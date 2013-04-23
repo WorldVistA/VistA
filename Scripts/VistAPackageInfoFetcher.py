@@ -157,6 +157,83 @@ class VistAPackageInfoFetcher(object):
     self._packagePatchHist[packageName][curVer] = result
     return result
 
+  def getAllPatchesInstalledByTime(self, datetime):
+    if not self._packageMapping:
+      self.createAllPackageMapping()
+    if not self._packagePatchHist:
+      self.getAllPackagesPatchHistory()
+    outputResult = []
+    for packageName in self._packagePatchHist:
+      for ver in self._packagePatchHist[packageName]:
+        packageHistList = self._packagePatchHist[packageName][ver]
+        patchHist = packageHistList.patchHistory
+        for patchInfo in patchHist:
+          if patchInfo.datetime and patchInfo.datetime > datetime:
+            outputResult.append([packageHistList.namespace,
+                                packageHistList.version,
+                                patchInfo.patchNo,
+                                patchInfo.seqNo,
+                                patchInfo.datetime])
+    """ sort the result """
+    outputResult = sorted(outputResult, key=lambda item: item[4])
+    return outputResult
+
+  def getAllPatchInstalledAfterByTime(self, dateTime):
+    """ This will search install file to find out all patches installed
+        after specific time
+    """
+    connection = self._testClient.getConnection()
+    menuUtil = VistAMenuUtil(duz=1)
+    menuUtil.gotoFileManSearchFileEntryMenu(self._testClient)
+    connection.send("9.7\r") # INSTALL file #
+    connection.expect("-A- SEARCH FOR INSTALL FIELD: ")
+    connection.send("17\r") # field # for INSTALL COMPLETE TIME
+    connection.expect("-A- CONDITION: ")
+    connection.send("GREATER THAN\r")
+    connection.expect("-A- GREATER THAN DATE: ")
+    connection.send("%s\r" % dateTime)
+    connection.expect("-B- SEARCH FOR INSTALL FIELD: ")
+    connection.send("\r")
+    connection.expect("IF: A// ")
+    connection.send("\r")
+    connection.expect("STORE RESULTS OF SEARCH IN TEMPLATE: ")
+    connection.send("\r")
+    connection.expect(["SORT BY: ", "SORT BY: NAME// "])
+    connection.send("17\r") # sort by INSTALL COMPLETE TIME
+    connection.expect(["START WITH INSTALL COMPLETE TIME: ",
+                       "START WITH INSTALL COMPLETE TIME: FIRST// ",])
+    connection.send("\r")
+    connection.expect("WITHIN INSTALL COMPLETE TIME, SORT BY: ")
+    connection.send("\r")
+    connection.expect("FIRST PRINT FIELD: ")
+    connection.send("NAME\r")
+    connection.expect("THEN PRINT FIELD: ")
+    connection.send("17\r")
+    connection.expect("THEN PRINT FIELD: ")
+    connection.send("\r")
+    connection.expect("Heading \(S/C\): INSTALL SEARCH// ")
+    connection.send("\r") # use default heading
+    connection.expect("DEVICE:")
+    connection.send(";132;99999\r")
+    connection.expect("[0-9]+ MATCH(ES)? FOUND\.")
+    result = connection.before.split("\r\n")
+    output = []
+    resultStart = False
+    DATETIME_INDENT = 52
+    for line in result:
+      line = line.strip()
+      if len(line) == 0:
+        continue
+      if resultStart:
+        output.append((line[:DATETIME_INDENT].rstrip(),
+                       datetime.strptime(line[DATETIME_INDENT:],
+                                         "%b %d,%Y  %H:%M")))
+        continue
+      if re.search('^-+$',line):
+        resultStart = True
+    menuUtil.exitFileManMenu(self._testClient)
+    return output
+
   def getAllPackagesPatchHistory(self):
     self.createAllPackageMapping()
     self._packagePatchHist.clear()
@@ -216,6 +293,12 @@ class VistAPackageInfoFetcher(object):
 
   def getPackageName(self, namespace):
     return self._packageMapping.get(namespace)
+
+  def getPackageNamespaceByName(self, pgkName):
+    for (namespace, packageName) in self._packageMapping.iteritems():
+      if pgkName == packageName:
+        return namespace
+    return None
 
   def hasNamespace(self, namespace):
     return namespace in self._packageMapping
@@ -614,6 +697,22 @@ def testIsInstallCompleted():
         print ("%s installation status is %s" % (installName,
                packagePatchHist.PATCH_INSTALL_STATUS_LIST[result]))
 
+def main():
+  testClient = createTestClient()
+  assert testClient
+  import logging
+  with testClient:
+    import pprint
+    initConsoleLogging(logging.INFO)
+    packagePatchHist = VistAPackageInfoFetcher(testClient)
+    packagePatchHist.getPackagePatchHistByNamespace("DI")
+    packagePatchHist.printPackagePatchHist("VA FILEMAN")
+    output = packagePatchHist.getAllPatchesInstalledByTime(datetime(2012,8,24))
+    pprint.pprint(output)
+    output = packagePatchHist.getAllPatchInstalledAfterByTime("T-365")
+    pprint.pprint(output)
+
+
 if __name__ == '__main__':
   testIsInstallCompleted()
-  #testMain()
+  main()

@@ -103,6 +103,25 @@ def getStatus(gitRepoDir=None, subDirPath=None):
   result, output = _runGitCommand(git_command_list, gitRepoDir)
   return output
 
+def getCommitInfo(gitRepoDir=None, revision='HEAD'):
+  """
+    Utility function to retrieve commit information
+    like date/time in Unix timestamp, title and hash
+    @gitRepoDir: git repository directory, default is current directory.
+                 if provided, will only report info WRT to git repository
+    @revision: the revision to retrieve info, default is HEAD
+    @return: return commit info dictionary
+  """
+  delim = '\n'
+  outfmtLst = ("%ct","%s","%H")
+  git_command_list = ["git", "log"]
+  fmtStr = "--format=%s" % delim.join(outfmtLst)
+  git_command_list.extend([fmtStr, "-n1", revision])
+  result, output = _runGitCommand(git_command_list, gitRepoDir)
+  if result:
+    return dict(zip(outfmtLst, output.strip('\r\n').split(delim)))
+  return None
+
 def _runGitCommand(gitCmdList, workingDir):
   """
     Private Utility function to run git command in subprocess
