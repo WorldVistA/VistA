@@ -57,31 +57,31 @@ def extractInfoFromInstallName(installName):
   return (namespace, ver, patch)
 
 """ utility function to extract patch information from install name """
-def setPatchInfoFromInstallName(installName, kidsPatchInfo):
+def setPatchInfoFromInstallName(installName, patchInfo):
   (namespace, ver, patch) = extractInfoFromInstallName(installName)
   logger.debug((namespace, ver, patch, installName))
-  logger.debug((kidsPatchInfo))
-  if kidsPatchInfo.namespace:
-    if kidsPatchInfo.namespace != namespace:
+  logger.debug((patchInfo))
+  if patchInfo.namespace:
+    if patchInfo.namespace != namespace:
       logger.error((namespace, ver, patch))
       logger.error(installName)
-      logger.error(kidsPatchInfo)
+      logger.error(patchInfo)
   else:
-    kidsPatchInfo.namespace = namespace
-  if kidsPatchInfo.version:
-    if (float(kidsPatchInfo.version) !=
+    patchInfo.namespace = namespace
+  if patchInfo.version:
+    if (float(patchInfo.version) !=
         float(ver)):
       logger.error((namespace, ver, patch))
       logger.error(installName)
-      logger.error(kidsPatchInfo)
+      logger.error(patchInfo)
   else:
-    kidsPatchInfo.version = ver
-  kidsPatchInfo.patchNo = patch
+    patchInfo.version = ver
+  patchInfo.patchNo = patch
 
 """
 a class to store all information related to a KIDS build
 """
-class KIDSPatchInfo(object):
+class PatchInfo(object):
   def __init__(self):
     self.package = None
     self.namespace = None
@@ -101,7 +101,7 @@ class KIDSPatchInfo(object):
     self.isMultiBuilds = False
     self.multiBuildsList = None
     self.otherKidsInfoList = None
-    self.depKIDSPatch = set()
+    self.depKIDSBuild = set()
     """ related to custom intaller """
     self.hasCustomInstaller = False
     self.customInstallerPath = None
@@ -131,7 +131,7 @@ class KIDSPatchInfo(object):
               self.kidsInfoPath, self.kidsInfoSha1,
               self.rundate, self.status,
               self.isMultiBuilds, self.multiBuildsList, self.otherKidsInfoList,
-              self.priority, self.depKIDSPatch,
+              self.priority, self.depKIDSBuild,
               self.associatedInfoFiles, self.associatedGlobalFiles,
               self.hasCustomInstaller, self.customInstallerPath) )
   def __repr__(self):
@@ -141,7 +141,7 @@ class KIDSPatchInfo(object):
 This class will read the KIDS installation guide and extract information and
 create a KIDPatch Info object
 """
-class KIDSPatchInfoParser(object):
+class PatchInfoParser(object):
   """ Regular Expression and constants """
   RUNDATE_DESIGNATION_REGEX = re.compile(
                                 "^Run Date: (?P<date>[A-Z]{3,3} [0-9][0-9], "
@@ -161,14 +161,15 @@ class KIDSPatchInfoParser(object):
   def __init__(self):
     pass
 
-  """ Parse KIDS Info File, and store result in KIDSPatchInfo
+  """ Parse KIDS Info File, and store result in PatchInfo
     @parameter infoFile: the path to KIDS Info file
-    @return KIDSPatchInfo object if has installName, otherwise None
+    @return PatchInfo object if has installName, otherwise None
   """
   def parseKIDSInfoFile(self, infoFile):
-    kidsPatchInfo = KIDSPatchInfo()
+    logger.debug("Parsing Info file %s" % infoFile)
+    patchInfo = PatchInfo()
     assert os.path.exists(infoFile)
-    kidsPatchInfo.kidsInfoPath = infoFile
+    patchInfo.kidsInfoPath = infoFile
     inputFile = open(infoFile, 'rb')
     for line in inputFile:
       line = line.rstrip(" \r\n")
@@ -179,68 +180,68 @@ class KIDSPatchInfoParser(object):
         break;
       ret = self.RUNDATE_DESIGNATION_REGEX.search(line)
       if ret:
-        kidsPatchInfo.rundate = datetime.strptime(ret.group('date'),
+        patchInfo.rundate = datetime.strptime(ret.group('date'),
                                                   self.RUNDATE_FORMAT_STRING)
-        kidsPatchInfo.installName = convertToInstallName(ret.group('design'))
+        patchInfo.installName = convertToInstallName(ret.group('design'))
         continue
       ret = self.PACKAGE_PRIORITY_REGEX.search(line)
       if ret:
         package = ret.group('name').strip()
         logger.debug(package)
         (namespace, name) = package.split(" - ", 1) # split on first -
-        kidsPatchInfo.namespace = namespace.strip()
-        kidsPatchInfo.package = name.strip()
-        kidsPatchInfo.priority = ret.group('pri').strip()
+        patchInfo.namespace = namespace.strip()
+        patchInfo.package = name.strip()
+        patchInfo.priority = ret.group('pri').strip()
         continue
       ret = self.VERSION_STATUS_REGEX.search(line)
       if ret:
         versionInfo = ret.group('no').strip()
         pos = versionInfo.find('SEQ #')
         if pos >= 0:
-          kidsPatchInfo.version = versionInfo[:pos].strip()
-          kidsPatchInfo.seqNo = versionInfo[pos+5:].strip()
-          try: int(kidsPatchInfo.seqNo)
+          patchInfo.version = versionInfo[:pos].strip()
+          patchInfo.seqNo = versionInfo[pos+5:].strip()
+          try: int(patchInfo.seqNo)
           except ValueError as ex:
-            logger.error("invalid seqNo %s" % kidsPatchInfo.seqNo)
+            logger.error("invalid seqNo %s" % patchInfo.seqNo)
             raise ex
         else:
-          kidsPatchInfo.version = versionInfo.strip()
-        # fix the kidsPatch version to make sure 1 => 1.0
-        if (float(kidsPatchInfo.version).is_integer() and
-            kidsPatchInfo.version.find('.') < 0):
-          kidsPatchInfo.version += ".0"
-        kidsPatchInfo.status = ret.group('status').strip()
+          patchInfo.version = versionInfo.strip()
+        # fix the patch version to make sure 1 => 1.0
+        if (float(patchInfo.version).is_integer() and
+            patchInfo.version.find('.') < 0):
+          patchInfo.version += ".0"
+        patchInfo.status = ret.group('status').strip()
       """ find out the dep patch info """
       ret = self.ASSOCIATED_PATCH_START_REGEX.search(line)
       if ret:
         self.parseAssociatedPart(line[self.ASSOCIATED_PATCH_START_INDEX:],
-                                 kidsPatchInfo)
+                                 patchInfo)
         continue
       ret = self.ASSOCIATED_PATCH_SECTION_REGEX.search(line)
       if ret:
-        self.parseAssociatedPart(line.strip(), kidsPatchInfo)
+        self.parseAssociatedPart(line.strip(), patchInfo)
         continue
-    if kidsPatchInfo.installName == None: return None
-    setPatchInfoFromInstallName(kidsPatchInfo.installName,
-                                kidsPatchInfo)
-    return kidsPatchInfo
+    if patchInfo.installName == None: return None
+    setPatchInfoFromInstallName(patchInfo.installName,
+                                patchInfo)
+    return patchInfo
   """ parsing the associated KIDS build part """
-  def parseAssociatedPart(self, infoString, kidsPatchInfo):
+  def parseAssociatedPart(self, infoString, patchInfo):
     pos = infoString.find("<<= must be installed BEFORE")
     if pos >=0:
-      patchInfo = convertToInstallName(infoString[3:pos].strip())
-      kidsPatchInfo.depKIDSPatch.add(patchInfo)
+      installName = convertToInstallName(infoString[3:pos].strip())
+      patchInfo.depKIDSBuild.add(installName)
     else:
       logger.warn(infoString)
 
-def testKIDSInfoParser():
+def testPatchInfoParser():
   print ("sys.argv is %s" % sys.argv)
   if len(sys.argv) <= 1:
     print ("Need at least two arguments")
     sys.exit(-1)
-  kidsInfoParser = KIDSPatchInfoParser()
-  patchInfo = kidsInfoParser.parseKIDSInfoFile(sys.argv[1])
+  infoParser = PatchInfoParser()
+  patchInfo = infoParser.parseKIDSInfoFile(sys.argv[1])
   print patchInfo
 
 if __name__ == '__main__':
-  testKIDSInfoParser()
+  testPatchInfoParser()

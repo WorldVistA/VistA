@@ -25,7 +25,7 @@ from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from LoggerManager import logger, initConsoleLogging
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
 from VistAGlobalImport import VistAGlobalImport, DEFAULT_GLOBAL_IMPORT_TIMEOUT
-from ExternalDownloader import obtainKIDSPatchFileBySha1
+from ExternalDownloader import obtainKIDSBuildFileBySha1
 from ConvertToExternalData import readSha1SumFromSha1File
 from ConvertToExternalData import isValidExternalDataFileName
 from ConvertToExternalData import isValidGlobalFileSuffix, isValidGlobalSha1Suffix
@@ -40,7 +40,7 @@ CHECK_INSTALLATION_PROGRESS_TIMEOUT = 1200 # 1200 seconds or 20 minutes
 GLOBAL_IMPORT_BYTE_PER_SEC = 0.5*1024*1024 # import speed is 0.5 MiB per sec
 
 """ Default Installer for KIDS Patches """
-class DefaultKIDSPatchInstaller(object):
+class DefaultKIDSBuildInstaller(object):
   #---------------------------------------------------------------------------#
   # Class Constants
   #---------------------------------------------------------------------------#
@@ -157,7 +157,7 @@ class DefaultKIDSPatchInstaller(object):
   """ load the KIDS build distribution file via menu
     must be called while in KIDS Main Menu
   """
-  def __loadKIDSPatch__(self, connection):
+  def __loadKIDSBuild__(self, connection):
     connection.send("Installation\r")
     connection.expect("Select Installation ")
     connection.send("1\r") # load the distribution
@@ -246,7 +246,7 @@ class DefaultKIDSPatchInstaller(object):
     logger.info("Start installing %s" % self._kidsInstallName)
     connection = vistATestClient.getConnection()
     self.__gotoKIDSMainMenu__(vistATestClient)
-    self.__loadKIDSPatch__(connection)
+    self.__loadKIDSBuild__(connection)
     result = self.__handleKIDSLoadOptions__(connection, reinst)
     if not result:
       logger.error("Error handling KIDS Load Options %s, %s" %
@@ -469,7 +469,7 @@ class DefaultKIDSPatchInstaller(object):
         continue
       if isValidGlobalSha1Suffix(gFile): # external file
         sha1Sum = readSha1SumFromSha1File(gFile)
-        (result, path) = obtainKIDSPatchFileBySha1(gFile,
+        (result, path) = obtainKIDSBuildFileBySha1(gFile,
                                                    sha1Sum,
                                                    DEFAULT_CACHE_DIR)
         if not result:
@@ -552,7 +552,7 @@ class KIDSInstallerFactory(object):
                           **kargs):
     return KIDSInstallerFactory.installerDict.get(
                   kidsInstallName,
-                  DefaultKIDSPatchInstaller)(kidsFile,
+                  DefaultKIDSBuildInstaller)(kidsFile,
                                              kidsInstallName,
                                              seqNo, logFile,
                                              multiBuildList, duz,
@@ -605,16 +605,16 @@ def main():
   initConsoleLogging()
   with testClient:
     kidsFile = os.path.abspath(result.kidsFile)
-    from KIDSPatchParser import KIDSPatchParser
-    kidsParser = KIDSPatchParser(None)
-    kidsParser.unregisterSectionHandler(KIDSPatchParser.ROUTINE_SECTION)
+    from KIDSBuildParser import KIDSBuildParser
+    kidsParser = KIDSBuildParser(None)
+    kidsParser.unregisterSectionHandler(KIDSBuildParser.ROUTINE_SECTION)
     kidsParser.parseKIDSBuild(kidsFile)
     installNameList = kidsParser.installNameList
     installName = installNameList[0]
     multiBuildList = installNameList
     if len(installNameList) == 1:
       multiBuildList = None
-    defaultKidsInstall = DefaultKIDSPatchInstaller(kidsFile,
+    defaultKidsInstall = DefaultKIDSBuildInstaller(kidsFile,
                                            installName,
                                            logFile=result.logFile,
                                            multiBuildList=multiBuildList,
