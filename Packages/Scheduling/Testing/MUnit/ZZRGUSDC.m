@@ -1,0 +1,84 @@
+ZZRGUSDC ;Unit Tests - Clinic API; 4/16/13
+ ;;1.0;UNIT TEST;;05/28/2012;
+LOGON ;
+ S DUZ=$$CHECKAV^XUSRB("fakedoc1;1Doc!@#$")
+ D DUZ^XUS1A
+ S GMPVAMC=DUZ(2)
+ Q
+ ;
+ADDCLN(NAME) ; Add new clinic
+ N IEN
+ S IEN=$P(^SC(0),U,3)+1
+ S STOP=$O(^DIC(40.7,0))
+ S ^SC("B",NAME,IEN)=""
+ S $P(^SC(0),U,3)=$P(^SC(0),U,3)+1
+ S ^SC(IEN,0)=NAME_"^^C^^^^"_STOP
+ S $P(^SC(IEN,0),U,18)=$O(^DIC(40.7,STOP))
+ S $P(^SC(IEN,0),U,17)="Y"
+ S ^SC(IEN,"SL")="30^V^^^^4^1^Y"
+ S ^SC(IEN,"AT")="9"
+ S ^SC(IEN,"SDPRIV",0)="^44.04PA^1^1"
+ S ^SC(IEN,"SDP")="5^2^3^"
+ Q IEN_U_NAME
+ ;
+ADDREQ(SD,DFN,SCODE) ;
+ N ERR,FDA,IENS
+ S ^GMR(123.5,"AB1",SCODE,4,1)=""
+ S IENS="+1,"
+ S FDA(123,IENS,.01)=+SD
+ S FDA(123,IENS,.02)=+DFN
+ S FDA(123,IENS,.04)=+SC
+ S FDA(123,IENS,.1)="TXT"
+ S FDA(123,IENS,1)=4
+ S FDA(123,IENS,8)=5
+ S FDA(123,IENS,10)=DUZ
+ S FDA(123,IENS,13)="C"
+ D UPDATE^DIE("","FDA","IENS","ERR")
+ Q $G(IENS(1))
+ADDPATT(SC) ;
+ S DD=9999999
+ F I=0:1:6 S ^SC(SC,"T"_I,DD,0)=DD,^SC(SC,"T"_I,DD,1)="[1 1 1 1|1 1 1 1|1 1 1 1|1 1 1 1|1 1 1 1|1 1 1 1|1 1 1 1|1 1 1 1]"
+ Q
+ADDPAT(NAME) ; Add new patient
+ N IEN
+ S IEN=$P(^DPT(0),U,3)+1
+ S ^DPT("B",NAME,IEN)=""
+ S ^DPT(IEN,0)=NAME_"^M^2800621^^^^^^221133445^^^^^^1^3120628^^^^1"
+ Q IEN_U_NAME
+ ;
+SETUP(PNM,CNM) ;
+ S $P(^ORD(101,1380,0),"^",3)=""
+ S:$D(PNM) PNAME=PNM
+ S:$D(CNM) CNAME=CNM
+ S:'$D(PNM) PNAME="TEST,PATIENT"
+ S:'$D(CNM) CNAME="Test Clinic"
+ S SC2=$$ADDCLN("Second clinic")
+ S SC=$$ADDCLN(CNAME)
+ S SC2=$$ADDCLN(CNAME_2)
+ S DFN=$$ADDPAT(PNAME)
+ D ADDPATT(+SC)
+ D ADDPATT(+SC2)
+ S SD=DT_".08",SD=SD_U_$$FMTE^XLFDT(SD)
+ S RSN="Test Reason",LEN="30^30",TYPE="9^REGULAR",NXT="N"
+ S CRSN="11^OTHER",STYP="2^Sharing 2"
+ Q
+ ;
+SETENR(DFN,SC) ; Set patient enrolls
+ S ^DPT(+DFN,"DE","B",+SC,1)=""
+ S ^DPT(+DFN,"DE",1,0)=+SC_"^"
+ S ^DPT(+DFN,"DE",1,1,1,0)=DT_"^O^^^"
+ Q
+ ;
+SUBTYP ;
+ S ^DG(35.2,0)="SHARING AGREEMENT SUB-CATEGORY^35.2^2^2"
+ S ^DG(35.2,1,0)="Sharing 1"
+ S ^DG(35.2,2,0)="Sharing 2"
+ S ^DG(35.2,"B","Sharing 1",1)=""
+ S ^DG(35.2,"B","Sharing 2",2)=""
+ S ^DG(35.1,0)="SHARING AGREEMENT CATEGORY^35.1V^2^2"
+ S ^DG(35.1,1,0)="9;SD(409.1,^1^1"
+ S ^DG(35.1,2,0)="9;SD(409.1,^2^1"
+ S ^DG(35.1,"AT",9,1,1)=1
+ S ^DG(35.1,"AT",9,2,2)=1
+ S ^DG(35.1,"B","9;SD(409.1,",1)=""
+ S ^DG(35.1,"B","9;SD(409.1,",2)=""
