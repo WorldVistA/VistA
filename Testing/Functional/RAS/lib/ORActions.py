@@ -29,7 +29,7 @@ class ORActions (Actions):
 
     def verproblems (self, ssn, vlist):
         # Activate a problem
-        self.VistA.wait('Select Clinician Menu Option:')
+        self.VistA.wait('Clinician Menu')
         self.VistA.write('CPRS Clinician Menu')
         self.VistA.wait('Select Patient:')
         self.VistA.write('Find Patient')
@@ -45,5 +45,5 @@ class ORActions (Actions):
         self.VistA.write('Q')
         self.VistA.wait('Select Patient:');
         self.VistA.write('Q')
-        self.VistA.wait('Menu Option:');
+        self.VistA.wait('Clinician Menu');
         self.VistA.write('\r\r')
