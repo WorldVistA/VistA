@@ -50,6 +50,7 @@ CHKRCODE   ; Unit test to test the return code of $$PATAPPT^SDAMA204
  D CHKERRCODE(114)
  I RCODE K ^TMP($J,"SDAMA204","PATAPPT")
  ;fourth case is patient id is 1, this should just return 0 or 1
+ Q:'$D(^DPT(1,0))
  S RCODE=0
  S RCODE=$$PATAPPT^SDAMA204(1)
  D CHKTF^XTMUNIT((RCODE>0)!(RCODE=0),"Expected return code is >=0, real: "_RCODE)
