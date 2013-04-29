@@ -136,7 +136,7 @@ def reg_test004(resultlog, result_dir, namespace):
                               [['Enter Operation/Procedure'], ['31.93']],
                               [['Yes//'], ['YES']],
                               [['Enter Operation/Procedure'], ['']],
-                              [['392', '2.7', '0.7241', '1', '99', '392- ESOPHAGITIS'], []],
+                              [['Diagnosis Related Group: +[0-9]+', 'Average Length of Stay\(ALOS\): +[0-9.]+', 'Weight: +[0-9.]+', 'Low Day\(s\): +[0-9]+', 'High Days: +[0-9]+', '392- ESOPHAGITIS'], []],
                               [['Effective Date'], ['']],
                               [['Choose Patient from PATIENT file'], ['']],
                               [['Select PATIENT NAME:'], ['']],

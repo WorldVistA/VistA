@@ -1,3 +1,4 @@
+
 '''
 Created on November 2012
 
@@ -635,7 +636,7 @@ class ADTActions (Actions):
         ''' This handles lists of lists, so that a series of expect values can be checked before writing'''
         for wwset in dlist:
             for writeitem in wwset[0]:
-                self.VistA.wait(writeitem)
+                self.VistA.wait_re([writeitem])
             for expectitem in wwset[1]:
                 self.VistA.write(expectitem)
 
