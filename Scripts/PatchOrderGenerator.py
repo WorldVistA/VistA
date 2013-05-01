@@ -330,6 +330,13 @@ class PatchOrderGenerator(object):
       firstPatch.isMultiBuilds = True
       firstPatch.multiBuildsList = installList
       firstPatch.otherKidsInfoList = []
+      if firstPatch.csvDepPatch is None:
+        """
+          If primary build install name is not specified in the csv file
+          will fall back to use dependency specified in the first
+          secondary build
+        """
+        firstPatch.csvDepPatch = patchList[installList[1]].csvDepPatch
       for index in range(1,len(installList)):
         nextPatchInfo = patchList[installList[index]]
         """ just to make sure the first one has all the dependencies """
@@ -358,8 +365,40 @@ class PatchOrderGenerator(object):
     if updCSVDep:
       """ update the dependencies based on csv files """
       self.__updateCSVDependencies__()
+    """ update the dependencies based on patch Sequenece # """
+    self.__updateSeqNoDependencies__()
     """ update the dependencies for multi-build KIDS files """
     self.__updateMultiBuildDependencies__()
+
+  def __updateSeqNoDependencies__(self):
+    namespaceVerSeq = dict()
+    patchInfoDict = self._patchInfoDict
+    for patchInfo in patchInfoDict.itervalues():
+      """ generate dependencies map based on seq # """
+      namespace = patchInfo.namespace
+      version = patchInfo.version
+      seqNo = patchInfo.seqNo
+      installName = patchInfo.installName
+      if namespace and version:
+        if not seqNo:
+          continue
+        if namespace not in namespaceVerSeq:
+          namespaceVerSeq[namespace] = dict()
+        if version not in namespaceVerSeq[namespace]:
+          namespaceVerSeq[namespace][version] = []
+        namespaceVerSeq[namespace][version].append((int(seqNo),
+                                                    installName))
+    """ add dependencies based on SEQ # """
+    for versionDict in namespaceVerSeq.itervalues():
+      for seqList in versionDict.itervalues():
+        if len(seqList) < 2:
+          continue
+        else:
+          # sorted list by sequence #
+          seqOrder = sorted(seqList, key=lambda item: item[0])
+          for idx in range(len(seqOrder)-1,0,-1):
+            installName = seqOrder[idx][1]
+            patchInfoDict[installName].depKIDSBuild.add(seqOrder[idx-1][1])
 
   """ now generate the dependency graph """
   def __generatePatchDependencyGraph__(self):
@@ -379,33 +418,6 @@ class PatchOrderGenerator(object):
           depDict[installName] = set()
         if patchInfo.csvDepPatch in self._patchInfoDict:
           depDict[installName].add(patchInfo.csvDepPatch)
-      """ generate dependencies map based on seq # """
-      namespace = patchInfo.namespace
-      version = patchInfo.version
-      seqNo = patchInfo.seqNo
-      if namespace and version:
-        if not seqNo:
-          if float(version) == 1.0:
-            seqNo = "0"
-          else:
-            continue
-        if namespace not in namespaceVerSeq:
-          namespaceVerSeq[namespace] = dict()
-        if version not in namespaceVerSeq[namespace]:
-          namespaceVerSeq[namespace][version] = []
-        namespaceVerSeq[namespace][version].append((int(seqNo),
-                                                    installName))
-    """ add dependencies based on SEQ # """
-    for versionDict in namespaceVerSeq.itervalues():
-      for seqList in versionDict.itervalues():
-        if len(seqList) < 2:
-          continue
-        else:
-          seqOrder = sorted(seqList, key=lambda item: item[0])
-          for idx in range(len(seqOrder)-1,0,-1):
-            if seqOrder[idx][1] not in depDict:
-              depDict[seqOrder[idx][1]] = set()
-            depDict[seqOrder[idx][1]].add(seqOrder[idx-1][1])
 
   """ generate self._missKidsInfoSet """
   def __generateMissKIDSInfoSet__(self):
@@ -600,14 +612,7 @@ class PatchOrderGenerator(object):
     if installName:
       startingSet.add(installName)
     else:
-      for patch in patchDict.iterkeys():
-        found = False
-        for depSet in depDict.itervalues():
-          if patch in depSet:
-            found = True
-            break;
-        if not found:
-          startingSet.add(patch)
+      startingSet = set(patchDict.iterkeys()) - reduce(set.union, depDict.itervalues(), set())
     startingList = [y.installName for y in sorted([patchDict[x] for x in startingSet],
                     cmp=comparePatchInfo)]
     visitSet = set() # store all node that are already visited
