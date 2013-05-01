@@ -315,20 +315,25 @@ class VistAPackageInfoFetcher(object):
         continue
     menuUtil.exitFileManMenu(self._testClient)
     return result
-  """ use Kernel KIDS API to check the installation status """
+  """ use Kernel KIDS API to check the installation status.
+      This method might not work if install name does not
+      belong to a namespace, like "ECLAIM BUNDLE 1.0".
+  """
   def isPatchInstalled(self, installName):
     connection = self._testClient.getConnection()
     self._testClient.waitForPrompt()
     connection.send('W $$PATCH^XPDUTL("%s")\r' % installName)
-    connection.expect('\)')
     self._testClient.waitForPrompt()
-    result = connection.before.strip(' \r\n')
     connection.send('\r')
-    try:
-      if int(result) == 1:
-        return True
-    except ValueError as ve:
-      pass
+    result = connection.before
+    for line in result.split('\r\n'):
+      line = line.strip(' \r\n')
+      if re.search('^[0-1]$', line):
+        try:
+          if int(line) == 1:
+            return True
+        except ValueError as ve:
+          pass
     return False
 
   def printPackagePatchHist(self, packageName):
@@ -611,4 +616,4 @@ def testIsInstallCompleted():
 
 if __name__ == '__main__':
   testIsInstallCompleted()
-  testMain()
+  #testMain()
