@@ -3,7 +3,7 @@
 #
 #   python PopulatePatchesByPackage.py < ../Packages.csv
 #
-# This script reads all the KIDS patch files(*.KID/*.KIDs)
+# This script reads all the Patch files(*.KID/*.KIDs)
 # and info file (*.TXT(s)/*,txt) under the current directory recursively
 # and populate them by Package Name according to input Packages.csv file.
 #
@@ -107,7 +107,7 @@ def populate(input):
   noKidsPatchList = noKidsInfoDict.values()
   leftoverTxtFiles = patchOrderGen.getInvalidInfoFiles()
   #---------------------------------------------------------------------------
-  # place multiBuilds KIDS patch under MultiBuilds directory
+  # place multiBuilds KIDS Build under MultiBuilds directory
   #---------------------------------------------------------------------------
   multiBuildSet = set([x.installName for x in patchList if x.isMultiBuilds])
   for info in multiBuildSet:

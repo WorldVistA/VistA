@@ -27,7 +27,7 @@ from ConvertToExternalData import generateSha1Sum
 
 DEFAULT_EXTERNAL_DOWNLOAD_SITE_URL = "http://code.osehra.org/content/SHA1"
 
-""" find or download the external KIDS patch data, return the file path """
+""" find or download the external KIDS Build file, return the file path """
 def obtainKIDSBuildFileBySha1(filePath, sha1Sum, cacheDir):
   assert cacheDir and os.path.exists(cacheDir)
   rootDir = os.path.dirname(filePath)

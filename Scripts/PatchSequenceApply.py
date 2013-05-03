@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Generate the KIDS Patch Order Sequence, query a running VISTA
-# instance to vefify the patch dependencies and apply the KIDS Patch
+# Generate the Patch Order Sequence, query a running VISTA
+# instance to vefify the patch dependencies and apply the Patch
 # in right order
 #
 # For detailed help information, please run
@@ -105,7 +105,7 @@ class PatchSequenceApply(object):
                                   patchInfo.namespace,
                                   patchInfo.kidsFilePath))
 
-  """ Apply up to maxPatches KIDS Patches ordered by sequence number """
+  """ Apply up to maxPatches Patches ordered by sequence number """
   def applyPatchSequenceByNumber(self, maxPatches=1):
     totalPatch = len(self._outPatchList)
     numOfPatch = 1
@@ -116,7 +116,7 @@ class PatchSequenceApply(object):
     endIndex = min(totalPatch, numOfPatch)
     self.__applyPatchUptoIndex__(endIndex)
 
-  """ apply the KIDS Patch in sequence order up to specified install name """
+  """ apply the Patch in sequence order up to specified install name """
   def applyPatchSequenceByInstallName(self, installName, patchOnly=False):
     if installName not in self._patchSet:
       raise Exception("Invalid install name: %s" % installName)
@@ -179,7 +179,7 @@ class PatchSequenceApply(object):
       idx += 1
     return -1
   """
-    apply individual KIDS patch
+    apply individual Patch
   """
   def __applyIndividualPatch__(self, patchInfo):
     """ double check to see if patch is already installed """
@@ -189,7 +189,7 @@ class PatchSequenceApply(object):
       return False
     """ generate Sha1 Sum for patch Info """
     self.generateSha1SumForPatchInfo(patchInfo)
-    """ install the KIDS patch """
+    """ install the Patch """
     result = self.__installPatch__(patchInfo)
     if not result:
       errorMsg = ("Failed to install patch %s: KIDS %s" %
@@ -258,7 +258,7 @@ class PatchSequenceApply(object):
         packageName = patchHistInfo.getPackageName(namespace)
         patchHistInfo.getPackagePatchHistory(packageName, namespace, ver)
 
-  """ create KIDS Patch Installer by patch Info and install
+  """ create Patch Installer by patch Info and install
       the patch specified in patchInfo, return the result
       @return, True indicates on error, False indicates failure
   """
@@ -276,7 +276,7 @@ class PatchSequenceApply(object):
                                                        kidsSha1,
                                                        DEFAULT_CACHE_DIR)
       if not result:
-        logger.error("Could not obtain external KIDS patch for %s" % kidsPath)
+        logger.error("Could not obtain external Patch for %s" % kidsPath)
         return result
       kidsPath = resultPath # set the KIDS Path
     """ get the right KIDS installer """
@@ -301,7 +301,7 @@ class PatchSequenceApply(object):
                             multiBuildsList,
                             files=associateFiles,
                             globals=associatedGlobals)
-    logger.info("Applying KIDS Patch %s" % patchInfo)
+    logger.info("Applying Patch %s" % patchInfo)
     assert kidsInstaller
     return kidsInstaller.runInstallation(self._testClient)
 
@@ -356,7 +356,7 @@ def main():
   parser.add_argument('-l', '--logDir', required=True,
                       help='Output dirctory to store all log file information')
   parser.add_argument('-i', '--install', default=False, action="store_true",
-                      help = 'whether to install KIDS Patch or not')
+                      help = 'whether to install Patch or not')
   group = parser.add_mutually_exclusive_group()
   group.add_argument('-n', '--numOfPatch', default=1,
                      help="input All for all patches, "

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-# Generate KIDS Patch Order Sequence
+# Generate Patch Order Sequence
 #
-#   python PatchOrderGenerator.py <path_to_kids_patch_dir>
+#   python PatchOrderGenerator.py <path_to_patches_dir>
 #
-# This script reads all the KIDS patch files(*.KID/*.KIDs)
+# This script reads all the Patch files(*.KID/*.KIDs)
 # and info file (*.TXT(s)/*,txt) under the input directory recursively
-# and generate the KIDS patch order via patch dependency
+# and generate the Patch order via patch dependency
 #
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
@@ -64,7 +64,7 @@ from ConvertToExternalData import isValidPythonSuffix
 from KIDSAssociatedFilesMapping import getAssociatedInstallName
 
 """
-This class will generate a KIDS Patch order based on input
+This class will generate a Patch order based on input
 patch directory
 """
 class PatchOrderGenerator(object):
@@ -280,7 +280,7 @@ class PatchOrderGenerator(object):
         logger.debug("invalid kids info file %s" % kidsInfoFile)
         self._invalidInfoFileSet.add(kidsInfoFile)
         continue
-      """ only add to list for info that is related to a KIDS patch"""
+      """ only add to list for info that is related to a Patch"""
       installName = patchInfo.installName
       if installName not in self._kidsInstallNameDict:
         logger.warn("no KIDS file related to %s" % patchInfo)
@@ -425,7 +425,7 @@ class PatchOrderGenerator(object):
     kidsInstallNameSet = set(self._kidsInstallNameDict.keys())
     self._missKidsInfoSet = kidsInstallNameSet.difference(patchInstallNameSet)
     logger.info("Missing KIDS Info set %s" % self._missKidsInfoSet)
-  """ add missing info KIDS patch """
+  """ add missing info Patch """
   def __addMissKIDSInfoPatch__(self):
     for kidsInstallName in self._missKidsInfoSet:
       logger.debug("Installation Name: %s, does not have info file, %s" %

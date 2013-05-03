@@ -39,7 +39,7 @@ DEFAULT_INSTALL_DUZ = 17 # VistA-FOIA user, "USER,SEVENTEEN"
 CHECK_INSTALLATION_PROGRESS_TIMEOUT = 1200 # 1200 seconds or 20 minutes
 GLOBAL_IMPORT_BYTE_PER_SEC = 0.5*1024*1024 # import speed is 0.5 MiB per sec
 
-""" Default Installer for KIDS Patches """
+""" Default Installer for KIDS Build """
 class DefaultKIDSBuildInstaller(object):
   #---------------------------------------------------------------------------#
   # Class Constants
@@ -51,7 +51,7 @@ class DefaultKIDSBuildInstaller(object):
     second item: default answer, use \"\" for default
     third item: bool flag to indicate whether to break out of the menu loop
     If more menu options is needed, please either add extra option
-    in the subclass if just specific to that KIDS patch, or add it here if
+    in the subclass if just specific to that KIDS Build, or add it here if
     it is a general question
   """
   KIDS_MENU_OPTION_ACTION_LIST = [
@@ -75,7 +75,7 @@ class DefaultKIDSBuildInstaller(object):
     second item: default answer, use \"\" for default
     third item: bool flag to indicate whether to break out of the menu loop
     If more menu options is needed, please either add extra option
-    in the subclass if just specific to that KIDS patch, or add it here if
+    in the subclass if just specific to that KIDS Build, or add it here if
     it is a general question
   """
   KIDS_LOAD_QUESTION_ACTION_LIST = [
@@ -100,12 +100,12 @@ class DefaultKIDSBuildInstaller(object):
   # Class Methods
   #---------------------------------------------------------------------------#
   """ Constructor
-    @kidsFile: the absolute path to KIDS patch file
-    @kidsInstallName: the install name for the KIDS patch
-    @seqNo: seqNo of the KIDS patch, default is None
+    @kidsFile: the absolute path to KIDS Build file
+    @kidsInstallName: the install name for the KIDS Build
+    @seqNo: seqNo of the KIDS Build, default is None
     @logFile: logFile to store the log information for VistA interaction
     @multiBuildList: a python list of install names, only applies to
-                     a multibuilds KIDS patch
+                     a multibuilds KIDS Build
     @duz: the applier's VistA DUZ, default is set to 17, in VistA FOIA
           it is USER SEVENTEEN
     @**kargs: any extra information that might be needed

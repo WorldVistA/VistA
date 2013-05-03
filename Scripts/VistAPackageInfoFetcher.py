@@ -421,7 +421,7 @@ class PackagePatchHistory(object):
     return self.patchHistory.__str__()
 
 """
-a class to parse and store KIDS patch install history info
+a class to parse and store Patch install history info
 """
 class PatchInstallLog(object):
   PATCH_HISTORY_LINE_REGEX = re.compile("^   [0-9]")
