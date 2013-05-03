@@ -234,65 +234,6 @@ class VistATestClientFactory(object):
     testClient.createConnection(command, instance, username, password)
     return testClient
 
-#---------------------------------------------------------------------------
-""" Utilities Functions to control cache instance
-    make sure ccontrol is accessible directly via command line
-    also, intersystem cache version is later than 2010
-"""
-#---------------------------------------------------------------------------
-""" a utility method to stop Cache instance
-    @instanceName, the name of cache instance
-    @restart, restart the cache instance
-    @return True if is stopped, otherwise return False
-"""
-def stopCache(instanceName, restart=False):
-  if not isInstanceRunning(instanceName):
-    return True
-  callList = ["ccontrol", "stop", instanceName, "quietly"]
-  if restart:
-    callList.append("restart")
-  rcode = subprocess.call(callList)
-  return rcode == 0
-""" a utility method to force down Cache instance
-    @instanceName, the name of cache instance
-    @return True if is down, otherwise return False
-"""
-def forceDownCache(instanceName):
-  callList = ["ccontrol", "force", instanceName, "quietly"]
-  rcode = subprocess.call(callList)
-  return rcode == 0
-""" a utility method to start Cache instance
-    @instanceName, the name of cache instance
-    @return True if is started, otherwise return False
-"""
-def startCache(instanceName):
-  if isInstanceRunning(instanceName):
-    return True
-  callList = ["ccontrol", "start", instanceName, "quietly"]
-  rcode = subprocess.call(callList)
-  return rcode == 0
-def isInstanceRunning(instanceName):
-  cmd = "ccontrol"
-  arg = "qlist"
-  RUNNING_REGEX = re.compile("^running", re.IGNORECASE)
-  try:
-    output = subprocess.Popen([cmd, arg], stdout=subprocess.PIPE).communicate()[0]
-    lines = output.split('\n')
-    for line in lines:
-      resultList = line.split('^')
-      if resultList[0] == instanceName:
-        return (RUNNING_REGEX.search(resultList[3].split(',')[0]) != None)
-  except OSError as ex:
-    print ex
-  return False
-""" restore CACHE.DAT for current instance @TODO implementation
-"""
-def restoreCacheData(instanceName, origDataPath, pathToCurrentData):
-  if isInstanceRunning(instanceName):
-    stopCache(instanceName)
-  assert not isInstanceRunning(instanceName)
-  raise Exception("NOT IMPLEMENTED!")
-
 def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='VistA Test Client Demo',
