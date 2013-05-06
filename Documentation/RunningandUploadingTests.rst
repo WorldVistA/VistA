@@ -158,3 +158,66 @@ The GT.M version doesn\'t automatically source the gtmprofile for manual testing
   source /opt/gtm/gtmprofile
   export gtmgbldir="/home/osehra/Downloads/VistA/database"
   export gtmroutines="/home/osehra/Downloads/VistA/o(/home/osehra/Downloads/VistA/r) ${gtm_dist}
+
+
+Dashboard Submissions via Scripting
+---------------------------------------
+
+Another useful CTest option is "-S" which uses a series of CMake files as scripts to run a dashboard submission.
+This option is most useful for Nightly submissions to the dashboard, as it can maintain separate repositories
+from your development environment.
+
+**WARNING**
+
+**The use of these scripts will always use the TEST_VISTA_FRESH capability, which will import the code found in the VistA-FOIA repository
+into your GT.M or Caché instance.  DO NOT use these files if you have made changes that you do not want to overwrite**
+
+The files are broken up into two parts
+
+ * <machine_name>.cmake
+     * A machine specific file that contains the variables and information typically setup during configuration.
+ * vista_common.cmake
+     * A file that is included by the machine script. It takes the variables set above and creates a CMake cache. It then updates, or clones,
+       the needed respositories and then performs a dashboard submission.
+
+The VistA repository has a branch called 'dashboard' that contains the vista_common.cmake file mentioned above.  It also has a template for the machine
+specfic script, which can be found in the commented header of the vista_common.cmake file. It is recommended that you clone this branch in a separate repository
+which can be done with the following command
+
+.. parsed-literal::
+
+    Downloads$ :usertype:`git clone git://github.com/OSEHRA/VistA.git -b dashboard vista-scripts`
+
+This will clone the 'dashboard' branch into a folder called vista-scripts.
+
+These machine files should contain the same information regarding the same variables that one would set using the CMake GUI or the ccmake program.
+A good resource for creating these files can be found at the dashboard, as the two files are uploaded as 'notes' when the submission is sent to the
+OSEHRA dashboard.  These notes can be found by utilizing the "Advanced view" toggle in the upper righthand corner of the webpage and clicking on the
+icon next to one of the "Nightly Expected" build names that looks like a small sheet of paper.
+
+
+Once the machine file is fully finished, the process of starting the build mirrors the above dashboard submission.
+
+The text below shows an example command and the beginning of what is printed to the screen:
+
+.. parsed-literal::
+
+  vista-scripts$ :usertype:`ctest -S tuchanka.cmake -VV`
+  * Extra verbosity turned on
+  Reading Script: C:/Users/joe.snyder/Work/OSEHRA/vista-scripts/tuchanka.cmake
+  Dashboard script configuration:
+    CTEST_SITE=[TUCHANKA.kitware]
+    CTEST_BUILD_NAME=[Win32-Cache]
+    CTEST_SOURCE_DIRECTORY=[C:/Users/joe.snyder/Dash/VistA]
+    CTEST_BINARY_DIRECTORY=[C:/Users/joe.snyder/Dash/VistA-build]
+    CTEST_CMAKE_GENERATOR=[Borland Makefiles]
+    CTEST_BUILD_CONFIGURATION=[Debug]
+    CTEST_GIT_COMMAND=[C:/Program Files (x86)/Git/bin/git.exe]
+    CTEST_CHECKOUT_COMMAND=[]
+    CTEST_CONFIGURE_COMMAND=[]
+    CTEST_SCRIPT_DIRECTORY=[C:/Users/joe.snyder/Work/OSEHRA/vista-scripts]
+    CTEST_USE_LAUNCHERS=[1]
+    dashboard_M_dir=[C:/Users/joe.snyder/Dash/VistA-FOIA]
+
+
+  Clearing build tree...
