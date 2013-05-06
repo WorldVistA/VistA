@@ -149,10 +149,6 @@ CTest options can be combined.  The following shows an example of combining the 
      Submission successful
   Errors while running CTest
 
-This method of running the tests through CTest is the same for either environment, as are the tests that are created.  Test creationt is done by gabbing
-each package name from the OSEHRA Code base folder.  This forms the name of the test and the routines that are contained inside the package.  This is done
-automatically, so as more packages are added to the code base over time, the amount of XINDEX tests will grow accordingly.
-
 **Note For Linux Users:**
 
 The GT.M version doesn\'t automatically source the gtmprofile for manual testing. It is recommended that you add lines to the .bashrc file to make sure the environment is set up correctly:
