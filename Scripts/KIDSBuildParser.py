@@ -404,7 +404,7 @@ class KIDSBuildParser(object, ISectionParser):
   """
     enum for section
   """
-  KIDS_PATCH_SECTION = 0
+  KIDS_LINE_SECTION = 0
   INSTALL_NAME_SECTION = 1
   DATA_SECTION = 2
   DD_SECTION = 3
@@ -440,7 +440,7 @@ class KIDSBuildParser(object, ISectionParser):
   """
     regular expression to determine which section that current line belongs to
   """
-  KIDS_PATCH_LINE = re.compile("^\*\*KIDS\*\*")
+  KIDS_LINE = re.compile("^\*\*KIDS\*\*")
   INSTALL_NAME_LINE = re.compile("^\*\*INSTALL NAME\*\*$")
   DATA_LINE = re.compile("^\"DATA\"")
   DATA_DICTIONARY_LINE = re.compile("^\"\^DD\",")
@@ -500,7 +500,7 @@ class KIDSBuildParser(object, ISectionParser):
   def installNameList(self):
     return self._installNameList
   """
-    verify the integraty of a KIDS Patch
+    verify the integraty of a KIDS Build
   """
   def verifyKIDSBuild(self, kidsBuild):
     self.parseKIDSBuild(kidsBuild)
@@ -612,7 +612,7 @@ class KIDSBuildParser(object, ISectionParser):
     debugParser = DebugSectionParser()
     routineParser = RoutineSectionParser(outDir)
     self._regExSectionMapping = {
-      self.KIDS_PATCH_LINE : (self.KIDS_PATCH_SECTION, self),
+      self.KIDS_LINE : (self.KIDS_LINE_SECTION, self),
       self.INSTALL_NAME_LINE : (self.INSTALL_NAME_SECTION, self),
       self.DATA_LINE : (self.DATA_SECTION, None),
       self.DATA_DICTIONARY_LINE : (self.DD_SECTION, None),
@@ -652,7 +652,7 @@ class KIDSBuildParser(object, ISectionParser):
 
   """
     Implementation of
-        INSTALL_NAME_SECTION, KIDS_PATCH_SECTION, PRE_INSTALL_SECTION
+        INSTALL_NAME_SECTION, KIDS_LINE_SECTION, PRE_INSTALL_SECTION
         POST_INSTALL_SECTION and VERSION_SECTION, END_SECTION
   """
   """
@@ -713,7 +713,7 @@ class KIDSBuildParser(object, ISectionParser):
   """ set up section handler """
   def __initSectionHandler__(self):
     self._sectionHandler = {
-        self.KIDS_PATCH_SECTION: self.__onKIDSSectionStart__,
+        self.KIDS_LINE_SECTION: self.__onKIDSSectionStart__,
         self.PRE_INSTALL_SECTION: self.__onPreInstallSectionStart__,
         self.POST_INSTALL_SECTION: self.__onPostInstallSectionStart__,
         self.PRE_SECTION: self.__onEnvCheckSectionStart__,
@@ -772,7 +772,7 @@ def checksum(routine):
   return checksum
 
 """
-  output metadata result of a KIDS Patch to JSON format
+  output metadata result of a KIDS Build to JSON format
 """
 def outputMetaDataInJSON(kidsParser, outputFileName):
   kidsBuilds = kidsParser.kidsBuilds
@@ -817,15 +817,15 @@ def loadMetaDataFromJSON(inputFileName):
 
 
 def main():
-  parser = argparse.ArgumentParser(description='VistA KIDS Patch Parser')
+  parser = argparse.ArgumentParser(description='VistA KIDS Build Parser')
   parser.add_argument('-i', '--inputFile', required=True,
-                      help = 'Input KIDS Patch file or Invidual Routine File')
+                      help = 'Input KIDS Build file or Invidual Routine File')
   parser.add_argument('-o', '--outputDir', default=None,
                       help = 'Output directory to store extracted M routines')
   parser.add_argument('-c', '--checksum', default=False, action="store_true",
                       help = 'Print checksum of a M Routine')
   parser.add_argument('-v', '--verify', default=False, action="store_true",
-                      help = 'verify a KIDS patch')
+                      help = 'verify a KIDS Build')
   parser.add_argument('-j', '--jsonOutputFile', default=None,
                       help = 'output metadata as json format')
   result = parser.parse_args();
