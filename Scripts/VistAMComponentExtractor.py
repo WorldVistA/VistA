@@ -207,10 +207,6 @@ class VistADataExtractor:
   def __cleanup__(self):
     pass
 
-DEFAULT_OUTPUT_LOG_FILE_NAME = "GlobalExportTest.log"
-import tempfile
-def getTempLogFile():
-    return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
 def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='VistA M Component Extractor',

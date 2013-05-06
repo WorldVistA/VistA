@@ -41,3 +41,7 @@ def initFileLogging(outputFileName, defaultLevel=logging.INFO,
   fileHandle.setFormatter(formatter)
   logger.addHandler(fileHandle)
   fileHandle.doRollover()
+
+def getTempLogFile(outputFileName):
+  import tempfile, os
+  return os.path.join(tempfile.gettempdir(), outputFileName)

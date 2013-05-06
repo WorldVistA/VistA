@@ -19,6 +19,7 @@ import sys
 import os
 import argparse
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
+from LoggerManager import getTempLogFile
 
 class VistAGlobalExport(object):
   def __init__(self):
@@ -35,9 +36,6 @@ class VistAGlobalExport(object):
     connection.send('\r') # make sure the next one can expect prompt
 
 DEFAULT_OUTPUT_LOG_FILE_NAME = "GlobalExportTest.log"
-import tempfile
-def getTempLogFile():
-    return os.path.join(tempfile.gettempdir(), DEFAULT_OUTPUT_LOG_FILE_NAME)
 def main():
   testClientParser = createTestClientArgParser()
   parser = argparse.ArgumentParser(description='VistA Global Export',
@@ -52,7 +50,7 @@ def main():
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
   with testClient as vistAClient:
-    logFilename = getTempLogFile()
+    logFilename = getTempLogFile(DEFAULT_OUTPUT_LOG_FILE_NAME)
     print "Log File is %s" % logFilename
     vistAClient.setLogFile(logFilename)
     vistAGlobalExport = VistAGlobalExport()
