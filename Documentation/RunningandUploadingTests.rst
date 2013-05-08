@@ -169,7 +169,7 @@ from your development environment.
 
 **WARNING**
 
-**The use of these scripts will always use the TEST_VISTA_FRESH capability, which will import the code found in the VistA-FOIA repository
+**The use of these scripts will always use the TEST_VISTA_FRESH capability, which will import the code found in the VistA-M repository
 into your GT.M or Caché instance.  DO NOT use these files if you have made changes that you do not want to overwrite**
 
 The files are broken up into two parts
@@ -217,7 +217,7 @@ The text below shows an example command and the beginning of what is printed to 
     CTEST_CONFIGURE_COMMAND=[]
     CTEST_SCRIPT_DIRECTORY=[C:/Users/joe.snyder/Work/OSEHRA/vista-scripts]
     CTEST_USE_LAUNCHERS=[1]
-    dashboard_M_dir=[C:/Users/joe.snyder/Dash/VistA-FOIA]
+    dashboard_M_dir=[C:/Users/joe.snyder/Dash/VistA-M]
 
 
   Clearing build tree...

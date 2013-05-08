@@ -99,14 +99,14 @@ class VistADataExtractor:
     # do not export ZGO, ZGI and xobw.* routines for now
     excludeList = ROUTINE_EXTRACT_EXCLUDE_LIST
     vistARoutineExport = VistARoutineExport()
-    logger.info("Extracting All Routines from VistA-FOIA instance to %s" %
+    logger.info("Extracting All Routines from VistA instance to %s" %
                 self._routineOutputFile)
     vistARoutineExport.exportAllRoutines(vistATestClient,
                                          self._routineOutputFile,
                                          excludeList)
 
   def __importZGORoutine__(self, vistATestClient):
-    logger.info("Import ZGO routine to VistA-FOIA")
+    logger.info("Import ZGO routine to VistA instance")
     from PackRO import pack
     zgoOutFile = os.path.join(self._outputResultDir, "ZGO.ro")
     zgoRoutine = os.path.join(self._vistARepoDir, "Scripts", "ZGO.m")
@@ -121,7 +121,7 @@ class VistADataExtractor:
     logger.info("Remove all zwr files under %s" % self._globalOutputDir)
     for file in glob.glob(os.path.join(self._globalOutputDir, "*.zwr")):
       os.remove(file)
-    logger.info("Exporting all globals from VistA-FOIA instance")
+    logger.info("Exporting all globals from VistA instance")
     vistAGlobalExport = VistAGlobalExport()
     vistAGlobalExport.exportAllGlobals(vistATestClient, self._globalOutputDir)
 
@@ -214,7 +214,7 @@ def main():
   parser.add_argument('-o', '--outputDir', required=True,
                       help='output Dir to store global/routine export files')
   parser.add_argument('-r', '--vistARepo', required=True,
-                    help='path to the top directory of VistA-FOIA repository')
+                    help='path to the top directory of VistA-M repository')
   parser.add_argument('-l', '--logDir', required=True,
                       help='path to the top directory to store the log files')
   parser.add_argument('-ro', '--routineOutDir', default=None,

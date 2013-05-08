@@ -118,7 +118,7 @@ INDEX_HTML_PAGE_INTRODUCTION_PART = """
 Welcome to VistA Cross Reference Documentation Page.
 This documentation is generated with the results of XINDEX and
  FileMan Data Dictionary utility running against the VistA code base pulled
- from the <a href="http://code.osehra.org/gitweb?p=VistA-FOIA.git;a=summary"/>
+ from the <a href="http://code.osehra.org/gitweb?p=VistA-M.git;a=summary"/>
 repository</a>.
 This documentation provides direct dependency information among packages,
  among FileMan files,  between globals and routines,
@@ -991,7 +991,7 @@ class WebPageGenerator:
             self.__generateSourceCodePageByName__(sourceCodeName, routine, justComment)
 #===============================================================================
 # Method to generate individual source code page
-# sourceDir should be VistA-FOIA git repository
+# sourceDir should be VistA-M git repository
 #===============================================================================
     def generateAllSourceCodePage(self, justComment=True):
         for packageName in self._allPackages.iterkeys():
@@ -1838,7 +1838,7 @@ def testGetGitLastRev(GitRepoDir, gitPath):
     result = subprocess.check_output(gitCommand, shell=True)
     print result.strip()
 
-# test parsing package.csv file from VistA-FOIA release
+# test parsing package.csv file from VistA-M release
 def testPackageCsvParser(packageFile):
     csvFile = open(packageFile, 'rb')
     sniffer = csv.Sniffer()

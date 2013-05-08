@@ -195,7 +195,7 @@ endforeach()
 
 IF(TEST_VISTA_FRESH)
   set(freshinfo "")
-  find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
+  find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
   list(APPEND freshinfo TEST_VISTA_FRESH_M_DIR)
 
   if(CCONTROL_EXECUTABLE)
@@ -313,7 +313,7 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
 
   option(TEST_VISTA_COVERAGE "Create a coverage map of VistA based off the testing" OFF)
   if(TEST_VISTA_COVERAGE)
-    find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-FOIA DOC "Path to the folder that contains the routines and globals from OSEHRA")
+    find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
     message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
     This will also create new text files during the run.")
 

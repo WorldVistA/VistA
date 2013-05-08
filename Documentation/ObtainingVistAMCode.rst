@@ -1,10 +1,10 @@
-Obtaining the VistA-FOIA M Source Code
-======================================
+Obtaining the VistA-M Source Code
+=================================
 
 .. role:: usertype
     :class: usertype
 
-We need to retrieve the VistA-FOIA source code (MUMPS code) that will be used to populate Caché or GTM  and generally construct the local VistA
+We need to retrieve the VistA-M source code (MUMPS code) that will be used to populate Caché or GTM  and generally construct the local VistA
 environment. Begin by bringing up a Git Bash terminal from the installed Git system.
 
 .. parsed-literal::
@@ -54,12 +54,12 @@ To obtain a copy of the repository, create a directory (Folder) to hold the repo
 
 .. parsed-literal::
 
-  $ :usertype:`git clone git://code.osehra.org/VistA-FOIA.git`
-  Cloning into 'VistA-FOIA'...
+  $ :usertype:`git clone git://code.osehra.org/VistA-M.git`
+  Cloning into 'VistA-M'...
   .
   .
   .
-  $ :usertype:`cd VistA-FOIA`
+  $ :usertype:`cd VistA-M`
 
 to make a local clone of the remote repository.
 

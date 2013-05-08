@@ -12,7 +12,7 @@ OSEHRA, the Open Source Electronic Health Record Agent.
 Purpose
 -------
 
-The OSEHRA `VistA-FOIA Source Tree`_ contains a static representation of VistA.
+The OSEHRA `VistA-M Source Tree`_ contains a static representation of VistA.
 VistA is built on a database platform that houses both code and data so it
 requires programmatic operations to apply changes while maintaining consistency.
 Patches in this source tree may be applied to a running VistA instance to keep
@@ -73,7 +73,7 @@ Links
 
 .. _`VA VistA FOIA Site`: https://downloads.va.gov/files/FOIA
 .. _`VA FOIA Spreadsheets`: https://downloads.va.gov/files/FOIA/Software/DBA_VistA_FOIA_System_Files
-.. _`VistA-FOIA Source Tree`: http://code.osehra.org/VistA-FOIA.git
+.. _`VistA-M Source Tree`: http://code.osehra.org/VistA-M.git
 
 .. _`Packages/Order Entry Results Reporting/CPRS`: Packages/Order%20Entry%20Results%20Reporting/CPRS
 .. _`Packages/RPC Broker/BDK`: Packages/RPC%20Broker/BDK

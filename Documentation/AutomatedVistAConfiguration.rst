@@ -4,7 +4,7 @@ Automated VistA Import and Configuration
 The manual steps for the Caché and GTM importing process can be found at ImportCache_ and ImportGT.M_.
 The ImportRG script runs files that mirror these scripts and will introduce the same codebase into the database.
 
-The process for importing VistA-FOIA routines and globals into Caché and GTM has been automated. These files are configured and prepared during the setup
+The process for importing VistA-M routines and globals into Caché and GTM has been automated. These files are configured and prepared during the setup
 of the VistA repository after selecting the TEST_VISTA_FRESH_ option.  The TEST_VISTA_FRESH option also uses this import and configuration during the \'build\'
 step of a CTest dashboard submission. To execute the automated import and configuration via the command line, execute the following steps from a gitbash (Windows) or linux shell:
 

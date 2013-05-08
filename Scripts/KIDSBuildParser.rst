@@ -36,7 +36,7 @@ command::
 
 Sample output::
 
-  $ python KIDSBuildParser.py -i ~/git/VistA-FOIA/Packages/Kernel/Routines/XUS.m -c
+  $ python KIDSBuildParser.py -i ~/git/VistA-M/Packages/Kernel/Routines/XUS.m -c
   Checksum is: 31567708
 
 Output all routines in a KIDS build

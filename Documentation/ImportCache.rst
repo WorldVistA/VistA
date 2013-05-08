@@ -89,25 +89,25 @@ command and the first/last globals to be imported.
 
   VISTA> :usertype:`D LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Accounts Receivable/Globals/340+AR DEBTOR.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Accounts Receivable/Globals/340+AR DEBTOR.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Accounts Receivable/Globals/341+AR EVENT.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Accounts Receivable/Globals/341+AR EVENT.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Accounts Receivable/Globals/341.1+AR EVENT TYPE.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Accounts Receivable/Globals/341.1+AR EVENT TYPE.zwr
 
   .
   .
   .
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Womens Health/Globals/790.72+WV AGE RANGE DEFAULT.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Womens Health/Globals/790.72+WV AGE RANGE DEFAULT.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Womens Health/Globals/WV.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Womens Health/Globals/WV.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Wounded Injured and Ill Warriors/Globals/987.5+WII ADMISSIONS DISCHARGES.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Wounded Injured and Ill Warriors/Globals/987.5+WII ADMISSIONS DISCHARGES.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Wounded Injured and Ill Warriors/Globals/987.6+WII PARAMETERS.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Wounded Injured and Ill Warriors/Globals/987.6+WII PARAMETERS.zwr
 
-  C:/Users/joe.snyder/Desktop/VistA-FOIA/Packages/Wounded Injured and Ill Warriors/Globals/WII.zwr
+  C:/Users/joe.snyder/Desktop/VistA-M/Packages/Wounded Injured and Ill Warriors/Globals/WII.zwr
 
 
   VISTA>
