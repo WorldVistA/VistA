@@ -136,7 +136,7 @@ if(NOT DEFINED dashboard_git_crlf)
   endif(UNIX)
 endif()
 if(NOT DEFINED dashboard_git_M_url)
-  set(dashboard_git_M_url "git://code.osehra.org/VistA-FOIA.git")
+  set(dashboard_git_M_url "git://code.osehra.org/VistA-M.git")
 endif()
 if(NOT DEFINED dashboard_git_M_branch)
   set(dashboard_git_M_branch master)
@@ -209,7 +209,7 @@ endif()
 
 # Select VistA M reference directory.
 if(NOT DEFINED dashboard_M_dir)
-  set(dashboard_M_dir ${CTEST_DASHBOARD_ROOT}/VistA-FOIA)
+  set(dashboard_M_dir ${CTEST_DASHBOARD_ROOT}/VistA-M)
 endif()
 
 # Checkout VistA M reference directory.
