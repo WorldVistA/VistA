@@ -1,15 +1,37 @@
-'''
-Created on Jun 14, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: bcaine
+
+## @package sc_testmain01
+## Scheduling Test (Suite)
+
+'''
 This is the main Scheduling script that calls the underlying
 scheduling functional tests located in SC_Suite001
+
+Created on Jun 14, 2012
+@author: bcaine
+@copyright: PwC
+@license: http://www.apache.org/licenses/LICENSE-2.0
 '''
 import logging
 import sys
 import os
 sys.path = ['./RAS/lib'] + ['./dataFiles'] + ['../Python/vista'] + sys.path
-import SC_Suite001
+import SC_Suite001, SC_Suite002
 import argparse
 import datetime
 
@@ -62,6 +84,12 @@ def main():
         SC_Suite001.sc_test008(resultlog, args.resultdir, args.namespace)
         SC_Suite001.sc_test009(resultlog, args.resultdir, args.namespace)
         SC_Suite001.sc_test010(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test001(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test002(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test003(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test004(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test005(resultlog, args.resultdir, args.namespace)
+        SC_Suite002.comp_sc_test007(resultlog, args.resultdir, args.namespace)
         SC_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
         resultlog.write('finished')
     except Exception, e:
