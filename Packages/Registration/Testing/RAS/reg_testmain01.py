@@ -95,6 +95,7 @@ def main():
         REG_Suite001.reg_test003(resultlog, args.resultdir, args.namespace)
         REG_Suite001.reg_test004(resultlog, args.resultdir, args.namespace)
         REG_Suite001.reg_test005(resultlog, args.resultdir, args.namespace)
+        REG_Suite001.reg_test006(resultlog, args.resultdir, args.namespace)
         REG_Suite001.reg_logflow(resultlog, args.resultdir, args.namespace)
         REG_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
     except Exception, e:

@@ -119,14 +119,19 @@ def reg_test003(resultlog, result_dir, namespace):
         VistA1 = connect_VistA(testname, result_dir, namespace)
         reg = ADTActions(VistA1)
         reg.signon()
+        reg.gotoADTmenu()
         reg.waiting_list_entry(ssn='323554567')
         reg.signon()
+        reg.gotoADTmenu()
         reg.waiting_list_entry(ssn='123455678')
         reg.signon()
+        reg.gotoADTmenu()
         reg.waiting_list_output(vlist=['TWENTYFOUR,PATIENT', 'TWENTYTHREE,PATIENT'])
         reg.signon()
+        reg.gotoADTmenu()
         reg.delete_waiting_list_entry(ssn='323554567')
         reg.signon()
+        reg.gotoADTmenu()
         reg.delete_waiting_list_entry(ssn='123455678')
         reg.signoff()
     except TestHelper.TestError, e:
@@ -188,6 +193,25 @@ def reg_test005(resultlog, result_dir, namespace):
         reg.signon()
         reg.adt_menu_smoke(ssn='323554567')
 
+        reg.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write(e.value)
+        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+    else:
+        resultlog.write('Pass\n')
+
+def reg_test006(resultlog, result_dir, namespace):
+    '''Discharge previously discharged patient (break test, REF-221 ticket) and then perform Detailed Inpatient Inquire (REF-268) '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA1 = connect_VistA(testname, result_dir, namespace)
+        reg = ADTActions(VistA1)
+        reg.signon()
+        reg.gotoADTmenu()
+        reg.discharge_patient(ssn='444678924', dtime='NOW')
+        reg.det_inpatient_inquiry(ssn='444678924', item='1', vlist=['DIRECT', '2-B', 'ALEXANDER,ROBER', 'SMITH,MARY'])
         reg.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)

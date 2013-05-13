@@ -58,6 +58,15 @@ class ADTActions (Actions):
             self.VistA.wait('continue')
             self.VistA.write('')
 
+    def gotoADTmenu(self):
+        ''' Go to ADT menu for XUP entry only'''
+        self.VistA.wait('OPTION NAME')
+        self.VistA.write('ADT MANAGER MENU')
+        self.VistA.wait('continue')
+        self.VistA.write('')
+        self.VistA.wait('continue')
+        self.VistA.write('')
+
     def write(self, string):
         self.VistA.write(string)
 
@@ -507,12 +516,6 @@ class ADTActions (Actions):
 
     def waiting_list_entry(self, ssn):
         '''This method creates a wait list entry, via XUP  '''
-        self.VistA.wait('Select OPTION NAME')
-        self.VistA.write('ADT MANAGER MENU')
-        self.VistA.wait('continue')
-        self.VistA.write('')
-        self.VistA.wait('continue')
-        self.VistA.write('')
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -562,12 +565,6 @@ class ADTActions (Actions):
 
     def waiting_list_output(self, vlist):
         '''This method shows wait list, via XUP '''
-        self.VistA.wait('Select OPTION NAME')
-        self.VistA.write('ADT MANAGER MENU')
-        self.VistA.wait('continue')
-        self.VistA.write('')
-        self.VistA.wait('continue')
-        self.VistA.write('')
         self.VistA.wait('Option:')
         self.VistA.write('adt outputs menu')
         self.VistA.wait('ADT Outputs Menu')
@@ -587,12 +584,6 @@ class ADTActions (Actions):
 
     def delete_waiting_list_entry(self, ssn):
         '''This method deletes wait list entry, via XUP  '''
-        self.VistA.wait('Select OPTION NAME')
-        self.VistA.write('ADT MANAGER MENU')
-        self.VistA.wait('continue')
-        self.VistA.write('')
-        self.VistA.wait('continue')
-        self.VistA.write('')
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
