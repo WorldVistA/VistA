@@ -1,10 +1,39 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+## @package PL_Suite001
+## Problem List Package Test (Suite)
+
 '''
+These are the Problem List package Suite001 tests, implemented as Python functions.
+
+Each test has a unique name derived from the test method name.
+Each test has a unique result log with a filename derived from the testname and a datestamp.
+There is a parent resultlog that is also used for pass/fail logging.
+In general each test establishes a connection to the target application (VistA),
+signs on as a user, provider, or programmer and then performs a set of test functions.
+When testing is complete the connection is closed and a pass/fail indicate is written
+to the resultlog.
+
 Created on Mar 9, 2012
-
-
 @author: pbradley
-
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
 '''
+
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from PLActions import PLActions
@@ -15,7 +44,14 @@ import TestHelper
 import logging
 
 def pl_test001(resultlog, result_dir, namespace):
-    ''' NIST Inpatient Test '''
+    '''
+    This performs the NIST Inpatient Test; add problem to problem list, edit problem list,
+    verify, and remove problem from problem list.
+
+    The test scripts for testing of the Problem List adhere to the approved
+    guidelines as described in the NIST Test Procedure for 170.302 (c) Maintain up-to-date
+    problem list found at: http://healthcare.nist.gov/docs/170.302.c_problemlist_v1.1.pdf .
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -46,7 +82,7 @@ def pl_test001(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test002(resultlog, result_dir, namespace):
-    ''' Restore Removed Problems '''
+    '''This test restores previously removed problems '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -83,7 +119,7 @@ def pl_test002(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test003(resultlog, result_dir, namespace):
-    ''' Change Problem Data '''
+    '''This test changes problem data '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -120,7 +156,7 @@ def pl_test003(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test004(resultlog, result_dir, namespace):
-    ''' Create Problem Selection List, add/modify/remove categories and problems '''
+    ''' This test creates a Problem Selection List, and then adds/modifies/removes categories and problems '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -164,9 +200,9 @@ def pl_test004(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test005(resultlog, result_dir, namespace):
-    ''' Create Problem Selection List, assign to user, and add problem '''
-    '''Separate VistA Instances to allow concurrent logins in case of
-    future use of tstart and trollback when these features are available'''
+    '''This test creates a Problem Selection List, assigns it to user, and adds problem. '''
+    '''This test uses separate VistA Instances to allow concurrent connections in case of
+    future use of tstart and trollback when these features are available.'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -216,7 +252,7 @@ def pl_test005(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test006 (resultlog, result_dir, namespace):
-    ''' Create Selection List from IB Encounter Form'''
+    '''This test creates a Selection List from IB Encounter Form'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -247,7 +283,7 @@ def pl_test006 (resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test007 (resultlog, result_dir, namespace):
-    ''' Add problems and View Patients by Problems (PL menu items 4 & 5)'''
+    '''This test adds problems and then views patients by problem via Problem List menu items 4 & 5'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -273,9 +309,7 @@ def pl_test007 (resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test008 (resultlog, result_dir, namespace):
-    ''' Add problem via data entry as clerk and change as doctor'''
-    '''Multiple VistA instances to allow concurrent logins for when
-    tstart and trollback become available and implemented'''
+    '''This test adds a problem via data entry as clerk and changes the problem as doctor'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -302,9 +336,7 @@ def pl_test008 (resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test009 (resultlog, result_dir, namespace):
-    ''' Verify Problem List through Order Entry package'''
-    '''Multiple VistA instances to allow concurrent logins for when
-    tstart and trollback become available and implemented'''
+    '''This test verifies problems entered into the Problem List through Order Entry package'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -340,7 +372,7 @@ def pl_test009 (resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test010(resultlog, result_dir, namespace):
-    ''' Add problems to Problem List and then Remove them. '''
+    '''This tests adds problems to the Problem List and then removes them. '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -362,7 +394,7 @@ def pl_test010(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test011(resultlog, result_dir, namespace):
-    ''' Add a problem, add comments, and then remove to/from Problem List. '''
+    '''This test adds a problem, adds comments, and then removes them from the Problem List. '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -385,7 +417,7 @@ def pl_test011(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test012(resultlog, result_dir, namespace):
-    '''Problem List Menu Testing'''
+    '''This test performs Problem List Menu Testing (psuedo smoke test)'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -432,7 +464,7 @@ def pl_test012(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test013(resultlog, result_dir, namespace):
-    '''Tests the remainder of the selection list Build menu options'''
+    '''This tests the remaining selection list Build menu options not already tested elsewhere'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -471,7 +503,7 @@ def pl_test013(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test014(resultlog, result_dir, namespace):
-    ''' Test Problem List via CPRS MENU '''
+    '''This tests the Problem List via CPRS MENU '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -507,7 +539,8 @@ def pl_test014(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test015(resultlog, result_dir, namespace):
-    '''Tests that lock works correctly'''
+    '''This test verifies that lock function works correctly -- that is that two
+    providers/users can not edit the same record simultaneously.'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -539,7 +572,7 @@ def pl_test015(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test016(resultlog, result_dir, namespace):
-    '''Tests PL Site Parameters '''
+    '''This tests the PL Site Parameters menu'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -579,7 +612,8 @@ def pl_test016(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def pl_test017(resultlog, result_dir, namespace):
-    ''' Create Problem Selection List, do not delete at end '''
+    '''This test creates Problem Selection List, but does not delete the lists upon completion
+    such that global files can be compared post-testing.'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -614,7 +648,7 @@ def pl_test017(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def startmon(resultlog, result_dir, namespace):
-    '''Starts Coverage Monitor'''
+    '''This starts the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -633,7 +667,7 @@ def startmon(resultlog, result_dir, namespace):
         VistA1.write('h\r')
 
 def stopmon (resultlog, result_dir, humanreadable, namespace):
-    ''' STOP MONITOR'''
+    '''This stops the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -654,10 +688,11 @@ def stopmon (resultlog, result_dir, humanreadable, namespace):
         VistA1.write('h\r')
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+    '''This method appends a date/time stamp to a filename'''
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 def connect_VistA(testname, result_dir, namespace):
-    # Connect to VistA
+    ''' This method is used to establish the connection to VistA via ConnectToMUMPS'''
     logging.debug('Connect_VistA' + ', Namespace: ' + namespace)
     from OSEHRAHelper import ConnectToMUMPS, PROMPT
     VistA = ConnectToMUMPS(logfile=result_dir + '/' + timeStamped(testname + '.txt'), instance='', namespace=namespace)

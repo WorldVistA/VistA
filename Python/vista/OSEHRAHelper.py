@@ -1,4 +1,3 @@
-r"""Class to Connect to a VistA EHR automatically."""
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
 #
@@ -14,6 +13,18 @@ r"""Class to Connect to a VistA EHR automatically."""
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
+
+## @package OSEHRAHelper
+## OSEHRA test helper
+
+'''
+OSEHRAHelper provides classes that establish connections to VistA
+and interaction methods such as write() and wait()
+
+@copyright The Open Source Electronic Health Record Agent
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import sys
 import os
 import telnetlib
@@ -46,26 +57,26 @@ class PROMPT(object):
 
 class ConnectMUMPS(object):
 
-  def GetVistARoutines(self,vista_source_dir,test_results_dir,packagename):
-    packages_csv_file = vista_source_dir +'/Packages.csv'
+  def GetVistARoutines(self, vista_source_dir, test_results_dir, packagename):
+    packages_csv_file = vista_source_dir + '/Packages.csv'
 
-    packageprefix_sorted=FindPackagePrefixes(packagename,packages_csv_file)
+    packageprefix_sorted = FindPackagePrefixes(packagename, packages_csv_file)
     return self.PlatformDependRoutine(packageprefix_sorted, packagename, test_results_dir)
 
   def ClearExcludedRoutines(self, routine_set):
-    routine_set_clean=[]
+    routine_set_clean = []
     ROUTINE_EXTRACT_EXCLUDE_LIST = (
-       "ZGO", "ZGI","CHK2LEV", "CHKOP", "GENDASH", "GENOUT",
+       "ZGO", "ZGI", "CHK2LEV", "CHKOP", "GENDASH", "GENOUT",
        "GETPASS", "GTMHELP", "GTMHLPLD", "LOADOP",
        "LOADVX", "MSG", "PINENTRY", "TTTGEN",
-       "TTTSCAN", "NAME", "ZZRGUT.*","ZZDGPTCO1",
+       "TTTSCAN", "NAME", "ZZRGUT.*", "ZZDGPTCO1",
        "ZZUT.*", "DMU.*"
     )
-    routine_exclude_regex = re.compile('^('+'|'.join(ROUTINE_EXTRACT_EXCLUDE_LIST)+')$')
+    routine_exclude_regex = re.compile('^(' + '|'.join(ROUTINE_EXTRACT_EXCLUDE_LIST) + ')$')
     for routine in routine_set:
       if routine == "T":
         continue
-      elif re.match(routine_exclude_regex,routine) is None:
+      elif re.match(routine_exclude_regex, routine) is None:
         routine_set_clean.append(routine)
     return routine_set_clean
 
@@ -227,33 +238,33 @@ class ConnectWinCache(ConnectMUMPS):
       self.write("*")
       self.wait("Routine")
     for prefix in packageprefix:
-      self.write(prefix+'*')
+      self.write(prefix + '*')
       self.wait('Routine')
     self.write('')
-    index = self.multiwait(['Long or Short form',self.prompt])
+    index = self.multiwait(['Long or Short form', self.prompt])
     if index == 1:
       return 0
     self.write('L')
-    self.wait('last modified since date',120)
+    self.wait('last modified since date', 120)
     self.write('')
     self.wait('on or before date')
     self.write('')
     self.wait('Device')
-    self.write(test_results_dir +'/'+ packagename +'.txt')
+    self.write(test_results_dir + '/' + packagename + '.txt')
     self.wait('Parameters')
     self.write('WNS')
     while True:
       index = self.multiwait(['overwrite it', self.prompt])
-      if index==0:
+      if index == 0:
         self.write('')
         continue
-      if index==1:
+      if index == 1:
         break
     routineset = []
-    if os.path.exists(test_results_dir +'/'+ packagename +'.txt'):
-      routine_list=set(open(test_results_dir +'/'+ packagename +'.txt','r').readlines())
+    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
+      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
       for routine in routine_list:
-        REreturn=re.match("^[A-Z0-9]+",routine)
+        REreturn = re.match("^[A-Z0-9]+", routine)
         if REreturn is not None:
           routineset.append(REreturn.group(0))
       return self.ClearExcludedRoutines(routineset)
@@ -349,33 +360,33 @@ class ConnectLinuxCache(ConnectMUMPS):
       self.write("*")
       self.wait("Routine")
     for prefix in packageprefix:
-      self.write(prefix+'*')
+      self.write(prefix + '*')
       self.wait('Routine')
     self.write('')
-    index = self.multiwait(['Long or Short form',self.prompt])
+    index = self.multiwait(['Long or Short form', self.prompt])
     if index == 1:
       return 0
     self.write('L')
-    self.wait('last modified since date',120)
+    self.wait('last modified since date', 120)
     self.write('')
     self.wait('on or before date')
     self.write('')
     self.wait('Device')
-    self.write(test_results_dir +'/'+ packagename +'.txt')
+    self.write(test_results_dir + '/' + packagename + '.txt')
     self.wait('Parameters')
     self.write('WNS')
     while True:
       index = self.multiwait(['overwrite it', self.prompt])
-      if index==0:
+      if index == 0:
         self.write('')
         continue
-      if index==1:
+      if index == 1:
         break
     routineset = []
-    if os.path.exists(test_results_dir +'/'+ packagename +'.txt'):
-      routine_list=set(open(test_results_dir +'/'+ packagename +'.txt','r').readlines())
+    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
+      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
       for routine in routine_list:
-        REreturn=re.match("^[A-Z0-9]+",routine)
+        REreturn = re.match("^[A-Z0-9]+", routine)
         if REreturn is not None:
           routineset.append(REreturn.group(0))
       return self.ClearExcludedRoutines(routineset)
@@ -450,7 +461,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
       self.write("*")
       self.wait("Routine")
     for prefix in packageprefix:
-      self.write(prefix+'*')
+      self.write(prefix + '*')
       self.wait('Routine')
     self.write('')
     self.wait(PROMPT)
@@ -464,22 +475,22 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.wait('Output Format')
     self.write('ZWR')
     self.wait('Output device')
-    self.write(test_results_dir +'/'+ packagename +'.txt')
+    self.write(test_results_dir + '/' + packagename + '.txt')
     self.wait(PROMPT)
     self.write('K ^%RSET K %ZRSET')
     self.wait(PROMPT)
-    routineset=[]
-    if os.path.exists(test_results_dir +'/'+ packagename +'.txt'):
-      routine_list=set(open(test_results_dir +'/'+ packagename +'.txt','r').readlines())
+    routineset = []
+    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
+      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
       if packagename == "Uncategorized":
         for routine in routine_list:
-          REreturn=re.search('"[A-Z0-9]+"',routine)
+          REreturn = re.search('"[A-Z0-9]+"', routine)
           if REreturn is not None:
-            routineset.append(REreturn.group(0).replace('"',''))
+            routineset.append(REreturn.group(0).replace('"', ''))
       else:
         for prefix in packageprefix:
           for routine in routine_list:
-            REreturn=re.search(prefix + '[A-Z0-9]+',routine)
+            REreturn = re.search(prefix + '[A-Z0-9]+', routine)
             if REreturn is not None:
               routineset.append(REreturn.group(0))
       return self.ClearExcludedRoutines(routineset)

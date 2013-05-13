@@ -1,8 +1,39 @@
-'''
-Created on Jun 14, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: bcaine, pbradley
+## @package SC_Suite001
+## Scheduling Package Tests (Suite)
+
 '''
+These are the Scheduling package Suite001 tests, implemented as Python functions.
+
+Each test has a unique name derived from the test method name.
+Each test has a unique result log with a filename derived from the testname and a datestamp.
+There is a parent resultlog that is also used for pass/fail logging.
+In general each test establishes a connection to the target application (VistA),
+signs on as a user, provider, or programmer and then performs a set of test functions.
+When testing is complete the connection is closed and a pass/fail indicate is written
+to the resultlog.
+
+Created on Jun 14, 2012
+@author: pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from SCActions import SCActions
@@ -11,8 +42,10 @@ import datetime
 import logging
 
 def sc_test001(resultlog, result_dir, namespace):
-    '''Basic appointment managment options
-    Make an Appointment, Check in, Check Out'''
+    '''
+    Test for basic appointment management options.
+    Make an Appointment, Check in, Check Out
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -41,9 +74,11 @@ def sc_test001(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test002(resultlog, result_dir, namespace):
-    '''Basic appointment managment options
+    '''
+    Test basic appointment management options.
     Make an Appointment (Scheduled and Unscheduled),
-    record a No-Show, Cancel an appointment and change patients'''
+    record a No-Show, Cancel an appointment and change patients
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -72,8 +107,10 @@ def sc_test002(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test003(resultlog, result_dir, namespace):
-    '''This tests clinic features such as change clinic, change daterange,
-     expand the entry, add and edit, and Patient demographics'''
+    '''
+    This tests clinic features such as change clinic, change date-range,
+    expand the entry, add and edit, and Patient demographics
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -95,7 +132,9 @@ def sc_test003(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test004(resultlog, result_dir, namespace):
-    '''This tests clinic features such as expand the entry, add and edit, and Patient demographics'''
+    '''
+    This tests clinic features such as expand the entry, add and edit, and Patient demographics
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -123,7 +162,9 @@ def sc_test004(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test005(resultlog, result_dir, namespace):
-    '''This test checks a patient into a clinic, then discharges him, then deletes his checkout'''
+    '''
+    This test checks a patient into a clinic, then discharges him, then deletes his checkout
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -153,7 +194,9 @@ def sc_test005(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test006(resultlog, result_dir, namespace):
-    '''This test will exercise the wait list functionality'''
+    '''
+    This test will exercise the wait list functionality
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -173,9 +216,11 @@ def sc_test006(resultlog, result_dir, namespace):
 
 
 def sc_test007(resultlog, result_dir, namespace):
-    '''Basic Apptments, similar to sc_test001 but specifying patient name not clinic at first prompt
-       This test will also use the space-bar to check recall feature works
-        Make an Appointment, Check in, Check Out'''
+    '''
+    This is a basic appointment, similar to sc_test001 but specifying patient name not clinic at first prompt
+    This test will also use the space-bar to check recall feature works.
+    Make an Appointment, Check in, Check Out
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -209,7 +254,9 @@ def sc_test007(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test008(resultlog, result_dir, namespace):
-    '''Make future appointments and verify, and use CLINICX and check use of case sensitivity (cLiNiCx, ClInIcX, etc.)'''
+    '''
+    This test makes future appointments and verifies, and also checks case sensitivity (cLiNiCx, ClInIcX, etc.)
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -239,7 +286,9 @@ def sc_test008(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test009(resultlog, result_dir, namespace):
-    '''Make appts with variable length. Make appt in distant future for EWL'''
+    '''
+    This test makes appointments with variable length and makes appointment in distant future for EWL
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -268,7 +317,9 @@ def sc_test009(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def sc_test010(resultlog, result_dir, namespace):
-    '''Make appts and save demographics'''
+    '''
+    This test makes appointments and saves demographics
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -345,7 +396,9 @@ def sc_test010(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def startmon(resultlog, result_dir, namespace):
-    '''Starts Coverage Monitor'''
+    '''
+    This method starts the Coverage Monitor
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -364,7 +417,9 @@ def startmon(resultlog, result_dir, namespace):
         VistA1.write('h\r')
 
 def stopmon (resultlog, result_dir, humanreadable, namespace):
-    ''' STOP MONITOR'''
+    '''
+    This method stops the Coverage Monitor
+    '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -385,10 +440,15 @@ def stopmon (resultlog, result_dir, humanreadable, namespace):
         VistA1.write('h\r')
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+    '''
+    This method appends a date/time stamp to a filename
+    '''
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 def connect_VistA(testname, result_dir, namespace):
-    # Connect to VistA
+    '''
+    This method is used to establish the connection to VistA via ConnectToMUMPS
+    '''
     logging.debug('Connect_VistA' + ', Namespace: ' + namespace)
     from OSEHRAHelper import ConnectToMUMPS, PROMPT
     VistA = ConnectToMUMPS(logfile=result_dir + '/' + timeStamped(testname + '.txt'), instance='', namespace=namespace)

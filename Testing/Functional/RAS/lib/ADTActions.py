@@ -1,21 +1,46 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+## @class ADTActions
+## Registration/ADT Actions
 
 '''
+Registration/ADT Actions class. Extends Actions
+
 Created on November 2012
-
-ADT Manager Menu Actions for Registration package testing
-
 @author: pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
 '''
+
 import time
 # import TestHelper
 from Actions import Actions
 import logging
 
 class ADTActions (Actions):
+    '''
+    This class extends the Actions class with methods specific to actions performed
+    through the Roll and Scroll interface for the Registration package.
+    '''
     def __init__(self, VistAconn, scheduling=None, user=None, code=None):
         Actions.__init__(self, VistAconn, scheduling, user, code)
 
     def signon (self):
+        ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
             self.VistA.wait('');
             self.VistA.write('S DUZ=1 D ^XUP')
@@ -37,6 +62,7 @@ class ADTActions (Actions):
         self.VistA.write(string)
 
     def adt_setup(self):
+        '''This method sets up the ward, adds beds, etc...'''
         self.VistA.wait('OPTION NAME:')
         # DEFINE THE WARD
         self.VistA.write('WARD DEFINITION ENTRY')
@@ -213,6 +239,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def admit_a_patient(self, ssn, bed):
+        '''This method is used to admit a patient.'''
         self.VistA.wait('Option:')
         self.VistA.write('Bed Control Menu')
         self.VistA.wait('Option:')
@@ -260,6 +287,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def roster_list(self, vlist):
+        '''This method is used to display list of lodgers via ADT Outputs Menu'''
         self.VistA.wait('Option:')
         self.VistA.write('ADT Outputs Menu')
         self.VistA.wait('Option:')
@@ -291,6 +319,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def discharge_patient(self, ssn, dtime):
+        '''This method discharges a patient'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -311,6 +340,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def scheduled_admit_list(self, vlist):
+        '''This method lists patients scheduled for admission'''
         self.VistA.wait('Option:')
         self.VistA.write('adt outputs menu')
         self.VistA.wait('Option:')
@@ -333,6 +363,7 @@ class ADTActions (Actions):
 
 
     def transfer_patient(self, ssn):
+        '''This method transfers a patient TO AUTHORIZED ABSENCE'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -359,6 +390,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def schedule_admission(self, ssn):
+        '''This method schedules an admission tomorrow at 10am'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option')
@@ -393,6 +425,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def cancel_scheduled_admission(self, ssn):
+        '''This method cancels a scheduled admission'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -413,6 +446,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def checkin_lodger(self, ssn, bed):
+        '''This method checks in a lodger'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -453,6 +487,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def lodger_checkout(self, ssn):
+        '''This method checks out a lodger'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -471,7 +506,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def waiting_list_entry(self, ssn):
-        ''' waiting list entry, via XUP  '''
+        '''This method creates a wait list entry, via XUP  '''
         self.VistA.wait('Select OPTION NAME')
         self.VistA.write('ADT MANAGER MENU')
         self.VistA.wait('continue')
@@ -526,7 +561,7 @@ class ADTActions (Actions):
 
 
     def waiting_list_output(self, vlist):
-        ''' show wait list, via XUP '''
+        '''This method shows wait list, via XUP '''
         self.VistA.wait('Select OPTION NAME')
         self.VistA.write('ADT MANAGER MENU')
         self.VistA.wait('continue')
@@ -551,7 +586,7 @@ class ADTActions (Actions):
 
 
     def delete_waiting_list_entry(self, ssn):
-        ''' delete wait list entry, via XUP  '''
+        '''This method deletes wait list entry, via XUP  '''
         self.VistA.wait('Select OPTION NAME')
         self.VistA.write('ADT MANAGER MENU')
         self.VistA.wait('continue')
@@ -574,7 +609,7 @@ class ADTActions (Actions):
         self.VistA.write('\r')
 
     def det_inpatient_inquiry(self, ssn, item, vlist):
-        ''' Detailed Inpatient Inquiry Test'''
+        '''This method performs a Detailed Inpatient Inquiry'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -591,7 +626,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def drg_calc(self, ssn, diag, dnum, sdiag, sdnu, oper, onum):
-        ''' DRG Calculation Test'''
+        '''This method performs a DRG Calculation '''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -633,7 +668,7 @@ class ADTActions (Actions):
 
     def wwgeneric(self, dlist):
         ''' This is a generic method that receives a list of write and expect values'''
-        ''' This handles lists of lists, so that a series of expect values can be checked before writing'''
+        ''' This method handles lists of lists, so that a series of expect values can be checked before writing'''
         for wwset in dlist:
             for writeitem in wwset[0]:
                 self.VistA.wait_re([writeitem])
@@ -641,7 +676,7 @@ class ADTActions (Actions):
                 self.VistA.write(expectitem)
 
     def provider_change(self, ssn):
-        ''' Provider Change Test in Bed Control'''
+        '''This method performs a provider change in Bed Control'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -674,7 +709,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def seriously_ill_list(self, ssnlist, vlist1, vlist2):
-        ''' Detailed Inpatient Inquiry Test in Bed Control'''
+        '''This method performs a Detailed Inpatient Inquiry action in Bed Control'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -698,7 +733,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def switch_bed(self, ssn, bed, badbed=None):
-        ''' Switch Bed Test in Bed Control'''
+        '''This method performs a Switch Bed action in Bed Control'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -719,7 +754,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def extended_bed_ctrl(self, ssn, action, bed, badbed=None):
-        ''' Extended Bed Control Test in Bed Control'''
+        '''This method performs Extended Bed Control actions in Bed Control'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -740,7 +775,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def treating_spcl_trans(self, ssn, spcl):
-        ''' Treadting Specialty Transfer Test in Bed Control'''
+        '''This method performs Treating Specialty Transfer actions in Bed Control'''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
         self.VistA.wait('Option:')
@@ -772,7 +807,7 @@ class ADTActions (Actions):
         self.VistA.write('')
 
     def adt_menu_smoke(self, ssn):
-        # Veteran ID Card
+        ''' This method invokes ADT menu actions as a smoke test'''
         self.VistA.wait('Option:')
         self.VistA.write('veteran id card menu')
         self.VistA.wait('Veteran ID Card Menu')
@@ -924,7 +959,7 @@ class ADTActions (Actions):
             self.VistA.write('')
         for vitem in ['Enrolled Veterans Report', 'CURRENTLY ENROLLED', 'In Process', 'Total']:
             self.VistA.wait(vitem)
-        rval = self.VistA.multiwait(['Enter RETURN to continue','Enrollment Reports'])
+        rval = self.VistA.multiwait(['Enter RETURN to continue', 'Enrollment Reports'])
         if rval == 0:
             self.VistA.write('^')
             self.VistA.wait('Enrollment Reports')

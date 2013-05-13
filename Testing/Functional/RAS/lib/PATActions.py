@@ -1,31 +1,63 @@
-'''
-Created on Mar 26, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: pbradley
+## @class PATActions
+## Patient Registration Actions
+
 '''
+Add Patients class.  Extends Actions.
+
+Created on Mar 26, 2012
+@author: pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import time
 import TestHelper
 from Actions import Actions
 
 class PATActions (Actions):
+    '''
+    This class extends the Actions class with methods specific to actions performed
+    through the Roll and Scroll interface to add patients to system.  Two methods are provided;
+    patientaddcsv() which adds a single record from a CSV file and patientaddallcsv() which
+    adds all patient records from a CSV file.
+    '''
     def __init__(self, VistAconn, user=None, code=None):
         Actions.__init__(self, VistAconn, user, code)
 
     def setuser (self, user=None, code=None):
+        '''Set access code and verify code'''
         self.acode = user
         self.vcode = code
 
     def signon (self):
+        '''Signon via XUP'''
         self.VistA.wait('');
         self.VistA.write('S DUZ=1 D ^XUP')
 
     def signoff (self):
+        '''Signoff and halt'''
         self.VistA.write('')
         self.VistA.wait('>');
         self.VistA.write('h\r\r')
 
     def patientaddcsv(self, ssn, pfile=None, getrow=None):
-    # Add one patient to VistA
+        '''Add a patient from a specified record of a specified CSV file'''
         prec = [1]
         if pfile is not None:
             preader = TestHelper.CSVFileReader()
@@ -64,7 +96,7 @@ class PATActions (Actions):
             self.VistA.write('\r\r\r')
 
     def patientaddallcsv(self, pfile):
-    # Add ALL patients from CSV to VistA
+        '''Add ALL patients from specified CSV '''
         preader = TestHelper.CSVFileReader()
         prec = preader.getfiledata(pfile, 'key')
         for pitem in prec:

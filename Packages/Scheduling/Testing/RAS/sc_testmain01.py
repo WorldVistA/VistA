@@ -1,10 +1,44 @@
-'''
-Created on Jun 14, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: bcaine
-This is the main Scheduling script that calls the underlying
-scheduling functional tests located in SC_Suite001
+## @package sc_testmain01
+## Scheduling Package Testing (Main)
+
 '''
+This is the main Scheduling script that calls the underlying
+scheduling functional tests located in SC_Suite001.
+
+This test method (main()) is called through ctest, but can be
+launched direct via python with proper arguments.
+
+The resultdir argument is location where test results will be placed.
+The namespace argument specifies the VistA namespace to be tested.
+The coveragetype argument specifies the type of coverage files generated.
+The logging-level and logging-file arguments specify the logging levels
+to be used during testing (CRITICAL, ERROR, WARNING, INFO, DEBUG).
+
+The pass/fail results from each test will be logged in the
+Scheduling_results.txt file which will be written to the resultdir.
+
+Created on Jun 14, 2012
+@author: bcaine,pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import logging
 import sys
 import os
@@ -20,9 +54,11 @@ LOGGING_LEVELS = {'critical': logging.CRITICAL,
                   'debug': logging.DEBUG}
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+    ''' This method appends a date/time stamp to a filename'''
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 def main():
+    '''This is the main test method that calls the individual tests in the Scheduling test suite'''
     usage = "usage: %prog [options] arg"
     parser = argparse.ArgumentParser()
     parser.add_argument('resultdir', help='Result Directory')

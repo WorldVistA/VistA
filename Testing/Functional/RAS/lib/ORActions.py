@@ -1,17 +1,45 @@
-'''
-Created on Apr 20, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: pbradley
+## @class ORActions
+## Order Entry Actions
+
 '''
+Order Entry Action class. Extends Actions.
+
+Created on Apr 20, 2012
+@author: pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import time
 import TestHelper
 from Actions import Actions
 
 class ORActions (Actions):
+    '''
+    This class extends the Actions class with methods specific to actions performed
+    through the Roll and Scroll interface for the Clinician Menu.
+    '''
     def __init__(self, VistAconn, user=None, code=None):
         Actions.__init__(self, VistAconn, user, code)
 
     def signon (self):
+        ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
             self.VistA.wait('');
             self.VistA.write('S DUZ=1 D ^XUP')
@@ -28,7 +56,7 @@ class ORActions (Actions):
             self.VistA.write('')
 
     def verproblems (self, ssn, vlist):
-        # Activate a problem
+        '''Verify Problem List problems via CC action in CPRS Clinician Menu'''
         self.VistA.wait('Clinician Menu')
         self.VistA.write('CPRS Clinician Menu')
         self.VistA.wait('Select Patient:')

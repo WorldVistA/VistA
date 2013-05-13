@@ -1,18 +1,46 @@
-'''
-Created on Jun 14, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: bcaine, pbradley
+## @class SCActions
+## Scheduling Actions
+
 '''
+Scheduler Actions class. Extends Actions.
+
+Created on Jun 14, 2012
+@author: pbradley, bcaine
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 from Actions import Actions
 import TestHelper
 import datetime
 import time
 
 class SCActions (Actions):
+    '''
+    This class extends the Actions class with methods specific to actions performed
+    through the Roll and Scroll interface for the Scheduling package.
+    '''
     def __init__(self, VistAconn, scheduling=None, user=None, code=None):
         Actions.__init__(self, VistAconn, scheduling, user, code)
 
     def signon (self):
+        ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
             self.VistA.wait('')
             self.VistA.write('S DUZ=1 D ^XUP')
@@ -60,7 +88,7 @@ class SCActions (Actions):
         return date
 
     def makeapp(self, clinic, patient, datetime, fresh=None):
-        '''Makes Appointment for specified user at specified time'''
+        '''Makes Appointment for specified user at specified time via Clinic view'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(clinic)
         self.VistA.wait('OK')
@@ -120,7 +148,7 @@ class SCActions (Actions):
         self.VistA.wait('')
 
     def makeapp_bypat(self, clinic, patient, datetime, loopnum=1, fresh=None, CLfirst=None, prevCO=None):
-        '''Makes Appointment for specified user at specified time'''
+        '''Makes Appointment for specified user at specified time via Patient view'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -274,7 +302,7 @@ class SCActions (Actions):
 
 
     def set_mademographics(self, clinic, patient, datetime, dgrph, CLfirst=None):
-        ''' This test sets demographics via MA action.  This test crashes on SAVE in gtm'''
+        ''' This test sets demographics via MA action.  Not used.  Reference only. This test crashes on SAVE in gtm'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -324,7 +352,7 @@ class SCActions (Actions):
         self.VistA.wait('')
 
     def fix_demographics(self, clinic, patient, dgrph,):
-        ''' this is a workaround for the demographic bug in gtm'''
+        ''' This test sets demographics via PD action. This is an alternate implementation of set_mademographics()'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -336,6 +364,10 @@ class SCActions (Actions):
             self.VistA.write(wwset[1])
 
     def set_demographics(self, clinic, patient, dgrph, CLfirst=None, patidx=None):
+        '''
+        This sets demographics via PD action and has an option to select the clinic
+        before setting demographics for a patient via a patient index (patidx) argument.
+        '''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -360,6 +392,7 @@ class SCActions (Actions):
         self.VistA.wait('')
 
     def get_demographics(self, patient, vlist):
+        '''This gets the patient demographics via the PD action.'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -375,7 +408,7 @@ class SCActions (Actions):
 
 
     def verapp_bypat(self, patient, vlist, ALvlist=None, EPvlist=None, COnum=None, CInum=None):
-        '''Verify previous Appointment for specified user at specified time'''
+        '''Verify previous Appointment for specified user at specified time.'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
         self.VistA.wait('OK')
@@ -602,7 +635,7 @@ class SCActions (Actions):
         self.VistA.wait('')
 
     def canapp(self, clinic, mult=None):
-        '''Cancel an Appointment, if there are multiple apts on schedule, send a string to the parameter "first"'''
+        '''Cancel an Appointment, if there are multiple appts on schedule, send a string to the parameter "first"'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(clinic)
         self.VistA.wait('OK')
@@ -889,8 +922,10 @@ class SCActions (Actions):
         self.VistA.write('')
 
     def addedit(self, clinic, name, icd):
-        '''Functional but not complete. Exercises the Add/Edit menu but doesn't make any changes
-        Same problem as checkout with the CPT codes and the MPI'''
+        '''
+        Functional but not complete. Exercises the Add/Edit menu but doesn't make any changes
+        Same problem as checkout with the CPT codes and the MPI
+        '''
         self.VistA.wait('Clinic name:')
         self.VistA.write(clinic)
         self.VistA.wait('OK')
@@ -1090,9 +1125,11 @@ class SCActions (Actions):
         self.VistA.write('')
 
     def deletecheckout(self, clinic, appnum=None):
-        '''Deletes checkout from the menu
+        '''
+        Deletes checkout from the menu
         Must be signed in as fakedoc1 (1Doc!@#$)
-        Must have the SD SUPERVISOR Key assigned to Dr. Alexander'''
+        Must have the SD SUPERVISOR Key assigned to Dr. Alexander
+        '''
         self.VistA.wait('Scheduling Manager\'s Menu')
         self.VistA.write('Appointment Menu')
         self.VistA.wait('Appointment Menu')
@@ -1122,9 +1159,11 @@ class SCActions (Actions):
         self.VistA.write('')
 
     def waitlistentry(self, clinic, patient):
-        '''Enters a patient into the wait list
+        '''
+        Enters a patient into the wait list
         This assumes that SDWL PARAMETER and SDWL MENU
-        keys are given to fakedoc1'''
+        keys are given to fakedoc1
+        '''
         self.VistA.wait('Scheduling Manager\'s Menu')
         self.VistA.write('Appointment Menu')
         self.VistA.wait('Appointment Menu')

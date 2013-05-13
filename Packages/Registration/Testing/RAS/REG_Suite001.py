@@ -1,10 +1,39 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+## @package REG_Suite001
+## Registration Package Test (Suite)
+
 '''
+These are the Registration package Suite001 tests, implemented as Python functions.
+
+Each test has a unique name derived from the test method name.
+Each test has a unique result log with a filename derived from the testname and a datestamp.
+There is a parent resultlog that is also used for pass/fail logging.
+In general each test establishes a connection to the target application (VistA),
+signs on as a user, provider, or programmer and then performs a set of test functions.
+When testing is complete the connection is closed and a pass/fail indicate is written
+to the resultlog.
+
 Created on November 2012
-
-Test for Registration package using ADT
 @author: pbradley
-
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
 '''
+
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from ADTActions import ADTActions
@@ -14,7 +43,7 @@ import TestHelper
 import logging
 
 def reg_test001(resultlog, result_dir, namespace):
-    ''' Admit 4 patients, verify, then discharge them '''
+    '''Test admission of 4 patients, then verify, then discharge '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -54,7 +83,7 @@ def reg_test001(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def reg_test002(resultlog, result_dir, namespace):
-    ''' Schedule, Unschedule, Transfer Patient '''
+    '''Test to Schedule, Unschedule, and Transfer Patients '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -82,7 +111,7 @@ def reg_test002(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def reg_test003(resultlog, result_dir, namespace):
-    ''' Wait list testing '''
+    '''Test for Wait list entries '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -107,7 +136,7 @@ def reg_test003(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def reg_test004(resultlog, result_dir, namespace):
-    ''' Lodger checkin / checkout testing '''
+    '''Test for Lodger checkin / checkout '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -149,7 +178,7 @@ def reg_test004(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def reg_test005(resultlog, result_dir, namespace):
-    ''' ADT Menu Smoke Tests '''
+    '''This is a basic ADT Menu Smoke Tests '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -167,7 +196,7 @@ def reg_test005(resultlog, result_dir, namespace):
         resultlog.write('Pass\n')
 
 def reg_logflow(resultlog, result_dir, namespace):
-    ''' Use XTFCR to log flow to file '''
+    '''Use XTFCR to log flow to file.  Note a test, just creates flow diagrams. '''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
     logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
@@ -180,7 +209,6 @@ def reg_logflow(resultlog, result_dir, namespace):
         logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
     else:
         resultlog.write('Pass\n')
-
 
 def setup_ward(resultlog, result_dir, namespace):
     ''' Set up ward for ADT testing '''
@@ -199,9 +227,8 @@ def setup_ward(resultlog, result_dir, namespace):
     else:
         resultlog.write('Pass\n')
 
-
 def startmon(resultlog, result_dir, namespace):
-    '''Starts Coverage Monitor'''
+    '''This starts the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -220,7 +247,7 @@ def startmon(resultlog, result_dir, namespace):
         VistA1.write('h\r')
 
 def stopmon (resultlog, result_dir, humanreadable, namespace):
-    ''' STOP MONITOR'''
+    '''This stops the Coverage Monitor'''
     testname = sys._getframe().f_code.co_name
     resultlog.write('\n' + testname + ', '
                     + str(datetime.datetime.today()) + ': ')
@@ -241,10 +268,11 @@ def stopmon (resultlog, result_dir, humanreadable, namespace):
         VistA1.write('h\r')
 
 def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
+    '''This method appends a date/time stamp to a filename'''
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 def connect_VistA(testname, result_dir, namespace):
-    # Connect to VistA
+    ''' This method is used to establish the connection to VistA via ConnectToMUMPS'''
     logging.debug('Connect_VistA' + ', Namespace: ' + namespace)
     from OSEHRAHelper import ConnectToMUMPS, PROMPT
     VistA = ConnectToMUMPS(logfile=result_dir + '/' + timeStamped(testname + '.txt'), instance='', namespace=namespace)

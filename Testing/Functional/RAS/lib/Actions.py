@@ -1,12 +1,37 @@
-'''
-Created on Apr 20, 2012
+#---------------------------------------------------------------------------
+# Copyright 2013 PwC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
 
-@author: pbradley
+## @class Actions
+## VistA Actions (base class)
+
 '''
+Action class. Extends object.
+
+Created on Apr 20, 2012
+@author: pbradley
+@copyright PwC
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
 import time
 import TestHelper
 
 class Actions (object):
+    ''' This class extends the object class with methods specific to actions performed
+    through the VistA Roll and Scroll interface.'''
     def __init__(self, VistAconn, scheduling=None, user=None, code=None):
         self.sched = scheduling
         self.acode = user
@@ -14,6 +39,7 @@ class Actions (object):
         self.VistA = VistAconn
 
     def signon (self):
+        ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         print 'in Actions:', self.acode
         if self.acode is None:
             self.VistA.wait('');
@@ -29,12 +55,14 @@ class Actions (object):
             self.VistA.write('')
 
     def signoff (self):
+        '''Signoff and halt'''
         if self.acode is None:
             self.VistA.write('^\r^\r^\rh\r')
         else:
             self.VistA.write('^\r^\r^\r\r\r\r')
 
     def logflow(self, rlist):
+        ''' This method call XTFCR to create flow diagrams of routines'''
         self.VistA.write('S DUZ=1 D ^XUP')
         self.VistA.wait('OPTION NAME')
         self.VistA.write('')
