@@ -17,7 +17,7 @@
 import argparse
 import sys
 import os
-sys.path = [os.path.dirname(__file__) + '/../../../../Scripts/'] + sys.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../Scripts/'))
 import unittest
 import re
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
@@ -38,14 +38,16 @@ class TestZTMGRSET(unittest.TestCase):
 
     def PATCH(self, patchNumber):
         with self.createTestClient() as testClient:
+            expectedResult = self.expectedResult(patchNumber, testClient)
             connection = testClient.getConnection()
             testClient.waitForPrompt()
             connection.send("D PATCH^ZTMGRSET(" + patchNumber + ")\r")
             testClient.waitForPrompt()
             result = self.lineParser(connection.before, "^ALL DONE")
-            if result == None:
-                self.assertFalse(False)
-            self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
+            if expectedResult:
+                self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
+            else:
+                self.assertEqual(result, None, msg="ZTMGRSET Failed")
 
     def test_RELOADlessThan999(self):
         '''Test the RELOAD^ZTMGRSET entrypoint'''
@@ -61,6 +63,7 @@ class TestZTMGRSET(unittest.TestCase):
 
     def RELOAD(self, patchNumber):
         with self.createTestClient() as testClient:
+            expectedResult = self.expectedResult(patchNumber, testClient)
             connection = testClient.getConnection()
             testClient.waitForPrompt()
             connection.send("D RELOAD^ZTMGRSET\r")
@@ -72,9 +75,10 @@ class TestZTMGRSET(unittest.TestCase):
             connection.send(patchNumber + "\r")
             testClient.waitForPrompt()
             result = self.lineParser(connection.before, "^ALL DONE")
-            if result == None:
-                self.assertFalse(False)
-            self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
+            if expectedResult:
+                self.assertEqual(result, "ALL DONE", msg="ZTMGRSET Failed")
+            else:
+                self.assertEqual(result, None, msg="ZTMGRSET Failed")
 
     #def test_DEFAULT(self):
         #'''Test ^ZTMGRSET called from the top'''
@@ -92,6 +96,16 @@ class TestZTMGRSET(unittest.TestCase):
     def createTestClient(self):
         from __main__ import args
         return VistATestClientFactory.createVistATestClientWithArgs(args)
+
+    def expectedResult(self, patchNumber, testClient):
+        result = True # a flag to indicate whether to check expected result
+        patchOutRange = (int(patchNumber) >= 1000)
+        if patchOutRange:
+            """ need to report test fail as OK if patch number is out of
+                range
+            """
+            result = False
+        return result
 
 if __name__ == '__main__':
     testClientParser = createTestClientArgParser()
