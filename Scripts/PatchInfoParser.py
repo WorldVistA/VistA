@@ -110,6 +110,8 @@ class PatchInfo(object):
     """ Associated Files """
     self.associatedInfoFiles = None
     self.associatedGlobalFiles = None
+    """ Verified Date or release Date """
+    self.verifiedDate = None
 
   """ Utility method to add associated info file to the list """
   def addToAssociatedInfoList(self, infoFile):
