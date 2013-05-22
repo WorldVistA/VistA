@@ -1,0 +1,429 @@
+
+=============================================================================
+Run Date: SEP 24, 2012                     Designation: LR*5.2*382
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #330                    Status: Released
+                  Compliance Date: NOV 08, 2012
+=============================================================================
+
+Associated patches: (v)VBEC*1*0    <<= must be installed BEFORE `LR*5.2*382'
+
+Subject: LAB ADT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ LR*5.2*382 is exported as part of the VistA Blood Establishment 
+ Computer System (VBECS) Version 1.6.0 release and supports the Bar
+ Code Expansion (BCE) Positive Patient Identification project.
+  
+ *********************************************************************** 
+ WARNING! The HL7 version listed for the VAFC ADT-Axx SERVER protocols 
+ must be verified prior to installation. Refer to the Pre Installation 
+ Steps listed below for more information.
+   An example of the error generated:
+    1.I  6/18/12@15:05:08 HL7 LL VBECSPTU exceeded retries. LL will 
+ shutdown.
+             Select from 1 to 1
+             or enter ?, A, I, D, F, S, P, M, R, or ^ to exit: 1
+  
+ Processed Alert Number 1
+     6/18/12@15:05:08 HL7 LL VBECSPTU exceeded retries. LL will shutdown.
+ *********************************************************************** 
+  
+ VBECS related VistA patches require customer validation in local 
+ Test accounts prior to installation in Production to meet Food & 
+ Drug Administration (FDA) requirements. The user validates the 
+ Blood Bank software for its intended use prior to its acceptance 
+ and use for patient care.
+  
+ Therefore, it is imperative that OIT Field Operations coordinate 
+ the installation of Blood Bank software patches with Pathology & 
+ Laboratory Medicine Service staff to allow adequate time for impact 
+ analysis and testing the changes prior to installation in Production. 
+  
+ This patch contains the components necessary to transmit patient 
+ information, within ADT HL7 messages to VBECS. VBECS must be installed 
+ prior to installing this patch.
+  
+ Included in this patch are the following seven PROTOCOL file (#101) 
+ entries:
+  
+   VBECS-A01 CLIENT
+   VBECS-A02 CLIENT
+   VBECS-A03 CLIENT
+   VBECS-A04 CLIENT
+   VBECS-A11 CLIENT
+   VBECS-A12 CLIENT
+   VBECS-A13 CLIENT
+  
+ The patch creates and attaches each of the VBECS ADT CLIENT protocols to 
+ the corresponding VAFC ADT SERVER protocol to which the Lab ADT interface 
+ subscribes:
+ - VBECS ADT-A01 CLIENT protocol will subscribe to VAFC ADT-A01 SERVER 
+   protocol 
+ - VBECS ADT-A02 CLIENT protocol will subscribe to VAFC ADT-A02 SERVER 
+   protocol 
+ - VBECS ADT-A03 CLIENT protocol will subscribe to VAFC ADT-A03 SERVER 
+   protocol 
+ - VBECS ADT-A04 CLIENT protocol will subscribe to VAFC ADT-A04 SERVER 
+   protocol 
+ - VBECS ADT-A11 CLIENT protocol will subscribe to VAFC ADT-A11 SERVER 
+   protocol 
+ - VBECS ADT-A12 CLIENT protocol will subscribe to VAFC ADT-A12 SERVER 
+   protocol 
+ - VBECS ADT-A13 CLIENT protocol will subscribe to VAFC ADT-A13 SERVER 
+   protocol 
+  
+ This patch removes the VBECS ADT-A08 ROUTER protocol from the VAFC 
+ ADT-A08 SERVER protocol and subscribes the existing VBECS-A08 CLIENT 
+ protocol to the following server protocols:
+  
+   VAFC ADT-A08 SERVER
+   VAFC ADT-A08-SCHED SERVER
+   VAFC ADT-A08-SDAM SERVER
+   VAFC ADT-A08-TSP SERVER
+  
+ Each of these protocols are invoked when a patient movement event 
+ (ADT -Admission/Discharge/Transfer) is triggered and will transmit 
+ the corresponding HL7 ADT message to VBECS using the CLIENT/SERVER 
+ protocol pair associated with the ADT event.
+  
+ LR*5.2*382 contains a post-install routine, LR382A, that runs during 
+ the patch installation. If the installation is queued for a later date, 
+ the post-install routine will run in the background at the time the 
+ queued installation occurs.
+  
+ There is also a VBECS 1.6.0 server update patch that is also being 
+ released. Please refer to the VistA Blood Establishment Computer 
+ Software (VBECS) 1.6.0 Release Notes for detailed information 
+ about corrections in that patch. These documents will be found in 
+ the VBECS_1_6_0_DOCS_BUNDLE.ZIP file.
+  
+  
+ BLOOD BANK CLEARANCE: 
+ =====================
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*382 does not 
+  contain any changes to the VISTA BLOOD BANK Software as defined in
+  BBM TEAM REVIEW OF VISTA PATCHES.
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*382 does not 
+  alter or modify any software design safeguards or safety critical 
+  elements functions.
+  
+  RISK ANALYSIS: Changes made by patch LR*5.2*382 have no effect on Blood 
+  Bank software functionality, therefore RISK is none. 
+  
+  VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+  made, no specific validation requirements exist as a result of 
+  installation of this patch.
+  
+  
+ ROUTINES:
+ =========
+  LR382A - post-install routine deleted automatically after the patch is 
+           installed. 
+  
+  
+ DATA DICTIONARY:
+ ================
+  N/A
+  
+  
+ NEW MAIL GROUP:
+ ===============
+  LRADT INTERFACE ADMIN 
+  
+  
+ PROTOCOLS:
+ ==========
+  VBECS-A01 CLIENT
+  VBECS-A02 CLIENT
+  VBECS-A03 CLIENT
+  VBECS-A04 CLIENT
+  VBECS-A11 CLIENT
+  VBECS-A12 CLIENT
+  VBECS-A13 CLIENT
+  
+  
+ REMEDY TICKETS:
+ ===============
+  N/A
+  
+  
+ TEST SITES:
+ ===========
+  DALLAS, TX 
+  DURHAM, NC 
+  HEARTLAND-EAST HCS 
+    >Marion, IL 
+    >Poplar Bluff, MO 
+    >St. Louis, MO 
+  MILWAUKEE, WI 
+  PHILADELPHIA, PA 
+  PITTSBURGH, PA 
+  PUGET SOUND, WA 
+  SAN ANTONIO, TX 
+  SAN FRANCISCO, CA 
+  
+  
+ INSTALLATION INFORMATION:
+ ==========================
+  
+ The file listed below is obtained via the controlled VBECS software 
+ FTP. The installation of VBECS and its related patches are being 
+ handled as a controlled release until all sites have installed. 
+  
+ Sites that have already installed VBECS in test or production must 
+ obtain the LR*5.2*382, and VBECS 1.6.0 patches from 
+ the controlled VBECS software FTP site at: 
+      IP: 10.3.9.181
+      Port: 20001 
+  
+      Enter your Domain and NT user name and password to gain access.
+  
+ These patches are released with a (45) day compliance for all sites that 
+ have VBECS installed in test or production.
+  
+  
+ INSTALLATION FILES: 
+ ===================
+  LR_5_2_382.KID
+  
+  
+ DOCUMENTATION: 
+ ==============
+ Documentation is available for the VBECS package on the 
+ ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ Documentation in either the ".PDF" or ".DOC" format after they extract 
+ the ZIP file.
+  
+ The preferred method is to FTP the files from:
+ Download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE:  The ZIP file listed below will be listed in each of the 
+ VBECS and LR patches that are part of the VBECS package and associated 
+ patches. It only needs to be downloaded once.
+  
+ File Name                                   Retrieval format:  
+ ===========                                 ================= 
+ VBECS_1_6_0_DOCS_BUNDLE.ZIP                 BINARY 
+  
+  
+ The following files are contained in the VBECS_1_6_0_DOCS_BUNDLE.ZIP file 
+ and will not be individually located on the OI Field Office Anonymous 
+ Directories.
+  
+ The VBECS_1_6_0_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+ system for use.
+  
+ =======================================================================
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Patch 
+ Installation Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Patch 
+ Installation Guide.pdf
+ VBECS 1.6.0 Patch Installation Form for the Production Environment.docx
+ VBECS 1.6.0 Patch Installation Form for the Production Environment.pdf
+ VBECS 1.6.0 Patch Installation Form for the Test Environment.docx
+ VBECS 1.6.0 Patch Installation Form for the Test Environment.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 
+ Release Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 
+ Release Notes.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Technical 
+ Manual-Security Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 Technical 
+ Manual-Security Guide.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 User Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.0 User Guide.pdf
+ VBECS Known Defects and Anomalies.docx
+ VBECS Known Defects and Anomalies.pdf
+  
+  
+ PRE INSTALLATION STEPS:
+ ======================== 
+ Lab ADT LR*5.2*382 patch requires the following Department of Veterans 
+ Affairs (VA) software packages are installed for this patch to be
+ completely functional:
+  
+ Package                                     Minimum Version Needed
+ ------------------------------------------------------------------
+ VA FileMan                                            22.0
+ Kernel                                                8.0
+ Patient Information Management System (PIMS)          5.3
+ Laboratory                                            5.2
+ Order Entry/Results Reporting (OERR)                  3.0
+ ------------------------------------------------------------------
+ Note: These packages are not included in the LR*5.2*382 patch.
+  
+  
+ Before installing LR*5.2*382:
+     1) Use the Fileman search provided in the SEARCH EXAMPLE section 
+ below 
+        to list these protocols that must be reviewed: 
+        - VAFC ADT-A01 SERVER 
+        - VAFC ADT-A02 SERVER 
+        - VAFC ADT-A03 SERVER 
+        - VAFC ADT-A04 SERVER 
+        - VAFC ADT-A08 SERVER
+        - VAFC ADT-A08-SCHED SERVER
+        - VAFC ADT-A08-SDAM SERVER
+        - VAFC ADT-A08-TSP SERVER
+        - VAFC ADT-A11 SERVER 
+        - VAFC ADT-A12 SERVER 
+        - VAFC ADT-A13 SERVER 
+     2) Verify all VAFC ADT-Axx SERVER protocols are HL7 Version 2.3 
+        and CORRECT the HL7 version numbers if they are missing or 
+        incorrect.
+     3) Failure to correct the HL7 version numbers for the protocols 
+        listed in step #2 will result in failed messages and errors.
+  
+ An example of the error generated when the HL7 version number is 
+ incorrect 
+ or missing:
+    1.I  6/18/12@15:05:08 HL7 LL VBECSPTU exceeded retries. LL will 
+ shutdown.
+             Select from 1 to 1
+             or enter ?, A, I, D, F, S, P, M, R, or ^ to exit: 1
+  
+ Processed Alert Number 1
+     6/18/12@15:05:08 HL7 LL VBECSPTU exceeded retries. LL will shutdown.
+  
+  
+ SEARCH EXAMPLE:
+ =============== 
+ Select OPTION: SEARCH FILE ENTRIES  
+ OUTPUT FROM WHAT FILE: PROTOCOL// 
+   -A- SEARCH FOR PROTOCOL FIELD: TYPE  
+   -A- CONDITION: =  EQUALS
+   -A- EQUALS: E  event driver
+   -B- SEARCH FOR PROTOCOL FIELD: 
+ IF: A//     TYPE EQUALS "E" (event driver)
+ STORE RESULTS OF SEARCH IN TEMPLATE: 
+ SORT BY: NAME// 
+ START WITH NAME: FIRST// VAFC ADT-A01
+ GO TO NAME: LAST// VAFC ADT-A13Z
+   WITHIN NAME, SORT BY: 
+ FIRST PRINT FIELD: NAME  
+ THEN PRINT FIELD: VERSION ID  
+ THEN PRINT FIELD: 
+ Heading (S/C): PROTOCOL SEARCH// 
+ START AT PAGE: 1// 
+ DEVICE:   SSH Virtual Terminal    Right Margin: 132// 
+ PROTOCOL SEARCH                         JUN  6,2012  06:07    PAGE 1
+                                                              VERSION
+ NAME                                                             ID
+ --------------------------------------------------------------------
+ VAFC ADT-A01 SERVER                                              2.3
+ VAFC ADT-A02 SERVER                                              2.3
+ VAFC ADT-A03 SERVER                                              2.3
+ VAFC ADT-A04 SERVER                                              2.3
+ VAFC ADT-A08 SERVER                                              2.3
+ VAFC ADT-A08-SCHED SERVER                                        2.3
+ VAFC ADT-A08-SDAM SERVER                                         2.3
+ VAFC ADT-A08-TSP SERVER                                          2.3
+ VAFC ADT-A11 SERVER                                              2.3
+ VAFC ADT-A12 SERVER                                              2.3
+ VAFC ADT-A13 SERVER                                              2.3
+  
+ *Correct the HL7 version numbers if they are missing or incorrect. 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be loaded with users on the system.
+ Installation will take less than 5 minutes.
+  
+     1) Retrieve the KIDS build for patch LR*5.2*382.
+     2) Follow the instructions in the PRE INSTALLATION STEPS section.
+     3) Shut down the VBECSPTU link. 
+         Use HL7 Main Menu/ Filer and Link Management Options:
+         Select OPTION NAME: SL     Start/Stop Links
+         Start/Stop Links
+  
+         EXAMPLE:
+         ========
+         This option is used to launch the lower level protocol for the 
+         appropriate device. Please select the node with which you want
+         to communicate.
+  
+         Select HL LOGICAL LINK NODE: VBECSPTU  
+         The LLP was last started on MAR 03, 2009 09:00:29.
+  
+         Okay to shut down this job? YES
+         The job for the VBECSPTU Lower Level Protocol will be shut down. 
+  
+     4) On the 'Kernel Installation & Distribution System' Menu (KIDS), 
+        select the 'Installation' menu.
+     5) Use the 'LOAD A DISTRIBUTION' option on the KIDS Installation
+        menu. The Host File name is LR_5_2_382.KID Answer YES to the
+        question: Want to Continue with Load? YES// 
+     6) From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter LR*5.2*382). 
+        a) Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        b) Verify Checksums in Transport Global - this option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+     7) Use the Install Package(s) option and at the INSTALL NAME prompt,
+        enter LR*5.2*382.
+     8) At the "Enter the Coordinator for Mail Group 
+        'LRADT INTERFACE ADMIN'" prompt, enter the name of the individual 
+        responsible for maintaining the VBECS package and interfaces 
+        [typically the Automated Data Processing Application Coordinator 
+        (ADPAC) responsible for the Blood Bank]. This mail group receives 
+        notifications when an HL7 transmission or query through the VBECS 
+        VistALink client to the Blood Bank medical device fails. Add 
+        individual users to this mail group after the installation of the 
+        LR*5.2*382 patch.
+     9) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//'  respond NO
+    10) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//'  respond NO.
+    11) After LR*5.2*382 is installed the VBECSPTU outbound HL7 link must
+        be started before any ADT messages will be sent.
+  
+         Use HL7 Main Menu/ Filer and Link Management Options:
+         Select OPTION NAME: HL START       Start/Stop Links
+         Start/Stop Links
+  
+         EXAMPLE:
+         ========
+         This option is used to launch the lower level protocol for the 
+         appropriate device. Please select the node with which you want
+         to communicate.
+  
+         Select HL LOGICAL LINK NODE: VBECSPTU  
+ The LLP was last shutdown on MAR 05, 2009 09:19:15.
+         This LLP has been enabled! 
+
+Routine Information:
+====================
+Routine Name: LR382A
+
+=============================================================================
+User Information:                          Hold Date     : SEP 23, 2012
+Entered By  : INGRAM,FLORENCE A             Date Entered  : FEB 28, 2008
+Completed By: ROBERTS,JERILYN               Date Completed: AUG 24, 2012
+Released By : MURCH,CLAUDETTE               Date Released : SEP 24, 2012
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
