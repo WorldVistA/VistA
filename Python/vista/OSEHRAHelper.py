@@ -64,6 +64,27 @@ class PROMPT(object):
   """Wait for a VISTA> prompt in current namespace."""
 
 class ConnectMUMPS(object):
+  def exitToPrompt(self):
+    self.write("Quit")
+    while True:
+      try:
+        index2 = self.multiwait(["to continue","Option:",self.prompt, "want to halt","[0-9]+d[0-9]+"])
+      except TIMEOUT:
+        continue
+      if index2 == 1:
+        self.write("Continue")
+        self.wait("Do you want to halt")
+        self.write("Y")
+        self.wait(self.prompt)
+        break
+      if index2 == 2:
+        break
+      if index2 == 3:
+        self.write("Y")
+      if index2 == 4:
+        self.write("Q")
+      self.write("^")
+    self.MenuLocation=[]
 
   def ZN(self, namespace):
     self.wait('>')
@@ -132,6 +153,15 @@ class ConnectWinCache(ConnectMUMPS):
     self.prompt = self.namespace + '>'
     self.log = file(logfile, 'w')
     self.type = 'cache'
+    path,filename = os.path.split(logfile)
+    self.MenuLocation=[]
+    self.lastconnection=""
+    try:
+      self.ZN(namespace)
+    except IndexError, no_namechange:
+      pass
+    self.optionParentDict = []
+    self.optionMenuTextDict = []
 
   def write(self, command):
     self.connection.write(command + '\r')
@@ -149,6 +179,7 @@ class ConnectWinCache(ConnectMUMPS):
     else:
         self.log.write(rbuf)
         logging.debug(rbuf)
+        self.lastconnection=rbuf
         return 1
 
   def wait_re(self, command, timeout=30):
@@ -164,6 +195,7 @@ class ConnectWinCache(ConnectMUMPS):
     if output[2]:
       self.log.write(output[2])
       self.log.flush()
+      self.lastconnection=output[2]
       return output
 
   def multiwait(self, options, tout=15):
@@ -174,6 +206,7 @@ class ConnectWinCache(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
       self.log.write(index[2])
+      self.lastconnection=index[2]
       return index[0]
     else:
       raise IndexError('Input to multiwait function is not a list')
@@ -230,6 +263,15 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.prompt = self.namespace + '>'
     self.connection.logfile_read = file(logfile, 'w')
     self.type = 'cache'
+    path,filename = os.path.split(logfile)
+    self.MenuLocation=[]
+    self.lastconnection=""
+    try:
+      self.ZN(namespace)
+    except IndexError, no_namechange:
+      pass
+    self.optionParentDict = []
+    self.optionMenuTextDict = []
 
   def write(self, command):
     self.connection.send(command + '\r')
@@ -244,6 +286,7 @@ class ConnectLinuxCache(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
+        self.lastconnection=self.connection.before
         return 1
 
   def wait_re(self, command, timeout=15):
@@ -251,6 +294,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     if not timeout: timeout = -1
     compCommand = re.compile(command,re.I)
     self.connection.expect(compCommand, timeout)
+    self.lastconnection=self.connection.before
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
@@ -260,6 +304,7 @@ class ConnectLinuxCache(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + options)
         raise TestHelper.TestError('ERROR: expected: ' + options)
       self.connection.logfile_read.write(options[index])
+      self.lastconnection=self.connection.before
       return index
     else:
       raise IndexError('Input to multiwait function is not a list')
@@ -316,6 +361,11 @@ class ConnectLinuxGTM(ConnectMUMPS):
           self.prompt = "GTM>"
     self.connection.logfile_read = file(logfile, 'w')
     self.type = 'GTM'
+    path,filename = os.path.split(logfile)
+    self.MenuLocation=[]
+    self.lastconnection=""
+    self.optionParentDict = []
+    self.optionMenuTextDict = []
 
   def write(self, command):
     self.connection.send(command + '\r')
@@ -331,6 +381,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + command)
         raise TestHelper.TestError('ERROR: expected: ' + command)
     else:
+        self.lastconnection=self.connection.before
         return 1
 
   def wait_re(self, command, timeout=None):
@@ -338,6 +389,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
     if not timeout: timeout = -1
     compCommand = re.compile(command,re.I)
     self.connection.expect(compCommand, timeout)
+    self.lastconnection=self.connection.before
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
@@ -347,6 +399,7 @@ class ConnectLinuxGTM(ConnectMUMPS):
         logging.debug('ERROR: expected: ' + str(options))
         raise TestHelper.TestError('ERROR: expected: ' + str(options))
       self.connection.logfile_read.write(options[index])
+      self.lastconnection=self.connection.before
       return index
     else:
       raise IndexError('Input to multiwait function is not a list')
