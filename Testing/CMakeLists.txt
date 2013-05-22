@@ -373,3 +373,14 @@ endif()
 ##### SECTION TO RUN PACKAGE PREFIX PARSING TESTING #####
 #-----------------------------------------------------------------------------#
 add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/PrefixParserTest.py "Uncategorized" "${CMAKE_CURRENT_SOURCE_DIR}/Python/PackagePrefixSample.csv")
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO RUN PYTHON UNIT TEST(s) under Scripts/Testing/PyUnit #####
+#-----------------------------------------------------------------------------#
+file(GLOB PyUnitTests ${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/Test*.py)
+foreach(PyUnitTest ${PyUnitTests})
+  get_filename_component(PyUnitTestName "${PyUnitTest}" NAME_WE)
+  add_test(PyUnitTest_${PyUnitTestName} ${PYTHON_EXECUTABLE} ${PyUnitTest})
+  set_tests_properties(PyUnitTest_${PyUnitTestName}
+                       PROPERTIES FAIL_REGULAR_EXPRESSION "FAILED")
+endforeach()
