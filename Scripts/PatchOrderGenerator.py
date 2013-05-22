@@ -103,7 +103,6 @@ class PatchOrderGenerator(object):
     self.__generatePatchDependencyGraph__()
     self.__topologicSort__(installName)
     logger.info("After topologic sort %d" % len(self._patchOrder))
-    self.printPatchOrderList()
     return self._patchOrder
 
   """ analyze VistA patch Dir generate data structure """
@@ -116,6 +115,7 @@ class PatchOrderGenerator(object):
     self.__addMissKIDSInfoPatch__()
     self.__handlePatchAssociatedFiles__()
     self.__updateCustomInstaller__()
+    self.__updateMultiBuildPatchInfo__()
     self.__getPatchOrderDependencyByCSVFiles__()
 
   """ Some getter function to return result """
@@ -131,12 +131,7 @@ class PatchOrderGenerator(object):
 
   """ print the final order list """
   def printPatchOrderList(self):
-    for x in self._patchOrder:
-      print({"Name" : x.installName},
-            {"Seq#" : x.seqNo},
-            {"KIDS" : os.path.basename(x.kidsFilePath)},
-            {"CSVDep" : x.csvDepPatch},
-           )
+    printPatchOrderList(self._patchOrder)
 
   def __addKidsBuildFileToDict__(self, fileName, absPath, fileType):
     if fileName not in self._kidsBuildFileDict:
@@ -256,7 +251,7 @@ class PatchOrderGenerator(object):
           self._kidsInstallNameSha1Dict[installName] = sha1Path
         """ update kids dependency """
         if installName in self._kidsDepBuildDict:
-          logger.warn("%s is already has the dep map %s" %
+          logger.warn("%s already has the dep map %s" %
                       (installName, self._kidsDepBuildDict[installName]))
         if kidsBuilds:
           for kidsBuild in kidsBuilds:
@@ -321,14 +316,20 @@ class PatchOrderGenerator(object):
           patchInfo.depKIDSBuild = infoDepSet
       self._patchInfoDict[installName] = patchInfo
 
+  """ update multiBuild KIDS patch info"""
+  def __updateMultiBuildPatchInfo__(self):
+    patchList = self._patchInfoDict
+    for installList in self._multiBuildDict.itervalues():
+      for installName in installList:
+        patchInfo = patchList[installName]
+        patchInfo.isMultiBuilds = True
+        patchInfo.multiBuildsList = installList
   """ update multiBuild KIDS files dependencies """
   def __updateMultiBuildDependencies__(self):
     patchList = self._patchInfoDict
     for installList in self._multiBuildDict.itervalues():
       logger.info("Multi-Buids KIDS install List: %s" % (installList))
       firstPatch = patchList[installList[0]]
-      firstPatch.isMultiBuilds = True
-      firstPatch.multiBuildsList = installList
       firstPatch.otherKidsInfoList = []
       if firstPatch.csvDepPatch is None:
         """
@@ -336,15 +337,16 @@ class PatchOrderGenerator(object):
           will fall back to use dependency specified in the first
           secondary build
         """
-        firstPatch.csvDepPatch = patchList[installList[1]].csvDepPatch
+        secondPatch =  patchList[installList[1]]
+        if secondPatch.csvDepPatch != firstPatch.installName:
+          logger.info("Assign first patch CSV Dep %s" % firstPatch.installName)
+          firstPatch.csvDepPatch = secondPatch.csvDepPatch
       for index in range(1,len(installList)):
         nextPatchInfo = patchList[installList[index]]
         """ just to make sure the first one has all the dependencies """
         firstPatch.depKIDSBuild.update(nextPatchInfo.depKIDSBuild)
         firstPatch.otherKidsInfoList.append([nextPatchInfo.kidsInfoPath,
                                             nextPatchInfo.kidsInfoSha1])
-        nextPatchInfo.isMultiBuilds = True
-        nextPatchInfo.multiBuildsList = installList
         prevInstallName = installList[index - 1]
         if prevInstallName not in nextPatchInfo.depKIDSBuild:
           nextPatchInfo.depKIDSBuild.add(prevInstallName)
@@ -513,13 +515,15 @@ class PatchOrderGenerator(object):
     for csvOrderFile in self._csvOrderFileList:
       self.__getPatchOrderListByCSV__(csvOrderFile)
       self.__buildPatchOrderDependencyByCSV__(csvOrderFile)
+    sortedPatchList = self.__sortCSVDependencyByVerifiedDate__()
 
   """ build csvDepDict based on csv File """
   def __buildPatchOrderDependencyByCSV__(self, orderCSV):
     patchOrderList = self._patchOrderCSVDict[orderCSV]
     if patchOrderList is None: return
     """ some sanity check """
-    outOrderList = []
+    outPatchList = []
+    multiBuildSet = set()
     for patchOrder in patchOrderList:
       installName = patchOrder[0]
       if installName not in self._patchInfoDict:
@@ -528,6 +532,7 @@ class PatchOrderGenerator(object):
           logger.warn("No KIDS file found for %s" % str(patchOrder))
         continue
       patchInfo = self._patchInfoDict[installName]
+      patchInfo.verifiedDate = patchOrder[2]
       """ check the seq no """
       seqNo = patchOrder[1]
       if len(seqNo) > 0:
@@ -539,27 +544,33 @@ class PatchOrderGenerator(object):
         else:
           logger.info("Add seqNo %s for %s" % (seqNo, installName))
           patchInfo.seqNo = seqNo
-      """ handle the case with multibuilds kids file """
+      """ handle the multi-build patch """
+      if patchInfo.installName in multiBuildSet:
+        logger.info("%s is already part of the multiBuild" % installName)
+        continue
       if patchInfo.isMultiBuilds:
-        installList = patchInfo.multiBuildsList
-        index = installList.index(installName)
-        if index > 0:
-          for idx in range(0, index):
-            prevInstallName = installList[idx]
-            prevPatchInfo = self._patchInfoDict[prevInstallName]
-            if prevInstallName in self._notInstalledKidsSet:
-              logger.error("%s is not installed by FOIA" % prevInstallName)
-            if prevInstallName not in outOrderList:
-              logger.debug("Adding %s as part of multibuilds" % prevInstallName)
-              outOrderList.append(prevInstallName)
-            else:
-              logger.debug("%s is already in the list" % prevInstallName)
-      outOrderList.append(installName)
+        patchList = [self._patchInfoDict[x] for x in patchInfo.multiBuildsList]
+        for patchInfo in patchList:
+          patchInfo.verifiedDate = patchOrder[2]
+        outPatchList.extend(patchList)
+        multiBuildSet.update(patchInfo.multiBuildsList)
+      else:
+        outPatchList.append(patchInfo)
+    """ update the order list to include only patch info """
+    self._patchOrderCSVDict[orderCSV] = outPatchList
 
+  def __sortCSVDependencyByVerifiedDate__(self):
+    """ Utility methods to sort the CSV file based dependency by release time """
+    outPatchList = []
+    for csvPatchList in self._patchOrderCSVDict.itervalues():
+      outPatchList.extend(csvPatchList)
+    """ sort by verifiedTime """
+    outOrderList = sorted(outPatchList, key=lambda item: item.verifiedDate)
     for idx in range(len(outOrderList)-1, 0, -1):
-      installName = outOrderList[idx]
-      prevInstallName = outOrderList[idx-1]
+      installName = outOrderList[idx].installName
+      prevInstallName = outOrderList[idx-1].installName
       self._csvDepDict[installName] = prevInstallName
+
 
   """ parse the order csv file and generate an ordered list of install name """
   def __getPatchOrderListByCSV__(self, orderCSV):
@@ -601,24 +612,13 @@ class PatchOrderGenerator(object):
         self._informationalKidsSet.add(installName)
 
   """ generate a sequence of patches that need to be applied by
-      using topologic sort algorithm, also for the patch under the
-      same namepsace, make sure it was applied in the right sequence
+      using topologic sort algorithm.
+      If installName is provided, will only generated the order WRT.
   """
   def __topologicSort__(self, installName=None):
     patchDict = self._patchInfoDict
     depDict = self._patchDependencyDict
-    """ new generate a set consist of patch info that does not have incoming dependency"""
-    startingSet = set()
-    if installName:
-      startingSet.add(installName)
-    else:
-      startingSet = set(patchDict.iterkeys()) - reduce(set.union, depDict.itervalues(), set())
-    startingList = [y.installName for y in sorted([patchDict[x] for x in startingSet],
-                    cmp=comparePatchInfo)]
-    visitSet = set() # store all node that are already visited
-    result = []
-    for item in startingList:
-      visitNode(item, depDict, visitSet, result)
+    result = topologicSort(depDict, installName)
     self._patchOrder = [self._patchInfoDict[x] for x in result]
 
 """ compare function for PatchInfo objects """
@@ -639,13 +639,47 @@ def comparePatchInfo(one, two):
     return -1
   return 1
 
-def visitNode(nodeName, depDict, visitSet, result):
+""" topologic sort the DAG graph """
+def topologicSort(depDict, item=None):
+  initSet = set()
+  if item:
+    initSet.add(item)
+  else:
+    initSet = set(depDict.keys())
+  visitSet = set() # store all node that are already visited
+  tempStack = [] # mark the temp list
+  result = []
+  while len(initSet) > 0:
+    item = initSet.pop()
+    visitNode(item, depDict, visitSet, tempStack, result)
+    initSet.difference_update(visitSet)
+  return result
+
+def visitNode(nodeName, depDict, visitSet, tempStack, result):
   if nodeName in visitSet: # already visited, just return
     return
-  visitSet.add(nodeName)
+  if nodeName in tempStack: # there is a cycle in DAG
+    index = tempStack.index(nodeName)
+    logger.error("This is a cycle among these items:\n" +
+                 '\n'.join(repr(x) for x in tempStack[index:]))
+    raise Exception("DAG is NOT acyclic")
+  tempStack.append(nodeName)
   for item in depDict.get(nodeName,[]):
-    visitNode(item, depDict, visitSet, result)
+    visitNode(item, depDict, visitSet, tempStack, result)
+  """ remove from tempStach """
+  item = tempStack.pop()
+  assert item == nodeName
+  visitSet.add(nodeName)
   result.append(nodeName)
+
+""" Utility function to print result of a ordered patch list """
+def printPatchOrderList(patchOrderList):
+  for x in patchOrderList:
+    print({"Name" : x.installName},
+          {"Seq#" : x.seqNo},
+          {"KIDS" : os.path.basename(x.kidsFilePath)},
+          {"CSVDep" : x.csvDepPatch},
+         )
 
 """ Utility function to check if the csv file is indeed in valid format """
 def isValidOrderCSVFile(patchesCSV):
@@ -661,6 +695,21 @@ def isValidOrderCSVFile(patchesCSV):
     return True
   return False
 
+""" generate an output file that can be plotted by graphviz """
+def generateDependencyGraph(depDict, outputFile):
+  with open(outputFile, 'w') as output:
+    output.write("digraph dependency_graph {\n")
+    # set graph prop
+    output.write("\tgraph [nodesep=\"0.35\",\n\t\transsep=\"0.55\"\n\t];\n")
+   # set the node shape to be box
+    output.write("\tnode [fontsize=14,\n\t\tshape=box\n\t];\n")
+   # set the edge label and size props
+    output.write("\tedge [fontsize=12];\n")
+    for depNode in depDict:
+      for item in depDict[depNode]:
+        output.write("\t\"%s\" -> \"%s\";\n" % (depNode,
+                                       item))
+    output.write("}\n")
 ###########################################################################
 ####### """ Testing code section """
 ###########################################################################
@@ -671,10 +720,12 @@ def testGeneratePatchOrder():
   if len(sys.argv) <= 1:
     sys.stderr.write("Specify patch directory")
     sys.exit(-1)
+  result = []
   if len(sys.argv) == 2:
-    patchOrderGen.generatePatchOrder(sys.argv[1])
+    result = patchOrderGen.generatePatchOrder(sys.argv[1])
   else:
-    patchOrderGen.generatePatchOrder(sys.argv[1], sys.argv[2])
+    result = patchOrderGen.generatePatchOrder(sys.argv[1], sys.argv[2])
+  printPatchOrderList(result)
 
 if __name__ == '__main__':
   testGeneratePatchOrder()
