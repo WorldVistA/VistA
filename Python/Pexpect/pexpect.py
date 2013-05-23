@@ -71,15 +71,16 @@ try:
     import string
     import re
     import struct
-    #import resource
     import types
-    #import pty
-    #import tty
-    #import termios
-    #import fcntl
     import errno
     import traceback
     import signal
+    if not sys.platform.startswith('win'):
+        import resource
+        import pty
+        import tty
+        import termios
+        import fcntl
 except ImportError as e:
     raise ImportError(str(e) + """
 
@@ -390,9 +391,12 @@ class spawn(object):
         stores the status returned by os.waitpid. You can interpret this using
         os.WIFEXITED/os.WEXITSTATUS or os.WIFSIGNALED/os.TERMSIG. """
 
-        #self.STDIN_FILENO = pty.STDIN_FILENO
-        #self.STDOUT_FILENO = pty.STDOUT_FILENO
-        #self.STDERR_FILENO = pty.STDERR_FILENO
+        try:
+            self.STDIN_FILENO = pty.STDIN_FILENO
+            self.STDOUT_FILENO = pty.STDOUT_FILENO
+            self.STDERR_FILENO = pty.STDERR_FILENO
+        except NameError:
+            pass
         self.stdin = sys.stdin
         self.stdout = sys.stdout
         self.stderr = sys.stderr
