@@ -66,7 +66,6 @@ class PatchSequenceApply(object):
     self._vistaPatchInfo = VistAPackageInfoFetcher(testClient)
     self._outPatchList = []
     self._patchSet = set()
-    initConsoleLogging()
     initFileLogging(os.path.join(logFileDir, self.DEFAULT_OUTPUT_FILE_LOG))
 
   """ generate the patch order sequence base on input """
@@ -104,6 +103,7 @@ class PatchSequenceApply(object):
       logger.info("%s, %s, %s" % (patchInfo.installName,
                                   patchInfo.namespace,
                                   patchInfo.kidsFilePath))
+    return self._outPatchList
 
   """ Apply up to maxPatches Patches ordered by sequence number """
   def applyPatchSequenceByNumber(self, maxPatches=1):
@@ -114,17 +114,24 @@ class PatchSequenceApply(object):
     else:
       numOfPatch = int(maxPatches)
     endIndex = min(totalPatch, numOfPatch)
-    self.__applyPatchUptoIndex__(endIndex)
+    return self.__applyPatchUptoIndex__(endIndex)
 
-  """ apply the Patch in sequence order up to specified install name """
   def applyPatchSequenceByInstallName(self, installName, patchOnly=False):
+    """ apply the Patch in sequence order up to specified install name
+        if patchOnly is set to True, will only apply that patch
+    """
     if installName not in self._patchSet:
       raise Exception("Invalid install name: %s" % installName)
     if len(self._outPatchList) == 0:
       logger.info("No Patch to apply")
-      return
+      return 0
     logger.info("Apply patches up to %s" % installName)
-    self.__applyPatchUptoIndex__(len(self._outPatchList))
+    patchIndex = self.__getPatchIndexByInstallName__(installName)
+    endIndex = patchIndex + 1
+    startIndex = 0
+    if patchOnly:
+      startIndex = patchIndex
+    return self.__applyPatchUptoIndex__(endIndex, startIndex)
 
   @staticmethod
   def generateSha1SumForPatchInfo(patchInfo):
@@ -150,20 +157,23 @@ class PatchSequenceApply(object):
   """
     apply patch incrementally up to the end index in self._outPatchList
   """
-  def __applyPatchUptoIndex__(self, endIndex):
+  def __applyPatchUptoIndex__(self, endIndex, startIndex=0):
     assert endIndex >= 0 and endIndex <= len(self._outPatchList)
+    assert startIndex >=0 and startIndex <= endIndex
     """ make sure taskman is running """
     taskmanUtil = VistATaskmanUtil()
     taskmanUtil.startTaskman(self._testClient)
-    for index in range(0, endIndex):
+    result = 0
+    for index in range(startIndex, endIndex):
       patchInfo = self._outPatchList[index]
       result = self.__applyIndividualPatch__(patchInfo)
-      if not result:
+      if result < 0:
         logger.error("Failed to install patch %s: KIDS %s" %
                       (patchInfo.installName, patchInfo.kidsFilePath))
-        return
+        return result
     """ wait until taskman is current """
     taskmanUtil.waitTaskmanToCurrent(self._testClient)
+    return result
 
 #---------------------------------------------------------------------------
 # private implementation
@@ -179,14 +189,19 @@ class PatchSequenceApply(object):
       idx += 1
     return -1
   """
-    apply individual Patch
+    apply individual patch
+    @return:
+      throw exception for installation error.
+      0 if patch is already installed.
+      -1 if patch is not ready to install
+      1 if patch installed sucessfully
   """
   def __applyIndividualPatch__(self, patchInfo):
     """ double check to see if patch is already installed """
     if self.__isPatchInstalled__(patchInfo):
-      return True
+      return 0
     if not self.__isPatchReadyToInstall__(patchInfo):
-      return False
+      return -1
     """ generate Sha1 Sum for patch Info """
     self.generateSha1SumForPatchInfo(patchInfo)
     """ install the Patch """
@@ -200,7 +215,7 @@ class PatchSequenceApply(object):
       # also need to reload the package patch hist
       self.__reloadPackagePatchHistory__(patchInfo)
       assert self.__isPatchInstalled__(patchInfo)
-    return True
+    return 1
   """ get the package patch history and update package name
       for KIDS only build
   """
@@ -376,6 +391,7 @@ def main():
   """ create the VistATestClient"""
   testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
   assert testClient
+  initConsoleLogging()
   with testClient as vistAClient:
     patchSeqApply = PatchSequenceApply(vistAClient, outputDir)
     if result.upToPatch:
