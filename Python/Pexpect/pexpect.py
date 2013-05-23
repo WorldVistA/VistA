@@ -71,12 +71,12 @@ try:
     import string
     import re
     import struct
-    import resource
+    #import resource
     import types
-    import pty
-    import tty
-    import termios
-    import fcntl
+    #import pty
+    #import tty
+    #import termios
+    #import fcntl
     import errno
     import traceback
     import signal
@@ -390,9 +390,9 @@ class spawn(object):
         stores the status returned by os.waitpid. You can interpret this using
         os.WIFEXITED/os.WEXITSTATUS or os.WIFSIGNALED/os.TERMSIG. """
 
-        self.STDIN_FILENO = pty.STDIN_FILENO
-        self.STDOUT_FILENO = pty.STDOUT_FILENO
-        self.STDERR_FILENO = pty.STDERR_FILENO
+        #self.STDIN_FILENO = pty.STDIN_FILENO
+        #self.STDOUT_FILENO = pty.STDOUT_FILENO
+        #self.STDERR_FILENO = pty.STDERR_FILENO
         self.stdin = sys.stdin
         self.stdout = sys.stdout
         self.stderr = sys.stderr
@@ -1011,8 +1011,8 @@ class spawn(object):
         """This is like send(), but it adds a linefeed (os.linesep). This
         returns the number of bytes written. """
 
+        s += os.linesep
         n = self.send(s)
-        n = n + self.send(os.linesep)
         return n
 
     def sendcontrol(self, char):
@@ -1582,7 +1582,7 @@ class spawn(object):
         """
 
         while data != '' and self.isalive():
-            n = os.write(fd, data)
+            n = os.write(fd, data.encode("utf-8"))
             data = data[n:]
 
     def __interact_read(self, fd):
@@ -1607,7 +1607,7 @@ class spawn(object):
                 if self.logfile is not None:
                     self.logfile.write(data)
                     self.logfile.flush()
-                os.write(self.STDOUT_FILENO, data)
+                os.write(self.STDOUT_FILENO, data.encode("utf-8"))
             if self.STDIN_FILENO in r:
                 data = self.__interact_read(self.STDIN_FILENO)
                 if input_filter:
@@ -1722,7 +1722,7 @@ class searcher_string(object):
             ss.append((self.timeout_index,
                 '    %d: TIMEOUT' % self.timeout_index))
         ss.sort()
-        ss = zip(*ss)[1]
+        ss = [ s[1] for s in ss ]
         return '\n'.join(ss)
 
     def search(self, buffer, freshlen, searchwindowsize=None):
@@ -1824,7 +1824,7 @@ class searcher_re(object):
             ss.append((self.timeout_index, '    %d: TIMEOUT' %
                 self.timeout_index))
         ss.sort()
-        ss = zip(*ss)[1]
+        ss = [ s[1] for s in ss ]
         return '\n'.join(ss)
 
     def search(self, buffer, freshlen, searchwindowsize=None):
