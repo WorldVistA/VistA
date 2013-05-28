@@ -1,4 +1,4 @@
-ZZRGUTRB ;RGI/CBR - Unit Tests - RPC Broker ;3/28/2013
+ZZRGUTRB ;RGI/CBR - Unit Tests - RPC Broker ;5/27/2013
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1
  TSTART
  I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUTRB")
@@ -156,12 +156,19 @@ EDIT ;
  Q
  ;
 HISTORY ;
- N RET,EXTDT,DUZN
+ N RET,EXTDT,DUZN,GMPNAME,CNT,I
  D HIST^ORQQPL2(.RET,GMPIFN2)
  D CHKEQ^XTMUNIT(4,RET(0),"HIST^ORQQPL2: # of events.")
  S EXTDT=$$EXTDT^GMPLX(DT)
  S DUZN=$P(^VA(200,DUZ,0),U)
- D CHKEQ^XTMUNIT(EXTDT_U_"STATUS changed by "_DUZN_" from ACTIVE to INACTIVE",$G(RET(1)),"HIST^ORQQPL2: First history entry")
+ S GMPNAME=$P(^VA(200,GMPROV,0),U)
+ S CNT=0
+ F I=1:1:4 D
+ . I $G(RET(I))=(EXTDT_U_"STATUS changed by "_DUZN_" from ACTIVE to INACTIVE") S CNT=CNT+1
+ . I $G(RET(I))=(EXTDT_U_"PROBLEM removed by "_GMPNAME) S CNT=CNT+1
+ . I $G(RET(I))=(EXTDT_U_"PROBLEM placed back on list by "_DUZN) S CNT=CNT+1
+ . I $G(RET(I))=(EXTDT_U_"PROBLEM verified by "_DUZN) S CNT=CNT+1
+ D CHKEQ^XTMUNIT(4,CNT,"HIST^ORQQPL2: Only "_CNT_" out of 4 history entries match")
  Q
  ;
 LIST ;
