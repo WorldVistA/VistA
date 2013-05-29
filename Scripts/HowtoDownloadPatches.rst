@@ -26,7 +26,7 @@ invocation as shown here::
  } |
  wget --continue --input-file=- --recursive --wait=10 --random-wait \
       --user-agent= --execute robots=off --reject 'index.html*' --level=10 \
-      --accept '*.GBL,*.GBLs,*.KID,*.KIDs,*.TXT,*.txt,*TXTs' \
+      --accept '*.GBL,*.GBLs,*.KID,*.KIDs,*.kid,*.TXT,*.txt,*TXTs' \
       --no-parent --force-directories --no-host-directories --cut-dirs=1
 
 Use exactly the ``wget`` command-line shown.  Vary only the list of URLs.
@@ -38,7 +38,7 @@ Cleanup
 
 Convert text files to LF-only newlines::
 
- find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|TXT\|TXTs\|txt\)$' -print0 |
+ find FOIA -regex '.*\.\(GBL\|GBLs\|KID\|KIDs\|kid\|TXT\|TXTs\|txt\)$' -print0 |
  xargs -0 fromdos
 
 Convert large files to content links referencing external data::
