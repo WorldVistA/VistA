@@ -1,0 +1,169 @@
+$TXT Created by SMITH,ROBERT at INPVAA.FO-BIRM.MED.VA.GOV  (KIDS) on Monday, 10/04/04 at 11:16
+=============================================================================
+Run Date: JAN 10, 2005                     Designation: GMRY*4*6
+Package : GMRY - GEN. MED. REC. - I/O         Priority: Mandatory
+Version : 4         SEQ #5                      Status: Released
+                  Compliance Date: FEB 10, 2005
+=============================================================================
+
+Associated patches: (v)GMRY*4*3    <<= must be installed BEFORE `GMRY*4*6'
+
+Subject: UNDEFINED ERROR AT HANG+8 GMRYED4
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct two problems within the 
+ INTAKE/OUTPUT application  as reported.
+  
+ ASSOCIATED NOIS:
+ ================
+ DUB-0100-31658 Undefined HANG+8 GMRYED4 
+  
+ ASSOCIATED E3RS:
+ ================
+ N/A
+  
+ PARTICIPATING TEST SITES
+ ========================
+ Dublin, GA 				
+ Huntington, WV 			
+ Oklahoma City, OK 	
+ Philadelphia, PA
+  
+ NOIS OVERVIEW:
+ ==============
+  
+ DUB-0100-31658 Undefined HANG+8 GMRYED4
+  
+ Problem:
+ --------
+ 1) The undefined error HANG+8 GMRYED4 is caused by
+ the DA variable not being reset when the user ^ out
+ of the application.
+  
+ 2) After using Enter/Edit Patient Intake [NURCPE-I/O-INTAKE]
+ option and then uses the Start/Add/DC IV and Maintenance
+ [NURCPE-I/O-IV CARE] option and selects the Replace Same
+ Solution. The IV information is displayed and then the 
+ options for Start/Add/DC IV and Maintenance [NURCPE-I/O-IV CARE]
+ are displayed again. This is caused by the GFLAG variable that
+ is set and not killed when using the Enter/Edit Patient Intake
+ [NURCPE-I/O-INTAKE] option.
+  
+ Resolution:
+ -----------
+ 1) GMRYUT8 routine will be modified to reset the DA 
+ variable if the user ^ out of the application.
+  
+ 2) GMRYUT0 routine will be modified to kill the GFLAG
+ variable prior to exiting the Enter/Edit Patient Intake
+ [NURCPE-I/O-INTAKE] option.
+  
+  
+ ROUTINE SUMMARY:
+ ================
+ The following routines are included in this patch.  The second line of each
+ of these routines now looks like:
+            ;;4.0;Intake/Output;**[Patch List]**;Apr 25, 1997
+  
+                             CHECK^XTSUMBLD results
+ Routine name      Before Patch          After Patch         Patch List
+ ============      ============          ===========         ==========
+ GMRYUT8               17104333             17920269             6
+ GMRYUT0               16210967             16319728            3,6
+ GMRYED4               15250600             15301509             6
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be installed at any time.  Users do not need to be off
+ the system. Installation will take less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  (DSM for Open VMS sites only) Disable routine mapping on all systems
+      for the routines listed in the Routine Summary.
+  
+      NOTE:  If the routines included in this patch are not currently
+      in your mapped routine set, please skip this step.
+  
+  3.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+           Load a Distribution
+           Print Transport Global
+           Compare Transport Global to Current System
+           Verify Checksums in Transport Global
+           Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+           Backup a Transport Global
+  
+  4.  From this menu, you may elect to use the following options
+      (when prompted for the INSTALL NAME, enter GMRY*4.0*6):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  5.  Use the Install Package(s) option and select the package GMRY*4.0*6.
+  
+    a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        YES//', answer NO (unless otherwise indicated).
+    b.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? YES//', answer NO.
+  6.  (DSM for Open VMS sites only) Optional - Include the routines
+      distributed with this patch in the mapped routine set.
+  
+      NOTE: This step is only necessary if you performed step 2 or if
+      you wish to include the routines in your mapped set.
+
+Routine Information:
+====================
+
+Routine Name:
+  - GMRYUT0
+
+
+Routine Checksum:
+
+Routine Name:
+  - GMRYUT8
+
+
+Routine Checksum:
+
+Routine Name:
+  - GMRYED4
+
+
+Routine Checksum:
+
+=============================================================================
+User Information:
+Entered By  : SMITH,ROBERT J                Date Entered  : AUG 31, 2004
+Completed By: ANDERSON,MAXINE               Date Completed: JAN 06, 2005
+Released By : SPIVEY,RICHARD J              Date Released : JAN 10, 2005
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

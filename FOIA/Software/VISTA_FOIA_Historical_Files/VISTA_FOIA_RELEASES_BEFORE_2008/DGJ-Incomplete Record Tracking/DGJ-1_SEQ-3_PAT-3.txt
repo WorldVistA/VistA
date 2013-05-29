@@ -1,0 +1,212 @@
+$TXT Created by YORTY,M. ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 10/25/04 at 08:55
+=============================================================================
+Run Date: NOV 01, 2004                     Designation: DGJ*1*3
+Package : DGJ - INCOMPLETE RECORDS TRACKING   Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: DEC 02, 2004
+=============================================================================
+
+Associated patches: (v)DGJ*1*2     <<= must be installed BEFORE `DGJ*1*3'
+
+Subject: DISABLE COREFLS SOFTWARE
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ Reversion of CoreFLS software back to VistA software ONLY.
+ ==========================================================
+  
+ This patch will disable access to the CoreFLS software in Incomplete 
+ Records Tracking. The LOCAL VENDOR (#393.31) variable pointer will be 
+ removed from the TRANSCRIBED BY (#10.04) field of the INCOMPLETE 
+ RECORDS (#393) file.  The following option will be placed 'out of order'
+ with the message 'CoreFLS Disabled (DGJ*1*3)':
+  
+ Add a local vendor (COREFLS)     [DGJ LOCAL VENDOR ADD ]
+  
+ Before installation listing of TRANSCRIBED BY field (file #393, field
+ #10.04):
+  
+ D ^%G
+  
+ Global ^DD(393,10.04,"V"
+         DD(393,10.04,"V"
+ ^DD(393,10.04,"V",0) = ^.12P^3^3
+ ^DD(393,10.04,"V",1,0) = 200^PERSON^1^P^n^n
+ ^DD(393,10.04,"V",2,0) = 392.31^LOCAL VENDOR^2^L^n^n
+ ^DD(393,10.04,"V",3,0) = 440^VENDOR^3^V^n^n
+ ^DD(393,10.04,"V","B",200,1) = 
+ ^DD(393,10.04,"V","B",392.31,2) = 
+ ^DD(393,10.04,"V","B",440,3) = 
+ ^DD(393,10.04,"V","M","LOCAL VENDOR",2) = 
+ ^DD(393,10.04,"V","M","PERSON",1) = 
+ ^DD(393,10.04,"V","M","VENDOR",3) = 
+ ^DD(393,10.04,"V","O",1,1) = 
+ ^DD(393,10.04,"V","O",2,2) = 
+ ^DD(393,10.04,"V","O",3,3) = 
+ ^DD(393,10.04,"V","P","L",2) = 
+ ^DD(393,10.04,"V","P","P",1) = 
+ ^DD(393,10.04,"V","P","V",3) = 
+ Global ^
+  
+ After installation listing of TRANSCRIBED BY field (file #393, field
+ #10.04):
+  
+ Global ^DD(393,10.04,"V"
+         DD(393,10.04,"V"
+ ^DD(393,10.04,"V",0) = ^.12P^2^2
+ ^DD(393,10.04,"V",1,0) = 200^PERSON^1^P^n^n
+ ^DD(393,10.04,"V",2,0) = 440^VENDOR^2^V^n^n
+ ^DD(393,10.04,"V","B",200,1) = 
+ ^DD(393,10.04,"V","B",440,2) = 
+ ^DD(393,10.04,"V","M","PERSON",1) = 
+ ^DD(393,10.04,"V","M","VENDOR",2) = 
+ ^DD(393,10.04,"V","O",1,1) = 
+ ^DD(393,10.04,"V","O",2,2) = 
+ ^DD(393,10.04,"V","P","P",1) = 
+ ^DD(393,10.04,"V","P","V",2) = 
+ Global ^
+  
+  
+ This patch addresses the following New Sevice Request (NSR):
+ ------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following NOIS message(s):
+ ------------------------------------------------------------
+ There are no NOIS messages associated with this patch. 
+  
+  
+ Test Sites:
+ -----------
+ Clarksburg
+ Bay Pines
+ Dallas
+  
+  
+  
+  
+ =======================INSTALLATION INSTRUCTIONS==========================
+  
+ This patch can be loaded with users on the system.
+  
+  
+ Install Time - 1 minutes.
+  
+ Please ensure that your programming variables are set, 
+ including your DUZ(0)="@", otherwise installation will abort.
+  
+  
+ 1.   DISABLE ROUTINE MAPPING   (DSM for Open VMS sites only) 
+      -----------------------
+      Disable routine mapping on all systems for the routines listed in 
+      step 3 below.  
+       
+      NOTE:  If the routines included in this patch are not currently in 
+      your mapped routine set, please skip this step.
+  
+ 2.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.   COMPONENTS SENT WITH PATCH 
+      --------------------------
+      The following is a list of the routines included in this patch.  
+      The second line of each of these routines now looks like:  
+  
+      <tab>;;1.0;Incomplete Records Tracking;**[patch list]**;Jun 25, 2001
+  
+                             CHECK^XTSUMBLD results
+  Routine name      Before Patch          After Patch         Patch List
+  ============      ============          ===========         ==========
+  DGJ1P3                     N/A               877435                3
+  
+   Total number of routines - 1
+  
+ 4.   START UP KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]: 
+    
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+           Load a Distribution 
+           Print Transport Global 
+           Compare Transport Global to Current System 
+           Verify Checksums in Transport Global 
+           Install Package(s) 
+           Restart Install of Package(s) 
+           Unload a Distribution 
+           Backup a Transport Global 
+    
+ Select Installation Option: 
+  
+ 5.   Select Installation Option: 
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter DGJ*1*3):
+       
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+ 6.  Select Installation Option: Install Package(s)
+                                 ------------------
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        YES//", answer 'NO'.
+  
+     c. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? YES//", answer 'NO'.
+  
+  
+ 7.  REBUILD MAPPED ROUTINE(S)  (DSM for Open VMS sites only)
+     ==========================
+     NOTE: This step is only necessary if you performed step 1 or if you 
+     wish to include the routines in your mapped set.
+  
+ 8.  AFTER INSTALLATION
+     ==================
+     Delete routine DGJ1P3 after patch has been installed successfully.
+  
+     Since CoreFLS options have been placed out of order, you may remove
+     the DGJ LOCAL VENDOR security key from users.
+
+Routine Information:
+====================
+
+Routine Name:
+  - DGJ1P3
+
+
+Routine Checksum:
+
+=============================================================================
+User Information:
+Entered By  : YORTY,M ROBERT                Date Entered  : AUG 19, 2004
+Completed By: RUDINGER,NANCY L.             Date Completed: OCT 29, 2004
+Released By : FITCH,DONNA                   Date Released : NOV 01, 2004
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

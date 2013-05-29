@@ -1,0 +1,115 @@
+$TXT Created by CURTIN,EDNA at MNTVBB.ISC-WASH.VA.GOV  (KIDS) on THURSDAY, 09/21/00 at 07:40
+=============================================================================
+Run Date: SEP 25, 2000                     Designation: QAQ*1.7*7
+Package : QAQ - QUALITY ASSURANCE Priority: Mandatory
+Version : 1.7         SEQ #7                   Status: Released
+=============================================================================
+
+
+Subject: BENEFICIARY REPORT - MISC QAN NOIS
+
+Category: 
+  - Input Template
+  - Data Dictionary
+
+Description: 
+============
+
+ This patch makes a Data Dictionary change and adds to an Input template.
+ These changes work together with Incident Reporting patch QAN*2.0*29.
+ This patch should be installed before QAN*2.0*29.
+  
+ A new field has been added to the QUALITY ASSURANCE SITE PARAMETER file
+ (#740).  The field is QAN TIME REQUIRED (#755).  This field can be set to
+ "Yes" if a site wants to require that the Incident date and time be
+ entered rather than just date.
+  
+ A change has been made to the [QAQA QAN SITE PARAMETERS] input template to
+ allow QAN TIME REQUIRED to be set in the option QA Site Parameters [QAN
+ SITE PARAMETERS ENTER/EDIT].
+  
+ Please refer to the Patch Description for patch QAN*2.0*29 for a further
+ description of these two patches.
+  
+ This patch can be loaded with users on the system. Installation should
+ take less than 2 minutes.
+  
+  
+          ================INSTALLATION INSTRUCTIONS =================
+   1.   Load Patch
+        ----------
+        Use Option INSTALL/CHECK MESSAGE from the Packman Menu to
+        install patch.
+  
+   2.   DISABLE ROUTINE MAPPING   (DSM for OpenM sites only) 
+        -----------------------
+        There are no routines associated with this patch, so mapping is not
+        required.
+  
+   3.   ROUTINES SENT WITH PATCH 
+        ------------------------
+        There are no routines distributed with this patch.
+  
+   4.   START UP KIDS 
+        -------------
+        Start up the Kernel Installation and Distribution System Menu 
+        [XPD MAIN]: 
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+  
+  5.  Select Kernel Installation & Distribution System Option: INStallation
+      -------------------------------------------------------
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s) 
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+   6.   Select Installation Option: 
+        --------------------------
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter QAQ*21.7*7):
+  
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+   7.   Select Installation Option: Install Package(s) 
+                                    ----------------
+         (When prompted for the INSTALL NAME, enter QAQ*1.7*7)
+        **This is the step to start the installation of this KIDS patch: 
+  
+        a.  Choose the Install Package(s) option to start the patch
+            install.
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+            Options, and Protocols? YES//' answer NO.
+  
+        c.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order': press <return>.
+
+Routine Information:
+====================
+
+=============================================================================
+User Information:                               
+Entered By  : CURTIN,EDNA                    Date Entered : MAY 09, 2000
+Completed By: HAMWAY,NORMAN                 Date Completed: SEP 21, 2000
+Released By : BURTS,WANDA                   Date Released : SEP 25, 2000
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
