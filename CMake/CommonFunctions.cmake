@@ -25,6 +25,7 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTP
    if(ARGC GREATER 6)
      set(source_flag TRUE)
    endif()
+   string(REPLACE "_" " " PACKAGE_NAME ${PACKAGE_NAME})
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
       if(line MATCHES "^[A-Z0-9][^ ]+ +\\* \\* .*[cC]hecksum:.*")
@@ -49,7 +50,6 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTP
           if(tag AND GREP_EXEC AND source_flag)
             string(REGEX MATCH "\\+[0-9]+" position ${line})
             string(STRIP ${tag} tag)
-            string(REPLACE "_" " " PACKAGE_NAME ${PACKAGE_NAME})
             execute_process(COMMAND ${GREP_EXEC} -n -h ^${tag}
                             "${ARGV6}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
                             OUTPUT_VARIABLE linematch)
