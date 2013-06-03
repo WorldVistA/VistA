@@ -37,6 +37,7 @@ Created on November 2012
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from ADTActions import ADTActions
+from Actions import Actions
 import datetime
 import time
 import TestHelper
@@ -192,7 +193,6 @@ def reg_test005(resultlog, result_dir, namespace):
         reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         reg.signon()
         reg.adt_menu_smoke(ssn='323554567')
-
         reg.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)
@@ -212,6 +212,38 @@ def reg_test006(resultlog, result_dir, namespace):
         reg.gotoADTmenu()
         reg.discharge_patient(ssn='444678924', dtime='NOW')
         reg.det_inpatient_inquiry(ssn='444678924', item='1', vlist=['DIRECT', '2-B', 'ALEXANDER,ROBER', 'SMITH,MARY'])
+        reg.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write(e.value)
+        logging.error(testname + ' EXCEPTION ERROR: Unexpected test result')
+    else:
+        resultlog.write('Pass\n')
+
+def reg_test007(resultlog, result_dir, namespace):
+    '''Add a new doctor, wait 2 minutes, add another doctor, then attempt to add doctor during patient admitting using a prior date (REF-218) '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA1 = connect_VistA(testname, result_dir, namespace)
+        reg = Actions(VistA1, user='SM1234', code='SM12345!!')
+        reg.signon()
+        reg.adduser(name='JONES,JOE', ssn='000000050', gender='M', initials='JJ', acode='fakejoe1', vcode1='1SWUSH1234!!')
+        VistA1 = connect_VistA(testname + '_01', result_dir, namespace)
+        reg = Actions(VistA1)
+        reg.sigsetup(acode='fakejoe1', vcode1='1SWUSH1234!!', vcode2='1SWUSH12345!!', sigcode='JOEJ123')
+        VistA1 = connect_VistA(testname + '_02', result_dir, namespace)
+        reg = Actions(VistA1, user='SM1234', code='SM12345!!')
+        reg.signon()
+        reg.adduser(name='BURKE,BARBARA', ssn='000000051', gender='F', initials='BB', acode='fakebar1', vcode1='1OIG1234!!')
+        VistA1 = connect_VistA(testname + '_03', result_dir, namespace)
+        reg = Actions(VistA1)
+        reg.sigsetup(acode='fakebar1', vcode1='1OIG1234!!', vcode2='1OGI12345!!', sigcode='BARB123')
+        reg.signoff()
+        VistA1 = connect_VistA(testname + '_04', result_dir, namespace)
+        reg = ADTActions(VistA1, user='fakedoc1', code='1Doc!@#$')
+        reg.signon()
+        reg.admit_a_patient(ssn='666551234', bed='2-B', time='t-1@01am', doctorlist=['BURKE', 'Alexander', 'JONES', 'Alexander'])
         reg.signoff()
     except TestHelper.TestError, e:
         resultlog.write(e.value)
