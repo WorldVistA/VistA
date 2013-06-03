@@ -535,8 +535,9 @@ class winspawn(spawn):
         if self.stub == None or not getattr(sys, 'frozen', False):
             # python = os.path.join(sys.exec_prefix, 'python.exe')
             python = sys.executable
-            pycmd = 'import winpexpect; winpexpect._stub(r"%s", r"%s", r"%s", r"%s")' \
-                    % (cmd_name, stdin_name, stdout_name, stderr_name)
+            self_dir = os.path.normpath(os.path.dirname(os.path.abspath(__file__)))
+            pycmd = 'import sys; sys.path.insert(0, r"%s"); import winpexpect; winpexpect._stub(r"%s", r"%s", r"%s", r"%s")' \
+                    % (self_dir, cmd_name, stdin_name, stdout_name, stderr_name)
             pyargs = join_command_line([python, '-c', pycmd])
         else:
             python = self.stub
