@@ -29,6 +29,9 @@ def isWindowsSystem():
   return sys.platform.startswith("win")
 
 """ import right pexpect package """
+filedir = os.path.dirname(os.path.abspath(__file__))
+pexpectdir = os.path.normpath(os.path.join(filedir, "../Python/Pexpect"))
+sys.path.append(pexpectdir)
 if isLinuxSystem():
   import pexpect
   from pexpect import TIMEOUT, ExceptionPexpect

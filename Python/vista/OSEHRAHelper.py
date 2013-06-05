@@ -36,7 +36,7 @@ import csv
 from ParseCSVforPackagePrefixes import FindPackagePrefixes
 
 filedir = os.path.dirname(os.path.abspath(__file__))
-pexpectdir = os.path.normpath(os.path.join(filedir, "../pexpect/"))
+pexpectdir = os.path.normpath(os.path.join(filedir, "../Pexpect"))
 sys.path.append(pexpectdir)
 try:
   import pexpect
