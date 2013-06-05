@@ -1,0 +1,30 @@
+{
+  "VistA_Connection":
+  {
+    "system": 1,
+    "instance": "instance name",
+    "namespace": "namespace",
+    "username": "cacheusername",
+    "password": "cachepassword",
+    "useSudo": true
+  },
+  "Patch_Apply":
+  {
+    "log_dir": "/path/to/log/dir",
+    "input_patch_dir": "/path/to/input/patch/dir/",
+    "continuous": true
+  },
+  "M_Extract":
+  {
+    "temp_output_dir": "/path/to/temp/output/dir",
+    "log_dir": "/path/to/log/dir",
+    "M_repo": "/path/to/VistA-M/repository",
+    "M_repo_branch": "branch name",
+    "commit_msg_dir": "/path/to/commit/msg/dir"
+  },
+  "Backup":
+  {
+    "backup_dir": "/path/to/backup/dir",
+    "cache_dat_dir": "/path/to/cache/dat/dir"
+  }
+}
