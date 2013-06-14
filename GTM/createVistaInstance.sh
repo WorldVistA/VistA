@@ -120,13 +120,14 @@ echo "exec \$gtm_dist/mumps -run ^ZU"           >> $basedir/bin/tied.sh
 
 
 # Create Global mapping
-echo "c -s DEFAULT -bl=4096 -al=200000 -f=$basedir/g/$instance.dat" >> $basedir/etc/db.gde
-echo "a -s TEMP    -bl=4096 -al=10000  -f=$basedir/g/TEMP.dat" >> $basedir/etc/db.gde
-echo "c -r DEFAULT    -r=4080 -k=255"           >> $basedir/etc/db.gde
-echo "a -r TEMP       -r=4080 -k=255 -d=TEMP"   >> $basedir/etc/db.gde
+echo "c -s DEFAULT    -ACCESS_METHOD=BG -BLOCK_SIZE=4096 -ALLOCATION=200000 -EXTENSION_COUNT=1024 -GLOBAL_BUFFER_COUNT=4096 -LOCK_SPACE=400 -FILE=$basedir/g/$instance.dat" >> $basedir/etc/db.gde
+echo "a -s TEMP       -ACCESS_METHOD=MM -BLOCK_SIZE=4096 -ALLOCATION=10000 -EXTENSION_COUNT=1024 -GLOBAL_BUFFER_COUNT=4096 -LOCK_SPACE=400 -FILE=$basedir/g/TEMP.dat" >> $basedir/etc/db.gde
+echo "c -r DEFAULT    -RECORD_SIZE=16368 -KEY_SIZE=1019 -JOURNAL=(BEFORE_IMAGE,FILE_NAME=\"$basedir/j/$instance.mjl\") -DYNAMIC_SEGMENT=DEFAULT" >> $basedir/etc/db.gde
+echo "a -r TEMP       -RECORD_SIZE=16368 -KEY_SIZE=1019 -NOJOURNAL -DYNAMIC_SEGMENT=TEMP"   >> $basedir/etc/db.gde
 echo "a -n TMP        -r=TEMP"                  >> $basedir/etc/db.gde
 echo "a -n TEMP       -r=TEMP"                  >> $basedir/etc/db.gde
 echo "a -n UTILITY    -r=TEMP"                  >> $basedir/etc/db.gde
+echo "a -n XTMP       -r=TEMP"                  >> $basedir/etc/db.gde
 echo "a -n CacheTemp* -r=TEMP"                  >> $basedir/etc/db.gde
 echo "sh -a"                                    >> $basedir/etc/db.gde
 
