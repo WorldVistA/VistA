@@ -72,10 +72,10 @@ basedir=/home/$instance
 # $instance user is a programmer user
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
-adduser -c "$instance instance owner" -m -U $instance
+useradd -c "$instance instance owner" -m -U $instance
 
 # Make instance Directories
-mkdir -p $basedir/{r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www}
+mkdir -p $basedir/{r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www,backup}
 
 # Symlink libs
 ln -s $gtm_dist $basedir/lib/gtm
