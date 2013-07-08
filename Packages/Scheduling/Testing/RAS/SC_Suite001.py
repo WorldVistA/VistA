@@ -37,6 +37,7 @@ Created on Jun 14, 2012
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from SCActions import SCActions
+from Actions import Actions
 import TestHelper
 import datetime
 import logging
@@ -278,6 +279,8 @@ def sc_test008(resultlog, result_dir, namespace):
         SC.verapp(clinic='cLiNiCx',
                   vlist=['Thirteen,Patient M', 'Future', 'Sixteen,Patient P', 'Future'],
                   CInum=['2', '1'], COnum=['2', '2'])
+        SC.signon()
+        SC.canapp(clinic='cLiNiCx', mult='2', future=1, rebook=1)
         SC.signoff()
     except TestHelper.TestError, e:
         resultlog.write('\nEXCEPTION ERROR:' + str(e))
@@ -388,6 +391,65 @@ def sc_test010(resultlog, result_dir, namespace):
                                  ['PHONE NUMBER', ''],
                                  ['PAGER NUMBER', ''],
                                  ['EMAIL ADDRESS', '']])
+        SC.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write('\nEXCEPTION ERROR:' + str(e))
+        logging.error('*****exception*********' + str(e))
+    else:
+        resultlog.write('Pass\n')
+
+def sc_test011(resultlog, result_dir, namespace):
+    '''
+    This makes appointments via Multiple Clinic Display and then verifies the appointments
+    '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA = connect_VistA(testname, result_dir, namespace)
+        SC = SCActions(VistA, user='fakedoc1', code='1Doc!@#$')
+        SC.signon()
+        SC.multiclinicdisplay(cliniclist=['Clinic1', 'ClinicX'], patient='656454321', timelist=['7', '5'], pending=None)
+        SC.gotoApptMgmtMenu()
+        SC.verapp_bypat(patient='656454321', vlist=['Clinic1', '7:00', 'Future', 'Clinicx', '17:00', 'Future'],)
+        SC.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write('\nEXCEPTION ERROR:' + str(e))
+        logging.error('*****exception*********' + str(e))
+    else:
+        resultlog.write('Pass\n')
+
+def sc_test012(resultlog, result_dir, namespace):
+    '''
+    This test adds a new user with SDOB keys and creates & verifies appointments in timeslots outside a clinic's normal operating window
+    '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        # Create new user with SDOB keys
+        VistA1 = connect_VistA(testname, result_dir, namespace)
+        SC = Actions(VistA1, user='SM1234', code='SM12345!!')
+        SC.signon()
+        SC.adduser(name='CRANE,JON', ssn='000000065', gender='M', initials='JC', acode='fakejon1', vcode1='1SWUSH1234!!')
+        SC.signoff()
+        VistA1 = connect_VistA(testname + '_01', result_dir, namespace)
+        SC = Actions(VistA1)
+        SC.sigsetup(acode='fakejon1', vcode1='1SWUSH1234!!', vcode2='1SWUSH12345!!', sigcode='JONC123')
+        SC.signoff()
+        # Create appointment outside Clinic1's operating hours via fakedoc1
+        VistA2 = connect_VistA(testname + '_02', result_dir, namespace)
+        SC = SCActions(VistA2, user='fakedoc1', code='1Doc!@#$')
+        SC.signon()
+        SC.gotoApptMgmtMenu()
+        SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+5@9AM', fresh='No', badtimeresp='noslot')
+        SC.signoff()
+        # Create appointment outside Clinic1's operating hours via fakejon1 (SDOB key)
+        VistA3 = connect_VistA(testname + '_02', result_dir, namespace)
+        SC = SCActions(VistA3, user='fakejon1', code='1SWUSH12345!!')
+        SC.signon()
+        SC.gotoApptMgmtMenu()
+        SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+10@9AM', fresh='No', badtimeresp='overbook')
         SC.signoff()
     except TestHelper.TestError, e:
         resultlog.write('\nEXCEPTION ERROR:' + str(e))
