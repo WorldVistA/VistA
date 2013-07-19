@@ -47,13 +47,11 @@ class PATActions (Actions):
 
     def signon (self):
         '''Signon via XUP'''
-        self.VistA.wait('');
         self.VistA.write('S DUZ=1 D ^XUP')
 
     def signoff (self):
         '''Signoff and halt'''
         self.VistA.write('')
-        self.VistA.wait('>');
         self.VistA.write('h\r\r')
 
     def patientaddcsv(self, ssn, pfile=None, getrow=None):
