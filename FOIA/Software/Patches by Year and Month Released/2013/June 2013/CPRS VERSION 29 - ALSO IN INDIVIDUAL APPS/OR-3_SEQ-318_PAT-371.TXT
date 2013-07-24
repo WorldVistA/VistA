@@ -1,0 +1,185 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: OR*3*371
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #318                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*306    <<= must be installed BEFORE `OR*3*371'
+
+Subject: CPRS GUI 29 FOLLOW-UP PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a follow-up patch to CPRS GUI Version 29.  It should be 
+ installed just after the bundle including patch OR*3.0*306 is installed.
+  
+ Below are the issues resolved in this patch:
+  
+ 1) The word "dispensing" was spelled wrong in the parameter OR DEA TEXT 
+ which is used to display on the signature dialog when signing controlled 
+ substance orders. The post install of this patch corrects that spelling.
+  
+ 2) There were sporadic instances of the "Failed to Find Hash" error in 
+ backdoor Pharmacy when finishing controlled substance orders. This was 
+ caused by duplicate entries being created in the ORDER DEA ARCHIVE 
+ INFO (#101.52) for these orders. This patch catches these duplicates
+ before they happen so that the order can be finished without issue.
+  
+ 3) There was an error being generated in IN^ORCMED upon installation of 
+ OR*3.0*306. This patch fixes this error.
+  
+ 4) This patch turns on auditing for the ORDER DEA ARCHIVE INFO 
+ (#101.52). This is a requirement from the Drug Enforcement Agency for 
+ electronically written controlled substance prescriptions.
+  
+ 5) Routine ORDEA02 is used by the new menu option ePCS Controlled Subs by 
+ Provider [OR EPCS CS RX BY PROVIDER]. This patch distributes that routine.
+  
+ 6) Resolves a server-side error reported in Remedy Ticket 840933:
+  
+ <UNDEFINED>SETNARR+2^ORWPCE3,
+  
+ which was reported initially by Heartland West, and later by Heartland
+ East. The error occurs when a user has written a progress note and
+ attempts enter Encounter data. If a diagnosis for which the text begins 
+ with a number (e.g., 2ND DEGREE BURN) is selected from the Encounter form
+ in CPRS, and the Encounter data is filed, the error appears when focus
+ returns to the Notes tab. The error does not cause the CPRS session to
+ disconnect, and the Encounter data is successfully transmitted to PCE.
+ However, subsequent attempts to access the note will result in the
+ recurrence of the error, when CPRS tries to fetch the Encounter data to
+ present in the pane at the bottom of the Notes tab.
+  
+ Associated Remedy:
+ ==================
+ 840933
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ 101.52                     Full DD               Modified 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Installation Instructions:
+ ==========================
+ CPRS GUI version 29 consists of the following host files:
+ HDI_1_11.KID
+ PSS_1_166.KID
+ CPRSV29_PSO_PSD.KID
+ OR_GMPL_GMTS_XU_29.KID
+ CPRSChart.exe
+ Help system (numerous files in a single directory named Help)
+ OR_30_371.KID
+ PSO_7_426.KID
+  
+ The host files were created to simplify installation at Veterans Health 
+ Administration (VHA) facilities and to assist in the implementation. CPRS 
+ v29 will follow a phased implementation.  To see the current status and 
+ target dates for Sites/VISN/Regions please refer to the following site:
+  
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306IG.doc and OR_30_306IG.pdf and is included in OR_30_306.ZIP.
+  
+ Patch information:
+ HDI_1_11.KID supports CPRS v29 functionality by adding data for the 
+ Problem List Domain to the HDIS DOMAIN file (#7115.1). It includes the 
+ following patch: 
+ HD1*1*11
+  
+ PSS_1_166.KID supports the DEA ePCS functionality.  It includes the 
+ following patch: 
+ PSS*1*166
+  
+ CPRSV29_PSO_PSD.KID also supports the DEA ePCS functionality. It includes 
+ the following patches:   
+ PSD*3*73
+ PSO*7*391
+  
+ OR_GMPL_GMTS_XU_29.kid contains the main CPRS GUI v29 functionality. It 
+ includes the following patches:
+         GMPL*2*36 (Extension to accommodate SNOMED-CT)
+         GMTS*2.7*86 (Problem List Standardization support)
+         XU*8*609 (EPCS Support)
+         OR*3*306 (CPRS version 29)
+  
+ OR_30_371.KID includes support for CPRS v.29. It includes the following 
+ patch:
+         OR*3*371
+  
+ PSO_7_426.KID include support for DEA ePrescribing in Outpatient Pharmacy 
+ V7.0. It includes the following patch:
+         PSO*7*426
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMED
+    Before: B52490414   After: B65467847  **4,7,38,48,94,141,178,190,195,
+                                           243,306,371**
+Routine Name: ORDEA02
+    Before:       n/a   After:  B8327482  **371**
+Routine Name: ORMTIM02
+    Before: B17248840   After: B18747786  **253,243,371**
+Routine Name: ORWOR1
+    Before: B26597352   After: B34983568  **132,141,163,306,371**
+Routine Name: ORWPCE3
+    Before: B55452326   After: B56135760  **10,85,116,190,280,306,371**
+Routine Name: ORY371
+    Before:       n/a   After:  B3828070  **371**
+ 
+Routine list of preceding patches: 306
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : MAR 26, 2013
+Completed By: BARLOW,KENNETH                Date Completed: JUN 10, 2013
+Released By : SCHMIT,BECKY                  Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,497 @@
+$TXT Created by HARRIS,JAMES at DVACACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 02/21/13 at 13:17
+=============================================================================
+Run Date: MAY 29, 2013                     Designation: PSJ*5*275
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #246                      Status: Released
+                  Compliance Date: JUN 28, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*260   <<= must be installed BEFORE `PSJ*5*275'
+                    (v)PSJ*5*276   <<= must be installed BEFORE `PSJ*5*275'
+                    (v)PSJ*5*278   <<= must be installed BEFORE `PSJ*5*275'
+
+Subject: IMR 5 CLINIC ORDER ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Edit Clinic Med Orders Start Date/Time
+ ======================================
+ This patch implements a new Vista option that allows users to
+ quickly find clinic orders that are associated with a specific
+ clinic location (or specific patient), and date range, and quickly 
+ change the Start Date/Time of one or more selected clinic orders.
+  
+ The new option EDIT CLINIC MED ORDERS START DATE/TIME [PSJ ECO] allows
+ the user to search for clinic orders by clinic group, clinic, or by
+ patient. After entering a clinic group, clinic, or patient, a beginning
+ and ending date range must be entered to find orders with a start
+ date/time within the specified range.
+  
+ When searching by clinic, all patients with at least one clinic order
+ for the specified clinic and date range are displayed in a list, and
+ one or more patients may be selected from the list. After a patient is
+ selected, only clinic orders matching the specified clinic and date range 
+ are displayed.
+  
+ When searching by clinic group, all patients with at least one clinic 
+ order in the specified clinic group are displayed in a list, and one or
+ more patients may be selected from the list. After a patient is selected,
+ only the clinic orders matching the specified clinic group and date range 
+ are displayed.
+  
+ When searching by patient, clinic location is not specified, therefore, 
+ all clinic orders within the selected date range are displayed, for 
+ all clinic locations.
+  
+ For searches by clinic and by patient, from the clinic profile view, 
+ one or more clinic orders may be selected for start date/time editing.
+ The new start date/time is entered once, and applied to all selected
+ clinic orders. 
+  
+ Two new actions are available from the clinic profile view: VP (View
+ Profile), and VD (View Order Detail). The VP (View Profile) action
+ displays the full Inpatient medication profile, and the VD (View 
+ Order Detail) action prompts for a specific clinic order from the numbered
+ list, and displays the detailed view of the order.
+  
+  
+ Patient Profile Clinic Orders
+ =============================
+ Clinic Orders will display in the patient profile grouped by Clinic, 
+ separate from non-Clinic Orders. Clinic Orders will display after all 
+ active, pending, and non-verified non-Clinic Orders. Non-Active 
+ non-Clinic orders will display after Clinic Orders.
+  
+ The following menu options, and any actions that execute these options,
+ will be enhanced to separate clinic orders from non-clinic orders:
+  
+       Inpatient Order Entry [PSJ OE] 
+       Order Entry [PSJU NE] 
+       Non-Verified/Pending Orders [PSJU VBW] 
+       Order Entry (IV) [PSJI ORDER] 
+       Profile (IV) [PSJI PROFILE]
+       Action Profile #1 [PSJU AP-1] 
+       Action Profile #2  [PSJU AP-2]
+       Patient Profile (Unit Dose) [PSJU PR]
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ None.
+  
+ Forms Associated:
+ None. 
+  
+ Mail Groups Associated:
+ None. 
+  
+ Options Associated:
+ -------------------
+ Clinic Orders Menu                      [PSJ CLINIC ORDERS MENU]
+ Edit Clinic Med Orders Start Date/Time  [PSJ ECO]
+ Pharmacy Master Menu                    [PHARMACY MASTER MENU]
+ Unit Dose Medications                   [PSJU MGR]
+ IV Menu                                 [PSJI MGR]
+  
+  
+ Protocols Associated:
+ ---------------------
+ PSJ LM ECO HIDDEN ACTIONS
+ PSJ LM ECO IM PR
+ PSJ LM ECO MENU
+ PSJ LM ECO RANGE
+ PSJ LM ECO SELECT
+ PSJ LM ECO START
+ PSJ LM VIEW ORDER DETAIL
+  
+  
+ Security Keys Associated:
+ None. 
+  
+ Templates Associated:
+  
+ List Templates
+ --------------
+ PSJ LM CLINIC ORDERS
+  
+  
+ Additional Information:
+   
+  Patient Safety Issues (PSIs)
+  -----------------------------
+   2359 - Provider comments intended for a specific order are copied on
+          another order upon renewal.
+   
+   
+  Remedy Ticket(s) & Overview
+  ---------------------------
+   HD 764596/INC 781899 - Other Print Info display incorrectly.
+    Problem
+    --------
+    When two or more Pending IV renews or Non-Verified edited IV orders
+    containing Other Print Info are selected in Inpatient Order Entry using
+    a dash, 1-3 to view orders 1, 2, and 3, the orders following the first
+    order mistakenly display the first order's Other Print Info. 
+   
+    Solution
+    --------
+    When selecting multiple Pending Renewed IV orders or multiple
+    Non-Verified edited IV orders by using a dash in Inpatient Order Entry,
+    initialize contents of Other Print Info between orders so the Other
+    Print Info is displayed with the proper order.
+  
+  
+  
+   HD 760186 - Other Print Info from IV Quick Code not used. 
+    Problem
+    --------
+    Other Print Info copied in from Provider Comments not being overwritten
+    by Other Print info in a selected IV Quick Code.
+  
+    Solution
+    --------
+    Restore previous functionality. When an order that can be finished as 
+    Unit Dose or IV is finished as an IV, and the user is prompted for  
+    Additive, if the finishing pharmacist enters an IV Quick Code that 
+    contains Other Print Info text, that text should overwrite the contents
+    of the order's Other Print Info.
+  
+  
+   
+   HD 763244 - Undefined error in 7 Day Mar.
+    Problem
+    --------
+    Undefined error occurs when printing a PRN IV order in the 7Day MAR
+    [PSJU 7D MAR] option.
+  
+    Solution
+    ---------
+    Prevent undefined error from occurring.
+  
+   
+   
+   HD 756354 - Undefined error in CPRS IV label print.
+    Problem
+    --------
+    Undefined error occurs when printing an IV Label from the Chart Copy
+    dialog after signing an order in CPRS.
+           
+    Solution: Prevent undefined error from occurring.
+   
+  
+   
+   HD 763555 - Wrong intervention recommendation is filed.
+    Problem
+    --------
+    NO ALLERGY ASSESSMENT type of intervention does not file correct
+    recommendation when a custom entry exists with an Internal Entry 
+    Number (IEN) equal to the number 10 in the APSP INTERVENTION
+    RECOMMENDATION (#9009032.5) file.
+   
+    Solution
+    ---------
+    Enable the NO ALLERGY ASSESSMENT type of interventions to handle custom
+    entries in the APSP INTERVENTION RECOMMENDATION (#9009032.5) file. When
+    the UNABLE TO ASSESS recommendation is selected as the Recommendation 
+    of a NO ALLERGY ASSESSMENT intervention, the Recommendation should be 
+    stored properly with the intervention even when the UNABLE TO ASSESS 
+    entry in the APSP INTERVENTION RECOMMENDATION (#900903.5) file has an
+    Internal Entry Number other than the number 10.
+  
+           
+   
+   HD 770025 - Long Special Instructions not retained after CPRS Renew
+    Problem
+    --------
+    Long Special Instructions (greater than 180 characters) and Other Print
+    Info (greater than 60 characters) are not carried over to the Pending 
+    renewal order after the order is renewed in CPRS.
+   
+    Solution
+    --------
+    Retain long Special Instructions (greater than 180 characters) and
+    Other Print Info (greater than 60 characters) in the Pending renewal
+    order when the order is renewed from CPRS.
+  
+  
+   INC 815711 - Move enhanced order check so it quits correctly.
+    Problem
+    --------
+    The dosing order check occurs before the enhanced order check. The
+    dosing order check is not yet active, therefore no functional issues 
+    result. However, problems could occur when the dosing order check 
+    is released and activated.
+  
+    Solution
+    ---------
+    Move enhanced order check so that it occurs before the dosing order 
+    check. 
+  
+  
+   INC 806890 - Order status not set correctly 
+    Problem
+    --------
+    If a user goes into the Inpatient Order Entry [PSJ OE] after an IMO
+    order has expired and before the ORMTIME RUN option has run to
+    "correctly" change the status, the status is filed incorrectly: so
+    that the necessary cross references are not triggered. This is causing
+    patient care issues.
+  
+    Solution
+    ---------
+    File the status correctly when a user goes into the Inpatient Order 
+    Entry [PSJ OE] after an IMO order has expired and before the ORMTIME 
+    RUN option has run. This will cause the necessary cross references to 
+    trigger.
+  
+  
+ Test Sites:
+ ----------
+ CENTRAL TEXAS HCS
+ CHARLESTON, SC
+ UPSTATE NEW YORK HCS:
+  Albany,NY (VISN 2)
+  Bath, NY (VISN 2)
+  Canandaigua, NY (VISN 2)
+  Syracuse, NY (VISN 2)
+  VA Western New York Healthcare System at Batavia (VISN 2)
+   
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.va.gov/vdl/
+  
+ Title                          File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ Inpatient Medications V.5.0    PSJ_5_NURSE_UM_R0413.PDF     BINARY
+ Nurse's User Manual
+  
+ Inpatient Medications V.5.0    PSJ_5_P275_NURSE_UM_CP.PDF   BINARY
+ V. 5.0 Nurse's User Manual
+ Change Pages
+  
+ Inpatient Medications V.5.0    PSJ_5_PHAR_UM_R0413.PDF      BINARY
+ Pharmacist's User Manual 
+  
+ Inpatient Medications V.5.0    PSJ_5_P275_PHAR_UM_CP.PDF    BINARY
+ Pharmacist's User Manual
+ Change Pages
+  
+ Inpatient Medications V.5.0    PSJ_5_TM_R0413.PDF           BINARY
+ Technical Manual/Security
+ Guide
+  
+ Inpatient Medications V.5.0    PSJ_5_P275_TM_CP.PDF         BINARY
+ Technical Manual/Security
+ Guide Change Pages
+  
+ Inpatient Medications V.5.0    PSJ_5_P275_RN.PDF            BINARY
+ IMR 5 Release Notes
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ REMINDER: Do NOT queue this patch to install at a later time.
+  
+ Verify users are logged out of the Inpatient Medications V. 5.0
+ application. This patch should take less than 5 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter PSJ*5.0*275.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', accept the default, 'YES'.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', accept the default, 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter 'NO'.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ None.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 157
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAP0
+    Before: B31836925   After: B32794641  **8,58,111,278,275**
+Routine Name: PSGAPIV
+    Before:  B6284918   After:  B7424595  **9,58,169,275**
+Routine Name: PSGAPP
+    Before: B27978328   After: B31906580  **8,20,60,50,111,169,275**
+Routine Name: PSGCAP0
+    Before: B21979348   After: B23579520  **8,58,111,149,275**
+Routine Name: PSGCAPP
+    Before: B15658306   After: B20267187  **8,20,60,111,149,169,275**
+Routine Name: PSGMIV
+    Before: B42223209   After: B42880298  **4,20,21,28,58,111,131,145,267,275**
+Routine Name: PSGMMIV
+    Before: B42167886   After: B48999295  **20,21,58,111,131,145,267,275**
+Routine Name: PSGNE3
+    Before: B84337387   After: B86381204  **4,26,47,50,63,69,105,80,111,
+                                           183,193,179,275**
+Routine Name: PSGO
+    Before: B25195352   After: B35277270  **4,58,110,181,275**
+Routine Name: PSGOE
+    Before: B26201410   After: B26201410  **22,29,56,72,95,80,133,181,275**
+Routine Name: PSGOU
+    Before: B31799973   After: B34119458  **34,110,181,275**
+Routine Name: PSGP
+    Before: B12038299   After: B11695903  **10,53,111,181,267,275**
+Routine Name: PSGVBW
+    Before: B96887631   After: B97529412  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241,243,
+                                           265,275**
+Routine Name: PSIV
+    Before: B24205537   After: B30428060  **7,16,29,38,53,56,72,58,110,
+                                           181,267,275**
+Routine Name: PSIVACT
+    Before: B16650605   After: B30113388  **15,38,58,110,181,275**
+Routine Name: PSIVORC2
+    Before: B59003278   After: B59162972  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267,275**
+Routine Name: PSIVORFA
+    Before: B27786981   After: B28198833  **4,7,18,28,50,71,58,91,80,110,
+                                           111,134,225,267,275**
+Routine Name: PSIVPRO
+    Before: B37380332   After: B46921517  **38,58,85,110,181,263,275**
+Routine Name: PSIVQUI
+    Before: B19161013   After: B19673705  **21,50,65,73,76,93,104,110,275**
+Routine Name: PSIVUTL
+    Before: B28212020   After: B30828184  **69,58,81,85,110,133,181,263,275**
+Routine Name: PSJAC
+    Before: B14319225   After: B14549203  **8,10,50,127,181,275**
+Routine Name: PSJBCMA5
+    Before: B78422093   After: B80438277  **267,275**
+Routine Name: PSJCLOR
+    Before:       n/a   After:B135035264  **275**
+Routine Name: PSJCLOR1
+    Before:       n/a   After: B61599186  **275**
+Routine Name: PSJCLOR2
+    Before:       n/a   After:B116137522  **275**
+Routine Name: PSJCLOR3
+    Before:       n/a   After:B146984380  **275**
+Routine Name: PSJCLOR4
+    Before:       n/a   After: B76629306  **275**
+Routine Name: PSJCLOR5
+    Before:       n/a   After: B68088373  **275**
+Routine Name: PSJDPT
+    Before: B13914109   After: B14025206  **53,124,166,160,198,267,275**
+Routine Name: PSJHL7
+    Before: B50036131   After: B54233730  **42,47,50,70,82,110,127,133,275**
+Routine Name: PSJINVW
+    Before:B101370185   After:B123707309  **267,275**
+Routine Name: PSJLIACT
+    Before: B49301561   After: B49618322  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275**
+Routine Name: PSJLIVMD
+    Before: B95539776   After: B96668523  **37,50,63,58,81,91,80,116,110,
+                                           111,180,134,209,254,267,275**
+Routine Name: PSJLMGUD
+    Before: B30433867   After: B30490889  **25,58,85,116,110,111,267,275**
+Routine Name: PSJLMHED
+    Before: B50472528   After: B56770438  **4,58,85,110,148,181,260,275**
+Routine Name: PSJLMPRI
+    Before: B19651424   After: B22340639  **58,85,118,110,133,154,181,275**
+Routine Name: PSJO
+    Before: B23946604   After: B28881243  **31,58,110,181,267,275**
+Routine Name: PSJO1
+    Before: B32562541   After: B46168222  **3,47,56,58,109,110,127,162,
+                                           181,275**
+Routine Name: PSJOE0
+    Before: B25370612   After: B26253829  **47,56,110,133,162,241,267,275**
+Routine Name: PSJORMA2
+    Before: B19470230   After: B20205584  **2,15,21,26,58,237,275**
+Routine Name: PSJORRE
+    Before: B32342688   After: B35461891  **22,51,50,58,81,110,111,112,
+                                           134,225,275**
+Routine Name: PSJORRE1
+    Before: B35616681   After: B41040676  **22,51,50,58,81,91,110,111,
+                                           134,225,275**
+Routine Name: PSJORRN
+    Before: B62913592   After: B66656039  **134,213,225,275**
+Routine Name: PSJORRN1
+    Before: B57655173   After: B61358484  **134,213,225,275**
+Routine Name: PSJORRO
+    Before: B63875984   After: B67615979  **134,213,225,275**
+Routine Name: PSJP
+    Before: B21519406   After: B26835871  **10,53,60,181,273,267,275**
+Routine Name: PSJRXI
+    Before: B20674326   After: B22320376  **3,181,254,267,275**
+
+=============================================================================
+User Information:                          Hold Date     : MAY 01, 2013
+Entered By  : HARRIS,JAMES C                Date Entered  : FEB 28, 2012
+Completed By: NAPOLIELLO,GREG               Date Completed: APR 05, 2013
+Released By : MIAN,NAEEM                    Date Released : MAY 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

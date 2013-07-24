@@ -1,0 +1,177 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 11/14/12 at 16:26
+=============================================================================
+Run Date: APR 10, 2013                     Designation: LR*5.2*423
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #335                    Status: Released
+                  Compliance Date: MAY 11, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*240  <<= must be installed BEFORE `LR*5.2*423'
+                    (v)LR*5.2*360  <<= must be installed BEFORE `LR*5.2*423'
+
+Subject: ERRORS WITH BUILDING COLLECTION LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is a VM patch that addresses 2 issues in the Lab package.
+  
+ 1. In building the collection list, if an order fails to accession, 
+    it can cause subsequent orders to fail to accession also, even though
+    the subsequent orders are ok.
+  
+ 2. Laboratory-related locking issues when doing accessioning
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*423 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*423 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*423 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000707524  -  Multiple errors encountered when building 
+                        collection list
+  
+ 2. HD0000000725408  -  Laboratory-related locking issues when doing 
+                        accessioning.
+     
+  
+ Testing Sites:
+ =============
+ BRONX, NY
+ NORTH FLORIDA/SOUTH GEORGIA
+ NORTHERN CALIFORNIA HCS
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000707524  -  Multiple errors encountered when building 
+                             collection list
+  
+    Problem:
+    --------
+    Normally. when building the collection list and accessioning lab
+    collect orders to the appropriate accession area, the division
+    (institution) used is determined by the institution pointed to by the 
+    ordering location in the Hospital Location file (#44). If, in building
+    a collection list, an ordering location is encountered that points to
+    an institution other than the institution associated with the user, as
+    found in DUZ(2), the non-DUZ(2) institution may be used to try to
+    accession subsequent orders, leading to accessioning errors.
+   
+    Solution:
+    ---------
+    Modify routine LRPHSET1 to use the institution from the user, DUZ(2),
+    when an ordering location is encountered that is not linked to an
+    institution.
+  
+    Routine:  LRPHSET1  
+  
+ 2. HD0000000725408  -  Laboratory-related locking issues when doing    
+                         accessioning
+  
+    Problem:
+    --------
+    Non-compliance with SACC standards leads to locking issues during
+    accessioning.
+  
+    2.4.6.1 All LOCKs shall be of the incremental form. (Exemption: Kernel)
+         All incremental LOCKS must have a timeout, the timeout must not 
+         be less than the value of the Kernel variable "DILOCKTM".
+   
+    Solution:
+    ---------
+    Modify the incremental lock in routine LROE to use the variable
+    DILOCKTM as the timeout value rather than 1 second.
+  
+    Routine:    LROE
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ The install time for this patch is less than 2 minutes. This patch
+ can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*423.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LROE
+    Before: B34568741   After: B34630277  **100,121,201,221,263,286,360,423**
+Routine Name: LRPHSET1
+    Before: B10170497   After: B10152359  **121,191,221,240,423**
+ 
+Routine list of preceding patches: 240, 360
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : AUG 16, 2012
+Completed By: BYRD,TIERRA                   Date Completed: APR 09, 2013
+Released By : CONLIN,TERESA                 Date Released : APR 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

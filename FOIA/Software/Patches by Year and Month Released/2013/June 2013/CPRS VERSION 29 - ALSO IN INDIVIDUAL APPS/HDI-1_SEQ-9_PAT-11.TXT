@@ -1,0 +1,136 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: HDI*1*11
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1         SEQ #9                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*11'
+                    (v)XT*7.3*111  <<= must be installed BEFORE `HDI*1*11'
+
+Subject: PROBLEM LIST STANDARDIZATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+ The post-init routine for this patch will add data for the Problem List 
+ Domain to the HDIS Domain file (#7115.1). This patch is just in
+ preparation for the Problem List patch.
+  
+ This patch includes the following Bulletins:
+ HDIS ERRORS
+ HDIS NOTIFY ERT
+ HDIS NOTIFY HDR
+ HDIS XML MSG PROCESS ERROR
+  
+ This patch includes the following Mail Groups:
+ HDIS ERRORS
+ HDIS ERT NOTIFICATION
+ HDIS HDR NOTIFICATION
+ HDIS LAB EXCEPTIONS 
+  
+ The Mail Groups are distributed with updated mail addresses, which 
+ forward directly to STS (Standards and Terminology Services).  Users 
+ will not interact with the mail groups nor receive the notifications.
+  
+ INSTALLATION INSTRUCTIONS:
+  ==========================
+  
+  Note: Patch HDI*1.0*6 and XT*7.3*111 are REQUIRED builds for
+        HDI*1.0*11.  KIDS will not allow the installation of
+        this patch without the prior installation of them.
+  
+ CPRS v29 is an enhancement release with modifications for the Drug 
+ Enforcement Agency (DEA) electronic prescribing (ePCS) of controlled 
+ substances, Problem List changes for the use of SNOMED CT codes, and the 
+ display of Mental Health Treatment Coordinator information entered through
+ the Primary Care Management Module. In addition to these enhancements,
+ software changes are being made to correct several PSIs, Section 508
+ issues, and additional miscellaneous defect fixes.
+  
+ CPRS GUI version 29 consists of the following host files:
+ HDI_1_11.KID
+ PSS_1_166.KID
+ CPRSV29_PSO_PSD.KID
+ OR_GMPL_GMTS_XU_29.KID
+ CPRSChart.exe
+ Help system (numerous files in a single directory named Help)
+ OR_30_371.KID
+ PSO_7_426.KID
+  
+ The host files were created to simplify installation at Veterans Health 
+ Administration (VHA) facilities and to assist in the implementation. CPRS 
+ v29 will follow a phased implementation.  To see the current status and 
+ target dates for Sites/VISN/Regions please refer to the following site:
+  
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306IG.doc and OR_30_306IG.pdf and is included in OR_30_306.ZIP.
+  
+ Patch information:
+ HDI_1_11.KID supports CPRS v29 functionality by adding data for the 
+ Problem List Domain to the HDIS DOMAIN file (#7115.1). It includes the 
+ following patch: 
+ HD1*1*11
+  
+ PSS_1_166.KID supports the DEA ePCS functionality.  It includes the 
+ following patch: 
+ PSS*1*166
+  
+ CPRSV29_PSO_PSD.KID also supports the DEA ePCS functionality. It includes 
+ the following patches:   
+ PSD*3*73
+ PSO*7*391
+  
+ OR_GMPL_GMTS_XU_29.kid contains the main CPRS GUI v29 functionality. It 
+ includes the following patches:
+         GMPL*2*36 (Extension to accommodate SNOMED-CT)
+         GMTS*2.7*86 (Problem List Standardization support)
+         XU*8*609 (EPCS Support)
+         OR*3*306 (CPRS version 29)
+  
+ OR_30_371.KID includes support for CPRS v.29. It includes the following 
+ patch:
+         OR*3*371
+  
+ PSO_7_426.KID include support for DEA ePrescribing in Outpatient Pharmacy 
+ V7.0. It includes the following patch:
+         PSO*7*426
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1011A
+    Before:       n/a   After:  B2186334  **11**
+
+=============================================================================
+User Information:
+Entered By  : PETERSON,JAMES R              Date Entered  : JAN 24, 2008
+Completed By: BASKETT,BARBARA J             Date Completed: MAY 20, 2013
+Released By : HARROD,PAUL                   Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

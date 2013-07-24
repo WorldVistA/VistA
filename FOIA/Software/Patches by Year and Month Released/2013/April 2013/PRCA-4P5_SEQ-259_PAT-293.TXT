@@ -1,0 +1,205 @@
+$TXT Created by NULL,Rodger at CARVDD.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 12/17/12 at 13:59
+=============================================================================
+Run Date: APR 11, 2013                     Designation: PRCA*4.5*293
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #259                    Status: Released
+                  Compliance Date: MAY 11, 2013
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*222<<= must be installed BEFORE `PRCA*4.5*293'
+                    (v)PRCA*4.5*283<<= must be installed BEFORE `PRCA*4.5*293'
+
+Subject: HIPAA 5010 D.0 Level II Phase 2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The HIPAA 5010 D.0 Level II Phase 2 project includes the following
+ modifications to the Electronic Payments V. 4.5 application:
+  
+ 1. Duplicate Receipt Numbers
+    -------------------------
+    Modified VistA to create a unique receipt number for the user when
+    creating a receipt in order to post payments without manual
+    intervention. Previously, it was possible for VistA to create an
+    already used receipt number and this would cause the user to re-enter
+    data because VistA did not recognize the duplicate receipt number
+    until later in the creation of receipt process.
+  
+ 2. Manual Receipts - EFT Selection
+    -------------------------------
+    Modified VistA so that the user is unable to select a MATCHED EFT
+    when performing the Manual Match EFT-ERA. Due to this modification the
+    user will NOT be able to see or select a MATCHED EFT when using the
+    MANUALLY MATCH EFT-ERA [RCDPE MANUAL MATCH EFT-ERA] option.
+  
+    Once the match is made, the EFT will NOT be listed on the Unmatched
+    Aging Report.
+  
+ 3. EFT Unmatched Aging Report & ERA Unmatched Aging Reports
+    --------------------------------------------------------
+    Modified VistA so that only non-duplicate EFTs that are unmatched and
+    have a payment amount greater than zero appear on the EFT Unmatched
+    Aging Report.  VistA was also modified so that only non-duplicate ERAs
+    that are unmatched and have a payment amount greater than zero appear
+    on the ERA Unmatched Aging Report.
+  
+ 4. Unapplied EFT Deposit Report
+    ---------------------------
+    Modified VistA to prevent duplicate EFTs from displaying on the
+    Unapplied EFT Deposit Report. 
+  
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)              New/Modified/Deleted
+ ------------------    ----------------            --------------------
+ N/A
+  
+   
+ Options Associated:
+  
+ Option Name                                                  New/Mod/Del
+ -----------                                                  -----------
+ MANUAL MATCH EFT-ERA [RCDPE MANUAL MATCH EFT-ERA]               Modified
+ EFT UNMATCHED AGING REPORT [RCDPE EFT AGING REPORT]             Modified
+ ERA UNMATCHED AGING REPORT [RCDPE ERA AGING REPORT]             Modified
+ UNAPPLIED EFT DEPOSITS REPORT [RCDPE UNAPPLIED EFT DEP REPORT]  Modified
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+   
+   
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A 
+  
+  
+ TEST Sites:
+ ===========
+  Tennessee Valley HCS
+  Mountain Home, TN
+  Richmond, VA
+  Asheville, NC
+  Birmingham, AL
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The preferred method is to FTP the files from:
+ ftp://download.vista.med.va.gov/.  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+ OI FIELD OFFICE  FTP ADDRESS              DIRECTORY
+ ===============  ===========              =========
+ Albany           ftp.fo-albany.med.va.gov <ftp://ftp.fo-albany.med.va.gov>
+ Hines            ftp.fo-hines.med.va.gov  <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City   ftp.fo-slc.med.va.gov    <ftp://ftp.fo-slc.med.va.gov>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ File Description                        File Name                FTP Mode
+ -------------------------------------------------------------------------
+ e-Payments User Manual                  PRCA_4_5_UM_R0313.pdf    Binary
+ e-Payments Patch Release Notes          PRCA_4_5_RN.pdf          Binary
+  
+  
+ -------------------------------------------------------------------------
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation steps associated with this patch.
+  
+  
+  
+ Installation Instructions
+ -------------------------
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PRCA*4.5*293).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package 
+      PRCA*4.5*293.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPE8NZ
+    Before: B55534071   After: B56342604  **173,212,208,269,276,283,293**
+Routine Name: RCDPEAR1
+    Before:B125070101   After:B126108337  **173,269,276,284,293**
+Routine Name: RCDPEAR2
+    Before: B62672024   After: B63768101  **173,269,276,284,283,293**
+Routine Name: RCDPEM2
+    Before:B181574834   After:B188791112  **173,208,276,284,293**
+Routine Name: RCDPUREC
+    Before: B62020340   After: B76306195  **114,148,169,173,208,222,293**
+ 
+Routine list of preceding patches: 222, 283
+
+=============================================================================
+User Information:
+Entered By  : WHITE,DARLENE                 Date Entered  : NOV 13, 2012
+Completed By: JOHNSON,WILLIAM III           Date Completed: MAR 13, 2013
+Released By : BATIE,NADINE                  Date Released : APR 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

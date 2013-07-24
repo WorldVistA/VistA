@@ -1,0 +1,147 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 10/03/12 at 11:43
+=============================================================================
+Run Date: APR 22, 2013                     Designation: LR*5.2*426
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #336                    Status: Released
+                  Compliance Date: MAY 23, 2013
+=============================================================================
+
+
+Subject: INPUT TRANSFORM ERROR CAUSING DATA VERIFICATION ERROR
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses an issue involving the VA FileMan Verify Field 
+ utility, which gives mixed results on outputs. This patch will update the 
+ data dictionary only. It does not contain any routines nor will it update 
+ or change data stored at the site.
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*426 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*426 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*426 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000095444 - FM verify field utility gives mixed results on 
+                      outputs
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ HEARTLAND -EAST
+ WASHINGTON, DC
+ WEST PALM BEACH, FL
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000095444 - FM verify field utility gives mixed results on 
+                      outputs
+  
+    Problem:  
+    --------
+    The FileMan Verify Field utility will use a field's input transform to 
+    verify the integrity of the data stored for the selected field in the
+    selected file. When the Verify Field utility is used on the WKLD SUFFIX
+    CODE field (#1) in the WKLD SUFFIX CODE FILE (#64.2), the output is not
+    consistent. When the output is queued to a print device, the output 
+    states that both the data will fail the input transform, and the data 
+    item is a duplicate record. When the output is sent to a print device 
+    without it being queued, the output finds no problems. This is
+    incorrect. The output of the Verify Field utility using the input
+    transform of the WKLD SUFFIX CODE field (#1) should state it is
+    duplicate data whether it is queued or not.
+  
+    Resolution:
+    -----------
+    Remove the '$D(DIU(0)) logic test from the input transform.
+  
+    Technical Description:
+    ---------------------- 
+    The input transform is currently defined as this:
+    S X1=$P(X,".",2) Q:X1="0000"  K:X1>9999!(X1<1)!(X'?1"."4.5N) X I 
+    '$D(DIU(0)), $D(X),$D(^LAB(64.2,"F",X)) D EN^DDIOL("Duplicate
+    Code","","!?20") K X
+  
+    The problem is the '$D(DIU(0)) logic test. The DIU(0) is an optional 
+    variable used to hold input parameter values used by the EN^DIU2, a
+    Data Dictionary Deletion utility routine. When the output is queued,
+    this variable is not passed to TaskMan. While queued, the verification
+    process will reach this point and find the DIU(0) undefined and quit.
+    It will not complete the verification process and check the
+    ^LAB(64.2,"F") index. This index will contain a copy of the code and
+    display the "Duplicate Code" message, is what it should do, whether the
+    output is queued or not.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter LR*5.2*426)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package LR*5.2*426
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : SEP 24, 2012
+Completed By: BYRD,TIERRA                   Date Completed: APR 19, 2013
+Released By : CONLIN,TERESA                 Date Released : APR 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

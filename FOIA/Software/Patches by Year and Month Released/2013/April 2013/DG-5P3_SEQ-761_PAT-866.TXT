@@ -1,0 +1,126 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 01/28/13 at 10:02
+=============================================================================
+Run Date: APR 08, 2013                     Designation: DG*5.3*866
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #761                    Status: Released
+                  Compliance Date: MAY 09, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*866'
+
+Subject: PSEUDO SSN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*866 addresses the following issue:
+  
+ Pseudo Social Security Number (SSN) Calculator allows duplicates, which
+ is creating an issue for the New Born Project with multiple births and
+ billing process.
+   
+   
+   ASSOCIATED REMEDY: 
+   ==================
+   1) INC0000000770188   Pseudo SSN Calculator generates duplicates
+                          
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Alexandria, LA
+   Charleston, SC
+   New York HCS
+   
+   Remedy Overview:
+   ================
+   1) INC0000000770188    Pseudo SSN Calculator allows duplicates
+  
+    Problem:
+    --------
+    Current system allows for duplicate Pseudo SSN numbers. This is causing
+    issues for the New Born Project, if multiples are born, and allowing for 
+    issues within the billing system.
+  
+    Resolution:
+    -----------
+    The Pseudo SSN number is based on the birth date, first initial of last
+    name and first initial of first name.  Modified routine DGRPDD1 to 
+    check for duplicate Pseudo SSN numbers and if one is found, increase  
+    the pseudo number by one.
+   
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*866).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package DG*5.3*866
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+              
+         Register a Patient        [DG REGISTER PATIENT]
+         Load/Edit Patient Data    [DG LOAD PATIENT DATA]
+         Preregister a Patient     [DGPRE PRE-REGISTER OPTION]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;AUG 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGRPDD1
+    Before: B31264129   After: B32361034  **72,136,244,621,797,866**
+ 
+Routine list of preceding patches: 797
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : DEC 17, 2012
+Completed By: LEANORD,TATIANA               Date Completed: APR 04, 2013
+Released By : FITCH,DONNA                   Date Released : APR 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

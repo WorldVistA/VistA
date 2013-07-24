@@ -1,0 +1,246 @@
+
+=============================================================================
+Run Date: JUN 24, 2013                     Designation: WEBV*1*27
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #22                      Status: Released
+                  Compliance Date: JUL 25, 2013
+=============================================================================
+
+
+Subject: VistA Web v16.1.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 16.1.1 of VistaWeb (build last updated 04/11/13) will be      *
+ * promoted to the production server for national release on 06/25/13    *
+ *                                                                       *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National Vista Web server. There is *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *                                                                       *
+ *************************************************************************
+  
+ VistaWeb (VW) V16.1.1 includes the following issues as they relate to 
+ NwHIN:
+  
+  - Correction to MedVirginia's C32 Allergy section to display valid data
+    in 'Reaction' column.
+  
+  - Correction to HEALTHeLINK's C32 Lab Results section to display valid
+    data in 'Result Type' column.
+  
+  - Correction to HEALTHeLINK's C32 Lab Results section to display data in
+    'Source' column (instead of '--').
+  
+  - Correction to UHIN's C32 Lab Results section to display data in
+    'Source' column (instead of '--').
+  
+  - Correction to San Diego Beacon's C32 Lab Results to accommodate value
+    types of both String (ST) & Encapsulated (ED) data.
+  
+  - Correction to HEALTHeLINK's C32 Medication section so the 'Sig' column
+    data is not shown in 'Quantity' column.
+  
+  - Correction to UHIN's C32 Medication section so the 'Sig' column does
+    not show data from another field.
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1. INC000000809456 - VistAWeb - WEBV (Stand Alone) Issue
+ 2. INC000000809511 - VistAWeb - WEBV (Stand Alone) Issue
+ 3. INC000000809515 - VistAWeb - WEBV (Stand Alone) Issue
+ 4. INC000000809388 - VistAWeb - WEBV (Stand Alone) Issue
+ 5. INC000000809400 - VistAWeb - WEBV (Stand Alone) Issue
+ 6. INC000000809513 - VistAWeb - WEBV (Stand Alone) Issue
+ 7. INC000000809365 - VistAWeb - WEBV (Stand Alone) Issue
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Puget Sound HCS
+ Richmond, VA
+ Salt Lake City, UT
+ Upstate New York HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1)INC000000809456 - VistAWeb - WEBV (Stand Alone) Issue
+   
+    Problem:
+    =========
+    In the Allergy section of MedVirginia's C32, the 'Reaction' column is
+    showing data from other fields.  Data is being displayed in the correct
+    field and then again incorrectly in the 'Reaction' column.
+  
+    Solution:
+    =========
+    The XSLT stylesheet was looking for the 'Reaction' column data in the
+    wrong XML path.  This path is now commented out since it contains the
+    allergen name and not the allergy reaction data.
+  
+  
+ 2)INC000000809511 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    In the Lab Results section of HEALTHeLINK's C32, the 'Result Type'
+    column contains zeroes instead of the names of lab tests.
+  
+    Solution:
+    =========
+    A new path was added to the stylesheet which now looks in the correct
+    XML node for the needed data.  
+  
+  
+ 3)INC000000809515 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    In the Lab results section of HEALTHeLINK's C32, the 'Source' column
+    does not display any data (it is currently displaying '--').
+  
+    Solution:
+    =========
+    A new path was added in the stylesheet which now looks in the correct
+    XML node for the data needed for this partner.
+  
+  
+ 4)INC000000809388 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    In the Lab results section of UHIN's C32, the 'Source' column does not
+    display any data (it is currently displaying '--').
+  
+    Solution:
+    =========
+    A new path was added in the stylesheet which now looks in the correct
+    XML node for the data needed for this partner.
+  
+  
+ 5)INC000000809400 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    For San Diego Beacon, value  type of string (ST) and encapsulated data
+    (ED) is not being recognized in the Lab Results section.
+  
+    Solution:
+    =========
+    A line was added in the stylesheet to recognize both the 'ST' and
+    'ED' value type.
+  
+  
+ 6)INC000000809513 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    In the Medication section of HEALTHeLINK's C32, the 'Quantity' column
+    is displaying data that is supposed to go in another column.
+    Incorrect data is displayed in the 'Quantity' column then again in the
+    correct column.  
+  
+    Solution:
+    =========
+    In the stylesheet, Quantity was looking for data in the wrong XML
+    node. This was commented out since this particular node is reserved for
+    'Sig' column data per Healthcare Information Technology Standards Panel
+    (HITSP) standards.
+  
+  
+ 7)INC000000809365 - VistAWeb - WEBV (Stand Alone) Issue
+  
+    Problem:
+    =========
+    There are two issues within this UHIN partner ticket.
+       
+    First issue: The Medication sections, 'Sig' column is displaying
+    the medication name.
+       
+    Second issue: The Medication section is supposed to be sorted by
+    the date in the 'Order Expiration' column.
+  
+    Solution:
+    =========
+    Issue one fix: Corrected XPath expression that is locating the data
+    needed to go in the 'Sig' column so that it no longer displays
+    the medication name.
+       
+    Issue two fix: Corrected XPath expression that was pointing to the
+    node used to sort the medication column.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+  
+     http://www.va.gov/vdl 
+     http://vista.med.va.gov/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+  
+      - download.vista.med.va.gov.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.fo-albany.med.va.gov [anonymous.software]
+ Hines                ftp.fo-hines.med.va.gov  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.med.va.gov    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+   
+ WEBV_1_27_IG.zip
+  
+ The following files can be found in zip file above:
+  
+ WEBV_1_27_IG.DOC
+ WEBv_1_27_IG.PDF
+ NVW_Prod_v16_1_1_Install_Guide.doc
+ NVW_Prod_v16_1_1_Install_Guide.pdf
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : KATIC,SASA                    Date Entered  : APR 02, 2013
+Completed By: SESSLER,APRIL                 Date Completed: JUN 24, 2013
+Released By : SCHMIT,BECKY                  Date Released : JUN 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

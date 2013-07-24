@@ -1,0 +1,202 @@
+
+=============================================================================
+Run Date: MAY 14, 2013                     Designation: VBEC*1*50
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 1        SEQ #55                      Status: Released
+                  Compliance Date: JUN 13, 2013
+=============================================================================
+
+
+Subject: Release of VBECS 1.6.1 Server Patch
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This information patch serves to alert VA facilities using VistA 
+ Blood Establishment Computer Software (VBECS) that the VBECS 1.6.1 
+ server patch is available for immediate installation.
+  
+ If the VBECS servers are serviced by a second group, (i.e., a Regional 
+ Data Center) it is the responsibility of the local IRM support person 
+ for VBECS to ensure that all parties who need to take action on this 
+ information for 'their' VBECS system see it. The local support should 
+ follow local policies to forward such information to their Server 
+ Administrators. 
+  
+ Sites who have not installed VBECS have no action to take with this 
+ informational patch.
+  
+ This patch is released with a thirty (30) day compliance because the 
+ patch addresses an issue reported to the Food and Drug Administration 
+ (FDA) and Patient Safety. A full description of the patch changes are 
+ included in the VBECS 1.6.1 Release Notes.
+  
+  
+ BLOOD BANK CLEARANCE 
+ ===================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1.0*50 contains 
+ changes to a package referenced in BBM Team Review of VISTA Patches.
+ This patch does not alter or modify any VistA Blood Bank software 
+ design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*1.0*50 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ VALIDATION REQUIREMENTS: 
+ ==========================
+ VBECS 1.6.1 server patch requires customer validation in the local 
+ Test account prior to installation in Production to meet FDA
+ requirements. The user validates the Blood Bank software for its 
+ intended use prior to its acceptance and use for patient care. The 
+ VBECS 1.6.1 Release Notes contain descriptions of the changes made in 
+ this patch and includes validation scenarios.
+  
+ Therefore, it is imperative that OIT Field Operations coordinate 
+ the installation of the VBECS 1.6.1 server patch with Pathology & 
+ Laboratory Medicine Service staff to allow adequate time for impact 
+ analysis and testing the changes prior to installation in Production. 
+  
+  
+ REMEDY TICKETS:
+ ===============
+  HD 772113, PSPO 2339
+  HD 773858
+  
+  
+ TEST SITES:
+ ===========
+  DURHAM, NC 
+  HEARTLAND-EAST HCS 
+    >Marion, IL 
+    >Poplar Bluff, MO 
+    >St. Louis, MO 
+  MILWAUKEE, WI 
+  
+  
+ INSTALLATION INFORMATION:
+ ==========================
+  
+ The file listed below is obtained via the controlled VBECS software 
+ FTP. 
+  
+ Sites that have already installed VBECS in Test or Production must 
+ obtain the VBECS 1.6.1 server patch from the controlled VBECS 
+ software FTP site at: 
+      IP: 10.3.9.181 
+      Port: 20001 
+  
+      Enter your Domain and NT user name and password to gain access.
+  
+ This patch is released with a (30) day compliance for all sites that 
+ have VBECS installed in test or production.
+  
+  
+ Installation Files: 
+ ===================
+  VBECS_Patch_1.6.1.2_013113.zip
+  
+  
+ Documentation: 
+ ============== 
+ Documentation is available for the VBECS package on the 
+ ANONYMOUS.SOFTWARE directory at one of the following Office of 
+ Information (OI) Field Offices. Sites will be able to utilize
+ documentation in either the ".PDF" or ".DOC" format after they extract 
+ the .ZIP file.
+  
+ The preferred method is to FTP the files from:
+ Download.vista.med.va.gov
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as 
+ follows:
+        Albany                  ftp.fo-albany.med.va.gov
+        Hines                   ftp.fo-hines.med.va.gov
+        Salt Lake City          ftp.fo-slc.med.va.gov
+  
+ NOTE:  The .ZIP file listed below will be listed in each of the 
+ VBECS and LR patches that are part of the VBECS package and associated 
+ patches. It only needs to be downloaded once.
+  
+ File Name                                   Retrieval format:  
+ ===========                                 ================= 
+ VBECS_1_6_1_DOCS_BUNDLE.ZIP                 BINARY 
+  
+  
+ The following files are contained in the VBECS_1_6_1_DOCS_BUNDLE.ZIP 
+ file and will not be individually located on the OI Field Office 
+ Anonymous Directories.
+  
+ The VBECS_1_6_1_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+ system for use.
+  
+ =======================================================================
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 Patch 
+ Installation Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 Patch 
+ Installation Guide.pdf
+ VBECS 1.6.1 Patch Installation Form for the Production Environment.docx
+ VBECS 1.6.1 Patch Installation Form for the Production Environment.pdf
+ VBECS 1.6.1 Patch Installation Form for the Test Environment.docx
+ VBECS 1.6.1 Patch Installation Form for the Test Environment.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 Release 
+ Notes.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 Release 
+ Notes.pdf
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 User Guide.docx
+ VistA Blood Establishment Computer Software (VBECS) 1.6.1 User Guide.pdf
+  
+  
+ Installation Instructions:
+ ==========================
+ Coordinate a period of VBECS server downtime with the Blood Bank 
+ point of contact of about two hours to allow for the installation 
+ of the VBECS 1.6.1 server patch in TEST. 
+  
+   1. Download the VBECS_1_6_1_DOCS_BUNDLE.ZIP from the 
+      Download.vista.med.va.gov FTP site.
+  
+   2. Unzip this file and open the VBECS 1.6.1 Patch Installation 
+      Guide. Follow the instructions therein to apply the 
+      VBECS 1.6.1 server patch to TEST. 
+  
+   3. Notify the Blood Bank point of contact after the VBECS 1.6.1 
+      server patch is installed in TEST. 
+  
+   4. Following local validation of the changes in the patch the 
+      Blood Bank point of contact will coordinate a date and time to 
+      install the VBECS 1.6.1 server patch in the PRODUCTION account.
+  
+  
+ ========================================================================
+  
+ NOTE: Do not change the system! The U.S. Food and Drug Administration 
+ classifies this software as a medical device. Unauthorized modifications 
+ will render this device an adulterated medical device under Section 501 
+ of the Medical Device Amendments to the Federal Food, Drug, and Cosmetic 
+ Act. Acquiring and implementing this software through the Freedom of 
+ Information Act require the implementer to assume total responsibility 
+ for the software and become a registered manufacturer of a medical 
+ device, subject to FDA regulations. Adding to or updating VBECS software 
+ without permission is prohibited.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : KANIA,KEVIN                   Date Entered  : DEC 12, 2012
+Completed By: MORTON,RANDY                  Date Completed: MAY 14, 2013
+Released By : CURTIS,SEAN                   Date Released : MAY 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

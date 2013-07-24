@@ -1,0 +1,219 @@
+$TXT Created by RUFF,ROBERT at CPRS29.FO-SLC.MED.VA.GOV  (KIDS) on Thursday, 03/28/13 at 09:39
+=============================================================================
+Run Date: JUN 20, 2013                     Designation: OR*3*366
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #319                      Status: Released
+                  Compliance Date: JUN 22, 2013
+=============================================================================
+
+
+Subject: MOCHA 2 QUICK ORDER REPORTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ IMPORTANT NOTE:  As directed by the Secretary of the Department of 
+ Veterans Affairs, this patch is being released with a 24 hour compliance 
+ date for installation.
+  
+ This patch adds two new reports to the Order Menu Management Option.  
+ These reports will list quick orders whose resulting orders will not 
+ participate in Max Single Dose Checks.  Pharmacy Informatics and Clinical 
+ Application Coordinators should jointly review these reports and edit the 
+ quick orders listed.  This data cleanup is an integral part of the site's 
+ readiness to install and implement the Medication Order Check Healthcare 
+ Application (MOCHA) 2.0.  Documentation on this data cleanup process is 
+ available at http://go.va.gov/hmbz as well as the updated CPRS List 
+ Manager Technical Manual.
+  
+ Quick Order Mixed-Case Report [OR QO CASE REPORT]
+ =================================================
+ This report identifies quick orders that have potentially had the DRUG 
+ name edited such that when the quick order is loaded in CPRS the dosage 
+ that is saved with the quick order does not match any of the dosages 
+ available for selection in the list. This causes the dosage checks not to 
+ be able to be performed correctly.  The edit to the drug that this 
+ specifically looks for is a case change to the DRUG name.  If the name is 
+ changed so that it contains different characters that are not just case 
+ changes, this report will not identify them.
+  
+ Quick Order Free-Text Report [OR QO FREETEXT REPORT]
+ ====================================================
+ This report identifies Medication Quick orders that have a free text 
+ dosage that does not match exactly one of the possible dosages or local 
+ possible dosages from Pharmacy.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ OR QO CASE REPORT      Run Routine        New
+ OR QO FREETEXT REPORT  Run Routine        New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ None
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ None
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ None
+  
+  
+ Test Sites:
+ ----------
+ Charleston
+ Tuscaloosa
+ Kansas
+ Boise
+ Palo Alto
+ Northern California - Martinez
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.va.gov/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Computerized Patient Record   cprsguitm.pdf (PDF Format)     Binary
+   System (CPRS) Technical     cprsgiutm.doc (Word Format)    Binary
+   Manual - GUI Version
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 5 minutes to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     OR*3.0*366):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.  
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQOREP
+    Before:       n/a   After:B106806677  **366**
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : OCT 05, 2012
+Completed By: BARLOW,KENNETH                Date Completed: JUN 20, 2013
+Released By : STOKER,ELAINE                 Date Released : JUN 20, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

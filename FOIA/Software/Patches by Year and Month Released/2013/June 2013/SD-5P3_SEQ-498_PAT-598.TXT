@@ -1,0 +1,213 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 02/27/13 at 15:59
+=============================================================================
+Run Date: JUN 17, 2013                     Designation: SD*5.3*598
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #498                    Status: Released
+                  Compliance Date: JUL 18, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*563  <<= must be installed BEFORE `SD*5.3*598'
+
+Subject: PCMM REACTIVATION ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses several Primary Care Management Module (PCMM) issues:
+  
+ Note - This patch only addresses the issues listed below in VistA. Issues     
+ relating to the PCMM GUI have separate tickets and will be resolved in 
+ patch SD*5.3*602.
+  
+ 1. The user has the ability to reactivate an automatically inactivated patient
+    to an inactive team and position. 
+  
+ 2. The user has the ability to reactivate an automatically inactivated deceased
+    patient to their previously assigned team and position.
+  
+ 3. When running the Historical Provider Position Assignment Listing 
+    [SC PCMM HIST PROV ASSIGN LIST] report by provider no assignment data
+    is returned due to an incorrect variable name. 
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1)  INC000000536058  - User has the ability to reactivate a patient to an
+                       inactive team or position.
+  
+ 2)  INC000000709517 - User can reactivate a deceased patient to previously
+                       assigned team and position.
+  
+ 3)  INC000000625873 - Historical Report of several Providers   
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ San Francisco, CA
+ Tampa, FL
+ Upstate New York HCS
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+  
+ 1)  HD0000000536058 - User has the ability to reactivate a patient to an
+                       inactive team or position.
+  
+ Problem:
+ --------
+ When using the PCMM Assign or Unassign protocol via the Appointment Management
+ Module [SDAM APPT MGT] option, if the patient has been automatically
+ inactivated, the user will receive a prompt to reactivate the patient to their
+ previously assigned team and position. The system does not validate whether the
+ previously assigned team and position are currently active or  not. The user   
+ should not be able to assign a patient to an inactive team or position. 
+  
+  
+ Resolution:
+ -----------
+ Routine SCMCQK has been modified to check the status of the patients previously
+ assigned team and position. If either team or position is currently inactive
+ the user will NOT be prompted for reactivation.
+  
+  
+ 2)  HD0000000709517 - User can reactivate a deceased patient to previously
+                       assigned team and position.
+  
+ Problem:
+ --------
+ When using the PCMM Assign or Unassign protocol via the Appointment Management
+ Module [SDAM APPT MGT] option, if the patient has been automatically
+ inactivated, the user will receive a prompt to reactivate the patient to their
+ previously assigned team and position. If the patient is deceased the user
+ should not be able to reassign that patient to their previously assigned team
+ and position.
+  
+ Resolution:
+ -----------
+ Routine SCMCQK has been modified to NOT prompt the user for reactivation if the
+ patient is deceased.
+  
+  
+ 3)  HD0000000625873 - Historical Report of several Providers
+  
+ Problem:
+ --------
+ When running the Historical Provider Position Assignment Listing [SC PCMM HIST
+ PROV ASSIGN LIST] option by a specific provider, no data is returned due
+ to an incorrect variable name.
+  
+ Resolution:
+ -----------
+ Routine SCRPO3 has been modified by correcting the variable name.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*598):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+  
+         Enter options you wish to mark as 'Out Of Order':
+  
+         Appointment Management            [SDAM APPT MGT]
+  
+         Historical Provider Position.... 
+         Assignment Listing                [SC PCMM HIST PROV ASSIGN LIST]
+         
+         
+         Enter protocols you wish to mark as 'Out Of Order':
+  
+         PCMM Assign or Unassign           [SC PC PATIENT ASSIGN/UNASSIGN]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCMCQK
+    Before: B21155109   After: B23522932  **148,177,297,563,598**
+Routine Name: SCRPO3
+    Before: B60376313   After: B61149436  **177,598**
+ Description of Changes:
+  
+  
+
+ 
+Routine list of preceding patches: 563
+
+=============================================================================
+User Information:
+Entered By  : SPILLER,RICHARD               Date Entered  : JUL 11, 2012
+Completed By: SESSLER,APRIL                 Date Completed: JUN 11, 2013
+Released By : BENBOW,PHYLLIS O              Date Released : JUN 17, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

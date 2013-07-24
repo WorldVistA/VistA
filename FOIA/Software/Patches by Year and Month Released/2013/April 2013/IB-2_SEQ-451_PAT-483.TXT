@@ -1,0 +1,179 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 10/30/12 at 15:54
+=============================================================================
+Run Date: APR 26, 2013                     Designation: IB*2*483
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #451                      Status: Released
+                  Compliance Date: MAY 27, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*287    <<= must be installed BEFORE `IB*2*483'
+
+Subject: TC MODIFIER NEEDS TO BE REACTIVATED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues:
+ 1) The first issue is about the Technical Component (TC) Modifier added to the
+ procedure on the institutional bill.
+  
+ 2) The second issue is about the 'Modifier 26 Deleted from Procedures (1)'
+ message is mistakenly displayed for Modifier 58 in the [IB EDIT BILLING
+ INFO] option.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000742124 The Technical Component (TC) modifier needs to be reactivated
+ 
+ 2. HD0000000768361 Message - Modifier 26 Deleted from Procedures (1)
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA MARYLAND HCS
+ VA Western NY HCS
+ Martinsburg VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+ 1)  HD0000000742124 The Technical Component (TC) modifier needs to be
+     reactivated
+  
+     Problem:
+     --------
+     The Chief Business Office has requested to reactivate the Technical 
+     Component (TC) Modifier on institutional bills based on the rules:
+  
+     1. Modifier TC will not be removed from all procedures on institutional 
+     bills.
+     2. Modifier TC will be added to the procedure on an institutional bill
+     if the only professional charge for the procedure is 26 modified. 
+  
+ 
+     Resolution:
+     -----------
+     Routine IBCU7A was modified to create a function for adding Modifier TC
+     to the procedure on an institutional bill and the 'Modifier TC Added to 
+     Procedures (x)' message to accommodate with the change. The line codes
+     about Modifier TC removed from all procedures on institutional bills 
+     were also commented out in the routine.
+ 
+  
+ 2) HD0000000768361 Message - Modifier 26 Deleted from Procedures (1)
+  
+    Problem:
+    --------
+    When Modifier 58 for the procedure was entered to apply the procedure
+    updates for charges on the institutional bill, the 'Modifier 26 Deleted
+    from Procedures (1)' message mistakenly appears after that on screen <5>
+    in the [IB EDIT BILLING INFO] option.
+ 
+  
+    Resolution:
+    -----------
+    Routine IBCU7A was modified to correct the check for Modifier 26 and
+    display the Modifier 26 deleted message when the internal number of 
+    any Modifier entry is matching up to the internal number of Modifier 26.
+  
+ 
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    If installed during the normal workday, it is recommended that the 
+    following selection(s) in the OPTION (#19) file, and all of their 
+    descendants be disabled to prevent possible conflicts while running the 
+    KIDS Install. Other VISTA users will not be affected.
+  
+             Enter/Edit Billing Information [IB EDIT BILLING INFO]
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*483):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+  
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES
+      d. When prompted 'Enter options you wish to mark as 'Out Of 
+         Order':'  Enter the following options:
+  
+              Enter/Edit Billing Information [IB EDIT BILLING INFO]
+  
+      e. When prompted 'Enter protocols you wish to mark as 'Out Of 
+         Order':' press <return>.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCU7A
+    Before: B38419441   After: B47720475  **245,287,483**
+ 
+Routine list of preceding patches: 287
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : SEP 06, 2012
+Completed By: LOKHANDWALA,MURTUZA           Date Completed: APR 15, 2013
+Released By : GARRETT,WILLIAM               Date Released : APR 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

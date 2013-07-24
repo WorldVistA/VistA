@@ -1,0 +1,456 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: PSD*3*73
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #62                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)PSD*3*28    <<= must be installed BEFORE `PSD*3*73'
+                    (v)PSD*3*67    <<= must be installed BEFORE `PSD*3*73'
+                    (v)PSS*1*166   <<= must be installed BEFORE `PSD*3*73'
+
+Subject: DEA E-PRESCRIBING FOR CS (CPRS v29)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Computerized Patient Record System (CPRS) v29 is an enhancement release 
+ with modifications for the Drug Enforcement Agency (DEA) electronic
+ prescribing (ePCS) of controlled substances, Problem List changes for the
+ use of SNOMED CT codes, and the display of Mental Health Treatment
+ Coordinator (MHTC) information entered through the Primary Care Management
+ Module. In addition to these enhancements, software changes are being made
+ to correct several PSIs, Section 508 issues, and additional miscellaneous
+ defect fixes.
+  
+ CPRS GUI version 29 consists of several host files, updated CPRS GUI and 
+ several Help files; too many to list (which will be located in a single 
+ directory named HELP):
+ HDI_1_11.KID           CONTAINS HDI*1*11 PATCH 
+ PSS_1_166.KID          CONTAINS PSS*1*166 PATCH
+ CPRSV29_PSO_PSD.KID    CONTAINS PSO*7*391 AND PSD*3*73 PATCHES
+ OR_GMPL_GMTS_XU_29.KID CONTAINS XU*8*609, GMPL*2*36, GMTS*2.7*86 AND 
+                                 OR*3.0*306 PATCHES
+ CPRSChart.exe
+ OR_30_371.KID          CONTAINS OR*3.0*371 PATCH
+ PSO_7_426.KID          CONTAINS PSO*7*426 PATCH
+  
+ The host files were created to simplify installation and also to control
+ the phased implementation of CPRS V29 at the Veterans Health
+ Administration (VHA) facilities. To see the current status and
+ target dates for Sites/VISN/Regions, please refer to the following site:
+  
+ http://go.usa.gov/TfvW
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch information:
+ HDI_1_11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSO*7*391, PSD*3*73 and PSO*7*426 supports the DEA ePCS
+ functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT.
+ GMTS*2.7*86 supports the Problem List Standardization.
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhances the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+  
+ OR_30_371 includes support for CPRS v.29.
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306_IG.doc and OR_30_306_IG.pdf and is included in OR_30_306.ZIP.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+  
+ The following modifications and enhancements are included in this patch
+ (PSD*3*73):
+  
+ 1. Digitally Signed CS Orders Report [PSD DIGITALLY SIGNED ORDERS]
+    --------------------------------------------------------------
+    a) This option is modified to allow the selection of specific CS
+       Schedules when running the report as seen below:
+   
+       ...
+    
+       Sort By: Drug// ?
+  
+       Enter a code from the list.
+  
+            Select one of the following:
+  
+              D         Drug
+              PR        Provider
+              PA        Patient
+              S         Schedule
+  
+       Sort By: Drug// Schedule
+  
+       Select controlled substance schedule(s)
+  
+         Select one of the following:
+     
+              1         SCHEDULE II
+              2         SCHEDULES III - V
+              3         SCHEDULES II - V
+  
+       Select Schedule(s): 3//
+  
+       ...
+   
+    b) Two new fields are being added to the report output: 'Detox #'
+       and '# of Refills'.
+     
+ 2. Digitally Signed OP Released Rx Report [PSD DIG. SIGNED RELEASED RX] 
+    --------------------------------------------------------------------   
+    a) This option is modified to allow the selection of specific CS 
+       Schedules when running the report as seen below:
+   
+       ...
+    
+       Start Date: T  (FEB 29, 2012)
+  
+       End Date: T  (FEB 29, 2012)
+  
+       Select a schedule(s)
+  
+         Select one of the following:
+   
+              1         SCHEDULE II
+              2         SCHEDULES III - V
+              3         SCHEDULES II - V
+  
+       Select Schedule(s): 3//
+  
+       ...
+  
+    b) Two new fields are being added to the report output: 'Detox #'
+       and '# of Refills'.
+  
+ 3. Inspector's Log for Controlled Substances [PSD PRINT INSPECTOR LOG]
+    -------------------------------------------------------------------
+    This option is modified to allow the selection of specific CS Schedules
+    when running the report as seen below:
+   
+       ...
+     
+       Select NAOU: <RET>
+  
+       All Controlled Substances or Selected Schedules?
+  
+            Select one of the following:
+  
+              1         SCHEDULES I - II
+              2         SCHEDULES III - V
+              3         SCHEDULES I - V
+  
+       Select Schedule(s): 3//   SCHEDULES I - V
+   
+       Do you wish to sort by Inventory Type? NO// 
+  
+       ...
+  
+ 4. List On-Hand Amounts [PSD ON-HAND] and List On-Hand Amounts [PSD
+    ON-HAND TECH]
+    ------------------------------------------------------------------
+    These options are modified to allow the selection of specific CS 
+    Schedules when running the report as seen below:
+   
+       ...
+       
+       Select Primary Dispensing Site: OPC VAULT//     
+       Select Schedule/Drug
+  
+         Select one of the following:
+  
+              1         SCHEDULES I - II
+              2         SCHEDULES III - V
+              3         SCHEDULES I - V
+              4         INDIVIDUAL DRUG
+  
+       Select Schedule(s): 3//   SCHEDULES I - V
+  
+       DEVICE: 
+   
+       ...
+  
+ 5. Inventory Sheet Print [PSD INVEN SHEET PRT]
+    -------------------------------------------
+    This option is modified to allow the selection of specific CS
+    Schedules when running the report as seen below:
+   
+       ...
+       
+       Select Primary Dispensing Site: OPC VAULT//     
+       Select Schedule/Drug
+  
+         Select one of the following:
+  
+              1         SCHEDULES I - II
+              2         SCHEDULES III - V
+              3         SCHEDULES I - V
+              4         INDIVIDUAL DRUG
+  
+       Select Schedule(s): 3//   SCHEDULES I - V
+  
+       DEVICE: 
+   
+       ...
+  
+ 6. Controlled Substance Prescriptions Report [PSD CS PRESCRIPTIONS REPORT]
+    -----------------------------------------------------------------------
+    This option is a new option. It will provide a report of digitally signed
+    orders that have been filled for Schedules I-V CS. The report will be
+    for a date range with the option of including discontinued and/or
+    expired orders and various sort criteria, list by patient, by provider,
+    by drug and by schedule, etc. It will be an 80-column report and will
+    be queued to a printer.      
+   
+ 7. DEA DATA - Waived Practitioner Report [PSD DEA SUBOXONE]
+    --------------------------------------------------------
+    This option is a new option. This report provides a list of patients that
+    were prescribed Suboxone drugs. Two views are available, one with
+    details, and another with just the counts of Suboxone patients per
+    prescriber. 
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+  
+   
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type                         New/Modified/Deleted
+ -----------                  ----                         --------------------
+ PSD CS PRESCRIPTIONS REPORT  SEND TO SITE                 New
+ PSD DEA SUBOXONE             SEND TO SITE                 New
+ PSD PRODUCTION REPORTS                                    Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+  
+   
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                New/Modified/Deleted
+ -------------      ----      ------------------           --------------------
+ N/A
+  
+   
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20080702
+   
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ TEST Sites:
+ ===========
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ HEARTLAND-WEST HCS
+ HINES, IL
+ LOMA LINDA, CA
+ PALO ALTO HCS
+ SAN DIEGO, CA
+ TAMPA, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.va.gov/vdl/
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Controlled Substances V. 3.0 Supervisor PSD_3_UM_SUPV_R0513.PDF   (binary)
+ User Manual
+ Controlled Substances V. 3.0 Supervisor PSD_3_P73_UM_SUPV_CP.PDF  (binary)
+ User Manual Change Pages
+ Controlled Substances V. 3.0 Technical  PSD_3_TM_R0513.PDF        (binary)
+ Manual
+ Controlled Substances V. 3.0 Technical  PSD_3_P73_TM_CP.PDF       (binary)
+ Manual Change Pages
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ CPRSV29_PSO_PSD.KID includes patches PSO*7*391 and PSD*3*73.
+ The host file was created to simplify installation at Veterans Health
+ Administration (VHA) facilities and to assist in the phased implementation
+ release method for CPRS GUI v29.
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation. During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    CPRSV29_PSO_PSD.KID            PSD*3*73              ASCII
+                                   PSO*7*391
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1. Download CPRSV29_PSO_PSD.KID into your local directory.
+  
+ 2. From the Kernel Installation & Distribution System (KIDS) menu, select
+    the Installation menu.
+  
+ 3. Select the Load a Distribution and enter the directory that you FTP'ed
+    the host file to and CPRSV29_PSO_PSD.KID.  Example:
+    USER$:[ABC]CPRSV29_PSO_PSD.KID
+  
+ 4. From the Kernel Installation & Distribution System (KIDS) menu, you may
+    select to use the following options (when prompted for INSTALL NAME,
+    enter PSO_PSD_V29 1.0
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5. Use the Install Package(s) option and select the package 
+    PSO_PSD_V29 1.0.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'  
+    respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//  respond NO.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES;**[Patch List]**;13 Feb 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDBAL
+    Before: B16952502   After: B22121079  **73**
+Routine Name: PSDBALI
+    Before: B22304429   After: B28472924  **73**
+Routine Name: PSDBALI1
+    Before:  B4606716   After:  B5019533  **73**
+Routine Name: PSDDSOR
+    Before: B76244326   After: B86052358  **40,42,45,67,73**
+Routine Name: PSDDSOR1
+    Before:  B9308208   After: B31741433  **40,67,73**
+Routine Name: PSDDSOR2
+    Before: B21366672   After: B23181227  **40,42,45,73**
+Routine Name: PSDPLOG
+    Before: B17283374   After: B19818011  **8,73**
+Routine Name: PSDPLOG1
+    Before: B24167221   After: B25428029  **22,28,73**
+Routine Name: PSDPLOG2
+    Before: B16699847   After: B17681782  **73**
+Routine Name: PSDPLOG3
+    Before: B19498393   After: B20151384  **73**
+Routine Name: PSDSUBOX
+    Before:       n/a   After: B32552011  **73**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : MAY 25, 2011
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 05, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

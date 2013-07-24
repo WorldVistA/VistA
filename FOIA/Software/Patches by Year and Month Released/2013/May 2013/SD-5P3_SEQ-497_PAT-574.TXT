@@ -1,0 +1,245 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 12/17/12 at 13:33
+=============================================================================
+Run Date: MAY 30, 2013                     Designation: SD*5.3*574
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #497                    Status: Released
+                  Compliance Date: JUN 30, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*574'
+
+Subject: SDRR DATES ISSUE
+
+Category: 
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ *** IMPORTANT NOTE:                                                      *
+ *** If sites have not finished the conversion from Class III to Class I  *
+ *** AND Patch SD*5.3*536 has not been installed; please DO NOT install   *
+ *** this patch.                                                          *
+ **************************************************************************
+  
+ This patch will prevent the input date value from being accepted for the 
+ RECALL DATE (#5) and RECALL DATE (PER PATIENT) (#5.5) fields in the
+ RECALL REMINDERS (#403.5) file if it is before the current date.
+  
+ This patch will fix the problem of allowing entry of a month and year
+ for the recall dates that result in no letter printing.
+  
+ This patch will also disable the Conversion Menu [SDRR IRM MENU] options.
+  
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. HD0000000391447 - Problems with fields in file #403.5 (Recall Reminders
+                      file)
+ 2. HD0000000509047 - Recall Reminder issue
+ 3. HD0000000766165 - Disabling conversion options
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Charleston, SC
+ Cleveland, OH
+ N. Florida/ S. Georgia
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000391447 - Problems with fields in file #403.5 (Recall Reminders
+                      file)
+  
+    Problem:
+    --------
+    Currently, the system allows users to enter a past date in the RECALL
+    DATE (#5) and the RECALL DATE (PER PATIENT) (#5.5) fields in the RECALL
+    REMINDERS (#403.5) file. This is to ensure that sites with the Class 
+    III software can run the conversion routines without incident. However,
+    after installation of this patch, these two fields should only allow
+    users to enter a future date.
+  
+    Resolution:
+    -----------
+    Modified the INPUT TRANSFORM on the RECALL DATE (#5) and the RECALL 
+    DATE (PER PATIENT) (#5.5) fields in the RECALL REMINDERS (#403.5) file
+    so that past dates cannot be entered.
+  
+  
+ 2. HD0000000509047 - Recall Reminder issue
+  
+    Problem:
+    --------
+    Currently, the system allows users to enter a month and year in the 
+    RECALL DATE (#5) and the RECALL DATE (PER PATIENT) (#5.5) fields in 
+    the RECALL REMINDERS (#403.5) file that result in no letter printing.
+  
+    Resolution:
+    -----------
+    Modified the INPUT TRANSFORM on the RECALL DATE (#5) and the RECALL
+    DATE (PER PATIENT) (#5.5) fields in the RECALL REMINDERS (#403.5) file 
+    so that a future exact date must be entered.
+  
+  
+ 3. HD0000000766165 - Disabling conversion options
+  
+    Problem:
+    --------
+    When users run any of options listed under the Conversion Menu [SDRR
+    IRM MENU] options and if there are any entries in the RECALL REMINDERS 
+    (#403.5) file, issues will occur.
+  
+    Resolution:
+    -----------
+    This patch will disable the following options in Recall Reminder:
+  
+     Conversion Menu                        [SDRR IRM MENU]
+     Convert OUTPATIENT CLINIC RECALL PARAM [SDRR CONVERSION PARAMS FILE]
+     Convert OUTPATIENT CLINIC RECALL ...
+     APPT TYPES                             [SDRR CON RECALL APPT TYPES]
+     Convert OUTPATIENT CLINIC RECALL ...
+     TEAM                                   [SDRR CONVERSION TEAM FILE]
+     Convert OUTPATIENT CLINIC RECALL ...
+     PROVIDERS                              [SDRR CONVERSION PROVIDER FILE]
+     Convert OUTPATIENT CLINIC RECALL       [SDRR CONV OUTPATIENT RECALL]
+  
+  
+ Technical:
+ ==========
+ This patch will allow entering a future date only for the RECALL DATE (#5)
+ and RECALL DATE (PER PATIENT) (#5.5) in the RECALL REMINDERS (#403.5) 
+ file; it will not alter the existing data for these two fields.
+  
+ The following is a list of fields included in this patch:
+  
+         Field Name (Number)                File Name (Number)
+         -------------------                ------------------
+         RECALL DATE (#5)                   RECALL REMINDERS (#403.5)
+         RECALL DATE (PER PATIENT) (#5.5)   RECALL REMINDERS (#403.5)
+  
+  
+ Software and Documentation Distribution:
+ ========================================
+ Sites may retrieve the documentation directly via FTP. The preferred 
+ method is to FTP the file from:
+  
+         download.vista.med.va.gov
+  
+ This transmits the file from the first available FTP server.
+  
+ Sites may also elect to retrieve the documentation directly from the 
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+ Albany:         ftp.fo-albany.med.va.gov
+ Hines:          ftp.fo-hines.med.va.gov
+ Salt Lake City: ftp.fo-slc.med.va.gov
+  
+ Filename                Description
+ ========                ===========
+ SD_53_574_TSG.PDF       Recall Reminder Technical & Security Guide
+  
+ NOTE: This file must be transferred using the binary (BIN) file transfer 
+ mode.
+  
+ The complete and updated Technical & Security Guide will be posted to the 
+ VDL immediately after the release of the patch.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch should be installed after normal business hours, when all 
+ Recall Reminders users are logged off the system. 
+  
+ Install Time - less than 3 minutes.
+  
+ 1. Load Transport Global 
+    ---------------------
+  
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2. Start Up KIDS 
+    -------------
+    Start up the Kernel Installation and Distribution System Menu 
+    [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+   
+ 3. Select Installation Option: 
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*574):
+       
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch. It will not
+       backup any other changes such as DD's or templates.
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed.  It compares all components of this patch
+       (routines, DD's, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow
+       you to ensure the integrity of the routines that are in the
+       transport global.
+      
+ 4. Select Installation Option: Install Package(s) 
+    ----------------------------------------------
+    *** This is the step to start the installation of this KIDS patch: 
+     
+    a. Choose the Install Package(s) option to start the patch
+       install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' answer NO. 
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+       Options, and Protocols? YES//' answer YES.
+  
+       Conversion Menu                      [SDRR IRM MENU]
+       Convert OUTPATIENT CLINIC RECALL ...
+       PARAM                                [SDRR CONVERSION PARAMS FILE]
+       Convert OUTPATIENT CLINIC RECALL ...
+       APPT TYPES                           [SDRR CON RECALL APPT TYPES]
+       Convert OUTPATIENT CLINIC RECALL ...
+       TEAM                                 [SDRR CONVERSION TEAM FILE]
+       Convert OUTPATIENT CLINIC RECALL ...
+       PROVIDERS                            [SDRR CONVERSION PROVIDER FILE]
+       Convert OUTPATIENT CLINIC RECALL     [SDRR CONV OUTPATIENT RECALL]
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : OCT 14, 2010
+Completed By: SESSLER,APRIL                 Date Completed: MAY 29, 2013
+Released By : BENBOW,PHYLLIS O              Date Released : MAY 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

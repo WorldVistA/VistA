@@ -1,0 +1,143 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Wednesday, 04/04/12 at 14:30
+=============================================================================
+Run Date: APR 30, 2013                     Designation: FH*5.5*29
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #32                    Status: Released
+                  Compliance Date: MAY 31, 2013
+=============================================================================
+
+Associated patches: (v)FH*5.5*24   <<= must be installed BEFORE `FH*5.5*29'
+
+Subject: CORRECT ERROR WHEN USING CREATE/MAP FOOD PREFERENCES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1. An error is occurring when using the Create/Map Food Preferences 
+    to Allergies option [FHSELA].
+  
+ 2. A food preference without an associated meal will not print when 
+    using the Display Patient Preferences option [FHSEL4]. 
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000529281 - stack error when using Create/Map Food Preferences 
+                      to Allergies [FHSELA]
+  
+ 2. HD0000000601034 - Issues with patch FH*5.5*24
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Salisbury, NC.
+ Brockton, MA.
+ Kansas City, MO.
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000529281 - stack error when using Create/Map Food Preferences 
+                      to Allergies [FHSELA]
+  
+     Problem:
+     --------
+     In the option Create/Map Food Preferences [FHSELA] the user is 
+     prompted "Do you want to import Recipes from another Food Preference?
+     N //". If the user answers Y for yes to this prompt, the user is then
+     prompted "Select FOOD PREFERENCES NAME:". If the user decides to not
+     answer this prompt and hits the enter key to enter a null value or
+     enters a "^" to continue an undefined variable error is generated that
+     will cause the option FHSELA crash. The crash will force the user out
+     of VistA.
+     
+     Resolution:
+     -----------
+     Modify routine FHSEL1 to properly handle being called by routine 
+     FHSELA1. 
+  
+ 2. HD0000000601034 - Issues with patch FH*5.5*24
+  
+     Problem:
+     --------
+     A patient can have a food preference without an associated meal. This 
+     food preference without an associated meal is not listed in the
+     Display Patient Preferences option [FHSEL4] for that patient.
+  
+     Resolution:
+     -----------
+     The option Display Patient Preferences option [FHSEL4] calls routine
+     FHSEL1 to display the patient's food preferences. Routine FHSEL1 is
+     currently coded to check a food preference for an associated meal. If 
+     it does not find one it will not print that food preference. Routine
+     FHSEL1 will be changed to check a food preference for an associated
+     meal. If the food preference does not have an associated meal, routine
+     FHSEL1 will assume that it is to be associated with all meals and
+     print that food preference.
+  
+  
+     ===================== INSTALLATION INSTRUCTIONS =====================
+   
+     Installation will take less than 2 minutes.  Users may be on the
+     system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*29)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package 
+        FH*5.5*29.
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSEL1
+    Before: B23134374   After: B23349189  **8,24,29**
+ 
+Routine list of preceding patches: 24
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : OCT 04, 2011
+Completed By: DUCKWORTH,TIM                 Date Completed: APR 30, 2013
+Released By : BOSE,MARY ELLEN               Date Released : APR 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

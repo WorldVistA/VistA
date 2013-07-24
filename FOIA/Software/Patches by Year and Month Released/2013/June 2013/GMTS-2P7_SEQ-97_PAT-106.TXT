@@ -1,0 +1,216 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 12/11/12 at 10:30
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: GMTS*2.7*106
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #97                    Status: Released
+                  Compliance Date: JUL 11, 2013
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*57 <<= must be installed BEFORE `GMTS*2.7*106'
+                    (v)GMTS*2.7*89 <<= must be installed BEFORE `GMTS*2.7*106'
+
+Subject: Edit HS Object fix and SURGERY SEL NON OR PROCEDURES component fix
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following three issues in the Health Summary 
+ package:
+  
+ 1) Erroneous data is being created when using "^" at the "Overwrite No Data 
+ Available Message" prompt while using option [GMTS OBJ ENTER/EDIT] 
+  
+ 2) Not all the procedures are displaying when the user views the [SURGERY 
+ SEL NON OR PROCEDURES] Health summary component
+  
+ 3) When the user enters an "@" at the "Overwrite No Data Available Message" 
+ prompt while using option [GMTS OBJ ENTER/EDIT] the text in the file is 
+ not deleted
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1) HD0000000372594 - Overwrite No Data Available Message error
+ 
+ 2) HD0000000736170 - Problem with health summary object
+ 
+ 3) HD0000000742769 - EDIT HS OBJECT FIELD NOT EDITABLE
+   
+ TEST SITES:
+ ===========
+ VA New Jersey HCS
+ Edith Nourse Rogers Memorial Veterans Hospital - Bedford 
+ North Chicago VA Medical Center
+ VA Montana HCS
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1) HD0000000372594 - Overwrite No Data Available Message error
+  
+    Problem:
+    --------
+    The problem occurs when the user enters an "^" followed by text at the 
+    "Overwrite No Data Available Message" prompt while using option [GMTS OBJ 
+    ENTER/EDIT]. This causes the "^" to get entered into the file creating 
+    erroneous data.
+  
+    Resolution:
+    -----------
+    Changed the prompt so that if the user does use a "^" followed by text
+    the system will exit the option.
+  
+    NODATA^GMTSOBA2 has been modified to do a pre-validation transform. If 
+    the input contains "^" the system will convert the input into "^^"
+  
+    Created post install routine GMTSP106 to clean up existing erroneous 
+    data. This routine will send a mailman message to the user that runs the 
+    install stating which Health summary objects (If any) were updated. The 
+    format of the message is as follows:
+  
+ Subj: GMTS*2.7*106 Post install routine has completed  [#142921] 
+ 12/10/12@17:03
+ 4 lines
+ From: HEALTH SUMMARY PACKAGE  In 'IN' basket.   Page 1  *New*
+ ------------------------------------------------------------------------
+ GMTS*2.7*106 Post install routine has completed
+ Bad records corrected:
+  
+ (1st Health Summary object here)
+ (2nd Health Summary object here)
+ (and so on) 
+  
+ (OR if no bad records are found)
+ "No bad records found"
+  
+  
+ 2) HD0000000736170 - Problem with health summary object
+  
+    Problem:
+    --------
+    Not all the procedures are displaying when the user views the [SURGERY 
+    SEL NON OR PROCEDURES] Health summary component. The component is 
+    checking the user specified codes against the [PLANNED PRIN PROCEDURE 
+    CODE] instead of the [PRINCIPAL PROCEDURE CODE]
+  
+    Resolution:
+    -----------
+    Changed the component to check [PRINCIPAL PROCEDURE CODE] in File# 136 
+  
+    CHK^GMTSRON has been modified to use field .02 of the 136 file in the 
+    $$GET1^DIQ call
+   
+    Please note that this patch corrects the Health Summary side of the
+    SURGERY SEL NON OR PROCEDURES component. Although CPTs may be selected 
+    for this component on the VISTA side, there is still an issue with
+    selecting some CPT codes and their display in the AD HOC Health Summary
+    on the CPRS Reports Tab. This will be corrected with a future CPRS patch.
+ 
+    If the routine GMTSP106 is not deleted by the post installation process, 
+    it may be deleted manually after the patch is successfully installed.
+  
+  
+ 3) HD0000000742769 - EDIT HS OBJECT FIELD NOT EDITABLE
+  
+    Problem:
+    --------
+    The problem occurs when the user enters an "@" at the "Overwrite No Data 
+    Available Message" prompt while using option [GMTS OBJ ENTER/EDIT]. The 
+    current text doesn't get deleted from the object.
+  
+    Resolution:
+    -----------
+    Made entering the "@" cause the text to be deleted
+  
+    NODATA^GMTSOBA2 has been modified to check the non-validated user input. 
+    If it is a "@" GMTSOBJ("NO DATA") will be set to "@", if not it will be 
+    what the user entered (after validation)
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter GMTS*2.7*106):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        GMTS*2.7*106.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSOBA2
+    Before: B50336646   After: B52416135  **58,89,106**
+Routine Name: GMTSP106
+    Before:       n/a   After:  B2071523  **106**
+Routine Name: GMTSRON
+    Before: B24443367   After: B25074680  **11,28,37,57,106**
+ 
+Routine list of preceding patches: 57, 89
+
+=============================================================================
+User Information:
+Entered By  : AUGUSTINIAK,MARK              Date Entered  : AUG 27, 2012
+Completed By: LOKHANDWALA,MURTUZA           Date Completed: MAY 30, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

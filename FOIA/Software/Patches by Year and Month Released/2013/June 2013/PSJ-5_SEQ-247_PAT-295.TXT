@@ -1,0 +1,141 @@
+$TXT Created by ELLZEY,LINDA J at MDEVCACHE.FO-BIRM.MED.VA.GOV  (KIDS) on Thursday, 03/14/13 at 09:32
+=============================================================================
+Run Date: JUN 18, 2013                     Designation: PSJ*5*295
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #247                      Status: Released
+                  Compliance Date: JUN 20, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*260   <<= must be installed BEFORE `PSJ*5*295'
+
+Subject: M1E1 Emergency follow up
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch PSJ*5*295 is a follow-up patch for PSJ*5*260 MOCHA 1 
+ Enhancement 1 patch.
+  
+ Patch Information:
+ ------------------
+  
+ The following are the updates included in this patch:
+  
+ 1. A site reported that non-clinic orders that were "Discontinued due to
+ Edit" were displaying during therapeutic duplication order checks.    
+ Mocha 1 Enhancement 1 added discontinued/expired clinic orders to the
+ therapeutic duplications order checks. However non-clinic discontinued
+ orders were not to be displayed.  In order for this to happen, the patient
+ had to have a clinic order on the profile and a non-clinic order that was
+ "Discontinued due to Edit".  Routine PSJBLDOC was modified to exclude from
+ therapeutic duplications "Discontinued due to Edit" orders for non-clinic
+ orders. 
+  
+  
+ Components exported with this patch:
+ ------------------------------------
+ N/A   (Only routines exported)
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  BOISE, ID
+  CHARLESTON, SC
+  KANSAS CITY, MO
+  NORTHERN CALIFORNIA HCS, CA
+  PALO ALTO HCS, CA 
+  TUSCALOOSA, AL
+  BOSTON VAMC, MA
+  FRESNO VAMC, CA
+  WEST PALM BEACH VAMC, FL
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ Do not install this patch while Inpatient Pharmacy users are on the
+ system or when Inpatient orders are being entered and signed through CPRS.
+ Installation will take no longer than 5 minutes.
+  
+  1. From the Kernel Installation and Distribution System (KIDS)
+     menu, select the Installation menu.
+  
+  2. From this menu, you may elect to use the following options:
+     (when prompted for INSTALL NAME, enter PSJ*5.0*295)
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as Data Dictionaries or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         data dictionaries (DD), templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+   3. Use the Install Package(s) option and select the package PSJ*5*295.
+  
+  
+   4. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   5. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBLDOC
+    Before: B43930447   After: B43936297  **181,263,260,295**
+ 
+Routine list of preceding patches: 260
+
+=============================================================================
+User Information:
+Entered By  : ELLZEY,LINDA                  Date Entered  : MAR 13, 2013
+Completed By: YARBER,KIMBERLY               Date Completed: JUN 18, 2013
+Released By : TEAGUE,LYN                    Date Released : JUN 18, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

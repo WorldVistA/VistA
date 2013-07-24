@@ -1,0 +1,306 @@
+$TXT Created by GILMORE,JEREMY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 01/17/13 at 12:19
+=============================================================================
+Run Date: JUN 21, 2013                     Designation: ICD*18*69
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #61                     Status: Released
+                  Compliance Date: JUL 22, 2013
+=============================================================================
+
+Associated patches: (v)ICD*18*55   <<= must be installed BEFORE `ICD*18*69'
+                    (v)ICD*18*65   <<= must be installed BEFORE `ICD*18*69'
+
+Subject: VARIOUS DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+    The DRG (Diagnostic Related Group) Grouper is used to compute
+    and display the DRG for a patient based on that patient's diagnoses
+    and any operations/procedures performed.  It uses a mixture of 
+    formulas, Diagnosis and Operation identifiers, and tables that rely
+    on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80)
+    and the ICD OPERATION/PROCEDURE file (#80.1).  These files,
+    the date, and the age of the patient determine which codes are
+    needed to calculate the proper DRG.
+  
+    This patch corrects various DRG calculations.
+  
+    ASSOCIATED REMEDY TICKETS:
+    ========================== 
+    1)INC000000592036 - DRG not calculating correctly
+    2)INC000000606874 - DRG Calculations DRG 981 - VistA 293
+    3)INC000000614523 - DRG not calculating correctly
+    4)INC000000707978 - Issue Encountered.
+    5)INC000000707980 - DRG calculating codes incorrectly in Vista
+    6)INC000000710881 - Issue Encountered.
+    7)INC000000739227 - Upload from Quantim to VIP, the DRG changes
+    8)INC000000755863 - DRG grouping discrepancy 794 to 795
+         Duplicate:
+      INC000000757555 - DRG Miscalculation
+    9)INC000000768965 - drg calculates incorrectly in Vista for 
+                         following codes
+   10)INC000000604637 - PTF file will not release
+         Duplicates:
+      INC000000742575 - 4 and 5 site code rejection
+      INC000000763037 - invalid code 534 and 535
+      INC000000787997 - VIP work place
+      INC000000807643 - MAS - PTF:
+    
+    ASSOCIATED NSR's:
+    =================
+    N/A
+       
+    
+    PARTICIPATING TEST SITES:
+    =========================
+    Tampa, FL
+    Upstate New York HCS
+       
+    
+    REMEDY OVERVIEW:
+    ================
+    1) INC000000592036 - DRG not calculating correctly
+      
+    Problem:
+    ========
+    DRG 179 is incorrectly calculating to DRG 177 in VistA.
+       
+    Solution:
+    =========
+    Updated the identifier field to include a 'k' for diagnosis
+    code 482.42.
+    
+    
+    2) INC000000606874 - DRG Calculations DRG 981 - VistA 293
+  
+    Problem:
+    ========
+    DRG 981 is incorrectly calculating to DRG 291 in VistA.
+     
+    Solution:
+    =========
+    Updated the identifier field to include a 'O' for diagnosis
+    code 32.02.
+  
+  
+    3) INC000000614523 - DRG not calculating correctly
+  
+    Problem:
+    ========
+    DRG 310 is incorrectly calculating to DRG 309 in VistA.
+  
+     
+    Solution:
+    =========
+    Updated routines ICDTBL3D and ICDTBL3E to account for correct
+    diagnosis codes.
+  
+  
+    4) INC000000707978 - Issue Encountered.
+  
+    Problem:
+    ========
+    DRG 040 is incorrectly calculating to DRG 981 in VistA.
+     
+    Solution:
+    =========
+    Updated routines ICDTBL9D and ICDTBL9E to account for correct 
+    diagnosis codes.
+  
+  
+    5) INC000000707980 - DRG calculating codes incorrectly in Vista
+  
+    Problem:
+    ========
+    DRG 592 is incorrectly calculating to DRG 593 in VistA.
+  
+     
+    Solution:
+    =========
+    Updated routines ICDTBL5D and ICDTBL5E to account for correct
+    diagnosis codes.
+  
+   
+    6) INC000000710881 - Issue Encountered.
+     
+    Problem:
+    ========
+    DRG 310 is incorrectly calculating to DRG 308 in VistA.
+  
+     
+    Solution:
+    =========
+    Updated routines ICDTBL3D and ICDTBL3E to account for correct
+    diagnosis codes.
+       
+            
+    7) INC000000739227 - Upload from Quantim to VIP, the DRG 
+                          changes
+      
+    Problem:
+    ========
+    DRG 673 is incorrectly calculating to DRG 675 in VistA. 
+  
+       
+    Solution:
+    =========
+    Updated routines ICDTBL6D and ICDTBL6E to account for correct
+    diagnosis codes. 
+      
+      
+    8) INC000000755863 - DRG grouping discrepancy 794 to 795
+    
+    Problem:
+    ========
+    DRG 794 is incorrectly calculating to DRG 795 in VistA.
+     
+    Solution:
+    =========
+    Updated routines ICDTBL7D and ICDTBL7E to account for correct
+    diagnosis codes.
+  
+   
+    9) INC000000768965 - drg calculates incorrectly in Vista for 
+                          following codes
+    
+    Problem:
+    ========
+    DRG 794 is incorrectly calculating to DRG 795 in VistA.
+     
+    Solution:
+    =========
+    Updated the identifier field to include an 'S' for diagnosis
+    code v18.0.
+  
+  
+    10) INC000000604637 - PTF file will not release
+  
+    Problem:
+    ========
+    In VistA, when using the Load/Edit PTF Data option within the PTF 
+    Menu [DG PTF MENU] option name, the system will not prompt for axis
+    codes when diagnosis codes 294.20 or 294.21 are used on either the
+    501 or 701 screens. This issue will not allow the record to close 
+    and release because the axis codes are missing.
+     
+    Solution:
+    =========
+    Added diagnosis codes 294.20 and 294.21 to the PTF EXPANDED CODE
+    (#45.89) file. 
+  
+  
+    INSTALLATION INSTRUCTIONS:
+    ===========================
+    This patch may be run with users on the system.  However, it would
+    be preferable if Medical Records coders were off the system.
+    Installation will take less than 5 minutes.
+  
+    ********************************************************************
+    *Please Note: For those test sites/accounts with patch ICD*18.0*57 *
+    *installed for ICD-10 testing; you will need to restore the ICD-10 *
+    *account back to an ICD-9 account to install patch ICD*18.0*69.    *
+    ********************************************************************
+    
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+        NOTE:  If the required patches are not installed, the transport 
+        global will be removed.  If the transport global is removed you will
+        need to repeat this step.
+    
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+    
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter ICD*18.0*69):
+        a.  Compare Transport Global to Current System  - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.  It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+    
+    4.  Use the Install Package(s) option and select the package 
+        ICD*18.0*69.
+    
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond No.
+    
+    6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? YES//', respond Yes.
+    
+        When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+        enter:
+               PTF Menu  [DG PTF MENU] 
+        When prompted, 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press enter.
+    
+    7.  Routine(s) ICD1869* can be deleted after the patch has been
+        successfully installed.
+    
+    8.  Following installation of this patch, it is necessary to run the
+        Update Transfer DRG's for Current FY [DG PTF UPDATE TRANSFER DRGs] 
+        option in order to make the transfer DRGs correspond to the 
+        appropriate grouper.  This option updates/recalculates the transfer
+        DRGs for PTF records opened during the current fiscal year.
+        The option is locked with the DG PTFSUP security key.  The Menu path
+        is PTF Menu/Update DRG Information Menu/Update Transfer DRGs for
+        current FY.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20,2000;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1869L
+    Before:       n/a   After: B15287847  **69**
+Routine Name: ICD1869P
+    Before:       n/a   After:   B861701  **69**
+Routine Name: ICDTBL1C
+    Before:  B6601382   After:  B6806736  **50,53,55,69**
+Routine Name: ICDTBL1D
+    Before:  B6597931   After:  B6803254  **56,69**
+Routine Name: ICDTBL1E
+    Before:  B9736324   After:  B9970948  **65,69**
+Routine Name: ICDTBL3D
+    Before:  B8024597   After:  B8072801  **56,69**
+Routine Name: ICDTBL3E
+    Before:  B8024685   After:  B8072890  **65,69**
+Routine Name: ICDTBL5D
+    Before:  B7303976   After:  B7024066  **56,69**
+Routine Name: ICDTBL5E
+    Before:  B7303985   After:  B7024075  **65,69**
+Routine Name: ICDTBL6D
+    Before: B10169323   After: B10478160  **56,55,69**
+Routine Name: ICDTBL6E
+    Before: B10169332   After: B10478169  **65,69**
+Routine Name: ICDTBL9D
+    Before:  B4782477   After:  B5060180  **56,69**
+Routine Name: ICDTBL9E
+    Before:  B4782486   After:  B5060300  **65,69**
+ 
+Routine list of preceding patches: 55, 65
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : OCT 25, 2012
+Completed By: LEANORD,TATIANA               Date Completed: JUN 12, 2013
+Released By : DANE,SIDNEY                   Date Released : JUN 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

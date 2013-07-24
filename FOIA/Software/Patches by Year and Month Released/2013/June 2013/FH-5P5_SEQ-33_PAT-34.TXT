@@ -1,0 +1,126 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 10/26/12 at 13:34
+=============================================================================
+Run Date: JUN 24, 2013                     Designation: FH*5.5*34
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #33                    Status: Released
+                  Compliance Date: JUL 25, 2013
+=============================================================================
+
+
+Subject: LASER LABEL PRINTING ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. The *ALG indicator for patients with food allergies is not printing on
+    the laser labels for tray tickets.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000555526 - Labels not printing allergies 
+  
+    Duplicate(s)
+    ------------
+    HD0000000583136 - BHS - Issue with tray tickets 
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland-East HCS
+ New Jersey HCS
+ Wilmington, DE.
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000555526 
+  
+ Problem:
+ --------
+ Printers used by Nutrition and Food Service package can be configured to
+ print diet/tray ticket labels in one of the following four formats:
+   1  3-1/2 x 15/16 (Single strip labels)
+   2  4 x 1-7/16 (Single strip labels)
+   3  2-5/8 x 1 (Laser labels - 30 labels per sheet)
+   4  4 x 1-1/3 (Laser labels - 14 labels per sheet)
+ When a patient has a food allergy on record a variable will be set to the
+ value of *ALG. This should be printed on the diet/tray label to alert the
+ dietetics staff the patient has an allergy and to review the meal being 
+ prepared for the patient. This allergy indicator is not printing on either
+ of the formats 3 and 4 for laser labels.
+  
+ Routine FHLABEL is used to format, build, print the laser labels. The food
+ allergy indicator for a patient is set before the data is sent to routine
+ FHLABEL to be formatted for output to the label printer. So it is defined.
+ It is just not being included in the printout. 
+  
+ Resolution:
+ -----------
+ Modification of routine FHLABEL to include the food allergy indicator 
+ of *ALG on the label print out if it is defined.
+  
+     =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*34)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*34
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHLABEL
+    Before:  B9674043   After:  B9902365  **34**
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : MAY 31, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: JUN 21, 2013
+Released By : KREUZ,SHERI B                 Date Released : JUN 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

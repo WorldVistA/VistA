@@ -1,0 +1,401 @@
+$TXT Created by BOWEN,MARY JANE at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 11/28/12 at 10:57
+=============================================================================
+Run Date: MAY 01, 2013                     Designation: DVBA*2.7*183
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #161                    Status: Released
+                  Compliance Date: JUN 01, 2013
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*79 <<= must be installed BEFORE `DVBA*2.7*183'
+                    (v)DVBA*2.7*87 <<= must be installed BEFORE `DVBA*2.7*183'
+                    (v)DVBA*2.7*120<<= must be installed BEFORE `DVBA*2.7*183'
+                    (v)DVBA*2.7*121<<= must be installed BEFORE `DVBA*2.7*183'
+                    (v)DVBA*2.7*128<<= must be installed BEFORE `DVBA*2.7*183'
+                    (v)DVBA*2.7*134<<= must be installed BEFORE `DVBA*2.7*183'
+
+Subject: AMIE WORKSHEET UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will put in place and activate updates to 15 Automated Medical 
+ Information Exchange (AMIE) Compensation and Pension (C&P) Examination 
+ worksheets.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1) HD0000000404365 - Updates to 3 AMIE C&P Exam worksheets
+ 2) HD0000000404368 - Updates to 3 AMIE C&P Exam worksheets
+ 3) HD0000000404370 - Updates to 3 AMIE C&P Exam worksheets
+ 4) HD0000000416250 - Updates for 1 AMIE C&P Exam worksheet
+ 5) HD0000000440620 - Updates for 2 AMIE C&P Exam worksheets
+ 6) HD0000000428799 - Updates to 1 AMIE C&P Exam worksheets
+ 7) HD0000000428794 - Updates for 2 AMIE C&P Exam worksheets
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ TENNESSEE VALLEY HCS
+ TOGUS, ME
+ UPSTATE NEW YORK HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1) HD0000000404365   Updates to 3 AMIE C&P Exam worksheets
+            
+   Problem:
+   --------
+   Veterans Benefits Administration Veterans Affairs Central Office has   
+   approved content changes to the following three AMIE C&P examination 
+   worksheets:  Bones (Fractures and Bone Disease) (#1410),
+   Brain and Spinal Cord (#1210), and Traumatic Brain Injury (TBI) (#1240).
+  
+   Resolution:
+   -----------
+   Post-init routine DVBA183P will deactivate the current AMIE 
+   C&P examination worksheets in the AMIE EXAM (#396.6) file and activate 
+   these updated AMIE C&P examination worksheets in the same file:   
+            
+    a) Bones (Fractures and Bone Disease) (#1410) 
+       Current Internal Entry Number (IEN): 212, New IEN: 244
+       Created new Routine DVBCWB5 that will contain the new text
+       and new routine DVBCWB4 that will access the new text routine
+       and print the blank worksheet.
+    b) Brain and Spinal Cord (#1210) 
+       Current IEN: 113, New IEN: 239
+       Created new Routine DVBCWBS3 that will contain the 
+       new text and new routine DVBCWBS2 that will access the new
+       text routine and print the blank worksheet. 
+    c) Traumatic Brain Injury (TBI) (#1240) 
+       Current IEN: 227, New IEN: 246
+       Created new Routines DVBCWTB2, DVBCWTB3, DVBCWTB4 and 
+       DBVCWTB5, that will contain the new text and new routine DVBCWTB1   
+       which will access the new text routine and print the blank 
+       worksheet. 
+            
+ 2) HD0000000404368   Updates to 3 AMIE C&P Exam worksheets
+  
+   Problem:
+   --------
+   Veterans Benefits Administration Veterans Affairs Central 
+   Office has approved content changes to the following three AMIE C&P 
+   examination worksheets:  Aid and Attendance or Housebound Examination 
+   (#1720), Chronic Fatigue Syndrome (#1810), and Prisoner of War Protocol 
+   Examination (#1705).
+            
+   Resolution:
+   -----------
+   Post-init routine DVBA183P will deactivate the current AMIE 
+   C&P examination worksheets in the AMIE EXAM (#396.6) file and activate 
+   these updated AMIE C&P examination worksheets in the same file: 
+            
+    a) Aid and Attendance or Housebound Examination (#1720)
+       Current IEN: 100, New IEN: 238
+       Created new Routine DVBCWAH3 that will contain the new text
+       and new routine DVBCWAH2, which will access the new text 
+       routine and print the blank worksheet. 
+    b) Chronic Fatigue Syndrome (#1810)
+       Current IEN: 213, New IEN: 245
+       Created new Routine DVBCWFS5 that will contain the new text
+       and new routine DVBCWFS4, which will access the new text 
+       routine and print the blank worksheet. 
+    c) Prisoner of War Protocol Examination (#1705)
+       Current IEN: 190, New IEN: 243
+       Created new Routines DVBCWPA4 and DVBCWPA5 that will 
+       contain the new text and new routine DVBCWPA3, which will 
+       access the new text routine and print the blank worksheet. 
+  
+  
+  3) HD0000000404370   Updates to 3 AMIE C&P Exam worksheets
+  
+    Problem:
+    --------
+    Veterans Benefits Administration Veterans Affairs Central
+    Office has approved content changes to the following three AMIE
+    C&P examination worksheets:  Acromegaly (#0420), Arrhythmias 
+    (#0115) and Arteries, Veins and Miscellaneous (#0105).
+            
+    Resolution:
+    -----------
+    Post-init routine DVBA183P will deactivate the current AMIE 
+    C&P examination worksheets in the AMIE EXAM (#396.6) file and activate 
+    these updated AMIE C&P examination worksheets in the same file: 
+            
+     a) Acromegaly (#0420) 
+        Current IEN: 124, New IEN: 240
+        Created new Routine DVBCWAC3 that will contain the new text
+        and new routine DVBCWAC2 that will access the new text 
+        routine and print the blank worksheet. 
+     b) Arrhythmias (#0115) 
+        Current IEN: 157, New IEN: 242
+        Created new Routine DVBCWAM3 that will contain the new text 
+        and new routine DVBCWAM2 that will access the new text routine and
+        print the blank worksheet.
+     c) Arteries, Veins and Miscellaneous (#0105)
+        Current IEN: 154, New IEN: 241
+        Created new Routine DVBCWVN3 that will contain the new text 
+        and new routine DVBCWVN2 that will access the new text routine and
+        print the blank worksheet.
+         
+ 4) HD0000000416250   Updates for 1 AMIE C&P Exam worksheet
+  
+   Problem:
+   --------
+   Veterans Benefits Administration Veterans Affairs Central 
+   Office has approved content changes to the AMIE Initial Evaluation For 
+   Post-Traumatic Stress Disorder (PTSD)(#0910) C&P examination worksheet.
+  
+   Resolution:
+   -----------
+   Post-init routine DVBA183P will deactivate the current AMIE C&P
+   examination worksheets in the AMIE EXAM (#396.6) file and activate these
+   updated AMIE C&P examination worksheets in the same file:
+            
+    a) Initial Evaluation For Post-Traumatic Stress Disorder (PTSD)(#0910)
+       Current IEN: 196, New IEN: 247
+       Created new Routines DVBCWPF5, DVBCWPF6 and DVBCWPF7 that 
+       will contain the new text and new routine DVBCWPF4 that will access
+       the new text routine and print the blank worksheet.
+  
+ 5) HD0000000440620   Updates for 2 AMIE C&P Exam worksheets
+  
+    Problem:
+    --------
+    Veterans Benefits Administration Veterans Affairs Central
+    Office has approved content changes to the following two
+    AMIE C&P examination worksheets:  Gynecological Conditions
+    and Disorders of the Breast (#0705) and Dental and Oral (#0205).
+   
+    Resolution:
+    -----------
+    Post-init routine DVBA183P will deactivate the current 
+    AMIE C&P examination worksheets in the AMIE EXAM (#396.6) 
+    file and activate these updated AMIE C&P examination
+    worksheets in the same file. :  
+            
+    a) Gynecological Conditions and Disorders of the Breast (#0705)
+       Current IEN: 119, New IEN: 248
+       Created new Routine DVBCWGY3 that will contain the new text
+       and new routine DVBCWGY2 that will access the new text 
+       routine and print the blank worksheet. 
+    b) Dental and Oral (#0205)
+       Current IEN: 108, New IEN: 252
+       Created new Routine DVBCWDO3 that will contain the new text
+       and new routine DVBCWDO2 that will access the new text 
+       routine and print the blank worksheet. 
+  
+  6) HD0000000428799 - Updates to 1 AMIE C&P Exam worksheets  
+  
+    Problem:
+    --------
+    Veterans Benefits Administration Veterans Affairs Central
+    Office has approved content changes to the following  
+    AMIE C&P examination worksheet: HAND, THUMB, AND FINGERS
+    (#1420)
+  
+    Resolution:
+    -----------
+    Post-init routine DVBA183P will deactivate the current 
+    AMIE C&P examination worksheets in the AMIE EXAM (#396.6) file 
+    and activate these updated AMIE C&P examination worksheets in the same
+    file:  
+            
+    a) Hand, Thumb, and Fingers (#1420)
+       Current IEN: 208, New IEN: 249
+       Created new Routine DVBCHTF1 that will contain the new text
+       and new routine DVBCWHTF that will access the new text 
+       routine and print the blank worksheet. 
+     
+  7) HD0000000428794 - Updates to two AMIE C&P Exam worksheets  
+  
+    Problem:
+    --------
+    Veterans Benefits Administration Veterans Affairs Central
+    Office has approved content changes to the following  
+    AMIE C&P examination worksheets: FIBROMYALGIA (#1445) and 
+    GENITOURINARY EXAMINATION (#0605)
+                  
+    Resolution:
+    -----------
+    Post-init routine DVBA183P will deactivate the current AMIE 
+    C&P examination worksheets in the AMIE EXAM (#396.6) file and activate 
+    these updated AMIE C&P examination worksheets in the same file:  
+            
+    a) Fibromyalgia (#1445)
+       Current IEN: 217, New IEN: 250
+       Created new Routine DVBCWFI5 that will contain the new text
+       and new routine DVBCWFI4 that will access the new text 
+       routine and print the blank worksheet. 
+    b) Genitourinary Examination (#0605)
+       Current IEN: 224, New IEN: 251
+       Created new Routine DVBCWGE7 that will contain the new text
+       and new routine DVBCWGE6 that will access the new text 
+       routine and print the blank worksheet. 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be installed at any time.  Users do not have to be off the
+ system. Installation will take less than 5 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1    Load a Distribution
+     2    Verify Checksums in Transport Global
+     3    Print Transport Global
+     4    Compare Transport Global to Current System
+     5    Backup a Transport Global
+     6    Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options (when 
+ prompted for the INSTALL NAME enter DVBA*2.7*183):
+  
+     a. Verify Checksums in Transport Global - This option will allow you 
+ to ensure the integrity of the routines that are in the transport global.
+     b. Print Transport Global - This option will allow you to view the 
+ components of the KIDS build.
+     c. Compare Transport Global to Current System - This option will 
+ allow you to view all changes that will be made when this patch is 
+ installed. It compares all components of this patch (routines, DD's, 
+ templates, etc.).
+     d. Backup a Transport Global - This option will create a backup 
+ message of any routines exported with this patch. It will not backup any 
+ other changes such as DD's or templates.
+  
+ 4.  Use the Install Package(s) option and select DVBA*2.7*183.
+  
+     a. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" answer NO.
+  
+     b. When prompted "Want to DISABLE Scheduled Options, Menu Options, 
+ and Protocols? NO//" respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Print Blank C&P Worksheet [DVBA C PRINT BLANK C&P WORKSHEET]
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+  
+ 5.  Post init routine DVBA183P may be deleted after successful install
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA183P
+    Before:       n/a   After: B29207394  **183**
+Routine Name: DVBCHTF1
+    Before:       n/a   After: B57883397  **183**
+Routine Name: DVBCWAC2
+    Before:       n/a   After:  B2606732  **183**
+Routine Name: DVBCWAC3
+    Before:       n/a   After: B10198733  **183**
+Routine Name: DVBCWAH2
+    Before:       n/a   After:  B2881801  **183**
+Routine Name: DVBCWAH3
+    Before:       n/a   After: B56741726  **183**
+Routine Name: DVBCWAM2
+    Before:       n/a   After:  B2579589  **183**
+Routine Name: DVBCWAM3
+    Before:       n/a   After: B37736408  **183**
+Routine Name: DVBCWB4
+    Before:       n/a   After:  B2801579  **183**
+Routine Name: DVBCWB5
+    Before:       n/a   After: B29575087  **183**
+Routine Name: DVBCWBS2
+    Before:       n/a   After:  B2668409  **183**
+Routine Name: DVBCWBS3
+    Before:       n/a   After:B105994364  **183**
+Routine Name: DVBCWDO2
+    Before:       n/a   After:  B2629598  **183**
+Routine Name: DVBCWDO3
+    Before:       n/a   After: B43657327  **183**
+Routine Name: DVBCWFI4
+    Before:       n/a   After:  B2602946  **183**
+Routine Name: DVBCWFI5
+    Before:       n/a   After: B25224203  **183**
+Routine Name: DVBCWFS4
+    Before:       n/a   After:  B2683043  **183**
+Routine Name: DVBCWFS5
+    Before:       n/a   After: B24663824  **183**
+Routine Name: DVBCWGE6
+    Before:       n/a   After:  B2710647  **183**
+Routine Name: DVBCWGE7
+    Before:       n/a   After: B44345265  **183**
+Routine Name: DVBCWGY2
+    Before:       n/a   After:  B2957043  **183**
+Routine Name: DVBCWGY3
+    Before:       n/a   After: B33259928  **183**
+Routine Name: DVBCWHTF
+    Before:       n/a   After:  B2654436  **183**
+Routine Name: DVBCWPA3
+    Before:       n/a   After:  B2846720  **183**
+Routine Name: DVBCWPA4
+    Before:       n/a   After:B109025626  **183**
+Routine Name: DVBCWPA5
+    Before:       n/a   After: B89640933  **183**
+Routine Name: DVBCWPF4
+    Before:       n/a   After:  B3186186  **183**
+Routine Name: DVBCWPF5
+    Before:       n/a   After:B103095164  **183**
+Routine Name: DVBCWPF6
+    Before:       n/a   After: B76951900  **183**
+Routine Name: DVBCWPF7
+    Before:       n/a   After: B16783304  **183**
+Routine Name: DVBCWTB1
+    Before:       n/a   After:  B3051065  **183**
+Routine Name: DVBCWTB2
+    Before:       n/a   After: B96700034  **183**
+Routine Name: DVBCWTB3
+    Before:       n/a   After:B103196183  **183**
+Routine Name: DVBCWTB4
+    Before:       n/a   After: B19776317  **183**
+Routine Name: DVBCWTB5
+    Before:       n/a   After: B52823435  **183**
+Routine Name: DVBCWVN2
+    Before:       n/a   After:  B2766942  **183**
+Routine Name: DVBCWVN3
+    Before:       n/a   After: B39372873  **183**
+
+=============================================================================
+User Information:
+Entered By  : BOWEN,MARY JANE               Date Entered  : SEP 20, 2012
+Completed By: BYRD,TIERRA                   Date Completed: APR 29, 2013
+Released By : TAYLOR,KENNETH                Date Released : MAY 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

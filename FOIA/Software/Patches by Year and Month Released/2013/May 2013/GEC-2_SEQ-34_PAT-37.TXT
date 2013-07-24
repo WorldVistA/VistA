@@ -1,0 +1,147 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 08/13/12 at 18:42
+=============================================================================
+Run Date: MAY 16, 2013                     Designation: GEC*2*37
+Package : GEC - GENERIC CODE SHEET            Priority: Mandatory
+Version : 2        SEQ #34                      Status: Released
+                  Compliance Date: JUN 16, 2013
+=============================================================================
+
+Associated patches: (v)GEC*2*2     <<= must be installed BEFORE `GEC*2*37'
+
+Subject: CHANGE ZTIO=IO TO ZTIO=ION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses a change request with the IO variable for the code
+ sheet printing in the Keypunch a Code Sheet option running under the
+ Linux operating system.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000581927 ASKTOBAT^GECSXBL1+29 change ZTIO=IO TO ZTIO=ION
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ BLACK HILLS HCS
+ FARGO, ND
+ MARYLAND HCS
+ ST.CLOUD, MN
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000581927 ASKTOBAT^GECSXBL1+29 change ZTIO=IO TO ZTIO=ION
+  
+  Problem:
+  --------
+  The Information Technology specialist at Bay Pines site requested to change
+  the IO variable to the ION variable in the ZTIO string for queuing the
+  output for the device in the Linux environment. According to the Kernel
+  Developer's Guide, the ZTIO variable accepts the same I/O formatting 
+  string as IOP variable in the ^%ZIS: Standard Device Call. The IO variable
+  is returned with the device $I value of the selected device, but the ION
+  variable returns the device name (.01 field) in the Device file (#3.5)
+  which is the same device name (.01 field) of the IOP variable.
+  
+  Resolution:
+  -----------
+  Routine GECSXBL1 was modified to replace the IO variable in the ZTIO
+  string for the printer when the Taskman job starts to print the generic
+  code sheet in the [GECS KEYPUNCH] option.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed during normal working hours with all users
+ on the system. The developer recommends that one option be disabled
+ during installation:
+  
+     Keypunch a Code Sheet [GECS KEYPUNCH]
+  
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu 
+      [XPD MAIN]: 
+  
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter GEC*2.0*37):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer <return>
+      d. When prompted 'Enter options you wish to mark as 'Out of Order':', 
+         Enter the following options:
+   
+         Keypunch a Code Sheet [GECS KEYPUNCH]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;GCS;**[Patch List]**;MAR 14, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GECSXBL1
+    Before:  B6351225   After:  B6366006  **2,37**
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUL 20, 2012
+Completed By: LANG,MICKEY                   Date Completed: MAY 13, 2013
+Released By : VASSAR,CAROL                  Date Released : MAY 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

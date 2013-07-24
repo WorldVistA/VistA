@@ -1,0 +1,450 @@
+Released PSO*7*410 SEQ #352
+Extracted from mail message
+**KIDS**:PSO*7.0*410^
+
+**INSTALL NAME**
+PSO*7.0*410
+"BLD",9116,0)
+PSO*7.0*410^OUTPATIENT PHARMACY^0^3120816^y
+"BLD",9116,1,0)
+^^4^4^3120806^
+"BLD",9116,1,1,0)
+When processing Pending Orders in Outpatient Pharmacy, the system hangs
+"BLD",9116,1,2,0)
+if any word in the Provider Comments is longer than 60 characters and
+"BLD",9116,1,3,0)
+has a special delimiter (;,=:) after character position 57. If this 
+"BLD",9116,1,4,0)
+process continues to run, a <FILEFULL> error will occur.
+"BLD",9116,4,0)
+^9.64PA^^
+"BLD",9116,6.3)
+9
+"BLD",9116,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9116,"KRN",.4,0)
+.4
+"BLD",9116,"KRN",.401,0)
+.401
+"BLD",9116,"KRN",.402,0)
+.402
+"BLD",9116,"KRN",.403,0)
+.403
+"BLD",9116,"KRN",.5,0)
+.5
+"BLD",9116,"KRN",.84,0)
+.84
+"BLD",9116,"KRN",3.6,0)
+3.6
+"BLD",9116,"KRN",3.8,0)
+3.8
+"BLD",9116,"KRN",9.2,0)
+9.2
+"BLD",9116,"KRN",9.8,0)
+9.8
+"BLD",9116,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9116,"KRN",9.8,"NM",1,0)
+PSOUTLA2^^0^B20328353
+"BLD",9116,"KRN",9.8,"NM","B","PSOUTLA2",1)
+
+"BLD",9116,"KRN",19,0)
+19
+"BLD",9116,"KRN",19.1,0)
+19.1
+"BLD",9116,"KRN",101,0)
+101
+"BLD",9116,"KRN",409.61,0)
+409.61
+"BLD",9116,"KRN",771,0)
+771
+"BLD",9116,"KRN",779.2,0)
+779.2
+"BLD",9116,"KRN",870,0)
+870
+"BLD",9116,"KRN",8989.51,0)
+8989.51
+"BLD",9116,"KRN",8989.52,0)
+8989.52
+"BLD",9116,"KRN",8994,0)
+8994
+"BLD",9116,"KRN","B",.4,.4)
+
+"BLD",9116,"KRN","B",.401,.401)
+
+"BLD",9116,"KRN","B",.402,.402)
+
+"BLD",9116,"KRN","B",.403,.403)
+
+"BLD",9116,"KRN","B",.5,.5)
+
+"BLD",9116,"KRN","B",.84,.84)
+
+"BLD",9116,"KRN","B",3.6,3.6)
+
+"BLD",9116,"KRN","B",3.8,3.8)
+
+"BLD",9116,"KRN","B",9.2,9.2)
+
+"BLD",9116,"KRN","B",9.8,9.8)
+
+"BLD",9116,"KRN","B",19,19)
+
+"BLD",9116,"KRN","B",19.1,19.1)
+
+"BLD",9116,"KRN","B",101,101)
+
+"BLD",9116,"KRN","B",409.61,409.61)
+
+"BLD",9116,"KRN","B",771,771)
+
+"BLD",9116,"KRN","B",779.2,779.2)
+
+"BLD",9116,"KRN","B",870,870)
+
+"BLD",9116,"KRN","B",8989.51,8989.51)
+
+"BLD",9116,"KRN","B",8989.52,8989.52)
+
+"BLD",9116,"KRN","B",8994,8994)
+
+"BLD",9116,"QDEF")
+^^^^NO^^^^^^YES
+"BLD",9116,"QUES",0)
+^9.62^^
+"BLD",9116,"REQB",0)
+^9.611^1^1
+"BLD",9116,"REQB",1,0)
+PSO*7.0*210^2
+"BLD",9116,"REQB","B","PSO*7.0*210",1)
+
+"MBREQ")
+0
+"PKG",206,-1)
+1^1
+"PKG",206,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",206,20,0)
+^9.402P^^
+"PKG",206,22,0)
+^9.49I^1^1
+"PKG",206,22,1,0)
+7.0^3021122^3021202^66481
+"PKG",206,22,1,"PAH",1,0)
+410^3120816
+"PKG",206,22,1,"PAH",1,1,0)
+^^4^4^3120816
+"PKG",206,22,1,"PAH",1,1,1,0)
+When processing Pending Orders in Outpatient Pharmacy, the system hangs
+"PKG",206,22,1,"PAH",1,1,2,0)
+if any word in the Provider Comments is longer than 60 characters and
+"PKG",206,22,1,"PAH",1,1,3,0)
+has a special delimiter (;,=:) after character position 57. If this 
+"PKG",206,22,1,"PAH",1,1,4,0)
+process continues to run, a <FILEFULL> error will occur.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSOUTLA2")
+0^1^B20328353^B15870639
+"RTN","PSOUTLA2",1,0)
+PSOUTLA2 ;BHAM ISC/GSN-Pharmacy utility program cont. ;6/6/05 12:19pm
+"RTN","PSOUTLA2",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**210,410**;DEC 1997;Build 9
+"RTN","PSOUTLA2",3,0)
+ Q
+"RTN","PSOUTLA2",4,0)
+ ;
+"RTN","PSOUTLA2",5,0)
+WORDWRAP(STR,IEN,GL,LM) ;Wraps words at spaces normally and will breakup long
+"RTN","PSOUTLA2",6,0)
+ ;               words at a delimiter & wrap at those break points
+"RTN","PSOUTLA2",7,0)
+ ; Input: STR - a text string
+"RTN","PSOUTLA2",8,0)
+ ;        IEN - ien of global
+"RTN","PSOUTLA2",9,0)
+ ;        GL  - global root
+"RTN","PSOUTLA2",10,0)
+ ;        LM  - left margin
+"RTN","PSOUTLA2",11,0)
+ ; Output: Populated global  (usually in ^TMP)
+"RTN","PSOUTLA2",12,0)
+ ;
+"RTN","PSOUTLA2",13,0)
+ ; When a long word is encountered, i.e. text with no spaces, an
+"RTN","PSOUTLA2",14,0)
+ ; attempt will be made to locate a delimiter & break the line there. 
+"RTN","PSOUTLA2",15,0)
+ ; If it can't find a valid delimiter without a restricted scenario,
+"RTN","PSOUTLA2",16,0)
+ ; i.e. a number like 1,000 , then it will be forced to break at the
+"RTN","PSOUTLA2",17,0)
+ ; End of Line (EOL).
+"RTN","PSOUTLA2",18,0)
+ ;
+"RTN","PSOUTLA2",19,0)
+ ;    Delimiters searched for and order they are picked for use:
+"RTN","PSOUTLA2",20,0)
+ ;        preferred:   ,    ;
+"RTN","PSOUTLA2",21,0)
+ ;        alternate:   :    =
+"RTN","PSOUTLA2",22,0)
+ ;        do not use:  -  .  )  (  /    (to critical, used in dosing)
+"RTN","PSOUTLA2",23,0)
+ ;         example:  "TAKE 1/2-1 TAB(7.5MG) TABLET(S)"
+"RTN","PSOUTLA2",24,0)
+ ;
+"RTN","PSOUTLA2",25,0)
+ ; Key Variables: WORD  - current word from text string
+"RTN","PSOUTLA2",26,0)
+ ;                WORD1 - 1st part of word that will fit
+"RTN","PSOUTLA2",27,0)
+ ;                WORD2 - 2nd part of word for new line
+"RTN","PSOUTLA2",28,0)
+ ;                WORD0 - remnant that won't fit on the new line
+"RTN","PSOUTLA2",29,0)
+ ;
+"RTN","PSOUTLA2",30,0)
+ N QQ,DL,DLM,WD,LL,TL,UL,MAXLN,LSTD,CURD,GWRD,LC,WORD0,WORD,WORD1,WORD2
+"RTN","PSOUTLA2",31,0)
+ S IEN=+$G(IEN),@GL@(IEN,0)=$G(@GL@(IEN,0)),WORD0=""
+"RTN","PSOUTLA2",32,0)
+ ;loop thru words, quit if no more words & no remnants - i.e. WORD0
+"RTN","PSOUTLA2",33,0)
+ F QQ=1:1 S WORD=$P(STR," ",QQ) D  Q:(QQ'<$L(STR," "))&(WORD0="")
+"RTN","PSOUTLA2",34,0)
+ . ;if remnant exists, prepend to next Word
+"RTN","PSOUTLA2",35,0)
+ . S:WORD0]"" WORD=WORD0_WORD,WORD0=""
+"RTN","PSOUTLA2",36,0)
+ . ;wrap short words at spaces, check if last char is already a space
+"RTN","PSOUTLA2",37,0)
+ . S GWRD=@GL@(IEN,0)
+"RTN","PSOUTLA2",38,0)
+ . S LC=$E(@GL@(IEN,0),$L(GWRD))
+"RTN","PSOUTLA2",39,0)
+ . I LC=" ",$L(GWRD_WORD)<81 S @GL@(IEN,0)=@GL@(IEN,0)_WORD Q
+"RTN","PSOUTLA2",40,0)
+ . I LC'=" ",$L(GWRD_" "_WORD)<81 S @GL@(IEN,0)=@GL@(IEN,0)_" "_WORD Q
+"RTN","PSOUTLA2",41,0)
+ . I $L(WORD)<20,$L(LM+1+$L(WORD))<81 D  Q
+"RTN","PSOUTLA2",42,0)
+ . . S WORD1="",WORD2=WORD,DLM="" D ADDWORDS S WORD0=WORD2 Q
+"RTN","PSOUTLA2",43,0)
+ . ;
+"RTN","PSOUTLA2",44,0)
+ . ;word>80, so wrap long words @ a specific delimiter, if found
+"RTN","PSOUTLA2",45,0)
+ . S MAXLN=79-$L(@GL@(IEN,0))
+"RTN","PSOUTLA2",46,0)
+ . ;search backwards & pick 1st dl  > 1 count of preferred delims
+"RTN","PSOUTLA2",47,0)
+ . F DL=";","," S DL($L(WORD,DL))=DL
+"RTN","PSOUTLA2",48,0)
+ . S DL=$O(DL(DL),-1) S DLM=$S(DL>1:DL(DL),1:"")
+"RTN","PSOUTLA2",49,0)
+ . I DLM="" F DL="=",":" S DL($L(WORD,DL))=DL D  ;try these alt delims
+"RTN","PSOUTLA2",50,0)
+ . . S DL=$O(DL(DL),-1) S DLM=$S(DL>1:DL(DL),1:"")
+"RTN","PSOUTLA2",51,0)
+ . ;
+"RTN","PSOUTLA2",52,0)
+ . ;no good delimiter, will have to break at end of line
+"RTN","PSOUTLA2",53,0)
+ . I DLM="" D  Q
+"RTN","PSOUTLA2",54,0)
+ . . S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",55,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",56,0)
+ . ;
+"RTN","PSOUTLA2",57,0)
+ . ;good delimiter, will break at last dlm that fits within maxln
+"RTN","PSOUTLA2",58,0)
+ . S (LSTD,LL)=0,CURD=1 F TL=0:0 S CURD=$F(WORD,DLM,CURD) Q:'CURD  D
+"RTN","PSOUTLA2",59,0)
+ . . S TL=TL+1
+"RTN","PSOUTLA2",60,0)
+ . . S WD(TL)=CURD_"^"_$E(WORD,CURD-2,CURD)
+"RTN","PSOUTLA2",61,0)
+ . . S:CURD'>MAXLN LSTD=CURD,LL=TL
+"RTN","PSOUTLA2",62,0)
+ . ;special check of "," embedded in a number  e.g. 1,000
+"RTN","PSOUTLA2",63,0)
+ . ;backup to previous delimiter if pattern match
+"RTN","PSOUTLA2",64,0)
+ . I DLM="," F UL=LL:-1:0 Q:$P($G(WD(UL)),"^",2)'?1N1","1N
+"RTN","PSOUTLA2",65,0)
+ . I DLM=",",+$G(WD(UL))<LSTD S LSTD=+$G(WD(UL))
+"RTN","PSOUTLA2",66,0)
+ . ;
+"RTN","PSOUTLA2",67,0)
+ . ;*410
+"RTN","PSOUTLA2",68,0)
+ . ;if WORD is longer than 60 characters and a valid delimiter is 
+"RTN","PSOUTLA2",69,0)
+ . ;found after character position 57 (58 or later), ignore the 
+"RTN","PSOUTLA2",70,0)
+ . ;delimiter and break at end of line since entire word will not
+"RTN","PSOUTLA2",71,0)
+ . ;fit on one line
+"RTN","PSOUTLA2",72,0)
+ . N WORDLN S WORDLN=$L(WORD) I DLM]"",DLM'="," S WORDLN=$F(WORD,DLM,1)-1
+"RTN","PSOUTLA2",73,0)
+ . S WORD1=$E(WORD,1,WORDLN),WORD2=$E(WORD,WORDLN+1,$L(WORD))
+"RTN","PSOUTLA2",74,0)
+ . I (LM+1+$L(WORD1))>80 S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",75,0)
+ . I DLM]"",($F(WORD,DLM,1)-1)>57,$L(WORD)'<60 D  Q
+"RTN","PSOUTLA2",76,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",77,0)
+ . ;
+"RTN","PSOUTLA2",78,0)
+ . ;'LSTD usually means no valid Dlm's found in Word, but if line
+"RTN","PSOUTLA2",79,0)
+ . ;found to have some valid Dlm's later in the Word, then go ahead
+"RTN","PSOUTLA2",80,0)
+ . ;defer entire string to next line via Addwords Api
+"RTN","PSOUTLA2",81,0)
+ . I 'LSTD,TL>LL,$P($G(WD(TL)),"^",2)'?1N1","1N D  Q
+"RTN","PSOUTLA2",82,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",83,0)
+ . ;
+"RTN","PSOUTLA2",84,0)
+ . ;no valid Dlm's found in word, can't determine a word, break @EOL
+"RTN","PSOUTLA2",85,0)
+ . I 'LSTD,$L(WORD)>(MAXLN) D  Q
+"RTN","PSOUTLA2",86,0)
+ . . S WORD1=$E(WORD,1,MAXLN),WORD2=$E(WORD,MAXLN+1,$L(WORD))
+"RTN","PSOUTLA2",87,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",88,0)
+ . ;no valid Dlm's found in word, and can add Word to curr line
+"RTN","PSOUTLA2",89,0)
+ . I 'LSTD,$L(WORD)'>(MAXLN) S @GL@(IEN,0)=@GL@(IEN,0)_WORD Q
+"RTN","PSOUTLA2",90,0)
+ . ;
+"RTN","PSOUTLA2",91,0)
+ . ;valid Dlm's & location found indicated by SS
+"RTN","PSOUTLA2",92,0)
+ . I LSTD D  Q
+"RTN","PSOUTLA2",93,0)
+ . . S WORD1=$E(WORD,1,LSTD-1),WORD2=$E(WORD,LSTD,$L(WORD))
+"RTN","PSOUTLA2",94,0)
+ . . D ADDWORDS S WORD0=WORD2
+"RTN","PSOUTLA2",95,0)
+ Q
+"RTN","PSOUTLA2",96,0)
+ ;
+"RTN","PSOUTLA2",97,0)
+ADDWORDS ;Add words to curr line and to a new line
+"RTN","PSOUTLA2",98,0)
+ N CH
+"RTN","PSOUTLA2",99,0)
+ ;if last character is the DLM or a " ", then don't add a space when
+"RTN","PSOUTLA2",100,0)
+ ;adding Word1 to current line
+"RTN","PSOUTLA2",101,0)
+ S CH=$E(@GL@(IEN,0),$L(@GL@(IEN,0)))
+"RTN","PSOUTLA2",102,0)
+ I (CH=DLM)!(CH=" ") D
+"RTN","PSOUTLA2",103,0)
+ . S @GL@(IEN,0)=@GL@(IEN,0)_WORD1
+"RTN","PSOUTLA2",104,0)
+ E  D
+"RTN","PSOUTLA2",105,0)
+ . S @GL@(IEN,0)=@GL@(IEN,0)_" "_WORD1
+"RTN","PSOUTLA2",106,0)
+ ;create new line to hold Word2
+"RTN","PSOUTLA2",107,0)
+ S IEN=IEN+1,$P(@GL@(IEN,0)," ",LM+1)=" "
+"RTN","PSOUTLA2",108,0)
+ S MAXLN=79-$L(@GL@(IEN,0))
+"RTN","PSOUTLA2",109,0)
+ ;word2 won't fit, quit for further wrapping
+"RTN","PSOUTLA2",110,0)
+ Q:$L(WORD2)>(80-LM)
+"RTN","PSOUTLA2",111,0)
+ ;word2 will fit add it
+"RTN","PSOUTLA2",112,0)
+ S @GL@(IEN,0)=@GL@(IEN,0)_WORD2,WORD2=""
+"RTN","PSOUTLA2",113,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9116,6)
+^352
+**END**
+**END**

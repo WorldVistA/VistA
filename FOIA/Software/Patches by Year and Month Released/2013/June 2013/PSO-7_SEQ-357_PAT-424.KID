@@ -1,0 +1,604 @@
+EMERGENCY Released PSO*7*424 SEQ #357
+Extracted from mail message
+**KIDS**:PSO*7.0*424^
+
+**INSTALL NAME**
+PSO*7.0*424
+"BLD",8549,0)
+PSO*7.0*424^OUTPATIENT PHARMACY^0^3130315^y
+"BLD",8549,1,0)
+^^4^4^3130315^
+"BLD",8549,1,1,0)
+1. This build is to be installed immediately after PSO*7.0*390 to 
+"BLD",8549,1,2,0)
+   correct an issue where allergy labels are printing each time an allergy
+"BLD",8549,1,3,0)
+   order check occurs.  The allergy label should only print when a user
+"BLD",8549,1,4,0)
+   has not been assigned the PSORPH key. (CCR6452). 
+"BLD",8549,4,0)
+^9.64PA^^
+"BLD",8549,6.3)
+1
+"BLD",8549,"ABPKG")
+n
+"BLD",8549,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8549,"KRN",.4,0)
+.4
+"BLD",8549,"KRN",.401,0)
+.401
+"BLD",8549,"KRN",.402,0)
+.402
+"BLD",8549,"KRN",.403,0)
+.403
+"BLD",8549,"KRN",.5,0)
+.5
+"BLD",8549,"KRN",.84,0)
+.84
+"BLD",8549,"KRN",3.6,0)
+3.6
+"BLD",8549,"KRN",3.8,0)
+3.8
+"BLD",8549,"KRN",9.2,0)
+9.2
+"BLD",8549,"KRN",9.8,0)
+9.8
+"BLD",8549,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8549,"KRN",9.8,"NM",1,0)
+PSODGAL1^^0^B77165985
+"BLD",8549,"KRN",9.8,"NM","B","PSODGAL1",1)
+
+"BLD",8549,"KRN",19,0)
+19
+"BLD",8549,"KRN",19.1,0)
+19.1
+"BLD",8549,"KRN",101,0)
+101
+"BLD",8549,"KRN",409.61,0)
+409.61
+"BLD",8549,"KRN",771,0)
+771
+"BLD",8549,"KRN",779.2,0)
+779.2
+"BLD",8549,"KRN",870,0)
+870
+"BLD",8549,"KRN",8989.51,0)
+8989.51
+"BLD",8549,"KRN",8989.52,0)
+8989.52
+"BLD",8549,"KRN",8994,0)
+8994
+"BLD",8549,"KRN","B",.4,.4)
+
+"BLD",8549,"KRN","B",.401,.401)
+
+"BLD",8549,"KRN","B",.402,.402)
+
+"BLD",8549,"KRN","B",.403,.403)
+
+"BLD",8549,"KRN","B",.5,.5)
+
+"BLD",8549,"KRN","B",.84,.84)
+
+"BLD",8549,"KRN","B",3.6,3.6)
+
+"BLD",8549,"KRN","B",3.8,3.8)
+
+"BLD",8549,"KRN","B",9.2,9.2)
+
+"BLD",8549,"KRN","B",9.8,9.8)
+
+"BLD",8549,"KRN","B",19,19)
+
+"BLD",8549,"KRN","B",19.1,19.1)
+
+"BLD",8549,"KRN","B",101,101)
+
+"BLD",8549,"KRN","B",409.61,409.61)
+
+"BLD",8549,"KRN","B",771,771)
+
+"BLD",8549,"KRN","B",779.2,779.2)
+
+"BLD",8549,"KRN","B",870,870)
+
+"BLD",8549,"KRN","B",8989.51,8989.51)
+
+"BLD",8549,"KRN","B",8989.52,8989.52)
+
+"BLD",8549,"KRN","B",8994,8994)
+
+"BLD",8549,"QUES",0)
+^9.62^^
+"BLD",8549,"REQB",0)
+^9.611^1^1
+"BLD",8549,"REQB",1,0)
+PSO*7.0*390^2
+"BLD",8549,"REQB","B","PSO*7.0*390",1)
+
+"MBREQ")
+0
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+424^3130315
+"PKG",141,22,1,"PAH",1,1,0)
+^^4^4^3130315
+"PKG",141,22,1,"PAH",1,1,1,0)
+1. This build is to be installed immediately after PSO*7.0*390 to 
+"PKG",141,22,1,"PAH",1,1,2,0)
+   correct an issue where allergy labels are printing each time an allergy
+"PKG",141,22,1,"PAH",1,1,3,0)
+   order check occurs.  The allergy label should only print when a user
+"PKG",141,22,1,"PAH",1,1,4,0)
+   has not been assigned the PSORPH key. (CCR6452). 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSODGAL1")
+0^1^B77165985^B77114277
+"RTN","PSODGAL1",1,0)
+PSODGAL1 ;BIR/LC,SAB-enhanced DRUG ALLERGY REACTION CHECKING ;12/09/07  02:22
+"RTN","PSODGAL1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**251,401,390,424**;DEC 1997;Build 1
+"RTN","PSODGAL1",3,0)
+ ;External reference to ^GMRADPT supported by DBIA 10099
+"RTN","PSODGAL1",4,0)
+ ;External reference to ORCHK^GMRAOR supported by DBIA 2378
+"RTN","PSODGAL1",5,0)
+ ;External reference to $P(^GMR(120.8,LP,3),"^",3) supp. by DBIA 2214
+"RTN","PSODGAL1",6,0)
+ ;External reference to ^PS(50.605 supported by DBIA 696
+"RTN","PSODGAL1",7,0)
+ ;External reference to EN1^GMRAOR2 supported by DBIA 2422
+"RTN","PSODGAL1",8,0)
+ ;External reference to GETDATA^GMRAOR supported by DBIA 4847
+"RTN","PSODGAL1",9,0)
+ ;External reference to ^TMP("GMRAOC" supported by DBIA 4848
+"RTN","PSODGAL1",10,0)
+ ;External reference to ^XUSEC("PSORPH" supported by DBIA 10076
+"RTN","PSODGAL1",11,0)
+ ;External reference to CLIST^PSNAPIS supported by DBIA 2574
+"RTN","PSODGAL1",12,0)
+ ;External reference to ^GMRD(120.82,D0, supported by DBIA 5690
+"RTN","PSODGAL1",13,0)
+ ;External reference to GETOC4^OROCAPI1 supported by DBIA 5729
+"RTN","PSODGAL1",14,0)
+ ;External reference to INGR^PSNNGR supported by DBIA 5728
+"RTN","PSODGAL1",15,0)
+ ;External reference to ^PS(55 supported by DBIA 2228
+"RTN","PSODGAL1",16,0)
+ ;External reference to ^PS(53.1 supported by DBIA 5793 
+"RTN","PSODGAL1",17,0)
+ ;
+"RTN","PSODGAL1",18,0)
+ N PSOACK,DFN,PSODAL K TRU
+"RTN","PSODGAL1",19,0)
+ K ^TMP($J,"PSODRCLS"),DSPLQ,PSOMDC,^TMP("PSODAOC",$J),^TMP("GMRAOC",$J) S DFN=PSODFN
+"RTN","PSODGAL1",20,0)
+ I $D(PSODRUG("NDF")) S NDF=$P(PSODRUG("NDF"),"A"),TYP=$P(PSODRUG("NDF"),"A",2),PTR=NDF_"."_TYP
+"RTN","PSODGAL1",21,0)
+ I $G(NDF) D CHK S NDF=$P(PSODRUG("NDF"),"A")
+"RTN","PSODGAL1",22,0)
+ I '$G(NDF) D CHK1
+"RTN","PSODGAL1",23,0)
+ I $D(PSODRUG("VA CLASS")),$G(TRU) D CLASS
+"RTN","PSODGAL1",24,0)
+ I $G(^TMP($J,"PSODRCLS",0))!$G(TRU) D
+"RTN","PSODGAL1",25,0)
+ .I '$D(^XUSEC("PSORPH",DUZ)),'$D(PSOMDC) K DIR S DIR(0)="E",DIR("?")="Press Return to continue",DIR("A")="Press Return to continue" D ^DIR K DIR,DUOUT,DIRUT Q
+"RTN","PSODGAL1",26,0)
+ .I $D(PSJDGCK)!$D(PSODGCK) K DIR S DIR(0)="E",DIR("?")="Press Return to continue",DIR("A")="Press Return to continue" D ^DIR K DIR,DUOUT,DIRUT W @IOF Q
+"RTN","PSODGAL1",27,0)
+ .S DIR("?",1)="Answer 'YES' if you DO want to enter a intervention for this medication,"
+"RTN","PSODGAL1",28,0)
+ .S DIR("?")="       'NO' if you DON'T want to enter a intervention for this medication,"
+"RTN","PSODGAL1",29,0)
+ .S DIR(0)="SA^1:YES;0:NO",DIR("A")="Do you want to Intervene? ",DIR("B")="YES" D ^DIR
+"RTN","PSODGAL1",30,0)
+ .Q:'Y  S PSODAL=1
+"RTN","PSODGAL1",31,0)
+ .D ^PSORXI I $G(PSODAL("DA")) S $P(^TMP("PSODAOC",$J,1,0),"^",5)=PSODAL("DA")
+"RTN","PSODGAL1",32,0)
+EX K DIR,DTOUT,DIRUT,DIROUT,DUOUT,Y,DSPLQ,PSJAOC,PSOMDC
+"RTN","PSODGAL1",33,0)
+ K PSOACK,GMRAING,I,APTR,GMRA,GMRAL,LP,^TMP($J,"PSODRCLS"),^TMP("GMRAOC",$J)
+"RTN","PSODGAL1",34,0)
+ I $D(PSJDGCK)!$D(PSODGCK) K ^TMP("PSODAOC",$J)
+"RTN","PSODGAL1",35,0)
+ Q
+"RTN","PSODGAL1",36,0)
+ ;
+"RTN","PSODGAL1",37,0)
+CHK ;matched to ndf
+"RTN","PSODGAL1",38,0)
+ K ^TMP("PSODAI",$J) S PSOACK=$$ORCHK^GMRAOR(DFN,"DR",PTR) D:$G(PSOACK)=1
+"RTN","PSODGAL1",39,0)
+ .Q:$D(^XUSEC("PSORPH",DUZ))
+"RTN","PSODGAL1",40,0)
+ .S ^TMP("PSODAI",$J,0)=1
+"RTN","PSODGAL1",41,0)
+ .S I=0 F  S I=$O(GMRAING(I)) Q:'I  S ^TMP("PSODAI",$J,I,0)=GMRAING(I)
+"RTN","PSODGAL1",42,0)
+ D SYM
+"RTN","PSODGAL1",43,0)
+ D:$G(PSOACK)!($G(TRU)) DSPLY
+"RTN","PSODGAL1",44,0)
+ Q
+"RTN","PSODGAL1",45,0)
+CHK1 ;not matched to ndf
+"RTN","PSODGAL1",46,0)
+ K ^TMP("PSODAI",$J)
+"RTN","PSODGAL1",47,0)
+ S GMRA="0^0^001" D EN1^GMRADPT F LP=0:0 S LP=$O(GMRAL(LP)) Q:'LP!($G(PSOACK))  D:$D(^GMR(120.8,LP,0))
+"RTN","PSODGAL1",48,0)
+ .S:'$G(PSOACK) APTR=$P(^GMR(120.8,LP,0),"^",3)
+"RTN","PSODGAL1",49,0)
+ .I $P(APTR,";",2)="PSDRUG(",$P(APTR,";")=PSODRUG("IEN") S PSOACK=1
+"RTN","PSODGAL1",50,0)
+ .Q:$D(^XUSEC("PSORPH",DUZ))  S:$G(PSOACK)=1 ^TMP("PSODAI",$J,0)=1
+"RTN","PSODGAL1",51,0)
+ D SYM
+"RTN","PSODGAL1",52,0)
+ D:$G(PSOACK)!($G(TRU)) DSPLY
+"RTN","PSODGAL1",53,0)
+ Q
+"RTN","PSODGAL1",54,0)
+DSPLY ;
+"RTN","PSODGAL1",55,0)
+ Q:'$G(TRU)
+"RTN","PSODGAL1",56,0)
+ D FULL^VALM1
+"RTN","PSODGAL1",57,0)
+ N AGNL,SEV,SEVT,SEVN D EN1^GMRAOR2(TRU,"AGNL")
+"RTN","PSODGAL1",58,0)
+ S ^TMP("PSODAOC",$J,1,0)=PSODRUG("IEN")_"^"_"L"_"^"_$S($G(TRU):$P(GMRAL(TRU),"^",9),1:"None Found")_"^^^V^"_$E($P($G(AGNL),"^",5))
+"RTN","PSODGAL1",59,0)
+ I $O(AGNL("O",0)) S SEV=0 D
+"RTN","PSODGAL1",60,0)
+ .F I=1:1 S SEV=$O(AGNL("O",SEV)) Q:SEV<1  I $P(AGNL("O",SEV),"^",2)]"" S SEVT=$P(AGNL("O",SEV),"^",2),SEVN=$S(SEVT="MILD":1,SEVT="MODERATE":2,SEVT="SEVERE":3,1:"")
+"RTN","PSODGAL1",61,0)
+ S ^TMP("PSODAOC",$J,1,0)=^TMP("PSODAOC",$J,1,0)_"^"_$S($G(SEVN):SEVN,1:"")
+"RTN","PSODGAL1",62,0)
+ D
+"RTN","PSODGAL1",63,0)
+ .W $C(7),!,"A Drug-Allergy Reaction exists for this medication and/or class!",!
+"RTN","PSODGAL1",64,0)
+ .I '$D(PSODGCK) W !,"    Prospective Drug: "_PSODRUG("NAME")
+"RTN","PSODGAL1",65,0)
+ .I $D(PSODGCK),'$D(PSODGCKF) W !,"    Prospective Drug: "_PSODRUG("NAME")
+"RTN","PSODGAL1",66,0)
+ .I $D(PSODGCK),$D(PSODGCKF) W !,"        Profile Drug: "_PSODRUG("NAME")
+"RTN","PSODGAL1",67,0)
+ .W !,"     Causative Agent: "_$S($G(TRU):$P(GMRAL(TRU),"^",2),1:"None Found")
+"RTN","PSODGAL1",68,0)
+ .W !," Historical/Observed: "_$S($G(TRU):$P($G(AGNL),"^",5),1:"Not Entered")
+"RTN","PSODGAL1",69,0)
+ .W !,"            Severity: "_$S($G(SEVT)]"":SEVT,1:"Not Entered"),!
+"RTN","PSODGAL1",70,0)
+ .I $O(GMRAING(0)) D  S DSPLQ=1
+"RTN","PSODGAL1",71,0)
+ ..W ?7,"  Ingredients: "
+"RTN","PSODGAL1",72,0)
+ ..K ^UTILITY($J,"W") S DIWL=1,DIWR=57,DIWF=""
+"RTN","PSODGAL1",73,0)
+ ..F ZX=0:0 S ZX=$O(GMRAING(ZX)) Q:'ZX  S X=GMRAING(ZX)_", " D ^DIWP
+"RTN","PSODGAL1",74,0)
+ ..F ZX=0:0 S ZX=$O(^UTILITY($J,"W",1,ZX)) Q:'ZX  W ?22,^UTILITY($J,"W",1,ZX,0) I $O(^UTILITY($J,"W",1,ZX)) W !
+"RTN","PSODGAL1",75,0)
+ ..K ^UTILITY($J,"W"),DIWL,DIWR,DIWF,I,ZX,X W !
+"RTN","PSODGAL1",76,0)
+ ..K ^TMP("PSN",$J)
+"RTN","PSODGAL1",77,0)
+ ..S PSNDA=PSODRUG("IEN"),PSNID=PSODRUG("NDF") D INGR^PSNNGR  ;returns ingre ptrs
+"RTN","PSODGAL1",78,0)
+ ..F I=0:0 S I=$O(^TMP("PSN",$J,I)) Q:'I  S ^TMP("PSODAOC",$J,2,I)=I
+"RTN","PSODGAL1",79,0)
+ ..K ^TMP("PSN",$J),PSNDA,PSNID
+"RTN","PSODGAL1",80,0)
+ I $O(GMRAL(TRU,"S",0)) S ZI=TRU D SYM1 Q
+"RTN","PSODGAL1",81,0)
+ E  W ?3,"   Signs/Symptoms: None Entered",!
+"RTN","PSODGAL1",82,0)
+ Q
+"RTN","PSODGAL1",83,0)
+ ;
+"RTN","PSODGAL1",84,0)
+CLASS ;
+"RTN","PSODGAL1",85,0)
+ N CPT,CLCHK,CT,AGNL,CC,GMRA,LEN S LEN=4
+"RTN","PSODGAL1",86,0)
+ I $E($G(PSODRUG("VA CLASS")),1,4)="CN10" S LEN=5 ;look at 5 chars if ANALGESICS
+"RTN","PSODGAL1",87,0)
+ K ^TMP($J,"PSODRCLS")
+"RTN","PSODGAL1",88,0)
+ I $T(GETDATA^GMRAOR)]"" G CLASS2 ; CHECK FOR EXISTENCE OF NEW ENTRY POINT BEFORE USING
+"RTN","PSODGAL1",89,0)
+ S CLCHK=""
+"RTN","PSODGAL1",90,0)
+ S GMRA="0^0^111" D EN1^GMRADPT F CC=0:0 S CC=$O(GMRAL(CC)) Q:'CC  D
+"RTN","PSODGAL1",91,0)
+ .K AGNL D EN1^GMRAOR2(CC,"AGNL")
+"RTN","PSODGAL1",92,0)
+ .I $D(AGNL("V")) F CT=0:1 S CPT=$O(AGNL("V",CT)) Q:'CPT  I $E($P($G(AGNL("V",CPT)),"^"),1,LEN)=$E(PSODRUG("VA CLASS"),1,LEN) D
+"RTN","PSODGAL1",93,0)
+ ..S CLCHK=$G(CLCHK)+1,^TMP($J,"PSODRCLS",CLCHK)=$P($G(AGNL("V",CPT)),"^")_" "_$P($G(AGNL("V",CPT)),"^",2)
+"RTN","PSODGAL1",94,0)
+ G CLASSDSP
+"RTN","PSODGAL1",95,0)
+CLASS2 ;
+"RTN","PSODGAL1",96,0)
+ N RET
+"RTN","PSODGAL1",97,0)
+ S RET=$$DRCL(DFN)
+"RTN","PSODGAL1",98,0)
+ I '$G(RET) Q
+"RTN","PSODGAL1",99,0)
+ S CLCHK="",CT="" F  S CT=$O(GMRADRCL(CT)) Q:CT=""  D
+"RTN","PSODGAL1",100,0)
+ .I $E(PSODRUG("VA CLASS"),1,LEN)=$E(CT,1,LEN) S CLCHK=$G(CLCHK)+1,^TMP($J,"PSODRCLS",CLCHK)=CT_" "_$P(GMRADRCL(CT),"^",2)
+"RTN","PSODGAL1",101,0)
+CLASSDSP ;
+"RTN","PSODGAL1",102,0)
+ I $O(^TMP($J,"PSODRCLS",0)) W ?8,"  Drug Class: "
+"RTN","PSODGAL1",103,0)
+ K ^UTILITY($J,"W") S DIWL=1,DIWR=55,DIWF="" N ZPSODC
+"RTN","PSODGAL1",104,0)
+ S CT="" F  S CT=$O(^TMP($J,"PSODRCLS",CT)) Q:CT=""  D
+"RTN","PSODGAL1",105,0)
+ .S ZPSODC=$P(^TMP($J,"PSODRCLS",CT)," "),^TMP("PSODAOC",$J,1,CT)=$O(^PS(50.605,"B",ZPSODC,0))
+"RTN","PSODGAL1",106,0)
+ .S X=^TMP($J,"PSODRCLS",CT)_", " D ^DIWP
+"RTN","PSODGAL1",107,0)
+ F ZX=0:0 S ZX=$O(^UTILITY($J,"W",1,ZX)) Q:'ZX  W ?22,^UTILITY($J,"W",1,ZX,0),!
+"RTN","PSODGAL1",108,0)
+ K ^UTILITY($J,"W"),DIWL,DIWR,DIWF,CT,ZX,ZPSODC
+"RTN","PSODGAL1",109,0)
+ N ZORN,X K ^UTILITY($J,"W") S DIWL=1,DIWR=50,DIWF="" N Z,ZI,ZX,ZOV
+"RTN","PSODGAL1",110,0)
+ I $G(ORD),'$G(HPOERR),+$G(^PS(52.41,ORD,0)) S ZORN=$P(^PS(52.41,ORD,0),"^")
+"RTN","PSODGAL1",111,0)
+ I $G(PSOVRXN) S ZORN=$P(^PSRX(PSOVRXN,"OR1"),"^",2)
+"RTN","PSODGAL1",112,0)
+ I $G(ZRXN) N ZORN,X S ZORN=$P(^PSRX(ZRXN,"OR1"),"^",2)
+"RTN","PSODGAL1",113,0)
+ ;
+"RTN","PSODGAL1",114,0)
+ I +$G(PSJORD) D
+"RTN","PSODGAL1",115,0)
+ .I PSJORD["P" S ZORN=+$P(^PS(53.1,+PSJORD,0),U,21)
+"RTN","PSODGAL1",116,0)
+ .I PSJORD["U" S ZORN=+$P(^PS(55,DFN,5,+PSJORD,0),U,21)
+"RTN","PSODGAL1",117,0)
+ .I PSJORD["V" S ZORN=+$P(^PS(55,DFN,"IV",+PSJORD,0),U,21)
+"RTN","PSODGAL1",118,0)
+ G:'$G(ZORN) NF
+"RTN","PSODGAL1",119,0)
+ D GETOC4^OROCAPI1(ZORN,.RET)
+"RTN","PSODGAL1",120,0)
+ F ZI=0:0 S ZI=$O(RET(ZORN,"DATA",ZI)) Q:'ZI  I $P(RET(ZORN,"DATA",ZI,1),"^")=3,$G(RET(ZORN,"DATA",ZI,"OR",1,0))]"" S ZOV=$G(RET(ZORN,"DATA",ZI,"OR",1,0))
+"RTN","PSODGAL1",121,0)
+NF W ?3,"Provider Override Reason: " S X=$S($G(ZOV)]"":ZOV,1:"N/A - Order Entered Through VistA") D ^DIWP
+"RTN","PSODGAL1",122,0)
+ F ZX=0:0 S ZX=$O(^UTILITY($J,"W",1,ZX)) Q:'ZX  W ?29,^UTILITY($J,"W",1,ZX,0),!
+"RTN","PSODGAL1",123,0)
+ K ^UTILITY($J,"W"),DIWL,DIWR,DIWF,ZORN,RET
+"RTN","PSODGAL1",124,0)
+ ;pso*7*401
+"RTN","PSODGAL1",125,0)
+ I $D(PSOMDC) D
+"RTN","PSODGAL1",126,0)
+ .W !,"Warning: The following drug class does not exist in the VA DRUG CLASS"
+"RTN","PSODGAL1",127,0)
+ .W !,"file (#50.605). Please do a manual Drug-Allergy order check and notify"
+"RTN","PSODGAL1",128,0)
+ .W !,"the pharmacy ADPAC for follow up.",!
+"RTN","PSODGAL1",129,0)
+ .S PSOMDC="" F  S PSOMDC=$O(PSOMDC(PSOMDC)) Q:PSOMDC=""  W !,"VA Drug Class: "_PSOMDC,!
+"RTN","PSODGAL1",130,0)
+ .W ! S DIR("A")="Press Return to continue",DIR(0)="E",DIR("?")="Press Return to continue"
+"RTN","PSODGAL1",131,0)
+ .D ^DIR K DIR W !
+"RTN","PSODGAL1",132,0)
+ Q
+"RTN","PSODGAL1",133,0)
+ ;
+"RTN","PSODGAL1",134,0)
+DRCL(DFN) ;
+"RTN","PSODGAL1",135,0)
+ N RET S RET=0 K GMRADRCL D GETDATA^GMRAOR(DFN)
+"RTN","PSODGAL1",136,0)
+ Q:'$D(^TMP("GMRAOC",$J,"APC")) 0
+"RTN","PSODGAL1",137,0)
+ N GMRACL S GMRACL="" F  S GMRACL=$O(^TMP("GMRAOC",$J,"APC",GMRACL)) Q:'$L(GMRACL)  D
+"RTN","PSODGAL1",138,0)
+ .N GMRANM,GMRALOC S GMRALOC=^TMP("GMRAOC",$J,"APC",GMRACL)
+"RTN","PSODGAL1",139,0)
+ .I '$O(^PS(50.605,"B",GMRACL,0)) S PSOMDC(GMRACL)="" Q  ;PSO*7*401
+"RTN","PSODGAL1",140,0)
+ .S GMRANM=$P($G(^PS(50.605,+$O(^PS(50.605,"B",GMRACL,0)),0)),U,2)
+"RTN","PSODGAL1",141,0)
+ .S GMRADRCL(GMRACL)=GMRACL_U_GMRANM_" ("_GMRALOC_")",RET=RET+1
+"RTN","PSODGAL1",142,0)
+ K ^TMP("GMRAOC",$J)
+"RTN","PSODGAL1",143,0)
+ Q RET
+"RTN","PSODGAL1",144,0)
+ ;
+"RTN","PSODGAL1",145,0)
+SYM ;signs/symptom pso*7*390
+"RTN","PSODGAL1",146,0)
+ N NDF,ZI,PSCLASS,ZXX,ZLP,ZVAC,CT,XLP,ZLP,I,ZX,ZING S TRU=0
+"RTN","PSODGAL1",147,0)
+ S GMRA="0^0^111" D EN1^GMRADPT S NDF=$P(PSODRUG("NDF"),"A")
+"RTN","PSODGAL1",148,0)
+ N LEN S LEN=4 I $E($G(PSODRUG("VA CLASS")),1,4)="CN10" S LEN=5
+"RTN","PSODGAL1",149,0)
+ ;
+"RTN","PSODGAL1",150,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  I $P(GMRAL(ZI),"^",2)=$G(PSODRUG("OIN")) S TRU=ZI
+"RTN","PSODGAL1",151,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",152,0)
+ I $G(PSODRUG("VA CLASS"))]"" S ZI=+$O(^GMR(120.8,"APC",DFN,PSODRUG("VA CLASS"),0)) I ZI S TRU=ZI
+"RTN","PSODGAL1",153,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",154,0)
+ S ZVAC=$E($G(PSODRUG("VA CLASS")),1,LEN)
+"RTN","PSODGAL1",155,0)
+ S ZDC="" F  S ZDC=$O(^GMR(120.8,"APC",DFN,ZDC)) Q:ZDC=""!($G(TRU))  D
+"RTN","PSODGAL1",156,0)
+ .I $E(ZDC,1,LEN)=ZVAC S TRU=$O(^GMR(120.8,"APC",DFN,ZDC,0))
+"RTN","PSODGAL1",157,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",158,0)
+ K ZAGNL,^TMP("PSN",$J) N ZIN,ZIIN,ZI
+"RTN","PSODGAL1",159,0)
+ S PSNDA=PSODRUG("IEN"),PSNID=PSODRUG("NDF") D INGR^PSNNGR
+"RTN","PSODGAL1",160,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  D EN1^GMRAOR2(ZI,"ZAGNL") D
+"RTN","PSODGAL1",161,0)
+ .F ZIN=0:0 S ZIN=$O(ZAGNL("I",ZIN)) Q:'ZIN!($G(TRU))  F ZIIN=0:0 S ZIIN=$O(^TMP("PSN",$J,ZIIN)) Q:'ZIIN!($G(TRU))  D
+"RTN","PSODGAL1",162,0)
+ ..I ZAGNL("I",ZIN)=^TMP("PSN",$J,ZIIN) S TRU=ZI
+"RTN","PSODGAL1",163,0)
+ K ZAGNL,^TMP("PSN",$J)
+"RTN","PSODGAL1",164,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",165,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  S ZLP=$P(GMRAL(ZI),"^",9) I $P(ZLP,";")=NDF,$P(ZLP,";",2)="PSNDF(50.6," S TRU=ZI
+"RTN","PSODGAL1",166,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",167,0)
+ S ZVAC=$E($G(PSODRUG("VA CLASS")),1,LEN)
+"RTN","PSODGAL1",168,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  S ZLP=$P(GMRAL(ZI),"^",9) I $P(ZLP,";",2)="PSNDF(50.6," D
+"RTN","PSODGAL1",169,0)
+ .S CT=$$CLIST^PSNAPIS($P(ZLP,";"),.PSCLASS)
+"RTN","PSODGAL1",170,0)
+ .F ZXX=0:0 S ZXX=$O(PSCLASS(ZXX)) Q:'ZXX!($G(TRU))  I $E($P(PSCLASS(ZXX),"^",2),1,LEN)=ZVAC S TRU=ZI
+"RTN","PSODGAL1",171,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",172,0)
+ N ZI,ZLP,ZVAC,ZXX,AVAC,ZING,ZXP
+"RTN","PSODGAL1",173,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  S ZLP=$P(GMRAL(ZI),"^",9) I $P(ZLP,";",2)="PS(50.416," D
+"RTN","PSODGAL1",174,0)
+ .F ZXP=0:0 S ZXP=$O(^PS(50.416,$P(ZLP,";"),1,ZXP)) Q:'ZXP  I $P(^PS(50.416,$P(ZLP,";"),1,ZXP,0),"A")=TYP S TRU=ZI
+"RTN","PSODGAL1",175,0)
+ Q:$G(TRU)
+"RTN","PSODGAL1",176,0)
+ K ZAGNL N ZIN,ZIIN,ZVAC S ZVAC=$E($G(PSODRUG("VA CLASS")),1,LEN)
+"RTN","PSODGAL1",177,0)
+ F ZI=0:0 S ZI=$O(GMRAL(ZI)) Q:'ZI!($G(TRU))  D
+"RTN","PSODGAL1",178,0)
+ .K ZAGNL D EN1^GMRAOR2(ZI,"ZAGNL") K ZIN
+"RTN","PSODGAL1",179,0)
+ .F ZIN=0:0 S ZIN=$O(ZAGNL("V",ZIN)) Q:'ZIN!($G(TRU))  S ZIIN=$P(ZAGNL("V",ZIN),"^") I $E(ZIIN,1,LEN)=ZVAC S TRU=ZI
+"RTN","PSODGAL1",180,0)
+ K ZAGNL
+"RTN","PSODGAL1",181,0)
+ Q
+"RTN","PSODGAL1",182,0)
+ ;
+"RTN","PSODGAL1",183,0)
+SYM1 ;format signs/symptoms
+"RTN","PSODGAL1",184,0)
+ K ^UTILITY($J,"W"),X S DIWL=1,DIWR=51,DIWF=""
+"RTN","PSODGAL1",185,0)
+ F ZX=0:0 S ZX=$O(GMRAL(ZI,"S",ZX)) Q:'ZX  D
+"RTN","PSODGAL1",186,0)
+ .S ^TMP("PSODAOC",$J,3,ZX)=$P(GMRAL(ZI,"S",ZX),";",2),X=$P(GMRAL(ZI,"S",ZX),";")_", " D ^DIWP
+"RTN","PSODGAL1",187,0)
+ W ?4,"  Signs/Symptoms: "
+"RTN","PSODGAL1",188,0)
+ F ZX=0:0 S ZX=$O(^UTILITY($J,"W",1,ZX)) Q:'ZX  W ?22,^UTILITY($J,"W",1,ZX,0),!
+"RTN","PSODGAL1",189,0)
+ K ^UTILITY($J,"W"),DIWL,DIWR,DIWF,I,ZX
+"RTN","PSODGAL1",190,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8549,6)
+^357
+**END**
+**END**

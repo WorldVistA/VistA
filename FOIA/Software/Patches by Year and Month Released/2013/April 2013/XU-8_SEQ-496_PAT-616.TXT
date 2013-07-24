@@ -1,0 +1,307 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Friday, 02/01/13 at 06:48
+=============================================================================
+Run Date: APR 29, 2013                     Designation: XU*8*616
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #496                      Status: Released
+                  Compliance Date: MAY 30, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*604    <<= must be installed BEFORE `XU*8*616'
+
+Subject: UPDATE PERSON CLASS FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: HD772614
+ FORUM Tracking Message#: 59209116
+ Blood Bank Clearance: 12/11/2012
+ Test sites:
+  
+            
+                 XU*8*616
+ This patch updates the Person Class (#8932.1) file with new taxonomies:
+  
+ NUMBER        : 1212                            
+ PROVIDER TYPE : Other Service Providers
+ CLASSIFICATION: Case Manager/Care Coordinator
+ STATUS        : Active                        
+ VA CODE       : V080101
+ X12 CODE      : 171M00000X
+ DEFINITION:   A person who provides case management services and assists 
+  an individual in gaining access to needed medical, social, educational, 
+  and/or other services. The person has the ability to provide an 
+  assessment and review of completed plan of care on a periodic basis. This
+  person is also able to take collaborative action to coordinate the 
+  services with other providers and monitor the enrollee's progress toward 
+  the cost-effective achievement of objectives specified in the plan of 
+  care. Credentials may vary from an experience in the fields of 
+  psychology, social work, rehabilitation, nursing or a closely related 
+  human service field, to a related Assoc of Arts Degree or to nursing 
+  credentials. Some states may require certification in case management.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 17            
+ CLASSIFICATION CODE (c): 1M
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER        : 1213                            
+ PROVIDER TYPE : Other Service Providers
+ CLASSIFICATION: Community Health Worker
+ STATUS        : Active                        
+ VA CODE       : V080400
+ X12 CODE      : 172V00000X
+ DEFINITION:   Community health workers (CHW) are lay members of 
+  communities who work either for pay or as volunteers in association with 
+  the local health care system in both urban and rural environments and 
+  usually share ethnicity, language, socioeconomic status and life 
+  experiences with the community members they serve. They have been 
+  identified by many titles such as community health advisors, lay health 
+  advocates, promotores(as), outreach educators, community health 
+  representatives, peer health promoters, and peer health educators. CHWs 
+  offer interpretation and translation services, provide culturally 
+  appropriate health education and information, assist people in receiving 
+  the care they need, give informal counseling and guidance on health 
+  behaviors, advocate for individual and community health needs, and 
+  provide some direct services such as first aid and blood pressure 
+  screening. Some examples of these practitioners are Community Health 
+  Aides or Practitioners established under 25 USC 1616 (l) under HHS, 
+  Indian Health Service, Public Health Service.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 17            
+ CLASSIFICATION CODE (c): 2V
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER        : 1214                            
+ PROVIDER TYPE : Other Service Providers
+ CLASSIFICATION: Interpreter           
+ STATUS        : Active
+ VA CODE       : V080300                      
+ X12 CODE      : 171R00000X
+ DEFINITION:   An Interpreter is a person who translates oral 
+  communication between two or more people. This includes translating from 
+  one language to another or interpreting sign language. An interpreter is 
+  necessary for medical care when the patient does not speak the language 
+  of the health care provider or when the patient has a disability 
+  involving spoken language.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 17            
+ CLASSIFICATION CODE (c): 1R
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER        : 1215                            
+ PROVIDER TYPE : Other Service Providers
+ CLASSIFICATION: Mechanotherapist      
+ STATUS        : Active
+ VA CODE       : V080600                      
+ X12 CODE      : 172M00000X
+ DEFINITION:   A practitioner of mechanotherapy examines patients by 
+  verbal inquiry, examination of the musculoskeletal system by hand, and 
+  visual inspection and observation. In the treatment of patients, 
+  mechanotherapists employ the techniques of advised or supervised 
+  exercise; electrical neuromuscular stimulation; massage or manipulation; 
+  or air, water, heat, cold, sound, or infrared ray therapy.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 17            
+ CLASSIFICATION CODE (c): 2M
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+  
+ NUMBER        : 1216                            
+ PROVIDER TYPE : Dental Providers
+ CLASSIFICATION: Dentist
+ AREA OF SPECIALIZATION: Dentist Anesthesiologist
+ STATUS        : Active                       
+ VA CODE       : V030490
+ X12 CODE      : 1223D0004X
+ DEFINITION:   A dentist who has successfully completed an accredited
+  postdoctoral anesthesiology residency training program for dentists of 
+  two or more years duration, in accord with Commission on Dental
+  Accreditation's Standards for Dental Anesthesiology Residency Programs,
+  and/or meets the eligibility requirements for examination by the American
+  Dental Board of Anesthesiology.
+   
+  Source: The American Society of Dentist Anesthesiologists.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 12            
+ CLASSIFICATION CODE (c): 23
+ AREA OF SPECIALIZATION CODE (c): D0004
+  
+ NUMBER        : 1217
+ PROVIDER TYPE : Ambulatory Health Care Facilities
+ CLASSIFICATION: Clinic/Center         
+ AREA OF SPECIALIZATION: Birthing
+ STATUS        : Active                        
+ X12 CODE      : 261QB0400X
+ DEFINITION:   A freestanding birth center is a health facility other 
+  than a hospital where childbirth is planned to occur away from the
+  pregnant woman's residence, and that provides prenatal, labor and
+  delivery, and postpartum care, as well as other ambulatory services for
+  women and newborns.  
+   
+  Source: Summarized from Social Security Act [42 U.S.C. 1396d(1)(3)(B)].
+ INDIVIDUAL/NON: NON-INDIVIDUAL
+ PROVIDER TYPE CODE (c): 26            
+ CLASSIFICATION CODE (c): 1Q
+ AREA OF SPECIALIZATION CODE (c): B0400
+  
+  
+ This patch also updates the existed entry #858:
+  
+ Before:
+  
+ NUMBER        : 858
+ PROVIDER TYPE : Allopathic and Osteopathic Physicians
+ CLASSIFICATION: Pediatrics            
+ AREA OF SPECIALIZATION: Sports Medicine
+ STATUS        : Active                        
+ VA CODE       : V182518
+ X12 CODE      : 2080S0010X                  
+ SPECIALTY CODE: 37
+ PROVIDER TYPE CODE (c): 20            
+ CLASSIFICATION CODE (c): 80
+ AREA OF SPECIALIZATION CODE (c): S0010
+  
+  
+ After:
+  
+ NUMBER        : 858
+ PROVIDER TYPE : Allopathic and Osteopathic Physicians
+ CLASSIFICATION: Pediatrics            
+ AREA OF SPECIALIZATION: Sports Medicine
+ STATUS        : Active                        
+ VA CODE       : V182522
+ X12 CODE      : 2080S0010X                  
+ SPECIALTY CODE: 37
+ DEFINITION:   A pediatrician who is responsible for continuous care in 
+  the field of sports medicine, not only for the enhancement of health and
+  fitness, but also for the prevention of injury and illness. A sports
+  medicine physician must have knowledge and experience in the promotion of
+  wellness and the prevention of injury. Knowledge about special areas of
+  medicine such as exercise physiology, biomechanics, nutrition,
+  psychology, physical rehabilitation, epidemiology, physical evaluation,
+  injuries (treatment and prevention and referral practice) and the role of
+  exercise in promoting a healthy lifestyle are essential to the practice
+  of sports medicine. The sports medicine physician requires special
+  education to provide the knowledge to improve the healthcare of the
+  individual engaged in physical exercise (sports) whether as an individual
+  or in team participation.   
+  
+  Source: American Board of Medical Specialties, 2007. www.abms.org
+  [7/1/2007: definition added, source added; 7/1/2011: modified source]
+   
+  Additional Resources: American Board of Pediatrics, 2007. 
+  http://www.abp.org/. American Osteopathic Board of Pediatrics, 2007.
+  http://www.osteopathic.org/certification 
+  Board certification for Medical Doctors (MDs) is provided by the American
+  Board of Pediatrics. Board certification for Doctors of Osteopathy (DOs) 
+  is provided by the American Osteopathic Board of Pediatrics.
+  
+ INDIVIDUAL/NON: INDIVIDUAL 
+ PROVIDER TYPE CODE (c): 20            
+ CLASSIFICATION CODE (c): 80
+ AREA OF SPECIALIZATION CODE (c): S0010 
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*616 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*616 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*616
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routine XU8P616 will be deleted at the end of this patch
+ installation. If you wish to get the checksum value, you can 'Verify
+ Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*616     Loaded from Distribution    
+ 11/27/12@08:08:39
+      => XU*8*616
+  
+ This Distribution was loaded on NOV 27, 2012@08:08:39 with header of 
+    XU*8*616
+    It consisted of the following Install(s):
+      XU*8.0*616
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Telnet terminal
+  
+ PACKAGE: XU*8.0*616     NOV 27, 2012 8:09 am                          
+ PAGE 1
+ --------------------------------------------------------------------------
+ XU8P616   Calculated    B97450351   
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**; July 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P616
+    Before:       n/a   After: B97450351  **616**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : NOV 14, 2012
+Completed By: BEST,LISA                     Date Completed: APR 10, 2013
+Released By : TILLIS,LEWIS                  Date Released : APR 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

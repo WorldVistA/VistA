@@ -1,0 +1,306 @@
+$TXT Created by GILMORE,JEREMY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 12/18/12 at 09:09
+=============================================================================
+Run Date: MAY 01, 2013                     Designation: ICD*18*62
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #60                     Status: Released
+                  Compliance Date: MAY 31, 2013
+=============================================================================
+
+Associated patches: (v)ICD*18*61   <<= must be installed BEFORE `ICD*18*62'
+                    (v)ICD*18*65   <<= must be installed BEFORE `ICD*18*62'
+
+Subject: DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+    The DRG (Diagnostic Related Group) Grouper is used to compute
+    and display the DRG for a patient based on that patient's diagnoses
+    and any operations/procedures performed.  It uses a mixture of 
+    formulas, Diagnosis and Operation identifiers, and tables that rely
+    on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80)
+    and the ICD OPERATION/PROCEDURE file (#80.1).  These files,
+    the date, and the age of the patient determine which codes are
+    needed to calculate the proper DRG.
+  
+    This patch corrects various DRG calculations.
+  
+    ASSOCIATED REMEDY TICKETS:
+    ========================== 
+    1)INC0000000494990 - DRG Calculations
+           Duplicate:
+      INC0000000707854 - DRG 003 vs DRG 004 incorrect MSDRG
+    2)INC0000000517130 - DRG Calculations
+           Duplicate:
+      INC0000000604130 - DRG not calculating properly
+    3)INC0000000592026 - DRGs not calculating correctly
+    4)INC0000000592038 - DRG not calculating correctly
+    5)INC0000000611104 - DRG 963 vs DRG 85
+    6)INC0000000740192 - Upload from Quantim to VIP, the DRG changes
+    7)INC0000000521220 - DRG not Calculating
+    8)INC0000000583979 - DRG not calculating correctly 456 vs. 539
+    9)INC0000000592007 - DRG not calculating correctly
+   10)INC0000000608263 - DRG 808 vs 809 issue
+   11)INC0000000774550 - Applications-VistA 
+    
+  
+    ASSOCIATED NSR's:
+    =================
+    N/A
+       
+    
+    PARTICIPATING TEST SITES:
+    =========================
+    Montana HCS
+    Providence, RI
+    Tampa, FL
+       
+    
+    REMEDY OVERVIEW:
+    ================
+    1) INC0000000494990 - DRG Calculations
+      
+    Problem:
+    ========
+    DRG 3 is incorrectly calculating to DRG 4 in VistA.
+       
+    Solution:
+    =========
+    Updated the Major O.R. Procedure for procedure code 31.1.
+    
+    
+    2) INC0000000517130 - DRG Calculations
+  
+    Problem:
+    ========
+    DRG 66 is incorrectly calculating to DRG 65 in VistA. 
+     
+    Solution:
+    =========
+    Updated routines ICDTBL0C, ICDTBL0D, and ICDTBL0E to 
+    account for correct diagnosis codes.
+  
+  
+    3) INC0000000592026 - DRGs not calculating correctly
+  
+    Problem:
+    ========
+    There are three total issues listed in the ticket; however, two
+    of the issues have already been fixed or will be fixed in this
+    patch by another ticket.
+  
+    DRG 42 is incorrectly calculating to DRG 87 in VistA.
+     
+    Solution:
+    =========
+    Updated routines ICDTBL0C, ICDTBL0D, and ICDTBL0E to account
+    for correct procedure codes.
+  
+  
+    4) INC0000000592038 - DRG not calculating correctly
+  
+    Problem:
+    ========
+    DRG 12 is incorrectly calculating to DRG 580 in VistA.
+  
+     
+    Solution:
+    =========
+    Updated routine ICDDRGXM to account for correct diagnosis 
+    and procedure codes.
+  
+  
+    5) INC0000000611104 - DRG 963 vs DRG 85
+  
+    Problem:
+    ========
+    DRG 963 is incorrectly calculating to DRG 85 in VistA.
+     
+    Solution:
+    =========
+    Updated the ICD DIAGNOSIS file (#80) to account for the correct
+    major diagnostic category for diagnosis code 860.0.
+  
+  
+    6) INC0000000740192 - Upload from Quantim to VIP, the DRG 
+                          changes
+  
+    Problem:
+    ========
+    DRG 42 is incorrectly calculating to DRG 41 in VistA.
+  
+     
+    Solution:
+    =========
+    Updated routines ICDTBL0D and ICDTBL0E to account for correct 
+    diagnosis codes.
+  
+   
+    7) INC0000000521220 - DRG not Calculating
+     
+    Problem:
+    ========
+    DRG 280 is incorrectly calculating to DRG 282 in VistA.
+     
+    Solution:
+    =========
+    Updated routines ICDTBL2C and ICDTBL2D to process
+    diagnosis codes properly.
+       
+            
+    8) INC0000000583979 - DRG not calculating correctly 456 vs. 539
+      
+    Problem:
+    ========
+    DRG 539 is incorrectly calculating to DRG 456 in VistA.
+       
+    Solution:
+    =========
+    Updated routine ICDTBL4D to account for identifier "k". 
+      
+      
+    9) INC0000000592007 - DRG not calculating correctly
+    
+    Problem:
+    ========
+    There are two issues listed in this ticket:
+    a)DRG 460 is incorrectly calculating to DRG 496 in VistA.
+    b)DRG 464 is incorrectly calculating to DRG 481 in VistA.
+     
+    Solution:
+    =========
+    a)Updated the associated DRGs for procedure code 81.05.
+    b)Updated the associated DRGs for procedure code 80.05.
+  
+   
+    10) INC0000000608263 - DRG 808 vs 809 issue
+    
+    Problem:
+    ========
+    DRG 809 is incorrectly calculating to DRG 808 in VistA.
+     
+    Solution:
+    =========
+    Updated routine ICDTBL8D to account for correct
+    diagnosis codes.
+  
+  
+    11) INC0000000774550 - Applications-VistA
+    
+    Problem:
+    ========
+    The routine ICDHLPD is missing the identifier 'o' which
+    is used to identify diagnosis codes related to certain
+    ovarian conditions.
+     
+    Solution:
+    =========
+    Updated routine ICDHLPD to include the 'o' identifier.
+  
+  
+    INSTALLATION INSTRUCTIONS:
+    ===========================
+    This patch may be run with users on the system.  However, it would
+    be preferable if Medical Records coders were off the system.
+    Installation will take less than 5 minutes.
+    
+    1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+        NOTE:  If the required patches are not installed, the transport 
+        global will be removed.  If the transport global is removed you will
+        need to repeat this step.
+    
+    2.  From the Kernel Installation and Distribution System Menu, select
+        the Installation menu.
+    
+    3.  From this menu, you may elect to use the following options
+        (when prompted for INSTALL NAME, enter ICD*18.0*62):
+        a.  Compare Transport Global to Current System  - this option will
+            allow you to view all changes that will be made when the patch
+            is installed.  It compares all components of the patch 
+            (routines, DDs, templates, etc.).
+        b.  Verify Checksums in Transport Global - this option will
+            allow you to ensure the integrity of the routines that are in
+            the transport global.
+        c.  Print Transport Global - this option will allow you to view the
+            components of the KIDS build.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+    
+    4.  Use the Install Package(s) option and select the package 
+        ICD*18.0*62.
+    
+    5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', respond No.
+    
+    6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? YES//', respond Yes.
+    
+        When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+        enter:
+               PTF Menu  [DG PTF MENU]
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out Of 
+        Order':', press enter.
+    
+    7.  Routine(s) ICD1862* can be deleted after the patch has been
+        successfully installed.
+    
+    8.  Following installation of this patch, it is necessary to run the
+        Update Transfer DRG's for Current FY [DG PTF UPDATE TRANSFER DRGs] 
+        option in order to make the transfer DRGs correspond to the
+        appropriate grouper.  This option updates/recalculates the transfer
+        DRGs for PTF records opened during the current fiscal year.
+        The option is locked with the DG PTFSUP security key.  The Menu path
+        is PTF Menu/Update DRG Information Menu/Update Transfer DRG's for
+        Current FY.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20,2000;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1862L
+    Before:       n/a   After: B13559241  **62**
+Routine Name: ICD1862P
+    Before:       n/a   After:   B498893  **62**
+Routine Name: ICDDRGXM
+    Before: B10810981   After: B10793046  **31,50,62**
+Routine Name: ICDHLPD
+    Before: B11727225   After: B11854640  **10,14,20,24,55,62**
+Routine Name: ICDTBL0C
+    Before: B19961608   After: B20874721  **50,49,55,61,62**
+Routine Name: ICDTBL0D
+    Before: B21200955   After: B22597436  **56,61,62**
+Routine Name: ICDTBL0E
+    Before: B21201013   After: B22597494  **65,62**
+Routine Name: ICDTBL2C
+    Before: B51334945   After: B51314411  **50,49,54,55,61,62**
+Routine Name: ICDTBL2D
+    Before: B50218198   After: B50198003  **56,55,61,62**
+Routine Name: ICDTBL4D
+    Before: B24726624   After: B25052268  **56,55,62**
+Routine Name: ICDTBL8D
+    Before: B24982937   After: B25476852  **56,61,62**
+ 
+Routine list of preceding patches: 61, 65
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : JAN 19, 2012
+Completed By: LEANORD,TATIANA               Date Completed: APR 23, 2013
+Released By : BARFIELD,RICHARD              Date Released : MAY 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

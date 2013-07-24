@@ -1,0 +1,167 @@
+$TXT Created by ELWELL,DAVID at MNTVUU.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 11/01/12 at 15:17
+=============================================================================
+Run Date: MAY 30, 2013                     Designation: QAN*2*33
+Package : QAN - INCIDENT REPORTING            Priority: Mandatory
+Version : 2        SEQ #33                      Status: Released
+                  Compliance Date: JUN 30, 2013
+=============================================================================
+
+Associated patches: (v)QAN*2*32    <<= must be installed BEFORE `QAN*2*33'
+
+Subject: SUBSCRIPT ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch addresses 2 issues:
+  
+  1. A subscript error appears when scheduled auto email options are run and
+  entries in the QA INCIDENT REPORT (#742.4) file with a LOCAL CASE STATUS 
+  (#.09) of "CLOSED", "DELETED, or "QUICK" have no value for the INCIDENT
+  (#.02). 
+  
+  2. A subscript error occurs when accessing the 'Full Incident Edit' [QAN
+  INCIDENT FOLLOW-UP] option and then using a question mark '?' to view a list
+  of existing open cases by 'Case Number', 'Date of Incident' or 'Patient'.
+  
+  
+  Associated NSR(s):
+  ------------------
+  N/A
+   
+   
+  Associated Remedy ticket(s):
+  ----------------------------
+  1. HD0000000064451 - <SUBSCRIPT>INC1+4~QANDELE error
+       DUP - HD0000000465408 - <SUBSCRIPT>INC1+4^QANDELE ^QA(742.1 23:50:05
+  
+  2. HD0000000624774 - <SUBSCRIPT>EN1+1^QANUTL ^QA(742.1,"")
+    
+   
+  Participating Test Sites:
+  -------------------------
+  Central Texas HCS (Temple)
+  Upstate NY HCS (Batavia)
+   
+    
+  REMEDY OVERVIEW:
+  ----------------
+  
+  1. HD0000000064451 - <SUBSCRIPT>INC1+4~QANDELE error
+       DUP - HD0000000465408 - <SUBSCRIPT>INC1+4^QANDELE ^QA(742.1 23:50:05
+  
+  Problem:
+  --------
+  A subscript error appears in the error trap when the scheduled options 'Brief
+  E-Mail to Region' [QAN AUTO E-MAIL BRIEF], 'Delete E-Mail to Region' [QAN 
+  AUTO E-MAIL DELETE] and 'Full E-Mail to Region' [QAN AUTO E-MAIL FULL] are 
+  executed in the background and QA INCIDENT REPORT (#742.4) file entries with
+  a LOCAL CASE STATUS (#.09) of "QUICK", "DELETED", or  "CLOSED" (respectively)
+  are missing the INCIDENT (#.02) field value.
+  
+  Resolution:
+  -----------
+  All three options have been modified to check the value of INCIDENT (#.02)
+  field in the QA INCIDENT REPORT (#742.4) file. If the INCIDENT (#.02) field 
+  is empty, then the options will stop processing and continue to the next 
+  record.
+  
+  
+  2. HD0000000624774 - <SUBSCRIPT>EN1+1^QANUTL ^QA(742.1,"")
+  
+  Problem:
+  --------
+  A subscript error occurs when accessing the 'Full Incident Edit' [QAN 
+  INCIDENT FOLLOW-UP] option and then using a question mark '?' to view a list
+  of existing open cases by 'Case Number', 'Date of Incident' or 'Patient'.
+  
+  Resolution:
+  -----------
+  The options have been modified to check for the existence of the INCIDENT 
+  (#.02) field value in the QA INCIDENT REPORT (#742.4) file before displaying 
+  the list of open incidents.
+  
+  
+  Installation Instructions:
+  ==========================
+   
+     ***************************NOTE****************************  
+     * You may install this routine at any time without        *
+     * interruption to users.                                  *
+     ***********************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+    
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+     4. Use the Install Package(s) option and select the package QAN*2.0*33.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? YES//" respond YES. When prompted to select the options
+        you would like to place out of order, enter the following:
+  
+         'QAN AUTO E-MAIL BRIEF'      Brief E-Mail to Region
+         'QAN AUTO E-MAIL DELETE'     Delete E-Mail to Region
+         'QAN AUTO E-MAIL FULL'       Full E-Mail to Region  
+         'QAN INCIDENT FOLLOW-UP'     Full Incident Edit             
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Incident Reporting;**[Patch List]**;08/07/1992;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: QANBRIF
+    Before: B23319745   After: B23694301  **1,18,20,33**
+Routine Name: QANDELE
+    Before: B21505655   After: B21864480  **1,18,20,33**
+Routine Name: QANFULL
+    Before: B11906812   After: B12181437  **1,13,18,20,33**
+Routine Name: QANUTL
+    Before:  B9972935   After: B10391364  **1,3,32,33**
+Routine Name: QANUTL1
+    Before: B31108266   After: B31797794  **20,27,32,33**
+ 
+Routine list of preceding patches: 32
+
+=============================================================================
+User Information:
+Entered By  : ELWELL,DAVID                  Date Entered  : MAR 15, 2012
+Completed By: LANG,MICKEY                   Date Completed: MAY 16, 2013
+Released By : BARKER,MARK D                 Date Released : MAY 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

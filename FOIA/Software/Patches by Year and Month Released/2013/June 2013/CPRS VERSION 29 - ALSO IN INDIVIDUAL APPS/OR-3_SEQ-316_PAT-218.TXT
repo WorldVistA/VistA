@@ -1,0 +1,179 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: OR*3*218
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #316                      Status: Released
+                  Compliance Date: JUL 11, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*580        install with patch       `OR*3*218'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*218'
+
+Subject: CPRS V29 ePCS PRE-INSTALLATION
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch will enable sites to complete the pre-installation steps for 
+ Computerized Patient Record System (CPRS) version 29. It will allow 
+ sites to enable or disable electronic Prescribing for Controlled 
+ Substances (ePCS) functionality and enable or disable individual users to
+ use the ePCS functionality. It also provides the following new reports:
+      - A report that will list users who have the same VA#
+      - A report that will list providers who are unable to sign controlled
+        substance orders, as well as their prescribable drug schedules,
+        menu option Provider Incomplete Configuraiton Report
+      - A report that will list those users who have a DETOX/MAINTENANCE 
+        ID
+      - A report that will list those providers who have either a space or 
+        punctuation in their last name
+      - A report that will list the Fee Basis and C & A providers who do 
+        not have a DEA number
+ These new reports are all contained in the menu option ePCS Data 
+ Validation Reports [OR EPCS VALIDATION REPORTS].
+  
+ Associated Remedy Ticket(s):
+ ============================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ DEA ePrescribing (no NSR, regulatory update per Drug Enforcement Agency)
+  
+ Test Sites:
+ ===========
+ Charleston, SC
+ Cleveland, OH
+ Heartland East HCS, MO
+ Heartland West HCS, KS
+ Hines, IL
+ Loma Linda, CA
+ Palo Alto HCS, CA
+ San Diego HCS, CA
+ Tampa, FL
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ OE/RR EPCS                 SITE NAME (#.01)      New
+      PARAMETERS (#100.7)   ENABLE EPCS? (#.02)   New
+                            ENABLED USERS (#1)    New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ OR EPCS MENU                    Menu               New
+ OR EPCS SITE PARAMETER          Run Routine        New
+ OR EPCS USERS PARAMETER         Run Routine        New
+ OR EPCS PROVIDER CONFIG CHECK   Run Routine        New 
+ OR EPCS VALIDATION REPORTS      Run Routine        New
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ OREPCSSITE
+ OREPCSUSERS
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Software and Documentation Retrieval:
+ =====================================
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from
+ download.vista.med.va.gov, which will transmit the files from the first
+ available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+ specific server as follows:
+  
+ Albany          ftp.fo-albany.med.va.gov
+ Hines           ftp.fo-hines.med.va.gov
+ Salt Lake City  ftp.fo-slc.med.va.gov
+  
+ The software distribution includes: 
+  
+  FILE NAMES              DESCRIPTION                              DOWNLOAD
+  
+  CPRS29_DEA_SETUP.KID    This file will be made available by      ASCII
+                          the implementation manager for each site
+  CPRS29_DEA_KERNEL.ZIP   Kernel Executable Files                  BINARY
+  OR_30_218_IG.doc        DEA Setup Guide (Word Version)           BINARY
+  OR_30_218_IG.pdf        DEA Setup Guide (PDF Version)            BINARY
+   
+ (3) Documentation can also be retrieved from VISTA Document Library (VDL)
+ on the VA Intranet at the following address, http://vista.med.va.gov/vdl.
+  
+  
+ Installation Instructions
+ -------------------------
+ Installation instructions are contained in the DEA ePrescribing 
+ Installation and Setup Guide for Patches (XU*8.0*580, OR*3.0*218 and 
+ PSD*3*76).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 87
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDEA01
+    Before:       n/a   After: B39471115  **218**
+Routine Name: ORDEA01A
+    Before:       n/a   After:B172812749  **218**
+Routine Name: ORDEA01B
+    Before:       n/a   After: B16135241  **218**
+Routine Name: ORUTL
+    Before:  B8567087   After: B53928458  **95,280,218**
+Routine Name: ORY218
+    Before:       n/a   After:  B9816646  **218**
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  : PULEO,ANTHONY G               Date Entered  : MAY 04, 2004
+Completed By: BARLOW,KENNETH                Date Completed: JUN 10, 2013
+Released By : SCHMIT,BECKY                  Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

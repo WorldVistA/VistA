@@ -1,0 +1,199 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 07/10/12 at 13:53
+=============================================================================
+Run Date: APR 05, 2013                     Designation: GMTS*2.7*105
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #95                    Status: Released
+                  Compliance Date: MAY 06, 2013
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*63 <<= must be installed BEFORE `GMTS*2.7*105'
+                    (v)GMTS*2.7*66 <<= must be installed BEFORE `GMTS*2.7*105'
+
+Subject: SUBSCRIPT,SPELLING,& DISPLAY ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Health Summary (HS)
+ package:
+  
+ 1. A subscript error occurs when editing an AD HOC report.
+  
+ 2. The descriptions of the "Mental Health Assistant (MHA) Administration
+    List" & "MHA Score" health summary components contain spelling errors.
+  
+ 3. Computerized Patient Record system (CPRS) is not displaying the correct
+    name for nationally released health summary reports.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD0000000245075 - Editing ad hoc hs causes M error 
+  
+ 2. HD0000000606070 - Spelling errors in component descriptions
+  
+    Duplicate:
+    ----------
+    HD0000000784074 - Spelling errors noted in online description for
+                      IENs #248 and #249 - please fix when able (this is
+                      low priority since no functionality is affected)
+  
+ 3. HD0000000624624 - System not respecting the DISPLAY NAME of a 
+                      sequenced Health Summary type  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York
+ South Texas HCS
+ Washinton, DC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000245075
+   
+    Problem:
+    --------
+    A <SUBSCRIPT>GETSEL+16^GMTSADH2 error occurs when editing an AD HOC
+    health summary report using the [AD HOC HEALTH SUMMARY] option. This
+    happens if a component that has "9999999.64" in its SELECTION FILE
+    multiple is edited.
+   
+    Resolution:
+    -----------
+    Allowed components that have "9999999.64" in its SELECTION FILE 
+    multiple to process properly.
+  
+    Technical Resolution:
+    ---------------------
+    Routine GMTSADH2 has been modified to use the GMTSEG(SBS) variable 
+    instead of GMX. 
+  
+ 2. HD0000000606070
+  
+    Problem:
+    --------
+    The descriptions of the "MHA Administration List" & "MHA Score"
+    health summary components contain spelling errors.
+   
+    Resolution:
+    -----------
+    Attempt to correct the spelling errors if the description has not
+    already been modified.
+  
+    ***Note: If the description has been modified in any way, the spelling
+             errors may not get corrected.
+  
+    Technical Resolution:
+    ---------------------
+    Created a pre-install routine GMTSP105 that checks to see if the text 
+    is the same as the text when the component was released, if so it uses
+    a WP^DIE call to replace the existing text.
+  
+  
+ 3. HD0000000624624
+  
+    Problem:
+    --------
+    The problem occurs when the CPRS reports tab displays nationally
+    released health summary types. If the parameter "ORWRP HEALTH SUMMARY
+    LIST ALL" is not set to yes and the parameter "ORWRP HEALTH SUMMARY
+    TYPE LIST" includes a nationally released health summary. Instead
+    displaying the "TITLE" field it will display the "name" field.
+   
+    Resolution:
+    -----------
+    Made CPRS display the Title field for nationally released Health 
+    summary types
+  
+    Technical Resolution:
+    ---------------------
+    Routine GMTSXAB has been modified to use the GMTST (the title) variable
+    if it has more than 0 characters and default to GMTSNM (the name) if
+    not.
+  
+       ================INSTALLATION INSTRUCTIONS===============
+  
+ This patch can be loaded while users are on the system but is recommended
+ that it be installed when user activity is low. Installation time will be
+ less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter GMTS*2.7*105):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        GMTS*2.7*105.
+    
+    5.  When prompted "Want KIDS to INHIBIT LOGONs during the
+        install? NO//", answer NO.
+  
+    6.  When prompted "Want to DISABLE Scheduled Options and Menu 
+        Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSADH2
+    Before: B25995101   After: B26060019  **12,37,49,63,105**
+Routine Name: GMTSP105
+    Before:       n/a   After: B12584034  **105**
+Routine Name: GMTSXAB
+    Before: B13076076   After: B13314711  **47,49,58,66,105**
+ 
+Routine list of preceding patches: 63, 66
+
+=============================================================================
+User Information:
+Entered By  : AUGUSTINIAK,MARK              Date Entered  : JUN 25, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: MAR 26, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : APR 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

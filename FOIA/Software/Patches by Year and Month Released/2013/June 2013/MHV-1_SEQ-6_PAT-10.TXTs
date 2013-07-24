@@ -1,0 +1,306 @@
+$TXT Created by MARRI,NAGARAJA KUMAR at domain.ext  (KIDS) on Thursday, 06/06/13 at 16:04
+=============================================================================
+Run Date: JUN 19, 2013                     Designation: MHV*1*10
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: JUL 20, 2013
+=============================================================================
+
+Associated patches: (v)MHV*1*9     <<= must be installed BEFORE `MHV*1*10'
+
+Subject: MHV SM 12.4 RELEASE
+
+Category: 
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ MHV*1*10 SECURE MESSAGING
+  
+ Summary
+ -------
+ MHV*1*10 installs VISTA components needed for new queries that will be 
+ used by MHV 12.4 release SM Workload Credit functionality
+         - Clinics by Stop Code query
+         - CPRS TIU Title Query
+       
+ It leverages the existing HL7 components that are already developed and 
+ released in previous releases of SECURE MESSAGING.
+  
+ Detailed description
+ --------------------
+ Secure Messaging allows patients and clinicians to email each other 
+ securely and confidentially, and allows clinicians to post those email
+ threads to the medical record as progress notes.
+  
+ Relationships between patients and clinicians are established based 
+ on Primary Care Management Module (PCMM) providers, clinic appointments
+ and Order Entry/Results Reporting (OE/RR) teams.  Secure Messaging uses
+ triage groups based on these relationships to manage which patients are
+ able to email which providers.  More information on secure messaging can
+ be found on the MyHealtheVet (MHV) web site www.domain.ext.
+  
+ This patch allows the secure messaging server to communicate with VistA.  
+ It uses below existing protocols for querying Clinics by Credit Stop Code
+         MHVSM QBP-Q11 Event Driver 
+         MHVSM QBP-Q11 Subscriber 
+         MHVSM RSP-K11 Event Driver
+         MHVSM RSP-K11 Subscriber
+ It uses below new protocols for querying TIU Titles by TIU Document Class
+         MHVSM QBP-Q13 Event Driver
+         MHVSM QBP-Q13 Subscriber
+         MHVSM RTB-K13 Event Driver
+         MHVSM RTB-K13 Subscriber
+  
+ SM Clinics by Credit Stop Code query retrieves data from below VistA 
+ fields in HOSPITAL LOCAITON FILE (#44) and CLINIC STOP FILE (#40.7) and 
+ sends a list of all Clinics by Credit Stop Code (SM uses 719 for Secure 
+ Messaging)
+         #.01 NAME in HOSPITAL LOCATION FILE
+         #8   STOP CODE NUMBER in HOSPITAL LOCATION FILE
+         #1   AMIS REPORTING STOP CODE in CLINIC STOP FILE 
+  
+ SM TIU Titles by TIU Document Class query retrieves data from below
+ VistA fields in TIU DOCUMENT DEFINITION FILE (#8925.1) and sends a list of
+ document titles of DOCUMENT CLASS NAME "Secure Messaging Document".
+         #01      NAME  
+         #02      PRINT NAME
+         #04      TYPE 
+         #07      STATUS 
+  
+ It updates below routines 
+         MHVXCLN - Modifies this extraction routine to extract Clinics by 
+ Stop Code 719
+         MHV7B9A - Modifies this build routine to include primary stop 
+ code in response
+         MHVXTIU - New extraction routine to extract TIU Titles by TIU 
+ Document Class (SECURE MESSAGING DOCUMENTS)
+         MHV7R6  - New build routine to respond with TIU Titles
+         MHV7R5  - Modifies the receiver to include validation for TIU 
+ Document Class
+         MHV7B1C - Segment builder that builds RDF and RDT segments
+         MHVXDEMS- Routine pulled from Patch 9 to fix SACC violations
+         MHVXPAT - Routine pulled from Patch 9 to fix SACC violations
+         MHV1P10 - PRE/POST Install routine to add entries to MHV REQUEST 
+ TYPE, MHV RESPONSE MAP and PROTOCOL Files
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                       
+ New/Modified/Deleted
+ -------------          -----------------------------------  
+ --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 
+ New/Modified/Deleted
+ -------------      ----      ------------------            
+ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Washington - 688
+ Boston     - 523
+ Puget Sound- 663
+ Cincinnati - 539
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The software for this patch is distributed as KIDS build MHV*1.0*10.
+ The My HealtheVet Technical Manual is available through the VistA
+ Documentation Library (VDL) at the following address:
+  
+    http://www.domain.ext/vdl/application.asp?appid=153
+  
+ Also the documentation can be retrieved by downloading one of the
+ following documents from VA FTP sites:
+    mhv_vista_1_3_technicalmanual.doc
+    mhv_vista_1_3_technicalmanual.pdf
+                                                                     
+ The preferred method is to FTP the files from
+    download.domain.ext    
+ which will transmit the files from the first available FTP server.
+  
+ The files may also be downloaded directly from a particular FTP
+ location at the following locations:
+  
+    Albany                  ftp.domain.ext
+    Hines                   ftp.domain.ext
+    Salt Lake City          ftp.domain.ext
+  
+ Patch Installation:
+ ===================
+  
+ Installation Instructions
+ -------------------------
+ It is recommended that this patch be installed ASAP to take advantage of 
+ Rel 12.4 SM new functionality.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  The patch is distributed in KIDS format
+ in a PackMan message.  This patch requires MHV*1*9 and installation time 
+ is less than 5 minutes. 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The pre-init routine PRE^MHV1P10 turns on MHV Application Logging.
+  
+ The post-init routine POST^MHV1P10 adds SMCLINICS MHV request type and 
+ also turns off MHV application logging.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+                                                          ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+ Select Installation Option:
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the
+            INSTALL NAME, enter MHV*1.0*10):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+         install? NO //' answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO //' answer NO
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;My HealtheVet;**[Patch List]**;Aug 23, 2005;Build 50
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MHV1P10
+    Before:       n/a   After: B68173465  **10**
+Routine Name: MHV7B1C
+    Before:       n/a   After:  B3919656  **10**
+Routine Name: MHV7B9A
+    Before: B23577236   After: B32497735  **6,10**
+Routine Name: MHV7R5
+    Before: B32891553   After: B42337271  **6,10**
+Routine Name: MHV7R6
+    Before:       n/a   After: B19547499  **10**
+Routine Name: MHVXCLN
+    Before:  B3158368   After: B10544444  **6,10**
+Routine Name: MHVXDEMS
+    Before:  B6047250   After:  B5949587  **5,9,10**
+Routine Name: MHVXPAT
+    Before: B62269575   After: B62150323  **6,9,10**
+Routine Name: MHVXTIU
+    Before:       n/a   After: B15132002  **10**
+ 
+Routine list of preceding patches: 9
+
+=============================================================================
+User Information:
+Entered By  : MARRI,NAGARAJA                Date Entered  : JAN 15, 2013
+Completed By: BUCIUMAN-COMAN,LIANA          Date Completed: JUN 06, 2013
+Released By : COWNIE,KEVIN                  Date Released : JUN 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

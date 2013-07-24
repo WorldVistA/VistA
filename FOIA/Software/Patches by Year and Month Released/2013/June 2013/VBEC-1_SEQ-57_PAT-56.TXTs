@@ -1,0 +1,167 @@
+$TXT Created by MORTON,RANDY at domain.ext  (KIDS) on Thursday, 04/04/13 at 14:49
+=============================================================================
+Run Date: JUN 19, 2013                     Designation: VBEC*1*56
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 1        SEQ #57                      Status: Released
+                  Compliance Date: JUN 30, 2013
+=============================================================================
+
+Associated patches: (v)VBEC*1*3    <<= must be installed BEFORE `VBEC*1*56'
+
+Subject: VBECS HCPCS LOOKUP UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Test sites for the pre-release Clinical Lexicon patch LEX*2*90 revealed 
+ an issue with changes to the Current Procedural Terminology (CPT)
+ Category names in the CPT CATEGORY file (#81.1). In the Clinical Lexicon 
+ patch, the category named "PATHOLOGY AND LABORATORY SERVICES" (IEN 194)
+ was renamed to "LABORATORY SERVICES" which caused a Blood Bank lookup 
+ from this file to fail. That failure prevented VBECS from connecting 
+ to VistA, rendering VBECS unusable because the communication with 
+ VistA is critical to operations. The LEX*2*90 patch was changed to 
+ leave file #81.1 as "PATHOLOGY AND LABORATORY SERVICES" to preserve 
+ VBECS functionality. 
+  
+ The VBEC*1*56 patch addresses one issue:
+  
+  1. 108 VistA MR 032513 (INC 831030) - Change the VBECRPCH lookup to 
+     CPT CATEGORY file #81.1 from category name to a hard-coded internal 
+     entry number (IEN 194). This lookup will insulate the VistA Blood
+     Establishment Computer Software (VBECS) medical device which 
+     consumes the information in the file to any category name changes 
+     needed in the future.
+  
+     Verification Steps:
+     ===================
+     VBECS executes a lookup of CPT codes on a rolling 24-hour clock. The 
+     first user to log in >24 hours after the CPT codes were refreshed 
+     will trigger another lookup. 
+  
+     To verify the patch:
+       a) Ask a VBECS user to log into VBECS >24 hours after the VBEC*1*56 
+          patch is installed.
+       b) Request that the VBECS user click on the Tools menu and then 
+          Blood Products to open the Maintain Blood Products window. This 
+          option triggers a look up of the CPT codes from VistA.
+       c) The VBECS user's ability to open the Maintain Blood Products 
+          window without error in VBECS defines a successful verification 
+          of patch VBEC*1*56 functionality.
+  
+  
+ BLOOD BANK CLEARANCE 
+ ===================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1.0*56 contains 
+ changes to a package referenced in BBM Team Review of VISTA Patches.
+ This patch does not alter or modify any VistA Blood Bank software 
+ design safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*1.0*56 have no effect on Blood 
+ Bank software functionality; therefore, RISK is none.
+  
+  
+ ROUTINES:
+ =========
+  VBECRPCH
+  
+  
+ DATA DICTIONARY:
+ ================
+  N/A
+  
+  
+ REMEDY TICKETS:
+ ===============
+  INC000000831030
+  
+  
+ TEST SITES:
+ ===========
+  North Texas Health Care System (Dallas)
+  Montana Health Care System (Ft. Harrison)
+  Bay Pines
+  
+ INSTALLATION INSTRUCTIONS:
+  =========================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+  NOTE: Kernel patches must be current on the target system
+        to avoid problems loading and/or installing this patch.
+  
+    1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+        option will load the KIDS patch onto your system.
+  
+    2.  The patch has now been loaded into a Transport Global on your
+        system. You now need to use KIDS to install the transport global.
+  
+    3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+        select the 'Installation' menu.
+  
+    4.  Use the 'Verify Checksum in Transport Global' option and verify
+        that all routines have the correct checksums.
+  
+    5.  On the KIDS menu, under the 'Installation' menu, use the following
+        options:
+          Print Transport Global
+          Compare Transport Global to Current System
+          Backup a Transport Global
+  
+        If you wish to preserve a copy of the routines exported in this 
+        patch prior to installation, you should use the 'Backup a Transport
+        Global' option at this time.  You may also compare the routines in
+        your production account to the routines in the patch by using the
+        'Compare a Transport Global to Current System' option.
+  
+    6.  Use the 'Install Package(s)' option under the 'Installation' menu
+        and select the package 'VBEC*1*56.
+  
+        If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+        Install? NO//, choose 'NO'.
+  
+        If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+        choose 'NO'.
+  
+        If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', choose 'NO'.
+  
+ ========================================================================
+  
+ NOTE: Do not change the system! The U.S. Food and Drug Administration 
+ classifies this software as a medical device. Unauthorized modifications 
+ will render this device an adulterated medical device under Section 501 
+ of the Medical Device Amendments to the Federal Food, Drug, and Cosmetic 
+ Act. Acquiring and implementing this software through the Freedom of 
+ Information Act requires the implementer to assume total responsibility 
+ for the software and become a registered manufacturer of a medical 
+ device, subject to FDA regulations. Adding to or updating VBECS software 
+ without permission is prohibited.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VBECS;**[Patch List]**;Apr 14, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VBECRPCH
+    Before:  B3877808   After:  B3298642  **3,56**
+
+=============================================================================
+User Information:
+Entered By  : MORTON,RANDY                  Date Entered  : MAR 25, 2013
+Completed By: KANIA,KEVIN                   Date Completed: JUN 19, 2013
+Released By : BOYER,EDWARD                  Date Released : JUN 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

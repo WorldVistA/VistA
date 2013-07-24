@@ -1,0 +1,273 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Tuesday, 03/19/13 at 13:51
+=============================================================================
+Run Date: APR 08, 2013                     Designation: PRC*5.1*150
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #148                    Status: Released
+                  Compliance Date: MAY 09, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*131 <<= must be installed BEFORE `PRC*5.1*150'
+                    (v)PRC*5.1*147 <<= must be installed BEFORE `PRC*5.1*150'
+                    (v)PRC*5.1*148 <<= must be installed BEFORE `PRC*5.1*150'
+                    (v)PRC*5.1*149 <<= must be installed BEFORE `PRC*5.1*150'
+
+Subject: FILE 410 DELETION PROBLEMS;TEMP TRANSACTION FILING AND LOST ENTRIES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  _______________________________________________________________________
+ |                                                                       |
+ |                  *****  PLEASE NOTE  *****                            |
+ |                                                                       |
+ |   IFCAP USERS MUST BE OFF THE SYSTEM WHILE INSTALLING THIS PATCH      |
+ |                                                                       |
+ | This patch can be installed with users on the system, however routines|
+ | in the patch potentially affect many IFCAP options so all IFCAP users |
+ | should be off the system during installation. After-hours installation|
+ | is recommended.                                                       |
+ |_______________________________________________________________________|
+  
+  
+ This patch will address the following 3 issues:
+  
+ 1. Requisition deletions causing filing errors.
+  
+ 2. Temporary requests being changed to a new transaction number do not 
+    clear the temporary request cross reference pointers.
+  
+ 3. Changing the description on a Fund Control Point will cause previous
+    temporary transactions to fall off the Temporary Transaction Listing.
+  
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000617074 <UNDEFINED>CPBAL+19^PRCBIE2*DA
+       Duplicate: 
+       HD0000000617606 FGH - rogue or null 410 IEN values
+  
+ 2. HD0000000434202 Xrefs not cleaning up in File 410 re Temp Transactions
+  
+ 3. HD0000000449216 Temporary Transaction Number Control Point Rename
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ St. Cloud VAMC
+ North Florida/South Georgia HCS
+ Asheville VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. HD0000000617074 <UNDEFINED>CPBAL+19^PRCBIE2*DA
+                                   
+    Problem:
+    --------
+    Sites found that during normal processing for requisitions, 1358s or 
+    ceiling transactions that they would be locked out for a long time or 
+    getting errors due to null IEN being returned from CONTROL POINT 
+    ACTIVITY (#410) file. Also, site saw the File 410, node 0 counter
+    jumping around rather than to the next descending value.
+  
+    Also, sites were allowed to enter the same name for a temporary 
+    transaction between different users affecting the adverse assignment of
+    internal entry numbers (IEN).
+  
+    Lastly, when running option Cancel Transaction with Permanent Number
+    [PRCSCT] on a temporary transaction the entry is only cancelled leaving
+    the number non reusable.
+  
+  
+    Resolution:
+    -----------                                    
+    Modified all File 410 delete processing (using Fileman call to ^DIK) to
+    ascertain the current counter was retained after the delete of any File
+    410 entry.
+  
+    Also, modified the LAYGO lookup to prevent the duplicate use of any 
+    previously used temporary requisition/1358 name across all users.
+  
+    Lastly, when running option 'Cancel Transaction with Permanent Number'
+    a temporary transaction will be deleted when cancelled.
+  
+ Routines: PRCSUT3, PRCSEA, PRCSEA1, PRCEN, PRCS58OB, PRCGARP1
+  
+  
+ 2. HD0000000434202 Xrefs not cleaning up in File 410 re Temp Transactions
+  
+    Problem:
+    --------
+    Users can enter temporary requests into IFCAP system which will then be
+    converted to valid requisition (option Change Existing Transaction 
+    Number) after review by appropriate IFCAP staff.  The process of
+    changing the temporary request number to a valid requisition number is
+    not deleting all the associated pointers to the old temporary number in
+    CONTROL POINT ACTIVITY (#410) file.
+  
+    Also, a user could create a temporary transaction number that would be 
+    allowed to be used by other users, but not the original creator. A
+    second matching transaction number caused the internal entry number
+    assignment for the temporary transaction to go awry.
+  
+    Resolution:
+    -----------
+    Modifications have been made to the process 'Change Existing
+    Transaction Number' that will delete all associated cross references to
+    the original temporary request number.
+  
+    A modification was made to prevent any Temporary Request user from
+    using the same temporary request transaction number previously used in
+    system.
+  
+    Also, a post install routine (PRCS150P) will run to remove any
+    temporary transactions in 'B' cross reference that do not have a
+    matching entry in CONTROL POINT ACTIVITY (#410) file. The purged
+    invalid cross references will be kept in temporary work file for 120
+    days as:
+  
+    ^XTMP("PRCS150P","B",temp req#,410 ien)
+  
+    and any temporary transactions created before 10/01/2010 and cancelled 
+    temporary requisitions will be deleted from file 410 and stored in the
+    same temporary work file for 120 days as:
+  
+    ^XTMP("PRCS150P","DT",temp req#,410 ien)
+  
+ Routines: PRCSUT2, PRCSEA, PRCSEA1, PRCSES, PRCS150P (post install)
+  
+  
+ 3. HD0000000449216 Temporary Transaction Number Control Point Rename
+  
+    Problem:
+    --------
+    Changing the description of a Fund Control Point (FCP) on a temporary
+    transaction will prevent the temporary transaction from appearing on
+    the Temporary Transaction Listing.
+  
+    Resolution:
+    -----------
+    Modify print process for Temporary Transaction Listing to look at cross
+    reference for FCP number in lieu of FCP description.
+  
+ Routines: PRCSP1B
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+                   *****  PLEASE NOTE  *****                            
+                                                                        
+    IFCAP USERS MUST BE OFF THE SYSTEM WHILE INSTALLING THIS PATCH     
+                                                                        
+  This patch can be installed with users on the system, however routines
+  in the patch potentially affect many IFCAP options so all IFCAP users 
+  should be off the system during installation. After-hours installation
+  is recommended.                                                       
+                                                                        
+  It should take less than 10 minutes to install this patch.
+  
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRCS150P will be deleted once the
+   install is complete.  If you wish to check the checksum of this routine 
+   please use the 'Verify Checksums in Transport Global' under the 
+   Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*150)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*150.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES.
+  
+       Combined A&MM Menus                 [PRCHUSER MASTER]
+       Control Point Official's Menu       [PRCSCP OFFICIAL]
+       Control Point Clerk's Menu          [PRCSCP CLERK]
+       Requestor's Menu                    [PRCSREQUESTOR]
+       Delivery Orders Menu                [PRCH DELIVERY ORDER MENU]
+       Purchase Card Menu                  [PRCH PURCHASE CARD MENU]
+       Purchase Card Coordinator's Menu    [PRCH CARD COORDINATOR MENU]
+       Requisition Clerk Menu              [PRCHPM REQUISITION CLK MENU]
+       Purchasing Agent                    [PRCHUSER PA]
+       Prosthetic Clerk's Menu             [RMPR CLERK]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCEN
+    Before: B46938754   After: B49903338  **23,148,150**
+Routine Name: PRCGARP1
+    Before: B15503261   After: B16876682  **46,131,150**
+Routine Name: PRCS150P
+    Before:       n/a   After:  B3630138  **150**
+Routine Name: PRCS58OB
+    Before: B21961903   After: B23875458  **148,150**
+Routine Name: PRCSEA
+    Before: B67471937   After: B76984063  **81,147,150**
+Routine Name: PRCSEA1
+    Before: B14485778   After: B15066543  **150**
+Routine Name: PRCSES
+    Before: B25469642   After: B32719940  **150**
+Routine Name: PRCSP1B
+    Before: B14804601   After: B38836346  **150**
+Routine Name: PRCSUT2
+    Before: B51951982   After: B52607046  **13,135,148,150**
+Routine Name: PRCSUT3
+    Before: B14998690   After: B16423778  **115,123,149,150**
+ 
+Routine list of preceding patches: 131, 147, 148, 149
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : SEP 20, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: MAR 19, 2013
+Released By : VASSAR,CAROL                  Date Released : APR 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

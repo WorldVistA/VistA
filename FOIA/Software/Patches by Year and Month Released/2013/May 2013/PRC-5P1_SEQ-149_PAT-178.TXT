@@ -1,0 +1,159 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.MED.VA.GOV  (KIDS) on Thursday, 02/28/13 at 14:02
+=============================================================================
+Run Date: MAY 02, 2013                     Designation: PRC*5.1*178
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #149                    Status: Released
+                  Compliance Date: JUN 02, 2013
+=============================================================================
+
+
+Subject: COST CENTER MODIFICATION FOR SUB CC ON FMS DOCUMENT TRANSMISSION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1. COST CENTER modification for SUB COST CENTER in Memorandum of Agreement
+ (MOA) Health Level Seven (HL7) segment for FMS DOCUMENT TRANSMISSION
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000818642 FMS Document Transmission Issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ St. Cloud VAMC
+ Minneapolis VAMC
+ Central Plains HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000818642 FMS Document Transmission Issue
+  
+  
+    Problem:
+    --------
+    During order obligation a fiscal data document is transmitted to FMS 
+    using a HL7 packet layout., The HL7 packet created uses segment MOA for
+    Cost Center and Sub Cost Center.  When using a Cost Center with the
+    last two digits other than 00, (ex. 802101) it is set as 802100 in the
+    Cost Center field and the Sub Cost Center field is set with the last
+    two digits of the Cost Center which in this case is 01.
+  
+    The problem has been for some time that FMS has been expecting the full
+    cost center and sub cost center (802101) to be reported fully within
+    the Cost Center field of the MOA segment and the Sub Cost Center field
+    always set to 00.
+    
+    Example:
+    Using the same Cost Center 802101
+    ^GECS(2100.1,7026,10,5,0)="LIN^~MOA^001^^^^13^^0160A2^688^802100^01^01EB4
+    41X9^3220^^^150.00^|^~"
+  
+  
+  
+    Resolution:
+    -----------                    
+    Modify the FMS transmission packet created for segment MOA for Cost 
+    Center and Sub Cost Center.  Cost Center (ex. 802101) will now be set
+    as 802101 in the Cost Center fields and the Sub Cost Center field will 
+    be set with 00. This will align the Cost Center handling with the
+    current process used by the FMS data handler.
+  
+    Example:
+    ^GECS(2100.1,7026,10,5,0)="LIN^~MOA^001^^^^13^^0160A2^688^802101^00^01EB4
+    41X9^3220^^^150.00^|^~"
+  
+ Routines: PRCFFU3
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*178)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*178.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following options:
+  
+       Obligation Processing             [PRCFA OBLIGATION PROCESSING]
+       Amendment Processing              [PRCFA AMENDMENT PROCESSING]
+       Obligate 1358                     [PRCEF OBLIGATE]
+       Adjust (Increase/Decrease) 1358   [PRCEF ADJUST]
+       SO Rebuild/Transmit for 1358s     [PRCFA 1358 (SO) REBUILD/TRANS]
+       AR Rebuild/Transmit for PO/1358   [PRCFA PO/1358 (AR) REBLD/TRANS]
+       ET-FMS Document Rebuild           [PRCH ET-FMS DOCUMENT REBUILD]
+       MO/SO Rebuild/Transmit for P.O.   [PRCFA PO (MO/SO) REBUILD/TRANS]
+       Code Sheet Edit                   [PRC GECS CODE EDIT]
+       Create a Code Sheet               [PRC GECS CREATE]
+       Generate FMS Budget Documents     [PRCB GENERATE CODE SHEETS]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFFU3
+    Before: B14289259   After: B15311813  **178**
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : FEB 20, 2013
+Completed By: PODLEY,CHRIS                  Date Completed: APR 29, 2013
+Released By : NELSON,VICKI M                Date Released : MAY 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

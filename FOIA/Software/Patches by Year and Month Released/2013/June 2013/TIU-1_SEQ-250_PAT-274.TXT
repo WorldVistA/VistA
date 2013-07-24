@@ -1,0 +1,152 @@
+$TXT Created by HUFFMAN,Dan at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 03/11/13 at 15:20
+=============================================================================
+Run Date: JUN 24, 2013                     Designation: TIU*1*274
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #250                      Status: Released
+                  Compliance Date: JUL 25, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*227       install with patch       `TIU*1*274'
+                    (v)TIU*1*261       install with patch       `TIU*1*274'
+
+Subject: PREVENT NOTES WITHOUT TEXT FROM BEING SIGNED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue: 
+ 1. When a note exists without text it can be signed in VistA roll/scroll 
+    Progress Notes User Menu [TIU MAIN MENU PN CLINICIAN] options as well
+    as other List Manager options that contain the sign/cosign action, when
+    it should not be able to be signed.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ===============================
+ 1. HD000000600069     Signed notes with no text
+  
+ Test Sites:
+ ===========
+ VA Maryland HCS 
+ Birmingham VAMC
+ Hunter Holmes McGuire VAMC - Richmond
+  
+  
+ Remedy Overview:
+ ================
+ 1. HD000000600069     Signed notes with no text
+  
+ PSPO:
+ ===== 
+ PSPO #2196
+  
+   
+ Problem: 
+ --------
+ When a note exists without text it can be signed in VistA roll/scroll 
+ Progress Notes User Menu [TIU MAIN MENU PN CLINICIAN] options as well as 
+ other List Manager options that contain the sign/cosign action. An empty
+ note cannot be signed with CPRS and some users were using VistA to sign
+ these notes.
+  
+ Resolution:
+ -----------
+ If a note has no text and is attempted to be signed, signing is not allowed and
+ the message 'This note contains no text and cannot be signed.' is displayed to
+ the user's screen.  This is the same message displayed in CPRS when a note
+ without text is attempted to be signed.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routines TIURS & TIURS1 to display the message 'This note contains no
+ text and cannot be signed.' and not allowing a note without text to be
+ signed.  The entry points into the procedures are EDSIG^TIURS & 
+ ELSIG^TIURS1.
+  
+ EDSIG^TIURS is the code executed by TIU BROWSE ACTION SIGN/COSIGN which 
+ is the protocol for sign/cosign under the Progress Notes User Menu [TIU
+ MAIN MENU PN CLINICIAN] and Integrated Document Management [TIU MAIN MENU 
+ MIXED CLINICIAN] options:
+  
+    - Review Progress Notes by Patient [TIU BROWSE PN CLINICIAN] option
+    - Review Progress Notes [TIU OE/RR REVIEW PROG NOTES] option
+    - All MY UNSIGNED Progress Notes [TIU REVIEW PN UNSIGNED] option 
+      (sign/cosign after browse is selected) 
+    - List Notes By Title [TIU LIST NOTES BY TITLE] option (sign/cosign
+      after browse is selected)
+    - Search by Patient AND Title [TIU SEARCH BY PATIENT/TITLE] option 
+      (sign/cosign after browse is selected) 
+    - Show Progress Notes Across Patients [TIU REVIEW PN CLINICIAN] option
+    - Individual Patient Document [TIU BROWSE DOCUMENT CLINICIAN] option
+  
+ ELSIG^TIURS1 is the code executed by TIU ACTION SIGN/COSIGN which is the
+ protocol for sign/cosign under the Progress Notes User Menu [TIU MAIN 
+ MENU PN CLINICIAN] options:
+  
+    - All MY UNSIGNED Progress Notes [TIU REVIEW PN UNSIGNED] option 
+    - List Notes By Title [TIU LIST NOTES BY TITLE] option
+    - Search by Patient AND Title [TIU SEARCH BY PATIENT/TITLE] option 
+  
+  
+ Installation Instructions:
+ ==========================
+ It is highly recommended that this patch be installed during off hours 
+ when the Users are not electronically signing documents.  The installation
+ time should be less than 2 minutes.
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter TIU*1.0*274):
+    a)     Backup a Transport Global - This option will create a backup message 
+           of any routines exported with this patch. It will not backup any 
+           other changes such as DD's or templates.
+    b)     Compare Transport Global to Current System - This option will allow 
+           you to view all changes that will be made when this patch is 
+           installed.  It compares all components of this patch (routines, DD's,
+           templates, etc.).
+    c)     Verify Checksums in Transport Global - This option will allow you to
+           ensure the integrity of the routines that are in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package TIU*1.0*274.
+    a)     When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+           answer NO.
+    b)     When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+           Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIURS
+    Before: B62697793   After: B64898838  **3,4,20,67,79,98,107,58,100,
+                                           109,179,157,227,274**
+Routine Name: TIURS1
+    Before: B76091051   After: B80091588  **7,36,58,100,109,142,156,184,
+                                           233,261,274**
+ 
+Routine list of preceding patches: 227, 261
+
+=============================================================================
+User Information:
+Entered By  : HUFFMAN,DANIEL                Date Entered  : NOV 07, 2012
+Completed By: SHERMAN,BILL                  Date Completed: JUN 11, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : JUN 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

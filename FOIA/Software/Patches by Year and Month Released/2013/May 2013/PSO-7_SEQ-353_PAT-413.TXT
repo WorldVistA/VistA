@@ -1,0 +1,146 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 03/05/13 at 14:09
+=============================================================================
+Run Date: MAY 07, 2013                     Designation: PSO*7*413
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #353                      Status: Released
+                  Compliance Date: JUN 06, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*390   <<= must be installed BEFORE `PSO*7*413'
+
+Subject: DISCONTINUE PRESCRIPTIONS OPTION ABORTS IF A PATIENT HAS A DATE OF DEATH ENTRY 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+   This patch addresses the following 2 issues:
+  
+   1) The Discontinue Prescription(s) option [PSO C] aborts when a
+      prescription is processed on a deceased patient.
+  
+  
+   2) Users are able to discontinue prescriptions that have been "marked for
+      deletion".
+  
+  
+   Associated Remedy Ticket(s):
+   ============================
+   1) HD0000000734927 - Option Discontinue Prescription(s) [PSO C]
+                        terminated when a patient has a confirmed death.
+   2) HD0000000754039 - User is able to discontinue a prescription that has
+                        been "marked for deletion".
+  
+  
+   Associated NSRs:
+   ================
+   N/A
+     
+     
+   Participating Test Sites:
+   =========================
+   Oklahoma City VA Medical Center
+   Charlie Norwood VA Medical Center 
+   VA Northwest Iowa HCS
+   VA New York Harbor HCS
+   
+   Remedy Overview:
+   ================
+   1) HD0000000734927 - The Discontinue Prescription(s) option [PSO C]
+                        terminated when a patient has a confirmed death.
+  
+   Problem:
+   --------
+   When a user tries to DISCONTINUE a prescription on a deceased patient they   
+   receive the following message: RECORDING THAT AN ERROR OCCURRED
+  
+   The actual error is an undefined error in routine PSOCAN. The error is
+   generated because the logic for a deceased patient does not get executed.
+  
+   The error occurs while using the Discontinue Prescription(s) option 
+   [PSO C].
+  
+  
+   Resolution:
+   -----------
+   Modify routine PSOCAN to properly execute the logic for a deceased patient.
+  
+  
+  
+   2) HD0000000754039 - User is able to discontinue a prescription that has
+                        been "marked for deletion".
+  
+   Problem:
+   --------
+   Users are able to DISCONTINUE prescriptions that has been "marked for
+   deletion" when using the Discontinue Prescription(s) option [PSO C].
+  
+   Upon entering the prescription the user should get a message stating that
+   a prescription "marked for deletion" is an invalid choice.
+   
+   
+   Resolution:
+   ----------
+   Modify routine PSOCAN so that users are not able to discontinue prescriptions
+   "marked for deletion", and that the message stating as such is displayed.
+                     
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*413)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*413
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN
+    Before: B51638197   After: B52190356  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375,379,390,413**
+ 
+Routine list of preceding patches: 390
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : AUG 02, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: MAY 01, 2013
+Released By : BAYLIS,RANDALL S              Date Released : MAY 07, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

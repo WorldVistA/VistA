@@ -1,0 +1,698 @@
+$TXT Created by SANDUSKY,DONNA at DEVFEX.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 04/22/13 at 17:46
+=============================================================================
+Run Date: JUN 26, 2013                     Designation: DVBA*2.7*184
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #162                    Status: Released
+                  Compliance Date: JUL 27, 2013
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*10 <<= must be installed BEFORE `DVBA*2.7*184'
+                    (v)DVBA*2.7*102<<= must be installed BEFORE `DVBA*2.7*184'
+                    (v)DVBA*2.7*149<<= must be installed BEFORE `DVBA*2.7*184'
+                    (v)DVBA*2.7*181<<= must be installed BEFORE `DVBA*2.7*184'
+
+Subject: CAPRI VIRTUAL VA, UNENCRYPTED EMAIL & 2507 REQUEST ENH & DEFECT FIXES 
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ I. OVERVIEW
+  
+    This patch (DVBA*2.7*184) and CAPRI GUI v184 provides defect fixes and
+    enhancements for the CAPRI GUI and the Automated Medical Information
+    Exchange (AMIE) package.  Please refer to the 'FUNCTIONAL OVERVIEW'
+    section (III) for the specific changes and primary functionality being
+    delivered.
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch.
+   
+    1. Associated Remedy Ticket(s):
+       ----------------------------
+       HD0000000622883 (INC000000622883) - AMIE is sending unencrypted 
+       email upon adding or cancelling C&P exams
+  
+   
+  
+         Duplicates:     None
+  
+  
+    2. Associated New Service Request(s):
+       ----------------------------------
+       NONE 
+                    
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary functionality
+    that will be delivered in CAPRI GUI v184 and this VistA patch 
+    (DVBA*2.7*184).
+    
+    1. The following Remedy tickets are being addressed:
+   
+       a. HD0000000622883 (INC000000622883) - AMIE is sending unencrypted 
+          email upon adding or cancelling C&P exams.
+  
+      
+       Problem
+       -------
+       When adding or cancelling a C&P exam, AMIE sends out email 
+       notifications that contain PII if user has an Outlook email address.
+  
+       1. This only happens when a user has an email address defined in the
+          New Person file, and the user adds a new exam using AMIE option
+          DVBA C ADD ADDITIONAL EXAM or cancels an exam using AMIE option
+          DVBA C CANCEL REQUESTS/EXAMS.
+       2. If the user adds an exam via CAPRI this notification DOES NOT GET
+          SENT to the Outlook email address.
+  
+       Solution
+       --------
+       Routines that generate emails for C&P exams were modified to remove 
+       any identifiable patient data and to replace it with the internal
+       patient number (DFN) which can be used as a patient lookup.
+  
+  
+   2. The following defects that were reported directly to the CAPRI
+      development team are being addressed: NONE.
+  
+  
+   3. The following enhancements that were requested by Veterans Health
+      Administration Veterans Affairs Central Office (VHAVACO) are being
+      addressed:
+  
+      a.   Automate C&P Exam transmission to VVA upon 2507 release to RO.
+           Insert logic to utilize the new Virtual VA web service to 
+           automatically file the completed exam results to Virtual VA upon
+           the releasing of the exam request to the RO.
+  
+      b.   Create a new tab for the retrieval and displaying of available 
+           documents in the Veteran/Service Member's electronic claim
+           folder Integrate a new Virtual VA web service that will enable
+           VHA users to connect to VVA to retrieve a listing of all
+           available documents in the associated eFolder(s).
+  
+      c.   New Document Type for Record Transmissions to Virtual VA via 
+           Web Service Interface for records transmitted to Virtual VA via
+           web service. There are currently two document types: "CAPRI
+           Medical Records" and "C&P Exam." For records retrieved by the
+           user from the DoD tab, neither document type is appropriate. The
+           appropriate indexing value for records contained within this tab
+           would be service treatment records (STRs). The customer is
+           requesting that a third indexing value be implemented for these
+           record types.
+  
+      d.   Rename the priority of exam code "DCS - DES Claimed Condition
+           By Svcmbr" to "IDES" and remove the "DFD - DES Fit for Duty"
+           priority of exam code. Convert all existing "DCS" and "DFD"
+           priority of exam codes to "IDES".
+           
+        1. CAPRI/AMIE - AMIS 290 Reports
+           - CAPRI RPC: DVBAB AMIS REPORT 
+             AMIS 290 and AMIS 290 by Division Reports
+           - AMIE Options: DVBA C AMIS REPORT
+                           DVBA C RO AMIS 290
+        
+           Modifications to CAPRI and the AMIE software were required to
+           support combining the two "DES" Priority of Exam codes into one 
+           "IDES" code in the 2507 Request File (#396.3).
+        
+        2. CAPRI/AMIE - Insufficient Exam Report (Detailed and Summary)
+           - AMIE Option: DVBA Insufficient Exam Rpt
+  
+           Modifications to CAPRI and the AMIE software were required to
+           support combining the two "DES" Priority of Exam codes into one 
+           "IDES" code in the 2507 Request File (#396.3).
+  
+        3. AMIE - Health Summary Report
+           - AMIE Option: GMTS HS BY PATIENT
+  
+           Modification to AMIE software was required to support combining
+           the two "DES" Priority of Exam codes into one "IDES" code on the
+           Health Summary Report.
+  
+      e.   Add two additional FQDN (Fully Qualified Domain Name) names
+           that allow initial connection to the CLAIMS server:
+           FORUM.MED.VA.GOV replaces FORUM.VA.GOV and
+           CLAIMS.MED.VA.GOV replaces CLAIMS.FORUM.VA.GOV.  The old
+           FQDN entries will remain in place to allow backward
+           compatibility until everyone is updated.
+  
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE   RSLV OVER
+   FILE #   FILE NAME                   DD    CODE  W/FILE DATA   PTS  RIDE
+   ------------------------------------------------------------------------
+   396.3    2507 REQUEST                YES   YES   NO
+      Partial DD subDD 396.3    field: 9 
+  
+  
+   1. The set of codes data type for the PRIORITY OF EXAM (Field #9) in 
+      the 2507 REQUEST File (#396.3) will be updated to replace the 
+      following entries:
+  
+      a. DCS : DES CLAIMED COND BY SVCMBR
+      b. DFD : DES FIT-FOR-DUTY
+  
+      with the new entry:
+  
+      c. IDES : IDES
+  
+   2. The following Routines are being added/modified:
+  
+      a. Modify: DVBCADEX
+                 DVBCCNCL
+          Description of changes:
+          This routine is being modified to include the SITE and REQUEST
+          DATE variable to make it available to subsequent routines.
+  
+      b. Modify: DVBCBULL
+                 DVBCBUL1
+                 DVBCXFRE
+          Description of change:
+          This routine is being modified to remove PII from the existing
+          email logic. It will remove the SSN, the Patient Name and the
+          Claim Number.      
+  
+      c. Add: DVBA184P
+          Routine DVBA184P automatically queues a TaskMan task that
+          converts entries in the PRIORITY OF EXAM (#9) field of the 2507
+          REQUEST (#396.3) with a Priority Of  Exam Code "DCS" or "DFD" to
+          a new code, "IDES". The "ADP" cross-reference will be updated
+          to reflect changes in these entries. The installer will receive
+          an email notification on completion of the conversion. The
+          message will indicate the start and stop time of the process
+          and the count of converted records. If the conversion task is
+          stopped using a Taskman User option stop request, the installer
+          will receive a Mail Man message asking that the post install
+          process be re-run. The conversion routine must run to completion
+          in order to fully install DVBA*2.7*184. The task can be
+          restarted by running POST^DVBA184P.
+      
+      d. Modify: DVBAB2
+                 DVBAB3
+          Description of change:
+          Changed DES Priority of Exam codes "DCS"and "DFD" to "IDES" to 
+          reflect a single IDES code.
+       
+      e. Modify: DVBAB82
+                 DVBCAMIS
+          Description of Change:
+          Changed DES Priority of Exam codes "DCS"and "DFD" to "IDES" to 
+          reflect a single IDES code. Removed the text for "DCS and "DFD"
+          and added the text for "IDES" to print on the AMIS 290 Report.
+  
+      f. Modify: DVBCAMI1
+                 DVBCAMI2
+                 DVBCAMI3
+          Description of Change:
+          Changed DES Priority of Exam codes "DCS"and "DFD" to "IDES" to 
+          reflect a single IDES code.
+  
+      g. Modify: DVBCAMRO
+                 DVBCAMR1
+                 DVBCAMR2
+          Description of Change:
+          Changed DES Priority of Exam codes "DCS"and "DFD" to "IDES" to 
+          reflect a single IDES code.
+  
+      h. Modify: DVBCHS1
+                 DVBCIUTL
+          Description of Change:
+          Removed text for DES Priority of Exam codes "DCS"and "DFD" and 
+          replaced it with text for "IDES" to reflect a single IDES code
+          on the C & P Extract for Health Summary Report.
+  
+      i. Modify: DVBCIRPT
+                 DVBCIRP1
+          Description of Change:
+          Changed DES Priority of Exam codes "DCS" and "DFD" to "IDES" to 
+          reflect a single IDES code on the Insufficient Exam Report.
+          Also, added logic to process "IDES" as a single code instead of
+          "DES" as two codes, which used to produce two report sections.
+  
+      j. Modify: DVBAVRX1
+          Description of Change:
+          Added logic that will quit the email process and not cause an
+          error if the user's email address is set to NULL. While this
+          incident should never happen in practice, this patch is removing
+          the possibility of a hard crash from ever happening should the 
+          condition rise where the email address become NULL.
+  
+      k. Modify: DVBCUTIL
+          Description of Change:
+          Changed DES Priority of Exam codes "DCS" and "DFD" to "IDES" to
+          reflect a single IDES code on the Final C&P Exam Report. 
+  
+   3.  The following FILE is being modified:
+  
+       a. FILE 396.3      2507 REQUEST 
+  
+   4.  The following REMOTE PROCEDURES entries are being added/modified:
+  
+       a. NAME: DVBAB AMIS REPORTS
+          TAG:  STRT
+          ROUTINE: DVBAB3
+          RETURN VALUE TYPE: ARRAY
+          AVAILABILITY: RESTRICTED
+          DESCRIPTION: Returns an AMIS report for specified search 
+            criteria. 
+          INPUT PARAMETER: DVBAPRTY
+          MAXIMUM DATA LENGTH: 4 
+          INPUT PARAMETER DESCRIPTION: Priority of Exam code which 
+            indicates which priorities to filter on.
+  
+            AO   : Agent Orange
+            BDD  : Benefits Delivery at Discharge and Quick Start
+            IDES : Integrated Disability Evaluation System
+            ALL  : All Others (Original Report with all codes except those
+                   above)
+  
+   5. The following SECURITY KEY is being added/modified:
+     
+      a.  NAME: DVBA VVA HOSPITAL ROLE
+          DESCRIPTIVE NAME: VIRTUAL VA HOSPITAL ROLE
+          DESCRIPTION: Assignment of this security key permits CAPRI
+            Virtual VA users to access all documents marked as Restricted
+            with the exception of documents marked with a Restricted Reason
+            of Principle Guardianship Folder (PGF) and/or Income
+            Verification Match (IVM).
+  
+   6.  The following INTEGRATION CONTROL REGISTRATION's (ICR's) have 
+       been added or modified.
+  
+       a. 1138       AUTOMATED MED INFO EXCHANGE
+          DBIA1138     DVBCHS0
+          NAME: DBIA1138
+          CUSTODIAL PACKAGE: AUTOMATED MED INFO EXCHANGE Albany
+          SUBSCRIBING PACKAGE: HEALTH SUMMARY Salt Lake City
+          USAGE: Private                ENTERED: FEB 17,1995
+          STATUS: Active                EXPIRES: 
+          DURATION: Till Otherwise Agr  VERSION: 
+          DESCRIPTION:                  TYPE: Routine
+       The health summary package needs to be able to retrieve Compensation
+       and Pension data for a health summary C & P component.  
+  
+          ROUTINE: DVBCHS0
+          COMPONENT:  HSCP
+       The Health Summary application needs permission to use the
+       entry point HSCP^DVBCHS0(PATPTR,INVBEGDT,INVENDDT,OUTCODE,ARRAY) in
+       order to extract compensation and pension (C & P) information from
+       the 2507 EXAM (#396.4) and 2507 REQUEST (#396.3) files.  
+                  
+                  
+                Entry Point 
+                -----------
+                HSCP^DVBCHS0(PATPTR,INVBEGDT,INVENDDT,OUTCODE,ARRAY) 
+                  
+                  
+                Input 
+                -----
+                  PATPTR   - Pointer to PATIENT file (#2) 
+                  INVBEGDT - Beginning date in inverse FileMan format 
+                           - Defaults to one year before today 
+                  INVENDDT - Ending date in inverse FileMan format 
+                           - Defaults to today 
+                  OUTCODE  - Flag indicating which optional nodes to return
+                               0 = Do not return any optional nodes 
+                               1 = Node 1 should also be returned 
+                               2 = Node 2 should also be returned 
+                               3 = Nodes 1 & 2 should also be returned
+                                   (default) 
+                  ARRAY    - Where to store output (full global reference) 
+                           - Defaults to ^TMP("DVBC",$J) 
+                  
+                  
+                Ouptput 
+                -------
+                  ARRAY(InvExDt,Type,0) = Code ^ DATE OF EXAM [.06] 
+                        ^ EXAM TYPE [.03] ^ EXAMINING PHYSICIAN [.07] 
+                        ^ PRIORITY OF EXAM [396.3;9] 
+                  ARRAY(InvExDt,Type,1) = ROUTING LOCATION [396.3;24]
+                   <-- 
+                        ^ OWNER DOMAIN [396.3;28] ^ TRANSFERRED OUT TO [62]
+                  ARRAY(InvExDt,Type,2) = REQUEST STATUS [396.3;17]
+                   <-- 
+                        ^ APPROVED BY [396.3;25] ^ APPROVAL DATE/TIME
+                          [396.3;26] 
+                  ARRAY(InvExDt,Type,"RES",0) = Number of lines in EXAM
+                          RESULTS 
+                  ARRAY(InvExDt,Type,"RES",X) = Line X of EXAM RESULTS [70]
+                  
+                    Subscripts: 
+                      InvExDt - Inverse FileMan date of DATE OF EXAM [.06] 
+                      Type - Pointer value of EXAM TYPE [.03] 
+                  
+                    Code used as follows: 
+                      1 = Exam was performed locally 
+                      2 = Exam was performed by another facility 
+                      3 = Exam was performed locally for another facility 
+                  
+                    Dates will be in FileMan format, while all other 
+                    information will be in external format 
+                 
+                    With the exception of dates, N/A (not applicable) and 
+                    UNKNOWN will be used when appropriate 
+                  
+                    Optional nodes are marked by an arrow (<--) 
+                  
+                  
+                Notes 
+                -----
+                  - Output array will be initialized (KILLed) 
+                  - Information for an exam is only returned when: 
+                    1. The exam status is COMPLETED 
+                    2. The status of the request containing the exam is 
+                       a) RELEASED TO RO, NOT PRINTED 
+                       b) COMPLETED, PRINTED BY RO 
+                       c) COMPLETED, TRANSFERRED OUT 
+                  - The Priority of Exam codes and text that may be
+                    returned are:
+                       'T'   FOR TERMINAL 
+                       'P'   FOR POW 
+                       'OS'  FOR ORIGINAL SC 
+                       'ON'  FOR ORIGINAL NSC 
+                       'I'   FOR INCREASE 
+                       'R'   FOR REVIEW 
+                       'OTR' FOR OTHER 
+                       'E'   FOR INSUFFICIENT EXAM 
+                       'AO'  FOR AGENT ORANGE 
+                       'BDD' FOR BEN DELIV AT DISCHG
+                      'IDES' FOR IDES
+                       'QS'  FOR QUICK START 
+    VARIABLES:  Input     PATPTR
+                            Pointer to PATIENT file (#2) 
+    VARIABLES:  Input     INVBEGDT
+                            Beginning date in inverse FileMan Format 
+                            Defaults to one year before today.
+    VARIABLES:  Input     INVENDDT
+                            Ending date in inverse FileMan format. 
+                            Defaults to today
+    VARIABLES:  Input     OUTCODE
+                            Flag indicating which optional nodes to 
+                            return.  
+                               0 = Do not return any optional nodes 
+                               1 = Node 1 should also be returned 
+                               2 = Node 2 should also be returned 
+                               3 = Node 1 and 2 should also be returned
+                                   (default) 
+    VARIABLES:  Both      ARRAY
+                            Where to store output (full global reference).
+                            Defaults to ^TMP("DVBC",$J) 
+    VARIABLES:  Output    ARRAY(InvExDt,Type,0)
+                            Node contain the following data: 
+                               Code ^ DATE OF EXAM [.06] ^ EXAM TYPE [.03] 
+                               ^ EXAMINING PHYSICIAN [.07] ^ PRIORITY OF
+                               EXAM [396.3;9] 
+    VARIABLES:  Output    ARRAY(InvExDt,Type,1)
+                            Node contains the following data: 
+                               ROUTING LOCATION [396.3;24] ^ OWNER DOMAIN
+                               [396.3;28] ^ TRANSFERRED OUT TO [62]
+    VARIABLES:  Output    ARRAY(InvExDt,Type,2)
+                            Node contains the following data: 
+                               REQUEST STATUS [396.3;17] ^ APPROVED BY
+                               [396.3;25] ^ APPROVAL DATE/TIME [396.3;26]
+    VARIABLES:  Output    ARRAY(InExDt,Typ,"RES",0)
+                            Node contains the following data: 
+                               Number of lines in EXAM RESULTS 
+    VARIABLES:  Output    ARRAY(InExDt,Typ,"RES",X)
+                            Node contain the following data: 
+                               Line X of the EXAM RESULTS [70].  
+    VARIABLES:             
+            KEYWORDS:
+  
+                              *********************
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*184
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*184.
+  
+   2. CAPRI GUI v184 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v184 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P184_08.ZIP]). The 
+          installed executable for this patch is client version 
+          184.08 with a size of 14.4 MB.
+  
+          The CAPRI GUI v184 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.med.va.gov
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.fo-albany.med.va.gov   [anonymous.software]
+         Hines              ftp.fo-hines.med.va.gov    [anonymous.software]
+         Salt Lake City     ftp.fo-slc.med.va.gov      [anonymous.software]
+  
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P184_08.ZIP   File(s) indented below:      BINARY
+         - CAPRI.exe             CAPRI v184 executable
+         - VACAPRIVVA.dll        Virtual VA dynamically linked library
+         - CAPRI_Help.chm        CAPRI On-line Help
+         - CAPRI.map             CAPRI error map
+         - CAPRISession.r2w      Reflections session configuration
+         - ssh_config            Secure Shell configuration       
+         - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+        DVBA_27_P184_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P184_UM.PDF   Updated CAPRI User Manual    BINARY 
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.va.gov/vdl/application.asp?appid=133
+  
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+ ***IMPORTANT NOTE***
+  
+ With the introduction of "Get Docs from Virtual VA" in patch 
+ DVBA*2.7*184, there was an issue discovered with opening large TIFF files 
+ with the current Windows Photo Viewer, which is the default viewer on 
+ Windows 7 workstations for TIFF files. For this reason it is imperative 
+ that prior to the installation of CAPRI Patch DVBA*2.7*184 from a network 
+ share drive, the system administrators (IRM Staff) *MUST* validate that 
+ workstations running on Windows 7 have Microsoft Office Document Imaging 
+ 2007 (MODI) installed prior to installing P184 from a network share 
+ drive. This notice does not impact workstations running on Windows XP.
+  
+ If you are upgrading CAPRI in workstation's local hard drive, this 
+ pre-requisite should already have been met by an Action Item initiated by 
+ ESE. Reference national change order CO161098FY13.
+ However if one or more of your workstations have windows 7 and these 
+ don't have a CAPRI.EXE on local hard disk, i.e. in case of new installs 
+ or running CAPRI from a Network Share then on those workstations this 
+ pre-requisite has *not* been automatically met. You can meet this 
+ pre-requisite by following the instructions on this link
+ Microsoft Office (2007) Document Imaging Build Document (Please refer to 
+ DVBA_27_P184_RN.DOC, DVBA_27_P184.PDF, or CAPRI_GUI_ISG.DOC
+ for link to document).
+ In this document you may use either the SCCM method or the manual method.
+  
+ All workstations that will run CAPRI.EXE, MUST have this MODI package 
+ installed in order to view large .TIFF files.  Even if running CAPRI from 
+ the network, this package MUST still be installed on the workstation.
+  
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*184) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_181.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P184_08.ZIP]). Please refer to the 
+        CAPRI_GUI_ISG.doc document within the DVBA_27_P184_08.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files:
+            VACAPRIVVA.dll        Virtual VA dynamically linked library
+            CAPRI_Help.chm        CAPRI On-line Help
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch: NONE.
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*184 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*184). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*10
+        DVBA*2.7*102
+        DVBA*2.7*149
+        DVBA*2.7*181
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*184).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*184.
+  
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v184 (CAPRI.exe [DVBA_27_P184_08.ZIP]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+ ** 9. NOTE: Post-init routine DVBA184P is a temporary routine used as
+       part of the post-install process. DVBA184P may be deleted after  
+       successful install.
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v184
+   and DVBA*2.7*184 server software.
+  
+    Test Sites:
+    ---------- 
+    * Alexandria
+    * Denver
+    * Greater LA
+    * Tennessee Valley
+    * Washington, DC 
+  
+ IX.  ROUTINE INFORMATION
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA184P
+    Before:       n/a   After: B18867566  **184**
+Routine Name: DVBAB2
+    Before: B32023164   After: B31951617  **35,42,149,184**
+Routine Name: DVBAB3
+    Before: B10129611   After:  B9998262  **35,42,149,184**
+Routine Name: DVBAB82
+    Before:B116645006   After:B116645006  **42,90,100,119,156,149,179,181,184**
+Routine Name: DVBAVRX1
+    Before: B93077870   After: B93466397  **181,184**
+Routine Name: DVBCADEX
+    Before:  B7428732   After:  B8221294  **184**
+Routine Name: DVBCAMI1
+    Before: B11579821   After: B11567744  **17,149,184**
+Routine Name: DVBCAMI2
+    Before: B37534460   After: B37457231  **149,184**
+Routine Name: DVBCAMI3
+    Before:  B5656228   After:  B5656228  **149,184**
+Routine Name: DVBCAMIS
+    Before: B15380003   After: B14811175  **17,149,184**
+Routine Name: DVBCAMR1
+    Before:  B5153937   After:  B5142050  **149,184**
+Routine Name: DVBCAMR2
+    Before: B35979419   After: B35907185  **149,184**
+Routine Name: DVBCAMRO
+    Before: B10861262   After: B10848195  **17,149,184**
+Routine Name: DVBCBUL1
+    Before:  B7938885   After: B10399602  **42,184**
+Routine Name: DVBCBULL
+    Before: B15506228   After: B19523211  **42,184**
+Routine Name: DVBCCNCL
+    Before: B25585288   After: B27121636  **102,184**
+Routine Name: DVBCHS1
+    Before:  B5480980   After:  B5171006  **149,184**
+Routine Name: DVBCIRP1
+    Before: B46484005   After: B47449535  **13,19,27,149,184**
+Routine Name: DVBCIRPT
+    Before: B47028205   After: B48144132  **13,19,27,149,184**
+Routine Name: DVBCIUTL
+    Before: B37860545   After: B37112339  **13,17,19,149,184**
+Routine Name: DVBCUTIL
+    Before: B46886926   After: B46287055  **17,126,143,149,184**
+Routine Name: DVBCXFRE
+    Before: B20965709   After: B25183514  **10,184**
+
+=============================================================================
+User Information:
+Entered By  : SANDUSKY,DONNA                Date Entered  : OCT 18, 2012
+Completed By: DELACRUZ,KRISTINA             Date Completed: JUN 20, 2013
+Released By : BARKER,MARK D                 Date Released : JUN 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

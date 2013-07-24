@@ -1,0 +1,291 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.MED.VA.GOV  (KIDS) on Friday, 06/29/12 at 10:42
+=============================================================================
+Run Date: JUN 12, 2013                     Designation: LR*5.2*417
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #337                    Status: Released
+                  Compliance Date: JUL 13, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*405  <<= must be installed BEFORE `LR*5.2*417'
+
+Subject: FIX FOR SEVERAL HOWDY ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 7 HOWDY-related issues in the Lab package.
+  
+ 1. The LRHY PPOC LABEL PRINT [PRINT PPOC LABEL] option does not print an 
+    accession label when only one accession is selected from a group of 2
+    or more accessions.
+  
+ 2. The LRHY PPOC LABEL PRINT [PRINT PPOC LABEL] option has sequence  
+    numbers, accession numbers, and collection samples running together on
+    the screen.
+  
+ 3. MI-subscripted (Microbiology) tests will not accession in HOWDY if the 
+    MI test is on its own order and the site/specimen is not urine.
+  
+ 4. The LRHY PATIENT WAIT TIME [PATIENT WAIT TIME] option reports 
+    inaccurate times.
+  
+ 5. True accession number not appearing on LRHY PATIENT WAIT TIME report.
+  
+ 6. <SUBSCRIPT> error in option LRHY TRACK COLLECTION.
+  
+ 7. Invalid link in HOWDY document.
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*417 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*417 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*417 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000594743        -  Problem with PRINT PPOC LABEL option.
+  
+ 2. HD0000000725041        -  Data on screen runs together in PRINT PPOC 
+                              LABEL option.
+  
+ 3. HD0000000601619        -  Issue with accessioning Blood Cultures
+  
+ 4. HD0000000619387        -  Howdy PATIENT WAIT TIME report not accurate.
+    Duplicate(s):
+    HD0000000714423        -  HOWDY REPORTING PROBLEMS
+  
+ 5. HD0000000716798        -  Problem with Howdy Wait Time report Header 
+                              for Accession.
+ 6. HD0000000720853        -  Subscript error - <SUBSCRIPT>LST1^LRHYLS1.
+  
+ 7. HD0000000617792        -  Issue with link in HOWDY document.
+     
+     
+ Testing Sites:
+ ==============
+ Central Plains HCS
+ White River Junction, VT.
+ Salisbury, NC 
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  HD0000000594743       -  Problem with PRINT PPOC LABEL option.
+  
+     Problem
+     -------
+     The LRHY PPOC LABEL PRINT [PRINT PPOC LABEL] option does not print 
+     an accession label when only 1 accession is selected from a group of 2
+     or more accessions. If more than 1 accession is selected, labels print
+     as they should.
+  
+     Solution
+     --------
+     Modify routine LRHYAFT to print accession label even if only 1
+     accession is selected from a group of 2 or more accessions.
+  
+     Routine:    LRHYAFT
+  
+ 2.  HD0000000725041     -   Data on screen runs together in PRINT PPOC 
+                             LABELS option.
+   
+     Problem
+     -------
+     The sequence number, accession number, and collection sample all run
+     together on the screen at one point while running the LRHY PPOC LABEL 
+     PRINT [PRINT PPOC LABEL] option.
+  
+     Solution
+     --------
+     Modify routine LRHYAFT to put some spaces between these data elements
+     for easier reading.
+  
+     Routine:  LRHYAFT  
+  
+    
+ 3.  HD0000000601619     -  Issue with accessioning Blood Cultures
+  
+     Problem
+     -------
+     If an MI-subscripted test (Microbiology) is the only test on an order
+     and the site/specimen is not urine, the HOWDY software will not 
+     accession the test.
+    
+     Solution
+     --------
+     Modify routine LRHYB to accession MI-subscripted tests regardless of 
+     the site/specimen.
+  
+     Routine:    LRHYB
+  
+ 4.  HD0000000619387     -  Howdy PATIENT WAIT TIME report not accurate
+     Duplicate(s):
+     HD0000000714423     -  HOWDY REPORTING PROBLEMS
+  
+     Problem
+     -------
+     The LRHY PATIENT WAIT TIME [PATIENT WAIT TIME] option gives inaccurate
+     results because the code gets the arrival time for the first patient
+     of a session and uses that same arrival time for all subsequent
+     patients in that session. This causes the report to give inaccurate
+     (too long) wait times for most patients listed on the report.
+  
+     Solution
+     --------
+     Modify routine LRHYBC1 to get the current time for each patient when
+     they are logged in.
+  
+     Routine:    LRHYBC1
+  
+ 5.  HD0000000716798     -  Problem with Howdy WAIT TIME report Header for 
+                            Accession.
+  
+     Problem
+     -------
+     When running the LRHY PATIENT WAIT TIME [PATIENT WAIT TIME] option, 
+     the report has a column for the accession number for each patient, but
+     the data appearing in that column is not always the accurate accession
+     number. It is a "fabricated" accession number consisting of the first
+     2 characters of the accession area name followed by a date and
+     sequential number. There may be more than 1 accession area name with
+     the same first 2 characters such that it is unclear what the real
+     accession number is. 
+  
+     Solution
+     --------
+     Modify routine LRHY4X to get the "actual" accession number from the
+     ACCESSION field (#15) of the ACCESSION NUMBER subfile (#68.02) of the
+     ACCESSION file (#68).  Print this accession number under the ACCN
+     heading in the report.
+  
+     Routine:    LRHY4X
+   
+ 6.  HD0000000720853     -  Subscript error - <SUBSCRIPT>LST1^LRHYLS1.
+  
+     Problem
+     -------
+     Routine LRHYLS1 sets a variable (LRHOWDT) to the order date in the
+     LAB ORDERS file (#69) "C" cross reference for the order number in 
+     question. If the order has been purged, the variable gets set to null,
+     which subsequently leads to the <SUBSCRIPT> error.
+  
+     Solution
+     --------
+     Remove these lines of code from routine LRHYLS1 as the lines in 
+     question are not used later in the program.  Removal of these lines of
+     code will have no impact on the functioning of this routine.
+  
+     Routine:    LRHYLS1
+  
+ 7.  HD0000000617792    -  Issue with link in Howdy document
+  
+     Problem
+     -------
+     On page 5 of the HOWDY document for IT staff, which resides in the
+     VA Software Document Library, there is a hyperlink that points to
+     a local file entry which contains a program for formatting the 
+     magnetic card reader. This link needs to be changed to point to the 
+     manufacturer's web site.
+  
+     Solution
+     --------
+     Modify the document in question (HOWDY Reference Manual for Local IT
+     Staff) to replace the link to a local file entry with a link to the 
+     manufacturer's web site. The proper link is:
+  
+     
+     http://www.magtek.com/support/software/demo_programs/usb_swipe.insert.asp
+  
+  
+     ==================== INSTALLATION INSTRUCTIONS ====================
+  
+  The install time for this patch is less than 2 minutes. This patch can be
+  installed when Laboratory users are on the system. NOTE: Kernel patches
+  must be current on the target system to avoid problems loading and/or
+  installing this patch.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*417.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHY4X
+    Before: B60499659   After: B61161096  **405,417**
+Routine Name: LRHYAFT
+    Before: B93475288   After: B93771452  **405,417**
+ Description of Changes:
+  Added a call to print single label.
+
+Routine Name: LRHYB
+    Before: B41480183   After: B40872404  **405,417**
+Routine Name: LRHYBC1
+    Before: B65673282   After: B66006409  **405,417**
+Routine Name: LRHYLS1
+    Before:  B9947241   After:  B9364370  **405,417**
+ 
+Routine list of preceding patches: 405
+
+=============================================================================
+User Information:
+Entered By  : HOAK,DAVID                    Date Entered  : JAN 24, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: JUN 07, 2013
+Released By : KRUSE,JOHN                    Date Released : JUN 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

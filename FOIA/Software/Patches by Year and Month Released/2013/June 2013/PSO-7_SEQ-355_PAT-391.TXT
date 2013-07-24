@@ -1,0 +1,677 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: PSO*7*391
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #355                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*194   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSO*7*257   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSO*7*340   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSO*7*377   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSO*7*390   <<= must be installed BEFORE `PSO*7*391'
+                    (v)XU*8*580    <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSS*1*166   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSO*7*400   <<= must be installed BEFORE `PSO*7*391'
+                    (v)PSD*3*76    <<= must be installed BEFORE `PSO*7*391'
+
+Subject: DEA E-PRESCRIBING FOR CS (CPRS V29)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Computerized Patient Record System (CPRS) v29 is an enhancement release 
+ with modifications for the Drug Enforcement Agency (DEA) electronic
+ prescribing (ePCS) of controlled substances, Problem List changes for the
+ use of SNOMED CT codes, and the display of Mental Health Treatment
+ Coordinator (MHTC) information entered through the Primary Care Management
+ Module. In addition to these enhancements, software changes are being made
+ to correct several PSIs, Section 508 issues, and additional miscellaneous
+ defect fixes.
+  
+ CPRS GUI version 29 consists of several host files, updated CPRS GUI and 
+ several Help files; too many to list (which will be located in a single 
+ directory named HELP):
+ HDI_1_11.KID           CONTAINS HDI*1*11 PATCH 
+ PSS_1_166.KID          CONTAINS PSS*1*166 PATCH
+ CPRSV29_PSO_PSD.KID    CONTAINS PSO*7*391 AND PSD*3*73 PATCHES
+ OR_GMPL_GMTS_XU_29.KID CONTAINS XU*8*609, GMPL*2*36, GMTS*2.7*86 AND 
+                                 OR*3.0*306 PATCHES
+ CPRSChart.exe
+ OR_30_371.KID          CONTAINS OR*3.0*371 PATCH
+ PSO_7_426.KID          CONTAINS PSO*7*426 PATCH
+  
+ The host files were created to simplify installation and also to control
+ the phased implementation of CPRS V29 at the Veterans Health
+ Administration (VHA) facilities. To see the current status and
+ target dates for Sites/VISN/Regions, please refer to the following site:
+  
+ http://go.usa.gov/TfvW
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch information:
+ HDI_1_11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSO*7*391, PSD*3*73 and PSO*7*426 supports the DEA ePCS
+ functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT.
+ GMTS*2.7*86 supports the Problem List Standardization.
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhances the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+  
+ OR_30_371 includes support for CPRS v.29.
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306_IG.doc and OR_30_306_IG.pdf and is included in OR_30_306.ZIP.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+  
+ Note:
+    A new security key named "PSDRPH", has been sent out in the Controlled
+    Substances patch PSD*3*76, which is a required patch for this patch 
+    (PSO*7*391).
+    This key authorizes pharmacists to finish/verify digitally signed
+    Schedule II-V CS orders placed via CPRS and should be assigned to
+    registered pharmacists working with Schedule II-V drugs.
+  
+ The following modifications and enhancements are included in this patch 
+ (PSO*7*391):
+  
+ 1. When processing a digitally signed pending order, the integrity of the 
+ original order placed in CPRS is now being checked to ensure that the data
+ fields listed below are not altered from the time the order is signed in
+ CPRS and later selected for processing in backdoor pharmacy. This is done
+ by passing the data elements listed below to a Kernel Application
+ Programming Interface (API), Integration Control Registration (ICR) #3539,
+ along with the CPRS hash count, provided by ICR #5709. The Kernel API
+ compares these two hash values and returns an "OK" if the pending order is
+ unaltered or otherwise, returns a "-1^error code^error message."
+  
+ Example: "-1^89802016^Mismatched digital signature hash values."
+  
+ These are the fields used in the hash check:
+         Date of Issuance
+         Full Name and Address of the Patient
+         Drug Name
+         Quantity Prescribed  
+         Directions for Use
+         Prescriber Name   
+         Prescriber Address (site address) 
+         Prescriber DEA / VA Registration Number
+         Order Number (CPRS)
+  
+ The Kernel API will also check for the validity of the DEA certificate. If
+ the certificate is revoked or expired then the API will return the
+ appropriate error code.
+ If the error code is related to hash mismatch or the DEA certificate is
+ revoked then the following events will be triggered during pending order
+ processing:
+   The order will be auto discontinued.
+   First line of the pending order screen will have the message "Digital
+   Signature Failed: Corrupted (Hash mismatch)" or "Certificate revoked"
+   concatenated with "Order Auto Discontinued", and the message will be
+   highlighted in reverse video.
+   The status bar of the screen will have the message "Signature Failed: 
+   Corrupted (Hash mismatch)" or "Certificate revoked."
+   A mail message will be generated to the holders of the PSDMGR key 
+   notifying that the order has been auto discontinued (similar to the 
+   example listed below).
+   If the discontinuation is due to a hash mismatch as a result of altering
+   one of the fields listed above then the mail message will show the
+   altered fields with the discrepancies. Here is an example:
+  
+   Subj: DIGITALLY SIGNED NEW ORDER AUTO DISCONTINUED  [#196353] 
+         03/20/12@17:1024 lines
+   From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+          
+   -----------------------------------------------------------------------
+  
+   Following order was auto discontinued when finishing a pending order   
+   due to Corrupted (Hash mismatch) - 89802016
+  
+   Division      : GREELEY CLINIC
+   CPRS Order #  : 5587651
+   Issue Date    : MAR 7,2012
+   Patient       : TEST,PATIENT (0908)
+   Address       : P.O. BOX 31
+                   LAPORTE, CA  95981
+   Drug          : CODEINE SULFATE 60MG TAB
+   Dosage Ordered: 120(MG)
+   Dosage Form   : TABLETS
+   Quantity      : 54
+   Provider      : TEST,PROVIDER
+   DEA#          : TA1234563
+   Site Address  : 2360 E PERSHING BLVD
+                   2360 East Pershing Boulevard
+                   CHEYENNE
+  
+   Differences in CPRS and Pharmacy Pending File
+  
+   Data Name           CPRS File         Pharmacy Pending File
+   ---------           ---------         ---------------------
+   QTY PRESCRIBED      15                30
+  
+          
+   If the error code is related to 'certificate expired', the pending 
+   order will be processed (will not be auto discontinued) and a 
+   notification will be sent to the provider with the message, "DEA
+   certificate expired. Renew your certificate."
+  
+ 2. When finishing a pending CS order, if the user does not hold the new 
+    PSDRPH security key, the order will be marked as 'Non-Verified'.
+  
+ 3. To verify a 'Non-Verified' CS order, PSDRPH security key is now
+    required.
+  
+ 4. To discontinue a pending CS order, PSDRPH security key is now required.
+  
+ 5. The pending order screen will now display the provider's DEA/VA #, the 
+    DETOX# (if available) and the site address.
+  
+ 6. When finishing a new pending CS order, the orderable item, dosage, 
+    provider name, or the number of refills will not be allowed to be 
+    edited. Also, if the changes to the dispense drug would result in
+    a new order being created, this will not be allowed for digitally 
+    signed orders. The user WILL be allowed to select other dispense drugs 
+    for the same Orderable Item as long as it does not change the 
+    prescribed dosage.
+  
+ 7. When finishing a new pending CS order, the days supply or the quantity
+    will not be allowed to increase, but can be decreased. If the days
+    supply is decreased, the number of refills will also be adjusted 
+    accordingly depending on the drug setup (maximum refills, not 
+    refillable etc). (The quantity may be auto-calculated to a higher 
+    quantity by the system only when the dosage remains the same, but the 
+    dispense drug strength is changed - i.e. 2mg tablets #30 is changed to 
+    1mg tablets, the Sig is updated and the system changes the quantity to 
+    60. A manual change to a higher quantity is not allowed.)
+  
+  
+ 8. In patch PSO*7*99, a change was made for pending orders not to 
+    recalculate the quantity for CS drugs on selecting a different strength
+    of the same drug and resulting in the same prescribed dosage. This
+    change is removed in this patch.
+  
+ 9. When finishing a pending CS order or verifying a CS order by the PSDRPH
+    key holder, any edit to some of the key fields like dispense drug,
+    dosage, dispense units, issue date, day's supply, quantity or number of
+    refills, will now be captured and stored in the activity log.
+  
+ 10. In the Complete Orders From OERR [PSO LMOE FINISH] option, a new sort 
+     selection, 'CS' is included to select digitally signed CS orders 
+     separately.
+  
+ 11. A new field BACKDOOR SIGNATURE STATUS (#311) is being added to the 
+     PRESCRIPTION file (#52) and will be set to '1' to indicate that the CS
+     order was entered via pharmacy backdoor and was not digitally signed.
+  
+ 12. A new field, DIRECTIONS FOR USE (#120) is being added to the PENDING
+     OUTPATIENT ORDERS file (#52.41) to store the raw HEALTH LEVEL SEVEN
+     (HL7) dosage data as sent from CPRS. This will be used to validate the
+     integrity (hash count) against the CPRS digitally signed orders.
+  
+ 13. Currently, the pending order screen displays only the number of 
+     refills ordered by the provider. For digitally signed orders, this
+     is modified to include the days supply and the quantity. Here is a
+     screen capture:
+     (6)    Issue Date: SEP 17,2012        (7) Fill Date: SEP 17,2012
+     (8)    Days Supply: 45                (9)   QTY (  ): 45
+    Provider ordered: days supply 45, quantity 45 & refills 1    
+    (10)   # of Refills: 1                (11)  Routing: WINDOW
+  
+ 14. The protocols PSO LM ACCEPT and PSO LM RENEW MENU are being modified
+     to add code to the SCREEN field (#24) and the HEADER field (#26) of
+     the PROTOCOL file (#101) to ensure users are limited to ListMan
+     actions based on their security key.
+  
+ 15. As part of this project, Kernel patch XU*8*580 introduced the 
+     following new fields to the NEW PERSON file (#200). Apart from the 
+     DEA#/VA# requirement, DEA further classifies what CS schedule a
+     provider is authorized to write. 
+  
+     55.1      SCHEDULE II NARCOTIC (S), [PS3;1]
+     55.2      SCHEDULE II NON-NARCOTIC (S), [PS3;2]
+     55.3      SCHEDULE III NARCOTIC (S), [PS3;3]
+     55.4      SCHEDULE III NON-NARCOTIC (S), [PS3;4]
+     55.5      SCHEDULE IV (S), [PS3;5]
+     55.6      SCHEDULE V (S), [PS3;6]
+  
+     If any one of the above fields are populated for a provider then when
+     placing a new order in backdoor pharmacy, the software will now check
+     for the drug schedule with the provider privileges. If the provider
+     does not have the credentials to write such orders then the software
+     will display a message (as shown below) and will not allow the 
+     selection of that provider.
+     Example: When the provider does not have schedule 2 privileges, this
+     message is displayed: 
+     "Provider not authorized to write Federal Schedule 2 prescriptions."
+  
+ 16. When placing an order for a CS Detoxification drug, the software will 
+     now check for a valid Detoxification number for the provider. If the 
+     provider does not have a Detoxification number then the software will 
+     display a message "Provider must have a DETOX# to order this drug."
+  
+ 17. The Released and Unreleased Prescription Report [PSO RELEASE REPORT] 
+     is being modified to include CS as a selection to the input. The drug
+     name and CS schedule is being added to the output. Here are the
+     changes:                         
+  
+ You are currently logged in under the CHEYENNE VAM&ROC division.
+ Do you want to select a different division? NO// 
+  
+ Do you want ONLY Unreleased Prescriptions? NO// 
+ Include (C)S Rx only, (N)on CS Rx only, or (B)oth (C/N/B): B// Controlled 
+ Substances Rxs Only
+  
+ Select controlled substance schedules
+  
+      Select one of the following:
+  
+           1         SCHEDULES I - II
+           2         SCHEDULES III - V
+           3         SCHEDULES I - V
+  
+ Select Schedule(s): 3// 
+  
+ The report currently shows the count of unreleased and copay
+ prescriptions, but not the count of released prescriptions. The report is
+ modified with this patch to include the count of released prescriptions.
+  
+ 18. The following options are being modified to include the
+     DETOX/MAINTENANCE ID NUMBER field (#53.11) and the DEA EXPIRATION DATE
+     field (#747.44) of the NEW PERSON file (#200) as part of the screen. 
+     The DEA EXPIRATION DATE field will be prompted only if the PROVIDER
+     TYPE field (#53.6) of the NEW PERSON file (#200) is marked as "FEE 
+     BASIS".
+  
+     Add New Providers [PSO PROVIDER ADD]
+     Edit Provider [PSO PROVIDER EDIT]
+     View Provider [PSO PROVIDER INQUIRE]
+  
+ 19. Currently, the default days supply for all drugs is set from the DAYS 
+     SUPPLY field (#3) of the RX PATIENT STATUS file (#53) up to a maximum
+     of 90. With this project, the default for CS schedule II-V drugs will
+     be set to 30 or from the DAYS SUPPLY field (#3) of the RX PATIENT
+     STATUS file (#53) if it is less than 30. Also, the Integration Control
+     Registration #3278 that returns days supply (DSUP^PSOSIGDS) to CPRS is
+     modified to return 30 or from the DAYS SUPPLY field (#3) of the RX
+     PATIENT STATUS file (#53) if it is less than 30 for CS schedule II-V
+     drugs.
+  
+ 20. The pharmacy release slip portion of the Laser Label is being 
+     modified to include the text "(DSIG)" or "(NOT DSIG)" after the
+     patient's name to indicate that the prescription is digitally signed
+     or not digitally signed.
+  
+ 21. This patch addresses the issue reported in REMEDY ticket #595795, to
+     ensure that when editing an orderable item/dispensed drug, the 
+     instruction field is displayed only when editing the pending order 
+     and not when editing an active or non-verified order.
+  
+ 22. The Expire Prescriptions [PSO EXPIRE PRESCRIPTIONS] option that 
+     currently runs as a nightly job is being modified to check for the
+     Institutional DEA 'expiration date'. If the expiration date is within
+     30 calendar days or past expiration then a mail message will be
+     generated and sent to PSDMGR key holders. Here is an example when the
+     expiration date is within 30 days:
+  
+ Subj: 500:Institutional DEA Expiration Date is about to expire  [#140331]
+ 03/20/12@11:57  3 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ -----------------------------------------------------------------------
+  
+ Please update Institutional DEA Certification Date. Will expire on 
+ 3/24/12.
+  
+ ******************************
+  
+ Here is an example when the DEA Expiration Date is past expiration date:
+  
+  
+ Subj: 500:Institutional DEA Expiration Date has expired  [#140333]
+ 03/20/12@12:08  3 lines
+ From: POSTMASTER  In 'IN' basket.   Page 1  *New*
+ ----------------------------------------------------------------------
+  
+ Please update Institutional DEA Certification Date. Expired on 2/19/12.
+  
+ **********************************
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                      Field Name (#)             New/Mod/Del
+ -------------                      --------------             -----------
+ PRESCRIPTION (#52)                 BACKDOOR SIGNATURE STATUS (#311)  New
+  
+ PENDING OUTPATIENT ORDERS (#52.41) DIRECTIONS FOR USE (#120)         New
+ PENDING OUTPATIENT ORDERS (#52.41) DRUG INCLUDED (#118)              New 
+  
+ Forms Associated:
+  
+ Form Name             File #                New/Mod/Del
+ ---------             ------                -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                   New/Mod/Del
+ ---------------                   -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Mod/Del
+ -----------                    ----             -----------
+ PSO LMOE FINISH                MENU             Modified
+ PSO EXPIRE PRESCRIPTIONS       MENU             Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Mod/Del
+ -------------                     -----------
+ PSO LM ACCEPT                     Modified
+ PSO LM RENEW MENU                 Modified
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name          Type      File Name (#)                 New/Mod/Del
+ -------------          ----      ------------------            -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20080702
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 483789 - Inconsistency in the process of a tech finishing a pending order.
+ 595795 - Changing orderable item on verified order gives incorrect 
+          information to user. 
+             
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ HEARTLAND-WEST HCS
+ HINES, IL
+ LOMA LINDA, CA
+ PALO ALTO HCS
+ SAN DIEGO, CA
+ TAMPA, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.va.gov/vdl/                                                   
+  
+                                                                                                                                                                                                                                                               
+
+ 
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_MAN_UM_R0513.PDF    (binary)
+ User Manual
+ Outpatient Pharmacy V. 7.0 Manager's    PSO_7_P391_MAN_UM_CP.PDF  (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_PHAR_UM_R0513.PDF   (binary) 
+ User Manual
+ Outpatient Pharmacy V. 7.0 Pharmacist's PSO_7_P391_PHAR_UM_CP.PDF (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Technician's PSO_7_TECH_UM_R0513.PDF   (binary)
+ User Manual                                                      
+ Outpatient Pharmacy V. 7.0 Technician's PSO_7_P391_TECH_UM_CP.PDF (binary)
+ User Manual Change Pages
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_TM_R0513.PDF        (binary)
+ Manual/Security Guide 
+ Outpatient Pharmacy V. 7.0 Technical    PSO_7_P391_TM_CP.PDF      (binary)
+ Manual/Security Guide Change Pages 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ CPRSV29_PSO_PSD.KID includes patches PSO*7*391 and PSD*3*73.
+ The host file was created to simplify installation at Veterans Health
+ Administration (VHA) facilities and to assist in the phased implementation
+ release method for CPRS GUI v29.
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation. During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    CPRSV29_PSO_PSD.KID            PSD*3*73              ASCII
+                                   PSO*7*391
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Outpatient Pharmacy users are on the
+ system or when Outpatient orders are being entered and signed through
+ Computerized Patient Record System. Installation will take no longer than
+ 5 minutes.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1. Download CPRSV29_PSO_PSD.KID into your local directory.
+  
+ 2. From the Kernel Installation & Distribution System (KIDS) menu, select
+    the Installation menu.
+  
+ 3. Select the Load a Distribution and enter the directory that you FTP'ed
+    the host file to and CPRSV29_PSO_PSD.KID.  Example:
+    USER$:[ABC]CPRSV29_PSO_PSD.KID
+  
+ 4. From the Kernel Installation & Distribution System (KIDS) menu, you may
+    select to use the following options (when prompted for INSTALL NAME,
+    enter PSO_PSD_V29 1.0
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5. Use the Install Package(s) option and select the package 
+    PSO_PSD_V29 1.0.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN4
+    Before: B47636509   After: B49357876  **20,24,27,63,88,117,131,259,
+                                           268,225,358,385,391**
+Routine Name: PSODGDGP
+    Before: B57788736   After: B66741905  **251,387,379,391**
+Routine Name: PSODIR
+    Before: B28488189   After: B34162228  **37,46,111,117,146,164,211,
+                                           264,275,391**
+Routine Name: PSODIR1
+    Before: B86466009   After: B94639325  **23,46,78,102,121,131,146,166,
+                                           184,222,268,206,266,340,391**
+Routine Name: PSODISP
+    Before: B55745559   After: B53119721  **15,71,131,156,185,148,247,
+                                           200,385,391**
+Routine Name: PSODISP1
+    Before: B43577126   After: B49194938  **15,9,33,391**
+Routine Name: PSOHLEXP
+    Before: B14786719   After: B22400492  **10,22,36,73,148,257,391**
+Routine Name: PSOHLNE1
+    Before: B73330251   After: B74363469  **1,9,46,71,98,111,117,131,157,
+                                           181,143,235,239,225,391**
+Routine Name: PSOHLNE2
+    Before: B64195087   After: B64216422  **1,7,59,46,225,305,391**
+Routine Name: PSOHLNEW
+    Before: B83121604   After: B86108957  **1,7,15,46,71,98,111,124,117,
+                                           131,146,132,143,223,235,148,
+                                           239,249,225,324,251,387,379,
+                                           391**
+Routine Name: PSOLLL2
+    Before: B16255333   After: B16898415  **120,138,141,161,200,391**
+Routine Name: PSON52
+    Before: B65058460   After: B86376192  **1,16,23,27,32,46,71,111,124,
+                                           117,131,139,157,143,219,148,
+                                           239,201,268,260,225,303,358,
+                                           251,387,379,390.391**
+Routine Name: PSONFI
+    Before:  B9036524   After:  B8543831  **46,94,131,225,391**
+Routine Name: PSOORED4
+    Before: B52076927   After: B54971624  **46,91,78,99,111,117,133,159,
+                                           148,251,391**
+Routine Name: PSOOREDT
+    Before: B69885568   After: B72615864  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391**
+Routine Name: PSOORFI1
+    Before: B74027837   After: B83482862  **7,15,23,27,32,44,51,46,71,
+                                           90,108,131,152,186,210,222,258,
+                                           260,225,391**
+Routine Name: PSOORFI4
+    Before: B81736847   After: B81023299  **46,74,78,99,117,131,207,258,
+                                           274,300,308,251,384,391**
+Routine Name: PSOORFI5
+    Before: B19521565   After: B46664581  **225,315,266,391**
+Routine Name: PSOORFIN
+    Before: B62133110   After: B63039564  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391**
+Routine Name: PSOORNE2
+    Before: B68864998   After: B69776712  **11,21,23,27,32,37,46,84,103,
+                                           117,131,146,156,210,148,222,
+                                           238,264,281,289,251,379,391**
+Routine Name: PSOORNE3
+    Before: B66896129   After: B68130643  **11,9,39,59,46,103,124,139,
+                                           152,194,391**
+Routine Name: PSOORNE4
+    Before: B85067804   After: B94257859  **11,27,32,36,46,75,96,103,99,
+                                           117,131,225,386,390,391**
+Routine Name: PSOORNE5
+    Before: B60780567   After: B68801944  **11,27,32,46,78,99,117,131,
+                                           146,171,180,210,222,268,206,
+                                           225,391**
+Routine Name: PSOORNEW
+    Before: B81591143   After: B92744719  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391**
+Routine Name: PSOORNW1
+    Before: B43950828   After: B44718806  **23,46,78,117,131,133,172,148,
+                                           222,268,206,251,379,391**
+Routine Name: PSOPKIV1
+    Before: B24905517   After: B98820890  **131,146,223,148,249,391**
+Routine Name: PSOPKIV2
+    Before:       n/a   After: B23465178  **391**
+Routine Name: PSOPRVW
+    Before: B37841346   After: B40061242  **11,146,153,263,268,264,398,391**
+Routine Name: PSORN52C
+    Before: B50785936   After: B68196793  **1,7,11,27,46,75,87,100,111,
+                                           124,117,131,146,148,200,225,
+                                           251,387,379,391**
+Routine Name: PSORXVW
+    Before: B70126239   After: B77494288  **14,35,46,96,103,88,117,131,
+                                           146,156,185,210,148,233,260,
+                                           264,281,359,385,400,391**
+Routine Name: PSOSIG
+    Before: B63218715   After: B70011572  **46,99,114,391**
+Routine Name: PSOSIGDS
+    Before: B62109134   After: B68186224  **46,222,391**
+Routine Name: PSOVER
+    Before: B75971956   After: B81192424  **16,21,27,117,131,146,251,375,
+                                           387,379,391**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : MAY 25, 2011
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 05, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

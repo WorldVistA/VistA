@@ -1,0 +1,129 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/02/13 at 11:33
+=============================================================================
+Run Date: JUN 07, 2013                     Designation: IB*2*501
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #453                      Status: Released
+                  Compliance Date: JUN 25, 2013
+=============================================================================
+
+
+Subject: CY2013 ADMINISTRATIVE FEE UPDATE FOR 3RD PARTY RX CLAIMS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *************************************************************************
+ PLEASE NOTE: There is a shortened Compliance Date for this patch.
+ *************************************************************************
+  
+ This patch will update the administrative charge based on a new dispensing
+ fee of $13.18 for third party pharmacy prescription claims with an
+ effective date of January 1st, 2013.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ INC000000845536 Need CY2013 Administrative charge for 3rd party RX claims
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS                              
+ Hampton VA Medical Center  
+ Tuscaloosa VA Medical Center          
+ VA Western NY HCS               
+ William S. Middleton Memorial Veterans Hospital - Madison 
+  
+ REMEDY OVERVIEW:
+ ================
+ INC000000845536 Need CY2013 Administrative charge for 3rd party RX claims
+  
+  Problem:
+  --------
+  The Chief Business Office has requested an update to the administrative
+  charge for third party pharmacy prescription with an effective date of
+  January 1st, 2013.
+  
+  Resolution:
+  -----------
+  A post-init routine IB20P501 was created to call a procedure to inactivate
+  rate schedules containing the RX COST set for rate types: Reimbursable
+  Insurance, No Fault Insurance, Tort Feasor, and Workers Compensation with
+  an inactive date of December 31, 2012. It also updates the adjustments
+  for those rate types with the new dispensing fee effective from January
+  1st, 2013 in the Rate Schedule (#363) file.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*501):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P501.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P501
+    Before:       n/a   After:  B2755308  **501**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : APR 23, 2013
+Completed By: DAWSON,TIM                    Date Completed: JUN 03, 2013
+Released By : CAULFIELD,MARY                Date Released : JUN 07, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

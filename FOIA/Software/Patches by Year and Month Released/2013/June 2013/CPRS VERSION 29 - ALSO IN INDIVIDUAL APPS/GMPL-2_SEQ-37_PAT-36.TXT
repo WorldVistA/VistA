@@ -1,0 +1,306 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: GMPL*2*36
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #37                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)GMPL*2*26   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*27   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*28   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*31   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*35   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)LEX*2*51    <<= must be installed BEFORE `GMPL*2*36'
+                    (v)LEX*2*58    <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*38   <<= must be installed BEFORE `GMPL*2*36'
+                    (v)GMPL*2*39   <<= must be installed BEFORE `GMPL*2*36'
+
+Subject: EXTENSIONS TO ACCOMMODATE SNOMED-CT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ The Computerized Patient Record System (CPRS) Graphical User Interface 
+ (GUI) v29 is an enhancement release with modifications for the Drug
+ Enforcement Agency (DEA) electronic prescribing (ePCS) of controlled
+ substances, Problem List changes for the use of SNOMED CT codes, and the
+ display of Mental Health Treatment Coordinator information entered through
+ the Primary Care Management Module. In addition to these enhancements,
+ software changes are being made to correct several Patient Safety Issues
+ (PSIs), Section 508 issues, and additional miscellaneous defect fixes.
+  
+ CPRS GUI v29 consists of several host files, an updated CPRS GUI and 
+ several Help files, too many to list (which will be located in a single
+ directory name HELP): 
+ HDI_1_11.KID which contains the HDI*1*11 patch
+ PSS_1_166.KID which contains the PSS*1*166 patch 
+ CPRSV29_PSO_PSD.KID which contains the PSO*7*391 and PSD*3*73 patches
+ OR_GMPL_GMTS_XU_29.KID which contains the XU*8*609, GMPL*2*36, GMTS*2.7*86
+ and OR*3*306 patches 
+ CPRSChart.exe 
+ OR_30_371.KID which contains the OR*3*371 PATCH
+ PSO_7_426.KID which contains the PSO*7*426 patch
+  
+ The host files were created to simplify installation and control the 
+ phased implementation of CPRS v29 at the Veterans Health Administration
+ (VHA) facilities. To see the current status and target dates for
+ Sites/VISN/Regions please refer to the following site:
+  
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms/AllItems
+ .aspx
+  
+ Click on the CPRS GUI v29 Deployment Schedule folder. Then open the
+ document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch Information:
+ ==================
+ HDI*1*11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSD*3*73 and PSO*7*391 support the DEA ePCS functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT
+ GMTS*2.7*86 supports the Problem List Standardization
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhanced the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+ The bulletin informs its recipients that a new NTRT Request has been 
+ initiated by a Clinician at their facility.
+  
+ OR*3*371 includes support for CPRS v29 - ePCS and encounters.
+  
+ PSO*7*426 ePCS Support
+  
+ The purpose of this patch (GMPL*2*36) is to accommodate the use of the
+ Systematic Nomenclature of Medicine -- Clinical Terms (SNOMED CT) for
+ selection of Patient Problems, and to dovetail with the efforts of
+ Standard Data Service (SDS) to implement SNOMED CT on both the Enterprise
+ Terminology Server and the Clinical Lexicon, using the New Term Rapid
+ Turnaround (NTRT) strategy for vetting and deployment of novel clinical
+ expressions.
+  
+ This patch introduces changes required by CPRS GUI v29 for selection of
+ Patient Problems using SNOMED CT.
+  
+ Patch Components:
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ PROBLEM SELECTION CATEGORY SNOMED CT CONCEPT
+ CONTENTS (#125.12)         CODE (#5)            New
+                            SNOMED CT
+                            DESIGNATION CODE
+                            (#6)                 New
+  
+ PROBLEM LIST SITE          *USE CLINICAL
+ PARAMETERS (#125.99)       LEXICON              Modified
+  
+ PROBLEM (#9000011)         All Fields            
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ GMPL FREETEXT F/U 
+  REPORT                action             New
+ GMPL MGT MENU          menu               Modified
+ GMPL NTRT F/U RPT      action             New
+ GMPL USER LOOK-UP 
+  DISPLAY               run routine        New   
+ GMPL USER LOOK-UP
+  FILTER                run routine        Modified
+ GMPL USER LOOK-UP
+  VOCABULARY            run routine        Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ Bulletin:
+ ========
+ GMPL PROBLEM NTRT BULLETIN    (New)
+ This bulletin is sent to members of the FORUM mail group g.PROBLEM LIST 
+ NTRT when a SNOMED CT Concept is selected by the user for which no 
+ ICD-9-CM codes are mapped. The mail group is populated with members of 
+ OI&T's Standards and Terminology Service. When approved by the Domain 
+ Steward for Problem List, new standardized mappings will be deployed 
+ using the New Term Rapid Turnaround capability.
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+ Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+ Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+ Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ ----------------------------------------------------------------------
+ Problem List User Manual                GMPL2_0_36_UM.PDF     Binary
+ Problem List Technical Manual           GMPL2_0_36_TM.PDF     Binary
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ ==========================
+ Please refer to the "CPRS GUI v.29 Installation Guide" for installation
+ and set-up information. This document is exported as OR_30_306_IG.doc and
+ OR_30_306_IG.pdf and is included in OR_30_306.ZIP
+  
+ Installation of these host files must be coordinated among the personnel
+ affected because these host files will be installed in one installation
+ session.
+  
+ Sites will retrieve VistA software from an FTP address as directed by the
+ CPRS Implementation team. Installation instructions will be distributed
+ when your site begins the implementation process.
+
+Routine Information:
+====================
+Routine Name: GMPLBLD
+    Checksum:
+      Before: B38813778   After: B39542631  **3,28,33,36**
+Routine Name: GMPLBLD1
+    Checksum:
+      Before: B31647398   After: B34149613  **3,28,36**
+Routine Name: GMPLBLD2
+    Checksum:
+      Before: B48951620   After: B50049989  **3,28,36**
+Routine Name: GMPLBLDC
+    Checksum:
+      Before: B32403515   After: B36845008  **3,7,28,36**
+Routine Name: GMPLDISP
+    Checksum:
+      Before: B29081516   After: B41666174  **21,26,35,36**
+Routine Name: GMPLEDT3
+    Checksum:
+      Before: B27556139   After: B29964655  **26,35,36**
+Routine Name: GMPLENFM
+    Checksum:
+      Before: B21546471   After: B31415115  **3,4,7,26,35,36**
+Routine Name: GMPLHIST
+    Checksum:
+      Before: B13031139   After: B17659917  **7,26,31,35,36**
+Routine Name: GMPLHS
+    Checksum:
+      Before: B13486016   After: B20917122  **22,26,35,36**
+Routine Name: GMPLMGR
+    Checksum:
+      Before: B24427031   After: B26246096  **21,28,36**
+Routine Name: GMPLMGR2
+    Checksum:
+      Before: B26697548   After: B27300832  **26,28,36**
+Routine Name: GMPLNTFT
+    Checksum:
+      Before: N/A         After: B57123267  **36**
+Routine Name: GMPLNTRT
+    Checksum:
+      Before: N/A         After: B91442393  **36**
+Routine Name: GMPLPRNT
+    Checksum:
+      Before: B30693281   After: B33959958  **1,13,26,41,36**
+Routine Name: GMPLSAVE
+    Checksum:
+      Before: B29395469   After: B95717448  **26,31,35,37,38,36**
+Routine Name: GMPLUTL
+    Checksum:
+      Before: B40762056   After: B51218894  **3,6,8,10,16,26,35,39,36**
+Routine Name: GMPLUTL1
+    Checksum:
+      Before: B25149940   After: B58284693  **3,8,7,9,26,35,39,36**
+Routine Name: GMPLUTL2
+    Checksum:
+      Before: B69909833   After: B80938362  **10,18,21,26,35,36**
+Routine Name: GMPLUTL3
+    Checksum:
+      Before: B4082939    After: B16541154  **14,15,19,25,26,36**
+Routine Name: GMPLX
+    Checksum:
+      Before: B42121408   After: B82126474  **7,23,26,28,27,36**
+Routine Name: GMPLX1
+    Checksum:
+      Before: B44650031   After: B78242398  **3,26,35,36**
+Routine Name: GMPLY36
+    Checksum:
+      Before: N/A         After:   B534718  **36**
+
+=============================================================================
+User Information:
+Entered By  : RUSSELL,JOEL                  Date Entered  : JUN 14, 2007
+Completed By: SHANE,CLARK                   Date Completed: JUN 06, 2013
+Released By : SCHWARTZ,VIKIE                Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

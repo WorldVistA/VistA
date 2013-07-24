@@ -1,0 +1,203 @@
+$TXT Created by CHUNG,TERESA at CPRS29.FO-SLC.MED.VA.GOV  (KIDS) on Friday, 09/21/12 at 09:57
+=============================================================================
+Run Date: MAY 14, 2013                     Designation: GMPL*2*43
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #36                      Status: Released
+                  Compliance Date: JUN 13, 2013
+=============================================================================
+
+Associated patches: (v)GMPL*2*5    <<= must be installed BEFORE `GMPL*2*43'
+                    (v)GMPL*2*27   <<= must be installed BEFORE `GMPL*2*43'
+                    (v)GMPL*2*28   <<= must be installed BEFORE `GMPL*2*43'
+
+Subject: ICD-10 Support Patch to resolve all direct global reads
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is created to resolve all ^ICD9( direct global reads in
+ preparation and support of the ICD-9 to ICD-10 coding system transition.
+ All direct global reads to ^ICD9( will be replaced with API calls in the
+ Problem List. This patch itself does NOT involve the use of the ICD-10
+ coding system.
+  
+ This patch does not make any changes that are visible to users. Testing
+ merely verifies that the code change does not cause errors or break the
+ current functionality. Testing involves:
+  
+   1. Adding a new problem via CPRS GUI or Problem List List Manager.
+   2. Editing an existing problem via CPRS GUI or Problem List List 
+      Manager.
+   3. Verifying that the Search ICD Diagnoses for Codes option of the 
+      Assign ICD Diagnoses to Problem List [GMPL CODE LIST] menu option 
+      displays the correct default ICD code associated with the selected
+      problem and works correctly.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ ------------------             -------------------    --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A                   N/A        N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A                      N/A
+  
+ Options Associated:
+  
+ Option Name       Type               New/Modified/Deleted
+ -----------       ----               -------------------- 
+ N/A               N/A                N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A                                      N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A               N/A         N/A                 N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ N/A
+  
+ Problem:
+ --------
+ N/A
+  
+ Resolution:
+ -----------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Eastern Colorado (Denver), CO
+ Hudson Valley, NY
+ Tuscaloosa, AL
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ N/A. Since no new functionality is introduced with this patch, there are 
+ no documentation updates available.
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A. There are no Pre/Post installation routines exported with this patch.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 1 minute 
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch
+     #(ex.GMPL*2.0*43):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer NO. 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A                                                         
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPL1
+    Before: B26232725   After: B27012106  **3,20,28,43**
+Routine Name: GMPLCODE
+    Before: B11198487   After: B11967458  **28,43**
+Routine Name: GMPLEDT4
+    Before: B18695691   After: B19794628  **5,43**
+Routine Name: GMPLPXRM
+    Before: B10434009   After: B11040861  **27,43**
+ 
+Routine list of preceding patches: 5, 27, 28
+
+=============================================================================
+User Information:
+Entered By  : CHUNG,TERESA L                Date Entered  : JAN 23, 2012
+Completed By: SHANE,CLARK                   Date Completed: MAY 14, 2013
+Released By : PERSCHON,ANDREA               Date Released : MAY 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

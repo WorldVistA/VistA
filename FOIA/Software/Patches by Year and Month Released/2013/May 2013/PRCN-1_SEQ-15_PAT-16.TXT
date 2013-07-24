@@ -1,0 +1,153 @@
+$TXT Created by CHANDARANA,RISHAN at MNTVUU.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/16/13 at 14:58
+=============================================================================
+Run Date: MAY 21, 2013                     Designation: PRCN*1*16
+Package : PRCN - EQUIPMENT/TURN-IN REQUEST    Priority: Mandatory
+Version : 1        SEQ #15                      Status: Released
+                  Compliance Date: JUN 21, 2013
+=============================================================================
+
+Associated patches: (v)PRCN*1*15   <<= must be installed BEFORE `PRCN*1*16'
+
+Subject: MODIFICATION OF INPUT TEMPLATE [PRCNTIPED]
+
+Category: 
+  - Input Template
+
+Description:
+============
+
+ Patch PRCN*1.0*16 is a modification to input template [PRCNTIPED] to allow for
+ the deletion of all Replacement Items. The current template is only 
+ allowing the deletion of the last item within the Edit Turn-in Transaction
+ (PPM) option.  
+   
+   ASSOCIATED REMEDY: 
+   ==================
+   1)  HD0000000097152 - Edit Template [PRCNTIPED] only allowing deletion
+                         of last default item.
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Detroit, MI.
+   Tennessee Valley HCS
+   Salisbury, NC.
+   
+   Remedy Overview:
+   ================
+   1)  HD0000000097152
+  
+   Problem:
+   --------
+   User can only delete the default REPLACEMENT ITEM NUMBER field (#.01) of
+   the TURN-IN LINE ITEM  multiple (#413.11,#.001) when using the Edit
+   Turn-In Transaction [PRCN TURN PPM EDIT]. The default replacement item
+   number is the last one entered.
+   
+   Resolution:
+   -----------
+   A modification was made to the input template [PRCNTIPED] for TURN-IN LINE
+   ITEM multiple (#413.11,#.001) to include REPLACEMENT ITEM NUMBER
+   field(#.01) which will allow the user to edit or delete any selected items. 
+   
+   Technical Description:
+   ----------------------
+   Template [PRCNTIPED] before:
+  
+   TURN-IN LINE ITEM
+    I X="" S Y=""
+    S RI=$P(^PRCN(413.1,PRCNTDA,1,DA,0),U)
+    D DISP^PRCNTIRQ
+    JUSTIFICATION
+    I X'=6 S Y=""
+    OTHER JUSTIFICATION
+    I X="" W !,$C(7),"  ? Justification for Turn-in is required!" S Y=.7
+    DISPOSAL CONDITION CODE
+    7
+    VOUCHER #
+    6
+    9
+    10
+    .01:
+       USE STATUS
+       TURN-IN DATE
+   I $O(^PRCN(413.1,DA,1,0))="" W !,"No Turn-In Items entered - Please Edit" S
+   Y=""
+  
+  
+   Template [PRCNTIPED] after:
+  
+   TURN-IN LINE ITEM
+    I X="" S Y=""
+    S RI=$P(^PRCN(413.1,PRCNTDA,1,DA,0),U)
+    D DISP^PRCNTIRQ
+    REPLACEMENT ITEM NUMBER
+    JUSTIFICATION
+    I X'=6 S Y=""
+    OTHER JUSTIFICATION
+    I X="" W !,$C(7),"  ? Justification for Turn-in is required!" S Y=.7
+    DISPOSAL CONDITION CODE
+    VOUCHER #
+    .01:
+       USE STATUS
+       TURN-IN DATE
+    I $O(^PRCN(413.1,DA,1,0))="" W !,"No Turn-In Items entered - Please Edit" S
+    Y=""
+  
+    ==================== Installation Instruction ====================
+  
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes. Suggested time to install:
+  non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PRCN*1.0*16).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+  
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+  
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+  
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package PRCN*1.0*16
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : MAR 30, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: MAY 16, 2013
+Released By : VASSAR,CAROL                  Date Released : MAY 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

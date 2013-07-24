@@ -1,0 +1,143 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Tuesday, 01/29/13 at 08:11
+=============================================================================
+Run Date: MAY 16, 2013                     Designation: PSO*7*378
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #354                      Status: Released
+                  Compliance Date: JUN 15, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*268   <<= must be installed BEFORE `PSO*7*378'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*378'
+
+Subject: Outpatient Prescription Edit and QUANITY display
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1)  This patch will resolve the issue when a user edits the first ROUTE of a
+     complex prescription from ORAL to SUBLINGUAL, prior to accepting, the  
+     UNDER THE TONGUE will echo to the second occurrence.
+  
+ 2)  The QUANTITY from the prior prescription is being carried over to the
+     current prescription.
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1)  INC000000350199     Outpatient Prescription Edit
+  
+ 2)  INC000000418687     Previous RX QUANITY being pulled
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Wilmington VA Medical Center
+ Lexington VA Medical Center
+ VA N. Florida/S. Georgia VA HCS
+  
+   
+ Remedy Overview:
+ ================
+ 1)  INC000000350199     Outpatient Prescription Edit
+   
+ Problem: 
+ ========
+ If the user enters a "new" complex prescription and says NO to IS THIS
+ CORRECT?, they are allowed to edit the ROUTE field.  If the user changes 
+ the first ROUTE from ORAL to SUBLINGUAL and leaves the second ROUTE as ORAL, 
+ the UNDER THE TONGUE, associated with the first ROUTE change, will echo 
+ down and display next to the second ROUTE of ORAL.
+  
+ Resolution:
+ ===========
+ Added code to RTE^PSOORED5 and RTE^PSOBKDED to obtain the Outpatient 
+ Expansion field (#4) from the Medication Routes File (#51.2).
+  
+ 2)  INC000000418687    Previous RX QUANITY being pulled
+  
+ Problem:
+ ========
+ When finishing prescriptions, if you go back and edit the prescription
+ it brings the quantity from the previous prescription into the current
+ prescription.
+  
+ Resolution:
+ ===========
+ Modify routine PSOORED3 to ensure the quantity is recalculated and is
+ displayed on the screen correctly.
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ On the system when this patch is installed.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*378)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*378.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B80833683   After: B81532355  **11,46,91,78,99,117,133,143,
+                                           268,378**
+Routine Name: PSOORED3
+    Before: B61839517   After: B63367851  **46,78,99,117,133,148,249,251,
+                                           379,378**
+Routine Name: PSOORED5
+    Before: B59866468   After: B60470652  **46,75,78,100,99,117,133,251,378**
+ 
+Routine list of preceding patches: 268, 379
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : FEB 15, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: MAY 07, 2013
+Released By : BAYLIS,RANDALL S              Date Released : MAY 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

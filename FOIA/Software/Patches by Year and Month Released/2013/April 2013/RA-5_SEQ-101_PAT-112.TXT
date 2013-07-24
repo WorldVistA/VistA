@@ -1,0 +1,142 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.MED.VA.GOV  (KIDS) on Thursday, 03/08/12 at 12:32
+=============================================================================
+Run Date: APR 17, 2013                     Designation: RA*5*112
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #101                      Status: Released
+                  Compliance Date: MAY 18, 2013
+=============================================================================
+
+Associated patches: (v)RA*5*70     <<= must be installed BEFORE `RA*5*112'
+
+Subject: CORRECT THE CALL TO THE ICD DIAGNOSIS FILE (#80)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This patch will correct the following issue:
+      
+  1. Radiology routine RABWUTL contains a soon to be unsupported FILEMAN
+     read of the ICD DIAGNOSIS FILE (#80).
+       
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+                
+  ASSOCIATED REMEDY TICKETS:
+  ==========================
+  1. HD0000000606685 - A RA routine was found to have an unsupported
+                       Fileman read of global location 0;3 formerly the
+                       DIAGNOSIS field #3.
+  
+  PARTICIPATING TEST SITES:
+  =========================
+  Upstate, NY.
+  Houston, TX.
+  Puget Sound HCS
+      
+  REMEDY TICKET OVERVIEW:
+  =======================     
+  1. HD0000000606685
+       
+     PROBLEM:
+     --------
+     The ICD10 Implementation team has identified a direct read of the ICD 
+     DIAGNOSIS File (#80) in routine RABWUTL within the Radiology
+     package.  All direct reads must be replaced with an Application
+     Programming Interface in an effort to support the ICD10 project.
+        
+     RESOLUTION:
+     -----------     
+     Replace the direct reads in routine ^RABWUTL with Application 
+     Programming Interface calls to routine ^ICDCODE to return ICD code and
+     DIAGNOSIS under Database Integration Agreement (DBIA) number 3990.
+      
+     ==================== INSTALLATION INSTRUCTIONS ====================
+      
+  If installed during the normal workday, it is recommended that the 
+  the Radiology users be off the system.  Other VISTA users will not be
+  affected. Install Time should be less than 2 minutes (unless otherwise
+  indicated).
+      
+  1. Load Transport Global:
+     ----------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+  2. Start Up KIDS:
+     --------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+  Select Kernel Installation & Distribution System Option: INStallation 
+                                                           ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+  3. Select Installation Option: 
+     ---------------------------
+     NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter RA*5.0*112):
+       
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+      
+  4. Select Installation Option: Install Package(s):
+     -----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a. Choose the Install Package(s) option to start the patch
+        install.
+  
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16,1998;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RABWUTL
+    Before:  B1666628   After:  B2131308  **41,70,112**
+ 
+Routine list of preceding patches: 70
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : MAR 01, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: APR 15, 2013
+Released By : COWNIE,KEVIN                  Date Released : APR 17, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

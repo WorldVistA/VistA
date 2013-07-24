@@ -1,0 +1,267 @@
+$TXT Created by FISHER,BRAD at DEVVFF.FO-ALBANY.MED.VA.GOV  (KIDS) on Friday, 04/19/13 at 13:41
+=============================================================================
+Run Date: MAY 14, 2013                     Designation: EDP*2*5
+Package : EDP - EMERGENCY DEPARTMENT          Priority: EMERGENCY
+Version : 2         SEQ #2                      Status: Released
+                  Compliance Date: MAY 16, 2013
+=============================================================================
+
+
+Subject: EDP*2*4 CORRUPTION RESOLUTION
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ Associated patches: EDP 2.0       <<= must be installed BEFORE 'EDP*2*5'
+   
+  
+ This PATCH FOR A PATCH addresses the below issue, as well as a
+ corruption issue encountered with EDP*2.0*4. During the release process
+ routine EDPFPTC had been corrupted in the development environment
+ causing the routine to be incorrect at the time of release. This patch
+ resolves the logic issues within EDPFPTC.
+   
+ This EMERGENCY patch addresses an issue in EDIS that causes errors in
+ routine XOBVSKT when selecting a patient with multiple Patient Record
+ Flags (PRF's) with multiple lines of text in more than one of the flags.
+  
+ This patch contains a single routine (EDPFPTC), and contains no other
+ patch components.
+   
+   
+ Patch Components
+ ================
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+   
+ 1.   #INC000000841991 - Error message Loading log entries failed.
+                         Error number 1085.
+  
+ Problem:
+ --------
+ Patch was installed last night and now users are unable to remove any
+ patients who were on the board that were on the board at the time of
+ the patch was installed and patients that were added after the patch
+ was installed cannot be updated.  Error message Loading log entries
+ failed.  Error number 1085.
+  
+  
+ Resolution:
+ -----------
+  
+  EDP*2.0*4 was released with an incorrect version of EDPFPTC. The section
+  of logic in EDPFPTC related to patch 4 is as follows:
+  
+  . F  S N=$O(EDPY(EDI,"NARR",N)) Q:N<1 S 
+ X=X_$C(13,10)_$G(EDPY(EDI,"NARR",N,0))
+  . ;F S N=$O(EDPY(EDI,"NARR",N)) Q:N<1 S X=$G(EDPY(EDI,"NARR",N,0)) D 
+ XML^EDPX(X)
+  . ;bwf - 3/1/2013 - removed line due to multiple flag issues
+  . D XML^EDPX("<text>"_$$ESC^EDPX(X)_"</text>")
+  . ;bwf 3/1/2013 - added following line to build footer for patient 
+ record flag issues.
+  . ;D XML^EDPX("</text>")
+  
+  
+  EDP*2.0*5 corrects the logic to be the following:
+  
+  . ;F S N=$O(EDPY(EDI,"NARR",N)) Q:N<1 S 
+ X=X_$C(13,10)_$G(EDPY(EDI,"NARR",N,0))
+  . F  S N=$O(EDPY(EDI,"NARR",N)) Q:N<1 S X=$G(EDPY(EDI,"NARR",N,0)) D 
+ XML^EDPX($$ESC^EDPX(X))
+  . ;bwf - 4/16/2013 - removed line due to multiple flag issues
+  . ;D XML^EDPX("<text>"_$$ESC^EDPX(X)_"</text>")
+  . ;bwf 4/16/2013 - added following line to build footer for patient 
+ record flag issues.
+  . D XML^EDPX("</text>")
+  
+ Associated Remedy Tickets:
+ --------------------------
+  
+ 842002
+ 842007
+ 842019
+ 842029
+ 842034
+ 842043
+ 842045
+ 842059
+ 842092
+ 842102
+ 842115
+ 842118
+ 842120
+ 842149
+ 842158
+ 842170
+ 842206
+ 842207
+ 842208
+ 842209
+ 842217
+ 842229
+ 842278
+ 842294
+ 842298
+ 842300
+ 842307
+  
+  
+ 2.   #INC000000773607 - Cannot do anything with patient on board - 
+                         receive error.
+   
+ Problem:
+ -------
+ Multiple Patient record flags causing patient to be inaccessible in EDIS.
+   
+ Resolution:
+ ----------
+ Modified EDPFPTC routine to build XML in a more friendly way to XOBVSKT. 
+ The old logic would build the xml in a structure where there were 
+ $C(13,10) values imdded and a single line was used to create the XML.
+ Ex. <text> Record flag info line 1_$C(13,10)_line 2_$C(13,10)_$C(13,10) 
+ </text>
+  
+ The modification builds the xml so that each line of text is represented 
+ in the xml as the body.
+   
+ Ex.
+ <text>
+ Record flag info line 1
+   
+ line 2
+ </text>
+   
+ Test Sites:
+ ----------
+ Baltimore
+ New York Harbor
+ Lebanon
+ Syracuse
+   
+ Associated Remedy Tickets:
+ --------------------------
+ 755918
+ 770503
+ 778925
+ 779546
+ 780003
+ 780200
+ 781201
+ 791172
+ 795159
+ 796082
+ 796334
+ 800480
+   
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+   
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+   
+ Patch Installation:
+   
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+   
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ *************************************************************
+ Important Note:
+  
+ The BEFORE checksum for routine EDPFPTC is based on EDP*2*4, which
+ has been marked as 'Entered In Error'. It is okay if the before
+ checksum in the patch does not match the checksum in your test or
+ production environments. Please insure that the post patch checksum
+ for EDPFPTC matches.
+  
+ Checksums calculated by FORUM:
+  
+ Before: B18942481   After: B19115099  **5**
+  
+ The Checksums you MAY see when installing EDP*2*5:
+  
+ Before: B14885802   After: B19115099  **5**
+  
+ *************************************************************
+  
+   
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     EDP*2.0*5):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install (EDP*2*5).
+   
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'     
+      
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// , answer 'NO'.
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+   
+   
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EMERGENCY DEPARTMENT;**[Patch List]**;May 2, 2012;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EDPFPTC
+    Before: B18942481   After: B19115099  **5**
+
+=============================================================================
+User Information:
+Entered By  : FISHER,BRADLEY                Date Entered  : APR 16, 2013
+Completed By: SHANE,CLARK                   Date Completed: MAY 08, 2013
+Released By : VANCAMP,E PHILIP              Date Released : MAY 14, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

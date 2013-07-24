@@ -1,0 +1,131 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 08/16/12 at 13:51
+=============================================================================
+Run Date: APR 29, 2013                     Designation: PSO*7*410
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #352                      Status: Released
+                  Compliance Date: MAY 30, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*210   <<= must be installed BEFORE `PSO*7*410'
+
+Subject: <FILEFULL> ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When processing Pending Orders, the system evaluates each word of
+ the Provider Comments and if any word is longer than 60 characters
+ and has one of the special delimiters (; , = :) after character 57
+ (in character position 58 or greater), it gets carried over to the
+ next line which will again follow this same pattern and the loop
+ begins which causes the <FILEFULL> error.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ HD0000000622353 - Prescription for patient is shutting down the system
+   
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ VA Northern Indiana HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000622353 - Prescription for patient is shutting down the system
+  
+ Problem:
+ --------
+ When processing Pending Orders in Outpatient Pharmacy, the system hangs
+ if any word in the Provider Comments is longer than 60 characters and
+ has a special delimiter (;,=:) after character position 57. If this 
+ process continues to run, a <FILEFULL> error will occur.
+  
+ Resolution:
+ -----------
+ Modify processing so if any word is at least 61 characters long and has
+ a special delimiter (;,:=) at character 58 or later, split the line the
+ same as if it does not have a special delimiter.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOUTLA2 at tag WORDWRAP + 61, if word is at least 61
+ characters long and has a special delimiter (;,:=) at character 58
+ or later, split the line the same as if it does not have a special
+ delimiter.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is recommended to install this patch when users are not processing
+ Pending Orders or Prescriptions in Outpatient Pharmacy.  It should take
+ less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*410)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*410.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+         a. When prompted 'Enter options you wish to mark as 'Out of Order':'  
+   
+            Enter the following options:
+       
+            Patient Prescription Processing [PSO LM BACKDOOR ORDERS]
+            Complete Orders from OERR  [PSO LMOE FINISH] 
+  
+         b. When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOUTLA2
+    Before: B15870639   After: B20328353  **210,410**
+ 
+Routine list of preceding patches: 210
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : JUN 19, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: APR 11, 2013
+Released By : SEBURN,CINDY L                Date Released : APR 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

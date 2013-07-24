@@ -1,0 +1,177 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 03/21/13 at 08:14
+=============================================================================
+Run Date: JUN 26, 2013                     Designation: PSB*3*64
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #58                      Status: Released
+                  Compliance Date: JUL 27, 2013
+=============================================================================
+
+Associated patches: (v)PSB*3*32    <<= must be installed BEFORE `PSB*3*64'
+                    (v)PSB*3*67    <<= must be installed BEFORE `PSB*3*64'
+
+Subject: DISAPPEARING UNKNOWN ACTION, FATAL ERROR in BCMA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 3 issues:
+ 
+ 1.  An order with an Unknown Action status is unavailable
+     when using the Edit Med Log option if another user runs
+     the BCMA Medication Administration History (MAH) report.
+ 2.  A broker error occurs when using the Unable to Scan function
+     in BCMA and then scanning another medication. 
+ 3.  A broker error occurs when clicking on the BCMA Coversheet if 
+     a patient's only current order is an IV Piggyback which has a
+     day of the week schedule.
+ 
+ Associated NSR(s):
+ =================
+  N/A
+   
+ Associated Remedy ticket(s):
+ ===========================
+ 1.    INC0000000418230 - Disappearing Unknown Action Status
+        duplicate:  INC0000000740558
+ 2.    INC0000000798826 - FILESF+11^PSBVDLU3 *PSBMEDOI
+        duplicate:  INC0000000817311
+        duplicate:  INC0000000820809
+        duplicate:  INC0000000831950
+        duplicate:  INC0000000841354
+        duplicate:  INC0000000849124
+        duplicate:  INC0000000851593
+        duplicate:  INC0000000856756
+ 3.    INC0000000466070 - <UNDEFINED>QUT+3^PSBCSUTY
+   
+ PARTICIPATING TEST SITES:
+ ========================
+ PALO ALTO HCS
+ HOUSTON VAMC
+ RICHMOND VAMC
+ 
+ 
+ REMEDY OVERVIEW:
+ ===============
+   
+ 1.      HD0000000418230 - Disappearing Unknown Action Status
+ 
+ Problem:
+ --------
+ An order with an Unknown Action status is unavailable
+ when using the Edit Med Log option if another user runs
+ the BCMA Medication Administration History (MAH) report.
+ The administration will not be available until the user who
+ ran the report closes their session. 
+ 
+ Resolution:
+ -----------
+ Routine PSBOMH1 was modified to remove the incremental lock
+ from the code.  The report is only reading from the BCMA 
+ MEDICATION LOG (#53.79) file, not writing to it, so the lock
+ is not needed.
+ 
+ 2.     HD00000000798826 - FILESF+11^PSBVDLU3 *PSBMEDOI
+ 
+ Problem:
+ --------
+ A fatal "Undefined" error will occur in BCMA when the Unable to
+ Scan function is used, and then a medication is scanned.
+ 
+ Resolution:
+ -----------
+ Routine PSBVDLU3 was modified to clean up the variable PSBFILE when
+ exiting the PSBVDLU3 routine, which will prevent the undefined error.
+ 
+ 3.     HD00000000466070 - <UNDEFINED>QUT+3^PSBCSUTY
+ 
+ Problem:
+ --------
+ A fatal error occurs when clicking on the BCMA Coversheet if
+ a patient's only current order is an IV Piggyback which has a day of the 
+ week schedule.  The error will cause BCMA to shut down and need
+ to be restarted.  The error will continue to occur until another order
+ is created or the order is marked "Given".  The error occurred because
+ the % variable containing the current date/time was killed in a previous
+ routine.
+ 
+ Resolution:
+ -----------
+ Routine PSBCSUTY was modified to set the % variable to the current date
+ and time.
+ 
+ Installation Instructions:
+ =========================
+   
+    *************************** NOTE ********************* *
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS *
+    *  AN EDITED ERROR WILL OCCUR.                         *               
+    *  The patch should be installed when NO BCMA Client   * 
+    *  users are on the system.                            *                  
+    * **************************************************** *
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+                                                       
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*64):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3*64.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBCSUTY
+    Before: B43368080   After: B43766281  **16,32,64**
+Routine Name: PSBOMH1
+    Before: B83032453   After: B83153329  **6,3,9,11,26,38,45,51,50,57,67,64**
+Routine Name: PSBVDLU3
+    Before: B91754867   After: B91879754  **13,38,28,50,64**
+ 
+Routine list of preceding patches: 32, 67
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : MAY 19, 2011
+Completed By: LOKHANDWALA,MURTUZA           Date Completed: JUN 20, 2013
+Released By : CONNOLLY,BARBARA              Date Released : JUN 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

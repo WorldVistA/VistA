@@ -1,0 +1,269 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: PSD*3*76
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #61                      Status: Released
+                  Compliance Date: JUL 11, 2013
+=============================================================================
+
+
+Subject: CPRS V29 e-PCS PRE-INSTALLATION- INTRODUCTION OF THE  PSDRPH SECURITY KEY
+
+Category: 
+  - Other
+
+Description:
+============
+
+ The e-Prescribing of Controlled Substances (ePCS) project, will provide
+ enhanced functionality to allow for the electronic prescribing of
+ controlled substances while meeting Drug Enforcement Administration's
+ (DEA) regulations and requirements. This patch will enable sites to 
+ complete the pre-installation steps for Computerized Patient Record System
+ (CPRS) version 29.
+  
+ This patch is being released in host file CPRS29_DEA_SETUP.KID  which 
+ includes the  following patches:
+  
+ OR*3.0*218
+ PSD*3.0*76
+ XU*8.0*580
+  
+ The host file was created to simplify installation of the CPRS V29 e-PCS 
+ pre-installation patches at Veterans Health Administration (VHA) 
+ facilities. Installation of this host file should be coordinated among 
+ the packages affected because the host file will install the software 
+ needed to complete the pre-installation setup and configuration needed 
+ for the implementation of CPRS v29
+  
+ Please refer to the "DEA e-Prescribing Setup Installation and 
+ Configuration Guide for Patches (OR*3.0*218, PSD*3*76, and XU*8.0*580)" 
+ for installation and configuration information. This document is being 
+ exported as OR_30_218_IG.pdf and OR_30_218_IG.doc.
+  
+ In preparation for this project, a new security key PSDRPH is being added 
+ in this patch. This key authorizes pharmacists to finish and verify
+ digitally signed Schedule II-V Controlled Substance (CS) orders placed via
+ COMPUTERIZED PATIENT RECORD SYSTEM (CPRS) V. 3.0. It should only be
+ assigned to registered pharmacists working with Schedule II-V drugs.
+  
+ The assignment of security key PSDRPH may be done at any time after the 
+ installation of this host file to begin the setup process required for
+ ePCS.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name (#)                      New/Modified/Deleted
+ ------------------    ----------------------------------- --------------------
+  
+   
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type                         New/Modified/Deleted
+ -----------                  ----                         --------------------
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+  
+   
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ PSDRPH
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                New/Modified/Deleted
+ -------------      ----      ------------------           --------------------
+ N/A
+  
+   
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20080702
+   
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ TEST Sites:
+ ===========
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ HEARTLAND-WEST HCS
+ HINES, IL
+ LOMA LINDA, CA
+ PALO ALTO HCS
+ SAN DIEGO, CA
+ TAMPA, FL
+  
+  
+ Documentation and Software Retrieval Instructions:
+ --------------------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch as well as host file CPRS29_DEA_SETUP.KID is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.va.gov/vdl/
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Controlled Substances V. 3.0 Nurse      PSD_3_NURSE_UM_R0513.PDF  (binary)
+ User Manual
+ Controlled Substances V. 3.0 Nurse      PSD_3_P76_NURSE_UM_CP.PDF (binary)
+ User Manual Change Pages
+ Controlled Substances V. 3.0 Pharmacist PSD_3_CSPHARM_R0513.PDF   (binary)
+ User Manual
+ Controlled Substances V. 3.0 Pharmacist PSD_3_P76_CSPHARM_CP.PDF  (binary)
+ User Manual Change Pages
+ Controlled Substances V. 3.0 Package    PSD_3_CSSECURI_R0513.PDF  (binary)
+ Security Guide
+ Controlled Substances V. 3.0 Package    PSD_3_P76_CSSECURI_CP.PDF (binary)
+ Security Guide Change Pages                     
+ Controlled Substances V. 3.0 Inspector  PSD_3_INSP_UM_R0513.PDF   (binary)
+ User Manual
+ Controlled Substances V. 3.0 Inspector  PSD_3_P76_INSP_UM_CP.PDF  (binary)
+ User Manual Change Pages
+ Controlled Substances V. 3.0 Supervisor PSD_3_UM_SUPV_R0513.PDF   (binary)
+ User Manual
+ Controlled Substances V. 3.0 Supervisor PSD_3_P76_UM_SUPV_CP.PDF  (binary)
+ User Manual Change Pages
+ Controlled Substances V. 3.0 Technical  PSD_3_TM_R0513.PDF        (binary)
+ Manual
+ Controlled Substances V. 3.0 Technical  PSD_3_P76_TM_CP.PDF       (binary)
+ Manual Change Pages
+ DEA e-Prescribing Setup Installation
+ and Configuration Guide for Patches 
+ (OR*3.0*218, PSD*3*76, and XU*8.0*580)  OR_30_218_IG.PDF and 
+                                         OR_30_218_IG.DOC          (binary)
+  
+  
+ Patch Installation: 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ CPRS29_DEA_SETUP.KID, includes patches OR*3.0*218, PSD*3.0*76 and 
+ XU*8.0*580.
+  
+ Please refer to the "DEA e-Prescribing Setup Installation and 
+ Configuration Guide for Patches (OR*3.0*218, PSD*3*76, and XU*8.0*580)" 
+ for installation and configuration information. This document is being 
+ exported as OR_30_218_IG.pdf and OR_30_218_IG.doc.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    CPRS29_DEA_SETUP.KID           OR*3*218           ASCII        
+                                   PSD*3*76
+                                   XU*8.0*580
+  
+ Installation Instructions
+ -------------------------
+ You can install this patch while Controlled Substance users are on the 
+ system. Installation will take no longer than 2 minutes.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1. Download CPRS29_DEA_SETUP.KID into your local directory.
+  
+ 2. From the Kernel Installation & Distribution System (KIDS) menu, select
+    the Installation menu.
+  
+ 3. Select the Load a Distribution and enter the directory that you FTP'ed
+    the host file to and CPRS29_DEA_SETUP.KID.  Example:
+    USER$:[ABC]CPRS29_DEA_SETUP.KID
+  
+ 4. From the Kernel Installation & Distribution System (KIDS) menu, you may
+    select to use the following options (when prompted for INSTALL NAME,
+    enter  CPRS29 DEA 1.0.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5. Use the Install Package(s) option and select the package 
+    CPRS29 DEA 1.0.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//'  respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? NO//'  respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : MAR 21, 2013
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 05, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

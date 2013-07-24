@@ -1,0 +1,199 @@
+$TXT Created by MENDOZA,RAUL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 02/07/13 at 16:49
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: XU*8*609
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #499                      Status: Released
+                  Compliance Date: JUL 11, 2013
+=============================================================================
+
+
+Subject: EPCS BLANK XDATE CHECK TO $$DEA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is in support of the Drug Enforcement Agency (DEA) e-Prescribing of
+ Controlled Substances (CS) (ePCS) using Public Key Infrastructure (PKI).
+ 
+ The Computerized Patient Record System (CPRS) Graphical User Interface 
+ (GUI) v29 is an enhancement release with modifications for the Drug
+ Enforcement Agency (DEA) electronic prescribing (ePCS) of controlled
+ substances, Problem List changes for the use of SNOMED CT codes, and the
+ display of Mental Health Treatment Coordinator information entered through
+ the Primary Care Management Module. In addition to these enhancements,
+ software changes are being made to correct several Patient Safety Issues
+ (PSIs), Section 508 issues, and additional miscellaneous defect fixes.
+ CPRS GUI v29 consists of several host files, an updated CPRS GUI and 
+ several Help files, too many to list (which will be located in a single 
+ directory name HELP):
+ 
+ HDI_1_11.KID which contains the HDI*1*11 patch
+ PSS_1_166.KID which contains the PSS*1*166 patch
+ CPRSV29_PSO_PSD.KID which contains the PSO*7*391 and PSD*3*73 patches
+ OR_GMPL_GMTS_XU_29.KID which contains the XU*8*609, GMPL*2*36, GMTS*27*86
+ and OR*3*306 patches 
+ CPRSChart.exe 
+ OR_30_371.KID which contains the OR*3*371 patch
+ PSO_7_426.KID which contains the PSO*7*426 patch
+   
+ The host files were created to simplify installation and control the 
+ phased implementation of CPRS v29 at the Veterans Health Administration
+ (VHA) facilities. To see the current status and target dates for
+ Sites/VISN/Regions please refer to the following site:
+   
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms/AllItems.aspx
+ 
+ Click on the CPRS GUI v29 Deployment Schedule folder. Then open the
+ document "CPRS GUI v29 Deployment Schedule.xslx".
+   
+ Patch Information:
+ ==================
+ HDI*1*11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+   
+ PSS*1*166, PSD*3*73 and PSO*7*391 support the DEA ePCS functionality.
+   
+ GMPL*2*36 is an extension to accommodate SNOMED-CT
+ GMTS*2.7*86 supports the Problem List Standardization
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+  and enhanced the Primary Care button by adding the Mental Health 
+  Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+  "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+  this bulletin will be delivered to the OR CACS Mail Group. It may be 
+  configured to be delivered to separate local mail groups for each Medical 
+  Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+  The bulletin informs its recipients that a new NTRT Request has been 
+  initiated by a Clinician at their facility.
+   
+ OR*3*371 includes support for CPRS v29 - ePCS and encounters.
+   
+ PSO*7*426 ePCS Support
+ 
+ 
+ ***************************************************************
+ Modifications:
+ This patch will edit the code in the $$DEA() API in the XUSER routine. 
+ If the expiration date is unpopulated, it will be considered the DEA number as
+ expired.  And, if providers are of type Fee Basis or C&A, it will ONLY return
+ DEA# or null.
+ 
+ ***************************************************************   
+ 
+ 
+ Documentation Changes
+ ===================== 
+ The most up-to-date Kernel/Kernel Toolkit end-user documentation is available
+ on the VHA Software Document Library (VDL) at the following Internet Website:
+ http://www.va.gov/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word format
+ (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The Kernel/Kernel Toolkit APIs are also available in HTML format at the
+ following Intranet Website:
+ http://vaww.vista.med.va.gov/kernel/apis/index.shtml
+  
+ 
+ Remedy Tickets
+ ==============
+ 749290
+ 
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*609 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+ Patches for Effects on VISTA Blood Bank Software. This patch does not alter or
+ modify any VistA Blood Bank software design safeguards or safety critical
+ elements functions.
+ 
+ RISK ANALYSIS: Changes made by patch XWB*1.1*609 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ Thanks to Test Sites
+ ====================
+ Charleston
+ Cleveland
+ Heartland-East
+ Heartland-West
+ Hines
+ Loma Linda
+ Palo Alto
+ San Diego
+ Tampa
+ 
+ 
+ 
+ Installation Instructions:
+ =========================
+ 1. Users ARE allowed to be on the system during the installation. 
+    However, it is recommended that the patch be installed during
+    non-peak time. It will take about two minutes to install the
+    patch, but you may queue the installation if you wish.
+ 
+ 2. You DO NOT need to stop TaskMan or the background filers.
+   
+ 3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+    option will load the KIDS package onto your system.
+   
+ 4. The patch has now been loaded into a Transport global on your system. 
+    You now need to use KIDS to install the Transport global. On the KIDS
+    menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME: XU*8.0*609
+                                       ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//             
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSER
+    Before: B47045111   After: B48065845  **75,97,99,150,226,267,288,330,
+                                           370,373,580,609**
+ 
+Routine list of preceding patches: 580
+
+=============================================================================
+User Information:
+Entered By  : MENDOZA,RAUL E.               Date Entered  : AUG 28, 2012
+Completed By: BEST,LISA                     Date Completed: MAY 30, 2013
+Released By : TILLIS,LEWIS                  Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

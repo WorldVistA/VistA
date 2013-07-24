@@ -1,0 +1,468 @@
+$TXT Created by NABER,DAVID at DEVVJJ.FO-ALBANY.MED.VA.GOV  (KIDS) on Monday, 03/25/13 at 15:20
+=============================================================================
+Run Date: JUN 17, 2013                     Designation: EC*2*119
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #112                      Status: Released
+                  Compliance Date: JUL 18, 2013
+=============================================================================
+
+Associated patches: (v)EC*2*69         install with patch       `EC*2*119'
+                    (v)EC*2*108    <<= must be installed BEFORE `EC*2*119'
+                    (v)EC*2*112    <<= must be installed BEFORE `EC*2*119'
+
+Subject: Event Capture FY13 Updates
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Decision Support System (DSS) Program office requests modifications to
+ the Event Capture System that would provide the field with improved data
+ entry capabilities so that accurate costing information can be gathered
+ nationally.  This patch contains the modifications for Fiscal Year 2013.
+  
+ Functional Overview
+ ===================
+  
+ 1) Remove Procedure Reason data entry from Event Code Screen setup.  
+  
+    Reasons and event code screens are no longer linked together.  When
+    entering data, all reasons will be available for selection if the event
+    code screen allows reasons.  When setting up event code screens, users
+    no longer need to identify specific reasons to be associated with
+    the event code screen.
+  
+ 2) Create menu option on management menu for entering values into the
+    Procedure Reason file.
+  
+    For holders of the ECMGR key, there will be a new option called Reasons
+    on the management menu.  This option will allow you to add new reasons
+    as well as activate and inactivate existing reasons.
+  
+ 3) Modify reason selection to allow for entry by letter.
+  
+    On data entry screens where reasons can be entered, the user may now
+    select reasons by entering the starting letter or letters of the 
+    reason they'd like to select.  For example, if the reason list 
+    contains 3 reasons that start with the letter K, you may enter K in the
+    reason field to get to the first entry that starts with K.  For each
+    additional letter typed, the list will automatically take you to the
+    first matching entry.  This functionality is in addition to the
+    existing selection functionality using the down chevron.
+  
+ 4) On dual monitor setups, screens open up across both monitors.
+  
+    Code has been changed so that when a user has dual monitors, new
+    screens open up on the main monitor.
+  
+ 5) Modify "now" and "midnight" buttons to return hours and minutes only.
+  
+    Code has been changed so that when a user hits the "now" or "midnight"
+    button when entering time related data, only the hours and minutes are
+    returned.  Seconds are dropped from the time selection as this was
+    causing issues when linking to scheduled appointments.
+  
+ 6) Correct inactive default associated clinic in event code screen setup.
+  
+    This change was previously added for users doing data entry but was 
+    not correctly applied during event code screen setup on the management
+    menu.  Code has been updated so that if an event code screen has an
+    inactive default clinic, the default associated clinic will be deleted
+    and the user will receive a warning indicating that the default
+    associated clinic is inactive and that they must either leave 
+    the field blank or select another clinic.
+  
+ 7) Add ability to copy event code screens to a DSS unit.
+  
+    Managers will now have an option to copy event code screens from an
+    existing DSS unit to another DSS unit.  Users may copy one, some, or 
+    all of the screens and may change certain fields during the copy 
+    process.  The screens are to be copied one at a time, to assist with 
+    accuracy.
+  
+    During the coding of this requirement, it was discovered that lowercase
+    letters are allowed in DSS unit names. Use of lowercase letters causes
+    problems with retrieval and editing later and should not be allowed.
+    Lowercase letters are no longer allowed and a post-install routine
+    will review existing entries and convert them to uppercase where
+    possible.  The installer of the patch will receive an email upon
+    completion of the post-install identifying all entries that were
+    updated, along with any entries that couldn't be updated due to
+    creation of a duplicate.  For entries not automatically converted, the
+    site will need to update those entries to all uppercase manually.
+  
+ 8) Make all ECS reports exportable to Excel.
+  
+    All reports on the reports menu can now be exported to Excel.
+  
+ The following defects are also addressed in this patch.
+  
+ 1) When using the 'Data Entry by Procedure' option, for multiple 
+    diagnoses with multiple patients in batch entry, a patient would be
+    assigned an incorrect diagnosis.
+  
+    Problem:
+    --------
+    The 'Diagnosis' field is saving the same diagnosis for multiple
+    patients when they actually have different diagnoses.  When a second
+    encounter is added for a patient, the original diagnosis populates. If
+    the user does not click in the field, the diagnosis is not saved.
+  
+    Resolution:
+    -----------
+    Modified 'UfrmEditProcPatients2.pas' to correctly save a default 
+    diagnosis without user interaction.
+  
+ 2) The 'Data Entry by Patient' "Add" button will not work for users 
+    with only 1 Decision Support Systems (DSS) Unit, when launching Event
+    Capture via Computerized Patient Record System (CPRS).
+  
+    Problem:
+    --------
+    When Event Capture is launched via CPRS and the user only has 1 DSS 
+    unit assigned, the "Add" button will not properly initialize unless the
+    "DSS Unit" dropdown is clicked.
+  
+    Resolution:
+    -----------
+    The file 'UfrmPatientProcDE.pas' has been modified to properly 
+    initialize the "Add" button when Event Capture is launched via CPRS.
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ Remedy Ticket #464081 and duplicate ticket #622913 - Batch entry 
+ diagnoses on first entry then converts to all patients in the batch.
+  
+ Remedy Ticket #498189 and duplicate tickets #499418 and #502928 - event 
+ capture interface after patch 109.
+  
+ Remedy Ticket #614541 - Cannot assign default clinic.
+  
+ Remedy Ticket #624690 and duplicate ticket #624861 -Inactive default 
+ associated clinics can cause problems on the management data entry 
+ screens. Default Associated Clinic changing to the next active clinic,
+ alphabetically.
+  
+  
+ Components Sent With Patch
+ ==========================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ File Name (Number)           Field Name (Number)      New/Modified/Deleted
+ --------------------------------------------------------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+  
+ Form Name                       File #            New/Modified/Deleted
+ ----------------------------------------------------------------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+  
+ Mail Group Name                    New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+  
+ Options
+ -------
+ EC GUI CONTEXT
+  
+ Protocols Associated:
+ ---------------------
+  
+ Protocol Name                      New/Modified/Deleted
+ -------------------------------------------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+  
+ Security Key
+ ------------
+ N/A
+  
+ Help Frames
+ -----------
+ ECREASON - New
+ EC SCREEN COPY - New
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+ The following sites participated in the testing of the EC*2.0*119
+ software.
+  
+ Test Sites
+ ================
+ Northern Indiana
+ Louisville
+ Albuquerque
+ Battle Creek
+  
+ Software and Documentation Retrieval
+ ====================================
+  
+ The VistA server software for this patch is being distributed through 
+ the National Patch Module (NPM).
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable.  The installed executable for
+ this patch is client version 2.1.3.5.
+  
+ The GUI client software and documentation for this patch
+ may be retrieved directly using FTP from the ANONYMOUS.SOFTWARE  directory
+ at the following Office of Information (OI) Field Offices:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   ------------       ------------------------     ------------------
+   First available    download.vista.med.va.gov    anonymous.software
+   Albany             ftp.fo-albany.med.va.gov     anonymous.software
+   Hines              ftp.fo-hines.med.va.gov      anonymous.software
+   Salt Lake City     ftp.fo-slc.med.va.gov        anonymous.software
+  
+ The following files will be available:
+  
+     File Name           Format        Description
+     ---------           ------        -----------
+     EC_2_P119.ZIP       BINARY        EC GUI client installer zip file
+  
+ The Technical and User Manuals as well as the Installation Guide and 
+ Release Notes can be obtained via FTP from the following
+ ANONYMOUS.SOFTWARE directories:
+  
+        OI Field Office                  FTP Address
+        ---------------                  ------------------------
+        Albany                           ftp.fo-albany.med.va.gov
+        Hines                            ftp.fo-hines.med.va.gov
+        Salt Lake City                   ftp.fo-slc.med.va.gov
+   
+        File Name           Description
+        ----------------    ----------------------------------------
+        EC_2_P119_IG.DOC    Installation Guide for ECS FY13 Enhancements
+        EC_2_P119_UM.DOC    Updated Event Capture User Manual 
+        EC_2_P119_TM.DOC    Technical Manual for ECS FY13 Enhancements
+        EC_2_P119_RN.DOC    Release Notes for ECS FY13 Enhancements
+  
+ The VistA Documentation Library [VDL] web site will contain the
+ updated 'Event Capture User Manual', 'Event Capture Release Notes', 
+ 'Event Capture Installation Guide' and 'Event Capture Technical Manual'.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+ The VDL address is http://www.va.gov/vdl/application.asp?appid=39.
+  
+ Installation Instructions
+ ========================= 
+  
+ ********************* IMPORTANT NOTE ***************************
+ This patch updates the software version number of both the VistA
+ server software and the Event Capture client GUI to version 2.1.3.5
+ GUI client versions prior to version 2.1.3.5 are not compatible with 
+ the VistA server software for this patch.  Therefore, it is crucial
+ that the Event Capture client GUI distributed with this patch be
+ installed immediately following the VistA server software install
+ to minimize service disruption to the Event Capture System users.
+  
+ Pre-Installation Items:
+ =======================
+  
+ * Environment Check:
+      
+   Programmer access is required for installing this patch.
+  
+   ** NOTE ** -- Prior to installation, the installer must ensure the  
+                 DUZ(0) node of the DUZ array is set to the "@" symbol.
+   
+ * Users On the System:
+    
+   This patch modifies routines used by the Event Capture application and
+   may affect many users.
+  
+   This patch may be installed with users on the system, but should be
+   loaded during non-peak hours to minimize disruption to users and to
+   reduce the possibility of errors when the routines are updated.
+  
+   If installed during the normal workday, it is recommended that the
+   following selection(s) in the OPTION (#19) file, and all of their
+   descendants be disabled to prevent possible conflicts while running
+   the KIDS Install. Other VISTA users will not be affected.
+  
+         EC GUI Context version 2.1.3.4   ... EC GUI CONTEXT
+    
+ * Software Installation Time:
+  
+   The estimated installation time is less than 5 minutes during off peak
+   hours.
+  
+ * Required Builds:
+    
+   The following is a list of REQUIRED builds for this KIDS
+   distribution.  KIDS will not allow the installation of this patch
+   without their prior installation.
+  
+   Required Build(s):
+   ------------------
+   EC*2*112
+   EC*2*108
+   EC*2*69
+  
+ Post-Install Items:
+ ===================
+  
+ **PLEASE NOTE**
+ A post-install routine will run that will check to see if there are any
+ DSS unit names that contain lowercase letters.  If any are found, they 
+ will be converted to all uppercase as long as this conversion doesn't 
+ create a duplicate entry.  Upon completion of the post-install an email 
+ message will be sent to the installer indicating any DSS units that were 
+ updated as well as any that were not updated due to the creation of a 
+ duplicate entry.  If any entries could not be updated, the site will have 
+ to manually fix those entries.
+  
+ Installation Steps:
+ ===================
+   
+   1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options
+       (when prompted for INSTALL NAME, enter EC*2.0*119):
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+   4.  Use the Install Package(s) option and select the package EC*2.0*119.
+  
+   5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//'  Answer YES unless your system does this in a
+       nightly TaskMan process.
+  
+   6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//' answer NO.
+  
+   7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//' answer YES.
+     
+   8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+       Enter the following options:
+      
+       EC GUI Context version 2.1.3.4   ... EC GUI CONTEXT
+  
+   9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+       Order':' press <enter>.
+  
+  10.  Install the Event Capture GUI client software following the
+       instructions of the EC GUI Installation Guide found on the VistA
+       Documentation Library (VDL) at the following link:
+       http://www.va.gov/vdl/application.asp?appid=39
+  
+  11.  The Event Capture GUI executable file "ECS GUI.exe", that
+       is unbundled after running the install in step #10, may be
+       copied to another machine without additional supporting files.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P119
+    Before:       n/a   After: B15753102  **119**
+Routine Name: ECDSS1
+    Before: B15692712   After: B26567205  **4,25,95,119**
+Routine Name: ECDSS3
+    Before:  B4631829   After:  B7309130  **25,95,119**
+Routine Name: ECEFPAT
+    Before: B59874823   After: B71296249  **25,32,39,42,47,49,54,65,72,
+                                           95,76,112,119**
+Routine Name: ECINCPT
+    Before:  B3068405   After:  B4337598  **72,119**
+Routine Name: ECKILL
+    Before: B12351832   After: B13025684  **4,5,10,17,18,23,42,54,65,76,
+                                           100,119**
+Routine Name: ECMFECS
+    Before: B43702074   After: B43787476  **25,33,47,55,65,95,100,119**
+Routine Name: ECNTPCE
+    Before: B20426279   After: B28957760  **61,72,119**
+Routine Name: ECOSSUM
+    Before: B64825146   After: B96916049  **5,8,18,47,72,95,119**
+Routine Name: ECPAT
+    Before: B34100564   After: B47879400  **5,18,47,72,95,112,119**
+Routine Name: ECPCER
+    Before: B20555015   After: B32347801  **4,18,23,47,72,95,119**
+Routine Name: ECPROV2
+    Before:  B4114212   After:  B4427549  **5,47,69,119**
+Routine Name: ECPROV3
+    Before: B40301318   After: B73930927  **5,8,18,29,47,56,63,72,95,112,119**
+Routine Name: ECPRSUM1
+    Before: B30118950   After: B45928925  **5,18,33,47,62,63,61,72,88,
+                                           95,112,119**
+Routine Name: ECRDSSA
+    Before:B103256712   After:B116122411  **95,104,112,119**
+Routine Name: ECRDSSU
+    Before: B52276776   After: B52878746  **5,8,10,14,18,47,63,72,95,119**
+Routine Name: ECRDSSU2
+    Before:       n/a   After: B24221820  **119**
+Routine Name: ECRPCLS
+    Before: B51723587   After: B64728262  **5,47,119**
+Routine Name: ECRRPT
+    Before: B55454344   After: B57156527  **25,32,41,56,61,82,94,95,108,119**
+Routine Name: ECRRPT1
+    Before: B61256749   After: B64773176  **25,32,33,61,78,72,90,95,100,
+                                           107,112,119**
+Routine Name: ECSCPT
+    Before: B11029333   After: B12785074  **72,92,95,119**
+Routine Name: ECSCPT1
+    Before:  B9008177   After: B11623947  **72,95,119**
+Routine Name: ECSUM
+    Before: B13051883   After: B13236696  **4,19,33,47,95,119**
+Routine Name: ECSUM1
+    Before: B12652997   After: B19398599  **4,19,23,33,47,95,100,119**
+Routine Name: ECUNTRPT
+    Before:  B6471767   After:  B8713813  **107,119**
+ 
+Routine list of preceding patches: 69, 108, 112
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : SEP 13, 2012
+Completed By: HENDERSON,JOHN                Date Completed: JUN 13, 2013
+Released By : MORRIS,THERESA                Date Released : JUN 17, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

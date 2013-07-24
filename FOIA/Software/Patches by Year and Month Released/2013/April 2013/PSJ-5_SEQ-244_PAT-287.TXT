@@ -1,0 +1,147 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.MED.VA.GOV  (KIDS) on Tuesday, 10/16/12 at 15:13
+=============================================================================
+Run Date: APR 15, 2013                     Designation: PSJ*5*287
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #244                      Status: Released
+                  Compliance Date: MAY 15, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*258   <<= must be installed BEFORE `PSJ*5*287'
+                    (v)PSJ*5*269   <<= must be installed BEFORE `PSJ*5*287'
+
+Subject: FIX INFINITE LOOP FOR ADMIN TIMES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. Users can get stuck in an infinite loop when editing Admin Time of a 
+    Unit Dose order.
+  
+ 2. When attempting to renew an IV order with an invalid schedule name,
+    The user doesn't get the error message until after the order checks 
+    are performed.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000739304 - ADMIN TIMES field echoes back in infinite loop
+  
+ 2. HD0000000624441 - Patch OR*3.0*327 - Invalid/Changed schedule - IMO 
+                      Clinic Orders Excluded
+  
+  
+ Participating Test Sites:
+ ========================
+ Durham VAMC
+ Oklahoma City VAMC
+ Upstate NY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. HD0000000739304
+  
+    Problem:
+    -------
+    When creating a new Unit Dose order in Inpatient Order Entry [PSJ OE],
+    before accepting the order, if the user edits the order and enters
+    "8,9" to edit the Schedule followed by the Admin Times, they will be
+    caught in an infinite loop and the edit cannot be completed.
+  
+    Solution:
+    --------
+    Changed PSGOE8 so the infinite loop no longer occurs.
+  
+  
+ 2. HD0000000624441
+  
+    Problem:
+    -------
+    When attempting to renew an IV order in Inpatient Order Entry [PSJ OE] 
+    with an invalid schedule name, the user is only presented with a 
+    warning message after the order checks have been performed.  This is 
+    inconsistent with the Unit Dose case, where a warning is displayed 
+    immediately.
+  
+    Solution:
+    --------
+    Changed PSIVOPT2 so that a warning message displays immediately as with
+    Unit Dose orders.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5*287)
+   
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view
+        the components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*287.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOE8
+    Before: B48117152   After: B48942874  **47,50,65,72,110,111,188,192,
+                                           113,223,269,287**
+Routine Name: PSIVOPT2
+    Before: B36639315   After: B38451894  **23,29,58,110,127,133,135,157,
+                                           181,258,287**
+ 
+Routine list of preceding patches: 258, 269
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : OCT 16, 2012
+Completed By: WERNER,GARY                   Date Completed: APR 04, 2013
+Released By : MIAN,NAEEM                    Date Released : APR 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

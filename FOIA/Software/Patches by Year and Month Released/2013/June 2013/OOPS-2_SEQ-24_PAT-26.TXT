@@ -1,0 +1,124 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 05/02/13 at 12:13
+=============================================================================
+Run Date: JUN 24, 2013                     Designation: OOPS*2*26
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #24                      Status: Released
+                  Compliance Date: JUL 25, 2013
+=============================================================================
+
+
+Subject: OWCP CHARGEBACK CODE update
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates the ASISTS OWCP CHARGEBACK CODES file (#2263.6) with
+ one new entry. 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000831626 - ASISTS - Other:
+   
+ Participating Test Sites:
+ =========================
+ South Texas HCS
+ New York Harbor
+ Salisbury, NC.
+ Black Hills HCS
+   
+ Remedy Overview:
+ ================
+ INC000000831626 - ASISTS - Other:
+   
+ Problem: 
+ --------
+ A new Office of Workers Compensation Programs (OWCP) Chargeback codes is
+ needed for "Texas Valley Coastal Bend" as required by Department of Labor
+ (DOL) for the submission of a CA1/CA2 claims (see File Update below).
+  
+ Resolution:
+ -----------
+ Post-init routine OOPS2P26 will update the ASISTS OWCP CHARGEBACK CODES 
+ file (#2263.6) with the necessary code.
+  
+ File Update:
+ ------------
+  
+ Code #   Station Name                Station#      Region#   VA Org.
+ ------   ------------                --------      -------   -------
+ 4303     Texas Valley Coastal Bend   740           17        VHA
+   
+      =================== INSTALLATION INSTRUCTIONS ===================
+ It is not necessary to disable any options.  You may install these
+ routines at any time without interruption to users.  It should take less
+ than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*26)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+  
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+  
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+  
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package OOPS*2.0*26.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+    7. You may delete the routine OOPS2P26 from your production system 
+       after the patch has been successfully installed.
+  
+ *** During installation the status the CHARGEBACK CODE update is
+     displayed. Please review and verify the code was added successfully. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPS2P26
+    Before:       n/a   After:  B4083768  **26**
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : APR 18, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: JUN 18, 2013
+Released By : CARTER,LYNN                   Date Released : JUN 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

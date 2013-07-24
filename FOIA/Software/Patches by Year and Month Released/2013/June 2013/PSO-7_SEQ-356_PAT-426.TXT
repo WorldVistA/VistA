@@ -1,0 +1,255 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: PSO*7*426
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #356                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*391   <<= must be installed BEFORE `PSO*7*426'
+
+Subject: DEA E-PRESCRIBING FOR CS (CPRS V29)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Computerized Patient Record System (CPRS) v29 is an enhancement release 
+ with modifications for the Drug Enforcement Agency (DEA) electronic
+ prescribing (ePCS) of controlled substances, Problem List changes for the
+ use of SNOMED CT codes, and the display of Mental Health Treatment
+ Coordinator (MHTC) information entered through the Primary Care Management
+ Module. In addition to these enhancements, software changes are being made
+ to correct several PSIs, Section 508 issues, and additional miscellaneous
+ defect fixes.
+  
+ CPRS GUI version 29 consists of several host files, updated CPRS GUI and 
+ several Help files; too many to list (which will be located in a single 
+ directory named HELP):
+ HDI_1_11.KID           CONTAINS HDI*1*11 PATCH 
+ PSS_1_166.KID          CONTAINS PSS*1*166 PATCH
+ CPRSV29_PSO_PSD.KID    CONTAINS PSO*7*391 AND PSD*3*73 PATCHES
+ OR_GMPL_GMTS_XU_29.KID CONTAINS XU*8*609, GMPL*2*36, GMTS*2.7*86 AND 
+                                 OR*3.0*306 PATCHES
+ CPRSChart.exe
+ OR_30_371.KID          CONTAINS OR*3.0*371 PATCH
+ PSO_7_426.KID          CONTAINS PSO*7*426 PATCH
+  
+ The host files were created to simplify installation and also to control
+ the phased implementation of CPRS V29 at the Veterans Health
+ Administration (VHA) facilities. To see the current status and
+ target dates for Sites/VISN/Regions, please refer to the following site:
+  
+ http://go.usa.gov/TfvW
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch information:
+ HDI_1_11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSO*7*391, PSD*3*73 and PSO*7*426 supports the DEA ePCS
+ functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT.
+ GMTS*2.7*86 supports the Problem List Standardization.
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhances the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+  
+ OR_30_371 includes support for CPRS v.29.
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306_IG.doc and OR_30_306_IG.pdf and is included in OR_30_306.ZIP.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+  
+ The following issue has been fixed in this patch (PSO*7*426):
+  
+ Hines reported that when finishing a complex pending order if 'month' is
+ part of duration then the order is discontinued due to hash mismatch. This
+ is due to pharmacy storing 'month' as "L" and CPRS storing as "M". This
+ patch resolves this problem by tweaking the hash check code to represent
+ "L" as "M" when "L" is found in the duration field.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)                      Field Name (#)             New/Mod/Del
+ -------------                      --------------             -----------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #                New/Mod/Del
+ ---------             ------                -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                   New/Mod/Del
+ ---------------                   -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Mod/Del
+ -----------                    ----             -----------
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Mod/Del
+ -------------                     -----------
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name          Type      File Name (#)                 New/Mod/Del
+ -------------          ----      ------------------            -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ HEARTLAND-WAST HCS
+ HINES, IL
+ LOMA LINDA, CA
+ PALO ALTO HCS
+ SAN DIEGO, CA
+ TAMPA, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A 
+                                                                                                                                                                                                                                                               
+
+ 
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ N/A 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ PSO_7_426.KID file was created to simplify installation at Veterans Health
+ Administration (VHA) facilities and to assist in the phased implementation
+ release method for CPRS GUI v29.
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation. During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSO_7_426.KID                  PSO*7*426             ASCII
+                                   
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch when Outpatient orders (Controlled 
+ Substances) are being entered and signed through Computerized Patient
+ Record System. Installation will take no longer than 2 minutes.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1. Download PSO_7_426.KID into your local directory.
+  
+ 2. From the Kernel Installation & Distribution System (KIDS) menu, select
+    the Installation menu.
+  
+ 3. Select the Load a Distribution and enter the directory that you FTP'ed
+    the host file to and PSO_7_426.KID.  Example:
+    USER$:[ABC]PSO_7_426.KID
+  
+ 4. From the Kernel Installation & Distribution System (KIDS) menu, you may
+    select to use the following options (when prompted for INSTALL NAME,
+    enter PSO*7.0*426
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5. Use the Install Package(s) option and select the package 
+    PSO*7.0*426.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOPKIV1
+    Before: B98820890   After: B99524853  **131,146,223,148,249,391,426**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : APR 23, 2013
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 05, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

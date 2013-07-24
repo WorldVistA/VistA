@@ -1,0 +1,152 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Thursday, 09/27/12 at 11:26
+=============================================================================
+Run Date: APR 22, 2013                     Designation: PSJ*5*228
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #245                      Status: Released
+                  Compliance Date: MAY 23, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*228'
+
+Subject: Dispense Drug not highlighting when more than one drug added
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following items in the INPATIENT MEDICATIONS 
+ package:
+  
+ 1. Dispense Drug with multiple lines is not being highlighted.
+  
+ 2. Print alignment problem for IV orders in Inpatient Order Entry 
+    [PSJ OE].
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. INC000000378642 - Dispense Drug not highlighting when more than one
+                      drug added
+  
+ 2. INC000000372130 - Display issue for an IV Solution Order
+  
+    Duplicate:
+    ----------
+    INC000000456934 
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Central Texas HCS
+ Oklahoma City VAMC
+ Upstate NY HCS
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. INC000000378642:
+  
+    Problem:
+    -------
+    When editing an active Unit Dose order in PSJ OE [Inpatient Order
+    Entry], if the Dispense Drug times (*) the Units per Dose does not
+    equal the original dosage, the system will highlight field 2 (Dosage)
+    and field 12 (Dispense Drug).  However, if there is more than one
+    Dispense Drug, then field 12 (Dispense Drug) will not be highlighted.
+  
+    Resolution:
+    ----------
+    Changed the routine PSJLMUDE to highlight the proper lines if there is
+    more than one Dispense Drug.
+  
+  
+ 2. INC000000372130:
+  
+    Problem:
+    -------
+    In PSJ OE [Inpatient Order Entry], if the user enters an IV order with
+    an Infusion Rate which ends with "@0", the SCHEDULE field will be blank
+    instead of displaying the text "@0 labels a day", and the NEXT FILL
+    field will display "els a day ********" instead of the expected
+    "********".
+  
+    Resolution:
+    ----------
+    Changed the routine PSJLIVFD so that the phrase "@0 labels a day" is 
+    properly aligned to the left instead of printing too far to the right.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5.0*228)
+   
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch 
+        is installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*228.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJLIVFD
+    Before: B54237436   After: B54218075  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267,
+                                           228**
+Routine Name: PSJLMUDE
+    Before: B65175235   After: B66391198  **7,47,50,63,64,58,80,116,110,
+                                           111,164,175,201,181,254,267,
+                                           228**
+ 
+Routine list of preceding patches: 267
+
+=============================================================================
+User Information:
+Entered By  : DANG,CHAU                     Date Entered  : JUL 10, 2009
+Completed By: WERNER,GARY                   Date Completed: APR 04, 2013
+Released By : TEAGUE,LYN                    Date Released : APR 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

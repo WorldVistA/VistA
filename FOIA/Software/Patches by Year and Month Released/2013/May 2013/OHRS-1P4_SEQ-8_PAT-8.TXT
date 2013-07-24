@@ -1,0 +1,147 @@
+*****************************************************************
+=============================================================================
+Run Date: MAY 07, 2013                     Designation: OHRS*1.4*8
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4         SEQ #8                    Status: Released
+                  Compliance Date: JUN 07, 2013
+=============================================================================
+
+
+Subject: CISS-OHRS 1.4.8 Maintenance Updates
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ *****************************************************************
+   This is to announce the updates to the CISS-OHRS web application
+   version 1.4.8 will be rolled out nationally on May 10, 2013
+    
+ *****************************************************************
+    
+ RELEASE INFORMATION:
+ ====================
+  This is an informational release notice only. 
+   
+ BLOOD BANK CLEARANCE
+ ====================
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: OHRS*1.4*8
+  does not alter or modify any VistA Blood Bank software design
+  safeguards or safety critical elements functions.
+  
+  RISK ANALYSIS: Changes made by patch OHRS*1.4*8 have no effect on Blood
+  Bank software functionality, therefore RISK is none.
+   
+ SOFTWARE CHANGES:
+ ================
+  1. CCR3050 - An application error was being displayed when a user 
+               attempted to save or sign a medical surveillance, adverse
+               reaction, fit test or pandemic influenza encounter.
+               Remedy Tickets:INC000000820952, INC000000820941,
+               INC000000821367,INC000000821496,INC000000821579,
+               INC000000822038,INC000000825001,INC000000807879
+  
+  2. CCR2953 - On a Measles, Mumps and Rubella (MMR)
+               encounter, the immunity
+               status was not being updated to immune by titer for measles 
+               and rubella when a positive titer has a titer performed date
+               on or before the vaccination administration date or vaccine
+               previously received date, therefore the disease immunity  
+               table on the print cumulative vaccination record was not 
+               displaying measles and rubella as immune by titer.
+               Remedy ticket: INC000000733716
+   
+  3. CCR3062 - The ID3: Vaccination Status Report was not displaying the 
+               date of decision for seasonal flu vaccines that had been
+               declined by the patient. When a patient signs a declination
+               statement, the date of decision column on the report should
+               display the date that the declination was signed. 
+               Remedy Ticket: INC000000832594
+   
+  4. CCR3061 - When an encounter is assigned to a cosigner, the designated
+               cosigner was not receiving the alerts on the alerts screen
+               and existing cosign alerts were not being removed from 
+               the alerts list when the cosigner has cosigned the 
+               encounter. Remedy Ticket: INC000000830741
+  
+ 5. CCR2983 - Once a user is granted access to OHRS, the access should
+              remain active for 90 days even if the user does not log in
+              to the system immediately.
+  
+ SYSTEM REQUIREMENTS:
+ ======================
+  n/a
+   
+ SOFTWARE RETRIEVAL:
+ =====================
+  n/a
+   
+ REMEDY TICKET(S) and OVERVIEW:
+ ==============================             
+  INC000000820952 - An application error was being displayed when a user
+  INC000000820941   attempted to save or sign a medical surveillance
+  INC000000821367   adverse reaction, fit test or pandemic influenza
+  INC000000821496   encounter.
+  INC000000821579             
+  INC000000822038
+  INC000000825001
+  INC000000807819
+    
+  INC000000733716 - On a Measles, Mumps and Rubella (MMR) encounter, the
+                    immunity status was not being updated to immune by 
+                    titer for measles and rubella when a positive titer has
+                    a titer performed date on or before the vaccination 
+                    administration date or the vaccine previously received 
+                    date, therefore the disease immunity table on the print
+                    cumulative vaccination record was not displaying 
+                    measles and rubella as immune by titer.
+                   
+   
+  INC000000832594 - The ID3: Vaccination status report was not displaying 
+                    the date of decision for seasonal flu vaccines that
+                    had been declined by a patient. When a patient signs a
+                    declination statement, the date of decision column on 
+                    the report should display the date that the declination
+                    was signed.
+  
+  INC000000830741 - When an encounter is assigned to a cosigner, the 
+                    designated cosignee was not receiving the alerts
+                    on the alerts screen and existing cosign alerts
+                    were not being removed from the alerts list when
+                    when the cosigner has cosigned the encounter.
+  
+ TEST SITES:
+ ====================== 
+  Philadelphia VAMC, PA
+  Amarillo VAMC, TX
+  Montgomery VAMC, AL
+  Tucson VAMC, AZ
+  
+ DOCUMENTATION:
+ ======================
+  The User Guide is available on VA Documentation Library (VDL) at:
+  http://www.va.gov/vdl/ in the HealtheVet section.
+  
+ ADDITIONAL INFORMATION:
+ =======================
+  If you have any questions concerning the implementation of this 
+  application, please contact the VA Service Desk at 1-888-596-4357
+  or log a Remedy Ticket via Remedy for CISS-OHRS
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,SHAWNTA                 Date Entered  : MAR 30, 2013
+Completed By: KAUR,RENE                     Date Completed: MAY 07, 2013
+Released By : MOODY,SUSAN                   Date Released : MAY 07, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

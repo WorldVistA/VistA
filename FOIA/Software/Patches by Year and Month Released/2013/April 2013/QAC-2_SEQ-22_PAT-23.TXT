@@ -1,0 +1,189 @@
+
+=============================================================================
+Run Date: APR 29, 2013                     Designation: QAC*2*23
+Package : QAC - PATIENT REPRESENTATIVE        Priority: Mandatory
+Version : 2        SEQ #22                      Status: Released
+                  Compliance Date: MAY 20, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*451    <<= must be installed BEFORE `QAC*2*23'
+                    (v)QAC*2*21    <<= must be installed BEFORE `QAC*2*23'
+
+Subject: PATS 1.1.0 -IRIS API, Maint Fixes: Timeout,Notif,ROC Dates,SDS,KAAJ,Oracle Upgr
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient Advocate Tracking System (PATS) is a web-based system used to 
+ document, track, and report patient-related issues. PATS replaces the 
+ legacy Patient Representative (Patient Rep) system. 
+  
+ This patch introduces updates to the web component and database (Oracle 
+ 11g).
+  
+ The updates include:
+  
+ 1. Introduction of KAAJEE 1.0.1 (upgrade)
+ 2. SDS version upgrade to 18.
+ 3. Remedy 344975 - Erroneously handled JSPs
+ 4. Remedy 327260, 284833,422092 - Notification employee lookup problem
+ 5. Remedy 284100 - Application error during ROC entry
+ 6. Remedy 316775, 210322, 213510 - Application timeout redesign
+ 7. IRIS application interface based on SOAP protocol, PAD API, db updates
+  
+ Test Sites:
+ ===========
+  
+ Central Iowa Healthcare System - 636A6
+ Chalmers P.Wylie Ambulatory Care Center (Columbus, Ohio) - 757
+ Michael E. DeBakey VA Medical Center (Houston, Texas) - 580
+ Bay Pines VA Healthcare System - 516
+ San Diego VA Healthcare System - 664
+  
+ Detailed description:
+ =====================
+  
+ PAD API
+  
+ TO interface PATS with IRIS application, a new API was introduced, called 
+ PAD. This API will handle the dialog with IRIS, create the ROC
+ automatically. It will then send the new ROC number back to IRIS for
+ insertion into the IRIS inquiry for tracking purposes.
+ Pt. Advocates at the VAMC/CBOC will see this ROC, with Information 
+ Taker 'IRIS,SYSTEM', in their PATS LIST-OF-OPEN-ROCs.
+ A TREATMENT STATUS of 'Undetermined - IRIS' will be used in ROCs where 
+ no unique patient was found to auto-insert to the ROC
+  
+  
+  
+ KAAJEE 1.0.1
+  
+ For login process PATS application utilizes KAAJEE login screen which 
+ provides secure signon architecture. PATS is able to authenticate against 
+ Kernel on the VistA M Server via an Internet Browser on the client 
+ workstation and a middle tier application server. Currently PATS is using 
+ version 1.0.0.019 version of Kaajee. PATS needs to upgrade the latest 
+ version (1.0.1.003) of Kaajee to integrate the new login page with the 
+ following features:
+  
+        KAAJEE Login Page-Removal of Refresh Button. 
+        Enhanced Login Functionality:
+        Added JavaScript code for client-side sorting of Institutions.
+        Provided Access code; Verify code capability in one line.
+        Added support for parameter passing of Default Institution and
+        Institution sorting preferences. This addresses the issues of
+        persistent cookies when using Thin Clients and Terminal Servers.
+        Made the KAAJEE Login Web page more Section 508 friendlier.
+  
+ For more information refer to the:
+ http://www4.va.gov/vdl/documents/Infrastructure/KAAJEE/kaajee_1_0_1_readme
+ .txt
+  
+ SDS 18 Upgrade
+  
+ PATS uses SDS tables (Institution, Country, State and Facility Type) and 
+ its corresponding API's. PATS currently uses version 9.9 of SDS.
+ Currently any changes made to the SDS tables data used by the PATS 
+ application is being done manually in the production database.
+ These scripts need to be customized since the SDS Master at the Austin
+ Information Technology Center (AITC) is not
+ compatible with the version in the local PATS production database.
+ The customized SQL scripts are sent by the SDS team to the HealtheVet
+ Maintenance team. After the internal testing is completed successfully 
+ the scripts are sent to the Enterprise Infrastructure Engineering team to 
+ be applied in production database. The manual process takes place twice in
+ a month with the customized scripts being sent to the HealtheVet team
+ which are then packaged for installation to the production database shared
+ by PATS, VPFS and SDS. 
+  
+ After successfully updating the PATS production database manually for the 
+ SDS tables, the SDS data will soon become out of sync with the master SDS 
+ table data at the AITC. Hence to keep the SDS data in the PATS production 
+ database in sync with the master SDS data, replication has to take place. 
+  
+ Automatic replication of the data from the master database at the AITC
+ to the
+ local PATS production database would take place if the SDS versions 
+ match. Hence upgrading the SDS version would facilitate the automatic 
+ replication process to take place without any manual intervention.
+  
+  
+ Remedy Ticket Fixes.
+  
+ 344975          erroneously handed jsps
+ Centralized production server has started to have problems responding to 
+ user requests with properly compiled jsp pages. Java Server Pages as a 
+ technology is integral part of PATS application architecture which 
+ requires compilation by the server before a user is served with a proper 
+ response to a request. The problem was identified as a lack of server's 
+ heap memory availability, compounded by the forceful StringBuffer 
+ allocation during run-time. The default capacity of StringBuffer objects 
+ was adjusted, to avoid forcing the server to perform additional 
+ allocations during runtime.
+  
+ 327260, 284833, 422092  Employee lookup problem
+ Exercising PATS Notification feature was observed to be problematic for 
+ names having an apostrophe in the last name. The problem had to do with 
+ the way HTML pages are being interpreted and rendered. An apostrophe 
+ character happens to be one of HTML special markup characters and needs 
+ either special formatting of being referred to by the UTF code in order 
+ to be rendered and interpreted correctly. Such formatting has been 
+ implemented and has proven to correct the problem in the development 
+ environment.
+  
+ 284100          PATS application error.
+ During new ROC entry, users are allowed to enter invalid DATA OF CONTACT 
+ value which will propagate via internal algorithm to creation of an 
+ invalid ROC number.  Thereafter users will be prevented from closing the 
+ ROC by errors triggered from the invalid ROC number. Please fix the 
+ algorithm, so only valid dates can be entered into the DATE OF CONTACT 
+ field during new ROC creation.
+  
+ 316775          Cannot complete Notes.
+ Users have reported multiple instances of timing out while trying to 
+ complete Notes on the ROC Resolution Tab. Problem has to do with the fact 
+ that PATS does not notify a user of a pending timeout, catching a person 
+ in the midst of a typing/composing session.
+ The typed text is lost them, since user is forced to re-login into 
+ application.
+  
+ A proposed change consists of a notification box, blocking a PATS 
+ interface (to avoid accidental focus losing issues) and presenting an 
+ option to reset a timeout counter.
+  
+ DOCUMENTATION:
+  
+ All application's components have been uploaded to the HIS sharepoint
+ site: http://vaww.eie.va.gov/SysDesign/NHS/PATS/default.aspx
+  
+ Documentation for PATS application can be retrieved at VHA Documentation 
+ Library: http://www.va.gov/vdl/application.asp?appid=172 , some updates 
+ were made to the documents as a result of this patch (* denotes updated
+ documents)
+           
+           PATS Data Migration Guide
+           PATS User Guide*
+           PATS Installation Guide for EIE Staff*
+           PATS Installation Guide for IRM Staff
+           PATS Systems Management Guide*
+           PATS Notification Presentation for NonAdvocates
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : MIKHAILUTSA,ARSEN             Date Entered  : APR 23, 2013
+Completed By: FAULKNER,JOSHUA               Date Completed: APR 26, 2013
+Released By : EVERHART,SID                  Date Released : APR 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

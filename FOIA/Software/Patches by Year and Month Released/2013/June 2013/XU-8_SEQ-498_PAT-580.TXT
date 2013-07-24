@@ -1,0 +1,634 @@
+$TXT Created by MENDOZA,RAUL at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Thursday, 03/28/13 at 14:43
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: XU*8*580
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #498                      Status: Released
+                  Compliance Date: JUL 11, 2013
+=============================================================================
+
+
+Subject: SUPPORT FOR E-PCS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+  
+ OVERVIEW
+ This patch is in support of the Drug Enforcement Agency (DEA) 
+ e-Prescribing of Controlled Substances (CS) (ePCS) using Public Key 
+ Infrastructure (PKI).  The following will describe the modifications 
+ and/or enhancements to the Kernel package to meet the requirements 
+ proposed by the DEA Interim Final Rule (IFR) for Electronic Prescriptions 
+ for Controlled Substances effective as of June 1, 2010. 
+  
+ Installation Instructions
+ -------------------------
+ Installation instructions are contained in the DEA ePrescribing Installation
+ and Setup Guide for Patches (XU*8.0*580 and OR*3.0*218) 
+ or OR_30_218_IG.pdf.
+ 
+ 
+ New Person (#200) file modifications:
+ 53.3 VA# - make it case in-sensitive
+ 53.11 'Extra DEA#' is rename to 'Detox/Maintenance ID Number'
+ 55.1 Schedule II Narcotic - new field
+ 55.2 Schedule II Non-Narcotic - new field
+ 55.3 Schedule III Narcotic - new field
+ 55.4 Schedule III Non-Narcotic - new field
+ 55.5 Schedule IV - new field
+ 55.6 Schedule V - new field
+  
+ Institution (#4) file modification:
+ 52.1 Facility DEA Expiration Date - new field
+  
+ NEW Files:
+ XUEPCS DATA FILE (#8991.6)
+ XUEPCS PSDRPH AUDIT FILE (#8991.7)
+  
+ Parameters:
+ XUEPCS REPORT DEVICE
+ Set the parameter XUEPCS REPORT DEVICE to printer device (see examples 
+ below)
+    a. This can be done from General Parameter Tools menu
+       under the CPRS Configuration (IRM) menu
+    b. This can also be done by running the routine XPAREDIT
+   
+     
+  Examples:
+  =========
+   Setting the XUEPCS REPORT DEVICE parameter:
+  
+    CL     Clinician Menu ...
+    NM     Nurse Menu ...
+    WC     Ward Clerk Menu ...
+    PE     CPRS Configuration (Clin Coord) ...
+    IR     CPRS Configuration (IRM) ...
+  
+ Select CPRS Manager Menu Option: IR  CPRS Configuration (IRM)
+    OC     Order Check Expert System Main Menu ...
+    TI     ORMTIME Main Menu ...
+    UT     CPRS Clean-up Utilities ...
+    XX     General Parameter Tools ...
+    HD     HealtheVet Desktop Configuration ...
+    RD     Remote Data Order Checking Parameters
+  
+ Select CPRS Configuration (IRM) Option: GENERal Parameter Tools
+    LV     List Values for a Selected Parameter
+    LE     List Values for a Selected Entity
+    LP     List Values for a Selected Package
+    LT     List Values for a Selected Template
+    EP     Edit Parameter Values
+    ET     Edit Parameter Values with Template
+    EK     Edit Parameter Definition Keyword
+   
+ Select General Parameter Tools Option: EP  Edit Parameter Values
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XUEPCS REPORT DEVICE     ePCS Device 
+ Definition for Reports
+  
+ ---- Setting XUEPCS REPORT DEVICE  for System: KRN.FO-OAKLAND.MED.VA.GOV 
+ ----
+ Select device for ePCS reports: SDD P10//  ? Enter printer device
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:
+  
+  Also can be set by running routine XPAREDIT
+  
+  >D ^XPAREDIT
+                          --- Edit Parameter Values ---
+  
+ Select PARAMETER DEFINITION NAME: XUEPCS REPORT DEVICE     ePCS Device 
+ Definition for Reports
+  
+ ---- Setting XUEPCS REPORT DEVICE  for System: KRN.FO-OAKLAND.MED.VA.GOV 
+ ----
+ Select device for ePCS reports: SDD P10//  ? Enter printer device
+ --------------------------------------------------------------------------
+  
+ Select PARAMETER DEFINITION NAME:  
+  
+ APIs:
+ $$DEA^XUSER() - ICR 2343
+ $$DETOX^XUSER() - ICR 2343
+ $$SDEA^XUSER() - ICR 2343
+ $$VDEA^XUSER() - ICR 2343
+  
+ Options:
+ ePCS DEA Utility Functions...  [XU EPCS Utility Functions]
+ Print DEA Expiration Date Null  [XU EPCS EXP DATE]
+ Print DISUSER DEA Expiration Date Null  [XU EPCS DISUSER EXP DATE]
+ Print DEA Expiration Date Expires 30 days  [XU EPCS XDATE EXPIRES]
+ Print DISUSER DEA Expiration Date Expires 30 days [XU EPCS DISUSER XDATE
+ EXPIRES]
+ Print Prescribers with Privileges  [XU EPCS PRIVS]
+ Print DISUSER Prescribers with Privileges [XU EPCS DISUSER PRIVS]
+ Print PSDRPH Key Holders  [XU EPCS PSDRPH]
+ Print Setting Parameters Privileges  [XU EPCS SET PARMS]
+ Task Changes to DEA Prescribing Privileges Report  [XU EPCS LOGICAL ACCESS]
+ Task Allocation Audit of PSDRPH Key Report  [XU EPCS PSDRPH AUDIT]
+ Allocate/De-Allocate of PSDRPH Key  [XU EPCS PSDRPH KEY]
+ Edit Facility DEA# and Expiration Date  [XU EPCS EDIT DEA# AND XDATE]
+ Print Audits for Prescriber Editing  [XU EPCS PRINT EDIT AUDIT]
+  
+ Options - Broker-type:
+ ePCS Edit Prescriber Data  [XU EPCS EDIT DATA]
+ ePCS Set SAN from PIV Card [XUSSPKI UPN SET]
+  
+ *The following options need to run on a daily basis and need to be setup 
+ through TaskManager.  Make sure the parameter XUEPCS REPORT DEVICE is set 
+ up prior (as shown in the Parameter section above).
+  
+ Task Changes to DEA Prescribing Privileges Report  [XU EPCS LOGICAL ACCESS]
+ Task Allocation Audit of PSDRPH Key Report  [XU EPCS PSDRPH AUDIT]
+  
+  
+ Examples:
+  
+ 1. XU EPCS LOGICAL ACCESS
+  
+  
+             Core Applications ...
+             Device Management ...
+             Menu Management ...
+             Programmer Options ...
+             Operations Management ...
+             Spool Management ...
+             Information Security Officer Menu ...
+             Taskman Management ...
+             User Management ...
+    FM       VA FileMan ...
+             Application Utilities ...
+             Capacity Planning ...
+             HL7 Main Menu ...
+             Manage Mailman ...
+  
+ Select Systems Manager Menu Option:  Taskman Management
+             Schedule/Unschedule Options
+             One-time Option Queue
+             Taskman Management Utilities ...
+             List Tasks
+             Dequeue Tasks
+             Requeue Tasks
+             Delete Tasks
+             Print Options that are Scheduled to run
+             Cleanup Task List
+             Print Options Recommended for Queueing
+  
+ Select Taskman Management Option: SCHedule/Unschedule Options
+  
+ Select OPTION to schedule or reschedule: XU EPCS LOGICAL ACCESS       
+  Task Changes to DEA Prescribing Privileges Report
+   Are you adding 'XU EPCS LOGICAL ACCESS' as 
+     a new OPTION SCHEDULING (the 238TH)? No// Y
+  
+  
+          Edit Option Schedule
+     Option Name: XU EPCS LOGICAL ACCESS        
+     Menu Text: Task Changes to DEA Prescribing           TASK ID:
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: T+1@001
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ __________________________________________________________________________
+  
+ COMMAND: SAVE
+ COMMAND: EXIT
+  
+ Select OPTION to schedule or reschedule:       
+  
+  
+ 2. XU EPCS PSDRPH AUDIT
+ Repeat the same process for XU EPCS PSDRPH AUDIT.  Set the time and 
+ frequency the same.
+  
+  
+ Security Keys:
+ XUEPCSEDIT
+  
+ RPCs:
+ XU EPCS EDIT
+ XUS PKI SET UPN
+ XUS PKI GET UPN
+ XWB GET VARIABLE VALUE
+  
+  
+ Print Templates:
+ XU EPCS XDATE PRINT
+ XU EPCS DISUSER XDATE PRINT
+ XU EPCS DISUSER XDATE2 PRINT
+ XU EPCS PSDRPH PRINT
+ XU EPCS SET PARMS PRINT
+ XU EPCS PRIVS PRINT
+ XU EPCS DISUSER PRIVS PRINT
+ XU EPCS LOGICAL ACCESS PRINT
+ XU EPCS PSDRPH KEY PRINT
+ XU EPCS XDATE 30 PRINT
+  
+ Sort Templates:
+ XU EPCS PSDRPH SORT
+ XU EPCS SET PARMS SORT
+ XU EPCS DIV SORT
+ XU EPCS DISUSER SORT
+ XU EPCS DISUSER2 SORT
+ XU EPCS ACTIVE USER SORT
+  
+ Bulletin:
+ XUSSPKI SAN 
+  
+   
+ The following items address fixes that need to be in place to support the 
+ DEA ePCS specific software:
+  
+ 1) Remedy Ticket 327828:
+ The file screen on the NEW PERSON (#200) file can cause an error when
+ editing the file using ^LOOP.  This patch fixes that. (Routine ^XUSER) 
+  
+ To reproduce this, do the following:
+ 1) Create a new key.
+ 2) Create a search template with some users in it.
+ 3) Give one of the users the new key and the XUSHOWSSN key.
+ 4) Edit the NEW PERSON (#200) file:
+  
+ INPUT TO WHAT FILE: INSTALL// 200  NEW PERSON
+ EDIT WHICH FIELD: ALL// KEY
+      1   KEY DELEGATION LEVEL  
+      2   KEYS    (multiple)
+      3   KEYSTROKES FROM LM WP  
+ CHOOSE 1-3: 2  KEYS  (multiple)
+    EDIT WHICH KEYS SUB-FIELD: ALL// .01///MY NEW NURSE KEY
+    THEN EDIT KEYS SUB-FIELD: 
+ THEN EDIT FIELD: 
+  
+ Select NEW PERSON NAME: ^LOOP
+  
+ EDIT ENTRIES BY: NAME//[ZZNURSETEMPLATE
+  
+   WITHIN 'ZZNURSETEMPLATE' NUMBER, EDIT ENTRIES BY: 
+  
+    XUUSER1,ONE                     REGISTERED NURSE
+ Select KEY: SDMOB// MY NEW NURSE KEY
+ Select KEY: 
+  
+    XUUSER2,TWO                   NURSE PRACTITIONER      
+ 118       NURSE PRACTITIONER
+ Select KEY: MAGDISP CLIN//    MY NEW NURSE KEY
+ Select KEY: 
+  
+    XUUSER3,THREE                    REGISTERED NURSE
+ Select KEY: MAGDISP CLIN//    MY NEW NURSE KEY
+ Select KEY: 
+  
+    XUUSER4,FOUR                     CHIEF NURSE/EDUCATION
+ Select KEY:    MY NEW NURSE KEY
+ Select KEY: 
+  
+    XUUSER5,FIVE                     REGISTERED NURSE
+ Select KEY: PSB CPRS MED BUTTON//    MY NEW NURSE KEY
+ Select KEY: 
+  
+    XUUSER6,SIX                     REGISTERED NURSE
+ Select KEY: MY NEW NURSE KEY// ??
+  
+ WANT TO STOP LOOPING? Yes// N  (No)
+  I $G(DUZ),$D(^XUSEC("XUSHOWSSN",DUZ)),$L(X)=9,X?9N Q 1
+                                        ^
+ <UNDEFINED>SCR200+3^XUSER *X
+  
+ The ^LOOP fails when it reaches the user who already has the new key and
+ the XUSHOWSSN key.
+  
+ 2) Remedy Ticket 389572:
+ The OBJECT (#9.201) multiple in the HELP FRAME (#9.2) file points to a
+ non-existent file. Therefore, we are deleting the OBJECT multiple.
+ The Kernel Developers Guide has been updated to remove any mention of the
+ non-existing OBJECT file. (Routine POST^XU8P544)
+  
+ The following will be deleted from the HELP FRAME (#9.2) file:
+ STANDARD DATA DICTIONARY #9.2 -- HELP FRAME FILE
+ STORED IN ^DIC(9.2,
+  
+ DATA     NAME                  GLOBAL        DATA
+ ELEMENT  TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 9.2,10   OBJECT                 10;0 POINTER Multiple #9.201
+  
+          DESCRIPTION:      This field is a multiple provided to point to
+                            the object file to specify particular objects,
+                            and is primarily used in conjunction with the 
+                            Enter and Exit Execute fields (fields 10.1 and
+                            10.2).  
+  
+ 9.201,.01  OBJECT                 0;1 POINTER ** TO AN UNDEFINED FILE ** 
+                                    (Multiply asked)
+  
+            LAST EDITED:      JAN 16, 1991 
+            HELP-PROMPT:      This is a pointer to entries in the OBJECT 
+                              file which may be referenced in the ENTRY or 
+                              EXIT EXECUTE STATEMENTS associated with this 
+                              Help Frame 
+            DESCRIPTION:      This field is used to indicate a specific
+                              object in the OBJECT file.  It is primarily
+                              intended for use with the Entry and Exit
+                              Execute fields to provide the ability to
+                              relate to the specified object.  
+  
+            CROSS-REFERENCE:  9.201^B 
+                              1)= S ^DIC(9.2,DA(1),10,"B",$E(X,1,30),DA)=""
+                              2)= K ^DIC(9.2,DA(1),10,"B",$E(X,1,30),DA)
+  
+ 3) Remedy Ticket 322444:
+ The description for the DIS(1) (#69.1) field in the OPTION (#19) file
+ incorrectly states that a $T value of 1 will cause the entry not to print.
+ We are taking this opportunity to correct that, and rewrite the 
+ descriptions
+ of all the DIS fields. The following fields in the OPTION (#19) file have
+ new HELP PROMPTs and DESCRIPTIONs:
+  
+ 19,69    DIS(0)                 69;E1,245 MUMPS
+          INPUT TRANSFORM: K:$L(X)>245 X D:$D(X) ^DIM
+          LAST EDITED:     MAR 21, 1991 
+          HELP-PROMPT:     Enter standard M code which sets $T. 
+          DESCRIPTION:     Used in the PRINT type option. This is
+                           executable M code which sets $T to select
+                           desired entries for the sort process. If the
+                           code produces a truth value of 1, the entry
+                           will be printed. (A truth value of 0 will not 
+                           allow the entry to be printed.) At the time the
+                           code is executed, the internal entry number
+                           (IEN) of the entry is stored in the variable
+                           D0.  
+                                  
+                           For example, the following would print patients
+                           who were NOT born in the 1970's: 
+                                  
+                           DIS(0)=I
+                           
+ $P(^DPT(D0,0),U,3)<2700101!($P(^(0),U,3)>2791231)
+                           If used in conjunction with fields DIS(1),
+                           DIS(2), and DIS(3), the entry will print if
+                           DIS(0) and DIS(1) are true, OR if DIS(0) and
+                           DIS(2) are true, OR if DIS(0) and DIS(3) are
+                           true.  
+                                  
+                           Note: You may have DIS(0) only, or DIS(0) in
+                           combination with DIS(1) only, or DIS(1) and
+                           DIS(2), or DIS(1), DIS(2), and DIS(3).  
+  
+ 19,69.1  DIS(1)                 69.1;E1,245 MUMPS
+          INPUT TRANSFORM: K:$L(X)>245 X D:$D(X) ^DIM
+          LAST EDITED:     MAR 21, 1991 
+          HELP-PROMPT:     Enter standard M code which sets $T. 
+          DESCRIPTION:     This field may be used in PRINT options along
+                           with DIS(0) and the other DIS(n) fields. Each
+                           DIS field is examined in order (beginning with
+                           0) for M code that will produce a $T value to
+                           determine whether or not the data pointed to by
+                           D0 should be printed. See the description of
+                           D(0) (field #69) for more information.  
+                                  
+  
+  
+ 19,69.2  DIS(2)                 69.2;E1,245 MUMPS
+          INPUT TRANSFORM: K:$L(X)>245 X D:$D(X) ^DIM
+          LAST EDITED:     MAR 21, 1991 
+          HELP-PROMPT:     Enter standard M code which sets $T. 
+          DESCRIPTION:     This field may be used in PRINT options along
+                           with DIS(0) and the other DIS(n) fields. Each
+                           DIS field is examined in order (beginning with
+                           0) for M code that will produce a $T value to
+                           determine whether or not the data pointed to by
+                           D0 should be printed. See the description of
+                           D(0) (field #69) for more information.  
+  
+ 19,69.3  DIS(3)                 69.3;E1,245 MUMPS
+          INPUT TRANSFORM: K:$L(X)>245 X D:$D(X) ^DIM
+          LAST EDITED:     MAR 21, 1991 
+          HELP-PROMPT:     Enter standard M code which sets $T. 
+          DESCRIPTION:     This field may be used in PRINT options along
+                           with DIS(0) and the other DIS(n) fields. Each
+                           DIS field is examined in order (beginning with
+                           0) for M code that will produce a $T value to
+                           determine whether or not the data pointed to by
+                           D0 should be printed. See the description of
+                           D(0) (field #69) for more information.
+  
+ Documentation Changes
+ =====================
+ The Kernel Developers Guide has been updated to remove any mention of the
+ non-existing OBJECT file.
+  
+ The most up-to-date Kernel/Kernel Toolkit end-user documentation is 
+ available
+ on the VHA Software Document Library (VDL) at the following Internet 
+ Website:
+ http://www.va.gov/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format
+ (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ The Kernel/Kernel Toolkit APIs are also available in HTML format at the
+ following Intranet Website:
+ http://vaww.vista.med.va.gov/kernel/apis/index.shtml
+  
+  
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*580 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*580 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 322444
+ 327828
+ 389572
+  
+  
+ Thanks to Test Sites
+ ====================
+ Charleston
+ Cleveland
+ Heartland-East
+ Heartland-West
+ Hines
+ Loma Linda
+ Palo Alto
+ San Diego
+ Tampa
+  
+ Routine Summary: 
+ ================
+ Please see the "Routine Information" section. 
+ *Note: Routine: XU8P580 issues a warning during the installation of 
+ this patch if it appears that TaskMan is still running and/or logons 
+ have not been inhibited.
+  
+  
+ Installation Instructions:
+ =========================
+ ** Although queuing of this patch is allowed, it is recommended
+ that all Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors during a database update. Edits may be lost and records may be
+ left in an inconsistent state. An error that occurs before a cross-
+ reference is executed, for example, may lead to corrupted data or hard
+ errors in the future. **
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+  
+      4.  In accordance with the warning at the beginning of the 
+ installation instructions, make sure ALL interactive processes, and 
+ ALL non-interactive background jobs are stopped following your site 
+ specific procedures. TaskMan should be stopped or placed in a wait state.
+ All users should be off the system. NOT performing this step could result
+ in 'source routine edited' error during database updates, and records may
+ be left in an inconsistent state.
+  
+      5.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: XU*8.0*580
+                                 ===========
+  
+ The Environment Check Routine XU8P580 runs automatically during this
+ step. XU8P580 issues a warning if it appears that TaskMan is still 
+ running or logons have not been inhibited. 
+  
+            Answer 'YES' to 'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+ 
+ During the Pre-Install process, you will see:
+ Beginning Pre-Installation...
+   I am deleting the cross-reference "SAN" for field #501.2 file #200.
+ Finished Pre-Installation.
+  
+ During the Post-Install process, you will see:
+ Beginning Post-Installation...
+   I am deleting the OBJECT (#9.201) multiple from the HELP FRAME (#9.2) 
+ file.
+   I am re-indexing "ASAN" cross-reference for field #501.2 file #200.
+ Finished Post-Installation.
+  
+      6.  Re-enable all processes stopped in step 4 above.
+  
+  
+ Post Installation
+ =================
+ Upon successful installation of this patch, routine XU8P580 may be 
+ deleted.
+  
+  
+ Example
+ =======
+ >D ^ZTRDEL
+  
+ ROUTINE DELETE
+  
+ All Routines? No => No
+  
+ Routine: XU8P580
+ Routine: 
+ 1 routine
+  
+ 1 routines to DELETE, OK: NO// Y
+ XU8P580  
+ Done.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 46
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XU8P580
+    Before:       n/a   After:  B7617911  **580**
+Routine Name: XUEPCSED
+    Before:       n/a   After:  B2888160  **580**
+Routine Name: XUEPCSRT
+    Before:       n/a   After: B22030133  **580**
+Routine Name: XUSC1C
+    Before:  B8238333   After:  B8383983  **283,580**
+Routine Name: XUSER
+    Before:  B9027633   After: B47045111  **75,97,99,150,226,267,288,330,
+                                           370,373,580**
+Routine Name: XUSER2
+    Before: B13847196   After: B15407315  **267,251,344,534,580**
+ 
+Routine list of preceding patches: 283, 373, 534
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : MAY 26, 2011
+Completed By: SERVICE,JOHN                  Date Completed: JUN 10, 2013
+Released By : TILLIS,LEWIS                  Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

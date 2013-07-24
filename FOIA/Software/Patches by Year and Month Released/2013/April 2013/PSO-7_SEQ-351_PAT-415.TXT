@@ -1,0 +1,131 @@
+$TXT Created by NIXON,TONY at MNTVBB.FO-ALBANY.MED.VA.GOV  (KIDS) on Wednesday, 10/17/12 at 15:52
+=============================================================================
+Run Date: APR 16, 2013                     Designation: PSO*7*415
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #351                      Status: Released
+                  Compliance Date: MAY 17, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*385   <<= must be installed BEFORE `PSO*7*415'
+
+Subject: Error Occurs When Running the TRICARE CHAMPVA Bypass/Override Report
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  An error occurs when running the TRICARE CHAMPVA Bypass/Override Report 
+  [PSO TRI CVA OVERRIDE REPORT].
+  
+  
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000751571 - Receive RUN^PSOBORP0 error when running TRICARE CHAMPVA 
+                    Bypass/Override Report
+  
+  
+  
+  Associated NSRs:
+  ================
+  N/A
+    
+    
+  Participating Test Sites:
+  =========================
+  Battle Creek VA Medical Center
+  Asheville VA Medical Center
+  John D. Dingell VA Medical Center - Detroit
+  
+  
+  Remedy Overview:
+  ================
+  HD0000000751571 - Receive RUN^PSOBORP0 error when running TRICARE CHAMPVA 
+                    Bypass/Override Report
+  
+  
+  
+  Problem:
+  --------
+  The user is receiving an "end of file" error after running the TRICARE
+  CHAMPVA Bypass/Override Report [PSO TRI CVA OVERRIDE REPORT]. This error
+  occurs because the report attempts to prompt the user to "Press Return 
+  to continue, '^' to exit" even if the chosen device is a printer.  This
+  prompt should only be displayed when the report is printed to the screen.
+  
+  
+  
+ Technical Explanation
+  ---------------------
+  Even though the device chosen is a printer, the process prompts the user to
+  "Press Return to continue, '^' to exit". A DIR call is made to display
+  the message on the screen.
+  
+  
+  Resolution:
+  ----------- 
+  Modify the code in routines PSOBORP0 and PSOBORP1 to ensure that the 
+  "Press Return to continue, '^' to exit" message only gets executed when
+  the user prints the report to a screen.
+  
+  
+   =================== INSTALLATION INSTRUCTIONS =====================
+     
+   Installation will take less than 2 minutes.  Users may be on the system.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+          the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSO*7.0*415)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSO*7.0*415
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBORP0
+    Before: B12711131   After: B13846157  **358,385,415**
+Routine Name: PSOBORP1
+    Before:B123593134   After:B123999048  **358,385,415**
+ 
+Routine list of preceding patches: 385
+
+=============================================================================
+User Information:
+Entered By  : NIXON,ANTOINE                 Date Entered  : OCT 12, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: APR 08, 2013
+Released By : MENEGUZZO,KIMBERLY            Date Released : APR 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,140 @@
+$TXT Created by TRAN,BA at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 01/04/12 at 08:08
+=============================================================================
+Run Date: APR 11, 2013                     Designation: XU*8*588
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #495                      Status: Released
+                  Compliance Date: MAY 12, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*527    <<= must be installed BEFORE `XU*8*588'
+
+Subject: FIX: <UNDEFINED> ERROR IN XUSTERM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy#: 533335
+ Test sites:  BAY PINES HCS
+ Patch Tracking Message#:  56024466
+ Blood Bank Clearance: 01/04/12
+  
+                         XU*8.0*588
+  
+ This patch fixes an error <UNDEFINED>GET+6^XUSTERM for option 'Deactivate
+ a User' [XUSERDEACT]. The error happens when a mailgroup is improperly
+ killed directly from the programmer mode. The global nodes are deleted but
+ the ^XMB(3.8,"AB") cross reference for the mailgroup members is not
+ removed.
+  
+ To fix the error this patch modifies the routine XUSTERM for the option
+ 'Deactivate a user' [XUSERDEACT] to check the existing of related
+ global nodes before removing a deactivated user from the sub-file
+ Member(#3.81) in the Mail Group file(#3.8).
+  
+  
+ Blood Bank Team Coordination: 01/04/12
+ ============================
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*588 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*588 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*588
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Optional post instruction:
+ -------------------------
+ The option RE-INDEX FILE will clean bad "AB" x-refs if there are any of 
+ them on the system.
+  
+ KRN>D P^DI
+  
+ VA FileMan 22.0
+  
+ Select OPTION: UTILITY FUNCTIONS  
+ Select UTILITY OPTION: RE-INDEX FILE  
+  
+ MODIFY WHAT FILE: MAIL GROUP// 
+  
+ THERE ARE 16 INDICES WITHIN THIS FILE
+ DO YOU WISH TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// Y  (Yes)
+  
+ What type of cross-reference (Traditional or New)? Traditional//   
+ TRADITIONAL
+ Select FIELD: 2  MEMBER  (multiple)
+ Select MEMBER SUB-FIELD: .01  MEMBER
+  
+  
+ CURRENT CROSS-REFERENCES:
+         1     REGULAR 'B' INDEX OF MEMBER SUB-FIELD
+         2     REGULAR 'AB' INDEX OF FILE
+ WANT TO RE-CROSS-REFERENCE ONE OF THEM? No// Y  (Yes)
+ WHICH NUMBER: 2
+ ARE YOU SURE YOU WANT TO DELETE AND RE-CROSS-REFERENCE THE 'AB' INDEX? 
+ No// Y
+   (Yes)
+ ...HMMM, HOLD ON...    ...DONE!
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUSTERM
+    Before: B20468894   After: B20794964  **36,73,135,148,169,222,313,
+                                           384,489,527,588**
+ 
+Routine list of preceding patches: 527
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : DEC 06, 2011
+Completed By: BEST,LISA                     Date Completed: FEB 26, 2013
+Released By : TILLIS,LEWIS                  Date Released : APR 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
