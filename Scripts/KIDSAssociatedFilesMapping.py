@@ -23,6 +23,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "EDP-2.TXT" : "EDP 2.0",
   "MAG3_0P121.ReadMe.txt" : "MAG*3.0*121",
   "MOCHA_1.txt" : "PSJ*5.0*261",
+  "PREC - PHARMACY ENTERPRISE CUSTOMIZATION SYSTEM RELEASE.txt" : "PREC*2.2*1",
   "PREN Release.txt" : "PREN*1.0*1",
   "Release of Patient Assessment Documentation Pkg_NUPA_1.txt" : "NUPA 1.0",
   "Release of VA NATIONAL HEALTH INFO NETWORK NHIN_1.txt" : "NHIN 1.0",
@@ -39,6 +40,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "LEX_2_83.GBLs": "LEX*2.0*83",
   "LEX_2_84.GBLs": "LEX*2.0*84",
   "LEX_2_89.GBLs": "LEX*2.0*89",
+  "LEX_2_90.GBLs": "LEX*2.0*90",
 }
 
 """
