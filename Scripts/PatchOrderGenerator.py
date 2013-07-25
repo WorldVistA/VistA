@@ -515,7 +515,7 @@ class PatchOrderGenerator(object):
     for csvOrderFile in self._csvOrderFileList:
       self.__getPatchOrderListByCSV__(csvOrderFile)
       self.__buildPatchOrderDependencyByCSV__(csvOrderFile)
-    sortedPatchList = self.__sortCSVDependencyByVerifiedDate__()
+    sortedPatchList = self.__sortCSVDependencyList__()
 
   """ build csvDepDict based on csv File """
   def __buildPatchOrderDependencyByCSV__(self, orderCSV):
@@ -559,13 +559,16 @@ class PatchOrderGenerator(object):
     """ update the order list to include only patch info """
     self._patchOrderCSVDict[orderCSV] = outPatchList
 
-  def __sortCSVDependencyByVerifiedDate__(self):
-    """ Utility methods to sort the CSV file based dependency by release time """
-    outPatchList = []
-    for csvPatchList in self._patchOrderCSVDict.itervalues():
-      outPatchList.extend(csvPatchList)
-    """ sort by verifiedTime """
-    outOrderList = sorted(outPatchList, key=lambda item: item.verifiedDate)
+  def __sortCSVDependencyList__(self):
+    """ Utility methods to sort the CSV file based dependency """
+    outOrderList = []
+    """ sort the csv file by the first entry's verification date """
+    csvFileOrder = sorted(self._patchOrderCSVDict.keys(),
+                          key=lambda
+                          item: self._patchOrderCSVDict[item][0].verifiedDate)
+
+    for csvFile in csvFileOrder:
+      outOrderList.extend(self._patchOrderCSVDict[csvFile])
     for idx in range(len(outOrderList)-1, 0, -1):
       installName = outOrderList[idx].installName
       prevInstallName = outOrderList[idx-1].installName
