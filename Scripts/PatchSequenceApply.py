@@ -354,6 +354,10 @@ class PatchSequenceApply(object):
       installStatus = self._vistaPatchInfo.getInstallationStatus(item)
       if self._vistaPatchInfo.isInstallCompleted(installStatus):
         continue
+      elif item in patchInfo.optionalDepSet:
+        logger.warn("Patch specified in KIDS info file %s is not installed for %s" %
+                    (item, patchInfo.installName))
+        continue
       else:
         logger.error("dep %s is not installed for %s %s" %
                     (item, patchInfo.installName, patchInfo.kidsFilePath))

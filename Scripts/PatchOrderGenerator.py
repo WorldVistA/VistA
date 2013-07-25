@@ -297,7 +297,8 @@ class PatchOrderGenerator(object):
         logger.warn("duplicated installName %s, %s, %s" %
                      (installName, self._patchInfoDict[installName],
                      kidsInfoFile))
-      """ merge the dependency if needed """
+      """ merge the dependency if needed, also
+          put extra dependency into optional set """
       if installName in self._kidsDepBuildDict:
         infoDepSet = set()
         kidsDepSet = set()
@@ -312,6 +313,7 @@ class PatchOrderGenerator(object):
           logger.debug("info build set is %s" % infoDepSet)
           logger.warning("difference set: %s" % diffSet)
           patchInfo.depKIDSBuild = infoDepSet | kidsDepSet
+          patchInfo.optionalDepSet = infoDepSet - kidsDepSet
         else:
           patchInfo.depKIDSBuild = infoDepSet
       self._patchInfoDict[installName] = patchInfo
@@ -345,6 +347,7 @@ class PatchOrderGenerator(object):
         nextPatchInfo = patchList[installList[index]]
         """ just to make sure the first one has all the dependencies """
         firstPatch.depKIDSBuild.update(nextPatchInfo.depKIDSBuild)
+        firstPatch.optionalDepSet.update(nextPatchInfo.optionalDepSet)
         firstPatch.otherKidsInfoList.append([nextPatchInfo.kidsInfoPath,
                                             nextPatchInfo.kidsInfoSha1])
         prevInstallName = installList[index - 1]
