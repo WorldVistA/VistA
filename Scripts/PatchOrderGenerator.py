@@ -411,12 +411,10 @@ class PatchOrderGenerator(object):
     namespaceVerSeq = dict()
     for patchInfo in self._patchInfoDict.itervalues():
       installName = patchInfo.installName
+      if installName not in depDict:
+        depDict[installName] = set()
       if patchInfo.depKIDSBuild:
-        """ reduce the node by removing info not in the current patch """
-        if installName not in depDict:
-          depDict[installName] = set()
-        depDict[installName].update(
-          [x for x in patchInfo.depKIDSBuild if x in self._patchInfoDict])
+        depDict[installName].update(patchInfo.depKIDSBuild)
       """ combine csv dependencies """
       if patchInfo.csvDepPatch:
         if installName not in depDict:
@@ -577,6 +575,17 @@ class PatchOrderGenerator(object):
       prevInstallName = outOrderList[idx-1].installName
       self._csvDepDict[installName] = prevInstallName
 
+  def _removeNotInstalledKIDSBuild(self, installName):
+    patchInfo = self._patchInfoDict.get(installName)
+    if not patchInfo: return
+    listToRemove = [installName]
+    if patchInfo.isMultiBuilds:
+      listToRemove = patchInfo.multiBuildsList
+    self._multiBuildDict.pop(patchInfo.kidsFilePath, None)
+    for install in listToRemove:
+      logger.info("Removing %s" % install)
+      self._kidsInstallNameDict.pop(install, None)
+      self._patchInfoDict.pop(install, None)
 
   """ parse the order csv file and generate an ordered list of install name """
   def __getPatchOrderListByCSV__(self, orderCSV):
@@ -600,6 +609,7 @@ class PatchOrderGenerator(object):
           logger.error("Uninstalled patch %s found in %s: %s" %
                        (installName, self._kidsInstallNameDict[installName],
                         row))
+        self._removeNotInstalledKIDSBuild(installName)
         logger.debug("Ignore uninstalled patch %s" % row)
         continue
       try:
@@ -625,7 +635,21 @@ class PatchOrderGenerator(object):
     patchDict = self._patchInfoDict
     depDict = self._patchDependencyDict
     result = topologicSort(depDict, installName)
-    self._patchOrder = [self._patchInfoDict[x] for x in result]
+    self._patchOrder = [self._patchInfoDict[x] for x in result if x in patchDict]
+    self._checkMultiBuildsOrder()
+
+  def _checkMultiBuildsOrder(self):
+    """ make sure that all the multi-build are grouped together """
+    multiDict = dict()
+    for index in range(len(self._patchOrder)):
+      patchInfo = self._patchOrder[index]
+      if patchInfo.isMultiBuilds:
+        if patchInfo.kidsFilePath not in multiDict:
+          multiDict[patchInfo.kidsFilePath] = index
+        if ( multiDict[patchInfo.kidsFilePath] != index and
+            multiDict[patchInfo.kidsFilePath] != index - 1 ):
+          logger.error("Patch out of order %s" % patchInfo)
+        multiDict[patchInfo.kidsFilePath] = index
 
 """ compare function for PatchInfo objects """
 def comparePatchInfo(one, two):
