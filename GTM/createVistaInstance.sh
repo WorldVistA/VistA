@@ -72,7 +72,7 @@ basedir=/home/$instance
 # $instance user is a programmer user
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
-useradd -c "$instance instance owner" -m -U $instance
+useradd -c "$instance instance owner" -m -U $instance -s /bin/bash
 
 # Make instance Directories
 mkdir -p $basedir/{r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www,backup}
@@ -120,6 +120,7 @@ echo "exec \$gtm_dist/mumps -run ^ZU"           >> $basedir/bin/tied.sh
 
 
 # Create Global mapping
+# Thanks to Sam Habiel, Gus Landis, and others for the inital values
 echo "c -s DEFAULT    -ACCESS_METHOD=BG -BLOCK_SIZE=4096 -ALLOCATION=200000 -EXTENSION_COUNT=1024 -GLOBAL_BUFFER_COUNT=4096 -LOCK_SPACE=400 -FILE=$basedir/g/$instance.dat" >> $basedir/etc/db.gde
 echo "a -s TEMP       -ACCESS_METHOD=MM -BLOCK_SIZE=4096 -ALLOCATION=10000 -EXTENSION_COUNT=1024 -GLOBAL_BUFFER_COUNT=4096 -LOCK_SPACE=400 -FILE=$basedir/g/TEMP.dat" >> $basedir/etc/db.gde
 echo "c -r DEFAULT    -RECORD_SIZE=16368 -KEY_SIZE=1019 -JOURNAL=(BEFORE_IMAGE,FILE_NAME=\"$basedir/j/$instance.mjl\") -DYNAMIC_SEGMENT=DEFAULT" >> $basedir/etc/db.gde
