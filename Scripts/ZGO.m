@@ -67,7 +67,7 @@ FILES ; Build FILES() mapping FGR components to file number
  . N F S F=$$FILE(FGR),@F=N
  Q
 FGROK(FGR,N) ; Verify that FGR is a canonical M node name
- I FGR="" W "W: File "_N_" has no root!",! Q
+ I FGR="" W "W: File "_N_" has no root!",! Q 0
  N $ET S $ET="S $EC="""" W ""W: File "_N_" has non-canonical root: ""_FGR,! Q 0"
  N (FGR) ; Hide local variables from evaluation of @FGR
  Q ($NA(@FGR)]"")&($QL(FGR)'<0)
