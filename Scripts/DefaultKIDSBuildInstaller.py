@@ -597,6 +597,8 @@ def main():
                 help='whether re-install the KIDS even it is already installed')
   parser.add_argument('-g', '--globalFiles', default=None, nargs='*',
                       help='list of global files that need to import')
+  parser.add_argument('-d', '--duz', default=DEFAULT_INSTALL_DUZ, type=int,
+                help='installer\'s VistA instance\'s DUZ')
 
   result = parser.parse_args();
   print (result)
@@ -618,6 +620,7 @@ def main():
                                            installName,
                                            logFile=result.logFile,
                                            multiBuildList=multiBuildList,
+                                           duz = result.duz,
                                            globals=result.globalFiles)
     defaultKidsInstall.runInstallation(testClient, result.reinstall)
 
