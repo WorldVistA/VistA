@@ -57,8 +57,9 @@ class MCompReposCommitter(object):
     logger.info("Commit the change")
     commitChange(commitMsgFile, self._packagesDir)
 
-def generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile, branch="HEAD"):
-  reposHash = getGitRepoRevisionHash(branch)[:8]
+def generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile,
+                                     branch="HEAD", reposDir=None):
+  reposHash = getGitRepoRevisionHash(branch, reposDir)[:8]
   with open(commitMsgFile, 'w') as output:
     topicLine = "Install: %s" % patchInfo.installName
     if patchInfo.multiBuildsList:
@@ -110,9 +111,10 @@ def testSinglePatchCommitMsg():
   patchInfo.installName = "LR*5.2*334"
   patchInfo.kidsFilePath = "C:/users/jason.li/git/VistA/Packages/"\
                            "Lab Service/Patches/LR_5.2_334/LR_52_334.KIDs.json"
-
   commitMsgFile = getDefaultCommitMsgFileByPatchInfo(patchInfo)
-  generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile, "origin/master")
+  print commitMsgFile
+  generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile,
+                                   "origin/master", SCRIPTS_DIR)
 
 def testMultiBuildPatchCommitMsg():
   patchInfo = PatchInfo()
@@ -132,7 +134,8 @@ def testMultiBuildPatchCommitMsg():
      "Patches/LA_5.2_74/LA-5P2_SEQ-57_PAT-74.TXT", None],
   ]
   commitMsgFile = getDefaultCommitMsgFileByPatchInfo(patchInfo)
-  generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile, "origin/master")
+  generateCommitMsgFileByPatchInfo(patchInfo, commitMsgFile,
+                                   "origin/master", SCRIPTS_DIR)
 
 def getDefaultCommitMsgFileByPatchInfo(patchInfo, dir=None):
   outputFile = installNameToDirName(patchInfo.installName) + ".msg"
