@@ -87,17 +87,17 @@ class PatchIncrInstallExtractCommit(object):
       logger.error("%s does not exist" % commitMsgDir)
       return False
     backupConfig = self._config.get('Backup')
-    startCache(self._instance, self._useSudo)
-    testClient = self._createTestClient()
-    with testClient:
-      patchApply = PatchSequenceApply(testClient, patchLogDir)
-      outPatchList = patchApply.generatePatchSequence(inputPatchDir)
-      if not outPatchList:
-        logger.info("No Patch needs to apply")
-        return True
-      if not isContinuous:
-        outPatchList = [outPatchList[0]]
-      for patchInfo in outPatchList:
+
+    while True:
+      startCache(self._instance, self._useSudo)
+      testClient = self._createTestClient()
+      with testClient:
+        patchApply = PatchSequenceApply(testClient, patchLogDir)
+        outPatchList = patchApply.generatePatchSequence(inputPatchDir)
+        if not outPatchList:
+          logger.info("No Patch needs to apply")
+          return True
+        patchInfo = outPatchList[0]
         logger.info(patchInfo)
         result = patchApply.applyPatchSequenceByInstallName(
                                               patchInfo.installName,
@@ -110,7 +110,8 @@ class PatchIncrInstallExtractCommit(object):
           continue
         commitFile = getDefaultCommitMsgFileByPatchInfo(patchInfo,
                                                         dir=commitMsgDir)
-        generateCommitMsgFileByPatchInfo(patchInfo, commitFile)
+        generateCommitMsgFileByPatchInfo(patchInfo, commitFile,
+                                         reposDir=SCRIPTS_DIR)
         MExtractor = VistADataExtractor(mRepo, outputDir, extractLogDir,
                                         gitBranch=mRepoBranch)
         MExtractor.extractData(testClient)
@@ -127,6 +128,9 @@ class PatchIncrInstallExtractCommit(object):
           backupCacheDataByGitHash(self._instance, origDir, backupDir,
                                    mRepo, mRepoBranch, self._useSudo)
           startCache(self._instance, self._useSudo)
+        if not isContinuous:
+          break
+    return True
 
 if __name__ == '__main__':
   initConsoleLogging()
