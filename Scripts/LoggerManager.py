@@ -19,7 +19,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 logger = logging.getLogger()
 
-MAX_BACKUP_COUNT = 10
+MAX_BACKUP_COUNT = 100
 def initConsoleLogging(defaultLevel=logging.INFO,
                        formatStr = '%(asctime)s %(levelname)s %(message)s'):
   logger.setLevel(defaultLevel)
@@ -41,7 +41,8 @@ def initFileLogging(outputFileName, defaultLevel=logging.INFO,
   fileHandle.setLevel(defaultLevel)
   fileHandle.setFormatter(formatter)
   logger.addHandler(fileHandle)
-  fileHandle.doRollover()
+  if sys.hexversion < 0x020700F0: # version less that 2.7
+    fileHandle.doRollover()
   return fileHandle
 
 def getTempLogFile(outputFileName):
