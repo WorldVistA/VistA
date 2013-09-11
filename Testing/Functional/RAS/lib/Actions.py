@@ -94,6 +94,7 @@ class Actions (object):
                 print "HOW DID I GET HERE: " + str(rval)
 
     def adduser(self, name, ssn, gender, initials, acode, vcode1):
+        ''' Add a user to system'''
         self.VistA.wait('Option:')
         self.VistA.write('USER MANAGEMENT')
         self.VistA.wait('User Management')
@@ -177,3 +178,16 @@ class Actions (object):
         self.VistA.write(sigcode)
         self.VistA.wait('Toolbox')
         self.VistA.write('\r\r\r')
+
+    def addSAsubtype(self, subcat):
+        '''Add SHARING AGREEMENT sub-category (for Appointment Type), exits to VistA>'''
+        self.VistA.wait('Select OPTION NAME:')
+        self.VistA.write('SD SHARING AGREEMENT UPDATE')
+        self.VistA.wait('Select APPOINTMENT TYPE NAME:')
+        self.VistA.write('SHARING AGREEMENT')
+        self.VistA.wait('Select SHARING AGREEMENT SUB-CATEGORY NAME:')
+        self.VistA.write(subcat)
+        self.VistA.wait('Are you adding')
+        self.VistA.write('Yes')
+        self.VistA.wait('SHARING AGREEMENT CATEGORY ACTIVE:')
+        self.VistA.write('yes')

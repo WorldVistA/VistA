@@ -63,8 +63,11 @@ class ADTActions (Actions):
         self.VistA.write('ADT MANAGER MENU')
         self.VistA.wait('continue')
         self.VistA.write('')
-        self.VistA.wait('continue')
-        self.VistA.write('')
+        rval = self.VistA.multiwait(['Option:', 'continue:'])
+        if rval == 0:
+            self.VistA.write('foo')  # cause menu to refresh
+        else:
+            self.VistA.write('')
 
     def priortime(self, deltamin= -1):
         '''Return a previous time '''
@@ -1046,3 +1049,37 @@ class ADTActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Option')
         self.VistA.write('')
+
+    def eligverific(self, patient, eligtype):
+        ''' Add to Patient ELIGIBILITY '''
+        self.VistA.wait('Option:')
+        self.VistA.write('Registration Menu\r')
+        self.VistA.wait('Select Registration Menu')
+        self.VistA.write('Eligibility Verification')
+        self.VistA.wait('Select PATIENT NAME:')
+        self.VistA.write(patient)
+        self.VistA.wait('to QUIT:')
+        self.VistA.write('')
+        self.VistA.wait('to QUIT')
+        self.VistA.write('')
+        self.VistA.wait('to QUIT')
+        self.VistA.write('')
+        if self.VistA.type == 'cache':
+            self.VistA.wait('to QUIT')
+            self.VistA.write('')
+            self.VistA.wait('to QUIT')
+            self.VistA.write('3')
+            self.VistA.wait('PRIMARY ELIGIBILITY CODE:')
+            self.VistA.write('')
+            self.VistA.wait('Select ELIGIBILITY:')
+            self.VistA.write(eligtype)
+            self.VistA.wait('Are you adding')
+            self.VistA.write('YES')
+            self.VistA.wait('Select ELIGIBILITY')
+            self.VistA.write('')
+            self.VistA.wait('PERIOD OF SERVICE')
+            self.VistA.write('')
+            self.VistA.wait('to QUIT')
+            self.VistA.write('^')
+            self.VistA.wait('Select PATIENT NAME:')
+            self.VistA.write('\r\r')

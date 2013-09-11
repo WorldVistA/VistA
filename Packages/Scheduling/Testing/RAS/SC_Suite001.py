@@ -37,6 +37,7 @@ Created on Jun 14, 2012
 import sys
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from SCActions import SCActions
+from ADTActions import ADTActions
 from Actions import Actions
 import TestHelper
 import datetime
@@ -450,6 +451,71 @@ def sc_test012(resultlog, result_dir, namespace):
         SC.signon()
         SC.gotoApptMgmtMenu()
         SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+10@9AM', fresh='No', badtimeresp='overbook')
+        SC.signoff()
+    except TestHelper.TestError, e:
+        resultlog.write('\nEXCEPTION ERROR:' + str(e))
+        logging.error('*****exception*********' + str(e))
+    else:
+        resultlog.write('Pass\n')
+
+def sc_test013(resultlog, result_dir, namespace):
+    '''
+    This test creates a Sharing Agreement subcategory and adds it to a select patient's eligibility
+    '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    if sys.platform == 'win32':
+        try:
+            # Create Sharing Agreement sub-category
+            VistA1 = connect_VistA(testname, result_dir, namespace)
+            aa = Actions(VistA1)
+            aa.signon()
+            aa.addSAsubtype(subcat='subcat1')
+            aa.signon()
+            aa.addSAsubtype(subcat='SUBCAT2')
+        # Add Sharing Agreement to Patient Eligibility
+            VistA1 = connect_VistA(testname + '_1', result_dir, namespace)
+            adt = ADTActions(VistA1)
+            adt.signon()
+            adt.gotoADTmenu()
+            adt.eligverific(patient='333224444', eligtype='SHARING AGREEMENT')
+            adt.signoff()
+        # Make Appointment using new sub-category
+            VistA1 = connect_VistA(testname + '_2', result_dir, namespace)
+            SC = SCActions(VistA1, user='fakejon1', code='1SWUSH12345!!')
+            SC.signon()
+            SC.gotoApptMgmtMenu()
+            SC.makeapp(patient='333224444', clinic='Clinic1', datetime='t+9@5AM', fresh='No', apptype='SHARING AGREEMENT', subcat=['subcat1', 'SUBCAT2'])
+            SC.signoff()
+        except TestHelper.TestError, e:
+            resultlog.write('\nEXCEPTION ERROR:' + str(e))
+            logging.error('*****exception*********' + str(e))
+        else:
+            resultlog.write('Pass\n')
+    else:
+        resultlog.write('Skip\n')
+
+def sc_test014(resultlog, result_dir, namespace):
+    '''
+    This test verifies clinic setup parameters
+    '''
+    testname = sys._getframe().f_code.co_name
+    resultlog.write('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    logging.debug('\n' + testname + ', ' + str(datetime.datetime.today()) + ': ')
+    try:
+        VistA = connect_VistA(testname, result_dir, namespace)
+        SC = SCActions(VistA, scheduling='Scheduling')
+        time = SC.schtime()
+        SC.signon()
+        SC.ma_clinicchk(patient='333224444', clinic='CLInicB', exp_apptype='EMPLOYEE', datetime='t+3@05PM',
+                        cslots='[2]', cxrays='YES', fresh='No', cvar='Yes', elig='Yes')
+        SC.signon()
+        SC.ma_clinicchk(patient='333224444', clinic='CLInicC', exp_apptype='RESEARCH', datetime='t+4@04pm',
+                        cslots='[4]', cxrays='', fresh='No', elig='Yes')
+        SC.signon()
+        SC.ma_clinicchk(patient='333224444', clinic='CLInicD', exp_apptype='REGULAR', datetime='t+5@03pm',
+                        cslots='[4]', cxrays='', fresh='No', elig='Yes')
         SC.signoff()
     except TestHelper.TestError, e:
         resultlog.write('\nEXCEPTION ERROR:' + str(e))

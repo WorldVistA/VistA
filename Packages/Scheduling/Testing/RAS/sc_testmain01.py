@@ -100,6 +100,8 @@ def main():
         SC_Suite001.sc_test010(resultlog, args.resultdir, args.namespace)
         SC_Suite001.sc_test011(resultlog, args.resultdir, args.namespace)
         SC_Suite001.sc_test012(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test013(resultlog, args.resultdir, args.namespace)
+        SC_Suite001.sc_test014(resultlog, args.resultdir, args.namespace)
         SC_Suite001.stopmon(resultlog, args.resultdir, args.coveragetype, args.namespace)
         resultlog.write('finished')
     except Exception, e:
