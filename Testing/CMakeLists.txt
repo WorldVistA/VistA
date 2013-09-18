@@ -197,6 +197,14 @@ IF(TEST_VISTA_FRESH)
   set(freshinfo "")
   find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
   list(APPEND freshinfo TEST_VISTA_FRESH_M_DIR)
+  option(TEST_VISTA_FRESH_CUSTOM_REFRESH "Use a custom script to refresh the VistA Databases" OFF)
+  mark_as_advanced(TEST_VISTA_FRESH_CUSTOM_REFRESH)
+
+  if(TEST_VISTA_FRESH_CUSTOM_REFRESH)
+    set(TEST_VISTA_FRESH_CUSTOM_COMMAND "" CACHE STRING "Command to run in place of the ImportRG refresh.
+    Both the executable path in quotation marks and the path to the file to execute are required")
+    mark_as_advanced(TEST_VISTA_FRESH_CUSTOM_COMMAND)
+  endif()
 
   if(CCONTROL_EXECUTABLE)
     set(TEST_VISTA_SETUP_VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
