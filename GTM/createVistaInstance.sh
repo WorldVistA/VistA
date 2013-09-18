@@ -101,7 +101,7 @@ fi
 
 # prog.sh - priviliged (programmer) user access
 # Allow access to ZSY
-echo "These exist for compatibility reasons"    >> $basedir/bin/prog.sh
+echo "#These exist for compatibility reasons"    >> $basedir/bin/prog.sh
 echo "alias gtm=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
 echo "alias GTM=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
 echo "alias gde=\"\$gtm_dist/mumps -run GDE\""  >> $basedir/bin/prog.sh
