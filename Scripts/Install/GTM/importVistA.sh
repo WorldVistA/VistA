@@ -39,4 +39,4 @@ $vistar/
 EOF
 
 # Import globals
-$gtm_dist/mumps -run %XCMD "W \$\$LIST^ZGI(\"$globallst\",\"$vistasourcedir/\")"
+$gtm_dist/mumps -run %XCMD "W \$\$LIST^ZGI(\"$globallst\")"
