@@ -63,5 +63,8 @@ rm -f $basedir/r/$gtmver/*.o
 rm -f $basedir/g/*.dat
 rm -f $basedir/j/*.mjl
 
+# source the environment so we have a correct GT.M environment
+source $basedir/etc/env
+
 # Re-create the databases
 $gtm_dist/mupip create
