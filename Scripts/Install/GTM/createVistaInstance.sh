@@ -88,6 +88,7 @@ echo "export gtm_tmp=$basedir/tmp"              >> $basedir/etc/env
 echo "export gtm_prompt=\"${instance^^}>\""     >> $basedir/etc/env
 echo "export gtmgbldir=$basedir/g/$instance.gld" >> $basedir/etc/env
 echo "export gtm_zinterrupt='I $$JOBEXAM^ZU($ZPOSITION)'" >> $basedir/etc/env
+echo "export gtm_lvnullsubs=2"                  >> $basedir/etc/env
 echo "export PATH=$PATH:$gtm_dist"              >> $basedir/etc/env
 
 
