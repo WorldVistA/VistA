@@ -116,10 +116,15 @@ class VistATestClient(object):
 class VistATestClientGTMLinux(VistATestClient):
   DEFAULT_GTM_PROMPT = "GTM>"
   DEFAULT_GTM_COMMAND = "mumps -direct"
+
   def __init__(self):
     gtm_prompt = os.getenv("gtm_prompt")
     if not gtm_prompt:
       gtm_prompt = self.DEFAULT_GTM_PROMPT
+    gtm_dist = os.getenv("gtm_dist")
+    if gtm_dist:
+      self.DEFAULT_GTM_COMMAND = os.path.join(gtm_dist,
+                                              self.DEFAULT_GTM_COMMAND)
     VistATestClient.__init__(self, self.GTM_ON_LINUX, gtm_prompt, None)
   def createConnection(self, command, instance,
                        username = None, password = None):
