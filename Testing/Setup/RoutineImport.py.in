@@ -34,7 +34,7 @@ if VistA.type=='GTM':
   VistA.wait('Input device: <terminal>:')
   VistA.write('${RoutineImportFile}')
   VistA.wait('Output directory :')
-  VistA.write('${TEST_VISTA_FRESH_GTM_ROUTINE_DIR}/')
+  VistA.write('${RoutineImportDir}/')
   VistA.wait(PROMPT, 1500)
   VistA.write('H')
 else:

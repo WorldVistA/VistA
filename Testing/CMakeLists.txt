@@ -232,7 +232,8 @@ IF(TEST_VISTA_FRESH)
     set(TEST_VISTA_SETUP_VOLUME_SET "PLA" CACHE STRING "Volume Set for new Vista Instance")
 
     #Creates variables for the routines and globals directorys within GT.M
-    set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR "" CACHE PATH "Path to the Routines folder within GT.M")
+    set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR "" CACHE PATH
+      "Directory where OSEHRA routines should be imported while setting up a fresh VistA instance. (NOTE: Path must be in the 'gtmroutines' environment variable)")
     if(NOT TEST_VISTA_FRESH_GTM_ROUTINE_DIR AND TEST_VISTA_GTM_ROUTINE_DIR)
       set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR ${TEST_VISTA_GTM_ROUTINE_DIR})
     endif()
@@ -260,6 +261,7 @@ IF(TEST_VISTA_FRESH)
 
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/RoutineImport.log")
   set(RoutineImportFile "${VISTA_BINARY_DIR}/routines.ro")
+  set(RoutineImportDir "${TEST_VISTA_FRESH_GTM_ROUTINE_DIR}")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in ${VISTA_BINARY_DIR}/VistARoutineImport.py)
 
   set(logfile "${VISTA_BINARY_DIR}/Testing/Log/GlobalImport.log")
@@ -345,7 +347,12 @@ if(TEST_VISTA_MUNIT AND TEST_VISTA_FRESH AND NOT TEST_VISTA_SETUP_MUNIT)
 endif()
 if(TEST_VISTA_MUNIT)
   if(GTM_DIST)
-    set(TEST_VISTA_GTM_ROUTINE_DIR "" CACHE PATH "Location to which the MUnit test routines will be imported")
+    set(TEST_VISTA_GTM_ROUTINE_DIR "" CACHE PATH
+      "Directory where OSEHRA GT.M routines are imported. MUnit test routines will be imported here. (NOTE: Path must be in the 'gtmroutines' environment variable)")
+    if(NOT TEST_VISTA_GTM_ROUTINE_DIR)
+      message(SEND_ERROR "Please set TEST_VISTA_GTM_ROUTINE_DIR as location to which MUnit test routines should be imported (GT.M routines directory)")
+    endif()
+    set(RoutineImportDir "${TEST_VISTA_GTM_ROUTINE_DIR}")
   endif()
   file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
   # Set up the platform dependent script files
