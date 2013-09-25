@@ -114,7 +114,7 @@ the testing procedure.
    :align: center
    :alt:  Highlighted variables that change the XINDEX testing.
 
-The TEST_VISTA_FRESH_M_DIR is the path to the directory with OSEHRA M repository checkout.  This repository is parsed to determine the Packages and routines to test.
+The TEST_VISTA_FRESH_M_DIR is not a required variable for setting up the XINDEX testing.
 The TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES is an option which changes the failure condition of the XINDEX tests.  With this option off, the test will fail if the XINDEX report
 returns a fatal error, "F -" in the output.  This option will cause a warning in the output "W -" as a failure condition.  The GREP_EXECUTABLE is used to find and print
 the line position of a returned error or warning in the source file during the reporting of the error. It can be found among the advanced variables like PYTHON_EXECTUABLE.
@@ -123,7 +123,6 @@ The these variables are set in the following manner:
      =======================================   ===================================  ======================================
       Variable Name                                 Value for Testing in Caché          Value for Testing in GT.M
      =======================================   ===================================  ======================================
-     TEST_VISTA_FRESH_M_DIR                      Path to OSEHRA M repository           Path to OSEHRA M repository
      TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES               ON/OFF                                  ON/OFF
      TEST_VISTA_OUTPUT_DIR                       Path to folder where log files        Path to folder where log files
                                                  will be stored                        will be stored
@@ -256,6 +255,35 @@ The VistA repository also has the capability to test the local VistA instance th
 There are currently two test suites that utilize the RAS functionality:  Scheduling and Problem List.  This option does not require any other
 variables to be set.
 
+TEST_VISTA_MUNIT
+`````````````````
+The OSEHRA Testing harness also contains the capability to run unit tests on the M[umps] code.  It utilizes a framework developed by Joel Ivey called MUnit, which is
+part of the M-Tools_ package.  There is no explicit option to show the MUnit variables in CMake, they will show in the first configure after selecting the TEST_VISTA
+option.
+
+.. figure:: http://code.osehra.org/content/named/SHA1/6c9f3ddd-cmakeGUIMUnitHighlighted.png
+    :align: center
+    :alt: Highlighting the MUnit options that appear after selecting TEST_VISTA
+
+There are four CMake variables that relate to the Automated MUnit testing. One option, TEST_VISTA_MUNIT, determines if the MUnit tests are added to the CTest test list.
+The other three are used during the installation of the MUnit KIDS file.  The option, TEST_VISTA_SETUP_MUNIT, is the trigger that tells CMake to install the MUnit KIDS
+file.  The OSEHRA harness has the capability to install this KIDS build in two scenarios.  The first is during any CMake 'configure' step, the second is at the end of
+the TEST_VISTA_FRESH import process. This installation requires two pieces of information.  The first piece of information is specified in the TEST_VISTA_SETUP_MUNIT_PATCH_FILE variable
+which should be set as the full path to the .KID file that contains the MUnit code.  The current version of the .KID file that is recommended for use in the OSEHRA Testing harness
+is `Version 9`_ The final variable, TEST_VISTA_SETUP_MUNIT_PATCH_NAME, refers to the install name of the MUnit KIDS Build.  This is pre-set to match the MUnit code (XT*7.3*81) and
+should not need to be changed.
+
+     ========================================   ==========================================   =======================================
+         Variable Name                             Value for Testing in Caché                    Value for Testing in GT.M
+     ========================================   ==========================================   =======================================
+       TEST_VISTA_MUNIT                                            ON                                           ON
+       TEST_VISTA_SETUP_MUNIT                                      ON                                           ON
+       TEST_VISTA_SETUP_MUNIT_PATCH_FILE                  Path to MUnit KIDS file                     Path to MUnit KIDS file
+       TEST_VISTA_SETUP_MUNIT_PATCH_NAME                        XT*7.3*81                                    XT*7.3*81
+     ========================================   ==========================================   =======================================
+
+**Note:  A warning will be shown if the TEST_VISTA_MUNIT option is selected with the TEST_VISTA_FRESH option without selecting TEST_VISTA_SETUP_MUNIT, as this combination
+will cause the MUnit tests of a Dashboard submission to fail.**
 
 EXAMPLE TESTING SETUP
 ---------------------
@@ -276,3 +304,7 @@ The \"Generate\" will only add a single line to the output window saying
    Generating done.
 
 This lets you know that the tests are ready to be run from the command line.
+
+.. _`OSEHRA website`: http://www.osehra.org/document/guis-used-automatic-functional-testing
+.. _M-Tools: https://github.com/OSEHRA-Sandbox/M-Tools/
+.. _`Version 9`: https://github.com/OSEHRA-Sandbox/M-Tools/blob/23424de6be7bd09c7ea44b3a32d91e2c33edc136/Utilities%20XT_7.3_81%20not%20yet%20released/XT_7-3_81_TESTVER9.KID
