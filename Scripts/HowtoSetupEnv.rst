@@ -14,13 +14,18 @@ Python Version
 Linux Platform
 --------------
 
-No additional setup is need on this platform.
+No additional software setup is needed on this platform.
+
+Please make sure:
+
+* ``ccontrol`` is in ``$PATH`` if using InterSystems Caché.
+* ``mumps``, ``mupip`` can be found using the ``$gtm_dist`` environment variable.
 
 ----------------
 Windows Platform
 ----------------
 
-Some additional setup is need on this platform.
+Some additional software setup is needed on this platform.
 
 * `pwin32 extension`_: A python windows extension used by winpexpect.
   To install python windows extension, please go to `pwin32 extension files`_ section
@@ -30,6 +35,11 @@ Some additional setup is need on this platform.
   interact with VistA instances via either telnet or ssh protocol.
 
   Just download the executable ``plink.exe`` and put it under windows ``%PATH%``.
+
+Also make sure:
+
+* ``ccontrol.exe`` is under windows ``%PATH%``.
+* Telnet port 23 is open and directly accessible in InterSystems Caché.
 
 .. _`Python 2.7`: http://www.python.org/download/releases/2.7.3/
 .. _`pwin32 extension`: http://sourceforge.net/projects/pywin32/
