@@ -22,7 +22,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # extra utils - used for cmake and dashboards and initial clones
-apt-get install build-essential cmake-curses-gui git
+apt-get install -y build-essential cmake-curses-gui git
 
 # Clone repos
 mkdir ~/Development
