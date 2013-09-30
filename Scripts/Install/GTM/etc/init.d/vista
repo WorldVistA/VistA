@@ -17,6 +17,18 @@
 
 # init script for VistA
 
+# Debian LSB info
+### BEGIN INIT INFO
+# Provides:          foiavista
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start VistA services at boot time
+# Description:       Starts/Stops VistA instances in a sane way.
+#                    Includes starting TaskMan.
+### END INIT INFO
+
 # TODO: add RHEL specific options
 # TODO: add Ubuntu specific options
 
