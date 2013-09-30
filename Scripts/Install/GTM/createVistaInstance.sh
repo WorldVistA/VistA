@@ -132,10 +132,6 @@ echo "a -n XTMP       -r=TEMP"                  >> $basedir/etc/db.gde
 echo "a -n CacheTemp* -r=TEMP"                  >> $basedir/etc/db.gde
 echo "sh -a"                                    >> $basedir/etc/db.gde
 
-# Set permissions
-chown -R $instance:$instance $basedir
-chmod -R g+rw $basedir
-
 # create the global directory
 # TODO redirect output to file
 # have to source the environment first to have GTM env vars available
@@ -144,3 +140,7 @@ $gtm_dist/mumps -run GDE < $basedir/etc/db.gde
 
 # Create the database
 $gtm_dist/mupip create
+
+# Set permissions
+chown -R $instance:$instance $basedir
+chmod -R g+rw $basedir
