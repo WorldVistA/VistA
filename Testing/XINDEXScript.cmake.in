@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-include(@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake)
+include("@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake")
 
 #Execute the python script
 execute_process(COMMAND "@PYTHON_EXECUTABLE@"  "@CMAKE_CURRENT_BINARY_DIR@/@package_file_name@Test.py" RESULT_VARIABLE return ERROR_VARIABLE ERROR)
@@ -26,4 +26,4 @@ endif()
 file(STRINGS "@LOGFILENAME@" OUTPUT)
 string(REPLACE "[" "{" OUTPUT "${OUTPUT}" )
 string(REPLACE "]" "}" OUTPUT "${OUTPUT}" )
-ReportXINDEXResult(@package_file_name@ @VISTA_SOURCE_DIR@/Packages/ @VENDER_NAME@ "@GREP_EXECUTABLE@" "${OUTPUT}" @TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES@ @TEST_VISTA_FRESH_M_DIR@)
+ReportXINDEXResult(@package_file_name@ "@VISTA_SOURCE_DIR@/Packages/" @VENDER_NAME@ "@GREP_EXECUTABLE@" "${OUTPUT}" @TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES@ "@TEST_VISTA_FRESH_M_DIR@")
