@@ -21,6 +21,7 @@ import tempfile
 import shutil
 import argparse
 import glob
+from PatchInfoParser import installNameToDirName
 from VistATestClient import VistATestClientFactory, createTestClientArgParser
 from LoggerManager import logger, initConsoleLogging
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
@@ -81,7 +82,7 @@ class DefaultKIDSBuildInstaller(object):
   KIDS_LOAD_QUESTION_ACTION_LIST = [
       ("OK to continue with Load","YES", False),
       ("Want to Continue with Load\?","YES", False),
-      ("Select Installation ","Install", True),
+      ("Select Installation ","?", True),
       ("Want to continue installing this build\?","YES", False),
       ("Want to RUN the Environment Check Routine\? YES//","YES",False)
   ]
@@ -137,6 +138,9 @@ class DefaultKIDSBuildInstaller(object):
     self._globalFiles = None
     if "globals" in kargs:
       self._globalFiles = kargs['globals']
+    self._tgOutputDir = None
+    if "printTG" in kargs:
+      self._tgOutputDir = kargs['printTG']
 
   """ set up the log for VistA connection
     @connection: a connection from a VistATestClient
@@ -167,6 +171,7 @@ class DefaultKIDSBuildInstaller(object):
   """ Answer all the KIDS install questions
   """
   def __handleKIDSInstallQuestions__(self, connection):
+    connection.send("Install\r")
     connection.expect("Select INSTALL NAME:")
     connection.send(self._kidsInstallName+"\r")
     """ handle any questions before general KIDS installation questions"""
@@ -252,6 +257,11 @@ class DefaultKIDSBuildInstaller(object):
       logger.error("Error handling KIDS Load Options %s, %s" %
                    (self._kidsInstallName, self._kidsFile))
       return False
+    if self._tgOutputDir:
+      if self._multiBuildList is None:
+        self.__printTransportGlobal__(vistATestClient,[self._kidsInstallName],self._tgOutputDir)
+      else:
+        self.__printTransportGlobal__(vistATestClient,self._multiBuildList,self._tgOutputDir)
     result = self.__handleKIDSInstallQuestions__(connection)
     if not result:
       result = self.unloadDistribution(vistATestClient, False)
@@ -366,6 +376,91 @@ class DefaultKIDSBuildInstaller(object):
     if infoFetcher.isInstallStarted(installStatus):
       return self.restartInstallation(vistATestClient)
     return self.normalInstallation(vistATestClient, reinst)
+
+  def __printTGlobalChecksums__(self,testClient,installname,outputDir):
+    connection = testClient.getConnection()
+    connection.expect("Select Installation")
+    connection.send("Verify Checksums\r")
+    connection.expect("Select INSTALL NAME")
+    connection.send(installname +"\r")
+    connection.expect("Want each Routine Listed with Checksums")
+    connection.send("YES\r")
+    connection.expect("DEVICE")
+    connection.send("HFS\r")
+    connection.expect("HOST FILE NAME")
+    logfile=os.path.join(outputDir,installNameToDirName(installname)+"Checksums.log")
+    if testClient.isCache():
+      logfile=os.path.normpath(logfile)
+    connection.send(logfile+"\r")
+    connection.expect("PARAMETERS")
+    if testClient.isCache():
+      connection.send("\r")
+    else:
+      connection.send("NEWVERSION:NOREADONLY:VARIABLE\r")
+    index = connection.expect(["Select Installation","overwrite it"],600)
+    if index == 0:
+      connection.send("?\r")
+    else:
+      connection.send('\r')
+
+  def __printTGlobalSummary__(self,testClient,installname,outputDir):
+    connection = testClient.getConnection()
+    connection.expect("Select Installation")
+    connection.send("Print Transport Global\r")
+    connection.expect("Select INSTALL NAME")
+    connection.send(installname +"\r")
+    connection.expect("What to Print")
+    connection.send('2\r')
+    connection.expect("DEVICE")
+    connection.send("HFS\r")
+    connection.expect("HOST FILE NAME")
+    logfile=os.path.join(outputDir,installNameToDirName(installname)+"Print.log")
+    if testClient.isCache():
+      logfile=os.path.normpath(logfile)
+    connection.send(logfile+"\r")
+    connection.expect("PARAMETERS")
+    if testClient.isCache():
+      connection.send("\r")
+    else:
+      connection.send("NEWVERSION:NOREADONLY:VARIABLE\r")
+    index = connection.expect(["Select Installation","overwrite it"],600)
+    if index == 0:
+      connection.send("?\r")
+    else:
+      connection.send('\r')
+
+  def __printTGlobalCompare__(self,testClient,installname,outputDir):
+    connection = testClient.getConnection()
+    connection.expect("Select Installation")
+    connection.send("Compare Transport Global\r")
+    connection.expect("Select INSTALL NAME")
+    connection.send(installname +"\r")
+    connection.expect("Type of Compare")
+    connection.send("1\r")
+    connection.expect("DEVICE")
+    connection.send("HFS\r")
+    connection.expect("HOST FILE NAME")
+    logfile=os.path.join(outputDir,installNameToDirName(installname)+"Compare.log")
+    if testClient.isCache():
+      logfile=os.path.normpath(logfile)
+    connection.send(logfile+"\r")
+    connection.expect("PARAMETERS")
+    if testClient.isCache():
+      connection.send("\r")
+    else:
+      connection.send("NEWVERSION:NOREADONLY:VARIABLE\r")
+    index = connection.expect(["Select Installation","overwrite it"],600)
+    if index == 0:
+      connection.send("?\r")
+    else:
+      connection.send('\r')
+
+  ''' Print out the checksums and the summary of the transport global  '''
+  def __printTransportGlobal__(self,testClient,installNameList,outputDir):
+    for installName in installNameList:
+      self.__printTGlobalChecksums__(testClient,installName,outputDir)
+      self.__printTGlobalSummary__(testClient,installName,outputDir)
+      self.__printTGlobalCompare__(testClient,installName,outputDir)
   #---------------------------------------------------------------------------#
   #  Public override methods sections
   #---------------------------------------------------------------------------#
@@ -595,8 +690,10 @@ def main():
   parser.add_argument('-l', '--logFile', default=None, help='path to logFile')
   parser.add_argument('-r', '--reinstall', default=False, action='store_true',
                 help='whether re-install the KIDS even it is already installed')
+  parser.add_argument('-t', '--tglobalprint', default=None,
+                help='folder to hold a printout of Transport global information')
   parser.add_argument('-g', '--globalFiles', default=None, nargs='*',
-                      help='list of global files that need to import')
+                help='list of global files that need to import')
   parser.add_argument('-d', '--duz', default=DEFAULT_INSTALL_DUZ, type=int,
                 help='installer\'s VistA instance\'s DUZ')
 
@@ -621,7 +718,8 @@ def main():
                                            logFile=result.logFile,
                                            multiBuildList=multiBuildList,
                                            duz = result.duz,
-                                           globals=result.globalFiles)
+                                           globals=result.globalFiles,
+                                           printTG=result.tglobalprint)
     defaultKidsInstall.runInstallation(testClient, result.reinstall)
 
 if __name__ == "__main__":
