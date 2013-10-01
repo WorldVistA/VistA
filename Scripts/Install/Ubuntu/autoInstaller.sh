@@ -42,5 +42,11 @@ cd GTM
 # Create the VistA instance
 ./createVistaInstance.sh
 
+# Modify the Vagrant user to be able to use the VistA instance
+# add vagrant user to foia group
+adduser vagrant foia
+# source env script during vagrant login
+echo "source /home/foia/etc/env" >> /home/vagrant/.bashrc
+
 # Import via ImportRG of the VistA repository
 # These use the Dashboard scripts in the Dashboard directory
