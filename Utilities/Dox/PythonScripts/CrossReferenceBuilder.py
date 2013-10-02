@@ -22,13 +22,17 @@ from CallerGraphParser import parseAllCallGraphLog
 from CallerGraphParser import createCallGraphLogAugumentParser
 from DataDictionaryParser import parseDataDictionaryLogFile
 from DataDictionaryParser import createDataDictionaryAugumentParser
+from FileManDbCallParser import parseFileManDBJSONFile
+from FileManDbCallParser import createFileManDBFileAugumentParser
 
 def createCrossReferenceLogArgumentParser():
     callLogArgParser = createCallGraphLogAugumentParser()
     dataDictLogArgParser = createDataDictionaryAugumentParser()
+    filemanDBJsonArgParser = createFileManDBFileAugumentParser()
     parser = argparse.ArgumentParser(add_help=False,
                                      parents=[callLogArgParser,
-                                              dataDictLogArgParser])
+                                              dataDictLogArgParser,
+                                              filemanDBJsonArgParser])
     return parser
 class CrossReferenceBuilder(object):
     def __init__(self):
@@ -37,16 +41,38 @@ class CrossReferenceBuilder(object):
         return self.buildCrossReference(arguments.xindexLogDir,
                                         arguments.MRepositDir,
                                         arguments.patchRepositDir,
-                                        arguments.fileSchemaDir)
+                                        arguments.fileSchemaDir,
+                                        arguments.filemanDbJson)
     def buildCrossReference(self, xindexLogDir, MRepositDir,
-                            patchRepositDir, fileSchemaDir=None):
+                            patchRepositDir, fileSchemaDir=None,
+                            filemanDbJson=None):
         logParser = parseAllCallGraphLog(xindexLogDir,
                                          MRepositDir,
                                          patchRepositDir)
         if fileSchemaDir:
             parseDataDictionaryLogFile(logParser.getCrossReference(),
                                        fileSchemaDir)
+        if filemanDbJson:
+            parseFileManDBJSONFile(logParser.getCrossReference(),
+                                   filemanDbJson)
         logParser.getCrossReference().generateAllPackageDependencies()
         return logParser.getCrossReference()
     def buildCrossReferenceFromMongoDB(self):
         pass
+
+def main():
+    crossRefParse = createCrossReferenceLogArgumentParser()
+    parser = argparse.ArgumentParser(
+          description='VistA Cross-Reference Builder',
+          parents=[crossRefParse])
+    result = parser.parse_args()
+    from LogManager import initConsoleLogging
+    initConsoleLogging()
+    crossRefBlder = CrossReferenceBuilder()
+    crossRefBlder.buildCrossReferenceWithArgs(result)
+
+"""
+    main entry
+"""
+if __name__ == '__main__':
+    main()

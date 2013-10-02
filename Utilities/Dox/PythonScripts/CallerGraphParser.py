@@ -30,7 +30,7 @@ import argparse
 from datetime import datetime, date, time
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from CrossReference import LocalVariable, GlobalVariable, NakedGlobal, MarkedItem, LabelReference
-from CrossReference import RoutineCallInfo
+from CrossReference import RoutineCallInfo, getAlternateGlobalName, getTopLevelGlobalName
 
 from LogManager import logger, initConsoleLogging
 
@@ -216,7 +216,7 @@ class GlobalVarSectionParser (AbstractSectionParser):
         if not globalVar:
            # this is to fix a problem with the name convention of a top level global
            # like ICD9 can be referred as eith ICD9 or ICD9(
-           altName = self.getAlternateGlobalName(self._varName)
+           altName = getAlternateGlobalName(self._varName)
            globalVar = CrossReference.getGlobalByName(altName)
            if globalVar:
               logger.debug("Changing global name from %s to %s" % (self._varName, altName))
@@ -224,31 +224,10 @@ class GlobalVarSectionParser (AbstractSectionParser):
         Routine.addGlobalVariables(GlobalVariable(self._varName,
                                                   self._varPrefix,
                                                   self._varValue))
-    @staticmethod
-    def getAlternateGlobalName(globalName):
-        pos = globalName.find("(") # this should find the very first "("
-        if pos == -1:
-            return globalName + "("
-        if pos == len(globalName) - 1:
-            return globalName[0:len(globalName)-1]
-        return globalName
-    @staticmethod
-    def getTopLevelGlobalName(globalName):
-        pos = globalName.find("(") # this should find the very first "("
-        if pos == -1: # could not find, must be the top level name already
-            return globalName[1:]
-        return globalName[1:pos]
     def __postParsing__(self, Routine, CrossReference):
         globalVar = CrossReference.getGlobalByName(self._varName)
         if not globalVar:
-            topLevelName = self.getTopLevelGlobalName(self._varName)
-            (namespace, package) = CrossReference.categorizeGlobalByNamespace(topLevelName)
-            logger.debug("Global: %s, namespace: %s, package: %s" % (self._varName, namespace, package))
-            if not package:
-                package = CrossReference.getPackageByName("Uncategorized")
-                CrossReference.addToOrphanGlobalByName(self._varName)
-            globalVar = Global(self._varName, None, None, package)
-            CrossReference.addGlobalToPackage(globalVar, package.getName())
+            globalVar = CrossReference.addNonFileManGlobalByName(self._varName)
         routineName = Routine.getName()
         # case to handle the platform dependent routines
         if CrossReference.isPlatformDependentRoutineByName(routineName):
@@ -1042,12 +1021,12 @@ def createCallGraphLogAugumentParser():
     argGroup = parser.add_argument_group(
                               'Call Graph Log Parser Releated Arguments',
                               "Argument for Parsing Call Graph and Schema logs")
-    argGroup.add_argument('-l', '--xindexLogDir', required=True,
+    argGroup.add_argument('-xl', '--xindexLogDir', required=True,
                           help='Input XINDEX log files directory, nomally under'
                              '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
-    argGroup.add_argument('-r', '--MRepositDir', required=True,
+    argGroup.add_argument('-mr', '--MRepositDir', required=True,
                           help='VistA M Component Git Repository Directory')
-    argGroup.add_argument('-b', '--patchRepositDir', required=True,
+    argGroup.add_argument('-pr', '--patchRepositDir', required=True,
                           help="VistA Git Repository Directory")
     return parser
 
