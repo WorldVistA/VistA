@@ -25,14 +25,12 @@ fi
 apt-get install -y build-essential cmake-curses-gui git
 
 # Clone repos
-mkdir ~/Development
-cd ~/Development
-git clone https://github.com/OSEHRA/VistA.git
-git clone https://github.com/OSEHRA/VistA-M.git
+cd /usr/local/src
 git clone https://github.com/ChristopherEdwards/VistA-installation-scripts.git -b dev
+git clone https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
 
 # bootstrap the system
-cd ~/Development/VistA-installation-scripts/Scripts/Install/
+cd /usr/local/src/VistA-installation-scripts/Scripts/Install/
 ./Ubuntu/bootstrapUbuntuServer.sh
 
 # Install GTM
@@ -48,5 +46,10 @@ adduser vagrant foia
 # source env script during vagrant login
 echo "source /home/foia/etc/env" >> /home/vagrant/.bashrc
 
-# Import via ImportRG of the VistA repository
-# These use the Dashboard scripts in the Dashboard directory
+source /home/foia/etc/env
+
+# Build a dashboard and run the tests to verify installation
+# These use the Dashboard branch of the VistA repository
+# The dashboard will clone VistA and VistA-M repos
+cd ~
+ctest -S /vagrant/test.cmake -VV
