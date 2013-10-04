@@ -21,6 +21,11 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Abort provisioning if toolchain is already installed.
+test -d /opt/lsb-gtm/V6.0-002_x86 &&
+test -d /home/foia/g &&
+{ echo "VistA already Installed. Aborting."; exit 0; }
+
 # extra utils - used for cmake and dashboards and initial clones
 apt-get install -y build-essential cmake-curses-gui git
 
@@ -43,13 +48,23 @@ cd GTM
 # Modify the Vagrant user to be able to use the VistA instance
 # add vagrant user to foia group
 adduser vagrant foia
+
 # source env script during vagrant login
 echo "source /home/foia/etc/env" >> /home/vagrant/.bashrc
 
+# Setup environment variables so the dashboard can build
 source /home/foia/etc/env
+
+# create random string for build identification
+# source: http://ubuntuforums.org/showthread.php?t=1775099&p=10901169#post10901169
+export buildid=`tr -dc "[:alpha:]" < /dev/urandom | head -c 8`
+echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
 
 # Build a dashboard and run the tests to verify installation
 # These use the Dashboard branch of the VistA repository
 # The dashboard will clone VistA and VistA-M repos
 cd ~
-ctest -S /vagrant/test.cmake -VV
+ctest -S /vagrant/test.cmake
+
+# Remind users of their build id
+echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"

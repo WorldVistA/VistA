@@ -1,5 +1,5 @@
-set(CTEST_SITE "vagrant.krminc")
-set(CTEST_BUILD_NAME "Ubuntu12.04-GTMV6")
+set(CTEST_SITE "$ENV{buildid}.vagrant")
+set(CTEST_BUILD_NAME "Ubuntu12.04-GTMV6.0-002(x86)")
 
 set(dashboard_CMakeCache "#Path to a program.
 CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/make
