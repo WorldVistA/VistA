@@ -1,0 +1,13 @@
+service vistalink
+{
+    port = 8001
+    socket_type = stream
+    protocol = tcp
+    type = UNLISTED
+    user = softhat
+    server = /home/softhat/VistA-Instance/inet/vistalink.sh
+    wait = no
+    disable = no
+    per_source = UNLIMITED
+    instances = UNLIMITED
+}
