@@ -90,13 +90,6 @@ endif()
 #-----------------------------------------------------------------------------
 #------ SET UP UNIT TEST ENV -----#
 #-----------------------------------------------------------------------------
-find_file(TEST_VISTA_SETUP_MUNIT_PATCH_FILE NAMES XT_7-3_81_TESTVER9.KID DOC "Path to the MUNIT KIDS file XT_7-3_81_TESTVER9.KID")
-set(TEST_VISTA_SETUP_MUNIT_PATCH_NAME "XT*7.3*81" CACHE STRING "MUnit Kids build package install name")
-  SET(MUNIT_INSTALLATION_SCRIPT "InstallMUnitKIDSBuild.py")
-if(TEST_VISTA_SETUP_MUNIT_PATCH_FILE)
-  file(TO_NATIVE_PATH ${TEST_VISTA_SETUP_MUNIT_PATCH_FILE} TEST_VISTA_SETUP_MUNIT_PATCH_FILE)
-endif()
-
 SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/UnitTest/")
 SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
 file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
@@ -248,10 +241,6 @@ endif()
 ##### SECTION TO RUN UNIT TESTING #####
 #-----------------------------------------------------------------------------#
 OPTION(TEST_VISTA_MUNIT "Run Automated Unit Testing" OFF)
-OPTION(TEST_VISTA_SETUP_MUNIT "Install MUNIT KIDS BUILD" OFF)
-if(TEST_VISTA_MUNIT AND TEST_VISTA_FRESH AND NOT TEST_VISTA_SETUP_MUNIT)
-  message(WARNING "Current configuration will cause Dashboard submissions to fail all MUnit Tests. Either include TEST_VISTA_SETUP_MUNIT or remove TEST_VISTA_FRESH")
-endif()
 if(TEST_VISTA_MUNIT)
   if(GTM_DIST)
     execute_process(
@@ -272,11 +261,6 @@ To modify the list, edit GTM_SOURCE_DIR")
 endif()
   file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
   # Set up the platform dependent script files
-  if(TEST_VISTA_SETUP_MUNIT AND TEST_VISTA_SETUP_MUNIT_PATCH_FILE AND TEST_VISTA_SETUP_MUNIT_PATCH_NAME)
-    message(STATUS "Installing MUnit KIDS Build")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Setup/${MUNIT_INSTALLATION_SCRIPT}.in ${CMAKE_CURRENT_BINARY_DIR}/Setup/${MUNIT_INSTALLATION_SCRIPT})
-    execute_process(COMMAND "${PYTHON_EXECUTABLE}" "${CMAKE_CURRENT_BINARY_DIR}/Setup/${MUNIT_INSTALLATION_SCRIPT}")
-  endif()
   foreach(package ${PACKAGES})
     get_filename_component(package_name ${package} NAME)
     if(IS_DIRECTORY ${package}/Testing/MUnit)

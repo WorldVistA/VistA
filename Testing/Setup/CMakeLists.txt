@@ -93,9 +93,6 @@ if(GTM_DIST)
   set(RoutineImportFile "${CMAKE_CURRENT_SOURCE_DIR}/ZTLOAD1.ro")
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RoutineImport.py.in ${CMAKE_CURRENT_BINARY_DIR}/ZTLOADImport.py)
 endif()
-if(TEST_VISTA_SETUP_MUNIT_PATCH_FILE AND TEST_VISTA_SETUP_MUNIT_PATCH_NAME)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${MUNIT_INSTALLATION_SCRIPT}.in ${CMAKE_CURRENT_BINARY_DIR}/${MUNIT_INSTALLATION_SCRIPT})
-endif()
 if(VISTA_HAVE_BUILD_TOOL)
   # Mark the FreshVistA target as part of the ALL target if this
   # undocumented option is set (for use by dashboard scripts).

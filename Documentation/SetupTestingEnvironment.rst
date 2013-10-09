@@ -265,25 +265,13 @@ option.
     :align: center
     :alt: Highlighting the MUnit options that appear after selecting TEST_VISTA
 
-There are four CMake variables that relate to the Automated MUnit testing. One option, TEST_VISTA_MUNIT, determines if the MUnit tests are added to the CTest test list.
-The other three are used during the installation of the MUnit KIDS file.  The option, TEST_VISTA_SETUP_MUNIT, is the trigger that tells CMake to install the MUnit KIDS
-file.  The OSEHRA harness has the capability to install this KIDS build in two scenarios.  The first is during any CMake 'configure' step, the second is at the end of
-the TEST_VISTA_FRESH import process. This installation requires two pieces of information.  The first piece of information is specified in the TEST_VISTA_SETUP_MUNIT_PATCH_FILE variable
-which should be set as the full path to the .KID file that contains the MUnit code.  The current version of the .KID file that is recommended for use in the OSEHRA Testing harness
-is `Version 9`_ The final variable, TEST_VISTA_SETUP_MUNIT_PATCH_NAME, refers to the install name of the MUnit KIDS Build.  This is pre-set to match the MUnit code (XT*7.3*81) and
-should not need to be changed.
+There is just one CMake variable that relates to the Automated MUnit testing. The option, TEST_VISTA_MUNIT, determines if the MUnit tests are added to the CTest test list.
 
      ========================================   ==========================================   =======================================
          Variable Name                             Value for Testing in Caché                    Value for Testing in GT.M
      ========================================   ==========================================   =======================================
        TEST_VISTA_MUNIT                                            ON                                           ON
-       TEST_VISTA_SETUP_MUNIT                                      ON                                           ON
-       TEST_VISTA_SETUP_MUNIT_PATCH_FILE                  Path to MUnit KIDS file                     Path to MUnit KIDS file
-       TEST_VISTA_SETUP_MUNIT_PATCH_NAME                        XT*7.3*81                                    XT*7.3*81
      ========================================   ==========================================   =======================================
-
-**Note:  A warning will be shown if the TEST_VISTA_MUNIT option is selected with the TEST_VISTA_FRESH option without selecting TEST_VISTA_SETUP_MUNIT, as this combination
-will cause the MUnit tests of a Dashboard submission to fail.**
 
 EXAMPLE TESTING SETUP
 ---------------------
