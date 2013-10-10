@@ -86,6 +86,7 @@ class Routine(object):
         self._calledRoutines = RoutineDepDict()
         self._callerRoutines = RoutineDepDict()
         self._refGlobals = dict()
+        self._dbGlobals = dict()
         self._package = package
         self._totalCaller = 0
         self._totalCalled = 0
@@ -130,6 +131,15 @@ class Routine(object):
             self._refGlobals[globalVar.getName()] = globalVar
     def getReferredGlobal(self):
         return self._refGlobals
+    def addFilemanDbCallGlobal(self, dbGlobal, callTag=None):
+        dbFileNo = dbGlobal.getFileNo() # if it is a file man file
+        if not dbFileNo: return
+        if dbFileNo not in self._dbGlobals:
+            self._dbGlobals[dbFileNo] = (dbGlobal, [])
+        self._dbGlobals[dbFileNo][1].append(callTag)
+        dbGlobal.addFileManDbCallRoutine(self)
+    def getFilemanDbCallGlobals(self):
+        return self._dbGlobals
     def addNakedGlobals(self, NakedGlobal):
         varName = NakedGlobal.getName()
         if varName not in self._nakedGlobals:
@@ -325,6 +335,7 @@ class FileManFile(object):
         self._subFiles = None  # dict of all subFiles
         self._description = None # description of fileMan file
         self.setFileNo(fileNo)
+        self._fileManDbCallRoutines = None
     def getFileNo(self):
         return self._fileNo
     def setFileNo(self, fileNo):
@@ -360,6 +371,11 @@ class FileManFile(object):
         return not self.isRootFile()
     def getParentFile(self):
         return self._parentFile
+    def getRootFile(self):
+        root = self
+        while not root.isRootFile():
+            root = root.getParentFile()
+        return root
     def getSubFileByFileNo(self, fileNo):
         if not self._subFiles:
             return None
@@ -372,6 +388,17 @@ class FileManFile(object):
         return self._description
     def setDescription(self, description):
         self._description = [x.decode('latin1').encode('utf8') for x in description]
+    def getFileManDbCallRoutines(self):
+        return self._fileManDbCallRoutines
+    def addFileManDbCallRoutine(self, routine):
+        if not routine: return
+        package = routine.getPackage()
+        if not package: return
+        if not self._fileManDbCallRoutines:
+            self._fileManDbCallRoutines = dict()
+        if package not in self._fileManDbCallRoutines:
+            self._fileManDbCallRoutines[package] = set()
+        self._fileManDbCallRoutines[package].add(routine)
     def printFileManInfo(self):
         self.printFileManDescription()
         self.printFileManFields()
@@ -679,7 +706,7 @@ class Global(FileManFile):
         FileManFile.__init__(self, fileNo, fileManName)
         self._name = globalName
         self._package = package
-        self._referencesRoutines = dict() # accessed by routines
+        self._referencesRoutines = dict() # accessed by routines directly
         self._filePointers = dict() # pointer to some other file
         self._filePointedBy = dict() # pointed to by some other files
         self._totalReferencedRoutines = 0
@@ -827,6 +854,22 @@ class Global(FileManFile):
         return self._name.__hash__()
 
 #===============================================================================
+# # Utilities function related to Global
+#===============================================================================
+def getAlternateGlobalName(globalName):
+    pos = globalName.find("(") # this should find the very first "("
+    if pos == -1:
+        return globalName + "("
+    if pos == len(globalName) - 1:
+        return globalName[0:len(globalName)-1]
+    return globalName
+def getTopLevelGlobalName(globalName):
+    pos = globalName.find("(") # this should find the very first "("
+    if pos == -1: # could not find, must be the top level name already
+        return globalName[1:]
+    return globalName[1:pos]
+
+#===============================================================================
 # # class to represent a VistA Package
 #===============================================================================
 class Package(object):
@@ -843,6 +886,9 @@ class Package(object):
         self._globalDependents = dict()
         self._fileManDependencies = dict()
         self._fileManDependents = dict()
+        """ fileman db call related dependencies """
+        self._fileManDbDependencies = dict()
+        self._fileManDbDependents = dict()
         self._origName = packageName
         self._docLink = ""
         self._docMirrorLink = ""
@@ -890,7 +936,7 @@ class Package(object):
                     package._routineDependents[self][0].add(routine)
                     package._routineDependents[self][1].update(calledRoutines[package])
             referredGlobals = routine.getReferredGlobal()
-            # based in referred Globals
+            # based on referred Globals
             for globalVar in referredGlobals.itervalues():
                 package = globalVar.getPackage()
                 if package != self:
@@ -902,6 +948,20 @@ class Package(object):
                         package._globalDependents[self] = (set(), set())
                     package._globalDependents[self][0].add(routine)
                     package._globalDependents[self][1].add(globalVar)
+            # based on fileman db calls
+            filemanDbCallGbls = routine.getFilemanDbCallGlobals()
+            for filemanDbGbl, tags in filemanDbCallGbls.itervalues():
+                # find the package associated with the global
+                package = filemanDbGbl.getRootFile().getPackage()
+                if package != self:
+                    if package not in self._fileManDbDependencies:
+                        self._fileManDbDependencies[package] = (set(), set())
+                    self._fileManDbDependencies[package][0].add(routine)
+                    self._fileManDbDependencies[package][1].add(filemanDbGbl)
+                    if self not in package._fileManDbDependents:
+                        package._fileManDbDependents[self] = (set(), set())
+                    package._fileManDbDependents[self][0].add(routine)
+                    package._fileManDbDependents[self][1].add(filemanDbGbl)
     def generateFileManFileBasedDependencies(self):
         # build fileman file based dependencies
         self.__correctFileManFilePointerDependencies__()
@@ -977,6 +1037,10 @@ class Package(object):
         return self._fileManDependencies
     def getPackageFileManFileDependents(self):
         return self._fileManDependents
+    def getPackageFileManDbCallDependencies(self):
+        return self._fileManDbDependencies
+    def getPackageFileManDbCallDependents(self):
+        return self._fileManDbDependents
     def addNamespace(self, namespace):
         self._namespaces.append(namespace)
     def addNamespaceList(self, namespaceList):
@@ -1160,6 +1224,7 @@ class CrossReference:
         self._mumpsRoutines = set()
         self._platformDepRoutines = dict() # [name, package, mapping list]
         self._platformDepRoutineMappings = dict() # [platform dep _calledRoutine -> generic _calledRoutine]
+        self._allFileManSubFiles = dict() # store all fileman subfiles
     def getAllRoutines(self):
         return self._allRoutines
     def getAllPackages(self):
@@ -1170,6 +1235,8 @@ class CrossReference:
         return self._allGlobals
     def getAllFileManGlobals(self):
         return self._allFileManGlobals
+    def getAllFileManSubFiles(self):
+        return self._allFileManSubFiles
     def getOrphanGlobals(self):
         return self._orphanGlobals
     def hasPackage(self, packageName):
@@ -1185,9 +1252,12 @@ class CrossReference:
         if not self.hasRoutine(routineName):
             self._allRoutines[routineName] = Routine(routineName)
     def getRoutineByName(self, routineName):
-        if self.isPlatformDependentRoutineByName(routineName):
-            return self.getPlatformDependentRoutineByName(routineName)
-        return self._allRoutines.get(routineName)
+        newRtnName = routineName
+        if self.routineNeedRename(routineName):
+            newRtnName = self.getRenamedRoutineName(routineName)
+        if self.isPlatformDependentRoutineByName(newRtnName):
+            return self.getPlatformDependentRoutineByName(newRtnName)
+        return self._allRoutines.get(newRtnName)
     def getPackageByName(self, packageName):
         return self._allPackages.get(packageName)
     def getGlobalByName(self, globalName):
@@ -1203,6 +1273,18 @@ class CrossReference:
         if not hasSourceCode:
             routine.setHasSourceCode(hasSourceCode)
         self._allPackages[packageName].addRoutine(routine)
+    def addNonFileManGlobalByName(self, globalName):
+        if self.getGlobalByName(globalName): return # already exists
+        topLevelName = getTopLevelGlobalName(globalName)
+        (namespace, package) = self.categorizeGlobalByNamespace(topLevelName)
+        logger.debug("Global: %s, namespace: %s, package: %s" %
+                     (globalName, namespace, package))
+        if not package:
+            package = self.getPackageByName("Uncategorized")
+            self.addToOrphanGlobalByName(globalName)
+        globalVar = Global(globalName, None, None, package)
+        self.addGlobalToPackage(globalVar, package.getName())
+        return globalVar
     def addGlobalToPackageByName(self, globalName, packageName):
         if packageName not in self._allPackages:
             self._allPackages[packageName] = Package(packageName)
@@ -1221,6 +1303,17 @@ class CrossReference:
             realFileNo = float(fileNo)
             if realFileNo not in self._allFileManGlobals:
                 self._allFileManGlobals[realFileNo] = self._allGlobals[globalVar.getName()]
+    def addFileManSubFile(self, subFile):
+        self._allFileManSubFiles[subFile.getFileNo()] = subFile
+    def isFileManSubFileByFileNo(self, subFileNo):
+        return subFileNo in self._allFileManSubFiles
+    def getFileManSubFileByFileNo(self, subFileNo):
+        return self._allFileManSubFiles.get(subFileNo)
+    def getSubFileRootByFileNo(self, subFileNo):
+        root = self.getFileManSubFileByFileNo(subFileNo)
+        if not root:
+            return None
+        return root.getRootFile()
     def addToOrphanRoutinesByName(self, routineName):
         if not self.hasRoutine(routineName):
             self._orphanRoutines.add(routineName)

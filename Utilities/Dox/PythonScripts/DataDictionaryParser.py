@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-# A logFileParser class to parse XINDEX log files and generate the routine/package information in CrossReference Structure
+# A logFileParser class to parse VistA FileMan Schema log files and generate
+# the FileMan Schema and dependencies among packages.
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
 #
@@ -372,13 +373,14 @@ class FileManFieldSectionParser(IDDSectionParser):
             fileNo = result.group('File')
             logger.debug("Pointer to subFile %s" % fileNo)
             subFile = Global.getSubFileByFileNo(fileNo)
-            if not subFile:
+            if not subFile: # this is a new subfile
                 subFile = FileManFile(fileNo, fName, self._curFile)
                 self._curFile.addFileManSubFile(subFile)
                 logger.debug("Added subFile %s to File %s" % (fileNo, self._curFile.getFileNo()))
                 if self._isSubFile:
                     Global.addFileManSubFile(subFile)
             self._field.setPointedToSubFile(subFile)
+            CrossReference.addFileManSubFile(subFile)
             return
         for (key, value) in self.StringTypeMappingDict.iteritems():
             if fType.startswith(key):
@@ -645,7 +647,7 @@ def parseDataDictionaryLogFile(crossRef, fileSchemaDir):
 def createDataDictionaryAugumentParser():
     parser = argparse.ArgumentParser(add_help=False) # no help page
     argGroup = parser.add_argument_group("Data Dictionary Parser Auguments")
-    argGroup.add_argument('-f', '--fileSchemaDir', required=True,
+    argGroup.add_argument('-fs', '--fileSchemaDir', required=True,
                           help='VistA File Man Schema log Directory')
     return parser
 if __name__ == '__main__':
