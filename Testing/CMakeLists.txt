@@ -102,79 +102,11 @@ SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
 file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 
 if(GTM_DIST)
-  SET(VENDER_NAME "GTM")
+  include(UseGTM)
 endif()
 
 if(CCONTROL_EXECUTABLE)
-  set(VISTA_CACHE_USERNAME "" CACHE STRING "Username for instance")
-  set(VISTA_CACHE_PASSWORD "" CACHE STRING "Password for instance")
-  set(VENDER_NAME "Cache")
-  if(NOT VISTA_CACHE_INSTANCE)
-    # Detect Cache instances.
-    if(WIN32)
-      execute_process(
-        COMMAND ${CCONTROL_EXECUTABLE} qlist nodisplay
-        OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
-        ERROR_VARIABLE err
-        RESULT_VARIABLE failed
-        TIMEOUT 30 # should never happen, listing is fast
-        )
-    else()
-      execute_process(
-        COMMAND ${CCONTROL_EXECUTABLE} qlist
-        OUTPUT_FILE ${VISTA_BINARY_DIR}/cache_qlist.txt
-        ERROR_VARIABLE err
-        RESULT_VARIABLE failed
-        TIMEOUT 30
-        )
-    endif()
-    if(failed)
-      string(REPLACE "\n" "\n  " err "  ${err}")
-      message(FATAL_ERROR "Failed to run \"${CCONTROL_EXECUTABLE} qlist \": ${failed}\n${err}")
-    endif()
-    file(STRINGS ${VISTA_BINARY_DIR}/cache_qlist.txt qlist)
-    set(VISTA_CACHE_INSTANCES "")
-    foreach(VISTA_CACHE_INSTANCE ${qlist})
-      string(REPLACE "^" ";" VISTA_CACHE_INSTANCE "${VISTA_CACHE_INSTANCE}")
-      list(GET VISTA_CACHE_INSTANCE 0 name)
-      list(GET VISTA_CACHE_INSTANCE 1 ${name}_DIRECTORY)
-      list(GET VISTA_CACHE_INSTANCE 2 ${name}_VERSION)
-      list(GET VISTA_CACHE_INSTANCE 6 ${name}_WEB_PORT)
-      list(APPEND VISTA_CACHE_INSTANCES ${name})
-    endforeach()
-
-    # Select a default instance.
-    set(default "")
-    foreach(guess CACHEWEB TRYCACHE)
-      if(${guess}_DIRECTORY)
-        set(default ${guess})
-        break()
-      endif()
-    endforeach()
-    if(VISTA_CACHE_INSTANCES AND NOT default)
-      list(GET VISTA_CACHE_INSTANCES 0 default)
-    endif()
-
-    # Present an INSTANCE option.
-    set(VISTA_CACHE_INSTANCE "${default}" CACHE STRING "Cache instance name")
-    set_property(CACHE VISTA_CACHE_INSTANCE PROPERTY STRINGS "${VISTA_CACHE_INSTANCES}")
-  endif()
-  message(STATUS "Using Cache instance ${VISTA_CACHE_INSTANCE}")
-
-  # Select a namespace for VistA
-  set(VISTA_CACHE_NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
-
-  if(WIN32)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
-    message(STATUS "Testing if Cache Telnet service is enable:")
-    execute_process(COMMAND "@CTERM_EXECUTABLE@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
-    message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
-    if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
-      message(FATAL_ERROR "Error connecting to Cache ${VISTA_CACHE_INSTANCE} namespace ${VISTA_CACHE_NAMESPACE} via telnet, please enable the telnet setting via"
-        " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
-        " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
-    endif()
-  endif()
+  include(UseCache)
 endif()
 
 include(CommonFunctions)
@@ -193,9 +125,9 @@ endforeach()
 ##### SECTION TO SETUP THE REFRESH OF THE DATABASE #####
 #-----------------------------------------------------------------------------#
 
-IF(TEST_VISTA_FRESH)
+if(TEST_VISTA_FRESH)
   add_subdirectory(Setup)
-ENDIF()
+endif()
 
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
@@ -253,23 +185,6 @@ if(TEST_VISTA_MUNIT AND TEST_VISTA_FRESH AND NOT TEST_VISTA_SETUP_MUNIT)
   message(WARNING "Current configuration will cause Dashboard submissions to fail all MUnit Tests. Either include TEST_VISTA_SETUP_MUNIT or remove TEST_VISTA_FRESH")
 endif()
 if(TEST_VISTA_MUNIT)
-  if(GTM_DIST)
-    execute_process(
-      COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/ParseGTMRoutines.py
-      OUTPUT_VARIABLE GTM_ROUTINE_DIRS
-      )
-    string(STRIP "${GTM_ROUTINE_DIRS}" GTM_ROUTINE_DIRS)
-    set(GTM_SOURCE_DIR ${GTM_ROUTINE_DIRS} CACHE STRING
-        "List of directories that contain GT.M source routines obtained
-by parsing the 'gtmroutines' environment variable")
-    list(GET GTM_SOURCE_DIR 0 firstPath)
-    set(TEST_VISTA_GTM_ROUTINE_DIR ${firstPath} CACHE STRING
-        "Directory where OSEHRA GT.M routines are imported.
-MUnit test routines will be imported here.
-To modify the list, edit GTM_SOURCE_DIR")
-    set_property(CACHE TEST_VISTA_GTM_ROUTINE_DIR PROPERTY STRINGS ${GTM_SOURCE_DIR})
-    set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
-endif()
   file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
   # Set up the platform dependent script files
   if(TEST_VISTA_SETUP_MUNIT AND TEST_VISTA_SETUP_MUNIT_PATCH_FILE AND TEST_VISTA_SETUP_MUNIT_PATCH_NAME)
@@ -300,22 +215,11 @@ endif()
     endif()
   endforeach()
 endif()
+
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN PACKAGE PREFIX PARSING TESTING #####
 #-----------------------------------------------------------------------------#
 add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/PrefixParserTest.py "Uncategorized" "${CMAKE_CURRENT_SOURCE_DIR}/Python/PackagePrefixSample.csv")
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO RUN GTMROUTINES VARIABLE PARSING TEST #####
-#-----------------------------------------------------------------------------#
-if(GTM_DIST)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/ParseGTMRoutinesTest.py.in"
-                 "${CMAKE_CURRENT_BINARY_DIR}/Python/ParseGTMRoutinesTest.py")
-  add_test(PYTHON_GTMRoutinesParser ${PYTHON_EXECUTABLE}
-           ${CMAKE_CURRENT_BINARY_DIR}/Python/ParseGTMRoutinesTest.py)
-  set_tests_properties(PYTHON_GTMRoutinesParser
-                       PROPERTIES FAIL_REGULAR_EXPRESSION "FAILED")
-endif()
 
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN PYTHON UNIT TEST(s) under Scripts/Testing/PyUnit #####
