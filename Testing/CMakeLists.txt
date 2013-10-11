@@ -254,13 +254,22 @@ if(TEST_VISTA_MUNIT AND TEST_VISTA_FRESH AND NOT TEST_VISTA_SETUP_MUNIT)
 endif()
 if(TEST_VISTA_MUNIT)
   if(GTM_DIST)
-    set(TEST_VISTA_GTM_ROUTINE_DIR "" CACHE PATH
-      "Directory where OSEHRA GT.M routines are imported. MUnit test routines will be imported here. (NOTE: Path must be in the 'gtmroutines' environment variable)")
-    if(NOT TEST_VISTA_GTM_ROUTINE_DIR)
-      message(SEND_ERROR "Please set TEST_VISTA_GTM_ROUTINE_DIR as location to which MUnit test routines should be imported (GT.M routines directory)")
-    endif()
-    set(RoutineImportDir "${TEST_VISTA_GTM_ROUTINE_DIR}")
-  endif()
+    execute_process(
+      COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/ParseGTMRoutines.py
+      OUTPUT_VARIABLE GTM_ROUTINE_DIRS
+      )
+    string(STRIP "${GTM_ROUTINE_DIRS}" GTM_ROUTINE_DIRS)
+    set(GTM_SOURCE_DIR ${GTM_ROUTINE_DIRS} CACHE STRING
+        "List of directories that contain GT.M source routines obtained
+by parsing the 'gtmroutines' environment variable")
+    list(GET GTM_SOURCE_DIR 0 firstPath)
+    set(TEST_VISTA_GTM_ROUTINE_DIR ${firstPath} CACHE STRING
+        "Directory where OSEHRA GT.M routines are imported.
+MUnit test routines will be imported here.
+To modify the list, edit GTM_SOURCE_DIR")
+    set_property(CACHE TEST_VISTA_GTM_ROUTINE_DIR PROPERTY STRINGS ${GTM_SOURCE_DIR})
+    set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
+endif()
   file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
   # Set up the platform dependent script files
   if(TEST_VISTA_SETUP_MUNIT AND TEST_VISTA_SETUP_MUNIT_PATCH_FILE AND TEST_VISTA_SETUP_MUNIT_PATCH_NAME)
