@@ -18,6 +18,16 @@
 import os
 import re
 
+def remove_duplicates_preserve_order(items):
+  found = set([])
+  keep = []
+  for item in items:
+    if item not in found:
+      found.add(item)
+      keep.append(item)
+
+  return keep
+
 def check_dir(element, final_list):
   #replace all "\\ " with " " as os.path cannot check escaped spaces
   elementPath = re.subn(r'\\\s', ' ', element)[0]
@@ -26,6 +36,11 @@ def check_dir(element, final_list):
 
 def parse_gtmroutines():
   var = os.getenv('gtmroutines')
+  final_list = extract_m_source_dirs(var)
+  final_str = ';'.join(final_list)
+  print final_str
+
+def extract_m_source_dirs(var):
   #First, replace unescaped spaces with semicolons
   tmp = var.replace(" ",";").replace("\;","\ ")
   tmpl = tmp.split(";")
@@ -42,9 +57,8 @@ def parse_gtmroutines():
       check_dir(stripElement, final_list)
 
   # Remove duplicates, and print the semicolon separated string
-  final_list = list(set(final_list))
-  final_str = ';'.join(final_list)
-  print final_str
+  final_list = remove_duplicates_preserve_order(final_list)
+  return final_list
 
 if __name__ == "__main__":
   parse_gtmroutines()

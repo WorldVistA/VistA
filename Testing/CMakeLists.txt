@@ -306,6 +306,18 @@ endif()
 add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Python/PrefixParserTest.py "Uncategorized" "${CMAKE_CURRENT_SOURCE_DIR}/Python/PackagePrefixSample.csv")
 
 #-----------------------------------------------------------------------------#
+##### SECTION TO RUN GTMROUTINES VARIABLE PARSING TEST #####
+#-----------------------------------------------------------------------------#
+if(GTM_DIST)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/ParseGTMRoutinesTest.py.in"
+                 "${CMAKE_CURRENT_BINARY_DIR}/Python/ParseGTMRoutinesTest.py")
+  add_test(PYTHON_GTMRoutinesParser ${PYTHON_EXECUTABLE}
+           ${CMAKE_CURRENT_BINARY_DIR}/Python/ParseGTMRoutinesTest.py)
+  set_tests_properties(PYTHON_GTMRoutinesParser
+                       PROPERTIES FAIL_REGULAR_EXPRESSION "FAILED")
+endif()
+
+#-----------------------------------------------------------------------------#
 ##### SECTION TO RUN PYTHON UNIT TEST(s) under Scripts/Testing/PyUnit #####
 #-----------------------------------------------------------------------------#
 file(GLOB PyUnitTests ${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/Test*.py)

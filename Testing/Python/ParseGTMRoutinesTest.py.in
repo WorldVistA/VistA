@@ -1,0 +1,92 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+import os
+import random
+import shutil
+import sys
+import tempfile as tf
+import unittest
+
+sys.path = ['${CMAKE_SOURCE_DIR}/Testing/Python'] + sys.path
+import ParseGTMRoutines
+
+class TestParseGTMRoutines(unittest.TestCase):
+
+  def generateGTMRoutinesVariable(self):
+    # Create temporary directories to use in paths for the gtmroutines variable
+    tf.tempdir = ('${CMAKE_BINARY_DIR}/Testing/Temporary')
+    top_level_dirs = [tf.mkdtemp() for _ in xrange(random.randint(1,5))]
+    self.files = [tf.mkstemp(suffix='.so')[1] for _ in xrange(random.randint(1,5))]
+    self.dir_dict = {}
+    for topdir in top_level_dirs:
+      tf.tempdir = topdir
+      mid_level_dirs = [tf.mkdtemp() for _ in xrange(random.randint(0,5))]
+      if not mid_level_dirs:
+        # Randomize between object/source and object only.
+        [tf.mkstemp() for _ in xrange(random.randint(0,1))]
+      self.dir_dict[topdir] = mid_level_dirs
+
+    # Create the gtmroutines style input variable
+    self.final_str = ''
+    for a_dir in self.dir_dict:
+      if not self.dir_dict[a_dir]:
+        if not os.listdir(a_dir):
+          self.final_str = self.final_str + ' ' + a_dir
+        else:
+          self.final_str = self.final_str + ' ' + a_dir + '()'
+      else:
+        self.final_str = self.final_str + ' ' + a_dir +\
+                        '(' + ' '.join(self.dir_dict[a_dir]) + ')'
+    self.final_str = self.final_str + ' ' + ' '.join(self.files)
+    self.final_str = self.final_str.lstrip()
+
+  def setUp(self):
+    self.generateGTMRoutinesVariable()
+    self.output_lst = ParseGTMRoutines.extract_m_source_dirs(self.final_str)
+    sys.stdout.write("\nSimulated 'gtmroutines': \"")
+    sys.stdout.write(self.final_str)
+    sys.stdout.write("\"\n")
+    print "\nOutput GTM source dirs:", self.output_lst, "\n"
+
+  def tearDown(self):
+    for a_dir in self.dir_dict:
+      shutil.rmtree(a_dir)
+    for fls in self.files:
+      os.remove(fls)
+
+  def test_directories(self):
+    for a_dir in self.dir_dict:
+      if not self.dir_dict[a_dir]:
+        if not os.listdir(a_dir):
+          self.assertTrue(a_dir in self.output_lst)
+        else:
+          self.assertFalse(a_dir in self.output_lst)
+      else:
+        for a_src_dir in self.dir_dict[a_dir]:
+          self.assertTrue(a_src_dir in self.output_lst)
+
+  def test_files(self):
+    for fls in self.files:
+      self.assertFalse(fls in self.output_lst)
+
+  def test_dirs_exist(self):
+    for a_dir in self.output_lst:
+      self.assertTrue(os.path.isdir(a_dir))
+
+if __name__ == '__main__':
+  suite = unittest.TestLoader().loadTestsFromTestCase(TestParseGTMRoutines)
+  unittest.TextTestRunner(verbosity=2).run(suite)
