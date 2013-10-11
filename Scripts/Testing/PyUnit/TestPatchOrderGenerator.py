@@ -64,10 +64,13 @@ class TestPatchOrderGenerator(unittest.TestCase):
                '9':  ['11', '8'],
                '10': ['11', '3'],
                '11': ['7', '5'],
-               '8':  ['7' , '3']
+               '8':  ['7' , '3'],
+               '12': [],
               }
     result = topologicSort(depDict)
     self.assertTrue(result, "no valid order is generated")
+    self.assertTrue('12' in result, "orphan node is ignored")
+    print result
     result = topologicSort(depDict, '9')
     self.assertTrue(result, "no valid order is generated")
     print result
