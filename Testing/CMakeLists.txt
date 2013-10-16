@@ -193,6 +193,7 @@ if(TEST_VISTA_MUNIT)
       #Configures the python script with the name of the routine
       set(RoutineImportFile "${SCRIPT_OUTPUT_DIR}/${package_file_name}Routines.ro")
       set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}RoutineImport.log")
+      set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
       configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}RoutineImport.py")
       set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}.log")
       configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.py")

@@ -19,6 +19,24 @@
 #-----------------------------------------------------------------------------
 set(VENDOR_NAME "GTM")
 
+#-----------------------------------------------------------------------------
+#------ EXTRACT GT.M SOURCE DIR LIST FROM GTMROUTINES ENV VAR -----#
+#-----------------------------------------------------------------------------
+execute_process(
+  COMMAND ${PYTHON_EXECUTABLE} ${VISTA_SOURCE_DIR}/Testing/Python/ParseGTMRoutines.py
+  OUTPUT_VARIABLE GTM_ROUTINE_DIRS
+  )
+string(STRIP "${GTM_ROUTINE_DIRS}" GTM_ROUTINE_DIRS)
+set(GTM_SOURCE_DIR ${GTM_ROUTINE_DIRS} CACHE STRING
+    "List of directories that contain GT.M source routines obtained
+by parsing the 'gtmroutines' environment variable")
+list(GET GTM_SOURCE_DIR 0 firstPath)
+set(TEST_VISTA_GTM_ROUTINE_DIR ${firstPath} CACHE STRING
+    "Directory where OSEHRA GT.M routines are imported.
+MUnit test routines will be imported here.
+To modify the list, edit GTM_SOURCE_DIR")
+set_property(CACHE TEST_VISTA_GTM_ROUTINE_DIR PROPERTY STRINGS ${GTM_SOURCE_DIR})
+
 #-----------------------------------------------------------------------------#
 ##### SECTION TO SETUP THE REFRESH OF THE DATABASE #####
 #-----------------------------------------------------------------------------#
@@ -39,27 +57,6 @@ if(TEST_VISTA_FRESH)
   list(APPEND freshinfo TEST_VISTA_SETUP_VOLUME_SET)
   list(APPEND freshinfo TEST_VISTA_FRESH_GTM_ROUTINE_DIR)
   list(APPEND freshinfo TEST_VISTA_FRESH_GTM_GLOBALS_DAT)
-endif()
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO RUN UNIT TESTING #####
-#-----------------------------------------------------------------------------#
-if(TEST_VISTA_MUNIT)
-  execute_process(
-    COMMAND ${PYTHON_EXECUTABLE} ${VISTA_SOURCE_DIR}/Testing/Python/ParseGTMRoutines.py
-    OUTPUT_VARIABLE GTM_ROUTINE_DIRS
-    )
-  string(STRIP "${GTM_ROUTINE_DIRS}" GTM_ROUTINE_DIRS)
-  set(GTM_SOURCE_DIR ${GTM_ROUTINE_DIRS} CACHE STRING
-      "List of directories that contain GT.M source routines obtained
-by parsing the 'gtmroutines' environment variable")
-  list(GET GTM_SOURCE_DIR 0 firstPath)
-  set(TEST_VISTA_GTM_ROUTINE_DIR ${firstPath} CACHE STRING
-      "Directory where OSEHRA GT.M routines are imported.
-MUnit test routines will be imported here.
-To modify the list, edit GTM_SOURCE_DIR")
-  set_property(CACHE TEST_VISTA_GTM_ROUTINE_DIR PROPERTY STRINGS ${GTM_SOURCE_DIR})
-  set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
 endif()
 
 #-----------------------------------------------------------------------------#
