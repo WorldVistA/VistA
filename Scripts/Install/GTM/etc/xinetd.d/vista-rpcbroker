@@ -1,11 +1,11 @@
-service cprs-vista
+service vista-rpcbroker
 {
   port = 9430
   socket_type = stream
   protocol = tcp
   type = UNLISTED
-  user = $USER
-  server = $HOME/VistA-Instance/inet/cprs-vista-rpcbroker.sh
+  user = foia
+  server = /home/foia/bin/rpcbroker.sh
   wait = no
   disable = no
   per_source = UNLIMITED

@@ -77,6 +77,14 @@ useradd -c "$instance instance owner" -m -U $instance -s /bin/bash
 # Make instance Directories
 mkdir -p $basedir/{r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www,backup}
 
+# Copy standard etc and bin items from repo
+cp -R etc $basedir
+cp -R bin $basedir
+
+# Create symbolic link to enable brokers
+ln -s $basedir/etc/xinetd.d/vista-rpcbroker /etc/xinetd.d/$instance-vista-rpcbroker
+ln -s $basedir/etc/xinetd.d/vista-vistalink /etc/xinetd.d/$instance-vista-vistalink
+
 # Symlink libs
 ln -s $gtm_dist $basedir/lib/gtm
 

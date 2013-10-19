@@ -66,5 +66,8 @@ echo "Your build id is: $buildid you will need this to identify your build on th
 cd ~
 ctest -S /vagrant/test.cmake
 
+# Restart xinetd
+service xinetd restart
+
 # Remind users of their build id
 echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
