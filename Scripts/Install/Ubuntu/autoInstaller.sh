@@ -31,11 +31,11 @@ apt-get install -y build-essential cmake-curses-gui git
 
 # Clone repos
 cd /usr/local/src
-git clone https://github.com/ChristopherEdwards/VistA-installation-scripts.git -b dev
+git clone https://github.com/OSEHRA/VistA
 git clone https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
 
 # bootstrap the system
-cd /usr/local/src/VistA-installation-scripts/Scripts/Install/
+cd /usr/local/src/VistA/Scripts/Install/
 ./Ubuntu/bootstrapUbuntuServer.sh
 
 # Install GTM
