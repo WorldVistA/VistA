@@ -107,12 +107,15 @@ after selecting the options.
 XINDEX Testing
 ``````````````
 
-Running XINDEX on the routines in the VistA instance is the default testing in the OSEHRA Harness.  It does not have an explicit option but does have a few variables that influence
-the testing procedure.
+Running XINDEX on the routines in the VistA instance is the default testing in the OSEHRA Harness.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/27b575fd-cmakeGUIXINDEXHighlights.png
    :align: center
    :alt:  Highlighted variables that change the XINDEX testing.
+
+The TEST_VISTA_XINDEX option controls the running of the XINDEX tests. Setting
+this option to ON runs XINDEX on every routine in every package. Setting this
+option to OFF disables XINDEX testing.
 
 The TEST_VISTA_FRESH_M_DIR is not a required variable for setting up the XINDEX testing.
 The TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES is an option which changes the failure condition of the XINDEX tests.  With this option off, the test will fail if the XINDEX report
@@ -123,6 +126,7 @@ The these variables are set in the following manner:
      =======================================   ===================================  ======================================
       Variable Name                                 Value for Testing in Caché          Value for Testing in GT.M
      =======================================   ===================================  ======================================
+     TEST_VISTA_XINDEX                                    ON/OFF                                  ON/OFF
      TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES               ON/OFF                                  ON/OFF
      TEST_VISTA_OUTPUT_DIR                       Path to folder where log files        Path to folder where log files
                                                  will be stored                        will be stored
