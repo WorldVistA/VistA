@@ -33,7 +33,6 @@ import time
 import re
 import logging
 import csv
-from ParseCSVforPackagePrefixes import FindPackagePrefixes
 
 filedir = os.path.dirname(os.path.abspath(__file__))
 pexpectdir = os.path.normpath(os.path.join(filedir, "../Pexpect"))
@@ -56,29 +55,6 @@ class PROMPT(object):
   """Wait for a VISTA> prompt in current namespace."""
 
 class ConnectMUMPS(object):
-
-  def GetVistARoutines(self, vista_source_dir, test_results_dir, packagename):
-    packages_csv_file = vista_source_dir + '/Packages.csv'
-
-    packageprefix_sorted = FindPackagePrefixes(packagename, packages_csv_file)
-    return self.PlatformDependRoutine(packageprefix_sorted, packagename, test_results_dir)
-
-  def ClearExcludedRoutines(self, routine_set):
-    routine_set_clean = []
-    ROUTINE_EXTRACT_EXCLUDE_LIST = (
-       "ZGO", "ZGI", "CHK2LEV", "CHKOP", "GENDASH", "GENOUT",
-       "GETPASS", "GTMHELP", "GTMHLPLD", "LOADOP",
-       "LOADVX", "MSG", "PINENTRY", "TTTGEN",
-       "TTTSCAN", "NAME", "ZZRGUT.*", "ZZDGPTCO1",
-       "ZZUT.*", "DMU.*"
-    )
-    routine_exclude_regex = re.compile('^(' + '|'.join(ROUTINE_EXTRACT_EXCLUDE_LIST) + ')$')
-    for routine in routine_set:
-      if routine == "T":
-        continue
-      elif re.match(routine_exclude_regex, routine) is None:
-        routine_set_clean.append(routine)
-    return routine_set_clean
 
   def ZN(self, namespace):
     self.wait('>')
@@ -231,47 +207,6 @@ class ConnectWinCache(ConnectMUMPS):
     self.wait('choice')
     self.write('1\r')
 
-  def PlatformDependRoutine(self, packageprefix, packagename, test_results_dir):
-    self.write('D ^%RD')
-    self.wait('Routine')
-    if packagename == "Uncategorized":
-      self.write("*")
-      self.wait("Routine")
-    for prefix in packageprefix:
-      self.write(prefix + '*')
-      self.wait('Routine')
-    self.write('')
-    index = self.multiwait(['Long or Short form', self.prompt])
-    if index == 1:
-      return 0
-    self.write('L')
-    self.wait('last modified since date', 120)
-    self.write('')
-    self.wait('on or before date')
-    self.write('')
-    self.wait('Device')
-    self.write(test_results_dir + '/' + packagename + '.txt')
-    self.wait('Parameters')
-    self.write('WNS')
-    while True:
-      index = self.multiwait(['overwrite it', self.prompt])
-      if index == 0:
-        self.write('')
-        continue
-      if index == 1:
-        break
-    routineset = []
-    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
-      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
-      for routine in routine_list:
-        REreturn = re.match("^[A-Z0-9]+", routine)
-        if REreturn is not None:
-          routineset.append(REreturn.group(0))
-      return self.ClearExcludedRoutines(routineset)
-    else:
-      print "No Routines were written to" + test_results_dir + "/" + packagename + ".txt"
-      return 0
-
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
@@ -353,47 +288,6 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.wait('choice')
     self.write('1\r')
 
-  def PlatformDependRoutine(self, packageprefix, packagename, test_results_dir):
-    self.write('D ^%RD')
-    self.wait('Routine')
-    if packagename == "Uncategorized":
-      self.write("*")
-      self.wait("Routine")
-    for prefix in packageprefix:
-      self.write(prefix + '*')
-      self.wait('Routine')
-    self.write('')
-    index = self.multiwait(['Long or Short form', self.prompt])
-    if index == 1:
-      return 0
-    self.write('L')
-    self.wait('last modified since date', 120)
-    self.write('')
-    self.wait('on or before date')
-    self.write('')
-    self.wait('Device')
-    self.write(test_results_dir + '/' + packagename + '.txt')
-    self.wait('Parameters')
-    self.write('WNS')
-    while True:
-      index = self.multiwait(['overwrite it', self.prompt])
-      if index == 0:
-        self.write('')
-        continue
-      if index == 1:
-        break
-    routineset = []
-    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
-      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
-      for routine in routine_list:
-        REreturn = re.match("^[A-Z0-9]+", routine)
-        if REreturn is not None:
-          routineset.append(REreturn.group(0))
-      return self.ClearExcludedRoutines(routineset)
-    else:
-      print "No Routines were written to" + test_results_dir + "/" + packagename + ".txt"
-      return 0
-
 class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
@@ -453,51 +347,6 @@ class ConnectLinuxGTM(ConnectMUMPS):
     self.write('ZWR')
     self.wait('device')
     self.write(path + '/Coverage/' + filename.replace('.log', '.mcov').replace('.txt', '.mcov'))
-
-  def PlatformDependRoutine(self, packageprefix, packagename, test_results_dir):
-    self.write('S %ZRSET=1 D ^%RSEL')
-    self.wait('Routine')
-    if packagename == "Uncategorized":
-      self.write("*")
-      self.wait("Routine")
-    for prefix in packageprefix:
-      self.write(prefix + '*')
-      self.wait('Routine')
-    self.write('')
-    self.wait(PROMPT)
-    self.write('D ^%GO')
-    self.wait('Global ^')
-    self.write('%RSET')
-    self.wait('Global ^')
-    self.write('')
-    self.wait('Header Label')
-    self.write('')
-    self.wait('Output Format')
-    self.write('ZWR')
-    self.wait('Output device')
-    self.write(test_results_dir + '/' + packagename + '.txt')
-    self.wait(PROMPT)
-    self.write('K ^%RSET K %ZRSET')
-    self.wait(PROMPT)
-    routineset = []
-    if os.path.exists(test_results_dir + '/' + packagename + '.txt'):
-      routine_list = set(open(test_results_dir + '/' + packagename + '.txt', 'r').readlines())
-      if packagename == "Uncategorized":
-        for routine in routine_list:
-          REreturn = re.search('"[A-Z0-9]+"', routine)
-          if REreturn is not None:
-            routineset.append(REreturn.group(0).replace('"', ''))
-      else:
-        for prefix in packageprefix:
-          for routine in routine_list:
-            REreturn = re.search(prefix + '[A-Z0-9]+', routine)
-            if REreturn is not None:
-              routineset.append(REreturn.group(0))
-      return self.ClearExcludedRoutines(routineset)
-    else:
-      print "No Routines were written to" + test_results_dir + "/" + packagename + ".txt"
-      return 0
-
 
 def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0.0.1'):
 
