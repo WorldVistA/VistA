@@ -1,6 +1,10 @@
+# Set the site name with {randomString}.vagrant to identify all vagrant builds
 set(CTEST_SITE "$ENV{buildid}.vagrant")
+
+# Hardset buildname with {OS}-{Mplatform}(platform) convention
 set(CTEST_BUILD_NAME "Ubuntu12.04-GTMV6.0-002(x86)")
 
+# Build CMakeCache
 set(dashboard_CMakeCache "#Path to a program.
 CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/make
 #Value Computed by CMake
@@ -41,18 +45,12 @@ TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT:STRING=3600
 TEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=/home/foia/g
 #Path to the Routines folder within GT.M
 TEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=/home/foia/r
-#Path to the folder that contains the routines and globals from
-# OSEHRA
-#TEST_VISTA_FRESH_M_DIR:PATH=/home/root/Development/VistA-M
 #Use Python to test VistA via roll and scroll
 TEST_VISTA_FUNCTIONAL_RAS:BOOL=ON
 #Use Python and Sikuli to test Vitals and CPRS
 TEST_VISTA_FUNCTIONAL_SIK:BOOL=OFF
 #Run Automated Unit Testing
 TEST_VISTA_MUNIT:BOOL=OFF
-#Path to results directory Defaults to /Testing/Temporary/ within
-# the Binary Dir.
-#TEST_VISTA_OUTPUT_DIR:PATH=/home/vagrant/VistA/target/Testing/Temporary
 #Prepopulate the database with sample data including users, patients,
 # locations, etc. 
 TEST_VISTA_SETUP:BOOL=ON
@@ -76,14 +74,12 @@ TEST_VISTA_SETUP_UCI_NAME:STRING=PLA
 TEST_VISTA_SETUP_VOLUME_SET:STRING=PLA
 #Use warnings as a failure condition for XINDEX tests?
 TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES:BOOL=OFF
-#Value Computed by CMake
-#VISTA_BINARY_DIR:STATIC=/home/vagrant/VistA/target
-#Value Computed by CMake
-#VISTA_SOURCE_DIR:STATIC=/root/Development/VistA
+#Run XINDEX Tests
+TEST_VISTA_XINDEX:BOOL=OFF
 #Server address of the machine that will have the VistA TCP listener
 VISTA_TCP_HOST:STRING=127.0.0.1
 #Port number of the opened TCP listener.
-VISTA_TCP_PORT:STRING=9210
+#VISTA_TCP_PORT:STRING=9210
 #Always build testing
 BUILD_TESTING:INTERNAL=ON")
 #Where the files from git will be placed

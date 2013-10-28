@@ -64,7 +64,7 @@ echo "Your build id is: $buildid you will need this to identify your build on th
 # These use the Dashboard branch of the VistA repository
 # The dashboard will clone VistA and VistA-M repos
 cd ~
-ctest -S /vagrant/test.cmake
+ctest -S /vagrant/test.cmake -V
 
 # Restart xinetd
 service xinetd restart
