@@ -75,9 +75,13 @@ execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/VistAR
 CheckResult(return "VistA Routine Import Failed")
 
 if(TEST_VISTA_SETUP AND NOT EXISTS "@CCONTROL_EXECUTABLE@")
-  message(STATUS "Updating the ZTLOAD1 routine ")
-  execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/ZTLOADImport.py" RESULT_VARIABLE return )
-  CheckResult(return "Import of ZTLOAD1 Failed")
+  file(GLOB ImportRoutines "@CMAKE_CURRENT_SOURCE_DIR@/*.ro")
+  foreach(RoutineImportFile ${ImportRoutines})
+    get_filename_component(routineName "${RoutineImportFile}" NAME_WE)
+    message(STATUS "Updating the ${routineName} routine ")
+    execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@CMAKE_CURRENT_BINARY_DIR@/${routineName}Import.py" RESULT_VARIABLE return )
+    CheckResult(return "Import of ${routineName} Failed")
+  endforeach()
 endif()
 
 message(STATUS "Importing globals...")
