@@ -69,5 +69,8 @@ ctest -S /vagrant/test.cmake -V
 # Restart xinetd
 service xinetd restart
 
+# Add p and s directories to gtmroutines environment variable
+perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' /home/foia/etc/env
+
 # Remind users of their build id
 echo "Your build id is: $buildid you will need this to identify your build on the VistA dashboard"
