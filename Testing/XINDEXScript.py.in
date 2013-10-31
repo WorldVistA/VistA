@@ -16,6 +16,7 @@
 import sys,os,re,time
 sys.path = ['@VISTA_SOURCE_DIR@/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
+from ParseCSVforPackagePrefixes import FindPackagePrefixes
 
 VistA=ConnectToMUMPS("@LOGFILENAME@","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
 if ('@VISTA_CACHE_USERNAME@' and '@VISTA_CACHE_PASSWORD@'):
@@ -31,42 +32,44 @@ if '@TEST_VISTA_COVERAGE@'=='ON':
   VistA.startCoverage()
 VistA.wait(PROMPT)
 VistA.write('K ^XUTL("XQ",$J)')
-routines=VistA.GetVistARoutines('@VISTA_SOURCE_DIR@','@TEST_VISTA_OUTPUT_DIR@','@package_file_name@')
+pkgPrefixLst = FindPackagePrefixes('@package_file_name@',
+                                   os.path.join('@VISTA_SOURCE_DIR@',
+                                                'Packages.csv'))
 VistA.write('D ^XINDEX')
 if VistA.type == 'cache':
   VistA.wait('No =>')
   VistA.write('No')
-if isinstance(routines,list):
-  for routine in routines:
-    VistA.wait('Routine:')
-    VistA.write(routine)
+if '@package_file_name@' == 'Uncategorized':
   VistA.wait('Routine:')
+  VistA.write('*') # select all routines
+for prefix in pkgPrefixLst:
+  VistA.wait('Routine:')
+  VistA.write(prefix + '*')
+VistA.wait('Routine:')
+VistA.write('')
+selectionList = ['Select BUILD NAME:',
+                 'Select INSTALL NAME:',
+                 'Select PACKAGE NAME:']
+while True:
+  index = VistA.multiwait(selectionList)
   VistA.write('')
-  selectionList = ['Select BUILD NAME:',
-                   'Select INSTALL NAME:',
-                   'Select PACKAGE NAME:']
-  while True:
-    index = VistA.multiwait(selectionList)
-    VistA.write('')
-    if index == len(selectionList) - 1:
-      break
-  index = VistA.multiwait(['warnings?',VistA.prompt])
-  if index==1:
-    sys.exit(0)
-  VistA.write('No')
-  VistA.wait('routines?')
-  VistA.write('NO')
-  VistA.wait('DEVICE:')
-  VistA.write(';;9999')
-  if sys.platform == 'win32':
-    VistA.wait('Right Margin:')
-    VistA.write('')
+  if index == len(selectionList) - 1:
+    break
+index = VistA.multiwait(['warnings?',VistA.prompt])
+if index==1:
+  sys.exit(0)
+VistA.write('No')
+VistA.wait('routines?')
+VistA.write('NO')
+VistA.wait('DEVICE:')
+VistA.write(';;9999')
+if sys.platform == 'win32':
+  VistA.wait('Right Margin:')
   VistA.write('')
-  VistA.wait('continue:',120)
-  VistA.write('')
-  VistA.wait('--- END ---',120)
-  if '@TEST_VISTA_COVERAGE@'=='ON':
-    VistA.stopCoverage(os.path.normpath("@LOGFILENAME@"))
-  VistA.write('h')
-else:
-  print "No routines for the XINDEX test."
+VistA.write('')
+VistA.wait('continue:',120)
+VistA.write('')
+VistA.wait('--- END ---',120)
+if '@TEST_VISTA_COVERAGE@'=='ON':
+  VistA.stopCoverage(os.path.normpath("@LOGFILENAME@"))
+VistA.write('h')
