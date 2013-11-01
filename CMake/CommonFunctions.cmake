@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # Define a function for parsing and reporting XINDEX output results
-function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
+function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDOR_NAME GREP_EXEC OUTPUT USE_XINDEX_WARNINGS_AS_FAILURES)
    if(USE_XINDEX_WARNINGS_AS_FAILURES)
      set(FAILURE_CONDITION "F -|W -")
    else()
@@ -33,8 +33,8 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDER_NAME GREP_EXEC OUTP
       elseif(line MATCHES ${FAILURE_CONDITION})
         # also assume the file name is ${PACKAGE_NAME}.${routinename}
         set(ExceptionFound FALSE)
-        if (EXISTS ${PACKAGES_DIR}/${PACKAGE_NAME}/XINDEXException/${VENDER_NAME}.${routine_name})
-          file(STRINGS ${PACKAGES_DIR}/${PACKAGE_NAME}/XINDEXException/${VENDER_NAME}.${routine_name} ExceptionList)
+        if (EXISTS ${PACKAGES_DIR}/${PACKAGE_NAME}/XINDEXException/${VENDOR_NAME}.${routine_name})
+          file(STRINGS ${PACKAGES_DIR}/${PACKAGE_NAME}/XINDEXException/${VENDOR_NAME}.${routine_name} ExceptionList)
           foreach (Exception ${ExceptionList})
             string(STRIP "${line}" newline)
             # this is quite stricty to ensure the text is the exactly the same

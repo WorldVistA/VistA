@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-set(freshinfo "")
 find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
 list(APPEND freshinfo TEST_VISTA_FRESH_M_DIR)
 option(TEST_VISTA_FRESH_CUSTOM_REFRESH "Use a custom script to refresh the VistA Databases" OFF)
@@ -25,50 +24,9 @@ if(TEST_VISTA_FRESH_CUSTOM_REFRESH)
   mark_as_advanced(TEST_VISTA_FRESH_CUSTOM_COMMAND)
 endif()
 
-if(CCONTROL_EXECUTABLE)
-  set(TEST_VISTA_SETUP_VOLUME_SET "VISTA" CACHE STRING "Volume Set for new Vista Instance")
-  set(TEST_VISTA_FRESH_CACHE_DAT_VISTA "" CACHE FILEPATH "Path to the CACHE.dat file with the imported VistA")
-  set(TEST_VISTA_FRESH_CACHE_DAT_EMPTY "" CACHE FILEPATH "Path to an empty ******.DAT file for replacement")
-
-  list(APPEND freshinfo TEST_VISTA_SETUP_VOLUME_SET)
-  list(APPEND freshinfo TEST_VISTA_FRESH_CACHE_DAT_VISTA)
-  list(APPEND freshinfo TEST_VISTA_FRESH_CACHE_DAT_EMPTY)
-
-  if(TEST_VISTA_FRESH_CACHE_DAT_VISTA)
-    get_filename_component(filename ${TEST_VISTA_FRESH_CACHE_DAT_VISTA} NAME)
-    string(TOLOWER ${filename} filename_lower)
-    if(${filename_lower} STREQUAL "cache.dat")
-      get_filename_component(TEST_VISTA_FRESH_CACHE_DIR_VISTA ${TEST_VISTA_FRESH_CACHE_DAT_VISTA} PATH)
-    else(${filename_lower} STREQUAL "cache.dat")
-      message(SEND_ERROR "${TEST_VISTA_FRESH_CACHE_DAT_VISTA} does not point to a file called 'cache.dat'.  Fix the path to point to a correct file.")
-    endif(${filename_lower} STREQUAL "cache.dat")
-  endif(TEST_VISTA_FRESH_CACHE_DAT_VISTA)
-endif()
-
-if(GTM_DIST)
-  #Finds the scripting program for the Linux Based system
-  set(TEST_VISTA_SETUP_UCI_NAME "PLA" CACHE STRING "GTM  UCI to store VistA")
-  set(TEST_VISTA_SETUP_VOLUME_SET "PLA" CACHE STRING "Volume Set for new Vista Instance")
-
-  #Creates variables for the routines and globals directorys within GT.M
-  set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR "" CACHE PATH
-    "Directory where OSEHRA routines should be imported while setting up a fresh VistA instance. (NOTE: Path must be in the 'gtmroutines' environment variable)")
-  if(NOT TEST_VISTA_FRESH_GTM_ROUTINE_DIR AND TEST_VISTA_GTM_ROUTINE_DIR)
-    set(TEST_VISTA_FRESH_GTM_ROUTINE_DIR ${TEST_VISTA_GTM_ROUTINE_DIR})
-  endif()
-  set(TEST_VISTA_FRESH_GTM_GLOBALS_DAT "" CACHE FILEPATH " Path to the GT.M database.dat")
-
-  list(APPEND freshinfo TEST_VISTA_SETUP_UCI_NAME)
-  list(APPEND freshinfo TEST_VISTA_SETUP_VOLUME_SET)
-  list(APPEND freshinfo TEST_VISTA_FRESH_GTM_ROUTINE_DIR)
-  list(APPEND freshinfo TEST_VISTA_FRESH_GTM_GLOBALS_DAT)
-endif()
-
 set(TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT 3600 CACHE STRING "Timeout in seconds for importing globals")
 set(TEST_VISTA_SETUP_SITE_NAME "DEMO.OSEHRA.ORG" CACHE STRING "Name to set for the site address when initializing VistA instance.  Default is 'DEMO.OSEHRA.ORG'")
 set(TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY "@" CACHE PATH "Absolute path to the system temp directory.  The default of '@' will cause the system to use the working directory of the process as the temp directory.  This path has a limit of 50 characters.  Avoid Windows paths with a '~' ")
-
-
 
 foreach(fvariable ${freshinfo})
   if(NOT ${fvariable})
