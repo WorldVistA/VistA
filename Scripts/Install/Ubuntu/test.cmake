@@ -4,6 +4,9 @@ set(CTEST_SITE "$ENV{buildid}.vagrant")
 # Hardset buildname with {OS}-{Mplatform}(platform) convention
 set(CTEST_BUILD_NAME "Ubuntu12.04-GTMV6.0-002(x86)")
 
+# Set build type to experimental by default
+set(dashboard_model "Experimental")
+
 # Build CMakeCache
 set(dashboard_CMakeCache "#Path to a program.
 CMAKE_MAKE_PROGRAM:FILEPATH=/usr/bin/make
