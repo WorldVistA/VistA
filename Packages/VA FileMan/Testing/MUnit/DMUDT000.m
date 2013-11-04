@@ -61,6 +61,7 @@ DMUDT000 ; VEN/SMH - Unit Test Driver for Date Utilities; 26-DEC-2012
  QUIT
  ;
 %DTINT ; @TEST - Interactive dates; %DT("AE") - Ask and Echo
+ I ^%ZSOF("OS")["OpenM" Q
  N %DT,X,Y
  S %DT="A"
  N CMD S CMD="D ^%DT"

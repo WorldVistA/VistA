@@ -4,7 +4,7 @@ DMUDIC00 ; VEN/SMH - A few ^DIC API Unit Tests; 13 JAN 2013
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
  D DT^DICRW
- D EN^XTMUNIT($T(+0),1)
+ D:$$VERSION^XPDUTL("DI")["22.2" EN^XTMUNIT($T(+0),1)
  QUIT
  ;
 STARTUP ; Create files 1009.802 (Shadow State) and 1009.801 (Broken File)
