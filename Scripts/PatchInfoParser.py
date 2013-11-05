@@ -40,12 +40,11 @@ def dirNameToInstallName(dirName):
 """ Utility function to extract namespace, version, patchNo from installName"""
 def extractInfoFromInstallName(installName):
   namespace, ver, patch = None, None, None
-  if installName.find("*") < 0: # handle namepsace 1.0
-    result = re.match("^(?P<namespace>[A-Z]+) (?P<ver>[1-9][0-9]?\.[0-9])$", installName)
-    if result:
-      namespace = result.group('namespace')
-      ver = result.group('ver')
-      patch = None
+  if installName.find("*") < 0: # handle "namepsace version"
+    pos = installName.rfind(' ')
+    if pos >= 0:
+      namespace = installName[:pos]
+      ver = installName[pos+1:]
   else:
     result = installName.split('*')
     namespace = result[0]

@@ -600,7 +600,6 @@ def addPackagePatchHistory(packageName, version, seqNo,
                            patchNo, vistAClient, inputDuz):
   logger.info("Adding %s, %s, %s, %s to Package Patch history" %
               (packageName, version, seqNo, patchNo))
-  appliedUser = getPersonNameByDuz(inputDuz, vistAClient)
   connection = vistAClient.getConnection()
   menuUtil = VistAMenuUtil(duz=1)
   menuUtil.gotoFileManEditEnterEntryMenu(vistAClient)
@@ -626,7 +625,7 @@ def addPackagePatchHistory(packageName, version, seqNo,
   connection.expect("DATE APPLIED: ")
   connection.send("T\r")
   connection.expect("APPLIED BY: ")
-  connection.send("%s\r" % appliedUser)
+  connection.send("`%s\r" % inputDuz)
   connection.expect("DESCRIPTION:")
   connection.send("\r")
   connection.expect("Select PATCH APPLICATION HISTORY: ")

@@ -47,6 +47,7 @@ from LoggerManager import logger, initConsoleLogging, initFileLogging
 from PatchInfoParser import extractInfoFromInstallName
 from PatchOrderGenerator import PatchOrderGenerator
 from VistAPackageInfoFetcher import VistAPackageInfoFetcher
+from VistAPackageInfoFetcher import getPackageLatestVersionByNamespace
 from ExternalDownloader import obtainKIDSBuildFileBySha1
 from ConvertToExternalData import generateSha1Sum
 from VistATaskmanUtil import VistATaskmanUtil
@@ -214,7 +215,17 @@ class PatchSequenceApply(object):
     else:
       # also need to reload the package patch hist
       self.__reloadPackagePatchHistory__(patchInfo)
-      assert self.__isPatchInstalled__(patchInfo)
+      """ special logic to handle release code """
+      installed = False
+      namespace,ver,patch = extractInfoFromInstallName(patchInfo.installName)
+      if not patch:
+        if namespace and ver:
+          updVer = getPackageLatestVersionByNamespace(namespace,
+                                                      self._testClient)
+          if updVer and updVer == ver:
+            installed = True
+      if not installed:
+        assert self.__isPatchInstalled__(patchInfo)
     return 1
   """ get the package patch history and update package name
       for KIDS only build
@@ -268,7 +279,11 @@ class PatchSequenceApply(object):
     for installName in installNameList:
       (namespace,ver,patch) = extractInfoFromInstallName(installName)
       if not patchHistInfo.hasNamespace(namespace):
-        patchHistInfo.createAllPackageMapping()
+        ns = patchHistInfo.getPackageNamespaceByName(namespace)
+        if not ns:
+          patchHistInfo.createAllPackageMapping()
+        else:
+          namespace = ns
       if patchHistInfo.hasNamespace(namespace):
         packageName = patchHistInfo.getPackageName(namespace)
         patchHistInfo.getPackagePatchHistory(packageName, namespace, ver)

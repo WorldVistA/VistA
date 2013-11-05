@@ -673,6 +673,18 @@ def parsePatchInstallDatetime(dtString):
     logger.error("Can not parse datetime %s" % dtString)
   return outDatetime
 
+"""
+  get the latest version for a given package
+"""
+
+def getPackageLatestVersionByNamespace(pkgNamespace, vistATestClient):
+  vistATestClient.waitForPrompt()
+  conn = vistATestClient.getConnection()
+  conn.send('W $$VERSION^XPDUTL("%s")\r' % pkgNamespace)
+  vistATestClient.waitForPrompt()
+  conn.send('\r')
+  return conn.before.strip('\r\n ').split('\r\n')[-1]
+
 """ test the fetcher class """
 def testMain():
   testClient = createTestClient()
@@ -740,8 +752,10 @@ def main():
     import pprint
     initConsoleLogging(logging.INFO)
     packagePatchHist = VistAPackageInfoFetcher(testClient)
-    packagePatchHist.getPackagePatchHistByNamespace("DI")
+    packagePatchHist.getPackagePatchHistByNamespace("DI", "22.0")
     packagePatchHist.printPackagePatchHist("VA FILEMAN")
+    ver = getPackageLatestVersionByNamespace("DI", testClient)
+    print "the latest version is [%s]" % ver
     output = packagePatchHist.getAllPatchesInstalledByTime(datetime(2012,8,24))
     pprint.pprint(output)
     output = packagePatchHist.getAllPatchInstalledAfterByTime("T-365")
@@ -750,5 +764,5 @@ def main():
 
 if __name__ == '__main__':
   testIsInstallCompleted()
-  testMain()
+  #testMain()
   main()
