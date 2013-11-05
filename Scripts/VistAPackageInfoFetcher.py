@@ -47,17 +47,17 @@ class VistAPackageInfoFetcher(object):
     menuUtil.gotoFileManPrintFileEntryMenu(self._testClient)
     # print file entry
     connection.send("9.4\r") # Package file with fileman #9.4
-    connection.expect("SORT BY:")
+    connection.expect(re.compile("SORT BY:", re.I))
     connection.send("\r")
-    connection.expect("START WITH")
+    connection.expect(re.compile("START WITH", re.I))
     connection.send("\r")
-    connection.expect("FIRST PRINT FIELD:")
+    connection.expect(re.compile("FIRST PRINT FIELD:", re.I))
     connection.send(".01\r") # fileman field# .01 is NAME
-    connection.expect("THEN PRINT FIELD:")
+    connection.expect(re.compile("THEN PRINT FIELD:", re.I))
     connection.send("1\r") # fileman field# 1 is the PREFIX
-    connection.expect("THEN PRINT FIELD:")
+    connection.expect(re.compile("THEN PRINT FIELD:", re.I))
     connection.send("\r")
-    connection.expect("PACKAGE LIST//")
+    connection.expect(re.compile("PACKAGE LIST//", re.I))
     connection.send("\r")
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
@@ -198,20 +198,21 @@ class VistAPackageInfoFetcher(object):
     connection.send("\r")
     connection.expect("STORE RESULTS OF SEARCH IN TEMPLATE: ")
     connection.send("\r")
-    connection.expect(["SORT BY: ", "SORT BY: NAME// "])
+    connection.expect([re.compile("SORT BY: ", re.I),
+                       re.compile("SORT BY: NAME// ", re.I)])
     connection.send("17\r") # sort by INSTALL COMPLETE TIME
-    connection.expect(["START WITH INSTALL COMPLETE TIME: ",
-                       "START WITH INSTALL COMPLETE TIME: FIRST// ",])
+    connection.expect([re.compile("START WITH INSTALL COMPLETE TIME: ", re.I),
+                       re.compile("START WITH INSTALL COMPLETE TIME: FIRST// ",re.I)])
     connection.send("\r")
-    connection.expect("WITHIN INSTALL COMPLETE TIME, SORT BY: ")
+    connection.expect(re.compile("WITHIN INSTALL COMPLETE TIME, SORT BY: ", re.I))
     connection.send("\r")
-    connection.expect("FIRST PRINT FIELD: ")
+    connection.expect(re.compile("FIRST PRINT FIELD: ", re.I))
     connection.send("NAME\r")
-    connection.expect("THEN PRINT FIELD: ")
+    connection.expect(re.compile("THEN PRINT FIELD: ", re.I))
     connection.send("17\r")
-    connection.expect("THEN PRINT FIELD: ")
+    connection.expect(re.compile("THEN PRINT FIELD: ", re.I))
     connection.send("\r")
-    connection.expect("Heading \(S/C\): INSTALL SEARCH// ")
+    connection.expect(re.compile("Heading \(S/C\): INSTALL SEARCH// ", re.I))
     connection.send("\r") # use default heading
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
@@ -226,8 +227,7 @@ class VistAPackageInfoFetcher(object):
         continue
       if resultStart:
         output.append((line[:DATETIME_INDENT].rstrip(),
-                       datetime.strptime(line[DATETIME_INDENT:],
-                                         "%b %d,%Y  %H:%M")))
+                       parsePatchInstallDatetime(line[DATETIME_INDENT:])))
         continue
       if re.search('^-+$',line):
         resultStart = True
@@ -375,7 +375,7 @@ class VistAPackageInfoFetcher(object):
     connection.send("%s\r" % installName)
     while True:
       index = connection.expect(["Select INSTALL NAME: ",
-                                 "ANOTHER ONE: ",
+                                 re.compile("ANOTHER ONE: ", re.I),
                                  "CHOOSE 1-[0-9]+: "])
       if index == 0:
         connection.send("\r")
@@ -548,10 +548,7 @@ class PatchInstallLog(object):
           datetimePart += ":00:00"
         if len(datetimePart) - pos == 6:
           datetimePart +=":00"
-        self.datetime = datetime.strptime(datetimePart,
-                                          self.DATETIME_FORMAT_STRING)
-      else:
-        self.datetime = datetime.strptime(datetimePart, self.DATE_FORMAT_STRING)
+      self.datetime = parsePatchInstallDatetime(datetimePart)
     if self.isVersionLine(historyLine):
       self.__parseVersionInfo__(
           historyLine[:datetimeIndent].strip())
@@ -638,6 +635,44 @@ def parsePackagePatchHistory(historyString, packageName, namespace, version):
         result.setVersion(patchLog.version)
   return result
 
+def convertAbbreviatedMonth(dtString):
+  convertLst = (('JAN', 'Jan'), ('FEB', 'Feb'), ('MAR', 'Mar'),
+                ('APR', 'Apr'), ('MAY', 'May'), ('JUN', 'Jun'),
+                ('JUL', 'Jul'), ('AUG', 'Aug'), ('SEP', 'Sep'),
+                ('OCT', 'Oct'), ('NOV', 'Nov'), ('DEC', 'Dec'))
+  for abvMon in convertLst:
+    if dtString.startswith(abvMon[0]):
+      return dtString.replace(abvMon[0], abvMon[1])
+  return dtString
+
+def parsePatchInstallDatetime(dtString):
+  """
+  Utility function to parse Patch Install Date time
+  return datetime object if valid, otherwise None
+  """
+  outDatetime = None
+  datetimeFmtLst = (
+                     "%b %d, %Y@%H:%M:%S",
+                     "%b %d, %Y@%H:%M",
+                     "%b %d,%Y@%H:%M:%S",
+                     "%b %d,%Y@%H:%M",
+                     "%b %d,%Y  %H:%M",
+                   )
+  date_time_seperator = "@"
+  for fmtStr in datetimeFmtLst:
+    dtStr = convertAbbreviatedMonth(dtString)
+    try:
+      if dtStr.find(date_time_seperator) < 0:
+        if fmtStr.find(date_time_seperator) >= 0:
+          fmtStr = fmtStr[0:fmtStr.find(date_time_seperator)]
+      outDatetime = datetime.strptime(dtStr, fmtStr)
+    except ValueError, ve:
+      pass
+
+  if not outDatetime:
+    logger.error("Can not parse datetime %s" % dtString)
+  return outDatetime
+
 """ test the fetcher class """
 def testMain():
   testClient = createTestClient()
@@ -715,4 +750,5 @@ def main():
 
 if __name__ == '__main__':
   testIsInstallCompleted()
+  testMain()
   main()
