@@ -1,8 +1,8 @@
 # Set the site name with {randomString}.vagrant to identify all vagrant builds
 set(CTEST_SITE "$ENV{buildid}.vagrant")
 
-# Hardset buildname with {OS}-{Mplatform}(platform) convention
-set(CTEST_BUILD_NAME "Ubuntu12.04-GTMV6.0-002(x86)")
+# Hardset buildname with {OS}-{Mversion}_{arch} convention
+set(CTEST_BUILD_NAME "Ubuntu12.04-GTM$ENV{gtmver}")
 
 # Set build type to experimental by default
 set(dashboard_model "Experimental")
