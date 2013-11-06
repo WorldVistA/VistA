@@ -1,5 +1,5 @@
-DMUDT000 ; VEN/SMH - Unit Test Driver for Date Utilities; 26-DEC-2012
- ;;22.2;VA FILEMAN;;
+DMUDT000 ; VEN/SMH - Unit Test Driver for Date Utilities; 04-MAR-2013
+ ;;22.2;VA FILEMAN;;Mar 28, 2013
  ;
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
@@ -206,9 +206,9 @@ DDUPDT ; @TEST - Internal Format to External Format - DD^%DT
  . S Y=3130522.22 D DD^%DT
  . D CHKEQ^XTMUNIT(Y,"MAY 22, 2013@22:00:00","Seconds not returned when requested")
  ;
- ; Test bad Input
+ ; Test bad Input - %DT accepts it anyways.
  N Y S Y=5 D DD^%DT
- D CHKEQ^XTMUNIT(Y,-1,"5 (invalid value) converted to a unknown date")
+ D CHKEQ^XTMUNIT(Y,1705,"5 should convert to 1705")
  ;
  ; Test l10n
  S DUZ("LANG")=2 ; German

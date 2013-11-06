@@ -1,5 +1,6 @@
 DMUDIC00 ; VEN/SMH - A few ^DIC API Unit Tests; 13 JAN 2013
- ;;22.2T2;VA FILEMAN;
+ ;;22.2;VA FILEMAN;;Mar 28, 2013
+ ;Per VHA Directive 2004-038, this routine should not be modified.
  ;
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1

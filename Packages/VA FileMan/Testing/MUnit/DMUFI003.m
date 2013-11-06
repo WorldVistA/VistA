@@ -1,5 +1,6 @@
-DMUFI003 ; ; 10-JAN-2013
- ;;0.1;FILEMAN EXTENSIONS FILES;;JAN 10, 2013
+DMUFI003 ; ; 10-JAN-2013 ; 1/27/13 3:46pm
+ ;;22.2;VA FILEMAN;;Mar 28, 2013
+ ;Per VHA Directive 2004-038, this routine should not be modified.
  Q:'DIFQ(1009.802)  F I=1:2 S X=$T(Q+I) Q:X=""  S Y=$E($T(Q+I+1),4,999),X=$E(X,4,999) S:$A(Y)=126 I=I+1,Y=$E(Y,2,999)_$E($T(Q+I+1),5,999) S:$A(Y)=61 Y=$E(Y,2,999) X NO E  S @X=Y
 Q Q
  ;;^DIC(1009.802,0,"GL")

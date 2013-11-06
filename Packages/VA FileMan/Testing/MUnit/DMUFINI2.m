@@ -1,5 +1,6 @@
-DMUFINI2 ; ; 10-JAN-2013
- ;;0.1;FILEMAN EXTENSIONS FILES;;JAN 10, 2013
+DMUFINI2 ; ; 10-JAN-2013 ; 1/27/13 3:48pm
+ ;;22.2;VA FILEMAN;;Mar 28, 2013
+ ;Per VHA Directive 2004-038, this routine should not be modified.
  ;
  ;
  K ^UTILITY("DIFROM",$J),DIC S DIDUZ=0 S:$D(DUZ)#2 DIDUZ=DUZ S DUZ=.5

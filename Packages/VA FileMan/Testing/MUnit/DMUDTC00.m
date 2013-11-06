@@ -1,5 +1,5 @@
-DMUDTC00 ; VEN/SMH - Unit Test Driver for %DTC Utilities; 31-DEC-2012
- ;;22.2;VA FILEMAN;;
+DMUDTC00 ; VEN/SMH - Unit Test Driver for %DTC Utilities; 04-MAR-2013
+ ;;22.2;VA FILEMAN;;Mar 28, 2013
  ;
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
@@ -216,7 +216,7 @@ NOW ; @TEST - Tests NOW^%DTC
  D CHKTF^XTMUNIT($L($P(%,".",2))>2,"Hours and minutes not provided when they should be")
  D CHKEQ^XTMUNIT(%I(1),+$E(DT,4,5),"Month incorrect")
  D CHKEQ^XTMUNIT(%I(2),+$E(DT,6,7),"Day incorrect")
- D CHKEQ^XTMUNIT(%I(3),$E(DT,1,3)+1700,"Year incorrect")
+ D CHKEQ^XTMUNIT(%I(3),$E(DT,1,3),"Year incorrect")
  D CHKEQ^XTMUNIT(X,DT,"VA Fileman date only incorrect")
  QUIT
  ;
