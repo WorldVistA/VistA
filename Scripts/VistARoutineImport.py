@@ -25,9 +25,8 @@ class VistARoutineImport(object):
   def __init__(self):
     pass
   def __importRoutineCache__(self, connection, routineImportFile):
-    nativeName = os.path.normpath(routineImportFile)
     connection.expect("Device: ")
-    connection.send("%s\r" % nativeName)
+    connection.send("%s\r" % routineImportFile)
     connection.expect("Parameters\? ")
     connection.send("\r")
     while True:
@@ -51,25 +50,26 @@ class VistARoutineImport(object):
 
   def __importRoutineGTM__(self, connection, routineImportFile,
                            routineOutputDir):
-    nativeName = os.path.normpath(routineImportFile)
     connection.expect("Formfeed delimited <No>\? ")
     connection.send("No\r")
     connection.expect("Input device: <terminal>: ")
-    connection.send("%s\r" % nativeName)
+    connection.send("%s\r" % routineImportFile)
     connection.expect("Output directory : ")
     connection.send("%s\r" % routineOutputDir)
 
   def importRoutines(self, vistATestClient, routineImportFile,
                      routineOutputDir, timeout=1200):
     assert os.path.exists(routineImportFile)
+    absRtnImportFile = os.path.normpath(os.path.abspath(routineImportFile))
     vistATestClient.waitForPrompt()
     connection = vistATestClient.getConnection()
     connection.send("D ^%RI\r")
     if vistATestClient.isCache():
-      self.__importRoutineCache__(connection, routineImportFile)
+      self.__importRoutineCache__(connection, absRtnImportFile)
     elif vistATestClient.isGTM():
-      self.__importRoutineGTM__(connection, routineImportFile,
-                                routineOutputDir)
+      absRtnOutDir = os.path.normpath(os.path.abspath(routineOutputDir))
+      self.__importRoutineGTM__(connection, absRtnImportFile,
+                                os.path.join(absRtnOutDir, ""))
     vistATestClient.waitForPrompt(timeout)
     connection.send('\r')
 
