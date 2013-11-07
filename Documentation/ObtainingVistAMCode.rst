@@ -4,17 +4,20 @@ Obtaining the VistA-M Source Code
 .. role:: usertype
     :class: usertype
 
-We need to retrieve the VistA-M source code (MUMPS code) that will be used to populate Caché or GTM  and generally construct the local VistA
-environment. Begin by bringing up a Git Bash terminal from the installed Git system.
+We need to retrieve the VistA-M source code (MUMPS code) that will be used to
+populate Caché or GTM  and generally construct the local VistA environment.
+Begin by bringing up a Git Bash terminal from the installed Git system.
 
 .. parsed-literal::
 
   user@machine ~
   $
 
-The git interface is a command-prompt interface with much of the functionality that should be familiar to Linux users; commands like \"ls\" and \"cd\"
-perform as they would in Cygwin shell or a Linux terminal. Git specific actions are always preceded by the \"git\" command on the input line. The
-command \"git --help\" displays a list of the most common commands.
+The git interface is a command-prompt interface with much of the functionality
+that should be familiar to Linux users; commands like \"ls\" and \"cd\"
+perform as they would in Cygwin shell or a Linux terminal. Git specific actions
+are always preceded by the \"git\" command on the input line. The command
+\"git --help\" displays a list of the most common commands.
 
 .. parsed-literal::
 
@@ -50,7 +53,8 @@ command \"git --help\" displays a list of the most common commands.
     status     Show the working tree status
     tag        Create, list, delete or verify a tag object signed with GPG
 
-To obtain a copy of the repository, create a directory (Folder) to hold the repository code and "cd" into that directory. Enter the commands
+To obtain a copy of the repository, create a directory (Folder) to hold the
+repository code and "cd" into that directory. Enter the commands
 
 .. parsed-literal::
 
@@ -63,10 +67,23 @@ To obtain a copy of the repository, create a directory (Folder) to hold the repo
 
 to make a local clone of the remote repository.
 
-The following step is only required for InterSystems Caché Single-User Evaluation Licensees:
+The following step is only required for InterSystems Caché Single-User or small
+license count licenses:
 
-Edit ZUONT.m,  located in /Packages/Kernel/Routines, and comment out the 8th line by placing a semi-colon (;) at the beginning of the line.
+Edit `ZU.m`_,  located in /Packages/Kernel/Routines/, and comment out the code
+followed by JOBCHK tag by placing a semi-colon (;) right after JOBCHK tag.
 
 .. parsed-literal::
 
-  :usertype:`;` JOBCHK I $$AVJ^%ZOSV()<3 W $C(7),!!,"** TROUBLE ** - ** CALL IRM NOW! **" G H
+  JOBCHK :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G H
+
+Similarly, edit `ZUONT.m`_, also located in /Packages/Kernel/Routines/, and comment out the following code.
+
+.. parsed-literal::
+
+   :usertype:`;` I $$AVJ^%ZOSV()<3 W $C(7),!!,"\*\* TROUBLE \*\* - \*\* CALL IRM NOW! \*\*" G HALT
+
+Note: If somehow ZU.m does not exist, it is OK to just make change to ZUONT.m.
+
+.. _ZUONT.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZUONT.m
+.. _ZU.m: http://code.osehra.org/gitweb?p=VistA-M.git;a=blob;f=Packages/Kernel/Routines/ZU.m
