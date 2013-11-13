@@ -1,20 +1,28 @@
 ﻿Retrieving the code from Git and Importing into Caché
-==========================================================
+=====================================================
 
 .. role:: usertype
     :class: usertype
 
-To prepare the M components for import into the VistA instance, follow the steps found in the PrepareMComponents_ document.
+To prepare the M components for import into the VistA instance, follow the steps
+found in the PrepareMComponents_ document.
 
 .. _PrepareMComponents: PrepareMComponents.rst
 
 Import routines and globals into Caché
 --------------------------------------
 
-The next set of steps is to import the routines and globals into the Caché instance and then configure the instance to the point where testing can be performed. All of these steps are performed from the Caché terminal. Right click on the Caché icon and select terminal from the pop-up as shown to bring up a Caché terminal.
+The next set of steps is to import the routines and globals into the Caché
+instance and then configure the instance to the point where testing can be
+performed. All of these steps are performed from the Caché terminal. Right
+click on the Caché icon and select terminal from the pop-up as shown to bring
+up a Caché terminal.
 
 
-The first step is to change from the default \"USER\" namespace to the namespace that you created earlier. Entering \"D ^%CD\" will bring up a prompt to accept the name of the new namespace that you want to enter. For demonstration purposes, we will assume that the namespace is called \"VISTA\".
+The first step is to change from the default \"USER\" namespace to the namespace
+that you created earlier. Entering \"D ^%CD\" will bring up a prompt to accept
+the name of the new namespace that you want to enter. For demonstration
+purposes, we will assume that the namespace is called \"VISTA\".
 
 
 .. parsed-literal::
@@ -27,9 +35,17 @@ The first step is to change from the default \"USER\" namespace to the namespace
   VISTA>
 
 
-The %RI routine is a MUMPS routine that is used to import other routines from a specific file type. When prompted for a device, enter the path to the routines.ro file and press <Enter> to accept the default parameters, read-only mode. The terminal will then display a warning saying
-\"This file may not be a %RO output file.\" This is an expected warning due to how we are creating the routines.ro file. At the prompt, enter \"Yes\" to continue and then enter then <Enter> to accept the 0th option (Caché) for the routines write type. To fully import the routines, enter
-\"All Routines\" at the Routine Input Option, and answer \"YES\" to \"replace similarly named routines.\" All other options may be answered with <Enter> to accept the default value.
+The %RI routine is a MUMPS routine that is used to import other routines from a
+specific file type. When prompted for a device, enter the path to the
+routines.ro file and press <Enter> to accept the default parameters, read-only
+mode. The terminal will then display a warning saying
+\"This file may not be a %RO output file.\" This is an expected warning due to
+how we are creating the routines.ro file. At the prompt, enter \"Yes\" to
+continue and then enter then <Enter> to accept the 0th option (Caché) for the
+routines write type. To fully import the routines, enter
+\"All Routines\" at the Routine Input Option, and answer \"YES\" to \"replace
+similarly named routines.\" All other options may be answered with <Enter> to
+accept the default value.
 
 .. parsed-literal::
 
@@ -66,7 +82,9 @@ The %RI routine is a MUMPS routine that is used to import other routines from a 
   Display Syntax Errors? Yes => :usertype:`Yes`
 
 
-The system will respond with a list of all that have been processed and then displays the VistA prompt . In the listing, the symbols next to the routine name have meaning:
+The system will respond with a list of all that have been processed and then
+displays the VistA prompt . In the listing, the symbols next to the routine
+name have meaning:
 
 ^ indicates routines which will replace those now on file.
 
@@ -81,8 +99,9 @@ to import the VistA globals from the repository:
 
   VISTA> :usertype:`W $$LIST^ZGI("/path-to/VistA/globals.lst")`
 
-This routine will go through all of the globals contained in the list file and import them into the VistA instance.
-The last package to be imported is the Wounded Injured and Ill Warriors.  The example below will demonstrate the
+This routine will go through all of the globals contained in the list file and
+import them into the VistA instance.  The last package to be imported is the
+Wounded Injured and Ill Warriors.  The example below will demonstrate the
 command and the first/last globals to be imported.
 
 .. parsed-literal::
@@ -116,8 +135,15 @@ command and the first/last globals to be imported.
 Configure the VistA Environment
 -------------------------------
 
-At this point, all routines and globals are imported and the environment is ready to be configured.  Enter \"D ^ZTMGRSET\"
-to initialize the current instance for use. Choose the default, Caché environment. Some routines are loaded and a series of prompts are shown on the screen.  The NAME OF MANAGER'S NAMESPACE, PRODUCTION (SIGN-ON) NAMESPACE, and NAME OF THIS CONFIGURATION prompts should be answered with the name of the namespace that was created earlier (VISTA in this configuration), . At the fourth prompt, \"Want to rename the FileMan routines,\" enter \"Y\" to rename the routines.
+At this point, all routines and globals are imported and the environment is
+ready to be configured.  Enter \"D ^ZTMGRSET\" to initialize the current
+instance for use. Choose the default, Caché environment. Some routines are
+loaded and a series of prompts are shown on the screen.
+The NAME OF MANAGER'S NAMESPACE, PRODUCTION (SIGN-ON) NAMESPACE, and
+NAME OF THIS CONFIGURATION prompts should be answered with the name of the
+namespace that was created earlier (VISTA in this configuration), . At the
+fourth prompt, \"Want to rename the FileMan routines,\" enter \"Y\" to
+rename the routines.
 
 .. parsed-literal::
 
@@ -212,11 +238,22 @@ to initialize the current instance for use. Choose the default, Caché environme
   VISTA>
 
 
-The final step needed for the testing is to alter a device within the File Manager. We need to change the $I value of the TELNET device to let the Caché terminal function as a display for the XINDEX routine.
+The final step needed for the testing is to alter a device within the File
+Manager. We need to change the $I value of the TELNET device to let the Caché
+terminal function as a display for the XINDEX routine, change $I value of
+terminal or TRM device to allow default IO device to work.
 
-The first step is to identify yourself as a programmer and gain permissions to change the files attributes.  Enter \"VISTA> S DUZ=1 D Q^DI\"
-
-to first get access to the File Manager and then to start the File Manager. At the Select OPTION prompt, enter \"1\" to edit the file entries; at the INPUT TO WHAT FILE: prompt, enter the word \"DEVICE\"; and at the EDIT WHICH FIELD: prompt enter \"$I\". Enter <Enter> to end the field queries. The system will respond with a Select DEVICE NAME: prompt, enter \"TELNET\" to bring up an option menu and then enter the option that does not reference GT.M or UNIX. Finally, the system will respond with $I: TNA//.  Enter \|TNT\|, and press enter until the VISTA prompt is reached.
+The first step is to identify yourself as a programmer and gain permissions to
+change the files attributes.  Enter \"VISTA> S DUZ=1 D Q^DI\" to first get
+access to the File Manager and then to start the File Manager.
+At the Select OPTION prompt, enter \"1\" to edit the file entries; at the
+INPUT TO WHAT FILE: prompt, enter the word \"DEVICE\"; and at the
+EDIT WHICH FIELD: prompt enter \"$I\". Enter <Enter> to end the field queries.
+The system will respond with a Select DEVICE NAME: prompt, enter \"TELNET\" to
+bring up an option menu and then enter the option that does not reference GT.M
+or UNIX. When the system responds with $I: TNA//.  Enter \"\|TNT\|\", and
+press enter. On next Select DEVICE NAME: prompt, enter \"TRM\". After $I: TRM//
+prompt, enter \"\|TRM\|:\|\", press enter until the VISTA prompt is reached.
 
 .. parsed-literal::
 
@@ -236,8 +273,10 @@ to first get access to the File Manager and then to start the File Manager. At t
   CHOOSE 1-2:  :usertype:`1`
   $I: TNA// :usertype:`|TNT|`
 
-  Select DEVICE NAME: :usertype:`<ENTER>`
+  Select DEVICE NAME: :usertype:`TRM`
+  $I: TRM// :usertype:`|TRM|:\|`
 
+  Select DEVICE NAME: :usertype:`<ENTER>`
   Select OPTION:  :usertype:`<ENTER>`
 
   VISTA>
