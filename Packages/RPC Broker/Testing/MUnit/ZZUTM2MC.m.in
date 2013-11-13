@@ -1,0 +1,171 @@
+ZZUTM2MC ;KRM/CJE,KW/JPS - Exercise M2M client and server code ;11/18/2013
+ ;;1.0;UNIT TEST;;Aug 28, 2013;Build 1
+ ; Check that the RPC Broker Listener is running
+ S CHKRTN=$$TEST^XWBTCPMT("${VISTA_TCP_HOST}","${VISTA_TCP_PORT}",1)
+ I $P(CHKRTN,U)=-1 W "RPC LISTENER CHECK FAILED, QUITTING" Q
+ ; Check to make sure new M2M server code is installed
+ I $T(+2^XWBRPC)'["991" W "REQUIRED PATCH NOT INSTALLED, QUITTING" Q
+ ; makes it easy to run tests simply by running this routine and
+ ; insures that XTMUNIT will be run only where it is present
+ I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZUTM2MC")
+ Q
+ ;
+STARTUP ; optional entry point
+ ; if present executed before any other entry point any variables
+ ; or other work that needs to be done for any or all tests in the
+ ; routine.  This is run only once at the beginning.
+ Q
+ ;
+SHUTDOWN ; optional entry point
+ ; if present executed after all other processing is complete to remove
+ ; any variables, or undo work done in STARTUP.
+ Q
+ ;
+SETUP ; optional entry point
+ ; if present it will be executed before each test entry to set up
+ ; variables, etc.
+ Q
+ ;
+TEARDOWN ; optional entry point
+ ; if present it will be exceuted after each test entry to clean up
+ ; variables, etc.
+ Q
+ ;
+ ; tests are primilarly from XWBRPC
+INACTIVE ; Test Inactive Remote Procedure (expect failure)
+ ; Sample inactive RPC: IBD GET PAST APPT LIST
+ ; Input parameter: IBDF(DFN) = Patient DFN
+ ;
+ Q
+PROGM ; Test XUPROGMODE RPCs (expect success)
+ ;
+ Q
+AFREE ; Test always free RPCs (expect success)
+ ; don't set a context since they are always free
+ ; RPC = XWB IM HERE
+ ; step 0 - create connection
+ ; step 1 - call the rpc
+ ; step 2 - verify results
+ ; step 3 - close connection
+ N RESULT
+ S RESULT=""
+ ; Step 0
+ D CRCONN
+ ; Step 1
+ I $$CHKSUCCESS($$CALLRPC^XWBM2MC("XWB IM HERE","RESULT",1))=0 Q
+ ; Step 2
+ D CHKEQ^XTMUNIT(1,RESULT(1),"XWB IM HERE RPC didn't give expected results")
+ D CLCONN
+ Q
+NOCTX ; Test that non-free RPCs can't be run
+ ; context = not set
+ ; RPC = XUS INTRO MSG
+ ; step 0 - create connection
+ ; step 1 - call the rpc
+ ; step 2 - verify results
+ ; step 3 - close connection
+ N RESULT,SUCCESS
+ S RESULT=""
+ ; Step 0
+ D CRCONN
+ ; Step 1
+ S SUCCESS=$$CALLRPC^XWBM2MC("XUS INTRO MSG","RESULT",1)
+ ; Step 2
+ D CHKEQ^XTMUNIT(0,SUCCESS,"Can call non-free RPCs")
+ D CHKEQ^XTMUNIT("<vistalink type=""VA.RPC.Error"" >",RESULT(1),"Expected error not received")
+ ; Step 3
+ D CLCONN
+ Q
+OUTCTX ; Test RPCs outside of requested context (expect failure)
+ ; context = not set
+ Q
+INCTX ; Test RPCs inside of requested context (expect success)
+ ; context = OR CPRS GUI CHART
+ ; RPC = ORWPT LIST ALL - get all patients
+ ; step 0 - create connection
+ ; step 1 - set the context
+ ; step 2 - setup the parameters for the rpc
+ ; step 3 - call the rpc
+ ; step 4 - verify results
+ ; step 5 - close connection
+ N PARAM,RESULT
+ S RESULT=""
+ ; Step 0
+ D CRCONN
+ ; Step 1
+ I '$$SETCTX("OR CPRS GUI CHART") Q
+ ; Step 2
+ S PARAM("TYPE")="STRING"
+ S PARAM("VALUE")="1"
+ I $$CHKSUCCESS($$PARAM^XWBM2MC(2,"PARAM"))=0 Q
+ I $$CHKSUCCESS($$PARAM^XWBM2MC(3,"PARAM"))=0 Q ; Parameter 3 is the same as 2
+ ; Step 3
+ I $$CHKSUCCESS($$CALLRPC^XWBM2MC("ORWPT LIST ALL","RESULT",1))=0 Q
+ ; Step 4
+ ZWRITE RESULT ; need to do a better check.
+ ; Step 5
+ D CLCONN
+ Q
+; Private entry points
+SETCTX(CONTEXT) ; Set the context
+ N CTX
+ S CTX=$$SETCONTX^XWBM2MC(CONTEXT)
+ I CTX D
+ . W "Info: Context was set",!
+ E  D
+ . W "Error: Context was not set.",!
+ . W "Don't expect to do anything useful",!
+ Q CTX
+CHKSUCCESS(SUCCESS) ; Check for success
+ I 'SUCCESS D
+ . D FAIL^XTMUNIT("Command was not successful, failing")
+ . D CLCONN
+ Q SUCCESS
+CRCONN ; Create connection
+ ; OSEHRA setup scripts use 9210 as a default port, use it
+ ; Default to localhost testing
+ N PORT,IP,AV,CONN
+ S PORT="${VISTA_TCP_PORT}"
+ S IP="${VISTA_TCP_HOST}"
+ S AV="fakedoc1;1Doc!@#$"
+ S CONN=$$CONNECT^XWBM2MC(PORT,IP,AV)
+ ; verify connection is good
+ I CONN D
+ . I $G(^TMP("XWBM2M",$J,"CONNECTED"))=1 D
+ . . W "Info: Connected!",!
+ E  D
+ . D ERROR
+ . D CLCONN
+ Q
+ERROR ; Connection error
+ N ERROR
+ U $P
+ D FAIL^XTMUNIT("Error: Unable to connect to M2M broker!")
+ S ERROR=""
+ F  S ERROR=$O(^TMP("XWBM2ME",$J,"ERROR",ERROR)) W ^TMP("XWBM2ME",$J,"ERROR",ERROR),! Q:'ERROR
+ Q
+CLCONN ; Close connection
+ I $G(^TMP("XWBM2M",$J,"CONNECTED")) D
+ . U $P ; ensure the IO is where we want it
+ . W "Info: Closing M2M broker connection",!
+ . S CONN=$$CLOSE^XWBM2MC
+ . I CONN D
+ . . W "Info: Success!",!
+ . E  D
+ . . W "Error: Unable to close M2M broker connection!",!
+ . . I $G(RES) D ; try to get the reason why we can't close the connection
+ . . . W RES
+ . . E  D
+ . . . W $G(^TMP("XWBM2MRPC",$J,"RESULTS")) ; try #2 for why we can't close the connection
+ Q
+XTROU ;
+ ;;
+ ; Entry points for tests are specified as the third semi-colon piece,
+ ; a description of what it tests is optional as the fourth semi-colon
+ ; piece on a line. The first line without a third piece terminates the
+ ; search for TAGs to be used as entry points
+XTENT ;
+ ;;INCTX; Test RPCs inside of requested context
+ ;;AFREE; Test always free RPCs (expect success)
+ ;;NOCTX; Test that non-free RPCs can't be run
+ Q

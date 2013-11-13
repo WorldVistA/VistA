@@ -1,0 +1,54 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+## RPC Broker Check
+##
+
+'''
+This command makes sure that the RPC Broker is listening before
+running the tests created for the SSEP
+
+@copyright The Open Source Electronic Health Record Agent
+@license http://www.apache.org/licenses/LICENSE-2.0
+'''
+
+import sys
+import os
+import time
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+
+def CheckRPCListener():
+  VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+  if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+    VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+  if VistA.type=='cache':
+    try:
+      VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+    except IndexError,no_namechange:
+      pass
+  VistA.wait(PROMPT,60)
+  VistA.write('D CALL^XWBTCPMT')
+  VistA.wait('IP ADDRESS')
+  VistA.write('${VISTA_TCP_HOST}')
+  VistA.wait('PORT')
+  VistA.write('${VISTA_TCP_PORT}')
+  index = VistA.multiwait(['Success','Failed'])
+  return index
+
+if __name__ == "__main__":
+  CheckRPCListener()

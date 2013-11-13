@@ -177,7 +177,7 @@ VistA.write('8994.1\r')
 VistA.wait('Select RPC BROKER SITE PARAMETERS DOMAIN NAME')
 VistA.write('${TEST_VISTA_SETUP_SITE_NAME}\r\r\r\r' + VistA.boxvol + '\rY\r\r${VISTA_TCP_PORT}\rY')
 if VistA.type=='cache':
-  VistA.write('1\r\r1\r')
+  VistA.write('1\r1\r1\r')
 else:
   VistA.write('1\r\r\r')
 
@@ -201,13 +201,47 @@ VistA.write('N')
 VistA.wait('VOLUME SET')
 VistA.write('\r\r')
 
+
 # Start TaskMan
-VistA.wait(PROMPT,60)
+if VistA.type=='cache':
+  VistA.wait(PROMPT)
+  VistA.write('S DUZ=1 D ^XUP')
+  VistA.wait('Select OPTION NAME')
+  VistA.write('EVE\r1')
+  VistA.wait('Systems Manager Menu')
+  VistA.write('Taskman Management')
+  VistA.wait('Select Taskman Management')
+  VistA.write('SCHED')
+  VistA.wait('reschedule:')
+  VistA.write('XWB LISTENER STARTER\rY')
+  VistA.wait('COMMAND:')
+  VistA.write('\r^SPECIAL QUEUEING\rSTARTUP\rS\rE\r')
+  VistA.wait('Select Taskman Management')
+  VistA.write('')
+  VistA.wait('Systems Manager Menu')
+  VistA.write('')
+  VistA.wait('Do you really want to halt')
+  VistA.write('Y')
+VistA.wait(PROMPT)
+VistA.write('S DUZ=1 D ^XUP')
+VistA.wait('Select OPTION NAME')
+VistA.write('EVE\r1')
+VistA.wait('Systems Manager Menu')
+VistA.write('Taskman Management')
+VistA.wait('Select Taskman Management')
+VistA.write('Taskman Management Utilities')
+VistA.wait('Select Taskman Management Utilities')
+VistA.write('Restart Task Manager\rY')
+VistA.wait('Select Taskman Management Utilities')
+VistA.write('')
+VistA.wait('Select Taskman Management')
+VistA.write('')
+VistA.wait('Select Systems Manager Menu')
+VistA.write('')
+VistA.wait('Do you really want to halt')
+VistA.write('Y')
+VistA.wait(PROMPT)
 VistA.write('K')
-VistA.wait(PROMPT,60)
-VistA.write('D ^ZTMB')
-VistA.wait(PROMPT,60)
-VistA.write('D STRT^XWBTCP(9210)')
 
 #Create the System Manager
 VistA.wait(PROMPT,60)
@@ -258,16 +292,7 @@ VistA.wait('mail groups?')
 VistA.write('\r')
 VistA.wait('Systems Manager Menu')
 # Set the Listener Starter to run when TaskMan is started
-if VistA.type=='cache':
-  VistA.write('Taskman Management')
-  VistA.wait('Taskman Management')
-  VistA.write('SCHED')
-  VistA.wait('reschedule:')
-  VistA.write('XWB LISTENER STARTER\rY')
-  VistA.wait('COMMAND:')
-  VistA.write('\r^SPECIAL QUEUEING\rSTARTUP\rS\rE\r\r\r\r')
-else:
-  VistA.write('\rY')
+VistA.write('\rY')
 VistA.wait(PROMPT,60)
 VistA.IEN('NEW PERSON','MANAGER,SYSTEM')
 VistA.wait(PROMPT,60)
@@ -372,7 +397,6 @@ VistA.wait(PROMPT,60)
 VistA.write('S GMVGUI=\"VITALSMANAGER.EXE:5.0.26.1\"')
 VistA.wait(PROMPT,60)
 VistA.write('D EN^XPAR(\"SYS\",\"GMV GUI VERSION\",GMVGUI,1)')
-
 
 # Sign into the ZU menu as the System,Manager and start the TCP listeneer
 
@@ -972,9 +996,9 @@ for date in dates:
   VistA.write('Yes')
 VistA.wait('AVAILABILITY DATE')
 VistA.write('\r\r\r\r\r')
-
 VistA.wait('Do you really want to halt?')
 VistA.write('Y')
+
 
 time.sleep(10)
 #Set up the Doctors electronic signature
