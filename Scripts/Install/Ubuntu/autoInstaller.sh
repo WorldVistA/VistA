@@ -40,6 +40,8 @@ test -d /home/foia/g &&
 { echo "VistA already Installed. Aborting."; exit 0; }
 
 # extra utils - used for cmake and dashboards and initial clones
+# Amazon EC2 requires to updates to get everything
+apt-get update
 apt-get update
 apt-get install -y build-essential cmake-curses-gui git
 
