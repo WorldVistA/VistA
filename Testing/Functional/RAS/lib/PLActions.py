@@ -441,7 +441,7 @@ class PLActions (Actions):
                 if r2val == 0:
                     self.VistA.write('N')
                 elif r2val == 1:
-                    self.VistA.write('??')
+                    self.VistA.write('?')
                 else:
                     self.VistA.wait('SHOULDNOTGETHERE')
             else:
