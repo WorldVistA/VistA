@@ -14,7 +14,8 @@ Vagrant has been integrated for GTM/Ubuntu. Goto the Scripts/Install/Ubuntu
 directory and type "vagrant up" to provision a new Virtual Machine (VM) running
 Ubuntu 12.04 LTS and GTM 6.x automatically. This procedure also performs a
 "dashboard" build which runs the current OSEHRA testing suite for VistA and
-submits it to the dashboard_. This will take over an hour to complete.
+submits it to the dashboard_. This will take about 30 minutes to complete.
+Further Vagrant information_.
 
 Bootstrapping
 =============
@@ -134,6 +135,14 @@ hard-coded to FOIA
 
     * j - contains the journals for the VistA environment
 
+    * s - contains secondary development
+
+    * s/$gtmver - Stores object files per GT.M version
+
+    * p - contains primary development
+
+    * s/$gtmver - Stores object files per GT.M version
+
 Caché
 -----
 
@@ -162,3 +171,4 @@ Caché where appropriate.
         * j - contains the journals for the VistA environment
 
 .. _dashboard: http://code.osehra.org/CDash/index.php?project=Open+Source+EHR
+.. _information: Vagrant.rst
