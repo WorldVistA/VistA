@@ -27,6 +27,7 @@ test -d /home/foia/g &&
 { echo "VistA already Installed. Aborting."; exit 0; }
 
 # extra utils - used for cmake and dashboards and initial clones
+apt-get update
 apt-get install -y build-essential cmake-curses-gui git
 
 # Clone repos
