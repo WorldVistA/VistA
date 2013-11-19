@@ -21,6 +21,19 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Get primary username. Vagrant always does a sudo to run this script
+# TODO: determine if root is a valid user
+if [[ -n "$SUDO_USER" ]]; then
+    primaryuser=$SUDO_USER
+elif [[ -n "$USERNAME" ]]; then
+    primaryuser=$USERNAME
+else
+    echo Cannot find a suitable username to add to VistA group
+    exit 1
+fi
+
+echo This script will add $primaryuser to the VistA group
+
 # Abort provisioning if toolchain is already installed.
 test -d /opt/lsb-gtm/V6.0-002_x86 &&
 test -d /home/foia/g &&
@@ -46,15 +59,18 @@ cd GTM
 # Create the VistA instance
 ./createVistaInstance.sh
 
-# Modify the Vagrant user to be able to use the VistA instance
-# add vagrant user to foia group
-adduser vagrant foia
-
-# source env script during vagrant login
-echo "source /home/foia/etc/env" >> /home/vagrant/.bashrc
+# Modify the primary user to be able to use the VistA instance
+adduser $primaryuser foia
 
 # Setup environment variables so the dashboard can build
 source /home/foia/etc/env
+
+# Get user's home directory
+# http://stackoverflow.com/questions/7358611/bash-get-users-home-directory-when-they-run-a-script-as-root
+USER_HOME=$(getent passwd $SUDO_USER | cut -d: -f6)
+
+# source env script during vagrant login
+echo "source /home/foia/etc/env" >> $USER_HOME/.bashrc
 
 # create random string for build identification
 # source: http://ubuntuforums.org/showthread.php?t=1775099&p=10901169#post10901169
