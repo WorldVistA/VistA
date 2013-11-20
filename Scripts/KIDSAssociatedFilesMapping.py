@@ -29,6 +29,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "Release of VA NATIONAL HEALTH INFO NETWORK NHIN_1.txt" : "NHIN 1.0",
   "Update to NUPA_1.txt" : "NUPA 1.0",
   "XOBU_1-6 Security Suite Utility Pack.txt" : "XOBU 1.6",
+  "CPRS 29 Source Code Note.txt" : "MultiBuilds",
   #### Global Files Section
   "LEX_2_51.GBL": "LEX*2.0*51",
   "LEX_2_74.GBL": "LEX*2.0*74",
@@ -41,6 +42,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "LEX_2_84.GBLs": "LEX*2.0*84",
   "LEX_2_89.GBLs": "LEX*2.0*89",
   "LEX_2_90.GBLs": "LEX*2.0*90",
+  "LEX_2_91.GBLs": "LEX*2.0*91",
 }
 
 """
