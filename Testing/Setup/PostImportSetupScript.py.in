@@ -80,7 +80,7 @@ VistA.write('')
 VistA.wait('DOMAIN NAME')
 VistA.write('`1')
 VistA.wait('PRIMARY HFS DIRECTORY')
-VistA.write(os.path.normpath('${SYSTEM_TEMP_DIR}'))
+VistA.write(os.path.normpath('${TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY}'))
 index = VistA.multiwait(['SURE YOU WANT TO DELETE','DOMAIN NAME'])
 if index == 0:
   VistA.write('Y')
