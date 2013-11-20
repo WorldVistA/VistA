@@ -1,0 +1,424 @@
+
+=============================================================================
+Run Date: JAN 15, 2014                     Designation: DG*5.3*869
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #773                    Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*650  <<= must be installed BEFORE `DG*5.3*869'
+                    (v)TIU*1*279   <<= must be installed BEFORE `DG*5.3*869'
+
+Subject: MISSING PATIENT - Patient Record Flag
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  
+ The Missing Patient, Patient Record Flag (PRF) project (patches 
+ DG*5.3*869 and TIU*1*279 combined) is new development of Missing Patient, 
+ PRF functionality within the Veterans Health Information Systems and 
+ Technology Architecture (VistA) system of applications.  This new PRF is 
+ to assist in fulfillment of Directive 2010-052 - Management of Wandering 
+ and Missing Patients.
+  
+ This Veterans Health Administration (VHA) Directive establishes policy to 
+ ensure that each Department of Veterans Affairs' (VA) medical facility 
+ has an effective and reliable plan to prevent, and effectively manage 
+ wandering and missing patient events that place patients at-risk for harm.
+   
+ * Note - There will be no changes to any Local Category (CAT) II PRFs 
+ associated with this Missing Patient PRF project or any of its 
+ components. This project is strictly creating a new, National CAT I PRF 
+ and Text Integration Utilities (TIU) note for missing patients. Each 
+ facility should manually deactivate any CAT II Missing Patient PRFs and 
+ only use this newly created CAT I flag going forward per VACO memo 
+ guidance dated 4/23/2013.  
+  
+ FEATURES
+ --------
+ 1. Patch DG*5.3*869 creates a new 'Missing Patient' National PRF entry in 
+ the PRF NATIONAL FLAG FILE #26.15. This new, National (Category I) PRF 
+ will be defined as follows:
+          Name:  MISSING PATIENT
+  
+          Status:  ACTIVE
+  
+          Type:  CLINICAL
+  
+          Review Frequency Days:  30
+  
+          Notification Days:  7
+  
+          Review Mail Group:  DGPF MISSING PT FLAG REVIEW
+  
+          TIU PN Title: PATIENT RECORD FLAG CATEGORY I - MISSING PATIENT
+  
+          Description: The purpose of this flag is to identify a missing
+          patient/resident (patient) in the electronic medical record,
+          including a Text Integration Utilities (TIU) progress note 
+          describing the risk and circumstances.
+  
+  
+ 2. Patch DG*5.3*869 gives the ability to deactivate and activate the 
+ "MISSING PATIENT" PRF.
+  
+ *Note: Activating or Deactivating the flag is a manual process. The 
+ status of the flag will be Active while the patient is missing. The user 
+ will not have the ability to delete the flag but will have the ability to 
+ deactivate the flag when the patient has been found.  Also, the flag and 
+ history remains within the PRF package.
+  
+ 3. This Missing Patient - PRF project (specifically TIU*1*279) creates a 
+ new national TIU Note Title, PATIENT RECORD FLAG CATEGORY I - MISSING 
+ PATIENT, to associate with the new "MISSING PATIENT" flag.
+  
+ 4. Patch DG*5.3*869 creates mail group, DGPF MISSING PT FLAG REVIEW. 
+  
+ 5. Patch DG*5.3*869 updates Dialog Number 261132-Patient has local ICN, 
+ to not reference any specific National, Category I PRF.
+  
+ 6. Patch DG*5.3*869 updates these existing PRF reports to include the new 
+ Missing Patient PRF data:
+    Assignment Action Not Linked Report
+    Flag Assignment Report
+    Patient Assignments Report
+    Assignments Due For Review Report
+    Assignments Approved By Report
+  
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+   
+ File Name               File #   Field #    New/Modified/Deleted
+ ------------------      ------   ------- --------------------------
+ PRF NATIONAL FLAG        26.15     N/A    Add MISSING PATIENT PRF
+  
+  
+ Dialog Associated:
+  
+ Dialog Number                File #   Field # New/Modified/Deleted
+ -------------                ------   ------- --------------------
+ 261132-Patient has local ICN   .84       4                MODIFIED
+  
+ Dialog # 261132 displays Text (field #4) when there is an attempt by a 
+ user to assign any National, CAT I PRF to the record of a patient that 
+ does not have a national, ICN.  This component updates Text (field #4) to 
+ not reference any specific National, Category I PRF (i.e., Behavioral) to 
+ be assigned.
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ Mail Group  Name              File#          New/Modified/Deleted
+ ---------------------------   -----          --------------------
+ DGPF MISSING PT FLAG REVIEW    3.8                            NEW
+  
+ Description:
+ Members of this Mail Group will be notified via a MailMan message when a 
+ patient has been assigned the National, Category I - MISSING PATIENT PRF
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ Associated Directive:
+ -----------------------------
+ Directive 2010-052 - Management of Wandering and Missing Patients
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ Miami, FL
+ Palo Alto, CA
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ * NOTE - Patch TIU*1*279 is a pre-requisite for the installation of 
+ this patch (DG*5.3*869)
+  
+ The preferred method is to FTP the files from 
+    ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+ Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+ Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+  
+    FILE NAME                    DESCRIPTION
+    ------------------ -------------------------------------------
+ DG_53_P869.ZIP                Software and Documentation for 
+                               MISSING PATIENT - PRF implementation.
+  
+ DG_53_P869.ZIP contains the following files and Missing Patient PRF 
+ documentation:
+  
+   DG_53_P869.KID              Host file containing DG*5.3*869 KIDS
+                               software Distribution
+   TIU_1_P279.KID              Host file containing TIU*1.0*279 KIDS
+                               software Distribution
+   Missing Patient PRF_        Installation Guide for patch installation
+   Installation Guide.PDF
+  
+   Missing Patient PRF_        Release Notes about new features and
+   Release Notes.PDF           functionality
+  
+   Patient Record Flags_User   Updated PRF User Guide for system access 
+   Guide.PDF                   and use   
+  
+   PIMSTM.PDF                  Updated Patient Information
+                               Management System Technical Manual
+  
+   TIUTM.PDF                   Updated TIU Technical Manual
+  
+   TIUUM.PDF                   Updated TIU User Manual
+   
+    * Note:  Use Binary mode when transferring the .ZIP file.
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Note: This patch contains the M code executed by the VistA system. The 
+ Patch TIU*1*279 (TIU_1_P279.KID) is included in the available 
+ DG_53_P869.ZIP file and will need to be installed before DG*5.3*869 
+ (DG_53_P869.KID).  Follow the "Installation Steps" for the respective 
+ patches during installation of that patch. 
+  
+  
+ Installation Instructions and Software Retrieval
+ ------------------------------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one 
+ of the OI Field Offices. The preferred method is to FTP the file from 
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server. Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                 DIRECTORY
+    Albany              FTP.FO-ALBANY.DOMAIN.EXT    anonymous.software
+    Hines               FTP.FO-HINES.DOMAIN.EXT     anonymous.software
+    Salt Lake City      FTP.FO-SLC.DOMAIN.EXT       anonymous.software
+  
+ The software distribution includes:
+  
+  FILE NAME     DESCRIPTION                                    BLOCK SIZE
+  
+ DG_53_P869.ZIP Contains KIDS files(2) and pdf documents (6)
+                DG_53_P869.KID                               16,384 bytes
+                TIU_1_P279.KID                                8,192 bytes
+                Missing Patient PRF_Installation Guide.PDF  638,976 bytes
+                Missing Patient PRF_Release Notes.PDF       614,400 bytes
+                Patient Record Flags_User Guide.PDF       1,658,880 bytes
+                PIMSTM.PDF                                3,194,880 bytes
+                TIUTM.PDF                                 3,035,136 bytes
+                TIUUM.PDF                                 2,256,896 bytes 
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+  
+ * Post-Install Routine (^DG53869P):
+  
+     This routine is responsible for installation of the DGPF MISSING PT 
+ FLAG REVIEW mail group and creation of the National, Category I, 
+ MISSING PATIENT, Patient Record Flag (PRF).  The post routine ^DG53869P
+ may be removed after installation has successfully completed.
+  
+  
+  Installation Steps (DG*5.3*869):
+  ================================
+  
+ 1. Download the ZIP file, DG_53_P869.ZIP from the ANONYMOUS.SOFTWARE
+    directory of the Albany OIFO to the appropriate directory on
+    your system.  Then Extract the file DG_53_P869.KID to the appropriate
+    directory on your system.
+  
+ 2. Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+    enter path and filename of the extracted file: e.g,
+    SYS$:[TMP]DG_53_P869.KID
+  
+ 3. From the 'Kernel Installation & Distribution System' menu, select
+    The Installation menu.
+  
+ 4. From this menu, you may now elect to use the following options (when
+    prompted for INSTALL NAME, enter DG*5.3*869).
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch.  It will NOT
+         backup any changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch is
+         installed.  It compares all components of the patch (routines,
+         DDs, templates, etc.).
+  
+      c. Verify Checksums in Transport Global - This option will allow you
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+ 5.  From the install menu, select the Install Package(s) option to
+     install the build (when prompted for INSTALL NAME, enter DG*5.3*869).
+  
+ 6.  When prompted 'Select the DGPF MISSING PT FLAG REVIEW MAIL GROUP 
+     COORDINATOR:' respond with the individual to be that Mail Group's
+     coordinator.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+  
+ Installation Example:
+ ---------------------
+ Select Installation Option: Install Package(s)
+ Select INSTALL NAME:    DG*5.3*869     Loaded from Distribution  
+ 4/25/13@13:57:02
+      => DG*5.3*869 ;Created on Apr 25, 2013@13:06:58
+  
+ This Distribution was loaded on Apr 25, 2013@13:57:02 with header of
+    DG*5.3*869 ;Created on Apr 25, 2013@13:06:58
+    It consisted of the following Install(s):
+      DG*5.3*869
+ Checking Install for Package DG*5.3*869
+  
+ Install Questions for DG*5.3*869
+  
+  
+ Select the DGPF MISSING PT FLAG REVIEW MAIL GROUP 
+ COORDINATOR:CLINICAL,COORDINATOR
+  CLINICAL,COORDINATOR ONE
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//0
+  
+  
+                                    DG*5.3*869
+ -------------------------------------------------------------------------
+  
+ Mail Group DGPF MISSING PT FLAG REVIEW created
+  
+  
+ National Category I , Patient Record Flag: MISSING PATIENT created
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  DG*5.3*869 Installed.
+                Apr 25, 2013@14:08:47
+  
+  Install Message
+           l------------------------------------------------------------k
+   100%    |             25             50             75               |
+ Complete  m------------------------------------------------------------j
+  
+  
+  
+  
+  
+  
+ Install Completed
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ For a user to have the ability to assign the Missing Patient - PRF, that
+ user must hold the DGPF ASSIGNMENT security key.
+
+Routine Information:
+====================
+Routine Name: DG53869P
+    Checksum:
+  The checksums below are new checksums, and
+   can be checked with CHECK1^XTSUMBLD.
+   
+  Routine Name: DG53869P
+      Before:       n/a   After:  B23654142  **869**
+ Description of Changes:
+  Routine ^DG53869P is a new routine and it is a Post Installation routine 
+  for patch DG*5.3*869.  Routine DG53869P can be described as follows:
+   
+   ;  Post Installation Routine for patch DG*5.3*869
+   ;
+   
+   Creates Mail Group (DGPF MISSING PT FLAG REVIEW) File # (3.8)
+   Creates Patient Record Flag (MISSING PATIENT) File # (26.15)
+   
+  After successful creation and installation of those mentioned items, 
+  messages are displayed respectively.
+
+
+=============================================================================
+User Information:                          Hold Date     : DEC 27, 2013
+Entered By  : JACKSON,TODD                  Date Entered  : FEB 05, 2013
+Completed By: GOURALNIK,YELENA              Date Completed: JAN 15, 2014
+Released By : DANE,SIDNEY                   Date Released : JAN 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

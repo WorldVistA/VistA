@@ -1,0 +1,177 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/09/13 at 15:03
+=============================================================================
+Run Date: MAR 19, 2014                     Designation: LR*5.2*434
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #348                    Status: Released
+                  Compliance Date: APR 19, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*221  <<= must be installed BEFORE `LR*5.2*434'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*434'
+
+Subject: ADDRESS PROBLEM OF GHOST TESTS AND WRONG URGENCY IN FILE 68
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. Incomplete test definition leads to "ghost" tests showing up in
+    Computerized Patient Record System (CPRS).
+  
+ 2. Panel tests sometimes get wrong urgency stored in the ACCESSION
+    file (#68) when ordered with an atomic test with a higher
+    urgency than the panel test.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*434 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*434 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*434 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+    
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1. INC000000726683
+ 2. INC000000847438
+  
+ Participating Test Sites:
+ =========================
+ East Colorado
+ Mountain Home, TN
+ Southern Arizona
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000726683 - Ghost tests showing up in CPRS.
+    
+    Duplicates:
+    -----------
+    INC000000070299
+    INC000000733129
+    INC000000740714
+    INC000000784997
+  
+    Problem:
+    --------
+    When a user is entering a new entry in the LABORATORY TEST file (#60)
+    and either times out or fails to value the required fields, FileMan 
+    automatically deletes this entry. However, because of 
+    cross-references on select fields used to keep OERR file ORDERABLE
+    ITEMS (#101.43) in sync with supporting packages, the entry in the 
+    ORDERABLE ITEMS file (#101.43) is created and not updated. This causes
+    the entry in the ORDERABLE ITEMS file (#101.43) to be selectable in
+    CPRS and referencing an entry in Lab that does not exist.
+  
+    Solution:
+    ---------
+    When an entry in the LABORATORY TEST file (#60) is deleted by FileMan
+    the entry in the ORDERABLE ITEMS file (#101.43) should be inactivated.
+    This is accomplished with modifications to routine LR7OV0.
+  
+    Routine: LR7OV0  
+  
+ 2. INC000000847438 - Wrong test urgency included in Turnaround Time Report
+  
+    Problem:
+    --------
+    When an accession is created with a panel test of ROUTINE urgency and
+    also an atomic test of a higher urgency (STAT) and the accession gets
+    resulted, the panel tests get defined in the ACCESSION file (#68) with
+    WKLD (workload) urgency of STAT.
+  
+    Solution:
+    ---------
+    Modify routine LRCAPV1S to correctly inherit the WKLD urgency of the
+    panel test.
+  
+  
+    Routine: LRCAPV1S   
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the Kernel Installation & Distribution System
+      (KIDS) patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+  
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+      options:
+  
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+      If you wish to preserve a copy of the routines exported in this 
+      patch prior to installation, you should use the 'Backup a Transport
+      Global' option at this time. You may also compare the routines in
+      your production account to the routines in the patch by using the
+      'Compare a Transport Global to Current System' option.
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' menu
+      and select the package LR*5.2*434.
+  
+      If prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      answer NO.
+  
+      If prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OV0
+    Before: B31803944   After: B33645882  **121,187,357,361,350,434**
+Routine Name: LRCAPV1S
+    Before:  B5317067   After:  B5816954  **42,153,201,221,434**
+ 
+Routine list of preceding patches: 221, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 24, 2013
+Completed By:                               Date Completed: MAR 13, 2014
+Released By :                               Date Released : MAR 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

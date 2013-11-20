@@ -1,0 +1,212 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 09/16/13 at 16:11
+=============================================================================
+Run Date: MAR 03, 2014                     Designation: LR*5.2*416
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #345                    Status: Released
+                  Compliance Date: APR 03, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*416'
+
+Subject: ADDRESS SOME AP REPORTING ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues in the Lab package.
+  
+ 1. The Review By Order Number [LRCENLKUP] option gives misleading
+    information when 1 of the samples of a multi-sample order is not
+    collected.
+  
+ 2. The LRAPFICH [Print final path reports by accession number] option
+    prints the incorrect year on the SNOMED CODE LISTING which, is printed
+    at the end of the anatomic pathology report for some AP accessions.
+  
+ 3. Character string in "MODIFIED" banner of autopsy reports prevents
+    report from getting to TIU.
+  
+ BLOOD BANK REVIEW:
+ ================== 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*416 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+ not alter or modify any VistA Blood Bank software design safeguards or 
+ safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*416 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC0000000535477 - Order problem
+  
+ 2. INC0000000591233 - ACC year displaying as 2011 on CPT code report
+    DUPLICATE(S):
+    INC0000000592442 - Wrong year on AP final report page 2 for a few
+                      AP accn numbers
+    INC0000000872016 - Wrong accession number on SNOMED CODE LISTING
+  
+ 3. INC0000000733708 - Autopsy reports not viewable in CPRS
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+     
+ PATIENT SAFETY ISSUES:
+ ======================
+ N/A
+  
+ Participating Testing Sites:
+ ============================
+ VA Heartland East - St. Louis
+ Central Plains HCS - Iowa City
+ Houston VAMC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC0000000535477 - Order problem
+  
+    Problem:
+    --------
+    When one of the samples of a multi-sample order is not collected, the
+    REVIEW BY ORDER NUMBER [LRCENLKUP] option still indicates that the
+    sample has been collected and accessioned.
+  
+    Solution:
+    ---------
+    Modify routine LRCE so that the message "Order has already been
+    accessioned" is not printed under this sample when the sample has not
+    been collected.  Routine also modified to not print out the text
+    "Tests have been accessioned, call the lab to add tests to the same
+    order" under the sample when it has not been collected.
+  
+    Routine:    LRCE  
+  
+ 2. INC0000000591233 - ACC year displaying as 2011 on CPT code report
+    DUPLICATE(S):
+    INC0000000592442 - Wrong year on AP final report page 2 for a few
+                             AP accn numbers
+    INC0000000872016 - Wrong accession number on SNOMED CODE LISTING
+  
+    Problem:
+    --------
+    When a specimen is logged in to Anatomic Pathology at the beginning of
+    one year but the specimen is collected for a date at the end of the 
+    previous year, the SNOMED CODE LISTING page displays the wrong
+    accession number.  The last 2 digits of the year make up part of the
+    accession number, and the code uses the specimen collection date to
+    construct the accession number. 
+  
+    Solution:
+    ---------
+    Modify routine LRSPRPT to use the DATE/TIME SPECIMEN RECEIVED field
+    (#.1) of the SURGICAL PATHOLOGY subfile (#63.08) of the LAB DATA file
+    (#63) to construct the accession number, which is printed on the
+    SNOMED CODE LISTING portion of the AP report.
+  
+    Routine:  LRSPRPT  
+  
+ 3. INC0000000733708 - Autopsy reports not viewable in CPRS
+  
+    Problem:
+    --------
+    There is a BLANK CHARACTER STRING (field #1.06) defined in the TIU
+    PARAMETERS FILE (file #8925.99).  This is a 3 character string that
+    is usually populated with "***".  The autopsy reports, when verified
+    and released, will not be stored in TIU, as they should be, when the 
+    report contains this BLANK CHARACTER STRING.  The "MODIFIED" banner
+    that prints on a modified autopsy report contains this BLANK CHARACTER
+    STRING and the report is not filed in TIU and is thus not visible in
+    CPRS.
+  
+    Option DISPLAY SURG PATH REPORTS FOR A PATIENT [LRAPSPCUM] also prints
+    "***" in the "MODIFIED" banner.  While this report does not go to TIU, 
+    the "MODIFIED" banner has been changed to "*+*" for consistency.
+  
+    Solution:
+    ---------
+    Modify routines LRAPBR4 and LRSPRPTM to replace the character string
+    "***" with the character string "*+*" in conformity with the other
+    reports coming out of the Anatomic Pathology software.
+  
+    Routine:    LRAPBR4  LRSPRPTM
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+    option will load the KIDS patch onto your system.
+  
+ 2. The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+ 3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+    select the 'Installation' menu.
+  
+ 4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+  
+ 5. On the KIDS menu, under the 'Installation' menu, use the following
+  
+    Options:
+            Print Transport Global
+            Compare Transport Global to Current System
+            Backup a Transport Global
+  
+    If you wish to preserve a copy of the routines exported in this 
+    patch prior to installation, you should use the 'Backup a Transport
+    Global' option at this time.  You may also compare the routines in
+    your production account to the routines in the patch by using the
+    'Compare a Transport Global to Current System' option.
+  
+  
+ 6. Use the 'Install Package(s)' option under the 'Installation' menu
+    and select the package 'LR*5.2*416.
+  
+    If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+    choose 'NO'.
+  
+    If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPBR4
+    Before: B44175433   After: B44190167  **259,317,350,416**
+Routine Name: LRCE
+    Before: B66243304   After: B67329261  **28,76,103,121,153,210,202,
+                                           263,350,416**
+Routine Name: LRSPRPT
+    Before: B65444483   After: B65490213  **1,72,248,259,317,350,416**
+Routine Name: LRSPRPTM
+    Before:  B2545182   After:  B2545240  **1,248,416**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 05, 2011
+Completed By:                               Date Completed: FEB 18, 2014
+Released By :                               Date Released : MAR 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,200 @@
+$TXT Created by POTTER,DAVID at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 01/17/13 at 17:10
+=============================================================================
+Run Date: DEC 03, 2013                     Designation: EAS*1*105
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #88                      Status: Released
+                  Compliance Date: JAN 03, 2014
+=============================================================================
+
+Associated patches: (v)EAS*1*79    <<= must be installed BEFORE `EAS*1*105'
+
+Subject: LONG TERM CARE COST ESTIMATE DISCLAIMER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch adds two disclaimer messages to the Calculated LTC Copayments
+ Print [EASEC LTC COPAY PRINT] report option to remind users that future
+ cost projections are just estimates.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. HD0000000274174 - EASEC LTC COPAY PRINT output incorrect
+       HD0000000382835 (d) - LTC Patient Billing Issue
+       HD0000000388374 (d) - LTC Co-pay API
+       HD0000000715693 (d) - Calculated Copay issue
+       HD0000000504013 (d) - Maximum co-pay issue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Battle Creek VA Medical Center     
+ Philadelphia VA Medical Center
+ VA Ann Arbor Healthcare System
+  
+ Remedy Overview:
+ ================
+ 1. HD0000000274174 - EASEC LTC COPAY PRINT output incorrect
+  
+ Problem:
+ ========
+ The Calculated LTC Copayments Print [EASEC LTC COPAY PRINT] report option,
+ can in certain circumstances provide estimates different from what the
+ actual billing option LTC Billing Clock Inquiry [IBAEC LTC CLOCK INQUIRY]
+ generates.
+  
+ Resolution:
+ ===========
+ This report is only intended to be a projected estimate, so a disclaimer 
+ message has been added to advise the user that this report provides only
+ projected estimates dependent upon existing conditions. Also a similar
+ disclaimer that the following report contains only projected estimates
+ based on existing data was added to the report header.
+  
+ The wording of the two disclaimers:
+  
+ ** This report is intended to provide a projected estimate of charges that
+ should generate for a patient admitted for a LTC stay. These estimates are
+ dependent on existing conditions with the projected estimate out to a 
+ year being presented in the report. Be advised that changing circumstances
+ or  newer LTC Copay tests within this timeframe could impact these
+ projected estimates and a discrepancy can exist from the actual charges
+ billing generates. **
+  
+ and
+  
+ **This report contains projected estimates based on existing data**
+  
+  
+ Documentation:
+ ==============
+ The following manual has been updated to reflect the updates made
+ with this patch.
+     
+  Sites may retrieve the documentation directly via FTP. The 
+  preferred method is to FTP the files from:
+     
+     download.vista.domain.ext
+    
+  which will transmit the file from the first available FTP server.
+    
+  Sites may also elect to retrieve the documentation directly from 
+  a specific server as follows:
+    
+      Albany          ftp.fo-albany.domain.ext
+      Hines           ftp.fo-hines.domain.ext
+      Salt Lake City  ftp.fo-slc.domain.ext
+  
+                                                                  Retrieval
+ Filename              Contents                                      Format
+  
+ EAS_1_P105_LTC_UM.PDF Long Term Care Copayment V. 1.0 User Manual   Binary
+  
+  Documentation for Enrollment Application System can also be found
+  in the Financial-Administrative section of the VA Software Document
+  Library:
+     
+      http://www.domain.ext/vdl
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch may be installed during normal working hours. Users may be on 
+ the system. 
+  
+ Install Time: less than 2 minutes.
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS  
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+   Select Kernel Installation & Distribution System Option: INStallation 
+                                                            --- 
+          Load a Distribution  
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+  
+  
+ 3.  Select Installation Option:  
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter EAS*1.0*105):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+  
+ 4.Select Installation Option: Install Package(s)
+                               ------------------
+     **This is the step to start the installation of this KIDS patch: 
+   
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO.
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer YES.
+     d.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':' enter:
+  
+         [EASEC LTC COPAY PRINT]       Calculated LTC Copayments Print
+  
+     e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <Enter>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;Mar 15, 2001;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASECPC
+    Before: B16405138   After: B24232664  **5,7,19,24,34,40,79,105**
+Routine Name: EASECPC1
+    Before: B77767454   After: B78976052  **7,24,40,105**
+ 
+Routine list of preceding patches: 79
+
+=============================================================================
+User Information:
+Entered By  : FERRARESE,MARY ANN            Date Entered  : MAY 23, 2012
+Completed By: DAWSON,TIM                    Date Completed: NOV 18, 2013
+Released By : REID,ANDREA                   Date Released : DEC 03, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

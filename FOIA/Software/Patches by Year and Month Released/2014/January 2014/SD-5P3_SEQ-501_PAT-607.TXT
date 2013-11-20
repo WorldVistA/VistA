@@ -1,0 +1,220 @@
+
+=============================================================================
+Run Date: JAN 16, 2014                     Designation: SD*5.3*607
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #501                    Status: Released
+                  Compliance Date: FEB 16, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*600  <<= must be installed BEFORE `SD*5.3*607'
+
+Subject: PCMM - WINDOWS 7 COMPATIBILITY ISSUES
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ Patch SD*5.3*607 includes a new GUI executable.
+  
+ This patch addresses five Primary Care Management Module (PCMM) issues:
+  
+ 1) Tab labels are missing on the Primary Care Team Position Setup form
+    within the PCMM GUI.
+  
+ 2) Background color of the Template box on the Query Template Utility form
+    is creating display issues.
+  
+ 3) Background color of the Details box on the Selection Details form is 
+    creating display issues.
+  
+ 4) Help File does not open and presents an error.
+  
+ 5) Captions are overlapped by input boxes causing the caption to not
+    display completely.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1)  INC000000800055 - PCMM GUI is missing tab labels on the Primary Care Team
+                       Position Setup form.
+  
+ 2)  INC000000800065 - PCMM GUI has a black background in the Template 
+                       input box. 
+  
+ 3)  INC000000800069 - PCMM GUI has a black background in the Details 
+                       input box. 
+  
+ 4)  INC000000800073 - PCMM GUI will not load the Windows Help File.
+  
+ 5)  INC000000800082 - PCMM GUI allows Captions to be overlapped by input
+                       boxes.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Eastern Colorado HCS
+ N. Florida/S. Georgia
+ San Diego VAMC
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+  
+ 1)  INC000000800055 - PCMM GUI is missing tab labels
+  
+ Problem:
+ --------
+ When running the PCMM GUI on Windows 7, tab labels are missing although
+ functionality remains intact.
+  
+ Resolution:
+ -----------
+ Added functions to the PCMM GUI that will dynamically override the Windows
+ Message (MDrawItem) responsible for drawing the tabs.  User will then
+ regain visibility of the tab labels after the tabs are drawn.
+  
+ 2)  INC000000800065 - PCMM GUI has a black background in the Template
+                       input box.
+  
+ Problem:
+ --------
+ When running the PCMM GUI on Windows 7, the Template input box on the 
+ Query Template Utility form has a black background with black font
+ color.  User cannot read the options in this input box.
+  
+ Resolution:
+ -----------
+ Changing the background color of the Template input box on the Query 
+ Template Utility form to white will allow Windows Themes to function
+ properly within PCMM.
+  
+ 3)  INC000000800069 - PCMM GUI has a black background in the Details
+                       input box.
+  
+ Problem:
+ --------
+ When running the PCMM GUI on Windows 7, the Details input box on the 
+ Selection Details form has a black background with a black font color.
+ User cannot read the options in this input box.
+  
+ Resolution:
+ -----------
+ Changing the background color of the Details input box on the Selection 
+ Details form to white will allow Windows Themes to function properly
+ within PCMM.
+  
+   
+ 4)  INC000000800073 - PCMM GUI will not load the Windows Help File.
+  
+ Problem:
+ --------
+ When running the PCMM GUI on Windows 7, the Help File will not load thus
+ creating an error.
+  
+ Resolution:
+ -----------
+ Windows 7 no longer supports legacy versions of Windows Help Files. 
+ The Windows 7 team has made changes to the current Windows 7 build that
+ will include the legacy Windows Help Viewer.  Machines that have an older
+ Windows 7 build will receive this update automatically.  An information
+ dialog box has been added to the PCMM GUI giving the user the option to
+ submit a remedy ticket in the event the user's computer was not 
+ automatically updated.
+  
+  
+ 5)  INC000000800082 - PCMM GUI allows Captions to be overlapped by input 
+                       boxes.
+  
+ Problem:
+ --------
+ When running the PCMM GUI on Windows 7, Captions are being overlapped
+ by input boxes causing the full Caption to not display correctly.
+  
+ Resolution:
+ -----------
+ Moving the input boxes one character space to the right will allow the entire
+ caption to be displayed.
+  
+ Help File:
+ ==========
+ This patch includes an updated PCMM.hlp file.  No changes have been made to the
+ text of this help file.  The original file has been compressed to improve
+ load time and a version number has been added to the title for tracking
+ purposes. The new size of file PCMM.hlp is 484 KB.
+  
+ PCMM User Manual:
+ =================
+ Changes have been made to the PCMM User Manual to include a description
+ of the updated status bar.  The status bar on the PCMM GUI has been
+ modified to include the PCMM GUI version and the patch number.
+  
+ Software Retrieval and Installation:
+ ====================================
+ Please refer to the "PCMM Installation Guide" for installation and set-up 
+ information. This document is exported as SD_53_607IG.doc and SD_53_607IG.pdf 
+ and is included in PCMM_GUI_1_3_0_28.ZIP
+  
+ *****************************PLEASE NOTE*********************************
+ *                                                                       *
+ * Windows 7 workstations must have the following Windows Update         *
+ * installed:                                                            *
+ *                                                                       *
+ *      Windows Update KB917607                                          *
+ *************************************************************************
+  
+ The following software file is exported as part of this patch:
+  
+     File Name                 Contents                 Retrieval Format
+     ----------------------    ---------------          ----------------
+     PCMM_GUI_1_3_0_28.zip     PCMM Executable           BINARY
+  
+     The zip file contains the following files:
+         
+     Pcmm.EXE
+     PCMM.GID
+     PCMM.hlp
+     SD_53_607IG.doc
+     SD_53_607IG.pdf
+  
+     The file listed above may be obtained via FTP. The preferred method
+     is to FTP the files from:
+  
+     download.vista.domain.ext
+  
+     This transmits the files from the first available FTP server.  Sites
+     may also elect to retrieve software directly from a specific server
+     as follows:
+  
+      CIO FIELD OFFICE    FTP ADDRESS                 DIRECTORY
+      ----------------    ------------------------    --------------------
+  
+      Albany              ftp.fo-albany.domain.ext    [anonymous.software]
+      Hines               ftp.fo-hines.domain.ext     [anonymous.software]
+      Salt Lake City      ftp.fo-slc.domain.ext       [anonymous.software]
+  
+ Following the release of this patch, the updated User Manual &
+ Installation Guide, will be available on the VDL.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : SALLIOTTE,DAVID               Date Entered  : JAN 09, 2013
+Completed By: SESSLER,APRIL                 Date Completed: JAN 07, 2014
+Released By : BENBOW,PHYLLIS O              Date Released : JAN 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

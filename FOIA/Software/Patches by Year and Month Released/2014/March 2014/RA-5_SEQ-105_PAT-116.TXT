@@ -1,0 +1,284 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 07/31/13 at 09:19
+=============================================================================
+Run Date: MAR 10, 2014                     Designation: RA*5*116
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #105                      Status: Released
+                  Compliance Date: APR 09, 2014
+=============================================================================
+
+Associated patches: (v)RA*5*90     <<= must be installed BEFORE `RA*5*116'
+
+Subject: VISTA IMAGING IMPORTER III RIS (RADIOLOGY INFORMATION SYSTEM) SUPPORT
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Importer is an application on the DICOM (Digital Imaging and 
+ Communication in Medicine) Image Gateway that can be used to transfer
+ DICOM objects from studies performed outside of the VA into VistA Imaging.
+ These DICOM objects may be transmitted directly from the outside facility
+ to the VA, as in the case for the studies for the polytrauma patients, or
+ they may be loaded from portable media (CDs or DVDs). Portable media must
+ conform to the DICOM Standard and the Integrating the Healthcare
+ Enterprise (IHE) Portable Data for Imaging (PDI) integration profile.
+ (Unfortunately, some PACS (Picture Archiving and Communication System)
+ generate "DICOM" CDs and DVDs in proprietary formats that can't be
+ processed by VistA Imaging - see Appendix D of the 'Imaging DICOM Gateway
+ Importer User Manual' for examples.) Report files that are on the media
+ will not process at this time but will be dealt with in a future patch.
+  
+ The Importer can also be used to correct and import locally acquired 
+ DICOM objects that were rejected by VistA due to patient and/or study 
+ identification information mismatch. This functionality replaces the 
+ current DICOM Correct utility on workstations where the Importer software 
+ is installed.
+  
+ This version of the Importer, the third, includes an enhancement to the 
+ VistA Radiology/Nuclear Medicine application (known as the Radiology
+ Information System or 'RIS'). The RIS will now accept Secondary Diagnostic
+ Codes and file exam specific secondary Dx Codes into the RAD/NUC MED
+ PATIENT database.
+  
+  
+ Exported Components (ex routines)      Component Type
+ =================================      ==============
+ RAMAG EXAM COMPLETE                    Remote Procedure Call (RPC)
+  
+ Note: The routines exported in this patch are documented below.
+  
+  
+ National Service Request
+ ========================
+ 20120908
+  
+  
+ Remedy Ticket(s)
+ ================
+ N/A
+  
+  
+ Test Sites:
+ ==========
+ VISN15 - St. Louis, MO
+ Fayetteville, NC
+ Puget Sound, WA
+ Honolulu, HI
+ Asheville, NC
+ West Los Angeles, CA
+ Tucson, AZ 
+ Sioux Falls, SD 
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ The most up-to-date VA Radiology/Nuclear Medicine end-user documentation
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website: http://www.domain.ext/vdl/application.asp?appid=98
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ There will not be documentation released with RA*5.0*116.
+  
+  
+ Installation Instructions: 
+ =========================
+ The patch can be installed with VistA RIS users online. The importation 
+ of patient studies MUST be suspended while this patch is being installed.
+  
+ Installation time for this patch is less than five minutes.
+  
+  1. Use the "INSTALL/CHECK MESSAGE" option of the Packman menu.
+     This option loads the patch into a Transport Global on your
+     system.
+  
+  2. Select the Installation submenu from the Kernel 
+     Installation & Distribution System [XPD MAIN] menu.
+  
+  3. Verify integrity of the patch using the Verify 
+     Checksums in Transport Global option [XPD PRINT CHECKSUM].
+  
+  4. Backup the routines exported with this patch using
+     the Backup a Transport Global [XPD BACKUP] option.
+  
+  5. Optionally, use the following options:
+  
+     Print Transport Global [XPD PRINT INSTALL]
+     Compare Transport Global to Current System [XPD COMPARE TO SYSTEM]
+  
+  6. Start the patch installation using the Install
+     Package(s) [XPD INSTALL BUILD] option.
+  
+  7. Answer NO to the following prompts:
+  
+     Want KIDS to INHIBIT LOGONS during install?  No//NO
+     Want to DISABLE Scheduled Options, Menu Options and Protocols?  No//NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAMAG06
+    Before: B45318084   After: B45567180  **90,116**
+ Description of Changes:
+  GJCA1$ diff RAMAG06.V5P116_A;2 RAMAG06.V5P116_B  
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_A;2
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAG06 for RA5P116 CHECK1 value 
+  = 4556
+      2   %RO on 20 Jun 2013   7:36 AM
+      3   RAMAG06^INT^1^62992,60190.902667^0
+      4   RAMAG06 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (EXAM COMPLETION) ; 
+  4/12/13 6:
+      5    ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 20
+      6    ;
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_B;1
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAG06 before mods RA*5.0*116 
+  CHECK1 v
+      2   %RO on 19 Jun 2013  10:54 AM
+      3   RAMAG06^INT^1^61426,58812^0
+      4   RAMAG06 ;HCIOFO/SG - ORDERS/EXAMS API (EXAM COMPLETION) ; 3/6/09 
+  4:20pm
+      5    ;;5.0;Radiology/Nuclear Medicine;**90**;Mar 16, 1998
+      6    ;
+  ************
+   
+   
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_A;2
+     96    ;   "SECDXCODE",#)
+     97    ;   "SERVICE")
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_B;1
+     96    ;   "SERVICE")
+  ************
+   
+  Number of difference sections found: 2
+  Number of difference records found: 6
+   
+  DIFFERENCES /IGNORE=()/MERGED=1-
+      SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_A;2-
+      SYS$USER:[CEBE.PATCH.5]RAMAG06.V5P116_B;1
+  GJCA1$
+
+Routine Name: RAMAGU01
+    Before: B42344620   After: B42905258  **90,116**
+ Description of Changes:
+  GJCA1$ diff RAMAGU01.V5P116_A;2 RAMAGU01.V5P116_B
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_A;2
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAGU01 for RA5P116 CHECK1 
+  value = 429
+      2   %RO on 20 Jun 2013   7:37 AM
+      3   RAMAGU01^INT^1^62992,60147.237562^0
+      4   RAMAGU01 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (RAMISC UTILITIES) ; 
+  4/12/13 
+      5    ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 20
+      6    ;
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_B;1
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAGU01 before mods RA*5.0*116 
+  CHECK1 
+      2   %RO on 19 Jun 2013  10:56 AM
+      3   RAMAGU01^INT^1^61068,42899^0
+      4   RAMAGU01 ;HCIOFO/SG - ORDERS/EXAMS API (RAMISC UTILITIES) ; 
+  3/13/08 11:5
+      5    ;;5.0;Radiology/Nuclear Medicine;**90**;Mar 16, 1998
+      6    ;
+  ************
+   
+   
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_A;2
+     71    ;;|SECDXCODE   |70.14  | .01 | PM  |    |$$COMPLETE^RAMAG06|
+     72    ;;|SERVICE     |70.03  |   7 | P   |    |$$REGISTER^RAMAG03|
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_B;1
+     71    ;;|SERVICE     |70.03  |   7 | P   |    |$$REGISTER^RAMAG03|
+  ************
+   
+  Number of difference sections found: 2
+  Number of difference records found: 6
+   
+  DIFFERENCES /IGNORE=()/MERGED=1-
+      SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_A;2-
+      SYS$USER:[CEBE.PATCH.5]RAMAGU01.V5P116_B;1
+  GJCA1$ 
+
+Routine Name: RAMAGU08
+    Before: B43666394   After: B46575809  **90,116**
+ Description of Changes:
+  GJCA1$ diff RAMAGU08.V5P116_A;2 RAMAGU08.V5P116_B
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_A;2
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAGU08 for RA5P116 CHECK1 
+  value = 465
+      2   %RO on 20 Jun 2013   7:38 AM
+      3   RAMAGU08^INT^1^62992,60102.174826^0
+      4   RAMAGU08 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (RAMISC VALID. #70) ; 
+  4/12/13
+      5    ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 20
+      6    ;
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_B;1
+      1   Cache for OpenVMS/ALPHA V8.x^INT^RAMAGU08 before mods RA*5.0*116 
+  CHECK1 
+      2   %RO on 19 Jun 2013  10:57 AM
+      3   RAMAGU08^INT^1^61426,58567^0
+      4   RAMAGU08 ;HCIOFO/SG - ORDERS/EXAMS API (RAMISC VALID. #70) ; 
+  3/6/09 4:16
+      5    ;;5.0;Radiology/Nuclear Medicine;**90**;Mar 16, 1998
+      6    ;
+  ************
+   
+   
+  ************
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_A;2
+    209    ;=== Secondary diagnostic code(s)
+    210    S NAME="SECDXCODE"
+    211    S RC=$$VALPRM^RAMAGU09(NAME)
+    212    I RC>0  D
+    213    . S RAI=0
+    214    . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+    215    . . S:$$VALPRM^RAMAGU09(NAME,RAI)<0 ECNT=ECNT+1
+    216    E  S:RC<0 ECNT=ECNT+1
+    217    ;
+    218    ;=== Primary interpreting resident and staff
+  ******
+  File SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_B;1
+    209    ;=== Primary interpreting resident and staff
+  ************
+   
+  Number of difference sections found: 2
+  Number of difference records found: 14
+   
+  DIFFERENCES /IGNORE=()/MERGED=1-
+      SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_A;2-
+      SYS$USER:[CEBE.PATCH.5]RAMAGU08.V5P116_B;1
+  GJCA1$
+
+ 
+Routine list of preceding patches: 90
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 19, 2013
+Completed By:                               Date Completed: MAR 10, 2014
+Released By :                               Date Released : MAR 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

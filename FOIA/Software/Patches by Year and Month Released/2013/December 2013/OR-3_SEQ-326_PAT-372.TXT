@@ -1,0 +1,184 @@
+$TXT Created by ESCALERA,Diego at CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 10/17/13 at 13:10
+=============================================================================
+Run Date: DEC 23, 2013                     Designation: OR*3*372
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #326                      Status: Released
+                  Compliance Date: JAN 23, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*372'
+
+Subject: ORWOR REQUIRE CURRENT CLIENT/UNSCHED VISIT DESCRIPTION
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch corrects 3 issues in the ORDER ENTRY/RESULTS REPORTING (OERR) 
+ package:
+   
+ 1. Remove obsolete parameter ORWOR REQUIRE CURRENT CLIENT 
+  
+ 2. Update the description of OERR notification UNSCHEDULED VISIT
+  
+ 3. Modify routine ORWGAPIA to use International Classification of 
+    Diseases (ICD) Application Program Interfaces (AIP) to read globals 
+  
+  
+   
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+   
+   
+ ASSOCIATED REMEDY:
+ ==================
+ 1. INC000000070938 - ORWOR REQUIRE CURRENT CLIENT
+   
+ 2. INC000000071104 - Unsched visit alert-discrep bet alert text & descrip
+   
+ 3. INC000000312724 - New API needs to be used
+   
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Mountain Home VAMC
+ VA Sierra Nevada HCS  
+ VA Salt Lake City HCS
+ Upstate NY HCS (Buffalo)
+ Edward Hines Jr. VA   
+   
+   
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000070938 - ORWOR REQUIRE CURRENT CLIENT
+   
+ Problem:
+ --------
+ The ORWOR REQUIRE CURRENT CLIENT is a general parameter used prior to
+ version 20 of Computerized Patient Record System (CPRS) Graphical User
+ Interface (GUI) to prevent CPRS GUI users from logging on with previous
+ versions of the client GUI after a new version had been installed. CPRS
+ GUIv20 added the version check into GUI executable, rendering the
+ parameter obsolete. Currently, if the parameter is set to the NO value,
+ which should allow ANY GUI version to run, an attempt to login with a
+ version other than the installed version is aborted by the check in the
+ GUI executable. CPRS no longer uses this parameter.
+  
+ Resolution:
+ -----------
+ This patch deletes the ORWOR REQUIRE CURRENT CLIENT parameter from the
+ PARAMETER DEFINITION (#8989.51) file.
+  
+  
+ 2. INC000000071104 - Unsched visit alert-discrep bet alert text & descrip
+   
+ Problem:
+ --------
+ The current description of the UNSCHEDULED VISIT notification in OE/RR
+ NOTIFICATION (#100.9) file begins with this sentence: Triggered when a
+ patient is admitted unexpectedly. Most VA personnel associate the term
+ "admission" ONLY with an INPATIENT admission. By using the term "visit" in
+ the notification name and message text that is displayed to the recipient,
+ using "admission" in the description appears to be a discrepancy and could
+ cause confusion. 
+  
+ Resolution:
+ -----------
+ The description has been modified to contain the following text:
+     
+       Triggered when an unscheduled patient visit occurs. Recipients 
+       include attending physician, primary provider and teams. Deletion 
+       occurs when each recipient reviews the notification.
+   
+  
+ 3. INC0000000312724 - New API needs to be used
+   
+ Problem:
+ --------
+ Routine ORWGAPIA directly reads the ^ICD9 and ^ICD0 globals. Direct 
+ reads may cause display problems for disease diagnosis when ICD-10 is
+ implemented. The routine should be using the new ICD APIs.
+   
+ Resolution:
+ -----------
+ The routine ORWGAPIA has been modified to use the appropriate ICD APIs.
+ (ICDDX^ICDCODE and ICDOP^ICDCODE)   
+   
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+   1.  Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2.  Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+       Select Kernel Installation & Distribution System Option: 
+       Installation
+       ---
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+   
+   3.  From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter OR*3.0*372):
+       
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch.
+       b.  Compare Transport Global to Current System - This option
+           will allow you to view all changes that will be made when
+           this patch is installed.  It compares all components of this
+           patch (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will
+           allow you to ensure the integrity of the routines that are
+           in the transport global.
+   
+   4.  Use the Install Package(s) option and select the package
+       OR*3.0*372.
+   
+       a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+           install? NO//", answer NO.
+       b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+           Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORWGAPIA
+    Before: B34887063   After: B36731546  **215,251,260,243,372**
+ 
+Routine list of preceding patches: 243
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : APR 22, 2013
+Completed By: HULET,LEE ANN                 Date Completed: DEC 17, 2013
+Released By : STOKER,ELAINE                 Date Released : DEC 23, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

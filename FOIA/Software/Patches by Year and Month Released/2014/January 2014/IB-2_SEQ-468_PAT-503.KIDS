@@ -1,0 +1,408 @@
+Released IB*2*503 SEQ #468
+Extracted from mail message
+**KIDS**:IB*2.0*503^
+
+**INSTALL NAME**
+IB*2.0*503
+"BLD",9472,0)
+IB*2.0*503^INTEGRATED BILLING^0^3131202^y
+"BLD",9472,1,0)
+^^8^8^3131202^^
+"BLD",9472,1,1,0)
+This patch addresses two issues. This first issue is about the 
+"BLD",9472,1,2,0)
+update of the administrative charge for the rate types based on 
+"BLD",9472,1,3,0)
+a new dispensing fee and adjustments for third party pharmacy 
+"BLD",9472,1,4,0)
+prescription claims with an effective date of January 1st, 2014.
+"BLD",9472,1,5,0)
+The second issue concerns that there is no space between the line item
+"BLD",9472,1,6,0)
+number and the bill from date to display if a patient has more than 99
+"BLD",9472,1,7,0)
+charges in the Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD
+"BLD",9472,1,8,0)
+CHARGES] option.
+"BLD",9472,4,0)
+^9.64PA^^
+"BLD",9472,6)
+^453
+"BLD",9472,6.3)
+15
+"BLD",9472,"INIT")
+POST^IB20P503
+"BLD",9472,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9472,"KRN",.4,0)
+.4
+"BLD",9472,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9472,"KRN",.401,0)
+.401
+"BLD",9472,"KRN",.402,0)
+.402
+"BLD",9472,"KRN",.402,"NM",0)
+^9.68A^^
+"BLD",9472,"KRN",.403,0)
+.403
+"BLD",9472,"KRN",.5,0)
+.5
+"BLD",9472,"KRN",.84,0)
+.84
+"BLD",9472,"KRN",3.6,0)
+3.6
+"BLD",9472,"KRN",3.8,0)
+3.8
+"BLD",9472,"KRN",9.2,0)
+9.2
+"BLD",9472,"KRN",9.8,0)
+9.8
+"BLD",9472,"KRN",19,0)
+19
+"BLD",9472,"KRN",19.1,0)
+19.1
+"BLD",9472,"KRN",101,0)
+101
+"BLD",9472,"KRN",409.61,0)
+409.61
+"BLD",9472,"KRN",409.61,"NM",0)
+^9.68A^1^1
+"BLD",9472,"KRN",409.61,"NM",1,0)
+IB CHARGES^^0
+"BLD",9472,"KRN",409.61,"NM","B","IB CHARGES",1)
+
+"BLD",9472,"KRN",771,0)
+771
+"BLD",9472,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",9472,"KRN",779.2,0)
+779.2
+"BLD",9472,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",9472,"KRN",870,0)
+870
+"BLD",9472,"KRN",8989.51,0)
+8989.51
+"BLD",9472,"KRN",8989.52,0)
+8989.52
+"BLD",9472,"KRN",8994,0)
+8994
+"BLD",9472,"KRN","B",.4,.4)
+
+"BLD",9472,"KRN","B",.401,.401)
+
+"BLD",9472,"KRN","B",.402,.402)
+
+"BLD",9472,"KRN","B",.403,.403)
+
+"BLD",9472,"KRN","B",.5,.5)
+
+"BLD",9472,"KRN","B",.84,.84)
+
+"BLD",9472,"KRN","B",3.6,3.6)
+
+"BLD",9472,"KRN","B",3.8,3.8)
+
+"BLD",9472,"KRN","B",9.2,9.2)
+
+"BLD",9472,"KRN","B",9.8,9.8)
+
+"BLD",9472,"KRN","B",19,19)
+
+"BLD",9472,"KRN","B",19.1,19.1)
+
+"BLD",9472,"KRN","B",101,101)
+
+"BLD",9472,"KRN","B",409.61,409.61)
+
+"BLD",9472,"KRN","B",771,771)
+
+"BLD",9472,"KRN","B",779.2,779.2)
+
+"BLD",9472,"KRN","B",870,870)
+
+"BLD",9472,"KRN","B",8989.51,8989.51)
+
+"BLD",9472,"KRN","B",8989.52,8989.52)
+
+"BLD",9472,"KRN","B",8994,8994)
+
+"BLD",9472,"QUES",0)
+^9.62^^
+"BLD",9472,"REQB",0)
+^9.611^1^1
+"BLD",9472,"REQB",1,0)
+IB*2.0*510^2
+"BLD",9472,"REQB","B","IB*2.0*510",1)
+
+"INIT")
+POST^IB20P503
+"KRN",409.61,211,-1)
+0^1
+"KRN",409.61,211,0)
+IB CHARGES^1^1^80^5^14^1^1^Charge^IBACM1 MENU^Charges^1^32
+"KRN",409.61,211,1)
+^VALM HIDDEN ACTIONS
+"KRN",409.61,211,"ARRAY")
+ ^TMP("IBACM",$J)
+"KRN",409.61,211,"COL",0)
+^409.621^7^7
+"KRN",409.61,211,"COL",1,0)
+CHARGE^71^9^Charge
+"KRN",409.61,211,"COL",2,0)
+FDATE^5^9^Bill From
+"KRN",409.61,211,"COL",3,0)
+ENTRY^25^24^Charge Type       Stop
+"KRN",409.61,211,"COL",4,0)
+STATUS^59^11^Status
+"KRN",409.61,211,"COL",5,0)
+CHG#^1^4
+"KRN",409.61,211,"COL",6,0)
+BILL#^50^8^Bill #
+"KRN",409.61,211,"COL",7,0)
+TDATE^15^8^Bill To
+"KRN",409.61,211,"COL","B","BILL#",6)
+
+"KRN",409.61,211,"COL","B","CHARGE",1)
+
+"KRN",409.61,211,"COL","B","CHG#",5)
+
+"KRN",409.61,211,"COL","B","ENTRY",3)
+
+"KRN",409.61,211,"COL","B","FDATE",2)
+
+"KRN",409.61,211,"COL","B","STATUS",4)
+
+"KRN",409.61,211,"COL","B","TDATE",7)
+
+"KRN",409.61,211,"FNL")
+D FNL^IBECEA
+"KRN",409.61,211,"HDR")
+D HDR^IBECEA
+"KRN",409.61,211,"HLP")
+S X="?" D DISP^XQORM1 W !!
+"KRN",409.61,211,"INIT")
+D INIT^IBECEA
+"MBREQ")
+0
+"ORD",17,409.61)
+409.61;17;1;;;;LME1^XPDIA1;;;LMDEL^XPDIA1
+"ORD",17,409.61,0)
+LIST TEMPLATE
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+503^3131202
+"PKG",200,22,1,"PAH",1,1,0)
+^^8^8^3131202
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. This first issue is about the 
+"PKG",200,22,1,"PAH",1,1,2,0)
+update of the administrative charge for the rate types based on 
+"PKG",200,22,1,"PAH",1,1,3,0)
+a new dispensing fee and adjustments for third party pharmacy 
+"PKG",200,22,1,"PAH",1,1,4,0)
+prescription claims with an effective date of January 1st, 2014.
+"PKG",200,22,1,"PAH",1,1,5,0)
+The second issue concerns that there is no space between the line item
+"PKG",200,22,1,"PAH",1,1,6,0)
+number and the bill from date to display if a patient has more than 99
+"PKG",200,22,1,"PAH",1,1,7,0)
+charges in the Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD
+"PKG",200,22,1,"PAH",1,1,8,0)
+CHARGES] option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","IB20P503")
+0^^B7417889^n/a
+"RTN","IB20P503",1,0)
+IB20P503 ;ALB/CXW - IB*2.0*503 Post Init: Administrative Charge Update; 11-26-2013 
+"RTN","IB20P503",2,0)
+ ;;2.0;INTEGRATED BILLING;**503**;21-MAR-94;Build 15
+"RTN","IB20P503",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IB20P503",4,0)
+ Q
+"RTN","IB20P503",5,0)
+ ;
+"RTN","IB20P503",6,0)
+ ;
+"RTN","IB20P503",7,0)
+POST ; post-install of patch installation
+"RTN","IB20P503",8,0)
+ ; use default rate types of rx 3rd party to update RS in #363
+"RTN","IB20P503",9,0)
+ ; ibraty=rate type names from file #399.3
+"RTN","IB20P503",10,0)
+ ; ibeffdt=effective external date (mm/dd/yyyy)
+"RTN","IB20P503",11,0)
+ ; ibadfe=administrative fee (dollar.cent)
+"RTN","IB20P503",12,0)
+ ; ibdisp=dispensing fee (dollar.cent)
+"RTN","IB20P503",13,0)
+ ; ibadjust=adjustment mumps code
+"RTN","IB20P503",14,0)
+ ;
+"RTN","IB20P503",15,0)
+ N IBCT,IBI,IBJ,IBT,IBMSG,IBX,IBRS,IBRSIN,IBRATY,IBEFFDT,IBADFE,IBDISP,IBADJUST
+"RTN","IB20P503",16,0)
+ D MES^XPDUTL("Patch IB*2.0*503 Post-Install starts...")
+"RTN","IB20P503",17,0)
+ S IBMSG="rate schedule with adjustments"
+"RTN","IB20P503",18,0)
+ S IBADFE="",IBEFFDT="3140101",IBCT=0
+"RTN","IB20P503",19,0)
+ F IBX=1:1 S IBT=$P($T(RSF+IBX),";",3) Q:'$L(IBT)  D
+"RTN","IB20P503",20,0)
+ . S IBRATY=$P(IBT,U),IBRATY=$TR(IBRATY,"/",U)
+"RTN","IB20P503",21,0)
+ . S IBRS=""
+"RTN","IB20P503",22,0)
+ . F IBI=1:1 S IBJ=$P(IBRATY,U,IBI) Q:IBJ=""  D
+"RTN","IB20P503",23,0)
+ .. S IBRSIN=$O(^DGCR(399.3,"B",IBJ,0))
+"RTN","IB20P503",24,0)
+ .. I 'IBRSIN D MES^XPDUTL("     >>>"_IBJ_" not defined, the "_IBMSG_" not added") Q
+"RTN","IB20P503",25,0)
+ .. I $P($G(^DGCR(399.3,+IBRSIN,0)),U,3) S IBRSIN=$O(^DGCR(399.3,"B",IBJ,99999),-1)
+"RTN","IB20P503",26,0)
+ .. I $P($G(^DGCR(399.3,+IBRSIN,0)),U,3) D MES^XPDUTL("    >>>"_IBJ_" not active, the "_IBMSG_" not added") Q
+"RTN","IB20P503",27,0)
+ .. I $$RSEXIST(IBEFFDT,IBRSIN) D MES^XPDUTL("    >>>"_IBJ_" "_IBMSG_" already exists") Q
+"RTN","IB20P503",28,0)
+ .. S IBRS=IBRS_U_IBJ
+"RTN","IB20P503",29,0)
+ . S IBRATY=$E(IBRS,2,$L(IBRS)) Q:IBRS=""
+"RTN","IB20P503",30,0)
+ . S IBDISP=$P(IBT,U,2)
+"RTN","IB20P503",31,0)
+ . S IBADJUST=$P(IBT,U,3)
+"RTN","IB20P503",32,0)
+ . D ENT^IB3PSOU(IBRATY,IBEFFDT,IBADFE,IBDISP,IBADJUST)
+"RTN","IB20P503",33,0)
+ . F IBI=1:1 S IBJ=$P(IBRATY,U,IBI) Q:IBJ=""  D
+"RTN","IB20P503",34,0)
+ .. S IBRSIN=$O(^DGCR(399.3,"B",IBJ,0))
+"RTN","IB20P503",35,0)
+ .. I $$RSEXIST(IBEFFDT,IBRSIN) S IBCT=IBCT+1 D MES^XPDUTL("    >>>"_IBJ_" "_IBMSG_" added")
+"RTN","IB20P503",36,0)
+ D MES^XPDUTL("  Total "_IBCT_$S(IBCT=1:" entry",1:" entries")_" updated in the Rate Schedule file (#363)")
+"RTN","IB20P503",37,0)
+ D MES^XPDUTL("Patch IB*2.0*503 Post-Install is complete.")
+"RTN","IB20P503",38,0)
+ Q
+"RTN","IB20P503",39,0)
+ ;
+"RTN","IB20P503",40,0)
+RSEXIST(IBEFFDT,IBRSIN) ; return RS IFN if Rate Schedule exists for Effective Date
+"RTN","IB20P503",41,0)
+ N IBX,IBRSFN,IBRS0 S IBX=0
+"RTN","IB20P503",42,0)
+ S IBRSFN=0 F  S IBRSFN=$O(^IBE(363,IBRSFN))  Q:'IBRSFN  D  I IBX Q
+"RTN","IB20P503",43,0)
+ . S IBRS0=$G(^IBE(363,IBRSFN,0))
+"RTN","IB20P503",44,0)
+ . I $P(IBRS0,U,2)=IBRSIN,$P(IBRS0,U,5)=IBEFFDT S IBX=IBRSFN
+"RTN","IB20P503",45,0)
+ Q IBX
+"RTN","IB20P503",46,0)
+ ;
+"RTN","IB20P503",47,0)
+RSF ; 8 rate types separated by '/'^dispensing fee^adjustment
+"RTN","IB20P503",48,0)
+ ;;REIMBURSABLE INS./NO FAULT INS./WORKERS' COMP./TORT FEASOR/INELIGIBLE/HUMANITARIAN^13.07^S X=X+13.07
+"RTN","IB20P503",49,0)
+ ;;TRICARE REIMB. INS./TRICARE^11.56^S X=X+11.56
+"RTN","IB20P503",50,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9472,6)
+^468
+**END**
+**END**

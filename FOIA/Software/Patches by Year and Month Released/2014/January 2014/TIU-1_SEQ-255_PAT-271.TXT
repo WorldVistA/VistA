@@ -1,0 +1,200 @@
+$TXT Created by HUFFMAN,Dan at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 05/23/13 at 16:02
+=============================================================================
+Run Date: JAN 03, 2014                     Designation: TIU*1*271
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #255                      Status: Released
+                  Compliance Date: FEB 03, 2014
+=============================================================================
+
+Associated patches: (v)TIU*1*239   <<= must be installed BEFORE `TIU*1*271'
+
+Subject: CORRECT ADDENDUM SEARCH RESULTS AND PREVENT DATES FROM BEING STRINGS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1) Users were not able to search for Addendums using the Multiple Patient
+    Documents [TIU REVIEW SCREEN MRT] option on the Text Integration
+    Utilities (MRT) [TIU MAIN MENU MRT] main menu or the Multiple Patient
+    Documents [TIU REVIEW SCREEN MIS MANAGER] option on the Text
+    Integration Utilities (MIS Manager) [TIU MAIN MENU MGR] main menu.
+  
+ 2) String dates are being stored in the REFERENCE DATE field (#1301) of 
+    the TIU DOCUMENT file (#8925).
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1) INC000000070396 - ISL-1103-50704  Addenda search problem for Multiple
+                      Patient Documents option
+ 2) INC000000151706 - String dates in file 8925
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ Participating Review Sites:
+ ===========================
+ James J. Peters VAMC - Bronx, NY
+ Orlando VAMC, FL
+  
+  
+ Overview of Remedy ticket(s):
+ =============================
+ 1) INC000000070396 - ISL-1103-50704  Addenda search problem for Multiple
+                      Patient Documents option
+  Problem
+  -------
+  When Medical Review Technicians (MRT's) were using the Multiple Patient
+  Documents [TIU REVIEW SCREEN MRT] option on the Text Integration 
+  Utilities (MRT) [TIU MAIN MENU MRT] main menu or the Multiple Patient
+  Documents [TIU REVIEW SCREEN MIS MANAGER] option on the Text Integration
+  Utilities (MIS Manager)[TIU MAIN MENU MGR] main menu searching for a
+  document type of Addendum, no search results were returned.  Searching
+  for other document types did yield valid search results.
+  
+  Resolution
+  ----------
+  Routine TIURM1 has been modified to return addendum results instead of
+  parent results when the user searches for type Addendum.
+  
+  
+ 2) INC000000151706 - String dates in file 8925
+  Problem
+  -------
+  One or more unidentified and possibly third party applications have been
+  sending the reference date to the TIU API in string format. This is
+  causing trailing zeros and a possibility of incorrect ordering in cross
+  references. The reference date is a multi-field cross-reference used for
+  look-ups by patient, document type, status, and date range. When notes
+  are displayed or printed, the child entries are normally ordered by
+  reference date under the parent entry. It was determined that there is a 
+  potential for the TIU Application Program Interface (API) to store a 
+  string instead of a date. 
+  
+  Resolution
+  ----------
+  Routine TIUSRVP has been modified to prevent the REFERENCE DATE field
+  (#1301) from being a string.
+  
+  ****PRE AND POST INSTALLATION NOTICE**** 
+  
+  *** DO NOT QUEUE THIS PATCH FOR INSTALLATION *** 
+  
+  There is a post install utility that needs to be queued to run at a 
+  different time. You will be prompted for a time during the installation 
+  of this patch. The Post Init routine can be ran while users are on the
+  system and will attempt to lock TIU records before correcting the 
+  reference date, but it is recommended that the post init be queued to 
+  run at a different time.
+  
+  Any failed corrections will be reported in a mailman message with the
+  subj line of: "REFERENCE DATES CORRECTED" which will be sent to both
+  the installing user and the mail group G.TIU CACS. Please check the 
+  mail group TIU CACS to make sure you have users defined.
+  
+  In order to go back and correct records that were unable to be corrected
+  due to locking issues, a user with Programmer access can re-run the
+  utility QUE^TIUP271 by following the steps below at the programmer 
+  prompt:
+  
+  1) Delete the Global set when task was run by typing: K ^XTMP('TIUP271')
+  
+  2) Queue the task to run again by typing: D QUE^TIUP271
+  
+ INSTALL INSTRUCTIONS:
+ =====================
+  
+  *** DO NOT QUEUE THIS PATCH FOR INSTALLATION ***
+  
+  Installation will take less than 1 minute.
+  
+  *** Post install utility may take several hours. It should take 
+  approximately 1 minute per million entries in the TIU file (#8925).
+  Therefore, it is suggested that this utility be tasked to run after
+  hours.
+  
+  At the following prompt, enter the time you would like the post-init 
+  Routine to run:
+  
+  "Enter when to Queue the REFERENCE DATE UPDATE job to run in 
+   date@time format:"
+  
+  If you choose NOT to queue the post-init task, you must not shut down or
+  exit your Vista session until it shows 100% complete. If the Vista 
+  session is closed, a user with programmer access will have to kill the 
+  ^TMP("TIU271") global and run QUE^TIUP271 as described above.
+  
+  The included post-init routine (TIUP271) should be deleted after the
+  tasked job "REFERENCE DATE UPDATE" completes and all records have been 
+  corrected.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter TIU*1.0*271):
+          a.  Verify Checksums in Transport Global - This option will 
+              allow you to ensure the integrity of the routines that are 
+              in the transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option 
+              will allow you to view all changes that will be made when 
+              this patch is installed.  It compares all components of 
+              this patch (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will 
+              not backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package 
+      TIU*1.0*271.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Aug 23, 2012;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUP271
+    Before:       n/a   After: B27522434  **271**
+Routine Name: TIURM1
+    Before: B39918877   After: B40265162  **100,113,271**
+Routine Name: TIUSRVP
+    Before: B49614327   After: B50136233  **1,7,19,28,47,89,104,100,115,
+                                           109,167,113,112,175,157,184,
+                                           239,271**
+ 
+Routine list of preceding patches: 239
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : AUG 21, 2012
+Completed By: SHERMAN,BILL                  Date Completed: DEC 19, 2013
+Released By : PIERSON,YVONNE E              Date Released : JAN 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,296 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Friday, 07/19/13 at 11:31
+=============================================================================
+Run Date: FEB 20, 2014                     Designation: OR*3*349
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #328                      Status: Released
+                  Compliance Date: MAR 23, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*306    <<= must be installed BEFORE `OR*3*349'
+                    (v)OR*3*336    <<= must be installed BEFORE `OR*3*349'
+
+Subject: AUDIOCARE AUTORENEWAL FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects four issues in the ORDER ENTRY/RESULTS REPORTING 
+  package:
+   
+  1. Add a description to the Parameter OR AUTORENEWAL USER.
+   
+  2. Use the OR AUTORENEWAL USER parameter value to populate the ENTERED 
+     BY (#16) field in the PRESCRIPTION (#52) file for AudioRENEWAL 
+     prescriptions. 
+   
+  3. MailMan messages from AudioRENEWAL module are not displaying enough
+     information to quickly take appropriate follow-up action.
+    
+  4. Modify the AudioRENEWAL routine so that when the ordering provider
+     of a renewable outpatient medication order has a status of terminated 
+     or disusered has an active surrogate designated, the routine creates
+     the new unsigned renewal order. 
+  
+   
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+    
+    
+  ASSOCIATED REMEDY:
+  ==================
+  1. INC000000410605 - Need Parameter Definition added after release of
+     OR*3*336
+  2. INC000000444880 - Audio Renewal function
+       (d)INC000000446522 - Audio renewal User
+       (d)INC000000469725 - Audio Care renewal
+  3. INC000000446533 - Enhancement request for Audio Renewal
+  4. INC000000507614 - Patient Safety Issue - AudioRENEWAL (Audiocare)
+     PSPO #2164
+   
+   
+  PARTICIPATING TEST SITES:
+  =========================
+  Shreveport VAMC, LA
+  VA Central California HCS, Fresno
+  Philadelphia VAMC, PA
+  VA West Los Angeles HCS
+  VA Gulf Coast HCS, Biloxi MS
+  Wm. Jennings Bryan Dorn VAMC, SC
+    
+    
+  REMEDY OVERVIEW:
+  ================
+  1. INC000000410605 - Need Parameter Definition added after release of
+                       OR*3*336
+   
+  Problem:
+  --------
+  The parameter definition for OR AUTORENEWAL USER has no description.
+   
+  Resolution:
+  -----------
+  OR AUTORENEWAL USER parameter definition has been updated to include a
+  description of the parameters usage.
+   
+  Parameter Definition Text:
+  --------------------------
+  This parameter points to a proxy user in the NEW PERSON (#200) file 
+  created for the auto-renewal process. This value is used to populate
+  the 'entered by' field in the ORDERS (#100) file, and the 'Entry by'
+  field in the PRESCRIPTION (#52) file, and is the proxy user IEN placed
+  in the AudioRenewal module User Parameters field 'Host User ID#'.
+   
+  2. INC000000444880 - AudioRenewal function
+   
+  Problem:
+  --------
+  When a site is using AudioRENEWAL functionality, the ENTERED BY (#16)
+  field in the prescription (#52) file of the renewal order erroneously
+  contains the name of the user who runs the option to process telephone
+  refills. Renewal orders created by this functionality should use the
+  proxy user name entered in the OR AUTORENEWAL USER parameter for the
+  'entered by' field.
+    
+  Resolution:
+  -----------
+  Routines ORAREN and ORWDXR have been modified to use the OR AUTORENEWAL 
+  USER parameter value to populate the ENTERED BY (#16) field in the
+  prescription (#52) file for AudioRENEWAL prescriptions. This allows the
+  'entered by' name to match in CPRS order detail and Outpatient Pharmacy
+  Package and identifies the order as a renewal created by the AudioRENEWAL
+  process.
+   
+   
+  3. INC000000446533 - Enhancement request for Audio Renewal
+      
+  Problem:
+  --------
+  The MailMan message with the subject line 'Renewal Requests not Sent 
+  to Providers' reports requests that failed to create new unsigned renewal
+  orders. There are many situations when a renewal may not process, such
+  as patient chart locked, provider terminated, or RX status not active or
+  expired. The second MailMan message has the subject line 'Renewal 
+  Requests with Order Checks' and reports the order checks that are
+  displayed to a provider who is beginning to write medication orders for a
+  patient, for example, renal functions for patients over 65 years old or
+  polypharmacy count. There is not enough information in the content of
+  these messages to allow personnel to quickly and accurately take
+  appropriate follow-up action.
+    
+  Resolution:
+  -----------
+  Routine ORAREN has been modified to add the name of the drug prescribed,
+  the CPRS patient identifier (first initial of last name and last 4 of
+  SSN), and the inactive providers name to the existing content of the 
+  MailMan message. 
+  
+   
+  4. INC000000507614 - Patient Safety Issue - AudioRENEWAL (AudioCare)
+   
+  Patient Safety Issue:
+  --------------------
+  PSPO #2164
+   
+  Problem:
+  --------
+  Currently, when an AudioRENEWAL request is processed and the outpatient 
+  medication order is renewable but the ordering provider status is 
+  terminated or disusered, the unsigned renewal order is not created. 
+  An entry is made in the MailMan message with the subject line 'Renewal
+  Requests not Sent to Providers' with the problem listed as 'Provider 
+  flagged as <STATUS>', where status will state the problem with the
+  provider. The person that calls in the renewal request is more than
+  likely hearing the message "Your renewal request has been submitted.
+  Please call back in <#> days for a status." If site personnel fail to
+  take action on the problem listed in the MailMan message, the patient may
+  call back days later to find out that no action has occurred on the
+  renewal, or may not call until they have run out of the medication. This
+  could create a situation where the patient misses multiple doses of a
+  needed medication.
+   
+  Resolution:
+  -----------
+  The AudioRENEWAL routine ORAREN has been modified so that when the 
+  ordering provider of a renewable outpatient medication order has a status
+  of terminated or disusered has an active surrogate designated, the
+  routine 'accepts' the surrogate's active status and creates the new
+  unsigned renewal order. This new unsigned order generates the ORDER
+  REQUIRES ELEC SIGNATURE notification which is distributed based on
+  surrogacy and provider recipient codes set for this notification in the
+  Notification Mgmt. Menus.
+  
+  If no surrogate is assigned to inactive providers when renewals are 
+  processed, the result will be the same as before this patch.  When the
+  ordering provider is terminated or disusered, and there is NO 
+  designated surrogate, NO renewal order is created. Since there is no 
+  unsigned order, no notification is generated. An entry is made in the 
+  MailMan message with the subject line 'Renewal Requests not Sent to 
+  Providers' with the problem listed as 'Provider <name> flagged as 
+  <STATUS>' where status will state the problem with the provider and
+  <name> will contain the name of the inactive provider.
+   
+   
+  Documentation Retrieval:
+  ========================
+  An updated AudioCARE Renewal Release Notes and Install Guide and 
+  CPRS GUI Technical Manual will be distributed with OR*3*349.
+  These documents are available on the ANONYMOUS.SOFTWARE directory
+  at one of the following Office of Information (OI) Field Offices.
+     
+  Sites may retrieve documentation in one of the following ways:
+     
+  (1) The preferred method is to FTP the files from
+  download.vista.domain.ext, which will transmit the files from 
+  the first available FTP server.
+    
+  (2) Sites may also elect to retrieve documentation directly 
+  from a specific server as follows:
+     
+  Albany          ftp.fo-albany.domain.ext
+  Hines           ftp.fo-hines.domain.ext
+  Salt Lake City  ftp.fo-slc.domain.ext
+     
+  The documentation distribution includes:
+     
+     FILE NAMES             DESCRIPTION                     FORMAT
+     CPRSGUITM.pdf          CPRS GUI Technical Manual       BINARY
+     PSO_7_P328_IG.pdf      AudioCARE Renewal - Release     BINARY
+                            Notes and Install Guide         
+  
+  
+  (3) Documentation can also be retrieved from VHA Software Document
+  Library (VDL) on the Internet at the following address,
+  http://www.domain.ext/vdl.
+   
+   
+   
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  All sites are expected to install OR*3*349 to their production Vista 
+  system, even if they are not currently using AudioCARE applications. 
+  This installation does not change the functionality of CPRS or Outpatient
+  Pharmacy applications.
+   
+   
+  This patch can be installed with users in the system. However, no 
+  AudioCARE processing should take place during the installation. 
+  Processing telephone refills/renewals during installation may result in a
+  system error. Installation will take less than two minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+    
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option:  
+      Installation
+      
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*349):
+    
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+    
+  4.  Use the Install Package(s) option and select the package OR*3.0*349.
+    
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAREN
+    Before: B23956192   After: B44893839  **336,349**
+Routine Name: ORWDXR
+    Before: B54765656   After: B55649537  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331,306,349**
+ 
+Routine list of preceding patches: 306, 336
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : APR 12, 2011
+Completed By: HULET,LEE ANN                 Date Completed: FEB 10, 2014
+Released By : PASTERNOCK,JOY                Date Released : FEB 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

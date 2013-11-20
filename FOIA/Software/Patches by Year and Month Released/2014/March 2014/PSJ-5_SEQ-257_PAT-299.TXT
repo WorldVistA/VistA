@@ -1,0 +1,221 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSJ*5*299
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #257                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*257   <<= must be installed BEFORE `PSJ*5*299'
+                    (v)PSJ*5*285   <<= must be installed BEFORE `PSJ*5*299'
+                    (v)PSJ*5*292   <<= must be installed BEFORE `PSJ*5*299'
+
+Subject: MOCHA 2.0 Emergency patch
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+  
+ ******************************  NOTE ***********************************
+ After install of this patch, the 2nd line of PSJLIACT routine will not
+ contain patch number 257, and 257 will be re-added with patch PSJ*5*296.
+ ************************************************************************
+  
+ This patch is part of MOCHA 2.0 FAST TRACK PATCHES 1.0 build that 
+ contains PSO*7*431 and PSJ*5*299. 
+  
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality. 
+  
+ **************************************************************************
+ When using the option Compare Transport Global to Current System [XPD 
+ COMPARE TO SYSTEM] with the host file MOCHA_2_0_FAST_TRACK_BUILDS you 
+ will see the following warnings on certain routines:
+  
+ Host file: MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSO*7*431, PSJ*5*299
+  
+ PSJ*5*299:
+  
+ Routine:  PSIVORFB
+ *** WARNING, you are missing one or more Patches ***
+  
+ Routine:  PSJLIACT
+ *** WARNING, your routine has different patches than the incoming routine 
+ ***
+  
+ These warnings are due to the sequence of released patches prior to MOCHA 
+ v2.0. Once all the MOCHA v2.0 patches are installed, the second lines of
+ the routines will be updated appropriately.
+ **************************************************************************
+  
+  
+ The following describes the modifications contained within this patch:
+  
+ 1.  CCR 6704:  A pending order that is finished, then edited and verified
+ within the same session within Inpatient Meds does not kill the CIMO cross
+ reference for NON-VERIFIED file (#53.1).  Order checks are correctly
+ displayed.  Orders left in the cross reference over time will take up more
+ space.  Order checking will not be slowed because the system looks at the
+ specified time frame for clinic.  A correction was made to delete the
+ cross reference entry when the order is verified.  The cleanup for the
+ cross reference entries are done under CCR 6610 described below.
+  
+ 2.  CCR 6721:  A test site reported an issue where an old "discontinued
+ due to edit" inpatient non-verified order is showing up as an order check.
+ This order is defined in the cross reference for NON-VERIFIED ORDERS 
+ file (#53.1) and should not be.  A modification was made to only allow
+ pending or non-verified orders to be stored in the cross reference and to
+ verify when processing orders that only pending and non-verified orders
+ are included in order checks.  Additionally CCR 6710 will clean up any 
+ existing orders that should not be in the cross reference.
+  
+ 3.  CCR 6710: CLIN 1 Support installed MOCHA 2.0 in their account and an 
+ error occurred during indexing of PHARMACY PATIENT file (#55).  The error 
+ was caused by an invalid entry in the file which was subsequently removed.
+ In order to complete the post install, it was necessary to reinstall the
+ patch again.  
+  
+ To eliminate having to reinstall the build when such an error occurs, a
+ restart function was added to give IRM's the capability to run the post
+ install separately.  From the programmers command prompt (>), sites can
+ restart the post install by typing:
+  
+     >D RESTART^PSJ299PO
+  
+ The post install routine will re-index the CIMO cross reference for
+ NON-VERIFIED ORDERS file (#53.1) and the CIMOU, CIMOCLU, CIMOCLI and CIMOI
+ cross references for PHARMACY PATIENT file (#55). This will clean up any
+ old IMO cross references created as a result of CCR 6704 and CCR
+ 6721 above. 
+  
+ 4. CCR 6732:  With v14 of MOCHA 2.0 FOLLOW UP COMBINED build the routine
+ PSIVORFB was included in the last build, and this routine was missing
+ nationally released PSJ*5*285 changes.  PSJ*5*285 was a VistA Maintenance
+ patch and did not have a patient safety.  The missing line of code was
+ restored and the 2nd line of the routine was changed to reflect PSJ*5*285.
+  
+ 5. CCR 6732:  Patch PSJ*5*285 was incorporated for shared routine 
+ PSIVORFB.  During incorporation it was determined that PSIVORFB code 
+ changes added for PSJ*5*257 patch were not needed.  The PSJ*5*257 code 
+ changes were removed and PSJ*5*285 was incorporated.
+  
+ 6. CCR 6744:  Patch PSJ*5*292 was incorporated for shared routine PSJO1.
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+ FTP Instructions:
+ -----------------
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSS_1_160.KID                  PSS*1*160          ASCII
+    PSS_1_173.KID                  PSS*1*173          ASCII
+  
+    MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                   PSJ*5*252
+                                   OR*3*345
+  
+    MOCHA_2_0_FOLLOW_UP_
+      COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                   PSJ*5*257
+                                   GMRA*4*47
+                                   OR*3*311
+  
+    MOCHA_2_0_FAST_TRACK_
+      BUILDS.KID                   PSO*7*431          ASCII
+                                   PSJ*5*299
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ ************************************************************************
+ After install of this patch, the 2nd line of PSJLIACT routine will not
+ contain patch number 257, and 257 will be re-added with patch PSJ*5*296.
+ ************************************************************************
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOEC
+    Before: B75500256   After: B75500256  **23,58,110,175,201,134,181,
+                                           260,288,257,299**
+Routine Name: PSIVORA
+    Before: B28909914   After: B29175721  **29,41,110,134,299**
+Routine Name: PSIVORFB
+    Before: B83657459   After: B84688439  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273,267,285,
+                                           257,299**
+Routine Name: PSJ299PO
+    Before:       n/a   After: B12136182  **299**
+Routine Name: PSJBLDOC
+    Before: B52892828   After: B54439928  **181,263,260,295,252,257,299**
+Routine Name: PSJCLNOC
+    Before: B84441536   After: B86092468  **260,257,299**
+Routine Name: PSJHL6
+    Before: B31807802   After: B32286288  **1,11,27,34,40,42,51,59,88,
+                                           98,181,263,299**
+Routine Name: PSJIMO1
+    Before: B32765352   After: B65823354  **257,299**
+Routine Name: PSJLIACT
+    Before: B50131468   After: B51186933  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,299**
+Routine Name: PSJO1
+    Before: B46297158   After: B46556084  **3,47,56,58,109,110,127,162,
+                                           181,275,292,299**
+ 
+Routine list of preceding patches: 257, 292
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 25, 2013
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

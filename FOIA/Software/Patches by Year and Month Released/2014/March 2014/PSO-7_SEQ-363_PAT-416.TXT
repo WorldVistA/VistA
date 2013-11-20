@@ -1,0 +1,307 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSO*7*416
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #363                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*372   <<= must be installed BEFORE `PSO*7*416'
+                    (v)PSS*1*160   <<= must be installed BEFORE `PSO*7*416'
+                    (v)PSO*7*378   <<= must be installed BEFORE `PSO*7*416'
+                    (v)PSO*7*390   <<= must be installed BEFORE `PSO*7*416'
+                    (v)PSO*7*391   <<= must be installed BEFORE `PSO*7*416'
+                    (v)PSO*7*413   <<= must be installed BEFORE `PSO*7*416'
+
+Subject: MOCHA 2.0 FOLLOW-UP
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality.  The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities. 
+  
+  
+ Patch Information:
+ ------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of 
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ PSS_1_160 and PSS_1_173 include the components necessary for the
+ interface that will be used in MOCHA v2.0.  The MOCHA 2.0 and 
+ MOCHA 2.0 FOLLOW UP COMBINED BUILD include the modifications to implement
+ Max Single Dose Order checks for the Order Entry Results Reporting (OERR),
+ Inpatient Medications and Outpatient Pharmacy applications.
+  
+ When OR*3*311 is installed, (Install step 4 of the MOCHA v2.0 
+ build), the 'before' checksum of routine ORCMED will be incorrect, as 
+ will the second line of that routine because it will not include patch 
+ OR*3*380. The functionality of patch OR*3*380 will also be overwritten. 
+ However, when OR*3*381 is installed (step 5 of the MOCHA v2.0 build), 
+ that will correct the second line, and restore the functionality from 
+ OR*3*380.
+  
+ These patches will add a maximum single dose order check to the current
+ VistA medication order checking system that uses the First DataBank (FDB)
+ business logic and database. In this initial phase of dosing
+ functionality, the Maximum Single Dose information will be displayed to
+ the user.  The following scenarios describe the types of messaging added:
+  
+   1. If the dosage entered passes the dosing checks, no message will be
+      displayed.
+  
+   2. If the dosage entered is too high, the Single Dose warning
+      message will be displayed.
+  
+   3. If the dose checks were not able to be performed, a generic message
+      will be displayed notifying the user that a manual check needs to be
+      completed to verify appropriate dosing.
+  
+  
+ Additionally PSO*7*416 includes subsequent defect corrections or patch
+ incorporations for nationally released patches. The following are
+ additional updates included in this patch:
+  
+ 1.  Incorporate modifications made in PSO*7*391 ePrescribing patch which 
+     is part of ePrescribing build PSO_PSD.kid.
+  
+ 2.  Incorporation of PSO*7*413.
+  
+ 3.  Incorporation of PSO*7*378.
+  
+  
+ *************************************************************************
+ When using the option Compare Transport Global to Current System [XPD 
+ COMPARE TO SYSTEM] with the host file MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD 
+ you will see the following warnings on certain routines:
+  
+ Host file: MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416, 
+ PSJ*5*257, GMRA*4*47, and OR*3*311
+  
+ PSO*7*416:
+  
+ Routine: PSOCAN, PSOCAN2, PSODDPR2, PSODDPR4, PSODDPR5, PSODDPRE, 
+ PSOORED3, PSOORED5, PSOORNEW, PSORXEDT, PSOVER1
+ *** WARNING, you are missing one or more Patches ***
+  
+ These warnings are due to the sequence of released patches prior to MOCHA 
+ 2.  Once all the MOCHA 2.0 patches are installed, the second lines of the 
+ routines will be updated appropriately. 
+ *************************************************************************
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/A 
+  
+                                                                          
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ HEARTLAND WEST, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+                
+ Documentation Retrieval:
+ ------------------------
+ The updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to file transfer protocol (FTP) the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ This documentation will be in the form of Adobe Acrobat files.
+  
+ FILE NAME                       DESCRIPTION
+ ------------------------        ------------------------------------------
+ PSO_7_MAN_UM_R0314.DOC          Outpatient Pharmacy V.7.0 Manager's User
+ PSO_7_MAN_UM_R0314.PDF          Manual
+  
+ PSO_7_PHAR_UM_R0314.DOC         Outpatient Pharmacy V.7.0 Pharmacist's
+ PSO_7_PHAR_UM_R0314.PDF         User Manual
+  
+ PSO_7_TECH_UM_R0314.DOC         Outpatient Pharmacy V. 7.0 Technician's 
+ PSO_7_TECH_UM_R0314.PDF         User Manual
+  
+ PSO_7_TM_R0314.DOC              Outpatient Pharmacy V. 7.0 Technical
+ PSO_7_TM_R0314.PDF              Manual/Security Guide
+  
+ PSS_1_PSJ_5_PSO_7_Dosing_       Dosing Order Check User Manual
+ Ord_Ck_User_Manual.DOC
+ PSS_1_PSJ_5_PSO_7_Dosing_
+ Ord_Ck_User_Manual.PDF       
+               
+ PSS_1_PSO_7_RN_R0314.DOC       Medication Order Check Healthcare
+ PSS_1_PSO_7_RN_R031.PDF        Application (MOCHA) v2.0 Release Notes
+  
+ PSS_1_VistA_to_MOCHA_ID.DOC    VistA to MOCHA v2.0 Interface Document
+ PSS_1_VistA_to_MOCHA_ID.PDF
+  
+ PSS_1_P160_MOCHA_CB_IG.DOC     MOCHA v2.0 Combined Build
+ PSS_1_P160_MOCHA_CB_IG.PDF     Installation Guide
+  
+  
+ FTP Instructions:
+  
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSS_1_160.KID                  PSS*1*160          ASCII
+  
+    PSS_1_173.KID                  PSS*1*173          ASCII
+  
+    MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                   PSJ*5*252
+                                   OR*3*345
+  
+    MOCHA_2_0_FOLLOW_UP_
+      COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                   PSJ*5*257
+                                   GMRA*4*47
+                                   OR*3*311
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.
+  
+  
+ The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 12
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 27
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBKDED
+    Before: B81532355   After: B81693378  **11,46,91,78,99,117,133,143,
+                                           268,378,416**
+Routine Name: PSOCAN
+    Before: B50642727   After: B53171969  **11,21,24,27,32,37,88,117,131,
+                                           185,253,251,375,379,390,413,
+                                           372,416**
+Routine Name: PSOCAN2
+    Before: B82456941   After: B85372649  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375,379,396,
+                                           390,372,416**
+Routine Name: PSODDPR2
+    Before: B94187291   After:B107649994  **251,375,379,390,372,416**
+Routine Name: PSODDPR4
+    Before:B117470989   After:B126073847  **251,375,387,379,390,372,416**
+Routine Name: PSODDPR5
+    Before: B80336459   After:B160645085  **251,375,379,390,372,416**
+Routine Name: PSODDPR8
+    Before: B56882045   After: B57269094  **390,372,416**
+Routine Name: PSODDPRE
+    Before:B128090258   After:B133385173  **251,375,387,379,390,372,416**
+Routine Name: PSODGDGP
+    Before: B58836737   After: B67660976  **251,387,379,391,372,416**
+Routine Name: PSODIR
+    Before: B37531921   After: B34430452  **37,46,111,117,146,164,211,
+                                           264,275,391,372,416**
+Routine Name: PSODOSUN
+    Before: B80758281   After: B84411682  **251,379,372,416**
+Routine Name: PSODOSUT
+    Before:B130396941   After:B130658909  **251,375,372,416**
+Routine Name: PSOORED3
+    Before: B59778178   After: B61293813  **46,78,99,117,133,148,249,251,
+                                           379,378,372,416**
+Routine Name: PSOORED4
+    Before: B55575437   After: B54845404  **46,91,78,99,111,117,133,159,
+                                           148,251,391,372,416**
+Routine Name: PSOORED5
+    Before: B58202771   After: B58804005  **46,75,78,100,99,117,133,251,
+                                           378,372,416**
+Routine Name: PSOORFI5
+    Before: B47045862   After: B47164460  **225,315,266,391,372,416**
+Routine Name: PSOORFIN
+    Before: B64877046   After: B63913344  **7,15,27,32,44,46,84,106,111,
+                                           117,131,146,139,195,225,315,
+                                           266,338,391,372,416**
+Routine Name: PSOORNEW
+    Before: B90508576   After: B92394411  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416**
+Routine Name: PSORXEDT
+    Before: B41063985   After: B45078409  **21,23,44,71,146,185,148,253,
+                                           390,372,416**
+Routine Name: PSOVER
+    Before: B88226703   After: B87892032  **16,21,27,117,131,146,251,375,
+                                           387,379,391,372,416**
+Routine Name: PSOVER1
+    Before:B121964546   After:B126246906  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379,390,372,416**
+ 
+Routine list of preceding patches: 372
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 01, 2012
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

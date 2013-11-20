@@ -1,0 +1,123 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 05/17/13 at 09:30
+=============================================================================
+Run Date: MAR 06, 2014                     Designation: OR*3*370
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #329                      Status: Released
+                  Compliance Date: APR 06, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*370'
+
+Subject: PREVENT NOTES WITHOUT TEXT FROM BEING SIGNED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue: 
+ 1. When a note exists without text it can be signed in VistA roll/scroll 
+    CPRS Menu [ORDERS MENU] sign option when it should not be able to be signed.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ===============================
+ 1. INC000000600069     Signed notes with no text
+  
+ Test Sites:
+ ===========
+ Hunter Holmes McGuire VAMC - Richmond   
+ VA Maryland HCS (Perry Point)
+ VA Pittsburgh HCS
+  
+  
+ Remedy Overview:
+ ================
+ 1. INC000000600069     Signed notes with no text
+  
+ PSPO:
+ ===== 
+ PSPO #2196
+  
+   
+ Problem: 
+ --------
+ When a note exists without text it can be signed in VistA roll/scroll 
+ CPRS Menu [ORDERS MENU] sign option. An empty note cannot be signed with 
+ CPRS and some users were using VistA options to sign these notes.
+  
+ Resolution:
+ -----------
+ If a note has no text and is attempted to be signed, signing is not allowed and
+ the message 'This note contains no text and cannot be signed.' is displayed to
+ the user's screen.  This is the same message displayed in CPRS GUI when a note
+ without text is attempted to be signed. Patch TIU*1.0*274 was also created to
+ address this issue when signing notes using TIU options.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine ORCNOTE to display the message 'This note contains no
+ text and cannot be signed.' preventing a note without text from being
+ signed.  The entry points into the procedure is ELSIG^ORCNOTE.
+  
+ ELSIG^ORCNOTE is the code executed by ORC TIU SIGN DOCUMENTS which is the
+ protocol for Sign under the CPRS Notes menu (ORC TIU ACTIONS) [CPRS Menu - 
+ ORDERS MENU]
+  
+  
+ Installation Instructions:
+ ==========================
+ It is highly recommended that this patch be installed during off hours 
+ when the Users are not electronically signing documents.  The installation
+ time should be less than 2 minutes.
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*370):
+    a)     Backup a Transport Global - This option will create a backup message 
+           of any routines exported with this patch. It will not backup any 
+           other changes such as DD's or templates.
+    b)     Compare Transport Global to Current System - This option will allow 
+           you to view all changes that will be made when this patch is 
+           installed.  It compares all components of this patch (routines, DD's,
+           templates, etc.).
+    c)     Verify Checksums in Transport Global - This option will allow you to
+           ensure the integrity of the routines that are in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package OR*3.0*370.
+    a)     When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+           answer NO.
+    b)     When prompted 'Want to DISABLE Scheduled Options and Menu Options and
+           Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCNOTE
+    Before: B59596403   After: B63789081  **22,48,65,104,280,370**
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2013
+Completed By:                               Date Completed: MAR 04, 2014
+Released By :                               Date Released : MAR 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

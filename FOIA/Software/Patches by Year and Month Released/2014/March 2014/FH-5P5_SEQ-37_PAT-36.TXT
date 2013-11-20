@@ -1,0 +1,119 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 03/19/14 at 17:07
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: FH*5.5*36
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #37                    Status: Released
+                  Compliance Date: APR 24, 2014
+=============================================================================
+
+Associated patches: (v)FH*5.5*29   <<= must be installed BEFORE `FH*5.5*36'
+
+Subject: DIETS: CHANGES AFTER PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When a patient has a list of food preferences in either option Enter/Edit 
+ Patient Preferences [FHSEL3] or Display Patient Preferences [FHSEL4], 
+ food preferences without an associated meal may have no indicator.   This 
+ causes a problem for sites because they are unable to determine which 
+ food preferences don't have an associated meal; therefore they are unable 
+ to correct them in the Enter/Edit Patient Preferences [FHSEL3].
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ INC000000860983 - Diets: Changes after patch 
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Dayton VA Medical Center
+ Tomah VA Medical Center
+ VA Puget Sound HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ INC000000860983 - Diets: Changes after patch
+  
+ Problem:
+ --------
+ Patch FH*5.5*29 addressed the issue of food preferences without associated
+ meals not appearing in the list of a patient's food preferences. These
+ food preferences will now appear in the patient's list of food preferences
+ but with no indicator that it lacks an associated meal. The site may be
+ not able to determine easily which food preference did not have an
+ associated meal in order to correct it.
+  
+ Resolution:
+ -----------
+ Modification of routine FHSEL1 to highlight food preferences without an
+ associated meal to help the user identify and correct a patient's faulty
+ food preferences.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*36)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*36
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSEL1
+    Before: B23349189   After: B23591856  **8,24,29,36**
+ 
+Routine list of preceding patches: 29
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2013
+Completed By:                               Date Completed: MAR 20, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

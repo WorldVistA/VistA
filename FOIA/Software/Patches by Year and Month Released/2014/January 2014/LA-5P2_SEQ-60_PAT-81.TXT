@@ -1,0 +1,160 @@
+$TXT Created by BECKWITH,RALPH at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 05/14/13 at 10:24
+=============================================================================
+Run Date: JAN 09, 2014                     Designation: LA*5.2*81
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #60                    Status: Released
+                  Compliance Date: FEB 09, 2014
+=============================================================================
+
+
+Subject: FILE# 68 ERRONEOUS VITEK NODE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ The HL7 record being returned to VistA from the VITEK automated 
+ instrument is setting the automated value for field LOAD LIST ENTRY (#2)
+ incorrectly.  
+  
+ BlOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*81 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*81 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*81 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ INC000000069082 - Invalid node in file #68 from VITEK resulting
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bronx, NY.
+ Central Texas
+ Salisbury, NC.
+  
+ REMEDY OVERVIEW:
+ ================ 
+ INC000000069082 - Invalid node in file #68 from VITEK resulting
+  
+ Problem:
+ --------
+ The HL7 record being returned to VistA from the VITEK automated 
+ instrument is setting the automated value for field LOAD LIST ENTRY (#2)
+ incorrectly.  The LOAD LIST ENTRY field (#2) was set into the incorrect
+ result node in the ACCESSION file (#68).
+    
+ Example:
+ The following example shows the LOAD LIST ENTRY being set into the wrong
+ node - 1,4. This should have been just '4'.
+  
+ ^LRO(68,12,1,2980000,1,3510,1,4,548,0) = ^^223;1;5  (Invalid)
+    
+ and should be: 
+  
+ ^LRO(68,12,1,2980000,1,3510,4,548,0)=548^9^223;1;5^330^2980320^^1^7394
+  
+ Resolution:
+ -----------                    
+ A modification to routine LAMIAUT8 has been made to set the LOAD LIST
+ ENTRY into the correct node/field of the ACCESSION file.
+    
+ Also, a pre-install routine is included to remove the bogus nodes 
+ from file #68, and if LOAD LIST ENTRY is defined in the bogus node, set
+ the field   LOAD LIST ENTRY from the bad node into the correct code/piece.
+  
+ Example:
+ This is what the node should be after pre-install:
+  
+ ^LRO(68,12,1,2980000,1,3510,4,548,0)=548^9^223;1;5^330^2980320^^1^7394 
+  
+ Routines: LAMIAUT8, LA81PRE (pre-install run)
+  
+   ==================== INSTALLATION INSTRUCTIONS ====================
+  
+ You may install this patch at any time without interruption to users.
+ Depending on the size of file #68 at your site, it should take 10-30
+ minutes to install this patch.
+  
+ ***********************************************************************
+ PLEASE NOTE: Pre install routine LA81PRE will be deleted once the
+ install is complete.  If you wish to check the checksum of this routine 
+ please use the 'Verify Checksums in Transport Global' under the 
+ Installation Menu.
+ ***********************************************************************
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter LA*5.2*81)
+   
+      a.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      b.  Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+      c.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package 
+    LA*5.2*81.
+   
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    NO//" respond NO.  
+  
+ 6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+    Protocols? NO//', respond NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA81PRE
+    Before:       n/a   After:  B5953653  **81**
+Routine Name: LAMIAUT8
+    Before: B15523733   After: B16110731  **81**
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : MAY 08, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: JAN 07, 2014
+Released By : KRUSE,JOHN                    Date Released : JAN 09, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

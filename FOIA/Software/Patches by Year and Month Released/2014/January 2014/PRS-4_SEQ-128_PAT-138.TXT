@@ -1,0 +1,224 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 08/07/13 at 00:35
+=============================================================================
+Run Date: JAN 06, 2014                     Designation: PRS*4*138
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #128                      Status: Released
+                  Compliance Date: FEB 06, 2014
+=============================================================================
+
+Associated patches: (v)PRS*4*135   <<= must be installed BEFORE `PRS*4*138'
+
+Subject: HYBRID TABLE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Occupation Series/Title codes 010106-Marriage Family Therapist and
+ 010117-Licensed Mental Health Provider need to be given hybrid status. 
+ Also, the Central Business Office (CBO) submitted a list of Occupation 
+ Series/Title codes and have requested those be given Hybrid status 
+ so that they will now receive Saturday Premium Pay. 
+    
+ ASSOCIATED NSR(s):
+ ==================
+   N/A   
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000764385 - Saturday Premium not calculating correctly 
+                      for new Hybrid
+ 2. INC000000823892 - New Hybrid Code
+ 3. INC000000857719 - Employees to begin receiving Saturday Premium Pay
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines VAHCS 
+ Birmingham VAMC 
+     
+ Remedy Overview:
+ ================
+ 1. INC000000764385 - Saturday Premium not calculating correctly for
+                      new Hybrid
+  
+ Problem:
+ --------
+ Employee with Occupation Series/Title Code of 010106-Marriage Family
+ Therapist is not receiving Saturday Premium pay because the code is 
+ not present in the Hybrid table.
+  
+ Resolution:
+ -----------
+ The VistA ETA software is updated to include the occupation series/title 
+ code 010106-Marriage Family Therapist in the Hybrid table in order to
+ recognize the employees as hybrids. The hybrid table resides in routine
+ PRSAENT1.
+  
+  
+ 2. INC000000823892 - New Hybrid Code
+  
+ Problem:
+ --------
+ The Licensed Mental Health providers need to be added to the hybrid
+ table.  The Occupation Series is 010117.
+  
+ Resolution:
+ -----------
+ The VistA ETA software is updated to include the occupation series code
+ 010117-Licensed Mental Health providers in the Hybrid table in order to
+ recognize the employees as hybrids. The hybrid table resides in routine
+ PRSAENT1.
+  
+  
+ 3. INC000000857719 - Employees to begin receiving Saturday Premium Pay
+  
+ Problem:
+ --------
+ The Central Business Office (CBO) has requested the following Occupation
+ Series codes be added to the Hybrid Table so they will receive Saturday
+ Premium Pay.
+  
+      1)   008002     Security Officer
+      2)   008103     Firefighter(BLS/HM)
+      3)   008104     Firefighter(Struc)
+      4)   008105     Firefighter (Haz Mat)
+      5)   008107     Firefighter (Parame)
+      6)   008302     Detective
+      7)   008303     Police Officer (INS)
+      8)   008305     Police Officer
+      9)   008504     Security Guard
+     10)   008601     Security Clerk
+     11)   008602     Security Assistant
+     12)   008604     Security Assistant
+     13)   030168     Patient Representative
+     14)   030303     Medical Admin Assistant
+     15)   030304     Domiciliary Assistant
+     16)   030316     Medical Data Clerk
+     17)   030319     Medical Data Clerk
+     18)   030345     Medical Data Clerk
+     19)   035009     X-Ray Film Proc Equ
+     20)   356610     Housekeeping Aid
+     21)   356630     Housekeeping Aid TR
+     22)   356640     Housekeeping Storeroom
+     23)   356660     Housekeeping Aid (L)
+     24)   480510     Medical Equipment RE
+     25)   480520     Medical Equipment W
+     26)   730410     Laundry Worker
+     27)   730550     Laundry Machine Operator
+     28)   730560     Laundry Machine OP (MT)
+     29)   740420     Cook
+     30)   740810     Food Service Worker
+     31)   740820     Food & Sanitation Worker
+     32)   540630     Utility Systems Operator/Energy Plant Operator/Leader
+     33)   4742       Utility Systems Operator
+     34)   541520     Air Conditioning Equipment Operator/Operator Leader/
+                          Lead Air Conditioning Equipment Operator
+     35)   530920     Boiler Plant Equipment Mechanic
+     36)   540220     Boiler Plant Operator and Lead Boiler Plant Operator
+     37)   570360     Motor Vehicle Operator
+     38)   4801       Lead Equipment Servicer (Wheelchair Repair)
+     39)   530620     Air Conditioning Equipment Mechanic/Air Conditioning
+                          Equipment Mechanic Leader
+     40)   104602     Clerk Translator
+     41)   100111     Interpreter 
+  
+  
+ Resolution:
+ -----------
+ The VistA ETA software is updated to include the 41 new occupation
+ series/title codes listed in the table above. The hybrid table resides in
+ routine PRSAENT1.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  If installed during the normal workday, it is recommended that the PAID
+ users be off the system and that all the PAID ETA options in the OPTION
+ (#19) file be disabled to prevent possible conflicts while running the
+ KIDS install. All the ETA options can be selected by using the PAID ETA
+ namespace of PRS and the asterisk, or wildcard character (*). As shown iN
+ steps 4.c. of the installation instructions, type PRS*, to disable all
+ PAID ETA options. Other VISTA users will not be affected. 
+  
+  
+ Install Time - less than 2 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*138):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*138.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//', answer YES.
+        c.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':',   enter PRS*
+        d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B33573800   After: B68586352  **96,130,135,138**
+ 
+Routine list of preceding patches: 135
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : OCT 18, 2012
+Completed By: SHERMAN,BILL                  Date Completed: DEC 19, 2013
+Released By : MCCLARAN,PAM                  Date Released : JAN 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

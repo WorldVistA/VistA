@@ -1,0 +1,168 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: IVM*2*154
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #131                      Status: Released
+                  Compliance Date: MAR 27, 2014
+=============================================================================
+
+Associated patches: (v)IVM*2*120   <<= must be installed BEFORE `IVM*2*154'
+
+Subject: DISCONTINUE ANNUAL MEANS TEST RENEWAL
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Informational
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is an emergency released with a 72-hour compliance.
+  
+         This patch is being released in support of the Enrollment System
+         (ES) Discontinue Annual Means Test Renewal project.  IVM*2*154
+         (Income Verification Match) is being released along with DG*5.3*858
+         (Registration), EAS*1*106 (Enrollment Application System), DGBT*1*24
+         (Beneficiary Travel), and IB*2*385 (Integrated Billing) in
+         host file: DG_53_P858.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES) and VistA Registration, Enrollment and Eligibility
+  (VistA REE) software to support the requirements of the Discontinue Annual
+  Means Test Renewal project.
+   
+  This patch modifies the Income Verification Match v2.0 application
+  as described below:
+   
+  1.  A Financial Query will be not be permitted for patients having a
+      current Means Test less than 1 year old as of the Veterans Financial
+      Application (VFA) Start Date, January 1, 2013.
+   
+   
+  Patch Components:
+  =================
+   
+  Files & Fields Associated:
+  --------------------------
+  The following is a list of files included in this patch:
+   
+   
+   
+  Forms Associated:
+  -----------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  -----------------------
+  N/A
+   
+   
+  Options Associated:
+  -------------------
+  N/A
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+  N/A
+   
+   
+  Templates Associated:
+  ---------------------
+  The following is a list of templates included in this patch:
+   
+  Template Name            Type        File Name (Number)
+  -------------            ----        ------------------
+  N/A
+   
+     
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  Boise VAMC, ID
+  Chillicothe VAMC, OH
+  VA North Texas HCS, TX
+  
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as follows:
+   
+   Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+   N/A
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www4.domain.ext/vdl/
+   
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  Please see the Patch Description for patch DG*5.3*858 for installation 
+  instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMCQ
+    Before: B25139388   After: B25370590  **17,30,55,120,154**
+ 
+Routine list of preceding patches: 120
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 19, 2012
+Completed By:                               Date Completed: FEB 14, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

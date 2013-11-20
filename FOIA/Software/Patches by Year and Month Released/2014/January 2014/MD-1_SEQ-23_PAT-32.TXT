@@ -1,0 +1,325 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.DOMAIN.EXT  (KIDS) on Friday, 07/12/13 at 12:49
+=============================================================================
+Run Date: JAN 17, 2014                     Designation: MD*1*32
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #23                      Status: Released
+                  Compliance Date: FEB 17, 2014
+=============================================================================
+
+Associated patches: (v)MD*1*33     <<= must be installed BEFORE `MD*1*32'
+
+Subject: CLINICAL PROCEDURES TERMINOLOGY FILE UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following 3 issues:
+  
+ 1) The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+    terms used during data entry/display in CP Flowsheet.  The Office of
+    Informatics and Analytics - Applied Informatics Services (AIS) 
+    Terminology Review Group submitted a spreadsheet requesting additions
+    or updates of 90 Terms.
+  
+ 2) A CP Flowsheets Term has a typo in the word Strength
+  
+ 3) The AIS Terminology Review Group has requested an additional Term as 
+    a warning message that Vitals are not always in chronological order. 
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000750616 Approved CP Terminology
+ 2) INC0000000815555 Clinical Procedures - Flowsheets:
+ 3) INC0000000756527 CP Flowsheets: Vitals Not Displayed in Chronologic 
+                     Sequence.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland - East HCS (Marion)
+ Huntington VA Medical Center 
+ North Texas HCS (Dallas)     
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1) INC0000000750616 Approved CP Terminology
+  
+ Problem:
+ --------
+ The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+ terms used during data entry/display in CP Flowsheet.  The Office of 
+ Informatics and Analytics - Applied Informatics Services (AIS) 
+ Terminology Review Group submitted a spreadsheet requesting additions
+ or updates of 90 Terms.
+  
+ The following list documents the approved changes.
+  
+ Additions:
+ ----------
+  Anesthesia planned 
+  ASA Physical Status 
+  Barriers to Learning
+  Chief Concern/Complaint 
+  Dentures 
+  Drain Suction cm H20
+  Drain Suction Type
+  ENTERAL NUTRITION DELIVERY METHOD
+  ENTERAL NUTRITION LINE TRACED
+  ENTERAL NUTRITION SYSTEM MAINTENANCE
+  ENTERAL NUTRITION TUBE PLACEMENT VERIFIED
+  ENTERAL TUBE ASPIRATE COLOR
+  ENTERAL TUBE SITE CONDITION CHECKED
+  Epidural: Bolus (ml)
+  Epidural: Continuous Rate (ml/hr)
+  Epidural: Dermatome Sensory Level - Left 
+  Epidural: Dermatome Sensory Level - Right 
+  Epidural: Side Effects 
+  Handoff Report
+  Insulin Pump SQ Infusion On?
+  Intake - CBI Irrigation to Subtract (negative number)
+  INTAKE - ENTERAL TUBE FLUSH
+  Labs per orders 
+  Mallampati Score 
+  Med Last Dose: Antibiotic 
+  Med Last Dose: Anticoagulant 
+  Med Last Dose: Aspirin  
+  Med Last Dose: Non-steroidal Anti-inflammatory Drug
+  Moderate Sedation: PreAssess: Previous Mod Sed. Complications
+  Moderate Sedation: PreAssess: Substance Abuse
+  Moderate sedation: Pre-assessment appliances removed 
+  Moderate sedation: Pre-assessment CPRS Health HX Reviewed
+  Moderate sedation: Pre-assessment Time out
+  Moderate Sedation: Preparation
+  Moderate sedation: Time Out: Patient Identifiers
+  Monitor Placed 
+  Output - CBI Drainage
+  PACU - Time of reversal agent 
+  Patient Education provided prior to sedation
+  PCA - Continuous mcg/hr (Basal)  
+  PCA - Continuous mg/hr (Basal)  
+  PCA - Level of Consciousness 
+  PCA - Side Effects
+  PCA - Total mcg per Shift 
+  PCA - Total mg per Shift 
+  Preprocedure: 12 lead EKG done?
+  Preprocedure: Allergies reassessed and documented
+  Preprocedure: Antibiotic given?
+  Preprocedure: Antibiotic ordered? 
+  Preprocedure: Blood Transfusion consent current?
+  Preprocedure: Chest Xray done? 
+  Preprocedure: Dentures removed?
+  Preprocedure: Disposition of Clothing
+  Preprocedure: Disposition of Valuables
+  Preprocedure: Driver/Escort to home confirmed
+  Preprocedure: Fingerstick Glucose done?
+  Preprocedure: Glasses / Contacts removed?
+  Preprocedure: H and P current?
+  Preprocedure: Hearing Aids in place?
+  Preprocedure: Home Medications taken/time
+  Preprocedure: Hospital Gown on?
+  Preprocedure: Informed Consent current
+  Preprocedure: Jewelry Removed?
+  Preprocedure: Labs done?  
+  Preprocedure: NPO since (date/time)
+  Preprocedure: Planned Procedure
+  Preprocedure: Premedication administered?
+  Preprocedure: Premedication ordered?
+  Preprocedure: Procedure site marked correctly
+  Preprocedure: Prosthetics/Implants?
+  Preprocedure: Type and Cross Match done?
+  Preprocedure: Type and Screen done?
+  Preprocedure: Vitals Signs done? 
+  Preprocedure: Voided?
+  Procedure Location 
+  Procedure Time
+  Procedure, planned 
+  Time Out: Patient Identification Method
+  Time Out: Verbal confirmation by team of procedure and laterality 
+  Time Out: Verbal confirmation by team of procedure to be performed
+  
+ Updates:
+ --------
+  Behavior
+  Cardiac Ectopy
+  Cardiac Rhythm
+  Education Topic
+  Enteral Nutrition Type
+  PACU - Discharge Critieria
+  Urine Characteristics 
+  Weight
+  Weight At Admission     
+  Weight Dry
+  
+ Resolution:
+ -----------
+ Post-Init routine MDTERMX will make the above Additions/Updates to the CP 
+ Terminology TERM File (#704.101) and TERM_TYPE file (#704.102) as
+ described in the Problem Section above. The details of each of these terms
+ is in the Clinical Observation (CliO) Terminology Dictionary And Clinical
+ Data Model Documentation that is listed below.
+  
+  
+ 2) INC0000000815555 Clinical Procedures - Flowsheets:
+  
+ Problem:
+ --------
+ The Clinical Procedures (CP) Terminology TERM file (#704.101) has the 
+ word Strength misspelled in the term "LOWER LIMB EXTREMITIES STRENTGH".
+  
+ Resolution:
+ -----------
+ Post-Init routine MDTERMX will make a spelling correction in the Clinical
+ Procedures TERM file (#704.101) for the word STRENGTH in the term "LOWER
+ LIMB EXTREMITIES STRENGTH".
+  
+  
+ 3) INC0000000756527 CP Flowsheets: Vitals Not Displayed in Chronologic 
+                     Sequence.
+  
+ PSPO:
+ -----
+ PSPO #2328
+  
+ Problem:
+ --------
+ Vitals data when accumulated from multiple sources (currently Vitals 
+ package and CP Flowsheets) are not displayed in chronological order 
+ in CP Flowsheets.  The AIS Terminology Group has requested an additional
+ Term be added to serve as a column header type of warning message.
+  
+ Resolution:
+ -----------
+ Post-Init routine MDTERMX will make the Addition to the CP Terminology
+ TERM File (#704.101) and TERM_TYPE file (#704.102) for the following
+ string:
+  
+ "Caution-Vitals may not display in correct sequence. Review times 
+ carefully"
+  
+  
+ DOCUMENTATION: 
+ ============== 
+ Documentation is available for the Clinical Observation (CliO) 
+ Terminology Dictionary And Clinical Data Model Documentation on the
+ ANONYMOUS.SOFTWARE directory at one of the following Office of  
+ Information (OI) Field Offices.
+ Sites will be able to download the documentation in the ".PDF" format.
+  
+ The preferred method is to FTP the files from: Download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+       Albany                  ftp.fo-albany.domain.ext
+       Hines                   ftp.fo-hines.domain.ext
+       Salt Lake City          ftp.fo-slc.domain.ext
+  
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P32TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+  
+ Documentation may be found on the System Design and Development Web 
+ page at:  http://www.domain.ext/vdl
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+     
+ 1.  Load Transport Global 
+     ---------------------
+  
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------    
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*32):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' answer NO 
+  
+  
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after 
+       it has made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **32**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : SEP 21, 2012
+Completed By: SHERMAN,BILL                  Date Completed: JAN 15, 2014
+Released By : COWNIE,KEVIN                  Date Released : JAN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,206 @@
+
+=============================================================================
+Run Date: FEB 03, 2014                     Designation: PREN*1*2
+Package : PREN - PHARMACY PRODUCT SYS-NATL    Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: MAR 06, 2014
+=============================================================================
+
+
+Subject: PPS-N 1.0.01 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ The Pharmacy Product System-National (PPS-N) is a Web-based application
+ that provides the ability to manage pharmacy-specific data across the VA
+ enterprise, ensuring that all facilities are using the same base data
+ for their operations. It allows approved national VA personnel to easily,
+ quickly, and safely manage the VA National Formulary which directs which
+ products (such as medications and supplies) are to be purchased and used
+ by the VA hospital system.
+  
+ The PPS-N application performs the following major business functions:
+  
+ * Add/edit/approve medication and supply information
+ * Synchronize the PPS-N data with the legacy National Drug File (NDF)
+   Management System (NDFMS) data
+ * Output various reports
+ * Process additions and updates from First DataBank (FDB)
+ * Search for and add drug information from First DataBank
+  
+  
+  
+ In addition to synchronizing PPS-N with the NDFMS system, the PPS-N
+ application also interfaces with the VA Enterprise Terminology Services
+ (VETS) system (for Standard Medication Route information) and with the VA
+ Federal Supply Schedule (FSS) system (for pricing data).
+  
+ The purpose of this software product release is to replace the current 
+ version, PPS-N v1.0.0, with an enhanced version, PPS-N v1.0.01, which 
+ contains fixes for eleven remedy tickets.
+  
+  
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ INC000000843660/ INC000000850205 / INC000000852832 - To add site# 675 
+ (ORLANDO VAMC ), 741 (HEALTH ADMINISTRATION CENTER)  and 764 (Mid-South 
+ CMOP) to the PPS-N KAAJEE configuration file for PPS-N login so that the 
+ users from these stations can log in to PPS-N with VistA access/verify 
+ codes. Also, the duplicate entries for station numbers 460, 540 and 648 
+ have been deleted from the kaajeeConfig.xml file.
+  
+ INC000000878826 - To modify the email id for the " Provide Feedback" 
+ option to pbmNDF@domain.ext
+  
+ INC000000875170 - To fix issues with the Export functionality in the 
+ Product search page
+  
+ INC000000862747 - To change the initial status of the background PPS jobs 
+ from PAUSED to RUNNING
+  
+ INC000000863813/INC000000863818 - To fix an issue that occurs in specific 
+ cases when the VA Print Name and VA Dispense Unit are added for a Product
+  
+ INC000000866095 - To update the National Formulary Name of a Product when 
+ the Generic Name or Dosage Form are changed
+  
+ INC000000854165 - To update the Route of Administration of an NDC to N/A 
+ when any modifications for that NDC are pushed from PPS-N to NDFMS.
+  
+ INC000000919586 - To fix cross-site scripting issues identified in the 
+ App Scan.
+  
+  
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany          ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+ Hines           ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  
+  
+ Salt Lake City  ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library
+ at:  http://www.domain.ext/vdl/ 
+  
+  
+  
+    FILE NAME                    DESCRIPTION
+    =========                    ===========
+  
+ PREN_1_P2_V1.0.01_IG.PDF    Pharmacy Product System-National (PPS-N)
+                             Installation Guide
+  
+ PREN_1_P2_V1.0.01_TG.PDF    PHARMACY PRODUCT SYSTEM-NATIONAL (PPS-N)
+                             Troubleshooting Guide
+  
+ PREN_1_P2_V1.0.01_UM.PDF    Pharmacy Product System-National (PPS-N) 
+                             User Guide
+  
+                
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ALLURI,ANITHA                 Date Entered  : NOV 12, 2013
+Completed By: ESCALERA,DIEGO                Date Completed: JAN 30, 2014
+Released By : TEAGUE,LYN                    Date Released : FEB 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

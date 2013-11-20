@@ -1,0 +1,1791 @@
+Released RA*5*116 SEQ #105
+Extracted from mail message
+**KIDS**:RA*5.0*116^
+
+**INSTALL NAME**
+RA*5.0*116
+"BLD",8631,0)
+RA*5.0*116^RADIOLOGY/NUCLEAR MEDICINE^0^3130731^y
+"BLD",8631,1,0)
+^^3^3^3130619^
+"BLD",8631,1,1,0)
+Patch one hundred and sixteen for the VistA Radiology/Nuclear Medicine 
+"BLD",8631,1,2,0)
+5.0 application. Please review FORUM's Patch Module description and
+"BLD",8631,1,3,0)
+installation instructions for RA*5.0*116 before installing this patch.
+"BLD",8631,4,0)
+^9.64PA^^
+"BLD",8631,6.3)
+1
+"BLD",8631,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8631,"KRN",.4,0)
+.4
+"BLD",8631,"KRN",.401,0)
+.401
+"BLD",8631,"KRN",.402,0)
+.402
+"BLD",8631,"KRN",.403,0)
+.403
+"BLD",8631,"KRN",.5,0)
+.5
+"BLD",8631,"KRN",.84,0)
+.84
+"BLD",8631,"KRN",3.6,0)
+3.6
+"BLD",8631,"KRN",3.8,0)
+3.8
+"BLD",8631,"KRN",9.2,0)
+9.2
+"BLD",8631,"KRN",9.8,0)
+9.8
+"BLD",8631,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",8631,"KRN",9.8,"NM",1,0)
+RAMAG06^^0^B45567180
+"BLD",8631,"KRN",9.8,"NM",2,0)
+RAMAGU01^^0^B42905258
+"BLD",8631,"KRN",9.8,"NM",3,0)
+RAMAGU08^^0^B46575809
+"BLD",8631,"KRN",9.8,"NM","B","RAMAG06",1)
+
+"BLD",8631,"KRN",9.8,"NM","B","RAMAGU01",2)
+
+"BLD",8631,"KRN",9.8,"NM","B","RAMAGU08",3)
+
+"BLD",8631,"KRN",19,0)
+19
+"BLD",8631,"KRN",19.1,0)
+19.1
+"BLD",8631,"KRN",101,0)
+101
+"BLD",8631,"KRN",409.61,0)
+409.61
+"BLD",8631,"KRN",771,0)
+771
+"BLD",8631,"KRN",779.2,0)
+779.2
+"BLD",8631,"KRN",870,0)
+870
+"BLD",8631,"KRN",8989.51,0)
+8989.51
+"BLD",8631,"KRN",8989.52,0)
+8989.52
+"BLD",8631,"KRN",8994,0)
+8994
+"BLD",8631,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",8631,"KRN",8994,"NM",1,0)
+RAMAG EXAM COMPLETE^^0
+"BLD",8631,"KRN",8994,"NM","B","RAMAG EXAM COMPLETE",1)
+
+"BLD",8631,"KRN","B",.4,.4)
+
+"BLD",8631,"KRN","B",.401,.401)
+
+"BLD",8631,"KRN","B",.402,.402)
+
+"BLD",8631,"KRN","B",.403,.403)
+
+"BLD",8631,"KRN","B",.5,.5)
+
+"BLD",8631,"KRN","B",.84,.84)
+
+"BLD",8631,"KRN","B",3.6,3.6)
+
+"BLD",8631,"KRN","B",3.8,3.8)
+
+"BLD",8631,"KRN","B",9.2,9.2)
+
+"BLD",8631,"KRN","B",9.8,9.8)
+
+"BLD",8631,"KRN","B",19,19)
+
+"BLD",8631,"KRN","B",19.1,19.1)
+
+"BLD",8631,"KRN","B",101,101)
+
+"BLD",8631,"KRN","B",409.61,409.61)
+
+"BLD",8631,"KRN","B",771,771)
+
+"BLD",8631,"KRN","B",779.2,779.2)
+
+"BLD",8631,"KRN","B",870,870)
+
+"BLD",8631,"KRN","B",8989.51,8989.51)
+
+"BLD",8631,"KRN","B",8989.52,8989.52)
+
+"BLD",8631,"KRN","B",8994,8994)
+
+"BLD",8631,"QUES",0)
+^9.62^^
+"BLD",8631,"REQB",0)
+^9.611^1^1
+"BLD",8631,"REQB",1,0)
+RA*5.0*90^2
+"BLD",8631,"REQB","B","RA*5.0*90",1)
+
+"KRN",8994,2594,-1)
+0^1
+"KRN",8994,2594,0)
+RAMAG EXAM COMPLETE^COMPLETE^RAMAGRP1^2^A^^^1
+"KRN",8994,2594,1,0)
+^8994.01^3^3^3130619^^^
+"KRN",8994,2594,1,1,0)
+The RAMAG EXAM COMPLETE remote procedure completes the exam. It also sends
+"KRN",8994,2594,1,2,0)
+required HL7 messages, sends changed order control "XX" to CPRS, but does
+"KRN",8994,2594,1,3,0)
+not send VistA alerts regarding the exam status change.
+"KRN",8994,2594,2,0)
+^8994.02A^5^2
+"KRN",8994,2594,2,1,0)
+RAEXAM^1^^1^1
+"KRN",8994,2594,2,1,1,0)
+^8994.021^4^4^3080116^^^^
+"KRN",8994,2594,2,1,1,1,0)
+String of exam/case identifiers separated by '^':
+"KRN",8994,2594,2,1,1,2,0)
+  ^01: IEN of the patient in the RAD/NUC MED PATIENT file (#70)
+"KRN",8994,2594,2,1,1,3,0)
+  ^02: IEN in the REGISTERED EXAMS multiple (sub-file #70.02)
+"KRN",8994,2594,2,1,1,4,0)
+  ^03: IEN in the EXAMINATIONS multiple (sub-file #70.03)
+"KRN",8994,2594,2,5,0)
+RAMSC^2^^^2
+"KRN",8994,2594,2,5,1,0)
+^^92^92^3130619^
+"KRN",8994,2594,2,5,1,1,0)
+Items of this list define miscellaneous/optional exam and/or report
+"KRN",8994,2594,2,5,1,2,0)
+parameters. Each record has 3 or more pieces separated by '^':
+"KRN",8994,2594,2,5,1,3,0)
+ 
+"KRN",8994,2594,2,5,1,4,0)
+  ^01: Parameter name
+"KRN",8994,2594,2,5,1,5,0)
+  ^02: Index (for multiples and word-processing values)
+"KRN",8994,2594,2,5,1,6,0)
+  ^03: Value1
+"KRN",8994,2594,2,5,1,7,0)
+  ^04: Value2
+"KRN",8994,2594,2,5,1,8,0)
+  ...
+"KRN",8994,2594,2,5,1,9,0)
+ 
+"KRN",8994,2594,2,5,1,10,0)
+The following parameters are supported by this remote procedure:
+"KRN",8994,2594,2,5,1,11,0)
+ 
+"KRN",8994,2594,2,5,1,12,0)
+  ACLHIST^{Seq#}^{Line of clinical history}
+"KRN",8994,2594,2,5,1,13,0)
+    Text for the ADDITIONAL CLINICAL HISTORY field
+"KRN",8994,2594,2,5,1,14,0)
+    (400) of the RAD/NUC MED REPORTS file (#74).
+"KRN",8994,2594,2,5,1,15,0)
+ 
+"KRN",8994,2594,2,5,1,16,0)
+  FLAGS^^{flags}
+"KRN",8994,2594,2,5,1,17,0)
+    Flags that control the execution (can be combined):
+"KRN",8994,2594,2,5,1,18,0)
+ 
+"KRN",8994,2594,2,5,1,19,0)
+    F  Try to enforce the new status even if some 
+"KRN",8994,2594,2,5,1,20,0)
+       required fields are not populated.
+"KRN",8994,2594,2,5,1,21,0)
+ 
+"KRN",8994,2594,2,5,1,22,0)
+    S  Do not send HL7 message to speech recognition
+"KRN",8994,2594,2,5,1,23,0)
+       (dictation) systems
+"KRN",8994,2594,2,5,1,24,0)
+ 
+"KRN",8994,2594,2,5,1,25,0)
+  IMPRESSION^{Seq#}^{Line of impression text}
+"KRN",8994,2594,2,5,1,26,0)
+    Text for the IMPRESSION TEXT field (300)
+"KRN",8994,2594,2,5,1,27,0)
+    of the file #74.
+"KRN",8994,2594,2,5,1,28,0)
+ 
+"KRN",8994,2594,2,5,1,29,0)
+  PROBSTAT^^{text}
+"KRN",8994,2594,2,5,1,30,0)
+    Value for the PROBLEM STATEMENT field (25)
+"KRN",8994,2594,2,5,1,31,0)
+    of the file #74.
+"KRN",8994,2594,2,5,1,32,0)
+ 
+"KRN",8994,2594,2,5,1,33,0)
+  REPORT^{Seq#}^{Line of report text}
+"KRN",8994,2594,2,5,1,34,0)
+    Text for the REPORT TEXT field (200)
+"KRN",8994,2594,2,5,1,35,0)
+    of the file #74.
+"KRN",8994,2594,2,5,1,36,0)
+ 
+"KRN",8994,2594,2,5,1,37,0)
+  RPTDTE^^{date}
+"KRN",8994,2594,2,5,1,38,0)
+    Date in HL7 format (TS) for the REPORTED DATE
+"KRN",8994,2594,2,5,1,39,0)
+    field (8) of the file #74: YYYYMMDD. The date
+"KRN",8994,2594,2,5,1,40,0)
+    must be exact. If a time part is provided, it
+"KRN",8994,2594,2,5,1,41,0)
+    is ignored.
+"KRN",8994,2594,2,5,1,42,0)
+ 
+"KRN",8994,2594,2,5,1,43,0)
+  RPTSTATUS^^{status}
+"KRN",8994,2594,2,5,1,44,0)
+    Internal value for the REPORT STATUS field (5)
+"KRN",8994,2594,2,5,1,45,0)
+    of the file #74. Currently, only "V" (Verified)
+"KRN",8994,2594,2,5,1,46,0)
+    and "EF" (Electronically Filed) codes are 
+"KRN",8994,2594,2,5,1,47,0)
+    supported.
+"KRN",8994,2594,2,5,1,48,0)
+ 
+"KRN",8994,2594,2,5,1,49,0)
+  TRANSCRST^^{IEN #200}
+"KRN",8994,2594,2,5,1,50,0)
+    Internal value for the TRANSCRIPTIONIST
+"KRN",8994,2594,2,5,1,51,0)
+    field (11) of the file #74: IEN in the NEW
+"KRN",8994,2594,2,5,1,52,0)
+    PERSON file (#200).
+"KRN",8994,2594,2,5,1,53,0)
+ 
+"KRN",8994,2594,2,5,1,54,0)
+  VERDTE^^{date}
+"KRN",8994,2594,2,5,1,55,0)
+    Date/time in HL7 format (TS) for the
+"KRN",8994,2594,2,5,1,56,0)
+    VERIFIED DATE field (7) of the file #74:
+"KRN",8994,2594,2,5,1,57,0)
+    YYYYMMDD[HHMM[+/-ZZZZ]]. The date must be
+"KRN",8994,2594,2,5,1,58,0)
+    exact.
+"KRN",8994,2594,2,5,1,59,0)
+ 
+"KRN",8994,2594,2,5,1,60,0)
+  VERPHYS^^{IEN #200}
+"KRN",8994,2594,2,5,1,61,0)
+    Internal value for the VERIFYING PHYSICIAN
+"KRN",8994,2594,2,5,1,62,0)
+    field (9) of the file #74: IEN in the NEW
+"KRN",8994,2594,2,5,1,63,0)
+    PERSON file (#200).
+"KRN",8994,2594,2,5,1,64,0)
+ 
+"KRN",8994,2594,2,5,1,65,0)
+The following optional parameters are also supported: BEDSECT, CMUSED, 
+"KRN",8994,2594,2,5,1,66,0)
+COMPLICAT, CONTMEDIA, CPTMODS, EXAMCAT, FILMSIZE, PRIMCAM, PRIMDXCODE,
+"KRN",8994,2594,2,5,1,67,0)
+PRIMINTRES, PRIMINTSTF, PRINCLIN, RDPHARMS, RDPH-*, SECDXCODE,
+"KRN",8994,2594,2,5,1,68,0)
+SERVICE, TECH, TECHCOMM, and WARD. If any of them are defined, their
+"KRN",8994,2594,2,5,1,69,0)
+values replace the existing ones assigned by the RAMAG EXAM REGISTER and
+"KRN",8994,2594,2,5,1,70,0)
+RAMAG EXAMINED.
+"KRN",8994,2594,2,5,1,71,0)
+ 
+"KRN",8994,2594,2,5,1,72,0)
+Records can be added to the list in any order. See the comments preceding
+"KRN",8994,2594,2,5,1,73,0)
+the $$COMPLETE^RAMAG06 for more details.
+"KRN",8994,2594,2,5,1,74,0)
+ 
+"KRN",8994,2594,2,5,1,75,0)
+If you want to clear a multiple that already has a value, assign "@" or
+"KRN",8994,2594,2,5,1,76,0)
+empty string to the parameter itself and do not set any subscripts. For
+"KRN",8994,2594,2,5,1,77,0)
+example, the following construction will clear the CONTRAST MEDIA 
+"KRN",8994,2594,2,5,1,78,0)
+multiple: Mult[i] := 'CONTMEDIA^^@'.
+"KRN",8994,2594,2,5,1,79,0)
+ 
+"KRN",8994,2594,2,5,1,80,0)
+Example:
+"KRN",8994,2594,2,5,1,81,0)
+ 
+"KRN",8994,2594,2,5,1,82,0)
+  with RPCBroker.Param[4] do
+"KRN",8994,2594,2,5,1,83,0)
+    begin
+"KRN",8994,2594,2,5,1,84,0)
+      PType := list;
+"KRN",8994,2594,2,5,1,85,0)
+      Mult[1] := 'PRIMDXCODE^^1';
+"KRN",8994,2594,2,5,1,86,0)
+      Mult[2] := 'CONTMEDIA^^N';
+"KRN",8994,2594,2,5,1,87,0)
+      Mult[3] := 'REPORT^1^Report line #1';
+"KRN",8994,2594,2,5,1,88,0)
+      Mult[4] := 'REPORT^2^Report line #2';
+"KRN",8994,2594,2,5,1,89,0)
+      Mult[5] := 'IMPRESSION^1^Impression line #1';
+"KRN",8994,2594,2,5,1,90,0)
+      Mult[6] := 'FLAGS^^FS';
+"KRN",8994,2594,2,5,1,91,0)
+      Mult[7] := 'RPTDTE^^20071215';
+"KRN",8994,2594,2,5,1,92,0)
+    end;
+"KRN",8994,2594,2,"B","RAEXAM",1)
+
+"KRN",8994,2594,2,"B","RAMSC",5)
+
+"KRN",8994,2594,2,"PARAMSEQ",1,1)
+
+"KRN",8994,2594,2,"PARAMSEQ",2,5)
+
+"KRN",8994,2594,3,0)
+^8994.03^23^23^3130619^^^^
+"KRN",8994,2594,3,1,0)
+A negative value of the first '^'-piece of the Results[0] indicates that
+"KRN",8994,2594,3,2,0)
+an error occurred during the execution of the remote procedure. In this
+"KRN",8994,2594,3,3,0)
+case, the second piece of the Results[0] will contain number of the error
+"KRN",8994,2594,3,4,0)
+descriptors returned in the subsequent nodes of the Results array.
+"KRN",8994,2594,3,5,0)
+ 
+"KRN",8994,2594,3,6,0)
+  Results[0]            Result descriptor
+"KRN",8994,2594,3,7,0)
+                          ^01: The last error code
+"KRN",8994,2594,3,8,0)
+                          ^02: Number of error descriptors
+"KRN",8994,2594,3,9,0)
+  
+"KRN",8994,2594,3,10,0)
+  Results[i]            Error descriptor
+"KRN",8994,2594,3,11,0)
+                          ^01: Error code
+"KRN",8994,2594,3,12,0)
+                          ^02: Message
+"KRN",8994,2594,3,13,0)
+                          ^03: Error location
+"KRN",8994,2594,3,14,0)
+                          ^04: Error type
+"KRN",8994,2594,3,15,0)
+  
+"KRN",8994,2594,3,16,0)
+  Results[j]            Line of the additional info
+"KRN",8994,2594,3,17,0)
+                          ^01: "" (empty)
+"KRN",8994,2594,3,18,0)
+                          ^02: Text
+"KRN",8994,2594,3,19,0)
+ 
+"KRN",8994,2594,3,20,0)
+Error descriptors are returned in reverse chronological order (most recent
+"KRN",8994,2594,3,21,0)
+first).
+"KRN",8994,2594,3,22,0)
+ 
+"KRN",8994,2594,3,23,0)
+Otherwise, 0 is returned in the Results[0].
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",18,-1)
+1^1
+"PKG",18,0)
+RADIOLOGY/NUCLEAR MEDICINE^RA^REGISTERS PATIENTS,RECORDS EXAMS,PROFILES,AMIS REPORTS
+"PKG",18,20,0)
+^9.402P^^
+"PKG",18,22,0)
+^9.49I^1^1
+"PKG",18,22,1,0)
+5.0^3051109^2980407^50
+"PKG",18,22,1,"PAH",1,0)
+116^3130731
+"PKG",18,22,1,"PAH",1,1,0)
+^^3^3^3130731
+"PKG",18,22,1,"PAH",1,1,1,0)
+Patch one hundred and sixteen for the VistA Radiology/Nuclear Medicine 
+"PKG",18,22,1,"PAH",1,1,2,0)
+5.0 application. Please review FORUM's Patch Module description and
+"PKG",18,22,1,"PAH",1,1,3,0)
+installation instructions for RA*5.0*116 before installing this patch.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","RAMAG06")
+0^1^B45567180^B45318084
+"RTN","RAMAG06",1,0)
+RAMAG06 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (EXAM COMPLETION) ; 4/12/13 6:21pm
+"RTN","RAMAG06",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 1
+"RTN","RAMAG06",3,0)
+ ;
+"RTN","RAMAG06",4,0)
+ Q
+"RTN","RAMAG06",5,0)
+ ;
+"RTN","RAMAG06",6,0)
+ ;##### COMPLETES THE EXAM
+"RTN","RAMAG06",7,0)
+ ;
+"RTN","RAMAG06",8,0)
+ ; .RAPARAMS       Reference to the API descriptor
+"RTN","RAMAG06",9,0)
+ ;                 (see the ^RA01 routine for details)
+"RTN","RAMAG06",10,0)
+ ; 
+"RTN","RAMAG06",11,0)
+ ; RACASE          Exam/case identifiers
+"RTN","RAMAG06",12,0)
+ ;                   ^01: IEN of the patient in the file #70   (RADFN)
+"RTN","RAMAG06",13,0)
+ ;                   ^02: IEN in the REGISTERED EXAMS multiple (RADTI)
+"RTN","RAMAG06",14,0)
+ ;                   ^03: IEN in the EXAMINATIONS multiple     (RACNI)
+"RTN","RAMAG06",15,0)
+ ;
+"RTN","RAMAG06",16,0)
+ ; [.RAMISC]       Reference to a local array containing miscellaneous
+"RTN","RAMAG06",17,0)
+ ;                 exam parameters.
+"RTN","RAMAG06",18,0)
+ ;
+"RTN","RAMAG06",19,0)
+ ;                 See the ^RAMAG routine for additional important
+"RTN","RAMAG06",20,0)
+ ;                 details regarding this parameter.
+"RTN","RAMAG06",21,0)
+ ;
+"RTN","RAMAG06",22,0)
+ ; RAMISC(
+"RTN","RAMAG06",23,0)
+ ;
+"RTN","RAMAG06",24,0)
+ ;   "ACLHIST",    Text for the ADDITIONAL CLINICAL HISTORY field
+"RTN","RAMAG06",25,0)
+ ;     Seq#)       (400) of the RAD/NUC MED REPORTS file (#74).
+"RTN","RAMAG06",26,0)
+ ;                 Required: No
+"RTN","RAMAG06",27,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",28,0)
+ ;
+"RTN","RAMAG06",29,0)
+ ;   "FLAGS")      Flags that control the execution (see the ^RAMAG
+"RTN","RAMAG06",30,0)
+ ;                 routine for details). Supported flags: "F", "S".
+"RTN","RAMAG06",31,0)
+ ;                 Required: No
+"RTN","RAMAG06",32,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",33,0)
+ ;
+"RTN","RAMAG06",34,0)
+ ;   "IMPRESSION", Text for the IMPRESSION TEXT field (300) of the
+"RTN","RAMAG06",35,0)
+ ;     Seq#)       file #74.
+"RTN","RAMAG06",36,0)
+ ;                 Required: Site and/or imaging type specific
+"RTN","RAMAG06",37,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",38,0)
+ ;
+"RTN","RAMAG06",39,0)
+ ;   "PROBSTAT")   Free text value for the PROBLEM STATEMENT field
+"RTN","RAMAG06",40,0)
+ ;                 (25) of the file #74. If this parameter is defined 
+"RTN","RAMAG06",41,0)
+ ;                 and not empty (space characters are not counted),
+"RTN","RAMAG06",42,0)
+ ;                 then the PROBLEM DRAFT status is assigned to the
+"RTN","RAMAG06",43,0)
+ ;                 report.
+"RTN","RAMAG06",44,0)
+ ;                 Required: No
+"RTN","RAMAG06",45,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",46,0)
+ ;
+"RTN","RAMAG06",47,0)
+ ;   "REPORT",     Text for the REPORT TEXT field (200)
+"RTN","RAMAG06",48,0)
+ ;     Seq#)       of the file #74.
+"RTN","RAMAG06",49,0)
+ ;                 Required: Yes
+"RTN","RAMAG06",50,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",51,0)
+ ;
+"RTN","RAMAG06",52,0)
+ ;   "RPTDTE")     Internal date value (FileMan) for the REPORTED
+"RTN","RAMAG06",53,0)
+ ;                 DATE field (8) of the file #74. The date must be
+"RTN","RAMAG06",54,0)
+ ;                 exact. If time is provided, it is ignored.
+"RTN","RAMAG06",55,0)
+ ;                 Required: Yes
+"RTN","RAMAG06",56,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",57,0)
+ ;
+"RTN","RAMAG06",58,0)
+ ;   "RPTSTATUS")  Internal value for the REPORT STATUS field (5) of
+"RTN","RAMAG06",59,0)
+ ;                 the file #74. Currently, only "V" (Verified) and
+"RTN","RAMAG06",60,0)
+ ;                 "EF" (Electronically Filed) codes are supported.
+"RTN","RAMAG06",61,0)
+ ;                 Required: Yes
+"RTN","RAMAG06",62,0)
+ ;                 Default:  "V"
+"RTN","RAMAG06",63,0)
+ ;
+"RTN","RAMAG06",64,0)
+ ;   "TRANSCRST")  Internal value for the TRANSCRIPTIONIST field (11)
+"RTN","RAMAG06",65,0)
+ ;                 of the file #74: IEN in the NEW PERSON file (#200).
+"RTN","RAMAG06",66,0)
+ ;                 Required: No
+"RTN","RAMAG06",67,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",68,0)
+ ;
+"RTN","RAMAG06",69,0)
+ ;   "VERDTE")     Internal date value (FileMan) for the VERIFIED DATE
+"RTN","RAMAG06",70,0)
+ ;                 field (7) of the file #74. The date must be exact.
+"RTN","RAMAG06",71,0)
+ ;                 Required: No
+"RTN","RAMAG06",72,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",73,0)
+ ;
+"RTN","RAMAG06",74,0)
+ ;   "VERPHYS")    Internal value for the VERIFYING PHYSICIAN field
+"RTN","RAMAG06",75,0)
+ ;                 (9) of the file #74: IEN in the NEW PERSON file
+"RTN","RAMAG06",76,0)
+ ;                 (#200).
+"RTN","RAMAG06",77,0)
+ ;                 Required: No
+"RTN","RAMAG06",78,0)
+ ;                 Default:  undefined
+"RTN","RAMAG06",79,0)
+ ;
+"RTN","RAMAG06",80,0)
+ ;   "BEDSECT")    If any of these optional parameters are defined,
+"RTN","RAMAG06",81,0)
+ ;   "CMUSED")     their values replace the existing ones assigned
+"RTN","RAMAG06",82,0)
+ ;   "COMPLICAT")  by the $$REGISTER^RAMAG03 and $$EXAMINED^RAMAG07.
+"RTN","RAMAG06",83,0)
+ ;   "CONTMEDIA",#)
+"RTN","RAMAG06",84,0)
+ ;   "CPTMODS",#)
+"RTN","RAMAG06",85,0)
+ ;   "EXAMCAT")
+"RTN","RAMAG06",86,0)
+ ;   "FILMSIZE",#)
+"RTN","RAMAG06",87,0)
+ ;   "PRIMCAM")
+"RTN","RAMAG06",88,0)
+ ;   "PRIMDXCODE")
+"RTN","RAMAG06",89,0)
+ ;   "PRIMINTRES")
+"RTN","RAMAG06",90,0)
+ ;   "PRIMINTSTF")
+"RTN","RAMAG06",91,0)
+ ;   "PRINCLIN")
+"RTN","RAMAG06",92,0)
+ ;   "RDPHARMS",#,"RDPH-...")
+"RTN","RAMAG06",93,0)
+ ;   "SECDXCODE",#)
+"RTN","RAMAG06",94,0)
+ ;   "SERVICE")
+"RTN","RAMAG06",95,0)
+ ;   "TECH",#)
+"RTN","RAMAG06",96,0)
+ ;   "TECHCOMM")
+"RTN","RAMAG06",97,0)
+ ;   "WARD")
+"RTN","RAMAG06",98,0)
+ ;
+"RTN","RAMAG06",99,0)
+ ; Return values:
+"RTN","RAMAG06",100,0)
+ ;       <0  Error descriptor (see $$ERROR^RAERR)
+"RTN","RAMAG06",101,0)
+ ;        0  Exam has been completed
+"RTN","RAMAG06",102,0)
+ ;
+"RTN","RAMAG06",103,0)
+COMPLETE(RAPARAMS,RACASE,RAMISC) ;
+"RTN","RAMAG06",104,0)
+ N RACN            ; Case number
+"RTN","RAMAG06",105,0)
+ N RACNI           ; IEN of the exam in the EXAMINATIONS multiple
+"RTN","RAMAG06",106,0)
+ N RADFN           ; IEN of the patient in the file #70
+"RTN","RAMAG06",107,0)
+ N RADTE           ; Date/time of the exam
+"RTN","RAMAG06",108,0)
+ N RADTI           ; Inverted date/time of the exam
+"RTN","RAMAG06",109,0)
+ N RAIENS          ; IENS of the exam record
+"RTN","RAMAG06",110,0)
+ N RAIMGTYI        ; Imaging type IEN (file #79.2)
+"RTN","RAMAG06",111,0)
+ N RAMSPSDEFS      ; Data for miscellaneous parameters validation
+"RTN","RAMAG06",112,0)
+ N RANMDIEN        ; IEN of the nuclear medicine data (file #70.2)
+"RTN","RAMAG06",113,0)
+ N RAOIFN          ; IEN of the order (file #75.1)
+"RTN","RAMAG06",114,0)
+ N RAPROCIEN       ; Radiology procedure IEN
+"RTN","RAMAG06",115,0)
+ N RPTIEN          ; IEN of the report (file #74)
+"RTN","RAMAG06",116,0)
+ ;
+"RTN","RAMAG06",117,0)
+ N RACTION,RALOCK,RAMSG,RAPOST,RAPRIEN,RARC,RARCP,RATRKCMB,TMP
+"RTN","RAMAG06",118,0)
+ D:$G(RAPARAMS("DEBUG"))>1
+"RTN","RAMAG06",119,0)
+ . D W^RAMAGU11("$$COMPLETE^RAMAG06","!!")
+"RTN","RAMAG06",120,0)
+ . D VARS^RAMAGU11("RACASE")
+"RTN","RAMAG06",121,0)
+ . D ZW^RAUTL22("RAMISC")
+"RTN","RAMAG06",122,0)
+ S (RARC,RARCP)=0
+"RTN","RAMAG06",123,0)
+ ;
+"RTN","RAMAG06",124,0)
+ ;--- Validate case identifiers
+"RTN","RAMAG06",125,0)
+ S RARC=$$CHKREQ^RAUTL22("RACASE")   Q:RARC<0 RARC
+"RTN","RAMAG06",126,0)
+ S RARC=$$CHKEXMID^RAMAGU04(RACASE)  Q:RARC<0 RARC
+"RTN","RAMAG06",127,0)
+ S RADFN=$P(RACASE,U),RADTI=$P(RACASE,U,2),RACNI=$P(RACASE,U,3)
+"RTN","RAMAG06",128,0)
+ S RAIENS=$$EXAMIENS^RAMAGU04(RACASE)
+"RTN","RAMAG06",129,0)
+ ;
+"RTN","RAMAG06",130,0)
+ ;--- Get the order IEN
+"RTN","RAMAG06",131,0)
+ S RAOIFN=$$GET1^DIQ(70.03,RAIENS,11,"I",,"RAMSG")
+"RTN","RAMAG06",132,0)
+ Q:$G(DIERR) $$DBS^RAERR("RAMSG",-9,70.03,RAIENS)
+"RTN","RAMAG06",133,0)
+ Q:RAOIFN'>0 $$ERROR^RAERR(-19,,70.03,RAIENS,11)
+"RTN","RAMAG06",134,0)
+ ;
+"RTN","RAMAG06",135,0)
+ ;--- Create the report stub if necessary
+"RTN","RAMAG06",136,0)
+ S RPTIEN=$$RPTSTUB^RAMAGU12(RACASE,.RADTE,.RACN)
+"RTN","RAMAG06",137,0)
+ Q:RPTIEN<0 RPTIEN
+"RTN","RAMAG06",138,0)
+ ;
+"RTN","RAMAG06",139,0)
+ ;--- Lock affected objects
+"RTN","RAMAG06",140,0)
+ K TMP
+"RTN","RAMAG06",141,0)
+ S TMP(70.03,RAIENS)=""
+"RTN","RAMAG06",142,0)
+ S TMP(74,RPTIEN_",")=""
+"RTN","RAMAG06",143,0)
+ S TMP(75.1,RAOIFN_",")=""
+"RTN","RAMAG06",144,0)
+ S RARC=$$LOCKFM^RALOCK(.TMP)
+"RTN","RAMAG06",145,0)
+ Q:RARC $$LOCKERR^RAERR(RARC,"exam/order/report")
+"RTN","RAMAG06",146,0)
+ M RALOCK=TMP
+"RTN","RAMAG06",147,0)
+ ;
+"RTN","RAMAG06",148,0)
+ D
+"RTN","RAMAG06",149,0)
+ . ;--- Setup the error handler
+"RTN","RAMAG06",150,0)
+ . N $ESTACK,$ETRAP  D SETDEFEH^RAERR("RARC")
+"RTN","RAMAG06",151,0)
+ . ; 
+"RTN","RAMAG06",152,0)
+ . ;--- Initialize variables
+"RTN","RAMAG06",153,0)
+ . N EXMST,RAFDA,RAFDAM
+"RTN","RAMAG06",154,0)
+ . D LDMSPRMS^RAMAGU01(.RAMSPSDEFS)
+"RTN","RAMAG06",155,0)
+ . S RACTION="EC"
+"RTN","RAMAG06",156,0)
+ . ;
+"RTN","RAMAG06",157,0)
+ . ;--- Load exam properties
+"RTN","RAMAG06",158,0)
+ . S RARC=$$EXAMVARS^RAMAGU04(RAIENS)  Q:RARC<0
+"RTN","RAMAG06",159,0)
+ . ;
+"RTN","RAMAG06",160,0)
+ . ;--- Get descriptor of the desired exam status
+"RTN","RAMAG06",161,0)
+ . S EXMST=$$EXMSTINF^RAMAGU06("^^9",RAIMGTYI)
+"RTN","RAMAG06",162,0)
+ . I EXMST<0  S RARC=EXMST  Q
+"RTN","RAMAG06",163,0)
+ . ;
+"RTN","RAMAG06",164,0)
+ . ;--- Validate general parameters
+"RTN","RAMAG06",165,0)
+ . S RARC=$$VAL70^RAMAGU08(RAIENS,+EXMST,.RACTION,.RAMISC,.RAFDAM)
+"RTN","RAMAG06",166,0)
+ . I RARC<0  S RARC=$$ERROR^RAERR(-11)  Q
+"RTN","RAMAG06",167,0)
+ . Q:RACTION=""  ;--- Exam already has requested status
+"RTN","RAMAG06",168,0)
+ . S RARC=$$VAL74^RAMAGU10(RPTIEN_",",RACTION,.RAMISC,.RAFDAM)
+"RTN","RAMAG06",169,0)
+ . I RARC<0  S RARC=$$ERROR^RAERR(-11)  Q
+"RTN","RAMAG06",170,0)
+ . ;
+"RTN","RAMAG06",171,0)
+ . ;--- Nuclear medicine (including parameter validation)
+"RTN","RAMAG06",172,0)
+ . S RARC=$$NUCMED^RAMAG06A(RACASE,RACTION,.RAMISC,.RAFDAM)  Q:RARC<0
+"RTN","RAMAG06",173,0)
+ . S RANMDIEN=RARC
+"RTN","RAMAG06",174,0)
+ . ;
+"RTN","RAMAG06",175,0)
+ . ;--- Pre-processing
+"RTN","RAMAG06",176,0)
+ . S RARC=$$EDTPRE^RAMAG06A(RACTION,.RATRKCMB,.RAPRIEN)  Q:RARC<0
+"RTN","RAMAG06",177,0)
+ . K RAFDAM("RACNT"),RAFDAM("RAIENS")
+"RTN","RAMAG06",178,0)
+ . ;
+"RTN","RAMAG06",179,0)
+ . ;--- Update the exam record
+"RTN","RAMAG06",180,0)
+ . K RAFDA,RAMSG  M RAFDA(70.03)=RAFDAM(70.03)  K RAFDAM(70.03)
+"RTN","RAMAG06",181,0)
+ . I $D(RAFDA)>1  D  Q:RARC<0  S RAPOST=1
+"RTN","RAMAG06",182,0)
+ . . D FILE^DIE(,"RAFDA","RAMSG")
+"RTN","RAMAG06",183,0)
+ . . S:$G(DIERR) RARC=$$DBS^RAERR("RAMSG",-9,70.03,RAIENS)
+"RTN","RAMAG06",184,0)
+ . ;
+"RTN","RAMAG06",185,0)
+ . ;--- Update the nuclear medicine data
+"RTN","RAMAG06",186,0)
+ . K RAFDA,RAMSG  M RAFDA(70.21)=RAFDAM(70.21)  K RAFDAM(70.21)
+"RTN","RAMAG06",187,0)
+ . I $D(RAFDA)>1  D  Q:RARC<0  S RAPOST=1
+"RTN","RAMAG06",188,0)
+ . . S RARC=$$UPDMULT^RAMAGU13(.RAFDA,RANMDIEN_",")
+"RTN","RAMAG06",189,0)
+ . ;
+"RTN","RAMAG06",190,0)
+ . ;--- Update the report record
+"RTN","RAMAG06",191,0)
+ . K RAFDA,RAMSG  M RAFDA(74)=RAFDAM(74)  K RAFDAM(74)
+"RTN","RAMAG06",192,0)
+ . I $D(RAFDA)>1  D  Q:RARC<0  S RAPOST=1
+"RTN","RAMAG06",193,0)
+ . . D FILE^DIE(,"RAFDA","RAMSG")
+"RTN","RAMAG06",194,0)
+ . . S:$G(DIERR) RARC=$$DBS^RAERR("RAMSG",-9,74,RPTIEN_",")
+"RTN","RAMAG06",195,0)
+ . ;
+"RTN","RAMAG06",196,0)
+ . ;--- Update multiples of the exam record
+"RTN","RAMAG06",197,0)
+ . I $D(RAFDAM)>1  D  Q:RARC<0  S RAPOST=1
+"RTN","RAMAG06",198,0)
+ . . S RARC=$$UPDMULT^RAMAGU13(.RAFDAM,RAIENS)
+"RTN","RAMAG06",199,0)
+ . ;
+"RTN","RAMAG06",200,0)
+ . ;--- Report status
+"RTN","RAMAG06",201,0)
+ . S TMP=$G(RAMISC("PROBSTAT"))
+"RTN","RAMAG06",202,0)
+ . S RARC=$$UPDRPTST^RAMAGU12(RPTIEN,$G(RAMISC("RPTSTATUS")),TMP)
+"RTN","RAMAG06",203,0)
+ . Q:RARC<0
+"RTN","RAMAG06",204,0)
+ . ;--- Exam status
+"RTN","RAMAG06",205,0)
+ . S TMP=$$TRFLAGS^RAUTL22($G(RAMISC("FLAGS")),"F","F")
+"RTN","RAMAG06",206,0)
+ . S RARC=$$UPDEXMST^RAMAGU05(RACASE,EXMST,TMP)  Q:RARC<0
+"RTN","RAMAG06",207,0)
+ . ;--- Activity log
+"RTN","RAMAG06",208,0)
+ . S TMP=$G(RAMISC("TECHCOMM"))
+"RTN","RAMAG06",209,0)
+ . S RARC=$$UPDEXMAL^RAMAGU05(RACASE,"C",TMP)
+"RTN","RAMAG06",210,0)
+ ;
+"RTN","RAMAG06",211,0)
+ ;--- Post-processing is performed and notifications are sent if any
+"RTN","RAMAG06",212,0)
+ ;    changes to the case have been made (even if its status has not
+"RTN","RAMAG06",213,0)
+ ;--- been changed to 'COMPLETE').
+"RTN","RAMAG06",214,0)
+ D:$G(RAPOST)
+"RTN","RAMAG06",215,0)
+ . N $ESTACK,$ETRAP
+"RTN","RAMAG06",216,0)
+ . D SETDEFEH^RAERR("RARCP")
+"RTN","RAMAG06",217,0)
+ . S RARCP=$$EDTPST^RAMAG06A(RACTION,RATRKCMB,.RAPRIEN)
+"RTN","RAMAG06",218,0)
+ ;
+"RTN","RAMAG06",219,0)
+ ;--- Error handling and cleanup
+"RTN","RAMAG06",220,0)
+ D UNLOCKFM^RALOCK(.RALOCK)
+"RTN","RAMAG06",221,0)
+ Q $S(RARC<0:RARC,RARCP<0:RARCP,1:0)
+"RTN","RAMAGU01")
+0^2^B42905258^B42344620
+"RTN","RAMAGU01",1,0)
+RAMAGU01 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (RAMISC UTILITIES) ; 4/12/13  6:27pm
+"RTN","RAMAGU01",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 1
+"RTN","RAMAGU01",3,0)
+ ;
+"RTN","RAMAGU01",4,0)
+ Q
+"RTN","RAMAGU01",5,0)
+ ;
+"RTN","RAMAGU01",6,0)
+ ;***** LOADS DEFINITIONS OF MISCELLANEOUS PARAMETERS
+"RTN","RAMAGU01",7,0)
+ ;
+"RTN","RAMAGU01",8,0)
+ ; .MSPSDEFS     Reference to a local variable where descriptors
+"RTN","RAMAGU01",9,0)
+ ;               of the miscellaneous parameters are loaded to
+"RTN","RAMAGU01",10,0)
+ ;               (see description of the RAMSPSDEFS in the ^RAMAG
+"RTN","RAMAGU01",11,0)
+ ;               routine for details).
+"RTN","RAMAGU01",12,0)
+ ;
+"RTN","RAMAGU01",13,0)
+LDMSPRMS(MSPSDEFS) ;
+"RTN","RAMAGU01",14,0)
+ N BUF,FILE,I,NAME
+"RTN","RAMAGU01",15,0)
+ K MSPSDEFS
+"RTN","RAMAGU01",16,0)
+ F I=4:1  S BUF=$P($T(MSCPRMS+I),";;",2)  Q:BUF=""  D
+"RTN","RAMAGU01",17,0)
+ . S BUF=$P($TR(BUF,"| ",U),U,2,99)
+"RTN","RAMAGU01",18,0)
+ . S NAME=$P(BUF,U,1)  Q:NAME=""
+"RTN","RAMAGU01",19,0)
+ . S FILE=$P(BUF,U,2)  Q:FILE'>0
+"RTN","RAMAGU01",20,0)
+ . S MSPSDEFS("N",NAME)=$P(BUF,U,2,5)
+"RTN","RAMAGU01",21,0)
+ . S:$P(BUF,U,4)["*" MSPSDEFS("F",FILE,NAME)=""
+"RTN","RAMAGU01",22,0)
+ Q
+"RTN","RAMAGU01",23,0)
+ ;
+"RTN","RAMAGU01",24,0)
+MSCPRMS ;+++++ DEFINITIONS OF MISCELLANEOUS PARAMETERS
+"RTN","RAMAGU01",25,0)
+ ;;==========================================================
+"RTN","RAMAGU01",26,0)
+ ;;| Parameter  | File  |Field|Type |Req#|    Reference     |
+"RTN","RAMAGU01",27,0)
+ ;;|------------+-------+-----+-----+----+------------------|
+"RTN","RAMAGU01",28,0)
+ ;;|ACLHIST     |74     | 400 | W   |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",29,0)
+ ;;|BEDSECT     |70.03  |  19 | P   |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",30,0)
+ ;;|CLINHIST    |70.03  | 400 | W   |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",31,0)
+ ;;|CMUSED      |70.03  |  10 |     |    |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",32,0)
+ ;;|COMPLICAT   |70.03  |  16 | P   |    |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",33,0)
+ ;;|CONTMEDIA   |70.3225| .01 |  M  |    |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",34,0)
+ ;;|CPTMODS     |70.3135| .01 | PM  | 14 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",35,0)
+ ;;|EXAMCAT     |70.03  |   4 |     |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",36,0)
+ ;;|FILMSIZE    |70.04  | .01 | PM  |  4 |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",37,0)
+ ;;|FLAGS       |       |     |     |    |          ^RAMAG  |
+"RTN","RAMAGU01",38,0)
+ ;;|HOLDESC     |75.1   |  25 | W   |    | $$ORDCANC^RAMAG04|
+"RTN","RAMAGU01",39,0)
+ ;;|IMPRESSION  |74     | 300 | W   | 16 |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",40,0)
+ ;;|ISOLPROC    |75.1   |  24 |     |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",41,0)
+ ;;|PREGNANT    |75.1   |  13 |     |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",42,0)
+ ;;|PREOPDT     |75.1   |  12 | D   |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",43,0)
+ ;;|PRIMCAM     |70.03  |  18 | P   |  6 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",44,0)
+ ;;|PRIMDXCODE  |70.03  |  13 | P   |  5 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",45,0)
+ ;;|PRIMINTRES  |70.03  |  12 | P   |  2 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",46,0)
+ ;;|PRIMINTSTF  |70.03  |  15 | P   |  2 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",47,0)
+ ;;|PRINCLIN    |70.03  |   8 | P   |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",48,0)
+ ;;|PROBSTAT    |74     |  25 |     |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",49,0)
+ ;;|RAPROC      |70.03  |   2 |     |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",50,0)
+ ;;|RDPHARMS    |70.21  |     |  M  | 17 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",51,0)
+ ;;|  RDPH-ACDR |70.21  |   4 |   * | 19 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",52,0)
+ ;;|  RDPH-DOSE |70.21  |   7 |   * | 17 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",53,0)
+ ;;|  RDPH-DRUG |70.21  | .01 | P * | 17 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",54,0)
+ ;;|  RDPH-DTADM|70.21  |   8 | D * | 21 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",55,0)
+ ;;|  RDPH-DTDRW|70.21  |   5 | D * | 19 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",56,0)
+ ;;|  RDPH-FORM |70.21  |  15 |   * | 25 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",57,0)
+ ;;|  RDPH-LOTN |70.21  |  13 | P * | 24 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",58,0)
+ ;;|  RDPH-PWADM|70.21  |   9 | P * | 21 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",59,0)
+ ;;|  RDPH-PWMSD|70.21  |   6 | P * | 19 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",60,0)
+ ;;|  RDPH-ROUTE|70.21  |  11 | P * | 23 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",61,0)
+ ;;|  RDPH-SITE |70.21  |  12 | P * | 23 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",62,0)
+ ;;|  RDPH-VOL  |70.21  |  14 |   * | 25 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",63,0)
+ ;;|REPORT      |74     | 200 | W   | 11 |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",64,0)
+ ;;|REQNATURE   |75.1   |  26 |     |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",65,0)
+ ;;|REQURG      |75.1   |   6 |     |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",66,0)
+ ;;|RPTDTE      |74     |   8 | D   |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",67,0)
+ ;;|RPTSTATUS   |74     |   5 |     |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",68,0)
+ ;;|SECDXCODE   |70.14  | .01 | PM  |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",69,0)
+ ;;|SERVICE     |70.03  |   7 | P   |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",70,0)
+ ;;|SINGLERPT   |70.03  |  25 |     |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",71,0)
+ ;;|TECH        |70.12  | .01 | PM  |  1 |$$EXAMINED^RAMAG07|
+"RTN","RAMAGU01",72,0)
+ ;;|TECHCOMM    |70.07  |   4 |     |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",73,0)
+ ;;|TRANSCRST   |74     |  11 | P   |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",74,0)
+ ;;|TRANSPMODE  |75.1   |  19 |     |    |   $$ORDER^RAMAG02|
+"RTN","RAMAGU01",75,0)
+ ;;|VERDTE      |74     |   7 | D   |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",76,0)
+ ;;|VERPHYS     |74     |   9 | P   |    |$$COMPLETE^RAMAG06|
+"RTN","RAMAGU01",77,0)
+ ;;|WARD        |70.03  |   6 | P   |    |$$REGISTER^RAMAG03|
+"RTN","RAMAGU01",78,0)
+ ;;==========================================================
+"RTN","RAMAGU01",79,0)
+ ;
+"RTN","RAMAGU01",80,0)
+ ; Type          Field type that requires special processing:
+"RTN","RAMAGU01",81,0)
+ ;                 D - Date/time, M - Multiple,
+"RTN","RAMAGU01",82,0)
+ ;                 P - Pointer,   W - Word processing,
+"RTN","RAMAGU01",83,0)
+ ;                 * - Add this parameter to the "F" index
+"RTN","RAMAGU01",84,0)
+ ;                     (see the VEXAMND^RAMAGU14 for details).
+"RTN","RAMAGU01",85,0)
+ ;
+"RTN","RAMAGU01",86,0)
+ ; Req#          Number of the "^"-piece of the value returned by the
+"RTN","RAMAGU01",87,0)
+ ;               $$EXMSTREQ^RAMAGU06. It determines if a non-empty
+"RTN","RAMAGU01",88,0)
+ ;               field value is required.
+"RTN","RAMAGU01",89,0)
+ ;
+"RTN","RAMAGU01",90,0)
+ ; Reference     Indicates where the parameter is described for the
+"RTN","RAMAGU01",91,0)
+ ;               first time.
+"RTN","RAMAGU01",92,0)
+ ;   
+"RTN","RAMAGU01",93,0)
+ ; NOTE #1: This table is here not only for documentation purposes;
+"RTN","RAMAGU01",94,0)
+ ;          the data is processed by the LDMSPRMS^RAMAGU01 procedure.
+"RTN","RAMAGU01",95,0)
+ ;
+"RTN","RAMAGU01",96,0)
+ ; NOTE #2: If a parameter does not have the corresponding field
+"RTN","RAMAGU01",97,0)
+ ;          and has the "M" flag, then this is a record tag (e.g.
+"RTN","RAMAGU01",98,0)
+ ;          RDPHARMS). It encloses other parameters that define
+"RTN","RAMAGU01",99,0)
+ ;          field values for a record of the sub-file.
+"RTN","RAMAGU01",100,0)
+ ;
+"RTN","RAMAGU01",101,0)
+ Q
+"RTN","RAMAGU01",102,0)
+ ;
+"RTN","RAMAGU01",103,0)
+ ;***** PARSES RAMSC RECORDS (RPC) INTO RAMISC SUBSCRIPTS (API)
+"RTN","RAMAGU01",104,0)
+ ;
+"RTN","RAMAGU01",105,0)
+ ; .RAMSC        Reference to the RAMSC parameter of a remote
+"RTN","RAMAGU01",106,0)
+ ;               procedure.
+"RTN","RAMAGU01",107,0)
+ ;
+"RTN","RAMAGU01",108,0)
+ ; .RAMISC       Reference to a local variable that will store
+"RTN","RAMAGU01",109,0)
+ ;               miscellaneous parameters as subscripts (for API
+"RTN","RAMAGU01",110,0)
+ ;               functions).
+"RTN","RAMAGU01",111,0)
+ ;
+"RTN","RAMAGU01",112,0)
+ ; Return values:
+"RTN","RAMAGU01",113,0)
+ ;       <0  Error descriptor (see $$ERROR^RAERR)
+"RTN","RAMAGU01",114,0)
+ ;        0  Success
+"RTN","RAMAGU01",115,0)
+ ;
+"RTN","RAMAGU01",116,0)
+RPCMISC(RAMSC,RAMISC) ;
+"RTN","RAMAGU01",117,0)
+ N RAMSPSDEFS,RASRCI,RC
+"RTN","RAMAGU01",118,0)
+ K RAMISC  S RASRCI=""
+"RTN","RAMAGU01",119,0)
+ D LDMSPRMS(.RAMSPSDEFS)
+"RTN","RAMAGU01",120,0)
+ S RC=$$RPCMISC1("RAMISC")
+"RTN","RAMAGU01",121,0)
+ Q $S(RC>0:$$ERROR^RAERR(-5),1:RC)
+"RTN","RAMAGU01",122,0)
+ ;
+"RTN","RAMAGU01",123,0)
+ ;+++++ RECURSIVE PARSER OF RAMSC RECORDS
+"RTN","RAMAGU01",124,0)
+ ;
+"RTN","RAMAGU01",125,0)
+ ; DSTNODE       Node of the RAMISC where values will be stored.
+"RTN","RAMAGU01",126,0)
+ ;
+"RTN","RAMAGU01",127,0)
+ ; [RECNAME]     Tag name and index of the current record. They are
+"RTN","RAMAGU01",128,0)
+ ; [RECNDX]      used to detect the record boundaries.
+"RTN","RAMAGU01",129,0)
+ ;
+"RTN","RAMAGU01",130,0)
+ ; Input Variables:
+"RTN","RAMAGU01",131,0)
+ ;   RAMSC, RAMSPSDEFS, RASRCI
+"RTN","RAMAGU01",132,0)
+ ;
+"RTN","RAMAGU01",133,0)
+ ; Output Variables:
+"RTN","RAMAGU01",134,0)
+ ;   RAMISC, RASRCI
+"RTN","RAMAGU01",135,0)
+ ;
+"RTN","RAMAGU01",136,0)
+ ; Return values:
+"RTN","RAMAGU01",137,0)
+ ;       <0  Error descriptor (see $$ERROR^RAERR)
+"RTN","RAMAGU01",138,0)
+ ;        0  Success
+"RTN","RAMAGU01",139,0)
+ ;       >0  Number of validation errors
+"RTN","RAMAGU01",140,0)
+ ;
+"RTN","RAMAGU01",141,0)
+ ; NOTE: This is an internal entry point. Do not call
+"RTN","RAMAGU01",142,0)
+ ;       it from outside of this routine.
+"RTN","RAMAGU01",143,0)
+ ;
+"RTN","RAMAGU01",144,0)
+RPCMISC1(DSTNODE,RECNAME,RECNDX) ;
+"RTN","RAMAGU01",145,0)
+ N ERRCNT,NAME,NDX,RARC,TMP,TYPE
+"RTN","RAMAGU01",146,0)
+ S (ERRCNT,RARC)=0
+"RTN","RAMAGU01",147,0)
+ ;===
+"RTN","RAMAGU01",148,0)
+ F  S RASRCI=$O(RAMSC(RASRCI))  Q:RASRCI=""  D  Q:RARC
+"RTN","RAMAGU01",149,0)
+ . S NAME=$$TRIM^XLFSTR($P(RAMSC(RASRCI),U))  Q:NAME=""
+"RTN","RAMAGU01",150,0)
+ . S NDX=+$$TRIM^XLFSTR($P(RAMSC(RASRCI),U,2))
+"RTN","RAMAGU01",151,0)
+ . S TYPE=$P($G(RAMSPSDEFS("N",NAME)),U,3)
+"RTN","RAMAGU01",152,0)
+ . ;=== Single value
+"RTN","RAMAGU01",153,0)
+ . I NDX'>0  D  Q
+"RTN","RAMAGU01",154,0)
+ . . I $D(@DSTNODE@(NAME))#10  D  S ERRCNT=ERRCNT+1  Q
+"RTN","RAMAGU01",155,0)
+ . . . D ERROR^RAERR(-6,,NAME)
+"RTN","RAMAGU01",156,0)
+ . . ;--- Convert date/time value from HL7 (TS) to FileMan
+"RTN","RAMAGU01",157,0)
+ . . I TYPE["D"  D  Q
+"RTN","RAMAGU01",158,0)
+ . . . S @DSTNODE@(NAME)=$$HL7TFM^XLFDT($P(RAMSC(RASRCI),U,3))
+"RTN","RAMAGU01",159,0)
+ . . . I @DSTNODE@(NAME)<0  D  S ERRCNT=ERRCNT+1
+"RTN","RAMAGU01",160,0)
+ . . . . S TMP=$NA(@DSTNODE@(NAME))
+"RTN","RAMAGU01",161,0)
+ . . . . D ERROR^RAERR(-3,TMP_"='"_$P(RAMSC(RASRCI),U,3)_"'",TMP)
+"RTN","RAMAGU01",162,0)
+ . . ;--- Copy parameters of other types
+"RTN","RAMAGU01",163,0)
+ . . S @DSTNODE@(NAME)=$P(RAMSC(RASRCI),U,3,999)
+"RTN","RAMAGU01",164,0)
+ . ;=== Check for duplicate indexes
+"RTN","RAMAGU01",165,0)
+ . I $D(@DSTNODE@(NAME,NDX))  D  S ERRCNT=ERRCNT+1  Q
+"RTN","RAMAGU01",166,0)
+ . . D ERROR^RAERR(-7,,NDX,NAME)
+"RTN","RAMAGU01",167,0)
+ . ;=== Check for record start/end
+"RTN","RAMAGU01",168,0)
+ . I (TYPE["M"),$P($G(RAMSPSDEFS("N",NAME)),U,2)'>0  D  Q
+"RTN","RAMAGU01",169,0)
+ . . ;--- If the name is the same as that of the current record, then
+"RTN","RAMAGU01",170,0)
+ . . ;    this either the end of the current record or a beginning of
+"RTN","RAMAGU01",171,0)
+ . . ;--- the next record of the same kind (and on the same level).
+"RTN","RAMAGU01",172,0)
+ . . I NAME=$G(RECNAME)  D:NDX'=$G(RECNDX)  S RARC=1  Q
+"RTN","RAMAGU01",173,0)
+ . . . ;--- If the index is different from that of the current record,
+"RTN","RAMAGU01",174,0)
+ . . . ;    then this is a beginning of the next record. Let the
+"RTN","RAMAGU01",175,0)
+ . . . ;--- source line be re-processed on the upper execution level.
+"RTN","RAMAGU01",176,0)
+ . . . S RASRCI=$O(RAMSC(RASRCI),-1)
+"RTN","RAMAGU01",177,0)
+ . . ;--- Start processing field values of the record
+"RTN","RAMAGU01",178,0)
+ . . S TMP=$$RPCMISC1($NA(@DSTNODE@(NAME,NDX)),NAME,NDX)
+"RTN","RAMAGU01",179,0)
+ . . I TMP<0  S RARC=TMP  Q
+"RTN","RAMAGU01",180,0)
+ . . S:TMP>0 ERRCNT=ERRCNT+TMP
+"RTN","RAMAGU01",181,0)
+ . . S:RASRCI="" RARC=1
+"RTN","RAMAGU01",182,0)
+ . ;=== List item or text line
+"RTN","RAMAGU01",183,0)
+ . S @DSTNODE@(NAME,NDX)=$P(RAMSC(RASRCI),U,3,999)
+"RTN","RAMAGU01",184,0)
+ ;===
+"RTN","RAMAGU01",185,0)
+ Q $S(RARC<0:RARC,1:ERRCNT)
+"RTN","RAMAGU08")
+0^3^B46575809^B43666394
+"RTN","RAMAGU08",1,0)
+RAMAGU08 ;HCIOFO/SG,GJC - ORDERS/EXAMS API (RAMISC VALID. #70) ; 4/12/13 6:25pm
+"RTN","RAMAGU08",2,0)
+ ;;5.0;Radiology/Nuclear Medicine;**90,116**;Mar 16, 1998;Build 1
+"RTN","RAMAGU08",3,0)
+ ;
+"RTN","RAMAGU08",4,0)
+ Q
+"RTN","RAMAGU08",5,0)
+ ;
+"RTN","RAMAGU08",6,0)
+ ;***** VALIDATES RAMISC PARAMETERS RELATED TO THE FILE #70
+"RTN","RAMAGU08",7,0)
+ ;
+"RTN","RAMAGU08",8,0)
+ ; RAIENS        IENS of the exam/case (subfile #70.03)
+"RTN","RAMAGU08",9,0)
+ ;
+"RTN","RAMAGU08",10,0)
+ ; RASTIEN       IEN of the requested exam status
+"RTN","RAMAGU08",11,0)
+ ;
+"RTN","RAMAGU08",12,0)
+ ; .RACTION      Reference to a local variable that indicates the
+"RTN","RAMAGU08",13,0)
+ ;               actions (can be combined):
+"RTN","RAMAGU08",14,0)
+ ;                 E  Examined (procedure has been performed)
+"RTN","RAMAGU08",15,0)
+ ;                 C  Complete
+"RTN","RAMAGU08",16,0)
+ ;
+"RTN","RAMAGU08",17,0)
+ ;               After exiting the function, this parameter contains
+"RTN","RAMAGU08",18,0)
+ ;               only those actions that actually have to be performed
+"RTN","RAMAGU08",19,0)
+ ;               in order to reach the requested status. For example, 
+"RTN","RAMAGU08",20,0)
+ ;               if "EC" is passed and the procedure has already been 
+"RTN","RAMAGU08",21,0)
+ ;               performed, then "E" will be removed.
+"RTN","RAMAGU08",22,0)
+ ;
+"RTN","RAMAGU08",23,0)
+ ;               If this parameter is empty after the call, then the
+"RTN","RAMAGU08",24,0)
+ ;               exam already has requested status.
+"RTN","RAMAGU08",25,0)
+ ;
+"RTN","RAMAGU08",26,0)
+ ; .RAMISC       Reference to a local array containing miscellaneous
+"RTN","RAMAGU08",27,0)
+ ;               request parameters.
+"RTN","RAMAGU08",28,0)
+ ;
+"RTN","RAMAGU08",29,0)
+ ; .RAFDA(       Reference to a local array where field values will
+"RTN","RAMAGU08",30,0)
+ ;               be prepared for storage (FileMan FDA array).
+"RTN","RAMAGU08",31,0)
+ ;
+"RTN","RAMAGU08",32,0)
+ ;   "RACNT")    This is an additional node that stores counter for
+"RTN","RAMAGU08",33,0)
+ ;               the IENS placeholders. Do not forget to remove this
+"RTN","RAMAGU08",34,0)
+ ;               node before passing the array into a FileMan API.
+"RTN","RAMAGU08",35,0)
+ ;
+"RTN","RAMAGU08",36,0)
+ ;   "RAIENS")   This is an additional node that stores IENS of the
+"RTN","RAMAGU08",37,0)
+ ;               record being processed. Do not forget to remove this 
+"RTN","RAMAGU08",38,0)
+ ;               node before passing the array into a FileMan API.
+"RTN","RAMAGU08",39,0)
+ ;
+"RTN","RAMAGU08",40,0)
+ ; [RAFDACNT]    New value for the placeholder counter for the RAFDA. 
+"RTN","RAMAGU08",41,0)
+ ;               If this parameter is greater than zero, it replaces
+"RTN","RAMAGU08",42,0)
+ ;               the value stored in the RAFDA("RACNT").
+"RTN","RAMAGU08",43,0)
+ ;
+"RTN","RAMAGU08",44,0)
+ ; Input variables:
+"RTN","RAMAGU08",45,0)
+ ;   RACN, RADTE, RAIMGTYI, RAMSPSDEFS
+"RTN","RAMAGU08",46,0)
+ ;
+"RTN","RAMAGU08",47,0)
+ ; Output variables:
+"RTN","RAMAGU08",48,0)
+ ;   RAMSPSDEFS, RAPROCIEN
+"RTN","RAMAGU08",49,0)
+ ;
+"RTN","RAMAGU08",50,0)
+ ; Return values:
+"RTN","RAMAGU08",51,0)
+ ;       <0  Error code
+"RTN","RAMAGU08",52,0)
+ ;        0  Ok
+"RTN","RAMAGU08",53,0)
+ ;
+"RTN","RAMAGU08",54,0)
+VAL70(RAIENS,RASTIEN,RACTION,RAMISC,RAFDA,RAFDACNT) ;
+"RTN","RAMAGU08",55,0)
+ N ERRCNT,EXMST,PNODE,RABUF,RACAT,RAI,RAMSG,RAPROC,RC,TMP
+"RTN","RAMAGU08",56,0)
+ ;
+"RTN","RAMAGU08",57,0)
+ ;=== Check required parameters and variables
+"RTN","RAMAGU08",58,0)
+ S RC=$$CHKREQ^RAUTL22("RACTION,RAIENS")  Q:RC<0 RC
+"RTN","RAMAGU08",59,0)
+ S RC=$$CHKREQ^RAUTL22("RACN,RADTE,RAIMGTYI","V")
+"RTN","RAMAGU08",60,0)
+ Q:RC<0 RC
+"RTN","RAMAGU08",61,0)
+ Q:$TR(RACTION,"EC")'="" $$IPVE^RAERR("RACTION")
+"RTN","RAMAGU08",62,0)
+ ;
+"RTN","RAMAGU08",63,0)
+ ;=== Initialize variables
+"RTN","RAMAGU08",64,0)
+ S RAFDA("RAIENS")=RAIENS
+"RTN","RAMAGU08",65,0)
+ S:$G(RAFDACNT)>0 RAFDA("RACNT")=+RAFDACNT
+"RTN","RAMAGU08",66,0)
+ S (ERRCNT,RC)=0
+"RTN","RAMAGU08",67,0)
+ ;
+"RTN","RAMAGU08",68,0)
+ ;=== Data from the EXAMINATIONS multiple
+"RTN","RAMAGU08",69,0)
+ D GETS^DIQ(70.03,RAIENS,"2;3;4","I","RABUF","RAMSG")
+"RTN","RAMAGU08",70,0)
+ Q:$G(DIERR) $$DBS^RAERR("RAMSG",-9,70.03,RAIENS)
+"RTN","RAMAGU08",71,0)
+ ;
+"RTN","RAMAGU08",72,0)
+ ;=== Check the current exam status
+"RTN","RAMAGU08",73,0)
+ S TMP=+$G(RABUF(70.03,RAIENS,3,"I"))
+"RTN","RAMAGU08",74,0)
+ S EXMST=$$EXMSTINF^RAMAGU06(TMP)  Q:EXMST<0 EXMST
+"RTN","RAMAGU08",75,0)
+ ;--- Already COMPLETE
+"RTN","RAMAGU08",76,0)
+ I $P(EXMST,U,3)=9  S RACTION=""  Q 0
+"RTN","RAMAGU08",77,0)
+ ;--- Already "EXAMINED"
+"RTN","RAMAGU08",78,0)
+ I $P(EXMST,U,3)>1  D  Q:RC<0 RC
+"RTN","RAMAGU08",79,0)
+ . S RC=$$GETEXMND^RAMAGU06(+EXMST)
+"RTN","RAMAGU08",80,0)
+ . ;--- Cannot find the "EXAMINED" status
+"RTN","RAMAGU08",81,0)
+ . S:'RC RACTION=$TR(RACTION,"E")
+"RTN","RAMAGU08",82,0)
+ Q:RACTION="" 0
+"RTN","RAMAGU08",83,0)
+ ;
+"RTN","RAMAGU08",84,0)
+ ;=== Detailed/series procedure and modifiers
+"RTN","RAMAGU08",85,0)
+ S PNODE=$NA(RAMISC("RAPROC"))
+"RTN","RAMAGU08",86,0)
+ S RAI=$O(@PNODE@(0))
+"RTN","RAMAGU08",87,0)
+ I RAI>0  S RAPROC=@PNODE@(RAI)  D         ; Update procedure
+"RTN","RAMAGU08",88,0)
+ . I $O(@PNODE@(RAI))>0  D ERROR^RAERR(-49)  S ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",89,0)
+ E  S RAPROC=$G(RABUF(70.03,RAIENS,2,"I")) ; Current procedure
+"RTN","RAMAGU08",90,0)
+ ;--- Validate the procedure and modifiers
+"RTN","RAMAGU08",91,0)
+ S TMP=$$CHKPROC^RAMAGU03(RAPROC,RAIMGTYI,RADTE,"DS")
+"RTN","RAMAGU08",92,0)
+ S:TMP<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",93,0)
+ S RAPROCIEN=$S('TMP:+RAPROC,1:"")
+"RTN","RAMAGU08",94,0)
+ ;
+"RTN","RAMAGU08",95,0)
+ ;=== Get the exam status requirements
+"RTN","RAMAGU08",96,0)
+ S TMP=$$EXMSTREQ^RAMAGU06(RASTIEN,RAPROCIEN)  Q:TMP<0 TMP
+"RTN","RAMAGU08",97,0)
+ ;--- The "EF" report status means outside work. In this case,
+"RTN","RAMAGU08",98,0)
+ ;    cancel requirements for anything except (possibly) the
+"RTN","RAMAGU08",99,0)
+ ;--- diagnostic code. See the HELP1^RASTREQ for more details.
+"RTN","RAMAGU08",100,0)
+ I $G(RAMISC("RPTSTATUS"))'="EF"  S RAMSPSDEFS("R")=TMP
+"RTN","RAMAGU08",101,0)
+ E  S RAMSPSDEFS("R")="",$P(RAMSPSDEFS("R"),U,5)=$P(TMP,U,5)
+"RTN","RAMAGU08",102,0)
+ ;
+"RTN","RAMAGU08",103,0)
+ ;=== Category of exam
+"RTN","RAMAGU08",104,0)
+ S PNODE=$NA(RAMISC("EXAMCAT"))
+"RTN","RAMAGU08",105,0)
+ I $D(@PNODE)#10  S RACAT=@PNODE  D        ; Update category
+"RTN","RAMAGU08",106,0)
+ . S:$$CHECKFLD^RAMAGU09(PNODE,RACAT,70.03,4,RAIENS,1)<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",107,0)
+ E  S RACAT=$G(RABUF(70.03,RAIENS,4,"I"))  ; Current category
+"RTN","RAMAGU08",108,0)
+ ;
+"RTN","RAMAGU08",109,0)
+ ;=== Parameters specific to the exam category
+"RTN","RAMAGU08",110,0)
+ S:$$VALECPRM^RAMAGU09(RACAT)<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",111,0)
+ ;
+"RTN","RAMAGU08",112,0)
+ ;=== Technologist comment
+"RTN","RAMAGU08",113,0)
+ S:$$VALPRM^RAMAGU09("TECHCOMM")<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",114,0)
+ ;
+"RTN","RAMAGU08",115,0)
+ ;=== Validate parameters specific to different exam statuses
+"RTN","RAMAGU08",116,0)
+ I $TR(RACTION,"EC")'=RACTION  D  S:TMP<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",117,0)
+ . S TMP=$$VEXAMND(RAIENS,RACTION,.RAMISC,.RAFDA)
+"RTN","RAMAGU08",118,0)
+ I RACTION["C"  D  S:TMP<0 ERRCNT=ERRCNT+1
+"RTN","RAMAGU08",119,0)
+ . S TMP=$$VCOMPLT(RAIENS,RACTION,.RAMISC,.RAFDA)
+"RTN","RAMAGU08",120,0)
+ ;
+"RTN","RAMAGU08",121,0)
+ ;=== Error handling and cleanup
+"RTN","RAMAGU08",122,0)
+ K RAFDA(70.07) ; Do not modify the activity log directly
+"RTN","RAMAGU08",123,0)
+ Q $S(ERRCNT>0:-11,1:0)
+"RTN","RAMAGU08",124,0)
+ ;
+"RTN","RAMAGU08",125,0)
+ ;+++++ VALIDATES 'COMPLETE' PARAMETERS
+"RTN","RAMAGU08",126,0)
+VCOMPLT(RAIENS,RACTION,RAMISC,RAFDA) ;
+"RTN","RAMAGU08",127,0)
+ N ERRCNT,PNODE,TMP
+"RTN","RAMAGU08",128,0)
+ S ERRCNT=0
+"RTN","RAMAGU08",129,0)
+ ;
+"RTN","RAMAGU08",130,0)
+ ;=== Error handling and cleanup
+"RTN","RAMAGU08",131,0)
+ Q $S(ERRCNT>0:-11,1:0)
+"RTN","RAMAGU08",132,0)
+ ;
+"RTN","RAMAGU08",133,0)
+ ;+++++ VALIDATES 'EXAMINED' PARAMETERS
+"RTN","RAMAGU08",134,0)
+VEXAMND(RAIENS,RACTION,RAMISC,RAFDA) ;
+"RTN","RAMAGU08",135,0)
+ N ECNT,NAME,PI,PNODE,RAI,RC,TMP
+"RTN","RAMAGU08",136,0)
+ S ECNT=0
+"RTN","RAMAGU08",137,0)
+ ;
+"RTN","RAMAGU08",138,0)
+ ;=== Contrast media used
+"RTN","RAMAGU08",139,0)
+ S RC=$$VALPRM^RAMAGU09("CMUSED",,RAIENS)
+"RTN","RAMAGU08",140,0)
+ I RC>0  D
+"RTN","RAMAGU08",141,0)
+ . ;--- Clear the CONTMEDIA list if necessary
+"RTN","RAMAGU08",142,0)
+ . S TMP=$G(RAFDA(70.03,RAIENS,10))
+"RTN","RAMAGU08",143,0)
+ . I TMP'="Y"  K RAMISC("CONTMEDIA")  S RAMISC("CONTMEDIA")=""
+"RTN","RAMAGU08",144,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",145,0)
+ ;
+"RTN","RAMAGU08",146,0)
+ ;=== Contrast media
+"RTN","RAMAGU08",147,0)
+ S NAME="CONTMEDIA"
+"RTN","RAMAGU08",148,0)
+ S RC=$$VALPRM^RAMAGU09(NAME)
+"RTN","RAMAGU08",149,0)
+ I RC>0  D
+"RTN","RAMAGU08",150,0)
+ . S RAI=0
+"RTN","RAMAGU08",151,0)
+ . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+"RTN","RAMAGU08",152,0)
+ . . S:$$VALPRM^RAMAGU09(NAME,RAI)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",153,0)
+ . ;--- Make the value of the CONTRAST MEDIA USED consistent
+"RTN","RAMAGU08",154,0)
+ . S TMP=$D(RAFDA(70.3225))
+"RTN","RAMAGU08",155,0)
+ . S:TMP RAFDA(70.03,RAIENS,10)=$S(TMP>1:"Y",1:"N")
+"RTN","RAMAGU08",156,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",157,0)
+ ;
+"RTN","RAMAGU08",158,0)
+ ;=== Complication
+"RTN","RAMAGU08",159,0)
+ S NAME="COMPLICAT"
+"RTN","RAMAGU08",160,0)
+ S RC=$$VALPRM^RAMAGU09(NAME,,RAIENS)
+"RTN","RAMAGU08",161,0)
+ I RC>0  D
+"RTN","RAMAGU08",162,0)
+ . S PNODE=$NA(RAMISC(NAME))
+"RTN","RAMAGU08",163,0)
+ . ;--- COMPLICATION TEXT
+"RTN","RAMAGU08",164,0)
+ . S TMP=$P($G(@PNODE),U,2)
+"RTN","RAMAGU08",165,0)
+ . S:$$CHECKFLD^RAMAGU09(PNODE,TMP,70.03,16.5,RAIENS)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",166,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",167,0)
+ ;
+"RTN","RAMAGU08",168,0)
+ ;=== CPT Modifiers
+"RTN","RAMAGU08",169,0)
+ S NAME="CPTMODS"
+"RTN","RAMAGU08",170,0)
+ S RC=$$VALPRM^RAMAGU09(NAME)
+"RTN","RAMAGU08",171,0)
+ I RC>0  D
+"RTN","RAMAGU08",172,0)
+ . S RAI=0
+"RTN","RAMAGU08",173,0)
+ . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+"RTN","RAMAGU08",174,0)
+ . . S:$$VALPRM^RAMAGU09(NAME,RAI)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",175,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",176,0)
+ ;
+"RTN","RAMAGU08",177,0)
+ ;=== Film size
+"RTN","RAMAGU08",178,0)
+ S NAME="FILMSIZE"
+"RTN","RAMAGU08",179,0)
+ S RC=$$VALPRM^RAMAGU09(NAME)
+"RTN","RAMAGU08",180,0)
+ I RC>0  D
+"RTN","RAMAGU08",181,0)
+ . S RAI=0
+"RTN","RAMAGU08",182,0)
+ . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+"RTN","RAMAGU08",183,0)
+ . . S PI=$NA(RAMISC(NAME,RAI))  K IENS
+"RTN","RAMAGU08",184,0)
+ . . ;--- FILM SIZE
+"RTN","RAMAGU08",185,0)
+ . . S:$$VALPRM^RAMAGU09(NAME,RAI,.IENS)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",186,0)
+ . . ;--- AMOUNT
+"RTN","RAMAGU08",187,0)
+ . . S TMP=$P($G(@PI),U,2)
+"RTN","RAMAGU08",188,0)
+ . . S:$$CHECKFLD^RAMAGU09(PI,TMP,70.04,2,IENS)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",189,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",190,0)
+ ;
+"RTN","RAMAGU08",191,0)
+ ;=== Primary camera/equipment/room
+"RTN","RAMAGU08",192,0)
+ S:$$VALPRM^RAMAGU09("PRIMCAM",,RAIENS)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",193,0)
+ ;
+"RTN","RAMAGU08",194,0)
+ ;=== Technologist
+"RTN","RAMAGU08",195,0)
+ S NAME="TECH"
+"RTN","RAMAGU08",196,0)
+ S RC=$$VALPRM^RAMAGU09(NAME)
+"RTN","RAMAGU08",197,0)
+ I RC>0  D
+"RTN","RAMAGU08",198,0)
+ . S RAI=0
+"RTN","RAMAGU08",199,0)
+ . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+"RTN","RAMAGU08",200,0)
+ . . S:$$VALPRM^RAMAGU09(NAME,RAI)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",201,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",202,0)
+ ;
+"RTN","RAMAGU08",203,0)
+ ;=== Primary diagnostic code
+"RTN","RAMAGU08",204,0)
+ S:$$VALPRM^RAMAGU09("PRIMDXCODE",,RAIENS)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",205,0)
+ ;
+"RTN","RAMAGU08",206,0)
+ ;=== Secondary diagnostic code(s)
+"RTN","RAMAGU08",207,0)
+ S NAME="SECDXCODE"
+"RTN","RAMAGU08",208,0)
+ S RC=$$VALPRM^RAMAGU09(NAME)
+"RTN","RAMAGU08",209,0)
+ I RC>0  D
+"RTN","RAMAGU08",210,0)
+ . S RAI=0
+"RTN","RAMAGU08",211,0)
+ . F  S RAI=$O(RAMISC(NAME,RAI))  Q:RAI'>0  D
+"RTN","RAMAGU08",212,0)
+ . . S:$$VALPRM^RAMAGU09(NAME,RAI)<0 ECNT=ECNT+1
+"RTN","RAMAGU08",213,0)
+ E  S:RC<0 ECNT=ECNT+1
+"RTN","RAMAGU08",214,0)
+ ;
+"RTN","RAMAGU08",215,0)
+ ;=== Primary interpreting resident and staff
+"RTN","RAMAGU08",216,0)
+ S RC=0
+"RTN","RAMAGU08",217,0)
+ F NAME="PRIMINTRES","PRIMINTSTF"  D
+"RTN","RAMAGU08",218,0)
+ . ;--- Check the parameter but does not record errors
+"RTN","RAMAGU08",219,0)
+ . S TMP=$$VALPRM^RAMAGU09(NAME,,RAIENS,,"C")
+"RTN","RAMAGU08",220,0)
+ . ;--- Handle defined/not defined cases
+"RTN","RAMAGU08",221,0)
+ . I TMP'<0  S RC=RC+1  Q
+"RTN","RAMAGU08",222,0)
+ . I +TMP=-8  S RC=RC-1  Q
+"RTN","RAMAGU08",223,0)
+ . ;--- Otherwise, call again to record the error(s)
+"RTN","RAMAGU08",224,0)
+ . S TMP=$$VALPRM^RAMAGU09(NAME,,RAIENS),ECNT=ECNT+1
+"RTN","RAMAGU08",225,0)
+ . ;--- Prevent the code below from recording additional errors
+"RTN","RAMAGU08",226,0)
+ . S RC=3
+"RTN","RAMAGU08",227,0)
+ ;--- If neither of the two parameters is defined but one of
+"RTN","RAMAGU08",228,0)
+ ;--- them is required, record the error.
+"RTN","RAMAGU08",229,0)
+ I RC<0  D  S ECNT=ECNT+1
+"RTN","RAMAGU08",230,0)
+ . S TMP=$NA(RAMISC("PRIMINTRES"))_", "_$NA(RAMISC("PRIMINTSTF"))
+"RTN","RAMAGU08",231,0)
+ . D ERROR^RAERR(-13,TMP)
+"RTN","RAMAGU08",232,0)
+ ;
+"RTN","RAMAGU08",233,0)
+ ;=== Error handling and cleanup
+"RTN","RAMAGU08",234,0)
+ Q $S(ECNT>0:-11,1:0)
+"VER")
+8.0^22.0
+"BLD",8631,6)
+^105
+**END**
+**END**
+

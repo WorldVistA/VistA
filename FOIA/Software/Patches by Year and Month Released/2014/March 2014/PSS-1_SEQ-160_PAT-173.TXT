@@ -1,0 +1,235 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSS*1*173
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #160                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSS*1*160   <<= must be installed BEFORE `PSS*1*173'
+                    (v)PSS*1*164   <<= must be installed BEFORE `PSS*1*173'
+                    (v)PSS*1*169   <<= must be installed BEFORE `PSS*1*173'
+
+Subject: MOCHA 2.0 FOLLOW-UP PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality.  The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities. 
+  
+  
+ Patch Information:
+ ------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of 
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ PSS_1_160 and PSS_1_173 include the components necessary for the
+ interface that will be used in MOCHA v2.0.  The MOCHA 2.0 and 
+ MOCHA 2.0 FOLLOW UP COMBINED BUILD include the modifications to implement
+ Max Single Dose Order checks for the Order Entry Results Reporting (OERR),
+ Inpatient Medications and Outpatient Pharmacy applications.
+                                               
+ These patches will add a maximum single dose order check to the current
+ VistA medication order checking system that uses the First DataBank (FDB)
+ business logic and database. In this initial phase of dosing
+ functionality, the Maximum Single Dose information will be displayed to
+ the user.  The following scenarios describe the types of messaging added:
+  
+   1. If the dosage entered passes the dosing checks, no message will be
+      displayed.
+  
+   2. If the dosage entered is too high, the Single Dose warning
+      message will be displayed.
+  
+   3. If the dose checks were not able to be performed, a generic message
+      will be displayed notifying the user that a manual check needs to be
+      completed to verify appropriate dosing.
+                                                          
+  
+ *************************************************************************
+ When using the option Compare Transport Global to Current System [XPD 
+ COMPARE TO SYSTEM] with the host file PSS_1_173.KID you will see the 
+ following warnings on certain routines:
+  
+ PSS*1*173:
+  
+ Routine:  PSS551 
+ *** WARNING, your routine has different patches than the incoming routine 
+ ***
+  
+ Routine:  PSSHRVL1
+ *** WARNING, you are missing one or more Patches ***
+  
+ These warnings are due to the sequence of released patches prior to MOCHA 
+ 2.  Once all the MOCHA 2.0 patches are installed, the second lines of the 
+ routines will be updated appropriately.
+ *************************************************************************
+             
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/A 
+  
+  
+ Components Exported With Patch: 
+ -------------------------------
+  
+ Routines only. See routine list below.
+  
+  
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ HEARTLAND WEST, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+                
+ Documentation Retrieval:
+ ------------------------
+ The updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ This documentation will be in the form of Adobe Acrobat files.
+  
+ FILE NAME                       DESCRIPTION
+ ------------------------        ------------------------------------------
+ PSS_1_UM_R0314.DOC              Pharmacy Data Management User Manual
+ PSS_1_UM_R0314.PDF
+  
+ PSS_1_TM_R0314.DOC              Pharmacy Data Management Technical Manual
+ PSS_1_TM_R0314.PDF
+  
+ PSS_1_PSJ_5_PSO_7_Dosing_       Dosing Order Check user Manual
+ Ord_Ck_User_Manual.DOC
+ PSS_1_PSJ_5_PSO_7_Dosing_
+ Ord_Ck_User_Manual.PDF
+  
+ PSS_1_PSO_7_PSJ_5_RN_R0314.DOC  Medication Order Check Healthcare
+ PSS_1_PSO_7_PSJ_5_RN_R0314.PDF  Application (MOCHA) v2.0 Release Notes
+  
+ PSS_1_VistA_to_MOCHA_ID.DOC     VistA to MOCHA v2.0 Interface Document
+ PSS_1_VistA_to_MOCHA_ID.PDF
+  
+ PSS_1_P160_MOCHA_CB_IG.DOC      MOCHA v2.0 Combined Build Installation
+ PSS_1_P160_MOCHA_CB_IG.PDF      Guide
+  
+  
+ FTP Instructions:
+  
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSS_1_160.KID                  PSS*1*160          ASCII
+  
+    PSS_1_173.KID                  PSS*1*173          ASCII
+  
+    MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                   PSJ*5*252
+                                   OR*3*345
+  
+    MOCHA_2_0_FOLLOW_UP_
+      COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                   PSJ*5*257
+                                   GMRA*4*47
+                                   OR*3*311
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS551
+    Before: B15975307   After: B15975307  **108,118,133,169,173**
+Routine Name: PSSDRDOS
+    Before:B154577281   After:B158735065  **160,173**
+Routine Name: PSSDSAPA
+    Before: B70156002   After: B85990165  **151,160,173**
+Routine Name: PSSDSAPD
+    Before:B180554732   After:B181014294  **117,160,173**
+Routine Name: PSSDSAPI
+    Before:B140284083   After:B140100816  **117,160,173**
+Routine Name: PSSDSAPM
+    Before:B247605421   After:B245057882  **117,168,160,173**
+Routine Name: PSSHRIT
+    Before:B211684834   After:B219197445  **136,168,164,173**
+Routine Name: PSSHRVL1
+    Before:B221546631   After:B224743007  **136,169,160,173**
+ 
+Routine list of preceding patches: 160, 164
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 22, 2012
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

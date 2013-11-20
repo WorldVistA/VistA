@@ -1,0 +1,1630 @@
+Released PSS*1*174 SEQ #157
+Extracted from mail message
+**KIDS**:PSS*1.0*174^
+
+**INSTALL NAME**
+PSS*1.0*174
+"BLD",8666,0)
+PSS*1.0*174^PHARMACY DATA MANAGEMENT^0^3130828^y
+"BLD",8666,1,0)
+^^233^233^3130828^
+"BLD",8666,1,1,0)
+This patch will address Patient Safety Issue PSPO00001088 and
+"BLD",8666,1,2,0)
+New Service Request (NSR) 20110308 as well as defects introduced
+"BLD",8666,1,3,0)
+by patch PSS*1.0*146.
+"BLD",8666,1,4,0)
+ 
+"BLD",8666,1,5,0)
+1) When adding a new IV Additive to the IV ADDITIVES File (#52.6),
+"BLD",8666,1,6,0)
+and the user is at the GENERIC DRUG prompt, there is no way
+"BLD",8666,1,7,0)
+to exit from the prompt. The input does not allow the user
+"BLD",8666,1,8,0)
+to use the caret (^) to exit. The code that was modified
+"BLD",8666,1,9,0)
+in routine PSSVIDRG for patch PSS*1.0*146 changed the code
+"BLD",8666,1,10,0)
+at the GENERIC DRUG prompt and introduced this issue.  Patch
+"BLD",8666,1,11,0)
+PSS*1.0*174 will fix this problem by properly allowing the
+"BLD",8666,1,12,0)
+user to exit the GENERIC DRUG prompt by using the caret (^).
+"BLD",8666,1,13,0)
+ 
+"BLD",8666,1,14,0)
+2) Another issue addressed with this patch is the wording when the
+"BLD",8666,1,15,0)
+User is linking an IV Additive to a Generic Drug at the 
+"BLD",8666,1,16,0)
+GENERIC DRUG prompt in menu option ADditives File [PSSJI DRUG].  It was
+"BLD",8666,1,17,0)
+unclear which drug name was the Additive and which was the
+"BLD",8666,1,18,0)
+Generic Drug when selecting.  This patch will remove the 
+"BLD",8666,1,19,0)
+uncertainty by clearly stating to the user which is the
+"BLD",8666,1,20,0)
+IV Additive and which is the Generic Drug.  For example:
+"BLD",8666,1,21,0)
+ 
+"BLD",8666,1,22,0)
+PRINT NAME: CEFAZOLIN// 
+"BLD",8666,1,23,0)
+GENERIC DRUG: CEFAZOLIN SOD 10GM M/D INJ// CEFAZ
+"BLD",8666,1,24,0)
+     1   CEFAZOLIN OPTH SOLN 50MG/CC  (15CC) 
+"BLD",8666,1,25,0)
+     2   CEFAZOLIN SOD 10GM M/D INJ           AM115     
+"BLD",8666,1,26,0)
+     3   CEFAZOLIN SOD 1GM INJ           AM115     N/F   
+"BLD",8666,1,27,0)
+CHOOSE 1-3: 3  CEFAZOLIN SOD 1GM INJ         AM115     N/
+"BLD",8666,1,28,0)
+ 
+"BLD",8666,1,29,0)
+You are about to change the GENERIC DRUG linked to this ADDITIVE.
+"BLD",8666,1,30,0)
+ADDITIVE CEFAZOLIN is currently linked to 
+"BLD",8666,1,31,0)
+GENERIC DRUG CEFAZOLIN SOD 10GM M/D INJ.
+"BLD",8666,1,32,0)
+ 
+"BLD",8666,1,33,0)
+Are you sure you want to link ADDITIVE CEFAZOLIN
+"BLD",8666,1,34,0)
+to GENERIC DRUG CEFAZOLIN SOD 1GM INJ? No//
+"BLD",8666,1,35,0)
+ 
+"BLD",8666,1,36,0)
+3) This patch will also serve as the overall resolution to the
+"BLD",8666,1,37,0)
+issue of ambiguous IV Additive strength when a pharmacist is
+"BLD",8666,1,38,0)
+finishing an IV by adding a STRENGTH (#19) field to the 
+"BLD",8666,1,39,0)
+IV ADDITIVES File (#52.6).  The new STRENGTH (#19) field
+"BLD",8666,1,40,0)
+can be populated when adding a new IV Additive or when editing
+"BLD",8666,1,41,0)
+an existing IV Additive via menu option ADditives File [PSSJI DRUG].
+"BLD",8666,1,42,0)
+ 
+"BLD",8666,1,43,0)
+For example:
+"BLD",8666,1,44,0)
+ 
+"BLD",8666,1,45,0)
+PRINT NAME: CEFAZOLIN// 
+"BLD",8666,1,46,0)
+GENERIC DRUG: CEFAZOLIN SOD 10GM M/D INJ//       AM115
+"BLD",8666,1,47,0)
+USED IN IV FLUID ORDER ENTRY: YES// 
+"BLD",8666,1,48,0)
+DRUG UNIT: GM// 
+"BLD",8666,1,49,0)
+STRENGTH: 1// ??
+"BLD",8666,1,50,0)
+ 
+"BLD",8666,1,51,0)
+This field identifies the numeric amount of medication that is
+"BLD",8666,1,52,0)
+provided by one unit-of-use for the identified product.
+"BLD",8666,1,53,0)
+ 
+"BLD",8666,1,54,0)
+For example, if one vial contains 50 MG of medication, the
+"BLD",8666,1,55,0)
+STRENGTH will be entered as '50'.  The DRUG UNIT of 'MG'
+"BLD",8666,1,56,0)
+is populated by the DRUG UNIT (#2) field.
+"BLD",8666,1,57,0)
+ 
+"BLD",8666,1,58,0)
+ 
+"BLD",8666,1,59,0)
+Whenever a lookup is performed on the IV ADDITIVES File (#52.6), the 
+"BLD",8666,1,60,0)
+STRENGTH (#19) field will display next to the NAME (#.01) field
+"BLD",8666,1,61,0)
+with the words "Additive Strength:" and then its value.
+"BLD",8666,1,62,0)
+Additionally, the DRUG UNIT (#2) field will be appended to the
+"BLD",8666,1,63,0)
+STRENGTH (#19) field.  If the STRENGTH (#19) field is not
+"BLD",8666,1,64,0)
+populated for the IV Additive, the text "N/A" will display, and
+"BLD",8666,1,65,0)
+the DRUG UNIT (#2) field will not display.
+"BLD",8666,1,66,0)
+ 
+"BLD",8666,1,67,0)
+For example:
+"BLD",8666,1,68,0)
+ 
+"BLD",8666,1,69,0)
+Select IV TYPE: PIGGYBACK.
+"BLD",8666,1,70,0)
+Select ADDITIVE: CEFAZOL
+"BLD",8666,1,71,0)
+     1   CEFAZOLIN         Additive Strength: 1 GM  
+"BLD",8666,1,72,0)
+               IV ROOM ONLY
+"BLD",8666,1,73,0)
+     2   CEFAZOLIN         Additive Strength: 2 GM  
+"BLD",8666,1,74,0)
+               
+"BLD",8666,1,75,0)
+     3   CEFAZOLIN PREMIX         Additive Strength: N/A  
+"BLD",8666,1,76,0)
+               
+"BLD",8666,1,77,0)
+CHOOSE 1-3:
+"BLD",8666,1,78,0)
+ 
+"BLD",8666,1,79,0)
+4) Additionally, this patch makes a small enhancement to the display
+"BLD",8666,1,80,0)
+of Quick Codes during the selection of an IV ADDITIVE during
+"BLD",8666,1,81,0)
+order entry.  When a lookup is performed on an IV ADDITIVE, if there
+"BLD",8666,1,82,0)
+are QUICK CODES defined for the IV ADDITIVE, the QUICK CODE
+"BLD",8666,1,83,0)
+STRENGTH (#1) field and the USUAL IV SCHEDULE (#4) field from the
+"BLD",8666,1,84,0)
+QUICK CODE Subfile (#52.61) will display next to the QUICK CODE.
+"BLD",8666,1,85,0)
+If the QUICK CODE STRENGTH (#1) field is null, "N/A" will be displayed.
+"BLD",8666,1,86,0)
+If the USUAL IV SCHEDULE (#4) field is null, "N/A" will be displayed.
+"BLD",8666,1,87,0)
+ 
+"BLD",8666,1,88,0)
+For example:
+"BLD",8666,1,89,0)
+Select ADDITIVE: CEFAZ
+"BLD",8666,1,90,0)
+     1   CEFAZOLIN         Additive Strength: 1 GM  
+"BLD",8666,1,91,0)
+               
+"BLD",8666,1,92,0)
+       - CEFAZ1GM -        Quick Code Strength: 1 GM     Schedule: N/A
+"BLD",8666,1,93,0)
+       - CEFAZ2GM -        Quick Code Strength: N/A     Schedule: BID
+"BLD",8666,1,94,0)
+     2   CEFAZOLIN         Additive Strength: 2 GM  
+"BLD",8666,1,95,0)
+               IV ROOM ONLY
+"BLD",8666,1,96,0)
+     3   CEFAZOLIN PREMIX         Additive Strength: N/A  
+"BLD",8666,1,97,0)
+               
+"BLD",8666,1,98,0)
+CHOOSE 1-3: 
+"BLD",8666,1,99,0)
+ 
+"BLD",8666,1,100,0)
+5) This patch will also enhance the capabilities of the IV ADDITIVES
+"BLD",8666,1,101,0)
+File (#52.6) and IV SOLUTIONS File (#52.7) so that a user can enter
+"BLD",8666,1,102,0)
+a new additive or solution that has the same name as an existing entry.
+"BLD",8666,1,103,0)
+Previously, a Fileman workaround had to be used to enter an identically
+"BLD",8666,1,104,0)
+named entry.  With this patch, if the user types in a name that already
+"BLD",8666,1,105,0)
+exists in the file, they will first be presented with a list of available
+"BLD",8666,1,106,0)
+selections.  If the user scrolls through the list without selecting an
+"BLD",8666,1,107,0)
+entry, they will be presented with the prompt to add a new entry.
+"BLD",8666,1,108,0)
+ 
+"BLD",8666,1,109,0)
+For example - IV ADDITIVES File (#52.6)
+"BLD",8666,1,110,0)
+ 
+"BLD",8666,1,111,0)
+CHOOSE 1-2: 1  PSSJI DRUG     ADditives File
+"BLD",8666,1,112,0)
+ADditives File
+"BLD",8666,1,113,0)
+Select IV ADDITIVES PRINT NAME: TESTDRUG
+"BLD",8666,1,114,0)
+  Lookup: PRINT NAME
+"BLD",8666,1,115,0)
+     1   TESTDRUG         Additive Strength: 10 MG  
+"BLD",8666,1,116,0)
+               
+"BLD",8666,1,117,0)
+     2   TESTDRUG         Additive Strength: N/A  
+"BLD",8666,1,118,0)
+     3   TESTDRUG         Additive Strength: 5 GM  
+"BLD",8666,1,119,0)
+               
+"BLD",8666,1,120,0)
+     4   TESTDRUG         Additive Strength: 12 GM  
+"BLD",8666,1,121,0)
+               
+"BLD",8666,1,122,0)
+CHOOSE 1-4: 
+"BLD",8666,1,123,0)
+  Are you adding 'TESTDRUG' as a new IV ADDITIVES (the 77TH)? No// Y  
+"BLD",8666,1,124,0)
+(Yes)
+"BLD",8666,1,125,0)
+ 
+"BLD",8666,1,126,0)
+ 
+"BLD",8666,1,127,0)
+For example - IV SOLUTIONS File (#52.7)
+"BLD",8666,1,128,0)
+ 
+"BLD",8666,1,129,0)
+Select OPTION NAME: PSSJI SOLN       PRimary Solution File (IV)
+"BLD",8666,1,130,0)
+PRimary Solution File (IV)
+"BLD",8666,1,131,0)
+Select IV SOLUTIONS PRINT NAME: 0.9% SODIUM CHLORIDE
+"BLD",8666,1,132,0)
+  Lookup: PRINT NAME
+"BLD",8666,1,133,0)
+     1   0.9% SODIUM CHLORIDE            250 ML                 
+"BLD",8666,1,134,0)
+     2   0.9% SODIUM CHLORIDE            50 ML  
+"BLD",8666,1,135,0)
+               
+"BLD",8666,1,136,0)
+     3   0.9% SODIUM CHLORIDE            25 ML  
+"BLD",8666,1,137,0)
+ 
+"BLD",8666,1,138,0)
+CHOOSE 1-3: 
+"BLD",8666,1,139,0)
+ 
+"BLD",8666,1,140,0)
+  Are you adding '0.9% SODIUM CHLORIDE' as 
+"BLD",8666,1,141,0)
+    a new IV SOLUTIONS (the 32ND)? No// Y  (Yes)
+"BLD",8666,1,142,0)
+ 
+"BLD",8666,1,143,0)
+6) This patch will also allow the addition of identically named
+"BLD",8666,1,144,0)
+IV ADDITIVES and IV SOLUTIONS from the DRUG ENTER/EDIT 
+"BLD",8666,1,145,0)
+[PSS DRUG ENTER/EDIT] option when linking an additive or solution
+"BLD",8666,1,146,0)
+to the drug.
+"BLD",8666,1,147,0)
+ 
+"BLD",8666,1,148,0)
+For example - new additive:
+"BLD",8666,1,149,0)
+ 
+"BLD",8666,1,150,0)
+AN IV ITEM? Yes// Y  (Yes)
+"BLD",8666,1,151,0)
+Edit Additives or Solutions: 
+"BLD",8666,1,152,0)
+ 
+"BLD",8666,1,153,0)
+     Select one of the following:
+"BLD",8666,1,154,0)
+ 
+"BLD",8666,1,155,0)
+          A         ADDITIVES
+"BLD",8666,1,156,0)
+          S         SOLUTIONS
+"BLD",8666,1,157,0)
+ 
+"BLD",8666,1,158,0)
+Enter response: ADDITIVES
+"BLD",8666,1,159,0)
+ 
+"BLD",8666,1,160,0)
+ CEFAZOLIN SOD 1GM INJ currently linked to the following IV Additives:
+"BLD",8666,1,161,0)
+ 
+"BLD",8666,1,162,0)
+ 
+"BLD",8666,1,163,0)
+               
+"BLD",8666,1,164,0)
+   1. TESTDRUG                 Additive Strength: 10 MG
+"BLD",8666,1,165,0)
+               
+"BLD",8666,1,166,0)
+   2. TESTDRUG                 Additive Strength: 5 GM
+"BLD",8666,1,167,0)
+               
+"BLD",8666,1,168,0)
+   3. TESTDRUG                 Additive Strength: 12 GM
+"BLD",8666,1,169,0)
+               
+"BLD",8666,1,170,0)
+   4. TESTDRUG                 Additive Strength: 12.5 GM
+"BLD",8666,1,171,0)
+               
+"BLD",8666,1,172,0)
+ 
+"BLD",8666,1,173,0)
+Select 1-4 from list above or type 'NEW' to link to a new IV Additive: NEW
+"BLD",8666,1,174,0)
+ 
+"BLD",8666,1,175,0)
+Select IV ADDITIVES PRINT NAME: TESTDRUG
+"BLD",8666,1,176,0)
+  Lookup: PRINT NAME
+"BLD",8666,1,177,0)
+     1   TESTDRUG         Additive Strength: 10 MG  
+"BLD",8666,1,178,0)
+               
+"BLD",8666,1,179,0)
+     2   TESTDRUG         Additive Strength: 5 GM  
+"BLD",8666,1,180,0)
+               
+"BLD",8666,1,181,0)
+     3   TESTDRUG         Additive Strength: 12 GM  
+"BLD",8666,1,182,0)
+               
+"BLD",8666,1,183,0)
+     4   TESTDRUG         Additive Strength: 12.5 GM  
+"BLD",8666,1,184,0)
+               
+"BLD",8666,1,185,0)
+CHOOSE 1-4: 
+"BLD",8666,1,186,0)
+  Are you adding 'TESTDRUG' as a new IV ADDITIVES (the 78TH)? No// Y  
+"BLD",8666,1,187,0)
+(Yes)
+"BLD",8666,1,188,0)
+ 
+"BLD",8666,1,189,0)
+ 
+"BLD",8666,1,190,0)
+For example - new solution:
+"BLD",8666,1,191,0)
+ 
+"BLD",8666,1,192,0)
+AN IV ITEM? Yes//   (Yes)
+"BLD",8666,1,193,0)
+Edit Additives or Solutions: 
+"BLD",8666,1,194,0)
+ 
+"BLD",8666,1,195,0)
+     Select one of the following:
+"BLD",8666,1,196,0)
+ 
+"BLD",8666,1,197,0)
+          A         ADDITIVES
+"BLD",8666,1,198,0)
+          S         SOLUTIONS
+"BLD",8666,1,199,0)
+ 
+"BLD",8666,1,200,0)
+Enter response: SOLUTIONS
+"BLD",8666,1,201,0)
+ 
+"BLD",8666,1,202,0)
+ CEFAZOLIN SOD 1GM INJ currently linked to IV Solutions:
+"BLD",8666,1,203,0)
+ 
+"BLD",8666,1,204,0)
+   1. 0.9% SODIUM CHLORIDE   300 ML
+"BLD",8666,1,205,0)
+   2. 0.9% SODIUM CHLORIDE   300 ML
+"BLD",8666,1,206,0)
+   3. 0.9% SODIUM CHLORIDE   450 ML
+"BLD",8666,1,207,0)
+   4. 0.9% SODIUM CHLORIDE   254 ML
+"BLD",8666,1,208,0)
+ 
+"BLD",8666,1,209,0)
+Select 1-4 from list above or type 'NEW' to link to a new IV Solution: NEW
+"BLD",8666,1,210,0)
+ 
+"BLD",8666,1,211,0)
+Select IV SOLUTIONS PRINT NAME: 0.9% SODIUM CHLORIDE
+"BLD",8666,1,212,0)
+  Lookup: PRINT NAME
+"BLD",8666,1,213,0)
+     1   0.9% SODIUM CHLORIDE            250 ML  
+"BLD",8666,1,214,0)
+               
+"BLD",8666,1,215,0)
+     2   0.9% SODIUM CHLORIDE            50 ML  
+"BLD",8666,1,216,0)
+               
+"BLD",8666,1,217,0)
+     3   0.9% SODIUM CHLORIDE            25 ML  
+"BLD",8666,1,218,0)
+     4   0.9% SODIUM CHLORIDE            10 ML  
+"BLD",8666,1,219,0)
+     5   0.9% SODIUM CHLORIDE            1000 ML  
+"BLD",8666,1,220,0)
+               
+"BLD",8666,1,221,0)
+Press <RETURN> to see more, '^' to exit this list, '^^' to exit all 
+"BLD",8666,1,222,0)
+lists, OR
+"BLD",8666,1,223,0)
+CHOOSE 1-5: 
+"BLD",8666,1,224,0)
+ 
+"BLD",8666,1,225,0)
+  Are you adding '0.9% SODIUM CHLORIDE' as 
+"BLD",8666,1,226,0)
+    a new IV SOLUTIONS (the 33RD)? No// Y  (Yes)
+"BLD",8666,1,227,0)
+ 
+"BLD",8666,1,228,0)
+ 
+"BLD",8666,1,229,0)
+ 
+"BLD",8666,1,230,0)
+** NOTE **
+"BLD",8666,1,231,0)
+This patch must be installed in conjunction with the Inpatient
+"BLD",8666,1,232,0)
+Medications v. 5.0 patch PSJ*5.0*289 for the full functionality
+"BLD",8666,1,233,0)
+to be realized.
+"BLD",8666,4,0)
+^9.64PA^52.6^1
+"BLD",8666,4,52.6,0)
+52.6
+"BLD",8666,4,52.6,2,0)
+^9.641^52.6^1
+"BLD",8666,4,52.6,2,52.6,0)
+IV ADDITIVES  (File-top level)
+"BLD",8666,4,52.6,2,52.6,1,0)
+^9.6411^19^1
+"BLD",8666,4,52.6,2,52.6,1,19,0)
+STRENGTH
+"BLD",8666,4,52.6,222)
+y^y^p^^^^n^^n
+"BLD",8666,4,52.6,224)
+
+"BLD",8666,4,"APDD",52.6,52.6)
+
+"BLD",8666,4,"APDD",52.6,52.6,19)
+
+"BLD",8666,4,"B",52.6,52.6)
+
+"BLD",8666,6)
+7^
+"BLD",8666,6.3)
+19
+"BLD",8666,"INID")
+^y
+"BLD",8666,"INIT")
+EN^PSS0174
+"BLD",8666,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8666,"KRN",.4,0)
+.4
+"BLD",8666,"KRN",.401,0)
+.401
+"BLD",8666,"KRN",.402,0)
+.402
+"BLD",8666,"KRN",.402,"NM",0)
+^9.68A^1^1
+"BLD",8666,"KRN",.402,"NM",1,0)
+PSSIV ADD    FILE #52.6^52.6^0
+"BLD",8666,"KRN",.402,"NM","B","PSSIV ADD    FILE #52.6",1)
+
+"BLD",8666,"KRN",.403,0)
+.403
+"BLD",8666,"KRN",.5,0)
+.5
+"BLD",8666,"KRN",.84,0)
+.84
+"BLD",8666,"KRN",3.6,0)
+3.6
+"BLD",8666,"KRN",3.8,0)
+3.8
+"BLD",8666,"KRN",9.2,0)
+9.2
+"BLD",8666,"KRN",9.8,0)
+9.8
+"BLD",8666,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8666,"KRN",9.8,"NM",1,0)
+PSSVIDRG^^0^B83452863
+"BLD",8666,"KRN",9.8,"NM","B","PSSVIDRG",1)
+
+"BLD",8666,"KRN",19,0)
+19
+"BLD",8666,"KRN",19.1,0)
+19.1
+"BLD",8666,"KRN",101,0)
+101
+"BLD",8666,"KRN",409.61,0)
+409.61
+"BLD",8666,"KRN",771,0)
+771
+"BLD",8666,"KRN",779.2,0)
+779.2
+"BLD",8666,"KRN",870,0)
+870
+"BLD",8666,"KRN",8989.51,0)
+8989.51
+"BLD",8666,"KRN",8989.52,0)
+8989.52
+"BLD",8666,"KRN",8994,0)
+8994
+"BLD",8666,"KRN","B",.4,.4)
+
+"BLD",8666,"KRN","B",.401,.401)
+
+"BLD",8666,"KRN","B",.402,.402)
+
+"BLD",8666,"KRN","B",.403,.403)
+
+"BLD",8666,"KRN","B",.5,.5)
+
+"BLD",8666,"KRN","B",.84,.84)
+
+"BLD",8666,"KRN","B",3.6,3.6)
+
+"BLD",8666,"KRN","B",3.8,3.8)
+
+"BLD",8666,"KRN","B",9.2,9.2)
+
+"BLD",8666,"KRN","B",9.8,9.8)
+
+"BLD",8666,"KRN","B",19,19)
+
+"BLD",8666,"KRN","B",19.1,19.1)
+
+"BLD",8666,"KRN","B",101,101)
+
+"BLD",8666,"KRN","B",409.61,409.61)
+
+"BLD",8666,"KRN","B",771,771)
+
+"BLD",8666,"KRN","B",779.2,779.2)
+
+"BLD",8666,"KRN","B",870,870)
+
+"BLD",8666,"KRN","B",8989.51,8989.51)
+
+"BLD",8666,"KRN","B",8989.52,8989.52)
+
+"BLD",8666,"KRN","B",8994,8994)
+
+"BLD",8666,"QUES",0)
+^9.62^^
+"BLD",8666,"REQB",0)
+^9.611^1^1
+"BLD",8666,"REQB",1,0)
+PSS*1.0*146^2
+"BLD",8666,"REQB","B","PSS*1.0*146",1)
+
+"FIA",52.6)
+IV ADDITIVES
+"FIA",52.6,0)
+^PS(52.6,
+"FIA",52.6,0,0)
+52.6I
+"FIA",52.6,0,1)
+y^y^p^^^^n^^n
+"FIA",52.6,0,10)
+
+"FIA",52.6,0,11)
+
+"FIA",52.6,0,"RLRO")
+
+"FIA",52.6,0,"VR")
+1.0^PSS
+"FIA",52.6,52.6)
+1
+"FIA",52.6,52.6,19)
+
+"INIT")
+EN^PSS0174
+"KRN",.402,2000,-1)
+0^1
+"KRN",.402,2000,0)
+PSSIV ADD^3130729.154^@^52.6^^@^3130828
+"KRN",.402,2000,"DIAB",1,1,52.62,0)
+ALL
+"KRN",.402,2000,"DIAB",1,1,52.63,0)
+ALL
+"KRN",.402,2000,"DR",1,52.6)
+D PRNMHD^PSSVIDRG;.01;.01///^S X=$$PRNM^PSSVIDRG();1///^S X=$$GEND^PSSVIDRG($S($G(DISPDRG):DISPDRG,$G(PSSDRG):PSSDRG,1:""));D GETD^PSSVIDRG;17;2;19;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;8;9;10;12;13;14;
+"KRN",.402,2000,"DR",2,52.61)
+.01;1;2;3;4;S X=$S($D(PSIVSC):PSIVSC,1:"") K PSIVSC;5;6;7;
+"KRN",.402,2000,"DR",2,52.62)
+.01:1
+"KRN",.402,2000,"DR",2,52.63)
+.01
+"MBREQ")
+0
+"ORD",7,.402)
+.402;7;;;EDEOUT^DIFROMSO(.402,DA,"",XPDA);FPRE^DIFROMSI(.402,"",XPDA);EPRE^DIFROMSI(.402,DA,$E("N",$G(XPDNEW)),XPDA,"",OLDA);;EPOST^DIFROMSI(.402,DA,"",XPDA);DEL^DIFROMSK(.402,"",%)
+"ORD",7,.402,0)
+INPUT TEMPLATE
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+174^3130828^11930
+"PKG",517,22,1,"PAH",1,1,0)
+^^233^233^3130828
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch will address Patient Safety Issue PSPO00001088 and
+"PKG",517,22,1,"PAH",1,1,2,0)
+New Service Request (NSR) 20110308 as well as defects introduced
+"PKG",517,22,1,"PAH",1,1,3,0)
+by patch PSS*1.0*146.
+"PKG",517,22,1,"PAH",1,1,4,0)
+ 
+"PKG",517,22,1,"PAH",1,1,5,0)
+1) When adding a new IV Additive to the IV ADDITIVES File (#52.6),
+"PKG",517,22,1,"PAH",1,1,6,0)
+and the user is at the GENERIC DRUG prompt, there is no way
+"PKG",517,22,1,"PAH",1,1,7,0)
+to exit from the prompt. The input does not allow the user
+"PKG",517,22,1,"PAH",1,1,8,0)
+to use the caret (^) to exit. The code that was modified
+"PKG",517,22,1,"PAH",1,1,9,0)
+in routine PSSVIDRG for patch PSS*1.0*146 changed the code
+"PKG",517,22,1,"PAH",1,1,10,0)
+at the GENERIC DRUG prompt and introduced this issue.  Patch
+"PKG",517,22,1,"PAH",1,1,11,0)
+PSS*1.0*174 will fix this problem by properly allowing the
+"PKG",517,22,1,"PAH",1,1,12,0)
+user to exit the GENERIC DRUG prompt by using the caret (^).
+"PKG",517,22,1,"PAH",1,1,13,0)
+ 
+"PKG",517,22,1,"PAH",1,1,14,0)
+2) Another issue addressed with this patch is the wording when the
+"PKG",517,22,1,"PAH",1,1,15,0)
+User is linking an IV Additive to a Generic Drug at the 
+"PKG",517,22,1,"PAH",1,1,16,0)
+GENERIC DRUG prompt in menu option ADditives File [PSSJI DRUG].  It was
+"PKG",517,22,1,"PAH",1,1,17,0)
+unclear which drug name was the Additive and which was the
+"PKG",517,22,1,"PAH",1,1,18,0)
+Generic Drug when selecting.  This patch will remove the 
+"PKG",517,22,1,"PAH",1,1,19,0)
+uncertainty by clearly stating to the user which is the
+"PKG",517,22,1,"PAH",1,1,20,0)
+IV Additive and which is the Generic Drug.  For example:
+"PKG",517,22,1,"PAH",1,1,21,0)
+ 
+"PKG",517,22,1,"PAH",1,1,22,0)
+PRINT NAME: CEFAZOLIN// 
+"PKG",517,22,1,"PAH",1,1,23,0)
+GENERIC DRUG: CEFAZOLIN SOD 10GM M/D INJ// CEFAZ
+"PKG",517,22,1,"PAH",1,1,24,0)
+     1   CEFAZOLIN OPTH SOLN 50MG/CC  (15CC) 
+"PKG",517,22,1,"PAH",1,1,25,0)
+     2   CEFAZOLIN SOD 10GM M/D INJ           AM115     
+"PKG",517,22,1,"PAH",1,1,26,0)
+     3   CEFAZOLIN SOD 1GM INJ           AM115     N/F   
+"PKG",517,22,1,"PAH",1,1,27,0)
+CHOOSE 1-3: 3  CEFAZOLIN SOD 1GM INJ         AM115     N/
+"PKG",517,22,1,"PAH",1,1,28,0)
+ 
+"PKG",517,22,1,"PAH",1,1,29,0)
+You are about to change the GENERIC DRUG linked to this ADDITIVE.
+"PKG",517,22,1,"PAH",1,1,30,0)
+ADDITIVE CEFAZOLIN is currently linked to 
+"PKG",517,22,1,"PAH",1,1,31,0)
+GENERIC DRUG CEFAZOLIN SOD 10GM M/D INJ.
+"PKG",517,22,1,"PAH",1,1,32,0)
+ 
+"PKG",517,22,1,"PAH",1,1,33,0)
+Are you sure you want to link ADDITIVE CEFAZOLIN
+"PKG",517,22,1,"PAH",1,1,34,0)
+to GENERIC DRUG CEFAZOLIN SOD 1GM INJ? No//
+"PKG",517,22,1,"PAH",1,1,35,0)
+ 
+"PKG",517,22,1,"PAH",1,1,36,0)
+3) This patch will also serve as the overall resolution to the
+"PKG",517,22,1,"PAH",1,1,37,0)
+issue of ambiguous IV Additive strength when a pharmacist is
+"PKG",517,22,1,"PAH",1,1,38,0)
+finishing an IV by adding a STRENGTH (#19) field to the 
+"PKG",517,22,1,"PAH",1,1,39,0)
+IV ADDITIVES File (#52.6).  The new STRENGTH (#19) field
+"PKG",517,22,1,"PAH",1,1,40,0)
+can be populated when adding a new IV Additive or when editing
+"PKG",517,22,1,"PAH",1,1,41,0)
+an existing IV Additive via menu option ADditives File [PSSJI DRUG].
+"PKG",517,22,1,"PAH",1,1,42,0)
+ 
+"PKG",517,22,1,"PAH",1,1,43,0)
+For example:
+"PKG",517,22,1,"PAH",1,1,44,0)
+ 
+"PKG",517,22,1,"PAH",1,1,45,0)
+PRINT NAME: CEFAZOLIN// 
+"PKG",517,22,1,"PAH",1,1,46,0)
+GENERIC DRUG: CEFAZOLIN SOD 10GM M/D INJ//       AM115
+"PKG",517,22,1,"PAH",1,1,47,0)
+USED IN IV FLUID ORDER ENTRY: YES// 
+"PKG",517,22,1,"PAH",1,1,48,0)
+DRUG UNIT: GM// 
+"PKG",517,22,1,"PAH",1,1,49,0)
+STRENGTH: 1// ??
+"PKG",517,22,1,"PAH",1,1,50,0)
+ 
+"PKG",517,22,1,"PAH",1,1,51,0)
+This field identifies the numeric amount of medication that is
+"PKG",517,22,1,"PAH",1,1,52,0)
+provided by one unit-of-use for the identified product.
+"PKG",517,22,1,"PAH",1,1,53,0)
+ 
+"PKG",517,22,1,"PAH",1,1,54,0)
+For example, if one vial contains 50 MG of medication, the
+"PKG",517,22,1,"PAH",1,1,55,0)
+STRENGTH will be entered as '50'.  The DRUG UNIT of 'MG'
+"PKG",517,22,1,"PAH",1,1,56,0)
+is populated by the DRUG UNIT (#2) field.
+"PKG",517,22,1,"PAH",1,1,57,0)
+ 
+"PKG",517,22,1,"PAH",1,1,58,0)
+ 
+"PKG",517,22,1,"PAH",1,1,59,0)
+Whenever a lookup is performed on the IV ADDITIVES File (#52.6), the 
+"PKG",517,22,1,"PAH",1,1,60,0)
+STRENGTH (#19) field will display next to the NAME (#.01) field
+"PKG",517,22,1,"PAH",1,1,61,0)
+with the words "Additive Strength:" and then its value.
+"PKG",517,22,1,"PAH",1,1,62,0)
+Additionally, the DRUG UNIT (#2) field will be appended to the
+"PKG",517,22,1,"PAH",1,1,63,0)
+STRENGTH (#19) field.  If the STRENGTH (#19) field is not
+"PKG",517,22,1,"PAH",1,1,64,0)
+populated for the IV Additive, the text "N/A" will display, and
+"PKG",517,22,1,"PAH",1,1,65,0)
+the DRUG UNIT (#2) field will not display.
+"PKG",517,22,1,"PAH",1,1,66,0)
+ 
+"PKG",517,22,1,"PAH",1,1,67,0)
+For example:
+"PKG",517,22,1,"PAH",1,1,68,0)
+ 
+"PKG",517,22,1,"PAH",1,1,69,0)
+Select IV TYPE: PIGGYBACK.
+"PKG",517,22,1,"PAH",1,1,70,0)
+Select ADDITIVE: CEFAZOL
+"PKG",517,22,1,"PAH",1,1,71,0)
+     1   CEFAZOLIN         Additive Strength: 1 GM  
+"PKG",517,22,1,"PAH",1,1,72,0)
+               IV ROOM ONLY
+"PKG",517,22,1,"PAH",1,1,73,0)
+     2   CEFAZOLIN         Additive Strength: 2 GM  
+"PKG",517,22,1,"PAH",1,1,74,0)
+               
+"PKG",517,22,1,"PAH",1,1,75,0)
+     3   CEFAZOLIN PREMIX         Additive Strength: N/A  
+"PKG",517,22,1,"PAH",1,1,76,0)
+               
+"PKG",517,22,1,"PAH",1,1,77,0)
+CHOOSE 1-3:
+"PKG",517,22,1,"PAH",1,1,78,0)
+ 
+"PKG",517,22,1,"PAH",1,1,79,0)
+4) Additionally, this patch makes a small enhancement to the display
+"PKG",517,22,1,"PAH",1,1,80,0)
+of Quick Codes during the selection of an IV ADDITIVE during
+"PKG",517,22,1,"PAH",1,1,81,0)
+order entry.  When a lookup is performed on an IV ADDITIVE, if there
+"PKG",517,22,1,"PAH",1,1,82,0)
+are QUICK CODES defined for the IV ADDITIVE, the QUICK CODE
+"PKG",517,22,1,"PAH",1,1,83,0)
+STRENGTH (#1) field and the USUAL IV SCHEDULE (#4) field from the
+"PKG",517,22,1,"PAH",1,1,84,0)
+QUICK CODE Subfile (#52.61) will display next to the QUICK CODE.
+"PKG",517,22,1,"PAH",1,1,85,0)
+If the QUICK CODE STRENGTH (#1) field is null, "N/A" will be displayed.
+"PKG",517,22,1,"PAH",1,1,86,0)
+If the USUAL IV SCHEDULE (#4) field is null, "N/A" will be displayed.
+"PKG",517,22,1,"PAH",1,1,87,0)
+ 
+"PKG",517,22,1,"PAH",1,1,88,0)
+For example:
+"PKG",517,22,1,"PAH",1,1,89,0)
+Select ADDITIVE: CEFAZ
+"PKG",517,22,1,"PAH",1,1,90,0)
+     1   CEFAZOLIN         Additive Strength: 1 GM  
+"PKG",517,22,1,"PAH",1,1,91,0)
+               
+"PKG",517,22,1,"PAH",1,1,92,0)
+       - CEFAZ1GM -        Quick Code Strength: 1 GM     Schedule: N/A
+"PKG",517,22,1,"PAH",1,1,93,0)
+       - CEFAZ2GM -        Quick Code Strength: N/A     Schedule: BID
+"PKG",517,22,1,"PAH",1,1,94,0)
+     2   CEFAZOLIN         Additive Strength: 2 GM  
+"PKG",517,22,1,"PAH",1,1,95,0)
+               IV ROOM ONLY
+"PKG",517,22,1,"PAH",1,1,96,0)
+     3   CEFAZOLIN PREMIX         Additive Strength: N/A  
+"PKG",517,22,1,"PAH",1,1,97,0)
+               
+"PKG",517,22,1,"PAH",1,1,98,0)
+CHOOSE 1-3: 
+"PKG",517,22,1,"PAH",1,1,99,0)
+ 
+"PKG",517,22,1,"PAH",1,1,100,0)
+5) This patch will also enhance the capabilities of the IV ADDITIVES
+"PKG",517,22,1,"PAH",1,1,101,0)
+File (#52.6) and IV SOLUTIONS File (#52.7) so that a user can enter
+"PKG",517,22,1,"PAH",1,1,102,0)
+a new additive or solution that has the same name as an existing entry.
+"PKG",517,22,1,"PAH",1,1,103,0)
+Previously, a Fileman workaround had to be used to enter an identically
+"PKG",517,22,1,"PAH",1,1,104,0)
+named entry.  With this patch, if the user types in a name that already
+"PKG",517,22,1,"PAH",1,1,105,0)
+exists in the file, they will first be presented with a list of available
+"PKG",517,22,1,"PAH",1,1,106,0)
+selections.  If the user scrolls through the list without selecting an
+"PKG",517,22,1,"PAH",1,1,107,0)
+entry, they will be presented with the prompt to add a new entry.
+"PKG",517,22,1,"PAH",1,1,108,0)
+ 
+"PKG",517,22,1,"PAH",1,1,109,0)
+For example - IV ADDITIVES File (#52.6)
+"PKG",517,22,1,"PAH",1,1,110,0)
+ 
+"PKG",517,22,1,"PAH",1,1,111,0)
+CHOOSE 1-2: 1  PSSJI DRUG     ADditives File
+"PKG",517,22,1,"PAH",1,1,112,0)
+ADditives File
+"PKG",517,22,1,"PAH",1,1,113,0)
+Select IV ADDITIVES PRINT NAME: TESTDRUG
+"PKG",517,22,1,"PAH",1,1,114,0)
+  Lookup: PRINT NAME
+"PKG",517,22,1,"PAH",1,1,115,0)
+     1   TESTDRUG         Additive Strength: 10 MG  
+"PKG",517,22,1,"PAH",1,1,116,0)
+               
+"PKG",517,22,1,"PAH",1,1,117,0)
+     2   TESTDRUG         Additive Strength: N/A  
+"PKG",517,22,1,"PAH",1,1,118,0)
+     3   TESTDRUG         Additive Strength: 5 GM  
+"PKG",517,22,1,"PAH",1,1,119,0)
+               
+"PKG",517,22,1,"PAH",1,1,120,0)
+     4   TESTDRUG         Additive Strength: 12 GM  
+"PKG",517,22,1,"PAH",1,1,121,0)
+               
+"PKG",517,22,1,"PAH",1,1,122,0)
+CHOOSE 1-4: 
+"PKG",517,22,1,"PAH",1,1,123,0)
+  Are you adding 'TESTDRUG' as a new IV ADDITIVES (the 77TH)? No// Y  
+"PKG",517,22,1,"PAH",1,1,124,0)
+(Yes)
+"PKG",517,22,1,"PAH",1,1,125,0)
+ 
+"PKG",517,22,1,"PAH",1,1,126,0)
+ 
+"PKG",517,22,1,"PAH",1,1,127,0)
+For example - IV SOLUTIONS File (#52.7)
+"PKG",517,22,1,"PAH",1,1,128,0)
+ 
+"PKG",517,22,1,"PAH",1,1,129,0)
+Select OPTION NAME: PSSJI SOLN       PRimary Solution File (IV)
+"PKG",517,22,1,"PAH",1,1,130,0)
+PRimary Solution File (IV)
+"PKG",517,22,1,"PAH",1,1,131,0)
+Select IV SOLUTIONS PRINT NAME: 0.9% SODIUM CHLORIDE
+"PKG",517,22,1,"PAH",1,1,132,0)
+  Lookup: PRINT NAME
+"PKG",517,22,1,"PAH",1,1,133,0)
+     1   0.9% SODIUM CHLORIDE            250 ML                 
+"PKG",517,22,1,"PAH",1,1,134,0)
+     2   0.9% SODIUM CHLORIDE            50 ML  
+"PKG",517,22,1,"PAH",1,1,135,0)
+               
+"PKG",517,22,1,"PAH",1,1,136,0)
+     3   0.9% SODIUM CHLORIDE            25 ML  
+"PKG",517,22,1,"PAH",1,1,137,0)
+ 
+"PKG",517,22,1,"PAH",1,1,138,0)
+CHOOSE 1-3: 
+"PKG",517,22,1,"PAH",1,1,139,0)
+ 
+"PKG",517,22,1,"PAH",1,1,140,0)
+  Are you adding '0.9% SODIUM CHLORIDE' as 
+"PKG",517,22,1,"PAH",1,1,141,0)
+    a new IV SOLUTIONS (the 32ND)? No// Y  (Yes)
+"PKG",517,22,1,"PAH",1,1,142,0)
+ 
+"PKG",517,22,1,"PAH",1,1,143,0)
+6) This patch will also allow the addition of identically named
+"PKG",517,22,1,"PAH",1,1,144,0)
+IV ADDITIVES and IV SOLUTIONS from the DRUG ENTER/EDIT 
+"PKG",517,22,1,"PAH",1,1,145,0)
+[PSS DRUG ENTER/EDIT] option when linking an additive or solution
+"PKG",517,22,1,"PAH",1,1,146,0)
+to the drug.
+"PKG",517,22,1,"PAH",1,1,147,0)
+ 
+"PKG",517,22,1,"PAH",1,1,148,0)
+For example - new additive:
+"PKG",517,22,1,"PAH",1,1,149,0)
+ 
+"PKG",517,22,1,"PAH",1,1,150,0)
+AN IV ITEM? Yes// Y  (Yes)
+"PKG",517,22,1,"PAH",1,1,151,0)
+Edit Additives or Solutions: 
+"PKG",517,22,1,"PAH",1,1,152,0)
+ 
+"PKG",517,22,1,"PAH",1,1,153,0)
+     Select one of the following:
+"PKG",517,22,1,"PAH",1,1,154,0)
+ 
+"PKG",517,22,1,"PAH",1,1,155,0)
+          A         ADDITIVES
+"PKG",517,22,1,"PAH",1,1,156,0)
+          S         SOLUTIONS
+"PKG",517,22,1,"PAH",1,1,157,0)
+ 
+"PKG",517,22,1,"PAH",1,1,158,0)
+Enter response: ADDITIVES
+"PKG",517,22,1,"PAH",1,1,159,0)
+ 
+"PKG",517,22,1,"PAH",1,1,160,0)
+ CEFAZOLIN SOD 1GM INJ currently linked to the following IV Additives:
+"PKG",517,22,1,"PAH",1,1,161,0)
+ 
+"PKG",517,22,1,"PAH",1,1,162,0)
+ 
+"PKG",517,22,1,"PAH",1,1,163,0)
+               
+"PKG",517,22,1,"PAH",1,1,164,0)
+   1. TESTDRUG                 Additive Strength: 10 MG
+"PKG",517,22,1,"PAH",1,1,165,0)
+               
+"PKG",517,22,1,"PAH",1,1,166,0)
+   2. TESTDRUG                 Additive Strength: 5 GM
+"PKG",517,22,1,"PAH",1,1,167,0)
+               
+"PKG",517,22,1,"PAH",1,1,168,0)
+   3. TESTDRUG                 Additive Strength: 12 GM
+"PKG",517,22,1,"PAH",1,1,169,0)
+               
+"PKG",517,22,1,"PAH",1,1,170,0)
+   4. TESTDRUG                 Additive Strength: 12.5 GM
+"PKG",517,22,1,"PAH",1,1,171,0)
+               
+"PKG",517,22,1,"PAH",1,1,172,0)
+ 
+"PKG",517,22,1,"PAH",1,1,173,0)
+Select 1-4 from list above or type 'NEW' to link to a new IV Additive: NEW
+"PKG",517,22,1,"PAH",1,1,174,0)
+ 
+"PKG",517,22,1,"PAH",1,1,175,0)
+Select IV ADDITIVES PRINT NAME: TESTDRUG
+"PKG",517,22,1,"PAH",1,1,176,0)
+  Lookup: PRINT NAME
+"PKG",517,22,1,"PAH",1,1,177,0)
+     1   TESTDRUG         Additive Strength: 10 MG  
+"PKG",517,22,1,"PAH",1,1,178,0)
+               
+"PKG",517,22,1,"PAH",1,1,179,0)
+     2   TESTDRUG         Additive Strength: 5 GM  
+"PKG",517,22,1,"PAH",1,1,180,0)
+               
+"PKG",517,22,1,"PAH",1,1,181,0)
+     3   TESTDRUG         Additive Strength: 12 GM  
+"PKG",517,22,1,"PAH",1,1,182,0)
+               
+"PKG",517,22,1,"PAH",1,1,183,0)
+     4   TESTDRUG         Additive Strength: 12.5 GM  
+"PKG",517,22,1,"PAH",1,1,184,0)
+               
+"PKG",517,22,1,"PAH",1,1,185,0)
+CHOOSE 1-4: 
+"PKG",517,22,1,"PAH",1,1,186,0)
+  Are you adding 'TESTDRUG' as a new IV ADDITIVES (the 78TH)? No// Y  
+"PKG",517,22,1,"PAH",1,1,187,0)
+(Yes)
+"PKG",517,22,1,"PAH",1,1,188,0)
+ 
+"PKG",517,22,1,"PAH",1,1,189,0)
+ 
+"PKG",517,22,1,"PAH",1,1,190,0)
+For example - new solution:
+"PKG",517,22,1,"PAH",1,1,191,0)
+ 
+"PKG",517,22,1,"PAH",1,1,192,0)
+AN IV ITEM? Yes//   (Yes)
+"PKG",517,22,1,"PAH",1,1,193,0)
+Edit Additives or Solutions: 
+"PKG",517,22,1,"PAH",1,1,194,0)
+ 
+"PKG",517,22,1,"PAH",1,1,195,0)
+     Select one of the following:
+"PKG",517,22,1,"PAH",1,1,196,0)
+ 
+"PKG",517,22,1,"PAH",1,1,197,0)
+          A         ADDITIVES
+"PKG",517,22,1,"PAH",1,1,198,0)
+          S         SOLUTIONS
+"PKG",517,22,1,"PAH",1,1,199,0)
+ 
+"PKG",517,22,1,"PAH",1,1,200,0)
+Enter response: SOLUTIONS
+"PKG",517,22,1,"PAH",1,1,201,0)
+ 
+"PKG",517,22,1,"PAH",1,1,202,0)
+ CEFAZOLIN SOD 1GM INJ currently linked to IV Solutions:
+"PKG",517,22,1,"PAH",1,1,203,0)
+ 
+"PKG",517,22,1,"PAH",1,1,204,0)
+   1. 0.9% SODIUM CHLORIDE   300 ML
+"PKG",517,22,1,"PAH",1,1,205,0)
+   2. 0.9% SODIUM CHLORIDE   300 ML
+"PKG",517,22,1,"PAH",1,1,206,0)
+   3. 0.9% SODIUM CHLORIDE   450 ML
+"PKG",517,22,1,"PAH",1,1,207,0)
+   4. 0.9% SODIUM CHLORIDE   254 ML
+"PKG",517,22,1,"PAH",1,1,208,0)
+ 
+"PKG",517,22,1,"PAH",1,1,209,0)
+Select 1-4 from list above or type 'NEW' to link to a new IV Solution: NEW
+"PKG",517,22,1,"PAH",1,1,210,0)
+ 
+"PKG",517,22,1,"PAH",1,1,211,0)
+Select IV SOLUTIONS PRINT NAME: 0.9% SODIUM CHLORIDE
+"PKG",517,22,1,"PAH",1,1,212,0)
+  Lookup: PRINT NAME
+"PKG",517,22,1,"PAH",1,1,213,0)
+     1   0.9% SODIUM CHLORIDE            250 ML  
+"PKG",517,22,1,"PAH",1,1,214,0)
+               
+"PKG",517,22,1,"PAH",1,1,215,0)
+     2   0.9% SODIUM CHLORIDE            50 ML  
+"PKG",517,22,1,"PAH",1,1,216,0)
+               
+"PKG",517,22,1,"PAH",1,1,217,0)
+     3   0.9% SODIUM CHLORIDE            25 ML  
+"PKG",517,22,1,"PAH",1,1,218,0)
+     4   0.9% SODIUM CHLORIDE            10 ML  
+"PKG",517,22,1,"PAH",1,1,219,0)
+     5   0.9% SODIUM CHLORIDE            1000 ML  
+"PKG",517,22,1,"PAH",1,1,220,0)
+               
+"PKG",517,22,1,"PAH",1,1,221,0)
+Press <RETURN> to see more, '^' to exit this list, '^^' to exit all 
+"PKG",517,22,1,"PAH",1,1,222,0)
+lists, OR
+"PKG",517,22,1,"PAH",1,1,223,0)
+CHOOSE 1-5: 
+"PKG",517,22,1,"PAH",1,1,224,0)
+ 
+"PKG",517,22,1,"PAH",1,1,225,0)
+  Are you adding '0.9% SODIUM CHLORIDE' as 
+"PKG",517,22,1,"PAH",1,1,226,0)
+    a new IV SOLUTIONS (the 33RD)? No// Y  (Yes)
+"PKG",517,22,1,"PAH",1,1,227,0)
+ 
+"PKG",517,22,1,"PAH",1,1,228,0)
+ 
+"PKG",517,22,1,"PAH",1,1,229,0)
+ 
+"PKG",517,22,1,"PAH",1,1,230,0)
+** NOTE **
+"PKG",517,22,1,"PAH",1,1,231,0)
+This patch must be installed in conjunction with the Inpatient
+"PKG",517,22,1,"PAH",1,1,232,0)
+Medications v. 5.0 patch PSJ*5.0*289 for the full functionality
+"PKG",517,22,1,"PAH",1,1,233,0)
+to be realized.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSS0174")
+0^^B4820647^n/a
+"RTN","PSS0174",1,0)
+PSS0174 ;BIR/JMC- PSS*1*174 POST INSTALL ;01/25/2013
+"RTN","PSS0174",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**174**;9/30/97;Build 19
+"RTN","PSS0174",3,0)
+ ;
+"RTN","PSS0174",4,0)
+ ;Reference to ^DD(52.6 is supported by DBIA 5895.
+"RTN","PSS0174",5,0)
+ ;
+"RTN","PSS0174",6,0)
+ Q
+"RTN","PSS0174",7,0)
+EN  ;
+"RTN","PSS0174",8,0)
+ ; STRENGTH (#19) field in the IV ADDITIVES File (#52.6) needs to display on any lookup on the file.  This node has to be
+"RTN","PSS0174",9,0)
+ ; set directly.
+"RTN","PSS0174",10,0)
+ ; Also, per the User Group, the Quick Code Strength and the Administration Schedule will display next to any
+"RTN","PSS0174",11,0)
+ ; quick codes associated with the IV ADDITIVE.
+"RTN","PSS0174",12,0)
+ S ^DD(52.6,0,"ID","W19")="S PSSY15=$P(^(0),U,15) W ""   Additive Strength: "",$S($G(PSSY15)="""":""N/A"",$E($G(PSSY15),1)=""."":""0""_PSSY15,1:$G(PSSY15))_"" ""_$S($G(PSSY15)="""":"""",1:$$GET1^DIQ(52.6,+Y_"","",2))"
+"RTN","PSS0174",13,0)
+ S ^DD(52.6,0,"ID","WRITE")="W:$D(^PSDRUG(+$P(^PS(52.6,+Y,0),""^"",2),0)) !?15,$P(^(0),""^"",10) I $D(DD),DD F PSIV=0:0 S PSIV=$O(^PS(52.6,+Y,1,PSIV)) Q:'PSIV  W !?7,""- "",$P(^(PSIV,0),""^""),"" -        Quick Code Strength: """
+"RTN","PSS0174",14,0)
+ S ^DD(52.6,0,"ID","WRITE")=^DD(52.6,0,"ID","WRITE")_",$S($P($G(^PS(52.6,+Y,1,PSIV,0)),""^"",2)'="""":$P($G(^PS(52.6,+Y,1,PSIV,0)),""^"",2),1:""N/A"")"
+"RTN","PSS0174",15,0)
+ S ^DD(52.6,0,"ID","WRITE")=^DD(52.6,0,"ID","WRITE")_"_""     Schedule: "",$S($P($G(^PS(52.6,+Y,1,PSIV,0)),""^"",5)'="""":$P($G(^PS(52.6,+Y,1,PSIV,0)),""^"",5),1:""N/A"")"
+"RTN","PSS0174",16,0)
+ Q
+"RTN","PSSVIDRG")
+0^1^B83452863^B70076783
+"RTN","PSSVIDRG",1,0)
+PSSVIDRG ;BIR/PR,WRT-ADD OR EDIT IV DRUGS ; 11/19/09 11:02am
+"RTN","PSSVIDRG",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**2,10,32,38,125,146,174**;9/30/97;Build 19
+"RTN","PSSVIDRG",3,0)
+ ;
+"RTN","PSSVIDRG",4,0)
+ ;Reference to ENIVKV^PSGSETU is supported by DBIA # 2153.
+"RTN","PSSVIDRG",5,0)
+ ;Reference to ^PSIV is supported by DBIA # 2155.
+"RTN","PSSVIDRG",6,0)
+ ;Reference to ^PSIVHLP1 is supported by DBIA # 2156.
+"RTN","PSSVIDRG",7,0)
+ ;Reference to ^PSIVXU is supported by DBIA # 2157.
+"RTN","PSSVIDRG",8,0)
+ ;
+"RTN","PSSVIDRG",9,0)
+ENS ;Enter here to enter/edit solutions
+"RTN","PSSVIDRG",10,0)
+ N FI,PSPRNM S DRUGEDIT=1,FI=52.7
+"RTN","PSSVIDRG",11,0)
+ L +^PS(FI):$S($G(DILOCKTM)>0:DILOCKTM,1:3) E  W $C(7),!!,"Someone else is entering drugs ... try later !",!! G K
+"RTN","PSSVIDRG",12,0)
+ENS1 ;
+"RTN","PSSVIDRG",13,0)
+ ; PSS*1*146 Compare and confirm SOLUTION Print name change
+"RTN","PSSVIDRG",14,0)
+ N DA,DIC,DLAYGO,II,PSDA,PSI,PSSY,PSSDG,PSSEL1,PSSDRG
+"RTN","PSSVIDRG",15,0)
+NS2 S PSI=0 I $G(DISPDRG),$O(^PS(52.7,"AC",DISPDRG,0)) S PSSY=0 F  S PSSY=$O(^PS(52.7,"AC",DISPDRG,PSSY)) Q:'PSSY  S PSI=PSI+1,PSSY(PSI)=PSSY
+"RTN","PSSVIDRG",16,0)
+ ;I PSI=1 S DIC("B")=$G(PSSY(1)) S DIC=FI,DIC(0)="QEALMNTV",DLAYGO=52.7,DIC("T")="" D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",17,0)
+ I PSI=0 S DIC=FI,DIC(0)="QEALMNTV",DLAYGO=52.7 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",18,0)
+ ;
+"RTN","PSSVIDRG",19,0)
+ENS2 ; IV Solutions Editing
+"RTN","PSSVIDRG",20,0)
+ S PSSQUIT=0
+"RTN","PSSVIDRG",21,0)
+ I '$G(PSFLGA)&(PSI>0) F  D  Q:$G(Y)
+"RTN","PSSVIDRG",22,0)
+ . W !!," ",$$GET1^DIQ(50,DISPDRG,.01)," currently linked to IV Solutions:",!
+"RTN","PSSVIDRG",23,0)
+ . S (PSDA,II)=0 F  S PSDA=$O(PSSY(PSDA)) Q:'PSDA  S II=II+1 W !,?3,II_". ",$P(^PS(52.7,$G(PSSY(PSDA)),0),"^")_"   "_$P(^PS(52.7,$G(PSSY(PSDA)),0),"^",3)
+"RTN","PSSVIDRG",24,0)
+ . W !!,"Select "_$S(PSI=1:1,1:"1-"_PSI)_" from list above or type 'NEW' to link to a new IV Solution: "
+"RTN","PSSVIDRG",25,0)
+ . R X:DTIME I '$T!("^"[X) S Y=-1 Q
+"RTN","PSSVIDRG",26,0)
+ . W ! I $$UP^XLFSTR(X)="NEW" D NEW(52.7) Q
+"RTN","PSSVIDRG",27,0)
+ . I '$D(PSSY(X)) W !!,"Select the number corresponding to the IV SOLUTION you want to edit",!,"or type 'NEW' to link ",$$GET1^DIQ(50,DISPDRG,.01)," to a new IV SOLUTION.",$C(7) Q
+"RTN","PSSVIDRG",28,0)
+ . I $D(PSSY(X)) S Y=$G(PSSY(X))
+"RTN","PSSVIDRG",29,0)
+ G K1:($G(Y)<0)
+"RTN","PSSVIDRG",30,0)
+ W ! K PSSEL1 S PSSASK="SOLUTIONS",DRUG=+Y,DIE=FI,(DA,ENTRY)=+Y,DR=".01" D EECK G K1:$G(PSSEL1)="^" I $G(PSSEL1)=2 S Y=0 W ! G NS2
+"RTN","PSSVIDRG",31,0)
+ N PSSQUIT S PSSQUIT=0
+"RTN","PSSVIDRG",32,0)
+ S PSSDRG=$P($G(^PS(52.7,ENTRY,0)),"^",2),DA=ENTRY,DIE="^PS(52.7,",DR="D PRNMHD^PSSVIDRG;.01;.01///^S X=$$PRNM^PSSVIDRG();.02;1///^S X=$$GEND^PSSVIDRG($S($G(DISPDRG):DISPDRG,$G(PSSDRG):PSSDRG,1:""""));D GETD^PSSVIDRG;2:8;10:15;17:99999"
+"RTN","PSSVIDRG",33,0)
+ N PSSENTRY I $G(DA) S PSSENTRY=DA D ^DIE I '$G(PSSQUIT) D MFS^PSSDEE K PSFLGS,PSSY
+"RTN","PSSVIDRG",34,0)
+ Q
+"RTN","PSSVIDRG",35,0)
+ENA ;Enter here to enter/edit additives.
+"RTN","PSSVIDRG",36,0)
+ N FI,PSPRNM S DRUGEDIT=1,FI=52.6
+"RTN","PSSVIDRG",37,0)
+ L +^PS(FI):$S($G(DILOCKTM)>0:DILOCKTM,1:3) E  W $C(7),!!,"Someone else is entering drugs ... try later !",!! G K
+"RTN","PSSVIDRG",38,0)
+ ;
+"RTN","PSSVIDRG",39,0)
+ENA1 ;
+"RTN","PSSVIDRG",40,0)
+ ; PSS*1*146 Compare and confirm ADDITIVE Print name change
+"RTN","PSSVIDRG",41,0)
+ N DA,DIC,DIE,DLAYGO,PSI,PSSY,PSSEL1,PSSDRG
+"RTN","PSSVIDRG",42,0)
+NA2 S PSI=0
+"RTN","PSSVIDRG",43,0)
+ I $G(DISPDRG),$O(^PS(52.6,"AC",DISPDRG,0)) D
+"RTN","PSSVIDRG",44,0)
+ . S PSSY=0 F  S PSSY=$O(^PS(52.6,"AC",DISPDRG,PSSY)) Q:'PSSY  S PSI=PSI+1,PSSY(PSI)=PSSY
+"RTN","PSSVIDRG",45,0)
+ ;I PSI=1 S DIC("B")=$G(PSSY(1)) S DIC=FI,DIC(0)="QEALMNTV",DLAYGO=52.6,DIC("T")="" D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",46,0)
+ I PSI=0 S DIC=FI,DIC(0)="QEALMNTV",DLAYGO=52.6 D ^DIC I Y<0 K PSFLGA G K1
+"RTN","PSSVIDRG",47,0)
+ ;
+"RTN","PSSVIDRG",48,0)
+ENA2 ; IV Additives Editing
+"RTN","PSSVIDRG",49,0)
+ S PSSQUIT=0
+"RTN","PSSVIDRG",50,0)
+ I '$G(PSFLGA)&(PSI>0) F  D  Q:$G(Y)
+"RTN","PSSVIDRG",51,0)
+ . W !!," ",$$GET1^DIQ(50,DISPDRG,.01)," currently linked to the following IV Additives:",!
+"RTN","PSSVIDRG",52,0)
+ . S (PSDA,II)=0 F  S PSDA=$O(PSSY(PSDA)) Q:'PSDA  D
+"RTN","PSSVIDRG",53,0)
+ .. S PSSY15=$P(^PS(52.6,$G(PSSY(PSDA)),0),"^",15) I $E($G(PSSY15))="." S PSSY15="0"_PSSY15
+"RTN","PSSVIDRG",54,0)
+ .. S II=II+1 W !,?3,II_". ",$P(^PS(52.6,$G(PSSY(PSDA)),0),"^"),?32,"Additive Strength: "_$S($G(PSSY15)="":"N/A",1:$G(PSSY15))_" "_$S($G(PSSY15)="":"",1:$$GET1^DIQ(52.6,$G(PSSY(PSDA)),2))
+"RTN","PSSVIDRG",55,0)
+ .. W:$D(^PSDRUG(+$P(^PS(52.6,$G(PSSY(PSDA)),0),"^",2),0)) !?15,$P(^(0),"^",10)
+"RTN","PSSVIDRG",56,0)
+ .. F PSIV=0:0 S PSIV=$O(^PS(52.6,$G(PSSY(PSDA)),1,PSIV)) Q:'PSIV  D
+"RTN","PSSVIDRG",57,0)
+ ... W !?7,"- ",$P(^(PSIV,0),"^")," -        Quick Code Strength: ",$S($P($G(^PS(52.6,$G(PSSY(PSDA)),1,PSIV,0)),"^",2)'="":$P($G(^PS(52.6,$G(PSSY(PSDA)),1,PSIV,0)),"^",2),1:"N/A")
+"RTN","PSSVIDRG",58,0)
+ ... W "     Schedule: ",$S($P($G(^PS(52.6,$G(PSSY(PSDA)),1,PSIV,0)),"^",5)'="":$P($G(^PS(52.6,$G(PSSY(PSDA)),1,PSIV,0)),"^",5),1:"N/A"),!
+"RTN","PSSVIDRG",59,0)
+ . W !!,"Select "_$S(PSI=1:1,1:"1-"_PSI)_" from list above or type 'NEW' to link to a new IV Additive: "
+"RTN","PSSVIDRG",60,0)
+ . R X:DTIME I '$T!("^"[X) S Y=-1 Q
+"RTN","PSSVIDRG",61,0)
+ . W ! I $$UP^XLFSTR(X)="NEW" D NEW(52.6) Q
+"RTN","PSSVIDRG",62,0)
+ . I '$D(PSSY(X)) W !!,"Select the number corresponding to the IV ADDITIVE you want to edit",!,"or type 'NEW' to link ",$$GET1^DIQ(50,DISPDRG,.01)," to a new IV ADDITIVE.",$C(7) Q
+"RTN","PSSVIDRG",63,0)
+ . I $D(PSSY(X)) S Y=$G(PSSY(X))
+"RTN","PSSVIDRG",64,0)
+ G K1:($G(Y)<0)
+"RTN","PSSVIDRG",65,0)
+ K PSSEL1 S PSSASK="ADDITIVES",DRUG=+Y,DIE=FI,(DA,ENTRY)=+Y D EECK  G K1:$G(PSSEL1)="^" I $G(PSSEL1)=2 S Y=0 W ! G NA2
+"RTN","PSSVIDRG",66,0)
+ S PSSDRG=$P($G(^PS(52.6,ENTRY,0)),"^",2),DIE="^PS(52.6,",DA=ENTRY,DR="[PSSIV ADD]"
+"RTN","PSSVIDRG",67,0)
+ N PSSENTRY I '$G(PSSQUIT),$G(DA) S PSSENTRY=DA D ^DIE S ENTRY=PSSENTRY D MFA^PSSDEE
+"RTN","PSSVIDRG",68,0)
+ K PSFLGA,PSSY,PSSY15
+"RTN","PSSVIDRG",69,0)
+ Q
+"RTN","PSSVIDRG",70,0)
+ENC ;Enter here to enter/edit IV Categories
+"RTN","PSSVIDRG",71,0)
+ ;S X="PSIVXU" X ^%ZOSF("TEST") I  D ^PSIVXU Q:$D(XQUIT)  K DA,DIC,DIE,DR,DLAYGO S DIC="^PS(50.2,",DIC(0)="AEQL",DLAYGO=50.2 D ^DIC G:Y<0 K S DIE=DIC,DR=".01;1",DA=+Y D ^DIE G K
+"RTN","PSSVIDRG",72,0)
+ Q
+"RTN","PSSVIDRG",73,0)
+K1 ;
+"RTN","PSSVIDRG",74,0)
+ L -^PS(FI)
+"RTN","PSSVIDRG",75,0)
+K S X="PSGSETU" X ^%ZOSF("TEST") I  D ENIVKV^PSGSETU
+"RTN","PSSVIDRG",76,0)
+KDRG K B,DA,DG,DIC,DIE,DIJ,DIX,DIY,DIYS,DLAYGO,DO,DRUG,DRUGEDIT,FI,I,J,P,PSIV,PSIVAT,PSSIVDRG,PSIVSC,XT,Z
+"RTN","PSSVIDRG",77,0)
+ Q
+"RTN","PSSVIDRG",78,0)
+ ;
+"RTN","PSSVIDRG",79,0)
+GETD ;See if generic drug is inactive in file 50.
+"RTN","PSSVIDRG",80,0)
+ I $D(^PSDRUG(X,"I")),^("I"),(DT+1>+^("I")) W $C(7),$C(7),!!,"This drug is inactive and will not be selectable during IV order entry.",! S ^PS(FI,DRUG,"I")=^PSDRUG(X,"I")
+"RTN","PSSVIDRG",81,0)
+ Q
+"RTN","PSSVIDRG",82,0)
+ENTDRG ;This module is no longer utilized by the Inpatient Medications application.
+"RTN","PSSVIDRG",83,0)
+ ;Will print word-processing field in IV add. file (52.6) and
+"RTN","PSSVIDRG",84,0)
+ ;IV sol. file (52.7).
+"RTN","PSSVIDRG",85,0)
+ ;
+"RTN","PSSVIDRG",86,0)
+ Q
+"RTN","PSSVIDRG",87,0)
+ ;S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIV Q:$D(XQUIT)
+"RTN","PSSVIDRG",88,0)
+ S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIVHLP1 Q:$D(XQUIT)
+"RTN","PSSVIDRG",89,0)
+ N P W !!,"Are you inquiring on" S X="... an IV ADDITIVE or IV SOLUTION (A/S): ^ADDITIVE^^ADDITIVE,SOLUTION" D ENQ^PSIV S X=$E(X) Q:"^"[X  I X["?" S HELP="DRGINQ" D ^PSIVHLP1 G ENTDRG
+"RTN","PSSVIDRG",90,0)
+ S FI=$S(X["A":52.6,1:52.7) N D0,D1,DA,DI,DIE,DP,DR,DQ
+"RTN","PSSVIDRG",91,0)
+DRG F Y=0:0 W ! X ^DD(55.11,.01,12.1) K DA,DIC S DIC="^PS("_FI_",",DIC(0)="QEAM" D ^DIC G:Y<0 KDRG S PSSIVDRG=+Y D WPH,WP
+"RTN","PSSVIDRG",92,0)
+ G KDRG
+"RTN","PSSVIDRG",93,0)
+WPH ;
+"RTN","PSSVIDRG",94,0)
+ W:$Y @IOF W ! F Y=1:1:79 W "-"
+"RTN","PSSVIDRG",95,0)
+ W !,"Drug information on: ",$P(^PS(FI,PSSIVDRG,0),"^")
+"RTN","PSSVIDRG",96,0)
+ W !?7,"Last updated: " W:'$D(^PS(FI,PSSIVDRG,4,0)) "N/A" I $D(^(0)) S Y=$P(^(0),"^",5) X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2)
+"RTN","PSSVIDRG",97,0)
+ W ! Q
+"RTN","PSSVIDRG",98,0)
+WP W ! I '$D(^PS(FI,PSSIVDRG,4,0)) W !,"*** No information on file. ***"
+"RTN","PSSVIDRG",99,0)
+ F Z=0:0 S Z=$O(^PS(FI,PSSIVDRG,4,Z)) Q:'Z  W !,^(Z,0) I $Y+5>IOSL W $C(7),!!,"Press return key: " R I:DTIME Q:'$T!(I["^")  D WPH
+"RTN","PSSVIDRG",100,0)
+ W ! F Y=1:1:79 W "-"
+"RTN","PSSVIDRG",101,0)
+ Q
+"RTN","PSSVIDRG",102,0)
+ENT ;
+"RTN","PSSVIDRG",103,0)
+ ;Will print out information on IV DRUGS
+"RTN","PSSVIDRG",104,0)
+ Q
+"RTN","PSSVIDRG",105,0)
+ ;S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIV Q:$D(XQUIT)
+"RTN","PSSVIDRG",106,0)
+ S X="PSIV" X ^%ZOSF("TEST") I  D ^PSIVHLP1 Q:$D(XQUIT)
+"RTN","PSSVIDRG",107,0)
+ ;
+"RTN","PSSVIDRG",108,0)
+BEG W !!,"Are you printing drug information from ..." S X="the IV ADDITIVE file or IV SOLUTION file ? ^ADDITIVE^^ADDITIVE,SOLUTION" D ENQ^PSIV G:"^"[X K I X["?" S HELP="DRGINQ" D ^PSIVHLP1 G BEG
+"RTN","PSSVIDRG",109,0)
+ S L=0,DIC="^PS("_$S(X["A":52.6,1:52.7)_"," D EN1^DIP D ^%ZISC G K
+"RTN","PSSVIDRG",110,0)
+ELECTRO ;Edit Electrolyte file
+"RTN","PSSVIDRG",111,0)
+ S X="PSIVXU" X ^%ZOSF("TEST") I  D ^PSIVXU Q:$D(XQUIT)  K DA,DIC S DIC="^PS(50.4,",DIC(0)="AEQLM",DLAYGO=50.4 D ^DIC G:Y<0 K
+"RTN","PSSVIDRG",112,0)
+ S DIE=DIC,DR="[PSSJIDE]",DA=+Y D ^DIE G ELECTRO
+"RTN","PSSVIDRG",113,0)
+ Q
+"RTN","PSSVIDRG",114,0)
+EECK I $D(PSSZ) S FILE=$S(PSSASK="ADDITIVES":$G(^PS(52.6,ENTRY,0)),1:$G(^PS(52.7,ENTRY,0))),PSSIEN=$P(FILE,"^",2) D:PSSIEN']"" PASSIN I PSSIEN'=DISPDRG D:$D(^PSDRUG(PSSIEN)) ECK,EECK1 D
+"RTN","PSSVIDRG",115,0)
+ . W !,"Do you really want to link this ",$S(PSSASK="ADDITIVES":"Additive",1:"Solution")," to ",$P(^PSDRUG(DISPDRG,0),"^",1)
+"RTN","PSSVIDRG",116,0)
+ . F  S %=2 D YN^DICN Q:%  W !,"  (A 'YES' or 'NO' response is required.)"
+"RTN","PSSVIDRG",117,0)
+ . I %Y="^" S PSSEL1="^" Q
+"RTN","PSSVIDRG",118,0)
+ . S PSSEL1=%
+"RTN","PSSVIDRG",119,0)
+ Q
+"RTN","PSSVIDRG",120,0)
+EECK1 Q:'$D(^PSDRUG(PSSIEN,0))  W !,"This Additive or Solution is linked to ",$P(^PSDRUG(PSSIEN,0),"^",1),".",!,"You are editing dispense drug ",$P(^PSDRUG(DISPDRG,0),"^",1),".",!
+"RTN","PSSVIDRG",121,0)
+ Q
+"RTN","PSSVIDRG",122,0)
+ECK W !,"You are editing a Additive or Solution which is linked to a different",!,"dispense drug from the one you are currently editing."
+"RTN","PSSVIDRG",123,0)
+ Q
+"RTN","PSSVIDRG",124,0)
+SOI I $D(^PS(59.7,1,80)),$P(^PS(59.7,1,80),"^",2)>1 W !!,"You are NOW in the ORDERABLE ITEM matching for Solutions." S Y=ENTRY_"^"_$P(^PS(52.7,ENTRY,0),"^",1),PSMASTER=1 D MAS^PSSSOLIT K PSMASTER
+"RTN","PSSVIDRG",125,0)
+ Q
+"RTN","PSSVIDRG",126,0)
+ADDOI I $D(^PS(59.7,1,80)),$P(^PS(59.7,1,80),"^",2)>1 W !!,"You are NOW in the ORDERABLE ITEM matching for Additives." S Y=ENTRY_"^"_$P(^PS(52.6,ENTRY,0),"^",1),PSMASTER=1 D MAS^PSSADDIT K PSMASTER
+"RTN","PSSVIDRG",127,0)
+ Q
+"RTN","PSSVIDRG",128,0)
+PASSIN S FILE=$S(PSSASK="ADDITIVES":$G(^PS(52.6,ENTRY,0)),1:$G(^PS(52.7,ENTRY,0))) S (X,PSSIEN)=DISPDRG ;146
+"RTN","PSSVIDRG",129,0)
+ Q
+"RTN","PSSVIDRG",130,0)
+MASTER F PSSOR=0:0 S PSSOR=$O(^PS(50.7,PSSOR)) Q:'PSSOR  D EN2^PSSHL1(PSSOR,"MUP")
+"RTN","PSSVIDRG",131,0)
+ Q
+"RTN","PSSVIDRG",132,0)
+PRNMHD ; PSS*1*146 Hold the print name when editing
+"RTN","PSSVIDRG",133,0)
+ N FI K PSPRNM
+"RTN","PSSVIDRG",134,0)
+ S FI=DIC I FI'["^" S FI="^PS("_FI_","
+"RTN","PSSVIDRG",135,0)
+ S FI=FI_DA_",0)",PSPRNM=$P($G(@FI),"^")
+"RTN","PSSVIDRG",136,0)
+ Q
+"RTN","PSSVIDRG",137,0)
+PRNM() ; PSS*1*146 compare and confirm Print name change
+"RTN","PSSVIDRG",138,0)
+ N PRNMDONE,%,FI,PRNAME,DUP,DUPLIC S PRNMDONE=0
+"RTN","PSSVIDRG",139,0)
+ S FI=DIC I FI'["^" S FI="^PS("_FI_","
+"RTN","PSSVIDRG",140,0)
+ S FI=FI_DA_",0)",PRNAME=$P($G(@FI),"^")
+"RTN","PSSVIDRG",141,0)
+ ;I PSPRNM'=PRNAME S DUPLIC=0 D  I DUPLIC Q PSPRNM
+"RTN","PSSVIDRG",142,0)
+ ;. S DUP=DIC I DUP'["^" S DUP="^PS("_DUP_","
+"RTN","PSSVIDRG",143,0)
+ ;. S DUP="$O("_DIC_"""B"","""_PRNAME_""","_DA_"))!$O("_DIC_"""B"","""_PRNAME_""","_DA_"),-1)"
+"RTN","PSSVIDRG",144,0)
+ ;. I @DUP D
+"RTN","PSSVIDRG",145,0)
+ ;. . W !,"PRINT NAME ALREADY ON FILE! PRINT NAME reset to "_PSPRNM,!,$C(7)
+"RTN","PSSVIDRG",146,0)
+ ;. . S DUPLIC=1
+"RTN","PSSVIDRG",147,0)
+ I (PSPRNM]"")&(PRNAME]"")&(PSPRNM'=PRNAME) F  Q:$G(PRNMDONE)  D
+"RTN","PSSVIDRG",148,0)
+ . W !,"  ARE YOU SURE YOU WANT TO CHANGE THE PRINT NAME TO "_PRNAME
+"RTN","PSSVIDRG",149,0)
+ . S %=2 D YN^DICN
+"RTN","PSSVIDRG",150,0)
+ . S:(%=1) PSPRNM=PRNAME S:% PRNMDONE=1
+"RTN","PSSVIDRG",151,0)
+ . I %Y="^" S PSSQUIT=1,PRNMDONE=1
+"RTN","PSSVIDRG",152,0)
+ . I 'PRNMDONE W !,"  Answer with 'Yes' or 'No'.",$C(7),! Q
+"RTN","PSSVIDRG",153,0)
+ . W !,"  PRINT NAME set to "_PSPRNM
+"RTN","PSSVIDRG",154,0)
+ Q PSPRNM
+"RTN","PSSVIDRG",155,0)
+GEND(CUR) ;PSS*1*146
+"RTN","PSSVIDRG",156,0)
+ ;Ask and Confirm generic drug.
+"RTN","PSSVIDRG",157,0)
+ ;Returns Selected drug IEN (file 50)
+"RTN","PSSVIDRG",158,0)
+ ; CUR -> Default (Current Drug)
+"RTN","PSSVIDRG",159,0)
+ N DIC,%,PSSEL,Y,X
+"RTN","PSSVIDRG",160,0)
+ S PSSEL=0,DIC=50,DIC("A")="GENERIC DRUG: ",DIC(0)="AEMQ",DIC("B")=$S($G(CUR):CUR,1:"")
+"RTN","PSSVIDRG",161,0)
+ F  D  Q:PSSEL=1
+"RTN","PSSVIDRG",162,0)
+ . D ^DIC W:(Y>0)&($G(CUR)']"") " ??" I $G(CUR)]""!(Y'>0),$G(DUOUT)!$G(DTOUT) S PSSEL=1,PSSQUIT=1 Q
+"RTN","PSSVIDRG",163,0)
+ . I +Y=+CUR D  I PSSEL=1 Q
+"RTN","PSSVIDRG",164,0)
+ . . I PSSASK="ADDITIVES",$D(^PS(52.6,"AC",+Y,+$G(DA))) S PSSEL=1 Q
+"RTN","PSSVIDRG",165,0)
+ . . I PSSASK="SOLUTIONS",$D(^PS(52.7,"AC",+Y,+$G(DA))) S PSSEL=1 Q
+"RTN","PSSVIDRG",166,0)
+ . I Y>0 F  D  Q:$G(PSSEL)
+"RTN","PSSVIDRG",167,0)
+ . . N CURADD,CURGEND
+"RTN","PSSVIDRG",168,0)
+ . . S CURADD=$S($G(PSSASK)="ADDITIVES":$$GET1^DIQ(52.6,$G(DA),.01,"E"),1:$$GET1^DIQ(52.7,$G(DA),.01,"E"))
+"RTN","PSSVIDRG",169,0)
+ . . S CURGEND=$$GET1^DIQ($S($G(PSSASK)="ADDITIVES":52.6,1:52.7),$G(DA),1,"E")
+"RTN","PSSVIDRG",170,0)
+ . . W !!,"  You are about to change the GENERIC DRUG linked to this "_$S($G(PSSASK)="ADDITIVES":"ADDITIVE.",1:"SOLUTION.")
+"RTN","PSSVIDRG",171,0)
+ . . W !,"  "_$S($G(PSSASK)="ADDITIVES":"ADDITIVE",1:"SOLUTION")_" "_$G(CURADD)_" is "_$S($G(CURGEND)="":"not ",1:"")_"currently linked to "_$S($G(CURGEND)="":"any",1:"")
+"RTN","PSSVIDRG",172,0)
+ . . W !,"  GENERIC DRUG "_$G(CURGEND)_"."
+"RTN","PSSVIDRG",173,0)
+ . . W !!,"  Are you sure you want to link "_$S($G(PSSASK)="ADDITIVES":"ADDITIVE",1:"SOLUTION")_" "_$G(CURADD)
+"RTN","PSSVIDRG",174,0)
+ . . W !,"  to GENERIC DRUG "_$$GET1^DIQ(50,+Y,.01,"E")
+"RTN","PSSVIDRG",175,0)
+ . . S %=2 D YN^DICN S:% PSSEL=% I %Y="^" S PSSQUIT=1,DUOUT=1,PSSEL=1 Q
+"RTN","PSSVIDRG",176,0)
+ . . I 'PSSEL W !,"   Answer with 'Yes' or 'No'.",$C(7),! Q
+"RTN","PSSVIDRG",177,0)
+ Q $S($G(DUOUT)!$G(DTOUT)!(Y<0):"^",1:+Y)
+"RTN","PSSVIDRG",178,0)
+ ;
+"RTN","PSSVIDRG",179,0)
+NEW(FI) ; add new additive/solution
+"RTN","PSSVIDRG",180,0)
+ N DA,DIC,DIE,DR,DLAYGO
+"RTN","PSSVIDRG",181,0)
+ S (DLAYGO,DIC)=FI,DIC(0)="QEALMNTV",DIC("T")="" D ^DIC K DIC
+"RTN","PSSVIDRG",182,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",52.6,52.6,19,0)
+STRENGTH^NJ17,8^^0;15^K:X>99999999!(X<0)!(X?.E1"".""9N.N) X
+"^DD",52.6,52.6,19,3)
+Type a number between 0 and 99999999, 8 decimal digits.
+"^DD",52.6,52.6,19,21,0)
+^.001^6^6^3130828^^
+"^DD",52.6,52.6,19,21,1,0)
+This field identifies the numeric amount of medication that is
+"^DD",52.6,52.6,19,21,2,0)
+provided by one unit-of-use for the identified product.
+"^DD",52.6,52.6,19,21,3,0)
+ 
+"^DD",52.6,52.6,19,21,4,0)
+For example, if one vial contains 50 MG of medication, the
+"^DD",52.6,52.6,19,21,5,0)
+STRENGTH will be entered as '50'.  The DRUG UNIT of 'MG'
+"^DD",52.6,52.6,19,21,6,0)
+is populated by the DRUG UNIT (#2) field.
+"^DD",52.6,52.6,19,"DT")
+3130828
+"BLD",8666,6)
+^157
+**END**
+**END**

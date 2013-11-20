@@ -1,0 +1,230 @@
+
+=============================================================================
+Run Date: FEB 11, 2014                     Designation: WEBV*1*31
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #26                      Status: Released
+                  Compliance Date: MAR 14, 2014
+=============================================================================
+
+
+Subject: Multiple VLER fixes
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 16.1.5 of VistAWeb (build last updated 12/10/13) will be      *
+ * promoted to the production server for national release on 02/11/2014  *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National Vista Web server. There is *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *************************************************************************
+  
+ VistAWeb (VW) v16.1.5 includes the following fixes:
+  
+ 1) New location needs to be added to VistAWeb stylesheet from which
+    'Immunization Name' data will be pulled and displayed in 'Immunization'
+    section in VistAWeb page.
+ 2) New location needs to be added to VistAWeb stylesheet from which
+    'Source' data will be pulled and displayed in 'Allergy' and 'Problem
+    List' section in VistAWeb page.
+ 3) New location needs to be added to VistAWeb stylesheet from which
+    'Provider Name' data will be pulled and displayed in 'Problem List'
+    section in VistAWeb page.
+ 4) Update page text from 'NwHIN Documents' to 'Non-VA Health Summaries'.
+ 5) New location needs to be added to VistAWeb stylesheet from which
+    'Provider Name' data will be pulled and displayed in 'Problem List'
+    section in VistAWeb page.
+ 6) VistAWeb should not display '--' in the 'Date/Time' column for the
+    individual lab results since those will always be empty. Instead of
+    displaying '--', display nothing.
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+  
+ 1) INC000000934827 - Add a new location from which VistAWeb will pull
+    'Immunization Name' data
+ 2) INC000000937678 - Incorrect display of 'Source' column in 'Allergy' and
+    'Problem' sections
+ 3) INC000000937819 - Incorrect display of 'Provider' column in 'Problem'
+    section
+ 4) INC000000938564 - Update page text from 'NwHIN Documents' to 'Non-VA Health
+    Summaries'
+ 5) INC000000891067 - Populate 'Provider' column of 'Problem' section with
+    provider name from Healthcare Provider module
+ 6) INC000000883111 - In 'Lab Results' section do not display '--' for
+    individual results - leave the table cell blank
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Honolulu
+ Indianapolis
+ Western New York
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000000934827 - Add a new location from which VistAWeb will pull 
+    'Immunization Name' data
+    
+    Problem:
+    ========
+    VistAWeb does not find data for the 'Immunization Name' column of the
+    'Immunization' section located in Patient Summary Report. This data is
+    located in a different XML location than the XML location VistAWeb
+    looks in.
+    
+    Solution:
+    =========
+    Update VistAWeb code so that it goes to new location that data for 
+    'Immunization Name' column is sent in.
+  
+ 2) INC000000937678 - Incorrect display of 'Source' column in 'Allergy' and
+    'Problem' sections
+    
+    Problem:
+    ========
+    VistAWeb does not find data for the 'Source' column of the 'Allergy'
+    and 'Problem List' sections located in Patient Summary Report. This
+    data is located in different XML locations than the XML locations
+    VistAWeb looks in.
+    
+    Solution:
+    =========
+    Update VistAWeb code so that it goes to the new location where data for
+    the 'Source' column is sent.
+  
+ 3) INC000000937819 - Incorrect display of 'Provider' column in 'Problem'
+    section
+    
+    Problem:
+    ========
+    VistAWeb does not find data for the 'Provider Name' column of the 
+    'Problems List' section located in the Patient Summary Report. This 
+    data is located in a different XML location than the XML location 
+    VistAWeb looks in.
+    
+    Solution:
+    =========
+    Update VistAWeb code so that it goes to the new location where data for
+    'Provider Name' column is sent.
+  
+ 4) INC000000938564 - Update page text from 'NwHIN Documents' to 
+    'Non-VA Health Summaries'
+    
+    Problem:
+    ========
+    The term 'NwHIN' (Nationwide Health Information Network) is no longer
+    in use, therefore the wording needs to change.
+    
+    Solution:
+    =========
+    Update text to say 'Non-VA Health Summaries'.
+  
+ 5) INC000000891067 - Populate 'Provider' column of 'Problem' section with
+    provider name from Healthcare Provider module
+    
+    Problem:
+    ========
+    VistAWeb does not find data for the 'Provider Name' column of the 
+    'Problems List' section located in the Patient Summary Report. This 
+    data is located in a different XML location than the  XML location 
+    VistAWeb looks in.
+    
+    Solution:
+    =========
+    Update VistAWeb code so that it looks for data in the new location 
+    where data for the 'Provider Name' column is sent.
+  
+ 6) INC000000883111 - In 'Lab Results' section, do not display '--' for
+    individual results, leave the table cell blank
+    
+    Problem:
+    ========
+    VistAWeb displays '--' in the 'Lab Results' section next to each  
+    individual lab performed in the 'Date/Time' column. This column will
+    always be empty because 'Date/Time' will be displayed in the main row
+    for the lab and individual lab work done doesn't need individual '--'s
+    and can be completely empty.
+  
+    Solution:
+    =========
+    Update VistAWeb code to not show '--' in the 'Date/Time' column of the
+    individual lab.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+  
+     http://www.domain.ext/vdl 
+     http://vista.domain.ext/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+  
+      - download.vista.domain.ext.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.fo-albany.domain.ext [anonymous.software]
+ Hines                ftp.fo-hines.domain.ext  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.domain.ext    [anonymous.software]
+  
+ Username is 'anonymous' without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+ WEBV_1_31_IG.zip
+  
+ The following files can be found in zip file above:
+  
+ NVW_Prod_v16_1_5_Install_Guide_201312xx.doc
+ NVW_Prod_v16_1_5_Install_Guide_201312xx.pdf
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : KATIC,SASA                    Date Entered  : DEC 04, 2013
+Completed By: CLAASSEN,STEVEN               Date Completed: FEB 07, 2014
+Released By : HINES,RICK                    Date Released : FEB 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

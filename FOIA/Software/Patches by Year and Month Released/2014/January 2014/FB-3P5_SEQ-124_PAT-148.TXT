@@ -1,0 +1,133 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 10/02/13 at 16:22
+=============================================================================
+Run Date: JAN 28, 2014                     Designation: FB*3.5*148
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #124                    Status: Released
+                  Compliance Date: FEB 28, 2014
+=============================================================================
+
+Associated patches: (v)FB*3.5*108  <<= must be installed BEFORE `FB*3.5*148'
+
+Subject: Fix undefined error at ANC+8 in FBPCR67
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch addresses 1 issue:
+  
+ 1)  The error "<UNDEFINED>ANC+8^FBPCR67" occurs when running 
+     the Potential Cost Recovery Report [FB PCR].
+  
+ Associated NSR(s):
+ =================
+  N/A
+   
+ Associated Remedy ticket(s):
+ ===========================
+ INC0000000308611 - PCR error  ANC+8^FBPCR67
+         INC0000000372796 (d)
+         INC0000000374385 (d)
+         INC0000000375517 (d)
+         INC0000000399954 (d)
+         INC0000000732162 (d)
+         INC0000000921160 (d)
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Upstate New York - Western NY HCS - Integrated Large
+ Biloxi - VA Gulf Coast Veterans Health Care System - Large
+ Mountain Home - VA Medical Center - Medium
+  
+ REMEDY OVERVIEW:
+ ===============
+   
+ 1) HD0000000308611 - PCR error  ANC+8^FBPCR67
+  
+  
+ Problem:
+ --------
+ When running the Potential Cost Recovery Report [FB PCR] report, 
+ the error "<UNDEFINED>ANC+8^FBPCR67" occurs when the variable
+ FBAACPTC is not properly cleaned up when searching through file
+ entries.
+  
+  
+ Resolution:
+ -----------
+ The routine FBPCR67 was modified to clean up the variable FBAACPTC
+ after each record.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*148)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       FB*3.5*148.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+          Potential Cost Recovery Report                [FB PCR]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBPCR67
+    Before: B27748859   After: B27989751  **4,48,55,69,98,122,108,148**
+ 
+Routine list of preceding patches: 108
+
+=============================================================================
+User Information:
+Entered By  : POTTER,DAVID                  Date Entered  : APR 15, 2013
+Completed By: MIRANDA,RAUL                  Date Completed: JAN 09, 2014
+Released By : MATHEWS,DEAN                  Date Released : JAN 28, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,112 @@
+
+=============================================================================
+Run Date: MAR 27, 2014                     Designation: KMPS*2*3
+Package : KMPS - SAGG PROJECT                 Priority: Mandatory
+Version : 2         SEQ #2                      Status: Released
+                  Compliance Date: APR 27, 2014
+=============================================================================
+
+
+Subject: Make sure SAGG background job is queued
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is an informational patch to ensure the Statistical Analysis of 
+ Global Growth (SAGG) package is queued to run at all facilities.
+  
+ First, check the status of SAGG by running option 'Check SAGG Environment'
+ [KMPS SAGG STATUS]. The following is a screen example:
+  
+ ----------
+  
+ KMPD STATUS                   Mar 21, 2014@08:47:11          Page: 1 of 3
+                               Environment Check for 
+                              SAGG PROJECT v2.0 **1**
+        Current Status.............. SCHEDULED
+        SAGG Master Background Task. KMPS SAGG 
+ REPORT QUEUED TO RUN AT............ Apr 05, 2014@19:30 (Saturday)
+        RESCHEDULING FREQUENCY...... 28 days
+        TASK ID..................... 7156424
+        QUEUED BY...................                    (Active)
+  
+        Temporary collection global.
+        ^XTMP("KMPS")............... NOT Present
+  
+    SAGG Project collection routines will monitor the following:
+  
+           _$1$DGA50:[PRO.VAC]
+           _$1$DGA50:[PRO.PRQ]
+           _$1$DGA50:[PRO.VAA]
+           _$1$DGA50:[PRO.XMB]
+  
+ +         Enter ?? for more actions
+  
+ Select Action: Next Screen//
+ ----------
+  
+ Check the following:
+ 1. Current Status should be 'SCHEDULED'
+ 2. REPORT QUEUED TO RUN AT should not be blank and should have a future 
+    date/time.
+ 3. RESCHEDULING FREQUENCY should be '28 days'
+ 4. QUEUED BY should not be blank and should have an 'Active' user.
+  
+ If any of the above fields are not correct the SAGG background job should 
+ be queued to run using the following instructions:
+  
+ The SAGG Master Background Task option [KMPS SAGG REPORT] is not assigned 
+ to any menu. This option is scheduled through TaskMan to start SAGG 
+ Project's master collection routine in the background. This option should 
+ be rescheduled with the Schedule/Unschedule Options [XUTM SCHEDULE] under 
+ the Taskman Management menu for every 28 days to ensure same day-of-week 
+ collection cycles. If this option does not execute properly, a warning 
+ message is sent to the KMPS-SAGG mail group.
+  
+ The example below shows a typical display when using the 
+ Schedule/Unschedule Options:
+  
+  
+ Select OPTION to schedule or reschedule: KMPS SAGG REPORT <Enter>   (R)
+  
+  
+  
+                           Edit Option Schedule
+     Option Name: KMPS SAGG REPORT              
+     Menu Text: SAGG Master Background Task               TASK ID: 3883
+ ____________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: JUN 26,1998@19:00             
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 28D 
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+  
+ COMMAND:                      Press <PF1>H for help   
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 21, 2014
+Completed By:                               Date Completed: MAR 27, 2014
+Released By :                               Date Released : MAR 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

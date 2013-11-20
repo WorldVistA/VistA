@@ -1,0 +1,226 @@
+
+=============================================================================
+Run Date: JAN 03, 2014                     Designation: WEBV*1*30
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #25                      Status: Released
+                  Compliance Date: FEB 03, 2014
+=============================================================================
+
+
+Subject: VistA Web 16.1.4: NwHIN & CRISP issues
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 16.1.4 of VistAWeb (build last updated 11/25/13) will be      *
+ * promoted to the production server for national release on 01/07/14    *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National Vista Web server. There is *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *************************************************************************
+  
+ VistAWeb (VW) v16.1.4 includes the following fixes:
+  
+ 1) Indiana Health Information Exchange (IHIE) stylesheet update to display
+ the Patient Summary Report.
+ 2) Hawaii stylesheet update to display lab result interpretation when 
+ interpretation is only one character long (e.g., Glucose is 'H').
+ 3) Stylesheet updates to display information less than two characters long
+ in the Immunization section of the Patient Summary Report.
+ 4) Renamed column "OCF" to "OFC" in Vitals section of the Patient Summary 
+ Report, which stands for Occipital Frontal Circumference.
+ 5) Stylesheet update so that allergy severity field does not display 
+ in allergy reaction field of the Patient Summary Report.
+ 6) Updated VistAWeb to address various Continuous Readiness 
+ in Information Security Program (CRISP) security issues.
+  
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ 1) INC000000809508 - VistAWeb stylesheet updates for Indiana
+ 2) INC000000892418 - VistAWeb is not displaying lab result interpretation 
+ 3) INC000000881534 - Analyze VistAWeb stylesheets
+ 4) INC000000881616 - Rename 'OCF' column in Vitals section to 'OFC'
+ 5) INC000000891070 - Invalid data displayed in allergy reaction field
+ 6) INC000000891639 - Address VistAWeb security (CRISP)
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Indianapolis
+ Puget Sound
+ Richmond 
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000000809508 - VistAWeb stylesheet updates for Indiana
+  
+    Problem:
+    ========
+    For IHIE, VistAWeb could not find data located in Patient Summary 
+    Report because it was in a different part of the VW code than the 
+    part of the code VistAWeb looks in.
+  
+    Solution:
+    =========
+    Update WV code so that VistAWeb looks in the correct part of the 
+    code where IHIE sends data.
+  
+ 2) INC000000892418 - VistAWeb is not displaying lab result interpretation 
+  
+    Problem:
+    ========
+    For Hawaii, VistAWeb does not display data in the interpretation 
+    section of the lab results in the Patient Summary Report when the
+    entry in the interpretation field is only one character in length.
+  
+    Solution:
+    =========
+    Update VistAWeb code to show the interpretation regardless of length.
+  
+ 3) INC000000881534 - Analyze VistAWeb stylesheets
+  
+    Problem:
+    ========
+    VistAWeb doesn't display data in the Immunizations field of the
+    Patient Summary Report when the data is only one character long.
+  
+    Solution:
+    =========
+    Update VistAWeb code so that it returns data that is one character
+    long.
+  
+ 4) INC000000881616 - Rename 'OCF' column in Vitals section to 'OFC'
+  
+    Problem:
+    ========
+    In the 'Vitals' section of Patient Summary Report there is a column
+    called 'OCF.' This needs to be renamed to 'OFC,' which is head
+    circumference. 
+  
+    Solution:
+    =========
+    Change column header wording from 'OCF' to 'OFC'.
+  
+ 5) INC000000891070 - Invalid data displayed in allergy reaction field
+  
+    Problem:
+    ========
+    VistAWeb is displaying allergy severity in the allergy reaction 
+    field when reaction isn't provided.
+  
+    Solution:
+    =========
+    Instead of displaying allergy severity, VistAWeb will now display  
+    '--', if there is no allergy reaction data available.
+  
+ 6) INC000000891639 - Address VistAWeb security
+  
+    Problem:
+    ========
+    A security scan of VistAWeb revealed that there are a number of 
+    potential security issues.
+  
+    Solution:
+    =========
+    Change VistAWeb code to fix these issues:
+    1) Autocomplete HTML Attribute Not Disabled for Password Field
+    2) Missing Secure Attribute in Encrypted Session (SSL) Cookie
+    3) Cacheable SSL Page Found
+  
+    Technical Description
+    =====================
+    The following items describe the three issues from the above.
+    1) Autocomplete HTML Attribute Not Disabled for Password Field
+    If the 'autocomplete' attribute is missing in the 'password'
+    field of the 'input' element, add it and set it to 'off'.
+  
+    2) Missing Secure Attribute in Encrypted Session (SSL) Cookie
+    Basically the only required attribute for the cookie is the
+    'name' field. Common optional attributes are: 'comment',
+    'domain', 'path', etc. The 'secure' attribute must be set
+    accordingly in order to prevent the cookie from being sent
+    unencrypted.
+  
+    3) Cacheable SSL Page Found
+    Disable caching on all SSL pages or all pages that contain
+    sensitive data. This can be achieved by using
+    'CacheControl:nostore' and 'Pragma:nocache' response directives
+    in your SSL page headers.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb Computerized Patient Record System
+ (CPRS) Access and Installation Guide, the
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe 
+ Portable Document Format (PDF) formats on the web at the following
+ addresses:
+  
+     http://www.domain.ext/vdl 
+     http://vista.domain.ext/vistaweb
+  
+ The Adobe PDF files are also available for File Transfer Protocol
+ (FTP) transfer. The preferred method is to FTP the files from:
+  
+      - download.vista.domain.ext.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.fo-albany.domain.ext [anonymous.software]
+ Hines                ftp.fo-hines.domain.ext  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.domain.ext    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+  WEBV_1_30_IG.zip
+  
+ The following files can be found in zip file above:
+  
+  NVW_Prod_v16 1 4_Install_Guide_20130923.doc
+  NVW_Prod_v16 1 4_Install_Guide_20130923.pdf
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : KATIC,SASA                    Date Entered  : OCT 17, 2013
+Completed By: CLAASSEN,STEVEN               Date Completed: JAN 03, 2014
+Released By : ERICKSON,REBECCA J            Date Released : JAN 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

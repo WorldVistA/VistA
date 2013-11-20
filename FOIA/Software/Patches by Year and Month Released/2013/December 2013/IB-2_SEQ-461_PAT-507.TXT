@@ -1,0 +1,188 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 09/16/13 at 14:14
+=============================================================================
+Run Date: DEC 10, 2013                     Designation: IB*2*507
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #461                      Status: Released
+                  Compliance Date: JAN 10, 2014
+=============================================================================
+
+
+Subject: UPDATE TYPE OF VISIT CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+  
+ 1. This patch updates Evaluation and Management codes in the TYPE OF VISIT
+    file (#357.69).  These codes are a subset of the Current Procedural
+    Terminology codes published by the American Medical Association and
+    they are used to describe the level of care for an outpatient visit.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000883484 Update Type of Visit file (#357.69)
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000883484 - Update Type of Visit file (#357.69)
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Detroit MI
+ Perry Point MD
+ Tampa FL
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000883484 - Update Type of Visit file (#357.69)
+  
+    Problem:
+    --------
+    As requested by the Health Information Governance Office, the TYPE OF
+    VISIT file (#357.69) needs to be updated to reflect current procedural
+    terminology.
+  
+    Resolution:
+    -----------
+    Add/modify 57 requested Type of Visit Codes as described below:
+  
+    Code   Description
+    ------------------------------------------------
+    99224  Subsq Observation Care-Prob Focused
+    99225  Subsq Observation Care-Exp Prob Focused
+    99226  Subsequent Observation Care - Detailed
+    99324  Domiciliary Visit-Problem Focused
+    99325  Dom Visit-New Pt,Exp Prob Focused
+    99326  Domiciliary Visit-Detailed
+    99327  Dom Visit-New Pt,Comp,Mod Complex
+    99328  Dom Visit-New Pt,Comp,High Complex
+    99334  Domiciliary Visit-Problem Focused
+    99335  Dom Visit-Est Pt,Exp Prob Focused
+    99336  Domiciliary Visit-Detailed
+    99337  Dom Visit-Est Pt,Comp,Mod Complex
+    99339  Phys Suprv Dom Pt,15-29 Min
+    99340  Phys Suprv Dom Pt,> 29 Min
+    99344  Home Visit,New Pt,Comp Mod Complex
+    99345  Home Visit,New Pt,Comp High Complex
+    99347  Home Visit-Problem Focused
+    99348  Home Visit-Expanded Problem Focused
+    99349  Home Visit-Detailed
+    99350  Home Visit,Est Pt,Mod Complex
+    99363  Anticoag Mgmt,Init 90 day of tx
+    99364  Anticoag Mgmt,Each Subseqt 90 day of tx
+    99366  Team Conf,HCP,Pt Present,> 29 Min
+    99367  Team Conf,Phys,Pt Not Present,> 29 Min
+    99368  Team Conf,HCP,Pt Not Present,> 29 Min
+    99374  Care Plan Svc,Home Hlth,15-29 Min
+    99379  Care Plan Svc,Nurs Fac,15-29 Min
+    99380  Care Plan Svc,Nurs Fac,> 29 Min
+    99406  Tobacco Cessation Counseling,3-10 Min
+    99407  Tobacco Cessation Counseling > 10 Min
+    99408  Alc/Subs Abuse Counseling,15-30 Min
+    99409  Alc/Subs Abuse Counseling > 30 Min
+    99460  Newborn Care Svc,Init,Per Day,Hosp
+    99461  Newborn Care Svc,Init,Per Day,Not Hosp
+    99462  Newborn Care Svc,Subsq,Per Day,Hosp
+    99463  Newborn Care Svc,Init,Adm/DC Same Day
+    99464  Attendance at Delivery
+    99465  Delivery/Birthing Room Resuscitation
+    99466  Crit Care Intrfac Trf,0-24 Mon,30-74 Min
+    99467  Critcare Intrfac Trf,0-24 Mon,Add 30 Min
+    99468  Init Neontl Crit Care,0-28 days
+    99469  Subsq Neontl Crit Care,0-28 days
+    99471  Init Ped Crit Care,29 days-24 Months
+    99472  Subsq Ped Crit Care,29 days-24 Months
+    99475  Init Ped Crit Care,2-5 years
+    99476  Subsq Ped Crit Care,2-5 years
+    99477  Init Hosp Care,Per Day,0-28 days
+    99478  Subsq Int Care,Per Day,Low Brth Wgt Inf
+    99479  Subsq Int Care,Per Day,Low Brth Wgt Inf
+    99480  Subsq Int Care,Per Day,Low Brth Wgt Inf
+    99485  Phys Supvsn Intrfac Trf,0-24 Mon,30 Min
+    99486  Phy Svsn Intrfac Trf,0-24 Mon,Add 30 Min
+    99487  Comp Chr Care Coor,No FTF,Per Calr Month
+    99488  Comp Chr Care Coor,FTF,Per Calr Month
+    99489  Comp Chr Care Coor,FTF,Ea Addl 30 Min
+    99495  Trans Care Mgmt Svc,FTF w/in 14 days D/C
+    99496  Trans Care Mgmt Svc,FTF w/in 7 days D/C
+   
+    ==================== INSTALLATION INSTRUCTIONS: ==================
+    
+   Installation will take less than 2 minutes. You may install this patch
+   at any time, however the Edit Tool Kit Forms [IBDF EDIT TOOL KIT FORMS]
+   option will be disabled during the patch installation.
+  
+   1. Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.  
+    
+   2. From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+  
+   3. From this menu, you may select to use the following options: 
+      (when prompted for INSTALL NAME, enter IB*2.0*507)
+    
+        a.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+  
+        b.  Print Transport Global - This option will allow you to view
+            the components of the KIDS build.
+  
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this 
+            patch is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+  
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+  
+   4. Use the Install Package(s) option and select the package 
+      IB*2.0*507.
+   
+   5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+      NO//" respond NO.  
+    
+   6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? YES//" respond YES.
+  
+      When prompted, "Enter options you wish to mark as 'Out of Order':",
+      enter:
+             Edit Tool Kit Forms  [IBDF EDIT TOOL KIT FORMS]
+  
+      When prompted, "Enter protocols you wish to mark as 'Out of
+      Order':", press enter.
+  
+   7. You may delete routine IB20P507 after the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P507
+    Before:       n/a   After: B31987002  **507**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUL 23, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: DEC 03, 2013
+Released By : CAULFIELD,MARY                Date Released : DEC 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,216 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: EAS*1*106
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1        SEQ #90                      Status: Released
+                  Compliance Date: MAR 27, 2014
+=============================================================================
+
+Associated patches: (v)EAS*1*46    <<= must be installed BEFORE `EAS*1*106'
+                    (v)EAS*1*88    <<= must be installed BEFORE `EAS*1*106'
+
+Subject: DISCONTINUE ANNUAL MEANS TEST RENEWAL
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Informational
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is an emergency released with a 72-hour compliance.
+  
+         This patch is being released in support of the Enrollment System
+         (ES) Discontinue Annual Means Test Renewal project.  EAS*1*106
+         (Enrollment Application System) is being released along with
+         DG*5.3*858 (Registration), IVM*2*154 (Income Verification Match),
+         DGBT*1*24 (Beneficiary Travel), and IB*2*385 (Integrated Billing) in
+         host file: DG_53_P858.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES) and VistA Registration, Enrollment and
+  Eligibility (VistA REE) software to support the requirements of the
+  Discontinue Annual Means Test Renewal project.
+   
+  This patch modifies the Enrollment Application System(EAS) v1.0
+  application as described below:
+   
+  1.  MTCHK^EASMTCHK API
+  ----------------------
+  The MTCHK^EASMTCHK API shall return a MT Not Required result if a current
+  Means Test is less than 1 year old as of the Veterans Financial
+  Assessment (VFA), January 1, 2013.
+   
+  2.  Means Test Expiration
+  -------------------------
+  Current Means Tests less than 1 year old as of the VFA Start Date,
+  January 1,2013, shall not expire.
+   
+   
+  Patch Components:
+  =================
+   
+  Files & Fields Associated:
+  --------------------------
+  The following is a list of files included in this patch:
+   
+   
+   
+  Forms Associated:
+  -----------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  -----------------------
+  N/A
+   
+   
+  Options Associated:
+  -------------------
+  The following menu options will be disabled by a post-install routine.
+   
+  Automated Means Test Letter Menu        [EAS MT AUTO LETTERS MENU]
+  Search For MT Anniversary Dates         [EAS MT LETTERS SEARCH]
+  Veteran MT Return Edit                  [EAS MT RETURNED]
+  Letters Print Menu                      [EAS MT PRINT MENU]
+   Sixty Day Letters Print                [EAS MT 60 DAY LETTER PRINT]
+   Thirty Day Letters Print               [EAS MT 30 DAY LETTER PRINT]
+   Zero Day Letters Print                 [EAS MT 0 DAY LETTER PRINT]
+   Reprint Letters by Processing Date     [EAS MT REPRINT LETTERS]
+   Reprint Single Letter                  [EAS MT REPRINT SINGLE LETTER]
+   Print Report of Contact                [EAS MT REPORT OF CONTACT]
+   User Enrollee Site Print Override      [EAS MT UES OVERRIDE]
+  Report Menu                             [EAS MT REPORT MENU]
+   Count of pending letters to be printed [EAS MT PENDING LETTERS]
+   Automated MT Letters Summary Report    [EAS MT SUMMARY REPORT]
+   Means Test Letters Statistic Report    [EAS MT STATISTICS SUMMARY]
+   Unreturned Letter Statistic Report     [EAS MT UNRETURNED LETTERS]
+   Means Test Expiration by Appt Date     [EAS MT APPT EXPIRATION RPT]
+   Means Test Expiration Report           [EAS MT EXPIRATIONS]
+   User Enrollee Status for MT Letters    [EAS MT UE STATUS]
+  EAS MT Parameter Menu                   [EAS MT SETUP MENU]
+   EAS MT Parameter Entry/Edit            [EAS MT PARAMETERS]
+   Prohibit MT Letters Add/Edit           [EAS MT PROHIBIT EDIT]
+   Edit Final Section of Letters          [EAS MT LETTERS EDIT] 
+   Print a Test Letter (EAS MT)           [EAS MT TEST LETTER]
+   Clear Letter Search In-Use flag        [EAS MT CLEAR IN USE FLAG]
+   
+  The following background jobs need to no longer be scheduled:
+   
+  Background print job for EAS MT Letters     [EAS MT LETTER BG PRINT]
+  Background search for MT Anniversary dates  [EAS MT LETTERS BG SEARCH] 
+  Daily Means Test Expiration Report          [EAS MT EXPIRATION BG PRINT]
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+  N/A
+   
+   
+  Templates Associated:
+  ---------------------
+  The following is a list of templates included in this patch:
+   
+  Template Name            Type        File Name (Number)
+  -------------            ----        ------------------
+  N/A
+   
+     
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  Boise VAMC, ID
+  Chillicothe VAMC, OH
+  VA North Texas HCS, TX
+  
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as follows:
+   
+   Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+   EAS_1_P106_TM.pdf           Revised Local Signed Means Test Application (ROSSIO 22) User Manual
+   EAS_1_P106_UM.pdf           Revised Local Signed Means Test Application (ROSSIO 22) Technical Manual
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www.domain.ext/vdl/
+   
+  Patch Installation:
+  ===================
+   
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  Please see the Patch Description for patch DG*5.3*858 for installation 
+  instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1106P
+    Before:       n/a   After:  B6761093  **106**
+Routine Name: EASECMT
+    Before: B37169032   After: B37476470  **7,16,18,70,88,106**
+Routine Name: EASMTCHK
+    Before: B32966517   After: B37185022  **3,12,15,38,46,106**
+ 
+Routine list of preceding patches: 46, 88
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 19, 2012
+Completed By:                               Date Completed: FEB 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

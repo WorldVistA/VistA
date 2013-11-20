@@ -1,0 +1,132 @@
+$TXT Created by HERRING,VENESSA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 08/21/13 at 12:29
+=============================================================================
+Run Date: FEB 25, 2014                     Designation: PSO*7*429
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #360                      Status: Released
+                  Compliance Date: MAR 28, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*424   <<= must be installed BEFORE `PSO*7*429'
+
+Subject: ERROR IN ALLERGY ORDER CHECK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes the following issue:
+  
+ The Causative Agent showing up in the Allergy Order check in Outpatient
+ Pharmacy is not correct.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy ticket:
+ =========================
+ HD0000000868157 - Causative Agent showing is not correct for Allergy check
+   
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma City VA Medical Center
+ William S Middleton Memorial Veterans Hospital - Madison                
+ Orlando VA Medical Center
+  
+  
+ PSPO:
+ =====
+ #2444
+  
+  
+ Remedy Overview:
+ ================
+ HD0000000868157 - Causative Agent showing is not correct for Allergy check
+  
+  
+ Problem:
+ --------
+ If a patient has more than one allergy to a drug class, only the causative
+ agent for the first allergy entered displays during the allergy checking.
+  
+  
+ Resolution:
+ -----------
+ Modify processing so all causative agents are listed when processing a 
+ patient's prescription.
+  
+  
+ Technical Resolution:
+ ---------------------
+ Modify SYM+7^PSODGAL1 to loop through all the medication allergies for the
+ drug class and store them in the TRU array.
+ Modify DSPLY+13^PSODGAL1 to loop through TRU array and display all causative
+ agents.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install
+ this patch when users are not processing Pending Orders or Prescriptions
+ in Outpatient Pharmacy.  It should take less than 2 minutes to install
+ this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*429)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*429.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODGAL1
+    Before: B77165985   After: B81652199  **251,401,390,424,429**
+ 
+Routine list of preceding patches: 424
+
+=============================================================================
+User Information:
+Entered By  : HERRING,VENESSA               Date Entered  : JUN 24, 2013
+Completed By: HEFFERNAN,COREY               Date Completed: FEB 12, 2014
+Released By : PARRIS,CHRIS                  Date Released : FEB 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

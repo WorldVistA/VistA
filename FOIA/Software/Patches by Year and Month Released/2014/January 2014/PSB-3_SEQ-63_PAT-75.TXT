@@ -1,0 +1,195 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 04/25/13 at 10:57
+=============================================================================
+Run Date: JAN 14, 2014                     Designation: PSB*3*75
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #63                      Status: Released
+                  Compliance Date: FEB 14, 2014
+=============================================================================
+
+Associated patches: (v)PSB*3*19    <<= must be installed BEFORE `PSB*3*75'
+
+Subject: LONG INFUSION RATE, ON CALL ORDER ISSUE 
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1.  When the INFUSION RATE field (#.08) in the PHARMACY PATIENT IV sub-file
+     (#55.01) is greater than 27 characters (30 character max) for an 
+     Intravenous Piggyback (IVPB) order, the text added by the software will
+     cause the infusion rate to exceed the 47 character maximum in BCMA.
+  
+ 2.  An IVPB order with a SCHEDULE (#.09) and a STATUS (#100) of "On Call" 
+     in the PHARMACY PATIENT IV sub-file (#55.01) cannot be marked
+     as given using the Manual Medication Entry [PSB MED LOG NEW ENTRY] 
+     option.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC0000000303861 - Infusion rate too long
+  
+ 2. INC0000000609267 - Erratic Display Characteristics with On Call Order  
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS
+ Detroit VAMC
+ Durham VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000000303861 - Infusion rate too long
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #1444
+  
+    Problem:
+    --------
+    When the INFUSION RATE field (#.08) in the PHARMACY PATIENT IV sub-file
+    (#55.01) is greater than 27 characters (30 character max) for an 
+    Intravenous Piggyback (IVPB) order, the text "INFUSED OVER" and "MINUTES"
+    is added by the software, which causes the infusion rate to exceed the 47 
+    character maximum when filed in the INFUSION RATE field (#.35) in the
+    BCMA MEDICATION LOG (#53.79) file.
+  
+    Resolution:
+    -----------
+    The input transform for the INFUSION RATE field (#.35) in the BCMA 
+    MEDICATION LOG (#53.79) file was modified to allow 50 characters instead
+    of 47.
+  
+    Technical Description:
+    ----------------------
+    The INPUT TRANSFORM and HELP-PROMPT fields of the DATA DICTIONARY for the
+    INFUSION RATE field (#.35) of the BCMA MEDICATION LOG (#53.79) file have
+    been modified.
+  
+ ********************BEFORE***********************
+  
+ 53.79,.35     INFUSION RATE          0;11 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>47!($L(X)<1) X
+               LAST EDITED:      FEB 25, 2003 
+               HELP-PROMPT:      Answer must be 1-47 characters in length. 
+               DESCRIPTION:      This is the infusion rate for an IV bag, which
+                                 is passed by Inpatient Medications. 
+  
+  
+ ********************AFTER***********************
+  
+ 53.79,.35     INFUSION RATE          0;11 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>50!($L(X)<1) X
+               LAST EDITED:      OCT 10, 2012 
+               HELP-PROMPT:      Answer must be 1-50 characters in length. 
+               DESCRIPTION:      This is the infusion rate for an IV bag, which
+                                 is passed by Inpatient Medications.  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER 
+  
+  
+  
+ 2. INC00000000609267 - Erratic Display Characteristics with On Call Order  
+  
+    Problem:
+    --------
+    An IVPB order with a SCHEDULE (#.09) and a STATUS (#100) of "On Call" 
+    in the PHARMACY PATIENT IV sub-file (#55.01) cannot be marked
+    as given using the Manual Medication Entry [PSB MED LOG NEW ENTRY] 
+    option.
+  
+    Resolution:
+    -----------
+    Routine PSBMLEN was modified to allow an IVPB order with a SCHEDULE
+    (#.09) and a STATUS (#100) of "On Call" in the PHARMACY PATIENT IV
+    sub-file (#55.01) marked as given using the Manual Medication Entry 
+    option.
+          
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*75):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*75.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//" respond YES.
+  
+        1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+              Manual Medication Entry    [PSB MED LOG NEW ENTRY]  
+      
+        2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBMLEN
+    Before: B71915409   After: B73011702  **4,9,19,75**
+ 
+Routine list of preceding patches: 19
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : APR 22, 2013
+Completed By: PODLEY,CHRIS                  Date Completed: JAN 07, 2014
+Released By : CONNOLLY,BARBARA              Date Released : JAN 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,851 @@
+$TXT Created by GREENE,LYFORD K. at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Sunday, 07/28/13 at 15:17
+=============================================================================
+Run Date: JAN 07, 2014                     Designation: PRC*5.1*174
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #154                    Status: Released
+                  Compliance Date: FEB 07, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*150 <<= must be installed BEFORE `PRC*5.1*174'
+                    (v)HL*1.6*158  <<= must be installed BEFORE `PRC*5.1*174'
+                    (v)PRC*5.1*167 <<= must be installed BEFORE `PRC*5.1*174'
+
+Subject: IFCAP/eCMS Interface, Phase 2 Increment 1
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Input Template
+  - Sort Template
+
+Description:
+============
+
+ This patch is part of the IFCAP/eCMS Interface project, which is 
+ establishing bi-directional communications between the VistA 
+ package Integrated Funds Distribution, Control Point Activity, Accounting 
+ and Procurement (IFCAP) and the commercial Electronic Contract Management
+ System (eCMS) located at the Austin Information Technology Center (AITC) 
+ in Austin Texas. The goal is for the VA to benefit from eCMS's ability to
+ consolidate multiple requests, electronically prepare and issue
+ solicitation documents, receive electronic offers, automate contract 
+ administration, and provide interfaces to the Integrated Acquisition 
+ Environment initiatives.
+  
+ The Phase 1 patch (PRC*5.1*167) created an interface to send via HL7
+ messaging a 2237 from IFCAP to eCMS and another HL7 interface to send 2237
+ Return or Cancel transactions from eCMS to IFCAP.  This patch makes
+ modifications to several existing IFCAP options to support the business 
+ process changes required to maintain the interfaces and also implements
+ improvements to the Transaction Report - eCMS/IFCAP [PRCHJ TRANS REPORT].
+ This is an IFCAP-only patch and does not rely on associated changes in
+ eCMS.
+  
+ Among the enhancements are:
+  1. During edit sessions in options New 2237 (Service) Request [PRCSENRB],
+     Edit a 2237 (Service) [PRCSEDTD], Change Existing Transaction Number 
+     [PRCSANTN], Copy a Transaction [PRCSECP] and Approve Requests
+     [PRCSAPP] the software checks if the Requesting Service field is
+     populated and each Line Item has an item description.  If not, the
+     user is notified and instructed to correct the 2237 before it can move
+     to the next level of review.  This will prevent the 2237 from being
+     sent to the Accountable Officer with missing field entries.
+  
+  2. Currently, when an Accountable Officer (AO) attempts to send eCMS a 
+     2237 that is missing required data fields, the IFCAP software blocks
+     the 2237's transmission and displays a warning message reporting the
+     first error encountered, but not any additional errors until the
+     previous one has been corrected and transmission re-attempted.  The
+     software will now display all required field errors together at one 
+     time.  All missing required fields on the 2237 will be output to the
+     screen and included in a MailMan message to the AO.  This allows the
+     user to correct each error within a single edit session and
+     potentially avoid multiple transmission attempts when the 2237 has
+     more than one missing required data field.
+  
+  3. During the building of the HL7 message for the Send 2237 to eCMS
+     interface, the hard error due to a missing Line Item Description will
+     no longer occur.  The 2237 cannot be forwarded to the Accountable
+     Officer for processing if a Line Item Description is missing.
+  
+  4. A Supply employee identified as Manager also is now able to execute
+     the Retransmit a 2237 to eCMS [PRCHJ RETRANS 2237] option on the
+     Accountable Officer Menu [PRCHUSER PPM].
+  
+  5. Three additional user groups can now execute the Transaction Report  
+     - eCMS/ IFCAP. A Supply employee identified as Manager now can run the
+     report from the Accountable Officer Menu [PRCHUSER PPM]. The report
+     can also be run by Fiscal users holding the new security key PRCHJFIS.
+     Accounting Technicians will access the report from the Accounting 
+     Utilities Menu [PRCFA UTILITY], and Budget Analysts, from the Budget 
+     Utilities Menu [PRCB UTILITIES].
+  
+  6. The interface for 2237 Returned by eCMS and for 2237 Cancelled by
+     eCMS will now accept a transaction when the status of the 2237 is one
+     of the following: 'Assigned to Purchasing Agent', 'Sent to eCMS
+     (P&C)', 'Returned to Service by PPM' or 'Returned To Service by P&C'.
+     Previously it would reject the transaction if the 2237's status was
+     not 'Sent to eCMS (P&C)'.
+  
+  7. The existing report Outstanding 2237s [PRCHOUT OUTST 2237/PA] now
+     includes 2237s whose status is 'Sent to eCMS (P&C)' and excludes 2237s
+     with status 'Returned to Service by eCMS (P&C)', as is appropriate.
+  
+  8. The eCMS identifier at the 2237 header level has been changed from
+     'Sent to eCMS' to 'Accepted by eCMS' to reduce confusion with the
+     displayed document's status.  This value is also more accurate as the
+     identifier is populated in IFCAP after eCMS successfully imports
+     the 2237 into the eCMS database and then sends the internal Purchase
+     Request identifier back to IFCAP in the Application Acknowledgment.
+     Note:  This change affects all 2237s accepted by eCMS, including
+     those that were in the database before Patch 174 was installed.
+  
+  9. When a 2237 is renumbered using option Change Existing Transaction
+     Number [PRCSANTN], the eCMS identifiers (file #410 CONTROL POINT 
+     ACTIVITY, field #103 ECMS ACTIONUID and subfile #410.02 ITEM, field
+     #100 ITEM UID) are now removed from the entry receiving the new
+     transaction number.
+  
+ 10. When the Accountable Officer (AO) in Process a Request in PPM [PRCHPM
+     REQST] is editing a 2237 which already has eCMS identifiers, as would
+     be the case for a 2237 returned to service by eCMS, edited and then 
+     resubmitted to the AO, the AO can only accept the default status of 
+     'Pending Accountable Officer Sig.', or change it to one of:  'Returned
+     to Service by PPM' or 'Sent to eCMS (P&C)'.  The AO will not be able
+     to direct the 2237 elsewhere.
+  
+ 11. When a Control Point User in IFCAP cancels a 2237, or triggers 
+     cancellation by changing a 2237's transaction number, the user's
+     identity and the date/time of the cancellation are now stored in the 
+     2237 record (in the CONTROL POINT ACTIVITY file (#410), fields 
+     CANCELLED BY (#104) and CANCEL DATE/TIME (#105)). When a Control Point
+     User runs the existing Transaction Status Report [PRCSTS] option on
+     the Display Control Point Activity Menu [PRCSD], the data in these two
+     fields will be displayed for those transactions cancelled after the
+     installation of this patch.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ CONTROL POINT ACTIVITY     REQUESTING SERVICE (#6.3)  Modified
+ (#410)
+  
+ CONTROL POINT ACTIVITY     CANCELLED BY (#104)        New
+ (#410)
+  
+ CONTROL POINT ACTIVITY     CANCEL DATE/TIME (#105)    New
+ (#410)                   
+  
+ IFCAP/ECMS                 IFCAP REFERENCE
+ TRANSACTION (#414.06)      NUMBER (#.01)              Modified
+  
+ IFCAP/ECMS
+ TRANSACTION (#414.06)
+ EVENT SUBFILE (#414.061)   EVENT TYPE (#.02)          Modified
+  
+ IFCAP/ECMS
+ TRANSACTION (#414.06)
+ EVENT SUBFILE (#414.061)   ECMS EMAIL (#6)            Modified
+  
+ IFCAP/ECMS EVENT           N/A                        New
+ TYPE (#414.07)
+  
+  
+ Forms Associated:
+  
+ Form Name              File #            New/Modified/Deleted
+ ---------              ------            --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                          New/Modified/Deleted
+ ---------------                          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Menu Text/Name         Type             New/Modified/Deleted
+ ---------------------         ----             --------------------
+ Retransmit a 2237 to eCMS
+  [PRCHJ RETRANS 2237]         RUN ROUTINE      Modified
+  
+ Outstanding 2237s
+  [PRCHOUT OUTST 2237/PA]      PRINT            Modified  
+  
+ Transaction Report - 
+ eCMS/IFCAP                                                                
+  [PRCHJ TRANS REPORT]         RUN ROUTINE      Modified
+  
+ Transaction Report -
+ eCMS/IFCAP
+  [PRCHJ TRANS REPORT2]        RUN ROUTINE      Modified
+  
+ Transaction Report -
+ eCMS/IFCAP
+  [PRCHJ TRANS REPORT3]        RUN ROUTINE      New
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name                        New/Modified/Deleted
+ -----------------                        --------------------
+ PRCHJFIS                                 New
+  
+  
+ Templates Associated:
+  
+ Template Name      Type    File Name (Number)       New/Modified/Deleted
+ ----------------   ----    --------------------     --------------------
+ PRCH OUTSTANDING   SORT    REQUEST WORKSHEET        Modified
+  REQUEST/PA                (#443)  
+  
+ PRCSEN2237B        INPUT   CONTROL POINT            Modified
+                            ACTIVITY (#410)
+  
+ PRCSENPR           INPUT   CONTROL POINT            Modified
+                            ACTIVITY (#410)
+  
+ PRCSENR&NR         INPUT   CONTROL POINT            Modified
+                            ACTIVITY (#410)
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ------------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ------------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ The following sites participated in testing and signed off on the 
+ PRC*5.1*174 patch.
+  
+  1. Greater Los Angeles Healthcare System (Large/Integrated)
+  2. Grand Junction VA Medical Center (Small) 
+  3. Southern Arizona Health Care System (Large)
+  4. St. Cloud VA Medical Center (Medium)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+  
+  ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                      File Name
+ ----------------------------------------------------------------------
+ Accounting Technician User's Guide    IFCP5_1ACCOUNTING_TECH.PDF
+ Application Coordinator User's Guide  IFCP5_1APPLICATION_COORD.PDF
+ Budget Analyst User's Guide           IFCP5_1BUDGET_ANALYST.PDF
+ Control Point Clerk User's Guide      IFCP5_1CP_CLERK.PDF
+ Control Point Official User's Guide   IFCP5_1CP_OFFICIAL.PDF
+ PPM Accountable Officer               IFCP5_1PPM_ACCOUNTABLE_OFFICER.PDF
+ Purchasing Agent User's Guide         IFCP5_1PURCHASING_AGENT.PDF
+ Package Security Guide                IFCP5_1SECURITY_GUIDE.PDF
+ Technical Manual                      IFCP5_1TECH_MANUAL.PDF
+  
+                         ***** Note *****
+         Use Binary mode when transferring the .PDF files. 
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ * This patch includes an environment check (ENV^PRC174P) that will perform
+   the actions listed below.  Please note, the environment check routine
+   will be automatically deleted by KIDS once the patch installation is
+   complete.
+  
+   1. It will determine if the installer's programmer variables are 
+      set up properly and abort the install if they are not.
+  
+  
+ * This patch has no pre-installation items.
+  
+  
+ * This patch includes a post-installation (POST^PRC174P) that will perform
+   the actions listed below.  Please note, the post install routine will be
+   automatically deleted by KIDS once the patch installation is complete.
+  
+   1. Delete extraneous temporary global node ^TMP("KCLTST","AOESIG") that
+      was being set in tag^routine (ORC^PRCHJS07).
+  
+   2. Set ID node for CONTROL POINT ACTIVITY (#410) file.
+  
+   3. For all existing '2237 SENT' and '2237 RESENT' entries in the 
+      IFCAP/ECMS TRANSACTION file (#414.06), EVENT subfile (#414.061),
+      populate File 414.061's STATION (#1) field with the data values of
+      the corresponding 2237 entries in the CONTROL POINT ACTIVITY file
+      (#410), STATION NUMBER (#.5) field.  Additionally, for each 2237
+      originating at one of the substations of its station, populate the
+      entry in File 414.061, SUB-STATION (#2) field with the data value of
+      the corresponding 2237 entry in the CONTROL POINT ACTIVITY file
+      (#410), SUBSTATION (#448) field.
+  
+  
+ Note: Due to changes introduced by PRC*5.1*174 to the Data Dictionaries
+ and other globals as well as routines, in the unlikely event that this
+ patch needs to be backed out, please log a REMEDY Ticket for 
+ repair-in-place options/assistance.
+  
+ Installation Instructions
+ -------------------------
+ * Users On the System
+  
+    This patch may be installed with users on the system, although it is 
+    recommended that it be installed during non-peak hours to minimize
+    potential disruption to IFCAP users.
+  
+    The following IFCAP options should be placed out of order to reduce the
+    possibility of errors when the routines are updated.
+  
+     - Accountable Officer Menu [PRCHUSER PPM]
+     - Accounting Utilities Menu [PRCFA UTILITY]
+     - Budget Utilities Menu [PRCB UTILITIES]
+     - Control Point Clerk's Menu [PRCSCP CLERK]
+     - Control Point Official's Menu [PRCSCP OFFICIAL]
+     - Purchasing Agent [PRCHUSER PA] 
+  
+ * Software Installation Time
+    
+    This patch should take less than 5 minutes to install during non-peak 
+    hours.
+  
+ * Required Builds
+  
+    The following is a list of REQUIRED builds for this KIDS distribution. 
+    KIDS will not allow the installation of this patch without their prior
+    installation.
+  
+     Required Build(s):
+     ------------------
+     HL*1.6*158
+     PRC*5.1*150
+     PRC*5.1*167  
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ * There are no pre-installation instructions associated with this patch.
+  
+ * Installation Steps
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select the
+     Installation Menu.  From this menu, you may elect to use the following
+     options.  When prompted for the INSTALL NAME enter the patch ID
+     (PRC*5.1*174):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  answer NO.   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  answer YES. 
+  
+     The following IFCAP Options should be placed out of order:
+  
+      a. Accountable Officer Menu [PRCHUSER PPM]
+      b. Accounting Utilities Menu [PRCFA UTILITY]
+      c. Budget Utilities Menu [PRCB UTILITIES]
+      d. Control Point Clerk's Menu [PRCSCP CLERK]
+      e. Control Point Official's Menu [PRCSCP OFFICIAL]
+      f. Purchasing Agent [PRCHUSER PA] 
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Assign the new security key (PRCHJFIS).
+  
+    The Chief Fiscal Officer should be contacted to identify the
+    appropriate Fiscal staff requiring access to the Transaction Report -
+    eCMS/IFCAP [PRCHJ TRANS REPORT3] option residing on the Accounting
+    Utilities Menu [PRCFA UTILITY] and Budget Utilities Menu [PRCB
+    UTILITIES].
+  
+    Once the appropriate Fiscal staff have been identified, the new
+    security key should then be assigned by OIT staff or the IFCAP (Fiscal)
+    Application Coordinator.
+  
+  
+ 2. Note consequences of fact that: Input template (PRCSENR&NR) is no
+    longer compiled.
+  
+    This patch is exporting the input template (PRCSENR&NR) that is used 
+    for creating and editing a 'Repetitive and Non-Repetitive' request in 
+    IFCAP.  The input template was previously released as 'compiled' and
+    the logic for this template was compiled into a set of routines within
+    the PRCST1* namespace.
+  
+    With the installation of this patch (PRC*5.1*174), the input template 
+    will no longer be 'compiled' and the routines associated with the input
+    template will not be invoked.  This means that VA FileMan will now run
+    off the input template directly instead of the compiled set of routines
+    within the PRCST1* namespace.
+  
+    ***** Please Note *****
+    a. If any local code changes were made to the compiled routines 
+       associated with this input template, they will no longer be invoked
+       or functional. 
+  
+    b. The set of routines associated with the 'compiled' version of 
+       the (PRCSENR&NR) input template may be left on your system or 
+       manually deleted.
+  
+    c. If you intend to manually delete the no-longer-invoked compiled 
+       template routines, proceed with caution and consider the following:
+  
+       - The number of routines generated for the compiled input template
+         is specific to the individual VistA instance and is dependent upon
+         system settings for maximum compiled routine size.  Therefore,
+         this patch does not automatically delete the routines due to the
+         potential variation among sites.
+  
+       - Prior to performing a manual deletion of the PRCST1* routines, it
+         is highly recommended that you review each routine to verify it is
+         associated with the input template.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC174P
+    Before:       n/a   After: B16034261  **174**
+ Description of Changes:
+  Pre/Post install routine for patch PRC*5.1*174.
+
+Routine Name: PRCHG
+    Before: B45716254   After: B46345680  **81,167,174**
+ Description of Changes:
+  The following changes were made to ES1^PRCHG:
+  * Modified logic to output all errors returned from $$SEND2237^PRCHJS01 to
+    the screen.
+  * Modified logic to log all errors returned from $$SEND2237^PRCHJS01 in
+    the IFCAP/ECMS TRANSACTION file (#414.06) via the LOG^PRCHJTA API.
+  * Modified logic to include all errors returned from $$SEND2237^PRCHJS01
+    in the error notification mail message to Accountable Officer.
+   
+  The following change was made to STAT^PRCHG, which is called by the input 
+  transform of the CURRENT STATUS field (#1.5) of the REQUEST WORKSHEET 
+  file (#443):
+  * If the 2237 has eCMS identifiers, the DIC("S") screen is set to only
+    allow selection of a status of "Sent to eCMS (P&C)" (69), "Returned to
+    Service by PPM" (63), or "Pending Accountable Officer Sig." (60).
+
+Routine Name: PRCHJMSG
+    Before: B10009804   After: B13099425  **167,174**
+ Description of Changes:
+  In module BLD where messages are being addressed to the Accountable
+  Officer, Control Point Official, and/or Requestor when a 2237 is returned
+  or canceled, a check was added to make sure that the appropriate field is
+  populated before setting up the XMY array entry in order to prevent a
+  potential null subscript error.  This check became more critical when the
+  software processing the incoming HL7 transaction was changed to accept
+  transactions for 2237s whose status is "Returned to Service by PPM" or
+  "Returned To Service by P&C".  Those earlier returns would have removed
+  signatures and pointer values to the NEW PERSON file (#200).
+
+Routine Name: PRCHJR01
+    Before:B143518446   After:B172209901  **167,174**
+ Description of Changes:
+  In module PARSE added path for a return to service by eCMS where the 2237 
+  had already been returned to service by the Accountable Officer or the 
+  IFCAP Ordering Officer. Similarly added a path for cancel from eCMS where
+  the 2237 has previously been returned to service by the Accountable
+  Officer or IFCAP Ordering Officer.
+   
+  In module RET2AO added logic to delete the IFCAP Ordering Officer's NEW 
+  PERSON file (#200) reference and date/time value from the PURCHASING AGENT
+  field (#6) and the DATE ASSIGNED TO PA field (#7) respectively of the 
+  REQUEST WORKSHEET file (#443) if a 2237 is being returned to the 
+  Accountable Officer by eCMS.
+   
+  In module VALIDATE changed the logic to accept the incoming 2237 
+  return to service by eCMS or cancel transaction if the 2237 in IFCAP has a
+  status of "Sent to eCMS (P&C)", "Assigned to Purchasing Agent", "Returned
+  To Service by P&C", or "Returned to Service by PPM".  Previously, the
+  logic would reject the transaction unless the 2237 was in status "Sent to
+  eCMS (P&C)".  Also added check to reject an incoming return to 
+  Accountable Officer transaction if the current status of the 2237 is 
+  "Returned To Service by P&C" or "Returned to Service by PPM".  This is 
+  necessary as the Control Point Official signature had been removed by 
+  the previous return and the 2237 has to be resubmitted to the Control 
+  Point Official for review and approval before going back to the 
+  Accountable Officer.
+   
+  In the text table following tag ERRTABLE:
+  1. Changed the wording for the error message #7 concerning wrong 2237
+     status.
+  2. Added error message #21 concerning attempted return to Accountable
+     Officer of 2237 which is in a Returned to Service status.
+
+Routine Name: PRCHJR03
+    Before:  B7485505   After: B10192642  **167,174**
+ Description of Changes:
+  Extrinsic function $$ECMSRETN^PRCHJR03() was added to perform remaining 
+  return to control point from eCMS tasks for 2237s which have already 
+  been returned to service by the Accountable Officer ("Returned to 
+  Service by PPM") or the IFCAP Ordering Officer ("Returned To Service by
+  P&C").
+
+Routine Name: PRCHJRP1
+    Before:B201702299   After:    Delete  
+ Description of Changes:
+  This routine will be deleted at the site.
+
+Routine Name: PRCHJRP2
+    Before: B35489110   After:    Delete  
+ Description of Changes:
+  This routine will be deleted at the site.
+
+Routine Name: PRCHJRP5
+    Before:       n/a   After:B131946291  **174**
+ Description of Changes:
+  EN^PRCHJRP5 is the entry point for options PRCHJ TRANS REPORT, PRCHJ TRANS
+  REPORT2 and PRCHJ TRANS REPORT3, which are the Transaction Report - 
+  eCMS/IFCAP for the Accountable Officer, Control Point and Fiscal/Budget 
+  users respectively. It prompts the user for report parameters. It later
+  invokes GATHER^PRCHJRP6 during execution of the report logic.
+
+Routine Name: PRCHJRP6
+    Before:       n/a   After: B82490228  **174**
+ Description of Changes:
+  This routine contains logic for compiling and displaying the Transaction 
+  Report - eCMS/IFCAP. GATHER^PRCHJRP6 is invoked by routine PRCHJRP5.
+
+Routine Name: PRCHJS01
+    Before: B32931088   After: B34864195  **167,174**
+ Description of Changes:
+  The following changes were made to PRE2237^PRCHJS01:
+  * Modified the function that performs pre-validation checks on specified
+    2237 data elements being transmitted to eCMS.  The function will now
+    return multiple pre-validation errors in an array (passed by reference).
+  * A hard error was occurring when an IFCAP user attempted to transmit or 
+    retransmit a 2237 to eCMS and the 2237 contained a Line Item without a 
+    description.
+   
+   
+  The following changes were made to SEND2237^PRCHJS01:
+  * Modified the function that is the primary driver for retrieving and
+    sending a 2237 transaction to eCMS in single HL7 message (OMN^O07). The
+    function will now return multiple errors in an array (passed by
+    reference) if they occur during the retrieval and sending of a 2237
+    transaction to eCMS.
+
+Routine Name: PRCHJS02
+    Before:B160738440   After:B161312507  **167,174**
+ Description of Changes:
+  The following changes were made to GETITEMS^PRCHJS02:
+  * Modified the logic that is responsible for placing the formatted
+    Description (Word Processing) text for a Line Item into the 
+    ^UTILITY($J,"W") global.  Specifically, a change was made to also kill
+    the ^UTILITY($J,"W") global after use of the ^DIWP utility.
+
+Routine Name: PRCHJS05
+    Before:B105876352   After:B105148815  **167,174**
+ Description of Changes:
+  The following changes were made to ORC^PRCHJS05:
+  * Removed the single line of code that was setting data into the
+    extraneous global node ^TMP("KCLTST","AOESIG").
+
+Routine Name: PRCHJS07
+    Before: B47804786   After: B50659801  **167,174**
+ Description of Changes:
+  The following changes were made to ENTACT^PRCHJS07:
+  * The function ENTACT is called from the Entry Action of the Retransmit a
+    2237 to eCMS [PRCHJ RETRANS 2237] option. This function was modified to
+    check the SUPPLY EMPLOYEE (#400) field of the NEW PERSON file (#200)
+    and determine if user is assigned as PPM ACCOUNTABLE OFFICER or MANAGER.
+    If the user is not assigned as the PPM ACCOUNTABLE OFFICER or MANAGER,
+    access to the option will be denied.
+   
+  The following changes were made to RETRANS^PRCHJS07:
+  * Modified logic to output all errors returned from $$SEND2237^PRCHJS01 to
+    the screen.
+  * Modified logic to log all errors returned from $$SEND2237^PRCHJS01 in
+    the IFCAP/ECMS TRANSACTION file (#414.06) via the LOG^PRCHJTA API.
+  * Modified logic to include all errors returned from $$SEND2237^PRCHJS01
+    in the error notification mail message to Accountable Officer.
+   
+  The following changes were made to DISP2237^PRCHJS07:
+  * At line tag DISP2237+1, the comment describing the procedure contained a
+    misspelling.  Corrected spelling of "disply" to "display".
+
+Routine Name: PRCHJTA
+    Before: B48621585   After: B46759830  **167,174**
+ Description of Changes:
+  GETSTN^PRCHJTA has been added to provide a common internal call for 
+  identifying the correct STATION and SUB-STATION data needed for storage 
+  into the IFCAP/ECMS TRANSACTION file (414.06).  Additionally, locking was 
+  updated within the API call LOG^PRCHJTA and a typo fixed within the 
+  internal call TYPE^PRCHJTA.
+
+Routine Name: PRCHJUTL
+    Before:  B5808246   After: B45318911  **167,174**
+ Description of Changes:
+  Added new function ITDES. This function checks a single Line Item on a
+  2237 to make sure it has a description.
+   
+   Input:
+     PRC410R - (required) IEN of record in CONTROL POINT ACTIVITY (#410) 
+               file
+    PRCITIEN - (required) IEN of record in ITEM (#410.02) sub-file
+   
+   Output:
+     Function value - 1 on success, 0 on failure (no Line Item Description)
+   
+   
+  Added new function ITDESALL.  This function checks all Line Items on a
+  document to make sure they have a description.
+   
+   Input:
+     PRC410R - (required) IEN of record in CONTROL POINT ACTIVITY (#410) 
+               file
+   
+   Output:
+     Function value - 1 on success, 0 on failure (one or more Line Items 
+                      don't have description)
+     PRCERR - (optional) on failure, an error message array is returned,
+              pass by reference
+               Array format:
+                PRCERR(1)="Line Item #3 Description is missing."
+                PRCERR(2)="Line Item #5 Description is missing."
+                PRCERR(3), etc.
+   
+   
+  Added new function REQCHECK.  This function is used to check a 2237 and
+  determine if the Requesting Service field and Description field for 
+  all Line Items are populated.
+   
+   Input:
+     PRC410R - (required) IEN of record in CONTROL POINT ACTIVITY (#410) 
+               file
+    PRCQUIET - (optional) 0=silent call, 1=output warning msgs
+   
+   Output: 
+     Function value - 1 on success, 0 on failure-field(s) not populated
+     PRCWARN - (optional) on failure, an warning message array is returned,
+               pass by reference
+                Array format:
+                 PRCWARN(1)="Requesting Service is missing."
+                 PRCWARN(2)="Line Item #3 Description is missing."
+                 PRCWARN(3), etc.
+
+Routine Name: PRCSAPP1
+    Before: B12057361   After: B16255463  **148,174**
+ Description of Changes:
+  The following changes were made to T2^PRCSAPP1:
+    * T2 contains checks to determine if a transaction is ready for final 
+      approval.  A new check was added to determine if the request being
+      processed is a 2237 transaction (Form Type IEN 2,3, or 4). If the
+      request is a 2237 then check if the required fields (Requesting 
+      Service and all Line Item Descriptions) are populated.  If the 2237
+      required field check fails then the variable SPENDCP is set equal to
+      12 to indicate the transaction is "Missing required data, 2237 request
+      needs to be edited prior to approval.".
+
+Routine Name: PRCSCK
+    Before: B58904514   After: B65643316  **81,174**
+ Description of Changes:
+  Added new procedure CHKITDES.
+  * This procedure checks all Line Items on a 2237 to make sure they have a
+    description.
+  * If any Line Item Descriptions are not populated, the procedure does the
+    following:
+    - Outputs a warning message to the user including the line item numbers
+      missing a description.
+    - Sets branching logic for the input template so the user will be 
+      returned to the "Select LINE ITEM NUMBER:" prompt.
+  * The input templates PRCSEN2237B that is used for entering/editing a 
+    'NON-REPETITIVE (2237) ORDER' (Form Type=2) and PRCSENR&NR that is used 
+    for entering/editing a 'REPETITIVE AND NON-REP ORDER' (Form Type=4) make
+    calls to this new procedure.
+
+Routine Name: PRCSD12
+    Before:  B5330398   After:  B5349838  **167,174**
+ Description of Changes:
+  The following changes were made to V^PRCSD12:
+   
+  * This module was modified to change the text from "Sent to eCMS" to 
+    "Accepted by eCMS" which appears in the upper right of 2237 display.  
+    The new text "Accepted by eCMS" will display for 2237s that were sent to
+    eCMS and for which IFCAP has received an application acknowledgment
+    containing the eCMS identifiers.
+
+Routine Name: PRCSEA
+    Before: B76984063   After: B77709239  **81,147,150,174**
+ Description of Changes:
+  A ^DIE call was added so that after the Control Point user commits to
+  cancelling a transaction the DUZ of the user and the current date/time are
+  filed in fields CANCELLED BY (#104) and CANCEL DATE/TIME (#105)
+  respectively of the CONTROL POINT ACTIVITY file (#410).
+
+Routine Name: PRCSEB
+    Before: B17751549   After: B19745869  **81,174**
+ Description of Changes:
+  The following changes were made to W61^PRCSEB:
+  * W61 contains logic for prompting a user "Is this request ready for
+    approval?".  This logic was modified to determine if the request being
+    processed is a 2237 transaction (Form Type IEN 2,3, or 4). If the 
+    request is a 2237 then check if the required fields (Requesting Service 
+    and all Line Item Descriptions) are populated.  If the 2237 required 
+    field check fails then output warning message to screen with the missing
+    data and don't allow approval of the 2237.
+
+Routine Name: PRCSEB0
+    Before: B22631602   After: B23160815  **81,174**
+ Description of Changes:
+  The following changes were made to ED1^PRCSEB0:
+   * When a user is using the following options:
+   
+       - New 2237 (Service) Request [PRCSENRB]
+       - Edit a 2237 (Service) [PRCSEDTD]
+       - Change Existing Transaction Number [PRCSANTN]
+   
+     Modifications were made to determine if the request being processed is
+     a 2237 transaction (Form Type IEN 2, 3, or 4).  If the request is a
+     2237 then check if the required fields (Requesting Service and all Line
+     Item Descriptions) are populated.  If the 2237 required field check
+     fails then output warning message to screen with the missing data prior
+     to issuing the prompt "Would you like to review this request?".
+
+Routine Name: PRCSECP
+    Before: B28930970   After: B39428501  **81,148,174**
+ Description of Changes:
+  The following changes were made to C^PRCSECP:
+  * After user selects a 2237 transaction to be copied:
+    - Warn user if 2237 is missing Requesting Service.
+    - Warn user if 2237 has any Line Items missing a description.
+   
+  Added new routine tag PROCEED^PRCSECP:
+  * Modified the help associated with the "Would you like to proceed with
+    copying this request" prompt when a user enters a "?".
+  * At the "Would you like to proceed with copying this request" prompt; if
+    the user enters 'No' or '^' to abort copying the transaction, a
+    message will be output to the screen that the transaction data was not 
+    copied and they are returned to the "Select the Transaction to be
+    copied: " prompt.
+
+Routine Name: PRCSP12
+    Before:  B8040343   After:  B8060908  **167,174**
+ Description of Changes:
+  The following changes were made to P^PRCSP12:
+   
+  * This module was modified to change the text from "Sent to eCMS" to 
+    "Accepted by eCMS" which appears in the upper right of 2237 display.  
+    The new text "Accepted by eCMS" will display for 2237s that were sent to
+    eCMS and for which IFCAP has received an application acknowledgment
+    containing the eCMS identifiers.
+
+Routine Name: PRCSP13
+    Before: B20364908   After: B22261437  **174**
+ Description of Changes:
+  Module CA was modified to print the values of the CONTROL POINT ACTIVITY 
+  file (#410) fields CANCELLED BY (#104) and CANCEL DATE/TIME (#105) if 
+  they are populated.
+
+Routine Name: PRCSUT2
+    Before: B52607046   After: B58831488  **13,135,148,150,174**
+ Description of Changes:
+  The following changes were made to CK1^PRCSUT2:
+  * A call to extrinsic function $$XECMSIDS^PRCHJR03() was added to remove 
+    any eCMS identifiers from a CONTROL POINT ACTIVITY file (#410) record
+    after it has been assigned a new transaction number.  If this 2237 
+    transaction is resubmitted to eCMS it will be treated as a new Purchase 
+    Request and assigned new eCMS identifiers.  The old identifiers would be
+    retired.
+  * A DIE call was added to file in the CANCELLED BY field (#104) of the 
+    CONTROL POINT ACTIVITY file (#410) entry the user who cancelled the
+    old transaction number. By the trigger cross reference on field #104,
+    the CANCEL DATE/TIME field (#105) is also populated.
+   
+  The following changes were made to W1^PRCSUT2:
+  * W1 contains logic for prompting a user to 'edit this request?'.  This
+    logic was modified to determine if the request being processed is a
+    2237 transaction (Form Type IEN 2,3, or 4). If the request is a 2237
+    then check if the required fields (Requesting Service and all Line Item
+    Descriptions) are populated.  If the 2237 required field check fails
+    then output warning message to screen with the missing data and force
+    user to edit 2237 without prompting.
+
+ 
+Routine list of preceding patches: 150, 167
+
+=============================================================================
+User Information:
+Entered By  : LOUCK,KEVIN                   Date Entered  : DEC 05, 2012
+Completed By: RUDINGER,NANCY L.             Date Completed: DEC 18, 2013
+Released By : NELSON,VICKI M                Date Released : JAN 07, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

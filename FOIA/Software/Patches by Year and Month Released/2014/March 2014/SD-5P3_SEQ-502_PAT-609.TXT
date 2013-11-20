@@ -1,0 +1,219 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 11/18/13 at 14:43
+=============================================================================
+Run Date: MAR 17, 2014                     Designation: SD*5.3*609
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #502                    Status: Released
+                  Compliance Date: APR 01, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*608  <<= must be installed BEFORE `SD*5.3*609'
+
+Subject: MID-FY2014 TABLE MAINTENANCE FOR CLINIC STOP FILE  
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides Fiscal Year 2014 Mid Year updates to the CLINIC STOP 
+ file (#40.7) as requested by the Decision Support Office (DSO).
+  
+                         *** IMPORTANT NOTE ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of April 1, 2014. *
+ ** This patch should be installed as close to COB on March 31, 2014      *
+ ** as possible but not after April 1, 2014.  Early installation of       *
+ ** this patch could result in transmission of incorrect stop codes       *
+ ** that will result in errors from Austin.  Coordination with the        *
+ ** MAS PAS/ADPAC is imperative as the patch will cause changes to the    *
+ ** CLINIC STOP file (#40.7).  Testing can be done in a site's mirror     *
+ ** account before installation in production to verify changes.          *
+ ** This patch creates and modifies descriptions of stop                  *
+ ** codes effective April 1, 2014, therefore installing early may         *
+ ** modify certain stop codes that may currently be in use at your site.  *
+ ** It is advised that clinics with stop codes assigned that will         *
+ ** incur restriction date/type changes should be corrected as soon as    *
+ ** possible after installation.  Please keep in mind that new stop       *
+ ** code corrections should not be assigned until April 1, 2014 as they   *
+ ** will not be accepted in Austin until that date.  All other stop code  *
+ ** corrections should be made as early as possible on April 1, 2014.     *
+ **************************************************************************
+  
+  
+ DSS Instructions for FY14 Mid Year Stop Code Patch (SD*5.3*609)
+ ---------------------------------------------------------------
+ This patch makes additions and changes to the Clinic Stop (Stop Code) 
+ file (#40.7) as of April 1, 2014.
+  
+   - No clinic can be created using any new or reactivated Stop Codes 
+     contained in the patch until after this patch is implemented.
+  
+   - Any clinics using a Stop Code inactivated by the patch should have an 
+     active Stop Code assigned.  Assigning appropriate active Stop Codes 
+     to clinics can be accomplished prior to patch implementation if 
+     desired.
+  
+ DSS Site Teams, Scheduling and IRM should coordinate to perform the 
+ following sequence:
+  
+ 1.) Run the DSS worksheet option Create DSS Clinic Stop File [ECXSCLOAD].
+     Then, make any necessary adjustments before approval so all clinics on
+     the worksheet have setups applicable for the month of March 2014.
+  
+ 2.) IRM installs the patch late on March 31 or early on April 1, 2014.
+  
+ 3.) Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE REP]
+     menu option, to list those clinics that need changes in the HOSPITAL
+     LOCATION file (#44) for FY14 Mid Year.  Work with Scheduling staff to
+     make changes in file (#44) so that the clinics will have the correct
+     stop codes in place for April 1st clinic appointments.  DO NOT make
+     changes using Enter/Edit to the CLINICS AND STOP CODES file (#728.44)
+     at this time.
+  
+ 4.) Follow normal procedures to run the DSS CLI Extract for March 2014.  
+     Updates should not be made for April stop code changes with the 
+     Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT] menu option prior to
+     running the March CLI Extract.  Perform normal AUDITS for the CLI
+     Extract.
+  
+ 5.) After auditing the March CLI Extract proceed with FY14 Mid Year Stop 
+     Code changes to the DSS Clinics and Stop Codes Worksheet clinics:
+  
+     a. Run the Create DSS Clinic Stop File [ECXSCLOAD] option.  This
+        option creates local entries in the CLINICS AND STOP CODES file
+        (#728.44) and compares the file to the HOSPITAL LOCATION file (#44)
+        to see if there are any differences since the last time the file
+        was reviewed.
+  
+     b. Use the Clinics and DSS Stop Codes Print [ECXSCLIST] menu option.
+        This option produces a worksheet of (A)All Clinics, (C)Active,
+        (I)Inactive, or only the (U)Unreviewed Clinics that are awaiting
+        approval.
+  
+     c. Update for FY14 Mid Year as needed using the Enter/Edit DSS Stop 
+        Codes for Clinics [ECXSCEDIT] menu option.
+  
+     d. Approve changes using the Approve Reviewed DSS Clinic Worksheet 
+        [ECXSCAPPROV] menu option.  Finalize all Stop Code changes on the
+        worksheet to be ready to run the April DSS CLI Extract.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ INC000000911149 - FY2014 Mid-Year Table Maintenance for CLINIC STOP file 
+                   (#40.7)
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ Salisbury, NC
+ Upstate New York HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000000911149 - FY2014 Mid-Year Table Maintenance for CLINIC STOP file 
+                   (#40.7)
+  
+ Problem:
+ --------
+ As requested by the Decision Support office, the CLINIC STOP file 
+ (#40.7), will be updated to add one new stop code and changing the name 
+ of one existing stop code.
+  
+ Resolution:
+ -----------
+ This patch updates the CLINIC STOP file (#40.7) by adding one (1) new stop
+ code and changing the name for one (1) stop code.
+  
+ Stop Code Being Added (will take effect when the patch is installed, but
+                        should not be used until 3/31/2014.)
+  
+    441  TELEPHONE ANESTHESIA
+         Restriction Type: P      Restriction Date: 4/1/2014
+  
+ Stop Code with Name Change only (will take effect when the patch is
+                                  installed):
+  
+    350  Old Name:  GERIATRIC PRIMARY CARE
+         New Name:  GERIPACT
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Installation will take less than 2 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ *** Routine SD53MY14 can be manually deleted after patch is installed. ***
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select the following options:
+      (when prompted for INSTALL NAME, enter SD*5.3*609)
+  
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch 
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - this option will ensure the
+         integrity of the routines that are in the transport global.
+      d. Print Transport Global - this option will allow you to view the 
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package SD*5.3*609.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP file (#40.7).  If any discrepancies
+       are found you should enter a Remedy ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53MY14
+    Before:       n/a   After: B65237534  **609**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 23, 2013
+Completed By:                               Date Completed: FEB 06, 2014
+Released By :                               Date Released : MAR 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

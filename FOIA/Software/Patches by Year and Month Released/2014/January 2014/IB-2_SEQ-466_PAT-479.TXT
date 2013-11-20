@@ -1,0 +1,171 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 07/19/12 at 18:15
+=============================================================================
+Run Date: JAN 13, 2014                     Designation: IB*2*479
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #466                      Status: Released
+                  Compliance Date: FEB 12, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*304    <<= must be installed BEFORE `IB*2*479'
+                    (v)IB*2*339    <<= must be installed BEFORE `IB*2*479'
+                    (v)IB*2*403    <<= must be installed BEFORE `IB*2*479'
+                    (v)IB*2*438    <<= must be installed BEFORE `IB*2*479'
+
+Subject: SITE PARAMETER DISPLAYS INCORRECTLY FOR IV SECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues: 
+  
+ 1. The extract name which displays incorrectly for IV section in the MCCR 
+    Site Parameter Display/Edit option.
+  
+ 2. A '^' character is causing duplicate CPT codes (in the thousands) on 
+    Inpatient bills in the Enter/Edit Billing Information option.
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000359215 Site Parameter displays incorrectly for IV section
+ 2. INC000000407527 CPT codes on Inpt bills (many) duplicated 1000's of
+    times
+    Duplicates
+    ----------
+    INC000000428112 CPT99232 freeze
+    INC000000496535 Duplicating procedures for a bill
+    INC00000806685 Accounts Receivable - Functionality Issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Maryland HCS
+ Upstate New York HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000359215 Site Parameter displays incorrectly for IV section
+  
+  Problem:
+  --------
+  When the batch extract parameters are displayed in the [IBJ MCCR SITE
+  PARAMETERS] option, the extract names don't belong to their associated
+  selection criteria on the same line.
+  
+  Resolution:
+  -----------
+  Routine IBJPI was modified to pass the internal number of the extract
+  name instead of the external value to FILEMAN DIQ call and return the
+  appropriate extract name to display in the option.
+  
+ 2. INC000000407527 CPT codes on Inpt bills (many) duplicated 1000's of times
+  
+  Problem:
+  --------
+  Site user received the CPT duplicates in thousands on an inpatient bill
+  in the IB option. The internal number of the secondary diagnosis code
+  associated with the procedure is incorrectly used as the quantity to
+  duplicate the CPT code on the bill.
+  
+  Resolution:
+  -----------
+  Routines IBCSC4A, IBCSC4B and IBCSC4E were modified to omit the '^' 
+  character associated with ASCII value of 94 as a grouping letter in the
+  scratch global file. It caused the subsequent '^' pieces of the CPT data
+  to shift one position for adding procedures.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*479):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCSC4A
+    Before: B31509518   After: B32672806  **106,228,339,479**
+Routine Name: IBCSC4B
+    Before: B35934384   After: B36503632  **210,228,304,479**
+Routine Name: IBCSC4E
+    Before: B44983116   After: B45259248  **8,106,121,124,210,266,403,479**
+Routine Name: IBJPI
+    Before: B22090434   After: B21978399  **184,271,316,416,438,479**
+ 
+Routine list of preceding patches: 304, 339, 403, 438
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUN 06, 2012
+Completed By: LANG,MICKEY                   Date Completed: JAN 06, 2014
+Released By : CARP,CHERYL                   Date Released : JAN 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

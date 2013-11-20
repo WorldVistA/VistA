@@ -1,0 +1,932 @@
+Released PSJ*5*229 SEQ #252
+Extracted from mail message
+**KIDS**:PSJ*5.0*229^
+
+**INSTALL NAME**
+PSJ*5.0*229
+"BLD",8256,0)
+PSJ*5.0*229^INPATIENT MEDICATIONS^0^3120426^y
+"BLD",8256,1,0)
+^^39^39^3120103^
+"BLD",8256,1,1,0)
+ Patch PSJ*5.0*229 will correct the following issues.
+"BLD",8256,1,2,0)
+ 
+"BLD",8256,1,3,0)
+ HD0000000339101 - PSPO# 00001478 - 1 IV order 3x/wk for 8 doses- when 
+"BLD",8256,1,4,0)
+                   stop time is entered as 8, the computer calculates 
+"BLD",8256,1,5,0)
+                   for 8 days not 8 doses
+"BLD",8256,1,6,0)
+ Problem:
+"BLD",8256,1,7,0)
+ --------
+"BLD",8256,1,8,0)
+ Dose limit calculations are not correct when entered from the 
+"BLD",8256,1,9,0)
+ infusion dialog in CPRS. There is no logic to calculculate day of week 
+"BLD",8256,1,10,0)
+ schedules and schedules with a frequency greater than 1440 (dose to be 
+"BLD",8256,1,11,0)
+ given more than once a day) calculate based on days instead of doses.
+"BLD",8256,1,12,0)
+ 
+"BLD",8256,1,13,0)
+ HD0000000282450 - 4 stop date calculated incorrectly?
+"BLD",8256,1,14,0)
+ Problem:
+"BLD",8256,1,15,0)
+ --------
+"BLD",8256,1,16,0)
+ When finishing a dose limit IV Piggyback order created in CPRS, the stop
+"BLD",8256,1,17,0)
+ date would not adhere to the dose limit. If there was a stop time defined
+"BLD",8256,1,18,0)
+ for a particular IV ROOM, the stop time would be tacked on, usually 
+"BLD",8256,1,19,0)
+ setting the stop date past the last dose of the order. If there was no
+"BLD",8256,1,20,0)
+ stop time defined, the system would tack on .2359 to the stop date, which
+"BLD",8256,1,21,0)
+ would also usually set the stop date past the dose limit. Both of these
+"BLD",8256,1,22,0)
+ scenarios would cause additional doses to be given.
+"BLD",8256,1,23,0)
+ 
+"BLD",8256,1,24,0)
+ HD0000000347116 - 6 Edited infusion rate to remove 250 ml/hr@0 and 
+"BLD",8256,1,25,0)
+                   scheduled labels still not printing
+"BLD",8256,1,26,0)
+ Problem:
+"BLD",8256,1,27,0)
+ --------
+"BLD",8256,1,28,0)
+ When editing an IV order from an infusion rate with the ATZERO flag set
+"BLD",8256,1,29,0)
+ to an infusion rate without the ATZERO flag, the labels still don't 
+"BLD",8256,1,30,0)
+ print. The ATZERO flag is not being removed by an opposite edit.
+"BLD",8256,1,31,0)
+ 
+"BLD",8256,1,32,0)
+ HD0000000217087 - IV Time frames in question
+"BLD",8256,1,33,0)
+ Problem:
+"BLD",8256,1,34,0)
+ --------
+"BLD",8256,1,35,0)
+ The duration on IV orders is not calculating correctly. A duration of 23
+"BLD",8256,1,36,0)
+ hours stops the order after 23 hours, and a duration of 25 hours stops 
+"BLD",8256,1,37,0)
+ the order after 25 hours; however, a duration of 24 hours stops the 
+"BLD",8256,1,38,0)
+ order at t+1 day @ 23:59 (23:59 is set by the inpatient ward parameter as
+"BLD",8256,1,39,0)
+ a default time).
+"BLD",8256,4,0)
+^9.64PA^^
+"BLD",8256,6)
+8^
+"BLD",8256,6.3)
+16
+"BLD",8256,"ABPKG")
+n
+"BLD",8256,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8256,"KRN",.4,0)
+.4
+"BLD",8256,"KRN",.401,0)
+.401
+"BLD",8256,"KRN",.402,0)
+.402
+"BLD",8256,"KRN",.403,0)
+.403
+"BLD",8256,"KRN",.5,0)
+.5
+"BLD",8256,"KRN",.84,0)
+.84
+"BLD",8256,"KRN",3.6,0)
+3.6
+"BLD",8256,"KRN",3.8,0)
+3.8
+"BLD",8256,"KRN",9.2,0)
+9.2
+"BLD",8256,"KRN",9.8,0)
+9.8
+"BLD",8256,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8256,"KRN",9.8,"NM",1,0)
+PSIVCAL^^0^B75101309
+"BLD",8256,"KRN",9.8,"NM",2,0)
+PSIVSP^^0^B41011288
+"BLD",8256,"KRN",9.8,"NM","B","PSIVCAL",1)
+
+"BLD",8256,"KRN",9.8,"NM","B","PSIVSP",2)
+
+"BLD",8256,"KRN",19,0)
+19
+"BLD",8256,"KRN",19.1,0)
+19.1
+"BLD",8256,"KRN",101,0)
+101
+"BLD",8256,"KRN",409.61,0)
+409.61
+"BLD",8256,"KRN",771,0)
+771
+"BLD",8256,"KRN",779.2,0)
+779.2
+"BLD",8256,"KRN",870,0)
+870
+"BLD",8256,"KRN",8989.51,0)
+8989.51
+"BLD",8256,"KRN",8989.52,0)
+8989.52
+"BLD",8256,"KRN",8994,0)
+8994
+"BLD",8256,"KRN","B",.4,.4)
+
+"BLD",8256,"KRN","B",.401,.401)
+
+"BLD",8256,"KRN","B",.402,.402)
+
+"BLD",8256,"KRN","B",.403,.403)
+
+"BLD",8256,"KRN","B",.5,.5)
+
+"BLD",8256,"KRN","B",.84,.84)
+
+"BLD",8256,"KRN","B",3.6,3.6)
+
+"BLD",8256,"KRN","B",3.8,3.8)
+
+"BLD",8256,"KRN","B",9.2,9.2)
+
+"BLD",8256,"KRN","B",9.8,9.8)
+
+"BLD",8256,"KRN","B",19,19)
+
+"BLD",8256,"KRN","B",19.1,19.1)
+
+"BLD",8256,"KRN","B",101,101)
+
+"BLD",8256,"KRN","B",409.61,409.61)
+
+"BLD",8256,"KRN","B",771,771)
+
+"BLD",8256,"KRN","B",779.2,779.2)
+
+"BLD",8256,"KRN","B",870,870)
+
+"BLD",8256,"KRN","B",8989.51,8989.51)
+
+"BLD",8256,"KRN","B",8989.52,8989.52)
+
+"BLD",8256,"KRN","B",8994,8994)
+
+"BLD",8256,"QUES",0)
+^9.62^^
+"BLD",8256,"REQB",0)
+^9.611^1^1
+"BLD",8256,"REQB",1,0)
+PSJ*5.0*213^2
+"BLD",8256,"REQB","B","PSJ*5.0*213",1)
+
+"MBREQ")
+0
+"PKG",221,-1)
+1^1
+"PKG",221,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",221,20,0)
+^9.402P^^
+"PKG",221,22,0)
+^9.49I^1^1
+"PKG",221,22,1,0)
+5.0^2971215^2981113^1
+"PKG",221,22,1,"PAH",1,0)
+229^3120426^520665228
+"PKG",221,22,1,"PAH",1,1,0)
+^^39^39^3120426
+"PKG",221,22,1,"PAH",1,1,1,0)
+ Patch PSJ*5.0*229 will correct the following issues.
+"PKG",221,22,1,"PAH",1,1,2,0)
+ 
+"PKG",221,22,1,"PAH",1,1,3,0)
+ HD0000000339101 - PSPO# 00001478 - 1 IV order 3x/wk for 8 doses- when 
+"PKG",221,22,1,"PAH",1,1,4,0)
+                   stop time is entered as 8, the computer calculates 
+"PKG",221,22,1,"PAH",1,1,5,0)
+                   for 8 days not 8 doses
+"PKG",221,22,1,"PAH",1,1,6,0)
+ Problem:
+"PKG",221,22,1,"PAH",1,1,7,0)
+ --------
+"PKG",221,22,1,"PAH",1,1,8,0)
+ Dose limit calculations are not correct when entered from the 
+"PKG",221,22,1,"PAH",1,1,9,0)
+ infusion dialog in CPRS. There is no logic to calculculate day of week 
+"PKG",221,22,1,"PAH",1,1,10,0)
+ schedules and schedules with a frequency greater than 1440 (dose to be 
+"PKG",221,22,1,"PAH",1,1,11,0)
+ given more than once a day) calculate based on days instead of doses.
+"PKG",221,22,1,"PAH",1,1,12,0)
+ 
+"PKG",221,22,1,"PAH",1,1,13,0)
+ HD0000000282450 - 4 stop date calculated incorrectly?
+"PKG",221,22,1,"PAH",1,1,14,0)
+ Problem:
+"PKG",221,22,1,"PAH",1,1,15,0)
+ --------
+"PKG",221,22,1,"PAH",1,1,16,0)
+ When finishing a dose limit IV Piggyback order created in CPRS, the stop
+"PKG",221,22,1,"PAH",1,1,17,0)
+ date would not adhere to the dose limit. If there was a stop time defined
+"PKG",221,22,1,"PAH",1,1,18,0)
+ for a particular IV ROOM, the stop time would be tacked on, usually 
+"PKG",221,22,1,"PAH",1,1,19,0)
+ setting the stop date past the last dose of the order. If there was no
+"PKG",221,22,1,"PAH",1,1,20,0)
+ stop time defined, the system would tack on .2359 to the stop date, which
+"PKG",221,22,1,"PAH",1,1,21,0)
+ would also usually set the stop date past the dose limit. Both of these
+"PKG",221,22,1,"PAH",1,1,22,0)
+ scenarios would cause additional doses to be given.
+"PKG",221,22,1,"PAH",1,1,23,0)
+ 
+"PKG",221,22,1,"PAH",1,1,24,0)
+ HD0000000347116 - 6 Edited infusion rate to remove 250 ml/hr@0 and 
+"PKG",221,22,1,"PAH",1,1,25,0)
+                   scheduled labels still not printing
+"PKG",221,22,1,"PAH",1,1,26,0)
+ Problem:
+"PKG",221,22,1,"PAH",1,1,27,0)
+ --------
+"PKG",221,22,1,"PAH",1,1,28,0)
+ When editing an IV order from an infusion rate with the ATZERO flag set
+"PKG",221,22,1,"PAH",1,1,29,0)
+ to an infusion rate without the ATZERO flag, the labels still don't 
+"PKG",221,22,1,"PAH",1,1,30,0)
+ print. The ATZERO flag is not being removed by an opposite edit.
+"PKG",221,22,1,"PAH",1,1,31,0)
+ 
+"PKG",221,22,1,"PAH",1,1,32,0)
+ HD0000000217087 - IV Time frames in question
+"PKG",221,22,1,"PAH",1,1,33,0)
+ Problem:
+"PKG",221,22,1,"PAH",1,1,34,0)
+ --------
+"PKG",221,22,1,"PAH",1,1,35,0)
+ The duration on IV orders is not calculating correctly. A duration of 23
+"PKG",221,22,1,"PAH",1,1,36,0)
+ hours stops the order after 23 hours, and a duration of 25 hours stops 
+"PKG",221,22,1,"PAH",1,1,37,0)
+ the order after 25 hours; however, a duration of 24 hours stops the 
+"PKG",221,22,1,"PAH",1,1,38,0)
+ order at t+1 day @ 23:59 (23:59 is set by the inpatient ward parameter as
+"PKG",221,22,1,"PAH",1,1,39,0)
+ a default time).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSIVCAL")
+0^1^B75101309^B65800854
+"RTN","PSIVCAL",1,0)
+PSIVCAL ;BIR/RGY,PR-CALCULATES START AND STOP DATES ; 4/26/12 2:36pm
+"RTN","PSIVCAL",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**4,26,41,47,63,67,69,58,94,80,110,111,177,120,134,229**;16 DEC 97;Build 16
+"RTN","PSIVCAL",3,0)
+ ;
+"RTN","PSIVCAL",4,0)
+ ; Reference to ^PS(50.7 is supported by DBIA #2180.
+"RTN","PSIVCAL",5,0)
+ ; Reference to ^PS(52.6 is supported by DBIA #1231.
+"RTN","PSIVCAL",6,0)
+ ; Reference to ^PS(55 is supported by DBIA #2191.
+"RTN","PSIVCAL",7,0)
+ ;
+"RTN","PSIVCAL",8,0)
+ENT ;NEEDS PSIVTYPE (P(4))
+"RTN","PSIVCAL",9,0)
+ I $G(PSJREN) D  Q:P(2)
+"RTN","PSIVCAL",10,0)
+ . I $G(P("OLDON")) N P2 S P2=$G(@("^PS(55,"_DFN_",""IV"","_+P("OLDON")_",0)")),P2=$P(P2,"^",2) I P2 S P(2)=P2
+"RTN","PSIVCAL",11,0)
+ I $G(PSJORD)["P",$G(P("APPT"))?7N1"."1.N S START=$$DATE2^PSJUTL2(P("APPT")) G Q
+"RTN","PSIVCAL",12,0)
+ I $G(PSJSYSW0)=""!($P(PSJSYSW0,U,5)=2) S START=+$E(P("LOG"),1,12) G Q
+"RTN","PSIVCAL",13,0)
+ S PSIVSN=+P("IVRM"),START="",PSIVTYPE=$G(P(4)) Q:PSIVTYPE=""
+"RTN","PSIVCAL",14,0)
+ N PSIV X $S($E(PSIVAC)="C":"S X=+$E(P(""LOG""),1,12) D H^%DTC S PSIV=%T",1:"S PSIV=$P($H,"","",2)") G T2:PSIVTYPE'["P"&('P(5))
+"RTN","PSIVCAL",15,0)
+ I P(11)']"" X $S($E(PSIVAC)="C":"S Y=+$E(P(""LOG""),1,12)",1:"D NOW^%DTC S Y=%") S Y=Y+.007\.01/100 S:'$P(Y,".",2) Y=$$MDNGHT(Y) X ^DD("DD") S START=Y G Q
+"RTN","PSIVCAL",16,0)
+ S X=P(11) D CHK S PX=Y,X1=PSIV\3600,X2=PSIV#3600\60,X=$E(".0",1,$L(X1)#2+1)_X1_$E("0",X2<10)_X2,START=$S($E(PSIVAC)="C":$P(P("LOG"),"."),1:"T")
+"RTN","PSIVCAL",17,0)
+ S X1=$P(PX,"-"),X1=$E(".0",1,$L(X1)#2+1)_X1,X2=$P(PX,"-",PSGCNT),X2=$E(".0",1,$L(X2)#2+1)_X2
+"RTN","PSIVCAL",18,0)
+ S NAT=+$P($G(^PS(59.6,+$O(^PS(59.6,"B",+VAIN(4),0)),0)),U,5)
+"RTN","PSIVCAL",19,0)
+ I '$D(PSGDT) S PSGDT=$$DATE^PSJUTL2()
+"RTN","PSIVCAL",20,0)
+ I X<X1,'NAT S START=$$ENSD^PSGNE3(P(9),P(11),+$E(P("LOG"),1,12),PSGDT) G Q
+"RTN","PSIVCAL",21,0)
+ I X>X2 S START=$$ENSD^PSGNE3(P(9),P(11),+$E(P("LOG"),1,12),PSGDT) G Q
+"RTN","PSIVCAL",22,0)
+T6 F I=2:1:PSGCNT S X1="."_$P(PX,"-",I-1),X2="."_$P(PX,"-",I) Q:+X1<X&(+X2>X)
+"RTN","PSIVCAL",23,0)
+ S X1=X-X1,X2=$S(NAT:0,1:X2-X),START=$S(X1<X2:$P(PX,"-",I-1),1:$P(PX,"-",I)) S:START="" START=$P(PX,"-") X $S($E(PSIVAC)="C":"S Y=$P(P(""LOG""),""."") X ^DD(""DD"") S PSIV=Y",1:"S PSIV=""TODAY""") S START=PSIV_"@"_$E("0",$L(START)=3)_START G Q
+"RTN","PSIVCAL",24,0)
+T2 S X=+("."_$E(10000+(PSIV\3600*100)+(PSIV#3600\60),2,5)),START=$O(^PS(59.5,PSIVSN,3,"AT",X)) S:'START START=$O(^(0)),PSIVTOM=1 I 'START S START=X K PSIVTOM
+"RTN","PSIVCAL",25,0)
+ S START=$S($E(PSIVAC)="C":$P(P("LOG"),"."),1:DT)_START I $D(PSIVTOM) S X1=$S($E(PSIVAC)="C":$P(P("LOG"),"."),1:DT),X2=1 D C^%DTC S Y=$P(X,".")_START K PSIVTOM
+"RTN","PSIVCAL",26,0)
+ S X=START,%DT="XRTX" D ^%DT
+"RTN","PSIVCAL",27,0)
+Q ;
+"RTN","PSIVCAL",28,0)
+ I START["@" S X=START,%DT="RTX" D ^%DT S START=+Y
+"RTN","PSIVCAL",29,0)
+ S P(2)=START
+"RTN","PSIVCAL",30,0)
+ I $G(PSJORD)["P" D:'$G(PSGRDTX(+PSJORD,"PSGSD")) REQDT^PSJLIVMD(PSJORD) S START=$G(PSGRDTX(+PSJORD,"PSGSD")) S P(2)=$S(START:START,1:P(2))
+"RTN","PSIVCAL",31,0)
+ K NAT,START,PSIVTYPE,PSIVSTRT,PSGCNT,X1,X2,PX
+"RTN","PSIVCAL",32,0)
+ Q
+"RTN","PSIVCAL",33,0)
+CHK F Y=1:1 Q:$L(X)>240!($P(X,"-",Y)="")  S $P(X,"-",Y)=$P(X,"-",Y)_$E("0000",1,4-$L($P(X,"-",Y)))
+"RTN","PSIVCAL",34,0)
+ S Y=X,PSGCNT=$L(X,"-") S:X]""&(PSGCNT<1) PSGCNT=1 Q
+"RTN","PSIVCAL",35,0)
+ ;
+"RTN","PSIVCAL",36,0)
+ENSTOP ; WILL CALCULATE STOP DATE FOR ORDER
+"RTN","PSIVCAL",37,0)
+ ;NEEDS (DFN) & ON
+"RTN","PSIVCAL",38,0)
+ N WALL,P3,ADX,DDLX,OIX,DRGT,PSIDAY,PSIMIN,LIMDAY S (WALL,P3,PSIDAY,PSIMIN)=0
+"RTN","PSIVCAL",39,0)
+ D:'$G(PSIVSITE) ^PSIVSET  Q:'P(2)
+"RTN","PSIVCAL",40,0)
+ I P(23)'="" S PSIVTYPE="C"
+"RTN","PSIVCAL",41,0)
+ S STOP="",X="",PSIVSTRT=P(2),PSIVTYPE=$G(P(4)) I $G(PSJREN) D
+"RTN","PSIVCAL",42,0)
+ . N RDT I $G(ON)["P" S RDT=+$$LASTREN^PSJLMPRI(DFN,ON)
+"RTN","PSIVCAL",43,0)
+ . S PSIVSTRT=$$DATE2^PSJUTL2($S($G(RDT):RDT,1:$G(PSGDT)))
+"RTN","PSIVCAL",44,0)
+ ;BHW - PSJ*5*177 - Begin Modifications - Reset Start date to Last Renewed date for active orders that have been renewed
+"RTN","PSIVCAL",45,0)
+ I ('$G(PSJREN))&($G(P(4))="A")&($G(ON)["V") D
+"RTN","PSIVCAL",46,0)
+ . N RDT S RDT=+$$LASTREN^PSJLMPRI(DFN,ON)
+"RTN","PSIVCAL",47,0)
+ . I +RDT S PSIVSTRT=RDT
+"RTN","PSIVCAL",48,0)
+ . Q
+"RTN","PSIVCAL",49,0)
+ ;BHW - PSJ*5*177 - End Modifications - Resetting PSIVSTRT will recalculate the stop date based on the Last renewed date.
+"RTN","PSIVCAL",50,0)
+ ;
+"RTN","PSIVCAL",51,0)
+ I $S("^NOW^STAT^ONCE^ONE-TIME^ONE TIME^ONETIME^1TIME^1-TIME^1 TIME^"[(U_P(9)_U):1,1:0),PSIVTYPE="P"!P(5)!(P(23)="P") S X=$$ENOSD^PSJDCU(PSJSYSW0,PSIVSTRT,DFN) I X]"" S:P(11)=""&($G(ON)["P") PSIVCAL=1 G END
+"RTN","PSIVCAL",52,0)
+ I '$G(P("OVRIDE")),$G(ON) N DUR,DURMIN,PSJPROV,PSJDNM,A,PSJDAY I $G(ON)["V"!(($G(ON)["P")&($P($G(^PS(53.1,+ON,0)),"^",4)="F")) D
+"RTN","PSIVCAL",53,0)
+ . S DUR=$$GETDUR^PSJLIVMD(DFN,+ON,"IV",1) I DUR]"" S DURMIN=$$DURMIN^PSJLIVMD(DUR) I DURMIN S PSIMIN=DURMIN
+"RTN","PSIVCAL",54,0)
+ I $P(PSIVSITE,"^",5) D
+"RTN","PSIVCAL",55,0)
+ . N Z S Y=0
+"RTN","PSIVCAL",56,0)
+ . F  S Y=$O(^PS(55,DFN,"IV",Y)) Q:'Y  S Z=^(Y,0) D  Q:X]""
+"RTN","PSIVCAL",57,0)
+ .. I $P(Z,"^",17)="A",$$ONE^PSJBCMA(DFN,Y_"V",$P(Z,"^",9))'="O" S X=$P(Z,"^",3) Q
+"RTN","PSIVCAL",58,0)
+ S:$G(X) WALL=X
+"RTN","PSIVCAL",59,0)
+ S PSIDAY=$S(PSIVTYPE="A":$P(PSIVSITE,"^",4),PSIVTYPE="H":$P(PSIVSITE,"^",17),PSIVTYPE="P":$P(PSIVSITE,"^",18),PSIVTYPE="S":$P(PSIVSITE,"^",20),1:$P(PSIVSITE,"^",21))
+"RTN","PSIVCAL",60,0)
+ ;*229 Add Dose Limit for IOE
+"RTN","PSIVCAL",61,0)
+ I '$G(ON),$G(PSIVLIMT)]"" S PSIVLIM=PSIVLIMT
+"RTN","PSIVCAL",62,0)
+ I $G(ON)["P"!($G(ON)["V") I '$G(P("OVRIDE")) N MINS,LIM S PSIVLIM=$S($G(PSIVLIMT)]"":PSIVLIMT,1:$$GETLIM(DFN,ON)) I $G(PSIVLIM)]"" S MINS=$$GETMIN(PSIVLIM,DFN,ON,.LIMDAY) D
+"RTN","PSIVCAL",63,0)
+ .I (MINS&(MINS<PSIMIN))!'PSIMIN S PSIMIN=MINS
+"RTN","PSIVCAL",64,0)
+ S PSJDAY="" D  I PSJDAY]"",PSJDAY<PSIDAY S PSIDAY=PSJDAY
+"RTN","PSIVCAL",65,0)
+ . N A,B,PSJCLIN
+"RTN","PSIVCAL",66,0)
+ . Q:'$D(PSJORD)  S A=""
+"RTN","PSIVCAL",67,0)
+ . I PSJORD["P" S A=$G(^PS(53.1,+PSJORD,"DSS"))
+"RTN","PSIVCAL",68,0)
+ . I PSJORD["U" S A=$G(^PS(55,PSGP,5,+PSJORD,8))
+"RTN","PSIVCAL",69,0)
+ . I PSJORD["V" S A=$G(^PS(55,PSGP,"IV",+PSJORD,"DSS"))
+"RTN","PSIVCAL",70,0)
+ . S (PSJCLIN,A)=$P(A,"^") Q:A=""  S PSJCLIN=$P(^SC(PSJCLIN,0),"^") I $D(^PS(53.46,"B",A)) S B=$O(^PS(53.46,"B",A,"")),PSJDAY=$P(^PS(53.46,B,0),"^",2)
+"RTN","PSIVCAL",71,0)
+ F X=0:0 S X=$O(DRG("AD",X)) Q:'X  I $P(^PS(52.6,+$P(DRG("AD",+X),U),0),"^",4),($P(^(0),"^",4))<+PSIDAY S PSIDAY=$P(^(0),"^",4)
+"RTN","PSIVCAL",72,0)
+ I WALL,($$FMADD^XLFDT(PSIVSTRT,PSIDAY,"D"))>WALL S PSIDAY=$$FMDIFF^XLFDT(WALL,PSIVSTRT,1) S:PSIDAY<1 PSIDAY=""
+"RTN","PSIVCAL",73,0)
+ S DRGT=$S($D(DRG("AD")):"AD",1:"SOL") F ADX=0:0 S ADX=$O(DRG(DRGT,ADX)) Q:'ADX!($G(DRGTMP)&($G(DRGTN)["AD")&(DRGT="SOL"))  D
+"RTN","PSIVCAL",74,0)
+ . S OIX=+$P(DRG(DRGT,ADX),"^",6),DDLX=$P(^PS(50.7,OIX,0),"^",5) Q:'DDLX  D DDLIM(.PSIDAY,.P3)
+"RTN","PSIVCAL",75,0)
+ I '$G(DRG("AD",0)),$G(DRGTMP),($G(DRGTN)["SOL") S OIX=$P($G(DRGTMP),"^",6) I OIX S DDLX=$P(^PS(50.7,OIX,0),"^",5) I DDLX  D DDLIM(.PSIDAY,.P3)
+"RTN","PSIVCAL",76,0)
+ I $G(PSIVLIM)["a",'$G(P("OVRIDE")) S DDLX=$P(PSIVLIM,"a",2)_"L" I $G(DDLX) D DDLIM(.PSIDAY,.P3)
+"RTN","PSIVCAL",77,0)
+ I $G(P(2)) I P3>P(2) S X=P3 Q  ;*229 Quit so we use dose limit.
+"RTN","PSIVCAL",78,0)
+ S:('PSIDAY&'PSIMIN) PSIDAY=1
+"RTN","PSIVCAL",79,0)
+TIME S X2=PSIDAY,X1=PSIVSTRT D C^%DTC S X=$P(X,"."),X=X_$S($P(PSIVSITE,"^",14)="":.2359,1:"."_$P(PSIVSITE,"^",14))
+"RTN","PSIVCAL",80,0)
+ I PSIMIN D
+"RTN","PSIVCAL",81,0)
+ . I $G(PSIDAY),((PSIDAY*1440)<PSIMIN) K PSIVLIM,P("LIMIT") S P("OVRIDE")=1 Q
+"RTN","PSIVCAL",82,0)
+ . ;*229 if PSIMIN=(PSIDAY*1440) then dose lim, if day lim use site param.
+"RTN","PSIVCAL",83,0)
+ . I (PSIMIN<=(PSIDAY*1440)!'$G(PSIDAY)) S X=$$FMADD^XLFDT(PSIVSTRT,,,PSIMIN) D
+"RTN","PSIVCAL",84,0)
+ . . I $G(P("LIMIT"))["d" S X=$P(X,"."),X=X_$S($P(PSIVSITE,"^",14)="":.2359,1:"."_$P(PSIVSITE,"^",14))
+"RTN","PSIVCAL",85,0)
+ ;
+"RTN","PSIVCAL",86,0)
+END ;
+"RTN","PSIVCAL",87,0)
+ S P(3)=+X
+"RTN","PSIVCAL",88,0)
+ I $G(PSJORD)["P" D:'$G(PSGRDTX(+PSJORD,"PSGFD")) REQDT^PSJLIVMD(PSJORD) S P(3)=$S($G(PSGRDTX(+PSJORD,"PSGFD")):PSGRDTX(+PSJORD,"PSGFD"),1:P(3))
+"RTN","PSIVCAL",89,0)
+ S P(3)=$$DATE2^PSJUTL2(P(3)),P(2)=$$DATE2^PSJUTL2(P(2))
+"RTN","PSIVCAL",90,0)
+ Q
+"RTN","PSIVCAL",91,0)
+ ;
+"RTN","PSIVCAL",92,0)
+ENAD ;Will get last admin. time for order (needs dfn and on)
+"RTN","PSIVCAL",93,0)
+ N P4,PSIVX,PSIVY
+"RTN","PSIVCAL",94,0)
+ I $P(PSJSYSW0,U,5)=2 S PSIVADM=$$DATE^PSJUTL2() Q
+"RTN","PSIVCAL",95,0)
+ I $S($G(PSIVAC)["R":1,P(9)="QOD":1,1:P(9)?1"Q".N1"D") S PSIVADM=$$ENSD^PSGNE3(P(9),P(11),+$E(P("LOG"),1,12),+$P($G(^PS(55,DFN,"IV",+P("OLDON"),0)),U,2)) Q:PSIVADM
+"RTN","PSIVCAL",96,0)
+ S PSIVX=X,PSIVY=Y,P4=P(4) S:P(4)="C" P4=P(23) S:P4="S" P4=$S(P(5):"P",1:"A") D NOW^%DTC S Y=%,PSIVNOW=Y I (P4="P"&(P(11)="")&'P(15))!("HA"[P4&'P(15)) S Y=Y+.007\.01/100 G QAD
+"RTN","PSIVCAL",97,0)
+ D P:P4="P"&('P(15)),AH:P(15)
+"RTN","PSIVCAL",98,0)
+QAD ;
+"RTN","PSIVCAL",99,0)
+ S:'$D(PSGSA) PSGSA=""
+"RTN","PSIVCAL",100,0)
+ S PSIVSD=Y I Y S OD=$L(PSGSA," ") I OD>2 S X=+PSGSA\1 F OD1=2:1:OD-1 I $P(PSGSA," ",OD1)'>$S(OD1>2:$P(PSGSA," ",OD1-1),1:PSGSA#1) S X1=X,X2=1 D C^%DTC
+"RTN","PSIVCAL",101,0)
+ I PSIVSD,OD>2 S Y=X_PSIVSD
+"RTN","PSIVCAL",102,0)
+ S PSIVADM=+Y,X=PSIVX,Y=PSIVY K PSGSA,PSIVSD,OD,OD1,PSIVMI,PSIVNOW S:PSIVADM<P(2) PSIVADM=P(2) Q
+"RTN","PSIVCAL",103,0)
+ ;
+"RTN","PSIVCAL",104,0)
+P S CD=PSIVNOW,PSGSA="",(PSIVSD,OD)=DT_.0001,X=P(11) D CHK S P(11)=X D ENP4^PSIVWL
+"RTN","PSIVCAL",105,0)
+ I PSGSA="" S PSIVSD=DT_.0001,PSIVMIN=-1440 D ENT^PSIVWL S $P(Y,".",2)=$P(P(11),"-",$L(P(11),"-")) Q
+"RTN","PSIVCAL",106,0)
+ S Y=$P(PSGSA," ",$L(PSGSA," ")-1) Q
+"RTN","PSIVCAL",107,0)
+AH F PSIVADM=0:-1 S CD=PSIVNOW,(X,X1)=DT,X2=PSIVADM D:X2 C^%DTC S X=$P(X,".") S (OD1,PSIVSD,OD)=X_.0001,PSIVMIN=P(15) D ENP3^PSIVWL Q:PSIVADM<-4!(PSGSA]"")
+"RTN","PSIVCAL",108,0)
+ S Y=$P(PSGSA," ",$L(PSGSA," ")-1) Q
+"RTN","PSIVCAL",109,0)
+MDNGHT(Y)          ;Sets Start Date/Time on orders placed between midnight and 12:30
+"RTN","PSIVCAL",110,0)
+ S Y=$$FMADD^XLFDT(Y,-1,0,0,0),Y=$P(Y,".")_".24" Q Y
+"RTN","PSIVCAL",111,0)
+ ;
+"RTN","PSIVCAL",112,0)
+DDLIM(PSIVDUR,STPDT) ;  Day Dose Limit
+"RTN","PSIVCAL",113,0)
+ N P3,NEWDAYS,NEWDUR,LASTD
+"RTN","PSIVCAL",114,0)
+ I DDLX["D" D  Q:(STPDT=0)
+"RTN","PSIVCAL",115,0)
+ .I +DDLX'<+PSIVDUR S STPDT=0 Q
+"RTN","PSIVCAL",116,0)
+ .S PSIVDUR=+DDLX,X2=PSIVDUR,X1=PSIVSTRT D C^%DTC S X=$P(X,"."),X=X_$S($P(PSIVSITE,"^",14)="":.2359,1:"."_$P(PSIVSITE,"^",14)) I X>P(2) S P(3)=X
+"RTN","PSIVCAL",117,0)
+ I DDLX["L",($G(P(9))]""),("AH"'[$G(PSIVTYPE)) S LASTD=$$DOSES(DDLX,.P) I LASTD D
+"RTN","PSIVCAL",118,0)
+ .S NEWDUR=$$FMDIFF^XLFDT(LASTD,P(2),2) I NEWDUR>0 S NEWDAYS=(NEWDUR/86400)
+"RTN","PSIVCAL",119,0)
+ .I $G(NEWDAYS) I NEWDAYS<PSIVDUR S PSIVDUR=NEWDAYS S P(3)=$$DATE2^PSJUTL2(LASTD)
+"RTN","PSIVCAL",120,0)
+ ;*229 Should be using LASTD if exists
+"RTN","PSIVCAL",121,0)
+ S P(3)=$$DATE2^PSJUTL2($S($G(LASTD):LASTD,1:P(3))),P(2)=$$DATE2^PSJUTL2(P(2)) S STPDT=P(3)
+"RTN","PSIVCAL",122,0)
+ Q
+"RTN","PSIVCAL",123,0)
+ ;
+"RTN","PSIVCAL",124,0)
+GETLIM(DFN,PSJORD) ; Convert IV Limits to minutes (only if in 'time' form).
+"RTN","PSIVCAL",125,0)
+ N ND2P5,F
+"RTN","PSIVCAL",126,0)
+ S F=$S(PSJORD["P":"^PS(53.1,+PSJORD,",PSJORD["V":"^PS(55,DFN,""IV"",+PSJORD,",1:"")
+"RTN","PSIVCAL",127,0)
+ S ND2P5=$G(@(F_"2.5)")) S LIM=$P(ND2P5,"^",4) Q:LIM="" 0
+"RTN","PSIVCAL",128,0)
+ S ND0=$G(@(F_"0)")) I PSJORD["P",$P(ND0,"^",4)="U" Q 0
+"RTN","PSIVCAL",129,0)
+ N MULT S MULT=$S($E(LIM)="h":60,$E(LIM)="d":1440,$E(LIM)="m":LIM,$E(LIM)="l":LIM,$E(LIM)="a":LIM,1:0) I MULT S LIM=MULT*$E(LIM,2,99)
+"RTN","PSIVCAL",130,0)
+ Q LIM
+"RTN","PSIVCAL",131,0)
+ ;
+"RTN","PSIVCAL",132,0)
+GETMIN(LIM,DFN,PSJORD,DAYS) ; Return the duration of the IV Limit in minutes (includes IV Limits in volume and doses format) 
+"RTN","PSIVCAL",133,0)
+ S LIM=$$GETMIN^PSIVUTL1(LIM,DFN,PSJORD,.DAYS)
+"RTN","PSIVCAL",134,0)
+ Q LIM
+"RTN","PSIVCAL",135,0)
+DOSES(DDLX,PRAY) ; Find stop date when 'doses' are sent as an IV Limit
+"RTN","PSIVCAL",136,0)
+ Q:$G(DDLX)'["L" ""
+"RTN","PSIVCAL",137,0)
+ I $P(DDLX,"L")["." S DDLX=($P(DDLX,".")+1)_"L"
+"RTN","PSIVCAL",138,0)
+ I '$G(PRAY(15)),$G(PRAY(11)) S PRAY(15)=1440/$L(PRAY(11),"-")
+"RTN","PSIVCAL",139,0)
+ Q:'$G(PRAY(2))!'$G(OIX) ""
+"RTN","PSIVCAL",140,0)
+ N FIRST,DOSAR,LAST,TMP9 S LAST="",TMP9=PRAY(9)
+"RTN","PSIVCAL",141,0)
+ S STRING=PRAY(2)_"^"_$S($G(STPDT):STPDT,1:$$FMADD^XLFDT(PSGDT,30))_"^"_PRAY(9)_"^C^"_OIX_"^"_PRAY(11) S FIRST=$$ENQ^PSJORP2(DFN,STRING)
+"RTN","PSIVCAL",142,0)
+ S P(9)=TMP9
+"RTN","PSIVCAL",143,0)
+ S FIRST=$S($G(FIRST):FIRST,1:PRAY(2)) Q:'FIRST  S DSTMP=FIRST,DOSAR(1)=DSTMP D
+"RTN","PSIVCAL",144,0)
+ .;*229 Add Dose Limit Calc
+"RTN","PSIVCAL",145,0)
+ .I $G(DDLX)["L",$G(PRAY(15)),($G(PRAY(11))']"")!($G(PRAY(15))>1440) N PSIVSD,PSIVMIN,X S PSIVMIN=(+DDLX*PRAY(15)),PSIVSD=+PRAY(2) D ENT^PSIVWL S DOSAR(1)=Y Q
+"RTN","PSIVCAL",146,0)
+ .I '$G(PRAY(11)) F I=2:1:DDLX+1 S DOSAR(I)=$$FMADD^XLFDT(DSTMP,,,PRAY(15)),DSTMP=DOSAR(I) Q
+"RTN","PSIVCAL",147,0)
+ .I $G(PRAY(11)) N ADMS,NXT,LAST,DAY S LAST=$P(DSTMP,".",2),DAY=$P(DSTMP,".") D
+"RTN","PSIVCAL",148,0)
+ ..F II=1:1:$L(PRAY(11),"-") S ADMS(+$P(PRAY(11),"-",II))=$P(PRAY(11),"-",II)
+"RTN","PSIVCAL",149,0)
+ ..;*229 Include DOW Calc, Need to Q if DAY<0 if we go past max dt
+"RTN","PSIVCAL",150,0)
+ ..F IJ=2:1:DDLX+1 S NXT=$O(ADMS(+LAST)),LAST=NXT D  Q:DAY<0
+"RTN","PSIVCAL",151,0)
+ ...I NXT="" S NXT=$O(ADMS(NXT)),LAST=NXT,DAY=$$FMADD^XLFDT(DAY,$$MWFD(PRAY(9),DAY)) Q:DAY<0
+"RTN","PSIVCAL",152,0)
+ ...S DOSAR(IJ)=DAY_"."_ADMS(NXT),DSTMP=DOSAR(IJ)
+"RTN","PSIVCAL",153,0)
+ ..I +DDLX=1 S NXT=$O(ADMS(LAST)),LAST=NXT D
+"RTN","PSIVCAL",154,0)
+ ...I NXT="" S NXT=$O(ADMS(NXT)),LAST=NXT
+"RTN","PSIVCAL",155,0)
+ I $D(DOSAR) S LAST=$O(DOSAR(""),-1) I LAST S LAST=DOSAR(LAST)
+"RTN","PSIVCAL",156,0)
+ Q LAST
+"RTN","PSIVCAL",157,0)
+ ;
+"RTN","PSIVCAL",158,0)
+MWFD(SCH,LAST) ;*229 Add to calc which days in DOW
+"RTN","PSIVCAL",159,0)
+ ;Calculate Days to add for DOW sched
+"RTN","PSIVCAL",160,0)
+ N X,Y
+"RTN","PSIVCAL",161,0)
+ I '$$DOW^PSIVUTL(SCH) Q 1 ;return 1 if not DOW
+"RTN","PSIVCAL",162,0)
+ F I=1:1:7 S X=$$FMADD^XLFDT(LAST,I) D DW^%DTC I SCH[$E(X,1,2) S Y=I Q
+"RTN","PSIVCAL",163,0)
+ Q Y
+"RTN","PSIVCAL",164,0)
+ ;
+"RTN","PSIVSP")
+0^2^B41011288^B38850432
+"RTN","PSIVSP",1,0)
+PSIVSP ;BIR/RGY,PR,CML3-DOSE PROCESSOR ; 1/3/12 3:36pm
+"RTN","PSIVSP",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**30,37,41,50,56,74,83,111,133,138,134,213,229**;16 DEC 97;Build 16
+"RTN","PSIVSP",3,0)
+ ;
+"RTN","PSIVSP",4,0)
+ ; Reference to ^PS(51.1 is supported by DBIA #2177
+"RTN","PSIVSP",5,0)
+ ;
+"RTN","PSIVSP",6,0)
+EN ;
+"RTN","PSIVSP",7,0)
+ Q:'$D(X)
+"RTN","PSIVSP",8,0)
+ S ATZERO=0 I X["@",$P(X,"@",2)=0 S ATZERO=1,X=$P(X,"@")
+"RTN","PSIVSP",9,0)
+ D EN^PSGS0 S (P(9),PSIVSC1)=$S($G(X)]"":X,1:$G(P(9))),P(11)=$S($G(PSGS0Y):PSGS0Y,1:$G(P(11))),(XT,P(15))=$S(($G(PSGS0XT)!($G(PSGS0XT)="O")!($G(PSGS0XT)="D")):$G(PSGS0XT),1:$G(P(15)))
+"RTN","PSIVSP",10,0)
+ I $G(ATZERO) S P(7)=1
+"RTN","PSIVSP",11,0)
+ K ATZERO Q
+"RTN","PSIVSP",12,0)
+EN1 ;
+"RTN","PSIVSP",13,0)
+ S (PSIVAT,PSIVWAT,Y)="",XT=-1,X0=X,X=$S(X="ON CALL":X,X="ONCALL":X,X="ON-CALL":X,X="ONETIME":X,X="ONE-TIME":X,X="ONE TIME":X,X="1TIME":X,X="1 TIME":X,X="1-TIME":X,$L(X," ")<3:$P(X," "),1:$P(X," ",1,2))
+"RTN","PSIVSP",14,0)
+ S:$E(X)="^" X=$E(X,2,999) G:X="" Q S:X["@0" ATZERO=1 S X=$S(X["@0":$P(X,"@"),1:X),P(7)=$S($D(ATZERO):1,1:"") K ATZERO
+"RTN","PSIVSP",15,0)
+ I $S($D(^PS(51.1,"AC","PSJ",X)):1,1:$E($O(^(X)),1,$L(X))=X) D DIC I Y'<0 G SH
+"RTN","PSIVSP",16,0)
+NS0 S Y=""
+"RTN","PSIVSP",17,0)
+ I $E(X,1,2)="AD" S XT=-1 Q
+"RTN","PSIVSP",18,0)
+ I $E(X,1,3)="BID"!($E(X,1,3)="TID")!($E(X,1,3)="QID") S XT=1440\$F("BTQ",$E(X))
+"RTN","PSIVSP",19,0)
+ E  S:$E(X)="Q" X=$E(X,2,99) S:'X X=$E(X)["O"+1_X S I=+X,X=$P(X,I,2),XT=I*$S(X["'":1,(X["D"&(X'["AD"))!(X["AM")!(X["PM")!(X["HS"&(X'["THS")):1440,X["H"&(X'["TH"):60,X["AC"!(X["PC"):480,X["W":10080,X["M":40320,1:0),X=X0 D 
+"RTN","PSIVSP",20,0)
+ . I 'XT,X'="NOW",X'="STAT",X'="ONCE",X'="ONE-TIME",X'="ONE TIME",X'="ONETIME",X'="1-TIME",X'="1 TIME",X'="1TIME",Y="" S XT=-1
+"RTN","PSIVSP",21,0)
+SH ;
+"RTN","PSIVSP",22,0)
+ I +Y<1,$E(X0)'="^" W:$G(ON)'["P" "  ",$S(XT=0&($S("^NOW^STAT^ONCE^ONE-TIME^ONETIME^1TIME^1-TIME^"[(U_$P(X," ")_U):1,X["1 TIME":1,1:X["ONE TIME")):"(ONCE ONLY)",XT>0:"Nonstandard schedule",XT<0:"",1:"(??)") W:XT>0 " (",XT," MINUTES)"
+"RTN","PSIVSP",23,0)
+Q Q:X="ONE TIME"
+"RTN","PSIVSP",24,0)
+ N I S X0=$P(X," ")_$S($L(X0," ")-1:" ",1:"")_$P(X0," ",2,99) K:XT<0!($L(X0)>22) X S:$D(X) X=X0 K X0 S:$G(P(7)) XT="" Q
+"RTN","PSIVSP",25,0)
+NEWQ ;N I S X0=$P(X," ")_$S($L(X0," ")-1:" ",1:"")_$P(X0," ",2,99) K:XT<0!($L(X0)>22) X S:$D(X) X=X0 S:P(7) X=X0 K X0 K:XT>0&('P(7)) X Q
+"RTN","PSIVSP",26,0)
+ Q
+"RTN","PSIVSP",27,0)
+ ;
+"RTN","PSIVSP",28,0)
+ ;*229 Add Temp val for dose limit in IOE
+"RTN","PSIVSP",29,0)
+ENDL N PSIVLIMT W "   Dose limit ....  " S PSIVLIMT="a"_X,PSIVMIN=P(15)*X,PSIVSD=+P(2)
+"RTN","PSIVSP",30,0)
+ I PSIVMIN<0 W !!," --- There is something wrong with this order !!",!,"     Call inpatient supervisor ....." S Y=-1 K PSIVMIN Q
+"RTN","PSIVSP",31,0)
+ I P(15)'["D",P(4)="P"!(P(5))!(P(23)="P"),PSIVMIN=0,"^NOW^STAT^ONCE^ONE-TIME^ONE TIME^ON CALL^ONETIME^1TIME^1 TIME^1-TIME^"'[(U_P(9)_U) D DLP G QDL
+"RTN","PSIVSP",32,0)
+ ;*229 DOW Calc and dose lim should match CPRS, if it's vol limit, we leave old functionality
+"RTN","PSIVSP",33,0)
+ I $G(P(9))]"",$G(P(11))]"" D ENSTOP^PSIVCAL S Y=X I 1 ;*229 ENSTOP^PSIVCAL returns X, we wanted Y.
+"RTN","PSIVSP",34,0)
+ E  D ENT^PSIVWL
+"RTN","PSIVSP",35,0)
+QDL I $D(X) S X=Y X ^DD("DD") W $P(Y,"@")," ",$P(Y,"@",2) S Y=X
+"RTN","PSIVSP",36,0)
+ Q
+"RTN","PSIVSP",37,0)
+DLP ;
+"RTN","PSIVSP",38,0)
+ S X=X+1,$P(PSIVSD,".",2)=$P(PSIVSD,".",2)_$E("0000",1,4-$L($P(PSIVSD,".",2))) D CHK S X2=0,Y=1 I X<2 S Y=+PSIVSD G QDLP
+"RTN","PSIVSP",39,0)
+ I $P(PSIVSD,".",2)>$P(P(11),"-",$L(P(11),"-")) S X2=1 G OV
+"RTN","PSIVSP",40,0)
+ G:$P(P(11),"-")>$P(PSIVSD,".",2) OV
+"RTN","PSIVSP",41,0)
+ F Y=1:1 S X1=$P(P(11),"-",Y) I X1=$P(PSIVSD,".",2)!($P(PSIVSD,".",2)<X1) Q
+"RTN","PSIVSP",42,0)
+OV I P(11)="" W $C(7)," ???",!?15,"*** You have not defined any administration times !!" K X Q
+"RTN","PSIVSP",43,0)
+ F Y=Y:1 S:$P(P(11),"-",Y)="" X2=X2+1,Y=0,X=X+1 S X=X-1 Q:X<1
+"RTN","PSIVSP",44,0)
+ S X=PSIVSD\1 I X2>0 S X1=PSIVSD D C^%DTC S X=$P(X,".") ; install with version 17.3 of fileman
+"RTN","PSIVSP",45,0)
+ S Y=+(X_"."_$P(P(11),"-",Y))
+"RTN","PSIVSP",46,0)
+QDLP K X1,X2 Q
+"RTN","PSIVSP",47,0)
+ ;
+"RTN","PSIVSP",48,0)
+ENI ;
+"RTN","PSIVSP",49,0)
+ K:$L(X)<1!($L(X)>30)!(X["""")!($A(X)=45) X I '$D(X)!'$D(P(4)) Q
+"RTN","PSIVSP",50,0)
+ ;*229 Reset ATZERO flag.
+"RTN","PSIVSP",51,0)
+ I $P(X,"@",2)'=0 S P(7)=""
+"RTN","PSIVSP",52,0)
+ I P(4)="P"!(P(5))!(P(23)="P") Q:'X  S X="INFUSE OVER "_X_" MINUTE"_$S(X>1:"S",1:"") W "   ",X Q
+"RTN","PSIVSP",53,0)
+ I $E(X)="." K X Q  ;Enforce leading zero.
+"RTN","PSIVSP",54,0)
+ I X'=+X!(X'=0_+X),X["@",($P(X,"@",2,999)'=+$P(X,"@",2,999)!(+$P(X,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",55,0)
+ S SPSOL=$O(DRG("SOL",0)) I 'SPSOL K SPSOL,X W "  You must define at least one solution !!" Q
+"RTN","PSIVSP",56,0)
+ I X=+X!(X=0_+X),X'["@" S X=X_" ml/hr" W " ml/hr" D SPSOL S P(15)=$S('X:0,1:SPSOL\X*60+(SPSOL#X/X*60+.5)\1) K SPSOL Q
+"RTN","PSIVSP",57,0)
+ S SPSOL=$P(X,"@",2) S:$P(X,"@")=+X!($P(X,"@")=0_+X) $P(X,"@")=$P(X,"@")_" ml/hr" W "   ",+SPSOL," Label",$S(SPSOL'=1:"s",1:"")," per day",!?15,"at an infusion rate of: ",$P(X,"@") S P(15)=$S('SPSOL:0,1:1440/SPSOL\1) K SPSOL
+"RTN","PSIVSP",58,0)
+ I X["@",$P(X,"@",2)=0 S P(7)=1  ; Set ATZERO flag
+"RTN","PSIVSP",59,0)
+ Q
+"RTN","PSIVSP",60,0)
+SPSOL S SPSOL=0 F XXX=0:0 S XXX=$O(DRG("SOL",XXX)) Q:'XXX  S SPSOL=SPSOL+$P(DRG("SOL",XXX),U,3)
+"RTN","PSIVSP",61,0)
+ K XXX Q
+"RTN","PSIVSP",62,0)
+CHK F Y=1:1 Q:$L(P(11))>240!($P(P(11),"-",Y)="")  S $P(P(11),"-",Y)=$P(P(11),"-",Y)_$E("0000",1,4-$L($P(P(11),"-",Y)))
+"RTN","PSIVSP",63,0)
+ Q
+"RTN","PSIVSP",64,0)
+ ;
+"RTN","PSIVSP",65,0)
+DIC ; 51.1 look-up
+"RTN","PSIVSP",66,0)
+ N PSJSCH S PSJSCH=X I '$D(WSCHADM) N VAIP D IN5^VADPT S WSCHADM=VAIP(5),X=PSJSCH
+"RTN","PSIVSP",67,0)
+ K DIC S DIC="^PS(51.1,",DIC(0)=$E("E",'$D(NOECH))_"ISZ"
+"RTN","PSIVSP",68,0)
+ S DIC("W")="W ""  "","_$S('$D(WSCHADM):"$P(^(0),""^"",2)",'+WSCHADM:"$P(^(0),""^"",2)",1:"$S($D(^PS(51.1,+Y,1,+WSCHADM,0)):$P(^(0),""^"",2),1:$P(^PS(51.1,+Y,0),""^"",2))"),D="APPSJ" S:$D(PSIVSPQF) DIC(0)=DIC(0)_"O"
+"RTN","PSIVSP",69,0)
+ D IX^DIC K DIC
+"RTN","PSIVSP",70,0)
+ S:$D(DIE)#2 DIC=DIE Q:Y<0
+"RTN","PSIVSP",71,0)
+ S X=Y(0,0),ZZY=Y,(XT,Y)="" I $D(WSCHADM),$D(^PS(51.1,+ZZY,1,+WSCHADM,0)),$P(^(0),"^",2)]"" S (PSIVWAT,Y)=$P(^(0),"^",2)
+"RTN","PSIVSP",72,0)
+ K ZZY,WSCHADM S:Y="" (X,PSIVSC1)=$P(Y(0),U),(PSIVAT,Y)=$P(Y(0),"^",2) S XT=$P(Y(0),"^",3) Q
+"RTN","PSIVSP",73,0)
+ ;
+"RTN","PSIVSP",74,0)
+ORINF ;  OERR input transform for Infusion Rate
+"RTN","PSIVSP",75,0)
+ ;  X=data
+"RTN","PSIVSP",76,0)
+ N INFUSE
+"RTN","PSIVSP",77,0)
+ K:$L(X)<1!($L(X)>30)!(X["""")!($A(X)=45) X I '$D(X) Q
+"RTN","PSIVSP",78,0)
+ I X?.E1L.E S INFUSE=$$ENLU^PSGMI(X) Q:(INFUSE="TITRATE")!(INFUSE="BOLUS")!($P(INFUSE," ")="INFUSE")!($P(INFUSE," ")="Infuse")
+"RTN","PSIVSP",79,0)
+ Q:(X="TITRATE")!(X="BOLUS")!($P(X," ")="INFUSE")!($P(X," ")="Infuse")
+"RTN","PSIVSP",80,0)
+ I X["=" D  Q   ; NOIS LOU-0501-42191
+"RTN","PSIVSP",81,0)
+ .N X2,X1 S X1=$P(X,"="),X2=$P(X,"=",2)
+"RTN","PSIVSP",82,0)
+ .I X1["ML/HR",(+X1=$P(X1,"ML/HR"))!(+X1=$P(X1," ML/HR")) D
+"RTN","PSIVSP",83,0)
+ ..S X1=$TR(X1,"ML/HR","ml/hr")
+"RTN","PSIVSP",84,0)
+ .I X2["ML/HR",(+X2=$P(X2,"ML/HR"))!(+X2=$P(X2," ML/HR")) D
+"RTN","PSIVSP",85,0)
+ ..S X2=$TR(X2,"ML/HR","ml/hr")
+"RTN","PSIVSP",86,0)
+ .I X1[" ml/hr",(+X1=$P(X1," ml/hr")) D
+"RTN","PSIVSP",87,0)
+ ..S X1=$P(X1," ml/hr")_$P(X1," ml/hr",2,9999)
+"RTN","PSIVSP",88,0)
+ .I X2[" ml/hr",(+X2=$P(X2," ml/hr")) D
+"RTN","PSIVSP",89,0)
+ ..S X2=$P(X2," ml/hr")_$P(X2," ml/hr",2,9999)
+"RTN","PSIVSP",90,0)
+ .I X1["ml/hr",(+X1=$P(X1,"ml/hr")) D
+"RTN","PSIVSP",91,0)
+ ..S X1=$P(X1,"ml/hr")_$P(X1,"ml/hr",2,9999)
+"RTN","PSIVSP",92,0)
+ .I X2["ml/hr",(+X2=$P(X2,"ml/hr")) D
+"RTN","PSIVSP",93,0)
+ ..S X2=$P(X2,"ml/hr")_$P(X2,"ml/hr",2,9999)
+"RTN","PSIVSP",94,0)
+ .I X2'=+X2 D
+"RTN","PSIVSP",95,0)
+ ..I X2>0&(X2<1) Q
+"RTN","PSIVSP",96,0)
+ ..I ($P(X2,"@",2,999)'=+$P(X2,"@",2,999)!(+$P(X2,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",97,0)
+ .I X1>0&(X1<1) I +X1="."_$P(X1,".",2) S X1=X1_" ml/hr"
+"RTN","PSIVSP",98,0)
+ .I X2>0&(X2<1) I +X2="."_$P(X2,".",2) S X2=X2_" ml/hr"
+"RTN","PSIVSP",99,0)
+ .I X1=+X1 S X1=X1_" ml/hr"
+"RTN","PSIVSP",100,0)
+ .I X2=+X2 S X2=X2_" ml/hr"
+"RTN","PSIVSP",101,0)
+ .S:$P(X2,"@")=+X2 $P(X2,"@")=$P(X2,"@")_" ml/hr"
+"RTN","PSIVSP",102,0)
+ .S X=X1_"="_X2
+"RTN","PSIVSP",103,0)
+ I X["ML/HR",(+X=$P(X,"ML/HR"))!(+X=$P(X," ML/HR")) S X=$TR(X,"ML/HR","ml/hr")
+"RTN","PSIVSP",104,0)
+ I X[" ml/hr",+X=$P(X," ml/hr") S X=$P(X," ml/hr")_$P(X," ml/hr",2,9999)
+"RTN","PSIVSP",105,0)
+ I X["ml/hr",+X=$P(X,"ml/hr") S X=$P(X,"ml/hr")_$P(X,"ml/hr",2,9999)
+"RTN","PSIVSP",106,0)
+ I X>0,X<1 D  Q
+"RTN","PSIVSP",107,0)
+ .I X["ML/HR",(+X=$P($P(X,"ML/HR"),".",2))!(+X=$P($P(X," ML/HR"),".",2)) S X=$TR(X,"ML/HR","ml/hr")
+"RTN","PSIVSP",108,0)
+ .I X[" ml/hr",(+X=$P($P(X," ml/hr"),".",2)) S X=$P(X," ml/hr")_$P(X," ml/hr",2,9999)
+"RTN","PSIVSP",109,0)
+ .I X["ml/hr",+X=$P(X,"ml/hr") S X=$P(X,"ml/hr")_$P(X,"ml/hr",2,9999)
+"RTN","PSIVSP",110,0)
+ .I +X=X S X=X_" ml/hr"
+"RTN","PSIVSP",111,0)
+ .I $P(X,0,2)=+X S X=X_" ml/hr"
+"RTN","PSIVSP",112,0)
+ .S X=0_+X_$P(X,+X,2)
+"RTN","PSIVSP",113,0)
+ I '(X>0&X<1) I X'=+X,($P(X,"@",2,999)'=+$P(X,"@",2,999)!(+$P(X,"@",2,999)<0)) K X Q
+"RTN","PSIVSP",114,0)
+ I X=+X S X=X_" ml/hr" Q
+"RTN","PSIVSP",115,0)
+ S:$P(X,"@")=+X $P(X,"@")=$P(X,"@")_" ml/hr"
+"RTN","PSIVSP",116,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8256,6)
+^252
+**END**
+**END**

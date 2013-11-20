@@ -1,0 +1,321 @@
+$TXT Created by ZEIGLER,EDWARD L at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 10/02/13 at 13:51
+=============================================================================
+Run Date: FEB 20, 2014                     Designation: DG*5.3*874
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #776                    Status: Released
+                  Compliance Date: FEB 27, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*837  <<= must be installed BEFORE `DG*5.3*874'
+
+Subject: PID BUILDER/VHIC CARD SUPPORT/VIC REMOVAL
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+  This patch is being released with a 5 day compliance date.  It is
+  important that this patch be installed no later than the compliance date
+  to ensure Veterans with new VHIC cards are recognized by vendor products.
+ **************************************************************************
+  
+  
+ *************************************************************************
+ **   IMPORTANT - The install of this patch removes all the old VIC     **
+ **   related software.  Be sure and back up the routines listed below  **
+ **   since there are 35 routines removed from your system with the     **
+ **   install of this patch.  None of the routines are used by class 1  **
+ **   software and none of them should be used by class 3 software.     **
+ *************************************************************************
+  
+  
+ This patch provides support for the new VHIC (Veteran's Health Information
+ Card) card, formerly known as VIC (Veteran Identification Card) card, to
+ provide interoperability in remote systems.  The main Patient Identifier
+ (PID) segment builder is being updated to use the new VHIC card as an
+ identifier source.  This will allow remote systems such as ScriptPro that
+ utilize the Outpatient Automation Interface (OPAI) interface to use the
+ information on the new VHIC card for patient identification.
+  
+ This patch will also remove all legacy VIC software from the VistA systems
+ to ensure it isn't used anymore since the old application is now obsolete.
+  
+  
+ Issue #1:  When patients presented at the pharmacy to pick up their
+ outpatient medications some sites utilize 3rd party COTS (Commercial Off 
+ The Shelf) products that rely on patient identifying information contained
+ in the PID segment of HL7 messages.  Because the new VHIC card no longer
+ contains the patient's social security number, there was no common
+ identifier between the barcode on the VHIC card and data in the HL7 PID
+ segment.
+ Solution:  This patch adds the current active VHIC card numbers to the HL7
+ PID building utility.
+  
+ Issue #2:  Some HL7 messages were occasionally being generated from old
+ VIC workstations when the operations relating to those old workstations is
+ obsolete.
+ Solution:  This won't stop the old workstations from operating but to
+ eliminate possible interaction between the workstations and VistA the
+ legacy VIC card software is being removed from VistA.  All the components
+ should be deleted with the install of this patch.
+  
+ Components included in patch:
+ BULLETIN:                                      ACTION:
+    DGQE HL7ERR                                    DELETE AT SITE
+    DGQE PHOTO CAPTURE                             DELETE AT SITE
+  
+ MAIL GROUP:                                    ACTION:
+    DGQE HL7 TRANSMISSION ERRORS                   DELETE AT SITE
+    DGQE PHOTO CAPTURE                             DELETE AT SITE
+    VIC                                            DELETE AT SITE
+  
+ ROUTINE:                                       ACTION:
+    DGQEACK                                        DELETE AT SITE
+    DGQEBGR                                        DELETE AT SITE
+    DGQEDD                                         DELETE AT SITE
+    DGQEDEMO                                       DELETE AT SITE
+    DGQEHL71                                       DELETE AT SITE
+    DGQEHL72                                       DELETE AT SITE
+    DGQEHL73                                       DELETE AT SITE
+    DGQEHL74                                       DELETE AT SITE
+    DGQEHLL                                        DELETE AT SITE
+    DGQEHLNT                                       DELETE AT SITE
+    DGQEHLOR                                       DELETE AT SITE
+    DGQEHLR                                        DELETE AT SITE
+    DGQEHLRQ                                       DELETE AT SITE
+    DGQEHLS                                        DELETE AT SITE
+    DGQEHLUT                                       DELETE AT SITE
+    DGQEMA                                         DELETE AT SITE
+    DGQEMA1                                        DELETE AT SITE
+    DGQEMP                                         DELETE AT SITE
+    DGQEMPS                                        DELETE AT SITE
+    DGQEP0                                         DELETE AT SITE
+    DGQEPEN                                        DELETE AT SITE
+    DGQEPRE                                        DELETE AT SITE
+    DGQEPST                                        DELETE AT SITE
+    DGQEPST1                                       DELETE AT SITE
+    DGQEQRY                                        DELETE AT SITE
+    DGQEREQ                                        DELETE AT SITE
+    DGQERPC                                        DELETE AT SITE
+    DGQESC0                                        DELETE AT SITE
+    DGQESC1                                        DELETE AT SITE
+    DGQESC2                                        DELETE AT SITE
+    DGQESC3                                        DELETE AT SITE
+    DGQESC5                                        DELETE AT SITE
+    DGQEUT1                                        DELETE AT SITE
+    DGQEUT2                                        DELETE AT SITE
+    DGQEUT3                                        DELETE AT SITE
+    VAFCQRY1                                       SEND TO SITE
+  
+ OPTION:                                        ACTION:
+    DGQE BACKGROUND PROCESSING                     DELETE AT SITE
+    DGQE DATA CARD EDIT                            DELETE AT SITE
+    DGQE DATA CARD IN                              DELETE AT SITE
+    DGQE DATA CARD OUT                             DELETE AT SITE
+    DGQE DATA CARD PRE                             DELETE AT SITE
+    DGQE EDIT EMBOSSER FILES                       DELETE AT SITE
+    DGQE EMBOSSER DEVICE EDIT                      DELETE AT SITE
+    DGQE VIC                                       DELETE AT SITE
+    DGQE VIC MANUAL                                DELETE AT SITE
+    DGQE VIC RPCS                                  DELETE AT SITE
+  
+ SECURITY KEY:                                  ACTION:
+    DGQE VIC DOWNLOAD                              DELETE AT SITE
+  
+ PROTOCOL:                                      ACTION:
+    DGQE HL7 A08 VIC SERVER                        DELETE AT SITE
+    DGQE VIC A08 CLIENT                            DELETE AT SITE
+    DGQE VIC ORM/O01 EVENT                         DELETE AT SITE
+    DGQE VIC ORR/O02 SUBSC                         DELETE AT SITE
+  
+ HL7 APPLICATION PARAMETER:                     ACTION:
+    DGQE DATACARD                                  DELETE AT SITE
+    DGQE VIC EVENTS                                DELETE AT SITE
+  
+ HL LOGICAL LINK:                               ACTION:
+    VIC NCMD                                       DELETE AT SITE
+  
+ REMOTE PROCEDURE:                              ACTION:
+    DGQE GET PATIENT DEMO                          DELETE AT SITE
+    DGQE SET CARD ID                               DELETE AT SITE
+  
+ FILES:                                         ACTION:
+    39.6  VIC REQUEST                              DELETE AT SITE
+    39.7  VIC HL7 TRANSMISSION LOG                 DELETE AT SITE
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000904414 - The SSN will not be available in the VHIC 4 
+                   magstripe/barcode. The Pharmacy has to modify the
+                   process to use a different identifier to lookup the
+                   patient record.
+   
+ Associated New Service Request (NSR):
+ =====================================
+ There is no associated NSR with the patch.
+    
+  
+  
+ Test Sites:
+ ===========
+ Atlanta      
+ Connecticut Health Care System        
+ Heartland-West Health Care System        
+ Pittsburgh Health Care System           
+  
+  
+        
+ Installation Instructions:
+ ==========================
+ This patch takes less than 10 minutes to install.  The patch should be 
+ loaded during non-peak hours to minimize disruption to the users.
+  
+ 1.  Users are allowed on the system during patch installation.
+  
+ 2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+     Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+                                                                 
+ 3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+     the patch text only.
+     
+ 4.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+   
+ 5.  From this menu, you may elect to use the following options:
+     (a)  Backup a Transport Global.
+     (b)  Compare Transport Global to Current System.
+     (c)  Verify Checksums in Transport Global.
+     (d)  Print Transport Global.
+   
+ 6.  Use the Install Package(s) option and select the package DG*5.3*857.
+  
+ 7. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//', respond NO.
+  
+ 8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', respond YES.
+  
+ 10.  When prompted 'Enter options you wish to mark as 'Out Of
+        Order':'  Enter the following options:
+  
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+  
+ 11.  When prompted 'Enter protocols you wish to mark as 'Out Of
+        Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P874
+    Before:       n/a   After:  B1473947  **874**
+Routine Name: DGQEACK
+    Before: B19251564   After:    Delete  
+Routine Name: DGQEBGR
+    Before: B13847819   After:    Delete  
+Routine Name: DGQEDD
+    Before:   B489403   After:    Delete  
+Routine Name: DGQEDEMO
+    Before: B29593939   After:    Delete  
+Routine Name: DGQEHL71
+    Before:  B5609068   After:    Delete  
+Routine Name: DGQEHL72
+    Before: B12956525   After:    Delete  
+Routine Name: DGQEHL73
+    Before:  B9736063   After:    Delete  
+Routine Name: DGQEHL74
+    Before:  B6899053   After:    Delete  
+Routine Name: DGQEHLL
+    Before: B11701600   After:    Delete  
+Routine Name: DGQEHLNT
+    Before:       n/a   After:    Delete  
+Routine Name: DGQEHLOR
+    Before:  B8348816   After:    Delete  
+Routine Name: DGQEHLR
+    Before: B22790856   After:    Delete  
+Routine Name: DGQEHLRQ
+    Before:  B4995351   After:    Delete  
+Routine Name: DGQEHLS
+    Before: B13481805   After:    Delete  
+Routine Name: DGQEHLUT
+    Before: B16767022   After:    Delete  
+Routine Name: DGQEMA
+    Before: B15238660   After:    Delete  
+Routine Name: DGQEMA1
+    Before: B18898963   After:    Delete  
+Routine Name: DGQEMP
+    Before: B12400609   After:    Delete  
+Routine Name: DGQEMPS
+    Before:  B1502815   After:    Delete  
+Routine Name: DGQEP0
+    Before: B11779274   After:    Delete  
+Routine Name: DGQEPEN
+    Before:  B9079954   After:    Delete  
+Routine Name: DGQEPRE
+    Before:   B455031   After:    Delete  
+Routine Name: DGQEPST
+    Before:  B1319588   After:    Delete  
+Routine Name: DGQEPST1
+    Before: B76168576   After:    Delete  
+Routine Name: DGQEQRY
+    Before:       n/a   After:    Delete  
+Routine Name: DGQEREQ
+    Before: B15944716   After:    Delete  
+Routine Name: DGQERPC
+    Before: B11925039   After:    Delete  
+Routine Name: DGQESC0
+    Before:  B3556912   After:    Delete  
+Routine Name: DGQESC1
+    Before: B11820947   After:    Delete  
+Routine Name: DGQESC2
+    Before: B21637202   After:    Delete  
+Routine Name: DGQESC3
+    Before: B13251218   After:    Delete  
+Routine Name: DGQESC5
+    Before:  B8986401   After:    Delete  
+Routine Name: DGQEUT1
+    Before: B32594706   After:    Delete  
+Routine Name: DGQEUT2
+    Before: B45753448   After:    Delete  
+Routine Name: DGQEUT3
+    Before: B14825619   After:    Delete  
+Routine Name: VAFCQRY1
+    Before: B75122287   After: B82687106  **428,474,477,575,627,648,698,
+                                           711,707,837,874**
+Routine Name: VAFCQRY4
+    Before: B12814510   After: B12425054  **707,874**
+ 
+Routine list of preceding patches: 837
+
+=============================================================================
+User Information:
+Entered By  : WILLIAMS,JOHN F               Date Entered  : SEP 17, 2013
+Completed By: ALDERMAN,MATT S               Date Completed: FEB 13, 2014
+Released By : BARKER,MARK D                 Date Released : FEB 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,173 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 09/04/13 at 15:22
+=============================================================================
+Run Date: DEC 12, 2013                     Designation: ACKQ*3*22
+Package : ACKQ - QUASAR                       Priority: Mandatory
+Version : 3        SEQ #17                      Status: Released
+                  Compliance Date: JAN 12, 2014
+=============================================================================
+
+Associated patches: (v)ACKQ*3*16   <<= must be installed BEFORE `ACKQ*3*22'
+                    (v)ACKQ*3*18   <<= must be installed BEFORE `ACKQ*3*22'
+
+Subject: UPDATE DIRECT FILE READS TO SUPPORTED API'S FOR ICD/CPT FILES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ This patch will update all direct file reads to the ICD DIAGNOSIS (#80) file,
+ CPT MODIFIER (#81.3) file, and the CPT FILE (#81)file in the Quasar application 
+ to the new associated API's (Application Programming Interface).
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ INC000000894148 - Update existing direct file reads to new API's
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Black Hills HCS
+ Upstate New York
+ Bronx, NY.
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000000894148 - Update existing direct file reads to new API's
+  
+ Problem:
+ --------
+ All direct file reads to the ICD DIAGNOSIS file (#80), CPT MODIFIER file
+ (#81.3) and CPT FILE (#81)file need to be updated to their new associated API's.
+  
+ Resolution:
+ -----------
+ Update all direct file reads to the ICD DIAGNOSIS FILE (#80), CPT MODIFIER FILE
+ (#81.3) and CPT FILE (#81)file with the new supported API's.
+  
+ Routines: ACKQASU, ACKQASU4, ACKQDWLP, ACKQNQ, ACKQR2, ACKQR3, ACKQUTL4,
+           ACKQUTL5, ACKQUTL7
+  
+    ==================== INSTALLATION INSTRUCTIONS: ====================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+                                           
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter ACKQ*3.0*22):
+  
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+         
+         Enter options you wish to mark as 'Out Of Order':
+  
+         New Clinic Visits                     [ACKQAS VISIT ENTRY] 
+         Edit an Existing Visit                [ACKQAS VISIT EDIT]
+         Inquire - A&SP Patient                [ACKQAS PAT INQ]
+         Compile A&SP Capitation Data          [ACKQAS WKLD GEN MAN]
+         Print A&SP Capitation Report          [ACKQAS WKLD VERIFY]
+         Statistics by Procedure               [ACKQAS PROC STATS]
+         Visits by Diagnosis                   [ACKQAS VISITS BY DIAG]
+         Update CPT Modifiers per CO Directive [ACKQAS UPDATE CPT MODIFIERS]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+         enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;QUASAR;**[Patch List]**;Feb 11, 2000;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ACKQASU
+    Before: B22208442   After: B23317920  **8,15,16,22**
+Routine Name: ACKQASU4
+    Before: B44737991   After: B47495608  **17,22**
+Routine Name: ACKQDWLP
+    Before: B83192122   After: B86446562  **1,22**
+Routine Name: ACKQNQ
+    Before: B27597635   After: B28737008  **8,14,18,22**
+Routine Name: ACKQR2
+    Before: B80557034   After: B84001886  **1,8,22**
+Routine Name: ACKQR3
+    Before: B77560321   After: B79522688  **8,22**
+Routine Name: ACKQUTL4
+    Before: B85057049   After: B89569144  **1,8,14,17,16,22**
+Routine Name: ACKQUTL5
+    Before: B61333053   After: B64186800  **1,4,6,8,18,22**
+Routine Name: ACKQUTL7
+    Before: B27034364   After: B27877671  **8,22**
+ 
+Routine list of preceding patches: 16, 18
+
+=============================================================================
+User Information:
+Entered By  : SPILLER,RICHARD               Date Entered  : AUG 27, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: DEC 10, 2013
+Released By : COWNIE,KEVIN                  Date Released : DEC 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

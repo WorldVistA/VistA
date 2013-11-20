@@ -1,0 +1,357 @@
+
+=============================================================================
+Run Date: JAN 15, 2014                     Designation: TIU*1*279
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #256                      Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)TIU*1*260   <<= must be installed BEFORE `TIU*1*279'
+
+Subject: Create Missing Patient - PRF TIU Title
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ As part of the Missing Patient - Patient Record Flag (PRF) project, patch 
+ TIU*1*279 includes new development of the PRF functionality within the 
+ Veterans Health Information Systems and Technology Architecture (VistA) 
+ system of applications; specifically Missing Patient PRF functionality. 
+ This Missing Patient PRF functionality is to assist in fulfillment of 
+ Directive 2010-052 - Management of Wandering and Missing Patients. 
+  
+ This Veterans Health Administration (VHA) Directive establishes policy to 
+ ensure that each Department of Veterans Affairs' (VA) medical facility 
+ has an effective and reliable plan to prevent, and effectively manage 
+ wandering and missing patient events that place patients at-risk for 
+ harm. Patch TIU*1*279 specifically provides for linking a Text 
+ Integration Utilities (TIU) Progress Note Title with the new "MISSING 
+ PATIENT", PRF.
+  
+  
+ * Note - There will be no changes to any Local Category (CAT) II PRFs 
+ associated with this Missing Patient PRF project or any of its 
+ components. This project is strictly creating a new, National CAT I PRF 
+ and TIU note for missing patients. Each facility should manually 
+ deactivate any CAT II Missing Patient PRFs and only use this newly 
+ created CAT I flag going forward per VACO memo guidance dated 4/23/2013.
+  
+  
+ FEATURES
+ --------
+ 1. Patch TIU*1*279 creates and installs a new TIU Progress Note Title, 
+ PATIENT RECORD FLAG CATEGORY I - MISSING PATIENT.  This flag will have 
+ the MENTAL HEALTH PATIENT RECORD FLAG Enterprise Standard Title, and 
+ PATIENT RECORD FLAG CAT I Document Class.  This patch creates a new entry 
+ in the TIU DOCUMENT DEFINITION File #8925.1 to create this new TIU Title.
+  
+  
+ Patch Components
+ ================
+  
+ Dialog Associated:
+ N/A
+  
+  
+ Forms Associated:
+ N/A
+  
+  
+ Mail Groups Associated:
+ N/A
+  
+  
+ Options Associated:
+ N/A
+  
+  
+ Protocols Associated:
+ N/A
+  
+  
+ Security Keys Associated:
+ N/A
+  
+ Templates Associated:
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ Associated Directive:
+ -----------------------------
+ Directive 2010-052 - Management of Wandering and Missing Patients
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Charleston, SC
+ Miami, FL
+ Palo Alto, CA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ * NOTE - Patch TIU*1*279 is a pre-requisite for the installation of 
+ patch DG*5.3*869
+  
+ The preferred method is to FTP the files from 
+    ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+ Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+ Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+  
+    FILE NAME             DESCRIPTION
+    ------------------    -----------------------------------------------
+ DG_53_P869.ZIP                Software and Documentation for 
+                               MISSING PATIENT - PRF implementation.
+  
+ DG_53_P869.ZIP contains the following files and Missing Patient PRF 
+ documentation:
+  
+   DG_53_P869.KID              Host file containing DG*5.3*869 KIDS
+                               software Distribution
+   TIU_1_P279.KID              Host file containing TIU*1.0*279 KIDS
+                               software Distribution
+  
+   Missing Patient PRF_        Installation Guide for patch installation
+   Installation Guide.PDF
+  
+   Missing Patient PRF_        Release Notes about new features and
+   Release Notes.PDF           functionality
+  
+   Patient Record Flags_User   User Guide for system access and use
+   Guide.PDF
+  
+   PIMSTM.PDF                  Updated Patient Information
+                               Management System Technical Manual
+  
+   TIUTM.PDF                   Updated TIU Technical Manual
+  
+   TIUUM.PDF                   Updated TIU User Manual
+  
+    * Note:  Use Binary mode when transferring the .ZIP file. 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Note: This patch contains the M code executed by the VistA system. The 
+ Patch TIU*1*279 (TIU_1_P279.KID) is included in the available 
+ DG_53_P869.ZIP file and will need to be installed before DG*5.3*869 
+ (DG_53_P869.KID) due to necessity.  Follow the "Installation Steps" for 
+ the respective patches during installation of that patch.  Also, patch 
+ TIU*1*260 is a prerequisite for installation of TIU*1*279.
+  
+  
+ Installation Instructions and Software Retrieval
+ ------------------------------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one 
+ of the OI Field Offices. The preferred method is to FTP the file from 
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server. Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                 DIRECTORY
+    Albany              FTP.FO-ALBANY.DOMAIN.EXT    anonymous.software
+    Hines               FTP.FO-HINES.DOMAIN.EXT     anonymous.software
+    Salt Lake City      FTP.FO-SLC.DOMAIN.EXT       anonymous.software
+  
+ The software distribution includes:
+  
+ FILE NAME        DESCRIPTION                                         
+ BLOCK SIZE
+  
+ DG_53_P869.ZIP Contains KIDS files(2) and pdf documents (6)
+                DG_53_P869.KID                               16,384 bytes
+                TIU_1_P279.KID                                8,192 bytes
+                Missing Patient PRF_Installation Guide.PDF  638,976 bytes
+                Missing Patient PRF_Release Notes.PDF       614,400 bytes
+                Patient Record Flags_User Guide.PDF       1,658,880 bytes
+                PIMSTM.PDF                                3,194,880 bytes
+                TIUTM.PDF                                 3,035,136 bytes
+                TIUUM.PDF                                 2,256,896 bytes
+   
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install.
+  
+  
+ * Post-Install Routine (MAIN^TIUPS279):
+  
+     Responsible for creation and installation of the PATIENT RECORD FLAG 
+ CATEGORY I - MISSING PATIENT, TIU Document Definition.  This routine 
+ creates the new TIU Title for the MISSING Patient Record Flag Progress 
+ Note in the TIU Title Definition File (#8925.1). The post routine 
+ ^TIUPS279 may be removed after installation has successfully completed.
+  
+  
+  Installation Steps (TIU*1.0*279):
+  ===============================
+ 1.  Download the ZIP file, DG_53_P869.ZIP from the ANONYMOUS.SOFTWARE
+     directory of the Albany OIFO to the appropriate directory on your
+     system.  Then extract the file TIU_1_P279.KID to the appropriate
+     directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and 
+     enter path and filename e.g., SYS$:[TMP]TIU_1_P279.KID
+     
+ 3.  From the 'Kernel Installation & Distribution System' menu,
+     select The Installation menu.
+  
+ 4.  From this menu, you may now elect to use the following options
+     (when prompted for INSTALL NAME, enter TIU*1.0*279).
+  
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch.  It will NOT
+         backup any changes such as DDs or templates.
+  
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch is
+         installed.  It compares all components of the patch (routines,
+         DDs, templates, etc.).
+  
+      c. Verify Checksums in Transport Global - This option will allow you 
+         to ensure the integrity of the routines that are in the transport
+         global.
+  
+      d. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+  
+ 5.  From the install menu, select the Install Package(s) option to
+     install the build (when prompted for INSTALL NAME, enter
+     TIU*1.0*279). 
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+  
+  
+ Installation Example:
+ ---------------------
+ Select Installation Option: 6 Install Package(s)
+  
+ Select INSTALL NAME: TIU*1.0*279 Loaded from Distribution 12/4/13@10:43:01
+ => TIU*1*279 ;Created on Sep 10, 2013@13:22:53
+  
+ This Distribution was loaded on Dec 04, 2013@10:43:01 with header of
+    TIU*1*279 ;Created on Sep 10, 2013@13:22:53
+    It consisted of the following Install(s):
+     TIU*1.0*279
+ Checking Install for Package TIU*1.0*279
+ Install Questions for TIU*1.0*279
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+  
+ DEVICE: HOME// DEC Windows
+  
+                                   TIU*1.0*279
+ -------------------------------------------------------------------------
+  
+ Install Started for TIU*1.0*279 :
+                Dec 04, 2013@10:45
+  
+ Build Distribution Date: Sep 10, 2013
+  
+ Installing Routines:
+               Dec 04, 2013@10:45
+  
+ Running Post-Install Routine: MAIN^TIUPS279
+  
+   Title Created: PATIENT RECORD FLAG CATEGORY I - MISSING PATIENT
+  
+   Title attached to Document Class PATIENT RECORD FLAG CAT I
+  
+ Updating Routine file...               Dec 04, 2013@10:45
+  
+ Updating KIDS files...
+  
+ TIU*1.0*279 Installed.
+               Dec 04, 2013@10:45
+  
+  
+ Install Message
+           l------------------------------------------------------------k
+   100%    |             25             50             75               |
+ Complete  m------------------------------------------------------------j
+  
+  
+ Install Completed
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ For a user to view PRF linked TIU Progress Note Titles, that user must 
+ be a member of the 'DGPF PATIENT RECORD FLAGS MGR' User Class.  The VistA
+ USER CLASS MANAGEMENT [USR CLASS MANAGEMENT MENU] option should be used 
+ to update this membership.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+Routine Name: TIUPS279
+    Checksum:
+  The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+     
+    Routine Name: TIUPS279
+        Before:       n/a   After:  B9625532  **279**
+ Description of Changes:
+    NEW Routine for patch TIU*1*279.  This routine is a post-install 
+  routine to create the NEW TIU Title for the MISSING Patient Record Flag
+  Progress Note in TIU Title Definition File (#8925.1) .
+
+
+=============================================================================
+User Information:                          Hold Date     : DEC 27, 2013
+Entered By  : JACKSON,TODD                  Date Entered  : APR 15, 2013
+Completed By: GOURALNIK,YELENA              Date Completed: JAN 15, 2014
+Released By : SCHMIT,BECKY                  Date Released : JAN 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

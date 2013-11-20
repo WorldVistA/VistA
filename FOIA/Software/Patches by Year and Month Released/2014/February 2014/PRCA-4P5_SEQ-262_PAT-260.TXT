@@ -1,0 +1,184 @@
+$TXT Created by HSI,TUAN at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 07/07/09 at 14:34
+=============================================================================
+Run Date: FEB 26, 2014                     Designation: PRCA*4.5*260
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #262                    Status: Released
+                  Compliance Date: MAR 28, 2014
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*223<<= must be installed BEFORE `PRCA*4.5*260'
+                    (v)PRCA*4.5*244<<= must be installed BEFORE `PRCA*4.5*260'
+
+Subject: REPLACE SPECIAL CHARACTERS FOR CCPC TRANSMISSION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1) Add statement "THANK YOU FOR YOUR PAYMENT" to the bottom of the payment
+    receipt.
+  
+ 2) Replace special characters in the transaction description of the PD
+    segment which caused the CCPC (Consolidated Co-payment Processing
+    Center) transmission to fail to the AAC (Austin Automation Center). 
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000185402 - Changing Payment Receipt Language
+ 2) INC0000000275799 - CCPC failed trans. # 607 Madison
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Madison, WI
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC0000000185402 - Changing Payment Receipt Language
+  
+    Problem:
+    --------
+    Site requested to add statement "THANK YOU FOR YOUR PAYMENT" to the
+    bottom of the payment receipt.
+  
+    Resolution:
+    -----------
+    Modified routine RCDPRECT to add statement "THANK YOU FOR YOUR PAYMENT"
+    at the bottom of the payment receipt.
+  
+ 2. INC0000000275799 - CCPC failed trans. #607 Madison
+  
+    Problem:
+    --------
+    Site reported special characters within the transaction description of 
+    the AR (Accounts Receivable) TRANSACTION file (#433) caused a CCPC
+    transmission failure to the AAC.
+  
+    Resolution:
+    -----------
+    Modified routine RCCPCML to replace either a tilde "~" or pipe "|" 
+    symbol with a space if the description in the PD segment contains it
+    when transmitting CCPC messages to the AAC by using the 'Transmit CCPC
+    messages' [RCCPC TRANSMIT] option.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the users 
+ be off the system.
+  
+ Also, this patch should be installed at a time when the Accounts 
+ Receivable Nightly Process Background Job [PRCA NIGHTLY PROCESS] is not 
+ scheduled to run.
+  
+ Install Time - less than 3 minutes.
+  
+ 1)  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2)  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]:
+  
+     Edits and Distribution...
+     Utilities...
+     Installation...
+     
+     Select Kernel Installation and Distribution System Option:
+     INStallation
+     ---
+         1. Load a Distribution
+         2. Verify Checksums in Transport Global
+         3. Print Transport Global
+         4. Compare Transport Global to Current System
+         5. Backup a Transport Global
+         6. Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+  
+ 3)  From this menu, you may elect to use the following options (when 
+     prompted for INSTALL NAME, enter PRCA*4.5*260):
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will NOT 
+        backup any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when the patch is 
+        installed. It compares all components of the patch (routines, DDs, 
+        templates, etc.)
+  
+     c. Verify Checksums in Transport Global - This option will ensure the 
+        integrity of the routines that are in the transport global.
+  
+     d. Print Transport Global - This option will allow you to view the 
+        components of the KIDS build.
+  
+ 4)  Use the Install Package(s) option and select the package PRCA*4.5*260.
+  
+     a. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", answer NO.
+  
+     b. When prompted "Want to DISABLE Scheduled Options and Menu Options 
+        and Protocols? YES//", answer YES.
+  
+     c. When prompted "Enter options you wish to mark as "Out of Order":",
+        enter the following option:
+  
+        Receipt Processing               [RCDP RECEIPT PROCESSING]
+        Transmit CCPC Messages           [RCCPC TRANSMIT]
+        Accounts Receivable Nightly      [PRCA NIGHTLY PROCESS]
+        Process Background Job
+  
+        Note: The Accounts Receivable Nightly Process Background Job [PRCA
+              NIGHTLY PROCESS] should not be running during the 
+              installation of this patch.
+  
+     d. When prompted "Enter protocols you wish to mark as 'Out of 
+        Order':", [enter]
+  
+     e. When prompted "Delay Install (Minutes): (0-60): 0//", [enter] 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCCPCML
+    Before: B45438721   After: B47881024  **34,80,93,118,133,140,160,165,
+                                           187,195,206,223,260**
+Routine Name: RCDPRECT
+    Before: B18445207   After: B18968174  **114,148,217,244,260**
+ 
+Routine list of preceding patches: 223, 244
+
+=============================================================================
+User Information:
+Entered By  : HSI,TUAN                      Date Entered  : MAY 18, 2009
+Completed By: LANG,MICKEY                   Date Completed: JAN 30, 2014
+Released By : BROWN,GAYLE F                 Date Released : FEB 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

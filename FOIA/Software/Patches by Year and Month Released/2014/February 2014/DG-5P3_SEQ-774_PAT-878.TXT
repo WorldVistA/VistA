@@ -1,0 +1,154 @@
+
+=============================================================================
+Run Date: FEB 13, 2014                     Designation: DG*5.3*878
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #774                    Status: Released
+                  Compliance Date: MAR 16, 2014
+=============================================================================
+
+
+Subject: MISSING PATIENT - PRF DOCUMENTATION UPDATE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+ Patch DG*5.3*869, released 01/14/2014, compliance date 01/26/2014
+ introduced the Missing Patient, Patient Record Flag (PRF) and the
+ DGPF MISSING PT FLAG REVIEW mail group.  If the mail group and
+ the new Category I PRF are not created as part of the installation
+ process, there could be a potential patient safety issue at your 
+ site.
+  
+ This informational patch updates the Missing Patient PRF
+ Installation Guide with instructions for Missing Patient PRF
+ and DGPF MISSING PT FLAG REVIEW mail group installation 
+ verification.
+  
+ This patch is informational only, no routines have been changed.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ INC000000961159 - Mail Group not created
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC000000961159 - Mail Group not created
+  
+ Problem:
+ -------
+ It has been reported from a few sites that the install process for the 
+ new Missing Patient, Patient Record Flag (PRF), along with the new DGPF
+ MISSING PT FLAG REVIEW mail group set up had not completed successfully.
+  
+  
+ Solution:
+ ---------
+ Follow these instructions and ensure your site had no issues with 
+ installing the Missing Patient PRF and DGPF MISSING PT FLAG REVIEW mail
+ group:
+  
+ 1.     All sites should have already installed patch DG*5.3*869 by 
+ 01/26/2014. Due to issues found at some sites we are requesting
+ that you please verify that the mail group, DGPF MISSING PT FLAG
+ REVIEW, has been created.  
+    
+    *If the mail group and the new Category I PRF are not created
+     as part of the installation process, there could be a potential
+     patient safety issue at your site.
+  
+    *The mail group (DGPF MISSING PT FLAG REVIEW) must exist before
+     the MISSING PATIENT, Patient Record Flag will be added to the 
+     Patient Record Flag file.
+  
+  
+  
+ 2.    If the mail group is not created, please manually add the mail 
+ group (DGPF MISSING PT FLAG REVIEW) Mail Group:
+  
+    *Using option Mail Group Edit  [XMEDITMG], enter the following
+     information:
+  
+       NAME: DGPF MISSING PT FLAG REVIEW   TYPE: public
+       ALLOW SELF ENROLLMENT?: YES         RESTRICTIONS: UNRESTRICTED
+       ORGANIZER: user designated as mail group coordinator
+  
+  
+  
+ 3.    Reinstall the DG*5.3*869 patch only. Be aware that the install 
+ prompts a question for the "Name of the Mail Group Coordinator" which 
+ will need to be answered.
+  
+  
+ 4.    After the above steps are completed, verify that the Missing
+ Patient PRF was added to the PRF National Flag file:
+  
+    *Using FileMan Inquiry verify entry MISSING PATIENT was added to the
+     PRF NATIONAL FLAG (#26.15) file.
+  
+  
+  
+ The "Missing Patient PRF_Installation Guide" has also been updated with
+ this information.
+  
+  
+ If you experience any issues with the install process, please log a 
+ ticket with the national service desk  at 888-596-4357. 
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The Missing Patient PRF_Installation Guide is available on the
+ ANONYMOUS.SOFTWARE directory at one of the following Office of Information
+ (OI) Field Offices.  These files should be retrieved in binary format.
+     
+  Sites may retrieve documentation in one of the following ways:
+    
+  (1) The preferred method is to FTP the file from 
+      download.vista.domain.ext, which will transmit the file from 
+      the first available FTP server.
+     
+  (2) Sites may also elect to retrieve documentation directly from a
+      specific server as follows:
+     
+      Albany                ftp.fo-albany.domain.ext
+      Hines                 ftp.fo-hines.domain.ext
+      Salt Lake City        ftp.fo-slc.domain.ext
+     
+      The documentation distribution includes:
+  
+      File Name:    Missing Patient PRF_Installation Guide.pdf
+  
+      Description:  Updated installation guide for the Missing Patient,
+                    Patient Record Flag
+  
+      Protocol:     Binary
+  
+  (3) The installation guide is also available on the VDL located at:
+      http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : JACKSON,TODD                  Date Entered  : FEB 05, 2014
+Completed By: GOURALNIK,YELENA              Date Completed: FEB 11, 2014
+Released By : DANE,SIDNEY                   Date Released : FEB 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

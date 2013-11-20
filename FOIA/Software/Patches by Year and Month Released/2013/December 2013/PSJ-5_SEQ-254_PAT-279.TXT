@@ -1,0 +1,508 @@
+$TXT Created by HARRIS,JAMES at DVBCACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 10/01/13 at 21:55
+=============================================================================
+Run Date: DEC 12, 2013                     Designation: PSJ*5*279
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #254                      Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*266    <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSJ*5*228   <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSJ*5*229   <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSJ*5*247   <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSJ*5*258   <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*279'
+                    (v)PSS*1*172   <<= must be installed BEFORE `PSJ*5*279'
+
+Subject: IMR6 - CLINIC ORDER 
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR6 CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, AND IV BAG 
+ LOGIC enhancement includes 4 patches which must be installed in the
+ following order:
+  
+ 1.      PSS*1*172
+ 2.      OR*3*266
+ 3.      PSJ*5*279
+ 4.      PSB*3*70
+  
+ ATTENTION: This enhancement also includes a new Graphical User Interface
+ (GUI) executable, BCMA GUI version 3.0.70.65. Installation of this GUI is
+ required immediately after the KIDS install for the Patch to function.
+ **************************************************************************
+  
+ Clinic Orders
+ =========================================
+ This patch contains changes to support clinic orders enhancements in
+ patch PSB*3*70. Support is accomplished by modifying Inpatient Medications
+ software to send active clinic orders with the clinic name to the Bar Code
+ Medication Administration (BCMA) software.
+  
+ A new mail group PSJ CLINIC DEFINITION has been created to provide a 
+ means by which pharmacy personnel may be notified when clinic orders are 
+ created for clinics that have not been set up completely. If a clinic 
+ order, or Inpatient Medications for Outpatients (IMO) order, is created in
+ CPRS for a clinic that is not defined in the CLINIC DEFINITION (#53.46)
+ file, a message is sent to the  PSJ CLINIC DEFINITION mail group
+ indicating the order will not display in BCMA unless the clinic is defined
+ in the CLINIC DEFINITION (#53.46) file, and the SEND TO BCMA? (#3) field
+ is set to YES.
+  
+  
+ IV Bag Logic
+ ------------
+ This patch modifies Inpatient Order Entry so that when Inpatient orders
+ are edited, BCMA IV parameters are now checked to determine if IV labels
+ were invalidated as a result of the edit. If labels were invalidated, 
+ the pharmacy user making the edit is informed and a list of the
+ invalidated IV labels are displayed. The pharmacy user is given an 
+ opportunity to print replacement labels, including when no new order is
+ created as a result of the edit.
+  
+ T@0 Infusion Rate (Number of Labels per Day)
+ --------------------------------------------
+ This patch creates a new field called Labels Per Day. The value in this 
+ field, if populated, will override the system-calculated number of IV 
+ labels. The Labels Per Day field will be accessible in Inpatient Order
+ Entry, via the Infusion Rate field (the Labels Per Day prompt will display
+ immediately after the prompt for Infusion Rate).
+  
+ Previous existing functionality allowing the entry of the number of
+ labels directly into the Infusion Rate field via the "@" character (e.g.
+ 125@1) will be retained, and the number of labels entered after the "@"
+ character will automatically populate the Labels Per Day field.
+  
+ A new INFUSION INSTRUCTIONS (#53.47) file facilitates the entry of 
+ commonly used standard text, or 'canned' messages, in the INFUSION RATE 
+ (#.08) field in the IV (#100) sub-file of the PHARMACY PATIENT (#55) file.
+  
+ An abbreviation entered into the INFUSION RATE (#.08) field in the IV 
+ (#100) sub-file of the PHARMACY PATIENT (#55) sub-file (via Inpatient
+ Order Entry) is replaced with expanded text, if the abbreviation
+ has been defined in the INFUSION INSTRUCTIONS file (#53.47.)
+  
+ Pre-Exchange Report for Clinic Orders
+ --------------------------------------
+ A new PRE-EXCHANGE REPORT DEVICE (#5) field is being added to the CLINIC 
+ DEFINITION (#53.46) file. The field, if populated, contains a device that 
+ will be the default print device at the prompt "Select DEVICE for 
+ PRE-EXCHANGE UNITS REPORT:" that displays after a clinic order is 
+ verified.
+  
+  
+ PSJ CLINIC DEFINITION mail group
+ ---------------------------------
+ A new PSJ CLINIC DEFINITION mail group is being added to the MAIL GROUP 
+ (#3.8) file. A mail message is sent to this mail group when a valid 
+ Clinic Order is filed in the NON-VERIFIED ORDERS (#53.1) file that is 
+ associated with a location that is not defined in the CLINIC DEFINITION 
+ (#53.46) file.  
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+                                                            New/Modified
+ File Name (Number)         Field Name (Number)             /Deleted
+ ------------------         -------------------             -----------
+ Non-Verified Orders (53.1) Infusion Rate (#59)             Modified
+ Non-Verified Orders (53.1) Labels Per Day (#131)           New
+ Clinic Definition (53.46)  Missing Dose Printer (#4)       New
+ Clinic Definition (53.46)  Pre-Exchange Report Device (#5) New
+  
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ PSJ CLINIC DEFINITION
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ PSJ LM FINISH
+ PSJU LM COPY
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ---------------------------- 
+ NSR 20010504 - Check for invalid bags, prompt to print new labels.
+ NSR 20070506 - Clinic Orders.
+ NSR 20090813 - Request separate area for IV label suppression information.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 452  - Reported occurrence of patient receiving increased titration 
+             rate of morphine.(HD 173063)
+  
+ PSPO 1448 - Normal Saline is displaying on a Sodium Bicarbonate D5W order.
+             (HD 322729, HD 278810, HD 615239)
+            
+ PSPO 1855 - Inpatient Medication Orders for Outpatient orders (IMO) start 
+             date/time is the date/time of the appointment, which may not 
+             be accurate. (HD 178352)
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ HD 178352 - Inpatient Medications for Outpatients (IMO) orders start 
+ date/time is the date/time of the appointment, which may not be accurate. 
+ ----------------------------------------------------------------------
+ Problem - When IMO orders are created in CPRS, the appointment date/time 
+ selected by the ordering provider is used as the default start date/time 
+ of the order when the order is finished in Inpatient Medications, even if 
+ the appointment date/time is in the past, prior to the actual creation of 
+ the order. This may cause confusion about the true start date/time of the 
+ order.
+  
+ Resolution - Use the appointment date/time selected by the ordering 
+ provider as the default start date/time for IMO orders if the appointment 
+ date/time is on or after the date/time the order is finished by the 
+ finishing pharmacist. If the appointment date/time is prior to the 
+ date/time the order is finished by the finishing pharmacist, the current 
+ date/time (i.e. NOW) is used as the order's default start date/time at 
+ the time the order is finished.
+  
+  
+ HD 322729, HD 278810, HD 615239 - Normal Saline order displays on a 
+ Sodium Bicarbonate D5W order.
+ -------------------------------------------------------------------------
+ Problem: When an infusing IV order changes significantly via an edit, 
+ previously printed IV labels may continue to display as available bags in 
+ BCMA with the 'old' order information (the order as it existed prior to 
+ the change), if the BCMA IV Parameters are not set up to invalidate the 
+ IV labels and bags based on the changed field(s). Alternatively, if the 
+ IV labels and bags are invalidated based on the BCMA IV parameters, the 
+ finishing pharmacist is not aware of the existence of the invalidated 
+ bags. Pharmacy users are not typically aware of the field settings of the
+ BCMA IV parameters, making it difficult for pharmacy to know which edits 
+ will invalidate IV labels and bags, and when to retrieve invalidated 
+ bags to prevent them from being infused inadvertently.
+  
+ Resolution: At the time a changed IV order is finished, display to the 
+ finishing pharmacist a list of previously printed IV labels that were 
+ invalidated due to the change, and the changed field that triggered the 
+ invalidation based on the BCMA IV parameters. Alternatively, if the 
+ change did not invalidate the IV labels, display the list of IV labels 
+ that continue to be available for infusion. In addition, add a column 
+ titled "Available in BCMA" to the IV Label Log to indicate each label's 
+ current availability for infusion.
+  
+ HD 173063 - Request separate area for IV Label suppression.
+ ---------------------------------------------------------------------
+ Problem: VA facilities may enter text followed by "@" into the VistA 
+ field titled "Infusion Rate" that can lead to misunderstanding. This 
+ capability has been available in the VistA system since 1994. 
+  
+ Resolution: Add a new field titled "NUMBER OF LABELS PER DAY" to the 
+ Inpatient Medications IV software package to allow the pharmacy 
+ flexibility to indicate the number of IV labels to print per day.
+  
+ INC801240 - Technician entered non-verified IV order hangs.
+ -----------------------------------------------------------
+ Problem: When a pharmacy technician copied two IV orders the pharmacist is
+ unable to verify the second order.  When the second of the two copied IV 
+ orders is selected in Inpatient Order Entry, the order checking software
+ causes the process to hang indefinitely.
+  
+ Resolution: When the second of two copied IV orders in the NON-VERIFIED
+ ORDERS (#53.1) file is processed, verify that the previous order filed in 
+ the NON-VERIFIED ORDERS (#53.1) file is left blank if the order was 
+ created as a result of the COPY action.
+  
+ CQ BCMA00001657 - Long Profile problem with non-Active Unit Dose orders.
+ ---------------
+ Problem: The Long Profile view in the Inpatient Order Entry [PSJ OE]
+ option and the Order Entry [PSJU NE] option are using the HOURS OF
+ RECENTLY DC/EXPIRED (#7) field parameter in the INPATIENT WARD PARAMETERS
+ (#59.6) file to determine the beginning of the range of dates within which
+ to display non-active Unit Dose orders, rather than the patient's last
+ Admission Date. The HOURS RECENTLY DC/EXPIRED parameter is (correctly)
+ used by the Short Profile.
+  
+ Resolution: Change the Long Profile in the Inpatient Order Entry [PSJ OE]
+ option and the Order Entry [PSJU NE] option to use the patient's last
+ Admission Date to determine the beginning of the range of dates within
+ which non-active Unit Dose orders display. The Short Profile will continue
+ using the HOURS RECENTLY DC/EXPIRED parameter.
+  
+  
+ Test Sites:
+ ----------
+ Central Texas
+ Loma Linda
+ Pittsburgh
+ St. Cloud
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                          File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ Inpatient Medications V. 5.0   PSJ_5_NURSE_UM_R1213.PDF     BINARY
+ Nurse's User Manual
+  
+ Inpatient Medications V. 5.0   PSJ_5_P279_NURSE_UM_CP.PDF   BINARY
+ Nurse's User Manual Change
+ Pages
+  
+ Inpatient Medications V. 5.0   PSJ_5_PHAR_UM_R1213.PDF      BINARY
+ Pharmacist's User Manual
+  
+ Inpatient Medications V. 5.0   PSJ_5_P279_PHAR_UM_CP.PDF    BINARY
+ Pharmacist's User Manual
+ Change Pages
+  
+ Inpatient Medications V. 5.0   PSJ_5_SUPR_UM_R1213.PDF      BINARY
+ Supervisor's User Manual
+  
+ Inpatient Medications V. 5.0   PSJ_5_P279_SUPR_UM_CP.PDF    BINARY
+ Supervisor's User Manual
+ Change Pages
+  
+ Inpatient Medications V. 5.0   PSJ_5_TM_R1213.PDF           BINARY
+ Technical Manual/Security 
+ Guide
+  
+ Inpatient_Medications_V. 5.0   PSJ_5_P279_TM_CP.PDF         BINARY
+ Technical Manual/Security
+ Guide Change Pages
+  
+ Inpatient Medications V. 5.0   PSJ_5_P279_RN.PDF            BINARY
+ IMR 6 Release Notes
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ REMINDER: Do NOT queue this patch to install at a later time.
+  
+ Verify users are logged of the Inpatient Medications V. 5.0 application.
+ This patch should take less than 5 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter PSJ*5.0*279.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', accept the default, 'NO'.
+  
+ 6.  When prompted "Enter the Coordinator for Mail Group 'PSJ CLINIC 
+     DEFINITION':", enter the name of the person responsible for
+     maintaining membership in pharmacy mail groups.
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', accept the default, 'NO'.
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter 'NO'.
+  
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Uninstall Instructions
+ ----------------------
+ This procedure assumes that a backup copy of the routines was done during 
+ the installation process.
+ Only routines are backed-up; other components such as DDs, templates, 
+ protocols, options or HL7 components are not backed up. 
+  
+ To back out the patches, restore the backup copy saved in the MailMan 
+ message. This action will restore the routines to the state before 
+ installing the IMR 6 patches.  
+  
+ Note: In order to completely back out all components, development will 
+ provide a patch for each package to restore non-routine components to
+ their pre-IMR 6 state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 150
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGFILD3
+    Before: B23057587   After: B24920479  **279**
+Routine Name: PSGP
+    Before: B11695903   After: B11793961  **10,53,111,181,267,275,279**
+Routine Name: PSGPER
+    Before: B11838843   After: B18332674  **95,115,127,133,279**
+Routine Name: PSGPER0
+    Before: B26511977   After: B34370854  **58,82,95,115,279**
+Routine Name: PSGPER1
+    Before:  B7625269   After: B18498632  **80,127,279**
+Routine Name: PSGPER2
+    Before: B24518370   After: B31489798  **80,115,279**
+Routine Name: PSIVCAL
+    Before: B75101309   After: B76248321  **4,26,41,47,63,67,69,58,94,
+                                           80,110,111,177,120,134,229,279**
+Routine Name: PSIVEDT1
+    Before: B63913566   After:B111693180  **3,7,41,47,50,64,58,116,110,
+                                           111,113,267,279**
+Routine Name: PSIVHYPL
+    Before: B42608112   After: B49378868  **58,96,128,178,184,279**
+Routine Name: PSIVHYPR
+    Before: B39800593   After: B46405814  **58,88,96,178,184,279**
+Routine Name: PSIVLABL
+    Before: B38277482   After: B43882246  **58,82,104,127,178,184,273,279**
+Routine Name: PSIVLABR
+    Before: B34113753   After: B39932964  **58,82,178,184,279**
+Routine Name: PSIVLB
+    Before:  B7797321   After:  B7955740  **58,81,279**
+Routine Name: PSIVLBL1
+    Before: B42715799   After: B42809676  **69,58,81,97,104,279**
+Routine Name: PSIVLTR1
+    Before:  B9987089   After: B40668959  **58,279**
+Routine Name: PSIVOPT1
+    Before: B43461784   After: B46129724  **29,58,101,110,127,181,258,279**
+Routine Name: PSIVORAL
+    Before: B19351743   After: B19483553  **58,135,267,279**
+Routine Name: PSIVORC1
+    Before: B54564779   After: B79901460  **1,37,69,110,157,134,181,263,
+                                           270,279**
+Routine Name: PSIVORE1
+    Before: B25223179   After: B25786480  **58,110,127,133,279**
+Routine Name: PSIVOREN
+    Before: B27499279   After: B28253385  **3,18,69,110,127,133,140,134,
+                                           207,279**
+Routine Name: PSIVORFA
+    Before: B28198833   After: B30883518  **4,7,18,28,50,71,58,91,80,110,
+                                           111,134,225,267,275,279**
+Routine Name: PSIVORLB
+    Before: B13180848   After: B16554015  **58,184,279**
+Routine Name: PSIVRD
+    Before: B24771031   After: B24864338  **38,58,88,279**
+Routine Name: PSIVSP
+    Before: B41011288   After: B42203793  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229,279**
+Routine Name: PSIVUTL
+    Before: B30828184   After: B35163625  **69,58,81,85,110,133,181,263,
+                                           275,279**
+Routine Name: PSJAC
+    Before: B14549203   After: B18623217  **8,10,50,127,181,275,279**
+Routine Name: PSJBCMA
+    Before: B81219931   After:B104152395  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253,267,279**
+Routine Name: PSJBCMA1
+    Before: B94159665   After:B120598961  **32,41,46,57,63,66,56,58,81,
+                                           91,104,186,159,173,253,267,279**
+Routine Name: PSJBCMA6
+    Before:       n/a   After:  B9827080  **279**
+Routine Name: PSJCLOR2
+    Before:B116137522   After:B116286849  **275,279**
+Routine Name: PSJHL2
+    Before: B36875797   After: B42288788  **1,18,16,23,28,42,50,70,58,
+                                           100,102,110,111,112,144,141,
+                                           134,279**
+Routine Name: PSJHL4
+    Before: B75570898   After: B76440545  **1,12,27,34,40,42,55,47,50,
+                                           56,58,98,85,105,107,110,111,
+                                           154,134,197,226,279**
+Routine Name: PSJHL7
+    Before: B54233730   After: B54843805  **42,47,50,70,82,110,127,133,
+                                           275,279**
+Routine Name: PSJHL9
+    Before: B61245429   After: B61985581  **1,18,31,42,47,50,63,72,75,
+                                           58,80,110,111,134,267,279**
+Routine Name: PSJIBAG
+    Before:       n/a   After: B43933390  **279**
+Routine Name: PSJLIVFD
+    Before: B54218075   After: B63427206  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267,
+                                           228,279**
+Routine Name: PSJLIVMD
+    Before: B96668523   After:B100202267  **37,50,63,58,81,91,80,116,110,
+                                           111,180,134,209,254,267,275,
+                                           279**
+Routine Name: PSJP
+    Before: B26835871   After: B28361612  **10,53,60,181,273,267,275,279**
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : MAY 29, 2012
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: NOV 27, 2013
+Released By : MIAN,NAEEM                    Date Released : DEC 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

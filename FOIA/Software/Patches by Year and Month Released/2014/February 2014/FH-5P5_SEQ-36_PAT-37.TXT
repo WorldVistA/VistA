@@ -1,0 +1,172 @@
+$TXT Created by UNDERHILL,GARDNER at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 09/23/13 at 13:23
+=============================================================================
+Run Date: FEB 20, 2014                     Designation: FH*5.5*37
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #36                    Status: Released
+                  Compliance Date: MAR 23, 2014
+=============================================================================
+
+Associated patches: (v)FH*5.5*35   <<= must be installed BEFORE `FH*5.5*37'
+
+Subject:  FOOD ALLERGY UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ When mapping food preferences to food allergies, recent additions to 
+ the GMR ALLERGIES file (#120.82) are not being presented for mapping.
+ This patch will add 10 new food/drug allergies to the hard coded list 
+ in routine FHSELA2 so that they can be mapped in the N&FS menu option
+ Create/Map Food Preference to Allergies [FHSELA].
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PATIENT SAFETY ISSUES:
+ ======================
+ PSPO #1380 - Remedy ticket HD0000000905481
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000905481 - PSPO 1380 changes needed due to NTRT 
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ N. FL/S. GA HCS
+ Palo Alto HCS
+ Upstate NY HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000905481 - PSPO 1380 changes needed due to NTRT 
+  
+   Patient Safety Issue:
+   ---------------------
+   PSPO 1380
+  
+   Problem:
+   --------  
+   The Create/Map Food Preferences to Allergies [FHSELA] option displays
+   a list of all available food allergies that have not been previously
+   mapped.  The available list of food allergies can be displayed using 
+   the GMR ALLERGIES file (#120.82) but the list of food allergies
+   displayed in the Create/Map Food Preference to Allergies [FHSELA] is
+   presented using the hard coded list contained within routine FHSELA2.  
+   The ten new food allergies listed below were previously added to the GMR
+   ALLERGIES file (#120.82) but the hard coded list was not updated with
+   the same food allergies.  Therefore, an incomplete list of food
+   allergies is presented to the user.  
+  
+   The following food allergies were previously added to the GMR ALLERGIES
+   file (#120.82) using the New Term Rapid Turnaround (NTRT) push:
+  
+   - Agave
+   - Canola Oil
+   - Erythritol
+   - Hemp Milk
+   - Kale  
+   - Margarine
+   - Raw Onions
+   - Raw Vegetables
+   - Taro Root
+   - Turmeric
+  
+   Resolution:
+   -----------
+   Routine FHSELA2 will be modified to display the ten new food allergies
+   that were added to the GMR ALLERGIES file (#120.82) so that the user 
+   can select the food allergies for mapping. To complete this process upon
+   installation, sites must manually "map" the food allergy to the Food
+   Preference file in the N&FS package.
+  
+   TECHNICAL SUMMARY:
+   ==================
+   The option Create/Map Food Preferences to Allergies [FHSELA] calls 
+   routines FHSELA1 and FHSELA2 to map the allergies. FHSELA2 creates a 
+   worklist of all food allergies.  FHSELA1 takes that work list and
+   removes foods that have been previously mapped to allergies and presents
+   the unmapped allergies to the user.  FHSELA1 handles the user's input
+   and performs the mapping of the food preference to allergy.
+  
+   Routine FHSELA2 does not read the GMR ALLERGIES file (#120.82) and
+   dynamically create a work list of all food allergies. It uses the hard
+   coded allergies listed in the routine FHSELA2. 
+   
+   The additions to the new GMR ALLERGIES file (#120.82) are not carried
+   over in the work list routine.  
+  
+  
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+ If installed during the normal workday, it is recommended that the 
+ Nutrition and Food Service users are off the system.  Other VISTA users
+ will not be affected.
+ Install Time - less than 2 minutes 
+  
+   
+   1. Load Transport Global 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options:
+      (when prompted for INSTALL NAME, enter FH*5.5*37)
+   
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+   
+   4. Use the Install Package(s) option and select the package FH*5.5*37.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//", respond NO.
+   
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B113627704   After:B121957526  **8,13,23,25,28,35,37**
+ 
+Routine list of preceding patches: 35
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : SEP 12, 2013
+Completed By: WERNER,GARY                   Date Completed: FEB 19, 2014
+Released By : KREUZ,SHERI B                 Date Released : FEB 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

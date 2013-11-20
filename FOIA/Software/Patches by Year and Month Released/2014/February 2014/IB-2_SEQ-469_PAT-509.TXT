@@ -1,0 +1,150 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 10/30/13 at 16:20
+=============================================================================
+Run Date: FEB 12, 2014                     Designation: IB*2*509
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #469                      Status: Released
+                  Compliance Date: MAR 15, 2014
+=============================================================================
+
+
+Subject: TCP/IP ADDRESS UPDATE FOR THE HL7 LOGICAL LINK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will update the following HL LOGICAL LINK (#870) entries with new
+ IP addresses:
+  
+ BPS NCPDP
+ EPHARM OUT
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ INC000000897475  Integrated Billing - e-Pharmacy:
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York - Buffalo
+ Washington DC VAMC
+ Detroit MI. VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+ INC000000897475 - Integrated Billing - e-Pharmacy:
+  
+ Problem:
+ --------
+ Financial Services Center requests assistance to have VistA E-Pharmacy 
+ connections updated. This requires a conditional update to the "BPS NCPDP"
+ and "EPHARM OUT" HL LOGICAL LINK (#870) entries dependent on whether the 
+ patch is being installed in a test system or production.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P509 was created to check whether the patch was 
+ installing in a test system or production and populate the TCP/IP address 
+ accordingly as indicated below:
+  
+ Test       - 10.226.187.121
+ Production - 10.224.187.16
+  
+ Routine: IB20P509
+     
+    ==================== INSTALLATION INSTRUCTIONS: ====================
+  
+     It is recommended this patch be installed outside of normal business
+     hours to avoid any complications resulting from users on the system.
+     Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL:
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS:
+      --------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*509):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s):
+      -----------------------------------------------
+      *  This is the step to start the installation of this KIDS patch:
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+  
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE:
+      ---------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P509.
+  
+    ******************************************************************** 
+    *  During installation, messages will be displayed indicting the   *
+    *  success or failure of the update.  Please review to verify the  *
+    *  installation and update was successful                          *
+    ********************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P509
+    Before:       n/a   After:  B2841813  **509**
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : SEP 19, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: FEB 10, 2014
+Released By : GARRETT,WILLIAM               Date Released : FEB 12, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

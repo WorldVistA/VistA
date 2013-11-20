@@ -1,0 +1,182 @@
+
+=============================================================================
+Run Date: FEB 10, 2014                     Designation: PXRM*2*34
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #24                      Status: Released
+                  Compliance Date: MAR 13, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*24   <<= must be installed BEFORE `PXRM*2*34'
+
+Subject: VA-TERATOGENIC MEDICATION ORDER CHECK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Teratogenic Medications Order Check Interim Solution was originally 
+ released as VistA patch PXRM*2*22 in July 2012.  The interim solution is 
+ intended to have regular updates for clinical content, primarily to add 
+ newly approved medications with FDA Pregnancy Categories that warrant an 
+ order check.  This patch, PXRM*2*34, represents the first such update.  
+ Included in this update are new medications, order check text changes 
+ consistent with the Notification of Teratogenic Medications project, 
+ support for reversal of tubal ligations, and updates to the taxonomies 
+ that define a women's medical inability to conceive a pregnancy.
+  
+ This patch also includes an update to a single dialog element for the 
+ Epilepsy Initial note that was released with PXRM*2.0*30.  That element 
+ had a mapped Health Factor Category, instead of a mapped Health Factor.  
+ This element updates that mapped item.
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. INC000000881972 - VA-Teratogenic Medication Order Check Update
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Site(s)
+ ==========================
+ Central Plains Health Care System
+ Cincinnati VA Medical Center
+ North Chicago VA Medical Center
+  
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1.  INC000000881972 - VA-Teratogenic Medication Order Check Update
+  
+ Problem:
+ --------
+ The Teratogenic Medications Order Check Interim Solution was originally 
+ released as VistA patch PXRM*2*22 in July 2012.  The interim solution is 
+ intended to have regular updates for clinical content, primarily to add 
+ newly approved medication with FDA Pregnancy Categories that warrant an
+ order check.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*34, represents the first such update.  Two routines are
+ included with this patch, PXRMP34E and PXRMP34I. They are init tasks that
+ add new entries to the REMINDER EXCHANGE (#811.8) file and the contents 
+ of these entries are installed during the post-init.  These routines can
+ be deleted after the install.
+ Included in this update are new medication, order check text changes
+ consistent with the Notification of Teratogenic Medication project,
+ support for reversal of tubal ligations, and updates to the taxonomies
+ that define a women's medical inability to conceive a pregnancy.
+  
+ Please refer to PXRM_2_0_34_IG.pdf for more detail concerning these 
+ clinical reminders.
+  
+  
+ Build Components:
+ =================
+ N/A
+  
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_34.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.fo-albany.domain.ext
+     Hines               ftp.fo-hines.domain.ext
+     Salt Lake City      ftp.fo-slc.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.
+ It is available as .pdf format.  This file should be downloaded in 
+ BINARY format.  
+  
+     File Name:            Description:               Protocol:
+     ==========            ============               =========
+     PXRM_2_0_34_IG.PDF    PXRM*2.0*34 Install        BINARY
+                           and Setup Guide
+     PXRM_2_0_34.KID       PXRM*2.0*34 Host File      ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_34_IG.PDF, for complete details.
+  
+ NOTE: DO NOT QUEUE THE INSTALLATION, because this installation asks 
+ questions requiring responses and queuing will stop the installation. 
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_34.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*34
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP34E
+     PXRMP34I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 195
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP34E
+    Before:       n/a   After:  B1140476  **34**
+Routine Name: PXRMP34I
+    Before:       n/a   After: B10454311  **34**
+
+=============================================================================
+User Information:
+Entered By  : TRAN,BA D                     Date Entered  : AUG 21, 2013
+Completed By: SHERMAN,BILL                  Date Completed: FEB 07, 2014
+Released By : VANCAMP,E PHILIP              Date Released : FEB 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,249 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 08/05/13 at 11:23
+=============================================================================
+Run Date: DEC 09, 2013                     Designation: GMTS*2.7*107
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #101                    Status: Released
+                  Compliance Date: JAN 09, 2014
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*78 <<= must be installed BEFORE `GMTS*2.7*107'
+                    (v)GMTS*2.7*89 <<= must be installed BEFORE `GMTS*2.7*107'
+
+Subject: Bug fixes - iMed note, Import HS object, Vitals text
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Health Summary 
+ package:
+  
+ 1.  Incorrect information is getting appended to the bottom of IMED 
+     education notes when displayed with [SPN] (Selected progress notes) 
+     Health Summary component. 
+  
+ 2.  Health Summary components [VS] "Vital Signs", [VSD] "Vital Signs 
+     Detailed Display", and [SVS] "Vital Signs Selected" are displaying 
+     clinically incorrect information. 
+  
+ 3.  The [Export a Health Summary Object] option is exporting objects with 
+     health summary types that contain local and selected components.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ===========================
+ 1) INC000000418117 - Imed Consent note shows as unsigned
+ 2) INC000000752225 - ADHOC HS Vital Signs Detailed Display issue 
+ 3) INC000000784073 - Importing HS Object Questions
+  
+  
+ Participating Test Sites:
+ ========================
+ CENTRAL PLAINS HCS    
+ CENTRAL TEXAS HCS     
+ SAN FRANCISCO, CA     
+ WASHINGTON, DC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000418117 - Imed Consent note shows as unsigned
+  
+    Problem:
+    --------
+    The problem occurs when the user selects either Heath summary component 
+    "SPN" (Selected Progress notes) or "PN" (Progress notes). If the user 
+    selects a "scanned document," VistA will append the text "<  THE ABOVE 
+    NOTE IS UNSIGNED  >" and "* DRAFT COPY *" to the bottom of the report 
+    even though scanned documents do not require a signature and are not 
+    drafts.
+  
+    Resolution:
+    -----------
+    Stopped the text from being appended on scanned documents that have an 
+    administrative closure date.
+  
+    Routine GMTSPN2 has been modified to check the TIU Document File. 
+    If the "ADMINISTRATIVE CLOSURE MODE" (1613) field is set to 'S' FOR 
+    scanned document, and "ADMINISTRATIVE CLOSURE DATE" (1606) has a value, 
+    the note will be excluded from having the unwanted text appended.
+  
+  
+ 2) INC000000752225 - ADHOC HS Vital Signs Detailed Display issue
+  
+    Problem:
+    --------
+    When pain value of 99 is entered in vitals, the ADHOC Health Summary
+    components ([VS] "Vital Signs", [VSD] "Vital Signs Detailed Display", and
+    [SVS] "Vital Signs Selected") show the text "No Response." When you view
+    the same info via the Vitals Cumulative report, it correctly shows the
+    text as "Unable to Respond." No response to pain and unable to respond are
+    two clinically different things.
+  
+    Resolution:
+    -----------
+    Changed the components to display "Unable to Respond"
+  
+    Routines GMTSVS, GMTSVSD, and GMTSVSS have been modified to write "Unable 
+    to Respond." GMTSVS was also modified to move Pain score to a new third 
+    line. GMTSVSS was also modified to allot more space (18 characters) for 
+    Pain score.
+  
+  
+ 3) INC000000784073 - Importing HS Object Questions
+  
+    Problem:
+    --------
+    When using the [GMTS OBJ EXPORT] option in VistA, if one of the 
+    components used in the Health Summary type is a local component or has 
+    selected Items, the process completes with no error reported. However, 
+    when the receiving CAC  tries to use the imported object, it fails to 
+    work. If VistA identifies the component as a local component or one that 
+    has selected Items, it simply omits the component without any type of 
+    error or warning.
+  
+    Resolution:
+    -----------
+    Modified VistA to return an error message and abort the export if the CAC 
+    tries to export a Health Summary Object that is associated with a Health 
+    Summary Type with a local component or selected items component.
+    The following error messages were approved by the CPRS Clinical Workgroup:
+  
+ "Can not export a Health Summary Object using a Health Summary Type that 
+ contains Local Health Summary Components"
+ "Health Summary Type <TYPE> contains Local Health Summary Component 
+ <COMPONENT>"
+  
+ "Can not export a Health Summary Object using a Health Summary Type that 
+ contains Health Summary Components with Selected Items"
+ "Health Summary Type <TYPE> contains Health Summary Component <COMPONENT> 
+ with Selected Items"
+  
+   Routine GMTSOBE has been modified to check the components prior to 
+   export. If it finds a local or selected component it sets flag 
+   GMTSCERR=1, displays the message, then quits the routine. 
+ 
+  
+ DOCUMENTATION RETRIEVAL:
+ ======================== 
+  Sites may retrieve documentation in one of the following ways:
+ 
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+ 
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+ 
+      Albany          ftp.fo-albany.domain.ext
+      Hines           ftp.fo-hines.domain.ext
+      Salt Lake City  ftp.fo-slc.domain.ext
+ 
+      The documentation distribution includes: 
+  
+      File Name                     Description          Retrieval Format
+      =========                     ===========          ================
+      hsum_2_7_107_tm.pdf           Technical Manual     BINARY
+      hsum_2_7_107_um.pdf           User Manual          BINARY 
+      hsum_2_7_107_tm.doc           Technical Manual     BINARY
+      hsum_2_7_107_um.doc           User Manual          BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+ 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter GMTS*2.7*107):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        GMTS*2.7*107.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSOBE
+    Before: B41728577   After: B54063238  **89,107**
+Routine Name: GMTSPN2
+    Before: B44633772   After: B47494120  **45,47,49,82,107**
+Routine Name: GMTSVS
+    Before: B40018918   After: B51081616  **8,20,28,35,49,78,107**
+Routine Name: GMTSVSD
+    Before: B58460028   After: B59713312  **35,49,58,78,107**
+Routine Name: GMTSVSS
+    Before: B43514605   After: B45201579  **8,20,28,35,49,78,107**
+ 
+Routine list of preceding patches: 78, 82, 89
+
+=============================================================================
+User Information:
+Entered By  : AUGUSTINIAK,MARK              Date Entered  : JAN 29, 2013
+Completed By: LOKHANDWALA,MURTUZA           Date Completed: NOV 21, 2013
+Released By : SCHMIT,BECKY                  Date Released : DEC 09, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
