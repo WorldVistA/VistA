@@ -664,38 +664,231 @@ VistA.write('Strep Test\r\r\r')
 VistA.wait('COMPONENT SEQUENCE')
 VistA.write('10\r')
 VistA.wait('ITEM:')
-VistA.write('LRZ STREP TEST\r\r\r\r')
+VistA.write('LRZ STREP TEST\r\r\r\r') # Return to EVE menu
 
-
-#Add the Quick order for LRZ Strep to the Orders menu
+#Create a new Order Menu
 VistA.wait('Systems Manager Menu')
-VistA.write('General Parameter')
-VistA.wait('General Parameter')
-VistA.write('EP')
-VistA.wait('PARAMETER DEFINITION NAME')
-VistA.write('ORWOR WRITE ORDERS LIST')
-VistA.wait('Enter selection')
-VistA.write('3')
-VistA.wait('Select Sequence')
-VistA.write('10')
-VistA.wait('Are you adding')
-VistA.write('Y\r')
-VistA.wait('Order Dialog')
-VistA.write('STREP TEST\r2\r')
-VistA.wait('selection:')
-VistA.write('\r\r')
-VistA.wait('Systems Manager Menu')
-VistA.write('CPRS Configuration')
+VistA.write('CPRS Configuration') # We can jump straight to the CPRS (Clin Coord) menu
 VistA.wait('CPRS Configuration')
-VistA.write('MM')
+VistA.write('MM') # Order Menu Management
 VistA.wait('Order Menu Management')
-VistA.write('MN')
-VistA.wait('ORDER MENU')
-VistA.write('OR ADD MENU CLINICIAN')
-VistA.write('ADD\rMenu')
+VistA.write('MN') # Enter/edit order menus
+VistA.wait('ORDER MENU:')
+VistA.write('ORZ GEN MED WRITE ORDERS LIST') # New menu name
+VistA.wait('Are you adding')
+VistA.write('Y')
+VistA.wait('Do you wish to copy an existing menu')
+VistA.write('N')
+VistA.wait('DISPLAY TEXT')
+VistA.write('') # Ignored by GUI
+VistA.wait('Edit') # DESCRIPTION field
+VistA.write('N')
+#VistA.write('General Medicine Write Orders list') # Menu description
+#VistA.wait('2')
+#VistA.write('') # End of DESCRIPTION
+#VistA.wait('EDIT') # Editor options
+#VistA.write('') # We are done with the DESCRIPTION
+VistA.wait('COLUMN WIDTH')
+VistA.write('80') # Default to 80 characters
+VistA.wait('MNEMONIC WIDTH')
+VistA.write('') # Ignored by GUI
+VistA.wait('PATH SWITCH')
+VistA.write('') # Ignored by GUI
+VistA.wait('ENTRY ACTION')
+VistA.write('') # Shown because we have programmer access - Ignore this field
+VistA.wait('EXIT ACTION')
+VistA.write('') # Shown because we have programmer access - Ignore this field
+# Begin ScreenMan form
+VistA.wait('Action')
+VistA.write('Add')
+VistA.wait('Add')
+VistA.write('Menu Items') # Add Menu Items to this Order Menu
+# Add items to menu - repeat for each menu item
+# Begin 'Add New Orders' menu
 VistA.wait('ITEM')
-VistA.write('STREP TEST\r2\r20\r1\r\r\r')
-VistA.write('Q\r\r')
+VistA.write('OR ADD MENU CLINICIAN')
+VistA.wait('ROW')
+VistA.write('1')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Add New Orders'
+# Begin 'Allergies' package menu
+VistA.wait('ITEM')
+VistA.write('GMRAOR ALLERGY ENTER/EDIT')
+VistA.wait('ROW')
+VistA.write('2')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Allergies'
+# Begin 'Diet' package menu
+VistA.wait('ITEM')
+VistA.write('FHW1')
+VistA.wait('ROW')
+VistA.write('3')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Diet'
+# Begin 'Meds, Inpatient' package menu
+VistA.wait('ITEM')
+VistA.write('PSJ OR PAT OE')
+VistA.wait('ROW')
+VistA.write('4')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Meds, Inpatient'
+# Begin 'Meds, Non-VA' package menu
+VistA.wait('ITEM')
+VistA.write('PSH OERR')
+VistA.wait('ROW')
+VistA.write('5')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Meds, Non-VA'
+# Begin 'Meds, Outpatient' package menu
+VistA.wait('ITEM')
+VistA.write('PSO OERR')
+VistA.wait('ROW')
+VistA.write('6')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Meds, Outpatient'
+# Begin 'IV Fluids' package menu
+VistA.wait('ITEM')
+VistA.write('PSJI OR PAT FLUID OE')
+VistA.wait('ROW')
+VistA.write('7')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'IV Fluids'
+# Begin 'Lab Tests' package menu
+VistA.wait('ITEM')
+VistA.write('LR OTHER LAB TESTS')
+VistA.wait('ROW')
+VistA.write('8')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Lab Tests'
+# Begin 'Imaging' package menu
+VistA.wait('ITEM')
+VistA.write('RA OERR EXAM')
+VistA.wait('ROW')
+VistA.write('9')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Imaging'
+# Begin 'Consult' package menu
+VistA.wait('ITEM')
+VistA.write('GMRCOR CONSULT')
+VistA.wait('ROW')
+VistA.write('10')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Consult'
+# Begin 'Procedure' package menu
+VistA.wait('ITEM')
+VistA.write('GMRCOR REQUEST')
+VistA.wait('ROW')
+VistA.write('11')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Procedure'
+# Begin 'Vitals' package menu
+VistA.wait('ITEM')
+VistA.write('GMRVOR')
+VistA.wait('CHOOSE') # There is more than one GMRVOR* menu
+VistA.write('1') # GMRVOR is the entire menu name and is the first one
+VistA.wait('ROW')
+VistA.write('12')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Vitals'
+# Begin 'Text Only Order' package menu
+VistA.wait('ITEM')
+VistA.write('OR GXTEXT WORD PROCESSING ORDER')
+VistA.wait('ROW')
+VistA.write('13')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'Text Only Order'
+# Begin 'STREP TEST' quick order menu
+VistA.wait('ITEM')
+VistA.write('LRZ STREP TEST')
+VistA.wait('ROW')
+VistA.write('14')
+VistA.wait('COLUMN')
+VistA.write('1')
+VistA.wait('DISPLAY TEXT')
+VistA.write('')
+VistA.wait('MNEMONIC')
+VistA.write('')
+# End 'STREP TEST'
+VistA.wait('ITEM')
+VistA.write('') # Done adding menus
+VistA.wait('Action')
+VistA.write('Quit') # Done editing this menu
+VistA.wait('Order Menu Management') # Need to get to CPRS Manager Menu
+VistA.write('General Parameter Tools')
+VistA.wait('General Parameter Tools') # The System Manager has this as a secondary menu (can jump to it)
+VistA.write('EP') # Edit Parameter
+VistA.wait('PARAMETER DEFINITION NAME')
+VistA.write('ORWDX WRITE ORDERS LIST') # Parameter used to control Write Orders list
+VistA.wait('selection')
+VistA.write('8') # Set it for the entire System
+VistA.wait('Order Dialog')
+VistA.write('ORZ GEN MED WRITE ORDERS LIST') # Order menu we want to use
+VistA.write('\r\r\r\r') # we are done. Stay at the EVE menu
 
 #Give all users of the instance permission to mark allergies as "Entered in error')
 VistA.wait('Systems Manager Menu')
