@@ -1,0 +1,280 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 07/03/13 at 12:52
+=============================================================================
+Run Date: SEP 10, 2013                     Designation: IB*2*502
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #458                      Status: Released
+                  Compliance Date: SEP 30, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*187    <<= must be installed BEFORE `IB*2*502'
+
+Subject: FY 2014 IB STOP CODE UPDATE AND VALIDATION LOGIC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues:
+  
+ 1. Updates Integrated Billing Clinic Stop Codes for Fiscal Year 2014
+ 2. Corrects the selection logic used to validate stop codes
+  
+  
+ **************************************************************************
+ Note: In order to provide CORRECT billing of co-pay charges for the 
+ Decision Support System (DSS) Stop Code changes, this patch should be
+ installed at all sites by Oct. 1, 2013.
+ **************************************************************************
+  
+   
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000857937    FY 2014 IB STOP CODE UPDATE
+ 2. INC000000862861    Inactive Stop Codes
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Pittsburgh HCS
+ St. Cloud, MN
+ Tuscaloosa, AL
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000857937    FY 2014 IB STOP CODE UPDATE
+   
+ Problem: 
+ --------
+ As requested by the Chief Business Office (CBO), the IB CLINIC
+ STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+ reflect changes for Fiscal Year 2014.
+   
+ Resolution:
+ -----------
+ Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 346     OCT  1,2013  SPECIALTY CARE  ALS CENTER                      OVERRIDE
+ 347     OCT  1,2013  BASIC CARE      ALS HOME CARE PROGRAM           OVERRIDE
+ 354     OCT  1,2013  BASIC CARE      HOSPITAL AT HOME                OVERRIDE
+ 490     OCT  1,2013  NON-BILLABLE    TELETRANSPLANT PT SITE          OVERRIDE
+ 491     OCT  1,2013  SPECIALTY CARE  TELETRANSPLANT PROV SITE        OVERRIDE
+ 586     OCT  1,2013  BASIC CARE      RRTP INDIVIDUAL                 OVERRIDE
+ 587     OCT  1,2013  BASIC CARE      RRTP GROUP                      OVERRIDE
+  
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ BEFORE INSTALLATION OF PATCH IB*2*502: 
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 159    OCT  1,2006 BASIC CARE      COMPLEMENTARY ALTERNATIVE THER NONE 
+ 102101 OCT  1,2002 SPECIALTY CARE  EMERGENCY UNIT WORK            OVERRIDE
+ 107473 OCT  1,2002 SPECIALTY CARE  ECHOCARDIOGRAM                 OVERRIDE
+ 116329 OCT  1,2002 SPECIALTY CARE  RESPIRATORY THERAPY PROCEDURES OVERRIDE
+ 117473 OCT  1,2002 NON-BILLABLE    PPD CLINIC                     OVERRIDE
+ 174202 OCT  1,2002 BASIC CARE      HBPC - RECREATION THERAPY (RT) OVERRIDE
+ 209125 OCT  1,2002 NON-BILLABLE    VIST COORD BY SOCIAL WORKER    OVERRIDE
+ 303201 OCT  1,2002 BASIC CARE      CARD REHAB                     OVERRIDE
+ 304715 OCT  1,2002 BASIC CARE      DERMATOLOGY ROUTINE AFTERCARE  OVERRIDE
+ 310301 OCT  1,2006 NON-BILLABLE    TRANSRECTAL ULTRASOUND F-U IND OVERRIDE
+ 323473 OCT  1,2002 NON-BILLABLE    PPD CLINIC                     OVERRIDE
+ 394301 OCT  1,2006 NON-BILLABLE    TRANSRECTAL ULTRASOUND F-U GRP OVERRIDE
+ 417474 OCT  1,2002 BASIC CARE      PROSTHETICS LAB                OVERRIDE
+ 510473 OCT  1,2002 SPECIALTY CARE  NEURO PSYCHOLOGY LAB           OVERRIDE
+ 510475 OCT  1,2002 NON-BILLABLE    RESEARCH (USE 510474)          OVERRIDE
+  
+  
+ AFTER INSTALLATION OF PATCH IB*2*502:
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 159    OCT  1,2013 BASIC CARE      COMP AND ALTERNATIVE MED       NONE
+ 102101 OCT  1,2013 BASIC CARE      EMERGENCY UNIT WORK            OVERRIDE
+ 107473 OCT  1,2013 NON-BILLABLE    ECHOCARDIOGRAM                 NONE
+ 116329 OCT  1,2013 BASIC CARE      RESPIRATORY THERAPY PROCEDURES OVERRIDE
+ 117473 OCT  1,2013 BASIC CARE      PPD CLINIC                     OVERRIDE
+ 174202 OCT  1,2013 NON-BILLABLE    HBPC - RECREATION THERAPY (RT) OVERRIDE
+ 209125 OCT  1,2013 BASIC CARE      VIST COORD BY SOCIAL WORKER    OVERRIDE
+ 303201 OCT  1,2013 SPECIALTY CARE  CARD REHAB                      NONE 
+ 304715 OCT  1,2013 SPECIALTY CARE  DERMATOLOGY ROUTINE AFTERCARE  OVERRIDE
+ 310301 OCT  1,2013 SPECIALTY CARE  TRANSRECTAL ULTRASOUND F-U IND OVERRIDE
+ 323473 OCT  1,2013 BASIC CARE      PPD CLINIC                     OVERRIDE
+ 394301 OCT  1,2013 SPECIALTY CARE  TRANSRECTAL ULTRASOUND F-U GRP OVERRIDE
+ 417474 OCT  1,2013 NON-BILLABLE    PROSTHETICS LAB                OVERRIDE
+ 510473 OCT  1,2013 BASIC CARE      NEURO PSYCHOLOGY LAB           OVERRIDE
+ 510475 OCT  1,2013 BASIC CARE      RESEARCH (USE 510474)          OVERRIDE
+  
+ ROUTINE: IB20P502
+     
+  
+ 2. INC000000862861    Inactive Stop Codes
+  
+ Problem: 
+ --------
+ Incorrect logic is used to determine what stop codes can be selected when 
+ attempting to add charges via the Cancel/Edit/Add Patient Charges 
+ [IB CANCEL/EDIT/ADD CHARGES] option.
+  
+ Resolution:
+ -----------
+ Modify the logic to prevent selection of Stop Codes with a RESTRICTION
+ TYPE (#5) of "Secondary" in the CLINIC STOP (#40.7) file at the time of
+ visit and allow Stop Codes to be selected if they were made inactive
+ after the Visit Date was selected.
+  
+ ROUTINE: IBEMTSCU
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended to disable option(s) as listed in step 6 below.  Install
+ should take place after normal work hours to avoid interruption to users.
+ It should take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*502)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*502.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//" <ENTER>
+    
+        Enter the following options:
+  
+        Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD CHARGES]
+  
+     7. You may delete routine IB20P502 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added.  See below:
+     NOTE: If any type of error message is displayed during installation
+     create a REMEDY ticket to resolve the issue.  
+   
+  DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    346  ALS CENTER
+  
+    347  ALS HOME CARE PROGRAM
+  
+    354  HOSPITAL AT HOME
+  
+    490  TELETRANSPLANT PT SITE
+  
+    491  TELETRANSPLANT PROV SITE
+  
+    586  RRTP INDIVIDUAL
+  
+    587  RRTP GROUP
+  
+      7 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    159  COMP AND ALTERNATIVE MED
+  
+    102101  EMERGENCY UNIT WORK
+  
+    107473  ECHOCARDIOGRAM
+  
+    116329  RESPIRATORY THERAPY PROCEDURES
+  
+    117473  PPD CLINIC
+  
+    174202  HBPC - RECREATION THERAPY (RT)
+  
+    209125  VIST COORD BY SOCIAL WORKER
+  
+    303201  CARD REHAB
+  
+    304715  DERMATOLOGY ROUTINE AFTERCARE
+  
+    310301  TRANSRECTAL ULTRASOUND F-U IND
+  
+    323473  PPD CLINIC
+  
+    394301  TRANSRECTAL ULTRASOUND F-U GRP
+  
+    417474  PROSTHETICS LAB
+  
+    510473  NEURO PSYCHOLOGY LAB
+  
+    510475  RESEARCH (USE 510474)
+  
+      15 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P502
+    Before:       n/a   After: B16129515  **502**
+Routine Name: IBEMTSCU
+    Before: B62662227   After: B73973273  **167,177,187,502**
+ 
+Routine list of preceding patches: 187
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : MAY 21, 2013
+Completed By: LANG,MICKEY                   Date Completed: SEP 04, 2013
+Released By : BROWN,GAYLE F                 Date Released : SEP 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,173 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 04/15/13 at 13:24
+=============================================================================
+Run Date: AUG 06, 2013                     Designation: EN*7*92
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #88                      Status: Released
+                  Compliance Date: SEP 06, 2013
+=============================================================================
+
+Associated patches: (v)EN*7*48     <<= must be installed BEFORE `EN*7*92'
+
+Subject: TABLE UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Patch EN*7.0*92 adds 1 new code to the NON-EXPENDABLE EQUIPMENT BUDGET OBJECT
+ CODES (NX BOC) (#6914.4) file and renames code 1524 to 1995 in
+ the NON-EXPENDABLE STANDARD GENERAL LEDGER (NX SGL)(#6914.3) file.
+   
+   ASSOCIATED REMEDY: 
+   ==================
+   1)  INC000000772743    IFCAP-Other: File 6914.4 (NX BOC) issue
+   2)  INC000000772753    IFCAP-Other: File 6914.3 (NX SGL List) issue
+  
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Salisbury, NC.
+   Detroit, MI.
+   Lake City, FL.
+  
+   Remedy Overview:
+   ================
+   1) INC000000772743
+  
+   Problem:
+   --------
+   The CFO Office of Financial Oversight requested that Budget Object Code (BOC)
+   2335 be added to NON-EXPENDABLE EQUIPMENT BUDGET OBJECT CODES (NX BOC)
+   (#6914.4) file. 
+   
+   Resolution:
+   -----------
+   This patch updates the NX BOC (#6914.4) file by adding code 2335.
+   
+   2) INC000000772753
+   
+   Problem:
+   --------
+   The CFO Office of Financial Oversight requested that General Ledger (GL)
+   1524 be renamed to (GL) 1995 in the NON-EXPENDABLE STANDARD GENERAL 
+   LEDGER (NX SGL)(#6914.3) file. 
+  
+   Resolution:
+   -----------
+   The NX SGL (#6914.3) file will be modified by this patch as follows:
+   SGL 1524 (PROPERTY PENDING DISPOSAL) will be renamed to SGL 1995 (PP&E
+   REMOVED FROM SERVICE BUT NOT DISPOSED)
+  
+   Note that the renaming of SGL 1524 to 1995 will automatically update all
+   files and reports that print this data.  Also, the text for the Excessed
+   Equipment Report [ENFAR7] option has been updated accordingly. NO FAP
+   Documents are required for this change, because a FA TYPE of 'X' 
+   continues to be used for the Excess SGL account.
+  
+   Help text for the FAIR MARKET VALUE (#104) field of the FD DOCUMENT LOG
+   File (#6915.5) is modified to display the correct SGL code.  
+  
+    ===================== INSTALLATION INSTRUCTIONS =====================
+   
+   This patch may be installed during normal working hours. Users can be on
+   the system during the installation. Install Time is less than 2 minutes.
+        
+   1.  LOAD TRANSPORT GLOBAL 
+       ---------------------
+       Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+   2.  START UP KIDS  
+       -------------
+       Start up the Kernel Installation and Distribution System Menu 
+       [XPD MAIN]: 
+   
+            Edits and Distribution ...  
+            Utilities ...  
+            Installation ...  
+   
+     Select Kernel Installation & Distribution System Option: Installation 
+                                                              --- 
+            Load a Distribution  
+            Print Transport Global 
+            Compare Transport Global to Current System 
+            Verify Checksums in Transport Global 
+            Install Package(s) 
+            Restart Install of Package(s) 
+            Unload a Distribution 
+            Backup a Transport Global 
+   
+   3.  Select Installation Option:  
+       ---------------------------
+       NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter EN*7.0*92):
+        
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+   
+   4.  Select Installation Option: Install Package(s)
+                                   ------------------
+       **This is the step to start the installation of this KIDS patch: 
+    
+       a.  Choose the Install Package(s) option to start the patch install.
+  
+       b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+           NO//' answer NO
+  
+       c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+           Options, and Protocols? YES//' answer YES
+  
+       d.  When prompted 'Enter options you wish to mark as 'Out of Order':
+           Enter the following options:
+  
+                ENMM MGR [Nonexpendable Equipment Module (A&MM)]
+  
+   5.  During install, verify that all entries were added successfully.
+       If an error is displayed, please file a Remedy Ticket.  
+   
+   6.  The routine ENX1P92 can be removed from your production and 
+       test system after the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;ENGINEERING;**[Patch List]**;Aug 17, 1993;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ENFADEL
+    Before: B33058574   After: B33426149  **29,33,38,39,46,92**
+Routine Name: ENFAR7
+    Before: B11283524   After: B11449754  **29,33,46,48,92**
+Routine Name: ENX1P92
+    Before:       n/a   After:  B5277574  **92**
+ 
+Routine list of preceding patches: 48
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : FEB 07, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: JUL 23, 2013
+Released By : HARDY,STACY                   Date Released : AUG 06, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

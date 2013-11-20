@@ -1,0 +1,725 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: OR*3*306
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #317                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*181    <<= must be installed BEFORE `OR*3*306'
+                    (v)OR*3*204    <<= must be installed BEFORE `OR*3*306'
+                    (v)GMPL*2*36   <<= must be installed BEFORE `OR*3*306'
+                    (v)HDI*1*11    <<= must be installed BEFORE `OR*3*306'
+                    (v)LEX*2*58    <<= must be installed BEFORE `OR*3*306'
+                    (v)XU*8*502    <<= must be installed BEFORE `OR*3*306'
+                    (v)OR*3*331    <<= must be installed BEFORE `OR*3*306'
+                    (v)OR*3*340    <<= must be installed BEFORE `OR*3*306'
+                    (v)MHV*1*9     <<= must be installed BEFORE `OR*3*306'
+                    (v)PSO*7*391   <<= must be installed BEFORE `OR*3*306'
+
+Subject: CPRS v29
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Computerized Patient Record System (CPRS) Graphical User Interface 
+ (GUI) v29 is an enhancement release with modifications for the Drug
+ Enforcement Agency (DEA) electronic prescribing (ePCS) of controlled
+ substances, Problem List changes for the use of SNOMED CT codes, and the
+ display of Mental Health Treatment Coordinator information entered through
+ the Primary Care Management Module. In addition to these enhancements,
+ software changes are being made to correct several Patient Safety Issues
+ (PSIs), Section 508 issues, and additional miscellaneous defect fixes.
+  
+ CPRS GUI v29 consists of several host files, an updated CPRS GUI and 
+ several Help files, too many to list (which will be located in a single 
+ directory name HELP):
+ HDI_1_11.KID which contains the HDI*1*11 patch
+ PSS_1_166.KID which contains the PSS*1*166 patch
+ CPRSV29_PSO_PSD.KID which contains the PSO*7*391 and PSD*3*73 patches
+ OR_GMPL_GMTS_XU_29.KID which contains the XU*8*609, GMPL*2*36, GMTS*2.7*86
+                        and OR*3*306 patches 
+ CPRSChart.exe 
+ OR_30_371.KID which contains the OR*3*371 patch
+ PSO_7_426.KID which contains the PSO*7*426 patch
+  
+ The host files were created to simplify installation and control the 
+ phased implementation of CPRS v29 at the Veterans Health Administration
+ (VHA) facilities. To see the current status and target dates for
+ Sites/VISN/Regions please refer to the following site:
+  
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms/AllItems
+ .aspx
+  
+ Click on the CPRS GUI v29 Deployment Schedule folder. Then open the
+ document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch Information:
+ ==================
+ HDI*1*11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSD*3*73 and PSO*7*391 support the DEA ePCS functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT
+ GMTS*2.7*86 supports the Problem List Standardization
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhanced the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+ The bulletin informs its recipients that a new NTRT Request has been 
+ initiated by a Clinician at their facility.
+  
+ OR*3*371 includes support for CPRS v29 - ePCS and encounters.
+  
+ PSO*7*426 ePCS Support
+  
+ Associated Remedy ticket(s):
+ ============================
+ HD0000000069944
+ HD0000000070892
+ HD0000000266396
+ HD0000000276744
+ HD0000000278019
+ HD0000000325209
+ HD0000000328643
+ HD0000000334617
+ HD0000000360890
+ HD0000000385673
+ HD0000000396719
+ HD0000000417043 
+ HD0000000429709
+ HD0000000437940
+ HD0000000444275  
+ HD0000000478780
+ HD0000000483700
+ HD0000000486375
+ HD0000000486635
+ HD0000000486696
+ HD0000000499883
+ HD0000000516561
+ HD0000000581482
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Charleston, SC
+ Cleveland, OH
+ Heartland East HCS, MO
+ Heartland West HCS, KS
+ Hines, IL
+ Loma Linda, CA
+ Palo Alto HCS, CA
+ San Diego HCS, CA
+ Tampa, FL
+  
+ Remedy Overview:
+ ================
+ 1. No Remedy Ticket - MHTC for Same Button_Associate Provider 
+  
+    Problem:
+    ========
+    When the CPRS Workgroup reviewed the Primary Care button, it was
+    decided that the Mental Health Treatment Coordinator and the Associate
+    Provider should be on the button. But it was also felt that the
+    location of the Associate Provider on the button could be confusing to
+    providers and they might misinterpret what it meant.
+  
+    Resolution:
+    ===========
+    Following the recommendation from the workgroup, the layout of the 
+    information on the button was changed to be clearer, as follows:
+    . Top line: Primary Care Team / Primary Care Provider / Associate
+      Primary Care Provider (if assigned)
+    . Second line (if patient is an inpatient): Inpatient Attending /
+      Inpatient Provider
+    . Third line: Mental Health Treatment Coordinator (if assigned)
+  
+ 2. HD0000000069944 - Problem list - SC vs. NSC vs. Unknown
+    
+    Problem:
+    ========
+    There was an inconsistency between the designation of service
+    connection and treatment factors on the Problems Tab and the signature
+    dialogs. On the Problems tab, the user was presented with a single
+    check box to indicate Yes or No. If left blank, CPRS interpreted the
+    blank as a No. On the signature dialogs, however, the same information
+    had two check boxes, one for Yes and one for No. If neither was
+    checked, CPRS interpreted this as Unknown.
+  
+    Resolution:
+    ===========
+    CPRS developers changed the Problems tab so that it now has two check 
+    boxes for Yes and No and the system will now accept a blank entry for 
+    both as Unknown.
+  
+ 3. HD0000000070892 - Details of Old Orders
+  
+    Problem:
+    ========
+    For orders prior to the install of the first CPRS GUI release, users
+    are receiving a message "Detail view is not available for selected
+    order".
+  
+    Resolution:
+    ===========
+    CPRS developers corrected the problem.
+  
+ 4. HD0000000266396 - ORWCH BOUNDS Question
+  
+    Problem:
+    ========
+    Some dialogs were not saving their position nor size in the ORWCH
+    BOUNDS parameter as they should. Therefore, when changing the size of a
+    dialog and then closing the session and reopening, the dialog returned
+    to its default size.
+  
+    Resolution:
+    ===========
+    CPRS developers corrected the problem and the dialogs should 
+    appropriately retain their size from session to session in CPRS.
+  
+ 5. HD0000000276744 - Quick Order Quantity Quandary with Decimal Point
+  
+    Problem:
+    ========
+    When the user entered a quick order with a fractional value and 
+    Auto-verify was set to YES, CPRS gave an Invalid Integer Error.
+  
+    Resolution:
+    ===========
+    CPRS developers corrected this problem and fractional values can be 
+    entered.
+  
+ 6. HD0000000278019 - Free-Text Dosage Display in Patient Instructions/SIG
+  
+    Problem:
+    ========
+    When a provider entered a free-text dosage rather than picking one from
+    the drop-down list, the text displayed in the Patient Instructions/SIG
+    and order details in CPRS. It was assumed that this might be dangerous
+    as the patients could misunderstand the dose they were to
+    take-especially if the dosage contained a concentration for a
+    medication such as insulin.
+  
+    Resolution:
+    ===========
+    Corrected the display.
+  
+ 7. HD0000000325209 - Cannot Do Chart Check on DC'd Entered in Error Orders
+  
+    Problem:
+    ======== 
+    CPRS would allow verification of discontinued orders, but it did not
+    allow 24-hour chart check.
+  
+    Resolution:
+    ===========
+    CPRS developers corrected this problem.
+  
+ 8. HD0000000328643 - Rx Patient Status Field Works Erratically
+  
+    Problem:
+    ========
+    Outpatient prescription fields do not display consistently in CPRS.
+  
+    Resolution:
+    ===========
+    CPRS developers made some corrections to the file to make it function 
+    correctly.
+  
+ 9. HD0000000334617 - Attempting to Copy to a New Order Resulting in a GUI 
+                      Error
+  
+    Problem:
+    ========
+    When attempting an action on an order with more than 9 actions, the 
+    user would get an error that read, "NUMBER' is not a valid integer"
+    (where NUMBER was something like 12621991).
+  
+    Resolution:
+    ===========
+    CPRS developers corrected the problem.
+  
+ 10. HD0000000360890 - Problem in CPRS causing error in Lab
+  
+     Problem:
+     ========
+     Error in Lab which originates with an issue with Lab urgency in CPRS.
+  
+     Resolution:
+     ===========
+     CPRS developers corrected this problem.
+  
+ 11. HD0000000385673 - Complex Dose Different than Single Dose
+  
+     Problem:
+     ========
+     The dosage for a simple versus complex order for the same medication 
+     could result in getting a different dosage. For example, the simple
+     dose might be a 40 mg tablet, which the complex might use an 80 mg
+     tablet and use half-tablets for part of the complex dose.
+    
+     Resolution:
+     ===========
+     Developers corrected this problem. If the single tablet is better,
+     that dose will be used.
+  
+ 12. HD0000000396719 - Error Local Dosage Field Translation 
+  
+     Problem:
+     ========
+     The translation for local dosages was not working correctly. 
+    
+     Resolution:
+     ===========
+     CPRS developers changed the translation so that instead of 1.2 being 
+     put in the instructions as "1.2 tablets", it will now read "one and .2
+     tablets". This is the correct translation.
+  
+ 13. HD0000000417043 - Cytopathology report that printed with the wrong
+                       Veteran's name in the header
+  
+     Problem:
+     ========
+     If the user was on a patient's record and had viewed a report and then
+     processed an alert for a different veteran's results and then tried to
+     print the Most Recent report, CPRS printed the report incorrectly. The
+     information was for the second patient while the header was for the
+     first patient.
+  
+     Resolution:
+     ===========
+     Printing from the Most Recent display was disabled. It should not have
+     been allowed.
+  
+  
+  
+ 14. HD0000000429709 - Double-Clicking an Order via the Order Menu Will
+                       Create Two Order Dialogs
+  
+     Problem:
+     ========
+     Rapidly double-clicking on an order menu item could bring up multiple
+     dialogs. In the reported case, double-clicking on an inpatient
+     medications item instead brought up two outpatient medication dialogs.
+  
+     Resolution:
+     ===========
+     CPRS developers corrected this problem.
+  
+ 15. HD0000000437940 - Wrong Location Dialog Box Displays when a Provider 
+                       Tries to Renew
+  
+     Problem:
+     ========
+     When a provider tries to sign the renewal orders sent from
+     AudioRenewal, they get print location box.  They should get Provider &
+     Location for Current Activities.
+  
+     Resolution:
+     ===========  
+     CPRS developers corrected this problem. The correct dialog now
+     displays.
+  
+ 16. HD0000000444275  - User Is Being Prompted to Sign DC'd Order that Was 
+                        Cancelled 
+  
+     Problem:
+     ========
+     Previously, cancelling orders caused problems with both order checks
+     and the signature dialog.
+  
+     Resolution:
+     =========== 
+     CPRS developers corrected this problem. If you cancel an order on the 
+     signature dialog the order checks will update and the order will no 
+     longer display again to be signed on the signature dialog after it has
+     been cancelled.
+  
+ 17. HD0000000478780 - Cannot Focus a Disabled or Invisible Window Error
+                       Msg Appears when Clicking on an Appt on the Cover
+                       Sheet
+  
+     Problem:
+     ========
+     Cannot Focus a Disabled or Invisible Window Error Msg Appears when 
+     Clicking on an Appt on the Cover Sheet
+  
+     Resolution:
+     ===========
+     CPRS developers corrected this problem.
+  
+ 18. HD0000000483700 - Force CPRS to Always Use MH DLL to Resolve Reminders
+  
+     Problem:
+     ========
+     The Mental Health team requested that CPRS be changed to always use
+     the new Mental Health dll when resolving a mental-health related
+     reminder.
+  
+     Resolution:
+     ===========
+     CPRS developers now force reminders to use the Mental Health DLL to 
+     resolve reminders. If the MH DLL is not available, CPRS will not
+     proceed.
+  
+ 19. HD0000000486375 - RDI Currently Uses a Truncated, 10-Digit Version of
+                       the ICN in Its Calls to HDR
+   
+     Problem:
+     ========
+     RDI Currently Uses a Truncated, 10-Digit Version of the ICN in Its
+     Calls to HDR
+  
+     Resolution:
+     ===========
+     CPRS developers changed Remote Data Interoperability to use the full 
+     identifier rather than a truncated one.
+  
+ 20. HD0000000486635 - Note Label Disappearing
+  
+     Problem:
+     ========
+     The line that displays how many notes have been entered for the
+     patient disappeared when the user selected the New Note button.
+   
+     Resolution:
+     ===========
+     CPRS developers corrected this problem. The number of notes for the 
+     patient will display above the Notes tree view display.
+  
+ 21. HD0000000486696 - Cannot Edit Notes for Reminder Dialogs
+  
+     Problem:
+     ========
+     Users were unable to edit notes for reminder dialogs using the
+     template editor. When importing a Clinical Reminder Dialog Template
+     into Shared Templates the Show Template Notes did not display.
+  
+     Resolution:
+     ===========
+     CPRS developers corrected this problem.
+  
+ 22. HD0000000499883 - Free-Text Results "Collide" When Graphing 
+                       Multiple Lab Tests
+  
+     Problem:
+     ========
+     Under a specific set of circumstances, it was possible for the lab 
+     test free-text result from one lab test to incorrectly be displayed as
+     the result in another test. The following conditions were necessary to
+     produce this error: 
+     . Multiple lab tests must be selected.
+     . At least two of these lab tests must have values that are free-text.
+     . The values must be different. 
+     . The graphs must be separate (Individual Graphs checked). 
+     . One of the lab tests with a free-text value must be the very top
+       item in the Items list.
+  
+     Resolution:
+     ===========
+     Developers corrected this issue. The entries should now read   
+     correctly.
+  
+  
+ 23.  HD0000000516561 - Another Person Editing Orders
+  
+      Problem:
+      ========
+      In CPRS 28, when a user entered an allergy from the Orders tab, 
+      CPRS locked ordering for the selected patient until the entire CPRS 
+      session was closed-even if the user changed patients in the original
+      session, the lock remained until the session was completely closed. A
+      user in a different session could not order anything on the locked
+      patient until the first session was closed. This problem did not
+      occur if the allergy was entered from the Cover Sheet, only from the
+      Orders tab.
+  
+      Resolution:
+      ===========
+      CPRS developers corrected this problem. The lock should be 
+      released as soon as the provider is done placing orders, including 
+      allergies, on the Orders tab.
+  
+ 24. HD0000000581482 -  Allergy Issue - Observed entries set to 
+                        default value MODERATE
+  
+     Problem:
+     ========
+     CPRS Observed allergies defaulted to the Severity of Moderate. Because
+     users could accept the default without making a conscious decision
+     about severity, there could be a potential risk of using a medication
+     that is listed with an existing Adverse Reaction (ADR)/Allergy, but
+     with an unexpected level of reaction. This could delay treatment of
+     lifesaving medication because the severity is rated higher than it
+     should be, or it could cause the clinician to give a medication that
+     causes a severe reaction when only a moderate reaction was expected.
+  
+     Resolution:
+     ===========
+     Developers changed the default for all observed ADR/Allergy entries to
+     be BLANK (NULL), and CPRS now requires the user to select an ADR
+     severity (Mild/Moderate/Severe).
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ OE/RR NOTIFICATION (#100.9)no field, sending data for new 
+                            notification
+ ORDER DIALOG (#101.41)     no field - sending new dialog
+ ORDER DEA ARCHIVE INFO     all fields            New 
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ OR CACS                  Modified
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ OR CPRS GUI CHART               Broker             Modified
+ OR EPCS CS RX BY PROVIDER       Run Routine        New
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ ORES
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Documentation and Software Retrieval:
+ =====================================
+ The following documents can be downloaded from the FTP address as 
+ directed by the CPRS Implementation team.
+  
+ The updated documentation associated with this patch is:
+  
+ File Name            Contents               
+ ---------            --------               
+ CPRSGUITM.DOC        CPRS GUI Technical Manual (Word version) 
+ CPRSGUITM.PDF        CPRS GUI Technical Manual 
+ CPRSGUIUM.DOC        CPRS GUI User Manual      (Word version)
+ CPRSGUIUM.PDF        CPRS GUI User Manual   
+ CPRSLMTM.DOC         CPRS LM Technical Manual  (Word version)
+ CPRSLMTM.PDF         CPRS LM Technical Manual
+ OR_30_306_IG.DOC     CPRS GUI v.29 and Associated Patches
+                        Installation Guide        (Word Version)       
+ OR_30_306_IG.PDF     CPRS GUI v.29 and Associated Patches
+                        Installation Guide
+ OR_30_306_RN.DOC     CPRS GUI V29 Release Notes (Word Version) 
+ OR_30_306_RN.PDF     CPRS GUI V29 Release Notes
+                                 
+  
+ OR_30_306_SRC.ZIP      CPRSChart Source            Binary 
+  
+ CPRS documentation can also be found in the VA Software Document Library:
+  
+ http://www.va.gov/vdl.
+  
+ Software Retrieval and Installation Instructions:
+ =================================================
+ Please refer to the "CPRS GUI v.29 Installation Guide" for installation
+ and set-up information. This document is exported as OR_30_306IG.doc and
+ OR_30_306IG.pdf and is included in OR_30_306.ZIP
+  
+ Installation of these host files must be coordinated among the personnel
+ affected because these host files will be installed in one installation
+ session.
+  
+ Sites will retrieve VistA software from an FTP address as directed by the
+ CPRS Implementation team. Installation instructions will be distributed
+ when your site begins the implementation process.
+  
+ The software distribution includes:
+  
+ File Name              Contents          Retrieval Format
+ ---------              --------          ----------------
+ OR_30_306.ZIP          CPRSCHART.EXE     Binary
+                        CPRS.CNT
+                        CPRS.HLP
+                        Documentation files listed above
+  
+ OR_30_306_SRC.ZIP      CPRS v29 Source   Binary
+ OR_GMPL_GMTS_XU_29.KID KIDS Builds       Ascii
+ HDI_1_11.KID           KIDS Build        Ascii
+ OR_39_372.KID          KIDS Build        Ascii
+ PSO_7_426.KID          KIDS Build        Ascii
+ PSS_1_166.KID          KIDS Build        Ascii
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 43
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OR3CONV
+Routine Name: OR3CONV1
+Routine Name: ORCACT0
+    Before: B58407841   After: B64282861  **7,27,48,72,86,92,94,141,165,
+                                           177,173,190,215,243,289,204,
+                                           306**
+Routine Name: ORCACT01
+    Before: B66127888   After: B73162250  **94,116,134,141,163,187,190,
+                                           213,243,306**
+Routine Name: ORCHTAB2
+    Before: B22410347   After: B22057058  **27,58,181,306**
+Routine Name: ORCMED
+    Before: B41444759   After: B52490414  **4,7,38,48,94,141,178,190,195,
+                                           243,306**
+Routine Name: ORCSAVE
+    Before: B92624396   After: B93570621  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306**
+Routine Name: ORCXPND1
+    Before: B77575358   After: B82803363  **26,67,75,89,92,94,148,159,
+                                           188,172,215,243,280,340,306**
+Routine Name: ORCXPND4
+    Before: B16971380   After: B27943000  **67,306**
+Routine Name: ORDEA
+    Before:       n/a   After: B85981983  **306**
+Routine Name: ORDEAAUD
+    Before:       n/a   After:   B166040  **306**
+Routine Name: ORDV04
+    Before: B57992153   After: B74664100  **109,148,160,208,195,241,215,
+                                           274,256,243,306**
+Routine Name: ORMPS
+    Before: B79586894   After: B82154291  **3,54,62,86,92,94,116,138,152,
+                                           141,165,149,213,195,243,306**
+Routine Name: ORQQPL
+    Before: B17756509   After: B25909130  **9,10,85,173,306**
+Routine Name: ORQQPL1
+    Before: B62165510   After: B77752949  **10,85,148,173,203,206,249,
+                                           243,280,306**
+Routine Name: ORQQPL2
+    Before: B22211060   After: B35231801  **10,306**
+Routine Name: ORQQPL3
+    Before: B54712722   After: B52966029  **10,148,173,243,280,306**
+Routine Name: ORQQPL4
+    Before:       n/a   After: B10666256  **306**
+Routine Name: ORQQPXRM
+    Before: B18382115   After: B16643774  **10,85,116,173,187,190,215,243,306**
+Routine Name: ORRDI1
+    Before:B113020386   After:B113704699  **232,294,306**
+Routine Name: ORWDCN32
+    Before: B17224910   After: B19324752  **10,85,306**
+Routine Name: ORWDPS1
+    Before: B49131928   After: B56868000  **85,132,141,163,215,255,243,306**
+Routine Name: ORWDX
+    Before: B66882759   After: B66876839  **10,85,125,131,132,141,164,
+                                           178,187,190,195,215,246,243,
+                                           283,296,280,306**
+Routine Name: ORWDXA
+    Before: B82710229   After: B82710229  **10,85,116,132,148,141,149,
+                                           187,213,195,215,243,280,306**
+Routine Name: ORWDXR
+    Before: B54764735   After: B54765656  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331,306**
+Routine Name: ORWOR
+    Before: B42185290   After: B50635965  **10,85,132,141,163,187,190,
+                                           215,243,307,330,280,347,306**
+Routine Name: ORWOR1
+    Before: B21551426   After: B26597352  **132,141,163,306**
+Routine Name: ORWORR
+    Before: B67327939   After: B76813647  **10,92,116,110,132,141,163,
+                                           189,195,215,243,280,306**
+Routine Name: ORWPCE
+    Before: B60867098   After: B53783465  **10,85,116,173,190,195,215,
+                                           243,295,280,306**
+Routine Name: ORWPCE1
+    Before: B63538675   After: B67787627  **10,85,116,132,148,187,190,
+                                           215,243,280,306**
+Routine Name: ORWPCE2
+    Before: B49058348   After: B50908533  **10,85,109,116,173,195,243,306**
+Routine Name: ORWPCE3
+    Before: B43187706   After: B55452326  **10,85,116,190,280,306**
+Routine Name: ORWPCE4
+    Before:       n/a   After: B12891193  **10,85,116,173,190,195,215,
+                                           243,295,280,306**
+Routine Name: ORWPT
+    Before: B60483737   After: B63799384  **10,85,132,149,206,187,190,
+                                           215,243,280,306**
+Routine Name: ORWPT1
+    Before: B19631349   After: B25961923  **10,109,280,340,306**
+Routine Name: ORY306
+    Before:       n/a   After:B144132481  **306**
+Routine Name: ORY3060
+    Before:       n/a   After: B15649990  **306**
+Routine Name: ORY30601
+    Before:       n/a   After: B71971190  **306**
+Routine Name: ORY30602
+    Before:       n/a   After: B78115782  **306**
+Routine Name: ORY30603
+    Before:       n/a   After: B84895361  **306**
+Routine Name: ORY30604
+    Before:       n/a   After: B59036369  **306**
+Routine Name: ORY30605
+    Before:       n/a   After: B67798372  **306**
+Routine Name: ORY30606
+    Before:       n/a   After: B65314465  **306**
+Routine Name: ORY30607
+    Before:       n/a   After: B10957549  **306**
+Routine Name: ORY3061
+    Before:       n/a   After: B40551451  **306**
+Routine Name: ORY3062
+    Before:       n/a   After: B26766778  **306**
+Routine Name: ORY3063
+    Before:       n/a   After: B12996430  **306**
+Routine Name: ORY3064
+    Before:       n/a   After: B13526334  **306**
+Routine Name: ORY306ES
+    Before:       n/a   After: B12634847  **306**
+Routine Name: ORY306PR
+    Before:       n/a   After:  B2637944  **306**
+Routine Name: ORYCHKE
+    Before:  B2490043   After:  B2490043  **280,306**
+ 
+Routine list of preceding patches: 181, 204, 294, 331, 340, 347
+
+=============================================================================
+User Information:
+Entered By  : LEYVA,KATHRYN                 Date Entered  : DEC 02, 2008
+Completed By: BARLOW,KENNETH                Date Completed: JUN 10, 2013
+Released By : SCHMIT,BECKY                  Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,141 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 07/31/13 at 20:02
+=============================================================================
+Run Date: SEP 18, 2013                     Designation: LR*5.2*429
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #338                    Status: Released
+                  Compliance Date: OCT 19, 2013
+=============================================================================
+
+
+Subject: REPLACE DIRECT READ OF FILE 80
+
+Category: 
+  - Input Template
+
+Description:
+============
+
+ This patch will replace a direct read of the ICD Diagnosis file (#80) with
+ a call to a standard API ($$ICDDX^ICDCODE) in the form LREPI9.
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*429 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by VHA 
+ DIRECTIVE 2004-058 titled VISTA BLOOD BANK SOFTWARE VERSION 5.2.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*429 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*429 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. HD0000000777165  -  Direct access to field 3 of file 80 in Emergency
+                        Pathogens (EPI) application needs to be replaced
+  
+    
+ PARTICIPATING TEST SITES:
+ ========================
+ WASHINGTON, DC
+ HEARTLAND-EAST
+ BRONX VAMC 
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  HD0000000777165 - Direct access to field 3 of file 80 in Emergency
+                       Pathogens (EPI) application needs to be replaced
+    
+     Problem:
+     --------
+     Form LREPI9 uses a direct read of the Diagnosis field (#3) from the
+     ICD Diagnosis file (#80) to extract the diagnosis code description. 
+     This field will be going away with the release of ICD10 code (patches
+     ICD*18.0*57 and LEX*2.0*80).
+  
+     Solution:
+     ---------
+     Modify form LREPI9 to use API $$ICDDX^ICDCODE to extract the diagnosis
+     code description from file (#80) rather than using a direct read of
+     field (#3). The API obtains the diagnosis code description from the
+     Diagnosis - Versioned field (#1) of subfile Diagnosis - Versioned
+     (#80.067) of ICD Diagnosis file (#80). This field is unaffected by the
+     release of the ICD and LEX patches.
+  
+     Form:    LREPI9  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+ The install time for this patch is less than 2 minutes. This patch can be 
+ installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid 
+ problems loading and/or installing this patch.
+  
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system.  You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*429.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : JAN 21, 2013
+Completed By: WERNER,GARY                   Date Completed: SEP 12, 2013
+Released By : CONLIN,TERESA                 Date Released : SEP 18, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

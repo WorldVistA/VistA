@@ -1,0 +1,234 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 05/29/13 at 09:25
+=============================================================================
+Run Date: JUL 25, 2013                     Designation: XU*8*632
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #501                      Status: Released
+                  Compliance Date: AUG 25, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*602    <<= must be installed BEFORE `XU*8*632'
+
+Subject: DISPLAY UNPROCESSED ALERTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patches XU*8*513 and XU*8*602 made changes to alert processing to sort 
+ critical alerts at the top of the users' processing lists.  As a result, 
+ since XU*8*602 was installed, users that have a large number of 
+ unprocessed alerts may see a noticeable delay or pause when their VistA 
+ menus are displaying while their alerts are being sorted.
+  
+ This patch will improve the efficiency of the VistA Menu Manager when 
+ informing the user that there are alerts to process by sorting through 
+ only the most recent alerts.  When the user chooses to begin processing 
+ alerts, the complete list of unprocessed alerts will then be sorted and 
+ presented to the user.
+  
+ To identify which users might be impacted by this patch, a FileMan 
+ Inquiry can be used to quickly check on the number of unprocessed alerts 
+ for users:
+  
+    Select OPTION:    INQUIRE TO FILE ENTRIES
+  
+    OUTPUT FROM WHAT FILE: ALERT// 
+    Select ALERT RECIPIENT:  User,Alert     
+    ANOTHER ONE: 
+    STANDARD CAPTIONED OUTPUT? Yes// N  (No)
+    FIRST PRINT FIELD:      ALERT DATE/TIME    (multiple)
+      FIRST PRINT ALERT DATE/TIME SUB-FIELD: +.01  ALERT DATE/TIME
+      THEN PRINT ALERT DATE/TIME SUB-FIELD: 
+    THEN PRINT FIELD: 
+    Heading (S/C): ALERT STATISTICS// 
+    DEVICE:   TELNET PORT    Right Margin: 132// 
+  
+ Before this patch is installed, anyone that has more than a few hundred 
+ unprocessed alerts will likely see a noticeable "hang" while their menus
+ display.
+  
+ You can also run "User Alerts Count Report" [XQAL USER ALERTS COUNT] to 
+ identify users which may be experiencing delays.  Basically anyone with
+ more than a few hundred entries may have this problem.
+  
+    Select Report Menu for Alerts Option: User Alerts Count Report
+    Do you want to count only alerts containing specific words or
+    phrase(s)? NO
+    Display users whose ALERT count is at least:  100// 200
+    START DATE:  T-900
+    END DATE:  (10/31/2010 - 4/18/2013): T
+    Breakout by One or More Divisions? NO
+  
+         Select one of the following:
+                   
+              1         By Name
+              2         By Number
+              3         By Service/Section
+  
+    Select the ordering of results desired: 1  By Name
+    DEVICE: HOME//   SSH VIRTUAL TERMINAL    Right Margin: 80// 
+  
+    COUNT of ALERTS - users with more than 200 on Apr 18, 2013@08:22:44
+    for date range 10/31/2010 to 04/18/2013
+    CRIT column indicates number of CRITICAL alerts and ABNORMAL IMAGING 
+    alerts
+  
+ The best way to fix the delay is for the user to process or delete their 
+ unprocessed alerts.  Consideration should also be given to deciding if a 
+ user that has so many unprocessed alerts has a valid need for getting the 
+ alerts at all.
+  
+ If IRM knows that all of the Alerts for a user can be deleted (do not 
+ need follow-up action or review) then the "Purge Alerts for a User" 
+ [XQALERT BY USER DELETE] option can be run, selecting "A" to delete all 
+ alerts.  This option requires the XQAL-DELETE security key to be used.
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - 04/23/13
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*632 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*632 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. INC0000000843877 Alerts Issue
+  
+ Problem:
+ -------
+ Patches XU*8*513 and XU*8*602 made changes to alert processing to sort 
+ critical alerts to the top of the users' processing lists.  As a result, 
+ since XU*602 was installed, users that have a large number of unprocessed
+ alerts may see a delay or pause when their VistA menus are displaying
+ while their alerts are being sorted.
+  
+ Resolution:
+ ----------
+ Only the most recent alerts need to be displayed at the Menu Manager 
+ prompt.  A change has been made to only look for recent alerts 
+ at the Menu Manager prompt.  A more comprehensive list will then be 
+ displayed when the user begins to process alerts.
+  
+  
+ Test Sites: (Patch Tracking Message #TBD)
+ ----------
+ Battle Creek VA Medical Center, Battle Creek MI (515) - Medium
+ Salem VA Medical Center, Salem VA (658) - Large
+ VA Central Alabama HCS (Tuskegee, Montgomery) (619) - Large/Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*632):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQALERT
+    Before: B19925402   After: B20471268  **1,65,125,173,285,366,513,602,632**
+ 
+Routine list of preceding patches: 602
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : APR 22, 2013
+Completed By: DERBES-MURPHY,ELISA           Date Completed: JUL 18, 2013
+Released By : TILLIS,LEWIS                  Date Released : JUL 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

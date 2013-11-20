@@ -1,0 +1,210 @@
+
+=============================================================================
+Run Date: SEP 24, 2013                     Designation: LA*5.2*82
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: EMERGENCY
+Version : 5.2        SEQ #58                    Status: Released
+                  Compliance Date: OCT 04, 2013
+=============================================================================
+
+
+Subject: UPDATE PROCEDURES FOR SNOMED CT LABORATORY MAPPINGS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is an information patch containing the procedures for updating
+ the SNOMED CT (Systemized Nomenclature of Medicine Clinical Terms) 
+ laboratory mappings.
+  
+ 1. SNOMED CT codes are used in the Laboratory application and are mapped 
+    to the following files: TOPOGRAPHY FIELD file (#61), ETIOLOGY FIELD
+    file (#61.2), and COLLECTION SAMPLE file (#62). SNOMED CT mappings are
+    local to each facility and may need to periodically be updated (for
+    example, an update might be needed due to a site adding new entries to
+    the above mentioned files, or if existing entries need to be mapped to
+    new SNOMED CT codes). When an update is available for a site, Standards
+    & Terminology Services (STS) will send an email to the Laboratory
+    Information Manager (LIM) to notify the site that there is a new
+    mapping file for them to download and process.
+  
+    It is the responsibility of local or regional Office of Information and
+    Technology (OI&T) personnel (aka, Information Resource Management (IRM))
+    to download the SNOMED CT mapping file for their facility. Communication
+    needs to be in place  between OI&T and Laboratory Service with respect to
+    the process and who will be installing this SNOMED CT file.
+  
+    The SNOMED CT mapping files are stored on the Hines Office of Information
+    (OI) Field Office File Transfer Protocol (FTP) server, under the
+    ANONYMOUS.LAB_SNOMED_CT directory.  This directory is NOT replicated to
+    the Albany or Salt Lake City OI Field Office FTP servers.
+  
+   
+        FTP server: ftp.fo-hines.domain.ext
+        Username:  anonymous
+        Directory:  ANON$:[ANONYMOUS.LAB_SNOMED_CT]
+        File Name*: SITEID_SCT_MM_DD_YY.TXT
+              *For the file name, "SITEID" is your three digit site ID, and 
+              "MM_DD_YY" is the date the file was created.
+         Example: 581_SCT_07_04_13.txt
+         Make sure you only download the file for your site.
+  
+ 2. When an updated SNOMED CT mapping file is available, IRM staff will 
+    need to FTP the file to an appropriate directory on the local Veterans
+    Health Information Systems and Technology Architecture (VistA)
+    server. Ensure the file is downloaded in the correct format (ASCII).
+    IRM staff must communicate with the Laboratory Information Manager
+    (LIM) to coordinate an acceptable time in which the update can be
+    installed.
+  
+ 3. The option Load SNOMED SCT Mapping [LA7S LOAD MAPPING SCT] will be 
+    used to load and process the SNOMED CT mapping file after the file is
+    downloaded to a local directory on the Vista system. This option should
+    be run by IRM staff, because access to the directory level of a system
+    is a security issue and access is usually limited to IRM personnel.
+    (Note: for more information about this option, see the LEDI IV User Manual,
+    section 5.3.20, entitled "Load SNOMED SCT Mapping [LA7S LOAD MAPPING SCT]").
+  
+ 4. When running the option, the user will be prompted with the following
+    prompts:
+  
+    a. "Host File Directory: xxxx$:[xxxx]//" - Enter the directory where 
+       you downloaded the file to (Note: do not enter the file name here -
+       just enter the directory name). 
+  
+    b. "Select FILE:" - Enter a double question mark ("??") to get a list
+       of '.txt' files that are in the selected directory.
+  
+       Select FILE: 1// ??
+  
+             1  581_SCT_4_25_12.TXT;1
+             2  581_SCT_6_25_13.TXT;1
+             Select a file by number from the list
+  
+       The file to load can be selected by number reference.
+  
+    c. Processing Action:
+  
+       Select one of the following:
+  
+            0         Quit - no action
+            1         Process SNOMED CT mappings directly
+            2         Task processing SNOMED CT mappings
+  
+       Processing Action: 0//   
+  
+       Select option 1 to process the SNOMED CT mappings directly.
+  
+   Example of executing steps #3 and #4:
+   -------------------------------------
+  
+    Select Lab liaison menu Option: SMGR <Enter> Lab Shipping Management 
+    Menu
+  
+    Select Lab Shipping Management Menu Option: LSCT <Enter> Load SNOMED 
+    SCT Mapping
+  
+    HOST FILE DIRECTORY: USER$:[TEMP]// <Enter>
+    Using filespec *.TXT Select FILE: 1// ?? <Enter>
+    
+    1 581_SCT_12-14-10.TXT;2
+    2 HUNT_CORRECT_3-31-11.TXT;1
+    3 LEDI_LEDI COTS_IP_PORT_CONFIGURATION.TXT;1
+    4 RELNOTES.TXT;3
+    5 WORKLOAD_TO_VISTA_201012.TXT;1
+    Select a file by number from the list
+  
+    Select FILE: 1// 1 <Enter>
+    Directory: USER$:[TEMP]
+    File.....: 581_SCT_12-14-10.TXT;2
+    Loading file into TMP global
+    ...SORRY, LET ME THINK ABOUT THAT A MOMENT...
+    Processing file data and storing in file #95.4
+    ...SORRY, JUST A MOMENT PLEASE...
+  
+    Records added: 13685
+  
+  
+         Select one of the following:
+  
+              0 Quit - no action
+              1 Process SNOMED CT mappings directly
+              2 Task processing SNOMED CT mappings
+  
+    Processing Action: 0// 1 <Enter> Process SNOMED CT mappings directly
+    Loading files with National SNOMED CT Codes
+  
+    **********************************************
+    Loading file #61 [TOPOGRAPHY FIELD]
+    **********************************************.......
+    Lexicon SCT lookup error STS alert sent..
+    Lexicon SCT lookup error STS alert sent....
+    No such entry: File #61 IEN:8830 STS alert sent.
+    ************************************************
+    Loading file #61.2 [ ETIOLOGY FIELD ]
+    ************************************************
+    Lexicon SCT lookup error STS alert sent.
+    Names do not match: [CLOSTRIDIUM DIFFICILE TOXIN A/B POSITIVE < - >
+    CLOSTRIDIUM        
+    DIFFICILE TOXIN B DNA DETECTED] STS alert sent.
+    Lexicon SCT lookup error STS alert sent.
+    ************************************************
+    Loading file #62 [ COLLECTION SAMPLE ]       
+    ************************************************
+    Lexicon SCT lookup error STS alert sent.
+    Lexicon SCT lookup error STS alert sent.
+  
+ 5. After the SNOMED CT Mapping file is loaded, it should be deleted from 
+    the local directory.
+  
+ 6. In conjunction with this patch release, an updated mapping file is 
+    being released for all sites. This file should be downloaded and loaded
+    by IRM staff using the process outlined above.
+   
+    In the future, updated mapping files will be made available on a
+    site-by-site basis. When a mapping file is ready for a site to load, 
+    a member of the STS team will contact the site to notify them that a
+    new mapping file is ready for them to download and process.
+  
+  
+  
+ Test Sites
+ ==========
+  
+  Bedford VAMC
+  Biloxi VAMC
+  Boston HCS
+  Hines, IL VAMC
+  Houston VAMC
+  Madison, WI VAMC
+  Milwaukee VAMC
+  Minneapolis VA HCS
+  Shreveport VAMC
+  St. Cloud VA HCS
+  Upstate New York HCS
+  VA Heartland-West HCS
+   
+ We would also like to thank the following site who participated in the 
+ testing of this patch: 
+  
+  Oklahoma City VAMC
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ANZALDUA,CAROL                Date Entered  : JUN 06, 2013
+Completed By: DERBES-MURPHY,ELISA           Date Completed: SEP 17, 2013
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

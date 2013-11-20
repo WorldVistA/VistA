@@ -1,0 +1,255 @@
+
+=============================================================================
+Run Date: AUG 28, 2013                     Designation: TIU*1*275
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: EMERGENCY
+Version : 1       SEQ #251                      Status: Released
+                  Compliance Date: AUG 29, 2013
+=============================================================================
+
+
+Subject: USH LEGAL SOLUTION
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Other
+
+Description:
+============
+
+ This patch addressed the Under Secretary of Health (USH) legal solution.  
+ The legal solution impacts the High Risk Mental Health Patient - National 
+ Reminder and Flag (HRMHP) project.  A new national category 1 Patient 
+ Record Flag (PRF) will provide a tool to inform all Veteran 
+ Administration (VA) caregivers of special guidelines that must be 
+ followed when documenting notes or dealing with the patient.  This flag 
+ will require special permissions in order to be assigned to a patient and 
+ once assigned it cannot be modified or inactivated other than allowing 
+ the reassignment of the owning facility.
+  
+ This patch TIU*1.0*275 will install one new Title into the TIU DOCUMENT 
+ DEFINITION file (#8925.1): PATIENT RECORD FLAG CATEGORY I - URGENT 
+ ADDRESS AS FEMALE which is only to be used with the new "URGENT    ADDRESS
+ AS FEMALE" Patient Record Flag.
+  
+ Patch DG*5.3*864 will install the new Patient Record Flag.  The new PRF 
+ must only be used with the guidance from the Office of Under Secretary of 
+ Health on a patient-by-patient basis.  It may not be used for any other 
+ purpose or patient.  The text used during the assignment will be based on 
+ very specific pre-defined text provided by the Office of the Under 
+ Secretary of Health.  Once the patient is assigned the "URGENT    ADDRESS 
+ AS FEMALE" PRF and the flag is activated, the PRF cannot be inactivated
+ for the patient.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ New Data entry in TIU DOCUMENT DEFINITION file (#8925.1)
+  
+ NAME: PATIENT RECORD FLAG CATEGORY I - URGENT    ADDRESS AS FEMALE
+ PRINT NAME: PATIENT RECORD FLAG CATEGORY I - URGENT    ADDRESS AS FEMALE
+ TYPE: TITLE                           
+ CLASS OWNER: CLINICAL COORDINATOR
+ STATUS: ACTIVE
+ VHA ENTERPRISE STANDARD TITLE: PATIENT RECORD FLAG
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20070589 - High Risk Mental Health Patient - National Reminder and Flag
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Jerry L. Pettis Memorial VA Medical Center, Loma Linda CA (Large)
+ Portland VA Medical Center, Portland OR (Large)
+ VA Gulf Coast Veterans Health Care System, Biloxi MS (Large)
+ VA Puget Sound HCS, Seattle/Tacoma WA (Integrated)
+  
+  
+ Software & Documentation Retrieval Instructions
+ ----------------------------------------------- 
+ The software for this set of patches is not being distributed through the
+ National Patch Module.
+  
+ There is a multi-package build named USH PRF LEGAL SOLUTION 1.0 which
+ contains the following KIDS builds: TIU*1.0*275, DG*5.3*864, and
+ GMTS*2.7*103. The associated host file is named
+ USH_PRF_LEGAL_SOLUTION_1_0.KID.
+  
+ Documentation is contained in the USH_PRF_LEGAL_SOLUTION_1_0.zip file
+ which contains the following documents:
+  Health Summary User Manual
+                                                HSUM2_7_103_UM.PDF
+  Health Summary Technical Manual
+                                                HSUM2_7_103_TM.PDF
+  Patient Record Flag User Guide
+                                                PatRecFlagUG.PDF
+  TIU User Manual
+                                                TIUUM-275.PDF
+  USH Patient Record Flag Legal Solution Installation Guide
+                                                DG_5_3_864_IG.PDF
+  USH Patient Record Flag Legal Solution Release Notes
+                                                DG_5_3_864_RN.PDF 
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany      ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines       ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext  <ftp://ftp.fo-slc.domain.ext>
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ USH PRF LEGAL SOLUTION 1.0
+                               USH_PRF_LEGAL_SOLUTION_1_0.KID ASCII
+ USH PRF LEGAL SOLUTION 1.0 Documentation
+                               USH_PRF_LEGAL_SOLUTION_1_0.zip Binary
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www.domain.ext/vdl/
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ TIU*1.0*275 consists of one post-install routine that will install the 
+ new title into the TIU DOCUMENT DEFINITION file (#8925.1). A message will
+ be written to screen and also captured in the install log as to whether or
+ not the title was successfully created. If a title already exists with 
+ the same name, it will be overwritten by the new title.
+  
+ The routine TIUPS275 contains the POST install actions for this patch.  
+ This routine may be deleted from the system if storage space is a 
+ concern.  Local IT staff should consider keeping a copy of TIUPS275 as it 
+ may prove useful in the event of any unexpected issues with this patch.
+  
+ Installation Instructions
+ -------------------------
+ This TIU patch does not require any menu options to be disabled.  The 
+ following install steps are only a high level overview, please follow the 
+ DG_5_3_864.IG.PDF install guide for more detailed instructions and
+ guidance.
+  
+ 1.  Download the USH_PRF_LEGAL_SOLUTION_1_0.KID file from the appropriate
+     FTP Server to a directory on your system.
+  
+ 2.  Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR:]USH_PRF_LEGAL_SOLUTION_1_0.KID, where [DIR:] is the local
+     directory where you have stored the host file.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     USH PRF LEGAL SOLUTION 1.0:
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and 
+     choose the patch to install.
+     USH PRF LEGAL SOLUTION 1.0
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  Answer 'NO'
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-installation instructions for the TIU portion of this 
+ multipackage installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Nov 13, 2012;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUPS275
+    Before:       n/a   After:  B9548345  **275**
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : NOV 13, 2012
+Completed By: GRAZIANI,ROBERT               Date Completed: AUG 28, 2013
+Released By : SCHMIT,BECKY                  Date Released : AUG 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

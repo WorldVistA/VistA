@@ -1,0 +1,360 @@
+
+=============================================================================
+Run Date: JUL 23, 2013                     Designation: GMRV*4*17
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 4        SEQ #15                      Status: Released
+                  Compliance Date: AUG 23, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization:  Gen. Med. Rec - Vitals
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is issued as directed in Memorandum: Open Source VistA
+ Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this document for
+ specific details.
+   
+ A review of the VistA Standardization routines was completed for:
+ Gen. Med. Rec - Vitals, version 4.0. A baseline list of the nationally
+ released M routines and their official checksums is included below. VistA
+ Standardization Certification represents the matching of the routine
+ checksums, compared in the site's Production account only.
+   
+ The VistA Standardization Team performed an analysis of each site's Production
+ environment. For any site with routine checksum variance, this team worked with
+ the site to remediate any variance from the baseline. After the completion of
+ this process, sites with no variance were identified as VistA Standardization
+ Certified for the package. There is NO additional action required on the part
+ of these sites. 
+   
+ For sites which had variance (local modification) and determined it was
+ important to maintain for their Production environment, a waiver was requested.
+ If approved, the waiver allows retention of the local modification to a VistA
+ Standardization routine, as detailed in VA Directive 6402.
+   
+ Each site will be placed on one of the lists below:  
+       VistA Standardization Certified Sites
+       Sites with Approved/Pending Waiver
+       Non-Compliant Sites with Pending Remediation
+ The expectation for sites on the Non-Compliant Sites with Pending Remediation
+ list is for their remediation to be completed, by either removing the
+ modification or requesting a waiver. There will NOT be an additional
+ Informational Only patch to move the site to the VistA Standardization
+ Certified Sites list.
+   
+ Please Note:
+       Environment check routines, pre or post installation routines remaining
+ from previously installed patches, compiled routines (e.g. cross-reference), or
+ prior package version routines, will NOT affect your site's standardization
+ compliance. Their existence, or non-existence, at your site, or on the VistA
+ Standardization routines list below, does not impact the VistA Standardization
+ Certification. 
+       VistA Standardization Certification for this package applies to the date
+ specified in the Official Checksum heading below. If additional patches, or a
+ newer version for the package, has been released since this date, the checksums
+ for affected routines will be different. For these routines, refer to the
+ patch/version documentation for the most up-to-date checksums.
+    
+ =========================================================================
+ Note:  Site 556   NORTH CHICAGO, IL is exempt from this project objective
+   
+ Sites with Approved/Pending Waiver:
+ ==================================
+ Waiver #: 159694
+ Routine Included: GMRVED2
+  
+   437    FARGO, ND
+   438    SIOUX FALLS, SD
+   442    CHEYENNE, WY
+   502    ALEXANDRIA, LA
+   503    ALTOONA, PA
+   504    AMARILLO, TX
+   506    ANN ARBOR, MI
+   512    MARYLAND HCS
+   518    BEDFORD, MA
+   519    BIG SPRING, TX
+   523    BOSTON HCS
+   526    BRONX, NY
+   528    UPSTATE NEW YORK HCS
+   529    BUTLER, PA
+   531    BOISE, ID
+   534    CHARLESTON, SC
+   537    CHICAGO HCS
+   540    CLARKSBURG, WV
+   541    CLEVELAND, OH
+   546    MIAMI, FL
+   548    WEST PALM BEACH, FL
+   549    NORTH TEXAS HCS
+   550    ILLIANA HCS
+   552    DAYTON, OH
+   553    DETROIT, MI
+   557    DUBLIN, GA
+   558    DURHAM, NC
+   562    ERIE, PA
+   565    FAYETTEVILLE, NC
+   568    BLACK HILLS HCS
+   570    FRESNO, CA
+   573    NORTH FLORIDA/SOUTH GEORGIA
+   575    GRAND JUNCTION, CO
+   578    HINES, IL
+   580    HOUSTON, TX
+   581    HUNTINGTON, WV
+   585    IRON MOUNTAIN, MI
+   586    JACKSON, MS
+   589    HEARTLAND-WEST HCS
+   590    HAMPTON, VA
+   593    LAS VEGAS, NV
+   595    LEBANON, PA
+   596    LEXINGTON, KY
+   598    LITTLE ROCK, AR (C)
+   600    LONG BEACH, CA
+   605    LOMA LINDA, CA
+   608    MANCHESTER, NH
+   610    NORTHERN INDIANA HCS
+   612    NORTHERN CALIFORNIA HCS
+   613    MARTINSBURG, WV
+   618    MINNEAPOLIS, MN
+   620    HUDSON VALLEY HCS
+   621    MOUNTAIN HOME, TN
+   623    MUSKOGEE, OK
+   626    TENNESSEE VALLEY HCS
+   630    NEW YORK HCS
+   631    NORTHAMPTON, MA
+   632    NORTHPORT, NY
+   635    OKLAHOMA CITY, OK
+   636    CENTRAL PLAINS HCS
+   637    ASHEVILLE, NC
+   644    PHOENIX, AZ
+   646    PITTSBURGH HCS
+   648    PORTLAND, OR (C)
+   649    PRESCOTT, AZ
+   650    PROVIDENCE, RI
+   652    RICHMOND, VA
+   653    ROSEBURG, OR
+   654    RENO, NV
+   656    ST CLOUD, MN
+   657    HEARTLAND-EAST HCS
+   658    SALEM, VA
+   659    SALISBURY, NC
+   662    SAN FRANCISCO, CA
+   663    PUGET SOUND HCS
+   664    SAN DIEGO, CA
+   666    SHERIDAN, WY
+   667    SHREVEPORT, LA
+   668    SPOKANE, WA
+   672    SAN JUAN, PR
+   673    TAMPA, FL
+   674    CENTRAL TEXAS HCS
+   675    ORLANDO, FL
+   678    TUCSON, AZ
+   679    TUSCALOOSA, AL
+   688    WASHINGTON, DC
+   689    CONNECTICUT HCS
+   691    VA GREATER LOS ANGELES HCS
+   692    WHITE CITY, OR (DOM)
+   693    WILKES BARRE, PA
+   695    MILWAUKEE, WI
+   740    TEXAS VALLEY COASTAL BEND HCS
+   
+   
+ Non-Compliant Sites with Pending Remediation:
+ ============================================
+   648    PORTLAND, OR (C)
+   662    SAN FRANCISCO, CA  
+  
+   
+ VistA Standardization Certified Sites:
+ =====================================
+   358    MANILA OC, PI
+   402    TOGUS, ME
+   405    WHITE RIVER JUNCTION, VT
+   436    MONTANA HCS
+   459    HONOLULU, HI
+   460    WILMINGTON, DE
+   463    ANCHORAGE, AK (OPC)
+   501    ALBUQUERQUE, NM
+   508    ATLANTA, GA
+   509    AUGUSTA, GA (C)
+   515    BATTLE CREEK, MI
+   516    BAY PINES, FL
+   517    BECKLEY, WV
+   520    BILOXI, MS (C)
+   521    BIRMINGHAM, AL
+   538    CHILLICOTHE, OH
+   539    CINCINNATI, OH
+   542    COATESVILLE, PA
+   544    COLUMBIA, SC
+   554    EASTERN COLORADO HCS
+   561    NEW JERSEY HCS
+   564    FAYETTEVILLE, AR
+   583    INDIANAPOLIS, IN (C)
+   603    LOUISVILLE, KY
+   607    MADISON, WI
+   614    MEMPHIS, TN
+   619    CENTRAL ALABAMA HCS
+   629    NEW ORLEANS, LA
+   640    PALO ALTO HCS
+   642    PHILADELPHIA, PA
+   655    SAGINAW, MI
+   660    SALT LAKE CITY, UT
+   671    SOUTH TEXAS HCS
+   676    TOMAH, WI
+   687    WALLA WALLA, WA
+   756    EL PASO, TX
+   757    COLUMBUS, OH(OPC)
+  
+   
+ ====================================================================
+   
+ Routine Information:
+ ===================
+ The checksums below are calculated using new checksums, and can be checked with
+ CHECK1^XTSUMBLD.
+   
+ Routine Name   Official Checksum as of 03/22/2013
+ ============   ====================================
+ GMRVADM        1592209
+ GMRVALL0       6557156
+ GMRVALL1       3531832
+ GMRVBMI        312331
+ GMRVBP0        12550476
+ GMRVBP1        12223992
+ GMRVBP2        8826874
+ GMRVBP3        5181031
+ GMRVBP4        8505648
+ GMRVBP5        10165663
+ GMRVCAQU       11759383
+ GMRVCHAR       3311881
+ GMRVDS0        21505774
+ GMRVDS1        14998029
+ GMRVDS2        5343669
+ GMRVED0        25746398
+ GMRVED1        31601118
+ GMRVED2        30554834
+ GMRVED3        40309323
+ GMRVED4        27265623
+ GMRVED5        1936813
+ GMRVED6        10030540
+ GMRVEE0        30629717
+ GMRVEE1        23870964
+ GMRVEE2        26733608
+ GMRVEE3        1295160
+ GMRVER0        7143880
+ GMRVER1        29426521
+ GMRVFIX        29833645
+ GMRVFSYN       6427885
+ GMRVFUT0       5252079
+ GMRVFUT2       3335124
+ GMRVFUT3       7293114
+ GMRVGR0        15526665
+ GMRVGR1        34450574
+ GMRVGR2        14596208
+ GMRVGR3        5333808
+ GMRVGR4        7261812
+ GMRVGR5        4608923
+ GMRVGR6        6973665
+ GMRVGR7        2158230
+ GMRVHB0        7799982
+ GMRVHB1        6768620
+ GMRVHB2        288147
+ GMRVHB3        974749
+ GMRVHB4        7961572
+ GMRVHG0        14700905
+ GMRVHG1        13380359
+ GMRVHG2        1111052
+ GMRVHG3        1592183
+ GMRVHG4        18783049
+ GMRVHPN0       10604903
+ GMRVHPN1       4393857
+ GMRVHPN2       2551912
+ GMRVHPO0       13954180
+ GMRVHPO1       7437833
+ GMRVHPO2       746682
+ GMRVHPO3       8461376
+ GMRVHW0        12683009
+ GMRVHW1        6628775
+ GMRVHW2        1737128
+ GMRVKPN0       9120983
+ GMRVKPN1       8663675
+ GMRVKPN2       4130317
+ GMRVKPO0       14836490
+ GMRVKPO1       7375012
+ GMRVKPO2       9345041
+ GMRVKPO3       8075638
+ GMRVKPO4       8392691
+ GMRVLBP0       12625980
+ GMRVLBP1       3975512
+ GMRVLBP2       6851319
+ GMRVLGQU       5308882
+ GMRVLPO0       15990265
+ GMRVLPO1       4400434
+ GMRVLPO2       8108643
+ GMRVLWT0       6067337
+ GMRVLWT1       12358242
+ GMRVLWT2       2102794
+ GMRVLWT3       6365420
+ GMRVORC0       4602958
+ GMRVORD0       12036593
+ GMRVORDG       8388414
+ GMRVORE0       18628202
+ GMRVORE1       14441705
+ GMRVORE2       13618815
+ GMRVORE3       10625777
+ GMRVOREQ       42536143
+ GMRVPCE0       2505058
+ GMRVPCE1       18749286
+ GMRVPCE2       15636945
+ GMRVPCE3       11637289
+ GMRVQUAL       31825473
+ GMRVSAS0       3926198
+ GMRVSC0        14042810
+ GMRVSC1        14206536
+ GMRVSC2        17609755
+ GMRVSITE       7713748
+ GMRVSR0        34252648
+ GMRVSR1        26289693
+ GMRVSR2        6329687
+ GMRVUT0        14673210
+ GMRVUT1        22116684
+ GMRVUT2        17965647
+ GMRVUT3        14717743
+ GMRVUTL        4909510
+ GMRVUTL1       5432870
+ GMRVVS0        11696989
+ GMRVVS1        25918331
+ GMRVVS2        19479206
+ GMRVVS3        6112740
+ GMRVVS4        6150163
+ GMRVWT0        6012470
+ GMRVWT1        15213496
+ GMRVWT2        7318766
+ GMRVWT3        4761735
+ GMRVWT4        5728140
+ GMRVXCH0       3444028
+ GMRVXCH1       20661772
+ GMRVXCH2       9571221
+ GMRVXCH3       7504353
+ GMRVXCHT       8717494
+ GMRVXVM0       9398421
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ACKERMAN,NIEN-CHIN            Date Entered  : JUL 12, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 12, 2013
+Released By : KREUZ,SHERI B                 Date Released : JUL 23, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

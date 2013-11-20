@@ -1,0 +1,283 @@
+$TXT Created by URRUTIA,PAM at DDC.DOMAIN.EXT  (KIDS) on Friday, 07/29/11 at 12:01
+=============================================================================
+Run Date: JUL 01, 2013                     Designation: RMPF*3*4
+Package : RMPF - REMOTE ORDER/ENTRY SYSTEM    Priority: Mandatory
+Version : 3         SEQ #4                      Status: Released
+                  Compliance Date: AUG 01, 2013
+=============================================================================
+
+
+Subject: ROES3 ELIGIBILITY MODIFICATIONS AND ENHANCEMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch addresses several issues that have come up at the VA Medical 
+ Centers since the first release of the ROES package. All issues addressed 
+ in this patch are related to the ROES application that runs from the CPRS 
+ Tools menu (ROES3.exe). The ROES Desktop application (ROES3Desktop.exe) 
+ is only included for issues 2 and 3 below.
+  
+  Issues addressed in this patch are:
+  
+ 1.  As approved by the PSAS Program Office, all Veteran eligibility 
+ determinations calculated by the software will be automatically 
+ approved.  Veteran eligibility requests will no longer be sent to the 
+ Prosthetic and Sensory Aids Service (PSAS) staff for approval.  Changes 
+ in the background calculations for Veteran eligibility are detailed in 
+ the Release Notes for this patch.
+  
+ 2.  For added security, the web connection has been changed from clear 
+ http to secure http using the https protocol identifier.
+  
+ 3.  Adjustments were made for 64 bit terminal servers to access and use 
+ the ROES web site.
+  
+ 4.  Connections from CPRS to the ROES web server will only be allowed 
+ from a VistA production account to prevent false Veteran information from 
+ becoming a part of the national database.
+  
+ 5.  Menu options, routines, remote procedure calls and security keys from 
+ prior versions of ROES that are no longer needed will be removed.
+         Obsolete Options removed:  RMPFDE2 and RMPFDE4
+         Obsolete Routines removed:  RMPFDE1,RMPFDE2,RMPFDE3 and RMPFDE4
+         Obsolete Keys removed:  RMPF SUPERVISOR and RMPF SYSTEM MANAGER
+         Obsolete Remote Procedures removed: RMPF ELIG MSG and RMPFELIG
+  
+ 6.  Modifications for VistA and Delphi coding standards are included.
+  
+ 7.  Documentation has been updated regarding the removal of the 
+ eligibility interactions before connecting to ROES.
+  
+  
+  Associated Remedy Tickets:
+  ====================================== 
+  N/A
+  
+  
+  E3R references addressed in this patch
+  ======================================
+  N/A
+  
+  Test Sites
+  ========
+  Miami
+  Omaha
+  Columbia (SC)
+  
+  Required Builds
+  =============
+  
+  RMPF*3.0*1
+  
+  
+  This patch contains the following enhancements and problem resolutions:
+  ==========================================================
+  
+  The ROES application requires that the user's browser have JAVA
+  available and enabled in order to function.  Sun has not developed a
+  64-bit version of JAVA, so on 64-bit terminal server installations the
+  browser is not JAVA capable. This may prevent some ROES features from
+  working properly. 64-bit installations also have a 32-bit browser
+  which resides at a location different from the normal 32-bit location.
+  That new location is:
+         C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE.
+  
+  The ROES executables that connect to the internet application have been
+  modified to check for the 32-bit Internet Explorer at that location.
+  This change will not affect any current 32-bit installations because, if 
+  Internet Explorer is not found at that location, ROES will look in the
+  usual installation directories:
+         C:\Program Files\Internet Explorer\IEXPLORE.EXE or
+         C:\Program Files\PLUS!\Microsoft Internet\IEXPLORE.EXE
+  
+  On a 64-Bit installation, if the ROES application still does not work
+  properly after installing the new executable, please ensure the path
+  "C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE" does exist on
+  the workstation.
+  
+  All workstations accessing the ROES application from either CPRS or the
+  desktop need to have the RPCBroker Listener running, as in the previous
+  releases of ROES. Refer to the RPCBroker Installation Guide for further
+  direction, if needed. It can be retrieved from http://www.domain.ext/vdl.
+  
+  The following VistA routines have been modified to address new standards
+  guidelines.
+  
+  1. RMPFRPC0 - Eligibility calculations were modified for new rules and
+     categories and is now called directly from RMPFRPC1 instead of from
+     remote procedure call RMPFELIG.
+  
+  2. RMPFRPC1 - DDC changed to DALC. Added check to see if running from a
+     production account. Comments were added and clarified.
+  
+  
+  SOFTWARE RETRIEVAL:
+  =====================
+  
+ The following software files are exported as part of this patch:
+  
+      File Name             Contents                   Transfer
+  
+      RMPF3_4.KID           VistA modifications        ASCII
+  
+      RMPF3_0P4.ZIP         Updated executables        BINARY
+        Containing the following files:
+        ROES3.exe            CPRS link to ROES web application
+        ROES3DeskTop.exe     Desktop link to ROES web application
+  
+      RMPF3_0P4_DOC.ZIP     Updated documentation      BINARY
+        Containing the following files:
+        RMPF3_0P4IG.PDF      Installation Guide
+        RMPF3_0P4SG.PDF      Security Guide
+        RMPF3_0P4TM.PDF      Technical Manual
+        RMPF3_0P4UM.PDF      User Manual
+        RMPF3_0P4RN.PDF      Release Notes
+  
+  The KIDS build is distributed with this patch, files can be downloaded 
+  from the national download directory at
+  
+      download.vista.domain.ext
+  
+  This site transmits the files from the first available FTP server.  
+  Sites may also elect to retrieve software directly from a specific server
+  as follows:
+  
+  OI FIELD OFFICE         FTP ADDRESS                     DIRECTORY
+  
+  Albany                ftp.fo-albany.domain.ext     anonymous.software
+  Hines                 ftp.fo-hines.domain.ext      anonymous.software
+  Salt Lake City        ftp.fo-slc.domain.ext        anonymous.software
+  
+  
+  INSTALLATION INSTRUCTIONS:
+  =========================
+  
+  
+  Make a backup copy of the current ROES3.exe and ROES3Desktop.exe
+  files (from a location where they currently are being used) to a
+  backup location. Note the locations where all instances of those
+  executables exist, for future maintenance.
+  
+  All obsolete options, routines and remote procedure calls from
+  previous ROES versions will be removed during the installation. The list
+  items being removed is listed in the ROUTINE SUMMARY SECTION of the
+  build.
+  
+  Only ROES users need be off the system while ROES*3.0*4 is being
+  installed. This patch should be installed during non-peak hours to
+  minimize disruption. The total installation may take 15 minutes or more,
+  depending on the CPRS Tools menu structure and number of ROES and
+  ROES Desktop executables to update at your site. Be sure that the KIDS
+  install (steps 1-9) are completed before updating the executables (steps
+  10-11). The KIDS install will run in under 5 minutes.
+   
+  Review your mapped set.  If the routines listed in the ROUTINE SUMMARY
+  section of the build are mapped, they should be removed from the mapped
+  set at this time.
+  
+   1.  Choose the INSTALL/CHECK MESSAGE option on the PackMan menu. 
+       Answer YES to the prompt 'Want to Continue with Load? YES//'.  This
+       will load the KIDS package onto your system.
+  
+   2.  From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+  
+   3.  From this menu, you may elect to use the following options (when
+       prompted for INSTALL NAME, enter RMPF*3.0*4):
+       a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will not
+           backup any changes to DD's.
+       b. Compare Transport Global to Current System - this option will
+           allow you to view all changes to routines that will be made 
+           when the patch is installed.
+       c. Verify Checksums in Transport Global - this option will allow you
+           to ensure the integrity of the routines that are in the 
+           Transport Global.
+  
+   4.  Then choose the Install Package(s) option and select RMPF*3.0*4.
+  
+   5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO (unless otherwise indicated)
+  
+   6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//', respond "YES". When prompted to select the
+       options you would like to place out of order, enter the following:
+            
+              ROES3 OPTION ACCESS                  [RMPF ROES3]
+  
+   7.  If prompted 'Enter protocols you wish to mark as 'Out of Order': 
+       press <return>.
+  
+   8.  When prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0.'
+  
+   9.  If you unmapped routines at the start, those SENT TO SITE
+       should be returned to the mapped set once this part of the
+       installation is complete.
+  
+  10.  Retrieve the file RMPF3_0P4.ZIP and extract files ROES3.exe and
+       ROES3DeskTop.exe.
+  
+  11.  All existing instances of ROES3.exe and ROES3DeskTop.exe need to
+       be replaced, regardless of whether they reside on server(s) or
+       individual workstation(s).
+  
+       To do this, copy the new executable files to those locations,
+       replacing the existing version. Take care NOT to inadvertently
+       replace the ROES3.exe file with the ROES3DeskTop.exe file
+       or vice versa. When this is completed properly, the command line
+       option from CPRS Tools and the desktop links to ROES should continue
+       to work without any modifications.
+  
+  If additional guidance is needed for the GUI installation, please refer
+  to the ROES 3 Installation Guide on the System Design and Development 
+  web page at:  http://www.domain.ext/vdl. Within the Clinical section look for
+  'Remote Order Entry System (ROES)'.  Under that option you will find the
+  Installation Guide, Security Guide, Technical Manual and User Manual.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;REMOTE ORDER ENTRY SYSTEM;**[Patch List]**;Feb 9, 2011;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPFDE1
+    Before:  B9126547   After:    Delete  
+Routine Name: RMPFDE2
+    Before: B16506181   After:    Delete  
+Routine Name: RMPFDE3
+    Before: B20728190   After:    Delete  
+Routine Name: RMPFDE4
+    Before:  B3265627   After:    Delete  
+Routine Name: RMPFRPC0
+    Before: B44994754   After: B45495358  **1,4**
+ Description of Changes:
+  Eligibility calculations were modified for new rules and categories.
+
+Routine Name: RMPFRPC1
+    Before: B14682514   After: B22103813  **1,4**
+ Description of Changes:
+  DDC changed to DALC. Added check to see if running from a production 
+  account.  Comments were added and clarified.
+
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  : URRUTIA,PAM J                 Date Entered  : OCT 10, 2008
+Completed By: RICHARDSON,JAMES L            Date Completed: JUN 11, 2013
+Released By : MORRIS,DELISA                 Date Released : JUL 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

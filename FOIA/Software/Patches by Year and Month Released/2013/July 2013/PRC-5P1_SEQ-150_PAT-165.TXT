@@ -1,0 +1,250 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 03/02/12 at 12:58
+=============================================================================
+Run Date: JUL 02, 2013                     Designation: PRC*5.1*165
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #150                    Status: Released
+                  Compliance Date: AUG 02, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*81  <<= must be installed BEFORE `PRC*5.1*165'
+                    (v)PRC*5.1*125 <<= must be installed BEFORE `PRC*5.1*165'
+
+Subject: AMENDMENT ACCESS ISSUE;AUTO-GEN ORDERING ISSUE;APPROVE REQUESTS SUBSCRIPT ERROR
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Items falling below emergency stock level are not showing on Auto-Gen
+    suggested orders.
+  
+ 2. Amendment problem where user is not authorized to amend order.
+  
+ 3. User encountered subscript error while running option 'APPROVE 
+    REQUESTS'.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ Remedy:
+ =======
+ 1. HD0000000532370 Items falling below emergency stock level are not 
+                    showing up on Auto-Gen orders
+  
+ 2. HD0000000519557 Amendment problem - not authorized to amend
+  
+ 3. HD0000000592857 User encountered subscript error while running option 
+                    APPROVE REQUESTS'.
+  
+  
+ Test Sites:
+ ===========
+ VA Heartland West HCS
+ St Cloud VA Medical Center
+ Salisbury - W.G. (Bill) Hefner VA Medical Center 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000532370 Items falling below emergency stock level are not 
+                    showing up on Auto-Gen orders 
+  
+    Problem:
+    --------
+    During the auto generation of repetitive orders, those items compiled
+    that have no vendor contract number associated will not be pulled into
+    the subsequent Delivery Order created for Vendor/items.
+                                                          
+  
+    Resolution:
+    -----------
+    Modify routine used in then Create Delivery Order From Repetitive Item
+    List option [PRCH CREATE DEL ORDER] to list the items that will not be
+    pulled into the Vendor Delivery Order due to a missing Vendor contract 
+    number. The user creating the order will be queried to proceed with the
+    order if there are additional items as part of order.
+  
+    For example:
+  
+ Select REPETITIVE ITEM LIST ENTRY NUMBER: 656-12-1-042-828100-0004  
+ # OF ITEMS: 2                                        TOTAL COST:    666.02
+ This repetitive item list has the following vendors:
+  
+ KREISERS, INC.                          NUMBER: 9696
+  
+  
+ Excluded item(s) with no vendor contract#: 
+  
+     22980   SET,IV ADMIN,PUMP,MEDLEY,NEEDL    QTY= 2       COST:     1.00
+  
+ Do you wish to continue with this order excluding the above item(s)? No// 
+  
+  
+ Routines: PRCH442
+  
+  
+ 2. HD0000000519557 Amendment problem - not authorized to amend
+  
+    Problem:
+    --------
+    A user that created an order left the VA so the site staff made another
+    user a surrogate on the original user's purchase card.  However 
+    they selected a user with a similar name as the original user.  This 
+    prevented the intended user from amending the order as they were not 
+    listed as a purchase card surrogate, but did have access to the Fund 
+    Control Point associated with the purchase card. 
+  
+    Resolution:
+    -----------
+    Modify routine used by option Purchase Card Registration [PRCH CARD
+    REGISTRATION] to insure that a surrogate added to a Purchase Card has
+    access to the Fund Control Point associated with the Purchase Card.
+  
+  
+ Routines: PRCHUSER
+  
+ DD Modification for file 440.5 [PURCHASE CARD INFORMATION], subfile 
+ #440.512 [SURROGATE USER]:
+  
+ 440.512,.01   SURROGATE USER         0;1 POINTER TO NEW PERSON FILE (#200)
+                                  (Multiply asked)
+  
+               INPUT TRANSFORM:  S DIC("S")="I 
+ $D(^PRC(420,PRC(""SITE""),1,+$P(^PRC(44
+                                 0.5,DA(1),0),U,2),1,+Y))" D ^DIC K DIC S 
+ DIC=DI
+                                 E,X=+Y K:Y<0 X S:+$G(X) DINUM=X
+               LAST EDITED:      DEC 06, 2011 
+               HELP-PROMPT:      Please enter an alternate purchase card 
+ user 
+               DESCRIPTION:      A user who has the ability to act as a
+                                 surrogate for the card holder.  
+  
+               TECHNICAL DESCR:  The surrogate MUST have access to the FCP
+                                 linked to the Purchase Card.  
+  
+               SCREEN:           S DIC("S")="I 
+ $D(^PRC(420,FCPSITE,1,+$P(^PRC(44
+                                 0.5,DA(1),0),U,2),1,+Y))"
+               EXPLANATION:      Cannot be surrogate if no access to PCard 
+ FCP
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY 
+ PROGRAMMER
+  
+               CROSS-REFERENCE:  440.512^B 
+                                 1)= S 
+ ^PRC(440.5,DA(1),1,"B",$E(X,1,30),DA)=""
+                                 2)= K 
+ ^PRC(440.5,DA(1),1,"B",$E(X,1,30),DA)
+  
+               CROSS-REFERENCE:  440.5^C 
+                                 1)= S 
+ ^PRC(440.5,"C",$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^PRC(440.5,"C",$E(X,1,30),DA(1),DA)
+  
+  
+  
+ 3. HD0000000592857 User encountered subscript error while running option 
+                    APPROVE REQUESTS'.
+  
+    Problem:
+    --------
+    The user received a subscript error while running option 'APPROVE
+    REQUESTS' when not choosing a valid site from multiple site list. 
+  
+  
+    Resolution:
+    -----------
+    Modify routine to insure a user that is linked to multiple sites 
+    within FUND CONTROL POINT File (#420) selects one of the sites
+    displayed.  If user simply hits return they will get the following 
+    error message:
+  
+    Select STATION NUMBER: 
+    Please select site
+  
+  
+ Routines: PRCSAPP
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*165)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*165.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit enter.  When prompted to select the options
+       you would like to place out of order, enter the following:
+  
+       PRCH CREATE DEL ORDER     Create Delivery Order From Repetitive 
+                                 Item List
+       PRCH CARD REGISTRATION    Purchase Card Registration
+       APPROVE REQUESTS          Approve Requests
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH442
+    Before: B40109640   After: B51303635  **13,81,165**
+Routine Name: PRCHUSER
+    Before: B15927920   After: B18801135  **8,125,165**
+Routine Name: PRCSAPP
+    Before: B13811690   After: B14893513  **165**
+ 
+Routine list of preceding patches: 81, 125
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : DEC 08, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: JUN 26, 2013
+Released By : CURZI,KATHLEEN G              Date Released : JUL 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

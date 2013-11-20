@@ -1,0 +1,414 @@
+
+=============================================================================
+Run Date: AUG 28, 2013                     Designation: GMTS*2.7*103
+Package : GMTS - HEALTH SUMMARY               Priority: EMERGENCY
+Version : 2.7        SEQ #99                    Status: Released
+                  Compliance Date: AUG 29, 2013
+=============================================================================
+
+
+Subject: HIGH RISK MH PT PROJECT NEW HEALTH SUMMARY COMPONENT & TYPES-USH LEGAL SOLUTION
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Other
+  - Informational
+
+Description:
+============
+
+ This patch is part of a multi-package build that addresses the Under 
+ Secretary of Health (USH) legal solution. The legal solution impacts the 
+ High Risk Mental Health Patient - National Reminder and Flag (HRMHP) 
+ project. A new national category 1 patient record flag (PRF) will provide 
+ a tool to inform all Veteran Administration (VA) caregivers of special 
+ guidelines that must be followed when documenting notes or dealing with 
+ the patient. This flag will require special permissions in order to be 
+ assigned to a patient and once assigned it cannot be modified or 
+ inactivated other than allowing the reassignment of the owning facility. 
+ Detailed information about this new PRF can be found in the DG*5.3*864 
+ patch description and the other documents outlined in the documentation 
+ section below.
+  
+ This GMTS patch will install one new Health Summary Component and two new 
+ Health Summary Types.  The Health Summary Types use the Health Summary 
+ Component to display all Active and Inactive national (Category 1) PRFs 
+ that are assigned to a given patient.  Details of each new item are in 
+ the 'Patch Components' section of this patch description.
+  
+  
+ Patch Components
+ ================
+ HEALTH SUMMARY COMPONENT (#142.1)
+  
+ NUMBER: 257                           NAME: CAT I PT RECORD FLAG STATUS
+ PRINT ROUTINE: EN;GMTSRFHX            ABBREVIATION: PRF1
+ DESCRIPTION:   This component displays the Active and Inactive Category 1
+ Patient Record Flags assigned to a given patient.  The full assignment 
+ history is included with each instance of flag assignment.  Active flag
+ assignments are displayed first, followed by Inactive flag assignments.
+  
+  
+ HEALTH SUMMARY TYPE (#142)
+  
+ VA-PRF CAT 1 STATUS
+ NAME: VA-PT RECORD FLAG STATUS
+ LOCK: GMTSMGR
+ SUMMARY ORDER: 5
+   COMPONENT NAME: CAT I PT RECORD FLAG STATUS
+ NATIONALLY EXPORTED TYPE: Nationally Exported, Uneditable
+  
+ REMOTE PRF CAT 1 STATUS
+ NUMBER: 5000021                         NAME: REMOTE PT RECORD FLAG STATUS
+ LOCK: GMTSMGR
+ SUMMARY ORDER: 5
+   COMPONENT NAME: CAT I PT RECORD FLAG STATUS
+ TITLE: Remote Pt Record Flag Status
+ NATIONALLY EXPORTED TYPE: Nationally Exported, Uneditable
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+   Biloxi VAMC
+   Loma Linda VAMC
+   Puget Sound HCS
+   Portland VAMC 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The software for this set of patches is not being distributed through the
+ National Patch Module.
+  
+ There is a multi-package build named USH PRF LEGAL SOLUTION 1.0 
+ which contains the following KIDS builds: TIU*1.0*275, DG*5.3*864, and
+ GMTS*2.7*103. The associated host file is named
+ USH_PRF_LEGAL_SOLUTION_1_0.KID.
+  
+ Documentation is contained in the USH_PRF_LEGAL_SOLUTION_1_0.zip file
+ which contains the following documents:
+   
+   Health Summary User Manual
+                                                HSUM2_7_103_UM.PDF
+   Health Summary Technical Manual
+                                                HSUM2_7_103_TM.PDF
+   Patient Record Flag User Guide         
+                                                PatRecFlagUG.PDF
+   TIU User Manual
+                                                TIUUM-275.PDF
+   USH Patient Record Flag Legal Solution Installation Guide
+                                                DG_5_3_864.IG.PDF
+   USH Patient Record Flag Legal Solution Release Notes
+                                                DG_5_3_864.RN.PDF
+  
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany      ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines       ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext  <ftp://ftp.fo-slc.domain.ext>
+  
+ Title                         File Name                          FTP Mode
+ -----------------------------------------------------------------------
+ USH PRF LEGAL SOLUTION 1.0    USH_PRF_LEGAL_SOLUTION_1_0.KID  ASCII
+  
+ USH PRF LEGAL SOLUTION 1.0 Documentation
+                               USH_PRF_LEGAL_SOLUTION_1_0.zip     Binary
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www.domain.ext/vdl/      
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ GMTS*2.7*103 will run an environment check routine to ensure that IEN 257 
+ in ^GMT(142.1 is unused and will also check for any NAME (.01) or 
+ ABBREVIATION (3) conflicts with the new component.  If any conflicts are 
+ found, the environment check will indicate the conflict, the install will 
+ abort, and the transport global will be unloaded from the system.
+  
+ The pre-install routine will remove any previous version of the Reminder 
+ Exchange file that is used to install the two new Health Summary Types.  
+ In the event of multiple installations, this step ensures that the 
+ Reminder Exchange file used during installation is from the build instead 
+ of the version stored in the REMINDER EXCHANGE file (#811.9).
+  
+ The post-install routine, GMTSY103, will install the Health Summary 
+ the HEALTH SUMMARY COMPONENT file (#142.1).  This routine will also 
+ initiate the Reminder Exchange installation for the Health Summary Types.
+ This routine may be deleted from the system if storage space is a 
+ concern.  Local IT staff should consider keeping a copy of GMTSY103 as it 
+ may prove useful in the event of any unexpected issues with this patch.
+  
+  
+ Pre-installation Instructions
+ -----------------------------
+ Prior to installing the patch, examine the HEALTH SUMMARY COMPONENT file 
+ (#142.1) for any NUMBER (.001), NAME (.01), or ABBREVIATION (3) entries 
+ that will conflict with the new component exported with this patch.  The 
+ national component NUMBER, NAME, and ABBREVIATION are as follows:
+  
+ NUMBER (IEN)            NAME                            ABBREVIATION
+ 257                     CAT I PT RECORD FLAG STATUS     PRF1
+  
+ Internal Entry Numbers below 100001 are reserved for National health 
+ summary components.  It is extremely unlikely your site will have a 
+ component stored at IEN 257 as doing so would require programmer access 
+ and manual editing of the ^GMR(142.1 global.  To check the global on your 
+ system, look at ^GMT(142.1,257.  That location should be empty.  If not, 
+ your site will need to submit a Remedy ticket for Health Summary support 
+ to assist in cleaning up that global entry.  Before submitting the 
+ ticket, if the component is actually in use at your site and should be 
+ kept, it can be recreated at a local IEN and with a slightly different 
+ name.  Use the "Create/Modify Health Summary Components" option of the 
+ GMTS IRM MAINTENANCE MENU to recreate the component.  After recreating 
+ the component, submit the Remedy ticket requesting Health Summary support 
+ with: locating any items pointing to IEN 257, have those items re-pointed 
+ to the new local component location, and cleaning up the unwanted entry 
+ at IEN 257.
+  
+ The "B" cross-reference for the HEALTH SUMMARY COMPONENT file (#142.1), 
+ [^GMR(142.1,"B",], contains the NAME for each component.  Each component 
+ entry in the file must have a unique NAME.  Examine the global listing 
+ for this cross-reference to determine if any local component will need 
+ the NAME field edited to avoid collision with the new national component.
+  
+ ^GMT(142.1,"B","CAT I PT RECORD FLAG STATUS",660187)="" <-Example of a 
+ local component that will conflict with the incoming CAT I PT RECORD FLAG 
+ STATUS component NAME. 
+  
+ The "C" cross-reference for the HEALTH SUMMARY COMPONENT file (#142.1), 
+ [^GMR(142.1,"C",], contains the ABBREVIATION for each component.  Each 
+ component entry in the file must have a unique ABBREVIATION.  Examine the 
+ global listing for this cross-reference to determine if any local 
+ components will need the ABBREVATION field edited to avoid collision with 
+ the new national component.
+  
+ ^GMT(142.1,"C","PRF1",660187="" <-Example of a local component that will 
+ conflict with the incoming CAT I PT RECORD FLAG STATUS component 
+ ABBREVIATION. 
+  
+ If a NAME or ABBREVIATION conflict is found, the "Create/Modify Health 
+ Summary Components" option of the GMTS IRM MAINTENANCE MENU should be 
+ used to edit the local component's NAME or ABBREVIATION.
+  
+  
+ Installation Instructions
+ -------------------------
+ This GMTS patch does not require any menu options to be disabled.  The 
+ following install steps are only a high level overview.  Please follow the
+ USH Patient Record Flag Legal Solution Installation Guide for more
+ detailed instructions and guidance.
+  
+ 1.  Download the USH_PRF_LEGAL_SOLUTION_1_0.KID file from the appropriate
+     FTP Server to a directory on your system.
+  
+ 2.  Use the LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR:]USH_PRF_LEGAL_SOLUTION_1_0.KID, where [DIR:] is the
+     local directory where you have stored the host file.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch:
+     USH PRF LEGAL SOLUTION 1.0
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option
+     and choose the patch to install:
+     USH PRF LEGAL SOLUTION 1.0 
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   Answer 'NO'
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  Answer 'NO'
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The two new Health Summary Types, VA-PT RECORD FLAG STATUS and REMOTE PT 
+ RECORD FLAG STATUS must be added to the list of available reports 
+ viewable in CPRS GUI. This can be done in different ways and from 
+ several different menus.  Depending on local configuration, all health 
+ summary types may be available for selection or the selection may be 
+ configured to a defined list.  See "Health Summary Configuration" in the 
+ Reports section of the CPRS Technical Manual: GUI Version for further 
+ information.  Always follow your site's local policies on how to assign 
+ these items to the list of available reports.  Any users with a CPRS 
+ session open during the time of installation will need to close and 
+ re-open CPRS in order to see the new Health Summary Types on the Reports 
+ tab.
+  
+ This example uses the Health Summary Coordinator's menu 
+ [GMTS COORDINATOR] to add the items for use at the System level.
+  
+ GMTS COORDINATOR       Health Summary Coordinator's Menu     menu
+  
+  
+    1      Print Health Summary Menu ...
+    2      Build Health Summary Type Menu ...
+    3      Set-up Batch Print Locations
+    4      List Batch Health Summary Locations
+    5      CPRS Reports Tab 'Health Summary Types List' Menu ...
+  
+  
+ Select Health Summary Coordinator's Menu <TEST ACCOUNT> Option: 5  CPRS 
+ Reports Tab 'Health Summary Types List' Menu
+  
+  
+    1      Display 'Health Summary Types List' Defaults
+    2      Precedence of 'Health Summary Types List'
+    3      Method of compiling 'Health Summary Types List'
+    4      Edit 'Health Summary Types List' Parameters
+  
+  
+ Select CPRS Reports Tab 'Health Summary Types List' Menu <TEST ACCOUNT> 
+ Option:4  Edit 'Health Summary Types List' Parameters
+  
+  
+ Allowable Health Summary Types may be set for the following:
+  
+      2   User          USR    [choose from NEW PERSON]
+      3   Division      DIV    [choose from INSTITUTION]
+      4   System        SYS    [DVF.FO-SLC.DOMAIN.EXT]
+      5   Service       SRV    [choose from SERVICE/SECTION]
+  
+ Enter selection: 4  System   DVF.FO-SLC.DOMAIN.EXT
+  
+ - Setting Allowable Health Summary Types  for System: 
+ DVF.FO-SLC.DOMAIN.EXT -
+ Select Sequence: ?
+  
+  
+ Sequence  Value
+ --------  -----
+ 1         GMTS HS ADHOC OPTION
+ 2         GEC/LOCAL TEST
+ 7         VA-MH HIGH RISK PATIENT
+ 20        REMOTE MH HIGH RISK PATIENT
+  
+  
+ Select Sequence: 15
+ Are you adding 15 as a new Sequence? Yes//   YES
+  
+ Sequence: 15//    15
+ Health Summary: VA-PT RECORD FLAG STATUS  
+ Select Sequence: 25
+ Are you adding 25 as a new Sequence? Yes//   YES
+  
+ Sequence: 25//    25
+ Health Summary: REMOTE PT RECORD FLAG STATUS
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSRFHX
+    Before:       n/a   After: B19895758  **103**
+Routine Name: GMTSY103
+    Before:       n/a   After: B35203734  **103**
+
+=============================================================================
+User Information:
+Entered By  : MALMROSE,CARY                 Date Entered  : NOV 29, 2011
+Completed By: GRAZIANI,ROBERT               Date Completed: AUG 28, 2013
+Released By : SCHMIT,BECKY                  Date Released : AUG 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

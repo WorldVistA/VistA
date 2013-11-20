@@ -1,0 +1,140 @@
+$TXT Created by ENELOW,Jason at CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 10/05/12 at 11:08
+=============================================================================
+Run Date: JUL 08, 2013                     Designation: PSJ*5*286
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #248                      Status: Released
+                  Compliance Date: AUG 07, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*181   <<= must be installed BEFORE `PSJ*5*286'
+
+Subject: ORDER CHECK ON INCORRECT DRUG
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications 
+ package:
+  
+ 1. Order Check performed on old orderable item
+  
+ 2. Auto-discontinued Unit Dose orders for outpatients can be copied in
+    Inpatient Order Entry [PSJ OE].
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. INC0000000748582 - Order Checks Issues with Copy and Edit Function
+  
+ 2. INC0000000740720 - Inpatient Medications - Other:
+  
+  
+ Participating Test Sites:
+ ========================
+ Fresno VAMC
+ Oklahoma City VAMC
+ Upstate NY HCS
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. INC0000000748582
+  
+    Patient Safety Issue:
+    --------------------
+    PSPO #2317
+  
+    Problem:
+    -------
+    If an active Unit Dose order is copied, and then the Orderable Item is
+    edited before the copy is accepted, the enhanced order checks are 
+    executed based on drugs for the old Orderable Item instead of the new
+    one.
+  
+    Resolution:
+    ----------
+    Changed PSGOD so that the order checks now look at the correct drug 
+    information.
+  
+ 2. INC0000000740720
+  
+    Problem:
+    -------
+    When editing orders for an outpatient in Inpatient Order Entry [PSJ
+    OE], an auto-discontinued Unit Dose order can be selected and copied to
+    create a new Unit Dose order.
+  
+    Resolution:
+    ----------
+    Changed PSGOD so that users are not allowed to copy Unit Dose orders
+    for outpatients.
+  
+  
+ ======================= INSTALLATION INSTRUCTIONS ========================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+ 1. Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.  
+   
+ 3. From this menu, you may select to use the following options: 
+    (when prompted for INSTALL NAME, enter PSJ*5*286)
+   
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+   
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*286.
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.  
+   
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOD
+    Before: B21325344   After: B22325461  **67,58,111,133,181,286**
+ 
+Routine list of preceding patches: 181
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : SEP 27, 2012
+Completed By: WERNER,GARY                   Date Completed: JUN 28, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUL 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,182 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 12/06/12 at 14:35
+=============================================================================
+Run Date: AUG 13, 2013                     Designation: IB*2*490
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #456                      Status: Released
+                  Compliance Date: SEP 13, 2013
+=============================================================================
+
+
+Subject: 2013 OCCURRENCE/CONDITION/VALUE/REVENUE/POS CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the MCCR Utility (#399.1) file, the Revenue
+ Code (#399.2) file, and the Place of Service (#353.1) file for FY2013.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ HD0000000758452 FY2013 Occurrence/Value/Condition/Revenue/POS code updates
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Central Texas HCS
+ Tampa, FL
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000758452 FY2013 Occurrence/Value/Condition/Revenue/POS code updates
+  
+ Problem:
+ --------
+ The Chief Business Office has requested the following updates to the
+ MCCR Utility (#399.1) file, the Revenue Code (#399.2) file, and the 
+ Place of Service (#353.1) file.
+  
+ Resolution:
+ -----------
+ Created post-init routine IB20P490 to update codes in the following three
+ files:
+  
+ The MCCR Utility (#399.1) file will update 1 Occurrence Code, 3 Occurrence
+ Span Codes, 3 Condition Codes, and 2 Value Codes.
+  
+ Occurrence Code:
+ 55  DATE OF DEATH (name updated)
+  
+ Occurrence Span Codes:
+ 81  ANTEPARTUM DAYS AT REDUCED LEVEL OF CARE (name updated)
+ M3  ICF LEVEL OF CARE (name updated)
+ M4  RESIDENTIAL LEVEL OF CARE (name updated)
+  
+ Condition Codes:
+ 52  OUT OF HOSPICE SERVICE AREA (new)
+ RAO  TRICARE EXTERNAL PARTNERSHIP PROGRAM (code updated)
+ EO  CHANGE IN PATIENT STATUS (removed)
+  
+ Value Codes:
+ 84  LIFE TIME RESERVE AMOUNT IN THE THIRD GREATER CALENDAR YEAR (new)
+ 85  COINSURANCE AMOUNT IN THE THIRD OR GREATER CALENDAR YEAR (new)
+  
+ Note***
+ Using option [IB EDIT BILLING INFO] users may type ?? to select from the 
+ full list of Value Codes referenced by Internal Number (IEN) or simply 
+ type the description name of the new Value Code.
+  
+  
+ The Revenue Code (#399.2) file will have code 909 reserved for future
+ use and activate the following 134 codes (if inactive): 164, 167, 169,
+ 170, 171, 172, 179, 182, 203, 204, 206, 207, 208, 209, 210, 211, 212, 213,
+ 214, 219, 220, 221, 222, 223, 224, 229, 230, 231, 232, 233, 234, 235, 239,
+ 303, 304, 332, 367, 371, 372, 385, 386, 387, 399, 412, 442, 443, 459, 509,
+ 511, 514, 515, 517, 520, 523, 529, 539, 543, 546, 562, 569, 572, 579, 582,
+ 590, 622, 631, 632, 633, 635, 637, 641, 642, 643, 644, 645, 646, 647, 648,
+ 650, 652, 655, 656, 657, 659, 662, 720, 721, 722, 723, 724, 729, 800, 801,
+ 802, 803, 804, 809, 810, 811, 812, 813, 814, 819, 824, 834, 844, 845, 851,
+ 854, 855, 889, 902, 913, 917, 932, 946, 962, 964, 977, 981, 982, 984, 985,
+ 989, 990, 991, 992,  993, 994, 995, 996, 997, 998, 999. 
+  
+ This file will also be updated with the following changes:
+ 139  OTHER/SEMI-PRIVATE (name updated)
+ 986  PRO FEE/EEMG (name updated)
+  
+  
+ The Place of Service (#353.1) file will add 1 new code:
+ 18  PLACE OF EMPLOYMENT/WORKSITE (new)
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*490):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P490.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P490
+    Before:       n/a   After: B30261509  **490**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : NOV 07, 2012
+Completed By: LANG,MICKEY                   Date Completed: AUG 06, 2013
+Released By : HALL,LISA A                   Date Released : AUG 13, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

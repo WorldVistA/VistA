@@ -1,0 +1,122 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 08/07/13 at 08:16
+=============================================================================
+Run Date: AUG 28, 2013                     Designation: MPIF*1*58
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: EMERGENCY
+Version : 1        SEQ #54                      Status: Released
+                  Compliance Date: AUG 29, 2013
+=============================================================================
+
+Associated patches: (v)MPIF*1*52   <<= must be installed BEFORE `MPIF*1*58'
+                    (v)DG*5.3*864  <<= must be installed BEFORE `MPIF*1*58'
+
+Subject: PATIENT RECORD FLAG SUPPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  MPIF*1.0*52 and DG*5.3*864 are required builds for patch MPIF*1*58.
+   
+  Issue #1
+  A code change has been made in routine MPIFBT3 to support the Patient
+  Record Flag initiative distributed in VistA patch DG*5.3*864.
+    
+  For some time the Register a Patient [DG REGISTER PATIENT] and Load/Edit
+  Patient Data [DG LOAD PATIENT DATA] options have included the query for
+  the Patient Record Flag.  However, when a patient is created outside of
+  these options, the query for the Patient Record Flag was not occurring.
+  Also, if a patient does not get an Integration Control Number (ICN) via
+  the direct connect to the Master Veteran Index during registration, that
+  record gets a local ICN.  The local ICN is resolved to a national ICN
+  through the Local/Missing ICN Resolution Background Job [MPIF LOC/MIS
+  ICN RES] option.
+    
+  The Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  now includes the query for the Patient Record Flag.
+           
+  Associated Remedy Ticket(s):
+  ============================
+  INC000000801785
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  Biloxi VAMC
+  Portland VAMC 
+  Puget Sound HCS
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+      
+  1.  Users are allowed on the system during patch installation.
+     
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package MPIF*1.0*58.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTION should be
+      disabled during the installation.
+        Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFBT3
+    Before: B15393291   After: B16478020  **1,3,10,17,21,24,28,31,33,35,
+                                           43,52,58**
+ 
+Routine list of preceding patches: 52
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAY 22, 2013
+Completed By: CHESNEY,CHRISTINE M           Date Completed: AUG 28, 2013
+Released By : ALEXANDER,DIANNE              Date Released : AUG 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

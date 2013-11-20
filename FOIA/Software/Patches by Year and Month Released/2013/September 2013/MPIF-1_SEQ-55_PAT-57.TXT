@@ -1,0 +1,173 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Friday, 05/10/13 at 11:14
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: MPIF*1*57
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #55                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)MPIF*1*20   <<= must be installed BEFORE `MPIF*1*57'
+                    (v)MPIF*1*55   <<= must be installed BEFORE `MPIF*1*57'
+                    (v)DG*5.3*863  <<= must be installed BEFORE `MPIF*1*57'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 10
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  DG*5.3*863, MPIF*1.0*20, and MPIF*1.0*55 are required builds for
+  patch MPIF*1*57.
+   
+  NOTE: Patches DG*5.3*863, RG*1*60, and MPIF*1*57 are being released
+  together.  It is recommended that all three patches be installed on
+  the same date if possible.  Each patch contains functionality related
+  to the display of the full INTEGRATION CONTROL NUMBER (ICN).  All
+  three patches must be in place nationally for the full ICN to display
+  in all of the stated options.
+    
+  Issue #1
+  Changes have been made to address Remedy ticket HD0000000707771.  Code
+  that used EN1^XWB2HL7 to invoke a Remote Procedure Call (RPC) to the
+  Master Veteran Index (MVI) or another remote system used RTNDATA^XWBDRPC
+  instead of RPCCHK^XWB2HL7 to check the status of the call.  The result
+  is that even though the check is performed in a loop multiple times,
+  if results do not come back by the first check, subsequent checks would
+  never succeed, and the RPC call would appear to fail.  The code was
+  modified and refactored to use RPCCHK^XWB2HL7 instead of RTNDATA^XWBDRPC
+  to check the status of the RPC call.
+   
+  Issue #2
+  The Display Only Query [Display Only Query [MPIF DISPLAY ONLY QUERY
+  TO MPI] option on the Message Exception Menu [RG EXCEPTION MENU] will
+  now display the full INTEGRATION CONTROL NUMBER (ICN).  The full ICN
+  includes the PATIENT (#2) file INTEGRATION CONTROL NUMBER
+  (991.01) field, followed by a "V", followed by the ICN CHECKSUM
+  (991.02) field, and is retrieved by calling the GETICN^MPIF001 API.
+           
+  Documentation Update:
+  =====================
+  The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+  VISTA documentation is available, updated for patches DG*5.3*863,
+  MPIF*1.0*57, and RG*1.0*60.  Facilities should download the revised
+  documentation listed as follows:
+  
+      User Manual                         RG1_0_UM.PDF
+      Technical Manual                    RG1_0_TM.PDF
+      Exception Handling                  RG1_0_EH.PDF
+   
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.DOMAIN.EXT
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+  
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.domain.ext     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.domain.ext      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.domain.ext        ANONYMOUS.SOFTWARE
+  
+  Note:  These files must be transferred in binary or IMAGE,
+         not ASCII, mode.
+   
+  The documents can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+      http://www.domain.ext/vdl/application.asp?appid=16
+   
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000707771 - MPIF DISPLAY ONLY QUERY TO MPI
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  New Mexico VA HCS
+  VA Maine HCS
+  VA North Texas HCS
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+      
+  1.  Users are allowed on the system during patch installation.
+     
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package MPIF*1.0*57.
+   
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+     
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX AUSTIN;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFDNL
+    Before: B32783071   After: B34577284  **52,55,57**
+Routine Name: MPIFEXT
+    Before: B46733837   After: B45536997  **20,57**
+Routine Name: MPIFSA2
+    Before: B81928168   After: B83766711  **28,29,35,38,43,52,55,57**
+ 
+Routine list of preceding patches: 20, 55
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : OCT 16, 2012
+Completed By: CHESNEY,CHRISTINE M           Date Completed: AUG 19, 2013
+Released By : BARKER,MARK D                 Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

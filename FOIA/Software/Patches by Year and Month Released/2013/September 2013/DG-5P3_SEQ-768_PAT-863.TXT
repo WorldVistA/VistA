@@ -1,0 +1,238 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 05/29/13 at 08:42
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: DG*5.3*863
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #768                    Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*863'
+                    (v)DG*5.3*772  <<= must be installed BEFORE `DG*5.3*863'
+                    (v)DG*5.3*837  <<= must be installed BEFORE `DG*5.3*863'
+                    (v)DG*5.3*856  <<= must be installed BEFORE `DG*5.3*863'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 10
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  DG*5.3*688, DG*5.3*772, DG*5.3*837, and DG*5.3*856 are required builds
+  for patch DG*5.3*863.
+   
+  NOTE: Patches DG*5.3*863, RG*1*60, and MPIF*1*57 are being released
+  together.  It is recommended that all three patches be installed on
+  the same date if possible.  Each patch contains functionality related
+  to the display of the full INTEGRATION CONTROL NUMBER (ICN).  All
+  three patches must be in place nationally for the full ICN to display
+  in all of the stated options.
+    
+  Issue #1
+  In certain instances, a patient's current residential address may be a
+  foreign address (e.g., for a Department of Defense (DoD) patient).
+  The following foreign address fields were added to the Patient MPI/PD 
+  Data Inquiry and Display Remote Patient Data Query displays.
+      PROVINCE from the PATIENT (#2) file, field .1171,
+      POSTAL CODE from the PATIENT (#2) file, field .1172, and
+      COUNTRY from the PATIENT (#2) file, field .1173.
+  If the PATIENT (#2) file COUNTRY (.1173) field is null or if the entry
+  it points to in the COUNTRY CODE (#779.004) file has CODE (.01) field
+  equal to "USA", then the PATIENT (#2) file CITY (.114), STATE (.115),
+  and ZIP CODE (.116) fields are displayed.
+  If the PATIENT (#2) file COUNTRY (.1173) field is NOT null and the CODE  
+  (.01) field of the COUNTRY CODE file (#779.004) entry that it points to
+  is NOT equal to "USA", then the PATIENT (#2) file CITY (.114), PROVINCE  
+  (.1171), COUNTRY (.1173) name, and POSTAL CODE (.1172) fields, if
+  populated, are displayed.
+   
+  Issue #2
+  The Patient MPI/PD Data Inquiry [RG EXCEPTION TF INQUIRY] and Display
+  Remote Patient Data Query [RG REMOTE PDAT DISPLAY] options will now
+  display the full INTEGRATION CONTROL NUMBER (ICN).  The full ICN includes
+  the PATIENT (#2) file INTEGRATION CONTROL NUMBER (991.01) field, 
+  followed by a "V", followed by the ICN CHECKSUM (991.02) field,
+  and is retrieved by calling the GETICN^MPIF001 API.
+   
+  Issue #3
+  The concept of a COORDINATING MASTER OF RECORD (CMOR) was replaced in
+  2007 when patch MPI*1.0*40 was installed on the Master Veteran Index
+  (MVI). At that time, the Primary View methodology began as
+  an enterprise view of the most current data for a patient based on
+  authority scoring and the data rules.  There are some places in VistA
+  where the obsolete COORDINATING MASTER OF RECORD terminology is still
+  displayed.  With this patch the words COORDINATING MASTER OF RECORD
+  have been removed from the following Registration features:
+      Load/Edit Patient Data [DG LOAD PATIENT DATA]
+      Register a Patient[DG REGISTER PATIENT]
+      PATIENT HAS EXPIRED mail message generated when DATE OF DEATH is
+      entered for a patient.
+    
+  Issue #4
+  When the Master Veteran Index (MVI) sent an A19 query message to a
+  facility for a specific patient DFN, if that patient DFN had been the
+  "merged-from" record in a duplicate record merge and was merged into a
+  different DFN, then the query returned an error message to the MVI.
+  A code change in routine VAFCQRY will now return the ICN of the
+  "merged-to" patient so that the records can be updated on the MVI.
+    
+  Issue #5
+  To address Remedy ticket HD0000000460869 reported by Health Care
+  Identity Management (HC IdM), a code change has been made in routine
+  VAFCAUD.  Under certain circumstances, corrupt data in the local VistA
+  AUDIT (#1.1) file caused the Display Remote Patient Audit [MPI DATA
+  MGT REM DISP PAUD QRY] report on the MVI to fail.  This occurred
+  when a field was previously marked for auditing and was later removed,
+  but the field reference remained in the AUDIT (#1.1) file.  Code
+  modifications have been made to prevent an undefined error.
+          
+  Issue #6
+  To address Remedy ticket INC000000841436 reported by Health Care
+  Identity Management (HC IdM), modifications have been made in
+  routines VAFCTFIN, VAFCTFU2, and VAFCTFU3.  For a submitted
+  identifier, the VAFC LOCAL GETCORRESPONDINGIDS Remote Procedure Call
+  (RPC) returns a list of the Treating Facilities/correlations for that
+  patient.  Previously, the code did not include My HealtheVet (MHV) as
+  a correlation in the list unless the ROI SIGNED INDICATOR (.08) field
+  in the TREATING FACILITY LIST (#391.91) file for the record was equal
+  to 1 (or YES).  This conditional code has been eliminated.  Processing
+  of the Health Level Seven (HL7) MFN-M05 messages which update the
+  TREATING FACILITY LIST (#391.91) file is being changed to allow the
+  removal of records that do not have an associated DFN or if the
+  correlation is MHV, regardless of the ROI SIGNED INDICATOR (.08)
+  field value.
+   
+  Documentation Update:
+  =====================
+  The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+  VISTA documentation is available, updated for patches DG*5.3*863,
+  MPIF*1.0*57, and RG*1.0*60.  Facilities should download the revised
+  documentation listed as follows:
+   
+      User Manual                         RG1_0_UM.PDF
+      Technical Manual                    RG1_0_TM.PDF
+      Exception Handling                  RG1_0_EH.PDF
+   
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.DOMAIN.EXT
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+  
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.domain.ext     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.domain.ext      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.domain.ext        ANONYMOUS.SOFTWARE
+  
+  Note:  These files must be transferred in binary or IMAGE,
+         not ASCII, mode.
+   
+  The documents can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+      http://www.domain.ext/vdl/application.asp?appid=16
+   
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000460869 - Audit Error
+  INC000000841436 - Unlinked Correlation not Removing from Site Side
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  New Mexico VA HCS
+  VA Maine HCS
+  VA North Texas HCS
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+   
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+   
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package DG*5.3*863.
+     
+  7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+   
+  9.  After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGDEATH
+    Before: B40831841   After: B40455285  **45,84,101,149,392,545,595,
+                                           568,563,725,772,863**
+Routine Name: DGRPD1
+    Before:  B8127087   After:  B7833358  **703,730,688,863**
+Routine Name: VAFCAUD
+    Before: B27488177   After: B36673248  **477,712,863**
+Routine Name: VAFCPDAT
+    Before: B40842331   After: B50668087  **333,414,474,505,707,712,837,863**
+Routine Name: VAFCQRY
+    Before: B12975534   After: B14904724  **428,575,627,707,863**
+Routine Name: VAFCTFIN
+    Before: B87975194   After: B88224954  **428,474,520,639,707,800,821,
+                                           837,863**
+Routine Name: VAFCTFU2
+    Before: B47326411   After: B47004597  **821,856,863**
+Routine Name: VAFCTFU3
+    Before:       n/a   After: B10715994  **863**
+ 
+Routine list of preceding patches: 688, 772, 837, 856
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : OCT 16, 2012
+Completed By: CHESNEY,CHRISTINE M           Date Completed: AUG 19, 2013
+Released By : BARKER,MARK D                 Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

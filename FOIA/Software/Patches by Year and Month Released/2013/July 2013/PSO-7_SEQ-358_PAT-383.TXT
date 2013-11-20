@@ -1,0 +1,168 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 05/02/12 at 12:00
+=============================================================================
+Run Date: JUL 08, 2013                     Designation: PSO*7*383
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #358                      Status: Released
+                  Compliance Date: AUG 07, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*367   <<= must be installed BEFORE `PSO*7*383'
+
+Subject:  CORRECTIONS TO LABEL PRINTING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues: 
+ 1)  DUZ is printing on the label instead of co-signer.
+ 2)  To change the USPS forwarding terminology on labels in VistA. 
+ 3)  Remove "REGULAR MAIL" from the shipping portion of laser labels in VistA.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) HD0000000190711     DUZ is printing on the label instead of co-signer. 
+  
+ 2) HD0000000464740     Change USPS forwarding service terminology.
+        
+ 3) HD0000000475631     CBOC rx not being mailed 1st Class
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ VA Heartland East HCS
+ Durham VA Medical Center
+  
+   
+ Remedy Overview:
+ ================
+ 1) HD0000000190711   DUZ is printing on label instead of co-signer 
+  
+ Problem:
+ ========
+  When printing an order label for a prescription that required a co-signer,
+  the label printed the internal number (DUZ) of the co-signer where the
+  label should print the name of the order co-signer.
+  
+ Resolution:
+ ===========
+  Routines PSOLLL1 and PSOLBLN were modified to print the name of the 
+  co-signer from the NEW PERSON file (#200) instead of the internal number
+  of the co-signer in the NEW PERSON file (#200)
+  
+  
+  
+ 2) HD0000000464740     Change USPS forwarding service terminology.
+  
+ Problem: 
+ ========
+ The current terminology used for USPS forwarding instructions needs to be 
+ updated from "FORWARDING SERVICE REQUESTED" to "ADDRESS SERVICE REQUESTED".  
+ This fix will apply to only Vista labels.  (non-laser labels)
+  
+  
+ Resolution:
+ ===========
+ Update the 3 Vista routines that are used for non-laser label printing 
+ to the most current terminology.
+   
+ 3)  HD0000000475631     CBOC rx not being mailed 1st Class
+  
+ Patient Safety Issue:
+ ===================== 
+ PSPO#2054 
+  
+ PROBLEM:
+ ========
+ When a prescription is processed and mailed directly from the site, the 
+ delivery of the prescription can take longer to get to the patient.  This is 
+ happening because "REGULAR MAIL" is printed on the shipping portion of the 
+ label and thus is processed that way by the Post Office, regardless of the 
+ 1st Class postage that may be affixed to the package.  
+  
+  
+ RESOLUTION:
+ ===========
+ We are removing the words "REGULAR MAIL" from the shipping portion of
+ the VistA laser labels.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  Users should not be
+ on the system when this patch is installed.  It should take less 
+ than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*383 )
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*383 .
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOLBL2
+    Before: B36346864   After: B36311103  **16,19,30,71,92,117,135,326,
+                                           367,383**
+Routine Name: PSOLBLN
+    Before: B63565356   After: B63718452  **16,36,71,107,110,117,135,233,
+                                           251,387,379,367,383**
+Routine Name: PSOLBLN1
+    Before: B41952754   After: B41888954  **5,30,71,107,110,162,367,383**
+Routine Name: PSOLLL1
+    Before: B72361773   After: B72285264  **120,141,135,162,161,233,200,
+                                           264,326,338,367,383**
+ 
+Routine list of preceding patches: 367
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : FEB 25, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: JUN 26, 2013
+Released By : BAYLIS,RANDALL S              Date Released : JUL 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

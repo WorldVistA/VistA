@@ -1,0 +1,197 @@
+$TXT Created by DAVIS,PAULETTE T at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 05/29/13 at 09:28
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: RG*1*60
+Package : RG - CLINICAL INFO RESOURCE NETWORK Priority: Mandatory
+Version : 1        SEQ #59                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)RG*1*46     <<= must be installed BEFORE `RG*1*60'
+                    (v)RG*1*55     <<= must be installed BEFORE `RG*1*60'
+                    (v)RG*1*59     <<= must be installed BEFORE `RG*1*60'
+                    (v)DG*5.3*863  <<= must be installed BEFORE `RG*1*60'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 10
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  NOTE:  RG* and MPIF* patches should NOT be installed on legacy
+  systems to avoid issues with the legacy systems ending up as
+  Treating Facilities.
+   
+  DG*5.3*863, RG*1.0*46, RG*1.0*55, and RG*1.0*59 are required builds
+  for patch RG*1*60.
+   
+  NOTE: Patches DG*5.3*863, RG*1*60, and MPIF*1*57 are being released
+  together.  It is recommended that all three patches be installed on
+  the same date if possible.  Each patch contains functionality related
+  to the display of the full INTEGRATION CONTROL NUMBER (ICN).  All
+  three patches must be in place nationally for the full ICN to display
+  in all of the stated options.
+   
+  Issue #1
+  The Display Remote Patient Data Query [RG REMOTE PDAT DISPLAY] option
+  will now display the full INTEGRATION CONTROL NUMBER (ICN).  The full
+  ICN includes the PATIENT (#2) file INTEGRATION CONTROL NUMBER
+  (991.01) field, followed by a "V", followed by the ICN CHECKSUM
+  (991.02) field, and is derived by calling the GETICN^MPIF001 API.
+   
+  Issue #2
+  To address Remedy ticket HD0000000459245, a code change has been
+  made in routine RGADTP.  The RG ADT-A08 TRIGGER subscriber protocol
+  is on the VAFC ADT-A08 SERVER protocol.  When it calls routine RGADTP,
+  the DFN variable is known to exist.  However, in some cases, other
+  applications' subscriber protocols may not have the DFN variable defined.
+  To prevent an undefined error at ROUTE+8^RGADTP, a check has been added
+  to only set the ^XTMP global when DFN is defined.
+    
+  Issue #3
+  An obsolete report will be removed from the Management Reports [RG MGT
+  REPORTS] menu.  The National ICN Statistics [RG NATIONAL ICN STATISTICS]
+  report was used during the initial set up process and is no longer needed.
+    
+  Issue #4
+  Changes have been made to the Patient Audit File Print [RGMT AUDIT
+  PRINT] and Single Patient Audit File Print [RGMT AUDIT SINGLE] options
+  on the Patient Audit Log Reports [RG TRAN/AUD AUD REP] menu.  ALIAS data
+  was not displayed on these reports because the process did not handle
+  multiple field values from the AUDIT (#1.1) file.  Multiples are stored
+  differently in the AUDIT global.  Modifications have been made to
+  display the AUDIT data for multiple subfields within the PATIENT
+  (#2) file, specifically the ALIAS (2.01) subfield, ALIAS (.01) and
+  ALIAS SSN (1) fields.
+          
+  Documentation Update:
+  =====================
+  The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+  VISTA documentation is available, updated for patches DG*5.3*863,
+  MPIF*1.0*57, and RG*1.0*60.  Facilities should download the revised
+  documentation listed as follows:
+  
+      User Manual                         RG1_0_UM.PDF
+      Technical Manual                    RG1_0_TM.PDF
+      Exception Handling                  RG1_0_EH.PDF
+   
+  The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+  directory at: DOWNLOAD.VISTA.DOMAIN.EXT
+  This transmits the file from the first available FTP server.
+  Sites may also elect to retrieve software directly from one
+  of the following servers.
+  
+  OI Field Office         FTP Address                  Directory
+  ------------------------------------------------------------------
+  Albany             ftp.fo-albany.domain.ext     ANONYMOUS.SOFTWARE
+  Hines              ftp.fo-hines.domain.ext      ANONYMOUS.SOFTWARE
+  Salt Lake City     ftp.fo-slc.domain.ext        ANONYMOUS.SOFTWARE
+  
+  Note:  These files must be transferred in binary or IMAGE,
+         not ASCII, mode.
+   
+  The documents can also be downloaded from the VistA Documentation
+  Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+      http://www.domain.ext/vdl/application.asp?appid=16
+   
+  Associated Remedy Ticket(s):
+  ============================
+  HD0000000459245 - Encounters Not Closing / [ROUTE+8^RGADTP crashes]
+   
+  Associated New Service Request (NSR):
+  =====================================
+  There is no associated NSR with the patch.
+    
+  Test Sites:
+  ===========
+  New Mexico VA HCS
+  VA Maine HCS
+  VA North Texas HCS
+        
+  Installation Instructions:
+  ==========================
+  This patch takes less than 2 minutes to install.  This patch should
+  be loaded during non-peak hours to minimize disruption to the users.
+    
+  1.  Users are allowed on the system during patch installation.
+   
+  2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+      Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+      Link Management Options [HL MENU FILER LINK MGT] menu on the
+      HL7 Main Menu [HL MAIN MENU].
+     
+  3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  4.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  6.  Use the Install Package(s) option and select the package RG*1.0*60.
+       
+  7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//', respond as per your facility's policy.  If you
+      choose to answer YES, then at the end of the patch installation,
+      KIDs will rebuild the menus which may take several hours and could
+      disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+      nightly batch job tasked to run, answer NO to this question.
+      The nightly job will rebuild the menus as scheduled.
+    
+  8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+     
+  9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.  The following OPTIONS should be
+      disabled during the installation.
+      Register a Patient              [DG REGISTER PATIENT]
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+      Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+      UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+      MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+         
+  10. After patch installation has completed, restart the HL7 incoming
+      filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+      option on the Filer and Link Management Options [HL MENU FILER 
+      LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL INFO RESOURCE NETWORK;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RGADTP
+    Before: B82380142   After: B83590843  **26,27,20,34,35,40,45,44,47,59,60**
+Routine Name: RGMTAUD
+    Before: B20411525   After: B34306275  **3,19,20,30,60**
+Routine Name: RGMTAUDP
+    Before: B59483224   After: B84209421  **19,30,46,60**
+Routine Name: RGRPDAT
+    Before: B52556448   After: B53927428  **23,27,31,55,60**
+ 
+Routine list of preceding patches: 46, 55, 59
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAY 17, 2012
+Completed By: CHESNEY,CHRISTINE M           Date Completed: AUG 19, 2013
+Released By : BARKER,MARK D                 Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

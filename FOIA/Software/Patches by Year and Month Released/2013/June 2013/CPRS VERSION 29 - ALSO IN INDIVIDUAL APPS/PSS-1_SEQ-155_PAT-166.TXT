@@ -1,0 +1,307 @@
+
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: PSS*1*166
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #155                      Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)PSS*1*159   <<= must be installed BEFORE `PSS*1*166'
+
+Subject: DEA E-PRESCRIBING FOR CS (CPRS v29)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ Computerized Patient Record System (CPRS) v29 is an enhancement release 
+ with modifications for the Drug Enforcement Agency (DEA) electronic
+ prescribing (ePCS) of controlled substances, Problem List changes for the
+ use of SNOMED CT codes, and the display of Mental Health Treatment
+ Coordinator (MHTC) information entered through the Primary Care Management
+ Module. In addition to these enhancements, software changes are being made
+ to correct several PSIs, Section 508 issues, and additional miscellaneous
+ defect fixes.
+  
+ CPRS GUI version 29 consists of several host files, updated CPRS GUI and 
+ several Help files; too many to list (which will be located in a single 
+ directory named HELP):
+ HDI_1_11.KID           CONTAINS HDI*1*11 PATCH 
+ PSS_1_166.KID          CONTAINS PSS*1*166 PATCH
+ CPRSV29_PSO_PSD.KID    CONTAINS PSO*7*391 AND PSD*3*73 PATCHES
+ OR_GMPL_GMTS_XU_29.KID CONTAINS XU*8*609, GMPL*2*36, GMTS*2.7*86 AND 
+                                 OR*3.0*306 PATCHES
+ CPRSChart.exe
+ OR_30_371.KID          CONTAINS OR*3.0*371 PATCH
+ PSO_7_426.KID          CONTAINS PSO*7*426 PATCH
+  
+ The host files were created to simplify installation and also to control
+ the phased implementation of CPRS V29 at the Veterans Health
+ Administration (VHA) facilities. To see the current status and
+ target dates for Sites/VISN/Regions, please refer to the following site:
+  
+ http://go.usa.gov/TfvW
+  
+ Then open the document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch information:
+ HDI_1_11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSO*7*391, PSD*3*73 and PSO*7*426 supports the DEA ePCS
+ functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT.
+ GMTS*2.7*86 supports the Problem List Standardization.
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhances the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+  
+ OR_30_371 includes support for CPRS v.29.
+  
+  
+ Please refer to the "CPRS GUI v.29 Installation Guide" for 
+ installation and set-up information.  This document is exported 
+ as OR_30_306_IG.doc and OR_30_306_IG.pdf and is included in OR_30_306.ZIP.
+  
+ Installation of these host files must be coordinated among the personnel 
+ affected because these host files will be installed in one installation 
+ session.
+  
+  
+ This is the Pharmacy Data Management patch (PSS*1*166) that provides
+ the following enhancements and will be in the KIDS distribution PSS_1_166.
+  
+ 1. This patch modifies Integration Control Registration (ICR) #3737 by
+    adding the following two new Application Programming Interfaces (API):
+    a. The API $$DETOX^PSSOPKI will return a "1" (one) if the drug name 
+       contains "BUPREN", a detoxification drug or a "0" (zero) otherwise.
+  
+    b. The API $$OIDETOX^PSSOPKI is provided to CPRS to determine
+       whether an orderable item has an associated detoxification drug.
+  
+ 2. This patch modifies ICR #3784 - API $$IVDEA^PSSUTIL1 to return the 
+    specific CS FEDERAL SCHEDULE field (#19) code of the VA PRODUCT file
+    (#50.68) or the specific DEA, SPECIAL HDLG field (#3) code of the DRUG
+    file (#50) of the drugs tied to the Orderable Item.
+  
+ 3. Patch PSS*1*159 introduced an issue where the user was prevented from
+    up-arrowing (^) to quit out of the template in the Edit Orderable Items
+    [PSS EDIT ORDERABLE ITEMS] and Dispense Drug/Orderable Item Maintenance
+    [PSS MAINTAIN ORDERABLE ITEMS] options. This patch resolves that issue
+    by allowing the user to up-arrow out of the template.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ N/A 
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20080702 
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 770121 - PSS EDIT ORDERABLE ITEMS doesn't allow users to "^" out of option
+  
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ CLEVELAND, OH
+ HEARTLAND-EAST HCS
+ HEARTLAND-WAST HCS
+ HINES, IL
+ LOMA LINDA, CA
+ PALO ALTO HCS
+ SAN DIEGO, CA
+ TAMPA, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ N/A 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ PSS_1_166.KID file was created to simplify installation at Veterans Health
+ Administration (VHA) facilities and to assist in the phased implementation
+ release method for CPRS GUI v29.
+  
+ The software will be distributed in a controlled process due to the phased
+ implementation. During each implementation phase, the Implementation Team
+ will provide each site the instructions and location to obtain the
+ software.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSS_1_166.KID                  PSS*1*166             ASCII
+                                   
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while pharmacy orders are being entered and 
+ signed through CPRS. If this is not possible, then it is recommended to be
+ installed during non-peak hours. Installation will take no longer than 2
+ minutes and this patch may be queued.
+ Suggested time to install: non-peak hours, especially when CPRS users are
+ off the system.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1. Download PSS_1_166.KID into your local directory.
+  
+ 2. From the Kernel Installation & Distribution System (KIDS) menu, select
+    the Installation menu.
+  
+ 3. Select the Load a Distribution and enter the directory that you FTP'ed
+    the host file to and PSS_1_166.KID.  Example:
+    USER$:[ABC]PSS_1_166.KID
+  
+ 4. From the Kernel Installation & Distribution System (KIDS) menu, you may
+    select to use the following options (when prompted for INSTALL NAME,
+    enter PSS*1.0*166
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5. Use the Install Package(s) option and select the package 
+    PSS*1.0*166.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSOPKI
+    Before:  B9200801   After: B11838560  **61,69,166**
+Routine Name: PSSPOIM1
+    Before: B57105824   After: B61796505  **29,38,47,141,153,159,166**
+Routine Name: PSSPOIMO
+    Before:B131205688   After:B139401789  **29,32,38,47,68,102,125,141,
+                                           153,159,166**
+Routine Name: PSSUTIL1
+    Before: B30142391   After: B37379824  **38,66,69,166**
+
+=============================================================================
+User Information:
+Entered By  : ANWER,MOHAMED                 Date Entered  : JUL 07, 2011
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JUN 05, 2013
+Released By : BLOCH,JACULYN                 Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

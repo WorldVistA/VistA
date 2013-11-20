@@ -1,0 +1,180 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 11/20/12 at 09:23
+=============================================================================
+Run Date: SEP 24, 2013                     Designation: TIU*1*272
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #254                      Status: Released
+                  Compliance Date: OCT 25, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*132   <<= must be installed BEFORE `TIU*1*272'
+                    (v)TIU*1*224   <<= must be installed BEFORE `TIU*1*272'
+
+Subject: TIU REPORT STATUS ISSUES AND TEMPLATE SUBSCRIPT ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1)  Completed documents are showing on TIU report of "All My Unsigned"
+     documents.
+ 2)  GETFLD+2^TIUSRVF subscript errors
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1)  INC000000069426     Completed docs showing in TIU reports
+ 2)  INC000000071111     GET+2^TIUSRVF
+     Duplicate(s)
+     INC000000727292     <SUBSCRIPT>GETFLD+2^TIUSRVF
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Orlando VAMC, FL                      
+ James J. Peters VAMC - Bronx, NY     
+ Hudson Valley HCS, NY (Castle Point) 
+  
+   
+ Remedy Overview:
+ ================
+ 1)  INC000000069426     Completed docs showing in TIU reports
+   
+ Problem: 
+ ========
+ When a user goes into the Progress Notes User Menu [TIU MAIN MENU PN 
+ CLINICIAN] option and selects the All My Unsigned Progress Notes [TIU 
+ REVIEW PN UNSIGNED] option, a display of Progress Notes is shown to the 
+ user. At the bottom of the screen the user is given several choices of 
+ Actions to perform next. One of those actions is to CHANGE VIEW. This 
+ allows the user to change the view they see on the screen after answering 
+ several questions; Status, Progress Notes Types, and Search Categories. 
+ If, while the user is answering those questions, they want to go back and 
+ change a previous answer, they use "^" key and are shown the previous 
+ question to change their input. This defect reported occurs when the 
+ user  uses the "^" to backup in order to change the Select Status from 
+ the original selected status to a different status, the report will show 
+ both selected statuses, the originally selected one, and the one they 
+ just selected.
+  
+ For example, if the original Select Status was UNSIGNED, the user enters 
+ "^" to back up to change this selection to COMPLETED.  The ending result 
+ was a report that displays both COMPLETED and UNSIGNED statuses.
+  
+  
+ Resolution:
+ ===========
+ The variable STATUS is not getting cleared out when the "^" is used.  Therefore
+ data is still in this variable and when it is set with the new value it is 
+ actually concatenating the data to whatever value is already there, 
+ instead of replacing it.
+  
+ To fix this issue, the variable STATUS will be killed at the beginning of the
+ STATUS tag in routine TIUR.
+  
+  
+ 2)  INC000000071111     GETFLD+2^TIUSRVF
+     Duplicate(s)
+     INC000000727292     <SUBSCRIPT>GETFLD+2^TIUSRVF 
+  
+ Problem: 
+ ========
+ Templates that are used in TIU are stored in the TIU TEMPLATE (#8927) 
+ file. Each template field in TIU TEMPLATE file needs to have a matching 
+ entry in the TIU TEMPLATE FIELD (#8927.1) File. The entries in TIU 
+ TEMPLATE FIELD file describe the attributes of the field; Type, Length, 
+ Required, Allowed Items, and Max/Min Values. When the user goes in to 
+ delete a template field using Department of Veteran Affairs (VA) FileMan 
+ and editing the TIU TEMPLATE file, it may appear that it is deleted but 
+ in actuality only the descriptive part of the field is deleted. This 
+ blank descriptive field is one of the causes for the subscript error, the 
+ other is when the descriptive field does not have a corresponding entry 
+ in the TIU TEMPLATE FIELD file. Then if you attempt to enter a new 
+ Progress Note using this corrupt template in CPRS  you will get a 
+ subscript error and be kicked out of CPRS with a Server Error displayed. 
+ When you look in the error log in VistA, you will see an error entry 
+ similar to: <SUBSCRIPT>GETFLD+2^TIUSRVF ^TIU(8927.1.
+  
+ For example, TIU TEMPLATE file may have an entry named HEPATITIS. This 
+ template contains many fields. One of those is named HEPATITIS PROBLEM2.  
+ If a user deletes {FLD: HEPATITIS PROBLEM2}, a review of the global 
+ indicates {FLD:} remains. This remaining portion results in an error in 
+ CPRS when the template is used. Also, if the TIU TEMPLATE FIELD File is 
+ missing an entry for HEPATITIS PROBLEM2, this will also cause the error 
+ to occur when the template is used in CPRS.
+  
+  
+ Resolution:
+ ===========
+ The only correction we can make here is to bulletproof the code in 
+ routine TIUSRVF so the users are not knocked out of the system.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is recommended that this patch be installed during off hours when the
+ Users are not using this option.  It should take less than 2 minutes 
+ to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*272)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package TIU*1.0*272.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUR
+    Before: B40522374   After: B41230330  **74,79,58,100,113,112,207,224,272**
+Routine Name: TIUSRVF
+    Before: B72544715   After: B73199913  **105,127,132,272**
+ 
+Routine list of preceding patches: 132, 224
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : OCT 16, 2012
+Completed By: SHERMAN,BILL                  Date Completed: SEP 18, 2013
+Released By : BOSE,MARY ELLEN               Date Released : SEP 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

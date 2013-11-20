@@ -1,0 +1,1043 @@
+
+=============================================================================
+Run Date: JUL 30, 2013                     Designation: MAG*3*118
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #89                      Status: Released
+                  Compliance Date: SEP 27, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*116   <<= must be installed BEFORE `MAG*3*118'
+
+Subject: DICOM IMPORTER II
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+  - Sort Template
+  - Print Template
+
+Description:
+============
+
+ The DICOM Importer will enhance the automation of importing DICOM objects
+ from outside facilities streamlining the reconciliation of patient
+ demographic and imaging study data between outside imaging facilities , 
+ including the Department of Defense (DoD), and systems of the Department 
+ of Veterans Affairs (VA).
+  
+ The VA is faced with the on-going problem of having to import into VistA and 
+ commercial PACS increasing numbers of outside DICOM studies.  Current estimates
+ are that that sites may import up to 500 studies per week. These studies come 
+ from multiple sources:
+  
+   - VA Polytrauma Centers where critically wounded service personal are 
+     transitioning from intensive care DoD facilities to the VA.  
+   - Veterans serviced by other federal facilities (DoD, Indian Health 
+     Services)
+   - Walk-in patients with media (CDs/DVDs) containing imaging studies.  
+   - Images from outside facilities for contracted studies.
+  
+ MAG*3.0*118 includes the DICOM Importer II, which provides the ability to:
+   - Import DICOM objects from an Integrated Health Enterprise (IHE)
+     Portable Data for Imaging compliant storage media (CD). 
+   - Import of DICOM objects from a network DICOM proxy server.
+  
+ The DICOM Importer II:
+   - Introduces a centralized work queue for staging studies copied from
+     media or received through a network proxy and provides users with a 
+     graphical user interface (GUI) for reconciling the studies with
+     orders.
+   - Introduces a centralized work queue for studies requiring corrections
+     (DICOM Correct) and provides users with a graphical user interface
+     (GUI) for making the corrections.
+   - Provides better tracking of patient information though enhancements to
+     the reporting of statistical information.
+   - Includes enhanced security mechanisms providing several levels of user
+     access to the import and reporting functionality.
+  
+ MAG*3.0*118 implements enterprise-level audit logging consistent with the 
+ VA 6500.C Security Handbook. It uses the mechanisms introduced in 
+ MAG*3.0*116 to capture system level Audit logging. 
+  
+ Distribution of the Software:
+ =============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P118
+  
+ NOTE: You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*118 KIDS                  MAG3_0P118.KID                   ASCII
+ Installation file for DICOM
+  Gateway                          MAG3_0P118_DICOM_Setup.exe       Binary
+ Installation file for the HDIG 
+  (Hybrid DICOM Image Gateway)     MAG3_0P118_HDIG_Setup.msi        Binary
+ Installation file for the 
+  VIX service                      MAG3_0P118_VIX_Setup.msi         Binary
+ Installation file for the DICOM Importer
+  II client application            MAG3_0P118_ImporterII_Setup.exe  Binary
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*118 Patch Description     MAG3_0P118_Patch_Description.pdf
+  
+ MAG*3.0*34, MAG*3.0*116 and       MAG3_0P118_Planning_and_
+ MAG*3.0*118 Planning and          Installation_Instructions.pdf
+ Installation Instructions               
+  
+ VistA Imaging DICOM Importer II 
+ User Manual                      MAG_DICOM_Importer_II_User_Manual.pdf
+  
+ VistA Imaging DICOM Gateway 
+ User Manual                      MAG_DICOMug.pdf
+  
+ VistA Imaging DICOM Gateway 
+ Installation Guide               MAG_DICOMig.pdf
+  
+ VistA Imaging 
+ Error Message Guide              MAG_IMGerrormsg.pdf
+  
+ VistA Imaging Technical Manual   IMGtechman.pdf
+  
+ VistA Imaging Security Guide     IMGsecgd.pdf
+  
+ VistA Imaging Exchange (VIX)
+ Service Installation Guide       MAG_VIX_installation_guide.pdf
+  
+ Associated Patches:
+ ===================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*118 can be installed. The KIDS files of 
+ the following VistA Imaging patches must be installed on the VistA system 
+ in this order:
+  
+   MAG*3.0*116
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Maryland HCS, Baltimore, MD (Integrated)
+ Biloxi, MS (Large)
+ Charleston, SC (Large)
+  
+  
+ Remedy Help Calls:
+ ==================
+  
+ 1. 134667 - Cancel case image cannot be deleted
+  
+ Problem:
+ ========
+ Site reports he has images waiting to be processed in 
+ the PACs system, but the case number has been cancelled. There are 183 
+ images in cancelled case #022306-798. This may be a looping issue in the 
+ DICOM Correct process.
+  
+ Resolution:
+ ==========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+     
+ 2. 183828 - VistA Imaging not processing images
+  
+ Problem:
+ ========
+ Site said that a particular patient had a hyphenated name that was 
+ causing the process window to loop. File 2006.575 was checked and 390,000 
+ entries were found for that one machine. User killed them all off in a 
+ programming loop and re-indexed the file. User tried to resend the old 
+ images but they failed with an error of no error.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 3. 185660 - Corrected image not processing on DICOM gateway
+  
+ Problem:
+ ========
+ Validated corrected images and error out at MAGD 
+ (2006.575,132921,"RLATE").
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 4. 186403 - 68 studies to be corrected not in DICOM Correct
+  
+ Problem:
+ ========
+ This is another of those out of control fix loops on the 2_3 process 
+ window. File 2006.575 was over 1,000,000. There were about 40 images with 
+ over 30,000 images each in file 2006.575. User cleaned those out and did 
+ a resend of the 9.000 images in the image in folder, but it kept looping 
+ again. User ended up having to clean out all the images for Machine ID 
+ "C". Then, after re-indexing and running option 12 it started to work 
+ properly. Had to resend the images all over again, and reset the listener 
+ port, but now it is resending and the numbers on the failed images jive.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 5. 186942 - DICOM Image Gateway caught in loop
+  
+ Problem:
+ ========
+ HDIG is stuck in a processing loop. Looked like it was a consult that 
+ was using Radiology. Cleaned up file 2006.575 and started things back up. 
+ User did have some problems trying to resend the images that were in 
+ 2006.575 on this machine. The resend failed repeatedly. Site POC said 
+ these were archive images that Echo was trying to send and that they may 
+ have issues. She did not think they were crucial at this time and they 
+ could work on them later.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 6. 188633 - Process job stuck in a loop on DICOM fix
+  
+ Problem:
+ ========
+ Site found the process window looping on a set of images. By the time 
+ user got in to VistA it was at 120,000 images, 99% from one machine id. A 
+ delete loop was run in Fileman to clean up the images and restarted the 
+ processing window. User was not able to resend images. This time the 
+ issue was due to Radiology attaching the images to a cancelled study.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 7. 189963 - Image processing stuck in a loop
+  
+ Problem:
+ ========
+ Images sent from Echocardiogram using the consult process are causing the 
+ Imaging processor to loop. This is the 3rd time images that were attached 
+ to a cancelled consult have caused this problem.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 8. 193044 - DICOM FIX problem
+  
+ Problem:
+ ========
+ Previous problem where the entries with bad case number go into a loop 
+ for DICOM fix even though they do not show up in DICOM Fix for users to 
+ correct. They apparently resent the images for a patient with a bad case 
+ number on purpose to get them through. Now we have approximately 620400+ 
+ entries in file 2006.575.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 9. 213872 - Image process window in a DICOM fix loop
+  
+ Problem:
+ ========
+ Site had run into another of those Dicom Fix loops. This time the POC 
+ caught when it had put over 12,000,000 entries in file 2006.575. Site had 
+ to kill the global completely. There was no way to let Fileman clean them 
+ up. Dig2 had 10,000 old images in the Image_in. Moved out about 4,000 
+ that were from 2006 and moved the rest into a separate folder and did a 
+ resend.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 10. 215075 - DICOM Gateway stuck in loop again
+  
+ Problem:
+ ========
+ Images sent from Echocardiogram using the consult process are causing the 
+ Imaging processor to loop. This is the 4th or 5th time images that were 
+ attached to a cancelled consult have caused this problem.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 11. 275712 - Vista Imaging - DICOM Gateway trying to process 
+ "Cancelled" exam images
+  
+ Problem:
+ ========
+ Accidently put images to "Cancelled" consult (through Dicom Menu Option, 
+ Correct Clinical Studies) and the Gateway is stuck on trying to process 
+ these repeatedly. There are several other DICOM modalities on this 
+ gateway and nothing else is getting through.
+  
+ Resolution:
+ ===========
+ DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM Correct 
+ is no longer used.
+  
+ 12. 404101 - Outside studies in as problem images for MAG*3.0*99
+  
+ Problem:
+ ========
+ DICOM Correct (delete of these images) resulted in problems. The vendor 
+ supplied fee'd studies back to site via CD. The study used was a CR CXR 
+ with an OA and Lat view AND another image. This image was created by the 
+ outside modality as a DICOM image but it appears to be their report. It 
+ doesn't appear to be CR, SC, encapsulated PDF or any other real modality 
+ format. 1) If that image comes across first the old DICOM correct 
+ (delete) function doesn't delete it or any images that came in behind it; 
+ and 2) If the image comes in last then old DICOM correct (delete) will 
+ delete everything but the aptly named "***_problem_image.DCM".
+  
+ Resolution:
+ ===========
+ Vendor media data problem. Media (data) is no longer available to 
+ determine issue. However, MAG*3.0*118 is much more robust to handle 
+ invalid media.
+  
+ 13. 477443 - MAG*3.0*53/ MAG*3.0*99 DICOM Importer error on CD
+  
+ Problem:
+ ========
+ The study errors from CD and if transmitted to gateway. User uploaded the 
+ entire CD contents to: /software/sites/fayetteville_nc/P53-99errorCD in 
+ the FNC site folder. The error is: 
+ Ready to import the DICOM objects? n // y
+ ********************************************************************
+ *** Error in rpc RAMAG EXAM ORDER                                       
+ ***_*** -11^2 -11^Invalid
+ parameter(s).^VALIDATE+76~RAMAG02A^E           ***_*** -3^Parameter
+ 'REQPHYS' has an invalid value.^VALIDATE+16~RAMAG02A^E ***  ***
+ ^REQPHYS='671589'                                                 
+ ***_*** Message generated at MUMPS line tag ORDER+29^MAGDAIR5    ***
+ ********************************************************************
+  
+ Resolution:
+ ===========
+ MAG*3.0*118 performs enhanced media validation prior to import.
+  
+ 14. 490431 - STUDY TIME missing
+  
+ Problem:
+ ========
+ Studies were not imported in MAG*3.0*53 when the STUDY TIME was missing 
+ (the processing failed).  
+  
+ Resolution:
+ ===========
+ If a missing study time is encountered in the DICOM header during import, 
+ the STUDY TIME field defaults to one minute after midnight. 
+  
+ 15. 499196 - Vista Imaging - MAG*3.0*53 error
+  
+ Problem:
+ ========
+ When using Importer (MAG*3.0*53) on a DICOM gateway, whenever there is a 
+ study that has a time just in seconds after midnight (1 to 59 seconds 
+ after midnight), the following error happens: Error in RPC RAMAG EXAM 
+ REGISTER 11^2 11^Invalid parameter(s).^VALIDATE+101~RAMAG03A^3  
+ 3^Parameter 'RADTE' has an invalid value. ^VALIDATE+29~RAMAG03A^E Message 
+ generated at MUMPS line tag REGISTER+33^MAGDAIR5. This happens 
+ consistently when the time has not reached 1 minute after midnight.  
+  
+ Resolution:
+ ===========
+ Time issue was resolved to properly handle improperly formatted date/time 
+ data. 
+  
+ 16. 538939 - Errors importing images from CD/DVD
+  
+ Problem:
+ ========
+ Errors importing images from CD/DVD.
+  
+ Resolution:
+ ===========
+ MAG*3.0*118 performs enhanced media validation prior to import.
+  
+ 17. 555094 - DICOM FAILED IMAGES file (#2006.575) overflow
+  
+ Problem:
+ ========
+ DICOM Correct errors and file overflow errors occur when performing 
+ legacy DICOM Correct on a single study sent from two sources and 
+ attempting to delete the study from DICOM Correct. The issue may also 
+ occur with a canceled study in the DICOM Delete queue that receives 
+ images. Such conditions can send the software into a loop and fill the 
+ DICOM FAILED IMAGES file (#2006.575).
+  
+ Resolution:
+ ===========
+ The DICOM Correct process was changed with MAG*3.0*118. Legacy DICOM 
+ Correct is no longer used.
+  
+ 18. 573524 - Could not load images using importer. Receive error
+  
+ Problem:
+ ========
+ DICOM Processing 2-3 errors discovered in testing of MAG*3.0*34/ 
+ MAG*3.0*116 are evidently inherent to DICOM Correct coding issues that 
+ have been present since Imaging MAG*3.0*11. Root cause appears to be the 
+ inconsistent utilization of the "AFX" cross reference, referring to Tier 
+ 3 Development to be addressed.
+  
+ Resolution:
+ ===========
+ The DICOM Correct process was changed with MAG*3.0*118.  Legacy DICOM 
+ Correct is no longer used.
+  
+ 19. 591243 - Could not load images using importer. Receive error
+  
+ Problem:
+ ========
+ This error is being caused by provider, causing invalid parameter in the 
+ order file "-3^Parameter 'REQPHYS' has an invalid value. 
+ ^VALIDATE=166RAMAG02A6E^REQPHYS=`91578' Message generated at MUMPS line 
+ tag ORDER+29^MAGDAIR5.
+  
+ Resolution:
+ ===========
+ MAG*3.0*118 performs enhanced media validation prior to import.
+  
+ 20. 600280 - Images don't show in Display and Error with Correct 
+ Option
+  
+ Problem:
+ ========
+ Radiology imported an MRI from a CD. The report the Importer created can 
+ be seen in CPRS. However, there's no image icon next to it and nothing in 
+ Imaging Display. Attempted to use the 'Correct local studies...' option 
+ and receive an error. <UNDEFINED>GETDATA+12^MAGDAIRD In looking at the 
+ error, the patient it errors on has no images in the IMAGE_IN folder and 
+ isn't in the DICOM FAILED file. Unsupported SOP instance (enhanced MR) 
+ was imported into the 2005 structure. When Clinical Display attempted to 
+ view it, an error occurred.
+  
+ Resolution:
+ ===========
+ MAG*3.0*34 resolves this issue by accepting those new SOP classes, and 
+ putting them in the new data structure. Therefore, clinical display 
+ doesn't currently see them. This was not an explicit fix of the bug. It 
+ was a side-effect of MAG*3.0*34 supporting new SOP classes.
+  
+ 21. 626432 - Test site attempted to install MAG*3.0*118-T24 prior to 
+ removing entries to file #2006.575
+  
+ Problem:
+ ========
+ Test site attempted to install MAG*3.0*118-T24 prior to removing entries 
+ to file #2006.575.
+  
+ Resolution:
+ ===========
+ MAG*3.0*118 KIDS includes a pre-environment check to ensure no entries 
+ exist in #2006.575 and will not allow install if entries exist.
+  
+  
+ New Service Requests:
+ =====================
+ This patch addresses the following New Service Request (NSR): 
+   20070406 - VistA Imaging Core Infrastructure
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ --------------------------------------------------------------------------
+ IMAGE (#2005)                 ORIGIN INDEX (#45)          new field
+ IMAGE AUDIT (#2005.1)         ORIGIN INDEX (#45)          new field
+ IMAGING PATIENT 
+   REFERENCE (#2005.6)                                     new file
+ IMAGING PROCEDURE 
+   REFERENCE (#2005.61)                                    new file
+ IMAGE STUDY (#2005.62)                                    new file
+ IMAGE SERIES (#2005.63)                                   new file
+ IMAGE SOP INSTANCE (#2005.64)                             new file
+ IMAGE INSTANCE FILE (#2005.65)                            new file
+ IMAGING DUPLICATE 
+   UID LOG (#2005.66)                                      new file
+ IMAGING SERVICE 
+   INSTITUTION (#2005.8)                                   new file
+ IMAGING SITE 
+   PARAMETERS (#2006.1)     RAD TECHNOLOGIST (#300)        new field
+                            RAD FILM SIZE (#301)           new field
+                            RAD PRIMARY DIAGNOSTIC 
+                              CODE (#302)                  new field
+                            RAD PRIMARY 
+                              CAMERA/EQUIP/RM (#303)       new field
+                            RAD CPT MODIFIERS (#304)       new field
+ DICOM UID SPECIFIC
+   ACTION (#2006.539)       UID (#.01)                     modified field
+ DICOM FAILED 
+   IMAGES (#2006.575)       FILEPATH (#.01)                modified field
+                            MACHINE ID (#28)               modified field
+ DICOM GATEWAY INSTRUMENT 
+   DICTIONARY (#2006.911)                                  new file
+ DICOM GATEWAY MODALITY 
+   DICTIONARY (#2006.912)                                  new file
+ ARTIFACT KEYLIST (#2006.913)                              new file
+ RETENTION POLICY (#2006.914)                              new file
+ ARTIFACT DESCRIPTOR (#2006.915)                           new file
+ ARTIFACT (#2006.916)                                      new file
+ STORAGE PROVIDER (#2006.917)                              new file
+ ARTIFACT INSTANCE (#2006.918)                             new file
+ MAGV GATEWAY 
+   CONFIGURATION (#2006.9191)                              new file
+ DICOM AE SECURITY 
+   MATRIX (#2006.9192)                                     new file
+ IMAGING APPLICATION 
+   SERVICE (#2006.9193)                                    new file
+ ARTIFACT RETENTION 
+   POLICY (#2006.921)                                      new file
+ RETENTION POLICY 
+   FULFILLMENT (#2006.922)                                 new file
+ RETENTION POLICY STORAGE 
+   PROVIDER MAP (#2006.923)                                new file
+ STORAGE PROVIDER 
+   AVAILABILITY (#2006.924)                                new file
+ TRANSFER STATISTICS (#2006.925)                           new file
+ STORAGE TRANSACTION (#2006.926)                           new file
+ QUEUE (#2006.927)                                         new file
+ QUEUE MESSAGE (#2006.928)                                 new file
+ IMAGING EVENT AUDIT LOG (#2006.93)                        new file
+ IMAGING EVENT AUDITABLE 
+   ACTION (#2006.931)                                      new file
+ MAG WORK ITEM (#2006.941)                                 new file
+ WORKLIST (#2006.9412)                                     new file
+ MAG WORK ITEM STATUS (#2006.9413)                         new file
+ MAG WORK ITEM SUBTYPE (#2006.9414)                        new file
+ MAGV IMPORT STUDY LOG (#2006.9421)                        new file
+ MAGV IMPORT MEDIA LOG (#2006.9422)                        new file
+  
+ Security Keys:
+ ==============
+ The following new security keys are included in this patch:
+  
+ MAGV IMPORT MEDIA STAGER
+ MAGV IMPORT RECON ARTIFACT
+ MAGV IMPORT RECON CONTRACT
+ MAGV IMPORT REPORTS
+ MAGV IMPORT STAGE MEDIA ADV
+  
+ The following security keys were modified in this patch:
+  
+ MAG DELETE
+ MAG SYSTEM
+ MAG VIX ADMIN
+  
+ REMOTE PROCEDURES:
+ ==================
+  
+ The following new and modified remote procedures are included in this 
+ patch:
+  
+ Modified Remote Procedures:       
+ MAG CFIND QUERY: Modified 
+ MAG DICOM CHECK AE TITLE
+ MAG DICOM RADIOLOGY PROCEDURES
+ MAG DICOM VISTA AE TITLE
+ MAG STUDY UID QUERY
+  
+ New Remote Procedures:
+ MAG EVENT AUDIT
+ MAG FILEMAN FIELD ATTS
+ MAG FILEMAN FIELD LIST
+ MAGV ADD WORK ITEM TAGS
+ MAGV ATTACH IMAGE INSTANCE
+ MAGV ATTACH PAT PROC REF
+ MAGV ATTACH SERIES
+ MAGV ATTACH SOP
+ MAGV ATTACH STUDY
+ MAGV CONFIRM RAD ORDER
+ MAGV CREATE DICOM FAILED IMAGE
+ MAGV CREATE PAT REF
+ MAGV CREATE WORK ITEM
+ MAGV DELETE DICOM FAILED IMAGE
+ MAGV DELETE WORK ITEM
+ MAGV DGW ACTION UID LIST
+ MAGV DGW INSTRUMENT LIST
+ MAGV DGW MODALITY LIST
+ MAGV DICOM GET COUNT
+ MAGV DICOM SET INSTRUMENT LIST
+ MAGV DICOM SET MODALITY LIST
+ MAGV FIND PAT REF
+ MAGV FIND PROC REF
+ MAGV FIND SERIES BY REFERENCE
+ MAGV FIND SERIES BY UID
+ MAGV FIND SOP BY UID
+ MAGV FIND STUDY BY UID
+ MAGV FIND STUDY TIU
+ MAGV FIND WORK ITEM
+ MAGV GET ACCESSION NUM
+ MAGV GET DGW CONFIG
+ MAGV GET DICOM FAILED IMAGE
+ MAGV GET IMAGE FILE
+ MAGV GET NEXT WORK ITEM
+ MAGV GET ORIG IMAGE FILE
+ MAGV GET PAT INFO
+ MAGV GET PAT ORDERS
+ MAGV GET PAT REF ATTS
+ MAGV GET PROC REF ATTS
+ MAGV GET PROCEDURE INFO
+ MAGV GET RADIOLOGY PROCEDURES
+ MAGV GET REPORT
+ MAGV GET SERIES
+ MAGV GET SERVICE INST LIST
+ MAGV GET SOP DATA
+ MAGV GET STUDY
+ MAGV GET WORK ITEM
+ MAGV GET WORKLISTS
+ MAGV IMPORT MEDIA LOG STORE
+ MAGV IMPORT STATUS
+ MAGV IMPORT STUDY LOG REPORT
+ MAGV IMPORT STUDY LOG STORE
+ MAGV INACTIVATE INSTANCE FILE
+ MAGV INACTIVATE PAT REF
+ MAGV INACTIVATE PROC REF
+ MAGV INACTIVATE SERIES
+ MAGV INACTIVATE SOP
+ MAGV INACTIVATE STUDY
+ MAGV RAD EXAM ORDER
+ MAGV RAD EXAM REGISTER
+ MAGV RAD STAT COMPLETE
+ MAGV RAD STAT EXAMINED
+ MAGV SEARCH BY ATTRIBUTE
+ MAGV SERIES UID CHECK
+ MAGV SET DGW CONFIG
+ MAGV SET DICOM FAILED IMAGE
+ MAGV SOP UID CHECK
+ MAGV STUDY LOOKUP
+ MAGV STUDY UID CHECK
+ MAGV TRAVERSE IMAGE FILE
+ MAGV TRAVERSE PROC REF
+ MAGV TRAVERSE SERIES
+ MAGV TRAVERSE SOP
+ MAGV TRAVERSE STUDY
+ MAGV UPDATE IMAGE FILE
+ MAGV UPDATE PAT PROC REF
+ MAGV UPDATE PAT REF
+ MAGV UPDATE SERIES
+ MAGV UPDATE SOP
+ MAGV UPDATE STUDY
+ MAGV UPDATE WORK ITEM
+ MAGV WORK ITEMS COUNT
+ MAGVA CREATE AD
+ MAGVA CREATE AINSTANCE
+ MAGVA CREATE ARETPOL
+ MAGVA CREATE ARTIFACT W KL
+ MAGVA CREATE KEYLIST
+ MAGVA CREATE PROVAVAILTY
+ MAGVA CREATE PROVIDER
+ MAGVA CREATE QUEUE
+ MAGVA CREATE RETPOL
+ MAGVA CREATE RETPOL PROV MAP
+ MAGVA CREATE RETPOLFF
+ MAGVA CREATE STORAGE TA
+ MAGVA CREATE TRF STATS
+ MAGVA DELETE KEYLIST
+ MAGVA DELETE PROVAVAILTY
+ MAGVA DELETE RETPOL PROV MAP
+ MAGVA DEQUEUE Q MSG
+ MAGVA ENQUEUE Q MSG
+ MAGVA FIND KEYLIST
+ MAGVA GET A AIS ARPS AND RPFFS
+ MAGVA GET A W KL AND AIS
+ MAGVA GET A W KL AND AIS BY KL
+ MAGVA GET A W KL AND AIS BY PK
+ MAGVA GET ALL ADS
+ MAGVA GET ALL PROVAVAILS
+ MAGVA GET ALL PROVIDERS
+ MAGVA GET ALL QUEUES
+ MAGVA GET ALL RETPOL PROV MAPS
+ MAGVA GET ALL RETPOLS
+ MAGVA GET ALL SITE PARAM IDS
+ MAGVA GET ARTIFACT W KL
+ MAGVA GET CWL
+ MAGVA GET JUKEBOX WL
+ MAGVA GET KEYLIST
+ MAGVA GET NET LOC DETAILS
+ MAGVA PEEK Q MSG
+ MAGVA SET AD RETPOL
+ MAGVA UPDATE ARETPOL
+ MAGVA UPDATE ARTIFACT
+ MAGVA UPDATE LAST ACCESS DT
+ MAGVA UPDATE PROVAVAILTY
+ MAGVA UPDATE PROVIDER
+ MAGVA UPDATE RETPOL PROV MAP
+  
+ Menu Options
+ ============
+ The following new or modified VistA menu options are included in this
+ patch:
+  
+ Option Name               Type                      New/Modified/Deleted
+ ------------------------------------------------------------- 
+ DICOM VISA             [MAG DICOM VISA]                New
+ Delete Study by 
+   Accession Number     [MAG SYS-DELETE STUDY]          New
+ Configure AE Security 
+   Matrix Settings      [MAGV AE SEC MX SETTINGS]       New
+ Hybrid DICOM Gateway
+   Menu                 [MAGV HDIG MENU]                New
+ Imaging System Manager
+   Menu                 [MAG SYS MENU]                  Modified
+ Find Async Storage 
+   Request Errors       [MAGV ASYNC STORAGE ERR QRY]    New
+ List Async Storage 
+   Request Errors       [MAGV ASYNC STORAGE ERR LIST]   New
+ Requeue Async Storage 
+   Request Errors       [MAGV ASYNC STORAGE ERR REQU]   New
+  
+ Templates:
+ ==========
+ MAG*3.0*118 includes new sort and print templates to enable quick access 
+ to image information for particular patients, procedures and files. Sort 
+ and print templates are paired to allow their coordinated use within the 
+ VA FileMan PRINT FILE ENTRIES Option.
+  
+ Template Name          Type        File Name (Number)  
+ --------------------------------------------------------------------------
+ MAGV-PAT-QUERY         Sort       IMAGING PATIENT REFERENCE file (#2005.6)
+ MAGV-PAT-QUERY         Print      IMAGING PATIENT REFERENCE file (#2005.6)
+  
+ MAGV-PROC-QUERY        Sort       PROCEDURE ID Field (#.01)
+ MAGV-PROC-QUERY        Print      PROCEDURE ID Field (#.01)
+  
+ MAGV-FILEREF-QUERY     Sort       ARTIFACT INSTANCE file (#2006.918)
+ MAGV-FILEREF-QUERY     Print      ARTIFACT INSTANCE file (#2006.918)
+  
+ MAGVA-ASYNC-STORAGE-
+   ERRORS               Sort       QUEUE MESSAGE file (#2006.928)
+  
+ DICOM Gateway Routines 
+ ======================
+ This section lists new and modified routines for the DICOM Gateway. For 
+ each routine, the second line will contain the following information.
+  
+ ;;3.0; IMAGING;**[Patch List]**; Mar 19, 2002; Build 169;Nov 06, 2012
+  
+  
+ Please note that the "before" checksum may differ if any test software has
+ been installed.  
+  
+ Routine      Before        After          Patch List
+              Checksums     Checksums
+ MAGDCST4     39520710      36636307       **10,11,30,51,69,54,53,118**
+ MAGDMENO     38759789      39201483       **11,30,51,50,69,54,53,118**
+ MAGDMENU     49596722      51431162       **9,21,11,30,51,69,54,53,118**
+ MAGDMFB1     82299095      84989302       **9,21,11,30,51,69,54,53,
+                                           123,118**
+ MAGDMFBB     54136845      54136845       **9,21,11,51,69,54,53,49,
+                                           123,118**
+ MAGDMFBE     104829530     75395970       **9,21,11,30,51,69,54,53,
+                                           123,118**
+ MAGDMFBI     23675432      24349850       **9,10,11,69,118**
+ MAGDMFBM     76440452      87462868       **9,10,11,30,51,69,54,53,
+                                           99,118**
+ MAGDMFIC     51798367      45208695       **10,11,30,69,54,118**
+ MAGDVRSN     21494340      21494340       **1,7,9,26,21,10,36,3,11,30,5,
+                                           51,50,52,69,75,102,103,54,53,
+                                           66,49,99,116,123,118**
+ MAGVCSTR     NEW           11185442       **118**
+ MAGVDGW1     NEW           14541208       **118**
+  
+ Installation
+ ============
+ MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 must be installed together. For 
+ more information about the prerequisites and the procedures to install 
+ the patches, please refer to the combined installation instructions for 
+ all three patches - MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 Installation 
+ Instructions (MAG3_0P118_Installation.pdf). 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4525;May 01, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGDCCS
+    Before: B66427733   After: B66427733  **10,11,85,54,123,118**
+Routine Name: MAGDGMRC
+    Before: B32653385   After: B36374245  **10,51,50,85,118**
+Routine Name: MAGDLB1
+    Before: B55699904   After: B55692202  **11,30,54,123,118**
+Routine Name: MAGDLB6
+    Before:  B5741563   After:  B5964230  **21,10,11,51,118**
+Routine Name: MAGDMEDJ
+    Before: B27152321   After: B30422298  **118**
+Routine Name: MAGDQR00
+    Before:  B3247668   After:  B4967195  **51,54,118**
+Routine Name: MAGDQR01
+    Before: B52064110   After: B37721625  **51,54,66,118**
+Routine Name: MAGDQR02
+    Before: B67369112   After: B63705354  **51,54,66,118**
+Routine Name: MAGDQR03
+    Before:B166761513   After:B216009721  **51,54,66,123,118**
+Routine Name: MAGDQR04
+    Before: B78024448   After:B138218574  **51,54,66,123,118**
+Routine Name: MAGDQR05
+    Before: B45801758   After: B49847313  **54,118**
+Routine Name: MAGDQR06
+    Before: B28701967   After: B59258858  **54,66,118**
+Routine Name: MAGDQR07
+    Before: B30347605   After:  B4766521  **54,118**
+Routine Name: MAGDQR08
+    Before: B33379098   After: B58325682  **54,118**
+Routine Name: MAGDQR09
+    Before:       n/a   After: B39831535  **118**
+Routine Name: MAGDQR10
+    Before:       n/a   After:  B9045803  **118**
+Routine Name: MAGDQR11
+    Before:       n/a   After:  B6241369  **118**
+Routine Name: MAGDQR12
+    Before:       n/a   After: B11594014  **118**
+Routine Name: MAGDQR13
+    Before:       n/a   After: B68282867  **118**
+Routine Name: MAGDQR22
+    Before:       n/a   After:  B9067474  **118**
+Routine Name: MAGDQR23
+    Before:       n/a   After:  B5722979  **118**
+Routine Name: MAGDQR31
+    Before:       n/a   After:  B8494742  **118**
+Routine Name: MAGDQR32
+    Before:       n/a   After:  B7433299  **118**
+Routine Name: MAGDQR71
+    Before:       n/a   After:  B5273821  **118**
+Routine Name: MAGDQR72
+    Before:       n/a   After:  B6230687  **118**
+Routine Name: MAGDQR73
+    Before:       n/a   After:  B6999469  **118**
+Routine Name: MAGDQR74
+    Before:       n/a   After:  B9439259  **118**
+Routine Name: MAGDQRUE
+    Before:       n/a   After:  B4782470  **118**
+Routine Name: MAGDQRUL
+    Before:       n/a   After:  B9509874  **118**
+Routine Name: MAGDRPC8
+    Before: B62107213   After: B63429339  **11,30,51,54,118**
+Routine Name: MAGDRPC9
+    Before: B55813118   After: B73201561  **50,54,53,49,123,118**
+Routine Name: MAGDRPCA
+    Before: B93958807   After: B96716003  **53,123,118**
+Routine Name: MAGDRPCB
+    Before:B129146302   After:B129973111  **53,118**
+Routine Name: MAGFXQRS
+    Before:       n/a   After:  B5583745  **118**
+Routine Name: MAGGTID
+    Before: B47456559   After: B64976541  **8,59,93,118**
+Routine Name: MAGIP118
+    Before:       n/a   After:B140430902  **118**
+Routine Name: MAGJUTL6
+    Before:       n/a   After:  B9257634  **118**
+Routine Name: MAGKIDS1
+    Before: B40480221   After: B40122481  **93,118**
+Routine Name: MAGUAUD
+    Before:       n/a   After:  B5675527  **118**
+Routine Name: MAGUE001
+    Before:  B8353040   After: B10282269  **54,118**
+Routine Name: MAGUE002
+    Before:  B6508124   After:  B6868694  **54,118**
+Routine Name: MAGUE004
+    Before:       n/a   After:  B3837996  **118**
+Routine Name: MAGUE005
+    Before:       n/a   After:  B3722038  **118**
+Routine Name: MAGUFFLA
+    Before:       n/a   After:  B8770819  **118**
+Routine Name: MAGUFFLL
+    Before:       n/a   After:  B6710816  **118**
+Routine Name: MAGUPSE
+    Before:       n/a   After:  B4463670  **118**
+Routine Name: MAGURQRS
+    Before:       n/a   After:  B5067518  **118**
+Routine Name: MAGVAC01
+    Before:       n/a   After: B52937887  **118**
+Routine Name: MAGVAD01
+    Before:       n/a   After:  B4168174  **118**
+Routine Name: MAGVAD02
+    Before:       n/a   After:  B7021893  **118**
+Routine Name: MAGVAF01
+    Before:       n/a   After: B96471020  **118**
+Routine Name: MAGVAF02
+    Before:       n/a   After:  B5352804  **118**
+Routine Name: MAGVAF03
+    Before:       n/a   After:B133628281  **118**
+Routine Name: MAGVAF04
+    Before:       n/a   After:  B4868004  **118**
+Routine Name: MAGVAF05
+    Before:       n/a   After:  B7798795  **118**
+Routine Name: MAGVAG01
+    Before:       n/a   After:  B4532733  **118**
+Routine Name: MAGVAG02
+    Before:       n/a   After: B77173020  **118**
+Routine Name: MAGVAG03
+    Before:       n/a   After: B74285507  **118**
+Routine Name: MAGVAG04
+    Before:       n/a   After: B66728252  **118**
+Routine Name: MAGVAKL1
+    Before:       n/a   After: B31327671  **118**
+Routine Name: MAGVAQ01
+    Before:       n/a   After: B87039259  **118**
+Routine Name: MAGVAQ02
+    Before:       n/a   After: B45403991  **118**
+Routine Name: MAGVAU01
+    Before:       n/a   After: B18289481  **118**
+Routine Name: MAGVD001
+    Before:       n/a   After: B16780675  **118**
+Routine Name: MAGVD002
+    Before:       n/a   After:  B7446987  **118**
+Routine Name: MAGVD003
+    Before:       n/a   After:  B7699485  **118**
+Routine Name: MAGVD004
+    Before:       n/a   After:  B6940481  **118**
+Routine Name: MAGVD005
+    Before:       n/a   After:  B4474227  **118**
+Routine Name: MAGVD006
+    Before:       n/a   After:  B9747291  **118**
+Routine Name: MAGVD007
+    Before:       n/a   After:  B6560103  **118**
+Routine Name: MAGVD008
+    Before:       n/a   After:  B6497121  **118**
+Routine Name: MAGVD010
+    Before:       n/a   After: B13079258  **118**
+Routine Name: MAGVDATE
+    Before:       n/a   After:  B5037019  **118**
+Routine Name: MAGVDGWP
+    Before:       n/a   After:B137738696  **118**
+Routine Name: MAGVGUID
+    Before:       n/a   After: B34342476  **118**
+Routine Name: MAGVIM01
+    Before:       n/a   After:B189891368  **118**
+Routine Name: MAGVIM02
+    Before:       n/a   After: B85608956  **118**
+Routine Name: MAGVIM03
+    Before:       n/a   After: B41664423  **118**
+Routine Name: MAGVIM04
+    Before:       n/a   After: B52513000  **118**
+Routine Name: MAGVIM05
+    Before:       n/a   After:B120062662  **118**
+Routine Name: MAGVIM06
+    Before:       n/a   After: B74879511  **118**
+Routine Name: MAGVIM07
+    Before:       n/a   After: B57953558  **118**
+Routine Name: MAGVIM08
+    Before:       n/a   After: B11155831  **118**
+Routine Name: MAGVIM09
+    Before:       n/a   After: B12035756  **118**
+Routine Name: MAGVIM10
+    Before:       n/a   After: B23098643  **118**
+Routine Name: MAGVORDR
+    Before:       n/a   After: B20723443  **118**
+Routine Name: MAGVRS01
+    Before:       n/a   After:  B3699007  **118**
+Routine Name: MAGVRS04
+    Before:       n/a   After:  B4005478  **118**
+Routine Name: MAGVRS05
+    Before:       n/a   After:  B3883384  **118**
+Routine Name: MAGVRS06
+    Before:       n/a   After:  B4241857  **118**
+Routine Name: MAGVRS07
+    Before:       n/a   After:  B4131532  **118**
+Routine Name: MAGVRS08
+    Before:       n/a   After: B33958165  **118**
+Routine Name: MAGVRS09
+    Before:       n/a   After:  B4813861  **118**
+Routine Name: MAGVRS11
+    Before:       n/a   After:  B3844243  **118**
+Routine Name: MAGVRS14
+    Before:       n/a   After:  B6147415  **118**
+Routine Name: MAGVRS15
+    Before:       n/a   After:  B5110681  **118**
+Routine Name: MAGVRS21
+    Before:       n/a   After:  B3838605  **118**
+Routine Name: MAGVRS24
+    Before:       n/a   After:  B6638693  **118**
+Routine Name: MAGVRS31
+    Before:       n/a   After:  B4232355  **118**
+Routine Name: MAGVRS41
+    Before:       n/a   After:B182345011  **118**
+Routine Name: MAGVRS42
+    Before:       n/a   After: B33489526  **118**
+Routine Name: MAGVRS43
+    Before:       n/a   After: B12222384  **118**
+Routine Name: MAGVRS44
+    Before:       n/a   After: B40208831  **118**
+Routine Name: MAGVRS45
+    Before:       n/a   After: B10063504  **118**
+Routine Name: MAGVRS46
+    Before:       n/a   After: B12606360  **118**
+Routine Name: MAGVRS51
+    Before:       n/a   After: B82412262  **118**
+Routine Name: MAGVRS52
+    Before:       n/a   After: B24276946  **118**
+Routine Name: MAGVRS61
+    Before:       n/a   After: B94036467  **118**
+Routine Name: MAGVRS71
+    Before:       n/a   After:  B4464077  **118**
+Routine Name: MAGVRS81
+    Before:       n/a   After: B20670020  **118**
+Routine Name: MAGVRS82
+    Before:       n/a   After: B14108947  **118**
+Routine Name: MAGVSOPC
+    Before:       n/a   After:  B6655177  **118**
+Routine Name: MAGVSOPU
+    Before:       n/a   After:B118959735  **118**
+Routine Name: MAGVSTDY
+    Before:       n/a   After:  B7218427  **118**
+Routine Name: MAGVUID
+    Before:       n/a   After: B62918469  **118**
+Routine Name: MAGVUID1
+    Before:       n/a   After:  B4997448  **118**
+ 
+Routine list of preceding patches: 93, 123
+
+=============================================================================
+User Information:
+Entered By  : TROMBETTA,KATHY               Date Entered  : MAR 15, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 05, 2013
+Released By : MASSEY,DAVID                  Date Released : JUL 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

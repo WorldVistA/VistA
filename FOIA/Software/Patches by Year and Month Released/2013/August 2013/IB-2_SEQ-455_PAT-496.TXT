@@ -1,0 +1,161 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 01/23/13 at 17:05
+=============================================================================
+Run Date: AUG 01, 2013                     Designation: IB*2*496
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #455                      Status: Released
+                  Compliance Date: AUG 31, 2013
+=============================================================================
+
+
+Subject: SOURCE OF INFORMATION UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses two issues. The first issue contains a new source of
+ insurance information added to the SOURCE OF INFORMATION file (#355.12).
+ The second issue concerns a typo on the help prompt of the CLAIMS (RX) 
+ STATE field (#.185) in the INSURANCE file (#36).
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000802039 Integrated Billing - Patch Issue: Patch request
+ 2. INC000000800048 Help message misspelling
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ MARYLAND HCS
+ PITTSBURGH HCS
+ PORTLAND, OR
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000802039 Integrated Billing - Patch Issue: Patch request
+  
+  Problem:
+  --------
+  The Chief Business Office (CBO) has requested to add a new source of
+  insurance information - 'KIOSK' to the field list.
+  
+  Resolution:
+  -----------
+  A post-init routine IB20P496 was created to add the new source of insurance
+  information to the SOURCE OF INFORMATION file (#355.12).
+  
+ 2. INC000000800048 Help message misspelling
+  
+  Problem:
+  --------
+  A typo was found on the help prompt of the CLAIMS (RX) STATE field on
+  the Prescription Claims Office Information (PC) action under the Insurance
+  Company Entry/Edit [IBCN INSURANCE CO EDIT] option.
+  
+  Resolution:
+  -----------
+  A misspelled word 'clais' was corrected to display 'claims' on the help
+  prompt of the CLAIMS (RX) STATE field (#.185) in the INSURANCE file
+  (#36).
+  
+  
+ INSTALLATION INSTRUCTIONS
+  =========================
+  If installed during the normal workday, it is recommended that the 
+  following selection(s) in the OPTION (#19) file be disabled to prevent 
+  possible conflicts while running the KIDS Install. Other VISTA users will 
+  not be affected. Installation will take less than 2 minutes.
+  
+      Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT]
+      Source Of Information Report [IB OUTPUT PRE-REG SOURCE REPT]
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*496):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//' answer YES
+      d. When prompted 'Enter options you wish to mark as 'Out Of 
+         Order':'  Enter the following options:
+  
+     Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT]
+     Source Of Information Report [IB OUTPUT PRE-REG SOURCE REPT]
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P496.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 23
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P496
+    Before:       n/a   After:  B2865112  **496**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JAN 18, 2013
+Completed By: LANG,MICKEY                   Date Completed: JUL 24, 2013
+Released By : MURRAY,ANGELA                 Date Released : AUG 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

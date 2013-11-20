@@ -1,0 +1,155 @@
+
+=============================================================================
+Run Date: AUG 22, 2013                     Designation: MPIF*1*56
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #53                      Status: Released
+                  Compliance Date: SEP 13, 2013
+=============================================================================
+
+Associated patches: (v)XOBW*1*0    <<= must be installed BEFORE `MPIF*1*56'
+                    (v)MPIF*1*54   <<= must be installed BEFORE `MPIF*1*56'
+                    (v)MPIF*1*55   <<= must be installed BEFORE `MPIF*1*56'
+
+Subject: VIC 4.0 AND DOD CAC MPI INTEGRATION/HWSC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides the functionality needed to interface VHA VistA 
+ software to the MVI for Primary View (PV) lookup and data retrieval 
+ during registration of a Veteran using the new Veteran Identification 
+ Card (VIC 4.0) and the Department of Defense's Common Access Card (CAC).
+  
+ MPIF software will provide the interface using HealtheVet Web Services 
+ (HWSC) to obtain initial patient information when a patient has never been
+ treated at the local VA facility and their VIC 4.0 card is swiped or 
+ scanned or their CAC card is swiped during the registration process.  This
+ VistA-to-MVI interface will send and parse eXtensible Markup Language
+ (XML) messages.
+  
+ NOTE:  RG* and MPIF* patches should NOT be installed on legacy systems to 
+ avoid issues with the legacy systems ending up as Treating Facilities.
+  
+ MPIF*1.0*54 and MPIF*1.0*55 are required builds for patch MPIF*1*56.
+   
+ Issue:  Using the Load/Edit Patient Data [DG LOAD PATIENT DATA] option, 
+ an issue was found where auto linking a patient to a mismatched patient 
+ was not creating a correlation on the Master Patient Index (MPI). This 
+ was due to the Health Level Seven (HL7) A24 link message not being sent 
+ to the MPI.  We found that the mismatched patient with the new ICN did 
+ not have the COORDINATING MASTER OF RECORD (#991.03) field populated in 
+ VistA.  The existing code in MPIFQ0 was quitting if COORDINATING MASTER 
+ OF RECORD was not set up and not sending the A24 to the MPI.
+ Solution:  Routine MPIFQ0 was modified so it does not quit, but instead 
+ will fall through the code to send the A24 to the MPI.
+  
+ This patch is being distributed as a ZIP file that contains the necessary 
+ files for installation.  Sites should refer to the install guide for 
+ installation instructions.
+  
+ Patch Information:
+ MPIF_1_56.zip includes the components necessary for the interface that
+ will be used:
+         MPIF_1_56.KID (contains MPIF*1*56)
+         PSIMWSEXECUTE.WSDL
+         MPIF_1_56IG.PDF
+  
+ This patch (MPIF*1.0*56) provides the interface that will be used by the 
+ registration updates being distributed separately in the standalone 
+ DG*5.3*857 patch. It provides all the software and tools necessary to 
+ complete the setup of the interface, which must be done prior to interface
+ being fully functional.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ There are no associated Remedy Tickets.
+  
+ Associated New Service Request (NSR):
+ =====================================
+ There is no associated NSR with the patch.
+  
+ Documentation Retrieval:
+ ------------------------
+ The files for this patch can be obtained from the ANONYMOUS.SOFTWARE 
+ directory at one of the OI Field Offices.  The preferred method is to FTP 
+ the file from DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file 
+ from the first available server.  Alternatively, sites may elect to 
+ retrieve the file from a specific OI Field Office.
+  
+ OI FIELD OFFICE     FTP ADDRESS                  DIRECTORY
+ ---------------     ------------                 --------------
+ Albany              FTP.FO-ALBANY.DOMAIN.EXT     anonymous.software
+ Hines               FTP.FO-HINES.DOMAIN.EXT      anonymous.software
+ Salt Lake City      FTP.FO-SLC.DOMAIN.EXT        anonymous.software
+  
+ Below is a list of the files related to this patch that will need to be 
+ downloaded.
+  
+ File Name                Contents                     Retrieval(Format)
+ ---------------------    -----------------------      -----------------
+ MPIF_1_56.ZIP            Files indicated below:          Binary
+ - MPIF_1_56.KID             KIDS Installation Build      (KIDS)
+ - PSIMWSEXECUTE.WSDL        WSDL                         (XML)
+ - MPIF_1_56IG.PDF           Install Guide                (PDF)
+  
+ Documentation for the install may also be retrieved from the VA Software 
+ Document Library (VDL) on the Internet at the following address,
+ http://www.domain.ext/vdl
+  
+ Test Sites:
+ ===========
+ <add info here>
+  
+ Environment Check Routine:
+ ==========================
+ MPIFHWSC - This environment check is done to ensure proper placement of 
+ the WSDL file is complete prior to allowing the patch to be installed.  
+ Refer to the install guide for further information.
+  
+ Post-Install Routine:
+ =====================
+ POST^MPIFHWSC - The post install routine will set up the web services 
+ needed for the interface.  Refer to the install guide for further 
+ information.
+  
+ Installation Instructions:
+ ==========================
+ Please refer to the MPIF_1_56IG.PDF Installation Guide for complete 
+ installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFAPI
+    Before: B49371589   After: B50736449  **1,3,14,16,17,21,27,28,33,35,
+                                           37,43,45,44,46,48,55,56**
+Routine Name: MPIFHWSC
+    Before:       n/a   After:  B6654102  **56**
+Routine Name: MPIFQ0
+    Before: B72427777   After: B73016774  **1,3,8,14,13,16,17,21,20,24,
+                                           26,28,31,33,35,38,43,52,54,56**
+Routine Name: MPIFXMLS
+    Before:       n/a   After: B42583885  **56**
+ 
+Routine list of preceding patches: 54, 55
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAY 01, 2012
+Completed By: ALDERMAN,MATT S               Date Completed: JUL 05, 2013
+Released By : BARKER,MARK D                 Date Released : AUG 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

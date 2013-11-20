@@ -1,0 +1,866 @@
+
+=============================================================================
+Run Date: JUL 16, 2013                     Designation: SR*3*181
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #171                      Status: Released
+                  Compliance Date: AUG 16, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization:  SURGERY
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is issued as directed in Memorandum: Open Source 
+ VistA Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this 
+ document for specific details.
+   
+ A review of the VistA Standardization routines was completed for: 
+ SURGERY, version 3.0. A baseline list of the nationally released M 
+ routines and their official checksums is included below. VistA 
+ Standardization Certification represents the matching of the routine 
+ checksums, compared in the site's Production account only.
+   
+ The VistA Standardization Team performed an analysis of each site's 
+ Production environment. For any site with routine checksum variance, this 
+ team worked with the site to remediate any variance from the baseline. 
+ After the completion of this process, sites with no variance were 
+ identified as VistA Standardization Certified for the package. There is 
+ NO additional action required on the part of these sites. 
+   
+ For sites which had variance (local modification) and determined it was 
+ important to maintain for their Production environment, a waiver was 
+ requested. If approved, the waiver allows retention of the local 
+ modification to a VistA Standardization routine, as detailed in VA 
+ Directive 6402.
+   
+ Each site will be placed on one of the lists below:  
+       VistA Standardization Certified Sites
+       Sites with Approved/Pending Waiver
+       Non-Compliant Sites with Pending Remediation
+ The expectation for sites on the Non-Compliant Sites with Pending 
+ Remediation list is for their remediation to be completed, by either 
+ removing the modification or requesting a waiver. There will NOT be an 
+ additional Informational Only patch to move the site to the VistA 
+ Standardization Certified Sites list.
+   
+ Please Note:
+       Environment check routines, pre or post installation routines 
+ remaining from previously installed patches, compiled routines (e.g. 
+ cross-reference), or prior package version routines, will NOT affect your 
+ site's standardization compliance. Their existence, or non-existence, at 
+ your site, or on the VistA Standardization routines list below, does not 
+ impact the VistA Standardization Certification. 
+       VistA Standardization Certification for this package applies to the 
+ date specified in the Official Checksum heading below. If additional 
+ patches, or a newer version for the package, has been released since this 
+ date, the checksums for affected routines will be different. For these 
+ routines, refer to the patch/version documentation for the most 
+ up-to-date checksums.
+    
+ =========================================================================
+ Note:  Site 556   NORTH CHICAGO, IL is exempt from this project objective
+   
+ Sites with Approved/Pending Waiver:
+ ==================================
+   437    FARGO, ND               waiver: 189624
+   438    SIOUX FALLS, SD         waiver: 189624
+   523    BOSTON HCS              waiver: 176134
+   528    UPSTATE NEW YORK HCS    waiver: 175238
+   534    CHARLESTON, SC          waiver: 179420
+   549    NORTH TEXAS HCS         waiver: 203782
+   550    ILLIANA HCS             waiver: 185478
+   552    DAYTON, OH              waiver: 184132
+   568    BLACK HILLS HCS         waiver: 189624
+   573    NORTH FLORIDA/SOUTH GEORGIA     waiver: 177990
+   580    HOUSTON, TX             waiver: 188750, 189151 
+   583    INDIANAPOLIS, IN (C)    waiver: 193208
+   589    HEARTLAND-WEST HCS      waiver: 190656, 191539, 191545, 191561, 
+                                          193981, 194008, 194028, 194244,
+                                          194259, 203376, 203418
+   618    MINNEAPOLIS, MN         waiver: 179361, 179372, 179383, 179412,
+                                          179424
+   636    CENTRAL PLAINS HCS      waiver: 184587, 184603, 184623, 184638,
+                                          184657
+   652    RICHMOND, VA            waiver: 174686
+   656    ST CLOUD, MN            waiver: 189624
+   671    SOUTH TEXAS HCS         waiver: 192415
+   673    TAMPA, FL               waiver: 172494, 183470 
+   674    CENTRAL TEXAS HCS       waiver: 180396
+   675    ORLANDO, FL             waiver: 183470
+   688    WASHINGTON, DC          waiver: 175700, 176566, 178283, 178389
+   695    MILWAUKEE, WI           waiver: 184075, 204220, 204424, 204491,
+                                          204522, 204543, 204572, 204597,
+                                          204629, 204648, 204685, 205619,
+                                          205642, 205663, 205673, 205690,
+                                          205703, 205716
+  
+   
+ Non-Compliant Sites with Pending Remediation:
+ ============================================
+   358    MANILA OC, PI
+   463    ANCHORAGE, AK (OPC)
+   501    ALBUQUERQUE, NM
+   518    BEDFORD, MA
+   519    BIG SPRING, TX
+   531    BOISE, ID
+   534    CHARLESTON, SC
+   554    EASTERN COLORADO HCS
+   570    FRESNO, CA
+   578    HINES, IL
+   585    IRON MOUNTAIN, MI
+   600    LONG BEACH, CA
+   605    LOMA LINDA, CA
+   607    MADISON, WI
+   612    NORTHERN CALIFORNIA HCS
+   636    CENTRAL PLAINS HCS
+   640    PALO ALTO HCS
+   644    PHOENIX, AZ
+   648    PORTLAND, OR (C)
+   653    ROSEBURG, OR
+   654    RENO, NV
+   657    HEARTLAND-EAST HCS
+   658    SALEM, VA
+   660    SALT LAKE CITY, UT
+   662    SAN FRANCISCO, CA
+   664    SAN DIEGO, CA
+   666    SHERIDAN, WY
+   678    TUCSON, AZ
+   687    WALLA WALLA, WA
+   691    VA GREATER LOS ANGELES HCS
+   695    MILWAUKEE, WI
+   
+   
+ VistA Standardization Certified Sites:
+ =====================================
+   402    TOGUS, ME
+   405    WHITE RIVER JUNCTION, VT
+   436    MONTANA HCS
+   442    CHEYENNE, WY
+   459    HONOLULU, HI
+   460    WILMINGTON, DE
+   502    ALEXANDRIA, LA
+   503    ALTOONA, PA
+   504    AMARILLO, TX
+   506    ANN ARBOR, MI
+   508    ATLANTA, GA
+   509    AUGUSTA, GA (C)
+   512    MARYLAND HCS
+   515    BATTLE CREEK, MI
+   516    BAY PINES, FL
+   517    BECKLEY, WV
+   520    BILOXI, MS (C)
+   521    BIRMINGHAM, AL
+   526    BRONX, NY
+   529    BUTLER, PA
+   537    CHICAGO HCS
+   538    CHILLICOTHE, OH
+   539    CINCINNATI, OH
+   540    CLARKSBURG, WV
+   541    CLEVELAND, OH
+   542    COATESVILLE, PA
+   544    COLUMBIA, SC
+   546    MIAMI, FL
+   548    WEST PALM BEACH, FL
+   553    DETROIT, MI
+   557    DUBLIN, GA
+   558    DURHAM, NC
+   561    NEW JERSEY HCS
+   562    ERIE, PA
+   564    FAYETTEVILLE, AR
+   565    FAYETTEVILLE, NC
+   575    GRAND JUNCTION, CO
+   581    HUNTINGTON, WV
+   586    JACKSON, MS
+   590    HAMPTON, VA
+   593    LAS VEGAS, NV
+   595    LEBANON, PA
+   596    LEXINGTON, KY
+   598    LITTLE ROCK, AR (C)
+   603    LOUISVILLE, KY
+   608    MANCHESTER, NH
+   610    NORTHERN INDIANA HCS
+   613    MARTINSBURG, WV
+   614    MEMPHIS, TN
+   619    CENTRAL ALABAMA HCS
+   620    HUDSON VALLEY HCS
+   621    MOUNTAIN HOME, TN
+   623    MUSKOGEE, OK
+   626    TENNESSEE VALLEY HCS
+   629    NEW ORLEANS, LA
+   630    NEW YORK HCS
+   631    NORTHAMPTON, MA
+   632    NORTHPORT, NY
+   635    OKLAHOMA CITY, OK
+   637    ASHEVILLE, NC
+   642    PHILADELPHIA, PA
+   646    PITTSBURGH HCS
+   649    PRESCOTT, AZ
+   650    PROVIDENCE, RI
+   655    SAGINAW, MI
+   659    SALISBURY, NC
+   663    PUGET SOUND HCS
+   667    SHREVEPORT, LA
+   668    SPOKANE, WA
+   672    SAN JUAN, PR
+   676    TOMAH, WI
+   679    TUSCALOOSA, AL
+   689    CONNECTICUT HCS
+   692    WHITE CITY, OR (DOM)
+   693    WILKES BARRE, PA
+   740    TEXAS VALLEY COASTAL BEND HCS
+   756    EL PASO, TX
+   757    COLUMBUS, OH(OPC)
+   
+ ====================================================================
+   
+ Routine Information:
+ ===================
+ The checksums below are calculated using new checksums, and can be 
+ checked with CHECK1^XTSUMBLD.
+   
+ Routine Name    Official Checksum as of Mar 13, 2013
+ ============    ====================================
+ SRBL            19209911
+ SRBLOOD         20308980
+ SRCHL7A         18837235
+ SRCHL7U          3165191
+ SRCUSS          17905369
+ SRCUSS0         18030404
+ SRCUSS1         20239510
+ SRCUSS2         12026155
+ SRCUSS3         11048752
+ SRCUSS4         10127518
+ SRCUSS5          1779068
+ SRENSCS          7706764
+ SRHLDW           7515736
+ SRHLDW1          4690924
+ SRHLENV          2511607
+ SRHLMFN          4239429
+ SRHLOORU         7665460
+ SRHLORU         12930727
+ SRHLQRY          6244953
+ SRHLSCRN        26127710
+ SRHLU           12221625
+ SRHLUI          28751024
+ SRHLUO          25491414
+ SRHLUO1         22777639
+ SRHLUO2          3872359
+ SRHLUO3         25089400
+ SRHLUO4         27418679
+ SRHLUO4C        10352097
+ SRHLVOOR         7984518
+ SRHLVORU        14557624
+ SRHLVQRY         5995834
+ SRHLVU           1855705
+ SRHLVUI         15807237
+ SRHLVUI2        10653769
+ SRHLVUO         24398625
+ SRHLVUO1        23278123
+ SRHLVUO2         3906684
+ SRHLVUO4        26115450
+ SRHLVZIU         7355440
+ SRHLVZQR         7446765
+ SRHLVZSQ         5876891
+ SRHLXTMP          708492
+ SRHLZIU          8348995
+ SRHLZQR          7134421
+ SRO1L           15261949
+ SRO1L1          14121011
+ SROA30          24202198
+ SROABCH          9293045
+ SROACAR         13317261
+ SROACAR1         8943612
+ SROACAT         19181546
+ SROACC          25143542
+ SROACC0         26210969
+ SROACC1         16590247
+ SROACC2         15553723
+ SROACC3         15911250
+ SROACC4         14665771
+ SROACC5         17271167
+ SROACC6         14172012
+ SROACCM          8018534
+ SROACCT          7115220
+ SROACL1         32293061
+ SROACL2          3905416
+ SROACLN         12597200
+ SROACMP         34040143
+ SROACMP1        28325936
+ SROACOD         16578804
+ SROACOM         15413481
+ SROACOM1        19771311
+ SROACOP         23967302
+ SROACPM         53758075
+ SROACPM1        18824569
+ SROACPM2         6724131
+ SROACR1         22783448
+ SROACR2         15979431
+ SROACTH          7802049
+ SROACTH1        14856446
+ SROADEL          8483911   
+ SROADOC         11569145
+ SROADOC1        18854619
+ SROADX          91763601
+ SROADX1         93981084
+ SROADX2         32744906
+ SROAERR          5443025
+ SROAEX          13404461
+ SROAL1          23289544
+ SROAL11         20255252
+ SROAL2          19510513
+ SROAL21          9664688
+ SROALAB          6024559
+ SROALC          10775491
+ SROALCP         10185864
+ SROALCS         14078478
+ SROALCSP        12320846
+ SROALDP          3567455
+ SROALEC         24984327
+ SROALEN         11769493
+ SROALESS        19577615
+ SROALET         23195100
+ SROALL          13177619
+ SROALLP         12738077
+ SROALLS         19259517
+ SROALLSP        20260764
+ SROALM          22101707
+ SROALMN         24842259
+ SROALN1          9118535
+ SROALN2          9184341
+ SROALN3         12090037
+ SROALNC         19389319
+ SROALNO         15168639
+ SROALOG         26759607
+ SROALSL         11594141
+ SROALSS         17361953
+ SROALSSP        17160064
+ SROALST         13725112
+ SROALSTP        12194763
+ SROALT          13907550
+ SROALTP         12785479
+ SROALTS         15655356
+ SROALTSP        14316603
+ SROAMAN         16250806
+ SROAMEAS          450182
+ SROAMIS         17586751
+ SROAMIS1        10263251
+ SROANEST        54722958
+ SROANEW         18923715
+ SROANIN          5016187
+ SROANP          15991170
+ SROANP1         12005722
+ SROANR          14108247
+ SROANR0         27197122
+ SROANR1         11861888
+ SROANT          10975780
+ SROANTP         11181920
+ SROANTS         12602082
+ SROANTSP        12449043
+ SROAO            9259852
+ SROAOP          22239437
+ SROAOP1         11582758
+ SROAOP2         11756977
+ SROAOPS         12090766
+ SROAOSET         3998437
+ SROAOTH          6104912
+ SROAOUT         16161579
+ SROAPAS         28274307
+ SROAPC           1088877
+ SROAPCA         30319092
+ SROAPCA0          604813
+ SROAPCA1        30466791
+ SROAPCA2        19031580
+ SROAPCA3        26346165
+ SROAPCA4        15333948
+ SROAPIMS        27220554
+ SROAPM          44996096
+ SROAPR1A         6217869
+ SROAPR2         10438353
+ SROAPRE         16062002
+ SROAPRE1        13792714
+ SROAPRE2         9148135
+ SROAPRT1        17263679
+ SROAPRT2        11792393
+ SROAPRT3        11865696
+ SROAPRT4         6182812
+ SROAPRT5         5757110
+ SROAPRT6         5989513
+ SROAPRT7        30682535
+ SROAPS1         27027149
+ SROAPS2         17240705
+ SROAR           10043198
+ SROAR1          17090080
+ SROAR2          15038123
+ SROARET         19049777
+ SROARPT         46276819
+ SROASITE         2132818
+ SROASS          19270585
+ SROASS1         10102900
+ SROASSE         14102514
+ SROASSN          7342556
+ SROASSP          5254158
+ SROAT0P         15119995
+ SROAT0T          3942191
+ SROAT1P         18518763
+ SROAT1T          2755009
+ SROAT2P         18866996
+ SROAT2T          6257748
+ SROATCM         25780812
+ SROATCM1        57561203
+ SROATCM2         8932844
+ SROATCM3        12876503
+ SROATM1         25818950
+ SROATM2         35035640
+ SROATM3         24191349
+ SROATM4          9019353
+ SROATMIT         7128937
+ SROATMNO        36435737
+ SROATT          18589422
+ SROATT0         11732273
+ SROATT1          4083925
+ SROATT2          6215341
+ SROAUTL         41315079
+ SROAUTL0        21141152
+ SROAUTL1        19378590
+ SROAUTL2        35937353
+ SROAUTL3        13680381
+ SROAUTL4        55709470
+ SROAUTLC        28000682
+ SROAWL          32382594
+ SROAWL1         33694001
+ SROAX            1410911
+ SROBLOD          6495187
+ SROCAN           9376834
+ SROCAN0         16620958
+ SROCANUP         7695839
+ SROCASE             3119
+ SROCCAT         16992620
+ SROCD           20552354
+ SROCD0          61009295
+ SROCD1          22252247
+ SROCD2          22859343
+ SROCD3          25974520
+ SROCD4          27765963
+ SROCDX          21645937
+ SROCDX1         25247822
+ SROCDX2         14335464
+ SROCL1          11537820
+ SROCLAB          3998916
+ SROCMP          30406339
+ SROCMP1         17757697
+ SROCMP2          4970576
+ SROCMPD          2736170
+ SROCMPED        34021331
+ SROCMPL         16125230
+ SROCMPS         17061652
+ SROCNR           7185494
+ SROCNR1         18143422
+ SROCNR2         17572206
+ SROCODE          6396921
+ SROCOM           6818082
+ SROCOMP         18025907
+ SROCON           9128806
+ SROCON1          2288672
+ SROCOND             3160
+ SROCPT          12587576
+ SROCPT0         14774043
+ SROCRAT         11546314
+ SROCVER         31713915
+ SRODATE          4504549
+ SRODELA         16552696
+ SRODEV            310813
+ SRODIS          21345297
+ SRODIS0         20212068
+ SRODLA1         13469681
+ SRODLA2         17838233
+ SRODLAY         12197195
+ SRODLT          11375015
+ SRODLT0         13627039
+ SRODLT1          4370174
+ SRODLT2          5741314
+ SRODPT           2708172
+ SRODTH          12013664
+ SROERR          34000236
+ SROERR0         18120820
+ SROERR1         21611140
+ SROERR2         10283784
+ SROERRPO        12052674
+ SROES           26256773
+ SROESAD         32374327
+ SROESAD1        34222417
+ SROESAR         30442459
+ SROESAR0        11601591
+ SROESAR1        31464875
+ SROESAR2        30925923
+ SROESARA        22261959
+ SROESHL          7580303
+ SROESL           2207605
+ SROESNR         31682934
+ SROESNR0        39978191
+ SROESNR1        41160518
+ SROESNR2        34159372
+ SROESNR3         1183519
+ SROESNRA        23152586
+ SROESPR         27974669
+ SROESPR1        65495045
+ SROESPR2        10042548
+ SROESTV         12480052
+ SROESUTL         6409983
+ SROESX          27218249
+ SROESX0         12202497
+ SROESXA         16202604
+ SROESXP         15133480
+ SROFILE         16246959
+ SROFLD           3621103
+ SROGMTS         59971824
+ SROGMTS0        26721960
+ SROGMTS1        73229807
+ SROGMTS2        29817223
+ SROGTSR          7864759
+ SROHIS          65784676
+ SROICD            818894
+ SROICU           8073914
+ SROICU1         13994619
+ SROICU2         14071324
+ SROINQ          18402832
+ SROIRR           8545925
+ SROKEY          10306968
+ SROKEY1         11632529
+ SROKRET          1039924
+ SROLABS          8361411
+ SROLOCK         16348635
+ SROMED          20688417
+ SROMENU         21565979
+ SROMOD          38394892
+ SROMOD0         42153492
+ SROMOR          13955435
+ SROMORT         15904042
+ SRONAN           3232141
+ SRONAN1          9950439
+ SRONASS         17653883
+ SRONBCH          1890440
+ SRONEW          35630421
+ SRONIN          79594372
+ SRONITE          3746041
+ SRONON          11378996
+ SRONOP          25370271
+ SRONOP1         16584848
+ SRONOR          10376697
+ SRONOR1          6086472
+ SRONOR2         17794451
+ SRONOR3         17276324
+ SRONOR4         17388281
+ SRONOR5         17096598
+ SRONOR6          6241352
+ SRONOR7         17816972
+ SRONOR8         17438076
+ SRONP            5944291
+ SRONP0           6747040
+ SRONP1          11174803
+ SRONP2          17607439
+ SRONPEN         17073231
+ SRONRPT         27465848
+ SRONRPT0        63289001
+ SRONRPT1        27292461
+ SRONRPT2        19811275
+ SRONRPT3        26846038
+ SRONUR           3658216
+ SRONUR1         19808790
+ SRONUR2         20847856
+ SRONXR           1356097
+ SROOPRM         16314997
+ SROOPRM1         9283031
+ SROP            21464405
+ SROP1            4409373
+ SROPAC0          9572236
+ SROPAC1          4927507
+ SROPACT          7593412
+ SROPAT           5074821
+ SROPCE          75482609
+ SROPCE0         29268226
+ SROPCE0A        42322529
+ SROPCE0B        19503944
+ SROPCE1         42506082
+ SROPCEP         80453673
+ SROPCEU         46115593
+ SROPCEU0        24720463
+ SROPCEX          5206173
+ SROPDEL         20175732
+ SROPECS         26127239
+ SROPECS1        27273469
+ SROPER          12586025
+ SROPFSS          8994664
+ SROPLIS          4980104
+ SROPLIST        13562828
+ SROPLST1         7433292
+ SROPLSTS        21285954
+ SROPPC          16082459
+ SROPREQ          6344955
+ SROPRI          19452862
+ SROPRI1          3994544
+ SROPRI2         10046256
+ SROPRIN          2602233
+ SROPRIO         20219757
+ SROPRIT         10843399
+ SROPROC         20860366
+ SROPRPT          3491966
+ SROPS           13002966
+ SROPS1          14523964
+ SROPSEL          2165512
+ SROPSN          11285351
+ SROQ              206693
+ SROQ0            2820292
+ SROQ0A           1380442
+ SROQ30D         25737238
+ SROQADM         27368110
+ SROQD           31124608
+ SROQD0          26539053
+ SROQD1          12825991
+ SROQIDP         19872075
+ SROQIDP0        13343047
+ SROQL           27803674
+ SROQN           28925024
+ SROR             1974332
+ SRORACE          5400028
+ SRORAT1         15525737
+ SRORAT2          8206249
+ SRORATA          6538715
+ SRORATP          8208810
+ SRORATS          5061858
+ SROREA           3367781
+ SROREA1          7144644
+ SROREA2          9889096
+ SROREAS         10165170
+ SROREQ           5616049
+ SROREQ1         19647276
+ SROREQ2         17539162 
+ SROREQ3         18373002
+ SROREQ4         16096256
+ SROREST         12673663
+ SRORESV          6341223
+ SRORET          16864278
+ SRORHRS         13232112
+ SRORHRS0         7705610
+ SRORIN          18574612
+ SRORTRN          2179611
+ SRORUT          12937612
+ SRORUT0         21030480
+ SRORUT1          9358863
+ SRORUT2          5256365
+ SROSCH          16004233
+ SROSCH1         16320901
+ SROSCH2          4727693
+ SROSNR           7740903
+ SROSNR1         17789750
+ SROSNR2         17492823
+ SROSPC1         12463202
+ SROSPEC         13829631
+ SROSPLG         12933460
+ SROSPLG1         4812608
+ SROSPLG2         3361006
+ SROSPSS         16215009
+ SROSRPT          6149981
+ SROSTAFF        10259758
+ SROSTOP           520121
+ SROSUR          21092325
+ SROSUR1          5476319
+ SROSUR2         23072673
+ SROTHER         14170836
+ SROTIUD          4241608
+ SROTRIG           387037
+ SROTRPT          8419546
+ SROTRPT0        15250644
+ SROUNV           7447735
+ SROUNV1         10370902
+ SROUNV2         11504914
+ SROUTC          20577259
+ SROUTED          4931014
+ SROUTIN          5501608
+ SROUTL          43018873
+ SROUTL0         20639462
+ SROUTL1          3817248
+ SROUTLN          1090084
+ SROUTUP         11011407
+ SROVAR          34682815
+ SROVER          25619011
+ SROVER1         14904185
+ SROVER2         26717453
+ SROVER3         37508747
+ SROWC           20430751
+ SROWC1          16244877
+ SROWC2          13256878
+ SROWC3           8954546
+ SROWL           27493770
+ SROWL0          12998165
+ SROWRQ           6361588
+ SROWRQ1         19898120
+ SROXPR            856566
+ SROXR1          12767880
+ SROXR2          14060100
+ SROXR4           8706222
+ SROXREF          3587457
+ SROXRET         11967908
+ SRSAVG           5842281
+ SRSAVL          22424982
+ SRSAVL1         12305412
+ SRSBD1           2081645
+ SRSBDEL         24873371
+ SRSBLOK          4729663
+ SRSBOUT         34635928
+ SRSBUTL         34773230
+ SRSCAN          10909174
+ SRSCAN0         17191683
+ SRSCAN1          6477107
+ SRSCAN2         12903373
+ SRSCD           22375836
+ SRSCDS          18660318
+ SRSCDS1         15299047
+ SRSCDW          16148134
+ SRSCDW1         14666683
+ SRSCG            3129584
+ SRSCHAP         13083163
+ SRSCHC           8886316
+ SRSCHC1         11988538
+ SRSCHC2          1775654
+ SRSCHCA          8640617
+ SRSCHCC          9198696
+ SRSCHD           8441446
+ SRSCHD1          8338471
+ SRSCHD2         14636430
+ SRSCHDA         15325707
+ SRSCHDC         20661897
+ SRSCHK           3532910
+ SRSCHOR          6619520
+ SRSCHUN         30666407
+ SRSCHUN1         9878171
+ SRSCHUP          8681809   
+ SRSCONR         16632460
+ SRSCOR          14585410
+ SRSCPT          17336697
+ SRSCPT1         14019263
+ SRSCPT2         15586528
+ SRSCRAP         10314174
+ SRSDIS1          9832283
+ SRSDISP         11398688
+ SRSDT            8539486
+ SRSGRPH          9058294
+ SRSIND           3584732
+ SRSKILL         16932772
+ SRSKILL1        23566923
+ SRSKILL2         9377716
+ SRSMREQ          3695125
+ SRSPUT0         17322212
+ SRSPUT1          8610595
+ SRSPUT2          5230726
+ SRSRBS          20433248
+ SRSRBS1         17454065
+ SRSRBW          18556869
+ SRSRBW1         17186410
+ SRSREQ          17620484
+ SRSREQUT         9250947
+ SRSRQST         26866519
+ SRSRQST1        10838483
+ SRSTCH           4189292
+ SRSTIME         10072185
+ SRSUP1          26118535
+ SRSUPC           8595921
+ SRSUPRG          6046682
+ SRSUPRQ         28797469
+ SRSUTIN          4861288
+ SRSUTL           8481404
+ SRSUTL2          7870385
+ SRSWL            9893450
+ SRSWL1           9599536
+ SRSWL10         13585137
+ SRSWL11          8537522
+ SRSWL12         15196732
+ SRSWL13         11836392
+ SRSWL14         12851406
+ SRSWL15         10628031
+ SRSWL2           8385053
+ SRSWL3          17278759
+ SRSWL4           5707223
+ SRSWL5           2199214
+ SRSWL6          13914883
+ SRSWL7           9938716
+ SRSWL8          13147766
+ SRSWL9           7831756
+ SRSWLST         26590559
+ SRSWREQ         11509762
+ SRTOVRF          3588832
+ SRTPASS          6895418
+ SRTPCOM         18255698
+ SRTPDONR        23255580
+ SRTPHRT1        20289016
+ SRTPHRT2        14749738
+ SRTPHRT3        29966365
+ SRTPHRT4        10647755
+ SRTPHRT5        16458020
+ SRTPHRT6        20925868
+ SRTPKID1        22335138
+ SRTPKID2        11622344
+ SRTPKID3        22920528
+ SRTPKID4        14842762
+ SRTPKID6        11447092
+ SRTPLIV1        18127397
+ SRTPLIV2        17272501
+ SRTPLIV3        11751575
+ SRTPLIV4        18271645
+ SRTPLIV5        12380637
+ SRTPLIV6        15125679
+ SRTPLIV7        22391567
+ SRTPLS           8478091
+ SRTPLST          6305808
+ SRTPLSTP         5716142
+ SRTPLUN1        19782807
+ SRTPLUN2        12338846
+ SRTPLUN3        23740054
+ SRTPLUN5        22456445
+ SRTPNEW         31629734
+ SRTPPAS         15105323
+ SRTPRACE        12206490
+ SRTPRH          15224993
+ SRTPRH1         19779584
+ SRTPRH2         10615308
+ SRTPRK           9507819
+ SRTPRK1         17385598
+ SRTPRK2         11085476
+ SRTPRK3          2835990
+ SRTPRLI         14662175
+ SRTPRLI1        12730267
+ SRTPRLI2        16111293
+ SRTPRLU         13790018
+ SRTPRLU1        10274745
+ SRTPRLU2        10391149
+ SRTPSITE         1155460
+ SRTPSS          12591452
+ SRTPTM1         30165729
+ SRTPTM2          2860927
+ SRTPTMIT        13764550
+ SRTPTRAN         9242681
+ SRTPUTL         17836670
+ SRTPUTL4        68822462
+ SRTPUTLC        15681866
+ SRTPVAN         18785603
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : THOMAS,MARY JANE              Date Entered  : MAR 28, 2013
+Completed By: ALLARD,CHARLES                Date Completed: JUL 12, 2013
+Released By : MUSGROVE,STEVE                Date Released : JUL 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,400 @@
+$TXT Created by ESCALERA,Diego at CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 06/20/13 at 16:07
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: OR*3*354
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #322                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*339    <<= must be installed BEFORE `OR*3*354'
+
+Subject: CORRECT TWD AFTER MISSED APPOINTMENT ANTICOAGULATOR GUI
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch includes a new AMT GUI executable and corrects the following 
+ issues:
+  
+ 1) Anticoagulation Management Tool (AMT) GUI is designed to be invoked
+    from the Tools Menu in CPRS. The executable file (AntiCoagulate.exe) is
+    either placed on a workstation or in a network share directory. When
+    running from a network directory location the AMT Help file fails to
+    load. 
+    
+ 2) Users can flag a missed appointment in AMT so that the program can
+    calculate the 'Show Rate' given on the Demographics tab. This entry 
+    is also used in anticoagulation reports and utilities. In some cases 
+    after a missed appointment has been flagged the daily dosing and weekly
+    total dose erroneously revert to previous dosing amounts.
+  
+ 3) The VistA report Calculate TTR (Rosendaal Method) [ORAM ROSENDAAL 
+    TTR REPORT] is not considering missed appointment and inactive patient 
+    data properly in the calculation, which produces inaccurate TTR (time 
+    in therapeutic range) results.
+  
+ 4) When a progress note is entered in AMT it can be saved and signed
+    without requiring the user to enter the required information.
+  
+ 5) The AMT Utility tab provides the function "Pts lost to follow up" 
+    to search for patients in the anticoagulation program who have not been
+    seen recently. This function is not presenting the missed appointments
+    accurately.
+  
+ 6) If the daily tablet amount for Monday is entered as 0.25 the error
+    " '1/4' is not a valid floating point value" displays and the dosing
+    letter has a blank in the # of tablets box for Monday.
+  
+ 7) When INR results of "> 3.5" are sent to Anticoagulation Management 
+    GUI, they are being display as 3.5.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+    
+    
+ ASSOCIATED REMEDY:
+ ==================
+ 1. HD0000000514093 - Anticoagulation Clinical Tool Parameter Setup in
+                      VISTA 
+  
+ 2. HD0000000523093 - Incorrect TWD display following missed appt 
+                      PSPO #2110
+    Duplicates:
+    HD0000000622110
+    HD0000000511959           
+  
+ 3. HD0000000593233 - Rosendaal calculation incorrect
+  
+ 4. HD0000000599707 - Walla Walla (R1 site) problem with signed, no 
+                      text notes PSPO #2191
+  
+ 5. HD0000000602516 - Patients lost to follow up incorrect PSPO #2197
+  
+ 6. HD0000000719861 - When entering letter with o.25 dosing, letter
+                      shows blank and is giving error.
+  
+ 7. HD0000000769824 - INR result >3.5 on point of care device - fingerstick
+                      PSPO #2335
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate NY HCS, NY (Buffalo)
+ VA Sierra Nevada HCS, NY (Reno)
+ VA N. Florida/S. Georgia HCS (Gainesville)
+ Dublin VAMC, GA
+ VA East Colorado HSC (Denver)    
+    
+ REMEDY OVERVIEW:
+ ================
+ 1. HD0000000514093 - Anticoagulation Clinical Tool Parameter Setup in
+                      Vista
+  
+ Problem:
+ --------
+ When the AMT GUI is executed from a network directory location the Help
+ file fails to load upon selecting Contents from the AMT Help menu pull
+ down.
+      
+ Resolution:
+ -----------
+ The AMT GUI has been updated to always check the directory location that
+ the executable is running from (local or remote network) for the existence
+ of the Help file.
+  
+ **NOTE** Microsoft Windows 7 internal security does not allow files with 
+    the .hlp extension to be accessed from a remote network location. This 
+    is a known issue with Windows 7 and the resolution is not in the scope
+    of this patch.   
+  
+   
+ 2. HD0000000523093 - Incorrect TWD display following missed apt
+  
+    Patient Safety Issue: PSPO #2110
+  
+ Problem:
+ --------
+ After a user records a missed appointment there is a possibility for the
+ daily dosing schedule and total weekly dosage to erroneously revert
+ to a previous dates dosing schedule. This was caused by the incorrect date
+ of the last INR being recorded as the date the missed appointment was
+ entered in the tool.
+    
+ Resolution:
+ -----------
+ The AMT GUI will now record the date of the last recorded INR result when
+ a missed appointment is listed on the activity table of the Flowsheet tab.
+      
+ **NOTE** It should be known that when a missed appointment is entered,
+ there is no automatic date entry for when the missed appointment occurred.
+ The date on the Anticoagulation Activity tab will display in chronological
+ order as it relates to the last INR date.
+  
+      
+ 3. HD0000000593233 - Rosendaal calculation incorrect
+  
+ Problem:
+ --------
+ The clinic and facility-wide calculation of the TTR using the Rosendaal
+ method includes inactive patients and missed appointments. This is causing
+ the report to produce inaccurate results.
+     
+ Resolution:
+ -----------
+ Because the Rosendaal method does not take inactive patients and missed
+ appointment entries into account, routine ORAMTTR has been modified to
+ include two options when a user selects Calculate TTR (Rosendaal Method) 
+ facility-wide report: 
+  
+             I    Include inactive patients and missed appointments
+             E    Exclude inactive patients and missed appointments
+  
+ Selecting the include report will produce the same report as before 
+ installing this patch; and selecting the exclude report will omit 
+ patients that are considered inactive as well as missed appointment 
+ entries. Patients are determined to be inactive if they are marked
+ inactive in the ORAM FLOWSHEET file (#103) or they have a span of more
+ than 56 days without an INR result recorded in the selected date range.
+      
+ 4. HD0000000599707 - Walla Walla (R1 site) problem with signed, no text 
+                      Notes
+  
+    Patient Safety Issue: PSPO #2191
+  
+ Problem:
+ --------  
+ It is possible to create and sign Anticoagulation discharge notes
+ that contain no text while in the AMT GUI. This GUI was not checking for
+ the necessary note information when the user completes the AMT visit.
+     
+ Resolution:
+ -----------
+ The AMT GUI has been modified to require the user to select and 
+ complete at least one input check box and its associated text (if 
+ any) in the discharge note dialog box before allowing the user to sign
+ the note. 
+  
+ When the patch is installed, the post-install routine ORY354 will 
+ automatically run and search all TIU notes for patients with entries 
+ in the ORAM FLOWSHEET file (#103) for any that were signed with no 
+ text entry. This routine may take some time to run, based on the number of
+ records in File #103 ORAM FLOWSHEET. The search results will be listed in
+ a Mailman message with the subject line "ANTICOAG PATIENTS WITH BLANK
+ NOTES". This message will be received by the person installing the patch
+ and should be provided to the appropriate person at each site responsible
+ for anticoagulation tracking and management. A sample message is displayed
+ below:
+  
+ Subj: ANTICOAG PATIENTS WITH BLANK NOTES  [#644359] 02/08/13@14:42 18 
+ lines
+ From: CPRS, SEARCH  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+   The check for anticoag patients with blank notes is complete.
+  
+   Here is the list of the affected patients: 
+  
+ Patient                        Note Title                     Note Date
+ FUXTS,PLYIL Z                  ANTICOAG CLINIC CONSULT RESULT Dec 12, 2012
+ LDYIYHU,PDAALUI W              ANTICOAG CLINIC CONSULT RESULT Dec 12, 2012
+ SZDSE,CHTTH S TU               ANTICOAG CLINIC CONSULT RESULT Dec 12, 2012
+ SZDAHN,CXEY Z                  ANTICOAG CLINIC CONSULT RESULT Feb 04, 2013
+ CPRSPATIENT,ONELH              ANTICOAG CLINIC CONSULT RESULT Feb 08, 2013
+ CPRSPATIENT,EIGHT              ANTICOAG CLINIC CONSULT RESULT Feb 04, 2013
+ CRAADSXY,PDAADLZ S             ANTICOAG CLINIC CONSULT RESULT Dec 13, 2012
+ CRAELZ,IXYLAI U                ANTICOAG CLINIC CONSULT RESULT Feb 08, 2013
+  
+ (end of example)
+  
+      
+ 5. HD0000000602516 - Patients lost to follow up incorrect
+  
+    Patient Safety Issue: PSPO #2197
+  
+ Problem:
+ --------
+ The utility option "Pts lost to follow up" is used to locate and display
+ patients in the anticoagulation program who have not been seen recently. 
+ However, the entry of a missed appointment is being considered the same as
+ a patient visit by the utility. This may result in providers incorrectly
+ surmising that a patient has been seen recently, when they have actually
+ missed an appointment.
+  
+   
+ Resolution:
+ -----------
+ Routine ORAM2 has been modified to change the lost to follow up utility
+ so that it will now display both the last missed appointment within the
+ selected date range if one exists, and the existing last seen date, which
+ is the first date outside the date range that contains an INR. It should
+ be noted that the missed appointment date that displays may not be the
+ date the missed appointment was recorded and may not be the actual date of
+ the missed appointment.
+      
+ 6. HD0000000719861 - When entering letter with o.25 dosing, letter shows
+ blank and is giving error
+  
+ Problem:
+ --------
+ When entering the numeric value of one-fourth tablet as 0.25 in the 
+ AMT dosing schedule for a Monday, the error " '1/4' in not a valid 
+ floating point value" displays to the user when printing or reviewing the
+ letter. On the letter, Monday's tablet size is blank. When going back to
+ look at the dosing schedule in AMT, Monday's tablet dosing displays the
+ "1/4" character instead of the correct decimal 0.25 value.
+  
+ Resolution:
+ -----------
+ The AMT GUI has been modified to correctly accept the value of 0.25 and
+ use the "1/4" character only for the printed letter and not for the actual
+ dosing schedule in AMT.
+  
+ 7. HD0000000769824 - INR result >3.5 on point of care device - fingerstick
+  
+    Patient Safety Issue: PSPO #2335
+    
+ Problem:
+ --------
+ INR results that are received from the Lab package with a "<" or ">" 
+ symbol are displayed in the AMT GUI without the symbol. This is
+ particularly a problem with Point of Care devices, as some report INR 
+ results over 3.5 as ">3.5". The AMT software strips off the symbol
+ when displaying a result containing these symbols.
+  
+ Resolution:
+ -----------
+ Update the AMT software to display the "<" or ">" before the numeric value
+ of the INR result in the AMT GUI. All INR results that were received from
+ the Lab package containing either symbol before installing this patch 
+ will display the appropriate symbol after installing OR*3*354.
+  
+ INR results that were stored in File #103 ORAM FLOWSHEET without the 
+ accompanying symbol before patch OR*3*354 was installed will display on 
+ the AMT graph as ">#/#" (">3.5/3.5").
+  
+  
+      
+ SOFTWARE RETRIEVAL:
+ ===================
+ To obtain the updated client software, use FTP to retrieve OR_30_354.zip
+ from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+ directories:
+    
+ OI Field Office    FTP Address                 Directory
+ ---------------    -----------                 ---------
+ Albany             ftp.fo-albany.domain.ext    anonymous.software
+ Hines              ftp.fo-hines.domain.ext     anonymous.software 
+ Salt Lake City     ftp.fo-slc.domain.ext       anonymous.software
+   
+ The software distribution includes this file:  OR_30_354.zip (1.04 MB)
+   
+ FILE NAME          RETRIEVAL FORMAT    
+ ---------          ----------------
+ OR_30_354.ZIP      BINARY
+   
+   
+ ZIP FILE CONTENTS          DESCRIPTION           FILE VERSION    
+ -----------------          -----------           ------------
+ AntiCoagulate.exe          Client                1.0.354.10
+ Anticoag_help_file.hlp     Client help file    
+ Anticoag help file.cnt     Client help TOC file
+  
+   
+ GUI Client installation instructions are in the Anticoagulation 
+ Management Installation/Implementation Guide in the VistA Documentation
+ Library:
+ http://www.domain.ext/vdl.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*354):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package OR*3.0*354.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+        c.  When prompted "Running Post-Install Routine: EN1^ORY354
+            Requested Start Time: NOW//", answer NOW or enter a future
+            date/time. 
+  
+ POST INSTALL INSTRUCTIONS:
+ ==========================
+ INSTALLER: Routine ORY354 produces a Mailman message. (RE: Issue #4)
+ Please provide the Mailman message and this Patch Description to the VA
+ site Patient Safety Manager (PSM) for distribution to the Anticoagulation
+ Management Tool (AMT) Coordinator for further dissemination to the AMT
+ users.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 12
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM2
+    Before:B121018591   After:B139162666  **307,339,354**
+Routine Name: ORAMTTR
+    Before: B84841974   After: B99608227  **307,339,354**
+Routine Name: ORY354
+    Before:       n/a   After:  B9049892  **354**
+ 
+Routine list of preceding patches: 339
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : SEP 22, 2011
+Completed By: HULET,LEE ANN                 Date Completed: AUG 12, 2013
+Released By : STOKER,ELAINE                 Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

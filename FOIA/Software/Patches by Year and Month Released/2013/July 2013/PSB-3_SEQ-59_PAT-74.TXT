@@ -1,0 +1,203 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 10/25/12 at 11:28
+=============================================================================
+Run Date: JUL 08, 2013                     Designation: PSB*3*74
+Package : PSB - BAR CODE MED ADMIN            Priority: EMERGENCY
+Version : 3        SEQ #59                      Status: Released
+                  Compliance Date: AUG 07, 2013
+=============================================================================
+
+Associated patches: (v)PSB*3*42    <<= must be installed BEFORE `PSB*3*74'
+                    (v)PSB*3*62    <<= must be installed BEFORE `PSB*3*74'
+                    (v)PSB*3*68    <<= must be installed BEFORE `PSB*3*74'
+
+Subject: UNABLE TO ACCESS IVP TAB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 3 issues:
+  
+ 1.  A broker error occurs when attempting to open BCMA (Bar Code
+     Medication Administration) for a patient who has an Intravenous 
+     Piggyback (IVPB) medication with an unknown Action Status. 
+ 2.  The header on several reports do not delineate a patient's room
+     number with a colon.
+ 3.  The BCMA Missed Medications Report does not contain meds that
+     are held or refused when run in VistA.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+  N/A
+   
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC0000000763064 - Installed BCMA Patch, one patient receiving error. 
+                  Unable to open BCMA for that patient.  Broker RPC Error:
+    Duplicate:
+    INC0000000773994
+    INC0000000774952
+  
+ 2. INC0000000738057 - All Reports prompt for RM (Room) need to  be 
+                       delaminated by a colon (:).
+  
+ 3. INC0000000749807 - Inpatient Medications - Other: MisMed Report Issue
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Indianapolis VAMC
+ Atlanta VAMC
+ Pittsburgh HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000000763064 - Installed BCMA Patch, one patient receiving error. 
+                  Unable to open BCMA for that patient.  Broker RPC Error:
+  
+    Problem:
+    --------
+    A broker error occurs when attempting to open BCMA for a patient who
+    has an Intravenous Piggyback (IVPB) medication with an unknown Action
+    Status.
+  
+  
+    Resolution:
+    -----------
+    Routine PSBVT was modified to set the variable PSBMRIEN when an unknown
+    action occurs for an IVPB medication.
+  
+  
+ 2. INC00000000738057 - All Reports prompt for RM (Room) need to be
+                       delaminated by a colon (:).
+  
+    Problem:
+    --------
+    The header on the BCMA Administration Times report, the BCMA Cover
+    Sheet reports, Due List report, IV Bag Status report, Medication
+    History Report, Medication Therapy report, Medication Variance Log
+    report, Missed Medications report, PRN Effectiveness Log report, and
+    Medication History report do not have a colon to delineate "Rm" from
+    the room number. 
+  
+    Resolution:
+    -----------
+    Routine PSBOHDR was modify to include a colon (:) after the "Rm"
+  
+  
+ 3. INC00000000749807 - Inpatient Medications - Other: MisMed Report Issue
+  
+    Problem:
+    --------
+    The BCMA Missed Medications Report does not contain medications that
+    are held or refused when run in VistA.
+  
+    Resolution:
+    -----------
+    Routine PSBOMM2 was modified to include held and refused medications in
+    the VistA report.
+  
+    NOTES:
+    ------
+    Routine APSPFUNC called from PSBOHDR are Indian Health
+    Services only routines and will display as an XINDEX error when
+    installing this patch in VA Accounts.  This functionality was
+    introduced by patch PSB*3.0*42. This enhancement is intended to enable
+    the BCMA application to recognize whether it is operating in the Indian
+    Health Service (IHS) or Veterans Health Administration (VHA)
+    environment, and respond by recognizing and displaying the patient
+    identifier appropriate to the environment. This will enable a single
+    version of BCMA to be maintained by VHA and yet be installed and
+    operate in a "plug and play" fashion in an IHS or Tribal facility
+    running Resource and Patient Management System (RPMS).
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+       
+     **********************************************************
+     * If your site is using Biopoint wristband printers,     *
+     * please contact Biopoint to ensure your site has the    *
+     * latest compatible Biopoint Software.                   *
+     **********************************************************
+  
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*74):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*74.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//" respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+          Missed Medications   [PSBO MM]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOHDR
+    Before: B25151951   After: B25654134  **5,13,42,74**
+Routine Name: PSBOMM2
+    Before: B40308817   After: B40365491  **26,32,51,62,74**
+Routine Name: PSBVT
+    Before: B79719168   After: B80815673  **6,3,38,68,74**
+ 
+Routine list of preceding patches: 42, 62, 68
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : OCT 12, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: JUL 01, 2013
+Released By : LYTTLE,KIM M                  Date Released : JUL 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,240 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 08/15/12 at 16:15
+=============================================================================
+Run Date: SEP 03, 2013                     Designation: OR*3*363
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #321                      Status: Released
+                  Compliance Date: OCT 04, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*268    <<= must be installed BEFORE `OR*3*363'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*363'
+
+Subject: DISPENSE DRUG ISSUES,COMPLEX ORDER ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Computerized Patient 
+ Record System (CPRS) package:
+   
+ 1. If the dispensed drug is changed when an inpatient medication order is
+    finished by pharmacy there may be no indication visible on the CPRS
+    Order Tab View Orders or Meds tab that a change has been made. The new
+    drug is only displayed in the "Dispensed Drug" text of the order 
+    detail.
+  
+ 2. Remove routine created by OR*3*268.
+  
+ 3. If pharmacy changes the drug while processing an outpatient medication
+    order there may be no indication visible on the CPRS Order Tab View 
+    Orders view or Meds tab that a change has been made. The new drug is
+    only displayed in the "Dispensed Drug" text of the order detail.
+  
+ 4. Large complex outpatient orders erroneously indicate a change has been 
+    made by pharmacy when viewed on the CPRS Order Tab View Orders when 
+    no change was actually made.
+   
+  
+ ASSOCIATED REMEDY:
+ ==================
+  
+ 1. HD0000000102172 - RENEWAL ORDER PRINTING WRONG DISPENSE DRUG
+                      PSPO #205
+    Duplicate:
+    HD0000000711874  PSPO #2260
+  
+ 2. HD0000000258432 - Need to remove routine created in OR*3*268
+  
+ 3. HD0000000618076 - MIS-MATCH BETWEEN ORDER TAB CPRS AND ACTUAL SIG
+                      PSPO #2250
+    Duplicates:
+    HD0000000398679 
+    HD0000000710861
+    HD0000000800113 PSPO #2364
+  
+ 4. HD0000000735586 - Canceling a complex order change creates an unwanted 
+                      action in CPRS
+   
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Upstate NY HCS (Albany, Buffalo) NY
+ Mountain Home VAMC, TN
+ VA Salt Lake City HCS, UT
+ Orlando VAMC, FL
+ Cleveland VAMC, OH 
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. HD0000000102172 -RENEWAL ORDER PRINTING WRONG DISPENSE DRUG
+  
+    Patient Safety Issue: PSPO #205
+  
+ Problem:
+ --------
+ When pharmacy [PSJ OE] changes the dispensed drug of an inpatient 
+ medication order, and no other fields are changed, this edit may not be
+ recognized by the order entry software as a service correction or change
+ to the order when viewed again in CPRS. This problem is most noticeable
+ with medications dispensed as inhalants or drops. The dispensed drug
+ entered by pharmacy displays in the CPRS order detail view in the
+ "Dispensed Drugs (units/dose):" field, but without a change indicator to
+ prompt the user to view the order detail, this information could be missed
+ and patients could receive incorrect doses.
+  
+ Resolution:
+ -----------
+ Routine ORMPS2 has been modified to recognize a change to the dispensed 
+ drug by pharmacy as a service correction. In CPRS, when in View Orders 
+ view, the medication will be preceded by an asterisk (*) indicating that 
+ the order was changed as a service correction, and a new entry in the 
+ order's activity log will record the change. In some instances, depending 
+ on the medication ordered, the medication information displayed in View 
+ Orders will update to include the dispensed drug information.  
+  
+  
+ 2. HD0000000258432 - Remove routine created in OR*3*268
+  
+ Problem:
+ --------
+ Patch OR*3.0*268 created the temporary routine ORY268 to produce a 
+ one-time MailMan message that reported when updating completed for the 
+ NAME field (#.01) and the MESSAGE TEXT field (#.03) of two OE/RR 
+ NOTIFICATIONS: IMAGING RESULTS, NON CRITICAL and ABNL IMAGING RESLT, NEED 
+ ATTN. The compliance date for OR*3*268 was October 6, 2009. Routine 
+ ORY268 is now obsolete and should be removed from the system.  
+  
+ Resolution:
+ -----------
+ Installing OR*3*363 deletes routine ORY268 if it is present.
+  
+  
+ 3. HD0000000618076 - MIS-MATCH BETWEEN ORDER TAB CPRS AND ACTUAL SIG
+   
+    Patient Safety Issue: PSPO #2250
+   
+ Problem:
+ --------
+ When processing an outpatient medication order, if pharmacy [PSO LM 
+ BACKDOOR] dispenses a different strength of tablet with a different 
+ number of tablets to take, keeping the total dosage unchanged, there 
+ may be no indication visible on the CPRS Order Tab View Orders view or
+ Meds tab that a change has been made. The new strength and number is only
+ displayed in the "Dispensed Drug" text of the order detail, but without a 
+ change indicator to prompt the user to view the order detail, it is 
+ possible that a patient could be given the incorrect dose information 
+ displayed in the View Orders view. 
+  
+ Resolution:
+ -----------
+ Routine ORMPS2 has been modified to recognize a change to the strength of 
+ the medication and number of tablets to take as a service correction. In 
+ CPRS, when in View Orders, the medication will be preceded by an asterisk 
+ (*) indicating that the order was changed as a service correction, and a 
+ new entry in the order's activity log will record the change. The new 
+ medication strength and number of tablets to take will be displayed in
+ View Orders on the Orders and Meds tab, and also in the order details.
+  
+ 4. HD0000000735586 - Canceling a complex order change creates an unwanted
+    action in CPRS
+  
+ Problem:
+ --------
+ When pharmacy [PSO LM BACKDOOR] finishes a large complex outpatient order 
+ (at least 3 lines), or aborts an edit to an active large complex
+ outpatient order, when the order is viewed again in CPRS on the Order Tab
+ View Orders view and Meds tab the medication is preceded by an asterisk
+ (*) and an entry in the order's activity log is recorded as if a change
+ was made, when in fact, no change was actually made.
+  
+ Resolution:
+ -----------
+ The HL7 returned from PSO was longer than expected resulting in one piece 
+ getting pushed to another segment, causing the record to be evaluated as 
+ a change. The code has been changed to use the $$FIND^ORM API to find the 
+ quantity and refill codes in the HL7 message so the evaluation is done on 
+ the correct values.    
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*363):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package OR*3.0*363.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMPS2
+    Before: B47758235   After: B49592916  **94,116,129,134,186,190,195,
+                                           215,265,243,280,363**
+Routine Name: ORY268
+    Before:  B3844585   After:    Delete  
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  : AUGUSTINIAK,MARK              Date Entered  : JUL 16, 2012
+Completed By: HULET,LEE ANN                 Date Completed: AUG 28, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : SEP 03, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

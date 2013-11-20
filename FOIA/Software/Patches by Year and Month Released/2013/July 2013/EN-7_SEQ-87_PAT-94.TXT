@@ -1,0 +1,600 @@
+
+=============================================================================
+Run Date: JUL 16, 2013                     Designation: EN*7*94
+Package : EN - ENGINEERING                    Priority: Mandatory
+Version : 7        SEQ #87                      Status: Released
+                  Compliance Date: AUG 16, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization: ENGINEERING 7.0
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is issued as directed in Memorandum: Open Source
+ VistA Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this 
+ document for specific details.
+   
+ A review of the VistA Standardization routines was completed for
+ ENGINEERING version 7.0. A baseline list of the nationally released M 
+ routines and their official checksums is included below. VistA 
+ Standardization Certification represents the matching of the routine
+ checksums, compared in the site's Production account only.
+   
+ The VistA Standardization Team performed an analysis of each site's
+ Production environment. For any site with routine checksum variance, this
+ team worked with the site to remediate any variance from the baseline.  
+ After the completion of this process, sites with no variance were
+ identified as VistA Standardization Certified for the package. There is NO
+ additional action required on the part of these sites.
+   
+ For sites which had variance (local modification) and determined it was
+ important to maintain for their Production environment, a waiver was
+ requested. If approved, the waiver allows retention of the local
+ modification to a VistA Standardization routine, as detailed in VA
+ Directive 6402.
+   
+ Each site will be placed on one of the lists below:  
+       VistA Standardization Certified Sites
+       Sites with Approved/Pending Waiver
+       Non-Compliant Sites with Pending Remediation
+  
+ The expectation for sites on the Non-Compliant Sites with Pending
+ Remediation list is for their remediation to be completed, by either
+ removing the modification or requesting a waiver. There will NOT be an
+ additional Informational Only patch to move the site to the VistA
+ Standardization Certified Sites list.
+   
+ Please Note:
+     Environment check routines, pre or post installation routines 
+     remaining from  previously installed patches, compiled routines 
+     (e.g. cross-reference), or prior package version routines, will NOT 
+     affect your site's standardization compliance.  Their existence, or 
+     non-existence, at your site, or on the VistA Standardization routines
+     list below, does not impact the VistA Standardization Certification. 
+  
+     VistA Standardization Certification for this package applies to the
+     date specified in the Official Checksum heading below. If additional
+     patches, or a newer version for the package, has been released since
+     this date, the checksums for affected routines will be different. 
+     For these routines, refer to the patch/version documentation for the
+     most up-to-date checksums.
+    
+ Note: Site 556, NORTH CHICAGO, IL is exempt from this project objective.
+  
+  
+ Sites with Approved/Pending Waiver:
+ ==================================
+    402    TOGUS, ME  -  Waiver #s 180494, 180514, 180517, 186494, 190001
+    437    FARGO, ND  -  Waiver #s 174645, 174653, 174658
+    438    SIOUX FALLS, SD  -  Waiver #s 174645, 174653, 174658
+    516    BAY PINES, FL  -  Waiver #s 188947, 188961
+    526    BRONX, NY  -  Waiver #s 186496, 186502, 186507, 186511, 186512, 
+                         186515
+    528    UPSTATE NEW YORK HCS  -  Waiver # 194095
+    541    CLEVELAND, OH  -  Waiver #s 189661, 189671, 189683, 189692
+    549    NORTH TEXAS HCS  -  Waiver # 173026
+    552    DAYTON, OH  -   Waiver # 176738 
+    561    NEW JERSEY HCS  -  Waiver #s 184345, 184349, 184364 
+    568    BLACK HILLS HCS  -  Waiver #s 174645, 174653, 174658
+    573    NORTH FLORIDA/SOUTH GEORGIA  -  Waiver # 175396 
+    578    HINES, IL  -  Waiver # 188717 
+    589    HEARTLAND-WEST HCS  -  Waiver #s 180060, 186850, 189687, 186901
+    618    MINNEAPOLIS, MN  -  Waiver #s 172919, 173605, 173618, 173631, 
+                               173639, 174645, 174653, 174957, 174658,
+                               174957, 178055
+    626    TENNESSEE VALLEY HCS  -   Waiver # 181054 
+    630    NEW YORK HCS  -  Waiver # 184180
+    652    Richmond, VA  Waiver # 180738 
+    656    ST CLOUD, MN  -  Waiver #s 174645, 174653, 174658
+    657    HEARTLAND-EAST HCS  -  Waiver # 186901
+    674    CENTRAL TEXAS HCS  -  Waiver #s 172712, 172868
+    675    ORLANDO, FL  -  Waiver # 186494
+    679    TUSCALOOSA, AL  -  Waiver # 172868
+    688    WASHINGTON, DC  -  Waiver #s 178899, 178906, 178912, 178915
+    695    MILWAUKEE, WI  -  Waiver #s 171728
+  
+   
+ Non-Compliant Sites with Pending Remediation:
+ ============================================
+    459    HONOLULU, HI - Routines ENPL2, ENPL3, ENPL4, ENPL5, ENPL9,
+                          ENPLSV, ENPLSV3, ENPLSV4, ENWONEW1
+    463    ANCHORAGE, AK (OPC) - Routines ENCTREAD, ENEQNX1, ENLBL7
+    516    BAY PINES, FL - Routines ENEQNX5, ENLBL7
+    518    BEDFORD, MA - Routines ENWOD2, ENWONEW, ENWOP2
+    531    BOISE, ID - Routines ENEQNX4, ENEQPMS5, ENLBL7
+    537    CHICAGO HCS - Routines EN, ENEQPMP3, ENWO1, ENWO2, ENWONEW
+    541    CLEVELAND, OH - Routine ENLBL7
+    549    NORTH TEXAS HCS - Routine ENSP
+    554    EASTERN COLORADO HCS - ENEQRP, ENEQRP5, ENLBL4, ENLBL7
+    575    GRAND JUNCTION, CO - Routine ENLBL7 
+    578    HINES, IL - Routines ENEQRP5, ENWO1
+    585    IRON MOUNTAIN, MI - Routines ENPL2, ENPL3, ENPL4, ENPL5, ENPL9,
+                               ENPLSV3, ENPLSV4 
+    600    LONG BEACH, CA - Routines ENLBL4, ENLBL7, ENWO2, ENWOD2, 
+                            ENWONEW1, ENWONEW3
+    605    LOMA LINDA, CA - Routines ENETRAN2, ENEQ2, ENEQNX5, ENLBL7, 
+                            ENWONEW 
+    607    MADISON, WI - Routines ENLBL7, ENWO
+    612    NORTHERN CALIFORNIA HCS - Routines ENLBL7, ENWO
+    640    PALO ALTO HCS - Routine ENLBL7
+    649    PRESCOTT, AZ - Routines ENCTREAD, ENEQPMR4,ENEQPMS5, ENSP, ENPLX
+    653    ROSEBURG, OR - Routines ENCTREAD, ENEWOD, ENLBL7, ENWONEW
+    660    SALT LAKE CITY, UT - Routines ENARG21, ENEQPMP1, ENJINJ1, ENLBL7
+    662    SAN FRANCISCO, CA - Routines ENWOCOMP, ENCTREAD, ENEQ2, ENEQNX4,
+                               ENEQNX5 ENEQRPI, ENEWOD1, ENLBL7, ENUTL,
+                               ENWOD, ENWOD1, ENWOD2, ENWONEW2, ENWOP1
+    664    SAN DIEGO, CA - Routine ENEQRP2
+    678    TUCSON, AZ - Routines ENEQNX4, ENEQPMR1, ENEQPMR4, ENWO1, 
+                        ENWOD2, ENWONEW1, ENY2REP9
+    691    VA GREATER LOS ANGELES HCS -  Routine ENWO2
+    695    MILWAUKEE, WI - Routines ENWO2, ENETRAN, ENEWOD, ENEWOD1, 
+                           ENLBL4, ENLBL7, ENSP2, ENSP3, ENWARD2, ENWOD,
+                           ENWOD1, ENWOD2, ENWOD3, ENWONEW, ENWOP, ENWOP1,
+                           ENWOP3
+  
+   
+ VistA Standardization Certified Sites:
+ =====================================
+   358    MANILA OC, PI
+   405    WHITE RIVER JUNCTION, VT
+   436    MONTANA HCS
+   442    CHEYENNE, WY
+   460    WILMINGTON, DE
+   501    ALBUQUERQUE, NM
+   502    ALEXANDRIA, LA
+   503    ALTOONA, PA
+   504    AMARILLO, TX
+   506    ANN ARBOR, MI
+   508    ATLANTA, GA
+   509    AUGUSTA, GA (C)
+   512    MARYLAND HCS
+   515    BATTLE CREEK, MI
+   517    BECKLEY, WV
+   519    BIG SPRING, TX
+   520    BILOXI, MS (C)
+   521    BIRMINGHAM, AL
+   523    BOSTON HCS
+   529    BUTLER, PA
+   534    CHARLESTON, SC
+   538    CHILLICOTHE, OH
+   539    CINCINNATI, OH
+   540    CLARKSBURG, WV
+   542    COATESVILLE, PA
+   544    COLUMBIA, SC
+   546    MIAMI, FL
+   548    WEST PALM BEACH, FL
+   550    ILLIANA HCS
+   553    DETROIT, MI
+   557    DUBLIN, GA
+   558    DURHAM, NC
+   562    ERIE, PA
+   564    FAYETTEVILLE, AR  
+   565    FAYETTEVILLE, NC
+   570    FRESNO, CA
+   580    HOUSTON, TX
+   581    HUNTINGTON, WV
+   583    INDIANAPOLIS, IN (C)
+   586    JACKSON, MS
+   590    HAMPTON, VA
+   593    LAS VEGAS, NV
+   595    LEBANON, PA
+   596    LEXINGTON, KY
+   598    LITTLE ROCK, AR (C)
+   603    LOUISVILLE, KY
+   608    MANCHESTER, NH
+   610    NORTHERN INDIANA HCS
+   613    MARTINSBURG, WV
+   614    MEMPHIS, TN
+   619    CENTRAL ALABAMA HCS
+   620    HUDSON VALLEY HCS
+   621    MOUNTAIN HOME, TN
+   623    MUSKOGEE, OK
+   629    NEW ORLEANS, LA
+   631    NORTHAMPTON, MA
+   632    NORTHPORT, NY
+   635    OKLAHOMA CITY, OK
+   636    CENTRAL PLAINS HCS
+   637    ASHEVILLE, NC
+   642    PHILADELPHIA, PA
+   644    PHOENIX, AZ
+   646    PITTSBURGH HCS
+   648    PORTLAND, OR (C)
+   650    PROVIDENCE, RI
+   654    RENO, NV
+   655    SAGINAW, MI
+   658    SALEM, VA
+   659    SALISBURY, NC
+   663    PUGET SOUND HCS
+   666    SHERIDAN, WY
+   667    SHREVEPORT, LA
+   668    SPOKANE, WA
+   671    SOUTH TEXAS HCS
+   672    SAN JUAN, PR
+   673    TAMPA, FL
+   676    TOMAH, WI
+   687    WALLA WALLA, WA
+   689    CONNECTICUT HCS
+   692    WHITE CITY, OR (DOM)
+   693    WILKES BARRE, PA
+   740    TEXAS VALLEY COASTAL BEND HCS
+   756    EL PASO, TX
+   757    COLUMBUS, OH(OPC)
+   
+ ====================================================================
+   
+ Routine Information:
+ ===================
+ The checksums below are calculated using new checksums, and can be 
+ checked 
+  
+ with CHECK1^XTSUMBLD.
+   
+ Routine Name    Official Checksum as of March 13, 2013
+ ============    ======================================
+ EN              6977397
+ ENAEMS          15418310
+ ENAR            1536322
+ ENAR1           19139912
+ ENAR2           2402488
+ ENARG           41203317
+ ENARG1          16862275
+ ENARG2          3918260
+ ENARG21         12719305
+ ENARG22         2750927
+ ENARG23         29414381
+ ENARGO          30969579
+ ENARGR          27203237
+ ENARL           8783049
+ ENARS           2388838
+ ENARY101        15440818
+ ENARY102        5841500
+ ENARY11         7220242
+ ENARY12         4269557
+ ENARY13         3443929
+ ENARY14         11259358
+ ENARY201        17496101
+ ENARY202        21868231
+ ENARY203        13595135
+ ENARY21         7263107
+ ENARY22         4451481
+ ENARY23         3404918
+ ENARY24         11259365
+ ENARY301        22407382
+ ENARY302        21211030
+ ENARY303        18126096
+ ENARY31         7273555
+ ENARY32         4509828
+ ENARY33         3443943
+ ENARY34         11259379
+ ENBCPM          1546107
+ ENBCPM1         29359516
+ ENBCPM2         9413822
+ ENBCPM3         12413367
+ ENBCPM4         17987712
+ ENBCPM5         24186530
+ ENBCPM6         22463415
+ ENBCPM7         19424228
+ ENBCPM8         5669592
+ ENBCPM9         6062570
+ ENCTBAR         9519761
+ ENCTFLD         6463885
+ ENCTLAB         5929287
+ ENCTMAN         5022644
+ ENCTMES1        12715603
+ ENCTMES2        2109300
+ ENCTPRG         3295039
+ ENCTQUES        4430239
+ ENCTRCH         10178330
+ ENCTREAD        23883149
+ ENCTRED         16032165
+ ENCTTI          2342391
+ ENCTUTL         5451917
+ ENEQ            4650236
+ ENEQ1           35028954
+ ENEQ2           30199570
+ ENEQ3           18623861
+ ENEQ4           8832160
+ ENEQCMR         18781962
+ ENEQHS          20112320
+ ENEQLT          15801352
+ ENEQLT1         10103347
+ ENEQLT2         29456872
+ ENEQMED         15787905
+ ENEQMED1        25273662
+ ENEQMED2        13211606
+ ENEQMED3        9672194
+ ENEQNX          1581868
+ ENEQNX1         15417507
+ ENEQNX2         10321778
+ ENEQNX3         17340830
+ ENEQNX4         20005339
+ ENEQNX5         3833304
+ ENEQP           15119413
+ ENEQP1          850676
+ ENEQPMP         16046329
+ ENEQPMP1        44101135
+ ENEQPMP2        2589198
+ ENEQPMP3        19319060
+ ENEQPMR         4202976
+ ENEQPMR1        21604560
+ ENEQPMR2        40764141
+ ENEQPMR3        27960615
+ ENEQPMR4        24719724
+ ENEQPMR5        24701880
+ ENEQPMR6        31536528
+ ENEQPMS         4387176
+ ENEQPMS1        45623657
+ ENEQPMS2        32320889
+ ENEQPMS3        9731469
+ ENEQPMS4        26831251
+ ENEQPMS5        35232570
+ ENEQPMS6        17738806
+ ENEQPMS7        18231077
+ ENEQPMS8        18901106
+ ENEQRP          4987490
+ ENEQRP1         27956935
+ ENEQRP2         28407791
+ ENEQRP3         11895309
+ ENEQRP4         8386173
+ ENEQRP5         20412866
+ ENEQRP6         45321576
+ ENEQRPI         52219084
+ ENEQTD          11894884
+ ENETRAN         4545124
+ ENETRAN1        17212651
+ ENETRAN2        6027604
+ ENEWOD          6346653
+ ENEWOD1         13361528
+ ENEXPT          27591274
+ ENEXPT1         10625108
+ ENFAACQ         12029792
+ ENFAAV          23971152
+ ENFABAL         25070966
+ ENFABAL1        14086962
+ ENFABAL2        11531240
+ ENFABETR        13303544
+ ENFACHG         22190247
+ ENFACHG1        9619312
+ ENFACTE         6814435
+ ENFACTL         33669061
+ ENFACTR         8136813
+ ENFACTS         39690029
+ ENFACTT         44644565
+ ENFACTU         6256950
+ ENFACTX         9383569
+ ENFADEL         33058574
+ ENFAEIL         40932815
+ ENFAR1          15879212
+ ENFAR2          13947998
+ ENFAR3          12025293
+ ENFAR4          21022921
+ ENFAR5          4297562
+ ENFAR5A         12733457
+ ENFAR5B         13087557
+ ENFAR6          9710227
+ ENFAR7          11283524
+ ENFAR8          33291801
+ ENFAR9          19893693
+ ENFARA          3934767
+ ENFARA1         35062688
+ ENFARB          13970895
+ ENFARC          3250570
+ ENFARC1         22939028
+ ENFARC2         27772497
+ ENFARC3         27015224
+ ENFAUTL         15783962
+ ENFAVAL         31094011
+ ENFAXFR         50094662
+ ENFAXMT         20384750
+ ENFAXMT1        3423854
+ ENFAXMT2        6202881
+ ENFAXMT3        4280171
+ ENFAXMTM        49411782
+ ENFSA           11823784
+ ENFSA1          8763168
+ ENFSA2          6910921
+ ENJ             7552270
+ ENJC2           12093498
+ ENJDPL          9243209
+ ENJINJ          20831126
+ ENJINJ1         12860738
+ ENJINJ2         5533173
+ ENJINJ3         3269044
+ ENJINK          5436323
+ ENJINQ          18977481
+ ENJMUL          9808551
+ ENJPARAM        3065980
+ ENLBL           3686888
+ ENLBL1          3875981
+ ENLBL10         18912054
+ ENLBL11         10789094
+ ENLBL12         20705398
+ ENLBL15         17967284
+ ENLBL16         491670
+ ENLBL2          4384454
+ ENLBL3          20585581
+ ENLBL4          26614374
+ ENLBL5          19840430
+ ENLBL6          1556376
+ ENLBL7          4759949
+ ENLBL8          11819077
+ ENLBL9          16770608
+ ENLIB           14079064
+ ENLIB1          22603824
+ ENLIB2          16941437
+ ENLIB3          37060620
+ ENLIB4          5266908
+ ENMAN           4532662
+ ENNEWPK2        8499165
+ ENNEWPKG        4257213
+ ENPAT14         2067808
+ ENPAT15         9643110
+ ENPAT35         1759642
+ ENPL1           6961157
+ ENPL10          4070018
+ ENPL11          935660
+ ENPL2           3643264
+ ENPL3           14921522
+ ENPL3A          11636283
+ ENPL3B          4387116
+ ENPL4           3094927
+ ENPL5           22783522
+ ENPL5A          13667370
+ ENPL5B          21225450
+ ENPL5C          6931475
+ ENPL5D          25158830
+ ENPL6           843126
+ ENPL9           7374466
+ ENPLS           19519244
+ ENPLS1          8194632
+ ENPLS2          13168979
+ ENPLSV          5590880
+ ENPLSV1         14279857
+ ENPLSV2         4657256
+ ENPLSV3         18306330
+ ENPLSV4         15451566
+ ENPLUTL         6647011
+ ENPLV           4492693
+ ENPLV1          6509115
+ ENPLV2          19482750
+ ENPLV3          9826245
+ ENPLV4          17106300
+ ENPLV5          11839908
+ ENPLV6          9702551
+ ENPLV7          39341209
+ ENPLX           28022638
+ ENPLX1          29001739
+ ENPLX2          13662200
+ ENPLX3          14514089
+ ENPLX4          26717067
+ ENPROJ          7309019
+ ENPROJF         11934113
+ ENPRP           4860318
+ ENPRP1          36348118
+ ENPRP2          4825935
+ ENPRP3          7017664
+ ENPRP4          3772174
+ ENPRPAD         12382577
+ ENPRUTL         39286975
+ ENSA            15427001
+ ENSA1           28852112
+ ENSA2           9380237
+ ENSA3           5058878
+ ENSA4           11074108
+ ENSA5           6915631
+ ENSA6           16799096
+ ENSA7           7554490
+ ENSA8           16956865
+ ENSA9           5455635
+ ENSP            24768455
+ ENSP1           5821396
+ ENSP2           9465286
+ ENSP3           18310514
+ ENSP5           15155177
+ ENSP6           4773264
+ ENSPSRT         34966715
+ ENTEXT          639607
+ ENTIDD          21790016
+ ENTIEQE         1545355
+ ENTINSD         3670772
+ ENTINSR         5685527
+ ENTIRA          13057790
+ ENTIRC          17990636
+ ENTIRN          2690254
+ ENTIRRE         14984359
+ ENTIRRH         78858476
+ ENTIRRH1        38241223
+ ENTIRRI         13521614
+ ENTIRRNA        9368958
+ ENTIRRU         21377878
+ ENTIRRX         10875789
+ ENTIRS          10316574
+ ENTIRT          11562191
+ ENTIRX          23992664
+ ENTIUTL         50281271
+ ENTIUTL1        16940686
+ ENTIUTL2        53889224
+ ENUTL           6203315
+ ENWARD          2359373
+ ENWARD1         5484921
+ ENWARD2         20730182
+ ENWO            5733832
+ ENWO1           27890777
+ ENWO2           19814581
+ ENWOCOMP        1104862
+ ENWOD           24829030
+ ENWOD1          7334990
+ ENWOD2          33144795
+ ENWOD3          3011599
+ ENWOINV         3153393
+ ENWOLD          12320811
+ ENWOME          46293614
+ ENWOME1         6594433
+ ENWOME2         2343070
+ ENWONEW         23886462
+ ENWONEW1        6786823
+ ENWONEW2        8986516
+ ENWONEW3        25141945
+ ENWOP           12086721
+ ENWOP1          2701512
+ ENWOP2          6725814
+ ENWOP3          4412243
+ ENWOREP         8518261
+ ENWOST          11592713
+ ENWOUTL         10430200
+ ENXLFIX         23975080
+ ENXLFIX0        8436217
+ ENY2K           56238089
+ ENY2K1          16249790
+ ENY2K2          22524982
+ ENY2K3          22452585
+ ENY2K4          16883851
+ ENY2K5          47413207
+ ENY2K6          14672977
+ ENY2K7          13552036
+ ENY2K8          1819773
+ ENY2K9          10437815
+ ENY2KA          7242965
+ ENY2KR          21642988
+ ENY2KR1         60592782
+ ENY2REP         54633622
+ ENY2REP1        10447649
+ ENY2REP2        31120656
+ ENY2REP3        28966199
+ ENY2REP4        40796913
+ ENY2REP5        23096513
+ ENY2REP6        39152687
+ ENY2REP7        23748031
+ ENY2REP8        55896405
+ ENY2REP9        14220629
+ ENY2REPA        29521668
+ ENY2REPB        55108257
+ ENY2REPC        31423546
+ ENY2USRD        34256218
+ ENY2USRS        58563910
+ ENY2UTL         1368708
+ ENY2VAC1        27060840
+ ENY2VAC2        57584746
+ ENY2VACO        19491249
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : LAM,ESTELLA                   Date Entered  : APR 19, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 09, 2013
+Released By : NELSON,VICKI M                Date Released : JUL 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,226 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Thursday, 02/07/13 at 08:53
+=============================================================================
+Run Date: SEP 25, 2013                     Designation: PRC*5.1*171
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #153                    Status: Released
+                  Compliance Date: OCT 26, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*41  <<= must be installed BEFORE `PRC*5.1*171'
+                    (v)PRC*5.1*123 <<= must be installed BEFORE `PRC*5.1*171'
+
+Subject: OFFICE SUPPLY MENU ITEM SCROLLING;REMOVE OPTION 'ENTER/EDIT CP USERS;DEL ORDER
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Distribution Order Processing [PRCP DIST ORDER PROCESSING] option is
+    not scrolling correctly when using Enter/Edit Inventory Items.
+  
+ 2. Remove option 'Enter/Edit Control Point Users' [PRCSCPU] to keep user
+    assignment solely under Fiscal control.
+  
+ 3. Enter Delivery Order [PRCH ENTER DELIVERY ORDER] option create
+    obligated amount on Running Balance with auto obligate turned off.
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000625911 - Distribution Order Processing option is not scrolling
+                      correctly when using Enter/Edit Inventory Items.
+  
+ 2. INC000000585098 - Remove option 'Enter/Edit Control Point Users' for 
+                      improved compliance.
+  
+      Duplicate: INC000000604751 Access to Enter/Edit Control Point Users
+  
+ 3. INC000000737200 - Delivery Orders create obligated amount on Running
+                      Balance with auto obligate turned off
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Lexington, KY.
+ St. Cloud, MN.
+ Lake City, FL.
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000625911
+  
+    Problem:
+    --------
+    When using option Distribution Order Processing [PRCP DIST ORDER 
+    PROCESSING]the user is able to add/edit items on order.  Displaying
+    items to add will create scrolling overwrite when using action
+    Enter/Edit Inventory Items.
+  
+    Resolution:
+    -----------                    
+    Modify process flow to clear screen protect when moving from Listman 
+    screen for Distribution Order Processing [PRCP DIST ORDER PROCESSING]
+    option to Listman screen for action Enter/Edit Inventory Items, and
+    same screen clearing when returning from latter to former.
+  
+    Routines: PRCPEILM, PRCPOPL
+  
+ 2. INC000000585098
+  
+    Problem:
+    --------
+    The Control Point official uses this option to add or delete staff who 
+    will be allowed to Request, Initiate and/or Approve orders for a Fund 
+    Control Point. However, each user assigned should have a valid
+    Delegation of Authority MEMO.  A new fiscal audit has identified users
+    not having this MEMO.
+  
+    Resolution:
+    -----------
+    Delete the option 'Enter/Edit Control Point Users' [PRCSCPU] used by
+    Budget Analysts to assign staff power to the Fund Control Points.  This
+    will insure the staff assignment to Fund Control Points will be a
+    function of the Fiscal staff ONLY.
+  
+    The IFCAP Technical Manual P. 179 is being modified with this release.
+  
+    Routines: None
+  
+    Technical:
+    ----------
+    OPTION:                                        ACTION:
+    PRCSCPU                                        DELETE AT SITE
+  
+ 3. INC000000737200
+                                  
+    Problem:
+    --------
+    Site reported that Enter Delivery Order [PRCH ENTER DELIVERY ORDER] 
+    option will show as obligated on Running Balance report even with auto
+    obligate turned off.
+  
+    Resolution:
+    -----------
+    Modify the option Enter Delivery Order [PRCH ENTER DELIVERY ORDER] 
+    creation processing to not auto obligate the order unless the EDI or
+    All/Delivery switch is turned on for Fund Control Point or entire site.
+  
+    Routines: PRCH410
+  
+  DOCUMENTATION RETRIEVAL:
+  ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.domain.ext
+      Hines           ftp.fo-hines.domain.ext
+      Salt Lake City  ftp.fo-slc.domain.ext
+  
+      The documentation distribution includes: 
+    
+      File Name                              Description  Retrieval Format
+      =========                              ===========  ================
+      IFCP5_1TECH_MANUAL.PDF                 Tech Manual  BINARY
+      IFCP5_1SECURITY_GUIDE 171.PDF          Tech Manual  BINARY
+      IFCP5_1CP_CLERK 171.PDF                Tech Manual  BINARY
+      IFCP5_1PPM_ACCOUNTABLE_OFFICER 171.PDF Tech Manual  BINARY
+      IFCP5_1APPLICATION_COORD 171.PDF       Tech Manual  BINARY
+      IFCP5_1CP_OFFICIAL 171.PDF             Tech Manual  BINARY
+      IFCP5_1REQUIREMENTS_ANALYST 171.PDF    Tech Manual  BINARY
+   
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following
+      address: http://www.domain.ext/vdl
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+  You may install this patch at any time without interruption to users.  
+  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*171)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*171.
+  
+    5. Want KIDS to Rebuild Menu Trees Upon Completion of Install? 
+       YES// respond YES
+    
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO  
+   
+    7. When prompted "Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//" respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Distribution Order Processing    [PRCP DIST ORDER PROCESSING] 
+          Enter/Edit Control Point Users   [PRCSCPU]
+          Enter Delivery Order             [PRCH ENTER DELIVERY ORDER]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCH410
+    Before: B34933376   After: B43608419  **123,171**
+Routine Name: PRCPEILM
+    Before:  B9820965   After: B10541434  **1,171**
+Routine Name: PRCPOPL
+    Before: B25807256   After: B27780138  **1,41,171**
+ 
+Routine list of preceding patches: 41, 123
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : JUN 04, 2012
+Completed By: DUCKWORTH,TIM                 Date Completed: SEP 10, 2013
+Released By : CURZI,KATHLEEN G              Date Released : SEP 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

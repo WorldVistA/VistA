@@ -1,0 +1,383 @@
+
+=============================================================================
+Run Date: SEP 24, 2013                     Designation: MAG*3*131
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #93                      Status: Released
+                  Compliance Date: NOV 08, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*122   <<= must be installed BEFORE `MAG*3*131'
+
+Subject: CLINICAL DISPLAY SCOUT LINES ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Routine
+
+Description:
+============
+
+ MAG*3.0*131 Clinical Display Scout Lines Enhancement introduces new
+ features to the VistA Imaging Clinical Display.
+  
+ MAG*3.0*131 contains the following new functions:
+  
+ - Clinical Display will calculate and display Scout lines on CT and MR
+   images in the Radiology viewer. 
+ - Scout lines can be displayed for CT and MR studies from remote VA sites
+   and from the Department of Defense (DoD).
+ - The Radiology viewer will automatically display cross referencing slice
+   line indicators on orthogonal views of MR and CT image sets that are
+   concurrently displayed. 
+ - Scout lines can be hidden by the user. 
+ - Image orientation indicators are shown in the scout window.
+ - The user can designate an image as a scout image from within the 
+   radiology viewer.
+ - The user can remove an image from the scout window.
+ - The scout viewer will have all the image manipulation functions 
+   currently available in the Radiology viewer. 
+ - User can configure the scout line color to Blue, Red, Green or Yellow.
+ - Indicator lines will be displayed on the scout image for the first and
+   last image in the series to indicate the range of scout lines.
+ - Users can view images in two windows in the Radiology Viewer with the
+   location of the selected image displayed as a scout line superimposed 
+   on the scout image where they intersect the scout image.
+ - When the user selects a location in the scout image,  the viewer 
+   containing the associated stack will display the selected or the nearest
+   slice image.
+  
+ MAG*3.0*131 addresses the following issues that were reported in the 
+ Remedy Action Request System for the Clinical Display application.
+  
+ - Allows a user to view 24-bit full color images in red, green, blue
+   channels in both the Full Resolution and Radiology viewers.
+ - Corrects an issue that prevents printing a DICOM encapsulated PDF.
+ - Provides a description when an image has no associated user field in the
+   QA Review Report function.
+ - Corrects an issue with viewing a study image in the radiology viewer.
+ - Removes the hidden modal window when a patient does not have radiology
+   images to be displayed.
+ - Corrects an issue that caused certain DICOM images to be distorted.
+ - Support displaying of images from the Muse EKG system for Indian Health
+   Services.
+  
+ Distribution of the Software:
+ =============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P131
+ This document includes installation instructions.
+  
+ NOTE: You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*131 KIDS                  MAG3_0P131.KID                   ASCII
+ Installation file for Clinical    MAG3_0P131_CLINICAL_
+   Display software                 DISPLAY_SETUP.exe               Binary
+ Installation file for sites       MAG3_0P131_CLINICAL_DISPLAY_
+   using SMS or similar software    INSTALL.msi                     Binary
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*131 Patch Description     MAG3_0P131_Patch_Description.pdf
+ Technical Manual change pages     MAG3_0P131_TM.pdf
+ Installation Guide change pages   MAG3_0P131_IG.pdf
+ Security Guide change pages       MAG3_0P131_SG.pdf
+  
+  
+ Associated Patches:
+ ===================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*131 can be installed. The KIDS files of 
+ the following VistA Imaging patches must be installed on the VistA system 
+ in this order:
+  
+   MAG*3.0*122
+   MAG*3.0*129
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Connecticut HCS - West Haven CT,  (Integrated)
+ Salem ,VA  (Large)
+ VA Heartland East HCS - Marion, IL  (Integrated)
+ VA Heartland East HCS - Poplar Bluff, MO  (Integrated)
+ VA Heartland East HCS - St. Louis, MO  (Integrated)
+ VISN 2 (Integrated)
+  
+ Remedy Help Calls:
+ ==================
+  
+ 1. 369949
+  
+ Problem:
+ ======== 
+ In QA Review report, all the images that are not associated with a user
+ have <empty> in the user column. 
+  
+ Solution:
+ ========= 
+ Replaced <empty> with <undefined>.
+  
+ 2. 438339
+  
+ Problem: 
+ ========
+ When viewing a group of images in Clinical Display radiology viewer the
+ last viewed image is displayed instead of the group abstract. 
+  
+ Solution:  
+ =========
+ When a user double clicks an item in the image list, the group abstract
+ will be displayed. 
+  
+ 3. 598729
+  
+ Problem:
+ ======== 
+ Clinical Display renders certain DICOM images incorrectly. The images look
+ square and are distorted. 
+  
+ Solution:
+ ========= 
+ A change to the resolution update for the image corrects this issue and
+ allows for the image to be viewed properly. 
+  
+ 4. 713689 
+  
+ Problem:
+ ========
+ A full color 24-bit image can reveal different diagnostic information 
+ when cycling between the individual color channels. Currently only the 
+ composite full-color image is displayed. 
+  
+ Resolution:
+ ==========
+ MAG*3.0*131 provides a new button on the image toolbar and a new menu on 
+ the image menu that permits the user to cycle through an image's color 
+ channels when the image is a 24-bit color image. These options are 
+ available in both the Clinical Display Full Resolution Viewer and the 
+ Clinical Display Radiology Viewer.
+  
+ 5. 726792 
+  
+ Problem:
+ ========
+ When selecting individual images to ROI print, sometimes not all images 
+ display a checkbox. Also, the user reported that color ROI printouts come 
+ out in black and white.
+  
+ Resolution:
+ ===========
+ Clinical Display now displays the checkboxes in the Image List when ROI 
+ Choose Images to Print is selected. The checkboxes refresh when a new 
+ patient is selected and also when image filters are selected. Clinical 
+ Display ROI, when printing to paper does print in color when a valid 
+ color printer is selected and when the color printer driver is installed 
+ and operational on the user's computer.
+  
+ 6. 815885
+  
+ Problem:
+ ======== 
+ Clinical Display can display DICOM encapsulated PDFs but when the user
+ prints, only the print headers are printed.
+  
+ Resolution:
+ =========== 
+ The images will be rasterized so that the PDF can be properly printed.
+  
+  
+  
+ New Service Requests:
+ =====================
+ This patch addresses the following New Service Request (NSR): 
+   NSR#20070513 VistA Imaging Document and Ancillary Imaging: Scout Line
+                Navigation Enhancements Supplemental (BRCD)
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ --------------------------------------------------------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Security Keys:
+ ==============
+ There are no new or modified Security Keys in this patch. 
+  
+  
+ REMOTE PROCEDURES:
+ ==================
+ There are no new or modified Remote Procedures in this patch.
+  
+ Menu Options
+ ============
+ There are no new or modified Menu Options in this patch. 
+  
+ Templates:
+ ==========
+ There are no new or modified Templates in this patch.
+  
+  
+ Installation
+ ============
+ This patch is to be installed on the VistA System and on the client 
+ workstations.
+  
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. 
+  
+ This patch may be loaded while VistA Imaging System is active.   
+  
+ Installation will take less than one minute.  
+  
+ Installing the KIDS Package
+  
+ 1  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P131.KID) of
+        the Patch 131 KIDS file that you downloaded from the Imaging FTP
+        server.  
+     c. When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+         
+     Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+      this option to verify the integrity of the routines in the patch. 
+     Compare Transport Global to Current System [XPD COMPARE TO 
+     SYSTEM] - run this option to view all changes that will be made when  
+      the patch is installed.  All components (routines, options, and so
+      on) in the patch will be compared.
+     Backup a Transport Global [XPD BACKUP] - run this option to create a 
+      backup message of any routines exported with the patch.  It will NOT
+      back up any of the other changes.
+ 5  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*131
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*131 KIDS.
+  
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*131    7/18/13@18:07:45
+      => VistA Imaging V3.0 Patch 131 - Clinical Display Scout Lines 
+ Enhancement
+  
+ This Distribution was loaded on Jul 18, 2013@18:07:45 with header of 
+    VistA Imaging V3.0 Patch 131 - Clinical Display Scout Lines 
+ Enhancement - 07/18/2013 12:55PM  ;Created on Jul 18, 2013@12:55:14
+    It consisted of the following Install(s):
+     MAG*3.0*131
+ Checking Install for Package MAG*3.0*131
+  
+ Install Questions for MAG*3.0*131
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ MAG*3.0*131                                   
+  
+  Install Started for MAG*3.0*131 : 
+                Jul 18, 2013@18:10:10
+  
+ Build Distribution Date: Jul 18, 2013
+  
+  Installing Routines: 
+                Jul 18, 2013@18:10:10
+  
+  Running Post-Install Routine: POS^MAGIP131 
+  
+ Post Install Mail Message: Jul 18, 2013@18:10:10
+  
+  Updating Routine file... 
+  
+  Updating KIDS files... 
+  
+  MAG*3.0*131 Installed. 
+                Jul 18, 2013@18:10:10
+  
+ Install Message sent 
+  
+ Install Completed
+  
+ Clinical Workstation Installation
+ =================================
+ The details for the installation of the client software are in the 
+ MAG3_0P131 Patch Description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 5342;Aug 14, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTPT1
+    Before: B51976467   After: B59311646  **16,8,92,46,59,93,117,122,131**
+Routine Name: MAGGTU4D
+    Before:  B5101074   After:  B5508411  **93,94,106,117,122,131**
+Routine Name: MAGIP131
+    Before:       n/a   After:  B3414337  **131**
+ 
+Routine list of preceding patches: 122
+
+=============================================================================
+User Information:
+Entered By  : KAREDDY,VIJENDER              Date Entered  : NOV 04, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: SEP 04, 2013
+Released By : FUGETT,BRENT                  Date Released : SEP 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

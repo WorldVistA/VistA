@@ -1,0 +1,310 @@
+$TXT Created by BEUSCHEL,GARY at FM22-PATCH.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 12/04/12 at 07:26
+=============================================================================
+Run Date: SEP 12, 2013                     Designation: DI*22*167
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22       SEQ #148                     Status: Released
+                  Compliance Date: OCT 13, 2013
+=============================================================================
+
+Associated patches: (v)DI*22*39    <<= must be installed BEFORE `DI*22*167'
+                    (v)DI*22*165   <<= must be installed BEFORE `DI*22*167'
+
+Subject: DO NOT RE-INDEX
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+                           ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+                    ** Don't queue this patch **
+        ** After this patch is installed, you must run ^DINIT **
+              ** See the Post Installation instructions **
+   
+ This patch addresses the following item:
+  
+ 1.     Remedy Ticket 447336:
+ There are files which shouldn't be re-indexed. When they are inadvertently
+ re-indexed, it unleashes a zombie apocalypse, and necessitates restores
+ from backup. A recent example is the unfortunate re-indexing of the
+ HOSPITAL LOCATION (#44) file, as described in Remedy Ticket 445925.
+ Currently there is no way to prevent such files from being re-indexed,
+ except for putting "DO NOT RE-INDEX" in the file description, which is
+ about as effective as the admonition that Zeus gave Pandora not to open
+ that box. The RE-INDEX FILE [DIRDEX] option is a powerful, useful tool,
+ like a buzz-saw. But like a buzz-saw, it can cause a lot of damage when
+ one isn't paying attention.
+ 
+ This patch introduces a solution to this problem. Individual cross-
+ references may now be marked "Do Not Re-Index", and the RE-INDEX FILE
+ [DIRDEX] option will respect that. APIs which perform re-indexing will
+ also respect that, with the following exceptions:
+   1) APIs which re-index a single record will ignore the no-re-index
+      restriction.
+   2) A cross-reference will be re-indexed if it is specifically named
+      in an API call, regardless of whether it is marked "Do Not Re-Index".
+ 
+ Traditional Regular cross-references, such as B and C cross-references,
+ may always be re-indexed, and cannot be marked "Do Not Re-Index". All
+ other cross-references may be marked "Do Not Re-Index", because re-indexing
+ them might cause problems. The following cross-reference types may be
+ marked "Do Not Re-Index":
+   1) All New-Style cross-references
+   2) Bulletin cross-references
+   3) MUMPS cross-references
+   4) Trigger cross-references
+ 
+ To mark a cross-reference "Do Not Re-Index", use the CROSS-REFERENCE A
+ FIELD OR FILE [DIXREF] option under the UTILITY FUNCTIONS [DIUTILITY]
+ option. New-Style cross-references may be marked "Do Not Re-Index" when
+ they are created or when edited later. Traditional Bulletin, MUMPS, and
+ Trigger cross-references may not be marked "Do Not Re-Index" when they
+ are created; only when edited later. "Do Not Re-Index" can only be undone
+ by killing the "NOREINDEX" node in the DD.
+ 
+ ----------------------------------------------------------------------------
+ 
+ The following fields are added to facilitate "Do Not Re-Index":
+ 1)     RE-INDEXING (#666) field in the CROSS-REFERENCE (#.1) file.
+ Note that this file is not viewable through FileMan. If you want to see
+ this new field, do a global listing on ^DD(.1,666
+ 2)     RE-INDEXING (#666) field in the INDEX (#.11) file:
+ .11,666     RE-INDEXING            NOREINDEX;1 SET
+                             '1' FOR NO RE-INDEXING ALLOWED; 
+                             '0' FOR ALLOW REINDEXING; 
+             HELP-PROMPT:    Should the re-indexing of this cross reference 
+                             be prohibited? 
+             DESCRIPTION:    If you answer '1', this cross reference will
+                             not be re-indexed during a general re-indexing
+                             of this file, whether it's done via API or 
+                             interactively. If you answer '0', which is the
+                             default, it will. A cross reference will be
+                             re-indexed if it is specifically named in an
+                             API call.  For those APIs which re-index a
+                             single record, this restriction is ignored.
+                             UNEDITABLE
+ 
+ Additionally, the following field is added to the 'DIKC EDIT MAIN' Block
+ record of the BLOCK (#.404) file. This block is used in the 'DIKC EDIT'
+ ScreenMan Form record of the FORM (#.403) file:
+ FIELD ORDER: 666                        CAPTION: Do Not ReIndex
+   FIELD TYPE: DATA DICTIONARY FIELD     FIELD: 666
+   DATA COORDINATE: 14,26                DATA LENGTH: 22
+   CAPTION COORDINATE: 14,10
+ 
+ --------------------------------------------------------------------------
+ 
+ This is how the re-indexing APIs behave relative to "Do Not Re-Index":
+   1) Ignore "Do Not Re-Index", because they operate on a single record:
+      a. EN^DIK
+      b. EN1^DIK
+      c. EN2^DIK
+      d. IX^DIK
+      e. IX1^DIK
+      f. IX2^DIK
+   2) Ignore "Do Not Re-Index", if the cross-reference IS specifically named:
+      a. ENALL^DIK
+      b. ENALL2^DIK
+   3) Honor "Do Not Re-Index":
+      a. ENALL^DIK      (If the cross-reference is NOT specifically named)
+      b. ENALL2^DIK     (If the cross-reference is NOT specifically named)
+      c. IXALL^DIK
+      d. IXALL2^DIK
+ 
+ Documentation
+ =============
+ The following VA FileMan documentation was updated for this patch:
+   * Advanced User Manual
+   * APIs/Programmer Manual
+  
+ The most up-to-date VA FileMan end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+     http://www.domain.ext/vdl/application.asp?appid=5
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The VA FileMan documentation is also available in HTML format at the 
+ following Intranet Websites:
+  
+   * Getting Started Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u1/index.shtml
+  
+   * Advanced User Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u2/index.shtml
+  
+   * APIs/Programmer Manual:
+     http://vaww.vista.domain.ext/fileman/docs/pm/index.shtml
+  
+   * ScreenMan Tutorial:
+     http://vaww.vista.domain.ext/fileman/docs/scrnman/index.shtml
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 8 NOV 2012
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22*167 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22*167 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 447336
+ 
+ Thanks to Test Sites 
+ ====================
+ Washington, D.C. VAMC
+ Jackson VAMC
+ Black Hills HCS
+  
+ Routine Summary: 
+ ================
+ Please see the "Routine Information" section. 
+ *Note: Routine: DIPR167 issues a warning during the installation of 
+ this patch if it appears that TaskMan is still running and/or logons 
+ have not been inhibited.
+  
+ Installation Instructions:
+ =========================
+ ** DON'T QUEUE THIS PATCH. It is HIGHLY RECOMMENDED that ALL Users be off
+ the system and VISTA Background jobs be STOPPED before this patch is
+ installed. TaskMan should be stopped or placed in a wait state. Failure
+ to do so may result in 'source routine edited' errors during a database
+ update. Edits may be lost and records may be left in an inconsistent
+ state. An error that occurs before a cross-reference is executed, for
+ example, may lead to corrupted data or hard errors in the future. **
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+  
+      4.  In accordance with the warning at the beginning of the 
+ installation instructions, make sure ALL interactive processes, and 
+ ALL non-interactive background jobs are stopped following your site 
+ specific procedures. TaskMan should be stopped or placed in a wait state.
+ All users should be off the system. NOT performing this step could result
+ in 'source routine edited' error during database updates, and records may
+ be left in an inconsistent state.
+  
+      5.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: DI*22.0*167
+                                 ===========
+  
+ The Environment Check Routine DIPR167 runs automatically during this
+ step. DIPR167 issues a warning if it appears that TaskMan is still 
+ running or logons have not been inhibited.
+  
+            Answer 'YES' to 'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+  
+      6.  Don't yet Re-enable all processes stopped in step 4 above.
+ Follow the Post Installation instructions first!
+  
+ Post Installation
+ =================
+ Upon successful installation of this patch, routine DIPR167 will be deleted.
+ 
+      1.  VERY IMPORTANT:
+ You must now enter "D ^DINIT" from the programmer prompt. KIDS by design
+ does not transport the FileMan files which we are changing with this patch.
+ The only way to implement the changes is by running ^DINIT like this:
+ 
+ > D ^DINIT
+ Answer YES to the following prompt:
+ Initialize VA FileMan now?  NO//YES
+ 
+ Accept the default answers to the following prompts:
+ SITE NAME:
+ SITE NUMBER:
+ Do you want to change the MUMPS OPERATING SYSTEM File? NO//
+ TYPE OF MUMPS SYSTEM YOU ARE USING:
+ 
+ If any of the default answers is missing or wrong, and you are unsure of
+ the correct answer, please file a Remedy ticket.
+ 
+      2.  Now Re-enable all processes stopped in Step 4 of the Installation
+ instructions above.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.0;VA FileMan;**[Patch List]**;Mar 30, 1999;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDS01
+    Before: B25171979   After: B28553785  **8,39,167**
+Routine Name: DICE
+    Before: B18028605   After: B18620023  **26,58,165,167**
+Routine Name: DIK
+    Before: B37897212   After: B47561240  **41,109,160,167**
+Routine Name: DIKC
+    Before: B61603904   After: B62037611  **1,22,11,68,95,146,167**
+Routine Name: DIKC1
+    Before: B25573484   After: B26788475  **11,167**
+Routine Name: DIKC2
+    Before: B26770056   After: B26790488  **11,167**
+Routine Name: DIKCP1
+    Before: B41630978   After: B42219628  **20,167**
+Routine Name: DIKCUTL2
+    Before: B36365260   After: B36745109  **68,167**
+Routine Name: DINIT0F9
+    Before: B53814964   After: B57110980  **167**
+Routine Name: DINIT11
+    Before: B12282950   After: B17127660  **167**
+Routine Name: DINIT2A2
+    Before: B58044793   After: B67467623  **1,167**
+Routine Name: DIPR167
+    Before:       n/a   After:  B6579372  **167**
+Routine Name: DIU
+    Before:  B8874526   After:  B9210427  **167**
+Routine Name: DIU1
+    Before: B21521978   After: B24307273  **41,167**
+ 
+Routine list of preceding patches: 20, 39, 146, 160, 165
+
+=============================================================================
+User Information:
+Entered By  : BEUSCHEL,GARY                 Date Entered  : DEC 09, 2010
+Completed By: BEST,LISA                     Date Completed: SEP 10, 2013
+Released By : HARROD,PAUL                   Date Released : SEP 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

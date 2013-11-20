@@ -1,0 +1,235 @@
+$TXT Created by ESCALERA,Diego at CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 06/07/13 at 20:52
+=============================================================================
+Run Date: SEP 09, 2013                     Designation: OR*3*320
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #323                      Status: Released
+                  Compliance Date: OCT 10, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*215    <<= must be installed BEFORE `OR*3*320'
+                    (v)OR*3*253    <<= must be installed BEFORE `OR*3*320'
+
+Subject: PATIENT NAMES DROPPING OFF LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects one issue within the ORDER ENTRY/RESULTS REPORTING 
+ package:
+  
+ When selecting patients by clinic in the Computerized Patient Record 
+ System (CPRS) the user can specify a date range to list appointments for
+ selection. When there are more than 200 appointments within the selected
+ date range, some of the appointments are not displayed for selection.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ HD0000000107869 - Patient names dropping off list PSPO #1693
+    Duplicates:
+    HD0000000123291 - Patient missing from list
+    HD0000000141740 - Missing patient from list
+    HD0000000150290 - Number of patients in changes for same day
+    HD0000000156577 - Patient Selection List T to T+60 not displaying all
+                      appts
+    HD0000000157389 - Patients missing from list
+    HD0000000191014 - Patient Selection List by Clinic & Date Drops
+                      Appointments
+    HD0000000284707 - Patients not showing on patient selection screen
+    HD0000000340962 - PATIENTS SELECTION DISPLAY NOT ACCURATE
+    HD0000000358111 - Patient's don't apper on the patient selection screen
+                      if the users selects more than 90 days to display.
+    HD0000000388134 - Optomitry CPRS Report Dropping Names.
+    HD0000000487856 - All appointments not showing CPRS when using date 
+                      range view
+    HD0000000528649 - Patient missing from clinc list:
+    HD0000000625847 - Appointment issue
+    INC000000816214 - OERR - Patient Selection
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Birmingham VAMC, AL
+ VA N. California HCS, CA
+ Salisbury VAMC, NC
+ VA Northern Arizona HCS, AZ
+ West Palm Beach VAMC, FL
+ Louisville VAMC, KY
+ VA Gulf Coast HCS, MS
+ VA Maryland HCS, (Baltimore) MD
+ VA Hudson Valley, (Castle Point) NY
+ Pittsburg VAMC, (Pittsburg) PA
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ HD0000000107869 - Patient names dropping off list
+  
+ Patient Safety Issue: PSPO #1693 
+  
+ Problem:
+ --------
+ When selecting patients by clinic in CPRS the user can specify a date
+ range to list appointments for selection. Before patch OR*3*187, when the
+ number of appointments for the date range exceeded 200 the message "Too
+ many appointments found. Please narrow search range" would display to the
+ user. Patch OR*3*187 modified the selection of patients by clinic
+ appointment to use the new scheduling API's. Unfortunately this change
+ inadvertently overwrote the user message. When the number of appointments
+ within the date range exceeded 200, the list was sorted by internal entry
+ number (IEN) when it truncated. Since the IEN is never displayed to
+ the user, the truncation behavior made no sense. The appointments dropped
+ were from any part of the date range due to the IEN sort order. The user
+ received no indication that the maximum displayable number had been 
+ reached and generally unaware that not all appointments within the date 
+ range were being displayed. 
+  
+ Appointments were also being dropped when the user has defined a patient 
+ selection default list with a combination of sources with one or more
+ clinics in the source list. A combination list uses the default start and
+ stop date range defined in the patient selection default in Lists/Teams.
+ The default combination patient selection list can only display 200
+ appointments from each clinic. As with selecting patients by clinic, when
+ the number of appointments within the default date range exceeded 200 for
+ the clinic in the combination list, the user received no indication that
+ the maximum displayable number had been reached for that clinic and
+ generally unaware that not all appointments within the date range were
+ being displayed.
+  
+  
+ Resolution:
+ -----------
+ Routine ORQPTQ2 has been modified to use SDAPI^SDAMA301 which can 
+ truncate by appointment date. When the number of clinic appointments 
+ within the date range exceeds 200, the earliest appointments in the date 
+ range will display for selection and a new message will display at the top
+ of the patient selection list.
+  
+ Example of new message:
+  
+ *** UNABLE TO SHOW ALL APPOINTMENTS *** 
+ Showing the first 200 appointments from Mar 01, 2012 to Mar 16, 2012 
+ Modify the appointment list date range to start on Mar 17, 2012 to see 
+ additional appointments.
+ (end of message)
+  
+ The appointment list date range for clinics is designed to query for full
+ dates, so when the search results exceed 200 appointments the display will
+ end with the last appointment of the last day before the maximum
+ displayable count is reached. Because of this, the number of appointments
+ ("200" in the example) will change to the exact number of displayed
+ appointments.
+  
+ In addition, when the user has defined a combination of sources with one
+ or more clinics in their patient selection defaults, routine ORQPTQ6 has 
+ been modified to display the following message when the number of clinic
+ appointments within the date range exceeds 200:
+  
+ *** UNABLE TO SHOW ALL APPOINTMENTS *** 
+ Showing only the first 200 appointments from [Clinic Name]
+ Showing only the first 200 appointments from [2nd Clinic Name] 
+ Reduce The Date Range By Changing The Stop Date Of The Patient Selection 
+ Defaults To T-##.
+ (end of message) 
+  
+ In the user defined patient selection default list with a combination
+ of sources, when the search results exceed 200 appointments and the 
+ message above displays, the list will display exactly 200 appointments for
+ that clinic. The ad-hoc query in the patient selection window is not
+ designed to handle multiple clinics, therefore the warning 
+ message asks the user to modify the patient selection defaults.
+ The T-## at the end of the second message: ## is the T minus one day of
+ appointment number 200's date from the first clinic reaching 200
+ appointments in the search results. Entering this value as the default
+ stop date will create a shorter default list with no clinics reaching
+ the 200 count maximum.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will be
+ less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: Installation
+                                                              ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*320):
+      
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package
+     OR*3.0*320.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORQPTQ11
+    Before: B56815266   After: B56702520  **82,85,109,132,173,253,320**
+Routine Name: ORQPTQ2
+    Before: B41840769   After: B65971331  **9,10,85,187,190,195,215,320**
+Routine Name: ORQPTQ5
+    Before: B61498504   After: B76840931  **82,85,187,190,320**
+Routine Name: ORQPTQ6
+    Before: B43002726   After: B45127106  **82,85,187,320**
+ 
+Routine list of preceding patches: 215, 253
+
+=============================================================================
+User Information:
+Entered By  : ESCALERA,DIEGO                Date Entered  : SEP 14, 2009
+Completed By: HULET,LEE ANN                 Date Completed: AUG 12, 2013
+Released By : PERSCHON,ANDREA               Date Released : SEP 09, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

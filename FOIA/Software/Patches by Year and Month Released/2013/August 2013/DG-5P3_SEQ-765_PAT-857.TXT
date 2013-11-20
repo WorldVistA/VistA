@@ -1,0 +1,175 @@
+$TXT Created by ZEIGLER,EDWARD L at DEVCRN.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 07/25/13 at 11:49
+=============================================================================
+Run Date: AUG 22, 2013                     Designation: DG*5.3*857
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #765                    Status: Released
+                  Compliance Date: SEP 13, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*572  <<= must be installed BEFORE `DG*5.3*857'
+                    (v)DG*5.3*769  <<= must be installed BEFORE `DG*5.3*857'
+
+Subject: VIC 4.0 AND DOD CAC MPI INTEGRATION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch provides support for the new VIC 4.0 card and DoD's CAC card.  
+ The current VIC (Veteran Identification Card) being issued to patients is 
+ being replaced with a new VIC 4.0 card.
+  
+ The VIC card provides a mechanism either via Barcode Scan or Magnetic 
+ Strip to look up a patient in various VistA roll and scroll options.  The 
+ contents of both the Barcode and Magnetic Stripe are being updated with 
+ the new VIC 4.0 card being issued to patients.
+  
+ Support for scanning Department of Defense's Common Access Card (CAC) 
+ barcode and patient lookup based on the 10 digit EDIPI is included in an 
+ effort to provide joint interoperability.
+  
+ DG*5.3*572, DG*5.3*658, and DG*5.3*769 are required builds for 
+ patch DG*5.3*857.
+  
+ Issue #1
+ The main patient lookup routine (DPTLK) currently only supports the legacy
+ VIC card for patient lookup.  The routine is being enhanced to also
+ support patient lookup based on information contained in the new VIC 4.0
+ card and the DoD CAC card.  The new VIC 4.0 card will contain the card
+ number in both the Barcode and Magnetic Strip.  The DoD CAC card barcode
+ contains the DoD Electronic Data Interchange Person Identifier (EDIPI).  
+ Both the card number (VIC 4.0) and the EDIPI will be stored at all sites
+ of record in the TREATING FACILITY LIST (#391.91) file.  If the card being
+ swiped or scanned is a new VIC 4.0 card or DoD CAC card, the patient
+ lookup process will look for a treating facility with the card number or
+ EDIPI as the facility unique identifier to find the appropriate patient
+ record.
+  
+ Issue #2
+ Currently if the user swiping a VIC card is utilizing a registration 
+ option and the patient is not known to the local VA facility there is 
+ sufficient detailed information contained in the Magnetic Strip to start 
+ the creation of a patient record in the PATIENT (#2) file.  However from a
+ confidentiality standpoint that information will not be stored on the new
+ VIC 4.0 card.  If a new VIC 4.0 card is being scanned or swiped, the user
+ is in a patient registration option and the patient is not known to the
+ local VA facility, a query to the MVI will be sent.  This query, if the
+ MPIF*1*56 patch is installed, will look-up the needed patient information
+ to initiate the registration process at the local VA facility.
+  
+ Issue #3
+ Currently there is no mechanism to add a patient based on a DoD CAC 
+ card.  In order to provide joint interoperability with the install of this
+ patch if a DoD CAC card is being scanned, the user is in a patient 
+ registration option and the patient is not known to the local VA facility,
+ a query to the MVI will be sent.  This query, if the MPIF*1*56 patch is
+ installed, will look-up the needed patient information to initiate the
+ registration process at the local VA facility.
+  
+ Issue #4
+ There are other packages, both local to the VistA M database and other 
+ rich clients, including kiosk devices that lookup patients based on the 
+ legacy VIC card.  To assist lookup of patients with the VIC 4.0 card or a 
+ DoD CAC card a new Supported API (RPCVIC^DPTLK) and Remote Procedure (DG 
+ VIC PATIENT LOOKUP) are being added to the REGISTRATION package.  If the 
+ patient is known locally to the VistA system the patient's DFN will be 
+ returned regardless of which version of the card is being swiped or 
+ scanned or if a DoD CAC card is being scanned.
+  
+ Issue #5
+ Prior to this patch there was no way to lookup a patient using their 10 
+ digit EDIPI number.  With the install of this patch standard VistA 
+ patient selection prompts will now support input of the patient's EDIPI 
+ number at 'Select PATIENT:' prompts.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ There are no associated Remedy Tickets.
+   
+ Associated New Service Request (NSR):
+ =====================================
+ There is no associated NSR with the patch.
+    
+ Test Sites:
+ ===========
+ Hampton VAMC
+ Atlanta VAMC
+ Pittsburgh HCS
+  
+        
+ Installation Instructions:
+ ==========================
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system, however because the patient lookup 
+ routines are impacted, we suggest it be installed after business hours.
+  
+  1.  Users are allowed on the system during patch installation.
+                                                                 
+  2.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+      Note:  TEXT PRINT/DISPLAY option in the PackMan menu will display
+      the patch text only.
+     
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+   
+  4.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+  5.  Use the Install Package(s) option and select the package DG*5.3*857.
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES.
+  
+  8.  When prompted 'Enter options you wish to mark as 'Out Of
+         Order':'  Enter the following options:
+  
+         Register a Patient              [DG REGISTER PATIENT]
+         Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+         Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+         Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+         UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+  
+  9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+         Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGROUT
+    Before: B15077176   After: B18071448  **533,572,857**
+Routine Name: DPTLK
+    Before: B66931183   After:B114088511  **32,72,93,73,136,157,197,232,
+                                           265,277,223,327,244,513,528,
+                                           541,576,600,485,633,629,647,
+                                           769,857**
+Routine Name: DPTLK4
+    Before:  B1670609   After:  B3734144  **73,857**
+ 
+Routine list of preceding patches: 572, 769
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,PAULETTE                Date Entered  : MAY 18, 2012
+Completed By: ALDERMAN,MATT S               Date Completed: JUL 31, 2013
+Released By : BARKER,MARK D                 Date Released : AUG 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,231 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 11/28/12 at 15:10
+=============================================================================
+Run Date: AUG 02, 2013                     Designation: PRC*5.1*170
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #151                    Status: Released
+                  Compliance Date: AUG 19, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*133 <<= must be installed BEFORE `PRC*5.1*170'
+                    (v)PRC*5.1*139 <<= must be installed BEFORE `PRC*5.1*170'
+
+Subject: RECEIVING ERROR;CANCEL IMPREST FUNDS OPTION;CACHE COMPILE ERROR
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Entering invalid quantity when receiving order can result in incorrect
+    quantity received.
+  
+ 2. Cancel Imprest Funds Purchase Order must be for unobligated order.
+  
+ 3. Testing Cache 2011 found compile error with routine PRCBR1. 
+  
+  
+  
+  
+ Associated Remedy Tickets(s):
+ =============================
+ 1. HD0000000501947 Receiving error when trying to reverse quantity 
+                    received
+  
+ 2. HD0000000611234 Cancel Imprest Funds P.O. option description
+  
+ 3. HD0000000705639 Cache compile error on routine PRCBR1
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ St Cloud VA Medical Center
+ VA Heartland West HCS
+  
+  
+ Remedy Overview:
+ ================ 
+ 1. HD0000000501947 Receiving error when trying to reverse quantity 
+                    received
+  
+ Problem:
+ -------
+ Site found that during order receipt processing they would enter an 
+ invalid receipt quantity on item (trying to correct previous entry) and 
+ the error would compromise the final receipt dollar amount for ordered 
+ item.
+  
+ Resolution:
+ ----------                    
+ For receipt processing, ensure the user is returned to the quantity query 
+ after any erroneous quantity entry.
+  
+ Routines: PRCHREC1
+  
+  
+ 2. HD0000000611234 Cancel Imprest Funds P.O. option description
+  
+ Problem:
+ --------
+ Users found that option PRCHPC IMPREST FUND CANCEL contained invalid 
+ operational description:
+  
+ NUMBER: 10427                           NAME: PRCHPC IMPREST FUND CANCEL
+   MENU TEXT: Cancel Imprest Funds P.O.  TYPE: run routine
+   CREATOR: GREENE,LYFORD K              X ACTION PRESENT: YES
+  DESCRIPTION:   Allows user to cancel an Imprest Funds P.O. only, before 
+ it has been received.  
+   EXIT ACTION: K PRCHIMP                ROUTINE: EN6^PRCHEB
+   TIMESTAMP: 54142,49275
+   UPPERCASE MENU TEXT: CANCEL IMPREST FUNDS P.O.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to the option PRCHPC IMPREST FUND CANCEL for 
+ the correct operational description that the purchase order to be 
+ cancelled MUST be unobligated:
+  
+ NUMBER: 10427                           NAME: PRCHPC IMPREST FUND CANCEL
+   MENU TEXT: Cancel Imprest Funds P.O.  TYPE: run routine
+   CREATOR: GREENE,LYFORD K              X ACTION PRESENT: YES
+  DESCRIPTION:   Allows user to cancel an unobligated Imprest Funds 
+ Purchase Order only.  
+   EXIT ACTION: K PRCHIMP                ROUTINE: EN6^PRCHEB
+   TIMESTAMP: 54142,49275
+   UPPERCASE MENU TEXT: CANCEL IMPREST FUNDS P.O.
+  
+  
+ The IFCAP Technical Manual will be modified with this release.
+  
+ Routines: None
+  
+  
+ 3. HD0000000705639 Cache compile error on routine PRCBR1
+  
+ Problem:
+ --------
+ Site was testing Cache 2011 and found compile error in routine PRCBR1.
+ Compile error will also occur under Cache 2008 for routine.
+  
+  
+  
+ Resolution:
+ ----------
+ Modify locking logic in routine PRCBR1 to meet programming standards for 
+ Cache 2008 or Cache 2011 compiling.
+  
+  
+ Routines: PRCBR1
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.domain.ext
+      Hines           ftp.fo-hines.domain.ext
+      Salt Lake City  ftp.fo-slc.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name                   Description              Retrieval Format
+      =========                   ===========              ================
+      IFCP5_1TECH_MANUAL.PDF      Technical Manual              BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*170)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+        PRC*5.1*170.
+  
+    5. When Prompted "Want KIDS to Rebuild Menu Trees Upon Completion
+       of Install? NO//" respond NO
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    7. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? NO//', respond YES 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Receive Purchase Card Order        [PRCH REC PURCHASE CARD ORDER]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCBR1
+    Before: B21660865   After: B21667913  **139,170**
+Routine Name: PRCHREC1
+    Before: B22440228   After: B23986631  **133,170**
+ 
+Routine list of preceding patches: 133, 139
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : APR 26, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: JUL 19, 2013
+Released By : TEITELBAUM,SCHNEUR Z          Date Released : AUG 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

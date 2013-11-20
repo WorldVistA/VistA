@@ -1,0 +1,252 @@
+$TXT Created by AUGUSTINIAK,MARK at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 07/15/13 at 11:36
+=============================================================================
+Run Date: SEP 19, 2013                     Designation: GMTS*2.7*109
+Package : GMTS - HEALTH SUMMARY               Priority: EMERGENCY
+Version : 2.7       SEQ #100                    Status: Released
+                  Compliance Date: SEP 21, 2013
+=============================================================================
+
+
+Subject: REMOTE HEALTH SUMMARY TYPE TITLE CHANGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch will fix an existing design flaw that was brought to light 
+ after the install of GMTS*2.7*105. The TITLE field (#.02) in the HEALTH 
+ SUMMARY TYPE file (#142) for many remote Health Summary reports does not
+ include the word "Remote". 
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000842628 - Patch GMTS*2.7*105 assistance with titles
+    Duplicates
+    INC000000840160 - Health Summary - Other:
+    INC000000865151 - VistAWeb - WEBV (CPRS GUI) Issue: health summary 
+                      display issue.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ TEST SITES:
+ ===========
+ Hunter Holmes McGuire VA Medical Center - Richmond, VA
+ Washington DC VA Medical Center
+ VA New Jersey Health Care System
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000842628 - Patch GMTS*2.7*105 assistance with titles
+  
+ Problem:
+ --------
+ After the install of GMTS*2.7*105, which changed reports to use Titles 
+ instead of Names, many Remote Health Summary reports did not include 
+ the word "Remote" in the TITLE field (#.02) in the HEALTH SUMMARY TYPE 
+ file (#142). Also, some Titles were in all UPPER case.  Site was 
+ looking for a way to have the Remote Health Summary types display as 
+ they did prior to the patch with the .01 NAME field. When the site 
+ tried locally to edit the titles of these Remote Health Summary types 
+ it resulted in other sites receiving errors accessing the modified 
+ site's Remote Health Summary data.
+  
+ The following are the existing entries before the patch.
+  
+ NAME                            TITLE
+ ============================    =======================
+ REMOTE CLINICAL DATA (1Y)       Clinical Data (1y)
+ REMOTE CLINICAL DATA (3M)       Clinical Data (3m)
+ REMOTE CLINICAL DATA (4Y)       Clinical Data (4y)
+ REMOTE DEMO/VISITS/PCE (1Y)     Demographics/Visits/PCE (1y)
+ REMOTE DEMO/VISITS/PCE (3M)     Demographics/Visits/PCE (3m)
+ REMOTE DIS SUM/SURG/PROD (12Y)  Discharge Sum/Surg/Prod (12y)
+ REMOTE LABS ALL (1Y)            Labs All (1y)
+ REMOTE LABS ALL (3M)            Labs All (3m)
+ REMOTE LABS LONG VIEW (12Y)     Labs Long View (12Y)
+ REMOTE MEDS/LABS/ORDERS (1Y)    Meds/Labs/Orders (1y)
+ REMOTE MEDS/LABS/ORDERS (3M)    Meds/Labs/Orders (3m)
+ REMOTE MH HIGH RISK PATIENT     REMOTE MH HIGH RISK PATIENT
+ REMOTE ONCOLOGY VIEW            Oncology View
+ REMOTE TEXT REPORTS (1Y)        Text Reports (1y)
+ REMOTE TEXT REPORTS (3M)        Text Reports (3m)
+  
+ Resolution:
+ -----------
+ Change the TITLE field (#.02) of the HEALTH SUMMARY TYPE file 
+ (#142) entries to the following:
+  
+ NAME                            TITLE
+ ============================    =======================
+ REMOTE CLINICAL DATA (1Y)       Remote Clinical Data (1y)
+ REMOTE CLINICAL DATA (3M)       Remote Clinical Data (3m)
+ REMOTE CLINICAL DATA (4Y)       Remote Clinical Data (4y)
+ REMOTE DEMO/VISITS/PCE (1Y)     Remote Demo/Visits/PCE (1y)
+ REMOTE DEMO/VISITS/PCE (3M)     Remote Demo/Visits/PCE (3m)
+ REMOTE DIS SUM/SURG/PROD (12Y)  Remote Dis Sum/Surg/Prod (12y)
+ REMOTE LABS ALL (1Y)            Remote Labs All (1y)
+ REMOTE LABS ALL (3M)            Remote Labs All (3m)
+ REMOTE LABS LONG VIEW (12Y)     Remote Labs Long View (12y)
+ REMOTE MEDS/LABS/ORDERS (1Y)    Remote Meds/Labs/Orders (1y)
+ REMOTE MEDS/LABS/ORDERS (3M)    Remote Meds/Labs/Orders (3m)
+ REMOTE MH HIGH RISK PATIENT     Remote MH High Risk Patient
+ REMOTE ONCOLOGY VIEW            Remote Oncology View
+ REMOTE TEXT REPORTS (1Y)        Remote Text Reports (1y)
+ REMOTE TEXT REPORTS (3M)        Remote Text Reports (3m)
+  
+ Pre install routine GMTSP109 will use a ^DIE call to change the TITLE 
+ field and then generate a MailMan message notifying the user of the 
+ changes
+  
+ The message will look similar to the following:
+  
+ Subj: GMTS*2.7*109 Post install routine has completed  [#147933] 
+ 05/23/13@17:36
+ 48 lines
+ From: HEALTH SUMMARY PACKAGE  In 'IN' basket.   Page 1  *New*
+ --------------------------------------------------------------------------
+ -----
+ GMTS*2.7*109 install routine has completed
+ The TITLES for the following HEALTH SUMMARY TYPES have been changed
+  
+ REMOTE CLINICAL DATA (1Y) (IEN #5000005)
+ FROM: Clinical Data (1y) TO: Remote Clinical Data (1y)
+  
+ REMOTE CLINICAL DATA (3M) (IEN #5000004)
+ FROM: Clinical Data (3m) TO: Remote Clinical Data (3m)
+  
+ REMOTE CLINICAL DATA (4Y) (IEN #5000009)
+ FROM: Clinical Data (4y) TO: Remote Clinical Data (4y)
+  
+ REMOTE DEMO/VISITS/PCE (1Y) (IEN #5000006)
+ FROM: Demographics/Visits/PCE (1y) TO: Remote Demo/Visits/PCE (1y)
+  
+ REMOTE DEMO/VISITS/PCE (3M) (IEN #5000001)
+ FROM: Demographics/Visits/PCE (3m) TO: Remote Demo/Visits/PCE (3m)
+  
+ REMOTE DIS SUM/SURG/PROD (12Y) (IEN #5000013)
+ FROM: Discharge Sum/Surg/Prod (12y) TO: Remote Dis Sum/Surg/Prod (12y)
+  
+ REMOTE LABS ALL (1Y) (IEN #5000011)
+ FROM: Labs All (1y) TO: Remote Labs All (1y)
+  
+ REMOTE LABS ALL (3M) (IEN #5000012)
+ FROM: Labs All (3m) TO: Remote Labs All (3m)
+  
+ REMOTE LABS LONG VIEW (12Y) (IEN #5000010)
+ FROM: Labs Long View (12Y) TO: Remote Labs Long View (12y)
+  
+ REMOTE MEDS/LABS/ORDERS (1Y) (IEN #5000007)
+ FROM: Meds/Labs/Orders (1y) TO: Remote Meds/Labs/Orders (1y)
+  
+ REMOTE MEDS/LABS/ORDERS (3M) (IEN #5000002)
+ FROM: Meds/Labs/Orders (3m) TO: Remote Meds/Labs/Orders (3m)
+  
+ REMOTE MH HIGH RISK PATIENT (IEN #5000020)
+ FROM: REMOTE MH HIGH RISK PATIENT TO: Remote MH High Risk Patient
+  
+ REMOTE ONCOLOGY VIEW (IEN #5000015)
+ FROM: Oncology View TO: Remote Oncology View
+  
+ REMOTE TEXT REPORTS (1Y) (IEN #5000008)
+ FROM: Text Reports (1y) TO: Remote Text Reports (1y)
+  
+ REMOTE TEXT REPORTS (3M) (IEN #5000003)
+ FROM: Text Reports (3m) TO: Remote Text Reports (3m)
+  
+  
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *               I M P O R T A N T   N O T I C E                   *
+ *                                                                 *
+ *  When this patch is installed, other sites may receive errors   *
+ *  accessing your Remote Health Summary data. This error states   *
+ *  "SITENAME Error #; Remote HS Report Title not found on remote  *
+ *  system." VistaWeb and RDV are throwing the same error message. *
+ *  Once all sites have installed this Emergency patch, all titles *
+ *  will be updated, and remote HS Data functionality returned.    *
+ *                                                                 *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  
+  INSTALLATION INSTRUCTIONS:
+  ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+  
+  NOTE: Pre-Init routine GMTSP109 will be automatically deleted at the 
+        end of installation. Checksums can only be verified before 
+        installation, with install step 2 Verify Checksums in Transport
+        Global.
+  
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter GMTS*2.7*109):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        GMTS*2.7*109.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSP109
+    Before:       n/a   After: B10619718  **109**
+
+=============================================================================
+User Information:
+Entered By  : AUGUSTINIAK,MARK              Date Entered  : MAY 22, 2013
+Completed By: SHERMAN,BILL                  Date Completed: SEP 16, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : SEP 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

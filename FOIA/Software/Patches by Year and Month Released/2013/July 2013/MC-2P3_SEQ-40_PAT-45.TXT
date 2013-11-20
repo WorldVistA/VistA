@@ -1,0 +1,403 @@
+
+=============================================================================
+Run Date: JUL 12, 2013                     Designation: MC*2.3*45
+Package : MC - MEDICINE                       Priority: Mandatory
+Version : 2.3        SEQ #40                    Status: Released
+                  Compliance Date: AUG 12, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization:  Medicine
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is issued as directed in Memorandum: Open Source VistA
+ Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this document for
+ specific details.
+   
+ A review of the VistA Standardization routines was completed for:
+ Medicine, version 2.3. A baseline list of the nationally released M
+ routines and their official checksums is included below. VistA Standardization
+ Certification represents the matching of the routine checksums, compared in the
+ site's Production account only.
+   
+ The VistA Standardization Team performed an analysis of each site's Production
+ environment. For any site with routine checksum variance, this team worked with
+ the site to remediate any variance from the baseline. After the completion of
+ this process, sites with no variance were identified as VistA Standardization
+ Certified for the package. There is NO additional action required on the part
+ of these sites. 
+   
+ For sites which had variance (local modification) and determined it was
+ important to maintain for their Production environment, a waiver was requested.
+ If approved, the waiver allows retention of the local modification to a VistA
+ Standardization routine, as detailed in VA Directive 6402.
+   
+ Each site will be placed on one of the lists below:  
+       VistA Standardization Certified Sites
+       Sites with Approved/Pending Waiver
+       Non-Compliant Sites with Pending Remediation
+ The expectation for sites on the Non-Compliant Sites with Pending Remediation
+ list is for their remediation to be completed, by either removing the
+ modification or requesting a waiver. There will NOT be an additional
+ Informational Only patch to move the site to the VistA Standardization
+ Certified Sites list.
+   
+ Please Note:
+       Environment check routines, pre or post installation routines remaining
+ from previously installed patches, compiled routines (e.g. cross-reference), or
+ prior package version routines, will NOT affect your site's standardization
+ compliance. Their existence, or non-existence, at your site, or on the VistA
+ Standardization routines list below, does not impact the VistA Standardization
+ Certification. 
+       VistA Standardization Certification for this package applies to the date
+ specified in the Official Checksum heading below. If additional patches, or a
+ newer version for the package, has been released since this date, the checksums
+ for affected routines will be different. For these routines, refer to the
+ patch/version documentation for the most up-to-date checksums.
+    
+ =========================================================================
+ Note:  Site 556   NORTH CHICAGO, IL is exempt from this project objective
+   
+ Sites with Approved/Pending Waiver:
+ ==================================
+ Waiver #: 169097
+ Routine Included: MCAR7M1
+                    
+   402    TOGUS, ME
+   405    WHITE RIVER JUNCTION, VT
+   518    BEDFORD, MA                                               
+   523    BOSTON HCS
+   544    COLUMBIA, SC
+   596    LEXINGTON, KY
+   608    MANCHESTER, NH
+   613    MARTINSBURG, WV
+   631    NORTHAMPTON, MA
+   640    PALO ALTO HCS
+   650    PROVIDENCE, RI
+   658    SALEM, VA
+   664    SAN DIEGO, CA
+   
+  
+ Waiver #: 183721
+ Waiver #: 183731
+ Waiver #: 183735
+ Waiver #: 183745            
+ Waiver #: 183753  
+ Routine Included: MCARP
+                                                            
+   603    LOUISVILLE, KY
+  
+ Waiver #: 205211
+ Waiver #: 205707
+ Routine: MCPFTP2A
+                         
+   688    WASHINGTON, DC
+                                                     
+ Non-Compliant Sites with Pending Remediation:
+ ============================================
+   358    MANILA OC, PI
+   459    HONOLULU, HI
+   501    ALBUQUERQUE, NM
+   570    FRESNO, CA
+   593    LAS VEGAS, NV
+   600    LONG BEACH, CA
+   605    LOMA LINDA, CA
+   612    NORTHERN CALIFORNIA HCS
+   640    PALO ALTO HCS
+   644    PHOENIX, AZ
+   648    PORTLAND, OR (C)
+   653    ROSEBURG, OR
+   654    RENO, NV
+   660    SALT LAKE CITY, UT
+   662    SAN FRANCISCO, CA
+   663    PUGET SOUND HCS
+   664    SAN DIEGO
+   678    TUCSON, AZ
+   687    WALLA WALLA, WA 
+   691    VA GREATER LOS ANGELES HCS 
+   
+ VistA Standardization Certified Sites:
+ =====================================
+   436    MONTANA HCS
+   437    FARGO, ND
+   438    SIOUX FALLS, SD
+   442    CHEYENNE, WY
+   460    WILMINGTON, DE
+   463    ANCHORAGE, AK (OPC)
+   502    ALEXANDRIA, LA
+   503    ALTOONA, PA
+   504    AMARILLO, TX
+   506    ANN ARBOR, MI
+   508    ATLANTA, GA
+   509    AUGUSTA, GA (C)
+   512    MARYLAND HCS
+   515    BATTLE CREEK, MI
+   516    BAY PINES, FL
+   517    BECKLEY, WV
+   519    BIG SPRING, TX
+   520    BILOXI, MS (C)
+   521    BIRMINGHAM, AL
+   526    BRONX, NY
+   528    UPSTATE NEW YORK HCS
+   529    BUTLER, PA
+   531    BOISE, ID
+   534    CHARLESTON, SC
+   537    CHICAGO HCS
+   538    CHILLICOTHE, OH
+   539    CINCINNATI, OH
+   540    CLARKSBURG, WV
+   541    CLEVELAND, OH
+   542    COATESVILLE, PA
+   546    MIAMI, FL
+   548    WEST PALM BEACH, FL
+   549    NORTH TEXAS HCS
+   550    ILLIANA HCS
+   552    DAYTON, OH
+   553    DETROIT, MI
+   554    EASTERN COLORADO HCS
+   557    DUBLIN, GA
+   558    DURHAM, NC
+   561    NEW JERSEY HCS
+   562    ERIE, PA
+   564    FAYETTEVILLE, AR
+   565    FAYETTEVILLE, NC
+   568    BLACK HILLS HCS
+   573    NORTH FLORIDA/SOUTH GEORGIA
+   575    GRAND JUNCTION, CO
+   578    HINES, IL
+   580    HOUSTON, TX
+   581    HUNTINGTON, WV
+   583    INDIANAPOLIS, IN (C)
+   585    IRON MOUNTAIN, MI
+   586    JACKSON, MS
+   589    HEARTLAND-WEST HCS
+   590    HAMPTON, VA
+   595    LEBANON, PA
+   598    LITTLE ROCK, AR (C)
+   607    MADISON, WI
+   610    NORTHERN INDIANA HCS
+   614    MEMPHIS, TN
+   618    MINNEAPOLIS, MN
+   619    CENTRAL ALABAMA HCS
+   620    HUDSON VALLEY HCS
+   621    MOUNTAIN HOME, TN
+   623    MUSKOGEE, OK
+   626    TENNESSEE VALLEY HCS
+   629    NEW ORLEANS, LA
+   630    NEW YORK HCS
+   632    NORTHPORT, NY
+   635    OKLAHOMA CITY, OK
+   636    CENTRAL PLAINS HCS
+   637    ASHEVILLE, NC
+   642    PHILADELPHIA, PA
+   646    PITTSBURGH HCS
+   649    PRESCOTT, AZ
+   652    RICHMOND, VA
+   655    SAGINAW, MI
+   656    ST CLOUD, MN
+   657    HEARTLAND-EAST HCS
+   659    SALISBURY, NC
+   666    SHERIDAN, WY
+   667    SHREVEPORT, LA
+   668    SPOKANE, WA
+   671    SOUTH TEXAS HCS
+   672    SAN JUAN, PR
+   673    TAMPA, FL
+   674    CENTRAL TEXAS HCS
+   675    ORLANDO, FL
+   676    TOMAH, WI
+   679    TUSCALOOSA, AL
+   689    CONNECTICUT HCS
+   692    WHITE CITY, OR (DOM)
+   693    WILKES BARRE, PA
+   695    MILWAUKEE, WI
+   740    TEXAS VALLEY COASTAL BEND HCS
+   756    EL PASO, TX
+   757    COLUMBUS, OH(OPC)
+   
+ ====================================================================
+   
+ Routine Information:
+ ===================
+ The checksums below are calculated using new checksums, and can be checked with
+ CHECK1^XTSUMBLD.
+   
+ Routine Name   Official Checksum as of 03/22/2013
+ ============   ====================================
+ MCAPI          4779104
+ MCAR7A         12488102
+ MCAR7E         4988285
+ MCAR7H         1039659
+ MCAR7M1        5115104
+ MCAR7P1        7940873
+ MCAR7P2        5973879
+ MCAR7X         1926126
+ MCARAM         17940329
+ MCARAM0        15705369
+ MCARAM0A       4430969
+ MCARAM0B       2009347
+ MCARAM0C       362777
+ MCARAM0D       1771031
+ MCARAM0E       2691202
+ MCARAM0F       1432948
+ MCARAM0G       1291264
+ MCARAM0H       1883613
+ MCARAM1        19015574
+ MCARAM2        13953498
+ MCARAM3        15105352
+ MCARAM4        11578636
+ MCARAM5        13100707
+ MCARAM6        13664959
+ MCARAM7        8880005
+ MCARAML        1520113
+ MCARAMLA       2897478
+ MCARAMLB       1796162
+ MCARAMLC       3664283
+ MCARAMLD       1966666
+ MCARAMLE       1729225
+ MCARAMLF       2335595
+ MCARAMLG       5943617
+ MCARAMLH       8048464
+ MCARAP         22520575
+ MCARAP1        14511630
+ MCARAP2        11606593
+ MCARAPI        6975599
+ MCARASE        1796907
+ MCARATVE       8505842
+ MCARBSA        3247060
+ MCARD          10122374
+ MCARD1         15041838
+ MCARDBL        3935565
+ MCARDSS        6438917
+ MCARE          27909496
+ MCARE1         970254
+ MCARED         2046377
+ MCAREH         3925233
+ MCAREO         246054
+ MCARGD         17853684
+ MCARGE         25616817
+ MCARGEA        2574716
+ MCARGEO        255921
+ MCARGES        25713899
+ MCARGP         12419032
+ MCARGPA        2903384
+ MCARGS         19682895
+ MCARHP         18270053
+ MCARLV         1789916
+ MCARP          33272345
+ MCARP1         10963685
+ MCARPAC        5666411
+ MCARPACE       10748436
+ MCARPAL        12124288
+ MCARPCE        9279131
+ MCARPCS        3205731
+ MCARPCS1       13729223
+ MCARPCS2       10883239
+ MCARPCS3       17299894
+ MCARPCS4       7873148
+ MCARPROC       4099837
+ MCARPS         21557982
+ MCARPS1        8444833
+ MCARPS2        18407793
+ MCARPS3        17359352
+ MCARSRE        3140328
+ MCARSRP        6414582
+ MCARSRR        11111615
+ MCARSUP        6823709
+ MCARUTL1       5897257
+ MCARUTL2       25925561
+ MCARUTL3       7270223
+ MCARUTL4       3195244
+ MCARUTL5       4131279
+ MCARVCHK       22793156
+ MCBPFTP1       28642672
+ MCBPFTP2       10135980
+ MCBPFTP3       9492116
+ MCBPFTP4       2977429
+ MCBPFTP5       6259222
+ MCBPFTP6       2871144
+ MCBPFTP7       5052876
+ MCDBELM        18698889
+ MCDBSAVE       9813249
+ MCDUP1         27018273
+ MCDUPE         50059
+ MCDUPM         13034439
+ MCDUPP         14337509
+ MCDUPR         24488814
+ MCEF           6141665
+ MCENDIQ1       278001
+ MCEO           1076781
+ MCEPROC        2133320
+ MCESCON3       939380
+ MCESCONV       27852414
+ MCESEDT        30105892
+ MCESEDT2       23798200
+ MCESHLP        15604337
+ MCESLIST       10954099
+ MCESMFDV       3129239
+ MCESPRT        12944936
+ MCESSCR        10168225
+ MCFIXOEP       932652
+ MCGBL          7708610
+ MCMAG          1323572
+ MCMAGDSP       13996915
+ MCNMDUP        5362420
+ MCNP2CHK       13520353
+ MCNP2X         1531747
+ MCOR           22696878
+ MCOR1          9904645
+ MCOREX         4961082
+ MCORMN         28222030
+ MCORMN0        20182884
+ MCORMN01       4360683
+ MCORMN1        14178971
+ MCORMN2        11744332
+ MCORMN3        11065851
+ MCPARAM        606224
+ MCPFTE         10983954
+ MCPFTI         9367322
+ MCPFTIC        6921750
+ MCPFTP         3751871
+ MCPFTP1        31423809
+ MCPFTP1A       2153226
+ MCPFTP2        15484590
+ MCPFTP2A       17926565
+ MCPFTP3        6893849
+ MCPFTP4        8582271
+ MCPFTP4A       2867351
+ MCPFTP5        22932646
+ MCPFTR         2861372
+ MCPFTSS        1617583
+ MCPMV          4740672
+ MCPMVA         701845
+ MCPSOP         24935576
+ MCPTF          17490725
+ MCRH1          31516454
+ MCRH2          5718448
+ MCRH3          3720034
+ MCRPEC         29070687
+ MCU            1335611
+ MCUIMAG0       57194828
+ MCWORKLD       14221314
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ACKERMAN,NIEN-CHIN            Date Entered  : MAR 26, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 11, 2013
+Released By : MILLIGAN,KERRY                Date Released : JUL 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

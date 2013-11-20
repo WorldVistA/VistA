@@ -1,0 +1,110 @@
+$TXT Created by DIMICELI,RON at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Monday, 09/09/13 at 08:40
+=============================================================================
+Run Date: SEP 30, 2013                     Designation: XWB*1.1*62
+Package : XWB - RPC BROKER                    Priority: EMERGENCY
+Version : 1.1        SEQ #46                    Status: Released
+                  Compliance Date: OCT 02, 2013
+=============================================================================
+
+
+Subject: Fix security bug in M2M Broker
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a security vulnerability in the M2M Broker.
+ A well formatted XML message can be processed without user
+ authentication.
+ 
+ Remedy Tickets:
+ ===============
+ 891538
+ 
+ 
+ Thanks to Test Sites
+ ====================
+ Phoenix HCS
+ Washington VAMC
+ Heartland West HCS
+ Cleveland VAMC  
+    
+ Blood Bank Clearance  8/20/13
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*62 contains
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+ 
+ RISK ANALYSIS: Changes made by patch XWB*1.1*62 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ Installation Instructions
+ ========================= 
+  >>>Users may remain on the system.
+  >>>TaskMan does *NOT* need to be put stopped.
+ 
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+     Answer 'Yes' to run the Environment Check Routine.
+     
+     Build XWB*1.1*62 has an Environmental Check Routine
+     Want to RUN the Environment Check Routine? YES//
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global
+    
+  4. On the KIDS menu, in the 'Installation' menu, use the following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XWB*1.1*62
+                               ==========
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 21, 2002;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XWBP62
+    Before:       n/a   After:  B2610201  **62**
+Routine Name: XWBRM
+    Before: B13950171   After: B16862663  **28,45,62**
+Routine Name: XWBRMX
+    Before:  B7578330   After:  B7226104  **28,62**
+Routine Name: XWBVLL
+    Before: B15486790   After: B17198371  **28,41,34,62**
+ 
+Routine list of preceding patches: 34, 45
+
+=============================================================================
+User Information:
+Entered By  : DIMICELI,RON                  Date Entered  : AUG 07, 2013
+Completed By: BEST,LISA                     Date Completed: SEP 25, 2013
+Released By : PALMER,MICHAEL                Date Released : SEP 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

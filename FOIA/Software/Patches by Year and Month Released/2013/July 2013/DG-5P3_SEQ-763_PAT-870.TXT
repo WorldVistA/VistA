@@ -1,0 +1,133 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 05/02/13 at 13:56
+=============================================================================
+Run Date: JUL 15, 2013                     Designation: DG*5.3*870
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #763                    Status: Released
+                  Compliance Date: AUG 15, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*744  <<= must be installed BEFORE `DG*5.3*870'
+
+Subject: PTF EDIT FOR NEW ICD10 CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*870 modifies two Registration routines to change a read to 
+ a supported cross reference when verifying Patient Treatment File (PTF) 
+ entries and accommodate both alpha and numeric characters.
+  
+   
+   ASSOCIATED REMEDY: 
+   ==================
+   1)  INC000000842743    ICD10 requires change to ICD verification due to code
+                          changes.
+  
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Durham, NC
+   Salisbury, NC
+   Tuscaloosa, AL
+   
+   
+   Remedy Overview:
+   ================
+   1)  INC000000842743    ICD10 requires change to ICD verification due to code
+                          changes.
+   
+   
+  
+   Problem:
+   --------
+   Registration routines DGPT60PR and DGPTAE04 are reading the AB cross 
+   reference to the ICD OPERATION/PROCEDURE file (#80.1), which is 
+   unsupported and does not allow for both alpha and numeric characters. 
+  
+  
+   Resolution:
+   -----------
+   This patch updates routines DGPT60PR and DGPTAE04 to read the BA
+   cross reference to the ICD OPERATION/PROCEDURE file (#80.1), which
+   is supported under ICR5404 and allow for both alpha and numeric
+   characters.
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*870).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package DG*5.3*870
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+                
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+  
+         Load/Edit PTF Data         [DG PTF SCREEN]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPT60PR
+    Before:  B4451733   After:  B4626791  **510,870**
+Routine Name: DGPTAE04
+    Before:  B9304291   After:  B9485293  **510,744,870**
+ 
+Routine list of preceding patches: 744
+
+=============================================================================
+User Information:
+Entered By  : GREEN,LINDA A                 Date Entered  : FEB 20, 2013
+Completed By: LEANORD,TATIANA               Date Completed: JUL 04, 2013
+Released By : ADAMS,RITA W                  Date Released : JUL 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

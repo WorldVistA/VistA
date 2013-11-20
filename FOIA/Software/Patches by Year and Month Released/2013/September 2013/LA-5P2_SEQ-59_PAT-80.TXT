@@ -1,0 +1,345 @@
+
+=============================================================================
+Run Date: SEP 24, 2013                     Designation: LA*5.2*80
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: EMERGENCY
+Version : 5.2        SEQ #59                    Status: Released
+                  Compliance Date: OCT 04, 2013
+=============================================================================
+
+Associated patches: (v)LA*5.2*74   <<= must be installed BEFORE `LA*5.2*80'
+
+Subject: LEDI IV UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ The build for this patch is distributed as part of a multi-package build 
+ that contains LR*5.2*427 and LA*5.2*80.
+   
+  
+ Blood Bank Clearance
+ ==================== 
+ VISTA Laboratory Package patch LA*5.2*80 contains changes to software 
+ controlled by VHA DIRECTIVE 2004-058, titled VISTA BLOOD BANK SOFTWARE. 
+ Changes include: 
+ File                            Field
+ ====-------------------         =====
+ LAB CODE MAPPING (#62.47)      SEQUENCE (#.001)         
+                                 CONCEPT (#.01)           
+                                 ALTERNATE CONCEPT (#.04) 
+                                 IDENTIFIER (#62.4701,.01)
+                                 CODING SYSTEM (#62.4701,.02)
+                                 NATIONAL STANDARD (#62.4701,.05)
+                                 RELATED ENTRY (#62.4701,2.1)
+                                 MESSAGE CONFIGURATION (#62.4701,2.2)
+  
+ LA7 MESSAGE PARAMETER (#62.48) SEQUENCE (#62.482,.001)  
+                                 VA FILE ENTRY (#62.482,.01)
+                                 SNOMED CT ID (#62.482,.02)
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*80 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*80 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 0 routines and 
+ 2 files identified in Veterans Health Administration (VHA) Directive 
+ 2004-058, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios by option
+  
+ --------------------------------------------------------------------------
+  
+ This patch addresses the following items related to LEDI IV:
+   
+ o On the second line of routine LA7SMU2A, it is missing a star before the
+   patch number. This will be added by the patch.
+  
+ o The routine LAMIAUT4 was modified to ask for performing lab and to send
+   Computerized Patient Record System (CPRS) alerts when using the option 
+   Verify Micro Auto Data [LA MI VERIFY AUTO].
+  
+ o This patch will make cosmetic changes to the Data Dictionary (e.g.,
+   update Help-Prompts, Descriptions, etc.) for files LAB CODE MAPPING
+   (#62.47) and LA7 MESSAGE PARAMETER (#62.48).
+  
+ o The functionality to electronically transmit AP orders and AP/Micro
+   results via the LEDI interface was previously disabled by default for
+   LEDI IV. This patch will now enable the functionality to electronically
+   transmit AP Orders and Micro Results via LEDI. (Note: The functionality
+   to transmit AP results will still be disabled).
+  
+ o When a Systemized Nomenclature of Medicine Clinical Terms (SNOMED CT) 
+   mapping file is loaded, the system validates each SNOMED CT ID against
+   the Lexicon. If there is an exception found (e.g., the code is inactive)
+   the system sends an alert to Standards & Terminology Services (STS) so
+   that STS can send an updated mapping for this entry. However, it is
+   possible for a code to be active at the time of the load, but be
+   deprecated when a Lexicon patch is installed that updates the SNOMED CT
+   code set. To ensure the SCT mappings stay current, this patch creates a
+   new option, 'Check SNOMED CT Mappings Against the Lexicon' [LA7TASK SCT
+   MAPPINGS CHECK]. This option checks the SCT mappings against the Lexicon
+   for exceptions, and should be scheduled to run on a recurring basis. If
+   the option finds any exceptions:
+  
+   a. The SCT CODE STATUS field (#21) for the entry will be updated to
+      'Error'
+   b. A HDI exception alert will be sent to STS 
+   c. A MailMan message will be sent to the G.LMI and G.LAB MESSAGING Mail
+      Groups with a list of the exceptions found. (Note: When the members
+      of the local mail groups receive the MailMan message with the list of
+      exceptions found, they do not need to do anything. STS will review
+      the exception alerts they receive, and if needed, will send an
+      updated SCT mapping file to the site to load. Until STS notifies the
+      site that there is an updated mapping file to load, there is nothing
+      that the site needs to do)
+  
+ o This patch will fix an issue with how the system handles the following 
+   situation. When an order is received by a host site via the LEDI 
+   interface, the system tries to find a matching entry in the host's 
+   shipping configuration based off the test and specimen codes that were 
+   sent across in the HL7 message. In a scenario where it found a matching 
+   test/specimen entry setup, but the specimen at the host site was mapped
+   to a different SNOMED CT ID than the ordering site, then when creating
+   the order, the system was not using the specimen that was configured on
+   the shipping configuration, but instead, would use a specimen that
+   matched the SNOMED CT ID from the message. If the host site did not have
+   an existing entry that matched the SNOMED CT ID from the message, the
+   system automatically created a new entry based off the SNOMED CT
+   information from the message and used that new specimen for the order.
+   This patch changes this functionality, so that in this scenario, the
+   host site rejects the order with an HL7 Application Error (AE). The
+   collecting site would then need to change their test configuration to
+   make sure that the specimen and collection samples they are using are
+   mapped to the same SNOMED CT ID as the host site.
+  
+    NOTE
+    ====
+    Due to this change, after a LEDI Host site installs this patch, they
+    might start seeing Application Errors (AEs) being generated for
+    incoming HL7 orders. If this occurs, notify the collecting site. The
+    collecting site will need to ensure that the specimen and collection
+    samples they are using are correctly mapped to the same SNOMED CT ID at
+    the host site.
+  
+ o This patch will update the file #62.47 mapping to remove LOINC code 
+   22638-1 from the SP COMMENT concept and add it to SP GROSS DESCRIPTION,
+   CY GROSS DESCRIPTION, and EM GROSS DESCRIPTION.  LOINC code 24419-4 will
+   also be added to the CY GROSS DESCRIPTION and EM GROSS DESCRIPTION
+   concepts.
+  
+ o When an HL7 ORU (Observational report - Unsolicited) message is
+   generated for an AP result, the fourth component (body site) in OBR-15
+   (Specimen source) was not being populated. Similarly, for a
+   mycobacteriology result, OBR-32 (Principal result interpreter) was not
+   being populated. These issues have been fixed with this patch.
+  
+ o When an HL7 ORU (Observational report - Unsolicited) message is
+   generated for a Micro result, an incorrect field number is being
+   referenced so the PARASITOLOGY SMEAR/PREP field (#15.51) of the
+   MICROBIOLOGY sub-file (#5) for the LAB DATA file (#63) is not populated
+   and sent.  This issue has been fixed with this patch.
+  
+ o This patch will hard code it so that Micro and AP results returned via
+   the LEDI interface will never overlay previous results for this
+   accession in the ^LAH global.
+  
+ o Microbiology sterility results being returned by a LEDI host site were 
+   not filing in the LAH global on the collecting site. This patch will add
+   filing logic for sterility results.
+   
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)       New/Modified/Deleted
+ -----------------------    -----------------------   --------------------
+ LAB CODE MAPPING           SEQUENCE (#.001)                 Modified
+ (#62.47)                   CONCEPT (#.01)                   Modified
+                            ALTERNATE CONCEPT (#.04)         Modified
+                            IDENTIFIER (#62.4701,.01)        Modified
+                            CODING SYSTEM                    Modified
+                              (#62.4701,.02)
+                            NATIONAL STANDARD                Modified
+                              (#62.4701,.05)
+                            RELATED ENTRY                    Modified
+                              (#62.4701,2.1)
+                            MESSAGE CONFIGURATION            Modified
+                              (#62.4701,2.2)
+  
+ LA7 MESSAGE PARAMETER      SEQUENCE (#62.482,.001)          Modified
+ (#62.48)                   VA FILE ENTRY                    Modified
+                              (#62.482,.01)
+                            SNOMED CT ID                     Modified
+                              (#62.482,.02)
+  
+  
+ Options Associated:
+   
+ Option Name                          Type             New/Modified/Deleted
+ -----------                          ----             --------------------
+ LA7TASK SCT MAPPINGS CHECK           routine                New
+  
+  
+ Parameter Definitions Associated:
+   
+ Parameter Definition Name:                          New/Modified/Deleted
+ -------------------------                           --------------------
+ LA LEDI ORM HL7 STATUS                                      Modified
+ LA LEDI ORU HL7 STATUS                                      Modified
+     
+    
+   
+ Remedy Tickets Overview
+ =======================
+   
+ 1. INC000000852585 - Error with option LA DOWN
+   
+    Problem
+    -------
+    Sometimes when a user runs option Download a load list to an Instrument
+    [LA DOWN], the option generates an error in the VistA error trap and
+    does not download the load list to the instrument. The issue is caused
+    because patch LA*5.2*74 modified routine LA7ADL to change how variable
+    LA761 was set. It moved this action from CHKTEST^LA7ADL to UID^LA7ADL.
+    Routine LA7UIO is used by the option LA DOWN, and it calls
+    CHKTEST^LA7ADL at CUP+20. Since it enters at CHKTEST, LA761 has not
+    been set causing the undefined error.
+  
+    Solution
+    --------
+    Modified CUP^LA7UIO to set variable LA761 before calling 
+    CHKTEST^LA7ADL.
+   
+    Routine: LA7UIO
+   
+  
+    
+ Test Sites
+ ==========
+  
+  Bedford VAMC
+  Biloxi VAMC
+  Boston HCS
+  Hines, IL VAMC
+  Houston VAMC
+  Madison, WI VAMC
+  Milwaukee VAMC
+  Minneapolis VA HCS
+  Shreveport VAMC
+  St. Cloud VA HCS
+  Upstate New York HCS
+  VA Heartland-West HCS
+    
+ We would also like to thank the following site who participated in the 
+ testing of this patch: 
+  
+  Oklahoma City VAMC
+    
+  
+    
+ Software and Documentation Retrieval Information
+ ================================================
+  
+ VistA Laboratory patch LR*5.2*80 software is distributed by Host File, 
+ along with LR*5.2*427.
+  
+  
+ Documentation is available on the ANONYMOUS.SOFTWARE directory at one of 
+ the following Office of Information (OI) Field Offices.
+  
+ The preferred method is to FTP the files from:
+    download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may also
+ elect to retrieve documentation directly from a specific server as
+ follows:
+         Albany                  ftp.fo-albany.domain.ext
+         Hines                   ftp.fo-hines.domain.ext
+         Salt Lake City          ftp.fo-slc.domain.ext
+  
+ File Name                     Contents                    Retrieval Format
+ ------------------            --------------------        ----------------
+ LR_52_P427.KID                Host File containing        ascii
+                               KIDS software distribution
+  
+ LAB_LEDI_IV_UM_UPDATE.PDF     LEDI IV User Manual         binary
+                               Update
+  
+ LEDI_IV_AP_MICRO_CONFIGURATION_GUIDE.PDF                  binary
+                               LEDI IV Update AP/MICRO     
+                               Configuration Guide 
+    
+   
+   
+ Installation Instructions
+ =========================
+ This patch, LA*5.2*80, is part of a combined build for LEDI IV Updates.  
+ Please refer to patch LR*5.2*427 for installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7CHKF1
+    Before:       n/a   After: B91962013  **80**
+Routine Name: LA7SMU2
+    Before: B28488734   After: B27930322  **46,64,74,80**
+Routine Name: LA7SMU2A
+    Before: B11988192   After: B11988192  **74,80**
+Routine Name: LA7UIO
+    Before:  B9066917   After:  B9916746  **66,80**
+Routine Name: LA7VIN4A
+    Before: B16212997   After: B19473776  **74,80**
+Routine Name: LA7VIN71
+    Before: B21329203   After: B21704396  **74,80**
+Routine Name: LA7VIN7C
+    Before: B37686666   After: B42479147  **74,80**
+Routine Name: LA7VMSG
+    Before: B31327904   After: B45543754  **27,50,56,46,64,74,80**
+Routine Name: LA7VORU2
+    Before: B30157126   After: B30167256  **46,64,68,74,80**
+Routine Name: LA7VORUB
+    Before: B55030598   After: B55537548  **68,74,80**
+Routine Name: LA80
+    Before:       n/a   After:  B5891361  **80**
+Routine Name: LAMIAUT4
+    Before: B18229439   After: B18820439  **153,80**
+ 
+Routine list of preceding patches: 66, 74, 153
+
+=============================================================================
+User Information:
+Entered By  : ANZALDUA,CAROL                Date Entered  : OCT 11, 2012
+Completed By: DERBES-MURPHY,ELISA           Date Completed: SEP 17, 2013
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

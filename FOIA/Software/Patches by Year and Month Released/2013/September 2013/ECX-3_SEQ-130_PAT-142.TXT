@@ -1,0 +1,165 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 01/10/13 at 15:57
+=============================================================================
+Run Date: SEP 12, 2013                     Designation: ECX*3*142
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #130                      Status: Released
+                  Compliance Date: OCT 13, 2013
+=============================================================================
+
+Associated patches: (v)ECX*3*92    <<= must be installed BEFORE `ECX*3*142'
+                    (v)ECX*3*136   <<= must be installed BEFORE `ECX*3*142'
+
+Subject: BUG IN ROUTINE, UPDATE REPORT LOGIC AND MENU OPTION PROMPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*142 addresses three different issues:
+        1. Intravenous Push (IVP) Source Audit Report is displaying 
+           test patients.
+            
+        2. After editing Decision Support System (DSS) Clinic Stop 
+           Codes, system does not prompt for another clinic but 
+           returns to the prior menu.
+  
+        3. The Worksheets for DSS Clinic Stops [ECXSCLOAD] option does not 
+           display changes made to Inactive Clinics.
+            
+   
+   ASSOCIATED REMEDY: 
+   ==================
+   1)  INC000000619155   Bug in Routine ECXPHAA
+   2)  INC000000419523   ECXSCEDIT Option Issues
+   3)  INC000000494112   Code does not update
+                          
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Central Texas Veterans HCS
+   Salem -  VA Medical Center 
+   Providence - VA Medical Center
+   
+   Remedy Overview:
+   ================
+   1)  INC000000619155    Bug in routine ECXPHAA
+   
+    Problem:
+    --------
+    When using the UDP/IVP Source Audit Report [ECX PHA UDP/IVP SOURCE
+    AUDIT] option, The IVP Source Audit Report is displaying test patients;
+    however, it should only display real patients.
+  
+    Resolution:
+    -----------
+    Modified routine ECXPHAA to correctly check for test patients and not 
+    display them on report.
+  
+   
+   2)  INC000000419523    ECXSCEDIT Option Issues
+  
+    Problem:
+    --------
+    When using the Enter/Edit DSS Stop Codes for clinics [ECXSCEDIT]
+    option, to edit the DSS Stop Codes for Clinics, the menu returns to
+    previous menu option instead of prompting for another clinic to edit.
+    
+    Resolution:
+    -----------
+    Modified routine ECXSCLD to prompt for another clinic.
+  
+  
+   3)  INC000000494112    Code does not update
+             
+    Problem:
+    --------         
+    When using the Create DSS Clinic Stop Code File [ECXSCLOAD] option, the
+    Worksheet for DSS Clinic Stops report is not showing changes made to 
+    Inactive Clinics.
+    
+    Resolution:
+    -----------
+    Modified routine ECXSCLD to allow for Inactive Clinics to display 
+    changes. 
+  
+        
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter ECX*3.0*142).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package ECX*3.0*142
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES.
+         When prompted,"Enter options you wish to mark as 'Out of Order':"
+         enter:
+                Maintenance     [ECX MAINTENANCE]
+                UDP/IVP Source Audit report [ECX PHA UDP/IVP SOURCE AUDIT]
+                Setup for DSS Clinic Information [ECX SETUP CLINIC]
+                Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT]
+                Create DSS Clinic Stop Code File  [ECXSCLOAD]
+  
+     When prompted,"Enter protocols you wish to mark as 'Out Of Order':",
+     Press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXPHAA
+    Before: B42962189   After: B44653526  **92,142**
+Routine Name: ECXSCLD
+    Before:B200358220   After:B204371648  **2,8,24,30,71,80,105,112,120,
+                                           126,132,136,142**
+ 
+Routine list of preceding patches: 92, 136
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : SEP 25, 2012
+Completed By: MIRANDA,RAUL                  Date Completed: SEP 09, 2013
+Released By : VASSAR,CAROL                  Date Released : SEP 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

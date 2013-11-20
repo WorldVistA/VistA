@@ -1,0 +1,163 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 02/26/13 at 11:52
+=============================================================================
+Run Date: AUG 19, 2013                     Designation: RMPR*3*166
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #150                      Status: Released
+                  Compliance Date: SEP 19, 2013
+=============================================================================
+
+Associated patches: (v)RMPR*3*153  <<= must be installed BEFORE `RMPR*3*166'
+                    (v)RMPR*3*154  <<= must be installed BEFORE `RMPR*3*166'
+
+Subject: NEW PRIVACY STATEMENT AND HOME OXYGEN ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will fix the following issues:
+  
+ 1) Prosthetics routines need to be updated with the New Privacy Act 
+ Statement.
+  
+ 2) Sites are unable to post prosthetics monthly home oxygen bills to
+ the 1358 DAILY RECORD file (#424) when Veterans internal entry numbers
+ (IEN) in the Patient file (#2) exceed 9 digits.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) INC000000771473  Update RMPR* routines to reflect New Privacy Act 
+                     Statement.  Modify routines RMPRP23, RMPR9P23, and
+                     RMPR4P23
+ 2) INC000000786903  The home oxygen billing package - RMPO Billing 
+                     Transactions
+   
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA Illiana HCS - Danville
+ Central Texas Veterans HCS
+  
+   
+ Remedy Overview:
+ ================
+  
+ 1) INC000000771473  Update RMPR* routines to reflect New Privacy Act Sta
+                     Modify routines RMPRP23, RMPR9P23, and RMPR4P23
+  
+ Problem: 
+ --------
+ Per Acquisition Policy Flash 12-04, Prosthetics routines need to be
+ updated to reflect the New Privacy Act Statement 
+    
+  
+ Resolution:
+ -----------
+ Update Prosthetics routines used to display the Privacy Act Statement to 
+ use the newly released text.
+  
+ Routines: RMPR9P23, RMPRP23, RMPR4P23
+   
+ 2) INC000000786903  The home oxygen billing package - RMPO Billing 
+                     Transactions  
+  
+ Problem: 
+ --------
+ Sites are unable to post prosthetics monthly home oxygen bills to
+ the 1358 DAILY RECORD file (#424) when Veterans internal entry numbers
+ (IEN) in the Patient file (#2) exceed 9 digits. These issues occur due to
+ length restrictions in the 1358 DAILY RECORD file (#424) REFERENCE field
+ (#.1) when the IEN's are concatenated with the identifier string "PAT ID"
+ and exceed maximum amount of characters for that field.
+    
+  
+ Resolution:
+ -----------
+ Modify the identifier string to be "PID" thereby reducing the number 
+ of characters by three which will allow the record to post correctly.
+  
+ Routines: RMPOPST1
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to users.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*166
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package RMPR*3.0*166.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+    7. When prompted 'Enter options you wish to mark as 'Out Of 
+       Order':'  Enter the following options:
+  
+         Billing Transactions           [RMPO BILLING TRANSACTIONS]
+         Reprint a 2421 Form            [RMPR REPRINT 2421]
+         Reprint a Purchase Card Form   [RMPR4 RPC]
+  
+    8. When prompted 'Enter protocols you wish to mark as 'Out Of Order':',
+       press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOPST1
+    Before: B18233927   After: B18943875  **29,44,55,154,166**
+Routine Name: RMPR4P23
+    Before:  B8940498   After: B10672593  **3,153,166**
+Routine Name: RMPR9P23
+    Before:   B321448   After:   B303495  **153,166**
+Routine Name: RMPRP23
+    Before:  B8940005   After: B10672100  **153,166**
+ 
+Routine list of preceding patches: 153, 154
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : FEB 24, 2011
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 06, 2013
+Released By : MORRIS,DELISA                 Date Released : AUG 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,283 @@
+
+=============================================================================
+Run Date: SEP 04, 2013                     Designation: MAG*3*140
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #92                      Status: Released
+                  Compliance Date: OCT 05, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*129   <<= must be installed BEFORE `MAG*3*140'
+
+Subject: Clinical Capture Scanning Enhancements
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ MAG*3.0*140 Clinical Capture Scanning Enhancements contains enhancements
+ to Clinical Capture which will allow users to convert multi-page scanned
+ images to PDFs and will also allow users to capture multiple page images
+ and save them as PDFs.
+  
+ MAG*3.0*140 contains the following new functions:
+  - Scan or import multi-page color images to save as PDF documents.
+  - The ability to capture XML files has been enabled in Clinical Capture.
+  - Save the number of pages of any captured image to the IMAGE file
+  
+ Note: The Clinical Capture Application is only supported on a Window 7 
+ operating system, other operating systems are not officially supported.  
+  
+  
+ Distribution of the Software:
+ =============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P140
+ This document includes installation instructions.
+  
+ NOTE: You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*140 KIDS                  MAG3_0P140.KID                   ASCII
+ Installation file for Clinical    MAG3_0P140_CLINICAL_CAPTURE_SETUP.exe
+   Display software.                                                Binary
+ Installation file for sites       Mag3_0P140_CLINICAL_CAPTURE_INSTALL.msi
+   using SMS or similar software                                    Binary
+  
+ NOTE: MagAUShare.zip will not be included in the contents because 
+ Autoupdate is no longer supported. 
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*140 Patch Description     MAG3_0P140_Patch_Description.pdf
+ Technical Manual change pages     MAG3_0P140_TM.pdf
+ Security Guide change pages       MAG3_0P140_SG.pdf
+ Installation Guide change pages   MAG3_0P140_IG.pdf
+ MAG*3.0*140 Readme file           MAG3_0P140_README.txt 
+  
+ Associated Patches:
+ ===================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*140 can be installed. The KIDS files of 
+ the following VistA Imaging patches must be installed on the VistA system 
+ in this order:
+              
+   MAG*3.0*129
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Connecticut HCS - West Haven, CT (Integrated)
+ Salem, VA (Large)
+ VA Heartland East - Marion, IL (Integrated)
+ West Palm Beach, FL (Large)
+  
+ Remedy Help Calls:
+ ==================
+  
+ 1.  745055 
+  
+ Problem:
+ ========
+ The issue of huge file sizes when scanning multipage color images causes 
+ problems to all applications copying images from storage.
+  
+ Resolution:
+ ===========
+ Add the capability to save multipage color images as PDF file.  PDF files 
+ have a high compression ratio and will decrease the size of multipage 
+ color images substantially.
+  
+ New Service Requests:
+ =====================
+ There are no New Service Requests (NSRs) addressed in this patch. 
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+ This patch contains no new or modified files or fields. 
+  
+ Security Keys:
+ ==============
+ This patch contains no new or modified security keys. 
+  
+  
+ REMOTE PROCEDURES:
+ ==================
+ This patch contains no new or modified remote procedures. 
+  
+ Menu Options
+ ============
+ This patch contains no new or modified menu options. 
+  
+ Templates:
+ ==========
+ This patch contains no new or modified templates. 
+  
+  
+  
+ Installation
+ ============
+ This patch is to be installed on the VistA System and on the Clinical 
+ Capture workstations.
+  
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch.  Installation of the client software may be phased in 
+ according to each site's needs. 
+  
+ This patch may be loaded while VistA Imaging System is active.   
+  
+ Installation will take less than one minute. 
+  
+ Installing the KIDS Package
+  
+ 1  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P140.KID) of
+        the Patch 140 KIDS file that you downloaded from the Imaging FTP
+        server.  
+     c. When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+         
+     Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+      this option to verify the integrity of the routines in the patch. 
+     Compare Transport Global to Current System [XPD COMPARE TO 
+     SYSTEM] - run this option to view all changes that will be made when  
+      the patch is installed.  All components (routines, options, and so
+      on) in the patch will be compared.
+     Backup a Transport Global [XPD BACKUP] - run this option to create a 
+      backup message of any routines exported with the patch.  It will NOT
+      back up any of the other changes.
+ 5  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*140
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*140 KIDS.
+  
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*140    7/22/13@14:05:43
+      => VistA Imaging V3.0 Patch 140 - Scanning Enhancements - 07/19/2
+  
+ This Distribution was loaded on Jul 22, 2013@14:05:43 with header of 
+    VistA Imaging V3.0 Patch 140 - Scanning Enhancements - 07/19/2013 12:
+ 22PM  ;Created on Jul 19, 2013@12:22:45
+    It consisted of the following Install(s):
+     MAG*3.0*140
+ Checking Install for Package MAG*3.0*140
+  
+ Install Questions for MAG*3.0*140
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ Complete                                 
+ MAG*3.0*140                          
+  
+  Install Started for MAG*3.0*140 : 
+                Jul 22, 2013@14:11:23
+  
+ Build Distribution Date: Jul 19, 2013
+  
+  Installing Routines: 
+                Jul 22, 2013@14:11:23
+  
+  Running Pre-Install Routine: PRE^MAGIP140 
+  
+  Running Post-Install Routine: POS^MAGIP140 
+  
+ Post Install Mail Message: Jul 22, 2013@14:11:24
+  
+  Updating Routine file... 
+  
+  Updating KIDS files... 
+  
+  MAG*3.0*140 Installed. 
+                Jul 22, 2013@14:11:24
+  
+  
+ Install Message sent 
+  
+ Install Completed
+  
+ Clinical Workstation Installation
+ =================================
+ The details for the installation of the client software are in the 
+ MAG3_0P140 Patch Description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 5274;Jul 19, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGTU4C
+    Before:  B5332367   After:  B5540791  **93,94,106,117,122,129,140**
+Routine Name: MAGIP140
+    Before:       n/a   After: B13676169  **140**
+ 
+Routine list of preceding patches: 129
+
+=============================================================================
+User Information:
+Entered By  : CASUGAY,ELSIE G               Date Entered  : JAN 21, 2013
+Completed By: SHOVESTUL,MARYANN             Date Completed: AUG 22, 2013
+Released By : FUGETT,BRENT                  Date Released : SEP 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

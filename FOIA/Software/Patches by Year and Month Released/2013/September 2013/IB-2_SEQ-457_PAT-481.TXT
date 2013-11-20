@@ -1,0 +1,212 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 04/03/13 at 08:49
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: IB*2*481
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #457                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+
+Subject: UPDATE FOR UNSUPPORTED ICD FIELD
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Application Programmer Interfaces (APIs) have been created to facilitate
+ the implementation of the International Classification of Diseases, 10th
+ Edition (ICD10) project.  These APIs replace direct global reads to
+ unsupported fields in the ICD DIAGNOSIS (#80) file.  This patch will use
+ these APIs in order to obtain information from the file instead of
+ performing a direct read of the ^ICD9 global.
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ INC0000000605329 IB CODE CONTAINS DIRECT GLOBAL READS TO THE ^ICD9 GLOBAL 
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ BLACK HILLS HCS
+ FARGO, ND
+ MINNEAPOLIS, MN
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ INC0000000605329 IB CODE CONTAINS DIRECT GLOBAL READS TO THE ^ICD9 GLOBAL 
+  
+    Problem:   
+    --------
+    Direct global reads to the DIAGNOSIS (#3) field in the ICD DIAGNOSIS
+    file (#80) are not supported and need to be replaced in order for the
+    software to function properly. 
+  
+    Resolution:
+    -----------
+    The ICD DIAGNOSIS CODE (1) field (#64) contained an unsupported direct
+    global read.  This field was already marked for deletion and this patch 
+    corrects the unsupported read by deleting this field.  
+  
+    Technical:
+    ----------
+    To delete the field properly, current values of the ICD DIAGNOSIS 
+    CODE (1) field (#64) were set to null for all entries in the 
+    BILL/CLAIMS file (#399).  The ICD DIAGNOSIS CODE (1) field (#64) was then 
+    removed from the Data Dictionary.  The trigger for this field contained 
+    the code that performed a direct read to the unsupported field within the 
+    ^ICD9 global.  The IBXX* cross reference routines for the BILL/CLAIMS 
+    file (#399) were then recompiled.  These actions removed the direct global 
+    read of the unsupported field within the ^ICD9 global.
+  
+  
+  
+                          INSTALLATION INSTRUCTIONS:
+                          ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.  
+ Installation will take less than 20 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter IB*2.0*481)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       IB*2.0*481.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+       When prompted, "Enter options you wish to mark as 'Out of Order':",
+       enter:
+               Enter/Edit Billing Information  [IB EDIT BILLING INFO]
+  
+       When prompted, "Enter protocols you wish to mark as 'Out of Order':"
+       press <return>.
+  
+    7. You may delete routine IB20P481 after the installation is complete.
+  
+  
+ *** After the install please review the output to verify the IBXX* cross
+     reference routines were recompiled.  See below for an example.  If any
+     issues arise during the patch install please create a Remedy ticket.
+     
+ ------------------------------------------------
+  
+ *** Procedure initiating. ***
+  
+ >>> Setting all values of field (#64) in file (#399) to null. <<<
+ >>> This may take a while, depending on how many bills are in <<<
+ >>> the Bill/Claims file.  Please be patient.                 <<<
+  
+ >>> All values for field (#64) have been set to null. <<<
+  
+ >>> Deleting field (#64) from file (#399) in Data Dictionary. <<<
+  
+ >>> Deletion from Data Dictionary complete. <<<
+  
+ >>> Recompiling cross reference routines for BILL/CLAIMS file. <<<
+  
+ ** File 399 **
+  
+  
+ Compiling Cross-Reference(s) 399 of File 399.
+  
+ ...HMMM, LET ME PUT YOU ON 'HOLD' FOR A SECOND...
+  
+ 'IBXX1' ROUTINE FILED.
+ 'IBXX2' ROUTINE FILED.
+ 'IBXX3' ROUTINE FILED.
+ 'IBXX4' ROUTINE FILED.
+ 'IBXX5' ROUTINE FILED.
+ 'IBXX6' ROUTINE FILED.
+ 'IBXX7' ROUTINE FILED.
+ 'IBXX8' ROUTINE FILED.
+ 'IBXX9' ROUTINE FILED.
+ 'IBXX10' ROUTINE FILED.
+ 'IBXX11' ROUTINE FILED.
+ 'IBXX12' ROUTINE FILED.
+ 'IBXX13' ROUTINE FILED.
+ 'IBXX14' ROUTINE FILED.
+ 'IBXX15' ROUTINE FILED.
+ 'IBXX16' ROUTINE FILED.
+ 'IBXX17' ROUTINE FILED.
+ 'IBXX18' ROUTINE FILED.
+ 'IBXX19' ROUTINE FILED.
+ 'IBXX20' ROUTINE FILED.
+ 'IBXX21' ROUTINE FILED.
+ 'IBXX22' ROUTINE FILED.
+ 'IBXX23' ROUTINE FILED.
+ 'IBXX24' ROUTINE FILED.
+ 'IBXX25' ROUTINE FILED.
+ 'IBXX26' ROUTINE FILED.
+ 'IBXX27' ROUTINE FILED.
+ 'IBXX28' ROUTINE FILED.
+ 'IBXX29' ROUTINE FILED.
+ 'IBXX30' ROUTINE FILED.
+ 'IBXX31' ROUTINE FILED.
+ 'IBXX32' ROUTINE FILED.
+ 'IBXX33' ROUTINE FILED.
+ 'IBXX' ROUTINE FILED.
+  
+ >>> Recompile complete. <<<
+  
+ *** Procedure complete. ***
+  
+ -------------------------------------------------
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P481
+    Before:       n/a   After:  B4603335  **481**
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : JUL 17, 2012
+Completed By: LANG,MICKEY                   Date Completed: AUG 27, 2013
+Released By : CAULFIELD,MARY                Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

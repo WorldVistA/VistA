@@ -1,0 +1,686 @@
+Released DG*5.3*861 SEQ #767
+Extracted from mail message
+**KIDS**:DG*5.3*861^
+
+**INSTALL NAME**
+DG*5.3*861
+"BLD",9195,0)
+DG*5.3*861^REGISTRATION^0^3130708^y
+"BLD",9195,1,0)
+^^10^10^3130314^
+"BLD",9195,1,1,0)
+This patch addresses 3 issues:
+"BLD",9195,1,2,0)
+ 
+"BLD",9195,1,3,0)
+1. Medicaid inconsistency check isn't working when a field consistency
+"BLD",9195,1,4,0)
+   edit check that is processed prior to it is set to DON'T CHECK. 
+"BLD",9195,1,5,0)
+2. When the SOCIAL SECURITY NUMBER field (#.09) of the PATIENT file (#2) 
+"BLD",9195,1,6,0)
+   is updated, the PRIMARY LONG ID field (#.363) and the PRIMARY SHORT ID
+"BLD",9195,1,7,0)
+   field (#.364) of the PATIENT file (#2) are not updated accordingly. 
+"BLD",9195,1,8,0)
+3. An undefined error is occurring during an attempt to close a Patient
+"BLD",9195,1,9,0)
+   Treatment File (PTF) (#45) record via LOAD/EDIT PTF DATA [DG LOAD 
+"BLD",9195,1,10,0)
+   PATIENT DATA] Option.
+"BLD",9195,4,0)
+^9.64PA^8^1
+"BLD",9195,4,8,0)
+8
+"BLD",9195,4,8,2,0)
+^9.641^8^1
+"BLD",9195,4,8,2,8,0)
+ELIGIBILITY CODE  (File-top level)
+"BLD",9195,4,8,2,8,1,0)
+^9.6411^9^1
+"BLD",9195,4,8,2,8,1,9,0)
+ID FORMAT
+"BLD",9195,4,8,222)
+y^n^p^^^^n^^n
+"BLD",9195,4,8,224)
+
+"BLD",9195,4,"APDD",8,8)
+
+"BLD",9195,4,"APDD",8,8,9)
+
+"BLD",9195,4,"B",8,8)
+
+"BLD",9195,6.3)
+29
+"BLD",9195,"ABPKG")
+n
+"BLD",9195,"INI")
+EN^DG53P861
+"BLD",9195,"INID")
+^^y
+"BLD",9195,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9195,"KRN",.4,0)
+.4
+"BLD",9195,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",.401,0)
+.401
+"BLD",9195,"KRN",.402,0)
+.402
+"BLD",9195,"KRN",.403,0)
+.403
+"BLD",9195,"KRN",.5,0)
+.5
+"BLD",9195,"KRN",.84,0)
+.84
+"BLD",9195,"KRN",3.6,0)
+3.6
+"BLD",9195,"KRN",3.8,0)
+3.8
+"BLD",9195,"KRN",9.2,0)
+9.2
+"BLD",9195,"KRN",9.8,0)
+9.8
+"BLD",9195,"KRN",9.8,"NM",0)
+^9.68A^4^2
+"BLD",9195,"KRN",9.8,"NM",3,0)
+DGRPC1^^0^B14075036
+"BLD",9195,"KRN",9.8,"NM",4,0)
+DGPTF2^^0^B16869075
+"BLD",9195,"KRN",9.8,"NM","B","DGPTF2",4)
+
+"BLD",9195,"KRN",9.8,"NM","B","DGRPC1",3)
+
+"BLD",9195,"KRN",19,0)
+19
+"BLD",9195,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",19.1,0)
+19.1
+"BLD",9195,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",101,0)
+101
+"BLD",9195,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",409.61,0)
+409.61
+"BLD",9195,"KRN",409.61,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",771,0)
+771
+"BLD",9195,"KRN",771,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",779.2,0)
+779.2
+"BLD",9195,"KRN",779.2,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",870,0)
+870
+"BLD",9195,"KRN",870,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",8989.51,0)
+8989.51
+"BLD",9195,"KRN",8989.51,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",8989.52,0)
+8989.52
+"BLD",9195,"KRN",8989.52,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN",8994,0)
+8994
+"BLD",9195,"KRN",8994,"NM",0)
+^9.68A^^
+"BLD",9195,"KRN","B",.4,.4)
+
+"BLD",9195,"KRN","B",.401,.401)
+
+"BLD",9195,"KRN","B",.402,.402)
+
+"BLD",9195,"KRN","B",.403,.403)
+
+"BLD",9195,"KRN","B",.5,.5)
+
+"BLD",9195,"KRN","B",.84,.84)
+
+"BLD",9195,"KRN","B",3.6,3.6)
+
+"BLD",9195,"KRN","B",3.8,3.8)
+
+"BLD",9195,"KRN","B",9.2,9.2)
+
+"BLD",9195,"KRN","B",9.8,9.8)
+
+"BLD",9195,"KRN","B",19,19)
+
+"BLD",9195,"KRN","B",19.1,19.1)
+
+"BLD",9195,"KRN","B",101,101)
+
+"BLD",9195,"KRN","B",409.61,409.61)
+
+"BLD",9195,"KRN","B",771,771)
+
+"BLD",9195,"KRN","B",779.2,779.2)
+
+"BLD",9195,"KRN","B",870,870)
+
+"BLD",9195,"KRN","B",8989.51,8989.51)
+
+"BLD",9195,"KRN","B",8989.52,8989.52)
+
+"BLD",9195,"KRN","B",8994,8994)
+
+"BLD",9195,"PRE")
+
+"BLD",9195,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",9195,"QUES",0)
+^9.62^^
+"BLD",9195,"REQB",0)
+^9.611^3^2
+"BLD",9195,"REQB",2,0)
+DG*5.3*688^2
+"BLD",9195,"REQB",3,0)
+DG*5.3*643^2
+"BLD",9195,"REQB","B","DG*5.3*643",3)
+
+"BLD",9195,"REQB","B","DG*5.3*688",2)
+
+"FIA",8)
+ELIGIBILITY CODE
+"FIA",8,0)
+^DIC(8,
+"FIA",8,0,0)
+8I
+"FIA",8,0,1)
+y^n^p^^^^n^^n
+"FIA",8,0,10)
+
+"FIA",8,0,11)
+
+"FIA",8,0,"RLRO")
+
+"FIA",8,0,"VR")
+5.3^DG
+"FIA",8,8)
+1
+"FIA",8,8,9)
+
+"INI")
+EN^DG53P861
+"MBREQ")
+0
+"PKG",5,-1)
+1^1
+"PKG",5,0)
+REGISTRATION^DG^PATIENT REGISTRATION, ADMISSION, DISCHARGE, EMBOSSER 
+"PKG",5,20,0)
+^9.402P^^
+"PKG",5,22,0)
+^9.49I^1^1
+"PKG",5,22,1,0)
+5.3^2930813
+"PKG",5,22,1,"PAH",1,0)
+861^3130708
+"PKG",5,22,1,"PAH",1,1,0)
+^^10^10^3130708
+"PKG",5,22,1,"PAH",1,1,1,0)
+This patch addresses 3 issues:
+"PKG",5,22,1,"PAH",1,1,2,0)
+ 
+"PKG",5,22,1,"PAH",1,1,3,0)
+1. Medicaid inconsistency check isn't working when a field consistency
+"PKG",5,22,1,"PAH",1,1,4,0)
+   edit check that is processed prior to it is set to DON'T CHECK. 
+"PKG",5,22,1,"PAH",1,1,5,0)
+2. When the SOCIAL SECURITY NUMBER field (#.09) of the PATIENT file (#2) 
+"PKG",5,22,1,"PAH",1,1,6,0)
+   is updated, the PRIMARY LONG ID field (#.363) and the PRIMARY SHORT ID
+"PKG",5,22,1,"PAH",1,1,7,0)
+   field (#.364) of the PATIENT file (#2) are not updated accordingly. 
+"PKG",5,22,1,"PAH",1,1,8,0)
+3. An undefined error is occurring during an attempt to close a Patient
+"PKG",5,22,1,"PAH",1,1,9,0)
+   Treatment File (PTF) (#45) record via LOAD/EDIT PTF DATA [DG LOAD 
+"PKG",5,22,1,"PAH",1,1,10,0)
+   PATIENT DATA] Option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","DG53P861")
+0^^B1737294^n/a
+"RTN","DG53P861",1,0)
+DG53P861 ;ALB/LG - PRE-INSTALL ROUTINE FOR DG*5.3*861;NOV 2012 ; 3/14/13 1:57pm
+"RTN","DG53P861",2,0)
+ ;;5.3;Registration;**861**;Aug 13, 1993;Build 29
+"RTN","DG53P861",3,0)
+ ; This routine will be used to default the ID FORMAT
+"RTN","DG53P861",4,0)
+ ; Field (#9) of the  ELIGIBILITY CODE FILE (#8) in cases where
+"RTN","DG53P861",5,0)
+ ; the field is set to null.  This file update will coincide
+"RTN","DG53P861",6,0)
+ ; with a modification to make the ID FORMAT Field (#9) of the 
+"RTN","DG53P861",7,0)
+ ; ELIGIBILITY CODE FILE (#8) a required field. 
+"RTN","DG53P861",8,0)
+ Q
+"RTN","DG53P861",9,0)
+EN N DA,DIE,DR,DGELGSTT,DGELDAT,DGVAS
+"RTN","DG53P861",10,0)
+ S DA=0,DGVAS=$O(^DIC(8.2,"B","VA STANDARD","")) ;Check for site specific VA STANDARD assignment 
+"RTN","DG53P861",11,0)
+ F  S DA=$O(^DIC(8,DA)) Q:'DA  D
+"RTN","DG53P861",12,0)
+ .S DGELDAT=$G(^DIC(8,DA,0)),DGELGSTT=$P(DGELDAT,"^",10)
+"RTN","DG53P861",13,0)
+ .I DGELGSTT Q  ;Field already has ID Format Field (#9) defined and should not be updated
+"RTN","DG53P861",14,0)
+ .S DIE=8,DR="9////"_DGVAS ;Update using site specific VA standard assignment
+"RTN","DG53P861",15,0)
+ .D ^DIE
+"RTN","DG53P861",16,0)
+ D BMES^XPDUTL("Pre-Install Routine: ^DG53P861--Complete")
+"RTN","DG53P861",17,0)
+ Q
+"RTN","DGPTF2")
+0^4^B16869075^B16520587
+"RTN","DGPTF2",1,0)
+DGPTF2 ;ALB/JDS - PTF CORRECTIONS ; MAR 16, 2005
+"RTN","DGPTF2",2,0)
+ ;;5.3;Registration;**37,342,643,861**;Aug 13, 1993;Build 29
+"RTN","DGPTF2",3,0)
+EN Q:'$D(^UTILITY("DG",$J))  S Q=0,DG2=""
+"RTN","DGPTF2",4,0)
+ F DG9=101,401,501,701,601,"HEADER" D @DG9 F I1=0:0 S I1=$O(^UTILITY("DG",$J,DG9,I1)) Q:I1'>0!(Q)  S DG45="",DGJ=^(I1) F J=2:1 S K=$P(DGJ,U,J) Q:'K  D SET Q:Q  I '$P(DGJ,U,J+1) D @($S(DG9=401!(DG9=501)!(DG9=601):"D5",1:"DO1")) Q:Q
+"RTN","DGPTF2",5,0)
+Q D DO:'Q K DG9,I1,DR,DG45,DG2,DGJ,Q,M,L,^UTILITY("DG",$J) Q
+"RTN","DGPTF2",6,0)
+SET S L=$P(DGL,U,K) I DGPTFE!('$P(L,"*",3)) S M="DG"_$P(L,"*",2) I @M'[($P(L,"*",1)_";") S @M=@M_$P(L,"*",1)_";"
+"RTN","DGPTF2",7,0)
+ Q
+"RTN","DGPTF2",8,0)
+ ; -- DGL sets
+"RTN","DGPTF2",9,0)
+101 I DGPTFMT<2 S DGL=".01*2^20*45^21.1;21.2*45^22*45^.526*2^.05*2^.02*2^.03*2^23*45^.32103;.32102;.3212*2^.115;.117;.1112*2^10*45"
+"RTN","DGPTF2",10,0)
+ I DGPTFMT>1 S DGL=".01*2^20*45^21.1;21.2*45^22*45^.526*2^.05*2^.02*2^.03*2^.323*2^.32101;.32103;.3212;.32102;.3213*2^.115;.117;.1112*2^10*45"
+"RTN","DGPTF2",11,0)
+ Q
+"RTN","DGPTF2",12,0)
+701 S DGL="70*45*1^71*45*1^72*45*1^73*45^74*45^75*45^76.1;76.2*45^77*45^.06*2^78*45^79*45"
+"RTN","DGPTF2",13,0)
+ Q
+"RTN","DGPTF2",14,0)
+401 S DGL=".01*45^3*45^4*45^5*45^6*45^7*45^8:12*45"
+"RTN","DGPTF2",15,0)
+ Q
+"RTN","DGPTF2",16,0)
+501 I DGPTFMT<2 S DGL="10*45*1^2*45*1^3*45^4*45^57.4*2^5:9*45^72.1*45*1"
+"RTN","DGPTF2",17,0)
+ I DGPTFMT>1 S DGL="10*45*1^2*45*1^2*45*1^3*45^4*45^57.4*2^5:9*45^^^^72.1*45*1"
+"RTN","DGPTF2",18,0)
+ Q
+"RTN","DGPTF2",19,0)
+601 S DGL=".01*45^1*45^^^4:9*45"
+"RTN","DGPTF2",20,0)
+ Q
+"RTN","DGPTF2",21,0)
+HEADER S DGL=".09*2^2*45*1^3*45*1"
+"RTN","DGPTF2",22,0)
+ Q
+"RTN","DGPTF2",23,0)
+ ;
+"RTN","DGPTF2",24,0)
+DO I DG2]"" W !!,"Editing patient information:" S DIE="^DPT(",DR=DG2,DA=+^DGPT(PTF,0) D ^DIE
+"RTN","DGPTF2",25,0)
+ W !!,"Exiting the correction process." H 2
+"RTN","DGPTF2",26,0)
+ Q
+"RTN","DGPTF2",27,0)
+DO1 I DG45]"" W !!,"Editing PTF information:" S DIE="^DGPT(",DR=DG45,DA=PTF D DIE
+"RTN","DGPTF2",28,0)
+ Q
+"RTN","DGPTF2",29,0)
+D5 G D5Q:DG45=""
+"RTN","DGPTF2",30,0)
+ S DIE="^DGPT(PTF,"_$S(DG9=601:"""P""",DG9=401:"""S""",1:"""M""")_",",DA(1)=PTF,DA=I1,DR=DG45
+"RTN","DGPTF2",31,0)
+ S Y=@(DIE_DA_",0)"),Y=$P(Y,U,$S(DG9=601!(DG9=401):1,1:10)) D D^DGPTUTL
+"RTN","DGPTF2",32,0)
+ W !!,"Editing ",$S(DG9=601:"Procedure",DG9=401:"Surgery",1:"Movement")," of ",Y D DIE
+"RTN","DGPTF2",33,0)
+D5Q Q
+"RTN","DGPTF2",34,0)
+ ;
+"RTN","DGPTF2",35,0)
+DIE D ^DIE
+"RTN","DGPTF2",36,0)
+D Q:'$D(Y)
+"RTN","DGPTF2",37,0)
+D1 K DR W !,"Do you want to stop correcting" S %=1 D YN^DICN
+"RTN","DGPTF2",38,0)
+ I %=1!(%=-1) S Q=1 Q
+"RTN","DGPTF2",39,0)
+ I %=0 W !?10,"Enter 'YES' or '^' to stop making corrections",!?10,"and   'NO'         to continue making corrections" G D1
+"RTN","DGPTF2",40,0)
+ Q
+"RTN","DGPTF2",41,0)
+PRINT W !,"Want to print error log " S %=2 D YN^DICN G PRINT:%'>0 Q:%=2
+"RTN","DGPTF2",42,0)
+ K IOP D ^%ZIS Q:IO']""  S Y=DT X ^DD("DD") W @IOF W !!,"Error log for PTF record ",PTF,"  "_$P(^DPT(DFN,0),U,1)_"  ",Y,!! S DGERR=-1,J=PTF D LOG^DGPTFTR D ^%ZISC
+"RTN","DGPTF2",43,0)
+ S IOP="" D ^%ZIS K IOP I $L(DGVO_DGVI)>4 S X=132 X ^%ZOSF("RM")
+"RTN","DGPTF2",44,0)
+ Q
+"RTN","DGPTF2",45,0)
+CLS I $D(^DGM("PT",DFN)) W !!,"Not all messages have been cleared up for this patient--cannot close.",*7,*7 S DGPTF=DFN,X="??" K DGALL D HELP^DGPTMSGD K DGPTF G EN1:'$D(DGALL) K DGALL
+"RTN","DGPTF2",46,0)
+ W !,"Performing edit checks..."
+"RTN","DGPTF2",47,0)
+ ;-- init for Austin Edits
+"RTN","DGPTF2",48,0)
+ K ^TMP("AEDIT",$J),^TMP("AERROR",$J) S DGACNT=0
+"RTN","DGPTF2",49,0)
+ ;
+"RTN","DGPTF2",50,0)
+ S Y=1 D RTY^DGPTUTL
+"RTN","DGPTF2",51,0)
+ S J=PTF,DGERR=-1 D LOG^DGPTFTR K DGLOGIC D LO^DGUTL K T1,T2 I DGERR>0 K DGERR H 4 D DGPTF2 G EN1
+"RTN","DGPTF2",52,0)
+ ;
+"RTN","DGPTF2",53,0)
+ ;-- new austin edit checks
+"RTN","DGPTF2",54,0)
+ D ^DGPTAE I DGERR>0 K DGERR D DGPTF2 G EN1
+"RTN","DGPTF2",55,0)
+ ;
+"RTN","DGPTF2",56,0)
+ K DGERR S DR=$S($P(^DGPT(PTF,0),U,7):"",1:";7////"_DUZ_";8///T"),DA=PTF,DIE="^DGPT(",DP=45 D ^DIE K DR
+"RTN","DGPTF2",57,0)
+ S DIC(0)="LN",(DINUM,X)=PTF,DIC="^DGP(45.84," K DD,DO D FILE^DICN K DINUM
+"RTN","DGPTF2",58,0)
+ I Y>0 S DA=+Y,DR="2///NOW;3////"_DUZ,DIE="^DGP(45.84," D ^DIE K DR
+"RTN","DGPTF2",59,0)
+ K DIE,DIC
+"RTN","DGPTF2",60,0)
+ I '$D(^DGP(45.84,PTF)) W !,"Cannot close without proper fileman access",*7 D HANG^DGPTUTL G EN1
+"RTN","DGPTF2",61,0)
+ F I=0,.11,.52,.321,.32,.36,57,.3 S:$D(^DPT(DFN,I)) ^DGP(45.84,PTF,$S(I=0:10,1:I))=^DPT(DFN,I)
+"RTN","DGPTF2",62,0)
+ S $P(^DGP(45.84,PTF,0),U,6)=DRG
+"RTN","DGPTF2",63,0)
+ W !,"****** PTF CLOSED OUT ******" D HANG^DGPTUTL
+"RTN","DGPTF2",64,0)
+ ;DG*5.3*861 Added the following statement to restore the value for DGREL
+"RTN","DGPTF2",65,0)
+ I '$G(DGREL) S DGREL=$S($D(^XUSEC("DG PTFREL",DUZ)):1,1:0)
+"RTN","DGPTF2",66,0)
+ I DGREL S (DGN,DGST)=1 G EN1
+"RTN","DGPTF2",67,0)
+ K DGRTY,DGRTY0 G Q^DGPTF
+"RTN","DGPTF2",68,0)
+EN1 K DGRTY,DGRTY0 G EN1^DGPTF4
+"RTN","DGRPC1")
+0^3^B14075036^B13110554
+"RTN","DGRPC1",1,0)
+DGRPC1 ;ALB/MRL/PJR - CHECK CONSISTENCY OF PATIENT DATA (CONT) ; 5/28/04 8:51am
+"RTN","DGRPC1",2,0)
+ ;;5.3;Registration;**314,342,451,564,688,861**;Aug 13, 1993;Build 29
+"RTN","DGRPC1",3,0)
+18 ;
+"RTN","DGRPC1",4,0)
+19 S X=$S($P(DGCD,"^",5)="Y":1,1:0) I $S(X=DGVT:0,DGVT=2&('X):0,1:1) S X=$S(DGVT:18,1:19) I DGCHK[(","_X_",") D COMB
+"RTN","DGRPC1",5,0)
+ S:'DGVT DGLST=$S(+DGLST>22:+DGLST,1:22) G:DGCHK'[",22,"&'DGVT FIND^DGRPC2 D NEXT I DGLST>20!('DGLST) G @DGLST
+"RTN","DGRPC1",6,0)
+20 I DGVT,DGSC S DGD=$S(+$P(DGP(.3),"^",2)>49:1,1:3) I $P(DGCD,"^",4)'=DGD!($P(DGCD,"^",5)="N") S X=20 D COMB
+"RTN","DGRPC1",7,0)
+ S:DGSC DGLST=$S(+DGLST>22:+DGLST,1:22) G:DGCHK'[",22,"&DGSC FIND^DGRPC2 D NEXT I +DGLST'=21 G @DGLST
+"RTN","DGRPC1",8,0)
+21 ; off
+"RTN","DGRPC1",9,0)
+ D NEXT I +DGLST'=22 G @DGLST
+"RTN","DGRPC1",10,0)
+22 I $P(DGP("VET"),"^",1)'="Y" G 221
+"RTN","DGRPC1",11,0)
+ S DGSTR="^"
+"RTN","DGRPC1",12,0)
+ I DGSC S DGSTR=DGSTR_$S($P(DGP(.3),"^",2)<50:3,1:1)_"^" G 220 ;only appropriate sc type
+"RTN","DGRPC1",13,0)
+ I $P(DGP(.52),"^",5)="Y" S DGSTR=DGSTR_"18^" G 220 ;pow only
+"RTN","DGRPC1",14,0)
+ I $P(DGP(.53),"^",1)="Y" S DGSTR=DGSTR_"22^" G 220 ;Purple Heart
+"RTN","DGRPC1",15,0)
+ I $P(DGP(0),"^",3)'>2061231 S DGSTR=DGSTR_"16^" ;mex border
+"RTN","DGRPC1",16,0)
+ I $P(DGP(0),"^",3)'>2071231 S DGSTR=DGSTR_"17^" ;allow WWI
+"RTN","DGRPC1",17,0)
+ S DGFL=0 I $P(DGP(.362),"^",12)="Y" S DGSTR=DGSTR_"2^",DGFL=1 ; a&a
+"RTN","DGRPC1",18,0)
+ I $P(DGP(.362),"^",13)="Y" S DGSTR=DGSTR_"15^",DGFL=1 ; hb
+"RTN","DGRPC1",19,0)
+ I DGFL=1 G 220
+"RTN","DGRPC1",20,0)
+ I $P(DGP(.362),"^",14)="Y" S DGSTR=DGSTR_"4^" G 220 ;nsc, va pen
+"RTN","DGRPC1",21,0)
+ S DGSTR=DGSTR_"5^" ;nsc
+"RTN","DGRPC1",22,0)
+220 I DGSTR'[("^"_$P(DGCD,"^",9)_"^") S X=22 D COMB
+"RTN","DGRPC1",23,0)
+ K DGSTR
+"RTN","DGRPC1",24,0)
+221 D NEXT I +DGLST'=23 G @DGLST
+"RTN","DGRPC1",25,0)
+23 S DGD=$G(^DPT(DFN,.361)) I $P(DGD,"^",1)="V",$P(DGD,"^",2)="" S X=23 D COMB
+"RTN","DGRPC1",26,0)
+ D NEXT I +DGLST'=24 G @DGLST
+"RTN","DGRPC1",27,0)
+24 I '$D(^DIC(21,+$P(DGP(.32),"^",3),"E",+$P(DGP(.36),"^",1))) S X=24 D COMB
+"RTN","DGRPC1",28,0)
+ D NEXT I +DGLST'=25 G @DGLST
+"RTN","DGRPC1",29,0)
+25 ;off
+"RTN","DGRPC1",30,0)
+ S:DGVT DGLST=35 G:DGCHK'[",35,"&DGVT FIND^DGRPC2 D NEXT I +DGLST'=26 G @DGLST
+"RTN","DGRPC1",31,0)
+26 ;off
+"RTN","DGRPC1",32,0)
+27 ;off
+"RTN","DGRPC1",33,0)
+28 ;off
+"RTN","DGRPC1",34,0)
+ D NEXT I +DGLST>32!('DGLST) G @DGLST
+"RTN","DGRPC1",35,0)
+29 ;
+"RTN","DGRPC1",36,0)
+30 ;
+"RTN","DGRPC1",37,0)
+31 ;
+"RTN","DGRPC1",38,0)
+ ;
+"RTN","DGRPC1",39,0)
+32 I 'DGVT S DGD=DGP(.362),X=28 F I=12,13,14,16 S X=X+1 I $P(DGD,"^",I)="Y",(DGCHK[(","_X_",")) D COMB
+"RTN","DGRPC1",40,0)
+ S DGLST=32 G:DGCHK'[",32," FIND^DGRPC2 D NEXT G @DGLST
+"RTN","DGRPC1",41,0)
+33 ;off
+"RTN","DGRPC1",42,0)
+ S DGLST=33 G:DGCHK'[",33," FIND^DGRPC2 D NEXT I +DGLST>35!('DGLST) G @DGLST
+"RTN","DGRPC1",43,0)
+ ;
+"RTN","DGRPC1",44,0)
+34 I 'DGVT,$P(DGP(.52),"^",5)="Y",DGCHK[(","_34_",") D COMB S DGLST=34 G:DGCHK'[",34," FIND^DGRPC2 D NEXT G @DGLST
+"RTN","DGRPC1",45,0)
+35 ;off
+"RTN","DGRPC1",46,0)
+ S DGLST=35 G:DGCHK'[",35," FIND^DGRPC2 D NEXT I +DGLST'=36 G @DGLST
+"RTN","DGRPC1",47,0)
+36 I '$D(^DG(391,+DGP("TYPE"),0)) S X=36 D COMB
+"RTN","DGRPC1",48,0)
+ ;;S:'DGVT DGLST=48 G:DGCHK'[",48,"&'DGVT FIND^DGRPC2 D NEXT I +DGLST>40!('DGLST) G @DGLST
+"RTN","DGRPC1",49,0)
+ D NEXT I +DGLST>40!('DGLST) G @DGLST
+"RTN","DGRPC1",50,0)
+37 ;; This check deactivated by EVC project (DG*5.3*688)
+"RTN","DGRPC1",51,0)
+38 ;
+"RTN","DGRPC1",52,0)
+39 ;
+"RTN","DGRPC1",53,0)
+40 F I=5,11 S I2=0,X=$S(I=5:37,1:39) I $P(DGP(.52),"^",I)="Y" D PC
+"RTN","DGRPC1",54,0)
+ ;;
+"RTN","DGRPC1",55,0)
+41 ;; Inconsistencies 41 and 42 are superseded by 72 through 82
+"RTN","DGRPC1",56,0)
+42 ;;
+"RTN","DGRPC1",57,0)
+ ;;
+"RTN","DGRPC1",58,0)
+ S DGLST=42 S:'DGVT DGLST=48 G:DGCHK'[",48,"&'DGVT FIND^DGRPC2 D NEXT G @DGLST
+"RTN","DGRPC1",59,0)
+ ;
+"RTN","DGRPC1",60,0)
+PC I DGCHK[(","_X_","),X'=37 F I1=I+1:1:I+3 I $P(DGP(.52),"^",I1)="",'I2 D COMB S I2=1
+"RTN","DGRPC1",61,0)
+ I DGCHK[(","_X_","),X'=37 F I1=I+2:1:I+3 I $E($P(DGP(.52),"^",I1),4,7)="0000",'I2 D COMB S I2=1
+"RTN","DGRPC1",62,0)
+ S X=X+1 I DGCHK[(","_X_","),$P(DGP(.52),"^",I+2),$P(DGP(.52),"^",I+3),'$$B4^DGRPDT($P(DGP(.52),"^",I+2),$P(DGP(.52),"^",I+3),1) D COMB
+"RTN","DGRPC1",63,0)
+ Q
+"RTN","DGRPC1",64,0)
+ ;
+"RTN","DGRPC1",65,0)
+COMB S DGCT=DGCT+1,DGER=DGER_X_",",DGLST=X Q
+"RTN","DGRPC1",66,0)
+ Q
+"RTN","DGRPC1",67,0)
+NEXT ;DG*5.3*861 Process appropriate consistency checks
+"RTN","DGRPC1",68,0)
+ N DGLSHLD,DGIX,DGI S DGLSHLD=+DGLST S DGI=$F(DGCHK,(","_+DGLST_",")),DGLST=+$E(DGCHK,DGI,999) I +DGLST,+DGLST<41 Q
+"RTN","DGRPC1",69,0)
+ I 'DGLST D
+"RTN","DGRPC1",70,0)
+ . F DGIX=DGLSHLD:1:99 I DGCHK[(","_DGIX_",") S DGLST=DGIX Q
+"RTN","DGRPC1",71,0)
+ I +DGLST,+DGLST>42,+DGLST<79 S DGLST=DGLST_"^DGRPC2" Q
+"RTN","DGRPC1",72,0)
+ I +DGLST,+DGLST'<79 S DGLST=DGLST_"^DGRPC3" Q
+"RTN","DGRPC1",73,0)
+ S:'DGLST DGLST="END^DGRPC3"
+"RTN","DGRPC1",74,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",8,8,9,0)
+ID FORMAT^RP8.2'^DIC(8.2,^0;10^Q
+"^DD",8,8,9,1,0)
+^.1
+"^DD",8,8,9,1,1,0)
+8^AF
+"^DD",8,8,9,1,1,1)
+S ^DIC(8,"AF",$E(X,1,30),DA)=""
+"^DD",8,8,9,1,1,2)
+K ^DIC(8,"AF",$E(X,1,30),DA)
+"^DD",8,8,9,3)
+Select the ID format to be used.
+"^DD",8,8,9,21,0)
+^.001^10^10^3130224^^^^
+"^DD",8,8,9,21,1,0)
+This field indicates which identification format is to be used
+"^DD",8,8,9,21,2,0)
+when setting a patient's ID who has been assigned this eligibility.
+"^DD",8,8,9,21,3,0)
+ 
+"^DD",8,8,9,21,4,0)
+Most eligibilities should be associated with 'VA STANDARD' format.
+"^DD",8,8,9,21,5,0)
+This format is the patient's Social Security Number.
+"^DD",8,8,9,21,6,0)
+ 
+"^DD",8,8,9,21,7,0)
+If your site has a DOD/VA sharing agreement AND are running
+"^DD",8,8,9,21,8,0)
+the VA/DOD software developed by the Dallas ISC, then you
+"^DD",8,8,9,21,9,0)
+may have to associate some DOD specific eligibilities with
+"^DD",8,8,9,21,10,0)
+a format other than 'VA STANDARD'.
+"^DD",8,8,9,"DT")
+3121125
+"BLD",9195,6)
+^767
+**END**
+**END**

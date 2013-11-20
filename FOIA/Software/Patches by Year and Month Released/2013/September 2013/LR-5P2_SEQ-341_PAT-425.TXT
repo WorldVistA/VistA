@@ -1,0 +1,696 @@
+$TXT Created by KOPP,TERRY at CHLVSS.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 08/06/13 at 09:56
+=============================================================================
+Run Date: SEP 25, 2013                     Designation: LR*5.2*425
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #341                    Status: Released
+                  Compliance Date: OCT 26, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*425'
+                    (v)OR*3*315    <<= must be installed BEFORE `LR*5.2*425'
+
+Subject: MISCELLANEOUS LAB TOOLS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch installs new report and management tools for the VistA
+ Laboratory System.  It also enhances functionality that currently
+ exists within the VistA Lab system.
+  
+  
+ Blood Bank Team Coordination 
+ ============================
+ VISTA Laboratory Package patch LR*5.2*425 contains changes to software 
+ controlled by the ProPath standard titled: BBM Team Review of VistA 
+ Patches. Changes include: 
+  
+ Routines:
+ =========
+ LRXREF1
+  
+ Files:
+ ======
+ File Name (Number)          Field Name (Number)      New/
+                                                      Modified/
+                                                      Deleted
+ ------------------         -------------------      --------
+ LABORATORY TEST            LAB COLLECTION SAMPLE    Modified
+                 (#60)                        (#9)
+   
+  SITE/SPECIMEN SUBFIELD     SITE/SPECIMEN            Modified
+                 (#60.01)                   (#.01)
+   
+  COLLECTION SAMPLE SUBFIELD COLLECTION SAMPLE        Modified
+                 (#60.03)                   (#.01)
+    
+  COLLECTION SAMPLE           INACTIVE DATE            New
+                 (#62)                      (#64.9101)
+   
+  LABORATORY SITE             LAST IEN PROCESSED       New
+                 (#69.9)                     (#64.913)
+   
+  LABORATORY SITE             LAST DATE PROCESSED      New
+                 (#69.9)                     (#64.914)
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*425 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*425 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 1 routine and 3 
+ files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenario requirements by option
+  
+  
+  
+ Functional Description
+ ======================
+ 1. Laboratories currently establish business rules that define how long a 
+    pending order is valid. For example: a lab might decide that an order 
+    scheduled for collection more than 90 days in the past is no longer 
+    valid. This patch automates those business rules by introducing a new 
+    parameter: LRJ OBSOLETE PENDING ORDERS. This allows the site to define 
+    how many days in the past an order is considered valid. If that date 
+    passes, then a TaskMan job will cancel the order in lab and notify 
+    the Order Entry/Results Reporting (OERR) V3.0 system to change the
+    order status to lapsed.
+  
+  
+ 2. Hospital Location changes made in the VistA Admission/Discharge/Transfer
+    (ADT) system can be significant to Lab when locating inpatients for
+    specimen collection.  This patch provides hospital location change
+    reporting tools.  The following functionality is introduced:
+  
+   o  Hospital Location Initial Extract: This is a predefined report that 
+      will pull the required information from VistA ADT in an extract to
+      verify lab related locations, beds & rooms.  ("Lab related" locations
+      are Clinic, Ward, or Operating Room type locations.)
+  
+   o  Hospital Location Change Monitoring System (HLCMS): The Hospital
+      Location Change Monitoring tool supports scheduled notifications
+      to designated staff and alerts them of changes to the VistA hospital
+      locations so lab configurations can be adjusted, as necessary.
+  
+   o  Hospital Location Monitor - Contains tools to define the Lab 
+      sub-system that controls monitoring of Hospital Location changes 
+      affecting Lab.  The tool set contains viewers for extracted raw data 
+      and mail messages.
+  
+  
+ 3. Lab Test Audit File 60 Tool: The Laboratory Test File 60 Audit Tool 
+    monitors changes made to the VistA LABORATORY TEST(#60) file. This
+    file must be kept in synch with a COTS lab system so that if any 
+    item is not working, the user can identify changes recently made to 
+    this file for the purpose of troubleshooting. This benefits the sites
+    for any future lab capability solution and it will leverage VistA Lab
+    Test Order Catalog and CPRS.
+  
+  
+ 4.  Monitor Laboratory Test File Changes Affecting Quick Orders: The
+     Laboratory users requested that when certain fields are updated in the
+     LABORATORY TEST (#60) file, it triggers a CPRS call to search for
+     quick orders that contain the test that was updated. If any are found,
+     the appropriate personnel are notified.
+  
+  
+ 5. Inactivation of Topography and Collection Sample File entries:
+  
+   o Allows sites to inactivate entries in TOPOGRAPHY FIELD file (#61)
+     and COLLECTION SAMPLE file (#62).  This reduces the number of valid
+     selections for providers when entering orders in CPRS and when
+     defining new lab tests. The order entry process for the provider is
+     improved, and Lab workflow benefits because of fewer mistakes caused
+     by improper selections during the ordering process.  This results in
+     improvement of the order entry process for the provider and the
+     processing for the Lab resulting in fewer corrections to make.
+  
+   o The STS extract for SNOMED requests will include the inactive date of
+     entries in the TOPOGRAPHY FIELD and COLLECTION SAMPLE files. With the
+     introduction of the SNOMED CT ID codes by STS (LEDI IV) the sites can
+     use the Inactive field in Collection Sample and Topography to reduce 
+     the number of "duplicate SNOMED CT ID assignment" entries. This will
+     make for better quality order/result information that may be crossing
+     to the HDR repository.
+  
+  
+ 6. The following issue was addressed: 
+  
+   o On the STS extract for SNOMED requests, if an entry is mapped to an
+     inactive SCT code it displays the inactive date.  The date however, is
+     displaying in FileMan format. The user requested it be displayed in
+     human readable format instead.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+  N/A
+  
+ Associated NSR(s):
+ ==================
+  N/A
+  
+ Test Sites:
+ ===========
+  Fresno VAMC
+  Eastern Colorado HCS
+  North Texas HCS
+  Erie VAMC
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ LABORATORY TEST            LAB COLLECTION SAMPLE    Modified
+                (#60)                        (#9)
+  
+ SITE/SPECIMEN SUBFIELD     SITE/SPECIMEN            Modified
+                (#60.01)                   (#.01)
+  
+ COLLECTION SAMPLE SUBFIELD COLLECTION SAMPLE        Modified
+                (#60.03)                   (#.01)
+  
+ TOPOGRAPHY FIELD           INACTIVE DATE            New
+                (#61)                      (#64.9103)
+  
+ COLLECTION SAMPLE          INACTIVE DATE            New
+                (#62)                      (#64.9101)
+  
+ LSRP AUDIT CONFIG          AUDIT FILE NAME          New
+                (#64.9178)                 (#.01)
+  
+ AUDIT FIELDS SUBFIELD      AUDIT FIELDS             New
+                (#64.9278)                  (#1)
+  
+  
+ AUDIT FIELDS SUBFIELD      FIELD NUMBER             New
+                (#64.9278)                  (#.01)
+  
+ LABORATORY SITE            LAST IEN PROCESSED       New
+                (#69.9)                     (#64.913)
+  
+  
+ LABORATORY SITE            LAST DATE PROCESSED      New
+                (#69.9)                     (#64.914)
+  
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+  N/A
+  
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                    New/Modified/Deleted
+ ---------------                    --------------------
+ LRJ SYS MAP HL TASK REPORT         New
+ LRJ AUF60 AUDIT TASK REPORT        New
+ LRJ AUF60XT AUDIT TASK REPORT      New
+  
+  
+  
+ Options Associated:
+  
+ Option Name                   Type               New/Modified/Deleted
+ -----------                   ----               -------------------- 
+ LRJ SYS MAP HL TASKMAN RPT    run routine        New
+ LRJ BACKGROUND F60 AUDIT      run routine        New
+ LRJ BACKGROUND F60 AUD FILE   run routine        New
+ LRJ OBSOLETE PENDING ORDERS   run routine        New
+ LRJ MAINT INACTIVE DT FILE 61 edit               New
+ LRJ MAINT INACTIVE DT FILE 62 edit               New
+ LRJ HOSPITAL LOCATION MONITOR run routine        New
+ LRJ SYS MAP AUF60             action             New
+ LRJ QUICK ORDER CHECK         run routine        New
+ LRLIAISON                     menu               Modified
+  
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                    New/Modified/Deleted
+ -------------                                    -------------------- 
+ LRJ SYS MAP AUD LIST AUDITED FIELDS              New
+ LRJ SYS MAP AUD DISPLAY FILE 60 CHANGES          New
+ LRJ SYS MAP AUD SET FILE 60 AUDITED FLAG         New
+ LRJ SYS MAP HL MENU                              New
+ LRJ SYS MAP HL DISPLAY MESSAGE                   New
+ LRJ SYS MAP HL DISP EXT                          New
+ LRJ SYS MAP HL SEND MSG                          New
+ LRJ SYS MAP HL SEND EXT                          New
+ LRJ SYS MAP AUF60 MENU                           New
+ LRJ SYS MAP AUF60 SEND DISPLAY MESSAGE           New
+ LRJ SYS MAP AUF60 SEND FILE MESSAGE              New
+ LRJ SYS MAP HL AUDIT QUERY                       New
+ LRJ SYS MAP HL SCHED AUDIT RPT DISP              New
+ LRJ SYS MAP HL SCHED AUDIT RPT TASK              New
+ LRJ SYS MAP HL ACCEPT CONFIG                     New
+  
+  
+  
+ Parameters Associated:
+  
+ Parameter Name                                    New/Modified/Deleted
+ --------------                                    --------------------
+ LRJ HL LAST START DATE                            New
+ LRJ HL LAST END DATE                              New
+ LRJ LSRP AUF60 LAST START DATE                    New
+ LRJ LSRP AUF60 LAST END DATE                      New
+ LRJ LSRP AUF60XT LAST START DT                    New
+ LRJ LSRP AUF60XT LAST END DATE                    New
+ LRJ OBSOLETE PENDING ORDERS                       New
+  
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ LRJ HL TOOLS MGR
+  
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ LRJ SYS DISPLAY    Print     Audit (#1.1)        New
+   FILE 60 CHANGE
+  
+ LRJ SYS GET 
+    INDIRECT AUDIT  Print     Audit (#1.1)        New
+  
+ LRJ SYS DISPLAY 
+    FILE 60 CHANGE  Sort      Audit (#1.1)        New
+  
+ LRJ SYS MAP HL     List                          New
+  
+ LRJ SYS MAP AUF60  List                          New
+  
+  
+  
+ Documentation Retrieval:
+ ========================
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from
+ download.vista.domain.ext, which will transmit the files from the first
+ available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from a
+ specific server as follows:
+  
+ Albany          ftp.fo-albany.domain.ext
+ Hines           ftp.fo-hines.domain.ext
+ Salt Lake City  ftp.fo-slc.domain.ext
+  
+ The documentation distribution includes: 
+  
+   FILE NAMES                   DESCRIPTION
+   ===========                  ============
+   LR_5_2_425_PS_UG.docx        Patch Supplement: User Guide
+  
+ (3) Documentation can also be retrieved from VISTA Document Library (VDL)
+ on the VA Intranet at the following address, http://vista.domain.ext/vdl.
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The pre and post installation routine is LR425.  Sites may delete routine 
+ LR425 after the patch is installed.
+  
+ The pre-installation routine checks to be sure the site has the mail 
+ group LMI defined.  If the mail group cannot be found, the patch 
+ installation will be aborted and an alert will be sent to the installer.  
+ Add the mail group and then re-start the patch installation.
+  
+ The post-installation routine performs the following functions: 
+ -       Enables Fileman auditing for HLCMS (Hospital Location monitoring)
+ -       Enables auditing for selected LABORATORY TEST file (#60) fields
+ -       Checks/sets the initial parameters for Monitor Laboratory Test 
+         File Changes Affecting Quick Orders
+ -       Upon successful patch installation, an install completion alert 
+         is sent to mail group LMI
+  
+ Installation Instructions
+ -------------------------
+ This patch can be loaded with users in the system.  Installation time is
+ less than five minutes.  Prior installation of OR*3.0*315 is required.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter LR*5.2*425.)
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      LR*5.2*425.
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+  
+  
+ Installation Example:
+ ===================== 
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Line 560  Message #350746    Unloading KIDS Distribution   LR*5.2*425
+ Build LR*5.2*425 has been loaded before, here is when: 
+       LR*5.2*425   Install Completed
+                    was loaded on Jun 12, 2013@12:24:35
+       LR*5.2*425   Install Completed
+                    was loaded on Aug 27, 2013@11:11:10
+ OK to continue with Load? NO// YES
+  
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    LR*5.2*425
+ Will first run the Environment Check Routine, LR425
+  
+  
+  
+  
+ Using the KERNEL KIDS installation menu: 
+  
+ XPD MAIN      Kernel Installation & Distribution System
+  
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+  
+ Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: INST
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation <TEST ACCOUNT> Option: 6  Install Package(s)
+ Select INSTALL NAME:    LR*5.2*425    9/11/13@09:51:03
+      => Copy of: LR*5.2*425 TEST v4
+  
+ This Distribution was loaded on Sep 11, 2013@09:51:03 with header of 
+    Copy of: LR*5.2*425 TEST v4
+    It consisted of the following Install(s):
+      LR*5.2*425
+ Checking Install for Package LR*5.2*425
+ Will first run the Environment Check Routine, LR425
+  
+  
+                 *** 'Installation' Environment Check started *** 
+  
+          'LMI' Mail Group must exist.
+               Checking for 'LMI' Mail Group...
+                    'LMI' Mail Group exists.
+                         Continuing...
+  
+       Sending install started alert...
+          Alert addressed to mail group G.LMI
+              Installation of 'LR*5.2*425' started Sep 11, 2013@09:54:14
+  
+  
+  
+                           --- Lab Environment okay ---
+  
+ Install Questions for LR*5.2*425
+  
+ Incoming Files:
+  
+  
+    60        LABORATORY TEST  (Partial Definition)
+ Note:  You already have the 'LABORATORY TEST' File.
+  
+  
+    61        TOPOGRAPHY FIELD  (Partial Definition)
+ Note:  You already have the 'TOPOGRAPHY FIELD' File.
+  
+  
+    62        COLLECTION SAMPLE  (Partial Definition)
+ Note:  You already have the 'COLLECTION SAMPLE' File.
+  
+  
+    64.9178   LSRP AUDIT CONFIG  (including data)
+ Note:  You already have the 'LSRP AUDIT CONFIG' File.
+ Data will NOT be added.
+  
+  
+    69.9      LABORATORY SITE  (Partial Definition)
+ Note:  You already have the 'LABORATORY SITE' File.
+  
+ Incoming Mail Groups:
+  
+ Enter the Coordinator for Mail Group 'LRJ SYS MAP HL TASK REPORT': BELSCH
+ BELSCHWINDER,MICHAEL  troy   NEW YORK     MJB     112G  COMPUTER SPECIALIST
+  
+ Enter the Coordinator for Mail Group 'LRJ AUF60 AUDIT TASK REPORT': BELSCH
+ BELSCHWINDER,MICHAEL  troy   NEW YORK     MJB     112G  COMPUTER SPECIALIST
+  
+ Enter the Coordinator for Mail Group 'LRJ AUF60XT AUDIT TASK REPORT': BELSCH
+ BELSCHWINDER,MICHAEL  troy   NEW YORK     MJB     112G  COMPUTER SPECIALIST
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   TELNET PORT
+  
+ ---------------------------------------------------------------------------
+  
+  Install Started for LR*5.2*425 : 
+                Sep 11, 2013@09:54:30
+  
+ Build Distribution Date: Aug 06, 2013
+  
+  Installing Routines:
+                Sep 11, 2013@09:54:31
+  
+  Installing Data Dictionaries: 
+                Sep 11, 2013@09:54:31
+  
+  Installing Data: 
+                Sep 11, 2013@09:54:31
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing SECURITY KEY
+  
+  Installing PRINT TEMPLATE
+  
+  Installing SORT TEMPLATE
+  
+  Installing MAIL GROUP
+  
+  Installing PROTOCOL
+  
+  Installing LIST TEMPLATE
+  
+  Installing OPTION
+  
+  Installing PARAMETER DEFINITION
+                Sep 11, 2013@09:54:32
+  
+  Running Post-Install Routine: POST^LR425
+  
+                           *** Post install started ***
+  
+       Enable Auditing for selected patient location fields...
+  
+         Turn on Audit Attribute for the following fields in file: 44
+              Field #: .01
+              Field #: 2
+              Field #: 3
+              Field #: 3.5
+              Field #: 2505
+              Field #: 2506
+  
+         Turn on Audit Attribute for the following fields in file: 42
+              Field #: .01
+              Field #: .015
+              Field #: 44
+  
+         Turn on Audit Attribute for the following fields in file: 405.4
+              Field #: .01
+  
+         Turn on Audit Attribute for the following fields in file: 405.41
+              Field #: .01
+              Continuing...
+  
+  
+  
+      Enable Auditing for selected LABORATORY TEST file (#60) fields...
+  
+      Checking parameters for file 60 audit changes affecting quick orders...
+           Parameters are already set, no update necessary
+  
+                          *** Post install completed ***
+  
+  
+  
+       Sending install completion alert to mail group G.LMI
+          Alert addressed to mail group G.LMI
+                 Installation of 'LR*5.2*425' completed Sep 11, 2013@09:54:32
+  
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  LR*5.2*425 Installed. 
+                Sep 11, 2013@09:54:32
+  
+  Not a production UCI
+  
+                                    LR*5.2*425
+  
+ Install Completed
+  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR425
+    Before:       n/a   After: B66054547  **425**
+Routine Name: LRJPON
+    Before:       n/a   After: B15108369  **425**
+Routine Name: LRJSAU
+    Before:       n/a   After:  B7630715  **425**
+Routine Name: LRJSAU2
+    Before:       n/a   After:B141696414  **425**
+Routine Name: LRJSAU3
+    Before:       n/a   After:  B1054860  **425**
+Routine Name: LRJSAU60
+    Before:       n/a   After:B234883150  **425**
+Routine Name: LRJSAUO
+    Before:       n/a   After:  B1765290  **425**
+Routine Name: LRJSML
+    Before:       n/a   After: B27239914  **425**
+Routine Name: LRJSML1
+    Before:       n/a   After: B28615722  **425**
+Routine Name: LRJSML2
+    Before:       n/a   After: B48324195  **425**
+Routine Name: LRJSML3
+    Before:       n/a   After:B199716407  **425**
+Routine Name: LRJSML4
+    Before:       n/a   After: B58662393  **425**
+Routine Name: LRJSML5
+    Before:       n/a   After: B11779668  **425**
+Routine Name: LRJSML6
+    Before:       n/a   After: B72438950  **425**
+Routine Name: LRJSML8
+    Before:       n/a   After: B94488687  **425**
+Routine Name: LRJSMLA
+    Before:       n/a   After:B232140831  **425**
+Routine Name: LRJSMLA1
+    Before:       n/a   After: B94292187  **425**
+Routine Name: LRJSMLU
+    Before:       n/a   After: B39493848  **425**
+Routine Name: LRJUTL3
+    Before:       n/a   After:   B817310  **425**
+Routine Name: LRSRVR6
+    Before: B34119485   After: B37731233  **346,378,350,425**
+Routine Name: LRXREF1
+    Before: B10149956   After: B13794855  **425**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : SEP 06, 2012
+Completed By: SMULLEN,GEOFFREY              Date Completed: SEP 13, 2013
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

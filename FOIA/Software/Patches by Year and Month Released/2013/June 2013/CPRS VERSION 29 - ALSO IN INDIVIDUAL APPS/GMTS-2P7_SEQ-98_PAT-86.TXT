@@ -1,0 +1,296 @@
+$TXT Created by CHUNG,TERESA at CPRS29.FO-SLC.MED.VA.GOV  (KIDS) on Thursday, 08/09/12 at 13:43
+=============================================================================
+Run Date: JUN 10, 2013                     Designation: GMTS*2.7*86
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7        SEQ #98                    Status: Released
+                  Compliance Date: NOV 04, 2013
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*52 <<= must be installed BEFORE `GMTS*2.7*86'
+                    (v)GMTS*2.7*71 <<= must be installed BEFORE `GMTS*2.7*86'
+                    (v)GMPL*2*36   <<= must be installed BEFORE `GMTS*2.7*86'
+
+Subject: Problem List Data Standardization of Health Summary
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Computerized Patient Record System (CPRS) Graphical User Interface
+ (GUI) v29 is an enhancement release with modifications for the Drug
+ Enforcement Agency (DEA) electronic prescribing (ePCS) of controlled
+ substances, Problem List changes for the use of SNOMED CT codes, and the
+ display of Mental Health Treatment Coordinator information entered through
+ the Primary Care Management Module. In addition to these enhancements,
+ software changes are being made to correct several Patient Safety Issues
+ (PSIs), Section 508 issues, and additional miscellaneous defect fixes.
+  
+ CPRS GUI v29 consists of several host files, an updated CPRS GUI and 
+ several Help files, too many to list (which will be located in a single
+ directory name HELP):
+ HDI_1_11.KID which contains the HDI*1*11 patch
+ PSS_1_166.KID which contains the PSS*1*166 patch
+ CPRSV29_PSO_PSD.KID which contains the PSO*7*391 and PSD*3*73 patches
+ OR_GMPL_GMTS_XU_29.KID which contains the XU*8*609, GMPL*2*36, GMTS*2.7*86
+ and OR*3*306 patches 
+ CPRSChart.exe 
+ OR_30_371.KID which contains the OR*3*371 patch
+ PSO_7_426.KID which contains the PSO*7*426 patch
+  
+ The host files were created to simplify installation and control the 
+ phased implementation of CPRS v29 at the Veterans Health Administration
+ (VHA) facilities. To see the current status and target dates for
+ Sites/VISN/Regions please refer to the following site:
+  
+ http://vaww.oed.portal.va.gov/projects/CPRS/v29_main/Public/Forms/AllItems
+ .aspx
+  
+ Click on the CPRS GUI v29 Deployment Schedule folder. Then open the
+ document "CPRS GUI v29 Deployment Schedule.xslx".
+  
+ Patch Information:
+ ==================
+ HDI*1*11 supports CPRS v29 functionality by adding data for the Problem
+ List Domain to the HDIS DOMAIN file (#7115.1).
+  
+ PSS*1*166, PSD*3*73 and PSO*7*391 support the DEA ePCS functionality.
+  
+ GMPL*2*36 is an extension to accommodate SNOMED-CT
+ GMTS*2.7*86 supports the Problem List Standardization
+ XU*8*609 ePCS Support
+ OR*3*306 New CPRS version 29 which contains several Remedy ticket fixes 
+ and enhanced the Primary Care button by adding the Mental Health 
+ Treatment Coordinator and the Associate Provider. Adds a new Bulletin 
+ "OR PROBLEM NTRT BULLETIN" and reissues Mail Group OR CACS. By default, 
+ this bulletin will be delivered to the OR CACS Mail Group. It may be 
+ configured to be delivered to separate local mail groups for each Medical 
+ Center Division by setting the new OR PROBLEM NTRT BY DIVISION parameter. 
+ The bulletin informs its recipients that a new NTRT Request has been 
+ initiated by a Clinician at their facility.
+  
+ OR*3*371 includes support for CPRS v29 - ePCS and encounters.
+  
+ PSO*7*426 ePCS Support
+  
+ This patch (GMTS*2.7*86) contains changes to the PROBLEM LIST ALL (PLL),
+ PROBLEM LIST ACTIVE (PLA), and PROBLEM LIST INACTIVE (PLI) components of
+ the Health Summary (HS) Adhoc Report in support of the Problem List Data
+ Standardization project. These changes will impact the HS application in
+ both the List Manager and the CPRS GUI v29 and onwards.
+  
+ New problems that are added from the Problem List Dataset/Subset of the
+ Lexicon look-up will now display both the SNOMED-CT (SCT) code and the
+ mapped ICD-9-CM code(s) in all three of the components mentioned above.
+ Problems that are mapped to multiple ICD-9-CM codes will display the 
+ primary ICD-9-CM code first followed by the secondary ICD-9-CM codes
+ delimited with "/". Pre-existing legacy problems and problems entered 
+ from the Encounters form with only ICD-9-CM codes will continue to 
+ display the ICD-9-CM codes.
+  
+ The following is a sample HS Adhoc Report:
+  
+ **********************  CONFIDENTIAL AD HOC SUMMARY *********************
+ CPRS,PATIENT          666-12-3456                       DOB: 01/16/1947
+  
+ ------------------------- PLA - Active Problems -------------------------
+                                   
+                                                   5 Active Problems
+    PROBLEM                                           LAST MOD    PROVIDER
+    Screening for Malignant Neoplasm of the Prostate  06/18/2007  PROV,CPRS
+    (ICD-9-CM V76.44), Onset 06/18/2007 
+        COMMENTS
+  
+    Amputated toe (SCT 299657000) (ICD-9-CM V49.72),  06/18/2007  PROV,CPRS
+    Onset 06/18/2007 
+        COMMENTS
+  
+    Single coronary vessel disease (SCT 194842008)    06/18/2007  PROV,CPRS
+    (ICD-9-CM 414.00), Onset 06/18/2007 
+        COMMENTS
+  
+    BENIGN ESSENTIAL HYPERTENSION (ICD-9-CM 401.1);   06/18/2007  PROV,CPRS
+    Benign Hypertension, Onset 06/18/2007 
+        COMMENTS
+  
+    Encopresis with constipation AND overflow         06/18/2007  PROV,CPRS
+    incontinence (SCT 73149003) (ICD-9-CM
+    564.00/787.6/788.38) 
+  
+  
+ -------------------------- PLL - All Problems ---------------------------
+                                   
+                                                   6 Problems
+ ST PROBLEM                                           LAST MOD    PROVIDER
+ A  Screening for Malignant Neoplasm of the Prostate  06/18/2007  PROV,CPRS
+    (ICD-9-CM V76.44), Onset 06/18/2007 
+        COMMENTS
+  
+ A  Amputated toe (SCT 299657000) (ICD-9-CM V49.72),  06/18/2007  PROV,CPRS
+    Onset 06/18/2007 
+        COMMENTS
+  
+ A  Single coronary vessel disease (SCT 194842008)    06/18/2007  PROV,CPRS
+    (ICD-9-CM 414.00), Onset 06/18/2007 
+        COMMENTS
+  
+ A  BENIGN ESSENTIAL HYPERTENSION (ICD-9-CM 401.1);   06/18/2007  PROV,CPRS
+    Benign Hypertension, Onset 06/18/2007 
+        COMMENTS
+  
+ A  Encopresis with constipation AND overflow         06/18/2007  PROV,CPRS
+    incontinence (SCT 73149003) (ICD-9-CM
+    564.00/787.6/788.38)
+  
+ I  Infection by Schistosoma (SCT 10087007)           06/05/2007  PROV,CPRS
+    (ICD-9-CM 120.9), Resolved 06/05/2007 
+  
+  
+ ------------------------ PLI - Inactive Problems ------------------------
+                                   
+                                                   1 Inactive Problems
+    PROBLEM                                           LAST MOD    PROVIDER
+    Infection by Schistosoma (SCT 10087007)           06/05/2007  PROV,CPRS
+    (ICD-9-CM 120.9), Resolved 06/05/2007 
+  
+  
+ *** END **********  CONFIDENTIAL AD HOC SUMMARY   pg. 1 ******************
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Charleston, SC
+ Cleveland, OH
+ Heartland East HCS, MO
+ Heartland West HCS, KS
+ Hines, IL
+ Loma Linda, CA
+ Palo Alto HCS, CA
+ San Diego HCS, CA
+ Tampa, FL
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.med.va.gov/. This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.fo-albany.med.va.gov  <ftp://ftp.fo-albany.med.va.gov>
+  Hines          ftp.fo-hines.med.va.gov   <ftp://ftp.fo-hines.med.va.gov>
+  Salt Lake City ftp.fo-slc.med.va.gov     <ftp://ftp.fo-slc.med.va.gov>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.va.gov/vdl/
+  
+ File Description                        File Name             FTP Mode
+ ----------------------------------------------------------------------
+ Health Summary User Manual              HSUM2_7_86_UM.PDF     Binary
+ Health Summary Technical Manual         HSUM2_7_86_TM.PDF     Binary
+  
+ Patch Installation:
+  
+ Software Retrieval and Installation Instructions:
+ =================================================
+ Please refer to the "CPRS GUI v.29 Installation Guide" for installation
+ and set-up information. This document is exported as OR_30_306_IG.doc and
+ OR_30_306_IG.pdf and is included in OR_30_306.ZIP
+  
+ Installation of these host files must be coordinated among the personnel
+ affected because these host files will be installed in one installation
+ session.
+  
+ Sites will retrieve VistA software from an FTP address as directed by the
+ CPRS Implementation team. Installation instructions will be distributed
+ when your site begins the implementation process.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 38
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSPLST
+    Before: B36587508   After: B46234208  **28,35,52,86**
+Routine Name: GMTSPXU1
+    Before: B13346814   After: B13856268  **10,37,71,86**
+ 
+Routine list of preceding patches: 52, 71
+
+=============================================================================
+User Information:
+Entered By  : CHUNG,TERESA L                Date Entered  : JUN 14, 2007
+Completed By: GRAZIANI,ROBERT               Date Completed: JUN 10, 2013
+Released By : SCHWARTZ,VIKIE                Date Released : JUN 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

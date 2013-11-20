@@ -1,0 +1,351 @@
+$TXT Created by REESE,DARRYL at CHEYL52.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 08/27/13 at 08:58
+=============================================================================
+Run Date: AUG 28, 2013                     Designation: DG*5.3*864
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #766                    Status: Released
+                  Compliance Date: AUG 29, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*650  <<= must be installed BEFORE `DG*5.3*864'
+                    (v)TIU*1*275   <<= must be installed BEFORE `DG*5.3*864'
+
+Subject: USH LEGAL SOLUTION
+
+Category: 
+  - Routine
+  - Other
+  - Informational
+  - Enhancement ()
+
+Description:
+============
+
+ This patch addresses the Under Secretary of Health (USH) legal solution.
+ The legal solution impacts the High Risk Mental Health Patient - National
+ Reminder and Flag (HRMHP) project. A new national category 1 patient
+ record flag will provide a tool to inform all Veteran Administration (VA)
+ caregivers of special guidelines that must be followed when documenting 
+ notes or dealing with the patient. This flag will require special 
+ permissions in order to be assigned to a patient and once assigned it 
+ cannot be modified or inactivated other than allowing the reassignment of 
+ the owning facility. Patch TIU*1*275 creates one new Title into the TIU
+ DOCUMENT DEFINITION file (8925.1): PATIENT RECORD FLAG CATEGORY I -
+ URGENT    ADDRESS AS FEMALE. The new URGENT    ADDRESS AS FEMALE PRF must
+ only be used with the guidance from the Office of Under Secretary of
+ Health on a patient-by-patient basis. It may not be used for any other
+ purpose or patient. The ability to assign the new URGENT    ADDRESS
+ AS FEMALE PRF will be limited to one identified IRM staff member with
+ programmer access, or an identified clinician with temporary programmer
+ access assigned by IRM staff at one pre-determined site. The identified
+ person with programmer access at the pre-determined site will assign the
+ URGENT    ADDRESS AS FEMALE PRF to a pre-determined patient. The text used
+ during the assignment will be based on very specific pre-defined text
+ provided by the Office of the Under Secretary of Health. Once the patient
+ is assigned the URGENT    ADDRESS AS FEMALE PRF and the flag is activated,
+ the PRF cannot be inactivated for the patient.
+  
+ The patch also includes a change to the option Load/Edit Patient Data [DG 
+ LOAD PATIENT DATA] to ensure Patient Record Flags are updated when 
+ patients register at new facilities.
+  
+ ************************  A T T E N T I O N  ****************************
+  
+ XT*7.3*110 - XINDEX update for new SAC, released October 22, 2008, made 
+ changes to the routine XINDEX to bring it into compliance with the latest 
+ revision of the SAC standards.  The latest revision of the standard can 
+ be found at the following URL:
+  
+ http://vaww.oed.portal.domain.ext/communities/app_dev/sac/default.aspx
+  
+ DG*5.3*624, 1010 EZ PHASE 3 ENHANCEMENTS, was released to the field 
+ August 12, 2005 prior to the implementation of XT*7.3*110. The 
+ Development/SQA Team of patch DG*5.3*864, USH LEGAL SOLUTION, identified 
+ an issue where the revised version of XINDEX is reporting a violation of 
+ the current SAC standard.  The USH LEGAL SOLUTION project did not create 
+ or modify the locks where the violations are reported.   A waiver was 
+ sought from the SAC committee. The SAC committee recognized:  (1) the 
+ issue with the locks was not detected due to circumstances beyond the 
+ control of the USH LEGAL SOLUTION project team, and (2) the code has been 
+ in production for several years prior to the Standard being updated.  The 
+ decision to release rather than to remediate was an approved Management 
+ Decision supported by the SAC committee.  A request for remediation of 
+ the SAC violation was logged via Remedy Ticket #INC000000899851.
+  
+ The following errors should be ignored for this patch installation:
+  
+ Compiled list of Errors and Warnings              
+  
+ DGREG    * *  152 Lines,  7192 Bytes, Checksum: B46440553
+      G:$D(^DPT("ADA",1,DA)) CH1 L @(DIE_DINUM_")"):2 G:'$T MSG 
+      S:'($D(^DPT(D A(1),"DIS",0))#2) ^(0)="^2.101D^^" 
+      S DIC(0)="L",X=+Y D ^DIC
+      REG+5        S - Non-Incremental Lock.
+  
+ --- Routine Detail ---
+ *****   ERRORS & WARNINGS IN DGREG   *****
+    REG+5        S - Non-Incremental Lock. 
+  
+ **************************************************************************
+   
+  Patch Components
+  ================
+  Files & Fields Associated:
+   
+   
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  N/A
+   
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+   
+  Mail Group Name                     New/Modified/Deleted
+  ---------------                     --------------------
+  N/A 
+  
+   
+  Options Associated:
+   
+  Option Name                        Type           New/Modified/Deleted
+  -----------                        ----           --------------------
+  Load/Edit Patient Data         run routine             modified
+  [DG LOAD PATIENT DATA]  
+  Register a Patient             run routine             modified
+  [DG REGISTER PATIENT]
+   
+  Protocols Associated:
+  
+  Protocol Name                       New/Modified/Deleted
+  --------------------------------------------------------
+  ASSIGN FLAG [DGPF ASSIGN FLAG]           modified
+  Edit Record Flag [DGPF EDIT FLAG]        modified
+  
+  
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+  
+  Additional Information:
+  -----------------------
+   A new data entry (PATIENT RECORD FLAG CATEGORY I - URGENT   ADDRESS
+   AS FEMALE will be added to the PRF NATIONAL FLAG file (#26.15) by  
+   this patch.
+   
+   The new record entry will contain the following data:
+   
+   NAME:                  URGENT    ADDRESS AS FEMALE
+   STATUS:                ACTIVE                        
+   TYPE:                  OTHER
+   REVIEW FREQUENCY DAYS: 0             
+   NOTIFICATION DAYS:     0
+   TIU PN TITLE:          PATIENT RECORD FLAG CATEGORY I - URGENT
+                          ADDRESS AS FEMALE
+   DESCRIPTION:
+   This Patient Record Flag was established to ensure that a transgender
+   Veteran is addressed as Female per a court order agreement. This flag
+   cannot be used without approval of the Under Secretary for Health.
+  
+  
+  New Service Request (NSRs)
+  -------------------------
+  20070589 - High Risk Mental Health Patient - National Reminder and Flag
+  
+  Patient Safety Issues (PSIs)
+  ---------------------------
+  PSPO #2365 - During testing of new software it was found when a patient
+  registers at a new facility the backward look up to determine of a 
+  Category I Record Flag exists for that patient at any other facility does
+  not function correctly.
+  
+  
+  Remedy Ticket(s) & Overview
+  ---------------------------
+  INC000000801785 - Category I Flag
+  
+  Problem:
+  --------
+  The automatic update (a routine unseen by users) of the Category I Flag 
+  to the new facility, the patient is registering at does not work 
+  correctly.
+  
+  Resolution:
+  -----------
+  Corrections will be made to the Patient Record Flag transmission 
+  routines, addressed in this patch.
+  
+  Test Sites:
+  -----------
+  Biloxi VAMC
+  Loma Linda VAMC
+  Puget Sound HCS
+  Portland VAMC 
+  
+  Software & Documentation Retrieval Instructions
+  -----------------------------------------------
+  The software for this set of patches is not being distributed through 
+  the National Patch Module.
+   
+  There is a multi-package build named USH PRF LEGAL SOLUTION 1.0 which
+  contains the following KIDS builds: TIU*1.0*275, DG*5.3*864, and 
+  GMTS*2.7*103. The associated host file is named
+  USH_PRF_LEGAL_SOLUTION_1_0.KID.
+   
+  Documentation is contained in the USH_PRF_LEGAL_SOLUTION_1_0.ZIP
+  file which contains the following documents:
+  
+         Patient Record Flag User Guide  PatRecFlagUG.PDF
+  
+         USH Patient Record Flag Legal Solution Installation Guide
+                                         DG_5_3_864.IG.PDF
+  
+         USH Patient Record Flag Legal Solution Release Notes
+                                         DG_5_3_864.RN.PDF
+         
+         Health Summary User Manual   HSM2_7_103_UM.PDF
+  
+         Health Summary Technical Manual HSUM2_7_103_TM.PDF
+  
+         TIU User Manual TIUUM_275.PDF
+  
+  
+  The preferred method for obtaining these files is to use File Transfer 
+  Protocol (FTP) to download them from:
+  
+  This transmits the files from the first available FTP server. Sites may
+  also elect to retrieve software directly from a specific server as
+  follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  Title                        File Name                         FTP Mode
+  -----------------------------------------------------------------------
+  USH PRF LEGAL SOLUTION 1.0   USH_PRF_LEGAL_SOLUTION_1_0.KID     ASCII
+  USH PRF SOLUTION Documentation
+                               USH_PRF_LEGAL_SOLUTION_1_0.ZIP    Binary
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  (VDL) at: http://www.domain.ext/vdl/
+  
+  
+  Patch Installation:
+  
+  Installation Instructions
+  -------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install. 
+  
+  Pre-Installation Instructions
+  -----------------------------
+  1. Download the KIDS file USH_PRF_LEGAL_SOLUTION_1_0.KID from the
+     appropriate FTP server to the directory on your system.
+  
+  2. Use LOAD A DISTRIBUTION option on the KIDS INSTALLATION menu, and
+     enter: [DIR]:,USH_PRF_LEGAL_SOLUTION_1_0.KID, where [DIR] is the
+     local directory where you have stored the host file:
+  
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From following options. When prompted for the
+      INSTALL enter the patch USH PRF LEGAL SOLUTION 1.0: 
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//'  Answer 'NO'   
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'  Answer 'NO'
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//  Answer 'YES" and select the following options:
+   
+      Patient Record Flags Main Menu  [DGPF RECORD FLAGS MAIN MENU]       
+      Patient Record Flag Background  [DGPF BACKGROUND PROCESSING]       
+      Record Flag Transmission Mgmt   [DGPF TRANSMISSION MGMT]  
+      Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+      Register a Patient              [DG REGISTER PATIENT]
+  
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+   
+  
+  Post-Installation Instructions
+  ------------------------------
+  The post-init routine included with this patch will install the new 
+  PATIENT FLAG CATEGORY I - URGENT    ADDRESS AS FEMALE entry into the 
+  PRF NATIONAL FLAG (26.15) file.
+  
+  The post-init routine can be deleted after the patch is successfully 
+  installed.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG10
+    Before: B19403722   After: B19615369  **32,109,139,149,182,326,513,
+                                           425,574,642,658,773,864**
+Routine Name: DG53864P
+    Before:       n/a   After:  B6717089  **864**
+Routine Name: DGPFLMA2
+    Before: B50998481   After: B58607996  **425,623,554,650,864**
+Routine Name: DGPFLMA3
+    Before: B70378995   After: B74777125  **425,623,554,650,864**
+Routine Name: DGPFMPI
+    Before:       n/a   After:  B2049737  **864**
+ Description of Changes:
+  
+
+Routine Name: DGREG
+    Before: B47199763   After: B47583853  **1,32,108,147,149,182,245,250,
+                                           513,425,533,574,563,624,658,
+                                           864**
+ 
+Routine list of preceding patches: 650, 773
+
+=============================================================================
+User Information:
+Entered By  : KOPECKY,STEPHEN C.            Date Entered  : NOV 14, 2012
+Completed By: KIRBY,ROSE                    Date Completed: AUG 28, 2013
+Released By : DANE,SIDNEY                   Date Released : AUG 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
