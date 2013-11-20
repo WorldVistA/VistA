@@ -1,0 +1,460 @@
+
+=============================================================================
+Run Date: OCT 21, 2013                     Designation: MAG*3*133
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #94                      Status: Released
+                  Compliance Date: NOV 25, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*120   <<= must be installed BEFORE `MAG*3*133'
+
+Subject: VISTARAD MAINTENANCE VIII
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ MAG*3.0*133 VistARad Maintanence VII will address maintenance items and  
+ Remedy tickets that were reported in the Remedy Action Request system.
+  
+ MAG*3.0*133 addresses the following issues:
+  - Memory Leak issue when accessing certain exams
+  - Fixes a hanging protocol issue when opening certain XA studies
+  - For Indian Health Services only: corrects the display of the 
+    medical record number and patient age when displayed on the VistARad 
+    title bars. 
+  - Provides a user preference to display larger thumbnails on the 
+    Preview window and re-formats the Preview window display
+  - Provides a feature that allows a user to reset VistARad windows 
+    positions 
+  - Hidden message box for VistA password expirations
+  - Kodak (CareStream) CR images not opening properly due to a hanging
+    protocol issue CT dose reports that do not render correctly if
+    utilizing the old Group 6000 overlays
+  - Images with VOI/LUT data fail to load when remotely accessed through
+    the VIX.
+  - Exams that include scanned documents (which do not load in 
+    VistARad) now will provide explanatory information regarding the files 
+    that do not load when accessed remotely via the VIX.
+  
+ NOTE    All sites running VistA Imaging 3.0 must install the KIDS portion 
+ of this patch. At sites that have implemented VistARad, installation of 
+ both the KIDS and the client software is required.  The MAG*3.0*133 KIDS 
+ is backwards-compatible with the MAG*3.0*120 client software; 
+ installation of the client software may be phased in according to each 
+ site's needs. 
+  
+ Distribution of the Software:
+ =============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P###
+ This document includes installation instructions.
+  
+ NOTE: You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents:
+ ===============
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*133 KIDS                  MAG3_0P133.KID                   ASCII
+ VistARad client installation file MAG3_0P133_VRAD_setup.exe        Binary
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*133 Patch Description     MAG3_0P133_Patch_Description.pdf
+ Technical Manual change pages     MAG3_0P133_TM.pdf
+ VistARad User Guide               MAG_VistARad_User_Guide.pdf
+ VistARad Quick Reference Guide    MAG_Vrad_Quick_Ref.pdf
+ VistARad Quick Start Guide        MAG_vrad_QSG.pdf
+ VistARad Shortcut Keys            MAG_Vrad_Shortcuts.pdf
+  
+                                                     
+ Associated Patches:
+ ===================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*133 can be installed. The KIDS files of 
+ the following VistA Imaging patches must be installed on the VistA system 
+ in this order:
+  
+   MAG*3.0*120
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Cleveland, OH (Large)
+ Columbia, SC (Large)
+ Mountain Home, TN (Medium)
+ Oklahoma City, OK (Large) 
+  
+ Remedy Help Calls:
+ ==================
+  
+ 1. 207691, 590741, 601910, 605562, 614787 
+  
+ Problem:
+ ========
+ CT dose report images do not render when using the old version Group 6000 
+ overlays.
+  
+ Resolution:
+ ==========
+ The program was modified to be able to manage and display both old and 
+ new versions of Group 6000 overlay data.
+  
+ 2. 385648 
+  
+ Problem:
+ ========
+ Thumbnail images on the Preview window are too small.
+  
+ Resolution:
+ ===========
+ The default size for the thumbnail image on the Preview window's list 
+ view was increased.  In addition, a user preference was created to allow 
+ each user to select from a choice of larger sizes that are now available.
+  
+ 3. 419152, 535982, 600443
+  
+ Problem:
+ ========
+ VistARad is failing to open all images from an XA study due to an issue 
+ with the XA hanging protocol when both single-frame and multi-frame image 
+ objects exist in the study.
+  
+ Resolution:
+ ===========
+ The program's hanging protocol processing logic was fixed to correctly 
+ manage studies having interleaved multi-frame and single frame images.
+  
+ 4. 518326, 713116, 784423, 712501
+  
+ Problem:
+ ========
+ When opening images from certain  Kodak (CareStream) CR modality 
+ versions, the images are not correctly grouped in the display viewports.
+  
+ Resolution:
+ ===========
+ The program was modified to prevent identifying these images as scout 
+ images so that the images would be grouped appropriately.
+  
+ 5. 613696
+  
+ Problem:
+ ========
+ A memory leak occurs when loading images having VOI/LUTs.  This may lead 
+ to a crash after loading numerous such exams during a reading session.
+  
+ Resolution:
+ ===========
+ The program was modified to eliminate the memory leak.
+  
+ 6. 709885
+  
+ Problem:
+ ========
+ Sometimes the remembered screen position for certain of VistARad's 
+ ancillary windows is lost, resulting in the window failing to display on 
+ any of the available screens.
+  
+ Solution:
+ =========
+ A new menu option, Customize | Reset VistARad Windows, was created to 
+ allow the user to restore all the ancillary windows to a default screen 
+ position from which the user can re-position the windows to preferred 
+ locations and sizes.
+  
+ 7. 730931, 797181
+  
+ Problem:
+ ========
+ The VistARad client is improperly displaying patient demographic 
+ information for IHS patients: the Medical Record Number (MRN) is 
+ incorrectly formatted; and, patient age for patients born after 
+ 12/31/1999 is incorrect.
+  
+ Resolution:
+ ===========
+ The program was modified to not always assume that a patient's 
+ identifying number is a social security number so that the MRN can be 
+ displayed without hyphens breaking it apart.  The logic for calculating 
+ patient age was corrected to always use the four-digit year. 
+  
+ 8. 754317
+  
+ Problem:
+ ========
+ VistARad is displaying some MR exams by breaking some series into 
+ individual images.  This produces many extraneous thumbnail entries on 
+ the Preview window. 
+  
+ Resolution:
+ ===========
+ The program was modified to prevent identifying these images as scout 
+ images so that the images would be grouped appropriately, and not 
+ generate extraneous thumbnails on the Preview window.
+  
+ 9. 754321
+  
+ Problem:
+ ========
+ The Contrast or dose fields are not visible when the radiologists pull up 
+ orders in VistARad.
+  
+ Resolution:
+ ===========
+ When the radiologist displays the requisition or report, the medications 
+ and radiopharmaceuticals dosing data are now displayed.
+  
+ 10. 760101
+  
+ Problem:
+ ========
+ The Message box containing the VistA password expiration message is 
+ hidden behind the Broker Login window. 
+  
+ Resolution:
+ ===========
+ A program setting was changed so that when the message box is displayed 
+ it is forced on top of any other window so a user will see it.
+  
+ 11. 769112, 791998
+  
+ Problem:
+ ========
+ Images with VOI/LUT data fail to load when remotely accessed through the 
+ VIX.
+  
+ Resolution:
+ ===========
+ The image processing logic employed for remotely accessed images was 
+ re-factored to unify it with the logic that is employed for locally 
+ accessed images having VOI/LUT data.  This allowed the sequence of steps 
+ for the loading and pre-processing logic to follow identical pathways 
+ through the image retrieval operations for both local and remote images.
+  
+ 12. 771016
+  
+ Problem:
+ ========
+ After opening remotely accessed exams that include scanned documents 
+ (most of which are not supported by VistARad), a message window displays 
+ stating that "some images failed to load".  This message is misleading, 
+ since the actual images from the study do load correctly, and only the 
+ scanned document(s) are not loaded.
+  
+ Resolution:
+ ===========
+ The message box that is displayed now will provide explanatory 
+ information regarding the files that do not load so that the clinician 
+ can determine whether the failed objects may include images, or may be 
+ scanned documents.  It further reminds the user that scanned documents 
+ may be viewed in the VistA Imaging Display Client, if needed.
+  
+ Note: This new behavior will not occur until modifications to the VIX 
+ software that are part of MAG*3.0*138 Telepathology Worklist, have been 
+ installed.  However, the implementation is back-compatible with the 
+ currently-deployed VIX software so that the existing functionality will 
+ be observed until such time as the newer VIX version is deployed.
+  
+ New Service Requests:
+ =====================
+ There are no New Service Requests addressed in this patch. 
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+ There are no new or modified files or fields in this patch. 
+  
+ Security Keys:
+ ==============
+ There are no new or modified security keys in this patch. 
+  
+  
+ REMOTE PROCEDURES:
+ ==================
+ There are no new or modified remote procedure calls in this patch.
+  
+  
+ Menu Options
+ ============
+ There are no new or modified menu options in this patch.
+  
+ Templates:
+ ==========
+ There are no new or modified templates in this patch. 
+  
+ Installation
+ ============
+  
+ This patch may be loaded while the VistA Imaging system is active.  
+ However, all radiologists that would be performing interpretations should 
+ be logged off the system during the KIDS install; non-radiologists need 
+ not be logged off. The KIDS installation will take less than one minute.
+  
+ Installing the KIDS Package
+  
+ 1  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P133.KID) of
+        the Patch 133 KIDS file that you downloaded from the Imaging FTP
+        server.  
+     c. When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+         
+     Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+      this option to verify the integrity of the routines in the patch. 
+     Compare Transport Global to Current System [XPD COMPARE TO 
+     SYSTEM] - run this option to view all changes that will be made when  
+      the patch is installed.  All components (routines, options, and so
+      on) in the patch will be compared.
+     Backup a Transport Global [XPD BACKUP] - run this option to create a 
+      backup message of any routines exported with the patch.  It will NOT
+      back up any of the other changes.
+ 5  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*133
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*133 KIDS.
+  
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*133    7/16/13@12:47:12
+      => Version 3.0 Patch 133 - VistARad Maintenance - 07/08/2013 04:48
+  
+ This Distribution was loaded on Jul 16, 2013@12:47:12 with header of 
+    Version 3.0 Patch 133 - VistARad Maintenance - 07/08/2013 04:48PM  
+ ;Created on Jul 08, 2013@16:48:34
+    It consisted of the following Install(s):
+     MAG*3.0*133
+ Checking Install for Package MAG*3.0*133
+ Will first run the Environment Check Routine, MAGJMN1
+  
+  
+ Wait for Background Compile program to stop;
+      this might take up to a few minutes..
+  
+ Background Compile Stopped; proceeding with install.
+  
+  
+ Install Questions for MAG*3.0*133
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ Complete                                MAG*3.0*133  
+                                   
+  Install Started for MAG*3.0*133 : 
+                Jul 16, 2013@12:49:12
+  
+ Build Distribution Date: Jul 08, 2013
+  
+  Installing Routines: 
+                Jul 16, 2013@12:49:12
+  
+  Running Post-Install Routine: POSTINST^MAGJMN1... Enabling background 
+ compile .
+  
+ Background Compile Enabled.
+  
+  
+  Updating Routine file... 
+  
+  Updating KIDS files... 
+  
+  MAG*3.0*133 Installed. 
+                Jul 16, 2013@12:49:15
+  
+  
+ Install Message sent 
+  
+ Install Completed
+  
+ VistARad Workstation Installation:
+ ==================================
+ For details on the VistARad Workstation Installation process, refer to 
+ the MAG3_0P133_Patch_Description.pdf document distributed with the patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 5393;Sep 09, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGJEX1
+    Before: B73006273   After: B73078692  **16,22,18,65,101,115,104,120,133**
+Routine Name: MAGJMN1
+    Before:B106024345   After: B98640707  **16,9,22,18,65,76,101,90,115,
+                                           120,133**
+Routine Name: MAGJRPT
+    Before: B78502597   After:B103626332  **18,101,120,133**
+Routine Name: MAGJTU4V
+    Before:  B5203794   After:  B5405270  **90,115,120,133**
+Routine Name: MAGJUPD1
+    Before: B61960961   After: B64000428  **16,22,18,76,101,120,133**
+Routine Name: MAGJUTL1
+    Before: B69694036   After: B71279028  **22,18,65,76,101,133**
+Routine Name: MAGJUTL3
+    Before:B130108028   After:B139481284  **16,9,22,18,65,76,101,90,120,133**
+Routine Name: MAGJUTL5
+    Before: B38114169   After: B38140374  **65,76,101,90,115,104,120,133**
+ 
+Routine list of preceding patches: 120
+
+=============================================================================
+User Information:
+Entered By  : KAREDDY,VIJENDER              Date Entered  : NOV 04, 2011
+Completed By: MASSEY,DAVID                  Date Completed: OCT 21, 2013
+Released By : HAAS,CHRISTINE T              Date Released : OCT 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

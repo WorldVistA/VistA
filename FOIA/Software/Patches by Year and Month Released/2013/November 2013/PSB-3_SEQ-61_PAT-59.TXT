@@ -1,0 +1,290 @@
+
+=============================================================================
+Run Date: NOV 22, 2013                     Designation: PSB*3*59
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #61                      Status: Released
+                  Compliance Date: DEC 23, 2013
+=============================================================================
+
+Associated patches: (v)PSB*3*48    <<= must be installed BEFORE `PSB*3*59'
+                    (v)PSB*3*69    <<= must be installed BEFORE `PSB*3*59'
+
+Subject: BCBU MAR DISPLAY ISSUES (ALPHA SORT MEDS, REMOVE THE '&') 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 4 issues:
+  
+ 1. A site noticed an issue when using the Bar Code Medication 
+    Administration Backup System (BCBU). Current patients within a unit,
+    who do not have current active medication orders, will not display on
+    the BCBU Medication Administration Report (MAR) while using the Print
+    MAR for a Selected Ward (PW) menu option or the Print MAR for All
+    Wards (PA) menu option.
+  
+ 2. The BCBU MAR currently displays an ampersand (&) symbol followed by 
+    the administration times in the "Give: " line of the report. The 
+    "Give: " line is for displaying the dosage amounts and schedules
+    of the patient's medications only. This additional information was
+    added for Computerized Patient Record System (CPRS) and was never
+    intended to display in the BCBU MAR reports.
+  
+ 3. Sites have noticed that the BCBU MAR does not list the patients 
+    medication names in alphabetical order for the three main print MAR 
+    options which could potentially harm certain patients.
+  
+ 4. Currently when printing a BCBU MAR report asterisks appear for PRN   
+    medications that were ordered on the same day the MAR report was
+    printed.
+   
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC0000000270121 - Patient with no active meds does not print
+  
+ 2. INC0000000286996 - 5 BCMA Contingency display problem
+    Duplicates: 
+    INC0000000287124 - Admin time printing incorrectly
+    INC0000000287192 - BCMA DISPLAY PROBLEM
+    INC0000000300956 - Everywhere an @ should be, the printout shows &
+    INC0000000472076 - Incorrect Symbol being used for orders relating to
+                       time
+  
+ 3. INC0000000211122 - Report doesn't list drugs alphabetically
+  
+ 4. INC0000000727979 - MAR PRN ASTERISK ERROR
+    
+    
+ PARTICIPATING TEST SITES:
+ =========================
+ Pittsburgh HCS
+ Dublin VAMC
+ Loma Linda VAMC
+ St. Cloud VAMC
+    
+    
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC0000000270121 - Patient with no active meds does not print
+    
+    Problem:   
+    --------
+    Sites noticed when using the Bar Code Medication Administration
+    Backup System (BCBU) that current patients within a unit, who
+    do not have current active medication orders, will not display
+    on the BCBU Medication Administration Report (MAR) while using the
+    Print MAR for a Selected Ward (PW) menu option or the Print MAR for
+    All Wards (PA) menu option. The sites were expecting a MAR to print
+    the patient's informational header and footer since the menu option
+    Print MAR for Selected Patient (PP) prints the header and footer
+    only if the patient has no current active medication orders. 
+    
+    Resolution:
+    -----------
+    Routines ALPBPPAT, ALPBPWRD, and ALPBPALL have been modified to
+    give BCBU users the option to include patients without active
+    medication orders on the BCBU MAR with a new prompt:
+    "Include Patients Without Active Medications? YES//". 
+    
+    
+ 2. INC0000000286996 - 5 BCMA Contingency display problem
+    
+    Problem:
+    --------  
+    The BCBU MAR currently displays the ampersand (&) symbol followed by 
+    the administration times in the "Give: " line of the report. This
+    additional information was added for Computerized Patient Record
+    System (CPRS) and was never intended to display in the BCBU MAR
+    reports. The "Give: " line is for displaying the dosage amounts
+    and schedules of the patient's medications only.
+    
+    Resolution:
+    -----------
+    Routine ALPBHL1U has been modified to remove the ampersand (&)
+    symbol and administration times before storing the schedule for 
+    display on the BCBU MAR. This change will only correct future
+    medication orders on the BCBU MAR that are done after the 
+    installation of this patch.
+    
+    
+ 3. INC0000000211122 - Report does not list drugs alphabetically
+    
+    Patient Safety Issue:
+    ---------------------
+    PSPO #00000876
+  
+    Problem:
+    --------  
+    Currently the options Print MAR for ALL Wards [PSB BCBU PRINT MAR 
+    ALL], Print Mar for Selected Patient [PSB BCBU PRINT MAR PATIENT],
+    and Print Mar for Selected Ward [PSB BCBU PRINT MAR WARD] do not 
+    display patient's medications in alphabetical order.
+    
+    Resolution:
+    -----------
+    Modified routines ALPBPALL, ALPBPPAT, and ALPBPWRD to sort the
+    medications by the ORDER TYPE first (unit dose, unit dose PRN,
+    intravenous, and intravenous PRN), then arranged in alphabetical
+    order by the DRUG NAME, followed by the ORDER STATUS, and the
+    ORDER NUMBER.
+  
+  
+ 4. INC0000000727979 - MAR PRN ASTERISK ERROR
+  
+    Problem:
+    --------  
+    Currently future PRN medication orders are displaying on the BCBU MAR with
+    asterisks printed in the box for the first date the drug is able to be
+    administered.
+    
+    Resolution:
+    -----------
+    Modified routine ALPBFRM1 to account for medication orders that do not
+    have administration times included with the administration dates.
+  
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ Sites may retrieve documentation in one of the following ways:
+  
+ (1) The preferred method is to FTP the files from
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from the 
+     ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+   Albany         ftp.fo-albany.domain.ext <ftp://ftp.fo-albany.domain.ext>
+   Hines          ftp.fo-hines.domain.ext  <ftp://ftp.fo-hines.domain.ext>
+   Salt Lake City ftp.fo-slc.domain.ext    <ftp://ftp.fo-slc.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ The documentation distribution includes:
+  
+ File Name                         File Description        Retrieval Format
+ --------------------------------------------------------------------------
+ PSB_3_BCBU_IG_R022013.PDF        Installation Guide                BINARY
+  
+ (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+  
+ PATCH RETRIEVAL INSTRUCTIONS: 
+ =============================
+ 1.  Retrieve the KIDS distribution host file. This patch will be
+     distributed in a host file due to the amount of data contained in
+     the patch.  The name of the host file is:
+  
+          PSB_3_59.KID
+  
+     The preferred method is to FTP the files from download.vista.domain.ext,
+     which will transmit the files from the first available FTP server.
+  
+     The files may also be downloaded directly from a particular FTP
+     location at the following locations.
+  
+        Albany          ftp.fo-albany.domain.ext
+        Hines           ftp.fo-hines.domain.ext
+        Salt Lake City  ftp.fo-slc.domain.ext
+  
+     The PSB_3_59.KID host file is available in the ANONYMOUS.SOFTWARE
+     directory. Use ASCII Mode when downloading the file.
+    
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+  
+   ************************ NOTE **************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS 
+   AN EDITED ERROR WILL OCCUR.  
+   The patch should be installed when NO Barcode Medication 
+   Administration (BCMA) users are on the system.
+   ********************************************************
+   
+  Installation will take less than 5 minutes.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+    1. From the Kernel Installation & Distribution System menu, select
+       the LOAD DISTRIBUTION option and load PSB_3_59.KID  
+   
+    2. Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSB*3.0*59)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*59.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBFRM1
+    Before: B62585050   After: B63410391  **8,48,69,59**
+Routine Name: ALPBHL1U
+    Before: B63735023   After: B68251433  **7,69,59**
+Routine Name: ALPBPALL
+    Before: B26374660   After: B44937205  **8,29,48,59**
+Routine Name: ALPBPPAT
+    Before: B22283739   After: B32938480  **8,48,59**
+Routine Name: ALPBPWRD
+    Before: B51543358   After: B73805924  **8,37,48,59**
+ 
+Routine list of preceding patches: 69
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : JAN 26, 2011
+Completed By: PODLEY,CHRIS                  Date Completed: NOV 06, 2013
+Released By : COWNIE,KEVIN                  Date Released : NOV 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,645 @@
+
+=============================================================================
+Run Date: OCT 02, 2013                     Designation: YS*5.01*105
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #91                   Status: Released
+                  Compliance Date: NOV 02, 2013
+=============================================================================
+
+Associated patches: (v)YS*5.01*83  <<= must be installed BEFORE `YS*5.01*105'
+                    (v)YS*5.01*103 <<= must be installed BEFORE `YS*5.01*105'
+
+Subject: ADD NEW INSTRUMENTS TO MENTAL HEALTH ASSISTANT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ The Outcomes Monitoring (OM) project's main focus in this patch is to add 
+ new instruments to the Mental Health Assistant (MHA). Outcomes Monitoring 
+ refers to the evaluation of the treatment provided patients in the
+ Veterans Health Administration (VHA). These new instruments will help
+ clinicians and administrators analyze the effectiveness of treatment, help
+ clarify diagnoses and provide empirical measures for treatment outcomes.
+   
+  New Mental Health Instruments: 
+  ==============================
+  The Acceptance and Action Questionnaire (AAQ-2)             AAQ-2
+  Brief Addiction Monitor - Consumption Items                 BAM-C
+  Brief Addiction Monitor - IOP version                       BAM-IOP
+  Brief Addiction Monitor - Revised                           BAM-R
+  Barthel Index of Activities of Daily Living                 BARTHEL INDEX
+  Five Facet Mindfulness Questionnaire                        FFMQ
+  General Practitioner Assessment of Cognition                GPCOG
+  Lawton-Brody Instrumental Activities of Daily Living Scale  IADL
+  Millon Behavioral Medicine Diagnostic--Bariatric Norms
+  (This test is already in the package.)                      MBMD
+  Multidimensional Health Locus of Control: Form C            MHLC-C
+  Mini-Cog                                                    MINICOG
+  Minnesota Multiphasic Personality Inventory-2-Restructured 
+  Form                                                        MMPI-2-RF
+  Montreal Cognitive Assessment                               MOCA
+  Montreal Cognitive Assessment, Alternate 1                  MOCA ALT 1
+  Montreal Cognitive Assessment, Alternate 2                  MOCA ALT 2
+  NEO Personality Inventory-3                                 NEO-PI-3
+  PTSD Checklist Stressor Specific                            PCLS
+  Patient Health Questionnaire 15-Item Somatic Symptom
+  Severity Scale                                              PHQ-15
+  Quality of Life Inventory                                   QOLI
+  Status of Suicide Form                                      SSF
+  Short Test of Mental Status                                 STMS
+  Veterans Rand 12 Item Health Survey                         VR-12
+  Veteran Recovery Assessment                                 VRA
+  World Health Organization Disability Assessment
+  Schedule 2.0                                                WHODAS 2
+   
+  Inactivated Mental Health Instruments: 
+  ======================================
+  PTSD Checklist Stressor Specific - PCL-SZ
+ After consultation with several Posttraumatic Stress Disorder (PTSD) 
+ experts involved in performance measure, joint Veterans
+ Administration-Department of Defense (VA-DoD) initiatives, the National
+ Center for Posttraumatic Stress Disorder (NC-PTSD), and the Evidence-Based
+ Psychotherapy (EBP) dissemination project, the PTSD Checklist Stressor,
+ Specific (PCL-SZ) instrument released in Patch YS*5.01*103 is inactivated
+ because of its negative effects on the Evidence-Based Psychotherapy (EBP)
+ initiative.
+  
+  MMPI 2 Short Form - MMP2S
+ This test is outdated and no longer supported by the test publisher. It 
+ has been replaced by the new version, MMPI2-RF.
+  
+  Millon Clinical Multiaxial Inventory-II - MCMI2
+ This test is outdated and no longer supported by the test publisher. It 
+ has been replaced by the new version, MCMI3.
+    
+  
+  Files: 
+  ======
+ The following files are re-released in this patch to support the new 
+ instruments. All entries are exported with an internal entry number (IEN) 
+ less than 100000, which are the 'national entries' of the files.
+    
+   MH TESTS AND SURVEYS file (#601.71) 
+   
+   MH QUESTIONS file (#601.72) 
+   
+   MH INTRODUCTIONS file (#601.73)
+   
+   MH RESPONSE TYPES file (#601.74) 
+   
+   MH CHOICES file (#601.75)
+   
+   MH CHOICETYPES file (#601.751)
+    This file is re-introduced and the data is handled specifically in the 
+    post-install portion of the build. 
+   
+   MH INSTRUMENT CONTENT file (#601.76)
+   
+   MH SKIPPED QUESTIONS file (#601.79)
+   
+   MH SECTIONS file (#601.81)
+   
+   MH RULES file (#601.82)
+   
+   MH INSTRUMENTRULES file (#601.83)
+   
+   MH SCALEGROUPS file (#601.86)
+  
+   MH SCALES file (#601.87) 
+  
+   MH DISPLAY file (#601.88)
+  
+   MH CHOICEIDENTIFIERS file (#601.89)
+  
+   MH SCORING KEYS file (#601.91)
+   
+   MH REPORT file (#601.93)
+     
+  
+   Data Dictionary Changes:
+   ========================
+ MH TESTS AND SURVEYS file (#601.71)
+  
+ The file DESCRIPTION was updated.
+  
+ This file defines the interviews, surveys and tests available in the 
+ Mental Health Assistant. Attributes of the instruments include authoring
+ credits, target populations, normative samples and copyright information.
+ Actions available including privileging, reporting of full item content
+ and transmission to the Mental Health National Database are also
+ specified. 
+  
+ Direct entry via FileMan is prohibited.  
+  
+  
+ The NAME field (#.01) has an updated DESCRIPTION. 
+  
+ 601.71,.01    NAME                   0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  K:$L(X)>50!($L(X)<3)!'(X'?1P.E) X
+               LAST EDITED:      JUN 26, 2012 
+               HELP-PROMPT:      Answer must be 3-50 characters in length. 
+               DESCRIPTION:      Name of the interview, survey or test. 
+                                 Often its abbreviation is used here, e.g.
+                                 "BDI2" instead of "Beck Depression
+                                 Inventory-2".  Each entry has a unique
+                                 name.  
+  
+               CROSS-REFERENCE:  601.71^B^MUMPS 
+                                 1)= S ^YTT(601.71,"B",X,DA)=""
+                                 2)= K ^YTT(601.71,"B",X,DA)
+  
+ The PRINT TITLE field (#2) has an updated DESCRIPTION.
+  
+ 601.71,2      PRINT TITLE            0;3 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>100!($L(X)<3) X
+               LAST EDITED:      DEC 13, 2002 
+               HELP-PROMPT:      Answer must be 3-100 characters in 
+                                 length. 
+               DESCRIPTION:      This is the full formal name of the 
+                                 interview, survey or test.  It is used on
+                                 printed reports.
+  
+ The R PRIVILEGE field (#9) now allows up to 27 characters. The HELP-PROMPT
+ was updated. The TITLE and TECHNICAL DESCRIPTION values were added.
+  
+ 601.71,9      R PRIVILEGE            2;1 FREE TEXT
+  
+               REPORT PRIVILEGE          
+               INPUT TRANSFORM:  K:$L(X)>27!($L(X)<3) X
+               LAST EDITED:      MAR 30, 2012 
+               HELP-PROMPT:      Answer must be 3-27 characters. 
+               DESCRIPTION:      A key name from the SECURITY KEY file 
+                                 (#19.1). Only those users holding the
+                                 specified key can produce a report of the
+                                 instrument.  
+  
+               TECHNICAL DESCR:  A free text name that must match a 
+                                 SECURITY KEY
+  
+ The REQUIRES LICENSE field (#11) has an updated DESCRIPTION and a 
+ HELP-PROMPT was added.
+  
+ 601.71,11     REQUIRES LICENSE       2;3 SET (Required)
+  
+                                 'Y' FOR Yes; 
+                                 'N' FOR No; 
+               LAST EDITED:      JAN 27, 2004 
+               HELP-PROMPT:      Indicate whether rights need to be 
+                                 granted by a copyright holder.
+               DESCRIPTION:      This indicates whether a copyright holder 
+                                 must grant the rights to use this Mental
+                                 Health instrument. 
+  
+ The SUBMIT TO NATIONAL DATABASE field (#24) has an updated DESCRIPTION 
+ and HELP-PROMPT. A TITLE value and TECHNICAL DESCRIPTION were added.
+  
+ 601.71,24     SUBMIT TO NATIONAL DB  8;4 SET
+  
+               SUBMIT TO NATIONAL DATABASE   
+                                 'Y' FOR Yes; 
+                                 'N' FOR No; 
+               LAST EDITED:      MAR 27, 2012 
+               HELP-PROMPT:      Indicate if the results are to be sent to 
+                                 a national database.
+               DESCRIPTION:      Boolean indicating to send results to the
+                                 national MHSHG database. Set only by 
+                                 MHSHG.  
+  
+               TECHNICAL DESCR:  If Yes, the results are to be transmitted 
+                                 to a national database.
+   
+ The GENERATE PNOTE field (#28) has a TITLE added.
+  
+ 601.71,28     GENERATE PNOTE         8;8 SET
+  
+               GENERATE PROGRESS NOTE    
+                                 'Y' FOR Yes; 
+                                 'N' FOR No; 
+               LAST EDITED:      MAR 21, 2012 
+               HELP-PROMPT:      Should the TIU note be created? 
+               DESCRIPTION:      Select No (or leave null) to stop MHA3 
+                                 from generating a TIU note.  Clinical
+                                 Reminders do not read this flag. TIU notes
+                                 are never generated for a test that has an
+                                 R_Privilege set.
+  
+ The TIU TITLE field (#29) has an updated DESCRIPTION and a TECHNICAL 
+ DESCRIPTION was added.
+  
+ 601.71,29     TIU TITLE              8;9 POINTER TO TIU DOCUMENT 
+                                      DEFINITION FILE (#8925.1)
+  
+               LAST EDITED:      JUN 28, 2010 
+               HELP-PROMPT:      Select the progress note title. 
+               DESCRIPTION:      Title of the TIU note used to identify the
+                                 progress note for this instrument. 
+  
+               TECHNICAL DESCR:  MENTAL HEALTH DIAGNOSTIC STUDY NOTE is the
+                                 approved title for additional instruments.
+                                 Other titles need approval by the 
+                                 Standards Group before they can be used.
+  
+ The following four fields (#100.01, #100.02, #100.03 and #100.04) are 
+ new. There are used to verify the workstation environment. 
+  
+ 601.71,100.01 YS_MHA_B.DLL VERSION   VER;1 FREE TEXT
+  
+               INPUT TRANSFORM:  
+               K:$L(X)>12!($L(X)<7)!'(X?1.2N1"."1.2N1"."1.2N1"."1.3N) X
+               LAST EDITED:      MAR 16, 2012 
+               HELP-PROMPT:      Answer must be 7-12 characters in length. 
+               DESCRIPTION:      Version number of YS_MHA_B.DLL from the 
+                                 Host File System (HFS).  It is used to
+                                 verify the software configuration on a
+                                 user's workstation.
+                                 It should only be edited by Mental Health
+                                 software.  
+  
+               TECHNICAL DESCR:  File Version Number in the format
+                                 "nn.nn.nn.nnn" 
+  
+ 601.71,100.02 YS_MHA_B.DLL DATE/TIME VER;2 DATE
+  
+               INPUT TRANSFORM:  S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      MAR 16, 2012 
+               HELP-PROMPT:      Enter the date/time the file was modified 
+                                 (time is optional).
+               DESCRIPTION:      Modified date/time of YS_MHA_B.DLL from 
+                                 the Host File System (HFS).  It is used to
+                                 verify the software configuration on a
+                                 user's workstation.  It should only be
+                                 edited by Mental Health software.
+  
+               TECHNICAL DESCR:  File Modified date/time from the Host File
+                                 System.  Time is optional.  
+  
+ 601.71,100.03 YS_MHA_AUX.DLL VERSION VER;3 FREE TEXT
+  
+               INPUT TRANSFORM:  
+               K:$L(X)>12!($L(X)<7)!'(X?1.2N1"."1.2N1"."1.2N1"."1.3N) X
+               LAST EDITED:      MAR 16, 2012 
+               HELP-PROMPT:      Answer must be 7-12 characters in length. 
+               DESCRIPTION:      Version number of YS_MHA_AUX.DLL from the 
+                                 Host File System (HFS).  It is used to
+                                 verify the software configuration on a
+                                 user's workstation.
+                                 It should only be edited by Mental Health
+                                 software.  
+  
+               TECHNICAL DESCR:  File Version Number in the format
+                                 "nn.nn.nn.nnn" 
+  
+ 601.71,100.04 YS_MHA_AUX.DLL DATE/TIME VER;4 DATE
+  
+               INPUT TRANSFORM:  S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      MAR 16, 2012 
+               HELP-PROMPT:      Enter the date/time the file was modified 
+                                 (time is optional).
+               DESCRIPTION:      Modified date/time of YYS_MHA_AUX.DLL 
+                                 from the Host File System (HFS).  It is
+                                 used to verify the software configuration
+                                 on a user's workstation.  It should only
+                                 be edited by Mental Health software.
+  
+               TECHNICAL DESCR:  File Modified date/time from the Host File
+                                 System.  Time is optional.  
+  
+  
+ MH CHOICETYPES file (#601.751)
+  
+ In the CHOICETYPE field (#.01) a bogus value of '-1' was removed from the 
+ fourth piece of the ^DD(601.751,.01,1,0) node. This value is visible using
+ the global lister only.
+  
+  Before: ^DD(601.751,.01,1,0)="^.1^^-1"
+   After: ^DD(601.751,.01,1,0)="^.1"
+  
+  
+ MH SCALEGROUPS file (#601.86)
+ The ORDINATEMIN field (#5) definition now permits negative values. The 
+ HELP-PROMPT was updated.
+  
+ 601.86,5      ORDINATEMIN            0;6 NUMBER
+  
+               INPUT TRANSFORM:  
+               K:+X'=X!(X>9999)!(X<-9999)!(X?.E1"."1N.N) X
+               LAST EDITED:      FEB 28, 2012 
+               HELP-PROMPT:      Type a number between -9999 and 9999, 0 
+                                 decimal digits.
+               DESCRIPTION:
+                                 This is the ordinate minimum.  
+  
+  
+ SECLUSION/RESTRAINT file (#615.2)
+ A spelling error was corrected in the PATIENT SEARCHED field (#.08).
+  Before: Was the Patinet Searched
+   After: Was the patient searched?
+  
+ 615.2,.08     PATIENT SEARCHED       0;8 SET
+  
+               Was the patient searched?   
+                                 'Y' FOR YES; 
+                                 'N' FOR NO; 
+               LAST EDITED:      MAR 27, 2012 
+               DESCRIPTION:      Question as to whether or not a patient 
+                                 was searched for possible harmful objects
+                                 on his/her person.
+  
+  
+   Option: 
+   =======
+ The MENU TEXT field (#1) of the [YS BROKER1] option in OPTION file (#19)
+ is re-named. This change is important because the version numbers listed
+ in the MENU TEXT value are used by the MHA graphical user interfaces
+ (GUIs) to determine if the GUI software invoked by the user is current.
+  
+   Before patch: YS BROKER1 version 1.0.3.45~1.0.3.45~1.0.3.45 
+    After patch: YS BROKER1 version 1.0.3.60~1.0.3.60~1.0.3.60 
+  
+  Data Changes:
+  =============
+ The following changes were made to existing file entries.
+  
+ MH TESTS AND SURVEYS (601.71)
+ The value of the LAST EDIT DATE (Field #18) is modified for each 
+ instrument. The first time a user logs into the MHA, the resource files 
+ (rsc extension) on their workstation will be rebuilt for each instrument.
+ The user will see a progress bar while the files are rebuilt. It should 
+ not take more than 1 or 2 minutes to rebuild.
+  
+ The value of the WRITE FULL TEXT (Field #26) is set to YES for the 
+ following active instruments:
+  ASI
+  DOMG
+  GAF
+  IEQ
+  MHLA
+  MHLB
+  PCLC
+  PCLM
+  RLOC
+  SAI
+  
+ MH QUESTIONS (601.72) 
+ Entries 3349, 3366, 5169 and 5410: QUESTION TEXT (Field #1)
+ Before: Feeling DISTANT OR CUT OFF from other people?
+ After:  Feeling DISTANT or CUT OFF from other people?
+  
+ Entry 3924: QUESTION TEXT (Field #1)
+ Before: Fecal Incontinence (occasional or more frequently over the past 
+ week).
+ After:  Fecal incontinence occasional or more frequently over the past 
+ week.
+  
+ MH CHOICES (601.75)
+ Entry 2914: CHOICE TEXT (Field #3) 
+ Before: Maintains house alone or with occasional assistance (e.g. heavy 
+ work domestic help.
+ After:  Maintains house alone or with occasional assistance (e.g. heavy 
+ work domestic help).
+  
+ MH SCALEGROUPS (601.86)
+ Entry: 50: SCALEGROUP NAME (Field #2)
+ Before: Prevalence Scores
+ After:  Management Guides
+  
+ MH REPORT (601.93)
+ Entries: 11 and 38: RPT (Field #2)
+ Before: Feeling DISTANT OR CUT OFF from other people?
+ After:  Feeling DISTANT or CUT OFF from other people?
+  
+ Entry: 2 RPT (Field #2)
+ Before: Unable to bathe properly; e.g., difficulty adjusting .
+ After:  Unable to bathe properly; (e.g., difficulty adjusting .
+  
+ Before: Fecal Incontinence, (occasional or more over the past week).
+ After:  Fecal incontinence, occasional or more over the past week.
+  
+ MH INSTRUMENT (601)
+ ^YTT(601,241,"Q",9,"T",1,0)
+ Before: "LOSS OF INTEREST in activities that you used to enjoy?"
+  After: "LOSS of INTEREST in activities that you used to enjoy?"
+  
+ ^YTT(601,241,"Q",10,"T",1,0)
+ Before: "Feeling DISTANT OR CUT OFF from other people?"
+  After: "Feeling DISTANT or CUT OFF from other people?"
+   
+ ^YTT(601,242,"Q",9,"T",1,0)       
+ Before: "LOSS OF INTEREST in activities that you used to enjoy?"
+  After: "LOSS of INTEREST in activities that you used to enjoy?"
+  
+ ^YTT(601,242,"Q",10,"T",1,0)=
+ Before: "Feeling DISTANT OR CUT OFF from other people?"
+  After: "Feeling DISTANT or CUT OFF from other people?"
+  
+ TEST SCALE NUMBER (Field #16) (multiple)
+ Entries 40 through 97 are added to the MBMD instrument. 
+  
+  Routine Deletions:
+  ==================
+ The following routines are no longer needed and deleted:
+  YSGAF3
+  YSKFASI3
+  YSKFASIK
+  YSKFASIP
+  
+   Associated Remedy Ticket(s): 
+   ============================
+   HD0000000290418 - The bariatric norm has been added to the MBMD (Millon 
+   Behavioral Medicine Diagnostic).  
+   
+   HD0000000721216 - The scoring issue with two digit values is fixed in the
+   YS_MHA_AUX.dll file included in this patch.
+  
+   HD0000000739365 - The BAI (Beck Anxiety Index) report display has been 
+   changed to more clearly explain the results. (Patient Safety Issue 2299)
+  
+   HD0000000738279 - The BDI2 (Beck Depression Inventory - Second Edition) 
+   report display has been changed to more clearly explain the results. In
+   addition, the BSI (Beck Scale for Suicide Ideation) and the BHS (Beck
+   Hopelessness Scale) report displays have been changed to more clearly
+   explain the results. 
+  
+   HD0000000722890 - The problem with the ASI exam changing from Lite to 
+   Full when edited has been fixed.
+   
+   HD0000000537915 - The PHQ-2 (Patient Health Questionnaire-2) and PC 
+   PTSD (Primary Care PTSD Screen) report displays have been changed to
+   include the verbiage requested.
+  
+   HD0000000507076 - An <UNDEFINED> error occurred at BDI2+1^YTBI because 
+   a global node was missing.
+  
+   HD0000000754691, HD0000000779663, HD0000000805126, HD0000000824422 -
+   Instruments with more than 200 questions were not displaying completely
+   on workstations running Windows 7 operating system.
+  
+  
+   Patient Safety Issues (PSIs):
+   =============================
+   PSPO 2299 - The scoring for the Beck Anxiety Inventory (BAI) instrument
+ is causing confusion. There are 21 questions each with 4 choice numbers
+ ranging from 1 to 4. Some users who score it by hand count the choice
+ number as the score (i.e., choice 1 is worth 1 point and so on). However,
+ the score is the choice number minus 1 (i.e., choice 1 is worth no points,
+ choice 2 is worth 1 point and so on).
+  
+ With this patch, the report for the BAI will clearly document the
+ patient's answers and their point value.
+  
+  
+  
+   New Service Requests (NSRs):
+   ============================
+   N/A
+   
+  
+   Test Site(s): 
+   ============= 
+   Boston HCS
+   Durham, NC VAMC 
+   Upstate New York HCS (Albany, NY) 
+  
+   
+   SOFTWARE RETRIEVAL: 
+   ===================
+   The following software and documentation files are exported as part of this 
+   patch: 
+   
+     File Name                Contents                        Format 
+     ---------                --------                        ------
+     YS_501_105.ZIP           All software and                Binary 
+                              manuals for this patch 
+     ------------------------------------------------------------------
+     Software included in the YS_501_105.ZIP is as follows: 
+   
+     YS_501_105.KID           MHA Server Components           ASCII 
+   
+     YS_501_105_Setup.exe     Mental Health Assistant         Binary 
+                              This file is the complete 
+                              install for the Mental Health 
+                              Assistant GUI Version 1.0.3.66
+                                YS_MHA.exe 
+                                YS_MHA_A.dll 
+                                YS_MHA_AUX.dll 
+                                borlndmm.dll 
+   
+     YS501105_MHA3_IG.PDF     MHA3 Installation Guide      Binary 
+     YS501105_MHA3_IG.DOC     MHA3 Installation Guide      Binary 
+     YS501105_MHA3_UM.PDF     MHA3 User Manual             Binary 
+     YS501105_MHA3_UM.DOC     MHA3 User Manual             Binary 
+     YS501105_MHA3_RN.PDF     MHA3 Release Notes           Binary 
+     YS501105_MHA3_RN.DOC     MHA3 Release Notes           Binary 
+   
+    The software files are available on the following OI Field Offices' 
+    ANONYMOUS.SOFTWARE directories.  
+   
+    All sites are encouraged to use their FTP capability to obtain these 
+    files.  Use the FTP address "download.vista.domain.ext" (without the 
+    quotes) to connect to the first available FTP server where the files 
+    are located.  
+   
+     OI FIELD OFFICE    FTP ADDRESS                DIRECTORY 
+     ===============    ===========                =========
+     ALBANY             ftp.fo-albany.domain.ext   [ANONYMOUS.SOFTWARE] 
+     HINES              ftp.fo-hines.domain.ext    [ANONYMOUS.SOFTWARE] 
+     SALT LAKE          ftp.fo-slc.domain.ext      [ANONYMOUS.SOFTWARE] 
+  
+     Documentation can also be found on the VA Software Documentation
+     Library at:  http://www4.domain.ext/vdl/
+   
+   
+    Installation Instructions: 
+    ==========================
+    1. Use the 'LOAD A DISTRIBUTION' option. 
+       The Host File name is YS_501_105.KID.  
+       Answer YES to the question: "Want to Continue with Load? YES//" 
+    
+    2. The patch has now been loaded into a Transport global on your 
+       system. You now need to install the Transport global. 
+       [Optional] On the KIDS menu, under the 'Installation' menu, use the 
+       following options: 
+   
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Backup a Transport Global 
+    
+    3. Users may remain on the system, but installation should be done 
+       during off-peak hours.  
+   
+    4. Installation will take less than ten minutes. 
+   
+    5. From the 'Installation Menu' of the KIDS menu, run the option 
+       'Install Package(s)' Select the package 'YS*5.01*105' 
+       and proceed with install.  
+    
+    6. Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+       Please answer according to your site's policy.  
+   
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install//? NO', 
+       respond NO.  
+   
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//', respond YES 
+   
+       Place the following options out of order: 
+        YS BROKER1 
+   
+    7. Please refer to the INSTALL WINDOWS ILLUSTRATION section of the 
+       MENTAL HEALTH ASSISTANT VERSION 3 INSTALLATION GUIDE to install 
+       the MHA graphical user interface files.  
+   
+    8. Ensure that the option YS BROKER1 [YS BROKER1] is on the Mental 
+       Health user's secondary menu, if it is not already there.  
+   
+    9. Place the MHA3 application on the CPRS Tools menu, if it is not 
+       already there. For instructions on how to add the MHA3 application 
+       to the CPRS Tools menu, see the "Setting up VistA MHA3 on CPRS GUI 
+       Tools Menu" section in the Installation Guide.  
+   
+    10. Delete the YS105PRE routine when the installation is complete.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.01;MENTAL HEALTH;**[Patch List]**;Dec 30, 1994;Build 76
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: YS105PRE
+    Before:       n/a   After: B27488665  **105**
+Routine Name: YSGAF3
+Routine Name: YSKFASI3
+Routine Name: YSKFASIK
+Routine Name: YSKFASIP
+Routine Name: YTMBMD
+    Before: B20606864   After: B25599071  **76,83,105**
+Routine Name: YTMBMD1
+    Before:       n/a   After:  B8510909  **105**
+Routine Name: YTMBMD2
+    Before:       n/a   After:  B4080859  **105**
+ 
+Routine list of preceding patches: 83
+
+=============================================================================
+User Information:
+Entered By  : TRAXLER,FRANK                 Date Entered  : MAY 26, 2011
+Completed By: ORAZIO,LONGO                  Date Completed: SEP 10, 2013
+Released By : MONTGOMERY,ALAN               Date Released : OCT 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,256 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 05/22/13 at 17:21
+=============================================================================
+Run Date: OCT 23, 2013                     Designation: DG*5.3*847
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #769                    Status: Released
+                  Compliance Date: NOV 23, 2013
+=============================================================================
+
+
+Subject: CORRECT TRIGGERS IN 4 FIELDS OF THE PATIENT FILE
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 4 issues:
+ 1. Incorrect trigger for ADDRESS CHANGE SOURCE (#.119) field in the 
+    PATIENT (#2) file
+ 2. Incorrect trigger for CELLULAR NUMBER CHANGE SOURCE (#.1311) 
+    field in the PATIENT (#2) file
+ 3. Incorrect trigger for PAGER NUMBER CHANGE SOURCE (#.1313) field 
+    in the PATIENT (#2) file
+ 4. Incorrect trigger for EMAIL ADDRESS CHANGE SOURCE (#.137) field 
+    in the PATIENT (#2) file
+  
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000599219   Triggers ADDRESS CHANGE SOURCE
+                               (file #2,field #.119)
+ 2. INC000000599224   Triggers CELLULAR NUMBER CHANGE SOURCE
+                               (file #2, field #.1311)
+ 3. INC000000599226   Triggers PAGER NUMBER CHANGE SOURCE
+                               (file #2, field #.1313)
+ 4. INC000000599227   Triggers EMAIL ADDRESS CHANGE SOURCE 
+                               (file #2, field #.137)
+    
+  
+  
+ Participating Test Sites:
+ =========================
+ Connecticut HCS - (West Haven) - Integrated Large
+ Salisbury - W.G. (Bill) Hefner VA Medical Center - Large
+ Wilmington - VA Medical Center - Medium 
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000000599219   Triggers ADDRESS CHANGE SOURCE
+                               (file #2,field #.119)
+  
+ Problem:
+ --------
+ This field triggers the population of the ADDRESS CHANGE SITE field (#.12)
+ of the PATIENT file (#2). It is incorrectly populating that field with the 
+ local VAMC institution no matter what value is entered into the 
+ ADDRESS CHANGE SOURCE field (#.119). It is only supposed to populate the 
+ ADDRESS CHANGE SITE field (#.12) when "VAMC" is entered into the 
+ ADDRESS CHANGE SOURCE field (#.119).  
+ Also, The ADDRESS CHANGE SITE field (#.12) does not change if the ADDRESS
+ CHANGE SOURCE field (#.119) is changed or deleted.
+  
+  
+ Resolution:
+ -----------
+ Corrected the trigger to the following:
+ ADDRESS CHANGE SOURCE="VAMC"
+ Also, the CHANGE/DELETE CONDITION has been updated to delete the value 
+ in the ADDRESS CHANGE SITE field if the ADDRESS CHANGE SOURCE is 
+ changed or deleted.
+  
+  
+ 2. INC000000599224   Triggers CELLULAR NUMBER CHANGE SOURCE
+                               (file #2, field #.1311)
+  
+ Problem:
+ --------
+ This field triggers the population of the CELLULAR NUMBER CHANGE SITE 
+ field (#.13111) of the PATIENT file (#2). It is incorrectly populating 
+ that field with the local VAMC institution no matter what value is 
+ entered into the CELLULAR NUMBER CHANGE SOURCE field (#.1311). It is 
+ only supposed to populate the CELLULAR NUMBER CHANGE SITE field (#.13111)
+ when "VAMC" is entered into the CELLULAR NUMBER CHANGE SOURCE 
+ field (#.1311).
+ Also, The CELLULAR NUMBER CHANGE SITE field (#.12) does not change 
+ if the CELLULAR NUMBER CHANGE SOURCE field (#.119) is changed or deleted.
+  
+ Resolution:
+ -----------
+ Corrected the trigger to the following:
+ CELLULAR NUMBER CHANGE SOURCE="VAMC"
+ Also, the CHANGE/DELETE CONDITION has been updated to delete the value 
+ in the CELLULAR NUMBER CHANGE SITE field if the CELLULAR NUMBER 
+ CHANGE SOURCE is changed or deleted.
+  
+  
+ 3. INC000000599226   Triggers PAGER NUMBER CHANGE SOURCE
+                               (file #2, field #.1313)
+  
+ Problem:
+ --------
+ This field triggers the population of the PAGER NUMBER CHANGE SITE 
+ field (#.1314) of the PATIENT file (#2). It is incorrectly populating 
+ that field with the local VAMC institution no matter what value is 
+ entered into the PAGER NUMBER CHANGE SOURCE field (#.1313). It is only 
+ supposed to populate the PAGER NUMBER CHANGE SITE field (#.1314) when 
+ "VAMC" is entered into the PAGER NUMBER CHANGE SOURCE field (#.1313).
+ Also, The PAGER NUMBER CHANGE SITE field (#.12) does not change if 
+ the PAGER NUMBER CHANGE SOURCE field (#.119) is changed or deleted. 
+  
+ Resolution:
+ -----------
+ Corrected the trigger to the following:
+ PAGER NUMBER CHANGE SOURCE="VAMC"
+ Also, the CHANGE/DELETE CONDITION has been updated to delete the value 
+ in the PAGER NUMBER CHANGE SITE field if the PAGER NUMBER CHANGE 
+ SOURCE is changed or deleted.
+  
+  
+ 4. INC000000599227   Triggers EMAIL ADDRESS CHANGE SOURCE 
+                               (file #2, field #.137)
+  
+ Problem:
+ --------
+ This field triggers the population of the EMAIL ADDRESS CHANGE SITE 
+ field (#.138) of the PATIENT file (#2). It is incorrectly populating 
+ that field with the local VAMC institution no matter what value is 
+ entered into the EMAIL ADDRESS CHANGE SOURCE field (#.137). It is 
+ only supposed to populate the EMAIL ADDRESS CHANGE SITE field (#.138)
+ when "VAMC" is entered into the EMAIL ADDRESS CHANGE SOURCE 
+ field (#.137).
+ Also, The EMAIL ADDRESS CHANGE SITE field (#.12) does not change if 
+ the EMAIL ADDRESS CHANGE SOURCE field (#.119) is changed or deleted.  
+  
+ Resolution:
+ -----------
+ Corrected the trigger to the following:
+ EMAIL ADDRESS CHANGE SOURCE="VAMC"
+ Also, the CHANGE/DELETE CONDITION has been updated to delete the value 
+ in the EMAIL ADDRESS CHANGE SITE field if the EMAIL ADDRESS CHANGE 
+ SOURCE is changed or deleted.
+  
+  
+ Technical
+ =========
+ The following partial Data Dictionary entries are included. 
+  
+                                        UP    SEND  DATA                USER
+                                        DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                  DD    CODE  W/FILE  DATA  PTRS  RIDE
+ ---------------------------------------------------------------------------
+  
+ 2           PATIENT                    YES   NO    NO                  NO
+  
+ Partial DD: subDD: 2          fld: .119
+                               fld: .1311
+                               fld: .1313
+                               fld: .137
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ ***** NOTE ********
+ A Pre-Install routine is included in this patch.  The routine will 
+ delete all remnants of the old triggers before install so that the 
+ new triggers will install accurately.
+  
+ The Pre-Install routine DG53P847 will be deleted after patch install.
+ *******************
+   
+ It is recommended that the patch be installed after regular work 
+ hours and Registration users be off the system. Other VistA users 
+ should not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+  1.   Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.   Start up the Kernel Installation and Distribution System Menu
+       [XPD MAIN]:
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+                           ---
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+            Select Installation Option:
+  
+  3.   From this menu, you may elect to use the following options
+       (When prompted for the INSTALL NAME, enter DG*5.3*847):
+  
+       a.  Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed. It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+  4.   Use the Install Package(s) option and select the package
+       DG*5.3*847.
+  
+       a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           NO//', answer NO
+       b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P847
+    Before:       n/a   After:   B510306  **847**
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : AUG 02, 2011
+Completed By: MIRANDA,RAUL                  Date Completed: OCT 21, 2013
+Released By : ADAMS,RITA W                  Date Released : OCT 23, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

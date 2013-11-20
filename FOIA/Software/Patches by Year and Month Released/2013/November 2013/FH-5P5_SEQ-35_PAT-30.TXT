@@ -1,0 +1,148 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 07/08/13 at 13:02
+=============================================================================
+Run Date: NOV 27, 2013                     Designation: FH*5.5*30
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #35                    Status: Released
+                  Compliance Date: DEC 28, 2013
+=============================================================================
+
+
+Subject: ISSUES WITH NUTRITION STATUS AVERAGE REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1. When the user decides to sort the Nutrition Status Average Report by 
+    the Clinician, the report is using the CLINICIAN (# 1) field rather
+    than the CLINICIAN(S) (# 112) of the NUTRITION LOCATION (# 119.6) file.
+  
+ 2. Routine FHASN71 will be updated to include Integration Agreements in 
+    its comments section.
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Indianapolis, IN.
+ Upstate New York
+ New Jersey
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. HD000000511977 - Nutrition Status Average Report - Updated for 
+                     CLINICIAN(S)
+  
+ 2. HD000000536685 - Routine FHASN71 needs integration agreements
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. HD0000000511977
+  
+    Problem:
+    --------
+    The user can choose to sort the Nutrition Status Average Report by
+    either the Ward the patients are admitted to or the Clinicians assigned
+    to the ward the patients are admitted to. When sorting by the
+    Clinician, the Nutrition Status Average Report sorts using the
+    CLINICIAN (#1) field of the NUTRITION LOCATION (#119.6) file rather
+    than the correct CLINICIAN(S) (#112) field. The sorted report will be
+    incorrect.
+  
+    Resolution:
+    -----------
+    Revise the Nutrition Status Average Report to use the CLINICIAN(S)
+    (#112) field of the NUTRITION LOCATION (#119.6) file when the user
+    chooses to sort by clinician.
+  
+ 2. HD0000000536685
+  
+    Problem:
+    --------
+    Routine FHASN71 is a very old routine that makes a number of direct
+    global reads of ^DGPM(D0,0) and ^DGPM("ATID1" index without integration
+    agreements. Routine FHASN71 also makes use of the DGPMSTAT API without
+    the integration agreement.
+  
+    Resolution:
+    -----------
+    The following integration agreements were added to routine FHASN71:
+    IA # 1071 - DGPMSTAT
+                Supported usage
+    IA # 2056 - Data Base Server API: Data Retriever Utilities
+                Supported usage
+  
+    The following integration agreements were modified and added to routine
+    FHASN71:
+    IA # 1096 - PATIENT MOVEMENT file cross reference
+                Controlled Subscription usage
+                Dietetics added as a subscribing package 10/12/2012.  
+    IA # 2090 - ACCESS TO PATIENT MOVEMENT DATA
+                Controlled Subscription usage
+                Global references added 10/12/2012
+    ^DGPM(D0,0)
+    .01 DATE/TIME                     0;1   Direct Global Read & w/FileMan
+    .17 DISCHARGE/CHECK-OUT MOVEMENT  0;17  Direct Global Read & w/FileMan
+  
+    ===================== INSTALLATION INSTRUCTIONS =====================
+   
+    Installation will take less than 2 minutes.  Users may be on the
+    system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*30)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*30
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHASN71
+    Before: B18147254   After: B23883807  **30**
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : OCT 27, 2011
+Completed By: DUCKWORTH,TIM                 Date Completed: NOV 20, 2013
+Released By : KREUZ,SHERI B                 Date Released : NOV 27, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

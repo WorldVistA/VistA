@@ -1,0 +1,530 @@
+Released FH*5.5*30 SEQ #35
+Extracted from mail message
+**KIDS**:FH*5.5*30^
+
+**INSTALL NAME**
+FH*5.5*30
+"BLD",8906,0)
+FH*5.5*30^DIETETICS^0^3130708^y
+"BLD",8906,1,0)
+^^7^7^3130708^
+"BLD",8906,1,1,0)
+This patch addresses the following issues:
+"BLD",8906,1,2,0)
+1. When the user decides to sort the Nutrition Status Average Report by 
+"BLD",8906,1,3,0)
+the Clinician, the report is using the CLINICIAN (# 1) field rather than
+"BLD",8906,1,4,0)
+the CLINICIAN(S) (# 112) of the NUTRITION LOCATION (# 119.6) file.
+"BLD",8906,1,5,0)
+ 
+"BLD",8906,1,6,0)
+2. Routine FHASN71 will be updated to include Integration Agreements in 
+"BLD",8906,1,7,0)
+its comments section.
+"BLD",8906,4,0)
+^9.64PA^^
+"BLD",8906,6.3)
+4
+"BLD",8906,"ABPKG")
+n
+"BLD",8906,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8906,"KRN",.4,0)
+.4
+"BLD",8906,"KRN",.401,0)
+.401
+"BLD",8906,"KRN",.402,0)
+.402
+"BLD",8906,"KRN",.403,0)
+.403
+"BLD",8906,"KRN",.5,0)
+.5
+"BLD",8906,"KRN",.84,0)
+.84
+"BLD",8906,"KRN",3.6,0)
+3.6
+"BLD",8906,"KRN",3.8,0)
+3.8
+"BLD",8906,"KRN",9.2,0)
+9.2
+"BLD",8906,"KRN",9.8,0)
+9.8
+"BLD",8906,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8906,"KRN",9.8,"NM",1,0)
+FHASN71^^0^B23883807
+"BLD",8906,"KRN",9.8,"NM","B","FHASN71",1)
+
+"BLD",8906,"KRN",19,0)
+19
+"BLD",8906,"KRN",19.1,0)
+19.1
+"BLD",8906,"KRN",101,0)
+101
+"BLD",8906,"KRN",409.61,0)
+409.61
+"BLD",8906,"KRN",771,0)
+771
+"BLD",8906,"KRN",779.2,0)
+779.2
+"BLD",8906,"KRN",870,0)
+870
+"BLD",8906,"KRN",8989.51,0)
+8989.51
+"BLD",8906,"KRN",8989.52,0)
+8989.52
+"BLD",8906,"KRN",8994,0)
+8994
+"BLD",8906,"KRN","B",.4,.4)
+
+"BLD",8906,"KRN","B",.401,.401)
+
+"BLD",8906,"KRN","B",.402,.402)
+
+"BLD",8906,"KRN","B",.403,.403)
+
+"BLD",8906,"KRN","B",.5,.5)
+
+"BLD",8906,"KRN","B",.84,.84)
+
+"BLD",8906,"KRN","B",3.6,3.6)
+
+"BLD",8906,"KRN","B",3.8,3.8)
+
+"BLD",8906,"KRN","B",9.2,9.2)
+
+"BLD",8906,"KRN","B",9.8,9.8)
+
+"BLD",8906,"KRN","B",19,19)
+
+"BLD",8906,"KRN","B",19.1,19.1)
+
+"BLD",8906,"KRN","B",101,101)
+
+"BLD",8906,"KRN","B",409.61,409.61)
+
+"BLD",8906,"KRN","B",771,771)
+
+"BLD",8906,"KRN","B",779.2,779.2)
+
+"BLD",8906,"KRN","B",870,870)
+
+"BLD",8906,"KRN","B",8989.51,8989.51)
+
+"BLD",8906,"KRN","B",8989.52,8989.52)
+
+"BLD",8906,"KRN","B",8994,8994)
+
+"BLD",8906,"QUES",0)
+^9.62^^
+"BLD",8906,"REQB",0)
+^9.611^^
+"MBREQ")
+0
+"PKG",122,-1)
+1^1
+"PKG",122,0)
+DIETETICS^FH^Dietetics System
+"PKG",122,20,0)
+^9.402P^^
+"PKG",122,22,0)
+^9.49I^1^1
+"PKG",122,22,1,0)
+5.5^3050202^3050308^33227
+"PKG",122,22,1,"PAH",1,0)
+30^3130708
+"PKG",122,22,1,"PAH",1,1,0)
+^^7^7^3130708
+"PKG",122,22,1,"PAH",1,1,1,0)
+This patch addresses the following issues:
+"PKG",122,22,1,"PAH",1,1,2,0)
+1. When the user decides to sort the Nutrition Status Average Report by 
+"PKG",122,22,1,"PAH",1,1,3,0)
+the Clinician, the report is using the CLINICIAN (# 1) field rather than
+"PKG",122,22,1,"PAH",1,1,4,0)
+the CLINICIAN(S) (# 112) of the NUTRITION LOCATION (# 119.6) file.
+"PKG",122,22,1,"PAH",1,1,5,0)
+ 
+"PKG",122,22,1,"PAH",1,1,6,0)
+2. Routine FHASN71 will be updated to include Integration Agreements in 
+"PKG",122,22,1,"PAH",1,1,7,0)
+its comments section.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","FHASN71")
+0^1^B23883807^B18147254
+"RTN","FHASN71",1,0)
+FHASN71 ; HISC/NCA - Print Status Average (cont.) ;9/28/95  10:52
+"RTN","FHASN71",2,0)
+ ;;5.5;DIETETICS;**30**;Jan 28, 2005;Build 4
+"RTN","FHASN71",3,0)
+ ;IA # 1071 - DGPMSTAT
+"RTN","FHASN71",4,0)
+ ;IA # 1096 - PATIENT MOVEMENT file cross reference
+"RTN","FHASN71",5,0)
+ ;IA # 2056 - Data Base Server API: Data Retriever Utilities
+"RTN","FHASN71",6,0)
+ ;IA # 2090 - ACCESS TO PATIENT MOVEMENT DATA
+"RTN","FHASN71",7,0)
+Q0 ; Process Screening all patients
+"RTN","FHASN71",8,0)
+ K CLIN,DWRD,LIST,LST,NAME,S,WARD,WC,WLCN,WRD,X,X1
+"RTN","FHASN71",9,0)
+ S TOT=""
+"RTN","FHASN71",10,0)
+ ;Build lists of MAS wards, ward names, ward clinicians, clinician names
+"RTN","FHASN71",11,0)
+ ;DWRD - Array MAS Wards
+"RTN","FHASN71",12,0)
+ ;FHWN - Array Ward Names
+"RTN","FHASN71",13,0)
+ ;FHWC - Array Ward Clinicains
+"RTN","FHASN71",14,0)
+ ;FHWCN - Array Ward Clinican Names
+"RTN","FHASN71",15,0)
+ F WRD=0:0 S WRD=$O(^FH(119.6,WRD)) Q:WRD<1  D
+"RTN","FHASN71",16,0)
+ . F LST=0:0 S LST=$O(^FH(119.6,WRD,"W",LST)) Q:LST<1  D
+"RTN","FHASN71",17,0)
+ . . S X=+$G(^(LST,0))
+"RTN","FHASN71",18,0)
+ . . S:'$D(DWRD(X)) DWRD(X)=WRD
+"RTN","FHASN71",19,0)
+ . S FHWN(WRD)=$P($G(^FH(119.6,WRD,0)),U)
+"RTN","FHASN71",20,0)
+ . F WC=0:0 S WC=$O(^FH(119.6,WRD,2,WC)) Q:WC<1  D
+"RTN","FHASN71",21,0)
+ . . S CLIN=+$G(^FH(119.6,WRD,2,WC,0))
+"RTN","FHASN71",22,0)
+ . . S LIST(WRD,CLIN)=""
+"RTN","FHASN71",23,0)
+ . . I '$D(FHWCN(CLIN)) S FHWCN(CLIN)=$$GET1^DIQ(200,CLIN_",",.01)
+"RTN","FHASN71",24,0)
+ . . S LIST(WRD,CLIN)=""
+"RTN","FHASN71",25,0)
+ . S (X,X1)=""
+"RTN","FHASN71",26,0)
+ . F  S X=$O(LIST(WRD,X)) Q:X=""  S X1=X1_X_"|"
+"RTN","FHASN71",27,0)
+ . I X1'="" S FHWC(WRD)=X1
+"RTN","FHASN71",28,0)
+ . K CLIN,LIST,WC,X,X1
+"RTN","FHASN71",29,0)
+ ;Process all persons in the NUTRITION PERSON file
+"RTN","FHASN71",30,0)
+ F FHDFN=0:0 S FHDFN=$O(^FHPT(FHDFN)) Q:FHDFN<1  I $D(^FHPT(FHDFN,0)) K N S ND=0 D TS,CALC
+"RTN","FHASN71",31,0)
+ ;Build sort array, print summary
+"RTN","FHASN71",32,0)
+ D BSA,PS
+"RTN","FHASN71",33,0)
+ ;Variable clean up and exit
+"RTN","FHASN71",34,0)
+ K ^TMP($J)
+"RTN","FHASN71",35,0)
+ ;D KILL^XUSCLEAN
+"RTN","FHASN71",36,0)
+ Q
+"RTN","FHASN71",37,0)
+TS ; Tabulate status
+"RTN","FHASN71",38,0)
+ D PATNAME^FHOMUTL I DFN="" Q
+"RTN","FHASN71",39,0)
+ S DGT=EDT+1,DGT=DGT+.0000001
+"RTN","FHASN71",40,0)
+ S (DGA1,DG1,DGXFR0)=""
+"RTN","FHASN71",41,0)
+ D ^DGPMSTAT
+"RTN","FHASN71",42,0)
+ Q:DGA1=""!(DG1="")
+"RTN","FHASN71",43,0)
+ S ADM=DGA1,XX=$G(^DGPM(ADM,0))
+"RTN","FHASN71",44,0)
+ S DISC=$P(XX,"^",17)
+"RTN","FHASN71",45,0)
+ S:DISC'="" DISC=$P($G(^DGPM(DISC,0)),"^",1)
+"RTN","FHASN71",46,0)
+ Q:'$D(^FHPT(FHDFN,"A",ADM,0))
+"RTN","FHASN71",47,0)
+ S MW1=$S($P(DG1,"^",1):$P(DG1,"^",1),1:0)
+"RTN","FHASN71",48,0)
+ S W1=$S($D(DWRD(+MW1)):$G(DWRD(+MW1)),1:0)
+"RTN","FHASN71",49,0)
+ I '$D(^FH(119.6,+W1,0)) S MWRD=$P($G(^DIC(42,+MW1,0)),"^",1) S DW1=$O(^FH(119.6,"B",MWRD,0)) Q:DW1<1  S W1=+DW1
+"RTN","FHASN71",50,0)
+ S WD=$G(FHWC(+W1)) S:'WD WD=0
+"RTN","FHASN71",51,0)
+ I '$D(^FHPT(FHDFN,"S",0)) D UC Q
+"RTN","FHASN71",52,0)
+ D NS I '$D(^TMP($J,"FHNS")) D UC Q
+"RTN","FHASN71",53,0)
+ S NX="" F X4=0:0 S X4=$O(^TMP($J,"FHNS",X4)) Q:X4<1  S X5=$G(^(X4,0)),NX=X4 D CHK
+"RTN","FHASN71",54,0)
+ Q
+"RTN","FHASN71",55,0)
+CHK ; Check if inpatient with ADM
+"RTN","FHASN71",56,0)
+ I $P(X5,"^",1)<$S($D(^FHPT(FHDFN,"A",ADM,0)):$P(^(0),"^",1),1:9999999) D  Q
+"RTN","FHASN71",57,0)
+ . D GADM
+"RTN","FHASN71",58,0)
+ . I '$D(^FHPT(FHDFN,"A",ADM,0)) D UC Q
+"RTN","FHASN71",59,0)
+ . I $P(X5,"^",1)<$S($D(^FHPT(FHDFN,"A",ADM,0)):$P(^(0),"^",1),1:9999999) D UC Q
+"RTN","FHASN71",60,0)
+ I DISC,$P(X5,"^",1)>DISC D GADM Q:'$D(^FHPT(FHDFN,"A",ADM,0))  Q:DISC&($P(X5,"^",1)>DISC)
+"RTN","FHASN71",61,0)
+ S S1=$P(X5,"^",2),D1=$P(X5,"^",3)_"|"
+"RTN","FHASN71",62,0)
+ S W1=$S($P(X5,"^",6)'="":$P(X5,"^",6),1:W1)
+"RTN","FHASN71",63,0)
+ S:'W1 W1=0
+"RTN","FHASN71",64,0)
+ S WD=$G(FHWC(+W1))
+"RTN","FHASN71",65,0)
+ S:'WD WD=0
+"RTN","FHASN71",66,0)
+ I S1,S1<5 D SC Q 
+"RTN","FHASN71",67,0)
+UC ; Unclassified
+"RTN","FHASN71",68,0)
+ S S1=5
+"RTN","FHASN71",69,0)
+SC ; Set Classification
+"RTN","FHASN71",70,0)
+ S X=$S(SRT="W":W1,1:WD)
+"RTN","FHASN71",71,0)
+ S:'$D(N(X)) N(X)=""
+"RTN","FHASN71",72,0)
+ S $P(N(X),U,S1)=$P(N(X),U,S1)+1
+"RTN","FHASN71",73,0)
+ S ND=ND+1
+"RTN","FHASN71",74,0)
+ Q
+"RTN","FHASN71",75,0)
+GADM ; Get ADM for patient
+"RTN","FHASN71",76,0)
+ D PATNAME^FHOMUTL I DFN="" Q
+"RTN","FHASN71",77,0)
+ S NX=$O(^DGPM("ATID1",DFN,NX)) Q:NX=""  S ADM=+$O(^(NX,0)),XX=$G(^DGPM(ADM,0)),DISC=$P(XX,"^",17) S:DISC'="" DISC=$P($G(^DGPM(DISC,0)),"^",1)
+"RTN","FHASN71",78,0)
+ Q:'$D(^FHPT(FHDFN,"A",ADM,0))  Q:$P(X5,"^",1)<$S($D(^FHPT(FHDFN,"A",ADM,0)):$P(^(0),"^",1),1:9999999)
+"RTN","FHASN71",79,0)
+ S W1=$S($P(XX,"^",6):$P(XX,"^",6),1:0),WD=$G(FHWC(+W1)) S:'WD WD=0
+"RTN","FHASN71",80,0)
+ Q
+"RTN","FHASN71",81,0)
+NS ; Nutrition Status in inverse date order
+"RTN","FHASN71",82,0)
+ K ^TMP($J,"FHNS") S FHX1=9999999-(EDT+.3),FHX2=9999999-(SDT+.0001),ZZ=""
+"RTN","FHASN71",83,0)
+ F XX=FHX1:0 S XX=$O(^FHPT(FHDFN,"S",XX)) Q:XX<1!(XX>FHX2)  S X=$G(^(XX,0)) D STOR
+"RTN","FHASN71",84,0)
+ I '$D(^TMP($J,"FHNS")) S XX=FHX1,FHX1=$O(^FHPT(FHDFN,"S",FHX1)) Q:FHX1=""  S X=$G(^(FHX1,0)) D STOR
+"RTN","FHASN71",85,0)
+ Q
+"RTN","FHASN71",86,0)
+STOR ; Store Nutrition Status by inverse date
+"RTN","FHASN71",87,0)
+ I ZZ'=($P(X,"^",1)\1) S ^TMP($J,"FHNS",XX,0)=X
+"RTN","FHASN71",88,0)
+ S ZZ=$P(X,"^",1)\1
+"RTN","FHASN71",89,0)
+ Q
+"RTN","FHASN71",90,0)
+CALC ;Calculate Average
+"RTN","FHASN71",91,0)
+ I $G(N(0))'="" S L=0 D C1
+"RTN","FHASN71",92,0)
+ I SRT="W" F L=0:0 S L=$O(N(L)) Q:L<1  D C1
+"RTN","FHASN71",93,0)
+ I SRT="C" S L="" F  S L=$O(N(L)) Q:L=""  D C1
+"RTN","FHASN71",94,0)
+ Q
+"RTN","FHASN71",95,0)
+C1 ;Calculate Averages continued
+"RTN","FHASN71",96,0)
+ F K=1:1:5 D
+"RTN","FHASN71",97,0)
+ . S X=$S(ND:$P(N(L),U,K)/ND,1:"")
+"RTN","FHASN71",98,0)
+ . S X=$J(X,0,0)
+"RTN","FHASN71",99,0)
+ . S:'$D(S(L)) S(L)=""
+"RTN","FHASN71",100,0)
+ . S $P(S(L),U,K)=$P(S(L),U,K)+X
+"RTN","FHASN71",101,0)
+ . S $P(S(L),U,6)=$P(S(L),U,6)+X
+"RTN","FHASN71",102,0)
+ . S $P(TOT,U,K)=$P(TOT,U,K)+X
+"RTN","FHASN71",103,0)
+ . S $P(TOT,U,6)=$P(TOT,U,6)+X
+"RTN","FHASN71",104,0)
+ Q
+"RTN","FHASN71",105,0)
+BSA ;Build sort array
+"RTN","FHASN71",106,0)
+ ;SA - Sort Array
+"RTN","FHASN71",107,0)
+ ;SN - Sort Name
+"RTN","FHASN71",108,0)
+ K SA,SN
+"RTN","FHASN71",109,0)
+ S W1=""
+"RTN","FHASN71",110,0)
+ F  S W1=$O(S(W1)) Q:W1=""  D
+"RTN","FHASN71",111,0)
+ . I W1=0 Q
+"RTN","FHASN71",112,0)
+ . I SRT="W" S SN=$G(FHWN(W1))
+"RTN","FHASN71",113,0)
+ . I SRT="C" D
+"RTN","FHASN71",114,0)
+ . . S X=$P(W1,"|"),SN=$G(FHWCN(X))
+"RTN","FHASN71",115,0)
+ . . F X=2:1  S X1=$P($G(W1),"|",X)  Q:X1=""  S SN=SN_" - "_$G(FHWCN(X1))
+"RTN","FHASN71",116,0)
+ . S SN=SN_"~"_W1
+"RTN","FHASN71",117,0)
+ . S SA(SN)=""
+"RTN","FHASN71",118,0)
+ K SN
+"RTN","FHASN71",119,0)
+ Q
+"RTN","FHASN71",120,0)
+PS ; Print summary
+"RTN","FHASN71",121,0)
+ S DTP=SDT D DTP^FH S DTE=DTP_" to " S DTP=EDT D DTP^FH S DTE=DTE_DTP
+"RTN","FHASN71",122,0)
+ D NOW^%DTC S (NOW,DTP)=% D DTP^FH S PG=0,LN="",$P(LN,"-",100)="" D HDR
+"RTN","FHASN71",123,0)
+ S X="" F  S X=$O(SA(X)) Q:X=""  D
+"RTN","FHASN71",124,0)
+ . S NAME=$P(X,"~")
+"RTN","FHASN71",125,0)
+ . S W1=$P(X,"~",2)
+"RTN","FHASN71",126,0)
+ . S D1=S(W1)
+"RTN","FHASN71",127,0)
+ . D PSD
+"RTN","FHASN71",128,0)
+ I $G(S(0))'="" S NAME="UNKNOWN",D1=$G(S(0)) D PSD
+"RTN","FHASN71",129,0)
+ S NAME="Grand Total",D1=TOT W !?16,LN D PSD
+"RTN","FHASN71",130,0)
+ W !
+"RTN","FHASN71",131,0)
+ Q
+"RTN","FHASN71",132,0)
+PSD ;Print summary detail
+"RTN","FHASN71",133,0)
+ D:$Y>(IOSL-8) HDR
+"RTN","FHASN71",134,0)
+ W !?16,NAME
+"RTN","FHASN71",135,0)
+ I NAME[" - " W !
+"RTN","FHASN71",136,0)
+ W ?48
+"RTN","FHASN71",137,0)
+ S D3=$P(D1,U,6)
+"RTN","FHASN71",138,0)
+ F K=1:1:5 D
+"RTN","FHASN71",139,0)
+ . S D2=$P(D1,U,K)
+"RTN","FHASN71",140,0)
+ . W $S(D2:$J(D2,7),1:$J("",7))
+"RTN","FHASN71",141,0)
+ . S D2=$S(D3:D2/D3*100,1:"")
+"RTN","FHASN71",142,0)
+ . W $S(D2:$J(D2,5,0),1:$J("",5))
+"RTN","FHASN71",143,0)
+ W $S(D3:$J(D3,7),1:$J("",7))
+"RTN","FHASN71",144,0)
+ Q
+"RTN","FHASN71",145,0)
+HDR ;Report Page Header
+"RTN","FHASN71",146,0)
+ W:'($E(IOST,1,2)'="C-"&'PG) @IOF S PG=PG+1 W !?16,DTP,!!?42,"N U T R I T I O N   S T A T U S   A V E R A G E",?109,"Page ",PG
+"RTN","FHASN71",147,0)
+ W !!?(132-$L(DTE)\2),DTE
+"RTN","FHASN71",148,0)
+ W !!?16,$S(SRT="C":"CLINICIAN",1:"WARD"),?54,"I    %     II    %    III    %     IV    %    UNC    %  TOTAL",!?16,LN,!
+"RTN","FHASN71",149,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8906,6)
+^35
+**END**
+**END**

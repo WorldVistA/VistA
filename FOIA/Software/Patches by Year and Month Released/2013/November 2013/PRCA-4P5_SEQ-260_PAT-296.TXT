@@ -1,0 +1,243 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 06/13/13 at 17:29
+=============================================================================
+Run Date: NOV 18, 2013                     Designation: PRCA*4.5*296
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #260                    Status: Released
+                  Compliance Date: DEC 18, 2013
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*206<<= must be installed BEFORE `PRCA*4.5*296'
+                    (v)PRCA*4.5*217<<= must be installed BEFORE `PRCA*4.5*296'
+                    (v)PRCA*4.5*220<<= must be installed BEFORE `PRCA*4.5*296'
+
+Subject: LOCKBOX CHANGE REQUEST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues.
+  
+ The first issue contains two changes to the Automatic Payment Process Server
+ [RCDP AUTOMATIC PAYMENTS] option that processes deposit files containing 
+ records of veterans' cash and check payments of their copayment bills to 
+ the national Lockbox. VistA Accounts Receivable (AR) will begin to receive
+ new types of deposit files that represent withholdings of VA Compensation
+ and Pension (C&P) benefits or amounts owed to the veteran by the US
+ Treasury. They are then applied to veterans' delinquent accounts in the 
+ same manner as cash/check payments.
+  
+ The second issue is about the account lookup keys which will be included
+ in the new Treasury and Compensation & Pension (C&P) withholding deposit
+ files to identify the correct veteran in VistA.
+  
+ Note *** This patch will allow VistA Accounts Receivable to accept 
+ automated TOP (Treasury Offset Program) and C&P (Compensation and 
+ Pension) files sent from the DMC.  DMC files are generally sent between 
+ the 20-25th of each month so installing this patch before then will 
+ greatly reduce the amount of work required for your accounting staff.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000817917 Accounts Receivable - Lockbox:
+ 2. INC000000850561 Treasury/Lockbox/C&P Deposit issue
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Dublin, GA
+ Heartland West HCS
+ Upstate NY HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000817917 Accounts Receivable - Lockbox
+  
+  Problem:
+  --------
+  The Chief Business Office (CBO) has requested two changes to the
+  Automatic Payment Process Server [RCDP AUTOMATIC PAYMENTS] option in
+  order to process new types of deposit files that will be transmitted to
+  VistA AR from Debt Management Center (DMC) systems.
+  
+  1. Utilize specific letters for the system-generated receipt number for
+     receipts that store the veterans' withholdings to designate the
+     deposit file type as detailed below:
+  
+     Deposit File Type          Deposit # Prefix        1st Letter Receipt #
+     ------------------------   ----------------        --------------------
+     DMC (C&P) Offset                  168                      A
+     Treasury Offset                   169                      T
+     Other (Cross-Servicing)           170                      P
+  
+  2. Suppress the generation of the Cash Receipt document (usually sent to
+     the Financial Management System) for deposit files that represent:
+     (1) Treasury Offset amounts, (2) Compensation & Pension (C&P)
+     withholdings, or (3) Other Collections through the Cross-Servicing
+     program.
+  
+  Resolution:
+  -----------
+  1. Routine RCDPXPAP was modified to retrieve the event number from the
+     file (#341.1) based on the structures as listed below and pass it into
+     the function for the generation of the first letter of the receipt 
+     number.
+  
+     - When the deposit number begins with '168' (DMC (C&P)), the event  
+       number is 15 for the 'ADMINISTRATIVE OFFSET' event type.
+     - When the deposit number begins with '169' (Treasury Offset), the event
+       number is 13 for the 'TOP PAYMENT' event type.
+     - When the deposit number begins with '170' (Other (Crossing-Servicing),
+       the event number is 16 for the 'PRIVATE COLLECTION AGENCY' event type.
+  
+  In addition, post-init routine PRCAP296 was created to add two new event
+  types for'DMC (C&P)' offset and 'Other (Cross-Servicing)' offset to the 
+  AR Event Type file (#341.1). Routine PRCABJV was also modified to add
+  these new event types in file verification for the [PRCA NIGHTLY PROCESS]
+  Accounts Receivable Nightly Process Background Job option.
+  
+     Name                             Event Number           Category
+     ----------------------------     ------------           --------
+     ADMINISTRATIVE OFFSET                15                 PAYMENT
+     PRIVATE COLLECTION AGENCY            16                 PAYMENT
+  
+  2. Routine RCDPURE1 was modified to suppress the generation of the Cash 
+     Receipt (CR) document for those above event types of receipts.
+  
+ 2. INC000000850561 Treasury/Lockbox/C&P Deposit issue
+  
+  Problem:
+  --------
+  The CBO has requested proper utilization of account lookup keys for the
+  new Treasury and Compensation & Pension (C&P) withholding deposit files
+  to identify the correct veteran in VistA. The account lookup key is a
+  14-character string that consists of the veteran's social security
+  number, followed by 5 alpha and punctuation characters that represent the
+  veteran's name. The 5 alpha and punctuation characters have the following
+  representations:
+  
+  1. Lockbox deposit file:  Characters are the first five characters of the
+     the veteran's last name, including any punctuation characters that are
+     part of that name. This account lookup is currently in use in VistA.
+  
+  2. Treasury deposit file:  Characters are the first five characters of the
+     veteran's last name, excluding any punctuation characters that are part
+     of that name.
+  
+  3. C&P deposit file:  First position represents the first character of the
+     veteran's first name; second position represents the veteran's middle
+     initial (or a space character if there is no middle initial); last
+     three positions represents the first three characters of the veteran's
+     last name, excluding any punctuation characters that are part of that
+     name.
+  
+  Resolution:
+  -----------
+  The account lookup function $$FINDACCT in routine RCDPXPAP was modified to
+  use the representations to check each of the three deposit files and
+  return the associated internal number of the veteran to update the account.
+  
+  It also fixed a bug to identify the correct veteran when the account lookup
+  key for the current Lockbox deposit file contains any punctuation
+  characters that are part of the veteran's last name.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ It is recommended this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+  1.   LOAD TRANSPORT GLOBAL 
+       ---------------------
+       Choose the PackMan message containing this patch and invoke the 
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+  2.   START UP KIDS
+       -------------
+       Start up the Kernel Installation and Distribution System Menu
+   
+       [XPD MAIN]: 
+              Edits and Distribution ...  
+              Utilities ...  
+              Installation ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+              Load a Distribution
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution 
+              Backup a Transport Global 
+   
+  3.   Select Installation Option:
+       ---------------------------
+       NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+              NAME, enter PRCA*4.5*296):
+  
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       c.  Verify Checksums in Transport Global - This option will allow
+   
+  4.   Select Installation Option: Install Package(s)
+  
+       **This is the step to start the installation of this KIDS patch:
+       a. Choose the Install Package(s) option to start the patch install.
+       b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+          NO//' answer NO
+       c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//' answer NO
+  
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: PRCAP296.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCABJV
+    Before: B29300227   After: B30084731  **1,48,63,114,141,170,176,173,
+                                           192,220,296**
+Routine Name: PRCAP296
+    Before:       n/a   After:  B2847358  **296**
+Routine Name: RCDPURE1
+    Before: B55071399   After: B57024051  **114,148,153,169,204,173,214,
+                                           217,296**
+Routine Name: RCDPXPAP
+    Before: B46255466   After: B49106296  **114,150,206,296**
+ 
+Routine list of preceding patches: 206, 217, 220
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : MAR 12, 2013
+Completed By: LANG,MICKEY                   Date Completed: NOV 13, 2013
+Released By : MARSHALL,FALENCIA B.          Date Released : NOV 18, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,136 @@
+$TXT Created by CREMEANS,THERESA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 09/04/13 at 16:40
+=============================================================================
+Run Date: OCT 22, 2013                     Designation: PSJ*5*301
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #251                      Status: Released
+                  Compliance Date: OCT 31, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*301'
+
+Subject: ACTION PROFILE #2 PROBLEM
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ This patch addresses an issue with the ACTION PROFILE #2 [PSJU AP-2] 
+ report introduced by PSJ*5*275.
+  
+ The change to the ACTION PROFILE #2 [PSJU AP-2] report in patch PSJ*5*275 
+ caused the report to only print the first patient found, regardless of 
+ how many patients should have printed, when the report was run by Ward or 
+ Ward Group. 
+  
+ This patch corrects the report by ensuring all appropriate patients and
+ their orders print on the report when the report is run by Ward or Ward
+ Group.
+  
+ Note:  
+ ----
+ Sites should ensure that the following patches are installed in this
+ order:
+  
+ 1. PSJ*5.0*275
+ 2. PSJ*5.0*292
+ 3. PSJ*5.0*301
+  
+ Associated NSR(s):
+ =================
+ N/A 
+  
+ Associated Remedy Tickets:
+ =========================
+ INC00000901088 - Patient medication report is not capturing all the data
+  
+ Participating Test Sites:
+ ========================
+ Durham VAMC
+ Northern California HCS
+ Oklahoma City VAMC
+ Western New York HCS
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ INC00000901088
+  
+ Problem:
+ --------
+ The Unit Dose Action Profile #2 report is not showing all patient medications.
+ The report should be showing all patients and all medications, according to
+ the option chosen, for the given time period.  Instead it is only showing the 
+ first patient it comes to and nothing else.
+  
+ Resolution:
+ -----------
+ Routines PSGCAPP and PSGCAP0 were modified to ensure all data for the given
+ time frame and option are displayed on the report.
+  
+  
+ Installation Instructions:
+ ==========================
+  
+ ** Please note that sites should make sure that these patches are 
+    installed in this order:
+  
+    1. PSJ*5.0*275
+    2. PSJ*5.0*292
+    3. PSJ*5.0*301
+  
+ This patch may be installed while Pharmacy users are on the system.
+ Installation of this patch should take less than 5 minutes. 
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter PSJ*5.0*301.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', press <enter>.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', press <enter>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGCAP0
+    Before: B23579520   After: B30223671  **8,58,111,149,275,301**
+Routine Name: PSGCAPP
+    Before: B20267187   After: B26437637  **8,20,60,111,149,169,275,301**
+
+=============================================================================
+User Information:
+Entered By  : CREMEANS,THERESA              Date Entered  : AUG 30, 2013
+Completed By: WERNER,GARY                   Date Completed: OCT 17, 2013
+Released By : MIAN,NAEEM                    Date Released : OCT 22, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

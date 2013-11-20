@@ -1,0 +1,176 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 02/13/13 at 13:49
+=============================================================================
+Run Date: OCT 02, 2013                     Designation: OOPS*2*25
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #26                      Status: Released
+                  Compliance Date: NOV 02, 2013
+=============================================================================
+
+Associated patches: (v)OOPS*2*20   <<= must be installed BEFORE `OOPS*2*25'
+                    (v)OOPS*2*24   <<= must be installed BEFORE `OOPS*2*25'
+
+Subject: INACTIVE STATIONS;INCIDENT OUTCOME TOTAL DAYS;INCIDENT OUTCOME ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues in the ASISTS (Automated Safety
+ Incident Surveillance and Tracking System) GUI (Graphical User Interface):
+  
+ 1) Issues displaying Stations on the "Edit Site Parameter" form 
+ 2) Incident Outcome display order problems
+ 3) OSHA (Occupational Safety and Health Administration) 300 "Away From 
+    Work" and "Job Transfer/Restriction" calculation issues
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1) INC000000781436  Site Perimeters are not showing up
+   (d)INC000000787155  CBOBs not list in OSHA 300A Summary Report 
+   (d)INC000000806578  ASISTS - Other: 3 Missing stations, and the
+                last one you cannot get into (presently disabled).
+  
+ 2) INC000000730564  ASISTS - Other:
+  
+ 3) INC000000809171  ASISTS - Report Issue:
+  
+  
+ TEST SITES:
+ ===========
+ Cleveland, OH
+ Miami, FL
+ Minneapolis, MN
+ North Texas HCS
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000781436  Site Perimeters are not showing up
+   
+ Problem: 
+ --------
+ If a site has an inactive station in the ASISTS SITE PARAMETER file
+ (#2262) any station following the inactive station will fail
+ to display on the "Edit Site Parameter" form in the ASISTS GUI.   
+  
+ Resolution:
+ -----------
+ Modified the code so that when a Station entry is encountered that is 
+ marked as inactive, the process will continue to list all stations listed
+ in the file after the inactive one.
+  
+ Routine: OOPSGUI6
+  
+ 2) INC000000730564  ASISTS - Other:
+   
+ Problem: 
+ --------
+ Once an individual exceeds nine records in the INCIDENT OUTCOME 
+ SUB-FILE (#95) in the ASISTS ACCIDENT REPORTING (#2260) file, the records 
+ begin to display out of chronological order on the Incident Outcome form
+ on the ASISTS GUI.
+    
+ Resolution:
+ -----------
+ The FILEMAN call to retrieve the records and subsequently return the results
+ to the ASISTS GUI does not sort correctly once the subfile reaches ten
+ records.  This patch will add code to further sort the results to ensure
+ the data returned to the ASISTS GUI will be in the order the records were
+ saved in the INCIDENT OUTCOME SUB-FILE (#95). 
+  
+ Routine: OOPSGUIC
+  
+ 3) INC000000809171  ASISTS - Report Issue:
+   
+ Problem: 
+ --------
+ The system will calculate the total days the individual has accumulated 
+ for all added incident outcome classification entries.  The result will 
+ be the summation of the actual number of days for both "Away From Work" 
+ and "Job Transfer/Restriction" entries.  If the calculated total days for 
+ a specific case exceed 180 days, the maximum number of days that will 
+ be reported for that case on the OSHA 300 Log will be 180 days.  However,
+ if the summation equals exactly 180 days, it fails to record the most
+ recent incident outcome days.    
+  
+ Resolution:
+ -----------
+ Modify the software to account for instances when the summation equals
+ exactly 180 days so that all valid incident outcome data is included. 
+  
+ Routine: OOPSGUIR
+  
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ You may install these routines at any time without interruption to users.
+ Installation should take less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*25)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package OOPS*2.0*25.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI6
+    Before: B53278536   After: B55527418  **4,8,7,25**
+Routine Name: OOPSGUIC
+    Before: B66128626   After: B79794142  **8,7,23,24,25**
+Routine Name: OOPSGUIR
+    Before: B70518771   After: B71502420  **8,7,11,14,20,25**
+ 
+Routine list of preceding patches: 20, 24
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : JAN 28, 2013
+Completed By: LANG,MICKEY                   Date Completed: SEP 26, 2013
+Released By : MORRIS,DELISA                 Date Released : OCT 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

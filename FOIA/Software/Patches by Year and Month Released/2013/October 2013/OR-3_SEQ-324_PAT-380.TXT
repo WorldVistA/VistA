@@ -1,0 +1,243 @@
+$TXT Created by HAWSEY,JASON at CPRS29.FO-SLC.DOMAIN.EXT  (KIDS) on Tuesday, 09/17/13 at 12:31
+=============================================================================
+Run Date: OCT 16, 2013                     Designation: OR*3*380
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #324                      Status: Released
+                  Compliance Date: OCT 18, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*371    <<= must be installed BEFORE `OR*3*380'
+
+Subject: CORRECT TRANSFER MEDICATION ORDER ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects an issue related to transferring a medication from 
+ either Inpatient to Outpatient or vice-versa.  In specific scenarios, a 
+ wrong dosage is automatically placed in the order dialog upon 
+ transferring the medication resulting in a possible overdose.  
+  
+ For example: Suppose there is an orderable item configured with a 20 MG 
+ Outpatient dosage and a 120 MG Inpatient dosage (note that there is no 20 
+ MG Inpatient dosage).  If the provider attempts to transfer an Outpatient 
+ medication order with the 20 MG dosage to an Inpatient medication order, 
+ the 120 MG dosage is automatically selected because it contains the 
+ characters "20 MG".  In this scenario, the automatic dosage selection 
+ creates a 6-fold increase over the intended dosage.
+  
+ **********IMPORTANT NOTICE**********
+  
+ 1. This patch is being released as an emergency patch with a non-standard 
+ emergency compliance date. This is to allow the sites that have NOT 
+ installed OR*3*371 (CPRS GUI V29 Follow-up Patch) to have time to get that
+ installed before installing OR*3*380.
+  
+ 2. The Pre/Post Installation Review section contains a list of sites that 
+ should NOT install OR*3*380 until explicitly told to do so.
+  
+ 3. If your site is not exempted from installation, you should install 
+ OR*3*380 within 2 days of national release.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 2472
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. INC000000906468 - OERR - Orders Tab: Dosage being changed transferring 
+ med orders from outpatient to inpatient
+  
+   Problem:
+   ========
+   The dosage of a med order was being changed to a higher dosage when 
+   transferring it from outpatient to inpatient or from inpatient to 
+   outpatient.
+  
+   Resolution:
+   ===========
+   CPRS developers have corrected this problem such that in this case the 
+   dosage will be blanked out and the provider will have to enter or select
+   a dosage manually.
+  
+ 2. INC000000904483 - Duplicate of INC000000906468
+  
+ Test Sites:
+ ----------
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The following sites should NOT install OR*3*380 until explicitly told to 
+ do so by the CPRS development team:
+  
+ Albuquerque, NM
+ Asheville, NC
+ Atlanta, GA
+ Augusta, GA
+ Bay Pines, FL
+ Beckley, WV
+ Birmingham, AL
+ Boise, ID
+ Central Alabama HCS
+ Charleston, SC
+ Chillicothe, OH
+ Columbia, SC
+ Connecticut HCS
+ Dublin, GA
+ Durham, NC
+ Fayetteville, NC
+ Hampton, VA
+ Heartland-West HCS
+ Honolulu, HI
+ Hudson Valley HCS
+ Manila OC, PI
+ Miami, FL
+ New York HCS
+ North Chicago, IL
+ North Florida/South Georgia HCS
+ Northern California HCS
+ Palo Alto HCS
+ Phoenix, AZ
+ Portland, OR
+ Puget Sound HCS
+ Richmond, VA
+ Roseburg, OR
+ Salem, VA
+ Salisbury, NC
+ San Juan, PR
+ Tuscaloosa, AL
+ West Palm Beach, FL
+ White city, OR
+ Wilmington, DE
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     OR*3.0*380):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ -----------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMED
+    Before: B65467847   After: B62390463  **4,7,38,48,94,141,178,190,195,
+                                           243,306,371,380**
+ 
+Routine list of preceding patches: 371
+
+=============================================================================
+User Information:
+Entered By  : CRUMLEY,JAMIE                 Date Entered  : SEP 16, 2013
+Completed By: PHELPS,TY                     Date Completed: OCT 11, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : OCT 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

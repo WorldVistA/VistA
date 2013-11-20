@@ -1,0 +1,594 @@
+EMERGENCY Released PSJ*5*301 SEQ #251
+Extracted from mail message
+**KIDS**:PSJ*5.0*301^
+
+**INSTALL NAME**
+PSJ*5.0*301
+"BLD",9482,0)
+PSJ*5.0*301^INPATIENT MEDICATIONS^0^3130904^y
+"BLD",9482,1,0)
+^^11^11^3130904^
+"BLD",9482,1,1,0)
+This patch addresses an issue with the ACTION PROFILE #2 [PSJU AP-2] 
+"BLD",9482,1,2,0)
+report introduced by PSJ*5*275.
+"BLD",9482,1,3,0)
+ 
+"BLD",9482,1,4,0)
+The change to the ACTION PROFILE #2 [PSJU AP-2] report in patch PSJ*5*275 
+"BLD",9482,1,5,0)
+caused the report to only print the first patient found, regardless of 
+"BLD",9482,1,6,0)
+how many patients should have printed, when the report was run by Ward or 
+"BLD",9482,1,7,0)
+Ward Group. 
+"BLD",9482,1,8,0)
+ 
+"BLD",9482,1,9,0)
+This patch corrects the report by ensuring all appropriate 
+"BLD",9482,1,10,0)
+patients and their orders print on the report when the report is run by 
+"BLD",9482,1,11,0)
+Ward or Ward Group.
+"BLD",9482,4,0)
+^9.64PA^^
+"BLD",9482,6.3)
+3
+"BLD",9482,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9482,"KRN",.4,0)
+.4
+"BLD",9482,"KRN",.4,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",.401,0)
+.401
+"BLD",9482,"KRN",.402,0)
+.402
+"BLD",9482,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",.403,0)
+.403
+"BLD",9482,"KRN",.5,0)
+.5
+"BLD",9482,"KRN",.84,0)
+.84
+"BLD",9482,"KRN",3.6,0)
+3.6
+"BLD",9482,"KRN",3.8,0)
+3.8
+"BLD",9482,"KRN",3.8,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",9.2,0)
+9.2
+"BLD",9482,"KRN",9.8,0)
+9.8
+"BLD",9482,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9482,"KRN",9.8,"NM",1,0)
+PSGCAPP^^0^B26437637
+"BLD",9482,"KRN",9.8,"NM",2,0)
+PSGCAP0^^0^B30223671
+"BLD",9482,"KRN",9.8,"NM","B","PSGCAP0",2)
+
+"BLD",9482,"KRN",9.8,"NM","B","PSGCAPP",1)
+
+"BLD",9482,"KRN",19,0)
+19
+"BLD",9482,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",19.1,0)
+19.1
+"BLD",9482,"KRN",19.1,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",101,0)
+101
+"BLD",9482,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",409.61,0)
+409.61
+"BLD",9482,"KRN",409.61,"NM",0)
+^9.68A^^0
+"BLD",9482,"KRN",771,0)
+771
+"BLD",9482,"KRN",779.2,0)
+779.2
+"BLD",9482,"KRN",870,0)
+870
+"BLD",9482,"KRN",8989.51,0)
+8989.51
+"BLD",9482,"KRN",8989.52,0)
+8989.52
+"BLD",9482,"KRN",8994,0)
+8994
+"BLD",9482,"KRN","B",.4,.4)
+
+"BLD",9482,"KRN","B",.401,.401)
+
+"BLD",9482,"KRN","B",.402,.402)
+
+"BLD",9482,"KRN","B",.403,.403)
+
+"BLD",9482,"KRN","B",.5,.5)
+
+"BLD",9482,"KRN","B",.84,.84)
+
+"BLD",9482,"KRN","B",3.6,3.6)
+
+"BLD",9482,"KRN","B",3.8,3.8)
+
+"BLD",9482,"KRN","B",9.2,9.2)
+
+"BLD",9482,"KRN","B",9.8,9.8)
+
+"BLD",9482,"KRN","B",19,19)
+
+"BLD",9482,"KRN","B",19.1,19.1)
+
+"BLD",9482,"KRN","B",101,101)
+
+"BLD",9482,"KRN","B",409.61,409.61)
+
+"BLD",9482,"KRN","B",771,771)
+
+"BLD",9482,"KRN","B",779.2,779.2)
+
+"BLD",9482,"KRN","B",870,870)
+
+"BLD",9482,"KRN","B",8989.51,8989.51)
+
+"BLD",9482,"KRN","B",8989.52,8989.52)
+
+"BLD",9482,"KRN","B",8994,8994)
+
+"BLD",9482,"QDEF")
+^^^^NO^^^^^^NO
+"BLD",9482,"QUES",0)
+^9.62^^
+"BLD",9482,"REQB",0)
+^9.611^1^1
+"BLD",9482,"REQB",1,0)
+PSJ*5.0*275^2
+"BLD",9482,"REQB","B","PSJ*5.0*275",1)
+
+"MBREQ")
+0
+"PKG",471,-1)
+1^1
+"PKG",471,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",471,20,0)
+^9.402P^^
+"PKG",471,22,0)
+^9.49I^1^1
+"PKG",471,22,1,0)
+5.0^2971215^2990325^66481
+"PKG",471,22,1,"PAH",1,0)
+301^3130904
+"PKG",471,22,1,"PAH",1,1,0)
+^^11^11^3130904
+"PKG",471,22,1,"PAH",1,1,1,0)
+This patch addresses an issue with the ACTION PROFILE #2 [PSJU AP-2] 
+"PKG",471,22,1,"PAH",1,1,2,0)
+report introduced by PSJ*5*275.
+"PKG",471,22,1,"PAH",1,1,3,0)
+ 
+"PKG",471,22,1,"PAH",1,1,4,0)
+The change to the ACTION PROFILE #2 [PSJU AP-2] report in patch PSJ*5*275 
+"PKG",471,22,1,"PAH",1,1,5,0)
+caused the report to only print the first patient found, regardless of 
+"PKG",471,22,1,"PAH",1,1,6,0)
+how many patients should have printed, when the report was run by Ward or 
+"PKG",471,22,1,"PAH",1,1,7,0)
+Ward Group. 
+"PKG",471,22,1,"PAH",1,1,8,0)
+ 
+"PKG",471,22,1,"PAH",1,1,9,0)
+This patch corrects the report by ensuring all appropriate 
+"PKG",471,22,1,"PAH",1,1,10,0)
+patients and their orders print on the report when the report is run by 
+"PKG",471,22,1,"PAH",1,1,11,0)
+Ward or Ward Group.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSGCAP0")
+0^2^B30223671^B23579520
+"RTN","PSGCAP0",1,0)
+PSGCAP0 ;BIR/CML3-ACTION PROFILE ;12 Mar 98 / 9:30 AM
+"RTN","PSGCAP0",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**8,58,111,149,275,301**;16 DEC 97;Build 3
+"RTN","PSGCAP0",3,0)
+ ;
+"RTN","PSGCAP0",4,0)
+ ; Reference to ^PS(55 is supported by DBIA# 2191
+"RTN","PSGCAP0",5,0)
+ ; Reference to ^PSDRUG is supported by DBIA# 2192
+"RTN","PSGCAP0",6,0)
+ ;
+"RTN","PSGCAP0",7,0)
+GOD ; gather order data
+"RTN","PSGCAP0",8,0)
+ S ND=$G(^PS(55,PSGP,5,PSJJORD,0)),ND2=$G(^(2)),SI=$P($G(^(6)),"^"),DRG=$G(^(.2)) ;WS=$S(DRG&PSGAPWD:$D(^PSI(58.1,"D",+DRG,PSGAPWD)),1:0)
+"RTN","PSGCAP0",9,0)
+ S X=$$NFWS^PSJUTL1(PSGP,PSJJORD_"U",PSGAPWD) S NF=$P(X,U),WS=$P(X,U,2),SM=$S('$P(X,U,3):0,$P(X,U,4):1,1:2)
+"RTN","PSGCAP0",10,0)
+ N X,PSG
+"RTN","PSGCAP0",11,0)
+ D DRGDISP^PSJLMUT1(PSGP,PSJJORD_"U",20,0,.PSG,1)
+"RTN","PSGCAP0",12,0)
+ S DRG=PSG(1),DRG=$S(DRG["NOT FOUND":"z",1:DRG) ;SM=$S('$P(ND,"^",5):0,$P(ND,"^",6):1,1:2)
+"RTN","PSGCAP0",13,0)
+ S ST=$S($P(ND,U,27)="R"&($P(ND,U,9)="A"):"R",1:$P(ND,U,9)),ND=$P(ND,"^",7)
+"RTN","PSGCAP0",14,0)
+ N DDRG S (X,DCU)=0 F  S X=$O(^PS(55,PSGP,5,PSJJORD,1,X)) Q:'X  S DDRG=^(X,0),DCU=DCU+($P($G(^PSDRUG(+DDRG,660)),"^",6)*($S($P(DDRG,"^",2):$P(DDRG,"^",2),1:1)))
+"RTN","PSGCAP0",15,0)
+ ;
+"RTN","PSGCAP0",16,0)
+ ; PSJ*5*275 get clinic
+"RTN","PSGCAP0",17,0)
+ ;S PSGAPWDN="zz"
+"RTN","PSGCAP0",18,0)
+ N PSJCLN,CLINSORT S PSJCLN=$$CLINIC^PSJO1(PSGP,PSJJORD_"U")
+"RTN","PSGCAP0",19,0)
+ ; When run by Clinic, if patient also has Inpatient orders, make sure those orders have a corresponding patient node in ^TMP
+"RTN","PSGCAP0",20,0)
+ I PSJCLN="",($G(PSGSS)["C"),$G(PSJPWD),($G(PSJPWDN)]"") N PSGAPWDN,PSGAPWD S PSGAPWD=PSJPWD,PSGAPWDN=PSJPWDN D
+"RTN","PSGCAP0",21,0)
+ .S ^TMP($J,S1,PSGAPWDN,PN)=$P(PSJPSEX,"^",2)_"^"_$E($P(PSJPDOB,"^",2),1,10)_";"_PSJPAGE_"^"_VA("PID")_"^"_PSJPDX_"^"_$S(PSJPRB]"":PSJPRB,1:"*NF*")_"^"_$E($P(PSJPAD,"^",2),1,10)_"^"_$E($P(PSJPTD,"^",2),1,10)
+"RTN","PSGCAP0",22,0)
+ .S ^TMP($J,S1,PSGAPWDN,PN)=^(PN)_"^"_PSJPWT_"^"_PSJPWTD_"^"_PSJPHT_"^"_PSJPHTD_"^"_$P(PSGP(0),"^")
+"RTN","PSGCAP0",23,0)
+ I (PSJCLN]"") S CLINSORT=$$CLINSORT^PSJO1($G(ST)) I CLINSORT N:($G(PSGSS)'["C") PSGAPWDN S PSGAPWDN="zz"_U_PSJCLN_U_CLINSORT_U_ST
+"RTN","PSGCAP0",24,0)
+ ;
+"RTN","PSGCAP0",25,0)
+ S SD=$P(ND2,"^",2),FD=$P(ND2,"^",4) F X="SD","FD" S @X=$E($$ENDTC^PSGMI(@X),1,5)
+"RTN","PSGCAP0",26,0)
+ ;
+"RTN","PSGCAP0",27,0)
+ S Y=SI S:Y]"" Y=$$ENSET^PSGSICHK(Y)
+"RTN","PSGCAP0",28,0)
+ S PSGAPWDN=$S($P($G(PSGAPWDN),"^")="zz"&($P($G(PSGAPWDN),"^",2)'=""):PSGAPWDN,$G(PSGAPWD)="zz":"zz",$G(PSGAPWDN):PSGAPWDN,'$G(PSGAPWDN)&($G(PSJPWDN)'=""):PSJPWDN,1:"zz")
+"RTN","PSGCAP0",29,0)
+ S ^TMP($J,S1,PSGAPWDN,PN,ND_"^"_DRG,PSJJORD)=ST_"^"_SD_"^"_FD_"^"_WS_"^"_SM_"^"_NF_"^"_DCU_"^"_DRG S:Y]"" ^(PSJJORD,1)=Y Q
+"RTN","PSGCAP0",30,0)
+ ;
+"RTN","PSGCAP0",31,0)
+PAT ;
+"RTN","PSGCAP0",32,0)
+ D PSJAC2^PSJAC(1),NOW^%DTC S PSGDT=%,PN=$E($P(PSGP(0),"^"),1,20)_"^"_PSGP
+"RTN","PSGCAP0",33,0)
+ S S1="zz" I PSGAPS="T",PSJPWD,PSJPRB]"",$D(^PS(57.7,PSJPWD,1,+$O(^PS(57.7,"AWRT",PSJPWD,PSJPRB,0)),0)),$P(^(0),"^")]"" S S1=$P(^(0),"^")
+"RTN","PSGCAP0",34,0)
+ I PSGAPS="P",PSJPTSP,$D(^VA(200,PSJPTSP,0)),$P(^(0),"^")]"" S S1=$P(^(0),"^")
+"RTN","PSGCAP0",35,0)
+ S:PSGMTYPE[1 PSGMTYPE="2,3,4,5,6"
+"RTN","PSGCAP0",36,0)
+ I PSGMTYPE[2 D
+"RTN","PSGCAP0",37,0)
+ . F STRT=PSGAPSD-.0001:0 S STRT=$O(^PS(55,PSGP,5,"AUS",STRT)) Q:$S('STRT:1,PSGAPO="E":STRT>PSGAPFD,1:0)  I STRT'=PSGAPSD F PSJJORD=0:0 S PSJJORD=$O(^PS(55,PSGP,5,"AUS",STRT,PSJJORD)) Q:'PSJJORD  D GOD
+"RTN","PSGCAP0",38,0)
+ . S XTYPE=2,PST="S" D ^PSGCAPIV
+"RTN","PSGCAP0",39,0)
+ N XTYPE F XTYPE=3:1:6 I PSGMTYPE[XTYPE S PST=$S(XTYPE=3:"P",XTYPE=4:"A",XTYPE=5:"H",1:"C") D ^PSGCAPIV
+"RTN","PSGCAP0",40,0)
+ I PSGMTYPE[3 S XTYPE=3,PST="S" D ^PSGCAPIV ;* Find syringe type iv
+"RTN","PSGCAP0",41,0)
+ I $D(^TMP($J,S1,PSGAPWDN,PN)) S ^(PN)=$P(PSJPSEX,"^",2)_"^"_$E($P(PSJPDOB,"^",2),1,10)_";"_PSJPAGE_"^"_VA("PID")_"^"_PSJPDX_"^"_$S(PSJPRB]"":PSJPRB,1:"*NF*")_"^"_$E($P(PSJPAD,"^",2),1,10)_"^"_$E($P(PSJPTD,"^",2),1,10)
+"RTN","PSGCAP0",42,0)
+ I  S ^TMP($J,S1,PSGAPWDN,PN)=^(PN)_"^"_PSJPWT_"^"_PSJPWTD_"^"_PSJPHT_"^"_PSJPHTD_"^"_$P(PSGP(0),"^")
+"RTN","PSGCAP0",43,0)
+ Q
+"RTN","PSGCAP0",44,0)
+ ;
+"RTN","PSGCAP0",45,0)
+ENQ ; queued entry point
+"RTN","PSGCAP0",46,0)
+ N ALFLG,DCU,DRGI,DRGN,DRGT,KKA,HT,HTD,ON,PST,PSIVUP,PSJORIFN,QST,WTD,XTYPE
+"RTN","PSGCAP0",47,0)
+ K ^TMP($J) S STT=PSGAPSD-.0001,PSJACNWP=1 D @("P"_PSGSS),^PSGCAPP D ^%ZISC
+"RTN","PSGCAP0",48,0)
+ Q
+"RTN","PSGCAP0",49,0)
+ ;
+"RTN","PSGCAP0",50,0)
+PG ;
+"RTN","PSGCAP0",51,0)
+ I PSGAPWD="zz" D CLIN Q
+"RTN","PSGCAP0",52,0)
+ F PSGAPWD=0:0 S PSGAPWD=$O(^PS(57.5,"AC",PSGAPWG,PSGAPWD)) Q:'PSGAPWD  I $D(^DIC(42,PSGAPWD,0)),$P(^(0),"^")]"" S PSGAPWDN=$P(^(0),"^") D PW
+"RTN","PSGCAP0",53,0)
+ Q
+"RTN","PSGCAP0",54,0)
+ ;
+"RTN","PSGCAP0",55,0)
+PW ;
+"RTN","PSGCAP0",56,0)
+ F PSGP=0:0 S PSGP=$O(^DPT("CN",PSGAPWDN,PSGP)) Q:'PSGP  D PAT
+"RTN","PSGCAP0",57,0)
+ Q
+"RTN","PSGCAP0",58,0)
+ ;
+"RTN","PSGCAP0",59,0)
+PP ;
+"RTN","PSGCAP0",60,0)
+ F PSGP=0:0 S PSGP=$O(PSGPAT(PSGP)) Q:'PSGP  S PSGAPWDN=$P($G(^DPT(PSGP,.1)),"^") S:PSGAPWDN]"" PSGAPWD=+$O(^DIC(42,"B",PSGAPWDN,0)) S:PSGAPWDN="" PSGAPWDN="zz" D PAT
+"RTN","PSGCAP0",61,0)
+ Q
+"RTN","PSGCAP0",62,0)
+ ;
+"RTN","PSGCAP0",63,0)
+PL S CL="" F  S CL=$O(^PS(57.8,"AD",CG,CL)) Q:CL=""  D PC
+"RTN","PSGCAP0",64,0)
+ Q
+"RTN","PSGCAP0",65,0)
+PC S PSGAPWDN=$S($D(^SC(CL,0)):$P(^(0),"^"),1:"")
+"RTN","PSGCAP0",66,0)
+ S PSGP="" F  S PSGP=$O(^PS(53.1,"AD",CL,PSGP)) Q:PSGP=""  D PAT
+"RTN","PSGCAP0",67,0)
+ N INDEX,APSTOP
+"RTN","PSGCAP0",68,0)
+ F INDEX="AIVC","AUDC" S APSTOP=0 F  S APSTOP=$O(^PS(55,INDEX,APSTOP)) Q:'APSTOP  D
+"RTN","PSGCAP0",69,0)
+ . S DFN=0 F  S DFN=$O(^PS(55,INDEX,APSTOP,CL,DFN)) Q:'DFN  I '$D(^TMP("PSGAP0",$J,"OUTPT",DFN)) S PSGP=DFN,Q=APSTOP,PSGAPWD="zz" D PAT
+"RTN","PSGCAP0",70,0)
+ Q
+"RTN","PSGCAP0",71,0)
+CLIN ;
+"RTN","PSGCAP0",72,0)
+ N INDEX,APSTOP,CLIN
+"RTN","PSGCAP0",73,0)
+ F INDEX="AIVC","AUDC" S APSTOP=0 F  S APSTOP=$O(^PS(55,INDEX,APSTOP)) Q:'APSTOP  S CLIN=0 F  S CLIN=$O(^PS(55,INDEX,APSTOP,CLIN)) Q:'CLIN  D
+"RTN","PSGCAP0",74,0)
+ . S DFN=0 F  S DFN=$O(^PS(55,INDEX,APSTOP,CLIN,DFN)) Q:'DFN  I '$D(^TMP("PSGAP0",$J,"OUTPT",DFN)) S PSGP=DFN,Q=APSTOP,PSGAPWD="zz" D PAT
+"RTN","PSGCAP0",75,0)
+ Q
+"RTN","PSGCAP0",76,0)
+ ;
+"RTN","PSGCAP0",77,0)
+SETPI(PSGP) ; Set Patient Information for clinic orders when run by Ward
+"RTN","PSGCAP0",78,0)
+ N PSJCLPIN D PSJAC2^PSJAC(1)
+"RTN","PSGCAP0",79,0)
+ S PSJCLPIN=$P($G(PSJPSEX),"^",2)_"^"_$E($P($G(PSJPDOB),"^",2),1,10)_";"_$G(PSJPAGE)_"^"_$G(VA("PID"))_"^"_$G(PSJPDX)_"^"_$S($G(PSJPRB)]"":$G(PSJPRB),1:"*NF*")
+"RTN","PSGCAP0",80,0)
+ Q PSJCLPIN_"^"_$E($P($G(PSJPAD),"^",2),1,10)_"^"_$E($P(PSJPTD,"^",2),1,10)_"^"_PSJPWT_"^"_PSJPWTD_"^"_PSJPHT_"^"_PSJPHTD_"^"_$P(PSGP(0),"^")
+"RTN","PSGCAP0",81,0)
+ENOR ;
+"RTN","PSGCAP0",82,0)
+ D ENCV^PSGSETU I $D(XQUIT) Q
+"RTN","PSGCAP0",83,0)
+ S (DFN,PSGP)=+ORVP D ^PSJAC S PSGPAT=PSGP,PSGPAT(DFN)="",(PSGAP,PSGAPWD,PSGAPWG)=0,(PSGAPWDN,PSGAPWGN)="",PSGSS="P" D ORS^PSGCAP S PSJNKF=1 D DONE^PSGCAP Q
+"RTN","PSGCAPP")
+0^1^B26437637^B20267187
+"RTN","PSGCAPP",1,0)
+PSGCAPP ;BIR/CML3-PRINT DATA FOR ACTION PROFILE ;05 Oct 98 / 10:21 AM
+"RTN","PSGCAPP",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**8,20,60,111,149,169,275,301**;16 DEC 97;Build 3
+"RTN","PSGCAPP",3,0)
+LOOP ;
+"RTN","PSGCAPP",4,0)
+ N PSJCLIN1
+"RTN","PSGCAPP",5,0)
+ D NOW^%DTC S PSGDT=%,PSGPDT=$$ENDTC2^PSGMI(PSGDT),CML=IO'=IO(0)!($E(IOST,1,2)'="C-")
+"RTN","PSGCAPP",6,0)
+ U IO I '$D(^TMP($J)) D  G DONE
+"RTN","PSGCAPP",7,0)
+ .W:$Y @IOF W !?26,"UNIT DOSE ACTION PROFILE #2",?62,PSGPDT,!?10,"NO ",$S(PSGAPO="E":"EXPIRING",1:"ACTIVE")," ORDERS FOUND FOR ",$S(PSGSS="G":"WARD GROUP: "_PSGAPWGN,PSGSS="W":"WARD: "_PSGAPWDN,1:"PATIENT(S) SELECTED"),"."
+"RTN","PSGCAPP",8,0)
+ S (LN,LINE,ALN,S1,WD,PN)="",$P(LN,"_",19)="",$P(LINE,"-",81)="",$P(ALN," -",18)="",ALN=ALN_" A C T I V E"_ALN
+"RTN","PSGCAPP",9,0)
+ S PSGVAMC=$$SITE^PSGMMAR2(80)
+"RTN","PSGCAPP",10,0)
+ F  S (PS1,S1,PSJTEAM)=$O(^TMP($J,S1)) Q:S1=""!$D(PSJDLW)  S:S1="zz" (PS1,PSJTEAM)="NOT FOUND" F  S WD=$O(^TMP($J,S1,WD)) Q:WD=""!$D(PSJDLW)  D
+"RTN","PSGCAPP",11,0)
+ . F  S PN=$O(^TMP($J,S1,WD,PN)) Q:PN=""!$D(PSJDLW)  S PI=$G(^(PN)) S:PI="" PI=$G(^TMP($J,S1,"zz",PN)) S:((PI="")&$P($G(PN),"^",2)) PI=$$SETPI^PSGCAP0($P(PN,"^",2)) D H1
+"RTN","PSGCAPP",12,0)
+ ;
+"RTN","PSGCAPP",13,0)
+DONE ;PSJ*5*149 Add WD1 to killed variables.
+"RTN","PSGCAPP",14,0)
+ W:CML&($Y) @IOF K AD,ALN,CML,DF,LINE,LN,MF,N,PG,PI,PPN,PS1,PSGPDT,RCT,RF,PID,TD,WD,PSJDLW,PSGVAMC,WD1,PSJCNTR,PSJAMO Q
+"RTN","PSGCAPP",15,0)
+ ;
+"RTN","PSGCAPP",16,0)
+H1 ; first header for patient
+"RTN","PSGCAPP",17,0)
+ ; PSJ*5*149 Use WD1 to preserve value of WD
+"RTN","PSGCAPP",18,0)
+ N WD1
+"RTN","PSGCAPP",19,0)
+ I $P(WD,"^")="zz",($P(WD,"^",2)]"") I ($P(WD,"^",2)'=$P($G(PSJCLIN1),"^",2)) S PSJCLIN1=WD D
+"RTN","PSGCAPP",20,0)
+ .N MIDLEN,SIDLEN S MIDLEN=$L($P(PSJCLIN1,"^",2)) S SIDLEN=((81-MIDLEN)\2)
+"RTN","PSGCAPP",21,0)
+ .S (LN,LINE,ALN)="",$P(LN,"_",(SIDLEN\2))="",$P(LINE,"-",81)="",$P(ALN," -",(SIDLEN\2))="",ALN=ALN_$P(PSJCLIN1,"^",2)_ALN
+"RTN","PSGCAPP",22,0)
+ I $G(WD)="zz" S WD1=WD N WD S WD="*NF*"
+"RTN","PSGCAPP",23,0)
+ D ^PSGCAPP0
+"RTN","PSGCAPP",24,0)
+ S WD=$G(WD1,WD)
+"RTN","PSGCAPP",25,0)
+END ;
+"RTN","PSGCAPP",26,0)
+ S (ON,DRG)="" F  S DRG=$O(^TMP($J,S1,WD,PN,DRG)) Q:DRG=""  F  S ON=$O(^TMP($J,S1,WD,PN,DRG,ON)) Q:ON=""  S ND=^(ON),SI=$G(^(ON,1)) D NP:$Y+12>IOSL Q:$D(PSJDLW)  D ORDP
+"RTN","PSGCAPP",27,0)
+ ; Check for orders in other locations for the same patient; ensure all of one patient's orders display in the same section of the report
+"RTN","PSGCAPP",28,0)
+ N WD2,PN2,DRG2,ON2 S WD2="" F  S WD2=$O(^TMP($J,S1,WD2)) Q:WD2=""  I WD2'=WD S PN2="" F  S PN2=$O(^TMP($J,S1,WD2,PN2)) Q:PN2=""  I PN2=PN S (WD2(WD2),DRG2)="" F  S DRG2=$O(^TMP($J,S1,WD2,PN2,DRG2)) Q:DRG2=""  D
+"RTN","PSGCAPP",29,0)
+ .S ON2="" F  S ON2=$O(^TMP($J,S1,WD2,PN2,DRG2,ON2)) Q:ON2=""  N WD,DRG,ON S WD=WD2,DRG=DRG2,ON=ON2 S ND=^(ON),SI=$G(^(ON,1)) D NP Q:$D(PSJDLW)  D ORDP
+"RTN","PSGCAPP",30,0)
+ ; Remove the previously printed orders from the 'other' locations so they are not printed again later
+"RTN","PSGCAPP",31,0)
+ N TMPWD S TMPWD="" F  S TMPWD=$O(WD2(TMPWD)) Q:TMPWD=""  K ^TMP($J,S1,TMPWD,PN)
+"RTN","PSGCAPP",32,0)
+ Q:$D(PSJDLW)
+"RTN","PSGCAPP",33,0)
+ I $D(^PS(53.1,"AC",PSGP)) W !!?13,"******** THIS PATIENT HAS NON-VERIFIED ORDERS. ********"
+"RTN","PSGCAPP",34,0)
+ S DF=1 W:'$D(PSJDLW) !!?16,LN,?40,LN_LN,!?16,"Date AND Time",?40,"PROVIDER'S SIGNATURE"
+"RTN","PSGCAPP",35,0)
+ D:$Y+10>IOSL NP1 W:'$D(PSJDLW) !!!?10,"MULTIDISCIPLINARY REVIEW",!?16,"(WHEN APPROPRIATE)",?40,LN_LN,!?40,"PHARMACIST'S SIGNATURE"
+"RTN","PSGCAPP",36,0)
+ D:$Y+6>IOSL NP1 W:'$D(PSJDLW) !!?40,LN_LN,!?40,"NURSE'S SIGNATURE"
+"RTN","PSGCAPP",37,0)
+ ; PSJ*5*169 Standardize AMO section to 10 lines.
+"RTN","PSGCAPP",38,0)
+ N PSJCNTR,PSJAMO
+"RTN","PSGCAPP",39,0)
+ I IOSL-$Y>10 D
+"RTN","PSGCAPP",40,0)
+ . W !!?3,"ADDITIONAL MEDICATION ORDERS:"
+"RTN","PSGCAPP",41,0)
+ . F PSJCNTR=1:1:10 W !!,LINE S PSJAMO=0 I $Y+9>IOSL S PSJAMO=1 D NP1
+"RTN","PSGCAPP",42,0)
+ I  W:'$D(PSJDLW) !!?16,LN,?40,LN_LN,!?16,"Date AND Time",?40,"PROVIDER'S SIGNATURE",!
+"RTN","PSGCAPP",43,0)
+ E  F Q=$Y+5:1:IOSL-1 W !
+"RTN","PSGCAPP",44,0)
+ W:'$D(PSJDLW) !?2,PPN,?40,PID,?78-$L(PDOB),PDOB Q
+"RTN","PSGCAPP",45,0)
+ ;
+"RTN","PSGCAPP",46,0)
+ORDP ;
+"RTN","PSGCAPP",47,0)
+ S N=N+1 I ON["V" D PRT^PSGCAPIV(ON) Q
+"RTN","PSGCAPP",48,0)
+ N X,PSG S PSGP=$P(PN,U,2)
+"RTN","PSGCAPP",49,0)
+ D DRGDISP^PSJLMUT1(+PSGP,+ON_"U",39,69,.PSG,0)
+"RTN","PSGCAPP",50,0)
+ S SM=$P(ND,"^",5),NF=$P(ND,"^",6),DCU=$P(ND,"^",7),DCU=$S($E(DCU)=".":"0"_DCU,'DCU:"0.00",1:DCU) W !,$J(N,3)
+"RTN","PSGCAPP",51,0)
+ W ?5,PSG(1),?46,$P(DRG,"^"),?49,$P(ND,"^",2),?55,$P(ND,"^",3),?61,$P(ND,"^") I NF!SM!$P(ND,"^",4) W ?65 W:NF "NF " W:$P(ND,"^",4) "WS " W:SM $E("HSM",SM,3)
+"RTN","PSGCAPP",52,0)
+ N X F X=1:0 S X=$O(PSG(X)) Q:'X  W !?5,PSG(X)
+"RTN","PSGCAPP",53,0)
+ I SI]"" W !?8,"Special Instructions: " F X=1:1:$L(SI," ") S Y=$P(SI," ",X) W:$X+$L(Y)>78 !?31 W Y," "
+"RTN","PSGCAPP",54,0)
+ORDP1 ;*** Also being called from ^PSGCAPIV.   PSJ*5*169 Don't allow RENEW on one-time orders.
+"RTN","PSGCAPP",55,0)
+ W !!?5,"__TAKE NO ACTION     __DISCONTINUE     "_$S($P(DRG,"^")="O"!($G(QST)="O"):"       ",1:"__RENEW")_"   COST/DOSE: ",DCU,!?2,"------------------------------------------------------------------------",! Q
+"RTN","PSGCAPP",56,0)
+ ;
+"RTN","PSGCAPP",57,0)
+NP ;
+"RTN","PSGCAPP",58,0)
+ W:'$D(PSJDLW) !!?16,LN,?40,LN_LN,!?16,"Date AND Time",?40,"PROVIDER'S SIGNATURE"
+"RTN","PSGCAPP",59,0)
+ ;
+"RTN","PSGCAPP",60,0)
+NP1 ;
+"RTN","PSGCAPP",61,0)
+ Q:$D(PSJDLW)
+"RTN","PSGCAPP",62,0)
+ I $E(IOST,1)="C" K DIR S DIR(0)="E" D ^DIR K DIR I $D(DTOUT)!$D(DUOUT) S PSJDLW=1 Q
+"RTN","PSGCAPP",63,0)
+ F Q=$Y:1:IOSL-4 W !
+"RTN","PSGCAPP",64,0)
+ I '$G(PG),$P($G(PI),"^",3) S (N,DF)=0,PSEX=$P(PI,"^"),PDOB=$P(PI,"^",2),PID=$P(PI,"^",3),RB=$P(PI,"^",5),AD=$P(PI,"^",6),TD=$P(PI,"^",7),WT=$P(PI,"^",8),WTD=$P(PI,"^",9),HT=$P(PI,"^",10),HTD=$P(PI,"^",11),PPN=$P(PI,"^",12),PSGP=$P(PN,"^",2) D
+"RTN","PSGCAPP",65,0)
+ .S PAGE=$P(PDOB,";",2),PDOB=$P(PDOB,";"),PG=1
+"RTN","PSGCAPP",66,0)
+ ;* S PG=PG+1 W !?2,PPN,?40,PID,?78-$L(PDOB),PDOB W:$Y @IOF W !?28,"UNIT DOSE ACTION PROFILE #2",?73-$L(PG),"Page: "_PG,!?1,PPN,?40,PID,?60,PDOB I DF W !!,LINE Q
+"RTN","PSGCAPP",67,0)
+ S PG=$G(PG)+1 W !?2,PPN,?40,PID,?78-$L(PDOB),PDOB W:$Y @IOF
+"RTN","PSGCAPP",68,0)
+ W !?26,"UNIT DOSE ACTION PROFILE #2",?73-$L(PG),"Page: "_PG
+"RTN","PSGCAPP",69,0)
+ W !?+PSGVAMC,$P(PSGVAMC,U,2)
+"RTN","PSGCAPP",70,0)
+ W !?1,PPN,?40,PID,?60,PDOB
+"RTN","PSGCAPP",71,0)
+ I DF D  Q
+"RTN","PSGCAPP",72,0)
+ . I $G(PSJAMO)=1 W !!,"ADDITIONAL MEDICATION ORDERS (CONTINUED):",! Q
+"RTN","PSGCAPP",73,0)
+ . W !!,LINE
+"RTN","PSGCAPP",74,0)
+ ; Make sure orders always have correct profile heading - ACTIVE for Inpatient orders, clinic name for Clinic Orders
+"RTN","PSGCAPP",75,0)
+ I ($$CLINIC^PSJO1($P(PN,"^",2),+ON_"U")]"") N ALN S ALN="" S $P(ALN," -",18)="",ALN=ALN_$$CLINIC^PSJO1($P(PN,"^",2),+ON_"U")_ALN
+"RTN","PSGCAPP",76,0)
+ I ($$CLINIC^PSJO1($P(PN,"^",2),+ON_"U")=""),$G(PSJPWD) N ALN S ALN="" S $P(ALN," -",18)="",ALN=ALN_" A C T I V E"_ALN
+"RTN","PSGCAPP",77,0)
+ W !!," No. Action",?16,"Drug",?46,"ST Start Stop  Status/Info",!,ALN
+"RTN","PSGCAPP",78,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9482,6)
+^251
+**END**
+**END**

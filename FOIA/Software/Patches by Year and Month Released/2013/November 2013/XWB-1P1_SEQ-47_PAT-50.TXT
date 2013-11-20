@@ -1,0 +1,516 @@
+
+=============================================================================
+Run Date: NOV 27, 2013                     Designation: XWB*1.1*50
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #47                    Status: Released
+                  Compliance Date: DEC 28, 2013
+=============================================================================
+
+
+Subject: RPC Broker BDK - SSH Enabled
+
+Category: 
+  - Informational
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch XWB*1.1*50 BDK32 SSH Enabled, with support for Delphi XE2, XE3, XE4,
+ and XE5.
+  
+ There is no action for VHA sites required by this patch. This patch is
+ Programmer-Only Client-Only.  There is no server side (VistA PackMan or
+ KIDS) part to the patch.  There are no client side (Windows executable)
+ components for VHA production workstations.  The patch is intended for
+ Delphi developer client workstations only.
+  
+ This patch provides support for the Delphi versions XE2, XE3, XE4, and XE5
+ and removes support for obsolete versions of Delphi.
+  
+ RPC Broker Patch XWB*1.1*50 provides Secure Shell (SSH) support for the
+ Attachmate Reflections terminal emulator software using SSH tunneling to
+ provide secure data transfer between the client and the VistA M Server.  
+ It also provides for the use of open source PuTTY Link (Plink) for secure 
+ channels for those who may be using the RPC Broker outside of the VA and 
+ require secure connections.
+  
+ For SSH Tunneling using Attachmate Reflection, inclusion of "SSH" set as 
+ a command line option or as a property within the application (set to 
+ Attachmate Reflection) will generally require the following command line 
+ parameters to be set:
+     SSHPort=portnumber   to specify a particular port number
+                          if not specified, it will use the port
+                          number for the remote server.
+     SSHUser=username     for remote server, where username is of the form
+                          xxxvista and the xxx is the stations three letter
+                          Abbreviation.
+  
+ For SSH Tunneling using open source PuTTY Link (Plink), inclusion of
+ "PLINK" set as command line option or as a property within the application
+ will generally require the following command line parameters to be set:
+     SSHPort=portnumber   to specify a particular port number
+  
+ The patch is distributed as a zip file (XWB_1_1_P50.zip) on the anonymous 
+ directory sites.  The zip file contains all of the source code and 
+ instructions for compiling and installing for each version of Delphi 
+ listed above, as well as a few sample programs.
+  
+ The installation requires less than 30 Megabytes of disk space on a 
+ workstation.
+  
+ The patch priority is Mandatory (since there is no choice for optional).
+  
+  
+ Blood Bank Team Coordination:
+ =============================
+ Clearance - Not required for client-side only patches.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1. INC886661 XE3 Broker error message illegible
+  
+ Problem:
+ -------
+ While testing CPRS, developers noticed that error messages coming back 
+ from the broker were illegible (looked like Chinese characters and other 
+ wingdings).
+  
+ Resolution:
+ ----------
+ CPRS developers recommended changes to a Delphi function that interfaces 
+ with the Windows WinSock API.  These changes have been incorporated into 
+ the XWB*1.1*50 version of the Broker Development Kit for all Delphi 
+ versions.
+  
+  
+ Test Sites:
+ ----------
+ Not applicable.  Not tested at field sites.  Not tested independently.  
+ Patch contains shared code that is tested during GUI development and 
+ deployment.  No production client-side or server-side software is 
+ included.
+  
+  
+ Software & Documentation Retrieval Instructions
+ ----------------------------------------------- 
+ The most up-to-date VA Remote Procedure Call (RPC) Broker end-user 
+ documentation is available on the VHA Software Document Library (VDL) at 
+ the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=23
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ Software is contained in the XWB_1_1_P50.zip file.
+  
+ Documentation is contained in the XWB_1_1_P50_README.txt file, which 
+ contains updated instructions for installing the RPC Broker BDK.  
+ Complete documentation for the RPC Broker package is being updated and 
+ will be available on the VDL.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. The 
+ files are located in the [anonymous.software] directory. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+  Albany      ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines       ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext  <ftp://ftp.fo-slc.domain.ext>
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ BDK32 SSH Enabled             XWB_1_1_P50.zip                Binary
+ XWB*1.1*50 READ ME            XWB_1_1_P50_README.txt         Ascii
+  
+  
+ Routine Information:
+ ====================
+  
+   Server Side:
+   ------------
+   No M routines included
+  
+  
+ List of preceding patches:
+   XWB*1.1*13, XWB*1.1*26, XWB*1.1*47
+  
+  
+ The client-side (developer) software distribution includes:
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- -------------
+ 11/01/2013  07:40 AM         6,635,580 XWB_1_1_P50.zip
+  
+  Client Side:
+  ------------
+  
+ The following is a list of the files included in the zip file and their 
+ CRC-32 values assuming that the zip file has been unzipped into the 
+ directory (C:\Program Files (x86)\Vista). The locations would differ if
+ the files are installed under another location.
+  
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- -------------
+  
+  Directory of C:\Program Files (x86)\vista\BDK32
+  
+ 11/01/2013  08:26 AM    <DIR>          .
+ 11/01/2013  08:26 AM    <DIR>          ..
+ 11/01/2013  08:25 AM    <DIR>          Help
+ 11/01/2013  08:26 AM    <DIR>          Samples
+ 11/01/2013  08:27 AM    <DIR>          Source
+ 10/29/2013  02:45 PM             5,177 XWB_1_1_P50_README.TXT
+                1 File(s)          5,177 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Help
+  
+ 11/01/2013  08:25 AM    <DIR>          .
+ 11/01/2013  08:25 AM    <DIR>          ..
+ 06/15/2004  10:14 AM             2,305 broker.als
+ 07/02/2008  12:56 PM             5,732 broker.cnt
+ 07/02/2008  12:56 PM           419,834 Broker.hlp
+ 01/10/2005  02:55 PM             6,039 broker.toc
+ 08/04/2000  04:25 PM            49,152 INETWH32.dll
+ 09/21/2002  01:33 AM         1,089,536 ROBOEX32.DLL
+                6 File(s)      1,572,598 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples
+  
+ 11/01/2013  08:26 AM    <DIR>          .
+ 11/01/2013  08:26 AM    <DIR>          ..
+ 11/01/2013  08:26 AM    <DIR>          BrokerEx
+ 11/01/2013  08:26 AM    <DIR>          SilentSignOn
+                0 File(s)              0 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\BrokerEx
+  
+ 11/01/2013  08:26 AM    <DIR>          .
+ 11/01/2013  08:26 AM    <DIR>          ..
+ 08/25/2008  06:33 PM               386 BrokerExample.cfg
+ 08/25/2008  06:33 PM             1,618 BrokerExample.dof
+ 04/03/2003  10:49 AM               434 BrokerExample.dpr
+ 09/23/2013  04:31 PM             9,287 BrokerExample.dproj
+ 09/23/2013  04:31 PM                62 BrokerExample.dproj.local
+ 09/23/2013  04:31 PM         2,851,328 BrokerExample.exe
+ 09/23/2013  04:31 PM               227 BrokerExample.identcache
+ 09/23/2013  04:30 PM             5,564 BrokerExample.res
+ 08/01/2013  11:31 AM               204 BrokerExample.VA508
+ 08/01/2013  11:31 AM             4,286 BrokerExample_Icon.ico
+ 09/23/2013  04:31 PM            26,209 fBrokerExample.dcu
+ 08/25/2008  05:44 PM            16,740 fBrokerExample.dfm
+ 08/25/2008  05:44 PM            17,207 fBrokerExample.pas
+ 09/23/2013  04:31 PM             4,598 fOkToTerminate.dcu
+ 12/07/2006  04:20 PM             1,354 fOkToTerminate.dfm
+ 12/07/2006  04:15 PM               447 fOkToTerminate.pas
+ 11/04/2002  02:38 PM            83,095 frmVistAAbout.dfm
+ 07/21/2004  11:39 AM             9,165 frmVistAAbout.pas
+ 09/23/2013  04:31 PM            11,843 fVistAAbout.dcu
+ 11/04/2002  02:38 PM            83,095 fVistAAbout.dfm
+ 07/21/2004  11:40 AM             9,163 fVistAAbout.pas
+               21 File(s)      3,136,312 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\SilentSignOn
+  
+ 11/01/2013  08:26 AM    <DIR>          .
+ 11/01/2013  08:26 AM    <DIR>          ..
+ 04/27/2010  10:57 AM               264 Error.Log
+ 08/01/2013  11:39 AM            11,839 frmVistAAbout.dcu
+ 11/04/2002  03:38 PM            83,095 frmVistAAbout.dfm
+ 11/29/2001  04:56 PM             9,165 frmVistAAbout.pas
+ 08/01/2013  11:35 AM            10,366 fXWBAppHandle1.dcu
+ 08/01/2013  11:37 AM             4,271 fXWBAppHandle1.dfm
+ 07/21/2004  04:40 PM             3,702 fXWBAppHandle1.pas
+ 08/01/2013  11:38 AM             8,875 fXWBAppHandle2.dcu
+ 10/16/2012  11:02 AM             3,173 fXWBAppHandle2.dfm
+ 05/20/2004  04:44 PM             2,665 fXWBAppHandle2.pas
+ 08/01/2013  11:38 AM             9,716 fXWBAVCodes.dcu
+ 10/16/2012  11:03 AM             5,030 fXWBAVCodes.dfm
+ 11/05/2002  03:28 PM             3,264 fXWBAVCodes.pas
+ 08/01/2013  11:39 AM             9,696 fXWBOnFail.dcu
+ 10/16/2012  11:05 AM             5,063 fXWBOnFail.dfm
+ 11/05/2002  03:27 PM             2,944 fXWBOnFail.pas
+ 09/24/2001  10:12 AM             2,179 ReadMeForSamples.txt
+ 06/17/2008  03:14 PM               386 XWBAppHandle1.cfg
+ 06/17/2008  03:14 PM             1,187 XWBAppHandle1.dof
+ 09/24/2001  09:55 AM               211 XWBAppHandle1.dpr
+ 08/01/2013  11:37 AM             9,510 XWBAppHandle1.dproj
+ 08/01/2013  11:37 AM                62 XWBAppHandle1.dproj.local
+ 08/01/2013  11:35 AM         2,527,232 XWBAppHandle1.exe
+ 08/01/2013  11:37 AM               275 XWBAppHandle1.identcache
+ 08/01/2013  11:35 AM             2,048 XWBAppHandle1.res
+ 08/01/2013  11:35 AM               355 XWBAppHandle1.VA508
+ 10/10/2012  03:51 PM               766 XWBAppHandle1_Icon.ico
+ 06/17/2008  03:14 PM               386 XWBAppHandle2.cfg
+ 06/17/2008  03:14 PM             1,178 XWBAppHandle2.dof
+ 09/24/2001  09:56 AM               211 XWBAppHandle2.dpr
+ 08/01/2013  11:37 AM             9,492 XWBAppHandle2.dproj
+ 08/01/2013  11:37 AM                62 XWBAppHandle2.dproj.local
+ 08/01/2013  11:38 AM         2,524,672 XWBAppHandle2.exe
+ 08/01/2013  11:38 AM               275 XWBAppHandle2.identcache
+ 08/01/2013  11:38 AM             2,048 XWBAppHandle2.res
+ 08/01/2013  11:37 AM               355 XWBAppHandle2.VA508
+ 10/10/2012  03:50 PM               766 XWBAppHandle2_Icon.ico
+ 06/17/2008  03:15 PM               386 XWBAVCodes.cfg
+ 06/17/2008  03:15 PM             1,726 XWBAVCodes.dof
+ 02/20/2002  12:29 PM               298 XWBAVCodes.dpr
+ 08/01/2013  11:38 AM            10,181 XWBAVCodes.dproj
+ 08/01/2013  11:38 AM                62 XWBAVCodes.dproj.local
+ 08/01/2013  11:38 AM         2,483,712 XWBAVCodes.exe
+ 08/01/2013  11:38 AM               404 XWBAVCodes.identcache
+ 08/01/2013  11:38 AM             2,048 XWBAVCodes.res
+ 08/01/2013  11:38 AM               725 XWBAVCodes.VA508
+ 10/10/2012  03:48 PM               766 XWBAVCodes_Icon.ico
+ 06/17/2008  03:15 PM               386 XWBOnFail.cfg
+ 06/17/2008  03:15 PM             1,164 XWBOnFail.dof
+ 09/24/2001  09:41 AM               220 XWBOnFail.dpr
+ 08/01/2013  11:39 AM             9,451 XWBOnFail.dproj
+ 08/01/2013  11:39 AM                62 XWBOnFail.dproj.local
+ 08/01/2013  11:39 AM         2,525,696 XWBOnFail.exe
+ 08/01/2013  11:39 AM               267 XWBOnFail.identcache
+ 08/01/2013  11:39 AM             2,048 XWBOnFail.res
+ 08/01/2013  11:39 AM               375 XWBOnFail.VA508
+ 10/10/2012  03:48 PM               766 XWBOnFail_Icon.ico
+               57 File(s)     10,297,527 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Source
+  
+ 11/01/2013  08:27 AM    <DIR>          .
+ 11/01/2013  08:27 AM    <DIR>          ..
+ 09/23/2013  04:31 PM             4,792 AddServer.dcu
+ 08/01/2013  12:43 PM             1,636 AddServer.dfm
+ 08/01/2013  12:46 PM             1,145 AddServer.pas
+ 09/23/2013  04:31 PM            17,635 CCOWRPCBroker.dcu
+ 08/01/2013  12:46 PM            23,301 CCOWRPCBroker.pas
+ 09/23/2013  04:31 PM               757 CCOW_const.dcu
+ 08/01/2013  01:28 PM             1,358 CCOW_const.pas
+ 08/01/2013  11:26 AM             1,457 dunit.ini
+ 09/23/2013  04:31 PM             4,417 fDebugInfo.dcu
+ 08/01/2013  12:47 PM               696 fDebugInfo.dfm
+ 08/01/2013  12:47 PM             1,009 fDebugInfo.pas
+ 09/23/2013  04:31 PM             4,900 fPlinkpw.dcu
+ 09/23/2013  09:15 AM               994 fPlinkpw.dfm
+ 09/23/2013  09:15 AM             1,470 fPlinkpw.pas
+ 09/23/2013  04:31 PM             5,440 frmSignonMessage.dcu
+ 08/01/2013  12:48 PM             5,723 frmSignonMessage.dfm
+ 08/01/2013  12:48 PM             1,466 frmSignonMessage.pas
+ 08/01/2013  11:23 AM            11,856 frmVistAAbout.dcu
+ 11/04/2002  03:38 PM            83,095 frmVistAAbout.dfm
+ 06/17/2008  01:47 PM             9,686 frmVistAAbout.pas
+ 09/23/2013  04:31 PM             5,351 fRPCBErrMsg.dcu
+ 08/01/2013  12:50 PM               891 fRPCBErrMsg.dfm
+ 08/01/2013  12:50 PM             1,611 fRPCBErrMsg.pas
+ 01/16/2002  03:10 PM               328 fRPCSharedBrokerSessionMgr1.dfm
+ 06/17/2008  01:47 PM               763 fRPCSharedBrokerSessionMgr1.pas
+ 09/23/2013  04:31 PM             4,500 fSgnonDlg.dcu
+ 08/01/2013  12:51 PM             6,205 fSgnonDlg.dfm
+ 08/01/2013  12:51 PM             1,043 fSgnonDlg.pas
+ 11/04/2002  05:12 PM             6,203 fSignonConfigColor.dfm
+ 06/17/2008  01:47 PM               845 fSignonConfigColor.pas
+ 09/23/2013  04:31 PM             4,906 fSSHUsername.dcu
+ 09/23/2013  09:16 AM               979 fSSHUsername.dfm
+ 09/23/2013  09:15 AM             1,464 fSSHUsername.pas
+ 08/01/2013  11:23 AM            10,807 fVistaBar.dcu
+ 04/05/2002  03:22 PM               687 fVistaBar.dfm
+ 06/17/2008  01:47 PM             4,949 fVistaBar.pas
+ 01/07/2002  05:16 PM             3,440 fVistaBar.res
+ 09/23/2013  04:31 PM             6,042 Hash.dcu
+ 08/01/2013  12:52 PM             3,953 Hash.pas
+ 10/12/2007  01:17 PM             3,146 IISBase.inc
+ 09/23/2013  04:31 PM            19,899 Loginfrm.dcu
+ 08/01/2013  12:53 PM            25,893 Loginfrm.dfm
+ 08/01/2013  12:53 PM            14,502 Loginfrm.pas
+ 09/23/2013  04:31 PM             2,285 MFunStr.dcu
+ 08/01/2013  12:55 PM             2,915 MFunStr.pas
+ 09/23/2013  04:18 PM             6,741 RpcbEdtr.dcu
+ 06/17/2008  01:47 PM             4,547 Rpcbedtr.pas
+ 09/23/2013  04:31 PM            15,342 Rpcberr.dcu
+ 08/01/2013  12:56 PM             1,667 RpcbErr.dfm
+ 08/01/2013  12:56 PM             7,449 RpcbErr.pas
+ 09/23/2013  04:31 PM            14,485 Rpcconf1.dcu
+ 08/01/2013  12:58 PM             8,076 Rpcconf1.dfm
+ 08/01/2013  12:59 PM             8,899 Rpcconf1.pas
+ 09/23/2013  04:31 PM            16,483 RpcNet.dcu
+ 09/19/2002  11:12 AM               358 Rpcnet.dfm
+ 08/01/2013  12:59 PM            12,980 Rpcnet.pas
+ 01/18/2002  04:29 PM               480 RPCSharedBrokerSessionMgr1_TLB.dcr
+ 09/23/2013  04:20 PM            37,270 RPCSharedBrokerSessionMgr1_TLB.dcu
+ 09/23/2013  09:23 AM            42,885 RPCSharedBrokerSessionMgr1_TLB.pas
+ 09/23/2013  04:20 PM            11,813 
+ RPCSharedBrokerSessionMgr1_TLB_SRB.dcu
+ 09/23/2013  09:23 AM            17,536 
+ RPCSharedBrokerSessionMgr1_TLB_SRB.pas
+ 09/23/2013  04:31 PM             8,846 RpcSLogin.dcu
+ 08/01/2013  01:00 PM            10,818 RpcSlogin.pas
+ 09/23/2013  04:31 PM            11,357 seldiv.dcu
+ 08/01/2013  01:02 PM             6,269 SelDiv.dfm
+ 08/01/2013  01:02 PM             8,063 SelDiv.pas
+ 09/23/2013  04:31 PM            25,579 Sgnoncnf.dcu
+ 08/01/2013  01:03 PM             6,403 SgnonCnf.dfm
+ 08/01/2013  01:03 PM            19,416 SgnonCnf.pas
+ 03/29/2002  03:58 PM               936 SharedRPCBroker.dcr
+ 09/23/2013  04:20 PM            24,702 SharedRPCBroker.dcu
+ 09/23/2013  09:24 AM            26,152 SharedRPCBroker.pas
+ 09/23/2013  04:20 PM               925 SharedRPCBrokerReg.dcu
+ 09/23/2013  09:25 AM               999 SharedRPCBrokerReg.pas
+ 09/23/2013  04:20 PM             5,081 SharedRPCBrokerSink.dcu
+ 09/23/2013  09:24 AM             4,452 SharedRPCBrokerSink.pas
+ 08/01/2013  11:17 AM             4,286 SharedRPCBroker_D2007_Icon.ico
+ 09/23/2013  04:00 PM               835 SharedRPCBroker_DXE2.dpk
+ 09/23/2013  04:01 PM             6,447 SharedRPCBroker_DXE2.dproj
+ 09/23/2013  04:01 PM               372 SharedRPCBroker_DXE2.dproj.local
+ 09/23/2013  04:00 PM                96 SharedRPCBroker_DXE2.otares
+ 09/23/2013  04:01 PM             4,812 SharedRPCBroker_DXE2.res
+ 09/23/2013  04:00 PM             4,286 SharedRPCBroker_DXE2_Icon.ico
+ 09/23/2013  04:10 PM               835 SharedRPCBroker_DXE3.dpk
+ 09/23/2013  04:10 PM             8,048 SharedRPCBroker_DXE3.dproj
+ 09/23/2013  04:10 PM               372 SharedRPCBroker_DXE3.dproj.local
+ 09/23/2013  04:09 PM                96 SharedRPCBroker_DXE3.otares
+ 09/23/2013  04:10 PM             4,812 SharedRPCBroker_DXE3.res
+ 09/23/2013  04:09 PM             4,286 SharedRPCBroker_DXE3_Icon.ico
+ 09/23/2013  04:15 PM               835 SharedRPCBroker_DXE4.dpk
+ 09/23/2013  04:16 PM             8,769 SharedRPCBroker_DXE4.dproj
+ 09/23/2013  04:16 PM               372 SharedRPCBroker_DXE4.dproj.local
+ 09/23/2013  04:15 PM                96 SharedRPCBroker_DXE4.otares
+ 09/23/2013  04:16 PM             4,812 SharedRPCBroker_DXE4.res
+ 09/23/2013  04:15 PM             4,286 SharedRPCBroker_DXE4_Icon.ico
+ 09/23/2013  09:26 AM               819 SharedRPCBroker_DXE5.dpk
+ 09/23/2013  04:20 PM             9,936 SharedRPCBroker_DXE5.dproj
+ 09/23/2013  04:20 PM               669 SharedRPCBroker_DXE5.dproj.local
+ 09/23/2013  09:25 AM               110 SharedRPCBroker_DXE5.identcache
+ 09/23/2013  04:20 PM             4,816 SharedRPCBroker_DXE5.res
+ 08/01/2013  11:11 AM             4,286 SharedRPCBroker_R2007_Icon.ico
+ 09/23/2013  03:58 PM               970 SharedRPCBroker_RXE2.dpk
+ 09/23/2013  03:58 PM             6,337 SharedRPCBroker_RXE2.dproj
+ 09/23/2013  03:58 PM               372 SharedRPCBroker_RXE2.dproj.local
+ 09/23/2013  03:57 PM                96 SharedRPCBroker_RXE2.otares
+ 09/23/2013  03:58 PM             4,812 SharedRPCBroker_RXE2.res
+ 09/23/2013  03:57 PM             4,286 SharedRPCBroker_RXE2_Icon.ico
+ 09/23/2013  04:08 PM               970 SharedRPCBroker_RXE3.dpk
+ 09/23/2013  04:08 PM             7,946 SharedRPCBroker_RXE3.dproj
+ 09/23/2013  04:08 PM               372 SharedRPCBroker_RXE3.dproj.local
+ 09/23/2013  04:07 PM                96 SharedRPCBroker_RXE3.otares
+ 09/23/2013  04:08 PM             4,812 SharedRPCBroker_RXE3.res
+ 09/23/2013  04:07 PM             4,286 SharedRPCBroker_RXE3_Icon.ico
+ 09/23/2013  04:15 PM               970 SharedRPCBroker_RXE4.dpk
+ 09/23/2013  04:15 PM             8,649 SharedRPCBroker_RXE4.dproj
+ 09/23/2013  04:15 PM               372 SharedRPCBroker_RXE4.dproj.local
+ 09/23/2013  04:14 PM                96 SharedRPCBroker_RXE4.otares
+ 09/23/2013  04:15 PM             4,812 SharedRPCBroker_RXE4.res
+ 09/23/2013  04:14 PM             4,286 SharedRPCBroker_RXE4_Icon.ico
+ 09/23/2013  09:24 AM               937 SharedRPCBroker_RXE5.dpk
+ 09/23/2013  09:24 AM            10,089 SharedRPCBroker_RXE5.dproj
+ 09/23/2013  09:24 AM               669 SharedRPCBroker_RXE5.dproj.local
+ 09/23/2013  09:24 AM               454 SharedRPCBroker_RXE5.identcache
+ 09/23/2013  09:24 AM             4,816 SharedRPCBroker_RXE5.res
+ 09/23/2013  04:31 PM             6,167 Splvista.dcu
+ 11/05/2002  05:50 PM           534,916 Splvista.dfm
+ 08/01/2013  01:04 PM             2,566 Splvista.pas
+ 06/10/2004  11:36 AM               406 TCCOWRPCBroker.bmp
+ 09/23/2013  04:31 PM            69,198 Trpcb.dcu
+ 08/01/2013  01:10 PM            78,570 Trpcb.pas
+ 06/17/2008  01:47 PM            68,475 uSharedBroker1.pas
+ 08/01/2013  11:25 AM            15,133 uUnitTestBroker.dcu
+ 06/17/2008  01:47 PM             5,893 uUnitTestBroker.pas
+ 06/17/2008  01:47 PM             4,190 uUnitTestMFunStr.pas
+ 09/23/2013  04:31 PM            14,840 VCEdit.dcu
+ 08/01/2013  01:18 PM             5,868 VCEdit.dfm
+ 08/01/2013  01:18 PM             8,576 VCEdit.pas
+ 02/09/2004  11:12 AM             2,604 VERGENCECONTEXTORLib_TLB.dcr
+ 09/23/2013  04:31 PM            59,882 VERGENCECONTEXTORLib_TLB.dcu
+ 08/01/2013  01:19 PM            63,846 VERGENCECONTEXTORLib_TLB.pas
+ 09/23/2013  04:31 PM            49,005 Wsockc.dcu
+ 08/01/2013  01:21 PM            60,692 wsockc.pas
+ 09/23/2013  04:31 PM             2,776 XlfSid.dcu
+ 08/01/2013  01:23 PM             4,567 XlfSid.pas
+ 09/23/2013  04:18 PM             1,317 XWBReg.dcu
+ 06/17/2008  01:47 PM             1,300 XWBReg.pas
+ 09/23/2013  04:31 PM            66,597 XWBRich20.dcu
+ 08/01/2013  01:25 PM            48,554 XWBRich20.pas
+ 09/23/2013  04:31 PM             9,524 Xwbut1.dcu
+ 08/01/2013  01:26 PM            10,214 Xwbut1.pas
+ 08/01/2013  10:39 AM               766 XWB_D2007_Icon.ico
+ 05/04/2004  04:36 PM             1,832 XWB_DXE2.dcr
+ 08/01/2013  10:42 AM               813 XWB_DXE2.dpk
+ 09/23/2013  03:52 PM             9,181 XWB_DXE2.dproj
+ 09/23/2013  03:52 PM               389 XWB_DXE2.dproj.local
+ 09/23/2013  03:52 PM             1,292 XWB_DXE2.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE3.dcr
+ 08/01/2013  10:57 AM               813 XWB_DXE3.dpk
+ 09/23/2013  04:07 PM            10,373 XWB_DXE3.dproj
+ 09/23/2013  04:07 PM               661 XWB_DXE3.dproj.local
+ 09/23/2013  04:07 PM             1,292 XWB_DXE3.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE4.dcr
+ 09/23/2013  04:12 PM               813 XWB_DXE4.dpk
+ 09/23/2013  04:13 PM            10,184 XWB_DXE4.dproj
+ 09/23/2013  04:13 PM             1,161 XWB_DXE4.dproj.local
+ 09/23/2013  04:13 PM             1,296 XWB_DXE4.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE5.dcr
+ 09/23/2013  09:18 AM               813 XWB_DXE5.dpk
+ 09/23/2013  04:19 PM            10,853 XWB_DXE5.dproj
+ 09/23/2013  04:19 PM             1,165 XWB_DXE5.dproj.local
+ 09/23/2013  04:18 PM             1,296 XWB_DXE5.res
+ 08/01/2013  10:29 AM               766 XWB_R2007_Icon.ico
+ 09/23/2013  03:39 PM             1,904 XWB_RXE2.dpk
+ 09/23/2013  03:39 PM            11,219 XWB_RXE2.dproj
+ 09/23/2013  03:39 PM               683 XWB_RXE2.dproj.local
+ 09/23/2013  03:39 PM             2,523 XWB_RXE2.identcache
+ 09/23/2013  03:39 PM             1,296 XWB_RXE2.res
+ 08/01/2013  10:33 AM             2,185 XWB_RXE2.VA508
+ 09/23/2013  04:06 PM             1,904 XWB_RXE3.dpk
+ 09/23/2013  04:06 PM            12,423 XWB_RXE3.dproj
+ 09/23/2013  04:06 PM             1,175 XWB_RXE3.dproj.local
+ 09/23/2013  04:06 PM             2,523 XWB_RXE3.identcache
+ 09/23/2013  04:06 PM             1,296 XWB_RXE3.res
+ 08/01/2013  10:56 AM             2,185 XWB_RXE3.VA508
+ 09/23/2013  03:09 PM             1,904 XWB_RXE4.dpk
+ 09/23/2013  03:10 PM            12,626 XWB_RXE4.dproj
+ 09/23/2013  03:10 PM             1,227 XWB_RXE4.dproj.local
+ 09/23/2013  03:11 PM             2,523 XWB_RXE4.identcache
+ 09/23/2013  03:10 PM             1,296 XWB_RXE4.res
+ 08/01/2013  01:27 PM             2,196 XWB_RXE4.VA508
+ 09/23/2013  09:13 AM             1,904 XWB_RXE5.dpk
+ 09/23/2013  09:16 AM            13,286 XWB_RXE5.dproj
+ 09/23/2013  09:16 AM             1,459 XWB_RXE5.dproj.local
+ 09/23/2013  10:52 AM             2,523 XWB_RXE5.identcache
+ 09/23/2013  09:16 AM             1,296 XWB_RXE5.res
+              195 File(s)      2,174,830 bytes
+  
+      Total Files Listed:
+              280 File(s)     17,186,444 bytes
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : AUG 24, 2008
+Completed By: BEST,LISA                     Date Completed: NOV 15, 2013
+Released By : PALMER,MICHAEL                Date Released : NOV 27, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

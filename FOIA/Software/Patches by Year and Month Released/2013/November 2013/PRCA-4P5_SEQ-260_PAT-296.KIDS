@@ -1,0 +1,1390 @@
+Released PRCA*4.5*296 SEQ #260
+Extracted from mail message
+**KIDS**:PRCA*4.5*296^
+
+**INSTALL NAME**
+PRCA*4.5*296
+"BLD",9385,0)
+PRCA*4.5*296^ACCOUNTS RECEIVABLE^0^3130613^y
+"BLD",9385,1,0)
+^^14^14^3130613^
+"BLD",9385,1,1,0)
+This patch addresses two issues.
+"BLD",9385,1,2,0)
+ 
+"BLD",9385,1,3,0)
+The first issue implements two changes to the Automatic Payment Process
+"BLD",9385,1,4,0)
+Server [RCDP AUTOMATIC PAYMENTS] option that processes deposit files
+"BLD",9385,1,5,0)
+containing records of veterans' cash and check payments of their copayment
+"BLD",9385,1,6,0)
+bills to the national Lockbox.  Vista Accounts Receivable (AR) will begin
+"BLD",9385,1,7,0)
+to receive new types of deposit files that represent withholdings of VA
+"BLD",9385,1,8,0)
+Compensation and Pension (C&P) benefits or amounts owed to the veteran by 
+"BLD",9385,1,9,0)
+the US Treasury, which must be applied to veteran's delinquent accounts 
+"BLD",9385,1,10,0)
+in the same manner as cash/check payments.
+"BLD",9385,1,11,0)
+ 
+"BLD",9385,1,12,0)
+The second issue is about the account lookup keys which will be included
+"BLD",9385,1,13,0)
+in the new Treasury and Compensation & Pension (C&P) withholding deposit
+"BLD",9385,1,14,0)
+files to identify the correct veteran in VistA.
+"BLD",9385,4,0)
+^9.64PA^^0
+"BLD",9385,6)
+^241
+"BLD",9385,6.3)
+24
+"BLD",9385,"INIT")
+POST^PRCAP296
+"BLD",9385,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9385,"KRN",.4,0)
+.4
+"BLD",9385,"KRN",.401,0)
+.401
+"BLD",9385,"KRN",.402,0)
+.402
+"BLD",9385,"KRN",.403,0)
+.403
+"BLD",9385,"KRN",.5,0)
+.5
+"BLD",9385,"KRN",.84,0)
+.84
+"BLD",9385,"KRN",3.6,0)
+3.6
+"BLD",9385,"KRN",3.8,0)
+3.8
+"BLD",9385,"KRN",9.2,0)
+9.2
+"BLD",9385,"KRN",9.8,0)
+9.8
+"BLD",9385,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",9385,"KRN",9.8,"NM",1,0)
+PRCABJV^^0^B30084731
+"BLD",9385,"KRN",9.8,"NM",2,0)
+RCDPURE1^^0^B57024051
+"BLD",9385,"KRN",9.8,"NM",3,0)
+RCDPXPAP^^0^B49106296
+"BLD",9385,"KRN",9.8,"NM","B","PRCABJV",1)
+
+"BLD",9385,"KRN",9.8,"NM","B","RCDPURE1",2)
+
+"BLD",9385,"KRN",9.8,"NM","B","RCDPXPAP",3)
+
+"BLD",9385,"KRN",19,0)
+19
+"BLD",9385,"KRN",19.1,0)
+19.1
+"BLD",9385,"KRN",101,0)
+101
+"BLD",9385,"KRN",409.61,0)
+409.61
+"BLD",9385,"KRN",771,0)
+771
+"BLD",9385,"KRN",779.2,0)
+779.2
+"BLD",9385,"KRN",870,0)
+870
+"BLD",9385,"KRN",8989.51,0)
+8989.51
+"BLD",9385,"KRN",8989.52,0)
+8989.52
+"BLD",9385,"KRN",8994,0)
+8994
+"BLD",9385,"KRN","B",.4,.4)
+
+"BLD",9385,"KRN","B",.401,.401)
+
+"BLD",9385,"KRN","B",.402,.402)
+
+"BLD",9385,"KRN","B",.403,.403)
+
+"BLD",9385,"KRN","B",.5,.5)
+
+"BLD",9385,"KRN","B",.84,.84)
+
+"BLD",9385,"KRN","B",3.6,3.6)
+
+"BLD",9385,"KRN","B",3.8,3.8)
+
+"BLD",9385,"KRN","B",9.2,9.2)
+
+"BLD",9385,"KRN","B",9.8,9.8)
+
+"BLD",9385,"KRN","B",19,19)
+
+"BLD",9385,"KRN","B",19.1,19.1)
+
+"BLD",9385,"KRN","B",101,101)
+
+"BLD",9385,"KRN","B",409.61,409.61)
+
+"BLD",9385,"KRN","B",771,771)
+
+"BLD",9385,"KRN","B",779.2,779.2)
+
+"BLD",9385,"KRN","B",870,870)
+
+"BLD",9385,"KRN","B",8989.51,8989.51)
+
+"BLD",9385,"KRN","B",8989.52,8989.52)
+
+"BLD",9385,"KRN","B",8994,8994)
+
+"BLD",9385,"QUES",0)
+^9.62^^
+"BLD",9385,"REQB",0)
+^9.611^3^3
+"BLD",9385,"REQB",1,0)
+PRCA*4.5*220^2
+"BLD",9385,"REQB",2,0)
+PRCA*4.5*206^2
+"BLD",9385,"REQB",3,0)
+PRCA*4.5*217^2
+"BLD",9385,"REQB","B","PRCA*4.5*206",2)
+
+"BLD",9385,"REQB","B","PRCA*4.5*217",3)
+
+"BLD",9385,"REQB","B","PRCA*4.5*220",1)
+
+"INIT")
+POST^PRCAP296
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+296^3130613
+"PKG",142,22,1,"PAH",1,1,0)
+^^14^14^3130613
+"PKG",142,22,1,"PAH",1,1,1,0)
+This patch addresses two issues.
+"PKG",142,22,1,"PAH",1,1,2,0)
+ 
+"PKG",142,22,1,"PAH",1,1,3,0)
+The first issue implements two changes to the Automatic Payment Process
+"PKG",142,22,1,"PAH",1,1,4,0)
+Server [RCDP AUTOMATIC PAYMENTS] option that processes deposit files
+"PKG",142,22,1,"PAH",1,1,5,0)
+containing records of veterans' cash and check payments of their copayment
+"PKG",142,22,1,"PAH",1,1,6,0)
+bills to the national Lockbox.  Vista Accounts Receivable (AR) will begin
+"PKG",142,22,1,"PAH",1,1,7,0)
+to receive new types of deposit files that represent withholdings of VA
+"PKG",142,22,1,"PAH",1,1,8,0)
+Compensation and Pension (C&P) benefits or amounts owed to the veteran by 
+"PKG",142,22,1,"PAH",1,1,9,0)
+the US Treasury, which must be applied to veteran's delinquent accounts 
+"PKG",142,22,1,"PAH",1,1,10,0)
+in the same manner as cash/check payments.
+"PKG",142,22,1,"PAH",1,1,11,0)
+ 
+"PKG",142,22,1,"PAH",1,1,12,0)
+The second issue is about the account lookup keys which will be included
+"PKG",142,22,1,"PAH",1,1,13,0)
+in the new Treasury and Compensation & Pension (C&P) withholding deposit
+"PKG",142,22,1,"PAH",1,1,14,0)
+files to identify the correct veteran in VistA.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PRCABJV")
+0^1^B30084731^B29300227
+"RTN","PRCABJV",1,0)
+PRCABJV ;WASH-ISC@ALTOONA,PA/TJK-FILE VERIFICATION FOR BACKGROUND JOB ;4/6/95  10:13 AM
+"RTN","PRCABJV",2,0)
+V ;;4.5;Accounts Receivable;**1,48,63,114,141,170,176,173,192,220,296**;Mar 20, 1995;Build 24
+"RTN","PRCABJV",3,0)
+ ;;patch 192 changes all occurrences of CHAMPUS to TRICARE
+"RTN","PRCABJV",4,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCABJV",5,0)
+EN1(FILE,X1,X2,ERROR) ;
+"RTN","PRCABJV",6,0)
+ ;FILE IS THE FILE NUMBER
+"RTN","PRCABJV",7,0)
+ ;X1 AND X2 ARE 3 PART VARIABLES SEPARATED BY SEMI-COLONS WITH
+"RTN","PRCABJV",8,0)
+ ;THE FORMAT (X-REF INDEX;NODE;PIECE)
+"RTN","PRCABJV",9,0)
+ ;AN ERROR ARRAY IS SET IF VALIDATION FAILS
+"RTN","PRCABJV",10,0)
+ NEW LT,CNT,I,I1,I2,I3,REC,IND,ND,PC,DATA,J,LN,FILENT
+"RTN","PRCABJV",11,0)
+ S LT=$S(FILE[430.3:"TRANST",FILE[430.2:"CAT",1:"EVENT"),CNT=0
+"RTN","PRCABJV",12,0)
+ F I=1,2 S J=@("X"_I),IND(I)=$P(J,";"),ND(I)=$P(J,";",2),PC(I)=$P(J,";",3)
+"RTN","PRCABJV",13,0)
+ F I1=1:1 D  Q:(DATA(0)="EOF")!(ERROR)
+"RTN","PRCABJV",14,0)
+    .S LN=$T(@LT+I1) F I=3:1:6 S DATA(I-3)=$P(LN,";",I)
+"RTN","PRCABJV",15,0)
+    .Q:DATA(0)="EOF"
+"RTN","PRCABJV",16,0)
+    .G RC:FILE<430
+"RTN","PRCABJV",17,0)
+    .I '$D(^PRCA(FILE,"B",DATA(0))) S ERROR=1 Q
+"RTN","PRCABJV",18,0)
+    .S REC=$O(^PRCA(FILE,"B",DATA(0),0)) I 'REC S ERROR=1 Q
+"RTN","PRCABJV",19,0)
+    .I DATA(3)'=REC S ERROR=1 Q
+"RTN","PRCABJV",20,0)
+    .I $P(^PRCA(FILE,REC,0),U)'=DATA(0) S ERROR=1 Q
+"RTN","PRCABJV",21,0)
+    .G CNT:X1=""
+"RTN","PRCABJV",22,0)
+    .F I2=1,2 D  Q:ERROR  I I2=1,X2="" Q
+"RTN","PRCABJV",23,0)
+       ..I '$D(^PRCA(FILE,IND(I2),DATA(I2))) S ERROR=1 G Q2
+"RTN","PRCABJV",24,0)
+       ..;  do not check if category number is a zero
+"RTN","PRCABJV",25,0)
+       ..I I2=1,DATA(1)'=0,$O(^PRCA(FILE,IND(I2),DATA(I2),0))'=REC S ERROR=1 G Q2
+"RTN","PRCABJV",26,0)
+       ..I $P(^PRCA(FILE,REC,ND(I2)),U,PC(I2))'=DATA(I2) S ERROR=1
+"RTN","PRCABJV",27,0)
+Q2       ..Q
+"RTN","PRCABJV",28,0)
+CNT    .Q:ERROR
+"RTN","PRCABJV",29,0)
+    .S CNT=CNT+1
+"RTN","PRCABJV",30,0)
+Q1    .Q
+"RTN","PRCABJV",31,0)
+RC    .I '$D(^RC(FILE,"B",DATA(0))) S ERROR=1 Q
+"RTN","PRCABJV",32,0)
+    .S REC=$O(^RC(FILE,"B",DATA(0),0)) I 'REC S ERROR=1 Q
+"RTN","PRCABJV",33,0)
+    .I DATA(3)'=REC S ERROR=1 Q
+"RTN","PRCABJV",34,0)
+    .I $P(^RC(FILE,REC,0),U)'=DATA(0) S ERROR=1 Q
+"RTN","PRCABJV",35,0)
+    .G CNT:X1=""
+"RTN","PRCABJV",36,0)
+    .F I3=1,2 D  Q:ERROR  I I3=1,X2="" Q
+"RTN","PRCABJV",37,0)
+       ..I '$D(^RC(FILE,IND(I3),DATA(I3))) S ERROR=1 G Q3
+"RTN","PRCABJV",38,0)
+       ..I $O(^RC(FILE,IND(I3),DATA(I3),0))'=REC S ERROR=1 G Q3
+"RTN","PRCABJV",39,0)
+       ..I $P(^RC(FILE,REC,ND(I3)),U,PC(I3))'=DATA(I3) S ERROR=1
+"RTN","PRCABJV",40,0)
+Q3       ..Q
+"RTN","PRCABJV",41,0)
+    .G CNT
+"RTN","PRCABJV",42,0)
+ I FILE>429.99,$P(^PRCA(FILE,0),U,4)'=CNT S ERROR=1 G EXIT
+"RTN","PRCABJV",43,0)
+ G EXIT:FILE>429.99
+"RTN","PRCABJV",44,0)
+ I $P(^RC(FILE,0),U,4)'=CNT S ERROR=1
+"RTN","PRCABJV",45,0)
+EXIT Q:'ERROR
+"RTN","PRCABJV",46,0)
+ S FILENT=$S(FILE>429.99:$P(^PRCA(FILE,0),U,4),1:$P(^RC(FILE,0),U,4))
+"RTN","PRCABJV",47,0)
+ S ERROR(1)="An error has been detected in the "_$P(^DIC(FILE,0),U)_" File."
+"RTN","PRCABJV",48,0)
+ I DATA(0)="EOF" S ERROR(2)="There are too many entries in your file."
+"RTN","PRCABJV",49,0)
+ I DATA(0)'="EOF" S ERROR(2)="The "_DATA(0)_" Entry in your file is missing or corrupted."
+"RTN","PRCABJV",50,0)
+ Q
+"RTN","PRCABJV",51,0)
+TRANST ;
+"RTN","PRCABJV",52,0)
+ ;;ACTIVE;102;A;16
+"RTN","PRCABJV",53,0)
+ ;;ADD (AMEND);302;AD;37
+"RTN","PRCABJV",54,0)
+ ;;ADMIN.COST CHARGE;12;AC;12
+"RTN","PRCABJV",55,0)
+ ;;AMEND;303;AM;38
+"RTN","PRCABJV",56,0)
+ ;;AMENDED BILL;110;AB;33
+"RTN","PRCABJV",57,0)
+ ;;ARCHIVED;115;XX;49
+"RTN","PRCABJV",58,0)
+ ;;BILL INCOMPLETE;201;BI;27
+"RTN","PRCABJV",59,0)
+ ;;CANCELLATION;111;CN;39
+"RTN","PRCABJV",60,0)
+ ;;CANCELLED BILL;210;CB;26
+"RTN","PRCABJV",61,0)
+ ;;CASH COLLECTION BY RC/DOJ;7;CJ;7
+"RTN","PRCABJV",62,0)
+ ;;CHARGE SUSPENDED;19;CS;47
+"RTN","PRCABJV",63,0)
+ ;;COLLECTED/CLOSED;108;CC;22
+"RTN","PRCABJV",64,0)
+ ;;COMMENT;17;CM;45
+"RTN","PRCABJV",65,0)
+ ;;DEBIT VOUCHER (SF 5515);30;DV;30
+"RTN","PRCABJV",66,0)
+ ;;DECREASE ADJUSTMENT;21;DA;35
+"RTN","PRCABJV",67,0)
+ ;;DELETE (AMEND);301;DL;36
+"RTN","PRCABJV",68,0)
+ ;;EXEMPT INT/ADM. COST;14;E;14
+"RTN","PRCABJV",69,0)
+ ;;IN-ACTIVE;103;IA;17
+"RTN","PRCABJV",70,0)
+ ;;INCOMPLETE;101;IN;15
+"RTN","PRCABJV",71,0)
+ ;;INCREASE ADJUSTMENT;1;AJ;1
+"RTN","PRCABJV",72,0)
+ ;;INTEREST/ADM. CHARGE;13;IC;13
+"RTN","PRCABJV",73,0)
+ ;;MARSHAL/COURT COST;15;ML;24
+"RTN","PRCABJV",74,0)
+ ;;NEW BILL;104;N;18
+"RTN","PRCABJV",75,0)
+ ;;OLD BILL;106;OB;28
+"RTN","PRCABJV",76,0)
+ ;;OPEN;112;OP;42
+"RTN","PRCABJV",77,0)
+ ;;PAYMENT (IN FULL);20;PF;34
+"RTN","PRCABJV",78,0)
+ ;;PAYMENT (IN PART);2;PP;2
+"RTN","PRCABJV",79,0)
+ ;;PENDING APPROVAL;205;PA;20
+"RTN","PRCABJV",80,0)
+ ;;PENDING ARCHIVE;114;X;48
+"RTN","PRCABJV",81,0)
+ ;;PENDING CALM CODE;107;PC;21
+"RTN","PRCABJV",82,0)
+ ;;RE-ESTABLISH;250;RW;43
+"RTN","PRCABJV",83,0)
+ ;;REESTABLISH TO RC/DOJ;5;RR;5
+"RTN","PRCABJV",84,0)
+ ;;REFER TO RC;3;RC;3
+"RTN","PRCABJV",85,0)
+ ;;REFER TO DOJ;4;RJ;4
+"RTN","PRCABJV",86,0)
+ ;;REFUND REVIEW;113;PR;44
+"RTN","PRCABJV",87,0)
+ ;;REFUNDED;120;RF;41
+"RTN","PRCABJV",88,0)
+ ;;REPAYMENT PLAN;16;RP;25
+"RTN","PRCABJV",89,0)
+ ;;RETURNED BY RC/DOJ;6;RD;6
+"RTN","PRCABJV",90,0)
+ ;;RETURNED FOR AMENDMENT;230;RA;32
+"RTN","PRCABJV",91,0)
+ ;;RETURNED FROM AR (NEW);220;RT;31
+"RTN","PRCABJV",92,0)
+ ;;SUSPENDED;240;SP;40
+"RTN","PRCABJV",93,0)
+ ;;SUSPENSE;105;S;19
+"RTN","PRCABJV",94,0)
+ ;;TERM.BY COMPROMISE;9;TC;9
+"RTN","PRCABJV",95,0)
+ ;;TERM.BY RC/DOJ;29;TJ;29
+"RTN","PRCABJV",96,0)
+ ;;TERM.BY FIS.OFFICER;8;TO;8
+"RTN","PRCABJV",97,0)
+ ;;UNSUSPENDED;18;US;46
+"RTN","PRCABJV",98,0)
+ ;;WAIVED IN FULL;10;WF;10
+"RTN","PRCABJV",99,0)
+ ;;WAIVED IN PART;11;WP;11
+"RTN","PRCABJV",100,0)
+ ;;WRITE-OFF;109;WO;23
+"RTN","PRCABJV",101,0)
+ ;;EOF
+"RTN","PRCABJV",102,0)
+CAT ;patch 192 - ISC-0502-N2803 change Champus to Tricare
+"RTN","PRCABJV",103,0)
+ ;;ADULT DAY HEALTH CARE;40;AD;33
+"RTN","PRCABJV",104,0)
+ ;;C (MEANS TEST);24;C;18
+"RTN","PRCABJV",105,0)
+ ;;TRICARE;37;T1;30
+"RTN","PRCABJV",106,0)
+ ;;TRICARE PATIENT;38;T2;31
+"RTN","PRCABJV",107,0)
+ ;;TRICARE THIRD PARTY;39;T3;32
+"RTN","PRCABJV",108,0)
+ ;;CHAMPVA;36;CV;29
+"RTN","PRCABJV",109,0)
+ ;;CHAMPVA SUBSISTENCE;34;CS;27
+"RTN","PRCABJV",110,0)
+ ;;CHAMPVA THIRD PARTY;35;CT;28
+"RTN","PRCABJV",111,0)
+ ;;COMP & PEN PROCEEDS;8;CM;43
+"RTN","PRCABJV",112,0)
+ ;;CRIME OF PER.VIO.;27;CP;8
+"RTN","PRCABJV",113,0)
+ ;;CURRENT EMP.;14;CE;16
+"RTN","PRCABJV",114,0)
+ ;;CWT PROCEEDS;7;CW;42
+"RTN","PRCABJV",115,0)
+ ;;DOMICILIARY;41;DO;34
+"RTN","PRCABJV",116,0)
+ ;;EMERGENCY/HUMANITARIAN;25;H;2
+"RTN","PRCABJV",117,0)
+ ;;ENHANCED USE LEASE PROCEEDS;10;EP;44
+"RTN","PRCABJV",118,0)
+ ;;EX-EMPLOYEE;13;E;15
+"RTN","PRCABJV",119,0)
+ ;;FEDERAL AGENCIES-REFUND;15;F2;13
+"RTN","PRCABJV",120,0)
+ ;;FEDERAL AGENCIES-REIMB.;16;F1;14
+"RTN","PRCABJV",121,0)
+ ;;GERIATRIC EVAL-INSTITUTIONAL;44;GE;37
+"RTN","PRCABJV",122,0)
+ ;;GERIATRIC EVAL-NON-INSTITUTION;45;GN;38
+"RTN","PRCABJV",123,0)
+ ;;HOSPITAL CARE (NSC);1;HC;5
+"RTN","PRCABJV",124,0)
+ ;;HOSPITAL CARE PER DIEM;32;HP;25
+"RTN","PRCABJV",125,0)
+ ;;INELIGIBLE HOSP.;20;I;1
+"RTN","PRCABJV",126,0)
+ ;;INTERAGENCY;19;IA;20
+"RTN","PRCABJV",127,0)
+ ;;MEDICARE;28;MC;21
+"RTN","PRCABJV",128,0)
+ ;;MILITARY;17;M;12
+"RTN","PRCABJV",129,0)
+ ;;NO-FAULT AUTO ACC.;26;NA;7
+"RTN","PRCABJV",130,0)
+ ;;NURSING HOME CARE PER DIEM;31;NP;24
+"RTN","PRCABJV",131,0)
+ ;;NURSING HOME CARE(NSC);3;NC;3
+"RTN","PRCABJV",132,0)
+ ;;NURSING HOME CARE-LTC;46;NL;39
+"RTN","PRCABJV",133,0)
+ ;;NURSING HOME PROCEEDS;5;NH;40
+"RTN","PRCABJV",134,0)
+ ;;OUTPATIENT CARE(NSC);2;OC;4
+"RTN","PRCABJV",135,0)
+ ;;PARKING FEES;6;PF;41
+"RTN","PRCABJV",136,0)
+ ;;PREPAYMENT;33;PP;26
+"RTN","PRCABJV",137,0)
+ ;;REIMBURS.HEALTH INS.;21;RI;9
+"RTN","PRCABJV",138,0)
+ ;;RESPITE CARE-INSTITUTIONAL;42;RC;35
+"RTN","PRCABJV",139,0)
+ ;;RESPITE CARE-NON-INSTITUTIONAL;43;RN;36
+"RTN","PRCABJV",140,0)
+ ;;RX CO-PAYMENT/NSC VET;30;PN;23
+"RTN","PRCABJV",141,0)
+ ;;RX CO-PAYMENT/SC VET;29;PS;22
+"RTN","PRCABJV",142,0)
+ ;;SHARING AGREEMENTS;18;SA;19
+"RTN","PRCABJV",143,0)
+ ;;TORT FEASOR;22;TF;10
+"RTN","PRCABJV",144,0)
+ ;;VENDOR;11;V;17
+"RTN","PRCABJV",145,0)
+ ;;WORKMAN'S COMP.;23;WC;6
+"RTN","PRCABJV",146,0)
+ ;;EOF
+"RTN","PRCABJV",147,0)
+EVENT ;
+"RTN","PRCABJV",148,0)
+ ;;CASH PAYMENT;6;;6
+"RTN","PRCABJV",149,0)
+ ;;CHECK/MO PAYMENT;4;;4
+"RTN","PRCABJV",150,0)
+ ;;COMMENT;1;;1
+"RTN","PRCABJV",151,0)
+ ;;CREDIT CARD PAYMENT;7;;7
+"RTN","PRCABJV",152,0)
+ ;;DEPT OF JUSTICE PAYMENT;5;;5
+"RTN","PRCABJV",153,0)
+ ;;REGIONAL COUNSEL PAYMENT;3;;3
+"RTN","PRCABJV",154,0)
+ ;;FOLLOW-UP LETTER;10;;10
+"RTN","PRCABJV",155,0)
+ ;;IRS PAYMENT;11;;11
+"RTN","PRCABJV",156,0)
+ ;;PATIENT STATEMENT;2;;2
+"RTN","PRCABJV",157,0)
+ ;;TDA PAYMENT;8;;8
+"RTN","PRCABJV",158,0)
+ ;;UB PRINTED;9;;9
+"RTN","PRCABJV",159,0)
+ ;;LOCKBOX;12;;12
+"RTN","PRCABJV",160,0)
+ ;;TOP PAYMENT;13;;13
+"RTN","PRCABJV",161,0)
+ ;;EDI LOCKBOX;14;;14
+"RTN","PRCABJV",162,0)
+ ;;ADMINISTRATIVE OFFSET;15;;15
+"RTN","PRCABJV",163,0)
+ ;;PRIVATE COLLECTION AGENCY;16;;16
+"RTN","PRCABJV",164,0)
+ ;;EOF
+"RTN","PRCAP296")
+0^^B2847358^n/a
+"RTN","PRCAP296",1,0)
+PRCAP296 ;ALB/CXW - post init for patch 296 ; 19-MAR-2013
+"RTN","PRCAP296",2,0)
+ ;;4.5;Accounts Receivable;**296**;Mar 20, 1995;Build 24
+"RTN","PRCAP296",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCAP296",4,0)
+ Q
+"RTN","PRCAP296",5,0)
+ ;
+"RTN","PRCAP296",6,0)
+POST ;  AR event type of payment update
+"RTN","PRCAP296",7,0)
+ N DA,DIC,DLAYGO,DO,RCI,RCX,RCCT,X,Y S U="^",RCCT=0
+"RTN","PRCAP296",8,0)
+ D MES^XPDUTL("Patch Post-Install starts...")
+"RTN","PRCAP296",9,0)
+ D MES^XPDUTL("Add a new AR event type of payment ...")
+"RTN","PRCAP296",10,0)
+ F RCI=1:1 S RCX=$P($T(AET+RCI),";;",2) Q:RCX=""  D
+"RTN","PRCAP296",11,0)
+ . S X=$P(RCX,U,1)
+"RTN","PRCAP296",12,0)
+ . ;quit if it exists
+"RTN","PRCAP296",13,0)
+ . I $D(^RC(341.1,"B",X)) Q
+"RTN","PRCAP296",14,0)
+ . S DIC="^RC(341.1,",DIC(0)="L",DLAYGO=341.1
+"RTN","PRCAP296",15,0)
+ . S DIC("DR")=".02///"_$P(RCX,U,2)_";.06///"_$P(RCX,U,3)
+"RTN","PRCAP296",16,0)
+ . D FILE^DICN
+"RTN","PRCAP296",17,0)
+ . I Y=-1 D MES^XPDUTL("ERROR when adding a new AR event type. Log a Remedy ticket!") Q
+"RTN","PRCAP296",18,0)
+ . D MES^XPDUTL("AR event type of payment: "_$P(RCX,U,1)_" added successfully")
+"RTN","PRCAP296",19,0)
+ . S RCCT=RCCT+1
+"RTN","PRCAP296",20,0)
+ D MES^XPDUTL("Total "_RCCT_" code"_$S(RCCT'=1:"s",1:"")_" added to the AR Event Type file (#341.1)")
+"RTN","PRCAP296",21,0)
+ ;
+"RTN","PRCAP296",22,0)
+ D MES^XPDUTL("Patch Post-Install is complete.")
+"RTN","PRCAP296",23,0)
+ Q
+"RTN","PRCAP296",24,0)
+AET ; name^event number^category 
+"RTN","PRCAP296",25,0)
+ ;;ADMINISTRATIVE OFFSET^15^PAYMENT
+"RTN","PRCAP296",26,0)
+ ;;PRIVATE COLLECTION AGENCY^16^PAYMENT
+"RTN","PRCAP296",27,0)
+ ;
+"RTN","RCDPURE1")
+0^2^B57024051^B55071399
+"RTN","RCDPURE1",1,0)
+RCDPURE1 ;WISC/RFJ-process a receipt ;1 Jun 99
+"RTN","RCDPURE1",2,0)
+ ;;4.5;Accounts Receivable;**114,148,153,169,204,173,214,217,296**;Mar 20, 1995;Build 24
+"RTN","RCDPURE1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPURE1",4,0)
+ Q
+"RTN","RCDPURE1",5,0)
+ ;
+"RTN","RCDPURE1",6,0)
+ ;
+"RTN","RCDPURE1",7,0)
+PROCESS(RCRECTDA,RCSCREEN) ;  process a receipt, update ar, generate cr/tr documents to fms
+"RTN","RCDPURE1",8,0)
+ ;  the receipt and deposit must be locked before calling this label
+"RTN","RCDPURE1",9,0)
+ ;  if $g(rcscreen) = 1 show messages during processing
+"RTN","RCDPURE1",10,0)
+ ;  if $g(rcscreen) = 2 store messages during processing
+"RTN","RCDPURE1",11,0)
+ ; 
+"RTN","RCDPURE1",12,0)
+ N RCPAYDA,RCDPFPAY,RCERROR,RCMSG,RCEFT,RCERA
+"RTN","RCDPURE1",13,0)
+ K ^TMP($J,"RCDPEMSG")
+"RTN","RCDPURE1",14,0)
+ ;
+"RTN","RCDPURE1",15,0)
+ ;  first mark the receipt as processed/closed to prevent changing the
+"RTN","RCDPURE1",16,0)
+ ;  data if the receipt does not fully process.  this will lock the
+"RTN","RCDPURE1",17,0)
+ ;  cancel payment, edit payment, etc. options.  once a receipt is
+"RTN","RCDPURE1",18,0)
+ ;  processed, even partially, it should not be changed.
+"RTN","RCDPURE1",19,0)
+ D MARKPROC^RCDPUREC(RCRECTDA,"")
+"RTN","RCDPURE1",20,0)
+ ;
+"RTN","RCDPURE1",21,0)
+ ; Special processing needed for EFT-related receipts
+"RTN","RCDPURE1",22,0)
+ ; RCEFT = 1 if EFT deposit, = 2 if receipt detail transfer, 0 if no EFT
+"RTN","RCDPURE1",23,0)
+ S RCEFT=+$$EDILB^RCDPEU(RCRECTDA)
+"RTN","RCDPURE1",24,0)
+ S RCERA=$P($G(^RCY(344,RCRECTDA,0)),U,18)
+"RTN","RCDPURE1",25,0)
+ ;
+"RTN","RCDPURE1",26,0)
+ ;  === no payments ===
+"RTN","RCDPURE1",27,0)
+ ;  if there are no payments for the receipt, quit
+"RTN","RCDPURE1",28,0)
+ I '$O(^RCY(344,RCRECTDA,1,0)) D  Q
+"RTN","RCDPURE1",29,0)
+ .   I $G(RCSCREEN) S RCMSG="Receipt does not have any payments and has been marked as processed/closed." D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",30,0)
+ .   I RCERA D UPDERA(RCERA)
+"RTN","RCDPURE1",31,0)
+ ;
+"RTN","RCDPURE1",32,0)
+ ;  check to see if the payments have dollar amounts
+"RTN","RCDPURE1",33,0)
+ S RCPAYDA=0 F  S RCPAYDA=$O(^RCY(344,RCRECTDA,1,RCPAYDA)) Q:'RCPAYDA  I $P($G(^(RCPAYDA,0)),"^",4) S RCDPFPAY=1 Q
+"RTN","RCDPURE1",34,0)
+ I '$G(RCDPFPAY) D  Q
+"RTN","RCDPURE1",35,0)
+ .   I $G(RCSCREEN)  S RCMSG="Receipt does not have any payments and has been marked as processed/closed." D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",36,0)
+ .   I RCERA D UPDERA(RCERA)
+"RTN","RCDPURE1",37,0)
+ ;
+"RTN","RCDPURE1",38,0)
+ ;  === update AR accounts ===
+"RTN","RCDPURE1",39,0)
+ I $G(RCSCREEN) S RCMSG="Updating AR accounts..." D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",40,0)
+ ;
+"RTN","RCDPURE1",41,0)
+ ;  loop payments and apply to account in AR
+"RTN","RCDPURE1",42,0)
+ S RCPAYDA=0 F  S RCPAYDA=$O(^RCY(344,RCRECTDA,1,RCPAYDA)) Q:'RCPAYDA  D  I RCERROR Q
+"RTN","RCDPURE1",43,0)
+ .   S RCERROR=$$PROCESS^RCBEPAY(RCRECTDA,RCPAYDA)
+"RTN","RCDPURE1",44,0)
+ ;
+"RTN","RCDPURE1",45,0)
+ ;  an error occurred during processing a payment
+"RTN","RCDPURE1",46,0)
+ I $G(RCERROR) D  Q
+"RTN","RCDPURE1",47,0)
+ .   I '$G(RCSCREEN) Q
+"RTN","RCDPURE1",48,0)
+ .   S RCMSG="+-----------------------------------------------------------------------------+" D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",49,0)
+ .   S RCMSG="|  An ERROR has occurred when processing payment "_RCPAYDA_" on receipt "_$P(^RCY(344,RCRECTDA,0),"^")_".",RCMSG=$E(RCMSG_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",50,0)
+ .   S RCMSG="|  The error message returned during processing is:",RCMSG=$E(RCMSG_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",51,0)
+ .   S RCMSG="|"_$J("",77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",52,0)
+ .   S RCMSG=$E("|  "_$P(RCERROR,"^",2)_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",53,0)
+ .   S RCMSG="|"_$J("",77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",54,0)
+ .   S RCMSG=$E("|  You will need to correct the error before you can completely process the"_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",55,0)
+ .   S RCMSG=$E("|  receipt.  Once the receipt is completely processed, the FMS "_$S(RCEFT'=2:"Cash Receipt",1:"'TR'")_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",56,0)
+ .   S RCMSG=$E("|  document will be generated."_$J("",77),1,77)_"|" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",57,0)
+ .   S RCMSG="+-----------------------------------------------------------------------------+" D MSG(RCMSG,RCSCREEN,"!")
+"RTN","RCDPURE1",58,0)
+ ;
+"RTN","RCDPURE1",59,0)
+ ;  all payments processed correctly
+"RTN","RCDPURE1",60,0)
+ I RCERA D UPDERA(RCERA)
+"RTN","RCDPURE1",61,0)
+ I $G(RCSCREEN) D MSG(" Done.",RCSCREEN)
+"RTN","RCDPURE1",62,0)
+ ;
+"RTN","RCDPURE1",63,0)
+ ;  *296 - no cr document for event type 'a' or 'p' or 't'
+"RTN","RCDPURE1",64,0)
+ N RCDPETY S RCDPETY=$P($G(^RCY(344,RCRECTDA,0)),"^",4)
+"RTN","RCDPURE1",65,0)
+ I (RCDPETY=15)!(RCDPETY=16)!(RCDPETY=13) D 215 Q
+"RTN","RCDPURE1",66,0)
+ ;
+"RTN","RCDPURE1",67,0)
+ ;  if no deposit ticket and not related to EFT or is a HAC payment, do not send to fms
+"RTN","RCDPURE1",68,0)
+ I '$P(^RCY(344,RCRECTDA,0),"^",6),$S('RCEFT:1,1:$$HACEFT^RCDPEU(+$P(^RCY(344,RCRECTDA,0),U,17))) D  Q
+"RTN","RCDPURE1",69,0)
+ .   D 215
+"RTN","RCDPURE1",70,0)
+ .   I $G(RCSCREEN) S RCMSG="Receipt does not have a deposit ticket and will NOT be sent to FMS." D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",71,0)
+ ;
+"RTN","RCDPURE1",72,0)
+ ;  === send fms cash receipt document ===
+"RTN","RCDPURE1",73,0)
+ N GECSDATA,FMSDOCNO,RESULT,REFMS
+"RTN","RCDPURE1",74,0)
+ ;  lookup fms document number to see if the receipt has been
+"RTN","RCDPURE1",75,0)
+ ;  sent to fms (field 200 in file 344)
+"RTN","RCDPURE1",76,0)
+ S FMSDOCNO=$P($G(^RCY(344,RCRECTDA,2)),"^")
+"RTN","RCDPURE1",77,0)
+ ;  if there is an entry, find the code sheet in gcs to rebuild
+"RTN","RCDPURE1",78,0)
+ ;  gecsdata will be the ien for file 2100.1
+"RTN","RCDPURE1",79,0)
+ I FMSDOCNO'="" S REFMS=1 N DIQ2 D DATA^GECSSGET(FMSDOCNO,0)
+"RTN","RCDPURE1",80,0)
+ ;
+"RTN","RCDPURE1",81,0)
+ I $G(RCSCREEN)&$G(GECSDATA) S RCMSG="Re-Transmitting CR document to FMS... " D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",82,0)
+ I $G(RCSCREEN)&'$G(GECSDATA) S RCMSG="Transmitting CR document to FMS... " D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",83,0)
+ ;
+"RTN","RCDPURE1",84,0)
+ ;  build and send the tr/cr document to fms
+"RTN","RCDPURE1",85,0)
+ I RCEFT'=2 D  ; Send CR doc
+"RTN","RCDPURE1",86,0)
+ . S RESULT=$$BUILDCR^RCXFMSCR(RCRECTDA,+$G(GECSDATA),RCEFT)
+"RTN","RCDPURE1",87,0)
+ E  D  ; Send TR doc
+"RTN","RCDPURE1",88,0)
+ . S RESULT=$$GETTR^RCXFMST1(RCRECTDA,+$G(GECSDATA))
+"RTN","RCDPURE1",89,0)
+ ;  error in building code sheet
+"RTN","RCDPURE1",90,0)
+ I 'RESULT D:$G(RCSCREEN) MSG("ERROR - "_$P(RESULT,"^",2),RCSCREEN,"!!") Q
+"RTN","RCDPURE1",91,0)
+ ;
+"RTN","RCDPURE1",92,0)
+ ;  no document to send
+"RTN","RCDPURE1",93,0)
+ I $P(RESULT,"^")=-1,$G(RCSCREEN) S RCMSG="NOTE - "_$P(RESULT,"^",2) S $P(RESULT,"^",2)="" D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",94,0)
+ ;  document built and sent
+"RTN","RCDPURE1",95,0)
+ I $P(RESULT,"^")=1,$G(RCSCREEN) D
+"RTN","RCDPURE1",96,0)
+ . N Z,DIE,DR,DA
+"RTN","RCDPURE1",97,0)
+ . D MSG("Done. FMS document number "_$P(RESULT,"^",2),RCSCREEN,"!!")
+"RTN","RCDPURE1",98,0)
+ . I +$O(^RCY(344.4,"ARCT",RCRECTDA,0)) S DIE="^RCY(344.4,",DR=".14////1",DA=+$O(^RCY(344.4,"ARCT",RCRECTDA,0)) D ^DIE
+"RTN","RCDPURE1",99,0)
+ . I $P($G(^RCY(344,RCRECTDA,0)),U,17) S Z=$P($G(^RCY(344.31,+$P(^RCY(344,RCRECTDA,0),U,17),0)),U,15) I Z'="" S DA=RCRECTDA,DIE="^RCY(344,",DR=".16////"_Z D ^DIE
+"RTN","RCDPURE1",100,0)
+ I $G(RCSCREEN) D
+"RTN","RCDPURE1",101,0)
+ . I '$G(REFMS)&(DT>$$LDATE^RCRJR(DT)) S Y=$E($$FPS^RCAMFN01(DT,1),1,5)_"01" D DD^%DT W !! S RCMSG="   * * * * Transmission will be held until "_Y_" * * * *" D MSG(RCMSG,RCSCREEN,"!!")
+"RTN","RCDPURE1",102,0)
+ ;
+"RTN","RCDPURE1",103,0)
+ ;
+"RTN","RCDPURE1",104,0)
+ ;  store the fms document number (receipt already marked processed/
+"RTN","RCDPURE1",105,0)
+ ;  closed at the top of the routine just before posting the dollars.
+"RTN","RCDPURE1",106,0)
+ D MARKPROC^RCDPUREC(RCRECTDA,$P(RESULT,"^",2))
+"RTN","RCDPURE1",107,0)
+ I RCEFT=2 D MSG("No 215 report generated for this receipt",RCSCREEN,"!!") G Q215
+"RTN","RCDPURE1",108,0)
+ ;
+"RTN","RCDPURE1",109,0)
+ ;
+"RTN","RCDPURE1",110,0)
+215 ;  === print 215 report ===
+"RTN","RCDPURE1",111,0)
+ I $G(RCSCREEN) D MSG("Queuing 215 report...",RCSCREEN,"!!")
+"RTN","RCDPURE1",112,0)
+ N DEVICE
+"RTN","RCDPURE1",113,0)
+ S DEVICE=$$OPTCK^RCDPRPL2("215REPORT",3)
+"RTN","RCDPURE1",114,0)
+ I DEVICE="" D:$G(RCSCREEN) MSG(" Use Customize Option to set up the default printer.",RCSCREEN) Q
+"RTN","RCDPURE1",115,0)
+ ;
+"RTN","RCDPURE1",116,0)
+ S ZTIO=DEVICE,ZTDTH=$H,ZTRTN="DQ^RCDPR215",ZTSAVE("RECEIPDA")=RCRECTDA,ZTSAVE("RCTYPE")="A"
+"RTN","RCDPURE1",117,0)
+ D ^%ZTLOAD,^%ZISC
+"RTN","RCDPURE1",118,0)
+Q215 I $G(RCSCREEN) D MSG(" Done.",RCSCREEN)
+"RTN","RCDPURE1",119,0)
+ Q
+"RTN","RCDPURE1",120,0)
+ ;
+"RTN","RCDPURE1",121,0)
+UPDERA(RCERA) ; Update detail posted status for ERA entry RCERA
+"RTN","RCDPURE1",122,0)
+ ;
+"RTN","RCDPURE1",123,0)
+ N DA,DIE,DR
+"RTN","RCDPURE1",124,0)
+ S DA=+$G(RCERA),DR=".14////1",DIE="^RCY(344.4," D:DA ^DIE
+"RTN","RCDPURE1",125,0)
+ Q
+"RTN","RCDPURE1",126,0)
+ ;
+"RTN","RCDPURE1",127,0)
+MSG(RCMSG,RCSCREEN,PRELINE,POSTLINE) ; Write message or set into msg array
+"RTN","RCDPURE1",128,0)
+ ; RCMSG = text to write  RCSCREEN = screen flag
+"RTN","RCDPURE1",129,0)
+ ; PRELINE = the line feeds to print before the text
+"RTN","RCDPURE1",130,0)
+ ; POSTLINE = the line feeds to print after the text
+"RTN","RCDPURE1",131,0)
+ Q:'RCSCREEN
+"RTN","RCDPURE1",132,0)
+ N RCPRE,RCPOST,Z
+"RTN","RCDPURE1",133,0)
+ S RCPRE=$L($G(PRELINE),"!")-1,RCPOST=$L($G(POSTLINE),"!")-1
+"RTN","RCDPURE1",134,0)
+ I RCSCREEN=1 D  G MSGQ
+"RTN","RCDPURE1",135,0)
+ . F Z=1:1:RCPRE W !
+"RTN","RCDPURE1",136,0)
+ . W RCMSG
+"RTN","RCDPURE1",137,0)
+ . F Z=1:1:RCPOST W !
+"RTN","RCDPURE1",138,0)
+ F Z=1:1:RCPRE S ^TMP($J,"RCDPEMSG",+$O(^TMP("RCDPEMSG",""),-1)+1)=""
+"RTN","RCDPURE1",139,0)
+ S ^TMP($J,"RCDPEMSG",+$O(^TMP("RCDPEMSG",""),-1)+1)=RCMSG
+"RTN","RCDPURE1",140,0)
+ F Z=1:1:RCPOST S ^TMP($J,"RCDPEMSG",+$O(^TMP("RCDPEMSG",""),-1)+1)=""
+"RTN","RCDPURE1",141,0)
+MSGQ Q
+"RTN","RCDPURE1",142,0)
+ ;
+"RTN","RCDPURE1",143,0)
+EDIT4(DA,DR,RCDR1,RCDR2,RCDR3) ; Modify DR string for type of payment edit
+"RTN","RCDPURE1",144,0)
+ ;   for EDI Lockbox
+"RTN","RCDPURE1",145,0)
+ ; Input: DA,DR   Output: RCDR1,RCDR2,RCDR3
+"RTN","RCDPURE1",146,0)
+ ; If type unchanged, or neither old/new are EDI Lockbox, no chk needed
+"RTN","RCDPURE1",147,0)
+ ; If old type is EDI Lockbox and scratch pad exists, no change allowed
+"RTN","RCDPURE1",148,0)
+ ; If changed to EDI Lockbox and detail already exists, no chg allowed
+"RTN","RCDPURE1",149,0)
+ ; If changed to EDI Lockbox, ask for related EFT
+"RTN","RCDPURE1",150,0)
+ N Z,Z0,RCSTRT,RCLST,RCDR,RCOE,RCNE,RCNO,RCM,RCM1,RCM2,RCM3,RCO4,RCN4,RCP,DIPA
+"RTN","RCDPURE1",151,0)
+ S (RCDR1,RCDR2,RCDR3)=""
+"RTN","RCDPURE1",152,0)
+ ;
+"RTN","RCDPURE1",153,0)
+ S RCP=10 F Z=2:1 Q:DR'[("@"_RCP)&(DR'[("@"_(RCP+1)))&(DR'[("@"_(RCP+2)))&(DR'[("@"_(RCP+3)))&(DR'[("@"_(RCP+4)))  S RCP=RCP*Z
+"RTN","RCDPURE1",154,0)
+ ;
+"RTN","RCDPURE1",155,0)
+ S Z=$L(DR,".04;"),RCSTRT=1,RCLST=Z
+"RTN","RCDPURE1",156,0)
+ I Z>2 D  ; Find .04, not n.04
+"RTN","RCDPURE1",157,0)
+ . F  S Z0=$P(DR,".04;",RCSTRT) Q:Z0=""!'$E(Z0,$L(Z0))  S RCSTRT=RCSTRT+1
+"RTN","RCDPURE1",158,0)
+ ;
+"RTN","RCDPURE1",159,0)
+ ; If unchanged/changed from/to other than EDI Lockbox, jump over edits
+"RTN","RCDPURE1",160,0)
+ S RCDR1="S RCP="_RCP_" D SETV^RCDPURE1;"_$P(DR,".04;",1,RCSTRT)
+"RTN","RCDPURE1",161,0)
+ S RCDR2="@"_RCP_";.04;S RCNO=0,RCN4=X D TYP^RCDPUREC(.Y);.17////^S X=RCNE;S Y=""@"_(RCP+2)_""""
+"RTN","RCDPURE1",162,0)
+ ; Reset field .04 and .17 if not a valid type change
+"RTN","RCDPURE1",163,0)
+ S RCDR2=RCDR2_";@"_(RCP+1)_";.04////^S X=RCO4;I RCOE="""" S Y=""@"_(RCP+3)_""";.17////^S X=RCOE;@"_(RCP+3)_";W !,*7,$S(RCO4=14:$S('RCNO:RCM1,1:RCM2),1:RCM) S Y=""@"_RCP_""";@"_(RCP+2)
+"RTN","RCDPURE1",164,0)
+ S RCDR3=$P(DR,".04;",RCSTRT+1,RCLST)
+"RTN","RCDPURE1",165,0)
+ Q
+"RTN","RCDPURE1",166,0)
+ ;
+"RTN","RCDPURE1",167,0)
+SETV ; Set up variables needed to edit change of receipt type
+"RTN","RCDPURE1",168,0)
+ S DIPA("RCPT")=$G(^RCY(344,DA,0)),RCO4=$P(DIPA("RCPT"),U,4),RCOE=$P(DIPA("RCPT"),U,17)
+"RTN","RCDPURE1",169,0)
+ S RCM="EDI Lockbox payment type is invalid for this receipt",RCM1="Payment type can't be changed once detail has been loaded from the ERA",RCM2="Must have an EFT for an EFT Lockbox payment type"
+"RTN","RCDPURE1",170,0)
+ S RCM3=">>If receipt is for an ERA and a paper check, select the ERA now"
+"RTN","RCDPURE1",171,0)
+ Q
+"RTN","RCDPURE1",172,0)
+ ;
+"RTN","RCDPURE1",173,0)
+WL(DA) ; Function returns 0 if the worklist did not create the receipt
+"RTN","RCDPURE1",174,0)
+ ;  or the ien of the worklist entry if it did (344.4 and 344.49 are DINUMED)
+"RTN","RCDPURE1",175,0)
+ N Z
+"RTN","RCDPURE1",176,0)
+ S Z=+$O(^RCY(344.4,"AREC",DA,0))
+"RTN","RCDPURE1",177,0)
+ Q Z
+"RTN","RCDPURE1",178,0)
+ ;
+"RTN","RCDPURE1",179,0)
+HAC(RC) ; Returns 1 if the receipt in RC is related to a HAC EFT
+"RTN","RCDPURE1",180,0)
+ N Z,HAC
+"RTN","RCDPURE1",181,0)
+ S HAC=0
+"RTN","RCDPURE1",182,0)
+ ; ERA related to an EFT detail record
+"RTN","RCDPURE1",183,0)
+ S Z=+$G(^RCY(344.31,+$P($G(^RCY(344,RC,0)),U,17),0))
+"RTN","RCDPURE1",184,0)
+ ; Deposit # in EFT transmission starts with HAC
+"RTN","RCDPURE1",185,0)
+ I Z S Z=$P($G(^RCY(344.3,+Z,0)),U,6) I $E(Z,1,3)="HAC" S HAC=1
+"RTN","RCDPURE1",186,0)
+ Q HAC
+"RTN","RCDPURE1",187,0)
+ ;
+"RTN","RCDPXPAP")
+0^3^B49106296^B46255466
+"RTN","RCDPXPAP",1,0)
+RCDPXPAP ;WISC/RFJ-automatically process the deposits  ;1 Jun 99
+"RTN","RCDPXPAP",2,0)
+ ;;4.5;Accounts Receivable;**114,150,206,296**;Mar 20, 1995;Build 24
+"RTN","RCDPXPAP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCDPXPAP",4,0)
+ Q
+"RTN","RCDPXPAP",5,0)
+ ;
+"RTN","RCDPXPAP",6,0)
+ ;
+"RTN","RCDPXPAP",7,0)
+PROCESS(RCDPDATE,RCPAYDA) ;  process the deposits
+"RTN","RCDPXPAP",8,0)
+ ;  rcdpdate is the transmission date;  rcpayda is ien for the payment
+"RTN","RCDPXPAP",9,0)
+ ;  type found in ^rc(341.1,rcpayda)
+"RTN","RCDPXPAP",10,0)
+ N DR,PAYDESC,RCDEPDAT,RCDEPOSI,RCDEPTDA,RCDFN,RCDPDATA,RCLINE,RCRECTDA,RCTRANDA,STATUS
+"RTN","RCDPXPAP",11,0)
+ K ^TMP($J,"RCDPXPAP")
+"RTN","RCDPXPAP",12,0)
+ ;
+"RTN","RCDPXPAP",13,0)
+ ;  file the data in the payment files 344 and 344.1
+"RTN","RCDPXPAP",14,0)
+ ;  tmp global = acct number(1) ^ amount(2) ^ batch#(3) ^ sequence#(4) ^
+"RTN","RCDPXPAP",15,0)
+ ;               pay type(5)    ^ pay desc fields(6)
+"RTN","RCDPXPAP",16,0)
+ S RCDEPOSI="" F  S RCDEPOSI=$O(^TMP($J,"RCDPXPAY","DEPOSIT",RCDEPOSI)) Q:RCDEPOSI=""  D
+"RTN","RCDPXPAP",17,0)
+ .   S RCDEPDAT=$G(^TMP($J,"RCDPXPAY","DEPDATE",RCDEPOSI))
+"RTN","RCDPXPAP",18,0)
+ .   ; *296 - event type 'a' or 't' or 'p' based on the prefix deposit #
+"RTN","RCDPXPAP",19,0)
+ .   N RCDETY S RCDETY=+$E(RCDEPOSI,1,3)
+"RTN","RCDPXPAP",20,0)
+ .   S RCPAYDA=$S(RCDETY=168:15,RCDETY=169:13,RCDETY=170:16,1:$G(RCPAYDA))
+"RTN","RCDPXPAP",21,0)
+ .   ; 
+"RTN","RCDPXPAP",22,0)
+ .   ;  add the deposit if not already in file
+"RTN","RCDPXPAP",23,0)
+ .   ;  make sure deposit is 6 characters in length
+"RTN","RCDPXPAP",24,0)
+ .   S X=$E("000000",1,6-$L(RCDEPOSI))_RCDEPOSI
+"RTN","RCDPXPAP",25,0)
+ .   S RCDEPTDA=$$ADDDEPT^RCDPUDEP(X,RCDEPDAT)
+"RTN","RCDPXPAP",26,0)
+ .   I 'RCDEPTDA D ERROR^RCDPXPAM(RCDPDATE,RCDPXMZ,"Unable to ADD deposit "_RCDEPOSI_" to the AR DEPOSIT file #344.1") Q
+"RTN","RCDPXPAP",27,0)
+ .   ;
+"RTN","RCDPXPAP",28,0)
+ .   ;  lock deposit
+"RTN","RCDPXPAP",29,0)
+ .   L +^RCY(344.1,RCDEPTDA)
+"RTN","RCDPXPAP",30,0)
+ .   ;  confirm deposit (close it to prevent modifications to it)
+"RTN","RCDPXPAP",31,0)
+ .   D CONFIRM^RCDPUDEP(RCDEPTDA)
+"RTN","RCDPXPAP",32,0)
+ .   ;  store the deposit for unlocking below
+"RTN","RCDPXPAP",33,0)
+ .   S ^TMP($J,"RCDPXPAP","DEPOSITLOCK",RCDEPTDA)=""
+"RTN","RCDPXPAP",34,0)
+ .   ;
+"RTN","RCDPXPAP",35,0)
+ .   ;  create receipt for transmission date and deposit
+"RTN","RCDPXPAP",36,0)
+ .   S RCRECTDA=$$ADDRECT^RCDPUREC(RCDPDATE,RCDEPTDA,RCPAYDA)
+"RTN","RCDPXPAP",37,0)
+ .   I 'RCRECTDA D ERROR^RCDPXPAM(RCDPDATE,RCDPXMZ,"Unable to ADD receipt "_RCDPDATE_" to the AR BATCH PAYMENT file #344") Q
+"RTN","RCDPXPAP",38,0)
+ .   ;
+"RTN","RCDPXPAP",39,0)
+ .   ;  lock receipt
+"RTN","RCDPXPAP",40,0)
+ .   L +^RCY(344,RCRECTDA)
+"RTN","RCDPXPAP",41,0)
+ .   ;  check to see if receipt has been processed (fms document)
+"RTN","RCDPXPAP",42,0)
+ .   D DIQ344^RCDPRPLM(RCRECTDA,"200;")
+"RTN","RCDPXPAP",43,0)
+ .   ;  code sheet already sent once, this is a retransmission, check it
+"RTN","RCDPXPAP",44,0)
+ .   I RCDPDATA(344,RCRECTDA,200,"E")'="" D
+"RTN","RCDPXPAP",45,0)
+ .   .   S STATUS=$$STATUS^GECSSGET(RCDPDATA(344,RCRECTDA,200,"E"))
+"RTN","RCDPXPAP",46,0)
+ .   .   ;  okay to continue if status is Error, Rejected, or not defined (-1)
+"RTN","RCDPXPAP",47,0)
+ .   .   I $E(STATUS)="E"!($E(STATUS)="R")!(STATUS=-1) Q
+"RTN","RCDPXPAP",48,0)
+ .   .   S ^TMP($J,"RCDPXPAP","DUPLICATE",RCRECTDA)="Receipt Not Changed^1"
+"RTN","RCDPXPAP",49,0)
+ .   I $D(^TMP($J,"RCDPXPAP","DUPLICATE",RCRECTDA)) L -^RCY(344,RCRECTDA) Q
+"RTN","RCDPXPAP",50,0)
+ .   ;
+"RTN","RCDPXPAP",51,0)
+ .   ;  mark receipt as processed (closed) to prevent editing
+"RTN","RCDPXPAP",52,0)
+ .   D MARKPROC^RCDPUREC(RCRECTDA,"")
+"RTN","RCDPXPAP",53,0)
+ .   ;  store the receipt for automatic processing (and unlock) below
+"RTN","RCDPXPAP",54,0)
+ .   ;  the 0 is the count of unlinked accts displayed in mail message
+"RTN","RCDPXPAP",55,0)
+ .   S ^TMP($J,"RCDPXPAP","PROCESS",RCRECTDA)=0
+"RTN","RCDPXPAP",56,0)
+ .   ;
+"RTN","RCDPXPAP",57,0)
+ .   ;  build a list of the current stored payments by batch_sequence
+"RTN","RCDPXPAP",58,0)
+ .   ;  number to prevent adding duplicates
+"RTN","RCDPXPAP",59,0)
+ .   K ^TMP($J,"RCDPXPAP",RCRECTDA)
+"RTN","RCDPXPAP",60,0)
+ .   S RCLINE=0 F  S RCLINE=$O(^RCY(344,RCRECTDA,1,RCLINE)) Q:'RCLINE  D
+"RTN","RCDPXPAP",61,0)
+ .   .   S RCDPDATA=$G(^RCY(344,RCRECTDA,1,RCLINE,2))
+"RTN","RCDPXPAP",62,0)
+ .   .   I '$P(RCDPDATA,"^",2)!('$P(RCDPDATA,"^",3)) Q
+"RTN","RCDPXPAP",63,0)
+ .   .   S ^TMP($J,"RCDPXPAP",RCRECTDA,$P(RCDPDATA,"^",2),$P(RCDPDATA,"^",3))=RCLINE
+"RTN","RCDPXPAP",64,0)
+ .   ;
+"RTN","RCDPXPAP",65,0)
+ .   ;  loop transactions and add them to the receipt
+"RTN","RCDPXPAP",66,0)
+ .   S RCLINE=0 F  S RCLINE=$O(^TMP($J,"RCDPXPAY","DEPOSIT",RCDEPOSI,RCLINE)) Q:'RCLINE  D
+"RTN","RCDPXPAP",67,0)
+ .   .   ;  data in the form:
+"RTN","RCDPXPAP",68,0)
+ .   .   ;  acct lookup(1)  ^ amount(2) ^ batch(3) ^ sequence(4) ^
+"RTN","RCDPXPAP",69,0)
+ .   .   ;  payment type(5) ^ payment description(6)
+"RTN","RCDPXPAP",70,0)
+ .   .   S RCDPDATA=^TMP($J,"RCDPXPAY","DEPOSIT",RCDEPOSI,RCLINE)
+"RTN","RCDPXPAP",71,0)
+ .   .   ;  if batch and sequence number already stored get current entry
+"RTN","RCDPXPAP",72,0)
+ .   .   ;  and do not add a new one
+"RTN","RCDPXPAP",73,0)
+ .   .   S RCTRANDA=0
+"RTN","RCDPXPAP",74,0)
+ .   .   I $P(RCDPDATA,"^",3),$P(RCDPDATA,"^",4) S RCTRANDA=+$G(^TMP($J,"RCDPXPAP",RCRECTDA,+$P(RCDPDATA,"^",3),+$P(RCDPDATA,"^",4)))
+"RTN","RCDPXPAP",75,0)
+ .   .   I 'RCTRANDA S RCTRANDA=+$$ADDTRAN^RCDPURET(RCRECTDA)
+"RTN","RCDPXPAP",76,0)
+ .   .   I 'RCTRANDA D ERROR^RCDPXPAM(RCDPDATE,RCDPXMZ,"Unable to ADD a new transaction to the AR BATCH PAYMENT file #344") Q
+"RTN","RCDPXPAP",77,0)
+ .   .   ;
+"RTN","RCDPXPAP",78,0)
+ .   .   ;  if the entry has already been processed, do not make any changes
+"RTN","RCDPXPAP",79,0)
+ .   .   I $P(^RCY(344,RCRECTDA,1,RCTRANDA,0),"^",5) S:'$D(^TMP($J,"RCDPXPAP","DUPLICATE",RCRECTDA)) ^(RCRECTDA)="Receipt Not Changed" Q
+"RTN","RCDPXPAP",80,0)
+ .   .   I $D(^TMP($J,"RCDPXPAP","DUPLICATE",RCRECTDA)) S ^(RCRECTDA)="Receipt Updated"
+"RTN","RCDPXPAP",81,0)
+ .   .   ;
+"RTN","RCDPXPAP",82,0)
+ .   .   ;  lookup account
+"RTN","RCDPXPAP",83,0)
+ .   .   S RCDFN=$$FINDACCT($P(RCDPDATA,"^"))_";DPT("
+"RTN","RCDPXPAP",84,0)
+ .   .   ;  acct not found, count as unlinked for mail message
+"RTN","RCDPXPAP",85,0)
+ .   .   I 'RCDFN S ^TMP($J,"RCDPXPAP","PROCESS",RCRECTDA)=^TMP($J,"RCDPXPAP","PROCESS",RCRECTDA)+1
+"RTN","RCDPXPAP",86,0)
+ .   .   ;
+"RTN","RCDPXPAP",87,0)
+ .   .   ;  build dr string to store the data
+"RTN","RCDPXPAP",88,0)
+ .   .   S DR=".21////"_$P(RCDPDATA,"^")_";"       ;account
+"RTN","RCDPXPAP",89,0)
+ .   .   I RCDFN S DR=DR_".03////^S X=RCDFN;.09////^S X=RCDFN;"
+"RTN","RCDPXPAP",90,0)
+ .   .   S DR=DR_".22////"_+$P(RCDPDATA,"^",3)_";" ;batch number
+"RTN","RCDPXPAP",91,0)
+ .   .   S DR=DR_".23////"_+$P(RCDPDATA,"^",4)_";" ;sequence number
+"RTN","RCDPXPAP",92,0)
+ .   .   S DR=DR_".24////"_$P(RCDPDATA,"^",5)_";"  ;payment type
+"RTN","RCDPXPAP",93,0)
+ .   .   S DR=DR_".04////"_($P(RCDPDATA,"^",2)/100)_";" ;payment amount
+"RTN","RCDPXPAP",94,0)
+ .   .   S DR=DR_".06////"_RCDEPDAT_";"            ;payment date = deposit date
+"RTN","RCDPXPAP",95,0)
+ .   .   ;
+"RTN","RCDPXPAP",96,0)
+ .   .   S PAYDESC=$P(RCDPDATA,"^",6)
+"RTN","RCDPXPAP",97,0)
+ .   .   ;  payment type check
+"RTN","RCDPXPAP",98,0)
+ .   .   I $P(RCDPDATA,"^",5)=2 D
+"RTN","RCDPXPAP",99,0)
+ .   .   .   ;  check number : account number : bank routing number
+"RTN","RCDPXPAP",100,0)
+ .   .   .   I $P(PAYDESC,":")'="" S DR=DR_".07////"_$P(PAYDESC,":")_";"
+"RTN","RCDPXPAP",101,0)
+ .   .   .   I $P(PAYDESC,":",2)'="" S DR=DR_".13////"_$P(PAYDESC,":",2)_";"
+"RTN","RCDPXPAP",102,0)
+ .   .   .   I $P(PAYDESC,":",3)'="" S DR=DR_".08////"_$P(PAYDESC,":",3)_";"
+"RTN","RCDPXPAP",103,0)
+ .   .   ;  payment type credit, store credit card number
+"RTN","RCDPXPAP",104,0)
+ .   .   I $P(RCDPDATA,"^",5)=3,$P(PAYDESC,":")'="" S DR=DR_".11////"_$P(PAYDESC,":")_";"
+"RTN","RCDPXPAP",105,0)
+ .   .   ;
+"RTN","RCDPXPAP",106,0)
+ .   .   ;  store the payment under the receipt
+"RTN","RCDPXPAP",107,0)
+ .   .   D FILETRAN(RCRECTDA,RCTRANDA,DR)
+"RTN","RCDPXPAP",108,0)
+ ;
+"RTN","RCDPXPAP",109,0)
+ ;  automatically process the receipts added
+"RTN","RCDPXPAP",110,0)
+ ;  ^tmp($j,"rcdpxpap","process",receiptda)=""
+"RTN","RCDPXPAP",111,0)
+ S RCRECTDA=0 F  S RCRECTDA=$O(^TMP($J,"RCDPXPAP","PROCESS",RCRECTDA)) Q:'RCRECTDA  D
+"RTN","RCDPXPAP",112,0)
+ .   D PROCESS^RCDPURE1(RCRECTDA,0)
+"RTN","RCDPXPAP",113,0)
+ .   ;  clear the lock (set above)
+"RTN","RCDPXPAP",114,0)
+ .   L -^RCY(344,RCRECTDA)
+"RTN","RCDPXPAP",115,0)
+ ;
+"RTN","RCDPXPAP",116,0)
+ ;  clear all locked deposits
+"RTN","RCDPXPAP",117,0)
+ S RCDEPTDA=0 F  S RCDEPTDA=$O(^TMP($J,"RCDPXPAP","DEPOSITLOCK",RCDEPTDA)) Q:'RCDEPTDA  D
+"RTN","RCDPXPAP",118,0)
+ .   ;  confirm deposit (recalc totals)
+"RTN","RCDPXPAP",119,0)
+ .   D CONFIRM^RCDPUDEP(RCDEPTDA)
+"RTN","RCDPXPAP",120,0)
+ .   L -^RCY(344.1,RCDEPTDA)
+"RTN","RCDPXPAP",121,0)
+ ;
+"RTN","RCDPXPAP",122,0)
+ ;  send a message to the users showing what was processed
+"RTN","RCDPXPAP",123,0)
+ D PROCMSG^RCDPXPAM
+"RTN","RCDPXPAP",124,0)
+ ;
+"RTN","RCDPXPAP",125,0)
+ ;  need to delete the 344.2 entry
+"RTN","RCDPXPAP",126,0)
+ D DELETRAN^RCDPXPA1(RCDPDATE)
+"RTN","RCDPXPAP",127,0)
+ ;
+"RTN","RCDPXPAP",128,0)
+ K ^TMP($J,"RCDPXPAP")
+"RTN","RCDPXPAP",129,0)
+ Q
+"RTN","RCDPXPAP",130,0)
+ ;
+"RTN","RCDPXPAP",131,0)
+ ;
+"RTN","RCDPXPAP",132,0)
+FINDACCT(ACCT) ;  lookup the patient and return the dfn
+"RTN","RCDPXPAP",133,0)
+ ;  if more than one patient matches acct, return null
+"RTN","RCDPXPAP",134,0)
+ ;  acct in the form 123456789ABCDE
+"RTN","RCDPXPAP",135,0)
+ ; *296 - punctuation added to not process the acct in 9n1.5ap
+"RTN","RCDPXPAP",136,0)
+ I ACCT'?9N1.5AP  D  Q DFN
+"RTN","RCDPXPAP",137,0)
+ . S DFN=+ACCT I $G(^DPT(DFN,0))'="" Q
+"RTN","RCDPXPAP",138,0)
+ . S DFN=$E(DFN,1,10)_"."_$E(DFN,11,99) I $G(^DPT(DFN,0))'="" Q 
+"RTN","RCDPXPAP",139,0)
+ . S DFN=0
+"RTN","RCDPXPAP",140,0)
+ . ;
+"RTN","RCDPXPAP",141,0)
+ N COUNT,DFN,FOUND,NAME,SSN
+"RTN","RCDPXPAP",142,0)
+ S SSN=$E(ACCT,1,9),NAME=$E(ACCT,10,99)
+"RTN","RCDPXPAP",143,0)
+ I SSN="" Q 0
+"RTN","RCDPXPAP",144,0)
+ S NAME=$TR(NAME,"/","'")
+"RTN","RCDPXPAP",145,0)
+ S COUNT=0  ;used to count number of matches
+"RTN","RCDPXPAP",146,0)
+ S FOUND=0  ;used to store matching acct's DFN number
+"RTN","RCDPXPAP",147,0)
+ S DFN=0 F  S DFN=$O(^DPT("SSN",SSN,DFN)) Q:'DFN  I $E($TR($P($G(^DPT(DFN,0)),"^")," "),1,$L(NAME))=NAME S COUNT=COUNT+1,FOUND=DFN
+"RTN","RCDPXPAP",148,0)
+ ;  multiple acct matches, return null
+"RTN","RCDPXPAP",149,0)
+ I COUNT>1 Q 0
+"RTN","RCDPXPAP",150,0)
+ ;  acct found, return dfn of account which matches
+"RTN","RCDPXPAP",151,0)
+ I FOUND Q FOUND
+"RTN","RCDPXPAP",152,0)
+ ;
+"RTN","RCDPXPAP",153,0)
+ ;  *296 - remove spaces, periods, apostrophes, dashes from the name for treasury/c&p deposits
+"RTN","RCDPXPAP",154,0)
+ ;         lookup the first 3 chars in the last name for c&p
+"RTN","RCDPXPAP",155,0)
+ I $G(RCDETY)=168 S NAME=$E(NAME,3,5)
+"RTN","RCDPXPAP",156,0)
+ S NAME=$TR(NAME," .'-")
+"RTN","RCDPXPAP",157,0)
+ S DFN=0 F  S DFN=$O(^DPT("SSN",SSN,DFN)) Q:'DFN  I $E($TR($P($G(^DPT(DFN,0)),"^")," .'-"),1,$L(NAME))=NAME S COUNT=COUNT+1,FOUND=DFN
+"RTN","RCDPXPAP",158,0)
+ ;  multiple acct matches, return null
+"RTN","RCDPXPAP",159,0)
+ I COUNT>1 Q 0
+"RTN","RCDPXPAP",160,0)
+ ;  return dfn of account which matches, or 0 if not found
+"RTN","RCDPXPAP",161,0)
+ Q +FOUND
+"RTN","RCDPXPAP",162,0)
+ ;
+"RTN","RCDPXPAP",163,0)
+ ;
+"RTN","RCDPXPAP",164,0)
+FILETRAN(RECTDA,TRANDA,DR) ;  file the payment transaction
+"RTN","RCDPXPAP",165,0)
+ N %,D,D0,D1,DA,DI,DIC,DICR,DIE,DIG,DIH,DIU,DIV,DIW,DQ,X,Y
+"RTN","RCDPXPAP",166,0)
+ S (DIC,DIE)="^RCY(344,"_RECTDA_",1,"
+"RTN","RCDPXPAP",167,0)
+ S DA=TRANDA,DA(1)=RECTDA
+"RTN","RCDPXPAP",168,0)
+ D ^DIE
+"RTN","RCDPXPAP",169,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9385,6)
+^260
+**END**
+**END**

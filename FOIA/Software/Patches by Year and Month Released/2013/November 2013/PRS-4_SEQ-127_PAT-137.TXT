@@ -1,0 +1,160 @@
+$TXT Created by GOLDSMITH,RHONDA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 10/25/12 at 14:58
+=============================================================================
+Run Date: NOV 25, 2013                     Designation: PRS*4*137
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #127                      Status: Released
+                  Compliance Date: DEC 26, 2013
+=============================================================================
+
+Associated patches: (v)PRS*4*132   <<= must be installed BEFORE `PRS*4*137'
+
+Subject: INTERMITTENT ON CALL; MONTHLY CALENDAR FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects two issues:
+ 1. Intermittent nurse entitled to but not able to post on call.
+ 2. PRS MONTH CALENDAR option does not include pay periods past 2012 or
+    holidays past 2013.
+    
+ ASSOCIATED NSR(s):
+ ==================
+   N/A   
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000712254 - Can't Post On Call
+ 2. INC000000761251 - PAID Other: Option needs updating
+    Duplicate(s)
+    INC000000810212 - Monthly Calendar Option Problem
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines VAHCS 
+ Birmingham VAMC 
+ VA Maryland HCS 
+     
+ Remedy Overview:
+ ================
+ 1. INC000000712254 - Can't Post On Call
+  
+ Problem:
+ --------
+ Intermittent nurse entitled to but not able to post on call in the
+ Post Employee Time option in the Timekeeper Menu.  On Call is not one
+ of the available types of time during posting of the timecard.
+  
+ Resolution:
+ -----------
+ Modified routine PRSATP to allow the On Call 'Type of Time' for posting 
+ on entitled Intermittent employees. 
+  
+  
+ 2. INC000000761251 - PAID Other: Option needs updating
+  
+ Problem:
+ --------
+ Option [PRS MONTH CALENDAR] does not display pay periods starting in 2013 
+ and does not display holidays beginning in 2014.
+   
+ Resolution:
+ ----------- 
+ Modified routine PRSLIB01 to display pay periods and holidays past 2013
+ and 2014.
+  
+   
+   INSTALLATION INSTRUCTIONS:
+   ==========================
+   If installed during the normal workday, it is recommended that the PAID
+   users be off the system. Other VISTA users will not be affected. 
+  
+   Install Time - less than 2 minutes.
+   
+   1.   Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.
+   
+   2.   Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+   
+            Edits and Distribution ...
+            Utilities ...
+            Installation ...
+            Patch Monitor Main Menu ...
+   
+        Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+     1      Load a Distribution
+     2      Verify Checksums in Transport Global
+     3      Print Transport Global
+     4      Compare Transport Global to Current System
+     5      Backup a Transport Global
+     6      Install Package(s)
+            Restart Install of Package(s)
+            Unload a Distribution
+   
+             Select Installation Option:
+   
+   3.   From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PRS*4.0*137):
+   
+        a.  Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+        b.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed. It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        d.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+   
+   4.   Use the Install Package(s) option and select the package
+        PRS*4.0*137.
+   
+        a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', answer NO
+        b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//', answer YES.
+        c.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':', enter
+  
+                      [PRSA TK POST]        Post Employee Time
+                      [PRS MONTH CALENDAR]  Monthly Calendar
+  
+        d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSATP
+    Before: B34908799   After: B35038644  **22,57,69,92,102,93,112,126,
+                                           132,137**
+Routine Name: PRSLIB01
+    Before: B52516097   After: B52519137  **45,93,137**
+ 
+Routine list of preceding patches: 132
+
+=============================================================================
+User Information:
+Entered By  : GOLDSMITH,RHONDA              Date Entered  : AUG 30, 2012
+Completed By: SHERMAN,BILL                  Date Completed: NOV 20, 2013
+Released By : CARTER,LYNN                   Date Released : NOV 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
