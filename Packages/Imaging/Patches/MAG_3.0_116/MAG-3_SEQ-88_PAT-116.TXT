@@ -1,0 +1,244 @@
+
+=============================================================================
+Run Date: JUL 30, 2013                     Designation: MAG*3*116
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #88                      Status: Released
+                  Compliance Date: SEP 27, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*34    <<= must be installed BEFORE `MAG*3*116'
+                    (v)MAG*3*49    <<= must be installed BEFORE `MAG*3*116'
+
+Subject: QUERY RETRIEVE PROVIDER II
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ MAG*3.0*116, the DICOM Query/Retrieve Provider II patch enhances
+ MAG*3.0*66 Query/Retrieve Provider by enabling the Query/Retrieve
+ application to access the new data structures introduced with the release
+ of MAG*3.0*34 and to retrieve the new SOP class objects for which support
+ was introduced in MAG*3.0*34.
+  
+ MAG*3.0*116 has enhanced logging, which ensures an adequate audit trail 
+ that meets the VA 6500 audit logging security requirements when records
+ are accessed through a query/retrieve request.
+  
+ The Query/Retrieve application in MAG*3.0*116 provides these features and 
+ benefits:
+  
+ - The capability to query and retrieve any stored SOP classes. However, in
+ MAG*3.0*34, the system default is to not store new SOP classes.
+  
+ - Runs as a service on the Hybrid DICOM Image Gateway (HDIG).
+  
+ - Supports enhanced logging in compliance with the recommendations 
+   of the audit requirements that were made for MAG*3.0*66
+   * Logs all system level events in a new Audit log
+   * Logs all application level events in the Application log
+   * Logs all warnings and errors in the ImagingExchangeWebApp.log
+   * Logs all Query/Retrieve requests to access sensitive patient records
+     in the VistA Sensitive Patient Log, the DICOM service account
+     information when logging entries. 
+  
+  
+  
+ Distribution of the Software
+ ============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P116
+  
+ NOTE:  You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents
+ ==============
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*116 KIDS                        MAG3_0P116.KID             ASCII 
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                   File Name                  
+ -------------------------------------------------------------------------
+ MAG*3.0*116 Patch Description      MAG3_0P116_Patch_Description.pdf
+  
+ MAG*3.0*34, MAG*3.0*116 
+ and MAG*3.0*118 Planning 
+ and Installation Instructions     MAG3_0P118_Patch_Installation.pdf
+  
+ Associated Patches
+ ==================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*116 can be installed. The KIDS files 
+ should be installed on the VistA system host in this order: 
+     
+     MAG*3.0*49
+     MAG*3.0*34
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+  
+ Maryland HCS, Baltimore, MD (Integrated)
+ Biloxi, MS (Large)
+ Charleston, SC (Large)
+  
+ Remedy Calls
+ ============
+  
+ This patch addresses the following Remedy help desk calls:
+  
+ 1. 463208- RF Multiframe images failed on the C-MOVE operation
+  
+ Problem:
+ ========
+ RF Multiframe images failed on the C-MOVE operation.
+  
+ Resolution:
+ ===========
+ Resolved in MAG*3.0*116 for old studies stored in a TGA format.  As of 
+ MAG*3.0*99, RF images should be stored as DICOM, which eliminates the 
+ problem.
+  
+ 2. 475747- Vista IMAGING - Error message displays after clicking 
+ START QR
+  
+ Problem:
+ ========
+ In setting up QR for DICOM gateway, page 194 of DICOM Gateway User Manual 
+ states after all the configurations, then an ACCESS/VERIFY logon prompt 
+ should appear when clicking START QR. A flash error message displays then 
+ the windows close.
+  
+ Resolution:
+ ===========
+ In MAG*3.0*116, Q/R starts as a service on the HDIG automatically. The 
+ login screen is no longer needed.
+  
+ 3. 488623- Multiple modality tags on Muskogee priors (sending to NTP).
+  
+ Problem:
+ ========
+ There is an odd behavior with some older Muskogee cases. The studies are 
+ being received with multiple values in the DICOM modality tag (0008,0060) 
+ of CR\DX\RF, but the SOP Class UID is CR, which corresponds to how it is 
+ acquired. An unnecessary check/modification by the Q/R application maybe 
+ occurring. On the outbound reconstruction of the DICOM object, the 
+ software is checking the RAD/NUC Med Procedure file (#71) for modality 
+ code(s) for a given procedure. If that procedure has multiple modality 
+ codes (which is common), then the application sends everything it finds. 
+ This is illegal according to the DICOM standard (0008, 0060 has a VM=1). 
+ Downstream this is causing issues with the vendor and their hanging 
+ protocols. The vendor's application is seeing the discrepancy between the 
+ SOP Class UID and the modality codes, and trying to correct by deeming 
+ the image as a Secondary Capture.
+  
+ Resolution:
+ ===========
+ Only a single value is returned for the Modality Code, as expected by the 
+ DICOM Standard.
+  
+ 4. 584576 - Receiving multiple tags on images and multiple values in 
+ the modality tags
+  
+ Problem:
+ ========
+ Receiving multiple tags on images. We are sending stat studies to a NTP 
+ site after hours and they are reporting that they are receiving SC 
+ modality types. They are also receiving images with multiple values in 
+ the modality tag.
+  
+ Resolution:
+ ===========
+ Only a single value is returned for the Modality Code, as expected by the 
+ DICOM Standard.
+  
+ New Service Requests
+ ====================
+ This patch addresses the following New Service Request (NSR)
+   20070512 - VistA Imaging Core Infrastructure
+  
+ Patient Safety Issues
+ =====================
+ There are no Patient Safety Issue (PSI) reports associated with this
+ patch.
+  
+ Data Dictionaries
+ =================
+ There are no new or modified data dictionaries are included in this patch.
+  
+ Security Keys
+ =============
+ There are no new or modified security keys included in this patch. 
+  
+ Remote Procedures
+ =================
+ There are no new or modified remote procedures included in this patch.
+  
+ Menu Options
+ ============
+ There are no new or modified VistA menu options included in this patch.
+  
+ Templates
+ =========
+ There are no new or modified templates included in this patch.
+  
+ DICOM Gateway Changes
+ =====================
+ The MAG*3.0*118 DICOM Gateway includes the MAG*3.0*116 DICOM Gateway. All 
+ changes in the MAG*3.0*116 DICOM Gateway are documented in the MAG*3.0*118
+ Patch Description.
+  
+ VistA System Changes
+ ====================
+ Though MAG*3.0*116 includes a KIDS package to be installed on the VistA 
+ Host, all MAG*3.0*116 VistA functional components and changes are 
+ implemented by the MAG*3.0*118 KIDS. For information about these 
+ components and changes, please see the MAG*3.0*118 Patch Description.
+  
+ Installation 
+ ============
+ MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 must be installed together. For 
+ more information about the prerequisites and the procedures to install 
+ the patches, please refer to the combined installation instructions for 
+ all three patches - MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 Installation 
+ Instructions (MAG3_0P118_Patch_Installation.pdf). 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4522;May 01, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIP116
+    Before:       n/a   After:  B4110392  **116**
+
+=============================================================================
+User Information:
+Entered By  : BOLTEN,LAYLA                  Date Entered  : JUL 13, 2010
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 05, 2013
+Released By : MASSEY,DAVID                  Date Released : JUL 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

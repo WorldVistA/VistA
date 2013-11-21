@@ -1,0 +1,1316 @@
+Released OR*3*354 SEQ #322
+Extracted from mail message
+**KIDS**:OR*3.0*354^
+
+**INSTALL NAME**
+OR*3.0*354
+"BLD",8896,0)
+OR*3.0*354^ORDER ENTRY/RESULTS REPORTING^0^3130620^y
+"BLD",8896,1,0)
+^^24^24^3121128^^^
+"BLD",8896,1,1,0)
+This patch will correct the following issues:
+"BLD",8896,1,2,0)
+1) When running the Anticoagulation Management GUI, in some cases 
+"BLD",8896,1,3,0)
+   the help file will fail to be found.
+"BLD",8896,1,4,0)
+  
+"BLD",8896,1,5,0)
+2) After a Missed Appointment has been filed, there are cases in 
+"BLD",8896,1,6,0)
+   which the Daily dosing schedule and total weekly dose don't 
+"BLD",8896,1,7,0)
+   coincide with what has been entered into the patient notes.
+"BLD",8896,1,8,0)
+ 
+"BLD",8896,1,9,0)
+3) The clinic and facility-wide calculation of the time in therapeutic 
+"BLD",8896,1,10,0)
+   range (TTR) using the Rosendaal method count inactive patients. 
+"BLD",8896,1,11,0)
+   This is incorrect because the Rosendaal method makes no mention of 
+"BLD",8896,1,12,0)
+   missed appointments.
+"BLD",8896,1,13,0)
+ 
+"BLD",8896,1,14,0)
+4) It is possible to create progress notes that contain no text. This 
+"BLD",8896,1,15,0)
+   is caused by the user having the ability to continue and file the 
+"BLD",8896,1,16,0)
+   note before making a selection about what data to put in the note.
+"BLD",8896,1,17,0)
+ 
+"BLD",8896,1,18,0)
+5) The patients lost to follow up utility does not take missed 
+"BLD",8896,1,19,0)
+   appointments into account. This will cause a provider to incorrectly 
+"BLD",8896,1,20,0)
+   believe that a patient has been seen, where he/she may have, in 
+"BLD",8896,1,21,0)
+   reality, just missed an appointment.
+"BLD",8896,1,22,0)
+   
+"BLD",8896,1,23,0)
+6) Error "'¼' is not a valid floating point value" is displaying when 
+"BLD",8896,1,24,0)
+   entering 0.25 as the tablet size for a Monday dose.
+"BLD",8896,4,0)
+^9.64PA^^
+"BLD",8896,6)
+3^
+"BLD",8896,6.3)
+12
+"BLD",8896,"INID")
+^
+"BLD",8896,"INIT")
+EN1^ORY354
+"BLD",8896,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8896,"KRN",.4,0)
+.4
+"BLD",8896,"KRN",.401,0)
+.401
+"BLD",8896,"KRN",.402,0)
+.402
+"BLD",8896,"KRN",.403,0)
+.403
+"BLD",8896,"KRN",.5,0)
+.5
+"BLD",8896,"KRN",.84,0)
+.84
+"BLD",8896,"KRN",3.6,0)
+3.6
+"BLD",8896,"KRN",3.8,0)
+3.8
+"BLD",8896,"KRN",9.2,0)
+9.2
+"BLD",8896,"KRN",9.8,0)
+9.8
+"BLD",8896,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",8896,"KRN",9.8,"NM",1,0)
+ORAMTTR^^0^B99608227
+"BLD",8896,"KRN",9.8,"NM",2,0)
+ORAM2^^0^B139162666
+"BLD",8896,"KRN",9.8,"NM","B","ORAM2",2)
+
+"BLD",8896,"KRN",9.8,"NM","B","ORAMTTR",1)
+
+"BLD",8896,"KRN",19,0)
+19
+"BLD",8896,"KRN",19.1,0)
+19.1
+"BLD",8896,"KRN",101,0)
+101
+"BLD",8896,"KRN",409.61,0)
+409.61
+"BLD",8896,"KRN",771,0)
+771
+"BLD",8896,"KRN",779.2,0)
+779.2
+"BLD",8896,"KRN",870,0)
+870
+"BLD",8896,"KRN",8989.51,0)
+8989.51
+"BLD",8896,"KRN",8989.52,0)
+8989.52
+"BLD",8896,"KRN",8994,0)
+8994
+"BLD",8896,"KRN","B",.4,.4)
+
+"BLD",8896,"KRN","B",.401,.401)
+
+"BLD",8896,"KRN","B",.402,.402)
+
+"BLD",8896,"KRN","B",.403,.403)
+
+"BLD",8896,"KRN","B",.5,.5)
+
+"BLD",8896,"KRN","B",.84,.84)
+
+"BLD",8896,"KRN","B",3.6,3.6)
+
+"BLD",8896,"KRN","B",3.8,3.8)
+
+"BLD",8896,"KRN","B",9.2,9.2)
+
+"BLD",8896,"KRN","B",9.8,9.8)
+
+"BLD",8896,"KRN","B",19,19)
+
+"BLD",8896,"KRN","B",19.1,19.1)
+
+"BLD",8896,"KRN","B",101,101)
+
+"BLD",8896,"KRN","B",409.61,409.61)
+
+"BLD",8896,"KRN","B",771,771)
+
+"BLD",8896,"KRN","B",779.2,779.2)
+
+"BLD",8896,"KRN","B",870,870)
+
+"BLD",8896,"KRN","B",8989.51,8989.51)
+
+"BLD",8896,"KRN","B",8989.52,8989.52)
+
+"BLD",8896,"KRN","B",8994,8994)
+
+"BLD",8896,"QUES",0)
+^9.62^^
+"BLD",8896,"REQB",0)
+^9.611^1^1
+"BLD",8896,"REQB",1,0)
+OR*3.0*339^2
+"BLD",8896,"REQB","B","OR*3.0*339",1)
+
+"INIT")
+EN1^ORY354
+"MBREQ")
+0
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+354^3130620^520736428
+"PKG",188,22,1,"PAH",1,1,0)
+^^24^24^3130620
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",188,22,1,"PAH",1,1,2,0)
+1) When running the Anticoagulation Management GUI, in some cases 
+"PKG",188,22,1,"PAH",1,1,3,0)
+   the help file will fail to be found.
+"PKG",188,22,1,"PAH",1,1,4,0)
+  
+"PKG",188,22,1,"PAH",1,1,5,0)
+2) After a Missed Appointment has been filed, there are cases in 
+"PKG",188,22,1,"PAH",1,1,6,0)
+   which the Daily dosing schedule and total weekly dose don't 
+"PKG",188,22,1,"PAH",1,1,7,0)
+   coincide with what has been entered into the patient notes.
+"PKG",188,22,1,"PAH",1,1,8,0)
+ 
+"PKG",188,22,1,"PAH",1,1,9,0)
+3) The clinic and facility-wide calculation of the time in therapeutic 
+"PKG",188,22,1,"PAH",1,1,10,0)
+   range (TTR) using the Rosendaal method count inactive patients. 
+"PKG",188,22,1,"PAH",1,1,11,0)
+   This is incorrect because the Rosendaal method makes no mention of 
+"PKG",188,22,1,"PAH",1,1,12,0)
+   missed appointments.
+"PKG",188,22,1,"PAH",1,1,13,0)
+ 
+"PKG",188,22,1,"PAH",1,1,14,0)
+4) It is possible to create progress notes that contain no text. This 
+"PKG",188,22,1,"PAH",1,1,15,0)
+   is caused by the user having the ability to continue and file the 
+"PKG",188,22,1,"PAH",1,1,16,0)
+   note before making a selection about what data to put in the note.
+"PKG",188,22,1,"PAH",1,1,17,0)
+ 
+"PKG",188,22,1,"PAH",1,1,18,0)
+5) The patients lost to follow up utility does not take missed 
+"PKG",188,22,1,"PAH",1,1,19,0)
+   appointments into account. This will cause a provider to incorrectly 
+"PKG",188,22,1,"PAH",1,1,20,0)
+   believe that a patient has been seen, where he/she may have, in 
+"PKG",188,22,1,"PAH",1,1,21,0)
+   reality, just missed an appointment.
+"PKG",188,22,1,"PAH",1,1,22,0)
+   
+"PKG",188,22,1,"PAH",1,1,23,0)
+6) Error "'¼' is not a valid floating point value" is displaying when 
+"PKG",188,22,1,"PAH",1,1,24,0)
+   entering 0.25 as the tablet size for a Monday dose.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORAM2")
+0^2^B139162666^B121018591
+"RTN","ORAM2",1,0)
+ORAM2 ;POR/RSF - ANTICOAGULATION MANAGEMENT RPCS (3 of 4) ; 6/21/12 7:48am
+"RTN","ORAM2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**307,339,354**;Dec 17, 1997;Build 12
+"RTN","ORAM2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","ORAM2",4,0)
+ Q
+"RTN","ORAM2",5,0)
+ ;
+"RTN","ORAM2",6,0)
+ALLGOAL(RESULT,DAYS,CLINIC) ; last inr for all pts seen in last x days
+"RTN","ORAM2",7,0)
+ ;;RPC = ORAM2 ALLGOAL
+"RTN","ORAM2",8,0)
+ N ORAMDFN,ORAMNOW,ORAMCUT,ORAMCNT,ORAMPC,ORAMGOOD,ORAMBAD,ORAMBL
+"RTN","ORAM2",9,0)
+ S ORAMDFN=0,ORAMCNT=0,ORAMGOOD=0,ORAMBAD=0
+"RTN","ORAM2",10,0)
+ S ORAMNOW=$$NOW^XLFDT
+"RTN","ORAM2",11,0)
+ S ORAMCUT=$$FMADD^XLFDT(ORAMNOW,-DAYS)
+"RTN","ORAM2",12,0)
+ F  S ORAMDFN=$O(^ORAM(103,ORAMDFN)) Q:'ORAMDFN  D
+"RTN","ORAM2",13,0)
+ . N ORAMFS,ORAM3D0,ORAMDATE,ORAMCLIN
+"RTN","ORAM2",14,0)
+ . S ORAMFS=$O(^ORAM(103,ORAMDFN,3," "),-1) Q:$G(ORAMFS)=""
+"RTN","ORAM2",15,0)
+ . S ORAMCLIN=$P($G(^ORAM(103,ORAMDFN,6)),U,2)
+"RTN","ORAM2",16,0)
+ . I +$G(CLINIC),(ORAMCLIN'=CLINIC) Q
+"RTN","ORAM2",17,0)
+ . S ORAM3D0=$G(^ORAM(103,ORAMDFN,3,ORAMFS,0)),ORAMDATE=$P(ORAM3D0,"^")
+"RTN","ORAM2",18,0)
+ . I ($G(ORAMDATE)>$G(ORAMCUT)) D
+"RTN","ORAM2",19,0)
+ .. N ORAMINR,ORAMGOAL,ORAMGLO,ORAMGHI
+"RTN","ORAM2",20,0)
+ .. S ORAMINR=$P(ORAM3D0,"^",3),ORAMGOAL=$P(ORAM3D0,"^",12),ORAMGLO=$P(ORAMGOAL,"-"),ORAMGHI=$P(ORAMGOAL,"-",2) S:ORAMGHI[" " ORAMGHI=$P(ORAMGHI," ",2)
+"RTN","ORAM2",21,0)
+ .. S ORAMGLO=ORAMGLO-(.1*ORAMGLO),ORAMGHI=ORAMGHI+(.1*ORAMGHI)
+"RTN","ORAM2",22,0)
+ .. S ORAMCNT=ORAMCNT+1
+"RTN","ORAM2",23,0)
+ .. I (ORAMINR'<ORAMGLO)&(ORAMINR'>ORAMGHI) S ORAMGOOD=ORAMGOOD+1
+"RTN","ORAM2",24,0)
+ .. E  D
+"RTN","ORAM2",25,0)
+ ... N ORAMNAME,ORAMSSN,LINE
+"RTN","ORAM2",26,0)
+ ... S ORAMBAD=ORAMBAD+1,LINE=""
+"RTN","ORAM2",27,0)
+ ... S ORAMNAME=$P($P(^DPT(ORAMDFN,0),"^"),","),ORAMSSN=$E($P(^DPT(ORAMDFN,0),"^",9),6,9)
+"RTN","ORAM2",28,0)
+ ... S LINE=$$SETSTR^VALM1(ORAMNAME,LINE,1,15)
+"RTN","ORAM2",29,0)
+ ... S LINE=$$SETSTR^VALM1("("_ORAMSSN_")",LINE,17,6)
+"RTN","ORAM2",30,0)
+ ... S LINE=$$SETSTR^VALM1($S(+ORAMINR>0:ORAMINR,1:"N/A"),LINE,25,5)
+"RTN","ORAM2",31,0)
+ ... S LINE=$$SETSTR^VALM1("("_ORAMGOAL_")",LINE,32,9)
+"RTN","ORAM2",32,0)
+ ... S RESULT(ORAMBAD)=LINE
+"RTN","ORAM2",33,0)
+ I ORAMCNT>0 S ORAMPC=$J(((ORAMGOOD/ORAMCNT)*100),3,1)
+"RTN","ORAM2",34,0)
+ I ORAMBAD'="" S ORAMBL=$L(ORAMBAD,"^"),$P(ORAMBAD,"^",1)=ORAMBL
+"RTN","ORAM2",35,0)
+ S RESULT(0)=$G(ORAMPC)
+"RTN","ORAM2",36,0)
+ Q
+"RTN","ORAM2",37,0)
+ ;
+"RTN","ORAM2",38,0)
+PTAPPT(RESULT,CLINIC) ; Counts # of pts/day next 45 days
+"RTN","ORAM2",39,0)
+ ;RPC=ORAM2 PTAPPT
+"RTN","ORAM2",40,0)
+ N ORAMFDT,ORAMRDT,ORAMCNT
+"RTN","ORAM2",41,0)
+ S ORAMFDT=$$FMADD^XLFDT(DT,45)_".2359",ORAMRDT=DT
+"RTN","ORAM2",42,0)
+ F  S ORAMRDT=$O(^ORAM(103,"L",ORAMRDT)) Q:(+ORAMRDT'>0)!(ORAMRDT>ORAMFDT)  D
+"RTN","ORAM2",43,0)
+ . N ORAMDT,ORAMRD,ORAMDFN
+"RTN","ORAM2",44,0)
+ . S ORAMDT=$P(ORAMRDT,"."),ORAMRD=$$FMTE^XLFDT(ORAMDT,"2DF"),ORAMDFN=0
+"RTN","ORAM2",45,0)
+ . F  S ORAMDFN=$O(^ORAM(103,"L",ORAMRDT,ORAMDFN)) Q:'ORAMDFN  D
+"RTN","ORAM2",46,0)
+ .. N ORAMCLIN S ORAMCLIN=$P($G(^ORAM(103,ORAMDFN,6)),U,2)
+"RTN","ORAM2",47,0)
+ .. Q:ORAMCLIN'=$G(CLINIC)
+"RTN","ORAM2",48,0)
+ .. S ORAMCNT(ORAMDT)=+$G(ORAMCNT(ORAMDT))+1
+"RTN","ORAM2",49,0)
+ .. S RESULT(ORAMDT)=ORAMRD_" - "_$G(ORAMCNT(ORAMDT))
+"RTN","ORAM2",50,0)
+PTAPPTQ Q
+"RTN","ORAM2",51,0)
+ ;
+"RTN","ORAM2",52,0)
+NOACT(RESULT,DAYS,CLINIC) ; Finds pts w/o AC activity past X days
+"RTN","ORAM2",53,0)
+ ;RPC=ORAM2 NOACT
+"RTN","ORAM2",54,0)
+ N ORAMDT,ORAMFDT,ORAMVST,ORAMDFN,ORAMPT,ORAMSSN,ORAMSORT,ORAMC,ORAMI,ORAMMIS,ORAMLAST,ORAMFS,ORMISVST,ORAMCLIN,ORAMDONE,ORAMFSTA
+"RTN","ORAM2",55,0)
+ S ORAMDT=$$NOW^XLFDT,ORAMFDT=$$FMADD^XLFDT(ORAMDT,-DAYS),ORAMDFN=0
+"RTN","ORAM2",56,0)
+ F  S ORAMDFN=$O(^ORAM(103,ORAMDFN)) Q:+ORAMDFN'>0  D
+"RTN","ORAM2",57,0)
+ . S ORAMFS=" ",ORAMLAST=0,ORAMMIS=0,ORAMCLIN=$P($G(^ORAM(103,ORAMDFN,6)),U,2),ORAMDONE=0
+"RTN","ORAM2",58,0)
+ . Q:(ORAMCLIN'=$G(CLINIC))!(2=$$GET1^DIQ(103,ORAMDFN,15,"I"))
+"RTN","ORAM2",59,0)
+ . F  S ORAMFS=$O(^ORAM(103,ORAMDFN,3,ORAMFS),-1) Q:(ORAMFS']"")!ORAMDONE  D
+"RTN","ORAM2",60,0)
+ . . I '$G(ORAMMIS)&$$MISSED(ORAMDFN,ORAMFS) S ORAMMIS=ORAMFS Q
+"RTN","ORAM2",61,0)
+ . . I '$G(ORAMLAST)&'$$MISSED(ORAMDFN,ORAMFS) S ORAMLAST=ORAMFS,ORAMDONE=1
+"RTN","ORAM2",62,0)
+ . Q:($$GET1^DIQ(103.011,ORAMLAST_","_ORAMDFN,.01,"I")'<ORAMFDT)
+"RTN","ORAM2",63,0)
+ . F ORAMFS="ORAMMIS","ORAMLAST" D
+"RTN","ORAM2",64,0)
+ . . K ORMISVST,ORAMFSTA
+"RTN","ORAM2",65,0)
+ . . I (ORAMFS="ORAMMIS") S ORMISVST=$$GET1^DIQ(103.011,@ORAMFS_","_ORAMDFN,80,"I"),ORAMFSTA=1
+"RTN","ORAM2",66,0)
+ . . Q:(ORAMFS="ORAMMIS")&($G(ORMISVST)'>ORAMFDT)
+"RTN","ORAM2",67,0)
+ . . S ORAMFS=@ORAMFS
+"RTN","ORAM2",68,0)
+ . . Q:'ORAMFS
+"RTN","ORAM2",69,0)
+ . . N LINE S LINE=""
+"RTN","ORAM2",70,0)
+ . . S ORAMPT=$P(^DPT(ORAMDFN,0),"^"),ORAMPT=$P(ORAMPT,","),ORAMSSN=$E($P(^DPT(ORAMDFN,0),"^",9),6,9)
+"RTN","ORAM2",71,0)
+ . . S ORAMVST=$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),"^")
+"RTN","ORAM2",72,0)
+ . . I $G(ORMISVST) S ORAMVST=ORMISVST
+"RTN","ORAM2",73,0)
+ . . S LINE=$$SETSTR^VALM1(ORAMPT,LINE,1,15)
+"RTN","ORAM2",74,0)
+ . . S LINE=$$SETSTR^VALM1("("_ORAMSSN_")",LINE,17,6)
+"RTN","ORAM2",75,0)
+ . . S LINE=$$SETSTR^VALM1($S($G(ORAMFSTA):"Missed Ap: ",1:"Last Seen: ")_$$FMTE^XLFDT($P(ORAMVST,"."),"2DF"),LINE,25,19)
+"RTN","ORAM2",76,0)
+ . . S ORAMSORT($P(ORAMVST,"."),ORAMPT_ORAMSSN)=LINE
+"RTN","ORAM2",77,0)
+ S (ORAMC,ORAMI)=0
+"RTN","ORAM2",78,0)
+ F  S ORAMI=$O(ORAMSORT(ORAMI)) Q:+ORAMI'>0  D
+"RTN","ORAM2",79,0)
+ . N ORAMJ S ORAMJ=""
+"RTN","ORAM2",80,0)
+ . F  S ORAMJ=$O(ORAMSORT(ORAMI,ORAMJ)) Q:ORAMJ']""  D
+"RTN","ORAM2",81,0)
+ . . S ORAMC=ORAMC+1,RESULT(ORAMC)=$G(ORAMSORT(ORAMI,ORAMJ))
+"RTN","ORAM2",82,0)
+ I ORAMC=0 S RESULT(0)="No patients lost to follow-up "_DAYS_" days or longer."
+"RTN","ORAM2",83,0)
+NOACTQ Q
+"RTN","ORAM2",84,0)
+ ;
+"RTN","ORAM2",85,0)
+MISSED(DFN,FS) ;*354 Added
+"RTN","ORAM2",86,0)
+ ;Input DFN -> Patient IEN
+"RTN","ORAM2",87,0)
+ ;      FS  -> FlowSheet IEN
+"RTN","ORAM2",88,0)
+ ;Output 1 if this flowsheet entry was a missed appt.
+"RTN","ORAM2",89,0)
+ ;       0 if this flowsheet entry was not a missed appt.
+"RTN","ORAM2",90,0)
+ ;
+"RTN","ORAM2",91,0)
+ N ORAMCM,IENS,I,RSLT
+"RTN","ORAM2",92,0)
+ Q:'$G(DFN)!'$G(FS) 0
+"RTN","ORAM2",93,0)
+ S IENS=FS_","_DFN_",",(I,RSLT)=0
+"RTN","ORAM2",94,0)
+ I $$GET1^DIQ(103.011,IENS,99,"","ORAMCM")="" Q RSLT
+"RTN","ORAM2",95,0)
+ F  S I=$O(ORAMCM(I)) Q:'I!RSLT  I ORAMCM(I)["Missed Appt; return:" S RSLT=1
+"RTN","ORAM2",96,0)
+ Q RSLT
+"RTN","ORAM2",97,0)
+ ;
+"RTN","ORAM2",98,0)
+SHOWRATE(RESULT,DFN) ; CALCULATES SHOWRATE
+"RTN","ORAM2",99,0)
+ ;;RPC=ORAM2 NOSHOW
+"RTN","ORAM2",100,0)
+ N ORAMFSDT,ORAMFS,ORAMR,ORAMARR,ORAMPC,ORAMPTT0,ORAMRDT,ORAMRDT0
+"RTN","ORAM2",101,0)
+ S ORAMR=0,ORAMPTT0=0,ORAMRDT0=""
+"RTN","ORAM2",102,0)
+ S ORAMFSDT=0 F  S ORAMFSDT=$O(^ORAM(103,DFN,3,"B",ORAMFSDT)) Q:'ORAMFSDT  D
+"RTN","ORAM2",103,0)
+ . S ORAMFS=0 F  S ORAMFS=$O(^ORAM(103,DFN,3,"B",ORAMFSDT,ORAMFS)) Q:'ORAMFS  D
+"RTN","ORAM2",104,0)
+ .. N ORAMD0,ORAMSD,ORAMSCR,ORAMPTT,ORAMLCNT,ORAMLLN,ORAMDIFF
+"RTN","ORAM2",105,0)
+ .. S ORAMD0=$G(^ORAM(103,DFN,3,ORAMFS,0)),ORAMSCR=$P(ORAMD0,"^",13),ORAMSD=$P($P(ORAMD0,"^"),"."),ORAMPTT=$P(ORAMD0,"^",3)
+"RTN","ORAM2",106,0)
+ .. S ORAMLCNT=$P($G(^ORAM(103,DFN,3,ORAMFS,1,0)),"^",3) Q:'ORAMLCNT
+"RTN","ORAM2",107,0)
+ .. S ORAMLLN=$G(^ORAM(103,DFN,3,ORAMFS,1,ORAMLCNT,0))
+"RTN","ORAM2",108,0)
+ .. S ORAMRDT=$S($G(ORAMLLN)["Next draw:":$P($G(ORAMLLN)," ",3),$G(ORAMLLN)["Callback:":"C",$G(ORAMLLN)["Missed Appt;":"M",$G(ORAMLLN)["Edited by:":"E",1:$P($G(ORAMLLN)," "))
+"RTN","ORAM2",109,0)
+ .. I ORAMRDT="E" S ORAMLCNT=ORAMLCNT-1,ORAMLLN=$G(^ORAM(103,DFN,3,ORAMFS,1,ORAMLCNT,0))
+"RTN","ORAM2",110,0)
+ .. I  S ORAMRDT=$S($G(ORAMLLN)["Next draw:":$P($G(ORAMLLN)," ",3),$G(ORAMLLN)["Callback:":$P($G(ORAMLLN)," ",2),$G(ORAMLLN)["Missed Appt;":"Q",1:$P($G(ORAMLLN)," "))
+"RTN","ORAM2",111,0)
+ .. I ORAMRDT="M" S ORAMRDT=$P($G(ORAMLLN)," ",4),ORAMR=ORAMR+1 D DT^DILF("T",ORAMRDT,.ORAMRDT) S ORAMRDT0=ORAMRDT Q  ;NOTE PT MISSED DRAW, ADD ONE TO DENOMINATOR
+"RTN","ORAM2",112,0)
+ .. I $L(ORAMRDT)>1 D DT^DILF("T",ORAMRDT,.ORAMRDT)
+"RTN","ORAM2",113,0)
+ .. I ORAMRDT="C" S ORAMRDT=$P($G(ORAMLLN)," ",2) D DT^DILF("T",ORAMRDT,.ORAMRDT) S ORAMRDT=$$FMADD^XLFDT(ORAMRDT,-1)
+"RTN","ORAM2",114,0)
+ .. I 'ORAMPTT!($G(ORAMPTT0)=$G(ORAMPTT)) S ORAMRDT0=ORAMRDT Q
+"RTN","ORAM2",115,0)
+ .. S ORAMPTT0=ORAMPTT
+"RTN","ORAM2",116,0)
+ .. I ORAMRDT0'="" S ORAMDIFF=$$FMDIFF^XLFDT(ORAMSD,ORAMRDT0,2) S ORAMR=ORAMR+1 I ORAMDIFF>-172801&(ORAMDIFF<172801) S ORAMARR(0)=$G(ORAMARR(0))+1
+"RTN","ORAM2",117,0)
+ .. S ORAMRDT0=ORAMRDT
+"RTN","ORAM2",118,0)
+ I ORAMR>0 S ORAMPC=($G(ORAMARR(0))/ORAMR)*100,ORAMPC=$E(ORAMPC,1,4)
+"RTN","ORAM2",119,0)
+ S RESULT=$G(ORAMPC)_"^"_$G(ORAMR)
+"RTN","ORAM2",120,0)
+ Q
+"RTN","ORAM2",121,0)
+ ;
+"RTN","ORAM2",122,0)
+RPTSTART(ROOT,DFN,ID,ALPHA,OMEGA,DTRANGE,REMOTE,MAX,ORFHIE) ;
+"RTN","ORAM2",123,0)
+ ;;
+"RTN","ORAM2",124,0)
+ D START^ORWRP(80,"RPT^ORAM2(.ROOT,.DFN,.ID,.ALPHA,.OMEGA,.DTRANGE,.REMOTE,.MAX,.ORFHIE)",999)
+"RTN","ORAM2",125,0)
+ Q
+"RTN","ORAM2",126,0)
+ ;
+"RTN","ORAM2",127,0)
+RPT(ROOT,DFN,ID,ALPHA,OMEGA,DTRANGE,REMOTE,MAX,ORFHIE) ;
+"RTN","ORAM2",128,0)
+ N ORAMCNT,ORAMJ,ORAMHCT,ORAMCLIN,ORAMPIND
+"RTN","ORAM2",129,0)
+ I '$D(^ORAM(103,"B",DFN)) Q
+"RTN","ORAM2",130,0)
+ W $P(^DPT(DFN,0),"^"),"  ",$E($P(^DPT(DFN,0),"^",9),1,3),"-",$E($P(^DPT(DFN,0),"^",9),4,5),"-",$E($P(^DPT(DFN,0),"^",9),6,9)
+"RTN","ORAM2",131,0)
+ I $P(^ORAM(103,DFN,0),"^",10)=1 W !,?10,"******* COMPLEX PATIENT *******"
+"RTN","ORAM2",132,0)
+ S ORAMCLIN=$P($G(^ORAM(103,DFN,6)),U,2),ORAMPIND=""
+"RTN","ORAM2",133,0)
+ I +ORAMCLIN D
+"RTN","ORAM2",134,0)
+ . N ICDC
+"RTN","ORAM2",135,0)
+ . S ICDC=$$GET^XPAR(ORAMCLIN_";SC(","ORAM AUTO PRIMARY INDICATION",1,"E")
+"RTN","ORAM2",136,0)
+ . I ICDC]"" D
+"RTN","ORAM2",137,0)
+ . . N ICDD,ICDDL,ICDDESC
+"RTN","ORAM2",138,0)
+ . . S ICDDL=$$ICDD^ICDCODE(ICDC,"ICDDESC",DT)
+"RTN","ORAM2",139,0)
+ . . S ORAMPIND=ICDC_U_$$TITLE^XLFSTR($G(ICDDESC(1)))_" ("_ICDC_")"
+"RTN","ORAM2",140,0)
+ I ORAMPIND]"" D
+"RTN","ORAM2",141,0)
+ . W !!,"Primary Indication: ",$P(ORAMPIND,U,2)
+"RTN","ORAM2",142,0)
+ . W !,"  Add'l Indication: ",$P($P(^ORAM(103,DFN,0),"^",3),"=")," (",$P($P(^ORAM(103,DFN,0),"^",3),"=",2),")"
+"RTN","ORAM2",143,0)
+ . W !,"          Goal INR: ",$P(^ORAM(103,DFN,0),"^",2)
+"RTN","ORAM2",144,0)
+ E  D
+"RTN","ORAM2",145,0)
+ . W !!,"Primary Indication: ",$P($P(^ORAM(103,DFN,0),"^",3),"=")," (",$P($P(^ORAM(103,DFN,0),"^",3),"=",2),")",?38,"Goal INR: ",$P(^ORAM(103,DFN,0),"^",2)
+"RTN","ORAM2",146,0)
+ D HCT^ORAM(.ORAMHCT,DFN)
+"RTN","ORAM2",147,0)
+ I $L(ORAMHCT,U)>1 D  I 1
+"RTN","ORAM2",148,0)
+ . W !?10,"Last ",$S($$UP^XLFSTR($P(ORAMHCT,U,3))["HGB":"Hgb",$$UP^XLFSTR($P(ORAMHCT,U,3))["HEMOGLOBIN":"Hgb",1:"HCT"),": "
+"RTN","ORAM2",149,0)
+ . W $S($P(ORAMHCT,U)]"":$P(ORAMHCT,U),1:"No result")," on ",$S($P(ORAMHCT,U,2)]"":$P(ORAMHCT,U,2),1:"file")
+"RTN","ORAM2",150,0)
+ E  W !?10,ORAMHCT
+"RTN","ORAM2",151,0)
+ I +$P($G(^ORAM(103,DFN,6)),U,5)!+$O(^ORAM(103,DFN,7,0)) D
+"RTN","ORAM2",152,0)
+ . W !!,"Patient is Eligible for LMWH Bridging"
+"RTN","ORAM2",153,0)
+ . I +$O(^ORAM(103,DFN,7,0)) D
+"RTN","ORAM2",154,0)
+ .. N ORI S ORI=0
+"RTN","ORAM2",155,0)
+ .. W ":"
+"RTN","ORAM2",156,0)
+ .. F  S ORI=$O(^ORAM(103,DFN,7,ORI)) Q:+ORI'>0  W !?2,$G(^ORAM(103,DFN,7,ORI,0))
+"RTN","ORAM2",157,0)
+ . E  W "."
+"RTN","ORAM2",158,0)
+ I $P($G(^ORAM(103,DFN,1,0)),"^",3)>0 S ORAMCNT=$P(^ORAM(103,DFN,1,0),"^",3) D
+"RTN","ORAM2",159,0)
+ . W !!,"Special Instructions:"
+"RTN","ORAM2",160,0)
+ . F ORAMJ=1:1:ORAMCNT W !?2,^ORAM(103,DFN,1,ORAMJ,0)
+"RTN","ORAM2",161,0)
+ I $P(^ORAM(103,DFN,0),"^",11)=2 W !?2,"Pt has given permission to leave anticoag msg on msg machine."
+"RTN","ORAM2",162,0)
+ I $P($G(^ORAM(103,DFN,4,0)),"^",3)>0 S ORAMCNT=$P(^ORAM(103,DFN,4,0),"^",3) D
+"RTN","ORAM2",163,0)
+ . W !?2,"OK to leave anticoagulation message with:"
+"RTN","ORAM2",164,0)
+ . F ORAMJ=1:1:ORAMCNT W !?4,^ORAM(103,DFN,4,ORAMJ,0)
+"RTN","ORAM2",165,0)
+ I $P($G(^ORAM(103,DFN,2,0)),"^",3)>0 S ORAMCNT=$P(^ORAM(103,DFN,2,0),"^",3) D
+"RTN","ORAM2",166,0)
+ . W !!,"Secondary Indication(s)/Risk Factors:"
+"RTN","ORAM2",167,0)
+ . F ORAMJ=1:1:ORAMCNT W !?2,^ORAM(103,DFN,2,ORAMJ,0)
+"RTN","ORAM2",168,0)
+ W !
+"RTN","ORAM2",169,0)
+ I $P(^ORAM(103,DFN,0),"^",5)'="" W !,"Start Date: ",$P(^ORAM(103,DFN,0),"^",5)
+"RTN","ORAM2",170,0)
+ I $P(^ORAM(103,DFN,0),"^",7)'="" W ?35,"Duration: ",$P(^ORAM(103,DFN,0),"^",7)
+"RTN","ORAM2",171,0)
+ W !,"==========================================================================="
+"RTN","ORAM2",172,0)
+ W !,"DATE",?10,"INR",?18,"Notified",?30,"TWD",?36,"Comments:"
+"RTN","ORAM2",173,0)
+ W !,"---------------------------------------------------------------------------"
+"RTN","ORAM2",174,0)
+ I $D(^ORAM(103,DFN,3,"B")) D
+"RTN","ORAM2",175,0)
+ . N ORAMFSD S ORAMFSD=" ",ORAMCNT=0
+"RTN","ORAM2",176,0)
+ . F  S ORAMFSD=$O(^ORAM(103,DFN,3,ORAMFSD),-1) Q:$G(ORAMFSD)<1  D
+"RTN","ORAM2",177,0)
+ .. I $$DTCHK(DFN,ALPHA,OMEGA,ORAMFSD)=0 Q  ;need to change this to the new date
+"RTN","ORAM2",178,0)
+ .. N ORAMDD1,ORAMDOSE,ORAMPS,ORAMPNOT
+"RTN","ORAM2",179,0)
+ .. I '+$D(^ORAM(103,DFN,3,ORAMFSD,"LOG",0)) W !,$$FMTE^XLFDT($E($P(^ORAM(103,DFN,3,ORAMFSD,0),"^",9),1,7),2)  ;changed from $P(^ORAM(103,DFN,3,ORAMCNT,0),"^")
+"RTN","ORAM2",180,0)
+ .. I +$D(^ORAM(103,DFN,3,ORAMFSD,"LOG",0)) S ORAMDD1=$P($P(^ORAM(103,DFN,3,ORAMFSD,"LOG",1,0),"(",2),".") Q:'+$G(ORAMDD1)  W !,$$FMTE^XLFDT(ORAMDD1,2)
+"RTN","ORAM2",181,0)
+ .. S ORAMPNOT=$$WRAP^ORAMX($P(^ORAM(103,DFN,3,ORAMFSD,0),"^",8),11)
+"RTN","ORAM2",182,0)
+ .. W ?11,$P(^ORAM(103,DFN,3,ORAMFSD,0),"^",3) ;INR
+"RTN","ORAM2",183,0)
+ .. W ?18,$P(ORAMPNOT,"|") ;Pt Notified
+"RTN","ORAM2",184,0)
+ .. W ?30,$P(^ORAM(103,DFN,3,ORAMFSD,0),"^",6) ;TWD
+"RTN","ORAM2",185,0)
+ .. ; Comments
+"RTN","ORAM2",186,0)
+ .. I $P($G(^ORAM(103,DFN,3,ORAMFSD,1,0)),"^",3)>0 D  I 1
+"RTN","ORAM2",187,0)
+ ... N ORAMCC,ORAMCLN S (ORAMCC,ORAMCLN)=0
+"RTN","ORAM2",188,0)
+ ... F  S ORAMCLN=$O(^ORAM(103,DFN,3,ORAMFSD,1,ORAMCLN)) Q:+ORAMCLN'>0  D
+"RTN","ORAM2",189,0)
+ .... I $P(^ORAM(103,DFN,3,ORAMFSD,0),"^",3)'="",ORAMCLN=2 W ?10,$$FMTE^XLFDT($P(^ORAM(103,DFN,3,ORAMFSD,0),"^"),2)
+"RTN","ORAM2",190,0)
+ .... W:ORAMCLN>1 ?18,$P(ORAMPNOT,"|",ORAMCLN)
+"RTN","ORAM2",191,0)
+ .... W ?38,^ORAM(103,DFN,3,ORAMFSD,1,ORAMCLN,0),!
+"RTN","ORAM2",192,0)
+ .... S ORAMCC=ORAMCC+1
+"RTN","ORAM2",193,0)
+ ... I $L(ORAMPNOT,"|")>ORAMCC D
+"RTN","ORAM2",194,0)
+ .... N ORAMI S ORAMI=0 F ORAMI=ORAMCC+1:1:$L(ORAMPNOT,"|") W ?18,$P(ORAMPNOT,"|",ORAMI),!
+"RTN","ORAM2",195,0)
+ .. E  D  W !
+"RTN","ORAM2",196,0)
+ ... I $L(ORAMPNOT,"|")>1 D
+"RTN","ORAM2",197,0)
+ .... N ORAMI S ORAMI=0 F ORAMI=2:1:$L(ORAMPNOT,"|") W ?18,$P(ORAMPNOT,"|",ORAMI),!
+"RTN","ORAM2",198,0)
+ .. ; Patient Instructions
+"RTN","ORAM2",199,0)
+ .. I +$O(^ORAM(103,DFN,3,ORAMFSD,3,0)) D
+"RTN","ORAM2",200,0)
+ ... N ORI S ORI=0
+"RTN","ORAM2",201,0)
+ ... W !,"Patient Instructions (from Letter):"
+"RTN","ORAM2",202,0)
+ ... F  S ORI=$O(^ORAM(103,DFN,3,ORAMFSD,3,ORI)) Q:+ORI'>0  D
+"RTN","ORAM2",203,0)
+ .... N ORPILN,ORJ S ORPILN=$G(^ORAM(103,DFN,3,ORAMFSD,3,ORI,0))
+"RTN","ORAM2",204,0)
+ .... S:$L(ORPILN)>77 ORPILN=$$WRAP^ORAMX(ORPILN,77)
+"RTN","ORAM2",205,0)
+ .... F ORJ=1:1:$L(ORPILN,"|") W !?2,$P(ORPILN,"|",ORJ)
+"RTN","ORAM2",206,0)
+ ... W !
+"RTN","ORAM2",207,0)
+ .. ; Daily Dosing
+"RTN","ORAM2",208,0)
+ .. S ORAMDOSE=$P(^ORAM(103,DFN,3,ORAMFSD,0),"^",7)
+"RTN","ORAM2",209,0)
+ .. I $L(ORAMDOSE) D
+"RTN","ORAM2",210,0)
+ ... N ORAMTP,ORAMTM,ORI
+"RTN","ORAM2",211,0)
+ ... S ORAMPS=$P(^ORAM(103,DFN,3,ORAMFSD,0),"^",5),(ORAMTP,ORAMTM)=0
+"RTN","ORAM2",212,0)
+ ... W !,"Current Dosing (using ",ORAMPS," mg tab):",!
+"RTN","ORAM2",213,0)
+ ... W ?6,$J("Sun",6),?12,$J("Mon",6),?18,$J("Tue",6),?24,$J("Wed",6),?30,$J("Thu",6),?36,$J("Fri",6),?42,$J("Sat",6),?48,$J("Tot",6),!
+"RTN","ORAM2",214,0)
+ ... W "Tab" F ORI=1:1:$L(ORAMDOSE,"|") S ORAMTP=ORAMTP+($P(ORAMDOSE,"|",ORI)/ORAMPS) W ?(6*ORI),$J(($P(ORAMDOSE,"|",ORI)/ORAMPS),6)
+"RTN","ORAM2",215,0)
+ ... W ?48,$J(ORAMTP,6),!
+"RTN","ORAM2",216,0)
+ ... W "mgs" F ORI=1:1:$L(ORAMDOSE,"|") S ORAMTM=ORAMTM+$P(ORAMDOSE,"|",ORI) W ?(6*ORI),$J($P(ORAMDOSE,"|",ORI),6)
+"RTN","ORAM2",217,0)
+ ... W ?48,$J(ORAMTM,6),!
+"RTN","ORAM2",218,0)
+ .. ; Complications
+"RTN","ORAM2",219,0)
+ .. I +$P(^ORAM(103,DFN,3,ORAMFSD,0),"^",2) D
+"RTN","ORAM2",220,0)
+ ... N ORAMCTXT,ORAMCMPL
+"RTN","ORAM2",221,0)
+ ... S ORAMCTXT=$S($P(^ORAM(103,DFN,3,ORAMFSD,0),"^",2)=1:"Major Bleed ",$P(^(0),"^",2)=2:"Complication(s) ",$P(^(0),"^",2)=3:"Minor Bleed ",1:"")
+"RTN","ORAM2",222,0)
+ ... I $D(^ORAM(103,DFN,3,ORAMFSD,2)) N ORAMRSF S ORAMRSF=0 F  S ORAMRSF=$O(^ORAM(103,DFN,3,ORAMFSD,2,ORAMRSF)) Q:ORAMRSF<1  D
+"RTN","ORAM2",223,0)
+ .... N ORI
+"RTN","ORAM2",224,0)
+ .... I ORAMRSF=1 W ?38,ORAMCTXT,"noted: (",^ORAM(103,DFN,3,ORAMFSD,2,ORAMRSF,0),")",! Q
+"RTN","ORAM2",225,0)
+ .... S ORAMCMPL=^ORAM(103,DFN,3,ORAMFSD,2,ORAMRSF,0)
+"RTN","ORAM2",226,0)
+ .... I $S(ORAMCMPL["MB:":1,ORAMCMPL["C:":1,1:0) S ORAMCMPL=$P(ORAMCMPL,":",2)
+"RTN","ORAM2",227,0)
+ .... I $L(ORAMCMPL)>37 S ORAMCMPL=$$WRAP^ORAMX(ORAMCMPL,37)
+"RTN","ORAM2",228,0)
+ .... F ORI=1:1:$L(ORAMCMPL,"|") W ?$S(ORI=1:38,1:40),$P(ORAMCMPL,"|",ORI),!
+"RTN","ORAM2",229,0)
+ .. W ?38,"-------------------------------------",!
+"RTN","ORAM2",230,0)
+ Q
+"RTN","ORAM2",231,0)
+ ;
+"RTN","ORAM2",232,0)
+ ;
+"RTN","ORAM2",233,0)
+DTCHK(DFN,ALPHA,OMEGA,ORAMFSD) ; CHECKS DATE RANGE WITH ALPHA AND OMEGA FROM CPRS
+"RTN","ORAM2",234,0)
+ N ORAMFDT,ORAMVAL
+"RTN","ORAM2",235,0)
+ S ORAMVAL=0
+"RTN","ORAM2",236,0)
+ S ORAMFDT=$P(^ORAM(103,DFN,3,ORAMFSD,0),"^")
+"RTN","ORAM2",237,0)
+ S:ORAMFDT'<ALPHA ORAMVAL=1
+"RTN","ORAM2",238,0)
+ S:ORAMFDT>OMEGA ORAMVAL=0
+"RTN","ORAM2",239,0)
+ Q ORAMVAL
+"RTN","ORAM2",240,0)
+ ;
+"RTN","ORAM2",241,0)
+TEAMCHK(RESULT,ORAMTMS) ; SET-UP VERIFY NAMES
+"RTN","ORAM2",242,0)
+ ;RPC=ORAM2 TEAM CHECK
+"RTN","ORAM2",243,0)
+ N ORAMSKIP,ORAMI,ORAMERR
+"RTN","ORAM2",244,0)
+ Q:$G(ORAMTMS)=""
+"RTN","ORAM2",245,0)
+ F ORAMI=1:1:20 S ORAMSKIP=$G(ORAMSKIP)_" "
+"RTN","ORAM2",246,0)
+ S ORAMERR=0
+"RTN","ORAM2",247,0)
+ F ORAMI=1:1:$L(ORAMTMS,"^") D
+"RTN","ORAM2",248,0)
+ . N ORAMN
+"RTN","ORAM2",249,0)
+ . I $P(ORAMTMS,"^",ORAMI)'="" S ORAMN=$P(ORAMTMS,"^",ORAMI) D
+"RTN","ORAM2",250,0)
+ .. S RESULT(ORAMI)=ORAMN_$E(ORAMSKIP,1,(20-$L(ORAMN)))
+"RTN","ORAM2",251,0)
+ .. I $D(^OR(100.21,ORAMN)) S RESULT(ORAMI)=RESULT(ORAMI)_$P(^OR(100.21,ORAMN,0),"^")
+"RTN","ORAM2",252,0)
+ .. E  S RESULT(ORAMI)=RESULT(ORAMI)_"clinic not found.",ORAMERR=$G(ORAMERR)+1
+"RTN","ORAM2",253,0)
+ S RESULT(0)=$G(ORAMERR)
+"RTN","ORAM2",254,0)
+ Q
+"RTN","ORAM2",255,0)
+ ;
+"RTN","ORAM2",256,0)
+REMIND(RESULT,ORAMDFN,ORAMDT,ORAMREM) ; RPC=ORAM2 REMINDER
+"RTN","ORAM2",257,0)
+ N ORAMRML,ORAMDAY,ORAMR,D0,DA,DIK,X
+"RTN","ORAM2",258,0)
+ Q:'+$G(ORAMDFN)  Q:$G(ORAMDT)=""  Q:$G(ORAMREM)=""
+"RTN","ORAM2",259,0)
+ S RESULT=0
+"RTN","ORAM2",260,0)
+ D NOW^%DTC S ORAMDAY=X D DT^DILF(,ORAMDT,.X) S ORAMDT=X
+"RTN","ORAM2",261,0)
+ S $P(^ORAM(103,ORAMDFN,0),"^",18)=$G(ORAMDT)
+"RTN","ORAM2",262,0)
+ K ^ORAM(103,ORAMDFN,5)
+"RTN","ORAM2",263,0)
+ S ORAMRML=$L(ORAMREM,"^"),^ORAM(103,ORAMDFN,5,0)="^^"_ORAMRML_"^"_ORAMRML_"^"_ORAMDAY_"^"
+"RTN","ORAM2",264,0)
+ F ORAMR=1:1:ORAMRML D
+"RTN","ORAM2",265,0)
+ . S ^ORAM(103,ORAMDFN,5,ORAMR,0)=$P(ORAMREM,"^",ORAMR)
+"RTN","ORAM2",266,0)
+ S DIK="^ORAM(103,",DA=ORAMDFN
+"RTN","ORAM2",267,0)
+ D IX^DIK
+"RTN","ORAM2",268,0)
+ S RESULT=1
+"RTN","ORAM2",269,0)
+ Q
+"RTN","ORAMTTR")
+0^1^B99608227^B84841974
+"RTN","ORAMTTR",1,0)
+ORAMTTR  ; POR/RSF - Rosendaal Calculations, Individual & Group ;10/05/10  11:57
+"RTN","ORAMTTR",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**307,339,354**;Dec 17, 1997;Build 12
+"RTN","ORAMTTR",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","ORAMTTR",4,0)
+ ;needs testing in system with new file and parameters
+"RTN","ORAMTTR",5,0)
+ Q
+"RTN","ORAMTTR",6,0)
+ ;
+"RTN","ORAMTTR",7,0)
+MAIN ; Rosendaal TTR Option
+"RTN","ORAMTTR",8,0)
+ N RESULT,DIR,DIRUT,DUOUT,DTOUT,DIROUT,Y,X,TYPE
+"RTN","ORAMTTR",9,0)
+ S DIR("B")="I",DIR(0)="SO^I:Include inactive patients and missed appointments;E:Exclude inactive patients and missed appointments"
+"RTN","ORAMTTR",10,0)
+ D ^DIR
+"RTN","ORAMTTR",11,0)
+ Q:$D(DIRUT)!$D(DUOUT)!$D(DTOUT)!$D(DIROUT)
+"RTN","ORAMTTR",12,0)
+ S TYPE=$S($E(Y)="I":0,1:1)
+"RTN","ORAMTTR",13,0)
+ D NROSENT(.RESULT,TYPE)
+"RTN","ORAMTTR",14,0)
+ Q
+"RTN","ORAMTTR",15,0)
+SINGLE ; TTR for Individual
+"RTN","ORAMTTR",16,0)
+ N ORAMDFN,ORAMED,ORAMSD,DUOUT,DTOUT,DIRUT,RESULT
+"RTN","ORAMTTR",17,0)
+ S (ORAMED,ORAMSD)=""
+"RTN","ORAMTTR",18,0)
+ W !!,"Single Patient TRR Calculation (Rosendaal Method):",!
+"RTN","ORAMTTR",19,0)
+ S ORAMDFN=+$$PATIENT^ORAMX Q:+ORAMDFN'>0
+"RTN","ORAMTTR",20,0)
+ F  D  Q:+ORAMED>+ORAMSD!$D(DIRUT)
+"RTN","ORAMTTR",21,0)
+ . W !
+"RTN","ORAMTTR",22,0)
+ . S ORAMSD=+$$READ^ORAMX("DA^::E","Please Enter START Date: ","T-90","Enter a start date for the report")
+"RTN","ORAMTTR",23,0)
+ . Q:'ORAMSD
+"RTN","ORAMTTR",24,0)
+ . S ORAMED=+$$READ^ORAMX("DA^::E","  Please Enter END Date: ","T","Enter an INCLUSIVE end date for the report")
+"RTN","ORAMTTR",25,0)
+ . Q:'ORAMED
+"RTN","ORAMTTR",26,0)
+ . I $L(ORAMED,".")=1 S ORAMED=ORAMED_".2359"
+"RTN","ORAMTTR",27,0)
+ . I ORAMSD>ORAMED W !,"END DATE must be more recent than the START DATE" S (ORAMSD,ORAMED)=""
+"RTN","ORAMTTR",28,0)
+ Q:$S(+ORAMDFN'>0:1,ORAMED'>0:1,ORAMSD'>0:1,1:0)
+"RTN","ORAMTTR",29,0)
+ D NRINDV(.RESULT,ORAMDFN,ORAMSD,ORAMED,1)
+"RTN","ORAMTTR",30,0)
+ Q
+"RTN","ORAMTTR",31,0)
+NROSENT(RESULT,TYPE) ;
+"RTN","ORAMTTR",32,0)
+ ;*354 TYPE -> Optional, defaults to include all patients.
+"RTN","ORAMTTR",33,0)
+ ;              > 0 Will drop inactive patients.
+"RTN","ORAMTTR",34,0)
+ N ORAMSD,ORAMED,ORAMDFN,ORAMFSD,ORAMCLIN,ORAMPT,ORAMDATE,LG,HG,V1,V2,D1,D2,ORAMDAYS
+"RTN","ORAMTTR",35,0)
+ N ORAMDIG,ORAMTD,ORAMCARR,TOTS,CNT,ORSITE
+"RTN","ORAMTTR",36,0)
+ K ^TMP("ORAM",$J)
+"RTN","ORAMTTR",37,0)
+ W !!,"Rosendaal method for percentage of INR scores in therapeutic range",!
+"RTN","ORAMTTR",38,0)
+SD1 ; Get date range for calculations
+"RTN","ORAMTTR",39,0)
+ S ORAMSD=+$$READ^ORAMX("DA^::E","Please Enter START Date: ","T-90","Enter a start date for the report")
+"RTN","ORAMTTR",40,0)
+ Q:'ORAMSD
+"RTN","ORAMTTR",41,0)
+ S ORAMED=+$$READ^ORAMX("DA^::E","  Please Enter END Date: ","T","Enter an INCLUSIVE end date for the report")
+"RTN","ORAMTTR",42,0)
+ Q:'ORAMED
+"RTN","ORAMTTR",43,0)
+ I $L(ORAMED,".")=1 S ORAMED=ORAMED_".2359"
+"RTN","ORAMTTR",44,0)
+ I ORAMSD>ORAMED W !,"END DATE must be more recent than the START DATE" S (ORAMSD,ORAMED)="" G SD1
+"RTN","ORAMTTR",45,0)
+ S ORAMDFN=0 F  S ORAMDFN=$O(^ORAM(103,ORAMDFN)) Q:'$G(ORAMDFN)  D
+"RTN","ORAMTTR",46,0)
+ . N ORAMFS,ORAMDD,PGR
+"RTN","ORAMTTR",47,0)
+ . Q:'+$D(^ORAM(103,ORAMDFN,3))  ;go to next pt if no flow sheet entries
+"RTN","ORAMTTR",48,0)
+ . Q:'$D(^ORAM(103,ORAMDFN,6))  Q:$P(^ORAM(103,ORAMDFN,6),U,2)=""  ;QUIT IF NO CLINIC ASSIGNED
+"RTN","ORAMTTR",49,0)
+ . S ORAMCLIN=$P(^ORAM(103,ORAMDFN,6),U,2)
+"RTN","ORAMTTR",50,0)
+ . ; 1. Get local labs for patient w/in date range
+"RTN","ORAMTTR",51,0)
+ . D NGETINR(ORAMDFN,ORAMCLIN,ORAMSD,ORAMED)
+"RTN","ORAMTTR",52,0)
+ . ; 2. Next, loop thru flow sheets for patient to gather goal ranges
+"RTN","ORAMTTR",53,0)
+ . S ORAMDD=ORAMSD-.01
+"RTN","ORAMTTR",54,0)
+ . F  S ORAMDD=$O(^ORAM(103,ORAMDFN,3,"B",ORAMDD)) Q:'+$G(ORAMDD)  D
+"RTN","ORAMTTR",55,0)
+ .. S ORAMFS=0 F  S ORAMFS=$O(^ORAM(103,ORAMDFN,3,"B",ORAMDD,ORAMFS)) Q:'+$G(ORAMFS)  D
+"RTN","ORAMTTR",56,0)
+ ... I $G(PGR)="" S PGR=0 I ORAMFS>2 S PGR=$P(^ORAM(103,ORAMDFN,3,(ORAMFS-1),0),U,12) S:$G(PGR)="" PGR=0
+"RTN","ORAMTTR",57,0)
+ ... S ORAMFSD=$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U) Q:$G(ORAMFSD)<ORAMSD  Q:$G(ORAMFSD)>ORAMED  ;OUT OF DATE RANGE
+"RTN","ORAMTTR",58,0)
+ ... I $P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,3)="",'+$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) Q
+"RTN","ORAMTTR",59,0)
+ ... I +$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) S ^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)=$P(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD),U)_U_$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,12)
+"RTN","ORAMTTR",60,0)
+ ... I '+$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) S ^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)=$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,3)_U_$P(^(0),U,12)
+"RTN","ORAMTTR",61,0)
+ ; 3. Loop thru array of pts & INRs collected in prior steps
+"RTN","ORAMTTR",62,0)
+ ;    Format: ^TMP("ORAM",$J,CLINIC,DFN,FMDATE)=INR_VALUE ^GOAL RANGE
+"RTN","ORAMTTR",63,0)
+ S ORAMCLIN=0
+"RTN","ORAMTTR",64,0)
+ F  S ORAMCLIN=$O(^TMP("ORAM",$J,ORAMCLIN)) Q:$G(ORAMCLIN)=""  D
+"RTN","ORAMTTR",65,0)
+ . N ORAMPT S ORAMPT=0
+"RTN","ORAMTTR",66,0)
+ . F  S ORAMPT=$O(^TMP("ORAM",$J,ORAMCLIN,ORAMPT)) Q:'+$G(ORAMPT)  D
+"RTN","ORAMTTR",67,0)
+ .. ;*354 Add second report type (omit inactive patients)
+"RTN","ORAMTTR",68,0)
+ .. N ORAMDATE S ORAMDATE=0 I ($G(TYPE)>0),$$DROP(ORAMPT,ORAMSD,ORAMED) K ^TMP("ORAM",$J,ORAMCLIN,ORAMPT) Q
+"RTN","ORAMTTR",69,0)
+ .. S (LG,HG,V1,V1,D1,D2)=""
+"RTN","ORAMTTR",70,0)
+ .. F  S ORAMDATE=$O(^TMP("ORAM",$J,ORAMCLIN,ORAMPT,ORAMDATE)) Q:'+$G(ORAMDATE)  D NGETFS(.ORAMCARR,ORAMCLIN,ORAMPT,ORAMDATE,.D1,.D2,.V1,.V2,.PGR,.LG,.HG,.ORAMDIG,.ORAMTD)
+"RTN","ORAMTTR",71,0)
+ I $G(ORAMDIG)<1 S RESULT="0^0" W !!?2,"Unable to calculate TTR (may be due to a short time frame with few repeat",!?2,"readings on the same patients)."  Q
+"RTN","ORAMTTR",72,0)
+ S TOTS=$TR($J((ORAMDIG/ORAMTD)*100,8,1)," ","")
+"RTN","ORAMTTR",73,0)
+ S ORSITE=$$NAME^VASITE
+"RTN","ORAMTTR",74,0)
+ S:ORSITE']"" ORSITE=$P($$SITE^VASITE,U,2)
+"RTN","ORAMTTR",75,0)
+ W @IOF,"Results of Rosendaal Method for Time in Therapeutic Range:"
+"RTN","ORAMTTR",76,0)
+ W !!,"Facility-wide for ",ORSITE," for ",$$FMTE^XLFDT(ORAMSD,2)," - ",$$FMTE^XLFDT(ORAMED,2)
+"RTN","ORAMTTR",77,0)
+ W !,"TTR = ",TOTS,"% (TOTAL DAYS IN GOAL: ",$TR($J(ORAMDIG,8,1)," ","")," TOTAL DAYS: ",$TR($J(ORAMTD,8,1)," ",""),")"
+"RTN","ORAMTTR",78,0)
+ I +$O(ORAMCARR(0)) W !!,"Results by Clinic:"
+"RTN","ORAMTTR",79,0)
+ S CNT=0 F  S CNT=$O(ORAMCARR(CNT)) Q:$G(CNT)=""  D
+"RTN","ORAMTTR",80,0)
+ . N CTOT S CTOT=$TR($J(($P(ORAMCARR(CNT),U,2)/$P(ORAMCARR(CNT),U))*100,8,1)," ",""),$P(ORAMCARR(CNT),U,2)=$TR($J($P(ORAMCARR(CNT),U,2),8,1)," ",""),$P(ORAMCARR(CNT),U,3)=CTOT
+"RTN","ORAMTTR",81,0)
+ . W !,$E($P(^SC(CNT,0),U),1,21),": TTR = ",CTOT,"% (Total days in goal: ",$TR($J($P(ORAMCARR(CNT),U,2),8,1)," ","")," TOTAL DAYS: ",$TR($J($P(ORAMCARR(CNT),U),8,1)," ",""),")",!
+"RTN","ORAMTTR",82,0)
+ . S ORAMCARR(CNT)=$P(^SC(CNT,0),U)_U_$P(ORAMCARR(CNT),U,2,3)
+"RTN","ORAMTTR",83,0)
+ M RESULT=ORAMCARR
+"RTN","ORAMTTR",84,0)
+ S RESULT(0)=TOTS_U_$TR($J(ORAMDIG,8,1)," ","")_U_$TR($J(ORAMTD,8,1)," ","")
+"RTN","ORAMTTR",85,0)
+ K ^TMP("ORAM",$J)
+"RTN","ORAMTTR",86,0)
+ Q
+"RTN","ORAMTTR",87,0)
+ ;
+"RTN","ORAMTTR",88,0)
+NRINDV(RESULT,ORAMDFN,ORAMSD,ORAMED,ORAMWON) ; TTR for single patient
+"RTN","ORAMTTR",89,0)
+ N ORAMFS,ORAMDD,PGR,ORAMCLIN
+"RTN","ORAMTTR",90,0)
+ S RESULT="NA"
+"RTN","ORAMTTR",91,0)
+ K ^TMP("ORAM",$J)
+"RTN","ORAMTTR",92,0)
+ Q:'+$D(^ORAM(103,ORAMDFN))  ;NOT IN FILE YET
+"RTN","ORAMTTR",93,0)
+ Q:'+$D(^ORAM(103,ORAMDFN,3))  ;NO FS ENTRIES YET
+"RTN","ORAMTTR",94,0)
+ Q:'$D(^ORAM(103,ORAMDFN,6))  Q:$P(^ORAM(103,ORAMDFN,6),U,2)=""  ;QUIT IF NO CLINIC ASSIGNED
+"RTN","ORAMTTR",95,0)
+ S:$G(ORAMSD)="" ORAMSD=$P(^ORAM(103,ORAMDFN,3,1,0),U)  ;IF NO DEFINED START DATE, DO FOR THE WHOLE TIME IN CLINIC.
+"RTN","ORAMTTR",96,0)
+ S:$G(ORAMED)="" ORAMED=DT
+"RTN","ORAMTTR",97,0)
+ S:$G(ORAMWON)="" ORAMWON=0  ;IF A NUMBER WILL WRITE RESULTS TO THE SCREEN
+"RTN","ORAMTTR",98,0)
+ S ORAMCLIN=$P(^ORAM(103,ORAMDFN,6),U,2)
+"RTN","ORAMTTR",99,0)
+ D NGETINR(ORAMDFN,ORAMCLIN,ORAMSD,ORAMED)  ;GETS LOCAL INR VALUES IN FORM ^TMP("ORAM",$J,CLINIC,DFN,FM_DATE)=VALUE^
+"RTN","ORAMTTR",100,0)
+ S ORAMDD=ORAMSD-.01
+"RTN","ORAMTTR",101,0)
+ F  S ORAMDD=$O(^ORAM(103,ORAMDFN,3,"B",ORAMDD)) Q:'+$G(ORAMDD)  D
+"RTN","ORAMTTR",102,0)
+ . S ORAMFS=0 F  S ORAMFS=$O(^ORAM(103,ORAMDFN,3,"B",ORAMDD,ORAMFS)) Q:'+$G(ORAMFS)  D
+"RTN","ORAMTTR",103,0)
+ .. N ORAMFSD
+"RTN","ORAMTTR",104,0)
+ .. I $G(PGR)="" S PGR=0 I ORAMFS>2 S PGR=$P(^ORAM(103,ORAMDFN,3,(ORAMFS-1),0),U,12) S:$G(PGR)="" PGR=0
+"RTN","ORAMTTR",105,0)
+ .. S ORAMFSD=$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U) Q:$G(ORAMFSD)<ORAMSD  Q:$G(ORAMFSD)>ORAMED  ;OUT OF DATE RANGE
+"RTN","ORAMTTR",106,0)
+ .. I $P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,3)="",'+$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) Q
+"RTN","ORAMTTR",107,0)
+ .. I +$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) S ^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)=$P(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD),U)_U_$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,12)
+"RTN","ORAMTTR",108,0)
+ .. I '+$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)) S ^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMFSD)=$P(^ORAM(103,ORAMDFN,3,ORAMFS,0),U,3)_U_$P(^(0),U,12)
+"RTN","ORAMTTR",109,0)
+ Q:'$D(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN))
+"RTN","ORAMTTR",110,0)
+ ;FORMED ARRAY OF PATIENTS AND SCORES IN THE DATE RANGE; FORMAT ^TMP("ORAM",$J,CLINIC,DFN,FMDATE)=INR_VALUE ^ GOAL RANGE.
+"RTN","ORAMTTR",111,0)
+ N ORAMDATE,LG,HG,V1,V2,D1,D2,ORAMDAYS,ORAMDIG,ORAMTD
+"RTN","ORAMTTR",112,0)
+ N ORAMC2,ORAMPT,ORAMCARR S ORAMC2=ORAMCLIN,ORAMPT=ORAMDFN
+"RTN","ORAMTTR",113,0)
+ S ORAMDATE=0 F  S ORAMDATE=$O(^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMDATE)) Q:'+$G(ORAMDATE)  D NGETFS(.ORAMCARR,ORAMCLIN,ORAMDFN,ORAMDATE,.D1,.D2,.V1,.V2,.PGR,.LG,.HG,.ORAMDIG,.ORAMTD)
+"RTN","ORAMTTR",114,0)
+ I $G(ORAMDIG)<1 S RESULT="0^0" W:+$G(ORAMWON) !!?2,"Unable to calculate TTR (may be due to a short time frame with few repeat",!?2,"readings on the same patient)."  Q
+"RTN","ORAMTTR",115,0)
+ N TOTS S TOTS=$TR($J((ORAMDIG/ORAMTD)*100,8,1)," ","")
+"RTN","ORAMTTR",116,0)
+ I +$G(ORAMWON) D
+"RTN","ORAMTTR",117,0)
+ . W !!,"Rosendaal method for percentage of INR scores in therapeutic range",!
+"RTN","ORAMTTR",118,0)
+ . W !,?5,$E($P(^DPT($G(ORAMDFN),0),U),1,10)_" ("_$E($P(^(0),U,9),6,9)_") for ",$$FMTE^XLFDT(ORAMSD,2)," - ",$$FMTE^XLFDT(ORAMED,2)
+"RTN","ORAMTTR",119,0)
+ . W !,?5,"TTR = ",TOTS,"%  (TOTAL DAYS IN GOAL: ",$TR($J(ORAMDIG,8,1)," ",""),"  TOTAL DAYS: ",$TR($J(ORAMTD,8,1)," ",""),")",!
+"RTN","ORAMTTR",120,0)
+ S RESULT=TOTS_U_$TR($J(ORAMDIG,8,1)," ","")_U_$TR($J(ORAMTD,8,1)," ","")
+"RTN","ORAMTTR",121,0)
+ K ^TMP("ORAM",$J)
+"RTN","ORAMTTR",122,0)
+ Q
+"RTN","ORAMTTR",123,0)
+ ;
+"RTN","ORAMTTR",124,0)
+NGETINR(ORAMDFN,ORAMCLIN,ORAMSD,ORAMED) ; Get local INRs - sort by clinic, patient, & date
+"RTN","ORAMTTR",125,0)
+ N LDATE,INR,LRDFN,ORAMITST,ORAMQO,INRHD,INRRD,RSD,RED
+"RTN","ORAMTTR",126,0)
+ I '$G(ORAMDFN) Q  ;IF DFN IS NOT PASSED, EXIT
+"RTN","ORAMTTR",127,0)
+ S LRDFN=$G(^DPT(ORAMDFN,"LR")) Q:'+$G(LRDFN)
+"RTN","ORAMTTR",128,0)
+ S RSD=9999999-(ORAMSD-.01)  ;REVERSE START DATE
+"RTN","ORAMTTR",129,0)
+ S RED=9999999-ORAMED
+"RTN","ORAMTTR",130,0)
+ N ORAMITST,ORAMORD S ORAMQO=$$GET^XPAR("ALL","ORAM INR QUICK ORDER",1,"I")
+"RTN","ORAMTTR",131,0)
+ I +ORAMQO'>0 W !!,"Parameter ORAM QUICK ORDER not yet established. Please contact your CAC.",! Q
+"RTN","ORAMTTR",132,0)
+ S ORAMITST=$$INRCHK^ORAM(ORAMQO)
+"RTN","ORAMTTR",133,0)
+ I +ORAMITST'>0 W !!,"Parameter ORAM QUICK ORDER not properly set up. Please contact your CAC.",! Q
+"RTN","ORAMTTR",134,0)
+ S LDATE=RSD F  SET LDATE=$O(^LR(LRDFN,"CH",LDATE),-1) Q:LDATE<1!(LDATE<RED)  D
+"RTN","ORAMTTR",135,0)
+ . N SCORE S SCORE=$G(^LR(LRDFN,"CH",LDATE,ORAMITST))  ;648149
+"RTN","ORAMTTR",136,0)
+ . Q:SCORE=""  ;QUIT IF NO INR TEST
+"RTN","ORAMTTR",137,0)
+ . Q:$P(SCORE,U,1)=""  ;QUIT IF NO INR DATA
+"RTN","ORAMTTR",138,0)
+ . S INR=$P(SCORE,U,1)  ;INR
+"RTN","ORAMTTR",139,0)
+ . N ORAMX S ORAMX=$E((9999999-LDATE),1,7)
+"RTN","ORAMTTR",140,0)
+ . S ^TMP("ORAM",$J,ORAMCLIN,ORAMDFN,ORAMX)=$G(INR)_U
+"RTN","ORAMTTR",141,0)
+ Q
+"RTN","ORAMTTR",142,0)
+ ;
+"RTN","ORAMTTR",143,0)
+NGETFS(ORAMCARR,ORAMCLIN,ORAMPT,ORAMDATE,D1,D2,V1,V2,PGR,LG,HG,ORAMDIG,ORAMTD) ; Check flow sheet entries vs. goals
+"RTN","ORAMTTR",144,0)
+ N CG,ORAMZ,ORAMDAYS
+"RTN","ORAMTTR",145,0)
+ S CG=$P(^TMP("ORAM",$J,ORAMCLIN,ORAMPT,ORAMDATE),U,2),ORAMZ=0
+"RTN","ORAMTTR",146,0)
+ I $G(CG)="",'+$G(LG) Q:'+$G(PGR)  S CG=PGR  ;BRINGS IN THE LAST GOAL INFO THAT SHOULD BE IN EFFECT FOR THE FIRST SEGMENT
+"RTN","ORAMTTR",147,0)
+ I $G(CG)'="" S LG=$P(CG,"-"),HG=$P(CG,"-",2)  S:HG[" " HG=$P(HG," ",2)  ;USES NEW ONE IF AVAILABLE
+"RTN","ORAMTTR",148,0)
+ Q:$P(^TMP("ORAM",$J,ORAMCLIN,ORAMPT,ORAMDATE),U)=""
+"RTN","ORAMTTR",149,0)
+ N ORAMIV S ORAMIV=$P(^TMP("ORAM",$J,ORAMCLIN,ORAMPT,ORAMDATE),U) S:ORAMIV[">" ORAMIV=$P(ORAMIV,">",2) S:ORAMIV["<" ORAMIV=$P(ORAMIV,"<",2)
+"RTN","ORAMTTR",150,0)
+ Q:'+ORAMIV  ;QUITS IF NOT A NUMBER AFTER CHECKING FOR > AND < SIGNS
+"RTN","ORAMTTR",151,0)
+ S D2=ORAMDATE S V2=ORAMIV_U_$S(ORAMIV>HG:"H",ORAMIV<LG:"L",1:"G")  ;IF OUT OF RANGE LISTS H OR L OTHERWISE G
+"RTN","ORAMTTR",152,0)
+ I $G(D1)="" S ORAMZ=1
+"RTN","ORAMTTR",153,0)
+ I '+$G(ORAMZ) D
+"RTN","ORAMTTR",154,0)
+ . S ORAMDAYS=$$FMDIFF^XLFDT(D2,D1,1)  ;DAYS DIFFERENCE BETWEEN THE LAST TWO INRS
+"RTN","ORAMTTR",155,0)
+ . S ORAMTD=$G(ORAMTD)+ORAMDAYS
+"RTN","ORAMTTR",156,0)
+ . S $P(ORAMCARR(ORAMCLIN),U)=($P($G(ORAMCARR(ORAMCLIN)),U)+ORAMDAYS)
+"RTN","ORAMTTR",157,0)
+ . I $P(V1,U,2)=$P(V2,U,2) S:$P(V1,U,2)="G" ORAMDIG=$G(ORAMDIG)+ORAMDAYS,$P(ORAMCARR(ORAMCLIN),U,2)=$P(ORAMCARR(ORAMCLIN),U,2)+ORAMDAYS  ;IF ALL IN GOAL, ALL GOOD, OTHERWISE 0 IN GOAL
+"RTN","ORAMTTR",158,0)
+ . I $P(V1,U,2)'=$P(V2,U,2) D  ;WAS IN GOAL IN ONLY ONE OF THE READINGS (OR ONE H AND ONE L)
+"RTN","ORAMTTR",159,0)
+ .. N DIFF S DIFF=$$ABS^XLFMTH($P(V1,U)-$P(V2,U)) N NUMC,NUMPC S:$P(V1,U,2)="G" NUMC=$P(V1,U)_U_$P(V2,U,2) S:$P(V2,U,2)="G" NUMC=$P(V2,U)_U_$P(V1,U,2)
+"RTN","ORAMTTR",160,0)
+ .. I $G(NUMC)'="" D
+"RTN","ORAMTTR",161,0)
+ ... I $P(NUMC,U,2)="L" S NUMPC=$$ABS^XLFMTH(LG-$P(NUMC,U))
+"RTN","ORAMTTR",162,0)
+ ... I $P(NUMC,U,2)="H" S NUMPC=$$ABS^XLFMTH(HG-$P(NUMC,U))
+"RTN","ORAMTTR",163,0)
+ ... S NUMPC=$S(DIFF=0:0,1:NUMPC/DIFF)
+"RTN","ORAMTTR",164,0)
+ .. I $G(NUMC)="" D  ; FOR THE RARE CASE OF A SKIPPED GOAL RANGE, SO NOT =, BUT ONE IS LOW AND THE OTHER HIGH
+"RTN","ORAMTTR",165,0)
+ ... S NUMPC=$$ABS^XLFMTH(HG-LG),NUMPC=NUMPC/DIFF
+"RTN","ORAMTTR",166,0)
+ .. S ORAMDIG=$G(ORAMDIG)+$TR($J(NUMPC*ORAMDAYS,8.3)," ","")
+"RTN","ORAMTTR",167,0)
+ .. S $P(ORAMCARR(ORAMCLIN),U,2)=($P(ORAMCARR(ORAMCLIN),U,2)+$TR($J(NUMPC*ORAMDAYS,8.3)," ",""))
+"RTN","ORAMTTR",168,0)
+ S D1=D2,V1=V2
+"RTN","ORAMTTR",169,0)
+ Q
+"RTN","ORAMTTR",170,0)
+ ;
+"RTN","ORAMTTR",171,0)
+DROP(DPT,BDT,EDT) ;
+"RTN","ORAMTTR",172,0)
+ ; Return if Patient should be dropped from calculation 1 (yes), 0 (no), -1 (err)
+"RTN","ORAMTTR",173,0)
+ ; DPT -> PT DFN     (required)
+"RTN","ORAMTTR",174,0)
+ ; BDT -> Begin Date (optional)
+"RTN","ORAMTTR",175,0)
+ ; EDT -> End Date   (optional)
+"RTN","ORAMTTR",176,0)
+ N FS,INR,PRE,ORAMISS,ORAMDROP,FSDT
+"RTN","ORAMTTR",177,0)
+ S:'$G(BDT) BDT=0 ;No Input set 0
+"RTN","ORAMTTR",178,0)
+ S:'$G(EDT) EDT=9999999 ;No input, set end of time.
+"RTN","ORAMTTR",179,0)
+ Q:'$D(^ORAM(103,DPT)) -1
+"RTN","ORAMTTR",180,0)
+ Q:(2=$$GET1^DIQ(103,DPT,15,"I")) 1 ;inactive patient
+"RTN","ORAMTTR",181,0)
+ F FS=0:0 S FS=$O(^ORAM(103,DPT,3,FS)) Q:'FS  D
+"RTN","ORAMTTR",182,0)
+ . S FSDT=$$GET1^DIQ(103.011,FS_","_DPT,.01,"I")
+"RTN","ORAMTTR",183,0)
+ . S INR=$$GET1^DIQ(103.011,FS_","_DPT,20,"I")
+"RTN","ORAMTTR",184,0)
+ . I '$G(INR) S ORAMISS(DPT,FSDT)=1 ;Mark Missed Appts
+"RTN","ORAMTTR",185,0)
+ S FS=BDT-.01 F  S FS=$O(ORAMISS(DPT,FS)) S PRE=$O(ORAMISS(DPT,FS),-1) Q:('FS)!(FS>EDT)!$G(ORAMDROP(DPT))  D
+"RTN","ORAMTTR",186,0)
+ . Q:'PRE  I ($$FMDIFF^XLFDT(FS,PRE)>56) S ORAMDROP(DPT)=1
+"RTN","ORAMTTR",187,0)
+ Q $G(ORAMDROP(DPT),0)
+"RTN","ORAMTTR",188,0)
+ ;
+"RTN","ORY354")
+0^^B9049892^n/a
+"RTN","ORY354",1,0)
+ORY354 ;DJE-Search for anticoag patients with blank notes ;06/20/13  09:21
+"RTN","ORY354",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**354**;Jun 20, 2013;Build 12
+"RTN","ORY354",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORY354",4,0)
+ ;
+"RTN","ORY354",5,0)
+EN1 ;
+"RTN","ORY354",6,0)
+ I $G(DUZ)="" W "Your DUZ is not defined.",! Q
+"RTN","ORY354",7,0)
+ N ZTDESC,ZTIO,ZTRTN,ZTSK,ZTSAVE
+"RTN","ORY354",8,0)
+TASK S ZTRTN="EN^ORY354",ZTIO=""
+"RTN","ORY354",9,0)
+ S ZTDESC="Check for anticoag patients with blank notes"
+"RTN","ORY354",10,0)
+ D ^%ZTLOAD
+"RTN","ORY354",11,0)
+ W !!,"The check for anticoag patients with blank notes is",$S($D(ZTSK):"",1:" NOT")," queued",!
+"RTN","ORY354",12,0)
+ I $D(ZTSK) W " (to start NOW).",!!,"YOU WILL RECEIVE A MAILMAN MESSAGE WHEN TASK #"_ZTSK_" HAS COMPLETED."
+"RTN","ORY354",13,0)
+ Q
+"RTN","ORY354",14,0)
+ ;
+"RTN","ORY354",15,0)
+EN ; -- tasked entry point
+"RTN","ORY354",16,0)
+ S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","ORY354",17,0)
+ N CREAT,EXPR,DFN,DOCTYPE,SIGDT,NOTEID,COUNTER
+"RTN","ORY354",18,0)
+ D NOW^%DTC S CREAT=$E(%,1,7),EXPR=$$FMADD^XLFDT(CREAT,30,0,0,0) K ^XTMP("ORY354")
+"RTN","ORY354",19,0)
+ S COUNTER=0,DFN=0 F  S DFN=$O(^ORAM(103,DFN)) Q:'DFN  D  ;loop anticoag patients
+"RTN","ORY354",20,0)
+ . S SIGDT=0 F  S SIGDT=$O(^TIU(8925,"APTP",DFN,SIGDT)) Q:'SIGDT  D  ;loop signed notes index
+"RTN","ORY354",21,0)
+ .. S NOTEID=0 F  S NOTEID=$O(^TIU(8925,"APTP",DFN,SIGDT,NOTEID)) Q:'NOTEID  D
+"RTN","ORY354",22,0)
+ ... I $D(^TIU(8925,NOTEID,"TEXT")) Q  ;Not empty, quit
+"RTN","ORY354",23,0)
+ ... I $G(^TIU(8925,NOTEID,0))="" Q  ;Bad index, quit
+"RTN","ORY354",24,0)
+ ... ;set node to NAME^NOTE TITLE^NOTE DATE
+"RTN","ORY354",25,0)
+ ... S COUNTER=COUNTER+1,^XTMP("ORY354",COUNTER)=$P(^DPT(DFN,0),U)_"^"_$$PNAME^TIULC1(+^TIU(8925,NOTEID,0))_"^"_$$FMTE^XLFDT($P(^TIU(8925,NOTEID,13),U),"D")
+"RTN","ORY354",26,0)
+ I $D(^XTMP("ORY354")) S ^XTMP("ORY354",0)=EXPR_"^"_CREAT
+"RTN","ORY354",27,0)
+ D SEND
+"RTN","ORY354",28,0)
+ K ZTQUEUED,ZTREQ Q
+"RTN","ORY354",29,0)
+SEND ;Send message
+"RTN","ORY354",30,0)
+ K ORMSG,XMY N OCNT,COUNTER,XMDUZ,XMSUB,XMTEXT,REC
+"RTN","ORY354",31,0)
+ S XMDUZ="CPRS, SEARCH",XMSUB="ANTICOAG PATIENTS WITH BLANK NOTES",XMTEXT="ORMSG(",XMY(DUZ)=""
+"RTN","ORY354",32,0)
+ S ORMSG(1,0)="  The check for  anticoag patients with blank notes is complete."
+"RTN","ORY354",33,0)
+ S ORMSG(2,0)=" ",ORMSG(3,0)="  Here is the list of the affected patients: ",ORMSG(4,0)=" "
+"RTN","ORY354",34,0)
+ S NOTEID=0,ORMSG(5,0)="Patient                        Note Title                     Note Date",OCNT=5
+"RTN","ORY354",35,0)
+ I '$D(^XTMP("ORY354")) S ORMSG(6,0)="No notes found."
+"RTN","ORY354",36,0)
+ S OCNT=5,COUNTER=0 F  S COUNTER=$O(^XTMP("ORY354",COUNTER)) Q:'COUNTER  D
+"RTN","ORY354",37,0)
+ . S REC=^XTMP("ORY354",COUNTER) S OCNT=OCNT+1,ORMSG(OCNT,0)=$$BUF30($P(REC,U,1))_" "_$$BUF30($P(REC,U,2))_" "_$P(REC,U,3)
+"RTN","ORY354",38,0)
+ D ^XMD
+"RTN","ORY354",39,0)
+ Q
+"RTN","ORY354",40,0)
+BUF30(X) ;Buffer and limit text to 30 characters
+"RTN","ORY354",41,0)
+ S $P(X," ",30)=" " ;add 30 spaces to end of text
+"RTN","ORY354",42,0)
+ Q $E(X,1,30) ;return first 30 characters of text
+"VER")
+8.0^22.0
+"BLD",8896,6)
+^322
+**END**
+**END**

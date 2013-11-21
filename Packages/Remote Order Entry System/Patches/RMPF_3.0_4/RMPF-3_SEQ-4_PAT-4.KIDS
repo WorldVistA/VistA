@@ -1,0 +1,1906 @@
+Released RMPF*3*4 SEQ #4
+Extracted from mail message
+**KIDS**:RMPF*3.0*4^
+
+**INSTALL NAME**
+RMPF*3.0*4
+"BLD",1785,0)
+RMPF*3.0*4^REMOTE ORDER/ENTRY SYSTEM^0^3110729^y
+"BLD",1785,1,0)
+^^226^226^3110729^
+"BLD",1785,1,1,0)
+ 
+"BLD",1785,1,2,0)
+This patch addresses several issues that have come up at the VA Medical 
+"BLD",1785,1,3,0)
+Centers since the first release of the ROES package. All issues addressed 
+"BLD",1785,1,4,0)
+in this patch are related to the ROES application that runs from the CPRS 
+"BLD",1785,1,5,0)
+Tools menu (ROES3.exe). The ROES Desktop application (ROES3Desktop.exe) 
+"BLD",1785,1,6,0)
+is only included for issues 2 and 3 below.
+"BLD",1785,1,7,0)
+ 
+"BLD",1785,1,8,0)
+ Issues addressed in this patch are:
+"BLD",1785,1,9,0)
+ 
+"BLD",1785,1,10,0)
+1. As approved by the PSAS Program Office, all Veteran eligibility 
+"BLD",1785,1,11,0)
+determinations calculated by the software will be automatically 
+"BLD",1785,1,12,0)
+approved.  Veteran eligibility requests will no longer be sent to the 
+"BLD",1785,1,13,0)
+Prosthetic and Sensory Aids Service (PSAS) staff for approval.  Changes 
+"BLD",1785,1,14,0)
+in the background calculations for Veteran eligibility are detailed in 
+"BLD",1785,1,15,0)
+the Release Notes for this patch.
+"BLD",1785,1,16,0)
+ 
+"BLD",1785,1,17,0)
+2. For added security, the web connection has been changed from 
+"BLD",1785,1,18,0)
+clear http to secure http using the https protocol identifier.
+"BLD",1785,1,19,0)
+ 
+"BLD",1785,1,20,0)
+3. Adjustments were made for 64 bit terminal servers to access and 
+"BLD",1785,1,21,0)
+use the ROES web site.
+"BLD",1785,1,22,0)
+ 
+"BLD",1785,1,23,0)
+4. Connections from CPRS to the ROES web server will only be allowed to 
+"BLD",1785,1,24,0)
+actually enter the web site if they are from a VistA production account to
+"BLD",1785,1,25,0)
+prevent false Veteran information from becoming a part of the national
+"BLD",1785,1,26,0)
+database.
+"BLD",1785,1,27,0)
+ 
+"BLD",1785,1,28,0)
+5. Menu options, routines, remote procedure calls and security keys 
+"BLD",1785,1,29,0)
+from prior versions of ROES that are no longer needed will be removed.
+"BLD",1785,1,30,0)
+        Obsolete Options removed:  RMPFDE2 and RMPFDE4
+"BLD",1785,1,31,0)
+        Obsolete Routines removed:  RMPFDE1,RMPFDE2,RMPFDE3 and RMPFDE4
+"BLD",1785,1,32,0)
+        Obsolete Keys removed:  RMPF SUPERVISOR and RMPF SYSTEM MANAGER
+"BLD",1785,1,33,0)
+        Obsolete Remote Procedures removed: RMPF ELIG MSG and RMPFELIG
+"BLD",1785,1,34,0)
+ 
+"BLD",1785,1,35,0)
+6. Modifications for VistA and Delphi coding standards are included.
+"BLD",1785,1,36,0)
+ 
+"BLD",1785,1,37,0)
+7. Documentation has been updated regarding the removal of the 
+"BLD",1785,1,38,0)
+eligibility interactions before connecting to ROES.
+"BLD",1785,1,39,0)
+ 
+"BLD",1785,1,40,0)
+ 
+"BLD",1785,1,41,0)
+ Associated Remedy Tickets:
+"BLD",1785,1,42,0)
+ ====================================== 
+"BLD",1785,1,43,0)
+ N/A
+"BLD",1785,1,44,0)
+ 
+"BLD",1785,1,45,0)
+ 
+"BLD",1785,1,46,0)
+ E3R references addressed in this patch
+"BLD",1785,1,47,0)
+ ======================================
+"BLD",1785,1,48,0)
+ N/A
+"BLD",1785,1,49,0)
+ 
+"BLD",1785,1,50,0)
+ Test Sites
+"BLD",1785,1,51,0)
+ ========
+"BLD",1785,1,52,0)
+ Miami 
+"BLD",1785,1,53,0)
+ Omaha
+"BLD",1785,1,54,0)
+ Phoenix
+"BLD",1785,1,55,0)
+ Columbia (SC)
+"BLD",1785,1,56,0)
+ 
+"BLD",1785,1,57,0)
+ Required Builds
+"BLD",1785,1,58,0)
+ =============
+"BLD",1785,1,59,0)
+ 
+"BLD",1785,1,60,0)
+ RMPF*3.0*1
+"BLD",1785,1,61,0)
+ 
+"BLD",1785,1,62,0)
+ 
+"BLD",1785,1,63,0)
+ 
+"BLD",1785,1,64,0)
+ This patch contains the following enhancements and problem resolutions:
+"BLD",1785,1,65,0)
+ ==========================================================
+"BLD",1785,1,66,0)
+ 
+"BLD",1785,1,67,0)
+ The ROES application requires that the user's browser have JAVA
+"BLD",1785,1,68,0)
+ available and enabled in order to function.  Sun has not developed a
+"BLD",1785,1,69,0)
+ 64-bit version of JAVA, so on 64-bit terminal server installations the
+"BLD",1785,1,70,0)
+ browser is not JAVA capable. This may prevent some ROES features from
+"BLD",1785,1,71,0)
+ working properly. 64-bit installations also have a 32-bit browser
+"BLD",1785,1,72,0)
+ which resides at a location different from the normal 32-bit location.
+"BLD",1785,1,73,0)
+ That new location is:
+"BLD",1785,1,74,0)
+        C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE.
+"BLD",1785,1,75,0)
+ 
+"BLD",1785,1,76,0)
+ The ROES executables that connect to the internet application have been
+"BLD",1785,1,77,0)
+ modified to check for the 32-bit Internet Explorer at that location.
+"BLD",1785,1,78,0)
+ This change will not affect any current 32-bit installations because, if 
+"BLD",1785,1,79,0)
+ Internet Explorer is not found at that location, ROES will look in the
+"BLD",1785,1,80,0)
+ usual installation directories:
+"BLD",1785,1,81,0)
+        C:\Program Files\Internet Explorer\IEXPLORE.EXE or
+"BLD",1785,1,82,0)
+        C:\Program Files\PLUS!\Microsoft Internet\IEXPLORE.EXE
+"BLD",1785,1,83,0)
+ 
+"BLD",1785,1,84,0)
+ On a 64-Bit installation, if the ROES application still does not work
+"BLD",1785,1,85,0)
+ properly after installing the new executable, please ensure the path
+"BLD",1785,1,86,0)
+ "C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE" does exist on
+"BLD",1785,1,87,0)
+ the workstation.
+"BLD",1785,1,88,0)
+ 
+"BLD",1785,1,89,0)
+ All workstations accessing the ROES application from either CPRS or the
+"BLD",1785,1,90,0)
+ desktop need to have the RPCBroker Listener running, as in the previous
+"BLD",1785,1,91,0)
+ releases of ROES. Refer to the RPCBroker Installation Guide for further
+"BLD",1785,1,92,0)
+ direction, if needed. It can be retrieved from http://www.domain.ext/vdl.
+"BLD",1785,1,93,0)
+ 
+"BLD",1785,1,94,0)
+ The following VistA routines have been modified to address new standards
+"BLD",1785,1,95,0)
+ guidelines.
+"BLD",1785,1,96,0)
+ 
+"BLD",1785,1,97,0)
+ 1. RMPFRPC0 - Eligibility calculations were modified for new rules and
+"BLD",1785,1,98,0)
+    categories and is now called directly from RMPFRPC1 instead of from
+"BLD",1785,1,99,0)
+    remote procedure call RMPFELIG.
+"BLD",1785,1,100,0)
+ 
+"BLD",1785,1,101,0)
+ 2. RMPFRPC1 - DDC changed to DALC. Added check to see if running from a
+"BLD",1785,1,102,0)
+    production account. Comments were added and clarified.
+"BLD",1785,1,103,0)
+ 
+"BLD",1785,1,104,0)
+ 
+"BLD",1785,1,105,0)
+ SOFTWARE RETRIEVAL:
+"BLD",1785,1,106,0)
+ =====================
+"BLD",1785,1,107,0)
+ 
+"BLD",1785,1,108,0)
+ The following software files are exported as part of this patch:
+"BLD",1785,1,109,0)
+       
+"BLD",1785,1,110,0)
+     File Name             Contents                         Transfer
+"BLD",1785,1,111,0)
+ 
+"BLD",1785,1,112,0)
+     RMPF3_4.KID           VistA modifications              ASCII
+"BLD",1785,1,113,0)
+ 
+"BLD",1785,1,114,0)
+     RMPF3_0P4.ZIP         Updated executables (354 KB)     BINARY
+"BLD",1785,1,115,0)
+       Containing the following files:
+"BLD",1785,1,116,0)
+       ROES3.exe           CPRS link to ROES web application     37 KB
+"BLD",1785,1,117,0)
+       ROES3DeskTop.exe    Desktop link to ROES web application  708 KB
+"BLD",1785,1,118,0)
+ 
+"BLD",1785,1,119,0)
+     RMPF3_0P4_DOC.ZIP     Updated documentation (1.816 MB) BINARY
+"BLD",1785,1,120,0)
+       Containing the following files:
+"BLD",1785,1,121,0)
+       RMPF3_0P4IG.PDF      Installation Guide
+"BLD",1785,1,122,0)
+       RMPF3_0P4SG.PDF      Security Guide
+"BLD",1785,1,123,0)
+       RMPF3_0P4TM.PDF      Technical Manual
+"BLD",1785,1,124,0)
+       RMPF3_0P4UM.PDF      User Manual
+"BLD",1785,1,125,0)
+       RMPF3_0P4RN.PDF      Release Notes
+"BLD",1785,1,126,0)
+ 
+"BLD",1785,1,127,0)
+ The KIDS part of the patch will be distributed in a PackMan message. It 
+"BLD",1785,1,128,0)
+ and the zip file containing the executables can also be downloaded from
+"BLD",1785,1,129,0)
+ the national download directory at:
+"BLD",1785,1,130,0)
+ 
+"BLD",1785,1,131,0)
+     download.vista.domain.ext
+"BLD",1785,1,132,0)
+ 
+"BLD",1785,1,133,0)
+ This site transmits the files from the first available FTP server.  
+"BLD",1785,1,134,0)
+ Sites may also elect to retrieve software directly from a specific server
+"BLD",1785,1,135,0)
+ as follows:
+"BLD",1785,1,136,0)
+ 
+"BLD",1785,1,137,0)
+ OI FIELD OFFICE       FTP ADDRESS                     DIRECTORY
+"BLD",1785,1,138,0)
+ 
+"BLD",1785,1,139,0)
+ Albany                ftp.fo-albany.domain.ext   anonymous.software
+"BLD",1785,1,140,0)
+ Hines                 ftp.fo-hines.domain.ext    anonymous.software
+"BLD",1785,1,141,0)
+ Salt Lake City        ftp.fo-slc.domain.ext      anonymous.software
+"BLD",1785,1,142,0)
+ 
+"BLD",1785,1,143,0)
+ 
+"BLD",1785,1,144,0)
+ INSTALLATION INSTRUCTIONS:
+"BLD",1785,1,145,0)
+ =========================
+"BLD",1785,1,146,0)
+ 
+"BLD",1785,1,147,0)
+ Make a backup copy of the current ROES3.exe and ROES3Desktop.exe
+"BLD",1785,1,148,0)
+ files (from a location where they currently are being used) to a
+"BLD",1785,1,149,0)
+ backup location. Note the locations where all instances of those
+"BLD",1785,1,150,0)
+ executables exist, for future maintenance.
+"BLD",1785,1,151,0)
+ 
+"BLD",1785,1,152,0)
+ All obsolete options, routines, remote procedure calls and files from
+"BLD",1785,1,153,0)
+ previous ROES versions will be removed during the installation. The list
+"BLD",1785,1,154,0)
+ items being removed is listed in the ROUTINE SUMMARY SECTION of the
+"BLD",1785,1,155,0)
+ build.
+"BLD",1785,1,156,0)
+ 
+"BLD",1785,1,157,0)
+ Only ROES users need be off the system while ROES*3.0*4 is being
+"BLD",1785,1,158,0)
+ installed. This patch should be installed during non-peak hours to
+"BLD",1785,1,159,0)
+ minimize disruption. The total installation may take 15 minutes or more,
+"BLD",1785,1,160,0)
+ depending on the CPRS Tools menu structure and number of ROES and
+"BLD",1785,1,161,0)
+ ROES Desktop executables to update at your site. Be sure that the KIDS
+"BLD",1785,1,162,0)
+ install (steps 1-9) are completed before updating the executables (steps
+"BLD",1785,1,163,0)
+ 10-11). The KIDS install will run in less than 2 minutes.
+"BLD",1785,1,164,0)
+  
+"BLD",1785,1,165,0)
+ Review your mapped set.  If the routines listed in the ROUTINE SUMMARY
+"BLD",1785,1,166,0)
+ section of the build are mapped, they should be removed from the mapped
+"BLD",1785,1,167,0)
+ set at this time.
+"BLD",1785,1,168,0)
+ 
+"BLD",1785,1,169,0)
+  1.  Choose the INSTALL/CHECK MESSAGE option on the PackMan menu. 
+"BLD",1785,1,170,0)
+      Answer YES to the prompt 'Want to Continue with Load? YES//'.  This
+"BLD",1785,1,171,0)
+      will load the KIDS package onto your system.
+"BLD",1785,1,172,0)
+ 
+"BLD",1785,1,173,0)
+  2.  From the Kernel Installation and Distribution System Menu, select
+"BLD",1785,1,174,0)
+      the Installation menu.
+"BLD",1785,1,175,0)
+ 
+"BLD",1785,1,176,0)
+  3.  From this menu, you may elect to use the following options (when
+"BLD",1785,1,177,0)
+      prompted for INSTALL NAME, enter RMPF*3.0*4):
+"BLD",1785,1,178,0)
+      a. Backup a Transport Global - this option will create a backup
+"BLD",1785,1,179,0)
+         message of any routines exported with the patch. It will not
+"BLD",1785,1,180,0)
+         backup any changes to DD's.
+"BLD",1785,1,181,0)
+      b. Compare Transport Global to Current System - this option will
+"BLD",1785,1,182,0)
+         allow you to view all changes to routines that will be made 
+"BLD",1785,1,183,0)
+         when the patch is installed.
+"BLD",1785,1,184,0)
+      c. Verify Checksums in Transport Global - this option will allow you
+"BLD",1785,1,185,0)
+         to ensure the integrity of the routines that are in the 
+"BLD",1785,1,186,0)
+         Transport Global.
+"BLD",1785,1,187,0)
+ 
+"BLD",1785,1,188,0)
+  4.  Then choose the Install Package(s) option and select RMPF*3.0*4.
+"BLD",1785,1,189,0)
+ 
+"BLD",1785,1,190,0)
+  5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+"BLD",1785,1,191,0)
+      NO//", respond NO (unless otherwise indicated)
+"BLD",1785,1,192,0)
+ 
+"BLD",1785,1,193,0)
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",1785,1,194,0)
+      and Protocols? YES//', respond "YES". When prompted to select the
+"BLD",1785,1,195,0)
+      options you would like to place out of order, enter the following:
+"BLD",1785,1,196,0)
+           
+"BLD",1785,1,197,0)
+             ROES3 OPTION ACCESS          [RMPF ROES3]
+"BLD",1785,1,198,0)
+ 
+"BLD",1785,1,199,0)
+  7.  If prompted 'Enter protocols you wish to mark as 'Out of Order': 
+"BLD",1785,1,200,0)
+      press <return>.
+"BLD",1785,1,201,0)
+ 
+"BLD",1785,1,202,0)
+  8.  When prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0.'
+"BLD",1785,1,203,0)
+ 
+"BLD",1785,1,204,0)
+  9.  If you unmapped routines at the start, those SENT TO SITE
+"BLD",1785,1,205,0)
+      should be returned to the mapped set once this part of the
+"BLD",1785,1,206,0)
+      installation is complete.
+"BLD",1785,1,207,0)
+ 
+"BLD",1785,1,208,0)
+ 10.  Retrieve the file RMPF3_0P4.ZIP and extract files ROES3.exe and
+"BLD",1785,1,209,0)
+      ROES3DeskTop.exe.
+"BLD",1785,1,210,0)
+ 
+"BLD",1785,1,211,0)
+ 11.  All existing instances of ROES3.exe and ROES3DeskTop.exe need to
+"BLD",1785,1,212,0)
+      be replaced, regardless of whether they reside on server(s) or
+"BLD",1785,1,213,0)
+      individual workstation(s).
+"BLD",1785,1,214,0)
+ 
+"BLD",1785,1,215,0)
+      To do this, copy the new executable files to those locations,
+"BLD",1785,1,216,0)
+      replacing the existing version. Take care NOT to inadvertently 
+"BLD",1785,1,217,0)
+      replace the ROES3.exe file with the ROES3DeskTop.exe file,
+"BLD",1785,1,218,0)
+      or vice versa. When this is completed properly, the command line
+"BLD",1785,1,219,0)
+      option from CPRS Tools and the desktop links to ROES should continue
+"BLD",1785,1,220,0)
+      to work without any modifications.
+"BLD",1785,1,221,0)
+ 
+"BLD",1785,1,222,0)
+ If additional guidance is needed for the GUI installation, please refer
+"BLD",1785,1,223,0)
+ to the ROES 3 Installation Guide on the System Design and Development 
+"BLD",1785,1,224,0)
+ web page at:  http://www.domain.ext/vdl. Within the Clinical section look for
+"BLD",1785,1,225,0)
+ 'Remote Order Entry System (ROES)'.  Under that option you will find the
+"BLD",1785,1,226,0)
+ Installation Guide, Security Guide, Technical Manual and User Manual.
+"BLD",1785,4,0)
+^9.64PA^^0
+"BLD",1785,6.3)
+19
+"BLD",1785,"ABNS",0)
+^9.66A^1^1
+"BLD",1785,"ABNS",1,0)
+RMPF
+"BLD",1785,"ABNS",1,1,0)
+^9.661A^^
+"BLD",1785,"ABNS","B","RMPF",1)
+ 
+"BLD",1785,"ABPKG")
+n^n^
+"BLD",1785,"KRN",0)
+^9.67PA^8989.52^19
+"BLD",1785,"KRN",.4,0)
+.4
+"BLD",1785,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",1785,"KRN",.401,0)
+.401
+"BLD",1785,"KRN",.402,0)
+.402
+"BLD",1785,"KRN",.403,0)
+.403
+"BLD",1785,"KRN",.5,0)
+.5
+"BLD",1785,"KRN",.84,0)
+.84
+"BLD",1785,"KRN",3.6,0)
+3.6
+"BLD",1785,"KRN",3.8,0)
+3.8
+"BLD",1785,"KRN",3.8,"NM",0)
+^9.68A^2^2
+"BLD",1785,"KRN",3.8,"NM",1,0)
+RMPF ROES UPDATES (ASPS)^^0
+"BLD",1785,"KRN",3.8,"NM",2,0)
+RMPF ROES UPDATES (PSAS)^^0
+"BLD",1785,"KRN",3.8,"NM","B","RMPF ROES UPDATES (ASPS)",1)
+ 
+"BLD",1785,"KRN",3.8,"NM","B","RMPF ROES UPDATES (PSAS)",2)
+ 
+"BLD",1785,"KRN",9.2,0)
+9.2
+"BLD",1785,"KRN",9.8,0)
+9.8
+"BLD",1785,"KRN",9.8,"NM",0)
+^9.68A^42^6
+"BLD",1785,"KRN",9.8,"NM",32,0)
+RMPFDE1^^1^
+"BLD",1785,"KRN",9.8,"NM",37,0)
+RMPFRPC0^^0^B45495358
+"BLD",1785,"KRN",9.8,"NM",38,0)
+RMPFRPC1^^0^B22103813
+"BLD",1785,"KRN",9.8,"NM",40,0)
+RMPFDE2^^1^
+"BLD",1785,"KRN",9.8,"NM",41,0)
+RMPFDE3^^1^
+"BLD",1785,"KRN",9.8,"NM",42,0)
+RMPFDE4^^1^
+"BLD",1785,"KRN",9.8,"NM","B","RMPFDE1",32)
+ 
+"BLD",1785,"KRN",9.8,"NM","B","RMPFDE2",40)
+ 
+"BLD",1785,"KRN",9.8,"NM","B","RMPFDE3",41)
+ 
+"BLD",1785,"KRN",9.8,"NM","B","RMPFDE4",42)
+ 
+"BLD",1785,"KRN",9.8,"NM","B","RMPFRPC0",37)
+ 
+"BLD",1785,"KRN",9.8,"NM","B","RMPFRPC1",38)
+ 
+"BLD",1785,"KRN",19,0)
+19
+"BLD",1785,"KRN",19,"NM",0)
+^9.68A^15^3
+"BLD",1785,"KRN",19,"NM",1,0)
+RMPF ROES3^^0
+"BLD",1785,"KRN",19,"NM",2,0)
+RMPFDE2^^1^
+"BLD",1785,"KRN",19,"NM",15,0)
+RMPFDE4^^1^
+"BLD",1785,"KRN",19,"NM","B","RMPF ROES3",1)
+ 
+"BLD",1785,"KRN",19,"NM","B","RMPFDE2",2)
+ 
+"BLD",1785,"KRN",19,"NM","B","RMPFDE4",15)
+ 
+"BLD",1785,"KRN",19.1,0)
+19.1
+"BLD",1785,"KRN",19.1,"NM",0)
+^9.68A^2^2
+"BLD",1785,"KRN",19.1,"NM",1,0)
+RMPF SUPERVISOR^^1^
+"BLD",1785,"KRN",19.1,"NM",2,0)
+RMPF SYSTEM MANAGER^^1^
+"BLD",1785,"KRN",19.1,"NM","B","RMPF SUPERVISOR",1)
+ 
+"BLD",1785,"KRN",19.1,"NM","B","RMPF SYSTEM MANAGER",2)
+ 
+"BLD",1785,"KRN",101,0)
+101
+"BLD",1785,"KRN",409.61,0)
+409.61
+"BLD",1785,"KRN",771,0)
+771
+"BLD",1785,"KRN",870,0)
+870
+"BLD",1785,"KRN",8989.51,0)
+8989.51
+"BLD",1785,"KRN",8989.52,0)
+8989.52
+"BLD",1785,"KRN",8994,0)
+8994
+"BLD",1785,"KRN",8994,"NM",0)
+^9.68A^3^3
+"BLD",1785,"KRN",8994,"NM",1,0)
+RMPFDEMOG^^0
+"BLD",1785,"KRN",8994,"NM",2,0)
+RMPFELIG^^1^
+"BLD",1785,"KRN",8994,"NM",3,0)
+RMPF ELIG MSG^^1^
+"BLD",1785,"KRN",8994,"NM","B","RMPF ELIG MSG",3)
+ 
+"BLD",1785,"KRN",8994,"NM","B","RMPFDEMOG",1)
+ 
+"BLD",1785,"KRN",8994,"NM","B","RMPFELIG",2)
+ 
+"BLD",1785,"KRN","B",.4,.4)
+ 
+"BLD",1785,"KRN","B",.401,.401)
+ 
+"BLD",1785,"KRN","B",.402,.402)
+ 
+"BLD",1785,"KRN","B",.403,.403)
+ 
+"BLD",1785,"KRN","B",.5,.5)
+ 
+"BLD",1785,"KRN","B",.84,.84)
+ 
+"BLD",1785,"KRN","B",3.6,3.6)
+ 
+"BLD",1785,"KRN","B",3.8,3.8)
+ 
+"BLD",1785,"KRN","B",9.2,9.2)
+ 
+"BLD",1785,"KRN","B",9.8,9.8)
+ 
+"BLD",1785,"KRN","B",19,19)
+ 
+"BLD",1785,"KRN","B",19.1,19.1)
+ 
+"BLD",1785,"KRN","B",101,101)
+ 
+"BLD",1785,"KRN","B",409.61,409.61)
+ 
+"BLD",1785,"KRN","B",771,771)
+ 
+"BLD",1785,"KRN","B",870,870)
+ 
+"BLD",1785,"KRN","B",8989.51,8989.51)
+ 
+"BLD",1785,"KRN","B",8989.52,8989.52)
+ 
+"BLD",1785,"KRN","B",8994,8994)
+ 
+"BLD",1785,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",1785,"QUES",0)
+^9.62^^
+"BLD",1785,"REQB",0)
+^9.611^1^1
+"BLD",1785,"REQB",1,0)
+RMPF*3.0*1^0
+"BLD",1785,"REQB","B","RMPF*3.0*1",1)
+ 
+"KRN",3.8,55,-1)
+0^1
+"KRN",3.8,55,0)
+RMPF ROES UPDATES (ASPS)^PU^n^^^^
+"KRN",3.8,55,3)
+ 
+"KRN",3.8,98,-1)
+0^2
+"KRN",3.8,98,0)
+RMPF ROES UPDATES (PSAS)^PU^^^^^
+"KRN",3.8,98,2,0)
+^^1^1^3020826^
+"KRN",3.8,98,2,1,0)
+PSAS GROUP TO RECEIVE ELIGIBILITY REQUEST MESSAGES
+"KRN",3.8,98,3)
+ 
+"KRN",19,5448,-1)
+0^1
+"KRN",19,5448,0)
+RMPF ROES3^ROES3 OPTION ACCESS^^B^^^^^^^^REMOTE ORDER/ENTRY SYSTEM
+"KRN",19,5448,1,0)
+^19.06^2^2^3110207^^^^
+"KRN",19,5448,1,1,0)
+This is the option that allows user's to access the Delphi Executable that
+"KRN",19,5448,1,2,0)
+connects the user to the DDC web site from the desktop or CPRS Tools menu.
+"KRN",19,5448,99.1)
+61069,31026
+"KRN",19,5448,"RPC",0)
+^19.05P^13^13
+"KRN",19,5448,"RPC",1,0)
+XUS AV CODE
+"KRN",19,5448,"RPC",2,0)
+XUS SIGNON SETUP
+"KRN",19,5448,"RPC",3,0)
+XWB CREATE CONTEXT
+"KRN",19,5448,"RPC",4,0)
+XWB GET VARIABLE VALUE
+"KRN",19,5448,"RPC",5,0)
+DDR GETS ENTRY DATA
+"KRN",19,5448,"RPC",6,0)
+DDR LISTER
+"KRN",19,5448,"RPC",7,0)
+DDR FINDER
+"KRN",19,5448,"RPC",8,0)
+DDR KEY VALIDATOR
+"KRN",19,5448,"RPC",9,0)
+DDR GET DD HELP
+"KRN",19,5448,"RPC",10,0)
+DDR VALIDATOR
+"KRN",19,5448,"RPC",11,0)
+XUS AV HELP
+"KRN",19,5448,"RPC",12,0)
+XUS GET USER INFO
+"KRN",19,5448,"RPC",13,0)
+RMPFDEMOG
+"KRN",19,5448,"U")
+ROES3 OPTION ACCESS
+"KRN",19,5997,-1)
+1^2
+"KRN",19,5997,0)
+RMPFDE2
+"KRN",19,5998,-1)
+1^15
+"KRN",19,5998,0)
+RMPFDE4
+"KRN",19.1,276,-1)
+1^1
+"KRN",19.1,276,0)
+RMPF SUPERVISOR
+"KRN",19.1,277,-1)
+1^2
+"KRN",19.1,277,0)
+RMPF SYSTEM MANAGER
+"KRN",8994,83,-1)
+0^1
+"KRN",8994,83,0)
+RMPFDEMOG^START^RMPFRPC1^2^R^^^1
+"KRN",8994,83,1,0)
+^^2^2^3080716^
+"KRN",8994,83,1,1,0)
+Accepts the patient DFN and returns an array containing predefined
+"KRN",8994,83,1,2,0)
+demographic information
+"KRN",8994,83,2,0)
+^8994.02A^1^1
+"KRN",8994,83,2,1,0)
+DFN^1^^1^1
+"KRN",8994,83,2,1,1,0)
+^8994.021^1^1^3080716^^^^
+"KRN",8994,83,2,1,1,1,0)
+DFN from local DPT file
+"KRN",8994,83,2,"B","DFN",1)
+ 
+"KRN",8994,83,2,"PARAMSEQ",1,1)
+ 
+"KRN",8994,83,3,0)
+^8994.03^21^21^3080716^^
+"KRN",8994,83,3,1,0)
+Subscripted list of demographic variables
+"KRN",8994,83,3,2,0)
+0=DOD numeric and text
+"KRN",8994,83,3,3,0)
+1=name text
+"KRN",8994,83,3,4,0)
+2=DOB numeric and text
+"KRN",8994,83,3,5,0)
+4=current address line 1
+"KRN",8994,83,3,6,0)
+5=current address line 2
+"KRN",8994,83,3,7,0)
+6=current address line 3
+"KRN",8994,83,3,8,0)
+7=current city
+"KRN",8994,83,3,9,0)
+8=current numeric and abbrev of state
+"KRN",8994,83,3,10,0)
+9=current zip
+"KRN",8994,83,3,11,0)
+10=temp start date numeric and text
+"KRN",8994,83,3,12,0)
+11=temp end dat4e numeric and text
+"KRN",8994,83,3,13,0)
+12=current phone
+"KRN",8994,83,3,14,0)
+13=eligibility status date numeric and text
+"KRN",8994,83,3,15,0)
+14=calculated eligibility
+"KRN",8994,83,3,16,0)
+15=eligibility status(V^Verified)
+"KRN",8994,83,3,17,0)
+16=sensitive record(1 or "")
+"KRN",8994,83,3,18,0)
+17=error message
+"KRN",8994,83,3,19,0)
+18=primary eligibility
+"KRN",8994,83,3,20,0)
+19=priority group
+"KRN",8994,83,3,21,0)
+20=integration control number
+"KRN",8994,127,-1)
+1^2
+"KRN",8994,127,0)
+RMPFELIG
+"KRN",8994,128,-1)
+1^3
+"KRN",8994,128,0)
+RMPF ELIG MSG
+"MBREQ")
+0
+"ORD",0,9.8)
+9.8;;1;RTNF^XPDTA;RTNE^XPDTA
+"ORD",0,9.8,0)
+ROUTINE
+"ORD",3,19.1)
+19.1;3;;;KEY^XPDTA1;KEYF1^XPDIA1;KEYE1^XPDIA1;KEYF2^XPDIA1;;KEYDEL^XPDIA1
+"ORD",3,19.1,0)
+SECURITY KEY
+"ORD",11,3.8)
+3.8;11;;;MAILG^XPDTA1;MAILGF1^XPDIA1;MAILGE1^XPDIA1;MAILGF2^XPDIA1;;MAILGDEL^XPDIA1(%)
+"ORD",11,3.8,0)
+MAIL GROUP
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",145,-1)
+1^1
+"PKG",145,0)
+REMOTE ORDER/ENTRY SYSTEM^RMPF^Remote Order/Entry System
+"PKG",145,20,0)
+^9.402P^^
+"PKG",145,22,0)
+^9.49I^1^1
+"PKG",145,22,1,0)
+3.0^3031025
+"PKG",145,22,1,"PAH",1,0)
+4^3110729
+"PKG",145,22,1,"PAH",1,1,0)
+^^226^226^3110729
+"PKG",145,22,1,"PAH",1,1,1,0)
+ 
+"PKG",145,22,1,"PAH",1,1,2,0)
+This patch addresses several issues that have come up at the VA Medical 
+"PKG",145,22,1,"PAH",1,1,3,0)
+Centers since the first release of the ROES package. All issues addressed 
+"PKG",145,22,1,"PAH",1,1,4,0)
+in this patch are related to the ROES application that runs from the CPRS 
+"PKG",145,22,1,"PAH",1,1,5,0)
+Tools menu (ROES3.exe). The ROES Desktop application (ROES3Desktop.exe) 
+"PKG",145,22,1,"PAH",1,1,6,0)
+is only included for issues 2 and 3 below.
+"PKG",145,22,1,"PAH",1,1,7,0)
+ 
+"PKG",145,22,1,"PAH",1,1,8,0)
+ Issues addressed in this patch are:
+"PKG",145,22,1,"PAH",1,1,9,0)
+ 
+"PKG",145,22,1,"PAH",1,1,10,0)
+1. As approved by the PSAS Program Office, all Veteran eligibility 
+"PKG",145,22,1,"PAH",1,1,11,0)
+determinations calculated by the software will be automatically 
+"PKG",145,22,1,"PAH",1,1,12,0)
+approved.  Veteran eligibility requests will no longer be sent to the 
+"PKG",145,22,1,"PAH",1,1,13,0)
+Prosthetic and Sensory Aids Service (PSAS) staff for approval.  Changes 
+"PKG",145,22,1,"PAH",1,1,14,0)
+in the background calculations for Veteran eligibility are detailed in 
+"PKG",145,22,1,"PAH",1,1,15,0)
+the Release Notes for this patch.
+"PKG",145,22,1,"PAH",1,1,16,0)
+ 
+"PKG",145,22,1,"PAH",1,1,17,0)
+2. For added security, the web connection has been changed from 
+"PKG",145,22,1,"PAH",1,1,18,0)
+clear http to secure http using the https protocol identifier.
+"PKG",145,22,1,"PAH",1,1,19,0)
+ 
+"PKG",145,22,1,"PAH",1,1,20,0)
+3. Adjustments were made for 64 bit terminal servers to access and 
+"PKG",145,22,1,"PAH",1,1,21,0)
+use the ROES web site.
+"PKG",145,22,1,"PAH",1,1,22,0)
+ 
+"PKG",145,22,1,"PAH",1,1,23,0)
+4. Connections from CPRS to the ROES web server will only be allowed to 
+"PKG",145,22,1,"PAH",1,1,24,0)
+actually enter the web site if they are from a VistA production account to
+"PKG",145,22,1,"PAH",1,1,25,0)
+prevent false Veteran information from becoming a part of the national
+"PKG",145,22,1,"PAH",1,1,26,0)
+database.
+"PKG",145,22,1,"PAH",1,1,27,0)
+ 
+"PKG",145,22,1,"PAH",1,1,28,0)
+5. Menu options, routines, remote procedure calls and security keys 
+"PKG",145,22,1,"PAH",1,1,29,0)
+from prior versions of ROES that are no longer needed will be removed.
+"PKG",145,22,1,"PAH",1,1,30,0)
+        Obsolete Options removed:  RMPFDE2 and RMPFDE4
+"PKG",145,22,1,"PAH",1,1,31,0)
+        Obsolete Routines removed:  RMPFDE1,RMPFDE2,RMPFDE3 and RMPFDE4
+"PKG",145,22,1,"PAH",1,1,32,0)
+        Obsolete Keys removed:  RMPF SUPERVISOR and RMPF SYSTEM MANAGER
+"PKG",145,22,1,"PAH",1,1,33,0)
+        Obsolete Remote Procedures removed: RMPF ELIG MSG and RMPFELIG
+"PKG",145,22,1,"PAH",1,1,34,0)
+ 
+"PKG",145,22,1,"PAH",1,1,35,0)
+6. Modifications for VistA and Delphi coding standards are included.
+"PKG",145,22,1,"PAH",1,1,36,0)
+ 
+"PKG",145,22,1,"PAH",1,1,37,0)
+7. Documentation has been updated regarding the removal of the 
+"PKG",145,22,1,"PAH",1,1,38,0)
+eligibility interactions before connecting to ROES.
+"PKG",145,22,1,"PAH",1,1,39,0)
+ 
+"PKG",145,22,1,"PAH",1,1,40,0)
+ 
+"PKG",145,22,1,"PAH",1,1,41,0)
+ Associated Remedy Tickets:
+"PKG",145,22,1,"PAH",1,1,42,0)
+ ====================================== 
+"PKG",145,22,1,"PAH",1,1,43,0)
+ N/A
+"PKG",145,22,1,"PAH",1,1,44,0)
+ 
+"PKG",145,22,1,"PAH",1,1,45,0)
+ 
+"PKG",145,22,1,"PAH",1,1,46,0)
+ E3R references addressed in this patch
+"PKG",145,22,1,"PAH",1,1,47,0)
+ ======================================
+"PKG",145,22,1,"PAH",1,1,48,0)
+ N/A
+"PKG",145,22,1,"PAH",1,1,49,0)
+ 
+"PKG",145,22,1,"PAH",1,1,50,0)
+ Test Sites
+"PKG",145,22,1,"PAH",1,1,51,0)
+ ========
+"PKG",145,22,1,"PAH",1,1,52,0)
+ Miami 
+"PKG",145,22,1,"PAH",1,1,53,0)
+ Omaha
+"PKG",145,22,1,"PAH",1,1,54,0)
+ Phoenix
+"PKG",145,22,1,"PAH",1,1,55,0)
+ Columbia (SC)
+"PKG",145,22,1,"PAH",1,1,56,0)
+ 
+"PKG",145,22,1,"PAH",1,1,57,0)
+ Required Builds
+"PKG",145,22,1,"PAH",1,1,58,0)
+ =============
+"PKG",145,22,1,"PAH",1,1,59,0)
+ 
+"PKG",145,22,1,"PAH",1,1,60,0)
+ RMPF*3.0*1
+"PKG",145,22,1,"PAH",1,1,61,0)
+ 
+"PKG",145,22,1,"PAH",1,1,62,0)
+ 
+"PKG",145,22,1,"PAH",1,1,63,0)
+ 
+"PKG",145,22,1,"PAH",1,1,64,0)
+ This patch contains the following enhancements and problem resolutions:
+"PKG",145,22,1,"PAH",1,1,65,0)
+ ==========================================================
+"PKG",145,22,1,"PAH",1,1,66,0)
+ 
+"PKG",145,22,1,"PAH",1,1,67,0)
+ The ROES application requires that the user's browser have JAVA
+"PKG",145,22,1,"PAH",1,1,68,0)
+ available and enabled in order to function.  Sun has not developed a
+"PKG",145,22,1,"PAH",1,1,69,0)
+ 64-bit version of JAVA, so on 64-bit terminal server installations the
+"PKG",145,22,1,"PAH",1,1,70,0)
+ browser is not JAVA capable. This may prevent some ROES features from
+"PKG",145,22,1,"PAH",1,1,71,0)
+ working properly. 64-bit installations also have a 32-bit browser
+"PKG",145,22,1,"PAH",1,1,72,0)
+ which resides at a location different from the normal 32-bit location.
+"PKG",145,22,1,"PAH",1,1,73,0)
+ That new location is:
+"PKG",145,22,1,"PAH",1,1,74,0)
+        C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE.
+"PKG",145,22,1,"PAH",1,1,75,0)
+ 
+"PKG",145,22,1,"PAH",1,1,76,0)
+ The ROES executables that connect to the internet application have been
+"PKG",145,22,1,"PAH",1,1,77,0)
+ modified to check for the 32-bit Internet Explorer at that location.
+"PKG",145,22,1,"PAH",1,1,78,0)
+ This change will not affect any current 32-bit installations because, if 
+"PKG",145,22,1,"PAH",1,1,79,0)
+ Internet Explorer is not found at that location, ROES will look in the
+"PKG",145,22,1,"PAH",1,1,80,0)
+ usual installation directories:
+"PKG",145,22,1,"PAH",1,1,81,0)
+        C:\Program Files\Internet Explorer\IEXPLORE.EXE or
+"PKG",145,22,1,"PAH",1,1,82,0)
+        C:\Program Files\PLUS!\Microsoft Internet\IEXPLORE.EXE
+"PKG",145,22,1,"PAH",1,1,83,0)
+ 
+"PKG",145,22,1,"PAH",1,1,84,0)
+ On a 64-Bit installation, if the ROES application still does not work
+"PKG",145,22,1,"PAH",1,1,85,0)
+ properly after installing the new executable, please ensure the path
+"PKG",145,22,1,"PAH",1,1,86,0)
+ "C:\Program Files (x86)\Internet Explorer\IEXPLORE.EXE" does exist on
+"PKG",145,22,1,"PAH",1,1,87,0)
+ the workstation.
+"PKG",145,22,1,"PAH",1,1,88,0)
+ 
+"PKG",145,22,1,"PAH",1,1,89,0)
+ All workstations accessing the ROES application from either CPRS or the
+"PKG",145,22,1,"PAH",1,1,90,0)
+ desktop need to have the RPCBroker Listener running, as in the previous
+"PKG",145,22,1,"PAH",1,1,91,0)
+ releases of ROES. Refer to the RPCBroker Installation Guide for further
+"PKG",145,22,1,"PAH",1,1,92,0)
+ direction, if needed. It can be retrieved from http://www.domain.ext/vdl.
+"PKG",145,22,1,"PAH",1,1,93,0)
+ 
+"PKG",145,22,1,"PAH",1,1,94,0)
+ The following VistA routines have been modified to address new standards
+"PKG",145,22,1,"PAH",1,1,95,0)
+ guidelines.
+"PKG",145,22,1,"PAH",1,1,96,0)
+ 
+"PKG",145,22,1,"PAH",1,1,97,0)
+ 1. RMPFRPC0 - Eligibility calculations were modified for new rules and
+"PKG",145,22,1,"PAH",1,1,98,0)
+    categories and is now called directly from RMPFRPC1 instead of from
+"PKG",145,22,1,"PAH",1,1,99,0)
+    remote procedure call RMPFELIG.
+"PKG",145,22,1,"PAH",1,1,100,0)
+ 
+"PKG",145,22,1,"PAH",1,1,101,0)
+ 2. RMPFRPC1 - DDC changed to DALC. Added check to see if running from a
+"PKG",145,22,1,"PAH",1,1,102,0)
+    production account. Comments were added and clarified.
+"PKG",145,22,1,"PAH",1,1,103,0)
+ 
+"PKG",145,22,1,"PAH",1,1,104,0)
+ 
+"PKG",145,22,1,"PAH",1,1,105,0)
+ SOFTWARE RETRIEVAL:
+"PKG",145,22,1,"PAH",1,1,106,0)
+ =====================
+"PKG",145,22,1,"PAH",1,1,107,0)
+ 
+"PKG",145,22,1,"PAH",1,1,108,0)
+ The following software files are exported as part of this patch:
+"PKG",145,22,1,"PAH",1,1,109,0)
+       
+"PKG",145,22,1,"PAH",1,1,110,0)
+     File Name             Contents                         Transfer
+"PKG",145,22,1,"PAH",1,1,111,0)
+ 
+"PKG",145,22,1,"PAH",1,1,112,0)
+     RMPF3_4.KID           VistA modifications              ASCII
+"PKG",145,22,1,"PAH",1,1,113,0)
+ 
+"PKG",145,22,1,"PAH",1,1,114,0)
+     RMPF3_0P4.ZIP         Updated executables (354 KB)     BINARY
+"PKG",145,22,1,"PAH",1,1,115,0)
+       Containing the following files:
+"PKG",145,22,1,"PAH",1,1,116,0)
+       ROES3.exe           CPRS link to ROES web application     37 KB
+"PKG",145,22,1,"PAH",1,1,117,0)
+       ROES3DeskTop.exe    Desktop link to ROES web application  708 KB
+"PKG",145,22,1,"PAH",1,1,118,0)
+ 
+"PKG",145,22,1,"PAH",1,1,119,0)
+     RMPF3_0P4_DOC.ZIP     Updated documentation (1.816 MB) BINARY
+"PKG",145,22,1,"PAH",1,1,120,0)
+       Containing the following files:
+"PKG",145,22,1,"PAH",1,1,121,0)
+       RMPF3_0P4IG.PDF      Installation Guide
+"PKG",145,22,1,"PAH",1,1,122,0)
+       RMPF3_0P4SG.PDF      Security Guide
+"PKG",145,22,1,"PAH",1,1,123,0)
+       RMPF3_0P4TM.PDF      Technical Manual
+"PKG",145,22,1,"PAH",1,1,124,0)
+       RMPF3_0P4UM.PDF      User Manual
+"PKG",145,22,1,"PAH",1,1,125,0)
+       RMPF3_0P4RN.PDF      Release Notes
+"PKG",145,22,1,"PAH",1,1,126,0)
+ 
+"PKG",145,22,1,"PAH",1,1,127,0)
+ The KIDS part of the patch will be distributed in a PackMan message. It 
+"PKG",145,22,1,"PAH",1,1,128,0)
+ and the zip file containing the executables can also be downloaded from
+"PKG",145,22,1,"PAH",1,1,129,0)
+ the national download directory at:
+"PKG",145,22,1,"PAH",1,1,130,0)
+ 
+"PKG",145,22,1,"PAH",1,1,131,0)
+     download.vista.domain.ext
+"PKG",145,22,1,"PAH",1,1,132,0)
+ 
+"PKG",145,22,1,"PAH",1,1,133,0)
+ This site transmits the files from the first available FTP server.  
+"PKG",145,22,1,"PAH",1,1,134,0)
+ Sites may also elect to retrieve software directly from a specific server
+"PKG",145,22,1,"PAH",1,1,135,0)
+ as follows:
+"PKG",145,22,1,"PAH",1,1,136,0)
+ 
+"PKG",145,22,1,"PAH",1,1,137,0)
+ OI FIELD OFFICE       FTP ADDRESS                     DIRECTORY
+"PKG",145,22,1,"PAH",1,1,138,0)
+ 
+"PKG",145,22,1,"PAH",1,1,139,0)
+ Albany                ftp.fo-albany.domain.ext   anonymous.software
+"PKG",145,22,1,"PAH",1,1,140,0)
+ Hines                 ftp.fo-hines.domain.ext    anonymous.software
+"PKG",145,22,1,"PAH",1,1,141,0)
+ Salt Lake City        ftp.fo-slc.domain.ext      anonymous.software
+"PKG",145,22,1,"PAH",1,1,142,0)
+ 
+"PKG",145,22,1,"PAH",1,1,143,0)
+ 
+"PKG",145,22,1,"PAH",1,1,144,0)
+ INSTALLATION INSTRUCTIONS:
+"PKG",145,22,1,"PAH",1,1,145,0)
+ =========================
+"PKG",145,22,1,"PAH",1,1,146,0)
+ 
+"PKG",145,22,1,"PAH",1,1,147,0)
+ Make a backup copy of the current ROES3.exe and ROES3Desktop.exe
+"PKG",145,22,1,"PAH",1,1,148,0)
+ files (from a location where they currently are being used) to a
+"PKG",145,22,1,"PAH",1,1,149,0)
+ backup location. Note the locations where all instances of those
+"PKG",145,22,1,"PAH",1,1,150,0)
+ executables exist, for future maintenance.
+"PKG",145,22,1,"PAH",1,1,151,0)
+ 
+"PKG",145,22,1,"PAH",1,1,152,0)
+ All obsolete options, routines, remote procedure calls and files from
+"PKG",145,22,1,"PAH",1,1,153,0)
+ previous ROES versions will be removed during the installation. The list
+"PKG",145,22,1,"PAH",1,1,154,0)
+ items being removed is listed in the ROUTINE SUMMARY SECTION of the
+"PKG",145,22,1,"PAH",1,1,155,0)
+ build.
+"PKG",145,22,1,"PAH",1,1,156,0)
+ 
+"PKG",145,22,1,"PAH",1,1,157,0)
+ Only ROES users need be off the system while ROES*3.0*4 is being
+"PKG",145,22,1,"PAH",1,1,158,0)
+ installed. This patch should be installed during non-peak hours to
+"PKG",145,22,1,"PAH",1,1,159,0)
+ minimize disruption. The total installation may take 15 minutes or more,
+"PKG",145,22,1,"PAH",1,1,160,0)
+ depending on the CPRS Tools menu structure and number of ROES and
+"PKG",145,22,1,"PAH",1,1,161,0)
+ ROES Desktop executables to update at your site. Be sure that the KIDS
+"PKG",145,22,1,"PAH",1,1,162,0)
+ install (steps 1-9) are completed before updating the executables (steps
+"PKG",145,22,1,"PAH",1,1,163,0)
+ 10-11). The KIDS install will run in less than 2 minutes.
+"PKG",145,22,1,"PAH",1,1,164,0)
+  
+"PKG",145,22,1,"PAH",1,1,165,0)
+ Review your mapped set.  If the routines listed in the ROUTINE SUMMARY
+"PKG",145,22,1,"PAH",1,1,166,0)
+ section of the build are mapped, they should be removed from the mapped
+"PKG",145,22,1,"PAH",1,1,167,0)
+ set at this time.
+"PKG",145,22,1,"PAH",1,1,168,0)
+ 
+"PKG",145,22,1,"PAH",1,1,169,0)
+  1.  Choose the INSTALL/CHECK MESSAGE option on the PackMan menu. 
+"PKG",145,22,1,"PAH",1,1,170,0)
+      Answer YES to the prompt 'Want to Continue with Load? YES//'.  This
+"PKG",145,22,1,"PAH",1,1,171,0)
+      will load the KIDS package onto your system.
+"PKG",145,22,1,"PAH",1,1,172,0)
+ 
+"PKG",145,22,1,"PAH",1,1,173,0)
+  2.  From the Kernel Installation and Distribution System Menu, select
+"PKG",145,22,1,"PAH",1,1,174,0)
+      the Installation menu.
+"PKG",145,22,1,"PAH",1,1,175,0)
+ 
+"PKG",145,22,1,"PAH",1,1,176,0)
+  3.  From this menu, you may elect to use the following options (when
+"PKG",145,22,1,"PAH",1,1,177,0)
+      prompted for INSTALL NAME, enter RMPF*3.0*4):
+"PKG",145,22,1,"PAH",1,1,178,0)
+      a. Backup a Transport Global - this option will create a backup
+"PKG",145,22,1,"PAH",1,1,179,0)
+         message of any routines exported with the patch. It will not
+"PKG",145,22,1,"PAH",1,1,180,0)
+         backup any changes to DD's.
+"PKG",145,22,1,"PAH",1,1,181,0)
+      b. Compare Transport Global to Current System - this option will
+"PKG",145,22,1,"PAH",1,1,182,0)
+         allow you to view all changes to routines that will be made 
+"PKG",145,22,1,"PAH",1,1,183,0)
+         when the patch is installed.
+"PKG",145,22,1,"PAH",1,1,184,0)
+      c. Verify Checksums in Transport Global - this option will allow you
+"PKG",145,22,1,"PAH",1,1,185,0)
+         to ensure the integrity of the routines that are in the 
+"PKG",145,22,1,"PAH",1,1,186,0)
+         Transport Global.
+"PKG",145,22,1,"PAH",1,1,187,0)
+ 
+"PKG",145,22,1,"PAH",1,1,188,0)
+  4.  Then choose the Install Package(s) option and select RMPF*3.0*4.
+"PKG",145,22,1,"PAH",1,1,189,0)
+ 
+"PKG",145,22,1,"PAH",1,1,190,0)
+  5.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+"PKG",145,22,1,"PAH",1,1,191,0)
+      NO//", respond NO (unless otherwise indicated)
+"PKG",145,22,1,"PAH",1,1,192,0)
+ 
+"PKG",145,22,1,"PAH",1,1,193,0)
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",145,22,1,"PAH",1,1,194,0)
+      and Protocols? YES//', respond "YES". When prompted to select the
+"PKG",145,22,1,"PAH",1,1,195,0)
+      options you would like to place out of order, enter the following:
+"PKG",145,22,1,"PAH",1,1,196,0)
+           
+"PKG",145,22,1,"PAH",1,1,197,0)
+             ROES3 OPTION ACCESS          [RMPF ROES3]
+"PKG",145,22,1,"PAH",1,1,198,0)
+ 
+"PKG",145,22,1,"PAH",1,1,199,0)
+  7.  If prompted 'Enter protocols you wish to mark as 'Out of Order': 
+"PKG",145,22,1,"PAH",1,1,200,0)
+      press <return>.
+"PKG",145,22,1,"PAH",1,1,201,0)
+ 
+"PKG",145,22,1,"PAH",1,1,202,0)
+  8.  When prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0.'
+"PKG",145,22,1,"PAH",1,1,203,0)
+ 
+"PKG",145,22,1,"PAH",1,1,204,0)
+  9.  If you unmapped routines at the start, those SENT TO SITE
+"PKG",145,22,1,"PAH",1,1,205,0)
+      should be returned to the mapped set once this part of the
+"PKG",145,22,1,"PAH",1,1,206,0)
+      installation is complete.
+"PKG",145,22,1,"PAH",1,1,207,0)
+ 
+"PKG",145,22,1,"PAH",1,1,208,0)
+ 10.  Retrieve the file RMPF3_0P4.ZIP and extract files ROES3.exe and
+"PKG",145,22,1,"PAH",1,1,209,0)
+      ROES3DeskTop.exe.
+"PKG",145,22,1,"PAH",1,1,210,0)
+ 
+"PKG",145,22,1,"PAH",1,1,211,0)
+ 11.  All existing instances of ROES3.exe and ROES3DeskTop.exe need to
+"PKG",145,22,1,"PAH",1,1,212,0)
+      be replaced, regardless of whether they reside on server(s) or
+"PKG",145,22,1,"PAH",1,1,213,0)
+      individual workstation(s).
+"PKG",145,22,1,"PAH",1,1,214,0)
+ 
+"PKG",145,22,1,"PAH",1,1,215,0)
+      To do this, copy the new executable files to those locations,
+"PKG",145,22,1,"PAH",1,1,216,0)
+      replacing the existing version. Take care NOT to inadvertently 
+"PKG",145,22,1,"PAH",1,1,217,0)
+      replace the ROES3.exe file with the ROES3DeskTop.exe file,
+"PKG",145,22,1,"PAH",1,1,218,0)
+      or vice versa. When this is completed properly, the command line
+"PKG",145,22,1,"PAH",1,1,219,0)
+      option from CPRS Tools and the desktop links to ROES should continue
+"PKG",145,22,1,"PAH",1,1,220,0)
+      to work without any modifications.
+"PKG",145,22,1,"PAH",1,1,221,0)
+ 
+"PKG",145,22,1,"PAH",1,1,222,0)
+ If additional guidance is needed for the GUI installation, please refer
+"PKG",145,22,1,"PAH",1,1,223,0)
+ to the ROES 3 Installation Guide on the System Design and Development 
+"PKG",145,22,1,"PAH",1,1,224,0)
+ web page at:  http://www.domain.ext/vdl. Within the Clinical section look for
+"PKG",145,22,1,"PAH",1,1,225,0)
+ 'Remote Order Entry System (ROES)'.  Under that option you will find the
+"PKG",145,22,1,"PAH",1,1,226,0)
+ Installation Guide, Security Guide, Technical Manual and User Manual.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+ 
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","RMPFDE1")
+1^32^^B9126547
+"RTN","RMPFDE2")
+1^40^^B16506181
+"RTN","RMPFDE3")
+1^41^^B20728190
+"RTN","RMPFDE4")
+1^42^^B3265627
+"RTN","RMPFRPC0")
+0^37^B45495358^B44994754
+"RTN","RMPFRPC0",1,0)
+RMPFRPC0        ;DALC/PJU - Module to establish DALC elig for ROES3;06/18/2008
+"RTN","RMPFRPC0",2,0)
+ ;;3.0;REMOTE ORDER ENTRY SYSTEM;**1,4**;Feb 9, 2011;Build 19
+"RTN","RMPFRPC0",3,0)
+ ;;Updated for R3*4 2/1/2011
+"RTN","RMPFRPC0",4,0)
+ ;;Per VHA Directive 10-92-142 this routine should not be modified
+"RTN","RMPFRPC0",5,0)
+ ;;Uses supported IA's: 2343, 10003, 10015, 10061, 10103
+"RTN","RMPFRPC0",6,0)
+ ;;subscriber to IA's: 174 & 767
+"RTN","RMPFRPC0",7,0)
+START(AR,DFN,SHW)  ;called from RMPFRPC1 for elig variables
+"RTN","RMPFRPC0",8,0)
+  ;input: array name by ref, DFN, SHW=1(opt) if prompts can be shown
+"RTN","RMPFRPC0",9,0)
+  ;will return to the Delphi app as 0-7 subscripts in same order
+"RTN","RMPFRPC0",10,0)
+  ;PD = AR(0)=date of death msg or ""
+"RTN","RMPFRPC0",11,0)
+  ;ED = AR(1)=eligibility status date FM
+"RTN","RMPFRPC0",12,0)
+  ;EL = AR(2)=calculated eligibility code
+"RTN","RMPFRPC0",13,0)
+  ;ES = AR(3)=eligibility status
+"RTN","RMPFRPC0",14,0)
+  ;SR = AR(4)=sensitive record
+"RTN","RMPFRPC0",15,0)
+  ;ER = AR(5) is for error msg's
+"RTN","RMPFRPC0",16,0)
+  ;PE = AR(6)=primary eligibility
+"RTN","RMPFRPC0",17,0)
+  ;PG = AR(7)=priority group
+"RTN","RMPFRPC0",18,0)
+  ;RA = AR(8)=elig^APPR(1)^PSAS user^ASPS user^req dt^sug el^act dt
+"RTN","RMPFRPC0",19,0)
+  ;PS = enrollment group sub
+"RTN","RMPFRPC0",20,0)
+  ;R3 = array of auto accepted R3 elig's
+"RTN","RMPFRPC0",21,0)
+  ;VS = 0/1 for SC ^ %
+"RTN","RMPFRPC0",22,0)
+  ;VT = y/n for veteran flag
+"RTN","RMPFRPC0",23,0)
+  K AR ;in case came in with data (is called by ref)
+"RTN","RMPFRPC0",24,0)
+  N ROES ;array of eligibilities to submitted to PSAS
+"RTN","RMPFRPC0",25,0)
+  N A0,A1,A2,ED,EL,ES,ER,PD,PG,PS,R3,RA,RMDNM,SSN,VS,VT,IEN
+"RTN","RMPFRPC0",26,0)
+  S (ED,EL,ES,ER,PD,PG,PS,R3,RA,RMDNM,SSN,VS,VT,IEN)=""
+"RTN","RMPFRPC0",27,0)
+  F X=0:1:8 S AR(X)="" ;initialize array AR
+"RTN","RMPFRPC0",28,0)
+  ;R3*4 removed or renamed:"WWI","AAA","EP3","HB"
+"RTN","RMPFRPC0",29,0)
+  F X="SC","COM","PH","POW","PG3","PG4","NCA","0CA","OIF" S R3(X)=""
+"RTN","RMPFRPC0",30,0)
+  F X="SCV","OGA","NSC","PG8","BLR","VOC","CAN","BRI" S R3(X)=""
+"RTN","RMPFRPC0",31,0)
+  K VADM,VAEL,VAMB,VAPA,VASV
+"RTN","RMPFRPC0",32,0)
+  D DEM^VADPT ;demographic vars
+"RTN","RMPFRPC0",33,0)
+  I $G(VAERR) S ER="**ERROR retrieving Demographic values**" G END
+"RTN","RMPFRPC0",34,0)
+  I $G(VADM(6)) D  ;fm^external date of death
+"RTN","RMPFRPC0",35,0)
+  .S (PD,AR(0))=VADM(6)
+"RTN","RMPFRPC0",36,0)
+  S RMDNM=$G(VADM(1)) ;Patient name for SHOW
+"RTN","RMPFRPC0",37,0)
+  S SSN=$P($G(VADM(2)),U,1)
+"RTN","RMPFRPC0",38,0)
+  I $P($G(^DGSL(38.1,DFN,0)),U,2) S AR(4)=1 ;IA 767 (DBIA268-C SEN REC)
+"RTN","RMPFRPC0",39,0)
+  S VAPA("P")="" D ADD^VADPT ;permanent address
+"RTN","RMPFRPC0",40,0)
+  I $G(VAERR) S ER="**ERROR** Problem retrieving Permanent Address" G END
+"RTN","RMPFRPC0",41,0)
+  D ELIG^VADPT ;eligibility vars
+"RTN","RMPFRPC0",42,0)
+  I $G(VAERR) D  G END
+"RTN","RMPFRPC0",43,0)
+  .S ER="**ERROR** Problem in retrieving Eligibility (VADPT)."
+"RTN","RMPFRPC0",44,0)
+  I $L(ER) G END
+"RTN","RMPFRPC0",45,0)
+  S AR(6)=$P($G(VAEL(1)),U,2) ;external form PRIMARY ELIG
+"RTN","RMPFRPC0",46,0)
+  S ES=$P($G(VAEL(8)),U,1) ;elig status
+"RTN","RMPFRPC0",47,0)
+  I ES="V" D  ;verified
+"RTN","RMPFRPC0",48,0)
+  .K RM S DIC=2,DA=DFN,DIQ="RM",DR=".3612" D EN^DIQ1
+"RTN","RMPFRPC0",49,0)
+  .S ED=RM(2,DFN,.3612) ;elig date text
+"RTN","RMPFRPC0",50,0)
+  .S %DT="X",X=ED D ^%DT S:+Y>1 ED=+Y_U_ED ;fmdate ^ text date
+"RTN","RMPFRPC0",51,0)
+  .K RM,DIC,DA,DIQ,DR,%DT
+"RTN","RMPFRPC0",52,0)
+  S VT=$S($G(VAEL(4)):"Y",1:"N") ;VET Y/N
+"RTN","RMPFRPC0",53,0)
+  K RM S DIC=2,DA=DFN,DIQ="RM",DR="27.01",DIQ(0)="I" D EN^DIQ1
+"RTN","RMPFRPC0",54,0)
+  S DA=$G(RM(2,DFN,27.01,"I")) ;CURRENT ENROLLMENT entry in ^DPT(
+"RTN","RMPFRPC0",55,0)
+  I DA D
+"RTN","RMPFRPC0",56,0)
+  .K RM2 S DIC=27.11,DIQ="RM2",DR=".07;.12",DIQ(0)="I" D EN^DIQ1
+"RTN","RMPFRPC0",57,0)
+  .S (PG,AR(7))=$G(RM2(27.11,DA,.07,"I")) ;Priority Group
+"RTN","RMPFRPC0",58,0)
+  .S PS1=$G(RM2(27.11,DA,.12,"I"))
+"RTN","RMPFRPC0",59,0)
+  .S PS=$S(PS1=1:"A",PS1=2:"B",PS1=3:"C",PS1=4:"D",1:"") ;PG Subgroup
+"RTN","RMPFRPC0",60,0)
+  K RM,RM2,DIC,DA,DIQ,DR,PS1
+"RTN","RMPFRPC0",61,0)
+  I VT="Y" D  ;is veteran
+"RTN","RMPFRPC0",62,0)
+  .D ELIGBL Q:$L(EL)  ; ck for SC for condition *** SC **
+"RTN","RMPFRPC0",63,0)
+  .S VS=$G(VAEL(3)) I $P(VS,U,1) D  ;(3)=0/1 for SC ^ %
+"RTN","RMPFRPC0",64,0)
+  ..I $P(VS,U,2)'<10 D
+"RTN","RMPFRPC0",65,0)
+  ...I +PG>0,+PG<4 S EL="COM" ;PG 1-3 & SC >= 10% *** COM **
+"RTN","RMPFRPC0",66,0)
+  G:$L(EL) END ;EL = COM or SC
+"RTN","RMPFRPC0",67,0)
+  D SVC^VADPT I $G(VAERR) D  G END ;Service Info(SVC^VADPT)
+"RTN","RMPFRPC0",68,0)
+  .S ER="**ERROR** Problem in retrieving Service Information."
+"RTN","RMPFRPC0",69,0)
+  I ($G(VASV(4))=1)!($P(VAEL(1),U,2)="PRISONER OF WAR") D  G:$L(EL) END
+"RTN","RMPFRPC0",70,0)
+  .S EL="POW" ;VASV(4)= POW status (1/0)      *** POW **
+"RTN","RMPFRPC0",71,0)
+  I +$G(VASV(9)) S EL="PH" G END ;VASV(9)=1(current PH),else 0 ** PH **
+"RTN","RMPFRPC0",72,0)
+  I VT="Y" D  G:$L(EL) END
+"RTN","RMPFRPC0",73,0)
+  .S:PG=3 EL="PG3" ;                          *** PG3 **
+"RTN","RMPFRPC0",74,0)
+  .S:PG=4 EL="PG4" ; include AAA & HB & catastrophic disabled ** PG4 **
+"RTN","RMPFRPC0",75,0)
+  ;VAMB(1)=recv A&A ben's;VAMB(2)=recv HB bens both in PG4
+"RTN","RMPFRPC0",76,0)
+  D ALLIED(DFN) G:$L(EL) END ;   *** CAN or BRI **
+"RTN","RMPFRPC0",77,0)
+  I VT="Y" D  G:$L(EL) END
+"RTN","RMPFRPC0",78,0)
+  .I PG=5 D  Q:$L(EL)  ;                      ***  NCA **
+"RTN","RMPFRPC0",79,0)
+  ..I $P($G(VAEL(1)),U,2)="NSC, VA PENSION" S EL="NCA" Q
+"RTN","RMPFRPC0",80,0)
+  ..S:$P($G(VAEL(6)),U,2)="NSC VETERAN" EL="NCA"
+"RTN","RMPFRPC0",81,0)
+  .I $G(VAEL(3)),$P($G(VAEL(3)),U,2)=0 D  Q:$L(EL)  ; *** 0CA **
+"RTN","RMPFRPC0",82,0)
+  ..I (PG=5)!(PG=7)!(PG=8) S EL="0CA" Q
+"RTN","RMPFRPC0",83,0)
+  .I PG=6 D  Q:$L(EL)  ;VASV(11)= # OIF/OEF tours
+"RTN","RMPFRPC0",84,0)
+  ..I +$G(VASV(11))>0 S EL="OIF" ;          *** OIF *** 
+"RTN","RMPFRPC0",85,0)
+  ..E  S EL="SCV" ;Special category veterans  *** SCV **
+"RTN","RMPFRPC0",86,0)
+  G:$L(EL) END
+"RTN","RMPFRPC0",87,0)
+  S X=0 I ($D(VAEL(1))>9) D  G:$L(EL) END ;   *** OGA **
+"RTN","RMPFRPC0",88,0)
+  .F  S X=$O(VAEL(1,X)) Q:'X  D  Q:$L(EL)
+"RTN","RMPFRPC0",89,0)
+  ..I $P(VAEL(1,X),U,2)="OTHER FEDERAL AGENCY" S EL="OGA"
+"RTN","RMPFRPC0",90,0)
+  I VT="Y",'$G(VAEL(3)) D  G:$L(EL) END ; *** NSC **
+"RTN","RMPFRPC0",91,0)
+  .I (PG=7) S EL="NSC"
+"RTN","RMPFRPC0",92,0)
+  I VT="Y",PG=8 S EL="PG8" ; *** PG8 **
+"RTN","RMPFRPC0",93,0)
+END  I $L($G(ER)) S AR(5)=ER
+"RTN","RMPFRPC0",94,0)
+  S:$L(ED) AR(1)=ED ; ***  ELIG DATE **
+"RTN","RMPFRPC0",95,0)
+  S:$L(EL) AR(2)=EL ; *** calc elig CODE
+"RTN","RMPFRPC0",96,0)
+  S:$L($G(ES)) AR(3)=ES ;ELIG STAT
+"RTN","RMPFRPC0",97,0)
+  G:$L(EL) END2 ;R3*4
+"RTN","RMPFRPC0",98,0)
+  ;if 'EL ck for PRIOR elig in ELIGIBILITY CONFIRMATION file
+"RTN","RMPFRPC0",99,0)
+  S IEN="" I $D(^RMPF(791814,"B",DFN)) D
+"RTN","RMPFRPC0",100,0)
+  .S IEN=$O(^RMPF(791814,"B",DFN," "),-1)
+"RTN","RMPFRPC0",101,0)
+  G:'IEN END2
+"RTN","RMPFRPC0",102,0)
+  S A0=$G(^RMPF(791814,IEN,0)),A1=$G(^(1)),A2=$G(^(2))
+"RTN","RMPFRPC0",103,0)
+  S RA=$P(A2,U,2) ;0 or 1 or 2 (REJ, APPR, WAIT)
+"RTN","RMPFRPC0",104,0)
+  I +RA<1 S RA=1,EL="NSC",$P(A2,U,1)=EL ;DEFAULT DISAPPROVED CHG'D TO NSC APPROVED
+"RTN","RMPFRPC0",105,0)
+  I (RA>1) S RA=1 D  ; others auto approve
+"RTN","RMPFRPC0",106,0)
+  .I $P(A2,U,1)'="" S EL=$P(A2,U,1) ;PSAS ELIG
+"RTN","RMPFRPC0",107,0)
+  .I EL="" S EL="NSC",$P(A1,U,1)=EL ;DEFAULT 
+"RTN","RMPFRPC0",108,0)
+  .S AR(2)=EL ;calculated elig
+"RTN","RMPFRPC0",109,0)
+  .S X=$P(A2,U,3) S:(+X<1) X=DUZ ;psas or user DUZ
+"RTN","RMPFRPC0",110,0)
+  .S Y=$$NAME^XUSER(X) S:Y="" Y="Unknown"
+"RTN","RMPFRPC0",111,0)
+  .S $P(RA,U,2)=Y ;name
+"RTN","RMPFRPC0",112,0)
+  .S X=$P(A0,U,3) S:(+X<1) X=DUZ ;ASPS user DUZ
+"RTN","RMPFRPC0",113,0)
+  .S Y=$$NAME^XUSER(X) S:Y="" Y="Unknown"
+"RTN","RMPFRPC0",114,0)
+  .S $P(RA,U,3)=Y ;name
+"RTN","RMPFRPC0",115,0)
+  .S AR(8)=EL_U_RA ;elg^1^PSAS user^ASPS user
+"RTN","RMPFRPC0",116,0)
+  .S Y=$P(A2,U,4) ;action date
+"RTN","RMPFRPC0",117,0)
+  .I Y="" S Y=DT
+"RTN","RMPFRPC0",118,0)
+  .D DD^%DT S $P(AR(8),U,7)=Y ;Action date
+"RTN","RMPFRPC0",119,0)
+  ;;AR(8)=elg^1^P-user^A-user^entry DT^elg^Act DT
+"RTN","RMPFRPC0",120,0)
+END2  I EL="" S EL="NSC" D  ;DEFAULT FOR R3*4  1/26/2011
+"RTN","RMPFRPC0",121,0)
+  .S Y=DT D DD^%DT S ED=Y
+"RTN","RMPFRPC0",122,0)
+  .S AR(1)=ED ; ***  ELIG DATE **
+"RTN","RMPFRPC0",123,0)
+  .S AR(2)=EL ; *** calc elig CODE
+"RTN","RMPFRPC0",124,0)
+  D:$G(SHW) SHOW ;SHW=1 to show calc'd values for TESTING ONLY
+"RTN","RMPFRPC0",125,0)
+  D KVAR^VADPT K LD,S0,S1,S2,S6,YY,POP,VAERR
+"RTN","RMPFRPC0",126,0)
+  Q
+"RTN","RMPFRPC0",127,0)
+  ;
+"RTN","RMPFRPC0",128,0)
+ELIGBL ;ELIGIBILITY FOR DISABILITY CONDITION - SC
+"RTN","RMPFRPC0",129,0)
+  ;contains DFN,.372,X,0)=31 ptr^disabil %^SC 0/1
+"RTN","RMPFRPC0",130,0)
+  ;DIC(31,i,0)= disab txt^abbrev^dx code
+"RTN","RMPFRPC0",131,0)
+  Q:(+PG<1)  I "123578"'[PG Q  ;just 1,2,3,5,7&8 per Kyle 1/14/09
+"RTN","RMPFRPC0",132,0)
+  Q:'$D(^DPT(DFN,.372))  N LD,S,RD,P,AX S AX=0
+"RTN","RMPFRPC0",133,0)
+E1  ;*** added IA #174(rated disabilities mult node direct read)
+"RTN","RMPFRPC0",134,0)
+  S AX=$O(^DPT(DFN,.372,AX)) G E1END:'AX
+"RTN","RMPFRPC0",135,0)
+  I $D(^DPT(DFN,.372,AX,0)) D  G:$L(EL) E1END
+"RTN","RMPFRPC0",136,0)
+  .S S=^DPT(DFN,.372,AX,0) I $P(S,U,3) D  ;service connected
+"RTN","RMPFRPC0",137,0)
+  ..S RD=$P(S,U,1) D:RD  ;disibility file ptr
+"RTN","RMPFRPC0",138,0)
+  ...S X=RD,DIC=31,DIC(0)="NZ" D ^DIC
+"RTN","RMPFRPC0",139,0)
+  ...S LD=$S(+Y>0:$P(Y(0),U,3),1:"Unknown") K DIC,Y ;DX codes
+"RTN","RMPFRPC0",140,0)
+  ...Q:+LD<5000  Q:+LD>6300  S LD=+LD ;ck specific hearing DX codes
+"RTN","RMPFRPC0",141,0)
+  ...I (LD=6016)!((LD>6099)&(LD<6111)) S EL="SC" Q
+"RTN","RMPFRPC0",142,0)
+  ...I ((LD>6198)&(LD<6212))!((LD>6249)&(LD<6264)) S EL="SC" Q
+"RTN","RMPFRPC0",143,0)
+  ...I ((LD>6276)&(LD<6300)) S EL="SC"
+"RTN","RMPFRPC0",144,0)
+  G E1 ;dis
+"RTN","RMPFRPC0",145,0)
+E1END  Q
+"RTN","RMPFRPC0",146,0)
+  ;
+"RTN","RMPFRPC0",147,0)
+ALLIED(DFN)  ;Determine if qualifying Allied Veteran
+"RTN","RMPFRPC0",148,0)
+  ;output: EL= CAN or BRI if true
+"RTN","RMPFRPC0",149,0)
+  N DIC,DA,DIQ,DR,RM
+"RTN","RMPFRPC0",150,0)
+  I $P(VAEL(3),U,1)=1 D  ; SC
+"RTN","RMPFRPC0",151,0)
+  .S DIC=2,DA=DFN,DIQ="RM",DR=".309" D EN^DIQ1
+"RTN","RMPFRPC0",152,0)
+  .S:(RM(2,DFN,.309)="CANADA") EL="CAN"
+"RTN","RMPFRPC0",153,0)
+  .S:(RM(2,DFN,.309)["BRITAIN") EL="BRI"
+"RTN","RMPFRPC0",154,0)
+  Q
+"RTN","RMPFRPC0",155,0)
+  ;
+"RTN","RMPFRPC0",156,0)
+SHOW ;View data retrieved - for debugging only if SHW=1
+"RTN","RMPFRPC0",157,0)
+  ;called from END2
+"RTN","RMPFRPC0",158,0)
+  W !!,"Patient: ",$G(RMDNM)
+"RTN","RMPFRPC0",159,0)
+  W !,"Calculated R3 elig = " W:$L(EL) EL
+"RTN","RMPFRPC0",160,0)
+  W !,"VA Elig status: " W:$L(ES) ES
+"RTN","RMPFRPC0",161,0)
+  W !,"Elig status date: " W:$L(ED) ED
+"RTN","RMPFRPC0",162,0)
+  ;W ! ZW AR ;FOR TESTING ONLY
+"RTN","RMPFRPC0",163,0)
+ENDS Q
+"RTN","RMPFRPC1")
+0^38^B22103813^B14682514
+"RTN","RMPFRPC1",1,0)
+RMPFRPC1  ;DALC/PJU - Module to get Demographics for Patient ;06/18/08
+"RTN","RMPFRPC1",2,0)
+ ;;3.0;REMOTE ORDER ENTRY SYSTEM;**1,4**;Feb 9, 2011;Build 19
+"RTN","RMPFRPC1",3,0)
+ ;;Per VHA Directive 10-92-142 this routine should not be modified
+"RTN","RMPFRPC1",4,0)
+ ;;Uses supported IA's: 2701, 4440, 10061
+"RTN","RMPFRPC1",5,0)
+ ;;Added to IA: 767
+"RTN","RMPFRPC1",6,0)
+START(RE,DFN) ;Descrip of ret array(RE) in EXAMP at bottom of pg
+"RTN","RMPFRPC1",7,0)
+  ;Called from RPC 'RMPFDEMOG' in Delphi routine uRMPFR3Patient.pas
+"RTN","RMPFRPC1",8,0)
+  ;input: array name by ref, DFN
+"RTN","RMPFRPC1",9,0)
+  ;output: 2 char term used in name-value pairs for URL
+"RTN","RMPFRPC1",10,0)
+  I '$G(DFN) D  G END
+"RTN","RMPFRPC1",11,0)
+  .S ER="** Must have a DFN defined to continue. Exiting **"
+"RTN","RMPFRPC1",12,0)
+  K RE ;can set param to clear between calls
+"RTN","RMPFRPC1",13,0)
+  N ARR,BD,CL,CI,ED,EL,ER,ES,GP,ICN,L1,L2,L3
+"RTN","RMPFRPC1",14,0)
+  N NM,PD,PN,PR,SR,SS,ST,TE,TD,VH,VT,ZP
+"RTN","RMPFRPC1",15,0)
+  S (BD,CL,CI,ED,EL,ER,ES,GP,ICN,L1,L2,L3)=""
+"RTN","RMPFRPC1",16,0)
+  S (NM,PD,PN,PR,SR,SS,ST,TE,TD,VH,VT,ZP)=""
+"RTN","RMPFRPC1",17,0)
+  F X=0,11:1:31 S RE(X)=""
+"RTN","RMPFRPC1",18,0)
+  D DEM^VADPT ; demographic vars
+"RTN","RMPFRPC1",19,0)
+  I $G(VAERR) D  G END
+"RTN","RMPFRPC1",20,0)
+  .S ER="**Problem in retrieving Demographic values. Exiting.**"
+"RTN","RMPFRPC1",21,0)
+  I $D(^DGSL(38.1,"B",DFN)) D  ;IA#767
+"RTN","RMPFRPC1",22,0)
+  .S SR=$O(^DGSL(38.1,"B",DFN,0)) ;ck for sensitive record
+"RTN","RMPFRPC1",23,0)
+  .I SR,$P($G(^DGSL(38.1,SR,0)),U,2) S RE(26)=1
+"RTN","RMPFRPC1",24,0)
+  S NM=$G(VADM(1)),RE(11)=NM ;name
+"RTN","RMPFRPC1",25,0)
+  S SS=$P($G(VADM(2)),U,1),RE(12)=SS ;ssn
+"RTN","RMPFRPC1",26,0)
+  S BD=$G(VADM(3)),RE(13)=BD ;DOB
+"RTN","RMPFRPC1",27,0)
+  D ADD^VADPT ; current addr
+"RTN","RMPFRPC1",28,0)
+  I $G(VAERR) D  G END
+"RTN","RMPFRPC1",29,0)
+  .S ER="**Problem in retrieving Address values. Exiting**"
+"RTN","RMPFRPC1",30,0)
+  S L1=$G(VAPA(1)),RE(14)=L1
+"RTN","RMPFRPC1",31,0)
+  S L2=$G(VAPA(2)),RE(15)=L2
+"RTN","RMPFRPC1",32,0)
+  S L3=$G(VAPA(3)),RE(16)=L3
+"RTN","RMPFRPC1",33,0)
+  S CI=$G(VAPA(4)),RE(17)=CI
+"RTN","RMPFRPC1",34,0)
+  S ST=$P($G(VAPA(5)),U,1) ;State file pointer
+"RTN","RMPFRPC1",35,0)
+  I 'ST D  G END
+"RTN","RMPFRPC1",36,0)
+  .S ER="**STATE field of address in local PATIENT record is missing. Exiting."
+"RTN","RMPFRPC1",37,0)
+  E  S X=ST,DIC="5",DIC(0)="NZ" D ^DIC K DIC D  G:$L(ER) END
+"RTN","RMPFRPC1",38,0)
+  .I +Y<1 K Y D  Q
+"RTN","RMPFRPC1",39,0)
+  ..S ER="**STATE field of address in local PATIENT record is not valid. Exiting."
+"RTN","RMPFRPC1",40,0)
+  .S ST=$P(Y(0),U,2) K Y ;State abbrev
+"RTN","RMPFRPC1",41,0)
+  S RE(18)=$P($G(VAPA(5)),U,1)_U_ST
+"RTN","RMPFRPC1",42,0)
+  S ZP=$S($G(VAPA(11)):VAPA(11),1:VAPA(6)),RE(19)=$P(ZP,U,1)
+"RTN","RMPFRPC1",43,0)
+  S TD=$G(VAPA(9)),RE(20)=TD
+"RTN","RMPFRPC1",44,0)
+  S TE=$G(VAPA(10)),RE(21)=TE
+"RTN","RMPFRPC1",45,0)
+  S PN=$G(VAPA(8)),RE(22)=PN
+"RTN","RMPFRPC1",46,0)
+END  ;get eligibility information
+"RTN","RMPFRPC1",47,0)
+  ;ARR is killed and re-set in RMPFRPC0
+"RTN","RMPFRPC1",48,0)
+  D START^RMPFRPC0(.ARR,DFN) ;elig vars
+"RTN","RMPFRPC1",49,0)
+  S RE(0)=$G(ARR(0)) ;FM DOD ^ external
+"RTN","RMPFRPC1",50,0)
+  S RE(23)=DT ;$P(ARR(8),U,7) ;El stat dt - as of today
+"RTN","RMPFRPC1",51,0)
+  S RE(24)=$G(ARR(2)) ;R3 calc elig code
+"RTN","RMPFRPC1",52,0)
+  I RE(24)="" S RE(24)=$G(ARR(8)) ;just elig R3*4
+"RTN","RMPFRPC1",53,0)
+  ;elig^app(1)/dis(0)/sub(2)/exp(3)^PSuser^ASuser^ReqDt^SugEl^ActDt
+"RTN","RMPFRPC1",54,0)
+  S RE(25)=$P($G(ARR(3)),U,1) ;elig status
+"RTN","RMPFRPC1",55,0)
+  I $L($G(ER)) S RE(27)=ER ;error msg from VADPT calls
+"RTN","RMPFRPC1",56,0)
+  I $G(RE(27))="" S RE(27)=$G(ARR(5)) ;error msg from elig call
+"RTN","RMPFRPC1",57,0)
+  S RE(28)=$G(ARR(6)) ;prim elig
+"RTN","RMPFRPC1",58,0)
+  S RE(29)=$G(ARR(7)) ;priority group
+"RTN","RMPFRPC1",59,0)
+  S ICN="",X="MPIF001" X ^%ZOSF("TEST")
+"RTN","RMPFRPC1",60,0)
+  I $T S ICN=$$GETICN^MPIF001(DFN)
+"RTN","RMPFRPC1",61,0)
+  S:(ICN<1) ICN="" ;"***ICN NOT FOUND***"
+"RTN","RMPFRPC1",62,0)
+  S RE(30)=ICN
+"RTN","RMPFRPC1",63,0)
+  S VH=0 ;ck for production account
+"RTN","RMPFRPC1",64,0)
+  S X="XUPROD" X ^%ZOSF("TEST") I $T D
+"RTN","RMPFRPC1",65,0)
+  .S VH=$$PROD^XUPROD()
+"RTN","RMPFRPC1",66,0)
+  .I VH'=1 S VH=0
+"RTN","RMPFRPC1",67,0)
+  S RE(31)=VH
+"RTN","RMPFRPC1",68,0)
+EXIT  F X=11:1:31 S RE(X)=$$CLEAN(RE(X))
+"RTN","RMPFRPC1",69,0)
+  ;ZW RE ;TESTING R3*4
+"RTN","RMPFRPC1",70,0)
+  K S0,S1,S2,S6,YY,POP,VAERR
+"RTN","RMPFRPC1",71,0)
+  D KVAR^VADPT
+"RTN","RMPFRPC1",72,0)
+  Q
+"RTN","RMPFRPC1",73,0)
+  ;
+"RTN","RMPFRPC1",74,0)
+CLEAN(RMVAR)  ;Remove symbols that should not go through URL
+"RTN","RMPFRPC1",75,0)
+  N RMPFRTN
+"RTN","RMPFRPC1",76,0)
+  S RMPFRTN=$TR(RMVAR,"@#%?&/\*","")
+"RTN","RMPFRPC1",77,0)
+ENDC  Q RMPFRTN
+"RTN","RMPFRPC1",78,0)
+  ;
+"RTN","RMPFRPC1",79,0)
+EXAMP  ;return sorted array to calling application
+"RTN","RMPFRPC1",80,0)
+  ;RPCBroker lookup is done to retrieve the patient DFN.
+"RTN","RMPFRPC1",81,0)
+  ;A call is then made to this routine through the RMPFDEMOG RPC.
+"RTN","RMPFRPC1",82,0)
+  ;From the PATIENT file, we get the name, SSN, date of birth,
+"RTN","RMPFRPC1",83,0)
+  ;current address, and temporary address parameters.
+"RTN","RMPFRPC1",84,0)
+  ;will return to the Delphi app subscripts in same order
+"RTN","RMPFRPC1",85,0)
+  ;created during calculation in the RE array (passed by ref)
+"RTN","RMPFRPC1",86,0)
+  ;PD = RE(0)=date of death msg or ""
+"RTN","RMPFRPC1",87,0)
+  ;NM = RE(11)=name
+"RTN","RMPFRPC1",88,0)
+  ;SS = RE(12)=SSN
+"RTN","RMPFRPC1",89,0)
+  ;BD = RE(13)=DOB
+"RTN","RMPFRPC1",90,0)
+  ;L1 = RE(14)=current ad1
+"RTN","RMPFRPC1",91,0)
+  ;L2 = RE(15)=current ad2
+"RTN","RMPFRPC1",92,0)
+  ;L3 = RE(16)=current ad3
+"RTN","RMPFRPC1",93,0)
+  ;CI = RE(17)=current city
+"RTN","RMPFRPC1",94,0)
+  ;ST = RE(18)=current st
+"RTN","RMPFRPC1",95,0)
+  ;ZP = RE(19)=current zip
+"RTN","RMPFRPC1",96,0)
+  ;TD = RE(20)=t start date
+"RTN","RMPFRPC1",97,0)
+  ;TE = RE(21)=t end date
+"RTN","RMPFRPC1",98,0)
+  ;PN = RE(22)=current phone
+"RTN","RMPFRPC1",99,0)
+  ;ED = RE(23)=eligibility status date FM
+"RTN","RMPFRPC1",100,0)
+  ;EL = RE(24)=R3 elig cd ;;^1/2/3^PS-user^AS-user^reqDt^sugEl^actDt
+"RTN","RMPFRPC1",101,0)
+  ;ES = RE(25)=eligibility status
+"RTN","RMPFRPC1",102,0)
+  ;SR = RE(26)=sensitive record
+"RTN","RMPFRPC1",103,0)
+  ;ER = RE(27)=error msg
+"RTN","RMPFRPC1",104,0)
+  ;PR = RE(28)=primary elig
+"RTN","RMPFRPC1",105,0)
+  ;GP = RE(29)=priority group
+"RTN","RMPFRPC1",106,0)
+  ;ICN= RE(30)=Integration Control Number for MPI
+"RTN","RMPFRPC1",107,0)
+  ;VH = RE(31)=1 if a production account
+"VER")
+8.0^22.0
+"BLD",1785,6)
+^4
+**END**
+**END**

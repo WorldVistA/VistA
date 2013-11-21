@@ -1,0 +1,217 @@
+$TXT Created by ELWELL,DAVID at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 07/08/13 at 11:32
+=============================================================================
+Run Date: SEP 10, 2013                     Designation: EC*2*118
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #113                      Status: Released
+                  Compliance Date: OCT 11, 2013
+=============================================================================
+
+Associated patches: (v)EC*2*120    <<= must be installed BEFORE `EC*2*118'
+
+Subject: FY14 UPDATE TO EC NATIONAL PROCEDURE (#725) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 1 issue:
+  
+  
+ 1. This patch will update the EC NATIONAL PROCEDURE (#725) file by adding 67
+    new procedures.
+  
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+     
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000834982 - FY14 Update to the EC National Procedure (#725) file.
+      
+     
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS
+ Battle Creek VAMC
+ Louisville VAMC
+ Lebanon VAMC
+     
+      
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC000000834982 - FY14 Update to the EC National Procedure (#725) file.
+  
+    Problem: 
+    --------
+    The Decision Support System office requested an update to the EC 
+    NATIONAL PROCEDURE (#725) file. The request is to add 67 new procedures 
+    to the file.
+   
+    Resolution:
+    -----------
+    The routine included in this patch will update the EC NATIONAL 
+    PROCEDURE (#725) file by adding 67 new procedures to the file.
+   
+    The entries that will be added in the NATIONAL PROCEDURE
+    (#725) file are:
+   
+        Natl #          Description                     CPT CODE    
+        ------          -----------                     --------    
+        BR001           PAT COORD/ASSIST                99199
+        BR002           NON-MD IDT PAT                  99368
+        BR003           NON-MD IDT NO PAT               99366
+        BR004           OTH THERAPY EXERCISE            97110
+        BR005           COG SKILLS DVMNT                97532
+        BR006           CASE MGMT/ADJ COUNSEL           96152
+        BR007           GRP TRAIN/SUP 2-5               96153
+        BR008           GRP TRAIN/SUP 6-10              96153
+        BR009           GRP TRAIN/SUP >11               96153
+        BR010           TRAIN/SUP PAT/FAM               96154
+        BR011           TRAIN/SUP FAM ONLY              96155
+        BR012           PHONE 5-10M                     98966
+        BR013           PHONE 11-20M                    98967
+        BR014           PHONE 21-30M                    98968
+        BR015           PHONE 5-10M, NO PT              98966
+        BR016           PHONE 11-20M, NO PT             98967
+        BR017           PHONE 21-30M, NO PT             98968
+        BR018           TRANSPORT/ESCORT PAT            99082
+        BR019           CAT INITIAL ASSESS              97755
+        BR020           CAT RE-ASSESS                   96151
+        BR021           CAT SENS INTEG TECH             97535
+        BR022           CAT ADAPT SOFTWARE              97537
+        BR023           CAT APP SOFTWARE                97537
+        BR024           CAT EMAIL/INTERNET              97537
+        BR025           CAT EQUIP/MAINT/TRBL            97537
+        BR026           CAT PROG INTRO                  97537
+        BR027           LS INITIAL ASSESS               96150
+        BR028           LS RE-ASSESS                    96151
+        BR029           LS SENS INTEG TECH              97535
+        BR030           LS COMM BASIC                   97535
+        BR031           LS COMM/OCCUP TRNG              97537
+        BR032           LS SCM BRAILLE                  97535
+        BR033           LS SCM ADL                      97535
+        BR034           LS SCM KITCHEN                  97535
+        BR035           MS INITIAL ASSESS               96150
+        BR036           MS RE-ASSESS                    96151
+        BR037           MS SIT SENS SKILLTRG            97535
+        BR038           MS SIT BASIC SKILLS             97533
+        BR039           MS SELF CARE MGMT               97535
+        BR040           MS ADV SKILLTRG                 97533
+        BR041           MS HOUSE RPR WW                 97535
+        BR042           OM INITIAL ASSESS               96150
+        BR043           OM RE-ASSESS                    96151
+        BR044           OM SENS INTEG TECH              97535
+        BR045           OM INDOOR TRG                   97116
+        BR046           OM RES RURAL TVL                97116
+        BR047           OM BUSINESS TVL                 97537
+        BR048           OM COMMUNITY TVL                97537
+        BR049           LV INITIAL ASSESS               96150
+        BR050           LV RE-ASSESS                    96151
+        BR051           LV SIT VSTRNG NO DEV            97533
+        BR052           LV SIT VSTRNG DEV               97533
+        BR053           LV SELF CARE MGMT               97535
+        BR054           LV SIT INTDIST REC TASK         97533
+        BR055           LV SIT DISTANCE VIEW            97533
+        HH147           HH DRIVE TIME (15MIN) PA        NONE
+        NU205           INDIRCALORMTRY 20M              94690
+        NU206           INDIRCALORMTRY ADD5M            NONE
+        SM001           SECURE MSGEVAL MD               99444
+        SM002           SECURE MSGEVAL NONMD            98969
+        SM003           SECURE MSG <2M                  NONE
+        SM004           SECURE MSG 2-5M                 NONE
+        SM005           SECURE MSG 5-10M                NONE
+        SM006           SECURE MSG >10M                 NONE
+        SP564           FEES INTERPRET/RPT              92613
+        SP565           FLST INTERPRET/RPT              92615
+        SP566           FEEST INTERPRET/RPT             92617
+              
+   ===========================================================================
+    Note: The new EC NATIONAL PROCEDURE Numbers could exist in some site's
+    environment. If the EC NATIONAL PROCEDURE Numbers exist, then the system
+    will add the new numbers and it will keep what the sites have on file. In
+    addition, a message similar to the one below will be printed during
+    installation: 
+    
+    ***EXAMPLE***
+    "Entry #3457 for 99999 SAMPLE [CPT: 99999] (XXXXX)  ...
+    successfully added. Your site has a local procedure (entry #90077) in
+    File #725 which uses XXXXX as its National Number. Please inactivate
+    this local procedure."
+    
+    Please review the installed message.
+   ==========================================================================
+  
+   
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   
+     ***************************NOTE****************************  
+     * It is not necessary to disable any options.  You may    *
+     * install this routine at any time without interruption *
+     * to users.                                               *
+     ***********************************************************
+   
+    Installation will take less than 2 minutes.
+   
+    Suggested time to install: Non-peak requirement hours.
+    
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter EC*2.0*118)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+    
+     4. Use the Install Package(s) option and select the package EC*2.0*118.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+  
+     7. Review the installation message for errors.    
+  
+     8. You may delete the routine EC2P118 from your production system after 
+        the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P118
+    Before:       n/a   After: B25009752  **118**
+
+=============================================================================
+User Information:
+Entered By  : ELWELL,DAVID                  Date Entered  : SEP 11, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: SEP 04, 2013
+Released By : MORRIS,THERESA                Date Released : SEP 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

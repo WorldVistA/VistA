@@ -1,0 +1,198 @@
+
+=============================================================================
+Run Date: JUL 30, 2013                     Designation: MAG*3*34
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #87                      Status: Released
+                  Compliance Date: SEP 27, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*93    <<= must be installed BEFORE `MAG*3*34'
+                    (v)MAG*3*99    <<= must be installed BEFORE `MAG*3*34'
+                    (v)MAG*3*123   <<= must be installed BEFORE `MAG*3*34'
+
+Subject: STORING ALL DICOM OBJECTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ MAG*3.0*34 enables the storage of all composite DICOM objects that are
+ transmitted to VistA Imaging in their original native DICOM format,
+ without any alterations or format changes. Specifically, MAG*3.0*34 
+ enables the storage of these classes of objects in DICOM format:
+  
+   - MAG*3.0*34 continues to support the storage of all Service Object 
+ Pair (SOP) classes, which could be stored in DICOM format in MAG*3.0*99, 
+ such as Digital X-Ray Image Storage, CT Image Storage, and MR Image 
+ Storage. These images can be stored and displayed in VistARad and 
+ Clinical Display.  They are referred to as previously supported SOP 
+ classes.  They are referred to as newly supported SOP classes. The 
+ ability to display these objects in the display clients will be added in 
+ future patches.
+  
+   - In addition to the SOP classes that could be stored in their 
+ original format in MAG*3.0*99, MAG*3.0*34 enables the storage of most 
+ other Service Object Pair (SOP) classes that could not be stored in DICOM 
+ format before. Examples of such SOP classes are multi-frame CTs, 
+ multi-frame MRs, or structured reports. They are referred to as newly 
+ supported SOP classes. The ability to display these objects in the 
+ display clients will be added in future patches.
+  
+ Important
+ Display of the newly supported SOP classes (DICOM objects) will be
+ supported in future releases. You will not be able to view these objects
+ in the display clients (Clinical Capture, Clinical Display, and VistA
+ RAD). You can access these objects using the Query/Retrieve application.
+  
+ The patch features and benefits are detailed in the MAG*3.0*34 Patch 
+ Description.
+  
+ Distribution of the Software
+ ============================
+ The patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P34
+  
+ NOTE:  You can find last-minute information about this patch in its 
+ readme file. If present, this file will also be located in the patch 
+ distribution directories.
+  
+ Patch Contents
+ ==============
+ This patch includes the following files:
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*34 KIDS                         MAG3_0P34.KID             ASCII 
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ -------------------------------------------------------------------------
+ MAG*3.0*34 Patch Description      MAG3_0P34_Patch_Description.pdf
+  
+ MAG*3.0*34, MAG*3.0*116 
+ and MAG*3.0*118 Planning 
+ and Installation Instructions     MAG3_0P118_Patch_Installation.pdf
+  
+ Associated Patches
+ ==================
+ All released VistA Imaging patches are required and must be installed on 
+ the VistA system before MAG*3.0*34 can be installed. The KIDS files 
+ should be installed on the VistA system host in this order: 
+         MAG*3.0*93
+         MAG*3.0*99
+         MAG*3.0*123
+  
+ For a list of all released Imaging (MAG) patches, refer to the 
+ patch_list.txt file, which is available on the Imaging FTP server. To 
+ locate the file, go to ftp://ftp.imaging.domain.ext. Then, navigate to 
+ the \Docs\Imaging_Docs_Latest folder.
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+  
+ Maryland HCS, Baltimore, MD (Integrated)
+ Biloxi, MS (Large)
+ Charleston, SC (Large)
+  
+ Remedy Calls
+ ============
+ 1. 752683- Ignoring Image
+  
+ Problem:
+ ========
+ A particular type of study creates a small report in addition to
+ two images. The two radiology images cross, but the process window
+ comes up with a statement to ignore the DCM image of the report. We would
+ like for the additional DCM image to go into storage.
+  
+ Resolution:
+ ===========
+ Storage for Structured Reporting is supported in MAG*3.0*34.
+  
+ New Service Requests
+ ====================
+ This patch addresses the following New Service Request (NSR)
+   20070512 - VistA Imaging Core Infrastructure
+  
+ Patient Safety Issues
+ =====================
+ There are no Patient Safety Issue (PSI) reports associated with this
+ patch.
+  
+ Data Dictionaries
+ =================
+ There are no new or modified data dictionaries are included in this patch.
+  
+ Security Keys
+ =============
+ The following security key was modified
+  
+ MAGV VIX ADMIN - Users who hold this security key have permission 
+ to perform Administrative related activities on the VIX system. A user 
+ must be assigned the security key. The key is required to access the new 
+ HDIG logs.
+  
+ Remote Procedures
+ =================
+ There are no new or modified remote procedures included in this patch.
+  
+ Menu Options
+ ============
+ There are no new or modified VistA menu options included in this patch.
+  
+ Templates
+ =========
+ There are no new or modified templates included in this patch.
+  
+ DICOM Gateway Changes
+ =====================
+ The MAG*3.0*118 DICOM Gateway includes the MAG*3.0*34 DICOM Gateway. All 
+ changes in the MAG*3.0*34 DICOM Gateway are documented in the MAG*3.0*118 
+ Patch Description.
+  
+ VistA System Changes
+ ====================
+ Though MAG*3.0*34 includes a KIDS package to be installed on the VistA 
+ Host, all MAG*3.0*34 VistA functional components and changes are 
+ implemented by the MAG*3.0*118 KIDS. For information about these 
+ components and changes, please see the MAG*3.0*118 Patch Description.
+  
+ Installation 
+ ============
+ MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 must be installed together. For 
+ more information about the prerequisites and the procedures to install 
+ the patches, please refer to the combined installation instructions for 
+ all three patches - MAG*3.0*34, MAG*3.0*116 and MAG*3.0*118 Installation 
+ Instructions (MAG3_0P118_Patch_Installation.pdf). 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4524;May 01, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGIPS34
+    Before:       n/a   After:  B4110628  **34**
+
+=============================================================================
+User Information:
+Entered By  : BARRIOS,LUCILLE               Date Entered  : FEB 12, 2004
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 05, 2013
+Released By : MASSEY,DAVID                  Date Released : JUL 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

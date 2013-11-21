@@ -1,0 +1,504 @@
+$TXT Created by OGI,MICHAEL at FM22-PATCH.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 02/20/13 at 13:51
+=============================================================================
+Run Date: SEP 17, 2013                     Designation: DI*22*169
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22       SEQ #149                     Status: Released
+                  Compliance Date: OCT 18, 2013
+=============================================================================
+
+Associated patches: (v)DI*22*18    <<= must be installed BEFORE `DI*22*169'
+                    (v)DI*22*71    <<= must be installed BEFORE `DI*22*169'
+                    (v)DI*22*95    <<= must be installed BEFORE `DI*22*169'
+                    (v)DI*22*152   <<= must be installed BEFORE `DI*22*169'
+                    (v)DI*22*165   <<= must be installed BEFORE `DI*22*169'
+
+Subject: BUG STOMP JAMBOREE II
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+                           ** Notice: **
+ ** See "Installation Instructions" section for Installation Warning **
+   
+ We had such a great time at the last Bug Stomp Jamboree, that we decided
+ to invite you all to come on down and party again. Oh boy, we're already
+ planning the next one!
+  
+ This patch addresses the following items:
+  
+ 1. Remedy Ticket 67942
+ If you use a partial order number to inquire into the ORDER ACKNOWLEDGEMENT
+ (#102.4) file, you will be greeted with a lot of dots and a very long wait.
+ (The .01 field of this file points to the ORDER (#100) file, which does not
+ have a B cross-reference.) This patch eliminates that wait.
+ (Routine ^DICM)
+  
+ Observe:
+  
+ Select OPTION: INQUIRE TO FILE ENTRIES  
+ OUTPUT FROM WHAT FILE: MAILBOX// 102.4  ORDER ACKNOWLEDGEMENT
+                                           (25 entries)
+ Select ORDER ACKNOWLEDGEMENT: ?
+  Answer with ORDER ACKNOWLEDGEMENT
+  Do you want the entire 25-Entry ORDER ACKNOWLEDGEMENT List? Y  (Yes)
+    Choose from:
+    3691609   
+    3691615   
+    3691616   
+    3691617   
+    3691618
+     <snip>
+ Select ORDER ACKNOWLEDGEMENT: 369..........................................
+ ...........................................................................
+ <snip>
+  
+ With the patch, VA FileMan will respond with "??" to a partial order number,
+ because complete order numbers must be used in this situation.
+  
+ 2. Remedy Ticket 466389, 713657
+ If you use the re-indexing API ENALL2^DIK on a file with no entries,
+ VA FileMan will abort. This patch prevents that from happening.
+ (Routine ^DIK1)
+  
+ Observe:
+ OUTPUT FROM WHAT FILE: ORDER ACKNOWLEDGEMENT// 7.1  SPECIALITY
+                                           (0 entries)
+ Select SPECIALITY NAME: 
+  
+ Select OPTION: 
+ SUPISC1A3:ACT 32d3>S DIK="^DIC(7.1,",DIK(1)=.01 D ENALL2^DIK
+  
+  S NAM="" F  S NAM=$O(^UTILITY("DIK",DIKJ,"KW",FIL,NAM)) Q:NAM=""  K
+ @(DIN_""""_ NAM_""")")
+                                                                    ^
+ <UNDEFINED>KW+2^DIK1 *DIN
+  
+ 3. Remedy Ticket 586657
+ If you use the EDIT FILE [DIEDFILE] option under the UTILITY FUNCTIONS
+ [DIUTILITY] option, and enter "??" at the "Select APPLICATION GROUP:"
+ prompt, you get different errors depending on the circumstances.
+ This patch prevents the errors.
+ (Routine ^DILIBF)
+  
+ Observe:
+ Select OPTION: UTILITY FUNCTIONS  
+ Select UTILITY OPTION: EDIT FILE  
+  
+ MODIFY WHAT FILE: SPECIALITY// 
+ Do you want to use the screen-mode version? YES// NO
+ NAME: SPECIALITY// 
+ DESCRIPTION:
+   No existing text
+   Edit? NO// 
+ Select APPLICATION GROUP: VA// ??
+ VA FileMan goes into an infinite loop if there's already an entry here. Oops!
+  
+ MODIFY WHAT FILE: DOMAIN// 8989.3  KERNEL SYSTEM PARAMETERS
+                                           (1 entry)
+ Do you want to use the screen-mode version? YES// NO
+ NAME: KERNEL SYSTEM PARAMETERS  Replace 
+ DESCRIPTION:
+ This file holds the site parameters for this installation of the Kernel.
+ <snip>
+  
+   Edit? NO// 
+ Select APPLICATION GROUP: ??
+  S:DINDEX'="#" DIXIEN=$O(^DD("IX","BB",DIFILE,DINDEX,""))
+  ^
+ <SUBSCRIPT>I1+4^DICUIX ^DD("IX","BB","")
+ VA FileMan simply aborts if there's nothing here yet. Double oops!
+  
+ 4. Remedy Ticket 590010
+ The API DELIXN^DDMOD does not give you an error (or error message) if you
+ pass it a non-existent cross-reference to delete, even though it should.
+ Also, if you call it with a null first argument, it aborts. This patch
+ ensures that you get a proper error message under the circumstances
+ described.
+ (Routine ^DIKD2)
+  
+ Observe:
+ Call with invalid cross-reference name:
+ > D DELIXN^DDMOD(3.9,"ABC")
+  
+ > ZW DIERR
+  
+ > D ^%G
+  
+ Device:
+ Right margin: 80 =>
+ Global ^TMP("DIERR",$J -- NOTE: translation in effect
+ 
+ Global ^
+ DIERR should exist, and the error message should be under ^TMP("DIERR",$J
+  
+ Call with null first argument:
+ >D DELIXN^DDMOD(,"ABC")
+  
+  S DIXR=$O(^DD("IX","BB",DIFIL,DIXR,0))
+  ^
+ <UNDEFINED>CHK+5^DIKD2 *DIFIL
+  
+ 5. Remedy Ticket 593847
+ When printing (or creating/editing a print template) VA FileMan doesn't
+ notice an error in a $SELECT statement, namely using a comma where a
+ colon is called for. This patch catches that error.
+ (Routine ^DICOMPW)
+  
+ Observe:
+ Select OPTION: PRINT FILE ENTRIES  
+  
+ OUTPUT FROM WHAT FILE: KERNEL SYSTEM PARAMETERS// 699  ENDOSCOPY/CONSULT
+                                           (1 entry)
+ SORT BY: APPOINTMENT DATE/TIME// 
+ START WITH APPOINTMENT DATE/TIME: FIRST// 
+ FIRST PRINT FIELD: .01  APPOINTMENT DATE/TIME
+ THEN PRINT FIELD: SIGNS AND SYMPTOMS    (multiple)
+   THEN PRINT SIGNS AND SYMPTOMS SUB-FIELD: $S($L(SIGNS AND SYMPTOMS)>0,"SIGNS
+ AND SYMPTOMS:",1:"")
+   THEN PRINT SIGNS AND SYMPTOMS SUB-FIELD:
+ The first comma should be a colon in the above $S.
+  
+ 6. Remedy Ticket 614058
+ Patch DI*22*152 added the "|" character to the list of optional characters
+ to use in the DIWF input variable of the API ^DIWP, but it was never
+ documented, and it didn't work. The "|" character means that any "|" in
+ the text should be printed as-is, but word-wrap should still function, and
+ margins respected. This patch makes the "|" character in DIWF function as
+ intended, and includes it in the documentation.
+ (Routine ^DIWP)
+  
+ Observe:
+ >K ^UTILITY($J)                                  
+ >S X="Testing a line with the | character in it."
+ >S DIWL=5,DIWR=30,DIWF="|" D ^DIWP               
+ >ZW ^UTILITY($J)                                 
+ ^UTILITY(544756092,"W",5)=2
+ ^UTILITY(544756092,"W",5,1,0)="Testing a line with the |"
+ ^UTILITY(544756092,"W",5,2,0)="character in it.| "
+ Note that the API put a trailing "|" at the end of the text.
+ It shouldn't have.
+  
+ 7. Remedy Ticket 622106, 624208
+ The API ^DIM incorrectly validates some M code. This patch corrects that.
+ (Routine ^DIM2)
+  
+ Observe:
+ >S X="S Y=AGE&FI(1)'FI(2)"
+ >D ^DIM
+ >ZW X
+ X="S Y=AGE&FI(1)'FI(2)"
+ It should have killed X, since the M code in X is not valid.
+  
+ 8. Remedy Ticket 726162
+ This one is SO EMBARASSING! If you edit a .01 field and enter text
+ containing an embedded "^", VA FileMan sets the .01 field with the first
+ "^" piece, and the next field with the second "^" piece! This patch
+ prevents that from happening.
+ (Routine ^DICN)
+  
+ Observe:
+ Here's a test file:
+ STANDARD DATA DICTIONARY #518951.4 -- ZZG TESTER FILE   
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 518951.4,.01  NAME                   0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  K:$L(X)>30!(X?.N)!($L(X)<3)!'(X'?1P.E) X
+               HELP-PROMPT:      NAME MUST BE 3-30 CHARACTERS, NOT NUMERIC OR 
+                                 STARTING WITH PUNCTUATION 
+               CROSS-REFERENCE:  518951.4^B 
+                                 1)= S ^DIZ(518951.4,"B",$E(X,1,30),DA)=""
+                                 2)= K ^DIZ(518951.4,"B",$E(X,1,30),DA)
+  
+ 518951.4,1    AGE                    0;2 NUMBER
+  
+               INPUT TRANSFORM:  K:+X'=X!(X>150)!(X<0)!(X?.E1"."1N.N) X
+               LAST EDITED:      NOV 19, 2012 
+               HELP-PROMPT:      Type a number between 0 and 150, 0 decimal 
+                                 digits.
+  
+ Let's edit it:
+ Select OPTION: ENTER OR EDIT FILE ENTRIES  
+  
+ INPUT TO WHAT FILE: ZZG TESTER// 
+ EDIT WHICH FIELD: ALL// 
+  
+ Select ZZG TESTER NAME: FRED^GINGER
+   Are you adding 'FRED^GINGER' as a new ZZG TESTER (the 1ST)? No// Y  (Yes)
+ NAME: FRED// 
+ AGE: GINGER//
+  
+ Select ZZG TESTER NAME:
+  
+ 9. No Remedy Ticket
+ Patch DI*22*165 made a change to the APIs FIND^DIC and $$FIND1^DIC to
+ prevent looking up in the pointed-to file when the lookup value is a
+ number, the pointer index is not the "B" index, and the "M" flag is
+ passed. This was to avoid the possible confusion of having a large
+ number of matches returned. However, the change caused some existing
+ lookups to break. This patch restores the lookup capability.
+ (Routine ^DICF4)
+  
+ Observe:
+ The HL LOGICAL LINK (#870) file has a "C" index on the INSTITUTION (#.02)
+ field [node 0, piece 2], which is a pointer to the INSTITUTION (#4) file.
+ Here is a test entry:
+  
+ Global ^HLCS(870,235
+ ^HLCS(870,235,0)="VAVCB^7^...
+             ...
+  
+ Global ^HLCS(870,"C",7
+ ^HLCS(870,"C",7,235)=""
+  
+ The INSTITUTION (#4) file has a "D" index on the STATION NUMBER (#99) field
+ [node 99, piece 1]:
+  
+ Global ^DIC(4,7
+ ^DIC(4,7,0)="TEXAS VALLEY COASTAL BEND HCS^48"
+         99)=740
+  
+ Global ^DIC(4,"D",740
+ ^DIC(4,"D",740,7)=""
+  
+ If we do a FIND^DIC or $$FIND1^DIC call to look up station number 740 on
+ File #870 and use the "M" flag to use multiple indexes, the APIs should
+ return entry #235, since its "C" index points to an entry in the
+ INSTITUTION file that has 740 in its "D" index. However, they return no
+ matches:
+  
+ >D FIND^DIC(870,"","","PM",740,"","","","","TARG","MSG")
+  
+ >ZW TARG
+ TARG("DILIST",0)="0^*^0^"
+ TARG("DILIST",0,"MAP")="IEN^.01I"
+  
+ >W $$FIND1^DIC(870,,"M","740")
+ 0
+  
+ After the patch, FIND^DIC and $$FIND1^DIC correctly find the entry:
+  
+ >D FIND^DIC(870,"","","PM",740,"","","","","TARG","MSG")
+  
+ >ZW TARG
+ TARG("DILIST",0)="1^*^0^"
+ TARG("DILIST",0,"MAP")="IEN^.01I"
+ TARG("DILIST",1,0)="235^VAVCB"
+  
+ >W $$FIND1^DIC(870,,"M","740")
+ 235
+  
+ 10. No Remedy Ticket
+ This patch adds a new key sequence <PF1><PF1>P to the Browser to allow printing
+ the current document. When <PF1><PF1>P is pressed, the user is asked whether to
+ print a header on each page, and whether to wrap text on word boundaries and
+ interpret word processing (|) windows. The user is then asked to select a
+ printer device.
+ (Routine ^DDBRGE, ^DDGLIBP, ^DINIT00P, ^DINIT00Q, ^DINIT00R, ^DINIT00S,
+ ^DINIT00T)
+  
+ Observe:
+ Print a header on each page? NO// YES
+ Wrap text? NO// YES
+ Interpret word processing windows (|)? NO// YES
+ DEVICE: QUEUE TO PRINT ON
+ DEVICE: HP-DIRECT
+  
+ Requested Start Time: NOW// <RET>
+ Report queued!
+ Task number: 476105
+  
+ Documentation
+ =============
+ The Programmer Manual was updated to include the changes necessary for
+ Item 6 above. The Getting Started Manual was updated to include
+ instructions for Item 10 above. The most up-to-date VA FileMan end-user
+ documentation is available on the VHA Software Document Library (VDL)
+ at the following Internet Website:
+     http://www.domain.ext/vdl/application.asp?appid=5
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ The VA FileMan documentation is also available in HTML format at the 
+ following Intranet Websites:
+  
+   * Getting Started Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u1/index.shtml
+  
+   * Advanced User Manual:
+     http://vaww.vista.domain.ext/fileman/docs/u2/index.shtml
+  
+   * APIs/Programmer Manual:
+     http://vaww.vista.domain.ext/fileman/docs/pm/index.shtml
+  
+   * ScreenMan Tutorial:
+     http://vaww.vista.domain.ext/fileman/docs/scrnman/index.shtml
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - 12/13/2012
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI*22*169 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch DI*22*169 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+ Remedy Tickets
+ ==============
+ 67942
+ 466389
+ 586657
+ 590010
+ 593847
+ 614058
+ 622106
+ 624208
+ 713657
+ 726162
+  
+ Thanks to Test Sites 
+ ====================
+ Coatesville VAMC
+ Washington, D.C. VAMC
+ Heartland West HCS
+  
+ Routine Summary: 
+ ================
+ Please see the "Routine Information" section. 
+ *Note: Routine: DIPR169 issues a warning during the installation of 
+ this patch if it appears that TaskMan is still running and/or logons 
+ have not been inhibited.
+  
+ Installation Instructions:
+ =========================
+ ** Although queuing of this patch is allowed, it is HIGHLY RECOMMENDED
+ that ALL Users be off the system and VISTA Background jobs be STOPPED
+ before this patch is installed. TaskMan should be stopped or placed in
+ a wait state. Failure to do so may result in 'source routine edited'
+ errors during a database update. Edits may be lost and records may be
+ left in an inconsistent state. An error that occurs before a cross-
+ reference is executed, for example, may lead to corrupted data or hard
+ errors in the future. **
+  
+ Also, please make sure that no other patches are installed until
+ installation for this patch has completed.
+  
+ The following installation instructions are based upon the premise 
+ that the installer has heeded the above warning.
+  
+ Installation should take less than a minute.
+  
+      1.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+ This option will load the KIDS package onto your system.
+  
+      2.  The patch has now been loaded into a transport global on your 
+ system. You now need to use KIDS to install the transport global.
+  
+      3.  On the KIDS menu, under the 'Installation' menu, use the 
+ following options:
+  
+            Print Transport Global
+            Compare Transport Global to Current System
+            Verify Checksums in Transport Global
+            Backup a Transport Global
+  
+      4.  In accordance with the warning at the beginning of the 
+ installation instructions, make sure ALL interactive processes, and 
+ ALL non-interactive background jobs are stopped following your site 
+ specific procedures. TaskMan should be stopped or placed in a wait state.
+ All users should be off the system. NOT performing this step could result
+ in 'source routine edited' error during database updates, and records may
+ be left in an inconsistent state.
+  
+      5.  On the KIDS menu, under the 'Installation' menu, use the 
+ following option:
+  
+            Select Installation Option: Install Package(s)
+            Select INSTALL NAME: DI*22.0*169
+                                 ===========
+  
+ The Environment Check Routine DIPR169 runs automatically during this
+ step. DIPR169 issues a warning if it appears that TaskMan is still 
+ running or logons have not been inhibited.
+  
+            Answer 'YES' to 'Want KIDS to INHIBIT LOGONs during the 
+ install?'
+            Answer 'NO' to 'Want to DISABLE Scheduled Options, Menu 
+ Options, and Protocols?'
+  
+      6.  Re-enable all processes stopped in step 4 above.
+  
+ Post Installation
+ =================
+ Upon successful installation of this patch, routine DIPR169 will be deleted.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;22.0;VA FileMan;**[Patch List]**;Mar 30, 1999;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDBRGE
+    Before: B28284994   After: B33963703  **169**
+Routine Name: DDGLIBP
+    Before:       n/a   After: B24781099  **169**
+Routine Name: DICF4
+    Before: B21205416   After: B22658578  **4,31,165,169**
+Routine Name: DICM
+    Before: B34755435   After: B36720423  **4,20,31,40,149,159,165,169**
+Routine Name: DICN
+    Before: B15378818   After: B15919106  **4,31,169**
+Routine Name: DICOMPW
+    Before: B13134870   After: B15090622  **6,76,169**
+Routine Name: DIK1
+    Before: B14766986   After: B15344498  **1,10,41,146,160,165,169**
+Routine Name: DIKD2
+    Before:  B5553526   After:  B6201758  **12,95,169**
+Routine Name: DILIBF
+    Before: B28544786   After: B26157808  **48,71,169**
+Routine Name: DIM2
+    Before: B15416688   After: B15444024  **169**
+Routine Name: DINIT00P
+    Before: B45768204   After: B45640693  **169**
+Routine Name: DINIT00Q
+    Before: B49572847   After: B56790232  **169**
+Routine Name: DINIT00R
+    Before: B48990724   After: B49045160  **169**
+Routine Name: DINIT00S
+    Before: B44878174   After: B44086643  **169**
+Routine Name: DINIT00T
+    Before: B49469615   After: B50751846  **8,18,169**
+Routine Name: DIPR169
+    Before:       n/a   After:  B5164886  **169**
+Routine Name: DIWP
+    Before: B12144783   After: B12664290  **46,152,169**
+ 
+Routine list of preceding patches: 18, 71, 76, 95, 152, 165
+
+=============================================================================
+User Information:
+Entered By  : BEUSCHEL,GARY                 Date Entered  : NOV 15, 2012
+Completed By: BEST,LISA                     Date Completed: SEP 12, 2013
+Released By : HARROD,PAUL                   Date Released : SEP 17, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

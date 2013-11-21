@@ -1,0 +1,726 @@
+KIDS Distribution saved on Apr 30, 2013@02:20:39
+PSO*7*426
+**KIDS**:PSO*7.0*426^
+
+**INSTALL NAME**
+PSO*7.0*426
+"BLD",8671,0)
+PSO*7.0*426^OUTPATIENT PHARMACY^0^3130430^y
+"BLD",8671,1,0)
+^^10^10^3130429^
+"BLD",8671,1,1,0)
+This is a follow-up patch for PSO*7*391 that was part of Computerized 
+"BLD",8671,1,2,0)
+Patient Record System (CPRS) Graphic User Interface (GUI) v29. CPRS GUI 
+"BLD",8671,1,3,0)
+v29 will be a phased implementation and therefore, this patch, PSO*7*426,
+"BLD",8671,1,4,0)
+should be installed after CPRS GUI v29 bundle is installed.
+"BLD",8671,1,5,0)
+ 
+"BLD",8671,1,6,0)
+Hines reported that when finishing a complex pending order if 'month' is
+"BLD",8671,1,7,0)
+part of duration then the order is discontinued due to hash mismatch. This
+"BLD",8671,1,8,0)
+is due to pharmacy storing 'month' as "L" and CPRS storing as "M". This
+"BLD",8671,1,9,0)
+patch resolves this problem by tweaking the hash check code to represent
+"BLD",8671,1,10,0)
+"L" as "M" when "L" is found in the duration field.
+"BLD",8671,4,0)
+^9.64PA^^
+"BLD",8671,6.3)
+2
+"BLD",8671,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8671,"KRN",.4,0)
+.4
+"BLD",8671,"KRN",.401,0)
+.401
+"BLD",8671,"KRN",.402,0)
+.402
+"BLD",8671,"KRN",.403,0)
+.403
+"BLD",8671,"KRN",.5,0)
+.5
+"BLD",8671,"KRN",.84,0)
+.84
+"BLD",8671,"KRN",3.6,0)
+3.6
+"BLD",8671,"KRN",3.8,0)
+3.8
+"BLD",8671,"KRN",9.2,0)
+9.2
+"BLD",8671,"KRN",9.8,0)
+9.8
+"BLD",8671,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8671,"KRN",9.8,"NM",1,0)
+PSOPKIV1^^0^B99524853
+"BLD",8671,"KRN",9.8,"NM","B","PSOPKIV1",1)
+
+"BLD",8671,"KRN",19,0)
+19
+"BLD",8671,"KRN",19.1,0)
+19.1
+"BLD",8671,"KRN",101,0)
+101
+"BLD",8671,"KRN",409.61,0)
+409.61
+"BLD",8671,"KRN",771,0)
+771
+"BLD",8671,"KRN",779.2,0)
+779.2
+"BLD",8671,"KRN",870,0)
+870
+"BLD",8671,"KRN",8989.51,0)
+8989.51
+"BLD",8671,"KRN",8989.52,0)
+8989.52
+"BLD",8671,"KRN",8994,0)
+8994
+"BLD",8671,"KRN","B",.4,.4)
+
+"BLD",8671,"KRN","B",.401,.401)
+
+"BLD",8671,"KRN","B",.402,.402)
+
+"BLD",8671,"KRN","B",.403,.403)
+
+"BLD",8671,"KRN","B",.5,.5)
+
+"BLD",8671,"KRN","B",.84,.84)
+
+"BLD",8671,"KRN","B",3.6,3.6)
+
+"BLD",8671,"KRN","B",3.8,3.8)
+
+"BLD",8671,"KRN","B",9.2,9.2)
+
+"BLD",8671,"KRN","B",9.8,9.8)
+
+"BLD",8671,"KRN","B",19,19)
+
+"BLD",8671,"KRN","B",19.1,19.1)
+
+"BLD",8671,"KRN","B",101,101)
+
+"BLD",8671,"KRN","B",409.61,409.61)
+
+"BLD",8671,"KRN","B",771,771)
+
+"BLD",8671,"KRN","B",779.2,779.2)
+
+"BLD",8671,"KRN","B",870,870)
+
+"BLD",8671,"KRN","B",8989.51,8989.51)
+
+"BLD",8671,"KRN","B",8989.52,8989.52)
+
+"BLD",8671,"KRN","B",8994,8994)
+
+"BLD",8671,"QUES",0)
+^9.62^^
+"BLD",8671,"REQB",0)
+^9.611^1^1
+"BLD",8671,"REQB",1,0)
+PSO*7.0*391^2
+"BLD",8671,"REQB","B","PSO*7.0*391",1)
+
+"MBREQ")
+0
+"PKG",141,-1)
+1^1
+"PKG",141,0)
+OUTPATIENT PHARMACY^PSO^OUTPATIENT LABELS, PROFILE, INVENTORY, PRESCRIPTIONS
+"PKG",141,20,0)
+^9.402P^^
+"PKG",141,22,0)
+^9.49I^1^1
+"PKG",141,22,1,0)
+7.0^2971216^2980917^11712
+"PKG",141,22,1,"PAH",1,0)
+426^3130430
+"PKG",141,22,1,"PAH",1,1,0)
+^^10^10^3130430
+"PKG",141,22,1,"PAH",1,1,1,0)
+This is a follow-up patch for PSO*7*391 that was part of Computerized 
+"PKG",141,22,1,"PAH",1,1,2,0)
+Patient Record System (CPRS) Graphic User Interface (GUI) v29. CPRS GUI 
+"PKG",141,22,1,"PAH",1,1,3,0)
+v29 will be a phased implementation and therefore, this patch, PSO*7*426,
+"PKG",141,22,1,"PAH",1,1,4,0)
+should be installed after CPRS GUI v29 bundle is installed.
+"PKG",141,22,1,"PAH",1,1,5,0)
+ 
+"PKG",141,22,1,"PAH",1,1,6,0)
+Hines reported that when finishing a complex pending order if 'month' is
+"PKG",141,22,1,"PAH",1,1,7,0)
+part of duration then the order is discontinued due to hash mismatch. This
+"PKG",141,22,1,"PAH",1,1,8,0)
+is due to pharmacy storing 'month' as "L" and CPRS storing as "M". This
+"PKG",141,22,1,"PAH",1,1,9,0)
+patch resolves this problem by tweaking the hash check code to represent
+"PKG",141,22,1,"PAH",1,1,10,0)
+"L" as "M" when "L" is found in the duration field.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSOPKIV1")
+0^1^B99524853
+"RTN","PSOPKIV1",1,0)
+PSOPKIV1 ;BHAM ISC/MHA - validate PKI cert. ; 05/09/2002  8:15 am
+"RTN","PSOPKIV1",2,0)
+ ;;7.0;OUTPATIENT PHARMACY;**131,146,223,148,249,391,426**;DEC 1997;Build 2
+"RTN","PSOPKIV1",3,0)
+ ;Ref. to ^ORDEA is supported by DBIA 5709
+"RTN","PSOPKIV1",4,0)
+ ;Ref. to ^ORB supported by DBIA 1362
+"RTN","PSOPKIV1",5,0)
+ ;Ref. to ^XUSSPKI supported by DBIA 3539
+"RTN","PSOPKIV1",6,0)
+CER ;
+"RTN","PSOPKIV1",7,0)
+ N PKIRT
+"RTN","PSOPKIV1",8,0)
+ D VERIFY(.PKIRT,ORD)
+"RTN","PSOPKIV1",9,0)
+ S PKI=+PKIRT I PKI=1!(PKI=89802020) D  Q
+"RTN","PSOPKIV1",10,0)
+ . S PKI1=1,VALMSG="Digitally Signed Order",PKIE="Processing "_VALMSG
+"RTN","PSOPKIV1",11,0)
+ . I PKI=89802020 S PKIE=PKIE_": "_$P($T(@($E(PKI,7,8))),";;",2)
+"RTN","PSOPKIV1",12,0)
+ I PKI<2 S VALMSG=$P(PKIRT,"^",2) Q
+"RTN","PSOPKIV1",13,0)
+ S PKI1=$S(PKI>89802014&(PKI<89802020)!((PKI>89802020)&(PKI<89802031)):2,1:1)
+"RTN","PSOPKIV1",14,0)
+ S PKIE="Digital Signature Failed: "_$P($T(@($E(PKI,7,8))),";;",2)
+"RTN","PSOPKIV1",15,0)
+ I PKI1=2 D
+"RTN","PSOPKIV1",16,0)
+ .S VALMSG="Signature Failed: "_$P($T(@($E(PKI,7,8))),";;",2)
+"RTN","PSOPKIV1",17,0)
+ .S PKIE=PKIE_" - Order Auto Discontinued"
+"RTN","PSOPKIV1",18,0)
+ S:$L(PKIE)>80 PKIE=$E(PKIE,1,80)
+"RTN","PSOPKIV1",19,0)
+ Q
+"RTN","PSOPKIV1",20,0)
+L1 ;
+"RTN","PSOPKIV1",21,0)
+ S PKID=1,IEN=IEN+1,^TMP($S($G(ST)=1:"PSOAO",1:"PSOPO"),$J,IEN,0)=PKIE
+"RTN","PSOPKIV1",22,0)
+ Q
+"RTN","PSOPKIV1",23,0)
+ERR(ER) ;
+"RTN","PSOPKIV1",24,0)
+ Q:'ER
+"RTN","PSOPKIV1",25,0)
+ N ERM S ERM=$P($T(@($E(ER,7,8))),";;",2) I ERM]"" Q "Signature Failed: "_ERM
+"RTN","PSOPKIV1",26,0)
+ Q ""
+"RTN","PSOPKIV1",27,0)
+REA ;
+"RTN","PSOPKIV1",28,0)
+ D KV^PSOVER1
+"RTN","PSOPKIV1",29,0)
+ W ! S DIR("A")="Enter Override Reason ",DIR(0)="F^5:70",DIR("?")="Free text reason must be entered, should be between 5 to 70 characters and must not contain embedded up-arrow, e.g. Spoke with the Provider."
+"RTN","PSOPKIV1",30,0)
+ S:$G(PKIR)]"" DIR("B")=PKIR D ^DIR S:'$D(DIRUT) PKIR=Y
+"RTN","PSOPKIV1",31,0)
+ I $D(DIRUT) K PKIR I $D(OR0) S:$P(OR0,"^",3)="RNW" PSONEW("QFLG")=1 S:$P(OR0,"^",3)="NW" PSORX("DFLG")=1
+"RTN","PSOPKIV1",32,0)
+ D KV^PSOVER1 K Y Q
+"RTN","PSOPKIV1",33,0)
+ACT(DA) ;
+"RTN","PSOPKIV1",34,0)
+ Q:'DA
+"RTN","PSOPKIV1",35,0)
+ N I,J D AR
+"RTN","PSOPKIV1",36,0)
+ S ^PSRX(DA,"A",0)="^52.3DA^"_J_"^"_J,^PSRX(DA,"A",J,0)=%_"^K^"_DUZ_"^0^INVALID PKI CERT. "_PKI
+"RTN","PSOPKIV1",37,0)
+ S ^PSRX(DA,"A",J,2,1,0)=PKIR,^PSRX(DA,"A",J,2,0)="^52.34A^1^1"
+"RTN","PSOPKIV1",38,0)
+ K PKIR Q
+"RTN","PSOPKIV1",39,0)
+ ;
+"RTN","PSOPKIV1",40,0)
+AR ;
+"RTN","PSOPKIV1",41,0)
+ S (I,J)=0 F  S I=$O(^PSRX(DA,"A",I)) Q:'I  S J=I
+"RTN","PSOPKIV1",42,0)
+ S J=J+1 D NOW^%DTC Q
+"RTN","PSOPKIV1",43,0)
+DCP ;
+"RTN","PSOPKIV1",44,0)
+ Q:'$D(^PS(52.41,ORD,0))  N PKIOR,PKIORM
+"RTN","PSOPKIV1",45,0)
+ K ^PS(52.41,"AOR",$P(^PS(52.41,ORD,0),"^",2),+$P($G(^PS(52.41,ORD,"INI")),"^"),ORD),^PS(52.41,"AD",$P(^PS(52.41,ORD,0),"^",12),+$P($G(^PS(52.41,ORD,"INI")),"^"),ORD)
+"RTN","PSOPKIV1",46,0)
+ S $P(^PS(52.41,ORD,0),"^",3)="DC"
+"RTN","PSOPKIV1",47,0)
+ S PKIE=$P(PKIE," - ")_" - "_PKI,$P(^PS(52.41,ORD,4),"^")=PKIE
+"RTN","PSOPKIV1",48,0)
+ S PKIOR=$E(PKI,7,8)
+"RTN","PSOPKIV1",49,0)
+ S PKIORM=$S(PKIOR=16:"16:Order has been modified. Resubmit or contact Pharmacy.",PKIOR=17:"17:DEA Certificate revoked. Resubmit or contact Pharmacy.",1:PKIE)
+"RTN","PSOPKIV1",50,0)
+ D EN^PSOHLSN($P(^PS(52.41,ORD,0),"^"),"OC",PKIORM,"A")
+"RTN","PSOPKIV1",51,0)
+ D ^PSOPKIV2
+"RTN","PSOPKIV1",52,0)
+ Q
+"RTN","PSOPKIV1",53,0)
+ ;
+"RTN","PSOPKIV1",54,0)
+DCV ;
+"RTN","PSOPKIV1",55,0)
+ W ! D KV^PSOVER1 K PKIR S DIR(0)="Y",DIR("B")="N",DIR("A",1)="Digitally signed Schedule II Rx cannot be deleted, it can only be D/Ced."
+"RTN","PSOPKIV1",56,0)
+ S DIR("A")="Are you sure you want to D/C this Rx: " D ^DIR,KV^PSOVER1
+"RTN","PSOPKIV1",57,0)
+ I 'Y S VALMSG="No Action Taken!",VALMBCK="R" Q
+"RTN","PSOPKIV1",58,0)
+ S:'$D(INCOM) INCOM="DCed by Pharmacy for PKI" S DIR("B")=INCOM
+"RTN","PSOPKIV1",59,0)
+ ;
+"RTN","PSOPKIV1",60,0)
+ W ! S DIR("A")="Reason for D/Cing",DIR(0)="F^5:75",DIR("?")="Reason must be entered and should be 5 to 75 characters and must not contain embedded uparrow"
+"RTN","PSOPKIV1",61,0)
+ D ^DIR I $D(DIRUT) D KV^PSOVER1 S VALMSG="No Action Taken!",VALMBCK="R" Q
+"RTN","PSOPKIV1",62,0)
+ S PKIR=Y D KV^PSOVER1
+"RTN","PSOPKIV1",63,0)
+DCV0 Q:'$D(^PS(52.4,DA,0))
+"RTN","PSOPKIV1",64,0)
+ S $P(^PSRX(DA,"STA"),"^")=12,$P(^PSRX(DA,3),"^",5)=DT
+"RTN","PSOPKIV1",65,0)
+ D REVERSE^PSOBPSU1(DA,,"DC",7),CAN^PSOTPCAN(DA) N I,J D AR
+"RTN","PSOPKIV1",66,0)
+ S ^PSRX(DA,"A",J,0)=%_"^C^"_DUZ_"^0^Discontinued during verification"
+"RTN","PSOPKIV1",67,0)
+ S J=J+1 D ADR
+"RTN","PSOPKIV1",68,0)
+ N PKIX S PKIX=DA D EN^PSOHLSN1(DA,"OD","",PKIR,PSONOOR)
+"RTN","PSOPKIV1",69,0)
+ S DA=PKIX S DIK="^PS(52.4," D ^DIK K DIK
+"RTN","PSOPKIV1",70,0)
+ Q
+"RTN","PSOPKIV1",71,0)
+ ;
+"RTN","PSOPKIV1",72,0)
+DCV1 N PKIR,PSONOOR,DA S DA=PSONV,PKIR=$P($G(PKIE),"-")_" - "_PKI,PSONOOR="A" D DCV0
+"RTN","PSOPKIV1",73,0)
+ Q
+"RTN","PSOPKIV1",74,0)
+ADR ;
+"RTN","PSOPKIV1",75,0)
+ S ^PSRX(DA,"A",0)="^52.3DA^"_J_"^"_J
+"RTN","PSOPKIV1",76,0)
+ S ^PSRX(DA,"A",J,0)=%_"^K^"_DUZ_"^0^Digitally signed"
+"RTN","PSOPKIV1",77,0)
+ S ^PSRX(DA,"A",J,2,1,0)=$S($G(PKIR)]"":PKIR,1:"Digitally signed order Discontinued"),^PSRX(DA,"A",J,2,0)="^52.34A^1^1"
+"RTN","PSOPKIV1",78,0)
+ Q
+"RTN","PSOPKIV1",79,0)
+RV ;
+"RTN","PSOPKIV1",80,0)
+ N TY,T,T1,T2,MIG,SG
+"RTN","PSOPKIV1",81,0)
+ S (T,T2)=0
+"RTN","PSOPKIV1",82,0)
+ F  S T=$O(^PS(52.41,ORD,"OBX",T)) Q:'T  D
+"RTN","PSOPKIV1",83,0)
+ .S T1=0,$P(TY(T2)," ",23)=" "
+"RTN","PSOPKIV1",84,0)
+ .F  S T1=$O(^PS(52.41,ORD,"OBX",T,2,T1)) Q:'T1  D
+"RTN","PSOPKIV1",85,0)
+ ..S MIG=^PS(52.41,ORD,"OBX",T,2,T1,0)
+"RTN","PSOPKIV1",86,0)
+ ..F SG=1:1:$L(MIG," ") S:$L(TY(T2)_" "_$P(MIG," ",SG))>80 T2=T2+1,$P(TY(T2)," ",23)=" " S TY(T2)=$G(TY(T2))_" "_$P(MIG," ",SG)
+"RTN","PSOPKIV1",87,0)
+ .S T2=T2+4
+"RTN","PSOPKIV1",88,0)
+ Q
+"RTN","PSOPKIV1",89,0)
+ ;
+"RTN","PSOPKIV1",90,0)
+VERIFY(RET,PSIEN)       ;Verify PKI Data
+"RTN","PSOPKIV1",91,0)
+ ;PSIEN = IEN of file 52.41 ;ORIFN;ACTION - NOTE: if no ACTION then 1 (new order) is assumed
+"RTN","PSOPKIV1",92,0)
+ ;Returned values: "1" if digital signature verifies
+"RTN","PSOPKIV1",93,0)
+ ;                 "-1^error message" if DS fails during initial parameter checking
+"RTN","PSOPKIV1",94,0)
+ ;                 "898020xx^message" if DS fails during verification
+"RTN","PSOPKIV1",95,0)
+ ;
+"RTN","PSOPKIV1",96,0)
+ N PSO0,DFN,PSIG,I,INFO,INF1,DEA,INST,HASH,DATE
+"RTN","PSOPKIV1",97,0)
+ I $G(PSIEN)="" S RET="-1^Invalid order number" Q
+"RTN","PSOPKIV1",98,0)
+ K ^TMP("PSOPKIDATA",$J)
+"RTN","PSOPKIV1",99,0)
+ S PSO0=$G(^PS(52.41,PSIEN,0))
+"RTN","PSOPKIV1",100,0)
+ S ^TMP("PSOPKIDATA",$J,"ISSUANCE DATE",1)=$$FMTE^XLFDT($P($P(PSO0,"^",6),"."))
+"RTN","PSOPKIV1",101,0)
+ ;patient inf
+"RTN","PSOPKIV1",102,0)
+ S DFN=$P(PSO0,"^",2) D DEM^VADPT,ADD^VADPT
+"RTN","PSOPKIV1",103,0)
+ S ^TMP("PSOPKIDATA",$J,"PATIENT NAME",2)=VADM(1)
+"RTN","PSOPKIV1",104,0)
+ S ^TMP("PSOPKIDATA",$J,"PATIENT ADDRESS",3)=VAPA(1)_"^"_VAPA(2)_"^"_VAPA(3)_"^"_VAPA(4)_"^"_$P(VAPA(5),"^")_"^"_$P(VAPA(5),"^",2)_"^"_VAPA(6)_"^"_VAPA(7)
+"RTN","PSOPKIV1",105,0)
+ S ^TMP("PSOPKIDATA",$J,"QUANTITY",5)=$P(PSO0,"^",10)
+"RTN","PSOPKIV1",106,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV1",107,0)
+ D ARCHIVE^ORDEA(+PSO0)
+"RTN","PSOPKIV1",108,0)
+ ;POS DOSE
+"RTN","PSOPKIV1",109,0)
+ N J,INF0,INF1,PSIG
+"RTN","PSOPKIV1",110,0)
+ S J=0 F  S J=$O(^PS(52.41,PSIEN,1,J)) Q:'J  D
+"RTN","PSOPKIV1",111,0)
+ .S INF0=$G(^PS(52.41,PSIEN,9,J,0)),INF1=$G(^PS(52.41,PSIEN,1,J,1))
+"RTN","PSOPKIV1",112,0)
+ .S PSIG=INF0_"|"_$P(INF1,"^")_"|"_$S($E($P(INF1,"^",2))="L":"M"_$E($P(INF1,"^",2),2,99),1:$P(INF1,"^",2))_"|"_$P(INF1,"^",6)_"|"_$P(INF1,"^",8)
+"RTN","PSOPKIV1",113,0)
+ .S ^TMP("PSOPKIDATA",$J,"DIRECTIONS",6,J)=PSIG
+"RTN","PSOPKIV1",114,0)
+ I +$P(PSO0,"^",9),+$P(PSO0,"^",25) S ^TMP("PSOPKIDATA",$J,"DRUG NAME",4)=$$GET1^DIQ(50,$P(PSO0,"^",9),.01)
+"RTN","PSOPKIV1",115,0)
+ S DEA=$P($G(^TMP($J,"ORDEA",+PSO0,2)),"^")
+"RTN","PSOPKIV1",116,0)
+ ;S ^TMP("PSOPKIDATA",$J,"DETOX NUMBER",7)=$$DETOX^XUSER($P(PSO0,"^",5))
+"RTN","PSOPKIV1",117,0)
+ S ^TMP("PSOPKIDATA",$J,"PROVIDER NAME",8)=$$GET1^DIQ(200,$P(PSO0,"^",5),.01)
+"RTN","PSOPKIV1",118,0)
+ I $D(^TMP($J,"ORDEA",+PSO0,3)) S ^TMP("PSOPKIDATA",$J,"PROVIDER ADDRESS",9)=$P(^(3),"^",2,6)
+"RTN","PSOPKIV1",119,0)
+ E  D INSTAD
+"RTN","PSOPKIV1",120,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV1",121,0)
+ D KVA^VADPT
+"RTN","PSOPKIV1",122,0)
+ S ^TMP("PSOPKIDATA",$J,"DEA NUMBER",10)=DEA
+"RTN","PSOPKIV1",123,0)
+ S ^TMP("PSOPKIDATA",$J,"ORDER NUMBER",11)=$P(PSO0,"^")
+"RTN","PSOPKIV1",124,0)
+ S HASH=$$HASHRTN^ORDEA($P(PSO0,"^"))
+"RTN","PSOPKIV1",125,0)
+ I '$L(HASH) S RET="-1^Order has no PKI Hash" G VQT
+"RTN","PSOPKIV1",126,0)
+ S DATE=$$FMTE^XLFDT($P($P(PSO0,"^",6),"."))
+"RTN","PSOPKIV1",127,0)
+ I '$L(DATE) S RET="-1^No date associated with order" G VQT
+"RTN","PSOPKIV1",128,0)
+ S RET=$$VERIFY^XUSSPKI(HASH,$NA(^TMP("PSOPKIDATA",$J)))
+"RTN","PSOPKIV1",129,0)
+ I RET="OK"!(RET["No error found for this certificate or chain") S RET=1 G VQT
+"RTN","PSOPKIV1",130,0)
+ N ECD S ECD=898020
+"RTN","PSOPKIV1",131,0)
+ I RET[ECD S RET=$P(RET,"^",2) G VQT
+"RTN","PSOPKIV1",132,0)
+ I RET["not time-valid" S RET=ECD_"20" G VQT
+"RTN","PSOPKIV1",133,0)
+ I RET["has been revoked" S RET=ECD_"17" G VQT
+"RTN","PSOPKIV1",134,0)
+ I RET["does not have a valid signature" S RET=ECD_"22" G VQT
+"RTN","PSOPKIV1",135,0)
+ I RET["not properly time-nested" S RET=ECD_"23" G VQT
+"RTN","PSOPKIV1",136,0)
+ I RET["not valid in its proposed usage" S RET=ECD_"24" G VQT
+"RTN","PSOPKIV1",137,0)
+ I RET["based on an untrusted root" S RET=ECD_"25" G VQT
+"RTN","PSOPKIV1",138,0)
+ I RET["certificates in the certificate chain is unknown" S RET=ECD_"26" G VQT
+"RTN","PSOPKIV1",139,0)
+ I RET["authority that the original certificate had certified" S RET=ECD_"27" G VQT
+"RTN","PSOPKIV1",140,0)
+ I RET["certificate chain is not complete" S RET=ECD_"28" G VQT
+"RTN","PSOPKIV1",141,0)
+ I RET["this chain did not have a valid signature" S RET=ECD_"29" G VQT
+"RTN","PSOPKIV1",142,0)
+ I RET["not valid for this usage" S RET=ECD_"30" G VQT
+"RTN","PSOPKIV1",143,0)
+VQT ;
+"RTN","PSOPKIV1",144,0)
+ K ^TMP("PSOPKIDATA",$J)
+"RTN","PSOPKIV1",145,0)
+ Q
+"RTN","PSOPKIV1",146,0)
+ ;
+"RTN","PSOPKIV1",147,0)
+INSTAD ;
+"RTN","PSOPKIV1",148,0)
+ S INST=$P($G(^PS(52.41,PSIEN,"INI")),"^")
+"RTN","PSOPKIV1",149,0)
+ D GETS^DIQ(4,INST,".01;1.01;1.02;1.03;1.04;.02","E","VADR")
+"RTN","PSOPKIV1",150,0)
+ S VADD(1)=$G(VADR(4,INST_",",.01,"E")),VADD(2)=$G(VADR(4,INST_",",1.01,"E")),VADD(3)=$G(VADR(4,INST_",",1.02,"E"))
+"RTN","PSOPKIV1",151,0)
+ S VADD(4)=$G(VADR(4,INST_",",1.03,"E")),VADD(5)=$G(VADR(4,INST_",",.02,"E")),VADD(6)=$G(VADR(4,INST_",",1.04,"E"))
+"RTN","PSOPKIV1",152,0)
+ S ^TMP("PSOPKIDATA",$J,"PROVIDER ADDRESS",9)=VADD(1)_"^"_VADD(2)_"^"_VADD(3)_"^"_VADD(4)_"^"_VADD(5)_"^"_VADD(6)
+"RTN","PSOPKIV1",153,0)
+ Q
+"RTN","PSOPKIV1",154,0)
+ ;
+"RTN","PSOPKIV1",155,0)
+HSHCHK(ARET,PNP) ;Compares digitally signed archived data in file #101.52 against data in OP pending file #52.41
+"RTN","PSOPKIV1",156,0)
+ ;PSO*7*391/JAM
+"RTN","PSOPKIV1",157,0)
+ ;Input - PNP  - Pending file IEN
+"RTN","PSOPKIV1",158,0)
+ ;     
+"RTN","PSOPKIV1",159,0)
+ ;Output - returns 1 if the archived data matches the pending file
+"RTN","PSOPKIV1",160,0)
+ ;                 0 if initial parameter checking fails
+"RTN","PSOPKIV1",161,0)
+ ;                -1 if comparison fails; and return array with failed items
+"RTN","PSOPKIV1",162,0)
+ ;
+"RTN","PSOPKIV1",163,0)
+ N DFN,PND0,DRGNM,DEA,DETOX,DFN,J,I,INST,NAM,SIGFL,DOSE,DOSEP,DOSEX,DFRM,TMP,VADD,VADR,INF0,INF1,ASIG,PSIG,ORP,ND
+"RTN","PSOPKIV1",164,0)
+ I $G(PNP)="" S ARET=0 Q ARET
+"RTN","PSOPKIV1",165,0)
+ S PND0=$G(^PS(52.41,PNP,0)) I PND0="" S ARET=0 Q ARET
+"RTN","PSOPKIV1",166,0)
+ S ORP=$P(PND0,"^") I ORP="" S ARET=0 Q ARET
+"RTN","PSOPKIV1",167,0)
+ ;get archived data from CPRS
+"RTN","PSOPKIV1",168,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV1",169,0)
+ D ARCHIVE^ORDEA(ORP)
+"RTN","PSOPKIV1",170,0)
+ I '$D(^TMP($J,"ORDEA")) S ARET=0 Q ARET
+"RTN","PSOPKIV1",171,0)
+ F I=1:1:5 S TMP(I)=$G(^TMP($J,"ORDEA",ORP,I))
+"RTN","PSOPKIV1",172,0)
+ I $P($P(PND0,"^",6),".")'=$P(TMP(1),"^",2) S ARET=-1,ARET("ISSUANCE DATE")=$P(TMP(1),"^",2)_"^"_$P($P(PND0,"^",6),".")
+"RTN","PSOPKIV1",173,0)
+ S DRGNM=$$GET1^DIQ(50,$P(PND0,"^",9),.01)
+"RTN","PSOPKIV1",174,0)
+ I DRGNM'=$P(TMP(1),"^",3) S ARET=-1,ARET("DRUG NAME")=$P(TMP(1),"^",3)_"^"_DRGNM
+"RTN","PSOPKIV1",175,0)
+ I $P(PND0,"^",10)'=$P(TMP(1),"^",6) S ARET=-1,ARET("QTY PRESCRIBED")=$P(TMP(1),"^",6)_"^"_$P(PND0,"^",10)
+"RTN","PSOPKIV1",176,0)
+ ;I $P(PND0,"^",11)'=$P(TMP(1),"^",7) S ARET=-1,ARET("# OF REFILLS")=$P(TMP(1),"^",7)_"^"_$P(PND0,"^",11)
+"RTN","PSOPKIV1",177,0)
+ ;provider info
+"RTN","PSOPKIV1",178,0)
+ S INST=$P($G(^PS(52.41,PNP,"INI")),"^")
+"RTN","PSOPKIV1",179,0)
+ S DEA=$$DEA^XUSER(0,$P(PND0,"^",5))
+"RTN","PSOPKIV1",180,0)
+ I DEA'=$P(TMP(2),"^") S ARET=-1,ARET("DEA #")=$P(TMP(2),"^")_"^"_DEA
+"RTN","PSOPKIV1",181,0)
+ ;S DETOX=$$DETOX^XUSER($P(PND0,"^",5)) I DETOX'=$P(TMP(2),"^",2) S ARET=-1,ARET("DETOX #")=$P(TMP(2),"^",2)_"^"_DETOX
+"RTN","PSOPKIV1",182,0)
+ S NAM=$$GET1^DIQ(200,$P(PND0,"^",5),.01) I NAM'=$P(TMP(2),"^",3) S ARET=-1,ARET("PROVIDER NAME")=$P(TMP(2),"^",3)_"^"_NAM
+"RTN","PSOPKIV1",183,0)
+ ;patient inf
+"RTN","PSOPKIV1",184,0)
+ S DFN=$P(PND0,"^",2) D DEM^VADPT,ADD^VADPT
+"RTN","PSOPKIV1",185,0)
+ I VADM(1)'=$P(TMP(4),"^") S ARET=-1,ARET("PATIENT NAME")=$P(TMP(4),"^")_"^"_VADM(1)
+"RTN","PSOPKIV1",186,0)
+ I VAPA(1)'=$P(TMP(5),"^") S ARET=-1,ARET("PATIENT ADDRESS #1")=$P(TMP(5),"^")_"^"_VAPA(1)
+"RTN","PSOPKIV1",187,0)
+ I VAPA(2)'=$P(TMP(5),"^",2) S ARET=-1,ARET("PATIENT ADDRESS #2")=$P(TMP(5),"^",2)_"^"_VAPA(2)
+"RTN","PSOPKIV1",188,0)
+ I VAPA(3)'=$P(TMP(5),"^",3) S ARET=-1,ARET("PATIENT ADDRESS #3")=$P(TMP(5),"^",3)_"^"_VAPA(3)
+"RTN","PSOPKIV1",189,0)
+ I VAPA(4)'=$P(TMP(5),"^",4) S ARET=-1,ARET("PATIENT CITY")=$P(TMP(5),"^",4)_"^"_VAPA(4)
+"RTN","PSOPKIV1",190,0)
+ I $P(VAPA(5),"^",2)'=$P(TMP(5),"^",5) S ARET=-1,ARET("PATIENT STATE")=$P(TMP(5),"^",5)_"^"_$P(VAPA(5),"^",2)
+"RTN","PSOPKIV1",191,0)
+ I VAPA(6)'=$P(TMP(5),"^",6) S ARET=-1,ARET("PATIENT ZIP+4")=$P(TMP(5),"^",6)_"^"_VAPA(6)
+"RTN","PSOPKIV1",192,0)
+ ;sig
+"RTN","PSOPKIV1",193,0)
+ M ASIG=^TMP($J,"ORDEA",ORP,6)
+"RTN","PSOPKIV1",194,0)
+ S I=0 F  S I=$O(^PS(52.41,PNP,1,I)) Q:'I  D
+"RTN","PSOPKIV1",195,0)
+ .S INF0=$G(^PS(52.41,PNP,9,I,0)),INF1=$G(^PS(52.41,PNP,1,I,1))
+"RTN","PSOPKIV1",196,0)
+ .S PSIG(I)=INF0_"|"_$P(INF1,"^")_"|"_$P(INF1,"^",2)_"|"_$P(INF1,"^",6)_"|"_$P(INF1,"^",8)
+"RTN","PSOPKIV1",197,0)
+ S I=0 F  S I=$O(ASIG(I)) Q:'I  I ASIG(I)'=$G(PSIG(I)) S ND="SIG #"_I,ARET=-1 S ARET(ND)=ASIG(I)_"^"_$G(PSIG(I))
+"RTN","PSOPKIV1",198,0)
+ D KVA^VADPT
+"RTN","PSOPKIV1",199,0)
+ K ^TMP($J,"ORDEA")
+"RTN","PSOPKIV1",200,0)
+ Q $S($G(ARET):ARET,1:1)
+"RTN","PSOPKIV1",201,0)
+ ;
+"RTN","PSOPKIV1",202,0)
+ALERT ;
+"RTN","PSOPKIV1",203,0)
+ ; ORN=76 - Notification ID (ifn from OE/RR Notifications file  #100.9) 
+"RTN","PSOPKIV1",204,0)
+ ; ORBDFN=Patient DFN from Patient file #2 
+"RTN","PSOPKIV1",205,0)
+ ; ORNUM=Order ifn from Order file #100
+"RTN","PSOPKIV1",206,0)
+ ; ORBADUZ=Provider DUZ - Array of notification recipients requested by the calling package.  
+"RTN","PSOPKIV1",207,0)
+ ; ORBPMSG=Message text 
+"RTN","PSOPKIV1",208,0)
+ ; ORBPDATA=This is an identifier of the package entry which the notification is based on.  
+"RTN","PSOPKIV1",209,0)
+ ;          For radiology: Rad/Nuc Med exam/case ifn's(format: exam_ifn;case_ifn)
+"RTN","PSOPKIV1",210,0)
+ ;          For consults:  the IEN of the consult in file 123 
+"RTN","PSOPKIV1",211,0)
+ N PSOX S PSOX=1
+"RTN","PSOPKIV1",212,0)
+ S PSOX(+$P(OR0,"^",5))=""
+"RTN","PSOPKIV1",213,0)
+ D EN^ORB3(76,PSODFN,$P(OR0,"^"),.PSOX,"DEA certificate expired. Renew your certificate.","")
+"RTN","PSOPKIV1",214,0)
+ Q
+"RTN","PSOPKIV1",215,0)
+ ; 
+"RTN","PSOPKIV1",216,0)
+00 ;;Order Text is blank;;
+"RTN","PSOPKIV1",217,0)
+01 ;;DEA # missing;;
+"RTN","PSOPKIV1",218,0)
+02 ;;Drug Schedule missing;;
+"RTN","PSOPKIV1",219,0)
+03 ;;DEA # not valid;;
+"RTN","PSOPKIV1",220,0)
+04 ;;Valid Certificate not found;;
+"RTN","PSOPKIV1",221,0)
+05 ;;Couldn't load CSP;;
+"RTN","PSOPKIV1",222,0)
+06 ;;Smart card Reader not found;;
+"RTN","PSOPKIV1",223,0)
+07 ;;Certificate with DEA # not found;;
+"RTN","PSOPKIV1",224,0)
+08 ;;Certificate not valid for schedule;;
+"RTN","PSOPKIV1",225,0)
+10 ;;Crypto Error (contact IRM);;
+"RTN","PSOPKIV1",226,0)
+15 ;;Corrupted (Decode failure);;
+"RTN","PSOPKIV1",227,0)
+16 ;;Corrupted (Hash mismatch);;
+"RTN","PSOPKIV1",228,0)
+17 ;;Certificate revoked;;
+"RTN","PSOPKIV1",229,0)
+18 ;;Verification failure;;
+"RTN","PSOPKIV1",230,0)
+19 ;;Before Cert effective date;;
+"RTN","PSOPKIV1",231,0)
+20 ;;Certificate expired;;
+"RTN","PSOPKIV1",232,0)
+21 ;;No Cert with a valid date found;;
+"RTN","PSOPKIV1",233,0)
+22 ;;Signature Check failed (Invalid Signature);;
+"RTN","PSOPKIV1",234,0)
+23 ;;CERT_IS_NOT_TIME_NESTED;;
+"RTN","PSOPKIV1",235,0)
+24 ;;CERT_IS_NOT_VALID_FOR_USAGE;;
+"RTN","PSOPKIV1",236,0)
+25 ;;CERT_IS_UNTRUSTED_ROOT;;
+"RTN","PSOPKIV1",237,0)
+26 ;;CERT_REVOCATION_STATUS_UNKNOWN;;
+"RTN","PSOPKIV1",238,0)
+27 ;;CERT_IS_CYCLIC;;
+"RTN","PSOPKIV1",239,0)
+28 ;;CERT_IS_PARTIAL_CHAIN;;
+"RTN","PSOPKIV1",240,0)
+29 ;;CERT_CTL_IS_NOT_SIGNATURE_VALID;;
+"RTN","PSOPKIV1",241,0)
+30 ;;CERT_CTL_IS_NOT_VALID_FOR_USAGE;;
+"VER")
+8.0^22.0
+**END**
+**END**

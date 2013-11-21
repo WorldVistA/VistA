@@ -1,0 +1,492 @@
+Released IB*2*490 SEQ #456
+Extracted from mail message
+**KIDS**:IB*2.0*490^
+
+**INSTALL NAME**
+IB*2.0*490
+"BLD",9200,0)
+IB*2.0*490^INTEGRATED BILLING^0^3121206^y
+"BLD",9200,1,0)
+^^2^2^3121206^
+"BLD",9200,1,1,0)
+The purpose of this patch is to update the MCCR Utility file and the
+"BLD",9200,1,2,0)
+Revenue Code file and the Place of Service file for FY2013.
+"BLD",9200,4,0)
+^9.64PA^^
+"BLD",9200,6)
+^436
+"BLD",9200,6.3)
+12
+"BLD",9200,"INIT")
+POST^IB20P490
+"BLD",9200,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9200,"KRN",.4,0)
+.4
+"BLD",9200,"KRN",.401,0)
+.401
+"BLD",9200,"KRN",.402,0)
+.402
+"BLD",9200,"KRN",.403,0)
+.403
+"BLD",9200,"KRN",.5,0)
+.5
+"BLD",9200,"KRN",.84,0)
+.84
+"BLD",9200,"KRN",3.6,0)
+3.6
+"BLD",9200,"KRN",3.8,0)
+3.8
+"BLD",9200,"KRN",9.2,0)
+9.2
+"BLD",9200,"KRN",9.8,0)
+9.8
+"BLD",9200,"KRN",19,0)
+19
+"BLD",9200,"KRN",19.1,0)
+19.1
+"BLD",9200,"KRN",101,0)
+101
+"BLD",9200,"KRN",409.61,0)
+409.61
+"BLD",9200,"KRN",771,0)
+771
+"BLD",9200,"KRN",779.2,0)
+779.2
+"BLD",9200,"KRN",870,0)
+870
+"BLD",9200,"KRN",8989.51,0)
+8989.51
+"BLD",9200,"KRN",8989.52,0)
+8989.52
+"BLD",9200,"KRN",8994,0)
+8994
+"BLD",9200,"KRN","B",.4,.4)
+
+"BLD",9200,"KRN","B",.401,.401)
+
+"BLD",9200,"KRN","B",.402,.402)
+
+"BLD",9200,"KRN","B",.403,.403)
+
+"BLD",9200,"KRN","B",.5,.5)
+
+"BLD",9200,"KRN","B",.84,.84)
+
+"BLD",9200,"KRN","B",3.6,3.6)
+
+"BLD",9200,"KRN","B",3.8,3.8)
+
+"BLD",9200,"KRN","B",9.2,9.2)
+
+"BLD",9200,"KRN","B",9.8,9.8)
+
+"BLD",9200,"KRN","B",19,19)
+
+"BLD",9200,"KRN","B",19.1,19.1)
+
+"BLD",9200,"KRN","B",101,101)
+
+"BLD",9200,"KRN","B",409.61,409.61)
+
+"BLD",9200,"KRN","B",771,771)
+
+"BLD",9200,"KRN","B",779.2,779.2)
+
+"BLD",9200,"KRN","B",870,870)
+
+"BLD",9200,"KRN","B",8989.51,8989.51)
+
+"BLD",9200,"KRN","B",8989.52,8989.52)
+
+"BLD",9200,"KRN","B",8994,8994)
+
+"BLD",9200,"QUES",0)
+^9.62^^
+"BLD",9200,"REQB",0)
+^9.611^^
+"INIT")
+POST^IB20P490
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+490^3121206
+"PKG",200,22,1,"PAH",1,1,0)
+^^2^2^3121206
+"PKG",200,22,1,"PAH",1,1,1,0)
+The purpose of this patch is to update the MCCR Utility file and the
+"PKG",200,22,1,"PAH",1,1,2,0)
+Revenue Code file and the Place of Service file for FY2013.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","IB20P490")
+0^^B30261509^n/a
+"RTN","IB20P490",1,0)
+IB20P490 ;ALB/CXW - UPDATE MCCR UTILITY/REVENUE/POS CODE; 11/05/2012
+"RTN","IB20P490",2,0)
+ ;;2.0;INTEGRATED BILLING;**490**;21-MAR-94;Build 12
+"RTN","IB20P490",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IB20P490",4,0)
+ Q
+"RTN","IB20P490",5,0)
+POST ; 
+"RTN","IB20P490",6,0)
+ ; Update value/occurrence/condition codes in mccr utility file 399.1
+"RTN","IB20P490",7,0)
+ ; Update revenue codes in revenue file 399.2
+"RTN","IB20P490",8,0)
+ ; Update pos in the place of service file 353.1   
+"RTN","IB20P490",9,0)
+ N U S U="^"
+"RTN","IB20P490",10,0)
+ D MES^XPDUTL("Patch Post-Install starts")
+"RTN","IB20P490",11,0)
+ D MCR,RVC,POS
+"RTN","IB20P490",12,0)
+ D MES^XPDUTL("Patch Post-Install is complete.")
+"RTN","IB20P490",13,0)
+ Q
+"RTN","IB20P490",14,0)
+ ;
+"RTN","IB20P490",15,0)
+MCR ; 4 types of codes
+"RTN","IB20P490",16,0)
+ N IBCNT,IBCOD,IBPE,IBFD,IBFD2,IBI,IBX S IBFD2=""
+"RTN","IB20P490",17,0)
+ ; Value code flag in field .18/piece 11
+"RTN","IB20P490",18,0)
+ S IBCNT=0,IBCOD="Value",IBPE=11,IBFD=.18
+"RTN","IB20P490",19,0)
+ F IBI=1:1 S IBX=$P($T(VALU+IBI),";;",2) Q:IBX=""  D MFILE
+"RTN","IB20P490",20,0)
+ ;
+"RTN","IB20P490",21,0)
+ ; Condition code flag in field .22/piece 15
+"RTN","IB20P490",22,0)
+ S IBCOD="Condition",IBPE=15,IBFD=.22
+"RTN","IB20P490",23,0)
+ F IBI=1:1 S IBX=$P($T(CONU+IBI),";;",2) Q:IBX=""  D MFILE
+"RTN","IB20P490",24,0)
+ ;
+"RTN","IB20P490",25,0)
+ ; Occurrence code flag in field .11/piece 4
+"RTN","IB20P490",26,0)
+ S IBCOD="Occurrence",IBPE=4,IBFD=.11
+"RTN","IB20P490",27,0)
+ F IBI=1:1 S IBX=$P($T(OCCU+IBI),";;",2) Q:IBX=""  D MFILE
+"RTN","IB20P490",28,0)
+ ;
+"RTN","IB20P490",29,0)
+ ; Occurrence span code flag in fields .11/piece 4, .17/piece 10
+"RTN","IB20P490",30,0)
+ S IBCOD="Occurrence Span",IBPE=4,IBFD=.17,IBFD2=.11
+"RTN","IB20P490",31,0)
+ F IBI=1:1 S IBX=$P($T(OCCPU+IBI),";;",2) Q:IBX=""  D MFILE
+"RTN","IB20P490",32,0)
+ ; 
+"RTN","IB20P490",33,0)
+ D MES^XPDUTL("Total "_IBCNT_" code"_$S(IBCNT'=1:"s",1:"")_" updated in the MCCR Utility file (#399.1)")
+"RTN","IB20P490",34,0)
+ D MES^XPDUTL("")
+"RTN","IB20P490",35,0)
+ Q
+"RTN","IB20P490",36,0)
+ ;
+"RTN","IB20P490",37,0)
+MFILE ; Mccr file
+"RTN","IB20P490",38,0)
+ N IBFN,IBFLG,IBMS,IBX3,DLAYGO,DIC,DIE,DIK,DA,DD,DO,DR,X,Y
+"RTN","IB20P490",39,0)
+ S IBMS="",IBFN=+$$EXCODE($P(IBX,U),IBPE),IBFLG=$P(IBX,U,3)
+"RTN","IB20P490",40,0)
+ S:'IBFN&($P(IBX,U)="RAO") IBFN=+$$EXCODE("A0",IBPE)
+"RTN","IB20P490",41,0)
+ I 'IBFLG,'IBFN D
+"RTN","IB20P490",42,0)
+ . K DD,DO S DLAYGO=399.1,DIC="^DGCR(399.1,",DIC(0)="L",X=$P(IBX,U,2) D FILE^DICN I Y<1 K X,Y Q
+"RTN","IB20P490",43,0)
+ . S IBMS="added",DA=+Y,DIE=DIC,DR=".02///"_$P(IBX,U,1)_";"_IBFD_"///"_1 D ^DIE K DLAYGO,DIC,DIE,DA,DR,X,Y
+"RTN","IB20P490",44,0)
+ I 'IBFLG,IBFN S IBX3=$G(^DGCR(399.1,IBFN,0)) D
+"RTN","IB20P490",45,0)
+ . I $P(IBX3,U,1)=$P(IBX,U,2),$P(IBX3,U,2)=$P(IBX,U,1) Q
+"RTN","IB20P490",46,0)
+ . S IBMS="updated",DIE="^DGCR(399.1,",DA=IBFN,DR=".01///"_$P(IBX,U,2) S:$P(IBX,U,1)="RAO" DR=DR_";.02///"_"RAO" D ^DIE K DIE,DA,DR,X,Y
+"RTN","IB20P490",47,0)
+ I IBFLG,IBFN D
+"RTN","IB20P490",48,0)
+ . S IBMS="removed",DIK="^DGCR(399.1,",DA=IBFN D ^DIK
+"RTN","IB20P490",49,0)
+ I IBMS'="" S IBCNT=IBCNT+1 D MES^XPDUTL(" "_IBCOD_" Code "_$P(IBX,U)_" "_$P(IBX,U,2)_" "_IBMS)
+"RTN","IB20P490",50,0)
+ Q
+"RTN","IB20P490",51,0)
+ ;
+"RTN","IB20P490",52,0)
+EXCODE(X,P) ; Returns IEN if code found in the P piece
+"RTN","IB20P490",53,0)
+ N IBX,IBY S IBY=""
+"RTN","IB20P490",54,0)
+ I $G(X)'="" S IBX=0 F  S IBX=$O(^DGCR(399.1,"C",X,IBX)) Q:'IBX  I $P($G(^DGCR(399.1,IBX,0)),U,+$G(P)) S IBY=IBX
+"RTN","IB20P490",55,0)
+ Q IBY
+"RTN","IB20P490",56,0)
+ ;
+"RTN","IB20P490",57,0)
+RVC ; Revenue code in fields 1/piece 2, 3/piece 4
+"RTN","IB20P490",58,0)
+ N IBCNT,IBCOD,IBFLG,IBRES,IBI,IBJ,IBX,IBY,IBZ,IBX3
+"RTN","IB20P490",59,0)
+ S IBCNT=0,(IBX3,IBFLG)="",IBCOD="Revenue",IBRES="*RESERVED"
+"RTN","IB20P490",60,0)
+ F IBI=1:1 S IBX=$P($T(RVCU+IBI),";;",2) Q:IBX=""  D
+"RTN","IB20P490",61,0)
+ . S IBY=$P(IBX,U),IBFLG=$P(IBX,U,4)
+"RTN","IB20P490",62,0)
+ . S IBZ=$O(^DGCR(399.2,"B",IBY,0)) Q:'IBZ
+"RTN","IB20P490",63,0)
+ . S IBX3=$G(^DGCR(399.2,+IBZ,0))
+"RTN","IB20P490",64,0)
+ . ; quit if updated
+"RTN","IB20P490",65,0)
+ . I $P(IBX3,U,2)=$P(IBX,U,2),$P(IBX3,U,4)=$P(IBX,U,3) Q
+"RTN","IB20P490",66,0)
+ . D RFILE
+"RTN","IB20P490",67,0)
+ ;
+"RTN","IB20P490",68,0)
+ S IBFLG=2 F IBI=1:1 S IBX=$P($T(RVCA+IBI),";;",2) Q:IBX=""  D
+"RTN","IB20P490",69,0)
+ . F IBJ=1:1 S IBY=$P(IBX,";",IBJ) Q:IBY=""  D
+"RTN","IB20P490",70,0)
+ .. S IBZ=$O(^DGCR(399.2,"B",IBY,0)) Q:'IBZ
+"RTN","IB20P490",71,0)
+ .. S IBX3=$G(^DGCR(399.2,+IBZ,0))
+"RTN","IB20P490",72,0)
+ .. ; quit if reserved or active
+"RTN","IB20P490",73,0)
+ .. Q:$P(IBX3,U,2)=IBRES
+"RTN","IB20P490",74,0)
+ .. Q:+$P(IBX3,U,3)
+"RTN","IB20P490",75,0)
+ .. S IBX3=$P(IBX3,U,4)
+"RTN","IB20P490",76,0)
+ .. D RFILE
+"RTN","IB20P490",77,0)
+ ;
+"RTN","IB20P490",78,0)
+ D MES^XPDUTL("Total "_IBCNT_" code"_$S(IBCNT'=1:"s",1:"")_" updated in the "_IBCOD_" file (#399.2)")
+"RTN","IB20P490",79,0)
+ D MES^XPDUTL("")
+"RTN","IB20P490",80,0)
+ Q
+"RTN","IB20P490",81,0)
+ ;
+"RTN","IB20P490",82,0)
+RFILE ; Revenue file
+"RTN","IB20P490",83,0)
+ N IBMS,DIE,DA,DD,DO,DR,X,Y S IBMS=""
+"RTN","IB20P490",84,0)
+ I 'IBFLG S IBMS="updated",DR="1///"_$P(IBX,U,2)_";3///"_$P(IBX,U,3)_";2///1"
+"RTN","IB20P490",85,0)
+ ; bypass the input transform for reserved in a '*' char format
+"RTN","IB20P490",86,0)
+ I IBFLG=1 S IBMS="reserved",DR="1////"_IBRES_";2///0"_";3////"_IBRES
+"RTN","IB20P490",87,0)
+ I IBFLG=2 S IBMS="activated",DR="2///1"
+"RTN","IB20P490",88,0)
+ S DIE="^DGCR(399.2,",DA=+IBZ D ^DIE K DIE,DA,DR,X,Y
+"RTN","IB20P490",89,0)
+ I IBMS'="" S IBCNT=IBCNT+1 D MES^XPDUTL("  "_IBCOD_" Code "_IBZ_" "_$S(IBFLG=1:IBRES,IBFLG=2:IBX3,1:$P(IBX,U,3))_" "_IBMS)
+"RTN","IB20P490",90,0)
+ Q
+"RTN","IB20P490",91,0)
+ ;
+"RTN","IB20P490",92,0)
+POS ; Place Of Service in fields .01/piece 1, .02/piece 2, .03/piece 3
+"RTN","IB20P490",93,0)
+ N IBCOD,IBI,IBX,IBY,DLAYGO,DIE,DA,DIC,DD,DO,DR,X,Y
+"RTN","IB20P490",94,0)
+ S IBCNT=0,IBCOD="Place of Service"
+"RTN","IB20P490",95,0)
+ F IBI=1:1 S IBX=$P($T(POSU+IBI),";;",2) Q:IBX=""  D
+"RTN","IB20P490",96,0)
+ . S IBY=$P(IBX,U,1)
+"RTN","IB20P490",97,0)
+ . S IBY=$O(^IBE(353.1,"B",$P(IBX,U,1),0)) Q:IBY
+"RTN","IB20P490",98,0)
+ . K DD,DO S DLAYGO=353.1,DIC="^IBE(353.1,",DIC(0)="L",X=$P(IBX,U,1) D FILE^DICN I Y<1 K X,Y Q
+"RTN","IB20P490",99,0)
+ . S DA=+Y,DIE=DIC,DR=".02///"_$P(IBX,U,2)_";.03///"_$P(IBX,U,3) D ^DIE K DA,DLAYGO,DIC,DIE,DR,X,Y
+"RTN","IB20P490",100,0)
+ . S IBCNT=IBCNT+1 D MES^XPDUTL(" "_IBCOD_" Code "_$P(IBX,U,1)_" "_$P(IBX,U,2)_" added")
+"RTN","IB20P490",101,0)
+ D MES^XPDUTL("Total "_IBCNT_" code"_$S(IBCNT'=1:"s",1:"")_" updated in the "_IBCOD_" file (#353.1)")
+"RTN","IB20P490",102,0)
+ Q
+"RTN","IB20P490",103,0)
+ ;
+"RTN","IB20P490",104,0)
+RVCU ; Revenue code^abbreviation^name^1 - reserve
+"RTN","IB20P490",105,0)
+ ;;139^OTHER/SEMI-PRIVATE^OTHER/SEMI-PRIVATE
+"RTN","IB20P490",106,0)
+ ;;986^PRO FEE/EEMG^PRO FEE/EEMG
+"RTN","IB20P490",107,0)
+ ;;909^*RESERVED^*RESERVED^1
+"RTN","IB20P490",108,0)
+ ;
+"RTN","IB20P490",109,0)
+RVCA ; Revenue code delimited by semi-colon for activation (134) 
+"RTN","IB20P490",110,0)
+ ;;164;167;169;170;171;172;179;182;203;204;206;207;208;209;210;211;212
+"RTN","IB20P490",111,0)
+ ;;213;214;219;220;221;222;223;224;229;230;231;232;233;234;235;239;303
+"RTN","IB20P490",112,0)
+ ;;304;332;367;371;372;385;386;387;399;412;442;443;459;509;511;514;515
+"RTN","IB20P490",113,0)
+ ;;517;520;523;529;539;543;546;562;569;572;579;582;590;622;631;632;633
+"RTN","IB20P490",114,0)
+ ;;635;637;641;642;643;644;645;646;647;648;650;652;655;656;657;659;662
+"RTN","IB20P490",115,0)
+ ;;720;721;722;723;724;729;800;801;802;803;804;809;810;811;812;813;814
+"RTN","IB20P490",116,0)
+ ;;819;824;834;844;845;851;854;855;889;902;913;917;932;946;962;964;977
+"RTN","IB20P490",117,0)
+ ;;981;982;984;985;989;990;991;992;993;994;995;996;997;998;999
+"RTN","IB20P490",118,0)
+ ;
+"RTN","IB20P490",119,0)
+VALU ; Value code^name
+"RTN","IB20P490",120,0)
+ ;;84^LIFE TIME RESERVE AMOUNT IN THE THIRD GREATER CALENDAR YEAR
+"RTN","IB20P490",121,0)
+ ;;85^COINSURANCE AMOUNT IN THE THIRD OR GREATER CALENDAR YEAR
+"RTN","IB20P490",122,0)
+ ;
+"RTN","IB20P490",123,0)
+OCCU ; Occurrence code^name
+"RTN","IB20P490",124,0)
+ ;;55^DATE OF DEATH
+"RTN","IB20P490",125,0)
+ ;
+"RTN","IB20P490",126,0)
+OCCPU ; Occurrence span code^name
+"RTN","IB20P490",127,0)
+ ;;81^ANTEPARTUM DAYS AT REDUCED LEVEL OF CARE
+"RTN","IB20P490",128,0)
+ ;;M3^ICF LEVEL OF CARE
+"RTN","IB20P490",129,0)
+ ;;M4^RESIDENTIAL LEVEL OF CARE
+"RTN","IB20P490",130,0)
+ ;
+"RTN","IB20P490",131,0)
+CONU ; Condition code^name^1 - remove
+"RTN","IB20P490",132,0)
+ ;;52^OUT OF HOSPICE SERVICE AREA
+"RTN","IB20P490",133,0)
+ ;;EO^CHANGE IN PATIENT STATUS^1
+"RTN","IB20P490",134,0)
+ ;;RAO^TRICARE EXTERNAL PARTNERSHIP PROGRAM
+"RTN","IB20P490",135,0)
+ ;
+"RTN","IB20P490",136,0)
+POSU ; Place of Service code^name^abbreviation
+"RTN","IB20P490",137,0)
+ ;;18^PLACE OF EMPLOYMENT/WORKSITE^PLACE OF EMPLOYMENT
+"RTN","IB20P490",138,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9200,6)
+^456
+**END**
+**END**

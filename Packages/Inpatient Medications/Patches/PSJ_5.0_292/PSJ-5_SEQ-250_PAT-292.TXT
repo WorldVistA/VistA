@@ -1,0 +1,263 @@
+Original message: "PSJ*5*292 TEST v1" [#61932936]
+=============================================================================
+Run Date: AUG 26, 2013                     Designation: PSJ*5*292
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #250                      Status: Released
+                  Compliance Date: SEP 15, 2013
+=============================================================================
+
+Associated patches: (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*292'
+
+Subject: IMR 5 PSJ*5*275 FOLLOWUP- OLD ORDERS ON PROFILE
+
+Category: 
+  - Routine
+  - PATCH FOR A PATCH
+
+Description:
+============
+
+ Patch PSJ*5*275 introduced an issue with the Inpatient Profile that 
+ caused very old, corrupted Unit Dose orders display on the Inpatient
+ Profile. This patch corrects the problem.
+  
+ Prior to PSJ*5*275, the Inpatient Profile attempted to display only Unit 
+ Dose orders with a stop date later than the patient's last admission 
+ date. Orders within this same period were checked for auto-expiration; if 
+ the order's stop date was later then the last admission date, but 
+ before 'now', the status was changed to expired.
+  
+ Orders with stop dates earlier than the last admission date were ignored 
+ by the profile; their statuses were not updated, and they were not 
+ displayed.
+  
+ Patch PSJ*5*275 attempted to make the inpatient profile consistent by
+ honoring the HOURS OF RECENTLY DC/EXPIRED (#7) field in the INPATIENT
+ WARD PARAMETERS (#59.6) file so that no order would display if its stop
+ date was older than the value defined by this parameter. However, the 
+ patch incorrectly retrieved the parameter's nominal 'hours' value 
+ instead of its calculated 'date' value (derived by subtracting the hours 
+ from the current date/time), so that regardless of the value of the
+ parameter, virtually no orders were ignored when displaying the profile.
+  
+ Finally, while patch PSJ*5*275 changed how far into the past the profile 
+ began searching for orders' stop date, the process that auto-expired 
+ orders from the inpatient profile did not change, allowing corrupted 
+ orders with stop dates in the past, and statuses of active or renewed, 
+ to display in the patient's Inpatient medication profile without 
+ performing a corresponding auto-expire on these orders.
+  
+ This patch corrects the issue by changing how the inpatient profile 
+ begins to look for orders with stop dates in the past to the calculated 
+ value of the HOURS OF RECENTLY DC/EXPIRED (#7) field in the INPATIENT 
+ WARD PARAMETERS (#59.6) file subtracted from the current date/time.
+  
+ For Example, given two active orders with stop dates in the past, and an
+              admission date, and a HOURS RECENTLY DC/EXPIRED value, the 
+              following functionality would be observed prior to PSJ*5*275,
+              with PSJ*5*275, and after PSJ*5*275:
+  
+            Current Date/Time : 06/06/2013@1300 
+          Last Admission Date : 06/04/2013@1300
+ HOURS OF RECENTLY DC/EXPIRED : 120
+                      Order 1 : Stop Date 01/01/2001@2400, Status=ACTIVE
+                      Order 2 : Stop Date 06/03/2013@2400, Status=EXPIRED
+                      Order 3 : Stop Date 06/05/2013@1200, Status=ACTIVE
+            
+                      
+ Prior to PSJ*5*275 :  (Order 1 is ignored and remains active)
+                       (Order 2 is ignored and remains expired)
+                       (Order 3 is auto-expired and displays)
+ --------------------------------------------------------------------------
+ Inpatient Order Entry    Jun 06, 2013@13:00:00     Page:  1 of  1
+ - - - - - - - RECENTLY DISCONTINUED/EXPIRED (LAST 120 HOURS) - - - - - -
+    1    Order 3                        C  06/04  06/05 E
+           Give:  PO Q4H       
+  
+  
+ With PSJ*5*275  (Orders 1 and 2 are displayed and remain active)
+                 (Order 3 is auto-expired and displays)
+ --------------------------------------------------------------------------
+ Inpatient Order Entry    Jun 06, 2013@13:00:00     Page:  1 of  1
+ - - - - - - - - - - - - - - - A C T I V E - - - - - - - - - - - - - - - 
+    1    Order 1                        C  12/30  01/01 A
+           Give: 10MG PO TID   
+    2    Order 2                        C  06/02  06/03 A
+           Give: 10MG PO TID 
+ - - - - - - - - RECENTLY DISCONTINUED/EXPIRED (LAST 24 HOURS) - - - - - -
+    3    Order 3                        C  06/04  06/05 E
+           Give:  PO Q4H      
+  
+  
+                 
+ With PSJ*5*292  (Order 1 is ignored and remains active)
+                 (Order 2 is displayed and remains expired)
+                 (Order 3 is auto-expired and displays)
+ ---------------------------------------------------------------------
+ Inpatient Order Entry    Jun 06, 2013@13:00:00     Page:  1 of  1
+ - - - - - - RECENTLY DISCONTINUED/EXPIRED (LAST 24 HOURS) - - - - - - -
+    1    Order 2                        C  06/02  06/03 E
+           Give: 10MG PO TID 
+    2    Order 3                        C  06/04  06/05 E
+           Give:  PO Q4H      
+  
+  
+  
+  
+ Code Comparison
+ **************************************************************************
+ PSJO1.INT.1
+  +2         ;;5.0;INPATIENT 
+ MEDICATIONS;**3,47,56,58,109,110,127,162,181,275,292**;16 DEC 97
+ ...................
+ |"GLD"|PSJO1.INT.1
+  +2         ;;5.0;INPATIENT 
+ MEDICATIONS;**3,47,56,58,109,110,127,162,181,275**; 16 DEC 97
+ ---------------------------------------
+ PSJO1.INT.1
+  +79        
+ I PSJPTYP'=2 F ST="C","O","OC","P","R" F SD=+$P(PSJDCEXP,"^",2):0 S
+  SD=$O(^PS(55,PSGP,5,"AU",ST,SD)) Q:'SD  F O=0:0 S O=$O(^PS(55,PSGP,5,"AU
+ ",ST,SD,O)) Q:'O  D ECHK
+ ...................
+ |"GLD"|PSJO1.INT.1
+  +79        
+ I PSJPTYP'=2 F ST="C","O","OC","P","R" F SD=+PSJDCEXP:0 S SD=$O(^PS
+ (55,PSGP,5,"AU",ST,SD)) Q:'SD  F O=0:0 S O=$O(^PS(55,PSGP,5,"AU",ST,SD,O)
+ ) Q:'O  D ECHK
+ **************************************************************************
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ None.
+  
+ Forms Associated:
+ None. 
+  
+ Mail Groups Associated:
+ None. 
+  
+ Options Associated:
+ -------------------
+ None.
+  
+ Protocols Associated:
+ ---------------------
+ None.
+  
+ Security Keys Associated:
+ None. 
+  
+ Templates Associated:
+ None.
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ---------------------------- 
+ N/A 
+  
+ Remedy Tickets
+ ---------------
+ INC000000864277
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 2437
+  
+ Test Sites:
+ ----------
+ Central Texas
+ Loma Linda
+ Pittsburgh
+ St. Cloud
+ Albany,NY (VISN 2)
+ Bath, NY (VISN 2)
+ Canandaigua, NY (VISN 2)
+ Syracuse, NY (VISN 2)
+ VA Western New York Healthcare System at Batavia (VISN 2)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ N/A.
+  
+ Installation Instructions
+ -------------------------
+ REMINDER: Do NOT queue this patch to install at a later time.
+  
+ Verify users are logged out of the Inpatient Medications V. 5.0
+ application. This patch should take less than 5 minutes to install.
+  
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter PSJ*5.0*292.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', accept the default, 'NO'.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', enter 'NO'.
+  
+ 7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ None.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJO1
+    Before: B46168222   After: B46297158  **3,47,56,58,109,110,127,162,
+                                           181,275,292**
+
+=============================================================================
+User Information:
+Entered By  : HARRIS,JAMES C                Date Entered  : FEB 04, 2013
+Completed By: PAYNE,RONALD                  Date Completed: AUG 26, 2013
+Released By : TEAGUE,LYN                    Date Released : AUG 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

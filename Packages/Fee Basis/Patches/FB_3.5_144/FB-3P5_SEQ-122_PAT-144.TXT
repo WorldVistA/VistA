@@ -1,0 +1,211 @@
+$TXT Created by POTTER,DAVID at MNTVUU.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 02/14/13 at 11:24
+=============================================================================
+Run Date: SEP 03, 2013                     Designation: FB*3.5*144
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #122                    Status: Released
+                  Compliance Date: OCT 03, 2013
+=============================================================================
+
+Associated patches: (v)FB*3.5*81   <<= must be installed BEFORE `FB*3.5*144'
+                    (v)FB*3.5*135  <<= must be installed BEFORE `FB*3.5*144'
+
+Subject: FIXING VETERAN PAYMENT REPORT, TRAVEL PAYMENTS, AND MENU OPTIONS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following:
+  
+ 1. Resolves an undefined error in routine FBPHON from variable DFN that 
+    is killed in END^FBCHVH.
+ 2. Modifies the logic when determining the symbols used for payments in 
+    the Payment History Display [FBAA PAYMENT HISTORY DISPLAY] option.
+ 3. Resolves an undefined error within the Travel Payment Only option 
+    [FBAA TRAVEL ENTRY] due to batch files missing a status.
+  
+  
+ Associate Remedy Tickets:
+ =========================
+ 1. INC0000000393967 - Error <UNDEFINED> HDR^FBPHON *DFN
+ 2. INC0000000484604 - Payment History Display Issue
+ 3. INC0000000720756 - Undefined error within Travel Payment Only option
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ St Cloud VA Medical Center
+ VA Western NY HCS
+ Dayton VA Medical Center
+  
+  
+ Remedy Overview:
+ ================
+ 1. INC0000000393967 - Error <UNDEFINED> HDR^FBPHON *DFN
+  
+ Problem:
+ --------
+ When a user is in the Telephone Inquiry Menu [FB PHONE MENU] and they go
+ to the Payment Listing for Vendor/Veteran option [FB VENDOR/VETERAN 
+ PAYMENTS] then select a vendor & veteran, view the "ID", and then 
+ change the vendor, they will encounter an undefined error.
+  
+ Resolution:
+ -----------
+ By removing the kill of variable DFN from END^FBCHVH, allows the user to 
+ change vendors without causing the undefined error.
+  
+ 2. INC0000000484604 - Payment History Display issue
+  
+ Problem:
+ --------
+ When a payment that qualifies under "Mill-Bill" classification also 
+ qualifies under RBRVS, then it displays an "R" for RBRVS when it should 
+ display an "M" for "Mill-Bill".
+  
+ Resolution:
+ -----------
+ Modifying the logic in routine FBAAUTL4 for selecting the value of 
+ variable FBRET, allows us to prevent the situation where multiple types 
+ of payment can be true at once.     
+  
+ 3. INC0000000720756 - Undefined error within Travel Payment Only option
+  
+ Problem:
+ --------
+ Users in the Fee Basis package will encounter an undefined error if they
+ enter a "?" at the TRAVEL BATCH NUMBER prompt in the Travel Payment Only
+ option [FBAA TRAVEL ENTRY].  This happens when there is an entry in the
+ FEE BASIS BATCH file (#161.7) that does not have a value in the STATUS
+ field (#11).
+  
+ Resolution:
+ -----------
+ Modifying the input transform of TRAVEL BATCH NUMBER sub-field (#1) within the
+ TRAVEL PAYMENT DATE multiple (#7) in the FEE BASIS PAYMENT file (#162) to
+ check for the existence of the "ST" node in the FEE BASIS BATCH file
+ (#161.7) before trying to list travel batches resolves the error.
+  
+ Data Dictionary Changes:
+ ========================
+ BEFORE:
+ -------
+ 162.04,1      TRAVEL BATCH NUMBER    0;2 POINTER TO FEE BASIS BATCH FILE (#161.
+                                 7) (Required)
+  
+               INPUT TRANSFORM:  S DIC("S")="I $P(^(0),U,3)=""B2""&($P(^(0),U,5)
+                                 =DUZ)&(^(""ST"")=""O"")" D ^DIC K DIC S DIC=DIE
+                                 ,X=+Y K:Y<0 X
+               LAST EDITED:      DEC 16, 1986 
+               DESCRIPTION:      The batch number that this travel payment will
+                                 be associated with.  
+  
+               SCREEN:           S DIC("S")="I $P(^(0),U,3)=""B2""&($P(^(0),U,5)
+                                 =DUZ)&(^(""ST"")=""O"")"
+               EXPLANATION:      Allows selection of travel batches in open stat
+                                 us, which were opened by this specific user.
+               CROSS-REFERENCE:  162^AD 
+                                 1)= S ^FBAAC("AD",$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^FBAAC("AD",$E(X,1,30),DA(1),DA)
+  
+ AFTER:
+ ------
+ 162.04,1      TRAVEL BATCH NUMBER    0;2 POINTER TO FEE BASIS BATCH FILE (#161.
+                                 7) (Required)
+  
+               INPUT TRANSFORM:  S DIC("S")="I $P(^(0),U,3)=""B2""&($P(^(0),U,5)
+                                 =DUZ)&($P($G(^(""ST"")),U)=""O"")" D ^DIC K DIC
+                                  S DIC=DIE,X=+Y K:Y<0 X
+               LAST EDITED:      DEC 04, 2012 
+               HELP-PROMPT:      Select the batch number associated with this 
+                                 travel payment. 
+               DESCRIPTION:      The batch number that this travel payment will
+                                 be associated with.  
+  
+               SCREEN:           S DIC("S")="I $P(^(0),U,3)=""B2""&($P(^(0),U,5)
+                                 =DUZ)&($P($G(^(""ST"")),U)=""O"")"
+               EXPLANATION:      Allows selection of travel batches in open stat
+                                 us, which were opened by this specific user.
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  162^AD 
+                                 1)= S ^FBAAC("AD",$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^FBAAC("AD",$E(X,1,30),DA(1),DA)
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+     
+   This patch may be installed during normal working hours with all users 
+   on the system. However, as it is necessary to disable some menu options
+   when installing this patch it is recommended that the install be done
+   during non-peak hours.
+     
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter FB*3.5*144)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package FB*3.5*144
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond YES.
+  
+    7. When prompted 'Enter options you wish to mark as 'Out Of Order':'
+      
+        Payment History Display            [FBAA PAYMENT HISTORY DISPLAY]
+        Payment Listing for Vendor/Veteran [FB VENDOR/VETERAN PAYMENTS]
+        Travel Payment Only                [FBAA TRAVEL ENTRY]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAAUTL4
+    Before: B19952985   After: B20242957  **4,32,77,81,144**
+Routine Name: FBCHVH
+    Before: B37280892   After: B37233286  **4,61,122,133,108,135,144**
+ 
+Routine list of preceding patches: 81, 135
+
+=============================================================================
+User Information:
+Entered By  : POTTER,DAVID                  Date Entered  : MAY 24, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 29, 2013
+Released By : CARP,CHERYL                   Date Released : SEP 03, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

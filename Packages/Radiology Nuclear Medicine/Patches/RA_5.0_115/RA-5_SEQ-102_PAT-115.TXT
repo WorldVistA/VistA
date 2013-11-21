@@ -1,0 +1,113 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.DOMAIN.EXT  (KIDS) on Tuesday, 04/16/13 at 09:34
+=============================================================================
+Run Date: JUL 01, 2013                     Designation: RA*5*115
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #102                      Status: Released
+                  Compliance Date: AUG 01, 2013
+=============================================================================
+
+
+Subject: 2013 UPDATES TO THE RADIOLOGY CPT BY PROCEDURE TYPE FILE (#73.2)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+   This patch will correct the following issue:
+       
+   The Radiology Program Office sends out an updated listing of the
+   File Radiology CPT by Procedure Type (73.2) on a yearly basis. This
+   update needs to be distributed to the sites.
+                
+   Associated Remedy Tickets:
+   ==========================
+   HD0000000822535 - 2013 file update of 73.2 CPT BY PROCEDURE TYPE
+      
+   Associated NSR(s):
+   ==================
+   N/A
+       
+   Participating Test Sites:
+   =========================
+   Detroit, MI.
+   Upstate New York HCA
+   South Texas HCS
+      
+   Remedy Overview:
+   ================     
+   HD0000000822535 - 2013 file update of 73.2 CPT BY PROCEDURE TYPE
+       
+   Problem:
+   --------
+   RADIOLOGY CPT BY PROCEDURE TYPE (73.2) file needs to be updated with the
+   yearly updates provided by the Radiology Program Office.
+        
+   Resolution:
+   -----------     
+   This patch will update the RADIOLOGY CPT BY PROCEDURE TYPE (73.2) file
+   for distribution to the sites.
+     
+   ==================== Installation Instructions ===================
+      
+   If installed during the normal workday, it is recommended that the
+   Radiology users be off the system.  Other VISTA users will not be
+   affected.
+  
+   Install Time - less than 2 minutes (unless otherwise indicated) PRE
+   Install Routine, RA115PRE, can be deleted after the installation.
+      
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+   2. From the Kernel Installation & Distribution System menu, select the
+      Installation menu.
+    
+   3. From this menu, you may select to use the following options (when
+      prompted for INSTALL NAME, enter RA*5.0*115)
+     
+       a.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+  
+       b.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this patch
+           is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+  
+       c.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+      
+    4. Use the Install Package(s) option and select the package RA*5.0*115
+  
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" answer NO 
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+VERSION ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA115PRE
+    Before:       n/a   After:  B1288275  **115**
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : MAR 05, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: JUL 01, 2013
+Released By : BECKLEY,ROBERT J              Date Released : JUL 01, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

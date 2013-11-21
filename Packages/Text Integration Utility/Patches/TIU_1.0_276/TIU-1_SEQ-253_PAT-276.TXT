@@ -1,0 +1,151 @@
+$TXT Created by ENELOW,JASON at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 02/05/13 at 08:42
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: TIU*1*276
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #253                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*201   <<= must be installed BEFORE `TIU*1*276'
+                    (v)TIU*1*207   <<= must be installed BEFORE `TIU*1*276'
+
+Subject: FIX SEARCH FOR EXPECTED COSIGNER AND LINKED TEMPLATE TEXT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration
+ Utilities package:
+  
+ 1. Inability to search for Expected Cosigner
+ 2. Error loading boilerplate text with attached template
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000070219 - PAL-0803-60554  Expected cosigner
+    Duplicates
+    INC000000211550 - Can't use terminated EXP COSIGNER in TIU 
+                      search option (TIU reports)
+    INC000000221376 - Unable to pull up Expected Cosigner with 
+                      Expired Attending User Class
+    INC000000342822 - Unable to run Expected Cosigner reports for 
+                      terminated users
+  
+ 2. INC000000070634 - HIN-0304-42622  DOCUMENT LINKED TO REMINDER DIALOG & 
+                      TIU BOILERPLATE
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+   
+  
+ TEST SITES:
+ ==========
+ NEW JERSEY HCS (East Orange) 
+ ORLANDO VAMC   
+ PITTSBURGH HCS 
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. INC000000070219 - PAL-0803-60554  Expected cosigner
+  
+   Problem:
+   -------
+   When running a search using the Show Progress Notes Across Patients 
+   option [TIU REVIEW PN CLINICIAN], if searching by Expected Cosigner,
+   only users who are currently authorized to cosign documents can be
+   searched for.  This makes it impossible to search for documents whose
+   Expected Cosigner is no longer an active provider.
+  
+   Resolution:
+   ----------
+   Changed the search so it is possible to search by Expected Cosigner 
+   even if the user is not a current provider.
+  
+  
+ 2. INC000000070634 - HIN-0304-42622  DOCUMENT LINKED TO REMINDER DIALOG & 
+                      TIU BOILERPLATE
+  
+   Problem:
+   -------
+   If a TIU document with boilerplate text is linked to a template in 
+   CPRS, then when a new note is created, the boilerplate text is loaded
+   directly into the text of the note rather than appearing in an order
+   dialog. This can result in field links or display-only text being added.
+  
+   Resolution:
+   ----------
+   At the request of the CPRS Workgroup, TIU documents with linked 
+   templates will no longer load any boilerplate text associated with the
+   document itself in the CPRS GUI.
+  
+  
+ Installation Instructions:
+ ==========================
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*276)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*276.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULA1
+    Before: B26285953   After: B27166128  **75,113,207,276**
+Routine Name: TIUSRVD
+    Before: B45998004   After: B47698313  **1,7,22,47,103,100,115,164,
+                                           112,186,201,276**
+ 
+Routine list of preceding patches: 201, 207
+
+=============================================================================
+User Information:
+Entered By  : ENELOW,JASON                  Date Entered  : JAN 09, 2013
+Completed By: SHERMAN,BILL                  Date Completed: AUG 22, 2013
+Released By : DILTZ-ANDARY,TAMARA           Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

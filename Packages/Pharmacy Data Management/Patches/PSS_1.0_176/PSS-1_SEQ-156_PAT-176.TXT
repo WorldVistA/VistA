@@ -1,0 +1,383 @@
+$TXT Created by SMITH,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 04/08/13 at 13:16
+=============================================================================
+Run Date: SEP 10, 2013                     Designation: PSS*1*176
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #156                      Status: Released
+                  Compliance Date: OCT 11, 2013
+=============================================================================
+
+Associated patches: (v)PSO*7*364   <<= must be installed BEFORE `PSS*1*176'
+
+Subject: OUTPATIENT PHARMACY RX NDC CLEAN UP AND DRUG TRIGGERS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1) Incorrect Drug Cost in Outpt Rx Clean up needed
+  
+ 2) Audit File/Drug File Issue
+  
+  
+ Associated Remedy Ticket(s)
+ ===========================
+ 1) INC000000607659 - Incorrect Drug Cost in Outpt Rx Clean up needed
+  
+ 2) INC000000720652 - Audit File/Drug File Issue
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites
+ ==========
+ Oklahoma City VA Medical Center 
+ Dayton VA Medical Center
+ John D. Dingell VA Medical Center - Allen Park/Detroit 
+  
+ Remedy Overview:
+ ================
+ 1) INC000000607659 - Incorrect Drug Cost in Outpt Rx Clean up needed
+  
+ Problem:
+ --------
+ Incorrect drug costs in Outpatient Pharmacy associated with the National
+ Drug Class (NDC)
+  
+ When a prescription is released, the multiple, NDC BY OUTPATIENT SITE 
+ (#50.032) in the DRUG file (#50) is getting stored.  Only drugs that
+ are E-PAYABLE should have this multiple stored in the DRUG file. 
+  
+  
+ Resolution:
+ -----------
+ Pre-install routine PSSP176 will examine every drug in the DRUG file (#50)
+ and remove the NDC BY OUTPATIENT SITE field data if populated and;
+  
+ 1) The DEA, SPECIAL HDLG field (#3) contains an "I" (Investigational), "S"
+ (Supply) or "9" (OTC) and DOES NOT contains "E" (electronically billable).
+  
+    Or
+  
+ 2) The DEA, SPECIAL HDLG field (#3) contains an "M" or "0" (both 
+ designating a Compound Drug).
+  
+ The multiple NDC BY OUTPATIENT SITE field (#50.032) data will also be
+ stored in a temporary file for 180 days from the install date of
+ PSS*1.0*176.  This data will be used if the data needs to be recovered.
+  
+ A report will also be generated identifying what data was removed from the
+ multiple NDC BY OUTPATIENT SITE field (#50.032).  This report will be sent
+ via MailMan to all users that hold the PSNMGR key and the installer of 
+ the patch.
+  
+ The pre-install routine PSSP176 is not automatically deleted by the KIDS, 
+ but sites' may delete the pre-install routine PSSP176 if the
+ installation was successful.
+  
+  
+ Example of MailMan report:
+  
+ Subj: WRONG NDC BY OUTPATIENT SITE  [#2699342] 03/11/13@11:07  28 lines
+ From: PSS*1*176 INCORRECT DRUG COST IN OUTPATIENT RX  In 'IN' basket. Page 1
+ *New*
+ ----------------------------------------------------------------------------
+ The following is a list of drugs where the NDC by OUTPATIENT
+              SITE multiple has been removed.
+  
+ No action is needed to be taken on these entries, unless the assigned
+    DEA Special Handling designation appears incorrect.
+  
+ Total number of drug files modified = 5
+  
+ DRUG IEN                                                         DEA
+  GENERIC NAME                                     NDC         SPECIAL HDLG
+ ----------------------------------------------------------------------------
+ 1193
+  DOMEBORO OTIC SOLUTION                        68457-3333-22     9P
+ 2901
+  THEOBROMA OIL                                 68574-7629-01     NO DEA 
+  
+ Subj: WRONG NDC BY OUTPATIENT SITE  [#2699342]   Page 2
+ ----------------------------------------------------------------------------
+ 2924
+  TOTAL ECLIPSE LOTION 4 OZ                     NO NDC            9
+ 3878
+  CALCIUM CARBONATE 500MG TAB                   45678-3857-01     9P
+ 5087
+  SIGMA CAPSULES VA COOP 118                    67894-3759-03     I
+  
+    *** End of Report ***
+  
+ 2) INC000000720652 - Audit File/Drug File Issue
+  
+ Problem:
+ --------
+ The DRUG file (#50) uses a cross-reference trigger to update the PRICE PER
+ DISPENSE UNIT field (#16) whenever the PRICE PER ORDER UNIT field (#13)
+ and/or the DISPENSE UNITS PER ORDER UNIT field (#15) are changed.  These
+ cross-reference triggers are currently configured incorrectly and when sites
+ turn auditing on for these fields no data is collected.
+  
+ Resolution:
+ -----------
+ The FileMan triggers for the PRICE PER ORDER UNIT field (#13) and DISPENSE
+ UNITS PER ORDER UNIT field (#15) of the Data Dictionary for the Drug File 
+ (#50) will be deleted and recreated with the correct configuration.
+  
+ DATA DICTIONARY CHANGES:
+ =========================
+  
+ BEFORE:
+ -------
+ STANDARD DATA DICTIONARY #50 -- DRUG FILE
+  
+ DATA      NAME                  GLOBAL        DATA
+ ELEMENT   TITLE                 LOCATION      TYPE
+ ----------------------------------------------------------------------------
+ 50,13     PRICE PER ORDER UNIT   660;3 NUMBER
+  
+           INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>99999)
+                             !(X<0)!(X?.E1"."3.N) X
+           LAST EDITED:      APR 07, 2006 
+           HELP-PROMPT:      Type a Dollar Amount between 0 and 99999, 2 
+                             Decimal Digits. 
+           DESCRIPTION:        This is the price per order unit for this
+                             drug.  
+  
+           GROUP:            PS
+           NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+           CROSS-REFERENCE:  ^^TRIGGER^50^16 
+                             1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(
+                             1)=$S($D(^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y
+                             (1),U,5)>0 I X S X=DIV S Y(1)=$S($D(^PSDRUG(D0,
+                             660)):^(660),1:"") S X=$P(Y(1),U,6) S DIU=X K Y
+                             X ^DD(50,13,1,1,1.1) X ^DD(50,13,1,1,1.4)
+  
+                             1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)):^(6
+                             60),1:"") S X=DIV,X=$S($P(Y(1),U,5):X/$P(Y(1),U
+                             ,5),1:"*******"),Y(2)=X S X=1,Y(3)=X S X=4,X=$J
+                             (Y(2),Y(3),X)
+  
+                             1.4)= S DIH=$S($D(^PSDRUG(DIV(0),660)):^(660),1
+                             :""),DIV=X X "F %=0:0 Q:$L($P(DIH,U,5,99))  S D
+                             IH=DIH_U" S %=$P(DIH,U,7,999),^(660)=$P(DIH,U,1
+                             ,5)_U_DIV_$S(%]"":U_%,1:""),DIH=50,DIG=16 D ^DI
+                             CR:$O(^DD(DIH,DIG,1,0))
+  
+                             2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                             ^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y(1),U,6) 
+                             S DIU=X K Y S X=DIV S X="" X ^DD(50,13,1,1,2.4)
+  
+                             2.4)= S DIH=$S($D(^PSDRUG(DIV(0),660)):^(660),1
+                             :""),DIV=X X "F %=0:0 Q:$L($P(DIH,U,5,99))  S D
+                             IH=DIH_U" S %=$P(DIH,U,7,999),^(660)=$P(DIH,U,1
+                             ,5)_U_DIV_$S(%]"":U_%,1:""),DIH=50,DIG=16 D ^DI
+                             CR:$O(^DD(DIH,DIG,1,0))
+  
+                             CREATE CONDITION)= #15>0
+                             CREATE VALUE)= $J(#13/#15,1,4)
+                             DELETE VALUE)= @
+                             FIELD)= #16
+  
+ 50,15    DISPENSE UNITS PER ORDER UNIT 660;5 NUMBER
+  
+          INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<1)!(X?.E1"."5.N) X
+          LAST EDITED:      OCT 26, 2000 
+          HELP-PROMPT:      Type a number between 1 and 99999, 4 Decimal 
+                            Digits 
+          DESCRIPTION:        This is the dispense units per order unit for
+                            this drug.  
+  
+          TECHNICAL DESCR:
+                                  
+          GROUP:            PS
+          CROSS-REFERENCE:  ^^TRIGGER^50^16 
+                            1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S X=
+                            Y(0)>0 I X S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)
+                            ):^(660),1:"") S X=$P(Y(1),U,6) S DIU=X K Y X ^
+                            DD(50,15,1,1,1.1) X ^DD(50,15,1,1,1.4)
+  
+                            1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)):^(6
+                            60),1:"") S X=$P(Y(1),U,3),X=$S(DIV:X/DIV,1:"**
+                            *****"),Y(2)=X S X=1,Y(3)=X S X=4,X=$J(Y(2),Y(3
+                            ),X)
+  
+                            1.4)= S DIH=$S($D(^PSDRUG(DIV(0),660)):^(660),1
+                            :""),DIV=X X "F %=0:0 Q:$L($P(DIH,U,5,99))  S D
+                            IH=DIH_U" S %=$P(DIH,U,7,999),^(660)=$P(DIH,U,1
+                            ,5)_U_DIV_$S(%]"":U_%,1:""),DIH=50,DIG=16 D ^DI
+                            CR:$O(^DD(DIH,DIG,1,0))
+  
+                            2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                            ^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y(1),U,6) 
+                            S DIU=X K Y S X=DIV S X="" X ^DD(50,15,1,1,2.4)
+  
+                            2.4)= S DIH=$S($D(^PSDRUG(DIV(0),660)):^(660),1
+                            :""),DIV=X X "F %=0:0 Q:$L($P(DIH,U,5,99))  S D
+                            IH=DIH_U" S %=$P(DIH,U,7,999),^(660)=$P(DIH,U,1
+                            ,5)_U_DIV_$S(%]"":U_%,1:""),DIH=50,DIG=16 D ^DI
+                            CR:$O(^DD(DIH,DIG,1,0))
+  
+                            CREATE CONDITION)= #15>0
+                            CREATE VALUE)= $J(#13/#15,1,4)
+                            DELETE VALUE)= @
+                            FIELD)= #16
+  
+ AFTER:
+ ------
+ STANDARD DATA DICTIONARY #50 -- DRUG FILE
+  
+ DATA     NAME                  GLOBAL        DATA
+ ELEMENT  TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+ 50,13    PRICE PER ORDER UNIT   660;3 NUMBER (audited)
+  
+          INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>99999)
+                            !(X<0)!(X?.E1"."3.N) X
+          LAST EDITED:      FEB 12, 2013 
+          HELP-PROMPT:      Type a Dollar Amount between 0 and 99999, 2 
+                            Decimal Digits. 
+          DESCRIPTION:        This is the price per order unit for this
+                            drug.  
+  
+          GROUP:            PS
+          NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+          CROSS-REFERENCE:  ^^TRIGGER^50^16 
+                            1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S Y(
+                            1)=$S($D(^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y
+                            (1),U,5)>0 I X S X=DIV S Y(1)=$S($D(^PSDRUG(D0,
+                            660)):^(660),1:"") S X=$P(Y(1),U,6),X=X S DIU=X
+                             K Y X ^DD(50,13,1,1,1.1) X ^DD(50,13,1,1,1.4)
+  
+                            1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)):^(6
+                            60),1:"") S X=DIV,X=$S($P(Y(1),U,5):X/$P(Y(1),U
+                            ,5),1:"*******"),Y(2)=$G(X) S X=1,Y(3)=$G(X) S 
+                            X=4,X=$J(Y(2),Y(3),X)
+  
+                            1.4)= S DIH=$G(^PSDRUG(DIV(0),660)),DIV=X S $P(
+                            ^(660),U,6)=DIV,DIH=50,DIG=16 D ^DICR
+  
+                            2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                            ^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y(1),U,6),
+                            X=X S DIU=X K Y S X="" S DIH=$G(^PSDRUG(DIV(0),
+                            660)),DIV=X S $P(^(660),U,6)=DIV,DIH=50,DIG=16 
+                            D ^DICR
+  
+                            CREATE CONDITION)= #15>0
+                            CREATE VALUE)= $J(#13/#15,1,4)
+                            DELETE VALUE)= @
+                            FIELD)= #16
+  
+ 50,15    DISPENSE UNITS PER ORDER UNIT 660;5 NUMBER (audited)
+  
+          INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<1)!(X?.E1"."5N.N) X
+          LAST EDITED:      FEB 12, 2013 
+          HELP-PROMPT:      Type a number between 1 and 99999, 4 decimal 
+                            digits. 
+          DESCRIPTION:        This is the dispense units per order unit for
+                            this drug.  
+  
+          TECHNICAL DESCR:
+                                  
+          GROUP:            PS
+          CROSS-REFERENCE:  ^^TRIGGER^50^16 
+                            1)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(0)=X S X=
+                            Y(0)>0 I X S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)
+                            ):^(660),1:"") S X=$P(Y(1),U,6),X=X S DIU=X K Y
+                             X ^DD(50,15,1,1,1.1) X ^DD(50,15,1,1,1.4)
+  
+                            1.1)= S X=DIV S Y(1)=$S($D(^PSDRUG(D0,660)):^(6
+                            60),1:"") S X=$P(Y(1),U,3),X=$S(DIV:X/DIV,1:"**
+                            *****"),Y(2)=$G(X) S X=1,Y(3)=$G(X) S X=4,X=$J(
+                            Y(2),Y(3),X)
+  
+                            1.4)= S DIH=$G(^PSDRUG(DIV(0),660)),DIV=X S $P(
+                            ^(660),U,6)=DIV,DIH=50,DIG=16 D ^DICR
+  
+                            2)= K DIV S DIV=X,D0=DA,DIV(0)=D0 S Y(1)=$S($D(
+                            ^PSDRUG(D0,660)):^(660),1:"") S X=$P(Y(1),U,6),
+                            X=X S DIU=X K Y S X="" S DIH=$G(^PSDRUG(DIV(0),
+                            660)),DIV=X S $P(^(660),U,6)=DIV,DIH=50,DIG=16 
+                            D ^DICR
+  
+                            CREATE CONDITION)= #15>0
+                            CREATE VALUE)= $J(#13/#15,1,4)
+                            DELETE VALUE)= @
+                            FIELD)= #16
+  
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   Suggested time to install is during non-peak hours for Outpatient 
+   Pharmacy and Pharmacy Data Management users.
+  
+   The patch can be queued, but ensure the installation is complete before
+   deleting the pre-install routine
+  
+   Install Time - less than 5 minutes (unless otherwise indicated)
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSS*1.0*176)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSS*1.0*176
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//" respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+  
+    7. pre-install routine PSSP176 is not automatically deleted by the 
+       KIDS, but sites' may delete the pre-install routine PSSP176 if the
+       installation was successful.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSP176
+    Before:       n/a   After: B17499562  **176**
+
+=============================================================================
+User Information:
+Entered By  : SMITH,ROBERT J                Date Entered  : DEC 20, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: SEP 10, 2013
+Released By : MENEGUZZO,KIMBERLY            Date Released : SEP 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

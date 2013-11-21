@@ -1,0 +1,237 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 07/08/13 at 12:09
+=============================================================================
+Run Date: AUG 29, 2013                     Designation: DG*5.3*861
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #767                    Status: Released
+                  Compliance Date: SEP 28, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*643  <<= must be installed BEFORE `DG*5.3*861'
+                    (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*861'
+
+Subject: MEDICAID INCONSISTENCY/PRIM LONG AND SHORT ID UPDATE/PTF CLOSE ERROR
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1. Medicaid inconsistency check isn't working when a field consistency
+    edit check that is processed prior to it is set to DON'T CHECK. 
+ 2. When the SOCIAL SECURITY NUMBER field (#.09) of the PATIENT file (#2) 
+    is updated, the PRIMARY LONG ID field (#.363) and the PRIMARY SHORT ID
+    field (#.364) of the PATIENT file (#2) are not updated accordingly. 
+ 3. An undefined error is occurring during an attempt to close a Patient
+    Treatment File (PTF) (#45) record via LOAD/EDIT PTF DATA [DG LOAD 
+    PATIENT DATA] Option.
+       
+ Associated NSR(s):
+ ==================
+  
+ N/A
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+   
+ 1. INC0000000351698 - Medicaid inconsistency isn't working   bdj
+     duplicate(s):     INC0000000623567  Four patients show with discrepancy 
+                                         in their military information.
+   
+ 2. INC0000000416259 - Pt. SSN changed but still shows up in anxillary 
+                       software with old name
+     duplicate(s):     INC0000000415935  2 Wrong SSN on SF 513
+                       INC0000000432336  Patient's Last 4 of SSN
+                                         Correct in DHCP however, 
+                                         prints different 
+                       INC0000000437067  SSN displayed on PN and 
+                                         Consult differs from file 2 SSN
+   
+ 3. INC0000000615215 - $ZE=<UNDEFINED>CLS+19^DGPTF2 *DGREL
+     duplicate(s):     INC0000000760222  $ZE=<UNDEFINED>CLS+19^DGPTF2 *DGREL
+  
+ Participating Test Sites:
+ =========================
+ Central Texas HCS
+ Connecticut HCS
+ Salisbury, NC
+    
+ Remedy Overview:
+ ================
+ 1. INC0000000351698 - Medicaid inconsistency isn't working
+   
+ Problem:
+ --------   
+  
+    The Consistency Checker does not validate all designated fields
+    when patient information is logged into the LOAD/EDIT PATIENT DATA  
+    [DG LOAD PATIENT DATA].
+      
+   
+ Resolution:
+ ----------- 
+  
+    Routine ^DGRPC1 will be modified to allow all designated fields 
+    to be processed correctly.
+   
+     
+ 2. INC0000000416259 - Pt. SSN changed but still shows up in anxillary 
+                       software with old name
+    
+ Problem: 
+ --------
+  
+    When the SOCIAL SECURITY NUMBER field (#.09) of PATIENT 
+    file (#2) is updated, the PRIMARY LONG ID field (#.363) and 
+    the PRIMARY SHORT ID field (#.364) of PATIENT file (#2) are 
+    not updating accordingly.
+  
+     
+ Resolution:
+ -----------
+  
+    The resolution has two parts.  The first part will require the data
+    dictionary attributes for the ELIGIBILITY CODE file (#8) to be modified
+    to make the ID FORMAT field (#9) a required field. This field will now
+    have the following as help text:
+    
+           Select the ID format to be used.
+    
+    A pre-install routine, ^DG53P861, will be installed to update all ID 
+    FORMAT fields (#9) of the ELIGIBILITY CODE file (#8) that are currently 
+    undefined.  All ID FORMAT fields (#9) that do not have a value will be 
+    set to VA STANDARD.
+    
+ 3. INC0000000615215 - $ZE=<UNDEFINED>CLS+19^DGPTF2 *DGREL
+   
+ Problem:
+ --------   
+  
+    A sporadic undefined error is encountered when an attempt is made to close
+    a PTF record using the LOAD/EDIT PATIENT DATA  [DG LOAD PATIENT DATA]
+    Option.
+  
+    
+ Resolution:
+ -----------  
+   
+    The problem is that information needed by the Registration Package is 
+    deleted prematurely.  The PTF CORRECTIONS routine, ^DGPTF2, will be 
+    modified to reset the information when needed.
+  
+   
+ Technical
+ =========
+  
+ The following partial Data Dictionary entries are included:
+   
+   
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 8           ELIGIBILITY CODE FILE     YES   NO    NO                  NO
+  
+ Partial DD: subDD: 8          fld: 9
+   
+  
+ Installation Instructions:
+ ==========================
+    
+    If installed during the normal workday, it is recommended that the
+    the Registration users be off the system. Other VISTA users will 
+    not be affected.
+  
+    Install Time - less than 2 minutes.
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+  
+    2.   Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+             Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+  
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+  
+       Select Installation Option:
+  
+     3.   From this menu, you may elect to use the following options
+          (When prompted for the INSTALL NAME, enter DG*5.3*861):
+  
+          a. Print Transport Global - this option will allow you to view
+             the components of the KIDS build.
+          b. Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+          c. Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+          d. Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+     4.   Use the Install Package(s) option and select the package
+          DG*5.3*861.
+  
+          a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+              NO//', answer NO
+          b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+              Options, and Protocols? YES//', answer YES.
+  
+              LOAD/EDIT PATIENT DATA [DG LOAD PATIENT DATA]
+   
+              LOAD/EDIT PTF DATA [DG PTF SCREEN]
+  
+              ELIGIBILITY CODE ENTER/EDIT [DG ELIG CODE ENTER/EDIT]
+  
+      5.  Routine ^DG53P861 is a pre-install routine that is deleted after 
+          it is run during the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53P861
+    Before:       n/a   After:  B1737294  **861**
+Routine Name: DGPTF2
+    Before: B16520587   After: B16869075  **37,342,643,861**
+Routine Name: DGRPC1
+    Before: B13110554   After: B14075036  **314,342,451,564,688,861**
+ 
+Routine list of preceding patches: 643, 688
+
+=============================================================================
+User Information:
+Entered By  : GREEN,LINDA A                 Date Entered  : OCT 04, 2012
+Completed By: SESSLER,APRIL                 Date Completed: AUG 29, 2013
+Released By : FLINN,DAWN                    Date Released : AUG 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,1464 @@
+KIDS Distribution saved on Apr 03, 2013@11:57:31
+PSS*1*166
+**KIDS**:PSS*1.0*166^
+
+**INSTALL NAME**
+PSS*1.0*166
+"BLD",8246,0)
+PSS*1.0*166^PHARMACY DATA MANAGEMENT^0^3130403^y
+"BLD",8246,1,0)
+^^40^40^3130402^
+"BLD",8246,1,1,0)
+This patch is being released as part of the DEA e-Prescribing of 
+"BLD",8246,1,2,0)
+Controlled Substances (CS) project using Public Key Infrastructure (PKI)
+"BLD",8246,1,3,0)
+to satisfy requirements requested by the Drug Enforcement Administration
+"BLD",8246,1,4,0)
+(DEA).
+"BLD",8246,1,5,0)
+The applications involved in this project along with their patch numbers 
+"BLD",8246,1,6,0)
+are listed below and the same order should be followed when installing 
+"BLD",8246,1,7,0)
+the patches.
+"BLD",8246,1,8,0)
+ 
+"BLD",8246,1,9,0)
+   APPLICATION                                            PATCH
+"BLD",8246,1,10,0)
+   -----------------------------------------------------------------
+"BLD",8246,1,11,0)
+   KERNEL V. 8.0                                          XU*8*580
+"BLD",8246,1,12,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                  PSS*1*166
+"BLD",8246,1,13,0)
+   COMPUTERIZED PATIENT RECORD SYSTEM (CPRS) V. 3.0       OR*3*306
+"BLD",8246,1,14,0)
+   CONTROLLED SUBSTANCES (CS) V. 3.0                      PSD*3*73
+"BLD",8246,1,15,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*391
+"BLD",8246,1,16,0)
+ 
+"BLD",8246,1,17,0)
+Note: Patches PSO*7*391 and PSD*3*73 will be released in the Kernel 
+"BLD",8246,1,18,0)
+      Installation and Distribution System (KIDS) multi-build distribution
+"BLD",8246,1,19,0)
+      CPRSV29_PSO_PSD.
+"BLD",8246,1,20,0)
+ 
+"BLD",8246,1,21,0)
+This is the Pharmacy Data Management patch (PSS*1*166) that provides
+"BLD",8246,1,22,0)
+the following enhancements and will be in the KIDS distribution PSS_1_166.
+"BLD",8246,1,23,0)
+ 
+"BLD",8246,1,24,0)
+1. This patch modifies Integration Control Registration (ICR) #3737 by
+"BLD",8246,1,25,0)
+   adding the following two new Application Programming Interface (API):
+"BLD",8246,1,26,0)
+   a. The API $$DETOX^PSSOPKI will return a "1" (one) if the drug name 
+"BLD",8246,1,27,0)
+      contains "BUPREN", a detoxification drug or a "0" (zero) otherwise.
+"BLD",8246,1,28,0)
+ 
+"BLD",8246,1,29,0)
+   b. The API $$OIDETOX^PSSOPKI is provided to CPRS to determine
+"BLD",8246,1,30,0)
+   whether an orderable item has an associated detoxification drug.
+"BLD",8246,1,31,0)
+ 
+"BLD",8246,1,32,0)
+2. This patch modifies ICR #3784 - API $$IVDEA^PSSUTIL1 to return the 
+"BLD",8246,1,33,0)
+   specific CS FEDERAL SCHEDULE field (#19) code of the VA PRODUCT file
+"BLD",8246,1,34,0)
+   (#50.68) or the specific DEA, SPECIAL HDLG field (#3) code of the DRUG
+"BLD",8246,1,35,0)
+   file (#50) of the drugs tied to the Orderable Item.
+"BLD",8246,1,36,0)
+ 
+"BLD",8246,1,37,0)
+3. Patch PSS*1*159 introduced an issue where the user was prevented from
+"BLD",8246,1,38,0)
+   up-arrowing (^) to quit out of the template in the Edit Orderable Items
+"BLD",8246,1,39,0)
+   [PSS EDIT ORDERABLE ITEMS] option. This patch resolves that issue by
+"BLD",8246,1,40,0)
+   allowing the user to up-arrow out of the template.
+"BLD",8246,4,0)
+^9.64PA^^
+"BLD",8246,6.3)
+9
+"BLD",8246,"ABPKG")
+n
+"BLD",8246,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8246,"KRN",.4,0)
+.4
+"BLD",8246,"KRN",.401,0)
+.401
+"BLD",8246,"KRN",.402,0)
+.402
+"BLD",8246,"KRN",.403,0)
+.403
+"BLD",8246,"KRN",.5,0)
+.5
+"BLD",8246,"KRN",.84,0)
+.84
+"BLD",8246,"KRN",3.6,0)
+3.6
+"BLD",8246,"KRN",3.8,0)
+3.8
+"BLD",8246,"KRN",9.2,0)
+9.2
+"BLD",8246,"KRN",9.8,0)
+9.8
+"BLD",8246,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8246,"KRN",9.8,"NM",1,0)
+PSSOPKI^^0^B11838560
+"BLD",8246,"KRN",9.8,"NM",2,0)
+PSSUTIL1^^0^B37379824
+"BLD",8246,"KRN",9.8,"NM",3,0)
+PSSPOIMO^^0^B139401789
+"BLD",8246,"KRN",9.8,"NM",4,0)
+PSSPOIM1^^0^B61796505
+"BLD",8246,"KRN",9.8,"NM","B","PSSOPKI",1)
+
+"BLD",8246,"KRN",9.8,"NM","B","PSSPOIM1",4)
+
+"BLD",8246,"KRN",9.8,"NM","B","PSSPOIMO",3)
+
+"BLD",8246,"KRN",9.8,"NM","B","PSSUTIL1",2)
+
+"BLD",8246,"KRN",19,0)
+19
+"BLD",8246,"KRN",19.1,0)
+19.1
+"BLD",8246,"KRN",101,0)
+101
+"BLD",8246,"KRN",409.61,0)
+409.61
+"BLD",8246,"KRN",771,0)
+771
+"BLD",8246,"KRN",779.2,0)
+779.2
+"BLD",8246,"KRN",870,0)
+870
+"BLD",8246,"KRN",8989.51,0)
+8989.51
+"BLD",8246,"KRN",8989.52,0)
+8989.52
+"BLD",8246,"KRN",8994,0)
+8994
+"BLD",8246,"KRN","B",.4,.4)
+
+"BLD",8246,"KRN","B",.401,.401)
+
+"BLD",8246,"KRN","B",.402,.402)
+
+"BLD",8246,"KRN","B",.403,.403)
+
+"BLD",8246,"KRN","B",.5,.5)
+
+"BLD",8246,"KRN","B",.84,.84)
+
+"BLD",8246,"KRN","B",3.6,3.6)
+
+"BLD",8246,"KRN","B",3.8,3.8)
+
+"BLD",8246,"KRN","B",9.2,9.2)
+
+"BLD",8246,"KRN","B",9.8,9.8)
+
+"BLD",8246,"KRN","B",19,19)
+
+"BLD",8246,"KRN","B",19.1,19.1)
+
+"BLD",8246,"KRN","B",101,101)
+
+"BLD",8246,"KRN","B",409.61,409.61)
+
+"BLD",8246,"KRN","B",771,771)
+
+"BLD",8246,"KRN","B",779.2,779.2)
+
+"BLD",8246,"KRN","B",870,870)
+
+"BLD",8246,"KRN","B",8989.51,8989.51)
+
+"BLD",8246,"KRN","B",8989.52,8989.52)
+
+"BLD",8246,"KRN","B",8994,8994)
+
+"BLD",8246,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8246,"QUES",0)
+^9.62^^
+"BLD",8246,"REQB",0)
+^9.611^1^1
+"BLD",8246,"REQB",1,0)
+PSS*1.0*159^2
+"BLD",8246,"REQB","B","PSS*1.0*159",1)
+
+"MBREQ")
+0
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+166^3130403
+"PKG",517,22,1,"PAH",1,1,0)
+^^40^40^3130403
+"PKG",517,22,1,"PAH",1,1,1,0)
+This patch is being released as part of the DEA e-Prescribing of 
+"PKG",517,22,1,"PAH",1,1,2,0)
+Controlled Substances (CS) project using Public Key Infrastructure (PKI)
+"PKG",517,22,1,"PAH",1,1,3,0)
+to satisfy requirements requested by the Drug Enforcement Administration
+"PKG",517,22,1,"PAH",1,1,4,0)
+(DEA).
+"PKG",517,22,1,"PAH",1,1,5,0)
+The applications involved in this project along with their patch numbers 
+"PKG",517,22,1,"PAH",1,1,6,0)
+are listed below and the same order should be followed when installing 
+"PKG",517,22,1,"PAH",1,1,7,0)
+the patches.
+"PKG",517,22,1,"PAH",1,1,8,0)
+ 
+"PKG",517,22,1,"PAH",1,1,9,0)
+   APPLICATION                                            PATCH
+"PKG",517,22,1,"PAH",1,1,10,0)
+   -----------------------------------------------------------------
+"PKG",517,22,1,"PAH",1,1,11,0)
+   KERNEL V. 8.0                                          XU*8*580
+"PKG",517,22,1,"PAH",1,1,12,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                  PSS*1*166
+"PKG",517,22,1,"PAH",1,1,13,0)
+   COMPUTERIZED PATIENT RECORD SYSTEM (CPRS) V. 3.0       OR*3*306
+"PKG",517,22,1,"PAH",1,1,14,0)
+   CONTROLLED SUBSTANCES (CS) V. 3.0                      PSD*3*73
+"PKG",517,22,1,"PAH",1,1,15,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                        PSO*7*391
+"PKG",517,22,1,"PAH",1,1,16,0)
+ 
+"PKG",517,22,1,"PAH",1,1,17,0)
+Note: Patches PSO*7*391 and PSD*3*73 will be released in the Kernel 
+"PKG",517,22,1,"PAH",1,1,18,0)
+      Installation and Distribution System (KIDS) multi-build distribution
+"PKG",517,22,1,"PAH",1,1,19,0)
+      CPRSV29_PSO_PSD.
+"PKG",517,22,1,"PAH",1,1,20,0)
+ 
+"PKG",517,22,1,"PAH",1,1,21,0)
+This is the Pharmacy Data Management patch (PSS*1*166) that provides
+"PKG",517,22,1,"PAH",1,1,22,0)
+the following enhancements and will be in the KIDS distribution PSS_1_166.
+"PKG",517,22,1,"PAH",1,1,23,0)
+ 
+"PKG",517,22,1,"PAH",1,1,24,0)
+1. This patch modifies Integration Control Registration (ICR) #3737 by
+"PKG",517,22,1,"PAH",1,1,25,0)
+   adding the following two new Application Programming Interface (API):
+"PKG",517,22,1,"PAH",1,1,26,0)
+   a. The API $$DETOX^PSSOPKI will return a "1" (one) if the drug name 
+"PKG",517,22,1,"PAH",1,1,27,0)
+      contains "BUPREN", a detoxification drug or a "0" (zero) otherwise.
+"PKG",517,22,1,"PAH",1,1,28,0)
+ 
+"PKG",517,22,1,"PAH",1,1,29,0)
+   b. The API $$OIDETOX^PSSOPKI is provided to CPRS to determine
+"PKG",517,22,1,"PAH",1,1,30,0)
+   whether an orderable item has an associated detoxification drug.
+"PKG",517,22,1,"PAH",1,1,31,0)
+ 
+"PKG",517,22,1,"PAH",1,1,32,0)
+2. This patch modifies ICR #3784 - API $$IVDEA^PSSUTIL1 to return the 
+"PKG",517,22,1,"PAH",1,1,33,0)
+   specific CS FEDERAL SCHEDULE field (#19) code of the VA PRODUCT file
+"PKG",517,22,1,"PAH",1,1,34,0)
+   (#50.68) or the specific DEA, SPECIAL HDLG field (#3) code of the DRUG
+"PKG",517,22,1,"PAH",1,1,35,0)
+   file (#50) of the drugs tied to the Orderable Item.
+"PKG",517,22,1,"PAH",1,1,36,0)
+ 
+"PKG",517,22,1,"PAH",1,1,37,0)
+3. Patch PSS*1*159 introduced an issue where the user was prevented from
+"PKG",517,22,1,"PAH",1,1,38,0)
+   up-arrowing (^) to quit out of the template in the Edit Orderable Items
+"PKG",517,22,1,"PAH",1,1,39,0)
+   [PSS EDIT ORDERABLE ITEMS] option. This patch resolves that issue by
+"PKG",517,22,1,"PAH",1,1,40,0)
+   allowing the user to up-arrow out of the template.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PSSOPKI")
+0^1^B11838560
+"RTN","PSSOPKI",1,0)
+PSSOPKI ;BHAM ISC/MHA-New API's to CPRS for DEA/PKI Pilot Project ;03/11/02
+"RTN","PSSOPKI",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**61,69,166**;9/30/97;Build 9
+"RTN","PSSOPKI",3,0)
+ ;Reference to ^PSNDF(50.68 supported by DBIA 3735
+"RTN","PSSOPKI",4,0)
+ ;
+"RTN","PSSOPKI",5,0)
+OIDEA(PSSXOI,PSSXOIP) ; CPRS Orderable Item call 
+"RTN","PSSOPKI",6,0)
+ ;returns the CS Federal Schedule code in the VA PRODUCT file (#50.68)
+"RTN","PSSOPKI",7,0)
+ ;or the DEA Special Hndl code depending on the "ND" node of the 
+"RTN","PSSOPKI",8,0)
+ ;drugs associated to the Orderable Item, and Usage passed in
+"RTN","PSSOPKI",9,0)
+ ;1  Sch. I Nar.
+"RTN","PSSOPKI",10,0)
+ ;2  II
+"RTN","PSSOPKI",11,0)
+ ;2n II Non-Nar.
+"RTN","PSSOPKI",12,0)
+ ;3  III
+"RTN","PSSOPKI",13,0)
+ ;3n III Non-Nar.
+"RTN","PSSOPKI",14,0)
+ ;4  IV
+"RTN","PSSOPKI",15,0)
+ ;5  V
+"RTN","PSSOPKI",16,0)
+ ;0  there are other active drugs
+"RTN","PSSOPKI",17,0)
+ ;"" no active drugs
+"RTN","PSSOPKI",18,0)
+ ;
+"RTN","PSSOPKI",19,0)
+ N PSSXOLP,PSSXOLPD,PSSXOLPX,PSSXNODD,PSSPKLX,PSSI,PSSK,PSSJ,PSSGD
+"RTN","PSSOPKI",20,0)
+ S (PSSXOLPD,PSSXNODD)=0 I PSSXOIP="X" G OIQ
+"RTN","PSSOPKI",21,0)
+ I '$G(PSSXOI)!($G(PSSXOIP)="") G OIQ
+"RTN","PSSOPKI",22,0)
+ S PSSPKLX=$S(PSSXOIP="I":1,PSSXOIP="U":1,1:0)
+"RTN","PSSOPKI",23,0)
+ F PSSXOLP=0:0 S PSSXOLP=$O(^PSDRUG("ASP",PSSXOI,PSSXOLP)) Q:'PSSXOLP  D
+"RTN","PSSOPKI",24,0)
+ .I $P($G(^PSDRUG(PSSXOLP,"I")),"^"),$P($G(^("I")),"^")<DT Q
+"RTN","PSSOPKI",25,0)
+ .I 'PSSPKLX,$P($G(^PSDRUG(PSSXOLP,2)),"^",3)'["O" Q
+"RTN","PSSOPKI",26,0)
+ .I PSSPKLX I $P($G(^PSDRUG(PSSXOLP,2)),"^",3)'["U",$P($G(^(2)),"^",3)'["I" Q
+"RTN","PSSOPKI",27,0)
+ .S PSSXNODD=1,PSSJ=($P($G(^PSDRUG(PSSXOLP,0)),"^",3)) S:PSSJ]"" PSSGD(PSSJ)=""
+"RTN","PSSOPKI",28,0)
+ .I +$P($G(^PSDRUG(PSSXOLP,"ND")),"^",3) S PSSK=$P(^("ND"),"^",3) D
+"RTN","PSSOPKI",29,0)
+ ..I +$P($G(^PSNDF(50.68,PSSK,7)),"^") S PSSK=$P(^(7),"^"),PSSI($S($E(PSSK,2)="n":$E(PSSK)_".5",1:PSSK))=""
+"RTN","PSSOPKI",30,0)
+ G:$O(PSSI(""))]"" CSS
+"RTN","PSSOPKI",31,0)
+ S PSSXOLPX="" F  S PSSXOLPX=$O(PSSGD(PSSXOLPX)) Q:PSSXOLPX=""  D
+"RTN","PSSOPKI",32,0)
+ .I PSSXOLPX[1 S PSSI(1)="" Q
+"RTN","PSSOPKI",33,0)
+ .I PSSXOLPX[2,PSSXOLPX'["C" S PSSI(2)="" Q
+"RTN","PSSOPKI",34,0)
+ .I PSSXOLPX[2,PSSXOLPX["C" S PSSI(2.5)="" Q
+"RTN","PSSOPKI",35,0)
+ .I PSSXOLPX[3,PSSXOLPX'["C" S PSSI(3)="" Q
+"RTN","PSSOPKI",36,0)
+ .I PSSXOLPX[3,PSSXOLPX["C" S PSSI(3.5)="" Q
+"RTN","PSSOPKI",37,0)
+ .I PSSXOLPX[4 S PSSI(4)="" Q
+"RTN","PSSOPKI",38,0)
+ .I PSSXOLPX[5 S PSSI(5)=""
+"RTN","PSSOPKI",39,0)
+CSS S PSSK=0 S PSSK=$O(PSSI(PSSK)) I PSSK S PSSXOLPD=$E(PSSK)_$S($L(PSSK)>1:"n",1:"")
+"RTN","PSSOPKI",40,0)
+OIQ I PSSXOLPD=0 S:'PSSXNODD PSSXOLPD=""
+"RTN","PSSOPKI",41,0)
+ I +PSSXOLPD=1!(+PSSXOLPD=2) S PSSXOLPD=1_";"_PSSXOLPD
+"RTN","PSSOPKI",42,0)
+ I +PSSXOLPD=3!(+PSSXOLPD=4)!(+PSSXOLPD=5) S PSSXOLPD=2_";"_PSSXOLPD
+"RTN","PSSOPKI",43,0)
+ Q PSSXOLPD
+"RTN","PSSOPKI",44,0)
+ ;
+"RTN","PSSOPKI",45,0)
+DEAPKI(PSSDIENM) ;Return CS Federal Sch or the DEA Special Hndl for CPRS Dose Call - PKI Project
+"RTN","PSSOPKI",46,0)
+ Q:'$G(PSSDIENM)
+"RTN","PSSOPKI",47,0)
+ N PSSDEAX,PSSDEAXV,PSSJ
+"RTN","PSSOPKI",48,0)
+ I +$P($G(^PSDRUG(PSSDIENM,"ND")),"^",3) S PSSDEAX=$P(^("ND"),"^",3) D
+"RTN","PSSOPKI",49,0)
+ .I +$P($G(^PSNDF(50.68,PSSDEAX,7)),"^") S PSSDEAXV=$P(^(7),"^"),PSSJ=1
+"RTN","PSSOPKI",50,0)
+ G:$G(PSSJ) DSET
+"RTN","PSSOPKI",51,0)
+ S PSSDEAX=$P($G(^PSDRUG(PSSDIENM,0)),"^",3)
+"RTN","PSSOPKI",52,0)
+ I PSSDEAX[1 S PSSDEAXV=1 G DSET
+"RTN","PSSOPKI",53,0)
+ I PSSDEAX[2,PSSDEAX'["C" S PSSDEAXV=2 G DSET
+"RTN","PSSOPKI",54,0)
+ I PSSDEAX[2,PSSDEAX["C" S PSSDEAXV="2n" G DSET
+"RTN","PSSOPKI",55,0)
+ I PSSDEAX[3,PSSDEAX'["C" S PSSDEAXV=3 G DSET
+"RTN","PSSOPKI",56,0)
+ I PSSDEAX[3,PSSDEAX["C" S PSSDEAXV="3n" G DSET
+"RTN","PSSOPKI",57,0)
+ I PSSDEAX[4 S PSSDEAXV=4 G DSET
+"RTN","PSSOPKI",58,0)
+ I PSSDEAX[5 S PSSDEAXV=5 G DSET
+"RTN","PSSOPKI",59,0)
+ S PSSDEAXV=0
+"RTN","PSSOPKI",60,0)
+DSET ;
+"RTN","PSSOPKI",61,0)
+ I +PSSDEAXV=1!(+PSSDEAXV=2) S PSSDEAXV=1_";"_PSSDEAXV
+"RTN","PSSOPKI",62,0)
+ I +PSSDEAXV=3!(+PSSDEAXV=4)!(+PSSDEAXV=5) S PSSDEAXV=2_";"_PSSDEAXV
+"RTN","PSSOPKI",63,0)
+ S PSSX("DD",PSSDIENM)=PSSX("DD",PSSDIENM)_"^"_PSSDEAXV_"^"_$S($D(PSSHLF(PSSDIENM)):1,1:0)
+"RTN","PSSOPKI",64,0)
+ Q
+"RTN","PSSOPKI",65,0)
+ ;
+"RTN","PSSOPKI",66,0)
+DETOX(PSSDIEN) ;Returns 1 if the drug is a detox drug - drug name contains "BUPREN"  - PKI 2011 Project
+"RTN","PSSOPKI",67,0)
+ Q:'$G(PSSDIEN) 0
+"RTN","PSSOPKI",68,0)
+ Q:$P($G(^PSDRUG(PSSDIEN,0)),"^")["BUPREN" 1
+"RTN","PSSOPKI",69,0)
+ Q 0
+"RTN","PSSOPKI",70,0)
+ ;
+"RTN","PSSOPKI",71,0)
+OIDETOX(PSSXOI,PSSXOIP) ; CPRS Orderable Item to check a drug is a DETOX or not 
+"RTN","PSSOPKI",72,0)
+ ;Input - PSSXOI - Orderable Item IEN
+"RTN","PSSOPKI",73,0)
+ ;      - PSSXOIP - Package
+"RTN","PSSOPKI",74,0)
+ ;Output - returns 1 if the drugs associated to the Orderable Item contains the text "BUPREN" as part of the name
+"RTN","PSSOPKI",75,0)
+ ;         otherwise it returns 0
+"RTN","PSSOPKI",76,0)
+ N PSSDTOX,PSSLP,PSSDPK
+"RTN","PSSOPKI",77,0)
+ I '$G(PSSXOI)!($G(PSSXOIP)="")!(PSSXOIP'="O") Q 0
+"RTN","PSSOPKI",78,0)
+ S (PSSLP,PSSDTOX)=0
+"RTN","PSSOPKI",79,0)
+ F  S PSSLP=$O(^PSDRUG("ASP",PSSXOI,PSSLP)) Q:'PSSLP!PSSDTOX  D
+"RTN","PSSOPKI",80,0)
+ .I $P($G(^PSDRUG(PSSLP,"I")),"^"),$P($G(^("I")),"^")<DT Q
+"RTN","PSSOPKI",81,0)
+ .S PSSDPK=$P($G(^PSDRUG(PSSLP,2)),"^",3)
+"RTN","PSSOPKI",82,0)
+ .Q:PSSDPK=""!(PSSDPK'["O")
+"RTN","PSSOPKI",83,0)
+ .I $$DETOX(PSSLP) S PSSDTOX=1 Q
+"RTN","PSSOPKI",84,0)
+ Q PSSDTOX
+"RTN","PSSOPKI",85,0)
+ ;
+"RTN","PSSPOIM1")
+0^4^B61796505
+"RTN","PSSPOIM1",1,0)
+PSSPOIM1 ;BIR/RTR,WRT-Manual create of Orderable Item continued ; 4/28/09 4:36pm
+"RTN","PSSPOIM1",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**29,38,47,141,153,159,166**;9/30/97;Build 9
+"RTN","PSSPOIM1",3,0)
+ ;
+"RTN","PSSPOIM1",4,0)
+CHK S PSNO=0 I $G(PSMAN) W !!,"Matching ",PSNAME,!,"   to",!,SPHOLD," ",$P($G(^PS(50.606,+DOSEPTR,0)),"^"),!
+"RTN","PSSPOIM1",5,0)
+ I '$G(PSMAN) S PSMC=$P($G(^PS(50.7,PSSP,0)),"^") W !!,"Matching ",PSNAME,!,"   to",!,PSMC," ",$P($G(^PS(50.606,+$P(^PS(50.7,PSSP,0),"^",2),0)),"^"),!
+"RTN","PSSPOIM1",6,0)
+ K DIR S DIR(0)="Y",DIR("B")="YES",DIR("A")="Is this OK" D ^DIR
+"RTN","PSSPOIM1",7,0)
+ K PSMAN S:Y=0 PSNO=1 I Y'=1,'PSNO S PSOUT=1
+"RTN","PSSPOIM1",8,0)
+ Q
+"RTN","PSSPOIM1",9,0)
+END K ^TMP($J,"PSSOO"),PSSSSS,PSCREATE,^TMP("PSSLOOP",$J)
+"RTN","PSSPOIM1",10,0)
+ K AAA,ANS,APLU,COMM,DA,DIC,DIE,DOSEFORM,DOSEFV,DOSEPTR,DR,FFF,MATCH,NEWSP,NODE,NOFLAG,OTH,POINT,PSCNT,PSIEN,PSMAN,PSMC,PSNAME,PSNO,PSSP,PSND,PSOUT,SPHOLD,SPR,TMPTR,TT,VAGEN,X,Y,ZZ,PSOOOUT,PSXDATE,PSXADATE,PSXSDATE,AAAAA,BBBBB,ZXX,PSXDDATE Q
+"RTN","PSSPOIM1",11,0)
+MESS W !!,"This option enables you to match Dispense Drugs to an entry in the Pharmacy",!,"Orderable Item file, or create a new Pharmacy Orderable Item entry for a",!,"Dispense Drug.",! Q
+"RTN","PSSPOIM1",12,0)
+MESSZ S ^TMP("PSSLOOP",$J,DUZ)="" W !!,"This option is for matching IV Additives, IV Solutions, and all Dispense Drugs",!,"marked with an I, O, or U in the Application Packages' Use field to an",!,"Orderable Item."
+"RTN","PSSPOIM1",13,0)
+ W !,"You will need to keep accessing this option until all drugs are matched.",!,"A check will be done every time this option is exited to see if the matching",!,"process is complete.",!!
+"RTN","PSSPOIM1",14,0)
+ K DIR S DIR(0)="E" D ^DIR K DIR I X["^"!($D(DTOUT)) S PSOUT=1
+"RTN","PSSPOIM1",15,0)
+ Q
+"RTN","PSSPOIM1",16,0)
+CHECK W !!!,"Checking Drug files, please wait..."
+"RTN","PSSPOIM1",17,0)
+ S X1=DT,X2=-365 D C^%DTC S PSZXDATE=X,DONEFLAG=1
+"RTN","PSSPOIM1",18,0)
+ F FFFF=0:0 S FFFF=$O(^PSDRUG(FFFF)) Q:'FFFF!('DONEFLAG)  S QQNM=$P($G(^PSDRUG(FFFF,0)),"^") I QQNM'="",$D(^PSDRUG("B",QQNM)) D  I ZZG I USAGE["O"!(USAGE["I")!(USAGE["U") I '$P($G(^PSDRUG(FFFF,2)),"^") S DONEFLAG=0
+"RTN","PSSPOIM1",19,0)
+ .S USAGE=$P($G(^PSDRUG(FFFF,2)),"^",3)
+"RTN","PSSPOIM1",20,0)
+ .S ZZG=1 S PSZZDATE=+$P($G(^PSDRUG(FFFF,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",21,0)
+ I DONEFLAG=1 D
+"RTN","PSSPOIM1",22,0)
+ .F QQQ=0:0 S QQQ=$O(^PS(52.6,QQQ)) Q:'QQQ!('DONEFLAG)  S PSZNAME=$P($G(^PS(52.6,QQQ,0)),"^") I PSZNAME'="",$D(^PS(52.6,"B",PSZNAME)),$P($G(^PS(52.6,QQQ,0)),"^",2),'$P($G(^(0)),"^",11) D  I ZZG S DONEFLAG=0
+"RTN","PSSPOIM1",23,0)
+ ..S ZZG=1 S PSZZDATE=+$P($G(^PS(52.6,QQQ,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",24,0)
+ .I DONEFLAG F QQQ=0:0 S QQQ=$O(^PS(52.7,QQQ)) Q:'QQQ!('DONEFLAG)  S PSZNAME=$P($G(^PS(52.7,QQQ,0)),"^") I PSZNAME'="",$D(^PS(52.7,"B",PSZNAME)),$P($G(^PS(52.7,QQQ,0)),"^",2),'$P($G(^(0)),"^",11) D  I ZZG S DONEFLAG=0
+"RTN","PSSPOIM1",25,0)
+ ..S ZZG=1 S PSZZDATE=+$P($G(^PS(52.7,QQQ,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",26,0)
+MAIL I DONEFLAG W !!!,?3,"You are finished matching to the Orderable Item File!",!!,"A clean-up job is being queued now, and when it is finished, you will"
+"RTN","PSSPOIM1",27,0)
+ I  W !,"receive a mail message informing you of its completion.",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSPOIM1",28,0)
+ I $G(DONEFLAG) S PSSOMAIL=1,PSOUDUZ=DUZ S ZTRTN="DATE^PSSPOIM1",ZTIO="",ZTDTH=$H,ZTDESC="ORDERABLE ITEM CLEAN UP",ZTSAVE("DUZ")="",ZTSAVE("PSSOMAIL")="" D ^%ZTLOAD
+"RTN","PSSPOIM1",29,0)
+ I 'DONEFLAG W $C(7),$C(7),!!?5,"There are still Drugs not matched, you will need to come back",!?5,"and continue matching Drugs!",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSPOIM1",30,0)
+ K DONEFLAG,QQQ,QQNM,PSZZDATE,PSZXDATE,ZZG,USAGE,FFFF,PSZNAME Q
+"RTN","PSSPOIM1",31,0)
+OTHER W @IOF W !,"There are other Dispense Drugs with the same VA Generic Name and same Dose",!,"Form already matched to orderable items. Choose a number to match, or enter",!,"'^' to enter a new one.",!!?6,"Disp. drug -> ",PSNAME,! Q
+"RTN","PSSPOIM1",32,0)
+EN(PSVAR) ;
+"RTN","PSSPOIM1",33,0)
+ W !?3,"Now editing Orderable Item:",!?3,$P(^PS(50.7,PSVAR,0),"^"),"   ",$P($G(^PS(50.606,+$P(^(0),"^",2),0)),"^")
+"RTN","PSSPOIM1",34,0)
+ W ! K DIE N MFLG S PSBEFORE=$P(^PS(50.7,PSVAR,0),"^",4),PSBEFORE1=+$P(^PS(50.7,PSVAR,0),"^",2),PSAFTER=0,PSINORDE=""
+"RTN","PSSPOIM1",35,0)
+ S DIE="^PS(50.7,",DA=PSVAR,DR="5;6" D ^DIE K DIE I $D(DTOUT)!($D(Y)>10) Q
+"RTN","PSSPOIM1",36,0)
+ K DIR S DIR(0)="DO",DIR("A")="INACTIVE DATE" D  D ^DIR K DIR I $G(Y)["^"!($D(DTOUT))!($G(DUOUT)) Q
+"RTN","PSSPOIM1",37,0)
+ .I $G(PSBEFORE) S Y=PSBEFORE D DD^%DT S DIR("B")=$G(Y)
+"RTN","PSSPOIM1",38,0)
+ I $G(PSBEFORE),'$G(Y) W ?40,"Inactive Date deleted!"
+"RTN","PSSPOIM1",39,0)
+ S PSSDTENT=$G(Y) I $G(Y) D DD^%DT W ?40,$G(Y)
+"RTN","PSSPOIM1",40,0)
+ S PSSOTH=$P($G(^PS(59.7,1,40.2)),"^"),DIE="^PS(50.7,"
+"RTN","PSSPOIM1",41,0)
+ S DR=".05;@1;D SETF^PSSPOIMO;.06;D DFR^PSSPOIMO(PSBEFORE1);10//YES;I X=""Y"" S Y=""@2"";S:$G(DUOUT) Y=""@3"";D PDCHK^PSSPOIMO S:PSSFG Y=""@1"";S:$G(DUOUT) Y=""@3"";@2;K DIE(""NO^""),DIRUT;D MRSEL^PSSPOIMO;.07;.08;7;S:'$G(PSSOTH) Y=""@3"";7.1;@3"
+"RTN","PSSPOIM1",42,0)
+ D ^DIE S PSAFTER=$P(^PS(50.7,PSVAR,0),"^",4) K DIE,PSSOTH,^TMP("PSJMR",$J),^TMP("PSSDMR",$J) I $D(PSSOU),'$G(PSSOU) D MRSEL^PSSPOIMO K ^TMP("PSJMR",$J)
+"RTN","PSSPOIM1",43,0)
+ S:PSBEFORE&('PSAFTER) PSINORDE="D" S:PSAFTER PSINORDE="I"
+"RTN","PSSPOIM1",44,0)
+ I PSINORDE'="" D REST^PSSPOIDT(PSVAR)
+"RTN","PSSPOIM1",45,0)
+ K PSBEFORE,PSBEFORE1,PSAFTER,PSINORDE
+"RTN","PSSPOIM1",46,0)
+IMMUN ;PSS*1*141 FOR 'IMMUNIZATIONS DOCUMENTATION BY BCMA'
+"RTN","PSSPOIM1",47,0)
+ I $O(^PSDRUG("AOC",PSVAR,"IM000"))'["IM" G SYN ;ASK WHEN APPROPRIATE
+"RTN","PSSPOIM1",48,0)
+ W ! S DIE="^PS(50.7,",DA=PSVAR,DR=9 D ^DIE K DIE
+"RTN","PSSPOIM1",49,0)
+SYN I $G(Y)["^"!($G(DIRUT))!$D(DTOUT)!($D(Y)>10) G FINS
+"RTN","PSSPOIM1",50,0)
+ W ! K DIC S:'$D(^PS(50.7,PSVAR,2,0)) ^PS(50.7,PSVAR,2,0)="^50.72^0^0" S DIC="^PS(50.7,"_PSVAR_",2,",DA(1)=PSVAR,DIC(0)="QEAMZL",DIC("A")="Select SYNONYM: ",DLAYGO=50.72 D ^DIC K DIC
+"RTN","PSSPOIM1",51,0)
+ I Y<0!($D(DTOUT))!($D(DUOUT)) K:'$O(^PS(50.7,PSVAR,2,0)) ^PS(50.7,PSVAR,2,0) G FIN
+"RTN","PSSPOIM1",52,0)
+ W ! S DA=+Y,DIE="^PS(50.7,"_PSVAR_",2,",DA(1)=PSVAR,DR=.01 D ^DIE K DIE G SYN
+"RTN","PSSPOIM1",53,0)
+FIN D EN^PSSPOIDT(PSVAR) I $G(PSVAR1) D EN2^PSSHL1(PSVAR,"MAD") G FINS
+"RTN","PSSPOIM1",54,0)
+ D EN2^PSSHL1(PSVAR,"MUP")
+"RTN","PSSPOIM1",55,0)
+FINS K PSVAR,PSVAR1 Q
+"RTN","PSSPOIM1",56,0)
+ ;
+"RTN","PSSPOIM1",57,0)
+DATE ;
+"RTN","PSSPOIM1",58,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(50.7,ZZZ)) Q:'ZZZ  S PSOTYPE=$P($G(^PS(50.7,ZZZ,0)),"^",3) D
+"RTN","PSSPOIM1",59,0)
+ .I PSOTYPE,'$D(^PS(52.6,"AOI",ZZZ)),'$D(^PS(52.7,"AOI",ZZZ)),'$P($G(^PS(50.7,ZZZ,0)),"^",4) K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE Q
+"RTN","PSSPOIM1",60,0)
+ .Q:PSOTYPE
+"RTN","PSSPOIM1",61,0)
+ .D SUPP
+"RTN","PSSPOIM1",62,0)
+ .I '$D(^PSDRUG("ASP",ZZZ)),'$P($G(^PS(50.7,ZZZ,0)),"^",4) K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE Q
+"RTN","PSSPOIM1",63,0)
+ .D:'$P($G(^PS(50.7,ZZZ,0)),"^",4)
+"RTN","PSSPOIM1",64,0)
+ ..S PSDFLAG=0 F WW=0:0 S WW=$O(^PSDRUG("ASP",ZZZ,WW)) Q:'WW!(PSDFLAG)  S PSAPPL=$P($G(^PSDRUG(WW,2)),"^",3) I PSAPPL["I"!(PSAPPL["O")!(PSAPPL["U") S PSDFLAG=1
+"RTN","PSSPOIM1",65,0)
+ ..I 'PSDFLAG K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE
+"RTN","PSSPOIM1",66,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(52.7,ZZZ)) Q:'ZZZ  S RRRR=$P($G(^PS(52.7,ZZZ,0)),"^",11) I RRRR,'$P($G(^PS(50.7,RRRR,0)),"^",3) K DIE S DA=ZZZ,DIE="^PS(52.7,",DR="9////"_"@" D ^DIE K DIE
+"RTN","PSSPOIM1",67,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(52.6,ZZZ)) Q:'ZZZ  S RRRR=$P($G(^PS(52.6,ZZZ,0)),"^",11) I RRRR,'$P($G(^PS(50.7,RRRR,0)),"^",3) K DIE S DA=ZZZ,DIE="^PS(52.6,",DR="15////"_"@" D ^DIE K DIE
+"RTN","PSSPOIM1",68,0)
+ D:$G(PSCREATE) MAIL^PSSCREAT
+"RTN","PSSPOIM1",69,0)
+ I '$G(PSSOMAIL) K PSOTYPE,DA,DIE,WW,RRRR,PSDFLAG,PSAPPL,GGG,HHH,ZZZZZ Q
+"RTN","PSSPOIM1",70,0)
+ S PSOTEXT(1)="You have completed the matching process required for the installation of",PSOTEXT(2)="Outpatient V. 7.0 and Inpatient Medications V. 5.0!"
+"RTN","PSSPOIM1",71,0)
+ S XMDUZ=.5,XMY(DUZ)="",XMTEXT="PSOTEXT(",XMSUB="Pharmacy Orderable Item File" D ^XMD
+"RTN","PSSPOIM1",72,0)
+ S PSSITE=+$O(^PS(59.7,0)) S $P(^PS(59.7,PSSITE,80),"^",2)=3 K PSSITE
+"RTN","PSSPOIM1",73,0)
+ D ^%ZISC K PSOTYPE,DA,DIE,WW,RRRR,PSDFLAG,PSAPPL,GGG,HHH,ZZZZZ,PSSOMAIL S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSSPOIM1",74,0)
+RMES W !!,"This report takes a long time to first build the data to print, then to",!,"actually print the data. To avoid tying up a terminal for a long period of time,",!,"the report must be QUEUED to a printer."
+"RTN","PSSPOIM1",75,0)
+ W !!,"This report must be QUEUED to a printer!"
+"RTN","PSSPOIM1",76,0)
+ Q
+"RTN","PSSPOIM1",77,0)
+KMES W !!,"Due to the length of this report, and to avoid tying up a terminal for a long",!,"time, this report must be QUEUED to a printer!"
+"RTN","PSSPOIM1",78,0)
+ Q
+"RTN","PSSPOIM1",79,0)
+SUPP ;Mark as supply
+"RTN","PSSPOIM1",80,0)
+ N SSSUP,SSSIN,SSSAP,SSLOOP,SSSQUE,SSSQUEY,SSSQDATE,SLIP,SLDO,SLDP
+"RTN","PSSPOIM1",81,0)
+ S (SSSQUE,SSSQUEY)=0 F SSLOOP=0:0 S SSLOOP=$O(^PSDRUG("ASP",ZZZ,SSLOOP)) Q:'SSLOOP!(SSSQUEY)  D
+"RTN","PSSPOIM1",82,0)
+ .I $P($G(^PSDRUG(SSLOOP,0)),"^",3)["S" S SSSAP=$P($G(^(2)),"^",3),SSSIN=$P($G(^("I")),"^") D
+"RTN","PSSPOIM1",83,0)
+ ..I SSSAP["O"!(SSSAP["I")!(SSSAP["U") I 'SSSIN S $P(^PS(50.7,ZZZ,0),"^",9)=1 S (SSSQUEY,SSSQUE)=1 Q
+"RTN","PSSPOIM1",84,0)
+ ..I SSSAP["O"!(SSSAP["I")!(SSSAP["U") I +SSSIN>DT S $P(^PS(50.7,ZZZ,0),"^",9)=1 S SSSQUE=1,SSSQDATE($E(SSSIN,1,7))=""
+"RTN","PSSPOIM1",85,0)
+ I 'SSSQUEY,SSSQUE,$O(SSSQDATE(0)) F SLIP=0:0 S SLIP=$O(SSSQDATE(SLIP)) Q:'SLIP  D
+"RTN","PSSPOIM1",86,0)
+ .S ZTRTN="ENT^PSSPOIDT",ZTDESC="Supply update for Orderable Item",ZTIO="",ZTDTH=SLIP_.01 S SLDO=$G(PSSORDIT),SLDP=$G(PSSCROSS) S PSSORDIT=ZZZ,PSSCROSS=1 S ZTSAVE("PSSORDIT")="",ZTSAVE("PSSCROSS")="" D ^%ZTLOAD D
+"RTN","PSSPOIM1",87,0)
+ ..S PSSORDIT=$G(SLDO) K:'PSSORDIT PSSORDIT
+"RTN","PSSPOIM1",88,0)
+ ..S PSSCROSS=$G(SLDP) K:'PSSCROSS PSSCROSS
+"RTN","PSSPOIM1",89,0)
+ Q
+"RTN","PSSPOIM1",90,0)
+ ;
+"RTN","PSSPOIMO")
+0^3^B139401789
+"RTN","PSSPOIMO",1,0)
+PSSPOIMO ;BIR/RTR/WRT-Edit Orderable Item Name and Inactive date ; 4/28/09 4:39pm
+"RTN","PSSPOIMO",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**29,32,38,47,68,102,125,141,153,159,166**;9/30/97;Build 9
+"RTN","PSSPOIMO",3,0)
+ S PSSITE=+$O(^PS(59.7,0)) I +$P($G(^PS(59.7,PSSITE,80)),"^",2)<2 W !!?3,"Orderable Item Auto-Create has not been completed yet!",! K PSSITE K DIR S DIR("A")="Press RETURN to continue",DIR(0)="E" D ^DIR K DIR Q
+"RTN","PSSPOIMO",4,0)
+ K PSSITE W !!,"This option enables you to edit Orderable Item names, Formulary status,",!,"drug text, Inactive Dates, and Synonyms."
+"RTN","PSSPOIMO",5,0)
+EN I $D(PSOIEN) L -^PS(50.7,PSOIEN)
+"RTN","PSSPOIMO",6,0)
+ K PSSCROSS,DTOUT,DUOUT,DIRUT
+"RTN","PSSPOIMO",7,0)
+ K DIC ; S PY=$P($G(^PS(59.7,1,31)),"^",2)
+"RTN","PSSPOIMO",8,0)
+ S PSS1="W ""  ""_$P(^PS(50.606,$P(^PS(50.7,+Y,0),""^"",2),0),""^"")_""  ""_$S($P($G(^PS(50.7,+Y,0)),""^"",4):$E($P(^(0),""^"",4),4,5)_""-""_$E($P(^(0),""^"",4),6,7)_""-""_$E($P(^(0),""^"",4),2,3),1:"""")"
+"RTN","PSSPOIMO",9,0)
+ S PSS2=" S NF=$P($G(^PS(50.7,+Y,0)),""^"",12) I NF S NF=""   N/F"" W NF"
+"RTN","PSSPOIMO",10,0)
+ S DIC("W")=PSS1_PSS2,DIC("S")="I '$P($G(^PS(50.7,+Y,0)),""^"",3)"
+"RTN","PSSPOIMO",11,0)
+ ;PSO*7*102;ONLY SEARCH B AND C X-REFS
+"RTN","PSSPOIMO",12,0)
+ S $P(PLINE,"-",79)="" W !! K PSOUT S DIC="^PS(50.7,",DIC(0)="QEAMZ",D="B^C" D MIX^DIC1 K DIC,PY,D G:Y<0!($D(DTOUT))!($D(DUOUT)) END
+"RTN","PSSPOIMO",13,0)
+ S PSOIEN=+Y,PSOINAME=$P(Y,"^",2),PSDOSE=+$P(^PS(50.7,PSOIEN,0),"^",2) L +^PS(50.7,PSOIEN):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I '$T W !,$C(7),"Another person is editing this one." Q
+"RTN","PSSPOIMO",14,0)
+ W !!!,?5,"Orderable Item -> ",PSOINAME,!?5,"Dosage Form    -> ",$P($G(^PS(50.606,PSDOSE,0)),"^"),!
+"RTN","PSSPOIMO",15,0)
+ K DIR S DIR("?")=" ",DIR("?",1)="Enter 'Yes' to see all of the Dispense Drugs, IV Additives, and IV Solutions",DIR("?",2)="that are matched to this Orderable Item. IV Additives will be identified with"
+"RTN","PSSPOIMO",16,0)
+ S DIR("?",3)="an (A), and IV Solutions with an (S)."
+"RTN","PSSPOIMO",17,0)
+ S DIR(0)="Y",DIR("B")="YES",DIR("A")="List all Drugs/Additives/Solutions tied to this Orderable Item" D ^DIR K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) G EN
+"RTN","PSSPOIMO",18,0)
+ I Y D DISP
+"RTN","PSSPOIMO",19,0)
+EDIT K DIR W ! S DIR(0)="Y",DIR("A")="Are you sure you want to edit this Orderable Item",DIR("B")="NO",DIR("?")="Answer YES to edit the fields associated with this Orderable Item." D ^DIR K DIR I 'Y!($D(DTOUT))!($D(DUOUT)) G EN
+"RTN","PSSPOIMO",20,0)
+ W !!?3,"Now editing Orderable Item:",!?3,PSOINAME,"   ",$P($G(^PS(50.606,PSDOSE,0)),"^")
+"RTN","PSSPOIMO",21,0)
+DIR K DIR S DIR(0)="F^3:40",DIR("B")=PSOINAME,DIR("A")="Orderable Item Name" D ^DIR
+"RTN","PSSPOIMO",22,0)
+ I Y["^"!($D(DUOUT))!($D(DTOUT)) G EN
+"RTN","PSSPOIMO",23,0)
+ I X[""""!($A(X)=45)!('(X'?1P.E))!(X?2"z".E) W $C(7),!!?5,"??" G DIR
+"RTN","PSSPOIMO",24,0)
+ I X'=PSOINAME S ZZFLAG=0 D @$S('$P($G(^PS(50.7,PSOIEN,0)),"^",3):"CHECK",1:"ZCHECK") I ZZFLAG G DIR
+"RTN","PSSPOIMO",25,0)
+ S PSONEW=X,DIE="^PS(50.7,",DA=PSOIEN,DR=".01////"_X D ^DIE I PSONEW'=PSOINAME W !!,"Name changed from  ",PSOINAME,!?15,"to  ",PSONEW
+"RTN","PSSPOIMO",26,0)
+ S PSSDTENT=0 W ! K DIE N MFLG S PSBEFORE=$P(^PS(50.7,PSOIEN,0),"^",4),PSAFTER=0,PSINORDE="" D
+"RTN","PSSPOIMO",27,0)
+ .;If reactivate OI, prompt to reactivate DD's only if there are any, then always give message saying OI now Active. If Inactivate, prompt to inactivate any active DD's if there are any, and give message
+"RTN","PSSPOIMO",28,0)
+ .;but if OI is reactivated, and there are no activities matched to it, and user does not want to activate the drugs, then inactivate the OI again, and give a clear message explaining this.
+"RTN","PSSPOIMO",29,0)
+ .W !,"This Orderable Item is "_$S($P($G(^PS(50.7,PSOIEN,0)),"^",12):"Non-Formulary.",1:"Formulary."),!
+"RTN","PSSPOIMO",30,0)
+ .I $P($G(^PS(50.7,PSOIEN,0)),"^",10) W !,"This Orderable Item is marked as a Non-VA Med.",!
+"RTN","PSSPOIMO",31,0)
+ .S DIE="^PS(50.7,",DA=PSOIEN,DR=6 S PSCREATE=1 D ^DIE K DIE,PSCREATE I $D(DTOUT)!($D(Y)>10) Q
+"RTN","PSSPOIMO",32,0)
+ .;PSS*1*102;ADD DRUG TEXT AS SYNONYM IS REQUESTED BY USER
+"RTN","PSSPOIMO",33,0)
+ .D ADDSYN^PSSPOIMP
+"RTN","PSSPOIMO",34,0)
+ .K DIR S DIR(0)="DO",DIR("A")="INACTIVE DATE" D  D ^DIR K DIR I $G(Y)["^"!($D(DTOUT))!($G(DUOUT)) Q
+"RTN","PSSPOIMO",35,0)
+ ..I $G(PSBEFORE) S Y=PSBEFORE D DD^%DT S DIR("B")=$G(Y)
+"RTN","PSSPOIMO",36,0)
+ .I $G(PSBEFORE),'$G(Y) W ?40,"Inactive Date deleted!"
+"RTN","PSSPOIMO",37,0)
+ .S PSSDTENT=$G(Y) I $G(Y) D DD^%DT W ?40,$G(Y)
+"RTN","PSSPOIMO",38,0)
+ .S PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSPOIMO",39,0)
+ .S DIE="^PS(50.7,",DA=PSOIEN N PSSFG,PSSOU
+"RTN","PSSPOIMO",40,0)
+ .S DR=".05;@1;D SETF^PSSPOIMO;.06;D DFR^PSSPOIMO(PSDOSE);10//YES;I X=""Y"" S Y=""@2"";S:$G(DUOUT) Y=""@3"";D PDCHK^PSSPOIMO S:PSSFG Y=""@1"";S:$G(DUOUT) Y=""@3"";@2;K DIE(""NO^""),DIRUT;D MRSEL^PSSPOIMO;.07;.08;7;S:'$G(PSSOTH) Y=""@3"";7.1;@3"
+"RTN","PSSPOIMO",41,0)
+ .S PSCREATE=1 D ^DIE K DIE,PSCREATE,PSSOTH,^TMP("PSJMR",$J),^TMP("PSSDMR",$J) I $D(PSSOU),'$G(PSSOU) D MRSEL K ^TMP("PSJMR",$J)
+"RTN","PSSPOIMO",42,0)
+ .S $P(^PS(50.7,PSOIEN,0),"^",4)=PSSDTENT,PSAFTER=PSSDTENT
+"RTN","PSSPOIMO",43,0)
+ S:PSBEFORE&('$P(^PS(50.7,PSOIEN,0),"^",4)) PSINORDE="D" S:$P(^PS(50.7,PSOIEN,0),"^",4) PSINORDE="I"
+"RTN","PSSPOIMO",44,0)
+ I PSINORDE'="" D CHECK^PSSPOID2(PSOIEN) D
+"RTN","PSSPOIMO",45,0)
+ .I PSINORDE="D" D  Q
+"RTN","PSSPOIMO",46,0)
+ ..I $O(PSSDACTI(0))!($O(PSSSACTI(0)))!($O(PSSAACTI(0))) D
+"RTN","PSSPOIMO",47,0)
+ ...W !!,"There are inactive "_$S($O(PSSDACTI(0)):"drugs, ",1:"")_$S($O(PSSAACTI(0)):"additives, ",1:"")_$S($O(PSSSACTI(0)):"solutions,",1:""),!,"matched to this Pharmacy Orderable Item."
+"RTN","PSSPOIMO",48,0)
+ .I $O(PSSDACT(0))!($O(PSSSACT(0)))!($O(PSSAACT(0))) D
+"RTN","PSSPOIMO",49,0)
+ ..W !!,"There are active "_$S($O(PSSDACT(0)):"drugs, ",1:"")_$S($O(PSSAACT(0)):"additives, ",1:"")_$S($O(PSSSACT(0)):"solutions,",1:""),!,"matched to this Pharmacy Orderable Item."
+"RTN","PSSPOIMO",50,0)
+ I $G(PSINORDE)="D" I $O(PSSDACTI(0))!($O(PSSSACTI(0)))!($O(PSSAACTI(0))) D REST^PSSPOIDT(PSOIEN)
+"RTN","PSSPOIMO",51,0)
+ I $G(PSINORDE)="I" I $O(PSSDACT(0))!($O(PSSSACT(0)))!($O(PSSAACT(0))) D REST^PSSPOIDT(PSOIEN)
+"RTN","PSSPOIMO",52,0)
+ S DIK="^PS(50.7,",DA=PSOIEN,DIK(1)=.04 D EN^DIK K DIK
+"RTN","PSSPOIMO",53,0)
+ K PSBEFORE,PSAFTER,PSINORDE,PSSDTENT,PSSDACT,PSSDACTI,PSSSACT,PSSSACTI,PSSAACT,PSSAACTI
+"RTN","PSSPOIMO",54,0)
+IMMUN ;PSS*1*141 FOR 'IMMUNIZATIONS DOCUMENTATION BY BCMA'
+"RTN","PSSPOIMO",55,0)
+ I $O(^PSDRUG("AOC",PSOIEN,"IM000"))'["IM" G SYN ;ASK WHEN APPROPRIATE
+"RTN","PSSPOIMO",56,0)
+ W ! S DIE="^PS(50.7,",DA=PSOIEN,DR=9 D ^DIE K DIE
+"RTN","PSSPOIMO",57,0)
+SYN I $G(Y)["^"!($G(DIRUT))!$D(DTOUT)!($D(Y)>10) G EN
+"RTN","PSSPOIMO",58,0)
+ W ! K DIC S:'$D(^PS(50.7,PSOIEN,2,0)) ^PS(50.7,PSOIEN,2,0)="^50.72^0^0" S DIC="^PS(50.7,"_PSOIEN_",2,",DA(1)=PSOIEN,DIC(0)="QEAMZL",DIC("A")="Select SYNONYM: ",DLAYGO=50.72 D ^DIC K DIC
+"RTN","PSSPOIMO",59,0)
+ I Y<0!($D(DUOUT))!($D(DTOUT)) K:'$O(^PS(50.7,PSOIEN,2,0)) ^PS(50.7,PSOIEN,2,0) D EN^PSSPOIDT(PSOIEN),EN2^PSSHL1(PSOIEN,"MUP") G EN
+"RTN","PSSPOIMO",60,0)
+ W ! S DA=+Y,DIE="^PS(50.7,"_PSOIEN_",2,",DA(1)=PSOIEN,DR=.01 D ^DIE K DIE G SYN
+"RTN","PSSPOIMO",61,0)
+ D EN^PSSPOIDT(PSOIEN),EN2^PSSHL1(PSOIEN,"MUP")
+"RTN","PSSPOIMO",62,0)
+ G EN
+"RTN","PSSPOIMO",63,0)
+END K ZZFLAG,DIC,DIR,DIE,DTOUT,DUOUT,DIRUT,FLAG,PSOINAME,PSOUT,PSDOSE,PSONEW,UPFLAG,VV,ZZ,AA,BB,Y,AAA,SSS,PSOARR,PSOARRAD,PLINE I $D(PSOIEN) L -^PS(50.7,PSOIEN) K PSOIEN
+"RTN","PSSPOIMO",64,0)
+ Q
+"RTN","PSSPOIMO",65,0)
+DISP N PSSLFLAG,PSSLDATE S FLAG=1 D HEAD F ZZ=0:0 S ZZ=$O(^PSDRUG("ASP",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  S FLAG=0 D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ W !,$P($G(^PSDRUG(ZZ,0)),"^") W:$P($G(^PSDRUG(ZZ,0)),"^",9) "   N/F" D DTE
+"RTN","PSSPOIMO",66,0)
+ Q:$G(PSOUT)
+"RTN","PSSPOIMO",67,0)
+ S (FLAG,PSSLFLAG)=0
+"RTN","PSSPOIMO",68,0)
+ F ZZ=0:0 S ZZ=$O(^PS(52.6,"AOI",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ D
+"RTN","PSSPOIMO",69,0)
+ .S PSSLFLAG=1
+"RTN","PSSPOIMO",70,0)
+ .W !,$P($G(^PS(52.6,ZZ,0)),"^"),?42,"(A)"
+"RTN","PSSPOIMO",71,0)
+ .S PSSLDATE=$P($G(^PS(52.6,ZZ,"I")),"^") I PSSLDATE D DTEX
+"RTN","PSSPOIMO",72,0)
+ Q:$G(PSOUT)
+"RTN","PSSPOIMO",73,0)
+ ;I $G(PSSLFLAG) W !
+"RTN","PSSPOIMO",74,0)
+ F ZZ=0:0 S ZZ=$O(^PS(52.7,"AOI",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ D
+"RTN","PSSPOIMO",75,0)
+ .W !,$P($G(^PS(52.7,ZZ,0)),"^"),?31,$P($G(^(0)),"^",3),?42,"(S)"
+"RTN","PSSPOIMO",76,0)
+ .S PSSLDATE=$P($G(^PS(52.7,ZZ,"I")),"^") I PSSLDATE D DTEX
+"RTN","PSSPOIMO",77,0)
+ Q
+"RTN","PSSPOIMO",78,0)
+HEAD I 'FLAG W ! K DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" D ^DIR K DIR I 'Y S PSOUT=1 Q
+"RTN","PSSPOIMO",79,0)
+ W @IOF W !,?6,"Orderable Item ->  ",PSOINAME,!?6,"Dosage Form    ->  ",$P($G(^PS(50.606,+$P($G(^PS(50.7,PSOIEN,0)),"^",2),0)),"^"),!!,"Dispense Drugs:"_$S('FLAG:" (continued)",1:""),!,"---------------"
+"RTN","PSSPOIMO",80,0)
+ Q
+"RTN","PSSPOIMO",81,0)
+ADDIT ;If orderable item is flagged for IV
+"RTN","PSSPOIMO",82,0)
+ S AA=$O(^PS(52.6,"AOI",PSOIEN,0))
+"RTN","PSSPOIMO",83,0)
+ S BB=$O(^PS(52.7,"AOI",PSOIEN,0))
+"RTN","PSSPOIMO",84,0)
+ I 'AA,'BB W $C(7),!,"This Orderable Item is flagged for IV use, but currently there are no IV",!,"Additives or IV Solutions matched to this Orderable Item!" G EDIT
+"RTN","PSSPOIMO",85,0)
+ G SOL
+"RTN","PSSPOIMO",86,0)
+CHECK ;
+"RTN","PSSPOIMO",87,0)
+ S ZZFLAG=0 F VV=0:0 S VV=$O(^PS(50.7,"ADF",X,PSDOSE,VV)) Q:'VV  I VV,'$P($G(^PS(50.7,VV,0)),"^",3) S ZZFLAG=1
+"RTN","PSSPOIMO",88,0)
+ I ZZFLAG W $C(7),!!?5,"There is already an Orderable Item with this same name and Dosage Form",!?5,"that is not flagged as 'IV'. Use the 'DISPENSE DRUG/ORDERABLE ITEM",!?5,"MAINTENANCE' option if you want to re-match to this Orderable Item!",!
+"RTN","PSSPOIMO",89,0)
+ Q
+"RTN","PSSPOIMO",90,0)
+ZCHECK ;
+"RTN","PSSPOIMO",91,0)
+ S ZZFLAG=0 F VV=0:0 S VV=$O(^PS(50.7,"ADF",X,PSDOSE,VV)) Q:'VV  I VV,$P($G(^PS(50.7,VV,0)),"^",3) S ZZFLAG=1
+"RTN","PSSPOIMO",92,0)
+ I ZZFLAG W $C(7),!!?5,"There is already an Orderable Item with the same name and Dosage Form,",!?5,"that is flagged for 'IV' use.",!
+"RTN","PSSPOIMO",93,0)
+ Q
+"RTN","PSSPOIMO",94,0)
+SOL ;
+"RTN","PSSPOIMO",95,0)
+ K DIR S DIR(0)="Y",DIR("B")="YES",DIR("A")="List all Additives and Solutions tied to this Orderable Item" D ^DIR K DIR G:Y["^"!($D(DTOUT)) EN G:Y=0 EDIT
+"RTN","PSSPOIMO",96,0)
+ H 1 K PSOARR,PSOARRAD S AAA=$O(^PS(52.6,"AOI",PSOIEN,0)) I AAA,$D(^PS(52.6,AAA,0)) S PSOARRAD=AAA
+"RTN","PSSPOIMO",97,0)
+ F SSS=0:0 S SSS=$O(^PS(52.7,"AOI",PSOIEN,SSS)) Q:'SSS  S:$D(^PS(52.7,SSS,0)) PSOARR(SSS)=""
+"RTN","PSSPOIMO",98,0)
+ S FLAG=1,UPFLAG=0 D SHEAD F ZZ=0:0 S ZZ=$O(PSOARR(ZZ)) Q:'ZZ!($G(PSOUT))!($G(UPFLAG))  S FLAG=0 D:($Y+7)>IOSL SHEAD Q:$G(PSOUT)!($G(UPFLAG))  I ZZ W !,$P($G(^PS(52.7,ZZ,0)),"^"),"   ",$P($G(^(0)),"^",3)
+"RTN","PSSPOIMO",99,0)
+ G:$G(PSOUT) EN
+"RTN","PSSPOIMO",100,0)
+ G EDIT
+"RTN","PSSPOIMO",101,0)
+SHEAD I 'FLAG W ! K DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" D ^DIR K DIR I 'Y S:Y="" PSOUT=1 S:Y=0 UPFLAG=1 Q
+"RTN","PSSPOIMO",102,0)
+ W @IOF W !?6,"Orderable Item ->  ",PSOINAME,?68,"(IV)",!?6,"Dosage Form    ->  ",$P($G(^PS(50.606,+$P($G(^PS(50.7,PSOIEN,0)),"^",2),0)),"^"),!,PLINE I FLAG,'$G(PSOARRAD) W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",103,0)
+ I 'FLAG W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",104,0)
+ I FLAG,$G(PSOARRAD) W !,$P($G(^PS(52.6,PSOARRAD,0)),"^"),"    ","(IV Additive)",! I $D(PSOARR) W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",105,0)
+ Q
+"RTN","PSSPOIMO",106,0)
+DTE I $D(^PSDRUG(ZZ,"I")) S Y=$P(^PSDRUG(ZZ,"I"),"^") D DD^%DT W ?50,Y K Y
+"RTN","PSSPOIMO",107,0)
+ Q
+"RTN","PSSPOIMO",108,0)
+DTEX S Y=$G(PSSLDATE) D DD^%DT W ?50,$G(Y) K Y
+"RTN","PSSPOIMO",109,0)
+ Q
+"RTN","PSSPOIMO",110,0)
+IVMSG ; display a message if the CORRESPONDING IV field is entered
+"RTN","PSSPOIMO",111,0)
+ ;
+"RTN","PSSPOIMO",112,0)
+ S PSSIVMSG=$P(^PS(50.7,PSOIEN,0),"^",11) I PSSIVMSG="" Q
+"RTN","PSSPOIMO",113,0)
+ S PSSIVFRM=$P(^PS(50.7,PSSIVMSG,0),"^",2) I PSSIVFRM S PSSIVFRM=$P(^PS(50.606,PSSIVFRM,0),"^")
+"RTN","PSSPOIMO",114,0)
+ S PSSIVMSG=$P(^PS(50.7,PSSIVMSG,0),"^")_" "_PSSIVFRM
+"RTN","PSSPOIMO",115,0)
+ W !!,"The Corresponding IV Item is currently identified as: "_PSSIVMSG,!
+"RTN","PSSPOIMO",116,0)
+ K PSSIVFRM,PSSIVMSG
+"RTN","PSSPOIMO",117,0)
+ Q
+"RTN","PSSPOIMO",118,0)
+UDMSG ; display a message if the CORRESPONDING UD field is entered
+"RTN","PSSPOIMO",119,0)
+ ;
+"RTN","PSSPOIMO",120,0)
+ S PSSUDMSG=$P(^PS(50.7,PSOIEN,0),"^",10) I PSSUDMSG="" Q
+"RTN","PSSPOIMO",121,0)
+ S PSSUDFRM=$P(^PS(50.7,PSSUDMSG,0),"^",2) I PSSUDFRM S PSSUDFRM=$P(^PS(50.606,PSSUDFRM,0),"^")
+"RTN","PSSPOIMO",122,0)
+ S PSSUDMSG=$P(^PS(50.7,PSSUDMSG,0),"^")_" "_PSSUDFRM
+"RTN","PSSPOIMO",123,0)
+ W !!,"The Corresponding UD Item is currently identified as: "_PSSUDMSG,!
+"RTN","PSSPOIMO",124,0)
+ K PSSUDMSG,PSSUDFRM
+"RTN","PSSPOIMO",125,0)
+ Q
+"RTN","PSSPOIMO",126,0)
+DFR(PSDOSE) ; dosage form med routes - called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",127,0)
+ D SETF
+"RTN","PSSPOIMO",128,0)
+ N MR,MRNODE,XX K ^TMP("PSSDMR",$J)
+"RTN","PSSPOIMO",129,0)
+ S (MCT,MR)=0 F  S MR=$O(^PS(50.606,PSDOSE,"MR",MR)) Q:'MR  D
+"RTN","PSSPOIMO",130,0)
+ .S XX=+$G(^PS(50.606,PSDOSE,"MR",MR,0)) Q:'XX  S MRNODE=$G(^PS(51.2,XX,0)) I $P($G(MRNODE),"^",4)'=1 Q
+"RTN","PSSPOIMO",131,0)
+ .S MCT=MCT+1,^TMP("PSSDMR",$J,MCT)=$P(MRNODE,U),^TMP("PSSDMR",$J,"B",XX)=""
+"RTN","PSSPOIMO",132,0)
+ D DFRL
+"RTN","PSSPOIMO",133,0)
+ Q
+"RTN","PSSPOIMO",134,0)
+DFRL W !!," List of med routes associated with the DOSAGE FORM of the orderable item:",!
+"RTN","PSSPOIMO",135,0)
+ S MCT=0 I '$O(^TMP("PSSDMR",$J,MCT)) W !,?3,"NO MED ROUTE DEFINED"
+"RTN","PSSPOIMO",136,0)
+ F  S MCT=$O(^TMP("PSSDMR",$J,MCT)) Q:'MCT  W !,?3,$G(^(MCT))
+"RTN","PSSPOIMO",137,0)
+ D EN^DDIOL(" If you answer YES to the next prompt, the DEFAULT MED ROUTE (if populated)",,"!!")
+"RTN","PSSPOIMO",138,0)
+ D EN^DDIOL(" and this list (if populated) will be displayed as selectable med routes",,"!")
+"RTN","PSSPOIMO",139,0)
+ D EN^DDIOL(" during medication ordering dialog. If you answer NO, the DEFAULT MED ROUTE",,"!")
+"RTN","PSSPOIMO",140,0)
+ D EN^DDIOL(" (if populated) and POSSIBLE MED ROUTES list will be displayed instead.",,"!") W !
+"RTN","PSSPOIMO",141,0)
+ ;K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",142,0)
+ Q
+"RTN","PSSPOIMO",143,0)
+PDR ; possible med routes - called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",144,0)
+ N MCT,MR,MRNODE,XX K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",145,0)
+ S (XX,MCT)=0 F  S XX=$O(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),3,"B",XX)) Q:'XX  S MRNODE=$G(^PS(51.2,XX,0)),MCT=MCT+1,^TMP("PSSMR",$J,MCT)=$P(MRNODE,U)
+"RTN","PSSPOIMO",146,0)
+ I $O(^TMP("PSSMR",$J,0)) D
+"RTN","PSSPOIMO",147,0)
+ .W !!," List of Possible Med Routes associated with the orderable item:",!
+"RTN","PSSPOIMO",148,0)
+ .S MCT=0 F  S MCT=$O(^TMP("PSSMR",$J,MCT)) Q:'MCT  W !,?3,$G(^(MCT))
+"RTN","PSSPOIMO",149,0)
+ W ! K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",150,0)
+ Q
+"RTN","PSSPOIMO",151,0)
+PDCHK ; called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",152,0)
+ N ANS,D,DIC,DIE,DO,DICR,DR,DIR,PSOUT,PSSDA,PSSX,PSSXA,PSSY,Q,X,Y,Z
+"RTN","PSSPOIMO",153,0)
+ S DIR(0)="PO^51.2:EMZ",DIR("A")="POSSIBLE MED ROUTES",DIR("S")="I $P(^(0),U,4)" S PSOUT=0
+"RTN","PSSPOIMO",154,0)
+ S DIR("PRE")="I X=""?"" D MRTHLP^PSSPOIMO"
+"RTN","PSSPOIMO",155,0)
+ F  D PDR,^DIR D  I PSOUT Q
+"RTN","PSSPOIMO",156,0)
+ .I (X="")!$D(DTOUT)!$D(DUOUT) S PSOUT=1 Q
+"RTN","PSSPOIMO",157,0)
+ .I X="@",$D(PSSY) S ANS=DA D:$$DASK  Q
+"RTN","PSSPOIMO",158,0)
+ ..N DIK,DA S DA(1)=ANS,DIK="^PS(50.7,"_DA(1)_",3,"
+"RTN","PSSPOIMO",159,0)
+ ..S DA=$O(^PS(50.7,DA(1),3,"B",PSSY,"")) I DA="" Q
+"RTN","PSSPOIMO",160,0)
+ ..D ^DIK K PSSY,DIR("B")
+"RTN","PSSPOIMO",161,0)
+ .I Y="" W "  ??" Q
+"RTN","PSSPOIMO",162,0)
+ .I $D(^PS(50.7,DA,3,"B",+Y)) D  Q
+"RTN","PSSPOIMO",163,0)
+ ..I $D(DIR("B")) K PSSY,DIR("B") Q
+"RTN","PSSPOIMO",164,0)
+ ..S DIR("B")=Y(0,0),PSSY=+Y Q
+"RTN","PSSPOIMO",165,0)
+ .S PSSXA=Y(0,0),PSSX=+Y D DFR(+$P(^PS(50.7,DA,0),"^",2))
+"RTN","PSSPOIMO",166,0)
+ .I $G(PSSX) S ANS=$$ASK() I 'ANS Q
+"RTN","PSSPOIMO",167,0)
+ .S PSSDA(50.711,"+1,"_DA_",",.01)=+PSSX
+"RTN","PSSPOIMO",168,0)
+ .D UPDATE^DIE("","PSSDA")
+"RTN","PSSPOIMO",169,0)
+ .K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",170,0)
+ D DP
+"RTN","PSSPOIMO",171,0)
+ Q
+"RTN","PSSPOIMO",172,0)
+ASK() ; confirm adding the new entry
+"RTN","PSSPOIMO",173,0)
+ N DIR,X,Y W ! S DIR(0)="YO",DIR("B")="YES"
+"RTN","PSSPOIMO",174,0)
+ I $D(^TMP("PSSDMR",$J)),'$D(^TMP("PSSDMR",$J,"B",PSSX)) S DIR("B")="NO",DIR("A",1)="The selected entry does not match to any of the dosage form med routes."
+"RTN","PSSPOIMO",175,0)
+ W $C(7) S DIR("A")="  Are you adding '"_PSSXA_"' as a new POSSIBLE MED ROUTE" D ^DIR
+"RTN","PSSPOIMO",176,0)
+ Q $S(Y=1:1,1:0)
+"RTN","PSSPOIMO",177,0)
+DASK() ; delete possible med route
+"RTN","PSSPOIMO",178,0)
+ N DIR
+"RTN","PSSPOIMO",179,0)
+ W $C(7) S DIR("A")="     SURE YOU WANT TO DELETE ",DIR(0)="Y" D ^DIR
+"RTN","PSSPOIMO",180,0)
+ Q $S(Y=1:1,1:0)
+"RTN","PSSPOIMO",181,0)
+MRTHLP ; help of possible med route
+"RTN","PSSPOIMO",182,0)
+ N DIC,RTE,D
+"RTN","PSSPOIMO",183,0)
+ S RTE=0 F  S RTE=$O(^PS(50.7,DA,3,"B",RTE)) Q:'RTE   D EN^DDIOL($P($G(^PS(51.2,RTE,0)),"^"),,"!,?4")
+"RTN","PSSPOIMO",184,0)
+ W ! D EN^DDIOL("Enter the most common MED ROUTE associated with this Orderable Item.",,"!,?5")
+"RTN","PSSPOIMO",185,0)
+ D EN^DDIOL("ONLY MED ROUTES MARKED FOR USE BY ALL PACKAGES ARE SELECTABLE.",,"!,?5")
+"RTN","PSSPOIMO",186,0)
+ Q
+"RTN","PSSPOIMO",187,0)
+DP ; check the existence of Default Med Route & Possible Med Routes
+"RTN","PSSPOIMO",188,0)
+ N D,DIC,DIE,DO,DICR,DR,DIR,Q,X,Y,Z
+"RTN","PSSPOIMO",189,0)
+ I '$P($G(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),0)),"^",6)&('$O(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),3,0))) D
+"RTN","PSSPOIMO",190,0)
+ .S PSR(1)=" You have not selected ANY med routes to display during order entry. In"
+"RTN","PSSPOIMO",191,0)
+ .S PSR(2)=" order to have med routes displayed during order entry, you must either"
+"RTN","PSSPOIMO",192,0)
+ .S PSR(3)=" define a DEFAULT MED ROUTE and/or at least one POSSIBLE MED ROUTE, or"
+"RTN","PSSPOIMO",193,0)
+ .S PSR(4)=" answer YES to the USE DOSAGE FORM MED ROUTE LIST prompt."
+"RTN","PSSPOIMO",194,0)
+ .S PSR(5)=" **WITH THE CURRENT SETTINGS, NO MED ROUTES WILL DISPLAY FOR SELECTION ",PSR(5,"F")="!!"
+"RTN","PSSPOIMO",195,0)
+ .S PSR(6)=" DURING ORDER ENTRY FOR THIS ORDERABLE ITEM**"
+"RTN","PSSPOIMO",196,0)
+ .D EN^DDIOL(.PSR),EN^DDIOL(" ","","!")
+"RTN","PSSPOIMO",197,0)
+ .K DIR S DIR(0)="Y",DIR("?",1)="If you select NO, you will continue to loop back to the Default Med Route"
+"RTN","PSSPOIMO",198,0)
+ .S DIR("?")="prompt until either a selection is made or you answer YES to this prompt to proceed."
+"RTN","PSSPOIMO",199,0)
+ .S DIR("A",1)="",DIR("A",2)="The current setting is usually only appropriate for supply items."
+"RTN","PSSPOIMO",200,0)
+ .S DIR("A")="Continue with NO med route displaying for selection during order entry",DIR("B")="NO"
+"RTN","PSSPOIMO",201,0)
+ .D ^DIR K DIR W ! I 'Y!($D(DTOUT))!($D(DUOUT)) S PSSFG=1
+"RTN","PSSPOIMO",202,0)
+ .S:Y PSSFG=0
+"RTN","PSSPOIMO",203,0)
+ E  S PSSFG=0
+"RTN","PSSPOIMO",204,0)
+ Q
+"RTN","PSSPOIMO",205,0)
+ ;
+"RTN","PSSPOIMO",206,0)
+SETF ;
+"RTN","PSSPOIMO",207,0)
+ S PSSOU=0 K ^TMP("PSJMR",$J) D MEDRT^PSSJORDF($S($G(PSVAR):PSVAR,1:PSOIEN))
+"RTN","PSSPOIMO",208,0)
+ I '$D(^TMP("PSJMR",$J)) S DIE("NO^")="",PSSFG=1
+"RTN","PSSPOIMO",209,0)
+ E  S PSSFG=0 K DIE("NO^")
+"RTN","PSSPOIMO",210,0)
+ Q
+"RTN","PSSPOIMO",211,0)
+MRSEL ;
+"RTN","PSSPOIMO",212,0)
+ K ^TMP("PSJMR",$J) D MEDRT^PSSJORDF($S($G(PSVAR):PSVAR,1:PSOIEN))
+"RTN","PSSPOIMO",213,0)
+ W !,"The following Med Routes will now be displayed during order entry:"
+"RTN","PSSPOIMO",214,0)
+ N I S (PSSOU,I)=0 F  S I=$O(^TMP("PSJMR",$J,I)) Q:'I   W !,$P(^(I),"^",2) S PSSOU=1
+"RTN","PSSPOIMO",215,0)
+ W:'PSSOU !,"(None)"
+"RTN","PSSPOIMO",216,0)
+ W ! S PSSOU=1
+"RTN","PSSPOIMO",217,0)
+ Q
+"RTN","PSSPOIMO",218,0)
+ ;
+"RTN","PSSUTIL1")
+0^2^B37379824
+"RTN","PSSUTIL1",1,0)
+PSSUTIL1 ;BIR/RTR-Utility routine ;08/21/00
+"RTN","PSSUTIL1",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**38,66,69,166**;9/30/97;Build 9
+"RTN","PSSUTIL1",3,0)
+ ;Reference to ^PS(50.607 supported by DBIA #2221
+"RTN","PSSUTIL1",4,0)
+ ;Reference to ^PSNAPIS supported by DBIA 2531
+"RTN","PSSUTIL1",5,0)
+ ;
+"RTN","PSSUTIL1",6,0)
+EN(PSSDRIEN) ;
+"RTN","PSSUTIL1",7,0)
+ N PSSMASH,PSSMNDFS,PSSMSSTR,PSSMUNIT,PSSUNZ,PSSMA,PSSMB,PSSMA1,PSSMB1,PSSUNX,PSSMASH2,PSSMASH3,PSSNAT1,PSSNAT3,PSSNODEU
+"RTN","PSSUTIL1",8,0)
+ I '$G(PSSDRIEN) Q "|^^^^^99PSU"
+"RTN","PSSUTIL1",9,0)
+ S PSSMSSTR=$P($G(^PSDRUG(PSSDRIEN,"DOS")),"^"),PSSMUNIT=$P($G(^("DOS")),"^",2)
+"RTN","PSSUTIL1",10,0)
+ S PSSNAT1=$P($G(^PSDRUG(PSSDRIEN,"ND")),"^"),PSSNAT3=$P($G(^("ND")),"^",3) I PSSNAT1,PSSNAT3 S PSSNODEU=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT3) S PSSMNDFS=$P(PSSNODEU,"^",4) S:'$G(PSSMUNIT) PSSMUNIT=$P(PSSNODEU,"^",5)
+"RTN","PSSUTIL1",11,0)
+ S PSSUNZ=$P($G(^PS(50.607,+$G(PSSMUNIT),0)),"^")
+"RTN","PSSUTIL1",12,0)
+ I PSSUNZ'["/" Q $S($G(PSSMSSTR)'="":$G(PSSMSSTR),$G(PSSMNDFS)'="":$G(PSSMNDFS),1:"")_"|"_"^^^"_$S($G(PSSMUNIT):$G(PSSMUNIT),1:"")_"^"_$G(PSSUNZ)_"^"_"99PSU"
+"RTN","PSSUTIL1",13,0)
+ S PSSMASH=0
+"RTN","PSSUTIL1",14,0)
+ I $G(PSSMSSTR),$G(PSSMNDFS),+$G(PSSMSSTR)'=+$G(PSSMNDFS) S PSSMASH=1
+"RTN","PSSUTIL1",15,0)
+ I 'PSSMASH Q PSSMSSTR_"|"_"^^^"_$S($G(PSSMUNIT):$G(PSSMUNIT),1:"")_"^"_$G(PSSUNZ)_"^"_"99PSU"
+"RTN","PSSUTIL1",16,0)
+ S PSSMA=$P(PSSUNZ,"/"),PSSMB=$P(PSSUNZ,"/",2),PSSMA1=+$G(PSSMA),PSSMB1=+$G(PSSMB)
+"RTN","PSSUTIL1",17,0)
+ S PSSMASH2=PSSMSSTR/PSSMNDFS,PSSMASH3=PSSMASH2*($S($G(PSSMB1):$G(PSSMB1),1:1))
+"RTN","PSSUTIL1",18,0)
+ S PSSUNX=$G(PSSMA)_"/"_$G(PSSMASH3)_$S('$G(PSSMB1):$G(PSSMB),1:$P(PSSMB,PSSMB1,2))
+"RTN","PSSUTIL1",19,0)
+ Q $S($G(PSSMSSTR)'="":$G(PSSMSSTR),$G(PSSMNDFS)'="":$G(PSSMNDFS),1:"")_"|"_"^^^^"_$G(PSSUNX)_"^"_"99PSU"
+"RTN","PSSUTIL1",20,0)
+ ;
+"RTN","PSSUTIL1",21,0)
+ Q
+"RTN","PSSUTIL1",22,0)
+ ;
+"RTN","PSSUTIL1",23,0)
+DRG(PSSDD,PSSOI,PSSPK) ;
+"RTN","PSSUTIL1",24,0)
+ ; PSSDD - Array of Drugs
+"RTN","PSSUTIL1",25,0)
+ ; PSSOI - Orderable Item (Pharmacy)
+"RTN","PSSUTIL1",26,0)
+ ; PSSPK - Application Package ("O"-Outpatient;"I"-IV;"X"-Non-VA Med)
+"RTN","PSSUTIL1",27,0)
+ ;Return active dispense drugs for package based on Orderable Item 
+"RTN","PSSUTIL1",28,0)
+ N PSSL,PSSAP,PSSIN,PSSND
+"RTN","PSSUTIL1",29,0)
+ Q:'$G(PSSOI)
+"RTN","PSSUTIL1",30,0)
+ I $G(PSSPK)'="O",$G(PSSPK)'="I",$G(PSSPK)'="X" Q
+"RTN","PSSUTIL1",31,0)
+ F PSSL=0:0 S PSSL=$O(^PSDRUG("ASP",PSSOI,PSSL)) Q:'PSSL  D
+"RTN","PSSUTIL1",32,0)
+ . S PSSIN=$P($G(^PSDRUG(PSSL,"I")),"^"),PSSAP=$P($G(^(2)),"^",3)
+"RTN","PSSUTIL1",33,0)
+ . I PSSIN,PSSIN<DT Q
+"RTN","PSSUTIL1",34,0)
+ . S PSSND=$P($G(^PSDRUG(PSSL,"ND")),"^")
+"RTN","PSSUTIL1",35,0)
+ . I PSSPK="O"!(PSSPK="X") D  Q
+"RTN","PSSUTIL1",36,0)
+ . . S:PSSAP[PSSPK PSSDD(PSSL_";"_PSSND)=$P($G(^PSDRUG(PSSL,0)),"^")
+"RTN","PSSUTIL1",37,0)
+ . I PSSAP["I"!(PSSAP["U") D
+"RTN","PSSUTIL1",38,0)
+ . . S PSSDD(PSSL_";"_PSSND)=$P($G(^PSDRUG(PSSL,0)),"^")
+"RTN","PSSUTIL1",39,0)
+ Q
+"RTN","PSSUTIL1",40,0)
+ ;
+"RTN","PSSUTIL1",41,0)
+ITEM(PSSIT,PSSDR) ;Return Orderable Item to CPRS
+"RTN","PSSUTIL1",42,0)
+ N PSSNEW
+"RTN","PSSUTIL1",43,0)
+ I '$G(PSSIT)!('$G(PSSDR)) Q -1
+"RTN","PSSUTIL1",44,0)
+ I '$D(^PS(50.7,+$G(PSSIT),0))!('$D(^PSDRUG(+$G(PSSDR),0))) Q -1
+"RTN","PSSUTIL1",45,0)
+ S PSSNEW=+$P($G(^PSDRUG(+$G(PSSDR),2)),"^")
+"RTN","PSSUTIL1",46,0)
+ I PSSNEW,PSSNEW=$G(PSSIT) Q 0
+"RTN","PSSUTIL1",47,0)
+ I PSSNEW,PSSNEW'=$G(PSSIT) Q 1_"^"_PSSNEW
+"RTN","PSSUTIL1",48,0)
+ Q -1
+"RTN","PSSUTIL1",49,0)
+ ;
+"RTN","PSSUTIL1",50,0)
+ Q
+"RTN","PSSUTIL1",51,0)
+ ;
+"RTN","PSSUTIL1",52,0)
+EN1(PSSOA,PSSOAP) ;
+"RTN","PSSUTIL1",53,0)
+ ;Return Orderable Item Forumary Alternatives to CPRS
+"RTN","PSSUTIL1",54,0)
+ ;PSSOA = Pharmacy Orderable Item number
+"RTN","PSSUTIL1",55,0)
+ ;PSSOAP = "I" For Inpatient, "O" For Outpatient
+"RTN","PSSUTIL1",56,0)
+ Q:'$G(PSSOA)
+"RTN","PSSUTIL1",57,0)
+ I $G(PSSOAP)'="O",$G(PSSOAP)'="I" Q
+"RTN","PSSUTIL1",58,0)
+ N PSSOAL,PSSOALD,PSSOAN,PSSOAIT,PSSOADT,PSSOAZ
+"RTN","PSSUTIL1",59,0)
+ S PSSOAL="" F  S PSSOAL=$O(^PSDRUG("ASP",PSSOA,PSSOAL)) Q:PSSOAL=""  D
+"RTN","PSSUTIL1",60,0)
+ .S PSSOALD="" F  S PSSOALD=$O(^PSDRUG(PSSOAL,65,PSSOALD)) Q:PSSOALD=""  D
+"RTN","PSSUTIL1",61,0)
+ ..S PSSOAN=$P($G(^PSDRUG(PSSOAL,65,PSSOALD,0)),"^") I PSSOAN S PSSOAIT=$P($G(^PSDRUG(PSSOAN,2)),"^") D:PSSOAIT
+"RTN","PSSUTIL1",62,0)
+ ...Q:PSSOAIT=PSSOA
+"RTN","PSSUTIL1",63,0)
+ ...Q:$D(PSSOA(PSSOAIT))
+"RTN","PSSUTIL1",64,0)
+ ...Q:'$D(^PS(50.7,PSSOAIT,0))!($P($G(^PS(50.7,PSSOAIT,0)),"^",12))
+"RTN","PSSUTIL1",65,0)
+ ...Q:$P($G(^PS(50.7,PSSOAIT,0)),"^",4)&(+$P($G(^(0)),"^",4)'>DT)
+"RTN","PSSUTIL1",66,0)
+ ...S PSSOAZ="" F  S PSSOAZ=$O(^PSDRUG("ASP",PSSOAIT,PSSOAZ)) Q:PSSOAZ=""!($D(PSSOA(PSSOAIT)))  D
+"RTN","PSSUTIL1",67,0)
+ ....Q:$P($G(^PSDRUG(PSSOAZ,"I")),"^")&(+$P($G(^("I")),"^")'>DT)
+"RTN","PSSUTIL1",68,0)
+ ....Q:$P($G(^PSDRUG(PSSOAZ,0)),"^",9)
+"RTN","PSSUTIL1",69,0)
+ ....I $G(PSSOAP)="O" S:$P($G(^PSDRUG(PSSOAZ,2)),"^",3)["O" PSSOA(PSSOAIT)="" Q
+"RTN","PSSUTIL1",70,0)
+ ....I $P($G(^PSDRUG(PSSOAZ,2)),"^",3)["I"!($P($G(^(2)),"^",3)["U") S PSSOA(PSSOAIT)=""
+"RTN","PSSUTIL1",71,0)
+ Q
+"RTN","PSSUTIL1",72,0)
+SCH(SCH) ;Expand schedule for Outpatient order in CPRS
+"RTN","PSSUTIL1",73,0)
+ N SQFLAG,SCLOOP,SCLP,SCLPS,SCLHOLD,SCIN,SODL,SST,SCHEX
+"RTN","PSSUTIL1",74,0)
+ S SCHEX=$G(SCH) S SQFLAG=0
+"RTN","PSSUTIL1",75,0)
+ I $G(SCH)="" G SCHQT
+"RTN","PSSUTIL1",76,0)
+ ;I SCH[""""!($A(SCH)=45)!(SCH?.E1C.E)!($L(SCH," ")>3)!($L(SCH)>20)!($L(SCH)<1) K SCH Q
+"RTN","PSSUTIL1",77,0)
+ F SCLOOP=0:0 S SCLOOP=$O(^PS(51.1,"B",SCH,SCLOOP)) Q:'SCLOOP!(SQFLAG)  I $P($G(^PS(51.1,SCLOOP,0)),"^",8)'="" S SCHEX=$P($G(^(0)),"^",8),SQFLAG=1
+"RTN","PSSUTIL1",78,0)
+ I SQFLAG G SCHQT
+"RTN","PSSUTIL1",79,0)
+ I $P($G(^PS(51,"A",SCH)),"^")'="" S SCHEX=$P(^(SCH),"^") G SCHQT
+"RTN","PSSUTIL1",80,0)
+ S SCLOOP=0 F SCLP=1:1:$L(SCH) S SCLPS=$E(SCH,SCLP) I SCLPS=" " S SCLOOP=SCLOOP+1
+"RTN","PSSUTIL1",81,0)
+ I SCLOOP=0 S SCHEX=SCH G SCHQT
+"RTN","PSSUTIL1",82,0)
+ S SCLOOP=SCLOOP+1
+"RTN","PSSUTIL1",83,0)
+ K SCLHOLD F SCIN=1:1:SCLOOP S (SODL,SCLHOLD(SCIN))=$P(SCH," ",SCIN) D
+"RTN","PSSUTIL1",84,0)
+ .Q:$G(SODL)=""
+"RTN","PSSUTIL1",85,0)
+ .S SQFLAG=0 F SST=0:0 S SST=$O(^PS(51.1,"B",SODL,SST)) Q:'SST!($G(SQFLAG))  I $P($G(^PS(51.1,SST,0)),"^",8)'="" S SCLHOLD(SCIN)=$P($G(^(0)),"^",8),SQFLAG=1
+"RTN","PSSUTIL1",86,0)
+ .Q:$G(SQFLAG)
+"RTN","PSSUTIL1",87,0)
+ .I $P($G(^PS(51,"A",SODL)),"^")'="" S SCLHOLD(SCIN)=$P(^(SODL),"^")
+"RTN","PSSUTIL1",88,0)
+ S SCHEX="",SQFLAG=0 F SST=1:1:SCLOOP S SCHEX=SCHEX_$S($G(SQFLAG):" ",1:"")_$G(SCLHOLD(SST)),SQFLAG=1
+"RTN","PSSUTIL1",89,0)
+SCHQT ;
+"RTN","PSSUTIL1",90,0)
+ S SCH=SCHEX
+"RTN","PSSUTIL1",91,0)
+ Q
+"RTN","PSSUTIL1",92,0)
+ ;
+"RTN","PSSUTIL1",93,0)
+IVDEA(PSSIVOI,PSSIVOIP) ;CS Federal Schedule/DEA Special Handling to CPRS for IV Fluids dialogue
+"RTN","PSSUTIL1",94,0)
+ ;parameter 1 is Orderable Item
+"RTN","PSSUTIL1",95,0)
+ ;parameter 2 is "A" for Additive, "S" for Solution
+"RTN","PSSUTIL1",96,0)
+ ;Return the CS Federal Schedule code in the VA PRODUCT file (#50.68)
+"RTN","PSSUTIL1",97,0)
+ ;or the DEA Special Hndl code depending on the "ND" node of the 
+"RTN","PSSUTIL1",98,0)
+ ;drugs associated to the Orderable Item.
+"RTN","PSSUTIL1",99,0)
+ ;1;1  Sch. I Nar.
+"RTN","PSSUTIL1",100,0)
+ ;1;2  II
+"RTN","PSSUTIL1",101,0)
+ ;1;2n II Non-Nar.
+"RTN","PSSUTIL1",102,0)
+ ;2;3  III
+"RTN","PSSUTIL1",103,0)
+ ;2;3n III Non-Nar.
+"RTN","PSSUTIL1",104,0)
+ ;2;4  IV
+"RTN","PSSUTIL1",105,0)
+ ;2;5  V
+"RTN","PSSUTIL1",106,0)
+ ;0  there are other active drugs
+"RTN","PSSUTIL1",107,0)
+ ;"" no active drugs
+"RTN","PSSUTIL1",108,0)
+ N PSSIVDO,PSSIVDD,PSSIVL,PSSIVLP,PSSIVDEA,PSSIVLPX,PSSK,PSSI,PSSGD
+"RTN","PSSUTIL1",109,0)
+ S (PSSIVDO,PSSIVDD)=0
+"RTN","PSSUTIL1",110,0)
+ I $G(PSSIVOIP)'="S" S PSSIVOIP="A"
+"RTN","PSSUTIL1",111,0)
+ I '$G(PSSIVOI) G IVQ1
+"RTN","PSSUTIL1",112,0)
+ S PSSIVL="" F  S PSSIVL=$O(^PSDRUG("ASP",PSSIVOI,PSSIVL)) Q:'PSSIVL  D
+"RTN","PSSUTIL1",113,0)
+ .I $P($G(^PSDRUG(PSSIVL,"I")),"^"),$P($G(^("I")),"^")<DT Q
+"RTN","PSSUTIL1",114,0)
+ .I $P($G(^PSDRUG(PSSIVL,2)),"^",3)'["I",$P($G(^(2)),"^",3)'["U" Q
+"RTN","PSSUTIL1",115,0)
+ .S PSSIVDD=1
+"RTN","PSSUTIL1",116,0)
+ .I PSSIVOIP="A" D  Q
+"RTN","PSSUTIL1",117,0)
+ ..S (PSSIVLP,PSSIVLPX)=0 F  S PSSIVLP=$O(^PSDRUG("A526",PSSIVL,PSSIVLP)) Q:'PSSIVLP!(PSSIVLPX)  D
+"RTN","PSSUTIL1",118,0)
+ ...I $D(^PS(52.6,PSSIVLP,0)) I '$P($G(^("I")),"^")!($P($G(^("I")),"^")>DT) D IVX
+"RTN","PSSUTIL1",119,0)
+ .S (PSSIVLP,PSSIVLPX)=0 F  S PSSIVLP=$O(^PSDRUG("A527",PSSIVL,PSSIVLP)) Q:'PSSIVLP!(PSSIVLPX)  D
+"RTN","PSSUTIL1",120,0)
+ ..I $D(^PS(52.7,PSSIVLP,0)) I '$P($G(^("I")),"^")!($P($G(^("I")),"^")>DT) D IVX
+"RTN","PSSUTIL1",121,0)
+IVQ ;
+"RTN","PSSUTIL1",122,0)
+ G:$O(PSSI(""))]"" CSS
+"RTN","PSSUTIL1",123,0)
+ S PSSIVLPX="" F  S PSSIVLPX=$O(PSSGD(PSSIVLPX)) Q:PSSIVLPX=""  D
+"RTN","PSSUTIL1",124,0)
+ .I PSSIVLPX[1 S PSSI(1)="" Q
+"RTN","PSSUTIL1",125,0)
+ .I PSSIVLPX[2,PSSIVLPX'["C" S PSSI(2)="" Q
+"RTN","PSSUTIL1",126,0)
+ .I PSSIVLPX[2,PSSIVLPX["C" S PSSI(2.5)="" Q
+"RTN","PSSUTIL1",127,0)
+ .I PSSIVLPX[3,PSSIVLPX'["C" S PSSI(3)="" Q
+"RTN","PSSUTIL1",128,0)
+ .I PSSIVLPX[3,PSSIVLPX["C" S PSSI(3.5)="" Q
+"RTN","PSSUTIL1",129,0)
+ .I PSSIVLPX[4 S PSSI(4)="" Q
+"RTN","PSSUTIL1",130,0)
+ .I PSSIVLPX[5 S PSSI(5)=""
+"RTN","PSSUTIL1",131,0)
+CSS S PSSK=0 S PSSK=$O(PSSI(PSSK)) I PSSK S PSSIVDO=$E(PSSK)_$S($L(PSSK)>1:"n",1:"")
+"RTN","PSSUTIL1",132,0)
+OIQ I PSSIVDO=0 S:'PSSIVDD PSSIVDO=""
+"RTN","PSSUTIL1",133,0)
+ I +PSSIVDO=1!(+PSSIVDO=2) S PSSIVDO=1_";"_PSSIVDO
+"RTN","PSSUTIL1",134,0)
+ I +PSSIVDO=3!(+PSSIVDO=4)!(+PSSIVDO=5) S PSSIVDO=2_";"_PSSIVDO
+"RTN","PSSUTIL1",135,0)
+ Q PSSIVDO
+"RTN","PSSUTIL1",136,0)
+IVQ1 ;
+"RTN","PSSUTIL1",137,0)
+ I PSSIVDO=0,'PSSIVDD S PSSIVDO=""
+"RTN","PSSUTIL1",138,0)
+ Q PSSIVDO
+"RTN","PSSUTIL1",139,0)
+ ;
+"RTN","PSSUTIL1",140,0)
+IVX ;
+"RTN","PSSUTIL1",141,0)
+ S (PSSIVDD,PSSIVLPX)=1
+"RTN","PSSUTIL1",142,0)
+ S PSSIVDEA=$P($G(^PSDRUG(PSSIVL,0)),"^",3) S:PSSIVDEA]"" PSSGD(PSSIVDEA)=""
+"RTN","PSSUTIL1",143,0)
+ I +$P($G(^PSDRUG(PSSIVL,"ND")),"^",3) S PSSK=$P(^("ND"),"^",3) D
+"RTN","PSSUTIL1",144,0)
+ .I +$P($G(^PSNDF(50.68,PSSK,7)),"^") S PSSK=$P(^(7),"^"),PSSI($S($E(PSSK,2)="n":$E(PSSK)_".5",1:PSSK))=""
+"RTN","PSSUTIL1",145,0)
+ Q
+"RTN","PSSUTIL1",146,0)
+ ;
+"VER")
+8.0^22.0
+**END**
+**END**

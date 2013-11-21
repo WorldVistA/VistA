@@ -1,0 +1,928 @@
+$TXT Created by FISHER,BRAD at DEVVFF.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 06/17/13 at 11:08
+=============================================================================
+Run Date: AUG 19, 2013                     Designation: EDP*2*6
+Package : EDP - EMERGENCY DEPARTMENT          Priority: Mandatory
+Version : 2         SEQ #3                      Status: Released
+                  Compliance Date: SEP 19, 2013
+=============================================================================
+
+
+Subject: EDIS DEFECTS RESOLUTION
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ Associated patches: EDP*2*5       <<= must be installed BEFORE 'EDP*2*6'
+  
+ This patch addresses several defects, modifies the Big Board code to run 
+ on the application servers at AITC/PITC, and allows the Big Board Kiosks 
+ to run Windows 7. These items are required to be resolved before the end 
+ of the Fiscal year.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ TRACKING STAFF (231.7)     ROLE (.06)              Modified
+  
+ EDP REPORT TEMPLATE (232.1)        
+                            NAME (.01)               NEW
+                            INACTIVE (.02)           NEW
+                            EDITABLE (.03)           NEW
+                            DISPLAY ELEMENTS (1)     NEW
+                            ROLES (2)                NEW
+  
+ EDP REPORT ELEMENTS  (232.11)      
+                            NAME (.01)               NEW
+                            FILE # (.02)             NEW
+                            FIELD # (.03)            NEW
+                            HISTORY FIELD #(.04)     NEW
+                            HEADER (.05)             NEW
+                            FORMAT LOGIC (1)         NEW
+                            EXECUTABLE LOOKUP (2)    NEW
+                            DESCRIPTION (3)          NEW
+  
+  
+  
+ CPE ROLE (232.5)           ROLE (.01)              Modified
+                            ABBREVIATION (.02)      Modified
+                            XML ABBREVIATION (.03)  Modified
+                            XML STAFF NAME (.07)     NEW
+  
+  
+ EDP WORKSHEET
+ SPECIFICATION (232.6)      DISABLED (.06)           NEW
+                            EDITABLE (.07)           NEW
+                            SECTIONS (2)             NEW
+                            ROLES (3)                NEW
+  
+ EDP WORKSHEET
+ SECTION (232.71)           NAME (.01)              Modified
+                            COMPONENTS (1)          Modified
+                            ROLES (3)                NEW
+  
+ EDP WORKSHEET
+ COMPONENT (232.72)         NAME (.01)              Modified
+                            LABEL (.02)             Modified
+                            DATA PROVIDER (.03)     Modified
+                            WIDGET NAME (.06)        NEW
+                            PACKAGE LINK (.07)       NEW
+                            VALUE (.08)              NEW
+                            SUMMARY LABEL (.09)      NEW
+                            SUMMARY ORDER (.1)       NEW
+                            AVAILABLE (.11)          NEW
+                            VISIBILITY TRIGGER (.12) NEW
+                            ASSOCIATED FILE (1.1)   Modified
+                            ASSOCIATED FIELD (1.2)  Modified
+                            LOAD EVENT (1.3)        Modified
+                            LOAD API (2.1)          Modified
+                            SAVE API (2.2)          Modified
+                            ALTERNATE LOAD
+                            LOGIC (3)                NEW
+                            ALTERNATE SAVE
+                            LOGIC (4)                NEW
+                            PARAMETERS (5)          Modified
+                            DEFAULT VALUE (6)        NEW
+                            REQUIRED COMPONENTS (7)  NEW
+                            ROLES (8)                NEW
+                            VALIDATOR (9)            NEW 
+  
+  
+  
+  
+ EDP WORKSHEET COMPONENT    NAME (.01)               NEW
+ TYPE (232.73)
+  
+ EDP COMPONENT 
+ VALIDATORS (232.74)        NAME (.01)               NEW
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ EDPF WORKSHEETS
+ EDPR ADHOC
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ 1.      #INC000000823850 - Emergency Department Integrated Software - 
+ Other: 
+  
+ Problem:
+ -------
+ In Edit closed, the Save, Cancel, and Restore buttons disappear or are
+ Inactive after saving patient data.
+  
+ Resolution:
+ ----------
+ Modified UI to properly render buttons
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 827015
+  
+  
+ 2.      #INC000000822601 - Emergency Department Integrated Software - 
+ Other: 
+  
+ Problem:
+ -------
+ The nurses were able to print the reports with version 1.  Now with 
+ version 2 they are saying it gives them a blank page.
+  
+ Resolution:
+ ----------
+ Modified UI to properly display reports.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 822728
+ 823098
+ 837485
+ 838212
+  
+  
+ 3.      #INC000000532180 - EDIS current bigboard refresh time (~up to 15 
+ minutes)
+                    Not as programmed every 30 seconds 
+  
+ Problem:
+ -------
+ Sites have reported multiple issues with the responsiveness with EDIS and 
+ the bigboard, as well as random disconnects. 
+  
+ Resolution:
+ ----------
+ Modified EDPQDB routine to remove lab/rad sub-nodes when returning data 
+ to the UI. This should help with the responsiveness on the UI. Log4j was 
+ also installed and ran for a period of time to identify/address 
+ connectivity issues. This particular fix along with others may improve 
+ the issues with having to run reports multiple times, but may not fully 
+ resolve the issue.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 601505
+ 821730
+ 829433
+ 830088
+ 831656
+ 832523
+ 832691
+ 836110
+ 836399
+ 837246
+ 839752
+ 843175
+ 845239
+ 847135
+ 849518
+  
+  
+ 4.      #INC000000827822 - Lab trends parameter does not stay
+  
+ Problem:
+ -------
+ A parameter was added called 'Prior weeks for lab trends'. This is 
+ strictly a development tool and was never intended for use by the field. 
+ This parameter does not have a location within VistA where the data can 
+ be persisted.
+  
+ Resolution:
+ ----------
+ Removed 'Prior weeks for lab trends' parameter from UI. The default 
+ number of weeks in the past to gather lab data has been decided by the 
+ National Program Director for VA Emergency Medicine to be 6 weeks.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ N/A
+  
+  
+ 5.      #INC000000824827 - Emergency Department Integrated Software - 
+ Reports Issue:
+  
+ Problem:
+ -------
+ After restoring a patient in Edit Closed, the result patient list panel 
+ dissapears and the patient header bar and button bar disappear.
+  
+ Resolution:
+ ----------
+ Fixed UI so that edit closed screen renders properly after patient is 
+ edited.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 837346
+  
+  
+ 6.      #INC000000834301 - Emergency Department Integrated Software - 
+ Other:
+  
+ Problem:
+ -------
+ A patient restored to the board using edit closed does not show up in CPE.
+  
+ Resolution:
+ ----------
+ Added EDIS_DEFAULT room/area to the TRACKING ROOM/AREA file. Modified 
+ routines EDPLOGA, EDPLOG, and EDPBCF to handle EDIS_DEFAULT room/area. In 
+ the event a facility does not have a default room/area defined, EDIS will 
+ now use the EDIS_DEFAULT room so the patient will always show up in CPE.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 835454
+ 845194
+ 845871
+  
+  
+ 7.      #INC000000831084 - Emergency Department Integrated Software - 
+ Reports Issue:
+  
+ Problem:
+ -------
+ Delay Summary Report - Delay reason not showing up on delay report due to 
+ the fact they were in observation.
+  
+ Generated report displays "Total visits over 6 hours:" for VA Admitted 
+ where as in exported spread sheet it is not displaying.
+  
+  
+ Resolution:
+ ----------
+ Modified routine EDPRPT2 to correct the display issues with the Delay 
+ report.
+  
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 843475
+  
+  
+  
+ 8.      #INC000000819712 - NOP -EDIS - Activity Reports Issue
+  
+ Problem:
+ -------
+ 1. 'Adm Dec' and 'Adm Delay' not displaying the values in the exported 
+ spreadsheet for the  value '0'. 
+  
+ 2.  Change column name ED to IEN
+  
+ Resolution:
+ ----------
+ Modified EDPRPT1 routine so values are exported to spreadsheet properly. 
+ Changed column name to IEN.
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 837803
+  
+ 9.      #INC000000824388 - Emergency Department Integrated Software - 
+ Other:
+  
+ Problem:
+ -------
+ When a patient has their status changed to Observation, they become 
+ removable from the board without needing to enter a delay reason if they 
+ are over 6 hours.
+  
+ Resolution:
+ ----------
+ Modified routines EDPLOG and EDPQLE. Removed check for observation status 
+ to determine whether or not require a delay reason for a given patient. 
+ Per Dr. Gelman, this will help with issues in the field, and will require 
+ users to enter a delay reason for ANY patient that exceeds 6 hours in the 
+ ED.
+  
+ Associated Remedy Tickets:
+ --------------------------
+ 833695
+  
+ 10.     #INC000000846625 - GET+2^EDPQLE error
+  
+ Problem:
+ -------
+ Occasionally, when saving patient data, an error would occur at 
+ GET+2^EDPQLE
+  
+ Resolution:
+ ----------
+ Modified EDPCTRL to properly gather the log entry value for a refresh of 
+ data.
+  
+ Associated Remedy Tickets:
+ --------------------------
+ N/A
+  
+  
+ Other defect resolutions:
+ -------------------------
+  
+ 1.      CQ #EDIS00001026 - Report Problem - Shift report
+  
+ Problem:
+ -------
+ Users cannot have shifts starting on the half-hour. Shift report will not 
+ run.
+  
+ Resolution:
+ ----------
+ The UI method that calculates First Shift start times was modified to 
+ handle shift times on the half-hour.
+  
+ 2.      CQ #EDIS00000133 - Delay reason does not consistently appear when 
+ trying to  remove a patient from CPE (Clinical Practice Environment).
+  
+ Problem:
+ -------
+ If the user has been in another patient's EDIS record, then within the 
+ same session tries to discharge a patient who has been in EDIS longer 
+ that the parameter setting, the mandatory delay reason 
+ prompt does not appear and the user cannot remove the patient from the 
+ board.
+  
+  
+ Resolution:
+ ----------
+ Removed checks in logic for 'Observation' type patients. Now, delay 
+ reason will appear in ALL cases where a patient has been in the Emergency 
+ Department for more than 6 hours.
+  
+ 3.      CQ #EDIS00000343 - Edit closed screen
+  
+ Problem:
+ -------
+ If the patient is the only one returned from the query, user is unable to 
+ save the edited record. Edits are not commited.
+  
+ Resolution:
+ ----------
+ Edit Closed functionality - Save, Cancel and Restore buttons after saving 
+ patient data.
+  
+ 4.      CQ #EDIS00001108 - Users unable to save 'First Shift Start Time'
+  
+ Problem:
+ -------
+ When users modify the 'First Shift Start Time' field in the 
+ Configuration -> Parameters screen and click Save, nothing is
+ persisted to VistA.
+  
+ Resolution:
+ ----------
+ Fixed UI to properly submit the changed value to VistA.
+  
+ 5.      CQ #EDIS00001109/#EDIS00001110 - Lab and Imaging information 
+ buttons
+  
+ Problem:
+ -------
+ When a user clicks on the icon for labs or imaging from the CPE, data
+ is not returned correctly if at all.
+  
+ Resolution:
+ ----------
+ Removed lab and imaging results, as well as the icon/button to retrieve 
+ them.
+  
+ 6.      CQ #EDIS00001111 - Duplicate Lab results in Assess Worksheet
+  
+ Problem:
+ -------
+ When the user views labs via the Assess worksheet, data is duplicated
+ when re-visiting the worksheet.
+  
+ Resolution:
+ ----------
+ Fixed EDPLAB routine to no longer return duplicate results.
+  
+ 7.      CQ #EDIS00001112 - Bigboard
+  
+ Problem:
+ -------
+ The bigboard does not work in the 2.1 baseline.
+  
+ Resolution:
+ ----------
+ The EDIS Java and Spring code was modified to correctly function within 
+ the 2.1 baseline.
+  
+ 8.      CQ #EDIS00001119 - Elapsed minutes (Emins) column should be in 
+ hours/minutes instead of minutes
+  
+ Problem:
+ -------
+ Emins column was displaying only minutes. It should be displaying 
+ hours:minutes.
+  
+ Resolution:
+ ----------
+ The UI method that displays Emin values was modified to display total 
+ elapsed in HH:MM format.
+  
+ 9.      CQ #EDIS00001143 - Room selection does not update for current 
+ patient
+  
+ Problem:
+ -------
+ Selecting a room for a patient in the CPE does not always display all 
+ available beds.  It is picking up the previous log entry bedlist, which 
+ is filtered.
+  
+ Resolution:
+ ----------
+ The UI now refreshes the bed cache whenever there is a new patient 
+ selected from the CPE.
+  
+ 10.     CQ #EDIS00001148 - Online help
+  
+ Problem:
+ -------
+ Online help inaccurate.
+  
+ Resolution:
+ ----------
+ Updated Online Help to Reflect changes to EDIS V2.1.1
+  
+ 11.     CQ #EDIS00001159 - Vitals duplication
+  
+ Problem:
+ -------
+ Vitals get duplicated when entered for the same patient based on previous 
+ entry
+  
+ Resolution:
+ ----------
+ The array containing Vitals data returned from the RPC call is now being 
+ cleared before each VistA call.
+  
+ 12.     CQ #EDIS00001160 - Saving then updating vitals field does not 
+ enable save button
+  
+ Problem:
+ -------
+ After saving vitals immediate editing of a field does not trigger save 
+ button to be enabled.
+  
+ Resolution:
+ ----------
+ The UI now redraws the "Save" button upon each individual vital entry 
+ edit.
+  
+ 13.     CQ #EDIS00001004 - Report issues
+  
+ Problem:
+ -------
+ -       Generated reports displays "Elapsed" column but the exported 
+ spread sheet display 'Visit"       column.
+ -       For "Average For Different Categories" table, Adm Delay values 
+ are not matching with  exported spread sheet values.  
+ -       Change "ED" column name to "IEN" in exported spread sheet
+  
+ Resolution:
+ ----------
+ Modified reports routines so on screen and exported reports are 
+ consistent.
+  
+ 14.     CQ #EDIS00001155 - ED Mental Health Patient Report - not showing 
+ columns
+  
+ Problem:
+ -------
+ Generated report not showing "Unemploy" column but exported spread sheet 
+ displaying 'Unemploy" column.
+  
+ Resolution:
+ ----------
+ Modified EDPRPTBV to resolve missing column.
+  
+ 15.     CQ #EDIS00001156 - Orders By Acuity Report
+  
+ Problem:
+ -------
+ Column 1 in the exported spreadsheet is displayed as 'Acuity' whereas in 
+ the original generated report it is displayed as 'Acuity/Display Group_>'
+  
+ Resolution:
+ ----------
+ Modified report routine to fix inconsistencies.
+  
+ 16.     CQ #EDIS00001157 - Patient Removed in Error Report
+  
+ Problem:
+ -------
+ Report was not functioning. Application was returning 'unknown report 
+ type'
+  
+ Resolution:
+ ----------
+ Removed report from application. It is not needed at this time.
+  
+ 17.     CQ #EDIS00001158 - Exposure Report
+  
+ Problem:
+ -------
+ -       Generated report table name display as "Patients directly exposed 
+ in different treatment rooms" where as in exported report  displays 
+ "Exposed in Treatment Room".
+ -       Change "ED" column name to "IEN" in exported spread sheet
+  
+ Resolution:
+ ----------
+ Modified report routines to correct inconsistencies.
+  
+ 18.     CQ #EDIS00001161 - Mins column in CPE does not display correct 
+ time
+  
+ Problem:
+ -------
+ Mins column in CPE does not display correct time.  It is showing the same 
+ time as the Emins column which is incorrect.  It should show the time 
+ since a room has changed for that patient.
+  
+ Resolution:
+ ----------
+ The UI was incorrectly displaying the emins property in the lmins column; 
+ the UI is now retrieving the correct lmins property for that field.
+  
+ 19.     CQ #EDIS00001163 - Remove Alerts column from available column list
+  
+ Problem:
+ -------
+ This is a issue since v 1.0 and does not work as intended.   This was 
+ never fully implemented.
+  
+ Resolution:
+ ----------
+ Removed alerts column from the list of available columns.
+  
+ 20.     CQ #EDIS00001106 - Display board configuration problem: Unable to 
+ display first letter/last 4
+  
+ Problem:
+ -------
+ If site has configured the display board to show the patient's name as 
+ the first letter of the last name and the last 4 digits of the SSN, 
+ nothing is returned to the display until the user forces a save by 
+ editing another field, such as the acuity or comments field.
+  
+ Resolution:
+ ----------
+ Removed X9999 as a possible choice in the columns list from routine 
+ EDPBCF. Also added post init to remove any X9999 settings in display 
+ configurations.
+  
+  
+ 21.     CQ #EDIS00001121 - Add disposition dropdown to CPE
+  
+ Problem:
+ -------
+ National Program Director for VA Emergency Medicine requested that the a 
+ disposition column be added to CPE.
+  
+ Resolution:
+ ----------
+ Added diposition as a selectable column within configuration. This will 
+ allow users to choose 'disposition' within the configuration settings for 
+ a given view.
+  
+  
+ 22.     CQ #EDIS00001122 - Move vitals from Assess worksheet to Visit 
+ worksheet
+  
+ Problem:
+ -------
+ National Program Director for VA Emergency Medicine requested that vitals 
+ be moved from the Assess worksheet to the Visit worksheet.
+  
+ Resolution:
+ ----------
+ Moved Vitals Update and Vitals View components to the Visit worksheet.
+  
+ 23.     CQ #EDIS00001144 - Labs should only look back 6 weeks in the past
+  
+ Problem:
+ -------
+ Lab results were being gathered for the previous 26 weeks. National 
+ Program director for VA Emergency Medicine requested that this be changed 
+ to only look back 6 weeks.
+  
+ Resolution:
+ ----------
+ Modified UI logic to set the date range to look back only 6 weeks instead 
+ of 26 weeks.
+  
+  
+ 24.     CQ #EDIS00001145 - Left justify all columns in CPE and bigboard
+  
+ Problem:
+ -------
+ Originally, data displayed in the CPE and bigboard was centered in their 
+ data cells.  This presented a problem if the columns were sized too 
+ small; data would not be visible.  Left-justifying the data along the 
+ left edge of the columns ensures that data will always be visible.
+  
+ Resolution:
+ ----------
+ The UI enabled logic to enforce left-alignment of all data being 
+ displayed in the CPE and bigboard.
+  
+ 25.     CQ #EDIS00001146 - Add check for default room when user logs in
+  
+ Problem:
+ -------
+ Patients can be added to EDIS without a default room being defined. This 
+ results in the patient never showing up in CPE or on the bigboard.
+  
+  
+ Resolution:
+ ----------
+ Added EDIS_DEFAULT room/area to the TRACKING ROOM/AREA file. Enhanced 
+ logic in EDPLOGA, EDPLOG, and EDPBCF to utilize new room/area in the 
+ event the default room/area parameter has not been defined at this 
+ facility. This will insure that patients show up on the board. In case 
+ the default room has not been assigned, the UI will also display a 
+ warning to the user that the CAC (or other responsible individual) should 
+ address the situation.
+  
+  
+ 26.     CQ #EDIS00001174 - XML special characters in Laboratory Names
+  
+ Problem:
+ -------
+ Special characters in Laboratory test names causes Flex to encounter an 
+ error and will not display labs.
+  
+  
+ Resolution:
+ ----------
+ Modified EDPLAB to convert special characters into true xml 
+ representation.
+  
+  
+  
+ Test Sites:
+ ----------
+ Albany
+ Baltimore
+ Bath
+ Bay Pines
+ Buffalo
+ Lebanon
+ Manhattan
+ Perry Point
+ Syracuse
+ Temple
+ Togus
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ EDP_2_1_1_SrvrIG.PDF 
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 Server Installation Guide
+   
+ EDP_2_1_1_TM.PDF 
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 Technical Manual
+   
+ EDP_2_1_1_UM.PDF 
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 User Guide       
+   
+ EDP_2_1_1_ClientIG.PDF
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 Client Installation Guide       
+   
+ EDP_2_1_1_BigBoardIG.PDF
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 Bigboard Installation Guide       
+  
+ EDP_2_1_1_Glossary.PDF
+               Emergency Department Integration Software       BINARY 
+               Version 2.1.1 Glossary 
+  
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes 
+ to install.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     EDP*2.0*6):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install (EDP*2*6).
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer 'NO'     
+     
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer 'NO'.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// , answer 'NO'.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EMERGENCY DEPARTMENT;**[Patch List]**;Feb 24, 2012;Build 200
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EDP2PRE
+    Before:       n/a   After:   B852824  **6**
+Routine Name: EDP2PST
+    Before:       n/a   After: B10565179  **6**
+Routine Name: EDPARPT
+    Before:       n/a   After: B95079217  **6**
+Routine Name: EDPARPT1
+    Before:       n/a   After: B17834740  **6**
+Routine Name: EDPBCF
+    Before: B25433175   After: B26108693  **6**
+Routine Name: EDPBRM
+    Before: B25575594   After: B26325333  **6**
+Routine Name: EDPBST
+    Before:  B8664749   After:  B9812007  **6**
+Routine Name: EDPBWS
+    Before: B52550125   After:B229022529  **6**
+Routine Name: EDPCSV
+    Before:   B906612   After:  B1174493  **6**
+Routine Name: EDPCTRL
+    Before: B73485587   After: B89022760  **6**
+Routine Name: EDPFAA
+    Before: B24518510   After: B36904209  **6**
+Routine Name: EDPFPER
+    Before:  B3427509   After:  B4359382  **6**
+Routine Name: EDPGLOB
+    Before:  B2277682   After:  B4109172  **6**
+Routine Name: EDPLAB
+    Before: B49753454   After: B51111821  **6**
+Routine Name: EDPLOG
+    Before: B56585715   After: B58048189  **6**
+Routine Name: EDPLOGA
+    Before: B11867179   After: B12583805  **6**
+Routine Name: EDPLOGH
+    Before: B12449970   After: B12593326  **6**
+Routine Name: EDPQAR
+    Before:  B6897621   After:  B7638401  **6**
+Routine Name: EDPQDB
+    Before: B55055961   After: B56093021  **6**
+Routine Name: EDPQDBS
+    Before:  B3118586   After:  B7446153  **6**
+Routine Name: EDPQLE
+    Before: B41785417   After: B43232281  **6**
+Routine Name: EDPQLE1
+    Before: B10666213   After: B11912520  **6**
+Routine Name: EDPQPCE
+    Before:  B2442064   After:  B3317665  **6**
+Routine Name: EDPQPPS
+    Before:  B3126500   After:  B4046541  **6**
+Routine Name: EDPRPT1
+    Before: B44256046   After: B50357723  **6**
+Routine Name: EDPRPT10
+    Before: B26044910   After: B30220543  **6**
+Routine Name: EDPRPT12
+    Before:  B7802924   After:  B8703521  **6**
+Routine Name: EDPRPT13
+    Before:  B7380759   After:  B7846285  **6**
+Routine Name: EDPRPT2
+    Before: B22188672   After: B24332800  **6**
+Routine Name: EDPRPT3
+    Before: B14278258   After: B14278258  **6**
+Routine Name: EDPRPT4
+    Before: B25030915   After: B32540898  **6**
+Routine Name: EDPRPT7C
+    Before: B20628134   After: B22153636  **6**
+Routine Name: EDPRPT8
+    Before: B15247059   After: B15923220  **6**
+Routine Name: EDPRPTBV
+    Before: B21134846   After: B28273730  **6**
+Routine Name: EDPX
+    Before: B10778850   After: B12709600  **6**
+
+=============================================================================
+User Information:                          Hold Date     : AUG 16, 2013
+Entered By  : FISHER,BRADLEY                Date Entered  : MAY 10, 2013
+Completed By: BARLOW,KENNETH                Date Completed: JUL 18, 2013
+Released By : VANCAMP,E PHILIP              Date Released : AUG 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

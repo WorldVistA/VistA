@@ -1,0 +1,380 @@
+
+=============================================================================
+Run Date: JUL 30, 2013                     Designation: MAG*3*119
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #90                      Status: Released
+                  Compliance Date: SEP 27, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*118   <<= must be installed BEFORE `MAG*3*119'
+                    (v)MAG*3*122   <<= must be installed BEFORE `MAG*3*119'
+
+Subject: VIX MAINTENANCE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This document describes MAG*3.0*119, the VIX Maintenance patch.  
+ This patch adds new features such as the ability to delete studies from 
+ the VistA Imaging eXchange (VIX) cache to enhance user experience and 
+ also fixes a few remedy ticket issues.  
+  
+ MAG*3.0*119 contains the following new functions:
+  
+ * Support native 64 bit windows deployment. 
+ * Provide the ability to view deleted image placeholders for remote
+   images.
+ * Provide paging controls at the bottom of the Transaction log page.
+ * Provide the ability to delete specific studies from the VIX cache.
+ * Provide the ability to delete a patient and all associated studies from
+   the VIX cache.
+  
+ MAG*3.0*119 corrects the following problems:
+ * VistA RPC broker Failover
+ * HTTP HEAD request for images to  facilitate eliminating the 
+   ClientAbortException transaction log entries. 
+   NOTE: VistARad fix needs to be implemented to fully correct this error.
+ * Remedy ticket fixes
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. At sites that have implemented VistARad, installation of 
+ both the KIDS and the client software is required; installation of the 
+ client software may be phased in according to each site's needs. 
+  
+ This patch can be downloaded from:
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P119
+ KIDS Installation instructions are included in this document. For VIX 
+ Installation instructions please refer to the VIX install guide. 
+  
+ NOTE: Any late-breaking news about this patch will be found in a readme
+ file.  If present, this file will also be located in the MAG3_0P119 
+ directory.
+  
+ Patch Contents
+ ==============
+ This patch includes the following files:
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG*3.0*119 KIDS                  MAG3_0P119.KID                   ASCII
+ VIX Installer                     MAG3_0P119_VIX_SETUP.msi         Binary
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*119 Patch Description     MAG3_0P119_Patch_Description.pdf
+  
+ VistA Installation
+ Guide Change Pages                MAG3_0P119_Install_Guide_changes.pdf
+  
+ VIX Instalation Guide
+ Change Pages                      MAG3_0P119_VIX_Install_Manual
+                                    Changes.pdf
+  
+ VistA Imaging VIX Administrator's 
+ Manual Change Pages               MAG3_0P119_VIX_Admin_Manual_Changes.pdf
+  
+ Associated Patches
+ ==================
+ MAG*3.0*122 KIDS and MAG*3.0*118 KIDS must be installed before installing 
+ MAG*3.0*119 KIDS.
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+  
+ Eastern Colorado HCS (Integrated)
+ Honolulu, HI (Small)
+ Puget Sound (Integrated)
+  
+ Remedy Calls
+ ============
+ This patch addresses the following Remedy help desk calls:
+ 1. Ticket 586252
+  
+ Problem: Deleted image placeholder - view Deleted Image Placeholders for 
+ remote images
+  
+ Solution: VIX code was modified to request deleted image placeholders from
+ VistA and to include those in results returned to the client (Clinical
+ Display).
+  
+ 2. Ticket 586250
+  
+ Problem: VistA RPC Failover
+  
+ Solution: The connection from the VIX to VistA is done using one of two 
+ "styles" of connection, referred to simply as "old" and "new".  The VIX 
+ will now, subject to configuration, attempt the "new" style connection 
+ and, if that fails, try the "old" style connection.  The connections are 
+ done in such a way as to prevent a failed attempt at the "new" style 
+ connection from locking the client servicing thread. 
+ NOTE: Default connection will be the "old" style connection.
+  
+ 3. Ticket 586246
+  
+ Problem: Duplicating page controls on the bottom of the transaction log 
+ page
+  
+ Solution: The existing page navigation controls (at the top of the page) 
+ were duplicated and located at the bottom of the page.  The behavior and 
+ appearance of the new controls are identical to the existing controls.
+  
+ 4. Ticket 777931
+  
+ Problem: The full DoD study identifier is not being passed from the VIX 
+ to the CVIX when the user requested the study from VistARad. 
+  
+ Solution: The VIX provides the full study identifier when requesting the 
+ data from the CVIX
+  
+ 5. Ticket 828186
+  
+ Problem: Exception occurs in the AWIV Web Application immediately after 
+ the user logs in.
+  
+ Solution: The AWIV Web Application has been recompiled with the latest 
+ toolkit to resolve the issue.
+  
+ 6. Ticket 850266
+  
+ Problem: CVIX cannot retrieve list of reasons for printing an image from 
+ sites that include a letter in the reason code.
+  
+ Solution: Parsing the reason code from VistA no longer assumes the reason 
+ code is an integer to support letters.
+  
+ New Service Requests
+ ====================
+ There are no New Service Requests (NSRs) addressed in this patch.
+  
+ Patient Safety Issues
+ =====================
+ There are no Patient Safety Issue (PSI) reports associated with  this 
+ patch.
+  
+ Data Dictionaries:
+ ==================
+  
+ File Name (Number)            Field Name (Number)     New/Modified/Deleted
+ --------------------------------------------------------------------------
+ IMAGE AUDIT (#2005.1)         PACS UID (#60)          Modified 
+  
+  
+ Mail Groups
+ ===========
+ This patch contains no new or modified mail groups.
+  
+ Forms
+ =====
+ This patch contains no new or modified forms.
+  
+ Security Keys
+ =============
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures
+ =================
+ The following new and modified remote procedures are included in this 
+ patch:
+  
+ Modified Remote Procedures:       
+ MAG DOD GET STUDIES IEN
+  
+ Menu Options
+ ============
+ This patch contains no new or modified menu options.
+  
+ Protocols
+ =========
+ This patch contains no new or modified protocols.
+  
+ Templates
+ =========
+ This patch contains no new or modified templates.
+  
+ Installation
+ ============ 
+ This patch contains a VIX portion and a KIDS portion. Installation 
+ instructions for the VIX portion of this patch can be found in the VIX 
+ Installation Guide. 
+  
+ The KIDS portion of this patch is to be installed on the VistA System and 
+ the VIX portion should be installed on the VIX servers.
+  
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install both the KIDS 
+ portion as well as the VIX portion of this patch. 
+ This patch may be loaded while VistA Imaging System is active.  The KIDS 
+ portion can be installed while the VistA Imaging system is active. 
+  
+ Installation will take less than one minute.  
+  
+ All sites must install the KIDS portion of this patch. The MAG*3.0*119 
+ KIDS can be loaded while VistA Imaging System is active. Installing the 
+ KIDS will take less than one minute.
+ After the KIDS portion of this patch is installed, all sites will need to 
+ update their VIX. For detailed information, refer to the VIX Installation 
+ Guide.
+  
+ Installation Prerequisites
+ ==========================
+ Before installing this patch, you will need to download the MAG*3.0*119 
+ files from the Imaging FTP site to a local storage location.
+ Verify that required patches and any optional patches that support 
+ desired or needed features have been installed.
+  
+  
+ Installing the KIDS Package
+  
+ 1  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2  Run the Installation option [XPD INSTALLATION MENU].
+ 3  Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P119.KID) of
+        the Patch 124 KIDS file that you downloaded from the Imaging FTP
+        server.  
+     c. When prompted to continue with the load, enter YES.  A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4  After loading the KIDS file, use the following options to verify 
+    the contents of the patch and to back up any affected routines.
+         
+     Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- run 
+      this option to verify the integrity of the routines in the patch. 
+     Compare Transport Global to Current System [XPD COMPARE TO 
+     SYSTEM] - run this option to view all changes that will be made when  
+      the patch is installed.  All components (routines, options, and so
+      on) in the patch will be compared.
+     Backup a Transport Global [XPD BACKUP] - run this option to create a 
+      backup message of any routines exported with the patch.  It will NOT
+      back up any of the other changes.
+ 5  After performing the load and any optional verification steps, perform
+    the following steps to install the KIDS file:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*119
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//NO
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6  When installation is finished, an Install Complete message will 
+ be displayed.
+  
+ The sample installation below illustrates the installation of the 
+ MAG*3.0*119 KIDS. 
+ Select Installation Option: INstall Package(s)
+ Select INSTALL NAME:    MAG*3.0*119    4/26/13@11:47:41
+      => VistA Imaging V3.0 Patch 119 - VIX Maintenance 04/19/2013 07:
+  
+ This Distribution was loaded on Apr 26, 2013@11:47:41 with header of 
+    VistA Imaging V3.0 Patch 119 - VIX Maintenance 04/19/2013 07:38AM  ;
+ Created on Apr 19, 2013@07:38:43
+    It consisted of the following Install(s):
+     MAG*3.0*119
+ Checking Install for Package MAG*3.0*119
+  
+ Install Questions for MAG*3.0*119
+  
+ Incoming Files:
+  
+  
+    2005.1    IMAGE AUDIT  (Partial Definition)
+ Note:  You already have the 'IMAGE AUDIT' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ Complete                                 MAG*3.0*119                  
+  
+  Install Started for MAG*3.0*119 : 
+                Apr 26, 2013@11:50:30
+  
+ Build Distribution Date: Apr 19, 2013
+  
+  Installing Routines: 
+                Apr 26, 2013@11:50:30
+  
+  Running Pre-Install Routine: PRE^MAGIP119 
+  
+  Installing Data Dictionaries: 
+                Apr 26, 2013@11:50:30
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE 
+                Apr 26, 2013@11:50:30
+  
+  Running Post-Install Routine: POS^MAGIP119 
+ I will check the 'P-IMAGING' entry in the Terminal Type file.
+ I will check an 'Imaging Workstation' entry in the Device file. 
+  
+  
+    Task #963454 has been executed.
+    It will build "P" Index in IMAGE AUDIT file (#2005.1) 
+  
+  
+  Updating Routine file... 
+  
+  
+  Updating KIDS files... 
+  
+  
+  MAG*3.0*119 Installed. 
+                Apr 26, 2013@11:50:31
+  
+  
+ Install Message sent
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4396;Apr 19, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGDQR20
+    Before:       n/a   After: B81382507  **119**
+Routine Name: MAGDQR21
+    Before:B160483069   After:B172485019  **83,104,123,119**
+Routine Name: MAGGDEV
+    Before: B10186131   After: B10283027  **98,119**
+Routine Name: MAGGTUX5
+    Before:       n/a   After:  B5574202  **119**
+Routine Name: MAGIP119
+    Before:       n/a   After:  B4769868  **119**
+ 
+Routine list of preceding patches: 98, 123
+
+=============================================================================
+User Information:
+Entered By  : TROMBETTA,KATHY               Date Entered  : MAR 15, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 11, 2013
+Released By : RAYNO,WILLIAM                 Date Released : JUL 30, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

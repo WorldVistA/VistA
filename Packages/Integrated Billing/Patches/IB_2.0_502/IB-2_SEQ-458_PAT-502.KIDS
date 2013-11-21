@@ -1,0 +1,1034 @@
+Released IB*2*502 SEQ #458
+Extracted from mail message
+**KIDS**:IB*2.0*502^
+
+**INSTALL NAME**
+IB*2.0*502
+"BLD",9401,0)
+IB*2.0*502^INTEGRATED BILLING^0^3130703^y
+"BLD",9401,1,0)
+^^3^3^3130627^
+"BLD",9401,1,1,0)
+This patch updates Integrated Billing Clinic Stop Codes to reflect 
+"BLD",9401,1,2,0)
+Fiscal Year 2014 changes and corrects the selection logic used to 
+"BLD",9401,1,3,0)
+validate stop codes.
+"BLD",9401,4,0)
+^9.64PA^^
+"BLD",9401,6.3)
+1
+"BLD",9401,"INI")
+EN^IB20P502
+"BLD",9401,"INID")
+^^n
+"BLD",9401,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9401,"KRN",.4,0)
+.4
+"BLD",9401,"KRN",.401,0)
+.401
+"BLD",9401,"KRN",.402,0)
+.402
+"BLD",9401,"KRN",.403,0)
+.403
+"BLD",9401,"KRN",.5,0)
+.5
+"BLD",9401,"KRN",.84,0)
+.84
+"BLD",9401,"KRN",3.6,0)
+3.6
+"BLD",9401,"KRN",3.8,0)
+3.8
+"BLD",9401,"KRN",9.2,0)
+9.2
+"BLD",9401,"KRN",9.8,0)
+9.8
+"BLD",9401,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9401,"KRN",9.8,"NM",1,0)
+IBEMTSCU^^0^B73973273
+"BLD",9401,"KRN",9.8,"NM","B","IBEMTSCU",1)
+
+"BLD",9401,"KRN",19,0)
+19
+"BLD",9401,"KRN",19.1,0)
+19.1
+"BLD",9401,"KRN",101,0)
+101
+"BLD",9401,"KRN",409.61,0)
+409.61
+"BLD",9401,"KRN",771,0)
+771
+"BLD",9401,"KRN",779.2,0)
+779.2
+"BLD",9401,"KRN",870,0)
+870
+"BLD",9401,"KRN",8989.51,0)
+8989.51
+"BLD",9401,"KRN",8989.52,0)
+8989.52
+"BLD",9401,"KRN",8994,0)
+8994
+"BLD",9401,"KRN","B",.4,.4)
+
+"BLD",9401,"KRN","B",.401,.401)
+
+"BLD",9401,"KRN","B",.402,.402)
+
+"BLD",9401,"KRN","B",.403,.403)
+
+"BLD",9401,"KRN","B",.5,.5)
+
+"BLD",9401,"KRN","B",.84,.84)
+
+"BLD",9401,"KRN","B",3.6,3.6)
+
+"BLD",9401,"KRN","B",3.8,3.8)
+
+"BLD",9401,"KRN","B",9.2,9.2)
+
+"BLD",9401,"KRN","B",9.8,9.8)
+
+"BLD",9401,"KRN","B",19,19)
+
+"BLD",9401,"KRN","B",19.1,19.1)
+
+"BLD",9401,"KRN","B",101,101)
+
+"BLD",9401,"KRN","B",409.61,409.61)
+
+"BLD",9401,"KRN","B",771,771)
+
+"BLD",9401,"KRN","B",779.2,779.2)
+
+"BLD",9401,"KRN","B",870,870)
+
+"BLD",9401,"KRN","B",8989.51,8989.51)
+
+"BLD",9401,"KRN","B",8989.52,8989.52)
+
+"BLD",9401,"KRN","B",8994,8994)
+
+"BLD",9401,"QDEF")
+^^^^^^^^^^YES
+"BLD",9401,"QUES",0)
+^9.62^^
+"BLD",9401,"REQB",0)
+^9.611^1^1
+"BLD",9401,"REQB",1,0)
+IB*2.0*187^1
+"BLD",9401,"REQB","B","IB*2.0*187",1)
+
+"INI")
+EN^IB20P502
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+502^3130703
+"PKG",200,22,1,"PAH",1,1,0)
+^^3^3^3130703
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch updates Integrated Billing Clinic Stop Codes to reflect 
+"PKG",200,22,1,"PAH",1,1,2,0)
+Fiscal Year 2014 changes and corrects the selection logic used to 
+"PKG",200,22,1,"PAH",1,1,3,0)
+validate stop codes.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","IB20P502")
+0^^B16129515^n/a
+"RTN","IB20P502",1,0)
+IB20P502 ;ALB/RRA - IB*2.0*502; DSS CLINIC STOP CODES ; 6/18/12 5:08pm
+"RTN","IB20P502",2,0)
+ ;;2.0;INTEGRATED BILLING;**502**;21-MAR-94;Build 1
+"RTN","IB20P502",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IB20P502",4,0)
+ ;
+"RTN","IB20P502",5,0)
+ Q
+"RTN","IB20P502",6,0)
+EN ;
+"RTN","IB20P502",7,0)
+ N IBEFFDT
+"RTN","IB20P502",8,0)
+ D START,ADD,UPDATE,FINISH
+"RTN","IB20P502",9,0)
+ Q
+"RTN","IB20P502",10,0)
+ ;
+"RTN","IB20P502",11,0)
+START D BMES^XPDUTL("DSS Clinic Stop Codes, Post-Install Starting")
+"RTN","IB20P502",12,0)
+ Q
+"RTN","IB20P502",13,0)
+ ;
+"RTN","IB20P502",14,0)
+FINISH D BMES^XPDUTL("DSS Clinic Stop Codes, Post-Install Complete")
+"RTN","IB20P502",15,0)
+ Q
+"RTN","IB20P502",16,0)
+ ;
+"RTN","IB20P502",17,0)
+ ;
+"RTN","IB20P502",18,0)
+ADD ;add a new code
+"RTN","IB20P502",19,0)
+ N Y,IBC,IBT,IBX,IBY,IBCODE,IBTYPE,IBDES,IBOVER
+"RTN","IB20P502",20,0)
+ D BMES^XPDUTL(" Adding new codes to file 352.5")
+"RTN","IB20P502",21,0)
+ S IBC=0
+"RTN","IB20P502",22,0)
+ F IBX=1:1 S IBT=$P($T(NCODE+IBX),";",3) Q:'$L(IBT)  D
+"RTN","IB20P502",23,0)
+ . S IBCODE=+$P(IBT,U)
+"RTN","IB20P502",24,0)
+ . S IBTYPE=$P(IBT,U,2)
+"RTN","IB20P502",25,0)
+ . S IBDES=$E($P(IBT,U,3),1,30)
+"RTN","IB20P502",26,0)
+ . S IBOVER=$P(IBT,U,4)
+"RTN","IB20P502",27,0)
+ . S IBY=$P(IBT,U,5)
+"RTN","IB20P502",28,0)
+ . I $D(^IBE(352.5,"AEFFDT",IBCODE,-IBY)) D  Q
+"RTN","IB20P502",29,0)
+ . . D BMES^XPDUTL(" Duplication of stop code "_IBCODE)
+"RTN","IB20P502",30,0)
+ . S Y=+$$ADD3525(IBCODE,IBY,IBTYPE,IBDES,IBOVER) S:Y>0 IBC=IBC+1
+"RTN","IB20P502",31,0)
+ D BMES^XPDUTL("     "_IBC_$S(IBC<2:" entry",1:" entries")_" added to 352.5")
+"RTN","IB20P502",32,0)
+ Q
+"RTN","IB20P502",33,0)
+ ;
+"RTN","IB20P502",34,0)
+UPDATE ;update an old code
+"RTN","IB20P502",35,0)
+ N Y,IB1,IBC,IBT,IBX,IBCODE,IBMSG,IBTYPE,IBDES,IBOVER,IBLSTDT
+"RTN","IB20P502",36,0)
+ S (IBC,IBMSG(1),IBMSG(2),IBMSG(3))=0
+"RTN","IB20P502",37,0)
+ D BMES^XPDUTL(" Updating Stop Code entries in file 352.5")
+"RTN","IB20P502",38,0)
+ F IBX=1:1 S IBT=$P($T(OCODE+IBX),";",3) Q:'$L(IBT)  D
+"RTN","IB20P502",39,0)
+ . S IBCODE=+$P(IBT,U)
+"RTN","IB20P502",40,0)
+ . S IBY=$P(IBT,U,5)
+"RTN","IB20P502",41,0)
+ . I $D(^IBE(352.5,"AEFFDT",IBCODE,-IBY)) D  Q 
+"RTN","IB20P502",42,0)
+ . . D BMES^XPDUTL(" Duplication of stop code "_IBCODE)
+"RTN","IB20P502",43,0)
+ . S IBLSTDT=$O(^IBE(352.5,"AEFFDT",IBCODE,-9999999))
+"RTN","IB20P502",44,0)
+ . I +IBLSTDT=0 D  Q
+"RTN","IB20P502",45,0)
+ . . D BMES^XPDUTL(" Code "_IBCODE_" not found in file 352.5")
+"RTN","IB20P502",46,0)
+ . S IB1=$O(^IBE(352.5,"AEFFDT",IBCODE,IBLSTDT,0))
+"RTN","IB20P502",47,0)
+ . S IB1=$G(^IBE(352.5,IB1,0))
+"RTN","IB20P502",48,0)
+ . S IBTYPE=$S($P(IBT,U,2)'="":$P(IBT,U,2),1:$P(IB1,U,3))
+"RTN","IB20P502",49,0)
+ . S IBDES=$S($P(IBT,U,3)'="":$E($P(IBT,U,3),1,30),1:$P(IB1,U,4))
+"RTN","IB20P502",50,0)
+ . S IBOVER=$P(IBT,U,4)
+"RTN","IB20P502",51,0)
+ . S Y=+$$ADD3525(IBCODE,IBY,IBTYPE,IBDES,IBOVER) S:Y>0 IBC=IBC+1
+"RTN","IB20P502",52,0)
+ D BMES^XPDUTL("     "_IBC_$S(IBC<2:" update",1:" updates")_" added to file 352.5")
+"RTN","IB20P502",53,0)
+ Q
+"RTN","IB20P502",54,0)
+ ;
+"RTN","IB20P502",55,0)
+ADD3525(IBCODE,IBEFFDT,IBTYPE,IBDES,IBOVER) ;
+"RTN","IB20P502",56,0)
+ ;add a new entry
+"RTN","IB20P502",57,0)
+ D BMES^XPDUTL("   "_IBCODE_"  "_IBDES)
+"RTN","IB20P502",58,0)
+ N IBIENS,IBFDA,IBER,IBRET
+"RTN","IB20P502",59,0)
+ S IBRET=""
+"RTN","IB20P502",60,0)
+ S IBIENS="+1,"
+"RTN","IB20P502",61,0)
+ S IBFDA(352.5,IBIENS,.01)=IBCODE
+"RTN","IB20P502",62,0)
+ S IBFDA(352.5,IBIENS,.02)=IBEFFDT
+"RTN","IB20P502",63,0)
+ S IBFDA(352.5,IBIENS,.03)=IBTYPE
+"RTN","IB20P502",64,0)
+ S IBFDA(352.5,IBIENS,.04)=IBDES
+"RTN","IB20P502",65,0)
+ S:IBOVER IBFDA(352.5,IBIENS,.05)=1
+"RTN","IB20P502",66,0)
+ D UPDATE^DIE("","IBFDA","IBRET","IBER")
+"RTN","IB20P502",67,0)
+ I $D(IBER) D BMES^XPDUTL(IBER("DIERR",1,"TEXT",1))
+"RTN","IB20P502",68,0)
+ Q $G(IBRET(1))
+"RTN","IB20P502",69,0)
+ ;
+"RTN","IB20P502",70,0)
+ ;new stop codes - ADD
+"RTN","IB20P502",71,0)
+NCODE ;;code^billable type^description^override flag^effective date
+"RTN","IB20P502",72,0)
+ ;;346^2^ALS CENTER^1^3131001
+"RTN","IB20P502",73,0)
+ ;;347^1^ALS HOME CARE PROGRAM^1^3131001
+"RTN","IB20P502",74,0)
+ ;;354^1^HOSPITAL AT HOME^1^3131001
+"RTN","IB20P502",75,0)
+ ;;490^0^TELETRANSPLANT PT SITE^1^3131001
+"RTN","IB20P502",76,0)
+ ;;491^2^TELETRANSPLANT PROV SITE^1^3131001
+"RTN","IB20P502",77,0)
+ ;;586^1^RRTP INDIVIDUAL^1^3131001
+"RTN","IB20P502",78,0)
+ ;;587^1^RRTP GROUP^1^3131001
+"RTN","IB20P502",79,0)
+ ;
+"RTN","IB20P502",80,0)
+ ;existing stop codes - UPDATE
+"RTN","IB20P502",81,0)
+OCODE ;;code^billable type^description^override flag^effective date
+"RTN","IB20P502",82,0)
+ ;;159^1^COMP AND ALTERNATIVE MED^^3131001
+"RTN","IB20P502",83,0)
+ ;;102101^1^EMERGENCY UNIT WORK^1^3131001
+"RTN","IB20P502",84,0)
+ ;;107473^0^ECHOCARDIOGRAM^^3131001
+"RTN","IB20P502",85,0)
+ ;;116329^1^RESPIRATORY THERAPY PROCEDURES^1^3131001
+"RTN","IB20P502",86,0)
+ ;;117473^1^PPD CLINIC^1^3131001
+"RTN","IB20P502",87,0)
+ ;;174202^0^HBPC - RECREATION THERAPY (RT)^1^3131001
+"RTN","IB20P502",88,0)
+ ;;209125^1^VIST COORD BY SOCIAL WORKER^1^3131001
+"RTN","IB20P502",89,0)
+ ;;303201^2^CARD REHAB^^3131001
+"RTN","IB20P502",90,0)
+ ;;304715^2^DERMATOLOGY ROUTINE AFTERCARE^1^3131001
+"RTN","IB20P502",91,0)
+ ;;310301^2^TRANSRECTAL ULTRASOUND F-U IND^1^3131001
+"RTN","IB20P502",92,0)
+ ;;323473^1^PPD CLINIC^1^3131001
+"RTN","IB20P502",93,0)
+ ;;394301^2^TRANSRECTAL ULTRASOUND F-U GRP^1^3131001
+"RTN","IB20P502",94,0)
+ ;;417474^0^PROSTHETICS LAB^1^3131001
+"RTN","IB20P502",95,0)
+ ;;510473^1^NEURO PSYCHOLOGY LAB^1^3131001
+"RTN","IB20P502",96,0)
+ ;;510475^1^RESEARCH (USE 510474)^1^3131001
+"RTN","IB20P502",97,0)
+ ;
+"RTN","IBEMTSCU")
+0^1^B73973273^B62662227
+"RTN","IBEMTSCU",1,0)
+IBEMTSCU ;ALB/RFJ-print billable types for visit copay ;23 Nov 01
+"RTN","IBEMTSCU",2,0)
+ ;;2.0;INTEGRATED BILLING;**167,177,187,502**;21-MAR-94;Build 1
+"RTN","IBEMTSCU",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBEMTSCU",4,0)
+ Q
+"RTN","IBEMTSCU",5,0)
+ ;
+"RTN","IBEMTSCU",6,0)
+EFFDT() ;effect date Visit Copay 2
+"RTN","IBEMTSCU",7,0)
+ Q 3021001  ;OCT 1,2002
+"RTN","IBEMTSCU",8,0)
+ ;
+"RTN","IBEMTSCU",9,0)
+ADD(IBSTOPCD,IBEFFDT,IBBILTYP,IBDESC,IBOVER) ;  add a stop code to file 352.5
+"RTN","IBEMTSCU",10,0)
+ ;  ibstopcd = 3 or 6 digit stop code to add
+"RTN","IBEMTSCU",11,0)
+ ;  ibeffdt  = effective date, internal fileman form (ex:3011206)
+"RTN","IBEMTSCU",12,0)
+ ;             if effective date is not passed, it uses today (dt)
+"RTN","IBEMTSCU",13,0)
+ ;  ibbiltyp = billable type (B=basic, S=specialty, N=non-billable)
+"RTN","IBEMTSCU",14,0)
+ ;             default is non-billable if a B or S is not passed
+"RTN","IBEMTSCU",15,0)
+ ;  ibdesc   = description of stop code
+"RTN","IBEMTSCU",16,0)
+ ;  ibover   = if the code belongs to Override table
+"RTN","IBEMTSCU",17,0)
+ ;  returns 1 if added, -#^error if not added
+"RTN","IBEMTSCU",18,0)
+ ;
+"RTN","IBEMTSCU",19,0)
+ N D,D0,DA,DI,DIC,DIE,DLAYGO,DQ,DR,IBDA,X,Y,IBZ
+"RTN","IBEMTSCU",20,0)
+ ;
+"RTN","IBEMTSCU",21,0)
+ ;  check length of stop code
+"RTN","IBEMTSCU",22,0)
+ I '(($L(IBSTOPCD)=3)!($L(IBSTOPCD)=6)) Q "-1^STOP CODE "_IBSTOPCD_" NOT 3 OR 6 CHARACTERS IN LENGTH."
+"RTN","IBEMTSCU",23,0)
+ ;
+"RTN","IBEMTSCU",24,0)
+ ;  change billable type code to match set of codes in file 352.5
+"RTN","IBEMTSCU",25,0)
+ S IBBILTYP=$S(IBBILTYP="B":1,IBBILTYP="S":2,1:0)
+"RTN","IBEMTSCU",26,0)
+ ;
+"RTN","IBEMTSCU",27,0)
+ S (DIC,DIE)="^IBE(352.5,",DIC(0)="L",DLAYGO=352.5
+"RTN","IBEMTSCU",28,0)
+ ;
+"RTN","IBEMTSCU",29,0)
+ ;  check to see if entry is in the file
+"RTN","IBEMTSCU",30,0)
+ S IBDA=$O(^IBE(352.5,"AEFFDT",IBSTOPCD,-IBEFFDT,0))
+"RTN","IBEMTSCU",31,0)
+ I IBDA S IBZ=$G(^IBE(352.5,IBDA,0)) D  Q 1
+"RTN","IBEMTSCU",32,0)
+ .   S DR=""
+"RTN","IBEMTSCU",33,0)
+ .   ;  check to see if the correct billable type is set correctly
+"RTN","IBEMTSCU",34,0)
+ .   I $P(IBZ,"^",3)'=IBBILTYP S DR=".03////"_IBBILTYP_";"
+"RTN","IBEMTSCU",35,0)
+ .   ;  check description
+"RTN","IBEMTSCU",36,0)
+ .   I $P(IBZ,"^",4)'=$E(IBDESC,1,30) S DR=DR_".04////"_$E(IBDESC,1,30)
+"RTN","IBEMTSCU",37,0)
+ .   ;  if not, change it
+"RTN","IBEMTSCU",38,0)
+ .   I $L(DR) S DA=IBDA D ^DIE
+"RTN","IBEMTSCU",39,0)
+ ;
+"RTN","IBEMTSCU",40,0)
+ ;  add entry to file 352.5
+"RTN","IBEMTSCU",41,0)
+ S X=IBSTOPCD
+"RTN","IBEMTSCU",42,0)
+ S DIC("DR")=".02////"_IBEFFDT_";.03////"_IBBILTYP_";.04////"_$E(IBDESC,1,30)_";"
+"RTN","IBEMTSCU",43,0)
+ S:$G(IBOVER)=1 DIC("DR")=DIC("DR")_".05////1;"
+"RTN","IBEMTSCU",44,0)
+ D FILE^DICN
+"RTN","IBEMTSCU",45,0)
+ Q 1
+"RTN","IBEMTSCU",46,0)
+ ;
+"RTN","IBEMTSCU",47,0)
+ ;
+"RTN","IBEMTSCU",48,0)
+DIQ407(DA,DR) ;  diq call to retrieve data for dr fields in file 40.7
+"RTN","IBEMTSCU",49,0)
+ N D0,DIC,DIQ,DIQ2,YY
+"RTN","IBEMTSCU",50,0)
+ K IBSCDATA(40.7,DA)
+"RTN","IBEMTSCU",51,0)
+ I $G(DR)="" S DR=".01:4;"
+"RTN","IBEMTSCU",52,0)
+ S DIQ(0)="IE",DIC="^DIC(40.7,",DIQ="IBSCDATA" D EN^DIQ1
+"RTN","IBEMTSCU",53,0)
+ Q
+"RTN","IBEMTSCU",54,0)
+ ;
+"RTN","IBEMTSCU",55,0)
+ ;0 - active
+"RTN","IBEMTSCU",56,0)
+ISINACT(IBCODE) ;
+"RTN","IBEMTSCU",57,0)
+ Q:$L(IBCODE)=6 $$INACTIVE($E(IBCODE,1,3))+$$INACTIVE($E(IBCODE,4,6))
+"RTN","IBEMTSCU",58,0)
+ Q $$INACTIVE(IBCODE)
+"RTN","IBEMTSCU",59,0)
+ ;
+"RTN","IBEMTSCU",60,0)
+INACTIVE(IBSTCODE) ;  return 1 if inactive in file 40.7
+"RTN","IBEMTSCU",61,0)
+ ;  also, return ibscdata(da for stop code entries in 40.7)
+"RTN","IBEMTSCU",62,0)
+ N DA,IBSCDATA,RESULT
+"RTN","IBEMTSCU",63,0)
+ ;
+"RTN","IBEMTSCU",64,0)
+ ;  default is inactive
+"RTN","IBEMTSCU",65,0)
+ S RESULT=1
+"RTN","IBEMTSCU",66,0)
+ ;
+"RTN","IBEMTSCU",67,0)
+ S DA=0 F  S DA=$O(^DIC(40.7,"C",IBSTCODE,DA)) Q:'DA  D
+"RTN","IBEMTSCU",68,0)
+ . D DIQ407(DA,2)
+"RTN","IBEMTSCU",69,0)
+ . I 'IBSCDATA(40.7,DA,2,"I") S RESULT=0 Q
+"RTN","IBEMTSCU",70,0)
+ . ;IB*502 ticket 862861 only prevent selection if visit date is after the inactive date
+"RTN","IBEMTSCU",71,0)
+ . I IBFR<+$G(IBSCDATA(40.7,DA,2,"I")) S RESULT=0
+"RTN","IBEMTSCU",72,0)
+ ;
+"RTN","IBEMTSCU",73,0)
+ Q RESULT
+"RTN","IBEMTSCU",74,0)
+ ;
+"RTN","IBEMTSCU",75,0)
+ ;
+"RTN","IBEMTSCU",76,0)
+ASK() ; ask if the user wants to enter a stop code or select a clinic
+"RTN","IBEMTSCU",77,0)
+ ; return will be what entry point to use
+"RTN","IBEMTSCU",78,0)
+ N DIR,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","IBEMTSCU",79,0)
+ S DIR(0)="S^C:Clinic;S:Stop Code" D ^DIR
+"RTN","IBEMTSCU",80,0)
+ Q $S(Y="C":"C",Y="S":"S",1:"")
+"RTN","IBEMTSCU",81,0)
+ ;
+"RTN","IBEMTSCU",82,0)
+ASKSCODE(IBPROMPT) ;  ask and return selected stop code from file 352.5
+"RTN","IBEMTSCU",83,0)
+ ;  ibprompt = optional prompt to display
+"RTN","IBEMTSCU",84,0)
+ ;
+"RTN","IBEMTSCU",85,0)
+ N DIC,DILN,I,X,Y,DTOUT,DUOUT,DIRUT,DIROUT
+"RTN","IBEMTSCU",86,0)
+ S DIC="^IBE(352.5,",DIC(0)="QEAM"
+"RTN","IBEMTSCU",87,0)
+ S DIC("A")="Select OUTPATIENT VISIT STOP CODE: "
+"RTN","IBEMTSCU",88,0)
+ I $G(IBPROMPT)'="" S DIC("A")=IBPROMPT
+"RTN","IBEMTSCU",89,0)
+ S DIC("S")="I $$STOPSCRN^IBEMTSCU(Y)"
+"RTN","IBEMTSCU",90,0)
+ ;
+"RTN","IBEMTSCU",91,0)
+ W ! D ^DIC
+"RTN","IBEMTSCU",92,0)
+ I Y<1 Q -1
+"RTN","IBEMTSCU",93,0)
+ Q +Y
+"RTN","IBEMTSCU",94,0)
+ ;
+"RTN","IBEMTSCU",95,0)
+ ;
+"RTN","IBEMTSCU",96,0)
+STOPSCRN(IBX) ; screens out so only active and current ones are selectable
+"RTN","IBEMTSCU",97,0)
+ ;
+"RTN","IBEMTSCU",98,0)
+ ; if we have no from date, all are selectable
+"RTN","IBEMTSCU",99,0)
+ I '$G(IBFR) Q 1
+"RTN","IBEMTSCU",100,0)
+ ;
+"RTN","IBEMTSCU",101,0)
+ N IBZ,IBAX,IBS,IBEFFDT
+"RTN","IBEMTSCU",102,0)
+ S IBZ=$G(^IBE(352.5,IBX,0)),IBS=$P(IBZ,"^")
+"RTN","IBEMTSCU",103,0)
+ ;
+"RTN","IBEMTSCU",104,0)
+ ; is the effective date for this entry in the future?
+"RTN","IBEMTSCU",105,0)
+ I $P(IBZ,"^",2)>IBFR Q 0
+"RTN","IBEMTSCU",106,0)
+ ;
+"RTN","IBEMTSCU",107,0)
+ ;  get the effective date for stop code and visit date
+"RTN","IBEMTSCU",108,0)
+ S IBEFFDT=$O(^IBE(352.5,"AEFFDT",IBS,-(IBFR+.1)))
+"RTN","IBEMTSCU",109,0)
+ I 'IBEFFDT Q 0
+"RTN","IBEMTSCU",110,0)
+ ;
+"RTN","IBEMTSCU",111,0)
+ ;  get the billable entry to compare
+"RTN","IBEMTSCU",112,0)
+ S IBAX=$O(^IBE(352.5,"AEFFDT",IBS,IBEFFDT,0))
+"RTN","IBEMTSCU",113,0)
+ ;
+"RTN","IBEMTSCU",114,0)
+ Q $S(IBX=IBAX:1,1:0)
+"RTN","IBEMTSCU",115,0)
+ ;
+"RTN","IBEMTSCU",116,0)
+ASKSC(IBVISTDT) ; ask for a clinic to look up the stop code
+"RTN","IBEMTSCU",117,0)
+ ; it will prompt for a clinic selection, and return the stop
+"RTN","IBEMTSCU",118,0)
+ ; code number in 352.5 associated with the clinic
+"RTN","IBEMTSCU",119,0)
+ N DIC,X,Y,IB407,IBEFDT,IBCLIN
+"RTN","IBEMTSCU",120,0)
+ S DIC="^SC(",DIC(0)="AEMQZ",DIC("A")="Select CLINIC: ",DIC("S")="I $P(^(0),U,3)=""C""" D ^DIC Q:Y<1 -1
+"RTN","IBEMTSCU",121,0)
+ S IBCLIN=+Y
+"RTN","IBEMTSCU",122,0)
+ ;primary
+"RTN","IBEMTSCU",123,0)
+ S IB407=$P(Y(0),"^",7)
+"RTN","IBEMTSCU",124,0)
+ S IBCODE1=$$GETCODE(IB407)
+"RTN","IBEMTSCU",125,0)
+ ; if < eff date
+"RTN","IBEMTSCU",126,0)
+ Q:IBVISTDT<$$EFFDT() $$GET3525(+IBCODE1,0,IBVISTDT)
+"RTN","IBEMTSCU",127,0)
+ ;secondary
+"RTN","IBEMTSCU",128,0)
+ ; get the secondary stop code value
+"RTN","IBEMTSCU",129,0)
+ S IBCODE2=$$GETCRED(IBCLIN)
+"RTN","IBEMTSCU",130,0)
+ ;return proper IEN of #352.5
+"RTN","IBEMTSCU",131,0)
+ Q +$$GET3525(IBCODE1,IBCODE2,IBVISTDT)
+"RTN","IBEMTSCU",132,0)
+ ;
+"RTN","IBEMTSCU",133,0)
+ ;
+"RTN","IBEMTSCU",134,0)
+GETTYPE(IBSTOPCD,IBVISTDT) ;  lookup billable type
+"RTN","IBEMTSCU",135,0)
+ ;  input ibstopcd = stop code (.01 field entry in file 352.5)
+"RTN","IBEMTSCU",136,0)
+ ;        ibvistdt = visit date in fileman format
+"RTN","IBEMTSCU",137,0)
+ ;
+"RTN","IBEMTSCU",138,0)
+ ;  returns     -1 = stop code/effective date not found or defined
+"RTN","IBEMTSCU",139,0)
+ ;               0 = non-billable
+"RTN","IBEMTSCU",140,0)
+ ;               1 = basic rate
+"RTN","IBEMTSCU",141,0)
+ ;               2 = specialty rate
+"RTN","IBEMTSCU",142,0)
+ ;
+"RTN","IBEMTSCU",143,0)
+ N DA,IBEFFDT,RESULT
+"RTN","IBEMTSCU",144,0)
+ ;
+"RTN","IBEMTSCU",145,0)
+ ;  get the effective date for stop code and visit date
+"RTN","IBEMTSCU",146,0)
+ S IBEFFDT=$O(^IBE(352.5,"AEFFDT",IBSTOPCD,-(IBVISTDT+.1)))
+"RTN","IBEMTSCU",147,0)
+ I 'IBEFFDT Q -1
+"RTN","IBEMTSCU",148,0)
+ ;
+"RTN","IBEMTSCU",149,0)
+ ;  get the billable type
+"RTN","IBEMTSCU",150,0)
+ S DA=$O(^IBE(352.5,"AEFFDT",IBSTOPCD,IBEFFDT,0))
+"RTN","IBEMTSCU",151,0)
+ I 'DA Q -1
+"RTN","IBEMTSCU",152,0)
+ ;
+"RTN","IBEMTSCU",153,0)
+ ;  get the billable type
+"RTN","IBEMTSCU",154,0)
+ S RESULT=+$P($G(^IBE(352.5,DA,0)),"^",3)
+"RTN","IBEMTSCU",155,0)
+ Q RESULT
+"RTN","IBEMTSCU",156,0)
+ ;
+"RTN","IBEMTSCU",157,0)
+ ;
+"RTN","IBEMTSCU",158,0)
+GETSC(IBSL,IBVISTDT) ;  return the ien of the entry in file 352.5.
+"RTN","IBEMTSCU",159,0)
+ ;  ibsl is the clinic stop code in 409.68.  find the matching
+"RTN","IBEMTSCU",160,0)
+ ;  entry in file 352.5.  the 352.5 entry is populated in the 350 field
+"RTN","IBEMTSCU",161,0)
+ ;  for reference using the ibstopda variable
+"RTN","IBEMTSCU",162,0)
+ ;    input ibsl = 409.68:ien
+"RTN","IBEMTSCU",163,0)
+ N IB407,IBCLIN,IBCODE1,IBCODE2
+"RTN","IBEMTSCU",164,0)
+ I $P(IBSL,":")'=409.68 Q ""
+"RTN","IBEMTSCU",165,0)
+ ;primary
+"RTN","IBEMTSCU",166,0)
+ ;this is the ien for file 40.7 (dbia402)
+"RTN","IBEMTSCU",167,0)
+ S IB407=+$P($G(^SCE(+$P(IBSL,":",2),0)),"^",3)
+"RTN","IBEMTSCU",168,0)
+ ;get the primary stop code value
+"RTN","IBEMTSCU",169,0)
+ S IBCODE1=+$$GETCODE(IB407)
+"RTN","IBEMTSCU",170,0)
+ ;if < eff date
+"RTN","IBEMTSCU",171,0)
+ Q:IBVISTDT<$$EFFDT() $$GET3525(+IBCODE1,0,IBVISTDT)
+"RTN","IBEMTSCU",172,0)
+ ;secondary
+"RTN","IBEMTSCU",173,0)
+ ;get clinic(#44) pointer from #409.68
+"RTN","IBEMTSCU",174,0)
+ S IBCLIN=+$P($G(^SCE(+$P(IBSL,":",2),0)),"^",4)
+"RTN","IBEMTSCU",175,0)
+ ;get the secondary stop code value
+"RTN","IBEMTSCU",176,0)
+ S IBCODE2=+$$GETCRED(IBCLIN)
+"RTN","IBEMTSCU",177,0)
+ ;return proper IEN of #352.5
+"RTN","IBEMTSCU",178,0)
+ Q $$GET3525(+IBCODE1,+IBCODE2,IBVISTDT)
+"RTN","IBEMTSCU",179,0)
+ ;
+"RTN","IBEMTSCU",180,0)
+ ;apply business rules, select appropr. code in #352.5 and return its IEN
+"RTN","IBEMTSCU",181,0)
+ ;if  not found then return ""
+"RTN","IBEMTSCU",182,0)
+GET3525(IBCODE1,IBCODE2,IBVISTDT) ;
+"RTN","IBEMTSCU",183,0)
+ Q:+IBCODE1=0 ""  ;must be defined as a required field in #44
+"RTN","IBEMTSCU",184,0)
+ Q:$L(+IBCODE1)'=3!(IBCODE1<0) ""
+"RTN","IBEMTSCU",185,0)
+ I $L(+IBCODE2)'=3!(IBCODE2<0) S IBCODE2=0
+"RTN","IBEMTSCU",186,0)
+ N IB6DIG
+"RTN","IBEMTSCU",187,0)
+ N IBEFDT1,IBIEN1,IBOVER1,IBTYPE1
+"RTN","IBEMTSCU",188,0)
+ N IBEFDT2,IBIEN2,IBOVER2,IBTYPE2
+"RTN","IBEMTSCU",189,0)
+ S (IBIEN1,IBIEN2,IBOVER1,IBOVER2)=0
+"RTN","IBEMTSCU",190,0)
+ ;------ find appropriate ien in file #352.5
+"RTN","IBEMTSCU",191,0)
+ S IB6DIG=$S(IBCODE2>0:IBCODE1_IBCODE2,1:IBCODE1)
+"RTN","IBEMTSCU",192,0)
+ ;in the #352.5 with appropriate eff date?
+"RTN","IBEMTSCU",193,0)
+ S IBEFDT1=+$O(^IBE(352.5,"AEFFDT",IB6DIG,-(IBVISTDT+.1)))
+"RTN","IBEMTSCU",194,0)
+ ;
+"RTN","IBEMTSCU",195,0)
+ ;A) if found and it is 6 or 3 digit code
+"RTN","IBEMTSCU",196,0)
+ I IBEFDT1 D  Q:IBIEN1>0 IBIEN1
+"RTN","IBEMTSCU",197,0)
+ . ;get the entry in 352.5 
+"RTN","IBEMTSCU",198,0)
+ . S IBIEN1=+$O(^IBE(352.5,"AEFFDT",IB6DIG,IBEFDT1,0))
+"RTN","IBEMTSCU",199,0)
+ ;
+"RTN","IBEMTSCU",200,0)
+ ;B) if not found and it is 3 digit - return nothing, BASIC applies
+"RTN","IBEMTSCU",201,0)
+ I +IBCODE2=0 Q ""
+"RTN","IBEMTSCU",202,0)
+ ;
+"RTN","IBEMTSCU",203,0)
+ ;C) if not found and it is 6 digit - try each separately
+"RTN","IBEMTSCU",204,0)
+ ;-- primary code
+"RTN","IBEMTSCU",205,0)
+ ;in the #352.5 "override" tables with appropriate eff date?
+"RTN","IBEMTSCU",206,0)
+ S IBEFDT1=+$O(^IBE(352.5,"AEFFDT",IBCODE1,-(IBVISTDT+.1)))
+"RTN","IBEMTSCU",207,0)
+ I IBEFDT1 D
+"RTN","IBEMTSCU",208,0)
+ . ;get the entry in 352.5 
+"RTN","IBEMTSCU",209,0)
+ . S IBIEN1=+$O(^IBE(352.5,"AEFFDT",IBCODE1,IBEFDT1,0))
+"RTN","IBEMTSCU",210,0)
+ . Q:IBIEN1=0
+"RTN","IBEMTSCU",211,0)
+ . S IBOVER1=+$P($G(^IBE(352.5,IBIEN1,0)),"^",5)
+"RTN","IBEMTSCU",212,0)
+ . S IBTYPE1=+$P($G(^IBE(352.5,IBIEN1,0)),"^",3)
+"RTN","IBEMTSCU",213,0)
+ ;-- secondary code
+"RTN","IBEMTSCU",214,0)
+ ;in the #352.5 "override" tables with appropriate eff date?
+"RTN","IBEMTSCU",215,0)
+ S IBEFDT2=+$O(^IBE(352.5,"AEFFDT",IBCODE2,-(IBVISTDT+.1)))
+"RTN","IBEMTSCU",216,0)
+ I IBEFDT2 D
+"RTN","IBEMTSCU",217,0)
+ . ;get the entry in 352.5 
+"RTN","IBEMTSCU",218,0)
+ . S IBIEN2=+$O(^IBE(352.5,"AEFFDT",IBCODE2,IBEFDT2,0))
+"RTN","IBEMTSCU",219,0)
+ . Q:IBIEN2=0
+"RTN","IBEMTSCU",220,0)
+ . S IBOVER2=+$P($G(^IBE(352.5,IBIEN2,0)),"^",5)
+"RTN","IBEMTSCU",221,0)
+ . S IBTYPE2=+$P($G(^IBE(352.5,IBIEN2,0)),"^",3)
+"RTN","IBEMTSCU",222,0)
+ ;
+"RTN","IBEMTSCU",223,0)
+ ; If not found in override tables 
+"RTN","IBEMTSCU",224,0)
+ ; - AND primary is not in #352.5 then return nothing, BASIC applies
+"RTN","IBEMTSCU",225,0)
+ ; - AND primary is in #352.5 then return IBIEN1
+"RTN","IBEMTSCU",226,0)
+ I IBOVER1=0,IBOVER2=0 Q $S(IBIEN1>0:IBIEN1,1:"")
+"RTN","IBEMTSCU",227,0)
+ ;
+"RTN","IBEMTSCU",228,0)
+ I IBOVER1=0,IBOVER2'=0 Q +IBIEN2
+"RTN","IBEMTSCU",229,0)
+ ;
+"RTN","IBEMTSCU",230,0)
+ I IBOVER1'=0,IBOVER2=0 Q +IBIEN1
+"RTN","IBEMTSCU",231,0)
+ ;
+"RTN","IBEMTSCU",232,0)
+ ; If IBOVER1'=0,IBOVER2'=0
+"RTN","IBEMTSCU",233,0)
+ I IBTYPE1=0 Q +IBIEN1  ;NON
+"RTN","IBEMTSCU",234,0)
+ I IBTYPE2=0 Q +IBIEN2  ;NON
+"RTN","IBEMTSCU",235,0)
+ I IBTYPE1=2 Q +IBIEN1  ;SPEC
+"RTN","IBEMTSCU",236,0)
+ I IBTYPE2=2 Q +IBIEN2  ;SPEC
+"RTN","IBEMTSCU",237,0)
+ Q +IBIEN1  ;BASIC
+"RTN","IBEMTSCU",238,0)
+ ;
+"RTN","IBEMTSCU",239,0)
+ ;
+"RTN","IBEMTSCU",240,0)
+OPT ;  perform outpatient copay edits for visits after 11/29/01
+"RTN","IBEMTSCU",241,0)
+ ;  called from IBECEA3
+"RTN","IBEMTSCU",242,0)
+ ;
+"RTN","IBEMTSCU",243,0)
+ ;  return IBSTOPDA (if selected) to be stored in file 350
+"RTN","IBEMTSCU",244,0)
+ K IBSTOPDA,IBANS
+"RTN","IBEMTSCU",245,0)
+ ;
+"RTN","IBEMTSCU",246,0)
+ ;  ask selection by clinic or stop code
+"RTN","IBEMTSCU",247,0)
+ S IBANS=$$ASK I '$L(IBANS) W !!,"Charge NOT added." S IBY=-1 Q
+"RTN","IBEMTSCU",248,0)
+ ;
+"RTN","IBEMTSCU",249,0)
+ ;  ask clinic stop to calc charges
+"RTN","IBEMTSCU",250,0)
+ S IBSTOPDA=+$S(IBANS="S":$$ASKSCODE,1:$$ASKSC(IBFR))
+"RTN","IBEMTSCU",251,0)
+ I IBSTOPDA<0 S IBY=-1 W !!,"Charge NOT added." K IBSTOPDA Q
+"RTN","IBEMTSCU",252,0)
+ ;
+"RTN","IBEMTSCU",253,0)
+ ;  user selected a non-billable clinic stop
+"RTN","IBEMTSCU",254,0)
+ I IBSTOPDA>0,'$P($G(^IBE(352.5,IBSTOPDA,0)),"^",3) W !?5,"********** This is a NON-BILLABLE Clinic Stop **********",!?5,"Select an active billable clinic stop or press RETURN to exit." G OPT
+"RTN","IBEMTSCU",255,0)
+ ;  user selected an inactive stop code
+"RTN","IBEMTSCU",256,0)
+ I IBSTOPDA>0,$$ISINACT($P($G(^IBE(352.5,IBSTOPDA,0)),"^")) W !?5,"********** This is a INACTIVE Clinic Stop in file #40.7 **********",!?5,"Select an active billable clinic stop or press RETURN to exit." G OPT
+"RTN","IBEMTSCU",257,0)
+ ;  IB*502 prevent selection of Secondary stop codes
+"RTN","IBEMTSCU",258,0)
+ I IBSTOPDA>0,$$ISSEC($P($G(^IBE(352.5,IBSTOPDA,0)),"^")) W !?5,"********** This is a SECONDARY Clinic Stop in file #40.7 **********",!?5,"Select an active billable clinic stop or press RETURN to exit." G OPT
+"RTN","IBEMTSCU",259,0)
+ ;  *** get the charge ***
+"RTN","IBEMTSCU",260,0)
+ ;  return IBTO, IBUNIT, IBEVDA, IBCHG for processing in IBECEAU3
+"RTN","IBEMTSCU",261,0)
+ N IBDT,IBTYPE,IBX
+"RTN","IBEMTSCU",262,0)
+ S (IBDT,IBTO)=IBFR       ;visit date
+"RTN","IBEMTSCU",263,0)
+ S IBX="O" ;O for outpatient
+"RTN","IBEMTSCU",264,0)
+ S IBUNIT=1,IBEVDA="*"
+"RTN","IBEMTSCU",265,0)
+ S IBTYPE=1 ;BASIC by default
+"RTN","IBEMTSCU",266,0)
+ S:IBSTOPDA>0 IBTYPE=$P(^IBE(352.5,IBSTOPDA,0),"^",3)  ;type of charge, basic or specialty
+"RTN","IBEMTSCU",267,0)
+ D TYPE^IBAUTL2
+"RTN","IBEMTSCU",268,0)
+ I IBY<0 Q
+"RTN","IBEMTSCU",269,0)
+ ;
+"RTN","IBEMTSCU",270,0)
+ W !!,"Charge to be billed under the ",$$TYPE^IBEMTSCR($P($G(^IBE(352.5,IBSTOPDA,0)),"^",3))," Rate --> $",$J(IBCHG,0,2)
+"RTN","IBEMTSCU",271,0)
+ Q
+"RTN","IBEMTSCU",272,0)
+ ;
+"RTN","IBEMTSCU",273,0)
+ ;Get credit pair (secondary code) from #44
+"RTN","IBEMTSCU",274,0)
+GETCRED(IBCLIN) ;
+"RTN","IBEMTSCU",275,0)
+ N IB407
+"RTN","IBEMTSCU",276,0)
+ ; get credit pair (secondary stop code pointer) from #44
+"RTN","IBEMTSCU",277,0)
+ S IB407=+$P($G(^SC(IBCLIN,0)),"^",18)
+"RTN","IBEMTSCU",278,0)
+ ; if IB407 is defined, get the stop code in IBSCDATA(40.7,IB407,1,"E")
+"RTN","IBEMTSCU",279,0)
+ Q $$GETCODE(IB407)
+"RTN","IBEMTSCU",280,0)
+ ;
+"RTN","IBEMTSCU",281,0)
+GETCODE(IB407) ;
+"RTN","IBEMTSCU",282,0)
+ ; get the stop code in IBSCDATA(40.7,IB407,1,"E")
+"RTN","IBEMTSCU",283,0)
+ N IBCODE,IBSCDATA
+"RTN","IBEMTSCU",284,0)
+ S IBCODE=0
+"RTN","IBEMTSCU",285,0)
+ I IB407'=0 D DIQ407(IB407,1) D
+"RTN","IBEMTSCU",286,0)
+ . I $G(IBSCDATA(40.7,IB407,1,"E"))="" Q
+"RTN","IBEMTSCU",287,0)
+ . S IBCODE=+$G(IBSCDATA(40.7,IB407,1,"E"))
+"RTN","IBEMTSCU",288,0)
+ . S:$L(+IBCODE)'=3!(IBCODE<0) IBCODE=0
+"RTN","IBEMTSCU",289,0)
+ Q IBCODE
+"RTN","IBEMTSCU",290,0)
+ ;
+"RTN","IBEMTSCU",291,0)
+ISSEC(IBCODE) ;check if the code has secondary restriction type in DSS IB*502
+"RTN","IBEMTSCU",292,0)
+ N DA,IBSCDATA,IBRESULT
+"RTN","IBEMTSCU",293,0)
+ ;
+"RTN","IBEMTSCU",294,0)
+ ;  default OK
+"RTN","IBEMTSCU",295,0)
+ S IBRESULT=0
+"RTN","IBEMTSCU",296,0)
+ ;
+"RTN","IBEMTSCU",297,0)
+ S DA=0 F  S DA=$O(^DIC(40.7,"C",IBCODE,DA)) Q:'DA  D
+"RTN","IBEMTSCU",298,0)
+ . D DIQ407(DA,"5:6;")
+"RTN","IBEMTSCU",299,0)
+ . I $G(IBSCDATA(40.7,DA,5,"I"))="S" D
+"RTN","IBEMTSCU",300,0)
+ .. I $G(IBSCDATA(40.7,DA,6,"I"))<=IBFR S IBRESULT=1
+"RTN","IBEMTSCU",301,0)
+ ;
+"RTN","IBEMTSCU",302,0)
+ Q IBRESULT
+"RTN","IBEMTSCU",303,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9401,6)
+^458
+**END**
+**END**

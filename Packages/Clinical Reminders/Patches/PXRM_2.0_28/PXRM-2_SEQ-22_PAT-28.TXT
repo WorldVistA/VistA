@@ -1,0 +1,179 @@
+
+=============================================================================
+Run Date: JUL 15, 2013                     Designation: PXRM*2*28
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #22                      Status: Released
+                  Compliance Date: AUG 15, 2013
+=============================================================================
+
+Associated patches: (v)PXRM*2*27   <<= must be installed BEFORE `PXRM*2*28'
+
+Subject: WOMEN'S HEALTH REMINDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PXRM*2.0*28 is the second patch to the Clinical Reminders package
+ that uses the recently-approved expedited patch process.  The patch
+ releases one new and five updated National VHA reminders to the field, 
+ without any changes to routines, data dictionaries, or other package 
+ functions - "content" only. The six reminders (6) reminders are:
+  
+ 1.      VA-WH DISCUSS BREAST CA SCREEN WOMAN 40-49 (new)
+ 2.      VA-WH MAMMOGRAM SCREENING (updated)
+ 3.      VA-MHV MAMMOGRAM SCREENING (updated)
+ 4.      VA-WH PAP SMEAR SCREENING (updated)
+ 5.      VA-WH PAP SMEAR REVIEW RESULTS (updated)
+ 6.      VA-MHV CERVICAL CANCER SCREENING (updated)
+ 7.      VA-BREAST TUMOR Taxonomy (updated)
+ 8.      VA-WH MAMMOGRAM REVIEW RESULTS (dialog updated only)
+     
+ Please review the PXRM*2.0*28 Installation and Setup Guide for 
+ full description.
+    
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000755264 - WOMEN'S HEALTH REMINDERS
+     
+ Associated NSR(s):
+ ===================
+ N/A
+     
+ Participating Test Sites:
+ =========================
+ Northern California (MAC)
+ VA LONG BEACH HCS
+ LOMA LINDA
+ UPSTATE NEW YORK HCS
+ VA GREATER LOS ANGELES HCS
+    
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000000755264 - WOMEN'S HEALTH REMINDERS
+         
+ Problem:
+ --------
+ Women's Health Care specifically addressing Breast Cancer Screening
+ and Cervical Cancer Screening and following VHA Clinical Guidance 
+ created National Clinical Reminders in 2005 for sites to be 
+ standardized in following Clinical Practice Guidelines.
+ Clinical Guidance has changed significantly since 2005.  Current
+ MyHealtheVet reminders do not align with the CPRS reminders
+ and the readability for the Veterans in the reminders needs
+ improvement.  These reminders have not been updated since 2005
+ and sites that are  using the reminders may not be meeting 
+ current performance measures for Women's Health Care.  This
+ patch is needed to update the content to current guidelines.
+   
+ Resolution:
+ -----------
+ Created the necessary Women's Health Reminders
+           
+ Build Components:
+ =================
+ N/A
+      
+ Data Dictionary:
+ ================
+ REMINDER EXCHANGE (#811.8) file
+        
+ Software & Documentation Retrieval Instructions:
+ ================================================
+     
+ This patch is being distributed as a host file.  The name of the
+ host file is PXRM_2_0_28.KID.  This file should be downloaded in 
+ ASCII format.
+     
+ The preferred method for obtaining these files is to use File
+ Transfer Protocol (FTP) to download them from:
+ ftp://download.vista.domain.ext/.
+     
+ This transits the files from the first available FTP server.
+ Sites may also elect to retrieve the files directly from a 
+ specific server as follows:
+    
+ Albany               ftp.fo-albany.domain.ext
+ Hines                ftp.fo-hines.domain.ext
+ Salt Lake City       ftp.fo-slc.domain.ext
+    
+ Install guides are also available on the above servers.
+ They are available as .pdf format.  These files should be 
+ downloaded in BINARY format.
+    
+ File Name:               Description:              Protocol:
+ ==========               ============              =========
+ PXRM_2_0_28_IG.PDF      PXRM*2.0*28 Installation   BINARY
+                         and Setup Guide
+ PXRM_2_0_28.KID         PXRM*2.0*28 Host File      ASCII
+            
+ Documentation can also be found on the VistA Documentation 
+ Library (VDL) at;  http://www.domain.ext/vdl/
+     
+ Installation:
+ =============
+     
+ **BE SURE TO FOLLOW THE INSTALLATION GUIDE FOR INSTALL STEPS,
+ THERE ARE PRE-INSTALL AND POST-INSTALL STEPS THAT MUST BE
+ FOLLOWED**
+     
+     
+ This patch can be loaded with users on the systems.  Installation
+ will take five to ten minutes.  Refer to the Install Guide, 
+ PXRM_2_0_28_IG.PDF, for complete details.
+   
+ 1.  Use the 'Load a Distribution' option on the KIDS 
+     installation menu.  When prompted to enter a host 
+     file type in PXRM_2_0_28.KID
+   
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use
+     the following options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+    
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the
+     following option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*28
+   
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the 
+     install? NO//," respond 'NO'.
+   
+ 5.  When prompted "Want to DISABLE Scheduled Options, 
+     Menu Options, and Protocols? NO// respond 'NO'.
+   
+ 6.  After successful installation, the following init
+     routines may be deleted
+     PXRMP28E
+     PXRMP28I
+    
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 206
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP28E
+    Before:       n/a   After:  B6555887  **28**
+Routine Name: PXRMP28I
+    Before:       n/a   After: B10074364  **28**
+
+=============================================================================
+User Information:
+Entered By  : GRIMES,NANCY                  Date Entered  : JUL 25, 2012
+Completed By: SHERMAN,BILL                  Date Completed: JUL 11, 2013
+Released By : VANCAMP,E PHILIP              Date Released : JUL 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

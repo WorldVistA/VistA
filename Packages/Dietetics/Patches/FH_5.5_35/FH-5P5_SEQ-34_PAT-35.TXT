@@ -1,0 +1,118 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 03/19/13 at 14:14
+=============================================================================
+Run Date: AUG 19, 2013                     Designation: FH*5.5*35
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #34                    Status: Released
+                  Compliance Date: SEP 19, 2013
+=============================================================================
+
+Associated patches: (v)FH*5.5*28   <<= must be installed BEFORE `FH*5.5*35'
+
+Subject: ADD SAGE FOR N&FS FOOD ALLERGY DISLIKE / MAPPING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+   This patch will correct the following issue:
+  
+   1. Add SAGE as a food allergy to the General Medical Record (GMR)
+      ALLERGIES File (#120.82). It is currently not listed.
+  
+   ASSOCIATED NSR(s):
+   ==================
+   N/A
+  
+   PATIENT SAFETY ISSUES:
+   ======================
+   N/A
+  
+   ASSOCIATED REMEDY TICKETS:
+   ==========================
+   1. INC000000742739 - SAGE FOOD ALLERGY 
+  
+   PARTICIPATING TEST SITES:
+   =========================
+   Lake City, FL.
+   Heartland-East HCS
+   New Jersey HCS
+  
+   REMEDY TICKET OVERVIEW:
+   =======================
+   1. INC000000742739 - SAGE FOOD ALLERGY
+  
+      Problem:
+      --------
+      A recent New Term Rapid Turnaround (NTRT) push has added SAGE as a
+      food allergy to the GMR ALLERGIES File (#120.82). This new food
+      allergy is not presented to the user in the Create/Map Food
+      Preference to Allergies option [FHSELA] for creation/mapping.
+  
+      Resolution:
+      -----------
+      Create/Map Food Preference to Allergies option [FHSELA] calls routine
+      FHSELA2 to build a list of food allergies to be mapped. This list is
+      hard coded and must be updated with each new NTRT push. The routine
+      FHSELA2 will be modified to include SAGE in the hard coded list of
+      food allergies. Once included in the list, the user will be able to
+      map these new food allergy type preference when needed.
+  
+      ==================== INSTALLATION INSTRUCTIONS ====================
+   
+   Installation will take less than 2 minutes.  Users may be on the system.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter FH*5.5*35)
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+   
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+   
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+   
+   4. Use the Install Package(s) option and select the package FH*5.5*35
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+   
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B111633822   After:B113627704  **8,13,23,25,28,35**
+ 
+Routine list of preceding patches: 28
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : FEB 27, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: AUG 13, 2013
+Released By : KREUZ,SHERI B                 Date Released : AUG 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

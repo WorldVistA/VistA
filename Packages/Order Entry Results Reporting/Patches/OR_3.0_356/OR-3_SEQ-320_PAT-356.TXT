@@ -1,0 +1,204 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 01/17/12 at 11:03
+=============================================================================
+Run Date: AUG 28, 2013                     Designation: OR*3*356
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #320                      Status: Released
+                  Compliance Date: SEP 28, 2013
+=============================================================================
+
+Associated patches: (v)OR*3*265    <<= must be installed BEFORE `OR*3*356'
+                    (v)OR*3*280    <<= must be installed BEFORE `OR*3*356'
+
+Subject: ALERTS AND QUICK ORDER DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+ 1) When ordering certain types of quick orders, information about the order    
+    such as service connected and treatment factors display even though there
+    has been no opportunity to enter this information about the order.
+ 
+ 2) When orderable items are flagged to display an alert to the provider
+    because they are expiring, the alerts are not working correctly for the
+    outpatient parameter.
+ 
+ 3) In certain scenarios, when entries to the Orders file (#100) are  
+    deleted, there are dangling cross references that are left behind. 
+    These cause errors during nightly processing and CPRS order views.
+    
+  
+  ASSOCIATED NSR(s):
+  ==================
+  N/A
+   
+   
+  ASSOCIATED REMEDY:
+  ==================
+  1. HD0000000099418 - Strange Display in Quick Order (Nursing)
+  2. HD0000000316377 - Flag Inpatient EXPIRING orders for PROVIDER 
+                       RECIPIENTS. Parameter set for Ordering Provider 
+                       to receive alert is not functional.  
+  3. HD0000000382627 - 6 WNY - Check Lab Orders options leaving dangling 
+                       xrefs
+  
+  
+   
+  PARTICIPATING TEST SITES:
+  =========================
+  Carl Vinson VAMC
+  Central Texas HCS
+  Michael E. DeBakey VAMC
+   
+   
+  REMEDY OVERVIEW:
+  ================
+  1. HD0000000099418 - Strange Display in Quick Order (Nursing)
+     Problem:
+     --------
+     When ordering certain types of quick orders, information about the order    
+     such as service connected and treatment factors display even though there
+     has been no opportunity to enter this information about the order.
+     
+     Resolution:
+     -----------
+     Routine ORWDXM2 has been modified to prevent the display of the 
+     service connected and treatment factors of newly created orders.
+  
+  
+  2. HD0000000316377 - Flag Inpatient EXPIRING orders for PROVIDER 
+                       RECIPIENTS. Parameter set for Ordering Provider 
+                       to receive alert is not functional.  
+     Problem:
+     --------
+     When orderable items are flagged to display an alert to the provider
+     because they are expiring, the alerts are not working correctly for the
+     outpatient parameter.
+     
+     Resolution:
+     -----------
+     Routine ORB3TIM2 has been modified to include a check for the ORB 
+     OI EXPIRING - OUTPT PR parameter in order to fire the correct 
+     alerts if flagged.
+  
+  
+  3. HD0000000382627 - 6 WNY - Check Lab Orders options leaving dangling 
+                       xrefs
+     Problem:
+     --------
+     In certain scenarios, when entries to the Orders file (#100) are 
+     deleted, there are dangling cross references that are left behind. 
+     These cause errors during nightly processing and CPRS order views.
+     
+     Resolution:
+     -----------
+     Because it is not exactly clear which process is leaving these multiple    
+     cross references behind, routines ORB3TIM2 and ORQ12 have been modified   
+     to delete dangling pointers if they are encountered and there is no  
+     corresponding Orders file (#100) entry
+  
+  
+ Installation Instructions:
+ ==========================
+ It is recommended users are off the system. If a user is in the middle of 
+ order actions during installation of this patch CPRS may error and close.
+ It is also recommended that this patch is NOT installed during the 
+ nightly run of ORMTIME.
+  
+ Install Time - less than 2 minutes
+  
+ 1.  Load Transport Global 
+     ---------------------------
+  
+  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter OR*3.0*356):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+         a.  Choose the Install Package(s) option to start the patch
+             install.
+  
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during the 
+             install? NO//' answer NO
+  
+         c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+            Options, and Protocols? NO//' answer NO 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORB3TIM2
+    Before: B40286221   After: B42852684  **102,215,251,265,356**
+Routine Name: ORQ12
+    Before: B36656064   After: B37558185  **12,27,78,92,116,190,220,215,
+                                           243,356**
+Routine Name: ORWDXM2
+    Before: B76107854   After: B76657020  **10,85,109,116,132,158,187,
+                                           195,215,243,280,356**
+ 
+Routine list of preceding patches: 265, 280
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : OCT 27, 2011
+Completed By: LOKHANDWALA,MURTUZA           Date Completed: AUG 21, 2013
+Released By : KREUZ,SHERI B                 Date Released : AUG 28, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

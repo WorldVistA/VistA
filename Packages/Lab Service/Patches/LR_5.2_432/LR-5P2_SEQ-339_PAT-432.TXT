@@ -1,0 +1,158 @@
+$TXT Created by CARPENTER,TERRY at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 06/18/13 at 16:37
+=============================================================================
+Run Date: SEP 20, 2013                     Designation: LR*5.2*432
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #339                    Status: Released
+                  Compliance Date: OCT 21, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*153  <<= must be installed BEFORE `LR*5.2*432'
+                    (v)LR*5.2*423  <<= must be installed BEFORE `LR*5.2*432'
+
+Subject: Hospital Location File/Lab Collect issues
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix the following issues in the laboratory package:
+  
+ 1. Screening problem in the Hospital Location file (#44).
+ 2. There is a problem when a Lab Collect is placed on a collection list.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ ========================
+ 1. INC000000069030 -  No screen being done on file 44.
+  
+ 2. INC000000536496 -  Lab accessioning date error.
+     
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+    
+  
+ TEST SITES:
+ ===========
+ James J. Peters VA Medical Center - Bronx
+ Salisbury - W.G. (Bill) Hefner VA Medical Center
+ Southern Arizona VA Health Care System
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  INC000000069030 - No screen being done on file 44. 
+  
+     Problem
+     ------------
+     Hospital locations of "F" (File Area) and "I" (Imaging) should not 
+     be selectable as a patient location in the laboratory order entry.
+     These locations are already screened out in CPRS.
+  
+     Solution
+     ------------
+     Modify the FileMan call to the Hospital Location file (#44) in 
+     routine LRWU to screen out Hospital Locations of type "F" (File Area)
+     and "I" (Imaging).
+  
+  
+     Routine:    LRWU  
+  
+  
+  
+ 2.  INC000000536496 - Lab accessioning date error.
+    
+     Problem
+     ------------
+     When a LC (Lab Collect) order is placed on a collection list, the
+     order is accessioned and data is entered in the Accession file (#68)
+     and in the Lab Order Entry file (#69) to reflect the accessioning
+     process.  On occasion, the patient is not available at collection
+     time so the specimen is not collected.  At a later date/time 
+     laboratory staff can use option LROE to accession the order again.
+     This leads to conflicting/confusing dates/times in the Accession file 
+     (#68) and in the Lab Order Entry file (#69).
+  
+     Solution
+     ------------
+     Modify routine LROE to not allow accessioning to occur again if 
+     the Accession file (#68) and the Lab Order Entry file (#69)
+     indicate that accessioning has already occurred.
+  
+     
+     Routine:    LROE
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system
+       to avoid problems loading and/or installing this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter LR*5.2*432 )
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       LR*5.2*432 .
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LROE
+    Before: B34630277   After: B36200686  **100,121,201,221,263,286,360,
+                                           423,432**
+Routine Name: LRWU
+    Before: B18370085   After: B18476250  **42,138,153,432**
+ 
+Routine list of preceding patches: 153, 423
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,TERRY               Date Entered  : MAY 09, 2013
+Completed By: PODLEY,CHRIS                  Date Completed: SEP 06, 2013
+Released By : MURCH,CLAUDETTE               Date Released : SEP 20, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

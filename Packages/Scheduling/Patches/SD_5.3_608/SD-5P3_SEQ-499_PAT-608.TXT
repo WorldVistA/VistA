@@ -1,0 +1,182 @@
+$TXT Created by POTTER,DAVID at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 04/10/13 at 09:49
+=============================================================================
+Run Date: SEP 16, 2013                     Designation: SD*5.3*608
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #499                    Status: Released
+                  Compliance Date: OCT 01, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*601  <<= must be installed BEFORE `SD*5.3*608'
+
+Subject: FY2014 Table Maintenance for CLINIC STOP file (#40.7)
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch provides Fiscal Year 2014 updates to the CLINIC STOP (#40.7) 
+ file as requested by the Decision Support Office (DSO).
+  
+  
+                         ***IMPORTANT NOTE: ***
+ **************************************************************************
+ ** This patch should be installed as close to COB on September 30, 2013 **
+ ** as possible, but not after the start of business on October 1, 2013. **
+ ** Early installation of this patch could result in transmission of     **
+ ** incorrect stop codes that will result in errors from Austin.         **
+ ** Coordination with the MAS (Medical Administration Service) PAS       **
+ ** (Program Application Specialist)/ADPAC is imperative, as the patch   **
+ ** will cause changes to the CLINIC STOP file (#40.7).  Testing can be  **
+ ** done in a site's mirror account before installation in production to **
+ ** verify changes.                                                      **
+ **                                                                      **
+ ** This patch inactivates, creates and modifies descriptions of stop    **
+ ** codes effective October 1, 2013, therefore, installing early may     **
+ ** modify certain stop codes that may currently be in use at your site. **
+ ** It is advised that clinics with stop codes assigned that will        **
+ ** incur restriction date/type changes should be corrected as soon as   **
+ ** possible after installation.  Please keep in mind that new stop      **
+ ** code corrections cannot be assigned until October 1, 2013.           **
+ ** All other stop code corrections should be made as early as possible  **
+ ** on October 1, 2013.  Sites need to coordinate their DSS CLINICS AND  **
+ ** STOP CODES file (#728.44) worksheet maintenance to save the latest   **
+ ** FY2013 values (as of Sep 30, 2013), and then not change the work-    **
+ ** sheet to have FY2014 values until after the DSS Clinic (CLI)         **
+ ** extract for September data has run successfully.                     **
+ **************************************************************************
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ INC0000000833182 - FY2014 Table Maintenance for Clinic Stop file (#40.7)
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ Salisbury, NC
+ Upstate, NY HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ INC0000000833182 - FY2014 Table Maintenance for CLINIC STOP file (#40.7)
+  
+ Problem:
+ --------
+ The Stop Code Council, through the Decision Support Office (DSO), has 
+ requested Fiscal Year 2014 updates to the CLINIC STOP file (#40.7).
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2014 updates were submitted by the DSO to be
+ implemented effective October 1, 2013. Post-init routine SD53FY14 updates the
+ CLINIC STOP file (#40.7) by adding seven (7) new stop codes, inactivating two
+ (2) stop codes, and changing the name and restriction type for one (1) stop 
+ codes. A total of 10 stop codes are being updated with this patch.
+   
+ Listed below are the applicable stop code updates:
+  
+ New Stop Codes Being Added:  (effective 10/1/2013)
+  
+ Stop Code   Name/ Description            Restriction Type   Restriction Date
+    346         ALS CENTER                      E       
+    347    ALS HOME CARE PROGRAM                E
+    354        HOSPITAL AT HOME                 E
+    490      TELETRANSPLANT PT SITE             S               10/1/2013
+    491     TELETRANSPLANT PROV SITE            S               10/1/2013
+    586       RRTP INDIVIDUAL                   E
+    587         RRTP GROUP                      E
+  
+  
+ Stop Codes being Inactivated: (Inactive Date: 10/1/2013)
+  
+ 537    TELEPHONE/PSYCHOSOCIAL REHAB        
+ 654    NON VA RESIDENTIAL CARE DAYS        
+  
+ Stop Codes with changes to Name, Restriction type and Restriction date:
+  
+ 159   Old Name:  COMPLEMENTARY & ALTERNATIVE RX
+       New Name:  COMP AND ALTERNATIVE MED
+  
+       Old Restriction Type:  E    New Restriction Type:  S
+       Old Restriction Date:  N/A  New Restriction Date:  10/1/2013
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+  
+ Installation will take less than 2 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+  
+   3. From this menu, you may select the following options:
+      (when prompted for INSTALL NAME, enter SD*5.3*608)
+      
+      a. Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch. It will NOT
+         backup any other changes such as DDs or templates.
+      
+      b. Compare Transport Global to Current System - this option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      
+      c. Verify Checksums in Transport Global - this option will ensure
+         the integrity of the routines that are in the transport global.
+       
+   4. Use the Install Package(s) option and select the package SD*5.3*608.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+      NO//" respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+      and Protocols? NO//" respond NO.
+   
+   7. If an error is received during install, please contact your IRM
+      for additional support.
+  
+   8. The routine SD53FY14 can be removed from your production and test system
+      after the patch has been successfully installed.
+  
+ NOTE: Details of the changes applied by this patch are provided
+       during the installation and may also be reviewed with the Install
+       File Print option on the Utilities menu on the Kernel Installation
+       and Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post
+       installation to make sure that all of the updates are correctly
+       reflected in the CLINIC STOP file (#40.7). If any discrepancies
+       are found you should enter a Remedy Ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53FY14
+    Before:       n/a   After: B69008719  **608**
+
+=============================================================================
+User Information:                          Hold Date     : SEP 16, 2013
+Entered By  : POTTER,DAVID                  Date Entered  : MAR 27, 2013
+Completed By: SESSLER,APRIL                 Date Completed: SEP 04, 2013
+Released By : BARFIELD,RICHARD              Date Released : SEP 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

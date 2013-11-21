@@ -1,0 +1,187 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 04/02/13 at 09:58
+=============================================================================
+Run Date: SEP 05, 2013                     Designation: ECX*3*146
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #129                      Status: Released
+                  Compliance Date: OCT 06, 2013
+=============================================================================
+
+Associated patches: (v)ECX*3*141   <<= must be installed BEFORE `ECX*3*146'
+
+Subject: Update to National Clinic File (#728.441)
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*146 adds 41 new clinic codes and updates the description
+ of 4 existing codes in the NATIONAL CLINIC (#728.441) file.
+   
+  
+ ASSOCIATED REMEDY TICKET: 
+ =========================
+ 1)  INC000000829163    Update to the NATIONAL CLINIC (#728.441) file
+   
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Heartland-East HCS
+ New York Harbor HCS
+ Providence, RI
+ Salem, VA
+   
+  
+ Remedy Overview:
+ ================
+ 1)  INC000000829163    Update to the NATIONAL CLINIC (#728.441) file
+   
+   
+  
+   Problem:
+   --------
+   A request was made by the Decision Support Office (DSO) to update the 
+   NATIONAL CLINIC (#728.441) file with 41 new NATIONAL CLINIC codes and 
+   update the description of 4 existing codes.
+   
+   
+   Resolution:
+   -----------
+   This patch updates the NATIONAL CLINIC (#728.441) file by adding 41 
+   new records and updates the description of 4 existing codes.
+   
+   
+   The following entries have been added to the NATIONAL CLINIC (#728.441)
+   file:
+  
+   Code                  Short Description
+   --------------------------------------------
+   AMSP            Antimicrb Stwrdshp Pharmacist
+   CSCC            CnsltSprtClinc CreatvArtsFestvl
+   CSCF            CnsltSprtClinc GolfPgm
+   CSCG            CnsltSprtClinc GldnAgGms
+   CSCL            CnsltSprtClinc WellnessPgm
+   CSCN            CnsltSprtClinc WintrSprtClinc
+   CSCS            CnsltSprtClinc SummrClinc 
+   CSCT            CnsltSprtClinc TEE Trnmt
+   CSCW            CnsltSprtClinc WhlchrGms
+   ECOP            E-Cnslt Pharmacist
+   GERP            Geriatric Pharmacist
+   PIMI            Polytrauma Integ Med Init
+   SMOP            Smk Cessation Pharmacist
+   SPAP            SpcltyCare Anticoag Pharmacist
+   VITL            VITAL Initiative
+   ABCD            Locally Defined A
+   BCDE            Locally Defined B
+   CDEF            Locally Defined C
+   DEFG            Locally Defined D
+   EFGH            Locally Defined E
+   FGHI            Locally Defined F
+   GHIJ            Locally Defined G
+   HIJK            Locally Defined H
+   IJKL            Locally Defined I
+   JKLM            Locally Defined J
+   KLMN            Locally Defined K
+   LMNO            Locally Defined L
+   MNOP            Locally Defined M
+   NOPQ            Locally Defined N
+   OPQR            Locally Defined O
+   PQRS            Locally Defined P
+   QRST            Locally Defined Q
+   RSTU            Locally Defined R
+   STUV            Locally Defined S
+   TUVW            Locally Defined T
+   UVWX            Locally Defined U
+   VWXY            Locally Defined V
+   WXYZ            Locally Defined W
+   XYZA            Locally Defined X
+   YZAB            Locally Defined Y
+   ZABC            Locally Defined Z
+  
+  
+  
+   The following code's description changed:
+   
+   Existing Code         New Short Description
+   --------------------------------------------
+   CGPH            CntrlzAnticoagMgmt Pharmacist
+   CPRY            SCAN Mini-Spec Clinic
+   PACP            PACT Anticoag Tm Pharmacist
+   WCNC            VITAL Initiative (temp)
+  
+  
+  
+  Note: Each entry added to the ECX global will take approximately 85 bytes.
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter ECX*3.0*146).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         ECX*3.0*146.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//" respond NO.
+   
+   ** 7. During install, verify that all entries were added successfully.
+         If an error is displayed, please file a Remedy Ticket.  
+   
+      8. You may delete the routine ECX146PT from your production system after 
+         the patch has been successfully tested.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;DEC 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX146PT
+    Before:       n/a   After: B18077431  **146**
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : MAR 15, 2013
+Completed By: LEANORD,TATIANA               Date Completed: AUG 29, 2013
+Released By : VASSAR,CAROL                  Date Released : SEP 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

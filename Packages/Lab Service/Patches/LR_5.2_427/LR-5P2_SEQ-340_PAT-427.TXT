@@ -1,0 +1,934 @@
+
+=============================================================================
+Run Date: SEP 24, 2013                     Designation: LR*5.2*427
+Package : LR - LAB SERVICE                    Priority: EMERGENCY
+Version : 5.2       SEQ #340                    Status: Released
+                  Compliance Date: OCT 04, 2013
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*427'
+
+Subject: LEDI IV UPDATES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ The build for this patch is distributed as part of a multi-package build 
+ that contains LR*5.2*427 and LA*5.2*80.
+  
+   
+ Blood Bank Clearance
+ ====================
+  
+ VISTA Laboratory Package patch LR*5.2*427 contains changes to software 
+ controlled by VHA DIRECTIVE 2004-058, titled VISTA BLOOD BANK SOFTWARE. 
+ Changes include: 
+  
+ Routine
+ =======
+ LR7OR1
+  
+ File                       Field
+ ====                       =====
+ COLLECTION SAMPLE (#62)    NAME (#.01)
+ LAB DATA (#63)             FUNGUS/YEAST (#63.37,.01)
+     
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*427 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*427 does not 
+ alter or modify any software design safeguards or safety critical elements
+ functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 1 routines and 2
+ files identified in Veterans Health Administration (VHA) Directive 
+ 2004-058, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios by option
+  
+ --------------------------------------------------------------------------
+  
+ This patch addresses the following items related to Laboratory Data 
+ Sharing and Interoperability (LEDI) IV:
+  
+ o LEDI IV added the performing laboratory to the Anatomic Pathology (AP)
+   reports. However, for sites that have e-signature turned on, the 
+   performing laboratory was displaying before the pathologist's signature.
+   It was reported that with it before, the signature gets lost and is
+   difficult to find, and having it after the signature would make for a
+   nicer presentation of the report. This patch changes it so that the
+   performing laboratory is displayed after the signature.
+  
+ o LEDI IV made the NAME field (#.01) in the TOPOGRAPHY FIELD file (#61),
+   COLLECTION SAMPLE file (#62), and ETIOLOGY FIELD file (#61.2) 
+   uneditable. This patch will restore the original functionality to make
+   it editable again.
+  
+ o An issue was found where if a user ran option 'Multipurpose
+   accessioning' [LRQUICK] after logging in an AP accession via option
+   'Log-in, anat path' [LRAPLG], that an accession number was not being
+   assigned to the order. Additionally, the system was not displaying the
+   usual prompts to the user. This issue has been fixed with this patch.
+  
+ o When patch LR*5.2*415 was nationally released, a new bug was introduced.
+   During the check to make sure that an accession number was not already
+   in use, the software is incorrectly referencing the LRAAX variable when
+   it should have referenced the LRAA0 variable instead.  This issue will
+   be corrected by this patch.
+  
+ o If when loading the Systemized Nomenclature of Medicine Clinical 
+   Terminology (SNOMED CT) mappings via option Load SNOMED SCT Mapping
+   [LA7S LOAD MAPPING SCT], an alert was sent to Standards & Terminology
+   Services (STS) for an entry that had an exception with the mapping, then
+   during subsequent loads - the system is not sending an alert again for
+   this entry (if an exception was found with the new mapping) - EVEN if
+   the SNOMED CT ID changed with the new mapping. This patch fixes the 
+   code to send an alert to STS for subsequent SNOMED CT ID changes for an 
+   entry if an exception was found with the new mapping.
+  
+ o This patch updates the description for option AP LEDI Data Entry [LRAP 
+   VR].
+  
+ o The Joint Pathology Center (JPC) has replaced the Armed Forces Institute
+   of Pathology (AFIP). This patch replaces any references to the AFIP with
+   JPC.
+      
+ o This patch fixes a bug that was preventing certain Microbiology fields
+   from being assigned a performing laboratory during results entry.
+  
+ o When entering results using the Results entry [LRMIEDZ] option at the 
+   designate performing laboratory prompt, if the user chooses specific 
+   sections of report, certain fields are incorrectly displayed with a
+   number sign (#) and a number.  This patch will remove the erroneous
+   display and present the fields without any additional '#xx' reference.
+    
+ o Option Results entry (batch) [LRMISTUF] is prompting for a performing 
+   laboratory even when the 'Ask Performing Lab Micro' parameter is set to 
+   'No'. This patch fixes the code to not prompt for a performing
+   laboratory if the parameter is set to 'No' during batch entry, but will
+   automatically assign one based on the user's defaults.
+   
+ o If during results entry, the user sends an alert for an accession that
+   has add-on tests, when the alert is processed, it is displaying the last
+   test added to the accession on the report header - even if that was not
+   the test the alert was sent for. This patch fixes the code so that the
+   correct test is displayed on the header.
+  
+ o When entering comments for Microbiology organisms during results entry, 
+   if the comments are longer than 49 characters, it can run from one line
+   to the next and break right in the middle of a word when the results are
+   later viewed.  This patch will update the report so that the words will 
+   wrap correctly from one line to the next for a better visual display of 
+   the results.
+  
+ o On the Cumulative report, if there is a performing laboratory assigned
+   to a microbiology report, a separating line (containing "=--=--=--=") is
+   printed between the main report and the performing laboratory
+   assignment. However, when looking at the report, it is possible to
+   mistake the "=--=--=--=" line as a separator between different
+   microbiology reports, when in fact it is separating between different
+   sections of the same report. This patch will add a line containing equal
+   signs ("==========") after each microbiology report on the Cumulative,
+   so that it is clearer where one microbiology report ends and another
+   begins.
+     
+ o When editing an AP accession via option Edit log-in & clinical hx, anat
+   path [LRAPED], if the user goes to add a new specimen multiple, the
+   defaults for specimen topography and collection sample are not
+   displaying.  This patch fixes the code so the defaults display when
+   editing an AP accession via Edit log-in & clinical hx, anat path
+   [LRAPED] option.
+  
+ o If a referral laboratory has e-signature turned on for AP reports and
+   releases an AP supplementary report, the report is not being sent back
+   to the collecting site. This issue has been fixed with this patch.
+  
+ o When the 'Delete accession #, anat path [LRAPKILL]' option is executed, 
+   the reference to the accession is not deleted out of the LAB 
+   ORDER ENTRY file (#69).  This patch fixes the code so that the reference 
+   is also deleted. It will also update the status of the order to canceled.
+  
+ o A prompt for cytology workload profile is added when logging in a 
+   cytology referral accession at a host site.
+  
+ o When a collecting site accepts a LEDI micro result that only contains 
+   preliminary comments and they preview the result before accepting it,
+   the report is not displaying those comments. This issue will be fixed
+   with this patch.
+  
+    
+        
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ TOPOGRAPHY FIELD (#61)     NAME (#.01)                      Modified
+  
+ ETIOLOGY FIELD (#61.2)     NAME (#.01)                      Modified
+  
+ COLLECTION SAMPLE (#62)    NAME (#.01)                      Modified
+  
+ LAB DATA (#63)             FUNGUS/YEAST (#63.37,.01)        Modified
+   
+  
+ Parameter Definitions Associated:
+  
+ Parameter Definition Name                             New/Modified/Deleted
+ -------------------------                             --------------------
+ LR AP DEFAULT ACCESSION NUMBER                              New
+  
+  
+ Parameter Templates Associated:
+  
+ Parameter Template Name                               New/Modified/Deleted
+ ----------------------------------                    --------------------
+ LR PKG                                                      Modified
+  
+  
+ Options Associated:
+   
+ Option Name                          Type             New/Modified/Deleted
+ -----------                          ----             --------------------
+ AP LEDI Data Entry [LRAP VR]         routine                Modified
+ JPC registries [LRAPAFIP]            menu                   Modified
+  
+  
+ Remedy Tickets Overview
+ =======================
+   
+ 1. INC000000777628 - Accessions printing without page break between 
+                      patients
+    Duplicate:
+    INC000000814257 - Microbiology reports issue
+   
+    Problem
+    -------
+    When a user runs option All results for selected accessions [LRMIPLOG]
+    for multiple accessions, the report prints without putting page breaks 
+    between accessions.
+  
+    Solution
+    --------
+    Modified routine to put page breaks between accessions.
+   
+    Routine: LRMIPLOG
+  
+ 2. INC000000780476 - Collection list issue after LEDI IV install
+    Duplicates:
+    INC000000796627 - AM Collection list did not print to printer, nor can 
+                      see on screen
+    INC000000804957 - Lab - Other:
+    INC000000813520 - Collection lists for integrated Vista database don't 
+                      work after LEDI IV install
+    INC000000840590 - RIC-Lab - LEDI IV:  Collection List Problems
+    INC000000845646 - Lab - LEDI: The "temporary fix" is to locally modify 
+                      the code in routine LRPHSET2.
+    INC000000864259 - Lab Collection List issues 
+  
+    Problem
+    -------
+    If during routine lab collection receipt, orders are indicated not 
+    collected yet, but to have them carry on to the next collection time,
+    they are not printing to the list.
+  
+    Solution
+    --------
+    Fixed routine to use correct cross-reference.
+  
+    Routine: LRPHSET2
+  
+ 3. INC000000784206 - Micro report issue 
+   
+    Problem
+    -------
+    When a user runs option Verification of data by supervisor [LRMIVER]
+    for multiple accessions, the report prints without putting page breaks 
+    between accessions.
+  
+    Solution
+    --------
+    Modified routine to put page breaks between accessions.
+   
+    Routine: LRMIVER1
+  
+ 4. INC000000800952 - Issue with LEDI network reports
+  
+    Problem
+    -------
+    When reports are generated via option Create and Mail Lab Reports 
+    [LRRMM TASK MAIL LAB REPORTS], the report does not contain page breaks 
+    between the microbiology reports.
+  
+    Solution
+    --------
+    Modified routine LRRMM to print a form-feed before printing a micro 
+    report.
+  
+    Routine: LRRMM
+  
+ 5. INC000000812261 - Microbiology: Mycology Screening issue post LEDI IV
+  
+    Problem
+    -------
+    When entering microbiology results, the system allows the selection of 
+    any organism and is not screening out non-fungal organisms as it
+    should.
+  
+    Solution
+    --------
+    Modified the Data Dictionary (file #63, subfile #63.37, field #.01) to 
+    put back the screen that existed pre-LEDI IV to screen out non-fungal 
+    organisms.
+  
+ 6. INC000000816057 - Issue with cumulative report if field Test Field 
+                      Length is null
+    Duplicates:
+    INC000000810685 - Lab - LEDI:
+    INC000000812936 - Lab - LEDI:
+  
+    Problem
+    -------
+    If the field TEST FIELD LENGTH (#1) in the LAB REPORTS file (#64.5) is 
+    null, it can cause a looping in CPRS when a user selects a cumulative 
+    report that has a test with a missing field length. It will also fill
+    up a scratch global on the VistA system and affect system availability.
+  
+    Solution
+    --------
+    Modified routines LR7OSUM3 and LR7OSUM5 to use a default value of 15 if
+    the Test Field Length is null.
+  
+    Routines: LR7OSUM3 and LR7OSUM5
+   
+ 7. INC000000812762 - Microbiology: Error when verifying data
+    Duplicate:
+    INC000000828286 - MIN- Lab: LEDI IV Vitek Interface error
+  
+    Problem
+    -------
+    Routine LRMIUT1 is using variable Y when setting the AR 
+    cross-reference. When that variable is not set, it causes an error to 
+    occur.
+  
+    Solution
+    -------- 
+    Modified routine LRMIUT1 to use the variable DT when setting the AR 
+    cross-reference.
+  
+    Routine: LRMIUT1
+  
+ 8. INC000000816895 - Lab - Anatomic Path - LEDI IV Print Log Book
+  
+    Problem
+    -------
+    The Print log book [LRAPBK] option is not utilizing the LR AP SURGERY
+    REFERENCE parameter definition so the report is incorrectly
+    displaying the source of copied surgery information when being
+    printed.
+   
+    Solution
+    -------- 
+    Routine LRAPBK will be modified to only print the surgery information
+    when the LR AP SURGERY REFERENCE parameter is set to YES.  When it's
+    set to NO, the information will be omitted on the report.
+  
+    Routine: LRAPBK
+  
+ 9. INC000000814463 - Microbiology Summary List Issue
+  
+    Problem
+    -------
+    The Summary list (supervisors') [LR SUP SUMMARY] option is no longer
+    displaying accessions verified by the micro techs on site.  However,
+    it is displaying accessions verified by remote techs that access the
+    site.
+   
+    Solution
+    -------- 
+    Routine LRMINEW1 will be modified to also include the timestamp when
+    the XXX RPT DATE APPROVED field is updated with a new date.
+  
+    Routine: LRMINEW1
+  
+ 10. INC000000812788 - Not allowed to enter UID at accession prompt  
+  
+     Problem
+     -------  
+     LEDI IV added the ability to use a UID in the micro option Results entry
+     [LRMIEDZ], but it only works at the first accession number prompt at the
+     start of the option. When you are into the option and come to the next
+     accession number prompt the option doesn't allow the UID to be used.
+  
+     Solution
+     --------
+     Routine LRMIEDZ2 will be modified to allow the ability to enter the UID
+     at the next accession number prompt. 
+   
+     Routine: LRMIEDZ2 
+  
+ 11. INC000000823702 - Test result not displaying when viewing alert
+     Duplicate:
+     INC000000842226 - VA Alerts do not show all of Lab results
+  
+     Patient Safety Issue
+     --------------------
+     PSPO #2408 - VistA/CPRS alerts do not show all of the laboratory 
+                  results
+  
+     Problem
+     -------  
+     If two tests on a Lab order have the same Print Order, it is possible
+     that one of them will not display when viewing an alert for the
+     results. Similar issue occurs if the user right-clicks an order in
+     CPRS and chooses "results".
+  
+     Solution
+     --------
+     Routine was modified to make sure that when sorting the results in the
+     TMP global that tests with the same print order do not overwrite each
+     other. 
+   
+     Routine: LR7OR1
+  
+ 12. INC000000830122 - Issue with AP Comments field
+  
+     Problem
+     -------  
+     AP comments intended for internal use are being displayed on official 
+     reports.
+  
+     Solution
+     --------
+     Remove AP comments from displaying on the official report.
+   
+     Routines: LR7OSAP, LRAPBR1, LRAPCUM, LRSPRPTA
+  
+ 13. INC000000782825 - 2 Microbiology printing
+     Duplicates:
+     INC000000783053 - MAN-LR-LR SUP SUMMARY not working for Micro
+                       accessions since LEDI IV installed
+     INC000000784376 - 2 Summary reports not working post LEDI IV install
+     INC000000818452 - MIW - Lab - LEDI:
+     INC000000816184 - Microbiology Supervisor's Summary List
+     INC000000839689 - Lab - LEDI:
+  
+     Problem
+     -------
+     The Summary list (supervisors') [LR SUP SUMMARY] option is no longer
+     displaying verified accessions on the report.
+  
+     Solution
+     -------- 
+     Routine LRLIST will be modified to not include the timestamp when
+     comparing the XXX RPT DATE APPROVED field with the date selected
+     by the user for the report.
+  
+     Routine: LRLIST
+  
+ 14. INC000000781464 - Surgical Path next accession number available 
+                       problem
+  
+     Problem
+     -------
+     When logging in an AP specimen, the system is defaulting to the next 
+     available number that follows the last accession number logged in,
+     instead of defaulting to the first available number.
+  
+     Solution
+     -------- 
+     To avoid having any skipped AP accession numbers, this patch will
+     change the way the system assigns a default accession number when a
+     case is logged in via option 'Log-in, anat path' [LRAPLG]. Previously,
+     the system defaulted to the next available number that followed the
+     last accession number that was used. This patch changes it so that
+     every time an AP accession is logged in, the system starts searching
+     from the beginning (#1), and the first available accession number that
+     is found in that accession area will be used as the default accession
+     number for the new case being logged in (note: the user will still be
+     able to override the default, and select a different accession number,
+     if they so choose). For sites that want to keep the original method of
+     assigning a default AP accession number, a new Parameter is being
+     introduced that will let the site configure which method the system
+     should use. This new parameter, 'Method of Assigning AP Accession
+     Number', can be edited via the option 'Package Level Parameter Edit'
+     [LR7O PAR PKG] on the 'Update CPRS Parameters' [LR7O PARAM MENU] menu.
+  
+     Routine: LRAPLG1
+  
+   
+  
+ Test Sites
+ ==========
+  
+  Bedford VAMC
+  Biloxi VAMC
+  Boston HCS
+  Hines, IL VAMC
+  Houston VAMC
+  Madison, WI VAMC
+  Milwaukee VAMC
+  Minneapolis VA HCS
+  Shreveport VAMC
+  St. Cloud VA HCS
+  Upstate New York HCS
+  VA Heartland-West HCS
+   
+ We would also like to thank the following site who participated in the 
+ testing of this patch: 
+  
+  Oklahoma City VAMC
+    
+   
+     
+ Software and Documentation Retrieval Information
+ ================================================
+  
+ VistA Laboratory patch LR*5.2*427 software is distributed by Host File, 
+ along with LA*5.2*80.
+  
+  
+ Software is available on the ANONYMOUS.SOFTWARE directory at one of the
+ following Office of Information (OI) Field Offices.
+  
+ The preferred method is to FTP the files from:
+    download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may also
+ elect to retrieve documentation directly from a specific server as
+ follows:
+         Albany                  ftp.fo-albany.domain.ext
+         Hines                   ftp.fo-hines.domain.ext
+         Salt Lake City          ftp.fo-slc.domain.ext
+  
+ File Name                     Contents                    Retrieval Format
+ ------------------            --------------------        ----------------
+ LR_52_P427.KID                Host File containing        ascii
+                               KIDS software distribution
+  
+ LAB_LEDI_IV_UM_UPDATE.PDF     LEDI IV User Manual         binary
+                               Update
+  
+ LEDI_IV_AP_MICRO_CONFIGURATION_GUIDE.PDF                  binary
+                               LEDI IV Update AP/MICRO     
+                               Configuration Guide    
+    
+   
+  
+ Installation Instructions
+ =========================
+  
+ This patch, LR*5.2*427, is part of a combined build for LEDI IV Updates.  
+ This patch may be loaded with users on the system.  You may want to 
+ install it during non-peak hours.  Installation will take less than 10 
+ minutes.
+   
+   1.   DOWNLOAD HOST KIDS FILE
+        -----------------------
+        Download the KIDS file LR_52_P427.KID from the
+        ANONYMOUS.SOFTWARE directory of either Albany, Hines, or the Salt
+        Lake OIFO to the appropriate directory on your system.
+    
+   2.   LOAD DISTRIBUTION
+        -----------------
+        Use the 'LOAD A DISTRIBUTION' option on the KIDS INSTALLATION
+        menu, and enter:  the directory onto which you have
+        downloaded the host file, followed by LR_52_P427.KID, the host
+        file name.
+   
+   3.   START UP KIDS
+        -------------
+        Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]:
+    
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+    
+   Select Kernel Installation & Distribution System Option: INStallation
+                                                            ---
+             Load a Distribution
+             Print Transport Global
+             Compare Transport Global to Current System
+             Verify Checksums in Transport Global
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+             Backup a Transport Global
+    
+    
+   4.   Select Installation Option:
+        --------------------------
+    
+        a. Use the Load a Distribution and select Host File:
+           LR_52_P427.KID
+    
+        NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+               NAME, enter LR*5.2*427):
+    
+        b.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will not
+            backup any other changes such as DD's or templates.
+        c.  Compare Transport Global to Current System - This option will
+            allow you to view all changes that will be made when this patch
+            is installed.  It compares all components of this patch
+            (routines, DD's, templates, etc.).
+        d.  Verify Checksums in Transport Global - This option will allow
+            you to ensure the integrity of the routines that are in the
+            transport global.
+        e.  Print Transport Global
+    
+   5.   Select Installation Option: Install Package(s)
+                                    ------------------
+        **This is the step to start the installation of this KIDS patch:
+    
+       a.  Choose the Install Package(s) option to start the patch install.
+       b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+           YES//' answer NO
+       c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+           Options, and Protocols? YES//' answer YES.
+       d.  The following options should be disabled:
+             Verify/release reports, anat path [LRAPR]
+             Supplementary report release, anat path [LRAPRS]
+             Log-in, anat path [LRAPLG]
+             Add to collection list [LRPHMAN]
+             Results entry [LRMIEDZ]
+             Results entry (batch) [LRMISTUF]
+  
+   6.   Please refer to the LEDI IV Installation Guide for back-out
+        procedures, if an uninstall is necessary.
+                                  
+                                 
+                                
+ POST-INSTALLATION INSTRUCTIONS
+ ==============================
+  
+ 1. The option 'Check SNOMED CT Mappings Against the Lexicon' [LA7TASK SCT 
+    MAPPINGS CHECK] should be queued to run using the Taskman Management 
+    option 'Schedule/Unschedule Options' [XUTM SCHEDULE]. Queue the option
+    to run every two weeks during non-peak hours.
+  
+    Example:
+  
+    Select OPTION NAME: XUTM MGR       Taskman Management
+                        --------
+    Select Taskman Management Option: SCHedule/Unschedule Options
+                                      ---
+    Select OPTION to schedule or reschedule: LA7TASK SCT MAPPINGS CHECK
+                                             --------------------------
+      Are you adding 'LA7TASK SCT MAPPINGS CHECK' as 
+      a new OPTION SCHEDULING (the 84TH)? No// YES
+                                                ---
+  
+                          Edit Option Schedule
+        Option Name: LA7TASK SCT MAPPINGS CHECK    
+        Menu Text: Check SNOMED CT Mappings Against          TASK ID:
+        ------------------------------------------------------------------
+  
+      QUEUED TO RUN AT WHAT TIME: T+1@03:00              
+  
+    DEVICE FOR QUEUED JOB OUTPUT:                               
+  
+     QUEUED TO RUN ON VOLUME SET:                      
+  
+          RESCHEDULING FREQUENCY: 14D                           
+  
+                 TASK PARAMETERS:
+  
+                SPECIAL QUEUEING:
+  
+  
+        ------------------------------------------------------------------
+  
+   
+      COMMAND: SAVE                          Press <PF1>H for help   Insert
+  
+ 2. The LEDI IV installation inadvertently removed the SNOMED CODE field 
+    (#2) as an Identifier for files TOPOGRAPHY FIELD (#61) and ETIOLOGY
+    FIELD (#61.2). To make the field an Identifier again, a user with
+    programmer access and access to the option Identifier [DIIDENT] under
+    the Utility Functions [DIUTILITY] FileMan menu can designate the field
+    as an Identifier again.
+     
+    Example:
+     
+    VA FileMan 22.0
+      
+       
+    Select OPTION: 6 <ENTER> UTILITY FUNCTIONS
+    Select UTILITY OPTION: 3 <ENTER> IDENTIFIER
+     
+    MODIFY WHAT FILE: TOPOGRAPHY FIELD// 61 <ENTER> TOPOGRAPHY FIELD
+                                              (8514 entries)
+    Select FIELD: 2 <ENTER> SNOMED CODE
+    Want to make 'SNOMED CODE' an Identifier? No// Y <ENTER> (Yes)
+    Want to display SNOMED CODE whenever a lookup is done
+      on an entry in the 'TOPOGRAPHY FIELD' File? Yes// <ENTER>  (Yes)
+       
+        
+    Select UTILITY OPTION: 3 <ENTER> IDENTIFIER
+     
+    MODIFY WHAT FILE: TOPOGRAPHY FIELD// 61.2 <ENTER> ETIOLOGY FIELD
+                                              (4681 entries)
+    Select FIELD: 2 <ENTER> SNOMED CODE
+    Want to make 'SNOMED CODE' an Identifier? No// Y <ENTER> (Yes)
+    Want to display SNOMED CODE whenever a lookup is done
+      on an entry in the 'ETIOLOGY FIELD' File? Yes// <ENTER>  (Yes)
+       
+        
+    Select UTILITY OPTION:
+                      
+                       
+                        
+ INSTALLATION EXAMPLE
+ ====================
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: LR*5.2*427       Loaded from Distribution  
+ 8/19/13@18:03:56
+      => LR427 AND LA80  ;Created on Aug 19, 2013@17:17:24
+  
+ This Distribution was loaded on Aug 19, 2013@18:03:56 with header of 
+    LR427 AND LA80  ;Created on Aug 19, 2013@17:17:24
+    It consisted of the following Install(s):
+      LR*5.2*427      LA*5.2*80
+ Checking Install for Package LR*5.2*427
+  
+ Install Questions for LR*5.2*427
+  
+ Incoming Files:
+  
+  
+    61        TOPOGRAPHY FIELD  (Partial Definition)
+ Note:  You already have the 'TOPOGRAPHY FIELD' File.
+  
+  
+    61.2      ETIOLOGY FIELD  (Partial Definition)
+ Note:  You already have the 'ETIOLOGY FIELD' File.
+  
+  
+    62        COLLECTION SAMPLE  (Partial Definition)
+ Note:  You already have the 'COLLECTION SAMPLE' File.
+  
+  
+    63        LAB DATA  (Partial Definition)
+ Note:  You already have the 'LAB DATA' File.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+ Checking Install for Package LA*5.2*80
+  
+ Install Questions for LA*5.2*80
+  
+ Incoming Files:
+  
+  
+    62.47     LAB CODE MAPPING  (Partial Definition)
+ Note:  You already have the 'LAB CODE MAPPING' File.
+  
+  
+    62.48     LA7 MESSAGE PARAMETER  (Partial Definition)
+ Note:  You already have the 'LA7 MESSAGE PARAMETER' File.
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO// 
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// YES
+  
+ Enter options you wish to mark as 'Out Of Order': LRAPR
+      1   LRAPR       Verify/release reports, anat path
+      2   LRAPREF       SNOMED field references
+      3   LRAPRS       Supplementary report release, anat path
+ CHOOSE 1-3: 1  LRAPR     Verify/release reports, anat path
+  
+ Enter options you wish to mark as 'Out Of Order': LRAPRS       
+ Supplementary report release, anat path
+  
+ Enter options you wish to mark as 'Out Of Order': LRAPLG       Log-in, 
+ anat path
+  
+ Enter options you wish to mark as 'Out Of Order': LRPHMAN       Add to 
+ collection list
+  
+ Enter options you wish to mark as 'Out Of Order': LRMIEDZ       Results 
+ entry
+  
+ Enter options you wish to mark as 'Out Of Order': LRMISTUF       Results 
+ entry (batch)
+  
+ Enter options you wish to mark as 'Out Of Order': 
+  
+ Enter protocols you wish to mark as 'Out Of Order': 
+  
+ Delay Install (Minutes):  (0-60): 0// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//  VIRTUAL TELNET
+  
+  
+   Install Started for LR*5.2*427 : 
+                 Aug 19, 2013@18:18:48
+   
+  Build Distribution Date: Aug 19, 2013
+   
+   Installing Routines:
+                 Aug 19, 2013@18:18:50
+   
+   Installing Data Dictionaries: 
+                 Aug 19, 2013@18:18:51
+   
+   Installing PACKAGE COMPONENTS: 
+   
+   Installing OPTION
+   
+   Installing PARAMETER DEFINITION
+   
+   Installing PARAMETER TEMPLATE
+                 Aug 19, 2013@18:18:51
+   
+   Updating Routine file...
+   
+   Updating KIDS files...
+   
+   LR*5.2*427 Installed. 
+                 Aug 19, 2013@18:18:52
+   
+   Install Message sent #xxxx
+  
+ Install Completed
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OR1
+    Before: B33990199   After: B35364190  **121,187,219,230,256,310,340,
+                                           348,350,427**
+Routine Name: LR7ORB3
+    Before: B91737672   After: B97650234  **350,427**
+Routine Name: LR7OSAP
+    Before: B70117996   After: B68882961  **121,187,230,256,259,317,350,427**
+Routine Name: LR7OSMZ2
+    Before: B44248028   After: B47170390  **121,244,392,350,427**
+Routine Name: LR7OSUM1
+    Before: B83587916   After: B87418148  **121,187,256,286,384,350,427**
+Routine Name: LR7OSUM3
+    Before: B15244956   After: B15593166  **121,201,187,228,250,350,427**
+Routine Name: LR7OSUM5
+    Before: B48077281   After: B50074363  **121,187,228,241,250,251,256,
+                                           356,372,350,427**
+Routine Name: LRAPBK
+    Before: B72642436   After: B73747615  **51,72,201,274,350,427**
+Routine Name: LRAPBR
+    Before:  B6339003   After:  B6460203  **259,427**
+Routine Name: LRAPBR1
+    Before:B131863197   After:B133054463  **259,317,363,350,427**
+Routine Name: LRAPBRPW
+    Before: B10053434   After: B10229143  **259,427**
+Routine Name: LRAPCUM
+    Before: B23321950   After: B22712242  **34,72,173,248,259,350,427**
+Routine Name: LRAPED
+    Before: B27109913   After: B32844009  **1,31,72,115,259,350,427**
+Routine Name: LRAPLG1
+    Before:B161872680   After:B165428544  **72,121,248,308,350,427**
+Routine Name: LRAPPOW
+    Before:  B8567530   After:  B8842650  **72,114,259,427**
+Routine Name: LRAPRES
+    Before:B184355664   After:B184608349  **259,295,317,315,350,427**
+Routine Name: LRLIST
+    Before: B38541730   After: B49008370  **44,86,153,201,427**
+Routine Name: LRMIEDZ2
+    Before: B43535275   After: B69802337  **23,104,242,295,350,427**
+Routine Name: LRMINEW1
+    Before:  B8153364   After:  B8232594  **295,350,427**
+Routine Name: LRMIPLOG
+    Before:  B3454160   After:  B3619644  **427**
+Routine Name: LRMIPSZ2
+    Before: B34660166   After: B37459030  **388,350,427**
+Routine Name: LRMIPSZ3
+    Before: B28861527   After: B29744803  **350,427**
+Routine Name: LRMISTF1
+    Before: B39570376   After: B41353920  **121,128,202,263,264,295,350,427**
+Routine Name: LRMIUT1
+    Before:  B6708446   After:  B6714557  **100,121,323,350,427**
+Routine Name: LRMIVER1
+    Before: B15048312   After: B15654594  **295,350,427**
+Routine Name: LRORDK
+    Before: B16253475   After: B16287441  **61,100,121,153,201,427**
+Routine Name: LRPHSET2
+    Before: B27648184   After: B27649309  **121,202,350,427**
+Routine Name: LRRMM
+    Before: B26132298   After: B37494738  **164,427**
+Routine Name: LRRPL
+    Before:B138917268   After:B139621090  **350,427**
+Routine Name: LRRPLU
+    Before:B286239164   After:B285265973  **350,427**
+Routine Name: LRSCTF1
+    Before:  B8364733   After:  B9071625  **350,427**
+Routine Name: LRSPRPTA
+    Before: B15274783   After: B14810851  **350,427**
+Routine Name: LRUDEL
+    Before: B17685487   After: B24276751  **1,72,121,201,350,427**
+Routine Name: LRVR0
+    Before:B109458597   After:B127185317  **350,427**
+Routine Name: LRVRAP4
+    Before: B33201794   After: B35152791  **350,427**
+Routine Name: LRVRMI1A
+    Before: B13452364   After: B12793155  **350,427**
+Routine Name: LRVRMI2
+    Before: B34553820   After: B35719383  **350,427**
+Routine Name: LRVRMI2A
+    Before: B77056025   After: B78174930  **350,427**
+Routine Name: LRVRMI3
+    Before: B17349617   After: B26579796  **350,427**
+Routine Name: LRVRMI4
+    Before: B37691501   After: B38736850  **350,427**
+Routine Name: LRVRMI4A
+    Before: B95345785   After: B96274363  **350,427**
+Routine Name: LRWLST1
+    Before: B81664062   After: B81654382  **48,65,121,153,261,286,331,
+                                           379,415,350,427**
+Routine Name: LRWLST12
+    Before: B55671661   After: B67054395  **153,201,350,427**
+Routine Name: LRWU9
+    Before:B178029023   After:B186697780  **350,427**
+ 
+Routine list of preceding patches: 164, 350
+
+=============================================================================
+User Information:
+Entered By  : ANZALDUA,CAROL                Date Entered  : OCT 11, 2012
+Completed By: DERBES-MURPHY,ELISA           Date Completed: SEP 17, 2013
+Released By : BELSCHWINDER,MICHAEL          Date Released : SEP 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,271 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 03/20/13 at 09:00
+=============================================================================
+Run Date: AUG 20, 2013                     Designation: PRC*5.1*168
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #152                    Status: Released
+                  Compliance Date: SEP 20, 2013
+=============================================================================
+
+Associated patches: (v)PRC*5.1*158 <<= must be installed BEFORE `PRC*5.1*168'
+
+Subject: 1358 DISPLAY/PRINT;KEY PRCFA SUPERVISOR SETTING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 2 issues:
+  
+ 1. Display/print for 1358 prints out of sequence when more than 999
+    transactions.
+  
+ 2. Modify IFCAP security key PRCFA SUPERVISOR 'Keep at Terminate' setting
+    to 'NO'.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000526836 cannot print 1358
+  
+ 2. INC000000605061 PRCFA SUPERVISOR key not being removed when user 
+                    deactivated
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Togus VAMC
+ Oklahoma City VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000526836 cannot print 1358
+  
+    Problem:
+    --------
+    The option Display/Print 1358 [PRCEF DISPLAY/PRINT 1358] will print
+    the transaction activity for a 1358 out of sequence when the
+    transaction sequence numbers exceed 999.
+  
+    Resolution:
+    -----------                    
+    Modify compile/print for 1358 activity to handle leading zeros for 
+    transaction numbers to correct transaction sequencing issue.
+  
+  
+ Routines: PRCE58P1, PRCE58P3
+  
+  
+ 2. INC000000605061 PRCFA SUPERVISOR key not being removed when user
+                    deactivated
+  
+    Problem:
+    --------
+    Security key PRCFA SUPERVISOR 'KEEP AT TERMINATE' setting is currently
+    set to 'YES' to ensure key is kept when user is terminated.
+  
+  
+    Resolution:
+    -----------
+    1. A post install routine will set security key PRCFA SUPERVISOR
+       'KEEP AT TERMINATE' setting found in SECURITY KEY (#19.1) file to
+       'NO'.
+    2. The post install routine will remove the PRCFA SUPERVIOR key from
+       any terminated employees in the NEW PERSON (#200) file.
+    3. The post install routine will also create an audit of all active
+       Employee holders of the PRCFA SUPERVISOR key which will be stored in
+       a temporary file ^XTMP("PRC168P") for 4 months.
+  
+  
+ **** The post install routine is covered by ICR 5899 for NEW PERSON 
+ **** (#200) file and ICR 5900 for SECURITY KEY (#19.1) file.
+  
+ The VDL IFCAP Package Security Guide for IFCAP has been modified
+ for the PRCFA SUPERVISOR key setting under Chapter 3 - IFCAP Security
+ Keys & Other Features:
+  
+ FROM ==>>
+  
+ PRCFA SUPERVISOR 
+ KEEP AT TERMINATE: YES 
+ DESCRIPTION:  This key must be assigned to the Accounting Supervisor.  It 
+ locks the following options.
+      Purge Transmission Records/Code Sheets  [PRC GECS PURGE]
+      Retransmit Stack File Document  [PRC GECS STACK RETRANSMIT]
+      Enter/Edit Date When SOs become ARs  [PRC SO TO AR]
+      Audit Reports Menu  [PRCF AUDIT REPORTS]
+      Clear Program Lock  [PRCFA CLEAR LOCK]
+      Rebuild a Code Sheet Template  [PRCFA REBUILD CODE SHEET MAP]
+      Stacked Fiscal Documents Menu  [PRCFA STACK DOCUMENTS]
+  
+ TO ==>>
+  
+ PRCFA SUPERVISOR
+ KEEP AT TERMINATE: NO 
+ DESCRIPTION:  This key must be assigned to the Accounting Supervisor.  It 
+ locks the following options.
+      Purge Transmission Records/Code Sheets  [PRC GECS PURGE]
+      Retransmit Stack File Document  [PRC GECS STACK RETRANSMIT]
+      Enter/Edit Date When SOs become ARs  [PRC SO TO AR]
+      Audit Reports Menu  [PRCF AUDIT REPORTS]
+      Clear Program Lock  [PRCFA CLEAR LOCK]
+      Rebuild a Code Sheet Template  [PRCFA REBUILD CODE SHEET MAP]
+      Stacked Fiscal Documents Menu  [PRCFA STACK DOCUMENTS]
+  
+ The VDL IFCAP Package Technical Manual for IFCAP has been modified
+ for the PRCFA SUPERVISOR key setting in Table 6.2. Description of 
+ Security Keys on Page 110 for 6.3 Description of Security Keys:
+  
+ FROM ==>>
+  
+ 6.3 Description of Security Keys
+ Table 6.2 provides a list of security keys.  This list of security keys 
+ is also found in chapter 3 of the IFCAP V. 5.1 Package Security Guide 
+ (see http://www.domain.ext/vdl/application.asp?appid=42). 
+ Table 6.2. Description of Security Keys
+         
+ KEY          KAT?  DESCRIPTION                     LOCKS
+ PRCFA PURGE        Required to use the purge old   (None)
+ CODE SHEETS        code sheets from the system
+ ------------------------------------------------------------------------
+ PRCFA        YES   Must be assigned to the         Purge Transmission
+ SUPERVISOR         Accounting Supervisor           Records/Code Sheets
+  
+                                                    Retransmit Stack File 
+  
+  
+ TO ==>>
+  
+ 6.3 Description of Security Keys
+ Table 6.2 provides a list of security keys.  This list of security keys 
+ is also found in chapter 3 of the IFCAP V. 5.1 Package Security Guide 
+ (see http://www.domain.ext/vdl/application.asp?appid=42). 
+ Table 6.2. Description of Security Keys
+         
+ KEY          KAT?  DESCRIPTION                     LOCKS
+ PRCFA PURGE        Required to use the purge old   (None)
+ CODE SHEETS        code sheets from the system
+ ------------------------------------------------------------------------
+ PRCFA        NO    Must be assigned to the         Purge Transmission
+ SUPERVISOR         Accounting Supervisor           Records/Code Sheets
+  
+                                                    Retransmit Stack File
+  
+ Routines: PRC168P (post install)
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ======================== 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.fo-albany.domain.ext
+      Hines           ftp.fo-hines.domain.ext
+      Salt Lake City  ftp.fo-slc.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name                     Description          Retrieval Format
+      =========                     ===========          ================
+      IFCP5_1TECH_MANUAL.PDF        Technical Manual     BINARY
+      IFCP5_1SECURITY_GUIDE.PDF     Security Guide       BINARY 
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Post install routine PRC168P will be deleted once the
+   install is complete.  If you wish to check the checksum of this
+   routine please use the 'Verify Checksums in Transport Global' under
+   the Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*168)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*168.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Display/Print 1358                  [PRCEF DISPLAY/PRINT 1358]  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC168P
+    Before:       n/a   After:  B5228324  **168**
+Routine Name: PRCE58P1
+    Before: B16647166   After: B18868603  **158,168**
+Routine Name: PRCE58P3
+    Before: B17424731   After: B19541081  **158,168**
+ 
+Routine list of preceding patches: 158
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : MAR 06, 2012
+Completed By: HEFFERNAN,COREY               Date Completed: AUG 13, 2013
+Released By : CURZI,KATHLEEN G              Date Released : AUG 20, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

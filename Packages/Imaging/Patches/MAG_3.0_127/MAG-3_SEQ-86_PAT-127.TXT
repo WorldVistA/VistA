@@ -1,0 +1,661 @@
+
+=============================================================================
+Run Date: JUL 25, 2013                     Designation: MAG*3*127
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #86                      Status: Released
+                  Compliance Date: AUG 25, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*123   <<= must be installed BEFORE `MAG*3*127'
+
+Subject: TELEREADER MAINTENANCE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ MAG*3.0*127 Overview
+  
+ This document describes MAG*3.0*127, a TeleReader Maintenance patch. This 
+ patch addresses application bugs that were noted in the Remedy Action 
+ Request System, provides a mechanism for cloning user permissions, and 
+ applies the upgrade necessary to ensure the TeleReader Configurator 
+ application meets the Veteran's Health Administration (VHA) 508 compliance 
+ requirements. 
+  
+ Previous releases have included three client applications in one 
+ installation:  Clinical Capture, Clinical Display, and TeleReader. 
+ MAG*3.0*127 contains only the TeleReader and TeleReader Configurator 
+ applications.
+  
+ MAG*3.0*127 is backward compatible with all previously released TeleReader 
+ patches.
+  
+ Major changes are summarized below. For detailed information, refer to the 
+ change summary section in the MAG*3.0*127 Patch Description. 
+  
+ MAG*3.0*127 contains the following new functions for the TeleReader
+ Configurator:
+  
+ *  Provides a mechanism for cloning of a TeleReader user's profile, and 
+ application of the cloned profile to new user profiles.
+  
+ MAG*3.0*127 corrects the following problems:
+  
+ *  Ensures the TeleReader Configurator is compliant with the requirements 
+    specified in Section 508 Amendment to the Rehabilitation Act of 1973.
+  
+ *  Corrects the locking of patient files when they are being accessed from 
+    the TeleReader Worklist.
+  
+ *  Provides a comprehensive list of TIU notes titles in the TeleReader 
+    Configurator. 
+  
+ *  Cross references data that was contained in the "AC" files as reported 
+    in the Remedy Action Request System.
+  
+ *  Allows a user to select multiple procedures for any service.
+  
+ *  Allows for a duplication within the INSTIUTION file (#4) for sites with 
+    the same name to occur without error.
+  
+ *  Provides the ability to identify a reading site in TeleReader when the
+    reading site is not defined in the IMAGING USERS file (#2006.19).
+  
+ Note:  All sites running VistA Imaging 3.0 must install the KIDS portion of 
+        this patch. Installation of  both the KIDS and the client software is 
+        required; installation of the client software may be phased in 
+        according to each site's needs.
+  
+ Distribution of Software:
+ =========================
+  
+ This patch can be downloaded from:
+  
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P127
+  
+ Installation instructions are included in this document.
+  
+ Note:  Any late-breaking news about this patch will be found in a readme file. 
+        If present, this file will also be located in the MAG3_0P127 directory.
+  
+ Patch Contents:
+ ===============
+  
+ This patch includes the following files:
+  
+ Software:
+ =========
+  
+      MAG3_0P127.KID - KIDS (Kernel Installation & Distribution System) package 
+      to be installed on the VistA System.
+  
+      MAG3_0P127_TeleReaderSetup.exe - Set up file for the TeleReader.
+  
+      MAG3_0P127_TeleReaderConfiguratorSetup.exe - Installation file for the 
+      TeleReader Configurator.
+  
+      MAG3_0P127_TeleReaderInstall.msi- Set up file for the TeleReader.
+  
+      MAG3_0P127_TeleReaderConfiguratorInstall.msi - Installation file for the 
+      TeleReader Configurator.
+  
+ Documentation:
+ ==============
+  
+      MAG3_0P127_Patch_Description.pdf - Patch Description
+  
+      MAG3_0P127_Tech_Manual_Changes.pdf - VistA Imaging Technical Manual 
+      change pages for this patch.
+   
+      MAG3_0P127_Install_Guide_Changes.pdf - VistA Imaging Installation Guide 
+      change pages for this patch.
+  
+      MAG3_0P127_Security_Guide_Changes.pdf - VistA Imaging Security Guide 
+      change pages for this patch.
+  
+      MAG3_0P127_TeleReader_Configurator_User_Guide_Changes.pdf - VistA 
+      Imaging TeleReader Configurator User Guide change pages for this patch.
+  
+      MAG_TeleReader_Configuration.pdf - TeleReader configuration 
+      instructions. 
+  
+ Associated Patches:
+ ===================
+  
+ Before MAG*3.0*127 is installed, the following patch must be installed:
+  
+ *  MAG*3.0*123 
+  
+ For a list of all released Imaging (MAG) patches, refer to the patch_list.txt 
+ file available on the Imaging FTP server (go to ftp://ftp.imaging.domain.ext, 
+ then navigate to the \Docs\Imaging_Docs_Latest folder).
+  
+ Test Sites:
+  
+ The following sites are test sites for this patch:
+  
+ Coatesville, PA (Medium)
+ Denver, CO (Large)
+ Honolulu, HI (Small)
+ East Orange, NJ (Large)
+ Sheridan, WY (Small)
+ St. Louis, MO -VISN 15 (Integrated, Large)
+ Wilmington, DE (Medium)
+  
+ Remedy Calls:
+ =============
+  
+ This patch addresses the following Remedy help desk calls:
+  
+ Ticket: 417944, 370508, 357971, 715143
+ --------------------------------------
+ Problem: Studies within the TeleReader application are not locking when 
+          selected.
+ Solution: Use reading site station number instead of IEN to find the reading 
+           site and correctly lock the study. 
+  
+ Ticket: 413104, 454084
+ -----------------------
+ Problem: Cross-referencing of multiple entries within a specific file found 
+          in the code.
+ Solution: Delete all cross-reference data in TELEREADER ACQUISITION SERVICE 
+           file (#2006.5841) then rebuild the cross-references in TELEREADER 
+           ACQUISITION SERVICE file (#2006.5841).
+  
+ Ticket: 412866
+ --------------
+ Problem: Frequent error in VistA error log in TeleReader unread/read list.
+ Solution: Check for the integrity of the TELEREADER ACQUISITIONSERVICE file 
+           (#2006.5841).
+  
+ Ticket: 486870, 460439, 483451, 510367, 615437
+ ------------------------------------------------
+ Problem: Whole TIU note list is not populated during the initial configuration 
+          at the site.
+ Solution: Create a new RPC MAG3 TELEREADER TIU TITLES LST.
+  
+ Ticket: 375083
+ --------------
+ Problem: Update documentation to reflect changing of "TeleReader Acquisition 
+          Service" file to "TeleReader Acquisition Site" file on page 14 of 
+          MAG*3.0*46.
+ Solution: Documentation will be updated. 
+  
+ Ticket: 456539
+ --------------
+ Problem: Update the TeleReader Configurator to provide the ability to clone 
+          the rights and privileges of existing users to new users during the 
+          creation of new reader profiles.
+ Solution: Update the Reader set-up form to provide the ability to clone a 
+           reader profile. 
+  
+ Ticket: 732259
+ --------------
+ Problem: Track development for Windows 7 readiness.
+ Solution: Update the TeleReader Application and TeleReader Configurator to 
+           operate on Windows 7. 
+  
+ Ticket: 763870
+ --------------
+ Problem: Records with the same value of  NAME field (#4,.01) prevent normal 
+          operation of  TeleReader Configurator. 
+ Solution: Resolve the configuration issues when adding in new Acquisition 
+           sites. When two institutions (sites) have the same value in the 
+           NAME field in the INSTITUTION file (#4), use the institution 
+           internal entry number (IEN) as an identifier for the station number 
+           lookup.
+  
+ Ticket: 801030
+ --------------
+ Problem: The referred Reading site on the UNREAD listing is not defined in 
+          the IMAGE USER file (#2006.19), which displays a ? instead of the 
+          station identifier. 
+ Solution: TeleReader will now display the station number in the reading site 
+           column. In the rare case when the station number is blank in the 
+           INSTITUTION file (#4), the reading site will be identified by the 
+           site IEN contained within parenthesis. 
+  
+ New Service Requests:
+ =====================
+  
+ There are no New Service Requests (NSR) for this patch. 
+  
+ Patient Safety Issues:
+ ======================
+  
+ There are no Patient Safety Issue (PSI) reports associated with this patch.
+  
+ MAG*3.0*127 Changes:
+ ====================
+  
+ VistA System Changes:
+ =====================
+  
+ Data Dictionary:
+ ================
+  
+ The following files and fields are included in this patch:
+  
+ *  TELEREADER ACQUISITION SERVICE (#2006.5841) - Modified
+      *  PROCEDURE field (#1) - Removed the identifier. 
+  
+ Mail Groups:
+ ============
+  
+ This patch contains no new or modified mail groups.
+  
+ Forms:
+ ======
+  
+ This patch contains no new or modified forms.
+  
+ Security Keys:
+ ==============
+  
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures:
+ ==================
+  
+ This patch contains the following remote procedure calls:
+  
+ *  MAG3 TELEREADER CLONE READER - NEW
+    Clone a reader in TELEREADER READER file (#2006.5843).
+  
+ *  MAG3 TELEREADER TIU TITLES LST - NEW
+    Returns a list with TIU NOTE TITLES for a consult and clinical procedure 
+    classes.
+  
+ *  MAG DICOM CON UNREADLIST GET - MODIFIED
+    Adding a reading site's station number input parameter. The site station 
+    number will be used since IEN's in INSTIUTION file (#4) differ among VistA 
+    Sites.
+  
+ *  MAG DICOM CON UNREADLIST LOCK - MODIFIED
+    Adding a reading site's station number input parameter. The site station 
+    number will be used since IEN's in INSTIUTION file (#4) differ among VistA 
+    Sites.
+  
+ *  MAG3 TELEREADER ACQ SRVC SETUP - MODIFIED
+    Updated RPC and parameter's description.
+        
+ Menu Options:
+ =============
+  
+ This patch contains no new menu options.
+  
+ Protocols:
+ ==========
+  
+ This patch contains no new or modified protocols.
+  
+ Templates:
+ ==========
+  
+ This patch contains no new templates.
+  
+ Client Software Changes and New Features:
+ =========================================
+  
+ Configuration File Changes:
+ ===========================
+  
+ The TeleReader applications will now be supported on both Windows 7 and 
+ Windows XP operating systems (OS).  MAG*3.0*127 renames the MAG308.ini 
+ configuration file to MAG.ini. The patch places MAG.ini and 
+ MagTeleReaderConfig.ini in the following locations:
+  
+ Windows XP: C:\Documents and settings\All Users\Application Data\Vista\Imaging
+  
+ Windows 7: C:\ProgramData\VistA\Imaging
+  
+ NOTE: The MAG308.ini  configuration file can no longer be used to configure 
+       the TeleReader even though it remains in its original location. 
+  
+ TeleReader Configurator - Cloning a Reader Profile:
+  
+ MAG*3.0*127 provides the person responsible for configuring user profiles, 
+ the ability to clone a selected profile and apply those privileges to any 
+ number of new or pre-existing users. 
+  
+ During the reader configuration, the user must first select a desired profile 
+ to clone. Once that reader profile has been chosen, the user may begin the 
+ cloning operations. The new feature is designed so the user may either right 
+ click on the reader selected, or select the Clone Reader action button at 
+ the bottom of the screen, as displayed in Figure 1.
+  
+ NOTE: For more information on Figure 1 please refer to the patch description 
+       document.
+  
+ Figure 1, Menu Demonstrating Option to Clone a Reader
+  
+ After the cloning option has been selected, the site administrator must 
+ select the reader(s) whose profile(s) will be created by the master profile. 
+ To select a reader, the user must type a minimum of two characters into the 
+ search bar. TeleReader Configurator returns user names that meet the search 
+ characteristics and lists them in the Available Readers list. Once the 
+ Available Readers list has been populated, the user now has the ability to 
+ highlight any of the names in the list and move them to the Selected Readers
+ list using the forward arrow between the two lists. 
+  
+ Figure 2, TeleReader Configurator | Search for Available Readers and Select
+  
+ NOTE: For more information on Figure 2 please refer to the patch description 
+       document.
+  
+ Once the Selected Readers list is complete, the process of creating the new 
+ profiles is finalized by selecting the OK  action button. 
+  
+ This patch also provides the ability to associate a service with multiple 
+ procedures within the TeleReader Configurator. This record is created in the 
+ TELEREADER ACQUISITION SERVICE file (#2006.5841).
+  
+ Client Software Changes-Fixes:
+ ==============================
+  
+ TeleReader Configurator:
+ ======================== 
+  
+ *  MAG*3.0*127 has corrected the issue noted from Remedy which limited the
+    number of TIU NOTE TITLES to be displayed to the 1st through 44th found 
+    within the system; all of TIU NOTE TITLES for consult and clinical 
+    procedure classes at the site are now available and displayed for selection.
+  
+ *  Site administrators using the TeleReader Configurator have the ability to 
+    associate multiple procedures to a single service.
+        
+ *  The TeleReader Configurator has been updated to address the duplication
+    of site names by using the institution IEN as an identifier for the station
+    number lookup.
+  
+ *  The TeleReader Configurator is supported on Windows 7 operating system.
+    
+ TeleReader:
+ =========== 
+        
+ *  On the TeleReader worklist, the reading site column will display the station
+    number replacing the three letter site abbreviation. When the reading 
+    station number is not set in INSTITUTION file (#4), the IEN of the site 
+    will be displayed in parenthesis.
+        
+ *  The TeleReader has been updated to support locking of patient studies when 
+    the site IEN and station number values in INSTITUTION file (#4) are 
+    different. 
+  
+ *  Frequent errors that occurred in the worklist error log have been corrected 
+    by checking the integrity of TELEREADER ACQUISITION SERVICE file 
+    (#2006.5841).
+        
+ *  The TeleReader is supported on Windows 7 operating system.
+  
+ Installation:
+ =============  
+  
+ The TeleReaderConfiguratorSetup.exe portion of this patch is to be installed 
+ only on the administrator's workstation. The TeleReader application portion 
+ is to be installed on the clinical workstations. 
+  
+ With the release of this patch, the TeleReader applications will now be 
+ supported on both Windows 7 and Windows XP operating systems (OS).  The 
+ MAG308.ini configuration file has been renamed to MAG.ini. Both the MAG.ini 
+ and MagTeleReaderConfig.ini files have been moved to the file paths listed 
+ below:
+  
+ Windows XP: C:\Documents and settings\All Users\Application Data\Vista\Imaging
+  
+ Windows 7: C:\ProgramData\VistA\Imaging      
+  
+ This patch must be installed by the compliance date to conform to VHA 
+ Directive 2001-023.
+  
+ Installation will take less than one minute, with minimal VistA Imaging 
+ Activity. 
+  
+ Note:  All sites running VistA Imaging 3.0 must install the KIDS portion of
+        this patch. 
+  
+ Release of MAG*3.0*122 was the last Imaging Patch that included all three 
+ Clinical GUI applications: Clinical Capture, Clinical Display, and TeleReader. 
+  
+ After MAG*3.0*122, patches may or may not have all three applications 
+ included. As a result of this change in the distribution of Clinical GUI 
+ applications, the version of each of the three applications that is installed 
+ on a workstation may be different.
+  
+ MAG*3.0*127 only includes TeleReader and TeleReader Configurator applications, 
+ so after installing MAG*3.0*127, the workstation will have: 
+  
+ TeleReader                      Version 3.0 Patch 127
+ TeleReader Configurator         Version 3.0 Patch 127
+  
+ Installation Prerequisites:
+ ===========================
+  
+ Before installing this patch, you will need to download the MAG*3.0*127 files 
+ from the VistA Imaging FTP site to a local storage location.
+  
+ Verify that the patches listed in the Patch Sequence section on page 3 have 
+ been installed.
+  
+ Note:  During the installation process, bogus data found in the "AC" 
+        cross-reference in TELEREADER ACQUISITION SERVICE file (#2006.5841) 
+        will be removed.
+  
+ VistA System (KIDS) Installation:
+ =================================
+  
+ Installing the KIDS Package:
+ ============================
+  
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+  
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+  
+ 3.  Load the KIDS file by performing the following steps.
+  
+     a.  Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+         the KIDS distribution.
+  
+     b.  When prompted, enter the path and file name (MAG3_0P127.KID) of the 
+         Patch number KIDS file that you downloaded from the Imaging FTP 
+         server.
+     c.  When prompted to continue with the load, enter YES. A Distribution OK! 
+         message will be displayed when the load is complete.
+  
+ 4.  After loading the KIDS file, use the following options to verify the 
+     contents of the patch and to back up any affected routines.
+  
+         Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+         option to verify the integrity of the routines in the patch. 
+  
+         Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+         Run this option to view all changes that will be made when the patch
+         is installed. All components (routines, options, and so on) in the 
+         patch will be compared.
+        
+         Backup a Transport Global [XPD BACKUP] - Run this option to create a
+         backup message of any routines exported with the patch. It will not 
+         back up any of the other changes.
+  
+ 5.  After performing the load and any optional verification steps, perform the
+     following steps to install the KIDS file:
+  
+     a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+  
+     b.  When prompted for the install name, enter MAG*3.0*127.
+  
+     c.  Answer NO to the following prompts:
+  
+     Want KIDS to Rebuild Menu Trees Upon Completion of Install? No//NO
+  
+     Want KIDS to INHIBIT LOGONs during the install? No//NO
+  
+     Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+  
+ 6.  When installation is finished, VistA displays a MAG*3.0*127 Installed 
+     message. 
+  
+ KIDS Installation Example:
+ ==========================
+  
+ This sample shows the output when the KIDS file is installed for the first 
+ time. If you have already installed the patch and are installing the KIDS 
+ file in a namespace on which it has previously been installed, your output 
+ may be different.
+  
+ Select Installation Option: INStall Package(s)
+ Select INSTALL NAME:    MAG*3.0*127    4/3/13@14:05:21
+      => VistA Imaging V3.0 Patch 127 - Telereader Maintenance - 04/01/2
+  
+ This Distribution was loaded on Apr 03, 2013@14:05:21 with header of 
+    VistA Imaging V3.0 Patch 127 - Telereader Maintenance -04/01/2013
+ 01:
+ 54PM  ;Created on Apr 01, 2013@13:54:12
+    It consisted of the following Install(s):
+     MAG*3.0*127
+ Checking Install for Package MAG*3.0*127
+  
+ Install Questions for MAG*3.0*127
+  
+ Incoming Files:
+  
+    2006.5841 TELEREADER ACQUISITION SERVICE  (Partial Definition)
+ Note:  You already have the 'TELEREADER ACQUISITION SERVICE' File.
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ MAG*3.0*127                          
+  
+  Install Started for MAG*3.0*127 : 
+                Apr 03, 2013@14:05:24
+  
+ Build Distribution Date: Apr 01, 2013
+  
+  Installing Routines:               Apr 03, 2013@14:05:24
+  
+  Running Pre-Install Routine: PRE^MAGIP127
+  
+    Deleting the field definitions...
+    File #2006.5841, Fields: '1'
+    The definitions have been deleted.
+  
+  Installing Data Dictionaries: 
+                Apr 03, 2013@14:05:24
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing REMOTE PROCEDURE
+                Apr 03, 2013@14:05:24
+  
+  Running Post-Install Routine: POS^MAGIP127
+  
+    Attaching RPCs to the 'MAG WINDOWS' option...
+    MAG3 TELEREADER CLONE READER
+    MAG3 TELEREADER TIU TITLES LST
+    RPCs have been successfully attached.
+    Rebuild of cross-references in TELEREADER ACQUISITION SERVICE file 
+    (#2006.5841) has been completed.
+  
+ Post Install Mail Message: Apr 03, 2013@14:05:24
+  
+  Updating Routine file...
+  Updating KIDS files...
+  MAG*3.0*127 Installed. 
+                Apr 03, 2013@14:05:24
+  
+ Install Completed
+  
+ Installation of TeleReader and TeleReader Configurator Applications:
+ ====================================================================
+  
+ For instructions on how to install the TeleReader and TeleReader Configurator 
+ applications please refer to the VistA Imaging Installation Guide. 
+  
+ Uninstalling the TeleReader Client:
+ ===================================
+ If it is necessary to uninstall the MAG*3.0*127 TeleReader client, both 
+ MAG*3.0*127 and MAG*3.0*122 will have to be uninstalled and MAG*3.0*122 
+ re-installed to run the MAG*3.0*122 TeleReader client.
+  
+ If the site has also installed MAG*3.0*129 and/or MAG*3.0*130, it will be 
+ necessary to uninstall these patches and reinstall them after reinstalling 
+ MAG*3.0*122. 
+  
+ For example, if you have MAG*3.0*129 and MAG*3.0*130 and want to roll back 
+ to the MAG*3.0*122 TeleReader client you must:
+  
+ Uninstall MAG*3.0*130
+ Uninstall MAG*3.0*129
+ Uninstall MAG*3.0*127
+ Uninstall MAG*3.0*122
+ Reinstall MAG*3.0*122 (to return to the patch 122 TeleReader client)
+ Reinstall MAG*3.0*129 (to return to the patch 129 Clinical Capture client)
+ Reinstall MAG*3.0*130 (to return to the patch 130 Clinical Display client)
+  
+ Routines:
+ =========
+  
+ New and modified routines for the VistA System are listed below. 
+ CHECK1^XTSUMBLD is used to generate the checksums. 
+  
+ Note:  The "before" checksum may differ if any test software has been
+ installed.
+  
+ MAGIP127 is a post-install routine and is deleted after the KIDS install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4231;Apr 01, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGDTR01
+    Before: B41301476   After: B41833275  **46,127**
+Routine Name: MAGDTR03
+    Before: B73363614   After: B74736131  **46,54,127**
+Routine Name: MAGDTR04
+    Before: B21144013   After: B23585241  **46,127**
+Routine Name: MAGDTR05
+    Before: B48114402   After: B54928780  **46,54,123,127**
+Routine Name: MAGGTU4T
+    Before:  B5095422   After:  B5296933  **93,94,106,117,122,127**
+Routine Name: MAGIP127
+    Before:       n/a   After:  B9198493  **127**
+Routine Name: MAGNTLR2
+    Before: B26968313   After: B33178370  **114,127**
+Routine Name: MAGNTLR4
+    Before:       n/a   After: B12125415  **127**
+Routine Name: MAGNTLR5
+    Before:       n/a   After:  B7485097  **127**
+Routine Name: MAGNTLR6
+    Before:       n/a   After: B14484847  **127**
+Routine Name: MAGNTLRS
+    Before:B186626605   After:B146515363  **114,127**
+ 
+Routine list of preceding patches: 114, 122, 123
+
+=============================================================================
+User Information:
+Entered By  : KAREDDY,VIJENDER              Date Entered  : NOV 04, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 25, 2013
+Released By : ANDKHOIE,MOSA                 Date Released : JUL 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

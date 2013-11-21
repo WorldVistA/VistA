@@ -1,0 +1,128 @@
+$TXT Created by GEBHART,BOBBIE at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 05/15/13 at 09:44
+=============================================================================
+Run Date: AUG 19, 2013                     Designation: DG*5.3*868
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #764                    Status: Released
+                  Compliance Date: SEP 18, 2013
+=============================================================================
+
+Associated patches: (v)DG*5.3*744  <<= must be installed BEFORE `DG*5.3*868'
+
+Subject: ICD CORRECTION
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*868 addresses the following issue:
+  
+ Inactive International Classification of Diseases (ICD) code cannot be
+ assigned to Patient Treatment File (PTF) due to system sending date and
+ time of movement. Date is the only required information.
+          
+        
+   ASSOCIATED REMEDY: 
+   ==================
+   1)  INC000000366295   Unable to close PTF record            
+  
+   
+   ASSOCIATED NSR: 
+   ===============
+   N/A
+   
+   PARTICIPATING TEST SITES: 
+   =========================
+   Charleston, SC
+   Salisbury, NC
+   
+  
+   Remedy Overview:
+   ================
+   1)  INC000000366295    Unable to close PTF record
+  
+    Problem:
+    --------
+    User attempted to assign an ICD code to a PTF movement record the 
+    day prior to the ICD code becoming inactive and received the 
+    following error message "A suitable term could not be found based on  
+    user input".
+  
+  
+    Resolution:
+    -----------
+    ICD code verification requires movement date only.  Modified routine
+    DGPTF5 to only use movement date and to not include time of movement 
+    when verifying ICD code activation.
+  
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*868).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package DG*5.3*868
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+                   Load/Edit PTF Data      [DG PTF SCREEN]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPTF5
+    Before:  B3360965   After:  B3539356  **669,701,744,868**
+ 
+Routine list of preceding patches: 744
+
+=============================================================================
+User Information:
+Entered By  : GEBHART,BOBBIE                Date Entered  : JAN 24, 2013
+Completed By: LEANORD,TATIANA               Date Completed: AUG 19, 2013
+Released By : FLANAGAN,PATTY                Date Released : AUG 19, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

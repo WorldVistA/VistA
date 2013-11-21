@@ -1,0 +1,624 @@
+
+=============================================================================
+Run Date: JUL 08, 2013                     Designation: ONC*2.11*58
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.11        SEQ #58                   Status: Released
+                  Compliance Date: AUG 08, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization: ONCOLOGY 2.11
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This informational patch is issued as directed in Memorandum: Open Source 
+ VistA Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this 
+ document for specific details.
+   
+ A review of the VistA Standardization routines was completed for: ONCOLOGY
+ version 2.11. A baseline list of the nationally released M routines and
+ their official checksums is included below. VistA Standardization
+ Certification represents the matching of the routine checksums, compared
+ in the site's Production account only.
+   
+ The VistA Standardization Team performed an analysis of each site's 
+ Production environment. For any site with routine checksum variance, this 
+ team worked with the site to remediate any variance from the baseline. 
+ After the completion of this process, sites with no variance were 
+ identified as VistA Standardization Certified for the package. There is 
+ NO additional action required on the part of these sites. 
+   
+ For sites which had variance (local modification) and determined it was 
+ important to maintain for their Production environment, a waiver was 
+ requested. If approved, the waiver allows retention of the local 
+ modification to a VistA Standardization routine, as detailed in VA 
+ Directive 6402.
+   
+ Each site will be placed on one of the lists below:  
+       VistA Standardization Certified Sites
+       Sites with Approved/Pending Waiver
+       Non-Compliant Sites with Pending Remediation
+  
+ The expectation for sites on the Non-Compliant Sites with Pending 
+ Remediation list is for their remediation to be completed, by either 
+ removing the modification or requesting a waiver. There will NOT be an 
+ additional Informational Only patch to move the site to the VistA 
+ Standardization Certified Sites list.
+   
+ Please Note:
+    Environment check routines, pre or post installation routines 
+    remaining from previously installed patches, compiled routines (e.g. 
+    cross-reference), or prior package version routines, will NOT affect
+    your site's standardization compliance. Their existence, or
+    non-existence, at your site, or on the VistA Standardization routines
+    list below, does not impact the VistA Standardization Certification.
+  
+    VistA Standardization Certification for this package applies to the
+    date specified in the Official Checksum heading below. If additional 
+    patches, or a newer version for the package, has been released since
+    this date, the checksums for affected routines will be different. For
+    these routines, refer to the patch/version documentation for the most
+    up-to-date checksums.
+    
+    Site 556, NORTH CHICAGO, IL is exempt from this project objective
+   
+ Sites with Approved/Pending Waiver:
+ ==================================
+ n/a for this package
+   
+ Non-Compliant Sites with Pending Remediation:
+ ============================================
+ n/a for this package
+   
+   
+ VistA Standardization Certified Sites:
+ =====================================
+   358    MANILA OC, PI
+   402    TOGUS, ME
+   405    WHITE RIVER JUNCTION, VT
+   436    MONTANA HCS
+   437    FARGO, ND
+   438    SIOUX FALLS, SD
+   442    CHEYENNE, WY
+   459    HONOLULU, HI
+   460    WILMINGTON, DE
+   463    ANCHORAGE, AK (OPC)
+   501    ALBUQUERQUE, NM
+   502    ALEXANDRIA, LA
+   503    ALTOONA, PA
+   504    AMARILLO, TX
+   506    ANN ARBOR, MI
+   508    ATLANTA, GA
+   509    AUGUSTA, GA (C)
+   512    MARYLAND HCS
+   515    BATTLE CREEK, MI
+   516    BAY PINES, FL
+   517    BECKLEY, WV
+   518    BEDFORD, MA
+   519    BIG SPRING, TX
+   520    BILOXI, MS (C)
+   521    BIRMINGHAM, AL
+   523    BOSTON HCS
+   526    BRONX, NY
+   528    UPSTATE NEW YORK HCS
+   529    BUTLER, PA
+   531    BOISE, ID
+   534    CHARLESTON, SC
+   537    CHICAGO HCS
+   538    CHILLICOTHE, OH
+   539    CINCINNATI, OH
+   540    CLARKSBURG, WV
+   541    CLEVELAND, OH
+   542    COATESVILLE, PA
+   544    COLUMBIA, SC
+   546    MIAMI, FL
+   548    WEST PALM BEACH, FL
+   549    NORTH TEXAS HCS
+   550    ILLIANA HCS
+   552    DAYTON, OH
+   553    DETROIT, MI
+   554    EASTERN COLORADO HCS
+   557    DUBLIN, GA
+   558    DURHAM, NC
+   561    NEW JERSEY HCS
+   562    ERIE, PA
+   564    FAYETTEVILLE, AR
+   565    FAYETTEVILLE, NC
+   568    BLACK HILLS HCS
+   570    FRESNO, CA
+   573    NORTH FLORIDA/SOUTH GEORGIA
+   575    GRAND JUNCTION, CO
+   578    HINES, IL
+   580    HOUSTON, TX
+   581    HUNTINGTON, WV
+   583    INDIANAPOLIS, IN (C)
+   585    IRON MOUNTAIN, MI
+   586    JACKSON, MS
+   589    HEARTLAND-WEST HCS
+   590    HAMPTON, VA
+   593    LAS VEGAS, NV
+   595    LEBANON, PA
+   596    LEXINGTON, KY
+   598    LITTLE ROCK, AR (C)
+   600    LONG BEACH, CA
+   603    LOUISVILLE, KY
+   605    LOMA LINDA, CA
+   607    MADISON, WI
+   608    MANCHESTER, NH
+   610    NORTHERN INDIANA HCS
+   612    NORTHERN CALIFORNIA HCS
+   613    MARTINSBURG, WV
+   614    MEMPHIS, TN
+   618    MINNEAPOLIS, MN
+   619    CENTRAL ALABAMA HCS
+   620    HUDSON VALLEY HCS
+   621    MOUNTAIN HOME, TN
+   623    MUSKOGEE, OK
+   626    TENNESSEE VALLEY HCS
+   629    NEW ORLEANS, LA
+   630    NEW YORK HCS
+   631    NORTHAMPTON, MA
+   632    NORTHPORT, NY
+   635    OKLAHOMA CITY, OK
+   636    CENTRAL PLAINS HCS
+   637    ASHEVILLE, NC
+   640    PALO ALTO HCS
+   642    PHILADELPHIA, PA
+   644    PHOENIX, AZ
+   646    PITTSBURGH HCS
+   648    PORTLAND, OR (C)
+   649    PRESCOTT, AZ
+   650    PROVIDENCE, RI
+   652    RICHMOND, VA
+   653    ROSEBURG, OR
+   654    RENO, NV
+   655    SAGINAW, MI
+   656    ST CLOUD, MN
+   657    HEARTLAND-EAST HCS
+   658    SALEM, VA
+   659    SALISBURY, NC
+   660    SALT LAKE CITY, UT
+   662    SAN FRANCISCO, CA
+   663    PUGET SOUND HCS
+   664    SAN DIEGO, CA
+   666    SHERIDAN, WY
+   667    SHREVEPORT, LA
+   668    SPOKANE, WA
+   671    SOUTH TEXAS HCS
+   672    SAN JUAN, PR
+   673    TAMPA, FL
+   674    CENTRAL TEXAS HCS
+   675    ORLANDO, FL
+   676    TOMAH, WI
+   678    TUCSON, AZ
+   679    TUSCALOOSA, AL
+   687    WALLA WALLA, WA
+   688    WASHINGTON, DC
+   689    CONNECTICUT HCS
+   691    VA GREATER LOS ANGELES HCS
+   692    WHITE CITY, OR (DOM)
+   693    WILKES BARRE, PA
+   695    MILWAUKEE, WI
+   740    TEXAS VALLEY COASTAL BEND HCS
+   756    EL PASO, TX
+   757    COLUMBUS, OH(OPC)
+   
+ ====================================================================
+   
+ Routine Information:
+ ===================
+ The checksums below are calculated using new checksums, and can be 
+ checked with CHECK1^XTSUMBLD.
+   
+ Routine Name       Official Checksum as of 13 March 2013
+ ============       ====================================
+ ONCACD0            81553586
+ ONCACD1            45446923
+ ONCACDU1           24968526
+ ONCACDU2           63466870
+ ONCASCI             3659084
+ ONCATF             47209323
+ ONCATF1            40406368
+ ONCBPC0             6901838
+ ONCBPC1            17284866
+ ONCBPC2            12764757
+ ONCBPC3            14635274
+ ONCBPC4            21169006
+ ONCBPC4A           38587962
+ ONCBPC5             4450409
+ ONCBPC6             4771682
+ ONCBPC8            47081923
+ ONCBPC8A           33284452
+ ONCBRP0            12837473
+ ONCBRP1            32719907
+ ONCBRP2            62506484
+ ONCBRP3             7503561
+ ONCBRP4            18122984
+ ONCBRP5            34977273
+ ONCBRP5A           22871751
+ ONCBRP6             2557088
+ ONCBRP7             5546084
+ ONCBRP9            48248085
+ ONCBRP9A           41234576
+ ONCBRP9B            4450430
+ ONCCPC0            18285534
+ ONCCPC1            18505199
+ ONCCPC2            23982785
+ ONCCPC3            13119883
+ ONCCPC4            42722216
+ ONCCPC4A           23893949
+ ONCCPC5             2440947
+ ONCCPC6             2131050
+ ONCCPC7             4963773
+ ONCCPC9            43467064
+ ONCCPC9A           36996984
+ ONCCPC9B            5787445
+ ONCCS              45849556
+ ONCCS2            115939463
+ ONCCS3            114262815
+ ONCCSOT            39113425
+ ONCCSRS            38314840
+ ONCCSSTF           43956602
+ ONCCSV2            59868741
+ ONCCSV2A          145990753
+ ONCDTUTL            5364893
+ ONCDTX             77514496
+ ONCDTX1            16707284
+ ONCEDIT            90474447
+ ONCEDIT2           36961845
+ ONCEECA              275860
+ ONCFUNC            42640935
+ ONCGENED           26258248
+ ONCGPC0            10271078
+ ONCGPC1            26135683
+ ONCGPC2            34300918
+ ONCGPC3            37337028
+ ONCGPC4             2287713
+ ONCGPC5              711382
+ ONCGPC7            28612141
+ ONCGPC7A           52387035
+ ONCGPC7B           50557081
+ ONCHPC0            10413880
+ ONCHPC1             7513074
+ ONCHPC2            43941036
+ ONCHPC2A           15386094
+ ONCHPC3             6912178
+ ONCHPC4            58420486
+ ONCHPC4A           25360992
+ ONCHPC5             2297851
+ ONCHPC6             3980653
+ ONCHPC8            60713068
+ ONCHPC8A           54728029
+ ONCHTWT              983574
+ ONCIPC0             8509251
+ ONCIPC1            21514647
+ ONCIPC2            39154587
+ ONCIPC2A           15090103
+ ONCIPC3            30435995
+ ONCIPC3A           55646126
+ ONCIPC3B           19559942
+ ONCIPC3C           51622848
+ ONCIPC4            10711967
+ ONCIPC5            29479405
+ ONCIPC6             3994103
+ ONCIPC8            43372549
+ ONCIPC8A           45475707
+ ONCIPC8B           37692944
+ ONCIPC8C           55402593
+ ONCLNG             16808865
+ ONCLNG1            99067756
+ ONCLPC0            10514022
+ ONCLPC1            19641216
+ ONCLPC2             3561890
+ ONCLPC3            40928003
+ ONCLPC4             2148069
+ ONCLPC5            21199473
+ ONCLPC6             4634497
+ ONCLPC7              706738
+ ONCLPC9            19952611
+ ONCLPC9A           51877997
+ ONCLPC9B           27297739
+ ONCMPC0             6357751
+ ONCMPC1            20744246
+ ONCMPC2             8443615
+ ONCMPC3            27786106
+ ONCMPC4            25043669
+ ONCMPC4A           56547671
+ ONCMPC5             3224779
+ ONCMPC6             4105582
+ ONCMPC7             2403676
+ ONCMPC9            18150335
+ ONCMPC9A           40240411
+ ONCMPC9B            9462793
+ ONCMPH              2009397
+ ONCNPC0             6754206
+ ONCNPC1            24268621
+ ONCNPC2            21531582
+ ONCNPC3             6292554
+ ONCNPC4            24146889
+ ONCNPC4A           24957911
+ ONCNPC5             2756999
+ ONCNPC6             4957274
+ ONCNPC8            21963914
+ ONCNPC8A           15586688
+ ONCNPC8B           33295209
+ ONCNPI             32186235
+ ONCNTX             87537325
+ ONCNTX1            56514658
+ ONCOAI             28755753
+ ONCOAIC            11789159
+ ONCOAID             8458397
+ ONCOAIF            40598156
+ ONCOAIM            22101895
+ ONCOAIM2            3543064
+ ONCOAIP           102613421
+ ONCOAIP1            9531360
+ ONCOAIP2            3582117
+ ONCOAIQ             8053621
+ ONCOAIS             7347538
+ ONCOAIT             1211393
+ ONCOANC0           21445335
+ ONCOANC1           21219299
+ ONCOANC2           22555664
+ ONCOANC3           12213347
+ ONCOANC4           12799880
+ ONCOANC5           11158795
+ ONCOANC9            3745064
+ ONCOANCF           32058874
+ ONCOANCQ           25651393
+ ONCOAS             18131224
+ ONCOCC             44658900
+ ONCOCFL             4012582
+ ONCOCFL1           61829784
+ ONCOCFP            50437593
+ ONCOCFR            30967942
+ ONCOCKI             4437393
+ ONCOCOC             6349998
+ ONCOCOF            21220428
+ ONCOCOFA            2437896
+ ONCOCOM            52166923
+ ONCOCOML            1365958
+ ONCOCON            14433965
+ ONCOCOP             2361671
+ ONCOCOS            10618905
+ ONCOCRA             1506094
+ ONCOCRC            12766110
+ ONCOCRF            14483451
+ ONCOCRFA            3817093
+ ONCODEL            17361497
+ ONCODGR             2195125
+ ONCODIS              786459
+ ONCODLF            23576940
+ ONCODSP            50443707
+ ONCODSP1           21383416
+ ONCODSR            89512891
+ ONCODXD            17370508
+ ONCOEDC            23302979
+ ONCOEDC1           41828718
+ ONCOES             68765242
+ ONCOFDP            14855963
+ ONCOFLF            17881251
+ ONCOFTS            13108300
+ ONCOFUL            22246467
+ ONCOFUM            13605728
+ ONCOFUP             4216330
+ ONCOGEN            47631016
+ ONCOHELP            3398919
+ ONCOHICD           39876698
+ ONCOIT             37213574
+ ONCOLRU             7113449
+ ONCOMNI            58173682
+ ONCOOT             71002979
+ ONCOPA1            58176718
+ ONCOPA1A           57815890
+ ONCOPA2            44535183
+ ONCOPA2A           18422769
+ ONCOPA3            38378790
+ ONCOPA3A           27991276
+ ONCOPAR            13874306
+ ONCOPCE            70189715
+ ONCOPFX             4983959
+ ONCOPMA            23135907
+ ONCOPMB            23741129
+ ONCOPMP             3059088
+ ONCOPRT            41204141
+ ONCOPRT1           57470448
+ ONCORF              4642573
+ ONCOSA              9399540
+ ONCOSA1            11411674
+ ONCOSC             11427074
+ ONCOSC1             6612674
+ ONCOSCF             3938618
+ ONCOSCG            12768439
+ ONCOSCOM            3316978
+ ONCOSCT            11821848
+ ONCOSCT0            8671966
+ ONCOSCT1            7381828
+ ONCOSCT2           19240156
+ ONCOSCT3            2781384
+ ONCOSINP            9583126
+ ONCOSO              5178337
+ ONCOSSA            14757229
+ ONCOSSA1           15229749
+ ONCOSSA2            8003035
+ ONCOSSA3            3095497
+ ONCOSSA4            4638815
+ ONCOSSAT           12800639
+ ONCOST              2142434
+ ONCOST1             7690763
+ ONCOSUR            60090941
+ ONCOSUR1           36834583
+ ONCOSUR2           46917344
+ ONCOTM             12379399
+ ONCOTN            119940311
+ ONCOTN0            49148768
+ ONCOTNE            30270501
+ ONCOTNM           137993546
+ ONCOTNMB             648870
+ ONCOTNMC            8836327
+ ONCOTNMX            1925096
+ ONCOTNO            21943756
+ ONCOTNS            19044048
+ ONCOU              19968589
+ ONCOU0              1928305
+ ONCOU0A             6489600
+ ONCOU55            28674677
+ ONCOU55A            9583374
+ ONCOU55B            2593325
+ ONCOUK             17650591
+ ONCOUTC            13598286
+ ONCP2P0             6652955
+ ONCP2P1             7499412
+ ONCP2P2            57787500
+ ONCP2P3             6759135
+ ONCP2P4            32183944
+ ONCP2P4A           62450775
+ ONCP2P5             2551370
+ ONCP2P6             5614385
+ ONCP2P8            37983685
+ ONCP2P8A           48523761
+ ONCP2P8B            3539945
+ ONCPAT             47751522
+ ONCPAT1             2690514
+ ONCPCDX             3257923
+ ONCPCI             24563873
+ ONCPCS             13889291
+ ONCPDI              7353112
+ ONCPHC              4459971
+ ONCPL               3168179
+ ONCPM               7795122
+ ONCPMB              3958592
+ ONCPMC             11179867
+ ONCPML             24177429
+ ONCPMP              5711304
+ ONCPPC0             4092043
+ ONCPPC1             6064815
+ ONCPPC2             9874323
+ ONCPPC3             4428720
+ ONCPPC4            17202238
+ ONCPPC5             4818379
+ ONCPPC6            18098095
+ ONCPPC7             5416472
+ ONCPPC9            28731845
+ ONCPPC9A           22989622
+ ONCPPC9B           27659546
+ ONCPS53A          169093757
+ ONCPS53B          159998399
+ ONCPS53C          149245653
+ ONCPS54A           25346603
+ ONCPSD              6627917
+ ONCPTHST            3958786
+ ONCPTX             82449372
+ ONCRESTG            5694007
+ ONCRFNR             2850594
+ ONCRPC             15093875
+ ONCRR               7087743
+ ONCSAPI             5208764
+ ONCSAPI1           26797085
+ ONCSAPI3           55610697
+ ONCSAPID           21856891
+ ONCSAPIE           58002089
+ ONCSAPIR           26610695
+ ONCSAPIS            9309557
+ ONCSAPIT           77972147
+ ONCSAPIU            7316141
+ ONCSAPIV           11259789
+ ONCSAPIX            9859486
+ ONCSED01           13507255
+ ONCSED02           17490289
+ ONCSED03           44378907
+ ONCSED04           25577841
+ ONCSEDEM            3657858
+ ONCSG0             49166434
+ ONCSG0A            30426924
+ ONCSG1            152734191
+ ONCSG1A            51960655
+ ONCSG2             55673512
+ ONCSG3             69938670
+ ONCSG4             79706344
+ ONCSG4A            18136273
+ ONCSG5             67058899
+ ONCSG5A            64524003
+ ONCSNACR            6005907
+ ONCSPC0            16826730
+ ONCSPC1             7803234
+ ONCSPC2            16192359
+ ONCSPC3            13539346
+ ONCSPC4            38181307
+ ONCSPC4A           38376501
+ ONCSPC5            10166482
+ ONCSPC6             4640534
+ ONCSPC8            42929610
+ ONCSPC8A           39737162
+ ONCSSF1            36723126
+ ONCSSF2            21276764
+ ONCSSF25           13108569
+ ONCSSF3            23518844
+ ONCSSF4            20855629
+ ONCSSF5            21087348
+ ONCSSF6            22917384
+ ONCSTX               967309
+ ONCSUBS             7009875
+ ONCSYMP            11984863
+ ONCTEXT             1290050
+ ONCTIME            14762855
+ ONCTNMC             9628869
+ ONCTPC0             9479356
+ ONCTPC1            14593845
+ ONCTPC2            14770718
+ ONCTPC3            10519366
+ ONCTPC4            32657444
+ ONCTPC5            10087071
+ ONCTPC6             5416628
+ ONCTPC8            44121595
+ ONCTPC8A           27301984
+ ONCTXSM            19167802
+ ONCUTX             37076017
+ ONCUTX1            32335696
+ ONCX                  59681
+ ONCX10             13422084
+ ONCX10A            32534122
+ ONCXDEM             3540836
+ ONCXERR             5253465
+ ONCXURL             3380054
+  
+ Please note that on March 14, 2013, one day after the official checksum 
+ date for this patch, Patch ONC*2.11*57 was released and all sites have
+ been validated as having installed this patch with no local modification
+ made to the routines. The official checksum for the routines included with
+ Patch ONC*2.11*57 and which have been validate for the sites are as
+ follows:
+ ONCACD0            81586467
+ ONCACDU1           26408691
+ ONCACDU2           82187171
+ ONCCS              51579300
+ ONCCSRS            43589337
+ ONCGENED           26258151
+ ONCOAIP           103520591
+ ONCOCOF            24466837
+ ONCODIS              778492
+ ONCOEDC            26158579
+ ONCOEDC1           42257754
+ ONCOU55            29262224
+ ONCSG1            152655132
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : WINTERTON,STEVEN              Date Entered  : MAR 22, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 03, 2013
+Released By : CONSENTINO,ALBERT             Date Released : JUL 08, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

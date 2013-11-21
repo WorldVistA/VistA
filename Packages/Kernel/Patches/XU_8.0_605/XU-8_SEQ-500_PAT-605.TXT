@@ -1,0 +1,242 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 05/02/13 at 11:05
+=============================================================================
+Run Date: JUL 11, 2013                     Designation: XU*8*605
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #500                      Status: Released
+                  Compliance Date: AUG 11, 2013
+=============================================================================
+
+
+Subject: IPv4 and IPv6 Utilities
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch includes new utilities to support the VA's transition from IPv4
+ to IPv6.  IPv6 is a protocol designed to handle the growth rate of the 
+ Internet and to cope with the demanding requirements of services, 
+ mobility, and end-to-end security.  A Federal Chief Information Office 
+ (CIO) memo "Transition to IPv6" released in September of 2010 requires
+ agencies to continue their IPv6 transition efforts and has established
+ specific milestones associated with enabling an IPv6 operational
+ capability by the end of FY2014.
+  
+ These utilities will be supported under Integration Agreement (IA) #5844.
+  
+ $$VALIDATE^XLFIPV(IP) will validate the format of an IP address (either 
+ IPv4 or IPv6) and return 0 if the address is in an invalid format, or 
+ return 1 if the format is correct.  It can be called from routines or 
+ from FileMan data dictionaries wherever an IP address format needs to be
+ checked.
+  
+ $$FORCEIP4^XLFIPV(IP) will take an IP address (either IPv4 or IPv6) and
+ return an IPv4 address in a standardized format. This function can be used
+ for existing data dictionary input transforms to store IP addresses in a
+ consistent manner.  The function will return the null address "0.0.0.0" if
+ the passed IP address is invalid.  If an IPv6 address is input which does
+ not have a valid IPv4 equivalent, then the null address "0.0.0.0" will
+ be returned.
+  
+ $$FORCEIP6^XLFIPV(IP) will take an IP address (either IPv4 or IPv6) and
+ return an IPv6 address in a standardized format. This function can be used
+ for database conversions after a transition to IPv6 or for data dictionary
+ input transforms to store IP addresses in a consistent manner.  The
+ function will return the null address "::0" if the passed IP address is
+ invalid.
+  
+ $$CONVERT^XLFIPV(IP) will take an IP address (either IPv4 or IPv6) and 
+ return an IPv4 address if the Cache settings have IPv6 disabled, or will 
+ return an IPv6 address if the Cache settings have IPv6 enabled.  It will 
+ return the null address "0.0.0.0" or "::0" if the passed IP address is
+ invalid or cannot be converted.
+  
+ $$VERSION^XLFIPV() will return 1 if IPv6 is enabled in Cache, or will 
+ return 0 if IPv6 is disabled.  Beginning with version 2009.1, Cache 
+ supports IPv6 if enabled under the console "Memory and Startup 
+ Settings" and if the underlying operating system supports IPv6. This
+ function will return 0 for any version of Cache less than 2009.1.
+  
+ Several menu options have been added to the OPTIONS file (#19) that use 
+ the above functions.  These have been grouped together into the new "IPv4 
+ and IPv6 Address Tools" [XLFIPV IPV4 IPV6 MENU] menu option and added to 
+ the "Operations Management" [XUSITEMGR] menu option.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - <09/11/12>
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*605 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*605 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name                       Type          New/Modified/Deleted
+ -----------                       ----          -------------------- 
+ IPv4 and IPv6 Address Tools       Menu          New
+ [XLFIPV IPV4 IPV6 MENU]
+  
+ Validate IPv4 and IPv6 address    Run Routine   New
+ [XLFIPV VALIDATE]
+  
+ Convert any IP address to IPv4    Run Routine   New
+ [XLFIPV FORCEIP4]
+  
+ Convert any IP address to IPv6    Run Routine   New
+ [XLFIPV FORCEIP6]
+  
+ Convert any IP address per        Run Routine   New
+ system settings
+ [XLFIPV CONVERT]
+  
+ Show system settings for IPv6     Run Routine   New
+ [XLFIPV VERSION]
+  
+ Operations Management             Menu          Modified
+ [XUSITEMGR]
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. INC0000000739035 Kernel Support for IPv6
+  
+ Problem:
+ -------
+ Currently, all of VA's internal and external infrastructure and 
+ applications are set to IPv4 as the default transport mode.  The format 
+ is different between IPv4 and IPv6.  Kernel and several other 
+ applications process IP addresses in routines and need to store the IP 
+ addresses in files.  Each of these fields will need to change their field 
+ definition (data dictionary) to handle the longer IPv6 format.
+  
+ Resolution:
+ ----------
+ This patch provides functions to validate and translate addresses in both 
+ IPv4 and IPv6 format.  These supported functions may be called by other 
+ applications or data dictionaries for the transition from IPv4 to IPv6 in 
+ the VA network.
+  
+  
+ Test Sites: (Patch Tracking Message #58739397)
+ ----------
+ Alexandria VA Medical Center, Pineville, LA (502) - Medium
+ Edward Hines jr. VA Hospital, Hines, IL (578) - Large
+ VA Heartland West, Kansas City, KS (589) - Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.  There are no menu options or protocols that need to be disabled.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.  It may be queued for installation.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*605):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Aug 6, 2012;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XLFIPV
+    Before:       n/a   After: B87061641  **605**
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : AUG 06, 2012
+Completed By: BEST,LISA                     Date Completed: JUN 05, 2013
+Released By : TILLIS,LEWIS                  Date Released : JUL 11, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

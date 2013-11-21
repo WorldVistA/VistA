@@ -1,0 +1,153 @@
+$TXT Created by KOGER,RON at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 04/03/13 at 16:45
+=============================================================================
+Run Date: SEP 03, 2013                     Designation: IBD*3*64
+Package : IBD - AUTOMATED INFO COLLECTION SYS Priority: Mandatory
+Version : 3        SEQ #56                      Status: Released
+                  Compliance Date: OCT 03, 2013
+=============================================================================
+
+Associated patches: (v)IBD*3*51    <<= must be installed BEFORE `IBD*3*64'
+
+Subject: UPDATE FOR UNSUPPORTED ICD FIELD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ Application Programmer Interfaces (APIs) have been created to facilitate
+ the implementation of the International Classification of Diseases, 10th 
+ Edition (ICD10) project.  These APIs replace direct global reads to
+ unsupported fields in the ICD DIAGNOSIS (#80) file.  This patch will use
+ these APIs in order to obtain information from the file instead of
+ performing a direct read of the ICD9 global.
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ INC0000000610903  IN A SLC GOLD VISTA ACCOUNT A NUMBER OF AICS ROUTINES
+                   WERE FOUND TO HAVE UNSUPPORTED DIRECT GLOBAL READS TO
+                   THE DIAGNOSIS FIELD.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ BLACK HILLS HCS
+ FARGO, ND
+ MINNEAPOLIS, MN
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ INC0000000610903 IN A SLC GOLD VISTA ACCOUNT A NUMBER OF AICS ROUTINES
+                  WERE FOUND TO HAVE UNSUPPORTED DIRECT GLOBAL READS TO THE
+                  DIAGNOSIS FIELD.  
+    
+    Problem:   
+    --------
+    Direct global reads to the DIAGNOSIS (#3) and DESCRIPTION (#10) fields
+    in the ICD DIAGNOSIS file (#80) are not supported and need to be
+    replaced for the software to function properly.  Global reads to a
+    cross reference between an ICD9 code and its internal entry number
+    within ICD DIAGNOSIS file (#80) also need to be replaced. 
+  
+    Resolution:
+    -----------
+    The DIAGNOSIS (#3) and DESCRIPTION (#10) fields contained an  
+    unsupported direct global read.  These unsupported reads were replaced 
+    with supported methods to retrieve the data.
+    
+    Technical:
+    ----------
+    Routine ^IBDFN4 will be modified to replace the direct global read 
+    with a call to API $$ICDDX^ICDCODE in order to obtain the correct
+    DIAGNOSIS (#3) field value. The API $$ICDD^ICDCODE will replace a
+    second direct global read in order to obtain the correct DESCRIPTION
+    (#10) field value.
+  
+    In addition, routine ^IBDFN7 will be modified to replace a cross
+    reference between the ICD9 code and the corresponding internal entry
+    number within the ICD DIAGNOSIS file (#80). This modification will use
+    the API $$CODEN^ICDCODE.  These API calls are defined in Integration
+    Control Registration #3990.
+  
+  
+                          INSTALLATION INSTRUCTIONS:
+                          ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.  
+ Installation will take less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter IBD*3.0*64)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       IBD*3.0*64.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+       When prompted, "Enter options you wish to mark as 'Out of Order':",
+       enter:
+               Edit Tool Kit Forms  [IBDF EDIT TOOL KIT FORMS]
+  
+       When prompted, "Enter protocols you wish to mark as 'Out of Order':"
+       press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;AUTOMATED INFO COLLECTION SYS;**[Patch List]**;APR 24, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBDFN4
+    Before: B12796917   After: B13325324  **38,51,64**
+Routine Name: IBDFN7
+    Before:  B4240764   After:  B4134968  **38,51,64**
+ 
+Routine list of preceding patches: 51
+
+=============================================================================
+User Information:
+Entered By  : KOGER,RON                     Date Entered  : AUG 13, 2012
+Completed By: LANG,MICKEY                   Date Completed: AUG 27, 2013
+Released By : MURRAY,ANGELA                 Date Released : SEP 03, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,362 @@
+
+=============================================================================
+Run Date: SEP 20, 2013                     Designation: WEBV*1*28
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #23                      Status: Released
+                  Compliance Date: OCT 21, 2013
+=============================================================================
+
+
+Subject: VistA Web v16.1.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 16.1.2 of VistaWeb (build last updated 07/03/13) will be      *
+ * promoted to the production server for national release on 09/24/13    *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National Vista Web server. There is *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *************************************************************************
+  
+ VistaWeb (VW) v16.1.2 includes the following fixes as they relate to 
+ NwHIN C32 reports:
+  
+ 1) INC000000863939 -
+       Impact Sites:
+             General fix for all NwHIN partners
+  
+       Issue:
+             Medication source showing wrong data
+             Corrected four sections of Patient Summary Information
+             document(C32).
+       
+       C32 section fixed:
+             Allergies, medication, problems and vitals.
+             These sections will now only display hospital name under the
+             'Source' column and not display the Health Information
+             Exchange(HIE) partner name.
+  
+ 2) INC000000865358 - 
+       Impact Sites:
+             General fix for all NwHIN partners
+       Issue:
+             Test name is not displaying for test names less than 2
+             characters long 
+       C32 section fixed:
+             Corrected C32 lab results section
+             to display test names that are only one character long.
+  
+ 3) INC000000863982 -
+       Impact Sites:
+             General fix for all NwHIN partners
+       Issue:
+             VistaWeb is displaying the dose quantity instead of 
+             quantity ordered or dispensed.
+       C32 section fixed:
+             medication section so that dose quantity are no longer
+             displayed in 'Quantity' column where only quantity of
+             medication dispensed should be displayed.
+        
+ 4) INC000000809440 - 
+       Impact Sites:
+             North Carolina's NwHIN partners
+       Issue:
+             North Carolina's lab results are not displaying at all
+       C32 section fixed:
+             The lab results column will now display results.
+  
+ 5) INC000000874300 -
+       Impact Sites:
+             General fix for all NwHIN partners
+       Issue:
+             Lab observation shows in Panel name
+       C32 section fixed:
+             Corrected C32 lab results section so that lab observation
+             name is not shown in lab panel table cell if there is only
+             one lab observation.
+  
+ 6) INC000000864390 - 
+       Impact Sites:
+             San Diego Beacon NwHIN partner and possibly other Optum
+             NwHIN partner
+       Issue:
+             Procedure date/time missing 
+       C32 section fixed:
+             Corrected San Diego Beacon's C32 procedure section so that
+             procedure date is showing in 'Date/Time' column.
+  
+ 7) INC000000874602 - 
+       Impact Sites:
+             General fix for all NwHIN partners
+       Issue:
+             Language displayed as patient language is actually CDA
+             document language
+       C32 section fixed:
+             Patient information section of the C32 was corrected so that
+             document language is not shown as patient language if the
+             patient language is not sent in the C32.
+  
+ 8) INC000000855582 - 
+       Impact Sites:
+             General fix for all NwHIN partners
+       Issue:
+             Validate/correct that the display of Quantity is correct 
+             (a number and a form, e.g. 30 tablets)
+       C32 section fixed:
+             Medication section to display both value and unit 
+             (if available) in the 'Quantity'column.
+  
+ 9) INC000000809512 - 
+       Impact Sites:
+             HEALTHeLINK NwHIN partner
+       Issue:
+             Same Rx# listed for every medication
+       C32 section fixed:
+             Corrected HEALTHeLINK's C32 medication section so that the
+             same prescription number is not displayed for every
+             medication prescribed.
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+    1) INC000000863939 - Medication source showing wrong data
+    2) INC000000865358 - Test name is not displaying for test names less 
+                         than 2 characters long
+    3) INC000000863982 - VistaWeb is displaying the dose quantity instead    
+                         of quantity ordered or dispensed
+    4) INC000000809440 - Result values are not displaying
+    5) INC000000874300 - Lab observation shows in Panel name
+    6) INC000000864390 - Procedure date/time missing (SD Beacon and
+                         other Optum possibly)
+    7) INC000000874602 - Language displayed as patient language is
+                         actually CDA document language
+    8) INC000000855582 - Validate/correct that the display of Quantity
+                         is correct (a number and a form, e.g. 30 tablets)
+    9) INC000000809512 - Same Rx# listed for every medication
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Altoona, PA
+ Puget Sound HCS
+ Richmond, VA
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000000863939 - Medication source showing wrong data
+  
+    Problem:
+    ========
+    If VistaWeb doesn't find any data for the 'Source' column on the 
+    following four sections; Allergies, Medications, Problems and
+    Vitals, on the C32 document, it will default to the source of the
+    Health Information Exchange (HIE) that sent the C32 and display that
+    name as the source.  The source should be only the name of the hospital
+    that the patient visited and not the name of HIE Virtual Lifetime
+    Electronic Record (VLER) partner.
+  
+    Solution:
+    =========
+    Code has been changed to remove the reference pointing to HIE VLER
+    partner name so that it is not displayed in the 'Source' column.
+        
+ 2) INC000000865358 - Test name is not displaying for test names less than 
+                      2 characters long
+  
+    Problem:
+    ========
+    If a lab name comes in as just one character (ex. 'K' for Potassium)
+    VistaWeb will not display this lab name at all. Currently VistaWeb
+    is set to only display names of lab observations if that name is
+    greater than one character.
+  
+    Solution:
+    =========
+    VistaWeb's code has been changed to display names if their name has
+    more than zero characters which will include lab names with only one
+    character. 
+    
+ 3) INC000000863982 - VistaWeb is displaying the dose quantity instead of
+                      quantity ordered or dispensed.
+  
+    Problem:
+    ========
+    Currently, when VistaWeb populates the 'Quantity' column of the
+    medication section in a C32, it is set to look for that information in
+    a section of code where dosage quantity is stored. This is causing a
+    problem because the 'Quantity' column only needs to display the
+    quantity of medication dispensed and not the dosage.
+  
+    Solution:
+    =========       
+    Code has been removed that references the section where dosage quantity
+    is located and only point to the location where quantity of medication
+    dispensed is stored. 
+  
+ 4) INC000000809440 - Result values are not displaying
+  
+    Problem:
+    ========
+    North Carolina lab results are not displayed on the C32 report.  This 
+    issue occurs because North Carolina sends their values to a different
+    section of code where VistaWeb does not look at.
+  
+    Solution:
+    =========  
+    Code has been modified to add a new place for VistaWeb to look and
+    find data for lab results.
+  
+ 5) INC000000874300 - Lab observation shows in Panel name
+  
+    Problem:
+    ========
+    VistaWeb takes lab observation name and displays it as lab panel name
+    even though there is a different name sent to display as the panel
+    name.
+  
+    Solution:
+    =========   
+    VistaWeb code has been modified to look in the section of the C32's 
+    code, where the lab panel name is populated and display that as panel
+    name instead of displaying the lab observation name.
+  
+ 6) INC000000864390 - Procedure date/time missing (SD Beacon and other 
+                      Optum possibly)
+  
+    Problem:
+    ========
+    VistaWeb currently does not display the 'Date/Time' column for
+    San Diego Beacon's C32 in the Procedure section.  This is an issue 
+    because even if the data is sent in C32 it will not display.
+  
+    Solution:
+    =========       
+    Code has been modified in VistaWeb to add a new section of code that 
+    finds data for the 'Date/Time' column.
+  
+ 7) INC000000874602 - Language displayed as patient language is actually 
+                      CDA document language
+  
+    Problem:
+    ========
+    The section at the top of the C32 document displays patient specific
+    information. Amongst other info, this section shows language spoken by
+    the patient. If the patient language is not sent in C32, VistaWeb 
+    currently selects the 'document language' and displays that as the
+    patient's language.
+  
+    Solution:
+    ========= 
+    VistaWeb code has been modified so that it no longer selects the 
+    'document language' if the patient language is not sent and instead 
+    displays a null value.
+  
+ 8) INC000000855582 - Validate/correct that the display of Quantity is 
+                      correct (a number and a form, e.g. 30 tablets)
+  
+    Problem:
+    ========
+    The 'Quantity' column of the Medication section for all partners'
+    C32's shows only the quantity value of the medication without the unit
+    type (i.e. tab, mg, etc.) even though unit type is sent in C32.
+  
+    Solution:
+    =========
+    VistaWeb code has been modified that added to check for the unit 
+    value(s) and display it if the unit type is available. If available 
+    if will now show to the right of the quantity value in the 'Quantity'
+    column.
+  
+ 9) INC000000809512 - Same Rx# listed for every medication
+  
+    Problem:
+    ========
+    In HEALTHeLINK's C32, VistaWeb is taking the physician's ID and
+    displaying it as the prescription number for each medication. In many
+    cases the prescription number is the same for all medications since it
+    is the same physician who prescribed the medications. As a result
+    the 'Prescription #' field will have the same value listed.
+  
+    Solution:
+    =========
+    VistaWeb code has been modified to look in the correct section of 
+    code where the prescription number is and no longer displays the
+    physician's ID in the 'Prescription #' column.
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+  
+     http://www.domain.ext/vdl 
+     http://vista.domain.ext/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+  
+      - download.vista.domain.ext.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.fo-albany.domain.ext [anonymous.software]
+ Hines                ftp.fo-hines.domain.ext  [anonymous.software]
+ Salt Lake City       ftp.fo-slc.domain.ext    [anonymous.software]
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+  WEBV_1_28_IG.zip
+  
+ The following files can be found in zip file above:
+  
+  NVW_Prod_v16 1 2_Install_Guide_20130614.doc
+  NVW_Prod_v16 1 2_Install_Guide_20130614.pdf
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch is loaded on the National Vista Web server. There is nothing 
+ that local sites can or needs to do besides communicate changes to users.
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : MAY 28, 2013
+Completed By: SESSLER,APRIL                 Date Completed: SEP 20, 2013
+Released By : ERICKSON,REBECCA J            Date Released : SEP 20, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+OSNo routines included

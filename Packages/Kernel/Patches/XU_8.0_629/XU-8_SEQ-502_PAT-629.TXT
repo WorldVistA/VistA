@@ -1,0 +1,256 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 06/06/13 at 11:12
+=============================================================================
+Run Date: AUG 06, 2013                     Designation: XU*8*629
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #502                      Status: Released
+                  Compliance Date: SEP 06, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*614    <<= must be installed BEFORE `XU*8*629'
+
+Subject: VRAM ENTRY IN REMOTE APPLICATION FILE
+
+Category: 
+  - Other
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The VistA Remote Access Management (VRAM) Graphical User Interface (GUI)
+ is being developed as a client application interface to both the Claims
+ System and remote VistA systems.  Features covered within the scope of the
+ application include:
+  -  Connection and authentication with the Claims System through use of
+     authorized user credentials
+  -  Obtaining the authorized user's Claims System National-Level Account
+     Profile
+  -  Display and selection of authorized access to remote VistA systems
+     (user's catalog of authorized sites)
+  -  Connectivity to and brokered authentication with selected authorized
+     remote VistA systems using RPC Broker BSE component
+  -  Support for connectivity to remote VistA systems using SSH or Telnet
+     (favoring SSH).
+  -  Establishing a Terminal Emulation (VT-100) interface between the user
+     and the selected remote VistA system  
+  -  Provide standard Terminal Emulation and key mapping features during
+     the connected session
+  -  Provide standard rich-client Microsoft Windows application features
+  -  Perform Claims System National-Level Account Profile synchronization 
+     during instantiation of the remote connection with the selected remote
+     VistA system for specific users that includes:
+      * Creation of accounts and/or synchronization of account credentials
+      * Synchronization of Primary and Secondary Menu Option assignments
+      * Synchronization of Security Keys
+      * Synchronization of account preferences 
+  -  Allow capture and printing of Terminal Emulation session conducted. 
+  -  Allow launching multiple instances of the VRAM application.
+  -  Provide capability of Terminal Emulation preferences for output (e.g. 
+     background color, font color/size)
+  -  Provide an executable self-extracting installation package to 
+     automate installation of the VRAM client application and ancillary 
+     components  
+  
+ Patch XU*8.0*629 will add an entry in the REMOTE APPLICATION file 
+ (#8994.5) for the VRAM application. The entry in this file will allow the
+ Kernel Broker code in the host VistA system to validate VRAM
+ authentication requests for remote user access, and is done in accordance
+ with instructions on the use of the Broker Security Enhancement (BSE) as
+ provided by the Kernel team.
+     
+ By using BSE, VRAM can discontinue use of the CAPRI style of 
+ authentication, which is scheduled to be disabled at a future date. The 
+ file entry contains the name of the application, the application code 
+ (hashed), method of authentication, and authentication server IP, port, 
+ and entry point.  
+  
+ The menu option "CPAC VRAM GUI" [KPA VRAM GUI] in OPTION file (#19) 
+ contains the Remote Procedure Calls (RPCs) for the VRAM application, 
+ which was installed by a KPA-namespaced patch. If the option does not
+ exist on the VistA system where patch is XU*8*629 installed, an empty "KPA
+ VRAM GUI" [KPA VRAM GUI] option will be created by this patch as a
+ placeholder for the future installation of the VRAM application.
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - <04/16/13>
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*629 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch does
+ not alter or modify any VistA Blood Bank software design safeguards or
+ safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*629 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ KPA VRAM GUI           B:Broker (Client/Server)  New (only if it does
+                                                  not already exist)
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Availability              New/Modified/Deleted
+ --------               ------------              -------------------- 
+ XU REBUILD MENU TREE   Public                    New
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. INC000000819948 Kernel - Menu/Options Issue
+  
+ Problem:
+ -------
+ Secondary menu options and security keys assigned during a VRAM session 
+ are inaccessible to the user until the nightly menu rebuild occurs.
+  
+ Resolution:
+ ----------
+ This patch includes a new Kernel Remote Procedure Call (RPC) "XU 
+ REBUILD MENU TREE" which will rebuild the menu trees for a single user
+ during the VRAM session.
+  
+ 2. INC000000827587 Kernel - Security/Logon Issue
+  
+ Problem:
+ -------
+ The Broker Security Enhancement (BSE) enables Remote Procedure Call (RPC) 
+ based applications to make remote user/visitor connections in a more 
+ secure manner.  BSE is used for users which require access to data 
+ located at remote sites at which the users: (a) do not have assigned 
+ Access/Verify codes, (b) have not been entered into the NEW PERSON file 
+ (#200) by local staff, and (c) want to avoid having multiple 
+ Access/Verify code pairs.  BSE is used to authenticate a valid VistA user 
+ at one site (the home site) and subsequently access data and another site 
+ (the remote site).  BSE is used by Compensation And Pension Records 
+ Interchange (CAPRI), VistAWeb, Remote Data Views (RDV), VistA Imaging 
+ Display Client, and other applications.  BSE adds a step to the signon 
+ process to authenticate the connecting application.  This requires 
+ passing a secret encoded phrase that will be authenticated on the remote 
+ VistA system by looking up the entry in the REMOTE APPLICATION file 
+ (#8994.5).  The REMOTE APPLICATION file (#8994.5) is updated by Kernel 
+ patch and KIDS build.  VRAM requires an entry in this file to use BSE.
+  
+ Resolution:
+ ----------
+ This patch will create an entry in the REMOTE APPLICATION file (#8994.5) 
+ for the VRAM application.
+  
+  
+ Test Sites: (Patch Tracking Message #61439876)
+ ----------
+ VA Butler HealthCare, Butler PA (529) - Small
+ VA Heartland - West, Kansas City MO (589) - Large/Integrated
+ VA Western NY HCS, Albany NY (528) - Large/Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the 
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  There are no menu options or protocols that need to be 
+ disabled.  The patch may be installed during peak hours.  The patch 
+ should take less than 1 minute to install, and may be queued for 
+ installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*629):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global. 
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ84
+    Before: B60218862   After: B72156194  **157,253,614,629**
+Routine Name: XU8PS629
+    Before:       n/a   After: B14238522  **629**
+ 
+Routine list of preceding patches: 614
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : MAR 12, 2013
+Completed By: DERBES-MURPHY,ELISA           Date Completed: JUL 24, 2013
+Released By : TILLIS,LEWIS                  Date Released : AUG 06, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,857 @@
+$TXT Created by HARPER,AMY R at DEVFEX.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 04/22/13 at 14:56
+=============================================================================
+Run Date: JUL 24, 2013                     Designation: IB*2*458
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #454                      Status: Released
+                  Compliance Date: AUG 23, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*447    <<= must be installed BEFORE `IB*2*458'
+                    (v)IB*2*452    <<= must be installed BEFORE `IB*2*458'
+
+Subject: REASONABLE CHARGES ENHANCEMENTS 2013
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Other
+
+Description:
+============
+
+ **************************************************************************
+ ** Installation of IB*2*458 must be immediately followed by DSIV*2.2*8. **
+ ** DSIV*2.2*8 is being released as a companion patch to IB*2*458.       **
+ **************************************************************************
+                               
+                               
+ This patch contains several updates to Integrated Billing for billable 
+ event processing and reports.  Enhancements to Claims Tracking are the 
+ primary changes, including expanded Release of Information consents.  Also 
+ included are New Reasons Not Billable, significant changes to the Days 
+ Denied Report and an additional option for installing Reasonable Charges. 
+ No charges are updated or exported with this patch.
+                               
+                               
+ CLAIMS TRACKING DENIAL REASONS
+ ==============================
+ An Insurance Review that results in a Denial is assigned a reason for 
+ that denial from a standard set of reasons.  New entries are being added 
+ to this standard set of Insurance Review Denial Reasons.
+                               
+ New CLAIMS TRACKING DENIAL REASONS (#356.21):
+ ---------------------------------------------
+    DELAY IN TREATMENT/SERVICE                      DELAY TX
+    OBSERVATION IS MORE APPROPRIATE                 OBS
+    ALTERNATE LEVEL OF CARE IS MORE APPROPRIATE     ALT LOC
+                               
+                               
+ CLAIMS TRACKING REVIEW TYPES
+ ============================
+ Each Insurance Review is assigned a Type identifying both the type of 
+ care and the type of review.  New entries are being added to the standard 
+ set of Insurance Review Types.
+                               
+ New CLAIMS TRACKING REVIEW TYPE (#356.11):
+ ------------------------------------------
+    SNF/NHCU REVIEW                           25    SNF/NHCU
+    INPT RETROSPECTIVE REVIEW                 35    RETRO INPT
+    OPT RETROSPECTIVE REVIEW                  55    RETRO OPT
+                               
+ Display and Edit with New Review Types:
+ ---------------------------------------
+ The Insurance Review Types are used as controls when processing the 
+ fields of an Insurance Review to determine the data related to that 
+ review.  For example the fields displayed and editable for a 
+ URGENT/EMERGENT ADMIT REVIEW are different than the fields displayed and 
+ editable for an OUTPATIENT TREATMENT review.  The new Review Types will 
+ manage review data in the same way as existing similar Review Types:
+                               
+ SNF/NHCU REVIEW            process same as a URGENT/EMERGENT ADMIT REVIEW
+ INPT RETROSPECTIVE REVIEW  process same as a URGENT/EMERGENT ADMIT REVIEW
+ OPT RETROSPECTIVE REVIEW   process same as a OUTPATIENT TREATMENT Review
+                               
+                               
+ CLAIMS TRACKING REASONS NOT BILLABLE
+ ====================================
+ Each event in Claims Tracking may be assigned a Reason Not Billable to 
+ indicate the event is not billable and why.  The standard list of Reasons 
+ Not Billable is being updated, one entry is changed and several added.
+                               
+ Update CLAIMS TRACKING NON-BILLABLE REASONS (#356.8):
+ -----------------------------------------------------
+ The name of one Reason Not Billable is being changed.
+                               
+    NPI/TAXONOMY ISSUES changed to NPI/TAXONOMY/PPN ISSUES
+                               
+ New CLAIMS TRACKING NON-BILLABLE REASONS (#356.8):
+ --------------------------------------------------
+                               
+                                                    ECME  ECME PAPER
+    NAME                                    CODE    FLAG  FLAG
+ -------------------------------------------------------------------
+    APPT CANCELLED/PT NOT SEEN              MC20                
+    SEEN BY PROVIDER ON SAME DAY            MC21                
+    NON-BILLABLE DME/PROSTHETIC             MC22                
+    NON-BILLABLE PROCEDURE                  MC23                
+    EMPLOYEE HEALTH                         MC24    Yes   No
+    ENCOUNTER DURING INPT STAY              MC25                
+    NO PROSTHETIC COVERAGE                  CV22                
+    NON-COVERED DIAGNOSIS                   CV23                
+    NON-COVERED ROUTINE CARE                CV24                
+    HDHP PLAN NOT BILLED                    CV25    Yes   No
+    NOT RELATED TO WC/TORT/NF               CV26                
+    TRICARE PT SEEN AS VETERAN              CV27    Yes   No
+    COMBINED CHARGES                        BL08                
+    UNBUNDLED SERVICE                       BL09                
+                               
+                               
+ CLAIMS TRACKING INSURANCE REVIEW CALL REFERENCE AND AUTHORIZATION NUMBER
+ ========================================================================
+ The INSURANCE REVIEW file CALL REFERENCE NUMBER (#356.2, .09) and 
+ AUTHORIZATION NUMBER (#356.2, .28) fields are both being expanded to 35 
+ characters.
+                               
+ Fields Moved:
+ -------------
+ Due to the additional length required these fields have been moved in 
+ the INSURANCE REVIEW file (#356.2).  Two new fields are being added as 
+ replacements and the two existing fields inactivated:
+                               
+ INSURANCE REVIEW (#356.2) file:
+ #.09 CALL REFERENCE NUMBER (15chr) to #2.01 CALL REFERENCE NUMBER (35chr)
+ #.28 AUTHORIZATION NUMBER  (18chr) to #2.02 AUTHORIZATION NUMBER  (35chr)
+                               
+ Data Copied:
+ ------------
+ The data in the inactivated fields will be moved to the new fields so 
+ there should be no change from the user perspective except the expanded 
+ number of characters available.
+                               
+ Data Display:
+ -------------
+ These two fields are displayed on several Claims Tracking screens and 
+ reports.  If the number of characters available is too short to display 
+ the full extended length then the data will be truncated.  A '*' will be 
+ appended to the end of the data to indicate the full data is not 
+ displayed.
+                               
+ Call Reference Number as Default:
+ ---------------------------------
+ When a new Insurance Review is created and a Call Reference Number is 
+ entered then it is used as the default value for the Authorization Number. 
+ This default has been removed.  Now when the Authorization Number is 
+ presented the Authorization Number of a previous Insurance Review for the 
+ event will be used as the default.  If there was no previous Insurance 
+ Review Authorization Number then no default will be presented.
+                               
+                               
+ CLAIMS TRACKING RELEASE OF INFORMATION SPECIAL CONSENT
+ ======================================================
+ The Release of Information (ROI) function within Claims Tracking has been 
+ enhanced to include records of the ROI consents received and the sensitive 
+ condition they cover.  
+                               
+ Currently each event in Claims Tracking may be assigned a Special Consent 
+ ROI: Not Required, Obtained, Required, and Refused.  This indicates if 
+ that specific event may be related to a sensitive condition requiring a 
+ Release of Information consent form from the patient.  The new option will 
+ now allow entry of a record indicating a consent form has been received 
+ for a specific sensitive condition.
+                               
+ New CLAIMS TRACKING ROI CONSENT (#356.26) file:
+ -----------------------------------------------
+ A new file has been created for records of Release of Information obtained 
+ from a patient with the following.  Note that each sensitive condition 
+ will have its own record.
+ -  PATIENT the consent was received from.
+ -  SENSITIVE CONDITION the consent for release covers.  Includes the 
+    four standard sensitive conditions requiring ROI:  
+            DRUG ABUSE
+            ALCOHOLISM/ALCOHOL ABUSE
+            TESTING FOR OR INFECTION WITH HIV
+            SICKLE CELL ANEMIA
+ -  The EFFECTIVE DATE when the consent for release begins.
+ -  The EXPIRATION DATE when the consent for release ends.
+ -  A REVOKED flag indicating the patient revoked the consent.  In this 
+    case the Expiration date is updated to the date the revocation becomes 
+    effective.  A consent may be revoked but will be active for the date 
+    range assigned.
+ -  COMMENTS associated with ROI, this is intended primarily for entry of 
+    the Insurance the release consent covers.
+                               
+ View Patient ROI Special Consent Records:
+ --------------------------------------------
+ A new screen has been added to display and manage the ROI consent records.  
+ This screen has been added as an action on the main Claims Tracking Editor 
+ screen: ROI Consent (RO).
+                               
+ The ROI Special Consent screen will display all ROI consents entered for 
+ the Patient.  The display order is currently active ROIs first then in 
+ reverse effective date order.  Most recent active ROIs will be at the top.  
+ The Patient, effective date, expiration date and sensitive condition are 
+ all displayed.  In addition, a flag will indicate which consents are 
+ currently active, inactive or inactive/revoked.  The comments are 
+ displayed; however due to space limitations these are truncated.  Use the 
+ '>' to shift the view to the right to see the entire comment field, '<' 
+ shift the view back to the left.
+                               
+ Option: Claims Tracking Edit [IBT EDIT TRACKING ENTRY], ROI Consent (RO)
+                               
+ Add/Edit ROI Special Consent Records for a Patient:
+ ---------------------------------------------------
+ Actions associated with the new Claims Tracking Editor screen for ROI 
+ Special Consent:
+ -  Add ROI Consent (AR) will allow new entries to be added.
+ -  Edit ROI (ER) will allow edit of existing entries.
+ -  Revoke ROI (RV) will allow an ROI consent to be flagged as revoked by
+    the patient.  The Expiration date must be updated to the date the 
+    revocation takes effect.
+ -  Delete ROI (DR) will allow a ROI record to be deleted. This should 
+    only be used if the record was entered in error.  Old records that 
+    expired should remain.
+                               
+ Users must be assigned the new IB ROI EDIT Security Key to perform any of 
+ these actions or to modify the ROI records.
+                               
+ Security Key:  IB ROI EDIT  (new)
+                               
+ Updates to Claims Tracking Displays for ROI:
+ --------------------------------------------
+ Several Claims Tracking screens and reports have been updated to show 
+ indicators of the patients active ROI consent, if any.
+                               
+ The main Claims Tracking Editor screen is the list of a patient's events 
+ within a timeframe.  This screen has been modified in two ways:
+ -  Header of this screen will show indicators of the patient's sensitive 
+    conditions that have currently active consents, if any:  ROI: AHS
+ -  Each event in the list displays the Special Consent ROI field 
+    associated with that event (Not Required, Obtained, Required, 
+    Refused).  If the Special Consent ROI is Obtained then indicators of 
+    the sensitive conditions that have active consents on the date of the 
+    event will be appended to the field:  OBTAIN(AS)
+                               
+ Several other screens will have the following change to the header 
+ depending on the type of screen display:
+ -  Headers of screens that display lists of a patient's events will show 
+    indicators of the patient's sensitive conditions that have currently 
+    active consents, if any:  ROI: AHS.
+ -  Headers of screens that display the extended data of a particular 
+    event and have Special Consent ROI set to Obtained will have indicators 
+    of the sensitive conditions that have consents active on the date of 
+    the event appended: ROI: OBTAINED (AS).
+                               
+ ROI Expired Consent Report:
+ ---------------------------
+ A new report will list the ROI Special Consents that will expire within a 
+ user specified date range.  This report has been added to the Management 
+ Reports (Billing) Menu.
+                               
+ Option: ROI Expired Consent [IB OUTPUT ROI EXPIRED]  (new)
+ Menu:   Management Reports (Billing) Menu [IB OUTPUT MANAGEMENT REPORTS]
+                               
+                               
+ DAYS DENIED REPORT
+ ==================
+ The Days Denied report lists Inpatient stays that have a Denial Insurance 
+ Review. Significant updates have been made to the Days Denied Report:
+                               
+ -  The charges displayed as the Amount Denied has been update to the 
+    current active charges, Reasonable Charges.
+ -  Social Security Number has been removed and replaced with the last 4.
+ -  The Inpatient Admission's Service is added to each denied stay in the 
+    detail section.  This is the Service the patient was in at either the 
+    admission, if that date is included in the report, or the Service the 
+    patient was in on the begin date of the report.  This Service is used 
+    to provide the summary.
+ -  The Amount Denied has been added to each denied stay in the detail 
+    section.  This amount is either:
+    o  if entire admission was denied and the entire stay is within the 
+       date range of the report then the Amount Denied is the full charge
+       of the Admission
+    o  if only a partial denial then the Amount Denied is an average 
+       charge based on the full charge and the number of denied days on 
+       the report
+ -  Inpatient stays of one day will now be included on the report.
+                               
+ -  Events in Claims Tracking not linked to an actual clinical event will 
+    now be included on the report.  Entries are sometimes manually created 
+    so Insurance Reviews can be completed before the event is 
+    automatically entered into Claims Tracking.  The data on these types 
+    of entries will be limited as there is no source clinical event, for 
+    example there will be no service or amount displayed.
+                               
+ -  Detail and Summary sections are added for other types of care than 
+    Inpatient.  Any Outpatient, Prescriptions or Prosthetics assigned a 
+    denial will be included on the report.
+                               
+ Option:  Days Denied Report [IBT OUTPUT DENIED DAYS REPORT]
+                               
+                               
+ REASONS NOT BILLABLE REPORT
+ ===========================
+ An estimated charge for an Inpatient admission is included on the Reasons 
+ Not Billable report.  Errors were identified in the Reasonable Charges 
+ Inpatient Facility charge calculation and have been corrected:
+ -  Every Inpatient stay was assumed to have been a DRG charge.  This is 
+    updated so Nursing Home Care Treating Specialties will be properly 
+    charged the Skilled Nursing per diem.
+ -  Observation care will not be identified with and charged a DRG charge.
+ -  The Inpatient DRG calculation did not recognize the difference between 
+    ICU and Non-ICU care and added both DRG charges to the final amount. 
+    This is updated so each type will be identified and charged only the 
+    corresponding DRG amount.
+                               
+ Option:  Reasons Not Billable Report [IBJD REASONS NOT BILLABLE]
+                               
+                               
+ BILL/CLAIMS ENTRY OF REASON NOT BILLABLE (?RNB)
+ ===============================================
+ There are cases where an event may only be partially billed and therefore 
+ will require both a bill and a Reason Not Billable.  To assist processing 
+ these types of events a new Help action has been added to Enter/Edit a 
+ Bill option.  The '?RNB' action will present the Claims Tracking entries 
+ related to the bill and allow a Reason Not Billable to be entered.  The 
+ Reason Not Billable should only be entered if the event is not fully 
+ billed.
+                               
+ Option:  Enter/Edit Billing Information [IB EDIT BILLING INFO]
+                               
+                               
+ UPDATE FIELD
+ ============
+ The INSURANCE REVIEW (#356.2) FINAL OUTCOME OF APPEAL (#.29) field 
+ contained a misspelling.  This has been corrected (PARITIAL corrected to 
+ PARTIAL) and Help Text was added to the field.
+                               
+                               
+ CHARGE MASTER UPLOAD EXPAND DIVISION CHARACTERS
+ ===============================================
+ A list of sites is included with each version of Reasonable Charges 
+ released.  This site number was limited to 5 characters.  Actual division 
+ numbers are allowed 7 characters.  Therefore the Charge Master Upload has 
+ been modified to allow 7 character site numbers.
+                               
+ Option:  Load Host File into Charge Master [IBCR HOST FILE LOAD]
+                               
+                               
+ CHARGE MASTER REASONABLE CHARGES FACILITY TYPE DESIGNATION
+ ==========================================================
+ Each VA division is identified as a particular Facility Type for 
+ Reasonable Charges, either Provider Based or Non-Provider Based.  This 
+ designation determines the charges loaded and available for use for that 
+ division.
+                               
+ Non-Provider Based Freestanding Charges include Professional charges only.
+ Provider Base Charges include Institutional and Professional charges for 
+ Inpatient, SNF and Outpatient care.
+                               
+ There is the potential that a particular division's Facility Type may 
+ change which would require a complete new set of Reasonable Charges to be 
+ loaded for the new type.  Previously this was only possible when a new 
+ version was released.
+                               
+ A new option is added to allow a site's Facility Type to be changed at any 
+ time so it is no longer dependent on a version release.  The current 
+ versions Reasonable Charges are inactivated and a new set loaded for the 
+ new Facility Type effective on a specified date.
+                               
+ >>> CBO must approve any Facility Type change.
+                               
+                               
+ Option:  RC Change Facility Type [IBCR RC FACILITY TYPE]  (new)
+ Menu:    Charge Master IRM Menu [IBCR CHARGE MASTER IRM MENU]  (link)
+                               
+                               
+ TECHNICAL DESCRIPTION:
+ ======================
+                               
+ INSURANCE REVIEW (#356.2) file changes:
+ ---------------------------------------
+ The length of two free text fields in the INSURANCE REVIEW (#356.2) file 
+ were to be extended to 35 characters: CALL REFERENCE NUMBER (#.09) and 
+ AUTHORIZATION NUMBER (#.28).  These two fields are stored on the zero node 
+ of the file and extending the length of these fields would have violated 
+ the File Manager standard on node length.  Therefore, the fields are 
+ replaced rather than modified.  All references to the old replaced fields 
+ have been updated to reference the new fields.  The data is copied to the 
+ new fields in the post-init.
+                               
+ The existing two fields are '*'ed for deletion and no longer used:
+   *CALL REFERENCE NUMBER (#.09)   [0;9]    INSURANCE REVIEW (#356.2) file
+   *AUTHORIZATION NUMBER  (#.28)   [0;28]   INSURANCE REVIEW (#356.2) file
+                               
+ Two new fields are created on a new node (2) as replacements:
+   CALL REFERENCE NUMBER  (#2.01)  [2,1]    INSURANCE REVIEW (#356.2) file
+   AUTHORIZATION NUMBER   (#2.02)  [2,2]    INSURANCE REVIEW (#356.2) file
+                               
+ The INSURANCE REVIEW (#356.2) field TRACKING ID (#.02) is being released 
+ to update its cross reference #4 APRE.  The cross reference access to 
+ AUTHORIZATION NUMBER has been changed from the inactivated field (#.28) to 
+ the replacement (#2.02).
+                               
+ The Pre-Init will delete the INSURANCE REVIEW (#356.2) field AUTHORIZATION 
+ NUMBER (#.28) cross reference #1 APRE1.  This field is being inactivated 
+ so the cross reference is being moved to the replacement AUTHORIZATION 
+ NUMBER field (#2.02).
+                               
+ The Post-Init will copy the INSURANCE REVIEW (#356.2) data from the two 
+ inactivated fields to the two replacement fields:
+   CALL REFERENCE NUMBER (#.09) copied to CALL REFERENCE NUMBER (#2.01)
+   AUTHORIZATION NUMBER  (#.28) copied to AUTHORIZATION NUMBER  (#2.02)
+                               
+                               
+ Integration Control Reference Update (ICR #5340):
+ -------------------------------------------------
+ The integration agreement ICR #5340 between IB and the Insurance Capture 
+ Buffer (ICB) was updated.  The agreement allows ICB access to the 
+ INSURANCE REVIEW (#356.2) fields CALL REFERENCE NUMBER (#.09) and 
+ AUTHORIZATION NUMBER (#.28).  The ICR has been updated to remove those two 
+ fields and the two new replacement fields were added.
+                               
+                               
+ Reference File Updates:
+ -----------------------
+ The Post-Init will complete all changes to the reference files: 
+ Adds 3 new CLAIMS TRACKING DENIAL REASONS (#356.21) entries
+ Adds 3 new CLAIMS TRACKING REVIEW TYPE (#356.11) entries
+ Adds 14 new CLAIMS TRACKING NON-BILLABLE REASONS (#356.8) entries
+ Modifies 1 CLAIMS TRACKING NON-BILLABLE REASONS (#356.8) file entry
+                               
+                               
+ OPTIONS UPDATED:
+ ----------------
+ Claims Tracking Edit               [IBT EDIT TRACKING ENTRY]
+ Insurance Review Edit              [IBT EDIT COMMUNICATIONS]
+ Appeal/Denial Edit                 [IBT EDIT APPEALS/DENIALS]
+ Pending Reviews                    [IBT EDIT REVIEWS TO DO]
+ Hospital Reviews                   [IBT EDIT REVIEWS]
+ Inquire to Claims Tracking         [IBT OUTPUT CLAIM INQUIRY]
+ Print CT Summary for Billing       [IBT OUTPUT BILLING SHEET]
+ Patient Insurance Info View/Edit   [IBCN PATIENT INSURANCE]
+ Third Party Joint Inquiry          [IBJ THIRD PARTY JOINT INQUIRY]
+                               
+ ROI Expired Consent                [IB OUTPUT ROI EXPIRED]  (new)
+ Management Reports (Billing) Menu  [IB OUTPUT MANAGEMENT REPORTS]  (link)
+                               
+ Days Denied Report                 [IBT OUTPUT DENIED DAYS REPORT]
+ Reasons Not Billable Report        [IBJD REASONS NOT BILLABLE]
+ Enter/Edit Billing Information     [IB EDIT BILLING INFO]
+                               
+ Load Host File into Charge Master  [IBCR HOST FILE LOAD]
+ RC Change Facility Type            [IBCR RC FACILITY TYPE]  (new)
+ Charge Master IRM Menu             [IBCR CHARGE MASTER IRM MENU]  (link)
+                               
+                               
+ SECURITY KEY:
+ -------------
+ A new Security Key IB ROI EDIT is added with this patch.  Only users 
+ assigned this Security Key will be allowed to Add or Edit ROI Consent 
+ Records in the new CLAIMS TRACKING ROI CONSENT (#356.26) file via the new 
+ ROI Consent (RO) screen in the Claims Tracking Edit [IBT EDIT TRACKING 
+ ENTRY] option.  Users that should be allowed this access need to be 
+ identified and the key assigned.
+                               
+                               
+ PATCH COMPONENTS
+ ================
+ The following is the list of components exported by this patch.
+                               
+ File Name (Number)          Field Name (Number)              New/Modified
+ ------------------          -------------------------       ------------
+ CLAIMS TRACKING ROI CONSENT (#356.26)                        New File
+ CLAIMS TRACKING ROI CONSENT (#356.26)  ROI ENTRY           (#.01)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  PATIENT             (#.02)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  SENSITIVE CONDITION (#.03)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  EFFECTIVE DATE      (#.04)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  EXPIRATION DATE     (#.05)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  REVOKED             (#.06)   New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  DATE ENTERED        (#1.01)  New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  ENTERED BY          (#1.02)  New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  DATE LAST EDITED    (#1.03)  New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  LAST EDITED BY      (#1.04)  New
+ CLAIMS TRACKING ROI CONSENT (#356.26)  COMMENT             (#2.01)  New
+                               
+ INSURANCE REVIEW (#356.2)   TRACKING ID             (#.02)   Modified
+ INSURANCE REVIEW (#356.2)   *CALL REFERENCE NUMBER  (#.09)   Modified
+ INSURANCE REVIEW (#356.2)   *AUTHORIZATION NUMBER   (#.28)   Modified
+ INSURANCE REVIEW (#356.2)   FINAL OUTCOME OF APPEAL (#.29)   Modified
+ INSURANCE REVIEW (#356.2)   CALL REFERENCE NUMBER   (#2.01)  New
+ INSURANCE REVIEW (#356.2)   AUTHORIZATION NUMBER    (#2.02)  New
+                               
+ Input Templates             File (Number)                   New/Modified
+ --------------------        -------------------------       ------------
+ IBT ACTION INFO             INSURANCE REVIEW (#356.2)       Modified
+ IBT ADD APPEAL              INSURANCE REVIEW (#356.2)       Modified
+ IBT CONTACT INFO            INSURANCE REVIEW (#356.2)       Modified
+ IBT FINAL OUTCOME           INSURANCE REVIEW (#356.2)       Modified
+ IBT INS VERIFICATION        INSURANCE REVIEW (#356.2)       Modified
+ IBT QUICK EDIT              INSURANCE REVIEW (#356.2)       Modified
+                               
+ List Templates                                   New/Modified
+ -----------------------                          ------------
+ IBT ROI SPECIAL CONSENT                          New
+                               
+ Options                        Type              New/Modified
+ ----------------------------   -----------       ------------
+ IB OUTPUT MANAGEMENT REPORTS   Menu              Use as Link
+ IB OUTPUT ROI EXPIRED          Run Routine       New
+ IBCR CHARGE MASTER IRM MENU    Menu              Use as Link
+ IBCR RC FACILITY TYPE          Run Routine       New
+                               
+ Protocols                      Type              New/Modified
+ ----------------------------   -----------       ------------
+ IBCNS EXIT                     Action            Attach to Menu
+ IBTRE  MENU                    Menu              Use as Link
+ IBTRE ROI CONSENT              Action            New
+ IBTRR  MENU                    Menu              New
+ IBTRR ROI ADD                  Action            New
+ IBTRR ROI DELETE               Action            New
+ IBTRR ROI EDIT                 Action            New
+ IBTRR ROI REVOKE               Action            New
+                               
+ Security Key                                     New/Modified
+ ------------                                     ------------
+ IB ROI EDIT                                      New
+                               
+                               
+ Additional Information:
+ There are no Patient Safety Issues (PSIs) or Remedy Tickets associated 
+ with this patch.
+                               
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR #20080211 - FY 2009 Reasonable Charges Billing Enhancements
+ NSR #20090110 - FY 2010 Reasonable Charges Billing Enhancement
+                               
+ Test Sites:
+ ----------
+ Lebanon, PA
+ Salisbury, NC
+                               
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+                               
+ The preferred method is FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+                               
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+                               
+ Package documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+                               
+ Title                                          File Name        FTP Mode
+ -----------------------------------------------------------------------
+ Patch IB*2*458 Release Notes                   ib_2_458_rn.pdf  binary
+ Integrated Billing (IB) v2.0 Technical Manual  ib20tec.pdf      binary
+ Integrated Billing (IB) v2.0 User Manual       ib_20_u.pdf      binary
+                               
+                               
+ Patch Installation
+ ==================
+                               
+ Pre/Post Installation Overview
+ ------------------------------
+                               
+ The Pre-Init of this patch will complete the following:
+ 1.  Deletes the cross reference #1 APRE1 of the INSURANCE REVIEW (#356.2) 
+     field AUTHORIZATION NUMBER (#.28) .  This cross reference is moved to
+     the replacement field (#2.02).
+                               
+                               
+ The Post-Init of this patch will complete the following:
+ 1.  Adds 3 new CLAIMS TRACKING DENIAL REASONS (#356.21) entries
+                               
+ 2.  Adds 3 new CLAIMS TRACKING REVIEW TYPE (#356.11) entries
+                               
+ 3.  Adds 14 new CLAIMS TRACKING NON-BILLABLE REASONS (#356.8) entries
+                               
+ 4.  Modifies 1 CLAIMS TRACKING NON-BILLABLE REASONS (#356.8) file entry
+                               
+ 5.  Copies data from the two INSURANCE REVIEW (#356.2) fields being 
+     inactivated to the two replacement fields:
+     #.09 CALL REFERENCE NUMBER copied to #2.01 CALL REFERENCE NUMBER
+     #.28 AUTHORIZATION NUMBER  copied to #2.02 AUTHORIZATION NUMBER
+                               
+                               
+ The following options should be disabled during install:
+ Appeal/Denial Edit                 [IBT EDIT APPEALS/DENIALS]
+ Pending Reviews                    [IBT EDIT REVIEWS TO DO]
+ Hospital Reviews                   [IBT EDIT REVIEWS]
+ Inquire to Claims Tracking         [IBT OUTPUT CLAIM INQUIRY]
+ Print CT Summary for Billing       [IBT OUTPUT BILLING SHEET]
+ Patient Insurance Info View/Edit   [IBCN PATIENT INSURANCE]
+ Third Party Joint Inquiry          [IBJ THIRD PARTY JOINT INQUIRY]
+ Days Denied Report                 [IBT OUTPUT DENIED DAYS REPORT]
+ Reasons Not Billable Report        [IBJD REASONS NOT BILLABLE]
+ Enter/Edit Billing Information     [IB EDIT BILLING INFO]
+ Load Host File into Charge Master  [IBCR HOST FILE LOAD]
+                               
+                               
+ After the installation the new IB ROI EDIT Security Key will need to be 
+ assigned to users.  Identify users that should be allowed to Add or Edit 
+ the new ROI Consent Records.
+                               
+                               
+ After the installation of this patch, install patch DSIV*2.2*8.
+ DSIV*2.2*8 is an Insurance Capture Buffer (ICB) patch being released as 
+ a companion patch to this patch IB*2*458.  The Insurance Capture Buffer 
+ accesses the two INSURANCE REVIEW fields (#356.2, .09 and .28) being 
+ replaced in this patch (ICR #5340).  The ICB patch will update their 
+ access to the two new replacement INSURANCE REVIEW fields (#356.2, 2.01 
+ and 2.02).  This is accomplished by the release of new .dlls as described 
+ in DSIV*2.2*8.  Failure to install DSIV*2.2*8 immediately after 
+ installation of IB*2*458 may result in filing errors or filing data to 
+ incorrect fields in the Insurance Review file.
+                               
+                               
+ Pre-Init and Post-init Example Installation
+ -------------------------------------------
+                               
+  Running Pre-Install Routine: PRE^IBYP458
+                               
+      IB*2*458 Pre-Install .....
+                               
+      >> ^DD(356.2,.28) cross-reference #1 deleted
+         Insurance Review (#356.2) Authorization Number (.28) xref APRE1
+                               
+      IB*2*458 Pre-Install Complete
+                               
+                               
+  Running Post-Install Routine: POST^IBYP458
+                               
+      IB*2*458 Post-Install .....
+         
+      >> Add 3 Claims Tracking Review Types, New (#356.11) ...
+         SNF/NHCU REVIEW added
+         INPT RETROSPECTIVE REVIEW added
+         OPT RETROSPECTIVE REVIEW added
+         
+         Updated: 3 of 3 New Review Types Added
+         
+      >> Add 3 Claims Tracking Denial Reasons, New (#356.21) ...
+         DELAY IN TREATMENT/SERVICE added
+         OBSERVATION IS MORE APPROPRIATE added
+         ALTERNATE LEVEL OF CARE IS MORE APPROPRIATE added
+         
+         Updated: 3 of 3 New Denial Reasons Added
+         
+      >> Add 14 Reasons Not Billable (RNB), New (#356.8) ...
+         APPT CANCELLED/PT NOT SEEN added
+         SEEN BY PROVIDER ON SAME DAY added
+         NON-BILLABLE DME/PROSTHETIC added
+         NON-BILLABLE PROCEDURE added
+         EMPLOYEE HEALTH added
+         ENCOUNTER DURING INPT STAY added
+         NO PROSTHETIC COVERAGE added
+         NON-COVERED DIAGNOSIS added
+         NON-COVERED ROUTINE CARE added
+         HDHP PLAN NOT BILLED added
+         NOT RELATED TO WC/TORT/NF added
+         TRICARE PT SEEN AS VETERAN added
+         COMBINED CHARGES added
+         UNBUNDLED SERVICE added
+         
+         Updated: 14 of 14 New RNBs Added
+         
+      >> Change 1 Reasons Not Billable (RNB), Name (#356.8, .01) ...
+         NPI/TAXONOMY ISSUES changed to NPI/TAXONOMY/PPN ISSUES
+         
+         Updated: 1 of 1 RNB Names Updated
+         
+      >> Copy Insurance Review (#356.2) Data to New Field Locations ...
+         Searching file for data to copy, 11111 entries, please wait ...
+         
+         799 Call Reference Numbers found (.09), 799 copied (2.01)
+         7124 Authorization Numbers found (.28), 7124 copied (2.02)
+                               
+      IB*2*458 Post-Install Complete
+                               
+                               
+ Installation Instructions
+ -------------------------
+ This patch should be installed during non-peak hours when no Integrated 
+ Billing users are on the system to minimize potential disruption to 
+ users.  Make sure that when installing the patch the IB nightly job 
+ (IB MT NIGHT COMP) is not running.
+                               
+ Install Time - less than 10 minutes - but will vary from site to site
+ depending on the size of the Insurance Review  file (#356.2) which is 
+ searched for data to be copied to new fields during the Post-Init.
+                                                            
+ 1.  Choose the PackMan message containing this patch.
+                               
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+                               
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the 
+     patch IB*2.0*458:
+                               
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+                               
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'   answer NO if this is done as a nightly job
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'   answer NO
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//   answer YES
+                               
+ 8.  Enter options you wish to mark as 'Out Of Order': enter the following
+                               
+     Appeal/Denial Edit                 [IBT EDIT APPEALS/DENIALS]
+     Pending Reviews                    [IBT EDIT REVIEWS TO DO]
+     Hospital Reviews                   [IBT EDIT REVIEWS]
+     Inquire to Claims Tracking         [IBT OUTPUT CLAIM INQUIRY]
+     Print CT Summary for Billing       [IBT OUTPUT BILLING SHEET]
+     Patient Insurance Info View/Edit   [IBCN PATIENT INSURANCE]
+     Third Party Joint Inquiry          [IBJ THIRD PARTY JOINT INQUIRY]
+     Days Denied Report                 [IBT OUTPUT DENIED DAYS REPORT]
+     Reasons Not Billable Report        [IBJD REASONS NOT BILLABLE]
+     Enter/Edit Billing Information     [IB EDIT BILLING INFO]
+     Load Host File into Charge Master  [IBCR HOST FILE LOAD]
+                               
+ 9.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+                               
+ 10. Optional - Once this patch has been successfully installed you may
+     delete the post-init routine:  IBYP458
+                               
+ 11. Identify and assign users to the new IB ROI EDIT Security Key.
+                               
+ Post-Installation Instructions
+ ------------------------------
+                               
+ Assign Security Key:
+ The new IB ROI EDIT Security Key needs to be assigned to users.  
+ A new Security Key IB ROI EDIT is added with this patch.  Only users 
+ assigned this Security Key will be allowed to Add or Edit ROI Consent 
+ Records in the new ROI Consent (RO) screen in the Claims Tracking Edit 
+ [IBT EDIT TRACKING ENTRY] option.  Users that should be allowed this 
+ access need to be identified and the key assigned.
+                               
+ Install patch DSIV*2.2*8:
+ DSIV*2.2*8 is an Insurance Capture Buffer (ICB) patch being released as 
+ a companion patch to this patch IB*2*458.  The Insurance Capture Buffer 
+ accesses the two INSURANCE REVIEW fields (#356.2, .09 and .28) being 
+ replaced in this patch.  The ICB patch will update their access to use 
+ the two new replacement INSURANCE REVIEW fields (#356.2, 2.01 and 2.02).
+ Failure to install the .dlls as described in DSIV*2.2*8 immediately after 
+ installation of IB*2*458 may result in filing errors or filing data to 
+ incorrect fields.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCC1
+    Before: B54745451   After: B55298346  **19,95,160,159,320,347,377,
+                                           399,452,458**
+Routine Name: IBCD2
+    Before: B27925323   After: B27978767  **4,55,91,106,384,458**
+Routine Name: IBCNSP0
+    Before: B33972429   After: B34211643  **28,43,52,85,93,103,137,229,
+                                           251,363,371,399,438,458**
+Routine Name: IBCRCI
+    Before:  B9964623   After: B10399804  **52,106,245,458**
+Routine Name: IBCRHBS3
+    Before: B26475049   After: B26470229  **245,458**
+Routine Name: IBCRHRS
+    Before:       n/a   After:B166827262  **458**
+Routine Name: IBCSCH
+    Before: B48120299   After: B49539365  **52,80,106,124,138,51,148,137,
+                                           161,245,232,287,348,349,374,
+                                           371,395,400,432,447,458**
+Routine Name: IBCSCH1
+    Before: B30182718   After: B35678936  **106,125,51,245,266,395,458**
+Routine Name: IBJDB21
+    Before: B68099575   After: B73370335  **123,159,185,399,437,458**
+Routine Name: IBJTRA1
+    Before: B10800443   After: B10892306  **39,91,347,389,458**
+Routine Name: IBOTRR
+    Before:       n/a   After: B13485669  **458**
+Routine Name: IBTOBI
+    Before: B26516930   After: B26303932  **91,160,199,309,276,458**
+Routine Name: IBTOBI2
+    Before: B19691453   After: B20308448  **210,458**
+Routine Name: IBTOBI3
+    Before: B15138454   After: B15563291  **40,56,458**
+Routine Name: IBTODD
+    Before: B21565676   After: B34396486  **32,458**
+Routine Name: IBTODD1
+    Before: B16606516   After: B28302876  **32,458**
+Routine Name: IBTODD2
+    Before:  B6204334   After: B10971727  **32,458**
+Routine Name: IBTRC
+    Before: B25152146   After: B27777656  **458**
+Routine Name: IBTRC1
+    Before: B21805821   After: B23066031  **458**
+Routine Name: IBTRC3
+    Before:  B8308715   After:  B8006910  **458**
+Routine Name: IBTRCD
+    Before: B24519897   After: B25352762  **210,458**
+Routine Name: IBTRCD0
+    Before: B16086108   After: B16113018  **458**
+Routine Name: IBTRCD1
+    Before: B26536590   After: B27554841  **10,359,413,458**
+Routine Name: IBTRD
+    Before: B25402753   After: B26257163  **1,199,458**
+Routine Name: IBTRDD
+    Before:  B7193344   After:  B7262514  **458**
+Routine Name: IBTRE
+    Before: B25125140   After: B25778020  **122,51,276,458**
+Routine Name: IBTRED
+    Before: B24360829   After: B24448632  **71,91,160,247,309,276,339,363,458**
+Routine Name: IBTRED0
+    Before: B23652054   After: B23670458  **160,210,317,276,458**
+Routine Name: IBTRED1
+    Before: B10085901   After: B10155477  **458**
+Routine Name: IBTRR
+    Before:       n/a   After: B10506706  **458**
+Routine Name: IBTRR1
+    Before:       n/a   After: B38596413  **458**
+Routine Name: IBTRV
+    Before: B28763805   After: B29049324  **40,121,124,250,277,458**
+Routine Name: IBTRVD
+    Before:  B7583123   After:  B7748942  **266,458**
+Routine Name: IBTRVD0
+    Before: B23418245   After: B23753223  **58,458**
+Routine Name: IBYP458
+    Before:       n/a   After: B51260890  **458**
+ 
+Routine list of preceding patches: 32, 56, 58, 277, 384, 389, 413, 437, 438
+                           447, 452
+
+=============================================================================
+User Information:
+Entered By  : THAYER,CHRISTOPHER            Date Entered  : JUN 03, 2011
+Completed By: CORONA,JOSE                   Date Completed: JUL 24, 2013
+Released By : MURRAY,ANGELA                 Date Released : JUL 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

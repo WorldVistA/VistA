@@ -1,0 +1,294 @@
+$TXT Created by WESTRA,HERLAN at KRN.FO-OAKLAND.MED.VA.GOV  (KIDS) on Wednesday, 03/20/13 at 08:55
+=============================================================================
+Run Date: MAY 16, 2013                     Designation: XU*8*614
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #497                      Status: Released
+                  Compliance Date: JUN 16, 2013
+=============================================================================
+
+Associated patches: (v)XU*8*593    <<= must be installed BEFORE `XU*8*614'
+
+Subject: MENU MANAGER FIXES AND ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ VistA Kernel patch XU*8*614 provides the following fixes and enhancements:
+  
+ 1.  When entering VistA from programmer mode using D ^XUP the last command
+ <spacebar> recall did not work.  Instead, it ran the "User start-up 
+ event" [XU USER START-UP] menu option.  After this patch is installed, 
+ entering VistA from programmer mode will access the menu option selected 
+ on the previous use of D ^XUP using the <spacebar> recall (Unwinder) 
+ feature.
+  
+ 2.  The menu option "Single User Menu Tree Rebuild" [XQBUILDUSER] is 
+ provided in this patch.  It gives sites the means to rebuild the menu 
+ trees for a single user.  It has been attached to the "Menu Rebuild
+ Menu" [XQBUILDMAIN] option.
+  
+ 3.  The parameter "XQ MENUMANAGER PROMPT" is provided in this patch.  It 
+ allows sites to change the default <TEST ACCOUNT> prompt to another value
+ such as <LEGACY SYSTEM> in menu prompts of non-production VistA systems.  
+ The text defined by this parameter is inserted in the MenuManager
+ prompts.  If no text is defined, the hard-coded default is " <TEST
+ ACCOUNT>".  Alternatives could be " <LEGACY SYSTEM>", " <CONTINGENCY>", "
+ <READ ONLY>" or any other value from 3 to 20 characters, depending upon
+ the purpose of the non-production VistA system.  To change the value on a 
+ non-production system, use the "General Parameter Tools" [XPAR MENU 
+ TOOLS] option and select "EP Edit Parameter Values".  You will have to 
+ log off and log back into VistA to see the changed menu prompt.  Note that
+ the prompt can be set in advance on a production system before it is
+ mirrored to a non-production system, and the prompt will only appear on
+ the non-production system.
+  
+ 4.  A new menu option, "List Unreferenced Menu Options" [XQ LIST 
+ UNREFERENCED OPTIONS], is provided in this patch.  The option runs a 
+ report listing entries in the OPTION file (#19) that are not assigned to 
+ any user or attached to any other menu option.  It does not include 
+ options that are assigned in TaskManager (TaskMan) or have the "KEEP FROM 
+ DELETING" field (#209.2) set to "yes".
+  
+ 5.  The "KEEP FROM DELETING" field (#209.2) has been set to "yes" on
+ option "User start-up event" [XU USER START-UP] in the OPTION file (#19).
+  
+  
+ Blood Bank Team Coordination
+ ============================
+   
+ Clearance - <01/14/13>
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*614 contains 
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+ VISTA Patches for Effects on VISTA Blood Bank Software. This patch 
+ does not alter or modify any VistA Blood Bank software design safeguards
+ or safety critical elements functions.
+   
+ RISK ANALYSIS: Changes made by patch XU*8*614 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name                    Type                New/Modified/Deleted
+ -----------                    ----                --------------------
+ "Single User Menu Tree Rebuild"
+ [XQBUILDUSER]                  R:run routine       New
+ This option collects the menus that a user has in the primary and 
+ secondary fields of the OPTION file (#19) and then rebuilds the menu 
+ tree.  Note that other users might have the same menu tree, but this will 
+ only rebuild the menu tree for the selected user.
+  
+ "Menu Rebuild Menu"
+ [XQBUILDMAIN]                  M:menu              Modified
+ This is the main menu for all menu rebuild options.
+  
+ "List Unreferenced Menu Options"
+ [XQ LIST UNREFERENCED OPTIONS] R:run routine       New
+ List unreferenced options from OPTION file (#19).
+  
+ "Display Menus and Options"
+ [XQDISPLAY OPTIONS]            M:menu              Modified
+ This is a menu of options that will help the user display menus and their 
+ options.
+  
+ "User start-up event"
+ [XU USER START-UP]             X:extended action   Modified
+ This is an option used exclusively during a VistA user sign-on event. 
+ Items listed in this option are "TYPE:action" options in the OPTION file
+ (#19) that can be used to prompt users for input upon VistA sign-on and
+ before their Primary Menu Option is displayed.  It will not be used for
+ GUI sign-on.  It is called from XQ12.
+  
+  
+ Parameters Associated:
+  
+ Parameter Name                                     New/Modified/Deleted
+ --------------                                     --------------------
+ XQ MENUMANAGER PROMPT                              New
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  INC000000064420    MAD-1104-41204 No access to Imaging
+  INC000000764449    Last command recall no longer works
+  INC000000767421    Menu site identification for Legacy systems
+  
+ 1. INC000000064420 No access to Imaging
+  
+ Problem:
+ -------
+ Occasionally a user has a menu option assigned in VistA, but still does 
+ not have access to the option. An existing option to "Build Primary Menu 
+ Trees" [XQBUILDTREE] fixes the problem by rebuilding the menu trees for
+ all users, but is impractical for fixing a problem for a single user. A
+ menu rebuild for a single user would be a more practical solution.
+  
+ Resolution:
+ ----------
+ New option "Single User Menu Tree Rebuild" [XQBUILDUSER] was created to 
+ rebuild the menus for a single user.
+  
+ 2. INC000000764449 Last command recall no longer works
+  
+ Problem:
+ -------
+ After installation of XU*8.0*593 when entering VistA from programmer mode
+ using D ^XUP the last command <spacebar> recall no longer works.  Instead,
+ it runs the "User start-up event" [XU USER START-UP] menu option.  At all
+ other levels of the Menu Manager, using the <spacebar> to recall the last
+ used menu option still works.
+  
+ Resolution:
+ ----------
+ The intrinsic function $$STARTUP^XQ12 was modified to save the Kernel 
+ Unwinder value for the OPTION file (#19) and restore it after the "User 
+ start-up event" [XU USER START-UP] menu option was run.
+  
+ 3. INC000000767421 Menu site identification for Legacy systems
+  
+ Problem:
+ -------
+ Integrated sites that were formerly stand-alone production sites may have 
+ a Legacy VistA system containing historical data entered prior to site 
+ integration.  After patch XU*8*593, these sites show <TEST ACCOUNT> in 
+ the menu prompts.  The <TEST ACCOUNT> prompt was added in XU*8*593 to 
+ identify a non-production system, but does not adequately describe a 
+ legacy system.
+  
+ Resolution:
+ ----------
+ Created a parameter "XQ MENUMANAGER PROMPT" that allows sites to change
+ the default <TEST ACCOUNT> prompt to another value such as <LEGACY SYSTEM>
+ in the menu prompt on non-production systems.
+  
+ Test Sites: (Patch Tracking Message #60350606)
+ ----------
+ Louis A. Johnson VA Medical Center, Clarksburg WV (540) - Small
+ Northport VA Medical Center NY, Northport NY (632) - Large 
+ VA Western NY HCS, Albany NY (528) - Integrated
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the 
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.va.gov/vdl/application.asp?appid=10
+  
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the 
+ system.  There are no menu options or protocols that need to be 
+ disabled.  The patch should be installed during non-peak hours to minimize
+ potential for disruption to users.  This patch should take less than 1 
+ minute to install, and may be queued for installation.
+  
+ Note that when installing this patch in a non-production VistA account, 
+ you will have to log off and log back on to see the " <TEST ACCOUNT>" 
+ prompt.
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*614):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.  NOTE:  When installed in a TEST environment, 
+         your BEFORE checksums might not match the values shown below if
+         any of the routines were modified to display <TEST ACCOUNT> in
+         the VistA menu prompts.  The checksums should match in a
+         production environment.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer "NO".   
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer "NO".
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQ
+    Before: B26234879   After: B24099396  **9,46,94,103,157,570,593,614**
+Routine Name: XQ12
+    Before: B72908021   After: B72374012  **9,20,46,157,253,593,614**
+Routine Name: XQ33
+    Before: B11485714   After: B27163386  **49,73,46,614**
+Routine Name: XQ81
+    Before: B75894381   After: B77142358  **81,116,157,253,478,614**
+Routine Name: XQ84
+    Before: B58717207   After: B60218862  **157,253,614**
+Routine Name: XQTOC
+    Before: B17537937   After: B16729237  **20,157,593,614**
+ 
+Routine list of preceding patches: 478, 593
+
+=============================================================================
+User Information:
+Entered By  : WESTRA,HERLAN G               Date Entered  : OCT 19, 2012
+Completed By: BEST,LISA                     Date Completed: APR 30, 2013
+Released By : TILLIS,LEWIS                  Date Released : MAY 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

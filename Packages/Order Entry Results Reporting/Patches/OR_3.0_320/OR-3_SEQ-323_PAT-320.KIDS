@@ -1,0 +1,1978 @@
+Released OR*3*320 SEQ #323
+Extracted from mail message
+**KIDS**:OR*3.0*320^
+
+**INSTALL NAME**
+OR*3.0*320
+"BLD",8857,0)
+OR*3.0*320^ORDER ENTRY/RESULTS REPORTING^0^3130607^y
+"BLD",8857,1,0)
+^^9^9^3120524^
+"BLD",8857,1,1,0)
+This patch corrects 1 issue within the ORDER ENTRY/RESULTS REPORTING 
+"BLD",8857,1,2,0)
+package:
+"BLD",8857,1,3,0)
+ 
+"BLD",8857,1,4,0)
+1. The Patient Selection screen can be set up to display a clinic's 
+"BLD",8857,1,5,0)
+   appointments for a date range. The screen will show no more than 200
+"BLD",8857,1,6,0)
+   appointments. The screen does not show the user any message that the
+"BLD",8857,1,7,0)
+   maximum has been reached and that some of the appointments for the date
+"BLD",8857,1,8,0)
+   range are not being displayed. The appointments dropped can be from any
+"BLD",8857,1,9,0)
+   part of the date range.
+"BLD",8857,4,0)
+^9.64PA^^
+"BLD",8857,6)
+7^
+"BLD",8857,6.3)
+16
+"BLD",8857,"ABPKG")
+n
+"BLD",8857,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8857,"KRN",.4,0)
+.4
+"BLD",8857,"KRN",.401,0)
+.401
+"BLD",8857,"KRN",.402,0)
+.402
+"BLD",8857,"KRN",.403,0)
+.403
+"BLD",8857,"KRN",.5,0)
+.5
+"BLD",8857,"KRN",.84,0)
+.84
+"BLD",8857,"KRN",3.6,0)
+3.6
+"BLD",8857,"KRN",3.8,0)
+3.8
+"BLD",8857,"KRN",9.2,0)
+9.2
+"BLD",8857,"KRN",9.8,0)
+9.8
+"BLD",8857,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",8857,"KRN",9.8,"NM",1,0)
+ORQPTQ2^^0^B65971331
+"BLD",8857,"KRN",9.8,"NM",2,0)
+ORQPTQ5^^0^B76840931
+"BLD",8857,"KRN",9.8,"NM",3,0)
+ORQPTQ6^^0^B45127106
+"BLD",8857,"KRN",9.8,"NM",4,0)
+ORQPTQ11^^0^B56702520
+"BLD",8857,"KRN",9.8,"NM","B","ORQPTQ11",4)
+
+"BLD",8857,"KRN",9.8,"NM","B","ORQPTQ2",1)
+
+"BLD",8857,"KRN",9.8,"NM","B","ORQPTQ5",2)
+
+"BLD",8857,"KRN",9.8,"NM","B","ORQPTQ6",3)
+
+"BLD",8857,"KRN",19,0)
+19
+"BLD",8857,"KRN",19.1,0)
+19.1
+"BLD",8857,"KRN",101,0)
+101
+"BLD",8857,"KRN",409.61,0)
+409.61
+"BLD",8857,"KRN",771,0)
+771
+"BLD",8857,"KRN",779.2,0)
+779.2
+"BLD",8857,"KRN",870,0)
+870
+"BLD",8857,"KRN",8989.51,0)
+8989.51
+"BLD",8857,"KRN",8989.52,0)
+8989.52
+"BLD",8857,"KRN",8994,0)
+8994
+"BLD",8857,"KRN",8994,"NM",0)
+^9.68A^1^1
+"BLD",8857,"KRN",8994,"NM",1,0)
+ORQPT CLINIC PATIENTS^^0
+"BLD",8857,"KRN",8994,"NM","B","ORQPT CLINIC PATIENTS",1)
+
+"BLD",8857,"KRN","B",.4,.4)
+
+"BLD",8857,"KRN","B",.401,.401)
+
+"BLD",8857,"KRN","B",.402,.402)
+
+"BLD",8857,"KRN","B",.403,.403)
+
+"BLD",8857,"KRN","B",.5,.5)
+
+"BLD",8857,"KRN","B",.84,.84)
+
+"BLD",8857,"KRN","B",3.6,3.6)
+
+"BLD",8857,"KRN","B",3.8,3.8)
+
+"BLD",8857,"KRN","B",9.2,9.2)
+
+"BLD",8857,"KRN","B",9.8,9.8)
+
+"BLD",8857,"KRN","B",19,19)
+
+"BLD",8857,"KRN","B",19.1,19.1)
+
+"BLD",8857,"KRN","B",101,101)
+
+"BLD",8857,"KRN","B",409.61,409.61)
+
+"BLD",8857,"KRN","B",771,771)
+
+"BLD",8857,"KRN","B",779.2,779.2)
+
+"BLD",8857,"KRN","B",870,870)
+
+"BLD",8857,"KRN","B",8989.51,8989.51)
+
+"BLD",8857,"KRN","B",8989.52,8989.52)
+
+"BLD",8857,"KRN","B",8994,8994)
+
+"BLD",8857,"QUES",0)
+^9.62^^
+"BLD",8857,"REQB",0)
+^9.611^2^2
+"BLD",8857,"REQB",1,0)
+OR*3.0*215^1
+"BLD",8857,"REQB",2,0)
+OR*3.0*253^1
+"BLD",8857,"REQB","B","OR*3.0*215",1)
+
+"BLD",8857,"REQB","B","OR*3.0*253",2)
+
+"KRN",8994,174,-1)
+0^1
+"KRN",8994,174,0)
+ORQPT CLINIC PATIENTS^CLINPTS2^ORQPTQ2^2^S
+"KRN",8994,174,1,0)
+^^1^1^2950831^^^^
+"KRN",8994,174,1,1,0)
+Returns patients with appointments at a clinic between start and stop dates
+"KRN",8994,174,2,0)
+^8994.02A^3^3
+"KRN",8994,174,2,1,0)
+CLINIC ID^1^16^1
+"KRN",8994,174,2,1,1,0)
+^^1^1^2950608^
+"KRN",8994,174,2,1,1,1,0)
+The record number of the clinic from the Hospital Location File (#44).
+"KRN",8994,174,2,2,0)
+START DATE^1^16
+"KRN",8994,174,2,2,1,0)
+^^1^1^2950831^^
+"KRN",8994,174,2,2,1,1,0)
+The start date of the clinic appointments to retrieve (not in FM format.)
+"KRN",8994,174,2,3,0)
+STOP DATE^1^16
+"KRN",8994,174,2,3,1,0)
+^^1^1^2950831^^^^
+"KRN",8994,174,2,3,1,1,0)
+The stop date of the clinic appointments to retrieve (not in Fileman format.)
+"KRN",8994,174,2,"B","CLINIC ID",1)
+
+"KRN",8994,174,2,"B","START DATE",2)
+
+"KRN",8994,174,2,"B","STOP DATE",3)
+
+"KRN",8994,174,3,0)
+^^2^2^2950831^^^^
+"KRN",8994,174,3,1,0)
+Array of patients with appointments between start date and stop date
+"KRN",8994,174,3,2,0)
+delimited by "^".  Returned data includes patient id (DFN)^patient name.
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+320^3130607^520736413
+"PKG",188,22,1,"PAH",1,1,0)
+^^9^9^3130607
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch corrects 1 issue within the ORDER ENTRY/RESULTS REPORTING 
+"PKG",188,22,1,"PAH",1,1,2,0)
+package:
+"PKG",188,22,1,"PAH",1,1,3,0)
+ 
+"PKG",188,22,1,"PAH",1,1,4,0)
+1. The Patient Selection screen can be set up to display a clinic's 
+"PKG",188,22,1,"PAH",1,1,5,0)
+   appointments for a date range. The screen will show no more than 200
+"PKG",188,22,1,"PAH",1,1,6,0)
+   appointments. The screen does not show the user any message that the
+"PKG",188,22,1,"PAH",1,1,7,0)
+   maximum has been reached and that some of the appointments for the date
+"PKG",188,22,1,"PAH",1,1,8,0)
+   range are not being displayed. The appointments dropped can be from any
+"PKG",188,22,1,"PAH",1,1,9,0)
+   part of the date range.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","ORQPTQ11")
+0^4^B56702520^B56815266
+"RTN","ORQPTQ11",1,0)
+ORQPTQ11 ; SLC/CLA - Functs which return patient lists and sources pt 1B ;12/15/97 [ 08/04/97  3:32 PM ] [6/6/03 2:36pm]
+"RTN","ORQPTQ11",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**82,85,109,132,173,253,320**;Dec 17, 1997;Build 16
+"RTN","ORQPTQ11",3,0)
+ ;
+"RTN","ORQPTQ11",4,0)
+ ; SLC/PKS - Modified to deal with "Combination" lists - 3/2000.
+"RTN","ORQPTQ11",5,0)
+ ; SLC/PKS - Additions for "Restricted Pt. Lists" - 11/2001.
+"RTN","ORQPTQ11",6,0)
+ ;
+"RTN","ORQPTQ11",7,0)
+DEFSRC(Y) ; return current user's default list source
+"RTN","ORQPTQ11",8,0)
+ Q:'$D(DUZ)
+"RTN","ORQPTQ11",9,0)
+ N FROM,API,ORSRV
+"RTN","ORQPTQ11",10,0)
+ S ORSRV=$G(^VA(200,DUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ11",11,0)
+ S FROM=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT LIST SOURCE",1,"Q")
+"RTN","ORQPTQ11",12,0)
+ Q:'$L($G(FROM))
+"RTN","ORQPTQ11",13,0)
+ I FROM="T" S Y=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT TEAM",1,"B")_"^Team"
+"RTN","ORQPTQ11",14,0)
+ I FROM="W" S Y=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT WARD",1,"B")_"^Ward"
+"RTN","ORQPTQ11",15,0)
+ I FROM="P" S Y=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT PROVIDER",1,"B")_"^Primary Provider"
+"RTN","ORQPTQ11",16,0)
+ I FROM="S" S Y=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT SPECIALTY",1,"B")_"^Specialty"
+"RTN","ORQPTQ11",17,0)
+ I FROM="C" D
+"RTN","ORQPTQ11",18,0)
+ .S API="ORLP DEFAULT CLINIC "_$$UP^XLFSTR($$DOW^XLFDT(DT))
+"RTN","ORQPTQ11",19,0)
+ .S Y=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),API,1,"B")_"^"_$$DOW^XLFDT(DT)_" Clinic"
+"RTN","ORQPTQ11",20,0)
+ I FROM="M" S Y="^Combination"
+"RTN","ORQPTQ11",21,0)
+ Q
+"RTN","ORQPTQ11",22,0)
+FDEFSRC(ORDUZ) ; extrinsic function return user's (ORDUZ) default list source
+"RTN","ORQPTQ11",23,0)
+ Q:'$D(ORDUZ) "^^Error: No user identified"
+"RTN","ORQPTQ11",24,0)
+ N FROM,API,RESULT,ORSRV
+"RTN","ORQPTQ11",25,0)
+ S ORSRV=$G(^VA(200,ORDUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ11",26,0)
+ S FROM=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT LIST SOURCE",1,"Q")
+"RTN","ORQPTQ11",27,0)
+ Q:'$L($G(FROM)) "^^No default list source specified"
+"RTN","ORQPTQ11",28,0)
+ I FROM="T" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT TEAM",1,"B")_"^Team"
+"RTN","ORQPTQ11",29,0)
+ I FROM="W" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT WARD",1,"B")_"^Ward"
+"RTN","ORQPTQ11",30,0)
+ I FROM="P" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT PROVIDER",1,"B")_"^Primary Provider"
+"RTN","ORQPTQ11",31,0)
+ I FROM="S" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT SPECIALTY",1,"B")_"^Specialty"
+"RTN","ORQPTQ11",32,0)
+ I FROM="C" D
+"RTN","ORQPTQ11",33,0)
+ .S API="ORLP DEFAULT CLINIC "_$$UP^XLFSTR($$DOW^XLFDT(DT))
+"RTN","ORQPTQ11",34,0)
+ .S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),API,1,"B")_"^"_$$DOW^XLFDT(DT)_" Clinic"
+"RTN","ORQPTQ11",35,0)
+ I FROM="M" S RESULT="^Combination"
+"RTN","ORQPTQ11",36,0)
+ Q RESULT
+"RTN","ORQPTQ11",37,0)
+LISTSRC(ORDUZ,TYPE) ; extrinsic function return user's (ORDUZ) list source
+"RTN","ORQPTQ11",38,0)
+ ; for list type team, ward, primary provider, specialty, clinic, combination (TYPE)
+"RTN","ORQPTQ11",39,0)
+ Q:'$D(ORDUZ) "^^Error: No user identified"
+"RTN","ORQPTQ11",40,0)
+ Q:'$D(TYPE) "^^Error: No list type identified"
+"RTN","ORQPTQ11",41,0)
+ N API,RESULT,ORSRV
+"RTN","ORQPTQ11",42,0)
+ S ORSRV=$G(^VA(200,ORDUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ11",43,0)
+ I TYPE="T" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT TEAM",1,"B")_"^Team"
+"RTN","ORQPTQ11",44,0)
+ I TYPE="W" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT WARD",1,"B")_"^Ward"
+"RTN","ORQPTQ11",45,0)
+ I TYPE="P" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT PROVIDER",1,"B")_"^Primary Provider"
+"RTN","ORQPTQ11",46,0)
+ I TYPE="S" S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),"ORLP DEFAULT SPECIALTY",1,"B")_"^Specialty"
+"RTN","ORQPTQ11",47,0)
+ I TYPE="C" D
+"RTN","ORQPTQ11",48,0)
+ .S API="ORLP DEFAULT CLINIC "_$$UP^XLFSTR($$DOW^XLFDT(DT))
+"RTN","ORQPTQ11",49,0)
+ .S RESULT=$$GET^XPAR("USR.`"_ORDUZ_"^SRV.`"_+$G(ORSRV),API,1,"B")_"^"_$$DOW^XLFDT(DT)_" Clinic"
+"RTN","ORQPTQ11",50,0)
+ I TYPE="M" S RESULT="Combination"
+"RTN","ORQPTQ11",51,0)
+ I $P(RESULT,U)="" S RESULT=U_RESULT
+"RTN","ORQPTQ11",52,0)
+ Q RESULT
+"RTN","ORQPTQ11",53,0)
+DEFLIST(Y) ; return current user's default patient list
+"RTN","ORQPTQ11",54,0)
+ I $$BROKER^XWBLIB S Y=$NA(^TMP("OR",$J,"PATIENTS")) ; GUI = global.
+"RTN","ORQPTQ11",55,0)
+ I '$$BROKER^XWBLIB S ^TMP("OR",$J,"PATIENTS",0)=""
+"RTN","ORQPTQ11",56,0)
+ Q:'$D(DUZ)
+"RTN","ORQPTQ11",57,0)
+ N FROM,IEN,BEG,END,API,ORSRV,ORQDAT,ORQCNT,ORGUI
+"RTN","ORQPTQ11",58,0)
+ S ORSRV=$G(^VA(200,DUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U) ; Get S/S.
+"RTN","ORQPTQ11",59,0)
+ S FROM=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT LIST SOURCE",1,"Q")
+"RTN","ORQPTQ11",60,0)
+ Q:'$L($G(FROM))
+"RTN","ORQPTQ11",61,0)
+ I FROM="T" S IEN=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT TEAM",1,"Q") D:+$G(IEN)>0 TEAMPTS^ORQPTQ1(.Y,IEN)
+"RTN","ORQPTQ11",62,0)
+ I FROM="W" S IEN=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT WARD",1,"Q") D:+$G(IEN)>0 BYWARD^ORWPT(.Y,IEN)
+"RTN","ORQPTQ11",63,0)
+ I FROM="P" S IEN=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT PROVIDER",1,"Q") D:+$G(IEN)>0 PROVPTS^ORQPTQ2(.Y,IEN)
+"RTN","ORQPTQ11",64,0)
+ I FROM="S" S IEN=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),"ORLP DEFAULT SPECIALTY",1,"Q") D:+$G(IEN)>0 SPECPTS^ORQPTQ2(.Y,IEN)
+"RTN","ORQPTQ11",65,0)
+ I FROM="C" D
+"RTN","ORQPTQ11",66,0)
+ .S API="ORLP DEFAULT CLINIC "_$$UP^XLFSTR($$DOW^XLFDT(DT)),IEN=$$GET^XPAR("USR^SRV.`"_+$G(ORSRV),API,1,"Q") I +$G(IEN)>0 D
+"RTN","ORQPTQ11",67,0)
+ ..S BEG=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC START DATE",1,"E"))
+"RTN","ORQPTQ11",68,0)
+ ..I BEG="T+0" S BEG=$$FMTE^XLFDT(DT,BEG)
+"RTN","ORQPTQ11",69,0)
+ ..S END=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC STOP DATE",1,"E"))
+"RTN","ORQPTQ11",70,0)
+ ..I END="T+0" S END=$$FMTE^XLFDT(DT,END)
+"RTN","ORQPTQ11",71,0)
+ ..D CLINPTS2^ORQPTQ2(.Y,+$G(IEN),BEG,END)
+"RTN","ORQPTQ11",72,0)
+ I FROM="M" D
+"RTN","ORQPTQ11",73,0)
+ .S IEN=$D(^OR(100.24,DUZ,0)) I +$G(IEN)>0 S IEN=DUZ D
+"RTN","ORQPTQ11",74,0)
+ ..S BEG=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC START DATE",1,"E"))
+"RTN","ORQPTQ11",75,0)
+ ..I BEG="T+0" S BEG=$$FMTE^XLFDT(DT,BEG)
+"RTN","ORQPTQ11",76,0)
+ ..S END=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC STOP DATE",1,"E"))
+"RTN","ORQPTQ11",77,0)
+ ..I END="T+0" S END=$$FMTE^XLFDT(DT,END)
+"RTN","ORQPTQ11",78,0)
+ ..D COMBPTS^ORQPTQ6(0,+$G(IEN),BEG,END) ; "0"= GUI RPC call.
+"RTN","ORQPTQ11",79,0)
+ I ($$BROKER^XWBLIB)&(FROM'="M") D  ; Combinations already written to global.
+"RTN","ORQPTQ11",80,0)
+ .S ORQDAT="",ORQCNT=0
+"RTN","ORQPTQ11",81,0)
+ .F  S ORQCNT=$O(Y(ORQCNT)) Q:ORQCNT=""  S ORQDAT=Y(ORQCNT) D
+"RTN","ORQPTQ11",82,0)
+ ..S ^TMP("OR",$J,"PATIENTS",ORQCNT,0)=ORQDAT
+"RTN","ORQPTQ11",83,0)
+ I ('$$BROKER^XWBLIB) S Y=FROM_";"_+$G(IEN)_";"_$G(BEG)_";"_$G(END) ; MKB 10/13/95
+"RTN","ORQPTQ11",84,0)
+ Q
+"RTN","ORQPTQ11",85,0)
+DEFSORT(Y) ; Return user's default sort.
+"RTN","ORQPTQ11",86,0)
+ ; SLC/PKS - 4/6/2001
+"RTN","ORQPTQ11",87,0)
+ ;
+"RTN","ORQPTQ11",88,0)
+ N ORSORT,ORSECT,ORPARAM
+"RTN","ORQPTQ11",89,0)
+ ;
+"RTN","ORQPTQ11",90,0)
+ I ('$D(DUZ)) S Y="Unable to determine DUZ." Q
+"RTN","ORQPTQ11",91,0)
+ S ORSECT=$G(^VA(200,DUZ,5))
+"RTN","ORQPTQ11",92,0)
+ I +ORSECT>0 S ORSECT=$P(ORSECT,U)
+"RTN","ORQPTQ11",93,0)
+ S Y="A" ; Default of "Alpha" sort.
+"RTN","ORQPTQ11",94,0)
+ S ORPARAM="ORLP DEFAULT LIST ORDER"
+"RTN","ORQPTQ11",95,0)
+ S ORSORT=$$GET^XPAR("USR^SRV.`"_$G(ORSECT)_"^DIV^SYS^PKG",ORPARAM,1,"I")
+"RTN","ORQPTQ11",96,0)
+ I (ORSORT'="") S Y=ORSORT
+"RTN","ORQPTQ11",97,0)
+ ;
+"RTN","ORQPTQ11",98,0)
+ Q
+"RTN","ORQPTQ11",99,0)
+ ;
+"RTN","ORQPTQ11",100,0)
+PNAMWRIT(ORROOT,ORDFN) ; Write patient name to ^TMP global.
+"RTN","ORQPTQ11",101,0)
+ ;
+"RTN","ORQPTQ11",102,0)
+ ; Variables used:
+"RTN","ORQPTQ11",103,0)
+ ;
+"RTN","ORQPTQ11",104,0)
+ ;   ORDFN   = Passed patient DFN.
+"RTN","ORQPTQ11",105,0)
+ ;   ORNAME  = Patient name.
+"RTN","ORQPTQ11",106,0)
+ ;   ORROOT  = ^TMP root passed by calling code.
+"RTN","ORQPTQ11",107,0)
+ ;   ORWRITE = Holder for ^TMP node for writing.
+"RTN","ORQPTQ11",108,0)
+ ;
+"RTN","ORQPTQ11",109,0)
+ N ORNAME,ORWRITE
+"RTN","ORQPTQ11",110,0)
+ S ORROOT=ORROOT_","                       ; Add necessary comma.
+"RTN","ORQPTQ11",111,0)
+ ;
+"RTN","ORQPTQ11",112,0)
+ S ORNAME=""                               ; Initializae.
+"RTN","ORQPTQ11",113,0)
+ S ORNAME=$G(^DPT(ORDFN,0))                ; Get zero node pt. data.
+"RTN","ORQPTQ11",114,0)
+ S ORNAME=$P(ORNAME,U)                     ; Extract pt. name only.
+"RTN","ORQPTQ11",115,0)
+ I ORNAME="" Q 0                           ; Problem - punt.
+"RTN","ORQPTQ11",116,0)
+ ;
+"RTN","ORQPTQ11",117,0)
+ ; Create naked reference string for writing to ^TMP:
+"RTN","ORQPTQ11",118,0)
+ S ORWRITE=ORROOT_""""_ORNAME_""""_","_ORDFN_")"
+"RTN","ORQPTQ11",119,0)
+ S @ORWRITE=ORDFN_U_ORNAME                 ; Write to ^TMP.
+"RTN","ORQPTQ11",120,0)
+ ;
+"RTN","ORQPTQ11",121,0)
+ Q 1
+"RTN","ORQPTQ11",122,0)
+ ;
+"RTN","ORQPTQ11",123,0)
+RPLMAKE(Y,ORTL) ; Make global restricted pt. array from Team List.
+"RTN","ORQPTQ11",124,0)
+ ;
+"RTN","ORQPTQ11",125,0)
+ ; Variables used:
+"RTN","ORQPTQ11",126,0)
+ ;
+"RTN","ORQPTQ11",127,0)
+ ;   ORDFN   = Holder for patient DFN.
+"RTN","ORQPTQ11",128,0)
+ ;   ORJ     = Holds $J value.
+"RTN","ORQPTQ11",129,0)
+ ;   ORREAD  = Holder for ^TMP root to kill.
+"RTN","ORQPTQ11",130,0)
+ ;   ORRET   = Returned value from function call.
+"RTN","ORQPTQ11",131,0)
+ ;   ORROOT  = ^TMP root to pass.
+"RTN","ORQPTQ11",132,0)
+ ;   ORTL    = Team List IEN.
+"RTN","ORQPTQ11",133,0)
+ ;   ORX     = Working variable used in $ORDER statement.
+"RTN","ORQPTQ11",134,0)
+ ;   Y       = Returned value (same as ORJ).
+"RTN","ORQPTQ11",135,0)
+ ;
+"RTN","ORQPTQ11",136,0)
+ N ORDFN,ORJ,ORREAD,ORRET,ORROOT,ORX
+"RTN","ORQPTQ11",137,0)
+ ;
+"RTN","ORQPTQ11",138,0)
+ I ORTL="" S Y="" Q                        ; No Team List IEN passed.
+"RTN","ORQPTQ11",139,0)
+ I $G(^OR(100.21,ORTL,0))="" S Y="" Q      ; No such Team List.
+"RTN","ORQPTQ11",140,0)
+ ;
+"RTN","ORQPTQ11",141,0)
+ S (ORJ,Y)=$J                              ; Assign returned value.
+"RTN","ORQPTQ11",142,0)
+ S ORROOT="^TMP("_"""ORRPL"""_","          ; Initial setting.
+"RTN","ORQPTQ11",143,0)
+ S ORROOT=ORROOT_ORJ_","_"""B"""           ; Add job number, "B."
+"RTN","ORQPTQ11",144,0)
+ S ORREAD=ORROOT_")"                       ; Assign "kill" root.
+"RTN","ORQPTQ11",145,0)
+ K @ORREAD                                 ; Kill old, if any.
+"RTN","ORQPTQ11",146,0)
+ ;
+"RTN","ORQPTQ11",147,0)
+ ; From Team List B x-ref, obtain patients, create new ^TMP entries:
+"RTN","ORQPTQ11",148,0)
+ S ORX=""                                  ; Initialize.
+"RTN","ORQPTQ11",149,0)
+ F  S ORX=$O(^OR(100.21,ORTL,10,"B",ORX)) Q:ORX=""  D
+"RTN","ORQPTQ11",150,0)
+ .S ORDFN=$P(ORX,";")                      ; Extract patient DFN.
+"RTN","ORQPTQ11",151,0)
+ .S ORRET=$$PNAMWRIT(ORROOT,ORDFN)         ; Call that writes to ^TMP.
+"RTN","ORQPTQ11",152,0)
+ ;
+"RTN","ORQPTQ11",153,0)
+ Q
+"RTN","ORQPTQ11",154,0)
+ ;
+"RTN","ORQPTQ11",155,0)
+RPLREAD(Y,ORJ,ORFROM,ORDIR) ; Read disk-based patient array from TMP.
+"RTN","ORQPTQ11",156,0)
+ ;
+"RTN","ORQPTQ11",157,0)
+ ; Variables used:
+"RTN","ORQPTQ11",158,0)
+ ;
+"RTN","ORQPTQ11",159,0)
+ ;   ORCNT   = Counter variable.
+"RTN","ORQPTQ11",160,0)
+ ;   ORDIR   = Direction to move through list.
+"RTN","ORQPTQ11",161,0)
+ ;   ORFROM  = Starting point from which to move through list.
+"RTN","ORQPTQ11",162,0)
+ ;   ORI     = Counter variable.
+"RTN","ORQPTQ11",163,0)
+ ;   ORIEN   = Record IEN holder.
+"RTN","ORQPTQ11",164,0)
+ ;   ORJ     = Job number to use in ^TMP global root.
+"RTN","ORQPTQ11",165,0)
+ ;   ORROOT  = ^TMP global file root.
+"RTN","ORQPTQ11",166,0)
+ ;   ORZ     = Temporary value holder.
+"RTN","ORQPTQ11",167,0)
+ ;   Y       = Returned array.
+"RTN","ORQPTQ11",168,0)
+ ;
+"RTN","ORQPTQ11",169,0)
+ N ORCNT,ORI,ORIEN,ORROOT,ORZ
+"RTN","ORQPTQ11",170,0)
+ ;
+"RTN","ORQPTQ11",171,0)
+ I $P(ORFROM,U,2)'="" S ORFROM=$P(ORFROM,U,2)
+"RTN","ORQPTQ11",172,0)
+ ;
+"RTN","ORQPTQ11",173,0)
+ S ORROOT="^TMP("_"""ORRPL"""_","_ORJ      ; Initial setting.
+"RTN","ORQPTQ11",174,0)
+ S ORROOT=ORROOT_","_"""B"""               ; Add final text.
+"RTN","ORQPTQ11",175,0)
+ ;
+"RTN","ORQPTQ11",176,0)
+ ; Check for existence of data:
+"RTN","ORQPTQ11",177,0)
+ I '$D(@(ORROOT_")")) S Y(0)="No data available." Q
+"RTN","ORQPTQ11",178,0)
+ ;
+"RTN","ORQPTQ11",179,0)
+ S ORROOT=ORROOT_","                       ; Add comma.
+"RTN","ORQPTQ11",180,0)
+ S ORCNT=44                                ; Initialize to maximum.
+"RTN","ORQPTQ11",181,0)
+ S ORI=0                                   ; Initialize.
+"RTN","ORQPTQ11",182,0)
+ ;
+"RTN","ORQPTQ11",183,0)
+ ; Loop through ^TMP entries for data to return:
+"RTN","ORQPTQ11",184,0)
+ F  S ORFROM=$O(@(ORROOT_""""_ORFROM_""""_")"),ORDIR) Q:ORFROM=""  D  Q:ORI=ORCNT
+"RTN","ORQPTQ11",185,0)
+ .;
+"RTN","ORQPTQ11",186,0)
+ .; Sub-loop for entries up to ORCNT maximum:
+"RTN","ORQPTQ11",187,0)
+ .S ORIEN=0                                ; Initialize.
+"RTN","ORQPTQ11",188,0)
+ .F  S ORIEN=$O(@(ORROOT_""""_ORFROM_""""_","_ORIEN_")")) Q:'ORIEN  D  Q:ORI=ORCNT
+"RTN","ORQPTQ11",189,0)
+ ..S ORI=ORI+1                             ; Increment counter.
+"RTN","ORQPTQ11",190,0)
+ ..;
+"RTN","ORQPTQ11",191,0)
+ ..; Assign return array:
+"RTN","ORQPTQ11",192,0)
+ ..S Y(ORI)=@(ORROOT_""""_ORFROM_""""_","_ORIEN_")")
+"RTN","ORQPTQ11",193,0)
+ ;
+"RTN","ORQPTQ11",194,0)
+ Q
+"RTN","ORQPTQ11",195,0)
+ ;
+"RTN","ORQPTQ11",196,0)
+RPLCLEAN(Y,ORJ) ; Kill global data using passed global root value.
+"RTN","ORQPTQ11",197,0)
+ ;
+"RTN","ORQPTQ11",198,0)
+ ; Variables used:
+"RTN","ORQPTQ11",199,0)
+ ;
+"RTN","ORQPTQ11",200,0)
+ ;    ORJ    = Job number to use in ^TMP global root.
+"RTN","ORQPTQ11",201,0)
+ ;    ORROOT = Root of ^TMP global to kill.
+"RTN","ORQPTQ11",202,0)
+ ;    Y      = Returned RPC value.
+"RTN","ORQPTQ11",203,0)
+ ;
+"RTN","ORQPTQ11",204,0)
+ N ORROOT
+"RTN","ORQPTQ11",205,0)
+ ;
+"RTN","ORQPTQ11",206,0)
+ S Y=1                                     ; Initialize.
+"RTN","ORQPTQ11",207,0)
+ S ORROOT="^TMP("_"""ORRPL"""_","          ; Initial setting.
+"RTN","ORQPTQ11",208,0)
+ S ORROOT=ORROOT_ORJ_","_"""B"""_")"       ; Add rest.
+"RTN","ORQPTQ11",209,0)
+ K @ORROOT                                 ; Kill global data.
+"RTN","ORQPTQ11",210,0)
+ ;
+"RTN","ORQPTQ11",211,0)
+ Q
+"RTN","ORQPTQ11",212,0)
+ ;
+"RTN","ORQPTQ2")
+0^1^B65971331^B41840769
+"RTN","ORQPTQ2",1,0)
+ORQPTQ2 ; slc/CLA - Functions which return patient lists and list sources pt 2 ;3/14/05  10:50
+"RTN","ORQPTQ2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**9,10,85,187,190,195,215,320**;Dec 17, 1997;Build 16
+"RTN","ORQPTQ2",3,0)
+ ;
+"RTN","ORQPTQ2",4,0)
+ ; Ref. to ^UTILITY via IA 10061
+"RTN","ORQPTQ2",5,0)
+ ; DBIA 4433   SDAPI^SDAMA301   ^TMP($J,"SDAMA301")
+"RTN","ORQPTQ2",6,0)
+ ; 
+"RTN","ORQPTQ2",7,0)
+CLIN(Y) ; RETURN LIST OF CLINICS
+"RTN","ORQPTQ2",8,0)
+ N ORLST,IEN,I
+"RTN","ORQPTQ2",9,0)
+ D GETLST^XPAR(.ORLST,"ALL","ORWD COMMON CLINIC")
+"RTN","ORQPTQ2",10,0)
+ S I=0 F  S I=$O(ORLST(I)) Q:'I  D
+"RTN","ORQPTQ2",11,0)
+ . S IEN=$P(ORLST(I),U,2) I $$ACTLOC^ORWU(IEN)=1 D
+"RTN","ORQPTQ2",12,0)
+ .. S Y(I)=IEN_U_$P(^SC(IEN,0),U,1)
+"RTN","ORQPTQ2",13,0)
+ Q
+"RTN","ORQPTQ2",14,0)
+ ;
+"RTN","ORQPTQ2",15,0)
+ ;The appointment list date range is designed to query for full dates, 
+"RTN","ORQPTQ2",16,0)
+ ;so when the search result exceeds 200 appointments, 
+"RTN","ORQPTQ2",17,0)
+ ;the display will end with the last appointment of the last day before the maximum was reached. 
+"RTN","ORQPTQ2",18,0)
+CLINPTS2(Y,CLIN,ORBDATE,OREDATE) ; WRAPPER FUNCTION FOR USE BY RPC CALL ORQPT CLINIC PATIENTS
+"RTN","ORQPTQ2",19,0)
+ N MAXAPPTS,APPTBGN,APPTEND,NUMAPPTS
+"RTN","ORQPTQ2",20,0)
+ S MAXAPPTS=200 I ORBDATE=OREDATE S MAXAPPTS=0  ; if we only want one day, don't limit answer.
+"RTN","ORQPTQ2",21,0)
+ D CLINPTS(.Y,CLIN,ORBDATE,OREDATE,MAXAPPTS,.APPTBGN,.APPTEND)
+"RTN","ORQPTQ2",22,0)
+ S NUMAPPTS=$O(Y(""),-1)
+"RTN","ORQPTQ2",23,0)
+ I MAXAPPTS,NUMAPPTS'<MAXAPPTS D
+"RTN","ORQPTQ2",24,0)
+ . N ORI
+"RTN","ORQPTQ2",25,0)
+ . S ORI=0 S APPTEND=$P(APPTEND,".")
+"RTN","ORQPTQ2",26,0)
+ . F  S ORI=$O(Y(ORI)) Q:'ORI  D  ;erase last day's appts since we assume it to be partial
+"RTN","ORQPTQ2",27,0)
+ .. I APPTEND<$P(Y(ORI),U,4) K Y(ORI) S NUMAPPTS=NUMAPPTS-1 ;erase an appointment
+"RTN","ORQPTQ2",28,0)
+ . S Y(MAXAPPTS+1)="^ *** UNABLE TO SHOW ALL APPOINTMENTS ***"
+"RTN","ORQPTQ2",29,0)
+ . S Y(MAXAPPTS+2)="^ Showing the first "_NUMAPPTS_" appointments from "_$$FMTE^XLFDT(APPTBGN,"D")_" to "_$$FMTE^XLFDT(APPTEND-1,"D")
+"RTN","ORQPTQ2",30,0)
+ . S Y(MAXAPPTS+3)="^"_$C(160)_" Modify the appointment list date range to start on "_$$FMTE^XLFDT(APPTEND,"D")_" to see additional appointments." ;add blank line
+"RTN","ORQPTQ2",31,0)
+ . S Y(MAXAPPTS+4)="^"_$C(160)_$C(160) ;add blank line
+"RTN","ORQPTQ2",32,0)
+ ;
+"RTN","ORQPTQ2",33,0)
+CLINPTS(Y,CLIN,ORBDATE,OREDATE,MAXAPPTS,APPTBGN,APPTEND) ; RETURN LIST OF PTS W/CLINIC APPT W/IN BEGINNING AND END DATES
+"RTN","ORQPTQ2",34,0)
+ ; PKS-8/2003: Modified for new scheduling pkg APIs.
+"RTN","ORQPTQ2",35,0)
+ I +$G(CLIN)<1 S Y(1)="^No clinic identified" Q 
+"RTN","ORQPTQ2",36,0)
+ I $$ACTLOC^ORWU(CLIN)'=1 S Y(1)="^Clinic is inactive or Occasion Of Service" Q
+"RTN","ORQPTQ2",37,0)
+ N ORSRV,ORRESULT,ORERR,ORI,ORPT,ORPTSTAT,ORAPPT,ORCLIN,SDARRAY,NODE
+"RTN","ORQPTQ2",38,0)
+ I $L($G(MAXAPPTS))=0 S MAXAPPTS=200
+"RTN","ORQPTQ2",39,0)
+ S ORSRV=$G(^VA(200,DUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ2",40,0)
+ I ORBDATE="" S ORBDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC START DATE",1,"E"))
+"RTN","ORQPTQ2",41,0)
+ I OREDATE="" S OREDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC STOP DATE",1,"E"))
+"RTN","ORQPTQ2",42,0)
+ ;
+"RTN","ORQPTQ2",43,0)
+ ; Convert ORBDATE, OREDATE to FM Date/Time:
+"RTN","ORQPTQ2",44,0)
+ D DT^DILF("T",ORBDATE,.ORBDATE,"","")
+"RTN","ORQPTQ2",45,0)
+ D DT^DILF("T",OREDATE,.OREDATE,"","")
+"RTN","ORQPTQ2",46,0)
+ I (ORBDATE=-1)!(OREDATE=-1) S Y(1)="^Error in date range." Q 
+"RTN","ORQPTQ2",47,0)
+ S OREDATE=$P(OREDATE,".")_.5 ; Add 1/2 day to end date.
+"RTN","ORQPTQ2",48,0)
+ ;
+"RTN","ORQPTQ2",49,0)
+ ; *320 - use dbia 4433 instead of 3869.
+"RTN","ORQPTQ2",50,0)
+ ;
+"RTN","ORQPTQ2",51,0)
+ ;; IA# 3869:
+"RTN","ORQPTQ2",52,0)
+ ;K ^TMP($J,"SDAMA202","GETPLIST") ; Clean house before starting.
+"RTN","ORQPTQ2",53,0)
+ ;S ORRESULT=""
+"RTN","ORQPTQ2",54,0)
+ ;S ORCLIN=+CLIN,ORFLDS="1;3;4;12",ORASTAT="R;NT",ORSTART=ORBDATE,OREND=OREDATE,ORSTAT="" ; Assign parameters.
+"RTN","ORQPTQ2",55,0)
+ ;; ORFLDS: 1;3;4;12 = ApptDateTime;ApptStatus;IEN^PtName;PtStatus.
+"RTN","ORQPTQ2",56,0)
+ ;D GETPLIST^SDAMA202(ORCLIN,ORFLDS,ORASTAT,ORSTART,OREND,.ORRESULT,ORSTAT) ; DBIA 3869.
+"RTN","ORQPTQ2",57,0)
+ ;;
+"RTN","ORQPTQ2",58,0)
+ ;; Deal with server errors:
+"RTN","ORQPTQ2",59,0)
+ ;S ORERR=$$CLINERR^ORQRY01
+"RTN","ORQPTQ2",60,0)
+ ;I $L(ORERR) S Y(1)=U_ORERR Q
+"RTN","ORQPTQ2",61,0)
+ ;;
+"RTN","ORQPTQ2",62,0)
+ ;; Reassign ^TMP array to local array:
+"RTN","ORQPTQ2",63,0)
+ ;S (ORPT,ORI)=0,ORMAX=MAXAPPTS
+"RTN","ORQPTQ2",64,0)
+ ;I ORRESULT'>0 S Y(1)="^No appointments." Q
+"RTN","ORQPTQ2",65,0)
+ ;F  S ORPT=$O(^TMP($J,"SDAMA202","GETPLIST",ORPT)) Q:ORPT=""!(ORI>ORMAX)  D   ;DBIA 3869
+"RTN","ORQPTQ2",66,0)
+ ;.S ORI=ORI+1
+"RTN","ORQPTQ2",67,0)
+ ;.S Y(ORI)=$G(^TMP($J,"SDAMA202","GETPLIST",ORPT,4)) ; IEN^Name.
+"RTN","ORQPTQ2",68,0)
+ ;.S Y(ORI)=Y(ORI)_U_ORCLIN ; ^Clinic IEN.
+"RTN","ORQPTQ2",69,0)
+ ;.S Y(ORI)=Y(ORI)_U_$G(^TMP($J,"SDAMA202","GETPLIST",ORPT,1)) ; App't.
+"RTN","ORQPTQ2",70,0)
+ ;.S ORPTSTAT=$G(^TMP($J,"SDAMA202","GETPLIST",ORPT,12)) ; Pt Status.
+"RTN","ORQPTQ2",71,0)
+ ;.S ORPTSTAT=$S(ORPTSTAT="I":"IPT",ORPTSTAT="O":"OPT",1:"")
+"RTN","ORQPTQ2",72,0)
+ ;.S ORHOLD=$G(^TMP($J,"SDAMA202","GETPLIST",ORPT,3)) ; Appt Status.
+"RTN","ORQPTQ2",73,0)
+ ;.I ORPTSTAT=""&(ORHOLD="NT") S ORPTSTAT="NT" ; "No Action Taken."
+"RTN","ORQPTQ2",74,0)
+ ;.S Y(ORI)=Y(ORI)_U_U_U_U_U_ORPTSTAT ; Pt I or O status (or "NT").
+"RTN","ORQPTQ2",75,0)
+ ;;
+"RTN","ORQPTQ2",76,0)
+ ;K ^TMP($J,"SDAMA202","GETPLIST") ; Clean house after finishing.
+"RTN","ORQPTQ2",77,0)
+ ;
+"RTN","ORQPTQ2",78,0)
+ K ^TMP($J,"SDAMA301") ; Clean house before starting.
+"RTN","ORQPTQ2",79,0)
+ S ORRESULT=""
+"RTN","ORQPTQ2",80,0)
+ S ORCLIN=+CLIN
+"RTN","ORQPTQ2",81,0)
+ S SDARRAY(1)=ORBDATE_";"_OREDATE
+"RTN","ORQPTQ2",82,0)
+ S SDARRAY(2)=+CLIN
+"RTN","ORQPTQ2",83,0)
+ S SDARRAY(3)="R;I;NT"
+"RTN","ORQPTQ2",84,0)
+ S SDARRAY("SORT")="P" ;no clinic index
+"RTN","ORQPTQ2",85,0)
+ S SDARRAY("FLDS")="3;4"  ;ApptStatus^IEN;PtName
+"RTN","ORQPTQ2",86,0)
+ I MAXAPPTS S SDARRAY("MAX")=MAXAPPTS
+"RTN","ORQPTQ2",87,0)
+ ;
+"RTN","ORQPTQ2",88,0)
+ S ORRESULT=$$SDAPI^SDAMA301(.SDARRAY) ; DBIA 4433
+"RTN","ORQPTQ2",89,0)
+ ;
+"RTN","ORQPTQ2",90,0)
+ ; Deal with server errors:
+"RTN","ORQPTQ2",91,0)
+ I ORRESULT<0 D  S Y(1)=U_ORERR Q
+"RTN","ORQPTQ2",92,0)
+ .S ORERR=""
+"RTN","ORQPTQ2",93,0)
+ .N IDXERR S IDXERR=$O(^TMP($J,"SDAMA301","")) Q:IDXERR'>0
+"RTN","ORQPTQ2",94,0)
+ .S ORERR=^TMP($J,"SDAMA301",IDXERR)
+"RTN","ORQPTQ2",95,0)
+ ;
+"RTN","ORQPTQ2",96,0)
+ ; Reassign ^TMP array to local array:
+"RTN","ORQPTQ2",97,0)
+ S (ORPT,ORI)=0
+"RTN","ORQPTQ2",98,0)
+ I ORRESULT'>0 S Y(1)="^No appointments." Q
+"RTN","ORQPTQ2",99,0)
+ F  S ORPT=$O(^TMP($J,"SDAMA301",ORPT)) Q:ORPT=""  D
+"RTN","ORQPTQ2",100,0)
+ .S ORAPPT=""
+"RTN","ORQPTQ2",101,0)
+ .F  S ORAPPT=$O(^TMP($J,"SDAMA301",ORPT,ORAPPT)) Q:ORAPPT=""  D
+"RTN","ORQPTQ2",102,0)
+ ..S ORI=ORI+1
+"RTN","ORQPTQ2",103,0)
+ ..S NODE=^TMP($J,"SDAMA301",ORPT,ORAPPT)
+"RTN","ORQPTQ2",104,0)
+ ..S Y(ORI)=$TR($P(NODE,U,4),";","^") ; IEN^Name.
+"RTN","ORQPTQ2",105,0)
+ ..S Y(ORI)=Y(ORI)_U_ORCLIN ; ^Clinic IEN.
+"RTN","ORQPTQ2",106,0)
+ ..S Y(ORI)=Y(ORI)_U_ORAPPT ; App't.
+"RTN","ORQPTQ2",107,0)
+ ..I $L($G(APPTEND))=0 S APPTEND=ORAPPT,APPTBGN=ORAPPT
+"RTN","ORQPTQ2",108,0)
+ ..I ORAPPT>APPTEND S APPTEND=ORAPPT
+"RTN","ORQPTQ2",109,0)
+ ..I ORAPPT<APPTBGN S APPTBGN=ORAPPT
+"RTN","ORQPTQ2",110,0)
+ ..S ORPTSTAT=$P($P(NODE,U,3),";",1) ;appt status, will be transformed to pt status.
+"RTN","ORQPTQ2",111,0)
+ ..S ORPTSTAT=$S(ORPTSTAT="I":"IPT",ORPTSTAT="R":"OPT",ORPTSTAT="NT":"OPT",1:"") ; Pt Status.
+"RTN","ORQPTQ2",112,0)
+ ..S Y(ORI)=Y(ORI)_U_U_U_U_U_ORPTSTAT ; Pt I or O status (or "NT").
+"RTN","ORQPTQ2",113,0)
+ K ^TMP($J,"SDAMA301") ; Clean house after finishing.
+"RTN","ORQPTQ2",114,0)
+ ;
+"RTN","ORQPTQ2",115,0)
+ Q
+"RTN","ORQPTQ2",116,0)
+ ;
+"RTN","ORQPTQ2",117,0)
+CDATRANG(ORY) ; return default start and stop dates for clinics in form start^stop
+"RTN","ORQPTQ2",118,0)
+ N ORBDATE,OREDATE,ORSRV
+"RTN","ORQPTQ2",119,0)
+ S ORSRV=$G(^VA(200,DUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ2",120,0)
+ S ORBDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC START DATE",1,"E"))
+"RTN","ORQPTQ2",121,0)
+ S OREDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORLP DEFAULT CLINIC STOP DATE",1,"E"))
+"RTN","ORQPTQ2",122,0)
+ S ORBDATE=$S($L($G(ORBDATE)):ORBDATE,1:""),OREDATE=$S($L($G(OREDATE)):OREDATE,1:"")
+"RTN","ORQPTQ2",123,0)
+ S ORY=$$UP^XLFSTR(ORBDATE)_"^"_$$UP^XLFSTR(OREDATE)
+"RTN","ORQPTQ2",124,0)
+ Q
+"RTN","ORQPTQ2",125,0)
+PTAPPTS(Y,DFN,ORBDATE,OREDATE,CLIN) ; return appts for a patient between beginning and end dates for a clinic, if no clinic return all appointments
+"RTN","ORQPTQ2",126,0)
+ ;I +$G(CLIN)<1 S Y(1)="^No clinic identified" Q 
+"RTN","ORQPTQ2",127,0)
+ I +$G(CLIN)>0,$$ACTLOC^ORWU(CLIN)'=1 S Y(1)="^Clinic is inactive or Occasion Of Service" Q
+"RTN","ORQPTQ2",128,0)
+ N ERR,ERRMSG,VASD,NUM,CNT,INVDT,INT,EXT,ORSRV,VAERR K ^UTILITY("VASD",$J) S NUM=0,CNT=1  ;IA 10061
+"RTN","ORQPTQ2",129,0)
+ I (ORBDATE="")!(OREDATE="") D  ;get user's service and set up entities:
+"RTN","ORQPTQ2",130,0)
+ .S ORSRV=$G(^VA(200,DUZ,5)) I +ORSRV>0 S ORSRV=$P(ORSRV,U)
+"RTN","ORQPTQ2",131,0)
+ I ORBDATE="" D
+"RTN","ORQPTQ2",132,0)
+ .I '$L(CLIN) S ORBDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORQQEAPT ENC APPT START",1,"E"))
+"RTN","ORQPTQ2",133,0)
+ .S:ORBDATE="" ORBDATE="T" ;default start date across all clinics is today
+"RTN","ORQPTQ2",134,0)
+ I OREDATE="" D
+"RTN","ORQPTQ2",135,0)
+ .I '$L(CLIN) S OREDATE=$$UP^XLFSTR($$GET^XPAR("USR^SRV.`"_+$G(ORSRV)_"^DIV^SYS^PKG","ORQQEAPT ENC APPT STOP",1,"E"))
+"RTN","ORQPTQ2",136,0)
+ .S:OREDATE="" OREDATE="T" ;default end date across all clinics is today
+"RTN","ORQPTQ2",137,0)
+ ;CONVERT ORBDATE AND OREDATE INTO FILEMAN DATE/TIME
+"RTN","ORQPTQ2",138,0)
+ D DT^DILF("T",ORBDATE,.ORBDATE,"","")
+"RTN","ORQPTQ2",139,0)
+ D DT^DILF("T",OREDATE,.OREDATE,"","")
+"RTN","ORQPTQ2",140,0)
+ I (ORBDATE=-1)!(OREDATE=-1) S Y(1)="^Error in date range." Q 
+"RTN","ORQPTQ2",141,0)
+ S VASD("F")=ORBDATE
+"RTN","ORQPTQ2",142,0)
+ S VASD("T")=$P(OREDATE,".")_.5  ;ADD 1/2 DAY TO END DATE
+"RTN","ORQPTQ2",143,0)
+ I $L($G(CLIN)) S VASD("C",CLIN)=""
+"RTN","ORQPTQ2",144,0)
+ D SDA^ORQRY01(.ERR,.ERRMSG)
+"RTN","ORQPTQ2",145,0)
+ I ERR K ^UTILITY("VASD",$J) S Y(1)=ERRMSG Q
+"RTN","ORQPTQ2",146,0)
+ F  S NUM=$O(^UTILITY("VASD",$J,NUM)) Q:'NUM  D
+"RTN","ORQPTQ2",147,0)
+ .S INT=^UTILITY("VASD",$J,NUM,"I"),INVDT=9999999-$P(INT,U)
+"RTN","ORQPTQ2",148,0)
+ .S EXT=^UTILITY("VASD",$J,NUM,"E")
+"RTN","ORQPTQ2",149,0)
+ .S Y(CNT)=$P(INT,U)_U_$P(EXT,U,2)_U_$P(EXT,U,3)_U_$P(EXT,U,4)_U_INVDT
+"RTN","ORQPTQ2",150,0)
+ .S CNT=CNT+1
+"RTN","ORQPTQ2",151,0)
+ S:+$G(Y(1))<1 Y(1)="^No appointments."
+"RTN","ORQPTQ2",152,0)
+ K ^UTILITY("VASD",$J)
+"RTN","ORQPTQ2",153,0)
+ Q
+"RTN","ORQPTQ2",154,0)
+PROV(Y) ; RETURN LIST OF PROVIDERS
+"RTN","ORQPTQ2",155,0)
+ N I,IEN,NAME,TDATE
+"RTN","ORQPTQ2",156,0)
+ S I=1,NAME=""
+"RTN","ORQPTQ2",157,0)
+ F  S NAME=$O(^VA(200,"B",NAME)) Q:NAME=""  S IEN=0,IEN=$O(^(NAME,IEN))  D
+"RTN","ORQPTQ2",158,0)
+ .Q:$E(NAME)="*"
+"RTN","ORQPTQ2",159,0)
+ .I $D(^XUSEC("PROVIDER",IEN)),$$ACTIVE^XUSER(IEN) S Y(I)=IEN_"^"_NAME,I=I+1
+"RTN","ORQPTQ2",160,0)
+ Q
+"RTN","ORQPTQ2",161,0)
+PROVPTS(Y,PROV) ; RETURN LIST OF PATIENTS LINKED TO A PRIMARY PROVIDER
+"RTN","ORQPTQ2",162,0)
+ I +$G(PROV)<1 S Y(1)="^No provider identified" Q
+"RTN","ORQPTQ2",163,0)
+ N ORI,DFN
+"RTN","ORQPTQ2",164,0)
+ S ORI=1,DFN=0
+"RTN","ORQPTQ2",165,0)
+ F  S DFN=$O(^DPT("APR",PROV,DFN)) Q:DFN'>0  S Y(ORI)=+DFN_"^"_$P(^DPT(+DFN,0),"^"),ORI=ORI+1
+"RTN","ORQPTQ2",166,0)
+ S:+$G(Y(1))<1 Y(1)="^No patients found."
+"RTN","ORQPTQ2",167,0)
+ Q
+"RTN","ORQPTQ2",168,0)
+SPEC(Y) ; RETURN LIST OF TREATING SPECIALTIES
+"RTN","ORQPTQ2",169,0)
+ N I,NAME,IEN
+"RTN","ORQPTQ2",170,0)
+ S I=1,NAME=""
+"RTN","ORQPTQ2",171,0)
+ ;access to DIC(45.7 global granted under DBIA #519:
+"RTN","ORQPTQ2",172,0)
+ F  S NAME=$O(^DIC(45.7,"B",NAME)) Q:NAME=""  S IEN=0,IEN=$O(^(NAME,IEN)) I $$ACTIVE^DGACT(45.7,IEN) S Y(I)=IEN_"^"_NAME,I=I+1
+"RTN","ORQPTQ2",173,0)
+ Q
+"RTN","ORQPTQ2",174,0)
+SPECPTS(Y,SPEC) ; RETURN LIST OF PATIENTS LINKED TO A TREATING SPECIALTY
+"RTN","ORQPTQ2",175,0)
+ I +$G(SPEC)<1 S Y(1)="^No specialty identified" Q 
+"RTN","ORQPTQ2",176,0)
+ N ORI,DFN
+"RTN","ORQPTQ2",177,0)
+ S ORI=1,DFN=0
+"RTN","ORQPTQ2",178,0)
+ F  S DFN=$O(^DPT("ATR",SPEC,DFN)) Q:DFN'>0  S Y(ORI)=+DFN_"^"_$P(^DPT(+DFN,0),"^"),ORI=ORI+1
+"RTN","ORQPTQ2",179,0)
+ S:+$G(Y(1))<1 Y(1)="^No patients found."
+"RTN","ORQPTQ2",180,0)
+ Q
+"RTN","ORQPTQ2",181,0)
+WARD(Y) ; RETURN LIST OF ACTIVE WARDS
+"RTN","ORQPTQ2",182,0)
+ N I,IEN,NAME,D0
+"RTN","ORQPTQ2",183,0)
+ S I=1,NAME=""
+"RTN","ORQPTQ2",184,0)
+ ;access to DIC(42 global granted under DBIA #36:
+"RTN","ORQPTQ2",185,0)
+ F  S NAME=$O(^DIC(42,"B",NAME)) Q:NAME=""  S IEN=$O(^(NAME,0)) D
+"RTN","ORQPTQ2",186,0)
+ . S D0=IEN D WIN^DGPMDDCF
+"RTN","ORQPTQ2",187,0)
+ . I X=0 S Y(I)=IEN_"^"_NAME,I=I+1
+"RTN","ORQPTQ2",188,0)
+ Q
+"RTN","ORQPTQ2",189,0)
+WARDPTS(Y,WARD) ; RETURN LIST OF PATIENTS IN A WARD
+"RTN","ORQPTQ2",190,0)
+ ; SLC/PKS - Modifications for Room/Bed data on  1/19/2001.
+"RTN","ORQPTQ2",191,0)
+ I +$G(WARD)<1 S Y(1)="^No ward identified" Q 
+"RTN","ORQPTQ2",192,0)
+ N ORI,DFN,RBDAT
+"RTN","ORQPTQ2",193,0)
+ S ORI=1,DFN=0
+"RTN","ORQPTQ2",194,0)
+ ; Access to DIC(42 global granted under DBIA #36:
+"RTN","ORQPTQ2",195,0)
+ S WARD=$P(^DIC(42,WARD,0),"^")   ;GET WARD NAME FOR "CN"  LOOKUP
+"RTN","ORQPTQ2",196,0)
+ ; Next section modified 1/19/2001 by PKS:
+"RTN","ORQPTQ2",197,0)
+ F  D  Q:DFN'>0
+"RTN","ORQPTQ2",198,0)
+ .S DFN=$O(^DPT("CN",WARD,DFN)) Q:DFN'>0
+"RTN","ORQPTQ2",199,0)
+ .S Y(ORI)=+DFN_"^"_$P(^DPT(+DFN,0),"^")
+"RTN","ORQPTQ2",200,0)
+ .S RBDAT=""
+"RTN","ORQPTQ2",201,0)
+ .; Add patient room/bed information where data exists:
+"RTN","ORQPTQ2",202,0)
+ .S RBDAT=$P($G(^DPT(+DFN,.101)),U)
+"RTN","ORQPTQ2",203,0)
+ .I RBDAT'="" D                                   ; Any R/B data?
+"RTN","ORQPTQ2",204,0)
+ ..I $L(RBDAT)<4 S RBDAT=RBDAT_"   "              ; Add if < 4 chars.
+"RTN","ORQPTQ2",205,0)
+ ..S RBDAT=$E(RBDAT,1,4)                          ; Get first 4 only.
+"RTN","ORQPTQ2",206,0)
+ .S Y(ORI)=Y(ORI)_U_RBDAT                         ; Add R/B to string
+"RTN","ORQPTQ2",207,0)
+ .S ORI=ORI+1                                     ; Increment counter.
+"RTN","ORQPTQ2",208,0)
+ ;
+"RTN","ORQPTQ2",209,0)
+ S:+$G(Y(1))<1 Y(1)="^No patients found."
+"RTN","ORQPTQ2",210,0)
+ Q
+"RTN","ORQPTQ2",211,0)
+NLIST(ORQY) ; return a null list
+"RTN","ORQPTQ2",212,0)
+ S ORQY(1)=""
+"RTN","ORQPTQ2",213,0)
+ Q
+"RTN","ORQPTQ5")
+0^2^B76840931^B61498504
+"RTN","ORQPTQ5",1,0)
+ORQPTQ5 ; SLC/PKS - Functions for Patient Selection Lists. [4/23/04 4:49pm]
+"RTN","ORQPTQ5",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**82,85,187,190,320**;Dec 17, 1997;Build 16
+"RTN","ORQPTQ5",3,0)
+ ;
+"RTN","ORQPTQ5",4,0)
+ Q
+"RTN","ORQPTQ5",5,0)
+ ;
+"RTN","ORQPTQ5",6,0)
+COMBDISP(ORQDUZ,ORQPTR) ; Display user's "Combination" pt selection sources.
+"RTN","ORQPTQ5",7,0)
+ ;
+"RTN","ORQPTQ5",8,0)
+ ; Variables used:
+"RTN","ORQPTQ5",9,0)
+ ;
+"RTN","ORQPTQ5",10,0)
+ ;   ORQCNT = Counter for number of entries displayed.
+"RTN","ORQPTQ5",11,0)
+ ;   ORQDUZ = DUZ of user involved.
+"RTN","ORQPTQ5",12,0)
+ ;   ORQPTR = IEN for user's OE/RR PT SEL COMBO file entries.
+"RTN","ORQPTQ5",13,0)
+ ;   ORQSRC = $O command values from combo entries, file ^OR(100.24,.
+"RTN","ORQPTQ5",14,0)
+ ;   ORQTXT = Text name string for combo entry pointers.
+"RTN","ORQPTQ5",15,0)
+ ;
+"RTN","ORQPTQ5",16,0)
+ N ORQCNT,ORQSRC,ORQTXT
+"RTN","ORQPTQ5",17,0)
+ ;
+"RTN","ORQPTQ5",18,0)
+ ; Check passed variables, punt on errors:
+"RTN","ORQPTQ5",19,0)
+ S ORQCNT=0
+"RTN","ORQPTQ5",20,0)
+ I '($D(ORQDUZ)) W !,"No user DUZ passed.",! Q ORQCNT
+"RTN","ORQPTQ5",21,0)
+ I '($D(ORQPTR)) W !,"No combination pointer passed.",! Q ORQCNT
+"RTN","ORQPTQ5",22,0)
+ I ORQDUZ="" W !,"No user DUZ passed.",! Q ORQCNT
+"RTN","ORQPTQ5",23,0)
+ I ORQPTR="" W !,"No combination pointer passed.",! Q ORQCNT
+"RTN","ORQPTQ5",24,0)
+ ;
+"RTN","ORQPTQ5",25,0)
+ ; Order through the user's combination source entries:
+"RTN","ORQPTQ5",26,0)
+ K ^TMP("OR",$J,"ORQCPL")
+"RTN","ORQPTQ5",27,0)
+ S ORQSRC=0
+"RTN","ORQPTQ5",28,0)
+ F  S ORQSRC=$O(^OR(100.24,ORQPTR,.01,ORQSRC)) Q:'ORQSRC  D
+"RTN","ORQPTQ5",29,0)
+ .;
+"RTN","ORQPTQ5",30,0)
+ .; Get the actual source name based on the pointer entry value:
+"RTN","ORQPTQ5",31,0)
+ .S ORQTXT=""
+"RTN","ORQPTQ5",32,0)
+ .S ORQTXT=$G(^OR(100.24,ORQPTR,.01,ORQSRC,0))
+"RTN","ORQPTQ5",33,0)
+ .I '(ORQTXT="") D
+"RTN","ORQPTQ5",34,0)
+ ..S ORQCNT=ORQCNT+1         ; Increment counter.
+"RTN","ORQPTQ5",35,0)
+ ..S ORQTXT=$$COMBNM(ORQTXT) ; Call tag to create complete string.
+"RTN","ORQPTQ5",36,0)
+ ..;
+"RTN","ORQPTQ5",37,0)
+ ..; Write to ^TMP file for sorting:
+"RTN","ORQPTQ5",38,0)
+ ..I ORQTXT'="" S ^TMP("OR",$J,"ORQCPL",$P(ORQTXT,U))=$P(ORQTXT,U,2)
+"RTN","ORQPTQ5",39,0)
+ ;
+"RTN","ORQPTQ5",40,0)
+ ; Write data to the screen:
+"RTN","ORQPTQ5",41,0)
+ I ORQCNT D                                       ; Data to write?
+"RTN","ORQPTQ5",42,0)
+ .S ORQTXT=""                                     ; Reset, re-use.
+"RTN","ORQPTQ5",43,0)
+ .F  S ORQTXT=$O(^TMP("OR",$J,"ORQCPL",ORQTXT)) Q:ORQTXT=""  D
+"RTN","ORQPTQ5",44,0)
+ ..W !,$G(^TMP("OR",$J,"ORQCPL",ORQTXT))
+"RTN","ORQPTQ5",45,0)
+ ;
+"RTN","ORQPTQ5",46,0)
+ K ^TMP("OR",$J,"ORQCPL")                         ; Clean house.
+"RTN","ORQPTQ5",47,0)
+ ;
+"RTN","ORQPTQ5",48,0)
+ Q ORQCNT                                         ; Return counter.
+"RTN","ORQPTQ5",49,0)
+ ;
+"RTN","ORQPTQ5",50,0)
+COMBNM(ORQVAL) ; Returns name of "Combination" source entry, ^OR(100.24 file.
+"RTN","ORQPTQ5",51,0)
+ ;
+"RTN","ORQPTQ5",52,0)
+ ; Returned string is "X_Name^String" where X is letter of type,
+"RTN","ORQPTQ5",53,0)
+ ;    Name is name of entity, and String resembles examples below:
+"RTN","ORQPTQ5",54,0)
+ ; 
+"RTN","ORQPTQ5",55,0)
+ ;       W_1W^Ward:       1W  SURGERY WEST
+"RTN","ORQPTQ5",56,0)
+ ;       P_JONES,WILMA MD^Provider:   JONES,WILMA MD
+"RTN","ORQPTQ5",57,0)
+ ;       T_SURGERYLIST2^Team List:  SURGERYLIST2
+"RTN","ORQPTQ5",58,0)
+ ;       (Etc.)
+"RTN","ORQPTQ5",59,0)
+ ;
+"RTN","ORQPTQ5",60,0)
+ ; Variables used:
+"RTN","ORQPTQ5",61,0)
+ ;
+"RTN","ORQPTQ5",62,0)
+ ;    ORQFILE = File for retrieval of name.
+"RTN","ORQPTQ5",63,0)
+ ;    ORQPTR  = Name string to return.
+"RTN","ORQPTQ5",64,0)
+ ;    ORQRTN  = Value returned by this function.
+"RTN","ORQPTQ5",65,0)
+ ;    ORQVAL  = Combo source entry pointer.
+"RTN","ORQPTQ5",66,0)
+ ;
+"RTN","ORQPTQ5",67,0)
+ N ORQPTR,ORQFILE,ORQRTN
+"RTN","ORQPTQ5",68,0)
+ I '($D(ORQVAL)) Q ORQRTN                         ; Error - punt.
+"RTN","ORQPTQ5",69,0)
+ ;
+"RTN","ORQPTQ5",70,0)
+ S ORQRTN="No source found...."                   ; Default init.
+"RTN","ORQPTQ5",71,0)
+ S ORQPTR=$P(ORQVAL,";")                          ; Get pointer.
+"RTN","ORQPTQ5",72,0)
+ S ORQFILE="^"_$P(ORQVAL,";",2)                   ; Get file.
+"RTN","ORQPTQ5",73,0)
+ ;
+"RTN","ORQPTQ5",74,0)
+ I ORQFILE="^DIC(42," D  Q ORQRTN                 ; Wards.
+"RTN","ORQPTQ5",75,0)
+ .S ORQRTN=$G(^DIC(42,ORQPTR,0))
+"RTN","ORQPTQ5",76,0)
+ .I $D(ORQRTN) S ORQRTN="W"_"_"_$P(ORQRTN,U)_U_"Ward:       "_$P(ORQRTN,U)_"  "_$P(ORQRTN,U,2)
+"RTN","ORQPTQ5",77,0)
+ ;
+"RTN","ORQPTQ5",78,0)
+ I ORQFILE="^VA(200," D  Q ORQRTN                 ; Providers.
+"RTN","ORQPTQ5",79,0)
+ .S ORQRTN=$G(^VA(200,ORQPTR,0))
+"RTN","ORQPTQ5",80,0)
+ .I $D(ORQRTN) S ORQRTN="P"_"_"_$P(ORQRTN,U)_U_"Provider:   "_$P(ORQRTN,U)
+"RTN","ORQPTQ5",81,0)
+ ;
+"RTN","ORQPTQ5",82,0)
+ I ORQFILE="^DIC(45.7," D  Q ORQRTN               ; Specialties.
+"RTN","ORQPTQ5",83,0)
+ .S ORQRTN=$G(^DIC(45.7,ORQPTR,0))
+"RTN","ORQPTQ5",84,0)
+ .I $D(ORQRTN) S ORQRTN="S"_"_"_$P(ORQRTN,U)_U_"Specialty:  "_$P(ORQRTN,U)
+"RTN","ORQPTQ5",85,0)
+ ;
+"RTN","ORQPTQ5",86,0)
+ I ORQFILE="^OR(100.21," D  Q ORQRTN              ; Team Lists.
+"RTN","ORQPTQ5",87,0)
+ .S ORQRTN=$G(^OR(100.21,ORQPTR,0))
+"RTN","ORQPTQ5",88,0)
+ .I $D(ORQRTN) S ORQRTN="T"_"_"_$P(ORQRTN,U)_U_"Team List:  "_$P(ORQRTN,U)
+"RTN","ORQPTQ5",89,0)
+ ;
+"RTN","ORQPTQ5",90,0)
+ I ORQFILE="^SC(" D  Q ORQRTN                     ; Clinics.
+"RTN","ORQPTQ5",91,0)
+ .S ORQRTN=$G(^SC(ORQPTR,0))
+"RTN","ORQPTQ5",92,0)
+ .I $D(ORQRTN) S ORQRTN="C"_"_"_$P(ORQRTN,U)_U_"Clinic:     "_$P(ORQRTN,U)
+"RTN","ORQPTQ5",93,0)
+ ;
+"RTN","ORQPTQ5",94,0)
+ ; Return value (null will be returned if nothing matched):
+"RTN","ORQPTQ5",95,0)
+ Q ORQRTN
+"RTN","ORQPTQ5",96,0)
+ ;
+"RTN","ORQPTQ5",97,0)
+PTSCOMBO(ORQTYP,ORQPTR,APPTEND) ; Write ^TMP("OR",$J,"PATIENTS","B") patient entries.
+"RTN","ORQPTQ5",98,0)
+ ;
+"RTN","ORQPTQ5",99,0)
+ ; Called from COMBPTS^ORQPTQ6.
+"RTN","ORQPTQ5",100,0)
+ ; (ORQCNT,ORQPDAT,ORQPIEN,ORQPNM,ORQPSTAT,SORT,ORQLM,ORY,ORBDATE,OREDATE new'd in calling tag.)
+"RTN","ORQPTQ5",101,0)
+ ;
+"RTN","ORQPTQ5",102,0)
+ ; Variables used:
+"RTN","ORQPTQ5",103,0)
+ ;
+"RTN","ORQPTQ5",104,0)
+ ;    ORQDOB  = Patient DOB.
+"RTN","ORQPTQ5",105,0)
+ ;    ORQDONE = Flag for end of patient records.
+"RTN","ORQPTQ5",106,0)
+ ;    ORQIDT  = Clinic app't date stored in internal format.
+"RTN","ORQPTQ5",107,0)
+ ;    ORQMORE = Room/bed or appointment information.
+"RTN","ORQPTQ5",108,0)
+ ;    ORQPTR  = PASSED: Pointer from subfile entry, combination file.
+"RTN","ORQPTQ5",109,0)
+ ;    ORQSNM  = Name of source from subfile entry pointer.
+"RTN","ORQPTQ5",110,0)
+ ;    ORQSNM4 = First four letters of name of source.
+"RTN","ORQPTQ5",111,0)
+ ;    ORQSSN  = Patient SSN suffix.
+"RTN","ORQPTQ5",112,0)
+ ;    ORQTYP  = PASSED: Holds source type:
+"RTN","ORQPTQ5",113,0)
+ ;
+"RTN","ORQPTQ5",114,0)
+ ;                W = Ward
+"RTN","ORQPTQ5",115,0)
+ ;                P = Provider
+"RTN","ORQPTQ5",116,0)
+ ;                S = Specialty
+"RTN","ORQPTQ5",117,0)
+ ;                T = Team List
+"RTN","ORQPTQ5",118,0)
+ ;                C = Clinic
+"RTN","ORQPTQ5",119,0)
+ ;
+"RTN","ORQPTQ5",120,0)
+ N ORQDOB,ORQDONE,ORQIDT,ORQMORE,ORQSNM,ORQSNM4,ORQSSN,OLDAPPTEND,DATEDIF
+"RTN","ORQPTQ5",121,0)
+ ;
+"RTN","ORQPTQ5",122,0)
+ ; Initialize variables:
+"RTN","ORQPTQ5",123,0)
+ S ORQDONE=0
+"RTN","ORQPTQ5",124,0)
+ S ORQCNT=0
+"RTN","ORQPTQ5",125,0)
+ ;
+"RTN","ORQPTQ5",126,0)
+ ; Get name data for source:
+"RTN","ORQPTQ5",127,0)
+ S ORQSNM4=""                                     ; Default setting.
+"RTN","ORQPTQ5",128,0)
+ I ORQTYP="W" S ORQSNM4=$G(^DIC(42,ORQPTR,0))     ; Wards.
+"RTN","ORQPTQ5",129,0)
+ I ORQTYP="P" S ORQSNM4=$G(^VA(200,ORQPTR,0))     ; Providers.
+"RTN","ORQPTQ5",130,0)
+ I ORQTYP="S" S ORQSNM4=$G(^DIC(45.7,ORQPTR,0))   ; Specialties.
+"RTN","ORQPTQ5",131,0)
+ I ORQTYP="T" S ORQSNM4=$G(^OR(100.21,ORQPTR,0))  ; Team Lists.
+"RTN","ORQPTQ5",132,0)
+ I ORQTYP="C" D                                   ; Clinics.
+"RTN","ORQPTQ5",133,0)
+ .S ORQSNM4=$G(^SC(ORQPTR,0))
+"RTN","ORQPTQ5",134,0)
+ .I ($O(ORY(""),-1)'<200),'ORQLM,(ORBDATE'=OREDATE) D
+"RTN","ORQPTQ5",135,0)
+ ..I '$G(APPTEND) Q
+"RTN","ORQPTQ5",136,0)
+ ..S ^TMP("OR",$J,"PATIENTS",-1)=" ^ *** UNABLE TO SHOW ALL APPOINTMENTS ***^ ^ ^ "
+"RTN","ORQPTQ5",137,0)
+ ..S APPTEND=$$FMTH^XLFDT(APPTEND,1)-1 ;set to MUMPS' $H format
+"RTN","ORQPTQ5",138,0)
+ ..S OLDAPPTEND=$S($D(^TMP("OR",$J,"PATIENTS",-2)):$O(^(-2,"")),1:9999999)
+"RTN","ORQPTQ5",139,0)
+ ..I APPTEND<OLDAPPTEND D
+"RTN","ORQPTQ5",140,0)
+ ...K ^TMP("OR",$J,"PATIENTS",-2)
+"RTN","ORQPTQ5",141,0)
+ ...S DATEDIF=$S(APPTEND=$H:"T",APPTEND<$H:"T-"_($H-APPTEND),APPTEND>$H:"T+"_(APPTEND-$H))
+"RTN","ORQPTQ5",142,0)
+ ...S ^TMP("OR",$J,"PATIENTS",-2,APPTEND)=" ^"_$C(160)_" Reduce the date range by changing the stop date of the Patient Selection Defaults to "_DATEDIF_".^ ^ ^ "
+"RTN","ORQPTQ5",143,0)
+ ..S ^TMP("OR",$J,"PATIENTS",-3)=" ^"_$C(160)_$C(160)_$C(160)_$C(160)_" ^ ^ ^ " ;add blank line
+"RTN","ORQPTQ5",144,0)
+ ..S ^TMP("OR",$J,"PATIENTS",$O(^TMP("OR",$J,"PATIENTS",""))-1)=" ^ Showing only the first 200 appointments from "_$P(ORQSNM4,U)_"^ ^ ^ "
+"RTN","ORQPTQ5",145,0)
+ ;
+"RTN","ORQPTQ5",146,0)
+ ; Assure use of first 4 letters of name:
+"RTN","ORQPTQ5",147,0)
+ S ORQSNM4=$P(ORQSNM4,U)_"    "                   ; Add 4 for safety.
+"RTN","ORQPTQ5",148,0)
+ S ORQSNM4=$E(ORQSNM4,1,4)                        ; Get first 4 only.
+"RTN","ORQPTQ5",149,0)
+ ;
+"RTN","ORQPTQ5",150,0)
+ ; Add label prefix to source name:
+"RTN","ORQPTQ5",151,0)
+ S ORQSNM=""                                      ; Default setting.
+"RTN","ORQPTQ5",152,0)
+ S ORQSNM=$S(ORQTYP="W":"Wd ",ORQTYP="P":"Pr ",ORQTYP="S":"Sp ",ORQTYP="T":"Tm ",ORQTYP="C":"Cl ",1:"     ")           ; Get correct name.
+"RTN","ORQPTQ5",153,0)
+ S ORQSNM=ORQSNM_ORQSNM4                          ; Prepend label.
+"RTN","ORQPTQ5",154,0)
+ ;
+"RTN","ORQPTQ5",155,0)
+ ; Order thru ORY array created by calls in calling routine:
+"RTN","ORQPTQ5",156,0)
+ S ORQPDAT=""                                     ; Initialize.
+"RTN","ORQPTQ5",157,0)
+ F  S ORQCNT=$O(ORY(ORQCNT)) Q:'ORQCNT  S ORQPDAT=$G(ORY(ORQCNT)) Q:((ORQPDAT="")!(ORQDONE))  D
+"RTN","ORQPTQ5",158,0)
+ .;
+"RTN","ORQPTQ5",159,0)
+ .; Clear variables each time:
+"RTN","ORQPTQ5",160,0)
+ .S (ORQPIEN,ORQPNM,ORQSSN,ORQDOB,ORQIDT,ORQMORE,ORQPSTAT)=""
+"RTN","ORQPTQ5",161,0)
+ .;
+"RTN","ORQPTQ5",162,0)
+ .S ORQPIEN=$P(ORQPDAT,U)                         ; Get patient IEN.
+"RTN","ORQPTQ5",163,0)
+ .I ORQPIEN="" D  Q                               ; Punt if no IEN.
+"RTN","ORQPTQ5",164,0)
+ ..I ORQPDAT="^No appointments." S ORQDONE=1 Q
+"RTN","ORQPTQ5",165,0)
+ ..I ORQTYP="C" D
+"RTN","ORQPTQ5",166,0)
+ ...S ^TMP("OR",$J,"PATIENTS","B",ORQSNM_ORQPDAT)=ORQPDAT
+"RTN","ORQPTQ5",167,0)
+ ..I ORQTYP'="C" S ORQDONE=1
+"RTN","ORQPTQ5",168,0)
+ .S ORQPNM=$P(ORQPDAT,U,2)                        ; Get patient name.
+"RTN","ORQPTQ5",169,0)
+ .;
+"RTN","ORQPTQ5",170,0)
+ .; Get patient SSN suffix:
+"RTN","ORQPTQ5",171,0)
+ .S ORQSSN=$$ID($G(ORQPIEN))
+"RTN","ORQPTQ5",172,0)
+ .;
+"RTN","ORQPTQ5",173,0)
+ .; Get patient DOB:
+"RTN","ORQPTQ5",174,0)
+ .S ORQDOB=$$FMTE^XLFDT($P($G(^DPT(ORQPIEN,0)),U,3))
+"RTN","ORQPTQ5",175,0)
+ .;
+"RTN","ORQPTQ5",176,0)
+ .; Get patient room/bed information where data exists:
+"RTN","ORQPTQ5",177,0)
+ .S ORQMORE=$P($G(^DPT(ORQPIEN,.101)),U)
+"RTN","ORQPTQ5",178,0)
+ .;
+"RTN","ORQPTQ5",179,0)
+ .; Assure at least 4 letters for any existing room/bed data:
+"RTN","ORQPTQ5",180,0)
+ .I ORQMORE'="" D                                 ; Any data now?
+"RTN","ORQPTQ5",181,0)
+ ..I $L(ORQMORE)<4 D                              ; Less than 4 now?
+"RTN","ORQPTQ5",182,0)
+ ...S ORQMORE=ORQMORE_"   "                       ; Add 3 for safety.
+"RTN","ORQPTQ5",183,0)
+ ...S ORQMORE=$E(ORQMORE,1,4)                     ; Get first 4 only.
+"RTN","ORQPTQ5",184,0)
+ .;
+"RTN","ORQPTQ5",185,0)
+ .; Get clinic appointment information, if applicable:
+"RTN","ORQPTQ5",186,0)
+ .I ORQTYP="C" D
+"RTN","ORQPTQ5",187,0)
+ ..S ORQMORE=""                                   ; Reset, re-use.
+"RTN","ORQPTQ5",188,0)
+ ..S ORQMORE=$P(ORQPDAT,U,4)                      ; App't data.
+"RTN","ORQPTQ5",189,0)
+ ..S ORQIDT=ORQMORE                               ; Internal format.
+"RTN","ORQPTQ5",190,0)
+ ..S $P(ORQMORE,".",2)=$E($P(ORQMORE,".",2)_"000",1,4)
+"RTN","ORQPTQ5",191,0)
+ ..S ORQMORE=$$FMTE^XLFDT($P(ORQMORE,U))          ; Format app't.
+"RTN","ORQPTQ5",192,0)
+ ..S ORQPSTAT=$P(ORQPDAT,U,9)                     ; Ipt/Opt status.
+"RTN","ORQPTQ5",193,0)
+ .;
+"RTN","ORQPTQ5",194,0)
+ .; Write a sorted entry in ^TMP("OR",$J,"PATIENTS","B"):
+"RTN","ORQPTQ5",195,0)
+ .;    (Node's data:)
+"RTN","ORQPTQ5",196,0)
+ .;    (DFN^PtName^SSN^DOB^SourceName^App't/Room/Bed^SourceIEN^IOStat)
+"RTN","ORQPTQ5",197,0)
+ .I ORQPIEN'="" D
+"RTN","ORQPTQ5",198,0)
+ ..;
+"RTN","ORQPTQ5",199,0)
+ ..; Write using source name first if sorted by "S" (source) -or-
+"RTN","ORQPTQ5",200,0)
+ ..;    if "P" (app't) sort and not a clinic:
+"RTN","ORQPTQ5",201,0)
+ ..I ((SORT="S")!((SORT="P")&(ORQTYP'="C"))) D  Q
+"RTN","ORQPTQ5",202,0)
+ ...S ^TMP("OR",$J,"PATIENTS","B",ORQSNM_" "_ORQPNM_" "_ORQPIEN_" "_ORQIDT)=ORQPIEN_U_ORQPNM_U_ORQSSN_U_ORQDOB_U_ORQSNM_U_ORQMORE_U_ORQPTR_U_ORQIDT_U_ORQPSTAT
+"RTN","ORQPTQ5",203,0)
+ ..; 
+"RTN","ORQPTQ5",204,0)
+ ..; Use source source+app't first if "P" (app't) sort, and a clinic:
+"RTN","ORQPTQ5",205,0)
+ ..I ((ORQTYP="C")&(SORT="P")) D  Q
+"RTN","ORQPTQ5",206,0)
+ ...S ^TMP("OR",$J,"PATIENTS","B",ORQSNM_" "_ORQIDT_" "_ORQPNM_" "_ORQPIEN)=ORQPIEN_U_ORQPNM_U_ORQSSN_U_ORQDOB_U_ORQSNM_U_ORQMORE_U_ORQPTR_U_ORQIDT_U_ORQPSTAT
+"RTN","ORQPTQ5",207,0)
+ ..;
+"RTN","ORQPTQ5",208,0)
+ ..; If not by source or source/app't, default to alpha ("A") sort:
+"RTN","ORQPTQ5",209,0)
+ ..S ^TMP("OR",$J,"PATIENTS","B",ORQPNM_" "_ORQPIEN_" "_ORQSNM_" "_ORQIDT)=ORQPIEN_U_ORQPNM_U_ORQSSN_U_ORQDOB_U_ORQSNM_U_ORQMORE_U_ORQPTR_U_ORQIDT_U_ORQPSTAT
+"RTN","ORQPTQ5",210,0)
+ ;
+"RTN","ORQPTQ5",211,0)
+ Q
+"RTN","ORQPTQ5",212,0)
+ ;
+"RTN","ORQPTQ5",213,0)
+ID(ORQPIEN) ; Return short ID for patient ID.
+"RTN","ORQPTQ5",214,0)
+ ; (Copied from ORQPT routine and modified.)
+"RTN","ORQPTQ5",215,0)
+ ;
+"RTN","ORQPTQ5",216,0)
+ N ID
+"RTN","ORQPTQ5",217,0)
+ ;
+"RTN","ORQPTQ5",218,0)
+ S ID=$P($G(^DPT(ORQPIEN,.36)),U,4)               ; Gets short ID.
+"RTN","ORQPTQ5",219,0)
+ I '$L(ID) D                                      ; - or -
+"RTN","ORQPTQ5",220,0)
+ .S ID=$E($P($G(^DPT(ORQPIEN,0)),U,9),6,9)        ; Last 4 of SSN
+"RTN","ORQPTQ5",221,0)
+ ;
+"RTN","ORQPTQ5",222,0)
+ Q "("_$E(ORQPNM)_ID_")"
+"RTN","ORQPTQ5",223,0)
+ ;
+"RTN","ORQPTQ6")
+0^3^B45127106^B43002726
+"RTN","ORQPTQ6",1,0)
+ORQPTQ6 ; SLC/PKS [8/27/03 11:20am]
+"RTN","ORQPTQ6",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**82,85,187,320**;Dec 17, 1997;Build 16
+"RTN","ORQPTQ6",3,0)
+ ;
+"RTN","ORQPTQ6",4,0)
+ ; Called by BUILD^ORQPT (LM) and DEFLIST^ORQPTQ11 (GUI).
+"RTN","ORQPTQ6",5,0)
+ ;
+"RTN","ORQPTQ6",6,0)
+ Q
+"RTN","ORQPTQ6",7,0)
+ ;
+"RTN","ORQPTQ6",8,0)
+COMBPTS(ORQLM,ORQCPTR,ORBDATE,OREDATE) ; Build "Combination" pt. list.
+"RTN","ORQPTQ6",9,0)
+ ; SLC/PKS.
+"RTN","ORQPTQ6",10,0)
+ ;
+"RTN","ORQPTQ6",11,0)
+ ; NOTE: Any calls to this tag need to deal with ORQLM passed 
+"RTN","ORQPTQ6",12,0)
+ ;       variable appropriately.  Notice where it is evaluated 
+"RTN","ORQPTQ6",13,0)
+ ;       and make sure code specifies the setting of ORQLM (a 
+"RTN","ORQPTQ6",14,0)
+ ;       boolean variable) properly for the call.
+"RTN","ORQPTQ6",15,0)
+ ;
+"RTN","ORQPTQ6",16,0)
+ ; Variables used:
+"RTN","ORQPTQ6",17,0)
+ ; 
+"RTN","ORQPTQ6",18,0)
+ ;    MSG      = Holds error message, if any.
+"RTN","ORQPTQ6",19,0)
+ ;    ORBDATE  = PASSED: Beginning date for clinic appointments.
+"RTN","ORQPTQ6",20,0)
+ ;    OREDATE  = PASSED: End date for clinic appointments.
+"RTN","ORQPTQ6",21,0)
+ ;    ORQCNT   = Counter for patients.
+"RTN","ORQPTQ6",22,0)
+ ;    ORQCPTR  = PASSED: Combination file [^OR(100.24,] pointer.
+"RTN","ORQPTQ6",23,0)
+ ;    ORQDUZ   = DUZ of current user.
+"RTN","ORQPTQ6",24,0)
+ ;    ORQERR   = Array for error msg(s) return from DB calls.
+"RTN","ORQPTQ6",25,0)
+ ;    ORQFILE  = Combo source entry file.
+"RTN","ORQPTQ6",26,0)
+ ;    ORQLM    = PASSED: Called from LM ("1") or GUI ("0")?
+"RTN","ORQPTQ6",27,0)
+ ;    ORQPDAT  = String holder for arrays and ^TMP file values.
+"RTN","ORQPTQ6",28,0)
+ ;    ORQPDOB  = Patient DOB.
+"RTN","ORQPTQ6",29,0)
+ ;    ORQPFMDT = Hold app't date/time in FM internal format.
+"RTN","ORQPTQ6",30,0)
+ ;    ORQPIEN  = Variable for patient IEN, ^TMP("OR",$J,"PTSCOMBO")
+"RTN","ORQPTQ6",31,0)
+ ;    ORQPMOR  = Appointment or Room/Bed information.
+"RTN","ORQPTQ6",32,0)
+ ;    ORQPNM   = Variable for patient name, ^TMP("OR",$J,"PTSCOMBO")
+"RTN","ORQPTQ6",33,0)
+ ;    ORQPSNM  = Source name display string holder.
+"RTN","ORQPTQ6",34,0)
+ ;    ORQPSSN  = Patient ID (first letter of last name, last 4 SSN).
+"RTN","ORQPTQ6",35,0)
+ ;    ORQPSTAT = Ipt or Opt (or C/NS) status for clinic lists.
+"RTN","ORQPTQ6",36,0)
+ ;    ORQPTMP  = Temporary string construction holder.
+"RTN","ORQPTQ6",37,0)
+ ;    ORQPTR   = Pointer to combo source entry.
+"RTN","ORQPTQ6",38,0)
+ ;    ORQRTN   = Holds return value from DB calls.
+"RTN","ORQPTQ6",39,0)
+ ;    ORQSPCH  = Holds return value from SELCHK^ORWPT.
+"RTN","ORQPTQ6",40,0)
+ ;    ORQSRC   = Variable to hold each combo source subscript.
+"RTN","ORQPTQ6",41,0)
+ ;    ORQSRCID = IEN of source.
+"RTN","ORQPTQ6",42,0)
+ ;    ORQTXT   = Variable to hold stored values.
+"RTN","ORQPTQ6",43,0)
+ ;    ORY      = Array used in sub-calls.
+"RTN","ORQPTQ6",44,0)
+ ;
+"RTN","ORQPTQ6",45,0)
+ ; (NOTE: LCNT,LIST,MSG,NUM,SORT new'd in calling routines for LM.)
+"RTN","ORQPTQ6",46,0)
+ ;
+"RTN","ORQPTQ6",47,0)
+ N ORQCNT,ORQDUZ,ORQERR,ORQFILE,ORQPCNT,ORQPDAT,ORQPDOB,ORQPFMDT,ORQPIEN,ORQPNM,ORQPMOR,ORQPSNM,ORQPSSN,ORQPSTAT,ORQPTMP,ORQPTR,ORQRTN,ORQSPCH,ORQSRC,ORQSRCID,ORQTXT,ORY,MAXAPPTS
+"RTN","ORQPTQ6",48,0)
+ ;
+"RTN","ORQPTQ6",49,0)
+ K ^TMP("OR",$J,"PATIENTS")                     ; Safety cleanup.
+"RTN","ORQPTQ6",50,0)
+ ;
+"RTN","ORQPTQ6",51,0)
+ ; Do preliminary settings, cleanup, look for an existing user record:
+"RTN","ORQPTQ6",52,0)
+ S MSG=""                                       ; Default.
+"RTN","ORQPTQ6",53,0)
+ S MAXAPPTS=$S(ORBDATE=OREDATE:0,1:200)         ; If date range is only one day then no max, otherwise 200
+"RTN","ORQPTQ6",54,0)
+ I '$D(DUZ) D
+"RTN","ORQPTQ6",55,0)
+ .S MSG="No user DUZ info."
+"RTN","ORQPTQ6",56,0)
+ .I 'ORQLM D GUIABORT
+"RTN","ORQPTQ6",57,0)
+ .Q
+"RTN","ORQPTQ6",58,0)
+ S ORQDUZ=DUZ
+"RTN","ORQPTQ6",59,0)
+ K ORQERR
+"RTN","ORQPTQ6",60,0)
+ S ORQRTN=$$FIND1^DIC(100.24,"","QX",ORQDUZ,"","","ORQERR")
+"RTN","ORQPTQ6",61,0)
+ K ORQERR
+"RTN","ORQPTQ6",62,0)
+ D CLEAN^DILF ; Clean up after DB call.
+"RTN","ORQPTQ6",63,0)
+ ;
+"RTN","ORQPTQ6",64,0)
+ ; If no combination record, then punt:
+"RTN","ORQPTQ6",65,0)
+ I +ORQRTN<1 D
+"RTN","ORQPTQ6",66,0)
+ .S MSG="No combination entry."
+"RTN","ORQPTQ6",67,0)
+ .I 'ORQLM D GUIABORT
+"RTN","ORQPTQ6",68,0)
+ .Q
+"RTN","ORQPTQ6",69,0)
+ ;
+"RTN","ORQPTQ6",70,0)
+ I ORQLM D CLEAN^VALM10 ; VALM housekeeping.
+"RTN","ORQPTQ6",71,0)
+ ;
+"RTN","ORQPTQ6",72,0)
+ ; Order through the user's combination source entries:
+"RTN","ORQPTQ6",73,0)
+ I 'ORQLM S SORT="A" ; Required variable for PTSCOMBO^ORQPTQ5.
+"RTN","ORQPTQ6",74,0)
+ S ORQSRC=0
+"RTN","ORQPTQ6",75,0)
+ F  S ORQSRC=$O(^OR(100.24,ORQRTN,.01,ORQSRC)) Q:'ORQSRC  D
+"RTN","ORQPTQ6",76,0)
+ .K ORY                                         ; Clean up each time.
+"RTN","ORQPTQ6",77,0)
+ .S ORQTXT=""                                   ; Initialize.
+"RTN","ORQPTQ6",78,0)
+ .S ORQTXT=$G(^OR(100.24,ORQRTN,.01,ORQSRC,0))  ; Get record's value.
+"RTN","ORQPTQ6",79,0)
+ .;
+"RTN","ORQPTQ6",80,0)
+ .; In case of error, punt:
+"RTN","ORQPTQ6",81,0)
+ .I ORQTXT="" D
+"RTN","ORQPTQ6",82,0)
+ ..S MSG="Combination source entry error."
+"RTN","ORQPTQ6",83,0)
+ ..I 'ORQLM D GUIABORT                          ; GUI is different.
+"RTN","ORQPTQ6",84,0)
+ ..Q
+"RTN","ORQPTQ6",85,0)
+ .I ORQTXT="" Q
+"RTN","ORQPTQ6",86,0)
+ .S ORQPTR=$P(ORQTXT,";")                       ; Get pointer.
+"RTN","ORQPTQ6",87,0)
+ .S ORQFILE="^"_$P(ORQTXT,";",2)                ; Get file.
+"RTN","ORQPTQ6",88,0)
+ .;
+"RTN","ORQPTQ6",89,0)
+ .; Get info for each source entry and build ORY array accordingly.
+"RTN","ORQPTQ6",90,0)
+ .I ORQFILE="^DIC(42," D  Q                     ; Wards.
+"RTN","ORQPTQ6",91,0)
+ ..D WARDPTS^ORQPTQ2(.ORY,ORQPTR)
+"RTN","ORQPTQ6",92,0)
+ ..I $D(ORY) D PTSCOMBO^ORQPTQ5("W",ORQPTR) ; Process ORY array.
+"RTN","ORQPTQ6",93,0)
+ .I ORQFILE="^VA(200," D  Q                     ; Providers.
+"RTN","ORQPTQ6",94,0)
+ ..D PROVPTS^ORQPTQ2(.ORY,ORQPTR)
+"RTN","ORQPTQ6",95,0)
+ ..I $D(ORY) D PTSCOMBO^ORQPTQ5("P",ORQPTR) ; Process ORY array.
+"RTN","ORQPTQ6",96,0)
+ .I ORQFILE="^DIC(45.7," D  Q                   ; Specialties.
+"RTN","ORQPTQ6",97,0)
+ ..D SPECPTS^ORQPTQ2(.ORY,ORQPTR)
+"RTN","ORQPTQ6",98,0)
+ ..I $D(ORY) D PTSCOMBO^ORQPTQ5("S",ORQPTR) ; Process ORY array.
+"RTN","ORQPTQ6",99,0)
+ .I ORQFILE="^OR(100.21," D  Q                  ; Team Lists
+"RTN","ORQPTQ6",100,0)
+ ..D TEAMPTS^ORQPTQ1(.ORY,ORQPTR)
+"RTN","ORQPTQ6",101,0)
+ ..I $D(ORY) D PTSCOMBO^ORQPTQ5("T",ORQPTR) ; Process ORY array.
+"RTN","ORQPTQ6",102,0)
+ .I ORQFILE="^SC(" D  Q                         ; Clinics.
+"RTN","ORQPTQ6",103,0)
+ ..N APPTBGN,APPTEND S (APPTBGN,APPTEND)=""
+"RTN","ORQPTQ6",104,0)
+ ..D CLINPTS^ORQPTQ2(.ORY,ORQPTR,ORBDATE,OREDATE,MAXAPPTS,.APPTBGN,.APPTEND)
+"RTN","ORQPTQ6",105,0)
+ ..I $D(ORY) D PTSCOMBO^ORQPTQ5("C",ORQPTR,APPTEND)     ; Process ORY array.
+"RTN","ORQPTQ6",106,0)
+ ;
+"RTN","ORQPTQ6",107,0)
+ ; Order thru ^TMP file "B" node entries returned by previous calls:
+"RTN","ORQPTQ6",108,0)
+ S ORQCNT=0                                     ; Reset for final use.
+"RTN","ORQPTQ6",109,0)
+ I $D(^TMP("OR",$J,"PATIENTS")) D
+"RTN","ORQPTQ6",110,0)
+ .S ORQPDAT=""
+"RTN","ORQPTQ6",111,0)
+ .F  S ORQPDAT=$O(^TMP("OR",$J,"PATIENTS","B",ORQPDAT)) Q:ORQPDAT=""  D
+"RTN","ORQPTQ6",112,0)
+ ..;
+"RTN","ORQPTQ6",113,0)
+ ..; Clear variables each time through:
+"RTN","ORQPTQ6",114,0)
+ ..S (ORQTXT,ORQPFMDT,ORQPIEN,ORQPNM,ORQPSSN,ORQPSTAT,ORQPDOB,ORQPSNM,ORQPMOR,ORQSRCID)=""
+"RTN","ORQPTQ6",115,0)
+ ..;
+"RTN","ORQPTQ6",116,0)
+ ..; Retrieve node's value:
+"RTN","ORQPTQ6",117,0)
+ ..S ORQTXT=$G(^TMP("OR",$J,"PATIENTS","B",ORQPDAT))
+"RTN","ORQPTQ6",118,0)
+ ..;
+"RTN","ORQPTQ6",119,0)
+ ..; Set indvidual variables:
+"RTN","ORQPTQ6",120,0)
+ ..S ORQPIEN=$P(ORQTXT,U)                       ; Patient DFN.
+"RTN","ORQPTQ6",121,0)
+ ..S ORQPNM=$P(ORQTXT,U,2)                      ; Patient name.
+"RTN","ORQPTQ6",122,0)
+ ..S ORQPSSN=$P(ORQTXT,U,3)                     ; Patient ID.
+"RTN","ORQPTQ6",123,0)
+ ..S ORQPDOB=$P(ORQTXT,U,4)                     ; Patient DOB.
+"RTN","ORQPTQ6",124,0)
+ ..S ORQPSNM=$P(ORQTXT,U,5)                     ; Source data.
+"RTN","ORQPTQ6",125,0)
+ ..S ORQPMOR=$P(ORQTXT,U,6)                     ; App't or R/B info.
+"RTN","ORQPTQ6",126,0)
+ ..S ORQSRCID=$P(ORQTXT,U,7)                    ; Source IEN.
+"RTN","ORQPTQ6",127,0)
+ ..S ORQPFMDT=$P(ORQTXT,U,8)                    ; App't FM date/time.
+"RTN","ORQPTQ6",128,0)
+ ..S ORQPSTAT=$P(ORQTXT,U,9)                    ; Ipt/Opt status.
+"RTN","ORQPTQ6",129,0)
+ ..S ORQCNT=ORQCNT+1                            ; Increment counter.
+"RTN","ORQPTQ6",130,0)
+ ..;
+"RTN","ORQPTQ6",131,0)
+ ..; If a "sensitive" patient, reassign SSN, DOB data:
+"RTN","ORQPTQ6",132,0)
+ ..S ORQSPCH=$$SSN^DPTLK1(ORQPIEN)
+"RTN","ORQPTQ6",133,0)
+ ..I ORQSPCH["*" S ORQPSSN=""
+"RTN","ORQPTQ6",134,0)
+ ..S ORQPDOB=$$DOB^DPTLK1(ORQPIEN)
+"RTN","ORQPTQ6",135,0)
+ ..;
+"RTN","ORQPTQ6",136,0)
+ ..; Make some preliminary data settings:
+"RTN","ORQPTQ6",137,0)
+ ..S ORQPTMP=""
+"RTN","ORQPTQ6",138,0)
+ ..I ORQPSNM'="" S ORQPTMP=ORQPSNM_"  "
+"RTN","ORQPTQ6",139,0)
+ ..S ORQPTMP=ORQPTMP_ORQPMOR
+"RTN","ORQPTQ6",140,0)
+ ..;
+"RTN","ORQPTQ6",141,0)
+ ..; Write new ^TMP file "PATIENTS" nodes:
+"RTN","ORQPTQ6",142,0)
+ ..I ORQLM D                                    ; For LM.
+"RTN","ORQPTQ6",143,0)
+ ...S ^TMP("OR",$J,"PATIENTS","IDX",ORQCNT)=ORQPIEN_U_ORQPNM
+"RTN","ORQPTQ6",144,0)
+ ...S ^TMP("OR",$J,"PATIENTS",ORQCNT,0)=$$LJ^XLFSTR(ORQCNT,5)_$$LJ^XLFSTR(ORQPNM,31)_$$LJ^XLFSTR(ORQPSSN,10)_$$LJ^XLFSTR(ORQPDOB,15)_ORQPTMP_$$LJ^XLFSTR(ORQPDOB,15)_$$RJ^XLFSTR(ORQSRCID,8)_"  "_ORQPFMDT
+"RTN","ORQPTQ6",145,0)
+ ...D CNTRL^VALM10(ORQCNT,1,5,IOINHI,IOINORM)
+"RTN","ORQPTQ6",146,0)
+ ..;
+"RTN","ORQPTQ6",147,0)
+ ..I 'ORQLM D                                   ; For GUI.
+"RTN","ORQPTQ6",148,0)
+ ...S ORQTXT=ORQPIEN_U_ORQPNM_U_ORQPSNM_U_ORQPMOR_U_ORQPSSN_U_ORQPDOB_U_ORQSRCID_U_ORQPFMDT_U_ORQPSTAT
+"RTN","ORQPTQ6",149,0)
+ ...S ^TMP("OR",$J,"PATIENTS",ORQCNT,0)=ORQTXT  ; Actual global write.
+"RTN","ORQPTQ6",150,0)
+ ;
+"RTN","ORQPTQ6",151,0)
+ ; Set counters for return, if applicable; do cleanup:
+"RTN","ORQPTQ6",152,0)
+ I ORQCNT S (LCNT,NUM)=ORQCNT
+"RTN","ORQPTQ6",153,0)
+ K ORY
+"RTN","ORQPTQ6",154,0)
+ ;
+"RTN","ORQPTQ6",155,0)
+ ; If no patients found, prepare user message:
+"RTN","ORQPTQ6",156,0)
+ I 'ORQCNT S MSG="No patients found."
+"RTN","ORQPTQ6",157,0)
+ ;
+"RTN","ORQPTQ6",158,0)
+ ; If an error message exists, dump any partial processing and quit:
+"RTN","ORQPTQ6",159,0)
+ I MSG'="" D  Q
+"RTN","ORQPTQ6",160,0)
+ .I 'ORQLM D GUIABORT
+"RTN","ORQPTQ6",161,0)
+ .I ORQLM K ^TMP("OR",$J,"PATIENTS")
+"RTN","ORQPTQ6",162,0)
+ ;
+"RTN","ORQPTQ6",163,0)
+ ; Next lines create #line^^#pts^context value entry:
+"RTN","ORQPTQ6",164,0)
+ I ORQLM D
+"RTN","ORQPTQ6",165,0)
+ .S ^TMP("OR",$J,"PATIENTS",0)=ORQCNT_U_ORQCNT_U_$G(LIST)
+"RTN","ORQPTQ6",166,0)
+ .S ^TMP("OR",$J,"PATIENTS","#")=$O(^ORD(101,"B","ORQPT SELECT PATIENT",0))_"^1:"_ORQCNT
+"RTN","ORQPTQ6",167,0)
+ ;
+"RTN","ORQPTQ6",168,0)
+ ; Standard clean-up for GUI:
+"RTN","ORQPTQ6",169,0)
+ I 'ORQLM D
+"RTN","ORQPTQ6",170,0)
+ .K LCNT,LIST,MSG,NUM,SORT
+"RTN","ORQPTQ6",171,0)
+ .K ^TMP("OR",$J,"PATIENTS","B")
+"RTN","ORQPTQ6",172,0)
+ ;
+"RTN","ORQPTQ6",173,0)
+ Q
+"RTN","ORQPTQ6",174,0)
+ ;
+"RTN","ORQPTQ6",175,0)
+GUIABORT ; Cleanup when aborting when called from GUI.
+"RTN","ORQPTQ6",176,0)
+ ;
+"RTN","ORQPTQ6",177,0)
+ K ^TMP("OR",$J,"PATIENTS")
+"RTN","ORQPTQ6",178,0)
+ S ^TMP("OR",$J,"PATIENTS",0)=""
+"RTN","ORQPTQ6",179,0)
+ K LCNT,LIST,MSG,NUM,SORT
+"RTN","ORQPTQ6",180,0)
+ ;
+"RTN","ORQPTQ6",181,0)
+ Q
+"RTN","ORQPTQ6",182,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",8857,6)
+^323
+**END**
+**END**

@@ -1,0 +1,243 @@
+$TXT Created by CEBELINSKI,GREGORY at DEV.DEV.FO-HINES.DOMAIN.EXT  (KIDS) on Friday, 03/15/13 at 11:15
+=============================================================================
+Run Date: AUG 21, 2013                     Designation: RA*5*114
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #103                      Status: Released
+                  Compliance Date: SEP 21, 2013
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*114'
+                    (v)RA*5*106    <<= must be installed BEFORE `RA*5*114'
+
+Subject: HL7 ISSUES AND AGFA CONNECTIVITY MGR COMPONENT SETUP INSTRUCTIONS
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. HL7 subscriber setup instructions
+ 2. Instructions for disabling inbound reports to the Voice Recognition 
+    system 
+ 3. Error when receiving HL7 records with data over 245 characters
+ 4. Error when receiving HL7 records with Result Status = VAQ
+ 5. Error message sent instead of 'accept' message
+      
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC0000000780331 - This is an issue with the v2.4 HL7 upgrade
+ 2. INC0000000827987 - Radiology - Voice Recognition Setup:
+ 3. INC0000000816372 - HL7 issue preventing radiology from processing
+                       inbound reports.
+ 4. INC0000000829049 - Radiology - HL7 Issue:
+ 5. INC0000000829071 - Radiology - HL7 Issue:
+     
+ Associated NSR(s):
+ ==================
+ N/A
+      
+ Participating Test Sites:
+ =========================
+ Las Vegas, NV.
+ Loma Linda, CA.
+ Long Beach, CA.
+ San Diego, CA.
+ West LA HCS
+     
+ Remedy Overview:
+ ================     
+ 1. INC0000000780331 - This is an issue with the v2.4 HL7 upgrade
+      
+    Problem:
+    -------- 
+    The Radiology v2.4 Health Level 7 (HL7) upgrade did not include HL7
+    subscriber setup instructions for a commercial middleware component
+    that did not exist when the software was developed but is now in
+    production use at sites. Sites are using the new component due to how
+    the vendor's product  has evolved and per their service agreements
+    with the vendor.
+     
+    Resolution:
+    -----------     
+    A document has been provided by the Radiology development group that 
+    can be retrieved at the location below and will include instructions
+    for HL7 subscriber setup for the commercial middleware component.
+     
+       
+ 2. INC0000000827987 Radiology - Voice Recognition Setup:
+       
+    Problem:
+    --------     
+    In the VistA Radiology HL7 Observation Result (ORU) report message,
+    per IHE (Integrating the Healthcare Enterprise) Radiology Transaction
+    business rules, we do not include an Common Order (ORC) segment. The
+    Commercial Off The Shelf (COTS) Voice Recognition (VR) vendor relies
+    on the ORC segment to properly deconstruct the message.  Without that,
+    the COTS VR product is not properly deconstructing the message fields
+    and a corrupted report gets stored on the COTS VR side.  What we need
+    to do at this point is supply the instructions for disabling the Voice
+    Recognition side from receiving inbound reports from VistA. (Receiving
+    Radiology reports into Voice Recognition is not needed at this time.)
+     
+    Resolution:
+    -----------     
+    A document has been provided by the Radiology development group that 
+    can be retrieved at the location below and will include instructions
+    for on how to disable the Voice Recognition side from receiving
+    inbound Radiology Reports.
+  
+ 3. INC0000000816372 - HL7 issue preventing radiology from processing
+                       inbound reports.
+  
+    Problem:
+    -------- 
+    While receiving inbound Radiology reports from third party vendor 
+    packages through HL7 version 2.4 it was discovered that the
+    programming code in routine RAHLRU1 was not properly handling large
+    amounts of data in the Observation Request (OBR) segment of the HL7
+    data causing VistA to reject valid Radiology reports.
+     
+    Resolution:
+    -----------     
+    A modification will be made in routine RAHLRU1 to correctly 
+    reconstruct the OBR segment data into the proper format for further 
+    processing within the Radiology system.
+     
+ 4. INC0000000829049 -  Radiology - HL7 Issue:
+  
+    Problem:
+    -------- 
+    This is an issue that impacts the v2.4 HL7 interface for VistA
+    Radiology/Nuclear Medicine. The National Teleradiology Product has
+    workflow that allows a national teleradiologist to release a study
+    back to the VA facility for interpretation. This event is passed with
+    'VAQ' being passed as the Result Status in OBR-25 of the inbound ORU
+    (Observation Results Unsolicited) HL7 message.
+      
+    VistA is not prepared to accept the 'VAQ' status and as a result, the
+    report is rejected.
+     
+    Resolution:
+    -----------     
+    A modification will be made in routine RAHLTCPX to allow VistA to
+    accept 'VAQ' as a valid result status.
+     
+ 5. INC0000000829071 - Radiology - HL7 Issue:
+  
+    Problem:
+    -------- 
+    The issue is that a successful National Teleradiology Project release 
+    of the study back to the facility generates an erroneous application 
+    error acknowledgement when an application accept acknowledgement is
+    the correct acknowledgement to send.
+          
+    Resolution:
+    -----------     
+    A modification will be made in routine RARPTUT to send the correct 
+    application accept acknowledgement.
+     
+ Distribution:
+ =============
+ The documents will be posted on the Vista Documentation Library (VDL)
+ and sites may retrieve the document directly via FTP from the
+ ANONYMOUS.SOFTWARE directory at:
+  
+ Albany:                 ftp.fo-albany.domain.ext
+ Hines:                  ftp.fo-hines.domain.ext
+ Salt Lake City:         ftp.fo-slc.domain.ext
+ First Available Server: download.vista.domain.ext
+  
+ Files available:
+ Radiology HL7 Setup for Agfa ConMan.docx
+ Radiology HL7 RA TALKLINK ORU.docx
+  
+   ==================== Installation Instructions ====================
+     
+ If installed during the normal workday, it is recommended that the
+ Radiology users be off the system.  Other VISTA users will not be
+ affected. Install Time is less than 2 minutes.
+  
+ 1.  Load Transport Global:
+     ----------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+             
+ 2.  Start Up KIDS:
+     --------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+   
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+         Load a Distribution 
+         Print Transport Global 
+         Compare Transport Global to Current System 
+         Verify Checksums in Transport Global 
+         Install Package(s) 
+         Restart Install of Package(s) 
+         Unload a Distribution 
+         Backup a Transport Global 
+   
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter RA*5.0*114):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     
+ 4.  Select Installation Option: Install Package(s):
+     -----------------------------------------------
+      
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAHLRU1
+    Before: B76146976   After: B70894221  **47,114**
+Routine Name: RAHLTCPX
+    Before: B93748547   After: B94012646  **47,114**
+Routine Name: RARPTUT
+    Before:B110205349   After:B110702869  **106,114**
+ 
+Routine list of preceding patches: 47, 106
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : FEB 14, 2013
+Completed By: DUCKWORTH,TIM                 Date Completed: AUG 20, 2013
+Released By : MILLIGAN,KERRY                Date Released : AUG 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,193 @@
+
+=============================================================================
+Run Date: SEP 25, 2013                     Designation: PXRM*2*30
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #23                      Status: Released
+                  Compliance Date: OCT 26, 2013
+=============================================================================
+
+
+Subject: EPILEPSY CENTERS OF EXCELLENCE REMINDER DIALOG 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The VA-ECOE templates project is a product developed in collaboration 
+ with the VA Epilepsy Center of Excellence (ECOE), VHA Informatics Council 
+ (VHA IC), National Clinical Reminder Committee (NCRC), National HIMS 
+ Office, VistA Maintenance Program (VMP), Nashville Usability Testing 
+ staff, and Miami VA Healthcare System staff, which provides guidance for 
+ the collection of the information of Veterans diagnosed with epilepsy to 
+ support uniform care and epilepsy surveillance. The templates are vital 
+ for quality control and research data for improvement in specialized 
+ epilepsy health care.
+ The templates incorporate all of the American Academy of Neurology 
+ Epilepsy Quality Measures and the National Institute of Health 
+ recommended Common Data Elements. The database will be maintained by the 
+ VA Epilepsy Centers of Excellence Program implemented in 2008 by Public 
+ Law 110-387 mandate. Thanks to the Southeast ECoE team led by Dr. Aatif 
+ Husain SE ECoE Regional Clinical Director and Pamela Kelly the SE ECoE 
+ Regional Director, for facilitating the development and implementation of 
+ this tool.
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1.  INC000000778310 - Epilepsy Center of Excellence (ECOE) Reminder Dialog
+                       Templates
+ 2.  INC000000621549 - VA-NOD Hyperlink Not Working
+ 3.  INC000000834711 - Link for Audit CC Questionnaire in Alcohol Use
+                       Screen Reminder Not Working
+ 4.  INC000000907181 - TIU Template Field Hyperlink Broken
+  
+ Associated NSR(s):
+ ===================
+ N/A
+     
+  
+ Participating Test Sites:
+ =========================
+ Miami, FL
+ Durham, NC
+ North Florida/South Georgia HCS
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1. IN000000778310 - Epilepsy Center of Excellence (ECOE) Reminder Dialog
+                     Templates
+    
+ Problem 1:
+ ----------
+ The VA-ECOE templates project is a product developed in collaboration 
+ with the VA Epilepsy Center of Excellence (ECOE), VHA Informatics Council
+ (VHA IC), National Clinical Reminder Committee (NCRC), National HIMS
+ Office, VistA Maintenance Program (VMP), Nashville Usability Testing
+ staff, and Miami VA Healthcare System staff, which provides guidance for
+ the collection of the information of Veterans diagnosed with epilepsy to
+ support uniform care and epilepsy surveillance. The templates are vital
+ for quality control and research data for improvement in specialized
+ epilepsy health care.
+  
+ Resolution 1:
+ -------------
+ Created the necessary ECOE Reminder dialog templates
+  
+  
+ 2.  INC000000621549 - VA-NOD Hyperlink Not Working
+   
+ 3.  INC000000834711 - Link for Audit C Questionnaire in Alcohol Use
+                       Screen Reminder Not Working
+   
+ 4.  INC000000907181 - TIU Template Field Hyperlink Not Working
+   
+ Problems 2, 3, 4:
+ -----------------
+ There are several URL's embedded in National Template Fields within 
+ CPRS.  Currently the URL's take you to "Page Not Found".
+   
+ Resolutions 2, 3, 4:
+ --------------------
+ With this release, the links that currently take you to "Page Not
+ Found" will be corrected.  There are six Template Fields being
+ corrected.  These Template Fields are part of the National Reminders
+ for Alcohol, Depression, PTSD screenings and VANOD Reminder Dialogs.
+    
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ REMINDER EXCHANGE (#811.8) file
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host
+ file is PXRM_2_0_30.KID.  This file should be downloaded in ASCII format.
+       
+ The preferred method for obtaining these files is to use File Transfer
+ Protocol (FTP) to download them from:
+  
+ ftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve the files directly from a specific server as
+ follows:
+         
+ Albany             ftp.fo-albany.domain.ext
+ Hines              ftp.fo-hines.domain.ext
+ Salt Lake City     ftp.fo-slc.domain.ext
+    
+ Install guide is also available on the above servers.  It is available as
+ .pdf format.  This file should be downloaded in BINARY format.  
+     
+ File Name:            Description:               Protocol:
+ ==========            ============               =========
+ PXRM_2_0_30_IG.PDF    PXRM*2.0*30 Installation   BINARY
+                       and Setup Guide
+ PXRM_2_0_30.KID       PXRM*2.0*30 Host File      ASCII
+            
+ Documentation  can also be found on the VistA Documentation Library (VDL)
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation
+ will take five to ten minutes.  Refer to the Install Guide,
+ PXRM_2_0_30_IG.PDF, for complete details.
+    
+ 1.  Use the "Load a Distribution' option on the KIDS installation
+     menu.  When prompted to enter a host file type in PXRM_2_0_30.KID
+    
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the 
+     following options, as desired:
+         Print Transport Global
+         Compare Transport global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+     
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the
+     following option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*30
+      
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the
+     install? NO//," respond 'NO'.
+       
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu
+     Options, and Protocols? NO// respond 'NO'.
+         
+ 6.  After successful installation, the following init 
+     routines may be deleted
+     PXRMP30I
+     PXRMP30E
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 206
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP30E
+    Before:       n/a   After:  B1368735  **30**
+Routine Name: PXRMP30I
+    Before:       n/a   After:  B9388998  **30**
+
+=============================================================================
+User Information:
+Entered By  : GRIMES,NANCY                  Date Entered  : FEB 25, 2013
+Completed By: SHERMAN,BILL                  Date Completed: SEP 24, 2013
+Released By : MONTGOMERY,ALAN               Date Released : SEP 25, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

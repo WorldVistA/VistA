@@ -1,0 +1,190 @@
+$TXT Created by HUFFMAN,Dan at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 08/13/12 at 10:24
+=============================================================================
+Run Date: SEP 04, 2013                     Designation: TIU*1*256
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #252                      Status: Released
+                  Compliance Date: OCT 05, 2013
+=============================================================================
+
+Associated patches: (v)TIU*1*241   <<= must be installed BEFORE `TIU*1*256'
+
+Subject: ALLOW DELETE/RETRACT NIR AND ANESTHESIA REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ When a Nurse Intraoperative report (NIR) or Anesthesia report (AR) is
+ entered and signed in the Surgery package, a note is created in Text
+ Integration Utility (TIU) TIU DOCUMENT (#8925) file.  If the need arises,
+ there is no way to delete the note in Surgery or TIU.
+  
+ This patch will allow the following 3 Authorization/Subscription 
+ Utility (ASU) users classes the ability to delete/retract a Nurse
+ Intraoperative report or Anesthesia report:
+  
+ - CHIEF, HIMS
+ - CHIEF, MIS
+ - PRIVACY ACT OFFICER
+  
+ They will be able to do so through CPRS GUI via the Surgery tab or in Vista
+ through the following options:
+  
+ - Individual Patient Document       [TIU BROWSE DOCUMENT MGR]
+ - Search for Selected Documents     [TIU SEARCH LIST MGR]
+ - Multiple Patient Documents        [TIU REVIEW SCREEN MIS MANAGER]
+  
+  
+ Associated NSR:
+ ===============
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1) HD0000000389575 - Delete Case
+    Duplicates:
+    HD0000000390370 - Problem with delete/retract NIR
+    HD0000000405645 - incorrect chart w NIR and addendum
+    HD0000000418982 - Delete signed note
+  
+  
+ Participating Test Sites:
+ =========================
+ EASTERN COLORADO HCS 
+ MARYLAND HCS 
+  
+  
+ Remedy Overview:
+ ================
+ 1) HD0000000389575 - Delete Case
+  
+   Problem 1:
+   ----------
+   When a Nurse Intraoperative report or Anesthesia report is entered and
+   signed in the Surgery package, a note is created in the TIU DOCUMENT
+   (#8925) file.  If the need arises, there is no way to delete/retract
+   the note in Surgery or TIU.
+  
+   Resolution 1:
+   -------------
+   Allow ASU user classes:
+    - CHIEF, HIMS
+    - CHIEF, MIS
+    - PRIVACY ACT OFFICER
+   the ability to delete/retract NIRs or ARs regardless of business rules.
+   They will be able to do so through CPRS GUI via the Surgery tab or in Vista
+   through the following options:
+  
+    - Individual Patient Document       [TIU BROWSE DOCUMENT MGR]
+    - Search for Selected Documents     [TIU SEARCH LIST MGR]
+    - Multiple Patient Documents        [TIU REVIEW SCREEN MIS MANAGER]
+  
+  
+   NOTE:
+   -----                                        
+   When an NIR or AR is deleted/retracted, a new stub is created for the 
+   report with a status of "undictated".  This new stub still points to 
+   the Surgery case. A Surgery support person then manually deletes the
+   undictated TIU stub.  They then delete the Surgery pointer to the TIU
+   stub so that the Surgery case can be deleted.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch should be loaded when users are off the system. The
+ installation time should be less than 2 minutes.
+  
+  1.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  2.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter TIU*1.0*256):
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  3.  Use the Install Package(s) option and select the package
+      TIU*1.0*256.
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+          install? NO//', answer NO.
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? YES//', answer YES.
+      c.  When prompted to select the options you would like to place out 
+          of order, enter the following:
+  
+          Individual Patient Document       [TIU BROWSE DOCUMENT MGR]
+          Individual Patient Document       [TIU BROWSE DOCUMENT MRT]
+          Individual Patient Progress Note  [TIU BROWSE PN MGR]
+          Individual Patient Progress Note  [TIU BROWSE PN MRT]
+          Search for Selected Documents     [TIU SEARCH LIST MGR]
+          Search for Selected Documents     [TIU SEARCH LIST MRT]
+          Multiple Patient Documents        [TIU REVIEW SCREEN MIS MANAGER]
+  
+      d.  When prompted 'Enter protocols you wish to mark as 'Out Of 
+          Order', press <ENTER>.
+  
+  
+ Post-installation instructions:
+ ===============================
+ If sites have business rules for action DELETE Nurse Intraoperative report
+ and/or action for DELETE Anesthesia report they should remove them. These
+ business rules will have no relevance after this patch is installed because
+ the deletion of these TIU documents is restricted to only 3 ASU user
+ classes: HIMS/MIS Chiefs and Privacy Act Officers.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIULP
+    Before: B51642995   After: B55451451  **98,100,116,109,138,152,175,
+                                           157,182,184,217,236,234,232,
+                                           241,256**
+Routine Name: TIULP3
+    Before:  B5635029   After:  B6517608  **232,256**
+ 
+Routine list of preceding patches: 241
+
+=============================================================================
+User Information:
+Entered By  : ROWLANDS,ELMER                Date Entered  : JUN 23, 2010
+Completed By: SHERMAN,BILL                  Date Completed: AUG 23, 2013
+Released By : PIERSON,YVONNE E              Date Released : SEP 04, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

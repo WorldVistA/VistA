@@ -1,0 +1,486 @@
+
+=============================================================================
+Run Date: JUL 15, 2013                     Designation: YS*5.01*112
+Package : YS - MENTAL HEALTH                  Priority: Mandatory
+Version : 5.01        SEQ #89                   Status: Released
+                  Compliance Date: AUG 15, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization: MENTAL HEALTH 5.01
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This informational patch is issued as directed in Memorandum: Open Source
+  VistA Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this 
+  document for specific details.
+    
+  A review of the VistA Standardization routines was completed for: MENTAL 
+  HEALTH version 5.01. A baseline list of the nationally released M
+  routines and their official checksums is included below. VistA
+  Standardization Certification represents the matching of the routine
+  checksums, compared in the site's Production account only.
+    
+  The VistA Standardization Team performed an analysis of each site's 
+  Production environment. For any site with routine checksum variance, 
+  this team worked with the site to remediate any variance from the
+  baseline. After the completion of this process, sites with no variance
+  were identified as VistA Standardization Certified for the package. There
+  is NO additional action required on the part of these sites.
+    
+  For sites which had variance (local modification) and determined it was 
+  important to maintain for their Production environment, a waiver was 
+  requested. If approved, the waiver allows retention of the local 
+  modification to a VistA Standardization routine, as detailed in VA 
+  Directive 6402.
+    
+  Each site will be placed on one of the lists below:  
+        VistA Standardization Certified Sites
+        Sites with Approved/Pending Waiver
+        Non-Compliant Sites with Pending Remediation
+   
+  The expectation for sites on the Non-Compliant Sites with Pending 
+  Remediation list is for their remediation to be completed, by either 
+  removing the modification or requesting a waiver. There will NOT be an 
+  additional Informational Only patch to move the site to the VistA 
+  Standardization Certified Sites list.
+    
+  Please Note:
+     Environment check routines, pre or post installation routines 
+     remaining from previously installed patches, compiled routines (e.g. 
+     cross-reference), or prior package version routines, will NOT affect
+     your site's standardization compliance. Their existence, or
+     non-existence, at your site, or on the VistA Standardization routines
+     list below, does not impact the VistA Standardization Certification.
+   
+     VistA Standardization Certification for this package applies to the
+     date specified in the Official Checksum heading below. If additional 
+     patches, or a newer version for the package, has been released since
+     this date, the checksums for affected routines will be different. For
+     these routines, refer to the patch/version documentation for the most
+     up-to-date checksums.
+     
+     Site 556, NORTH CHICAGO, IL is exempt from this project objective
+    
+  Sites with Approved/Pending Waiver:
+  ==================================
+  n/a for this package
+    
+    
+  Non-Compliant Sites with Pending Remediation:
+  ============================================
+  CASE 1: Sites which have not removed patch 68 &/or 59 (cancelled after 
+  installation): routines impacted: YSDX3B, YSGAF, YSGAF2, and in some 
+  cases YSFOBX, YSGAFTER. These sites have identical routines.
+   
+    358    MANILA OC, PI
+    516    BAY PINES, FL
+    520    BILOXI, MS (C)
+    528    UPSTATE NEW YORK HCS
+    548    WEST PALM BEACH, FL
+    623    MUSKOGEE, OK
+    626    TENNESSEE VALLEY HCS
+    630    NEW YORK HCS
+    631    NORTHAMPTON, MA
+    650    PROVIDENCE, RI
+    667    SHREVEPORT, LA
+    668    SPOKANE, WA
+    673    TAMPA, FL
+    689    CONNECTICUT HCS
+  
+ =========================
+ CASE 2: Miscellaneous
+    459  HONOLULU (VA Pacific Islands HCS) 
+    501  ALBUQUERQUE (New Mexico HCS)
+    515  BATTLE CREEK, MI 
+    528  UPSTATE NEW YORK HCS 
+    539  CINCINNATI, OH
+    541  CLEVELAND, OH 
+    542  COATESVILLE, PA   
+    549  NORTH TEXAS HCS 
+    553  DETROIT, MI  
+    610  NORTHERN INDIANA HCS 
+    614  MEMPHIS   
+    640  PALO ALTO HCS 
+    648  PORTLAND, OR (C)
+    660  SALT LAKE CITY 
+    663  PUGET SOUND HCS 
+    666  SHERIDAN, WY 
+       
+  VistA Standardization Certified Sites:
+  =====================================
+    402    TOGUS, ME
+    405    WHITE RIVER JUNCTION, VT
+    436    MONTANA HCS
+    437    FARGO, ND
+    438    SIOUX FALLS, SD
+    442    CHEYENNE, WY
+    460    WILMINGTON, DE
+    463    ANCHORAGE, AK (OPC)
+    502    ALEXANDRIA, LA
+    503    ALTOONA, PA
+    504    AMARILLO, TX
+    506    ANN ARBOR, MI
+    508    ATLANTA, GA
+    509    AUGUSTA, GA (C)
+    512    MARYLAND HCS
+    517    BECKLEY, WV
+    518    BEDFORD, MA
+    519    BIG SPRING, TX
+    521    BIRMINGHAM, AL
+    523    BOSTON HCS
+    526    BRONX, NY
+    529    BUTLER, PA
+    531    BOISE, ID
+    534    CHARLESTON, SC
+    537    CHICAGO HCS
+    538    CHILLICOTHE, OH
+    540    CLARKSBURG, WV
+    544    COLUMBIA, SC
+    546    MIAMI, FL
+    550    ILLIANA HCS
+    552    DAYTON, OH
+    554    EASTERN COLORADO HCS
+    557    DUBLIN, GA
+    558    DURHAM, NC
+    561    NEW JERSEY HCS
+    562    ERIE, PA
+    564    FAYETTEVILLE, AR
+    565    FAYETTEVILLE, NC
+    568    BLACK HILLS HCS
+    570    FRESNO, CA
+    573    NORTH FLORIDA/SOUTH GEORGIA
+    575    GRAND JUNCTION, CO
+    578    HINES, IL
+    580    HOUSTON, TX
+    581    HUNTINGTON, WV
+    583    INDIANAPOLIS, IN (C)
+    585    IRON MOUNTAIN, MI
+    586    JACKSON, MS
+    589    HEARTLAND-WEST HCS
+    600    LONG BEACH, CA
+    590    HAMPTON, VA
+    593    LAS VEGAS, NV
+    595    LEBANON, PA
+    596    LEXINGTON, KY
+    598    LITTLE ROCK, AR (C)
+    603    LOUISVILLE, KY
+    605    LOMA LINDA, CA
+    607    MADISON, WI
+    608    MANCHESTER, NH
+    612    NORTHERN CALIFORNIA HCS
+    613    MARTINSBURG, WV
+    618    MINNEAPOLIS, MN
+    619    CENTRAL ALABAMA HCS
+    620    HUDSON VALLEY HCS
+    621    MOUNTAIN HOME, TN
+    629    NEW ORLEANS, LA
+    632    NORTHPORT, NY
+    635    OKLAHOMA CITY, OK
+    636    CENTRAL PLAINS HCS
+    637    ASHEVILLE, NC
+    642    PHILADELPHIA, PA
+    644    PHOENIX, AZ
+    646    PITTSBURGH HCS
+    649    PRESCOTT, AZ
+    652    RICHMOND, VA
+    653    ROSEBURG, OR
+    654    RENO, NV
+    655    SAGINAW, MI
+    656    ST CLOUD, MN
+    657    HEARTLAND-EAST HCS
+    658    SALEM, VA
+    659    SALISBURY, NC
+    662    SAN FRANCISCO, CA
+    664    SAN DIEGO, CA
+    667    SHREVEPORT, LA
+    671    SOUTH TEXAS HCS
+    672    SAN JUAN, PR
+    674    CENTRAL TEXAS HCS
+    675    ORLANDO, FL
+    676    TOMAH, WI
+    678    TUCSON, AZ
+    679    TUSCALOOSA, AL
+    687    WALLA WALLA, WA
+    688    WASHINGTON, DC
+    691    VA GREATER LOS ANGELES HCS
+    692    WHITE CITY, OR (DOM)
+    693    WILKES BARRE, PA
+    695    MILWAUKEE, WI
+    740    TEXAS VALLEY COASTAL BEND HCS
+    756    EL PASO, TX
+    757    COLUMBUS, OH(OPC)
+    
+  ====================================================================
+    
+  Routine Information:
+  ===================
+  The checksums below are calculated using new checksums, and can be 
+  checked with CHECK1^XTSUMBLD.
+    
+  Routine Name       Official Checksum as of 13 March 2013
+  ============       ====================================
+ YSASA2                  23828407
+ YSASBUL                 3526387
+ YSASCR                  632193
+ YSASCSA                 26922668
+ YSASCSB                 26082180
+ YSASCSC                 20249755
+ YSASES                  7095250
+ YSASFM                  12459768
+ YSASFS                  23500728
+ YSASFS1                 22570331
+ YSASFUR                 29229009
+ YSASGPH                 9594402
+ YSASLIB                 12975057
+ YSASNAR                 38698089
+ YSASO                   2904308
+ YSASO1                  12797860
+ YSASO2                  9572569
+ YSASOL                  29236654
+ YSASOSR                 6613119
+ YSASPNT                 10291993
+ YSASPRT                 4817471
+ YSASRPWP                3755636
+ YSASRU                  24470974
+ YSASRU1                 6081972
+ YSASSEL                 23674748
+ YSASSN                  17535400
+ YSAST                   9014148
+ YSASU                   22089171
+ YSASU1                  7082344
+ YSCEN13                 982218
+ YSCEN5                  5014852
+ YSCLSERV                64095727
+ YSCLSRV1                2228786
+ YSCLSRV2                41052596
+ YSCLSRV3                47455212
+ YSCLTEST                20876343
+ YSCLTST1                19103633
+ YSCLTST2                49184088
+ YSCLTST3                59491458
+ YSCLTST4                15352155
+ YSD4C001                5435824
+ YSD4C010                452667
+ YSDGDEM                 5038550
+ YSDGDEM0                10063531
+ YSDIZ                   7569820
+ YSDSS                   26475965
+ YSDX3                   10581455
+ YSDX3R                  8161908
+ YSDX3R1                 12384514
+ YSDX3U00                1469542
+ YSDX3UA                 17115146
+ YSDX3UA0                4109653
+ YSDX3UC                 6028387
+ YSDXR                   3156016
+ YSDXUT01                3451113
+ YSFORM                  2883557
+ YSGAF                   41186678
+ YSGAF1                  15299192
+ YSGAF2                  6467016
+ YSGAF3                  95532
+ YSGAFAP1                2926531
+ YSGAFAPI                2459639
+ YSGAFHL7                27123710
+ YSGAFOBX                11099191
+ YSGAFTR                 22758846
+ YSGAFUTL                38643467
+ YSKFASI3                43728134
+ YSKFASIK                4215056
+ YSKFASIP                23161991
+ YSKFMAIL                10045017
+ YSLOCN                  1428676
+ YSLRP                   836128
+ YSMHMENU                571680
+ YSMTI                   16384688
+ YSMTI0                  6160997
+ YSMTI1                  18161324
+ YSMTI2                  12997091
+ YSMTI3                  13652331
+ YSMTI4                  19348256
+ YSMTI5                  12163284
+ YSMTI6                  6171967
+ YSMTI7                  1904635
+ YSP77I                  4354573
+ YSSITE                  3477669
+ YSSR                    31889856
+ YSSR1                   21510369
+ YSSR2                   7632392
+ YSSRU                   20557028
+ YSSRU1                  8454449
+ YSTUSE                  2644206
+ YSUTL                   11413377
+ YSXRAA                  7328095
+ YSXRAB                  7323301
+ YSXRAC                  8529023
+ YSXRAD                  6958190
+ YSXRAE                  7329815
+ YSXRAJ                  7327773
+ YSXRAK                  8957357
+ YSXRAL                  6961191
+ YSXRAM                  6961572
+ YSXRAN                  6961953
+ YSXRAO                  6962334
+ YSXRAP                  6962715
+ YSXRAQ                  7331425
+ YSXRAR                  6958607
+ YSXRAS                  6963600
+ YSXRAT                  7742972
+ YSXRAU                  6959403
+ YSXRAV                  6959918
+ YSXRAW                  6960331
+ YSXRAX                  7340124
+ YSXRAY                  7341048
+ YSXRAZ                  7738134
+ YTACL                   4247460
+ YTAIMS                  7739693
+ YTALUSE                 893981
+ YTALUSEC                4029849
+ YTALUSR                 3606710
+ YTAPI                   21662254
+ YTAPI1                  6850000
+ YTAPI10                 18980623
+ YTAPI10A                21115425
+ YTAPI2                  16762849
+ YTAPI3                  7774096
+ YTAPI4                  3663733
+ YTAPI5                  12579735
+ YTAPI6                  9502536
+ YTAPI7                  16428780
+ YTAPI8                  16700712
+ YTAPI9                  9230621
+ YTAR                    29936390
+ YTAR1                   9188379
+ YTAR2                   4358565
+ YTATQ                   902361
+ YTAUDIT                 7934250
+ YTAUIR                  9902777
+ YTAUIRR                 14880327
+ YTBECK                  3204612
+ YTBI                    26357240
+ YTBPRS                  2763203
+ YTBSI18                 6190425
+ YTCESD                  4361649
+ YTCHECK                 25475518
+ YTCLERK                 19061679
+ YTCLERK1                10524166
+ YTDEMO                  1292615
+ YTDESC                  5798015
+ YTDOMR                  26438095
+ YTDOMR1                 13856663
+ YTDP                    20933177
+ YTDP1                   4828092
+ YTDRIV                  8805395
+ YTEXT                   21919848
+ YTEXT1                  7590462
+ YTFEAR                  3509438
+ YTFILE                  16256822
+ YTFIRO                  2503563
+ YTKIL                   9102073
+ YTKILINC                5844605
+ YTLCTD                  2929177
+ YTLIST                  13019349
+ YTMATE                  3154414
+ YTMBMD                  20606864
+ YTMCMI                  9833954
+ YTMCMI2                 8707444
+ YTMCMI2A                8075426
+ YTMCMI2B                14715804
+ YTMCMI2C                21611132
+ YTMCMI2D                5722079
+ YTMCMI3                 19369222
+ YTMCMI3A                16271558
+ YTMCMI3R                8684866
+ YTMILL                  7529832
+ YTMMP1                  7989458
+ YTMMP2                  14537571
+ YTMMP3                  10558688
+ YTMMP4                  8892987
+ YTMMP5                  16927218
+ YTMMP6                  9374202
+ YTMMP7                  1295759
+ YTMMPI                  9095736
+ YTMMPI2                 20251423
+ YTMMPI2A                14532305
+ YTMMPI2B                30224283
+ YTMMPI2C                11210369
+ YTMMPI2D                8402319
+ YTMMPI2P                17736010
+ YTMMPP                  11398784
+ YTMYER                  6444363
+ YTNEOPI                 15816087
+ YTNEOPI1                23150324
+ YTNEOPI2                16251191
+ YTONLY                  29076478
+ YTPAI                   23202181
+ YTPAI1                  14941687
+ YTPCL                   7363737
+ YTPHQ9                  4571822
+ YTPIT                   4191589
+ YTPSI                   3214453
+ YTPXRM                  4806121
+ YTQAPI                  15475641
+ YTQAPI1                 27189337
+ YTQAPI10                24613112
+ YTQAPI11                25396570
+ YTQAPI12                20141561
+ YTQAPI13                19997427
+ YTQAPI14                29549616
+ YTQAPI15                29251831
+ YTQAPI16                13185422
+ YTQAPI17                4160285
+ YTQAPI2                 23049934
+ YTQAPI3                 23768089
+ YTQAPI4                 28692651
+ YTQAPI5                 31633912
+ YTQAPI6                 8407277
+ YTQAPI7                 18902958
+ YTQAPI8                 32771511
+ YTQAPI9                 29518632
+ YTQCONS                 22590519
+ YTQHL7                  44857862
+ YTQKIL                  3326075
+ YTQLIB                  8410129
+ YTQPRT                  29277675
+ YTQPXRM                 4498627
+ YTQPXRM1                12928367
+ YTQPXRM2                14658221
+ YTQPXRM3                16585590
+ YTQPXRM4                21974840
+ YTQPXRM5                19969917
+ YTQPXRM6                17034666
+ YTQPXRM7                22901061
+ YTQPXRM8                15837966
+ YTQTIU                  22339305
+ YTQTUSE                 8194860
+ YTREPT                  16817574
+ YTRPEXT                 3923319
+ YTRPWRP                 16819326
+ YTS                     16658002
+ YTSCII                  17815699
+ YTSCL9R                 19518546
+ YTSCL9R1                11229619
+ YTSF36                  16628452
+ YTTLS                   2425718
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ALLARD,CHARLES                Date Entered  : JUL 03, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 15, 2013
+Released By : VANCAMP,E PHILIP              Date Released : JUL 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

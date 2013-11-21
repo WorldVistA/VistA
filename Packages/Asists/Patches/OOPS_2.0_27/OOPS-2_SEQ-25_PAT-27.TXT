@@ -1,0 +1,320 @@
+
+=============================================================================
+Run Date: JUL 15, 2013                     Designation: OOPS*2*27
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #25                      Status: Released
+                  Compliance Date: AUG 15, 2013
+=============================================================================
+
+
+Subject: INFORMATIONAL - VistA Standardization: ASISTS 2.0
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This informational patch is issued as directed in Memorandum: Open Source
+  VistA Deployment (VAIQ #7256522), dated Aug 31, 2012. Refer to this 
+  document for specific details.
+    
+  A review of the VistA Standardization routines was completed for: ASISTS
+  version 2.0. A baseline list of the nationally released M routines and
+  their official checksums is included below. VistA Standardization
+  Certification represents the matching of the routine checksums, compared
+  in the site's Production account only.
+    
+  The VistA Standardization Team performed an analysis of each site's 
+  Production environment. For any site with routine checksum variance, 
+  this team worked with the site to remediate any variance from the
+  baseline. After the completion of this process, sites with no variance 
+  were identified as VistA Standardization Certified for the package. There
+  is NO additional action required on the part of these sites.
+    
+  For sites which had variance (local modification) and determined it was 
+  important to maintain for their Production environment, a waiver was 
+  requested. If approved, the waiver allows retention of the local 
+  modification to a VistA Standardization routine, as detailed in VA 
+  Directive 6402.
+    
+  Each site will be placed on one of the lists below:  
+        VistA Standardization Certified Sites
+        Sites with Approved/Pending Waiver
+        Non-Compliant Sites with Pending Remediation
+   
+  The expectation for sites on the Non-Compliant Sites with Pending 
+  Remediation list is for their remediation to be completed, by either 
+  removing the modification or requesting a waiver. There will NOT be an 
+  additional Informational Only patch to move the site to the VistA 
+  Standardization Certified Sites list.
+    
+  Please Note:
+     Environment check routines, pre or post installation routines 
+     remaining from previously installed patches, compiled routines (e.g. 
+     cross-reference), or prior package version routines, will NOT affect
+     your site's standardization compliance. Their existence, or
+     non-existence, at your site, or on the VistA Standardization routines
+     list below, does not impact the VistA Standardization Certification.
+   
+     VistA Standardization Certification for this package applies to the
+     date specified in the Official Checksum heading below. If additional 
+     patches, or a newer version for the package, has been released since
+     this date, the checksums for affected routines will be different. For
+     these routines, refer to the patch/version documentation for the most
+     up-to-date checksums.
+     
+     Site 556, NORTH CHICAGO, IL is exempt from this project objective
+    
+  Sites with Approved/Pending Waiver:
+  ==================================
+  n/a for this package
+   
+  Non-Compliant Sites with Pending Remediation:
+  ============================================
+    537 CHICAGO HCS (OOPSMBUL-sends bulletin to Outlook Mail, class 3.)
+    578 HINES, IL   (OOPSMBUL - sends to Outlook MaiL, same code as CHS)
+    549 NORTH TEXAS HCS (OOPSPRT1 - Safety req., print Service on report.)
+  
+  VistA Standardization Certified Sites:
+  =====================================
+    358    MANILA OC, PI
+    402    TOGUS, ME
+    405    WHITE RIVER JUNCTION, VT
+    436    MONTANA HCS
+    437    FARGO, ND
+    438    SIOUX FALLS, SD
+    442    CHEYENNE, WY
+    459    HONOLULU, HI
+    460    WILMINGTON, DE
+    463    ANCHORAGE, AK (OPC)
+    501    ALBUQUERQUE, NM
+    502    ALEXANDRIA, LA
+    503    ALTOONA, PA
+    504    AMARILLO, TX
+    506    ANN ARBOR, MI
+    508    ATLANTA, GA
+    509    AUGUSTA, GA (C)
+    512    MARYLAND HCS
+    515    BATTLE CREEK, MI
+    516    BAY PINES, FL
+    517    BECKLEY, WV
+    518    BEDFORD, MA
+    519    BIG SPRING, TX
+    520    BILOXI, MS (C)
+    521    BIRMINGHAM, AL
+    523    BOSTON HCS
+    526    BRONX, NY
+    528    UPSTATE NEW YORK HCS
+    529    BUTLER, PA
+    531    BOISE, ID
+    534    CHARLESTON, SC
+    538    CHILLICOTHE, OH
+    539    CINCINNATI, OH
+    540    CLARKSBURG, WV
+    541    CLEVELAND, OH
+    542    COATESVILLE, PA
+    544    COLUMBIA, SC
+    546    MIAMI, FL
+    548    WEST PALM BEACH, FL
+    550    ILLIANA HCS
+    552    DAYTON, OH
+    553    DETROIT, MI
+    554    EASTERN COLORADO HCS
+    557    DUBLIN, GA
+    558    DURHAM, NC
+    561    NEW JERSEY HCS
+    562    ERIE, PA
+    564    FAYETTEVILLE, AR
+    565    FAYETTEVILLE, NC
+    568    BLACK HILLS HCS
+    570    FRESNO, CA
+    573    NORTH FLORIDA/SOUTH GEORGIA
+    575    GRAND JUNCTION, CO
+    580    HOUSTON, TX
+    581    HUNTINGTON, WV
+    583    INDIANAPOLIS, IN (C)
+    585    IRON MOUNTAIN, MI
+    586    JACKSON, MS
+    589    HEARTLAND-WEST HCS
+    600    LONG BEACH, CA
+    590    HAMPTON, VA
+    593    LAS VEGAS, NV
+    595    LEBANON, PA
+    596    LEXINGTON, KY
+    598    LITTLE ROCK, AR (C)
+    603    LOUISVILLE, KY
+    605    LOMA LINDA, CA
+    607    MADISON, WI
+    608    MANCHESTER, NH
+    610    NORTHERN INDIANA HCS
+    612    NORTHERN CALIFORNIA HCS
+    613    MARTINSBURG, WV
+    614    MEMPHIS, TN
+    618    MINNEAPOLIS, MN
+    619    CENTRAL ALABAMA HCS
+    620    HUDSON VALLEY HCS
+    621    MOUNTAIN HOME, TN
+    623    MUSKOGEE, OK
+    626    TENNESSEE VALLEY HCS
+    629    NEW ORLEANS, LA
+    630    NEW YORK HCS
+    631    NORTHAMPTON, MA
+    632    NORTHPORT, NY
+    635    OKLAHOMA CITY, OK
+    636    CENTRAL PLAINS HCS
+    637    ASHEVILLE, NC
+    640    PALO ALTO HCS
+    642    PHILADELPHIA, PA
+    644    PHOENIX, AZ
+    646    PITTSBURGH HCS
+    648    PORTLAND, OR (C)
+    649    PRESCOTT, AZ
+    650    PROVIDENCE, RI
+    652    RICHMOND, VA
+    653    ROSEBURG, OR
+    654    RENO, NV
+    655    SAGINAW, MI
+    656    ST CLOUD, MN
+    657    HEARTLAND-EAST HCS
+    658    SALEM, VA
+    659    SALISBURY, NC
+    660    SALT LAKE CITY, UT
+    662    SAN FRANCISCO, CA
+    663    PUGET SOUND HCS
+    664    SAN DIEGO, CA
+    666    SHERIDAN, WY
+    667    SHREVEPORT, LA
+    668    SPOKANE, WA
+    671    SOUTH TEXAS HCS
+    672    SAN JUAN, PR
+    673    TAMPA, FL
+    674    CENTRAL TEXAS HCS
+    675    ORLANDO, FL
+    676    TOMAH, WI
+    678    TUCSON, AZ
+    679    TUSCALOOSA, AL
+    687    WALLA WALLA, WA
+    688    WASHINGTON, DC
+    689    CONNECTICUT HCS
+    691    VA GREATER LOS ANGELES HCS
+    692    WHITE CITY, OR (DOM)
+    693    WILKES BARRE, PA
+    695    MILWAUKEE, WI
+    740    TEXAS VALLEY COASTAL BEND HCS
+    756    EL PASO, TX
+    757    COLUMBUS, OH(OPC)
+  
+  ====================================================================
+    
+  Routine Information:
+  ===================
+  The checksums below are calculated using new checksums, and can be 
+  checked with CHECK1^XTSUMBLD.
+    
+  Routine Name       Official Checksum as of 13 March 2013
+  ============       ====================================
+  OOPSCA             3664222
+  OOPSCA1            48090917
+  OOPSCA2            34482022
+  OOPSCC             43938864
+  OOPSCSN            636486
+  OOPSDIS            5182329
+  OOPSDM             4880594
+  OOPSDOL            74954701
+  OOPSDOL1           67499196
+  OOPSDOL2           49496083
+  OOPSDOLX           23349324
+  OOPSDS12           1352977
+  OOPSEMP1           19787505
+  OOPSEMP2           34801835
+  OOPSEMPB           22259299
+  OOPSESIG           1980320
+  OOPSESP            588226
+  OOPSESR            5642512
+  OOPSEUT            697652
+  OOPSF167           2457008
+  OOPSGUI0           43188883
+  OOPSGUI1           34497365
+  OOPSGUI2           53262849
+  OOPSGUI3           47210359
+  OOPSGUI4           65904177
+  OOPSGUI5           38468044
+  OOPSGUI6           53278536
+  OOPSGUI7           29256546
+  OOPSGUI8           51647610
+  OOPSGUI9           49823506
+  OOPSGUIC           66128626
+  OOPSGUID           67922733
+  OOPSGUIF           34611208
+  OOPSGUIR           70518771
+  OOPSGUIS           29381071
+  OOPSGUIT           80073431
+  OOPSGUIU           4223753
+  OOPSLOG            51748310
+  OOPSMBUL           24446634
+  OOPSNDB            42910203
+  OOPSNDBX           24144623
+  OOPSP50            36907134
+  OOPSPC10           44240593
+  OOPSPC11           17860899
+  OOPSPC20           51428968
+  OOPSPC21           30975068
+  OOPSPC30           56156206
+  OOPSPC40           40940469
+  OOPSPC41           27425434
+  OOPSPC50           38872315
+  OOPSPC51           19875338
+  OOPSPC60           57111712
+  OOPSPC70           19139422
+  OOPSPC71           26748147
+  OOPSPC80           30874792
+  OOPSPC81           28553834
+  OOPSPCA            9257078
+  OOPSPI2            17928
+  OOPSPRT            41633519
+  OOPSPRT1           30718455
+  OOPSPRT2           7746346
+  OOPSPUT1           6754985
+  OOPSSOF1           8357100
+  OOPSSOF2           2235585
+  OOPSSUP1           35167902
+  OOPSSUP2           49633675
+  OOPSSUP3           13871412
+  OOPSSUPB           53534270
+  OOPSTES4           3248544
+  OOPSUTL1           43478643
+  OOPSUTL2           48059306
+  OOPSUTL3           36226906
+  OOPSUTL4           56676889
+  OOPSUTL5           20658529
+  OOPSUTL6           16103334
+  OOPSV221           6181059
+  OOPSVAL1           75570428
+  OOPSWCE            59097557
+  OOPSWCE1           53507295
+  OOPSWCE2           55983187
+  OOPSWCSE           18713644
+  OOPSXP11           2927070
+  OOPSXP5            7400907
+  OOPSXP8            47149773
+  OOPSXV2            15691068
+  OOPSXV25           837302
+  OOPSXV27           3155635
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ALLARD,CHARLES                Date Entered  : JUL 11, 2013
+Completed By: THOMAS,MARY JANE              Date Completed: JUL 11, 2013
+Released By : MORRIS,DELISA                 Date Released : JUL 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

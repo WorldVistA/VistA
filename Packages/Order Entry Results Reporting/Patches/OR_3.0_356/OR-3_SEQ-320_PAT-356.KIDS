@@ -1,0 +1,1264 @@
+Released OR*3*356 SEQ #320
+Extracted from mail message
+**KIDS**:OR*3.0*356^
+
+**INSTALL NAME**
+OR*3.0*356
+"BLD",8475,0)
+OR*3.0*356^ORDER ENTRY/RESULTS REPORTING^0^3120117^y
+"BLD",8475,1,0)
+^^13^13^3120117^
+"BLD",8475,1,1,0)
+This patch will correct the following issues:
+"BLD",8475,1,2,0)
+1) When ordering certain types of quick orders. Information about the 
+"BLD",8475,1,3,0)
+   order such as service connected and treatment factors display, even 
+"BLD",8475,1,4,0)
+   though there has been no opportunity to enter this information about 
+"BLD",8475,1,5,0)
+   the order.
+"BLD",8475,1,6,0)
+ 
+"BLD",8475,1,7,0)
+2) When orderable items are flagged to display an alert to the provider 
+"BLD",8475,1,8,0)
+   when they are expiring. They were not creating alerts correctly for 
+"BLD",8475,1,9,0)
+   the outpatient paramter.
+"BLD",8475,1,10,0)
+ 
+"BLD",8475,1,11,0)
+3) In certain scenarios, when entries to the Orders File (#100) are  
+"BLD",8475,1,12,0)
+   deleted, there are dangling cross references that are left behind. 
+"BLD",8475,1,13,0)
+   These cause errors during nightly processing and cprs order views.
+"BLD",8475,4,0)
+^9.64PA^^
+"BLD",8475,6.3)
+6
+"BLD",8475,"ABPKG")
+n
+"BLD",8475,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8475,"KRN",.4,0)
+.4
+"BLD",8475,"KRN",.401,0)
+.401
+"BLD",8475,"KRN",.402,0)
+.402
+"BLD",8475,"KRN",.403,0)
+.403
+"BLD",8475,"KRN",.5,0)
+.5
+"BLD",8475,"KRN",.84,0)
+.84
+"BLD",8475,"KRN",3.6,0)
+3.6
+"BLD",8475,"KRN",3.8,0)
+3.8
+"BLD",8475,"KRN",9.2,0)
+9.2
+"BLD",8475,"KRN",9.8,0)
+9.8
+"BLD",8475,"KRN",9.8,"NM",0)
+^9.68A^4^3
+"BLD",8475,"KRN",9.8,"NM",1,0)
+ORWDXM2^^0^B76657020
+"BLD",8475,"KRN",9.8,"NM",3,0)
+ORB3TIM2^^0^B42852684
+"BLD",8475,"KRN",9.8,"NM",4,0)
+ORQ12^^0^B37558185
+"BLD",8475,"KRN",9.8,"NM","B","ORB3TIM2",3)
+
+"BLD",8475,"KRN",9.8,"NM","B","ORQ12",4)
+
+"BLD",8475,"KRN",9.8,"NM","B","ORWDXM2",1)
+
+"BLD",8475,"KRN",19,0)
+19
+"BLD",8475,"KRN",19.1,0)
+19.1
+"BLD",8475,"KRN",101,0)
+101
+"BLD",8475,"KRN",409.61,0)
+409.61
+"BLD",8475,"KRN",771,0)
+771
+"BLD",8475,"KRN",779.2,0)
+779.2
+"BLD",8475,"KRN",870,0)
+870
+"BLD",8475,"KRN",8989.51,0)
+8989.51
+"BLD",8475,"KRN",8989.52,0)
+8989.52
+"BLD",8475,"KRN",8994,0)
+8994
+"BLD",8475,"KRN","B",.4,.4)
+
+"BLD",8475,"KRN","B",.401,.401)
+
+"BLD",8475,"KRN","B",.402,.402)
+
+"BLD",8475,"KRN","B",.403,.403)
+
+"BLD",8475,"KRN","B",.5,.5)
+
+"BLD",8475,"KRN","B",.84,.84)
+
+"BLD",8475,"KRN","B",3.6,3.6)
+
+"BLD",8475,"KRN","B",3.8,3.8)
+
+"BLD",8475,"KRN","B",9.2,9.2)
+
+"BLD",8475,"KRN","B",9.8,9.8)
+
+"BLD",8475,"KRN","B",19,19)
+
+"BLD",8475,"KRN","B",19.1,19.1)
+
+"BLD",8475,"KRN","B",101,101)
+
+"BLD",8475,"KRN","B",409.61,409.61)
+
+"BLD",8475,"KRN","B",771,771)
+
+"BLD",8475,"KRN","B",779.2,779.2)
+
+"BLD",8475,"KRN","B",870,870)
+
+"BLD",8475,"KRN","B",8989.51,8989.51)
+
+"BLD",8475,"KRN","B",8989.52,8989.52)
+
+"BLD",8475,"KRN","B",8994,8994)
+
+"BLD",8475,"QUES",0)
+^9.62^^
+"BLD",8475,"REQB",0)
+^9.611^2^2
+"BLD",8475,"REQB",1,0)
+OR*3.0*280^2
+"BLD",8475,"REQB",2,0)
+OR*3.0*265^2
+"BLD",8475,"REQB","B","OR*3.0*265",2)
+
+"BLD",8475,"REQB","B","OR*3.0*280",1)
+
+"MBREQ")
+0
+"PKG",188,-1)
+1^1
+"PKG",188,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",188,20,0)
+^9.402P^^
+"PKG",188,22,0)
+^9.49I^1^1
+"PKG",188,22,1,0)
+3.0^2971217^2981113^1
+"PKG",188,22,1,"PAH",1,0)
+356^3120117
+"PKG",188,22,1,"PAH",1,1,0)
+^^13^13^3120117
+"PKG",188,22,1,"PAH",1,1,1,0)
+This patch will correct the following issues:
+"PKG",188,22,1,"PAH",1,1,2,0)
+1) When ordering certain types of quick orders. Information about the 
+"PKG",188,22,1,"PAH",1,1,3,0)
+   order such as service connected and treatment factors display, even 
+"PKG",188,22,1,"PAH",1,1,4,0)
+   though there has been no opportunity to enter this information about 
+"PKG",188,22,1,"PAH",1,1,5,0)
+   the order.
+"PKG",188,22,1,"PAH",1,1,6,0)
+ 
+"PKG",188,22,1,"PAH",1,1,7,0)
+2) When orderable items are flagged to display an alert to the provider 
+"PKG",188,22,1,"PAH",1,1,8,0)
+   when they are expiring. They were not creating alerts correctly for 
+"PKG",188,22,1,"PAH",1,1,9,0)
+   the outpatient paramter.
+"PKG",188,22,1,"PAH",1,1,10,0)
+ 
+"PKG",188,22,1,"PAH",1,1,11,0)
+3) In certain scenarios, when entries to the Orders File (#100) are  
+"PKG",188,22,1,"PAH",1,1,12,0)
+   deleted, there are dangling cross references that are left behind. 
+"PKG",188,22,1,"PAH",1,1,13,0)
+   These cause errors during nightly processing and cprs order views.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","ORB3TIM2")
+0^3^B42852684^B40286221
+"RTN","ORB3TIM2",1,0)
+ORB3TIM2 ; slc/CLA - Routine to trigger time-related notifications ; 11/1/11 11:40am
+"RTN","ORB3TIM2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**102,215,251,265,356**;Dec 17, 1997;Build 6
+"RTN","ORB3TIM2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORB3TIM2",4,0)
+ ;
+"RTN","ORB3TIM2",5,0)
+EXPIR ;trigger expiring order notifs
+"RTN","ORB3TIM2",6,0)
+ N EDT,EXDT,EXORN,ORBDNR,ORPT,ORBRSLT,RXORD,ORLASTDT,X,Y,%DT
+"RTN","ORB3TIM2",7,0)
+ N OIFILE,ORBY,ORBZ,ORBI,ORSCH,ORSCHFIL,ONETIME,ORST,ORNG,ORDT,ORDW,ORHOL
+"RTN","ORB3TIM2",8,0)
+ N EXOI,ORBLST,ORBERR,OITXT,PTLOC,ORSDT,ORNOW,ORLDT
+"RTN","ORB3TIM2",9,0)
+ ;
+"RTN","ORB3TIM2",10,0)
+ S ORNOW=$$NOW^XLFDT
+"RTN","ORB3TIM2",11,0)
+ ;
+"RTN","ORB3TIM2",12,0)
+ I '$D(^XTMP("ORB LAST EXPIRE")) D  ;holds last dt EXPIR processed
+"RTN","ORB3TIM2",13,0)
+ .S ^XTMP("ORB LAST EXPIRE",0)=$$FMADD^XLFDT(ORNOW,7,"","","")_U
+"RTN","ORB3TIM2",14,0)
+ ;
+"RTN","ORB3TIM2",15,0)
+ ;determine number of days to return orders using day of week & holidays
+"RTN","ORB3TIM2",16,0)
+ F ORNG=1:1 D  I ORHOL=0,ORDW=0 Q
+"RTN","ORB3TIM2",17,0)
+ .S ORDW=$S($H-4+ORNG#7>4:1,1:0)          ;if Sat or Sun, ORDW=0
+"RTN","ORB3TIM2",18,0)
+ .S ORDT=$$FMADD^XLFDT(DT,ORNG)
+"RTN","ORB3TIM2",19,0)
+ .K DIC S DIC="^HOLIDAY(",X=ORDT D ^DIC
+"RTN","ORB3TIM2",20,0)
+ .S ORHOL=$S(+$G(Y)>0:1,1:0)              ;if ORDT is a holiday, ORHOL=0
+"RTN","ORB3TIM2",21,0)
+ S %DT="",X="T+"_ORNG D ^%DT
+"RTN","ORB3TIM2",22,0)
+ S EDT=Y_".2400"
+"RTN","ORB3TIM2",23,0)
+ K DIC
+"RTN","ORB3TIM2",24,0)
+ ;
+"RTN","ORB3TIM2",25,0)
+ ;get DNR OIs:
+"RTN","ORB3TIM2",26,0)
+ S OIFILE=$$TERMLKUP^ORB31(.ORBY,"DNR")
+"RTN","ORB3TIM2",27,0)
+ ;
+"RTN","ORB3TIM2",28,0)
+ ;get local admin schedules for ONE TIME MED:
+"RTN","ORB3TIM2",29,0)
+ S ORSCHFIL=$$TERMLKUP^ORB31(.ORBZ,"ONE TIME MED")
+"RTN","ORB3TIM2",30,0)
+ ;
+"RTN","ORB3TIM2",31,0)
+ ;examine expiring orders:
+"RTN","ORB3TIM2",32,0)
+ S ORLASTDT=$P(^XTMP("ORB LAST EXPIRE",0),U,2)
+"RTN","ORB3TIM2",33,0)
+ S EXDT=$S($L(ORLASTDT):ORLASTDT,1:ORNOW)
+"RTN","ORB3TIM2",34,0)
+ F  S EXDT=$O(^OR(100,"AE",EXDT)) Q:(EXDT="")  D  Q:ORBRSLT<0
+"RTN","ORB3TIM2",35,0)
+ .S ORBRSLT=$$FMDIFF^XLFDT(EDT,$P(EXDT,".")_".2400",2)  ;diff in seconds
+"RTN","ORB3TIM2",36,0)
+ .Q:ORBRSLT<0
+"RTN","ORB3TIM2",37,0)
+ .S EXORN="" F  S EXORN=$O(^OR(100,"AE",EXDT,EXORN)) Q:EXORN=""  D
+"RTN","ORB3TIM2",38,0)
+ ..;
+"RTN","ORB3TIM2",39,0)
+ ..;*356 Protect, if x-ref dangles.
+"RTN","ORB3TIM2",40,0)
+ ..I '$D(^OR(100,EXORN)) K ^OR(100,"AE",EXDT,EXORN) Q
+"RTN","ORB3TIM2",41,0)
+ ..;
+"RTN","ORB3TIM2",42,0)
+ ..;Quit if isn't at least next day after order's Date of Last Activity:
+"RTN","ORB3TIM2",43,0)
+ ..S ORLDT=$P(^OR(100,EXORN,3),U)
+"RTN","ORB3TIM2",44,0)
+ ..Q:$$FMDIFF^XLFDT(ORNOW,ORLDT)<1
+"RTN","ORB3TIM2",45,0)
+ ..;
+"RTN","ORB3TIM2",46,0)
+ ..Q:$D(^XTMP("ORB LAST EXPIRE",EXORN))  ;quit if order already processed
+"RTN","ORB3TIM2",47,0)
+ ..S ^XTMP("ORB LAST EXPIRE",EXORN)=EXDT
+"RTN","ORB3TIM2",48,0)
+ ..;
+"RTN","ORB3TIM2",49,0)
+ ..S ORPT=$$PT^ORQOR2(EXORN)   ; get pt assoc w/order
+"RTN","ORB3TIM2",50,0)
+ ..Q:+$G(ORPT)<1
+"RTN","ORB3TIM2",51,0)
+ ..;
+"RTN","ORB3TIM2",52,0)
+ ..Q:+$G(^DPT(ORPT,.35))>0  ; quit if pt deceased - DBIA #10035
+"RTN","ORB3TIM2",53,0)
+ ..;
+"RTN","ORB3TIM2",54,0)
+ ..S PTLOC=$G(^DPT(+$G(ORPT),.1)),PTLOC=$S($L(PTLOC):PTLOC,1:"OUTPT")
+"RTN","ORB3TIM2",55,0)
+ ..;
+"RTN","ORB3TIM2",56,0)
+ ..; is expiring order a DNR order:
+"RTN","ORB3TIM2",57,0)
+ ..I $D(ORBY),(+$G(OIFILE)=101.43) D
+"RTN","ORB3TIM2",58,0)
+ ...F ORBI=1:1:ORBY D
+"RTN","ORB3TIM2",59,0)
+ ....S ORBDNR=$P(ORBY(ORBI),U) I ORBDNR=$$OI^ORQOR2(EXORN) D
+"RTN","ORB3TIM2",60,0)
+ .....S ORST=$P($$STATUS^ORQOR2(EXORN),U,2)
+"RTN","ORB3TIM2",61,0)
+ .....I ORST'="DISCONTINUED",ORST'="COMPLETE",ORST'="EXPIRED",ORST'="CANCELLED",ORST'="DISCONTINUED/EDIT" D
+"RTN","ORB3TIM2",62,0)
+ ......D EN^ORB3(45,ORPT,EXORN,"","",EXORN_"@") ;trigger DNR notif
+"RTN","ORB3TIM2",63,0)
+ ..;
+"RTN","ORB3TIM2",64,0)
+ ..; is expiring order a flagged oi:
+"RTN","ORB3TIM2",65,0)
+ ..S EXOI=$$OI^ORQOR2(EXORN) I +$G(EXOI)>0 D
+"RTN","ORB3TIM2",66,0)
+ ...I $L(PTLOC),PTLOC'="OUTPT" D
+"RTN","ORB3TIM2",67,0)
+ ....D ENVAL^XPAR(.ORBLST,"ORB OI EXPIRING - INPT","`"_EXOI,.ORBERR)
+"RTN","ORB3TIM2",68,0)
+ ....I 'ORBERR,'$G(ORBLST) D ENVAL^XPAR(.ORBLST,"ORB OI EXPIRING - INPT PR","`"_EXOI,.ORBERR)
+"RTN","ORB3TIM2",69,0)
+ ....I 'ORBERR,$G(ORBLST)>0 D
+"RTN","ORB3TIM2",70,0)
+ .....S OITXT=$P(^ORD(101.43,EXOI,0),U)
+"RTN","ORB3TIM2",71,0)
+ .....S ORSDT=$P(^OR(100,EXORN,0),U,8),ORSDT=$$FMTE^XLFDT(ORSDT,"2P")
+"RTN","ORB3TIM2",72,0)
+ .....D EN^ORB3(64,ORPT,EXORN,"","["_PTLOC_"] Order expiring: "_OITXT_" "_ORSDT,EXORN_"@") ;trigger Expiring Flagged OI - INPT notification
+"RTN","ORB3TIM2",73,0)
+ ...;
+"RTN","ORB3TIM2",74,0)
+ ...I $L(PTLOC),PTLOC="OUTPT" D
+"RTN","ORB3TIM2",75,0)
+ ....D ENVAL^XPAR(.ORBLST,"ORB OI EXPIRING - OUTPT","`"_EXOI,.ORBERR)
+"RTN","ORB3TIM2",76,0)
+ ....;*356 Add OUTPT PR 
+"RTN","ORB3TIM2",77,0)
+ ....I 'ORBERR,'$G(ORBLST) D ENVAL^XPAR(.ORBLST,"ORB OI EXPIRING - OUTPT PR","`"_EXOI,.ORBERR)
+"RTN","ORB3TIM2",78,0)
+ ....I 'ORBERR,$G(ORBLST)>0 D
+"RTN","ORB3TIM2",79,0)
+ .....S OITXT=$P(^ORD(101.43,EXOI,0),U)
+"RTN","ORB3TIM2",80,0)
+ .....S ORSDT=$P(^OR(100,EXORN,0),U,8),ORSDT=$$FMTE^XLFDT(ORSDT,"2P")
+"RTN","ORB3TIM2",81,0)
+ .....D EN^ORB3(65,ORPT,EXORN,"","["_PTLOC_"] Order expiring: "_OITXT_" "_ORSDT,EXORN_"@") ;trigger Expiring Flagged OI - OUTPT notification
+"RTN","ORB3TIM2",82,0)
+ ..;
+"RTN","ORB3TIM2",83,0)
+ ..;is expiring order a med order:
+"RTN","ORB3TIM2",84,0)
+ ..S RXORD=$$DGRX^ORQOR2(EXORN)
+"RTN","ORB3TIM2",85,0)
+ ..I $L(RXORD) D  ;if expiring order is a med order
+"RTN","ORB3TIM2",86,0)
+ ...;
+"RTN","ORB3TIM2",87,0)
+ ...N DFN S DFN=ORPT
+"RTN","ORB3TIM2",88,0)
+ ...D ADM^VADPT2
+"RTN","ORB3TIM2",89,0)
+ ...;
+"RTN","ORB3TIM2",90,0)
+ ...I (RXORD="OUTPATIENT MEDICATIONS")!(+$G(VADMVT)<1&(RXORD'="CLINIC ORDERS")) D
+"RTN","ORB3TIM2",91,0)
+ ....D EN^ORB3(72,ORPT,EXORN,"","",EXORN_"@")  ;trigger outpt notif
+"RTN","ORB3TIM2",92,0)
+ ...;
+"RTN","ORB3TIM2",93,0)
+ ...Q:RXORD="OUTPATIENT MEDICATIONS"  ;quit if an outpt med
+"RTN","ORB3TIM2",94,0)
+ ...Q:+$G(VADMVT)<1&(RXORD'="CLINIC ORDERS")  ;quit if an outpt
+"RTN","ORB3TIM2",95,0)
+ ...;
+"RTN","ORB3TIM2",96,0)
+ ...K VADMVT
+"RTN","ORB3TIM2",97,0)
+ ...;
+"RTN","ORB3TIM2",98,0)
+ ...;is schedule for the order a ONE TIME MED:
+"RTN","ORB3TIM2",99,0)
+ ...S ONETIME=0
+"RTN","ORB3TIM2",100,0)
+ ...I $D(ORBZ),(+$G(ORSCHFIL)=51.1) F ORBI=1:1:ORBZ D
+"RTN","ORB3TIM2",101,0)
+ ....S ORSCH=$P(ORBZ(ORBI),U,2)
+"RTN","ORB3TIM2",102,0)
+ ....I ORSCH=$$VALUE^ORCSAVE2(EXORN,"SCHEDULE") S ONETIME=1 Q
+"RTN","ORB3TIM2",103,0)
+ ...Q:+$G(ONETIME)=1  ;quit if one time med
+"RTN","ORB3TIM2",104,0)
+ ...;
+"RTN","ORB3TIM2",105,0)
+ ...;check if this is an IMO order and what it is,send an M.E.-OUTPT alert
+"RTN","ORB3TIM2",106,0)
+ ...I RXORD="CLINIC ORDERS" D  Q
+"RTN","ORB3TIM2",107,0)
+ ....N ORDLG,ORDG,ORDLGNM,FLAG,ORX
+"RTN","ORB3TIM2",108,0)
+ ....S FLAG=0
+"RTN","ORB3TIM2",109,0)
+ ....S ORDLG=$P($G(^OR(100,EXORN,0)),U,5) Q:$P(ORDLG,";",2)'="ORD(101.41,"
+"RTN","ORB3TIM2",110,0)
+ ....S ORDLGNM=$P($G(^ORD(101.41,+ORDLG,0)),U)
+"RTN","ORB3TIM2",111,0)
+ ....S ORDG=$P($G(^ORD(101.41,+ORDLG,0)),U,2)
+"RTN","ORB3TIM2",112,0)
+ ....I ORDLGNM="PSJ OR PAT OE"!(ORDLGNM="PSJI OR PAT FLUID OE") S FLAG=1
+"RTN","ORB3TIM2",113,0)
+ ....I 'FLAG F ORX="INPATIENT MEDICATIONS","IV MEDICATIONS","UNIT DOSE MEDICATIONS","CLINIC ORDERS" I $$UPPER^ORU(ORDG)=ORX D
+"RTN","ORB3TIM2",114,0)
+ .....S FLAG=1
+"RTN","ORB3TIM2",115,0)
+ .....I ORX="IV MEDICATIONS",(+$$IVRENEW(EXORN)=0) S FLAG=0
+"RTN","ORB3TIM2",116,0)
+ .....I ORX="UNIT DOSE MEDICATIONS",(+$$UDRENEW(EXORN,EXDT)=0) S FLAG=0
+"RTN","ORB3TIM2",117,0)
+ ....I FLAG D EN^ORB3(72,ORPT,EXORN,"","",EXORN_"@")  ;trigger outpt notif
+"RTN","ORB3TIM2",118,0)
+ ...;
+"RTN","ORB3TIM2",119,0)
+ ...;quit if inpt/unit dose med and med is not renewable:
+"RTN","ORB3TIM2",120,0)
+ ...I RXORD="UNIT DOSE MEDICATIONS",(+$$UDRENEW(EXORN,EXDT)=0) Q
+"RTN","ORB3TIM2",121,0)
+ ...;
+"RTN","ORB3TIM2",122,0)
+ ...;quit if IV med and med is not renewable:
+"RTN","ORB3TIM2",123,0)
+ ...I RXORD="IV MEDICATIONS",(+$$IVRENEW(EXORN)=0) Q
+"RTN","ORB3TIM2",124,0)
+ ...;
+"RTN","ORB3TIM2",125,0)
+ ...D EN^ORB3(47,ORPT,EXORN,"","",EXORN_"@")  ;trigger notif
+"RTN","ORB3TIM2",126,0)
+ S ^XTMP("ORB LAST EXPIRE",0)=$$FMADD^XLFDT(ORNOW,7,"","","")_U_$$NOW^XLFDT
+"RTN","ORB3TIM2",127,0)
+ D EXCLN(ORNOW)
+"RTN","ORB3TIM2",128,0)
+ Q
+"RTN","ORB3TIM2",129,0)
+UDRENEW(EXORN,EXDT) ;extr function returns 1 if med is renewable, 0 if not
+"RTN","ORB3TIM2",130,0)
+ N ORNOW,ORSLT,ORSTATUS
+"RTN","ORB3TIM2",131,0)
+ S ORSLT=0
+"RTN","ORB3TIM2",132,0)
+ S ORSTATUS=$P($$STATUS^ORQOR2(EXORN),U,2)
+"RTN","ORB3TIM2",133,0)
+ I ORSTATUS="ACTIVE" Q 1  ;renewable if "active"
+"RTN","ORB3TIM2",134,0)
+ I ORSTATUS="HOLD" Q 1   ;renewable if "on hold"
+"RTN","ORB3TIM2",135,0)
+ I ORSTATUS="EXPIRED" D
+"RTN","ORB3TIM2",136,0)
+ .S ORNOW=$$NOW^XLFDT
+"RTN","ORB3TIM2",137,0)
+ .;renewable if expired w/in past 4 days:
+"RTN","ORB3TIM2",138,0)
+ .I $$FMDIFF^XLFDT(ORNOW,EXDT,1)<4 S ORSLT=1
+"RTN","ORB3TIM2",139,0)
+ Q ORSLT
+"RTN","ORB3TIM2",140,0)
+ ;
+"RTN","ORB3TIM2",141,0)
+IVRENEW(EXORN) ;extr function returns 1 if med is renewable, 0 if not
+"RTN","ORB3TIM2",142,0)
+ N ORSLT,ORSTATUS
+"RTN","ORB3TIM2",143,0)
+ S ORSLT=0
+"RTN","ORB3TIM2",144,0)
+ S ORSTATUS=$P($$STATUS^ORQOR2(EXORN),U,2)
+"RTN","ORB3TIM2",145,0)
+ I ORSTATUS="ACTIVE" Q 1   ;renewable if "active"
+"RTN","ORB3TIM2",146,0)
+ I ORSTATUS="HOLD" Q 1   ;renewable if "on hold"
+"RTN","ORB3TIM2",147,0)
+ I ORSTATUS="EXPIRED" Q 1  ;renewable if "expired"
+"RTN","ORB3TIM2",148,0)
+ Q ORSLT
+"RTN","ORB3TIM2",149,0)
+ ;
+"RTN","ORB3TIM2",150,0)
+EXCLN(ORNOW) ;clean up old entires in ^XTMP("ORB LAST EXPIRE")
+"RTN","ORB3TIM2",151,0)
+ N ORN,ORDT
+"RTN","ORB3TIM2",152,0)
+ S ORN=1
+"RTN","ORB3TIM2",153,0)
+ F  S ORN=$O(^XTMP("ORB LAST EXPIRE",ORN)) Q:ORN=""  D
+"RTN","ORB3TIM2",154,0)
+ .S ORDT=$G(^XTMP("ORB LAST EXPIRE",ORN))
+"RTN","ORB3TIM2",155,0)
+ .I $L(ORDT),(ORDT<ORNOW) D
+"RTN","ORB3TIM2",156,0)
+ ..K ^XTMP("ORB LAST EXPIRE",ORN)
+"RTN","ORB3TIM2",157,0)
+ Q
+"RTN","ORQ12")
+0^4^B37558185^B36656064
+"RTN","ORQ12",1,0)
+ORQ12 ; slc/dcm - Get patient orders in context ; 11/1/11 11:39am
+"RTN","ORQ12",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**12,27,78,92,116,190,220,215,243,356**;Dec 17, 1997;Build 6
+"RTN","ORQ12",3,0)
+GET(IFN,NEWD,DETAIL,ACTOR) ; -- Setup TMP array
+"RTN","ORQ12",4,0)
+ ; IFN=ifn of order
+"RTN","ORQ12",5,0)
+ ; NEWD=3rd subscript in ^TMP("ORR",$J, node (ORLIST)
+"RTN","ORQ12",6,0)
+ ; DETAIL=see description in ^ORQ1
+"RTN","ORQ12",7,0)
+ ;
+"RTN","ORQ12",8,0)
+ N X0,X3,X4,X6,TXT,STAT,START,DG,STOP,ENTERD
+"RTN","ORQ12",9,0)
+ S ORLST=ORLST+1,^TMP("ORGOTIT",$J,IFN,+$G(ACTOR))=""
+"RTN","ORQ12",10,0)
+ I '$G(DETAIL) S ^TMP("ORR",$J,NEWD,ORLST)=IFN_$S($G(ACTOR):";"_ACTOR,1:"") Q
+"RTN","ORQ12",11,0)
+ S X0=^OR(100,IFN,0),X3=$G(^(3)),X4=$G(^(4)),X6=$G(^(6))
+"RTN","ORQ12",12,0)
+ S DG=$P(X0,U,11),DG=$P($G(^ORD(100.98,+DG,0)),U,3)
+"RTN","ORQ12",13,0)
+ S STAT=$S($P(X3,U,3):$P(^ORD(100.01,$P(X3,U,3),0),U,1,2),1:"") ;.01^abbr
+"RTN","ORQ12",14,0)
+ S ENTERD=$P(X0,U,7),START=$P(X0,U,8),STOP=$P(X0,U,9)
+"RTN","ORQ12",15,0)
+ ; S FLAGREA=$P(X6,U,7)
+"RTN","ORQ12",16,0)
+ S ^TMP("ORR",$J,NEWD,ORLST)=IFN_$S($G(ACTOR):";"_ACTOR,1:"")_U_DG_U_ENTERD_U_START_U_STOP_U_STAT
+"RTN","ORQ12",17,0)
+ D TEXT(.TXT,IFN) M ^TMP("ORR",$J,NEWD,ORLST,"TX")=TXT
+"RTN","ORQ12",18,0)
+ Q
+"RTN","ORQ12",19,0)
+ ;
+"RTN","ORQ12",20,0)
+TEXT(ORTX,ORIFN,WIDTH) ; -- Returns text of order ORIFN in ORTX(#)
+"RTN","ORQ12",21,0)
+ N OR0,OR3,OR6,X,Y,FIRST,ORI,ORJ,DLG,ORX,ORACT,ORTA
+"RTN","ORQ12",22,0)
+ K ORTX S:'$G(WIDTH) WIDTH=244
+"RTN","ORQ12",23,0)
+ S ORACT=+$P(ORIFN,";",2),ORIFN=+ORIFN
+"RTN","ORQ12",24,0)
+ I ORACT<1 S ORACT=+$P($G(^OR(100,ORIFN,3)),U,7) S:'ORACT ORACT=1
+"RTN","ORQ12",25,0)
+ ;D:$O(^OR(100,ORIFN,1,0)) CNV^ORY92(ORIFN) ;convert text otf
+"RTN","ORQ12",26,0)
+ S OR0=$G(^OR(100,ORIFN,0)),OR3=$G(^(3)),OR6=$G(^(6)),ORX=$G(^(8,ORACT,0))
+"RTN","ORQ12",27,0)
+ S ORTX=1,ORTX(1)=""
+"RTN","ORQ12",28,0)
+ I $P($G(OR0),U,11)'="",($P(^ORD(100.98,$P(OR0,U,11),0),U)="NON-VA MEDICATIONS") S X="Non-VA" D ADD
+"RTN","ORQ12",29,0)
+ G:$G(ORIGVIEW)>1 T1
+"RTN","ORQ12",30,0)
+ S:$P(OR0,U,14)=$O(^DIC(9.4,"C","OR",0)) ORTX(1)=">>" ;generic
+"RTN","ORQ12",31,0)
+ S X=$$ACTION($P(ORX,U,2)) D:$L(X) ADD
+"RTN","ORQ12",32,0)
+ I $P(ORX,U,2)="NW",$P(OR3,U,11),'$G(ORIGVIEW) D  ; Changed or Renewed
+"RTN","ORQ12",33,0)
+ . I $P(OR3,U,11)=2 S X="Renew" D ADD Q
+"RTN","ORQ12",34,0)
+ . N ORIG,ORIGTA S ORIG=+$P(OR3,U,5) Q:'ORIG  Q:$P(OR3,U,11)'=1
+"RTN","ORQ12",35,0)
+ . S X="Change" D ADD S ORI=0
+"RTN","ORQ12",36,0)
+ . I $G(IOST)'="P-OTHER" D
+"RTN","ORQ12",37,0)
+ . .S ORIGTA=$$LASTXT(ORIG) ;D:$O(^OR(100,ORIG,1,0)) CNV^ORY92(ORIG)
+"RTN","ORQ12",38,0)
+ . .F  S ORI=$O(^OR(100,ORIG,8,ORIGTA,.1,ORI)) Q:ORI'>0  S X=$G(^(ORI,0)) S:$E(X,1,3)=">> " X=$E(X,4,999) D ADD
+"RTN","ORQ12",39,0)
+ . .S X=" to" D ADD
+"RTN","ORQ12",40,0)
+T1 S ORTA=+$P(ORX,U,14),FIRST=+$O(^OR(100,ORIFN,8,ORTA,.1,0))
+"RTN","ORQ12",41,0)
+ S ORI=0 F  S ORI=$O(^OR(100,ORIFN,8,ORTA,.1,ORI)) Q:ORI'>0  S X=$G(^(ORI,0)) S:(FIRST=ORI)&($E(X,1,3)=">> ") X=$E(X,4,999) D:$L(X) ADD
+"RTN","ORQ12",42,0)
+ Q:$G(ORIGVIEW)>1  ;contents of global only
+"RTN","ORQ12",43,0)
+ S DLG=$P(OR0,U,5) K Y I DLG,$P(DLG,";",2)["101.41",$D(^ORD(101.41,+DLG,9)) X ^(9) I $L($G(Y)) S X=Y D ADD ; additional text
+"RTN","ORQ12",44,0)
+ ; I $P(OR3,U,11)=2 S X="(Renewal)" D ADD
+"RTN","ORQ12",45,0)
+ I $P(ORX,U,4)=2 S X="*UNSIGNED*" D ADD
+"RTN","ORQ12",46,0)
+ I $P(ORX,U,2)="DC"!("^1^13^"[(U_$P(OR3,U,3)_U)),$L(OR6) S X=" <"_$S($L($P(OR6,U,5)):$P(OR6,U,5),$P(OR6,U,4):$P($G(^ORD(100.03,+$P(OR6,U,4),0)),U),1:"")_">" D:$L(X)>3 ADD ; DC Reason
+"RTN","ORQ12",47,0)
+ I $D(XQAID),$G(ORFLG)=12 S ORX=$G(^OR(100,ORIFN,8,ORACT,3)) I $P(ORX,U) S X=" Flagged "_$$DATETIME($P(ORX,U,3))_$S($P(ORX,U,4):" by "_$$NAME($P(ORX,U,4)),1:"")_": "_$P(ORX,U,5) D ADD ; Flagged - show in FUP
+"RTN","ORQ12",48,0)
+ Q
+"RTN","ORQ12",49,0)
+ ;
+"RTN","ORQ12",50,0)
+LASTXT(IFN)     ; -- Returns action with latest text for order IFN
+"RTN","ORQ12",51,0)
+ N I,Y S Y=1
+"RTN","ORQ12",52,0)
+ S I=0 F  S I=$O(^OR(100,IFN,8,I)) Q:I'>0  S:$O(^(I,.1,0)) Y=I
+"RTN","ORQ12",53,0)
+ Q Y
+"RTN","ORQ12",54,0)
+ ;
+"RTN","ORQ12",55,0)
+LAST(CODE) ; -- Return DA of last occurence of CODE action
+"RTN","ORQ12",56,0)
+ N DA
+"RTN","ORQ12",57,0)
+ I '$L($G(CODE)) S DA=$O(^OR(100,ORIFN,8,"A"),-1) ; last entry
+"RTN","ORQ12",58,0)
+ E  S DA=$O(^OR(100,ORIFN,8,"C",CODE,"?"),-1) ; last CODE entry
+"RTN","ORQ12",59,0)
+ Q DA
+"RTN","ORQ12",60,0)
+ ;
+"RTN","ORQ12",61,0)
+ACTION(X) ; -- Returns text of action X
+"RTN","ORQ12",62,0)
+ N Y
+"RTN","ORQ12",63,0)
+ S Y=$S(X="DC":"Discontinue",X="HD":"Hold",X="RL"&'$G(ORIGVIEW):"Release Hold of",X="FL":"Flag",X="UF":"Unflag",X="RN"&'$G(ORIGVIEW):"Renew",1:"")
+"RTN","ORQ12",64,0)
+ Q Y
+"RTN","ORQ12",65,0)
+ ;
+"RTN","ORQ12",66,0)
+DATETIME(X) ; -- Returns date/time in format 00/00/00@00:00am
+"RTN","ORQ12",67,0)
+ N Y,D,T,T1,Z
+"RTN","ORQ12",68,0)
+ S D=$P(X,"."),T=$E($P(X,".",2)_"0000",1,4),T1=$E(T,1,2),Z="AM"
+"RTN","ORQ12",69,0)
+ S:T1>12 T1=T1-12,Z="PM"
+"RTN","ORQ12",70,0)
+ S Y=$E(D,4,5)_"/"_$E(D,6,7)_"/"_(1700+$E(D,1,3))_"@"_T1_":"_$E(T,3,4)_Z
+"RTN","ORQ12",71,0)
+ Q Y
+"RTN","ORQ12",72,0)
+ ;
+"RTN","ORQ12",73,0)
+NAME(X) ; -- Returns name as Lname,F
+"RTN","ORQ12",74,0)
+ N Y,Z S Z=$P($G(^VA(200,+X,0)),U) Q:Z="" ""
+"RTN","ORQ12",75,0)
+ S Y=$P(Z,",")_"," F I=$F(Z,","):1:$L(Z) I $E(Z,I)'=" " S Y=Y_$E(Z,I) Q
+"RTN","ORQ12",76,0)
+ S Y=$$LOWER^VALM1(Y) ; mixed case
+"RTN","ORQ12",77,0)
+ Q Y
+"RTN","ORQ12",78,0)
+ ;
+"RTN","ORQ12",79,0)
+ADD ; -- Add text X to ORTX()
+"RTN","ORQ12",80,0)
+ N I,Y S Y=$L(ORTX(ORTX)) S:Y Y=Y+1 ;allow for space
+"RTN","ORQ12",81,0)
+ I $E(X)=" ",Y S ORTX=ORTX+1,ORTX(ORTX)="",Y=0,X=$E(X,2,999) ;new line
+"RTN","ORQ12",82,0)
+ I Y+$L(X)'>WIDTH S ORTX(ORTX)=ORTX(ORTX)_$S(Y:" ",1:"")_X Q
+"RTN","ORQ12",83,0)
+ F I=1:1:$L(X," ") S Z=$P(X," ",I) D:(Y+$L(Z))>WIDTH  S ORTX(ORTX)=$G(ORTX(ORTX))_$S(Y:" ",1:"")_Z,Y=$L(ORTX(ORTX)) S:Y Y=Y+1
+"RTN","ORQ12",84,0)
+ . I $L(Z)>WIDTH F  S ORTX(ORTX)=$G(ORTX(ORTX))_$S(Y:" ",1:"")_$E(Z,1,WIDTH-Y),Z=$E(Z,WIDTH-Y+1,999) Q:$L(Z)'>WIDTH  S ORTX=ORTX+1,Y=0
+"RTN","ORQ12",85,0)
+ . S ORTX=ORTX+1,Y=0
+"RTN","ORQ12",86,0)
+ Q
+"RTN","ORQ12",87,0)
+ ;
+"RTN","ORQ12",88,0)
+EXPD ; -- loop through ^XTMP("ORAE" to get expired orders
+"RTN","ORQ12",89,0)
+ K ^TMP("ORGOTIT",$J),^TMP("ORSORT",$J)
+"RTN","ORQ12",90,0)
+ N TM,TO,IFN,X0,X3,X7,X8,USTS,NOW,ACTOR,X,ORREP
+"RTN","ORQ12",91,0)
+ S NOW=+$E($$NOW^XLFDT,1,12),TO=0,SDATE=9999999-SDATE,EDATE=9999999-EDATE
+"RTN","ORQ12",92,0)
+ F  S TO=$O(^XTMP("ORAE",PAT,TO)) Q:'TO  I $D(ORGRP(TO)) S TM=EDATE F  S TM=$O(^XTMP("ORAE",PAT,TO,TM)) Q:'TM!(TM>SDATE)!(+TM<EDATE)  D
+"RTN","ORQ12",93,0)
+ . S IFN=0 F  S IFN=$O(^XTMP("ORAE",PAT,TO,TM,IFN)) Q:'IFN  I ('$D(^TMP("ORGOTIT",$J,IFN))!MULT) D
+"RTN","ORQ12",94,0)
+ .. ;*356 Protect if x-ref dangles.
+"RTN","ORQ12",95,0)
+ .. I '$D(^OR(100,IFN)) K ^XTMP("ORAE",PAT,TO,TM,IFN) Q
+"RTN","ORQ12",96,0)
+ .. S USTS=$P(^OR(100,IFN,3),U,3)
+"RTN","ORQ12",97,0)
+ .. Q:+$G(USTS)'=7  ;quit if order no longer expired
+"RTN","ORQ12",98,0)
+ .. S ORREP=$P(^OR(100,IFN,3),U,6)
+"RTN","ORQ12",99,0)
+ .. Q:+$G(ORREP)>0  ;quit if order has been replaced
+"RTN","ORQ12",100,0)
+ .. S ^TMP("ORSORT",$J,9999999-TM,TO,IFN)=""
+"RTN","ORQ12",101,0)
+ S TM=0 F  S TM=$O(^TMP("ORSORT",$J,TM)) Q:'TM  S TO=0 F  S TO=$O(^TMP("ORSORT",$J,TM,TO)) Q:'TO  D
+"RTN","ORQ12",102,0)
+ .S IFN=0 F  S IFN=$O(^TMP("ORSORT",$J,TM,TO,IFN)) Q:'IFN  I $D(^OR(100,IFN,0)),$D(^(3)) S X0=^(0),X3=^(3) D
+"RTN","ORQ12",103,0)
+ ..S ACTOR=+$P(X3,U,7) D LP1^ORQ11
+"RTN","ORQ12",104,0)
+ ..;S ACTOR=0 F  S ACTOR=$O(^OR(100,"ACT",PAT,9999999-$P(X0,U,7),TO,IFN,ACTOR)) Q:ACTOR<1  I '$D(^TMP("ORGOTIT",$J,IFN,ACTOR)),$D(^OR(100,IFN,8,ACTOR,0)),$P(^(0),U,15)'=13 S X8=^(0),X7=$G(^(7)) D LP1^ORQ11
+"RTN","ORQ12",105,0)
+ S ^TMP("ORR",$J,ORLIST,"TOT")=$G(ORLST)
+"RTN","ORQ12",106,0)
+ K ^TMP("ORSORT",$J),^TMP("ORGOTIT",$J)
+"RTN","ORQ12",107,0)
+ Q
+"RTN","ORQ12",108,0)
+GETEIE(IFN,NEWD,DETAIL,ACTOR) ; -- Setup TMP array
+"RTN","ORQ12",109,0)
+ ; IFN=ifn of order
+"RTN","ORQ12",110,0)
+ ; NEWD=3rd subscript in ^TMP("ORR",$J, node (ORLIST)
+"RTN","ORQ12",111,0)
+ ; DETAIL=see description in ^ORQ1
+"RTN","ORQ12",112,0)
+ ;
+"RTN","ORQ12",113,0)
+ N X0,X3,X4,X6,TXT,STAT,START,DG,STOP,ENTERD,DCREAS
+"RTN","ORQ12",114,0)
+ S X0=^OR(100,IFN,0),X3=$G(^(3)),X4=$G(^(4)),X6=$G(^(6))
+"RTN","ORQ12",115,0)
+ S DG=$P(X0,U,11),DG=$P($G(^ORD(100.98,+DG,0)),U,3)
+"RTN","ORQ12",116,0)
+ S STAT=$S($P(X3,U,3):$P(^ORD(100.01,$P(X3,U,3),0),U,1,2),1:"")
+"RTN","ORQ12",117,0)
+ S ENTERD=$P(X0,U,7),START=$P(X0,U,8),STOP=$P(X0,U,9)
+"RTN","ORQ12",118,0)
+ S DCREAS=$P($G(X6),U,4) Q:DCREAS'>0
+"RTN","ORQ12",119,0)
+ I DCREAS'=$O(^ORD(100.03,"B","Entered in error","")) Q
+"RTN","ORQ12",120,0)
+ S ORLST=ORLST+1,^TMP("ORGOTIT",$J,IFN,+$G(ACTOR))=""
+"RTN","ORQ12",121,0)
+ I '$G(DETAIL) S ^TMP("ORR",$J,NEWD,ORLST)=IFN_$S($G(ACTOR):";"_ACTOR,1:"") Q
+"RTN","ORQ12",122,0)
+ S ^TMP("ORR",$J,NEWD,ORLST)=IFN_$S($G(ACTOR):";"_ACTOR,1:"")_U_DG_U_ENTERD_U_START_U_STOP_U_STAT
+"RTN","ORQ12",123,0)
+ D TEXT(.TXT,IFN) M ^TMP("ORR",$J,NEWD,ORLST,"TX")=TXT
+"RTN","ORQ12",124,0)
+ Q
+"RTN","ORWDXM2")
+0^1^B76657020^B76107854
+"RTN","ORWDXM2",1,0)
+ORWDXM2 ; SLC/KCM - Quick Orders ; 11/1/11 11:30am
+"RTN","ORWDXM2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**10,85,109,116,132,158,187,195,215,243,280,356**;Dec 17, 1997;Build 6
+"RTN","ORWDXM2",3,0)
+ ;
+"RTN","ORWDXM2",4,0)
+ADMTIME(ORDLOC,PATLOC,ENCLOC,DELAY,ISIMO) ;
+"RTN","ORWDXM2",5,0)
+ N ADMLOC,INST,SCHLOC,SCHTYPE
+"RTN","ORWDXM2",6,0)
+ S ADMLOC=+$P($G(ORDIALOG("B","ADMINISTRATION TIMES")),U,2)
+"RTN","ORWDXM2",7,0)
+ I ADMLOC>0,ORDLOC>0,PATLOC'=ORDLOC D  Q
+"RTN","ORWDXM2",8,0)
+ .S INST=0 F  S INST=$O(ORDIALOG(ADMLOC,INST)) Q:+INST'>0  D
+"RTN","ORWDXM2",9,0)
+ ..S ORDIALOG(ADMLOC,INST)=""
+"RTN","ORWDXM2",10,0)
+ I ADMLOC>0,$S(ENCLOC'=PATLOC:1,ISIMO:1,DELAY:1,1:0) D  Q
+"RTN","ORWDXM2",11,0)
+ .S INST=0 F  S INST=$O(ORDIALOG(ADMLOC,INST)) Q:+INST'>0  D
+"RTN","ORWDXM2",12,0)
+ ..S ORDIALOG(ADMLOC,INST)=""
+"RTN","ORWDXM2",13,0)
+ S SCHLOC=+$P($G(ORDIALOG("B","SCHEDULE TYPE")),U,2) Q:SCHLOC'>0
+"RTN","ORWDXM2",14,0)
+ S INST=0 F  S INST=$O(ORDIALOG(SCHLOC,INST)) Q:+INST'>0  D
+"RTN","ORWDXM2",15,0)
+ .S SCHTYP=$G(ORDIALOG(SCHLOC,INST)) Q:SCHTYP=""
+"RTN","ORWDXM2",16,0)
+ .I $S(SCHTYP="P":1,SCHTYP="O":1,SCHTYP="OC":1,1:0),ADMLOC>0 S ORDIALOG(ADMLOC,INST)=""
+"RTN","ORWDXM2",17,0)
+ Q
+"RTN","ORWDXM2",18,0)
+ ;
+"RTN","ORWDXM2",19,0)
+CLRRCL(OK)      ; clear ORECALL
+"RTN","ORWDXM2",20,0)
+ S OK=1
+"RTN","ORWDXM2",21,0)
+ K ^TMP("ORECALL",$J),^TMP("ORWDXMQ",$J)
+"RTN","ORWDXM2",22,0)
+ Q
+"RTN","ORWDXM2",23,0)
+VERTXT ; set verify text for order
+"RTN","ORWDXM2",24,0)
+ N SEQ,DA,X,PROMPT,MULT,CHILD,INST,TITLE,TEMP,ILST,SPACES
+"RTN","ORWDXM2",25,0)
+ N ISADMIN
+"RTN","ORWDXM2",26,0)
+ S ILST=0,$P(SPACES," ",31)=""
+"RTN","ORWDXM2",27,0)
+ S SEQ=0 F  S SEQ=$O(^ORD(101.41,+ORDIALOG,10,"B",SEQ)) Q:SEQ'>0  D
+"RTN","ORWDXM2",28,0)
+ . S DA=0 F  S DA=$O(^ORD(101.41,+ORDIALOG,10,"B",SEQ,DA)) Q:'DA  D
+"RTN","ORWDXM2",29,0)
+ . . S X0=$G(^ORD(101.41,+ORDIALOG,10,DA,0))
+"RTN","ORWDXM2",30,0)
+ . . S ISADMIN=$S(+OREVENT>0:0,ISIMO=1:0,$P($G(^ORD(101.41,$P(X0,U,2),0)),U)="OR GTX ADMIN TIMES":1,1:0)
+"RTN","ORWDXM2",31,0)
+ . . I ISADMIN=1,ORDLOC>0,ORDLOC'=PATLOC Q
+"RTN","ORWDXM2",32,0)
+ . . I $P(X0,U,9)["*",ISADMIN=0 Q
+"RTN","ORWDXM2",33,0)
+ . . S PROMPT=$P(X0,U,2),MULT=$P(X0,U,7),CHILD=$P(X0,U,11) I CHILD,ISADMIN=0 Q
+"RTN","ORWDXM2",34,0)
+ . . Q:'PROMPT  S INST=$O(ORDIALOG(PROMPT,0)) Q:'INST  ; no values
+"RTN","ORWDXM2",35,0)
+ . . S TITLE=$S($L($G(ORDIALOG(PROMPT,"TTL"))):ORDIALOG(PROMPT,"TTL"),1:ORDIALOG(PROMPT,"A"))
+"RTN","ORWDXM2",36,0)
+ . . I $E(ORDIALOG(PROMPT,0))="W" D
+"RTN","ORWDXM2",37,0)
+ . . . N IWP,WP,CNT
+"RTN","ORWDXM2",38,0)
+ . . . S IWP=0,CNT=0
+"RTN","ORWDXM2",39,0)
+ . . . F  S IWP=$O(^TMP("ORWORD",$J,PROMPT,INST,IWP)) Q:'IWP  D
+"RTN","ORWDXM2",40,0)
+ . . . . S CNT=CNT+1,WP(CNT)=^TMP("ORWORD",$J,PROMPT,INST,IWP,0)
+"RTN","ORWDXM2",41,0)
+ . . . I CNT=1 S ILST=ILST+1,LST(ILST)=$J(TITLE,30)_WP(1)
+"RTN","ORWDXM2",42,0)
+ . . . I CNT>1 D 
+"RTN","ORWDXM2",43,0)
+ . . . . S ILST=ILST+1,LST(ILST)=TITLE,IWP=0
+"RTN","ORWDXM2",44,0)
+ . . . . F  S IWP=$O(WP(IWP)) Q:'IWP  S ILST=ILST+1,LST(ILST)=WP(IWP)
+"RTN","ORWDXM2",45,0)
+ . . E  D
+"RTN","ORWDXM2",46,0)
+ . . . S TEMP=$$ITEM^ORCDLG(PROMPT,INST) I TEMP="" Q
+"RTN","ORWDXM2",47,0)
+ . . . S ILST=ILST+1,LST(ILST)=$J(TITLE,30)
+"RTN","ORWDXM2",48,0)
+ . . . ;S LST(ILST)=LST(ILST)_$$ITEM^ORCDLG(PROMPT,INST)
+"RTN","ORWDXM2",49,0)
+ . . . S LST(ILST)=LST(ILST)_TEMP
+"RTN","ORWDXM2",50,0)
+ . . Q:'MULT  Q:'$O(ORDIALOG(PROMPT,INST))  ; done
+"RTN","ORWDXM2",51,0)
+ . . F  S INST=$O(ORDIALOG(PROMPT,INST)) Q:INST'>0  S ILST=ILST+1,LST(ILST)=SPACES_$$ITEM^ORCDLG(PROMPT,INST)
+"RTN","ORWDXM2",52,0)
+ ;*356 Only display SC and TF for orders that are not new.
+"RTN","ORWDXM2",53,0)
+ I $G(ORWMODE) D DISPLAY^ORWDBA3  ;for display of Billing Aware data from orig order
+"RTN","ORWDXM2",54,0)
+ Q
+"RTN","ORWDXM2",55,0)
+RA ; setup environment for radiology
+"RTN","ORWDXM2",56,0)
+ ; -- get imaging types based on display group of quick order and
+"RTN","ORWDXM2",57,0)
+ ;    setup list of imaging locations based on imaging type
+"RTN","ORWDXM2",58,0)
+ N ORY,ITYPE,IFN,CNT,ORIMLOC,PROMPT
+"RTN","ORWDXM2",59,0)
+ S ORDIV=$$DIV^ORCDRA1,ITYPE=$P($G(^ORD(100.98,+ORDG,0)),U,3)
+"RTN","ORWDXM2",60,0)
+ S ORIMTYPE=$O(^RA(79.2,"C",ITYPE,0))
+"RTN","ORWDXM2",61,0)
+ D EN4^RAO7PC1(ITYPE,"ORY")
+"RTN","ORWDXM2",62,0)
+ S (IFN,CNT)=0 F  S IFN=$O(ORY(IFN)) Q:IFN'>0  D
+"RTN","ORWDXM2",63,0)
+ . S CNT=CNT+1,ORIMLOC(CNT)=ORY(IFN),ORIMLOC("B",$P(ORY(IFN),U,2))=IFN
+"RTN","ORWDXM2",64,0)
+ I '$$GET^XPAR("ALL","RA SUBMIT PROMPT",1,"Q"),CNT>1 K ORIMLOC
+"RTN","ORWDXM2",65,0)
+ E  S ORIMLOC=CNT_"^1"
+"RTN","ORWDXM2",66,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX IMAGING LOCATION",0))
+"RTN","ORWDXM2",67,0)
+ I $G(ORIMLOC) M ORDIALOG(PROMPT,"LIST")=ORIMLOC
+"RTN","ORWDXM2",68,0)
+ Q
+"RTN","ORWDXM2",69,0)
+LR ; setup environment for lab
+"RTN","ORWDXM2",70,0)
+ ; -- setup ORTIME, ORIMTIME & ORTEST arrays
+"RTN","ORWDXM2",71,0)
+ ;    setup ORMAX, ORDG, & ORCOLLCT variables
+"RTN","ORWDXM2",72,0)
+ N PROMPT,INST,EDITONLY
+"RTN","ORWDXM2",73,0)
+ D GETIMES^ORCDLR1  ; sets up ORTIME and ORIMTIME arrays
+"RTN","ORWDXM2",74,0)
+ S ORMAX=$$GET^XPAR("ALL^LOC.`"_+ORL,"LR MAX DAYS CONTINUOUS",1,"Q")
+"RTN","ORWDXM2",75,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0)),INST=1
+"RTN","ORWDXM2",76,0)
+ D LRTEST           ; sets up ORTEST array and ORDG
+"RTN","ORWDXM2",77,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX COLLECTION TYPE",0))
+"RTN","ORWDXM2",78,0)
+ I $D(ORDIALOG(PROMPT,1)) S ORCOLLCT=ORDIALOG(PROMPT,1) I 1
+"RTN","ORWDXM2",79,0)
+ E  S EDITONLY=0,ORCOLLCT=$$COLLTYPE^ORCDLR1
+"RTN","ORWDXM2",80,0)
+ I ORCOLLCT="I" D
+"RTN","ORWDXM2",81,0)
+ . S PROMPT=$O(^ORD(101.41,"B","OR GTX START DATE/TIME",0))
+"RTN","ORWDXM2",82,0)
+ . D LRICTMOK
+"RTN","ORWDXM2",83,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ADMIN SCHEDULE",0))
+"RTN","ORWDXM2",84,0)
+ I $D(ORDIALOG(PROMPT,1)) S ORSCH=ORDIALOG(PROMPT,1)
+"RTN","ORWDXM2",85,0)
+ Q
+"RTN","ORWDXM2",86,0)
+LRTEST ; -- Setup ORTEST() array of ordering parameters (copied from ORCDLR)
+"RTN","ORWDXM2",87,0)
+ N OI,TST,DG
+"RTN","ORWDXM2",88,0)
+ S OI=+$G(ORDIALOG(PROMPT,INST)) Q:'OI
+"RTN","ORWDXM2",89,0)
+ I '$D(ORTEST) S TST=+$P($G(^ORD(101.43,OI,0)),U,2) D TEST^LR7OR3(TST,.ORTEST) S ORTEST=TST
+"RTN","ORWDXM2",90,0)
+ S DG=$P($G(^ORD(101.43,+OI,"LR")),U,6) S:'$L(DG) DG="LAB"
+"RTN","ORWDXM2",91,0)
+ S DG=$O(^ORD(100.98,"B",DG,0)) S:DG ORDG=DG
+"RTN","ORWDXM2",92,0)
+ Q
+"RTN","ORWDXM2",93,0)
+LRRQCM()        ; return true if lab test has required comments
+"RTN","ORWDXM2",94,0)
+ I $O(^TMP("ORWORD",$J,PROMPT,INST,0)) Q 1 ; edit via WP
+"RTN","ORWDXM2",95,0)
+ N LRTEST,LRSAMP,LRSPEC,LRTSTN,LRTCOM,LRCCOM,DA,CNT,I,REQDCOMM,OI,TST
+"RTN","ORWDXM2",96,0)
+ S LRSAMP=$$VAL^ORCD("COLLECTION SAMPLE"),LRSPEC=$$VAL^ORCD("SPECIMEN")
+"RTN","ORWDXM2",97,0)
+ S OI=+$G(ORDIALOG(PROMPT,INST)) Q:'OI 0
+"RTN","ORWDXM2",98,0)
+ I '$D(ORTEST) S TST=+$P($G(^ORD(101.43,OI,0)),U,2) D TEST^LR7OR3(TST,.ORTEST) S ORTEST=TST
+"RTN","ORWDXM2",99,0)
+ S LRTSTN=1,LRTEST(1)=+ORTEST,DA=$O(^LAB(60,LRTEST(1),3,"B",+LRSAMP,0))
+"RTN","ORWDXM2",100,0)
+ S REQDCOMM=$P($G(^LAB(60,LRTEST(1),3,+DA,0)),U,6)
+"RTN","ORWDXM2",101,0)
+ S:'REQDCOMM REQDCOMM=+$P($G(^LAB(60,LRTEST(1),0)),U,19)
+"RTN","ORWDXM2",102,0)
+ Q REQDCOMM
+"RTN","ORWDXM2",103,0)
+LRASMP()       ; return true to ask collection sample (from ASKSAMP^ORCDLR)
+"RTN","ORWDXM2",104,0)
+ N DEFSAMP,SAMP0
+"RTN","ORWDXM2",105,0)
+ S DEFSAMP=$G(ORDIALOG(PROMPT,INST)),SAMP0=$G(^LAB(62,+DEFSAMP,0))
+"RTN","ORWDXM2",106,0)
+ I (ORCOLLCT="LC")!(ORCOLLCT="I"),$G(ORTEST("Lab CollSamp")) Q 0
+"RTN","ORWDXM2",107,0)
+ I $G(ORTEST("Unique CollSamp")),DEFSAMP Q 0 ; unique -> don't ask
+"RTN","ORWDXM2",108,0)
+ I 'DEFSAMP!('FIRST) Q 1 ; no default or edit -> ask
+"RTN","ORWDXM2",109,0)
+ I $G(ORDIALOG(PROMPT,"LIST"))="1^1" Q 0 ; only one choice
+"RTN","ORWDXM2",110,0)
+ Q 1
+"RTN","ORWDXM2",111,0)
+LRICTMOK        ;
+"RTN","ORWDXM2",112,0)
+ Q:'$D(ORDIALOG(PROMPT,1))
+"RTN","ORWDXM2",113,0)
+ N ORY
+"RTN","ORWDXM2",114,0)
+ D VALDT^ORWU(.ORY,ORDIALOG(PROMPT,1))
+"RTN","ORWDXM2",115,0)
+ I +$$VALID^LR7OV4(DUZ(2),ORY)=0 S ORDIALOG(PROMPT,1)=""
+"RTN","ORWDXM2",116,0)
+ Q
+"RTN","ORWDXM2",117,0)
+DO ; setup environment for diet order
+"RTN","ORWDXM2",118,0)
+ ; partially copied from EN^ORCDFH
+"RTN","ORWDXM2",119,0)
+ I ORCAT'="I" D  Q
+"RTN","ORWDXM2",120,0)
+ . S ORQUIT=1
+"RTN","ORWDXM2",121,0)
+ . S LST(0)="8^0"
+"RTN","ORWDXM2",122,0)
+ . S LST(.5)="This type of diet may be entered for inpatients only."
+"RTN","ORWDXM2",123,0)
+ D EN^FHWOR8(+ORVP,.ORPARAM)          ; set FH ordering parameters
+"RTN","ORWDXM2",124,0)
+ S:'$L($G(ORPARAM(3))) ORPARAM(3)="T" ; for now
+"RTN","ORWDXM2",125,0)
+ N PROMPT,OI                          ; set NPO flag if NPO diet
+"RTN","ORWDXM2",126,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDXM2",127,0)
+ S OI=+$G(ORDIALOG(PROMPT,1))
+"RTN","ORWDXM2",128,0)
+ S ORNPO=($P($G(^ORD(101.43,OI,0)),U)="NPO")
+"RTN","ORWDXM2",129,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX START DATE/TIME",0))
+"RTN","ORWDXM2",130,0)
+ S X=$G(ORDIALOG(PROMPT,1)) I $L(X) D CNV^ORCDFH1 S ORDIALOG(PROMPT,1)=$G(X)
+"RTN","ORWDXM2",131,0)
+ Q
+"RTN","ORWDXM2",132,0)
+EL ; setup environment for early/late tray
+"RTN","ORWDXM2",133,0)
+ D EN^FHWOR8(+ORVP,.ORPARAM)          ; set FH ordering parameters
+"RTN","ORWDXM2",134,0)
+ S:'$L($G(ORPARAM(3))) ORPARAM(3)="T" ; for now
+"RTN","ORWDXM2",135,0)
+ D EN2^ORCDFH                         ; setup ORTIME array
+"RTN","ORWDXM2",136,0)
+ N PROMPT                             ; set ORMEAL,ORTRAY
+"RTN","ORWDXM2",137,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX MEAL",0))
+"RTN","ORWDXM2",138,0)
+ I $D(ORDIALOG(PROMPT,1)) S ORMEAL=ORDIALOG(PROMPT,1)
+"RTN","ORWDXM2",139,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDXM2",140,0)
+ I $D(ORDIALOG(PROMPT,1)) S ORTRAY=ORDIALOG(PROMPT,1)
+"RTN","ORWDXM2",141,0)
+ Q
+"RTN","ORWDXM2",142,0)
+UD ; setup environment for unit dose med
+"RTN","ORWDXM2",143,0)
+ I $G(ORWP94) G PS^ORWDPS3  ; if patch 94 installed
+"RTN","ORWDXM2",144,0)
+ ;
+"RTN","ORWDXM2",145,0)
+ D AUTHMED Q:$G(ORQUIT)  ; checks authorized to write meds
+"RTN","ORWDXM2",146,0)
+ N PROMPT,OI
+"RTN","ORWDXM2",147,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDXM2",148,0)
+ I $D(ORDIALOG(PROMPT,1)) S OI=ORDIALOG(PROMPT,1) D MEDACTV(1) Q:$G(ORQUIT)
+"RTN","ORWDXM2",149,0)
+ D INSTR^ORCDPS(OI)      ; sets up instructions, routes, etc.
+"RTN","ORWDXM2",150,0)
+ D CHOICES^ORCDPS("U")   ; gets list of dispense drugs       
+"RTN","ORWDXM2",151,0)
+ Q
+"RTN","ORWDXM2",152,0)
+IV ; setup environment for IV fluid
+"RTN","ORWDXM2",153,0)
+ D AUTHMED Q:$G(ORQUIT)  ; checks authorized to write meds
+"RTN","ORWDXM2",154,0)
+ ; sets up list of volumes if only one solution
+"RTN","ORWDXM2",155,0)
+ ; otherwise, let the dialog go interactive
+"RTN","ORWDXM2",156,0)
+ N PROMPT,INST,CNT,OI
+"RTN","ORWDXM2",157,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0))
+"RTN","ORWDXM2",158,0)
+ S (CNT,INST)=0
+"RTN","ORWDXM2",159,0)
+ F  S INST=$O(ORDIALOG(PROMPT,INST)) Q:'INST  D  Q:$G(ORQUIT)
+"RTN","ORWDXM2",160,0)
+ . S CNT=CNT+1
+"RTN","ORWDXM2",161,0)
+ . S OI=ORDIALOG(PROMPT,INST) D MEDACTV(3) ; check active solutions
+"RTN","ORWDXM2",162,0)
+ I CNT=1 S INST=1 D VOLUME^ORCDPSIV
+"RTN","ORWDXM2",163,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ADDITIVE",0))
+"RTN","ORWDXM2",164,0)
+ S INST=0
+"RTN","ORWDXM2",165,0)
+ F  S INST=$O(ORDIALOG(PROMPT,INST)) Q:'INST  D  Q:$G(ORQUIT)
+"RTN","ORWDXM2",166,0)
+ . S OI=ORDIALOG(PROMPT,INST) D MEDACTV(4) ; check active additives
+"RTN","ORWDXM2",167,0)
+ Q
+"RTN","ORWDXM2",168,0)
+OP ; setup environment for outpatient pharmacy
+"RTN","ORWDXM2",169,0)
+ I $G(ORWP94) G PS^ORWDPS3  ; if patch 94 installed
+"RTN","ORWDXM2",170,0)
+ ;
+"RTN","ORWDXM2",171,0)
+ D AUTHMED Q:$G(ORQUIT)       ; checks authorized to write meds
+"RTN","ORWDXM2",172,0)
+ N PROMPT,INST,CNT,OI
+"RTN","ORWDXM2",173,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX ORDERABLE ITEM",0)),OI=0
+"RTN","ORWDXM2",174,0)
+ I $D(ORDIALOG(PROMPT,1)) S OI=$G(ORDIALOG(PROMPT,1)) D MEDACTV(2) Q:$G(ORQUIT)
+"RTN","ORWDXM2",175,0)
+ D:+OI INSTR^ORCDPS(OI)           ; sets up instructions, routes, etc.
+"RTN","ORWDXM2",176,0)
+ D CHOICES^ORCDPS("O")        ; gets list of dispense drugs      
+"RTN","ORWDXM2",177,0)
+ ; get defaults for drug, refills if only one dispense drug
+"RTN","ORWDXM2",178,0)
+ S PROMPT=$O(^ORD(101.41,"B","OR GTX DISPENSE DRUG",0))
+"RTN","ORWDXM2",179,0)
+ S (CNT,INST)=0
+"RTN","ORWDXM2",180,0)
+ F  S INST=$O(ORDIALOG(PROMPT,INST)) Q:'INST  S CNT=CNT+1
+"RTN","ORWDXM2",181,0)
+ I CNT=1 D
+"RTN","ORWDXM2",182,0)
+ . S ORDRUG=+$G(ORDIALOG(PROMPT,1)),ORCOMPLX=0
+"RTN","ORWDXM2",183,0)
+ . S OREFILLS=$P($G(ORDIALOG(PROMPT,"LIST","D",ORDRUG)),U,3)
+"RTN","ORWDXM2",184,0)
+ . S:'$L(OREFILLS) OREFILLS=11
+"RTN","ORWDXM2",185,0)
+ E  S ORCOMPLX=1,OREFILLS=11  ; force interactive on complex order
+"RTN","ORWDXM2",186,0)
+ S ORCOPAY=1                  ; ask SC if can't determine copay
+"RTN","ORWDXM2",187,0)
+ I $G(ORDRUG),$L($T(ASKSC^ORCDPS)) S ORCOPAY=$$ASKSC^ORCDPS
+"RTN","ORWDXM2",188,0)
+ Q
+"RTN","ORWDXM2",189,0)
+AUTHMED ; sets ORQUIT if not authorized to write meds
+"RTN","ORWDXM2",190,0)
+ N NOAUTH,NAME
+"RTN","ORWDXM2",191,0)
+ D AUTH^ORWDPS32(.NOAUTH,ORNP)
+"RTN","ORWDXM2",192,0)
+ I +NOAUTH D
+"RTN","ORWDXM2",193,0)
+ . S ORQUIT=1
+"RTN","ORWDXM2",194,0)
+ . S LST(0)="8^0"
+"RTN","ORWDXM2",195,0)
+ . ; FIX FOR REMEDY 71069, CQ 15917
+"RTN","ORWDXM2",196,0)
+ . S LST(.5)=$P(NOAUTH,U,2)
+"RTN","ORWDXM2",197,0)
+ . ;S NAME=$P($G(^VA(200,+ORNP,20)),U,2)
+"RTN","ORWDXM2",198,0)
+ . ;I '$L(NAME) S NAME=$P($G(^VA(200,+ORNP,0)),U,1)
+"RTN","ORWDXM2",199,0)
+ . ;S LST(.5)=NAME_" is not authorized to write med orders."
+"RTN","ORWDXM2",200,0)
+ Q
+"RTN","ORWDXM2",201,0)
+MEDACTV(USAGE) ; sets ORQUIT if the orderable item is not active for a med
+"RTN","ORWDXM2",202,0)
+ Q:'$G(OI)  S USAGE=+$G(USAGE)
+"RTN","ORWDXM2",203,0)
+ I $G(^ORD(101.43,OI,.1)),^(.1)'>$$NOW^XLFDT D  Q
+"RTN","ORWDXM2",204,0)
+ . S ORQUIT=1,LST(0)="8^0"
+"RTN","ORWDXM2",205,0)
+ . S LST(.5)=$P($G(^ORD(101.43,OI,0)),U)_" has been inactivated and may not be ordered anymore."
+"RTN","ORWDXM2",206,0)
+ I USAGE,'$P($G(^ORD(101.43,OI,"PS")),U,USAGE) D  Q
+"RTN","ORWDXM2",207,0)
+ . S ORQUIT=1,LST(0)="8^0"
+"RTN","ORWDXM2",208,0)
+ . S LST(.5)=$P($G(^ORD(101.43,OI,0)),U)_" may not be ordered as an "_$S(USAGE=1:"inpatient medication",USAGE=2:"outpatient medication",USAGE=3:"IV solution",1:"IV additive")_" anymore."
+"RTN","ORWDXM2",209,0)
+ Q
+"RTN","ORWDXM2",210,0)
+SCHEDULD() ; Is patient scheduled for PREOP (Imaging)
+"RTN","ORWDXM2",211,0)
+ I $G(ORDIALOG(PROMPT,1)) Q 1 ; don't ask - already have date
+"RTN","ORWDXM2",212,0)
+ E  Q 0
+"RTN","ORWDXM2",213,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",8475,6)
+^320
+**END**
+**END**

@@ -1,0 +1,568 @@
+
+=============================================================================
+Run Date: AUG 16, 2013                     Designation: MAG*3*129
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #91                      Status: Released
+                  Compliance Date: SEP 15, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*122   <<= must be installed BEFORE `MAG*3*129'
+
+Subject: CLINICAL CAPTURE ACCUSOFT VERSION UPDATE MAINTENANCE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This document describes MAG*3.0*129, the VistA Imaging Accusoft Version Update
+ Maintenance patch for VistA Imaging (VI) Clinical Capture. 
+  
+ The Veterans Health Information Systems and Technology Architecture (VistA) is
+ an enterprise-wide information system built around an Electronic Health Record
+ (EHR), used throughout the United States Department of Veterans Affairs (VA)
+ medical system, known as the Veterans Health Administration (VHA). About a
+ quarter of the nation's population is potentially eligible for VA benefits and
+ services because they are veterans, family members or survivors of veterans. By
+ providing electronic health records capability, VistA is thereby one of the
+ most widely used EHRs in the world.
+  
+ MAG*3.0*129  upgrades the Clinical Capture application to the latest version of
+ the Accusoft ImageGear components. Accusoft ImageGear is a commercial product
+ used by VI for viewing and manipulation of the images being captured and
+ displayed.
+  
+ Features and fixes of MAG*3.0*129 are summarized below. 
+  
+ *  This patch updates the Accusoft version of Clinical Capture to 16.2.11, the 
+    latest released version, and the same version as Clinical Display.
+  
+ *  Clinical Capture code developed to view and manipulate images using the 
+    older Accusoft Control IG99 is removed. The code and controls created for
+    Clinical Display will be reused in Clinical Capture. 
+        
+ *  The user will be able to display more image types in the capture window than 
+    previously supported, and will not have to use Alternate Viewers as much.
+        
+ *  Clinical Capture annotation functionality is upgraded to the same 
+    annotation functionality in Clinical Display, including the floating 
+    annotation toolbar.
+        
+ *  Clinical Capture now implements the CCOW standard using the Sentillion
+    Vergence Contextor. This enables Clinical Capture to stay in Patient Context
+    with other desktop applications that implement CCOW, most notably Clinical
+    Display and CPRS.
+        
+ *  Prevent users from creating an addendum to an addendum. 
+        
+ *  Provides a new user preference that will allow for the column sizes in the 
+    progress note listing window to be saved as a user preference.
+        
+ *  Corrected an issue which caused the application to time out when attempting 
+    to view TIU notes for a patient. The application will maintain the
+    ability to view all notes for the patient, however it will now display up to
+    100 notes at a time. The user will be prompted to select next.
+        
+ *  Corrects the ability for Free Text Input when using the Clinical Capture 
+    application.
+        
+ *  Allows for the MultiPg Doc option to remain checked when scanning only a 
+    single page.
+  
+ During the installation of MAG*3.0*129, the configuration file (.ini) settings
+ from mag308.ini will be retained in the new mag.ini file. 
+  
+ The capture function of Clinical Capture uses Accusoft to display images.
+ Images that are not viewable using Accusoft controls will continue to be
+ viewable in alternate viewers. In the case of non-visual objects such as wav
+ files, they will be continue to be run/played in the application that is
+ associated with the file format through the operating system.
+  
+ Previous releases have included three client applications in one installation: 
+ Clinical Capture, Clinical Display, and Telereader. 
+  
+ MAG*3.0*129 contains only the Clinical Capture application.
+   
+ Distribution of the Software:
+ =============================
+  
+ The patch can be downloaded from:
+  
+ ftp.imaging.domain.ext/Software/Released_Software/Mag3_0P129
+  
+ This document includes installation instructions.
+  
+ NOTE:  Any late-breaking news about this patch will be found in a readme file.
+        If present, this file will also be located in the MAG3_0P129 directory.
+  
+ Patch Contents:
+ ===============
+  
+ This patch includes the following files:
+  
+ Software:
+  
+ MAG3_0P129.KID - KIDS (Kernel Installation and Distribution System) package
+ to be installed on the VistA System.
+  
+ MAG3_0P129_Clinical_Capture_Setup.exe - Installation file for the Clinical
+ Capture software.
+  
+ MAG3_0P129_Clinical_Capture_install.msi - Installation file for Clinical
+ Capture. 
+  
+ Documentation:
+  
+ MAG_Capture_User_Manual.pdf
+ MAG3_0P129_Installation_Guide_Changes.pdf
+ MAG3_0P129_Technical_Maunal_Change_Pages.pdf
+ MAG3_0P129_Patch_Description.pdf 
+  
+ Associated Patches:
+ ===================
+  
+ Before MAG*3.0*129 is installed, the following patch(es) must be installed. 
+  
+        MAG*3.0*122
+  
+ For a list of all released Imaging (MAG) patches, refer to the patch_list.txt
+ file, which is available on the Imaging FTP server. To locate the file, go to
+ ftp://ftp.imaging.domain.ext. Then, navigate to the \Docs\Imaging_Docs_Latest
+ folder.
+  
+ Test Sites:
+ ===========
+  
+ Fayetteville, NC (Large)
+ Marion, IL (Integrated, Large)
+ West Haven, CT (Integrated, Large)
+ West Palm Beach, FL (Large)
+  
+ Remedy Calls:
+ =============
+  
+ Ticket:  #454036  
+ Problem: Clinical Capture does not maintain Patient context with CPRS when
+ launch from the CPRS application. Users are given the option to not synchronize
+ with patient in CPRS when Clinical Capture is called from CPRS through the
+ "Imaging<->CPRS Link" window. Resynchronizing requires restarting Clinical
+ Capture. Starting Clinical Capture from the desktop allows patient selection so
+ the option is not necessary and can lead to linking images to the wrong
+ patient. 
+  
+ Solution:  Clinical Capture now implements the CCOW standard using the
+ Sentillion Vergence Contextor. This enables Clinical Capture to stay in Patient
+ Context with other desktop applications that implement CCOW, most notably
+ Clinical Display and CPRS.
+  
+ Ticket:  #405910,534317,599111 
+ Problem: When a progress note is completed and an addendum is added, users are
+ then allowed to add an addendum to that already completed addendum. This
+ function is not permitted in CPRS and therefore should not be allowed within
+ Clinical Capture. 
+  
+ Solution :  Remove the ability for a user to create an addendum to an addendum
+ by removing the option from the GUI.
+  
+ Ticket   #240892  
+ Problem: Users requested the ability to save their column widths on the
+ Progress Notes window in their user preferences. 
+  
+ Solution: Allow for column sizes in the Progress Note listing window to be
+ saved as a user preference.
+  
+ Ticket:  #591246 
+ Problems: Clinical Capture times out when displaying a patient record that may
+ contain a long list of TIU notes.
+  
+ Solution:  Set the maximum number of notes to be displayed at 100 per each
+ search. Users will maintain the ability to select as many notes to be displayed
+ as they wish, however Clinical capture will only display a maximum of 100 at a
+ time. When that number of notes has been displayed the user will be prompted to
+ select  get "x" in order to view the remaining notes.  
+  
+ Ticket:  #583686
+ Problems: Clinical Capture allows for free text to be entered in the DICOM
+ Header Data Entry drop down screen. 
+  
+ Solution: Remove the ability to enter free text into those fields. A user must
+ now select an pre-set option (Right, Left, Unpaired, Both Left and Right) from
+ the drop down or leave that field blank. 
+  
+ New Service Requests:
+ =====================
+  
+ There are no new Service Requests associated with this patch.
+  
+ Patient Safety Issues:
+ ======================
+  
+ Patient Safety Issue (PSI) report 1948 regarding VistA Imaging Capture and CCOW
+ is associated with this patch.
+  
+ MAG*3.0*129 Changes:
+ ==================== 
+  
+ Summary:
+  
+ The release of MAG*3.0*129 will maintain all the current functionality of
+ Clinical Capture. Enhancements to Clinical Capture will include the capability
+ of viewing file formats such as PDF, DICOM, text, and TGA using the capture
+ window and the Accusoft display control. The Annotation support in Clinical
+ Capture will be modified to use the Annotation toolbar developed in MAG*3.0*122
+ for Clinical Display. This patch features a CCOW component that will allow
+ users of the Clinical Capture application to maintain patient context with CPRS
+ and Clinical Display. The use of this software without CCOW may requires the
+ user to closely monitor the patient identity. We recommend the use of CCOW to
+ minimize the possibility of human error leading to incorrect identification of
+ the patient.
+  
+ Clinical Capture Changes:
+ =========================
+  
+ Configuration File Changes:
+  
+ Clinical Capture supports both Windows 7 and Windows XP operating systems (OS). 
+ MAG*3.0*129 copies the mag308.ini configurations to the mag.ini file. 
+  
+ The patch places mag.ini in:
+  
+ Windows XP: C:\Documents and settings\All Users\Application Data\Vista\Imaging
+  
+ Windows 7: C:\ProgramData\VistA\Imaging
+  
+ NOTE: With the installation of MAG*3.0*129 all previous configuration settings
+       for Clinical Capture, Clinical Display, and Telereader (if applicable) 
+       from mag308.ini will be retained during the installation of mag.ini. 
+  
+ The business process for capturing images using Clinical Capture will not
+ change in MAG*3.0*129. 
+  
+ Upgrade to Accusoft version 16.2.11:
+  
+ When the application is upgraded to the latest version of Accusoft controls the
+ complexity of maintaining the applications is  greatly reduced. The
+ applications are easier to maintain by having only one set of functions for the
+ display and manipulation of images in Clinical Display and Clinical Capture;
+ and only one set of functions for the annotation of images in Clinical Display
+ and Clinical Capture.
+  
+ The ability to view images in the Clinical Capture application rather than an
+ alternate viewer increases the usability of the application, and the capability
+ to capture images in Adobe PDF format is enabled by this latest version of
+ controls. Future enhancements of TWAIN Device capabilities in Clinical Capture
+ will be enabled because the newer version of Accusoft controls support the
+ latest version of the TWAIN interface.
+  
+ Enhancements for Displaying Progress Notes:
+  
+ Clinical Capture has enhancements for displaying and viewing progress notes. 
+ These include an update that will allow for a user to load 'more' progress
+ notes correcting an issue that would cause the application to time out at the
+ time of retrieval and an updated split screen for displaying unsigned notes
+ that are maintained in separate lists.  
+  
+ Annotations Tool Bar:
+  
+ The controls used in the functionality of the application are being upgraded,
+ including the Annotations toolbar which will be replaced by the one used in 
+ Clinical Display.
+  
+ CCOW Implementation:
+  
+ With the release of MAG*3.0*129, a user will have the ability to directly
+ utilize the CCOW functionalities within the Clinical Capture application and
+ will provide the following functionalities:
+        
+      *  Clinical Capture will maintain patient context and listen for user 
+         change messages in Display and CPRS.
+        
+      * Clinical Capture now has the ability to be launched from CPRS and join
+        CCOW when the same patient has been selected remains context. 
+  
+ VistA System Changes:
+ =====================
+  
+ Data Dictionary:
+ There are no data dictionary changes for MAG*3.0*129.
+  
+ Mail Groups:
+ This patch contains no new or modified mail groups.
+  
+ Forms:
+ This patch contains no new or modified forms.
+  
+ Security Keys:
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures:
+ This patch contains no new remote procedure calls.
+  
+ Menu Options:
+ This patch contains no new menu options.
+  
+ Protocols:
+ This patch contains no new or modified protocols.
+  
+ Templates:
+ This patch contains no new or modified templates
+  
+ Installation :
+ ==============
+  
+ This patch is to be installed on the VistA System and on the clinical
+ workstations.
+  
+ With the release of this patch, the Clinical Capture application supports both
+ Windows 7 and Windows XP operating systems (OS).  The mag308.ini configuration
+ file has been copied to the mag.ini. The mag.ini has been moved to the file
+ path listed below:
+  
+ Windows XP: C:\Documents and settings\All Users\Application Data\Vista\Imaging
+  
+ Windows 7: C:\ProgramData\VistA\Imaging      
+  
+ MAG*3.0*122 is the last Imaging Patch that included all three Clinical GUI
+ applications: Clinical Capture, Clinical Display , and Telereader. 
+  
+ After MAG*3.0*122, patches may or may not have all three applications
+ included. As a result of this change in the distribution of Clinical GUI
+ applications, the version of each of the three applications that in installed
+ on a workstation may be different.
+  
+ MAG*3.0*129 only includes Clinical Capture, so after installing MAG*3.0*129,
+ the workstation will have:
+  
+ Clinical Capture       Version 3.0 Patch 129
+  
+ Clinical Display       Version 3.0 Patch 122
+  
+ Telereader             Version 3.0 Patch 122
+  
+ The user will see what applications are included in the build when they run the
+ install. 
+  
+ For example : 
+  
+      * For MAG*3.0*122, the Installation Message Window included the phrase :
+        'This will install Clinical Display, Clinical Capture and Telereader..'
+        
+      *  For MAG*3.0*129, the Installation Message Window includes the phrase :
+         'This will install the Clinical Capture application..'
+  
+ This patch must be installed by the compliance date to conform with VHA
+ Directive 2001-023.
+  
+ This patch may be loaded while users are on the system. Installation will take
+ less than one minute.
+  
+ Installation Prerequisites:
+  
+ Before installing this patch, you will need to download the MAG*3.0*129 files
+ from the Imaging FTP site to a local storage location.
+  
+ Verify that the patches listed in the section Associated Patches have been 
+ installed.
+  
+ VistA System (KIDS) Installation:
+ =================================
+  
+ Installation Steps:
+  
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+  
+ 2.  Run the Installation option [XPD INSTALLATION MENU].
+  
+ 3.  Load the KIDS file by performing the following steps:
+  
+     a.  Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load the
+         KIDS distribution.
+  
+     b.  When prompted, enter the path and file name (MAG3_0P129.KID) of the
+         Patch 129 KIDS file that you downloaded from the Imaging FTP server.
+  
+     c.  When prompted to continue with the load, enter YES. A Distribution OK!
+         message will be displayed when the load is complete.
+  
+ 4.  After loading the KIDS file, use the following options to verify the 
+     contents of the patch. This is a good point to backup any affected routines.
+  
+     a.  Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this
+         option if you want to ensure the integrity of the routines in the patch.
+  
+     b.  Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+         Run this option if you want to view all changes that will be made when
+         the patch is installed. All components (routines, options, and so on) 
+         in the patch will be compared.
+  
+     c.  Backup a Transport Global [XPD BACKUP] - Run this option if you want to
+         create a backup message of any routines exported with the patch. The 
+         option will NOT back up any of the other changes.
+  
+ 5.  After performing the load and any optional verification steps, install the 
+     KIDS file by performing the following steps:
+   
+     a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+  
+     b.  When prompted for the install name, enter MAG*3.0*129.
+  
+     c.  Answer NO to the following prompts, if they appear:
+  
+         Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+         Want KIDS to INHIBIT LOGONs during the install? NO//
+  
+ 6.  When the installation has finished, an Install Completed message will be 
+     displayed.
+  
+ KIDS Installation Example:
+ ==========================
+  
+ This sample shows the output when the KIDS file is installed for the first
+ time. If you have already installed the patch and are installing the KIDS file
+ in a namespace on which it has previously been installed, your output may be
+ different.
+  
+ Select INSTALL NAME:    MAG*3.0*129    5/16/13@10:21:56
+      => VistA Imaging V3.0 Patch 129 - Clinical Capture Accusoft Version Update
+  
+ This Distribution was loaded on May 16, 2013@10:21:56 with header of 
+    VistA Imaging V3.0 Patch 129 - Clinical Capture Accusoft Version Update
+ Maintenance - Test 18 05/10/2013 01:00PM  ;Created on May 10, 2013@13:00:31
+    It consisted of the following Install(s):
+     MAG*3.0*129
+ Checking Install for Package MAG*3.0*129
+  
+ Install Questions for MAG*3.0*129
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ MAG*3.0*129                                
+  
+  Install Started for MAG*3.0*129 : 
+                May 16, 2013@10:21:59
+  
+ Build Distribution Date: May 10, 2013
+  
+  Installing Routines:
+                May 16, 2013@10:21:59
+  
+  Running Pre-Install Routine: PRE^MAGIP129
+  
+  Running Post-Install Routine: POS^MAGIP129
+  
+ Post Install Mail Message: May 16, 2013@10:21:59
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*129 Installed. 
+                May 16, 2013@10:21:59
+  
+ Install Completed
+                       
+ Clinical Capture Installation:
+ ==============================
+  
+ The Clinical Capture Imaging client software can be updated using one of the
+ methods outlined below:
+  
+      *  Manual Installation
+  
+      *  Automatic Installation using other methods (SMS, PSexec, etc.) 
+  
+ After client installation is complete, log in to an updated workstation, and
+ use the Help | About menu option to verify that the version number is 
+ 3.0.129.16.
+  
+ Manual Installation:
+  
+ The Mag3_0P129_install.exe file can be installed manually on workstations as
+ described in Section "Single Workstation Installation" in the VistA Imaging
+ Installation Guide.
+  
+ Autoupdate Installation:
+  
+ VistA Imaging will no longer support Imaging Autoupdating , and the client
+ applications will not auto update as of the release of this patch.
+  
+ Other Automatic Installation Methods (SMS, PSexec, etc.):
+  
+ The following methods are available to push updated software to multiple
+ workstations:
+        
+      *  Remote push of Mag3_0P129_install.exe using PSexec, and an
+         administrator's account: For details, see section "Remote Push 
+         Installation using PSExec" in the current VistA Imaging Installation 
+         Guide.
+  
+ Remote push using Microsoft SMS or similar remote installation software: Either
+ Mag3_0P129_install.exe or Mag3_0P129_install.msi can be used for this.
+ Installation specifics will vary from site to site. 
+  
+ Uninstalling the Clinical Capture Client:
+  
+ If it is necessary to uninstall the MAG*3.0*129 Client, both MAG*3.0*129 and
+ MAG*3.0*122 will have to be uninstalled and MAG*3.0*122 re-installed to run the
+ MAG*3.0*122 client."
+  
+ If the site has also installed MAG*3.0*127 and/or MAG*3.0*130, it will be
+ necessary to uninstall these patches and reinstall them after reinstalling
+ MAG*3.0*122.
+  
+ For example, If you have MAG*3.0*127 and MAG*3.0*130 and want to uninstall the
+ MAG*3.0*129 Client, you must:
+  
+ Uninstall MAG*3.0*130
+ Uninstall MAG*3.0*129
+ Uninstall MAG*3.0*127
+ Uninstall MAG*3.0*122
+ Reinstall MAG*3.0*122 (to return to the patch 122 Clinical Capture client)
+ Reinstall MAG*3.0*127 (to return to the patch 127 TelerReader client)
+ Reinstall MAG*3.0*130 (to return to the patch 129 Clinical Display client)
+  
+ Routines:
+ =========
+  
+ Please note that the "before" checksum may differ if any test software has been
+ installed. 
+  
+ Routine MAGIPS129 is a post install routine and is deleted after the KIDS
+ install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 4607;May 10, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGGNTI
+    Before: B77235042   After: B78486431  **10,8,59,93,108,122,129**
+Routine Name: MAGGTU4C
+    Before:  B5095269   After:  B5332367  **93,94,106,117,122,129**
+Routine Name: MAGIP129
+    Before:       n/a   After:  B4237639  **129**
+ 
+Routine list of preceding patches: 122
+
+=============================================================================
+User Information:                          Hold Date     : AUG 10, 2013
+Entered By  : KAREDDY,VIJENDER              Date Entered  : NOV 04, 2011
+Completed By: SHOVESTUL,MARYANN             Date Completed: JUL 15, 2013
+Released By : WARK,PATRICK T                Date Released : AUG 16, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
