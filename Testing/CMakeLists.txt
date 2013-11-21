@@ -191,7 +191,7 @@ if(TEST_VISTA_MUNIT)
       foreach(routine ${routines})
         get_filename_component(routine_name ${routine} NAME_WE)
         set(send_commands "${send_commands}VistA.write('D ^${routine_name}')\n")
-        set(send_commands "${send_commands}VistA.wait(PROMPT)\n")
+        set(send_commands "${send_commands}VistA.wait(PROMPT,60)\n")
       endforeach()
       string(REPLACE  " " "_" package_file_name "${package_name}")
       #Configures the python script with the name of the routine
