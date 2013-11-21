@@ -17,13 +17,52 @@
 
 # Remove directories for instance Routines, Objects, Globals, Journals,
 # Temp Files
-# This utility requires root privliges
 
-# Make sure we are root
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root" 1>&2
+# Options
+# instance = name of instance
+# used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
+# for guidance
+usage()
+{
+    cat << EOF
+    usage: $0 options
+
+    This script will remove a VistA instance for GT.M
+
+    OPTIONS:
+      -h    Show this message
+      -i    Instance name
+EOF
+}
+
+while getopts "i:" option
+do
+    case $option in
+        h)
+            usage
+            exit 1
+            ;;
+        i)
+            instance=$(echo $OPTARG |tr '[:upper:]' '[:lower:]')
+            ;;
+    esac
+done
+
+if [[ -z $instance ]]
+then
+    usage
     exit 1
 fi
+
+
+# Make sure we are in the group we need to be to modify the instance
+if [[ $USER -ne $instance ]]; then
+    echo "This script must be run as $instance" 1>&2
+    exit 1
+fi
+
+
+echo "Removing $instance..."
 
 # Find GT.M:
 # Use path of /opt/lsb-gtm we can list the directories
@@ -45,13 +84,6 @@ fi
 # Only one GT.M version found
 export gtmver=$(ls -1 /opt/lsb-gtm/)
 
-# TODO: implement arguments to allow multiple instances, script can probably
-#       handle it
-# $instance must be lowercase - this script depends on it!
-# if $instance must be uppercase that is the exception and the scripts must
-#    uppercase it when necessary
-instance="foia"
-
 # TODO: implement argument for basedir
 # $basedir is the base directory for the instance
 # examples of $basedir are: /home/$instance, /opt/$instance, /var/db/$instance
@@ -68,3 +100,5 @@ source $basedir/etc/env
 
 # Re-create the databases
 $gtm_dist/mupip create
+
+echo "Done removing $instance"

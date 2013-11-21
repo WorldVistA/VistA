@@ -20,7 +20,7 @@ GIT_EXECUTABLE:FILEPATH=/usr/bin/git
 # found errors
 GREP_EXECUTABLE:FILEPATH=/bin/grep
 #GT.M Distribution Directory
-GTM_DIST:PATH=/home/foia/lib/gtm
+GTM_DIST:PATH=$ENV{gtm_dist}
 #Command to build the project
 MAKECOMMAND:STRING=/usr/bin/make -i
 #Path to a program.
@@ -39,15 +39,15 @@ TEST_VISTA_DOX_CALLERGRAPH:BOOL=OFF
 # remove this option, delete the CMake Cache
 TEST_VISTA_FRESH:BOOL=ON
 #Command to run in place of the ImportRG refresh.
-TEST_VISTA_FRESH_CUSTOM_COMMAND:STRING=\"/bin/bash\" \"/usr/local/src/VistA/Scripts/Install/GTM/removeVistaInstanceMinimal.sh\"
+TEST_VISTA_FRESH_CUSTOM_COMMAND:STRING=\"/bin/bash\" \"/vagrant/GTM/removeVistaInstanceMinimal.sh\" \"-i $ENV{instance}\"
 #Use a custom script to refresh the VistA Databases
 TEST_VISTA_FRESH_CUSTOM_REFRESH:BOOL=ON
 #Timeout in seconds for importing globals
 TEST_VISTA_FRESH_GLOBALS_IMPORT_TIMEOUT:STRING=3600
 # Path to the GT.M database.dat
-TEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=/home/foia/g
+TEST_VISTA_FRESH_GTM_GLOBALS_DAT:FILEPATH=$ENV{basedir}/g
 #Path to the Routines folder within GT.M
-TEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=/home/foia/r
+TEST_VISTA_FRESH_GTM_ROUTINE_DIR:PATH=$ENV{basedir}/r
 #Use Python to test VistA via roll and scroll
 TEST_VISTA_FUNCTIONAL_RAS:BOOL=ON
 #Use Python and Sikuli to test Vitals and CPRS
