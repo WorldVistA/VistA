@@ -33,7 +33,7 @@ sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
 from OSEHRAHelper import ConnectToMUMPS,PROMPT
 
 def CheckRPCListener():
-  VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/PostImport1.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
+  VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Temporary/RPCCheck.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
   if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
     VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
   if VistA.type=='cache':
