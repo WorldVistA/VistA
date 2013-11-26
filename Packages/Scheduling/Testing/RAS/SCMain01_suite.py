@@ -61,7 +61,7 @@ def sc_test001(test_suite_details):
         now = datetime.datetime.now()
         hour = now.hour + 1
         SC.signon()
-        SC.checkin(clinic=tclinic, vlist=['Three', str(hour), 'CHECKED-IN:'])
+        SC.checkin(clinic=tclinic, vlist=['Three', str(hour), 'CHECKED'])
         SC.signon()
         SC.checkout(clinic=tclinic, vlist1=['Three', str(hour), 'Checked In'],
                     vlist2=['305.91', 'OTHER DRUG', 'RESULTING'], icd='305.91')
@@ -254,7 +254,7 @@ def sc_test007(test_suite_details):
         now = datetime.datetime.now()
         hour = now.hour + 1
         SC.signon()
-        SC.checkin(clinic=tclinic, vlist=['Five', str(hour), 'CHECKED-IN:'], mult='5')
+        SC.checkin(clinic=tclinic, vlist=['Five', str(hour), 'CHECKED'], mult='5')
         SC.signon()
         SC.checkout(clinic=tclinic, vlist1=['Five', str(hour), 'Checked In'],
                     vlist2=['305.91', 'OTHER DRUG', 'RESULTING'], icd='305.91', mult='5')

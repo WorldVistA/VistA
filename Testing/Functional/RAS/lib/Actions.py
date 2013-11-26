@@ -110,7 +110,7 @@ class Actions (object):
         self.VistA.wait('NPI')
         self.VistA.write('')
         self.VistA.wait('NAME COMPONENTS')
-        self.VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rGMPL MGT MENU\rY\r\r\r\rOR CPRS GUI CHART\rY\r\r\r\rGMV V/M GUI\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r' + acode + '\r' + acode + '\r^Want to edit VERIFY CODE\rY\r' + vcode1 + '\r' + vcode1 + '\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r767\rY\rY\rT\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rE\rY')
+        self.VistA.write('\r\r\r\r\r^PRIMARY MENU OPTION\rXUCOR\r^SECONDARY MENU OPTIONS\rGMPL MGT MENU\rY\r\r\r\rOR CPRS GUI CHART\rY\r\r\r\rGMV V/M GUI\rY\r\r\r\r^Want to edit ACCESS CODE\rY\r' + acode + '\r' + acode + '\r^Want to edit VERIFY CODE\rY\r' + vcode1 + '\r' + vcode1 + '\rVISTA HEALTH CARE\rY\r\r\r\r\r^SERVICE/SECTION\rIRM\r^Language\r\r767\rY\rY\rT\r\r^RESTRICT PATIENT SELECTION\r0\r\rCOR\rY\rT\r\r^MULTIPLE SIGN-ON\r1\r1\r99\r^\rS\rE')
         self.VistA.wait('User Account Access Letter')
         self.VistA.write('NO')
         self.VistA.wait('wish to allocate security keys?')

@@ -457,7 +457,7 @@ class PLActions (Actions):
         self.VistA.write(probnum)
         self.VistA.wait('Are you sure you want to do this?')
         self.VistA.write('YES')
-        self.VistA.wait('Enter RETURN to continue')
+        self.VistA.wait('to continue')
         self.VistA.write('')
 
     def checkempty (self, ssn):

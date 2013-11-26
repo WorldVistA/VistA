@@ -163,7 +163,7 @@ class ADTActions (Actions):
         self.VistA.write('ZZFILEMAN')
         self.VistA.wait('OPTION:')
         self.VistA.write('1')
-        self.VistA.wait('INPUT TO WHAT FILE')
+        self.VistA.wait_re('INPUT TO WHAT FILE')
         self.VistA.write('395')
         self.VistA.wait('EDIT WHICH FIELD')
         self.VistA.write('ALL')
@@ -265,10 +265,10 @@ class ADTActions (Actions):
         self.VistA.wait('CONTINUE//')
         self.VistA.write('C')
         if time is None:
-            self.VistA.wait('NOW//')
+            self.VistA.wait('Select ADMISSION DATE')
             self.VistA.write('NOW')
         else:
-            self.VistA.wait('NOW//')
+            self.VistA.wait('Select ADMISSION DATE')
             self.VistA.write(time)
         self.VistA.wait('AS A NEW ADMISSION DATE')
         self.VistA.write('YES')
@@ -678,7 +678,7 @@ class ADTActions (Actions):
         ''' This method handles lists of lists, so that a series of expect values can be checked before writing'''
         for wwset in dlist:
             for writeitem in wwset[0]:
-                self.VistA.wait_re([writeitem])
+                self.VistA.wait_re(writeitem)
             for expectitem in wwset[1]:
                 self.VistA.write(expectitem)
 
@@ -867,7 +867,7 @@ class ADTActions (Actions):
         self.VistA.wait('No scheduled admissions on file')
         self.VistA.wait('ADT Third Party Output Menu')
         self.VistA.write('Review Document')
-        self.VistA.wait('START WITH DATE')
+        self.VistA.wait_re('START WITH DATE')
         self.VistA.write('')
         self.VistA.wait('DEVICE')
         self.VistA.write('')
@@ -914,7 +914,7 @@ class ADTActions (Actions):
         self.VistA.write('Log of Dispositions')
         self.VistA.wait('I//')
         self.VistA.write('ALL')
-        self.VistA.wait('START WITH LOG IN DATE/TIME: FIRST//')
+        self.VistA.wait_re('START WITH LOG IN DATE/TIME: FIRST//')
         self.VistA.write('')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
@@ -966,7 +966,7 @@ class ADTActions (Actions):
             self.VistA.write('')
         for vitem in ['Enrolled Veterans Report', 'CURRENTLY ENROLLED', 'In Process', 'Total']:
             self.VistA.wait(vitem)
-        rval = self.VistA.multiwait(['Enter RETURN to continue', 'Enrollment Reports'])
+        rval = self.VistA.multiwait(['to continue', 'Enrollment Reports'])
         if rval == 0:
             self.VistA.write('^')
             self.VistA.wait('Enrollment Reports')
@@ -984,7 +984,7 @@ class ADTActions (Actions):
             self.VistA.write('')
         for vitem in ['Pending Applications', 'AppDt', 'Name', 'PatientID', 'DOB']:
             self.VistA.wait(vitem)
-        self.VistA.wait('Enter RETURN to continue or')
+        self.VistA.wait('to continue')
         self.VistA.write('')
         self.VistA.wait('Enrollment Reports')
         self.VistA.write('Enrollees by Status')
@@ -999,7 +999,7 @@ class ADTActions (Actions):
             self.VistA.write('')
         for vitem in ['Enrollments by Status', 'SUMMARY STATISTICS', 'Run Date', 'TOTAL FOR ALL SELECTED FACILITIES']:
             self.VistA.wait(vitem)
-        self.VistA.wait('Enter RETURN to continue or')
+        self.VistA.wait('to continue')
         self.VistA.write('')
         self.VistA.wait('Enrollment Reports')
         self.VistA.write('Upcoming')
@@ -1018,7 +1018,7 @@ class ADTActions (Actions):
             self.VistA.write('')
         for vitem in ['Appointments for Veterans with no Enrollment Application', 'Run Date', 'Name', 'PatientID', 'DOB', 'Appt Dt', 'Enroll Cat']:
             self.VistA.wait(vitem)
-        self.VistA.wait('Enter RETURN to continue or')
+        self.VistA.wait('to continue')
         self.VistA.write('')
         self.VistA.wait('Enrollment Reports')
         self.VistA.write('EGT')

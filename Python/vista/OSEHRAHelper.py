@@ -80,7 +80,7 @@ class ConnectMUMPS(object):
   def getenv(self, volume):
     self.write('D GETENV^%ZOSV W Y')
     if sys.platform == 'win32':
-      match = self.wait_re([volume + ':[0-9A-Za-z-]+'], None)
+      match = self.wait_re(volume + ':[0-9A-Za-z-]+', None)
       test = match[1].span()
       VistAboxvol = ''
       for i in range(test[0], test[1]):
@@ -107,7 +107,7 @@ class ConnectMUMPS(object):
     self.wait('DEVICE')
     if sys.platform == 'win32':
       self.write('\r')
-      match = self.wait_re(['\r\n[0-9]+'], None)
+      match = self.wait_re('\r\n[0-9]+', None)
       test = match[1].span()
       number = ''
       for i in range(test[0], test[1]):
@@ -116,7 +116,7 @@ class ConnectMUMPS(object):
       self.IENumber = number
     else:
       self.write('')
-      self.wait_re(['\n[0-9]+'], None)
+      self.wait_re('\n[0-9]+', None)
       number = self.connection.after
       number = number.lstrip('\r\n')
       self.IENumber = number
@@ -155,7 +155,8 @@ class ConnectWinCache(ConnectMUMPS):
     logging.debug('connection.expect: ' + str(command))
     if command is PROMPT:
       command = self.prompt
-    output = self.connection.expect(command, None)
+    compCommand = re.compile(command,re.I)
+    output = self.connection.expect([compCommand], None)
     self.match = output[1]
     self.before = output[2]
     if output[0] == -1 and output[1] == None:
@@ -248,7 +249,8 @@ class ConnectLinuxCache(ConnectMUMPS):
   def wait_re(self, command, timeout=15):
     logging.debug('connection.expect: ' + str(command))
     if not timeout: timeout = -1
-    self.connection.expect(command, timeout)
+    compCommand = re.compile(command,re.I)
+    self.connection.expect(compCommand, timeout)
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + options)
@@ -334,7 +336,8 @@ class ConnectLinuxGTM(ConnectMUMPS):
   def wait_re(self, command, timeout=None):
     logging.debug('connection.expect: ' + str(command))
     if not timeout: timeout = -1
-    self.connection.expect(command, timeout)
+    compCommand = re.compile(command,re.I)
+    self.connection.expect(compCommand, timeout)
 
   def multiwait(self, options, tout=15):
     logging.debug('connection.expect: ' + str(options))
