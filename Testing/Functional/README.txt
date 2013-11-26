@@ -49,3 +49,30 @@ globals and routines from the OSEHRA codebase.  The script will:
 If using GT.M to connect to CPRS, there is a change that needs to be made to the ZTLOAD1.m routine that removes a block from the intialization of Fileman.
 This change, described here: http://groups.google.com/group/hardhats/browse_thread/thread/f9c2716d7fd17b57/f9c4f09852a8e3db?#f9c4f09852a8e3db , needs to be
 made before running the PostImportScript for GT.M.
+
+-----------------
+***SSH Suport***
+-----------------
+Setup:
+If connecting via SSH, paramiko will need to be installed. See installation notes here: http://www.lag.net/paramiko/
+For linux, installing the python package is suffecient. However for Windows, pre-complied PyCrpto libraries are needed to be installed too: http://www.voidspace.org.uk/python/modules.shtml#pycrypto
+
+SSH tests will fail in ctest if paramiko is not setup correctly.
+
+Usage:
+For a python test script to connect to VistA via SSH, the .cfg file (Windows INI format) must be present, in the same directory as the python test script. For a python test script 'example_01_test.py', it's configuration file must be named 'example_01.cfg'. In the configuration file, the 'RemoteConnect' option must be set to 1, setting it to 0 will toggle it off such that it acts as a normal telnet or pexpect connect.
+
+Example configuration file name:
+example_01_suite.py
+example_01_test.py
+example_01.cfg
+
+Example configuration file contents:
+[RemoteDetails]
+RemoteConnect=1
+ServerLocation=test.instance.org
+SSHUsername=user
+SSHPassword=password
+Instance=cache
+UseDefaultNamespace=1
+Namespace= ; Leave empty since not using
