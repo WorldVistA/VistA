@@ -1,0 +1,216 @@
+$TXT Created by MARSHALL,RICK at KERNEL.MUMPS.ORG  (KIDS) on Tuesday, 08/16/2013 at 15:30
+=============================================================================
+Run Date: SEP 06, 2013                      Designation: XWB*1.1*991
+Package : XWB - RPC BROKER                    Priority: EMERGENCY
+Version : 1.1        SEQ #46                    Status: Released
+                  Compliance Date: SEP 30, 2013
+=============================================================================
+ 
+Associated patches: (v)XWB*1.1*28  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*41  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*34  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*43  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*45  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*49  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*53  <<= must be installed BEFORE `XU*8*522'
+                    (v)XWB*1.1*35  <<= must be installed BEFORE `XU*8*522'
+ 
+Subject: M2M Security Fixes Part 1
+ 
+Category: 
+  - Routine
+  - Other
+ 
+Source: OSEHRA (http://www.osehra.org)
+  
+  This is NOT a VA patch. It was developed by an OSEHRA working group,
+  the Special Software Enhancement Project. Check with your VISTA support
+  experts before installing this patch.
+ 
+ 
+Description:
+============
+ Recently, a software vulnerability was identified in VISTA. The
+ vulnerability would allow hackers to gain access to VISTA code and data
+ through Remote Procedure Calls (RPCs).
+ 
+ Patch XWB*1.1*991 fixes the vulnerability. The patch makes five kinds of
+ changes to the broker:
+   1. Security improvements
+   2. New VISTA parameter: XWBM2M
+   3. M2M Broker now responds properly to VISTA parameter XWBDEBUG
+   4. Improved support for the broker on GT.M on Linux
+   5. General cleanup, annotation, and debugging
+             
+ To limit the ability of hackers to discover and exploit the
+ vulnerability, we are keeping its exact nature confidential until we are
+ sure that most sites are protected. More information about the
+ vulnerability, and what was done to patch it, will be released in a
+ future patch.
+ 
+ The patch introduces a new parameter: XWBM2M. This parameter can be set
+ to "No, Disabled" ONLY at sites that are NOT using software that depends
+ on the M-to-M Broker (such as VISTA Imaging). If your site IS using
+ software that depends on the M-to-M Broker (such as VISTA Imaging), you
+ should leave this parameter set to the default of "Yes, Enabled."
+ 
+ Package Elements Included:
+ ==========================
+ Routine XWBDLOG is used for Broker debug logging.
+ Routine XWBM2MC is the M-to-M Broker client routine.
+ Routine XWBP991 is the post-install for this patch.
+ Routine XWBRL is the M-to-M Broker socket manager (link methods).
+ Routine XWBRM is the M-to-M Broker request manager.
+ Routine XWBRMX is the M-to-M Broker XML message parser.
+ Routine XWBRPC is the M-to-M Broker parsed-message request handler.
+ Routine XWBTCPM is the RPC Broker main routine.
+ Routine XWBUTL is the M-to-M Broker utilities library.
+ Routine XWBVLL is the M-to-M Broker listener.
+ Parameter Definition XWBM2M is the M-to-M Broker Enabled? parameter.
+ 
+ Documentation Changes:
+ ======================
+ The most up-to-date Remote Procedure Call (RPC) Broker end-user documentation
+ is available on the VHA Software Document Library (VDL) at the following
+ Internet Website: http://www.va.gov/vdl/application.asp?appid=23 
+ 
+ NOTE: VISTA documentation is made available online in Microsoft Word format
+ (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+ 
+ Although this patch introduces a new parameter and changes to several
+ routines, for security reasons the RPC Broker documentation will not be
+ updated until part two of this series of patches is released.
+  
+ Test Sites:
+ ==========
+ Oroville Hospital (Linux/GT.M)
+ 
+ Remedy Tickets:
+ ==============
+ none
+ 
+ Blood Bank Team Coordination: 
+ =============================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*991 contains
+ changes to a package referenced in VHA OI SEPG SOP 192-023 Review of VISTA
+ Patches for Effects on VISTA Blood Bank Software. This patch does not alter or
+ modify any VISTA Blood Bank software-design safeguards or safety-critical
+ elements or functions.
+ 
+ RISK ANALYSIS: Changes made by patch XWB*1.1*991 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ Installation Instructions: 
+ ==========================
+ 1. ***IMPORTANT*** If your site is running the DICOM Gateway, then before
+    you disable broker services in step 2, close the connection on the DICOM
+    Gateway side, to avoid generating errors there while broker services are
+    down. If your DICOM Gateway serves a group of hospitals rather than just
+    yours, then you will need to coordinate the simultaneous installation of
+    this patch at all the sites in your group.
+ 
+ 2. The patch should be installed when users are off the system and broker
+    services are disabled.
+ 
+ 3. You DO NOT need to stop Taskman or the background filers.
+ 
+ 4. On the KIDS menu, under the Installation menu, use the following options:
+ 
+    Load a Distribution
+    Verify Checksums in Transport Global
+    Print Transport Global
+    Compare Transport Global to Current System
+    Backup a Transport Global
+ 
+ 5. On the KIDS menu, under the Installation menu, use the following option:
+ 
+    Install Package(s)
+    Select INSTALL NAME: XWB*1.1*991
+ 
+    Install Questions for XWB*1.1*991
+ 
+    Want KIDS to INHIBIT LOGONs during the install? YES//
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+     Install Started for XWB*1.1*991 :
+                   Aug 20, 2013@13:12:51
+ 
+    Build Distribution Date: Aug 19, 2013
+ 
+     Installing Routines:
+                   Aug 20, 2013@13:12:51
+ 
+     Installing PACKAGE COMPONENTS:
+ 
+     Installing PARAMETER DEFINITION
+                   Aug 20, 2013@13:12:51
+ 
+     Running Post-Install Routine: POST^XWBP991
+ 
+       Parameter XWBM2M set to default of Yes, Enabled.
+ 
+     Updating Routine file...
+ 
+     Updating KIDS files...
+ 
+     XWB*1.1*991 Installed.
+                   Aug 20, 2013@13:12:51
+ 
+     NO Install Message sent 
+ 
+ 6. If your site is NOT running software that depends on the M-to-M Broker
+    (such as VISTA Imaging), set the XWBM2M parameter to 'No, Disabled' as
+    described in the Description section above.
+ 
+ 7. Let users back on the system and enable broker services.
+ 
+ 8. If your site is running the DICOM Gateway, then re-open the connection on
+    the DICOM Gateway side.
+ 
+ Install Completed
+ 
+ 
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 28, 1997;Build 3
+ 
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+ 
+Routine Name: XWBDLOG
+    Before:   B6484698   After:  B17906363  **35,991**
+Routine Name: XWBM2MC
+    Before:   B58578138   After:  B63427122  **28,34,991**
+Routine Name: XWBP991
+    Before:        n/a   After:  B1514642  **991**
+Routine Name: XWBRL
+    Before:  B13318398   After:  B24123947  **28,34,991**
+Routine Name: XWBRM
+    Before:  B13950171   After:  B10532495  **28,45,991**
+Routine Name: XWBRMX
+    Before:  B7578330   After:  B6795392  **28,991**
+Routine Name: XWBRPC
+    Before:  B59522634   After:  B180526853  **28,34,991**
+Routine Name: XWBTCPM
+    Before:  B56306340   After:  B84873953  **35,43,49,53,991**
+Routine Name: XWBUTL
+    Before:  B10435731   After:  B19872185  **28,34,991**
+Routine Name: XWBVLL
+    Before:  B15486790   After:  B24429511  **28,41,34,991**
+ 
+Routine list of preceding patches: 28, 34, 35, 45, 53
+ 
+ 
+=============================================================================
+User Information:
+Entered By  : MARSHALL,RICK                 Date Entered  : AUG 16, 2013
+Completed By: IVEY,JOEL                     Date Completed: AUG 22, 2013
+Released By : EDWARDS,CHRISTOPHER           Date Released : SEP 10, 2013
+=============================================================================
+ 
+ 
+Packman Mail Message:
+=====================
+ 
+$END TXT
