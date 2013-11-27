@@ -253,7 +253,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     self.connection.expect(compCommand, timeout)
 
   def multiwait(self, options, tout=15):
-    logging.debug('connection.expect: ' + options)
+    logging.debug('connection.expect: ' + str(options))
     if isinstance(options, list):
       index = self.connection.expect(options, tout)
       if index == -1:
