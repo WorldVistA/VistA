@@ -24,7 +24,8 @@ MUMPS database will be utilized:
 Caché:
 
   * InstallCache_
-  * ImportCache_
+  * If you are using a downloaded CACHE.DAT file, see InstallCacheDat_
+  * To import from the OSEHRA VistA-M Repository, see ImportCache_
 
 GT.M:
 
@@ -53,6 +54,7 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 .. _ObtainingVistAMCode: ObtainingVistAMCode.rst
 .. _ChoosingMUMPSEnvironment: ChoosingMUMPSEnvironment.rst
 .. _InstallCache: InstallCache.rst
+.. _InstallCacheDat: InstallCacheDat.rst
 .. _ImportCache: ImportCache.rst
 .. _InstallGTM: InstallGTM.rst
 .. _ImportGTM: ImportGTM.rst
