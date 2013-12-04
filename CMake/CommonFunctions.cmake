@@ -75,15 +75,20 @@ endfunction()
 # Define a function for parsing and reporting munit output results
 function(ReportUnitTestResult PACKAGE_NAME DIRNAME OUTPUT)
    set(test_passed TRUE)
+   set(routine_name "NONE")
    foreach (line ${OUTPUT})
-     if(line MATCHES "^[^\\^]+>D \\^ZZUT[A-Z0-9]+")
-       string(REGEX MATCH "ZZUT[A-Z0-9]+$" routine_name "${line}")
-     elseif(line MATCHES "^ ?[^\\^]+\\^ZZUT[A-Z0-9]+")
+     # Matches the command that runs the test, keeps the routine name
+     if(line MATCHES ">D \\^[A-Z0-9]+")
+       string(REGEX MATCH "[A-Z0-9]+$" routine_name "${line}")
+     # Captures and prints the failure message
+     elseif(line MATCHES "^ ?[^\\^]+\\^${routine_name}+")
        message("${routine_name}: ${line}")
        set(test_passed FALSE)
+     # Matches the first part of the results line, checking for test failures
      elseif(line MATCHES "^ ?Checked.*, with [1-9]+ failure")
        message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
        set(test_passed FALSE)
+     # Matches the second part of the results line, checking for errors
      elseif(line MATCHES "encountered [1-9]+ error")
        message("M Error(s) encountered in ${routine_name} in package ${PACKAGE_NAME}")
        set(test_passed FALSE)
