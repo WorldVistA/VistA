@@ -35,8 +35,13 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   config.vm.synced_folder "../", "/vagrant"
 
-  # Amazon EC2 configuration
+  # Define primary box name for all VM providers
+  # More VMs could be added here to build a multi-box install and provision
+  # accordingly
+  config.vm.define "OSEHRA VistA", primary: true do |vista|
+  end
 
+  # Amazon EC2 configuration
   config.vm.provider :aws do |aws, override|
     aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
     aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
@@ -46,6 +51,17 @@ Vagrant.configure("2") do |config|
     override.vm.box = "dummy"
     override.ssh.username = "ubuntu"
     override.ssh.private_key_path = ENV['AWS_PRIVATE_KEY']
+  end
+
+  # Rackspace Cloud configuration
+  config.vm.provider :rackspace do |rs, override|
+    rs.username = ENV['RS_USERNAME']
+    rs.api_key = ENV['RS_API_KEY']
+    rs.flavor = /512MB/
+    rs.image = /Ubuntu 12.04/
+    rs.rackspace_region = :ord
+    rs.public_key_path = ENV['RS_PUBLIC_KEY']
+    override.ssh.private_key_path = ENV['RS_PRIVATE_KEY']
   end
 
   # Provider-specific configuration so you can fine-tune various
