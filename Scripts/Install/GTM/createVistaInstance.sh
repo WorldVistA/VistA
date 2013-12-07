@@ -25,6 +25,45 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Options
+# instance = name of instance
+# used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
+# for guidance
+
+usage()
+{
+    cat << EOF
+    usage: $0 options
+
+    This script will create a VistA instance for GT.M
+
+    OPTIONS:
+      -h    Show this message
+      -i    Instance name
+EOF
+}
+
+while getopts "i:" option
+do
+    case $option in
+        h)
+            usage
+            exit 1
+            ;;
+        i)
+            instance=$(echo $OPTARG |tr '[:upper:]' '[:lower:]')
+            ;;
+    esac
+done
+
+if [[ -z $instance ]]
+then
+    usage
+    exit 1
+fi
+
+echo "Creating $instance..."
+
 # Determine processor architecture - used to determine if we can use GT.M
 #                                    Shared Libraries
 # Default to x86 (32bit) - algorithm similar to gtminstall script
@@ -55,13 +94,6 @@ fi
 # Only one GT.M version found
 gtm_dist=/opt/lsb-gtm/$(ls -1 /opt/lsb-gtm/)
 gtmver=$(ls -1 /opt/lsb-gtm/)
-
-# TODO: implement arguments to allow multiple instances, script can probably
-#       handle it
-# $instance must be lowercase - this script depends on it!
-# if $instance must be uppercase that is the exception and the scripts must
-#    uppercase it when necessary
-instance="foia"
 
 # TODO: implement argument for basedir
 # $basedir is the base directory for the instance
@@ -101,9 +133,13 @@ echo "export PATH=\$PATH:\$gtm_dist"            >> $basedir/etc/env
 echo "export basedir=$basedir"                  >> $basedir/etc/env
 echo "export gtm_arch=$gtm_arch"                >> $basedir/etc/env
 echo "export gtmver=$gtmver"                    >> $basedir/etc/env
+echo "export instance=$instance"                >> $basedir/etc/env
 
 # Ensure correct permissions for env
 chown $instance:$instance $basedir/etc/env
+
+# Source envrionment in bash shell
+echo "source $basedir/etc/env" >> $basedir/.bashrc
 
 # Setup base gtmroutines
 gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
@@ -167,3 +203,5 @@ su $instance -c "source $basedir/etc/env && \$gtm_dist/mupip create"
 # Set permissions
 chown -R $instance:$instance $basedir
 chmod -R g+rw $basedir
+
+echo "Done creating $instance"
