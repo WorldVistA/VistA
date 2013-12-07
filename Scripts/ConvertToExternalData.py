@@ -36,6 +36,7 @@ VALID_KIDS_BUILD_SUFFIX_LIST = (".KIDs", "KIDS", ".KID", ".kids", ".kid")
 VALID_PATCH_INFO_SUFFIX_LIST = (".TXTs",".TXT",".txt","txts")
 VALID_CSV_FILE_SUFFIX_LIST = (".csv",".CSV")
 VALID_GLOBAL_FILE_SUFFIX_LIST = (".GBLs", ".GBL")
+VALID_ROUTINE_IMPORT_FILE_SUFFIX_LIST = (".RSA", "rsa", ".RO", ".ro")
 VALID_HEADER_FILE_SUFFIX_LIST = (".json",".JSON")
 VALID_SHA1_FILE_SUFFIX_LIST = (".SHA1",".sha1")
 
@@ -53,6 +54,10 @@ VALID_PATCH_INFO_SHA1_SUFFIX_LIST = tuple(
 
 VALID_GLOBAL_SHA1_SUFFIX_LIST = tuple(
   [x+y for x in VALID_GLOBAL_FILE_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
+)
+
+VALID_ROUTINE_SHA1_SUFFIX_LIST = tuple(
+  [x+y for x in VALID_ROUTINE_IMPORT_FILE_SUFFIX_LIST for y in VALID_SHA1_FILE_SUFFIX_LIST]
 )
 
 """
@@ -73,6 +78,9 @@ def isValidPatchInfoSuffix(fileName):
 def isValidGlobalFileSuffix(fileName):
   return fileName.endswith(VALID_GLOBAL_FILE_SUFFIX_LIST)
 
+def isValidRoutineFileSuffix(fileName):
+  return fileName.endswith(VALID_ROUTINE_IMPORT_FILE_SUFFIX_LIST)
+
 def isValidKIDSBuildHeaderSuffix(fileName):
   return fileName.endswith(VALID_KIDS_BUILD_HEADER_SUFFIX_LIST)
 
@@ -85,6 +93,9 @@ def isValidPatchInfoSha1Suffix(fileName):
 def isValidGlobalSha1Suffix(fileName):
   return fileName.endswith(VALID_GLOBAL_SHA1_SUFFIX_LIST)
 
+def isValidRoutineSha1Suffix(fileName):
+  return fileName.endswith(VALID_ROUTINE_SHA1_SUFFIX_LIST)
+
 def isValidCSVSuffix(fileName):
   return fileName.endswith(VALID_CSV_FILE_SUFFIX_LIST)
 
@@ -92,6 +103,7 @@ def isValidPatchDataSuffix(fileName, includeExternalExt=False):
   isValid = ( isValidKIDSBuildSuffix(fileName)  or
               isValidPatchInfoSuffix(fileName)   or
               isValidGlobalFileSuffix(fileName) or
+              isValidRoutineFileSuffix(fileName) or
               isValidCSVSuffix(fileName)        or
               isValidPythonSuffix(fileName)
             )
@@ -99,7 +111,9 @@ def isValidPatchDataSuffix(fileName, includeExternalExt=False):
     isValid = isValid or (isValidKIDSBuildHeaderSuffix(fileName) or
                           isValidKIDSBuildSha1Suffix(fileName) or
                           isValidPatchInfoSha1Suffix(fileName) or
-                          isValidGlobalSha1Suffix(fileName))
+                          isValidGlobalSha1Suffix(fileName) or
+                          isValidRoutineSha1Suffix(fileName)
+                          )
   return isValid
 
 def isValidPatchRelatedFiles(absFileName, checkExternalExt=False):
