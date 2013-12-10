@@ -4,8 +4,9 @@
 .. role:: usertype
     :class: usertype
 
-To prepare the M components for import into the VistA instance, follow the steps
-found in the PrepareMComponents_ document.
+To acquire the VistA-M source tree, follow the instructions in
+ObtainingVistAMCode_.  To prepare the M components for import into the VistA
+instance, follow the steps found in the PrepareMComponents_ document.
 
 .. _PrepareMComponents: PrepareMComponents.rst
 
@@ -30,8 +31,8 @@ purposes, we will assume that the namespace is called \"VISTA\".
   USER> :usertype:`D ^%CD`
 
   Namespace: :usertype:`VISTA`
-  Youre in namespace VISTA
-  Default directory is c:\intersystems\trycache\mgr\vista\
+  You're in namespace VISTA
+  Default directory is c:\\intersystems\\trycache\\mgr\\vista\\
   VISTA>
 
 
@@ -280,3 +281,4 @@ prompt, enter \"\|TRM\|:\|\", press enter until the VISTA prompt is reached.
   Select OPTION:  :usertype:`<ENTER>`
 
   VISTA>
+.. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst

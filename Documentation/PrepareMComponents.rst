@@ -4,6 +4,9 @@ Prepare M source for Import into instance
 .. role:: usertype
     :class: usertype
 
+To acquire the VistA-M source tree, follow the instructions in
+ObtainingVistAMCode_
+
 Within the VistA-M source tree, there is a Packages folder which contains all of
 the VistA M components divided by package name. Inside each package directory
 lies a 'Routines' directory and a 'Globals' directory. The 'Routines' directory
@@ -33,3 +36,4 @@ called 'globals.lst'. This 'globals.lst' will be read by the OSEHRA ZGI routine
 during a later import step.
 
 .. _`VistA Testing Source Repository`: http://code.osehra.org/VistA.git
+.. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst

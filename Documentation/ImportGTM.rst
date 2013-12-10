@@ -4,7 +4,9 @@
 .. role:: usertype
     :class: usertype
 
-To prepare the M components for import into the VistA instance, follow the steps found in the PrepareMComponents_ document.
+To acquire the VistA-M source tree, follow the instructions in
+ObtainingVistAMCode_.  To prepare the M components for import into the VistA
+instance, follow the steps found in the PrepareMComponents_ document.
 
 .. _PrepareMComponents: PrepareMComponents.rst
 
@@ -214,3 +216,5 @@ Note: The NAME OF MANAGER'S UCI, VOLUME SET and PRODUCTION (SIGN-ON) UCI,VOLUME 
 It will load and save some other routines, then ask if you \"Want to rename the FileMan routines:.\" We answer this option with a YES. The routine then loads three more routines, checks the % globals, and exits. Now you are ready to start testing the OSEHRA Code base.
 
 Some developers have encountered errors being displayed during the configuation process.  See the second entry on the Troubleshooting Page to see if the errors are the same and find any solutions.
+
+.. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst
