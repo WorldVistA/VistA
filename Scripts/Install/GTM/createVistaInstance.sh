@@ -105,6 +105,12 @@ basedir=/home/$instance
 # $instance group is for permissions to other users
 # $instance group is auto created by adduser script
 useradd -c "$instance instance owner" -m -U $instance -s /bin/bash
+useradd -c "Tied user account for $instance" -M -N -g $instance -s /home/$instance/bin/tied.sh -d /home/$instance ${instance}tied
+useradd -c "Programmer user account for $instance" -M -N -g $instance -s /home/$instance/bin/prog.sh -d /home/$instance ${instance}prog
+
+# Change password for tied accounts
+echo ${instance}tied:tied | chpasswd
+echo ${instance}prog:prog | chpasswd
 
 # Make instance Directories
 su $instance -c "mkdir -p $basedir/{p,p/$gtmver,s,s/$gtmver,r,r/$gtmver,g,j,etc,etc/xinetd.d,log,tmp,bin,lib,www,backup}"
@@ -158,15 +164,20 @@ fi
 
 # prog.sh - priviliged (programmer) user access
 # Allow access to ZSY
+echo "#!/bin/bash"                              >> $basedir/bin/prog.sh
+echo "source $basedir/etc/env"                  >> $basedir/bin/prog.sh
+echo "export SHELL=/bin/bash"                   >> $basedir/bin/prog.sh
 echo "#These exist for compatibility reasons"   >> $basedir/bin/prog.sh
 echo "alias gtm=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
 echo "alias GTM=\"\$gtm_dist/mumps -dir\""      >> $basedir/bin/prog.sh
 echo "alias gde=\"\$gtm_dist/mumps -run GDE\""  >> $basedir/bin/prog.sh
 echo "alias lke=\"\$gtm_dist/mumps -run LKE\""  >> $basedir/bin/prog.sh
 echo "alias dse=\"\$gtm_dist/mumps -run DSE\""  >> $basedir/bin/prog.sh
+echo "\$gtm_dist/mumps -dir"                    >> $basedir/bin/prog.sh
 
 # Ensure correct permissions for prog.sh
 chown $instance:$instance $basedir/bin/prog.sh
+chmod +x $basedir/bin/prog.sh
 
 # tied.sh - unpriviliged user access
 # $instance is their shell - no access to ZSY
@@ -179,6 +190,7 @@ echo "exec \$gtm_dist/mumps -run ^ZU"           >> $basedir/bin/tied.sh
 
 # Ensure correct permissions for tied.sh
 chown $instance:$instance $basedir/bin/tied.sh
+chmod +x $basedir/bin/tied.sh
 
 # Create Global mapping
 # Thanks to Sam Habiel, Gus Landis, and others for the inital values

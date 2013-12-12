@@ -126,11 +126,9 @@ The VM sets up the RPC broker which is used for CPRS, Vitals, and other GUIs
 and VistAlink. Regular ssh is also available. The VM will open the following
 ports on VirtualBox.
 
-Note: If you are using a cloud provider (AWS, Rackspace) you will have to open
-the cloud firewall as appropriate.
-
-Note: YOU WILL NEED TO ENSURE SSH IS OPEN BY DEFAULT. Vagrant depends upon
-this.
+Note: If you are using a cloud provider (AWS/EC2, Rackspace) you will have to
+open the cloud firewall for the following ports before you begin the
+provisioning process.
 
  * 9430 - RPC Broker
 
@@ -140,10 +138,10 @@ this.
 
 The Access/Verify codes are the same used in OSEHRA automated testing.
 
-Note: CPRS uses the RPC Broker and the correct commandline arguments are:
-S=127.0.0.1 P=9430. If you used a cloud provider (Rackspace, AWS) the easist
-way to find out what the S= nees to be is to lookup your DNS address in the
-management portal of your cloud provider.
+Note: CPRS uses the RPC Broker and the correct commandline arguments for
+VirtualBox are: S=127.0.0.1 P=9430. If you used a cloud provider
+(Rackspace, AWS) the easist way to find out what the S= needs to be is to lookup
+your DNS address in the management portal of your cloud provider.
 
 You can also access the VM using another SSH program (ex: PuTTY) by using the
 address as described in the note above and using the correct port 22 for cloud
@@ -152,16 +150,63 @@ installs and 2222 for local VirtualBox installs.
 Accessing Roll-and-Scroll
 -------------------------
 
-Currently there isn't an easy way to directly log in to VistA's Roll-and-Scroll
-environment. The current process is as follows:
+There are two user accounts that are created automatically during the
+installation process that make accessing VistA easier:
+
+Tied user account
+
+ * User Name: ${instance}tied
+
+ * Password: tied
+
+Programmer user account
+
+ * UserName: ${instance}prog
+
+ * Password: prog
+
+The ${instance}tied is designed for regular VistA users to access
+roll-and-scroll applications. This user is tied to the ^ZU routine.
+
+To login as a tied user using the default osehra instance:
+
+.. parsed-literal::
+
+    ~$ :usertype:`ssh -p 2222 osehratied@localhost`
+
+Then type the password above at the password prompt
+
+The ${instance}prog is designed for programmer users to access the M prompt.
+This is the equivalent of typing mumps -dir at the command line.
+
+To login as a programmer user using the default osehra instance:
+
+.. parsed-literal::
+
+    ~$ :usertype:`ssh -p 2222 osehraprog@localhost`
+
+Then type the password above at the password prompt
+
+Note: Everytime a new vagrant VM is created a new SSH machine key is generated,
+which has a new fingerprint. Some SSH clients will complain about this and will
+prevent you from logging on. There are typically instructions in the error
+message to resolve this connection problem.
+
+To login as a regular linux user (with sudo privileges):
 
 .. parsed-literal::
 
     ~$ :usertype:`cd Development/VistA/Scripts/Install/Ubuntu`
     ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`vagrant ssh`
+
+You can now use the system like any other linux box. If you need to access the
+VistA environment you can perform the following command:
+
+.. parsed-literal::
+
     vagrant\@vagrant-ubuntu-precise-32:~$ :usertype:`mumps -dir`
 
-This will drop you to a programmer prompt. To get to the normal VistA login
+Which will give you a programmer prompt. To get to the normal VistA login
 screen type the following:
 
 .. parsed-literal::
