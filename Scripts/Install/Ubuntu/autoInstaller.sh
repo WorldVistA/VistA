@@ -90,6 +90,13 @@ apt-get install -y build-essential cmake-curses-gui git dos2unix
 cd /usr/local/src
 git clone https://github.com/OSEHRA/VistA -b dashboard VistA-Dashboard
 
+# Ensure that line endings are correct
+dos2unix /vagrant/Ubuntu/*.sh
+dos2unix /vagrant/GTM/*.sh
+dos2unix /vagrant/GTM/gtminstall_SHA1
+dos2unix /vagrant/GTM/etc/xinetd.d/*
+dos2unix /vagrant/GTM/bin/*.sh
+
 # bootstrap the system
 cd /vagrant
 ./Ubuntu/bootstrapUbuntuServer.sh
