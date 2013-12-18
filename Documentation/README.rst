@@ -32,7 +32,8 @@ GT.M:
   * InstallGTM_
   * ImportGTM_
 
-The last sections are common to both types of systems:
+The last sections are common to both types of systems and utilize the OSEHRA
+Testing Harness:
 
   * SetupTestingEnvironment_
   * RunningandUploadingTests_
@@ -41,6 +42,9 @@ The last sections are common to both types of systems:
 The import and simple configuration of the M components of VistA has been
 automated. See AutomatedVistAConfiguration_ for more details.
 
+For Initialization and Setup without using the OSEHRA Utilities, see:
+
+  * Initialization_
 
 Troubleshooting:
 ````````````````
@@ -64,3 +68,4 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 .. _ReviewingResults: ReviewingResults.rst
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
 .. _PrepareMComponents: PrepareMComponents.rst
+.. _Initialization: Initialization.rst
