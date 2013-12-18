@@ -78,7 +78,7 @@ function(ReportUnitTestResult PACKAGE_NAME DIRNAME OUTPUT)
    set(routine_name "NONE")
    foreach (line ${OUTPUT})
      # Matches the command that runs the test, keeps the routine name
-     if(line MATCHES ">D \\^[A-Z0-9]+")
+     if(line MATCHES ">D [A-Z0-9]*\\^[A-Z0-9]+")
        string(REGEX MATCH "[A-Z0-9]+$" routine_name "${line}")
      # Captures and prints the failure message
      elseif(line MATCHES "^ ?[^\\^]+\\^${routine_name}+")
