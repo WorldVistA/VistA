@@ -113,6 +113,10 @@ su $instance -c "mkdir -p $basedir/{p,p/$gtmver,s,s/$gtmver,r,r/$gtmver,g,j,etc,
 su $instance -c "cp -R etc $basedir"
 su $instance -c "cp -R bin $basedir"
 
+# Modify xinetd.d scripts to reflect $instance
+perl -pi -e 's/foia/'$instance'/g' $basedir/bin/*.sh
+perl -pi -e 's/foia/'$instance'/g' $basedir/etc/xinetd.d/vista-*
+
 # Create symbolic link to enable brokers
 ln -s $basedir/etc/xinetd.d/vista-rpcbroker /etc/xinetd.d/$instance-vista-rpcbroker
 ln -s $basedir/etc/xinetd.d/vista-vistalink /etc/xinetd.d/$instance-vista-vistalink
