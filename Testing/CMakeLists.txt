@@ -233,3 +233,10 @@ foreach(PyUnitTest ${PyUnitTests})
   set_tests_properties(PyUnitTest_${PyUnitTestName}
                        PROPERTIES FAIL_REGULAR_EXPRESSION "FAILED")
 endforeach()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO RUN MENU TRAVERSAL TESTING #####
+#-----------------------------------------------------------------------------#
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
+add_test(PYTHON_MenuTraversal ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalSmokeTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalSmokeTest.py")

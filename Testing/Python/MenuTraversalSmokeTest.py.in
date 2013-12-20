@@ -1,0 +1,58 @@
+#---------------------------------------------------------------------------
+# Copyright 2013 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+
+### set up the IO that is need by unit test
+import sys,os,json
+sys.path = ['${VISTA_SOURCE_DIR}/Python/vista'] + sys.path
+from OSEHRAHelper import ConnectToMUMPS, PROMPT
+from OSEHRAMenuTraversal import goToOption,createOptionParentDictionary,createOptionMenuTextDictionary
+
+def visitChildren(VistA,targetmenu,results):
+  results.write("Going to " + targetmenu + "\n")
+  print "Going to " + targetmenu
+  try:
+    goToOption(VistA,targetmenu,"${VISTA_BINARY_DIR}",'',True)
+    results.write("Going to " + targetmenu + " --- Success\n")
+    print "Going to " + targetmenu + " --- Success"
+    for menu in VistA.optionParentDict.keys():
+      if VistA.optionParentDict[menu] == targetmenu and ("MENU" in menu or ("Applications" in VistA.optionMenuTextDict[menu] or "Menu" in VistA.optionMenuTextDict[menu] and not "a Menu Template" in VistA.optionMenuTextDict[menu] and not "Print" in VistA.optionMenuTextDict[menu] and not "List " in VistA.optionMenuTextDict[menu])):
+        visitChildren(VistA,menu,results)
+  except NameError:
+    results.write("Going to " + targetmenu + " --- Failure\n")
+    print("Going to " + targetmenu + " --- Failure")
+  finally:
+    results.flush()
+
+VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Temporary/MenuTraversalST.log","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
+if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
+  VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+VistA.wait(PROMPT, 60)
+VistA.optionParentDict = createOptionParentDictionary(VistA,os.path.join("${VISTA_BINARY_DIR}","MenuParentMap.txt"))
+VistA.optionMenuTextDict =createOptionMenuTextDictionary(VistA,os.path.join("${VISTA_BINARY_DIR}","MenuTextMap.txt"))
+counter = 0
+with open('${VISTA_BINARY_DIR}/Testing/Temporary/SmokeTestResults.log','w') as results:
+  results.write("Results of the Menu Traversal Smoke Test\n")
+
+  for menu in VistA.optionParentDict.keys():
+    if VistA.optionParentDict[menu] == '** no parents **' and ("MENU" in menu or ("Applications" in VistA.optionMenuTextDict[menu] or "Menu" in VistA.optionMenuTextDict[menu] and not "a Menu Template" in VistA.optionMenuTextDict[menu] and not "Print" in VistA.optionMenuTextDict[menu] and not "List " in VistA.optionMenuTextDict[menu])):
+      print "Visiting top level menu: " + menu
+      visitChildren(VistA,menu,results)
+  results.close()
+VistA.write('h')
+VistA.wait('Do you really want to halt')
+VistA.write('')
+VistA.wait(PROMPT)
+VistA.write('h')
