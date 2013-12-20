@@ -16,14 +16,14 @@
 
 # prepare the arguments list
 set(vendor_args "")
-if(EXISTS "@CCONTROL_EXECUTABLE@")
+if("@VENDOR_NAME@" STREQUAL "Cache")
   list(APPEND vendor_args -S 1 -CN "@VISTA_CACHE_NAMESPACE@" -CI "@VISTA_CACHE_INSTANCE@")
   string(STRIP "@VISTA_CACHE_USERNAME@" cacheusr)
   string(LENGTH "${cacheusr}" userLen)
   if(userLen)
     list(APPEND vendor_args -CU "@VISTA_CACHE_USERNAME@" -CP "@VISTA_CACHE_PASSWORD@")
   endif()
-elseif(EXISTS "@GTM_DIST@")
+elseif("@VENROD_NAME@" STREQUAL "GTM")
   list(APPEND vendor_args -S 2)
 endif()
 set(OTJ_PATCH_DIR "@OTJ_SUBMISSION_DIR@")

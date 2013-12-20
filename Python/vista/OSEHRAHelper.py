@@ -128,7 +128,7 @@ class ConnectMUMPS(object):
     self.wait('DEVICE')
     if sys.platform == 'win32':
       self.write('\r')
-      match = self.wait_re('\r\n[0-9]+', None)
+      match = self.wait_re('\r\n[0-9]+')
       test = match[1].span()
       number = ''
       for i in range(test[0], test[1]):
@@ -137,7 +137,7 @@ class ConnectMUMPS(object):
       self.IENumber = number
     else:
       self.write('')
-      self.wait_re('\n[0-9]+', None)
+      self.wait_re('\n[0-9]+')
       number = self.connection.after
       number = number.lstrip('\r\n')
       self.IENumber = number
@@ -166,6 +166,7 @@ class ConnectWinCache(ConnectMUMPS):
   def write(self, command):
     self.connection.write(command + '\r')
     logging.debug('connection.write:' + command)
+    self.log.flush()
 
   def wait(self, command, tout=15):
     logging.debug('connection.expect: ' + str(command))
@@ -187,7 +188,7 @@ class ConnectWinCache(ConnectMUMPS):
     if command is PROMPT:
       command = self.prompt
     compCommand = re.compile(command,re.I)
-    output = self.connection.expect([compCommand], None)
+    output = self.connection.expect([compCommand], timeout)
     self.match = output[1]
     self.before = output[2]
     if output[0] == -1 and output[1] == None:
@@ -590,12 +591,15 @@ def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA', location='127.0
     elif sys.platform == 'linux2':
       if no_pexpect:
         raise no_pexpect
-      try:
-        return ConnectLinuxCache(logfile, instance, namespace, location)
-      except pexpect.ExceptionPexpect, no_cache:
-        pass
-      try:
-        return ConnectLinuxGTM(logfile, instance, namespace, location)
-      except pexpect.ExceptionPexpect, no_gtm:
-         if (no_cache and no_gtm):
+      if os.getenv('gtm_dist'):
+        try:
+          return ConnectLinuxGTM(logfile, instance, namespace, location)
+        except pexpect.ExceptionPexpect, no_gtm:
+           if (no_gtm):
+             raise "Cannot find a MUMPS instance"
+      else:
+        try:
+          return ConnectLinuxCache(logfile, instance, namespace, location)
+        except pexpect.ExceptionPexpect, no_cache:
+         if (no_cache):
            raise "Cannot find a MUMPS instance"

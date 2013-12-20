@@ -96,9 +96,7 @@ file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
 
 if(GTM_DIST)
   include(UseGTM)
-endif()
-
-if(CCONTROL_EXECUTABLE)
+elseif(CCONTROL_EXECUTABLE)
   include(UseCache)
 endif()
 
@@ -168,9 +166,9 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
 
     file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
 
-    if(NOT TEST_VISTA_COVERAGE_READABLE AND CCONTROL_EXECUTABLE)
+    if(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "Cache")
       file(WRITE ${VISTA_BINARY_DIR}/cache_coverage.cmcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
-    elseif(NOT TEST_VISTA_COVERAGE_READABLE AND GTM_DIST)
+    elseif(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "GTM")
       file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
     endif()
   endif()
