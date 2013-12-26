@@ -146,14 +146,9 @@ class TestSuiteDriver(object):
                 default_namespace)
         else:
             remote_conn_details = None
-            ''' #no longer using parms to set instance/namespace
-            if args.instance == 'TRYCACHE':
-                instance = 'cache'
-            else:
-                instance = args.instance
-            '''
-            instance = 'notused'
-            namespace = args.namespace
+            instance = os.getenv('CACHE_INSTANCE','notused')
+            namespace = os.getenv('CACHE_NAMESPACE','')
+            logging.info("Instance = %s, Namespace = %s" % (instance, namespace))
 
         if not os.path.isdir(args.resultdir):
             try:

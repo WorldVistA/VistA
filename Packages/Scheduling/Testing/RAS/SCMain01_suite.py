@@ -562,6 +562,7 @@ def startmon(test_suite_details):
     test_driver = TestHelper.TestDriver(testname)
 
     test_driver.pre_test_run(test_suite_details)
+    VistA1 = None
     try:
         VistA = test_driver.connect_VistA(test_suite_details)
         VistA.startCoverage(routines=['SC*', 'SD*'])
@@ -588,6 +589,7 @@ def stopmon (test_suite_details):
     test_driver = TestHelper.TestDriver(testname)
 
     test_driver.pre_test_run(test_suite_details)
+    VistA1 = None
     try:
         # Connect to VistA
         VistA=test_driver.connect_VistA(test_suite_details)
@@ -607,24 +609,3 @@ def stopmon (test_suite_details):
         VistA.write('h\r')
         test_driver.finally_handling(test_suite_details)
     test_driver.end_method_handling(test_suite_details)
-
-def timeStamped(fname, fmt='%Y-%m-%d-%H-%M-%S_{fname}'):
-    '''
-    This method appends a date/time stamp to a filename
-    '''
-    return datetime.datetime.now().strftime(fmt).format(fname=fname)
-
-def connect_VistA(testname, result_dir, namespace):
-    '''
-    This method is used to establish the connection to VistA via ConnectToMUMPS
-    '''
-    logging.debug('Connect_VistA' + ', Namespace: ' + namespace)
-    from OSEHRAHelper import ConnectToMUMPS, PROMPT
-    VistA = ConnectToMUMPS(logfile=result_dir + '/' + timeStamped(testname + '.txt'), instance='', namespace=namespace)
-    if VistA.type == 'cache':
-        try:
-            VistA.ZN(namespace)
-        except IndexError, no_namechange:
-            pass
-    VistA.wait(PROMPT)
-    return VistA
