@@ -459,7 +459,7 @@ def sc_test012(test_suite_details):
     try:
         # create new user with SDOB keys
         VistA1 = test_driver.connect_VistA(test_suite_details)
-        SC = Actions(VistA1, user='SM1234', code='SM12345!!')
+        SC = Actions(VistA1, user='SM1234', code='SM1234!!!')
         SC.signon()
         SC.adduser(name='CRANE,JON', ssn='000000065', gender='M', initials='JC', acode='fakejon1', vcode1='1SWUSH1234!!')
         SC.signoff()
