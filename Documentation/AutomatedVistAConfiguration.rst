@@ -12,7 +12,7 @@ step of a CTest dashboard submission. To execute the automated import and config
 
   $ cd  VistA/bin
 
-  $ cmake -P ImportRG.cmake
+  $ cmake -P Testing/Setup/ImportRG.cmake
 
 Note that during the execution of the ImportRG script, in addition to the Routine and Global imports, three additional setup scripts are executed automatically:
 
