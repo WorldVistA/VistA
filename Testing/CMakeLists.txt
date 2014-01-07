@@ -256,3 +256,11 @@ endforeach()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 add_test(PYTHON_MenuTraversal ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalTest.py")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Python/MenuTraversalSmokeTest.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Python/MenuTraversalSmokeTest.py")
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO ADD USER GENERATED TESTS #####
+#-----------------------------------------------------------------------------#
+option(TEST_VISTA_USERTEST "Add tests from the Testing/UserTest/CMakeLists.txt file?" OFF)
+if(TEST_VISTA_USERTEST)
+  add_subdirectory(UserTest)
+endif()
