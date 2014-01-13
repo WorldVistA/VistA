@@ -355,7 +355,8 @@ class ConnectLinuxCache(ConnectMUMPS):
 class ConnectLinuxGTM(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    self.connection = pexpect.spawn('gtm', timeout=None)
+    gtm_command = os.getenv('gtm_dist')+'/mumps -dir'
+    self.connection = pexpect.spawn(gtm_command, timeout=None)
     if len(namespace) == 0:
         self.prompt = os.getenv("gtm_prompt")
         if self.prompt == None:
