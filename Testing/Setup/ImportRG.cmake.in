@@ -87,7 +87,7 @@ if((TEST_VISTA_SETUP) AND ("@VENDOR_NAME@" STREQUAL "GTM"))
 endif()
 
 message(STATUS "Importing globals...")
-if((TEST_VISTA_SETUP) AND ("@VENDOR_NAME@" STREQUAL "GTM"))
+if("@VENDOR_NAME@" STREQUAL "GTM")
   file(STRINGS "@VISTA_BINARY_DIR@/globals.lst" allGlobalFiles)
   set(importLogFile "@VISTA_BINARY_DIR@/Testing/Log/GlobalImport0.log")
   file(REMOVE ${importLogFile})
