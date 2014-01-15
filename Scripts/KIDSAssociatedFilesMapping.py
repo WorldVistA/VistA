@@ -43,6 +43,7 @@ KIDS_SINGLE_FILE_ASSOCIATION_DICT = {
   "LEX_2_89.GBLs": "LEX*2.0*89",
   "LEX_2_90.GBLs": "LEX*2.0*90",
   "LEX_2_91.GBLs": "LEX*2.0*91",
+  "LEX_2_93.GBLs": "LEX*2.0*93",
 }
 
 """
@@ -54,6 +55,7 @@ KIDS_GROUP_FILES_ASSOCIATION_DICT = {
   "IBRC1201[A-F].TXT" : "IB*2.0*468",
   "IBRC1210[A-F].TXT" : "IB*2.0*484",
   "IBRC1301[A-F].TXT" : "IB*2.0*491",
+  "IBRC1310[A-F].TXT" : "IB*2.0*508",
 }
 
 def getAssociatedInstallName(fileName):

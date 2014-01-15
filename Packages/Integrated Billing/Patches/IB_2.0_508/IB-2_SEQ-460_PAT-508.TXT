@@ -1,0 +1,665 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 09/18/13 at 15:30
+=============================================================================
+Run Date: NOV 12, 2013                     Designation: IB*2*508
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #460                      Status: Released
+                  Compliance Date: NOV 27, 2013
+=============================================================================
+
+Associated patches: (v)IB*2*491    <<= must be installed BEFORE `IB*2*508'
+
+Subject: REASONABLE CHARGES V3.13
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ *************************************************************************
+  
+ Implementation of Reasonable Charges v3.13 is a two step process:
+  
+ 1. Installation of this patch. This will inactivate Reasonable
+    Charges v3.12 charges with an inactive date of 09/30/13. (See
+    Installation Instructions.)
+                                        
+ 2. Uploading the Reasonable Charges v3.13 charges. This will load new
+    charges with an effective date of 10/01/13 and needs to be done 
+    immediately after the patch install.
+  
+ PLEASE NOTE: If possible, it is recommended that you install the 
+    LEXICON UTILITY patch LEX*2.0*93 - Code Set FY14 First Qtr Update patch
+    before this one.
+  
+ PLEASE NOTE: There is a shortened Compliance Date for this patch.
+  
+ *************************************************************************
+  
+ Reasonable Charges version 3.13 is a charge update to the existing 
+ Reasonable Charges billed to Third Party Payers. The primary update with 
+ this patch is to the charges, which will be implemented when the new 
+ RC v3.13 charges are uploaded (step 2).  
+                                        
+ This version of Reasonable Charges implements the following charge changes:
+ -  Contains new DRG charges and new SNF charges. 
+ -  All charges have their effective date updated to 10/01/13.
+  
+ Effective Date of Reasonable Charges v3.13 is 10/01/2013.
+                                        
+ Inactive Date of Reasonable Charges v3.12 is 09/30/2013.
+  
+ Reasonable Charges v3.12 loaded on your system will be inactivated with 
+ an inactivation date of 09/30/2013 when this patch is installed.
+                                        
+ Reasonable Charges v3.13 with an effective date of 10/01/13 will be 
+ loaded on your system when the charges are uploaded as described below.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000908438 Reasonable Charges V3.13
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines VA Healthcare System
+ James A. Haley Veterans' Hospital - Tampa
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000908438 Reasonable Charges V3.13
+  
+    Problem:
+    --------           
+    Changes in the national DRG rates need to be distributed to all
+    hospitals so that proper billing can take place.
+    
+    Resolution:
+    -----------
+    This patch updates the Reasonable Charges files and distributes
+    them with a new version number and a new effective date.
+  
+ Technical Description
+ =====================
+ This patch exports 2 routines, one of which is the post-init (IBYP508).
+  
+ The post-init will inactivate all existing Reasonable Charges defined in the
+ Charge Master.  Reasonable Charges v3.12 will be inactivated with an 
+ inactivation date of 09/30/13 when this patch is installed.
+    
+ The following is an example of the post-init portion of the installation:
+  
+     Reasonable Charges v3.13 Post-Install .....
+  
+       >> Inactivating Existing Reasonable Charges, Please Wait...
+  
+          Done.  46811 existing charges inactivated
+  
+     Reasonable Charges v3.13 Post-Install Complete
+  
+  
+ Note: The actual number of charges inactivated will vary based on the 
+ number of divisions billed at your site.  This will also determine the 
+ time required for the installation.
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file be disabled to prevent 
+ possible conflicts while running the KIDS Install. Other VISTA users will 
+ not be affected.
+  
+      Enter/Edit Billing Information [IB EDIT BILLING INFO]
+      Enter/Edit Charge Master [IBCR DISPLAY CHARGE MASTER]
+                        
+ Install Time - less than 30 minutes - but will vary from site to site
+ depending on the size of the Charge Item (#363.2) file - which is searched
+ for charges to inactivate in the Post-Init.
+    
+ Loading the Charge Master with the new RC v3.13 charges is separate from 
+ the patch installation and will take additional time per division.
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ... 
+             Installation ...
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                               ---
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global
+             Install Package(s) 
+             Restart Install of Package(s) 
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter IB*2.0*508):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+    
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' answer NO
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//' answer YES
+  
+     d. When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+        Enter/Edit Billing Information [IB EDIT BILLING INFO]
+        Enter/Edit Charge Master [IBCR DISPLAY CHARGE MASTER]
+  
+     e. When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':' press <return>.
+    
+ 5.  CLEAN UP POST INIT ROUTINE
+     --------------------------
+     Optional - Once this patch has been successfully installed you may
+     delete the post init routine:  IBYP508
+  
+ 6.  UPLOAD REASONABLE CHARGES V3.13
+     ------------------------------
+     Follow instructions below: RC v3.13 Upload Instructions
+  
+ ********************** RC v3.13 Upload Instructions **********************
+                                       
+ After patch installation, the Reasonable Charges v3.13 charges will need 
+ to be loaded into the Charge Master for each division billed at the site.
+                                  
+ The charges for each Division will require approximately 1.8 - 2.0 MB of 
+ disk space.  Other files will be searched, but the new charges will be 
+ added to the Charge Item file (#363.2).
+  
+  
+ Files Required for Upload:
+ --------------------------
+ The charge files are available on the following CIO Field Offices'
+ Anonymous.Software directories.  Use the appropriate FTP capability to 
+ retrieve the files (ASCII).
+                                       
+                                       
+   OI FIELD OFFICE          FTP ADDRESS                  DIRECTORY
+   ===============          ===========                  =========
+   ALBANY                   ftp.fo-albany.domain.ext     anonymous.software
+   HINES                    ftp.fo-hines.domain.ext      anonymous.software
+   SALT LAKE                ftp.fo-slc.domain.ext        anonymous.software
+   FIRST AVAILABLE SERVER   download.vista.domain.ext    anonymous.software
+  
+  
+   The Reasonable Charge v3.13 Host Files, effective 10/01/13: (ASCII)
+   IBRC1310A.TXT        Inpatient Facility Charges (DRG)
+   IBRC1310B.TXT        Facility Charge (CPT)
+   IBRC1310C.TXT        Physician Charges (CPT)
+   IBRC1310D.TXT        Service Category Codes
+   IBRC1310E.TXT        Area Factors
+   IBRC1310F.TXT        Site Identification
+  
+ Upload Instructions:
+ ====================
+  
+ Step 1:  Get Host Files
+ -----------------------
+ Retrieve the 6 Reasonable Charges v3.13 Host Files in ASCII format (see
+ previous section).
+                                        
+ Step 2:  Determine Divisions
+ ----------------------------
+ Use the Print Charge Master [IBCR REPORTS FOR CHARGE MASTER] option and 
+ print the Billing Regions report to find which Billing Regions and 
+ Divisions have charges loaded onto your system.  These are the divisions 
+ that will need new charges loaded.
+                                        
+ Step 3:  Begin Upload Process
+ -----------------------------
+ Use the Load Host File into Charge Master [IBCR HOST FILE LOAD] option 
+ to load Reasonable Charges onto your system for every division for which
+ care is billed at your site. Carefully follow the instructions below, for 
+ each Billing Region. 
+                                        
+ You will see the prompt:
+                 
+       Select one of the following:
+             1.1       Load CMAC into XTMP
+             1.2       Load AWP into XTMP
+             1.3       Load RC into XTMP
+             1.4       Load TP into XTMP
+             2         Assign Charge Set
+             3         Check Data Validity
+             4         Load into Charge Master
+             5         Delete XTMP files
+                                        
+ Below, in more detail, the steps will guide you through the process of 
+ selecting first 1.3, then 3, then 4, and waiting until 4 stops before 
+ continuing on to the next division (and capturing or printing all output 
+ for future reference).
+  
+ Step 4:  Load the Reasonable Charges
+ ------------------------------------
+ From the menu, select option 1.3 - Load RC into XTMP
+                                        
+ This loads the Host Files into temporary storage and calculates charges
+ for individual Divisions.
+                                        
+   - If there are no previously existing host files loaded, it will ask 
+     which version of Reasonable Charges to load.    
+     Select 3.13
+                                        
+   - When loading Reasonable Charges v3.13 the IBRC1310x.TXT files may be 
+     used for multiple divisions without reloading.  
+                                        
+   - If there exists any previously calculated charges (files) for a 
+     division, they will be displayed, and you will get the prompt:
+  
+         The above files already exist in XTMP.
+         Delete the above files and continue with upload?
+     Select Yes, to delete the previously calculated charges.
+                                        
+   - If there exist any previously loaded host files for any RC version, 
+     they will be displayed, and it will ask if they should be deleted.  
+     Select No, if the files are IBRC1310x.TXT since these are the  
+     correct files for v3.13, they may be re-used for multiple divisions.
+     Select Yes only if the files are from a different version.
+                                        
+   - Select Division:  Select the division number to load charges for. 
+     This should correspond to the Divisions associated with the Billing 
+     Regions determined previously.  Once the correct division is 
+     selected, answer Yes to Calculate Charges.
+  
+ Step 5: Check Data Validity
+ ---------------------------
+ From the menu, select option 3 - Check Data Validity.
+ This is optional, but it is suggested that it be run at least once, for 
+ the first division loaded.
+  
+ The following Procedures are now inactive and will show as line errors on 
+ this report, these may be ignored: C1879, C9366 and Q2046.
+  
+ If the resulting report has any Line Data Errors, then check that the
+ latest version of CPT and DRG has been installed. The Error key at the end
+ of the report does not mean that errors have occurred.  It simply provides
+ definitions of the types of errors that might occur.  Check the individual
+ line items in the report to see if any of the listed errors have been
+ detected.
+                                        
+ Step 6: Load into Charge Master
+ -------------------------------
+ From the menu, select option 4 - Load into Charge Master
+ Moves the charges calculated in selection 1.3 to permanent storage in the 
+ Charge Master.  The results report should match the examples below.
+  
+ It is important that this option completes before continuing.  Allow the 
+ upload of a division's charges to finish before attempting to upload 
+ another division.  A summary report will be printed when the upload is 
+ complete.  This option uses the same temporary files to calculate the
+ charges for all divisions, therefore they must be calculated and loaded 
+ serially.  
+                                        
+ Step 7: Repeat steps 4-6 for each Division needed
+ -------------------------------------------------
+ Steps 4-6 must be repeated for each division billed at your site.  Refer 
+ to the Divisions that already have charges assigned using the Billing 
+ Region Report list determined previously.
+  
+ In most cases, simply using the above options for loading Reasonable
+ Charges will result in the correct set up in the Charge Master. 
+  
+ -  Option 1.3, to calculate charges for a division
+ -  Option 4, to load those calculated charges into the Charge Master 
+    permanent files.
+                                        
+ However, if you are loading charges for a new site, or a site that may 
+ have changed its division number, then extra care is needed to ensure 
+ the setup of the Charge Master is correct. The following sections provide 
+ examples of displays and reports for the upload.
+  
+ ================= Reasonable Charges v3.13 Upload Details ================
+  
+ The Charge Host Files should load with the following counts:
+                                        
+ The following files were created in XTMP, they will be purged in 2 days:
+ ------------------------------------------------------------------------
+   IBRC1310A.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   750
+   IBRC1310B.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   6408
+   IBRC1310C.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   17178
+   IBRC1310D.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   30
+   IBRC1310E.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   917
+   IBRC1310F.TXT RC v3.13 Host File Upload, 9/17/13@17:31 by WANG,CHI   1139
+  
+ Any division that provides Inpatient Care should result in a summary with 
+ the following counts:
+  
+      IBCR UPLOAD RC 402 TOGUS, ME                      Count = 53002
+      IB Upload RC v3.13 402 TOGUS, ME, 9/18/13@15:37 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   Inpt Fac 1              CPT      24        RC-INPT FAC PR 402
+   2   Inpt Fac 2              CPT      6         RC-INPT FAC HR 402
+   3   Inpt Fac 4              CPT      5         RC-INPT FAC ML 402
+   4   Inpt Fac/Phys 1         CPT      3679      RC-INPT FAC PR 402
+   5   Inpt PD Anc             DRG      749       RC-INPT ANC 402
+   6   Inpt PD Anc ICU         DRG      749       RC-INPT ANC ICU 402
+   7   Inpt PD R&B             DRG      749       RC-INPT R&B 402
+   8   Inpt PD R&B ICU         DRG      749       RC-INPT R&B ICU 402
+   9   Inpt Phys 1             CPT      7814      RC-PHYSICIAN INPT PR 402
+   10  Inpt Phys 3             CPT      274       RC-PHYSICIAN INPT MN 402
+   11  Opt Fac 1               CPT      6396      RC-OPT FAC PR 402
+   12  Opt Fac 2               CPT      6         RC-OPT FAC HR 402
+   13  Opt Fac 4               CPT      5         RC-OPT FAC ML 402
+   14  Opt Fac/Phys 1          CPT      6187      RC-OPT FAC PR 402
+   15  Opt PD PHosp            MISCE    1         RC-OPT MISC 402
+   16  Opt Phys 1              CPT      6205      RC-PHYSICIAN OPT PR 402
+   17  Opt Phys 3              CPT      214       RC-PHYSICIAN OPT MN 402
+   18  SNF Fac 1               CPT      6037      RC-SNF FAC PR 402
+   19  SNF Fac 2               CPT      6         RC-SNF FAC HR 402
+   20  SNF Fac 4               CPT      5         RC-SNF FAC ML 402
+   21  SNF Fac/Phys 1          CPT      5030      RC-SNF FAC PR 402
+   22  SNF PD INC              BEDSE    2         RC-SNF INC 402
+   23  SNF Phys 1              CPT      7836      RC-PHYSICIAN SNF PR 402
+   24  SNF Phys 3              CPT      274       RC-PHYSICIAN SNF MN 402
+  
+  
+ IB Upload Summary Report of Charge Items Loaded into the Charge Master
+ --------------------------------------------------------------------------
+               IBCR UPLOAD RC 402 TOGUS, ME
+   
+ Inpt Fac 1          24 of 24 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     24 entries added to the Charge Set RC-INPT FAC PR 402.
+  
+  
+ Inpt Fac 2          6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-INPT FAC HR 402.
+  
+  
+ Inpt Fac 4          5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-INPT FAC ML 402.
+  
+  
+ Inpt Fac/Phys 1     3679 of 3679 records checked, 0 duplicates, 0 with $=0
+                     1 line/data errors or warnings found for a .03% error rate.
+                     3678 entries added to the Charge Set RC-INPT FAC PR 402.
+  
+      39374 = C1879^3131001^^218.26^^              Line/Data Error: Not a valid active Item in source file
+  
+ Inpt PD Anc         749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT ANC 402.
+  
+  
+ Inpt PD Anc ICU     749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT ANC ICU 402.
+  
+  
+ Inpt PD R&B         749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT R&B 402.
+  
+  
+ Inpt PD R&B ICU     749 of 749 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     749 entries added to the Charge Set RC-INPT R&B ICU 402.
+  
+  
+ Inpt Phys 1         7814 of 7814 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     7814 entries added to the Charge Set RC-PHYSICIAN INPT PR 402.
+  
+ Inpt Phys 3         274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN INPT MN 402.
+   
+ Opt Fac 1           6396 of 6396 records checked, 0 duplicates, 0 with $=0
+                     2 line/data errors or warnings found for a .03% error rate.
+                     6394 entries added to the Charge Set RC-OPT FAC PR 402.
+  
+      14332 = C9366^3131001^^376.3^^               Line/Data Error: Not a valid active Item in source file
+      15030 = Q2046^3131001^^1539.5^^              Line/Data Error: Not a valid active Item in source file
+  
+ Opt Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-OPT FAC HR 402.
+  
+  
+ Opt Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-OPT FAC ML 402.
+  
+  
+ Opt Fac/Phys 1      6187 of 6187 records checked, 0 duplicates, 0 with $=0
+                     1 line/data errors or warnings found for a .02% error rate.
+                     6186 entries added to the Charge Set RC-OPT FAC PR 402.
+  
+      39376 = C1879^3131001^^218.26^^              Line/Data Error: Not a valid active Item in source file
+  
+ Opt PD PHosp        1 of 1 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     1 entries added to the Charge Set RC-OPT MISC 402.
+  
+  
+ Opt Phys 1          6205 of 6205 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6205 entries added to the Charge Set RC-PHYSICIAN OPT PR 402
+ .
+  
+  
+ Opt Phys 3          214 of 214 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     214 entries added to the Charge Set RC-PHYSICIAN OPT MN 402.
+  
+  
+ SNF Fac 1           6037 of 6037 records checked, 0 duplicates, 0 with $=0
+                     2 line/data errors or warnings found for a .03% error rate.
+                     6035 entries added to the Charge Set RC-SNF FAC PR 402.
+  
+      14331 = C9366^3131001^^376.3^^               Line/Data Error: Not a valid active Item in source file
+  
+      15029 = Q2046^3131001^^1539.5^^              Line/Data Error: Not a valid active Item in source file
+  
+ SNF Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-SNF FAC HR 402.
+  
+  
+ SNF Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-SNF FAC ML 402.
+  
+  
+ SNF Fac/Phys 1      5030 of 5030 records checked, 0 duplicates, 0 with $=0
+                     1 line/data errors or warnings found for a .02% error rate.
+                     5029 entries added to the Charge Set RC-SNF FAC PR 402.
+  
+      39375 = C1879^3131001^^218.26^^              Line/Data Error: Not a valid active Item in source file
+  
+ SNF PD INC          2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-SNF INC 402.
+  
+  
+ SNF Phys 1          7836 of 7836 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     7836 entries added to the Charge Set RC-PHYSICIAN SNF PR 402.
+  
+  
+ SNF Phys 3          274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN SNF MN 402.
+  
+ Any Provider based division that provides Outpatient Care Only should 
+ result in a summary with the following counts:
+  
+      IBCR UPLOAD RC 402GE AUBURN, ME                   Count = 19014
+      IB Upload RC v3.13 402GE AUBURN, ME, 9/18/13@16:07 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   Opt Fac 1               CPT      6396      RC-OPT FAC PR 402GE
+   2   Opt Fac 2               CPT      6         RC-OPT FAC HR 402GE
+   3   Opt Fac 4               CPT      5         RC-OPT FAC ML 402GE
+   4   Opt Fac/Phys 1          CPT      6187      RC-OPT FAC PR 402GE
+   5   Opt PD PHosp            MISCE    1         RC-OPT MISC 402GE
+   6   Opt Phys 1              CPT      6205      RC-PHYSICIAN OPT PR 402GE
+   7   Opt Phys 3              CPT      214       RC-PHYSICIAN OPT MN 402GE
+  
+  
+ IB Upload Summary Report of Charge Items Loaded into the Charge Master
+ --------------------------------------------------------------------------
+                IBCR UPLOAD RC 402GE AUBURN, ME
+  
+ Opt Fac 1           6396 of 6396 records checked, 0 duplicates, 0 with $=0
+                     2 line/data errors or warnings found for a .03% error rate.
+                     6394 entries added to the Charge Set RC-OPT FAC PR 402GE.
+  
+      5654  = C9366^3131001^^388.44^^              Line/Data Error: Not a valid active Item in source file
+      6163  = Q2046^3131001^^1589.16^^             Line/Data Error: Not a valid active Item in source file
+  
+ Opt Fac 2           6 of 6 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6 entries added to the Charge Set RC-OPT FAC HR 402GE.
+  
+  
+ Opt Fac 4           5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-OPT FAC ML 402GE.
+  
+  
+ Opt Fac/Phys 1      6187 of 6187 records checked, 0 duplicates, 0 with $=0
+                     1 line/data errors or warnings found for a .02% error rate.
+                     6186 entries added to the Charge Set RC-OPT FAC PR 402GE.
+  
+      14113 = C1879^3131001^^191.69^^              Line/Data Error: Not a valid active Item in source file
+  
+ Opt PD PHosp        1 of 1 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     1 entries added to the Charge Set RC-OPT MISC 402GE.
+  
+  
+ Opt Phys 1          6205 of 6205 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     6205 entries added to the Charge Set RC-PHYSICIAN OPT PR 402GE.
+  
+  
+ Opt Phys 3          214 of 214 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     214 entries added to the Charge Set RC-PHYSICIAN OPT MN 402GE.
+  
+  
+ Any division with Non-Provider Based Freestanding Care should result in a 
+ summary with the following counts:
+  
+      IBCR UPLOAD RC 402GA CARIBOU, ME                  Count = 17372
+      IB Upload RC v3.13 402GA CARIBOU, ME, 9/18/13@15:57 by WANG,CHI
+  
+       Subfile                 Item     Count     Charge Set
+       -------                 ----     -----     -------------------------
+   1   FS Phys 1               CPT      16829     RC-PHYSICIAN FS PR 402GA
+   2   FS Phys 3               CPT      274       RC-PHYSICIAN FS MN 402GA
+   3   FS Phys/Add 00 1        CPT      2         RC-PHYSICIAN FS PR 402GA
+   4   FS Phys/Opt 1           CPT      260       RC-PHYSICIAN FS PR 402GA
+   5   FS Phys/Opt 4           CPT      5         RC-PHYSICIAN FS ML 402GA
+   6   FS Phys/Opt TC 1        CPT      2         RC-PHYSICIAN FS PR 402GA
+  
+  
+ IB Upload Summary Report of Charge Items Loaded into the Charge Master
+ --------------------------------------------------------------------------
+                IBCR UPLOAD RC 402GA CARIBOU, ME
+  
+ FS Phys 1           16829 of 16829 records checked, 0 duplicates, 0 with $=0
+                     2 line/data errors or warnings found for a .01% error rate.
+                     16827 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+  
+      11848 = C1879^3131001^^172.71^^              Line/Data Error: Not a valid active Item in source file
+      16633 = Q2046^3131001^^2011.28^^             Line/Data Error: Not a valid active Item in source file
+  
+ FS Phys 3           274 of 274 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     274 entries added to the Charge Set RC-PHYSICIAN FS MN 402GA.
+  
+  
+ FS Phys/Add 00 1    2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+  
+  
+ FS Phys/Opt 1       260 of 260 records checked, 0 duplicates, 0 with $=0
+                     1 line/data errors or warnings found for a .38% error rate.
+                     259 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+  
+      185   = C9366^3131001^^370.23^^              Line/Data Error: Not a valid active Item in source file
+  
+ FS Phys/Opt 4       5 of 5 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     5 entries added to the Charge Set RC-PHYSICIAN FS ML 402GA.
+  
+  
+ FS Phys/Opt TC 1    2 of 2 records checked, 0 duplicates, 0 with $=0
+                     0 line/data errors or warnings found for a 0% error rate.
+                     2 entries added to the Charge Set RC-PHYSICIAN FS PR 402GA.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCRHBRV
+    Before: B47845055   After: B48157732  **148,169,245,270,285,298,325,
+                                           334,355,360,365,382,390,408,
+                                           412,423,427,439,445,462,468,
+                                           484,491,508**
+Routine Name: IBYP508
+    Before:       n/a   After:  B8381759  **508**
+ 
+Routine list of preceding patches: 491
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : SEP 16, 2013
+Completed By: DAWSON,TIM                    Date Completed: NOV 04, 2013
+Released By : CAULFIELD,MARY                Date Released : NOV 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

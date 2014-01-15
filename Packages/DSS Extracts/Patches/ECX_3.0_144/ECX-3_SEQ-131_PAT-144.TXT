@@ -1,0 +1,532 @@
+$TXT Created by NABER,DAVID at DEVVCC.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 09/03/13 at 14:44
+=============================================================================
+Run Date: OCT 29, 2013                     Designation: ECX*3*144
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #131                      Status: Released
+                  Compliance Date: NOV 05, 2013
+=============================================================================
+
+Associated patches: (v)ECX*3*100   <<= must be installed BEFORE `ECX*3*144'
+                    (v)ECX*3*123   <<= must be installed BEFORE `ECX*3*144'
+                    (v)ECX*3*137   <<= must be installed BEFORE `ECX*3*144'
+                    (v)ECX*3*142   <<= must be installed BEFORE `ECX*3*144'
+                    (v)ECX*3*143   <<= must be installed BEFORE `ECX*3*144'
+
+Subject: DSS FY 2014 ANNUAL SUSTAINMENT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Sort Template
+  - Enhancement ()
+
+Description:
+============
+
+ ***********************************************************************
+ ** This patch is being released with an Emergency status because of  **
+ ** the shortened compliance date and must be installed in all        **
+ ** systems no later than the compliance requirement date. This patch **
+ ** must be installed on or before 11/05/13 so that the October DSS   **
+ ** Extracts can be generated using the updated Fiscal Year 14 logic. **
+ ** Failure to comply with the installation date will cause delays in **
+ ** extracting and reporting data.                                    **
+ ***********************************************************************
+  
+ The DSS FY14 Extract Enhancements shall provide the means of exporting 
+ data from selected VistA software modules and transmitting it to a DSS 
+ database residing at the AITC (Austin Information Technology Center). This
+ transfer is accomplished through a set of extract routines, intermediate
+ files, and transmission routines. Data from VistA packages is stored by
+ the extract routines in the intermediate files, where it is temporarily
+ available for local use and auditing. The data is then transmitted to the
+ AITC, where it is formatted and uploaded into commercial software.
+  
+ Included in the DSS FY14 scope are: 
+      o       DSS Extract field additions and modifications
+      o       DSS menu additions and modifications
+      o       New DSS reports and report modifications
+      o       Changes related to user, technical, or business 
+              documentation.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+  
+                                           UP    SEND  DATA               
+                                           DATE  SEC.  COMES  SITE   RSLV 
+ FILE #       NAME                         DD    CODE  W/FILE DATA   PTS 
+ ------------------------------------------------------------------------
+ 727.802     ADMISSION EXTRACT              YES   NO    NO         
+ 727.809     UNIT DOSE LOCAL EXTRACT        YES   NO    NO                 
+ 727.81      PRESCRIPTION EXTRACT           YES   NO    NO                 
+ 727.811     SURGERY EXTRACT                YES   NO    NO                 
+ 727.813     LABORATORY EXTRACT             YES   NO    NO                 
+ 727.814     RADIOLOGY EXTRACT              YES   NO    NO                 
+ 727.815     EVENT CAPTURE LOCAL EXTRACT    YES   NO    NO                 
+ 727.819     IV DETAIL EXTRACT              YES   NO    NO                 
+ 727.824     LAB RESULTS EXTRACT            YES   NO    NO                 
+ 727.825     QUASAR EXTRACT                 YES   NO    NO                 
+ 727.826     PROSTHETICS EXTRACT            YES   NO    NO                 
+ 727.827     CLINIC EXTRACT                 YES   NO    NO
+ 727.829     BLOOD BANK EXTRACT             YES   NO    NO
+ 727.832     NUTRITION EXTRACT              YES   NO    NO
+ 727.833     BCMA EXTRACT                   YES   NO    NO
+ 728.44      CLINICS AND STOP CODES         YES   NO    NO
+ 728.441     NATIONAL CLINIC                YES   NO    NO
+  
+ The following is a list of product features for this release:
+ =============================================================
+ 1.  Lock down of the NATIONAL CLINIC file (#728.441).  User 
+     additions/edits are no longer allowed.
+  
+ 2.  DATE OF BIRTH field (#121) in the SURGERY EXTRACT file (#727.811) 
+     file has been updated to match the DATE OF BIRTH field description in 
+     other extract files
+  
+ 3.  Add a new field called 4CHAR to the ECS and ECQ extracts.
+  
+ 4.  Convert non-standard race values to their standardized equivalent and
+     store in the RACE 1 field for affected extract files when no RACE 1 
+     information is available. Conversion is based on a matrix of
+     non-standard values provided by the VHA Office of Informatics and 
+     Analytics (OIA) Health Information Governance Office (HIG) VHA Data
+     Quality Program.
+  
+ 5.  Correct solutions cost logic on the IVP extract.
+  
+ 6.  Modify the clinic worksheet options so the create and unreviewed 
+     report options are now separated.  Running one option will no longer
+     force the other action to occur.  When running any clinic worksheet
+     report, the user will be informed of the last run date for the create
+     option.  The report will now indicate "last approved" date instead of
+     "last reviewed" date.  The report will now include the print date.
+  
+ 7.  The PRO extract audit report will now include the NPPD Entry Date.
+  
+ 8.  The Clinic Review Report will now allow the user to export active
+     clinics, inactive clinics or unreviewed clinics in addition to the
+     previously existing choice of all clinics.
+  
+ 9.  Onscreen instructions for capturing exportable data have been
+     updated to account for the use of reflections terminal emulators.
+  
+ 10. Add an Unusual Cost Report for Pharmacy extracts.  This report may be
+     output in a caret delimited format for exporting.
+  
+ 11. Add BCM as a selection in the Pharmacy Unusual Volume Report.  Also,
+     allow the report to be output in a caret delimited format for 
+     exporting.
+  
+ 12. Modify the DSS Identifier Non-Conforming Clinics report to display the
+     associated 4 character code.
+  
+ 13. Modify the DSS Clinic & Stop Codes Validity Report to validate and
+     report any inactive 4 character code.
+  
+ 14. Correct the IV solutions cost logic on the Pharmacy Unusual Volume
+     Report.
+  
+ 15. Add a new field VIETNAM to the CLI, ECS, ECQ, PRO, PRE and SUR
+     extracts.
+  
+ 16. Add a new field ENCOUNTER SC to the ADM, BCM, CLI, ECS, ECQ, IVP,
+     LAB, LAR, LBB, PRE, PRO, RAD and UDP extracts. Modified existing
+     ENCOUNTER SC field in the SUR extract.
+  
+ 17. Add new fields PROVIDER #6, PROVIDER #6 NPI, PROVIDER #6 PERSON
+     CLASS, PROVIDER #7, PROVIDER #7 NPI and PROVIDER #7 PERSON CLASS to
+     the ECQ and ECS extracts.
+  
+ 18. Add new fields SECONDARY PROVIDER #6, SECONDARY PROVIDER #6 PC,
+     SECONDARY PROVIDER #6 NPI, SECONDARY PROVIDER #7, SECONDARY
+     PROVIDER #7 PC, and SECONDARY PROVIDER #7 NPI to the CLI extract.
+  
+ 19. Add new fields IV ADDITIVE COST, IV SOLUTION COST, and DRUG COST
+     to the BCM extract.
+  
+ 20. Modify package extracts option so that the user may re-run an
+     extract without IRM/IT assistance when the extract system indicates
+     the extract is already running or when re-running the same date 
+     range.
+  
+ 21. Modify logic for the DEA, SPECIAL HDLG field to now include schedules 
+     1-5, in addition to investigational status (denoted by an "I") for the
+     UDP and BCM extracts.  Drug schedules take precedence over
+     investigational status when both are associated with the drug.  Rename
+     the INVESTIGATIONAL field in both extracts to DEA, SPECIAL HDLG.
+  
+  
+ 22. Exportability of the DSS Identifier Non-Conforming Report.  Report
+     can now be displayed in a caret delimited format.
+  
+ 23. Exportability of the DSS Clinics and Stop Codes Validity Report.  
+     Report can now be displayed in a caret delimited format.
+  
+ 24. Exportability of the Cost by PSAS HCPC Report.  Report can now be
+     displayed in a caret delimited format.
+  
+ 25. Exportability of the Prosthetics (PRO) YTD HCPCS Report.  Report can
+     now be displayed in a caret delimited format.
+  
+ 26. Exportability of the Prosthetics Extract Unusual Cost Report.  Report
+     can now be displayed in a caret delimited format.
+  
+ 27. Exportability of the Prosthetics (PRO) YTD Laboratory Report.  Report
+     can now be displayed in a caret delimited format.
+  
+ 28. Exportability of the Pharmacy Extracts Incomplete Feeder Key Report.
+     Report can now be displayed in a caret delimited format.
+  
+ 29. Exportability of the Pharmacy Extracts Unusual Volume Report.  Report
+     can now be displayed in a caret delimited format.
+     
+ 30. Exportability of the Lab Results DSS LOINC Code Report.  Report can
+     now be displayed in a caret delimited format.
+  
+ 31. Exportability of the Event Capture (ECS) Extract Audit.  Report can
+     now be displayed in a caret delimited format.
+  
+ 32. Exportability of the Prosthetics (PRO) Extract Audit.  Report can now
+     be displayed in a caret delimited format.
+  
+ 33. Modify the extract transmission process so that any field that
+     contains a tilde (~) character will have the tilde removed.
+  
+ 34. Add a new field called CONCURRENT CASE to the SUR extract.
+  
+ 35. Rename fields BCMA Drug Dispensed, BCMA Dose Given, BCMA Unit of
+     Administration, and BCMA ICU Flag to PLACEHOLDER in the IVP and UDP
+     extracts.
+  
+ 36. Add new field CAMP LEJEUNE STATUS to the ADM, BCM, CLI, ECS, ECQ, IVP,
+     LAB, LAR, PRE, PRO, RAD, SUR, and UDP extracts.
+  
+ 37. Add new field ENCOUNTER CAMP LEJEUNE to the ADM, BCM, CLI, ECS, ECQ,
+     IVP, LAR, PRE, PRO, RAD, SUR, and UDP extracts.
+  
+ 38. Create new option called Delete Extract Files.  The purging of extract
+     holding files and the deletion of extract files has been separated
+     into two different options.  The previous option, Purge Data from
+     Extract files has been renamed to Purge Extract Holding Files.
+  
+ 39. Add new field CLINIC IEN to the ECS and ECQ extracts.
+  
+ 40. Add new field RECORD LAST SYNCHED to the CLINICS AND STOP CODES
+     file (#728.44).  This field will hold the date the Create DSS
+     Clinic Stop Code File option is run.
+  
+ 41. Add new fields PRINCIPLE POSTOP ICD-10 CODE, OTHER POSTOP ICD-10
+     CODE #1, OTHER POSTOP ICD-10 CODE #2, OTHER POSTOP ICD-10 CODE #3,
+     OTHER POSTOP ICD-10 CODE #4 and OTHER POSTOP ICD-10 CODE #5 to the
+     SUR extract.
+  
+ 42. Allow fiscal year logic to be applied to reports so that user may
+     select to run either the previous or the current fiscal year logic
+     within a report.  For this year, only the IVP portion of the Pharmacy
+     Unusual Volume report will be affected.
+  
+ Security Key
+ ------------
+ ECX DSS TEST
+  
+ The purpose of this key is to allow future fiscal year extracts to be run 
+ by test sites only.
+  
+ Sort Template
+ --------------
+ ECX CLINIC CODE
+  
+ Template sorts so that only active entries are displayed. 
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                     Type               New/Modified
+ ------------------              ----               ------------
+ ECXDELEF                        Run Routine        Modified
+ ECXPURG                         Run Routine        Modified
+ ECX PHA COST                    Run Routine        New
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+   
+  
+ The documentation, including User and Technical manuals will be in the 
+ form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: http://www4.domain.ext/vdl/application.asp?appid=35
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP sites listed above.
+  
+ File Description                       File Name                FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                            DSS_3_FY2014_UM.pdf      Binary
+ Technical Manual                       DSS_3_FY2014_TM.pdf      Binary
+ Medical Records Data Definitions Guide DSS_3_FY2014_DD.pdf      Binary
+ Release Notes                          DSS_3_FY2014_RN.pdf      Binary
+  
+  
+ Test Sites:
+ -----------
+ Boston
+ Cheyenne
+ Little Rock
+ North Texas
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*144):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*144 when prompted for a build name.
+        b.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  YES//' answer NO (unless otherwise indicated).
+        c.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? YES//' hit '<return>'. YES (unless
+               otherwise indicated).
+  
+        d.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+  
+        f. If prompted 'Delay Install (Minutes):  (0-60):  0//'
+           answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P144
+    Before:       n/a   After: B63166716  **144**
+Routine Name: ECXADM
+    Before: B52630295   After: B59038752  **1,4,11,8,13,24,33,39,46,71,
+                                           84,92,107,105,120,127,132,136,
+                                           144**
+Routine Name: ECXAECS
+    Before: B40379474   After: B50961338  **8,33,123,144**
+Routine Name: ECXAPHA
+    Before: B35967865   After: B62748333  **40,49,66,104,109,113,136,144**
+Routine Name: ECXAPHA2
+    Before: B28836077   After: B51669266  **40,49,84,104,105,113,136,143,144**
+Routine Name: ECXAPHAP
+    Before:       n/a   After: B37750813  **40,49,66,104,109,113,136,144**
+Routine Name: ECXAPHP2
+    Before:       n/a   After: B29677445  **40,49,84,104,105,113,136,143,144**
+Routine Name: ECXAPRO
+    Before: B50281259   After: B58811063  **9,21,33,36,132,137,144**
+Routine Name: ECXAPRO1
+    Before: B15242720   After: B20521932  **9,21,132,144**
+Routine Name: ECXAPRO2
+    Before: B19164691   After: B27501495  **9,21,39,144**
+Routine Name: ECXBCM
+    Before: B71824253   After: B87281360  **107,127,132,136,143,144**
+Routine Name: ECXCPRO
+    Before: B32166082   After: B35725966  **21,24,33,84,137,144**
+Routine Name: ECXCPRO1
+    Before: B13012758   After: B17918535  **21,84,132,144**
+Routine Name: ECXDRUG1
+    Before: B33255159   After: B44065149  **40,68,144**
+Routine Name: ECXDRUG2
+    Before: B17371737   After: B17542635  **40,68,84,105,111,144**
+Routine Name: ECXEC
+    Before: B61924291   After: B75634343  **11,8,13,24,27,33,39,46,49,
+                                           71,89,92,105,120,127,132,136,
+                                           144**
+Routine Name: ECXKILL
+    Before:  B9492478   After:  B9656369  **9,8,21,24,31,39,49,84,89,105,
+                                           112,127,132,136,144**
+Routine Name: ECXKILL1
+    Before: B13723476   After: B14673623  **39,46,89,120,127,132,136,144**
+Routine Name: ECXLABN
+    Before: B44530777   After: B46690965  **1,11,8,13,28,24,30,31,32,33,
+                                           39,42,46,70,71,80,92,107,105,
+                                           112,127,132,144**
+Routine Name: ECXLABR
+    Before: B21203653   After: B22824878  **8,24,33,37,39,46,71,80,107,
+                                           105,112,127,144**
+Routine Name: ECXLARPT
+    Before: B22212471   After: B29347556  **112,120,144**
+Routine Name: ECXLBB
+    Before: B51392005   After: B52423335  **78,84,90,92,104,105,102,120,
+                                           127,144**
+Routine Name: ECXLBB1
+    Before: B27049597   After: B27728068  **105,102,120,127,144**
+Routine Name: ECXLPRO
+    Before: B25310596   After: B29349856  **21,24,36,84,144**
+Routine Name: ECXLPRO1
+    Before:  B8515235   After: B11630599  **21,84,144**
+Routine Name: ECXOPRX
+    Before: B60339399   After: B64829942  **10,11,8,13,24,30,33,38,39,
+                                           46,49,71,81,84,92,105,112,120,
+                                           127,136,144**
+Routine Name: ECXOPRX1
+    Before:  B9265203   After:  B9994734  **92,107,105,120,127,144**
+Routine Name: ECXPIVD2
+    Before:  B9098930   After:  B9468858  **105,120,127,144**
+Routine Name: ECXPIVDN
+    Before: B58842000   After: B58898409  **10,11,8,13,24,33,39,46,49,
+                                           71,84,96,92,107,105,112,120,
+                                           127,136,143,144**
+Routine Name: ECXPRO
+    Before: B42025638   After: B45721055  **9,13,15,21,24,33,39,46,71,
+                                           92,105,120,127,132,136,144**
+Routine Name: ECXPROCT
+    Before: B21321082   After: B24695240  **71,100,144**
+Routine Name: ECXPURG
+    Before: B23816296   After: B27702088  **9,24,33,35,49,102,112,144**
+Routine Name: ECXPURG1
+    Before: B36829694   After: B38351530  **2,9,8,24,49,102,112,144**
+Routine Name: ECXQSR
+    Before: B49856684   After: B61223139  **11,8,13,26,24,34,33,35,39,
+                                           43,46,49,64,71,84,92,106,105,
+                                           120,124,127,132,136,144**
+Routine Name: ECXQSR1
+    Before: B13899890   After: B16250505  **105,120,127,132,136,144**
+Routine Name: ECXRAD
+    Before: B39628286   After: B44395156  **11,8,13,16,24,33,39,46,71,
+                                           84,92,105,120,127,136,144**
+Routine Name: ECXSCLD
+    Before:B204371648   After:B220306894  **2,8,24,30,71,80,105,112,120,
+                                           126,132,136,142,144**
+Routine Name: ECXSCLD1
+    Before:  B4160258   After: B14959984  **132,136,144**
+Routine Name: ECXSCRP
+    Before: B21952351   After: B30491382  **57,58,120,126,144**
+Routine Name: ECXSCX1
+    Before: B78250876   After: B90609071  **8,28,24,27,29,30,31,33,84,
+                                           92,105,127,132,144**
+Routine Name: ECXSCX2
+    Before:  B9043953   After:  B9845162  **39,46,49,71,84,92,105,120,127,144**
+Routine Name: ECXSCX3
+    Before: B12749405   After: B21200160  **120,144**
+Routine Name: ECXSCXN
+    Before: B73018945   After: B86877891  **24,27,29,30,31,32,33,39,46,
+                                           49,52,71,84,92,107,105,120,124,
+                                           127,132,136,144**
+Routine Name: ECXSCXN1
+    Before: B14855625   After: B17063992  **71,105,127,132,136,144**
+Routine Name: ECXSTOP
+    Before: B11137426   After: B13978412  **120,126,144**
+Routine Name: ECXSURG
+    Before: B72092726   After: B76612966  **1,11,8,13,25,24,33,39,41,42,
+                                           46,50,71,84,92,99,105,112,128,
+                                           127,132,144**
+Routine Name: ECXSURG1
+    Before: B19369745   After: B21879740  **105,112,120,127,132,144**
+Routine Name: ECXTRAC
+    Before: B56593271   After: B97271442  **9,8,14,24,30,33,49,84,105,144**
+Routine Name: ECXTRANS
+    Before: B59690762   After: B59881332  **2,9,12,8,13,14,23,24,33,49,
+                                           54,75,71,144**
+Routine Name: ECXUD
+    Before: B58470506   After: B62950781  **10,8,24,33,39,46,49,71,84,
+                                           92,107,105,120,127,144**
+Routine Name: ECXUPRO
+    Before: B23782854   After: B27534272  **49,111,144**
+Routine Name: ECXUPRO1
+    Before:  B7105553   After:  B7760162  **49,111,132,137,144**
+Routine Name: ECXUTL
+    Before: B53983584   After: B53992756  **1,5,8,84,90,127,144**
+Routine Name: ECXUTL1
+    Before: B41491361   After: B85232307  **9,49,136,144**
+Routine Name: ECXUTL2
+    Before: B71508218   After: B72234767  **8,13,23,24,33,35,39,46,71,
+                                           84,92,105,112,120,127,144**
+Routine Name: ECXUTL3
+    Before: B63750846   After: B94009566  **11,24,32,33,35,37,39,42,46,
+                                           92,105,120,144**
+ 
+Routine list of preceding patches: 100, 123, 137, 142, 143
+
+=============================================================================
+User Information:
+Entered By  : NABER,DAVID A                 Date Entered  : JAN 16, 2013
+Completed By: SBERRO,SANDRA                 Date Completed: OCT 21, 2013
+Released By : VASSAR,CAROL                  Date Released : OCT 29, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

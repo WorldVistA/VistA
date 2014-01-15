@@ -1,0 +1,119 @@
+$TXT Created by MCNEILE,KEN at DEV.DEV.FO-HINES.DOMAIN.EXT  (KIDS) on Thursday, 05/09/13 at 14:19
+=============================================================================
+Run Date: NOV 21, 2013                     Designation: RA*5*110
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #104                      Status: Released
+                  Compliance Date: DEC 22, 2013
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*110'
+
+Subject: CORRECT SUBSCRIPT ERROR IN RAPROD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ When attempting to display Radiology exams in CPRS (Imaging - local 
+ only), CPRS will be interrupted with a subscript error when the procedure
+ code is missing.
+               
+ Associated Remedy Tickets:
+ ==========================
+ HD0000000341299 - CDIS+8^RAPROD
+      
+ Associated NSR(s):
+ ==================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ Detroit, MI.
+ South Texas HCS
+ Texas Valley Coastal Bend HCS
+      
+ Remedy Overview:
+ ================     
+ HD0000000341299 - CDIS+8^RAPROD
+            
+ Problem:
+ --------
+ When entering a parent procedure during Radiology Exam Entry/Patient 
+ Registration it is possible to have an abnormal termination of a session
+ either by closing your terminal session or by shutting down your device.  
+ If this happens at the precise moment that you have elected to enter a
+ descendent exam but have not yet entered a procedure code for this exam,
+ an error is not relayed until attempting to display the associated report
+ in CPRS (Imaging - local only). At that point a subscript error is
+ generated. 
+          
+ Resolution :
+ ------------ 
+ A modification will be made to routine RAPROD to not produce the subscript
+ error by having the routine sense the absence of the procedure code and
+ return to the executing for loop.     
+      
+    ==================== Installation Instructions ====================
+      
+ If installed during the normal workday, it is recommended that the
+ Radiology users be off the system. Other VISTA users will not be affected.
+ Install Time is less than 2 minutes.
+      
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+  2. From the Kernel Installation & Distribution System menu, select the
+     Installation menu.
+     
+  3. From this menu, you may select to use the following options (when
+     prompted for INSTALL NAME, enter RA*5.0*110)
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+   
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4. Use the Install Package(s) option and select the package RA*5.0*110
+   
+  5. When prompted "Want KIDS to INHIBIT LOGONs during the install? 
+     NO//" answer NO 
+   
+  6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//" answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RAPROD
+    Before: B45447427   After: B48293236  **10,35,45,56,99,47,110**
+ 
+Routine list of preceding patches: 47
+
+=============================================================================
+User Information:
+Entered By  : MCNEILE,KEN                   Date Entered  : JUL 11, 2011
+Completed By: DUCKWORTH,TIM                 Date Completed: NOV 14, 2013
+Released By : MILLIGAN,KERRY                Date Released : NOV 21, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

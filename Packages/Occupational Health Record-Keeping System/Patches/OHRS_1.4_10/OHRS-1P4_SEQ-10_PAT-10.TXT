@@ -1,0 +1,133 @@
+
+=============================================================================
+Run Date: NOV 15, 2013                     Designation: OHRS*1.4*10
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #10                    Status: Released
+                  Compliance Date: DEC 16, 2013
+=============================================================================
+
+
+Subject: OHRS 1.4.10 Maintenance Updates
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ *************************************************************
+ This is to announce the updates to CISS-OHRS web application
+ version 1.4.10 will be rolled out nationally November 18, 2013
+ *************************************************************
+  
+ RELEASE INFORMATION:
+ ====================
+ This is an informational release notice only.
+  
+   
+ BLOOD BANK CLEARANCE
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: OHRS*1.4*10
+ does not alter or modify any VistA Blood Bank software design
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch OHRS*1.4*10 have no effect on Blood
+ Bank software functionality, therefore RISK is none.
+  
+  
+ SOFTWARE CHANGES:
+ ================
+  
+ 1. CCR2923 - The OHRS database has been updated with ICD-10 codes, so 
+              that they are available for use when ICD-10 codes are 
+              mandated for use.
+  
+ 2. CCR3055 - The Fit Test notifications are now only available as an  
+              option when documenting a fit test notification.  
+  
+ 3. CCR3136 - An application error was being displayed on Manual 
+              Reconcile when merging data for Other Federal Agency(OFA)  
+              patient data that doesn't have a Duty Station or Work 
+              Location.  The application error is no longer displayed.
+  
+              The Manual Reconcile screen will display the Duty Station
+              in the 1st column if the data is in the OFA file
+  
+ 4. CCR3021 - When PAID employees are dropped from the paid data load,
+              OHRS will update the separation date for PAID 
+              employees who are no longer appearing in the PAID Load.  
+  
+ 5. CCR3117 - PAID Data Load job process will not replace an existing 
+              valid e-mail address with a Null e-mail value when sent
+              by PAID Data Load.
+  
+ 6. CCR3135 - Patient Import Data Load process was not accepting 3 digits 
+              value for the station field nor accepting 4 digit values for 
+              the duty station field during Patient Import data load 
+              process.  The system will now accept the 3 digits for the 
+              station field and 4 digit values for the duty station.
+  
+ 7. CCR3114 - Date calendar box on the Date field in OHRS application is 
+              not being properly read by the screen reader (JAWS). JAWS 
+              will now read instructions for the date field.
+               
+  
+ 8. CCR3126 - JAWS was not reading the Required (*) fields in the Risk 
+              Profile screen as a required field combo box. 
+              JAWS is now reading the required fields as expected.
+  
+ 9. CCR3128 - JAWS was not reading the message on the "Report 
+              Extension" popup message box on the completed reports
+              tab. JAWS is now reading the popup message as expected.
+  
+  
+ SYSTEM REQUIREMENTS:
+ ======================
+ n/a
+  
+   
+ SOFTWARE RETRIEVAL:
+ =====================
+ n/a
+  
+   
+ REMEDY TICKET(S) and OVERVIEW:
+ ==============================             
+ n/a 
+  
+  
+ TEST SITES:
+ ====================== 
+ Philadelphia VAMC, PA
+ Southern Arizona (SAVHCS), AZ
+ Albany VAMC, NY
+  
+  
+ DOCUMENTATION:
+ ======================
+ The User Guide is available on VA Documentation Library (VDL) at:
+ http://www.domain.ext/vdl/ in the HealtheVet section.
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357
+ or log a Remedy Ticket via Remedy for CISS-OHRS
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : DAVIS,SHAWNTA                 Date Entered  : OCT 07, 2013
+Completed By: KAUR,RENE                     Date Completed: NOV 06, 2013
+Released By : MOODY,SUSAN                   Date Released : NOV 15, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

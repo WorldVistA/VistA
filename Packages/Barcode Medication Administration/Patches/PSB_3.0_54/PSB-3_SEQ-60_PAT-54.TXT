@@ -1,0 +1,235 @@
+$TXT Created by RENE,BRIAN at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 09/05/13 at 15:46
+=============================================================================
+Run Date: NOV 05, 2013                     Designation: PSB*3*54
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #60                      Status: Released
+                  Compliance Date: DEC 06, 2013
+=============================================================================
+
+Associated patches: (v)PSB*3*50    <<= must be installed BEFORE `PSB*3*54'
+
+Subject: UNDEFINED IN PSBOML; FILING ERROR
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1.     An Undefined error occurs at LINE+13^PSBOML when the 
+        BCMA Med Log report is run and finds a BCMA MED LOG (#53.79)
+        entry without a corresponding PHARMACY PATIENT (#55) entry.
+  
+ 2.     When giving an IV via the Unable to Scan feature, the user will
+        receive a "Incomplete Data Returned from Vista" pop up box if the
+        data attempting to be stored in the ORDERABLE ITEM (#15) field of
+        the BCMA UNABLE TO SCAN LOG (#53.77) file is greater than 40
+        characters.
+  
+ ASSOCIATED NSR(S):
+ ==================
+  N/A
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1.  INC0000000218516 - <UNDEFINED>LINE+13^PSBOML
+     Duplicate: 
+     INC0000000219868
+     INC0000000220068
+     INC0000000221427
+     INC0000000222347
+     INC0000000222870
+     INC0000000270459
+  
+ 2. INC0000000328464 - Error after migrating to RDPC
+    Duplicate:
+    INC0000000614139
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ South Texas HCS
+ VA Western NY HCS
+ St. Cloud VAMC
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC0000000218516 - <UNDEFINED>LINE+13^PSBOML
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #857
+  
+    Problem:
+    --------
+    When running the BCMA Med Log report, an undefined error occurs at 
+    LINE+13^PSBOML when a PHARMACY PATIENT (#55) file record does not have
+    a corresponding BCMA MED LOG (#53.79) file entry.
+  
+    Resolution:
+    -----------
+    Routine PSBOML was modified to correct the undefined error and send a 
+    Mailman message to the mail group in the BCMA PARAMETERS GUI Unknown
+    Actions field stating the following: "Order #_ given in BCMA no longer
+    has a corresponding entry in the Pharmacy Patient (#55) file. Please
+    submit a remedy ticket for this issue." A post install routine will
+    also run letting the installer know via screen print and Mailman
+    message that the BCMA PARAMETERS GUI Unknown Actions mail group has no 
+    active members.
+  
+ 2. INC0000000328464 - Error after migrating to RDPC
+  
+    Problem:
+    --------
+    When attempting to give an IV via "Unable to Scan" that contains only a
+    solution and has a NAME (#.01) and DOSAGE FORM (#.02) in the PHARMACY 
+    ORDERABLE ITEM (#50.7) that has a combined length of greater than 40 
+    characters, it will cause users to receive the pop up dialog box
+    "Incomplete data returned from VISTA".  An entry will also not be
+    stored  in the ORDERABLE ITEM NAME (#15) field of the BCMA UNABLE TO
+    SCAN LOG (#53.77), causing the drug not to show in the DRUG (ID #)
+    field in the "BCMA Unable to Scan Detailed" report.
+  
+    Resolution:
+    -----------
+    The input transform of data dictionary was modified to allow up to 71 
+    characters for the ORDERABLE ITEM NAME (#15) field in the BCMA UNABLE 
+    TO SCAN LOG (#53.77).
+  
+  
+ ********************BEFORE***********************
+  
+ 53.77,15      ORDERABLE ITEM NAME    5;2 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>40!($L(X)<3) X
+               LAST EDITED:      NOV 19, 2008 
+               HELP-PROMPT:      The name of the orderable item that is 
+                                 associated with the UTS event. 
+               DESCRIPTION:      The Orderable Item Name of the medication that
+                                 is contained in an order that is associated
+                                 with the UTS event.  
+  
+               TECHNICAL DESCR:  The Orderable Item Name entry can be located in
+                                 file # 50.7 by using the value of field 14 of
+                                 this file as a pointer. We are storing the
+                                 value rather than pointing to it for historical
+                                 purposes. We do not want this field to change
+                                 if there is a change in file # 50.7. Our goal
+                                 is to store the value at the the time of the
+                                 UTS event. 
+  
+ ********************AFTER***********************
+  
+ 53.77,15      ORDERABLE ITEM NAME    5;2 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>71!($L(X)<3) X
+               LAST EDITED:      APR 06, 2010 
+               HELP-PROMPT:      Enter the name of the orderable item (3-71 
+                                 characters) that is associated with the UTS 
+                                 event. 
+               DESCRIPTION:      The Orderable Item Name of the medication that
+                                 is contained in an order that is associated
+                                 with the UTS event.  When the medication only 
+                                 contains a solution with no additive, the
+                                 Orderable Item Name will include both the
+                                 Pharmacy Orderable Item and the Dosage Form.  
+  
+               TECHNICAL DESCR:  The Orderable Item Name entry can be located in
+                                 file # 50.7 by using the value of field 14 of
+                                 this file as a pointer. We are storing the
+                                 value rather than pointing to it for historical
+                                 purposes. We do not want this field to change
+                                 if there is a change in file # 50.7. Our goal
+                                 is to store the value at the time of the UTS
+                                 event.  When the medication only contains a
+                                 solution with no additive, the Orderable Item
+                                 Name will be the Name (#.01) field of the
+                                 Pharmacy Orderable Item file (#50.7) followed 
+                                 by a blank character followed by the Name
+                                 (#.01) field from the Dosage Form (#50.606)
+                                 file. The Dosage form can be located in file #
+                                 50.606 by using the value of field .02 of the #
+                                 50.7 file as a pointer.   
+  
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+   
+    *************************** NOTE ****************************
+    *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS      *
+    *  AN EDITED ERROR WILL OCCUR.                              *
+    *  The patch should be installed when NO BCMA Client        *
+    *  users are on the system.                                 *
+    *  Please monitor the install and check Mailman after       *
+    *  installation for a message that may be generated by      *
+    *  the post install routine                                 *
+    * ***********************************************************
+   
+    Installation will take less than 1 minute.
+   
+    Suggested time to install: Non-peak requirement hours.
+   
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+   
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSB*3.0*54):
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+   4. Use the Install Package(s) option and select the package PSB*3.0*54.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+  
+   ** NOTE: Post Install Routine PSB54P will be deleted automatically after
+      completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB54P
+    Before:       n/a   After:  B3645081  **54**
+Routine Name: PSBOML
+    Before: B33332484   After: B41485291  **3,11,50,54**
+ 
+Routine list of preceding patches: 50
+
+=============================================================================
+User Information:
+Entered By  : RENE,BRIAN                    Date Entered  : MAR 31, 2010
+Completed By: PODLEY,CHRIS                  Date Completed: OCT 18, 2013
+Released By : LYTTLE,KIM M                  Date Released : NOV 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,266 @@
+$TXT Created by BUECHLER,Melanie at DAYT79.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 09/10/13 at 10:49
+=============================================================================
+Run Date: NOV 05, 2013                     Designation: VPR*1*2
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: DEC 06, 2013
+=============================================================================
+
+Associated patches: (v)VPR*1*1     <<= must be installed BEFORE `VPR*1*2'
+
+Subject: VPR JSON
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package provides a new
+ remote procedure call (RPC) to enable extraction of patient health data
+ from a Veterans Health Information Systems and Technology Architecture
+ (VistA) database in JavaScript Object Notation (JSON) format, for use in
+ new web applications such as the Health Management Platform (HMP).  This
+ patch will also correct a reported issue with VPR 1.0.
+  
+  
+ New Service Requests (NSRs)
+ ===========================
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ============================
+ PSPO #2275
+  
+  
+ Remedy Tickets & Issues
+ =======================
+  
+ 1. HD0000000719354  NwHIN Uncosigned Notes
+  
+ Issue:
+ -----
+ Nationwide Health Information Network (NwHIN) uses the VPR data extract
+ RPC to request completed documents from VistA, but VPR is getting all
+ signed notes from Text Integration Utilities (TIU); notes also needing a
+ cosignature to be complete are included and returned in the resulting
+ VPR XML document.
+  
+ Resolution:
+ ----------
+ A filter will be added to the VPR documents extract, and notes that
+ still require a cosignature will no longer be included in the results
+ for complete documents. [Note: NwHIN added a similar filter to their
+ Adapter v5 client, released in September 2012, so users of that
+ application may not see any change with this patch.]
+   
+   
+ 2. [no Remedy#]     New Data Extract RPC
+  
+ Issue:
+ -----
+ New web applications in development, such as HMP, need VistA data
+ returned in the JSON format.
+  
+ Resolution:
+ ----------
+ This patch adds VPR GET PATIENT DATA JSON to the REMOTE PROCEDURE file
+ (#8994), and new routines to support it.  Data is pulled from VistA
+ applications in the same way as the previously released RPC, but the
+ results are formatted as JSON instead of XML.
+  
+ An option to allow viewing the JSON results is also included in this
+ patch.  The View JSON results option [VPR TEST JSON] may be assigned
+ to users who desire or need to see the raw results of this RPC; the input
+ parameters will be prompted for and passed into the RPC, and the results
+ displayed onscreen.
+  
+ For example:
+  
+ Select OPTION NAME:    VPR TEST JSON     View JSON results
+ View JSON results
+ Select PATIENT NAME:    AVIVAPATIENT,SIX        2-2-57    666000926     NO
+  NSC VETERAN                 AVIVAUSER,FIVE  PRIMARY CARE TEAM2
+  Enrollment Priority:            Category: IN PROCESS    End Date: 
+   
+ Select DOMAIN: VITAL
+ Select START DATE: T  (JUL 25, 2013)
+ Select STOP DATE: T  (JUL 25, 2013)
+ Select TOTAL #items: 
+   
+ {"apiVersion":"1.01","params":{"domain":"DEV.HMPDEV.VAINNOVATIONS.US",
+ "systemId":"F484"},
+ "data":{"updated":"20130725162437","totalItems":1,"items":[
+ {"displayName":"R","facilityCode":"500D","facilityName":"SLC-FO HMP DEV",
+ "high":30,"kind":"Vital Sign","localId":43506,"locationName":"GEN MED",
+ "locationUid":"urn:va:location:F484:9","low":8,"observed":20130725090949,
+ "qualifiers":[{"name":"SPONTANEOUS","vuid":4688706}],"result":41,
+ "resulted":20130725091049,"summary":"RESPIRATION 41 \/min","typeCode":
+ "urn:va:vuid:4688725","typeName":"RESPIRATION","uid":"urn:va:F484:100847:
+ vital:43506","units":"\/min"}
+ ]}}
+  
+  
+ Select DOMAIN: 
+ Select PATIENT NAME: 
+   
+   
+ Test Sites:
+ ==========
+ San Diego, CA
+ Loma Linda, CA
+ Greater Los Angeles Health Care System
+ Portland, OR
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server:
+   
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library:
+  http://www4.domain.ext/vdl/
+  
+ Title                         File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ VPR Technical Manual          VPR_TM.PDF                   binary
+   
+   
+ Installation Instructions
+ =========================
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter VPR*1.0*2.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO//' enter NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' enter NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' enter NO. 
+  
+ 8.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 317
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRD
+    Before: B28899728   After: B29175301  **1,2**
+Routine Name: VPRDCRC
+    Before:       n/a   After: B46793433  **2**
+Routine Name: VPRDGMPL
+    Before: B27790775   After: B27827751  **1,2**
+Routine Name: VPRDJ
+    Before:       n/a   After: B22186238  **2**
+Routine Name: VPRDJ0
+    Before:       n/a   After: B87481337  **2**
+Routine Name: VPRDJ00
+    Before:       n/a   After: B58623073  **2**
+Routine Name: VPRDJ01
+    Before:       n/a   After: B39474581  **2**
+Routine Name: VPRDJ02
+    Before:       n/a   After: B43626306  **2**
+Routine Name: VPRDJ03
+    Before:       n/a   After: B49743518  **2**
+Routine Name: VPRDJ04
+    Before:       n/a   After: B47678729  **2**
+Routine Name: VPRDJ04A
+    Before:       n/a   After: B36420588  **2**
+Routine Name: VPRDJ05
+    Before:       n/a   After: B76359424  **2**
+Routine Name: VPRDJ05V
+    Before:       n/a   After: B45875553  **2**
+Routine Name: VPRDJ06
+    Before:       n/a   After: B49853799  **2**
+Routine Name: VPRDJ07
+    Before:       n/a   After: B19635784  **2**
+Routine Name: VPRDJ08
+    Before:       n/a   After: B60175705  **2**
+Routine Name: VPRDJ08A
+    Before:       n/a   After: B39219672  **2**
+Routine Name: VPRDJ09
+    Before:       n/a   After: B37647658  **2**
+Routine Name: VPRDJT
+    Before:       n/a   After:  B9998610  **2**
+Routine Name: VPRDLR
+    Before: B24712747   After: B24009801  **2**
+Routine Name: VPRDLRA
+    Before: B76300469   After: B76865545  **1,2**
+Routine Name: VPRDLRO
+    Before: B27350157   After: B27947758  **2**
+Routine Name: VPRDMC
+    Before: B58328454   After: B58353015  **1,2**
+Routine Name: VPRDMDC
+    Before: B44678829   After: B58663659  **1,2**
+Routine Name: VPRDPXIM
+    Before: B15857859   After: B15866293  **2**
+Routine Name: VPRDTIU
+    Before: B80235055   After: B81103735  **1,2**
+Routine Name: VPRDVSIT
+    Before: B89381077   After: B89271062  **1,2**
+Routine Name: VPRJSON
+    Before:       n/a   After: B11235996  **2**
+Routine Name: VPRJSOND
+    Before:       n/a   After: B63619549  **2**
+Routine Name: VPRJSONE
+    Before:       n/a   After: B20857447  **2**
+Routine Name: VPRP2I
+    Before:       n/a   After:   B236349  **2**
+Routine Name: VPRUTILS
+    Before:       n/a   After:  B9723974  **2**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  : BUECHLER,MELANIE K            Date Entered  : JUL 31, 2013
+Completed By: CHIPMAN,HONEY                 Date Completed: NOV 05, 2013
+Released By : HINES,RICK                    Date Released : NOV 05, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

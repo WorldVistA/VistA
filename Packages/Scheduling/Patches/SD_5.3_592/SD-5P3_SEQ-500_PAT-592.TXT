@@ -1,0 +1,193 @@
+$TXT Created by SPILLER,RICHARD at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Tuesday, 07/16/13 at 09:22
+=============================================================================
+Run Date: OCT 23, 2013                     Designation: SD*5.3*592
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #500                    Status: Released
+                  Compliance Date: NOV 23, 2013
+=============================================================================
+
+Associated patches: (v)SD*5.3*572  <<= must be installed BEFORE `SD*5.3*592'
+                    (v)SD*5.3*597  <<= must be installed BEFORE `SD*5.3*592'
+
+Subject: FIX APPT CANCELLATION TIME AND WARNING MESSAGE FOR APPT CANCEL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two Scheduling issues:
+  
+ 1. When an appointment is cancelled, the software rounds and files the   
+    cancellation date/time rather than filing the precise time.
+  
+ 2. When a user attempts to cancel a checked out appointment, a warning
+    message is displayed with the incorrect appointment number.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC000000599584 - Appointment Cancellation Time Not Precise
+    Duplicate:
+    INC000000616591 - Appointment Cancellation time is not exact
+    INC000000725262 - Cancel Appointment issue
+    INC000000788758 - Cancel Appointment time issue
+    INC000000870347 - Scheduling - Other:
+  
+ 2) INC000000713571 - Display issue with Appointment Cancellation
+  
+ ASSOCIATED NSR(S):       
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Memphis, TN
+ Upstate New York HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000000599584 - Appointment Cancellation Time Not Precise
+  
+    Problem:
+    --------
+    When an appointment is cancelled the software rounds and files the
+    date/time rather than filing the precise time.  Depending which applies,
+    cancellation date/time and no-show date/time are both stored in             
+    NO-SHOW/CANCEL DATE/TIME field (#15) of the APPOINTMENT sub-file (#2.98)    
+    of the PATIENT file (#2).  No-show date/times are not rounded off and the
+    precise time is filed.  Cancellation date/times should be filed in the      
+    same manner, with no rounding of the time.
+  
+    Resolution:
+    -----------
+    Routine SDCNP0 will be modified to remove the logic that is rounding
+    the time before filing a cancellation date/time, so that it files the
+    precise time, the same as with no-show date/times.
+  
+ 2) INC000000713571 - Display issue with Appointment Cancellation
+  
+    Problem:
+    --------
+    If a user goes into option APPOINTMENT MANAGEMENT [SDAM APPT MGT],
+    either by clinic or by patient, and they attempt to cancel an 
+    appointment while another user on another session has checked out
+    that same appointment, a warning message is displayed. This message 
+    will be partially incorrect if the selected appointment was not the 
+    first appointment in the appointment list.  The first line of the 
+    warning message will echo back and display the correctly selected 
+    appointment from the list. However, the second line of the message 
+    will always read:
+    ">>> Appointment #1 has a check out date and cannot be cancelled."
+  
+    Although the statement is correct, it indicates the wrong appointment
+    number from the appointment list (unless the first appointment in the
+    list was the one selected).
+  
+    Resolution:
+    -----------
+    Routine SDAMC will be modified to setup the proper appointment list
+    selection variable therefore what is displayed is the correct information to
+    the user.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*592):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+  
+         Enter options you wish to mark as 'Out Of Order':
+  
+         Appointment Management            [SDAM APPT MGT]
+         Make Appointment                  [SDM]
+         Cancel Appointment                [SD CANCEL APPOINTMENT]
+         
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+         enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAMC
+    Before: B14510209   After: B15376797  **20,28,32,46,263,414,444,478,
+                                           538,554,597,592**
+Routine Name: SDCNP0
+    Before: B34578981   After: B37888084  **132,167,478,517,572,592**
+ 
+Routine list of preceding patches: 572, 597
+
+=============================================================================
+User Information:
+Entered By  : CURTIS,RICHARD                Date Entered  : JAN 05, 2012
+Completed By: SESSLER,APRIL                 Date Completed: OCT 17, 2013
+Released By : FLANAGAN,PATTY                Date Released : OCT 23, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

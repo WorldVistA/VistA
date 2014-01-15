@@ -1,0 +1,525 @@
+
+=============================================================================
+Run Date: OCT 24, 2013                     Designation: MAG*3*135
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #95                      Status: Released
+                  Compliance Date: DEC 09, 2013
+=============================================================================
+
+Associated patches: (v)MAG*3*121   <<= must be installed BEFORE `MAG*3*135'
+
+Subject: NETWORK LATENCY AND QUEUE MANAGEMENT ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ Due to a recent increase in network latency incidents resulting in OS 
+ timeouts or I/O errors, MAG*3.0*135 is necessary to address 
+ these situations where the BP storage applications halt, the queue counts 
+ go negative, and the operator cannot get to the failed queue details to 
+ determine what the problem is. Fixing all three BP applications is the 
+ strategy utilized to harden the BP against network timeouts and to make 
+ the BP applications more tolerant of different storage configurations.
+  
+ Network latency incidents have been exacerbated by:
+ 1. Import API Active X control introduced by Patch MAG*3.0*121 (released
+    3/23/12), which causes a MAGImportXcontrol1.ocx error on the BP.
+  
+ 2. Problems exhibiting more visibly through the new Remote Data Processing
+    Center (RDPC) architecture.
+ 3. CRISP-related security changes, which have decreased sites access to
+    the hospital database, thereby limiting their ability to resolve their 
+    own problems or facilitate Clin3 to do the same.
+  
+ 4. Sites are becoming increasingly challenged by the lack of storage 
+    space, which raises the level of exposure to known issues with
+    deployed software: 
+      * For integrated sites only, the BP Verifier may check data integrity
+        for the incorrect site after access/verify codes are edited at one
+        of the sites.
+      * The BP Purge does not differentiate between a regular image and a
+        photo ID when removing image files from the Tier 1 storage . Photo
+        IDs have been implemented at some sites, such as Cleveland, as
+        Photo ID object types rather than setting the Type Index as
+        expected by the software. This can have a high impact on negative
+        results from a purge and can cause thousands of entries in the   
+        JBTOHD (Jukebox to Hard disk) queue every day. The JBTOHD task
+        populates the VistA Imaging shares with images that have been
+        deleted from the Tier 1 shares through the Purge function.
+  
+ This patch provides new Queue Manager menu options that enable users to 
+ select the queues they want to display in the Queue Manager window and 
+ thus prevent large arrays causing timeouts or out of memory errors. Using 
+ the new Queue Manager menu options, users can elect to display all queues 
+ or a specific queue type. 
+  
+ Changes were made to the terminology of RAID and Magnetic storage to Tier 
+ 1 storage and the term Jukebox and Archive storage to Tier 2 storage.
+  
+ MAG*3.0*135 enables sites to configure the Tier 2 storage reserve. The 
+ value of 5 percent is not configurable and not compatible with some of 
+ the current storage technologies, Grid in particular.
+  
+ This patch resolves the issue related to transmitting the Monthly Site 
+ Usage report, which some sites were experiencing. The method used to 
+ generate the scheduled Imaging Monthly Site Usage report was revised. 
+  
+ MAG*3.0*135 provides support for Windows 2008 Server. The installation 
+ program of the storage applications sets the menu options and shortcuts 
+ of the storage applications to run in administrator mode. The storage 
+ applications must run in administrator mode on Windows 2008 so they can 
+ have read/write/delete access to the storage shares.
+  
+ The BP Verifier can now be used to recover Tier 1 storage network 
+ references. The site can restore a RAID share by way of a backup tape or 
+ Robocopy, set the Current Tier 1 Write location to that  share, and run 
+ the BP verifier over a broad enough Image IEN range to include the images 
+ on that share.
+  
+ MAG*3.0*135 now enables sites to manage the Purge Retention days for 
+ Advanced Directives in addition to Photo IDs.
+  
+ MAG*3.0*135 provides an Archive Appliance (AA) Offline Platter utility, 
+ which is used for processing of offline platter reports and updating the 
+ VistA database. The AA Offline Platter utility enables the tracking of 
+ images that are stored on platters that have been removed from the 
+ jukebox, or when platters are re-introduced to the jukebox inventory. 
+  
+  
+ Patch Components
+ ================
+  
+ Software
+ File Description                        File Name                  FTP
+                                                                    Mode
+ --------------------------------------------------------------------------
+ MAG3_0P135 KIDS                         MAG3_0P135.KID            ASCII
+ Installation file for BP Queue          MAG3_0P135_BPSetup.exe    Binary
+ Processor, Verifier and 
+ Purge client software 
+  
+ Documentation
+ All documentation should be downloaded in the Binary format
+  
+ File Description                  File Name                  
+ --------------------------------------------------------------------------
+ MAG*3.0*135 Patch Description     MAG3_0P135_Patch_Description.pdf
+ VistA Imaging System Background   MAG_BP_User_Manual.pdf
+   Processor User Manual 
+ VistA Imaging Technical           MAG3_0P135_Technical_Manual_Change.pdf
+   Manual Change Pages
+ VistA Imaging Installation      MAG3_0P135_Installation_Guide_Changes.pdf
+   Guide Change Pages
+ Platter Reporting on PAA          Platter Reporting on PAA.PPT 
+  
+ Test Sites
+ ==========
+ Atlanta, GA - Large
+ VA Heartland West - Kansas City, MO - Integrated
+ VISN 2 - VA Western NY HCS (Buffalo, Batavia, Canandaigua, Syracuse, 
+ Bath, Albany) - Integrated
+  
+  
+ Files & Fields Associated
+ =========================
+ The following files were modified
+  
+ File                               Field
+ ==========================================================================
+ IMAGE (#2005)                      STATUS (#113)
+ IMAGE AUDIT (#2005.1)              STATUS (#113)
+ NETWORK OCATION (#2005.2)          STORAGE TYPE (#6)
+ IMAGING SITE PARAMETERS (#2006.1)  DICOM GATEWAY ACCESS CODE (#124)
+                                    DICOM GATEWAY VERIFY CODE (#125)
+  
+ The following new field was added
+  
+ File                               Field
+ ==========================================================================
+ IMAGING SITE PARAMETERS (#2006.1)  TIER 2 RESERVE (#11.5)
+  
+  
+ Forms Associated
+ ================
+ No forms have been added or modified.
+  
+ Mail Groups Associated
+ ======================
+ No mail groups have been added or modified.
+  
+  
+ Options Associated
+ ==================
+ The following menu was modified:
+  
+ Track Offline Jukebox Images [MAG JB OFFLINE] 
+  
+ Protocols Associated
+ ====================
+ No protocols have been added or modified.
+  
+ Remote Procedures
+ =================
+ The following new remote procedure is included in theis patch
+  
+ MAGQ LOGV
+  
+ Security Keys Associated
+ ========================
+ No security keys have been added or modified.
+  
+ Templates Associated
+ ====================
+ No templates have been added or modified.
+  
+ New Service Requests (NSRs)
+ ===========================
+ There are no New Service Requests associated with this patch.
+  
+ Patient Safety Issues (PSIs)
+ ============================
+ There are no Patient Safety Issues associated with this patch.
+  
+ Remedy Ticket(s) & Overview
+ ===========================
+ This patch addresses the following Remedy Tickets:
+  
+ 1. 496758 - Automatic login fails at consolidated sites
+  
+ Problem
+ =======
+ Auto-logins and Scheduled BP Verifiers are not functioning at consolidated
+ sites.  The access and verify codes used for automatic logins are stored
+ in these fields of the IMAGING SITE PARAMETERS file (#2006.1): DICOM
+ GATEWAY ACCESS CODE (#2006.1, 124) and DICOM GATEWAY VERIFY CODE (#2006.1,
+ 125). Editing the values of the access and verify codes for the service
+ account for one site, updates the values for the service accounts of all
+ sites. As a result, when there is a host or network failure, the automatic
+ logins fail and the BP requires manual intervention.
+  
+ Resolution
+ ==========
+ This patch resolves the issue by modifying the data dictionary, input 
+ transformation of the IMAGING SITE PARAMETERS file (#2006.1) to ensure 
+ that that editing the values of one service account does not update the 
+ values of all service accounts. 
+  
+ 2. 511475  Photo IDs were purged as if they are full diagnostic or 
+    administrative images
+  
+ Problem 
+ =======
+ The BP Purge application only recognizes one of the two ways in which the 
+ database identifies patient photos. This resulted in photos being purged 
+ incorrectly.
+  
+ Resolution 
+ ==========
+ This version recognizes both ways in which the database identifies 
+ patient photos
+  
+ 3. 501172, 505170, 527346, 601767, 615316, 619086 - The BP Queue
+    Management does not load when the volume of data in the queues is 
+    large
+  
+ Problem
+ =======
+ When queue counts exceed a certain threshold, the Queue Manager times out 
+ before displaying the queues. If a failed queue falls behind, the 
+ operator has no access to any queues, including the failed Import queues, 
+ to identify the problems and re-queue the failed studies. 
+  
+ Resolution
+ ==========
+ This patch resolves the issue by modifying the interface to the Queue 
+ Manager to load the Queue Manager Tree view incrementally rather than all 
+ at once to prevent memory errors and timeouts. It also provides a submenu 
+ that enables operators to display individual queue types, such as the 
+ Import queue, preventing Queue Manager timeouts when the queue counts 
+ exceed the threshold.
+  
+ 4. 501706, 592201, 592407 - Queue counts go negative or will not
+    decrement
+  
+ Problem
+ =======
+ The operator needs to use the Refresh Queue Counts menu option to 
+ re-synchronize the queue counts as the software does not accurately 
+ decrement the EVAL queues or the JUKEBOX queues. This results in false 
+ positives in the automated mail alert subsystem.  Having a system that 
+ broadcasts false positives for queue counts effectively disables the 
+ messaging system.
+  
+ Resolution
+ ==========
+ This patch resolves the problem by revising the JUKEBOX and EVAL de-queue 
+ code so that the decrement is accurate.
+  
+ 5. 504648, 623042, 623676, 624452, 624495, 625355, 625368, 626184 - Import
+    OCX raises an error when the BP has an extended I/O event
+  
+ Problem
+ =======
+ The OCX has a separate Broker session that is not supported by periodic 
+ RPC calls. The timeouts result in the BP stopping and critical processing 
+ of iMED consents.
+  
+ Resolution
+ ==========
+ This patch resolves the problem by revising the OCX so it uses the same 
+ broker session that the BP allocation uses. It also implements error 
+ trapping, logging, and auto-connect in conjunction with all I/O calls.
+  
+ 6. 609411,757628,757632,757645,757706,757790,757895,758508,758733,758796,
+    759263,760520,761798,764979 - Problems transmitting the Monthly Site
+    Usage Report (MAG Enterprise issue with the Background Processor
+    routine MAGQBUT1)
+  
+ Problem
+ =======
+ When the name of the site in the INSTITUTION file (#4) exceeds 22 
+ characters, the Subject heading of the scheduled Imaging Monthly Site 
+ Usage Report exceeds 60 characters and the report cannot be transmitted.
+  
+ Resolution
+ ==========
+ This patch resolves the problem. The method used to generate the 
+ scheduled Imaging Monthly Site Usage report was revised. It now allows 
+ only 60 characters in the Subject heading of the report.
+  
+ 7. 709354, 709367, 745160, 758077, 794927 - AA Offline Platter Reports
+  
+ Problem
+ =======
+ Sites using the new archive appliances (AA) that run on the ASTI/Plasmon 
+ Archive Appliance (PAA) system needed a utility to track the platter 
+ status of images on platters that were removed from the Jukebox. The Mag 
+ Utility 'Offline Jukebox Images', which provides this functionality for 
+ older model jukeboxes, can only be used with the report format from the 
+ DiskXtender jukebox management (DEX) system and not with the PAA system.
+  
+ Resolution
+ ==========
+ The AA Offline Platter utility, which is distributed with this patch, 
+ enables sites to utilize the archive appliances platter reports to track 
+ the status of images located on platters that were removed from the 
+ Jukebox. The utility updates the platter status of the image files in the 
+ VistA database. For more information about the utility, see the section 
+ AA Offline Platter Utility.
+  
+ 8. 781887, 795508, 801936 - Issues when watermarking images for Rescinded 
+    Advance Directive
+  
+ Problem
+ =======
+ When creating a new watermarked image for a Rescinded Advance Directive, 
+ the incorrect date was used as the value for PROCEDURE/EXAM DATE TIME 
+ field (#15).
+  
+ Resolution
+ ==========
+ The issue was due to an error when the Import API created a new image 
+ entry. The Import API put a date in the PROCEDURE/EXAM DATE TIME field 
+ (#15) of the IMAGE File (#2005). For Rescinded Advance Directives the 
+ Import API incorrectly used the value of the ENTRY DATE/TIME field 
+ (#1201) instead of the value from the REFERENCE DATE field (#1301). This 
+ patch resolves the issue.
+  
+ 9. 823711 - Enhancement related to Advance Directives being taken off-line
+  
+ Problem
+ =======
+ Advance Directive image files were not immediately and readily available 
+ when the platters on which they were stored were taken off-line to free 
+ more space. 
+  
+ Resolution
+ ==========
+ This patch cannot resolve the need for sites take Tier 2 storage platters 
+ off-line when Tier 2 storage is needed for newly acquired images. Sites 
+ can manage the Purge Retention days with this patch and it is recommended 
+ that sites change the retention days for Photo IDs and Advanced 
+ Directives to a minimum of 10 years (3650 days). Sites will continue to 
+ be able to refresh Tier 1 storage and keep the Advanced Directives 
+ available through this configuration addition. See Purge Parameter 
+ Retention days and how it Applies to Advance Directives in the VistA 
+ Imaging Background Processor User Manual.
+  
+ Installation
+ ============
+  
+ This patch is to be installed on the VistA System and on the servers 
+ running the Background Processor (BP) Queue Processor.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. 
+  
+ This patch may be loaded while VistA Imaging System is active. 
+ Installation will take less than one minute. 
+  
+ NOTE: The KIDS file should be installed first. The Background Processor
+ clients for patch MAG*3.0*135 will not run if the updated MAGQBUT4 
+ routine (for version checking) is not in VistA. 
+  
+ Installation Prerequisites
+  
+ Before installing this patch, download the MAG*3.0*135 files from the
+ Imaging FTP site to a local storage location. 
+  
+ Verify that the patches listed in the Required Patches section on have
+ been installed.
+  
+ Important - Any Background Processor that is running must be stopped 
+ (applications are closed) prior to the installation of the KIDS and 
+ Client software. Any image capture application (Clinical Capture and 
+ DICOM Gateway processing) can continue. 
+  
+  
+ VistA System (KIDS) Installation
+  
+ To install the KIDS package:
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps.
+     a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to 
+        load the KIDS distribution.
+     b. When prompted, enter the path and file name (MAG3_0P135.KID) of    
+        the MAG*3.0*135 KIDS file that you downloaded from the Imaging FTP
+        server.
+     c. When prompted to continue with the load, enter YES. A 
+        Distribution OK! message will be displayed when the load is
+        complete.
+ 4. After loading the KIDS file, use the following options to verify the
+    contents of the patch and to back up any affected routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM]- Run this
+       option to verify the integrity of the routines in the patch. 
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option to see all changes that will be made when the patch
+       is installed. Running the option compares all KIDS components 
+       (routines, options, and so on).
+    c. Backup a Transport Global [XPD BACKUP] - Run this option to create a
+       backup message of any routines exported with the patch. Running the
+       option does NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install
+    the KIDS file as follows:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*135.
+    c. Answer NO to the following prompts:
+  
+  Want KIDS to INHIBIT LOGONs during the install? No//
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//
+  
+ When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ Sample KIDS Installation
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*135      7/2/12@15:53:04
+      => VistA Imaging V3.0 - Patch 135 - 07/02/2012 11:21AM  ;Created o
+  
+ This Distribution was loaded on Jul 02, 2012@15:53:04 with header of
+    VistA Imaging V3.0 - Patch 135 - 7/02/2012 11:21AM  ;Created 
+ on Jul 0 2, 2012@11:21:28
+    It consisted of the following Install(s):
+     MAG*3.0*135
+ Checking Install for Package MAG*3.0*135
+  
+ Install Questions for MAG*3.0*135
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  
+  Install Started for MAG*3.0*135 :
+                Jul 02, 2012@15:53:30
+  
+ Build Distribution Date: Jul 02, 2012
+  
+  Installing Routines:.......
+                Jul 02, 2012@15:53:31
+  
+  Running Pre-Install Routine: PRE^MAGIP135.
+  
+ Removing 'AC' trigger for Field 124: Jul 02, 2012@15:53:31
+  
+ Removing 'AD' trigger for Field 125: Jul 02, 2012@15:53:31
+  
+  Running Post-Install Routine: POST^MAGIP135.
+  
+ Post Install Mail Message: Jul 02, 2012@15:53:31
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*135 Installed.
+                Jul 02, 2012@15:53:31
+  
+  
+ Background Processor Installation Instructions
+ ==============================================
+  
+ Refer to the MAG3_0P135_Patch_Description.pdf document distributed with
+ the patch for a pre-installation checklist and client installation
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 5238;Jul 17, 2013
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MAGBRTE4
+    Before: B72404251   After: B73500112  **11,30,51,85,54,39,135**
+Routine Name: MAGGSIU4
+    Before: B78099135   After: B81149201  **121,135**
+Routine Name: MAGGSIU5
+    Before: B37701586   After: B39649203  **121,135**
+Routine Name: MAGIP135
+    Before:       n/a   After: B19945197  **135**
+Routine Name: MAGQBPG1
+    Before: B77258360   After:B112714429  **7,8,20,81,39,135**
+Routine Name: MAGQBPG2
+    Before: B21016522   After: B21657260  **8,20,39,135**
+Routine Name: MAGQBPRG
+    Before: B56526255   After: B59523068  **7,3,8,20,81,39,135**
+Routine Name: MAGQBTM
+    Before: B81984703   After: B85282923  **1,7,8,20,81,39,135**
+Routine Name: MAGQBUT1
+    Before:B115897109   After:B117993666  **7,8,20,81,39,135**
+Routine Name: MAGQBUT4
+    Before: B92803022   After: B92803022  **7,8,48,20,81,39,121,135**
+Routine Name: MAGQE3
+    Before: B75156361   After: B76069024  **27,29,30,20,46,135**
+Routine Name: MAGSDOFF
+    Before:       n/a   After: B63243612  **135**
+Routine Name: MAGSDOFL
+    Before: B58680175   After: B62340218  **18,98,135**
+ 
+Routine list of preceding patches: 46, 98, 121
+
+=============================================================================
+User Information:
+Entered By  : CASUGAY,ELSIE G               Date Entered  : MAY 04, 2012
+Completed By: MASSEY,DAVID                  Date Completed: OCT 24, 2013
+Released By : BOSAK,GREG                    Date Released : OCT 24, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included
