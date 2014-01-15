@@ -109,18 +109,8 @@ def runRPC(self,rpcfilename, signon):
 
 def createSocket():
   sock = None
-  if len(sys.argv) > 1:
-    if len(sys.argv) >= 3:
-      host = sys.argv[1]
-      port = int(sys.argv[2])
-      sock = createAndConnect(host, port)
-      return sock
-    else:
-      sock = createAndConnect(host=sys.argv[1])
-      return sock
-  else:
-    sock = createAndConnect()
-    return sock
+  sock = createAndConnect(results.host,int(results.port))
+  return sock
 
 class TestM2MBroker(unittest.TestCase):
 
@@ -138,8 +128,41 @@ class TestM2MBroker(unittest.TestCase):
     runRPC(self,"getpatientvitals.xml",False)
 
 def main():
+  # Import Argparse and add Scripts/ directory to sys.path
+  # by finding directory of current script and going up two levels
+  import argparse
+  curDir = os.path.dirname(os.path.abspath(__file__))
+  scriptDir = os.path.normpath(os.path.join(curDir, "../../"))
+  if scriptDir not in sys.path:
+    sys.path.append(scriptDir)
+
+  # OSEHRA Imports
   from RPCBrokerCheck import CheckRPCListener
-  checkresult = CheckRPCListener()
+  from VistATestClient import createTestClientArgParser,VistATestClientFactory
+
+  # Arg Parser to get address and port of RPC Listener along with a log file
+  # Inherits the connection arguments of the testClientParser
+
+  testClientParser = createTestClientArgParser()
+  ssepTestParser= argparse.ArgumentParser(description='Test the M2M broker via XML files',
+                                           parents=[testClientParser])
+  ssepTestParser.add_argument("-ha",required=True,dest='host',
+                              help='Address of the host where RPC Broker is listening')
+  ssepTestParser.add_argument("-hp",required=True,dest='port',
+                              help='Port of the host machine where RPC Broker is listening')
+  ssepTestParser.add_argument("-l",required=True,dest='log_file',
+                              help='Path to a file to log the output.')
+
+  # A global variable so that each test is able to use the port and address of the host
+  global results
+  results = ssepTestParser.parse_args()
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(results)
+  assert testClient
+  with testClient:
+    # If checkresult == 0, RPC listener is set up correctly and tests should be run
+    # else, don't bother running the tests
+    testClient.setLogFile(results.log_file)
+    checkresult = CheckRPCListener(testClient.getConnection(),results.host,results.port)
   if checkresult == 0:
     suite = unittest.TestLoader().loadTestsFromTestCase(TestM2MBroker)
     unittest.TextTestRunner(verbosity=2).run(suite)
