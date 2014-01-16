@@ -100,6 +100,9 @@ elseif(CCONTROL_EXECUTABLE)
   include(UseCache)
 endif()
 
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE XINDEX TESTING` #####
+#-----------------------------------------------------------------------------#
 include(CommonFunctions)
 option(TEST_VISTA_XINDEX "Run XINDEX on every routine in every package" ON)
 if(TEST_VISTA_XINDEX)
@@ -108,10 +111,10 @@ if(TEST_VISTA_XINDEX)
   foreach(package_file_name ${PACKAGES})
     #Configures the CMAKE testing
     set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.py @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
     #Creates the command that will be called for the Test
-    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/${package_file_name}Test.cmake)
+    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake)
   endforeach()
 endif()
 

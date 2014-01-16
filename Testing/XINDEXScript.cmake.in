@@ -16,7 +16,7 @@
 include("@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake")
 
 #Execute the python script
-execute_process(COMMAND "@PYTHON_EXECUTABLE@"  "@CMAKE_CURRENT_BINARY_DIR@/@package_file_name@Test.py" RESULT_VARIABLE return ERROR_VARIABLE ERROR)
+execute_process(COMMAND "@PYTHON_EXECUTABLE@"  "@CMAKE_CURRENT_BINARY_DIR@/XINDEX/@package_file_name@Test.py" RESULT_VARIABLE return ERROR_VARIABLE ERROR)
 
 
 if(NOT return EQUAL 0)
