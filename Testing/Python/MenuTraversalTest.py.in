@@ -24,6 +24,11 @@ from OSEHRAHelper import ConnectToMUMPS, PROMPT
 VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Temporary/MenuTraversal.log","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
 if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
   VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
 VistA.wait(PROMPT, 60)
 
 expectedresult=['Systems Manager Menu', 'Core Applications', 'Dietetic Administration', 'Production Reports', 'Forecasting']

@@ -156,10 +156,6 @@ class ConnectWinCache(ConnectMUMPS):
     path,filename = os.path.split(logfile)
     self.MenuLocation=[]
     self.lastconnection=""
-    try:
-      self.ZN(namespace)
-    except IndexError, no_namechange:
-      pass
     self.optionParentDict = []
     self.optionMenuTextDict = []
 
@@ -267,10 +263,6 @@ class ConnectLinuxCache(ConnectMUMPS):
     path,filename = os.path.split(logfile)
     self.MenuLocation=[]
     self.lastconnection=""
-    try:
-      self.ZN(namespace)
-    except IndexError, no_namechange:
-      pass
     self.optionParentDict = []
     self.optionMenuTextDict = []
 

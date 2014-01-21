@@ -39,6 +39,11 @@ def visitChildren(VistA,targetmenu,results):
 VistA = ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Temporary/MenuTraversalST.log","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
 if ('${VISTA_CACHE_USERNAME}' and '${VISTA_CACHE_PASSWORD}'):
   VistA.login('${VISTA_CACHE_USERNAME}','${VISTA_CACHE_PASSWORD}')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('${VISTA_CACHE_NAMESPACE}')
+  except IndexError,no_namechange:
+    pass
 VistA.wait(PROMPT, 60)
 VistA.optionParentDict = createOptionParentDictionary(VistA,os.path.join("${VISTA_BINARY_DIR}","MenuParentMap.txt"))
 VistA.optionMenuTextDict =createOptionMenuTextDictionary(VistA,os.path.join("${VISTA_BINARY_DIR}","MenuTextMap.txt"))
