@@ -32,6 +32,7 @@ def pack(files, output):
             sys.stderr.write('Skipping non-.m file: %s\n' % f)
             continue
         n = os.path.basename(f)[:-2]
+        n = n.replace("_","%")
         m = open(f,"r")
         output.write('%s\n'%n)
         for line in m:
