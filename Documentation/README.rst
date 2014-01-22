@@ -51,6 +51,13 @@ Troubleshooting:
 
 To report a problem or see potential solutions visit the `Troubleshooting Page`_
 
+Standards;
+``````````
+
+OSEHRA mantains the Standards and Conventions for software in the Standards
+directory and includes:
+
+  * `M Standards and Conventions`_
 
 .. _`Troubleshooting Page`:
    http://www.osehra.org/wiki/troubleshooting-installation-and-testing
@@ -69,3 +76,4 @@ To report a problem or see potential solutions visit the `Troubleshooting Page`_
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
 .. _PrepareMComponents: PrepareMComponents.rst
 .. _Initialization: Initialization.rst
+.. _`M Standards and Conventions`: Standards/SAC.rst
