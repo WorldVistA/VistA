@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-
+include(CommonFunctions)
 if(TEST_VISTA_FUNCTIONAL_SIK)
   # CPRS only runs on Windows, Thus the Sikuli and GUI test will be added only for those types of machines
   if(WIN32)
@@ -61,14 +61,7 @@ if(TEST_VISTA_FUNCTIONAL_RAS)
       endforeach()
       file(GLOB RASUnitTests ${package}/Testing/RAS/UT*.py)
       set(vendor_args "")
-      if("${VENDOR_NAME}" STREQUAL "Cache")
-          list(APPEND vendor_args -S 1 -CN "${VISTA_CACHE_NAMESPACE}" -CI "${VISTA_CACHE_INSTANCE}")
-          if(VISTA_CACHE_USERNAME)
-              list(APPEND vendor_args -CU "${VISTA_CACHE_USERNAME}" -CP "${VISTA_CACHE_PASSWORD}")
-          endif()
-      elseif("${VENDOR_NAME}" STREQUAL "GTM")
-          list(APPEND vendor_args -S 2)
-      endif()
+      SetVendorArgs(vendor_args)
       foreach(RASUnitTest ${RASUnitTests})
           get_filename_component(RASUnitTestName "${RASUnitTest}" NAME_WE)
           add_test(RASUnitTest_${RASUnitTestName} ${PYTHON_EXECUTABLE} ${RASUnitTest} ${vendor_args})

@@ -115,3 +115,26 @@ function(FindPackages SOURCE_DIR)
   set(PACKAGES ${packages_tmp} PARENT_SCOPE)
 
 endfunction()
+
+function(SetVendorArgsConfig VendorArg VendorName Namespace Instance UserName Password)
+  set(vendor_args "")
+  if(VendorName STREQUAL "Cache")
+    list(APPEND vendor_args -S 1 -CN ${Namespace} -CI ${Instance})
+    string(STRIP "${UserName}" cacheusr)
+    string(LENGTH "${cacheusr}" userLen)
+    if(userLen)
+      list(APPEND vendor_args -CU "${UserName}" -CP "${Password}")
+    endif()
+  elseif(VendorName STREQUAL "GTM")
+    list(APPEND vendor_args -S 2)
+  endif()
+  set(${VendorArg} "${vendor_args}" PARENT_SCOPE)
+endfunction()
+
+function(SetVendorArgs VendorArg)
+  set(vendor_args "")
+  SetVendorArgsConfig(vendor_args "${VENDOR_NAME}" "${VISTA_CACHE_NAMESPACE}"
+                     "${VISTA_CACHE_INSTANCE}" "${VISTA_CACHE_USERNAME}"
+                     "${VISTA_CACHE_PASSWORD}")
+  set(${VendorArg} "${vendor_args}" PARENT_SCOPE)
+endfunction()
