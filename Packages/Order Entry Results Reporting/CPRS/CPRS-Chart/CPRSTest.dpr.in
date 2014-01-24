@@ -1,0 +1,12 @@
+program CPRSTest;
+
+uses
+  Forms, TestFramework, GUITestRunner,
+  CPRSLibTestCases in '@SOURCE@\CPRSLibTestCases.pas';
+
+{$R '@SOURCE@\*.res'}
+
+begin
+  Application.Initialize;
+  GUITestRunner.RunRegisteredTests;
+end.

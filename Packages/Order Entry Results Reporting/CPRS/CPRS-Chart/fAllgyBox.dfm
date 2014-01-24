@@ -5,9 +5,8 @@ inherited frmAllgyBox: TfrmAllgyBox
   ClientWidth = 449
   Constraints.MinWidth = 457
   Position = poMainFormCenter
-  ExplicitLeft = 487
-  ExplicitTop = 242
   ExplicitWidth = 457
+  ExplicitHeight = 240
   PixelsPerInch = 96
   TextHeight = 13
   inherited memReport: TRichEdit

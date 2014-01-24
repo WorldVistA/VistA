@@ -14,7 +14,7 @@ interface
 Uses
 Sysutils, Classes, Messages, WinProcs, IniFiles,
 Dialogs, Registry,
-trpcb, ccowrpcbroker;
+trpcb{, ccowrpcbroker};
 
 
 {------ TVistaSession------}     //hold attributes of a session {p13}

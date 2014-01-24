@@ -2,32 +2,17 @@ unit fReview;
 
 {.$define debug}
 
-interface
+interface                                                                                                                                
 
 uses
   UBAGlobals,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, checklst, uConst, ExtCtrls, uCore, mCoPayDesc, XUDIGSIGSC_TLB,
-  ORCtrls, Menus, UBACore, ORClasses,fBase508Form, fPrintLocation,
-  VA508AccessibilityManager;
+  StdCtrls, checklst, uConst, ExtCtrls, uCore, mCoPayDesc, XUDsigS,
+  ORCtrls, Menus, UBACore, ORClasses, ORNet, fBase508Form, fPrintLocation,
+  VA508AccessibilityManager, fCSRemaining, rODMeds;
 
 type
   TfrmReview = class(TfrmBase508Form)
-    cmdOK: TButton;
-    cmdCancel: TButton;
-    lstReview: TCaptionCheckListBox;
-    pnlOrderAction: TPanel;
-    radSignChart: TRadioButton;
-    pnlSignature: TPanel;
-    txtESCode: TCaptionEdit;
-    lblESCode: TLabel;
-    Label1: TStaticText;
-    radHoldSign: TRadioButton;
-    grpRelease: TGroupBox;
-    radVerbal: TRadioButton;
-    radPhone: TRadioButton;
-    radPolicy: TRadioButton;
-    radRelease: TRadioButton;
     fraCoPay: TfraCoPayDesc;
     laDiagnosis: TLabel;
     gbxDxLookup: TGroupBox;
@@ -37,7 +22,35 @@ type
     Paste1: TMenuItem;
     Diagnosis1: TMenuItem;
     Exit1: TMenuItem;
+    pnlProvInfo: TPanel;
+    lblProvInfo: TLabel;
+    pnlDEAText: TPanel;
+    lblDEAText: TStaticText;
+    pnlBottom: TPanel;
+    pnlSignature: TPanel;
+    lblESCode: TLabel;
+    txtESCode: TCaptionEdit;
+    pnlOrderAction: TPanel;
+    Label1: TStaticText;
+    lblHoldSign: TStaticText;
+    radSignChart: TRadioButton;
+    radHoldSign: TRadioButton;
+    grpRelease: TGroupBox;
+    radVerbal: TRadioButton;
+    radPhone: TRadioButton;
+    radPolicy: TRadioButton;
+    radRelease: TRadioButton;
+    cmdOK: TButton;
+    cmdCancel: TButton;
+    pnlCombined: TORAutoPanel;
+    pnlReview: TPanel;
+    lstReview: TCaptionCheckListBox;
     lblSig: TStaticText;
+    pnlCSReview: TPanel;
+    lblCSReview: TLabel;
+    lstCSReview: TCaptionCheckListBox;
+    lblSmartCardNeeded: TStaticText;
+    pnlTop: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure lstReviewDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
     procedure cmdOKClick(Sender: TObject);
@@ -70,6 +83,19 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormResize(Sender: TObject);
+    procedure lstCSReviewMeasureItem(Control: TWinControl; Index: Integer;
+      var AHeight: Integer);
+    procedure lstCSReviewDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure lstCSReviewClickCheck(Sender: TObject);
+    procedure lstCSReviewMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure lstCSReviewMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure lstCSReviewKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure lstCSReviewClick(Sender: TObject);
+    procedure FormPaint(Sender: TObject);
 
   private
     { Private declarations }
@@ -80,15 +106,20 @@ type
     FLastHintItem: integer;
     FOldHintPause: integer;
     FOldHintHidePause: integer;
-    FShrunk: boolean;
     FIsEvtChange: boolean;
     procedure AddHeader(s: string);
+    procedure AddCSHeader(s: string);
     function AddItem(ChangeItem: TChangeItem): integer;
+    function AddCSItem(ChangeItem: TChangeItem): integer;
     procedure BuildList(FullList: boolean);
     procedure BuildFullList;
     procedure BuildSignList;
+    procedure PlaceComponents;
     procedure CleanupChangesList(Sender: TObject; ChangeItem: TChangeItem);  {**RV**}
     function ItemsAreChecked: Boolean;
+    function CSItemsAreChecked: Boolean;
+    function nonDCCSItemsAreChecked: Boolean;
+    function AnyItemsAreChecked: Boolean;
     function SignRequiredForAny(FullList: boolean): Boolean;
     procedure AdjustSignatureTop( HeightAdjustment: integer);
     function IsSignatureRequired:boolean;
@@ -96,7 +127,6 @@ type
     procedure ShowTreatmentFactorHints(var pHintText: string; var pCompName: TVA508StaticText); // 508
     procedure SetItemTextToState;
     procedure FormatListForScreenReader;
-
   public
     procedure SetCheckBoxStatus(thisOrderID: string);
     function GetCheckBoxStatus(sourceOrderID : string) : string; overload;
@@ -126,7 +156,7 @@ var
     FRVTFHintWindowActive: boolean;
     FRVTFHintWindow: THintWindow;
     {End BillingAware}
-  crypto: IXuDigSigS;
+    crypto: TCryptography;
     currentlySelectedItem: integer; //CQ5063
     currentItems: TStringList; //CQ5063
 
@@ -189,7 +219,6 @@ begin
      begin
      for i := 0 to itemsList.Count-1 do
         begin
-        //thisOrderID := Piece(itemsList[i],'^',1); //get the order ID
         if i = gridItemIndex then   //compare to order ID of source order
            begin
            Result := Piece(itemsList[i],U,4);  //return TF status'
@@ -256,10 +285,25 @@ begin
   if Changes.Count = 0 then Exit;
   if assigned(frmReview) then Exit;
   frmReview := TfrmReview.Create(Application);
+
+  CallV('ORDEA DEATEXT', []);
+  frmReview.lblDEAText.Caption := '';
+  for i := 0 to RPCBrokerV.Results.Count -1 do
+     frmReview.lblDEAText.Caption := frmReview.lblDEAText.Caption + ' ' + RPCBrokerV.Results.Strings[i];
+
+  CallV('ORDEA SIGINFO', [Patient.DFN, User.DUZ]);
+  frmReview.lblProvInfo.Caption := '';
+  for i := 0 to RPCBrokerV.Results.Count -1 do
+  begin
+    if not (frmReview.lblProvInfo.Caption = '') then frmReview.lblProvInfo.Caption := frmReview.lblProvInfo.Caption + #13#10;
+    
+     frmReview.lblProvInfo.Caption := frmReview.lblProvInfo.Caption + RPCBrokerV.Results.Strings[i];
+  end;
+  frmReview.lblDeaText.Visible := FALSE;
+  frmReview.lblSmartCardNeeded.Visible := FALSE;
   try
     Changes.OnRemove := frmReview.CleanupChangesList;     {**RV**}
     frmReview.FIsEvtChange := IsEvtChange;
-    ResizeAnchoredFormToFont(frmReview);
 
     if TimedOut and (Changes.Count > 0) then
        begin
@@ -272,13 +316,23 @@ begin
        end
     // if user not timed out, execute as before
     else
-       begin
+      begin
          if ((uCore.User.OrderRole = OR_NURSE) or (uCore.User.OrderRole = OR_CLERK)) and Changes.CanSign then
          begin
            frmReview.FCouldSign := True;
            frmReview.BuildSignList;  // ok will remove from changes, exit leaves altogether
-           frmReview.ShowModal;
-           Result := frmReview.FOKPressed;
+           if ((frmReview.lstReview.Count>0) or (frmReview.lstCSReview.Count>0)) then
+           begin
+              frmReview.PlaceComponents;
+              frmReview.ShowModal;
+              Result := frmReview.FOKPressed;
+              CSRemaining(frmReview.lstReview.items,frmReview.lstCSReview.items);
+              LastPINvalue := '';
+           end
+           else
+           begin
+             Result := True;
+           end;
          end;
 
       if Result and (Changes.Count > 0) then
@@ -290,8 +344,17 @@ begin
             //  build list of orders that are not billable based on package type
             UBAGlobals.NonBillableOrderList := rpcNonBillableOrders(tempOrderList);
 
-        frmReview.ShowModal;
-        Result := frmReview.FOKPressed;
+           if ((frmReview.lstReview.Count>0) or (frmReview.lstCSReview.Count>0)) then
+           begin
+              frmReview.PlaceComponents;
+              frmReview.ShowModal;
+              Result := frmReview.FOKPressed;
+              CSRemaining(frmReview.lstReview.items,frmReview.lstCSReview.items);
+           end
+           else
+           begin
+             Result := True;
+           end;
       end;
 
     end;
@@ -318,10 +381,7 @@ begin
    {Begin BillingAware}
      if  BILLING_AWARE then
      begin
-        lstReview.Height := 220;
-        lstReview.Top :=  (gbxdxLookup.top + 65);
         gbxDxLookup.Visible := TRUE;
-        lblsig.Top := (gbxdxLookup.Top +  48);
         laDiagnosis.Top :=  Lblsig.Top;
         laDiagnosis.Left := 270;
         laDiagnosis.Visible := TRUE;
@@ -334,6 +394,12 @@ procedure TfrmReview.AddHeader(s: string);
 { add header to review list, object is left nil }
 begin
   lstReview.Items.AddObject(s, nil);
+end;
+
+procedure TfrmReview.AddCSHeader(s: string);
+{ add header to review list, object is left nil }
+begin
+  lstCSReview.Items.AddObject(s, nil);
 end;
 
 function TfrmReview.AddItem(ChangeItem: TChangeItem): integer;
@@ -363,9 +429,38 @@ begin
  // this will override the signstate from above for all non-va med orders...  no signature required.
   if ChangeItem.GroupName = '' then
   begin
-  //if StrPos(PChar(ChangeItem.Text),PChar(NonVAMedTxt)) <> nil then
   if ChangeItem.OrderDG = NONVAMEDGROUP then
          lstReview.State[Result] := cbGrayed;
+   end;
+  //hds00006047
+end;
+
+function TfrmReview.AddCSItem(ChangeItem: TChangeItem): integer;
+{ add a single review item to the list with its associated TChangeItem object }
+begin
+  Result := lstCSReview.Items.AddObject(ChangeItem.Text, ChangeItem);
+
+  //Begin BillingAware
+  if  BILLING_AWARE then
+  begin
+    UBAGlobals.ChangeItemOrderNum := ChangeItem.ID; // GE 2/21/2006 removed "Copy(ChangeItem.ID,0,8)" issue when sites have order number > 8 digits
+     // HDS00005025
+
+    if ChangeItem.ItemType = CH_DOC then    // documents are not orderable, code is necessary
+      UBAGlobals.ChangeItemOrderNum := '0'; // document id can be same as order id, orderid = 0 will be nonbillable
+
+    tempOrderList.Add(UBAGlobals.ChangeItemOrderNum);
+  end;
+   //end BillingAware
+   if ChangeItem.DCOrder then lstCSReview.Checked[Result] := TRUE
+   else lstCSReview.Checked[Result] := False;
+
+  if ChangeItem.SignState=CH_SIGN_NA then lstCSReview.State[Result] := cbGrayed;
+ // this will override the signstate from above for all non-va med orders...  no signature required.
+  if ChangeItem.GroupName = '' then
+  begin
+  if ChangeItem.OrderDG = NONVAMEDGROUP then
+         lstCSReview.State[Result] := cbGrayed;
    end;
   //hds00006047
 end;
@@ -385,16 +480,23 @@ var
   i: integer;
 begin
  Result := FALSE;
-    with lstReview.items do for i := 0 to Pred(Count) do
+    with lstReview do for i := 0 to Items.Count-1 do
     begin
-      if frmReview.lstReview.Checked[i] then
+      if Checked[i] then
       begin
-        //CQ4790
         if TChangeItem(fReview.frmReview.lstReview.Items.Objects[i]) = nil then
            Continue;
-        //end CQ4790
-                   
          if (TChangeItem(fReview.frmReview.lstReview.Items.Objects[i]).SIGNSTATE) <> CH_SIGN_NA then
+            Result := TRUE;
+         end;
+    end;
+    with lstCSReview do for i := 0 to Items.Count-1 do
+    begin
+      if Checked[i] then
+      begin
+        if TChangeItem(fReview.frmReview.lstCSReview.Items.Objects[i]) = nil then
+           Continue;
+         if (TChangeItem(fReview.frmReview.lstCSReview.Items.Objects[i]).SIGNSTATE) <> CH_SIGN_NA then
             Result := TRUE;
          end;
     end;
@@ -406,16 +508,20 @@ var
   ChangeItem: TChangeItem;
   LabelHeight: integer;
   PrevGrpName, temp: string;
-  displayHeader, displaySpacer, otherUserOrders: boolean;
+  displayHeader, displaySpacer, displayCSHeader, displayCSSpacer, otherUserOrders, otherhdradded, othercshdradded: boolean;
   I, ColHeight: Integer;
+  t1, t2, NVAinNonCSList, otherinNonCSList: Boolean;
 begin
   tempOrderList := TStringList.Create;
   tempOrderList.Clear;
   PrevGrpName := '';
+  NVAinNonCSList := false;
+  otherinNonCSList := false;
   lstReview.Clear;  // ok to clear without freeing objects since they're part of Changes
   if(FullList) then
   begin
     SigItems.ResetOrders;
+    SigItemsCS.ResetOrders;
     with Changes do
     if PCE.Count > 0 then
     begin
@@ -448,6 +554,7 @@ begin
   begin
     //otherUserOrders := False;
     displaySpacer := False;
+    displayCSSpacer := False;
     with Changes do
     if Orders.Count > 0 then
     begin
@@ -456,12 +563,12 @@ begin
       for GrpIndex := 0 to OrderGrp.Count - 1 do
       begin
         displayHeader := True;
+        displayCSHeader := True;
         if (GrpIndex > 0 ) and (AnsiCompareText(PrevGrpName,OrderGrp[GrpIndex])=0) then
           Continue;
         if OrderGrp[GrpIndex] = '' then Temp := 'My Unsigned Orders - This Session'
         else if OrderGrp[GrpIndex] = 'Other Unsigned' then Temp := 'My Unsigned Orders - Previous Sessions'
         else Temp := 'Orders - ' + OrderGrp[GrpIndex];
-        //AddHeader('Orders - ' + Temp);
         {billing aware}
         if BILLING_AWARE then
         begin
@@ -469,38 +576,83 @@ begin
            UBACore.CompleteUnsignedBillingInfo(rpcGetUnsignedOrdersBillingData(OrderListSCEI) );
         end;
         {billing aware}
+
         for ChgIndex := 0 to Orders.Count - 1 do
         begin
           ChangeItem := Orders[ChgIndex];
           if (ChangeItem.GroupName = OrderGrp[GrpIndex]) and ((ChangeItem.User = 0) or (ChangeItem.User = User.DUZ)) then
           begin
-            if displayHeader = True then
-              begin
-                AddHeader(Temp);
-                displayHeader := False;
-                displaySpacer := True;
-              end;
-            lbIdx := AddItem(ChangeItem);
-            SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+            if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or IsPendingHold(ChangeItem.ID)) then
+            begin
+              if displayHeader = True then
+                begin
+                 AddHeader(Temp);
+                  displayHeader := False;
+                 displaySpacer := True;
+               end;
+              lbIdx := AddItem(ChangeItem);
+              SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+              if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
+              else otherinNonCSList := true;
+            end
+            else
+            begin
+              if not(GetPKISite) or not(GetPKIUse) or (DEACheckFailedAtSignature(GetOrderableIen(Piece(ChangeItem.ID,';',1)),False)='1') then ChangeItem.SignState := CH_SIGN_NA;
+
+              if displayCSHeader = True then
+                begin
+                 AddCSHeader(Temp);
+                  displayCSHeader := False;
+                 displayCSSpacer := True;
+               end;
+              lbIdx := AddCSItem(ChangeItem);
+              SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
+            end;
+            
          end
          else if ((ChangeItem.User > 0) and (ChangeItem.User <> User.DUZ)) then
            otherUserOrders := True;
         end;
         if displayHeader = False then AddHeader('   ');
+        if displayCSHeader = False then AddCSHeader('   ');
         PrevGrpName := OrderGrp[GrpIndex];
     end;
     //AGP fix for CQ 10073
     if otherUserOrders = True then
           begin
-            if displaySpacer = True then AddHeader('   ');
-            AddHeader('Others'' Unsigned Orders Orders - All Sessions');
+            othercshdradded := false;
+            otherhdradded := false;
             for ChgIndex := 0 to Orders.Count - 1 do
              begin
                 ChangeItem := Orders[ChgIndex];
                 if (ChangeItem.GroupName = 'Other Unsigned') and ((ChangeItem.User >0) and (ChangeItem.User <> User.DUZ)) then
                   begin
-                    lbIdx := AddItem(ChangeItem);
-                    SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+
+                    if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or IsPendingHold(ChangeItem.ID)) then
+                    begin
+                      if not otherhdradded then
+                      begin
+                        otherhdradded := true;
+                        if displaySpacer = True then AddHeader('   ');
+                        AddHeader('Others'' Unsigned Orders Orders - All Sessions');
+                      end;         
+                      lbIdx := AddItem(ChangeItem);
+                      SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                      if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
+                      else otherinNonCSList := true;
+                    end
+                    else
+                    begin
+                      if not(GetPKIUse) or not(GetPKISite) or (DEACheckFailedAtSignature(GetOrderableIen(Piece(ChangeItem.ID,';',1)),False)='1') then ChangeItem.SignState := CH_SIGN_NA;
+                      if not othercshdradded then
+                      begin
+                        othercshdradded := true;
+                        if displayCSSpacer = True then AddCSHeader('   ');
+                        AddCSHeader('Others'' Unsigned Orders - All Sessions');
+                      end;
+                      lbIdx := AddCSItem(ChangeItem);
+                      SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                    end;
                   end;
             end;
         end;
@@ -521,7 +673,6 @@ begin
   case FShowPanel of
   SP_CLERK: begin
               pnlSignature.Visible := False;
-              //pnlOrderAction.Visible := True;
               pnlOrderAction.Visible := SignRequiredForAny(FullList);
             end;
   SP_NURSE: begin
@@ -539,7 +690,9 @@ begin
               pnlSignature.Visible := False;
             end;
   end; {case FShowPanel}
-  pnlSignature.Visible := ItemsAreChecked;
+  pnlSignature.Visible := AnyItemsAreChecked;
+  
+
   txtESCodeChange(Self);
   if pnlOrderAction.Visible then
   begin
@@ -557,9 +710,15 @@ begin
   else
   begin
     if (User.OrderRole = OR_STUDENT) or (User.OrderRole = OR_NOKEY) or (User.OrderRole = OR_BADKEYS) then
-      lblSig.Caption := 'These orders will be held until signed'
+    begin
+      if otherinNonCSList then lblSig.Caption := 'These Non-Controlled Substance orders will be held until signed. '
+      else lblSig.Caption := ' ';
+      if NVAinNonCSList then lblSig.Caption := lblSig.Caption + 'Non-VA documentation will become active.';
+      
+      lblCSReview.Caption := 'These Controlled Substance orders will be held until signed';
+    end
     else
-      lblSig.Caption := 'Signature will be Applied to Checked Items';
+      lblSig.Caption := 'All Orders Except Controlled Substance Orders';
   end;
   //Make sure there is enough width for the buttons and lblSig
    //begin BillingAware
@@ -570,29 +729,40 @@ begin
   end;
    //end BillingAware
 
-  if (FullList and SigItems.UpdateListBox(lstReview)) then
+
+    if frmReview.lstCSReview.Count>0 then
+    begin
+      if not(GetPKISite) then
+      begin
+        ShowMsg('Digital Signing of Controlled Substances is currently disabled for your site. Controlled Substance Orders will not be signed.');
+//          frmReview.lstCSReview.Clear;
+//          SigItemsCS.ResetOrders;
+      end
+      else if not(GetPKIUse ) then
+      begin
+        ShowMsg('You are not currently permitted to digitally sign Controlled Substances. Controlled Substance Orders will not be signed.');
+//          frmReview.lstCSReview.Clear;
+//          SigItemsCS.ResetOrders;
+      end;
+    end;
+
+
+   SigItems.ClearDrawItems;
+   SigItems.ClearFcb;
+   SigItemsCS.ClearDrawItems;
+   SigItemsCS.ClearFcb;
+   t1 := SigItems.UpdateListBox(lstReview);
+   t2 := SigItemsCS.UpdateListBox(lstCSReview);
+
+  if (FullList and (t1 or t2)) then
   begin
     fraCoPay.Visible := TRUE;
-     //begin BillingAware
     if  BILLING_AWARE then frmReview.gbxDxLookup.Visible := TRUE;
-     //end BillingAware
-    if(FShrunk) then
-    begin
-      FShrunk := FALSE;
-      AdjustSignatureTop( fraCoPay.Height + 9);
-    end;
   end
   else
   begin
     fraCoPay.Visible := FALSE;
-     //begin BillingAware
     if  BILLING_AWARE then frmReview.gbxDxLookup.Visible := FALSE;
-    //end BillingAware
-    if(not FShrunk) then
-    begin
-      FShrunk := TRUE;
-      AdjustSignatureTop(-fraCoPay.Height - 9);
-    end;
   end;
 
   if lstReview.Count > 0 then begin
@@ -602,7 +772,7 @@ begin
    end;
   end;
   RedrawWindow(lstReview.Handle, nil, 0, RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
-
+  if frmReview.pnlSignature.Visible and frmReview.txtESCode.Visible then  frmReview.ActiveControl := frmReview.txtESCode;
 end; {BuildFullList}
 
 
@@ -614,6 +784,61 @@ end;
 procedure TfrmReview.BuildSignList;
 begin
    BuildList(FALSE);
+end;
+
+procedure TfrmReview.PlaceComponents;
+var
+  ShrinkHeight,oheight,newheight: Integer;
+begin
+    with frmReview do
+    begin
+      pnlDeaText.Visible := TRUE;
+      if ((lstReview.Count = 0) and (lstCSReview.Count = 0)) then  Exit;
+      pnlProvInfo.Height := lblProvInfo.Height+5+lblProvInfo.Top;
+
+      if lstCSReview.Count = 0 then
+      begin     
+        oheight := pnlReview.height;
+        pnlProvInfo.Visible := False;  
+        if fraCoPay.Visible = FALSE then
+        begin
+          pnlTop.Visible := False;
+        end;
+        pnlDEAText.Visible := False;   
+        pnlCSReview.Visible := False;
+        pnlReview.Align := alClient;
+        newheight := Height - pnlReview.height + oheight;
+        if newheight < Constraints.MinHeight then Constraints.MinHeight := newheight;
+        Height := newheight;
+      end
+      else if lstReview.Count = 0 then
+      begin
+        oheight := pnlCSReview.height;
+        pnlReview.Visible := False;
+        pnlCSReview.Align := alClient;
+        newheight := Height - pnlCSReview.height + oheight;  
+        if newheight < Constraints.MinHeight then Constraints.MinHeight := newheight;
+        Height := newheight;
+      end
+      else if fraCoPay.Visible = FALSE then
+      begin
+        fraCoPay.Visible := TRUE;
+        ShrinkHeight := fraCoPay.Height - pnlProvInfo.Height;
+        fraCoPay.Visible := FALSE;
+
+		    pnlTop.Height := pnlTop.Height - ShrinkHeight;
+        pnlCombined.Top := pnlCombined.Top - ShrinkHeight; 
+		    pnlCombined.Height := pnlCombined.Height + ShrinkHeight;
+
+      end;
+      
+
+
+      lblDEAText.Visible := FALSE;
+      lblSmartCardNeeded.Visible := FALSE;
+      if anyitemsarechecked then pnlsignature.visible := IsSignatureRequired;
+    end;
+
 end;
 
 function TfrmReview.ItemsAreChecked: Boolean;
@@ -629,6 +854,40 @@ begin
   end;
 end;
 
+function TfrmReview.CSItemsAreChecked: Boolean;
+{ return true if any items in the CS Review List are checked for applying signature }
+var
+  i: Integer;
+begin
+  Result := False;
+  with lstCSReview do for i := 0 to Items.Count - 1 do if Checked[i] then
+  begin
+    Result := True;
+    break;
+  end;
+end;
+
+function TfrmReview.nonDCCSItemsAreChecked: Boolean;
+{ return true if any items in the CS Review List are checked for applying signature }
+var
+  i: Integer;
+begin
+  Result := False;
+  with lstCSReview do for i := 0 to Items.Count - 1 do if Checked[i] and not(TChangeItem(Items.Objects[i])=nil) then
+  begin
+    if not(TChangeItem(Items.Objects[i]).DCOrder) then
+    begin
+      Result := True;
+      break;
+    end;
+  end;
+end;
+
+function TfrmReview.AnyItemsAreChecked: Boolean;
+begin
+  Result := ItemsAreChecked or CSItemsAreChecked;
+end;
+
 function TfrmReview.SignRequiredForAny(FullList: boolean): Boolean;
 var
   i: Integer;
@@ -639,7 +898,6 @@ begin
   if Changes.Documents.Count > 0 then Exit;
   if(FullList) then
   begin
-  //  if Changes.PCE.Count > 0 then Exit;   *** JM - you don't sign encounter informaiton ***
     tmpOrders := TStringList.Create;
     try
       for i := 0 to Pred(Changes.Orders.Count) do
@@ -697,6 +955,8 @@ begin
      end;
      pnlSignature.Visible := IsSignatureRequired;
   end;
+  if pnlSignature.Visible then txtESCode.SetFocus;
+
 end;
 
 procedure TfrmReview.lstReviewDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
@@ -734,7 +994,6 @@ begin
     if Items.Objects[Index] = nil then
         ARect.Left := 0;
     Canvas.Pen.Color := Get508CompliantColor(clSilver);
-    //Canvas.Brush.Color := Get508CompliantColor(clLime);
     Canvas.FillRect(ARect);
 
     if Index < Items.Count then
@@ -779,7 +1038,6 @@ begin
 
                     //Display all saved Dx's
                       for i := 0 to lstReview.Items.Count-1 do
-                      //for i := 1 to uSignItems.uSigItems.GetSigItems.Count - 1 do
                         with TOrder(lstReview.Items[i]) do
                           begin
                            // HDS00005025
@@ -799,8 +1057,7 @@ begin
                                     UpdateTextRecord(arRect[Index]);
                                     DrawText(Canvas.handle, PChar(str), Length(str), TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
 
-                                    if (Not UBACore.IsOrderBillable(tempID)) then// and
-                               //        (Not UBAGlobals.tempDxNodeExists(tempID) ) then  // if consult is non cidc but requires dx, show it.
+                                    if (Not UBACore.IsOrderBillable(tempID)) then
                                     begin
                                        Canvas.Font.Color := Get508CompliantColor(clBlue);
                                        UpdateTextRecord(arRect[Index]);
@@ -855,6 +1112,8 @@ end;
 procedure TfrmReview.radReleaseClick(Sender: TObject);
 begin
   if not grpRelease.Visible then Exit;
+  if radHoldSign.Checked then lblHoldSign.Visible := True
+  else lblHoldSign.Visible := False;
   if radRelease.Checked then
   begin
     radVerbal.Enabled := True;
@@ -877,7 +1136,10 @@ end;
 procedure TfrmReview.txtESCodeChange(Sender: TObject);
 begin
   if(not pnlSignature.Visible) then
-    cmdOK.Caption := 'OK'
+  begin
+    if (FCouldSign and not anyitemsarechecked) then cmdOK.Caption := 'Don''t Sign'
+    else cmdOK.Caption := 'OK'
+  end
   else
   begin
     if Length(txtESCode.Text) > 0 then cmdOK.Caption := 'Sign' else
@@ -886,7 +1148,7 @@ begin
     end;
   end;
 end;
-  
+
 procedure TfrmReview.cmdOKClick(Sender: TObject);
 { validate the electronic signature & call SaveSignItem for the encounter }
 const
@@ -896,22 +1158,26 @@ const
   TX_SAVERR2 = ', occurred while trying to save:' + CRLF + CRLF;
   TC_SAVERR  = 'Error Saving Order';
 var
-  i, idx, AType, PrintLoc, theSts, wardIEN: Integer;
+  i, k, idx, AType, PrintLoc, theSts, wardIEN: Integer;
   SigSts, RelSts, Nature: Char;
   ESCode, AnID, AnErrMsg: string;
   ChangeItem, TempChangeItem: TChangeItem;
-  OrderList, OrderPrintList: TStringList;
-  SaveCoPay: boolean;
+  OrderList, CSOrderList, TotalOrderList, OrderPrintList: TStringList;
+  SaveCoPay, PINRetrieved: boolean;
   DigSigErr, DigStoreErr, CryptoChecked, displayEncSwitch, DelayOnly: Boolean;
   SigData, SigUser, SigDrugSch, SigDEA: string;
   cSignature, cHashData, cCrlUrl, cErr, WardName, ASvc: string;
+  UsrAltName, IssuanceDate, PatientName, PatientAddress, DetoxNumber, ProviderName, ProviderAddress: string;
+  DrugName, Quantity, Directions: string;
   cProvDUZ: Int64;
   AList, ClinicList, WardList: TStringList;
   IsOk, ContainsIMOOrders, DoNotPrint : Boolean;
   EncLocName, EncLocText, tempInpLoc: string;
   EncLocIEN: integer;
   EncDT: TFMDateTime;
-  EncVC: Char;
+  EncVC: Char;  
+  PINResult : TPinResult;
+  PINLock : string;
 
   function OrdersSignedOrReleased: Boolean;
   var
@@ -944,8 +1210,52 @@ var
          Break;
       end;
     end;
+
+    for i := 0 to Pred(csOrderList.Count) do
+    begin
+      s := Piece(CSOrderList[i], U, 2);
+      x := s[1];
+      if ((s <> '') and (s[1] in [SS_ONCHART, SS_ESIGNED, SS_NOTREQD])) or
+         (Piece(CSOrderList[i], U, 3) = RS_RELEASE) then
+      begin
+         Result := TRUE;
+         Break;
+      end;
+    end;
+  end; 
+
+  function Piece2end (s,del: string): string;
+  var
+    i: Integer;
+  begin
+    i := Pos(del,s);
+    Result := copy(s,i+1,length(s));
   end;
 
+  procedure Log2File(  crypto: TCryptography) ;
+  var
+    f: TextFile;
+  begin
+    AssignFile(f,'c:\hashLog.txt');
+    if not(FileExists('c:\hashLog.txt')) then
+    begin
+      ReWrite(f) ;
+      Write(f,'cprs 29 hash log' + CRLF + CRLF);
+      CloseFile(f);
+    end;
+
+    Append(f);
+    WriteLn(f, '==============' + crypto.OrderNumber + CRLF +
+                      'IssuanceDate: "' + crypto.IssuanceDate + '"' + CRLF +
+                      'DrugName: "' + crypto.DrugName + '"' + CRLF +
+                      'Quantity: "' + crypto.Quantity + '"' + CRLF +
+                      'Directions: "' + crypto.Directions + '"' + CRLF +
+                      'DetoxNumber: "' + crypto.DetoxNumber + '"' + CRLF +
+                      'DeaNumber: "' + crypto.DeaNumber + '"' + CRLF +
+                      'OrderNumber: "' + crypto.OrderNumber + '"' + CRLF +
+                      CRLF);
+    CloseFile(f);
+  end;
 
 begin
   IsOk := True;
@@ -965,10 +1275,10 @@ begin
   begin
     ESCode := txtESCode.Text;
 
-    if ItemsAreChecked and (Length(ESCode) > 0) and (not ValidESCode(ESCode)) then
+    if AnyItemsAreChecked and (Length(ESCode) > 0) and (not ValidESCode(ESCode)) then
     begin
       InfoBox(TX_INVAL_MSG, TX_INVAL_CAP, MB_OK);
-      txtESCode.SetFocus;
+      frmReview.ActiveControl := frmReview.txtESCode;
       txtESCode.SelectAll;
       Exit;
     end;
@@ -979,11 +1289,11 @@ begin
   begin
     { save/sign orders }
     OrderList := TStringList.Create;
+    CSOrderList := TStringList.Create;
+    TotalOrderList := TStringList.Create;
     OrderPrintList := TStringList.create;
     ClinicList := TStringList.Create;
     WardList := TStringList.Create;
-    DigSigErr := True;
-    CryptoChecked := False;
     ContainsIMOOrders := False;
     try
       Nature := NO_PROVIDER;
@@ -1063,7 +1373,6 @@ begin
           Nature := NO_PROVIDER;
           with lstReview do for i := 0 to Items.Count - 1 do
           begin
-            DigStoreErr := false;
             ChangeItem := TChangeItem(Items.Objects[i]);
             if (ChangeItem <> nil) and (ChangeItem.ItemType = CH_ORD) then
               begin
@@ -1072,83 +1381,7 @@ begin
                              begin
                                SigSts := SS_ESIGNED;
                                RelSts := RS_RELEASE;
-                               if (OrderRequiresDigitalSignature(ChangeItem.ID)) and (CryptoChecked = false)
-                                 and GetPKISite and GetPKIUse then
-                                  begin
-                                    Cryptochecked := true;
-                                    try  //PKI object creation
-                                      crypto := CoXuDigSigS.Create;
-                                      crypto.GetCSP;
-                                      StatusText(crypto.Reason);
-                                      DigSigErr := False;
-                                    except
-                                    on  E: Exception do
-                                      begin
-                                        DigSigErr := True;
-                                      end;
-                                    end;
-                                  end;
-                               if (DigSigErr = false) and (OrderRequiresDigitalSignature(ChangeItem.ID))
-                                 and (SigItems.OK2SaveSettings) then
-                                begin
-                                  StatusText('Retrieving DIGITAL SIGNATURE');
-                                  SigDrugSch := GetDrugSchedule(ChangeItem.ID);
-                                  SigData := SetExternalText(ChangeItem.ID,SigDrugSch,User.DUZ);
-                                  if Length(SigData) < 1 then
-                                    begin
-                                      ShowMsg(ChangeItem.Text + CRLF + CRLF + 'Digital Signature failed with reason: Unable to get required data from server');
-                                      DigStoreErr := true;
-                                    end;
-                                  SigUser := piece(SigData,'^',18);
-                                  SigDEA := piece(SigData,'^',20);
-                                  cProvDUZ := User.DUZ;
-                                  if DigStoreErr = false then
-                                  try
-                                    crypto.Reset;
-                                    crypto.DEAsig := true;
-                                    crypto.UsrName := SigUser;
-                                    crypto.DrugSch := SigDrugSch;
-                                    crypto.UsrNumber := SigDEA;
-                                    crypto.DataBuffer := SigData;
-                                    if crypto.Signdata = true then
-                                      begin
-                                        cSignature := crypto.Signature;
-                                        cHashData := crypto.HashValue;
-                                        cCrlUrl := crypto.CrlUrl;
-                                      end
-                                    else
-                                      begin
-                                        ShowMsg(ChangeItem.Text + CRLF + CRLF + 'Digital Signature failed with reason: '+ piece(Crypto.Reason, '^', 2));
-                                        DigStoreErr := true;
-                                      end;
-                                  except
-                                    on  E: Exception do
-                                      begin
-                                        ShowMsg(ChangeItem.Text + CRLF + CRLF + 'Crypto raised an error: '+ E.Message);
-                                        DigStoreErr := true;
-                                      end;
-                                  end;  //except
-                                  if DigStoreErr = true then  //PKI
-                                    //NoOp
-                                  else
-                                    begin
-                                      cErr := '';
-                                      StoreDigitalSig(ChangeItem.ID, cHashData, cProvDUZ, cSignature, cCrlUrl, cErr);
-                                      if cErr = '' then
-                                        OrderList.Add(ChangeItem.ID + U + SS_DIGSIG + U + RS_RELEASE + U + Nature);
-                                    end;
-                                end
-                               else
-                                begin
-                                  if GetPKISite and (OrderRequiresDigitalSignature(ChangeItem.ID)) then
-                                    begin
-                                      ShowMsg('ORDER NOT SENT TO PHARMACY' + CRLF + CRLF + ChangeItem.Text + CRLF + CRLF +
-                                        'This Schedule II medication cannot be electronically entered without a Digital Signature. ' +
-                                        CRLF + 'Please discontinue/cancel this order and create a hand written order for manual processing, or digitally sign the order at a PKI-enabled workstation.');
-                                    end
-                                  else
-                                    OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature);
-                                end;
+                               OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature);
                              end else
                              begin
                                if BILLING_AWARE then
@@ -1182,55 +1415,283 @@ begin
                   end;
             end; {if ItemType}
           end; {with lstReview}
+
+
+
+          with lstCSReview do for i := 0 to Items.Count - 1 do
+          begin
+            ChangeItem := TChangeItem(Items.Objects[i]);
+            if (ChangeItem <> nil) and (ChangeItem.ItemType = CH_ORD) then
+              begin
+                case State[i] of
+                cbChecked:   if Length(ESCode) > 0 then
+                             begin
+                               SigSts := SS_ESIGNED;
+                               RelSts := RS_RELEASE;
+                               if ChangeItem.DCOrder then OrderList.Add(ChangeItem.ID + U + SS_ESIGNED + U + RelSts + U + Nature)
+                               else CSOrderList.Add(ChangeItem.ID + U + SS_DIGSIG + U + RelSts + U + Nature);
+                             end else
+                             begin
+                               if BILLING_AWARE then
+                                  UBACore.SaveUnsignedOrders(ChangeItem.ID+ '1' + GetCheckBoxStatus(ChangeItem.ID) );
+                               SigSts := SS_UNSIGNED;
+                               RelSts := RS_HOLD;
+                             end;
+                cbGrayed:    if OrderRequiresSignature(ChangeItem.ID) then
+                             begin
+                               SigSts := SS_UNSIGNED;
+                               RelSts := RS_HOLD;
+                             end else
+                             begin
+                               SigSts := SS_NOTREQD;
+                               RelSts := RS_RELEASE;
+                             end;
+                else         begin                   // (cbUnchecked)
+                               SigSts := SS_UNSIGNED;
+                               RelSts := RS_HOLD;
+                             end;
+                end; {case State}
+
+                if (ChangeItem.GroupName = 'Other Unsigned') and (SigSts = SS_UNSIGNED) and (RelSts = RS_HOLD)
+                  then //NoOp - don't add unsigned orders from outside session to the list
+                else
+                  begin
+                    if not(State[i] = cbChecked) and (OrderList.IndexOf(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature) < 0) then
+                      OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature)
+                    else if (cmdOK.Caption = 'Don''t Sign') and (OrderList.IndexOf(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature) < 0) then
+                      OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts + U + Nature);
+                  end;
+            end; {if ItemType}
+          end; {with lstCSReview}
+
+//add csorderlist to totalorderlist in order to do order checking
+for i := 0 to CSOrderList.Count - 1 do
+begin
+  TotalOrderList.add(CSOrderList.strings[i]);
+end;
+
+//add orderlist to totalorderlist in order to do order checking
+for i := 0 to OrderList.Count - 1 do
+begin
+  TotalOrderList.add(OrderList.strings[i]);
+end;
+//do order checkign on totalorderlist.  Any order's cancelled will no longer be in totalorderlist
+While (TotalOrderList.Count > 0) do
+begin
+  IsOk := ExecuteSessionOrderChecks(TotalOrderList);  // any cancelled orders will be removed from OrderList
+  if IsOk then Break;
+end;
+//remove any orders from csorderlist that are no longer part of totalorderlist
+i := CSOrderList.Count - 1;
+while i>=0 do
+begin
+  if (TotalOrderList.IndexOf(CSOrderList.strings[i])=-1) then CSOrderList.Delete(i);
+  i := i - 1;
+end;
+
+//remove any orders from orderlist that are no longer part of totalorderlist   
+i := OrderList.Count - 1;
+while i>=0 do
+begin
+  if (TotalOrderList.IndexOf(OrderList.strings[i])=-1) then OrderList.Delete(i);
+  i := i - 1;
+end;
+
+          if CSOrderList.Count > 0 then
+          begin
+          //check if sc boxes were answered here before dig signing process
+          inherited;
+          if not IsUserNurseProvider(User.DUZ) then
+          begin
+               if (not SigItems.OK2SaveSettings) or (not SigItemsCS.OK2SaveSettings) then
+               begin
+                 if (cmdOk.Caption = 'Don''t Sign') then
+                    //
+                 else
+                 begin
+                    InfoBox(TX_Order_Error, 'Review/Sign Orders', MB_OK);
+                    Exit;
+                 end
+               end;
+          end;
+          
+          LastPINvalue := '';
+          //isXuDSigSLogging := true;
+          PINRetrieved := false;
+          //get altusername
+          UsrAltName := sCallV('XUS PKI GET UPN', []);
+          //if SAN is blank then attempt to retrieve from card to set it
+          if UsrAltName='' then
+          begin
+            UsrAltName := SetSAN(fReview.frmReview);
+            if not(UsrAltName='')  then
+            begin
+              PINRetrieved := true;
+            end;
+          end;
+          //if still blank then cancel digital signing
+          if UsrAltName='' then PINResult := prCancel
+          else if not(PINRetrieved) then
+          try
+          begin
+            PINLock := sCallV('ORDEA PINLKCHK', []);
+            if PINLock = '1' then PINResult := prLocked
+            else PINResult := checkPINValue(fReview.frmReview);
+          end
+          except
+           PINResult := prError;
+          end;
+
+          if PINResult = prError then ShowMsg('Problem getting PIN.  Cannot Digitally Sign.')
+          else if PINResult=prLocked then
+          begin
+            if PINLock = '0' then sCallV('ORDEA PINLKSET', []);
+            ShowMsg('Card has been locked.  Cannot Digitally Sign.')
+          end
+          else if PINResult=prCancel then ShowMsg('Digital Signing has been cancelled.')
+          else
+            begin
+              try
+              begin
+                crypto := TCryptography.Create;
+                //call rpc to get hash fields other than drug info
+                CallV('ORDEA HASHINFO', [Patient.DFN, User.DUZ]);
+                for i := 0 to RPCBrokerV.Results.Count -1 do
+                begin
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'IssuanceDate' then IssuanceDate := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientName' then PatientName := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientAddress' then PatientAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DetoxNumber' then DetoxNumber := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderName' then ProviderName := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderAddress' then ProviderAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                  if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DeaNumber' then SigDEA := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                end;
+                for i := 0 to CSOrderList.Count - 1 do
+                begin
+                  CallV('ORDEA ORDHINFO', [Piece(Piece(CSOrderList.strings[i],U,1),';',1)]);
+                  DrugName := '';
+                  Quantity := '';
+                  Directions := '';
+                  for k := 0 to RPCBrokerV.Results.Count -1 do
+                  begin
+                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'DrugName' then DrugName := Piece2end(RPCBrokerV.Results.Strings[k],':');
+                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Quantity' then Quantity := Piece2end(RPCBrokerV.Results.Strings[k],':');
+                    if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Directions' then Directions := Piece(Piece2end(RPCBrokerV.Results.Strings[k],':'),U,1);
+                  end;
+                  try
+                    crypto.Reset;
+                    crypto.isDEAsig := true;
+                    crypto.UsrName := User.Name;
+                    crypto.UsrAltName := UsrAltName;
+                    crypto.IssuanceDate :=  IssuanceDate;
+                    crypto.PatientName :=   PatientName;
+                    crypto.PatientAddress :=  PatientAddress;
+                    crypto.DrugName :=     DrugName;
+                    crypto.Quantity :=   Quantity;
+                    crypto.Directions :=  Directions;
+                    crypto.DetoxNumber :=  ''; //DetoxNumber;  don't include detox in hash calc
+                    crypto.ProviderName :=  ProviderName;
+                    crypto.ProviderAddress :=  ProviderAddress;
+                    crypto.DeaNumber :=      SigDEA;
+                    crypto.OrderNumber :=   Piece(Piece(CSOrderList.strings[i],U,1),';',1);
+
+                    if false then Log2File(crypto);
+                    
+
+                    if crypto.Signdata = true then
+                    begin
+                      cSignature := crypto.SignatureStr;
+                      cHashData := crypto.HashStr;
+                      cCrlUrl := crypto.CrlUrl;
+                    end
+                    else
+                    begin
+                      ShowMsg('Could not digitally sign. An error has occurred: Hash generation failed'+CRLF+CRLF+crypto.Reason);
+                    DigStoreErr := true;
+                    end;
+
+                  except
+                    on  E: Exception do
+                      begin
+                        ShowMsg('Could not digitally sign. An error has occurred: '+ E.Message);
+                        DigStoreErr := true;
+                      end;
+                  end;
+
+                  if DigStoreErr then
+                    //messages shown above
+                  else
+                  begin
+                    cErr := '';
+                    StoreDigitalSig(Piece(CSOrderList.Strings[i],U,1), cHashData, User.DUZ, cSignature, cCrlUrl, Patient.DFN, cErr);
+                    if cErr = '' then
+                    begin
+                      UpdateOrderDGIfNeeded(Piece(CSOrderList.Strings[i],U,1));
+                      OrderList.Add(CSOrderList.Strings[i]);
+                      BAOrderList.Add(Piece(CSOrderList.Strings[i],U,1));
+                    end;
+                  end;
+                end;
+              end;
+              finally
+                if not(crypto=nil) then
+                begin
+                  crypto.Free;
+                  crypto := nil;
+                end;
+              end;
+            end;
+          end;
         end; {OR_PHYSICIAN}
       end; {case User.OrderRole}
       if BILLING_AWARE then
          if UBAGLobals.UnsignedOrders.Count > 0 then
            UBACore.BuildSaveUnsignedList(uBAGLobals.UnsignedOrders);
 
-      // if true BA data in not mandatory.
-      if not IsUserNurseProvider(User.DUZ) then
-      begin
-         if OrdersToBeSignedOrReleased then
-         begin
-           if (not SigItems.OK2SaveSettings) then
-           begin
-             if (cmdOk.Caption = 'Don''t Sign') then
-                SaveCoPay := TRUE
-             else
-             begin
-                InfoBox(TX_Order_Error, 'Review/Sign Orders', MB_OK);
-                Exit;
-             end
-           end
-           else
-             SaveCoPay := TRUE;
-      end
-      else
-         SaveCoPay := TRUE;
-
-         {Begin BillingAware}
-          if  BILLING_AWARE then
+          // if true BA data in not mandatory.
+          if not IsUserNurseProvider(User.DUZ) then
           begin
-            if (cmdOk.Caption = 'Sign') then
-              begin
-                if Not UBACore.BADxEntered then
+             if OrdersToBeSignedOrReleased then
+             begin
+               if (not SigItems.OK2SaveSettings) or (not SigItemsCS.OK2SaveSettings) then
+               begin
+                 if (cmdOk.Caption = 'Don''t Sign') then
+                    SaveCoPay := TRUE
+                 else
+                 begin
+                    InfoBox(TX_Order_Error, 'Review/Sign Orders', MB_OK);
+                    Exit;
+                 end
+               end
+               else
+                 SaveCoPay := TRUE;
+            end
+            else
+               SaveCoPay := TRUE;
+
+           {Begin BillingAware}
+            if  BILLING_AWARE then
+            begin
+              if (cmdOk.Caption = 'Sign') then
                 begin
-                   InfoBox(TX_NO_DX, TC_NO_DX, MB_OK);
-                   Exit;
+                  if Not UBACore.BADxEntered then
+                  begin
+                     InfoBox(TX_NO_DX, TC_NO_DX, MB_OK);
+                     Exit;
+                  end;
                 end;
-              end;
-            {End BillingAware}
-         end;
-      end;
+              {End BillingAware}
+             end;
+          end;
+
+
 
       {release & print orders}
       // test for LockedForOrdering is to make sure patient is locked if pulling in all unsigned
-      if (User.OrderRole in [OR_NOKEY..OR_STUDENT]) and (OrderList.Count > 0) and LockedForOrdering then
+      if (User.OrderRole in [OR_NOKEY..OR_STUDENT]) and (OrderList.Count > 0)and LockedForOrdering then
       begin
-        IsOk := ExecuteSessionOrderChecks(OrderList);  // any cancelled orders will be removed from OrderList
         StatusText('Sending Orders to Service(s)...');
-        if OrderList.Count > 0 then
+        if (OrderList.Count > 0) then
         begin
         //hds7591  Clinic/Ward movement.  Nurse orders
           if (cmdOk.Caption = 'Sign') or (cmdOK.Caption = 'OK') and (not frmFrame.TimedOut) then
@@ -1299,7 +1760,7 @@ begin
                   //All other scenarios should not print
                  if (ClinicList.count = 0) and (WardList.count = 0) then DoNotPrint := True;
              end;
-          end; //CmdOK.Caption = Sign
+          end; 
           if (cmdOk.Caption = 'Don''t Sign') and (not frmFrame.TimedOut) and (frmFrame.mnuFile.Tag <> 0) then
                begin
                  tempInpLoc := frmPrintLocation.rpcIsPatientOnWard(patient.dfn);
@@ -1337,8 +1798,13 @@ begin
         //hds7591  Clinic/Ward movement.
         
           if SaveCoPay then
-            SigItems.SaveSettings; // Save CoPay FIRST
+            begin
+              SigItems.SaveSettings; // Save CoPay FIRST
+              SigItemsCS.SaveSettings;
+            end;
+
           SendOrders(OrderList, ESCode);   {*KCM*}
+
 
       //CQ #15813 Modired code to look for error string mentioned in CQ and change strings to conts - JCS
         with OrderList do for i := 0 to Count - 1 do
@@ -1404,11 +1870,14 @@ begin
       FreeAndNil(ClinicList);
       FreeAndNil(WardList);
     end;
-    crypto := nil;
+    if not(crypto=nil) then
+    begin
+      crypto.Free;
+      crypto := nil;
+    end;
   end;
 
   { save/sign documents }
-  //with lstReview do for i := 0 to Items.Count - 1 do
   with lstReview do for i := 0 to Items.Count - 1 do
   begin
     ChangeItem := TChangeItem(Items.Objects[i]);
@@ -1435,6 +1904,17 @@ begin
 
   // clear all the items that were on the list (but not all in Changes)
   with lstReview do for i := Items.Count - 1 downto 0  do
+  begin
+    if (not Assigned(Items.Objects[i])) then continue;   {**RV**}
+    ChangeItem := TChangeItem(Items.Objects[i]);
+    if ChangeItem <> nil then
+    begin
+      AnID := ChangeItem.ID;
+      AType := ChangeItem.ItemType;
+      Changes.Remove(AType, AnID);
+    end;
+  end;
+  with lstCSReview do for i := Items.Count - 1 downto 0  do
   begin
     if (not Assigned(Items.Objects[i])) then continue;   {**RV**}
     ChangeItem := TChangeItem(Items.Objects[i]);
@@ -1489,11 +1969,7 @@ begin
     x := FilteredString(Items[Index]);
     AHeight := WrappedTextHeightByFont( lstReview.Canvas, Font, x, ARect) + SIG_ITEM_VERTICAL_PAD;
     if AHeight > 255 then AHeight := 255;
-    //-------------------
-    {Bug fix-HDS00001627}
-    //if AHeight <  13 then AHeight := 13; {ORIG}
     if AHeight <  13 then AHeight := 15;
-    //-------------------
   end;
 end;
 
@@ -1523,7 +1999,6 @@ begin
     if (Itm <> FLastHintItem) then
     begin
       Application.CancelHint;
-      //ORIG  lstReview.Hint := TrimRight(lstReview.Items[Itm]);
   {Begin BillingAware}
    if  BILLING_AWARE then
    begin
@@ -1598,9 +2073,6 @@ begin
 try
  if  BILLING_AWARE then
  begin
-  //Prevent user from attempting to process first row - It is not an order!
-  //if lstReview.ItemIndex = 0 then
-     //Exit;
 
   tmpOrderIDList := TStringList.Create;
   if Assigned(tmpOrderIDList) then tmpOrderIDList.Clear;
@@ -1689,7 +2161,6 @@ try
                   begin
                   if Assigned(UBAGlobals.globalDxRec) then
                      InitializeNewDxRec(UBAGlobals.globalDxRec);
-                  //frmBALocalDiagnoses.Enter(UBAConst.F_REVIEW, tmpOrderIDList);
 
                   frmBALocalDiagnoses := TfrmBALocalDiagnoses.Create(frmReview);
                   frmBALocalDiagnoses.ShowModal;
@@ -1710,6 +2181,451 @@ try
  finally
      if Assigned(tmpOrderIDList) then FreeAndNil(tmpOrderIDList);
  end;
+end;
+
+procedure TfrmReview.lstCSReviewClick(Sender: TObject);
+//If grid item is an order-able item, then enable the Diagnosis button
+// else disable the Diagnosis button.
+{Begin BillingAware}
+var
+  thisChangeItem: TChangeItem;
+  i: smallint;
+  thisOrderList: TStringList;
+{End BillingAware}
+begin
+thisOrderList := TStringList.Create;
+
+{Begin BillingAware}
+ if  BILLING_AWARE then
+ begin
+    if lstCSReview.Items.Count > 1 then
+       Copy1.Enabled := True
+    else
+       Copy1.Enabled := False;
+
+  try
+     for i := 0 to lstCSReview.Items.Count - 1 do
+     begin
+        if lstCSReview.Selected[i] then
+           begin
+           thisChangeItem := TChangeItem(lstCSReview.Items.Objects[i]);
+
+           //Disallow copying of a grid HEADER item on LEFT MOUSE CLICK
+           if thisChangeItem = nil then
+              begin
+              buDiagnosis.Enabled := false;
+              Copy1.Enabled := false;
+              Paste1.Enabled := false;
+              Diagnosis1.Enabled := false;
+              Exit;
+              end;
+
+           if (thisChangeItem <> nil) then
+              begin
+              thisOrderList.Clear;
+              thisOrderList.Add(thisChangeItem.ID);
+              // Returns True if All selected orders are N/A, Order selected are NON CIDC or DC'd
+              if uBACore.IsAllOrdersNA(thisOrderList) then
+                 begin
+                 Diagnosis1.Enabled := false;
+                 buDiagnosis.Enabled := false;
+                 end
+              else
+                 begin
+                 Diagnosis1.Enabled := true;
+                 buDiagnosis.Enabled := true;
+                 end
+              end
+           else
+              begin
+              buDiagnosis.Enabled := false;
+              Diagnosis1.Enabled := False;
+              Break;
+              end;
+           end;
+        end;
+  except
+     on EListError do
+        begin
+        {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewClick()');{$endif}
+        raise;
+        end;
+  end;
+ {End BillingAware}
+ end;    
+ if Assigned(thisOrderList) then thisOrderList.Free;
+end;
+
+procedure TfrmReview.lstCSReviewClickCheck(Sender: TObject);
+{ prevent grayed checkboxes from being changed to anything else }
+var
+  ChangeItem: TChangeItem;
+
+  procedure updateAllChilds(CheckedStatus: boolean; ParentOrderId: string);
+  var
+    idx: integer;
+    AChangeItem: TChangeItem;
+  begin
+    for idx := 0 to lstCSReview.Items.Count - 1 do
+    begin
+      AChangeItem := TChangeItem(lstCSReview.Items.Objects[idx]);
+      if Assigned(AChangeItem) and (AChangeItem.ParentID = ParentOrderId) then
+          if lstCSReview.Checked[idx] <> CheckedStatus then
+          begin
+            lstCSReview.Checked[idx] := CheckedStatus;
+            SigItemsCS.EnableSettings(idx, lstCSReview.checked[Idx]);
+          end;
+    end;
+  end;
+
+begin
+  with lstCSReview do
+  begin
+    ChangeItem := TChangeItem(Items.Objects[ItemIndex]);
+    if ChangeItem = nil then Exit;
+    
+    if ItemIndex > 0 then
+    begin
+      if (ChangeItem <> nil) then
+      begin
+        if (ChangeItem.SignState = CH_SIGN_NA) then State[ItemIndex] := cbGrayed
+        else
+        begin
+          SigItemsCS.EnableSettings(ItemIndex, checked[ItemIndex]);
+          if Length(ChangeItem.ParentID) > 0 then
+            updateAllChilds(checked[ItemIndex], ChangeItem.ParentID);
+        end;
+      end;
+    end;
+    if CSItemsAreChecked and nonDCCSItemsAreChecked then
+    begin
+       lblDeaText.Visible := TRUE;
+       lblSmartCardNeeded.Visible := TRUE;
+    end
+    else
+    begin
+       lblDeaText.Visible := FALSE;
+       lblSmartCardNeeded.Visible := FALSE;
+    end;
+    pnlSignature.Visible := IsSignatureRequired;
+  end;
+  if pnlSignature.Visible then
+  begin
+    txtESCode.SetFocus;
+    txtESCodechange(Self);
+  end;
+end;
+
+procedure TfrmReview.lstCSReviewDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
+{ outdent the header items (thus hiding the checkbox) }
+var
+  x: string;
+  ARect, TextRecord: TRect;
+  i, dy: integer;
+  tempID: string;
+  thisRec: UBAGlobals.TBADxRecord;
+
+{Begin BillingAware}
+  str: string;
+{End BillingAware}
+
+  procedure UpdateTextRecord(r: TRect);
+  begin
+    TextRecord := r;
+    inc(TextRecord.Top, dy);
+    dec(TextRecord.Bottom, dy);
+  end;
+
+begin
+  inherited;
+  dy := SIG_ITEM_VERTICAL_PAD div 2;
+  x := '';
+  ARect := Rect;
+
+  if  BILLING_AWARE then
+  begin
+     ARect.Right := ARect.Right - 50;
+
+  with lstCSReview do
+  begin
+    if Items.Objects[Index] = nil then
+        ARect.Left := 0;
+    Canvas.Pen.Color := Get508CompliantColor(clSilver);
+    Canvas.FillRect(ARect);
+
+    if Index < Items.Count then
+      begin
+       x := Trim(FilteredString(Items[Index]));
+
+       if (ARect.Left = 0) and ( Length(x)>0 ) then
+         Canvas.TextOut(ARect.Left + 2, ARect.Top + dy, x)
+       else
+          if (ARect.Left > 0 ) and ( Length(x)>0 ) then
+             begin
+             //ARect.Right below controls the right-hand side of the Dx Column
+             //Adjust ARect.Right in conjunction with procedure uSignItems.TSigItems.lbDrawItem(), because the
+             //two rectangles overlap each other.
+
+             if  BILLING_AWARE then
+                begin
+                arRect[Index] := Classes.Rect(ARect.Right+2, ARect.Top, ARect.Right + 108, ARect.Bottom);
+                Canvas.FillRect(arRect[Index]);
+                end;
+
+             //Draw ORDER TEXT
+            UpdateTextRecord(ARect);
+            DrawText(Canvas.handle, PChar(x), Length(x), TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+
+           if  BILLING_AWARE then
+                begin
+                     //Dx Column lines
+                     Canvas.Pen.Color := Get508CompliantColor(clSilver);
+                     Canvas.MoveTo(DxRect.Left-1, ARect.Top);
+                     Canvas.LineTo(DxRect.Left-1, ARect.Bottom);
+                     //Adjust position of 'Diagnosis' column label for font size
+                     laDiagnosis.Left := DxRect.Left + 14;
+                     if uSignItems.GetAllBtnLeftPos > 0 then
+                        laDiagnosis.left := uSignItems.GetAllBtnLeftPos - (laDiagnosis.Width +5);
+                     laDiagnosis.Top := lblSig.Top;
+                     //Assign DxRect for drawing Dx column and Dx string
+                     DxRect.Left := ARect.Right + 1;
+                     DxRect.Top := ARect.Top;
+                     DxRect.Right := DxRect.Left + 80;
+                     DxRect.Bottom := ARect.Bottom;
+
+                    //Display all saved Dx's
+                      for i := 0 to lstCSReview.Items.Count-1 do
+                        with TOrder(lstCSReview.Items[i]) do
+                          begin
+                           // HDS00005025
+                          if TChangeItem(lstCSReview.Items.Objects[Index]).ITEMTYPE = CH_DOC then
+                             tempID := '0' // if document id is equal to valid order id identify billable orders
+                          else
+                             tempID := TChangeItem(lstCSReview.Items.Objects[Index]).ID;
+                            // HDS00005025
+                           //WORKS FOR MULTIPLE Dx
+                           if Assigned(UBAGlobals.tempDxList) then
+                             if UBAGlobals.tempDxNodeExists(tempID) then
+                                 begin
+                                    thisRec := TBADxRecord.Create;
+                                    UBAGlobals.GetBADxListForOrder(thisRec, tempID);
+                                    str := Piece(thisRec.FBADxCode, '^', 1); // Display Dx text only - not the ICD-9 code
+                                    str := Piece(str, ':', 1);   //in case has : vs. ^
+                                    UpdateTextRecord(arRect[Index]);
+                                    DrawText(Canvas.handle, PChar(str), Length(str), TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+
+                                    if (Not UBACore.IsOrderBillable(tempID)) then// and
+                                    begin
+                                       Canvas.Font.Color := Get508CompliantColor(clBlue);
+                                       UpdateTextRecord(arRect[Index]);
+                                       DrawText(Canvas.handle, PChar(NOT_APPLICABLE), Length(NOT_APPLICABLE) , TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                                    end;
+                                 end
+                              else
+                                 begin
+                                 //Determine if order is billable. If NOT billable then insert NA in Dx field
+                                    if Not UBACore.IsOrderBillable(tempID) then
+                                    begin
+                                        Canvas.Font.Color := Get508CompliantColor(clBlue);
+                                        UpdateTextRecord(arRect[Index]);
+                                        DrawText(Canvas.handle, PChar(NOT_APPLICABLE), Length(NOT_APPLICABLE) , TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                                    end;
+                                 end;
+                          end;
+                    end;
+        end; //if
+      end; //if
+  end; //with
+ end
+ else
+    begin
+       with lstCSReview do
+          begin
+          if Items.Objects[Index] = nil then
+              ARect.Left := 0;
+
+          Canvas.FillRect(ARect);
+
+          if Index < Items.Count then
+             begin
+                x := Trim(FilteredString(Items[Index]));
+
+             if (ARect.Left = 0) and ( Length(x) > 0 ) then
+                Canvas.TextOut(ARect.Left + 2, ARect.Top + dy, x)
+             else
+                if (ARect.Left > 0 ) and ( Length(x)>0 ) then
+                   begin
+                     Canvas.Pen.Color := Get508CompliantColor(clSilver);
+                     Canvas.MoveTo(0, ARect.Bottom-1);
+                     Canvas.LineTo(ARect.Right, ARect.Bottom-1);
+                     UpdateTextRecord(ARect);
+                     DrawText(Canvas.handle, PChar(x), Length(x), TextRecord, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                   end;
+             end;
+       end;
+    end;
+end;
+
+
+procedure TfrmReview.lstCSReviewKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = VK_Space) then
+    FormatListForScreenReader
+end;
+
+procedure TfrmReview.lstCSReviewMeasureItem(Control: TWinControl;
+  Index: Integer; var AHeight: Integer);
+var
+  x:string;
+  ARect: TRect;
+begin
+  inherited;
+  AHeight := SigItemHeight;
+  with lstCSReview do if Index < Items.Count then
+  begin
+    ARect := ItemRect(Index);
+    ARect.Left := lstCSReview.CheckWidth;
+    Canvas.FillRect(ARect);
+    x := FilteredString(Items[Index]);
+    AHeight := WrappedTextHeightByFont( lstCSReview.Canvas, Font, x, ARect) + SIG_ITEM_VERTICAL_PAD;
+    if AHeight > 255 then AHeight := 255;
+    if AHeight <  13 then AHeight := 15;
+  end;
+end;
+
+procedure TfrmReview.lstCSReviewMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+{
+   - Open copy/paste popup menu.
+}
+var
+  ClientPoint: TPoint;
+  ScreenPoint: TPoint;
+  thisChangeItem: TChangeItem;
+  i: integer;
+begin
+  if not BILLING_AWARE then lstCSReview.PopupMenu := nil;
+
+  if BILLING_AWARE then
+     begin
+        if Button = mbRight then  //Right-click to open copy/paste popup menu
+           begin
+           //CQ3325
+           if frmReview.lstCSReview.Items.Count = 3 then
+              begin
+              Copy1.Enabled := false;
+              Paste1.Enabled := false
+              end
+           else
+              begin
+              Copy1.Enabled := true;
+              end;
+           //End CQ3325
+
+     //CQ HDS00002954 Fix
+     if Button = mbRight then
+         //Disallow copying of a grid HEADER item
+        for i := 0 to lstCSReview.Items.Count - 1 do
+              if lstCSReview.Selected[i] then
+                 begin
+                
+                 thisChangeItem := TChangeItem(lstCSReview.Items.Objects[i]);
+
+                  if thisChangeItem = nil then
+                     begin
+                     lstCSReview.Selected[i] := false;
+                     Copy1.Enabled := false;
+                     Paste1.Enabled := false;
+                     Exit;
+                     end;
+                  end;
+                    
+         if not frmReview.lstCSReview.Selected[lstCSReview.ItemIndex] then
+            (Sender as TCheckListBox).Selected[lstCSReview.ItemIndex] := true;
+
+         ClientPoint.X := X;
+         ClientPoint.Y := Y;
+         ScreenPoint := lstCSReview.ClientToScreen(ClientPoint);
+         poBACopyPaste.Popup(ScreenPoint.X, ScreenPoint.Y);
+         end;
+      end;
+end;
+
+procedure TfrmReview.lstCSReviewMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+  Itm: integer;
+
+ {Begin BillingAware}
+  tempRec: UBAGlobals.TBADxRecord;
+  i: smallint;
+  thisOrderID: string;
+ {End BillingAware}
+
+begin
+  inherited;
+  Itm := lstCSReview.ItemAtPos(Point(X, Y), TRUE);
+  if (Itm >= 0) then
+  begin
+    if (Itm <> FLastHintItem) then
+    begin
+      Application.CancelHint;
+  {Begin BillingAware}
+   if  BILLING_AWARE then
+   begin
+       if frmFrame.TimedOut then Exit;
+        //Billing Awareness 'flyover' hint includes Dx code(s) when Dx code(s) have been assigned to an order
+
+          if Assigned(frmReview) then
+              if Assigned(fReview.frmReview.lstCSReview.Items.Objects[Itm]) then
+                    thisOrderID := TOrder(fReview.frmReview.lstCSReview.Items.Objects[Itm]).ID;
+
+           if UBAGlobals.tempDxNodeExists(thisOrderID) then
+                 begin
+                 if Assigned(tempDxList) then
+                    try
+                      for i := 0 to (tempDxList.Count - 1) do
+                         begin
+                          tempRec := TBADxRecord(tempDxList.Items[i]);
+
+                          if Assigned(tempRec) then
+                            if (tempRec.FOrderID = thisOrderID) then
+                                begin
+                                with tempRec do
+                                   begin
+                                   FBADxCode := StringReplace(tempRec.FBADxCode,'^',':',[rfReplaceAll]);
+                                   FBASecDx1 := StringReplace(tempRec.FBASecDx1,'^',':',[rfReplaceAll]);
+                                   FBASecDx2 := StringReplace(tempRec.FBASecDx2,'^',':',[rfReplaceAll]);;
+                                   FBASecDx3 := StringReplace(tempRec.FBASecDx3,'^',':',[rfReplaceAll]);
+                                   end;
+
+                                   lstCSReview.Hint := TrimRight(lstCSReview.Items[Itm] + #13 +
+                                      tempRec.FBADxCode + #13 + tempRec.FBASecDx1 + #13 + tempRec.FBASecDx2 + #13 + tempRec.FBASecDx3);
+                                end
+                         end //for
+                      except
+                          on EListError do
+                             begin
+                             {$ifdef debug}Show508Message('EListError in fReview.lstCSReviewMouseMove()');{$endif}
+                             raise;
+                             end;
+                      end;
+                 end
+           else
+               lstCSReview.Hint := TrimRight(lstCSReview.Items[Itm]);
+   end;
+{End BillingAware}
+
+      FLastHintItem := Itm;
+      Application.ActivateHint(Point(X, Y));
+    end;
+  end
+  else
+  begin
+    lstCSReview.Hint := '';
+    FLastHintItem := -1;
+    Application.CancelHint;
+  end;
 end;
 
 procedure TfrmReview.lstReviewClick(Sender: TObject);
@@ -1815,9 +2731,7 @@ begin
            else
               begin
               Copy1.Enabled := true;
-              //Paste1.Enabled := true; //commented out for CQ6225
               end;
-           //End CQ3325
 
      //CQ HDS00002954 Fix
      if Button = mbRight then
@@ -1879,7 +2793,7 @@ begin
                thisChangeItem := TChangeItem(lstReview.Items.Objects[i]);
                
                //Skip this one if it's a "header" on the grid
-                 if (thisChangeItem = nil) then //or (thisChangeItem.ItemType <> CH_ORD)) then
+                 if (thisChangeItem = nil) then 
                     begin
                     if Assigned(thisChangeItem) then FreeAndNil(thisChangeItem);
                     Exit;
@@ -1898,7 +2812,6 @@ begin
                if Not UBACore.IsOrderBillable(fReview.srcOrderID) then 
                  begin
                  ShowMsg(BA_NA_COPY_DISALLOWED);
-                 //Continue;
                  fReview.srcOrderID := '';
                  Exit;
                  end;
@@ -2041,18 +2954,12 @@ end;
 
 procedure TfrmReview.FormShow(Sender: TObject);
 var
-  BottomEdge, numOrderItems: integer;
+  numOrderItems: integer;
 begin
   if pnlSignature.Visible then
-    BottomEdge := pnlSignature.Top
   else
   if pnlOrderAction.Visible then
-    BottomEdge := pnlOrderAction.Top
   else
-    BottomEdge := cmdOK.Top;
-  dec(BottomEdge, 4);
-  if (lstReview.Top + lstReview.Height) > BottomEdge then
-    lstReview.Height := BottomEdge - lstReview.Top;
     
      //INITIALIZATIONS
       Paste1.Enabled := false;
@@ -2185,11 +3092,38 @@ begin
     end;
 end;
 
+procedure TfrmReview.FormPaint(Sender: TObject);
+begin
+  inherited;
+
+  if frmReview.lstCSReview.count = 0 then
+  begin
+   frmReview.lstReview.Height := frmReview.pnlReview.Height - frmReview.lstReview.Top - 4;
+   frmReview.lstReview.Width := frmReview.pnlReview.Width - frmReview.lstReview.Left - 4;
+  end;
+  if frmReview.lstReview.count = 0 then
+  begin
+   frmReview.lstCSReview.Height := frmReview.pnlCSReview.Height - frmReview.lstCSReview.Top - 4;
+   frmReview.lstCSReview.Width := frmReview.pnlCSReview.Width - frmReview.lstCSReview.Left - 4;
+  end;
+end;
+
 procedure TfrmReview.FormResize(Sender: TObject);
 VAR
  I, ColHeight: Integer;
 begin
-  inherited;
+  inherited;  
+
+  if frmReview.lstCSReview.count = 0 then
+  begin
+   frmReview.lstReview.Height := frmReview.pnlReview.Height - frmReview.lstReview.Top - 4;
+   frmReview.lstReview.Width := frmReview.pnlReview.Width - frmReview.lstReview.Left - 4;
+  end;
+  if frmReview.lstReview.count = 0 then
+  begin
+   frmReview.lstCSReview.Height := frmReview.pnlCSReview.Height - frmReview.lstCSReview.Top - 4;
+   frmReview.lstCSReview.Width := frmReview.pnlCSReview.Width - frmReview.lstCSReview.Left - 4;
+  end;
   if lstReview.Count > 0 then begin
    for I := 1 to lstReview.Count - 1 do begin
     lstReviewMeasureItem(lstReview, I, ColHeight);

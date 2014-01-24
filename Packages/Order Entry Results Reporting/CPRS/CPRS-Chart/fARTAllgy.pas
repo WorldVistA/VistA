@@ -1,11 +1,11 @@
 unit fARTAllgy;
-  
+
 interface
 
 uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, ExtCtrls, ComCtrls, uConst,
-  Menus, ORDtTm, Buttons, fODBase, fAutoSz, fOMAction, rODAllergy,
+  Menus, ORDtTm, Buttons, fODBase, fAutoSz, fOMAction, rODAllergy, uOrders,
   VA508AccessibilityManager;
 
 type
@@ -168,6 +168,7 @@ const
   TX_BAD_OBS_DATE     = 'Observation date must be in the format m/d/y or m/y or y, or T-d.';
   TX_MISSING_OBS_DATE = 'Observation date is required for observed reactions.';
   TX_MISSING_OBS_HIST = 'You must select either OBSERVED or HISTORICAL for this reaction.';
+  TX_MISSING_SEVERITY= 'You must select a Severity.';
   TX_BAD_VER_DATE     = 'Verify date must be in the format m/d/y or m/y or y, or T-d.';
   TX_BAD_ORIG_DATE    = 'Origination date must be in the format m/d/y or m/y or y, or T-d.';
   TX_NO_FUTURE_ORIG_DATES  = 'An origination date in the future is not allowed.';
@@ -218,7 +219,8 @@ var
 begin      
   Result := False;
   if AnOwner = nil then AnOwner := Application;
-  
+
+  if not LockedForOrdering then Exit;//SMT Lets Lock Allergies
   if frmARTAllergy <> nil then
   begin
     InfoBox('You are already entering/editing an Allergy.', 'Information', MB_OK);
@@ -630,6 +632,8 @@ begin
             SetError(TX_ORIG_CMTS_REQD);
           if (grpObsHist.Enabled) and (calObservedDate.Text = '')  then
             SetError(TX_MISSING_OBS_DATE);
+          if (cboSeverity.ItemIndex = -1) then
+            SetError(TX_MISSING_SEVERITY);
         end;
       if cboAllergyType.ItemID = ''           then SetError(TX_NO_ALLGYTYPE);
       with cboNatureOfReaction do
@@ -715,7 +719,7 @@ procedure TfrmARTAllergy.grpObsHistClick(Sender: TObject);
 begin
   inherited;
   Changing := True;
-  cboSeverity.ItemIndex := 1;
+  cboSeverity.ItemIndex := -1; //*SMT
   case grpObsHist.ItemIndex of
     0:  begin
           cboSeverity.Visible := True;
@@ -829,7 +833,10 @@ begin
                 if (ItemID <> '') and (Text <> '') then
                   Severity := ItemID
                 else
+                begin
+                  cboSeverity.ItemIndex := -1;
                   Severity := '';
+                end;
               with memComments do
                 if GetTextLen > 0 then
                   QuickCopy(memComments, NewComments);
@@ -1277,7 +1284,8 @@ begin
   uAddingNew := False;
   Application.HintHidePause := FOldHintPause;
   Action  := caFree;
-                  
+
+  UnlockIfAble; //SMT Unlock when allergies close.
 end;
 
 procedure TfrmARTAllergy.FormCloseQuery(Sender: TObject;

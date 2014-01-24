@@ -4,125 +4,202 @@ inherited frmAbout: TfrmAbout
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'About CPRS'
-  ClientHeight = 487
-  ClientWidth = 337
-  Position = poScreenCenter
+  ClientHeight = 599
+  ClientWidth = 415
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
-  ExplicitWidth = 343
-  ExplicitHeight = 519
-  PixelsPerInch = 96
-  TextHeight = 13
-  object bvlBottom: TBevel [0]
-    Left = 6
-    Top = 288
-    Width = 328
-    Height = 47
+  ExplicitWidth = 421
+  ExplicitHeight = 632
+  PixelsPerInch = 120
+  TextHeight = 16
+  object pnlBottom: TPanel [0]
+    Left = 0
+    Top = 354
+    Width = 415
+    Height = 245
+    Align = alBottom
+    BevelEdges = []
+    BevelOuter = bvNone
+    Locked = True
+    TabOrder = 9
+    object pnlButton: TPanel
+      Left = 0
+      Top = 201
+      Width = 415
+      Height = 44
+      Align = alBottom
+      BevelOuter = bvNone
+      Locked = True
+      TabOrder = 0
+      DesignSize = (
+        415
+        44)
+      object cmdOK: TButton
+        Left = 318
+        Top = 11
+        Width = 88
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Cancel = True
+        Caption = 'OK'
+        Default = True
+        ModalResult = 1
+        TabOrder = 0
+      end
+    end
+    object pnlCopyright: TPanel
+      Left = 0
+      Top = 0
+      Width = 415
+      Height = 63
+      Align = alTop
+      BevelOuter = bvLowered
+      TabOrder = 1
+      object lblLegalCopyright: TMemo
+        AlignWithMargins = True
+        Left = 4
+        Top = 4
+        Width = 407
+        Height = 55
+        Align = alClient
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Color = clBtnFace
+        Lines.Strings = (
+          'lblLegalCopyright')
+        ReadOnly = True
+        TabOrder = 0
+      end
+    end
+    object pnl508Disclaimer: TPanel
+      Left = 0
+      Top = 63
+      Width = 415
+      Height = 138
+      Align = alClient
+      BevelOuter = bvLowered
+      Locked = True
+      TabOrder = 2
+      object lbl508Notice: TMemo
+        AlignWithMargins = True
+        Left = 4
+        Top = 4
+        Width = 407
+        Height = 130
+        Align = alClient
+        BorderStyle = bsNone
+        Color = clBtnFace
+        Lines.Strings = (
+          'Veteran'#39's Administration OI&T Product Development staff have '
+          
+            'made every effort during the design, development and testing of ' +
+            'this '
+          
+            'application to ensure full accessibility to all users in complia' +
+            'nce with '
+          
+            'Section 508 of the Rehabilitation Action of 1973, as amended.  I' +
+            'f any '
+          
+            'issues are encountered while running this application, please co' +
+            'ntact '
+          'your local help desk for support.')
+        ReadOnly = True
+        TabOrder = 0
+        WantReturns = False
+      end
+    end
   end
-  object bvl508Disclaimer: TBevel [1]
-    Left = 6
-    Top = 338
-    Width = 326
-    Height = 121
-  end
-  object lblProductName: TStaticText [2]
-    Left = 6
-    Top = 197
-    Width = 79
-    Height = 17
+  object lblProductName: TStaticText [1]
+    Left = 7
+    Top = 242
+    Width = 101
+    Height = 20
     Caption = 'lblProductName'
     TabOrder = 1
     TabStop = True
   end
-  object lblFileVersion: TStaticText [3]
-    Left = 193
-    Top = 197
-    Width = 65
-    Height = 17
+  object lblFileVersion: TStaticText [2]
+    Left = 238
+    Top = 242
+    Width = 86
+    Height = 20
     Caption = 'lblFileVersion'
     TabOrder = 2
     TabStop = True
   end
-  object lblCompanyName: TStaticText [4]
-    Left = 6
-    Top = 214
-    Width = 86
-    Height = 17
+  object lblCompanyName: TStaticText [3]
+    Left = 7
+    Top = 263
+    Width = 113
+    Height = 20
     Caption = 'lblCompanyName'
     TabOrder = 3
     TabStop = True
   end
-  object lblComments: TStaticText [5]
-    Left = 193
-    Top = 232
-    Width = 63
-    Height = 17
+  object lblComments: TStaticText [4]
+    Left = 238
+    Top = 286
+    Width = 82
+    Height = 20
     Caption = 'lblComments'
     TabOrder = 5
     TabStop = True
   end
-  object lblCRC: TStaticText [6]
-    Left = 6
-    Top = 266
-    Width = 36
-    Height = 17
+  object lblCRC: TStaticText [5]
+    Left = 7
+    Top = 327
+    Width = 46
+    Height = 20
     Caption = 'lblCRC'
     TabOrder = 8
     TabStop = True
   end
-  object lblLegalCopyright: TMemo [7]
-    Left = 8
-    Top = 289
-    Width = 322
-    Height = 44
-    BorderStyle = bsNone
-    Color = clBtnFace
-    Lines.Strings = (
-      'lblLegalCopyright')
-    ReadOnly = True
-    TabOrder = 9
-  end
-  object lblFileDescription: TStaticText [8]
-    Left = 6
-    Top = 249
-    Width = 83
-    Height = 17
+  object lblFileDescription: TStaticText [6]
+    Left = 7
+    Top = 306
+    Width = 108
+    Height = 20
     Caption = 'lblFileDescription'
     TabOrder = 6
     TabStop = True
   end
-  object lblInternalName: TStaticText [9]
-    Left = 193
-    Top = 249
-    Width = 77
-    Height = 17
+  object lblInternalName: TStaticText [7]
+    Left = 238
+    Top = 306
+    Width = 98
+    Height = 20
     Caption = 'lblInternalName'
     TabOrder = 7
     TabStop = True
   end
-  object lblOriginalFileName: TStaticText [10]
-    Left = 6
-    Top = 232
-    Width = 93
-    Height = 17
+  object lblOriginalFileName: TStaticText [8]
+    Left = 7
+    Top = 286
+    Width = 123
+    Height = 20
     Caption = 'lblOriginalFileName'
     TabOrder = 4
     TabStop = True
   end
-  object Panel1: TPanel [11]
-    Left = 6
-    Top = 6
-    Width = 325
-    Height = 183
+  object pnlLogo: TPanel [9]
+    Left = 7
+    Top = 7
+    Width = 400
+    Height = 226
     BevelInner = bvLowered
     BevelWidth = 3
     BorderWidth = 6
-    Caption = 'Panel1'
+    Caption = 'pnlLogo'
     TabOrder = 0
     object Image1: TImage
-      Left = 13
+      Left = 12
       Top = 12
-      Width = 300
-      Height = 159
+      Width = 376
+      Height = 202
+      Align = alClient
+      Center = True
       Picture.Data = {
         07544269746D61708ABE0000424D8ABE00000000000036040000280000002C01
         00009F000000010008000000000054BA00000000000000000000000100000001
@@ -1649,41 +1726,13 @@ inherited frmAbout: TfrmAbout
         7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B
         7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7C8C8ED1D29292
         929293939393D4CF86CFD49392D1858A7C7B7B7B7B7B}
+      Proportional = True
+      Stretch = True
+      ExplicitLeft = 15
+      ExplicitTop = 15
+      ExplicitWidth = 370
+      ExplicitHeight = 195
     end
-  end
-  object cmdOK: TButton [12]
-    Left = 261
-    Top = 466
-    Width = 72
-    Height = 21
-    Anchors = [akRight, akBottom]
-    Cancel = True
-    Caption = 'OK'
-    Default = True
-    ModalResult = 1
-    TabOrder = 11
-  end
-  object lbl508Notice: TMemo [13]
-    Left = 8
-    Top = 342
-    Width = 327
-    Height = 118
-    BorderStyle = bsNone
-    Color = clBtnFace
-    Lines.Strings = (
-      'Veteran'#39's Administration OI&T Office of Enterprise Development '
-      'staff have made every effort during the design, development and '
-      
-        'testing of this application to ensure full accessibility to all ' +
-        'users in '
-      
-        'compliance with Section 508 of the Rehabilitation Action of 1973' +
-        ', '
-      'as amended.  If any issues are encountered while running this '
-      'application, please contact your local help desk for support.')
-    ReadOnly = True
-    TabOrder = 10
-    WantReturns = False
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -1703,9 +1752,6 @@ inherited frmAbout: TfrmAbout
         'Component = lblCRC'
         'Status = stsDefault')
       (
-        'Component = lblLegalCopyright'
-        'Status = stsDefault')
-      (
         'Component = lblFileDescription'
         'Status = stsDefault')
       (
@@ -1715,16 +1761,31 @@ inherited frmAbout: TfrmAbout
         'Component = lblOriginalFileName'
         'Status = stsDefault')
       (
-        'Component = Panel1'
+        'Component = pnlLogo'
+        'Status = stsDefault')
+      (
+        'Component = frmAbout'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottom'
+        'Status = stsDefault')
+      (
+        'Component = pnlButton'
         'Status = stsDefault')
       (
         'Component = cmdOK'
         'Status = stsDefault')
       (
-        'Component = lbl508Notice'
+        'Component = pnlCopyright'
         'Status = stsDefault')
       (
-        'Component = frmAbout'
+        'Component = lblLegalCopyright'
+        'Status = stsDefault')
+      (
+        'Component = pnl508Disclaimer'
+        'Status = stsDefault')
+      (
+        'Component = lbl508Notice'
         'Status = stsDefault'))
   end
 end

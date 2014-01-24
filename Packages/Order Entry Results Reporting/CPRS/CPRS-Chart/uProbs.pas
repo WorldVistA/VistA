@@ -53,6 +53,19 @@ type
    property IsNew:boolean read GetAge;
  end;
 
+ TCoordExpr = class(TObject)
+   IFN:                   String;
+   icdId:                 String;
+   icdCode:               String;
+   snomedConcept:         String;
+   snomedDesignation:     String;
+   snomedConceptVUID:     String;
+   snomedDesignationVUID: String;
+   constructor Create(dhcpCoordExpr: String);
+   destructor Destroy; override;
+   function TCoordExprtoDHCPCoordExpr: String;
+ end;
+
   {patient qualifiers}
  TPLPt=class(TObject)
    PtVAMC:string;
@@ -91,6 +104,7 @@ type
    usTesting:boolean; {used for test purposes only}
    usClinList:TstringList;
    usServList:TstringList;
+   usSuppressCodes: Boolean; {Suppress presentation of codes during Lexicon Look-up}
    constructor Create(alist:TstringList);
    destructor Destroy; override;
  end;
@@ -110,30 +124,34 @@ type
    fNewrec:Tstringlist;
    fOrigRec:TStringList;
    fPIFN:String;
-   fDiagnosis:Tkeyval; {.01}
-   fModDate:TKeyVal;   {.03}
-   fNarrative:TKeyVal; {.05}
-   fEntDate:TKeyVal;   { .08}
-   fStatus:TKeyVal;    {.12}
-   fOnsetDate:TKeyVal; {.13}
-   fProblem:TKeyVal;   {1.01}
-   fCondition:TKeyVal;  {1.02}
-   fEntBy:TKeyVal;      {1.03}
-   fRecBy:TKeyVal;      {1.04}
-   fRespProv:TKeyVal;   {1.05}
-   fService:TKeyVal;     {1.06}
-   fResolveDate:TKeyVal; {1.07}
-   fClinic:TKeyVal;      {1.08}
-   fRecordDate:TKeyVal;  {1.09}
-   fServCon:TKeyVal;     {1.1}
-   fAOExposure:TKeyVal;  {1.11}
-   fRadExposure:TKeyVal; {1.12}
-   fGulfExposure:TKeyVal; {1.13}
-   fPriority:TKeyVal;     {1.14}
-   fHNC:TKeyVal;          {1.15}
-   fMST:TKeyVal;          {1.16}
-   fCV:TKeyVal;           {1.17}  // this is not used  value is always NULL
-   fSHAD:TKeyVal;         {1.18}
+   fDiagnosis:Tkeyval;        {.01}
+   fModDate:TKeyVal;          {.03}
+   fNarrative:TKeyVal;        {.05}
+   fEntDate:TKeyVal;          {.08}
+   fStatus:TKeyVal;           {.12}
+   fOnsetDate:TKeyVal;        {.13}
+   fProblem:TKeyVal;          {1.01}
+   fCondition:TKeyVal;        {1.02}
+   fEntBy:TKeyVal;            {1.03}
+   fRecBy:TKeyVal;            {1.04}
+   fRespProv:TKeyVal;         {1.05}
+   fService:TKeyVal;          {1.06}
+   fResolveDate:TKeyVal;      {1.07}
+   fClinic:TKeyVal;           {1.08}
+   fRecordDate:TKeyVal;       {1.09}
+   fServCon:TKeyVal;          {1.1}
+   fAOExposure:TKeyVal;       {1.11}
+   fRadExposure:TKeyVal;      {1.12}
+   fGulfExposure:TKeyVal;     {1.13}
+   fPriority:TKeyVal;         {1.14}
+   fHNC:TKeyVal;              {1.15}
+   fMST:TKeyVal;              {1.16}
+   fCV:TKeyVal;               {1.17}  // this is not used  value is always NULL
+   fSHAD:TKeyVal;             {1.18}
+   fSCTConcept:TKeyval;       {80001}
+   fSCTDesignation:TKeyVal;   {80002}
+   fNTRTRequested: TKeyVal;   {80101}
+   fNTRTComment: TKeyVal;     {80102}
    fFieldList:TstringList; {list of fields by name and class (TKeyVal or TComment)}
    fFilerObj:TstringList;
    fCmtIsXHTML: boolean;
@@ -148,20 +166,20 @@ type
    procedure SetEntDate(value:TDateTime);
    procedure SetOnsetDate(value:TDateTime);
    function GetOnsetDate:TDateTime;
-   Function GetSCProblem:Boolean;
-   Procedure SetSCProblem(value:Boolean);
-   Function GetAOProblem:Boolean;
-   Procedure SetAOProblem(value:Boolean);
-   Function GetRADProblem:Boolean;
-   Procedure SetRADProblem(value:Boolean);
-   Function GetENVProblem:Boolean;
-   Procedure SetENVProblem(value:Boolean);
-   Function GetHNCProblem:Boolean;
-   Procedure SetHNCProblem(value:Boolean);
-   Function GetMSTProblem:Boolean;
-   Procedure SetMSTProblem(value:Boolean);
-   Function GetSHADProblem:Boolean;
-   Procedure SetSHADProblem(value:Boolean);
+   Function GetSCProblem:String;
+   Procedure SetSCProblem(value:String);
+   Function GetAOProblem:String;
+   Procedure SetAOProblem(value:String);
+   Function GetRADProblem:String;
+   Procedure SetRADProblem(value:String);
+   Function GetENVProblem:String;
+   Procedure SetENVProblem(value:String);
+   Function GetHNCProblem:String;
+   Procedure SetHNCProblem(value:String);
+   Function GetMSTProblem:String;
+   Procedure SetMSTProblem(value:String);
+   Function GetSHADProblem:String;
+   Procedure SetSHADProblem(value:String);
    function GetStatus:String;
    procedure SetStatus(value:String);
    function GetPriority:String;
@@ -191,7 +209,9 @@ type
    procedure SetCondition(value:String);
  public
    fComments:TList; {comments}
+   fCoordExprs:TList; {coordinate expressions}
    procedure AddNewComment(Txt:string);
+   procedure AddNewCoordExpr(Txt:string);
    function FieldChanged(fldName:string):Boolean;
    constructor Create(AList:TstringList);
    destructor Destroy;override;
@@ -203,16 +223,20 @@ type
    property DateEntStr:string read GetEntDatStr write SetEntDatStr;
    property DateOnset:TDateTime read GetOnsetDate write SetOnsetDate;
    property DateOnsetStr:string read GetOnsetDatStr write SetOnsetDatStr;
-   property SCProblem:Boolean read GetSCProblem write SetSCProblem;
-   property AOProblem:Boolean read GetAOProblem write SetAOProblem;
-   property RADProblem:Boolean read GetRadProblem write SetRADProblem;
-   property ENVProblem:Boolean read GetENVProblem write SetENVProblem;
-   property HNCProblem:Boolean read GetHNCProblem write SetHNCProblem;
-   property MSTProblem:Boolean read GetMSTProblem write SetMSTProblem;
-   property SHADProlem:Boolean read GetSHADProblem write SetSHADProblem;
+   property SCProblem:String read GetSCProblem write SetSCProblem;
+   property AOProblem:String read GetAOProblem write SetAOProblem;
+   property RADProblem:String read GetRadProblem write SetRADProblem;
+   property ENVProblem:String read GetENVProblem write SetENVProblem;
+   property HNCProblem:String read GetHNCProblem write SetHNCProblem;
+   property MSTProblem:String read GetMSTProblem write SetMSTProblem;
+   property SHADProlem:String read GetSHADProblem write SetSHADProblem;
    property Status:String read GetStatus write SetStatus;
    property Narrative:TKeyVal read fNarrative write SetNarrative;
    property Diagnosis:TKeyVal read fDiagnosis write fDiagnosis;
+   property SCTConcept:TKeyVal read fSCTConcept write fSCTConcept;
+   property SCTDesignation:TKeyVal read fSCTDesignation write fSCTDesignation;
+   property NTRTRequested:TKeyVal read fNTRTRequested write fNTRTRequested;
+   property NTRTComment:TKeyVal read fNTRTComment write fNTRTComment;
    property Problem:TKeyVal read fProblem write fProblem;
    property RespProvider:TKeyVal read fRespProv write fRespProv;
    property EnteredBy:TKeyVal read fEntBy write fEntBy;
@@ -225,6 +249,7 @@ type
    property DateRecStr:string read GetRecDatStr write SetRecDatStr;
    property Priority:string read GetPriority write SetPriority;
    property Comments:TList read fComments write fComments;
+   property CoordExprs: TList read fCoordExprs write fCoordExprs;
    property Condition:string read GetCondition write SetCondition;
    property CommentCount:integer read GetCommentCount;
    property FilerObject:TstringList read GetFilerObject;
@@ -235,13 +260,15 @@ type
  end;
 
 var
-  ProbRec       :TProbRec;
-  PLPt          :TPLPt;
-  PLUser        :TPLUserParams;
-  pProviderID   :int64; {this is provider reviewing record, not resp provider}
-  pProviderName :string; {ditto}
-  PLFilters     :TPLFilters;
-  PLProblem     :string; {this is problem selected from lexicon lookup form}
+  ProbRec         :TProbRec;
+  PLPt            :TPLPt;
+  PLUser          :TPLUserParams;
+  pProviderID     :int64; {this is provider reviewing record, not resp provider}
+  pProviderName   :string; {ditto}
+  PLFilters       :TPLFilters;
+  PLProblem       :string; {this is problem selected from lexicon lookup form}
+  RequestNTRT     :Boolean;
+  NTRTComment :String;
 
 procedure GetListforIP(Alist:TstringList; AGrid: TCaptionListBox);
 procedure GetListforOP(Alist:TstringList; AGrid: TCaptionListBox);
@@ -318,6 +345,30 @@ begin
   result := uppercase(IFN)='NEW';
 end;
 
+{------------------- TCoordExpr Class ----------------}
+constructor TCoordExpr.Create(dhcpCoordExpr:string);
+begin
+  {create and instantiate a TCoordExpr object}
+  IFN := Piece(dhcpCoordExpr, u, 1);
+  icdId := Piece(dhcpCoordExpr, u, 2);
+  icdCode := Piece(dhcpCoordExpr, u, 3);
+  snomedConcept := Piece(dhcpCoordExpr, u, 4);
+  snomedDesignation := Piece(dhcpCoordExpr, u, 5);
+  snomedConceptVUID := Piece(dhcpCoordExpr, u, 6);
+  snomedDesignationVUID := Piece(dhcpCoordExpr, u, 7);
+end;
+
+destructor TCoordExpr.Destroy;
+begin
+  inherited destroy;
+end;
+
+function TCoordExpr.TCoordExprtoDHCPCoordExpr: String;
+begin
+  result := IFN + u + icdId + u + icdCode + u + snomedConcept + u +
+          snomedDesignation + u + snomedConceptVUID + u + snomedDesignationVUID;
+end;
+
 {-------------------------- TPLPt Class ----------------------}
 constructor TPLPt.Create(Alist:TStringList);
 var
@@ -389,6 +440,7 @@ begin
   usViewClin            := alist[10];
   usTesting             := (alist[11]<>'');
   usViewComments        := AList[12];
+  usSuppressCodes       := (Alist[13]='1');
   usCurrentView         := usDefaultView;
   usDefaultContext      := ';;' + usViewAct + ';' + usViewComments + ';' + Piece(usViewProv, U, 1);
   if usViewClin <> '' then
@@ -478,6 +530,10 @@ begin
   LoadField(fMST,'1.16','MST');
   LoadField(fCV,'1.17','CV');   // not used at this time
   LoadField(fSHAD,'1.18','SHD');
+  LoadField(fSCTConcept,'80001','SCTC');
+  LoadField(fSCTDesignation,'80002','SCTD');
+  LoadField(fNTRTRequested, '80101', 'NTRT');
+  LoadField(fNTRTComment, '80102', 'NTRTC');
   LoadComments;
 end;
 
@@ -509,6 +565,10 @@ begin
   fMST.free;
   fSHAD.Free;
   fCV.Free;
+  fSCTConcept.free;
+  fSCTDesignation.free;
+  fNTRTRequested.Free;
+  fNTRTComment.Free;
   fFieldList.free;
   fFilerObj.free;
   EraseComments(fComments);
@@ -553,6 +613,10 @@ begin
   fMST:=TKeyVal.create;
   fCV := TKeyVal.create;
   fSHAD:=TKeyVal.Create;
+  fSCTConcept:=TKeyVal.Create;
+  fSCTDesignation:=TKeyVal.Create;
+  fNTRTRequested := TKeyVal.Create;
+  fNTRTComment := TKeyVal.Create;
   fComments:=TList.create;
 end;
 
@@ -589,7 +653,7 @@ begin
   {get the original values for later comparison}
   fldVal := GetOrigVal(id);
   fldRec.internOrig := Piece(fldVal,'^',1);
-  fldRec.internOrig := Piece(fldVal,'^',2);
+  fldRec.externOrig := Piece(fldVal,'^',2);
   {add this field to list}
   fFieldList.addobject(id,fldrec);
 end;
@@ -604,35 +668,35 @@ begin
   j := 1; {first comment must be 1 or greater}
   first := true;
   for i := 0 to Pred(fNewRec.count) do
+  begin
+    if Piece(Piece(fNewRec[i],v,2),',',1) = '10' then
     begin
-      if Piece(Piece(fNewRec[i],v,2),',',1) = '10' then
+      if first then {the first line is just a counter}
+      begin
+        first := false;
+        // 'NEWþ10,0þ-1^These notes are now in XHTML format and must be modified via CPRS-R.'
+        noedit := Piece(fNewRec[i], v, 3);
+        if Piece(noedit, U, 1) = '-1' then
         begin
-          if first then {the first line is just a counter}
-            begin
-              first := false;
-              // 'NEWþ10,0þ-1^These notes are now in XHTML format and must be modified via CPRS-R.'
-              noedit := Piece(fNewRec[i], v, 3);
-              if Piece(noedit, U, 1) = '-1' then
-                begin
-                  fCmtIsXHTML := TRUE;
-                  fCmtNoEditReason := Piece(noedit, U, 2);
-                end
-              else
-                begin
-                  fCmtIsXHTML := FALSE;
-                  fCmtNoEditReason := '';
-                end;
-            end
-          else
-            begin
-              cv := Piece(fNewRec[i],v,3);
-              co := TComment.Create(cv);
-              fComments.add(co); {put object in list}
-              fFieldList.addObject('10,' + inttostr(j),co);
-              inc(j);
-            end;
+          fCmtIsXHTML := TRUE;
+          fCmtNoEditReason := Piece(noedit, U, 2);
+        end
+        else
+        begin
+          fCmtIsXHTML := FALSE;
+          fCmtNoEditReason := '';
         end;
+      end
+      else
+      begin
+        cv := Piece(fNewRec[i],v,3);
+        co := TComment.Create(cv);
+        fComments.add(co); {put object in list}
+        fFieldList.addObject('10,' + inttostr(j),co);
+        inc(j);
+      end;
     end;
+  end;
 end;
 
 function TProbRec.GetCommentCount:integer;
@@ -647,6 +711,15 @@ begin
   cor := TComment.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday) + '^' + IntToStr(User.DUZ));
   fComments.add(cor);
   fFieldList.addObject('10,"NEW",' + inttostr(fComments.count),cor);
+end;
+
+procedure TProbRec.AddNewCoordExpr(txt: string);
+var
+  ce: TCoordExpr;
+begin
+  ce := TCoordExpr.create('NEW^^' + txt + '^A^' + FloatToStr(FMToday) + '^' + IntToStr(User.DUZ));
+  fCoordExprs.add(ce);
+  fFieldList.addObject('10,"NEW",' + inttostr(fComments.count), ce);
 end;
 
 function TProbrec.GetModDate:TDateTime;
@@ -752,9 +825,9 @@ begin
   datefld.intern := FloatToStr(DateTimetoFMDateTime(dt));
 end;
 
-function TProbrec.GetSCProblem:Boolean;
+function TProbrec.GetSCProblem:String;
 begin
-  result := (fServCon.Intern='1');
+  result := fServCon.Intern;
 end;
 
 function TProbRec.GetCondition:string;
@@ -781,132 +854,168 @@ begin
     end;
 end;
 
-procedure TProbRec.SetSCProblem(value:Boolean);
+procedure TProbRec.SetSCProblem(value:String);
 begin
-  if value = true then
-    begin
-      fServCon.intern := '1';
-      fServCon.Extern := 'YES';
-    end
+  if value = '1' then
+  begin
+    fServCon.intern := '1';
+    fServCon.Extern := 'YES';
+  end
+  else if value = '0' then
+  begin
+    fServCon.intern := '0';
+    fServCon.Extern := 'NO';
+  end
   else
-    begin
-      fServCon.intern := '0';
-      fServCon.Extern := 'NO';
-    end;
+  begin
+    fServCon.intern :='';
+    fServCon.extern := 'Unknown';
+  end;
 end;
 
-function  TProbrec.GetAOProblem:Boolean;
+function  TProbrec.GetAOProblem:String;
 begin
-  result := (fAOExposure.Intern='1');
+  result := fAOExposure.Intern;
 end;
 
-procedure TProbRec.SetAOProblem(value:Boolean);
+procedure TProbRec.SetAOProblem(value:String);
 begin
-  if value = true then
-    begin
-      fAOExposure.intern := '1';
-      fAOExposure.extern := 'Yes';
-    end
+  if value = '1' then
+  begin
+    fAOExposure.intern := '1';
+    fAOExposure.extern := 'Yes';
+  end
+  else if value = '0' then
+  begin
+    fAOExposure.intern := '0';
+    fAOExposure.extern := 'No';
+  end
   else
-    begin
-      fAOExposure.intern := '0';
-      fAOExposure.extern := 'No';
-    end;
+  begin
+    fAOExposure.intern := '';
+    fAOExposure.extern := 'Unknown';
+  end;
 end;
 
-function  TProbrec.GetRADProblem:Boolean;
+function  TProbrec.GetRADProblem:String;
 begin
-  result := (fRADExposure.Intern = '1');
+  result := fRADExposure.Intern;
 end;
 
-procedure TProbRec.SetRADProblem(value:Boolean);
+procedure TProbRec.SetRADProblem(value:String);
 begin
-  if value = true then
-    begin
-      fRADExposure.intern := '1';
-      fRADExposure.extern := 'Yes';
-    end
+  if value = '1' then
+  begin
+    fRADExposure.intern := '1';
+    fRADExposure.extern := 'Yes';
+  end
+  else if value  = '0' then
+  begin
+    fRADExposure.intern := '0';
+    fRADExposure.extern := 'No';
+  end
   else
-    begin
-      fRADExposure.intern := '0';
-      fRADExposure.extern := 'No';
-    end;
+  begin
+    fRADExposure.intern := '';
+    fRADExposure.extern := 'Unknown';
+  end;
  end;
 
-function TProbrec.GetENVProblem:Boolean;
+function TProbrec.GetENVProblem:String;
 begin
-  result := (fGulfExposure.Intern = '1');
+  result := fGulfExposure.Intern;
 end;
 
-procedure TProbRec.SetENVProblem(value:Boolean);
+procedure TProbRec.SetENVProblem(value:String);
 begin
-  if value = true then
-    begin
-      fGulfExposure.intern := '1';
-      fGulfExposure.extern := 'Yes';
-    end
+  if value = '1' then
+  begin
+    fGulfExposure.intern := '1';
+    fGulfExposure.extern := 'Yes';
+  end
+  else if value = '0' then
+  begin
+    fGulfExposure.intern := '0';
+    fGulfExposure.extern := 'No';
+  end
   else
-    begin
-      fGulfExposure.intern := '0';
-      fGulfExposure.extern := 'No';
-    end;
+  begin
+    fGulfExposure.intern := '';
+    fGulfExposure.extern := 'Unknown';
+  end;
  end;
 
-function TProbrec.GetHNCProblem:Boolean;
+function TProbrec.GetHNCProblem:String;
 begin
-  result := (fHNC.Intern = '1');
+  result := fHNC.Intern;
 end;
 
-procedure TProbRec.SetHNCProblem(value:Boolean);
+procedure TProbRec.SetHNCProblem(value:String);
 begin
-  if value = true then
-    begin
-      fHNC.intern := '1';
-      fHNC.extern := 'Yes';
-    end
+  if value = '1' then
+  begin
+    fHNC.intern := '1';
+    fHNC.extern := 'Yes';
+  end
+  else if value = '0' then
+  begin 
+    fHNC.intern := '0';
+    fHNC.extern := 'No';
+  end
   else
-    begin
-      fHNC.intern := '0';
-      fHNC.extern := 'No';
-    end;
+  begin
+    fHNC.intern := '';
+    fHNC.extern := 'Unknown';
+  end;
+
  end;
 
-function TProbrec.GetMSTProblem:Boolean;
+function TProbrec.GetMSTProblem:String;
 begin
-  result := (fMST.Intern = '1');
+  result := fMST.Intern;
 end;
 
-procedure TProbRec.SetMSTProblem(value:Boolean);
+procedure TProbRec.SetMSTProblem(value:String);
 begin
-  if value = true then
-    begin
-      fMST.intern := '1';
-      fMST.extern := 'Yes';
-    end
+  if value = '1' then
+  begin
+    fMST.intern := '1';
+    fMST.extern := 'Yes';
+  end
+  else if value = '0' then
+  begin
+    fMST.intern := '0';
+    fMST.extern := 'No';
+  end
   else
-    begin
-      fMST.intern := '0';
-      fMST.extern := 'No';
-    end;
+  begin
+    fMST.intern := '';
+    fMST.extern := 'Unknown';
+  end;
  end;
 
-function TProbrec.GetSHADProblem:boolean;
+function TProbrec.GetSHADProblem:String;
 begin
-    result := (fSHAD.intern ='1');
+    result := fSHAD.intern;
 end;
 
-procedure TProbRec.SetSHADProblem(value:boolean);
+procedure TProbRec.SetSHADProblem(value:String);
 begin
-    if value = true then
-      begin
-        fSHAD.intern := '1';
-        fSHAD.extern := 'Yes';
-      end
+    if value = '1' then
+    begin
+      fSHAD.intern := '1';
+      fSHAD.extern := 'Yes';
+    end
+    else if value = '0' then
+    begin
+      fSHAD.intern := '0';
+      fSHAD.extern := 'No';
+    end
     else
-      begin
-        fSHAD.intern := '0';
-        fSHAD.extern := 'No';
-      end;
+    begin
+        fSHAD.intern := '';
+        fSHAD.extern := 'Unknown';
+    end;
 end;
 
 function TProbRec.GetStatus:String;
@@ -936,15 +1045,20 @@ end;
 procedure TProbRec.SetPriority(value:String);
 begin
   if (UpperCase(Value) = 'ACUTE') or (Uppercase(value) = 'A') then
-    begin
-      fPriority.intern := 'A';
-      fPriority.extern := 'ACUTE';
-    end
+  begin
+    fPriority.intern := 'A';
+    fPriority.extern := 'ACUTE';
+  end
+  else if (UpperCase(Value) = 'CHRONIC') or (UpperCase(value) = 'C') then
+  begin
+    fPriority.intern := 'C';
+    fPriority.extern := 'CHRONIC';
+  end
   else
-    begin
-      fPriority.intern := 'C';
-      fPriority.extern := 'CHRONIC';
-    end;
+  begin
+    fPriority.intern := '@';
+    fPriority.extern := '';
+  end;
 end;
 
 function  TProbrec.GetResDate:TDateTime;
@@ -1061,7 +1175,7 @@ begin
   for i := 0 to pred(fFieldList.count) do
     begin
       fldID := fFieldList[i];                      
-      if pos(u + fldID + u, '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18') > 0 then
+      if pos(u + fldID + u, '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002') > 0 then
         {is a field eligible for update}
         begin
           fldVal := TKeyVal(fFieldList.objects[i]).intern;

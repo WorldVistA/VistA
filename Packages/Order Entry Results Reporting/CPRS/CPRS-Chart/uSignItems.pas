@@ -17,12 +17,18 @@ type
     Index: integer;
   end;
 
+  TlbOnDrawEvent = record
+    xcontrol: TWinControl;
+    xevent: TDrawItemEvent;
+  end;
+
   TSigItems = class(TComponent)
   private
     FBuilding: boolean;
     FStsCount: integer;
     FItems: TORStringList;
     FOldDrawItemEvent: TDrawItemEvent;
+    FOldDrawItemEvents: array of TlbOnDrawEvent;
     Fcb: TList;
     Flb: TCustomListBox;
     FLastValidX: integer;
@@ -42,13 +48,15 @@ type
 
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
-  public
+  public                          
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Add(ItemType: Integer; const ID: string; Index: integer);
     procedure Remove(ItemType: integer; const ID: string);
     procedure ResetOrders;
     procedure Clear;
+    procedure ClearDrawItems;
+    procedure ClearFcb;
     function  UpdateListBox(lb: TCustomListBox): boolean;
     procedure EnableSettings(Index: integer; Checked: boolean);
     function  OK2SaveSettings: boolean;
@@ -65,6 +73,7 @@ type
   end;
 
 function SigItems: TSigItems;
+function SigItemsCS: TSigItems;
 function SigItemHeight: integer;
 function  GetAllBtnLeftPos: integer;
 
@@ -84,6 +93,7 @@ const
 
 var
   uSigItems: TSigItems = nil; //BAPHII 1.3.1
+  uSigItemsCS: TSigItems = nil; 
 
 
 implementation
@@ -135,7 +145,6 @@ var
   thisOrderID: string;
   thisChangeItem: TChangeItem;
   AllBtnLeft: integer;
-
 
 function TSigItems.GetSigItems : TORStringList;
 begin
@@ -210,9 +219,23 @@ begin
   Result := uSigItems;
 end;
 
+function SigItemsCS: TSigItems;
+begin
+  if not assigned(uSigItemsCS) then
+  begin
+    uSingletonFlag := TRUE;
+    try
+      uSigItemsCS := TSigItems.Create(nil);
+    finally
+      uSingletonFlag := FALSE;
+    end;
+  end;
+  Result := uSigItemsCS;
+end;
+
 function SigItemHeight: integer;
 begin
-  Result := MainFontHeight + 2 + SIG_ITEM_VERTICAL_PAD;
+  Result := abs(BaseFont.height) + 2 + SIG_ITEM_VERTICAL_PAD;
 end;
 
 function  GetAllBtnLeftPos: integer;
@@ -246,6 +269,17 @@ end;
 procedure TSigItems.Clear;
 begin
   FItems.Clear;
+  Fcb.Clear;
+  Finalize(FOldDrawItemEvents);
+end;
+
+procedure TSigItems.ClearDrawItems;
+begin
+  Finalize(FOldDrawItemEvents);
+end;
+
+procedure TSigItems.ClearFcb;
+begin
   Fcb.Clear;
 end;
 
@@ -339,7 +373,7 @@ var
   FirstValidItem: TSigItemType;
   x, y, MaxX, i, btnW, btnH, j, dx, ht, idx, dgrp: integer;
   s, id, Code, cType, Flags,OrderStatus,CVFlag,ChangedFlags: string;
-
+  odie: TlbOnDrawEvent;
   StsCode: char;
   sx, si: TSigItemType;
   sts, StsIdx: ItemStatus;
@@ -368,9 +402,32 @@ var
      Fcb.Add(Result);
   end;
 
+  function notRightOne(cnter: Integer): Boolean;
+  var
+    id,idx: string;
+    ix: Integer;
+  begin
+    Result := TRUE;
+    id := piece(FItems[cnter],'^',1);
+    for ix := 0 to lb.Items.Count - 1 do
+      begin
+        if lb.Items.Objects[ix] is TOrder then
+        begin
+          idx := TOrder(lb.Items.Objects[ix]).ID;
+          if id = idx then Result := FALSE;
+        end;
+        if lb.Items.Objects[ix] is TChangeItem then
+        begin
+          idx := TChangeItem(lb.Items.Objects[ix]).ID;
+          if id = idx then Result := FALSE;
+          
+        end;
+      end;
+  end;
+
 begin
   Result := FALSE;
-  Fcb.Clear;
+//  Fcb.Clear;
   FBuilding := TRUE;
 try
 
@@ -380,6 +437,8 @@ try
 
     for i := 0 to FItems.Count-1 do
     begin
+       if notRightOne(i) then continue;
+       
        s := FItems[i];
        thisOrderID := Piece(s,U,1);
        if BILLING_AWARE then
@@ -496,7 +555,8 @@ try
       StsUsed[si] := FALSE;
     //  loop thru orders selected to be signed fReview/fOrdersSign.
     for i := 0 to FItems.Count-1 do
-       begin
+       begin                     
+         if notRightOne(i) then continue;
          s := FItems[i];
 
          if (piece(s,u,2) <> '-1') and (piece(s,u,3) = '1') then
@@ -536,7 +596,7 @@ try
          prnt := lb.Parent;
          ownr := lb.Owner;
          MaxX := lb.ClientWidth;
-         lb.Canvas.Font := MainFont;
+         lb.Canvas.Font := BaseFont;
          btnW := 0;
 
          for si := low(TSigItemType) to high(TSigItemType) do
@@ -547,7 +607,7 @@ try
          end;
 
          inc(btnW, 8);
-         btnH := ResizeHeight( BaseFont, MainFont, 21);
+         btnH := ResizeHeight( BaseFont, BaseFont, 21);
          x := MaxX;
          dx := (btnW - cbWidth) div 2;
 
@@ -608,12 +668,17 @@ try
               FDy := ((ht - cbHeight) div 2)+1;
               y := lb.TopIndex;
               FOldDrawItemEvent := TExposedListBox(lb).OnDrawItem;
+              odie.xcontrol := lb;
+              odie.xevent := FOldDrawItemEvent;
+              SetLength(FOldDrawItemEvents,Length(FOldDrawItemEvents)+1);
+              FOldDrawItemEvents[Length(FOldDrawItemEvents)-1] := odie;
               Flb := lb;
               TExposedListBox(lb).OnDrawItem := lbDrawItem;
               lb.FreeNotification(Self);
 
               for i := 0 to FItems.Count-1 do
                   begin
+                    if notRightOne(i) then continue;
                     s := FItems[i];
                     orderStatus := (Piece(s,u,1));
                   if piece(s,u,3) = '1' then
@@ -797,15 +862,17 @@ end;
 procedure TSigItems.lbDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
 var
   OldRect: TRect;
-  i: integer;
+  i,j: integer;
   cb: TORCheckBox;
   si: TSigItemType;
   DrawGrid: boolean;
+  lb: TCustomListbox;
 
 begin
-  DrawGrid := (Index < flb.Items.Count);
-  if DrawGrid and (trim(Flb.Items[Index]) = '') and
-                  (Index = (flb.Items.Count - 1)) then
+  lb := TCaptionCheckListBox(Control);
+  DrawGrid := (Index < lb.Items.Count);
+  if DrawGrid and (trim(lb.Items[Index]) = '') and
+                  (Index = (lb.Items.Count - 1)) then
     DrawGrid := FALSE;
   if DrawGrid then
     dec(Rect.Bottom);
@@ -816,24 +883,34 @@ begin
   if  BILLING_AWARE then Rect.Right := FLastValidX - 55;
 {End BillingAware}
 
-  if assigned(FOldDrawItemEvent) then
+//  if assigned(FOldDrawItemEvent) then
+  if True then
   begin
-    inc(Rect.Bottom);
-    FOldDrawItemEvent(Control, Index, Rect, State);
-    dec(Rect.Bottom);
+    for j := 0 to Length(FOldDrawItemEvents) - 1 do
+    begin
+      if FOldDrawItemEvents[j].xcontrol = lb then
+      begin
+        inc(Rect.Bottom);
+        FOldDrawItemEvents[j].xevent(Control, Index, Rect, State);
+        dec(Rect.Bottom);
+      end;
+    end;
+//    inc(Rect.Bottom);
+//    FOldDrawItemEvent(Control, Index, Rect, State);
+//    dec(Rect.Bottom);
   end
   else
      begin
-     Flb.Canvas.FillRect(Rect);
-     if Index < flb.Items.Count then
-       Flb.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top, FilteredString(Flb.Items[Index]));
+     lb.Canvas.FillRect(Rect);
+     if Index < lb.Items.Count then
+       lb.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top, FilteredString(lb.Items[Index]));
      end;
 
   if DrawGrid then
      begin
-       Flb.Canvas.Pen.Color := Get508CompliantColor(clSilver);
-       Flb.Canvas.MoveTo(Rect.Left, Rect.Bottom);
-       Flb.Canvas.LineTo(OldRect.RIght, Rect.Bottom);
+       lb.Canvas.Pen.Color := Get508CompliantColor(clSilver);
+       lb.Canvas.MoveTo(Rect.Left, Rect.Bottom);
+       lb.Canvas.LineTo(OldRect.RIght, Rect.Bottom);
      end;
 
   if  BILLING_AWARE then OldRect.Left := Rect.Right + 90
@@ -841,7 +918,7 @@ begin
 
  //// SC Column
  ///
-  Flb.Canvas.FillRect(OldRect);
+  lb.Canvas.FillRect(OldRect);
   for i := 0 to Fcb.Count-1 do
      begin
        cb := TORCheckBox(Fcb[i]);
@@ -860,8 +937,8 @@ begin
     begin
       if FcbX[si] > FLastValidX then
       begin
-        Flb.Canvas.MoveTo(FcbX[si] - FValidGap, Rect.Top);
-        Flb.Canvas.LineTo(FcbX[si] - FValidGap, Rect.Bottom);
+        lb.Canvas.MoveTo(FcbX[si] - FValidGap, Rect.Top);
+        lb.Canvas.LineTo(FcbX[si] - FValidGap, Rect.Bottom);
       end;
     end;
   end;

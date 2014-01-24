@@ -117,18 +117,23 @@ begin
       AnOrder := TOrder(SelectList.Items[i]);
       OrderIDList.Add(AnOrder.ID + '^^1');  // 3rd pce = 1 means releasing order
     end;
-    if ExecuteSessionOrderChecks(OrderIDList) then
-      for i := SelectList.Count - 1 downto 0 do
+    while OrderIDList.Count > 0 do
+	  begin
+      if ExecuteSessionOrderChecks(OrderIDList) then
       begin
-        AnOrder := TOrder(SelectList.Items[i]);
-        if OrderIDList.IndexOf(AnOrder.ID + '^^1') < 0 then
+        for i := SelectList.Count - 1 downto 0 do
         begin
-          Changes.Remove(CH_ORD, AnOrder.ID);
-          SelectList.Delete(i);
+          AnOrder := TOrder(SelectList.Items[i]);
+          if OrderIDList.IndexOf(AnOrder.ID + '^^1') < 0 then
+          begin
+            Changes.Remove(CH_ORD, AnOrder.ID);
+            SelectList.Delete(i);
+          end;
         end;
-      end
-    else
-      SelectList.Clear;
+        Break;
+      end;
+	  end;
+    if OrderIDList.Count < 1 then SelectList.Clear;
   finally
     OrderIDList.Free;
   end;
@@ -256,18 +261,21 @@ begin
           OrderList.Clear;
           if Assigned(frmFrame) then
             frmFrame.SetActiveTab(CT_ORDERS);
-        end;
-          if ScreenReaderActive = True then
-            begin
-              frmOCSession.lblInstr.TabStop := true;
-              frmOCSession.memNote.TabStop := true;
-              frmOCSession.memNote.TabOrder := 2;
-            end
-          else
+        end
+		    else
+		    if frmOCSession.modalresult = mrRetry then Result := False;
+
+        if ScreenReaderActive = True then
           begin
-            frmOCSession.lblInstr.TabStop := false;
-            frmOCSession.memNote.TabStop := false;
-          end;
+            frmOCSession.lblInstr.TabStop := true;
+            frmOCSession.memNote.TabStop := true;
+            frmOCSession.memNote.TabOrder := 2;
+          end
+        else
+        begin
+          frmOCSession.lblInstr.TabStop := false;
+          frmOCSession.memNote.TabStop := false;
+        end;
       finally
         with uCheckedOrders do for i := 0 to Count - 1 do TOCRec(Items[i]).Free;
         frmOCSession.Free;
@@ -321,14 +329,12 @@ end;
 
 procedure TfrmOCSession.cmdCancelOrderClick(Sender: TObject);
 var
-  cnt, i, j, already: Integer;
+  i, j, already: Integer;
   AnOrderID: string;
-  DeleteOrderList, DeleteRowList: TstringList;
-  StillCritical: boolean;
+  DeleteOrderList: TstringList;
 begin
   inherited;
   DeleteOrderList := TStringList.Create;
-  DeleteRowList := TStringList.Create;
   for I := 0 to grdChecks.RowCount do
     if (Piece(grdChecks.Cells[2, i], U, 3) = '1') and (Piece(grdChecks.Cells[2, i], U, 2) = 'O') then
       begin
@@ -339,6 +345,7 @@ begin
              for j := FCheckList.Count - 1 downto 0 do
              if Piece(FCheckList[j], U, 1) = AnOrderID then FCheckList.Delete(j);
              DeleteOrderList.Add(AnOrderId);
+             Changes.Remove(CH_ORD, AnOrderId);
              for j := FOrderList.Count - 1 downto 0 do
              if Piece(FOrderList[j], U, 1) = AnOrderID then FOrderList.Delete(j);
              for j := uCheckedOrders.Count - 1 downto 0 do
@@ -350,45 +357,6 @@ begin
       begin
         infoBox('No orders are marked to cancel. Check the Cancel box by the orders to cancel. ', 'Error', MB_OK);
       end;
-
-    for i := 0 to DeleteOrderList.Count - 1 do
-      begin
-        AnOrderId := DeleteORderList.Strings[i];
-        for j := 0 to grdChecks.RowCount do
-          if Piece(grdChecks.Cells[2, j], u, 1) = AnOrderId then
-            begin
-              //grdChecks.Rows[j].Clear;
-              DeleteRowList.Add(InttoStr(j));
-            end;
-      end;
-    if (grdChecks.RowCount - 1) = DeleteRowList.Count then Close;
-    cnt := 0;
-    for i := 0 to DeleteRowList.Count - 1 do
-      begin
-        GridDeleteRow(((StrtoInt(DeleteRowList.Strings[i])) - cnt), grdChecks);
-        cnt := cnt +1;
-      end;
-    //check if the remaining order checks are not high level and thus don't require justification
-    if FCritical then
-    begin
-      StillCritical := false;
-      for I := 0 to grdChecks.RowCount do
-      begin
-        if ((Piece(grdChecks.cells[2,I],U,3) = '1') and not(Piece(grdChecks.Cells[2, i], U, 2) = 'O')) then
-          begin
-            StillCritical := true;
-            break;
-          end;
-      end;
-      if StillCritical = false then
-      begin
-        FCritical := false;
-        lblJustify.Visible := FCritical;
-        txtJustify.Visible := FCritical;
-        memNote.Visible := FCritical;
-      end;
-    end;
-    grdChecks.Repaint;
 end;
 
 procedure TfrmOCSession.cmdContinueClick(Sender: TObject);

@@ -12,10 +12,10 @@ unit CPRSChart_TLB;
 // ************************************************************************ //
 
 // PASTLWTR : 1.2
-// File generated on 1/24/2011 11:37:00 AM from Type Library described below.
+// File generated on 3/1/2013 8:48:17 AM from Type Library described below.
 
 // ************************************************************************  //
-// Type Lib: C:\Vista\cprs\main\CPRS-Chart\CPRSChart.tlb (1)
+// Type Lib: C:\Vista\cprs\OR_3_306V29\CPRS-chart\CPRSChart.tlb (1)
 // LIBID: {0A4A6086-6504-11D5-82DE-00C04F72C274}
 // LCID: 0
 // Helpfile: 

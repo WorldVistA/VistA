@@ -10,6 +10,8 @@ inherited frmOptionsNotes: TfrmOptionsNotes
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   OnShow = FormShow
+  ExplicitWidth = 405
+  ExplicitHeight = 178
   PixelsPerInch = 96
   TextHeight = 13
   object lblAutoSave1: TLabel [0]
@@ -108,7 +110,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     Top = 117
     Width = 399
     Height = 33
-    HelpContext = 9110
+    HelpContext = 9210
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True

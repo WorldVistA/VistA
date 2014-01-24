@@ -88,6 +88,7 @@ type
     procedure lstFlagClick(Sender: TObject);
     procedure lstFlagKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
   private
     FCoverList: TCoverSheetList;
     popReminders: TORPopupMenu;
@@ -136,12 +137,15 @@ const
   TAG_VSIT = 80;
   RemID    = '50';
 
-  TX_INACTIVE_ICODE = 'This problem references an ICD-9-CM code that is not currently active.' + #13#10 +
+  TX_INACTIVE_ICDCODE = 'This problem references an ICD-9-CM code that is not currently active.' + #13#10 +
                      'Please correct this code using the ''Problems'' tab.';
-  TC_INACTIVE_ICODE = 'Inactive ICD-9-CM code';
-  TX_INACTIVE_SCODE = 'This problem references an SNOMED CT code that is not currently active.' + #13#10 +
+  TC_INACTIVE_ICDCODE = 'Inactive ICD-9-CM code';
+  TX_INACTIVE_10DCODE = 'This problem references an ICD-10-CM code that is not currently active.' + #13#10 +
                      'Please correct this code using the ''Problems'' tab.';
-  TC_INACTIVE_SCODE = 'Inactive SNOMED CT code';
+  TC_INACTIVE_10DCODE = 'Inactive ICD-10-CM code';
+  TX_INACTIVE_SCTCODE = 'This problem references an SNOMED CT code that is not currently active.' + #13#10 +
+                     'Please correct this code using the ''Problems'' tab.';
+  TC_INACTIVE_SCTCODE = 'Inactive SNOMED CT code';
 
 var
   uIPAddress: string;
@@ -415,12 +419,16 @@ begin
                begin
                  i := ItemIndex;
                  if Piece(Items[ItemIndex], U, 13) = '#' then
-                   InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK)
+                 begin
+                   if Piece(Items[ItemIndex], U, 16) = '10D' then
+                     InfoBox(TX_INACTIVE_10DCODE, TC_INACTIVE_10DCODE, MB_ICONWARNING or MB_OK)
+                   else
+                     InfoBox(TX_INACTIVE_ICDCODE, TC_INACTIVE_ICDCODE, MB_ICONWARNING or MB_OK);
+                 end
                  else if Piece(Items[ItemIndex], U, 13) = '$' then
-                   InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
+                   InfoBox(TX_INACTIVE_SCTCODE, TC_INACTIVE_SCTCODE, MB_ICONWARNING or MB_OK);
                  ItemIndex := i;
                  ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-                 lst_1.SetFocus;
                end;
      TAG_ALLG:
 { TODO -oRich V. -cART/Allergy : What to do about NKA only via right-click menu?  Add here? }
@@ -429,45 +437,38 @@ begin
                  if ARTPatchInstalled then
                  begin
                    AllergyBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True, ItemIEN);
-                   lst_2.SetFocus;
                    //TDP - Fixed allergy form focus problem
                    if (frmARTAllergy <> nil) and frmARTAllergy.Showing then frmARTAllergy.SetFocus;
                  end
                  else
                  begin    
                    ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-                   lst_2.SetFocus;
                  end;
                end;
      TAG_POST:
              if DisplayText[ItemIndex] = 'Allergies' then
                begin
                ReportBox(DetailPosting('A'), DisplayText[ItemIndex], True);
-               lst_3.SetFocus;
                end
              else if ItemID <> '' then
                begin
                  NotifyOtherApps(NAE_REPORT, 'TIU^' + ItemID);
                  ReportBox(DetailPosting(ItemID), DisplayText[ItemIndex], True);
-                 lst_3.SetFocus;
                end;
      TAG_MEDS:
              if (ItemID <> '') and (ItemID <> '0') then
              begin
                ReportBox(DetailMed(ItemID), DisplayText[ItemIndex], True);
-               lst_4.SetFocus;
              end;
      TAG_RMND:
              if ItemIEN > 0  then
              begin
                ReportBox(DetailReminder(ItemIEN), ClinMaintText + ': ' + DisplayText[ItemIndex], True);
-               lst_5.SetFocus;
              end;
      TAG_LABS:
              if (ItemID <> '') and (Piece(ItemID,';',1) <> '0') and (not ContainsAlpha(Piece(ItemID,';',1))) then
              begin
                ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-               lst_6.SetFocus;
              end;
      TAG_VITL:
              if ItemID <> '' then
@@ -482,18 +483,17 @@ begin
                  if RemindersEvaluatingInBackground = true then  InitialRemindersLoaded := False;
                  DisplayPage;
                  TORListBox(Sender).Enabled := True;
-                 lst_7.SetFocus;
                end;
 
      TAG_VSIT:
              if (ItemID <> '') and (ItemID <> '0') then
              begin
                ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-               lst_8.SetFocus;
              end
     else
       //don't try to display a detail report
     end;
+    TORListBox(Sender).SetFocus;
     if uInit.TimedOut then                       // Fix for CQ: 8011
       Abort
     else
@@ -751,6 +751,17 @@ procedure TfrmCover.FormDestroy(Sender: TObject);
 begin
   inherited;
   FCoverList.Free;
+end;
+
+procedure TfrmCover.FormShow(Sender: TObject);
+begin
+  inherited;
+  //If a Dx was added to the PL, Update the Problem List on the Coversheet
+  if Changes.RefreshCoverPL then
+  begin
+    ListActiveProblems(lst_1.Items);
+    Changes.RefreshCoverPL := False;
+  end;
 end;
 
 procedure TfrmCover.sptBottomCanResize(Sender: TObject;

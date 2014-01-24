@@ -68,12 +68,12 @@ type
     FInfoText: string;
     FInfoLabel: TMentalHealthMemo;
     FBuilt: boolean;
-    FMaxLines: integer;
+    //FMaxLines: integer;
     FBuildingControls: boolean;
     procedure BuildControls;
-    function Answers: string;
+    {function Answers: string;
     procedure GetQText(QText: TStringList);
-    function LoadTest(InitialAnswers, TestName: string): boolean;
+    function LoadTest(InitialAnswers, TestName: string): boolean; }
     function CurrentQ: integer;
     procedure GotoQ(x: integer);
   public
@@ -119,7 +119,7 @@ var
   frmMHTest: TfrmMHTest;
   FFirstCtrl: TList;
   FYPos: TList;
-  UsedMHDll: TUsedMHDll;
+  //UsedMHDll: TUsedMHDll; comment out to clear compiler hint after commenting out code in CheckforMHDll /WAT
 
 type
   TMHQuestion = class(TObject)
@@ -133,7 +133,7 @@ type
     FID: integer;
     FAnswer: string;
     FObjects: TList;
-    FLine: integer;
+    //FLine: integer;
   protected
     procedure OnChange(Sender: TObject);
   public
@@ -153,6 +153,7 @@ type
 
 const
   MHDLLName = 'YS_MHA_A.DLL';
+  //MHDLLAUXName = 'YS_MHA_AUX.DLL';
 
 procedure LoadMHDLL;
 var
@@ -226,7 +227,7 @@ begin
       frmMHTest.Free;
       exit;
     end;
-  frmMHTest := TfrmMHTest.Create(Application);
+{  frmMHTest := TfrmMHTest.Create(Application);
   try
     frmMHTest.Caption := TestName;
     if(frmMHTest.LoadTest(InitialAnswers, TestName)) then
@@ -247,7 +248,7 @@ begin
       if Result = U then Result := '';
   finally
     frmMHTest.Free;
-  end;
+  end; }
 end;
 
 function SaveMHTest(TestName, date, Loc: string): boolean;
@@ -341,7 +342,7 @@ end;
 function CheckforMHDll: boolean;
 begin
   Result := True;
-    if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
+    {if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
   else if UsedMHDll.Checked = false then
     begin
       UsedMHDll.Display := UsedMHDllRPC;
@@ -351,7 +352,7 @@ begin
           Result := False;
           exit;
         end;
-    end;
+    end;  }
   if MHDLLHandle = 0 then // if not 0 the DLL already loaded - result = true
   begin
     LoadMHDLL;
@@ -378,7 +379,7 @@ end;
 
 { TfrmMHTest }
 
-function TfrmMHTest.Answers: string;
+{function TfrmMHTest.Answers: string;
 var
   i, XCnt: integer;
   ans: string;
@@ -396,8 +397,8 @@ begin
   if(XCnt = FObjs.Count) then
     Result := '';
 end;
-
-function TfrmMHTest.LoadTest(InitialAnswers, TestName: string): boolean;
+}
+{function TfrmMHTest.LoadTest(InitialAnswers, TestName: string): boolean;
 var
   TstData: TStringList;
   lNum, i, idx: integer;
@@ -606,7 +607,7 @@ begin
     end;
   end;
 end;
-
+}
 procedure TfrmMHTest.FormCreate(Sender: TObject);
 begin
   ResizeAnchoredFormToFont(self);
@@ -675,7 +676,7 @@ begin
   amgrMain.RefreshComponents;
 end;
 
-procedure TfrmMHTest.GetQText(QText: TStringList);
+{procedure TfrmMHTest.GetQText(QText: TStringList);
 var
   i, lx: integer;
 
@@ -690,27 +691,29 @@ begin
   for i := 0 to FObjs.Count-1 do
     QText.Add(copy(IntToStr(i+1) + '.      ', 1, lx) + TMHQuestion(FObjs[i]).Question);
 end;
-
+}
 function TfrmMHTest.CallMHDLL(TestName: string; Required: boolean): String;
 var                               
   ProgressNote : string;
 begin
   ProgressNote := '';
-  if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
+ { if (UsedMHDll.Checked = True) and (UsedMHDll.Display = False) then Exit
   else if UsedMHDll.Checked = false then
     begin
       UsedMHDll.Display := UsedMHDllRPC;
       UsedMHDll.Checked := True;
       if UsedMHDll.Display = false then exit;
-    end;
+    end; }
   LoadMHDLL;
   Result := '';
   if MHDLLHandle = 0 then
     begin
-      InfoBox(MHDLLName + ' not available.' + CRLF +
-                          'CPRS will continue processing the MH test using the previous format.' +
-                  CRLF + CRLF + 'Contact IRM to install the ' + MHDLLName +
-                                ' file on this machine.', 'Warning', MB_OK);
+      InfoBox('Mental Health DLL not found.' + CRLF +
+                  CRLF + 'Contact IRM to install the ' + MHDLLName +  ' file on this machine.', 'Warning', MB_OK);
+      //InfoBox(MHDLLName + ' not available.' + CRLF +
+      //                    'CPRS will continue processing the MH test using the previous format.' +
+      //            CRLF + CRLF + 'Contact IRM to install the ' + MHDLLName +
+      //                          ' file on this machine.', 'Warning', MB_OK);
       Exit;
     end
   else

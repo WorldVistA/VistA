@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ComCtrls, ORFn, rOrders, Mask, ORCtrls, ExtCtrls, fBase508Form,
-  VA508AccessibilityManager, VA508AccessibilityRouter;
+  VA508AccessibilityManager, VA508AccessibilityRouter, rODBase, rODMeds;
 
 type
   TfrmRenewOutMed = class(TfrmBase508Form)
@@ -36,16 +36,35 @@ implementation
 
 {$R *.DFM}
 
+var
+ MaxRefills: Integer;
+
 const
-  TX_ERR_REFILL = 'Refills must be a number from 0 to 11.';
+  TX_ERR_REFILL = 'The number of refills must be in the range of 0 through ';
   TC_ERR_REFILL = 'Refills';
 
 function ExecuteRenewOutMed(var Refills: Integer; var Comments, Pickup: string;
   AnOrder: TOrder): Boolean;
 var
   frmRenewOutMed: TfrmRenewOutMed;
+  DestList: TList;
+  HasObject: Boolean;
+  i: Integer;
+  Drug, Days, OrID: string;
 begin
   Result := False;
+  DestList := TList.Create();
+  try
+    LoadResponses(DestList, 'X' + AnOrder.ID, HasObject);
+
+    for I := 0 to DestList.Count - 1 do begin
+      if TResponse(DestList.Items[i]).PromptID = 'DRUG' then Drug := TResponse(DestList.Items[i]).IValue
+      else if TResponse(DestList.Items[i]).PromptID = 'SUPPLY' then Days := TResponse(DestList.Items[i]).IValue
+      else if TResponse(DestList.Items[i]).PromptID = 'ORDERABLE' then OrID := TResponse(DestList.Items[i]).IValue;
+    end;
+
+    MaxRefills := CalcMaxRefills(Drug, StrToInt(Days), StrToInt(OrID), AnOrder.EventName = 'D');
+
   frmRenewOutMed := TfrmRenewOutMed.Create(Application);
   try
     ResizeFormToFont(TForm(frmRenewOutMed));
@@ -60,7 +79,10 @@ begin
       Pickup := frmRenewOutMed.cboPickup.ItemID;
     end;
   finally
-    frmRenewOutMed.Release;
+   frmRenewOutMed.Release;
+  end;
+  finally
+    DestList.Free;
   end;
 end;
 
@@ -99,9 +121,9 @@ var
 begin
   inherited;
   NumRefills := StrToIntDef(txtRefills.Text, -1);
-  if (NumRefills < 0) or (NumRefills > 11) then
+  if (NumRefills < 0) or (NumRefills > MaxRefills) then
   begin
-    InfoBox(TX_ERR_REFILL, TC_ERR_REFILL, MB_OK);
+    InfoBox(TX_ERR_REFILL + IntToStr(MaxRefills), TC_ERR_REFILL, MB_OK);
     Exit;
   end;
   OKPressed := True;

@@ -47,7 +47,7 @@ type
     procedure PlaceMemo(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem; CurrentItemNumber: Integer);
     procedure PlaceLabel(DialogCtrl: TDialogCtrl; DialogItem: TDialogItem);
     procedure TrimAllMemos;
-    function SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl): Boolean;
+    procedure SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl);
   protected
     FFormCloseCalled : Boolean;
     FCharHt: Integer;
@@ -61,7 +61,7 @@ type
     procedure InitDialog; override;
     procedure SetDialogIEN(Value: Integer); override;
     procedure Validate(var AnErrMsg: string); override;
-    procedure UpdateAccessabilityActions(var Actions: TAccessibilityActions); override;
+    procedure UpdateAccessibilityActions(var Actions: TAccessibilityActions); override;
   public
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
   end;
@@ -214,8 +214,7 @@ begin
   if (FFirstCtrl <> nil) and (FFirstCtrl.Enabled) then SetFocusedControl(FFirstCtrl);
 end;
 
-procedure TfrmODGen.UpdateAccessabilityActions(
-  var Actions: TAccessibilityActions);
+procedure TfrmODGen.UpdateAccessibilityActions(var Actions: TAccessibilityActions);
 begin
   exclude(Actions, aaColorConversion);
 end;
@@ -661,7 +660,7 @@ begin
   memOrder.Text := Responses.OrderText;
 end;
 
-function TfrmODGen.SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl): Boolean;
+procedure TfrmODGen.SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl);
 Var
  I: Integer;
  SaveName: String;

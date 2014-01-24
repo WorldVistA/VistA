@@ -1,18 +1,19 @@
 object fraImgText: TfraImgText
   Left = 0
   Top = 0
-  Width = 443
-  Height = 20
   Align = alTop
-  AutoScroll = True
+  BorderStyle = bsNone
+  ClientHeight = 20
+  ClientWidth = 451
+  Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  ParentFont = False
-  TabOrder = 0
-  ExplicitWidth = 451
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 13
   object img: TImage
     Left = 4
     Top = 2

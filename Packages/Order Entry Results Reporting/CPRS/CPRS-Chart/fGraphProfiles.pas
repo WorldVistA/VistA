@@ -128,7 +128,7 @@ procedure DialogGraphProfiles(var actionOK: boolean;
   var checkaction: boolean; aGraphSetting: TGraphSetting;
   var aProfname, aProfilestring, aSection: string;
   const PatientDFN: string; var aCounter: integer;
-  aSelections: string);
+  apply: boolean; aSelections: string);
 
 implementation
 
@@ -159,7 +159,7 @@ begin
   counter := BIG_NUMBER;
   aSelections :='';
   DialogGraphProfiles(actionOK, checkaction, FGraphSetting,
-    profile, profilestring, section, Patient.DFN, counter, aSelections);
+    profile, profilestring, section, Patient.DFN, counter, false, aSelections);
   FGraphSetting.Free;
 end;
 
@@ -167,7 +167,7 @@ procedure DialogGraphProfiles(var actionOK: boolean;
   var checkaction: boolean; aGraphSetting: TGraphSetting;
   var aProfname, aProfilestring, aSection: string;
   const PatientDFN: string; var aCounter: integer;
-  aSelections: string);
+  apply: boolean; aSelections: string);
 var
   i: integer;
   astring, counter, profile, profileitem, profiletype, profiletext: string;
@@ -179,22 +179,24 @@ begin
     begin
       lblSave.Hint := aProfname;
       lblClose.Hint := PatientDFN;
-      if aCounter = BIG_NUMBER then
-      begin
-        pnlApply.Visible := false;
-        frmGraphProfiles.Caption := 'Define Views';
-      end
-      else
+      if apply then
       begin
         pnlApply.Visible := true;
         frmGraphProfiles.Caption := 'Select Items and Define Views';
+      end
+      else
+      begin
+        pnlApply.Visible := false;
+        frmGraphProfiles.Caption := 'Define Views';
       end;
       if length(aSelections) > 0 then
       begin
         if GtslViews.Count = 0 then
           GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections)
         else if Piece(GtslViews[0], '^', 1) <> VIEW_CURRENT then
-          GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections);
+          GtslViews.Insert(0, VIEW_CURRENT + '^<current selections>^' + aSelections)
+        else
+          GtslViews[0] := VIEW_CURRENT + '^<current selections>^' + aSelections;
       end;
       ResizeAnchoredFormToFont(frmGraphProfiles);
       ShowModal;
@@ -1334,10 +1336,13 @@ begin
       begin
         itemtest := UpperCase(Pieces(GtslItems[k], '^', 1, 2));
         if Piece(itemtest, '^', 1) = '63' then
-          itemtest := Piece(itemtest, '.', 1);   // works ok but could also remove spec parens on name
+          itemtest := Piece(itemtest, '.', 1);
         if itemtest = itemnums then
         begin
           itemname := Piece(GtslItems[k], '^', 4);
+          itemname := Piece(itemname, '(', 1);   // removes specimen parens on name
+          itemname := Piece(itemname, '[', 1);   // removes refrange bracket on name
+          itemname := trim(itemname);
           itemnums := itemnums + '^' + itemname;
           aList.Add(itemnums);
           break;
@@ -1358,6 +1363,9 @@ begin
       if Piece(teststring, '^', 1) = '0' then
         aList[i] := '0^' + Piece(teststring, '^', 2) + '^_' + Piece(teststring, '^', 3);
     end;
+    typedata := '0^' + Piece(aProfile, '^', 1) + '^ ' + Piece(aProfile, '^', 2);
+    aList.Insert(0, typedata);
+    aList.Insert(1, '^' + LLS_LINE);
     exit;
   end;
   if Piece(aProfile, '^', 1) = VIEW_LABS then

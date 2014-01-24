@@ -42,7 +42,7 @@ implementation
 {$R *.DFM}
 
 uses rOrders, fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, 
-  VA2006Utils;
+  VA2006Utils, fFrame;
 
 const
   TEXT_COLUMN = 0;
@@ -53,8 +53,21 @@ const
   TX_START_STOP = 'Enter the start and stop times for this order.  Stop time is optional.';
   TX_LBL_START  = 'Start Date/Time';
   TX_LBL_STOP   = 'Stop Date/Time';
-  TX_NO_DEA     = 'Provider must have a DEA# or VA# to review this order';
-  TC_NO_DEA     = 'DEA# Required';
+  TX_DEAFAIL1   = 'Order for controlled substance,' + CRLF;
+  TX_DEAFAIL2   = CRLF + 'could not be renewed. Provider does not have a' + CRLF +
+                  'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
+  TX_SCHFAIL    = CRLF + 'could not be renewed. Provider is not authorized' + CRLF +
+                  'to prescribe medications in Federal Schedule ';
+  TX_NO_DETOX   = CRLF + 'could not be renewed. Provider does not have a' + CRLF +
+                  'valid Detoxification/Maintenance ID number on' + CRLF +
+                  'record and is ineligible to sign the order.';
+  TX_EXP_DETOX1 = CRLF + 'could not be renewed. Provider''s Detoxification/Maintenance' + CRLF +
+                  'ID number expired due to an expired DEA# on ';
+  TX_EXP_DETOX2 = '.' + CRLF + 'Provider is ineligible to sign the order.';
+  TX_EXP_DEA1   = CRLF + 'could not be renewed. Provider''s DEA# expired on ';
+  TX_EXP_DEA2   = CRLF + 'and no VA# is assigned. Provider is ineligible to sign the order.';
+  TX_INSTRUCT   = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current renewal.';
+  TC_DEAFAIL    = 'Order not renewed';
   TC_ORDERCHECKS = 'Order Checks';
 
 function PickupText(const x: string): string;
@@ -78,13 +91,14 @@ var
   OrderableItemIen: integer;
   TreatAsIMOOrder, IsAnIMOOrder: boolean;
   PassDeaList: TList;
-  IsInpt: boolean;
+  InptDlg: boolean;
   i,j: Integer;
   //m: integer; //BAPHII 1.3.2
   PkgInfo:string;
   PlainText,RnErrMsg: string;
   TD: TFMDateTime;
   OrchkList: TStringList;
+  DEAFailStr, TX_INFO: string;
 
   function OrderForInpatient: Boolean;
   begin
@@ -94,6 +108,7 @@ begin
   Result := False;
   IsAnIMOOrder := False;
   RnErrMsg := '';
+  InptDlg := False;
 
   if SelectedList.Count = 0 then Exit;
 
@@ -103,7 +118,7 @@ begin
 
   try
     frmRenewOrders.OrderList := SelectedList;
-    IsInpt := OrderForInpatient;
+    //IsInpt := OrderForInpatient;
 
     with frmRenewOrders.OrderList do
     for j := 0 to Count - 1 do
@@ -113,14 +128,33 @@ begin
 
          if Pos('PS',PkgInfo)=1 then
             begin
+              if PkgInfo = 'PSO' then InptDlg := False
+              else if PkgInfo = 'PSJ' then InptDlg := True;
               OrderableItemIen := GetOrderableIen(TheOrder.ID);
-              
-              if DEACheckFailed(OrderableItemIen, IsInPt) then
+              DEAFailStr := '';
+              DEAFailStr := DEACheckFailed(OrderableItemIen, InptDlg);
+              while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
                  begin
-                   InfoBox(TX_NO_DEA + #13 + TheOrder.Text, TC_NO_DEA, MB_OK);
-                   UnlockOrder(TheOrder.ID);
-                 end
-              else PassDeaList.Add(frmRenewOrders.OrderList.Items[j]);
+                   case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                     1:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_DEAFAIL2;  //prescriber has an invalid or no DEA#
+                     2:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                     3:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                     4:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                     5:  TX_INFO := TX_DEAFAIL1 + #13 + TheOrder.Text + #13 + TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+                   end;
+                   if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                   begin
+                     DEAContext := True;
+                     fFrame.frmFrame.mnuFileEncounterClick(frmRenewOrders);
+                     DEAFailStr := '';
+                     DEAFailStr := DEACheckFailed(OrderableItemIen, InptDlg);
+                   end
+                   else begin
+                     UnlockOrder(TheOrder.ID);
+                     Exit;
+                   end;
+                 end;
+              PassDeaList.Add(frmRenewOrders.OrderList.Items[j]);
             end
          else
            PassDeaList.Add(frmRenewOrders.OrderList.Items[j]);

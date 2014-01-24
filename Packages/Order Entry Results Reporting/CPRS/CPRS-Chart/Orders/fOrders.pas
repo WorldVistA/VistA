@@ -369,6 +369,12 @@ const
     + #13#13
     + 'To write new delayed orders for this event you need to click the write delayed orders button on the orders tab and select the appropriate event. '
     + 'Orders delayed to this same event will remain delayed until the event occurs again.';
+  TX_DEAFAIL    = 'Signing provider does not have a current, valid DEA# on record.';
+  TX_SCHFAIL    = 'Signing provider is not authorized to prescribe medications in Federal Schedule ';
+  TX_NO_DETOX   = 'Signing provider does not have a valid Detoxification/Maintenance ID number on record.';
+  TX_EXP_DETOX  = 'Signing provider''s Detoxification/Maintenance ID number expired due to an expired DEA# on ';
+  TX_EXP_DEA1   = 'Signing provider''s DEA# expired on ';
+  TX_EXP_DEA2   = ' and no VA# is assigned.';
 
 var
   uOrderList: TList;
@@ -1016,7 +1022,7 @@ begin
       StatusText('Retrieving order details...');
       BigOrderID := TOrder(Items.Objects[i]).ID;
       AnOrderID := Piece(BigOrderID, ';', 1);
-      if StrToIntDef(AnOrderID,0) = 0 then
+      if StrToFloatDef(AnOrderID,0) = 0 then
         ShowMsg('Detail view is not available for selected order.')
       else
         begin
@@ -1657,7 +1663,7 @@ begin
         end;
       end;
       //AGP CHANGE ORDER ENTERED IN ERROR TO ALLOW SIGNATURE AND VERIFY ACTIONS 26.23
-      if ((AnOrder.EnteredInError = 1) and ((AnOrder.Status = 1) or (AnOrder.Status = 13)))  and ((AnAction <> 'ES') and (AnAction <> 'VR')) then
+      if ((AnOrder.EnteredInError = 1) and ((AnOrder.Status = 1) or (AnOrder.Status = 13)))  and ((AnAction <> 'ES') and (AnAction <> 'VR') and (AnAction <> 'CR')) then
          begin
             InfoBox(AnOrder.Text + WarningMsg + 'This order has been mark as Entered in error.', WarningTitle, MB_OK);
             Selected[i] := False;
@@ -1668,6 +1674,13 @@ begin
          ValidateOrderAction(AnOrder.ID, AnAction, ErrMsg)
       //AGP END Changes
         else ErrMsg := '';
+      case StrToIntDef(Piece(ErrMsg,U,1),0) of
+          1:  ErrMsg := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  ErrMsg := TX_SCHFAIL + Piece(ErrMsg,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  ErrMsg := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  ErrMsg := TX_EXP_DEA1 + Piece(ErrMsg,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  ErrMsg := TX_EXP_DETOX + Piece(ErrMsg,U,2) + '.';  //valid detox#, but expired DEA#
+      end;
       if (Length(ErrMsg)>0) and (Pos('COMPLEX-PSI',ErrMsg)<1) then
       begin
         InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
@@ -1818,8 +1831,6 @@ end;
 procedure TfrmOrders.mnuActRelClick(Sender: TObject);
 var
   SelectedList: TList;
-  ALocation: Integer;
-  AName: string;
 begin
   inherited;
   if NoneSelected(TX_NOSEL_SIGN) then Exit;
@@ -1829,17 +1840,8 @@ begin
     ShowMsg('You are not authorized to manual release delayed orders.');
     Exit;
   end;
-  if Encounter.Location = 0 then                         // location required for ORCSEND
-  begin
-    LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
-    if ALocation > 0 then Encounter.Location := ALocation;
-    frmFrame.DisplayEncounterText;
-  end;
-  if Encounter.Location = 0 then
-  begin
-    InfoBox(TX_SIGN_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);
-    Exit;
-  end;
+   if not EncounterPresent(TX_SIGN_LOC) then Exit;
+
   if not LockedForOrdering then Exit;
   SelectedList := TList.Create;
   try
@@ -2263,23 +2265,12 @@ procedure TfrmOrders.mnuActReleaseClick(Sender: TObject);
 { release orders to services without a signature, do appropriate prints }
 var
   SelectedList: TList;
-  ALocation: Integer;
-  AName: string;
 begin
   inherited;
   if NoneSelected(TX_NOSEL) then Exit;
   if not AuthorizedUser then Exit;
-  if Encounter.Location = 0 then                         // location required for ORCSEND
-  begin
-    LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
-    if ALocation > 0 then Encounter.Location := ALocation;
-    frmFrame.DisplayEncounterText;
-  end;
-  if Encounter.Location = 0 then
-  begin
-    InfoBox(TX_REL_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);
-    Exit;
-  end;
+  if not EncounterPresent(TX_REL_LOC) then Exit;
+
   if not LockedForOrdering then Exit;
   SelectedList := TList.Create;
   try
@@ -2308,23 +2299,12 @@ procedure TfrmOrders.mnuActOnChartClick(Sender: TObject);
 { mark orders orders as signed on chart, release to services, do appropriate prints }
 var
   SelectedList: TList;
-  ALocation: Integer;
-  AName: string;
 begin
   inherited;
   if NoneSelected(TX_NOSEL) then Exit;
   if not AuthorizedUser then Exit;
-  if Encounter.Location = 0 then                         // location required for ORCSEND
-  begin
-    LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
-    if ALocation > 0 then Encounter.Location := ALocation;
-    frmFrame.DisplayEncounterText;
-  end;
-  if Encounter.Location = 0 then
-  begin
-    InfoBox(TX_CHART_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);
-    Exit;
-  end;
+  if not EncounterPresent(TX_CHART_LOC) then Exit;
+
   if not LockedForOrdering then Exit;
   SelectedList := TList.Create;
   try
@@ -2352,8 +2332,6 @@ procedure TfrmOrders.mnuActSignClick(Sender: TObject);
 { obtain signature for orders, release them to services, do appropriate prints }
 var
   SelectedList: TList;
-  ALocation: Integer;
-  AName: string;
   Delayed: boolean;
 begin
   inherited;
@@ -2367,17 +2345,7 @@ begin
   end;
   if not (FCurrentView.EventDelay.EventIFN>0) then
   begin
-    if Encounter.Location = 0 then                         // location required for ORCSEND
-    begin
-      LookupLocation(ALocation, AName, LOC_ALL, TX_LOC_PRINT);
-      if ALocation > 0 then Encounter.Location := ALocation;
-      frmFrame.DisplayEncounterText;
-    end;
-    if Encounter.Location = 0 then
-    begin
-      InfoBox(TX_SIGN_LOC, TC_REQ_LOC, MB_OK or MB_ICONWARNING);
-      Exit;
-    end;
+   if not EncounterPresent(TX_SIGN_LOC) then Exit;
   end;
   if not LockedForOrdering then Exit;
 
@@ -2562,6 +2530,16 @@ begin
           end;
         end;
       NF_DC_ORDER                      :
+        begin
+          ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
+          Notifications.Delete;
+        end;
+      NF_DEA_AUTO_DC_CS_MED_ORDER      :
+        begin
+          ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
+          Notifications.Delete;
+        end;
+      NF_DEA_CERT_REVOKED              :
         begin
           ViewAlertedOrders(OrderIEN, STS_RECENT, '',  False, True, 'All Services, Recent Activity');
           Notifications.Delete;

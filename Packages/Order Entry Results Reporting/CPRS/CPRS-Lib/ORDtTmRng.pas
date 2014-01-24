@@ -25,21 +25,7 @@ type
   end;
 
   TORDateRangeDlg = class(TComponent)
-  private
-    FTextOfStart: string;
-    FTextOfStop: string;
-    FFMDateStart: TFMDateTime;
-    FFMDateStop: TFMDateTime;
-    FRelativeStart: string;
-    FRelativeStop: string;
-    FDateOnly: Boolean;
-    FRequireTime: Boolean;
-    FInstruction: string;
-    FLabelStart: string;
-    FLabelStop: string;
-    FFormat: string;
-    procedure SetDateOnly(Value: Boolean);
-    procedure SetFMDateStart(Value: TFMDateTime);
+  private    FTextOfStart: string;    FTextOfStop: string;    FFMDateStart: TFMDateTime;    FFMDateStop: TFMDateTime;    FRelativeStart: string;    FRelativeStop: string;    FDateOnly: Boolean;    FRequireTime: Boolean;    FInstruction: string;    FLabelStart: string;    FLabelStop: string;    FFormat: string;    procedure SetDateOnly(Value: Boolean);    procedure SetFMDateStart(Value: TFMDateTime);
     procedure SetFMDateStop(Value: TFMDateTime);
     procedure SetTextOfStart(const Value: string);
     procedure SetTextOfStop(const Value: string);
@@ -50,18 +36,7 @@ type
     property RelativeStart: string    read FRelativeStart;
     property RelativeStop:  string    read FRelativeStop;
   published
-    property DateOnly:    Boolean     read FDateOnly    write SetDateOnly;
-    property FMDateStart: TFMDateTime read FFMDateStart write SetFMDateStart;
-    property FMDateStop:  TFMDateTime read FFMDateStop  write SetFMDateStop;
-    property Instruction: string      read FInstruction write FInstruction;
-    property LabelStart:  string      read FLabelStart  write FLabelStart;
-    property LabelStop:   string      read FLabelStop   write FLabelStop;
-    property RequireTime: Boolean     read FRequireTime write SetRequireTime;
-    property Format:      string      read FFormat      write FFormat;
-    property TextOfStart: string      read FTextOfStart write SetTextOfStart;
-    property TextOfStop:  string      read FTextOfStop  write SetTextOfStop;
- end;
-
+    property DateOnly:    Boolean     read FDateOnly    write SetDateOnly;    property FMDateStart: TFMDateTime read FFMDateStart write SetFMDateStart;    property FMDateStop:  TFMDateTime read FFMDateStop  write SetFMDateStop;    property Instruction: string      read FInstruction write FInstruction;    property LabelStart:  string      read FLabelStart  write FLabelStart;    property LabelStop:   string      read FLabelStop   write FLabelStop;    property RequireTime: Boolean     read FRequireTime write SetRequireTime;    property Format:      string      read FFormat      write FFormat;    property TextOfStart: string      read FTextOfStart write SetTextOfStart;    property TextOfStop:  string      read FTextOfStop  write SetTextOfStop; end;
   procedure Register;
 
 implementation
@@ -98,19 +73,11 @@ begin
         FCalStart.FMDateTime := FFMDateStart;
         FCalStart.Text := FormatFMDateTime(FFormat, FFMDateStart);
       end;
-      if FFMDateStop > 0 then
-      begin
+      if FFMDateStop > 0 then      begin
         FCalStop.FMDateTime := FFMDateStop;
         FCalStop.Text := FormatFMDateTime(FFormat, FFMDateStop);
       end;
-      FCalStart.DateOnly    := FDateOnly;
-      FCalStop.DateOnly     := FDateOnly;
-      FCalStart.RequireTime := FRequireTime;
-      FCalStop.RequireTime  := FRequireTime;
-      lblInstruct.Caption  := FInstruction;
-      lblStart.Caption     := FLabelStart;
-      lblStop.Caption      := FLabelStop;
-
+      FCalStart.DateOnly    := FDateOnly;      FCalStop.DateOnly     := FDateOnly;      FCalStart.RequireTime := FRequireTime;      FCalStop.RequireTime  := FRequireTime;      lblInstruct.Caption  := FInstruction;      lblStart.Caption     := FLabelStart;      lblStop.Caption      := FLabelStop;
       Result := (ShowModal = IDOK);
       if Result then
       begin

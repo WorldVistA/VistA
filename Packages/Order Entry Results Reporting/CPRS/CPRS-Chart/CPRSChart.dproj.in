@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectGuid>{d008760c-d3c7-4922-b5ca-7134478bce35}</ProjectGuid>
+    <ProjectGuid>{db96cb9a-0ae3-46e4-9030-9c55686612ab}</ProjectGuid>
     <MainSource>CPRSChart.dpr</MainSource>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -24,10 +24,10 @@
     <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
     <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
     <DCC_BplOutput>Bpl</DCC_BplOutput>
-    <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_ResourcePath>
-    <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_ObjPath>
-    <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_IncludePath>
+    <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_ResourcePath>
+    <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_ObjPath>
+    <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
@@ -43,55 +43,59 @@
     <DCC_HppOutput>Dcu\$(Configuration)</DCC_HppOutput>
     <DCC_DcpOutput>Dcp\$(Configuration)</DCC_DcpOutput>
     <DCC_BplOutput>Bpl</DCC_BplOutput>
-    <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\BDK\Source;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_UnitSearchPath>
-    <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_ResourcePath>
-    <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_ObjPath>
-    <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source</DCC_IncludePath>
+    <DCC_UnitSearchPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\BDK\Source;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_ResourcePath>
+    <DCC_ObjPath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_ObjPath>
+    <DCC_IncludePath>..\..\BDK\Source\Dcu\$(Configuration);..\VA\Dcu\$(Configuration);..\CPRS-Lib\Dcp\$(Configuration);@SOURCE@;@SOURCE@\..\CPRS-Lib;@SOURCE@\..\..\..\RPC Broker\BDK\Source;$(BDS)\OCX\Servers</DCC_IncludePath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>
     <Borland.ProjectType>VCLApplication</Borland.ProjectType>
     <BorlandProject>
-      <BorlandProject xmlns="">
-        <Delphi.Personality>
-          <Parameters>
-            <Parameters Name="UseLauncher">False</Parameters>
-            <Parameters Name="LoadAllSymbols">True</Parameters>
-            <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
-          </Parameters>
-          <VersionInfo>
-            <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-            <VersionInfo Name="AutoIncBuild">False</VersionInfo>
-            <VersionInfo Name="MajorVer">1</VersionInfo>
-            <VersionInfo Name="MinorVer">0</VersionInfo>
-            <VersionInfo Name="Release">28</VersionInfo>
-            <VersionInfo Name="Build">6</VersionInfo>
-            <VersionInfo Name="Debug">False</VersionInfo>
-            <VersionInfo Name="PreRelease">False</VersionInfo>
-            <VersionInfo Name="Special">False</VersionInfo>
-            <VersionInfo Name="Private">False</VersionInfo>
-            <VersionInfo Name="DLL">False</VersionInfo>
-            <VersionInfo Name="Locale">1033</VersionInfo>
-            <VersionInfo Name="CodePage">1252</VersionInfo>
-          </VersionInfo>
-          <VersionInfoKeys>
-            <VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
-            <VersionInfoKeys Name="FileDescription">12/22/2009</VersionInfoKeys>
-            <VersionInfoKeys Name="FileVersion">1.0.28.6</VersionInfoKeys>
-            <VersionInfoKeys Name="InternalName">1.0.28.6 server required</VersionInfoKeys>
-            <VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
-            <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
-            <VersionInfoKeys Name="OriginalFilename">Patch 280</VersionInfoKeys>
-            <VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
-            <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-            <VersionInfoKeys Name="Comments">Version 1.0.28.6</VersionInfoKeys>
-          </VersionInfoKeys>
-          <Source>
-            <Source Name="MainSource">CPRSChart.dpr</Source>
-          </Source>
-        </Delphi.Personality>
-      </BorlandProject>
-    </BorlandProject>
+	<BorlandProject>
+		<Delphi.Personality>
+			<Parameters>
+				<Parameters Name="UseLauncher">False</Parameters>
+				<Parameters Name="LoadAllSymbols">True</Parameters>
+				<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+			</Parameters>
+				<VersionInfo>
+					<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+					<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+					<VersionInfo Name="MajorVer">1</VersionInfo>
+					<VersionInfo Name="MinorVer">0</VersionInfo>
+					<VersionInfo Name="Release">29</VersionInfo>
+					<VersionInfo Name="Build">21</VersionInfo>
+					<VersionInfo Name="Debug">False</VersionInfo>
+					<VersionInfo Name="PreRelease">False</VersionInfo>
+					<VersionInfo Name="Special">False</VersionInfo>
+					<VersionInfo Name="Private">False</VersionInfo>
+					<VersionInfo Name="DLL">False</VersionInfo>
+					<VersionInfo Name="Locale">1033</VersionInfo>
+					<VersionInfo Name="CodePage">1252</VersionInfo>
+				</VersionInfo>
+			<VersionInfoKeys>
+				<VersionInfoKeys Name="CompanyName">Department of Veterans Affairs</VersionInfoKeys>
+				<VersionInfoKeys Name="FileDescription">2/19/2013</VersionInfoKeys>
+				<VersionInfoKeys Name="FileVersion">1.0.29.21</VersionInfoKeys>
+				<VersionInfoKeys Name="InternalName">1.0.29.21 server required</VersionInfoKeys>
+				<VersionInfoKeys Name="LegalCopyright">Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.</VersionInfoKeys>
+				<VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+				<VersionInfoKeys Name="OriginalFilename">Patch 306</VersionInfoKeys>
+				<VersionInfoKeys Name="ProductName">Computerized Patient Record System</VersionInfoKeys>
+				<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+				<VersionInfoKeys Name="Comments">Version 1.0.29.21</VersionInfoKeys>
+			</VersionInfoKeys>
+			<Source>
+				<Source Name="MainSource">CPRSChart.dpr</Source>
+			</Source>
+		<TypeLibOptions>
+	      <TypeLibOptions Name="AutoRegisterTLB">False</TypeLibOptions>
+    	  <TypeLibOptions Name="AutoGenImportAssembly">False</TypeLibOptions>
+ 	   </TypeLibOptions>
+  	</Delphi.Personality>
+	</BorlandProject>
+	</BorlandProject>
   </ProjectExtensions>
   <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
   <ItemGroup>
@@ -432,6 +436,9 @@
     <DCCReference Include="fProbFlt.pas">
       <Form>frmPlVuFilt</Form>
     </DCCReference>
+    <DCCReference Include="fProbFreetext.pas">
+      <Form>frmProbFreetext</Form>
+    </DCCReference>
     <DCCReference Include="fProbLex.pas">
       <Form>frmPLLex</Form>
     </DCCReference>
@@ -602,6 +609,9 @@
     </DCCReference>
     <DCCReference Include="Options\rOptions.pas" />
     <DCCReference Include="Options\uOptions.pas" />
+    <DCCReference Include="Orders\fCSRemaining.pas">
+      <Form>frmCSRemaining</Form>
+    </DCCReference>
     <DCCReference Include="Orders\fIVRoutes.pas">
       <Form>frmIVRoutes</Form>
     </DCCReference>
@@ -868,6 +878,7 @@
     <DCCReference Include="uEventHooks.pas" />
     <DCCReference Include="uFormMonitor.pas" />
     <DCCReference Include="uGraphs.pas" />
+    <DCCReference Include="uHelpManager.pas" />
     <DCCReference Include="uInit.pas" />
     <DCCReference Include="uOrPtf.pas" />
     <DCCReference Include="uProbs.pas" />
@@ -885,5 +896,13 @@
     <DCCReference Include="Vitals\rVitals.pas" />
     <DCCReference Include="Vitals\uVitals.pas" />
     <DCCReference Include="XuDigSigSC_TLB.pas" />
+    <DCCReference Include="XuDigSig\fPINPrompt.pas" />
+    <DCCReference Include="XuDigSig\Wcrypt2.pas" />
+    <DCCReference Include="XuDigSig\WinSCard.pas" />
+    <DCCReference Include="XuDigSig\XlfHex.pas" />
+    <DCCReference Include="XuDigSig\XlfMime.pas" />
+    <DCCReference Include="XuDigSig\XuDsigConst.pas" />
+    <DCCReference Include="XuDigSig\XuDsigS.pas" />
+    <DCCReference Include="XuDigSig\XuDsigU.pas" />
   </ItemGroup>
 </Project>

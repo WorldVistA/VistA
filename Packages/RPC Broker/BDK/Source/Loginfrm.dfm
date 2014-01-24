@@ -54,7 +54,7 @@ object frmSignon: TfrmSignon
         
           '                                                                ' +
           '                   '#13
-        '   http://vaww.isc-sf.med.va.gov'#13
+        '   http://vaww.domain.domain.ext'#13
         'a                 '#13
         'b'#13
         'c                 '#13

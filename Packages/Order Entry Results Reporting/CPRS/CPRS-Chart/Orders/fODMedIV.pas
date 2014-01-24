@@ -177,10 +177,6 @@ implementation
 
 uses ORFn, uConst, rODMeds, rODBase, fFrame, uCore, fOtherSchedule, rCore;
 
-const
-  TX_NO_DEA     = 'Provider must have a DEA# or VA# to order this medication';
-  TC_NO_DEA     = 'DEA# Required';
-
 type
   TIVComponent = class
   private
@@ -778,7 +774,7 @@ end;
 
 procedure TfrmODMedIV.SetValuesFromResponses;
 var
-  x, addRoute, tempSch, AdminTime, TempOrder, tmpSch, tempIRoute, tempRoute, PreAddFreq: string;
+  x, addRoute, tempSch, AdminTime, TempOrder, tmpSch, tempIRoute, tempRoute, PreAddFreq, DEAFailStr, TX_INFO: string;
   AnInstance, i, idx, j: Integer;
   AResponse, AddFreqResp: TResponse;
   AnIVComponent: TIVComponent;
@@ -801,24 +797,59 @@ begin
         x := AmountsForIVFluid(StrToIntDef(AResponse.IValue, 0), 'B');
         AnIVComponent := TIVComponent.Create;
         AnIVComponent.IEN     := StrToIntDef(AResponse.IValue, 0);
+        DEAFailStr := '';
         if not FInpatient then
         begin
-          if DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'S') then
-          begin
-            InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-            cboAdditive.Text := '';
-            AbortOrder := True;
-            Exit;
-          end;
+          DEAFailStr := DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'S');
+          while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+            begin
+              case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+                2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              end;
+              if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                begin
+                  DEAContext := True;
+                  fFrame.frmFrame.mnuFileEncounterClick(self);
+                  DEAFailStr := '';
+                  DEAFailStr := DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'S');
+                end
+              else
+                begin
+                  cboAdditive.Text := '';
+                  AbortOrder := True;
+                  Exit;
+                end;
+            end
         end else
         begin
-          if DEACheckFailed(AnIVComponent.IEN, FInpatient) then
-          begin
-            InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-            cboAdditive.Text := '';
-            AbortOrder := True;
-            Exit;
-          end;
+          DEAFailStr := DEACheckFailed(AnIVComponent.IEN, FInpatient);
+          while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+            begin
+              case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+                2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              end;
+              if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                begin
+                  DEAContext := True;
+                  fFrame.frmFrame.mnuFileEncounterClick(self);
+                  DEAFailStr := '';
+                  DEAFailStr := DEACheckFailed(AnIVComponent.IEN, FInpatient);
+                end
+              else
+                begin
+                  cboAdditive.Text := '';
+                  AbortOrder := True;
+                  Exit;
+                end;
+            end
         end;
         AnIVComponent.Name    := AResponse.EValue;
         AnIVComponent.Fluid   := 'B';
@@ -849,24 +880,59 @@ begin
         x := AmountsForIVFluid(StrToIntDef(AResponse.IValue, 0), 'A');
         AnIVComponent := TIVComponent.Create;
         AnIVComponent.IEN     := StrToIntDef(AResponse.IValue, 0);
+        DEAFailStr := '';
         if not FInpatient then
         begin
-          if DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'A') then
-          begin
-            InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-            cboAdditive.Text := '';
-            AbortOrder := True;
-            Exit;
-          end;
+          DEAFailStr := DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'A');
+          while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+            begin
+              case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+                2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              end;
+              if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                begin
+                  DEAContext := True;
+                  fFrame.frmFrame.mnuFileEncounterClick(self);
+                  DEAFailStr := '';
+                  DEAFailStr := DEACheckFailedForIVOnOutPatient(AnIVComponent.IEN,'A');
+                end
+              else
+                begin
+                  cboAdditive.Text := '';
+                  AbortOrder := True;
+                  Exit;
+                end;
+            end
         end else
         begin
-          if DEACheckFailed(AnIVComponent.IEN, FInpatient) then
-          begin
-            InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-            cboAdditive.Text := '';
-            AbortOrder := true;
-            Exit;
-          end;
+          DEAFailStr := DEACheckFailed(AnIVComponent.IEN, FInpatient);
+          while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+            begin
+              case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+                2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+              end;
+              if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                begin
+                  DEAContext := True;
+                  fFrame.frmFrame.mnuFileEncounterClick(self);
+                  DEAFailStr := '';
+                  DEAFailStr := DEACheckFailed(AnIVComponent.IEN, FInpatient);
+                end
+              else
+                begin
+                  cboAdditive.Text := '';
+                  AbortOrder := True;
+                  Exit;
+                end;
+            end
         end;
         AnIVComponent.Name    := AResponse.EValue;
         AnIVComponent.Fluid   := 'A';
@@ -1234,7 +1300,7 @@ end;
 procedure TfrmODMedIV.cboSolutionMouseClick(Sender: TObject);
 var
   AnIVComponent: TIVComponent;
-  x,routeIEN: string;
+  x,routeIEN, DEAFailStr, TX_INFO: string;
   i: integer;
 begin
   inherited;
@@ -1259,22 +1325,57 @@ begin
   end;
   if cboSolution.ItemIEN <= 0 then Exit;                   // process selection of solution
   FInpatient := OrderForInpatient;
+  DEAFailStr := '';
   if not FInpatient then
   begin
-    if DEACheckFailedForIVOnOutPatient(cboSolution.ItemIEN,'S') then
-    begin
-      InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-      cboSolution.Text := '';
-      Exit;
-    end;
+    DEAFailStr := DEACheckFailedForIVOnOutPatient(cboSolution.ItemIEN,'S');
+    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+      begin
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailedForIVOnOutPatient(cboSolution.ItemIEN,'S');
+          end
+        else
+          begin
+            cboSolution.Text := '';
+            Exit;
+          end;
+      end
   end else
   begin
-    if DEACheckFailed(cboSolution.ItemIEN, FInpatient) then
-    begin
-       InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-       cboSolution.Text := '';
-       Exit;
-    end;
+    DEAFailStr := DEACheckFailed(cboSolution.ItemIEN, FInpatient);
+    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+      begin
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailed(cboSolution.ItemIEN, FInpatient);
+          end
+        else
+          begin
+            cboSolution.Text := '';
+            Exit;
+          end;
+      end
   end;
   RouteIEN := Piece(cboSolution.Items.Strings[cboSolution.itemindex],U,4);
   x := AmountsForIVFluid(cboSolution.ItemIEN, 'B');
@@ -1485,27 +1586,62 @@ end;
 procedure TfrmODMedIV.cboAdditiveMouseClick(Sender: TObject);
 var
   AnIVComponent: TIVComponent;
-  x, routeIEN: string;
+  x, routeIEN, DEAFailStr, TX_INFO: string;
 begin
   inherited;
   if cboAdditive.ItemIEN <= 0 then Exit;
   FInpatient := OrderForInpatient;
+  DEAFailStr := '';
   if not FInpatient then
   begin
-    if DEACheckFailedForIVOnOutPatient(cboAdditive.ItemIEN,'A') then
-    begin
-      InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-      cboAdditive.Text := '';
-      Exit;
-    end;
+    DEAFailStr := DEACheckFailedForIVOnOutPatient(cboAdditive.ItemIEN,'A');
+    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+      begin
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailedForIVOnOutPatient(cboAdditive.ItemIEN,'A');
+          end
+        else
+          begin
+            cboAdditive.Text := '';
+            Exit;
+          end;
+      end;
   end else
   begin
-    if DEACheckFailed(cboAdditive.ItemIEN, FInpatient) then
-    begin
-       InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-       cboAdditive.Text := '';
-       Exit;
-    end;
+    DEAFailStr := DEACheckFailed(cboAdditive.ItemIEN, FInpatient);
+    while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
+      begin
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailed(cboAdditive.ItemIEN, FInpatient);
+          end
+        else
+          begin
+            cboAdditive.Text := '';
+            Exit;
+          end;
+      end;
   end;
   routeIEN := Piece(cboAdditive.Items.Strings[cboAdditive.itemindex],U,4);
   x := AmountsForIVFluid(cboAdditive.ItemIEN, 'A');

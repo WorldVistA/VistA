@@ -148,7 +148,8 @@ begin
       FReportText.Lines.Add(aHead);
       FReportText.Lines.Add('-------------------------------------------------------------------------------');
       TotalSpaceAvailable := Length(FReportText.Lines[FReportText.Lines.Count - 1]);
-    end;
+    end else
+     TotalSpaceAvailable := 80;
   for i := 0 to frmReports.lvReports.Items.Count - 1 do
     if frmReports.lvReports.Items[i].Selected then
       begin

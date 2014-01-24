@@ -2,7 +2,7 @@ unit XMLUtils;
 
 interface
 uses
-  SysUtils, MSXML, ORFn;
+  SysUtils, MSXML_TLB, ORFn;
 
 function Text2XML(const AText: string): string;
 function FindXMLElement(Element: IXMLDOMNode; ElementTag: string): IXMLDOMNode;

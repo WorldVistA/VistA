@@ -274,6 +274,10 @@ inherited frmGraphs: TfrmGraphs
           TabOrder = 1
           object tsTopItems: TTabSheet
             Caption = 'Items'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object lvwItemsTop: TListView
               Left = 0
               Top = 0
@@ -638,6 +642,10 @@ inherited frmGraphs: TfrmGraphs
           TabOrder = 1
           object tsBottomItems: TTabSheet
             Caption = 'Items'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object lvwItemsBottom: TListView
               Left = 0
               Top = 0
@@ -1206,6 +1214,10 @@ inherited frmGraphs: TfrmGraphs
       Caption = 'Hints'
       Visible = False
     end
+    object mnuPopGraphMergeLabs: TMenuItem
+      Caption = 'Merge Labs'
+      OnClick = mnuPopGraphMergeLabsClick
+    end
     object N2: TMenuItem
       Caption = '-'
     end
@@ -1226,7 +1238,7 @@ inherited frmGraphs: TfrmGraphs
       Caption = '-'
       Visible = False
     end
-    object mnutest: TMenuItem
+    object mnuTest: TMenuItem
       Caption = 'testing'
       Enabled = False
       Visible = False
@@ -1256,6 +1268,8 @@ inherited frmGraphs: TfrmGraphs
     end
     object mnuGraphData: TMenuItem
       Caption = 'Show Graph Data...'
+      Enabled = False
+      Visible = False
       OnClick = mnuGraphDataClick
     end
     object mnuPopGraphToday: TMenuItem

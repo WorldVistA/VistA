@@ -4,7 +4,7 @@
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Danila Manapsal, Don Craven, Joel Ivey
 	Description: Verify Code edit dialog.
-	Current Release: Version 1.1 Patch 47 (Jun. 17, 2008))
+	Current Release: Version 1.1 Patch 40 (January 7, 2005))
 *************************************************************** }
 
 unit VCEdit;
@@ -98,10 +98,10 @@ var
 begin
   Result := False;
   Reason := '';
-  if OldVerify = NewVerify1 then
+  if UpperCase(OldVerify) = UpperCase(NewVerify1) then
     Reason := 'The new code is the same as the current one.'
   else
-  if NewVerify1 <> NewVerify2 then
+  if UpperCase(NewVerify1) <> UpperCase(NewVerify2) then
     Reason := 'The confirmation code does not match.';
   if Reason = '' then
   try
@@ -111,9 +111,9 @@ begin
       CreateContext('XUS SIGNON');
       RemoteProcedure := 'XUS CVC';
       Param[0].PType := literal;
-      Param[0].Value := Encrypt(OldVerify)
-                        + U + Encrypt(NewVerify1)
-                        + U + Encrypt(NewVerify2) ;
+      Param[0].Value := Encrypt(UpperCase(OldVerify))
+                        + U + Encrypt(UpperCase(NewVerify1))
+                        + U + Encrypt(UpperCase(NewVerify2)) ;
       Call;
       Reason := '';
       if Results[0] = '0' then
@@ -237,9 +237,9 @@ begin
     begin
       RemoteProcedure := 'XUS CVC';
       Param[0].PType := literal;
-      Param[0].Value := Encrypt(edtOldVC.Text)
-                        + U + Encrypt(edtNewVC.Text)
-                        + U + Encrypt(edtConfirmVC.Text) ;
+      Param[0].Value := Encrypt(UpperCase(edtOldVC.Text))
+                        + U + Encrypt(UpperCase(edtNewVC.Text))
+                        + U + Encrypt(UpperCase(edtConfirmVC.Text)) ;
       Call;
       if Results[0] = '0' then
       begin

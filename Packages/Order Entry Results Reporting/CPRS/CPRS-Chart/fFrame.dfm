@@ -1,8 +1,8 @@
 inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
-  Caption = 'p'
-  ClientHeight = 633
+  Caption = ']='
+  ClientHeight = 673
   ClientWidth = 793
   FormStyle = fsMDIForm
   Menu = mnuFrame
@@ -13,17 +13,16 @@ inherited frmFrame: TfrmFrame
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  OnHelp = FormHelp
   OnResize = FormResize
-  ExplicitWidth = 801
-  ExplicitHeight = 687
+  ExplicitWidth = 809
+  ExplicitHeight = 731
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
     Width = 793
-    Height = 633
+    Height = 673
     Align = alClient
     Caption = 'No patient is currently selected'
     Font.Charset = DEFAULT_CHARSET
@@ -34,14 +33,16 @@ inherited frmFrame: TfrmFrame
     ParentFont = False
     TabOrder = 1
     Visible = False
+    ExplicitHeight = 653
   end
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
     Width = 793
-    Height = 633
+    Height = 673
     Align = alClient
     TabOrder = 0
+    ExplicitHeight = 653
     object bvlPageTop: TBevel
       Left = 1
       Top = 41
@@ -312,6 +313,22 @@ inherited frmFrame: TfrmFrame
           ParentShowHint = False
           ShowHint = False
           TabOrder = 1
+          OnClick = pnlPrimaryCareClick
+          OnMouseDown = pnlPrimaryCareMouseDown
+          OnMouseUp = pnlPrimaryCareMouseUp
+        end
+        object lblPtMHTC: TStaticText
+          Left = 6
+          Top = 34
+          Width = 4
+          Height = 4
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBtnText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 2
           OnClick = pnlPrimaryCareClick
           OnMouseDown = pnlPrimaryCareMouseDown
           OnMouseUp = pnlPrimaryCareMouseUp
@@ -647,7 +664,7 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 611
+      Top = 651
       Width = 791
       Height = 21
       Panels = <
@@ -672,10 +689,11 @@ inherited frmFrame: TfrmFrame
         end>
       PopupMenu = popAlerts
       SizeGrip = False
+      ExplicitTop = 631
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 589
+      Top = 629
       Width = 791
       Height = 22
       Align = alBottom
@@ -690,12 +708,13 @@ inherited frmFrame: TfrmFrame
       OnChange = tabPageChange
       OnMouseDown = tabPageMouseDown
       OnMouseUp = tabPageMouseUp
+      ExplicitTop = 609
     end
     object pnlPage: TPanel
       Left = 1
       Top = 42
       Width = 791
-      Height = 547
+      Height = 587
       Align = alClient
       BevelOuter = bvNone
       Font.Charset = DEFAULT_CHARSET
@@ -705,6 +724,7 @@ inherited frmFrame: TfrmFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      ExplicitHeight = 567
       object lstCIRNLocations: TORListBox
         Left = 424
         Top = 0
@@ -842,6 +862,9 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = pnlCIRN'
+        'Status = stsDefault')
+      (
+        'Component = lblPtMHTC'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1123,13 +1146,17 @@ inherited frmFrame: TfrmFrame
         Caption = '&Options...'
         OnClick = mnuToolsOptionsClick
       end
+      object DigitalSigningSetup1: TMenuItem
+        Caption = 'Digital Signing Setup...'
+        OnClick = DigitalSigningSetup1Click
+      end
     end
     object mnuHelp: TMenuItem
       Caption = '&Help'
       GroupIndex = 9
       object mnuHelpContents: TMenuItem
         Caption = '&Contents'
-        Hint = 'WinHlp32 cprs.hlp'
+        Hint = 'help\cprs.htm'
         OnClick = ToolClick
       end
       object mnuHelpTutor: TMenuItem

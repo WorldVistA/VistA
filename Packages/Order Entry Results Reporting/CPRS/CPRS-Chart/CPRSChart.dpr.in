@@ -141,7 +141,6 @@ uses
   mVisitRelated in '@SOURCE@\Encounter\mVisitRelated.pas' {fraVisitRelated: TFrame},
   fRemVisitInfo in '@SOURCE@\fRemVisitInfo.pas' {frmRemVisitInfo},
   fIconLegend in '@SOURCE@\fIconLegend.pas' {frmIconLegend},
-  mImgText in '@SOURCE@\mImgText.pas' {fraImgText: TFrame},
   fTemplateImport in '@SOURCE@\Templates\fTemplateImport.pas' {frmTemplateImport},
   fRemCoverSheet in '@SOURCE@\fRemCoverSheet.pas' {frmRemCoverSheet},
   uTIU in '@SOURCE@\uTIU.pas',
@@ -319,7 +318,19 @@ uses
   fSpellNotify in '@SOURCE@\fSpellNotify.pas' {frmSpellNotify},
   uCombatVet in '@SOURCE@\uCombatVet.pas',
   fCombatVet in '@SOURCE@\fCombatVet.pas' {frmCombatVet},
-  fOCMonograph in '@SOURCE@\Orders\fOCMonograph.pas' {frmOCMonograph};
+  fOCMonograph in '@SOURCE@\Orders\fOCMonograph.pas' {frmOCMonograph},
+  fCSRemaining in '@SOURCE@\Orders\fCSRemaining.pas' {frmCSRemaining},
+  Wcrypt2 in '@BUILD_DELPHI_XuDigSig_DIR@\Wcrypt2.pas',
+  WinSCard in '@BUILD_DELPHI_XuDigSig_DIR@\WinSCard.pas',
+  XlfMime in '@BUILD_DELPHI_XuDigSig_DIR@\XlfMime.pas',
+  XlfHex in '@SOURCE@\XuDigSig\XlfHex.pas',
+  XuDsigConst in '@SOURCE@\XuDigSig\XuDsigConst.pas',
+  XuDsigS in '@SOURCE@\XuDigSig\XuDsigS.pas',
+  XuDsigU in '@SOURCE@\XuDigSig\XuDsigU.pas',
+  fPINPrompt in '@SOURCE@\XuDigSig\fPINPrompt.pas',
+  fProbFreetext in '@SOURCE@\fProbFreetext.pas' {frmProbFreetext},
+  mImgText in '@SOURCE@\mImgText.pas' {fraImgText},
+  uHelpManager in '@SOURCE@\uHelpManager.pas';
 
 {$R '@SOURCE@\CPRSChart.tlb'}
 
@@ -335,16 +346,19 @@ begin
     frmSplash := nil;
     if ParamSearch('SPLASH') <> 'OFF' then
     begin
-      frmSplash := TfrmSplash.Create(Application);  // show splash screen
+      frmSplash := TfrmSplash.Create(nil);  // show splash screen
       frmSplash.Show;                               //         "
       frmSplash.Refresh;                            //         "
     end;
     Application.Title := 'CPRS - Patient Chart';
-    Application.HelpFile := 'cprs.hlp';
+    Application.HelpFile := 'help\cprs.htm';
     Application.CreateForm(TdmodShared, dmodShared);
-  Application.CreateForm(TfrmFrame, frmFrame);
-  Application.CreateForm(TfrmSearchStop, frmSearchStop);
-  frmSplash.Free;                               // close & free splash screen
+    Application.CreateForm(TfrmFrame, frmFrame);
+    Application.CreateForm(TfrmSearchStop, frmSearchStop);
+    Application.CreateForm(TfrmProbFreetext, frmProbFreetext);
+    if assigned(frmSplash) then
+      frmSplash.Free;                               // close & free splash screen
+
     Application.Run;
   end;
 end.

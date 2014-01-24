@@ -667,7 +667,6 @@ begin
   end;
   // clear the editing controls (also clear the new labels?)
   txtSubject.Text := '';
-  lblNotes.Caption := '';
   SearchTextStopFlag := false;
   if memNewNote <> nil then memNewNote.Clear; //CQ7012 Added test for nil
   timAutoSave.Enabled := False;
@@ -2983,7 +2982,8 @@ begin
           end else
           //Reset the caption
           lblNotes.Caption := SetNoteTreeLabel(FCurrentContext);
-
+          NoteTotal := sCallV('ORCNOTE GET TOTAL', [Patient.DFN]);
+          lblNotes.Caption := lblNotes.Caption + ' (Total: ' + NoteTotal + ')';
         // Text Search CQ: HDS00002856 ---------------------------------------
 
         UpdateTreeView(FDocList, tvNotes);

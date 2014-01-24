@@ -64,11 +64,11 @@ var
 begin
   CPRSUpdate := RegReadStr(CPRS_REG_GOLD) + 'CPRSUpdate.exe';
   if not FileExists(CPRSUpdate) then CPRSUpdate := 'CPRSUpdate.exe';
-  x := FullToPathPart(Application.ExeName) + AppHelpFile + '.HLP';
-  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
+//  x := FullToPathPart(Application.ExeName) + AppHelpFile + '.HLP';
+//  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
   x := FullToPathPart(Application.ExeName) + AppHelpFile + '.CNT';
-  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
-  x := FullToPathPart(Application.ExeName) + WhatsThisHelpFile + '.HLP';
+//  if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
+//  x := FullToPathPart(Application.ExeName) + WhatsThisHelpFile + '.HLP';
   if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');
   x := FullToPathPart(Application.ExeName) + WhatsThisHelpFile + '.CNT';
   if AppOutOfDate(x) and FileExists(CPRSUpdate) then RunProgram(CPRSUpdate + ' XFER="' + x + '"');

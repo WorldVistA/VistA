@@ -156,10 +156,7 @@ begin
   ReadServerVariables;
   cboProc.InitLongList('') ;
   txtAttn.InitLongList('') ;
-  calEarliest.Text := 'TODAY';
-  //calLatest.Text := 'TODAY+30';
   PreserveControl(calEarliest);
-  //PreserveControl(calLatest);
   PreserveControl(txtAttn);
   PreserveControl(cboProc);
   if (patient.CombatVet.IsEligible = True) then
@@ -191,6 +188,7 @@ begin
       cboCategory.SelectById('I');
       SetControl(cboPlace, 'Inpt Place');
       SetControl(cboUrgency, 'Inpt Proc Urgencies');      //S.GMRCR
+      SetControl(calEarliest, 'EarliestDate');  //wat v29
     end
    else
     begin
@@ -200,6 +198,7 @@ begin
       cboCategory.SelectById('O');
       SetControl(cboPlace, 'Outpt Place');
       SetControl(cboUrgency, 'Outpt Urgencies');     //S.GMRCO
+      SetControl(calEarliest, 'EarliestDate');  //wat v29
     end ;
   end ;
   txtAttn.ItemIndex := -1;
@@ -216,6 +215,7 @@ begin
       Close;
       Exit;
     end;
+  if calEarliest.Text = 'T' then calEarliest.Text := 'TODAY';
   StatusText('');
   Changing := False;
 end;
@@ -242,7 +242,6 @@ begin
     SetControl(cboPlace,      'PLACE',     1);
     SetControl(txtAttn,       'PROVIDER',  1);
     SetControl(calEarliest,   'EARLIEST',  1);
-    //SetControl(calLatest,     'LATEST',    1);
     cboProc.Enabled := False;
     cboProc.Font.Color := clGrayText;
    //SetControl(cboService,    'SERVICE',   1);     // to fix OR*3.0*95 bug in v17.6  (RV)
@@ -320,8 +319,6 @@ begin
         SetError(TX_SELECT_DIAG);
     end;
   if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < FMToday       then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
 end;
 
 procedure TfrmODProc.txtAttnNeedData(Sender: TObject;
@@ -396,7 +393,6 @@ begin
   with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
   with txtAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
   with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text, Text);
-  //with calLatest     do if Length(Text) > 0 then Responses.Update('LATEST',    1, Text,   Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
   if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
@@ -467,7 +463,6 @@ begin
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
       SetControl(calEarliest,   'EARLIEST',  1);
-      //SetControl(calLatest,     'LATEST',    1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -576,7 +571,7 @@ begin
   inherited;
   LexiconLookup(Match, LX_ICD);
   if Match = '' then Exit;
-  ProvDx.Code := Piece(Match, U, 1);
+  ProvDx.Code := Piece(Piece(Match, U, 1),'/',1);
   ProvDx.Text := Piece(Match, U, 2);
   i := Pos(' (ICD', ProvDx.Text);
   if i = 0 then i := Length(ProvDx.Text) + 1;

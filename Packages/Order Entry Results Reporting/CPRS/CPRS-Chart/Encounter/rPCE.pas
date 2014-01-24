@@ -9,6 +9,7 @@ uses SysUtils, Classes, ORNet, ORFn, uPCE, UBACore, ORClasses;
 const
   LX_ICD = 12;
   LX_CPT = 13;
+  LX_SCT = 14;
 
   LX_Threshold = 15;
 
@@ -53,6 +54,7 @@ type
              apNeeded, apOutpatient, apAlways, apNever, apDisable);
 
 function GetVisitCat(InitialCat: char; Location: integer; Inpatient: boolean): char;
+function GetDiagnosisText(Narrative: String; Code: String): String;
 
 {assign and read values from fPCEData}
 //function SetRPCEncouterInfo(PCEData: TPCEData): boolean;
@@ -72,10 +74,12 @@ procedure LoadcboOther(Dest: TStrings; Location, fOtherApp: Integer);
 
 { Lexicon Lookup Calls }
 function  LexiconToCode(IEN, LexApp: Integer; ADate: TFMDateTime = 0): string;
-procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0);
+procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; Extend: Boolean = false);
 function  IsActiveICDCode(ACode: string; ADate: TFMDateTime = 0): boolean;
 function  IsActiveCPTCode(ACode: string; ADate: TFMDateTime = 0): boolean;
+function  IsActiveSCTCode(ACode: string; ADate: TFMDateTime = 0): boolean;
 function  IsActiveCode(ACode: string; LexApp: integer; ADate: TFMDateTime = 0): boolean;
+function  GetICDVersion(ADate: TFMDateTime = 0): String;
 
 { Encounter Form Elements }
 procedure DeletePCE(const AVisitStr: string);
@@ -222,6 +226,11 @@ begin
   Result := uVCResult
 end;
 
+function GetDiagnosisText(Narrative: String; Code: String): String;
+begin
+  Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
+end;
+
 { Lexicon Lookup Calls }
 
 function LexiconToCode(IEN, LexApp: Integer; ADate: TFMDateTime = 0): string;
@@ -231,19 +240,26 @@ begin
   case LexApp of
   LX_ICD: CodeSys := 'ICD';
   LX_CPT: CodeSys := 'CHP';
+  LX_SCT: CodeSys := 'GMPX';
   end;
-  Result := sCallV('ORWPCE LEXCODE', [IEN, CodeSys, ADate]);
+  Result := Piece(sCallV('ORWPCE LEXCODE', [IEN, CodeSys, ADate]), U, 1);
 end;
 
-procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0);
+procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; Extend: Boolean = false);
 var
   CodeSys: string;
+  ExtInt: integer;
 begin
   case LexApp of
   LX_ICD: CodeSys := 'ICD';
   LX_CPT: CodeSys := 'CHP';
+  LX_SCT: CodeSys := 'GMPX';
   end;
-  CallV('ORWPCE LEX', [x, CodeSys, ADate]);
+  if Extend then
+    ExtInt := 1
+  else
+    ExtInt := 0;
+  CallV('ORWPCE4 LEX', [x, CodeSys, ADate, ExtInt]);
   FastAssign(RPCBrokerV.Results, Dest);
 end;
 
@@ -257,6 +273,11 @@ begin
   Result := IsActiveCode(ACode, LX_CPT, ADate);
 end;
 
+function  IsActiveSCTCode(ACode: string; ADate: TFMDateTime = 0): boolean;
+begin
+  Result := IsActiveCode(ACode, LX_SCT, ADate);
+end;
+
 function  IsActiveCode(ACode: string; LexApp: integer; ADate: TFMDateTime = 0): boolean;
 var
   CodeSys: string;
@@ -264,8 +285,14 @@ begin
   case LexApp of
   LX_ICD: CodeSys := 'ICD';
   LX_CPT: CodeSys := 'CHP';
+  LX_SCT: CodeSys := 'GMPX';
   end;
   Result := (sCallV('ORWPCE ACTIVE CODE',[ACode, CodeSys, ADate]) = '1');
+end;
+
+function  GetICDVersion(ADate: TFMDateTime = 0): String;
+begin
+  Result := sCallV('ORWPCE ICDVER', [ADate]);
 end;
 
 { Encounter Form Elements ------------------------------------------------------------------ }
@@ -443,34 +470,21 @@ procedure ListDiagnosisCodes(Dest: TStrings; SectionIndex: Integer);
     diagnosis <TAB> ICDInteger <TAB> .ICDDecimal <TAB> ICD Code }
 var
   i: Integer;
-  s,d: string;
-  EncDT: TFMDateTime;
-
+  t, c, f: string;
 begin
-  EncDT := uEncPCEData.VisitDateTime;
   Dest.Clear;
   i := SectionIndex + 1;           // first line after the section name
   while (i < uDiagnoses.Count) and (CharAt(uDiagnoses[i], 1) <> U) do
   begin
-    s := Piece(uDiagnoses[i], U, 1);
-    d := Piece(s, '.', 2);
-    s := s + U + Piece(uDiagnoses[i], U, 2) + U + Piece(s, '.', 1) + U;
-    if(d <> '') then
-      SetPiece(s, U, 4, '.' + d )
-    else    // RV - CSV - need to do this so trailing "#" lines up correctly when no decimals
-      SetPiece(s, U, 4, '   ');  
+    c := Piece(uDiagnoses[i], U, 1);
+    t := Piece(uDiagnoses[i], U, 2);
+    f := Piece(uDiagnoses[i], U, 3);
 
-    //filtering out inactive codes.
-    if (Piece(uDiagnoses[i], U, 3) =  '#') then
-    begin
-      SetPiece(s, U, 5, '#');
-      Dest.Add(s);
-    end
-    else if ((Piece(uDiagnoses[i], U, 3) =  '') or
-     ( StrToFloat(Piece(uDiagnoses[i], U, 3)) > EncDT )) then
-    begin
-      Dest.Add(s);
-    end;
+    //identify inactive codes.
+    if (Pos('#', f) > 0) or (Pos('$', f) > 0) then
+      t := '#  ' + t;
+    Dest.Add(c + U + t + U + c + U + f);
+
     Inc(i);
   end;
 end;
@@ -483,29 +497,18 @@ begin
   //get problem list
   EncDT := Trunc(uEncPCEData.VisitDateTime);
   uLastDFN := patient.DFN;
-  tCallV(uProblems,      'ORWPCE ACTPROB',[Patient.DFN, EncDT]);
+  tCallV(uProblems, 'ORWPCE ACTPROB', [Patient.DFN, EncDT]);
   if uProblems.count > 0 then
   begin
     //add category to udiagnoses
     uDiagnoses.add(U + DX_PROBLEM_LIST_TXT);
-    for i := 1 to (uProblems.count-1) do //start with 1 because strings[0] is
-                                         //the count of elements.
+    for i := 1 to (uProblems.count-1) do //start with 1 because strings[0] is the count of elements.
     begin
-      //add problems to udiagnosis.
-      if (piece(uproblems.Strings[i],U,3) = '799.9') then continue;            // DON'T INCLUDE 799.9 CODES
-
-      if (Piece(uproblems.Strings[i], U, 11) =  '#') then
-        uDiagnoses.add(piece(uProblems.Strings[i],U,3) + U +                   // PL code inactive
-          piece(uProblems.Strings[i],U,2) + U + '#')
-      else if (Piece(uproblems.Strings[i], U, 10) =  '') then                  // no inactive date for code
-        uDiagnoses.add(piece(uProblems.Strings[i],U,3) + U +
-          piece(uProblems.Strings[i],U,2))
-      else if (Trunc(StrToFloat(Piece(uProblems.Strings[i], U, 10))) > EncDT) then     // code active as of EncDt
-        uDiagnoses.add(piece(uProblems.Strings[i],U,3) + U +
-          piece(uProblems.Strings[i],U,2))
-      else
-        uDiagnoses.add(piece(uProblems.Strings[i],U,3) + U +                   // PL code inactive
-          piece(uProblems.Strings[i],U,2) + U + '#');
+      // DON'T INCLUDE 799.9 CODES
+      if (piece(uProblems.Strings[i],U,3) = '799.9') then continue;
+      // add problems to udiagnosis 
+      uDiagnoses.add(piece(uProblems.Strings[i], U, 3) + U + piece(uProblems.Strings[i], U, 2) + U +
+                       piece(uProblems.Strings[i], U, 13));
     end;
 
     //1.3.10

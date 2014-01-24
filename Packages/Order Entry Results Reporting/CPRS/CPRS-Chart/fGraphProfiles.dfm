@@ -4,7 +4,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Select Items and Define Views'
-  ClientHeight = 379
+  ClientHeight = 386
   ClientWidth = 477
   Position = poMainFormCenter
   OnClose = FormClose
@@ -213,7 +213,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   object pnlApply: TPanel [16]
     Left = 0
     Top = 344
-    Width = 377
+    Width = 366
     Height = 36
     BevelOuter = bvNone
     ParentShowHint = False
@@ -337,9 +337,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     CharsNeedMatch = 1
   end
   object btnClose: TButton [22]
-    Left = 371
+    Left = 370
     Top = 353
-    Width = 97
+    Width = 95
     Height = 21
     Cancel = True
     Caption = 'Close'

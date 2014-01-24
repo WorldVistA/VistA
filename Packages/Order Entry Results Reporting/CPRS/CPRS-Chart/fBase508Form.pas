@@ -11,11 +11,14 @@ type
                           aaFixTabStopArrowNavigationBug);
   TAccessibilityActions = set of TAccessibilityAction;
 
-  TfrmBase508Form = class(Tfrm2006Compatibility)
+type
+  TfrmBase508Form = class(TForm)
     amgrMain: TVA508AccessibilityManager;
-    procedure FormKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    function FormHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
   private
+    HelpClicked: boolean;
+    OldCursor: TCursor;
     FLoadedCalled: boolean;
     FDefaultButton: TButton;
     FActions: TAccessibilityActions;
@@ -26,13 +29,15 @@ type
     procedure SetDefaultButton(const Value: TButton);
     procedure ModifyUnfocusableControl(Control: TWinControl; Attach: boolean);
     procedure UM508(var Message: TMessage); message UM_508;
+    procedure WMNCLBUTTONDOWN(var Msg: TWMNCLButtonDown) ; message WM_NCLBUTTONDOWN;
+    procedure WMNCLBUTTONUP(var Msg: TWMNCLButtonUp) ; message WM_NCLBUTTONUP;
+    function DoOnHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
   protected
     procedure Activate; override;
     procedure Loaded; override;
     procedure SetParent(AParent: TWinControl); override;
-    procedure Notification(AComponent: TComponent;
-      Operation: TOperation); override;
-    procedure UpdateAccessabilityActions(var Actions: TAccessibilityActions); virtual;
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure UpdateAccessibilityActions(var Actions: TAccessibilityActions); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     property DefaultButton : TButton read FDefaultButton write SetDefaultButton;
@@ -45,7 +50,7 @@ procedure UnfocusableControlEnter(Self, Sender: TObject);
 
 implementation
 
-uses ORFn, VA508AccessibilityRouter, VAUtils;
+uses ORSystem, ShellAPI, ORFn, VA508AccessibilityRouter, VAUtils, uHelpManager;
 
 {$R *.dfm}
 
@@ -97,15 +102,6 @@ begin
     AdjustForWindowsXPStyleTitleBar(Self);
   finally
     OnResize := OldResize;
-  end;
-end;
-
-procedure TfrmBase508Form.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  if (Key = VK_RETURN) and (ssCtrl in Shift) then begin
-    ClickDefaultButton;
-    Key := 0;
   end;
 end;
 
@@ -184,13 +180,14 @@ end;
 procedure TfrmBase508Form.UM508(var Message: TMessage);
 begin
   case Message.WParam of
-    MSG_508_CODE_TITLE_BAR: AdjustForTitleBarHeightChanges;        
+    MSG_508_CODE_TITLE_BAR: AdjustForTitleBarHeightChanges;
   end;
 end;
 
-procedure TfrmBase508Form.UpdateAccessabilityActions(var Actions: TAccessibilityActions);
+procedure TfrmBase508Form.UpdateAccessibilityActions(var Actions: TAccessibilityActions);
 begin
 end;
+
 
 type
   TExposedBtn = class(TButton);
@@ -207,6 +204,8 @@ begin
     if tempDefaultBtn.Visible then
       TExposedBtn(tempDefaultBtn).Click;
 end;
+
+
 
 constructor TfrmBase508Form.Create(AOwner: TComponent);
 
@@ -229,10 +228,12 @@ constructor TfrmBase508Form.Create(AOwner: TComponent);
 
 begin
   inherited Create(AOwner);
-  if not assigned(Parent) then  
+  HelpClicked := False;
+  OldCursor := crDefault;
+  if not assigned(Parent) then
     AutoScroll := True;
   FActions := [aaColorConversion, aaTitleBarHeightAdjustment, aaFixTabStopArrowNavigationBug];
-  UpdateAccessabilityActions(FActions);
+  UpdateAccessibilityActions(FActions);
   if aaColorConversion in FActions then
     UpdateColorsFor508Compliance(Self);
 
@@ -268,6 +269,84 @@ begin
     Last508KeyCode := 0;
   Result := CallNextHookEx(MouseMonitorHook, Code, wParam, lParam);
 end;
+
+function TfrmBase508Form.DoOnHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+var
+  context: THelpContext;
+  current: TControl;
+begin
+  CallHelp := False;
+
+  if assigned(Screen.ActiveControl) then begin
+    current := Screen.ActiveControl;
+    if (Data = 0) then begin
+      while (current.HelpContext = 0) and (assigned(current.Parent)) do current := current.Parent;
+      context := current.HelpContext;
+    end else begin
+      context := Data;
+    end;
+    Result := FormHelp(Command, context, CallHelp);
+  end else begin
+    Result := Application.OnHelp(Command, Data, CallHelp);
+  end;
+end;
+
+function TfrmBase508Form.FormHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+begin
+  Result := THelpManager.GetInstance.ExecHelp(Command, Data, CallHelp);
+end;
+
+procedure TfrmBase508Form.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  CallHelp: boolean;
+begin
+  if (Key = VK_RETURN) and (ssCtrl in Shift) then begin
+    ClickDefaultButton;
+    Key := 0;
+  end else if (Key = VK_F1) then begin
+    if assigned(ActiveControl) then
+      DoOnHelp(1, ActiveControl.HelpContext, CallHelp)
+    else
+      DoOnHelp(1, Self.HelpContext, CallHelp);
+    Key := 0;
+  end;
+end;
+
+{=============================================================================================}
+{  These two message handlers intercept the help button, and redirect it to the html system.  }
+{=============================================================================================}
+procedure TfrmBase508Form.WMNCLBUTTONDOWN(var Msg: TWMNCLButtonDown);
+begin
+  if Msg.HitTest = HTHELP then
+    Msg.Result := 0 // "eat" the message
+  else
+    inherited;
+end;
+
+procedure TfrmBase508Form.WMNCLBUTTONUP(var Msg: TWMNCLButtonUp);
+var
+  CallHelp: boolean;
+  wc: TWinControl;
+begin
+  if Msg.HitTest = HTHELP then begin
+    Msg.Result := 0;
+    OldCursor := Screen.Cursor;
+    Screen.Cursor := crHelp;
+    if HelpClicked then begin
+      wc := FindVCLWindow(Mouse.CursorPos); // find the control under the cursor.
+      if assigned(wc) then begin
+        while (wc.HelpContext = 0) and (assigned(wc.Parent)) do wc := wc.Parent;
+        FormHelp(1, wc.HelpContext, CallHelp);
+      end else
+        FormHelp(1, Self.HelpContext, CallHelp);
+    end else begin
+      Screen.Cursor := OldCursor;
+    end;
+    HelpClicked := not HelpClicked;
+  end else
+    inherited;
+end;
+
 
 initialization
   KeyMonitorHook   := SetWindowsHookEx(WH_KEYBOARD, KeyMonitorProc,   0, GetCurrentThreadID);

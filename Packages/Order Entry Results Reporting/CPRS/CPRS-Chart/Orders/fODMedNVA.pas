@@ -1175,7 +1175,7 @@ begin
   begin
     ItemIndex := -1;
     for i := 0 to Pred(Items.Count) do
-      if Piece(Items[i], U, 5) = x then
+      if UpperCase(Piece(Items[i], U, 5)) = UpperCase(x) then
       begin
         DoseIndex := i;
         Break;

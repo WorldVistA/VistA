@@ -356,7 +356,10 @@ end;
 procedure TfrmOMHTML.SetDialog(Value: Integer);
 begin
   FDialog := Value;
+  try
   webView.Navigate(GetURLForDialog(FDialog));
+  except
+  end;
 end;
 
 { Form events (get the initial page loaded) }
@@ -467,7 +470,10 @@ begin
     BackURL := FHistoryStack[Pred(FHistoryStack.Count)];
     FHistoryStack.Delete(Pred(FHistoryStack.Count));
     if FHistoryStack.Count < 2 then btnBack.Enabled := False;
+    try
     webView.Navigate(BackURL);
+    except
+    end;
   end;
 end;
 

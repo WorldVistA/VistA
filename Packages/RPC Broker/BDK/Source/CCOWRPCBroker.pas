@@ -344,6 +344,7 @@ begin
      //CCOW end
    //CCOW Start                                // p13  following section for silent signon
   if not ConnectingBroker.FKernelLogIn then
+  begin
     if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
     begin
       blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
@@ -351,8 +352,11 @@ begin
       begin     //Switch back to Kernel Login
         ConnectingBroker.FKernelLogIn := true;
         ConnectingBroker.Login.Mode := lmAVCodes;
+        if not (CCOWtoken = '') then
+          ConnectingBroker.Contextor := nil; // token didn't work turn off UserContext
       end;
     end;
+  end;
    //CCOW end
 
   if ConnectingBroker.FKernelLogIn then

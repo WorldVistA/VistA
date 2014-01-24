@@ -238,12 +238,9 @@ begin
   StatusText('Loading Default Values');
   FastAssign(ODForConsults, Defaults);  // ODForConsults returns TStrings with defaults
   CtrlInits.LoadDefaults(Defaults);
-  calEarliest.Text := 'TODAY';
-  //calLatest.Text := 'TODAY+30';
   txtAttn.InitLongList('') ;
   PreserveControl(txtAttn);
   PreserveControl(calEarliest);
-  //PreserveControl(calLatest);
     if (patient.CombatVet.IsEligible = True) then
    begin
      SetUpCombatVet;
@@ -277,6 +274,7 @@ begin
       cboCategory.SelectById('I');
       SetControl(cboPlace, 'Inpt Place');
       SetControl(cboUrgency, 'Inpt Cslt Urgencies');        //S.GMRCT
+      SetControl(calEarliest, 'EarliestDate');  //wat v29
     end
    else
     begin
@@ -286,6 +284,7 @@ begin
       cboCategory.SelectById('O');
       SetControl(cboPlace, 'Outpt Place');
       SetControl(cboUrgency, 'Outpt Urgencies');      //S.GMRCO
+      SetControl(calEarliest, 'EarliestDate');  //wat v29
     end ;
   end ;
   StatusText('Initializing Long List');
@@ -299,7 +298,6 @@ begin
   pnlServiceTreeButton.Enabled := True;
   SetProvDiagPromptingMode;
   ActiveControl := cboService;
-
   Changing := False;
   StatusText('');
 end;
@@ -352,12 +350,11 @@ begin
         radInpatient.Checked := True
       else
         radOutpatient.Checked := True ;
-      SetUpEarliestDate;   //wat v28
       SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
       SetControl(calEarliest,   'EARLIEST',  1);
-      //SetControl(calLatest,     'LATEST',    1);
+      SetUpEarliestDate;   //wat v28
       cboService.Enabled := False;
       setup508Label(servicelbl508, cboService);
       cboService.Font.Color := clGrayText;
@@ -482,8 +479,6 @@ begin
         SetError(TX_SELECT_DIAG);
     end;
   if (lblEarliest.Enabled) and (calEarliest.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < FMToday then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
 end;
 
 procedure TfrmODCslt.txtAttnNeedData(Sender: TObject;
@@ -664,7 +659,6 @@ begin
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(txtAttn,       'PROVIDER',  1);
       SetControl(calEarliest,   'EARLIEST',  1);
-      //SetControl(calLatest,     'LATEST',    1);
       SetTemplateDialogCanceled(FALSE);
       SetControl(memReason,     'COMMENT',   1);
       if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -731,7 +725,6 @@ begin
   with cboPlace      do  Responses.Update('PLACE',     1, ItemID, Text);
   with txtAttn       do  Responses.Update('PROVIDER',  1, ItemID, Text);
   with calEarliest   do if Length(Text) > 0 then Responses.Update('EARLIEST',  1, Text,   Text);
-  //with calLatest     do if Length(Text) > 0 then Responses.Update('LATEST',    1, Text,   Text);
   //with txtProvDiag   do if Length(Text) > 0 then Responses.Update('MISC',      1, Text,   Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');
@@ -897,7 +890,6 @@ begin
               SetControl(cboPlace,      'PLACE',     1);
               SetControl(txtAttn,       'PROVIDER',  1);
               SetControl(calEarliest,   'EARLIEST',  1);
-              //SetControl(calLatest,     'LATEST',    1);
               SetTemplateDialogCanceled(FALSE);
               SetControl(memReason,     'COMMENT',   1);
               if WasTemplateDialogCanceled and OrderContainsObjects then
@@ -1068,7 +1060,7 @@ begin
 
  LexiconLookup(Match, LX_ICD);
  if Match = '' then Exit;
- ProvDx.Code := Piece(Match, U, 1);
+ ProvDx.Code := Piece(Piece(Match, U, 1), '/', 1);
  ProvDx.Text := Piece(Match, U, 2);
  i := Pos(' (ICD', ProvDx.Text);
  if i = 0 then i := Length(ProvDx.Text) + 1;
@@ -1657,7 +1649,7 @@ begin
     begin
       lblEarliest.Enabled := True;
       calEarliest.Enabled := True;
-      calEarliest.Text := 'TODAY';
+      if calEarliest.Text = 'T' then calEarliest.Text := 'TODAY';
     end;
 end;
 

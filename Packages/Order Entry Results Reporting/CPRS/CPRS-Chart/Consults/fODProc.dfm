@@ -19,7 +19,7 @@ inherited frmODProc: TfrmODProc
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 598
+    Width = 590
     Height = 25
     Align = alTop
     BevelOuter = bvLowered
@@ -34,7 +34,7 @@ inherited frmODProc: TfrmODProc
       Name = 'txtCombatVet'
       Left = 1
       Top = 1
-      Width = 596
+      Width = 588
       Height = 23
       Align = alClient
       Alignment = taCenter

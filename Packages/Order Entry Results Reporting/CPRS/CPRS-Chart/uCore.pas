@@ -6,7 +6,7 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet;
+uses SysUtils, Windows, Classes, Forms, ORFn, ORNet, rCore, uConst, ORClasses, uCombatVet;
 
 type
   TUser = class(TObject)
@@ -89,6 +89,7 @@ type
     FLocation:   Integer;                        // IEN in Hosp Loc if inpatient
     FWardService: string;
     FSpecialty:  Integer;                        // IEN of the treating specialty if inpatient
+    FSpecialtySvc: string;                       // treating specialty service if inpatient                                                                               
     FAdmitTime:  TFMDateTime;                    // Admit date/time if inpatient
     FSrvConn:    Boolean;                        // True if patient is service connected
     FSCPercent:  Integer;                        // Per Cent Service Connection
@@ -96,6 +97,8 @@ type
     FPrimProv:   string;                         // name of primary care provider
     FAttending:  string;                         // if inpatient, name of attending
     FAssociate:  string;                         // if inpatient, name of associate
+    FInProvider:  string;                        // if inpatient, name of inpatient provider
+    FMHTC:       string;                         // name of Mental Health Treatment Coordinator
     FDateDied: TFMDateTime;                      // Date of Patient Death (<=0 or still alive)
     FDateDiedLoaded: boolean;                    // Used to determine of DateDied has been loaded
     FCombatVet : TCombatVet;                     // Object Holding CombatVet Data
@@ -118,6 +121,7 @@ type
     property Location:         Integer     read FLocation;
     property WardService:      string      read FWardService;
     property Specialty:        Integer     read FSpecialty;
+    property SpecialtySvc:     string      read FSpecialtySvc;
     property AdmitTime:        TFMDateTime read FAdmitTime;
     property DateDied:         TFMDateTime read GetDateDied;
     property ServiceConnected: Boolean     read FSrvConn;
@@ -126,6 +130,8 @@ type
     property PrimaryProvider:  string      read FPrimProv;
     property Attending:        string      read FAttending;
     property Associate:        string      read FAssociate;
+    property InProvider:        string     read FInProvider;
+    property MHTC:             string      read FMHTC;
     property CombatVet:        TCombatVet  read GetCombatVet;
   end;
 
@@ -175,18 +181,19 @@ type
 
   TChangeItem = class
   private
-    FItemType:  Integer;
-    FID:        string;
-    FText:      string;
-    FGroupName: string;
-    FSignState: Integer;
-    FParentID : string;
-    FUser     : Int64;
-    FOrderDG   : String;
-    FDCOrder  : boolean;
-    FDelay    : boolean;
+    FItemType:     Integer;
+    FID:           String;
+    FText:         String;
+    FGroupName:    String;
+    FSignState:    Integer;
+    FParentID:     String;
+    FUser:         Int64;
+    FOrderDG:      String;
+    FDCOrder:      Boolean;
+    FDelay:        Boolean;
     constructor Create(AnItemType: Integer; const AnID, AText, AGroupName: string;
-      ASignState: Integer; AParentID: string = ''; User: int64 = 0; OrderDG: string = ''; DCOrder: boolean = False; Delay: boolean = False);
+      ASignState: Integer; AParentID: string = ''; User: int64 = 0; OrderDG: string = '';
+      DCOrder: Boolean = False; Delay: Boolean = False);
   public
     property ItemType:  Integer read FItemType;
     property ID:        string  read FID;
@@ -198,26 +205,29 @@ type
     property OrderDG: string read FOrderDG write FOrderDG;
     property DCOrder: boolean read FDCOrder write FDCOrder;
     property Delay: boolean read FDelay write FDelay;
+    function CSValue(): Boolean;
   end;
 
   TORRemoveChangesEvent = procedure(Sender: TObject; ChangeItem: TChangeItem) of object;  {**RV**}
 
   TChanges = class
   private
-    FCount:     Integer;
-    FDocuments: TList;
-    FOrders:    TList;
-    FOrderGrp:  TStringList;
-    FPCE:       TList;
-    FPCEGrp:    TStringList;
-    FOnRemove:  TORRemoveChangesEvent;    {**RV**}
+    FCount:        Integer;
+    FDocuments:    TList;
+    FOrders:       TList;
+    FOrderGrp:     TStringList;
+    FPCE:          TList;
+    FPCEGrp:       TStringList;
+    FOnRemove:     TORRemoveChangesEvent;    {**RV**}
+    FRefreshCoverPL: Boolean;
+    FRefreshProblemList: Boolean;
   private
     procedure AddUnsignedToChanges;
   public
     constructor Create;
     destructor Destroy; override;
     procedure Add(ItemType: Integer; const AnID, ItemText, GroupName: string; SignState: Integer; AParentID: string = '';
-                  User: int64 = 0; OrderDG: String = ''; DCOrder: boolean = FALSE; Delay: boolean = False);
+                  User: int64 = 0; OrderDG: String = ''; DCOrder: Boolean = False; Delay: Boolean = False; ProblemAdded: Boolean = False);
     procedure Clear;
     function CanSign: Boolean;
     function Exist(ItemType: Integer; const AnID: string): Boolean;
@@ -237,6 +247,8 @@ type
     property PCE:        TList       read FPCE;
     property OrderGrp: TStringList read FOrderGrp;
     property PCEGrp:   TStringList read FPCEGrp;
+    property RefreshCoverPL: Boolean read FRefreshCoverPL write FRefreshCoverPL;
+    property RefreshProblemList: Boolean read FRefreshProblemList write FRefreshProblemList;
   end;
 
   TNotifyItem = class
@@ -720,25 +732,27 @@ end;
 procedure TPatient.Clear;
 { clears all fields in the Patient object }
 begin
-  FDFN         := '';
-  FName        := '';
-  FSSN         := '';
-  FDOB         := 0;
-  FAge         := 0;
-  FSex         := 'U';
-  FCWAD        := '';
-  FRestricted  := False;
-  FInpatient   := False;
-  FStatus      := '';
-  FLocation    := 0;
-  FWardService := '';
-  FSpecialty   := 0;
-  FAdmitTime   := 0;
-  FSrvConn     := False;
-  FSCPercent   := 0;
-  FPrimTeam    := '';
-  FPrimProv    := '';
-  FAttending   := '';
+  FDFN          := '';
+  FName         := '';
+  FSSN          := '';
+  FDOB          := 0;
+  FAge          := 0;
+  FSex          := 'U';
+  FCWAD         := '';
+  FRestricted   := False;
+  FInpatient    := False;
+  FStatus       := '';
+  FLocation     := 0;
+  FWardService  := '';
+  FSpecialty    := 0;
+  FSpecialtySvc := '';
+  FAdmitTime    := 0;
+  FSrvConn      := False;
+  FSCPercent    := 0;
+  FPrimTeam     := '';
+  FPrimProv     := '';
+  FAttending    := '';
+  FMHTC         := '';
   FreeAndNil(FCombatVet);
 end;
 
@@ -785,9 +799,10 @@ begin
   FInpatient  := Length(PtSelect.Location) > 0;
   if FInpatient then FStatus := ' (INPATIENT)'
   else FStatus := ' (OUTPATIENT)';
-  FWardService :=PtSelect.WardService;
+  FWardService := PtSelect.WardService;
   FLocation   := PtSelect.LocationIEN;
   FSpecialty  := PtSelect.SpecialtyIEN;
+  FSpecialtySvc := PtSelect.SpecialtySvc;
   FAdmitTime  := PtSelect.AdmitTime;
   FSrvConn    := PtSelect.ServiceConnected;
   FSCPercent  := PtSelect.SCPercent;
@@ -795,6 +810,8 @@ begin
   FPrimProv   := PtSelect.PrimaryProvider;
   FAttending  := PtSelect.Attending;
   FAssociate  := PtSelect.Associate;
+  FInProvider := PtSelect.InProvider;
+  FMHTC       := PtSelect.MHTC
 end;
 
 { TEncounter ------------------------------------------------------------------------------- }
@@ -967,7 +984,7 @@ end;
 { TChangeItem ------------------------------------------------------------------------------ }
 
 constructor TChangeItem.Create(AnItemType: Integer; const AnID, AText, AGroupName: string;
-  ASignState: Integer; AParentID: string; user: int64; OrderDG: string; DCOrder, Delay: boolean);
+  ASignState: Integer; AParentID: string; user: int64; OrderDG: string; DCOrder, Delay: Boolean);
 begin
   FItemType  := AnItemType;
   FID        := AnID;
@@ -981,16 +998,27 @@ begin
   FDelay     := Delay;
 end;
 
+function TChangeItem.CSValue(): boolean;
+var
+  ret: string;
+begin
+  ret := sCallV('ORDEA CSVALUE', [FID]);
+  if ret = '1' then Result :=  True
+  else Result := False;
+end;
+
 { TChanges --------------------------------------------------------------------------------- }
 
 constructor TChanges.Create;
 begin
-  FDocuments := TList.Create;
-  FOrders    := TList.Create;
-  FPCE       := TList.Create;
-  FOrderGrp  := TStringList.Create;
-  FPCEGrp    := TStringList.Create;
-  FCount := 0;
+  FDocuments          := TList.Create;
+  FOrders             := TList.Create;
+  FPCE                := TList.Create;
+  FOrderGrp           := TStringList.Create;
+  FPCEGrp             := TStringList.Create;
+  FCount              := 0;
+  FRefreshCoverPL     := False;
+  FRefreshProblemList := False;
 end;
 
 destructor TChanges.Destroy;
@@ -1005,7 +1033,8 @@ begin
 end;
 
 procedure TChanges.Add(ItemType: Integer; const AnID, ItemText, GroupName: string;
-  SignState: Integer; AParentID: string; User: int64; OrderDG: String; DCOrder, Delay: boolean);
+  SignState: Integer; AParentID: string; User: int64; OrderDG: String;
+  DCOrder, Delay, ProblemAdded: Boolean);
 var
   i: Integer;
   Found: Boolean;
@@ -1021,6 +1050,8 @@ begin
   CH_ORD: ChangeList := FOrders;
   CH_PCE: ChangeList := FPCE;
   end;
+  FRefreshCoverPL := ProblemAdded;
+  FRefreshProblemList := ProblemAdded;
   Found := False;
   if ChangeList <> nil then with ChangeList do for i := 0 to Count - 1 do
     with TChangeItem(Items[i]) do if ID = AnID then

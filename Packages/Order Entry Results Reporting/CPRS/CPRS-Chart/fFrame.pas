@@ -1,5 +1,6 @@
 unit fFrame;
-{ This is the main form for the CPRS GUI.  It provides a patient-encounter-user framework
+{ This is the m
+ain form for the CPRS GUI.  It provides a patient-encounter-user framework
   which all the other forms of the GUI use. }
 
 {$OPTIMIZATION OFF}                              // REMOVE AFTER UNIT IS DEBUGGED
@@ -14,7 +15,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, Tabs, ComCtrls,
   ExtCtrls, Menus, StdCtrls, Buttons, ORFn, fPage, uConst, ORCtrls, Trpcb,
   OleCtrls, VERGENCECONTEXTORLib_TLB, ComObj, AppEvnts, fBase508Form,
-  VA508AccessibilityManager, RichEdit;
+  VA508AccessibilityManager, RichEdit, XUDsigS;
 
 type
   TfrmFrame = class(TfrmBase508Form)
@@ -137,6 +138,8 @@ type
     pnlCIRN: TKeyClickPanel;
     lblCIRN: TLabel;
     mnuEditRedo: TMenuItem;
+    lblPtMHTC: TStaticText;
+    DigitalSigningSetup1: TMenuItem;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -179,8 +182,6 @@ type
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure pnlPrimaryCareMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
-    function FormHelp(Command: Word; Data: Integer;
-      var CallHelp: Boolean): Boolean;
     procedure pnlRemindersMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure pnlRemindersMouseUp(Sender: TObject; Button: TMouseButton;
@@ -249,6 +250,7 @@ type
     procedure mnuEditRedoClick(Sender: TObject);
     procedure tabPageMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure DigitalSigningSetup1Click(Sender: TObject);
   private
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
@@ -379,6 +381,8 @@ var
   PTSwitchRefresh: boolean = FALSE;  //flag for patient refresh or switch of patients
   ProbTabClicked: boolean = FALSE;
   TabCtrlClicked: Boolean = FALSE;
+  DEAContext: Boolean = False;
+  DelayReviewChanges: Boolean = False;
 
 const
   PASSCODE = '_gghwn7pghCrOJvOV61PtPvgdeEU2u5cRsGvpkVDjKT_H7SdKE_hqFYWsUIVT1H7JwT6Yz8oCtd2u2PALqWxibNXx3Yo8GPcTYsNaxW' + 'ZFo8OgT11D5TIvpu3cDQuZd3Yh_nV9jhkvb0ZBGdO9n-uNXPPEK7xfYWCI2Wp3Dsu9YDSd_EM34nvrgy64cqu9_jFJKJnGiXY96Lf1ecLiv4LT9qtmJ-BawYt7O9JZGAswi344BmmCbNxfgvgf0gfGZea';
@@ -618,7 +622,8 @@ begin
      end;
   lblPtCare.Caption     := 'Primary Care Team Unassigned';
   lblPtAttending.Caption := '';
-  pnlPrimaryCare.Caption := lblPtCare.Caption + ' ' + lblPtAttending.Caption;
+  lblPtMHTC.Caption := '';
+  pnlPrimaryCare.Caption := lblPtCare.Caption + ' ' + lblPtAttending.Caption + ' ' + lblPtMHTC.Caption;
   frmCover.ClearPtData;
   frmProblems.ClearPtData;
   frmMeds.ClearPtData;
@@ -646,7 +651,7 @@ begin
     Initialize;
     DisplayData('top');
     DisplayData('bottom');
-    GtslCheck.Clear;
+    //GtslCheck.Clear;
     Caption := 'CPRS Graphing - Patient: ' + MixedCase(Patient.Name);
   end;
   if frmFrame.TimedOut then
@@ -656,6 +661,14 @@ begin
              + CRLF + CRLF + 'Please report all occurrences of this problem by contacting your CPRS Help Desk.', 'CPRS Error', MB_OK);
     frmFrame.Close;
   end;
+end;
+
+procedure TfrmFrame.DigitalSigningSetup1Click(Sender: TObject);
+begin
+  inherited;
+  LastPINvalue := '';
+  SetSAN(Self);
+  LastPINvalue := '';
 end;
 
 procedure TfrmFrame.DisplayEncounterText;
@@ -692,7 +705,7 @@ end;
 procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
-  ClientVer, ServerVer, ServerReq: string;
+  ClientVer, ServerVer, ServerReq, SAN: string;
 begin
   FJustEnteredApp := false;
   SizeHolder := TSizeHolder.Create;
@@ -716,6 +729,7 @@ begin
       mnuFileResumeContext.Visible := False;
       mnuFileBreakContext.Visible := False;
     end;
+  
   RefreshFixedStatusWidth;
   FTerminate := False;
   AutoUpdateCheck;
@@ -785,7 +799,10 @@ begin
     InfoBox('Client "version" does not match client "required" server.', TC_CLIERR, MB_OK);
     Close;
     Exit;
-  end;
+  end; 
+  SAN := sCallV('XUS PKI GET UPN', []);
+  if SAN='' then DigitalSigningSetup1.Visible := True
+  else DigitalSigningSetup1.Visible := False;
   if (CompareVersion(ServerVer, ServerReq) <> 0) then
   begin
     if (sCallV('ORWU DEFAULT DIVISION', [nil]) = '1') then
@@ -1436,12 +1453,18 @@ begin
       else lblPtPostings.Caption := 'No Postings';
     lblPtCWAD.Caption := CWAD;
     pnlPostings.Caption := lblPtPostings.Caption + ' ' + lblPtCWAD.Caption;
-    if (Length(PrimaryTeam) > 0) or (Length(PrimaryProvider) > 0)
-      then lblPtCare.Caption := PrimaryTeam + ' / ' + MixedCase(PrimaryProvider);
-    if Length(Attending) > 0 then lblPtAttending.Caption := 'Attending:  ' + MixedCase(Attending);
+    if (Length(PrimaryTeam) > 0) or (Length(PrimaryProvider) > 0) then
+    begin
+      lblPtCare.Caption := PrimaryTeam + ' / ' + MixedCase(PrimaryProvider);
+      if Length(Associate)>0 then lblPtCare.Caption :=  lblPtCare.Caption + ' / ' + MixedCase(Associate);
+    end;
+    if Length(Attending) > 0 then lblPtAttending.Caption := '(Inpatient) Attending:  ' + MixedCase(Attending);
     pnlPrimaryCare.Caption := lblPtCare.Caption + ' ' + lblPtAttending.Caption;
-    if Length(Associate) > 0  then lblPtAttending.Caption := lblPtAttending.Caption + ' - Associate: ' + MixedCase(Associate);
-    pnlPrimaryCare.Caption := lblPtCare.Caption + ' ' + lblPtAttending.Caption ;
+    if Length(InProvider) > 0  then lblPtAttending.Caption := lblPtAttending.Caption + ' - (Inpatient) Provider: ' + MixedCase(InProvider);
+    if Length(MHTC) > 0 then lblPtMHTC.Caption := 'MH Treatment Coordinator: ' + MixedCase(MHTC);
+    if (Length(MHTC) = 0) and (Inpatient = True) and (SpecialtySvc = 'P') then
+      lblPtMHTC.Caption := 'MH Treatment Coordinator Unassigned';
+    pnlPrimaryCare.Caption := lblPtCare.Caption + ' ' + lblPtAttending.Caption + ' ' + lblPtMHTC.Caption;
     SetUpCIRN;
     DisplayEncounterText;
     SetShareNode(DFN, Handle);
@@ -1631,6 +1654,8 @@ begin
     NF_FLAGGED_OI_RESULTS            : NextIndex := PageIDToTab(CT_ORDERS);
     NF_FLAGGED_OI_ORDER              : NextIndex := PageIDToTab(CT_ORDERS);
     NF_DC_ORDER                      : NextIndex := PageIDToTab(CT_ORDERS);
+    NF_DEA_AUTO_DC_CS_MED_ORDER      : NextIndex := PageIDToTab(CT_ORDERS);
+    NF_DEA_CERT_REVOKED              : NextIndex := PageIDToTab(CT_ORDERS);
     NF_CONSULT_UNSIGNED_NOTE         : NextIndex := PageIDToTab(CT_CONSULTS);
     NF_DCSUMM_UNSIGNED_NOTE          : NextIndex := PageIDToTab(CT_DCSUMM);
     NF_NOTES_UNSIGNED_NOTE           : NextIndex := PageIDToTab(CT_NOTES);
@@ -2268,6 +2293,7 @@ begin
   pnlPrimaryCare.BevelOuter := bvLowered;
   with lblPtCare      do SetBounds(Left+2, Top+2, Width, Height);
   with lblPtAttending do SetBounds(Left+2, Top+2, Width, Height);
+  with lblPtMHTC do SetBounds(Left+2, Top+2, Width, Height);
 end;
 
 procedure TfrmFrame.pnlPrimaryCareMouseUp(Sender: TObject;
@@ -2277,6 +2303,7 @@ begin
   pnlPrimaryCare.BevelOuter := bvRaised;
   with lblPtCare      do SetBounds(Left-2, Top-2, Width, Height);
   with lblPtAttending do SetBounds(Left-2, Top-2, Width, Height);
+  with lblPtMHTC      do SetBounds(Left-2, Top-2, Width, Height);
 end;
 
 procedure TfrmFrame.pnlPostingsMouseDown(Sender: TObject;
@@ -2503,6 +2530,7 @@ begin
       with lblPtPostings do Font.Size := NewFontSize;
       with lblPtCare     do Font.Size := NewFontSize;
       with lblPtAttending do Font.Size := NewFontSize;
+      with lblPtMHTC      do Font.Size := NewFontSize;
       with lblFlag       do Font.Size := NewFontSize;
       with lblPtCWAD     do Font.Size := NewFontSize;
       with lblCIRN       do Font.Size := NewFontSize;
@@ -2582,7 +2610,8 @@ const
   CV_WIDTH      = 15; //14; WAT
   CIRN_WIDTH    = 11;
   MHV_WIDTH     = 6;
-  LINES_HIGH    = 2;
+  LINES_HIGH2    = 2;
+  LINES_HIGH3    = 3;    //lblPtMHTC line change
   M_HORIZ       = 4;
   M_MIDDLE      = 2;
   M_NVERT       = 4;
@@ -2591,7 +2620,25 @@ const
 //var
   //WidthNeeded: integer;
 begin
-  pnlToolbar.Height  := (LINES_HIGH * lblPtName.Height) + M_HORIZ + M_MIDDLE + M_HORIZ;
+  if lblPtMHTC.caption = '' then
+  begin
+    lblPtMHTC.Visible := false;
+    pnlToolbar.Height  := (LINES_HIGH2 * lblPtName.Height) + M_HORIZ + M_MIDDLE + M_HORIZ + M_MIDDLE
+  end
+  else
+  begin
+    if (lblPtAttending.Caption <> '') and (lblPtAttending.Caption <> lblPtMHTC.Caption) then
+    begin
+      lblPtMHTC.Visible := true;
+      pnlToolbar.Height  := (LINES_HIGH3 * lblPtName.Height) + M_HORIZ + M_MIDDLE + M_HORIZ + M_HORIZ;
+    end;
+    if lblPtAttending.Caption = '' then
+    begin
+      lblPtAttending.Caption := lblPtMHTC.Caption;
+      lblPtMHTC.Visible := false;
+      pnlToolbar.Height  := (LINES_HIGH2 * lblPtName.Height) + M_HORIZ + M_MIDDLE + M_HORIZ + M_MIDDLE;
+    end;
+  end;
   pnlPatient.Width   := HigherOf(PATIENT_WIDTH * MainFontWidth, lblPtName.Width + (M_WVERT * 2));
   lblPtSSN.Top       := M_HORIZ + lblPtName.Height + M_MIDDLE;
   lblPtAge.Top       := lblPtSSN.Top;
@@ -2602,6 +2649,7 @@ begin
                                  PATIENT_WIDTH * MainFontWidth);
   lblPtProvider.Top  := lblPtSSN.Top;
   lblPtAttending.Top := lblPtSSN.Top;
+  lblPtMHTC.Top       := M_MIDDLE + lblPtSSN.Height + lblPtSSN.Top;
   pnlPostings.Width  := Round(POSTING_WIDTH * MainFontWidth);
   if btnCombatVet.Visible then
    begin
@@ -2622,7 +2670,8 @@ begin
   with lblPtCWAD     do
     SetBounds(M_WVERT, lblPtSSN.Top, lblPtPostings.Width, lblPtName.Height);
   //Low resolution handling: First, try to fit everything on by shrinking fields
-  if pnlPrimaryCare.Width < HigherOf( lblPtCare.Left + lblPtCare.Width, lblPtAttending.Left + lblPtAttending.Width) + TINY_MARGIN then
+  if pnlPrimaryCare.Width < HigherOf( lblPtCare.Left + lblPtCare.Width, HigherOf(lblPtAttending.Left + lblPtAttending.Width,lblPtMHTC.Left + lblPtMHTC.Width)) + TINY_MARGIN then
+  //if pnlPrimaryCare.Width < HigherOf( lblPtCare.Left + lblPtCare.Width, lblPtAttending.Left + lblPtAttending.Width) + TINY_MARGIN then
   begin
     lblPtAge.Left := lblPtAge.Left - (lblPtName.Left - TINY_MARGIN);
     lblPtName.Left := TINY_MARGIN;
@@ -2741,30 +2790,6 @@ begin
   CT_PROBLEMS: frmProblems.RequestPrint;
   CT_SURGERY:  if Assigned(frmSurgery) then frmSurgery.RequestPrint;
   end;
-end;
-
-function TfrmFrame.FormHelp(Command: Word; Data: Integer;
-  var CallHelp: Boolean): Boolean;
-var
-  ActiveForm: TForm;
-begin
-  inherited;
-  if Screen.ActiveForm <> nil then
-    begin
-      if Screen.ActiveForm.ActiveControl <> nil then
-        begin
-          if Screen.ActiveForm.ActiveControl is TForm then
-            ActiveForm := TForm(Screen.ActiveForm.ActiveControl)
-          else if Screen.ActiveForm.ActiveControl.Owner is TForm then
-            ActiveForm := TForm(Screen.ActiveForm.ActiveControl.Owner)
-          else
-            ActiveForm := Screen.ActiveForm;
-        end
-      else
-        ActiveForm := Screen.ActiveForm;
-      HelpFile := ActiveForm.HelpFile;
-    end ;
-  Result := True;
 end;
 
 procedure TfrmFrame.WMSysCommand(var Message: TMessage);
@@ -4149,7 +4174,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_va.gov]request.id.name');
+  anItem := data.Present('[hds_med_domain]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -4377,8 +4402,11 @@ begin
 end;
 
 procedure TfrmFrame.mnuToolsGraphingClick(Sender: TObject);
+var
+  contexthint: string;
 begin
   Screen.Cursor := crHourGlass;
+  contexthint := mnuToolsGraphing.Hint;
   if GraphFloat = nil then              // new graph
   begin
     GraphFloat := TfrmGraphs.Create(self);
@@ -4397,6 +4425,7 @@ begin
         BorderWidth := 1;
         // context sensitive       type (tabPage.TabIndex)  & [item]
         ResizeAnchoredFormToFont(GraphFloat);
+        GraphFloat.pnlFooter.Hint := contexthint;   // context from lab most recent
         Show;
       end;
     finally
@@ -4413,13 +4442,22 @@ begin
   else
   begin
     GraphFloat.Caption := 'CPRS Graphing - Patient: ' + MixedCase(Patient.Name);
+    GraphFloat.pnlFooter.Hint := contexthint;   // context from lab most recent
     if GraphFloat.btnClose.Tag = 1 then
     begin
       Screen.Cursor := crDefault;
       exit;
     end
     else if GraphFloatActive and (frmGraphData.pnlData.Hint = Patient.DFN) then
-      GraphFloat.BringToFront             // graph is active, same patient
+    begin
+      if length(GraphFloat.pnlFooter.Hint) > 1 then
+      begin
+        GraphFloat.Close;
+        GraphFloatActive := true;
+        GraphFloat.Show;
+      end;
+      GraphFloat.BringToFront;             // graph is active, same patient
+    end
     else if frmGraphData.pnlData.Hint = Patient.DFN then
     begin                                 // graph is not active, same patient
       // context sensitive
@@ -4434,17 +4472,9 @@ begin
       GraphFloat.Free;
       GraphFloat := nil;
       mnuToolsGraphingClick(self);          // delete and recurse
-      {//FormCreate(self);   //****************
-      Initialize;
-      DisplayData('top');
-      DisplayData('bottom');
-      GtslCheck.Clear;
-      Caption := 'CPRS Graphing - Patient: ' + MixedCase(Patient.Name);
-      // context sensitive
-      Show;
-      GraphFloatActive := true;}
     end;
   end;
+  mnuToolsGraphing.Hint := '';
   Screen.Cursor := crDefault;
 end;
 
@@ -4461,7 +4491,7 @@ end;
 procedure TfrmFrame.laMHVClick(Sender: TObject);
 begin
   //if laMHV.Caption = 'MHV' then
-  //  ShellExecute(Handle, 'open', PChar('http://www.myhealth.va.gov/'), '', '', SW_NORMAL);
+  //  ShellExecute(Handle, 'open', PChar('http://www.doma.domain.ext/'), '', '', SW_NORMAL);
   ViewInfo(mnuViewMyHealtheVet);
 end;
 
@@ -4508,7 +4538,7 @@ begin
       end;
     4:begin
         if laMHV.Caption = 'MHV' then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.va.gov/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.doma.domain.ext/'), '', '', SW_NORMAL);
       end;
     5:begin
         if fCover.VAAFlag[0] <> '0' then //'0' means subscriber not found

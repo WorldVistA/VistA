@@ -8,20 +8,22 @@ uses
 
 type
   TfrmAbout = class(TfrmAutoSz)
-    Panel1: TPanel;
+    pnlLogo: TPanel;
     Image1: TImage;
-    cmdOK: TButton;
     lblProductName: TStaticText;
     lblFileVersion: TStaticText;
     lblCompanyName: TStaticText;
     lblComments: TStaticText;
     lblCRC: TStaticText;
-    lblLegalCopyright: TMemo;
-    bvlBottom: TBevel;
     lblFileDescription: TStaticText;
     lblInternalName: TStaticText;
     lblOriginalFileName: TStaticText;
-    bvl508Disclaimer: TBevel;
+    pnlBottom: TPanel;
+    pnlButton: TPanel;
+    cmdOK: TButton;
+    pnlCopyright: TPanel;
+    lblLegalCopyright: TMemo;
+    pnl508Disclaimer: TPanel;
     lbl508Notice: TMemo;
     procedure FormCreate(Sender: TObject);
   private

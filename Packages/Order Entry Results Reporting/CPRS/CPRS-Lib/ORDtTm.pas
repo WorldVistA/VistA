@@ -744,7 +744,7 @@ begin
   if Length(Text) > 0 then
   begin
    {
-!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - VHAISPBELLC !!!!!!
+!!!!!! THIS HAS BEEN REMOVED AS IT CAUSED PROBLEMS WITH REMINDER DIALOGS - ZZZZZZBELLC !!!!!!
     //We need to make sure that there is a date entered before parse
     if FRequireTime and ((Pos('@', Text) = 0) or (Length(Piece(Text, '@', 1)) = 0)) then
      ErrMsg := 'Date Required';

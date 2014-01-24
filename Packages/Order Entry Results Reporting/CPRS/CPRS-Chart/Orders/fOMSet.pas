@@ -34,7 +34,7 @@ type
     FActiveMenus: Integer;
     FClosebyDeaCheck: Boolean;
     function  IsCreatedByMenu(ASetItem: TSetItem): boolean;
-    function  DeaCheckPassed(OIIens: string; APkg: string; AnEventType: Char): boolean;
+    function  DeaCheckPassed(OIIens: string; APkg: string; AnEventType: Char): string;
     procedure DoNextItem;
     procedure UMDestroy(var Message: TMessage); message UM_DESTROY;
     procedure UMDelayEvent(var Message: TMessage); message UM_DELAYEVENT;
@@ -67,11 +67,25 @@ procedure TfrmOMSet.InsertList(SetList: TStringList; AnOwner: TComponent; ARefNu
   const KeyVarStr: string; AnEventType: Char);
 { expects SetList to be strings of DlgIEN^DlgType^DisplayName^OrderableItemIens }
 const
-  TXT_DEAFAIL = 'You need have #DEA key to place the order ';
-  TXT_INSTRUCT = #13 + 'Click OK to continue, Click Cancel to terminate the current order process.';
+  TXT_DEAFAIL1 = 'Order for controlled substance ';
+  TXT_DEAFAIL2 = CRLF + 'could not be completed. Provider does not have a' + CRLF +
+                 'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
+  TXT_SCHFAIL  = CRLF + 'could not be completed. Provider is not authorized' + CRLF +
+                 'to prescribe medications in Federal Schedule ';
+  TXT_NO_DETOX = CRLF + 'could not be completed. Provider does not have a' + CRLF +
+                 'valid Detoxification/Maintenance ID number on' + CRLF + 'record and is ineligible to sign the order.';
+  TXT_EXP_DETOX1 = CRLF + 'could not be completed. Provider''s Detoxification/Maintenance' + CRLF +
+                   'ID number expired due to an expired DEA# on ';
+  TXT_EXP_DETOX2 = '.' + CRLF + 'Provider is ineligible to sign the order.';
+  TXT_EXP_DEA1 = CRLF + 'could not be completed. Provider''s DEA# expired on ';
+  TXT_EXP_DEA2 = CRLF + 'and no VA# is assigned. Provider is ineligible to sign the order.';
+  TXT_INSTRUCT = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF +
+                 'Click CANCEL to cancel the current order process.';
+  TC_DEAFAIL   = 'Order not completed';
 var
   i, InsertAt: Integer;
   SetItem: TSetItem;
+  DEAFailStr, TX_INFO: string;
 begin
   InsertAt := lstSet.ItemIndex + 1;
   with SetList do for i := 0 to Count - 1 do
@@ -87,16 +101,30 @@ begin
       SetItem.OwnedBy := AnOwner;
       SetItem.RefNum  := ARefNum;
     end;
-    if not DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType) then
-      if InfoBox(TXT_DEAFAIL + Piece(SetList[i], U, 3) + TXT_INSTRUCT,
-          'Warning', MB_OKCANCEL or MB_ICONWARNING) = IDOK then
-        Continue
+    DEAFailStr := '';
+    DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
+    case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+      1:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_DEAFAIL2;  //prescriber has an invalid or no DEA#
+      2:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+      3:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_NO_DETOX;  //prescriber has an invalid or no Detox#
+      4:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DEA1 + Piece(DEAFailStr,U,2) + TXT_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+      5:  TX_INFO := TXT_DEAFAIL1 + Piece(SetList[i], U, 3) + TXT_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TXT_EXP_DETOX2;  //valid detox#, but expired DEA#
+    end;
+    if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then
+      if InfoBox(TX_INFO + TXT_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL or MB_ICONERROR) = IDRETRY then
+        begin
+          DEAContext := True;
+          fFrame.frmFrame.mnuFileEncounterClick(Self);
+          DEAFailStr := '';
+          DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
+          if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then Continue
+        end
       else
-      begin
-        FClosebyDeaCheck := True;
-        Close;
-        Exit;
-      end;
+        begin
+          FClosebyDeaCheck := True;
+          Close;
+          Exit;
+        end;
     lstSet.Items.InsertObject(InsertAt, Piece(SetList[i], U, 3), SetItem);
     Inc(InsertAt);
   end;
@@ -312,28 +340,36 @@ begin
     Close;
 end;
 
-function TfrmOMSet.DeaCheckPassed(OIIens: string; APkg: string; AnEventType: Char): boolean;
+function TfrmOMSet.DeaCheckPassed(OIIens: string; APkg: string; AnEventType: Char): string;
 var
   tmpIenList: TStringList;
   i: integer;
-  isInpt: boolean;
+  InptDlg: boolean;
+  DEAFailstr: string;
 begin
-  Result := True;
+  Result := '';
+  InptDlg := False;
   if Pos('PS',APkg) <> 1 then
     Exit;
   if Length(OIIens)=0 then Exit;
   tmpIenList := TStringList.Create;
   PiecesToList(OIIens,';',TStrings(tmpIenList));
-  case AnEventType of
+  (* case AnEventType of
   'A','T': isInpt := True;
   'D': isInpt := False;
   else isInpt := Patient.Inpatient;
-  end;
+  end; *)
+  if APkg = 'PSO' then InptDlg := False
+  else if APkg = 'PSJ' then InptDlg := True;
   for i := 0 to tmpIenList.Count - 1 do
-    if DEACheckFailed(StrToIntDef(tmpIenList[i],0), isInpt) then
     begin
-      Result := False;
-      Break;
+      DEAFailStr := '';
+      DEAFailStr := DEACheckFailed(StrToIntDef(tmpIenList[i],0), InptDlg);
+      if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then
+      begin
+        Result := DEAFailStr;
+        Break;
+      end;
     end;
 end;
 

@@ -4,8 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBase, StdCtrls, CheckLst, ORCtrls, ORNet, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
-  ComCtrls, fPCEBaseMain, UBAGlobals, UBAConst, UCore, VA508AccessibilityManager;
+  fPCEBase, StdCtrls, CheckLst, ORNet, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
+  ComCtrls, fPCEBaseMain, UBAGlobals, UBAConst, UCore, VA508AccessibilityManager,
+  ORCtrls;
 
 type
   TfrmDiagnoses = class(TfrmPCEBaseMain)
@@ -22,6 +23,9 @@ type
     procedure GetEncounterDiagnoses;
     procedure lbSectionDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
+    procedure lbxSectionDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure lbGridSelect(Sender: TObject);
   private
     procedure EnsurePrimaryDiag;
     function isProblem(diagnosis: TPCEDiag): Boolean;
@@ -33,14 +37,22 @@ type
   end;
 
 const
-  TX_INACTIVE_CODE = 'The "#" character next to the code for this problem indicates that the problem' + #13#10 +
-                     'references an ICD code that is not active as of the date of this encounter.' + #13#10 +
-                     'Before you can select this problem, you must update the ICD code it contains' + #13#10 +
-                     'via the Problems tab.';
-  TC_INACTIVE_CODE = 'Problem Contains Inactive Code';
-  TX_REDUNDANT_DX  = 'The problem that you''ve selected is already included in the list of diagnoses' + #13#10 +
-                     'for this encounter. No need to select it again...';
-  TC_REDUNDANT_DX  = 'Redundant Diagnosis: ';
+  TX_INACTIVE_ICD_CODE     = 'The "#" character next to the code for this problem indicates that the problem' + #13#10 +
+                             'references an ICD code that is not active as of the date of this encounter.' + #13#10 +
+                             'Before you can select this problem, you must update the ICD code it contains' + #13#10 +
+                             'via the Problems tab.';
+  TX_INACTIVE_SCT_CODE     = 'The "#" character next to the code for this problem indicates that the problem' + #13#10 +
+                             'references a SNOMED CT code that is not active as of the date of this encounter.' + #13#10 +
+                             'Before you can select this problem, you must update the SNOMED CT code it contains' + #13#10 +
+                             'via the Problems tab.';
+  TX_INACTIVE_ICD_SCT_CODE = 'The "#" character next to the code for this problem indicates that the problem' + #13#10 +
+                             'references BOTH an ICD and a SNOMED CT code that is not active as of the date' + #13#10 +
+                             'of this encounter. Before you can select this problem, you must update the codes' + #13#10 +
+                             'it contains via the Problems tab.';
+  TC_INACTIVE_CODE         = 'Problem Contains Inactive Code';
+  TX_REDUNDANT_DX          = 'The problem that you''ve selected is already included in the list of diagnoses' + #13#10 +
+                             'for this encounter. No need to select it again...';
+  TC_REDUNDANT_DX          = 'Redundant Diagnosis: ';
 
 var
   frmDiagnoses: TfrmDiagnoses;
@@ -52,6 +64,49 @@ implementation
 
 uses
   fEncounterFrame, uConst, UBACore, VA508AccessibilityRouter;
+
+type
+  TORCBImgIdx = (iiUnchecked, iiChecked, iiGrayed, iiQMark, iiBlueQMark,
+    iiDisUnchecked, iiDisChecked, iiDisGrayed, iiDisQMark,
+    iiFlatUnChecked, iiFlatChecked, iiFlatGrayed,
+    iiRadioUnchecked, iiRadioChecked, iiRadioDisUnchecked, iiRadioDisChecked);
+
+const
+  CheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
+    'ORCB_UNCHECKED', 'ORCB_CHECKED', 'ORCB_GRAYED', 'ORCB_QUESTIONMARK',
+    'ORCB_BLUEQUESTIONMARK', 'ORCB_DISABLED_UNCHECKED', 'ORCB_DISABLED_CHECKED',
+    'ORCB_DISABLED_GRAYED', 'ORCB_DISABLED_QUESTIONMARK',
+    'ORLB_FLAT_UNCHECKED', 'ORLB_FLAT_CHECKED', 'ORLB_FLAT_GRAYED',
+    'ORCB_RADIO_UNCHECKED', 'ORCB_RADIO_CHECKED',
+    'ORCB_RADIO_DISABLED_UNCHECKED', 'ORCB_RADIO_DISABLED_CHECKED');
+
+  BlackCheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
+    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
+    'BLACK_ORCB_QUESTIONMARK', 'BLACK_ORCB_BLUEQUESTIONMARK',
+    'BLACK_ORCB_DISABLED_UNCHECKED', 'BLACK_ORCB_DISABLED_CHECKED',
+    'BLACK_ORCB_DISABLED_GRAYED', 'BLACK_ORCB_DISABLED_QUESTIONMARK',
+    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
+    'BLACK_ORCB_RADIO_UNCHECKED', 'BLACK_ORCB_RADIO_CHECKED',
+    'BLACK_ORCB_RADIO_DISABLED_UNCHECKED', 'BLACK_ORCB_RADIO_DISABLED_CHECKED');
+
+var
+  ORCBImages: array[TORCBImgIdx, Boolean] of TBitMap;
+
+function GetORCBBitmap(Idx: TORCBImgIdx; BlackMode: boolean): TBitmap;
+var
+  ResName: string;
+begin
+  if (not assigned(ORCBImages[Idx, BlackMode])) then
+  begin
+    ORCBImages[Idx, BlackMode] := TBitMap.Create;
+    if BlackMode then
+      ResName := BlackCheckBoxImageResNames[Idx]
+    else
+      ResName := CheckBoxImageResNames[Idx];
+    ORCBImages[Idx, BlackMode].LoadFromResourceName(HInstance, ResName);
+  end;
+  Result := ORCBImages[Idx, BlackMode];
+end;
 
 procedure TfrmDiagnoses.EnsurePrimaryDiag;
 var
@@ -68,7 +123,7 @@ begin
 
     if not Primary and (Items.Count > 0) then
     begin
-      GridIndex := Items.Count - 1;//0; vhaispbellc CQ 15836
+      GridIndex := Items.Count - 1;//0; zzzzzzbellc CQ 15836
       TPCEDiag(Items.Objects[Items.Count - 1]).Primary := True;
       GridChanged;
     end;
@@ -124,6 +179,7 @@ end;
 procedure TfrmDiagnoses.btnRemoveClick(Sender: TObject);
 begin
   inherited;
+  Sync2Grid;
   EnsurePrimaryDiag;
 end;
 
@@ -275,9 +331,21 @@ procedure TfrmDiagnoses.lbxSectionClickCheck(Sender: TObject;
 begin
   if (not FUpdatingGrid) and (lbxSection.Checked[Index]) then
   begin
-    if (Piece(lbxSection.Items[Index], U, 5) = '#') then
+    if (Piece(lbxSection.Items[Index], U, 4) = '#') then
     begin
-      InfoBox(TX_INACTIVE_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+      InfoBox(TX_INACTIVE_ICD_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+      lbxSection.Checked[Index] := False;
+      exit;
+    end
+    else if (Piece(lbxSection.Items[Index], U, 4) = '$') then
+    begin
+      InfoBox(TX_INACTIVE_SCT_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+      lbxSection.Checked[Index] := False;
+      exit;
+    end
+    else if (Piece(lbxSection.Items[Index], U, 4) = '#$') then
+    begin
+      InfoBox(TX_INACTIVE_ICD_SCT_CODE, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
       lbxSection.Checked[Index] := False;
       exit;
     end
@@ -293,11 +361,80 @@ begin
   EnsurePrimaryDiag;
 end;
 
+procedure TfrmDiagnoses.lbxSectionDrawItem(Control: TWinControl; Index: Integer;
+  Rect: TRect; State: TOwnerDrawState);
+var
+  Narr, Code: String;
+  Format, CodeTab, ItemRight, DY: Integer;
+  ARect, TmpR: TRect;
+  BMap: TBitMap;
+begin
+  inherited;
+  Narr := Piece((Control as TORListBox).Items[Index], U, 2);
+  Code := Piece((Control as TORListBox).Items[Index], U, 3);
+  CodeTab := StrToInt(Piece(lbxSection.TabPositions, ',', 2));
+
+  // draw CheckBoxes
+  with lbxSection do
+  begin
+    if (CheckBoxes) then
+    begin
+      case CheckedState[Index] of
+        cbUnchecked:
+        begin
+          if (FlatCheckBoxes) then
+            BMap := GetORCBBitmap(iiFlatUnChecked, False)
+          else
+            BMap := GetORCBBitmap(iiUnchecked, False);
+        end;
+        cbChecked:
+        begin
+          if (FlatCheckBoxes) then
+            BMap := GetORCBBitmap(iiFlatChecked, False)
+          else
+            BMap := GetORCBBitmap(iiChecked, False);
+        end;
+      else // cbGrayed:
+      begin
+        if (FlatCheckBoxes) then
+          BMap := GetORCBBitmap(iiFlatGrayed, False)
+        else
+          BMap := GetORCBBitmap(iiGrayed, False);
+        end;
+      end;
+      TmpR := Rect;
+      TmpR.Right := TmpR.Left;
+      dec(TmpR.Left, (LBCheckWidthSpace - 5));
+      DY := ((TmpR.Bottom - TmpR.Top) - BMap.Height) div 2;
+      Canvas.Draw(TmpR.Left, TmpR.Top + DY, BMap);
+    end;
+  end;
+
+  // draw the Problem Text
+  ARect := (Control as TListBox).ItemRect(Index);
+  ARect.Left := ARect.Left + LBCheckWidthSpace;
+  ItemRight := ARect.Right;
+  ARect.Right := CodeTab - 10;
+  Format := (DT_LEFT or DT_NOPREFIX or DT_WORD_ELLIPSIS);
+  DrawText((Control as TListBox).Canvas.Handle, PChar(Narr), Length(Narr), ARect, Format);
+
+  // now draw ICD codes
+  ARect.Left := CodeTab;
+  ARect.Right := ItemRight;
+  DrawText((Control as TListBox).Canvas.Handle, PChar(Code), Length(Code), ARect, Format);
+end;
+
 procedure TfrmDiagnoses.btnOKClick(Sender: TObject);
 begin
   inherited;
   if  BILLING_AWARE then
      GetEncounterDiagnoses;
+end;
+
+procedure TfrmDiagnoses.lbGridSelect(Sender: TObject);
+begin
+  inherited;
+  Sync2Grid;
 end;
 
 procedure TfrmDiagnoses.lbSectionClick(Sender: TObject);
