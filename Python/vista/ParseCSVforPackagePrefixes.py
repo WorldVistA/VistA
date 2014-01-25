@@ -100,10 +100,43 @@ def FindPackagePrefixes(packagename,packages_csv_file):
   prefixes = sorted(included_prefixes+excluded_prefixes)
   return [str(x) for x in prefixes]
 
+def FindPackageFiles(packagename,packages_csv_file):
+  packages_csv = csv.DictReader(open(packages_csv_file,'rb'))
+  package_dir_name = packagename.replace('_',' ')
+  packageprefix = []
+  """
+   This section finds the FileMan file names that are contained in each package.  The
+   list will be passed to the "Verify Fields" Utility option of FileMan to check the
+   database as a test.
+
+   At this point, we will simply return the list for each package.
+  """
+
+  included = set()
+  inSpecifiedPackage=False
+  for fields in packages_csv:
+    newDirName = fields['Directory Name']
+    if newDirName:
+      if newDirName == package_dir_name:
+        inSpecifiedPackage=True
+      elif inSpecifiedPackage:
+        break
+    if inSpecifiedPackage:
+      filenum = fields['File Numbers']
+      if filenum:
+          included.add(filenum)
+
+  included_File_Names = [Prefix( "",x) for x in included]
+  File_Names = sorted(included_File_Names)
+  return [str(x) for x in File_Names]
+
 if __name__ == '__main__':
   print ('sys.argv is %s' % sys.argv)
   if len(sys.argv) <= 1:
     print ('Need the two arguments arguments:packagename,packages_csv_file ')
     sys.exit()
   prefixes = FindPackagePrefixes(sys.argv[1], sys.argv[2])
+  files = FindPackageFiles(sys.argv[1], sys.argv[2])
   print prefixes
+  print "********************************"
+  print files

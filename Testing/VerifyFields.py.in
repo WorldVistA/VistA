@@ -1,0 +1,111 @@
+#---------------------------------------------------------------------------
+# Copyright 2012 The Open Source Electronic Health Record Agent
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#---------------------------------------------------------------------------
+import sys,os,re,time
+sys.path = ['@VISTA_SOURCE_DIR@/Python/vista'] + sys.path
+from OSEHRAHelper import ConnectToMUMPS,PROMPT
+from ParseCSVforPackagePrefixes import FindPackageFiles
+
+VistA=ConnectToMUMPS("@LOGFILENAME@","@VISTA_CACHE_INSTANCE@","@VISTA_CACHE_NAMESPACE@")
+if ('@VISTA_CACHE_USERNAME@' and '@VISTA_CACHE_PASSWORD@'):
+  VistA.login('@VISTA_CACHE_USERNAME@','@VISTA_CACHE_PASSWORD@')
+if VistA.type=='cache':
+  try:
+    VistA.ZN('@VISTA_CACHE_NAMESPACE@')
+  except IndexError,no_namechange:
+    pass
+fileNameLst = FindPackageFiles('@package_file_name@',
+                                   os.path.join('@VISTA_SOURCE_DIR@',
+                                                'Packages.csv'))
+failTestflag=False
+VistA.wait(PROMPT)
+VistA.write('S DUZ=1 D Q^DI')
+VistA.wait('Select OPTION')
+VistA.write('Utility Functions')
+VistA.wait('UTILITY OPTION')
+for filenum in fileNameLst:
+  skipflag=False
+  failflag=False
+  VistA.write('Verify Fields')
+  VistA.wait('MODIFY WHAT FILE')
+  VistA.write('`'+filenum)
+  index = VistA.multiwait(['VERIFY WHICH FIELD','Select UTILITY OPTION','Are you adding a new FILE','MODIFY WHAT FILE'])
+  if index == 0:
+    numentstr = re.search("[0-9,]+ entr[iesy]+",VistA.lastconnection)
+    if numentstr:
+      nument = re.search("[0-9,]+", numentstr.group(0))
+    if nument and int(nument.group(0)) >= 300000:
+      skipflag=True
+    print "File has "+nument.group(0)+" entries"
+    print "Checking fields in File# " + filenum
+    if skipflag:
+      print "Skipping entry with >300,000 entries"
+      VistA.write('^')
+      VistA.wait('UTILITY OPTION')
+    else:
+      VistA.write('ALL')
+      VistA.wait('DO YOU MEAN ALL THE FIELDS IN THE FILE')
+      VistA.write('Yes')
+      VistA.wait('DEVICE')
+      VistA.write('HOME')
+      while True:
+        index2 = VistA.multiwait(['Select UTILITY OPTION',"\<[A-Z0]+\>[A-Z0-9+]+\^",'\%GTM','CHOOSE','STORE THESE ENTRY','to continue','FIELD:'],1800)
+        if index2 == 0:
+          break
+        elif index2 == 1 or index2 == 2:
+          VistA.write('Q')
+          VistA.wait(PROMPT)
+          VistA.write('S DUZ=1 D Q^DI')
+          VistA.wait('Select OPTION')
+          VistA.write('Utility Functions')
+          VistA.wait('UTILITY OPTION')
+          break
+        elif index2 == 3:
+          VistA.write('1')
+        elif index2 >= 4:
+          failcond = ['fails','[Mm]issing','not properly set','not properly Cross-referenced']
+          for condition in failcond:
+            failstring = re.search(condition,VistA.lastconnection)
+            if failstring:
+              failflag=True
+              failTestflag=True
+              print "Problem Found in File# " + filenum + " : found '" + failstring.group(0) + "' entries"
+          if failflag:
+            print "An error has been encountered during verification"
+            print VistA.lastconnection
+            VistA.write("^")
+            VistA.wait('UTILITY OPTION')
+            break
+          else:
+            VistA.write('')
+  elif index == 1:
+    print "No Entries to verify in File# " + filenum
+  elif index == 2:
+    VistA.write("No")
+    VistA.wait('MODIFY WHAT FILE')
+    VistA.write('')
+    VistA.wait('UTILITY OPTION')
+    print "File#" + filenum + " was not able to be found in the system"
+  elif index == 3:
+    VistA.write('')
+    VistA.wait('UTILITY OPTION')
+    print "File#" + filenum + " was not able to be found in the system"
+VistA.write('')
+VistA.wait('Select OPTION')
+VistA.write('')
+VistA.wait(PROMPT)
+VistA.write('h')
+if failTestflag:
+  sys.exit(1)
