@@ -20,6 +20,7 @@ import subprocess
 import re
 import argparse
 from LoggerManager import logger, initConsoleLogging
+import logging
 
 CACHE_DATA_FILE = 'CACHE.DAT'
 #---------------------------------------------------------------------------
@@ -98,6 +99,50 @@ def isInstanceRunning(instanceName):
   except OSError as ex:
     print ex
   return False
+"""
+  dismount/mount a local database via InterSystem Cache ^DATABASE call
+"""
+def dismountLocalDatabase(dbFilePath, testClient):
+  return _mountLocalDatabaseCommon(dbFilePath, testClient, True)
+
+def mountLocalDatabase(dbFilePath, testClient):
+  return _mountLocalDatabaseCommon(dbFilePath, testClient, False)
+
+def _mountLocalDatabaseCommon(dbFilePath, testClient,
+                              isDismount, readOnly=False):
+  # convert dbFilePath to abspath
+  if not os.path.isdir(dbFilePath):
+    logging.error("%s is not a valid directory" % dbFilePath)
+    return False
+  absDbFilePath = os.path.abspath(dbFilePath)
+  conn = testClient.getConnection()
+  testClient.waitForPrompt()
+  if isDismount:
+    conn.send('D DISMOUNT^DATABASE\r')
+  else:
+    conn.send('D MOUNT^DATABASE\r')
+  conn.expect('mount\? ')
+  conn.send(os.path.normpath(absDbFilePath)+ '\r')
+  index = conn.expect(['mount of databases\? ',
+                       'mount\? '
+                      ])
+  if index == 0: # confirmation the mount/dismount action
+    conn.send('Yes\r')
+    if not isDismount: # extra confirmation for mount
+      conn.expect('Mount Read Only\?')
+      if readOnly:
+        conn.send('Yes\r')
+      else:
+        conn.send('No\r')
+    conn.expect('mounted') # just double check
+    conn.expect('mount\? ')
+    conn.send('\r')
+  else: # database is already mounted/dismounted
+    conn.send('\r')
+  testClient.waitForPrompt()
+  conn.send('\r')
+  return True
+
 """
   restore Cache data file for Cache Instance provided
   @instanceName: Cache instance name to restore
@@ -228,9 +273,34 @@ def testExtract():
   destDir = '/tmp'
   extractBZIP2Tarball(bzipFile, destDir)
 
+def testMountDisMountLocalDb():
+  from VistATestClient import createTestClientArgParser
+  from VistATestClient import VistATestClientFactory
+
+  testClientParser = createTestClientArgParser()
+  parser = argparse.ArgumentParser(description='InterSystem Cache Mount Dismount Test',
+                                   parents=[testClientParser])
+  parser.add_argument('-p', '--dirPath', required=True,
+                      help='Enter directory path for the local database')
+  parser.add_argument('-a', '--action', choices=['M','D'],
+                      required=True, type=str,
+                      help='M: mount the database, D: dismount the database. '
+                           'Make sure InterSystem ^DATABASE routine is accessable via'
+                           ' specified namespace.')
+  result = parser.parse_args();
+  print result
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
+  with testClient:
+    if result.action == 'D':
+      logging.info('Dismount LocalDB: %s' % result.dirPath)
+      dismountLocalDatabase(result.dirPath, testClient)
+    else:
+      logging.info('mount LocalDB: %s' % result.dirPath)
+      mountLocalDatabase(result.dirPath, testClient)
+
 def main():
   initConsoleLogging()
-  pass
+  testMountDisMountLocalDb()
 
 if __name__ == '__main__':
   main()
