@@ -148,6 +148,7 @@ class TestSuiteDriver(object):
             remote_conn_details = None
             instance = os.getenv('CACHE_INSTANCE','notused')
             namespace = os.getenv('CACHE_NAMESPACE','')
+            username = os.getenv('CACHE_USERNAME','')
             logging.info("Instance = %s, Namespace = %s" % (instance, namespace))
 
         if not os.path.isdir(args.resultdir):
@@ -165,7 +166,7 @@ class TestSuiteDriver(object):
         result_log = file(resfile, 'w')
 
         return test_suite_details(package_name, test_suite_name, result_log, args.resultdir, instance,
-                           namespace, remote_conn_details, args.coverage_type)
+                           namespace, username, remote_conn_details, args.coverage_type)
 
     def pre_test_suite_run(self, test_suite_details):
         logging.info('Start ATF Test Suite \'' + test_suite_details.test_suite_name + '\'')
@@ -252,6 +253,13 @@ class TestDriver(object):
            print ex
            raise
 
+        if test_suite_details.username != '':
+            test_suite_details.password = os.getenv('CACHE_PASSWORD','')
+            VistA.wait("Username")
+            VistA.write(test_suite_details.username)
+            VistA.wait("Password")
+            VistA.write(test_suite_details.password)
+
         if VistA.type is not None and VistA.type =='cache' and test_suite_details.namespace != '':
             try:
                 VistA.ZN(test_suite_details.namespace)
@@ -275,7 +283,7 @@ class test_suite_details(object):
     '''
 
     def __init__(self, package_name, test_suite_name, result_log, result_dir, instance,
-                 namespace, remote_conn_details,coverage_type):
+                 namespace, username, remote_conn_details,coverage_type):
         '''
         Constructor
         '''
@@ -285,6 +293,7 @@ class test_suite_details(object):
         self.result_dir = result_dir
         self.instance = instance
         self.namespace = namespace
+        self.username = username
         self.remote_conn_details = remote_conn_details
         self.coverage_type = coverage_type
 
