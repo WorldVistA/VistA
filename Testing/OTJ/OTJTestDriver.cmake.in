@@ -15,17 +15,11 @@
 #---------------------------------------------------------------------------
 
 # prepare the arguments list
+include(CommonFunctions)
 set(vendor_args "")
-if("@VENDOR_NAME@" STREQUAL "Cache")
-  list(APPEND vendor_args -S 1 -CN "@VISTA_CACHE_NAMESPACE@" -CI "@VISTA_CACHE_INSTANCE@")
-  string(STRIP "@VISTA_CACHE_USERNAME@" cacheusr)
-  string(LENGTH "${cacheusr}" userLen)
-  if(userLen)
-    list(APPEND vendor_args -CU "@VISTA_CACHE_USERNAME@" -CP "@VISTA_CACHE_PASSWORD@")
-  endif()
-elseif("@VENDOR_NAME@" STREQUAL "GTM")
-  list(APPEND vendor_args -S 2)
-endif()
+SetVendorArgsConfig(vendor_args "@VENDOR_NAME@" "@VISTA_CACHE_NAMESPACE@"
+                     "@VISTA_CACHE_INSTANCE@" "@VISTA_CACHE_USERNAME@"
+                     "@VISTA_CACHE_PASSWORD@")
 set(OTJ_PATCH_DIR "@OTJ_SUBMISSION_DIR@")
 set(PATCH_INSTALL_SCRIPT "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py")
 set(LOG_DIR "@OTJ_LOG_DIR@/@submission_name@")
