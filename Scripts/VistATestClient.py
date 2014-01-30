@@ -41,6 +41,8 @@ else:
 
 DEFAULT_TIME_OUT_VALUE = 30
 CACHE_PROMPT_END = ">"
+DEFAULT_HOST='127.0.0.1'
+DEFAULT_PORT='23'
 
 """ Base class of a VistA Test Client
 """
@@ -58,9 +60,10 @@ class VistATestClient(object):
     self._namespace = namespace
     self._instance = None
   def createConnection(self, command, instance,
-                       username = None, password = None):
+                       username = None, password = None,
+                       hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     pass
-  def waitForPrompt(self, timeout=None):
+  def waitForPrompt(self, timeout=DEFAULT_TIME_OUT_VALUE):
     self._connection.expect(self._prompt, timeout)
   def getConnection(self):
     return self._connection
@@ -127,7 +130,8 @@ class VistATestClientGTMLinux(VistATestClient):
                                               self.DEFAULT_GTM_COMMAND)
     VistATestClient.__init__(self, self.GTM_ON_LINUX, gtm_prompt, None)
   def createConnection(self, command, instance,
-                       username = None, password = None):
+                       username = None, password = None,
+                       hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     if not command:
       command = self.DEFAULT_GTM_COMMAND
     self._connection = pexpect.spawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
@@ -151,15 +155,19 @@ class VistATestClientCache(VistATestClient):
     Make sure that plink is in you %path%
 """
 class VistATestClientCacheWindows(VistATestClientCache):
-  DEFAULT_WIN_TELNET_CMD =  "plink.exe -telnet 127.0.0.1 -P 23"
+  DEFAULT_WIN_TELNET_CMD =  "plink.exe -telnet"
   def __init__(self, namespace):
     assert namespace, "Must provide a namespace"
     prompt = namespace + CACHE_PROMPT_END
     VistATestClientCache.__init__(self, self.CACHE_ON_WINDOWS, prompt, namespace)
+
   def createConnection(self, command, instance,
-                       username = None, password = None):
+                       username = None, password = None,
+                       hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     if not command:
       command = self.DEFAULT_WIN_TELNET_CMD
+    if (hostname and port):
+      command += " %s -P %s" % (hostname, port)
     self._instance = instance
     self._connection = winspawn(command, timeout = DEFAULT_TIME_OUT_VALUE)
     assert self._connection.isalive()
@@ -174,8 +182,10 @@ class VistATestClientCacheLinux(VistATestClientCache):
     assert namespace, "Must provide a namespace"
     prompt = namespace + CACHE_PROMPT_END
     VistATestClientCache.__init__(self, self.CACHE_ON_LINUX, prompt, namespace)
+
   def createConnection(self, command, instance,
-                       username = None, password = None):
+                       username = None, password = None,
+                       hostname=DEFAULT_HOST, port=DEFAULT_PORT):
     if not command:
       assert instance
       command = "%s %s" % (self.DEFAULT_CACHE_CMD, instance)
@@ -205,6 +215,10 @@ def createTestClientArgParser():
                 help='Cache username for authentication, default is None')
   argGroup.add_argument('-CP', '--cachepass', default=None,
                 help='Cache password for authentication, default is None')
+  argGroup.add_argument('-HN', '--hostname', default='127.0.0.1',
+                help='Cache telnet host, default is localhost(127.0.0.1)')
+  argGroup.add_argument('-HT', '--hostport', default='23',
+                help='Cache telnet service port, default is 23')
   return parser
 
 class VistATestClientFactory(object):
@@ -221,11 +235,14 @@ class VistATestClientFactory(object):
                                  namespace=arguments.namespace,
                                  instance=arguments.instance,
                                  username=arguments.cacheuser,
-                                 password=arguments.cachepass)
+                                 password=arguments.cachepass,
+                                 host=arguments.hostname,
+                                 port=arguments.hostport)
   @staticmethod
   def createVistATestClient(system, prompt = None,
                     namespace = DEFAULT_NAMESPACE, instance = DEFAULT_INSTANCE,
-                    command = None, username = None, password = None):
+                    command = None, username = None, password = None,
+                    host=DEFAULT_HOST, port=DEFAULT_PORT):
     testClient = None
     assert (system > VistATestClientFactory.SYSTEM_NONE and
             system < VistATestClientFactory.SYSTEM_LAST)
@@ -239,24 +256,48 @@ class VistATestClientFactory(object):
         testClient = VistATestClientGTMLinux()
     if not testClient:
       raise Exception ("Could not create VistA Test Client")
-    testClient.createConnection(command, instance, username, password)
+    testClient.createConnection(command, instance, username,
+                                password, host, port)
     return testClient
 
-def main():
-  testClientParser = createTestClientArgParser()
-  parser = argparse.ArgumentParser(description='VistA Test Client Demo',
-                                   parents=[testClientParser])
-  result = parser.parse_args();
-  print (result)
-  import logging
-  initConsoleLogging(logging.INFO)
-  testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
-  assert testClient
+"""
+"""
+class TestException(Exception):
+  def __init__(self, description):
+    self._description = description
+  def __str__(self):
+    return repr(self._description)
+
+def testExceptionSafe(connArgs):
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(connArgs)
   """ this is to test the context manager to make sure the resource
       is clean up even there is an exception
   """
   with testClient as client:
-    raise Exception("Test Exception")
+    raise TestException("Exception Safe Testing Exception")
+
+def testConnection(connArgs):
+  retValue = False
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(connArgs)
+  with testClient as client:
+    testClient.waitForPrompt()
+    retValue = True
+  return retValue
+
+def getTestClientConnArg(descr):
+  testClientParser = createTestClientArgParser()
+  parser = argparse.ArgumentParser(description=descr,
+                                   parents=[testClientParser])
+  result = parser.parse_args();
+  print (result)
+  return result
+
+def main():
+  import logging
+  initConsoleLogging(logging.INFO)
+  connArgs = getTestClientConnArg("VistA Test Client Tests")
+  testConnection(connArgs)
+  testExceptionSafe(connArgs)
 
 if __name__ == '__main__':
   main()
