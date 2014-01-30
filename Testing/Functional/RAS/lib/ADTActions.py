@@ -26,7 +26,7 @@ Created on November 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
-import time
+import time,sys
 # import TestHelper
 from Actions import Actions
 import logging
@@ -331,7 +331,7 @@ class ADTActions (Actions):
         # self.VistA.write('YES')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
         for vitem in vlist:
@@ -378,7 +378,7 @@ class ADTActions (Actions):
         self.VistA.write('BOTH')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
         for vitem in vlist:
@@ -587,7 +587,7 @@ class ADTActions (Actions):
         self.VistA.write('Waiting List Output')
         self.VistA.wait('DEVICE')
         self.VistA.write('')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
         for vitem in vlist:
@@ -851,7 +851,7 @@ class ADTActions (Actions):
         self.VistA.write('yes')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
         self.VistA.wait('VA FORM 10-10EZ')
@@ -871,7 +871,7 @@ class ADTActions (Actions):
         self.VistA.write('')
         self.VistA.wait('DEVICE')
         self.VistA.write('')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
         self.VistA.wait('NO RECORDS TO PRINT')
@@ -885,7 +885,7 @@ class ADTActions (Actions):
         self.VistA.write('t+10')
         self.VistA.wait('DEVICE')
         self.VistA.write('')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         self.VistA.wait('ADT Third Party Output Menu')
@@ -918,7 +918,7 @@ class ADTActions (Actions):
         self.VistA.write('')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         self.VistA.wait('-------------------------')
@@ -936,7 +936,7 @@ class ADTActions (Actions):
             self.VistA.write('t')
             self.VistA.wait('DEVICE')
             self.VistA.write('HOME')
-            if self.VistA.type == 'cache':
+            if sys.platform == 'win32':
                 self.VistA.wait('Right Margin')
                 self.VistA.write('')
             for vitem in ['REGISTRATION DISPOSITION SUMMARY', 'ADMIT', 'SCHEDULED ADMISSION', 'SCHEDULE FUTURE APPOINTMENT', 'INELIGIBLE']:
@@ -961,7 +961,7 @@ class ADTActions (Actions):
         self.VistA.write('Enrolled Veterans')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         for vitem in ['Enrolled Veterans Report', 'CURRENTLY ENROLLED', 'In Process', 'Total']:
@@ -979,7 +979,7 @@ class ADTActions (Actions):
         self.VistA.write('YES')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         for vitem in ['Pending Applications', 'AppDt', 'Name', 'PatientID', 'DOB']:
@@ -994,7 +994,7 @@ class ADTActions (Actions):
         self.VistA.write('no')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         for vitem in ['Enrollments by Status', 'SUMMARY STATISTICS', 'Run Date', 'TOTAL FOR ALL SELECTED FACILITIES']:
@@ -1013,7 +1013,7 @@ class ADTActions (Actions):
         self.VistA.write('NO')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         for vitem in ['Appointments for Veterans with no Enrollment Application', 'Run Date', 'Name', 'PatientID', 'DOB', 'Appt Dt', 'Enroll Cat']:
@@ -1032,7 +1032,7 @@ class ADTActions (Actions):
         self.VistA.write('t+100')
         self.VistA.wait('DEVICE')
         self.VistA.write('HOME')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         for vitem in ['EGT Actual Summary Impact Report', 'Date Range', 'EGT Setting', 'Date/Time', 'IMPORTANT NOTE', 'ENROLLMENT PRIORITY', 'TOTAL PATIENTS']:

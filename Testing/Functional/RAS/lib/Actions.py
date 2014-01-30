@@ -27,6 +27,7 @@ Created on Apr 20, 2012
 '''
 
 import time
+import sys
 import TestHelper
 
 class Actions (object):
@@ -79,7 +80,7 @@ class Actions (object):
         self.VistA.write('')
         self.VistA.wait('DEVICE')
         self.VistA.write('')
-        if self.VistA.type == 'cache':
+        if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('')
         while True:
