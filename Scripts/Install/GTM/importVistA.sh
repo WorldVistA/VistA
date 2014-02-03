@@ -17,26 +17,34 @@
 
 # Import VistA Globals and Routines into GT.M
 
-# Ensure env vars are setup for GT.M
-if [[ ! -d "$gtm_dist" || ! $gtm_dist ]]; then
-    echo "gtm_dist doesn't exist"
-    exit 1
-fi
-if [[ ! -f "$gtmgbldir" || ! $gtmgbldir ]]; then
-    echo "gtmgbldir doesn't exist"
-    exit 1
-fi
-if [ ! "$gtmroutines" ]; then
-    echo "gtmroutines doesn't exist"
-    exit 1
+# Ensure presence of required variables
+if [[ -z $instance && $gtmver && $gtm_dist ]]; then
+    echo "The required variables are not set (instance, gtmver, gtm_dist)"
 fi
 
 # Import routines
-$gtm_dist/mumps -run ^%RI << EOF
+echo "Copying routines"
+OLDIFS=$IFS
+IFS=$'\n'
+for routine in $(cd /usr/local/src/VistA-Source && git ls-files -- \*.m); do
+    cp /usr/local/src/VistA-Source/${routine} $basedir/r
+done
+echo "Done copying routines"
 
-$vistaro
-$vistar/
-EOF
+# Compile routines
+echo "Compiling routines"
+cd $basedir/r/$gtmver
+for routine in $basedir/r/*.m; do
+    mumps ${routine} >> $basedir/log/compile.log 2>&1
+done
+echo "Done compiling routines"
 
 # Import globals
-$gtm_dist/mumps -run %XCMD "W \$\$LIST^ZGI(\"$globallst\")"
+echo "Importing globals"
+for global in $(cd /usr/local/src/VistA-Source && git ls-files -- \*.zwr); do
+    mupip load \"/usr/local/src/VistA-Source/${global}\" >> $basedir/log/loadGloabls.log 2>&1
+done
+echo "Done importing globals"
+
+# reset IFS
+IFS=$OLDIFS

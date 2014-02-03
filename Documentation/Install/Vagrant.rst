@@ -104,6 +104,12 @@ Now since we have a clone of the VistA repository we now need to provision a
 new virtual machine using Vagrant. This process is automated and should take
 about 30 minutes to complete.
 
+NOTE: If you would like to not install the development directories by default
+(necessary for the ability to re-run the testing or ImportRG.cmake) you must
+manually edit the ``Vagrantfile`` located in ``Scripts/Install/Ubuntu`` and
+remove the ``-e`` on line 147. It should look like:
+``s.args = "-i " + "#{ENV['instance']}"``
+
 The scripts to provision the VM are located in VistA/Scripts/Install_ and the
 Vagrant file is located in VistA/Scripts/Install/Ubuntu_, since we provision an
 Ubuntu Virtual Machine.
@@ -147,11 +153,46 @@ You can also access the VM using another SSH program (ex: PuTTY) by using the
 address as described in the note above and using the correct port 22 for cloud
 installs and 2222 for local VirtualBox installs.
 
+VistA User Accounts
+-------------------
+
+System Manager:
+
+ * Access: SM1234
+
+ * Verify: SM1234!!
+
+Doctor:
+
+ * Access: fakedoc1
+
+ * Verify: 1Doc!@#$
+
+ * Electronic Signature: ROBA123
+
+Nurse:
+
+ * Access: fakenurse1
+
+ * Verify: 1Nur!@#$
+
+ * Electronic Signature: MARYS123
+
+Clerk:
+
+ * Access: fakeclerk1
+
+ * Verify: 1Cle!@#$
+
+ * Electronic Signature: CLERKJ123
+
 Accessing Roll-and-Scroll
 -------------------------
 
 There are two user accounts that are created automatically during the
 installation process that make accessing VistA easier:
+
+Note: by default ${instance} is osehra.
 
 Tied user account
 
@@ -213,6 +254,52 @@ screen type the following:
 
     FOIA> :usertype:`D ^ZU`
 
+Shutdown Vagrant VM
+-------------------
+
+You can shutdown the VistA instance by typing ``vagrant halt`` or ``vagrant suspend``.
+
+``vagrant halt`` will stop the created VM and shutdown the guest operating
+system. To continue using the created VM type ``vagrant up`` and it will start
+the VM again.
+
+``vagrant suspend`` will "pause" the VM - save the memory and execution state
+to disk. This is useful when you want to save the state you were working in
+and return to it quickly. To continue using the suspended VM type
+``vagrant resume``.
+
+EWD.js integration
+------------------
+
+By default EWD.js is installed during the ``vagrant up`` process. Full
+documentation and sample urls are available at the `M/Gateway`_ site. The
+relevant configuration paramaters are below:
+
+Passwords:
+
+  * EWDMonitor: keepThisSecret!
+
+Ports:
+
+ * EWD.js: 8080 (https)
+
+ * EWDRest: 8000 (https)
+
+Services:
+
+ * EWD.js: ${instance}vista-ewdjs
+
+   * Note: this controls both EWDRest and EWD.js
+
+To control the EWD service type:
+
+.. parsed-literal::
+
+     ~$ :usertype:`sudo service ${instance}vista-ewdjs {start,stop,restart}`
+
+Where ${instance} is the name of the instance and {start,stop,restart} is the
+function you want to perform.
+
 Technical Details
 -----------------
 
@@ -254,3 +341,4 @@ parent directories in the correct order.
 .. _autoInstaller.sh: https://github.com/OSEHRA/VistA/blob/master/Scripts/Install/Ubuntu/autoInstaller.sh
 .. _Install: https://github.com/OSEHRA/VistA/tree/master/Scripts/Install
 .. _Ubuntu: https://github.com/OSEHRA/VistA/tree/master/Scripts/Install/Ubuntu
+.. _`M/Gateway`: http://gradvs1.mgateway.com/download/EWDjs.pdf

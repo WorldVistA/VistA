@@ -35,7 +35,7 @@ usage()
 EOF
 }
 
-while getopts "i:" option
+while getopts ":hi:" option
 do
     case $option in
         h)
@@ -54,49 +54,43 @@ then
     exit 1
 fi
 
-
 # Make sure we are in the group we need to be to modify the instance
-if [[ $USER -ne $instance ]]; then
-    echo "This script must be run as $instance" 1>&2
+if [[ $USER -ne $instance && $basedir && $gtm_dist && $instance ]]; then
+    echo "This script must be run as $instance and have the following variables
+    defined:
+    \$basedir
+    \$instance
+    \$gtm_dist" 1>&2
     exit 1
 fi
-
 
 echo "Removing $instance..."
 
-# Find GT.M:
-# Use path of /opt/lsb-gtm we can list the directories
-# if > 1 directory fail
-# Default GT.M install path is /usr/lib/fis-gtm/{gtm_ver}_{gtm_arch}
-# where gtm_arch=(x86 | x86_64) for linux
-# TODO: take GT.M path as the an argument to bypass logic and force GT.M
-#       location
-# list directory contents (1 per line) | count lines | strip leading and
-#                                                      trailing whitespace
+# Shutdown the vista instance nicely
+processes=$(pgrep mumps)
+if [ ! -z "${processes}" ] ; then
+    echo "Stopping any remaining M processes nicely"
+    for i in ${processes}
+    do
+        mupip stop ${i}
+    done
 
-gtm_dirs=$(ls -1 /opt/lsb-gtm/ | wc -l | sed 's/^[ \t]*//;s/[ \t]*$//')
-if [ $gtm_dirs -gt 1 ]; then
-    echo "More than one version of GT.M installed!"
-    echo "Can't determine what version of GT.M to use"
-    exit 1
+    # Wait for process to react to mupip stop instead of force kill later
+    sleep 5
 fi
 
-# Only one GT.M version found
-export gtmver=$(ls -1 /opt/lsb-gtm/)
-
-# TODO: implement argument for basedir
-# $basedir is the base directory for the instance
-# examples of $basedir are: /home/$instance, /opt/$instance, /var/db/$instance
-basedir=/home/$instance
+# Look for M processes that are still running
+processes=$(pgrep mumps)
+if [ ! -z "${processes}" ] ; then
+    echo "M process are being shutdown forcefully!"
+    pkill -9 mumps
+fi
 
 # Remove instance directories
 rm -f $basedir/r/*.m
 rm -f $basedir/r/$gtmver/*.o
 rm -f $basedir/g/*.dat
 rm -f $basedir/j/*.mjl
-
-# source the environment so we have a correct GT.M environment
-source $basedir/etc/env
 
 # Re-create the databases
 $gtm_dist/mupip create
