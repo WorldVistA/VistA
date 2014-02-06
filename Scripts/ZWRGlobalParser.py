@@ -118,6 +118,17 @@ def testRPCZWRFile():
     #if rpcName.startswith('OR') or rpcName.startswith('OCX'):
     #  pass
 
+def testDDZWRFile():
+  inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/VA FileMan/Globals/DD.zwr"
+  globalRoot = GlobalNode()
+  with open(inputFileName, "r") as input:
+    for idx, line in enumerate(input,0):
+      if idx <=1:
+        continue
+      line = line.strip('\r\n')
+      createGlobalNode(line, globalRoot)
+  printGlobal(globalRoot['8994'])
+
 class KeyValueMap(object):
   def __init__(self, key, valueMap=None):
     self.key = key
@@ -224,7 +235,8 @@ def createGlobalNode(inputLine, globalNode):
     return
 
 def main():
-  testRPCZWRFile()
+  #testRPCZWRFile()
+  testDDZWRFile()
 
 if __name__ == '__main__':
   main()
