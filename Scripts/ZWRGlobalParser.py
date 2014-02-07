@@ -17,7 +17,6 @@ import os
 import sys
 import re
 from datetime import datetime
-from LoggerManager import logger
 
 class ItemValue(object):
   def __init__(self, value):
@@ -39,7 +38,7 @@ class ItemValue(object):
   def __str__(self):
     if self.value:
       return "^".join(self.value)
-    return ""
+    return None
 
 class GlobalNode(object):
   def __init__(self, value=None):
@@ -100,15 +99,7 @@ def testRPCZWRFile():
         continue
       line = line.strip('\r\n')
       createGlobalNode(line, globalRoot)
-  intKey = []
-  for key in sorted(globalRoot['8994']):
-    try:
-      idx = int(key)
-      if idx > 0:
-        intKey.append(key)
-    except:
-      pass
-  for key in sorted(intKey, key=lambda x: int(x)):
+  for key in getKeys(globalRoot["8994"]):
     rpcRoot = globalRoot['8994'][key]
     rpcName = rpcRoot["0"].value[0]
     print '----------------------------------------'
@@ -118,8 +109,21 @@ def testRPCZWRFile():
     #if rpcName.startswith('OR') or rpcName.startswith('OCX'):
     #  pass
 
+def getKeys(globalRoot, func=int):
+  intKey = []
+  for key in globalRoot:
+    try:
+      idx = func(key)
+      intKey.append(key)
+    except:
+      pass
+  return sorted(intKey, key=lambda x: func(x))
+
 def testDDZWRFile():
-  inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/VA FileMan/Globals/DD.zwr"
+  #inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/VA FileMan/Globals/DD.zwr"
+  #inputFileName = "C:/Users/Jason.li/tmp/8894_test.zwr"
+  #inputFileName = "C:/Users/Jason.li/tmp/200_test.zwr"
+  inputFileName = "C:/Users/Jason.li/tmp/0_test.zwr"
   globalRoot = GlobalNode()
   with open(inputFileName, "r") as input:
     for idx, line in enumerate(input,0):
@@ -127,7 +131,66 @@ def testDDZWRFile():
         continue
       line = line.strip('\r\n')
       createGlobalNode(line, globalRoot)
-  printGlobal(globalRoot['8994'])
+  #printGlobal(globalRoot['8994'])
+  generateSchema(globalRoot['0'])
+  #generateSchema(globalRoot['8994'])
+
+def generateSchema(globalRoot):
+  """ read the 0 subscript node """
+  #print globalRoot["0"].value
+  for key in getKeys(globalRoot, float):
+    if key == '0': continue
+    parseSchemaField(key, globalRoot[key])
+
+def parseSchemaField(key, globalRoot):
+  item = globalRoot["0"].value
+  type = parseFieldType(item[1])
+  print "Field: %s, Name: %s, Type: %s: Location: %s" % (key, item[0], type, item[3])
+  if len(item) == 5 and item[4] and item[4] is not "Q":
+    print "\tInput Transform: %s" % item[4]
+  if "3" in globalRoot and globalRoot["3"].value is not None:
+    print "\tHELP-PROMPT: %s" % globalRoot['3'].value
+
+TYPE_LIST = [
+  ('D', 'Date'),
+  ('C', 'Computed'),
+  ('F', 'Free Text'),
+  ('N', 'Numeric Valued'),
+  ('P[0-9.]+', 'Pointer'),
+  ('W', 'Word Processing'),
+  ('S', 'Set'),
+  ('V', 'Variable Pointer'),
+  ('K', 'Mumps'),
+  ('A', 'SubFile Pointer'),
+  ('M', 'SubFile Pointer'),
+]
+
+EXTRA_LIST = [
+  ('R', 'Required'),
+  ('O', 'Output Transform'),
+  ('a', 'Audit'),
+  ('e', 'Audit on edit/delete'),
+  ('I', 'Uneditable'),
+  ('I', 'Uneditable'),
+  ('X', 'Editing is not allowed'),
+]
+
+def parseFieldType(typeField):
+  result = []
+  for match, type in TYPE_LIST:
+    if match in typeField:
+      result.append(type)
+  if not result:
+    try:
+      fd = float(typeField)
+      result.append('Word Processing Multiple')
+    except ValueError:
+      pass
+  if result:
+    for match, type in EXTRA_LIST:
+      if match in typeField:
+        result.append(type)
+  return result
 
 class KeyValueMap(object):
   def __init__(self, key, valueMap=None):
@@ -163,6 +226,16 @@ ZERO_LOC_LIST = (
     KeyValueMap("VERSION"),
     KeyValueMap("SUPPRESS RDV USER SETUP",YesNoMap),
     KeyValueMap("APP PROXY ALLOWED", YesNoMap) )
+
+INPUT_PARAMETER_LIST = (
+  KeyValueMap("INPUT PARAMETER"),
+  KeyValueMap("PARAMETER TYPE",
+             {'1': 'LITERAL', '2': 'LIST', '3': 'WORD PROCESSING', '4': 'REFERENCE'}),
+  KeyValueMap("MAXUMUM DATA LENGTH"),
+  KeyValueMap("REQUIRED", YESNOMAP),
+  KeyValueMap("SEQUENCE NUMBER"),
+)
+
 
 def parseMapValue(value, mapLst):
   locMap = zip([x.key for x in mapLst], value)
@@ -200,15 +273,6 @@ def parsingWordProcessingNode(globalNode):
   for key in sorted(globalNode, key=lambda x: int(x)):
     if "0" in globalNode[key]:
       print globalNode[key]["0"].value
-
-INPUT_PARAMETER_LIST = (
-  KeyValueMap("INPUT PARAMETER"),
-  KeyValueMap("PARAMETER TYPE",
-             {'1': 'LITERAL', '2': 'LIST', '3': 'WORD PROCESSING', '4': 'REFERENCE'}),
-  KeyValueMap("MAXUMUM DATA LENGTH"),
-  KeyValueMap("REQUIRED", YESNOMAP),
-  KeyValueMap("SEQUENCE NUMBER"),
-)
 
 def parsingInputParameterNode(globalNode):
   print parseMapValue(globalNode['0'].value, INPUT_PARAMETER_LIST)
