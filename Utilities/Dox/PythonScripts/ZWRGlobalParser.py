@@ -38,7 +38,7 @@ class ItemValue(object):
   def __str__(self):
     if self.value:
       return "^".join(self.value)
-    return None
+    return str(None)
 
 class GlobalNode(object):
   def __init__(self, value=None):
@@ -92,7 +92,7 @@ def testGlobalNode():
 
 def testRPCZWRFile():
   inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/RPC Broker/Globals/8994+REMOTE PROCEDURE.zwr"
-  globalRoot = GlobalNode()
+  globalRoot = GlobalNode("^DD(")
   with open(inputFileName, "r") as input:
     for idx, line in enumerate(input,0):
       if idx <=1:
@@ -110,30 +110,32 @@ def testRPCZWRFile():
     #  pass
 
 def getKeys(globalRoot, func=int):
-  intKey = []
+  outKey = []
   for key in globalRoot:
     try:
       idx = func(key)
-      intKey.append(key)
+      outKey.append(key)
     except:
       pass
-  return sorted(intKey, key=lambda x: func(x))
+  return sorted(outKey, key=lambda x: func(x))
 
 def testDDZWRFile():
   #inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/VA FileMan/Globals/DD.zwr"
   #inputFileName = "C:/Users/Jason.li/tmp/8894_test.zwr"
-  #inputFileName = "C:/Users/Jason.li/tmp/200_test.zwr"
-  inputFileName = "C:/Users/Jason.li/tmp/0_test.zwr"
+  inputFileName = "C:/Users/Jason.li/tmp/200_test.zwr"
+  #inputFileName = "C:/Users/Jason.li/tmp/0_test.zwr"
+  #inputFileName = "C:/Users/Jason.li/tmp/801.41_test.zwr"
   globalRoot = GlobalNode()
+  globalRoot.id = "^DD("
   with open(inputFileName, "r") as input:
     for idx, line in enumerate(input,0):
       if idx <=1:
         continue
       line = line.strip('\r\n')
       createGlobalNode(line, globalRoot)
-  #printGlobal(globalRoot['8994'])
-  generateSchema(globalRoot['0'])
-  #generateSchema(globalRoot['8994'])
+  files = getKeys(globalRoot, float)
+  for file in files:
+    generateSchema(globalRoot[file])
 
 def generateSchema(globalRoot):
   """ read the 0 subscript node """
@@ -144,53 +146,80 @@ def generateSchema(globalRoot):
 
 def parseSchemaField(key, globalRoot):
   item = globalRoot["0"].value
-  type = parseFieldType(item[1])
-  print "Field: %s, Name: %s, Type: %s: Location: %s" % (key, item[0], type, item[3])
-  if len(item) == 5 and item[4] and item[4] is not "Q":
-    print "\tInput Transform: %s" % item[4]
+  type, specifier, files, subFile = parseFieldTypeSpecifier(item[1])
+  print ("Field: %s, Name: %s, Type: %s: Specifier: %s, Location: %s, Multiple#: %s" %
+         (key, item[0], type, specifier, item[3], subFile))
+  if 'Set' in type and not subFile:
+    setDict = dict([x.split(':') for x in item[2].rstrip(';').split(';')])
+    print ("Set of Code: %s" % setDict)
+  if 'Pointer' in type:
+    if files:
+      print ("Pointer to: %s @ ^%s" % (files[0], item[2]))
+  if len(item) >= 5 and item[4]:
+    inputTrans = ""
+    for txt in item[4:]:
+      inputTrans += txt
+    print "\tInput Transform: %s" % inputTrans
   if "3" in globalRoot and globalRoot["3"].value is not None:
     print "\tHELP-PROMPT: %s" % globalRoot['3'].value
+  if "DT" in globalRoot and globalRoot["DT"].value is not None:
+    print "\tLast Modified: %s" % globalRoot["DT"].value
+  if "9.1" in globalRoot and globalRoot["9.1"].value is not None:
+    print "\tCompute Algorithm: %s" % globalRoot["9.1"].value
+  if "1" in globalRoot and globalRoot["1"]['0'].value:
+    parseCrossReference(globalRoot)
+
+def parseCrossReference(globalRoot):
+  pass
+  #printGlobal(globalRoot['1'])
 
 TYPE_LIST = [
-  ('D', 'Date'),
+  ('D', 'Date/Time'),
   ('C', 'Computed'),
   ('F', 'Free Text'),
   ('N', 'Numeric Valued'),
-  ('P[0-9.]+', 'Pointer'),
+  ('P', 'Pointer'),
   ('W', 'Word Processing'),
   ('S', 'Set'),
   ('V', 'Variable Pointer'),
   ('K', 'Mumps'),
-  ('A', 'SubFile Pointer'),
-  ('M', 'SubFile Pointer'),
+  ('A', 'Multiple'),
+  ('M', 'Multiple'),
 ]
 
-EXTRA_LIST = [
+SPECIFIER_LIST = [
   ('R', 'Required'),
   ('O', 'Output Transform'),
   ('a', 'Audit'),
   ('e', 'Audit on edit/delete'),
   ('I', 'Uneditable'),
-  ('I', 'Uneditable'),
   ('X', 'Editing is not allowed'),
 ]
 
-def parseFieldType(typeField):
-  result = []
+def parseFieldTypeSpecifier(typeField):
+  types, specifier = [], []
   for match, type in TYPE_LIST:
     if match in typeField:
-      result.append(type)
-  if not result:
-    try:
-      fd = float(typeField)
-      result.append('Word Processing Multiple')
-    except ValueError:
-      pass
+      types.append(type)
+  # checkiing for P type
+  files = []
+  if 'Pointer' in types:
+    result = re.search('P(?P<file>[0-9.]+)', typeField)
+    if result:
+      file = result.group('file')
+      float(file)
+      files.append(file)
+  subFile = None
+  result = re.search('(?P<subFile>^[0-9.]+)', typeField)
   if result:
-    for match, type in EXTRA_LIST:
+    subFile = result.group('subFile')
+    float(subFile)
+    types.append('Multiple #%s' % subFile)
+  if types:
+    for match, specif in SPECIFIER_LIST:
       if match in typeField:
-        result.append(type)
-  return result
+        specifier.append(specif)
+  return types, specifier, files, subFile
 
 class KeyValueMap(object):
   def __init__(self, key, valueMap=None):
@@ -285,10 +314,10 @@ def createGlobalNode(inputLine, globalNode):
     return
   pos = inputLine.find(")=\"")
   if pos >= 0:
-    nodeIndex = inputLine[start+1:pos].split(",")
+    nodeIndex = [x.strip('"') for x in inputLine[start+1:pos].split(",")]
     nodeValue = inputLine[pos+3:-1]
     if len(nodeValue) > 0:
-      nodeValue.replace('""', '\"')
+      nodeValue.replace('""""', '""')
     nodeIdx = globalNode
     for idx in nodeIndex[:-1]:
       if idx not in nodeIdx:
