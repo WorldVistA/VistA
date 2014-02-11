@@ -20,6 +20,16 @@ Requirements
 
  * An SSH Public/Private keypair generated from the AWS console
 
+Prerequisites
+-------------
+
+Install the Amazon Web Services (AWS) plugin and dummy box:
+
+.. parsed-literal::
+
+    ~$ :usertype:`vagrant plugin install vagrant-aws`
+    ~$ :usertype:`vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
+
 Setup
 -----
 
@@ -52,6 +62,22 @@ Configuration
 
 To provision a new EC2 instance you need to set the above environment variables.
 
+Automated:
+
+Use the setupEC2.sh mentioned above to create a script file that has the
+variables populated and ``source`` them into the current environment:
+
+.. parsed-literal::
+
+    ~$ :usertype:`cd Development/VistA/Scripts/Install/Ubuntu`
+    ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`./setupEC2.sh`
+    ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`source EC2.sh`
+
+Manual:
+
+If you choose not to use the setupEC2.sh script you have to setup all of the
+required variables by hand using ``export``
+
 .. parsed-literal::
 
     ~$ :usertype:`cd Development/VistA/Scripts/Install/Ubuntu`
@@ -60,7 +86,8 @@ To provision a new EC2 instance you need to set the above environment variables.
     ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`export AWS_KEYPAIR_NAME="YourKeypairName"`
     ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`export AWS_PRIVATE_KEY="PathToYourPrivateKey"`
 
-After these environment variables are setup you can then "vagrant up" a new VM.
+After these environment variables are setup you can then
+``vagrant up --provider=aws`` a new VM using the EC2 provider.
 
 Note: You can only have one Vagrant VM running at a time regardless of provider
 (VirtualBox, Rackspace, etc.)

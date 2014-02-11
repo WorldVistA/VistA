@@ -20,6 +20,16 @@ Requirements
 
  * An SSH Public/Private keypair
 
+Prerequisites
+-------------
+
+Install the Rackspace plugin and dummy box:
+
+.. parsed-literal::
+
+    ~$ :usertype:`vagrant plugin install vagrant-rackspace`
+    ~$ :usertype:`vagrant box add dummy https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box`
+
 Setup
 -----
 
@@ -53,7 +63,24 @@ overwrite your existing Rackspace.sh).
 Configuration
 -------------
 
-To provision a new Rackspace Cloud VM you need to set the above environment variables.
+To provision a new Rackspace Cloud VM you need to set the above environment
+variables.
+
+Automated:
+
+Use the setupRackspace.sh mentioned above to create a script file that has the
+variables populated and ``source`` them into the current environment:
+
+.. parsed-literal::
+
+    ~$ :usertype:`cd Development/VistA/Scripts/Install/Ubuntu`
+    ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`./setupRackspace.sh`
+    ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`source Rackspace.sh`
+
+Manual:
+
+If you choose not to use the setupRackspace.sh script you have to setup all of
+the required variables by hand using ``export``
 
 .. parsed-literal::
 
@@ -63,7 +90,8 @@ To provision a new Rackspace Cloud VM you need to set the above environment vari
     ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`export RS_PUBLIC_KEY="PathToYourPublicKey.pub"`
     ~/Development/VistA/Scripts/Install/Ubuntu$ :usertype:`export RS_PRIVATE_KEY="PathToYourPrivateKey"`
 
-After these environment variables are setup you can then "vagrant up" a new VM.
+After these environment variables are setup you can then
+``vagrant up --provider=rackspace`` a new VM.
 
 Note: You can only have one Vagrant VM running at a time regardless of provider
 (VirtualBox, Rackspace, etc.)
