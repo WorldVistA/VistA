@@ -17,6 +17,8 @@ import os
 import sys
 import re
 from datetime import datetime
+from LogManager import initConsoleLogging
+import logging
 
 class ItemValue(object):
   def __init__(self, value):
@@ -79,7 +81,7 @@ class GlobalNode(object):
 
 def printGlobal(gNode):
   if gNode is not None:
-    print gNode
+    logging.info(gNode)
     for item in sorted(gNode):
       printGlobal(gNode[item])
   else:
@@ -120,7 +122,7 @@ def createGlobalNodeByZWRFile(inputFileName):
       if idx <=1:
         continue
       line = line.strip('\r\n')
-      if idx == 2: globalRoot = GlobalNode(subscript=line[:line.find('(')-1])
+      if idx == 2: globalRoot = GlobalNode(subscript=line[:line.find('(')])
       createGlobalNode(line, globalRoot)
   return globalRoot
 
@@ -131,6 +133,8 @@ def testDDZWRFile():
   #inputFileName = "C:/Users/Jason.li/tmp/0_test.zwr"
   #inputFileName = "C:/Users/Jason.li/tmp/801.41_test.zwr"
   globalRoot = createGlobalNodeByZWRFile(inputFileName)
+  printGlobal(globalRoot)
+  return
   files = getKeys(globalRoot, float)
   allSchemaDict = {}
   for file in files:
@@ -138,6 +142,8 @@ def testDDZWRFile():
     if schema:
       allSchemaDict[file] = schema
   del globalRoot
+  import gc
+  gc.collect()
   # Find all the word processing multiple
   for file, schema in allSchemaDict.iteritems():
     for field, detail in schema.iteritems():
@@ -148,23 +154,24 @@ def testDDZWRFile():
           subTypes = allSchemaDict[subFile]['.01']['type']
           types.extend(subTypes)
 
-  #inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/RPC Broker/Globals/8994+REMOTE PROCEDURE.zwr"
-  fileNumber = '9.7'
-  inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/Kernel/Globals/9.7+Install.zwr"
+  #fileNumber = '9.7'
+  #inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/Kernel/Globals/9.7+Install.zwr"
+  fileNumber = '8994'
+  inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/RPC Broker/Globals/8994+REMOTE PROCEDURE.zwr"
   glbDataRoot = createGlobalNodeByZWRFile(inputFileName)
   parseDataBySchema(glbDataRoot[fileNumber], allSchemaDict, fileNumber)
 
 def printAllSchemas(allSchemaDict):
   for file, schema in allSchemaDict.iteritems():
-    print '----------------------------------'
-    print "File: %s" % file
+    logging.info('----------------------------------')
+    logging.info("File: %s" % file)
     print '----------------------------------'
     for field, valueDict in schema.iteritems():
-      print ("Field: %s, Name: %s, Type: %s: Specifier: %s,"
-             "Location: %s, Multiple#: %s, files: %s set: %s" %
-             (field, valueDict['name'], valueDict['type'],
-              valueDict['specifier'], valueDict['location'],
-              valueDict['subfile'], valueDict['files'], valueDict['set']))
+      logging.info("Field: %s, Name: %s, Type: %s: Specifier: %s,"
+                  "Location: %s, Multiple#: %s, files: %s set: %s" %
+                  (field, valueDict['name'], valueDict['type'],
+                   valueDict['specifier'], valueDict['location'],
+                   valueDict['subfile'], valueDict['files'], valueDict['set']))
 
 def sortSchemaByLocation(schemaRoot):
   locFields = {}
@@ -205,16 +212,15 @@ def parseDataBySchema(dataRoot, schemaRoot, fileNumber, level=0):
   indent = "\t" * level
   schemaDict = sortSchemaByLocation(schemaRoot[fileNumber])
   """ for each data entry, parse data by location """
-  intKey = getKeys(dataRoot)
-  print "%s%s" % (indent, fileNumber)
-  for ien in intKey:
-    if int(ien) <=0:
+  floatKey = getKeys(dataRoot, float)
+  for ien in floatKey:
+    if float(ien) <=0:
       continue
     #if level == 0 and int(ien) != 160: continue
     dataEntry = dataRoot[ien]
-    print '%s------------------' % indent
-    print '%sFileEntry: %s' % (indent, ien)
-    print '%s------------------' % indent
+    logging.info ('%s------------------' % indent)
+    logging.info ('%sFileEntry: %s' % (indent, ien))
+    logging.info ('%s------------------' % indent)
     dataKeys = [x for x in dataEntry]
     sortedKey = sorted(dataKeys, cmp=sortDataEntryFloatFirst)
     for key in sortedKey:
@@ -225,22 +231,29 @@ def parseDataBySchema(dataRoot, schemaRoot, fileNumber, level=0):
           if fieldAttr['subfile']:
             parseSubFileField(dataEntry[key], fieldAttr, schemaRoot, level)
           else:
-            values = dataEntry[key].value
-            if not values: continue
-            location = fieldAttr['location']
-            dataValue = None
-            if location:
-              index, loc = location.strip().split(';')
-              if loc and convertToType(loc, int):
-                intLoc = int(loc)
-                if intLoc > 0 and intLoc <= len(values):
-                  dataValue = values[intLoc-1]
-            else:
-              dataValue = str(dataEntry.value)
-            if dataValue:
-              parseIndividualFieldDetail(dataValue, fieldAttr, level)
+            parseSingleDataValueField(dataEntry[key], fieldAttr, level)
         else:
           parseDataValueField(dataEntry[key], fieldDict, level)
+
+def parseSingleDataValueField(dataEntry, fieldAttr, level):
+  values = dataEntry.value
+  if not values: return
+  indent = "\t" * level
+  location = fieldAttr['location']
+  dataValue = None
+  if location:
+    index, loc = location.strip().split(';')
+    if loc:
+      if convertToType(loc, int):
+        intLoc = int(loc)
+        if intLoc > 0 and intLoc <= len(values):
+          dataValue = values[intLoc-1]
+      else:
+        dataValue = str(dataEntry.value)
+  else:
+    dataValue = str(dataEntry.value)
+  if dataValue:
+    parseIndividualFieldDetail(dataValue, fieldAttr, level)
 
 def parseDataValueField(dataRoot, fieldDict, level):
   indent = "\t" * level
@@ -261,19 +274,21 @@ def parseIndividualFieldDetail(value, schema, level):
   if 'Set' in types and schema['set']:
     if value in schema['set']:
       fieldDetail = schema['set'][value]
-  print "%s%s: %s" % (indent, schema['name'], fieldDetail)
+  elif 'Pointer' in types and schema['files']:
+    fieldDetail = 'File: %s, IEN: %s' % (schema['files'][0], value)
+  logging.info ("%s%s: %s" % (indent, schema['name'], fieldDetail))
 
 def parseSubFileField(dataRoot, fieldAttr, schemaRoot, level):
   types = fieldAttr['type']
   subfile = fieldAttr['subfile']
   indent = "\t"*level
-  print "%s%s" % (indent, fieldAttr['name'] + ':')
+  logging.info ("%s%s" % (indent, fieldAttr['name'] + ':'))
   if 'Word Processing' in types:
     parsingWordProcessingNode(dataRoot, level+1)
   elif subfile:
     parseDataBySchema(dataRoot, schemaRoot, subfile, level+1)
   else:
-    print "Sorry, do not know how to intepret the schema %s" % fieldAttr
+    logging.info ("Sorry, do not know how to intepret the schema %s" % fieldAttr)
 
 def generateSchema(globalRoot):
   """ read the 0 subscript node """
@@ -400,12 +415,7 @@ def parsingWordProcessingNode(globalNode, level=1):
   indent = "\t"*level
   for key in sorted(globalNode, key=lambda x: int(x)):
     if "0" in globalNode[key]:
-      print "%s%s" % (indent, globalNode[key]["0"].value)
-
-def parsingInputParameterNode(globalNode):
-  print parseMapValue(globalNode['0'].value, INPUT_PARAMETER_LIST)
-  if "1" in globalNode:
-    parsingWordProcessingNode(globalNode['1'])
+      logging.info ("%s%s" % (indent, globalNode[key]["0"].value))
 
 def createGlobalNode(inputLine, globalNode):
   start = inputLine.find("(")
@@ -428,6 +438,7 @@ def createGlobalNode(inputLine, globalNode):
 
 def main():
   #testGlobalNode()
+  initConsoleLogging(formatStr='%(message)s')
   testDDZWRFile()
   #test_sortDataEntryFloatFirst()
 
