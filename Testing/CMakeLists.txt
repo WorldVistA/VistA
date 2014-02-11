@@ -239,13 +239,17 @@ add_test(PYTHON_PrefixParser ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/Py
 ##### SECTION TO RUN PYTHON UNIT TEST(s) under Scripts/Testing/PyUnit #####
 #-----------------------------------------------------------------------------#
 file(GLOB PyUnitTests ${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/Test*.py)
-configure_file("${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/RPCBrokerCheck.py.in" "${VISTA_SOURCE_DIR}/Scripts/Testing/PyUnit/RPCBrokerCheck.py")
 set(VendorArgs "")
 SetVendorArgs(VendorArgs)
 foreach(PyUnitTest ${PyUnitTests})
   get_filename_component(PyUnitTestName "${PyUnitTest}" NAME_WE)
   if(${PyUnitTestName} STREQUAL "TestSSEP")
-    set(ARGUMENTS ${VISTA_TCP_HOST} ${VISTA_TCP_PORT})
+    set(ARGUMENTS
+      "-ha" "${VISTA_TCP_HOST}"
+      "-hp" "${VISTA_TCP_PORT}"
+      "-l"  "${CMAKE_CURRENT_BINARY_DIR}/Temporary/TestSSEP.log"
+      "${VendorArgs}"
+      )
   elseif("${PyUnitTestName}" MATCHES "TestClient$")
     set(ARGUMENTS "${VendorArgs}")
   endif()
