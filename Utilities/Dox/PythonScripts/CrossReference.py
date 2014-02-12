@@ -357,6 +357,14 @@ class FileManFile(object):
         self._fields[FileManField.getFieldNo()] = FileManField
     def getAllFileManFields(self):
         return self._fields
+    def hasField(self, fieldNo):
+      if self._fields:
+        return fieldNo in self._fields
+      return False
+    def getField(self, fieldNo):
+      if self._fields:
+        return self._fields.get(fieldNo)
+      return None
     def addFileManSubFile(self, FileManSubFile):
         if not self._subFiles:
             self._subFiles = dict()
@@ -371,6 +379,8 @@ class FileManFile(object):
         return not self.isRootFile()
     def getParentFile(self):
         return self._parentFile
+    def setParentFile(self, parentFile):
+        self._parentFile = parentFile
     def getRootFile(self):
         root = self
         while not root.isRootFile():
@@ -415,8 +425,8 @@ class FileManFile(object):
             return
         write("################################################\n")
         write("%s: Total # of FileMan Fields: %d\n" % (self._fileNo, len(self._fields)))
-        for field in self._fields.itervalues():
-            field.printResult()
+        for fieldNo in sorted(self._fields.keys(), key=float):
+            self._fields[fieldNo].printResult()
         write("\n")
     def printFileManSubFiles(self):
         if not self._subFiles or len(self._subFiles) == 0:
@@ -451,13 +461,15 @@ class FileManField(object):
     FIELD_TYPE_VARIABLE_FILE_POINTER = 8
     FIELD_TYPE_SUBFILE_POINTER = 9
     FIELD_TYPE_MUMPS = 10
-    FIELD_TYPE_LAST = 11
+    FIELD_TYPE_BOOLEAN = 11
+    FIELD_TYPE_LAST = 12
     def __init__(self, fieldNo, name, fType ,location = None):
         self._fieldNo = None
         self.setFieldNo(fieldNo)
         self._name = name
         self._loc = location
         self._type = fType
+        self._subType = None
         self._typeName = None
         self._indexName = None
         self._propList = None # store extra information is name value pair format
@@ -482,6 +494,18 @@ class FileManField(object):
         return self._loc
     def getType(self):
         return self._type
+    def getSubType(self):
+        return self._subType
+    def setSubType(self, subType):
+        self._subType = subType
+    def addSubType(self, subType):
+        if not self._subType:
+           self._subType = []
+        self._subType.append(subType)
+    def hasSubType(self, subType):
+        if self._subType:
+            return subType in self._subType
+        return False
     def getFieldNo(self):
         return self._fieldNo
     def setType(self, fType):
@@ -556,10 +580,12 @@ class FileManField(object):
     def __str__(self):
         return self._fieldNo
     def __repr__(self):
-        return ("%s, %s, %s, %s" % (self.getFieldNo(),
+        return ("%s, %s, %s, %s, %s, %s" % (self.getFieldNo(),
                                     self.getName(),
                                     self.getLocation(),
-                                    self.getTypeName()))
+                                    self.getTypeName(),
+                                    self.getType(),
+                                    self.getSubType()))
 #===============================================================================
 # # A series of subclass of FileManField based on type
 #===============================================================================
@@ -588,11 +614,7 @@ class FileManSetTypeField(FileManField):
     def setSetMembers(self, memList):
         self._setMembers = memList
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
-                                      self.getName(),
-                                      self.getLocation(),
-                                      self.getTypeName(),
-                                      self._setMembers))
+        return "%s, %s" % (FileManField.__repr__(self), self._setMembers)
 
 class FileManFreeTextTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -610,12 +632,9 @@ class FileManWordProcessingTypeField(FileManField):
     def getNoWrap(self):
         return self._isNoWrap
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s, %s" % (self.getFieldNo(),
-                                      self.getName(),
-                                      self.getLocation(),
-                                      self.getTypeName(),
-                                      self._isNoWrap,
-                                      self._ignorePipe))
+        return ("%s, %s, %s" % (FileManField.__repr__(self),
+                                self._isNoWrap,
+                                self._ignorePipe))
 
 class FileManComputedTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -629,16 +648,13 @@ class FileManFilePointerTypeField(FileManField):
         FileManField.__init__(self, fieldNo, name, fType ,location)
         self._filePointedTo = None
     def setPointedToFile(self, filePointedTo):
-        assert isinstance(filePointedTo, FileManFile)
+        #assert isinstance(filePointedTo, FileManFile)
         self._filePointedTo = filePointedTo
     def getPointedToFile(self):
         return self._filePointedTo
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
-                                      self.getName(),
-                                      self.getLocation(),
-                                      self.getTypeName(),
-                                      self._filePointedTo))
+        return ("%s, %s" % (FileManField.__repr__(self),
+                            self._filePointedTo))
 
 class FileManVariablePointerTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -653,11 +669,7 @@ class FileManVariablePointerTypeField(FileManField):
     def getPointedToFiles(self):
         return self._pointedToFiles
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
-                                      self.getName(),
-                                      self.getLocation(),
-                                      self.getTypeName(),
-                                      self._pointedToFiles))
+        return ("%s, %s" % (FileManField.__repr__(self), self._pointedToFiles))
 
 class FileManSubFileTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -671,11 +683,8 @@ class FileManSubFileTypeField(FileManField):
     def getPointedToSubFile(self):
         return self._pointedToSubFile
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s" % (self.getFieldNo(),
-                                      self.getName(),
-                                      self.getLocation(),
-                                      self.getTypeName(),
-                                      self._pointedToSubFile))
+        return ("%s, %s" % (FileManField.__repr__(self),
+                            self._pointedToSubFile))
 
 class FileManMumpsTypeField(FileManField):
     def __init__(self, fieldNo, name, fType ,location = None):
@@ -693,7 +702,13 @@ class FileManFieldFactory:
     def createField(fieldNo, name, fType, location = None):
         assert (fType >= FileManField.FIELD_TYPE_NONE and
                 fType < FileManField.FIELD_TYPE_LAST)
-        return FileManFieldFactory._creationTuple_[fType](fieldNo, name, fType, location)
+        if fType < len(FileManFieldFactory._creationTuple_):
+          return FileManFieldFactory._creationTuple_[fType](fieldNo,
+                                                            name,
+                                                            fType,
+                                                            location)
+        else:
+          return FileManField(fieldNo, name, fType, location)
 #===============================================================================
 # # class to represent a global variable inherits FileManFile
 #===============================================================================
