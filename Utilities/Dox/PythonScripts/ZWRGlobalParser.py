@@ -94,8 +94,9 @@ def sortDataEntryFloatFirst(data1, data2):
     return cmp(float(data1), float(data2))
   if isData1Float:
     return -1 # float first
-  else:
-    return cmp(data1, data2)
+  if isData2Float:
+    return 1
+  return cmp(data1, data2)
 
 def convertToType(data1, convertFunc):
   try:
@@ -124,7 +125,7 @@ def testGlobalNode():
   printGlobal(gn)
 
 def test_sortDataEntryFloatFirst():
-  initLst = ['PRE', 'DIST', '22', '1', '0', 'INIT', 'VERSION', '4', 'INI']
+  initLst = ['PRE', 'DIST', '22', '1', '0', 'INIT', 'VERSION', '4', 'INI', '%D', '%']
   sortedLst = sorted(initLst, cmp=sortDataEntryFloatFirst)
   print initLst, sortedLst
 
@@ -215,8 +216,9 @@ def main():
   initConsoleLogging(formatStr='%(message)s')
   #testGlobalNode()
   #test_createGlobalNodeByZWRFile(sys.argv[1])
+  test_sortDataEntryFloatFirst()
   logging.info(datetime.now())
-  test_readGlobalNodeFromZWRFile(sys.argv[1])
+  #test_readGlobalNodeFromZWRFile(sys.argv[1])
   logging.info(datetime.now())
 
 if __name__ == '__main__':
