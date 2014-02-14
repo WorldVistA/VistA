@@ -31,22 +31,6 @@ def setTypeAndSpecifer(types, specifier, values):
     if values[1]: types.append(values[1])
     if values[2]: specifier.append(values[2])
 """
-  Enumeration for SPECIFIER
-"""
-FIELD_SPECIFIER_REQUIRED = 0
-FIELD_SPECIFIER_AUDIT= 1
-FIELD_SPECIFIER_MULTILINE = 2
-FIELD_SPECIFIER_LAYGO_NOT_ALLOWED = 3
-FIELD_SPECIFIER_OUTPUT_TRANSFORM = 4
-FIELD_SPECIFIER_EDITING_NOT_ALLOWD = 5
-FIELD_SPECIFIER_NO_WORD_WRAPPING = 6
-FIELD_SPECIFIER_IGORE_PIPE = 7
-FIELD_SPECIFIER_NEW_ENTRY_NO_ASK = 8
-FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER = 9
-FIELD_SPECIFIER_UNEDITABLE = 10
-FIELD_SPECIFIER_AUDIT_EDIT_DELETE = 11
-FIELD_SPECIFIER_EDIT_PROG_ONLY = 10
-"""
   A Tuple of four elements:
   1. Matching string
   3. Function to set some type, specifier.
@@ -56,7 +40,7 @@ FIELD_SPECIFIER_EDIT_PROG_ONLY = 10
 FIELD_TYPE_MAP_LIST = (
   ('Cm', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
                               None,
-                              FIELD_SPECIFIER_MULTILINE)),
+                              FileManField.FIELD_SPECIFIER_MULTILINE)),
   ('DC', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
                               FileManField.FIELD_TYPE_DATE_TIME,
                               None)),
@@ -65,7 +49,7 @@ FIELD_TYPE_MAP_LIST = (
                               None)),
   ('WL', setTypeAndSpecifer, (FileManField.FIELD_TYPE_WORD_PROCESSING,
                               None,
-                              FIELD_SPECIFIER_NO_WORD_WRAPPING)),
+                              FileManField.FIELD_SPECIFIER_NO_WORD_WRAPPING)),
   ('C', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
                              None,
                              None)),
@@ -95,28 +79,28 @@ FIELD_TYPE_MAP_LIST = (
                              None)),
   ('A', setTypeAndSpecifer, (FileManField.FIELD_TYPE_SUBFILE_POINTER,
                              None,
-                             FIELD_SPECIFIER_NEW_ENTRY_NO_ASK)),
+                             FileManField.FIELD_SPECIFIER_NEW_ENTRY_NO_ASK)),
   ('M', setTypeAndSpecifer, (FileManField.FIELD_TYPE_SUBFILE_POINTER,
                              None,
-                             FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER)),
+                             FileManField.FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER)),
   ('R', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_REQUIRED)),
+                             FileManField.FIELD_SPECIFIER_REQUIRED)),
   ('O', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_OUTPUT_TRANSFORM)),
+                             FileManField.FIELD_SPECIFIER_OUTPUT_TRANSFORM)),
   ('a', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_AUDIT)),
+                             FileManField.FIELD_SPECIFIER_AUDIT)),
   ('e', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_AUDIT_EDIT_DELETE)),
+                             FileManField.FIELD_SPECIFIER_AUDIT_EDIT_DELETE)),
   ('I', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_UNEDITABLE)),
+                             FileManField.FIELD_SPECIFIER_UNEDITABLE)),
   ('X', setTypeAndSpecifer, (None,
                              None,
-                             FIELD_SPECIFIER_EDIT_PROG_ONLY)),
+                             FileManField.FIELD_SPECIFIER_EDIT_PROG_ONLY)),
 )
 
 class FileManSchemaParser(object):
@@ -177,6 +161,9 @@ class FileManSchemaParser(object):
                  (zeroFields[1], types, specifier, filePointedTo, subFile))
     fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0], types[0], location)
     """ @TODO Set the specifier attributes """
+    if specifier:
+      fileField.setSpecifier(specifier)
+      logging.debug("Adding specifier: %s to %r" % (specifier, fileField))
     if fileField.getType() == FileManField.FIELD_TYPE_FILE_POINTER:
       if filePointedTo:
         if filePointedTo in self._allSchema:
@@ -287,9 +274,9 @@ def testDDZWRFile():
   schemaParse = FileManSchemaParser()
   allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
   # Find all the word processing multiple
-  #printAllSchemas(allSchemaDict)
-  from FileManGlobalDataParser import parseDataBySchema
-  parseDataBySchema(schemaParse._ddRoot['200'], allSchemaDict, '0')
+  printAllSchemas(allSchemaDict)
+  #from FileManGlobalDataParser import parseDataBySchema
+  #parseDataBySchema(schemaParse._ddRoot['200'], allSchemaDict, '0')
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
@@ -323,13 +310,13 @@ def parsingWordProcessingNode(globalNode, level=1):
 
 def test_parseFieldTypeSpecifier():
   for typeField in (".2LAP", "M66.021A", "MP8994",
-                    "Cm", "BC", '9002313.59902PA'):
+                    "Cm", "BC", '9002313.59902PA', 'RF'):
     print FileManSchemaParser()._parseFieldTypeSpecifier(typeField)
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(message)s')
-  test_parseFieldTypeSpecifier()
+  #test_parseFieldTypeSpecifier()
   testDDZWRFile()
 
 if __name__ == '__main__':
