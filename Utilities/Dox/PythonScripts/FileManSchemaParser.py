@@ -127,6 +127,7 @@ class FileManSchemaParser(object):
     self._ddRoot = createGlobalNodeByZWRFile(inputDDZWRFile)
     self._generateSchema()
     self._updateMultiple()
+    return self._allSchema
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
     for file in files: # create all the files
@@ -273,15 +274,19 @@ class FileManSchemaParser(object):
       print "DELETE TEST:"
       parsingDelTest(rootNode['DEL'])
 
-def testDDZWRFile():
+def createArgParser():
   import argparse
   parser = argparse.ArgumentParser(description='FileMan Schema Parser')
   parser.add_argument('ddFile', help='path to ZWR file contains DD global')
+  return parser
+
+def testDDZWRFile():
+  parser = createArgParser()
   result = parser.parse_args();
   schemaParse = FileManSchemaParser()
-  schemaParse.parseSchemaDDFile(result.ddFile)
+  allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
   # Find all the word processing multiple
-  printAllSchemas(schemaParse._allSchema)
+  printAllSchemas(allSchemaDict)
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)

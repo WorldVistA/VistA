@@ -19,23 +19,25 @@ import re
 from datetime import datetime
 import logging
 from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
+from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, createGlobalNodeByZWRFile
+from ZWRGlobalParser import createGlobalNodeByZWRFile
+from FileManSchemaParser import FileManSchemaParser, parsingWordProcessingNode
 
-def sortSchemaByLocation(schemaRoot):
-  locFields = {}
-  for fldAttr in schemaRoot.getAllFileManFields().itervalues():
+def sortSchemaByLocation(fileSchema):
+  locFieldDict = {}
+  for fldAttr in fileSchema.getAllFileManFields().itervalues():
     loc = fldAttr.getLocation()
     if not loc: continue
     index,pos = loc.split(';')
-    if index not in locFields:
-      locFields[index] = {}
-    locFields[index][pos] = fldAttr
-  return locFields
+    if index not in locFieldDict:
+      locFieldDict[index] = {}
+    locFieldDict[index][pos] = fldAttr
+  return locFieldDict
 
-def parseDataBySchema(dataRoot, schemaRoot, fileNumber, level=0):
+def parseDataBySchema(dataRoot, fileSchemaDict, fileNumber, level=0):
   """ first sort the schema Root by location """
   indent = "\t" * level
-  fieldDict = sortSchemaByLocation(schemaRoot[fileNumber])
+  locFieldDict = sortSchemaByLocation(fileSchemaDict[fileNumber])
   """ for each data entry, parse data by location """
   floatKey = getKeys(dataRoot, float)
   for ien in floatKey:
@@ -48,17 +50,17 @@ def parseDataBySchema(dataRoot, schemaRoot, fileNumber, level=0):
     logging.info ('%s------------------' % indent)
     dataKeys = [x for x in dataEntry]
     sortedKey = sorted(dataKeys, cmp=sortDataEntryFloatFirst)
-    for key in sortedKey:
-      if key in fieldDict:
-        fieldDict = schemaDict[key]
+    for locKey in sortedKey:
+      if locKey in locFieldDict:
+        fieldDict = locFieldDict[locKey] # a dict of {pos: field}
         if len(fieldDict) == 1:
           fieldAttr = fieldDict.values()[0]
-          if fieldAttr.isSubFilePointerType:
-            parseSubFileField(dataEntry[key], fieldAttr, schemaRoot, level)
+          if fieldAttr.isSubFilePointerType(): # Multiple
+            parseSubFileField(dataEntry[locKey], fieldAttr, fileSchemaDict, level)
           else:
-            parseSingleDataValueField(dataEntry[key], fieldAttr, level)
+            parseSingleDataValueField(dataEntry[locKey], fieldAttr, level)
         else:
-          parseDataValueField(dataEntry[key], fieldDict, level)
+          parseDataValueField(dataEntry[locKey], fieldDict, level)
 
 def parseSingleDataValueField(dataEntry, fieldAttr, level):
   values = dataEntry.value
@@ -86,8 +88,8 @@ def parseDataValueField(dataRoot, fieldDict, level):
   if not values: return # this is very import to check
   for idx, value in enumerate(values, 1):
     if value and str(idx) in fieldDict:
-      schema = fieldDict[str(idx)]
-      parseIndividualFieldDetail(value, schema, level)
+      fieldAttr = fieldDict[str(idx)]
+      parseIndividualFieldDetail(value, fieldAttr, level)
 
 def parseIndividualFieldDetail(value, fieldAttr, level):
   if not value: return
@@ -100,31 +102,48 @@ def parseIndividualFieldDetail(value, fieldAttr, level):
     if setDict and value in setDict:
       fieldDetail = setDict[value]
   elif fieldAttr.isFilePointerType():
-    filePointerTo = fieldAttr.getPointedToFile()
-    fieldDetail = 'File: %s, IEN: %s' % (filePointerTo.getFileNo(), value)
+    filePointedTo = fieldAttr.getPointedToFile()
+    if filePointedTo:
+      fieldDetail = 'File: %s, IEN: %s' % (filePointedTo.getFileNo(), value)
+    else:
+      fieldDetail = 'No Pointed to File'
   logging.info ("%s%s: %s" % (indent, fieldAttr.getName(), fieldDetail))
 
-def parseSubFileField(dataRoot, fieldAttr, schemaRoot, level):
+def parseSubFileField(dataRoot, fieldAttr, fileSchemaDict, level):
   indent = "\t"*level
   logging.info ("%s%s" % (indent, fieldAttr.getName() + ':'))
   subFile = fieldAttr.getPointedToSubFile()
-  if fileAttr.hasSubType(FileManField.FIELD_TYPE_WORD_PROCESSING):
+  if fieldAttr.hasSubType(FileManField.FIELD_TYPE_WORD_PROCESSING):
     parsingWordProcessingNode(dataRoot, level+1)
-  elif subfile:
-    parseDataBySchema(dataRoot, schemaRoot, subfile, level+1)
+  elif subFile:
+    parseDataBySchema(dataRoot, fileSchemaDict, subFile.getFileNo(), level+1)
   else:
     logging.info ("Sorry, do not know how to intepret the schema %s" % fieldAttr)
 
-def parseZWRGlobalDataBySchema(inputFileName, allSchemaDict):
+def parseZWRGlobalDataBySchema(inputFileName, allSchemaDict, fileNumber):
   glbDataRoot = createGlobalNodeByZWRFile(inputFileName)
   parseDataBySchema(glbDataRoot[fileNumber], allSchemaDict, fileNumber)
 
+def createArgParser():
+  import argparse
+  parser = argparse.ArgumentParser(description='FileMan Global Data Parser')
+  parser.add_argument('ddFile', help='path to ZWR file contains DD global')
+  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
+  parser.add_argument('fileNo', help='fileManFileNo')
+  return parser
+
+def testGlobalParser():
+  parser = createArgParser()
+  result = parser.parse_args()
+  print result
+  schemaParser = FileManSchemaParser()
+  allSchemaDict = schemaParser.parseSchemaDDFile(result.ddFile)
+  parseZWRGlobalDataBySchema(result.gdFile, allSchemaDict, result.fileNo)
+
 def main():
   from LogManager import initConsoleLogging
-  #testGlobalNode()
   initConsoleLogging(formatStr='%(message)s')
-  testDDZWRFile()
-  #test_sortDataEntryFloatFirst()
+  testGlobalParser()
 
 if __name__ == '__main__':
   main()
