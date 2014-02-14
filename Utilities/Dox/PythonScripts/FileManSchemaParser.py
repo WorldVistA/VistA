@@ -159,12 +159,13 @@ class FileManSchemaParser(object):
       elif location.split(';')[-1] == '0': # 0 means multiple
         multipleType = FileManField.FIELD_TYPE_SUBFILE_POINTER
         if not types:
-          logging.info('Set type to be multiple for %s' % zeroFields)
+          logging.debug('Set type to be multiple for %s' % zeroFields)
           types = [multipleType]
         if multipleType in types and types[0] != multipleType:
-          logging.info('Change type to be multiple for %s' % zeroFields)
+          logging.debug('Change type to be multiple for %s' % zeroFields)
           types.remove(multipleType)
           types.insert(0, multipleType)
+          if not subFile: subFile = filePointedTo
     if not types:
       logging.warn('Can not determine the type for %s' % zeroFields)
       types = [FileManField.FIELD_TYPE_NONE]
@@ -172,7 +173,7 @@ class FileManSchemaParser(object):
       if subFile and subFile == fileSchema.getFileNo():
         logging.error("recursive subfile pointer for %s" % subFile)
         types = [FileManField.FIELD_TYPE_NONE]
-    logging.info('%s is %s, %s, %s, %s' %
+    logging.debug('%s is %s, %s, %s, %s' %
                  (zeroFields[1], types, specifier, filePointedTo, subFile))
     fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0], types[0], location)
     """ @TODO Set the specifier attributes """
@@ -248,7 +249,7 @@ class FileManSchemaParser(object):
             if subFileNo in allSchemaDict and subFile.hasField('.01'):
               subType = subFile.getField('.01').getType()
               if subType != FileManField.FIELD_TYPE_NONE:
-                logging.info('Adding subType %s to %r' % (subType, detail))
+                logging.debug('Adding subType %s to %r' % (subType, detail))
                 detail.addSubType(subType)
 
   def parseSchemaFieldAttributes(self, zeroFields, rootNode):
@@ -286,7 +287,9 @@ def testDDZWRFile():
   schemaParse = FileManSchemaParser()
   allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
   # Find all the word processing multiple
-  printAllSchemas(allSchemaDict)
+  #printAllSchemas(allSchemaDict)
+  from FileManGlobalDataParser import parseDataBySchema
+  parseDataBySchema(schemaParse._ddRoot['200'], allSchemaDict, '0')
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
@@ -313,13 +316,14 @@ def parsingDelTest(globalRoot):
 
 def parsingWordProcessingNode(globalNode, level=1):
   indent = "\t"*level
+  logging.debug("Processing Word Processing Data")
   for key in sorted(globalNode, key=lambda x: int(x)):
     if "0" in globalNode[key]:
       logging.info ("%s%s" % (indent, globalNode[key]["0"].value))
 
 def test_parseFieldTypeSpecifier():
   for typeField in (".2LAP", "M66.021A", "MP8994",
-                    "Cm", "BC"):
+                    "Cm", "BC", '9002313.59902PA'):
     print FileManSchemaParser()._parseFieldTypeSpecifier(typeField)
 
 def main():
