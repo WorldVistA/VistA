@@ -103,14 +103,14 @@ FIELD_TYPE_MAP_LIST = (
     None)
   ),
   ('A',
-   (FileManField.FIELD_TYPE_SUBFILE_POINTER,
+   (None,
     None,
     FileManField.FIELD_SPECIFIER_NEW_ENTRY_NO_ASK)
   ),
   ('M',
-   (FileManField.FIELD_TYPE_SUBFILE_POINTER,
+   (None,
     None,
-    FileManField.FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER)
+    FileManField.FIELD_SPECIFIER_MULTIPLE_ASKED)
   ),
   ('R',
    (None,
@@ -141,6 +141,11 @@ FIELD_TYPE_MAP_LIST = (
    (None,
     None,
     FileManField.FIELD_SPECIFIER_EDIT_PROG_ONLY)
+  ),
+  ('*',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_SCREEN)
   ),
 )
 
@@ -267,7 +272,7 @@ class FileManSchemaParser(object):
       float(filePointedTo) # this is to make sure that file # is a float
       if len(result.groups()) > 1:
         specifier.append(FileManField.FIELD_SPECIFIER_LAYGO_NOT_ALLOWED)
-      typeField = typeField[:result.span()[0]] + typeField[result.span()[1]+1:]
+      typeField = typeField[:result.span()[0]] + typeField[result.span()[1]:]
     for match, args in FIELD_TYPE_MAP_LIST:
       if match in typeField:
         setTypeAndSpecifer(types, specifier, args)
@@ -294,7 +299,8 @@ class FileManSchemaParser(object):
             subFileNo = subFile.getFileNo()
             if subFileNo in allSchemaDict and subFile.hasField('.01'):
               subType = subFile.getField('.01').getType()
-              if subType != FileManField.FIELD_TYPE_NONE:
+              if (not detail.hasSubType(subType) and
+                  subType != FileManField.FIELD_TYPE_NONE):
                 logging.debug('Adding subType %s to %r' % (subType, detail))
                 detail.addSubType(subType)
 
@@ -317,6 +323,8 @@ class FileManSchemaParser(object):
     if "21" in rootNode:
       print "Description:"
       parsingWordProcessingNode(rootNode['21'])
+    if '7.5' in rootNode:
+      print "PRE-LOOKUP: %s" % "".join(rootNode['7.5'].value)
     if "DEL" in rootNode:
       print "DELETE TEST:"
       parsingDelTest(rootNode['DEL'])
@@ -333,9 +341,9 @@ def testDDZWRFile():
   schemaParse = FileManSchemaParser()
   allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
   # Find all the word processing multiple
-  printAllSchemas(allSchemaDict)
-  #from FileManGlobalDataParser import parseDataBySchema
-  #parseDataBySchema(schemaParse._ddRoot['200'], allSchemaDict, '0')
+  # printAllSchemas(allSchemaDict)
+  from FileManGlobalDataParser import parseDataBySchema
+  parseDataBySchema(schemaParse._ddRoot['2'], allSchemaDict, '0')
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
@@ -368,17 +376,17 @@ def parsingWordProcessingNode(globalNode, level=1):
       logging.info ("%s%s" % (indent, globalNode[key]["0"].value))
 
 def test_parseFieldTypeSpecifier():
-  for typeField in (".2LAP", "M66.021A", "MP8994",
+  for typeField in (".2LAP", "M66.021A", "MP200'X",
                     "Cm", "BC", "9002313.59902PA", "RF",
-                    "WL", "200.34P"):
+                    "WL", "200.34P", "*P21'Xa"):
     logging.info("%s: %s" % (typeField,
                   FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(message)s')
-  test_parseFieldTypeSpecifier()
-  #testDDZWRFile()
+  #test_parseFieldTypeSpecifier()
+  testDDZWRFile()
 
 if __name__ == '__main__':
   main()
