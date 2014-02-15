@@ -209,11 +209,17 @@ class FileManSchemaParser(object):
         types = [FileManField.FIELD_TYPE_NONE]
     logging.debug('%s is %s, %s, %s, %s' %
                  (zeroFields[1], types, specifier, filePointedTo, subFile))
-    fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0], types[0], location)
-    """ @TODO Set the specifier attributes """
+    fileField = FileManFieldFactory.createField(fieldNo, zeroFields[0],
+                                                types[0], location)
     if specifier:
       fileField.setSpecifier(specifier)
       logging.debug("Adding specifier: %s to %r" % (specifier, fileField))
+    self._setFieldSpecifiData(zeroFields, fileField, rootNode,
+                              fileSchema, filePointedTo, subFile)
+    return fileField
+
+  def _setFieldSpecifiData(self, zeroFields, fileField, rootNode,
+                           fileSchema, filePointedTo, subFile):
     if fileField.getType() == FileManField.FIELD_TYPE_FILE_POINTER:
       if filePointedTo:
         if filePointedTo in self._allSchema:
@@ -256,8 +262,7 @@ class FileManSchemaParser(object):
           fileField.setPointedToFiles(vpFileSchemas)
     elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
       if len(zeroFields) >= 5:
-        logging.info("Computed Mumps Code: %s for %r" % ("".join(zeroFields[4:]), fileField))
-    return fileField
+        logging.debug("Computed Mumps Code: %s for %r" % ("".join(zeroFields[4:]), fileField))
 
   @staticmethod
   def parseFieldTypeSpecifier(typeField):
