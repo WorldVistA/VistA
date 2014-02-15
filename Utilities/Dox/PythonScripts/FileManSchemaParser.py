@@ -27,80 +27,121 @@ from ZWRGlobalParser import createGlobalNodeByZWRFile, getKeys
 """
 def setTypeAndSpecifer(types, specifier, values):
   if values and len(values) == 3:
-    if values[0]: types.append(values[0])
-    if values[1]: types.append(values[1])
-    if values[2]: specifier.append(values[2])
+    if values[0] and values[0] not in types: types.append(values[0])
+    if values[1] and values[1] not in types: types.append(values[1])
+    if values[2] and values[2] not in specifier: specifier.append(values[2])
 """
-  A Tuple of four elements:
+  A Tuple of two elements:
   1. Matching string
-  3. Function to set some type, specifier.
-  4. Argument function if present, in the form of
+  4. Argument if present, in the form of
      (Type, subType, Specifier)
 """
 FIELD_TYPE_MAP_LIST = (
-  ('Cm', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
-                              None,
-                              FileManField.FIELD_SPECIFIER_MULTILINE)),
-  ('DC', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
-                              FileManField.FIELD_TYPE_DATE_TIME,
-                              None)),
-  ('BC', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
-                              FileManField.FIELD_TYPE_BOOLEAN,
-                              None)),
-  ('WL', setTypeAndSpecifer, (FileManField.FIELD_TYPE_WORD_PROCESSING,
-                              None,
-                              FileManField.FIELD_SPECIFIER_NO_WORD_WRAPPING)),
-  ('C', setTypeAndSpecifer, (FileManField.FIELD_TYPE_COMPUTED,
-                             None,
-                             None)),
-  ('D', setTypeAndSpecifer, (FileManField.FIELD_TYPE_DATE_TIME,
-                             None,
-                             None)),
-  ('F', setTypeAndSpecifer, (FileManField.FIELD_TYPE_FREE_TEXT,
-                             None,
-                             None)),
-  ('N', setTypeAndSpecifer, (FileManField.FIELD_TYPE_NUMBER,
-                             None,
-                             None)),
-  ('P', setTypeAndSpecifer, (FileManField.FIELD_TYPE_FILE_POINTER,
-                             None,
-                             None)),
-  ('S', setTypeAndSpecifer, (FileManField.FIELD_TYPE_SET,
-                             None,
-                             None)),
-  ('W', setTypeAndSpecifer, (FileManField.FIELD_TYPE_WORD_PROCESSING,
-                             None,
-                             None)),
-  ('V', setTypeAndSpecifer, (FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER,
-                             None,
-                             None)),
-  ('K', setTypeAndSpecifer, (FileManField.FIELD_TYPE_MUMPS,
-                             None,
-                             None)),
-  ('A', setTypeAndSpecifer, (FileManField.FIELD_TYPE_SUBFILE_POINTER,
-                             None,
-                             FileManField.FIELD_SPECIFIER_NEW_ENTRY_NO_ASK)),
-  ('M', setTypeAndSpecifer, (FileManField.FIELD_TYPE_SUBFILE_POINTER,
-                             None,
-                             FileManField.FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER)),
-  ('R', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_REQUIRED)),
-  ('O', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_OUTPUT_TRANSFORM)),
-  ('a', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_AUDIT)),
-  ('e', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_AUDIT_EDIT_DELETE)),
-  ('I', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_UNEDITABLE)),
-  ('X', setTypeAndSpecifer, (None,
-                             None,
-                             FileManField.FIELD_SPECIFIER_EDIT_PROG_ONLY)),
+  ('Cm',
+   (FileManField.FIELD_TYPE_COMPUTED,
+    None,
+    FileManField.FIELD_SPECIFIER_MULTILINE)
+  ),
+  ('DC',
+    (FileManField.FIELD_TYPE_COMPUTED,
+     FileManField.FIELD_TYPE_DATE_TIME,
+     None)
+  ),
+  ('BC',
+    (FileManField.FIELD_TYPE_COMPUTED,
+     FileManField.FIELD_TYPE_BOOLEAN,
+     None)
+  ),
+  ('WL',
+   (FileManField.FIELD_TYPE_WORD_PROCESSING,
+    None,
+    FileManField.FIELD_SPECIFIER_NO_WORD_WRAPPING)
+  ),
+  ('C',
+   (FileManField.FIELD_TYPE_COMPUTED,
+    None,
+    None)
+  ),
+  ('D',
+   (FileManField.FIELD_TYPE_DATE_TIME,
+    None,
+    None)
+  ),
+  ('F',
+   (FileManField.FIELD_TYPE_FREE_TEXT,
+    None,
+    None)
+  ),
+  ('N',
+   (FileManField.FIELD_TYPE_NUMBER,
+    None,
+    None)
+  ),
+  ('P',
+   (FileManField.FIELD_TYPE_FILE_POINTER,
+    None,
+    None)
+  ),
+  ('S',
+   (FileManField.FIELD_TYPE_SET,
+    None,
+    None)
+  ),
+  ('W',
+    (FileManField.FIELD_TYPE_WORD_PROCESSING,
+     None,
+     None)
+  ),
+  ('V',
+   (FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER,
+    None,
+    None)
+  ),
+  ('K',
+   (FileManField.FIELD_TYPE_MUMPS,
+    None,
+    None)
+  ),
+  ('A',
+   (FileManField.FIELD_TYPE_SUBFILE_POINTER,
+    None,
+    FileManField.FIELD_SPECIFIER_NEW_ENTRY_NO_ASK)
+  ),
+  ('M',
+   (FileManField.FIELD_TYPE_SUBFILE_POINTER,
+    None,
+    FileManField.FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER)
+  ),
+  ('R',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_REQUIRED)
+  ),
+  ('O',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_OUTPUT_TRANSFORM)
+  ),
+  ('a',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_AUDIT)
+  ),
+  ('e',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_AUDIT_EDIT_DELETE)
+  ),
+  ('I',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_UNEDITABLE)
+  ),
+  ('X',
+   (None,
+    None,
+    FileManField.FIELD_SPECIFIER_EDIT_PROG_ONLY)
+  ),
 )
 
 class FileManSchemaParser(object):
@@ -130,13 +171,17 @@ class FileManSchemaParser(object):
     if '0' not in rootNode:
       logging.warn('%s does not have a 0 subscript' % rootNode)
       return None
-    zeroFields = rootNode["0"].value # read the location first
-    if not zeroFields or len(zeroFields) < 2:
-      logging.warn("Invalid value: %s for %s" % (zeroFields, rootNode['0']))
+    zeroFields = rootNode["0"].value
+    if not zeroFields:
+      logging.warn("No value: %s for %s" % (zeroFields, rootNode['0']))
       return None
-    types, specifier, filePointedTo, subFile = self._parseFieldTypeSpecifier(zeroFields[1])
+    if len(zeroFields) < 2:
+      return FileManFieldFactory.createField(fieldNo, zeroFields[0],
+                                             FileManField.FIELD_TYPE_NONE, None)
+    types, specifier, filePointedTo, subFile = \
+        self.parseFieldTypeSpecifier(zeroFields[1])
     location = None
-    if zeroFields[3]:
+    if len(zeroFields) >= 4 and zeroFields[3]:
       location = zeroFields[3].strip(' ')
       if location == ';': # No location information
         location = None
@@ -169,10 +214,20 @@ class FileManSchemaParser(object):
         if filePointedTo in self._allSchema:
           fileField.setPointedToFile(self._allSchema[filePointedTo])
         else:
-          logging.warn("Could not find pointed to file: %s" % filePointedTo)
+          """ try to set the global location here """
+          if len(zeroFields) >= 3:
+            fileGlobalRoot = zeroFields[2]
+            logging.info("@TODO, find the file @ %s" % fileGlobalRoot)
+          else:
+            logging.warn("Could not find pointed to file: %s" % filePointedTo)
       else:
-        logging.warn("No pointed to file set for file:%s: field:%r 0-index:%s" %
-                     (fileSchema.getFileNo(), fileField, zeroFields))
+        """ try to set the global location here """
+        if len(zeroFields) >= 3:
+          fileGlobalRoot = zeroFields[2]
+          logging.info("@TODO, find the file @ %s" % fileGlobalRoot)
+        else:
+          logging.warn("No pointed to file set for file:%s: field:%r 0-index:%s" %
+                       (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile:
         if subFile in self._allSchema:
@@ -194,30 +249,34 @@ class FileManSchemaParser(object):
         if vptrs:
           vpFileSchemas = [self._allSchema.get(x) for x in vptrs]
           fileField.setPointedToFiles(vpFileSchemas)
+    elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
+      if len(zeroFields) >= 5:
+        logging.info("Computed Mumps Code: %s for %r" % ("".join(zeroFields[4:]), fileField))
     return fileField
 
   @staticmethod
-  def _parseFieldTypeSpecifier(typeField):
+  def parseFieldTypeSpecifier(typeField):
     if not typeField:
       return [FileManField.FIELD_TYPE_NONE], None, None, None
-    filePointedTo = None
-    result = re.search('P(?P<file>[0-9.]+)', typeField)
-    if result:
-      filePointedTo = result.group('file')
-      float(filePointedTo)
     types, specifier = [], []
-    for match, func, args in FIELD_TYPE_MAP_LIST:
+    filePointedTo = None # Handle specific case of pointed to file
+    result = re.search("P(?P<file>[0-9.]+)('?)", typeField)
+    if result:
+      types.append(FileManField.FIELD_TYPE_FILE_POINTER)
+      filePointedTo = result.group('file')
+      float(filePointedTo) # this is to make sure that file # is a float
+      if len(result.groups()) > 1:
+        specifier.append(FileManField.FIELD_SPECIFIER_LAYGO_NOT_ALLOWED)
+      typeField = typeField[:result.span()[0]] + typeField[result.span()[1]+1:]
+    for match, args in FIELD_TYPE_MAP_LIST:
       if match in typeField:
-        func(types, specifier, args)
+        setTypeAndSpecifer(types, specifier, args)
         typeField = typeField.replace(match,'') # get rid of the match
     subFile = None
-    result = re.search('(?P<subFile>^[0-9.]+)', typeField)
+    result = re.search("(?P<subFile>^[0-9.]+)", typeField)
     if result:
       subFile = result.group('subFile')
-      if FileManField.FIELD_TYPE_FILE_POINTER in types:
-        filePointedTo = subFile
-        subFile = None
-      elif FileManField.FIELD_TYPE_SUBFILE_POINTER not in types:
+      if FileManField.FIELD_TYPE_SUBFILE_POINTER not in types:
         types.insert(0, FileManField.FIELD_TYPE_SUBFILE_POINTER)
     return types, specifier, filePointedTo, subFile
 
@@ -310,14 +369,16 @@ def parsingWordProcessingNode(globalNode, level=1):
 
 def test_parseFieldTypeSpecifier():
   for typeField in (".2LAP", "M66.021A", "MP8994",
-                    "Cm", "BC", '9002313.59902PA', 'RF'):
-    print FileManSchemaParser()._parseFieldTypeSpecifier(typeField)
+                    "Cm", "BC", "9002313.59902PA", "RF",
+                    "WL", "200.34P"):
+    logging.info("%s: %s" % (typeField,
+                  FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(message)s')
-  #test_parseFieldTypeSpecifier()
-  testDDZWRFile()
+  test_parseFieldTypeSpecifier()
+  #testDDZWRFile()
 
 if __name__ == '__main__':
   main()
