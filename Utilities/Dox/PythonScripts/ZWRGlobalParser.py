@@ -199,7 +199,7 @@ def createGlobalNode(inputLine, globalRoot):
   nodeIndex, nodeValue = findSubscriptValue(inputLine)
   if nodeIndex:
     if len(nodeValue) > 0:
-      nodeValue.replace('""""', '""')
+      nodeValue = nodeValue.replace('""', '"')
     nodeIdx = globalRoot
     for idx in nodeIndex[:-1]:
       if idx not in nodeIdx:
