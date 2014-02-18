@@ -105,7 +105,6 @@ def convertToType(data1, convertFunc):
   except ValueError:
     return False
 
-
 def testGlobalNode():
   gn = GlobalNode("root^test", "^ZZTEST")
   for i in range(len(gn.value)):
@@ -122,6 +121,7 @@ def testGlobalNode():
   print gn['test'][2]
   print gn['test'][3]
   print 2 in gn['test']
+  print(gn)
   printGlobal(gn)
 
 def test_sortDataEntryFloatFirst():
@@ -214,7 +214,7 @@ def main():
   import sys
   from datetime import datetime
   initConsoleLogging(formatStr='%(message)s')
-  #testGlobalNode()
+  testGlobalNode()
   #test_createGlobalNodeByZWRFile(sys.argv[1])
   test_sortDataEntryFloatFirst()
   logging.info(datetime.now())

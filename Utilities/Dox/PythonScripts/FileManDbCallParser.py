@@ -128,18 +128,17 @@ from DataDictionaryParser import createDataDictionaryAugumentParser
 from DataDictionaryParser import parseDataDictionaryLogFile
 
 
-def createFileManDBFileAugumentParser():
+def createFileManDBFileAugumentParser(isRequired=True):
     parser = argparse.ArgumentParser(add_help=False) # no help page
     argGroup = parser.add_argument_group("FileMan DB Calls JSON file Parser Auguments")
-    argGroup.add_argument('-db', '--filemanDbJson', required=True,
+    argGroup.add_argument('-db', '--filemanDbJson', required=isRequired,
                         help='fileman db call information in JSON format')
     return parser
 
-def parseFileManDBJSONFile(crossRef, fileManJsonFile):
+def parseFileManDBJSONFile(crossRef, fileManJsonFile, isRequired=True):
     fileDbCallParser = FileManDbCallParser(crossRef)
-    fileDbCallParser.parseFileManDbJSONFile(fileManJsonFile)
+    fileDbCallParser.parseFileManDbJSONFile(fileManJsonFile, isRequired)
     return fileDbCallParser
-
 
 if __name__ == '__main__':
     callLogArgParser = createCallGraphLogAugumentParser()

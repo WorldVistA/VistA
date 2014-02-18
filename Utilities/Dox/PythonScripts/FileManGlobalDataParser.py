@@ -19,7 +19,7 @@ import re
 from datetime import datetime
 import logging
 from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
+from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from FileManSchemaParser import FileManSchemaParser
 
@@ -80,7 +80,7 @@ def printFileManFileData(fileManData, level=0):
   curIndent = "\t"*(level+1)
   if level == 0:
     print "File#: %s, Name: %s" % (fileManData.fileNo, fileManData.name)
-  for ien in getKeys(fileManData.data.keys(), int):
+  for ien in getKeys(fileManData.data.keys(), float):
     dataEntry = fileManData.data[ien]
     if level == 0:
       print "FileEntry#: %s" % ien
@@ -137,7 +137,7 @@ class FileManGlobalDataParser(object):
   def __init__(self):
     self._dataRoot = None
     self._allSchemaDict = None
-    self._glbData = None
+    self._glbData = {} # fileNo => FileManData
 
   @property
   def outFileManData(self):
@@ -146,11 +146,15 @@ class FileManGlobalDataParser(object):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
-    self._glbData = FileManFileData(fileNumber, schemaFile.getFileManName())
-    if subscript in self._dataRoot:
-      self._parseDataBySchema(self._dataRoot[subscript], schemaFile, self._glbData)
-    else:
-      logging.error("%s does not exist in %s" % (subscript, self._dataRoot))
+    if subscript and subscript in self._dataRoot:
+      dataRoot = self._dataRoot[subscript]
+      self._glbData[fileNumber] = FileManFileData(fileNumber, schemaFile.getFileManName())
+      self._parseDataBySchema(dataRoot, schemaFile, self._glbData[fileNumber])
+    else: # assume this is for all files in the entry
+      for fileNo in getKeys(self._dataRoot, float):
+        dataRoot = self._dataRoot[fileNo]
+        self._glbData[fileNo] = FileManFileData(fileNo, schemaFile.getFileManName())
+        self._parseDataBySchema(dataRoot, schemaFile, self._glbData[fileNo])
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
@@ -256,7 +260,7 @@ class FileManGlobalDataParser(object):
 
   def _parsingWordProcessingNode(self, dataRoot):
     outLst = []
-    for key in sorted(dataRoot, key=lambda x: int(x)):
+    for key in getKeys(dataRoot, int):
       if '0' in dataRoot[key]:
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
@@ -282,9 +286,14 @@ def testGlobalParser():
                                            allSchemaDict,
                                            result.fileNo,
                                            result.subscript)
-  printFileManFileData(glbDataParser.outFileManData)
+  for fileNo in getKeys(glbDataParser.outFileManData.iterkeys(), float):
+    printFileManFileData((glbDataParser.outFileManData[fileNo]))
+
 
 def horologToDateTime(input):
+  """
+    convert Mumps Horolog time to python datatime
+  """
   from datetime import timedelta
   originDt = datetime(1840,12,31,0,0,0)
   if input.find(',') < 0: # invalid format
