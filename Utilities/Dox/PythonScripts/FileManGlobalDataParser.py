@@ -23,6 +23,14 @@ from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from FileManSchemaParser import FileManSchemaParser
 
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
+print SCRIPTS_DIR
+if SCRIPTS_DIR not in sys.path:
+  sys.path.append(SCRIPTS_DIR)
+
+from FileManDateTimeUtil import fmDtToPyDt
+
 class FileManFileData(object):
   def __init__(self, fileNo, name):
     self._fileNo = fileNo
@@ -231,7 +239,11 @@ class FileManGlobalDataParser(object):
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
       else:
-        pass
+        outDt = fmDtToPyDt(value)
+        if outDt:
+          fieldDetail = outDt
+        else:
+          logger.warn("Could not parse Date/Time: %s" % value)
 
     outDataEntry.addData(FileManDataField(fieldAttr.getFieldNo(),
                                           fieldAttr.getType(),
