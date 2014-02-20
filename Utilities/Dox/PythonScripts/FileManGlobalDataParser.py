@@ -37,7 +37,7 @@ class FileManFileData(object):
     self._name = name
     self._data = {}
   @property
-  def data(self):
+  def dataEntries(self):
     return self._data
   @property
   def name(self):
@@ -57,11 +57,14 @@ class FileManDataEntry(object):
     self._fileNo = fileNo
     self._name = None
   @property
-  def data(self):
+  def fields(self):
     return self._data
   @property
   def name(self):
     return self._name
+  @property
+  def ien(self):
+    return self._ien
   @name.setter
   def name(self, name):
     self._name = name
@@ -76,6 +79,9 @@ class FileManDataField(object):
     self._type = type
     self._name = name
     self._value = value
+  @property
+  def id(self):
+    return self._fieldId
   @property
   def name(self):
     return self._name
@@ -95,15 +101,15 @@ def printFileManFileData(fileManData, level=0):
   curIndent = "\t"*(level+1)
   if level == 0:
     print "File#: %s, Name: %s" % (fileManData.fileNo, fileManData.name)
-  for ien in getKeys(fileManData.data.keys(), float):
-    dataEntry = fileManData.data[ien]
+  for ien in getKeys(fileManData.dataEntries.keys(), float):
+    dataEntry = fileManData.dataEntries[ien]
     if level == 0:
       print "FileEntry#: %s, Name: %s" % (ien, dataEntry.name)
     else:
       print
-    for dataField in dataEntry.data:
+    for dataField in dataEntry.fields:
       if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-        if dataField.value and dataField.value.data:
+        if dataField.value and dataField.value.dataEntries:
           print "%s%s:" % (curIndent, dataField.name)
           printFileManFileData(dataField.value, level+1)
       elif dataField.type == FileManField.FIELD_TYPE_WORD_PROCESSING:
@@ -116,6 +122,100 @@ def printFileManFileData(fileManData, level=0):
         print "%s%s: %s" % (curIndent, dataField.name, dataField.value)
     print
 
+def safeFileName(name):
+  import base64
+  return base64.urlsafe_b64encode(name)
+
+outDir = "C:/Users/Jason.li/tmp/rpc"
+header="""
+<link rel="stylesheet" href="http://tablesorter.com/themes/blue/style.css" type="text/css" id=""/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://tablesorter.com/__jquery.tablesorter.js"></script>
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+  // call the tablesorter plugin
+  $("#rpctable").tablesorter({
+    // sort on the first column and third column, order asc
+    sortList: [[0,0],[2,0]]
+  });
+}); </script>
+"""
+
+def generateAllRPCTableHtml(fileManData):
+  with open("%s/allrpcs.html" % outDir,'w+') as output:
+      output.write("<html>\n")
+      output.write("%s\n" % header)
+      output.write("<body>")
+      output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+      output.write("<thead>\n")
+      output.write("<tr>\n")
+      for name in ("Name", "Tag", "Routine", "Availability"):
+        output.write("<th>%s</th>\n" % name)
+      output.write("</tr>\n")
+      output.write("</thead>\n")
+      """ table body """
+      output.write("<tbody>\n")
+      for ien in getKeys(fileManData.dataEntries.keys(), float):
+        dataEntry = fileManData.dataEntries[ien]
+        tableRow = ["", "", "", ""]
+        for field in dataEntry.fields:
+          for idx, id in enumerate(('.01', '.02', '.03', '.05')):
+            if field.id == id:
+              value = field.value
+              if idx == 0:
+                value = "<a href=\"%s/%s.html\">%s</a>" % (outDir, safeFileName(value), value)
+              tableRow[idx] = value
+              continue
+        output.write("<tr>\n")
+        for item in tableRow:
+          output.write("<td>%s</td>\n" % item)
+        output.write("</tr>\n")
+      output.write("</tbody>\n")
+      output.write("</table>\n")
+      output.write ("</body></html>\n")
+
+def convertFileManDataToHtml(fileManData):
+  for ien in getKeys(fileManData.dataEntries.keys(), float):
+    dataEntry = fileManData.dataEntries[ien]
+    with open("%s/%s.html" % (outDir, safeFileName(dataEntry.name)), 'w') as output:
+      output.write ("<html><body>")
+      output.write ("FileManFile: %s, IEN: %s" % (fileManData.fileNo, ien))
+      fileManDataEntryToHtml(output, dataEntry, True)
+      output.write ("</body></html>")
+
+def convertFileManSubFileDataToHtml(output, fileManData):
+  output.write ("<ol>")
+  for ien in getKeys(fileManData.dataEntries.keys(), float):
+    dataEntry = fileManData.dataEntries[ien]
+    fileManDataEntryToHtml(output, dataEntry, False)
+  output.write ("</ol>")
+
+import cgi
+def fileManDataEntryToHtml(output, dataEntry, isRoot):
+  if isRoot:
+    output.write ("<div>%s</div>" % (dataEntry.name))
+    output.write ("<dl>")
+  else:
+    output.write ("<li>")
+  for dataField in dataEntry.fields:
+    fieldType = dataField.type
+    name, value = dataField.name, dataField.value
+    if fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
+      if dataField.value and dataField.value.dataEntries:
+        output.write ("<dt>%s:</dt>" % name)
+        output.write ("<dd>")
+        convertFileManSubFileDataToHtml(output, dataField.value)
+        output.write ("</dd>")
+        continue
+    if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
+      value = "\n".join(value)
+      value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
+    output.write ("<dt>%s:</dt>" % name)
+    output.write ("<dd>%s</dd>" % value)
+  if isRoot:
+    output.write ("</dl>")
+  else:
+    output.write("</li>")
 
 def test_FileManDataEntry():
   fileManData = FileManFileData('1', 'TEST FILE 1')
@@ -350,8 +450,10 @@ def testGlobalParser():
                                            result.fileNo,
                                            result.subscript)
   for fileNo in getKeys(glbDataParser.outFileManData.iterkeys(), float):
-    printFileManFileData((glbDataParser.outFileManData[fileNo]))
-
+    fileManData = glbDataParser.outFileManData[fileNo]
+    #printFileManFileData(fileManData)
+    generateAllRPCTableHtml(fileManData)
+    convertFileManDataToHtml(fileManData)
 
 def horologToDateTime(input):
   """
