@@ -8,6 +8,8 @@ inherited frmOptionsSubscribe: TfrmOptionsSubscribe
   ClientWidth = 302
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
+  ExplicitWidth = 308
+  ExplicitHeight = 244
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
@@ -31,7 +33,7 @@ inherited frmOptionsSubscribe: TfrmOptionsSubscribe
       Top = 2
       Width = 75
       Height = 22
-      HelpContext = 9003
+      HelpContext = 9996
       Caption = 'OK'
       Default = True
       ModalResult = 1
@@ -42,7 +44,7 @@ inherited frmOptionsSubscribe: TfrmOptionsSubscribe
       Top = 2
       Width = 75
       Height = 22
-      HelpContext = 9004
+      HelpContext = 9997
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2

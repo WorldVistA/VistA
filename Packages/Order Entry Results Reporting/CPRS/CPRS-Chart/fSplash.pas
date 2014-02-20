@@ -13,8 +13,9 @@ type
     lblCopyright: TStaticText;
     pnlImage: TPanel;
     Image1: TImage;
-    Memo1: TMemo;
     lblSplash: TStaticText;
+    pnl508Disclaimer: TPanel;
+    Memo1: TMemo;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

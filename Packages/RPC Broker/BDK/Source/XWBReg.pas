@@ -24,7 +24,7 @@ uses Classes,
   DsgnIntf,
   {$ENDIF}
      ExptIntf, //Delphi units
-     Trpcb, CCOWRPCBroker,
+     Trpcb, {CCOWRPCBroker, }
      RpcbEdtr, XWBRich20,             //Broker units
 //{$IFDEF VER130}
 //    VERGENCECONTEXTORLib_TLB_D50;
@@ -36,8 +36,8 @@ uses Classes,
 
 procedure Register;
 begin
-  RegisterComponents('Kernel',[TRPCBroker, TCCOWRPCBroker, TXWBRichEdit, TContextorControl]);
-
+  //RegisterComponents('Kernel',[TRPCBroker, TCCOWRPCBroker, TXWBRichEdit, TContextorControl]);
+  RegisterComponents('Kernel',[TRPCBroker, TXWBRichEdit, TContextorControl]);
   RegisterPropertyEditor(TypeInfo(TRemoteProc),nil,'',TRemoteProcProperty);
   RegisterPropertyEditor(TypeInfo(TServer),nil,'',TServerProperty);
   RegisterPropertyEditor(TypeInfo(TRpcVersion),nil,'',TRpcVersionProperty);

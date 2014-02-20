@@ -90,7 +90,6 @@ type
     FEditCtrl: TCustomEdit;
     FNavigatingTab: boolean;
     FEarliestDate: TFMDateTime;
-    //FLatestDate: TFMDateTime;
     procedure SetProvDiagPromptingMode;
     procedure SetUpCombatVet;
   protected
@@ -216,8 +215,6 @@ begin
     if UpperCase(DisplayText[i]) = UpperCase(OldRec.UrgencyName) then ItemIndex := i;
   calEarliest.FMDateTime := OldRec.EarliestDate;
   FEarliestDate := OldRec.EarliestDate;
-  //calLatest.FMDateTime := OldRec.LatestDate;
-  //FLatestDate := OldRec.LatestDate;
   txtProvDiag.Text := OldRec.ProvDiagnosis;
   ProvDx.Code := OldRec.ProvDxCode;
   if OldRec.ProvDxCodeInactive then
@@ -267,8 +264,6 @@ begin
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
   if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < FMToday       then SetError(TX_PAST_DATE);
-  //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
 end;
 
 procedure TfrmEditProc.txtAttnNeedData(Sender: TObject;
@@ -375,14 +370,6 @@ begin
        else
          EarliestDate := 0;
      end;
-
-(*     if FLatestDate > 0 then
-     begin
-       if FLatestDate <> OldRec.LatestDate then
-         LatestDate := FLatestDate
-       else
-         LatestDate := 0;
-     end;*)
 
      with cboPlace do if Length(ItemID) > 0 then
        if ItemID <> OldRec.Place then

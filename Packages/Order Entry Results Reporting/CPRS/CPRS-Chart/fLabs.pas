@@ -111,9 +111,9 @@ type
     Label1: TLabel;
     lblSample: TLabel;
     Label2: TLabel;
+    WebBrowser1: TWebBrowser;
     procedure FormCreate(Sender: TObject);
     procedure DisplayHeading(aRanges: string);
-    //procedure lstReportsClick(Sender: TObject);
     procedure lstHeadersClick(Sender: TObject);
     procedure lstDatesClick(Sender: TObject);
     procedure cmdOtherTestsClick(Sender: TObject);
@@ -192,6 +192,13 @@ type
     procedure chkMaxFreqClick(Sender: TObject);
     procedure PopupMenu3Popup(Sender: TObject);
     procedure grdLabTopLeftChanged(Sender: TObject);
+    procedure grdLabClick(Sender: TObject);
+    procedure grdLabMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure grdLabMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure grdLabMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
     SortIdx1, SortIdx2, SortIdx3: Integer;
@@ -215,6 +222,7 @@ type
     procedure HideTabControl;
     procedure ChkBrowser;
     procedure CommonComponentVisible(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12: Boolean);
+    procedure BlankWeb;
   public
     procedure ClearPtData; override;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -222,7 +230,6 @@ type
     procedure SetFontSize(NewFontSize: Integer); override;
     function FMToDateTime(FMDateTime: string): TDateTime;
     procedure RequestPrint; override;
-    //procedure ExtlstReportsClick(Sender: TObject; Ext: boolean);
 
 end;
 
@@ -232,6 +239,7 @@ var
   uPrevReportNode: TTreeNode;
   uDate1, uDate2: Tdatetime;
   tmpGrid: TStringList;
+  uMostRecent: TStringList;
   uLabLocalReportData: TStringList;  //Storage for Local report data
   uLabRemoteReportData: TStringList; //Storage for Remote lab query
   uUpdateStat: boolean;              //flag turned on when remote status is being updated
@@ -279,12 +287,14 @@ const
               'PRE {font-size:8pt;font-family: "Courier New", "monospace"}' + CRLF +
               '</style></head><body><pre>';
   HTML_POST = CRLF + '</pre></body></html>';
+  BlankWebPage = 'about:blank';
 
 {$R *.DFM}
 
 var
   uFrozen: Boolean;
   uGraphingActivated: Boolean;
+  uGraphTestClicked: Boolean;          // used to avoid mouse wheel selection
   uRemoteCount: Integer;
   uHTMLDoc: string;
   uReportRPC: string;
@@ -322,20 +332,6 @@ begin
           Exit;
         end;
     end;
-  {if (uReportType = 'G') and GraphFormActive then
-    with GraphForm do
-    begin
-      if (lvwItemsTop.SelCount < 1) and (lvwItemsBottom.SelCount < 1) then
-        begin
-          InfoBox('There are no items graphed.', 'No Items to Print', MB_OK);
-          Exit;
-        end
-      else
-        begin
-          mnuPopGraphPrintClick(mnuPopGraphPrint);
-          Exit;
-        end;
-    end; }
   if uQualifierType = QT_DATERANGE then
     begin      //      = 2
       if lstQualifier.ItemIndex < 0 then
@@ -401,9 +397,11 @@ begin
   aList := TStringList.Create;
   FastAssign(rpcGetGraphSettings, aList);
   uGraphingActivated := aList.Count > 0;
+  uGraphTestClicked := false;
   aList.Free;
   uRemoteCount := 0;
   tmpGrid := TStringList.Create;
+  uMostRecent := TStringList.Create;
   uLabLocalReportData := TStringList.Create;
   uLabRemoteReportData := TStringList.Create;
   uColumns := TStringList.Create;
@@ -475,8 +473,14 @@ end;
 procedure TfrmLabs.ClearPtData;
 begin
   inherited ClearPtData;
+  if Assigned(WebBrowser1) then
+  begin
+    uHTMLDoc := '';
+    BlankWeb;
+  end;
   Timer1.Enabled := False;
   memLab.Lines.Clear;
+  uMostRecent.Clear;
   uLabLocalReportData.Clear;
   uLabRemoteReportData.Clear;
   TabControl1.Tabs.Clear;
@@ -496,10 +500,7 @@ end;
 procedure TfrmLabs.DisplayPage;
 var
   i: integer;
-  {OrigSelection: integer;
-  OrigDateIEN: Int64;
-  OrigDateItemID: Variant;
-  OrigReportCat: TTreeNode; }
+
 begin
   inherited DisplayPage;
   frmFrame.mnuFilePrint.Tag := CT_LABS;
@@ -534,8 +535,6 @@ begin
     begin
       uColChange := '';
       lstQualifier.Clear;
-      //tvProcedures.Items.Clear;
-      //lblProcTypeMsg.Visible := FALSE;
       lvReports.SmallImages := uEmptyImageList;
       lvReports.Items.Clear;
       lvReports.Columns.Clear;
@@ -550,7 +549,6 @@ begin
       uLocalReportData.Clear;
       for i := 0 to RemoteSites.SiteList.Count - 1 do
         TRemoteSite(RemoteSites.SiteList.Items[i]).ReportClear;
-      //pnlRightTop.Height := lblTitle.Height + TabControl1.Height;
       StatusText('');
       with tvReports do
         if Items.Count > 0 then
@@ -919,13 +917,10 @@ begin
   tvReports.Items.Clear;
   memLab.Clear;     
   uHTMLDoc := '';
-  //WebBrowser1.Navigate('about:blank');  **Browser Remove**
-  //tvProcedures.Items.Clear;
-  //lblProcTypeMsg.Visible := FALSE;
+  BlankWeb;
   lvReports.SmallImages := uEmptyImageList;
   lvReports.Items.Clear;
   uTreeStrings.Clear;
-  //lblTitle.Caption := '';
   lvReports.Caption := '';
   ListLabReports(uTreeStrings);
   addchild := false;
@@ -1006,262 +1001,6 @@ begin
   end;
 end;
 
-{procedure TfrmLabs.lstReportsClick(Sender: TObject);
-begin
-  ExtlstReportsClick(Sender, false);
-end;  }
-
-{procedure TfrmLabs.ExtlstReportsClick(Sender: TObject; Ext: boolean);
-var
-  i,iCat: integer;
-  Rpt: string;
-begin
-  inherited;
-  uRemoteCount := 0;
-  Timer1.Enabled := False;
-  Rpt := lstReports.Items[lstReports.ItemIndex];
-  uReportType := Piece(Rpt,'^',4);
-  uReportRPC := UpperCase(Piece(Rpt,'^',6));
-  if length(Piece(Rpt,'^',5)) > 0 then
-    iCat := StrToInt(Piece(Rpt,'^',5))
-  else
-    iCat := 0;
-  if uReportType = '' then uReportType := 'R';
-  StatusText('');
-  uLabLocalReportData.Clear;
-  uLabRemoteReportData.Clear;
-  lstHeaders.Clear;
-  TabControl1.Visible := false;
-  if Piece(Rpt,'^',3) = '1' then
-    if TabControl1.Tabs.Count > 1 then
-      TabControl1.Visible := true;
-  for i := 0 to RemoteSites.SiteList.Count - 1 do
-    TRemoteSite(RemoteSites.SiteList.Items[i]).LabClear;
-  if uFrozen = True then memo1.visible := False;
-  case lstReports.ItemIEN of
-  1: begin                // Most Recent
-       CommonComponentVisible(false,false,false,false,false,true,true,false,true,false,false,false);
-       pnlButtons.Visible := true;
-       pnlWorksheet.Visible := false;
-       pnlGraph.Visible := false;
-       memLab.Align := alBottom;
-       memLab.Height := pnlLeft.Height div 5;
-       grdLab.Align := alClient;
-       memLab.Clear;
-       //if uReportType = 'H' then          **Browser Remove**
-         //begin
-           //WebBrowser1.Navigate('about:blank');
-           //WebBrowser1.Align := alBottom;
-           //WebBrowser1.Height := pnlLeft.Height div 5;
-           //WebBrowser1.Visible := true;
-           //WebBrowser1.BringToFront;
-           //memLab.Visible := false;
-         //end
-       //else
-        //begin
-          //WebBrowser1.Visible := false;
-          //WebBrowser1.SendToBack;
-          //memLab.Visible := true;
-          //memLab.BringToFront;
-        //end;
-       FormResize(self);
-       cmdRecentClick(self);
-       uPrevReportIndex := lstReports.ItemIndex;
-     end;
-  4: begin               // Interim for Selected Tests
-       if uPrevReportIndex <> lstReports.ItemIndex then
-       begin
-         lstTests.Clear;
-         lblSpecimen.Caption := '';
-       end;
-       if not Ext then SelectTests(Font.Size);
-       if lstTests.Items.Count > 0 then
-       begin
-         CommonComponentVisible(false,false,true,true,true,false,false,false,true,false,false,false);
-         memLab.Clear;
-         chkBrowser;
-         FormResize(self);
-         RedrawActivate(memLab.Handle);
-         lstDatesClick(self);
-         //lstQualifierClick(self);
-         if not Ext then cmdOtherTests.SetFocus;
-         cmdOtherTests.Default := true;
-       end
-       else lstReports.ItemIndex := uPrevReportIndex;
-     end;
-  5: begin               // Worksheet
-       if uPrevReportIndex <> lstReports.ItemIndex then
-       begin
-         lstTests.Clear;
-         lblSpecimen.Caption := '';
-       end;
-       if not Ext then SelectTestGroups(Font.Size);
-       if lstTests.Items.Count > 0 then
-       begin
-         CommonComponentVisible(false,false,true,true,true,true,true,false,false,false,false,false);
-         chtChart.Visible := true;
-         memLab.Visible := false;
-         pnlButtons.Visible := false;
-         pnlWorksheet.Visible := true;
-         pnlGraph.Visible := false;
-         lstTestGraph.Width := 97;
-         ragCorG.ItemIndex := 0;
-         FormResize(self);
-         lblFooter.Caption := '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical Value, "**" = Comments on Specimen';
-         //chkZoom.Checked := false;
-         //chkZoomClick(self);
-         //lstDatesClick(self);
-         lstQualifierClick(self);
-         if not Ext then cmdOtherTests.SetFocus;
-         cmdOtherTests.Default := true;
-       end
-       else lstReports.ItemIndex := uPrevReportIndex;
-     end;
-  6: begin               // Graph
-        // do if graphing is activiated
-       if uGraphingActivated then
-       begin
-         memLab.Clear;
-         chkBrowser;
-         FormResize(self);
-         memLab.Align := alClient;
-         CommonComponentVisible(false,false,false,false,false,false,false,false,false,false,false,false);
-         RedrawActivate(memLab.Handle);
-         StatusText('');
-         memLab.Lines.Insert(0, ' ');
-         memLab.Lines.Insert(1, 'Graphing activated');
-         memLab.SelStart := 0;
-         frmFrame.mnuToolsGraphingClick(self);  // make it just lab tests ??
-         //lstReports.ItemIndex := uPrevReportIndex;
-       end
-       else  // otherwise, do lab graph
-       begin
-         if uPrevReportIndex <> lstReports.ItemIndex then
-         begin
-           lblSingleTest.Caption := '';
-           lblSpecimen.Caption := '';
-         end;
-         if not Ext then SelectTest(Font.Size);
-         if (length(lblSingleTest.Caption) > 2) and (length(lblSpecimen.Caption) > 2) then
-         begin
-           CommonComponentVisible(false,false,true,true,true,true,false,false,true,false,false,false);
-           pnlChart.Visible := true;
-           chtChart.Visible := true;
-           pnlButtons.Visible := false;
-           pnlWorksheet.Visible := false;
-           pnlGraph.Visible := true;
-           memLab.Height := pnlRight.Height div 5;
-           memLab.Clear;
-           //if uReportType = 'H' then          **Browser Remove**
-           //begin
-             //WebBrowser1.Visible := true;
-             //WebBrowser1.Navigate('about:blank');
-             //WebBrowser1.Height := pnlRight.Height div 5;
-             //WebBrowser1.BringToFront;
-             //memLab.Visible := false;
-           //end
-           //else
-           //begin
-             //WebBrowser1.Visible := false;
-             //WebBrowser1.SendToBack;
-             //memLab.Visible := true;
-             //memLab.BringToFront;
-           //end;
-           lstTestGraph.Items.Clear;
-           lstTestGraph.Width := 0;
-           FormResize(self);
-           RedrawActivate(memLab.Handle);
-           lblFooter.Caption := '';
-           chkGraphZoom.Checked := false;
-           chkGraphZoomClick(self);
-           chkGraph3DClick(self);
-           chkGraphValuesClick(self);
-           //lstDatesClick(self);
-           lstQualifierClick(self);
-           if not Ext then cmdOtherTests.SetFocus;
-           cmdOtherTests.Default := true;
-         end
-         else
-           lstReports.ItemIndex := uPrevReportIndex;
-       end;
-     end
-    else // case
-    begin
-      //added to deal with other reports from file 101.24
-      memLab.Clear;
-      chkBrowser;
-      FormResize(self);
-      memLab.Align := alClient;
-      case iCat of
-                    //Categories of reports:
-                        //0:Fixed
-                        //1:Fixed w/Dates
-                        //2:Fixed w/Headers
-                        //3:Fixed w/Dates & Headers
-                        //4:Specialized
-                        //5:Graphic
-
-        0: begin
-            CommonComponentVisible(false,false,false,false,false,false,false,false,false,false,false,false);
-            StatusText('Retrieving data...');
-            GoRemoteOld(uLabRemoteReportData,lstReports.ItemIEN,1,'',uReportRPC,'0','9999','1',0,0);
-            TabControl1.OnChange(nil);
-            Reports(uLabLocalReportData,Patient.DFN, Piece(Rpt,'^',1), '0', '9999', '1', 0, 0, uReportRPC);
-            if TabControl1.TabIndex < 1 then
-              QuickCopy(uLabLocalReportData,memLab);
-            RedrawActivate(memLab.Handle);
-            StatusText('');
-            memLab.Lines.Insert(0,' ');
-            memLab.Lines.Delete(0);
-            memLab.SelStart := 0;
-            if uReportType = 'R' then
-            uHTMLDoc := HTML_PRE + uLabLocalReportData.Text + HTML_POST
-            else
-            uHTMLDoc := uHTMLPatient + uLabLocalReportData.Text;
-            //if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');  **Browser Remove**
-           end;
-        1: begin
-            CommonComponentVisible(false,false,false,true,true,false,false,false,false,false,false,false);
-            memLab.Repaint;
-            //lstDatesClick(self);
-            lstQualifierClick(self);
-           end;
-        2: begin
-            CommonComponentVisible(true,true,false,false,false,false,false,false,false,false,false,false);
-            lstHeaders.Clear;
-            StatusText('Retrieving data...');
-            GoRemoteOld(uLabRemoteReportData,lstReports.ItemIEN,1,'',uReportRPC,'0','9999','1',0,0);
-            TabControl1.OnChange(nil);
-            Reports(uLabLocalReportData,Patient.DFN, Piece(Rpt,'^',1), '0', '9999', '1', 0, 0, uReportRPC);
-            if uLabLocalReportData.Count > 0 then
-            begin
-             TabControl1.OnChange(nil);
-             if lstHeaders.Items.Count > 0 then lstHeaders.ItemIndex := 0;
-            end;
-            RedrawActivate(memLab.Handle);
-            StatusText('');
-            memLab.Lines.Insert(0,' ');
-            memLab.Lines.Delete(0);
-            if uReportType = 'R' then
-             uHTMLDoc := HTML_PRE + uLabLocalReportData.Text + HTML_POST
-            else
-             uHTMLDoc := uHTMLPatient + uLabLocalReportData.Text;
-            //if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');  **Browser Remove**
-           end;
-        3: begin
-            CommonComponentVisible(true,true,false,true,true,false,false,false,true,false,false,false);
-            //lstDatesClick(self);
-            lstQualifierClick(self);
-            memLab.Lines.Insert(0,' ');
-            memLab.Lines.Delete(0);
-           end;
-      end;
-    end;
-  end;
-  uPrevReportIndex := lstReports.ItemIndex;
-  DisplayHeading('');
-end;             }
-
 procedure TfrmLabs.lstHeadersClick(Sender: TObject);
 var
   Current, Desired: integer;
@@ -1333,18 +1072,17 @@ begin
     and (length(aMax)>0)
     and (StrToInt(aMax)<101) then
       MoreID := ';101';
+  Timer1.Interval := 3000;
   aRemote :=  piece(uRemoteType,'^',1);
   aHDR := piece(uRemoteType,'^',7);
   aFHIE := piece(uRemoteType,'^',8);
   SetPiece(uRemoteType,'^',5,lstQualifier.ItemID);
-  //tvProcedures.Items.Clear;
-  //lblProcTypeMsg.Visible := FALSE;
   uHTMLDoc := '';
-  {if uReportType = 'H' then       **Browser Remove**
+  if uReportType = 'H' then      
     begin
       WebBrowser1.Visible := true;
       WebBrowser1.TabStop := true;
-      WebBrowser1.Navigate('about:blank');
+      BlankWeb;
       WebBrowser1.BringToFront;
       memLab.Visible := false;
       memLab.TabStop := false;
@@ -1352,12 +1090,12 @@ begin
   else
     begin
       WebBrowser1.Visible := false;
-      WebBrowser1.TabStop := false;  }
+      WebBrowser1.TabStop := false;
       memLab.Visible := true;
       memLab.TabStop := true;
       memLab.BringToFront;
       RedrawActivate(memLab.Handle);
-    //end;  }
+    end;  
   uLocalReportData.Clear;
   uRemoteReportData.Clear;
   for i := 0 to RemoteSites.SiteList.Count - 1 do
@@ -1420,11 +1158,11 @@ begin
   Screen.Cursor := crHourGlass;
   uReportInstruction := #13#10 + 'Retrieving data...';
   memLab.Lines.Add(uReportInstruction);
-  {if WebBrowser1.Visible = true then           **Browser Remove**
+  if WebBrowser1.Visible = true then         
   begin
     uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-    WebBrowser1.Navigate('about:blank');
-  end;      }
+    BlankWeb;
+  end;      
   case uQualifierType of
       QT_HSCOMPONENT:
         begin     //      = 5
@@ -1496,8 +1234,6 @@ begin
       else
         begin
           Screen.Cursor := crDefault;
-          //GoRemote(uRemoteReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState, aHDR, aFHIE);
-//**************************************************************************
 case StrToInt(Piece(uRptID,':',1)) of
   21: begin                // Cumulative
        lstHeaders.Clear;
@@ -1551,7 +1287,6 @@ case StrToInt(Piece(uRptID,':',1)) of
   5: begin            // Worksheet
        chtChart.BottomAxis.Automatic := true;
        chkZoom.Checked := false;
-       //chkZoomClick(self);
        chkAbnormals.Checked := false;
        memLab.Clear;
        uLabLocalReportData.Clear;
@@ -1670,25 +1405,21 @@ case StrToInt(Piece(uRptID,':',1)) of
          memLab.SelStart := 0;
        end;
   end;
-//**************************************************************************
-          {LoadReportText(uLocalReportData, uRptID, lstQualifier.ItemID + MoreID, uReportRPC, uHState);
-          if TabControl1.TabIndex < 1 then
-            QuickCopy(uLocalReportData,memLab); }
         end;
     end;
     Screen.Cursor := crDefault;
     StatusText('');
     memLab.Lines.Insert(0,' ');
     memLab.Lines.Delete(0);
-    {if WebBrowser1.Visible = true then             **Browser Remove**
+    if WebBrowser1.Visible = true then          
       begin
         if uReportType = 'R' then
           uHTMLDoc := HTML_PRE + uLocalReportData.Text + HTML_POST
         else
           uHTMLDoc := uHTMLPatient + uLocalReportData.Text;
-        WebBrowser1.Navigate('about:blank');
+        BlankWeb;
       end;
-               }
+
 end;
 
 procedure TfrmLabs.lblDateEnter(Sender: TObject);
@@ -1708,12 +1439,11 @@ var
 begin
   inherited;
   uRemoteCount := 0;
+  Timer1.Interval := 3000;
   if uFrozen = True then memo1.visible := False;
   Screen.Cursor := crHourGlass;
   DisplayHeading('');
   uHTMLDoc := '';
-  //Rpt := lstReports.Items[lstReports.ItemIndex];
-  //uReportRPC := UpperCase(Piece(Rpt,'^',6));
   chkBrowser;
   if (lstDates.ItemID = 'S') then
   begin
@@ -1749,7 +1479,7 @@ begin
     BeginEndDates(date1,date2,daysback);
   date1 := date1 + 0.2359;
   uHTMLDoc := '';
-  //WebBrowser1.Navigate('about:blank');  **Browser Remove**
+  BlankWeb;
   aID := piece(uRptID,':',1);
   if aID = '21' then
     begin                // Cumulative
@@ -1807,7 +1537,6 @@ begin
     begin            // Worksheet
       chtChart.BottomAxis.Automatic := true;
       chkZoom.Checked := false;
-      //chkZoomClick(self);
       chkAbnormals.Checked := false;
       memLab.Clear;
       uLabLocalReportData.Clear;
@@ -1915,7 +1644,6 @@ begin
          uLabLocalReportData.Clear;
          uLabRemoteReportData.Clear;
          StatusText('Retrieving lab data...');
-         //GoRemoteOld(uLabRemoteReportData, StrToInt(Piece(uRptID,'^',1)), 1, '', uReportRPC, '', IntToStr(daysback), '', date1, date2);
          GoRemoteOld(uLabRemoteReportData, 1, 1, '', uReportRPC, '', IntToStr(daysback), '', date1, date2);
          TabControl1.OnChange(nil);
          Reports(uLabLocalReportData,Patient.DFN, 'L:' + Piece(uRptID,'^',1), '',
@@ -1974,6 +1702,43 @@ begin
     end;
     if not ok then lstTestGraph.Items.Add(lstTests.Items[i]);
   end;
+end;
+
+procedure TfrmLabs.grdLabClick(Sender: TObject);
+var
+  itemid: string;
+begin
+  //clicking on row on graph brings up graph of that lab test
+  //uses menu hint to hold type^item^date (63^lab_test_ien^collection_date_time)
+  if (uRptID = '1:MOST RECENT') and uGraphTestClicked then
+  begin
+    itemid := '63^' + Piece(uMostRecent.Strings[grdLab.Row], '^', 1);
+    itemid := itemid + '^' + lblDateFloat.Caption;
+    itemid := itemid + '^^' + Pieces(uMostRecent.Strings[grdLab.Row], '^', 2, 6);
+    frmFrame.mnuToolsGraphing.Hint := itemid;
+    frmFrame.mnuToolsGraphingClick(self);
+  end;
+end;
+
+procedure TfrmLabs.grdLabMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  uGraphTestClicked := true;
+end;
+
+procedure TfrmLabs.grdLabMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  inherited;
+  uGraphTestClicked := false;
+end;
+
+procedure TfrmLabs.grdLabMouseWheelDown(Sender: TObject; Shift: TShiftState;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+  inherited;
+  uGraphTestClicked := false;
 end;
 
 procedure TfrmLabs.grdLabTopLeftChanged(Sender: TObject);
@@ -2163,6 +1928,7 @@ begin
     end;
   RemoteQueryAbortAll;
   tmpGrid.free;
+  uMostRecent.Free;
   uLabLocalReportData.Free;
   uLabRemoteReportData.Free;
   uTreeStrings.Free;
@@ -2348,6 +2114,7 @@ begin
     begin
       if Piece(tmpList[0], '^', 2) = 'CH' then
       begin
+        FastAssign(tmpList, uMostRecent);
         FillGrid(grdLab, tmpList);
         FillComments(memLab, tmpList);
         pnlRightTop.Height := pnlRight.Height - (pnlRight.Height div 5);
@@ -2587,8 +2354,7 @@ begin
 end;
 
 procedure TfrmLabs.FormResize(Sender: TObject);
-//var
-  //aID: integer;
+
 begin
   inherited;
   AlignList;
@@ -2597,91 +2363,6 @@ begin
   lblHeading.Height := lblReports.Height;
   pnlFooter.Height := lblReports.Height + 5;
   lblFooter.Height := lblReports.Height;
-  {aID := 0;
-  if CharAt(uRPTID,2) =':' then
-    aID := StrToInt(piece(uRptID,':',1));
-  if (aID = 0) and (CharAt(uRPTID,3) =':') then
-    aID := StrToInt(piece(uRptID,':',1)); }
-  {case lstReports.ItemIEN of   }
-  {case aID of
-  1: begin                // Most Recent
-       pnlHeader.Align := alTop;
-       memLab.Height := pnlLeft.Height div 5;
-       memLab.Top := pnlLeft.Height - pnlFooter.Height - memLab.Height;
-       memLab.Align := alBottom;
-       grdLab.Align := alClient;
-       if tmpGrid.Count > 0 then HGrid(tmpGrid);
-       if (grdLab.VisibleRowCount + 1) < grdLab.RowCount then
-         grdLab.ColWidths[4] := grdLab.ColWidths[4] - 18;
-       pnlFooter.Top := pnlLeft.Height - pnlFooter.Height;
-       pnlFooter.Align := alBottom;
-       memLab.Repaint;
-       pnlRightTop.Height := pnlLeft.Height - (pnlLeft.Height div 5);
-                      //*pnlRightTop.Visible := true;
-                      //*pnlButtons.Visible := true;
-                      //*pnlWorksheet.Visible := false;
-                      //*pnlGraph.Visible := false;
-                      //memLab.Align := alBottom;
-                      sptHorzRight.Visible := true;
-                      pnlRightBottom.Height := pnlLeft.Height div 5;
-                      //memLab.Height := pnlLeft.Height div 5;
-                      //grdLab.Align := alClient;
-     end;
-  21: begin               // Cumulative
-       pnlFooter.Top := pnlLeft.Height - pnlFooter.Height;
-       pnlFooter.Align := alBottom;
-       lblFooter.Align := alTop;
-       memLab.Align := alClient;
-       memLab.Repaint;
-     end;
-  3: begin               // Interim
-       pnlFooter.Top := pnlLeft.Height - pnlFooter.Height;
-       pnlFooter.Align := alBottom;
-       lblFooter.Caption := '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical Value';
-       lblFooter.Align := alTop;
-       memLab.Align := alClient;
-       memLab.Repaint;
-     end;
-  4: begin               // Interim for Selected Tests
-       pnlFooter.Top := pnlLeft.Height - pnlFooter.Height;
-       pnlFooter.Align := alBottom;
-       lblFooter.Caption := '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical Value';
-       lblFooter.Align := alTop;
-       memLab.Align := alClient;
-       memLab.Repaint;
-     end;
-  5: begin               // Worksheet
-       pnlHeader.Align := alTop;
-       grdLab.Align := alClient;
-       ragCorGClick(self);
-       pnlFooter.Top := pnlLeft.Height - pnlFooter.Height;
-       pnlFooter.Align := alBottom;
-     end;
-  6: begin               // Graph
-       if not uGraphingActivated then
-       begin
-         memLab.Height := pnlLeft.Height div 4;
-         memLab.Align := alBottom;
-         pnlChart.Top := pnlHeader.Height;
-         pnlChart.Align := alClient;
-         memLab.Height := pnlLeft.Height div 4;
-         memLab.Align := alBottom;
-         memLab.Repaint;
-       end;
-     end;
-  20: begin               // Anatomic Path
-       memLab.Repaint;
-     end;
-  2: begin               // Blood Bank
-       memLab.Repaint;
-     end;
-  9: begin               // Microbiology
-       memLab.Repaint;
-     end;
-  10: begin              // Lab Status
-        memLab.Repaint;
-      end;
-  end; }
 end;
 
 procedure TfrmLabs.pnlRightResize(Sender: TObject);
@@ -2744,8 +2425,6 @@ begin
       serLow.AddXY(FMToDateTime(start), strtofloat(low), '',clTeeColor);
       serLow.AddXY(FMToDateTime(stop), strtofloat(low), '',clTeeColor);
     end;
-    //chtChart.Title.Text.Strings[0] := Piece(test, '^', 2) + '  (' + MixedCase(specimen) + ')';
-    //chtChart.Title.Font.Size := 12;
     chtChart.LeftAxis.Title.Caption := units;
     serTest.Title := Piece(test, '^', 2) + '  (' + MixedCase(specimen) + ')';
     serHigh.Title := 'Ref High ' + high;
@@ -3223,16 +2902,12 @@ procedure TfrmLabs.GotoTop1Click(Sender: TObject);
 begin
   inherited;
   SendMessage(memLab.Handle, WM_VSCROLL, SB_TOP, 0);
-  {GoToTop1.Enabled := false;
-  GoToBottom1.Enabled := true; }
 end;
 
 procedure TfrmLabs.GotoBottom1Click(Sender: TObject);
 begin
   Inherited;
   SendMessage(memLab.Handle, WM_VSCROLL, SB_BOTTOM, 0);
-  {GoToTop1.Enabled := true;
-  GoToBottom1.Enabled := false; }
 end;
 
 procedure TfrmLabs.FreezeText1Click(Sender: TObject);
@@ -3281,46 +2956,13 @@ begin
   Else
     FreezeText1.Enabled := False;
   If Memo1.Visible Then
-    UnFreezeText1.Enabled := True;
-  {If memLab.SelStart > 0 then
-    GotoTop1.Enabled := True
-  Else
-    GotoTop1.Enabled := False;
-  If SendMessage(memLab.handle, EM_LINEFROMCHAR,
-    memLab.SelStart,0) < memLab.Lines.Count then
-    GotoBottom1.Enabled := True
-  Else
-    GotoBottom1.Enabled := False; }
-  {case lstReports.ItemIEN of
-    1: FreezeText1.Enabled := False;
-    5: FreezeText1.Enabled := False;
-    6: FreezeText1.Enabled := False;
-  end;                               }
+    UnFreezeText1.Enabled := True;                              
 end;
 
 procedure TfrmLabs.ProcessNotifications;
 var
-  //AlertDate, CurrentDate: TFMDateTime;
   OrderIFN: string;
 begin
-  {uNewest := '';
-  uOldest := '';
-  GetNewestOldest(Patient.DFN, uNewest, uOldest); }
-  {AlertDate   := Trunc(StrToFMDateTime(Piece(Piece(Notifications.RecordID, U, 2), ';', 3)));
-  CurrentDate := FMToday;
-  lstReports.ItemIndex := 2;
-  if AlertDate = CurrentDate then
-    begin
-      lstDates.ItemIndex   := 0;
-      lstReports.ItemIndex := 0;
-    end
-  else if CurrentDate - AlertDate < 7  then lstDates.ItemIndex  := 2
-  else if CurrentDate - AlertDate < 14 then lstDates.ItemIndex  := 3
-  else if CurrentDate - AlertDate < 28 then lstDates.ItemIndex  := 4
-  else                                      lstDates.ItemIndex  := 5;
-
-  lstReportsClick(self); }
-
   OrderIFN                := Piece(Notifications.AlertData, '@', 1);
   if StrToIntDef(OrderIFN,0) > 0 then
    begin
@@ -3343,8 +2985,8 @@ begin
     pnlHeader.Visible       := false;
     grdLab.Visible          := false;
     pnlChart.Visible        := false;
-    //WebBrowser1.Visible     := false;  **Browser Remove**
-    //WebBrowser1.SendToBack;            **Browser Remove**
+    WebBrowser1.Visible     := false;
+    WebBrowser1.SendToBack;
     memLab.Visible          := true;
     memLab.BringToFront;
     pnlFooter.Visible       := true;
@@ -3354,6 +2996,11 @@ begin
     pnlRightTop.Height := 5;
     memLab.Align            := alClient;
     FormResize(self);
+    uRptID := PReportTreeObject(tvReports.Selected.Data)^.ID; //Remedy HD417043 - Set variables so printing not allowed on notifications.
+    uLabRepID := PReportTreeObject(tvReports.Selected.Data)^.ID;
+    uReportType := PReportTreeObject(tvReports.Selected.Data)^.RptType;
+    uQualifier := PReportTreeObject(tvReports.Selected.Data)^.Qualifier;
+    uQualifierType := StrToIntDef(Piece(uQualifier,';',4),0);
     QuickCopy(ResultOrder(OrderIFN), memLab);
     memLab.SelStart := 0;
     memLab.Repaint;
@@ -3609,10 +3256,11 @@ end;
 
 procedure TfrmLabs.Timer1Timer(Sender: TObject);
 var
-  i,j,fail: integer;
+  i,j,fail,t: integer;
   r0: String;
 begin
   inherited;
+  t := Timer1.Interval;
   with RemoteSites.SiteList do
    begin
     for i := 0 to Count - 1 do
@@ -3668,7 +3316,11 @@ begin
                   StatusText('Retrieving Lab data from '
                     + TRemoteSite(Items[i]).SiteName + '...');
               end;
-            Timer1.Interval := 10000;
+            if t < 5000 then
+              begin
+                if t < 3001 then Timer1.Interval := 4000
+                else if t < 4001 then Timer1.Interval := 5000;
+              end;
           end;
        end;
      if Timer1.Enabled = True then
@@ -3721,6 +3373,7 @@ begin
   lvReports.Hint := 'To sort, click on column headers|';
   tvReports.TopItem := tvReports.Selected;
   uRemoteCount := 0;
+  Timer1.Interval := 3000;
   uReportInstruction := '';
   aHeading    :=  PReportTreeObject(tvReports.Selected.Data)^.Heading;
   aRemote     :=  PReportTreeObject(tvReports.Selected.Data)^.Remote;
@@ -3784,7 +3437,7 @@ begin
       ShowTabControl;
   StatusText('');
   uHTMLDoc := '';
-  //WebBrowser1.Navigate('about:blank');   **Browser Remove**
+  BlankWeb;
   memLab.Lines.Clear;
   memLab.Parent := pnlRightBottom;
   memLab.Align := alClient;
@@ -3796,10 +3449,10 @@ begin
     begin
       lvReports.Visible := false;
       pnlRightBottom.Visible := true;
-      {WebBrowser1.Visible := true;         **Browser Remove**
+      WebBrowser1.Visible := true;
       WebBrowser1.TabStop := true;
-      WebBrowser1.Navigate('about:blank');
-      WebBrowser1.BringToFront;                 }
+      BlankWeb;
+      WebBrowser1.BringToFront;                 
       memLab.Visible := false;
       memLab.TabStop := false;
     end
@@ -3838,8 +3491,8 @@ begin
           end;
         lvReports.Visible := true;
         sptHorzRight.Visible := true;
-        //WebBrowser1.Visible := false;  **Browser Remove**
-        //WebBrowser1.TabStop := false;  **Browser Remove**
+        WebBrowser1.Visible := false;
+        WebBrowser1.TabStop := false;
         pnlRightBottom.Visible := true;
         memLab.Visible := true;
         memLab.TabStop := true;
@@ -3850,8 +3503,8 @@ begin
       begin
         lvReports.Visible := true;
         sptHorzRight.Visible := false;
-        //WebBrowser1.Visible := false;  **Browser Remove**
-        //WebBrowser1.TabStop := false;  **Browser Remove**
+        WebBrowser1.Visible := false;
+        WebBrowser1.TabStop := false;
         pnlRightBottom.Visible := True;
         memLab.Visible := true;
         memLab.TabStop := true;
@@ -3913,9 +3566,9 @@ begin
                       memLab.Height := pnlLeft.Height div 5;
                       grdLab.Align := alTop;
                       memLab.Clear;
-                      {if uReportType = 'H' then  **Browser Remove**
+                      if uReportType = 'H' then
                        begin
-                         WebBrowser1.Navigate('about:blank');
+                         BlankWeb;
                          WebBrowser1.Align := alBottom;
                          WebBrowser1.Height := pnlLeft.Height div 5;
                          WebBrowser1.Visible := true;
@@ -3925,10 +3578,10 @@ begin
                       else
                       begin
                         WebBrowser1.Visible := false;
-                        WebBrowser1.SendToBack;   }
+                        WebBrowser1.SendToBack;
                         memLab.Visible := true;
                         memLab.BringToFront;
-                      //end; }
+                      end; 
                       FormResize(self);
                       cmdRecentClick(self);
                       uPrevReportNode := tvReports.Selected;
@@ -3988,22 +3641,12 @@ begin
                      ragCorG.ItemIndex := 0;
                      FormResize(self);
                      lblFooter.Caption := '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical Value, "**" = Comments on Specimen';
-                     //chkZoom.Checked := false;
-                     //chkZoomClick(self);
-                     //lstDatesClick(self);
-                     //lstQualifierClick(self);
                      cmdOtherTests.SetFocus;
                      cmdOtherTests.Default := true;
                      uPrevReportNode := tvReports.Selected;
                      if lstDates.ItemIndex = -1 then
                       if Patient.Inpatient then lstDates.ItemIndex := 2
                       else lstDates.ItemIndex := 4;
-                     //for i := 1 to lstDates.Count - 1 do  //Sets default date range to next item > 1 Month (which should be 6 months)
-                      //if strToInt(piece(lstDates.Items[i],'^',1)) > 31 then
-                        //begin
-                          //lstDates.ItemIndex := i;
-                          //break;
-                        //end;
                      lstDatesClick(self);
                      if ScreenReaderSystemActive then
                        grdLab.SetFocus;
@@ -4033,7 +3676,6 @@ begin
                      memLab.Lines.Insert(1, 'Graphing activated');
                      memLab.SelStart := 0;
                      frmFrame.mnuToolsGraphingClick(self);  // make it just lab tests ??
-                     //tvReports.Selected := uPrevReportNode;
                     end
                     else  // otherwise, do lab graph
                     begin
@@ -4053,10 +3695,10 @@ begin
                        pnlGraph.Visible := true;
                        memLab.Height := pnlRight.Height div 5;
                        memLab.Clear;
-                       {if uReportType = 'H' then  **Browser Remove**
+                       if uReportType = 'H' then
                        begin
                          WebBrowser1.Visible := true;
-                         WebBrowser1.Navigate('about:blank');
+                         BlankWeb;
                          WebBrowser1.Height := pnlRight.Height div 5;
                          WebBrowser1.BringToFront;
                          memLab.Visible := false;
@@ -4064,10 +3706,10 @@ begin
                        else
                        begin
                          WebBrowser1.Visible := false;
-                         WebBrowser1.SendToBack;   }
+                         WebBrowser1.SendToBack;
                          memLab.Visible := true;
                          memLab.BringToFront;
-                       //end; }
+                       end; 
                        lstTestGraph.Items.Clear;
                        lstTestGraph.Width := 0;
                        FormResize(self);
@@ -4078,7 +3720,6 @@ begin
                        chkGraph3DClick(self);
                        chkGraphValuesClick(self);
                        lstDatesClick(self);
-                       //lstQualifierClick(self);
                        cmdOtherTests.SetFocus;
                        cmdOtherTests.Default := true;
                        uPrevReportNode := tvReports.Selected;
@@ -4111,12 +3752,6 @@ begin
                     if lstDates.ItemIndex = -1 then
                       if Patient.Inpatient then lstDates.ItemIndex := 2
                       else lstDates.ItemIndex := 4;
-                    {for i := 1 to lstDates.Count - 1 do  //Sets default date range to next item > 1 Month (which should be 6 months)
-                      if strToInt(piece(lstDates.Items[i],'^',1)) > 31 then
-                        begin
-                          lstDates.ItemIndex := i;
-                          break;
-                        end;  }
                     FormResize(self);
                     aOldID := 1;
                     if aID = '9:MICROBIOLOGY' then aOldID := 4;
@@ -4152,20 +3787,18 @@ begin
                           uHTMLDoc := HTML_PRE + uLabLocalReportData.Text + HTML_POST
                           else
                           uHTMLDoc := uHTMLPatient + uLabLocalReportData.Text;
-                          //if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');  **Browser Remove**
+                          if WebBrowser1.Visible = true then BlankWeb;
                          end;
                       1: begin
                           CommonComponentVisible(false,false,false,true,true,false,false,false,false,false,false,false);
                           memLab.Repaint;
                           lstDatesClick(self);
-                          //lstQualifierClick(self);
                          end;
                       2: begin
                           CommonComponentVisible(true,true,false,false,false,false,false,false,false,false,false,false);
                           lstHeaders.Clear;
                           StatusText('Retrieving data...');
                           GoRemoteOld(uLabRemoteReportData,StrToInt(Piece(aID,':',1)),aOldID,'',uReportRPC,'0','9999','1',0,0);
-                          //GoRemote(uRemoteReportData, aID, aRptCode, aRPC, uHState, aHDR, aFHIE);
                           TabControl1.OnChange(nil);
                           Reports(uLabLocalReportData,Patient.DFN, Piece(aID,':',1), '0', '9999', '1', 0, 0, uReportRPC);
                           if uLabLocalReportData.Count > 0 then
@@ -4181,12 +3814,11 @@ begin
                            uHTMLDoc := HTML_PRE + uLabLocalReportData.Text + HTML_POST
                           else
                            uHTMLDoc := uHTMLPatient + uLabLocalReportData.Text;
-                          //if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');  **Browser Remove**
+                          if WebBrowser1.Visible = true then BlankWeb;
                          end;
                       3: begin
                           CommonComponentVisible(true,true,false,true,true,false,false,false,true,false,false,false);
                           lstDatesClick(self);
-                          //lstQualifierClick(self);
                           memLab.Lines.Insert(0,' ');
                           memLab.Lines.Delete(0);
                          end;
@@ -4445,7 +4077,6 @@ begin
             GoRemote(uRemoteReportData, 'L:' + aID, aRptCode, aRPC, uHState, aHDR, aFHIE);
             uReportInstruction := #13#10 + 'Retrieving data...';
             TabControl1.OnChange(nil);
-            //LoadReportText(uLocalReportData, 'L:' + aID, aRptCode, aRPC, uHState);
             if not(piece(uRemoteType, '^', 9) = '1') then
               LoadReportText(uLocalReportData, 'L:' + aID, '', aRPC, uHState);
             if uLocalReportData.Count < 1 then
@@ -4465,7 +4096,7 @@ begin
   if lstQualifier.ItemIndex > -1 then
     begin
     if not (aHDR = '1') then
-      if aCategory <> '0' then
+      if (aCategory <> '0') and (WebBrowser1.Visible = false) then
           DisplayHeading(uQualifier)
       else
         DisplayHeading('');
@@ -4473,9 +4104,8 @@ begin
   else
     begin
       if not (aHDR = '1') then
-        if aCategory <> '0' then
+        if (aCategory <> '0') and (WebBrowser1.Visible = false) then
           begin
-            //lstDatesClick(self);
             x := lstDates.DisplayText[lstDates.ItemIndex];
             x1 := piece(x,' ',1);
             x2 := piece(x,' ',2);
@@ -4487,38 +4117,26 @@ begin
         else
           DisplayHeading('');
     end;
-
   SendMessage(tvReports.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
   RedrawActivate(tvReports.Handle);
-
-      memLab.Visible := true;
-      memLab.TabStop := true;
-      memLab.BringToFront;
-      RedrawActivate(memLab.Handle);
-
-  {if WebBrowser1.Visible = true then         **Browser Remove**
+  if WebBrowser1.Visible = true then
     begin
-      WebBrowser1.Navigate('about:blank');
+      BlankWeb;
       WebBrowser1.BringToFront;
-    end   }
-  {else if not GraphFormActive then
+      lstHeaders.Visible := false;
+      lblHeaders.Visible := false;
+      lstHeaders.TabStop := false;
+      pnlLefTop.Height := frmLabs.Height;
+      pnlLeftBottom.Visible := false;
+      Splitter1.Visible := false;
+    end
+  else
     begin
       memLab.Visible := true;
       memLab.TabStop := true;
       memLab.BringToFront;
       RedrawActivate(memLab.Handle);
-    end}
-  //else                    **Browser Remove**
-    //begin                 **Browser Remove**
-      {GraphPanel(true);
-      with GraphForm do
-      begin
-        lstDateRange.Items := cboDateRange.Items;
-        lstDateRange.ItemIndex := cboDateRange.ItemIndex;
-        ViewSelections;
-        BringToFront;
-      end; }
-    //end;                    **Browser Remove**
+    end;       
   lvReports.Columns.BeginUpdate;
   lvReports.Columns.EndUpdate;
   Screen.Cursor := crDefault;
@@ -4851,6 +4469,8 @@ begin
   if (uQualifiertype <> 6) or (length(piece(uHState,';',2)) < 1) then
     memLab.Lines.Clear;
   lstHeaders.Items.Clear;
+  uHTMLDoc := '';
+  if WebBrowser1.visible = true then BlankWeb;
   if (length(piece(uHState,';',2)) = 0) then with TabControl1 do
     begin
       memLab.Lines.BeginUpdate;
@@ -4912,51 +4532,57 @@ begin
           end
         else
           memLab.Lines.Add(uReportInstruction);
+      if WebBrowser1.Visible = true then
+        begin
+          if uReportType = 'R' then
+            uHTMLDoc := HTML_PRE + uLocalReportData.Text + HTML_POST
+          else
+            uHTMLDoc := uHTMLPatient + uLocalReportData.Text;
+          BlankWeb;
+        end;
       memLab.SelStart := 0;
       memLab.Lines.EndUpdate;
     end;
 end;
 
-procedure TfrmLabs.WebBrowser1DocumentComplete(Sender: TObject;     //**Browser Remove**
+procedure TfrmLabs.WebBrowser1DocumentComplete(Sender: TObject;
   const pDisp: IDispatch; var URL: OleVariant);
 var
-  //WebDoc: IHtmlDocument2;                            **Browser Remove**
+  WebDoc: IHtmlDocument2;
   v: variant;
 begin
   inherited;
   if uHTMLDoc = '' then Exit;
   if not(uReportType = 'H') then Exit; //this can be removed if & when browser replaces memLab control
-  //if not Assigned(WebBrowser1.Document) then Exit;    **Browser Remove**
-  //WebDoc := WebBrowser1.Document as IHtmlDocument2;   **Browser Remove**
+  if not Assigned(WebBrowser1.Document) then Exit;
+  WebDoc := WebBrowser1.Document as IHtmlDocument2;
   v := VarArrayCreate([0, 0], varVariant);
   v[0] := uHTMLDoc;
-  //WebDoc.write(PSafeArray(TVarData(v).VArray));         **Browser Remove**
-  //WebDoc.close;                                         **Browser Remove**
+  WebDoc.write(PSafeArray(TVarData(v).VArray));
+  WebDoc.close;
   //uHTMLDoc := '';
 end;
 
-procedure TfrmLabs.ChkBrowser;              // **Browser Remove**
+procedure TfrmLabs.ChkBrowser;
 begin
-  {if uReportType = 'H' then                **Browser Remove**
+  if uReportType = 'H' then
    begin
      WebBrowser1.Visible := true;
-     WebBrowser1.Navigate('about:blank');
+     BlankWeb;
      WebBrowser1.BringToFront;
      memLab.Visible := false;
    end
  else
   begin
     WebBrowser1.Visible := false;
-    WebBrowser1.SendToBack;    }
+    WebBrowser1.SendToBack;
     memLab.Visible := true;
     memLab.BringToFront;
-  //end;   }
+  end;
 end;
 
 procedure TfrmLabs.CommonComponentVisible(A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12: Boolean);
 begin
-  //Clear the last date selection
-  //if not A4 then lstDates.ItemIndex := -1;
   lstDates.Caption := lblDates.Caption;
   lstHeaders.Caption := lblHeaders.Caption;
   if A4 or A2 or A12 then
@@ -5005,6 +4631,14 @@ begin
   frmLabs.Realign;
 end;
 
+procedure TfrmLabs.BlankWeb;
+begin
+  try
+    WebBrowser1.Navigate(BlankWebPage);
+  except
+  end;
+end;
+                  
 procedure TfrmLabs.ShowTabControl;
 begin
   if TabControl1.Tabs.Count > 1 then

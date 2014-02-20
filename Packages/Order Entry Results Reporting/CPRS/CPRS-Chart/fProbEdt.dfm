@@ -4,14 +4,14 @@ inherited frmdlgProb: TfrmdlgProb
   HelpContext = 2000
   BorderIcons = []
   Caption = 'frmdlgProb'
-  ClientHeight = 358
-  ClientWidth = 496
+  ClientHeight = 394
+  ClientWidth = 494
   OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 504
-  ExplicitHeight = 392
+  ExplicitWidth = 502
+  ExplicitHeight = 428
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -41,19 +41,19 @@ inherited frmdlgProb: TfrmdlgProb
   object pnlComments: TPanel [3]
     Left = 0
     Top = 200
-    Width = 496
-    Height = 131
+    Width = 494
+    Height = 166
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     DesignSize = (
-      496
-      131)
+      494
+      166)
     object Bevel1: TBevel
-      Left = 7
-      Top = 3
-      Width = 484
-      Height = 128
+      Left = 3
+      Top = 1
+      Width = 482
+      Height = 166
       Anchors = [akLeft, akTop, akRight, akBottom]
     end
     object lblCmtDate: TOROffsetLabel
@@ -93,7 +93,7 @@ inherited frmdlgProb: TfrmdlgProb
       TabOrder = 0
     end
     object bbAdd: TBitBtn
-      Left = 178
+      Left = 176
       Top = 10
       Width = 100
       Height = 22
@@ -108,7 +108,7 @@ inherited frmdlgProb: TfrmdlgProb
       NumGlyphs = 2
     end
     object bbRemove: TBitBtn
-      Left = 385
+      Left = 383
       Top = 10
       Width = 100
       Height = 22
@@ -125,8 +125,8 @@ inherited frmdlgProb: TfrmdlgProb
     object lstComments: TORListBox
       Left = 10
       Top = 38
-      Width = 477
-      Height = 85
+      Width = 475
+      Height = 120
       Anchors = [akLeft, akTop, akRight, akBottom]
       ExtendedSelect = False
       ItemHeight = 13
@@ -141,7 +141,7 @@ inherited frmdlgProb: TfrmdlgProb
       OnChange = ControlChange
     end
     object bbEdit: TBitBtn
-      Left = 281
+      Left = 279
       Top = 10
       Width = 100
       Height = 22
@@ -158,17 +158,17 @@ inherited frmdlgProb: TfrmdlgProb
   end
   object pnlBottom: TPanel [4]
     Left = 0
-    Top = 331
-    Width = 496
-    Height = 27
+    Top = 366
+    Width = 494
+    Height = 28
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
     DesignSize = (
-      496
-      27)
+      494
+      28)
     object bbQuit: TBitBtn
-      Left = 299
+      Left = 407
       Top = 4
       Width = 78
       Height = 21
@@ -183,7 +183,7 @@ inherited frmdlgProb: TfrmdlgProb
       NumGlyphs = 2
     end
     object bbFile: TBitBtn
-      Left = 381
+      Left = 321
       Top = 4
       Width = 78
       Height = 21
@@ -223,8 +223,8 @@ inherited frmdlgProb: TfrmdlgProb
     end
   end
   object edResDate: TCaptionEdit [5]
-    Left = 66
-    Top = 365
+    Left = 151
+    Top = 372
     Width = 94
     Height = 21
     TabStop = False
@@ -237,8 +237,8 @@ inherited frmdlgProb: TfrmdlgProb
     Caption = 'Res Date'
   end
   object edUpdate: TCaptionEdit [6]
-    Left = 67
-    Top = 376
+    Left = 151
+    Top = 372
     Width = 94
     Height = 21
     TabStop = False
@@ -253,13 +253,13 @@ inherited frmdlgProb: TfrmdlgProb
   object pnlTop: TPanel [7]
     Left = 0
     Top = 0
-    Width = 496
+    Width = 494
     Height = 200
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     DesignSize = (
-      496
+      494
       200)
     object lblAct: TLabel
       Left = 12
@@ -340,7 +340,7 @@ inherited frmdlgProb: TfrmdlgProb
       OnClick = ControlChange
     end
     object bbChangeProb: TBitBtn
-      Left = 318
+      Left = 316
       Top = 18
       Width = 124
       Height = 21
@@ -353,7 +353,7 @@ inherited frmdlgProb: TfrmdlgProb
     object edProb: TCaptionEdit
       Left = 9
       Top = 19
-      Width = 296
+      Width = 294
       Height = 21
       Hint = 'Problem Name'
       Anchors = [akLeft, akTop, akRight]
@@ -364,95 +364,166 @@ inherited frmdlgProb: TfrmdlgProb
       Caption = 'Activity'
     end
     object gbTreatment: TGroupBox
-      Left = 310
-      Top = 58
-      Width = 181
+      Left = 289
+      Top = 52
+      Width = 196
       Height = 142
       Anchors = [akTop, akRight]
       Caption = 'Treatment Factors'
       TabOrder = 8
       DesignSize = (
-        181
+        196
         142)
-      object ckSC: TCheckBox
-        Left = 7
-        Top = 15
+      object lblYN: TLabel
+        Left = 3
+        Top = 12
+        Width = 35
+        Height = 13
+        Caption = 'Yes No'
+      end
+      object ckNSC: TCheckBox
+        Left = 24
+        Top = 26
         Width = 160
         Height = 17
         Anchors = [akTop, akRight]
         Caption = 'Service Connected '
         Enabled = False
-        TabOrder = 0
-        OnClick = ControlChange
+        TabOrder = 1
+        OnClick = ckNSCClick
       end
-      object ckRad: TCheckBox
-        Left = 7
-        Top = 50
+      object ckNRad: TCheckBox
+        Left = 24
+        Top = 58
         Width = 154
         Height = 17
         Anchors = [akTop, akRight]
         Caption = 'Radiation '
         Enabled = False
-        TabOrder = 2
-        OnClick = ControlChange
+        TabOrder = 5
+        OnClick = ckNSCClick
       end
-      object ckAO: TCheckBox
-        Left = 7
-        Top = 32
+      object ckNAO: TCheckBox
+        Left = 24
+        Top = 42
         Width = 154
         Height = 17
         Anchors = [akTop, akRight]
         Caption = 'Agent Orange '
         Enabled = False
-        TabOrder = 1
-        OnClick = ControlChange
+        TabOrder = 3
+        OnClick = ckNSCClick
       end
-      object ckENV: TCheckBox
-        Left = 7
-        Top = 68
+      object ckNENV: TCheckBox
+        Left = 24
+        Top = 74
         Width = 149
         Height = 17
         Anchors = [akTop, akRight]
-        Caption = 'Southwest &Asia Conditions'
+        Caption = 'Southwest Asia Conditions'
         Enabled = False
-        TabOrder = 3
-        OnClick = ControlChange
+        TabOrder = 7
+        OnClick = ckNSCClick
       end
-      object ckHNC: TCheckBox
-        Left = 7
-        Top = 119
+      object ckNHNC: TCheckBox
+        Left = 24
+        Top = 122
         Width = 149
         Height = 17
         Anchors = [akTop, akRight]
         Caption = 'Head and/or Neck Cancer'
         Enabled = False
-        TabOrder = 6
-        OnClick = ControlChange
+        TabOrder = 13
+        OnClick = ckNSCClick
       end
-      object ckMST: TCheckBox
-        Left = 7
-        Top = 102
+      object ckNMST: TCheckBox
+        Left = 24
+        Top = 106
         Width = 149
         Height = 17
         Anchors = [akTop, akRight]
         Caption = 'MST'
         Enabled = False
-        TabOrder = 5
-        OnClick = ControlChange
+        TabOrder = 11
+        OnClick = ckNSCClick
       end
-      object ckSHAD: TCheckBox
-        Left = 7
-        Top = 85
+      object ckNSHAD: TCheckBox
+        Left = 24
+        Top = 90
         Width = 170
         Height = 17
         Caption = 'Shipboard Hazard and Defense'
+        TabOrder = 9
+        OnClick = ckNSCClick
+      end
+      object ckYSC: TCheckBox
+        Left = 6
+        Top = 26
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 0
+        OnClick = ckNSCClick
+      end
+      object ckYAO: TCheckBox
+        Left = 6
+        Top = 42
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 2
+        OnClick = ckNSCClick
+      end
+      object ckYRad: TCheckBox
+        Left = 6
+        Top = 58
+        Width = 17
+        Height = 17
+        Enabled = False
         TabOrder = 4
+        OnClick = ckNSCClick
+      end
+      object ckYENV: TCheckBox
+        Left = 6
+        Top = 74
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 6
+        OnClick = ckNSCClick
+      end
+      object ckYSHAD: TCheckBox
+        Left = 6
+        Top = 90
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 8
+        OnClick = ckNSCClick
+      end
+      object ckYMST: TCheckBox
+        Left = 6
+        Top = 106
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 10
+        OnClick = ckNSCClick
+      end
+      object ckYHNC: TCheckBox
+        Left = 6
+        Top = 122
+        Width = 17
+        Height = 17
+        Enabled = False
+        TabOrder = 12
+        OnClick = ckNSCClick
       end
     end
     object cbServ: TORComboBox
       Left = 186
       Top = 166
-      Width = 113
+      Width = 97
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
@@ -485,7 +556,7 @@ inherited frmdlgProb: TfrmdlgProb
     object cbLoc: TORComboBox
       Left = 185
       Top = 168
-      Width = 113
+      Width = 98
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
@@ -518,7 +589,7 @@ inherited frmdlgProb: TfrmdlgProb
     object cbProv: TORComboBox
       Left = 186
       Top = 122
-      Width = 113
+      Width = 97
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
@@ -552,7 +623,7 @@ inherited frmdlgProb: TfrmdlgProb
     object edOnsetdate: TCaptionEdit
       Left = 187
       Top = 79
-      Width = 113
+      Width = 96
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 4
@@ -635,25 +706,25 @@ inherited frmdlgProb: TfrmdlgProb
         'Property = Caption'
         'Status = stsOK')
       (
-        'Component = ckSC'
+        'Component = ckNSC'
         'Status = stsDefault')
       (
-        'Component = ckRad'
+        'Component = ckNRad'
         'Status = stsDefault')
       (
-        'Component = ckAO'
+        'Component = ckNAO'
         'Status = stsDefault')
       (
-        'Component = ckENV'
+        'Component = ckNENV'
         'Status = stsDefault')
       (
-        'Component = ckHNC'
+        'Component = ckNHNC'
         'Status = stsDefault')
       (
-        'Component = ckMST'
+        'Component = ckNMST'
         'Status = stsDefault')
       (
-        'Component = ckSHAD'
+        'Component = ckNSHAD'
         'Status = stsDefault')
       (
         'Component = cbServ'
@@ -673,6 +744,27 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsOK')
       (
         'Component = frmdlgProb'
+        'Status = stsDefault')
+      (
+        'Component = ckYSC'
+        'Status = stsDefault')
+      (
+        'Component = ckYAO'
+        'Status = stsDefault')
+      (
+        'Component = ckYRad'
+        'Status = stsDefault')
+      (
+        'Component = ckYENV'
+        'Status = stsDefault')
+      (
+        'Component = ckYSHAD'
+        'Status = stsDefault')
+      (
+        'Component = ckYMST'
+        'Status = stsDefault')
+      (
+        'Component = ckYHNC'
         'Status = stsDefault'))
   end
 end

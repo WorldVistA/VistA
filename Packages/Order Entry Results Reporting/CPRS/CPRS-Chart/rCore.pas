@@ -69,6 +69,7 @@ type
     WardService: string;
     RoomBed: string;
     SpecialtyIEN: Integer;
+    SpecialtySvc: string;
     CWAD: string;
     Restricted: Boolean;
     AdmitTime: TFMDateTime;
@@ -76,8 +77,10 @@ type
     SCPercent: Integer;
     PrimaryTeam: string;
     PrimaryProvider: string;
+    MHTC: string;
     Attending: string;
     Associate: string;
+    InProvider: string;
   end;
 
   TEncounterText = record                         // record for ORWPT ENCTITL
@@ -1099,7 +1102,8 @@ begin
     LocationIEN := StrToIntDef(Piece(x, U, 5), 0);
     Location := Piece(x, U, 6);
     RoomBed := Piece(x, U, 7);
-    SpecialtyIEN := StrToIntDef(Piece(x, u, 16), 0);
+    SpecialtyIEN := StrToIntDef(Piece(x, U, 16), 0);
+    SpecialtySvc := Piece(x, U, 17);
     CWAD := Piece(x, U, 8);
     Restricted := Piece(x, U, 9) = '1';
     AdmitTime := MakeFMDateTime(Piece(x, U, 10));
@@ -1111,10 +1115,12 @@ begin
   begin
     PrimaryTeam     := Piece(x, U, 1);
     PrimaryProvider := Piece(x, U, 2);
+    Associate := Piece(x, U, 4);
+    MHTC := Piece(x, U, 5);
     if Length(Location) > 0 then
       begin
         Attending := Piece(x, U, 3);
-        Associate := Piece(x, U, 4);
+        InProvider := Piece(x, U, 6);
         x := sCallV('ORWPT INPLOC', [DFN]);
         WardService := Piece(x, U, 3);
       end;

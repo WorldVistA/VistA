@@ -27,7 +27,8 @@ inherited frmRemDlg: TfrmRemDlg
     Height = 3
     Cursor = crVSplit
     Align = alBottom
-    ExplicitTop = 218
+    ExplicitTop = 132
+    ExplicitWidth = 428
   end
   object sb1: TScrollBox [1]
     Left = 0
@@ -46,7 +47,6 @@ inherited frmRemDlg: TfrmRemDlg
     TabOrder = 0
     Visible = False
     OnResize = sbResize
-    ExplicitHeight = 218
   end
   object sb2: TScrollBox [2]
     Left = 0
@@ -56,7 +56,7 @@ inherited frmRemDlg: TfrmRemDlg
     HorzScrollBar.Tracking = True
     VertScrollBar.Tracking = True
     Align = alClient
-    Font.Charset = ANSI_CHARSET
+    Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Courier New'
@@ -64,7 +64,6 @@ inherited frmRemDlg: TfrmRemDlg
     ParentFont = False
     TabOrder = 1
     OnResize = sbResize
-    ExplicitHeight = 218
   end
   object pnlFrmBottom: TPanel [3]
     Left = 0
@@ -74,7 +73,6 @@ inherited frmRemDlg: TfrmRemDlg
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 221
     object lblFootnotes: TLabel
       Left = 0
       Top = 144
@@ -83,6 +81,7 @@ inherited frmRemDlg: TfrmRemDlg
       Align = alBottom
       AutoSize = False
       Caption = ' * Indicates a Required Field'
+      ExplicitWidth = 428
     end
     object pnlBottom: TPanel
       Left = 0
@@ -98,6 +97,7 @@ inherited frmRemDlg: TfrmRemDlg
         Height = 3
         Cursor = crVSplit
         Align = alBottom
+        ExplicitWidth = 426
       end
       object reData: TRichEdit
         Left = 1
@@ -109,7 +109,7 @@ inherited frmRemDlg: TfrmRemDlg
         Constraints.MinHeight = 30
         ReadOnly = True
         ScrollBars = ssVertical
-        TabOrder = 2
+        TabOrder = 1
         WantReturns = False
       end
       object reText: TRichEdit
@@ -121,96 +121,162 @@ inherited frmRemDlg: TfrmRemDlg
         Color = clCream
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         Constraints.MinHeight = 30
         ParentFont = False
         ReadOnly = True
         ScrollBars = ssBoth
-        TabOrder = 1
+        TabOrder = 0
         WantReturns = False
         WordWrap = False
       end
-      object pnlButtons: TORAutoPanel
+      object gpButtons: TGridPanel
         Left = 1
         Top = 1
         Width = 535
         Height = 24
         Align = alTop
-        BevelOuter = bvNone
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 0
+        ColumnCollection = <
+          item
+            Value = 12.436500077878570000
+          end
+          item
+            Value = 20.663506919207240000
+          end
+          item
+            Value = 12.719951270589920000
+          end
+          item
+            Value = 13.031814909766010000
+          end
+          item
+            Value = 13.361495388408290000
+          end
+          item
+            Value = 13.709670310492780000
+          end
+          item
+            Value = 14.077061123657190000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = btnClear
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = btnClinMaint
+            Row = 0
+          end
+          item
+            Column = 2
+            Control = btnVisit
+            Row = 0
+          end
+          item
+            Column = 3
+            Control = btnBack
+            Row = 0
+          end
+          item
+            Column = 4
+            Control = btnNext
+            Row = 0
+          end
+          item
+            Column = 5
+            Control = btnFinish
+            Row = 0
+          end
+          item
+            Column = 6
+            Control = btnCancel
+            Row = 0
+          end>
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end>
+        TabOrder = 2
         object btnClear: TButton
-          Left = 2
-          Top = 2
+          Left = 1
+          Top = 1
           Width = 66
-          Height = 21
+          Height = 22
           Hint = 'Clear Reminder Resolutions for this Reminder'
+          Align = alClient
           Caption = 'Clear'
           TabOrder = 0
           OnClick = btnClearClick
         end
-        object btnBack: TButton
-          Left = 263
-          Top = 2
-          Width = 66
-          Height = 21
-          Hint = 'Go back to the Previous Reminder Dialog'
-          Caption = '<  Back'
-          TabOrder = 3
-          OnClick = btnBackClick
-        end
-        object btnCancel: TButton
-          Left = 467
-          Top = 2
-          Width = 66
-          Height = 21
-          Hint = 'Cancel All Reminder Dialog Processing'
-          Cancel = True
-          Caption = 'Cancel'
-          TabOrder = 6
-          OnClick = btnCancelClick
-        end
-        object btnNext: TButton
-          Left = 331
-          Top = 2
-          Width = 66
-          Height = 21
-          Hint = 'Go on to the Next Reminder Dialog'
-          Caption = 'Next  >'
-          TabOrder = 4
-          OnClick = btnNextClick
-        end
-        object btnFinish: TButton
-          Left = 399
-          Top = 2
-          Width = 66
-          Height = 21
-          Hint = 'Finish Processing'
-          Caption = 'Finish'
-          TabOrder = 5
-          OnClick = btnFinishClick
-        end
         object btnClinMaint: TButton
-          Left = 70
-          Top = 2
-          Width = 105
-          Height = 21
+          Left = 67
+          Top = 1
+          Width = 110
+          Height = 22
           Hint = 'View the Clinical Maintenance Component'
+          Align = alClient
           Caption = 'Clinical &Maint'
           TabOrder = 1
           OnClick = btnClinMaintClick
         end
         object btnVisit: TButton
           Left = 177
-          Top = 2
-          Width = 84
-          Height = 21
+          Top = 1
+          Width = 67
+          Height = 22
+          Align = alClient
           Caption = '&Visit Info'
           TabOrder = 2
           OnClick = btnVisitClick
+        end
+        object btnBack: TButton
+          Left = 244
+          Top = 1
+          Width = 69
+          Height = 22
+          Hint = 'Go back to the Previous Reminder Dialog'
+          Align = alClient
+          Caption = '<  Back'
+          TabOrder = 3
+          OnClick = btnBackClick
+        end
+        object btnNext: TButton
+          Left = 313
+          Top = 1
+          Width = 71
+          Height = 22
+          Hint = 'Go on to the Next Reminder Dialog'
+          Align = alClient
+          Caption = 'Next  >'
+          TabOrder = 4
+          OnClick = btnNextClick
+        end
+        object btnFinish: TButton
+          Left = 384
+          Top = 1
+          Width = 73
+          Height = 22
+          Hint = 'Finish Processing'
+          Align = alClient
+          Caption = 'Finish'
+          TabOrder = 5
+          OnClick = btnFinishClick
+        end
+        object btnCancel: TButton
+          Left = 457
+          Top = 1
+          Width = 77
+          Height = 22
+          Hint = 'Cancel All Reminder Dialog Processing'
+          Align = alClient
+          Cancel = True
+          Caption = 'Cancel'
+          TabOrder = 6
+          OnClick = btnCancelClick
         end
       end
     end
@@ -236,37 +302,31 @@ inherited frmRemDlg: TfrmRemDlg
         'Component = reText'
         'Status = stsDefault')
       (
-        'Component = pnlButtons'
+        'Component = frmRemDlg'
+        'Status = stsDefault')
+      (
+        'Component = gpButtons'
         'Status = stsDefault')
       (
         'Component = btnClear'
-        'Property = Hint'
-        'Status = stsOK')
-      (
-        'Component = btnBack'
-        'Property = Hint'
-        'Status = stsOK')
-      (
-        'Component = btnCancel'
-        'Property = Hint'
-        'Status = stsOK')
-      (
-        'Component = btnNext'
-        'Property = Hint'
-        'Status = stsOK')
-      (
-        'Component = btnFinish'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnClinMaint'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = btnVisit'
         'Status = stsDefault')
       (
-        'Component = frmRemDlg'
+        'Component = btnBack'
+        'Status = stsDefault')
+      (
+        'Component = btnNext'
+        'Status = stsDefault')
+      (
+        'Component = btnFinish'
+        'Status = stsDefault')
+      (
+        'Component = btnCancel'
         'Status = stsDefault'))
   end
 end

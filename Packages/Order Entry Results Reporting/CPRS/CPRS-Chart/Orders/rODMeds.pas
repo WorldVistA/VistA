@@ -20,8 +20,9 @@ type
     MaxRefills: integer;
   end;
 
-function DEACheckFailed(AnOI: Integer; ForInpatient: Boolean): Boolean;
-function DEACheckFailedForIVOnOutPatient(AnOI: Integer; AnOIType: Char): boolean;
+function DEACheckFailed(AnOI: Integer; ForInpatient: Boolean): string;
+function DEACheckFailedAtSignature(AnOI: Integer; ForInpatient: Boolean): string;
+function DEACheckFailedForIVOnOutPatient(AnOI: Integer; AnOIType: Char): string;
 procedure ListForOrderable(var AListIEN, ACount: Integer; const DGrpNm: string);
 procedure SubsetOfOrderable(Dest: TStringList; Append: Boolean; ListIEN, First, Last: Integer);
 function IndexOfOrderable(ListIEN: Integer; From: string): Integer;
@@ -42,7 +43,7 @@ function GetDefaultAddFreq(OID: integer): string;
 function QtyToDays(Quantity: Double;   const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
 function DaysToQty(DaysSupply: Integer; const UnitsPerDose, Schedule, Duration, Drug: string): Integer;
 function DurToQty(DaysSupply: Integer; const UnitStr, SchedStr: string): Integer;
-function DefaultDays(const ADrug, UnitStr, SchedStr: string): Integer;
+function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI : Integer): Integer;
 function CalcMaxRefills(const Drug: string; Days, OrdItem: Integer; Discharge: Boolean): Integer;
 function ScheduleRequired(OrdItem: Integer; const ARoute, ADrug: string): Boolean;
 function ODForMedsIn: TStrings;
@@ -55,7 +56,7 @@ function PassDrugTest(OI: integer; OrderType: string; InptOrder: boolean; CheckF
 function AdminTimeHelpText(): string;
 //function ValidateDaySupplyandQuantity(DaySupply, Quantity: integer): boolean;
 //function ValidateMaxQuantity(Quantity: integer): boolean;
-function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempQuantity, tempRefills: integer): boolean;
+function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempRefills: integer; tempQuantity: Double): boolean;
 function ValidateDaySupplyandQuantityErrorMsg(DaySupply, quantity: integer): String;
 procedure ClearMaxData;
 function DifferentOrderLocations(ID: string; Loc: integer): boolean;
@@ -70,17 +71,25 @@ implementation
   uDrugHasMaxData: TDrugHasMaxData;
   uInpatientClozapineText : TInpatientClozapineText;
 
-function DEACheckFailed(AnOI: Integer; ForInpatient: Boolean): Boolean;
+function DEACheckFailed(AnOI: Integer; ForInpatient: Boolean): string;
 var
   PtType: Char;
 begin
   if ForInpatient then PtType := 'I' else PtType := 'O';
-  Result := sCallV('ORWDPS1 FAILDEA', [AnOI, Encounter.Provider, PtType]) = '1';
+  Result := sCallV('ORWDPS1 FAILDEA', [AnOI, Encounter.Provider, PtType]);
 end;
 
-function DEACheckFailedForIVOnOutPatient(AnOI: Integer; AnOIType: Char): boolean;
+function DEACheckFailedAtSignature(AnOI: Integer; ForInpatient: Boolean): string;
+var
+  PtType: Char;
 begin
-  Result := sCallV('ORWDPS1 IVDEA',[AnOI,AnOIType,Encounter.Provider]) = '1';
+  if ForInpatient then PtType := 'I' else PtType := 'O';
+  Result := sCallV('ORWDPS1 FAILDEA', [AnOI, User.DUZ, PtType]);
+end;
+
+function DEACheckFailedForIVOnOutPatient(AnOI: Integer; AnOIType: Char): string;
+begin
+  Result := sCallV('ORWDPS1 IVDEA',[AnOI,AnOIType,Encounter.Provider]);
 end;
 
 procedure ListForOrderable(var AListIEN, ACount: Integer; const DGrpNm: string);
@@ -240,9 +249,9 @@ begin
   Result := StrToIntDef(sCallV('ORWDPS2 DAY2QTY', [DaysSupply, UnitStr, SchedStr]), 0);
 end;
 
-function DefaultDays(const ADrug, UnitStr, SchedStr: string): Integer;
+function DefaultDays(const ADrug, UnitStr, SchedStr: string; OI : Integer): Integer;
 begin
-  Result := StrToIntDef(sCallV('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug]), 0);
+  Result := StrToIntDef(sCallV('ORWDPS1 DFLTSPLY', [UnitStr, SchedStr, Patient.DFN, ADrug, OI]), 0);
   if uDrugHasMaxData.CaptureMaxData = True then uDrugHasMaxData.MaxSupply := Result;
 end;
 
@@ -361,13 +370,14 @@ begin
    Result := uAdminTimeHelpText.helpText
 end;
 
-function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempQuantity, tempRefills: integer): boolean;
+function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string; OI, tempSupply, tempRefills: integer; tempQuantity: Double): boolean;
 var
-daySupply, Quantity, Refills: integer;
+daySupply, Refills: integer;
+Quantity: Double;
 begin
   Result := True;
   if uDrugHasMaxData.CaptureMaxData = false then exit;
-  daySupply := DefaultDays(tempDrug, tempUnit, tempSch);
+  daySupply := DefaultDays(tempDrug, tempUnit, tempSch, OI);
   if (tempSupply > daySupply) and (uDrugHasMaxData.MaxSupply > 0) then
     begin
       infoBox('For this medication Day Supply cannot be greater then ' + InttoStr(uDrugHasMaxData.MaxSupply), 'Cannot Save Error', MB_OK);

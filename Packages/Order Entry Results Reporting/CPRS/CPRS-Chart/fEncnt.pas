@@ -159,12 +159,13 @@ begin
         cboPtProvider.SelectByIEN(FProvider);
       end;
       ShowModal;
+      if DEAContext and ((Assigned(Changes.Orders)) and (Changes.Count > 0)) and (Encounter.Provider <> FProvider) then DelayReviewChanges := True;
       if OKPressed then
       begin
         CanChange := True;
        // if (fframe.frmFrame.DoNotChangeEncWindow = true) and (encounter.Location <> frmEncounter.FLocation) then
        //    fframe.frmFrame.DoNotChangeEncWindow := false;
-        if (PersonFilter <> NPF_SUPPRESS) and
+        if (PersonFilter <> NPF_SUPPRESS) and (not DelayReviewChanges) and
            (((Encounter.Provider =  User.DUZ) and (FProvider <> User.DUZ)) or
             ((Encounter.Provider <> User.DUZ) and (FProvider =  User.DUZ)))
            then CanChange := ReviewChanges(TimedOut);
@@ -177,6 +178,8 @@ begin
           Encounter.StandAlone    := FStandAlone;
         end;
       end;
+      if DelayReviewChanges then DelayReviewChanges := False;
+      if DEAContext then DEAContext := False;
     end;
   finally
     frmEncounter.Release;

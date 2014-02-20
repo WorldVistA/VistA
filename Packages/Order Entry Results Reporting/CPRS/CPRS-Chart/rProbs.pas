@@ -5,7 +5,7 @@ interface
 uses SysUtils, Classes, ORNet, ORFn, uCore;
 
 function AddSave(PatientInfo: string; ProviderID: int64; ptVAMC: string;
-           ProbFile: TStringList): TStrings ;
+           ProbFile: TStringList; SearchString: String): TStrings ;
 function AuditHistory(ProblemIFN: string): TStrings ;
 function ClinicFilterList(LocList: TStringList): TStrings ;
 function ClinicSearch(DummyArg:string): TStrings ;
@@ -13,14 +13,13 @@ function ProblemDelete(ProblemIFN: string; ProviderID: int64; ptVAMC, Comment: s
 {function ProblemDetail}
 function EditLoad(ProblemIFN: string; ProviderID: int64; ptVAMC: string): TStrings ;
 function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: string;
-           ProbFile: TStringList): TStrings ;
+           ProbFile: TStringList; SearchString: String): TStrings ;
 function InitPt(const PatientDFN: string): TStrings ;  //*DFN*
 function InitUser(ProviderID: int64): TStrings ;
 function PatientProviders(const PatientDFN: string): TStrings ;  //*DFN*
 function ProblemList(const PatientDFN: string; Status:string): TStrings ;  //*DFN*
-function OldProblemLexiconSearch(SearchFor: string; Matches: integer; ADate: TFMDateTime = 0): TStrings ;
-function ProblemLexiconCodeSearch(LexIEN: string; CodeType: string; ADate: TFMDateTime = 0): string ;
-function ProblemLexiconSearch(SearchFor: string; View: string; ADate: TFMDateTime = 0): TStrings ;
+function ProblemLexiconSearch(SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): TStrings ;
+function ProblemNTRTBulletin(term: String; ProviderID: String; PatientID: String; comment: String): String;
 function ProviderFilterList(ProvList: TStringList): TStrings ;
 function ProviderList(Flag:string; Number:integer; From,Part: string): TStrings ;
 function ProblemReplace(ProblemIFN: string): TStrings ;
@@ -37,9 +36,9 @@ function CheckForDuplicateProblem(TermIEN, TermText: string): string;
 implementation
 
 function AddSave(PatientInfo: string; ProviderID: int64; ptVAMC: string;
-           ProbFile: TStringList): TStrings ;
+           ProbFile: TStringList; SearchString: String): TStrings ;
 begin
-   CallV('ORQQPL ADD SAVE',[PatientInfo, ProviderID, ptVAMC, ProbFile]);
+   CallV('ORQQPL ADD SAVE',[PatientInfo, ProviderID, ptVAMC, ProbFile, SearchString]);
    Result := RPCBrokerV.Results ;
 end ;
 
@@ -75,9 +74,9 @@ begin
 end ;
 
 function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: string;
-           ProbFile: TStringList): TStrings ;
+           ProbFile: TStringList; SearchString: String): TStrings ;
 begin
-   CallV('ORQQPL EDIT SAVE',[ProblemIFN, ProviderID, ptVAMC, PrimUser, ProbFile]);
+   CallV('ORQQPL EDIT SAVE',[ProblemIFN, ProviderID, ptVAMC, PrimUser, ProbFile, SearchString]);
    Result := RPCBrokerV.Results ;
 end ;
 
@@ -99,24 +98,22 @@ begin
    Result := RPCBrokerV.Results ;
 end ;
 
-function ProblemLexiconSearch(SearchFor: string; View: string; ADate: TFMDateTime = 0): TStrings ;
+function ProblemLexiconSearch(SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): TStrings ;
+var
+  View: String;
 begin
-   CallV('ORWPCE LEX',[SearchFor,View, ADate]);
-   Result := RPCBrokerV.Results ;
+  if Extend then
+    View := 'CLF'
+  else
+    View := 'PLS';
+  CallV('ORQQPL4 LEX',[SearchFor, VIEW, ADate]);
+  Result := RPCBrokerV.Results ;
 end ;
 
-function ProblemLexiconCodeSearch(LexIEN: string; CodeType: string; ADate: TFMDateTime = 0): string ;
+function ProblemNTRTBulletin(term: String; ProviderID: String; PatientID: String; comment: String): String;
 begin
-   CallV('ORWPCE LEXCODE',[LexIEN, CodeType, ADate]);
-   Result := RPCBrokerV.Results[0] ;
-end ;
-
-function OldProblemLexiconSearch(SearchFor: string; Matches: integer; ADate: TFMDateTime = 0): TStrings ;
-const
-  VIEW = '';
-begin
-   CallV('ORQQPL PROBLEM LEX SEARCH',[SearchFor, Matches, VIEW, ADate]);
-   Result := RPCBrokerV.Results ;
+  CallV('ORQQPL PROBLEM NTRT BULLETIN', [term, ProviderID, PatientID, comment]);
+  result := RPCBrokerV.Results[0];
 end ;
 
 function ProblemList(const PatientDFN: string; Status:string): TStrings ;  //*DFN*

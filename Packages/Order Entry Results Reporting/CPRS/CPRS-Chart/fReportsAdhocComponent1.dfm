@@ -6,12 +6,12 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
   ClientHeight = 452
   ClientWidth = 633
   OldCreateOrder = False
-  Position = poScreenCenter
+  Position = poOwnerFormCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 641
+  ExplicitHeight = 486
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter [0]
@@ -48,7 +48,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
     OnDblClick = btnAddComponentClick
     OnKeyDown = ORComboBox1KeyDown
     CharsNeedMatch = 1
-    ExplicitHeight = 394
   end
   object Panel2: TPanel [2]
     Left = 0
@@ -57,7 +56,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
     Height = 51
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 394
     DesignSize = (
       633
       51)
@@ -125,7 +123,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
     Height = 401
     Align = alClient
     TabOrder = 1
-    ExplicitHeight = 394
     object Splitter4: TSplitter
       Left = 219
       Top = 25
@@ -165,7 +162,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
       ItemTipColor = clWindow
       LongList = False
       Pieces = '2'
-      ExplicitHeight = 368
     end
     object Panel6: TPanel
       Left = 1
@@ -175,7 +171,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitHeight = 368
       object btnRemoveComponent: TButton
         Left = 4
         Top = 30
@@ -212,7 +207,6 @@ inherited frmReportsAdhocComponent1: TfrmReportsAdhocComponent1
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 3
-      ExplicitHeight = 368
       object lblHeaderName: TLabel
         Left = 30
         Top = 8

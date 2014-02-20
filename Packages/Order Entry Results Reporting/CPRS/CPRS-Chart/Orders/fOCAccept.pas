@@ -54,7 +54,7 @@ begin
           GetXtraTxt(remOC,Piece(substring,'&',1),Piece(substring,'&',2));
           frmOCAccept.memChecks.Lines.Add('('+inttostr(i+1)+' of '+inttostr(OCList.Count)+')  ' + Piece(substring,'&',2));
           for j:= 0 to remOC.Count - 1 do frmOCAccept.memChecks.Lines.Add('      '+remOC[j]);
-          frmOCAccept.memChecks.Lines.Add('           ');
+//          frmOCAccept.memChecks.Lines.Add('           ');
         end
         else
         begin

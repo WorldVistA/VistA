@@ -41,6 +41,8 @@ type
     DCOriginalOrder: boolean;
     IsOrderPendDC: boolean;
     IsDelayOrder: boolean;
+    IsControlledSubstance: boolean;
+    IsDetox       : boolean;
     procedure Assign(Source: TOrder);
     procedure Clear;
   end;
@@ -235,7 +237,7 @@ procedure CompleteOrder(AnOrder: TOrder; const ESCode: string);
 procedure VerifyOrder(AnOrder: TOrder; const ESCode: string);
 procedure VerifyOrderChartReview(AnOrder: TOrder; const ESCode: string);
 function GetOrderableIen(AnOrderId:string): integer;
-procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl: string; var AError: string);
+procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl, DFN: string; var AError: string);
 procedure UpdateOrderDGIfNeeded(AnID: string);
 function CanEditSuchRenewedOrder(AnID: string; IsTxtOrder: integer): boolean;
 function IsPSOSupplyDlg(DlgID, QODlg: integer): boolean;
@@ -346,6 +348,8 @@ function IsValidSchedule(AnOrderID: string): boolean; //NSS
 function IsValidQOSch(QOID: string): string; //NSS
 function IsValidSchStr(ASchStr: string): boolean;
 
+function IsPendingHold(OrderID: string): boolean;
+
 implementation
 
 uses Windows, rCore, uConst, TRPCB, ORCtrls, UBAGlobals, UBACore, VAUtils;
@@ -409,6 +413,8 @@ begin
   OrderLocName := Source.OrderLocName;
   ParentID     := Source.ParentID;  
   LinkObject   := Source.LinkObject;
+  IsControlledSubstance   := Source.IsControlledSubstance;
+  IsDetox   := Source.IsDetox;
 end;
 
 procedure TOrder.Clear;
@@ -440,6 +446,8 @@ begin
   OrderLocName := '';         //imo
   ParentID     := '';
   LinkObject   := nil;
+  IsControlledSubstance := False;
+  IsDetox := False;
 end;
 
 { Order List functions }
@@ -584,8 +592,8 @@ begin
 end;
 
 procedure SetOrderFields(AnOrder: TOrder; const x, y, z: string);
-{           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22
-{ Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder}
+{           1   2    3     4      5     6   7   8   9    10    11    12    13    14     15     16  17    18    19     20         21          22              23               24
+{ Pieces: ~IFN^Grp^ActTm^StrtTm^StopTm^Sts^Sig^Nrs^Clk^PrvID^PrvNam^ActDA^Flag^DCType^ChrtRev^DEA#^VA#^DigSig^IMO^DCOrigOrder^ISDCOrder^IsDelayOrder^IsControlledSubstance^IsDetox}
 begin
   with AnOrder do
   begin
@@ -624,6 +632,10 @@ begin
     else IsOrderPendDC := False;
     if Piece(x,u,22) = '1' then IsDelayOrder := True
     else IsDelayOrder := False;
+    if Piece(x,u,23) = '1' then IsControlledSubstance := True
+    else IsControlledSubstance := False;
+    if Piece(x,u,24) = '1' then IsDetox := True
+    else IsDetox := False;
   end;
 end;
 
@@ -1462,7 +1474,8 @@ end;
 
 procedure ValidateOrderAction(const ID, Action: string; var ErrMsg: string);
 begin
-  ErrMsg := sCallV('ORWDXA VALID', [ID, Action, Encounter.Provider]);
+  if Action = OA_SIGN then ErrMsg := sCallV('ORWDXA VALID', [ID, Action, User.DUZ])
+  else ErrMsg := sCallV('ORWDXA VALID', [ID, Action, Encounter.Provider]);
 end;
 
 procedure ValidateOrderActionNature(const ID, Action, Nature: string; var ErrMsg: string);
@@ -1640,7 +1653,7 @@ begin
   Result := StrToIntDef(sCallV('ORWDXR GTORITM', [AnOrderId]),0);
 end;
 
-procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl: string; var AError: string);
+procedure StoreDigitalSig(AID, AHash: string; AProvider: Int64; ASig, ACrlUrl, DFN: string; var AError: string);
 var
   len, ix: integer;
   ASigAray: TStringList;
@@ -1654,7 +1667,7 @@ begin
         inc(ix, 240);
     end;   //while
   try
-    CallV('ORWOR1 SIG', [AID, AHash, len, '100', AProvider, ASigAray, ACrlUrl]);
+    CallV('ORWOR1 SIG', [AID, AHash, len, '100', AProvider, ASigAray, ACrlUrl, DFN]);
     with RPCBrokerV do
       if piece(Results[0],'^',1) = '-1' then
         begin
@@ -2287,7 +2300,7 @@ end;
 
 procedure SaveOrderChecksForSession(const AReason: string; ListOfChecks: TStringList);
 var
- i, inc, len, numLoop, remain, y: integer;
+ i, inc, len, numLoop, remain: integer;
  OCStr, TmpStr: string;
 begin
   //CallV('ORWDXC SAVECHK', [Patient.DFN, AReason, ListOfChecks]);
@@ -2508,6 +2521,15 @@ end;
 function IsValidSchStr(ASchStr: string): boolean;
 begin
   Result := SCallV('ORWNSS CHKSCH',[ASchStr]) = '1';
+end;
+
+function IsPendingHold(OrderID: string): boolean;
+var
+  ret: string;
+begin
+  ret := sCallV('ORDEA PNDHLD', [OrderID]);
+  if ret = '1' then Result :=  True
+  else Result := False;
 end;
 
 { TParentEvent }

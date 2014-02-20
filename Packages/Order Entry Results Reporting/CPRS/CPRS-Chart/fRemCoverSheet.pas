@@ -17,12 +17,7 @@ type
     lblRemLoc: TLabel;
     pnlMiddle: TPanel;
     pnlRight: TPanel;
-    mlgnCat: TfraImgText;
-    mlgnRem: TfraImgText;
-    mlgnAdd: TfraImgText;
     pnlCAC: TORAutoPanel;
-    mlgnRemove: TfraImgText;
-    mlgnLock: TfraImgText;
     imgMain: TImageList;
     sbUp: TBitBtn;
     sbDown: TBitBtn;
@@ -68,6 +63,16 @@ type
     lblView: TLabel;
     lblCAC: TVA508StaticText;
     VA508ImageListLabeler1: TVA508ImageListLabeler;
+    lblCategory: TLabel;
+    imgCategory: TImage;
+    lblReminder: TLabel;
+    imgReminder: TImage;
+    lblAdd: TLabel;
+    imgAdd: TImage;
+    lblRemove: TLabel;
+    imgRemove: TImage;
+    lblLock: TLabel;
+    imgLock: TImage;
     procedure cbxLocationNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cbxServiceNeedData(Sender: TObject; const StartFrom: String;
@@ -1964,11 +1969,13 @@ procedure TfrmRemCoverSheet.FormCreate(Sender: TObject);
 begin
   FSavePause := Application.HintHidePause;   //Save Hint Pause setting
   Application.HintHidePause := 20000;   //Reset Hint Pause to 20 seconds
-  mlgnLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
-          + CRLF + 'level  Coversheet display.  For example, if you lock'
-          + CRLF + 'a Reminder at the Service level, then that Reminder'
-          + CRLF + 'can not be removed from the coversheet display at'
-          + CRLF + 'the Location, User Class, or User levels.';
+  //mlgnLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
+  imgLock.hint := 'Lock a Reminder to prevent it''s removal from a lower'
+         + CRLF + 'level Coversheet display.  For example, if you lock'
+         + CRLF + 'a Reminder at the Service level, then that Reminder'
+         + CRLF + 'cannot be removed from the coversheet display at'
+         + CRLF + 'the Location, User Class, or User levels.';
+  lblLock.hint := imgLock.hint;       
   fOldFocusChanged := Screen.OnActiveControlChange;
   Screen.OnActiveControlChange := ActiveControlChanged;
 end;

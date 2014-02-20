@@ -12,6 +12,7 @@ object frmBase508Form: TfrmBase508Form
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  OnHelp = FormHelp
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13

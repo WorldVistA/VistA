@@ -87,6 +87,7 @@ type
 
 var
   frmOMNavA: TfrmOMNavA;
+  AlreadyRunning: Boolean = false;
 
 implementation
 
@@ -466,6 +467,9 @@ begin
   //frmFrame.UpdatePtInfoOnRefresh;
   if Key in [VK_RETURN, VK_SPACE] then with grdMenu do
   begin
+    If AlreadyRunning then Exit
+    else AlreadyRunning := true;
+
     if frmOrders <> nil then
     begin
        if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
@@ -514,6 +518,7 @@ begin
     cmdDoneClick(Self);
     Key := 0;
   end;
+  AlreadyRunning := false;
 end;
 
 procedure TfrmOMNavA.grdMenuKeyUp(Sender: TObject; var Key: Word;
@@ -589,6 +594,9 @@ begin
     Exit;
   end;
 
+  If AlreadyRunning then Exit
+  else AlreadyRunning := true;
+
   FMouseDown := False;
   //grdMenu.Invalidate;
   // may want to check here to see if mouse still over the same item
@@ -616,6 +624,7 @@ begin
       FDelayEvent.PtEventIFN := 0;
     end;
   end;
+  AlreadyRunning := False;
 end;
 
 procedure TfrmOMNavA.CMMouseLeave(var Message: TMessage);

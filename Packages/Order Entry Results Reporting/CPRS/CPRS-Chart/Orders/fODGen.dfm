@@ -20,10 +20,11 @@ inherited frmODGen: TfrmODGen
   object sbxMain: TScrollBox [2]
     Left = 0
     Top = 0
-    Width = 520
+    Width = 512
     Height = 185
     Align = alTop
     TabOrder = 4
+    ExplicitWidth = 520
   end
   inherited cmdAccept: TButton
     Top = 209

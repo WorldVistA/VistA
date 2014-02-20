@@ -6,17 +6,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, StrUtils, ORFn, ORCtrls, AppEvnts, mCoPayDesc, XUDIGSIGSC_TLB,
+  fAutoSz, StdCtrls, StrUtils, ORFn, ORNet, ORCtrls, AppEvnts, mCoPayDesc, XUDsigS,
   ComCtrls, CheckLst, ExtCtrls, uConsults, UBAGlobals,UBACore, UBAMessages, UBAConst,
-  Menus, ORClasses, fBase508Form, fPrintLocation, VA508AccessibilityManager;
+  Menus, ORClasses, fBase508Form, fPrintLocation, fCSRemaining, VA508AccessibilityManager,
+  rODMeds;
 
 type
   TfrmSignOrders = class(TfrmBase508Form)
-    cmdOK: TButton;
-    cmdCancel: TButton;
-    lblESCode: TLabel;
-    txtESCode: TCaptionEdit;
-    clstOrders: TCaptionCheckListBox;
     laDiagnosis: TLabel;
     gbdxLookup: TGroupBox;
     buOrdersDiagnosis: TButton;
@@ -25,8 +21,25 @@ type
     Paste1: TMenuItem; 
     Diagnosis1: TMenuItem;
     Exit1: TMenuItem;
-    lblOrderList: TStaticText;
     fraCoPay: TfraCoPayDesc;
+    pnlDEAText: TPanel;
+    lblDEAText: TStaticText;
+    pnlProvInfo: TPanel;
+    lblProvInfo: TLabel;
+    pnlOrderList: TPanel;
+    lblOrderList: TStaticText;
+    clstOrders: TCaptionCheckListBox;
+    pnlCSOrderList: TPanel;
+    lblCSOrderList: TStaticText;
+    lblSmartCardNeeded: TStaticText;
+    clstCSOrders: TCaptionCheckListBox;
+    pnlEsig: TPanel;
+    lblESCode: TLabel;
+    txtESCode: TCaptionEdit;
+    cmdOK: TButton;
+    cmdCancel: TButton;
+    pnlCombined: TORAutoPanel;
+    pnlTop: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -54,6 +67,13 @@ type
     procedure clstOrdersKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormResize(Sender: TObject);
+    procedure clstCSOrdersClick(Sender: TObject);
+    procedure clstCSOrdersClickCheck(Sender: TObject);
+    procedure clstCSOrdersMeasureItem(Control: TWinControl; Index: Integer;
+      var AHeight: Integer);
+    procedure clstCSOrdersDrawItem(Control: TWinControl; Index: Integer;
+      Rect: TRect; State: TOwnerDrawState);
+    procedure FormPaint(Sender: TObject);
   private
     OKPressed: Boolean;
     ESCode: string;
@@ -61,13 +81,16 @@ type
     FOldHintPause: integer;
     FOldHintHidePause: integer;
     function ItemsAreChecked: Boolean;
+    function CSItemsAreChecked: Boolean;
+    function nonDCCSItemsAreChecked: Boolean;
+    function AnyItemsAreChecked: Boolean;
     function GetNumberOfSelectedOrders : byte;
     procedure ShowTreatmentFactorHints(var pHintText: string; var pCompName: TVA508StaticText); // 508
     procedure SetItemTextToState;
     procedure FormatListForScreenReader;
   public
     procedure SetCheckBoxStatus(thisOrderID: string);
-    function GetCheckBoxStatus(sourceOrderID : string) : string; overload; 
+    function GetCheckBoxStatus(sourceOrderID : string) : string; overload;
     
 end;
 
@@ -83,13 +106,14 @@ end;
     FOSTFHintWndActive: boolean;
     FOSTFhintWindow: THintWindow;
     tempList : TList;
+    tempCSList : TList;
 
 {End BillingAware}
 
 {Forward} function ExecuteSignOrders(SelectedList: TList): Boolean;
 
 var
-  crypto: IXuDigSigS;
+  crypto: TCryptography;
   rectIndex: Integer;
 
   {Begin BillingAware}
@@ -200,14 +224,16 @@ const
   VERT_SPACING = 6;
 
 var
-  i, cidx,cnt, theSts, WardIEN: Integer;
-  ShrinkHeight: integer;
+  i, k, cidx,cnt, theSts, WardIEN: Integer;
+  ShrinkHeight,oheight,newheight,TotalSH,temph1,temph2,oltemptop,csoltemptop,deatemptop,esigtemptop,oltemph,csoltemph,deatemph,esigtemph: integer;
   SignList: TStringList;
+  CSSignList: TStringList;
   Obj: TOrder;
-  DigSigErr, DigStoreErr, ContainsIMOOrders, DoNotPrint: Boolean;
+  DigSigErr, DigStoreErr, ContainsIMOOrders, DoNotPrint, t1, t2,t3: Boolean;
   x, SigData, SigUser, SigDrugSch, SigDEA: string;
   cSignature, cHashData, cCrlUrl, cErr, WardName: string;
-  cProvDUZ: Int64;
+  UsrAltName, IssuanceDate, PatientName, PatientAddress, DetoxNumber, ProviderName, ProviderAddress: string;
+  DrugName, Quantity, Directions: string;
   OrderText, ASvc: string;
   PrintLoc: Integer;
   AList, ClinicList, OrderPrintList, WardList: TStringList;
@@ -215,6 +241,11 @@ var
   EncLocIEN: integer;
   EncDT: TFMDateTime;
   EncVC: Char;
+  CSSelectedList: TList;
+  CSOrder,PINRetrieved : boolean;
+  PINResult : TPinResult;
+  PINLock : string;
+  DEACheck: string;
   //ChangeItem: TChangeItem;
 
   function FindOrderText(const AnID: string): string;
@@ -222,8 +253,15 @@ var
     i: Integer;
   begin
     Result := '';
-    fOrdersSign.tempList := selectedList;
+    fOrdersSign.tempList := SelectedList;
+    fOrdersSign.tempCSList := CSSelectedList;
     with SelectedList do for i := 0 to Count - 1 do
+      with TOrder(Items[i]) do if ID = AnID then
+      begin
+        Result := Text;
+        Break;
+      end;
+    with CSSelectedList do for i := 0 to Count - 1 do
       with TOrder(Items[i]) do if ID = AnID then
       begin
         Result := Text;
@@ -237,10 +275,15 @@ var
   begin
     Result := True;
     tempList := SelectedList;
+    tempCSList := CSSelectedList;
     with SelectedList do for i := 0 to Pred(Count) do
     begin
       with TOrder(Items[i]) do if Signature <> OSS_NOT_REQUIRE then Result := False;
     end;
+//    with CSSelectedList do for i := 0 to Pred(Count) do
+//    begin
+//      with TOrder(Items[i]) do if Signature <> OSS_NOT_REQUIRE then Result := False;
+//    end;
   end;
 
   function DigitalSign: Boolean;
@@ -253,217 +296,481 @@ var
     begin
       with TOrder(Items[i]) do if Copy(DigSigReq,1,1) = '2' then Result := True;
     end;
+    with CSSelectedList do for i := 0 to Pred(Count) do
+    begin
+      with TOrder(Items[i]) do if Copy(DigSigReq,1,1) = '2' then Result := True;
+    end;
+  end;
+
+  function Piece2end (s,del: string): string;
+  var
+    i: Integer;
+  begin
+    i := Pos(del,s);
+    Result := copy(s,i+1,length(s));
+  end;
+
+  procedure Log2File(  crypto: TCryptography) ;
+  var
+    f: TextFile;
+  begin
+    AssignFile(f,'c:\PKISignError\hashLog.txt');
+    if not(FileExists('c:\PKISignError\hashLog.txt')) then
+    begin
+      ReWrite(f) ;
+      Write(f,'cprs 29 hash log' + CRLF + CRLF);
+      CloseFile(f);
+    end;
+
+    Append(f);
+    WriteLn(f, '==============' + crypto.OrderNumber + CRLF +
+                      'UsrName: "' + crypto.UsrName + '"' + CRLF +
+                      'UsrAltName: "' + crypto.UsrAltName + '"' + CRLF +
+                      'IssuanceDate: "' + crypto.IssuanceDate + '"' + CRLF +
+                      'PatientName: "' + crypto.PatientName + '"' + CRLF +
+                      'PatientAddress: "' + crypto.PatientAddress + '"' + CRLF +
+                      'DrugName: "' + crypto.DrugName + '"' + CRLF +
+                      'ProviderName: "' + crypto.ProviderName + '"' + CRLF +
+                      'ProviderAddress: "' + crypto.ProviderAddress + '"' + CRLF +
+                      'IssuanceDate: "' + crypto.IssuanceDate + '"' + CRLF +
+                      'Quantity: "' + crypto.Quantity + '"' + CRLF +
+                      'Directions: "' + crypto.Directions + '"' + CRLF +
+                      'DetoxNumber: "' + crypto.DetoxNumber + '"' + CRLF +
+                      'DeaNumber: "' + crypto.DeaNumber + '"' + CRLF +
+                      'OrderNumber: "' + crypto.OrderNumber + '"' + CRLF +
+                      CRLF);
+    CloseFile(f);
   end;
 
 begin
-  Result := False;
   DigSigErr := True;
+  CSSelectedList := SelectedList;
+  Result := False;
   PrintLoc := 0;
   EncLocIEN := 0;
   DoNotPrint := False;
-  if SelectedList.Count = 0 then Exit;
   if BILLING_AWARE then
   begin
      tempOrderList := TStringList.Create;
      tempOrderList.Clear;
   end;
   frmSignOrders := TfrmSignOrders.Create(Application);
+
+  CallV('ORDEA DEATEXT', []);
+  frmSignOrders.lblDEAText.Caption := '';
+  for i := 0 to RPCBrokerV.Results.Count -1 do
+     frmSignOrders.lblDEAText.Caption := frmSignOrders.lblDEAText.Caption + ' ' + RPCBrokerV.Results.Strings[i];
+
+  CallV('ORDEA SIGINFO', [Patient.DFN, User.DUZ]);
+  frmSignOrders.lblProvInfo.Caption := '';
+  for i := 0 to RPCBrokerV.Results.Count -1 do
+     frmSignOrders.lblProvInfo.Caption := frmSignOrders.lblProvInfo.Caption + #13#10 + RPCBrokerV.Results.Strings[i];
   try
-    ResizeAnchoredFormToFont(frmSignOrders);
+//    ResizeAnchoredFormToFont(frmSignOrders);
     SigItems.ResetOrders;
+    SigItemsCS.ResetOrders;
     with SelectedList do for i := 0 to Count - 1 do
       begin
         obj := TOrder(Items[i]);
-        cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text,Obj);
-        SigItems.Add(CH_ORD,Obj.ID, cidx);
-        if BILLING_AWARE then
-           tempOrderList.Add(Obj.ID);
-        frmSignOrders.clstOrders.Checked[cidx] := TRUE;
+        if ((obj.IsControlledSubstance=false) or IsPendingHold(Obj.ID)) then
+          begin
+            cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text,Obj);
+            SigItems.Add(CH_ORD,Obj.ID, cidx);
+            if BILLING_AWARE then
+              tempOrderList.Add(Obj.ID);
+            frmSignOrders.clstOrders.Checked[cidx] := TRUE;
 
-        if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
-           frmSignOrders.clstOrders.State[cidx] := cbGrayed ;
+            if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+              frmSignOrders.clstOrders.State[cidx] := cbGrayed ;
+          end;
+      end;
+    with CSSelectedList do for i := 0 to Count - 1 do
+      begin
+        obj := TOrder(Items[i]);
+        if (obj.IsOrderPendDC) then
+        begin
+          cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text,Obj);
+          SigItems.Add(CH_ORD,Obj.ID, cidx);
+          if BILLING_AWARE then
+            tempOrderList.Add(Obj.ID);
+          frmSignOrders.clstOrders.Checked[cidx] := TRUE;
+
+          if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+            frmSignOrders.clstOrders.State[cidx] := cbGrayed ;
+        end
+        else if (obj.IsControlledSubstance and not(IsPendingHold(Obj.ID))) then
+          begin
+            DEACheck := DEACheckFailedAtSignature(GetOrderableIen(Piece(obj.ID,';',1)),False);
+            if not(DEACheck='0') then ShowMsg('You are not authorized to Digitally Sign order: '+CRLF+obj.Text)
+            else
+            begin
+              cidx := frmSignOrders.clstCSOrders.Items.AddObject(Obj.Text,Obj);
+              SigItemsCS.Add(CH_ORD,Obj.ID, cidx);
+              if BILLING_AWARE then
+                tempOrderList.Add(Obj.ID);
+              if TOrder(Items[i]).IsOrderPendDC then frmSignOrders.clstCSOrders.Checked[cidx] := TRUE
+              else frmSignOrders.clstCSOrders.Checked[cidx] := FALSE;
+
+              if (TOrder(Items[i]).DGroupName) = NonVAMedGroup then
+                frmSignOrders.clstCSOrders.State[cidx] := cbGrayed ;
+              end;
+          end;
       end;
 
-    if SigItems.UpdateListBox(frmSignOrders.clstOrders) then
+    if frmSignOrders.clstCSOrders.Count>0 then
+    begin
+      if not(GetPKISite) then
+      begin
+        ShowMsg('Digital Signing of Controlled Substances is currently disabled for your site.');
+        if frmSignOrders.clstOrders.Count>0 then
+        begin
+          frmSignOrders.clstCSOrders.Clear;
+          SigItemsCS.ResetOrders;
+        end
+        else Exit;
+      end;
+      if not(GetPKIUse ) then
+      begin
+        ShowMsg('You are not currently permitted to digitally sign Controlled Substances.');
+        if frmSignOrders.clstOrders.Count>0 then
+        begin
+          frmSignOrders.clstCSOrders.Clear;
+          SigItemsCS.ResetOrders;
+        end
+        else Exit;
+      end;
+    end;
+    
+    
+
+    SigItems.ClearDrawItems;
+    SigItems.ClearFcb;
+    SigItemsCS.ClearDrawItems;
+    SigItemsCS.ClearFcb;
+    t1 := SigItems.UpdateListBox(frmSignOrders.clstOrders);
+    t2 := SigItemsCS.UpdateListBox(frmSignOrders.clstCSOrders);
+    if t1 or t2 then
       frmSignOrders.fraCoPay.Visible := TRUE
     else
       begin
-
       {Begin BillingAware}
         if  BILLING_AWARE then
            frmSignOrders.gbDxLookup.Visible := FALSE;
        {End BillingAware}
-
-        with frmSignOrders do begin
-          ShrinkHeight := lblOrderList.Top - VERT_SPACING;
-          Height := Height - ShrinkHeight;
-          lblOrderList.Top := lblOrderList.Top - ShrinkHeight;
-          clstOrders.Top := clstOrders.Top - ShrinkHeight;
-          clstOrders.Height := clstOrders.Height + ShrinkHeight;
-        end;
       end;
-
-    if GetPKISite and GetPKIUse and DigitalSign then //PKI setup for crypto card read
-      begin
-        try  //PKI object creation
-          crypto := CoXuDigSigS.Create;
-          crypto.GetCSP;
-          StatusText(crypto.Reason);
-          DigSigErr := False;
-        except
-          on  E: Exception do
-            begin
-              DigSigErr := True;
-            end;
-        end;
-      end;
-
     if SignNotRequired then
       begin
         frmSignOrders.lblESCode.Visible := False;
         frmSignOrders.txtESCode.Visible := False;
       end;
-
     if BILLING_AWARE then
     begin
      //  build list of orders that are not billable based on order type
         UBAGlobals.NonBillableOrderList := rpcNonBillableOrders(tempOrderList);
     end;
 
+
+
+
+    with frmSignOrders do
+    begin
+      lblDeaText.Visible := TRUE;
+      txtEScode.Text := '';
+      if ((clstOrders.Count = 0) and (clstCSOrders.Count = 0)) then  Exit;
+      pnlProvInfo.Height := lblProvInfo.Height+5+lblProvInfo.Top;
+      TotalSH := 0;
+
+      if clstCSOrders.Count = 0 then
+      begin      
+        oheight := pnlOrderList.height;
+        pnlProvInfo.Visible := False;
+        if fraCoPay.Visible = FALSE then
+        begin
+          pnlTop.Visible := False;
+        end;
+        lblDeaText.Visible := False;   
+        pnlCSOrderlist.Visible := False;
+        pnlOrderlist.Align := alClient; 
+        newheight := Height - pnlOrderList.height + oheight;
+        if newheight < Constraints.MinHeight then Constraints.MinHeight := newheight;
+        Height := newheight;
+      end
+      else if clstOrders.Count = 0 then
+      begin   
+        oheight := pnlCSOrderList.height;
+        pnlOrderlist.Visible := False;
+        pnlCSOrderlist.Align := alClient;  
+        newheight := Height - pnlCSOrderlist.height + oheight;
+        if newheight < Constraints.MinHeight then Constraints.MinHeight := newheight;
+        Height := newheight;
+        txtESCode.Visible := FALSE;
+        lblESCode.Visible := FALSE;
+
+      end
+      else if fraCoPay.Visible = FALSE then
+      begin
+        fraCoPay.Visible := TRUE;
+        ShrinkHeight := fraCoPay.Height - pnlProvInfo.Height;
+        fraCoPay.Visible := FALSE;
+
+		    pnlTop.Height := pnlTop.Height - ShrinkHeight;
+        pnlCombined.Top := pnlCombined.Top - ShrinkHeight; 
+		    pnlCombined.Height := pnlCombined.Height + ShrinkHeight;
+
+      end;
+      
+
+
+      lblDEAText.Visible := FALSE;
+      lblSmartCardNeeded.Visible := FALSE;
+    end;
+    if frmSignOrders.AnyItemsAreChecked then
+    begin
+      frmSignOrders.lblESCode.Visible := frmSignOrders.IsSignatureRequired;
+      frmSignOrders.txtESCode.Visible := frmSignOrders.IsSignatureRequired
+    end ;
+    if frmSignOrders.txtESCode.Visible then  frmSignOrders.ActiveControl := frmSignOrders.txtESCode;
+    
      frmSignOrders.ShowModal;
       if frmSignOrders.OKPressed then
       begin
         Result := True;
         SignList := TStringList.Create;
+        CSSignList := TStringList.Create;
         ClinicList := TStringList.Create;
         OrderPrintList := TStringList.Create;
         WardList := TStringList.Create;
         ContainsIMOOrders := false;
         try
           with SelectedList do for i := 0 to Count - 1 do with TOrder(Items[i]) do
+          begin     
+            CSOrder := False;
+            cErr := '';
+            cidx := frmSignOrders.clstOrders.Items.IndexOfObject(TOrder(Items[i]));
+            if cidx<0 then
             begin
-              DigStoreErr := false;
-              if (DigSigErr = False) and (Copy(TOrder(Items[i]).DigSigReq,1,1) = '2') then
+              cidx := frmSignOrders.clstCSOrders.Items.IndexOfObject(TOrder(Items[i]));
+              CSOrder := True;
+            end;
+
+
+            if (cidx > -1 ) and (CSOrder=False) and (cErr = '') then
+              begin
+                if TOrder(Items[i]).DGroupName = NonVAMedGroup  then  frmSignOrders.clstOrders.Checked[cidx] := True;    //Non VA MEDS
+                if frmSignOrders.clstOrders.Checked[cidx] then
                 begin
-                  StatusText('Retrieving DIGITAL SIGNATURE');
-                  x := TOrder(Items[i]).ID;
-                  SigDrugSch := GetDrugSchedule(x);
-                  SigData := SetExternalText(x,SigDrugSch,User.DUZ);
-                  if Length(SigData) < 1 then
+                  UpdateOrderDGIfNeeded(ID);
+                  SignList.Add(ID + U + SS_ESIGNED + U + RS_RELEASE + U + NO_PROVIDER);
+                  BAOrderList.Add(TOrder(Items[i]).ID);
+                end;
+              end;
+
+
+            if (cidx > -1) and (CSOrder) and (cErr = '') then
+              begin
+                if frmSignOrders.clstCSOrders.Checked[cidx] then
+                begin
+                  if IsOrderPendDC then
+                  begin
+                    UpdateOrderDGIfNeeded(ID);
+                    SignList.Add(ID + U + SS_DIGSIG + U + RS_RELEASE + U + NO_PROVIDER);
+                    BAOrderList.Add(TOrder(Items[i]).ID);
+                  end
+                  else
+                  begin
+//                    UpdateOrderDGIfNeeded(ID);
+                    CSSignList.Add(ID + U + SS_DIGSIG + U + RS_RELEASE + U + NO_PROVIDER);
+//                    BAOrderList.Add(TOrder(Items[i]).ID);
+                  end;
+                end;
+              end;
+          end;
+
+          if CSSignList.Count > 0 then
+          begin
+          LastPINvalue := '';
+          //isXuDSigSLogging := true;
+          PINRetrieved := false;
+          //get altusername
+          UsrAltName := sCallV('XUS PKI GET UPN', []);
+          //if SAN is blank then attempt to retrieve from card to set it
+          if UsrAltName='' then
+          begin
+            UsrAltName := SetSAN(fOrdersSign.frmSignOrders);
+            if not(UsrAltName='')  then
+            begin
+              PINRetrieved := true;
+            end;
+          end;
+          //if still blank then cancel digital signing
+          if UsrAltName='' then PINResult := prCancel
+          else if not(PINRetrieved) then
+          try
+          begin
+            PINLock := sCallV('ORDEA PINLKCHK', []);
+            if PINLock = '1' then PINResult := prLocked
+            else PINResult := checkPINValue(fOrdersSign.frmSignOrders);
+          end
+          except
+            PINResult := prError;
+          end;
+
+          if PINResult=PRError       then ShowMsg('Problem getting PIN.  Cannot Digitally Sign.')
+          else if PINResult=prLocked then
+          begin
+            if PINLock = '0' then sCallV('ORDEA PINLKSET', []);
+            ShowMsg('Card has been locked.  Cannot Digitally Sign.')
+          end
+          else if PINResult=prCancel then ShowMsg('Digital Signing has been cancelled.')
+          else
+            begin
+              try
+              begin
+              crypto := TCryptography.Create;
+              //call rpc to get hash fields other than drug info
+              CallV('ORDEA HASHINFO', [Patient.DFN, User.DUZ]);
+              for i := 0 to RPCBrokerV.Results.Count -1 do
+              begin
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'IssuanceDate' then IssuanceDate := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientName' then PatientName := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'PatientAddress' then PatientAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DetoxNumber' then DetoxNumber := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderName' then ProviderName := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'ProviderAddress' then ProviderAddress := Piece2end(RPCBrokerV.Results.Strings[i],':');
+                if Piece(RPCBrokerV.Results.Strings[i],':',1) = 'DeaNumber' then SigDEA := Piece2end(RPCBrokerV.Results.Strings[i],':');
+              end;
+
+              for i := 0 to CSSignList.Count - 1 do
+              begin
+                CallV('ORDEA ORDHINFO', [Piece(Piece(CSSignList.strings[i],U,1),';',1)]);
+                DrugName := '';
+                Quantity := '';
+                Directions := '';
+                for k := 0 to RPCBrokerV.Results.Count -1 do
+                begin
+                  if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'DrugName' then DrugName := Piece2end(RPCBrokerV.Results.Strings[k],':');
+                  if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Quantity' then Quantity := Piece2end(RPCBrokerV.Results.Strings[k],':');
+                  if Piece(RPCBrokerV.Results.Strings[k],':',1) = 'Directions' then Directions := Piece(Piece2end(RPCBrokerV.Results.Strings[k],':'),U,1);
+                end;
+                try
+                  crypto.Reset;
+                  crypto.isDEAsig := true;
+                  crypto.UsrName := User.Name;
+                  crypto.UsrAltName := UsrAltName;
+                  crypto.IssuanceDate :=  IssuanceDate;
+                  crypto.PatientName :=   PatientName;
+                  crypto.PatientAddress :=  PatientAddress;
+                  crypto.DrugName :=     DrugName;
+                  crypto.Quantity :=   Quantity;
+                  crypto.Directions :=  Directions;
+                  crypto.DetoxNumber :=  ''; //DetoxNumber;  don't include detox in hash calc
+                  crypto.ProviderName :=  ProviderName;
+                  crypto.ProviderAddress :=  ProviderAddress;
+                  crypto.DeaNumber :=      SigDEA;
+                  crypto.OrderNumber := Piece(Piece(CSSignList.strings[i],U,1),';',1);
+
+                  if false then Log2File(crypto);
+
+                  if crypto.Signdata = true then
+                  begin
+                    cSignature := crypto.SignatureStr;
+                    cHashData := crypto.HashStr;
+                    cCrlUrl := crypto.CrlUrl;
+                  end
+                  else
+                  begin
+                    ShowMsg('Could not digitally sign. An error has occurred: Hash generation failed'+CRLF+CRLF+crypto.Reason);
+                    DigStoreErr := true;
+                  end;
+
+                except
+                  on  E: Exception do
                     begin
-                      ShowMsg(TOrder(SelectedList.Items[i]).Text + CRLF + CRLF + 'Digital Signature failed with reason: Unable to get required data from server');
+                      ShowMsg('Could not digitally sign. An error has occurred: '+ E.Message);
                       DigStoreErr := true;
                     end;
-                  SigUser := piece(SigData,'^',18);
-                  SigDEA := piece(SigData,'^',20);
-                  cProvDUZ := User.DUZ;
-                  if DigStoreErr = false then
-                  try
-                    crypto.Reset;
-                    crypto.DEAsig := true;
-                    crypto.UsrName := SigUser;
-                    crypto.DrugSch := SigDrugSch;
-                    crypto.UsrNumber := SigDEA;
-                    crypto.DataBuffer := SigData;
-                    if crypto.Signdata = true then
-                      begin
-                        cSignature := crypto.Signature;
-                        cHashData := crypto.HashValue;
-                        cCrlUrl := crypto.CrlUrl;
-                      end
-                    else
-                      begin
-                        ShowMsg(TOrder(SelectedList.Items[i]).Text + CRLF + CRLF + 'Digital Signature failed with reason: '+ piece(Crypto.Reason, '^', 2));
-                        DigStoreErr := true;
-                      end;
-                  except
-                    on  E: Exception do
-                      begin
-                        ShowMsg(TOrder(SelectedList.Items[i]).Text + CRLF + CRLF + 'Crypto raised an error: '+ E.Message);
-                        DigStoreErr := true;
-                      end;
-                  end;  //except
-                  if DigStoreErr = true then //PKI
-                    begin
-                      //NoOp
-                    end
-                  else
-                    begin
-                      cErr := '';
-                      StoreDigitalSig(ID, cHashData, cProvDUZ, cSignature, cCrlUrl, cErr);
-                      cidx := frmSignOrders.clstOrders.Items.IndexOfObject(TOrder(Items[i]));
-                      if (cidx > -1 ) and (frmSignOrders.clstOrders.Checked[cidx]) and (cErr = '') then
-                      begin
-                        UpdateOrderDGIfNeeded(ID);
-                        SignList.Add(ID + U + SS_DIGSIG + U + RS_RELEASE + U + NO_PROVIDER);
-                        BAOrderList.Add(TOrder(Items[i]).ID);
-                      end;
-                    end;
-                end
-              else
-                begin
-                  if GetPKISite and (Copy(TOrder(SelectedList.Items[i]).DigSigReq,1,1) = '2') then
-                    begin
-                      ShowMsg('ORDER NOT SENT TO PHARMACY' + CRLF + CRLF + TOrder(SelectedList.Items[i]).Text + CRLF + CRLF +
-                        'This Schedule II medication cannot be electronically entered without a Digital Signature. ' +
-                        CRLF + 'Please discontinue/cancel this order and create a hand written order for manual processing, or digitally sign the order at a PKI-enabled workstation.');
-                    end
-                  else
-                    begin
-                      cidx := frmSignOrders.clstOrders.Items.IndexOfObject(TOrder(Items[i]));
-                      if TOrder(Items[i]).DGroupName = NonVAMedGroup  then  frmSignOrders.clstOrders.Checked[cidx] := True;    //Non VA MEDS
-                      if (cidx > -1 ) and (frmSignOrders.clstOrders.Checked[cidx]) then
-                      begin
-                        UpdateOrderDGIfNeeded(ID);
-                        SignList.Add(ID + U + SS_ESIGNED + U + RS_RELEASE + U + NO_PROVIDER);
-                      end;
-                    end;
                 end;
+
+                if DigStoreErr then
+                 //messages shown above
+                else
+                begin
+                  cErr := '';
+                  StoreDigitalSig(Piece(CSSignList.Strings[i],U,1), cHashData, User.DUZ, cSignature, cCrlUrl, Patient.DFN, cErr);
+                  if cErr = '' then
+                  begin
+                    UpdateOrderDGIfNeeded(Piece(CSSignList.Strings[i],U,1));
+                    SignList.Add(CSSignList.Strings[i]);
+                    BAOrderList.Add(Piece(CSSignList.Strings[i],U,1));
+                  end;
+                end;
+              end;
+              end;
+              finally
+                if not(crypto=nil) then
+                begin
+                  crypto.Free;
+                  crypto := nil;
+                end;
+              end;
             end;
+          end;
           StatusText('Sending Orders to Service(s)...');
           if SignList.Count > 0 then
           begin
             //hds7591  Clinic/Ward movement.  Patient Admission IMO
             if not frmFrame.TimedOut then
             begin
-               if (Patient.Inpatient = True) and (Encounter.Location <> Patient.Location) then
-                   begin
-                     EncLocName := Encounter.LocationName;
-                     EncLocIEN  := Encounter.Location;
-                     EncLocText := Encounter.LocationText;
-                     EncDT := Encounter.DateTime;
-                     EncVC := Encounter.VisitCategory;
-                     for i := 0 to SelectedList.Count - 1 do
-                       begin
-                         cidx := frmSignOrders.clstOrders.Items.IndexOfObject(TOrder(SelectedList.Items[i]));
-                         if frmSignOrders.clstOrders.Checked[cidx] = false then continue;
-                         if TOrder(SelectedList.Items[i]).DGroupName = 'Clinic Orders' then ContainsIMOOrders := true;
-                         if TOrder(SelectedList.Items[i]).DGroupName = '' then continue;
-                         if (Pos('DC', TOrder(SelectedList.Items[i]).ActionOn) > 0) or
-                            (TOrder(SelectedList.Items[i]).IsOrderPendDC = true) then
-                           begin
-                             WardList.Add(TOrder(SelectedList.Items[i]).ID);
-                             Continue;
-                           end;
-                         //ChangeItem := Changes.Locate(20,TOrder(SelectedList.Items[i]).ID);
-                         //if ChangeItem = nil then continue;
-                         //if ChangeItem.Delay = true then continue;
-                         if TOrder(SelectedList.Items[i]).IsDelayOrder = true then continue;                         
-                         OrderPrintList.Add(TOrder(SelectedList.Items[i]).ID + ':' + TOrder(SelectedList.Items[i]).Text);
-                       end;
-                      if OrderPrintList.Count > 0 then
-                        begin                          frmPrintLocation.PrintLocation(OrderPrintList, EncLocIEN, EncLocName, EncLocText, EncDT, EncVC, ClinicList,
-                                                        WardList, WardIen,WardName, ContainsIMOOrders, true);
-                          //fframe.frmFrame.OrderPrintForm := false;
-                        end
-                        else if (clinicList.count = 0) and (wardList.Count = 0) then DoNotPrint := True;
-                        if (WardIEN = 0) and (WardName = '') then CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
-                        end;            end;
+              if (Patient.Inpatient = True) and (Encounter.Location <> Patient.Location) then
+              begin
+                EncLocName := Encounter.LocationName;
+                EncLocIEN  := Encounter.Location;
+                EncLocText := Encounter.LocationText;
+                EncDT := Encounter.DateTime;
+                EncVC := Encounter.VisitCategory;
+                for i := 0 to SelectedList.Count - 1 do
+                begin
+                  CSOrder := False;
+                  cidx := frmSignOrders.clstOrders.Items.IndexOfObject(TOrder(SelectedList.Items[i]));
+                  //selected order isn't from non-CS list -> check CS List
+                  if cidx = -1 then
+                  begin
+                    cidx := frmSignOrders.clstCSOrders.Items.IndexOfObject(TOrder(SelectedList.Items[i]));
+                    //selected order found in CS List -> CSOrder := True
+                    if cidx <> -1 then
+                      CSOrder := True;
+                  end;
+                  if (CSOrder=False and (frmSignOrders.clstOrders.Checked[cidx]=False)) or (CSOrder and (frmSignOrders.clstCSOrders.Checked[cidx]=False)) then continue;
+                  if TOrder(SelectedList.Items[i]).DGroupName = 'Clinic Orders' then ContainsIMOOrders := true;
+                  if TOrder(SelectedList.Items[i]).DGroupName = '' then continue;
+                  if (Pos('DC', TOrder(SelectedList.Items[i]).ActionOn) > 0) or
+                     (TOrder(SelectedList.Items[i]).IsOrderPendDC = true) then
+                  begin
+                    WardList.Add(TOrder(SelectedList.Items[i]).ID);
+                    Continue;
+                  end;
+                  //ChangeItem := Changes.Locate(20,TOrder(SelectedList.Items[i]).ID);
+                  //if ChangeItem = nil then continue;
+                  //if ChangeItem.Delay = true then continue;
+                  if TOrder(SelectedList.Items[i]).IsDelayOrder = true then Continue;
+                  OrderPrintList.Add(TOrder(SelectedList.Items[i]).ID + ':' + TOrder(SelectedList.Items[i]).Text);
+                end;
+                if OrderPrintList.Count > 0 then
+                begin                  frmPrintLocation.PrintLocation(OrderPrintList, EncLocIEN, EncLocName, EncLocText, EncDT, EncVC, ClinicList,
+                                                 WardList, WardIen,WardName, ContainsIMOOrders, true);
+                  //fframe.frmFrame.OrderPrintForm := false;
+                end
+                else if (clinicList.count = 0) and (wardList.Count = 0) then
+                  DoNotPrint := True;
+                if (WardIEN = 0) and (WardName = '') then
+                  CurrentLocationForPatient(Patient.DFN, WardIEN, WardName, ASvc);
+              end;            end;
             uCore.TempEncounterLoc := 0;
             uCore.TempEncounterLocName := '';
             //hds7591  Clinic/Ward movement  Patient Admission IMO
 
             SigItems.SaveSettings; // Save CoPay FIRST!
+            SigItemsCS.SaveSettings;
             SendOrders(SignList, frmSignOrders.ESCode);
           end;
 
@@ -511,6 +818,8 @@ begin
               PrintOrdersOnSignReleaseMult(SignList, CLinicList, WardList, NO_PROVIDER, EncLocIEN, WardIEN, EncLocName, wardName)
             else if DoNotPrint = False then PrintOrdersOnSignRelease(SignList, NO_PROVIDER, PrintLoc);
         finally
+          CSRemaining(frmSignOrders.clstOrders.items,frmSignOrders.clstCSOrders.items);
+          LastPINvalue := '';
           SignList.Free;
           OrderPrintList.free;
           WardList.free;
@@ -519,9 +828,14 @@ begin
       end; {if frmSignOrders.OKPressed}
   finally
     frmSignOrders.Free;
+
     with SelectedList do for i := 0 to Count - 1 do UnlockOrder(TOrder(Items[i]).ID);
   end;
-  crypto := nil;
+    if not(crypto=nil) then
+    begin
+      crypto.Free;
+      crypto := nil;
+    end;
 end;
 
 procedure TfrmSignOrders.FormCreate(Sender: TObject);
@@ -534,6 +848,7 @@ begin
   FOldHintHidePause := Application.HintHidePause;
   Application.HintHidePause := 30000;
   tempList := TList.Create;
+  tempCSList := TList.Create;
 
   {Begin BillingAware}
   //This is the DIAGNOSIS label above the Dx column
@@ -550,8 +865,8 @@ begin
       end
    else
       begin
-         lblOrderList.Top := 158;
-         lblOrderList.Left := 8;
+//         lblOrderList.Top := 158;
+//         lblOrderList.Left := 8;
      end;
  {End BillingAware}
 
@@ -562,10 +877,26 @@ var
    i: Integer;
 begin
     Result := FALSE;
-
-    with tempList do for i := 0 to Pred(Count) do
+//
+//    with tempList do for i := 0 to Pred(Count) do
+//    begin
+//      if frmSignOrders.clstOrders.Checked[i] then
+//      begin
+//      with TOrder(Items[i]) do if Signature <> OSS_NOT_REQUIRE then
+//         Result := TRUE;
+//      end;
+//    end;
+    with frmSignOrders.clstOrders do for i := 0 to Items.Count-1 do
     begin
       if frmSignOrders.clstOrders.Checked[i] then
+      begin
+      with TOrder(Items[i]) do if Signature <> OSS_NOT_REQUIRE then
+         Result := TRUE;
+      end;
+    end; 
+    with frmSignOrders.clstCSOrders do for i := 0 to Items.Count-1 do
+    begin
+      if frmSignOrders.clstCSOrders.Checked[i] then
       begin
       with TOrder(Items[i]) do if Signature <> OSS_NOT_REQUIRE then
          Result := TRUE;
@@ -612,7 +943,7 @@ begin
     end;
 {End BillingAware}
 
-  if not SigItems.OK2SaveSettings then
+  if not SigItems.OK2SaveSettings or not SigItemsCS.OK2SaveSettings then
   begin
     InfoBox(TX_Order_Error, 'Sign Orders', MB_OK);
     Exit;
@@ -629,6 +960,7 @@ procedure TfrmSignOrders.cmdCancelClick(Sender: TObject);
 begin
   inherited;
   Close;
+//  CSRemaining(frmSignOrders.clstOrders.items,frmSignOrders.clstCSOrders.items);
 end;
 
 procedure TfrmSignOrders.FormDestroy(Sender: TObject);
@@ -716,7 +1048,7 @@ begin
                     end;
                 end;
             end;
-  
+
         end;
        end;
   end
@@ -797,9 +1129,12 @@ begin
   end
   else
   begin
-    lblESCode.Visible := ItemsAreChecked;
-    txtESCode.Visible := ItemsAreChecked;
+    lblESCode.Visible := ItemsAreChecked or CSItemsAreChecked;
+    txtESCode.Visible := ItemsAreChecked or CSItemsAreChecked;
   end;
+
+  if txtESCode.Visible then txtESCode.SetFocus;
+  
 end;
 
 function TfrmSignOrders.ItemsAreChecked: Boolean;
@@ -816,6 +1151,46 @@ begin
              Result := True;
              break;
            end;
+end;
+
+function TfrmSignOrders.CSItemsAreChecked: Boolean;
+{ return true if any items in the Review List are checked for applying signature }
+var
+  i: Integer;
+begin
+  Result := False;
+
+  with clstCSOrders do
+     for i := 0 to Items.Count - 1 do
+        if Checked[i] then
+           begin
+             Result := True;
+             break;
+           end;
+end;
+
+function TfrmSignOrders.nonDCCSItemsAreChecked: Boolean;
+{ return true if any items in the Review List are checked for applying signature }
+var
+  i: Integer;
+begin
+  Result := False;
+
+  with clstCSOrders do
+     for i := 0 to Items.Count - 1 do
+        if Checked[i] then
+           begin
+             if not TOrder(clstCSOrders.Items.Objects[i]).IsOrderPendDC then
+             begin
+               Result := True;
+               break;
+             end;
+           end;
+end;
+
+function TfrmSignOrders.AnyItemsAreChecked: Boolean;
+begin
+  Result := ItemsAreChecked or CSItemsAreChecked;
 end;
 
 procedure TfrmSignOrders.clstOrdersMouseMove(Sender: TObject;
@@ -893,8 +1268,8 @@ procedure TfrmSignOrders.FormShow(Sender: TObject);
 begin
 {Begin BillingAware}
 
-  if (clstOrders.Top + clstOrders.Height) > (lblESCode.Top - 4) then
-      clstOrders.Height := lblESCode.Top - clstOrders.Top - 4;
+//  if (clstOrders.Top + clstOrders.Height) > (lblESCode.Top - 4) then
+//      clstOrders.Height := lblESCode.Top - clstOrders.Top - 4;
 
   //INITIALIZATIONS
   Paste1.Enabled := false;
@@ -910,7 +1285,10 @@ begin
            UBAGlobals.OrderIDList := TStringList.Create;
 
         if  BILLING_AWARE then
+        begin
            clstOrders.Multiselect := true;
+           clstCSOrders.Multiselect := true;
+        end;
 
          with fraCoPay do
            begin
@@ -1242,6 +1620,242 @@ begin
 end;
 
 
+procedure TfrmSignOrders.clstCSOrdersClick(Sender: TObject);  
+//If grid item is an order-able item, then enable the Diagnosis button
+// else disable the Diagnosis button.
+var
+  thisChangeItem: TChangeItem;
+  i: smallint;
+  thisOrderList: TStringList;
+begin
+  thisOrderList := TStringList.Create;
+
+ {Begin BillingAware}
+ if  BILLING_AWARE then
+ begin
+
+ if clstCSOrders.Items.Count > 1 then
+        copy1.Enabled := True
+     else
+        copy1.Enabled := False;
+
+     for i := 0 to clstCSOrders.Items.Count - 1 do
+        begin
+           if clstCSOrders.Selected[i] then
+              begin
+                thisChangeItem := TChangeItem(clstCSOrders.Items.Objects[i]);
+
+                //Disallow copying of a grid HEADER item on LEFT MOUSE CLICK
+              if thisChangeItem = nil then
+                 begin
+                   Copy1.Enabled := false;
+                   buOrdersDiagnosis.Enabled := false;
+                   Exit;
+                 end;
+
+              if (thisChangeItem <> nil) then //Blank row - not an order item
+                 begin
+                   thisOrderList.Clear;
+                   thisOrderList.Add(thisChangeItem.ID);
+
+                   if IsAllOrdersNA(thisOrderList) then
+                   begin
+                     Diagnosis1.Enabled := false;
+                     buOrdersDiagnosis.Enabled := false;
+                  end
+                 else
+                 begin
+                    Diagnosis1.Enabled := true;
+                    buOrdersDiagnosis.Enabled := true;
+                 end
+              end
+              else
+              begin
+                 buOrdersDiagnosis.Enabled := false;
+                 Diagnosis1.Enabled := False;
+                 Break;
+              end;
+           end;
+        end;
+
+  if Assigned(thisOrderList) then thisOrderList.Free;
+  end;        
+end;
+
+procedure TfrmSignOrders.clstCSOrdersClickCheck(Sender: TObject);
+
+   procedure updateAllChilds(CheckedStatus: boolean; ParentOrderId: string);
+   var
+     idx: integer;
+   begin
+     for idx := 0 to clstCSOrders.Items.Count - 1 do
+        if TOrder(clstCSOrders.Items.Objects[idx]).ParentID = ParentOrderId then
+        begin
+           if clstCSOrders.Checked[idx] <> CheckedStatus then
+           begin
+              clstCSOrders.Checked[idx] := CheckedStatus;
+              SigItemsCS.EnableSettings(idx, clstCSOrders.checked[Idx]);
+           end;
+        end;
+   end;
+
+begin
+  with clstCSOrders do
+  begin
+    if Length(TOrder(Items.Objects[ItemIndex]).ParentID)>0 then
+    begin
+      SigItemsCS.EnableSettings(ItemIndex, checked[ItemIndex]);
+      updateAllChilds(checked[ItemIndex],TOrder(Items.Objects[ItemIndex]).ParentID);
+    end else
+      SigItemsCS.EnableSettings(ItemIndex, checked[ItemIndex]);
+  end;
+  if CSItemsAreChecked and nonDCCSItemsAreChecked then
+  begin
+     lblDeaText.Visible := TRUE;
+     lblSmartCardNeeded.Visible := TRUE;
+  end
+  else
+  begin
+     lblDeaText.Visible := FALSE;
+     lblSmartCardNeeded.Visible := FALSE;
+  end;
+  if AnyItemsAreChecked then
+  begin
+     lblESCode.Visible := IsSignatureRequired;
+     txtESCode.Visible := IsSignatureRequired
+  end
+  else
+  begin
+    lblESCode.Visible := ItemsAreChecked or CSItemsAreChecked;
+    txtESCode.Visible := ItemsAreChecked or CSItemsAreChecked;
+  end;
+  if txtESCode.Visible then txtESCode.SetFocus;
+end;
+
+procedure TfrmSignOrders.clstCSOrdersDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
+var
+{Begin BillingAware}
+  str: String;
+  tempID: string;
+  thisRec: UBAGlobals.TBADxRecord;
+ {End BillingAware}
+
+  X: string;
+  ARect: TRect;
+begin
+  inherited;
+  X := '';
+  ARect := Rect;
+
+{Begin BillingAware}
+  if  BILLING_AWARE then
+  begin
+     with clstCSOrders do
+     begin
+       if Index < Items.Count then
+       begin
+          Canvas.FillRect(ARect);
+          Canvas.Pen.Color := Get508CompliantColor(clSilver);
+          Canvas.MoveTo(ARect.Left, ARect.Bottom);
+          Canvas.LineTo(ARect.Right, ARect.Bottom);
+          x := FilteredString(Items[Index]);
+          ARect.Right := ARect.Right - 50;    //50 to 40
+          //Vertical column line
+          Canvas.MoveTo(ARect.Right, Rect.Top);
+          Canvas.LineTo(ARect.Right, Rect.Bottom);
+          //Adjust position of 'Diagnosis' column label for font size
+          laDiagnosis.Left := ARect.Right + 14;
+          if uSignItems.GetAllBtnLeftPos > 0 then
+             laDiagnosis.left := uSignItems.GetAllBtnLeftPos - (laDiagnosis.Width +5);
+              // ARect.Right below controls the right-hand side of the Dx Column
+              // Adjust ARect.Right in conjunction with procedure uSignItems.TSigItems.lbDrawItem(), because the
+              // two rectangles overlap each other.
+           if  BILLING_AWARE then
+           begin
+              arRect[Index] := Classes.Rect(ARect.Right+2, ARect.Top, ARect.Right + 108, ARect.Bottom);
+              Canvas.FillRect(arRect[Index]);
+           end;
+
+              //Win32 API - This call to DrawText draws the text of the ORDER - not the diagnosis code
+               DrawText(Canvas.handle, PChar(x), Length(x), ARect, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+       if  BILLING_AWARE then
+         begin
+             if Assigned(UBAGlobals.tempDxList) then
+                begin
+                   tempID := TOrder(clstCSOrders.Items.Objects[Index]).ID;
+
+                if UBAGlobals.tempDxNodeExists(tempID) then
+                    begin
+                       thisRec := TBADxRecord.Create;
+                       UBAGlobals.GetBADxListForOrder(thisRec, tempID);
+                       str := Piece(thisRec.FBADxCode,'^',1);
+                       {v25 BA}
+                       str := Piece(str,':',1);
+                       DrawText(Canvas.handle, PChar(str), Length(str), arRect[Index], DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                       if Not UBACore.IsOrderBillable(tempID) then
+                       begin
+                            Canvas.Font.Color := clBlue;
+                            DrawText(Canvas.handle, PChar(NOT_APPLICABLE), Length(NOT_APPLICABLE), {Length(str),} arRect[Index], DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                       end;
+                    end
+                 else
+                    begin
+                      //   determine if order is billable, if NOT then insert NA in Dx field
+                     if Not UBACore.IsOrderBillable(tempID) then
+                        begin
+                            Canvas.Font.Color := clBlue;
+                            DrawText(Canvas.handle, PChar(NOT_APPLICABLE), Length(NOT_APPLICABLE), {Length(str),} arRect[Index], DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                        end;
+                    end;
+                end;
+            end;
+
+        end;
+       end;
+  end
+  else
+     begin
+        X := '';
+        ARect := Rect;
+        with clstCSOrders do
+           begin
+             if Index < Items.Count then
+                begin
+                  Canvas.FillRect(ARect);
+                  Canvas.Pen.Color := Get508CompliantColor(clSilver);
+                  Canvas.MoveTo(ARect.Left, ARect.Bottom - 1);
+                  Canvas.LineTo(ARect.Right, ARect.Bottom - 1);
+                  X := FilteredString(Items[Index]);
+                  DrawText(Canvas.handle, PChar(x), Length(x), ARect, DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
+                end;
+           end;
+     end;
+{End BillingAware}
+end;
+
+procedure TfrmSignOrders.clstCSOrdersMeasureItem(Control: TWinControl;
+  Index: Integer; var AHeight: Integer);
+var
+  X: string;
+  ARect: TRect;
+begin
+  inherited;
+  AHeight := SigItemHeight;
+  with clstCSOrders do if Index < Items.Count then
+  begin
+    ARect := ItemRect(Index);
+    Canvas.FillRect(ARect);
+    x := FilteredString(Items[Index]);
+    AHeight := WrappedTextHeightByFont(Canvas, Font, x, ARect);
+    if AHeight > 255 then AHeight := 255;
+    //-------------------
+    {Bug fix-HDS00001627}
+    //if AHeight <  13 then AHeight := 13; {ORIG}
+    if AHeight <  13 then AHeight := 15;
+    //-------------------
+  end;
+end;
+
 procedure TfrmSignOrders.clstOrdersClick(Sender: TObject);
 //If grid item is an order-able item, then enable the Diagnosis button
 // else disable the Diagnosis button.
@@ -1401,9 +2015,36 @@ begin
   end;
 end;
 
-procedure TfrmSignOrders.FormResize(Sender: TObject);
+procedure TfrmSignOrders.FormPaint(Sender: TObject);
 begin
   inherited;
+
+  if fOrdersSign.frmSignOrders.clstCSOrders.count = 0 then
+  begin
+   fOrdersSign.frmSignOrders.clstOrders.Height := fOrdersSign.frmSignOrders.pnlOrderlist.Height - fOrdersSign.frmSignOrders.clstOrders.Top - 4;
+   fOrdersSign.frmSignOrders.clstOrders.Width := fOrdersSign.frmSignOrders.pnlOrderlist.Width - fOrdersSign.frmSignOrders.clstOrders.Left - 4;
+  end;
+  if fOrdersSign.frmSignOrders.clstOrders.count = 0 then
+  begin
+   fOrdersSign.frmSignOrders.clstCSOrders.Height := fOrdersSign.frmSignOrders.pnlCSOrderlist.Height - fOrdersSign.frmSignOrders.clstCSOrders.Top - 4;
+   fOrdersSign.frmSignOrders.clstCSOrders.Width := fOrdersSign.frmSignOrders.pnlCSOrderlist.Width - fOrdersSign.frmSignOrders.clstCSOrders.Left - 4;
+  end;
+end;
+
+procedure TfrmSignOrders.FormResize(Sender: TObject);
+begin
+  inherited;  
+
+  if fOrdersSign.frmSignOrders.clstCSOrders.count = 0 then
+  begin
+   fOrdersSign.frmSignOrders.clstOrders.Height := fOrdersSign.frmSignOrders.pnlOrderlist.Height - fOrdersSign.frmSignOrders.clstOrders.Top - 4;
+   fOrdersSign.frmSignOrders.clstOrders.Width := fOrdersSign.frmSignOrders.pnlOrderlist.Width - fOrdersSign.frmSignOrders.clstOrders.Left - 4;
+  end;
+  if fOrdersSign.frmSignOrders.clstOrders.count = 0 then
+  begin
+   fOrdersSign.frmSignOrders.clstCSOrders.Height := fOrdersSign.frmSignOrders.pnlCSOrderlist.Height - fOrdersSign.frmSignOrders.clstCSOrders.Top - 4;
+   fOrdersSign.frmSignOrders.clstCSOrders.Width := fOrdersSign.frmSignOrders.pnlCSOrderlist.Width - fOrdersSign.frmSignOrders.clstCSOrders.Left - 4;
+  end;
   clstOrders.invalidate;
 end;
 

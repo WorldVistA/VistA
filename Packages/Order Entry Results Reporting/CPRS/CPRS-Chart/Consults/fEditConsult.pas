@@ -283,8 +283,6 @@ begin
   if Not FProstheticsSvc then     //wat v28
     begin
        if calEarliest.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
-       //if calLatest.FMDateTime < FMToday       then SetError(TX_PAST_DATE);
-       //if calLatest.FMDateTime < calEarliest.FMDateTime then SetError(TX_BAD_DATES);
     end;
 
 end;
@@ -785,7 +783,6 @@ begin
     begin
       lblEarliest.Enabled := True;
       calEarliest.Enabled := True;
-      calEarliest.Text := 'TODAY';
       FProstheticsSvc := false;
     end;
 end;

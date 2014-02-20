@@ -1061,6 +1061,12 @@ begin
           GetAllSpecimens(cboSpecimen);
         if ItemIEN = 0 then SetError(TX_NO_SPECIMEN);
       end;
+      
+  If ALabTest.Urgency <= 0 then begin
+    with ALabTest do
+    ChangeUrgency(cboUrgency.ItemID);
+   ControlChange(Self);
+  end;
 
   with cboUrgency   do if ItemIEN  <= 0 then SetError(TX_NO_URGENCY);
   with cboFrequency do if ItemIEN  <= 0 then SetError(TX_NO_FREQUENCY);

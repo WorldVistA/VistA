@@ -1,7 +1,10 @@
 inherited frmDiagnoses: TfrmDiagnoses
   Left = 304
   Top = 169
+  AutoScroll = True
   Caption = 'Encounter Diagnoses'
+  ExplicitWidth = 640
+  ExplicitHeight = 438
   PixelsPerInch = 96
   TextHeight = 13
   inherited lblSection: TLabel
@@ -87,7 +90,8 @@ inherited frmDiagnoses: TfrmDiagnoses
       Tag = 20
       Height = 196
       IntegralHeight = True
-      Pieces = '2,3,4,5'
+      OnDrawItem = lbxSectionDrawItem
+      Pieces = '2,3'
       ExplicitHeight = 196
     end
     inherited pnlLeft: TPanel

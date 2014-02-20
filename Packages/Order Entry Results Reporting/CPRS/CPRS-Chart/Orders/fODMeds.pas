@@ -381,6 +381,7 @@ const
   FLD_DOSETEXT  =  8;
   FLD_INSTRUCT  = 10;
   FLD_DOSEUNIT  = 11;
+  FLD_DOSEUNIT_LOCAL = 12;
   FLD_ROUTE_ID  = 15;
   FLD_ROUTE_NM  = 16;
   FLD_ROUTE_AB  = 17;
@@ -629,7 +630,7 @@ end;
 
 procedure TfrmODMeds.SetupDialog(OrderAction: Integer; const ID: string);
 var
-  AnInstr, OrderID, nsSch, Text, tempOrder, tempSchString, tempSchType, AdminTime, x: string;
+  AnInstr, OrderID, nsSch, Text, tempOrder, tempSchString, tempSchType, AdminTime, x, DEAFailStr, TX_INFO: string;
   i, ix: integer;
   LocChange: boolean;
   AResponse: TResponse;
@@ -662,15 +663,33 @@ begin
   begin
     Changing := True;
     txtMed.Tag  := StrToIntDef(Responses.IValueFor('ORDERABLE', 1), 0);
-    if OrderAction = ORDER_QUICK then
+    if (OrderAction = ORDER_QUICK) or (OrderAction = ORDER_COPY) then
       begin
-        if DEACheckFailed(txtMed.Tag, FInptDlg) then
+        DEAFailStr := '';
+        DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+        while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
           begin
             //btnSelect.Visible := False;
             btnSelect.Enabled := False;
-            InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-            AbortOrder := True;
-            Exit;
+            case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+              1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+              2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+              3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+              4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+              5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+            end;
+            if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+              begin
+                DEAContext := True;
+                fFrame.frmFrame.mnuFileEncounterClick(self);      //select another prescriber and perform DEA check again
+                DEAFailStr := '';
+                DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+              end
+            else
+              begin
+                AbortOrder := True;
+                Exit;
+              end;
           end;
       end;
     if (OrderAction = ORDER_QUICK) and (uOrders.PassDrugTstCall = False) and
@@ -1436,9 +1455,11 @@ var
   //MedName: string;
   QOQuantityStr: string;
   ErrMsg, Temp: string;
+  DEAFailStr, TX_INFO: string;
 begin
   inherited;
   QOQuantityStr := '';
+  DEAFailStr := '';
   btnSelect.SetFocus;                             // let the exit events finish
   self.MedName := '';
   if pnlMeds.Visible then                         // display the medication fields
@@ -1462,14 +1483,31 @@ begin
         ShowMsg(ErrMsg);
         Exit;
       end;
-      if DEACheckFailed(txtMed.Tag, FInptDlg) then
+      DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+      while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
       begin
         //btnSelect.Visible := False;
         btnSelect.Enabled := False;
-        InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-        txtMed.Tag := 0;
-        txtMed.SetFocus;
-        Exit;
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+          end
+        else
+          begin
+            txtMed.Tag := 0;
+            txtMed.SetFocus;
+            Exit;
+          end;
       end;
       if txtMed.Tag = 0 then
       begin
@@ -1517,14 +1555,32 @@ begin
         ShowMsg(ErrMsg);
         Exit;
       end;
-      if DEACheckFailed(txtMed.Tag, FInptDlg) then
+      DEAFailStr := '';
+      DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+      while StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] do
       begin
         //btnSelect.Visible := False;
         btnSelect.Enabled := False;
-        InfoBox(TX_NO_DEA, TC_NO_DEA, MB_OK);
-        txtMed.Tag := 0;
-        txtMed.SetFocus;
-        Exit;
+        case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+          1:  TX_INFO := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+          2:  TX_INFO := TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+          3:  TX_INFO := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+          4:  TX_INFO := TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+          5:  TX_INFO := TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+        end;
+        if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+          begin
+            DEAContext := True;
+            fFrame.frmFrame.mnuFileEncounterClick(self);
+            DEAFailStr := '';
+            DEAFailStr := DEACheckFailed(txtMed.Tag, FInptDlg);
+          end
+        else
+          begin
+            txtMed.Tag := 0;
+            txtMed.SetFocus;
+            Exit;
+          end;
       end;
       if Pos(' NF', self.MedName) > 0 then
       begin
@@ -2123,7 +2179,7 @@ begin
   begin
     ItemIndex := -1;
     for i := 0 to Pred(Items.Count) do
-      if Piece(Items[i], U, 5) = x then
+      if UpperCase(Piece(Items[i], U, 5)) = UpperCase(x) then
       begin
         DoseIndex := i;
         Break;
@@ -2470,7 +2526,7 @@ begin
          Exit;
        end; *)
   if (length(cbodosage.Text)>0) and (cboDosage.ItemIndex > -1) and
-    (Piece(cboDosage.Items.Strings[cboDosage.ItemIndex],U,5) <> Piece(cboDosage.Text,tab,1)) then
+    (trim(Piece(cboDosage.Items.Strings[cboDosage.ItemIndex],U,5)) <> trim(Piece(cboDosage.Text,tab,1))) then
     begin
       cboDosage.ItemIndex := -1;
       cboDosage.Text := Piece(str, tab, 1);
@@ -2997,10 +3053,11 @@ begin
           UnitsPerDose := 99999999;
           for i := 0 to Pred(FoundDrugs.Count) do
           begin
-            if StrToFloatDef(Piece(FoundDrugs[i], U, 2), 99999999) < UnitsPerDose then
+            if (StrToFloatDef(Piece(FoundDrugs[i], U, 2), 99999999) = 1) or (StrToFloatDef(Piece(FoundDrugs[i], U, 2), 99999999) < UnitsPerDose) then
             begin
               Result := Piece(FoundDrugs[i], U, 1);
               UnitsPerDose := StrToFloatDef(Piece(FoundDrugs[i], U, 2), 99999999);
+              if UnitsPerDose = 1 then Break;
             end; {if StrToFloatDef}
           end; {for i..FoundDrugs}
         end; {if not..else PossibleDoses}
@@ -4231,8 +4288,9 @@ end;
 
 function TfrmODMeds.ValueOfResponse(FieldID: Integer; AnInstance: Integer = 1): string;
 var
-  x: string;
+  x, LocPosDos: string;
 begin
+  LocPosDos := '';
   case FieldID of
   FLD_SCHEDULE  : Result := Responses.IValueFor('SCHEDULE', AnInstance);
   FLD_UNITNOUN  : begin
@@ -4243,6 +4301,12 @@ begin
                     x := Responses.IValueFor('DOSE',   AnInstance);
                     Result := Piece(x, '&', 3);
                   end;
+  FLD_DOSEUNIT_LOCAL  : begin
+                          x := Responses.IValueFor('DOSE',   AnInstance);
+                          LocPosDos := Piece(x, '&', 5);
+                          if (Piece(x, '&', 1)='') and AnsiContainsStr(LocPosDos, ' ') then Result := Piece(LocPosDos, ' ', 1)
+                          else Result := '';
+                        end;
   FLD_DRUG_ID   : Result := Responses.IValueFor('DRUG',     AnInstance);
   FLD_INSTRUCT  : Result := Responses.IValueFor('INSTR',    AnInstance);
   FLD_SUPPLY    : Result := Responses.IValueFor('SUPPLY',   AnInstance);
@@ -4258,9 +4322,10 @@ procedure TfrmODMeds.UpdateDefaultSupply(const CurUnits, CurSchedule, CurDuratio
 var
   ADrug: string;
   Checked: boolean;
-  tmpSupply: integer;
+  tmpSupply, OI: integer;
 begin
   Checked := false;
+  OI := StrToIntDef(Responses.IValueFor('ORDERABLE', 1), 0);
  if ((StrToFloatDef(txtQuantity.Text, 0) = 0) and (StrToIntDef(txtSupply.Text, 0) = 0) and
      (txtQuantity.Tag = 0) and (txtSupply.Tag = 0) and (cboDosage.Text <> ''))
      or ((cboDosage.ItemIndex < 0) and (not FIsQuickOrder)) or
@@ -4268,8 +4333,8 @@ begin
   begin
     Checked := True;
     ADrug := Piece(CurDispDrug, U, 1);
-    CurSupply := DefaultDays(ADrug, CurUnits, CurSchedule);
-    if CurSupply > 0 then           
+    CurSupply := DefaultDays(ADrug, CurUnits, CurSchedule, OI);
+    if CurSupply > 0 then
     begin
       spnSupply.Position := CurSupply;
       if (txtSupply.Text = '') or (StrToInt(txtSupply.Text)<>CurSupply)  then
@@ -4297,7 +4362,7 @@ begin
   if (IsClozapineOrder = true) and (CurDispDrug <> '') and (CurDispDrug <> U)and (Checked = false) then
     begin
       ADrug := Piece(CurDispDrug, U, 1);
-      tmpSupply := DefaultDays(ADrug, CurUnits, CurSchedule);
+      tmpSupply := DefaultDays(ADrug, CurUnits, CurSchedule, OI);
       if (tmpSupply > 0) and (CurSupply > tmpSupply) then
         begin
           CurSupply := tmpSupply;
@@ -4642,7 +4707,7 @@ var
   CurScheduleIN, CurScheduleOut: string;
   CurSupply, i, pNum, j: Integer;
   CurQuantity: double;
-  LackQtyInfo, SaveChanging: Boolean;
+  LackQtyInfo, SaveChanging, LocPosDos: Boolean;
 begin
   inherited;
   timCheckChanges.Enabled := False;
@@ -4654,6 +4719,7 @@ begin
   CurSchedule := '';
   CurDuration := '';
   LackQtyInfo := False;
+  LocPosDos   := False;
   i := Responses.NextInstance('DOSE', 0);
   while i > 0 do
   begin
@@ -4662,6 +4728,9 @@ begin
     else if  (x = '') and FIsQuickOrder and (Length(txtQuantity.Text)>0) then
       LackQtyInfo := false;
     CurUnits    := CurUnits   + x  + U;
+    x := ValueOfResponse(FLD_DOSEUNIT_LOCAL,  i);
+    if x = '' then LocPosDos := False
+    else LocPosDos := True;
     x := ValueOfResponse(FLD_SCHEDULE,  i);
     if Length(x) = 0         then LackQtyInfo := TRUE;
     CurScheduleOut := CurScheduleOut + x + U;
@@ -4716,6 +4785,7 @@ begin
   begin
     CurSchedule := CurScheduleOut;
     if ((CurInstruct <> FLastInstruct) and (CurUnits <> U)) or ((IsClozapineOrder = true) and (CurDispDrug <> '') and (CurDispDrug <> U)) //AGP Change 26.48 Do not update quantity and day supply if no matching dose on the server
+    or ((CurInstruct <> FLastInstruct) and LocPosDos)
     //if ((CurInstruct <> FLastInstruct) and (CurUnits <> U))
       then UpdateDefaultSupply(CurUnits, CurSchedule, CurDuration, CurDispDrug, CurSupply, CurQuantity,
                                LackQtyInfo);
@@ -5207,26 +5277,24 @@ begin
           fltS := 'TWO-THIRDS';
         if fNum = 0.75 then
           fltS := 'THREE-FOURTHS';
-        if iNum = 1 then
-          intS := 'ONE';
-        if iNum = 2 then
-          intS := 'TWO';
-        if iNum = 3 then
-          intS := 'THREE';
-        if iNum = 4 then
-          intS := 'FOUR';
-        if iNum = 5 then
-          intS := 'FIVE';
-        if iNum = 6 then
-          intS := 'SIX';
-        if iNum = 7 then
-          intS := 'SEVEN';
-        if iNum = 8 then
-          intS := 'EIGHT';
-        if iNum = 9 then
-          intS := 'NINE';
-        if iNum = 10 then
-          intS := 'TEN';
+        if (fNum > 0) AND (Length(fltS)<1) then  //SMT Add a default for unaccounted values (Remedy HD396719)
+          fltS := FloatToStr(fNum);
+
+        Case iNum of
+          0: intS := '';
+		      1: intS := 'ONE';
+		      2: intS := 'TWO';
+		      3: intS := 'THREE';
+		      4: intS := 'FOUR';
+		      5: intS := 'FIVE';
+		      6: intS := 'SIX';
+		      7: intS := 'SEVEN';
+		      8: intS := 'EIGHT';
+		      9: intS := 'NINE';
+		      10: intS := 'TEN';
+        else intS := IntToStr(iNum);
+        End;
+
         if Length(intS) > 0 then
         begin
           if Length(fltS)>1 then

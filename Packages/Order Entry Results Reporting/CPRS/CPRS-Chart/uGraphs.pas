@@ -28,6 +28,7 @@ type
     MaxSelect: integer;
     MaxSelectMin: integer;
     MaxSelectMax: integer;
+    MergeLabs: boolean;
     MinGraphHeight: integer;
     OptionSettings: string;              // only used for storage
     Points: boolean;
@@ -87,6 +88,7 @@ const
   SETTING_VZOOM = 'L';
   SETTING_FIXED = 'M';
   SETTING_TURBO = 'N';
+  SETTING_MERGELABS = 'O';
 
   // keypress flags
   KEYPRESS_ON = 'YES';
@@ -112,6 +114,8 @@ const
   TXT_REPORT_DISCLAIMER = 'Note: Listing displays limited data, view details for more information.';
   TXT_VIEW_DEFINITION = 'View Definition';
   TXT_WARNING = 'Warning: You are using graph settings with a Special Function.';
+  TXT_WARNING_CHECK_RESULTS = '** Please check results for this item by viewing Details. **';
+  TXT_WARNING_MERGED_LABS = 'Warning: *Lab test results may have different reference ranges.';
   TXT_WARNING_SAME_TIME = 'Warning: Items have multiple occurrences at the same time.';
   TXT_ZOOMED = 'Zoomed Date Range: ';
 
@@ -252,6 +256,7 @@ begin
     if DateRangeInpatient = '' then DateRangeInpatient := '8';
     Turbo := Pos(SETTING_TURBO, OptionSettings) > 0;
     if Piece(settings, '|', 6) = '0' then Turbo := false;  // a 0 in 6th piece shuts down turbo for everyone    
+    MergeLabs := Pos(SETTING_MERGELABS, OptionSettings) > 0;
   end;
   Result := FGraphSetting;
 end;

@@ -1,5 +1,5 @@
 unit uPCE;
-                                                                       
+
 interface
 
 uses Windows, SysUtils, Classes, ORFn, uConst, ORCtrls, ORClasses,UBAGlobals;
@@ -235,6 +235,7 @@ type
     FHistoricalLocation: string;                   // Institution IEN^Name (if IEN=0 Piece 4 = outside location)
     FStandAlone: boolean;
     FStandAloneLoaded: boolean;
+    FProblemAdded: Boolean;                         // Flag set when one or more Dx are added to PL
 
     function GetVisitString: string;
     function GetCPTRequired: Boolean;
@@ -303,6 +304,7 @@ type
 
     property HasData:      Boolean  read GetHasData;
     property CPTRequired:  Boolean  read GetCPTRequired;
+    property ProblemAdded: Boolean  read FProblemAdded;
     property Inpatient:    Boolean  read FEncInpatient;
     property UseEncounter: Boolean  read FEncUseCurr  write SetEncUseCurr;
     property SCRelated:    Integer  read FSCRelated   write SetSCRelated;
@@ -786,7 +788,7 @@ begin
   case Cat of
     pdcVisit: if Code <> '' then Result := Category + ' ' + Narrative;
     pdcDiag:  begin
-               Result := Narrative;
+               Result := GetDiagnosisText(Narrative, Code);
                if PrimaryDiag then Result := Result + ' (Primary)';
              end;
     pdcProc: begin
@@ -1686,6 +1688,7 @@ begin
   FEncLocation := 0;
   FEncSvcCat   := 'A';
   FEncInpatient := FALSE;
+  FProblemAdded := False;
   FEncUseCurr   := FALSE;
   FStandAlone := FALSE;
   FStandAloneLoaded := FALSE;
@@ -2161,6 +2164,8 @@ begin
       with FDiagnoses  do for i := Count - 1 downto 0 do with TPCEDiag(Items[i]) do
       begin
         FSend := False;
+        // for diags, toggle off AddProb flag as well
+        AddProb := False;
         if FDelete then
         begin
           TPCEDiag(Items[i]).Free;
@@ -2239,7 +2244,8 @@ begin
     x := StrProcedures;
     if Length(x) > 0 then Changes.Add(CH_PCE, 'P' + AVisitStr, x, EncName, CH_SIGN_NA);
     x := StrDiagnoses;
-    if Length(x) > 0 then Changes.Add(CH_PCE, 'D' + AVisitStr, x, EncName, CH_SIGN_NA);
+    if Length(x) > 0 then Changes.Add(CH_PCE, 'D' + AVisitStr, x, EncName, CH_SIGN_NA,
+       Parent, User.DUZ, '', False, False, ProblemAdded);
     x := StrImmunizations;
     if Length(x) > 0 then Changes.Add(CH_PCE, 'I' + AVisitStr, x, EncName, CH_SIGN_NA);
     x := StrSkinTests;
@@ -2319,7 +2325,8 @@ begin
         CurDiagnosis.AddProb    := SrcDiagnosis.AddProb;
         CurDiagnosis.FSend := True;
       end;
-    end else
+    end
+    else
     begin
       CurDiagnosis := TPCEDiag.Create;
       CurDiagnosis.Assign(SrcDiagnosis);
@@ -2328,6 +2335,8 @@ begin
     end; {if MatchIndex}
     if(CurDiagnosis.Primary and (not assigned(PrimaryDiag))) then
       PrimaryDiag := CurDiagnosis;
+    if (CurDiagnosis.AddProb) then
+      FProblemAdded := True;
   end; {for}
   if(assigned(PrimaryDiag)) then
   begin
@@ -2712,8 +2721,8 @@ begin
   Result := '';
   with FDiagnoses do for i := 0 to Count - 1 do with TPCEDiag(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcDiag, Code, Category, Narrative, Primary) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcDiag] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcDiag, Code, Category, Narrative, Primary) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcDiag] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrProcedures: string;
@@ -2725,8 +2734,8 @@ begin
   with FProcedures do for i := 0 to Count - 1 do with TPCEProc(Items[i]) do
     if not FDelete then
       Result := Result + GetPCEDataText(pdcProc, Code, Category, Narrative, FALSE, Quantity) +
-                         ModText + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcProc] + Copy(Result, 1, Length(Result) - 2);
+                         ModText + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcProc] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrImmunizations: string;
@@ -2737,8 +2746,8 @@ begin
   Result := '';
   with FImmunizations do for i := 0 to Count - 1 do with TPCEImm(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcImm, Code, Category, Narrative) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcImm] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcImm, Code, Category, Narrative) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcImm] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 
@@ -2750,8 +2759,8 @@ begin
   Result := '';
   with FSkinTests do for i := 0 to Count - 1 do with TPCESkin(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcSkin, Code, Category, Narrative) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcSkin] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcSkin, Code, Category, Narrative) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcSkin] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrPatientEds: string;
@@ -2761,8 +2770,8 @@ begin
   Result := '';
   with FPatientEds do for i := 0 to Count - 1 do with TPCEPat(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcPED, Code, Category, Narrative) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcPED] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcPED, Code, Category, Narrative) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcPED] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrHealthFactors: string;
@@ -2772,8 +2781,8 @@ begin
   Result := '';
   with FHealthFactors do for i := 0 to Count - 1 do with TPCEHealth(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcHF, Code, Category, Narrative) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcHF] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcHF, Code, Category, Narrative) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcHF] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrExams: string;
@@ -2783,8 +2792,8 @@ begin
   Result := '';
   with FExams do for i := 0 to Count - 1 do with TPCEExams(Items[i]) do
     if not FDelete then
-      Result := Result + GetPCEDataText(pdcExam, Code, Category, Narrative) + ', ';
-  if Length(Result) > 0 then Result := PCEDataCatText[pdcExam] + Copy(Result, 1, Length(Result) - 2);
+      Result := Result + GetPCEDataText(pdcExam, Code, Category, Narrative) + CRLF;
+  if Length(Result) > 0 then Result := PCEDataCatText[pdcExam] + CRLF + Copy(Result, 1, Length(Result) - 2) + CRLF;
 end;
 
 function TPCEData.StrVisitType(const ASCRelated, AAORelated, AIRRelated,

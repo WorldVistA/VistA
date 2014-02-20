@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, fBase508Form,
-  fAutoSz, StdCtrls, ORFn, ORCtrls, ExtCtrls, ORNet, VA508AccessibilityManager;
+  fAutoSz, StdCtrls, ORFn, ORCtrls, ExtCtrls, ORNet, VA508AccessibilityManager, rMisc;
 
 type
   TfrmDCOrders = class(TfrmBase508Form)
@@ -64,6 +64,7 @@ begin
   if SelectedList.Count = 0 then Exit;
   frmDCOrders := TfrmDCOrders.Create(Application);
   try
+    SetFormPosition(frmDCOrders);
     ResizeFormToFont(TForm(frmDCOrders));
     NeedReason := False;
     with SelectedList do for i := 0 to Count - 1 do
@@ -162,6 +163,7 @@ begin
       Result := True;
     end
     else with SelectedList do for i := 0 to Count - 1 do UnlockOrder(TOrder(Items[i]).ID);
+    SaveUserBounds(frmDCOrders);
   finally
     frmDCOrders.Release;
   end;

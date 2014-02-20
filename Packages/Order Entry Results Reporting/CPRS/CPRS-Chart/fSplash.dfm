@@ -7,7 +7,7 @@ inherited frmSplash: TfrmSplash
   ClientHeight = 412
   ClientWidth = 386
   OldCreateOrder = True
-  Position = poScreenCenter
+  Position = poOwnerFormCenter
   OnCreate = FormCreate
   ExplicitWidth = 386
   ExplicitHeight = 412
@@ -19,18 +19,16 @@ inherited frmSplash: TfrmSplash
     Width = 386
     Height = 412
     Align = alClient
-    BevelInner = bvLowered
     BevelWidth = 3
-    BorderWidth = 210
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clGrayText
-    Font.Height = -11
+    Font.Height = -12
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     ParentFont = False
     TabOrder = 1
     object lblVersion: TStaticText
-      Left = 40
+      Left = 43
       Top = 230
       Width = 300
       Height = 13
@@ -59,7 +57,7 @@ inherited frmSplash: TfrmSplash
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
+      TabOrder = 1
     end
     object pnlImage: TPanel
       Left = 40
@@ -70,12 +68,15 @@ inherited frmSplash: TfrmSplash
       BevelOuter = bvNone
       BevelWidth = 3
       Caption = 'pnlImage'
-      TabOrder = 3
+      TabOrder = 2
       object Image1: TImage
         Left = 3
-        Top = 7
+        Top = 3
         Width = 300
-        Height = 159
+        Height = 160
+        Align = alClient
+        AutoSize = True
+        Center = True
         Picture.Data = {
           07544269746D61708ABE0000424D8ABE00000000000036040000280000002C01
           00009F000000010008000000000054BA00000000000000000000000100000001
@@ -1602,35 +1603,53 @@ inherited frmSplash: TfrmSplash
           7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B
           7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7B7C8C8ED1D29292
           929293939393D4CF86CFD49392D1858A7C7B7B7B7B7B}
+        Proportional = True
+        Stretch = True
+        ExplicitLeft = 2
+        ExplicitTop = 2
+        ExplicitWidth = 244
+        ExplicitHeight = 130
       end
     end
-    object Memo1: TMemo
-      Left = 29
+    object pnl508Disclaimer: TPanel
+      Left = 32
       Top = 272
-      Width = 322
+      Width = 321
       Height = 100
       BevelKind = bkTile
-      BorderStyle = bsNone
-      Color = clBtnFace
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGrayText
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      Lines.Strings = (
-        'Veteran'#39's Administration OI&T Office of Enterprise Development '
-        'staff have made every effort during the design, development and '
-        
-          'testing of this application to ensure full accessibility to all ' +
-          'users in '
-        
-          'compliance with Section 508 of the Rehabilitation Action of 1973' +
-          ', '
-        'as amended.  If any issues are encountered while running this '
-        'application, please contact your local help desk for support.')
-      ParentFont = False
-      ReadOnly = True
-      TabOrder = 1
+      BevelOuter = bvNone
+      Locked = True
+      TabOrder = 3
+      object Memo1: TMemo
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 311
+        Height = 90
+        Align = alClient
+        BevelEdges = []
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Color = clBtnFace
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -12
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Lines.Strings = (
+          'Dept. of Veterans Affairs OI&T Product Development staff have '
+          'made every effort during the design, development and testing of '
+          'this application to ensure full accessibility to all users in '
+          
+            'compliance with Section 508 of the Rehabilitation Action of 1973' +
+            ', '
+          'as amended. If any issues are encountered while running this '
+          'application, please contact your local help desk for support.')
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+      end
     end
   end
   object lblSplash: TStaticText [1]
@@ -1638,6 +1657,7 @@ inherited frmSplash: TfrmSplash
     Top = 212
     Width = 261
     Height = 18
+    Alignment = taCenter
     AutoSize = False
     Caption = 'Computerized Patient Record System'
     Font.Charset = DEFAULT_CHARSET
@@ -1666,14 +1686,16 @@ inherited frmSplash: TfrmSplash
         'Component = pnlImage'
         'Status = stsDefault')
       (
-        'Component = Memo1'
-        'Text =  '
-        'Status = stsOK')
-      (
         'Component = frmSplash'
         'Status = stsDefault')
       (
         'Component = lblSplash'
+        'Status = stsDefault')
+      (
+        'Component = pnl508Disclaimer'
+        'Status = stsDefault')
+      (
+        'Component = Memo1'
         'Status = stsDefault'))
   end
 end

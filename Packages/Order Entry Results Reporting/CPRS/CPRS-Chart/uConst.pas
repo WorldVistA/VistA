@@ -2,7 +2,7 @@ unit uConst;
 
 interface
 
-uses Messages;
+uses Messages, ORFn;
 
 const
 
@@ -231,6 +231,8 @@ const
   NF_PAP_SMEAR_RESULTS             = 70;
   NF_ANATOMIC_PATHOLOGY_RESULTS    = 71;
   NF_MEDICATIONS_EXPIRING_OUTPT    = 72;
+  NF_DEA_AUTO_DC_CS_MED_ORDER      = 74;
+  NF_DEA_CERT_REVOKED              = 75;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
   NF_NOTES_UNSIGNED_NOTE           = 903;
@@ -396,6 +398,27 @@ const
   TX_SAVERR_IMAGING_PROC = 'The order has not been saved.  You must contact the Imaging Department for help completing this order.';
   TX_SAVERR_PHARM_ORD_NUM_SEARCH_STRING = 'Invalid Pharmacy order number';
   TX_SAVERR_IMAGING_PROC_SEARCH_STRING = 'Invalid Procedure, Inactive, no Imaging Type or no Procedure Type';
+
+  //DEA prescriber ineligibility text used in conjunction w/DEACheckFailed
+  TX_DEAFAIL   = 'Order for controlled substance could not be completed.' + CRLF +
+                 'Provider does not have a current, valid DEA# on record' + CRLF +
+                 'and is ineligible to sign the order.';
+  TX_SCHFAIL   = 'Order for controlled substance could not be completed.' + CRLF +
+                 'Provider is not authorized to prescribe medications' + CRLF +
+                 'in Federal Schedule ';
+  TX_NO_DETOX  = 'Order for controlled substance could not be completed.' + CRLF +
+                 'Provider does not have a valid Detoxification/Maintenance ID' + CRLF +
+                 'number on record and is ineligible to sign the order.';
+  TX_EXP_DETOX1= 'Order for controlled substance could not be completed.' + CRLF +
+                 'Provider''s Detoxification/Maintenance ID number' + CRLF +
+                 'expired due to an expired DEA# on ';
+  TX_EXP_DETOX2= '.' + CRLF + 'Provider is ineligible to sign the order.';
+  TX_EXP_DEA1  = 'Order for controlled substance could not be completed.' + CRLF +
+                 'Provider''s DEA# expired on ';
+  TX_EXP_DEA2  = ' and no VA# is' + CRLF +
+                 'assigned. Provider is ineligible to sign the order.';
+  TX_INSTRUCT  = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current order.';
+  TC_DEAFAIL   = 'Order not completed';
 
 var
   ScrollBarWidth: integer = 0;

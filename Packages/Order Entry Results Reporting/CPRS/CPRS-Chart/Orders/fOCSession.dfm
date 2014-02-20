@@ -10,6 +10,7 @@ inherited frmOCSession: TfrmOCSession
   Caption = 'Order Checks'
   Constraints.MinHeight = 500
   Constraints.MinWidth = 500
+  DefaultMonitor = dmMainForm
   Position = poScreenCenter
   ShowHint = True
   OnClose = FormClose
@@ -82,6 +83,7 @@ inherited frmOCSession: TfrmOCSession
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
+      ModalResult = 4
       ParentFont = False
       TabOrder = 1
       OnClick = cmdCancelOrderClick
@@ -153,7 +155,7 @@ inherited frmOCSession: TfrmOCSession
     end
     object grdchecks: TCaptionStringGrid
       Left = 16
-      Top = 64
+      Top = 67
       Width = 682
       Height = 279
       Margins.Top = 0

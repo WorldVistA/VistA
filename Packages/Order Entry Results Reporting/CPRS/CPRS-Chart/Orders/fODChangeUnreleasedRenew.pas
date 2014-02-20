@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, ORCtrls, fAutoSz, uOrders, ORFn, ORDtTm, rOrders,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, rODBase, rODMeds;
 
 type
   TfrmODChangeUnreleasedRenew = class(TFrmAutoSz)
@@ -33,25 +33,45 @@ type
     { Public declarations }
   end;
 
-procedure ExecuteChangeRenewedOrder(const AnID: string; var param1, param2: string; Category: integer);
+procedure ExecuteChangeRenewedOrder(const AnID: string; var param1, param2: string; Category: integer; AnEvent: TOrderDelayEvent);
 
 implementation
 
 {$R *.dfm}
+var
+ MaxRefills: Integer;
+
 const
-  TX_ERR_REFILL = 'Refills must be a number from 0 to 11.';
+  TX_ERR_REFILL = 'The number of refills must be in the range of 0 through ';
   TC_ERR_REFILL = 'Refills';
   TC_INVALID_DATE = 'Unable to interpret date/time entry.';
   TX_BAD_START   = 'The start date is not valid.';
   TX_BAD_STOP    = 'The stop date is not valid.';
   TX_STOPSTART   = 'The stop date must be after the start date.';
 
-procedure ExecuteChangeRenewedOrder(const AnID: string; var param1, param2: string; Category: integer);
+procedure ExecuteChangeRenewedOrder(const AnID: string; var param1, param2: string; Category: integer; AnEvent: TOrderDelayEvent);
 var
   frmODChangeUnreleasedRenew: TfrmODChangeUnreleasedRenew;
   theText: string;
   tmpRefills: integer;
+  DestList: TList;
+  HasObject: Boolean;
+  i: Integer;
+  Drug, Days, OrID: string;
 begin
+  //Get needed information
+  DestList := TList.Create();
+  try
+    LoadResponses(DestList, 'X' + AnID, HasObject);
+
+    for I := 0 to DestList.Count - 1 do begin
+      if TResponse(DestList.Items[i]).PromptID = 'DRUG' then Drug := TResponse(DestList.Items[i]).IValue
+      else if TResponse(DestList.Items[i]).PromptID = 'SUPPLY' then Days := TResponse(DestList.Items[i]).IValue
+      else if TResponse(DestList.Items[i]).PromptID = 'ORDERABLE' then OrID := TResponse(DestList.Items[i]).IValue;
+    end;
+
+    MaxRefills := CalcMaxRefills(Drug, StrToInt(Days), StrToInt(OrID), AnEvent.EventType = 'D');
+
   tmpRefills := 0;
   theText := Trim(RetrieveOrderText(AnID));
   if Pos('>> RENEW', UpperCase(theText)) = 1 then Delete(theText,1,length('>> RENEW'))
@@ -93,6 +113,9 @@ begin
   finally
     frmODChangeUnreleasedRenew.Release;
   end;
+  finally
+    DestList.Free;
+  end;
 end;
 
 procedure TfrmODChangeUnreleasedRenew.FormCreate(Sender: TObject);
@@ -122,9 +145,9 @@ begin
   if panel2.Visible then
   begin
     NumRefills := StrToIntDef(edtRefill.Text, -1);
-    if (NumRefills < 0) or (NumRefills > 11) then
+    if (NumRefills < 0) or (NumRefills > MaxRefills) then
     begin
-      InfoBox(TX_ERR_REFILL, TC_ERR_REFILL, MB_OK);
+      InfoBox(TX_ERR_REFILL + IntToStr(MaxRefills), TC_ERR_REFILL, MB_OK);
       Exit;
     end;
   end

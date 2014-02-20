@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, uConst, rConsults,
   rOrders, ORFn, Dialogs, ORCtrls, stdCtrls, strUtils, fODBase, fODMedOIFA,
-  VA508AccessibilityRouter;
+  VA508AccessibilityRouter, XUDsigS, ORNet;
 
 type
   EOrderDlgFail = class(Exception);
@@ -17,12 +17,13 @@ type
 { Ordering Environment }
 function AuthorizedUser: Boolean;
 function AuthorizedToVerify: Boolean;
-function EncounterPresent: Boolean;
+function EncounterPresent(ErrorMsg: String = ''): Boolean;
 function EncounterPresentEDO: Boolean;
 function LockedForOrdering: Boolean;
 function IsValidActionOnComplexOrder(AnOrderID, AnAction: string;
     AListBox: TListBox; var CheckedList: TStringList; var ErrMsg: string; var ParentOrderID: string): boolean;  //PSI-COMPLEX
 procedure UnlockIfAble;
+function SetSAN(Self: TComponent): string;
 function OrderCanBeLocked(OrderID: string): Boolean;
 procedure UnlockOrderIfAble(OrderID: string);
 procedure AddSelectedToChanges(AList: TList);
@@ -232,6 +233,72 @@ begin
   SetOrderFormIDOnCreate(0);
 end;
 
+function SetSAN(Self: TComponent): string;
+var
+  crypto: TCryptography;
+  i: Integer;
+  setUPN, successMsg: string;
+begin
+    Result := '';
+    if InfoBox(
+      '        '
+      + User.name
+      + CRLF
+      + 'Your VistA account has not been linked to a PIV card.'
+      + CRLF
+      + 'CPRS will now attempt to retrieve some information'
+      + CRLF
+      + 'from your PIV card in order for you to digitally sign orders.'
+      + CRLF
+      + 'This will require entry of the PIN associated with your PIV card.'
+      + CRLF
+      + 'Would you like to continue?',
+      'Digital Signing Setup',MB_YESNO or MB_ICONQUESTION) = IDYES then
+      begin
+        crypto := TCryptography.Create();
+        crypto.VistaUserName := RPCBrokerV.User.Name;
+        Result := getSANFromCard(Self,crypto);
+        if Result='' then ShowMsg('CPRS was not able to link your VistA account to a PIV card.')
+        else
+        begin
+          setUPN := sCallV('XUS PKI SET UPN', [Result]);
+          if setUPN = '1' then
+          begin
+            fFrame.frmFrame.DigitalSigningSetup1.Visible := False;
+            successMsg :=
+              '        '
+              + User.name
+              + CRLF
+              + 'Your PIV card (' + Result + ') has been successfully linked'
+              + CRLF
+              + 'to this VistA account, which will allow you to digitally sign orders.'
+              + CRLF
+              + 'This process does not however provide you the authorization to place'
+              + CRLF
+              + 'controlled substance prescription orders.'
+              + CRLF;
+            CallV('ORDEA LNKMSG',[]);
+            for i := 0 to RPCBrokerV.Results.Count - 1 do
+            begin
+              successMsg := successMsg + CRLF + RPCBrokerV.Results.Strings[i];
+            end;
+            ShowMsg(successMsg);
+            end
+          else begin
+            ShowMsg(
+              '        '
+              + User.name
+              + CRLF
+              + 'CPRS was not able to link your VistA account to a PIV card.'
+              + CRLF
+              + 'One possible cause is that your card is already linked to another VistA account.');
+              Result:='';
+          end;
+        end;
+        crypto.Free;
+      end;
+end; 
+
 function AuthorizedUser: Boolean;
 begin
   Result := True;
@@ -254,10 +321,13 @@ begin
   end;
 end;
 
-function EncounterPresent: Boolean;
+function EncounterPresent(ErrorMsg: String = ''): Boolean;
 { make sure a location and provider are selected, returns false if not }
 begin
   Result := True;
+   //If ErrorMsg was not passed in then use the default
+  If ErrorMsg = '' then ErrorMsg := TX_PROV_LOC;
+
   if (Encounter.Provider > 0) and not PersonHasKey(Encounter.Provider, 'PROVIDER')
     then InfoBox(TX_PROV_KEY, TC_PROV_KEY, MB_OK);
   if (Encounter.Provider = 0) or (Encounter.Location = 0) or
@@ -272,7 +342,7 @@ begin
   if (Encounter.Provider = 0) or (Encounter.Location = 0) then
   begin
     if not frmFrame.CCOWDrivedChange then   //jdccow
-      InfoBox(TX_PROV_LOC, TC_PROV_LOC, MB_OK or MB_ICONWARNING);  {!!!}
+      InfoBox(ErrorMsg, TC_PROV_LOC, MB_OK or MB_ICONWARNING);  {!!!}
     Result := False;
   end;
   if (Encounter.Provider > 0) and not PersonHasKey(Encounter.Provider, 'PROVIDER') then
@@ -494,8 +564,11 @@ begin
   MedsIVDlgFormID := FormIDForDialog(MedsIVDlgIen);
 end;
 
-function CanCloseDialog(dialog : TfrmODBase) : Boolean;
+function GMRCCanCloseDialog(dialog : TfrmODBase) : Boolean;
 begin
+  //wat-added 'GMRC' to name to show only applies to GMRC order dialogs
+  //other dialogs could be added in the future as needed w/name updated accordingly
+  result := True;
   if uOrderDialog.FillerID = 'GMRC' then
     result := fODConsult.CanFreeConsultDialog(dialog)
             or fODProc.CanFreeProcDialog(dialog);
@@ -795,8 +868,21 @@ end;
 function ActivateOrderDialog(const AnID: string; AnEvent: TOrderDelayEvent;
   AnOwner: TComponent; ARefNum: Integer; ANeedVerify: boolean = True): Boolean;
 const
-  TX_NO_DEA     = 'Provider must have a DEA# or VA# to change this order';
-  TC_NO_DEA     = 'DEA# Required';
+  TX_DEAFAIL1   = 'Order for controlled substance,' + CRLF;
+  TX_DEAFAIL2   = CRLF + 'could not be completed. Provider does not have a' + CRLF +
+                  'current, valid DEA# on record and is ineligible' + CRLF + 'to sign the order.';
+  TX_SCHFAIL    = CRLF + 'could not be completed. Provider is not authorized' + CRLF +
+                  'to prescribe medications in Federal Schedule ';
+  TX_NO_DETOX   = CRLF + 'could not be completed. Provider does not have a' + CRLF +
+                  'valid Detoxification/Maintenance ID number on' + CRLF +
+                  'record and is ineligible to sign the order.';
+  TX_EXP_DETOX1 = CRLF + 'could not be completed. Provider''s Detoxification/Maintenance' + CRLF +
+                  'ID number expired due to an expired DEA# on ';
+  TX_EXP_DETOX2 = '.' + CRLF + 'Provider is ineligible to sign the order.';
+  TX_EXP_DEA1   = CRLF + 'could not be completed. Provider''s DEA# expired on ';
+  TX_EXP_DEA2   = CRLF + 'and no VA# is assigned. Provider is ineligible to sign the order.';
+  TX_INSTRUCT   = CRLF + CRLF + 'Click RETRY to select another provider.' + CRLF + 'Click CANCEL to cancel the current order.';
+  TC_DEAFAIL    = 'Order not completed';
   TC_IMO_ERROR  = 'Inpatient medication order on outpatient authorization required';
   TX_EVTDEL_DIET_CONFLICT = 'Have you done either of the above?';
   TC_EVTDEL_DIET_CONFLICT = 'Possible delayed order conflict';
@@ -811,13 +897,16 @@ var
   x, EditedOrder, chkCopay, OrderID, PkgInfo,OrderPtEvtID,OrderEvtID,NssErr, tempUnit, tempSupply, tempDrug, tempSch: string;
   temp,tempDur,tempQuantity, tempRefills: string;
   i, ODItem, tempOI, ALTOI: integer;
-  DrugCheck, IsInpatient, IsAnIMOOrder, DrugTestDlgType: boolean;
+  DrugCheck, InptDlg, IsAnIMOOrder, DrugTestDlgType: boolean;
   IsPsoSupply,IsDischargeOrPass,IsPharmacyOrder,IsConsultOrder,ForIMO, IsNewOrder: boolean;
   tmpResp: TResponse;
   CxMsg: string;
   AButton: TButton;
   SvcIEN: string;
   //CsltFrmID: integer;
+  FirstNumericPos: Integer;
+  DEAFailStr, TX_INFO: string;
+
 begin
   IsPsoSupply := False;
   Result := False;
@@ -828,15 +917,22 @@ begin
   PassDrugTstCall := False;
   DrugCheck := false;
   DrugTestDlgType := false;
+  InptDlg := False;
+  //We need to get the first numeric postion
+  for FirstNumericPos := 1 to Length(AnID) do begin
+   if AnID[FirstNumericPos] in ['0'..'9'] then break;
+  end;
+
   //QOAltOI.OI := 0;
   Application.ProcessMessages;
   // double check environment before continuing with order
   if uOrderDialog <> nil then uOrderDialog.Close; // then x := uOrderDialog.Name else x := '';
   //if ShowMsgOn(uOrderDialog <> nil, TX_DLG_ERR + CRLF + x, TC_DLG_ERR) then Exit;
+
   if CharAt(AnID, 1) = 'X' then
   begin
     IsNewOrder := False;
-   // if PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E')=false then Exit;
+   // if PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E')=false then Exit;
     ValidateOrderAction(Copy(AnID, 2, Length(AnID)), OA_CHANGE,   x);
     if ( Length(x)<1 ) and not (AnEvent.EventIFN > 0) then
       ValidateComplexOrderAct(Copy(AnID, 2, Length(AnID)),x);
@@ -850,7 +946,7 @@ begin
   if CharAt(AnID, 1) = 'C' then
   begin
     IsNewOrder := False;
-    //if PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E')=false then Exit;
+    //if PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E')=false then Exit;
     ValidateOrderAction(Copy(AnID, 2, Length(AnID)), OA_COPY,     x);
     if Length(x) > 0 then
       x := RetrieveOrderText(Copy(AnID, 2, Length(AnID))) + #13#10 + x;
@@ -860,11 +956,11 @@ begin
   if CharAt(AnID, 1) = 'T' then
   begin
     IsNewOrder := False;
-    if (XfInToOutNow = true) and (PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E', false)=false) then Exit;
+    if (XfInToOutNow = true) and (PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E', false)=false) then Exit;
     if (XfInToOutNow = false) then
       begin
-       if (XferOuttoInOnMeds = True) and (PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E', true)=false) then Exit;
-       if (XferOuttoInOnMeds = False) and (PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E', False)=false) then Exit;
+       if (XferOuttoInOnMeds = True) and (PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E', true)=false) then Exit;
+       if (XferOuttoInOnMeds = False) and (PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E', False)=false) then Exit;
       end;
     ValidateOrderAction(Copy(AnID, 2, Length(AnID)), OA_TRANSFER, x);
     if Length(x) > 0 then
@@ -891,8 +987,8 @@ begin
   BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
   if (ResolvedDialog.DisplayGroup = InPtDisp) or (ResolvedDialog.DisplayGroup = ClinDisp) then DrugTestDlgType := true;
   if (DrugCheck = true) and (ResolvedDialog.DisplayGroup = OutPtDisp) and
-  (PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E', false)=false) then Exit;
-  if (DrugCheck = true) and (DrugTestDlgType = true) and (PassDrugTest(StrtoINT(Copy(AnID, 2, Length(AnID)-3)), 'E', true)=false) then Exit;
+  (PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E', false)=false) then Exit;
+  if (DrugCheck = true) and (DrugTestDlgType = true) and (PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E', true)=false) then Exit;
   if (IsNewOrder = True) and (ResolvedDialog.DialogType = 'Q') and
      ((ResolvedDialog.DisplayGroup = OutptDisp) or (DrugTestDlgType = true)) then
     begin
@@ -1054,20 +1150,40 @@ begin
                 begin
                    SetupDialog(ORDER_EDIT,  ResolvedDialog.ResponseID);
                    OrderID := Copy(ResolvedDialog.ResponseID,2,Length(ResolvedDialog.ResponseID));
-                   IsInpatient := OrderForInpatient;
+                   //IsInpatient := OrderForInpatient;
                    ODItem := StrToIntDef(Responses.IValueFor('ORDERABLE', 1), 0);
                    PkgInfo := '';
+                   DEAFailStr := '';
                    if Length(OrderID)>0 then
                      PkgInfo := GetPackageByOrderID(OrderID);
                    if Pos('PS',PkgInfo)=1 then
                    begin
-                     if DEACheckFailed(ODItem, IsInPatient) and (uOrderDialog.FillerID <> 'PSH') then
+                     if PkgInfo = 'PSO' then InptDlg := False
+                     else if PkgInfo = 'PSJ' then InptDlg := True;
+                     DEAFailStr := DEACheckFailed(ODItem, InptDlg);
+                     while (StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5]) and (uOrderDialog.FillerID <> 'PSH') do
                      begin
-                       InfoBox(TX_NO_DEA + #13 + Responses.OrderText, TC_NO_DEA, MB_OK);
-                       if (ResolvedDialog.DialogType = 'X') and not Changes.ExistForOrder(EditedOrder)
-                       then UnlockOrder(EditedOrder);
-                       uOrderDialog.Close;
-                       Exit;
+                       case StrToIntDef(Piece(DEAFailStr,U,1),0) of
+                         1: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_DEAFAIL2;  //prescriber has an invalid or no DEA#
+                         2: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_SCHFAIL + Piece(DEAFailStr,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+                         3: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+                         4: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_EXP_DEA1 + Piece(DEAFailStr,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+                         5: TX_INFO := TX_DEAFAIL1 + #13 + Responses.OrderText + #13 + TX_EXP_DETOX1 + Piece(DEAFailStr,U,2) + TX_EXP_DETOX2;  //valid detox#, but expired DEA#
+                       end;
+                       if InfoBox(TX_INFO + TX_INSTRUCT, TC_DEAFAIL, MB_RETRYCANCEL) = IDRETRY then
+                         begin
+                           DEAContext := True;
+                           fFrame.frmFrame.mnuFileEncounterClick(uOrderDialog);
+                           DEAFailStr := '';
+                           DEAFailStr := DEACheckFailed(ODItem, InptDlg);
+                         end
+                       else
+                         begin
+                           if (ResolvedDialog.DialogType = 'X') and not Changes.ExistForOrder(EditedOrder)
+                           then UnlockOrder(EditedOrder);
+                           uOrderDialog.Close;
+                           Exit;
+                         end;
                      end;
                    end;
                 end;
@@ -1082,9 +1198,9 @@ begin
                 end;
           end;
 
-          if Assigned(uOrderDialog) then
+           if Assigned(uOrderDialog) then
             with uOrderDialog do
-              if AbortOrder and CanCloseDialog(uOrderDialog) then
+              if AbortOrder and GMRCCanCloseDialog(uOrderDialog) then
                 begin
                   Close;
                   if Assigned(uOrderDialog) then
@@ -1182,7 +1298,7 @@ begin
                       x := uOrderDialog.Responses.IValueFor('CONJ', i);
                       tempDur := tempDur + x + U;
                    end;
-                 if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur, tempOI, StrtoInt(tempSupply), StrtoInt(tempQuantity), StrtoInt(tempRefills)) = false then Exit;
+                 if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur, tempOI, StrtoInt(tempSupply), StrtoInt(tempRefills), StrToFloat(tempQuantity)) = false then Exit;
                end;
              if ((ResolvedDialog.DisplayGroup = CsltDisp) and (ResolvedDialog.QuickLevel = QL_AUTO)) then
              begin
@@ -1450,6 +1566,13 @@ begin
     Application.ProcessMessages;
     if uOrderAction <> nil then Exit;
   end;
+  if frmARTAllergy <> nil then   //SMT Add to account for allergies.
+  begin
+    frmARTAllergy.Close;
+    Application.ProcessMessages;
+    if frmARTAllergy <> nil then Exit;
+  end;
+
   Result := True;
 end;
 
@@ -1577,7 +1700,7 @@ begin
         param2 := FieldsForEditRenewOrder.StopTime;
       end;
       UBAGlobals.SourceOrderID := AList[i]; //hds6265 added
-      ExecuteChangeRenewedOrder(AList[i], param1, param2, txtOrder);
+      ExecuteChangeRenewedOrder(AList[i], param1, param2, txtOrder, AnEvent);
       AnOrder := TOrder.Create;
       SaveChangesOnRenewOrder(AnOrder, AList[i], param1, param2, txtOrder);
       AnOrder.ActionOn := AnOrder.ID + '=RN';

@@ -18,9 +18,13 @@ type
     btnPublicSave: TButton;
     bvlBase: TBevel;
     bvlDefaults: TBevel;
+    bvlMid: TBevel;
     cboConversions: TORComboBox;
+    cboDateRangeInpatient: TORComboBox;
+    cboDateRangeOutpatient: TORComboBox;
     chklstOptions: TCheckListBox;
     lblConversions: TLabel;
+    lblInpatient: TLabel;
     lblMaxGraphs: TLabel;
     lblMaxGraphsRef: TLabel;
     lblMaxSelect: TLabel;
@@ -29,10 +33,12 @@ type
     lblMinGraphHeightRef: TLabel;
     lblOptions: TLabel;
     lblOptionsInfo: TLabel;
+    lblOutpatient: TLabel;
     lblSave: TLabel;
     lblShow: TLabel;
     lblSources: TLabel;
     lstATypes: TListBox;
+    lstOptions: TListBox;
     lstSources: TCheckListBox;
     lstSourcesCopy: TListBox;
     spnMaxGraphs: TUpDown;
@@ -41,14 +47,12 @@ type
     txtMaxGraphs: TEdit;
     txtMaxSelect: TEdit;
     txtMinGraphHeight: TEdit;
-    bvlMid: TBevel;
-    lstOptions: TListBox;
-    cboDateRangeOutpatient: TORComboBox;
-    cboDateRangeInpatient: TORComboBox;
-    lblOutpatient: TLabel;
-    lblInpatient: TLabel;
+
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+
+    procedure AssignHints;
     procedure btnAllClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure btnPublicClick(Sender: TObject);
@@ -56,31 +60,30 @@ type
     procedure chklstOptionsClickCheck(Sender: TObject);
     procedure SaveClick(Sender: TObject);
     procedure spnMaxGraphsClick(Sender: TObject; Button: TUDBtnType);
+    procedure spnMaxSelectClick(Sender: TObject; Button: TUDBtnType);
+    procedure spnMinGraphHeightClick(Sender: TObject; Button: TUDBtnType);
     procedure txtMaxGraphsChange(Sender: TObject);
     procedure txtMaxGraphsExit(Sender: TObject);
     procedure txtMaxGraphsKeyPress(Sender: TObject; var Key: Char);
-    procedure spnMinGraphHeightClick(Sender: TObject; Button: TUDBtnType);
-    procedure spnMaxSelectClick(Sender: TObject; Button: TUDBtnType);
-    procedure txtMinGraphHeightChange(Sender: TObject);
     procedure txtMaxSelectChange(Sender: TObject);
-    procedure txtMinGraphHeightExit(Sender: TObject);
     procedure txtMaxSelectExit(Sender: TObject);
-    procedure txtMinGraphHeightKeyPress(Sender: TObject; var Key: Char);
     procedure txtMaxSelectKeyPress(Sender: TObject; var Key: Char);
-    procedure AssignHints;
+    procedure txtMinGraphHeightChange(Sender: TObject);
+    procedure txtMinGraphHeightExit(Sender: TObject);
+    procedure txtMinGraphHeightKeyPress(Sender: TObject; var Key: Char);
+
     function DisplaySettings: string;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
   private
     FHintPauseTime: integer;
   public
-    procedure wmNCLButtonDown(var Msg: TWMNCLButtonDown); message WM_NCLBUTTONDOWN;
     procedure ChangeSettings(aGraphSetting: TGraphSetting);
     procedure ChangeSources(DisplaySource: TStrings);
     procedure Conversion(conv: integer);
+    procedure GetTypeList(aList: TStrings);
     procedure SetSettings(aGraphSetting: TGraphSetting);
     procedure SetSources(aList, DisplaySource: TStrings);
-    procedure GetTypeList(aList: TStrings);
+    procedure wmNCLButtonDown(var Msg: TWMNCLButtonDown); message WM_NCLBUTTONDOWN;
   end;
 
 var
@@ -100,14 +103,14 @@ uses
   rGraphs, fGraphData, VAUtils;
 
 var
-  FPersonalSettings, FPublicSettings, FCloseSettings: string;
+  FCloseSettings, FPersonalSettings, FPublicSettings: string;
 
 procedure DialogOptionsGraphSettings(topvalue, leftvalue, fontsize: integer;
   var actiontype: boolean);
 var
   FGraphSetting: TGraphSetting;
   FSources, AllTypes: TStrings;
-  i, conv: integer;
+  conv, i: integer;
   aSettings, dfntype, listline, settings, settings1: string;
 begin
   settings := GetCurrentSetting;
@@ -129,7 +132,7 @@ begin
   end;
   FGraphSetting := GraphSettingsInit(settings);
   FSources := TStringList.Create;
-  for i := 0 to BIG_NUMBER do
+  for i := 1 to BIG_NUMBER do
   begin
     dfntype := Piece(settings1, ';', i);
     if length(dfntype) = 0 then break;
@@ -226,6 +229,7 @@ begin
       else if value = SETTING_HINTS then Hints := turnon
       else if value = SETTING_FIXED then FixedDateRange := turnon
       else if value = SETTING_TURBO then Turbo := turnon
+      else if value = SETTING_MERGELABS then MergeLabs := turnon
       else if value = SETTING_TOP then StayOnTop := turnon;
     end;
     if SortByType then SortColumn := 1 else SortColumn := 0;
@@ -238,7 +242,7 @@ procedure TfrmGraphSettings.ChangeSources(DisplaySource: TStrings);
 var
   needtoadd: boolean;
   i, j : integer;
-  filename, filenum, dsitem, dsnum: string;
+  dsitem, dsnum, filename, filenum: string;
 begin
   with lstSources do
   begin
@@ -338,13 +342,18 @@ begin
     if (SortColumn > 0) then
       if Pos(SETTING_SORT, OptionSettings) = 0 then
         OptionSettings := OptionSettings + SETTING_SORT;
+    Turbo := false;                               // *v29*turbo is turned off (all users turbo false)
     if Turbo then
       OptionSettings := OptionSettings + SETTING_TURBO;
-    if GraphPublicEditor or GraphTurboOn then
+    if MergeLabs then
+      OptionSettings := OptionSettings + SETTING_MERGELABS;
+    lstOptions.Items.Add('Merge Labs^O');
+    chklstOptions.Items.Add('Merge Labs');
+    {if GraphPublicEditor or GraphTurboOn then     // *v29*take Turbo off settings
     begin
       lstOptions.Items.Add('Turbo^N');
       chklstOptions.Items.Add('Turbo');
-    end;
+    end;}
     for i := 0 to lstOptions.Items.Count - 1 do
     begin
       value := Piece(lstOptions.Items[i], '^', 2);
@@ -356,7 +365,7 @@ end;
 procedure TfrmGraphSettings.SetSources(aList, DisplaySource: TStrings);
 var
   i, j : integer;
-  listitem, filenum, filename, dsitem, dsnum, dsdisplay: string;
+  dsdisplay, dsitem, dsnum, filename, filenum, listitem: string;
 begin
   with lstSources.Items do
   begin
@@ -524,7 +533,7 @@ begin
   end;
   for i := 0 to lstSources.Items.Count -1 do
     lstSources.Checked[i] := false;
-  for i := 0 to BIG_NUMBER do
+  for i := 1 to BIG_NUMBER do
   begin
     dfntype := Piece(settings1, ';', i);
     if length(dfntype) = 0 then break;
@@ -598,12 +607,15 @@ begin
   begin
     rpcSetGraphSettings(settings, '0');
     FPersonalSettings := settings;
+    SetPersonalSetting(settings);
   end;
   if (Sender = btnPublicSave) then
   begin
-    SetPiece(settings, '|', 6, Piece(FPublicSettings, '|', 6));  // retain turbo setting
+    //SetPiece(settings, '|', 6, Piece(FPublicSettings, '|', 6));  // retain turbo setting
+    SetPiece(settings, '|', 6, '0');  // *v29* force cache to be disabled
     rpcSetGraphSettings(settings, '1');
     FPublicSettings := settings;
+    SetPublicSetting(settings);
   end;
 end;
 

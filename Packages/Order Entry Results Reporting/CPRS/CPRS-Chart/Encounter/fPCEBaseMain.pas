@@ -225,8 +225,7 @@ procedure TfrmPCEBaseMain.btnRemoveClick(Sender: TObject);
 var
   i, j: Integer;
   APCEItem: TPCEItem;
-  CurCategory: string;
-
+  CurCategory, SCode, SNarr: String;
 begin
   inherited;
   FUpdatingGrid := TRUE;
@@ -237,9 +236,13 @@ begin
       APCEItem := TPCEDiag(lbGrid.Items.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
-        with APCEItem do for j := 0 to lbxSection.Items.Count - 1 do
-          if ORFn.Pieces(lbxSection.Items[j], U, 1, 2) = Code + U + Narrative then
+        for j := 0 to lbxSection.Items.Count - 1 do
+        begin
+          SCode := Piece(lbxSection.Items[j], U, 1);
+          SNarr := Piece(lbxSection.Items[j], U, 2);
+          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
             lbxSection.Checked[j] := False;
+        end;
       end;
       APCEItem.Free;
       lbGrid.Items.Delete(i);
@@ -341,15 +344,16 @@ end;
 
 procedure TfrmPCEBaseMain.CheckOffEntries;
 { TODO -oRich V. -cCode Set Versioning : Uncomment these lines to prevent acceptance of existing inactive DX codes. }
-(*const
-  TX_INACTIVE_ICD_CODE1 = 'The diagnosis of "';
-  TX_INACTIVE_ICD_CODE2 = '" entered for this encounter' + #13#10 + 'contains an inactive ICD code of "';
-  TX_INACTIVE_ICD_CODE3 = '" as of the encounter date, and will be removed.' + #13#10#13#10 +
+const
+  TX_INACTIVE_CODE1 = 'The diagnosis of "';
+  TX_INACTIVE_ICD_CODE = '" entered for this encounter' + #13#10 + 'contains an inactive ICD code of "';
+  TX_INACTIVE_SCT_CODE = '" entered for this encounter' + #13#10 + 'contains an inactive SNOMED CT code"';
+  TX_INACTIVE_CODE3 = '" as of the encounter date, and will be removed.' + #13#10#13#10 +
                           'Please select another diagnosis.';
-  TC_INACTIVE_ICD_CODE = 'Diagnosis Contains Inactive Code';*)
+  TC_INACTIVE_CODE = 'Diagnosis Contains Inactive Code';
 var
   i, j: Integer;
-  CurCategory, CodeNarr: string;
+  CurCategory, SCode, SNarr: string;
   APCEItem: TPCEItem;
 begin
   FUpdatingGrid := TRUE;
@@ -361,22 +365,30 @@ begin
       APCEItem := TPCEItem(lbGrid.Items.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
-        CodeNarr := APCEItem.Code + U + APCEItem.Narrative;
+//        CodeNarr := APCEItem.Code + U + APCEItem.Narrative;
         for j := 0 to lbxSection.Items.Count - 1 do
-          if ORFn.Pieces(lbxSection.Items[j], U, 1, 2) = CodeNarr then
+        begin
+          SCode := Piece(lbxSection.Items[j], U, 1);
+          SNarr := Piece(lbxSection.Items[j], U, 2);
+          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
+          begin
+            if (CurCategory = 'Problem List Items') and ((Pos('#', Piece(lbxSection.Items[j], U, 4)) > 0) or
+               (Pos('$', Piece(lbxSection.Items[j], U, 4)) > 0)) then
             begin
-{ TODO -oRich V. -cCode Set Versioning : Uncomment these lines to prevent acceptance of existing inactive DX codes. }
-(*              if (CurCategory = 'Problem List Items') and (Piece(lbxSection.Items[j], U, 5) = '#') then
-                begin
-                  InfoBox(TX_INACTIVE_ICD_CODE1 + APCEItem.Narrative + TX_INACTIVE_ICD_CODE2 +
-                         APCEItem.Code + TX_INACTIVE_ICD_CODE3, TC_INACTIVE_ICD_CODE, MB_ICONWARNING or MB_OK);
-                  lbxSection.Checked[j] := False;
-                  APCEItem.Free;
-                  lbGrid.Items.Delete(i);
-                end
-              else*)
-                lbxSection.Checked[j] := True;
-            end;
+              if (Pos('#', Piece(lbxSection.Items[j], U, 4)) > 0) then
+                InfoBox(TX_INACTIVE_CODE1 + APCEItem.Narrative + TX_INACTIVE_ICD_CODE +
+                     APCEItem.Code + TX_INACTIVE_CODE3, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK)
+              else if (Pos('$', Piece(lbxSection.Items[j], U, 4)) > 0) then
+                InfoBox(TX_INACTIVE_CODE1 + APCEItem.Narrative + TX_INACTIVE_SCT_CODE +
+                     TX_INACTIVE_CODE3, TC_INACTIVE_CODE, MB_ICONWARNING or MB_OK);
+              lbxSection.Checked[j] := False;
+              APCEItem.Free;
+              lbGrid.Items.Delete(i);
+            end
+            else
+              lbxSection.Checked[j] := True;
+          end;
+        end;
       end;
     end;
   finally
@@ -427,24 +439,25 @@ procedure TfrmPCEBaseMain.lbxSectionClickCheck(Sender: TObject;
   Index: Integer);
 var
   i, j: Integer;
-  x, x0, CodeCatNarr: string;
+  x, SCat, SCode, SNarr, CodeCatNarr: string;
   APCEItem: TPCEItem;
   Found, DoSync: boolean;
-
 begin
   inherited;
   if FUpdatingGrid or FClosing then exit;
   DoSync := FALSE;
-  x0 := GetCat;
+  SCat := GetCat;
   for i := 0 to lbxSection.Items.Count-1 do
   begin
-    x := x0 + U + ORFn.Pieces(lbxSection.Items[i], U, 1, 2);
-    CodeCatNarr := Piece(x, U, 2) + U + Piece(x, U, 1) + U + Piece(x, U, 3);
+    x := ORFn.Pieces(lbxSection.Items[i], U, 1, 2);
+    SCode := Piece(x, U, 1);
+    SNarr := Piece(x, U, 2);
+    CodeCatNarr := SCode + U + SCat + U + SNarr;
     Found := FALSE;
     for j := lbGrid.Items.Count - 1 downto 0 do
     begin
       APCEItem := TPCEItem(lbGrid.Items.Objects[j]);
-      with APCEItem do if CodeCatNarr = Code + U + Category + U + Narrative then
+      if (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
       begin
         Found := TRUE;
         if(lbxSection.Checked[i]) then break;
@@ -497,9 +510,8 @@ end;
 procedure TfrmPCEBaseMain.Sync2Grid;
 var
   i, idx, cnt, NewIdx: Integer;
-  CodeNarr: string;
+  SCode, SNarr: String;
   APCEItem: TPCEItem;
-
 begin
   if(FUpdatingGrid or FClosing) then exit;
   FUpdatingGrid := TRUE;
@@ -521,10 +533,11 @@ begin
       APCEItem := TPCEItem(lbGrid.Items.Objects[idx]);
       if APCEItem.Category = GetCat then
       begin
-        CodeNarr := APCEItem.Code + U + APCEItem.Narrative;
         for i := 0 to lbxSection.Items.Count - 1 do
         begin
-          if Pieces(lbxSection.Items[i], U, 1, 2) = CodeNarr then
+          SCode := Piece(lbxSection.Items[i], U, 1);
+          SNarr := Piece(lbxSection.Items[i], U, 2);
+          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)then
           begin
             NewIdx := i;
             break;
@@ -541,21 +554,33 @@ end;
 procedure TfrmPCEBaseMain.Sync2Section;
 var
   i, idx: Integer;
-  ACode: string;
-
+  APCEItem: TPCEItem;
+  SCat, SCode, SNarr: String;
 begin
   if(FUpdatingGrid or FClosing) then exit;
   FUpdatingGrid := TRUE;
   try
     idx := lbxSection.ItemIndex;
-    if(idx >= 0) then
-      ACode := GetCat + U + Pieces(lbxSection.Items[idx], U, 1, 2)
+    if (idx >= 0) then
+    begin
+      SCat := GetCat;
+      SCode := Piece(lbxSection.Items[idx], U, 1);
+      SNarr := Piece(lbxSection.Items[idx], U, 2);
+    end
     else
-      ACode := '~@^~@^@~';
+    begin
+      SCat := '~@';
+      SCode := '~@';
+      SNarr := '~@';
+    end;
+//    if(idx >= 0) then
+//      ACode := GetCat + U + Pieces(lbxSection.Items[idx], U, 1, 2)
+//    else
+//      ACode := '~@^~@^@~';
     for i := 0 to lbGrid.Items.Count - 1 do
     begin
-      with TPCEItem(lbGrid.Items.Objects[i]) do
-        lbGrid.Selected[i] := (ACode = (Category + U + Code + U + Narrative));
+      APCEItem := TPCEItem(lbGrid.Items.Objects[i]);
+      lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)) //(ACode = (Category + U + Code + U + Narrative));
     end;
   finally
     FUpdatingGrid := FALSE;

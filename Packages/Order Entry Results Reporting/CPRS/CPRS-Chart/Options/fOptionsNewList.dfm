@@ -12,10 +12,8 @@ inherited frmOptionsNewList: TfrmOptionsNewList
   OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
-  ExplicitLeft = 623
-  ExplicitTop = 446
-  ExplicitWidth = 181
-  ExplicitHeight = 261
+  ExplicitWidth = 179
+  ExplicitHeight = 262
   PixelsPerInch = 96
   TextHeight = 13
   object lblEnter: TLabel [0]
@@ -56,7 +54,7 @@ inherited frmOptionsNewList: TfrmOptionsNewList
       Top = 7
       Width = 75
       Height = 22
-      HelpContext = 9997
+      HelpContext = 9996
       Caption = 'OK'
       Default = True
       Enabled = False
@@ -68,7 +66,7 @@ inherited frmOptionsNewList: TfrmOptionsNewList
       Top = 7
       Width = 75
       Height = 22
-      HelpContext = 9996
+      HelpContext = 9997
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2

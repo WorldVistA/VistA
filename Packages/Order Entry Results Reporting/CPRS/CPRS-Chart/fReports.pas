@@ -127,6 +127,7 @@ type
     procedure ShowTabControl;
     procedure Graph(reportien: integer);
     procedure GraphPanel(active: boolean);
+    procedure BlankWeb;
   public
     procedure ClearPtData; override;
     function AllowContextChange(var WhyNot: string): Boolean; override;
@@ -190,6 +191,7 @@ const
               'PRE {font-size:8pt;font-family: "Courier New", "monospace"}' + CRLF +
               '</style></head><body><pre>';
   HTML_POST = CRLF + '</pre></body></html>';
+  BlankWebPage = 'about:blank';
 
 var
   uRemoteCount: Integer;
@@ -208,6 +210,11 @@ var
 procedure TfrmReports.ClearPtData;
 begin
   inherited ClearPtData;
+  if Assigned(WebBrowser1) then
+  begin
+    uHTMLDoc := '';
+    BlankWeb;
+  end;
   Timer1.Enabled := False;
   memText.Clear;
   tvProcedures.Items.Clear;
@@ -228,7 +235,7 @@ begin
     Initialize;
     DisplayData('top');
     DisplayData('bottom');
-    GtslCheck.Clear;
+    //GtslCheck.Clear;
     GraphFormActive := false;
   end;
   begin
@@ -257,7 +264,7 @@ begin
         Show;
         DisplayData('top');
         DisplayData('bottom');
-        GtslCheck.Clear;
+        //GtslCheck.Clear;
         GraphPanel(true);
         frmGraphData.pnlData.Hint := Patient.DFN;
         BringToFront;
@@ -275,26 +282,28 @@ begin
   end
   else if GraphForm.btnClose.Tag = 1 then
     Exit
-  else if GraphFormActive and (frmGraphData.pnlData.Hint = Patient.DFN) then
+  else if frmGraphData.pnlData.Hint = Patient.DFN then
   begin   // displaying same patient
-    if Tag <> reportien then
+    if Tag <> reportien then   // different report
     with GraphForm do
     begin  // new report
+      SendToBack;
+      GraphPanel(false);
       pnlMain.Tag := reportien;
       Initialize;
-      //DisplayData('top');
-      //DisplayData('bottom');
-      GtslCheck.Clear;
+      DisplayData('top');
+      DisplayData('bottom');
+      //GtslCheck.Clear;
       GraphPanel(true);
       BringToFront;
+      GraphFormActive := true;
+    end
+    else
+    begin   // bring back graph
+      GraphPanel(true);
+      BringToFront;
+      GraphFormActive := true;
     end;
-    //no action
-  end
-  else if frmGraphData.pnlData.Hint = Patient.DFN then
-  begin   // same patient, bring back graph
-    GraphPanel(true);
-    BringToFront;
-    GraphFormActive := true;
   end
   else
   with GraphForm do
@@ -303,7 +312,7 @@ begin
     Initialize;
     DisplayData('top');
     DisplayData('bottom');
-    GtslCheck.Clear;
+    //GtslCheck.Clear;
     frmGraphData.pnlData.Hint := Patient.DFN;
     GraphPanel(true);
     BringToFront;
@@ -360,6 +369,14 @@ begin
     lstQualifier.Visible := true;
     pnlViews.Visible := false;
     pnlLeftBottom.Height := lblHeaders.Height + lblQualifier.Height + 90;
+  end;
+end;
+
+procedure TfrmReports.BlankWeb;
+begin
+  try
+    WebBrowser1.Navigate(BlankWebPage);
+  except
   end;
 end;
 
@@ -606,7 +623,7 @@ begin
   tvReports.Items.Clear;
   memText.Clear;
   uHTMLDoc := '';
-  WebBrowser1.Navigate('about:blank');
+  BlankWeb;
   tvProcedures.Items.Clear;
   lblProcTypeMsg.Visible := FALSE;
   lvReports.SmallImages := uEmptyImageList;
@@ -961,6 +978,7 @@ begin
     and (length(aMax)>0)
     and (StrToInt(aMax)<101) then
       MoreID := ';101';
+  Timer1.Interval := 3000;
   aRemote :=  piece(uRemoteType,'^',1);
   aHDR := piece(uRemoteType,'^',7);
   aFHIE := piece(uRemoteType,'^',8);
@@ -974,7 +992,7 @@ begin
     begin
       WebBrowser1.Visible := true;
       WebBrowser1.TabStop := true;
-      WebBrowser1.Navigate('about:blank');
+      BlankWeb;
       WebBrowser1.BringToFront;
       memText.Visible := false;
       memText.TabStop := false;
@@ -1054,7 +1072,7 @@ begin
   if WebBrowser1.Visible = true then
   begin
     uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-    WebBrowser1.Navigate('about:blank');
+    BlankWeb;
   end;
   case uQualifierType of
       QT_HSCOMPONENT:
@@ -1166,7 +1184,7 @@ begin
           uHTMLDoc := HTML_PRE + uLocalReportData.Text + HTML_POST
         else
           uHTMLDoc := uHTMLPatient + uLocalReportData.Text;
-        WebBrowser1.Navigate('about:blank');
+        BlankWeb;
       end;
 end;
 
@@ -1491,7 +1509,7 @@ end;
 
 procedure TfrmReports.Timer1Timer(Sender: TObject);
 var
-  i,j,fail: integer;
+  i,j,fail,t: integer;
   r0,aSite: String;
   aHDR, aID, aRet: String;
 begin
@@ -1557,7 +1575,12 @@ begin
                   StatusText('Retrieving reports from '
                 + TRemoteSite(Items[i]).SiteName + '...');
               end;
-            Timer1.Interval := 10000;
+            t := Timer1.Interval;
+            if t < 5000 then
+              begin
+                if t < 3001 then Timer1.Interval := 4000
+                else if t < 4001 then Timer1.Interval := 5000;
+              end;
           end;
        end;
      if Timer1.Enabled = True then
@@ -1604,7 +1627,7 @@ begin
     memText.Lines.Clear;
   lstHeaders.Items.Clear;
   uHTMLDoc := '';
-  if WebBrowser1.visible = true then WebBrowser1.Navigate('about:blank');
+  if WebBrowser1.visible = true then BlankWeb;
   if (length(piece(uHState,';',2)) = 0) then with TabControl1 do
     begin
       memText.Lines.BeginUpdate;
@@ -1660,7 +1683,7 @@ begin
                   end;
             end
               else
-                if tvReports.Selected.Text = 'Imaging (local only)' then 
+                if tvReports.Selected.Text = 'Imaging (local only)' then
                    memText.Lines.clear
                 else
                    QuickCopy(uLocalReportData,memText);
@@ -1675,7 +1698,7 @@ begin
             uHTMLDoc := HTML_PRE + memText.Lines.Text + HTML_POST
           else
             uHTMLDoc := uHTMLPatient + memText.Lines.Text;
-          WebBrowser1.Navigate('about:blank');
+          BlankWeb;
         end;
       memText.Lines.EndUpdate;
     end;
@@ -2000,6 +2023,7 @@ begin
   lvReports.Hint := 'To sort, click on column headers|';
   tvReports.TopItem := tvReports.Selected;
   uRemoteCount := 0;
+  Timer1.Interval := 3000;
   uReportInstruction := '';
   aHeading    :=  PReportTreeObject(tvReports.Selected.Data)^.Heading;
   aRemote     :=  PReportTreeObject(tvReports.Selected.Data)^.Remote;
@@ -2068,7 +2092,7 @@ begin
         end;
   StatusText('');
   uHTMLDoc := '';
-  WebBrowser1.Navigate('about:blank');
+  BlankWeb;
   memText.Lines.Clear;
   memText.Parent := pnlRightBottom;
   memText.Align := alClient;
@@ -2088,7 +2112,7 @@ begin
       pnlRightBottom.Visible := true;
       WebBrowser1.Visible := true;
       WebBrowser1.TabStop := true;
-      WebBrowser1.Navigate('about:blank');
+      BlankWeb;
       WebBrowser1.BringToFront;
       memText.Visible := false;
       memText.TabStop := false;
@@ -2195,7 +2219,7 @@ begin
                     TRemoteSite(RemoteSites.SiteList[j]).LabClear;
                   end;
                 uHTMLDoc := '';
-                if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');
+                if WebBrowser1.Visible = true then BlankWeb;
                 ExecuteAdhoc1;  //Calls Adhoc form
                 if uLocalReportData.Count < 1 then
                   uReportInstruction := '<No Report Available>'
@@ -2209,7 +2233,7 @@ begin
                           uHTMLDoc := HTML_PRE + uLocalReportData.Text + HTML_POST
                         else
                           uHTMLDoc := uHTMLPatient + uLocalReportData.Text;
-                        WebBrowser1.Navigate('about:blank');
+                        BlankWeb;
                       end;
                   end;
                 TabControl1.OnChange(nil);
@@ -2309,7 +2333,7 @@ begin
             if WebBrowser1.Visible = true then
               begin
                 uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-                WebBrowser1.Navigate('about:blank');
+                BlankWeb;
               end;
           end;
         QT_NUTR:
@@ -2342,7 +2366,7 @@ begin
             if WebBrowser1.Visible = true then
               begin
                 uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-                WebBrowser1.Navigate('about:blank');
+                BlankWeb;
               end;
           end;
         QT_HSCOMPONENT:
@@ -2567,9 +2591,9 @@ begin
             if WebBrowser1.Visible = true then
               begin
                 uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-                WebBrowser1.Navigate('about:blank');
+                BlankWeb;
               end;
-            if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');
+            if WebBrowser1.Visible = true then BlankWeb;
           end;
         QT_SURGERY:
           begin      //      = 28
@@ -2597,7 +2621,7 @@ begin
             uReportInstruction := PChar(x);
             memText.Lines.Add(uReportInstruction);
             uHTMLDoc := HTML_PRE + uReportInstruction + HTML_POST;
-            if WebBrowser1.Visible = true then WebBrowser1.Navigate('about:blank');
+           if WebBrowser1.Visible = true then BlankWeb;
           end;
         else
           begin      //      = ?
@@ -2635,7 +2659,7 @@ begin
   RedrawActivate(memText.Handle);
   if WebBrowser1.Visible = true then
     begin
-      WebBrowser1.Navigate('about:blank');
+      BlankWeb;
       WebBrowser1.BringToFront;
     end
   else if not GraphFormActive then
@@ -3366,7 +3390,7 @@ begin
     lstDateRange.ItemIndex := GraphForm.cboDateRange.ItemIndex;
     //Exit;
   end;
-
+  Timer1.Interval := 3000;
 end;
 
 procedure TfrmReports.sptHorzMoved(Sender: TObject);

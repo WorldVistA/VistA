@@ -17,7 +17,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ComCtrls, ORCtrls, Buttons, Mask, ORFn, ORNet,
-  uTemplates, Menus, ImgList, Clipbrd, ToolWin, MenuBar, TypInfo, MSXML, fBase508Form,
+  uTemplates, Menus, ImgList, Clipbrd, ToolWin, MenuBar, TypInfo, MSXML_TLB, fBase508Form,
   VA508AccessibilityManager, VA508ImageListLabeler;
 
 type
@@ -425,6 +425,7 @@ type
     procedure InitTrees;
     procedure AdjustControls4FontChange;
     procedure ShowGroupBoilerplate(Visible: boolean);
+    procedure ShowBoilerPlate(Hide: Boolean);
     function GetLinkType(const ANode: TTreeNode): TTemplateLinkType;
   end;
 
@@ -980,6 +981,17 @@ begin
   end;
 end;
 
+procedure TfrmTemplateEditor.ShowBoilerPlate(Hide: Boolean);
+begin
+ LockWindowUpdate(Self.Handle);
+ PnlBP.Visible := Hide;
+
+ lblBoilerplate.Visible := Hide;
+ reBoil.Visible := Hide;
+ LockWindowUpdate(0);
+end;
+
+
 procedure TfrmTemplateEditor.ShowInfo(Node: TTreeNode);
 var
   OldUpdating, ClearName, ClearRB, ClearAll: boolean;
@@ -1489,12 +1501,14 @@ begin
         UpdateReadOnlyColorScheme(reBoil, TRUE);
         UpdateInsertsDialogs;
       end;
-      ShowGroupBoilerplate(ItemOK);
+
       if (not ItemOK) and (IsReminderDialog or IsCOMObject) then
         BPOK := FALSE;
+
+      ShowBoilerPlate(BPOK);
+      ShowGroupBoilerplate(ItemOK);
+
       pnlBoilerplateResize(Self);
-      pnlBoilerplate.Visible := BPOK;
-      lblBoilerplate.Visible := BPOK;
       pnlCOM.Visible := (not BPOK) and IsCOMObject;
     end;
   finally
@@ -2713,7 +2727,7 @@ end;
 
 procedure TfrmTemplateEditor.splBoilMoved(Sender: TObject);
 begin
-  if pnlBoilerplate.Visible and pnlGroupBP.Visible then
+  if reboil.Visible and pnlGroupBP.Visible then
     tmplEditorSplitterBoil := reBoil.Height;
   if pnlNotes.Visible then
     tmplEditorSplitterNotes := pnlNotes.Height;
@@ -3015,7 +3029,7 @@ var
   tryOK, ok: boolean;
 
 begin
-  if pnlBoilerplate.Visible then
+  if reboil.Visible then
   begin
     ok := (not reBoil.ReadOnly);
     mnuInsertObject.Enabled := ok;
@@ -3335,6 +3349,9 @@ begin
   splNotes.Visible := cbNotes.Checked;
   if cbNotes.Checked then
   begin
+    If (pnlGroupBP.Visible) and (tmplEditorSplitterNotes >= pnlGroupBP.Height - pnlGroupBP.Constraints.MinHeight) then
+     tmplEditorSplitterNotes := pnlNotes.Constraints.MinHeight;
+
     pnlNotes.Height := tmplEditorSplitterNotes;
     pnlNotes.Top := pnlBottom.Top - pnlNotes.Height;
     splNotes.Top := pnlNotes.Top - 3;

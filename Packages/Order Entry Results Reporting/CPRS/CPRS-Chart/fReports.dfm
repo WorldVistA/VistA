@@ -80,6 +80,7 @@ inherited frmReports: TfrmReports
         OnKeyDown = tvReportsKeyDown
         Caption = 'Available Reports'
         NodePiece = 0
+        ExplicitLeft = -1
       end
     end
     object pnlLeftBottom: TPanel
@@ -229,6 +230,8 @@ inherited frmReports: TfrmReports
           LongList = False
           Pieces = '2'
           TabPositions = '10'
+          ExplicitLeft = -1
+          ExplicitTop = 82
         end
       end
     end
@@ -597,6 +600,7 @@ inherited frmReports: TfrmReports
   end
   object Timer1: TTimer
     Enabled = False
+    Interval = 3000
     OnTimer = Timer1Timer
     Left = 389
     Top = 176

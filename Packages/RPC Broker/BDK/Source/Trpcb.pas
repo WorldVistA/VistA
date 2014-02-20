@@ -1403,6 +1403,20 @@ begin
      end;
      //CCOW end
 
+    if not ConnectingBroker.FKernelLogIn then
+    begin
+      if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
+      begin
+        blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
+        if not blnSignedOn then
+        begin     //Switch back to Kernel Login
+          ConnectingBroker.FKernelLogIn := true;
+          ConnectingBroker.Login.Mode := lmAVCodes;
+          if not (CCOWtoken = '') then
+            ConnectingBroker.Contextor := nil; // token didn't work turn off UserContext
+        end;
+      end;
+    end;
     if ConnectingBroker.FKernelLogIn then
     begin   //p13
       CCOWToken := '';  //  061201 JLI if can't sign on with Token clear it so can get new one
@@ -1454,10 +1468,11 @@ begin
       if Assigned(OldExceptionHandler) then
         Application.OnException := OldExceptionHandler;
     end;   //if kernellogin
-                                                 // p13  following section for silent signon
+{                                                 // p13  following section for silent signon
     if not ConnectingBroker.FKernelLogIn then
       if ConnectingBroker.FLogin <> nil then     //the user.  vistalogin contains login info
         blnsignedon := SilentLogin(ConnectingBroker);    // RpcSLogin unit
+}
     if not blnsignedon then
     begin
       ConnectingBroker.FLogin.FailedLogin(ConnectingBroker.FLogin);

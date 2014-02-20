@@ -6,6 +6,7 @@ inherited frmCover: TfrmCover
   Caption = 'Cover Sheet'
   HelpFile = 'overvw'
   OnDestroy = FormDestroy
+  OnShow = FormShow
   ExplicitWidth = 648
   ExplicitHeight = 395
   PixelsPerInch = 96

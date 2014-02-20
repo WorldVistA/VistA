@@ -4,7 +4,7 @@ unit uTemplates;
 
 interface
 uses
-  Classes, Controls, SysUtils, Forms, ORFn, ORNet, Dialogs, MSXML, uTIU, uDCSumm, Variants;
+  Classes, Controls, SysUtils, Forms, ORFn, ORNet, Dialogs, MSXML_TLB, uTIU, uDCSumm, Variants;
 
 type
   TTemplateType = (ttNone, ttMyRoot, ttRoot, ttTitles, ttConsults, ttProcedures,

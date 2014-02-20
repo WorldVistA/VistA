@@ -37,13 +37,20 @@ type
     bbChangeProb: TBitBtn;
     edProb: TCaptionEdit;
     gbTreatment: TGroupBox;
-    ckSC: TCheckBox;
-    ckRad: TCheckBox;
-    ckAO: TCheckBox;
-    ckENV: TCheckBox;
-    ckHNC: TCheckBox;
-    ckMST: TCheckBox;
-    ckSHAD: TCheckBox;
+    ckYSC: TCheckBox;
+    ckYRad: TCheckBox;
+    ckYAO: TCheckBox;
+    ckYENV: TCheckBox;
+    ckYHNC: TCheckBox;
+    ckYMST: TCheckBox;
+    ckYSHAD: TCheckBox;
+    ckNSC: TCheckBox;
+    ckNRad: TCheckBox;
+    ckNAO: TCheckBox;
+    ckNENV: TCheckBox;
+    ckNHNC: TCheckBox;
+    ckNMST: TCheckBox;
+    ckNSHAD: TCheckBox;
     ckVerify: TCheckBox;
     edRecDate: TCaptionEdit;
     cbServ: TORComboBox;
@@ -78,6 +85,9 @@ type
     procedure cbServNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure bbEditClick(Sender: TObject);
+    procedure ckTreatments(value: String; ckBox: Integer);
+    function  TreatmentsCked(ckBox: Integer):String;
+    procedure ckNSCClick(Sender: TObject);
   private
     { Private declarations }
     FEditing: Boolean;
@@ -93,6 +103,7 @@ type
     fChanged:boolean;
     FSilent: boolean;
     FCanQuit: boolean;
+    FSearchString: String;
 
     procedure UMTakeFocus(var Message: TMessage); message UM_TAKEFOCUS;
     procedure ShowComments;
@@ -131,7 +142,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, uProbs, fProbs, rProbs, fCover, rCover, rCore, fProbCmt, fProbLex, rPCE, uInit  ,
+uses ORFn, uProbs, fProbs, rProbs, fCover, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
      VA508AccessibilityRouter;
 
 type
@@ -203,6 +214,166 @@ begin
     end ;
 end;
 
+procedure TfrmdlgProb.ckNSCClick(Sender: TObject);
+var
+  ChkBoxName :string;
+begin
+  inherited;
+  fChanged:=true;
+  ChkBoxName := AnsiUpperCase(TCheckBox(Sender).Name);
+  if (ChkBoxName = 'CKYSC') and TCheckBox(Sender).Checked then ckNSC.Checked := not ckYSC.Checked;
+  if (ChkBoxName = 'CKNSC') and TCheckBox(Sender).Checked then ckYSC.Checked := not ckNSC.Checked;
+  if (ChkBoxName = 'CKYAO') then ckNAO.Checked := not ckYAO.Checked;
+  if (ChkBoxName = 'CKNAO') then ckYAO.Checked := not ckNAO.Checked;
+  if (ChkBoxName = 'CKYRAD') then ckNRAD.Checked := not ckYRAD.Checked;
+  if (ChkBoxName = 'CKNRAD') then ckYRAD.Checked := not ckNRAD.Checked;
+  if (ChkBoxName = 'CKYENV') then ckNENV.Checked := not ckYENV.Checked;
+  if (ChkBoxName = 'CKNENV') then ckYENV.Checked := not ckNENV.Checked;
+  if (ChkBoxName = 'CKYSHAD') then ckNSHAD.Checked := not ckYSHAD.Checked;
+  if (ChkBoxName = 'CKNSHAD') then ckYSHAD.Checked := not ckNSHAD.Checked;
+  if (ChkBoxName = 'CKYMST') then ckNMST.Checked := not ckYMST.Checked;
+  if (ChkBoxName = 'CKNMST') then ckYMST.Checked := not ckNMST.Checked;
+  if (ChkBoxName = 'CKYHNC') then ckNHNC.Checked := not ckYHNC.Checked;
+  if (ChkBoxName = 'CKNHNC') then ckYHNC.Checked := not ckNHNC.Checked;
+end;
+
+procedure TfrmdlgProb.ckTreatments(value: String; ckBox: Integer);
+{ Used to set the checkboxes in order to properly set yes and no boxes
+   Send How ckbox should be set and which box
+   Value -> 1 Set to Yes, 2 Set to No, 0 Set Unknown
+   ckBox:
+     0 -> Service Connected
+     1 -> Agent Orange
+     2 -> Radiation
+     3 -> Southwest Asia Conditions
+     4 -> Shipboard Hazard and Defense
+     5 -> MST
+     6 -> Head and/or Neck Cancer
+}
+Var
+ yptr,nptr :^TCheckBox;
+begin
+  case ckBox of
+    0 : begin
+          //Sevice Connected
+          yptr := @ckYSC;
+          nptr := @ckNSC;
+        end;
+    1 : begin
+          //Agent Orange
+          yptr := @ckYAO;
+          nptr := @ckNAO;
+        end;
+    2 : begin
+          //Radiation
+          yptr := @ckYRAD;
+          nptr := @ckNRAD;
+        end;
+    3 : begin
+          //Southwest Asia Conditions
+          yptr := @ckYENV;
+          nptr := @ckNENV;
+        end;
+    4 : begin
+          //Shipboard Hazard and Defense
+          yptr := @ckYSHAD;
+          nptr := @ckNSHAD;
+        end;
+    5 : begin
+          //MST
+          yptr := @ckYMST;
+          nptr := @ckNMST;
+        end;
+    6 : begin
+          //Head and/or Neck Cancer
+          yptr := @ckYHNC;
+          nptr := @ckNHNC;
+        end;
+    else begin
+           Exit;
+         end;
+  end;
+
+  if Value = '1' then  // Yes is selected
+  begin
+     TCheckBox(yptr^).Checked := True;
+     TCheckBox(nptr^).Checked := False;
+  end
+  else if value = '0' then  // No is selected
+  begin
+     TCheckBox(yptr^).Checked := False;
+     TCheckBox(nptr^).Checked := True;
+  end
+  else  //Unknown
+  begin
+     TCheckBox(yptr^).Checked := False;
+     TCheckBox(nptr^).Checked := False;
+  end;
+
+end;
+
+function TfrmdlgProb.TreatmentsCked(ckBox: Integer):String;
+{ Return 1 for checked 0 for not checked, and '' for unknown
+  ckBox:
+     0 -> Service Connected
+     1 -> Agent Orange
+     2 -> Radiation
+     3 -> Southwest Asia Conditions
+     4 -> Shipboard Hazard and Defense
+     5 -> MST
+     6 -> Head and/or Neck Cancer
+}
+Var
+ yptr,nptr :^TCheckBox;
+begin
+  case ckBox of
+    0 : begin
+          //Sevice Connected
+          yptr := @ckYSC;
+          nptr := @ckNSC;
+        end;
+    1 : begin
+          //Agent Orange
+          yptr := @ckYAO;
+          nptr := @ckNAO;
+        end;
+    2 : begin
+          //Radiation
+          yptr := @ckYRAD;
+          nptr := @ckNRAD;
+        end;
+    3 : begin
+          //Southwest Asia Conditions
+          yptr := @ckYENV;
+          nptr := @ckNENV;
+        end;
+    4 : begin
+          //Shipboard Hazard and Defense
+          yptr := @ckYSHAD;
+          nptr := @ckNSHAD;
+        end;
+    5 : begin
+          //MST
+          yptr := @ckYMST;
+          nptr := @ckNMST;
+        end;
+    6 : begin
+          //Head and/or Neck Cancer
+          yptr := @ckYHNC;
+          nptr := @ckNHNC;
+        end;
+    else begin
+           Result := '';
+           Exit;
+         end;
+
+  end;
+    if TCheckBox(yptr^).Checked then Result := '1'
+    else if TCheckBox(nptr^).Checked then Result := '0'
+    else Result := '';
+end;
+
+
 procedure TfrmdlgProb.FormShow(Sender: TObject);
 var
   alist: TstringList;
@@ -253,20 +424,28 @@ begin
         edRecdate.enabled    := false;
         edResdate.enabled    := false;
         edOnsetDate.enabled  := false;
-        ckSC.enabled         := false;
-        ckRAD.enabled        := false;
-        ckAO.enabled         := false;
-        ckENV.enabled        := false;
-        ckHNC.enabled        := false;
-        ckMST.enabled        := false;
-        ckSHAD.enabled       := false;
+        ckYSC.enabled         := false;
+        ckYRAD.enabled        := false;
+        ckYAO.enabled         := false;
+        ckYENV.enabled        := false;
+        ckYHNC.enabled        := false;
+        ckYMST.enabled        := false;
+        ckYSHAD.enabled       := false;
+        ckNSC.enabled         := false;
+        ckNRAD.enabled        := false;
+        ckNAO.enabled         := false;
+        ckNENV.enabled        := false;
+        ckNHNC.enabled        := false;
+        ckNMST.enabled        := false;
+        ckNSHAD.enabled       := false;
         if Reason = 'R' then bbFile.caption := 'Remove';
       end;
     edProb.Caption := lblact.Caption;
-    if Piece(subjProb,U,3) <> '' then
-      edProb.Text := Piece(subjProb, u, 2) + ' (' + Piece(subjProb, u, 3) + ')'
-    else
-      edProb.Text := Piece(subjProb, u, 2);
+    edProb.Text := Piece(subjProb, u, 2);
+
+    if Piece(subjProb, '|', 2) <> '' then
+      FSearchString := Piece(subjProb, '|', 2);
+
     {line up problem action and title}
     {edProb.Left:=lblAct.left+lblAct.width+2;}
     {get problem}
@@ -309,32 +488,102 @@ begin
     if pos(Reason,'CR') = 0 then
       with PLPt do
         begin
-          if UpperCase(Reason) = 'E' then
-            begin
-              ckSC.Enabled  := ProbRec.SCProblem or PtServiceConnected;
-              ckSC.checked  := ProbRec.SCProblem;
-            end
+          if PtServiceConnected then
+          begin
+            ckYSC.Enabled := True;
+            ckNSC.Enabled := True;
+            ckTreatments(ProbRec.SCProblem,0);
+          end
           else
-            begin
-              ckSC.enabled  := PtServiceConnected ;
-              ckSC.checked  := ProbRec.SCProblem and PtServiceConnected ;
-            end;
-          ckAO.enabled  := PtAgentOrange ;
-          ckRAD.enabled := PtRadiation ;
-          ckENV.enabled := PtEnvironmental ;
-          ckHNC.enabled := PtHNC ;
-          ckMST.enabled := PtMST ;
-          ckSHAD.Enabled := PtSHAD;
-          ckAO.checked  := Probrec.AOProblem and PtAgentOrange;
-          ckRAD.checked := Probrec.RADProblem and PtRadiation;
-          ckENV.checked := Probrec.ENVProblem and PtEnvironmental;
-          ckHNC.checked := Probrec.HNCProblem and PtHNC;
-          ckMST.checked := Probrec.MSTProblem and PtMST;
-          ckSHAD.Checked := Probrec.SHADProlem and PtSHAD;
+          begin
+            ckYSC.Enabled := False;
+            ckNSC.Enabled := False;
+          end;
+
+          if PtAgentOrange then
+          begin
+            ckYAO.Enabled := True;
+            ckNAO.Enabled := True;
+            ckTreatments(ProbRec.AOProblem,1);
+          end
+          else
+          begin
+            ckYAO.Enabled := False;
+            ckNAO.Enabled := False;
+          end;
+
+          if PtRadiation then
+          begin
+            ckYRad.Enabled := True;
+            ckNRad.Enabled := True;
+            ckTreatments(Probrec.RADProblem,2);
+          end
+          else
+          begin
+            ckYRad.Enabled := False;
+            ckNRad.Enabled := False;
+          end;
+
+          if PtEnvironmental then
+          begin
+            ckYENV.Enabled := True;
+            ckNENV.Enabled := True;
+            ckTreatments(ProbRec.ENVProblem,3);
+          end
+          else
+          begin
+            ckYENV.Enabled := False;
+            ckNENV.Enabled := False;
+          end;
+
+          if PtSHAD then
+          begin
+            ckYSHAD.Enabled := True;
+            ckNSHAD.Enabled := True;
+            ckTreatments(ProbRec.SHADProlem,4);
+          end
+          else
+          begin
+            ckYSHAD.Enabled := False;
+            ckNSHAD.Enabled := False;
+          end;
+
+          if PtMST then
+          begin
+            ckYMST.Enabled := True;
+            ckNMST.Enabled := True;
+            ckTreatments(ProbRec.MSTProblem,5);
+          end
+          else
+          begin
+            ckYMST.Enabled := False;
+            ckNMST.Enabled := False;
+          end;
+
+          if PtHNC then
+          begin
+            ckYHNC.Enabled := True;
+            ckNHNC.Enabled := True;
+            ckTreatments(ProbRec.HNCProblem,6);
+          end
+          else
+          begin
+            ckYHNC.Enabled := False;
+            ckNHNC.Enabled := False;
+          end;
         end ;
-    cbProv.InitLongList(ProbRec.RespProvider.extern) ;
+
+    {cbProv.InitLongList(ProbRec.RespProvider.extern) ;
     if (ProbRec.RespProvider.intern <> '') and (StrToInt64Def(ProbRec.RespProvider.intern, 0) > 0) then
-      cbProv.SelectByIEN(StrToInt64(ProbRec.RespProvider.intern));
+      cbProv.SelectByIEN(StrToInt64(ProbRec.RespProvider.intern));}
+
+    if (Encounter.Provider > 0) and PersonHasKey(Encounter.Provider, 'PROVIDER') then
+      begin
+        cbProv.InitLongList(Encounter.ProviderName);
+        cbProv.SelectByIEN(Encounter.Provider);
+      end
+    else cbProv.InitLongList('');
+
 
     if UpperCase(Reason) = 'A' then
       begin
@@ -352,7 +601,7 @@ begin
       end
     else
       begin
-        if (ProbRec.Service.DHCPField = '^') and  (ProbRec.Clinic.DHCPField <> '^') then
+        {if (ProbRec.Service.DHCPField = '^') and  (ProbRec.Clinic.DHCPField <> '^') then
           begin
             ShowClinicLocationCombo();
             cbLoc.InitLongList(ProbRec.Clinic.Extern);
@@ -364,18 +613,22 @@ begin
             cbServ.InitLongList(ProbRec.Service.Extern);
             cbServ.SelectByID(ProbRec.Service.Intern);
           end
+        else}
+        if Encounter.Inpatient then
+          begin
+            ShowServiceCombo();
+            cbServ.InitLongList('');
+          end
+        else if (Encounter.Location > 0) and IsClinicLoc(Encounter.Location) then
+          begin
+            ShowClinicLocationCombo();
+            cbLoc.InitLongList(Encounter.LocationName);
+            cbLoc.SelectByIEN(Encounter.Location);
+          end
         else
           begin
-            if Encounter.Inpatient then
-              begin
-                ShowServiceCombo();
-                cbServ.InitLongList('');
-              end
-            else
-              begin
-                ShowClinicLocationCombo();
-                cbLoc.InitLongList('');
-              end;
+            ShowClinicLocationCombo();
+            cbLoc.InitLongList('');
           end;
       end;
     cbLoc.Caption := lblLoc.Caption;
@@ -463,27 +716,37 @@ end;
 procedure TfrmdlgProb.bbFileClick(Sender: TObject);
 const
   TX_INACTIVE_ICODE   = 'This problem references an inactive ICD-9-CM code.' + #13#10 +
-                       'The code must be updated using the ''Change''' + #13#10 +
-                       'button before it can be saved';
+                        'The code must be updated using the ''Change''' + #13#10 +
+                        'button before it can be saved';
   TC_INACTIVE_ICODE   = 'Inactive ICD-9-CM Code';
+  TX_INACTIVE_SCODE   = 'This problem references an inactive SNOMED CT code.' + #13#10 +
+                        'The code must be updated using the ''Change''' + #13#10 +
+                        'button before it can be saved';
+  TC_INACTIVE_SCODE   = 'Inactive SNOMED CT Code';
 var
   AList: TstringList;
-  remcom, vu, ut: string;
-  i: integer;
+  remcom, vu, ut, PtID: string;
+//  i :Integer;
+  NTRTCallResult: String;
 begin
   frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
   if (Reason <> 'R') and (Reason <> 'r') then
     if (rgStatus.itemindex=-1) or (cbProv.itemindex=-1) then
-      begin
-        InfoBox('Status and Responsible Provider are required.', 'Information', MB_OK or MB_ICONINFORMATION);
-        exit;
-      end;
+    begin
+      InfoBox('Status and Responsible Provider are required.', 'Information', MB_OK or MB_ICONINFORMATION);
+      exit;
+    end;
   if Reason in ['C','c','E','e'] then
     if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
-      begin
-        InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
-        exit;
-      end;
+    begin
+      InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
+      exit;
+    end
+    else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern) then
+    begin
+      InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
+      exit;
+    end;
   if BadDates then exit;
   Alist:=TStringList.create;
   try
@@ -497,10 +760,12 @@ begin
       Probrec.status := 'A'
     else if rgstatus.itemindex = 1 then
       Probrec.status := 'I';
-    if rgStage.itemindex = 0 then
-      Probrec.Priority := 'A'
-    else if rgStage.itemindex = 1 then
-      Probrec.Priority := 'C';
+    case rgStage.ItemIndex of
+         0: ProbRec.Priority := 'A';
+         1: ProbRec.Priority := 'C'
+         else
+           ProbRec.Priority := '@';
+    end;
     ProbRec.DateOnsetStr := edOnsetDate.text;
     ProbRec.DateResStr   := edResDate.text;{aka inactivation date}
     ProbRec.DateRecStr   := edRecDate.text;{recorded anywhere}
@@ -508,13 +773,13 @@ begin
       ProbRec.DateModStr := DatetoStr(trunc(FMNow))
     else
       ProbRec.DateModStr := edUpdate.text; {last update}
-    (*if ckSC.enabled then *)Probrec.SCProblem    := ckSC.checked;
-    if ckRAD.enabled then Probrec.RadProblem  := ckrad.Checked;
-    if ckAO.enabled then ProbRec.AOProblem    := ckAO.checked;
-    if ckENV.enabled then ProbRec.ENVProblem  := ckENV.Checked;
-    if ckHNC.enabled then ProbRec.HNCProblem  := ckHNC.Checked;
-    if ckMST.enabled then ProbRec.MSTProblem  := ckMST.Checked;
-    if ckSHAD.Enabled then ProbRec.SHADProlem := ckSHAD.Checked;
+    (*if ckSC.enabled then *)Probrec.SCProblem    := TreatmentsCked(0);
+    if ckYAO.enabled then ProbRec.AOProblem    := TreatmentsCked(1);
+    if ckYRAD.enabled then Probrec.RadProblem  := TreatmentsCked(2);
+    if ckYENV.enabled then ProbRec.ENVProblem  := TreatmentsCked(3);
+    if ckYSHAD.Enabled then ProbRec.SHADProlem := TreatmentsCked(4);
+    if ckYMST.enabled then ProbRec.MSTProblem  := TreatmentsCked(5);
+    if ckYHNC.enabled then ProbRec.HNCProblem  := TreatmentsCked(6);
     if cbProv.itemindex = -1 then {Get provider}
       begin
         Probrec.respProvider.intern := '0';
@@ -536,6 +801,18 @@ begin
       end
     else
       Probrec.Service.DHCPtoKeyVal(cbServ.Items[cbServ.itemindex]);
+
+    if RequestNTRT then
+    begin
+      ProbRec.NTRTRequested.intern := '1';
+      ProbRec.NTRTRequested.extern := 'True';
+      if NTRTComment <> '' then
+      begin
+        ProbRec.NTRTComment.intern := NTRTComment;
+        ProbRec.NTRTComment.extern := NTRTComment;
+      end;
+    end;
+
     if ProbRec.Commentcount > 0 then GetEditedComments;
     GetNewComments(Reason);
     case Reason of
@@ -543,11 +820,11 @@ begin
         begin
           ut := '';
           if PLUser.usPrimeUser then ut := '1';
-          FastAssign(EditSave(ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject), AList) ;    //V17.5  RV
+          FastAssign(EditSave(ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString), AList) ;    //V17.5  RV
         end;
       'A','a':  {new problem}
          FastAssign(AddSave(PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
-           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject), AList) ;  //*DFN*
+           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString), AList) ;  //*DFN*
       'R','r': {remove problem}
          begin
            remcom := '';
@@ -566,18 +843,16 @@ begin
         Alist.clear;
         vu:=PLUser.usViewAct;
         fChanged := True;  {ensure update of problem list on close}
-        //frmProblems.LoadPatientProblems(AList,vu[1],false); 
-          { update cover sheet problem list }
-        with frmCover do
-          for i := ComponentCount - 1 downto 0 do
-            begin
-              if Components[i] is TORListBox then
-                begin
-                  case Components[i].Tag of
-                    10: ListActiveProblems((Components[i] as TORListBox).Items);
-                  end;
-                end;
-            end;
+        Changes.RefreshCoverPL := True;
+        if RequestNTRT then
+        begin
+          PtID := Patient.Name + ' (' + Copy(Patient.Name, 0, 1) + Copy(Patient.SSN, (Length(Patient.SSN) - 3), 4) + ')';
+          NTRTCallResult := ProblemNTRTBulletin(FSearchString, Piece(ProbRec.RespProvider.DHCPField, U, 1), PtID, NTRTComment);
+          if piece(NTRTCallResult, '^', 1) <> '1' then
+            InfoBox('Your NTRT Request bulletin for ' + FSearchString + ' could not be generated: '#13#10#13#10 +
+              piece(NTRTCallResult, '^', 2) + #13#10#13#10'Please contact IRM.', 'Bulletin Failed!', MB_ICONERROR or MB_OK);
+          RequestNTRT := False;
+        end;
         Close;
       end
     else
@@ -722,6 +997,10 @@ begin  {BODY }
   alist.add('NEW' + v + '1.16' + v + '0' + u + 'NO'); {MST}
   alist.add('NEW' + v + '1.17' + v + '0' + u + 'NO'); {CV}
   alist.add('NEW' + v + '1.18' + v + '0' + u + 'NO'); {SHAD}
+  if Piece(prob, u, 6) <> '' then
+    alist.Add('NEW' + v + '80001' + v + Piece(prob, u, 6) + u + Piece(prob, u, 6)); {SCT Concept}
+  if Piece(prob, u, 7) <> '' then
+    alist.Add('NEW' + v + '80002' + v + Piece(Piece(prob, u, 7), '|', 1) + u + Piece(Piece(prob, u, 7), '|', 1)); {SCT Designation}
 end;
 
 
@@ -965,6 +1244,8 @@ begin
     begin
       frmPLLex:=TfrmPLLex.create(Application);
       try
+        if (edProb.Text <> '') then
+          frmPLLex.SetSearchString(edProb.Text);
         frmPLLex.showmodal;
       finally
         frmPLLex.Free;
@@ -981,7 +1262,13 @@ begin
 
   {problems are in the form of: ien^.01^icd^icdifn , although only the .01 is required}
   if PLProblem='' then exit ;
-  newprob := PLProblem ;
+  newprob := PLProblem;
+
+  if Piece(NewProb, '|', 2) <> '' then
+  begin
+    FSearchString := Piece(NewProb, '|', 2);
+    NewProb := Piece(NewProb, '|', 1);
+  end;
 
   if frmProblems.HighlightDuplicate(NewProb, Piece(newprob, U, 2) + #13#10#13#10 +
       'This problem would be a duplicate.'+#13#10 +
@@ -995,15 +1282,14 @@ begin
       ProbRec.Problem.DHCPtoKeyVal(Piece(NewProb,u,1) + u + Piece(NewProb,u,2)) ;    {1.01}
       ProbRec.Diagnosis.DHCPtoKeyVal(Piece(NewProb,u,4) + u + Piece(NewProb,u,3)) ;   {.01}
       ProbRec.Narrative.DHCPtoKeyVal(u + Piece(NewProb,u,2));                         {.05}
+      ProbRec.SCTConcept.DHCPtoKeyVal(Piece(NewProb, u, 6) + u + Piece(NewProb, u, 6));
+      ProbRec.SCTDesignation.DHCPtoKeyVal(Piece(NewProb, u, 7) + u + Piece(NewProb, u, 7));
 
       {mark it as changed}
       fchanged := true ;
 
       {Redraw heading}
-      if Piece(NewProb,u,3)<>'' then
-        edProb.Text:=Piece(NewProb,u,2) + ' (' + Piece(NewProb,u,3) + ')'
-      else
-        edProb.Text:=Piece(NewProb,u,2) + ' (799.9)'; {code not found, or free-text entry}
+      edProb.Text:=Piece(NewProb,u,2);
     end ;
 end ;
 

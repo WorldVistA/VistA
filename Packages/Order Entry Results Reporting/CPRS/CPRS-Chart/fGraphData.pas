@@ -8,6 +8,9 @@ uses
 
 type
   TfrmGraphData = class(TfrmBase508Form)
+    btnData: TButton;
+    btnRefresh: TButton;
+    btnTesting: TButton;
     lblCurrent: TLabel;
     lblInfo: TLabel;
     lblInfoCurrent: TLabel;
@@ -15,12 +18,9 @@ type
     lblInfoPublic: TLabel;
     lblPersonal: TLabel;
     lblPublic: TLabel;
+    memTesting: TMemo;
     pnlData: TPanel;
     pnlInfo: TPanel;
-    btnData: TButton;
-    btnRefresh: TButton;
-    btnTesting: TButton;
-    memTesting: TMemo;
 
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -93,6 +93,7 @@ var
   function GetPublicSetting: string;
   function GraphPublicEditor: boolean;
   function GraphTurboOn: boolean;
+
   procedure SetCurrentSetting(aString: string);
   procedure SetGraphStatus(aString: string);
   procedure SetOldDFN(aString: string);
@@ -145,8 +146,10 @@ begin
     PersonalSetting := '';
     PublicEditor := false;
     Status := '';
-    TurboOn := true;
-    Cache := true;
+    //TurboOn := true; 
+    //Cache := true;
+    TurboOn := false;   //*v29* turbo turned off
+    Cache := false;     //*v29* cache turned off
   end;
 end;
 
@@ -206,7 +209,7 @@ end;
 
 procedure TfrmGraphData.ClearPtData;
 var                                        // called when patient is selected
-  oldDFN, faststatus: string;
+  faststatus, oldDFN: string;
 begin
   inherited;
   if FGraphActivity.CurrentSetting = '' then
@@ -343,7 +346,7 @@ end;
 
 procedure TfrmGraphData.btnDataClick(Sender: TObject);
 var
-  left, top, width, height: integer;
+  height, left, top, width: integer;
 begin
   height := pnlData.Height div 8;
   height := height - lblInfo.Height;
@@ -531,7 +534,7 @@ function GetGraphProfiles(profiles, permission: string; ext: integer; userx: int
 var      // temporary fix - converting definitions in GtslAllViews to rpc format
   allviews, fulltext: boolean;
   i: integer;
-  vtype, aline, avtype, avc, avnum, aname, atype, aitem, partsnum, bigline: string;
+  aitem, aline, aname, atype, avc, avnum, avtype, bigline, partsnum, vtype: string;
   //auser: string;
 begin
   if (userx > 0) and (userx <> User.DUZ) then
@@ -600,7 +603,7 @@ end;
 function GetATestGroup(testgroup: Integer; userx: int64): TStrings;
 var      // temporary fix - converting definitions in GtslAllViews to rpc format
   i: integer;
-  aline, avtype, avc, avnum, aname, aitem, partsnum: string;
+  aitem, aline, aname, avc, avnum, avtype, partsnum: string;
   //atype, auser: string;
 begin
   if (userx > 0) and (userx <> User.DUZ) then

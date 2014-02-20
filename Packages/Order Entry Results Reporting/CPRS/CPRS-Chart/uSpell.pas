@@ -9,7 +9,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, ComObj, StdCtrls, ComCtrls,
-  rCore, ORFn, Word2000, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
+  rCore, ORFn, Word2000, Office_TLB, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
 
 type
   TSpellCheckAvailable = record
@@ -71,6 +71,7 @@ type
     FNullStr: OleVariant;
     FWord: WordApplication;
     FDoc: WordDocument;
+    FWordVersion: single;
     FDialog: OleVariant;
     FDocDlg: OleVariant;
     FText: string;
@@ -317,7 +318,7 @@ const
   wsSaveInterval                  = 19;
   wsTrackRevisions                = 20;
   wsShowRevisions                 = 21;
-  wsShowSummary                   = 22;
+  wsShowSummary                   = 22; // not used for Word 2010
 
 procedure TMSWordThread.Execute;
 var
@@ -634,7 +635,8 @@ begin
   FWord.Options.SaveInterval                                := Load(wsSaveInterval);
   FDoc.TrackRevisions                                       := boolean(Load(wsTrackRevisions));
   FDoc.ShowRevisions                                        := boolean(Load(wsShowRevisions));
-  FDoc.ShowSummary                                          := boolean(Load(wsShowSummary));
+  if (FWordVersion < 13) then                               // altered for Word 2010
+    FDoc.ShowSummary                                        := boolean(Load(wsShowSummary));
 end;
 
 function TMSWordThread.RunWithErrorTrap(AMethod: TThreadMethod;
@@ -790,12 +792,14 @@ begin
   Save(Ord(FWord.Options.SaveInterval)                                , wsSaveInterval);
   Save(Ord(FDoc.TrackRevisions)                                       , wsTrackRevisions);
   Save(Ord(FDoc.ShowRevisions)                                        , wsShowRevisions);
-  Save(Ord(FDoc.ShowSummary)                                          , wsShowSummary);
+  if (FWordVersion < 13) then                                         // altered for Word 2010
+    Save(Ord(FDoc.ShowSummary)                                        , wsShowSummary);
 end;
 
 procedure TMSWordThread.StartWord;
 begin
   FWord := CoWordApplication.Create;
+  FWordVersion := StrToFloatDef(FWord.Version, 0.0);
 end;
 
 procedure TMSWordThread.ThreadLock;
@@ -859,7 +863,8 @@ procedure TMSWordThread.ConfigDoc;
 begin
   FDoc.TrackRevisions        := False;
   FDoc.ShowRevisions         := False;
-  FDoc.ShowSummary           := False;
+  if (FWordVersion < 13) then            // altered for Word 2010
+    FDoc.ShowSummary         := False;
   FWord.Height               := 1000;
   FWord.Width                := 1000;
   FWord.Top                  := -2000;
