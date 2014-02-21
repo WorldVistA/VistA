@@ -53,7 +53,7 @@ class FileManFileData(object):
 class FileManDataEntry(object):
   def __init__(self, fileNo, ien):
     self._ien = ien
-    self._data = []
+    self._data = {}
     self._fileNo = fileNo
     self._name = None
   @property
@@ -68,8 +68,8 @@ class FileManDataEntry(object):
   @name.setter
   def name(self, name):
     self._name = name
-  def addField(self, data):
-    self._data.append(data)
+  def addField(self, fldData):
+    self._data[fldData.id] = fldData
   def __repr__(self):
     return "%s: %s: %s" % (self._fileNo, self._ien, self._data)
 
@@ -107,7 +107,8 @@ def printFileManFileData(fileManData, level=0):
       print "FileEntry#: %s, Name: %s" % (ien, dataEntry.name)
     else:
       print
-    for dataField in dataEntry.fields:
+    for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
+      dataField = dateEntry.fields[fldId]
       if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
         if dataField.value and dataField.value.dataEntries:
           print "%s%s:" % (curIndent, dataField.name)
@@ -126,7 +127,7 @@ def safeFileName(name):
   import base64
   return base64.urlsafe_b64encode(name)
 
-outDir = "C:/Users/Jason.li/tmp/rpc"
+outDir = "C:/Users/Jason.li/git/Prod-Manage/Visual/rpc"
 header="""
 <link rel="stylesheet" href="http://tablesorter.com/themes/blue/style.css" type="text/css" id=""/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -141,29 +142,85 @@ header="""
 }); </script>
 """
 
-def generateAllRPCTableHtml(fileManData):
-  with open("%s/allrpcs.html" % outDir,'w+') as output:
+dthead = """
+<link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
+<link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+  // call the tablesorter plugin
+      $("#rpctable").dataTable({
+        "bInfo": true,
+        "iDisplayLength": 25,
+        "sPaginationType": "full_numbers"
+      });
+
+}); </script>
+"""
+
+dthead_rpc = """
+<link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
+<link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+  // call the tablesorter plugin
+      $("#rpctable").dataTable({
+        "bPaginate": false,
+        "bLengthChange": false,
+        "bInfo": false,
+        "bSort": false
+      });
+
+}); </script>
+"""
+
+def writeTableInfo(output):
+  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<thead>\n")
+  output.write("<tr>\n")
+  for name in ("Name", "Tag", "Routine", "Availability"):
+    output.write("<th>%s</th>\n" % name)
+  output.write("</tr>\n")
+  output.write("</thead>\n")
+
+def writeTableInfoRPC(output):
+  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<thead>\n")
+  output.write("<tr>\n")
+  for name in ("Name", "Value"):
+    output.write("<th>%s</th>\n" % name)
+  output.write("</tr>\n")
+  output.write("</thead>\n")
+
+def generateRPCListHtml(dataEntryLst, outputName):
+  with open("%s/%s.html" % (outDir, outputName), 'w+') as output:
       output.write("<html>\n")
-      output.write("%s\n" % header)
-      output.write("<body>")
-      output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
-      output.write("<thead>\n")
-      output.write("<tr>\n")
-      for name in ("Name", "Tag", "Routine", "Availability"):
-        output.write("<th>%s</th>\n" % name)
-      output.write("</tr>\n")
-      output.write("</thead>\n")
+      output.write("%s\n" % dthead)
+      output.write("<body id=\"dt_example\">")
+
+      output.write("""<div id="container" style="width:80%">""")
+      output.write("<h1>Package: %s RPC List</h1>" % (getPackageHRefLink(outputName)))
+      writeTableInfo(output)
       """ table body """
       output.write("<tbody>\n")
-      for ien in getKeys(fileManData.dataEntries.keys(), float):
-        dataEntry = fileManData.dataEntries[ien]
+      for dataEntry in dataEntryLst:
         tableRow = ["", "", "", ""]
-        for field in dataEntry.fields:
+        allFields = dataEntry.fields
+        for fldId in allFields.iterkeys():
           for idx, id in enumerate(('.01', '.02', '.03', '.05')):
-            if field.id == id:
-              value = field.value
-              if idx == 0:
-                value = "<a href=\"%s/%s.html\">%s</a>" % (outDir, safeFileName(value), value)
+            if id in fldId:
+              value = allFields[fldId].value
+              if id == '.01':
+                value = "<a href=\"%s.html\">%s</a>" % (safeFileName(value), value)
+              elif id == '.03': # routine
+                value = getRoutineHRefLink(value)
               tableRow[idx] = value
               continue
         output.write("<tr>\n")
@@ -172,15 +229,41 @@ def generateAllRPCTableHtml(fileManData):
         output.write("</tr>\n")
       output.write("</tbody>\n")
       output.write("</table>\n")
+      output.write("</div>\n")
+      output.write("</div>\n")
       output.write ("</body></html>\n")
+
+dox_url = "http://code.osehra.org/dox/"
+def getRoutineHRefLink(routineName):
+  from WebPageGenerator import getRoutineHtmlFileName
+  value = "<a href=\"%s%s\">%s</a>" % (dox_url,
+                                       getRoutineHtmlFileName(routineName),
+                                       routineName)
+  return value
+def getPackageHRefLink(pkgName):
+  from WebPageGenerator import getPackageHtmlFileName
+  value = "<a href=\"%s%s\">%s</a>" % (dox_url,
+                                       getPackageHtmlFileName(pkgName),
+                                       pkgName)
+  return value
 
 def convertFileManDataToHtml(fileManData):
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
     with open("%s/%s.html" % (outDir, safeFileName(dataEntry.name)), 'w') as output:
-      output.write ("<html><body>")
-      output.write ("FileManFile: %s, IEN: %s" % (fileManData.fileNo, ien))
+      output.write ("<html>")
+      output.write ("%s\n" % dthead_rpc)
+      output.write("<body id=\"dt_example\">")
+      output.write("""<div id="container" style="width:80%">""")
+      output.write ("<h1>%s (%s)</h1>\n" % (dataEntry.name, ien))
+      writeTableInfoRPC(output)
+      """ table body """
+      output.write("<tbody>\n")
       fileManDataEntryToHtml(output, dataEntry, True)
+      output.write("</tbody>\n")
+      output.write("</table>\n")
+      output.write("</div>\n")
+      output.write("</div>\n")
       output.write ("</body></html>")
 
 def convertFileManSubFileDataToHtml(output, fileManData):
@@ -192,29 +275,42 @@ def convertFileManSubFileDataToHtml(output, fileManData):
 
 import cgi
 def fileManDataEntryToHtml(output, dataEntry, isRoot):
-  if isRoot:
-    output.write ("<div>%s</div>" % (dataEntry.name))
-    output.write ("<dl>")
-  else:
+  if not isRoot:
     output.write ("<li>")
-  for dataField in dataEntry.fields:
+  for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
+    if isRoot:
+      output.write ("<tr>\n")
+    dataField = dataEntry.fields[fldId]
     fieldType = dataField.type
     name, value = dataField.name, dataField.value
+    """ hack for RPC """
+    if isRoot and fldId == '.03' and dataField.name == "ROUTINE":
+      value = getRoutineHRefLink(value)
     if fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if dataField.value and dataField.value.dataEntries:
-        output.write ("<dt>%s:</dt>" % name)
-        output.write ("<dd>")
+        if isRoot:
+          output.write("<td>%s</td>" % name)
+          output.write("<td>")
+        else:
+          output.write ("<dt>%s:</dt>" % name)
+          output.write ("<dd>")
         convertFileManSubFileDataToHtml(output, dataField.value)
-        output.write ("</dd>")
+        if isRoot:
+          output.write("</td>")
+        else:
+          output.write ("</dd>")
         continue
     if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
       value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
-    output.write ("<dt>%s:</dt>" % name)
-    output.write ("<dd>%s</dd>" % value)
-  if isRoot:
-    output.write ("</dl>")
-  else:
+    if isRoot:
+      output.write ("<td>%s</td>" % name)
+      output.write ("<td>%s</td>" % value)
+      output.write ("</tr>")
+    else:
+      output.write ("<dt>%s:</dt>" % name)
+      output.write ("<dd>%s</dd>" % value)
+  if not isRoot:
     output.write("</li>")
 
 def test_FileManDataEntry():
@@ -259,6 +355,10 @@ class FileManGlobalDataParser(object):
   def outFileManData(self):
     return self._glbData
 
+  @property
+  def crossRef(self):
+    return self._crossRef
+
   def parseZWRGlobalDataBySchema(self, inputFileName, allSchemaDict,
                                  fileNumber, subscript):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
@@ -280,14 +380,13 @@ class FileManGlobalDataParser(object):
       self._updateCrossReference()
 
   def _updateCrossReference(self):
-    return
     if '8994' in self._glbData:
       self._updateRPCRefence()
 
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
-    for ien in rpcData.data:
-      rpcEntry = rpcData.data[ien]
+    for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
+      rpcEntry = rpcData.dataEntries[ien]
       if rpcEntry.name:
         namespace, package = \
         self._crossRef.__categorizeVariableNameByNamespace__(rpcEntry.name)
@@ -295,6 +394,19 @@ class FileManGlobalDataParser(object):
           package.rpcs.append(rpcEntry)
           logging.info("Adding RPC: %s to Package: %s" %
                       (rpcEntry.name, package.getName()))
+        else:
+          """ try to categorize by routine called """
+          if '.03' in rpcEntry.fields:
+            rpcRoutine = rpcEntry.fields['.03'].value
+            namespace, package = \
+            self._crossRef.__categorizeVariableNameByNamespace__(rpcRoutine)
+            if package:
+              package.rpcs.append(rpcEntry)
+              logging.info("Adding RPC: %s to Package: %s" %
+                          (rpcEntry.name, package.getName()))
+          else:
+            logging.error("Can not find package for RPC: %s" %
+                          (rpcEntry.name))
 
 
   def _resolveSelfPointer(self):
@@ -303,9 +415,9 @@ class FileManGlobalDataParser(object):
     selfRefPtr = set()
     for fileNo in self._glbData.iterkeys():
       fileManData = self._glbData[fileNo]
-      for ien in fileManData.data:
-        dataEntry = fileManData.data[ien]
-        for fileField in dataEntry.data:
+      for ien in fileManData.dataEntries:
+        dataEntry = fileManData.dataEntries[ien]
+        for fileField in dataEntry.fields.itervalues():
           if fileField.type == FileManField.FIELD_TYPE_FILE_POINTER:
             pass
 
@@ -428,32 +540,38 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
+  def outputFileManData(self, html=False):
+    fileManDataMap = self._glbData
+    for fileNo in getKeys(fileManDataMap.iterkeys(), float):
+      fileManData = fileManDataMap[fileNo]
+      if not html:
+        printFileManFileData(fileManData)
+      else:
+        if fileNo == '8994':
+          if self._crossRef:
+            allPackages = self._crossRef.getAllPackages()
+            for package in allPackages.itervalues():
+              if package.rpcs:
+                logging.info("generating RPC list for package: %s" % package.getName())
+                generateRPCListHtml(package.rpcs, package.getName())
+          convertFileManDataToHtml(fileManData)
 
-def createArgParser():
-  import argparse
-  parser = argparse.ArgumentParser(description='FileMan Global Data Parser')
-  parser.add_argument('ddFile', help='path to ZWR file contains DD global')
-  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
-  parser.add_argument('fileNo', help='FileMan File Number')
-  parser.add_argument('subscript', help='The first subscript of the global root')
-  return parser
 
-def testGlobalParser():
+def testGlobalParser(crosRef=None):
   parser = createArgParser()
   result = parser.parse_args()
   print result
+  from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
+  crosRef = parseCrossRefGeneratorWithArgs(result)
   schemaParser = FileManSchemaParser()
   allSchemaDict = schemaParser.parseSchemaDDFile(result.ddFile)
-  glbDataParser = FileManGlobalDataParser()
+  glbDataParser = FileManGlobalDataParser(crosRef)
   glbDataParser.parseZWRGlobalDataBySchema(result.gdFile,
                                            allSchemaDict,
                                            result.fileNo,
                                            result.subscript)
-  for fileNo in getKeys(glbDataParser.outFileManData.iterkeys(), float):
-    fileManData = glbDataParser.outFileManData[fileNo]
-    #printFileManFileData(fileManData)
-    generateAllRPCTableHtml(fileManData)
-    convertFileManDataToHtml(fileManData)
+  glbDataParser.outputFileManData(html=True)
+
 
 def horologToDateTime(input):
   """
@@ -469,6 +587,19 @@ def horologToDateTime(input):
 def test_horologToDateTime():
   input = '57623,29373'
   logging.info(horologToDateTime(input))
+
+def createArgParser():
+  import argparse
+  from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+  initParser = createInitialCrossRefGenArgParser()
+  parser = argparse.ArgumentParser(description='FileMan Global Data Parser',
+                                   parents=[initParser])
+  parser.add_argument('ddFile', help='path to ZWR file contains DD global')
+  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
+  parser.add_argument('fileNo', help='FileMan File Number')
+  parser.add_argument('subscript', help='The first subscript of the global root')
+  return parser
+
 
 def main():
   from LogManager import initConsoleLogging

@@ -216,7 +216,10 @@ class InitCrossReferenceGenerator(object):
     logger.info("Total package is %d and Total Routines are %d" %
                 (len(allPackages), len(allRoutines)))
 
-def parseCrossRefGene
+def parseCrossRefGeneratorWithArgs(args):
+  return parseCrossReferenceGeneratorArgs(args.MRepositDir,
+                                          args.patchRepositDir)
+
 def parseCrossReferenceGeneratorArgs(MRepositDir,
                                      patchRepositDir):
   DoxDir = 'Utilities/Dox'
