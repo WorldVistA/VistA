@@ -183,7 +183,7 @@ def writeTableInfo(output):
   output.write("<table id=\"rpctable\" class=\"display\">\n")
   output.write("<thead>\n")
   output.write("<tr>\n")
-  for name in ("Name", "Tag", "Routine", "Availability"):
+  for name in ("Name", "Tag", "Routine", "Availability", "Description"):
     output.write("<th>%s</th>\n" % name)
   output.write("</tr>\n")
   output.write("</thead>\n")
@@ -199,6 +199,31 @@ def writeTableInfoRPC(output):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
+dox_url = "http://code.osehra.org/dox/"
+def getRPCHRefLink(value):
+  return "<a href=\"%s.html\">%s</a>" % (safeFileName(value), value)
+
+def getRoutineHRefLink(routineName):
+  from WebPageGenerator import getRoutineHtmlFileName
+  return "<a href=\"%s%s\">%s</a>" % (dox_url,
+                                      getRoutineHtmlFileName(routineName),
+                                      routineName)
+
+def getWordProcessingDataBrief(value):
+  return getWordProcessingData(value, False)
+def getWordProcessingData(value, isList=True):
+  outValue = "\n".join(value)
+  if isList:
+    outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
+  return outValue
+
+rpc_list_fields = (('.01', getRPCHRefLink), # Name
+                   ('.02', None), # Tag
+                   ('.03', getRoutineHRefLink), # Routine
+                   ('.05', None),# Availability
+                   ('1', getWordProcessingDataBrief),# Description
+                   )
+
 def generateRPCListHtml(dataEntryLst, outputName):
   with open("%s/%s.html" % (outDir, outputName), 'w+') as output:
       output.write("<html>\n")
@@ -211,18 +236,16 @@ def generateRPCListHtml(dataEntryLst, outputName):
       """ table body """
       output.write("<tbody>\n")
       for dataEntry in dataEntryLst:
-        tableRow = ["", "", "", ""]
+        tableRow = [""]*len(rpc_list_fields)
         allFields = dataEntry.fields
-        for fldId in allFields.iterkeys():
-          for idx, id in enumerate(('.01', '.02', '.03', '.05')):
-            if id in fldId:
-              value = allFields[fldId].value
-              if id == '.01':
-                value = "<a href=\"%s.html\">%s</a>" % (safeFileName(value), value)
-              elif id == '.03': # routine
-                value = getRoutineHRefLink(value)
-              tableRow[idx] = value
-              continue
+        for idx, id in enumerate(rpc_list_fields):
+          if id[0] in allFields:
+            value = allFields[id[0]].value
+            if id[0] == '.03':
+              print value
+            if id[1]:
+              value = id[1](value)
+            tableRow[idx] = value
         output.write("<tr>\n")
         for item in tableRow:
           output.write("<td>%s</td>\n" % item)
@@ -233,13 +256,6 @@ def generateRPCListHtml(dataEntryLst, outputName):
       output.write("</div>\n")
       output.write ("</body></html>\n")
 
-dox_url = "http://code.osehra.org/dox/"
-def getRoutineHRefLink(routineName):
-  from WebPageGenerator import getRoutineHtmlFileName
-  value = "<a href=\"%s%s\">%s</a>" % (dox_url,
-                                       getRoutineHtmlFileName(routineName),
-                                       routineName)
-  return value
 def getPackageHRefLink(pkgName):
   from WebPageGenerator import getPackageHtmlFileName
   value = "<a href=\"%s%s\">%s</a>" % (dox_url,
@@ -299,7 +315,7 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
           output.write("</td>")
         else:
           output.write ("</dd>")
-        continue
+      continue
     if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
       value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
