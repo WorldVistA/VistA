@@ -33,7 +33,10 @@ uses
   Forms,
   WinHelpViewer,
   UnitTest in '@SOURCE@\UnitTest.pas' {UnitTest},
-  UTSignonCnf in '@SOURCE@\Tests\UTSignonCnf.pas' {UTSignonCnf};
+  UTSignonCnf in '@SOURCE@\Tests\UTSignonCnf.pas' {UTSignonCnf},
+  UTXlfMime in '@SOURCE@\Tests\UTXlfMime.pas' {UTXuDsigS},
+  UTWcrypt2 in '@SOURCE@\Tests\UTWcrypt2.pas' {UTXuDsigS},
+  UTWinSCard in '@SOURCE@\Tests\UTWinSCard.pas'{UTXuDsigS};
 
 {$R '@SOURCE@\CPRSTesting.tlb'}
 

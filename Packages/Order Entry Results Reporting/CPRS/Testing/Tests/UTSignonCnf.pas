@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //---------------------------------------------------------------------------
+{$Optimization off}
 unit UTSignonCnf;
 interface
 uses UnitTest, TestFrameWork, SgnonCnf;
@@ -49,5 +50,5 @@ begin
 end;
 
 begin
-UnitTest.addSuite(UTSignonCnfTests.Suite);
+  UnitTest.addSuite(UTSignonCnfTests.Suite);
 end.

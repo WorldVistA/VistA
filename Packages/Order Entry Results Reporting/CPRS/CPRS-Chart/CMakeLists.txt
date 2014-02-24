@@ -16,13 +16,13 @@
 add_delphi_project(CPRSChart)
 add_dependencies(CPRSChart ORDateLib2007)
 
-set(BUILD_DELPHI_XuDigSig_DIR CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
+set(BUILD_DELPHI_XuDigSig_DIR "${CMAKE_CURRENT_SOURCE_DIR}/XuDigSig" CACHE PATH "Path to Folder that contains the MPL licensed files or local replacements")
 if(NOT BUILD_DELPHI_XuDigSig_DIR)
   message(WARNING "The CPRSv29 source on the FOIA site contained code that was
 released under the 1.1 version of the Mozilla Public license. These files
-have been separated into a different repository, and will need to be
-acquired by either downloading/cloning from
+have been replaced by OSEHRA written files found in the CPRS-Chart/XuDigSig
+directory.  To utilize the original files, download/clone them from
   https://github.com/OSEHRA-Sandbox/CPRSv29-XUDigSig
-or by recreating the files locally. The BUILD_DELPHI_XuDigSig_DIR should be
-set to the folder that contains these files. See the README for more details.")
+Then, set BUILD_DELPHI_XuDigSig_DIR to be the path to the folder that contains
+these files. See the README for more details.")
 endif()
