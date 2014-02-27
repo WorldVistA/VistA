@@ -15,14 +15,15 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Disable journaling for instance
+# Rotate journal for instance
 
-# TODO: accept journal file argument
-# TODO: accept database location
+# Ensure presence of required variables
+if [[ -z $instance && $gtmver && $gtm_dist && $basedir ]]; then
+    echo "The required variables are not set (instance, gtmver, gtm_dist)"
+fi
 
-# Source VistA environment variables
-source /opt/FOIA/etc/env
-instance="FOIA"
-gtmver="V6.0-000_x86_64"
+# Variable to determine how many days of journals to keep
+daystokeep="5"
 
-$gtm_dist/mupip set -journal="disable" -file /opt/$instance/$gtmver/g/$instance.dat
+# Delete journals older than $daystokeep
+find $basedir/j/ -name "*.mjl_*" -type f -ctime +$daystokeep -exec rm -v {} >> $basedir/log/deletedJournals.log \;

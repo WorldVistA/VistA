@@ -39,7 +39,7 @@ TEST_VISTA_DOX_CALLERGRAPH:BOOL=OFF
 # remove this option, delete the CMake Cache
 TEST_VISTA_FRESH:BOOL=ON
 #Command to run in place of the ImportRG refresh.
-TEST_VISTA_FRESH_CUSTOM_COMMAND:STRING=\"/bin/bash\" \"/vagrant/GTM/removeVistaInstanceMinimal.sh\" \"-i $ENV{instance}\"
+TEST_VISTA_FRESH_CUSTOM_COMMAND:STRING=\"/bin/bash\" \"$ENV{basedir}/bin/removeVistaInstanceMinimal.sh\" \"-i $ENV{instance}\"
 #Use a custom script to refresh the VistA Databases
 TEST_VISTA_FRESH_CUSTOM_REFRESH:BOOL=ON
 #Timeout in seconds for importing globals

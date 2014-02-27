@@ -15,14 +15,11 @@
 # limitations under the License.
 #---------------------------------------------------------------------------
 
-# Enable journaling for instance
+# Disable journaling for instance
 
-# TODO: accept journal file argument
-# TODO: accept database location
+# Ensure presence of required variables
+if [[ -z $instance && $gtmver && $gtm_dist && $basedir ]]; then
+    echo "The required variables are not set (instance, gtmver, gtm_dist)"
+fi
 
-# Source VistA environment variables
-source /opt/FOIA/etc/env
-instance="FOIA"
-gtmver="V6.0-000_x86_64"
-
-$gtm_dist/mupip set -journal="enable,on,before,file=/opt/$instance/$gtmver/j/$instance.mjl" -file /opt/$instance/$gtmver/g/$instance.dat
+$gtm_dist/mupip set -journal="disable" -file $basedir/g/$instance.dat

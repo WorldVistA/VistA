@@ -29,45 +29,41 @@
 #                    Includes starting TaskMan.
 ### END INIT INFO
 
-# TODO: add RHEL specific options
-# TODO: add Ubuntu specific options
-
-instance="FOIA"
-
-# setup environment variables
-source /opt/$instance/etc/env
+# Setup environment variables
+# This path will be replaced with the correct $basedir when a VistA instance
+# is created. This script will need to have it hardcoded
+source /home/foia/etc/env
 
 # Start VistA background tasks
 start() {
-    # TODO: logging
+    # If a database is shutdown cleanly there shouldn't be anything in the
+    # journals to replay, so we can run this without worry
+    echo "Ensuring a consistant database (mupip recover -backward)"
+    su $instance -c "source $basedir/etc/env && $gtm_dist/mupip journal -recover -backward $basedir/j/$instance.mjl >> $basedir/log/journalRecovery.log 2>&1 && $basedir/bin/enableJournal.sh"
 
-    # Check to see if database is clean
-    # TODO: check here
-
-    #if(!clean)
-    #   echo "DATABASE IS NOT CLEAN!"
-    #   echo "Trying auto recovery (mupip recover --backwards)
-    #   $gtm_dist/mupip journal -recover -backward /opt/$instance/$gtmver/j/$instacne.mjl
-    #fi
+    # Rundown temp database since we don't care about it
+    su $instance -c "source $basedir/etc/env && $gtm_dist/mupip rundown -region \"TEMP\" >> $basedir/log/tempRundown.log"
 
     # Start TaskMan
-    $gtm_dist/mumps -run START^ZTMB
-
-    # Others? MailMan?
-    # HL7, VistALink, RPC Broker are all handled by xinetd
+    echo "Starting TaskMan"
+    su $instance -c "source $basedir/etc/env && cd $basedir/tmp && $gtm_dist/mumps -run START^ZTMB"
 }
 stop() {
-    # TODO: logging
-
     # Stop TaskMan
-    mumps -run STOP^ZTMB <"y\r\ny\n"
+    su $instance -c "source $basedir/etc/env && mumps -run ^%XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
+Y
+Y
+Y
+EOF"
     
     # Wait for TaskMan to stop
-    sleep 60
+    echo "Waiting for TaskMan to stop (30 sec)"
+    sleep 30
 
-    # Look for mumps processes and terminate them nicely
-    processes=$(psgrep mumps)
+    # Look for M processes and terminate them nicely
+    processes=$(pgrep mumps)
     if [ ! -z "${processes}" ] ; then
+        echo "Stopping any remaining M processes nicely"
         for i in ${processes}
         do
             mupip stop ${i}
@@ -77,27 +73,27 @@ stop() {
         sleep 5
     fi
 
-    # Look for mumps processes that are still running
-    processes=$(psgrep mumps)
+    # Look for M processes that are still running
+    processes=$(pgrep mumps)
     if [ ! -z "${processes}" ] ; then
         #TODO: logging required here
-        echo "mumps process are being shutdown forcefully!"
+        echo "M process are being shutdown forcefully!"
         pkill -9 mumps
     fi
 }
 
 case "$1" in
-    (start)
-        start()
+    start)
+        start
         ;;
-    (stop)
-        stop()
+    stop)
+        stop
         ;;
-    (restart)
-        stop()
-        start()
+    restart)
+        stop
+        start
         ;;
-    (*)
+    *)
         echo "Usage: $0 {start|stop|restart}"
         ;;
 esac
