@@ -38,14 +38,19 @@ def fmDtToPyDt(fileManDt):
     outTime = time()
     if timePart and timePart[1:]: # has some time part here
       timePart = timePart[1:].ljust(6,'0')
-      hour = timePart[0:2]
-      if int(hour) == 24: # special handling for mid-night
+      hour = int(timePart[0:2])
+      if hour == 24: # special handling for mid-night
         outTime = time(23,59,59)
       else:
+        minute = int(timePart[2:4])
+        second = int(timePart[-2:])
+        if minute == 60:
+          minute = 59
+          second = 59
+        elif second == 60:
+          second = 59
         try:
-          outTime = time(int(timePart[0:2]),
-                         int(timePart[2:4]),
-                         int(timePart[-2:]))
+          outTime = time(hour, minute, second)
         except ValueError:
           return None
     return datetime.combine(outDate, outTime)
@@ -55,6 +60,7 @@ def testFmDtToPyDt():
   fileManDt = ("3121201.2308",
                "2970919.12",
                "2970919.24",
+               "2930913.146",
                "2970919.082701",
                "3091203.09072",
                )
