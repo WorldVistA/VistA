@@ -30,6 +30,9 @@ if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
 from FileManDateTimeUtil import fmDtToPyDt
+import glob
+
+outDir = "C:/Users/Jason.li/git/Prod-Manage/Visual/form"
 
 class FileManFileData(object):
   def __init__(self, fileNo, name):
@@ -108,7 +111,7 @@ def printFileManFileData(fileManData, level=0):
     else:
       print
     for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
-      dataField = dateEntry.fields[fldId]
+      dataField = dataEntry.fields[fldId]
       if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
         if dataField.value and dataField.value.dataEntries:
           print "%s%s:" % (curIndent, dataField.name)
@@ -127,7 +130,6 @@ def safeFileName(name):
   import base64
   return base64.urlsafe_b64encode(name)
 
-outDir = "C:/Users/Jason.li/git/Prod-Manage/Visual/rpc"
 header="""
 <link rel="stylesheet" href="http://tablesorter.com/themes/blue/style.css" type="text/css" id=""/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -145,6 +147,7 @@ header="""
 dthead = """
 <link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
 <link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
+<link rel="stylesheet" href="../style.css" type="text/css" id=""/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
 <script type="text/javascript" id="js">
@@ -153,7 +156,9 @@ dthead = """
       $("#rpctable").dataTable({
         "bInfo": true,
         "iDisplayLength": 25,
-        "sPaginationType": "full_numbers"
+        "sPaginationType": "full_numbers",
+        "bStateSave": true,
+        "bAutoWidth": false
       });
 
 }); </script>
@@ -171,22 +176,12 @@ dthead_rpc = """
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
+        "bStateSave": true,
         "bSort": false
       });
 
 }); </script>
 """
-
-def writeTableInfo(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
-  output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
-  output.write("<thead>\n")
-  output.write("<tr>\n")
-  for name in ("Name", "Tag", "Routine", "Availability", "Description"):
-    output.write("<th>%s</th>\n" % name)
-  output.write("</tr>\n")
-  output.write("</thead>\n")
 
 def writeTableInfoRPC(output):
   #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
@@ -212,11 +207,13 @@ def getRoutineHRefLink(routineName):
 def getWordProcessingDataBrief(value):
   return getWordProcessingData(value, False)
 def getWordProcessingData(value, isList=True):
-  outValue = "\n".join(value)
+  outValue = " ".join(value)
   if isList:
     outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
   return outValue
 
+"""
+"""
 rpc_list_fields = (('.01', getRPCHRefLink), # Name
                    ('.02', None), # Tag
                    ('.03', getRoutineHRefLink), # Routine
@@ -224,31 +221,50 @@ rpc_list_fields = (('.01', getRPCHRefLink), # Name
                    ('1', getWordProcessingDataBrief),# Description
                    )
 
-def generateRPCListHtml(dataEntryLst, outputName):
-  with open("%s/%s.html" % (outDir, outputName), 'w+') as output:
+def writeRPCTableInfo(output):
+  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<thead>\n")
+  output.write("<tr>\n")
+  for name in ("Name", "Tag", "Routine", "Availability", "Description"):
+    output.write("<th>%s</th>\n" % name)
+  output.write("</tr>\n")
+  output.write("</thead>\n")
+
+def writeTableListInfo(output):
+  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<thead>\n")
+  output.write("<tr>\n")
+  for name in ("Name", "IEN"):
+    output.write("<th>%s</th>\n" % name)
+  output.write("</tr>\n")
+  output.write("</thead>\n")
+
+def generateRPCListHtml(dataEntryLst, outputName, dir=outDir):
+  with open("%s/%s.html" % (dir, outputName), 'w+') as output:
       output.write("<html>\n")
       output.write("%s\n" % dthead)
       output.write("<body id=\"dt_example\">")
-
       output.write("""<div id="container" style="width:80%">""")
       output.write("<h1>Package: %s RPC List</h1>" % (getPackageHRefLink(outputName)))
-      writeTableInfo(output)
+      writeRPCTableInfo(output)
       """ table body """
       output.write("<tbody>\n")
       for dataEntry in dataEntryLst:
         tableRow = [""]*len(rpc_list_fields)
         allFields = dataEntry.fields
+        output.write("<tr>\n")
         for idx, id in enumerate(rpc_list_fields):
           if id[0] in allFields:
             value = allFields[id[0]].value
-            if id[0] == '.03':
-              print value
             if id[1]:
               value = id[1](value)
             tableRow[idx] = value
-        output.write("<tr>\n")
         for item in tableRow:
-          output.write("<td>%s</td>\n" % item)
+          output.write("<td class=\"ellipsis\">%s</td>\n" % item)
         output.write("</tr>\n")
       output.write("</tbody>\n")
       output.write("</table>\n")
@@ -263,10 +279,45 @@ def getPackageHRefLink(pkgName):
                                        pkgName)
   return value
 
-def convertFileManDataToHtml(fileManData):
+def getDataEntryHtmlFile(dataEntry, ien, fileNo):
+  entryName = str(dataEntry.name)[:20]
+  return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
+
+def generateDataTableHtml(fileManData, fileNo, dir=outDir):
+  with open("%s/%s.html" % (dir, fileNo), 'w') as output:
+    output.write("<html>\n")
+    output.write("%s\n" % dthead)
+    output.write("<body id=\"dt_example\">")
+    output.write("""<div id="container" style="width:80%">""")
+    output.write("<h1>File %s Data List</h1>" % (fileNo))
+    writeTableListInfo(output)
+    output.write("<tbody>\n")
+    for ien in getKeys(fileManData.dataEntries.keys(), float):
+      dataEntry = fileManData.dataEntries[ien]
+      if not dataEntry.name:
+        logging.info("no name for %s" % dataEntry)
+        continue
+      dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                dataEntry.name)
+      tableRow = [dataHtmlLink, dataEntry.ien]
+      output.write("<tr>\n")
+      """ table body """
+      for item in tableRow:
+        output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+      output.write("</tr>\n")
+    output.write("</tbody>\n")
+    output.write("</table>\n")
+    output.write("</div>\n")
+    output.write("</div>\n")
+    output.write ("</body></html>\n")
+
+def convertFileManDataToHtml(fileManData, dir=outDir):
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
-    with open("%s/%s.html" % (outDir, safeFileName(dataEntry.name)), 'w') as output:
+    if not dataEntry.name:
+      logging.info("no name for %s" % dataEntry)
+      continue
+    with open("%s/%s" % (dir, getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)), 'w') as output:
       output.write ("<html>")
       output.write ("%s\n" % dthead_rpc)
       output.write("<body id=\"dt_example\">")
@@ -283,16 +334,16 @@ def convertFileManDataToHtml(fileManData):
       output.write ("</body></html>")
 
 def convertFileManSubFileDataToHtml(output, fileManData):
-  output.write ("<ol>")
+  output.write ("<ol>\n")
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
     fileManDataEntryToHtml(output, dataEntry, False)
-  output.write ("</ol>")
+  output.write ("</ol>\n")
 
 import cgi
 def fileManDataEntryToHtml(output, dataEntry, isRoot):
   if not isRoot:
-    output.write ("<li>")
+    output.write ("<li>\n")
   for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
     if isRoot:
       output.write ("<tr>\n")
@@ -305,29 +356,29 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     if fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if dataField.value and dataField.value.dataEntries:
         if isRoot:
-          output.write("<td>%s</td>" % name)
-          output.write("<td>")
+          output.write("<td>%s</td>\n" % name)
+          output.write("<td>\n")
         else:
-          output.write ("<dt>%s:</dt>" % name)
-          output.write ("<dd>")
+          output.write ("<dl><dt>%s:</dt>\n" % name)
+          output.write ("<dd>\n")
         convertFileManSubFileDataToHtml(output, dataField.value)
         if isRoot:
-          output.write("</td>")
+          output.write("</td>\n")
         else:
-          output.write ("</dd>")
+          output.write ("</dd></dl>\n")
       continue
     if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
       value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
     if isRoot:
-      output.write ("<td>%s</td>" % name)
-      output.write ("<td>%s</td>" % value)
-      output.write ("</tr>")
+      output.write ("<td>%s</td>\n" % name)
+      output.write ("<td>%s</td>\n" % value)
+      output.write ("</tr>\n")
     else:
-      output.write ("<dt>%s:</dt>" % name)
-      output.write ("<dd>%s</dd>" % value)
+      output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (name, value))
+      #output.write ("<dd>%s</dd>\n" % value)
   if not isRoot:
-    output.write("</li>")
+    output.write("</li>\n")
 
 def test_FileManDataEntry():
   fileManData = FileManFileData('1', 'TEST FILE 1')
@@ -375,22 +426,85 @@ class FileManGlobalDataParser(object):
   def crossRef(self):
     return self._crossRef
 
-  def parseZWRGlobalDataBySchema(self, inputFileName, allSchemaDict,
-                                 fileNumber, subscript):
+  def _createDataRootByZWRFile(self, inputFileName):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
+
+  def getAllFileManZWRFiles(self, dirName, pattern):
+    searchFiles = glob.glob(os.path.join(dirName, pattern))
+    outFiles = {}
+    for file in searchFiles:
+      fileName = os.path.basename(file)
+      result = re.search("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$", fileName)
+      if result:
+        "ignore split file for now"
+        if result.groups()[1]:
+          logging.info("Ignore file %s" % fileName)
+          continue
+        fileNo = result.group('fileNo')
+        if fileNo.startswith('0'): fileNo = fileNo[1:]
+        globalDes = result.group('des')
+        outFiles[fileNo] = (globalDes, os.path.normpath(os.path.abspath(file)))
+    return outFiles
+
+  def parseFileManZWRGlobaFilesBySchema(self, mRepositDir, allSchemaDict):
+    allFiles = self.getAllFileManZWRFiles(os.path.join(mRepositDir,
+                                                       'Packages'),
+                                                     "*/Globals/*.zwr")
+    allFileManGlobal = self._crossRef.getAllFileManGlobals()
+    sizeLimit = 59*1024*1024 # 1 MiB
+    for key in sorted(allFileManGlobal.keys()):
+      fileManFile = allFileManGlobal[key]
+      fileNo = fileManFile.getFileNo()
+      if fileNo not in allFiles:
+        continue
+      ddFile = allFiles[fileNo][1]
+      glbDes = allFiles[fileNo][0]
+      self._createDataRootByZWRFile(ddFile)
+      if not self._dataRoot:
+        logging.warn("not data for file %s" % ddFile)
+        continue
+      globalName = fileManFile.getName()
+      parts = globalName.split('(')
+      rootName, subscript = (None, None)
+      if len(parts) > 1:
+        rootName = parts[0]
+        subscript = parts[1].strip('"')
+      else:
+        rootName = parts[0]
+        subscript = rootName
+      assert rootName == self._dataRoot.subscript
+      logging.info("File: %s, root: %s, sub: %s" % (ddFile, rootName, subscript))
+      self.parseZWRGlobalDataBySchema(self._dataRoot, allSchemaDict,
+                                      fileNo, subscript)
+      dir = "C:/Users/Jason.li/git/Prod-Manage/Visual/files"
+      logging.info("writing html for file %s: Name: %s" % (fileNo, glbDes))
+      self.outputFileManData(True, dir)
+      self._glbData = {}
+
+  def parseZWRGlobalFileBySchema(self, inputFileName, allSchemaDict,
+                                 fileNumber, subscript):
+    self._createDataRootByZWRFile(inputFileName)
+    self.parseZWRGlobalDataBySchema(dataRoot, allSchemaDict,
+                                    fileNumber, subscript)
+
+  def parseZWRGlobalDataBySchema(self, dataRoot, allSchemaDict,
+                                 fileNumber, subscript):
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
-    if subscript and subscript in self._dataRoot:
-      dataRoot = self._dataRoot[subscript]
+    fileDataRoot = dataRoot
+    if subscript:
+      if subscript in dataRoot:
+        logging.info("using subscript %s" % subscript)
+        fileDataRoot = dataRoot[subscript]
       self._glbData[fileNumber] = FileManFileData(fileNumber,
                                                   schemaFile.getFileManName())
-      self._parseDataBySchema(dataRoot, schemaFile, self._glbData[fileNumber])
+      self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
     else: # assume this is for all files in the entry
       for fileNo in getKeys(self._dataRoot, float):
-        dataRoot = self._dataRoot[fileNo]
+        fileDataRoot = self._dataRoot[fileNo]
         self._glbData[fileNo] = FileManFileData(fileNo,
                                                 schemaFile.getFileManName())
-        self._parseDataBySchema(dataRoot, schemaFile, self._glbData[fileNo])
+        self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNo])
     self._resolveSelfPointer()
     if self._crossRef:
       self._updateCrossReference()
@@ -517,7 +631,7 @@ class FileManGlobalDataParser(object):
         if outDt:
           fieldDetail = outDt
         else:
-          logger.warn("Could not parse Date/Time: %s" % value)
+          logging.warn("Could not parse Date/Time: %s" % value)
 
     outDataEntry.addField(FileManDataField(fieldAttr.getFieldNo(),
                                           fieldAttr.getType(),
@@ -556,7 +670,7 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-  def outputFileManData(self, html=False):
+  def outputFileManData(self, html=False, dir=outDir):
     fileManDataMap = self._glbData
     for fileNo in getKeys(fileManDataMap.iterkeys(), float):
       fileManData = fileManDataMap[fileNo]
@@ -569,8 +683,9 @@ class FileManGlobalDataParser(object):
             for package in allPackages.itervalues():
               if package.rpcs:
                 logging.info("generating RPC list for package: %s" % package.getName())
-                generateRPCListHtml(package.rpcs, package.getName())
-          convertFileManDataToHtml(fileManData)
+                generateRPCListHtml(package.rpcs, package.getName(), dir)
+        generateDataTableHtml(fileManData, fileNo, dir)
+        convertFileManDataToHtml(fileManData,dir)
 
 
 def testGlobalParser(crosRef=None):
@@ -582,11 +697,13 @@ def testGlobalParser(crosRef=None):
   schemaParser = FileManSchemaParser()
   allSchemaDict = schemaParser.parseSchemaDDFile(result.ddFile)
   glbDataParser = FileManGlobalDataParser(crosRef)
-  glbDataParser.parseZWRGlobalDataBySchema(result.gdFile,
-                                           allSchemaDict,
-                                           result.fileNo,
-                                           result.subscript)
-  glbDataParser.outputFileManData(html=True)
+  glbDataParser.parseFileManZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
+
+  #glbDataParser.parseZWRGlobalFileBySchema(result.gdFile,
+  #                                         allSchemaDict,
+  #                                         result.fileNo,
+  #                                         result.subscript)
+  #glbDataParser.outputFileManData(html=True)
 
 
 def horologToDateTime(input):
