@@ -14,6 +14,13 @@ provisioner which can talk to a variety of providers (VirtualBox, Rackspace,
 AWS, etc.) to create a base VM and deploy the developed application within it.
 Go read more about the history of vagrant here_
 
+Tutorial Video
+--------------
+
+There is a tutorial video that demonstrates this procedure in a Windows
+environment on YouTube_. This is highly recommended for new users to Vagrant or
+VistA.
+
 Why Vagrant?
 ------------
 
@@ -82,7 +89,7 @@ Vagrant what to do and how to do it.
 
 We'll begin by opening a git-bash prompt (Windows) or a bash shell (\*nix).
 
-Note: The guides assume that you will use a git-bash or a bash shell for
+NOTE: The guides assume that you will use a git-bash or a bash shell for
 all future interactions with Vagrant.
 
 You can clone the VistA repository anywhere but for simplicity we'll clone it
@@ -132,7 +139,7 @@ The VM sets up the RPC broker which is used for CPRS, Vitals, and other GUIs
 and VistAlink. Regular ssh is also available. The VM will open the following
 ports on VirtualBox.
 
-Note: If you are using a cloud provider (AWS/EC2, Rackspace) you will have to
+NOTE: If you are using a cloud provider (AWS/EC2, Rackspace) you will have to
 open the cloud firewall for the following ports before you begin the
 provisioning process.
 
@@ -144,7 +151,7 @@ provisioning process.
 
 The Access/Verify codes are the same used in OSEHRA automated testing.
 
-Note: CPRS uses the RPC Broker and the correct commandline arguments for
+NOTE: CPRS uses the RPC Broker and the correct commandline arguments for
 VirtualBox are: S=127.0.0.1 P=9430. If you used a cloud provider
 (Rackspace, AWS) the easist way to find out what the S= needs to be is to lookup
 your DNS address in the management portal of your cloud provider.
@@ -192,7 +199,7 @@ Accessing Roll-and-Scroll
 There are two user accounts that are created automatically during the
 installation process that make accessing VistA easier:
 
-Note: by default ${instance} is osehra.
+NOTE: by default ${instance} is osehra.
 
 Tied user account
 
@@ -228,7 +235,7 @@ To login as a programmer user using the default osehra instance:
 
 Then type the password above at the password prompt
 
-Note: Everytime a new vagrant VM is created a new SSH machine key is generated,
+NOTE: Everytime a new vagrant VM is created a new SSH machine key is generated,
 which has a new fingerprint. Some SSH clients will complain about this and will
 prevent you from logging on. There are typically instructions in the error
 message to resolve this connection problem.
@@ -250,9 +257,15 @@ VistA environment you can perform the following command:
 Which will give you a programmer prompt. To get to the normal VistA login
 screen type the following:
 
+NOTE: the prompt ``OSEHRA>`` is based on the $instance variable as referenced
+above.
+
 .. parsed-literal::
 
-    FOIA> :usertype:`D ^ZU`
+    OSEHRA> :usertype:`D ^ZU`
+
+To access the files using SFTP you must connect as the vagrant user or the
+account pre created if you are using a cloud provider (EC2/Rackspace).
 
 Shutdown Vagrant VM
 -------------------
@@ -289,7 +302,7 @@ Services:
 
  * EWD.js: ${instance}vista-ewdjs
 
-   * Note: this controls both EWDRest and EWD.js
+   * This controls both EWDRest and EWD.js
 
 To control the EWD service type:
 
@@ -299,6 +312,13 @@ To control the EWD service type:
 
 Where ${instance} is the name of the instance and {start,stop,restart} is the
 function you want to perform.
+
+The log files for EWD.js and EWDRest are located in /home/$instance/log/:
+
+ * ewdStartOut.log
+ * ewdStartErr.log
+ * ewdRestOut.log
+ * ewdRestErr.log
 
 Technical Details
 -----------------
@@ -337,6 +357,7 @@ parent directories in the correct order.
 
 .. _Vagrant: http://www.vagrantup.com
 .. _here: http://www.vagrantup.com/about.html
+.. _YouTube: http://www.youtube.com/watch?v=eogchJncTlc
 .. _Vagrantfile: https://github.com/OSEHRA/VistA/blob/master/Scripts/Install/Ubuntu/Vagrantfile
 .. _autoInstaller.sh: https://github.com/OSEHRA/VistA/blob/master/Scripts/Install/Ubuntu/autoInstaller.sh
 .. _Install: https://github.com/OSEHRA/VistA/tree/master/Scripts/Install

@@ -237,3 +237,6 @@ fi
 if $postInstall; then
     su $instance -c "source $basedir/etc/env && $postInstallScript"
 fi
+
+# Ensure group permissions are correct
+chmod -R g+rw /home/osehra

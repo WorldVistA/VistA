@@ -46,6 +46,23 @@ For Initialization and Setup without using the OSEHRA Utilities, see:
 
   * Initialization_
 
+Automated Virtual Machine (VM) creation and VistA installation
+--------------------------------------------------------------
+
+Using the power of Vagrant_ there is a Vagrantfile in the
+``Scripts/Install/Ubuntu`` directory that can be used to create a VM with VistA
+installed and runs a selection of unit tests. This type of VM creation is
+designed with DevOps in mind, but can be useful to try VistA out for the first
+time, demo system, among many other uses. However, DO NOT use this VM for
+production purposes!
+
+  * Overview_
+
+For more information regarding using Vagrant with cloud providers:
+
+  * `Amazon Web Services`_
+  * Rackspace_
+
 Troubleshooting:
 ````````````````
 
@@ -76,4 +93,8 @@ directory and includes:
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
 .. _PrepareMComponents: PrepareMComponents.rst
 .. _Initialization: Initialization.rst
+.. _Vagrant: http://www.vagrantup.com
+.. _Overview: Install/Vagrant.rst
+.. _`Amazon Web Services`: Install/AWS.rst
+.. _Rackspace: Install/Rackspace.rst
 .. _`M Standards and Conventions`: Standards/SAC.rst
