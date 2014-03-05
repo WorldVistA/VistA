@@ -217,6 +217,9 @@ def readGlobalNodeFromZWRFile(inputFileName):
         continue
       line = line.strip('\r\n')
       subscripts = findSubscriptValue(line)[0] # find all the subscripts
+      if not subscripts:
+        yield None
+        return
       if idx == 2:
         glbRootSub = line[:line.find('(')]
         index = resetGlobalIndex(subscripts, glbRootSub)
@@ -256,14 +259,15 @@ def test_createGlobalNodeByZWRFile(inputFileName):
 
 def test_readGlobalNodeFromZWRFile(inputFileName):
   logging.info("Start reading file: %s" % inputFileName)
+  totalEntry = 0
   for globalRoot in readGlobalNodeFromZWRFile(inputFileName):
     if globalRoot:
-      for idx in globalRoot:
-        logging.info("getting global index %s" % globalRoot[idx])
-      printGlobal(globalRoot)
+      totalEntry += 1
+      #printGlobal(globalRoot)
       del globalRoot
       globalRoot = None
       pass
+  logging.info("Total # of entries: %s" % totalEntry)
   logging.info("End reading file: %s" % inputFileName)
 
 def findSubscriptValue(inputLine):

@@ -19,9 +19,15 @@ import re
 from datetime import datetime
 import logging
 from CrossReference import FileManFile, FileManFieldFactory
-from CrossReference import FileManField
+from CrossReference import FileManField, Global
 from ZWRGlobalParser import createGlobalNodeByZWRFile, getKeys
 from ZWRGlobalParser import readGlobalNodeFromZWRFile, printGlobal
+
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
+print SCRIPTS_DIR
+if SCRIPTS_DIR not in sys.path:
+  sys.path.append(SCRIPTS_DIR)
 
 """
   Utility Function to set the Type/Specifier
@@ -156,6 +162,8 @@ class FileManSchemaParser(object):
     self._ddRoot = None # global Root by reading the zwr file
     self._zeroFiles = ['0'] # all file and subfile WRT file zero
     self._subFiles = set() # all the subFiles
+    self._noPointedToFiles = {} # global Name => global
+    self._fileDep = {} # fileNo => list of files
 
   def _readZeroFile(self, inputDDZWRFile):
     for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
@@ -163,12 +171,75 @@ class FileManSchemaParser(object):
         printGlobal(globalRoot)
         break
 
+  def _updateFileDepSet(self, file, deps, exclude):
+    for depFile in [x for x in deps]:
+      if depFile not in self._fileDep:
+        logging.info("no dep information for file %s" % depFile)
+        continue
+      if depFile in exclude:
+        logging.info("%s is in exclude list" % depFile)
+        continue
+      exclude.add(depFile)
+      self._updateFileDepSet(depFile, self._fileDep[depFile], exclude)
+      logging.info("defore update deps: %s" % deps)
+      deps.update(self._fileDep[depFile])
+      logging.info("after update deps: %s" % deps)
+
+  def _updateFileDep(self):
+    exclude = set()
+    for file in self._fileDep.iterkeys():
+      if file in exclude:
+        continue
+      exclude.add(file)
+      self._updateFileDepSet(file, deps, exclude)
+
+  def _generateNoPointerToFileList(self):
+    depDict = self._fileDep
+    noPointedToBy = sorted(reduce(set.union, depDict.itervalues()) -
+                            set(depDict.iterkeys()), key=lambda x: float(x))
+    # remove subfiles
+    allNoPointedToBy = noPointedToBy
+    noPointedToBy = [x for x in noPointedToBy if self._allSchema[x].isRootFile()]
+    logging.debug("SubFiles are %s" % (set(allNoPointedToBy) - set(noPointedToBy)))
+    logging.info("Total # of Files that is not pointed to by any files: %s" %
+                  len(noPointedToBy))
+    logging.debug("List of files that is not pointed to by any files: %s" % noPointedToBy)
+
+    """
+      generate list of files that does not have any pointer
+      and is not pointed by any files
+    """
+    allFiles = [x for x in self._allSchema if self._allSchema[x].isRootFile()]
+    logging.info("Total # of Files: %s" % len(allFiles))
+    allFilesWithPointedTo = [x for x in depDict if self._allSchema[x].isRootFile()]
+    allFilesWithoutPointedTo = sorted(set(allFiles) - set(allFilesWithPointedTo), key=lambda x: float(x))
+    logging.info("Total # of Files that is not pointed to by any files: %s" % len(allFilesWithoutPointedTo))
+    logging.debug("Files that is not pointed to by any files: %s" % allFilesWithoutPointedTo)
+    allFilePointerTo = reduce(set.union, depDict.itervalues())
+    allFileNoPointerTo = set(allFiles) - allFilePointerTo
+    logging.info("Total # of files that does not have file pointer: %s" % len(allFileNoPointerTo))
+    logging.debug("Files that does not have pointer to files: %s" % allFileNoPointerTo)
+    isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
+    logging.info("Total # of Isolated Files: %s" % len(isolatedFile))
+    logging.debug("Isolated File List: %s" % sorted(isolatedFile, key=lambda x: float(x)))
+
+
+  def _updateFileDepByFile(self, file, exclude):
+    exclude.add(file)
+    return self._updateFileDepSet(file, self._fileDep[file], exclude)
+
+  def _topologicSort(self):
+    from PatchOrderGenerator import topologicSort
+    result = topologicSort(self._fileDep, '2')
+    print result
+
   def parseSchemaDDFile(self, inputDDZWRFile):
     self._ddRoot = createGlobalNodeByZWRFile(inputDDZWRFile)
     assert self._ddRoot.subscript == "^DD"
     #self._generateFileZeroSchema()
     self._generateSchema()
     self._updateMultiple()
+    self._updateFileDep()
     return self._allSchema
 
   def parseSchemaDDFileV2(self, inputDDZWRFile):
@@ -177,28 +248,36 @@ class FileManSchemaParser(object):
       #logging.info("Printing Global Node:")
       #printGlobal(ddRoot)
       self._generateSchema()
+    self._updateMultiple()
+    self._generateNoPointerToFileList()
+    if '101' in self._fileDep:
+      print self._fileDep['101']
+    #self._updateFileDepByFile('200', set())
+    #print len(self._fileDep['200']), self._fileDep['200']
     return self._allSchema
+
   def _generateFileZeroSchema(self):
     while (len(self._zeroFiles) > 0):
       file = self._zeroFiles.pop(0)
       if file not in self._allSchema:
-        self._allSchema[file] = FileManFile(file, "")
+        self._allSchema[file] = Global("", file, "")
       self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
 
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
-    logging.info("Parsing files %s" % files)
+    logging.debug("Parsing files %s" % files)
     for file in files:
       if file not in self._allSchema:
-        self._allSchema[file] = FileManFile(file, "")
+        self._allSchema[file] = Global("", file, "")
       self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
 
-  def _parseSubFilesNode(self, rootNode):
+  def _parseSubFilesNode(self, rootNode, fileNo):
     """ Get the subFiles used in the file """
     for key in getKeys(rootNode['SB'], float):
-      logging.info("Adding subfiles: %s" % key)
+      logging.debug("Checking subfiles: %s" % key)
       assert key in self._allSchema
       assert self._allSchema[key].isSubFile()
+      assert self._allSchema[key].getParentFile().getFileNo() == fileNo
       self._subFiles.add(key)
   def _generateFileSchema(self, rootNode, fileSchema):
     """
@@ -210,7 +289,7 @@ class FileManSchemaParser(object):
       if field:
         fileSchema.addFileManField(field)
     if 'SB' in rootNode:
-      self._parseSubFilesNode(rootNode)
+      self._parseSubFilesNode(rootNode, fileSchema.getFileNo())
 
   def _parseSchemaField(self, fieldNo, rootNode, fileSchema):
     if '0' not in rootNode:
@@ -260,28 +339,47 @@ class FileManSchemaParser(object):
                               fileSchema, filePointedTo, subFile)
     return fileField
 
+  def _addToFileDepDict(self, fileNo, pointedToFile):
+    if pointedToFile not in self._fileDep:
+      self._fileDep[pointedToFile] = set()
+    logging.debug("File: %s - Adding Pointed to by file %s" % (pointedToFile, fileNo))
+    self._fileDep[pointedToFile].add(fileNo)
+
   def _setFieldSpecificData(self, zeroFields, fileField, rootNode,
                            fileSchema, filePointedTo, subFile):
     if fileField.getType() == FileManField.FIELD_TYPE_FILE_POINTER:
+      fileGlobalRoot = ""
+      if len(zeroFields) >= 3:
+        fileGlobalRoot = zeroFields[2]
       if filePointedTo:
-        if filePointedTo in self._allSchema:
-          fileField.setPointedToFile(self._allSchema[filePointedTo])
+        if filePointedTo not in self._allSchema:
+          """ create a new fileman file """
+          self._allSchema[filePointedTo] = Global(fileGlobalRoot,
+                                                  filePointedTo,
+                                                  "")
+        pointedToFile = self._allSchema[filePointedTo]
+        assert pointedToFile.isRootFile()
+        fileField.setPointedToFile(pointedToFile)
+        globalName = pointedToFile.getName()
+        fileNo = fileSchema.getFileNo()
+        if fileSchema.isSubFile():
+          fileNo = fileSchema.getRootFile().getFileNo()
+        self._addToFileDepDict(fileNo,
+                               pointedToFile.getFileNo())
+        if fileGlobalRoot:
+          if not globalName:
+            pointedToFile.setName(fileGlobalRoot)
+          elif globalName != fileGlobalRoot:
+            logging.error("%s: FileMan global root mismatch %s: %s" %
+                          (zeroFields, globalName, fileGlobalRoot))
         else:
-          logging.info("%r: filePointedTo: %s" % (fileField, filePointedTo))
-          """ try to set the global location here """
-          if len(zeroFields) >= 3:
-            fileGlobalRoot = zeroFields[2]
-            logging.info("@TODO, find the file @ %s" % fileGlobalRoot)
-          else:
-            logging.warn("Could not find pointed to file: %s" % filePointedTo)
+          logging.info("@TODO, find file global root for # %s" % filePointedTo)
+      elif fileGlobalRoot:
+        self._noPointedToFiles[fileGlobalRoot] = Global(fileGlobalRoot)
+        logging.info("@TODO, set the file number for %s" % fileGlobalRoot)
       else:
-        """ try to set the global location here """
-        if len(zeroFields) >= 3:
-          fileGlobalRoot = zeroFields[2]
-          logging.info("@TODO, find the file @ %s" % fileGlobalRoot)
-        else:
-          logging.warn("No pointed to file set for file:%s: field:%r 0-index:%s" %
-                       (fileSchema.getFileNo(), fileField, zeroFields))
+        logging.warn("No pointed to file set for file:%s: field:%r 0-index:%s" %
+                     (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile:
         if subFile not in self._allSchema:
@@ -301,11 +399,21 @@ class FileManSchemaParser(object):
         vptrs = parsingVariablePointer(rootNode['V'])
         vpFileSchemas = []
         if vptrs:
+          logging.debug("variable points: %s" % vptrs)
           for x in vptrs:
             if x not in self._allSchema:
-              self._allSchema[x] = FileManFile(x, "")
-            if self._allSchema[x].isSubFile():
-              logging.info("Field: %s point to subFile: %s" % (fileField, x))
+              self._allSchema[x] = Global("", x, "")
+            pointedToFile = self._allSchema[x]
+            if pointedToFile.isSubFile():
+              logging.error("Field: %r point to subFile: %s, parent: %s" %
+                           (fileField, pointedToFile,
+                            pointedToFile.getParentFile()))
+            else:
+              fileNo = fileSchema.getFileNo()
+              if fileSchema.isSubFile():
+                fileNo = fileSchema.getRootFile().getFileNo()
+              self._addToFileDepDict(fileNo,
+                                     pointedToFile.getFileNo())
             vpFileSchemas.append(self._allSchema[x])
           fileField.setPointedToFiles(vpFileSchemas)
     elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
@@ -314,7 +422,8 @@ class FileManSchemaParser(object):
                       ("".join(zeroFields[4:]), fileField))
 
   @staticmethod
-  def parseFieldTypeSpecifier(typeField):
+  def parseFieldTypeSpecifier(type):
+    typeField = type
     if not typeField:
       return [FileManField.FIELD_TYPE_NONE], None, None, None
     types, specifier = [], []
@@ -335,8 +444,10 @@ class FileManSchemaParser(object):
     result = re.search("(?P<subFile>^[0-9.]+)", typeField)
     if result:
       subFile = result.group('subFile')
-      if FileManField.FIELD_TYPE_SUBFILE_POINTER not in types:
+      if (FileManField.FIELD_TYPE_SUBFILE_POINTER not in types and
+         FileManField.FIELD_TYPE_COMPUTED not in types):
         types.insert(0, FileManField.FIELD_TYPE_SUBFILE_POINTER)
+        logging.debug("Set to subFile type for %s" % type)
     return types, specifier, filePointedTo, subFile
 
   def _updateMultiple(self):
@@ -397,8 +508,10 @@ def testDDZWRFile():
   allSchemaDict = schemaParse.parseSchemaDDFileV2(result.ddFile)
   # Find all the word processing multiple
   # printAllSchemas(allSchemaDict)
-  allSchemaDict['2'].printFileManInfo()
-  allSchemaDict['1'].printFileManInfo()
+  #allSchemaDict['44.003'].printFileManInfo()
+  #allSchemaDict['101'].printFileManInfo()
+  #allSchemaDict['2'].printFileManInfo()
+  #allSchemaDict['1'].printFileManInfo()
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
@@ -409,12 +522,15 @@ def parseCrossReference(globalRoot):
   pass
   #printGlobal(globalRoot['1'])
 
-def parsingVariablePointer(globalRoot):
-  intKey = getKeys(globalRoot)
+def parsingVariablePointer(vpRoot):
+  intKey = getKeys(vpRoot)
   outVptr = []
   for key in intKey:
-    if '0' in globalRoot[key]:
-      outVptr.append(globalRoot[key]['0'].value[0])
+    if '0' in vpRoot[key]:
+      value = vpRoot[key]['0'].value
+      if value:
+        value = value.split('^')[0]
+        outVptr.append(value)
   return outVptr
 
 def parsingDelTest(globalRoot):
@@ -433,13 +549,13 @@ def parsingWordProcessingNode(globalNode, level=1):
 def test_parseFieldTypeSpecifier():
   for typeField in (".2LAP", "M66.021A", "MP200'X",
                     "Cm", "BC", "9002313.59902PA", "RF",
-                    "WL", "200.34P", "*P21'Xa"):
+                    "WL", "200.34P", "*P21'Xa", "*P8'X", "CD8"):
     logging.info("%s: %s" % (typeField,
                   FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
 def main():
   from LogManager import initConsoleLogging
-  initConsoleLogging(formatStr='%(message)s')
+  initConsoleLogging(formatStr='%(asctime)s %(message)s')
   #test_parseFieldTypeSpecifier()
   testDDZWRFile()
 
