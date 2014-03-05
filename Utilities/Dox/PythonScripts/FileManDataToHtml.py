@@ -18,11 +18,7 @@ import sys
 import re
 from datetime import datetime
 import logging
-from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
-from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
-from ZWRGlobalParser import readGlobalNodeFromZWRFile
-from FileManSchemaParser import FileManSchemaParser
+import glob
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
@@ -31,11 +27,11 @@ if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
 from FileManDateTimeUtil import fmDtToPyDt
-import glob
-
+from ZWRGlobalParser import getKeys
+from CrossReference import FileManField
 
 def safeFileName(name):
-""" convert to base64 encoding """
+  """ convert to base64 encoding """
   import base64
   return base64.urlsafe_b64encode(name)
 
@@ -101,7 +97,7 @@ dthead_rpc = """
 }); </script>
 """
 
-def writeTableInfoRPC(output):
+def outputFileEntryTableList(output):
   #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
   output.write("<div id=\"demo\">")
   output.write("<table id=\"rpctable\" class=\"display\">\n")
@@ -162,6 +158,10 @@ def writeTableListInfo(output):
   output.write("</thead>\n")
 
 def generateRPCListHtml(dataEntryLst, outputName, dir):
+  """
+    Specific logic to handle RPC List
+    @TODO move the logic to a specific file
+  """
   with open("%s/%s.html" % (dir, outputName), 'w+') as output:
       output.write("<html>\n")
       output.write("%s\n" % dthead)
@@ -198,7 +198,11 @@ def getPackageHRefLink(pkgName):
   return value
 
 def getDataEntryHtmlFile(dataEntry, ien, fileNo):
-  entryName = str(dataEntry.name)[:20]
+  entryName = str(dataEntry.name)
+  return getDataEntryHtmlFileByName(entryName, ien, fileNo)
+
+def getDataEntryHtmlFileByName(entryName, ien, fileNo):
+  entryName = entryName[:20] # max 20 chars
   return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
 
 def generateDataTableHtml(fileManData, fileNo, dir):
@@ -235,13 +239,14 @@ def convertFileManDataToHtml(fileManData, dir):
     if not dataEntry.name:
       logging.info("no name for %s" % dataEntry)
       continue
-    with open("%s/%s" % (dir, getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)), 'w') as output:
+    outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
+    with open("%s/%s" % (dir, outHtmlFileName), 'w') as output:
       output.write ("<html>")
       output.write ("%s\n" % dthead_rpc)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       output.write ("<h1>%s (%s)</h1>\n" % (dataEntry.name, ien))
-      writeTableInfoRPC(output)
+      outputFileEntryTableList(output)
       """ table body """
       output.write("<tbody>\n")
       fileManDataEntryToHtml(output, dataEntry, True)
@@ -271,21 +276,31 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     """ hack for RPC """
     if isRoot and fldId == '.03' and dataField.name == "ROUTINE":
       value = getRoutineHRefLink(value)
-    if fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-      if dataField.value and dataField.value.dataEntries:
+    elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
+      if value and value.dataEntries:
         if isRoot:
           output.write("<td>%s</td>\n" % name)
           output.write("<td>\n")
         else:
           output.write ("<dl><dt>%s:</dt>\n" % name)
           output.write ("<dd>\n")
-        convertFileManSubFileDataToHtml(output, dataField.value)
+        convertFileManSubFileDataToHtml(output, value)
         if isRoot:
           output.write("</td>\n")
         else:
           output.write ("</dd></dl>\n")
       continue
-    if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
+    elif fieldType == FileManField.FIELD_TYPE_FILE_POINTER:
+      if value:
+        fields = value.split(';')
+        if len(fields) == 3: # fileNo, ien, name
+          refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
+          value = '<a href="%s">%s<a>' % (refFile, fields[-1])
+        elif len(fields) == 2:
+          value = 'File: %s, IEN: %s' % (fields[0], fields[1])
+        else:
+          logging.error("Unknown File Pointer Value %s" % dataField.value)
+    elif fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
       value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
     if isRoot:
@@ -298,15 +313,21 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
   if not isRoot:
     output.write("</li>\n")
 
-def outputFileManDataAsHtml(fileManDataMap, outDir):
+def outputFileManDataAsHtml(fileManDataMap, outDir, crossRef):
+  """
+    This is the entry pointer to generate Html output
+    format based on FileMan Data object
+    @TODO: integrate with FileManFileOutputFormat.py
+  """
   for fileNo in getKeys(fileManDataMap.iterkeys(), float):
     fileManData = fileManDataMap[fileNo]
     if fileNo == '8994':
-      if self._crossRef:
-        allPackages = self._crossRef.getAllPackages()
+      if crossRef:
+        allPackages = crossRef.getAllPackages()
         for package in allPackages.itervalues():
           if package.rpcs:
-            logging.info("generating RPC list for package: %s" % package.getName())
-            generateRPCListHtml(package.rpcs, package.getName(), dir)
-      generateDataTableHtml(fileManData, fileNo, dir)
-      convertFileManDataToHtml(fileManData,dir)
+            logging.info("generating RPC list for package: %s"
+                         % package.getName())
+            generateRPCListHtml(package.rpcs, package.getName(), outDir)
+    generateDataTableHtml(fileManData, fileNo, outDir)
+    convertFileManDataToHtml(fileManData, outDir)
