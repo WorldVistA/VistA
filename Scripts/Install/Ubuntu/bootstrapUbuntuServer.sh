@@ -26,4 +26,4 @@ apt-get -y -qq update > /dev/null
 apt-get -y -qq upgrade > /dev/null
 
 # Install baseline packages
-apt-get install -y -qq git xinetd perl wget ssh > /dev/null
+apt-get install -y -qq git xinetd perl wget curl python ssh > /dev/null
