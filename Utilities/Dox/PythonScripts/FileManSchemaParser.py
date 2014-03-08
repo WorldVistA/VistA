@@ -25,7 +25,6 @@ from ZWRGlobalParser import readGlobalNodeFromZWRFile, printGlobal
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-print SCRIPTS_DIR
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
@@ -164,6 +163,16 @@ class FileManSchemaParser(object):
     self._subFiles = set() # all the subFiles
     self._noPointedToFiles = {} # global Name => global
     self._fileDep = {} # fileNo => list of files
+    self._sccSet = []
+    self._isolatedFile = set()
+
+  @property
+  def sccSet(self):
+    return self._sccSet
+
+  @property
+  def isolatedFiles(self):
+    return self._isolatedFile
 
   def _readZeroFile(self, inputDDZWRFile):
     for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
@@ -200,7 +209,7 @@ class FileManSchemaParser(object):
     # remove subfiles
     allNoPointedToBy = noPointedToBy
     noPointedToBy = [x for x in noPointedToBy if self._allSchema[x].isRootFile()]
-    logging.debug("SubFiles are %s" % (set(allNoPointedToBy) - set(noPointedToBy)))
+    logging.info("SubFiles are %s" % (set(allNoPointedToBy) - set(noPointedToBy)))
     logging.info("Total # of Files that is not pointed to by any files: %s" %
                   len(noPointedToBy))
     logging.debug("List of files that is not pointed to by any files: %s" % noPointedToBy)
@@ -219,10 +228,9 @@ class FileManSchemaParser(object):
     allFileNoPointerTo = set(allFiles) - allFilePointerTo
     logging.info("Total # of files that does not have file pointer: %s" % len(allFileNoPointerTo))
     logging.debug("Files that does not have pointer to files: %s" % allFileNoPointerTo)
-    isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
-    logging.info("Total # of Isolated Files: %s" % len(isolatedFile))
-    logging.debug("Isolated File List: %s" % sorted(isolatedFile, key=lambda x: float(x)))
-
+    self._isolatedFile = set(allFilesWithoutPointedTo) & allFileNoPointerTo
+    logging.info("Total # of Isolated Files: %s" % len(self._isolatedFile))
+    logging.info("Isolated File List: %s" % sorted(self._isolatedFile, key=lambda x: float(x)))
 
   def _updateFileDepByFile(self, file, exclude):
     exclude.add(file)
@@ -242,6 +250,30 @@ class FileManSchemaParser(object):
     self._updateFileDep()
     return self._allSchema
 
+  def _generateSCCSet(self):
+    """
+      generate a list of set that contains
+      a group of files that are Strongly Connected Components
+    """
+    outList = self._sccSet
+    """ remove self dependency """
+    allFiles = set(self._fileDep.keys())
+    # special logic to reduce the dependency of file 101
+    for key, values in self._fileDep.iteritems():
+      #if key == '101':
+      #  for item in ('200', '19', '9.4', '870', '123.5', '62.07', '62.05', '60', '61', '62', '123.1', '71', '19.1'):
+      #    values.discard(item)
+      #elif key == '771':
+      #  values.discard('3.8')
+      #elif '200' == key:
+      #  values = set()
+      allFiles.update(values)
+    for key in allFiles:
+      self._fileDep.setdefault(key,set())
+    for scc in strongly_connected_components_iterative(allFiles, self._fileDep):
+      outList.append(scc)
+    return outList
+
   def parseSchemaDDFileV2(self, inputDDZWRFile):
     for ddRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
       self._ddRoot = ddRoot
@@ -250,8 +282,17 @@ class FileManSchemaParser(object):
       self._generateSchema()
     self._updateMultiple()
     self._generateNoPointerToFileList()
+    outSCCLst = self._generateSCCSet()
     if '101' in self._fileDep:
       print self._fileDep['101']
+    totalFiles = 0
+    for idx, scc in enumerate(outSCCLst):
+      scc = scc - self._isolatedFile
+      print "%s: %s" % (idx, scc)
+      totalFiles += len(scc)
+      if '101' in scc:
+        print "Total # files need to read at the same time is %s" % len(scc)
+        print "Total Files before 101 is %s" % totalFiles
     #self._updateFileDepByFile('200', set())
     #print len(self._fileDep['200']), self._fileDep['200']
     return self._allSchema
@@ -340,10 +381,11 @@ class FileManSchemaParser(object):
     return fileField
 
   def _addToFileDepDict(self, fileNo, pointedToFile):
-    if pointedToFile not in self._fileDep:
-      self._fileDep[pointedToFile] = set()
-    logging.debug("File: %s - Adding Pointed to by file %s" % (pointedToFile, fileNo))
-    self._fileDep[pointedToFile].add(fileNo)
+    if fileNo == pointedToFile:
+      return # ignore self pointed files
+    logging.debug("File: %s - Adding Pointed to file %s"
+                  % (fileNo, pointedToFile))
+    self._fileDep.setdefault(fileNo, set()).add(pointedToFile)
 
   def _setFieldSpecificData(self, zeroFields, fileField, rootNode,
                            fileSchema, filePointedTo, subFile):
@@ -553,10 +595,72 @@ def test_parseFieldTypeSpecifier():
     logging.info("%s: %s" % (typeField,
                   FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
+def strongly_connected_components_iterative(vertices, edges):
+  """
+  This is a non-recursive version of strongly_connected_components_path.
+  See the docstring of that function for more details.
+
+  Example from Tarjan's paper [2]_.
+
+  vertices = [1, 2, 3, 4, 5, 6, 7, 8]
+  edges = {1: [2], 2: [3, 8], 3: [4, 7], 4: [5],
+           5: [3, 6], 6: [], 7: [4, 6], 8: [1, 7]}
+  set([6])
+  set([3, 4, 5, 7])
+  set([8, 1, 2])
+
+  """
+  identified = set()
+  stack = []
+  index = {}
+  boundaries = []
+
+  for v in vertices:
+    if v not in index:
+      #print "traversal vertice %s: edges: %s" % (v, edges[v])
+      to_do = [('VISIT', v)]
+      while to_do:
+        operation_type, v = to_do.pop()
+        if operation_type == 'VISIT':
+          index[v] = len(stack)
+          stack.append(v)
+          boundaries.append(index[v])
+          to_do.append(('POSTVISIT', v))
+          # We reverse to keep the search order identical to that of
+          # the recursive code;  the reversal is not necessary for
+          # correctness, and can be omitted.
+          try:
+            to_do.extend(
+                reversed([('VISITEDGE', w) for w in edges[v]]))
+          except KeyError as ke:
+            print "KeyError: %r" % ke
+        elif operation_type == 'VISITEDGE':
+          if v not in index:
+            to_do.append(('VISIT', v))
+          elif v not in identified:
+            while index[v] < boundaries[-1]:
+              boundaries.pop()
+        else:
+          # operation_type == 'POSTVISIT'
+          if boundaries[-1] == index[v]:
+            boundaries.pop()
+            scc = set(stack[index[v]:])
+            del stack[index[v]:]
+            identified.update(scc)
+            yield scc
+
+def test_strongly_connected_components_iterative():
+  vertices = [1, 2, 3, 4, 5, 6, 7, 8]
+  edges = {1: set([2]), 2: set([3, 8]), 3: [4, 7], 4: [5],
+           5: [3, 6], 6: [], 7: [4, 6], 8: [1, 7]}
+  for scc in  strongly_connected_components_iterative(vertices, edges):
+    print(scc)
+
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
   #test_parseFieldTypeSpecifier()
+  test_strongly_connected_components_iterative()
   testDDZWRFile()
 
 if __name__ == '__main__':
