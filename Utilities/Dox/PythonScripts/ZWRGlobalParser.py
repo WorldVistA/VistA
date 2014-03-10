@@ -219,7 +219,10 @@ class DefaultZWRRootGenerator(object):
       self.rootSub = None
     else:
       self.commonSubscript, value, self.rootSub = findSubscriptValue(glbLoc)
-      self.index = len(subscripts)
+      if self.commonSubscript:
+        self.index = len(self.commonSubscript)
+      else:
+        self.index = 0
     self.curRoot = None
     self.inputFile = open(inputFileName, "r")
     self.lineNo = 0
@@ -227,6 +230,8 @@ class DefaultZWRRootGenerator(object):
     return self
   def __del__(self):
     self.inputFile.close()
+  def __next__(self):
+    return self.next()
   def next(self):
     if self.inputFile.closed:
       logging.info("%s is closed" % self.inputFile.name)
@@ -241,17 +246,14 @@ class DefaultZWRRootGenerator(object):
       self.lineNo += 1
       if self.lineNo <= 2: # ignore the first two lines
         continue
-      logging.info("reading line %s" % self.lineNo)
       line = line.strip('\r\n')
       result = self.filterResult(line)
       if result is None:
-        logging.info("result is None")
         self.inputFile.close()
         raise StopIteration
       if result == True:
         continue
       if result:
-        logging.info("result result")
         return result
   def filterResult(self, line):
     """
@@ -266,9 +268,6 @@ class DefaultZWRRootGenerator(object):
       return None
     if not self.rootSub:
       self.rootSub = rootSub
-      if self.rootSub == '^DD':
-        logging.info("Reset index to 0")
-        self.index = 0
     if rootSub != self.rootSub: # not under the same root, ignore
       retNode = self.curRoot
       if self.glbLoc:
@@ -286,16 +285,14 @@ class DefaultZWRRootGenerator(object):
       if self.commonSubscript is None:
         self.commonSubscript = subscripts[0:self.index+1]
       self.curRoot = createGlobalNode(line, self.curRoot)
-      logging.info("Return True")
       return True
     else:
       self.commonSubscript = curCommonScript + subscripts[len(curCommonScript):self.index+1]
-      logging.info("return current node")
       retNode = self.curRoot
       self.curRoot = createGlobalNode(line)
       return retNode
-def readGlobalNodeFromZWRFileV2(inputFileName):
-  return DefaultZWRRootGenerator(inputFileName)
+def readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
+  return DefaultZWRRootGenerator(inputFileName, glbLoc)
 
 def readGlobalNodeFromZWRFile(inputFileName):
   """ this is indeed a GlobalNode generator implemented by yield
@@ -380,9 +377,11 @@ def findSubscriptValue(inputLine):
   """
   start = inputLine.find("(")
   if start <= 0:
-    return None, None, None
+    return None, None, inputLine
+  if start == len(inputLine) - 1:
+    return None, None, inputLine[:-1]
   pos = inputLine.find(")=\"")
-  if pos >= start:
+  if pos > start+1:
     nodeIndex = [x.strip('"') for x in inputLine[start+1:pos].split(",")]
     nodeValue = inputLine[pos+3:-1]
     return nodeIndex, nodeValue, inputLine[:start]
@@ -397,6 +396,8 @@ def test_findSubscriptValue():
     ('''^DD(0,0,"IX","SB",0,.2)=""''',
       (['0','0','IX','SB','0','.2'], '', '^DD')),
     ('''^DD("IX"''', (['IX'],None,'^DD')),
+    ('''^DD''', (None, None,'^DD')),
+    ('''^DD(''', (None, None,'^DD')),
   ]:
     result = findSubscriptValue(line[0])
     assert result == line[1]
@@ -450,9 +451,9 @@ def main():
   import sys
   from datetime import datetime
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  #test_UtilitiesFunctions()
+  test_UtilitiesFunctions()
   #test_createGlobalNodeByZWRFile(sys.argv[1])
-  test_readGlobalNodeFromZWRFileV2(sys.argv[1])
+  #test_readGlobalNodeFromZWRFileV2(sys.argv[1])
   #test_readGlobalNodeFromZWRFile(sys.argv[1])
 
 if __name__ == '__main__':
