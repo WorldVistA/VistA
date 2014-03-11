@@ -220,6 +220,7 @@ class DefaultZWRRootGenerator(object):
       self.commonSubscript = None
     else:
       self.commonSubscript, value, self.rootSub = findSubscriptValue(glbLoc)
+      print self.commonSubscript, value, self.rootSub
       if self.commonSubscript:
         self.index = len(self.commonSubscript)
       else:
@@ -241,7 +242,11 @@ class DefaultZWRRootGenerator(object):
       if not line or len(line) == 0:
         self.inputFile.close()
         if self.curRoot:
-          return self.curRoot
+          retNode = self.curRoot.getRootNode()
+          if self.curCommonSub:
+            for sub in self.curCommonSub:
+              retNode = retNode[sub]
+          return retNode
       self.lineNo += 1
       if self.lineNo <= 2: # ignore the first two lines
         continue
@@ -271,7 +276,7 @@ class DefaultZWRRootGenerator(object):
       retNode = self.curRoot
       if self.glbLoc:
         logging.warn("Different root, expected: %s, real: %s, ignore for now" %
-                      (self._rootSub, rootSub))
+                      (self.rootSub, rootSub))
         self.curRoot = None
         return True
       else:
@@ -279,6 +284,9 @@ class DefaultZWRRootGenerator(object):
         self.curCommonSub = subscripts[0:self.index+1]
         self.curRoot = createGlobalNode(line)
         if retNode:
+          retNode = retNode.getRootNode()
+          for sub in self.curCommonSub:
+            retNode = retNode[sub]
           return retNode
         else:
           return True
@@ -288,6 +296,9 @@ class DefaultZWRRootGenerator(object):
       retNode = self.curRoot
       self.curRoot = None
       if retNode:
+        retNode = retNode.getRootNode()
+        for sub in self.commonSubscript:
+          retNode = retNode[sub]
         return retNode
       else:
         return True
@@ -415,6 +426,7 @@ def test_findSubscriptValue():
     ('''^DD(''', (None, None,'^DD')),
   ]:
     result = findSubscriptValue(line[0])
+    print line[0], result
     assert result == line[1]
 
 def createGlobalNode(inputLine, globalRoot=None):
@@ -467,7 +479,7 @@ def main():
   from datetime import datetime
   import argparse
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  #test_UtilitiesFunctions()
+  test_UtilitiesFunctions()
   #test_createGlobalNodeByZWRFile(sys.argv[1])
   parser = argparse.ArgumentParser(description='VistA ZWR Global Parser')
   parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
