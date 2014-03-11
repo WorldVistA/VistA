@@ -213,10 +213,11 @@ def resetGlobalIndex(subscripts, glbRootSub):
 class DefaultZWRRootGenerator(object):
   def __init__(self, inputFileName, glbLoc=None):
     self.glbLoc = glbLoc
+    self.curCommonSub = None
     if not glbLoc:
       self.index = 1 # set the starting index to be 1
-      self.commonSubscript = None
       self.rootSub = None
+      self.commonSubscript = None
     else:
       self.commonSubscript, value, self.rootSub = findSubscriptValue(glbLoc)
       if self.commonSubscript:
@@ -234,12 +235,10 @@ class DefaultZWRRootGenerator(object):
     return self.next()
   def next(self):
     if self.inputFile.closed:
-      logging.info("%s is closed" % self.inputFile.name)
       raise StopIteration
     while True:
       line = self.inputFile.readline()
       if not line or len(line) == 0:
-        logging.info("End of reading file: %s" % self.inputFile.name)
         self.inputFile.close()
         if self.curRoot:
           return self.curRoot
@@ -271,25 +270,41 @@ class DefaultZWRRootGenerator(object):
     if rootSub != self.rootSub: # not under the same root, ignore
       retNode = self.curRoot
       if self.glbLoc:
-        logging.warn("Different root, old: %s, new: %s, ignore for now" %
+        logging.warn("Different root, expected: %s, real: %s, ignore for now" %
                       (self._rootSub, rootSub))
         self.curRoot = None
         return True
       else:
         self.rootSub = rootSub
-        self.commonSubscript = subscripts[0:self.index+1]
+        self.curCommonSub = subscripts[0:self.index+1]
         self.curRoot = createGlobalNode(line)
+        if retNode:
+          return retNode
+        else:
+          return True
+    if self.commonSubscript and subscripts[0:self.index] != self.commonSubscript:
+      logging.warn("Different subsript, expected: %s, real: %s, ignore for now" %
+          (self.commonSubscript, subscripts[0:self.index]))
+      retNode = self.curRoot
+      self.curRoot = None
+      if retNode:
         return retNode
-    curCommonScript = getCommonSubscript(subscripts, self.commonSubscript)
-    if self.commonSubscript is None or self.commonSubscript == curCommonScript:
-      if self.commonSubscript is None:
-        self.commonSubscript = subscripts[0:self.index+1]
+      else:
+        return True
+    curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
+    if self.curCommonSub is None or self.curCommonSub == curCommonScript:
+      if self.curCommonSub is None:
+        self.curCommonSub = subscripts[0:self.index+1]
       self.curRoot = createGlobalNode(line, self.curRoot)
       return True
     else:
-      self.commonSubscript = curCommonScript + subscripts[len(curCommonScript):self.index+1]
       retNode = self.curRoot
+      if retNode:
+        retNode = retNode.getRootNode()
+        for subscript in curCommonScript:
+          retNode = retNode[subscript]
       self.curRoot = createGlobalNode(line)
+      self.curCommonSub = curCommonScript + subscripts[len(curCommonScript):self.index+1]
       return retNode
 def readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
   return DefaultZWRRootGenerator(inputFileName, glbLoc)
@@ -341,10 +356,10 @@ def test_createGlobalNodeByZWRFile(inputFileName):
   print "Total size of Global is %s" % countGlobalSize(outGlobal)
   logging.info("end parsing file: %s" % inputFileName)
 
-def test_readGlobalNodeFromZWRFileV2(inputFileName):
+def test_readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
   logging.info("Start reading file: %s" % inputFileName)
   totalEntry = 0
-  for globalRoot in readGlobalNodeFromZWRFileV2(inputFileName):
+  for globalRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
     if globalRoot:
       totalEntry += 1
       logging.info("Current Entry#: %s" % totalEntry)
@@ -361,7 +376,7 @@ def test_readGlobalNodeFromZWRFile(inputFileName):
     if globalRoot:
       totalEntry += 1
       logging.info("Current Entry#: %s" % totalEntry)
-      #printGlobal(globalRoot)
+      printGlobal(globalRoot)
       del globalRoot
       globalRoot = None
       pass
@@ -450,10 +465,15 @@ def main():
   from LogManager import initConsoleLogging
   import sys
   from datetime import datetime
+  import argparse
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  test_UtilitiesFunctions()
+  #test_UtilitiesFunctions()
   #test_createGlobalNodeByZWRFile(sys.argv[1])
-  #test_readGlobalNodeFromZWRFileV2(sys.argv[1])
+  parser = argparse.ArgumentParser(description='VistA ZWR Global Parser')
+  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
+  parser.add_argument('-glbRoot', help='Global root location for FileMan file')
+  result = parser.parse_args()
+  test_readGlobalNodeFromZWRFileV2(result.gdFile, result.glbRoot)
   #test_readGlobalNodeFromZWRFile(sys.argv[1])
 
 if __name__ == '__main__':
