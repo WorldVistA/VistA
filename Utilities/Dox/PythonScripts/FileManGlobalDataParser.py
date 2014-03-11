@@ -57,12 +57,16 @@ class FileManDataEntry(object):
     self._data = {}
     self._fileNo = fileNo
     self._name = None
+    self._type = None
   @property
   def fields(self):
     return self._data
   @property
   def name(self):
     return self._name
+  @property
+  def type(self):
+    return self._type
   @property
   def ien(self):
     return self._ien
@@ -72,6 +76,9 @@ class FileManDataEntry(object):
   @name.setter
   def name(self, name):
     self._name = name
+  @type.setter
+  def type(self, type):
+    self._type = type
   def addField(self, fldData):
     self._data[fldData.id] = fldData
   def __repr__(self):
@@ -166,7 +173,7 @@ def sortSchemaByLocation(fileSchema):
   hard code initial map due to the way the ^DIC is extracted
 """
 initGlobalLocationMap = {
-    x:'^DIC('+x for x in (
+    x: "^DIC(" + x for x in (
           '.2', '3.1', '3.4', '4', '4.001', '4.005',
           '4.009', '4.05', '4.1', '4.11', '4.2', '4.2996',
           '5', '7', '7.1', '8', '8.1', '8.2', '9.2', '9.4',
@@ -192,19 +199,25 @@ class FileManGlobalDataParser(object):
     self._fileKeyIndex = {} # File: => ien => Value
     self._glbLocMap = initGlobalLocationMap # File: => Global Location
     self._fileParsed = set() # set of files that has been parsed
-
   @property
   def outFileManData(self):
     return self._glbData
-
   @property
   def crossRef(self):
     return self._crossRef
-
   @property
   def globalLocationMap(self):
     return self._glbLocMap
-
+  def getFileNoByGlobalLocation(self, glbLoc):
+    """
+      get the file no by global location
+      return fileNo if found, otherwise return None
+    """
+    outLoc = normalizeGlobalLocation(glbLoc)
+    for key, value in self._glbLocMap.iteritems():
+      if value == outLoc:
+        return key
+    return None
   def _createDataRootByZWRFile(self, inputFileName):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
 
@@ -271,7 +284,7 @@ class FileManGlobalDataParser(object):
                                     fileNumber, subscript)
 
   def generateFileIndex(self, inputFileName, allSchemaDict,
-                        fileNumber, subscript):
+                        fileNumber):
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
     if not schemaFile.hasField('.01'):
@@ -283,14 +296,11 @@ class FileManGlobalDataParser(object):
       logging.error(".01 field does not have a location")
       return
     self._curFileNo = fileNumber
-    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName):
+    glbLoc = self._glbLocMap[fileNumber]
+    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
       if not dataRoot: continue
       self._dataRoot = dataRoot
       fileDataRoot = dataRoot
-      if subscript:
-        if subscript in dataRoot:
-          logging.debug("using subscript %s" % subscript)
-          fileDataRoot = dataRoot[subscript]
       (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
       if detail:
         logging.info("Adding %s:%s to file: %s" % (ien, detail, fileNumber))
@@ -336,7 +346,8 @@ class FileManGlobalDataParser(object):
     elif fileNumber in self._glbLocMap:
       logging.info("global loc %s, %s" % (glbLoc, self._glbLocMap[fileNumber]))
     for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
-      if not dataRoot: continue
+      if not dataRoot:
+        continue
       self._dataRoot = dataRoot
       fileDataRoot = dataRoot
       self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
@@ -428,23 +439,24 @@ class FileManGlobalDataParser(object):
             name = fileData.dataEntries[ien].name
             if not name: name = str(ien)
             for field in fields:
-              field.value = ";".join((field.value, name))
+              field.value = "^".join((field.value, name))
+    del self._pointerRef
     self._pointerRef = {}
 
 
   def _parseFileDetail(self, dataEntry, ien):
     if 'GL' in dataEntry:
       loc = dataEntry['GL'].value
-      if loc[-1] == ',':
-        loc = loc[0:-1]
+      loc = normalizeGlobalLocation(loc)
       self._glbLocMap[ien] = loc
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
     """ for each data entry, parse data by location """
+    logging.debug("Current subscript is %s" % dataRoot.subscript)
     floatKey = getKeys(dataRoot, float)
-    logging.debug('Total # of entry is %s' % len(floatKey))
+    logging.debug('Total # of entry is %s, %s' % (len(floatKey), floatKey))
     for ien in floatKey:
       if float(ien) <=0:
         continue
@@ -468,7 +480,7 @@ class FileManGlobalDataParser(object):
                                               outDataEntry)
           else:
             self._parseDataValueField(curDataRoot, fieldDict, outDataEntry)
-      logging.debug("adding %s" % ien)
+      logging.debug("adding %s, %s, %s to file: %s" % (ien, outDataEntry.name, outDataEntry, fileSchema.getFileNo()))
       outGlbData.addFileManDataEntry(ien, outDataEntry)
       if fileSchema.getFileNo() == self._curFileNo:
         self._addFileKeyIndex(self._curFileNo, ien, outDataEntry.name)
@@ -518,10 +530,10 @@ class FileManGlobalDataParser(object):
       filePointedTo = fieldAttr.getPointedToFile()
       if filePointedTo:
         fileNo = filePointedTo.getFileNo()
-        fieldDetail = ';'.join((fileNo, value))
+        fieldDetail = '^'.join((fileNo, value))
         idxName = self._getFileKeyIndex(fileNo, value)
         if idxName:
-          fieldDetail = ';'.join((fieldDetail, str(idxName)))
+          fieldDetail = '^'.join((fieldDetail, str(idxName)))
         elif fileNo == self._curFileNo:
           pointerFileNo = fileNo
       else:
@@ -532,7 +544,12 @@ class FileManGlobalDataParser(object):
         logging.error("Unknown variable pointer format: %s" % value)
         fieldDetail = "Unknow Variable Pointer"
       else:
-        fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], vpInfo[0])
+        fileNo = self.getFileNoByGlobalLocation(vpInfo[1])
+        if not fileNo:
+          logging.warn("Could not find File for %s" % vpInfo[1])
+          fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], vpInfo[0])
+        else:
+          fieldDetail = '^'.join((fileNo, vpInfo[0]))
     elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
@@ -555,8 +572,9 @@ class FileManGlobalDataParser(object):
         self._addDataFieldToPointerRef(pointerFileNo, value, dataField)
       outDataEntry.addField(dataField)
       if fieldAttr.getFieldNo() == '.01':
-        logging.debug("Setting dataEntry name as %s" % fieldDetail)
+        logging.debug("Setting dataEntry name as %s, %s" % (fieldDetail, outDataEntry))
         outDataEntry.name = fieldDetail
+        outDataEntry.type = fieldAttr.getType()
       logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
     return fieldDetail
 
@@ -652,7 +670,7 @@ def testGlobalParser(crosRef=None):
         zwrFile = allFiles[file]['path']
         globalSub = allFiles[file]['name']
         logging.debug("Generate file key index for: %s at %s" % (file, zwrFile))
-        glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file, file)
+        glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file)
     for file in fileSet:
       zwrFile = allFiles[file]['path']
       globalSub = allFiles[file]['name']
@@ -677,8 +695,30 @@ def horologToDateTime(input):
   return originDt + timedelta(int(days), int(seconds))
 
 def test_horologToDateTime():
-  input = '57623,29373'
-  logging.info(horologToDateTime(input))
+  input = (
+      ('57623,29373', datetime(1998,10,7,8,9,33)),
+  )
+  for one, two in input:
+    assert horologToDateTime(one) == two, "%s, %s" % (one, two)
+
+def normalizeGlobalLocation(input):
+  if not input:
+    return input
+  result = input
+  if input[0] != '^':
+    result = '^' + result
+  if input[-1] == ',':
+    result = result[0:-1]
+  return result
+
+def test_normalizeGlobalLocation():
+  input = (
+      ('DIPT(', '^DIPT('),
+      ('^DIPT(', '^DIPT('),
+      ('DIPT("IX",', '^DIPT("IX"'),
+  )
+  for one, two in input:
+    assert normalizeGlobalLocation(one) == two, "%s, %s" % (one, two)
 
 def createArgParser():
   import argparse
@@ -695,11 +735,14 @@ def createArgParser():
                       help='generate all dependency files as well')
   return parser
 
+def unit_test():
+  test_normalizeGlobalLocation()
+  test_horologToDateTime()
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
-  #test_horologToDateTime()
+  unit_test()
   #test_FileManDataEntry()
   testGlobalParser()
 
