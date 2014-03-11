@@ -21,7 +21,7 @@ import logging
 from CrossReference import FileManField
 from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
-from ZWRGlobalParser import readGlobalNodeFromZWRFile
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from FileManSchemaParser import FileManSchemaParser
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -162,6 +162,25 @@ def sortSchemaByLocation(fileSchema):
     locFieldDict[index][pos] = fldAttr
   return locFieldDict
 
+"""
+  hard code initial map due to the way the ^DIC is extracted
+"""
+initGlobalLocationMap = {
+    x:'^DIC('+x for x in (
+          '.2', '3.1', '3.4', '4', '4.001', '4.005',
+          '4.009', '4.05', '4.1', '4.11', '4.2', '4.2996',
+          '5', '7', '7.1', '8', '8.1', '8.2', '9.2', '9.4',
+          '9.8', '10', '10.2', '10.3', '11', '13', '19', '19.1',
+          '19.2', '19.8', '21', '22', '23', '25','30', '31', '34',
+          '35', '36', '37', '39.1', '39.2', '39.3', '40.7', '40.9',
+          '42', '42.4', '42.55', '43.4', '45.1', '45.3', '45.6',
+          '45.61', '45.68', '45.7', '45.81', '45.82', '45.88', '45.89',
+          '47', '49', '51.5', '68.4', '81.1', '81.2', '81.3', '150.9',
+          '194.4', '194.5', '195.1', '195.2', '195.3', '195.4', '195.6',
+          '213.9', '220.2', '220.3', '220.4', '620', '625', '627', '627.5',
+          '627.9', '6910', '6910.1', '6921', '6922',
+          )
+  }
 class FileManGlobalDataParser(object):
   def __init__(self, crossRef=None):
     self._dataRoot = None
@@ -171,6 +190,8 @@ class FileManGlobalDataParser(object):
     self._glbData = {} # fileNo => FileManData
     self._pointerRef = {}
     self._fileKeyIndex = {} # File: => ien => Value
+    self._glbLocMap = initGlobalLocationMap # File: => Global Location
+    self._fileParsed = set() # set of files that has been parsed
 
   @property
   def outFileManData(self):
@@ -180,6 +201,10 @@ class FileManGlobalDataParser(object):
   def crossRef(self):
     return self._crossRef
 
+  @property
+  def globalLocationMap(self):
+    return self._glbLocMap
+
   def _createDataRootByZWRFile(self, inputFileName):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
 
@@ -188,6 +213,10 @@ class FileManGlobalDataParser(object):
     outFiles = {}
     for file in searchFiles:
       fileName = os.path.basename(file)
+      if fileName == 'DD.zwr':
+        outFiles['0'] = {'name': 'Schema File',
+                         'path': os.path.normpath(os.path.abspath(file))}
+        continue
       result = re.search("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$", fileName)
       if result:
         "ignore split file for now"
@@ -197,7 +226,8 @@ class FileManGlobalDataParser(object):
         fileNo = result.group('fileNo')
         if fileNo.startswith('0'): fileNo = fileNo[1:]
         globalDes = result.group('des')
-        outFiles[fileNo] = (globalDes, os.path.normpath(os.path.abspath(file)))
+        outFiles[fileNo] = {'name': globalDes,
+                            'path': os.path.normpath(os.path.abspath(file))}
     return outFiles
 
   def parseAllZWRGlobaFilesBySchema(self, mRepositDir, allSchemaDict):
@@ -213,8 +243,8 @@ class FileManGlobalDataParser(object):
       fileNo = fileManFile.getFileNo()
       if fileNo not in allFiles:
         continue
-      ddFile = allFiles[fileNo][1]
-      glbDes = allFiles[fileNo][0]
+      ddFile = allFiles[fileNo]['path']
+      glbDes = allFiles[fileNo]['name']
       self._createDataRootByZWRFile(ddFile)
       if not self._dataRoot:
         logging.warn("not data for file %s" % ddFile)
@@ -253,7 +283,7 @@ class FileManGlobalDataParser(object):
       logging.error(".01 field does not have a location")
       return
     self._curFileNo = fileNumber
-    for dataRoot in readGlobalNodeFromZWRFile(inputFileName):
+    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName):
       if not dataRoot: continue
       self._dataRoot = dataRoot
       fileDataRoot = dataRoot
@@ -294,20 +324,21 @@ class FileManGlobalDataParser(object):
     return (None, None)
 
   def parseZWRGlobalFileBySchemaV2(self, inputFileName, allSchemaDict,
-                                   fileNumber, subscript):
+                                   fileNumber, glbLoc=None):
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
     self._glbData[fileNumber] = FileManFileData(fileNumber,
                                                 schemaFile.getFileManName())
     self._curFileNo = fileNumber
-    for dataRoot in readGlobalNodeFromZWRFile(inputFileName):
+    if not glbLoc:
+      glbLoc = self._glbLocMap.get(fileNumber)
+      logging.info("File: %s global loc: %s" % (fileNumber, glbLoc))
+    elif fileNumber in self._glbLocMap:
+      logging.info("global loc %s, %s" % (glbLoc, self._glbLocMap[fileNumber]))
+    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
       if not dataRoot: continue
       self._dataRoot = dataRoot
       fileDataRoot = dataRoot
-      if subscript:
-        if subscript in dataRoot:
-          logging.debug("using subscript %s" % subscript)
-          fileDataRoot = dataRoot[subscript]
       self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
     self._resolveSelfPointer()
     if self._crossRef:
@@ -401,6 +432,13 @@ class FileManGlobalDataParser(object):
     self._pointerRef = {}
 
 
+  def _parseFileDetail(self, dataEntry, ien):
+    if 'GL' in dataEntry:
+      loc = dataEntry['GL'].value
+      if loc[-1] == ',':
+        loc = loc[0:-1]
+      self._glbLocMap[ien] = loc
+
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
@@ -416,6 +454,8 @@ class FileManGlobalDataParser(object):
       dataKeys = [x for x in dataEntry]
       sortedKey = sorted(dataKeys, cmp=sortDataEntryFloatFirst)
       for locKey in sortedKey:
+        if locKey == '0' and fileSchema.getFileNo() == '1':
+          self._parseFileDetail(dataEntry[locKey], ien)
         if locKey in locFieldDict:
           fieldDict = locFieldDict[locKey] # a dict of {pos: field}
           curDataRoot = dataEntry[locKey]
@@ -570,24 +610,32 @@ def testGlobalParser(crosRef=None):
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import outputFileManDataAsHtml
   crossRef = parseCrossRefGeneratorWithArgs(result)
-  schemaParser = FileManSchemaParser()
-  allSchemaDict = schemaParser.parseSchemaDDFileV2(result.ddFile)
   glbDataParser = FileManGlobalDataParser(crossRef)
   #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
 
   allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(result.MRepositDir,
                                                      'Packages'),
                                                    "*/Globals/*.zwr")
-
+  assert '0' in allFiles and '1' in allFiles and result.fileNo in allFiles
+  schemaParser = FileManSchemaParser()
+  allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
   isolatedFiles = schemaParser.isolatedFiles
+  glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
+                                             allSchemaDict, '1', '^DIC(')
+  del glbDataParser.outFileManData['1']
+  assert result.fileNo in glbDataParser.globalLocationMap
   if not result.all or result.fileNo in isolatedFiles:
-    logging.info("Parsing file: %s at %s" % (result.fileNo, result.gdFile))
-    glbDataParser.parseZWRGlobalFileBySchemaV2(result.gdFile,
+    gdFile = allFiles[result.fileNo]['path']
+    logging.info("Parsing file: %s at %s" % (result.fileNo, gdFile))
+    glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile,
                                                allSchemaDict,
-                                               result.fileNo,
-                                               result.subscript)
+                                               result.fileNo)
     if result.outdir:
       outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+    else:
+      fileManDataMap = glbDataParser.outFileManData
+      for fileNo in getKeys(fileManDataMap.iterkeys(), float):
+        printFileManFileData(fileManDataMap[fileNo])
     return
   """ Also generate all required files as well """
   sccSet = schemaParser.sccSet
@@ -601,17 +649,16 @@ def testGlobalParser(crosRef=None):
     fileSet.discard('757')
     if len(fileSet) > 1:
       for file in fileSet:
-        zwrFile = allFiles[file][1]
-        globalSub = allFiles[file][0]
+        zwrFile = allFiles[file]['path']
+        globalSub = allFiles[file]['name']
         logging.debug("Generate file key index for: %s at %s" % (file, zwrFile))
         glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file, file)
     for file in fileSet:
-      zwrFile = allFiles[file][1]
-      globalSub = allFiles[file][0]
+      zwrFile = allFiles[file]['path']
+      globalSub = allFiles[file]['name']
       logging.info("Parsing file: %s at %s" % (file, zwrFile))
       glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile,
                                                  allSchemaDict,
-                                                 file,
                                                  file)
       if result.outdir:
         outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
@@ -639,11 +686,11 @@ def createArgParser():
   initParser = createInitialCrossRefGenArgParser()
   parser = argparse.ArgumentParser(description='FileMan Global Data Parser',
                                    parents=[initParser])
-  parser.add_argument('ddFile', help='path to ZWR file contains DD global')
-  parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
+  #parser.add_argument('ddFile', help='path to ZWR file contains DD global')
+  #parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
   parser.add_argument('fileNo', help='FileMan File Number')
-  parser.add_argument('subscript', help='The first subscript of the global root')
-  parser.add_argument('outdir', help='top directory to generate output in html')
+  #parser.add_argument('glbRoot', help='Global root location for FileMan file')
+  parser.add_argument('-outdir', help='top directory to generate output in html')
   parser.add_argument('-all', action='store_true',
                       help='generate all dependency files as well')
   return parser
