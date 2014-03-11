@@ -244,7 +244,11 @@ class DefaultZWRRootGenerator(object):
         if self.curRoot:
           retNode = self.curRoot.getRootNode()
           if self.curCommonSub:
-            for sub in self.curCommonSub:
+            common = self.curCommonSub[0:self.index]
+            for sub in common:
+              retNode = retNode[sub]
+          elif self.commonSubscript:
+            for sub in self.commonSubscript:
               retNode = retNode[sub]
           return retNode
       self.lineNo += 1
@@ -303,6 +307,7 @@ class DefaultZWRRootGenerator(object):
       else:
         return True
     curCommonScript = getCommonSubscript(subscripts, self.curCommonSub)
+    logging.debug(curCommonScript, self.curCommonSub)
     if self.curCommonSub is None or self.curCommonSub == curCommonScript:
       if self.curCommonSub is None:
         self.curCommonSub = subscripts[0:self.index+1]
@@ -374,7 +379,7 @@ def test_readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
     if globalRoot:
       totalEntry += 1
       logging.info("Current Entry#: %s" % totalEntry)
-      #printGlobal(globalRoot)
+      logging.info("Curent subscript is %s" % globalRoot.subscript)
       del globalRoot
       globalRoot = None
       pass
@@ -387,7 +392,7 @@ def test_readGlobalNodeFromZWRFile(inputFileName):
     if globalRoot:
       totalEntry += 1
       logging.info("Current Entry#: %s" % totalEntry)
-      printGlobal(globalRoot)
+      logging.info("Curent subscript is %s" % globalRoot.subscript)
       del globalRoot
       globalRoot = None
       pass
