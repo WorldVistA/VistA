@@ -218,6 +218,12 @@ class FileManGlobalDataParser(object):
       if value == outLoc:
         return key
     return None
+  def getFileManFileNameByFileNo(self, fileNo):
+    if self._crossRef:
+      fileManFile = self._crossRef.getGlobalByFileNo(fileNo)
+      if fileManFile:
+        return fileManFile.getFileManName()
+    return ""
   def _createDataRootByZWRFile(self, inputFileName):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
 
@@ -303,10 +309,11 @@ class FileManGlobalDataParser(object):
       fileDataRoot = dataRoot
       (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
       if detail:
-        logging.info("Adding %s:%s to file: %s" % (ien, detail, fileNumber))
         self._addFileKeyIndex(fileNumber, ien, detail)
       elif ien:
-        logging.info("No key associated with ien: %s, file: %s" % (ien, fileNumber))
+        logging.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
+      else:
+        logging.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
 
   def _getKeyNameBySchema(self, dataRoot, keyLoc, keyField):
     floatKey = getKeys(dataRoot, float)
@@ -338,7 +345,7 @@ class FileManGlobalDataParser(object):
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
     self._glbData[fileNumber] = FileManFileData(fileNumber,
-                                                schemaFile.getFileManName())
+                                  self.getFileManFileNameByFileNo(fileNumber))
     self._curFileNo = fileNumber
     if not glbLoc:
       glbLoc = self._glbLocMap.get(fileNumber)
@@ -350,7 +357,8 @@ class FileManGlobalDataParser(object):
         continue
       self._dataRoot = dataRoot
       fileDataRoot = dataRoot
-      self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
+      self._parseDataBySchema(fileDataRoot, schemaFile,
+                              self._glbData[fileNumber])
     self._resolveSelfPointer()
     if self._crossRef:
       self._updateCrossReference()
@@ -365,8 +373,9 @@ class FileManGlobalDataParser(object):
         logging.info("using subscript %s" % subscript)
         fileDataRoot = dataRoot[subscript]
       self._glbData[fileNumber] = FileManFileData(fileNumber,
-                                                  schemaFile.getFileManName())
-      self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
+                                   self.getFileManFileNameByFileNo(fileNumber))
+      self._parseDataBySchema(fileDataRoot, schemaFile,
+                              self._glbData[fileNumber])
     else: # assume this is for all files in the entry
       for fileNo in getKeys(self._dataRoot, float):
         fileDataRoot = self._dataRoot[fileNo]
@@ -454,9 +463,7 @@ class FileManGlobalDataParser(object):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
     """ for each data entry, parse data by location """
-    logging.debug("Current subscript is %s" % dataRoot.subscript)
     floatKey = getKeys(dataRoot, float)
-    logging.debug('Total # of entry is %s, %s' % (len(floatKey), floatKey))
     for ien in floatKey:
       if float(ien) <=0:
         continue
@@ -480,7 +487,6 @@ class FileManGlobalDataParser(object):
                                               outDataEntry)
           else:
             self._parseDataValueField(curDataRoot, fieldDict, outDataEntry)
-      logging.debug("adding %s, %s, %s to file: %s" % (ien, outDataEntry.name, outDataEntry, fileSchema.getFileNo()))
       outGlbData.addFileManDataEntry(ien, outDataEntry)
       if fileSchema.getFileNo() == self._curFileNo:
         self._addFileKeyIndex(self._curFileNo, ien, outDataEntry.name)
@@ -516,7 +522,6 @@ class FileManGlobalDataParser(object):
         self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
 
   def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
-    logging.debug("Parsing Individual Field Detail: %s" % value)
     if not value.strip(' '):
       return
     value = value.strip(' ')
@@ -526,30 +531,40 @@ class FileManGlobalDataParser(object):
       setDict = fieldAttr.getSetMembers()
       if setDict and value in setDict:
         fieldDetail = setDict[value]
-    elif fieldAttr.isFilePointerType():
-      filePointedTo = fieldAttr.getPointedToFile()
-      if filePointedTo:
-        fileNo = filePointedTo.getFileNo()
-        fieldDetail = '^'.join((fileNo, value))
-        idxName = self._getFileKeyIndex(fileNo, value)
+    elif fieldAttr.isFilePointerType() or fieldAttr.isVariablePointerType():
+      fileNo = None
+      ien = None
+      if fieldAttr.isFilePointerType():
+        filePointedTo = fieldAttr.getPointedToFile()
+        if filePointedTo:
+          fileNo = filePointedTo.getFileNo()
+          ien = value
+        else:
+          fieldDetail = 'No Pointed to File'
+      else: # for variable pointer type
+        vpInfo = value.split(';')
+        if len(vpInfo) != 2:
+          logging.error("Unknown variable pointer format: %s" % value)
+          fieldDetail = "Unknow Variable Pointer"
+        else:
+          fileNo = self.getFileNoByGlobalLocation(vpInfo[1])
+          ien = vpInfo[0]
+          if not fileNo:
+            logging.warn("Could not find File for %s" % value)
+            fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], ien)
+      if fileNo and ien:
+        fieldDetail = '^'.join((fileNo, ien))
+        idxName = self._getFileKeyIndex(fileNo, ien)
         if idxName:
-          fieldDetail = '^'.join((fieldDetail, str(idxName)))
+          idxes = str(idxName).split('^')
+          if len(idxes) == 1:
+            fieldDetail = '^'.join((fieldDetail, str(idxName)))
+          elif len(idxes) == 3:
+            fieldDetail = '^'.join((fieldDetail, str(idxes[-1])))
         elif fileNo == self._curFileNo:
           pointerFileNo = fileNo
-      else:
-        fieldDetail = 'No Pointed to File'
-    elif fieldAttr.isVariablePointerType():
-      vpInfo = value.split(';')
-      if len(vpInfo) != 2:
-        logging.error("Unknown variable pointer format: %s" % value)
-        fieldDetail = "Unknow Variable Pointer"
-      else:
-        fileNo = self.getFileNoByGlobalLocation(vpInfo[1])
-        if not fileNo:
-          logging.warn("Could not find File for %s" % vpInfo[1])
-          fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], vpInfo[0])
         else:
-          fieldDetail = '^'.join((fileNo, vpInfo[0]))
+          logging.warn("Can not find value for %s, %s" % (ien, fileNo))
     elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
@@ -562,7 +577,6 @@ class FileManGlobalDataParser(object):
     elif fieldAttr.getName().upper().startswith("TIMESTAMP"): # timestamp field
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
-    logging.debug("Field Detail is %s" % fieldDetail)
     if outDataEntry:
       dataField = FileManDataField(fieldAttr.getFieldNo(),
                                    fieldAttr.getType(),
@@ -572,10 +586,8 @@ class FileManGlobalDataParser(object):
         self._addDataFieldToPointerRef(pointerFileNo, value, dataField)
       outDataEntry.addField(dataField)
       if fieldAttr.getFieldNo() == '.01':
-        logging.debug("Setting dataEntry name as %s, %s" % (fieldDetail, outDataEntry))
         outDataEntry.name = fieldDetail
         outDataEntry.type = fieldAttr.getType()
-      logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
     return fieldDetail
 
   def _addDataFieldToPointerRef(self, fileNo, ien, dataField):
@@ -640,7 +652,6 @@ def testGlobalParser(crosRef=None):
   isolatedFiles = schemaParser.isolatedFiles
   glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
                                              allSchemaDict, '1', '^DIC(')
-  del glbDataParser.outFileManData['1']
   assert result.fileNo in glbDataParser.globalLocationMap
   if not result.all or result.fileNo in isolatedFiles:
     gdFile = allFiles[result.fileNo]['path']
@@ -669,7 +680,7 @@ def testGlobalParser(crosRef=None):
       for file in fileSet:
         zwrFile = allFiles[file]['path']
         globalSub = allFiles[file]['name']
-        logging.debug("Generate file key index for: %s at %s" % (file, zwrFile))
+        logging.info("Generate file key index for: %s at %s" % (file, zwrFile))
         glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file)
     for file in fileSet:
       zwrFile = allFiles[file]['path']
