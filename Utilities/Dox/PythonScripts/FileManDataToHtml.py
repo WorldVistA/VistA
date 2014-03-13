@@ -19,6 +19,7 @@ import re
 from datetime import datetime
 import logging
 import glob
+import cgi
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
@@ -29,12 +30,20 @@ if SCRIPTS_DIR not in sys.path:
 from FileManDateTimeUtil import fmDtToPyDt
 from ZWRGlobalParser import getKeys
 from CrossReference import FileManField
+from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
 
 def safeFileName(name):
   """ convert to base64 encoding """
   import base64
   return base64.urlsafe_b64encode(name)
 
+def safeElementId(name):
+  import base64
+  """
+  it turns out that '=' is not a valid html element id
+  remove the padding
+  """
+  return base64.b64encode(name, ["_", "_"]).replace('=','')
 """
   html header using JQuery Table Sorter Plugin
   http://tablesorter.com/docs/
@@ -66,11 +75,13 @@ data_table_reference = """
 <script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
 """
 
-data_table_list_init_setup = """
+from string import Template
+
+data_table_list_init_setup = Template("""
 <script type="text/javascript" id="js">
-  $(document).ready(function() {
+  $$(document).ready(function() {
   // call the tablesorter plugin
-      $("#rpctable").dataTable({
+      $$("#${tableName}").dataTable({
         "bInfo": true,
         "iDisplayLength": 25,
         "sPaginationType": "full_numbers",
@@ -78,15 +89,13 @@ data_table_list_init_setup = """
         "bAutoWidth": true
       });
 }); </script>
-"""
-
-from string import Template
+""")
 
 data_table_large_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
   // call the tablesorter plugin
-      $$("#rpctable").dataTable({
+      $$("#${tableName}").dataTable({
         "bProcessing": true,
         "bStateSave": true,
         "iDisplayLength": 10,
@@ -97,14 +106,11 @@ data_table_large_list_init_setup = Template("""
 }); </script>
 """)
 
-def test_sub():
-  print data_table_large_list_init_setup.substitute(ajexSrc="Test")
-
-data_table_record_init_setup = """
+data_table_record_init_setup = Template("""
 <script type="text/javascript" id="js">
-  $(document).ready(function() {
+  $$(document).ready(function() {
   // call the tablesorter plugin
-      $("#rpctable").dataTable({
+      $$("#${tableName}").dataTable({
         "bPaginate": false,
         "bLengthChange": false,
         "bInfo": false,
@@ -112,25 +118,33 @@ data_table_record_init_setup = """
         "bSort": false
       });
 }); </script>
-"""
+""")
 
-def outputDataListTableHeader(output):
-  output.write("%s\n" % data_table_reference)
-  output.write("%s\n" % data_table_list_init_setup)
+def test_sub():
+  print data_table_large_list_init_setup.substitute(ajexSrc="Test", tableName="Test")
+  print data_table_list_init_setup.substitute(tableName="Test")
+  print data_table_record_init_setup.substitute(tableName="Test")
 
-def outputLargeDataListTableHeader(output, src):
+
+def outputDataListTableHeader(output, tName):
   output.write("%s\n" % data_table_reference)
-  initSet = data_table_large_list_init_setup.substitute(ajexSrc=src)
+  initSet = data_table_list_init_setup.substitute(tableName=tName)
   output.write("%s\n" % initSet)
 
-def outputDataRecordTableHeader(output):
+def outputLargeDataListTableHeader(output, src, tName):
   output.write("%s\n" % data_table_reference)
-  output.write("%s\n" % data_table_record_init_setup)
+  initSet = data_table_large_list_init_setup.substitute(ajexSrc=src,
+                                                        tableName=tName)
+  output.write("%s\n" % initSet)
 
-def outputFileEntryTableList(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+def outputDataRecordTableHeader(output, tName):
+  output.write("%s\n" % data_table_reference)
+  initSet = data_table_record_init_setup.substitute(tableName=tName)
+  output.write("%s\n" % initSet)
+
+def outputFileEntryTableList(output, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in ("Name", "Value"):
@@ -146,7 +160,7 @@ def getDataEntryHtmlFile(dataEntry, ien, fileNo):
 
 def getDataEntryHtmlFileByName(entryName, ien, fileNo):
   entryName = entryName[:20] # max 20 chars
-  return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
+  return ("%s-%s" % (fileNo, ien)) + ".html"
 
 def getFileHtmlLink(dataEntry, value):
   entryName = str(value)
@@ -155,7 +169,6 @@ def getFileHtmlLink(dataEntry, value):
   return "<a href=\"%s\">%s</a>" % (htmlFile, value)
 
 def getRoutineHRefLink(dataEntry, routineName):
-  from WebPageGenerator import getRoutineHtmlFileName
   return "<a href=\"%s%s\">%s</a>" % (dox_url,
                                       getRoutineHtmlFileName(routineName),
                                       routineName)
@@ -183,26 +196,28 @@ def getFileManFilePointerLink(dataEntry, value):
 fields and logic to convert to html for RPC List
 """
 rpc_list_fields = (("Name", '.01', getFileHtmlLink), # Name
-                   ("Tag", '.02', None), # Tag
-                   ("Routine", '.03', getRoutineHRefLink), # Routine
-                   ("Availability", '.05', None),# Availability
-                   ("Description", '1', getWordProcessingDataBrief),# Description
-                   )
+       ("Tag", '.02', None), # Tag
+       ("Routine", '.03', getRoutineHRefLink), # Routine
+       ("Availability", '.05', None),# Availability
+       #("Description", '1', getWordProcessingDataBrief),# Description
+   )
 
 """
 fields and logic to convert to html for HL7 List
 """
 hl7_list_fields = (
-                   ("Name", '.01', getFileHtmlLink), # Name
-                   ("Type", '4', None), # Type
-                   ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
-                   ("Sendor", '770.1', getFileManFilePointerLink),# Sending Application
-                   ("Receiver", '770.2', getFileManFilePointerLink),# Receiving Application
-                   )
+       ("Name", '.01', getFileHtmlLink), # Name
+       ("Type", '4', None), # Type
+       ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
+       ("Transaction Message Type", '770.3', getFileManFilePointerLink), # Message Type
+       #("Response Message Type", '770.11', getFileManFilePointerLink), # Message Type
+       ("Sender", '770.1', getFileManFilePointerLink),# Sending Application
+       ("Receiver", '770.2', getFileManFilePointerLink),# Receiving Application
+   )
 
-def outputDataTableHeader(output, name_list):
+def outputDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in name_list:
@@ -210,10 +225,9 @@ def outputDataTableHeader(output, name_list):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
-def writeTableListInfo(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+def writeTableListInfo(output, tName):
   output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
   output.write("<thead>\n")
   output.write("<tr>\n")
   for name in ("Name", "IEN"):
@@ -221,33 +235,34 @@ def writeTableListInfo(output):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
-def generateRPCListHtml(dataEntryLst, pkgName, dir):
+def generateRPCListHtml(dataEntryLst, pkgName, outDir):
   """
     Specific logic to handle RPC List
     @TODO move the logic to a specific file
   """
 
   return generateDataListByPackage(dataEntryLst,
-                                   pkgName, dir,
+                                   pkgName, outDir,
                                    rpc_list_fields, "RPC")
 
-def generateHL7ListByPackage(dataEntryLst, pkgName, dir):
+def generateHL7ListByPackage(dataEntryLst, pkgName, outDir):
   """
     Specific logic to handle HL7 List
     @TODO move the logic to a specific file
   """
   return generateDataListByPackage(dataEntryLst,
-                                   pkgName, dir,
+                                   pkgName, outDir,
                                    hl7_list_fields, "HL7")
 
-def generateDataListByPackage(dataEntryLst, packageName, dir, list_fields, listName):
-  with open("%s/%s.html" % (dir, packageName), 'w+') as output:
+def generateDataListByPackage(dataEntryLst, packageName, outDir, list_fields, listName):
+  with open("%s/%s-%s.html" % (outDir, packageName, listName), 'w+') as output:
       output.write("<html>\n")
-      outputDataListTableHeader(output)
+      tName = safeElementId("%s-%s" % (listName, packageName))
+      outputDataListTableHeader(output, tName)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       output.write("<h1>Package: %s %s List</h1>" % (getPackageHRefLink(packageName), listName))
-      outputDataTableHeader(output, [x[0] for x in list_fields])
+      outputDataTableHeader(output, [x[0] for x in list_fields], tName)
       """ table body """
       output.write("<tbody>\n")
       for dataEntry in dataEntryLst:
@@ -277,19 +292,20 @@ def getPackageHRefLink(pkgName):
                                        pkgName)
   return value
 
-def generateDataTableHtml(fileManData, fileNo, dir):
+def generateDataTableHtml(fileManData, fileNo, outDir):
   isLargeFile = len(fileManData.dataEntries) > 4500
-  with open("%s/%s.html" % (dir, fileNo), 'w') as output:
+  tName = normalizePackageName(fileManData.name)
+  with open("%s/%s.html" % (outDir, fileNo), 'w') as output:
     output.write("<html>\n")
     if isLargeFile:
       ajexSrc = "%s_array.txt" % fileNo
-      outputLargeDataListTableHeader(output, ajexSrc)
+      outputLargeDataListTableHeader(output, ajexSrc, tName)
     else:
-      outputDataListTableHeader(output)
+      outputDataListTableHeader(output, tName)
     output.write("<body id=\"dt_example\">")
     output.write("""<div id="container" style="width:80%">""")
-    output.write("<h1>File %s(%s) Data List</h1>" % (fileManData.name, fileNo))
-    writeTableListInfo(output)
+    output.write("<h1>File %s(%s) Data List</h1>" % (tName, fileNo))
+    writeTableListInfo(output, tName)
     if not isLargeFile:
       output.write("<tbody>\n")
       for ien in getKeys(fileManData.dataEntries.keys(), float):
@@ -306,7 +322,7 @@ def generateDataTableHtml(fileManData, fileNo, dir):
         output.write("<tr>\n")
         """ table body """
         for item in tableRow:
-          output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+          output.write("<td>%s</td>\n" % item)
         output.write("</tr>\n")
     output.write("</tbody>\n")
     output.write("</table>\n")
@@ -318,7 +334,7 @@ def generateDataTableHtml(fileManData, fileNo, dir):
     logging.info("Ajex source file: %s" % ajexSrc)
     """ Write out the data file in JSON format """
     outJson = {"aaData": []}
-    with open(os.path.join(dir, ajexSrc), 'w') as output:
+    with open(os.path.join(outDir, ajexSrc), 'w') as output:
       outArray =  outJson["aaData"]
       for ien in getKeys(fileManData.dataEntries.keys(), float):
         dataEntry = fileManData.dataEntries[ien]
@@ -337,8 +353,9 @@ def isFilePointerType(dataEntry):
     return ( dataEntry.type == FileManField.FIELD_TYPE_FILE_POINTER or
              dataEntry.type == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER )
   return False
-def convertFileManDataToHtml(fileManData, dir):
+def convertFileManDataToHtml(fileManData, outDir):
   for ien in getKeys(fileManData.dataEntries.keys(), float):
+    tName = safeElementId("%s-%s" % (fileManData.fileNo, ien))
     dataEntry = fileManData.dataEntries[ien]
     if not dataEntry.name:
       logging.warn("no name for %s" % dataEntry)
@@ -347,15 +364,15 @@ def convertFileManDataToHtml(fileManData, dir):
     if isFilePointerType(dataEntry):
       link, name = convertFilePointerToHtml(dataEntry.name)
     outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
-    with open("%s/%s" % (dir, outHtmlFileName), 'w') as output:
+    with open("%s/%s" % (outDir, outHtmlFileName), 'w') as output:
       output.write ("<html>")
-      outputDataRecordTableHeader(output)
+      outputDataRecordTableHeader(output, tName)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
                                                         fileManData.name,
                                                         fileManData.fileNo))
-      outputFileEntryTableList(output)
+      outputFileEntryTableList(output, tName)
       """ table body """
       output.write("<tbody>\n")
       fileManDataEntryToHtml(output, dataEntry, True)
@@ -372,7 +389,28 @@ def convertFileManSubFileDataToHtml(output, fileManData):
     fileManDataEntryToHtml(output, dataEntry, False)
   output.write ("</ol>\n")
 
-import cgi
+regexRtn = re.compile("( ?D |[ :']\$\$)(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+def getMumpsRoutineHtmlLink(inputString):
+  import re
+  output = ""
+  pos = 0
+  endpos = 0
+  for result in regexRtn.finditer(inputString):
+    if result:
+      routine = result.group('rtn')
+      if routine:
+        tag = result.group('tag')
+        start, end = result.span('rtn')
+        endpos = result.end()
+        output += inputString[pos:start] + getRoutineHRefLink(None, routine) + inputString[end:endpos]
+        pos = endpos
+  if endpos != 0 and endpos < len(inputString):
+    output += inputString[endpos:]
+  if output:
+    return output
+  else:
+    return inputString
+
 def fileManDataEntryToHtml(output, dataEntry, isRoot):
   if not isRoot:
     output.write ("<li>\n")
@@ -383,6 +421,8 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     """ hack for RPC """
     if isRoot and fldId == '.03' and dataField.name == "ROUTINE":
       value = getRoutineHRefLink(dataEntry, value)
+    elif fieldType == FileManField.FIELD_TYPE_MUMPS:
+      value = getMumpsRoutineHtmlLink(value)
     elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if value and value.dataEntries:
         if isRoot:
@@ -463,9 +503,28 @@ def outputFileManDataAsHtml(fileManDataMap, outDir, crossRef):
     generateDataTableHtml(fileManData, fileNo, outDir)
     convertFileManDataToHtml(fileManData, outDir)
 
+def test_safeElementId():
+  for input in ("01", "1.0", "99999.4"):
+    print safeElementId(input)
+
+def test_getMumpsRoutineHtmlLink():
+  for input in ('D ^TEST1',
+                'D ^%ZOSV',
+                'D TAG^TEST2',
+                'Q $$TST^%RRST1',
+                'D ACKMSG^DGHTHLAA',
+                'S XQORM(0)="1A",XQORM("??")="D HSTS^ORPRS01(X)"',
+                'I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
+                'S DUZ=1 K ^XUTL(0)',
+                """W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T SEEM TO BE RUNNING!!!!",!!,*7""",
+                ):
+     print getMumpsRoutineHtmlLink(input)
+
 def main():
   test_sub()
+  test_safeElementId()
   test_convertFilePointerToHtml()
+  test_getMumpsRoutineHtmlLink()
 
 if __name__ == '__main__':
   main()
