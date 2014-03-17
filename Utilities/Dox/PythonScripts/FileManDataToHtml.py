@@ -211,7 +211,8 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
 """
 fields and logic to convert to html for RPC List
 """
-rpc_list_fields = (("Name", '.01', getFileHtmlLink), # Name
+rpc_list_fields = (
+       ("Name", '.01', getFileHtmlLink), # Name
        ("Tag", '.02', None), # Tag
        ("Routine", '.03', getRoutineHRefLink), # Routine
        ("Availability", '.05', None),# Availability
@@ -226,11 +227,25 @@ hl7_list_fields = (
        ("Type", '4', None), # Type
        ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
        ("Transaction Message Type", '770.3', getFileManFilePointerLink), # Message Type
-       #("Response Message Type", '770.11', getFileManFilePointerLink), # Message Type
+       ("Response Message Type", '770.11', getFileManFilePointerLink), # Message Type
        ("Sender", '770.1', getFileManFilePointerLink),# Sending Application
        ("Receiver", '770.2', getFileManFilePointerLink),# Receiving Application
    )
 
+hl7_table_header_fields = (
+    ("""
+      <th rowspan="2">Name</th>
+      <th rowspan="2">Type</th>
+      <th colspan="2">Message Type</th>
+      <th rowspan="2">Event Type</th>
+      <th rowspan="2">Sender</th>
+      <th rowspan="2">Receiver</th>
+     """),
+    ("""
+      <th>Transaction</th>
+      <th>Response</th>
+     """),
+  )
 def outputDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
   output.write("<table id=\"%s\" class=\"display\">\n" % tName)
@@ -239,6 +254,16 @@ def outputDataTableHeader(output, name_list, tName):
   for name in name_list:
     output.write("<th>%s</th>\n" % name)
   output.write("</tr>\n")
+  output.write("</thead>\n")
+
+def outputCustomDataTableHeader(output, name_list, tName):
+  output.write("<div id=\"demo\">")
+  output.write("<table id=\"%s\" class=\"display\">\n" % tName)
+  output.write("<thead>\n")
+  for name in name_list:
+    output.write("<tr>\n")
+    output.write("%s\n" % name)
+    output.write("</tr>\n")
   output.write("</thead>\n")
 
 def writeTableListInfo(output, tName):
@@ -300,7 +325,11 @@ def test_convertFilePointerToHtml():
   input = ('1^345^Testing', '2^345', '5')
   for one in input:
     print convertFilePointerToHtml(one)
+
 class FileManDataToHtml(object):
+  """
+    class to Genetate HTML pages based on FileManData
+  """
   def __init__(self, crossRef, outDir):
     self.crossRef = crossRef
     self.outDir = outDir
@@ -317,19 +346,27 @@ class FileManDataToHtml(object):
       if fileNo == '8994':
         if crossRef:
           allPackages = crossRef.getAllPackages()
+          allRpcs = []
           for package in allPackages.itervalues():
             if package.rpcs:
               logging.info("generating RPC list for package: %s"
                            % package.getName())
               self._generateRPCListHtml(package.rpcs, package.getName())
+              allRpcs.extend(package.rpcs)
+          if allRpcs:
+            self._generateRPCListHtml(allRpcs, "All")
       elif fileNo == '101':
         if crossRef:
           allPackages = crossRef.getAllPackages()
+          allHl7s = []
           for package in allPackages.itervalues():
             if package.hl7:
               logging.info("generating HL7 list for package: %s"
                            % package.getName())
               self._generateHL7ListByPackage(package.hl7, package.getName())
+              allHl7s.extend(package.hl7)
+          if allHl7s:
+            self._generateHL7ListByPackage(allHl7s, "All")
       self._generateDataTableHtml(fileManData, fileNo)
       self._convertFileManDataToHtml(fileManData)
 
@@ -346,40 +383,46 @@ class FileManDataToHtml(object):
       Specific logic to handle HL7 List
       @TODO move the logic to a specific file
     """
-    return self._generateDataListByPackage(dataEntryLst,
-                                     pkgName, hl7_list_fields, "HL7")
+    return self._generateDataListByPackage(dataEntryLst, pkgName,
+                                           hl7_list_fields, "HL7",
+                                           hl7_table_header_fields)
 
-  def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields, listName):
+  def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields,
+                                 listName, custom_header=None):
     outDir = self.outDir
     with open("%s/%s-%s.html" % (outDir, pkgName, listName), 'w+') as output:
-        output.write("<html>\n")
-        tName = safeElementId("%s-%s" % (listName, pkgName))
-        outputDataListTableHeader(output, tName)
-        output.write("<body id=\"dt_example\">")
-        output.write("""<div id="container" style="width:80%">""")
-        output.write("<h1>Package: %s %s List</h1>" % (getPackageHRefLink(pkgName), listName))
+      output.write("<html>\n")
+      tName = safeElementId("%s-%s" % (listName, pkgName))
+      outputDataListTableHeader(output, tName)
+      output.write("<body id=\"dt_example\">")
+      output.write("""<div id="container" style="width:80%">""")
+      output.write("<h1>Package: %s %s List</h1>" %
+                   (getPackageHRefLink(pkgName), listName))
+      if not custom_header:
         outputDataTableHeader(output, [x[0] for x in list_fields], tName)
-        """ table body """
-        output.write("<tbody>\n")
-        for dataEntry in dataEntryLst:
-          tableRow = [""]*len(list_fields)
-          allFields = dataEntry.fields
-          output.write("<tr>\n")
-          for idx, id in enumerate(list_fields):
-            if id[1] in allFields:
-              value = allFields[id[1]].value
-              if id[-1]:
-                value = id[-1](dataEntry, value, crossRef=self.crossRef)
-              tableRow[idx] = value
-          for item in tableRow:
-            #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
-            output.write("<td>%s</td>\n" % item)
-          output.write("</tr>\n")
-        output.write("</tbody>\n")
-        output.write("</table>\n")
-        output.write("</div>\n")
-        output.write("</div>\n")
-        output.write ("</body></html>\n")
+      else:
+        outputCustomDataTableHeader(output, custom_header, tName)
+      """ table body """
+      output.write("<tbody>\n")
+      for dataEntry in dataEntryLst:
+        tableRow = [""]*len(list_fields)
+        allFields = dataEntry.fields
+        output.write("<tr>\n")
+        for idx, id in enumerate(list_fields):
+          if id[1] in allFields:
+            value = allFields[id[1]].value
+            if id[-1]:
+              value = id[-1](dataEntry, value, crossRef=self.crossRef)
+            tableRow[idx] = value
+        for item in tableRow:
+          #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+          output.write("<td>%s</td>\n" % item)
+        output.write("</tr>\n")
+      output.write("</tbody>\n")
+      output.write("</table>\n")
+      output.write("</div>\n")
+      output.write("</div>\n")
+      output.write ("</body></html>\n")
   def _generateDataTableHtml(self, fileManData, fileNo):
     outDir = self.outDir
     isLargeFile = len(fileManData.dataEntries) > 4500
