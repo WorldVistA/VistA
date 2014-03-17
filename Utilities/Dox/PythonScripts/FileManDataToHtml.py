@@ -225,9 +225,9 @@ fields and logic to convert to html for HL7 List
 hl7_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Type", '4', None), # Type
-       ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
        ("Transaction Message Type", '770.3', getFileManFilePointerLink), # Message Type
        ("Response Message Type", '770.11', getFileManFilePointerLink), # Message Type
+       ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
        ("Sender", '770.1', getFileManFilePointerLink),# Sending Application
        ("Receiver", '770.2', getFileManFilePointerLink),# Receiving Application
    )
