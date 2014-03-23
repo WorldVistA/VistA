@@ -21,6 +21,7 @@ import logging
 import glob
 import cgi
 import re
+import json
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
@@ -246,6 +247,23 @@ hl7_table_header_fields = (
       <th>Response</th>
      """),
   )
+
+"""
+fields and logic to convert to html for option List
+"""
+option_list_fields = (
+       ("Name", '.01', getFileHtmlLink), # Name
+       ("Type", '4', None), # Type
+       ("Lock", '3', None), # Lock
+       #("Description", '3.5', getWordProcessingDataBrief), # Description
+   )
+
+menu_list_fields = (
+       ("Name", '.01', getFileHtmlLink), # Name
+       ("Menu Text", '1', None), # Menu Text
+       ("Lock", '3', None), # Lock
+       #("Description", '3.5', getWordProcessingDataBrief), # Description
+   )
 def outputDataTableHeader(output, name_list, tName):
   output.write("<div id=\"demo\">")
   output.write("<table id=\"%s\" class=\"display\">\n" % tName)
@@ -367,9 +385,89 @@ class FileManDataToHtml(object):
               allHl7s.extend(package.hl7)
           if allHl7s:
             self._generateHL7ListByPackage(allHl7s, "All")
+      elif fileNo == '19':
+        """ generate all option list """
+        allOptionList = []
+        allMenuList = []
+        for ien in getKeys(fileManData.dataEntries.keys(), float):
+          dataEntry = fileManData.dataEntries[ien]
+          allOptionList.append(dataEntry)
+          if '4' in dataEntry.fields:
+            if dataEntry.fields['4'].value == 'menu':
+              allMenuList.append(dataEntry)
+          else:
+            logging.error("ien: %s of file 19 does not have a type" % ien)
+        self._generateDataListByPackage(allOptionList, "All", option_list_fields,
+                                        "Option")
+        self._generateDataListByPackage(allMenuList, "All", menu_list_fields,
+                                        "Menu")
+        self._generateMenuDependency(allMenuList, allOptionList)
       self._generateDataTableHtml(fileManData, fileNo)
       self._convertFileManDataToHtml(fileManData)
 
+  def _generateMenuDependency(self, allMenuList, allOptionList):
+    menuDict = dict((x.ien, x) for x in allOptionList)
+    menuDepDict = dict((x, set()) for x in allMenuList)
+    for dataEntry in allMenuList:
+      if '10' in dataEntry.fields:
+        menuData = dataEntry.fields['10'].value
+        if menuData and menuData.dataEntries:
+          for subIen in menuData.dataEntries:
+            subEntry = menuData.dataEntries[subIen]
+            value = subEntry.name
+            childIen = value.split('^')[1]
+            if childIen in menuDict:
+              menuDepDict[dataEntry].add(menuDict[childIen])
+              logging.info("Adding %s to %s" % (menuDict[childIen].name,
+                                                dataEntry.name))
+            else:
+              logging.error("Could not find %s: value: %s" % (childIen, value))
+    """ discard any menu does not have any child """
+    leafMenus = set()
+    for entry in menuDepDict:
+      if len(menuDepDict[entry]) == 0:
+        leafMenus.add(entry)
+    for entry in leafMenus:
+      del menuDepDict[entry]
+    """ find the top level menu, menu without any parent """
+    allChildSet = reduce(set.union, menuDepDict.itervalues())
+    rootSet = set(allMenuList) - allChildSet
+    leafSet = allChildSet - set(allMenuList)
+    for rootMenu in rootSet:
+      logging.info("Root Menu: %s, %s" % (rootMenu.name, rootMenu.ien))
+    for leafMenu in leafSet:
+      logging.info("leaf Menu: %s, %s" % (leafMenu.name, leafMenu.ien))
+
+    """ generate the json file based on root menu """
+    for item in rootSet:
+      outJson = {}
+      outJson['name'] = item.name
+      outJson['ien'] = item.ien
+      if '1' in item.fields:
+        outJson['name'] = item.fields['1'].value
+        outJson['option'] = item.name
+      if '3' in item.fields:
+        outJson['lock'] = item.fields['3'].value
+      if item in menuDepDict:
+        self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson)
+      with open(os.path.join(self.outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
+        logging.info("Generate File: %s" % output.name)
+        json.dump(outJson, output)
+
+  def _addChildMenusToJson(self, children, menuDepDict, outJson):
+    for item in children:
+      childDict = {}
+      childDict['name'] = item.name
+      childDict['ien'] = item.ien
+      if '1' in item.fields:
+        childDict['name'] = item.fields['1'].value
+        childDict['option'] = item.name
+      if '3' in item.fields:
+        childDict['lock'] = item.fields['3'].value
+      if item in menuDepDict:
+        self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict)
+      logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
+      outJson.setdefault('children',[]).append(childDict)
   def _generateRPCListHtml(self, dataEntryLst, pkgName):
     """
       Specific logic to handle RPC List
@@ -462,7 +560,6 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write ("</body></html>\n")
     if isLargeFile:
-      import json
       logging.info("Ajex source file: %s" % ajexSrc)
       """ Write out the data file in JSON format """
       outJson = {"aaData": []}
