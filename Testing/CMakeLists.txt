@@ -93,76 +93,12 @@ endif()
 SET(SCRIPT_OUTPUT_DIR "${VISTA_BINARY_DIR}/UnitTest/")
 SET(UNITTEST_LOG_DIR "${SCRIPT_OUTPUT_DIR}/Log")
 file(MAKE_DIRECTORY "${UNITTEST_LOG_DIR}")
+include(CommonFunctions)
 
 if(GTM_DIST)
   include(UseGTM)
 elseif(CCONTROL_EXECUTABLE)
   include(UseCache)
-endif()
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO SETUP THE XINDEX TESTING` #####
-#-----------------------------------------------------------------------------#
-include(CommonFunctions)
-option(TEST_VISTA_XINDEX "Run XINDEX on every routine in every package" ON)
-if(TEST_VISTA_XINDEX)
-  FindPackages(${VISTA_SOURCE_DIR})
-  list(APPEND PACKAGES "Uncategorized")
-  foreach(package_file_name ${PACKAGES})
-    #Configures the CMAKE testing
-    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake @ONLY)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
-    #Creates the command that will be called for the Test
-    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake)
-  endforeach()
-endif()
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO SETUP THE FILEMAN "VERIFY FIELDS" TESTING #####
-#-----------------------------------------------------------------------------#
-option(TEST_VISTA_VERIFYFIELDS "Run the 'Verify Fields' FileMan Utility on every file in each package" OFF)
-mark_as_advanced(TEST_VISTA_VERIFYFIELDS)
-if(TEST_VISTA_VERIFYFIELDS)
-  FindPackages(${VISTA_SOURCE_DIR})
-  foreach(package_file_name ${PACKAGES})
-    # Configures the CMAKE testing
-    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@VFTest.log")
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VerifyFields.py.in ${VISTA_BINARY_DIR}/Testing/VerifyFields/${package_file_name}VFTest.py @ONLY)
-    # Creates the command that will be called for the Test
-    add_test(VerifyFields_${package_file_name} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/VerifyFields/${package_file_name}VFTest.py)
-  endforeach()
-endif()
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO SETUP THE REFRESH OF THE DATABASE #####
-#-----------------------------------------------------------------------------#
-
-if(TEST_VISTA_FRESH)
-  add_subdirectory(Setup)
-endif()
-
-#-----------------------------------------------------------------------------#
-##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
-#-----------------------------------------------------------------------------#
-option(TEST_VISTA_FUNCTIONAL_SIK "Use Python and Sikuli to test Vitals and CPRS" OFF)
-option(TEST_VISTA_FUNCTIONAL_RAS "Use Python to test VistA via roll and scroll" OFF)
-option(TEST_VISTA_SETUP "Prepopulate the database with sample data including users, patients, locations, etc. " ON)
-if(TEST_VISTA_SETUP)
-  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/PostImportSetupScript.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/PostImportSetupScript.py")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/importPats.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/importPats.py")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/ClinicSetup.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/ClinicSetup.py")
-endif()
-if((TEST_VISTA_FUNCTIONAL_SIK OR TEST_VISTA_FUNCTIONAL_RAS) AND TEST_VISTA_SETUP)
-  add_subdirectory(Functional)
-  # Coverage reports will be in human readable form for functional tests, by default
-  option(TEST_VISTA_COVERAGE_READABLE "On Cache, output the coverage report in a summary table" ON)
-  file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
-endif()
-# this option is reserved for dashboard submission
-if (TEST_VISTA_OTJ_SUBMISSION)
-  add_subdirectory(OTJ)
 endif()
 
 #-----------------------------------------------------------------------------#
@@ -209,8 +145,8 @@ endif()
 
 if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
 
-  if(EXISTS "${TEST_VISTA_OUTPUT_DIR}/Coverage/out.ro")
-    file(REMOVE "${TEST_VISTA_OUTPUT_DIR}/Coverage/out.ro")
+  if(EXISTS "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro")
+    file(REMOVE "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro")
   endif()
 
   if(EXISTS ${VISTA_BINARY_DIR}/gtm_coverage.mcov)
@@ -225,21 +161,112 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
     message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
     This will also create new text files during the run.")
 
+    if(EXISTS "${TEST_VISTA_OUTPUT_DIR}/Coverage/")
+      message("Removing old coverage data")
+      file(REMOVE_RECURSE "${TEST_VISTA_OUTPUT_DIR}/Coverage/")
+    endif()
     file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
     file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource")
+
+    set(TEST_VISTA_COVERAGE_SUBSET_DIR CACHE PATH "Path to a folder with routines to calculate coverage for" )
+    mark_as_advanced(TEST_VISTA_COVERAGE_SUBSET_DIR)
+    set(VendorArgs "")
+    SetVendorArgs(VendorArgs)
+    message("${TEST_VISTA_COVERAGE_SUBSET}")
+    set(ARGUMENTS "${VendorArgs}" "-o" "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro" "-r")
+    if(TEST_VISTA_COVERAGE_SUBSET_DIR)
+      set(TEST_VISTA_COVERAGE_SUBSET "[")
+      file(GLOB_RECURSE TEST_VISTA_COVERAGE_SUBSET_PATHS "${TEST_VISTA_COVERAGE_SUBSET_DIR}/*.m")
+      foreach(path ${TEST_VISTA_COVERAGE_SUBSET_PATHS})
+        get_filename_component(routine_name ${path} NAME_WE)
+        set(TEST_VISTA_COVERAGE_SUBSET "${TEST_VISTA_COVERAGE_SUBSET},'${routine_name}'")
+        set(ARGUMENTS ${ARGUMENTS} "${routine_name}")
+      endforeach()
+      set(TEST_VISTA_COVERAGE_SUBSET "${TEST_VISTA_COVERAGE_SUBSET}]")
+      STRING(REPLACE "[," "[" TEST_VISTA_COVERAGE_SUBSET ${TEST_VISTA_COVERAGE_SUBSET})
+    else()
+      set(TEST_VISTA_COVERAGE_SUBSET "[*]")
+      set(ARGUMENTS ${ARGUMENTS} "*")
+    endif()
 
     if(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "Cache")
       file(WRITE ${VISTA_BINARY_DIR}/cache_coverage.cmcov "packages:${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
     elseif(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "GTM")
       file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
     endif()
-    set(VendorArgs "")
-    SetVendorArgs(VendorArgs)
-    set(ARGUMENTS "-o" "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro" "-r" "*" "${VendorArgs}")
+
     add_test(COV_PrepareSource ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/Scripts/VistACoveragePrep.py" ${ARGUMENTS})
     set_property(TEST COV_PrepareSource PROPERTY DEPENDS ${munit_test_list})
   endif()
 endif()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE XINDEX TESTING` #####
+#-----------------------------------------------------------------------------#
+
+option(TEST_VISTA_XINDEX "Run XINDEX on every routine in every package" ON)
+if(TEST_VISTA_XINDEX)
+  FindPackages(${VISTA_SOURCE_DIR})
+  list(APPEND PACKAGES "Uncategorized")
+  foreach(package_file_name ${PACKAGES})
+    #Configures the CMAKE testing
+    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake @ONLY)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
+    #Creates the command that will be called for the Test
+    add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake)
+  endforeach()
+endif()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE FILEMAN "VERIFY FIELDS" TESTING #####
+#-----------------------------------------------------------------------------#
+option(TEST_VISTA_VERIFYFIELDS "Run the 'Verify Fields' FileMan Utility on every file in each package" OFF)
+mark_as_advanced(TEST_VISTA_VERIFYFIELDS)
+if(TEST_VISTA_VERIFYFIELDS)
+  FindPackages(${VISTA_SOURCE_DIR})
+  foreach(package_file_name ${PACKAGES})
+    # Configures the CMAKE testing
+    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@VFTest.log")
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VerifyFields.py.in ${VISTA_BINARY_DIR}/Testing/VerifyFields/${package_file_name}VFTest.py @ONLY)
+    # Creates the command that will be called for the Test
+    add_test(VerifyFields_${package_file_name} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/VerifyFields/${package_file_name}VFTest.py)
+  endforeach()
+endif()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP THE REFRESH OF THE DATABASE #####
+#-----------------------------------------------------------------------------#
+
+if(TEST_VISTA_FRESH)
+  add_subdirectory(Setup)
+endif()
+
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO SETUP AUTOMATIC SYSTEM TESTING #####
+#-----------------------------------------------------------------------------#
+option(TEST_VISTA_FUNCTIONAL_SIK "Use Python and Sikuli to test Vitals and CPRS" OFF)
+option(TEST_VISTA_FUNCTIONAL_RAS "Use Python to test VistA via roll and scroll" OFF)
+option(TEST_VISTA_SETUP "Prepopulate the database with sample data including users, patients, locations, etc. " ON)
+if(TEST_VISTA_SETUP)
+  set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/PostImportSetupScript.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/PostImportSetupScript.py")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/importPats.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/importPats.py")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/ClinicSetup.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Setup/ClinicSetup.py")
+endif()
+if((TEST_VISTA_FUNCTIONAL_SIK OR TEST_VISTA_FUNCTIONAL_RAS) AND TEST_VISTA_SETUP)
+  add_subdirectory(Functional)
+  # Coverage reports will be in human readable form for functional tests, by default
+  option(TEST_VISTA_COVERAGE_READABLE "On Cache, output the coverage report in a summary table" ON)
+  file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
+endif()
+# this option is reserved for dashboard submission
+if (TEST_VISTA_OTJ_SUBMISSION)
+  add_subdirectory(OTJ)
+endif()
+
+
 
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN PACKAGE PREFIX PARSING TESTING #####

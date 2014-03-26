@@ -563,9 +563,11 @@ def startmon(test_suite_details):
 
     test_driver.pre_test_run(test_suite_details)
     VistA1 = None
+    if test_suite_details.coverage_subset == ['*']:
+      test_suite_details.coverage_subset=['SC*', 'SD*']
     try:
         VistA = test_driver.connect_VistA(test_suite_details)
-        VistA.startCoverage(routines=['SC*', 'SD*'])
+        VistA.startCoverage(test_suite_details.coverage_subset)
 
         test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:

@@ -101,6 +101,7 @@ class TestSuiteDriver(object):
         #parser.add_argument('-i', '--instance', help='cache instance type', choices=["TRYCACHE", "GTM"], default='')
         parser.add_argument('-n', '--namespace', help='cache namespace', default='')
         parser.add_argument('-c', '--coverage-type', help='Human readable coverage on/off')
+        parser.add_argument('-cs','--coverage-subset',help='Subset of Routines to calculate coverage over')
         args = parser.parse_args()
 
         logging_level = LOGGING_LEVELS.get(args.logging_level, logging.NOTSET)
@@ -114,6 +115,7 @@ class TestSuiteDriver(object):
         #logging.info('INSTANCE arg: ' + str(args.instance))
         logging.info('NAMESPACE arg: ' + str(args.namespace))
         logging.info('COVERAGE TYPE arg: ' + str(args.coverage_type))
+        logging.info('COVERAGE Subset arg: ' + str(args.coverage_subset.split(",")))
 
         package_name = self.test_file[self.test_file.rfind('Packages')+9:self.test_file.rfind('/Testing/RAS/'+test_suite_name)]
 
@@ -166,7 +168,7 @@ class TestSuiteDriver(object):
         result_log = file(resfile, 'w')
 
         return test_suite_details(package_name, test_suite_name, result_log, args.resultdir, instance,
-                           namespace, username, remote_conn_details, args.coverage_type)
+                           namespace, username, remote_conn_details, args.coverage_type, args.coverage_subset.split(","))
 
     def pre_test_suite_run(self, test_suite_details):
         logging.info('Start ATF Test Suite \'' + test_suite_details.test_suite_name + '\'')
@@ -283,7 +285,7 @@ class test_suite_details(object):
     '''
 
     def __init__(self, package_name, test_suite_name, result_log, result_dir, instance,
-                 namespace, username, remote_conn_details,coverage_type):
+                 namespace, username, remote_conn_details,coverage_type,coverage_subset):
         '''
         Constructor
         '''
@@ -296,6 +298,7 @@ class test_suite_details(object):
         self.username = username
         self.remote_conn_details = remote_conn_details
         self.coverage_type = coverage_type
+        self.coverage_subset= coverage_subset
 
 
 def read_suite_config_file():
