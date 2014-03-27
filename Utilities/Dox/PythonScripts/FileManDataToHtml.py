@@ -298,7 +298,8 @@ def isFilePointerType(dataEntry):
     return ( dataEntry.type == FileManField.FIELD_TYPE_FILE_POINTER or
              dataEntry.type == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER )
   return False
-regexRtnCode = re.compile("( ?D |[ :']\$\$)(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+
+regexRtnCode = re.compile("( ?D |[ :',]\$\$)(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
 def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   """
     For a giving Mumps code, it use regular expression
@@ -684,6 +685,8 @@ def test_getMumpsRoutineHtmlLink():
     'I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
     'S DUZ=1 K ^XUTL(0)',
     """W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
+    """W "This is a Test",$$TM^ZTLOAD()""",
+    """D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",
   ):
     print getMumpsRoutineHtmlLinks(input)
 
