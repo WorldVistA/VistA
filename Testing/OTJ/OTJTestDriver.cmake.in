@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 
 # prepare the arguments list
-include(CommonFunctions)
+include("@VISTA_SOURCE_DIR@/CMake/CommonFunctions.cmake")
 set(vendor_args "")
 SetVendorArgsConfig(vendor_args "@VENDOR_NAME@" "@VISTA_CACHE_NAMESPACE@"
                      "@VISTA_CACHE_INSTANCE@" "@VISTA_CACHE_USERNAME@"
