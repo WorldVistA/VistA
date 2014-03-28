@@ -173,7 +173,11 @@ def sortSchemaByLocation(fileSchema):
   for fldAttr in fileSchema.getAllFileManFields().itervalues():
     loc = fldAttr.getLocation()
     if not loc: continue
-    index,pos = loc.split(';')
+    locInfo = loc.split(';')
+    if len(locInfo) != 2:
+      logging.error("Unknown location info %s for %r" % (loc, fldAttr))
+      continue
+    index,pos = locInfo
     if index not in locFieldDict:
       locFieldDict[index] = {}
     locFieldDict[index][pos] = fldAttr
@@ -198,6 +202,9 @@ initGlobalLocationMap = {
           '627.9', '6910', '6910.1', '6921', '6922',
           )
   }
+""" handle file# 0 or the schema file """
+initGlobalLocationMap['0'] = '^DD('
+
 class FileManGlobalDataParser(object):
   def __init__(self, crossRef=None):
     self._dataRoot = None
