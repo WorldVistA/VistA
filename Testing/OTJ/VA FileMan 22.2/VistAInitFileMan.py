@@ -131,7 +131,7 @@ def deleteFileManRoutinesCache(testClient):
   conn.send('\r')
   conn.expect('routines to DELETE, OK: ')
   conn.send('YES\r')
-  testClient.waitForPrompt()
+  testClient.waitForPrompt(120)
   conn.send('\r')
 
 def deleteFileManRoutinesGTM():
