@@ -159,7 +159,7 @@ def sc_test004(test_suite_details):
         SC.patdem(clinic=tclinic, name='Ten', mult='2')
         SC.signon()
         SC.expandentry(clinic=tclinic, vlist1=['TEN', 'SCHEDULED', '30'],
-                       vlist2=['Event', 'Date', 'User', 'TESTMASTER'],
+                       vlist2=['Event', 'Date', 'User', 'USER'],
                        vlist3=['NEXT AVAILABLE', 'NO', '0'], vlist4=['1933', 'MALE', 'UNANSWERED'],
                        vlist5=['Combat Veteran:', 'No check out information'], mult='3')
         SC.signon()
