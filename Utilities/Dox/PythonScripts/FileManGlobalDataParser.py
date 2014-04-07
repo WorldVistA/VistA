@@ -431,8 +431,10 @@ class FileManGlobalDataParser(object):
           logging.warn("Can not find a package for HL7: %s" % entryName)
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
+    rpcRtnRef = {}
     for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
       rpcEntry = rpcData.dataEntries[ien]
+      rpcRoutine = None
       if rpcEntry.name:
         namespace, package = \
         self._crossRef.__categorizeVariableNameByNamespace__(rpcEntry.name)
@@ -440,20 +442,37 @@ class FileManGlobalDataParser(object):
           package.rpcs.append(rpcEntry)
           logging.info("Adding RPC: %s to Package: %s" %
                       (rpcEntry.name, package.getName()))
+
+        if '.03' in rpcEntry.fields:
+          rpcRoutine = rpcEntry.fields['.03'].value
         else:
-          """ try to categorize by routine called """
-          if '.03' in rpcEntry.fields:
-            rpcRoutine = rpcEntry.fields['.03'].value
+          if rpcRoutine:
+            """ try to categorize by routine called """
             namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(rpcRoutine)
             if package:
               package.rpcs.append(rpcEntry)
-              logging.info("Adding RPC: %s to Package: %s" %
+              logging.info("Adding RPC: %s to Package: %s based on routine calls" %
                           (rpcEntry.name, package.getName()))
           else:
             logging.error("Can not find package for RPC: %s" %
                           (rpcEntry.name))
-
+        """ Generate the routine referenced based on RPC Call """
+        if rpcRoutine:
+          rpcInfo = {"name": rpcEntry.name,
+                     "file": '8994',
+                     "ien" : ien
+                    }
+          if '.02' in rpcEntry.fields:
+            rpcTag = rpcEntry.fields['.02'].value
+            rpcInfo['tag'] = rpcTag
+          rpcRtnRef.setdefault(rpcRoutine, []).append(rpcInfo)
+    if len(rpcRtnRef):
+      import json
+      """ generate the dependency in json file """
+      with open(os.path.join(self.outDir, "Routine-RPC.json"), 'w') as output:
+        logging.info("Generate File: %s" % output.name)
+        json.dump(rpcRtnRef, output)
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
@@ -669,6 +688,8 @@ def testGlobalParser(crosRef=None):
   glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
                                              allSchemaDict, '1', '^DIC(')
   assert result.fileNo in glbDataParser.globalLocationMap
+  if result.outdir:
+    glbDataParser.outDir = result.outdir
   htmlGen = FileManDataToHtml(crossRef, result.outdir)
   if not result.all or result.fileNo in isolatedFiles:
     gdFile = allFiles[result.fileNo]['path']

@@ -51,17 +51,20 @@ class CrossReferenceBuilder(object):
                             patchRepositDir, fileSchemaDir=None,
                             filemanDbJson=None):
 
-        logParser = parseAllCallGraphLog(xindexLogDir,
-                                         MRepositDir,
-                                         patchRepositDir)
+        crossRef = parseCrossReferenceGeneratorArgs(MRepositDir,
+                                                    patchRepositDir)
+        if xindexLogDir:
+            crossRef = parseAllCallGraphLog(xindexLogDir,
+                crossRef).getCrossReference()
+
         if fileSchemaDir:
-            parseDataDictionaryLogFile(logParser.getCrossReference(),
-                                       fileSchemaDir)
+            crossRef = parseDataDictionaryLogFile(crossRef,
+                                       fileSchemaDir).getCrossReference()
         if filemanDbJson:
-            parseFileManDBJSONFile(logParser.getCrossReference(),
-                                   filemanDbJson)
-        logParser.getCrossReference().generateAllPackageDependencies()
-        return logParser.getCrossReference()
+            crossRef = parseFileManDBJSONFile(crossRef,
+                                   filemanDbJson).getCrossReference()
+        crossRef.generateAllPackageDependencies()
+        return crossRef
     def buildCrossReferenceFromMongoDB(self):
         pass
 

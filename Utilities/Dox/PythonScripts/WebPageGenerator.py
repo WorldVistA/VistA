@@ -28,6 +28,7 @@ import bisect
 import argparse
 import shutil
 import csv
+import json
 
 from datetime import datetime, date, time
 from LogManager import logger
@@ -47,6 +48,9 @@ GLOBAL_VARIABLE_SECTION_HEADER_LIST = [
       '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed)''']
 FILENO_FILEMANDB_SECTION_HEADER_LIST = [
      "FileNo",
+      '''Call Tags''']
+RPC_REFERENCE_SECTION_HEADER_LIST = [
+     "RPC Name",
       '''Call Tags''']
 DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
 LINE_TAG_PER_LINE = 10
@@ -361,7 +365,7 @@ def writeSubSectionHeader(headerName, outputFile):
 # class to generate the web page based on input
 class WebPageGenerator:
     def __init__(self, crossReference, outDir, repDir, docRepDir, gitPath,
-                 includeSource=False):
+                 includeSource=False, rtnJson=None):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
@@ -377,6 +381,8 @@ class WebPageGenerator:
         self._dotPath = ""
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
+        with open(rtnJson, 'r') as jsonFile:
+            self._rtnJson = json.load(jsonFile)
 
     def __initWebTemplateFile__(self):
         #load _header and _footer in the memory
@@ -1764,6 +1770,18 @@ class WebPageGenerator:
         writeSectionHeader(sectionTitle, sectionTitle, outputFile)
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
+    def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
+      return ("http://code.osehra.org/ProdDemo/Visual/files/%s-%s.html" % (fileNo,
+            ien))
+    def __convertRtnDataReference__(self, variables):
+        output = []
+        for item in variables:
+            detailLink = self.__getDataEntryDetailHtmlLink__(item['file'],
+                item['ien'])
+            name = "<a href=\"%s\">%s</a>" % (detailLink, item['name'])
+            tag = item.get('tag', "")
+            output.append((name, tag))
+        return output
     def __convertVariableToTableData__(self, variables, isGlobal = False):
         output = []
         allVars = sorted(variables.iterkeys())
@@ -1877,6 +1895,12 @@ class WebPageGenerator:
                                             FILENO_FILEMANDB_SECTION_HEADER_LIST,
                                             routine.getFilemanDbCallGlobals(),
                                             self.__convertFileManDbCallToTableData__)
+        if routineName in self._rtnJson:
+          self.generateRoutineVariableSection(outputFile,
+                                              "Used in RPC",
+                                              RPC_REFERENCE_SECTION_HEADER_LIST,
+                                              self._rtnJson[routineName],
+                                              self.__convertRtnDataReference__)
         self.generateRoutineVariableSection(outputFile,
                                             "External References",
                                             DEFAULT_VARIABLE_SECTION_HEADER_LIST,
@@ -2041,6 +2065,8 @@ if __name__ == '__main__':
                         help='generate routine source code page?')
     parser.add_argument('-lf', '--outputLogFileName', required=False,
                         help='the output Logging file')
+    parser.add_argument('-rj','--rtnJson', help='routine reference in VistA '
+        'Data file in JSON format')
     result = parser.parse_args();
     if not result.outputLogFileName:
         outputLogFile = getTempLogFile()
@@ -2056,7 +2082,8 @@ if __name__ == '__main__':
                                   result.MRepositDir,
                                   doxDir,
                                   result.gitPath,
-                                  result.includeSource)
+                                  result.includeSource,
+                                  result.rtnJson)
     if result.hasDot and result.dotPath:
         webPageGen.setDotPath(result.dotPath)
     webPageGen.generateWebPage()
