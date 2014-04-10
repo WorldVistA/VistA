@@ -32,6 +32,64 @@ if SCRIPTS_DIR not in sys.path:
 from FileManDateTimeUtil import fmDtToPyDt
 import glob
 
+regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>"
+                         "([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+def getMumpsRoutine(mumpsCode):
+  """
+    For a given mumpsCode, parse the routine and tag information
+    via regular expression.
+    return an iterator with (routine, tag, rtnpos)
+  """
+  pos = 0
+  endpos = 0
+  for result in regexRtnCode.finditer(mumpsCode):
+    if result:
+      routine = result.group('rtn')
+      if routine:
+        tag = result.group('tag')
+        start, end = result.span('rtn')
+        endpos = result.end()
+        pos = endpos
+        yield (routine, tag, start)
+  raise StopIteration
+
+def test_getMumpsRoutine():
+  for input in (
+    ('D ^TEST1', [('TEST1','',3)]),
+    ('D ^%ZOSV', [('%ZOSV','',3)]),
+    ('D TAG^TEST2',[('TEST2','TAG',6)]),
+    ('Q $$TST^%RRST1', [('%RRST1','TST',8)]),
+    ('D ACKMSG^DGHTHLAA',[('DGHTHLAA','ACKMSG',9)]),
+    ('S XQORM(0)="1A",XQORM("??")="D HSTS^ORPRS01(X)"',[('ORPRS01','HSTS',36)]),
+    ('I $$TEST^ABCD D ^EST Q:$$ENG^%INDX K ^DD(0)',
+     [
+       ('ABCD','TEST',9),
+       ('EST','',17),
+       ('%INDX','ENG',29)
+     ]
+    ),
+    ('S DUZ=1 K ^XUTL(0)', None),
+    ("""W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
+     [('%ZTLOAD','TM',8)]
+    ),
+    ("""W "This is a Test",$$TM^ZTLOAD()""",[('ZTLOAD','TM',24)]),
+    ("""D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",
+     [
+       ('PSIVXU','',3),
+       ('PSIVSTAT','EN',27),
+       ('%DTC','NOW',40)
+     ]
+    ),
+    ("""D ^TEST1,EN^TEST2""",
+     [
+       ('TEST1','',3),
+       ('TEST2','EN',12)
+     ]
+    ),
+  ):
+    for idx, (routine,tag,pos) in enumerate(getMumpsRoutine(input[0])):
+      assert (routine, tag, pos) == input[1][idx], "%s: %s" % ((routine, tag, pos), input[1][idx])
+
 class FileManFileData(object):
   """
     Class to represent FileMan File data WRT
@@ -216,6 +274,7 @@ class FileManGlobalDataParser(object):
     self._fileKeyIndex = {} # File: => ien => Value
     self._glbLocMap = initGlobalLocationMap # File: => Global Location
     self._fileParsed = set() # set of files that has been parsed
+    self._rtnRefDict = {} # dict of rtn => fileNo => Details
   @property
   def outFileManData(self):
     return self._glbData
@@ -409,6 +468,13 @@ class FileManGlobalDataParser(object):
     elif '101' in self._glbData:
       self._updateHL7Reference()
 
+  def _outRtnReferenceDict(self):
+    if len(self._rtnRefDict):
+      import json
+      """ generate the dependency in json file """
+      with open(os.path.join(self.outDir, "Routine-Ref.json"), 'w') as output:
+        logging.info("Generate File: %s" % output.name)
+        json.dump(self._rtnRefDict, output)
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
     for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
@@ -429,9 +495,10 @@ class FileManGlobalDataParser(object):
           pass
         else:
           logging.warn("Can not find a package for HL7: %s" % entryName)
+        if '771' in protocolEntry.fields:
+          pass
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
-    rpcRtnRef = {}
     for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
       rpcEntry = rpcData.dataEntries[ien]
       rpcRoutine = None
@@ -460,19 +527,12 @@ class FileManGlobalDataParser(object):
         """ Generate the routine referenced based on RPC Call """
         if rpcRoutine:
           rpcInfo = {"name": rpcEntry.name,
-                     "file": '8994',
                      "ien" : ien
                     }
           if '.02' in rpcEntry.fields:
             rpcTag = rpcEntry.fields['.02'].value
             rpcInfo['tag'] = rpcTag
-          rpcRtnRef.setdefault(rpcRoutine, []).append(rpcInfo)
-    if len(rpcRtnRef):
-      import json
-      """ generate the dependency in json file """
-      with open(os.path.join(self.outDir, "Routine-RPC.json"), 'w') as output:
-        logging.info("Generate File: %s" % output.name)
-        json.dump(rpcRtnRef, output)
+          self._rtnRefDict.setdefault(rpcRoutine,{}).setdefault('8994',[]).append(rpcInfo)
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
@@ -787,13 +847,14 @@ def createArgParser():
 def unit_test():
   test_normalizeGlobalLocation()
   test_horologToDateTime()
+  test_getMumpsRoutine()
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
   unit_test()
   #test_FileManDataEntry()
-  testGlobalParser()
+  #testGlobalParser()
 
 if __name__ == '__main__':
   main()
