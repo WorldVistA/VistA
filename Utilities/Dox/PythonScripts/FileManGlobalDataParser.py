@@ -465,16 +465,17 @@ class FileManGlobalDataParser(object):
   def _updateCrossReference(self):
     if '8994' in self._glbData:
       self._updateRPCRefence()
-    elif '101' in self._glbData:
+    if '101' in self._glbData:
       self._updateHL7Reference()
 
-  def _outRtnReferenceDict(self):
+  def outRtnReferenceDict(self):
     if len(self._rtnRefDict):
       import json
       """ generate the dependency in json file """
       with open(os.path.join(self.outDir, "Routine-Ref.json"), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(self._rtnRefDict, output)
+
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
     for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
@@ -495,8 +496,19 @@ class FileManGlobalDataParser(object):
           pass
         else:
           logging.warn("Can not find a package for HL7: %s" % entryName)
-        if '771' in protocolEntry.fields:
-          pass
+        for field in ('771', '772'):
+          if field not in protocolEntry.fields:
+            continue
+          hl7Rtn = protocolEntry.fields[field].value
+          if not hl7Rtn:
+            continue
+          for rtn, tag, pos in getMumpsRoutine(hl7Rtn):
+            hl7Info = {"name": entryName,
+                       "ien": ien}
+            if tag:
+              hl7Info['tag'] = tag
+            self._rtnRefDict.setdefault(rtn,{}).setdefault('101',[]).append(hl7Info)
+
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
     for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
@@ -741,33 +753,39 @@ def testGlobalParser(crosRef=None):
   allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(result.MRepositDir,
                                                      'Packages'),
                                                    "*/Globals/*.zwr")
-  assert '0' in allFiles and '1' in allFiles and result.fileNo in allFiles
+  assert '0' in allFiles and '1' in allFiles and set(result.fileNos).issubset(allFiles)
   schemaParser = FileManSchemaParser()
   allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
   isolatedFiles = schemaParser.isolatedFiles
   glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
                                              allSchemaDict, '1', '^DIC(')
-  assert result.fileNo in glbDataParser.globalLocationMap
+  for fileNo in result.fileNos:
+    assert fileNo in glbDataParser.globalLocationMap
   if result.outdir:
     glbDataParser.outDir = result.outdir
   htmlGen = FileManDataToHtml(crossRef, result.outdir)
-  if not result.all or result.fileNo in isolatedFiles:
-    gdFile = allFiles[result.fileNo]['path']
-    logging.info("Parsing file: %s at %s" % (result.fileNo, gdFile))
-    glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile,
-                                               allSchemaDict,
-                                               result.fileNo)
-    if result.outdir:
-      htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
-    else:
-      fileManDataMap = glbDataParser.outFileManData
-      for fileNo in getKeys(fileManDataMap.iterkeys(), float):
-        printFileManFileData(fileManDataMap[fileNo])
+  if not result.all or set(result.fileNos).issubset(isolatedFiles):
+    for fileNo in result.fileNos:
+      gdFile = allFiles[fileNo]['path']
+      logging.info("Parsing file: %s at %s" % (fileNo, gdFile))
+      glbDataParser.parseZWRGlobalFileBySchemaV2(gdFile,
+                                                 allSchemaDict,
+                                                 fileNo)
+      if result.outdir:
+        htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
+      else:
+        fileManDataMap = glbDataParser.outFileManData
+        for file in getKeys(fileManDataMap.iterkeys(), float):
+          printFileManFileData(fileManDataMap[file])
+      del glbDataParser.outFileManData[fileNo]
+    glbDataParser.outRtnReferenceDict()
     return
   """ Also generate all required files as well """
   sccSet = schemaParser.sccSet
+  fileSet = set(result.fileNos)
   for idx, value in enumerate(sccSet):
-    if result.fileNo in value:
+    fileSet.difference_update(value)
+    if not fileSet:
       break
   for i in xrange(0,idx+1):
     fileSet = sccSet[i]
@@ -837,7 +855,7 @@ def createArgParser():
                                    parents=[initParser])
   #parser.add_argument('ddFile', help='path to ZWR file contains DD global')
   #parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
-  parser.add_argument('fileNo', help='FileMan File Number')
+  parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
   #parser.add_argument('glbRoot', help='Global root location for FileMan file')
   parser.add_argument('-outdir', help='top directory to generate output in html')
   parser.add_argument('-all', action='store_true',
@@ -854,7 +872,7 @@ def main():
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
   unit_test()
   #test_FileManDataEntry()
-  #testGlobalParser()
+  testGlobalParser()
 
 if __name__ == '__main__':
   main()
