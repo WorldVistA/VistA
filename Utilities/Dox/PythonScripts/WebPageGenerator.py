@@ -52,6 +52,9 @@ FILENO_FILEMANDB_SECTION_HEADER_LIST = [
 RPC_REFERENCE_SECTION_HEADER_LIST = [
      "RPC Name",
       '''Call Tags''']
+HL7_REFERENCE_SECTION_HEADER_LIST = [
+     "HL7 Protocol Name",
+      '''Call Tags''']
 DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
 LINE_TAG_PER_LINE = 10
 # constants for html page
@@ -382,7 +385,7 @@ class WebPageGenerator:
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
         with open(rtnJson, 'r') as jsonFile:
-            self._rtnJson = json.load(jsonFile)
+            self._rtnRefJson = json.load(jsonFile)
 
     def __initWebTemplateFile__(self):
         #load _header and _footer in the memory
@@ -1720,10 +1723,14 @@ class WebPageGenerator:
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
       return ("http://code.osehra.org/ProdDemo/Visual/files/%s-%s.html" % (fileNo,
             ien))
-    def __convertRtnDataReference__(self, variables):
+    def __convertRPCDataReference__(self, variables):
+        return self.__convertRtnDataReference__(variables, '8994')
+    def __convertHL7DataReference__(self, variables):
+        return self.__convertRtnDataReference__(variables, '101')
+    def __convertRtnDataReference__(self, variables, fileNo):
         output = []
         for item in variables:
-            detailLink = self.__getDataEntryDetailHtmlLink__(item['file'],
+            detailLink = self.__getDataEntryDetailHtmlLink__(fileNo,
                 item['ien'])
             name = "<a href=\"%s\">%s</a>" % (detailLink, item['name'])
             tag = item.get('tag', "")
@@ -1800,8 +1807,13 @@ class WebPageGenerator:
 # Method to generate individual routine page
 #===============================================================================
     def __getRpcReferences__(self, rtnName):
-        if self._rtnJson:
-            return self._rtnJson.get(rtnName)
+        return self.__getRtnDataFileRefs__(rtnName, '8994')
+    def __getHl7References__(self, rtnName):
+        return self.__getRtnDataFileRefs__(rtnName, '101')
+    def __getRtnDataFileRefs__(self, rtnName, fileNo):
+        if self._rtnRefJson and rtnName in self._rtnRefJson:
+          refFilesJson = self._rtnRefJson[rtnName]
+          return refFilesJson.get(fileNo)
         return None
     def __writeRoutineInfoSection__(self, routine, data, header, link, outputFile):
         writeSectionHeader(header, link, outputFile)
@@ -1941,7 +1953,16 @@ class WebPageGenerator:
              "dataarg" : [routineName], # extra arguments for data source
              "generator" : self.__writeRoutineVariableSection__, # section generator
              "geneargs" : [RPC_REFERENCE_SECTION_HEADER_LIST,
-                           self.__convertRtnDataReference__], # extra argument
+                           self.__convertRPCDataReference__], # extra argument
+           },
+           # Used in HL7 Interface section
+           {
+             "name": "Used in HL7 Interface", # this is also the link name
+             "data" : self.__getHl7References__, # the data source
+             "dataarg" : [routineName], # extra arguments for data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [HL7_REFERENCE_SECTION_HEADER_LIST,
+                           self.__convertHL7DataReference__], # extra argument
            },
            # FileMan Files Accessed Via FileMan Db Call section
            {
