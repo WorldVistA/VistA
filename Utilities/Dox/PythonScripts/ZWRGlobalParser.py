@@ -380,6 +380,7 @@ def test_readGlobalNodeFromZWRFileV2(inputFileName, glbLoc=None):
       totalEntry += 1
       logging.info("Current Entry#: %s" % totalEntry)
       logging.info("Curent subscript is %s" % globalRoot.subscript)
+      printGlobal(globalRoot)
       del globalRoot
       globalRoot = None
       pass
