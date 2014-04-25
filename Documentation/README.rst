@@ -68,7 +68,7 @@ Troubleshooting:
 
 To report a problem or see potential solutions visit the `Troubleshooting Page`_
 
-Standards;
+Standards:
 ``````````
 
 OSEHRA mantains the Standards and Conventions for software in the Standards

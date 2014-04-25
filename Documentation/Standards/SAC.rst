@@ -3,7 +3,7 @@ SAC
 ===
 
 The Department of Veterans Affairs M Programming Standards and Conventions.
-Revised 04/03/2007
+`Source document download`_ (`PDF`_)
 
 .. contents:: Table of Contents
 
@@ -576,3 +576,6 @@ It is the intention of this section of the Standards and Conventions to provide 
 --------------------------------------------
 
 3.3.1   User Interface Conventions for GUI Mode are detailed in a separate document.
+
+.. _`Source document download`: https://downloads.va.gov/files/FOIA/Software/Policies/SACC_2008%20(508%20Compliance%20Check%20Pending).doc
+.. _`PDF`: http://code.osehra.org/files/Standards/SAC/SACC_2008.pdf

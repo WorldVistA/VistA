@@ -193,6 +193,13 @@ Clerk:
 
  * Electronic Signature: CLERKJ123
 
+CPRS and Other GUI programs
+---------------------------
+
+The GUIs including CPRS are available from the OSEHRA site:
+
+http://www.osehra.org/document/guis-used-automatic-functional-testing
+
 Accessing Roll-and-Scroll
 -------------------------
 
