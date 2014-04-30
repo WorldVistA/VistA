@@ -1,0 +1,246 @@
+$TXT Created by               at MNTDEM.DOMAIN.EXT  (KIDS) on Monday, 11/18/13 at 20:50
+=============================================================================
+Run Date: MAR 26, 2014                     Designation: VPS*1*2
+Package : VPS - VA POINT OF SERVICE (KIOSKS)  Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: MAR 31, 2014
+=============================================================================
+
+Associated patches: (v)VPS*1*1     <<= must be installed BEFORE `VPS*1*2'
+                    (v)DG*5.3*857  <<= must be installed BEFORE `VPS*1*2'
+
+Subject: PHASE 1A WRITE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ VHA has recently identified interactive kiosks as an innovation that will
+ enable VA Medical Centers (VAMCs) to enhance services to veterans and 
+ improve the efficiency of operations. Many Veterans Integrated Service
+ Networks (VISNs), and VAMCs have already implemented kiosks in the past,
+ and are currently using them to provide streamlined approaches for
+ veterans to perform various tasks.
+  
+ The VA's vision for VA Point of Service (VPS) kiosk devices is to 
+ streamline and improve patient clinical and administrative processes
+ across the VA healthcare network, and to provide standard, easy-to-use
+ capabilities for patients and employees to access and update information
+ and perform business transactions through incremental releases. The VA's
+ vision includes a modular and configurable solution that may be tailored
+ to fit each facility's individual needs.
+  
+ The VPS Kiosk Application Server utilizes RPC Broker to make calls to the
+ Remote Procedures (RPCs) residing on the VistA host. This patch delivers
+ functionality that will support components delivered in VPS*1*1, and will
+ deliver additional functionality to support the Vetlink client.
+  
+  
+ Overview of items in the VPS package:
+ -------------------------------------
+  
+ Option VPS KIOSK INTERFACE    [VPS KIOSK INTERFACE] - This option contains
+ the RPCs that support the VPS Kiosk system (refer to list below). The
+ Vetlink Kiosk system will call upon these RPCs for specific events
+ triggered by the kiosk machine accessed by a patient (e.g., at check-in)
+ or by VAMC staff.
+  
+ New RPCs
+ --------
+ VPS EDIT PATIENT DEMOGRAPHIC - RPC will receive the data request to make
+ edits to the patient record in the PATIENT file (#2).
+  
+ VPS PATIENT CHECK-IN - The veteran can be checked-in by VAMC staff or by
+ self check-in using VIC card via the VETLINK VPS kiosk. Check-in request
+ will be submitted to this RPC.
+  
+ VPS PATIENT PRE-REGISTRATION - RPC will accept the pre-registration
+ request submitted by the VETLINK VPS kiosk.
+  
+ VPS GET SITES - RPC will return the list of facilities at which the
+ veteran was treated.
+  
+ VPS GET DFN - RPC will return the patient DFN. 
+  
+ VPS FULLSSN - Returns a list of patients with associated SSNs that match
+ the value stored in ID.
+  
+ VPS LAST5 - Returns a list of patients matching LastNameInitial_Last4SSN
+ based on Restricted Patient List.
+  
+ VPS LIST ALL - Returns a list of patients matching input value if "NAME"
+ or "IEN^NAME".
+ 
+ VPS GET2 PATIENT DEMOGRAPHIC - Given patient SSN, DFN, ICN, or VIC/CAC, 
+ this RPC returns the patient demographic data. 
+  
+ Pre-existing RPCs (already at sites)
+ ------------------------------------
+ ORWRP PRINT REPORT - Given patient DFN, Health Summary Type, Exam ID and Report
+ ID, this RPC prints health summary report. 
+ This RPC is the same RPC used by CPRS to print the report.
+ 
+ 
+ VPS GET PATIENT DEMOGRAPHIC - This RPC will accept patient SSN as input
+ then retrieve patient demographic data from VistA.
+  
+ VPS GET CLINIC - This RPC will accept a partial or full Clinic Name as
+ input then retrieves Clinic IEN, Clinic Name, Clinic Physical Location
+ from VistA based on the matching Clinic Name characters from the INPUT
+ String.
+  
+ XWB GET VARIABLE VALUE - This pre-existing RPC BROKER RPC accepts the name
+ of a variable which will be evaluated and its value returned to the
+ server. For example, this RPC may be called with a parameter like DUZ
+ which will be returned as 123456.
+  
+  
+ Patch Components
+ ================
+  
+ Options Associated:
+  
+ Option Name             Type                 New/Modified/Deleted
+ -----------             ----                 -------------------- 
+ VPS KIOSK INTERFACE     Broker               Modified
+  
+  
+ Remote Procedure                             New/Modified/Deleted
+ ----------------                             --------------------
+ VPS EDIT PATIENT DEMOGRAHIC                  New
+ VPS GET DFN                                  New
+ VPS GET PATIENT DEMOGRAPHIC                  Modified
+ VPS GET2 PATIENT DEMOGRAPHIC                New
+ VPS GET SITES                                New
+ VPS PATIENT CHECK-IN                         New
+ VPS PATIENT PRE-REGISTRATION                 New
+ VPS FULLSSN                                  New
+ VPS LAST5                                    New
+ VPS LIST ALL                                 New
+  
+  
+ This package addresses the following New Service Request (NSR):
+ ---------------------------------------------------------------
+ There is no NSR associated with this package.
+  
+  
+ This package addresses the following Remedy ticket(s):
+ ------------------------------------------------------
+ There is no Remedy ticket associated with this patch.
+  
+  
+ Test Sites:
+ -----------
+ Portland VAMC
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ VPS Release Notes             VPS_1_P2_RN.PDF                 (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre/post installation instructions for this patch.
+  
+  
+ Installation Instructions:
+ --------------------------
+ Users are allowed to remain on the system during the installation.
+ The installation will complete in less than TWO minutes and there are no
+ options or menus to disable.
+  
+  
+ 1.  Choose the Packman message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     VPS*1.0*2:
+  
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed. It compares all components of this patch (routines,
+        DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and choose
+     the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of Install?
+     NO//' answer NO if this is done as a nightly job.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//' 
+     answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO// answer NO
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VA POINT OF SERVICE (KIOSKS);**[Patch List]**;Oct 21, 2011;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPSRPC1
+    Before:B145653820   After:B195601675  **1,2**
+Routine Name: VPSRPC2
+    Before:       n/a   After:B128001842  **2**
+Routine Name: VPSRPC21
+    Before:       n/a   After: B63643512  **2**
+Routine Name: VPSRPC3
+    Before:       n/a   After: B12419287  **2**
+Routine Name: VPSRPC4
+    Before:       n/a   After: B10148978  **2**
+Routine Name: VPSRPC5
+    Before:       n/a   After:  B7561611  **2**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 03, 2012
+Completed By:                               Date Completed: MAR 20, 2014
+Released By :                               Date Released : MAR 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

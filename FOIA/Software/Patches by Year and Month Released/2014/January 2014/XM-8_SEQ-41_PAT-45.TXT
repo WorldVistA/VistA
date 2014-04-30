@@ -1,0 +1,175 @@
+$TXT Created by ANDERSON,CHRISTINA at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 06/19/13 at 10:16
+=============================================================================
+Run Date: JAN 29, 2014                     Designation: XM*8*45
+Package : XM - MAILMAN                        Priority: Mandatory
+Version : 8        SEQ #41                      Status: Released
+                  Compliance Date: MAR 01, 2014
+=============================================================================
+
+Associated patches: (v)XM*8*15     <<= must be installed BEFORE `XM*8*45'
+
+Subject: COMPILE ISSUES;MESSAGE ROUTER ERRORS;MSG DELIVERY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ - An error message that Mailman sends.
+ - Problems with not being able to handle multiple message parts that come
+   through from different servers at different times.
+ - Compile errors on routines that contain $ZC.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000205208 - ISP-DBaer Email fails w/XMDUZ=application proxy
+    
+    Duplicates:
+     INC000000522937 - PUG-HMorriss 6 Help cleaning up the Pick List File 
+                       #53.5
+     INC000000709625 - Mailman Message not sent when Pick List deleted.
+  
+ 2. INC0000000362732 - IFCAP Message Router Errors - 10000 node missing
+  
+    Duplicates:
+     INC000000327098 - Partial Message for Messate type ERA Record
+     INC000000331084 - ERA/EEOB Partial Message Received
+  
+ 3. INC0000000705881 - ISP-KManzer XML, XML1CRC, XML4CRC, XMLSWP -
+                       Testing Cache 2011 - Compile Errors
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Black Hills HCS
+ N. Florida/S. Georgia HCS
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) INC0000000205208 - ISP-DBaer Email fails w/XMDUZ=application proxy
+  
+ Problem: 
+ ========
+ If a mail message is triggered by a non-human user (i.e. Application 
+ Proxy) the message fails to transmit due to problems encountered while
+ populating the "From" value for the message.
+  
+ Resolution:
+ ===========
+ Routine XMXPARM was modified to remove incorrect validation logic which
+ allows messages to transmit that were triggered by non-human users.
+  
+   
+ 2) INC0000000362732 - IFCAP Message Router Errors - 10000 node missing
+  
+ Problem: 
+ ========
+ Sites are encountering problems with the delivery of Financial Management
+ Systems (FMS) messages through the PRCOFMS server due to timing issues
+ with the processing routine.  Different parts of the messages are coming
+ in at delayed intervals and the delay of some message lines are causing
+ the processing to quit.
+    
+ Resolution:
+ ===========
+ Routine XMDTO was modified to attempt to sync mail message arrival with
+ processing by building in up to a 5 minute pause and waiting for the next
+ mail message line to arrive. If not, then Mailman will send error server
+ message.
+  
+   
+ 3) INC0000000705881 - Testing Cache 2011 - Compile Errors
+  
+ Problem: 
+ ========
+ Routines XML1CRC, XML4CRC, XML4CRC1, XMLSWP and XMLSWP0 are receiving a
+ syntax error upon compiling. The syntax error is on the $ZC command.
+  
+ Resolution:
+ ===========
+ Routines XML1CRC, XML4CRC, XML4CRC1, XMLSWP and XMLSWP0 will be altered so
+ that there will be no syntax error when trying to compile the routine that
+ has multiple subscripts on $ZC. An execute statement will be added in
+ front of the SET statement. By doing this, this will eliminate any syntax
+ errors and it will not have an adverse effect on the logic.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ **NOTE: Due to changes made to the overall mailman process it is recommended
+ this patch be installed in non peak hours. It should take less than 2 minutes
+ to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter XM*8.0*45)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package XM*8.0*45.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;MailMan;**[Patch List]**;Jun 28, 2002;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XML1CRC
+    Before: B12736464   After: B12800225  **45**
+Routine Name: XML4CRC
+    Before: B19924261   After: B19995633  **45**
+Routine Name: XML4CRC1
+    Before: B12792269   After: B12862513  **45**
+Routine Name: XMLSWP
+    Before: B10276184   After: B10332361  **45**
+Routine Name: XMLSWP0
+    Before: B10066868   After: B10115149  **45**
+Routine Name: XMTDO
+    Before:  B3548599   After:  B5148040  **45**
+Routine Name: XMXPARM
+    Before: B73633568   After: B68128895  **15,45**
+ 
+Routine list of preceding patches: 15
+
+=============================================================================
+User Information:
+Entered By  : ANDERSON,CHRISTINA            Date Entered  : APR 23, 2013
+Completed By: SESSLER,APRIL                 Date Completed: JAN 21, 2014
+Released By : MALMIN,PAUL                   Date Released : JAN 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

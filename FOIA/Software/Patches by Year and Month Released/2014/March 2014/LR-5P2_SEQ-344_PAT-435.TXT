@@ -1,0 +1,165 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/23/13 at 16:02
+=============================================================================
+Run Date: MAR 03, 2014                     Designation: LR*5.2*435
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #344                    Status: Released
+                  Compliance Date: MAR 08, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*360  <<= must be installed BEFORE `LR*5.2*435'
+                    (v)LR*5.2*405  <<= must be installed BEFORE `LR*5.2*435'
+                    (v)LR*5.2*417  <<= must be installed BEFORE `LR*5.2*435'
+
+Subject: VHIC 4.0 card
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ This patch is being released with a 5 day compliance date. It is important
+ that this patch be installed no later than the compliance date to ensure
+ Veterans with new VHIC cards are recognized by the HOWDY software.
+ **************************************************************************
+  
+ This patch will provide the modification needed in the LAB SERVICE 
+ package or the patient lookup to accept the data from the new VHIC 4.2
+ (Veteran Health Identification Card) Veteran's ID Cards.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ VISTA Laboratory Package patch LR*5.2*435 contains changes to software 
+ controlled by the ProPath standard titled: BBM Team Review of VistA 
+ Patches. Changes include: 
+  Routine - LRDPA - Modified to accept data from the VHIC 4.0 card.
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*435 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*435 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+   
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 1 routines and 
+ 0 files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios by option
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+    
+ PARTICIPATING TEST SITES:
+ =========================
+ Hampton VAMC
+ VA Pittsburgh HCS
+ Atlanta VAMC
+   
+ REMEDY TICKET OVERVIEW:
+ ======================= 
+  
+ 1. INC000000900926     -  New VHIC cards do not work
+  
+    Problem:
+    --------
+    The VHIC 4.0 card removes the Social Security Number and replaces it
+    with a VHIC card number as a means of identifying patients. Howdy
+    software does not recognize the VHIC card number and therefore is
+    unable to identify the patients.  The generic lookup routine for the
+    lab package, LRDPA, also does not identify a patient using a VHIC card
+    number that has less than 9 numeric characters.
+  
+    Solution:
+    ---------
+    Modify Howdy routines LRHY0, LRHY01, LRHYAFT, and lab generic lookup
+    routine LRDPA to be able to identify a patient based on the swipe or
+    bar code from the VHIC 4.0 card.
+  
+    Routine LRHY0  LRHY01  LRHYAFT  LRDPA  
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch can
+    be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*435.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRDPA
+    Before: B27232185   After: B27548025  **137,121,153,202,211,248,305,
+                                           360,435**
+Routine Name: LRHY0
+    Before: B39459893   After: B38320113  **405,435**
+Routine Name: LRHY01
+    Before: B42068305   After: B41442608  **405,435**
+Routine Name: LRHYAFT
+    Before: B93771452   After: B93065494  **405,417,435**
+ 
+Routine list of preceding patches: 360, 417
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2013
+Completed By:                               Date Completed: FEB 24, 2014
+Released By :                               Date Released : MAR 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

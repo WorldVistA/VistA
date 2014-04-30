@@ -1,0 +1,222 @@
+$TXT Created by THOMPSON,Seth at CHEY204.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 04/26/12 at 14:42
+=============================================================================
+Run Date: DEC 02, 2013                     Designation: PSJ*5*229
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #252                      Status: Released
+                  Compliance Date: JAN 02, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*213   <<= must be installed BEFORE `PSJ*5*229'
+
+Subject: INCORRECT STOP DATE CALCULATED AND OTHER ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to provide software bug fixes for Inpatient 
+ Medications to correct the following issues:
+  
+ 1. Dose limit calculations are not correct when entered from the infusion 
+    dialog in CPRS.
+ 2. The stop date/times are incorrect for IV Piggyback orders created in
+    CPRS where there is a dose limit and an IV ROOM stop time was defined.
+ 3. Scheduled labels are not printing if ATZERO flag removed from infusion
+    rate.
+ 4. Stop date/times are not calculating correctly for IV orders with a
+    duration of 24 hours.
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. HD0000000339101 - PSPO# 00001478 - 1 IV order 3x/wk for 8 doses- when 
+                      stop time is entered as 8, the computer calculates for 
+                      8 days not 8 doses
+ 2. HD0000000282450 - Stop date calculated incorrectly?
+      HD0000000289544 (Duplicate) - When building a new quick order, stop 
+                      time defaults to the next day at 2359.
+      HD0000000332329 (Duplicate) - IV Quick Order Duration Field Ignored by
+                      Pharmacy Software
+      HD0000000341918 (Duplicate) -  Settings for CPRS order not honored in 
+                      pharmacy software
+      HD0000000400101 (Duplicate) - IV Dose Limit not honored
+ 3. HD0000000347116 - Edited infusion rate to remove 250 ml/hr@0 and
+                      scheduled labels still not printing
+ 4. HD0000000217087 - IV Time frames in question
+  
+  
+ Associated Patient Safety Issue(s):
+ ===================================
+ PSPO #1478
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Central Texas HCS
+ Indianapolis, IN
+ Oklahoma City, OK
+  
+  
+ Remedy Overview:
+ ================ 
+  
+ 1. HD0000000339101 - PSPO# 00001478 - IV order 3x/wk for 8 doses- when 
+                      stop time is entered as 8, the computer calculates for 
+                      8 days not 8 doses
+  Problem:
+  --------
+  Dose limit calculations are not correct when entered from the 
+  infusion dialog in CPRS. There is no logic to calculate day of week 
+  schedules and schedules with a frequency greater than 1440 (dose to be 
+  given less than once a day).  The medication stop date/time is being 
+  calculated based on days instead of doses.
+  
+  Resolution:
+  ----------- 
+  Logic has been added to the routines PSIVCAL and PSIVSP to correctly
+  calculate the dose limits from CPRS so the calculated medication stop
+  date/time will match the calculation in VistA.
+  
+  
+ 2.  HD0000000282450 - Stop date calculated incorrectly?
+  
+  Problem:
+  --------
+  When finishing a dose limit IV Piggyback order created in CPRS, the stop
+  date would not calculate correctly based on the dose limit. If a stop time
+  is defined for a particular IV ROOM, this stop time would be used instead
+  of the dose limit.  This usually set the stop date past the last dose of
+  the order. If there was no stop time defined for the IV ROOM, the system
+  would use 2359 as the stop time, which would also usually set the stop 
+  date/time past the dose limit. Both of these scenarios would cause
+  additional doses to be given.
+  
+  Resolution:
+  ----------- 
+  The routine PSIVCAL has been modified to use the dose limit to calculate 
+  the stop date/time if the order has a dose limit. This will prevent the
+  order from having more doses than expected by the dose limit.  This will
+  cause the stop date/time to be calculated in the same way as it would be
+  calculated if the dose limit was entered in VistA.
+  
+  
+ 3. HD0000000347116 - Edited infusion rate to remove 250 ml/hr@0 and 
+                      scheduled labels still not printing
+  
+  Problem:
+  --------
+  When the Pharmacist edited an IV order infusion rate and removed an
+  ATZERO flag, the schedule labels still will not print. The ATZERO flag is
+  not being removed from the infusion rate field even after being deleted
+  by the Pharmacist causing scheduled labels not to print.
+  
+  Resolution:
+  ----------- 
+  Modified routine PSIVCAL to reset the ATZERO flag to 0 before the order is
+  edited. This will cause the order to always expect to print labels unless
+  the "@0" is found in the infusion rate. When this is set, the ATZERO flag
+  will be set to 1 which suppresses label printing.
+  
+  
+ 4. HD0000000217087 - IV Time frames in question
+  
+  Problem:
+  --------
+  The duration on IV orders is not calculating correctly. A duration of 23
+  hours stops the order after 23 hours, and a duration of 25 hours stops 
+  the order after 25 hours; however, a duration of 24 hours stops the 
+  order at t+1 day @ 23:59 where 23:59 is set by the inpatient ward parameter
+  as a default time.
+  
+  Resolution:
+  -----------
+  The routine PSIVCAL has been modified to determine if a dose limit has
+  been entered. Based on this change the system will use the more restrictive
+  limit in calculating stop date/time which in this case will be the dose 
+  limit of 24 hours thus preventing extra doses.
+  
+  
+  
+ Installation Instructions:
+ ========================== 
+  
+   ************************ NOTE ************************
+   IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS 
+   AN EDITED ERROR WILL OCCUR.  
+   The patch should be installed when NO Inpatient Pharmacy 
+   users are on the system.
+   ******************************************************
+   
+  Installation will take less than 2 minutes.
+  
+  Suggested time to install: non-peak requirement hours.
+   
+  
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+     TEXT PRINT/DISPLAY option in the PackMan menu will display the
+     patch text only].
+   
+  2. From the Kernel Installation and Distribution System (KIDS)
+     menu, select the Installation menu.
+   
+  3. From this menu, you may elect to use the following options:
+     (when prompted for INSTALL NAME, enter PSJ*5.0*229)
+   
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+   
+  4. Use the Install Package(s) option and select the package
+     PSJ*5.0*229
+   
+  5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', respond NO.
+   
+  6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVCAL
+    Before: B65800854   After: B75101309  **4,26,41,47,63,67,69,58,94,
+                                           80,110,111,177,120,134,229**
+Routine Name: PSIVSP
+    Before: B38850432   After: B41011288  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229**
+ 
+Routine list of preceding patches: 213
+
+=============================================================================
+User Information:
+Entered By  : THOMPSON,SETH                 Date Entered  : JUL 13, 2009
+Completed By: LANG,MICKEY                   Date Completed: NOV 13, 2013
+Released By : TEAGUE,LYN                    Date Released : DEC 02, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,320 @@
+
+=============================================================================
+Run Date: JAN 21, 2014                     Designation: PSB*3*73
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #64                      Status: Released
+                  Compliance Date: FEB 21, 2014
+=============================================================================
+
+Associated patches: (v)PSB*3*8     <<= must be installed BEFORE `PSB*3*73'
+                    (v)PSB*3*59    <<= must be installed BEFORE `PSB*3*73'
+
+Subject: IMR6 - CLINIC ORDERS FOR BCBU
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+ PSB*3*73 is the backup contingency component of the BCMA IMR6 Clinic 
+ Orders project. 
+  
+ IMR6 CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, AND IV BAG 
+ LOGIC project enhancement also includes a new Graphical User Interface 
+ (GUI) executable file, BCMA.EXE, and the following 4 patches that were
+ released on December 12, 2013:
+  
+ 1.      PSS*1*172
+ 2.      PSJ*5*279
+ 3.      OR*3*266
+ 4.      PSB*3*70
+  
+ The CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, and IV BAG
+ LOGIC Project addresses enhancements identified during Inpatient
+ Medications Requirements for Special Focus Group Initial Request Analysis
+ (IMR SFG IRA) Phase III/Phase IV, as well as modifications requested by 
+ the Bar Code Medication Administration (BCMA) and Inpatient Medications
+ workgroups.  
+  
+ **************************************************************************
+ PSB*3*73 will enhance the BCMA Backup System (BCBU) to support Clinic 
+ Orders. The Backup System will be able to store a Clinic name, per each 
+ order, for orders associated with clinic locations. The existing 
+ Medication Administration Report (MAR) will now print the clinic name
+ along with the order under a heading label of "Location".  The word
+ "INPATIENT" will also print under the "Location" heading for Inpatient
+ Medication orders, which are associated with the ward, of patients that
+ are admitted.  This patch will add two new menu options to support the
+ printing of MAR reports for Selected Clinic or All Clinics. In addition, 
+ the Divisional and Default initialization options were updated to include 
+ Clinic Order data.
+  
+ Please refer to the BCMA Backup System (BCBU) Installation Guide for 
+ PSB*3*73 for installation details and updated options.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+                                                                
+                                                             New/Modified
+ File Name (Number)            Field Name (Number)             /Deleted
+ ---------------------------   ---------------------------   ------------
+ BCMA BACKUP DATA (53.7)       CLINIC NAME (3.5)                 New
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                          Type          New/Modified/Deleted
+ ------------------------------     -----------     --------------------
+ PSB BCBU PRINT MAR ALL CLINICS     run routine            New
+ PSB BCBU PRINT MAR CLINIC          run routine            New
+ PSB BCBU PRINT MAR ALL             run routine          Modified
+ PSB BCBU PRINT MAR PATIENT         run routine          Modified
+ PSB BCBU PRINT MAR WARD            run routine          Modified
+ PSB BCBU INIT WRKSTN DFT           run routine          Modified
+ PSB BCBU INIT WRKSTN DIV           run routine          Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name            New/Modified/Deleted
+ ----------------         -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 New/Modified/Deleted
+ -------------------      --------------------      
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070506 - Clinic Orders
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ -----------------------------
+ N/A
+  
+ REMEDY OVERVIEW
+ ---------------
+  
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Loma Linda
+ Pittsburgh
+ St. Cloud
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ FTP the files from, the preferred site, ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description            File Name                             FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide - BCMA Backup System VistA
+                             PSB_3_P73_BCBU_IG.PDF                (binary)
+  
+  
+ Patch Installation: 
+  
+ Pre-Installation Overview
+ ------------------------------
+ None. 
+  
+  
+ Patch retrieval Instructions: 
+ =============================
+ 1.  Retrieve the KIDS distribution host file. This patch will be
+     distributed in a host file due to the amount of data contained in
+     the patch.  The name of the host file is:
+  
+         PSB_3_73.KID
+  
+     The preferred method is to FTP the files from 
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+  
+     The files may also be downloaded directly from a particular FTP
+     location at the following locations.
+  
+        Albany          ftp.fo-albany.domain.ext
+        Hines           ftp.fo-hines.domain.ext
+        Salt Lake City  ftp.fo-slc.domain.ext
+  
+     The PSB_3_73.KID host file is available in the ANONYMOUS.PUB
+     directory. Use ASCII Mode when downloading the file.
+  
+  
+ Installation Instructions:
+ ========================== 
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes.
+  
+  Installation will take less than 5 minutes.
+  
+  Suggested time to install: non-peak requirement hours.
+  
+   1. From the Kernel Installation & Distribution System menu, select
+      the LOAD DISTRIBUTION option and load the host file PSB_3_73.KID  
+   
+   2. From the Kernel Installation & Distribution System Menu, select the 
+      INSTALLATION Menu. From this menu, you may elect to use the following
+      options. When prompted for the INSTALL NAME enter PSB*3*73.
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSB*3.0*73.
+  
+    5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion 
+       of Install? YES//', respond YES.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+  
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Uninstall Instructions
+ ----------------------
+ This procedure assumes that a backup copy of the routines was done during 
+ the installation process.
+ Only routines are backed-up; other components such as DDs, templates, 
+ protocols, options or HL7 components are not backed up. 
+  
+ To back out the patches, restore the backup copy saved in the MailMan 
+ message. This action will restore the routines to the state before 
+ installing the PSB*3*73 patch.
+  
+ Note: In order to completely back out all components, development will 
+ make a patch available that will restore non-routine components to 
+ pre-PSB*3*73 state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ALPBFRM1
+    Before: B63410391   After: B66421112  **8,48,69,59,73**
+Routine Name: ALPBHL1
+    Before: B66532049   After: B70207141  **7,8,73**
+Routine Name: ALPBHL1U
+    Before: B68251433   After: B69918866  **7,69,59,73**
+Routine Name: ALPBIN
+    Before: B15131381   After: B15950829  **8,73**
+Routine Name: ALPBIND
+    Before: B27901974   After: B42568406  **8,73**
+Routine Name: ALPBINP
+    Before: B61914716   After: B74330876  **8,37,73**
+Routine Name: ALPBPALL
+    Before: B44937205   After: B49924442  **8,29,48,59,73**
+Routine Name: ALPBPCLN
+    Before:       n/a   After: B73767305  **73**
+Routine Name: ALPBPPAT
+    Before: B32938480   After: B36616367  **8,48,59,73**
+Routine Name: ALPBPWRD
+    Before: B73805924   After: B81368962  **8,37,48,59,73**
+Routine Name: ALPBUTL
+    Before: B62463119   After: B88759700  **8,73**
+ 
+Routine list of preceding patches: 59
+
+=============================================================================
+User Information:
+Entered By  : NAPOLIELLO,GREG               Date Entered  : SEP 25, 2012
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: JAN 09, 2014
+Released By : COWNIE,KEVIN                  Date Released : JAN 21, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

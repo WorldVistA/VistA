@@ -1,0 +1,232 @@
+$TXT Created by UNDERHILL,GARDNER at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/09/13 at 13:38
+=============================================================================
+Run Date: JAN 13, 2014                     Designation: LR*5.2*436
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #342                    Status: Released
+                  Compliance Date: FEB 13, 2014
+=============================================================================
+
+
+Subject: Same SSN on entries in file 68
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+  
+ This patch addresses the following issue:
+  
+ 1. When printing a CAPTIONED template report in VA FileMan with the 
+ printing of computed fields turned on for the ACCESSION file (#68), all of
+ the values printed for the HOSPITAL ID computed field (#.09) are the
+ same. It will print a different value for each different AREA (#.01) and
+ use that value for all patients with accessions in that AREA (#.01)
+  
+  
+ BLOOD BANK REVIEW:
+ ==================
+  
+ VISTA Laboratory Package patch LR*5.2*436 contains changes to software 
+ controlled by the ProPath standard titled: BBM Team Review of VistA 
+ Patches. Changes include: 
+ File           Field      Field Name
+ ====           =====      ==========
+ 68 (ACCESSION) .09        HOSPITAL ID - The DA variable has been removed. 
+ This will require the use of the D0 variable when doing a lookup for the 
+ CAPTIONED template.
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*436 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*436 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 0 routines and 
+ 1 files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option.
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are not test case scenarios by option.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000193147 - Same SSN on entries in file 68 
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Mountain Home VA Medical Center
+ Manchester VA Medical Center
+ VA Heartland East HCS
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000193147 - Same SSN on entries in file 68
+  
+ Problem:
+ --------
+ When printing a CAPTIONED template report in VA FileMan with the printing
+ of computed fields turned on for the ACCESSION (#68) file, all of the 
+ values printed for the HOSPITAL ID computed field (#.09) will be the same.
+ It will print a different value for each different AREA (#.01) and use
+ that value for all patients with accessions in that AREA (#.01)
+  
+ Technical Background:
+ ---------------------
+ The HOSPITAL ID computed field (#.09) in the ACCESSION file (#68) pulls 
+ its value from the HOSPITAL ID computed field (#.09) in the LAB DATA 
+ file (#63). The HOSPITAL ID computed field (#.09) in the LAB DATA file 
+ (#63) pulls its value from the PATIENT file (#2) using the patient's LRDFN
+ passed in either the DA or D0 variable. The logic in the computed field
+ expects either DA or D0 to have a value, but not both. For some reason
+ when running the CAPTIONED template with the option to print the computed
+ fields both DA and D0 will be defined. The DA variable will contain the
+ IEN of the current accession area being processed for the report. The D0
+ variable will contain the LRDFN of the patient in the current accession
+ record being processed for the report. 
+  
+ The HOSPITAL ID field (#.09) in the LAB DATA file (#63) will use the DA 
+ variable to look up a patient and return that patient's HOSPITAL ID. It
+ will return for all patient's in a given accession area the ID of the
+ patient who's DFN matches the accession area's IEN. The patient who's ID
+ is used may not even have an accession in that AREA. The patient could be
+ an inpatient, an outpatient, or even deceased.
+  
+ The HOSPITAL ID field (#.09) in the LAB DATA file (#63) was last modified
+ in 1984. At that time there may have been a reason to check for both DA
+ and D0. That no longer appears to be the case.
+  
+ Resolution:
+ -----------
+ Remove from the MUMPS code of the HOSPITAL ID field (#.09) using the
+ variable DA to help pull the patient's ID from the PATIENT file (#2).
+  
+ Patch Components
+ ================ 
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ LAB DATA (#63)             HOSPITAL ID (#.09)         Modified
+  
+ Before patch installation:
+ --------------------------
+ STANDARD DATA DICTIONARY #63 -- LAB DATA FILE       
+                                              OCT 3,2013@17:10:54  PAGE 1
+ STORED IN ^LR(  (XXXXXX ENTRIES)   SITE: XXXX.XXXXXX.DOMAIN.EXT   UCI: X
+ XX,XXX                                                     (VERSION 5.2)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 63,.09        HOSPITAL ID             ;  COMPUTED
+  
+               MUMPS CODE:       S L1=$S($D(DA):DA,$D(D0):D0,1:"") I L1>0
+                                 S L=^LR(L1,0),X=$P($S($D(@(^DIC(+$P(L,"^
+                                 ",2),0,"GL")_(+$P(L,"^",3))_",0)")):^(0),
+                                 1:""),"^",9),X=$S(X?9N:$E(X,1,3)_"-"_$E(X
+                                 ,4,5)_"-"_$E(X,6,9),1:X)
+               ALGORITHM:        S L1=$S($D(DA):DA,$D(D0):D0,1:"") I L1>0 
+                                 S L=^LR(L1,0),X=$P($S($D(@(^DIC(+$P(L,"^"
+                                 ,2),0,"GL")_(+$P(L,"^",3))_",0)")):^(0),1
+                                 :""),"^",9),X=$S(X?9N:$E(X,1,3)_"-"_$E(X,
+                                 4,5)_"-"_$E(X,6,9),1:X)
+               LAST EDITED:      JAN 23, 1984 
+               DESCRIPTION:      Computed field to present the hospital ID
+                                 from the parent file.  
+  
+ After patch installation:
+ -------------------------
+ STANDARD DATA DICTIONARY #63 -- LAB DATA FILE   
+                                               OCT 4,2013@14:25:24  PAGE 1
+ STORED IN ^LR(  (XXXXXX ENTRIES)   SITE: XXXX.XXXXXX.DOMAIN.EXT   UCI: XX
+ X,XXX                                                       (VERSION 5.2)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ -------------------------------------------------------------------------
+  
+ 63,.09        HOSPITAL ID             ;  COMPUTED
+  
+               MUMPS CODE:       S L1=$S($D(D0):D0,1:"") I L1>0 S L=^LR(L1
+                                 ,0),X=$P($S($D(@(^DIC(+$P(L,"^",2),0,"GL"
+                                 )_(+$P(L,"^",3))_",0)")):^(0),1:""),"^",9
+                                 ),X=$S(X?9N:$E(X,1,3)_"-"_$E(X,4,5)_"-"_$
+                                 E(X,6,9),1:X)
+               ALGORITHM:        S L1=$S($D(D0):D0,1:"") I L1>0 S L=^LR(L1
+                                 ,0),X=$P($S($D(@(^DIC(+$P(L,"^",2),0,"GL"
+                                 )_(+$P(L,"^",3))_",0)")):^(0),1:""),"^",9
+                                 ),X=$S(X?9N:$E(X,1,3)_"-"_$E(X,4,5)_"-"_$
+                                 E(X,6,9),1:X)
+               LAST EDITED:      OCT 03, 2013 
+               DESCRIPTION:      Computed field to present the hospital ID
+                                 from the parent file. 
+  
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter LR*5.2*436)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package LR*5.2*436
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : UNDERHILL,GARDNER D           Date Entered  : OCT 03, 2013
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 07, 2014
+Released By : CONLIN,TERESA                 Date Released : JAN 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

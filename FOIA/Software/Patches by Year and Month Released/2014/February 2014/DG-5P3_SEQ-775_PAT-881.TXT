@@ -1,0 +1,222 @@
+
+=============================================================================
+Run Date: FEB 14, 2014                     Designation: DG*5.3*881
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #775                    Status: Released
+                  Compliance Date: MAR 17, 2014
+=============================================================================
+
+
+Subject: VETERANS HEALTH IDENTIFICATION CARD (VHIC) APPLICATION, VERSION 4.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Veterans Health Identification Card (VHIC) web application version 4.2
+ provides enhancements and addresses several defects identified within the 
+ initial national release of VHIC version 4.1 September 2013.
+  
+ Enhancements:
+ =============
+  
+   - Allow clinical applications to support positive patient identification
+     with the card
+   - On-screen guidance for improved photo capture to support the end-user
+     when capturing the Veteran image
+   - Improved reliability surrounding the Veteran in-person proofing 
+     process
+   - Hover-Over help text providing more specific user guidance for the
+     application screens
+   - Ability to designate the Veteran Branch of Service on the physical
+     card
+   - Addition of the following status reports necessary for supporting
+     local, regional, and VHIC Program operations:
+        1.  Card Status - Card Status Report
+        2.  Card Status - Print Release Status Report
+        3.  Cards Printed Without EDIPI
+        4.  Card Issued Multiple Times - Summary Report
+        5.  Card Issued Multiple Times - Detail Report
+  
+  
+ What to Expect:
+ ===============
+ After national rollout in September 2013, we continued to accumulate the 
+ card requests, yet halted production of the cards until this release so 
+ that we could address the new version of the card. VHIC 4.2 will be 
+ released in mid-February 2014 and start printing the accumulated card 
+ requests at that time.
+  
+  
+ Implementation:
+ ===============
+ The VHIC 4.2 is a centrally managed web-based application and will be 
+ implemented as a one-time rollout by the VHIC Technical team (Insignia). 
+ No software will be installed at the facilities.
+  
+  
+ Implementation Date:
+ ====================
+ February 11, 2014
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+  
+ Routine Information:
+ ====================
+ No routines included.
+  
+  
+ Documentation:
+ ==============
+ The following documentation is available with the release of VHIC 4.2. on 
+ the ANONYMOUS.SOFTWARE directory:
+  
+    VHIC 4.2 User Guide
+    VHIC 4.2 Release Notes  
+  
+ The preferred method is to FTP the files from:
+    Download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may also 
+ elect to retrieve documentation directly from a specific server as
+ follows:
+  
+        Albany                  ftp.fo-albany.domain.ext
+        Hines                   ftp.fo-hines.domain.ext
+        Salt Lake City          ftp.fo-slc.domain.ext
+  
+ Also, the VHIC User Guide and Release Notes can be found in both PDF and 
+ Word formats on the web at the following address:
+        http://www.domain.ext/vdl/application.asp?appid=140
+  
+ Please refer to the VHIC 4.2 User Guide and VHIC 4.2 Release Notes for 
+ more information.
+  
+ The VHIC User Guide can be found in both PDF and Word formats on the web 
+ at the following address: http://www.domain.ext/vdl/application.asp?appid=140
+  
+  
+ How to scan VHIC Barcode:
+ =========================
+ Turn on the barcode reader and aim it at the center of the barcode 
+ ensuring the entire length of the barcode is within the lighted area.  
+ Wait for the reader to pick up the data.  Many readers will also emit an 
+ audible beep. If necessary, vary the distance and angle between the 
+ reader and the barcode until the entire length of the barcode is 
+ illuminated. The images of successful and failed scan are provided in the 
+ Appendix H of the VHIC User Guide.
+  
+  
+ Mandate:
+ ======== 
+ None
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ #903802
+ Problem:
+ ========
+ When a VHIC Associate processed a card request for a Veteran, VHIC may 
+ retrieve incorrect information from the Enrollment system by using an 
+ inactive correlated identifier found in the Master Veteran Index (MVI).
+ Solution:
+ =========
+ When VHIC gets correlated identifiers from MVI, only active (A) records 
+ are included in the response.  Including the passive identifiers affects
+ picking the right correlation data out of MVI, affecting address
+ verification through ESR.
+  
+ #903985
+ Problem:
+ ========
+ After national rollout in September 2013, the card requests were 
+ accumulated, yet halted production of the cards until this release. The 
+ card request file was not sent to the Print Vendor.
+ Solution:
+ =========
+ The VHIC card request file will be sent to the Print Vendor after VHIC 
+ 4.2 release.
+  
+ #924560
+ Problem:
+ ========
+ The totals reported under VHIC reports are not accurate.
+ Solution:
+ =========
+ Report performance improved and report content/layout updated per 
+ Business requirements to include additional information.
+  
+ #930579
+ Problem:
+ ========
+ Report information is not accurate.
+ Solution:
+ =========
+ Report performance improved and report content/layout updated per 
+ Business requirements to include additional information.
+  
+ #931627
+ Problem:
+ ========
+ When the user selects a single facility or the whole VISN for card 
+ request, the site links will not open. 
+ Solution:
+ =========
+ Report performance improved and report content/layout updated per 
+ Business requirements to include additional information.
+  
+ #936582
+ Problem:
+ ========
+ The user reports getting an error stating the Veteran is not eligible for 
+ a VIC.
+ Solution:
+ =========
+ When VHIC gets correlated identifiers from MVI, only active (A) records 
+ are included in the response. 
+ Including the passive identifiers affects picking the right correlation 
+ data out of MVI, affecting eligibility verification through ESR.
+  
+ #944333
+ Problem:
+ ========
+ The standard bard code applications for phones are able to pull the full 
+ social security number off of the veteran ID cards.  
+ Solution:
+ =========
+ The SSN is removed from the barcode.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Reporting Problems:
+ ===================
+ Problems associated with VHIC application should be reported via Remedy 
+ or contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  : ZEIGLER,EDWARD L              Date Entered  : FEB 11, 2014
+Completed By: ALDERMAN,MATT S               Date Completed: FEB 11, 2014
+Released By : ANDREASSEN,LARRY              Date Released : FEB 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

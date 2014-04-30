@@ -1,0 +1,328 @@
+
+=============================================================================
+Run Date: JAN 06, 2014                     Designation: DG*5.3*853
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #772                    Status: Released
+                  Compliance Date: FEB 06, 2014
+=============================================================================
+
+
+Subject: VistA communication component for Veterans Transportation Services (VTS)
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ Changes to the Veterans Health Integrated Systems Technology Architecture
+ (VistA) software have been requested by the Veterans Administration (VHA) to
+ enhance existing transportation services for VA patients.  This Veterans
+ Transportation Services (VTS) project will integrate the VA's RideShare
+ service with VistA. This patch allows the ability to assign a patient to
+ Veteran transportation services in VistA.  This identifies a Veteran
+ requesting transportation to a qualified medical appointment arranged
+ through VistA scheduling service.  The RouteMatch RideShare program is used by
+ transportation coordinators to schedule pickup and delivery of veterans to and
+ from their appointments.
+ 
+ RouteMatch is the vendor for the RideShare commercial off the shelf (COTS)
+ software. This  DG*5.3*853 Patch will allow integration of VistA with the
+ RideShare application through a Data Interface Module (DIM) which is an
+ enhancement to the RideShare software.
+ 
+ The VA has an enterprise license for the RouteMatch RideShare software
+ application but deployment is limited to sites until program funding is
+ available for additional sites.  However this VistA patch should be installed
+ at all sites.  This will assist all sites transportation coordinators to
+ track veterans requesting alternate transportation services until RideShare
+ services are available.
+ 
+ 
+ Complete list of patch items:
+                                                
+ 1. A new 'VTS PATIENT FLAG (#3000)' field is added to the Patient file (#2).
+ 2. A new option DG VTS RIDESHARE (Send New Patient to RideShare (COTS))
+    is added.
+ 3. A new 'DG VTS RIDESHARE' security key is added.
+ 4. Routine DGVTS00 is created, and is used to compare Route Match to
+    VistA patients.
+ 5. Routine DGVTSFS is created, and is used during Patient selection
+    and VTS FLAG setting.
+ 6. Routine DGVTSA28 is created, and composes the HL7 message transmitted
+    to Route Match.
+ 
+ The new DG VTS RIDESHARE option should be assigned to the Transportation
+ coordinator.
+ 
+ 
+ IMPORTANT!
+ 
+ ...FURTHER IMPLEMENTATION OF THE RideShare (COTS) Software WILL OCCUR AT A
+ LATER DATE....
+ 
+ This VTS program can be deployed in two phases.  This first phase deployment
+ includes the installation of the DG*5.3*853 VistA patch.  The Second phase is
+ the configuration and deployment of the DIM enhancement to send HL7 messages
+ to RideShare application.
+ 
+ Phase 1
+ 1. Adds a new Routine DGVTSFS is created to populate a 'VTS PATIENT FLAG
+    (#3000)' field in the Patient file (#2).      
+ 2. Provides a new option DG VTS RIDESHARE which uses routine DGVTSFS.   
+ 3. Adds new 'DG VTS RIDESHARE' security key for Transportation Coordinators.
+ 4. Routine DGVTS00 is created, and is used to compare RouteMatch data to
+    VistA  patients.
+ 5. Routine DGVTSA28 is created, to compose an A28 HL7 message with Veteran ICN 
+ 
+ 
+ Phase 2
+ 6. Vitria Interface Engine (VIE team provides port and site IP address to route
+    A28 HL7 message to RideShare database at AITC.
+ 7. Site configures sender/listener for A28 HL7 message.
+ 8. AITC configures RideShare DIM sender/listener to acknowledge HL7 message.
+ 
+ 
+ 
+ NEW VISTA enhancements
+ 
+ Routine "DGVTS00"
+ 
+ Used for initial population of ICN data and updating data files.
+ 
+ A RideShare database file holding patient entries at AITC is compared 
+ to the Patient file (#2) in VistA.  
+ - If the data matches, the patient's Integrated Control Number (ICN) will
+   be written to a file holding successful matches.  The matched file will
+   be sent to RouteMatch RideShare to upload the ICN into their database.
+ - If no matching entry is found in the Patient file an entry will be made
+   in a RideShare error file.  
+ 
+ Option DG VTS RIDESHARE
+ 
+    Used to flag field in VistA Patient file for RideShare services.
+ 
+    The new DG VTS RIDESHARE option should be assigned to the Transportation
+    coordinator.  
+ 
+ Security Key 'DG VTS RIDESHARE'
+ 
+    Used to provide access to the Routine "DGVTS00" and the Menu Option "SEND
+    NEW Patient to RideShare (COTS)".  
+ 
+    The new 'DG VTS RIDESHARE' security key is assigned to the Transportation
+    coordinator.
+ 
+ RIDE SHARE WORK FLOW
+ 
+ The procedure followed by Transportation coordinators when setting up a
+ Veteran for using the transport system is described in this section of the
+ patch.  After selecting a Veteran, the following actions occur:
+ 
+ 1. The new 'VTS Patient Flag (#3000)' field is populated, indicating
+    that the patient is now associated with the provided transportation system.
+ 2. An HL7 message is created in the VistA HL7 package, and
+    transmitted to the Vitria Interface Engine (VIE).
+ 3. The Vitria Interface engine routes the HL7 message to the
+    RideShare COTS product (RouteMatch).
+ 4. RouteMatch will use the HL7 message to create the patient in the
+    Ride Share system.
+   
+  PATCH FUNCTIONALITY:
+ 
+ 1. A routine DGVTS00 that is run when a file containing RideShare 
+    patients is available for your site.
+ 
+ 2. A new field (VTS FLAG) added to the patient file to mark patients 
+    as RideShare patients.
+ 
+ 3. A new option added DG VTS RIDESHARE allows patients to be
+    selected marking their VTS PATIENT FLAG, and generate / send an HL7
+    message to RideShare.
+ 
+ The new option should be assigned to the Transportation Coordinator.
+ Routine DGVTSFS is for Patient selection and VTS FLAG setting.
+ Routine DGVTSA28 is for composing the VTS HL7 message.
+   
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ 20100818 - VTS Enhanced Ride Scheduling 
+  
+  
+ This patch addresses the following Remedy Tickets:
+  
+ There are no Remedy tickets associated with this patch.
+  
+ Components Sent With Patch
+ --------------------------
+ The following is a list of files included in this patch:
+  
+  
+                                      UP    SEND  DATA
+                                      DATE  SEC.  COMES  SITE   RSLV
+ FILE #  NAME                         DD    CODE  W/FILE DATA   PTS
+ -------------------------------------------------------------------
+ 2       PATIENT                      YES    YES   NO
+  
+  
+ This is only a partial update of patient file, only includes
+ the new field being added. New field is VTS PATIENT FLAG (#3000).
+  
+ The following is a list of protocols included in this patch:
+  
+ DG VTS ADT-A28                                     SEND TO SITE
+ DG VTS ADT-A28 CLIENT                              SEND TO SITE                
+ DG VTS ADT-A28 SERVER                              SEND TO SITE
+   
+ The following are the HL7 Application Parameters included in this patch:
+                                                          
+ AITC_VTS                                        SEND TO SITE
+ VISTA_VTS                                       SEND TO SITE
+ 
+ The following is the HL Logical Link included in this patch:
+                                                 
+ AITC_VTS                                        SEND TO SITE
+  
+ The following is a list of Options included in this patch:
+  
+ DG VTS RIDESHARE                           SEND TO SITE 
+ 
+ 
+ The following is the security key included in this patch:
+    
+ DG VTS RIDESHARE
+ 
+  
+ SOFTWARE AND DOCUMENTATION RETRIEVAL
+ 
+ Patch DG*5.3*853 consists of software and documentation.  The software is held
+ in a KIDS build.  The documentation consists of an installation guide and 
+ release notes.  The software and documentation files for VTS are stored in the 
+ ANONYMOUS.SOFTWARE directory, and can be downloaded using File Transfer 
+ Protocol (FTP) software.
+ 
+ VTS files can be downloaded from the following locations:
+ 
+                            download.VistA.domain.ext    
+    Albany                  ftp.fo-albany.domain.ext
+    Hines                   ftp.fo-hines.domain.ext
+    Salt Lake City          ftp.fo-slc.domain.ext
+    
+ The use of the download.VistA.domain.ext FTP location is recommended.   
+        
+ When downloading files by FTP, it is important to specify the correct protocol.
+ Text files should be downloaded using the ASCII protocol.  Files that have been
+ compiled, such as files with the PDF and DOCS file name extensions, should be 
+ downloaded using the binary protocol.  The correct protocol to use when 
+ downloading VTS documents is included in the file list below.
+ 
+                        FTP Download
+ File Name              Protocol       Description
+ ----------------------------------------------------------------------------
+ DG5_3P853.KID          ASCII          VTS software held in KIDS Build
+ DG_5_3_853_IG.PDF      Binary         Installation Guide in PDF format
+ DG5_3P853_RN.PDF       Binary         Release Notes in Microsoft Word format
+ 
+  
+ Test Sites:
+ -----------
+ Fort Harrison, MT
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ None
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+  Successful application installation involves installing patch during
+  non-peak hours, when no admission, discharge, transfer, and/or
+  registration users are on the system. The patch should take less
+  than 10 minutes to install. 
+  
+ 1. From the Kernel Installation and Distribution System Menu, 
+    select the Installation menu.
+ 2. Select Load a Distribution and enter the directory of the
+    host file and the host file name,SYS$USER:[XXX]DG5_3P853.KID,
+    at the "Enter a Host File:" prompt.
+ 3. From this menu, you may elect to use the following options 
+    (when prompted for INSTALL NAME, enter DG*5.3*853): 
+ 
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*853):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//'  Answer NO, unless your system does this in a
+         nightly TaskMan process.
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//' answer NO
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+         Options, and Protocols? NO//' answer NO.
+ 
+ 5.  Post-Installation Steps:
+     Please refer to the Veterans Transportation System Installation Guide for
+     post-installation instructions.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;REGISTRATION;**[Patch List]**;07-MAR-2012;Build 104
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGVTS00
+    Before:       n/a   After: B38863045  **853**
+Routine Name: DGVTSA28
+    Before:       n/a   After:  B2609481  **853**
+Routine Name: DGVTSFS
+    Before:       n/a   After:  B3143489  **853**
+
+=============================================================================
+User Information:
+Entered By  : CARPENTER,KEVIN               Date Entered  : MAR 07, 2012
+Completed By: STRATTON,ROBERT               Date Completed: JAN 03, 2014
+Released By : ANDREASSEN,LARRY              Date Released : JAN 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

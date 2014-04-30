@@ -1,0 +1,216 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: GMRA*4*47
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #43                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)GMRA*4*45   <<= must be installed BEFORE `GMRA*4*47'
+                    (v)OR*3*345    <<= must be installed BEFORE `GMRA*4*47'
+
+Subject: MOCHA 2.0 FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of a group of host file patches that make up the new 
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches 
+ contain software that supports MOCHA v2.0 functionality.  The host files 
+ were created to simplify installation at Veterans Health Administration 
+ (VHA) facilities.
+  
+ Patch Information:
+ ------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to them during their scheduled phase of 
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSO*7*431, PSJ*5*299 
+  
+ **NOTE**
+ PSS_1_160 and PSS_1_173 include the components necessary for the 
+ interface that will be used in MOCHA v2.0.  The MOCHA 2.0 and MOCHA 2.0 
+ FOLLOW UP COMBINED BUILD include the modifications to implement Max 
+ Single Dose Order checks for the Order Entry Results Reporting (OERR), 
+ Inpatient Medications and Outpatient Pharmacy applications.
+  
+ These patches will add a maximum single dose order check to the current 
+ VistA medication order checking system that uses the First DataBank (FDB) 
+ business logic and database. In this initial phase of dosing 
+ functionality, the Maximum Single Dose information will be displayed to 
+ the user.  The following scenarios describe the types of messaging added:
+  
+   1. If the dosage entered passes the dosing checks, no message will be 
+      displayed.
+  
+   2. If the dosage entered is too high, the Single Dose warning message 
+      will be displayed.
+  
+   3. If the dose checks were not able to be performed, a generic message 
+      will be displayed notifying the user that a manual check needs to be 
+      completed to verify appropriate dosing.
+  
+ This is a companion patch to the Order Entry/Results Reporting (OE/RR) 
+ version 3.0 software patch number 345 (OR*3*345). Patch OR*3*345 makes a 
+ change to the EN^ORKCHK application programming interface (API) that the 
+ Adverse Reaction Tracking (GMRA) software package uses under integration
+ agreement number 4135. This patch enables the GMRA package to use the
+ updated API.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name             Type               New/Modified/Deleted
+ -----------             ----               -------------------- 
+ GMRA FREE TEXT UTILITY  Run Routine        Modified
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. 778406 Adverse Reaction Tracking - Cleanup:
+  
+ Problem:
+ -------
+ When executing the Allergy clean up utility [GMRA FREE TEXT UTILITY] 
+ option with patch OR*3*345 installed, the following error is generated: 
+  
+ <UNDEFINED>PHARM+5^ORKCHK5 *ORDODSG
+  
+ This error is generated when the GMRA package uses OE/RR's order 
+ checking system to determine if any current orders could result in an 
+ adverse reaction based on the updated allergy data.
+  
+ Resolution:
+ ----------
+ This patch updates all calls to EN^ORKCHK within the GMRA package.
+  
+ Test Sites:
+ ----------
+ Charleston
+ Tuscaloosa
+ Kansas
+ Boise
+ Palo Alto
+ Northern California - Martinez
+  
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+  
+   The following patches will be distributed in a phased release and sites
+   will be given access to the host files during their scheduled phase of
+   implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID - HOST file with patch name OR*3*381.
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+   To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+  
+   Refer to the MOCHA v2.0 Installation Guide PSS_1_P160_MOCHA_CB_IG.doc.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAFX3
+    Before: B69479598   After: B70101558  **17,19,23,20,45,47**
+Routine Name: GMRAUTL2
+    Before: B88611028   After: B90558602  **23,36,41,45,47**
+ 
+Routine list of preceding patches: 45
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 19, 2012
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

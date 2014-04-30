@@ -1,0 +1,150 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 08/15/13 at 09:58
+=============================================================================
+Run Date: JAN 08, 2014                     Designation: VAQ*1.5*44
+Package : VAQ - PATIENT DATA EXCHANGE         Priority: Mandatory
+Version : 1.5        SEQ #41                    Status: Released
+                  Compliance Date: FEB 08, 2014
+=============================================================================
+
+Associated patches: (v)VAQ*1.5*32  <<= must be installed BEFORE `VAQ*1.5*44'
+
+Subject: MISSING HEALTH SUMMARY COMPONENT;NOTIFY ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 2 issues with Patient Data Exchange (PDX):
+  
+ 1) Users are not being notified when a Patient Date Exchange (PDX) request
+    should be notifying them.
+ 2) There are <UNDEFINED> errors occurring due to invalid Health Summary
+    Component entries.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ============================
+ 1) INC000000485092  Doesn't get PDX notification   bdj
+ 2) INC000000146245  <UNDEFINED>SEGMNT+3^GMTS1
+   (d)INC000000162063  Error -- <UNDEFINED>SEGMNT+3^GMTS1 
+  
+ TEST SITES:
+ ===========
+ Salisbury - W.G (Bill) Hefner VA Medical Center
+ VA Western NY HCS
+ Ralph H Johnson VA Medical Center -Charleston
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000485092  Doesn't get PDX notification   bdj
+   
+ Problem: 
+ --------
+ If the user who is selected to be notified during a Patient Data Exchange 
+ request has multiple entries in the NEW PERSON file (#200),  the code 
+ is unable to determine which entry is correct and fails to add the 
+ user as a recipient of the notification.    
+  
+ Resolution:
+ -----------
+ Update the code to store the entries as internal values, therefore 
+ avoiding lookups for partial or duplicate matches.
+  
+ Routine: VAQREQ06
+  
+ 2) INC000000146245  <UNDEFINED>SEGMNT+3^GMTS1
+   
+ Problem: 
+ --------
+ If a HEALTH SUMMARY COMPONENT file (#142.1) entry is removed that is 
+ referenced by the HEALTH SUMMARY COMPONENT field (#.04) in the 
+ VAQ - DATA SEGMENT file (#394.71) there is potential for an <UNDEFINED>
+ error to occur if a site selects that segment for a Patient Data Exchange
+ transaction.
+    
+ Resolution:
+ -----------
+ Prior to extracting data specific to a HEALTH SUMMARY COMPONENT file 
+ (#142.1) entry, the code will validate the value to ensure the entry 
+ exists and is valid.  In the event the value does not resolve to an entry 
+ in the HEALTH SUMMARY COMPONENT file (#142.1), nothing will be extracted 
+ for that segment.
+  
+  
+ Routine: VAQDBI
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ Installation should take less than 2 minutes.  Users can be on the system.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter VAQ*1.5*44)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package VAQ*1.5*44.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+    7.  When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+         Patient Data Exchange           [VAQ (MENU) MAIN]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;PATIENT DATA EXCHANGE;**[Patch List]**;NOV 17, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VAQDBI
+    Before: B13163658   After: B14783513  **44**
+Routine Name: VAQREQ06
+    Before: B17286497   After: B19324653  **4,20,26,32,44**
+ 
+Routine list of preceding patches: 32
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : JUL 18, 2013
+Completed By: HEFFERNAN,COREY               Date Completed: JAN 03, 2014
+Released By : FITCH,DONNA                   Date Released : JAN 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,422 @@
+$TXT Created by LORD,Brian S.(Henry at DEVVJJ.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 11/06/13 at 15:28
+=============================================================================
+Run Date: DEC 10, 2013                     Designation: DG*5.3*867
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #770                    Status: Released
+                  Compliance Date: JAN 10, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*760  <<= must be installed BEFORE `DG*5.3*867'
+                    (v)FB*3.5*147  <<= must be installed BEFORE `DG*5.3*867'
+
+Subject: DG NEWBORN CLAIMS ENHANCEMENT
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+                            ***NOTICE***
+ Users should be made aware that processing of Newborn claims must ONLY be
+ entered in VistA. No entry in FBCS should be performed.
+                            ***********
+ This patch, along with FB*3.5*146 and IB*2.0*499, is being released as a
+ bundle, and all three will be automatically installed in the correct order.
+ 
+ 
+ This patch has enhancements that extend the capabilities of the Veterans 
+ Health Information Systems and Technology Architecture (VistA) Patient 
+ Registration system (DG), Fee Basis System (FB), and Integrated Billing 
+ (IB).
+ 
+ Below is a list of all the applications involved in this project along with
+ their patch number:
+ 
+     APPLICATION/VERSION                                   PATCH
+     ---------------------------------------------------------------
+  PATIENT REGISTRATION (DG) V 5.3                       DG*5.3*867
+  FEE BASIS (FB) V 3.5                                  FB*3.5*146
+  INTEGRATED BILLING (IB) 2.0                           IB*2.0*499
+ 
+ The patches (DG*5.3*867, FB*3.5*146, and IB*2.0*499) are being released in the
+ Kernel Installation and Distribution System (KIDS) multi-build distribution
+ NEWBORN DG FB IB BUNDLE 1.0
+ 
+ The purpose of the Caregivers: Newborn Claims Processing Enhancement Project 
+ is to enhance VistA Fee Basis application in support of compliance with 
+ Public Law 111-163, the Caregiver and Veterans Omnibus Health Services Act 
+ of 2010. This law makes changes to sections of Title 38, United States Code 
+ to furnish health care services to a newborn child of a Woman Veteran who 
+ is receiving maternity care furnished by the Department of Veterans Affairs 
+ (VA) for not more than seven days after the birth of the child.
+ 
+ The scope of these enhancements is to capture information on healthcare
+ services provided to newborn children of Women Veterans. Affected functions
+ include eligibility determination, enrollment and registration, documentation
+ of referrals and authorization for care, claims processing, and payment. Only
+ modification to the Fee Basis (FB) and the Registration (DG) packages are
+ necessary to meet the requirements of this enhancement. The Integrated 
+ Billing (IB) Patch is included to provide required data for the Fee Basis 
+ install to reference.
+ 
+ 
+ The primary purpose of this enhancement is to allow the Electronic Filing of
+ Newborn claims.
+ 
+ Functional Description
+ ------------------------------
+ The following features and functions have been added to the Fee Basis workflow
+ process applying to both Civil Hospital and Medical Fee:
+ 
+  1. A new Patient Type of NEWBORN OF VETERAN has been added to the TYPE OF
+ PATIENT file (#391). This new selection will be available on Registration
+ Screen <7>.
+ 
+  2. A sponsor is required for all Newborns determined by having the DOB less
+ than one (1) year from the present date. An inconsistency check has been added
+ to check the presence of a sponsor. If an inconsistency is found the
+ inconsistency check will prompt the user to return to Screen <15> in
+ registration to enter a Sponsor.
+ 
+  3. All Sponsors for Newborns must be listed as eligible for care. An
+ inconsistency check will check the status of the Sponsors Eligibility. The
+ check will trigger if the Sponsor has no Eligibility status.
+ 
+ All other statuses (i.e. Pending Verification, Verified, and Pending
+ Re-verification) are acceptable.
+ 
+  4. Fee Authorization dates associated with Newborns have checks in place to
+ not allow Authorization dates that fall outside the accepted range of Newborn 
+ Authorization. The range is DOB to DOB+7. The system will warn the user and 
+ not accept an Authorization date that falls outside the appropriate range for 
+ a Newborn.
+ 
+  5. When a Veteran Mother of a Sponsored Newborn is reviewed in the
+ Registration screens, Screen <15> will display the Newborn(s), with the
+ additional header of "Sponsored Newborn".
+ 
+  6. The FAMILY PREFIX "NB Newborn of Vet" has been added to the Help text in
+ the FAMILY PREFIX field (#.03) in the SPONSOR RELATIONSHIP file (#355.81)
+ 
+  7. "NON-VA FOR FEMALE VET+NEWBORN 17.38" was added to the VA ADMITTING
+ REGULATION file (#43.4). This new Admitting Regulation is available when
+ editing the 7078.
+ 
+  8. The following default values were added when entering a Newborn with a 
+ date of birth of less than one (1) year from present date. Defaults will 
+ only be assigned when specified screens are accessed during the registration 
+ process: PATIENT DATA, SCREEN <2> Marital field is defaulted to NEVER 
+ MARRIED. APPLICANT/SPOUSE EMPLOYMENT DATA, SCREEN <4> Status field is 
+ defaulted to NOT EMPLOYED. FAMILY DEMOGRAPHIC DATA, SCREEN <8> Married 
+ Last Year field is defaulted to NO.
+ 
+ 
+  Patch Components
+  ================
+ 
+ 
+  Files & Fields Associated:
+ 
+ 
+  File Name (#)                   Field Name (#)        New/Modified/Deleted
+  -------------                   --------------        -----------------
+  TYPE OF PATIENT (#391)          NAME (#.01)           New Data content
+  (Single new record added "NEWBORN OF VETERAN")        No Data Dictionary
+                                                        changes
+ 
+  VA ADMITTING REGULATION (#43.4) NAME (#.01)           New Data content
+  (Single new record added "NON-VA FOR FEMALE VET+NEWBORN")
+                                                        No Data Dictionary 
+                                                        changes
+ 
+  INCONSISTENT DATA ELEMENTS (#38.6)                    New Data content
+  Two new records added:
+  313    NEWBORN REQUIRES SPONSOR
+  314    NEWBORN NEEDS ELIGIBLE SPONSOR                 No Data Dictionary
+                                                        changes
+ 
+ 
+  Forms Associated:
+ 
+  Form Name                File #                  New/Modified/Deleted
+  ---------                ------                  --------------------
+  N/A
+ 
+  Mail Groups Associated:
+ 
+  Mail Group Name                                  New/Modified/Deleted
+  ---------------                                  --------------------
+  N/A
+ 
+  Options Associated:
+ 
+  Option Name                    Type              New/Modified/Deleted
+  -----------                    ----              --------------------
+  N/A
+ 
+  Protocols Associated:
+ 
+  Protocol Name                                    New/Modified/Deleted
+  -------------                                    --------------------
+  N/A
+ 
+  Security Keys Associated:
+ 
+  Security Key Name
+  -----------------
+  N/A
+ 
+  Templates Associated:
+ 
+  Template Name       Type      File Name (#)     New/Modified/Deleted
+  -------------       ----      -------------     --------------------
+ 
+ 
+  Additional Information:
+ 
+ 
+  New Service Requests (NSRs):
+  -----------------------------
+  NSR 20100901
+ 
+  Patient Safety Issues (PSIs):
+  ------------------------------
+  N/A
+ 
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+ 
+ 
+  Test Sites:
+  -----------
+ 
+  LEXINGTON
+  PUGET SOUND
+ 
+ 
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+ 
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+ 
+   Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+   Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+   Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+ 
+  The documentation will be in the form of Adobe Acrobat files.
+ 
+  Documentation can also be found on the VA Software Documentation Library
+  at: http://www4.domain.ext/vdl/
+ 
+  File Description                          File Name             FTP Mode
+  --------------------------------------------------------------------------
+  Fee Basis User Manual                     fb3_5um.pdf           Binary
+  PIMS v5.3 ADT User Manual Registration    dg_5_3_reg_um.pdf     Binary
+  
+ The procedure guide, Care for Newborn of Women Veterans, located at 
+ http://nonvacare.hac.domain.ext/policy-programs/procedure-guides.asp, 
+ should be distributed to those personnel registering newborns and/or 
+ processing newborn claims.
+ 
+ 
+  Patch Installation:
+ 
+ 
+ Pre/Post Installation Overview
+ ------------------------------
+ There are three post installation routines associated with this patch DG867PO,
+ FB146PO, and IB499PO. These routines primarily serve as filters for the data
+ transmitted to the appropriate files listed above, so that only the intended
+ data is delivered. The only exception is the IB499PO routine which
+ programmatically makes an addition to the help text of the FAMILY PREFIX field
+ (#.03) in the SPONSOR RELATIONSHIP file (#355.81). These post installation
+ routines may be deleted after successful installation of the NEWBORN DG FB IB
+ BUNDLE 1.0
+ 
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize potential 
+ disruption to users. This patch should take less than 5 minutes to install.
+ 
+ FB*3.5*147 is a required patch and must be installed before DG*5.3*867.
+ 
+ DG*5.3*867 is one of three patches for this release (including FB*3.5*146 and
+ IB*2.0*499). The patches will be installed as a bundle in the following order: 
+ 
+ 1) DG*5.3*867 
+ 2) FB*3.5*146
+ 3) IB*2.0*499
+ 
+ 
+  Pre-Installation Instructions
+  -----------------------------
+  1.  OBTAIN PATCHES
+      --------------
+ Obtain the host file NEWBORN_1_2_DG_FB_IB.KID which contains the following
+ patches:
+ 
+  DG*5.3*867
+  FB*3.5*146
+  IB*2.0*499
+ 
+ Sites can retrieve VistA software from the following FTP addresses. The
+ preferred method is to FTP the files from:
+ 
+                      download.vista.domain.ext
+ 
+ This will transmit the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as follows:
+ 
+         Albany                  ftp.fo-albany.domain.ext
+         Hines                   ftp.fo-hines.domain.ext
+         Salt Lake City          ftp.fo-slc.domain.ext
+ 
+ The NEWBORN_1_2_DG_FB_IB.KID host file is located in the anonymous.software
+ directory. Use ASCII Mode when downloading the file.
+ 
+  2.  START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu option
+      [XPD MAIN]:
+ 
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+ 
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           Load a Distribution
+           Print Transport Global
+           Compare Transport Global to Current System
+           Verify Checksums in Transport Global
+           Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+           Backup a Transport Global
+ 
+      Select Installation Option:
+ 
+  3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+      -------------------------------------
+      From the Installation menu, select the Load a Distribution option.
+ 
+      When prompted for "Enter a Host File:" Enter the full directory path
+      where you saved the host file NEWBORN_1_2_DG_FB_IB.KID
+      (e.g., SYS$SYSDEVICE:[ANONYMOUS]NEWBORN_1_2_DG_FB_IB.KID)
+ 
+  When prompted for "OK to continue with Load? NO//", Enter "YES."
+ 
+      The following will display:
+ 
+        Loading Distribution...
+ 
+     NEWBORN DG FB IB BUNDLE 1.0
+     DG*5.3*867
+     FB*3.5*146
+     IB*2.0*499
+     Use INSTALL NAME: NEWBORN DG FB IB BUNDLE 1.0 to install this 
+     distribution.
+ 
+  4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+      -------------------------------------------------
+      From the Installation menu, you may select to use the following options
+ (when prompted for the INSTALL NAME, enter NEWBORN DG FB IB BUNDLE 1.0 
+ 
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as data dictionaries or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, data dictionaries, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+ 
+  5.  INSTALL MULTI-BUILD
+      -------------------
+    This is the step to start the installation of this KIDS patch.  This will 
+    need to be run for the NEWBORN DG FB IB BUNDLE 1.0
+ 
+     a.  Choose the Install Package(s) option to start the patch
+          install.
+     b.  When prompted for the "Select INSTALL NAME:" enter
+           NEWBORN DG FB IB BUNDLE 1.0 
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+          NO//", answer NO
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? NO//", answer NO
+     e.  When prompted "Device: HOME//", enter HOME 
+          to display the Install message on the screen (or enter the device
+          you want to print the Install message). You may queue the
+          install if you wish.
+ 
+ 
+ Post-Installation Instructions
+ ------------------------------
+ 
+ *** IMPORTANT NOTE ***
+ Please note there are three post installation routines that may be deleted
+ after successful installation of the NEWBORN DG FB IB BUNDLE 1.0. These are:
+ 
+ DG867PO        
+ FB146PO 
+ IB499PO
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;REGISTRATION;**[Patch List]**;01-APR-13;Build 56
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG867PO
+    Before:       n/a   After:   B481760  **867**
+Routine Name: DGDEP3
+    Before: B29628067   After: B31937643  **45,624,653,688,867**
+Routine Name: DGPTAE01
+    Before:  B8773190   After:  B9393836  **58,342,466,664,867**
+Routine Name: DGRP15
+    Before:  B4585956   After: B13096034  **114,239,568,867**
+Routine Name: DGRP2
+    Before: B11254124   After: B12657362  **415,545,638,677,760,867**
+Routine Name: DGRP4
+    Before:  B7761202   After:  B9074330  **624,867**
+Routine Name: DGRPC
+    Before: B28027409   After: B32590756  **108,121,314,301,470,489,505,
+                                           451,568,585,641,653,688,754,
+                                           797,867**
+Routine Name: DGRPC3
+    Before: B40710915   After: B55911726  **451,632,673,657,688,754,797,867**
+Routine Name: DGRPCF
+    Before: B24182202   After: B26163167  **250,653,786,754,867**
+ 
+Routine list of preceding patches: 664, 760, 797
+
+=============================================================================
+User Information:                          Hold Date     : NOV 27, 2013
+Entered By  : LORD,BRIAN                    Date Entered  : JAN 22, 2013
+Completed By: BERRY,LINDA                   Date Completed: NOV 08, 2013
+Released By : KRILEY,MARSHA                 Date Released : DEC 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

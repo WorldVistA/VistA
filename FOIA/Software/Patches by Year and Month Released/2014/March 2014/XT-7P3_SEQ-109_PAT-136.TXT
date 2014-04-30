@@ -1,0 +1,116 @@
+$TXT Created by              at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 08/07/13 at 10:49
+=============================================================================
+Run Date: MAR 25, 2014                     Designation: XT*7.3*136
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #109                    Status: Released
+                  Compliance Date: APR 25, 2014
+=============================================================================
+
+
+Subject: Fix bug in XML Utility with long comments
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes a bug in the XML Utility.  Several Remedy tickets
+ noted a problem when long comments are sent to the utility.
+ 
+ Remedy Tickets:
+ ===============
+  841434 - VBECS data parsing error
+  855409 - Pharmacy problem with XML parser
+  848494 - MOCHA data parsing error
+  884710 - VBECS - Other
+  
+ Thanks to Test Sites
+ ====================
+  Cheyenne 
+  Northwest Iowa HCS
+  Oklahoma City
+    
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*136 contains
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+ 
+ RISK ANALYSIS: Changes made by patch XT*7.3*136 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ 
+ Installation Instructions
+ =========================
+  >>>Users may remain on the system.
+  >>>TaskMan does *NOT* need to be put stopped.
+ 
+  It is recommended that this patch be Queued for a time of generally least
+  activity. Installation should take less than a minute.  
+   
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.  
+     This option will load the KIDS package onto your system.  
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. On the KIDS menu, in the 'Installation' menu, use the following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XT*7.3*136
+                               ==========
+  
+ Will first run the Environment Check Routine, XT73P136
+ 
+ 
+ Install Questions for XT*7.3*136
+ 
+ 
+ 
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MXMLPRS0
+    Before: B72264453   After: B73120158  **58,89,136**
+Routine Name: MXMLPRSE
+    Before: B64969959   After: B65813959  **58,67,89,116,136**
+Routine Name: XT73P136
+    Before:       n/a   After:  B4750902  **136**
+ 
+Routine list of preceding patches: 116
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 10, 2013
+Completed By:                               Date Completed: JAN 30, 2014
+Released By :                               Date Released : MAR 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

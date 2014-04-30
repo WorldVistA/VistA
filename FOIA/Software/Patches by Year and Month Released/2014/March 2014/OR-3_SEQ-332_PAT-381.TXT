@@ -1,0 +1,249 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: OR*3*381
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #332                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*311    <<= must be installed BEFORE `OR*3*381'
+                    (v)OR*3*383    <<= must be installed BEFORE `OR*3*381'
+
+Subject: CORRECT TRANSFER MEDICATION ORDER MOCHA
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects the same issue corrected in patch OR*3*380 except 
+ that it incorporates the modifications made in patch OR*3*311 (part of 
+ the Medication Order Check Healthcare Application, MOCHA, 2.0 release).
+  
+ This patch corrects an issue related to transferring a medication from 
+ either Inpatient to Outpatient or vice-versa.  In specific scenarios, a 
+ wrong dosage is automatically placed in the order dialog upon 
+ transferring the medication resulting in a possible overdose.  
+  
+ For example: Suppose there is an orderable item configured with a 20 MG 
+ Outpatient dosage and a 120 MG Inpatient dosage (note that there is no 20 
+ MG Inpatient dosage).  If the provider attempts to transfer an Outpatient 
+ medication order with the 20 MG dosage to an Inpatient medication order, 
+ the 120 MG dosage is automatically selected because it contains the 
+ characters "20 MG".  In this scenario, the automatic dosage selection 
+ creates a 6-fold increase over the intended dosage.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 2472 
+ When transferring a medication order from either inpatient to outpatient 
+ or outpatient to inpatient, CPRS may inadvertently select the incorrect 
+ dosage for the transferred order.  Refer to Remedy ticket INC000000906468 
+ for resolution.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000000906468 - OERR - Orders Tab: Dosage being changed transferring
+                      med orders from outpatient to inpatient
+  
+ Problem:
+ -------
+ The dosage of a med order was being changed to a higher dosage when 
+ transferring it from outpatient to inpatient or from inpatient to 
+ outpatient.
+  
+ Resolution:
+ ----------
+ CPRS developers have corrected this problem such that in this case the 
+ dosage will be blanked out and the provider will have to enter or select 
+ a dosage manually.
+  
+ 2. INC000000910347 - OERR - Meds Tab: Transfer to Outpatient - Error 
+ Message
+  
+ Problem:
+ -------
+ While testing patient safety advisory AL13-10, a MOCHA 2 test site 
+ identified an error message that is generated during the transfer of a 
+ medication order from inpatient to outpatient.
+  
+ Resolution:
+ ----------
+ The code did not properly initialize a variable. The software is modified 
+ to properly initialize that variable.
+  
+  
+ Test Sites:
+ ----------
+ Charleston
+ Tuscaloosa
+ Kansas
+ Boise
+ Palo Alto
+ Northern California - Martinez 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ There is no pre-installation nor post-installation routine.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of 
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID - HOST file with patch name OR*3*381.
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ Refer to the MOCHA v2.0 Installation Guide PSS_1_P160_MOCHA_CB_IG.doc.
+  
+ Installation Instructions:
+ --------------------------
+ 1. From the Kernel Installation & Distribution System menu, select 
+    the Installation menu.  
+  
+ 2. From this menu, choose to Load a Distribution and enter the 
+    location of the Host File for patch OR*3.0*381
+  
+ 3. From the same menu, you may select to use the following options:
+    (when prompted for INSTALL NAME, enter OR*3.0*381)
+  
+         a. Verify Checksums in Transport Global - This option will 
+                 allow you to ensure the integrity of the routines that 
+ are 
+                 in the transport global.
+  
+         b. Print Transport Global - This option will allow you to view
+                 the components of the KIDS build.
+  
+         c. Compare Transport Global to Current System - This option 
+                 will allow you to view all changes that will be made when 
+                 this patch is installed. It compares all components of
+                 this patch (routines, DD's, templates, etc.).
+  
+         d. Backup a Transport Global - This option will create a backup
+                 message of any routines exported with this patch. It will 
+                 not backup any other changes such as DD's or templates.
+  
+ 4. Use the Install Package(s) option and select the package 
+    OR*3.0*381
+  
+ 5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    YES//" respond NO.  
+  
+ 6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? YES//" respond NO.
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMED
+    Before: B75152203   After: B76157821  **4,7,38,48,94,141,178,190,195,
+                                           243,306,371,380,383,311,381**
+ 
+Routine list of preceding patches: 311
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 19, 2013
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,192 @@
+
+=============================================================================
+Run Date: DEC 27, 2013                     Designation: EAS*1*114
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1        SEQ #89                      Status: Released
+                  Compliance Date: DEC 31, 2013
+=============================================================================
+
+
+Subject: 2014 GMT THRESHOLDS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *  Per VHA FACT SHEET titled MEANS TEST AND GEOGRAPHIC-BASED MEANS TEST  *
+ *  AND MAXIMUM ANNUAL RATES OF PENSION FOR CALENDAR YEAR 2014, this      *
+ *  patch MUST be installed before January 1, 2014. The patch is being    *
+ *  released as an Emergency patch together with DG*5.3*875 (2014 Means   *
+ *  Test Thresholds) and IB*2.0*514 (2014 RX Copay Thresholds) and may    *
+ *  be installed out of sequence with respect to other released EAS       *
+ *  patches.                                                              *
+ **************************************************************************
+  
+  
+ The Geographic-Based Means Test thresholds for Calendar Year 2014 are
+ distributed with this patch. The updated values for the GMT THRESHOLDS
+ file (#712.5) are used in the determination of a veteran's GMT Threshold
+ for a given income year, based on locality and number of dependents.
+   
+ Geographical income level thresholds are set yearly by the U.S. Department
+ of Housing and Urban Development (HUD). This large set of income
+ thresholds is usually referred to as the HUD index. The geographic based
+ income limits for Income Year (IY) 2013 can be found January 1, 2014 at:
+ http://www.domain.ext/healthbenefits/resources/publications/IB10-497_means
+ _test_GMT_and_pension_threshold_dec2013.pdf
+  
+ This patch, EAS*1.0*114 is one of three VistA 2014 threshold patches.  It
+ addresses the annual updates for the GMT Thresholds. Patch DG*5.3*875 will
+ update the thresholds for the Means Tests and the Maximum Annual Pension
+ Rate. Patch IB*2.0*514 will address the annual updates for the Pharmacy
+ Copay Thresholds.
+   
+ Patch Components
+ ================
+   
+   
+ Files & Fields Associated:
+                                        UP    SEND  DATA               USER
+                                        DATE  SEC.  COMES  SITE  RSLV  OVER
+ FILE #      NAME                       DD    CODE  W/FILE DATA  PTS   RIDE
+ --------------------------------------------------------------------------
+ 712.5       GMT THRESHOLDS (#712.5)    NO    NO    YES    OVER  YES   NO
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+ Additional Information:
+   
+ SOFTWARE RETRIEVAL
+ ------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following three KIDS builds:
+   
+              Host file name:    DG_53_P875.KID
+   
+                      Builds: DG*5.3*875
+                              EAS*1.0*114
+                              IB*2.0*514
+   
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+   
+                      Albany   : ftp.fo-albany.domain.ext
+                      Hines    : ftp.fo-hines.domain.ext
+                Salt Lake City : ftp.fo-slc.domain.ext
+        First Available Server : download.vista.domain.ext
+   
+ The following file will be available:
+      File Name            Description
+      ---------            -----------
+      DG_53_P875.KID       Host File containing KIDS software distribution
+   
+  Note:  Use ASCII mode when transferring the .KID file.
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+   
+ Test Sites:
+ ----------
+ VISN 2
+ Chillicothe, OH VAMC
+ Puget Sound HCS
+  
+   
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ N/A
+   
+ Patch Installation:
+   
+   
+ Pre/Post Installation Overview
+ ------------------------------
+ The EAS1114P pre-install routine will display an informational message and
+ may be deleted after install.
+   
+   
+ Installation Instructions
+ -------------------------
+ The components sent with this patch EAS*1.0*114 have been included in the 
+ HOST File DG_53_P875.KID. Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*875.
+   
+   
+ Pre-Installation Instructions
+ -----------------------------
+ The components sent with this patch EAS*1.0*114 have been included in the 
+ HOST File DG_53_P875.KID. Please follow the instructions listed in the 
+ INSTALLATION INSTRUCTIONS section of the patch description for patch 
+ DG*5.3*875.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1114P
+    Before:       n/a   After:   B907701  **114**
+
+=============================================================================
+User Information:
+Entered By  : ACKERMAN,NIEN-CHIN            Date Entered  : NOV 25, 2013
+Completed By: GOLDEN,JEANNE                 Date Completed: DEC 24, 2013
+Released By : GAYLER,LU ANNE                Date Released : DEC 27, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

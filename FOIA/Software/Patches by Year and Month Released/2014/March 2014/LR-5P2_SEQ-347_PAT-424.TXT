@@ -1,0 +1,202 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/26/13 at 16:13
+=============================================================================
+Run Date: MAR 05, 2014                     Designation: LR*5.2*424
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #347                    Status: Released
+                  Compliance Date: APR 07, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*290  <<= must be installed BEFORE `LR*5.2*424'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*424'
+
+Subject: LAB TEST ACCESSIONED WITHOUT APPROPRIATE AREA
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following issues:
+  
+ 1. Lab test accessioned without appropriate accession area
+ 2. <SUBSCRIPT> error when using Enter/verify data (auto instrument) option
+ 3. <UNDEFINED> error when editing Autopsy Acc #
+ 4. LOINC code not appearing in panel tests
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*424 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*424 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*424 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC0000000365783 - Test not accessioned but active in CPRS
+  
+ 2. INC0000000069791 - Routine LRVR1 can crash with bad input.
+  
+ 3. INC0000000486388 - UNDEFINED error-FM/UTILITY FUNCTIONS/VERIFY FIELDS 
+                       File #63, Field #14
+          
+ 4. INC0000000787142 - Lab v5.2 logic error
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARRTICIPATING TEST SITES:
+ ==========================
+ South Texas - San Antonio
+ Minneapolis VAMC
+ Bronx VAMC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC0000000365783
+  
+    Problem:
+    --------
+    If a lab test specific to one facility is accessioned in a different 
+    facility by mistake, the user receives a message stating that the test 
+    "does not have an appropriate accession area".  But despite this, the 
+    lab order is marked as collected and the order in CPRS is marked
+    active.
+  
+    Resolution:
+    -----------
+    Changed routines LRWLST and LROE2 so that the lab order will remain in 
+    uncollected status, and the order in CPRS will remain pending.
+  
+ 2. INC0000000069791
+  
+    Problem:
+    --------
+    When using the "Enter/verify data (auto instrument)" option [LRVR], at 
+    the prompts "What tray:" and "What cup:", if the user enters a string 
+    of numbers too long for the system to process it can cause a
+    <SUBSCRIPT> error.
+  
+    Resolution:
+    -----------
+    Changed routine LRVR1 so that the error no longer occurs.
+  
+    Technical:
+    ----------
+    Error is <SUBSCRIPT>T2+4^LRVR1 caused by size of the variable LRTRCP.  
+    Changed code so that LRTRCP must be 200 characters or less, in 
+    accordance with the SACC.
+  
+ 3. INC0000000486388
+  
+    Problem:
+    --------
+    When editing the field AUTOPSY ACC # in the file LAB DATA in FileMan, 
+    an <UNDEFINED> error will result.
+  
+    Resolution:
+    -----------
+    Changed the input transform of the field AUTOPSY ACC # so that the 
+    error no longer occurs.
+  
+    Technical:
+    ----------
+    The error, <UNDEFINED>V^DIED *LRABV, occurs because the variable LRABV 
+    is not set up in the context of FileMan.
+    
+ 4. INC000000787142
+  
+    Problem:
+    --------
+    When a lab order containing two or more panels is created, in which one
+    atomic test is shared between multiple panels, the shared atomic test 
+    will be missing a LOINC (Logical Observation Identifiers Names and 
+    Codes) code when accessioned.
+  
+    Resolution:
+    -----------
+    Changed routine LRVR1 so that LOINC codes are added normally for 
+    repeated atomic tests.
+  
+  
+      ===================== INSTALLATION INSTRUCTIONS ====================
+  
+    It is not necessary to disable any options. It is recommended to
+    install this patch when users are off the system. It should take less
+    than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter LR*5.2*424)
+   
+       a. Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+       b. Print Transport Global - This option will allow you to view
+          the components of the KIDS build.
+  
+       c. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this 
+          patch is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       LR*5.2*424.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LROE2
+    Before: B10836155   After: B11045939  **121,424**
+Routine Name: LRVR1
+    Before: B56535395   After: B56575699  **42,153,221,286,291,350,424**
+Routine Name: LRWLST
+    Before: B32689066   After: B33834407  **46,65,100,121,153,202,290,424**
+ 
+Routine list of preceding patches: 290, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 27, 2012
+Completed By:                               Date Completed: FEB 24, 2014
+Released By :                               Date Released : MAR 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

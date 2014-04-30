@@ -1,0 +1,692 @@
+Released PSB*3*75 SEQ #63
+Extracted from mail message
+**KIDS**:PSB*3.0*75^
+
+**INSTALL NAME**
+PSB*3.0*75
+"BLD",9390,0)
+PSB*3.0*75^BAR CODE MED ADMIN^0^3130425^y
+"BLD",9390,1,0)
+^^12^12^3130425^
+"BLD",9390,1,1,0)
+This Patch Addresses 2 issues.
+"BLD",9390,1,2,0)
+ 
+"BLD",9390,1,3,0)
+1.  When the INFUSION RATE field (#.08) in the PHARMACY PATIENT IV subfile
+"BLD",9390,1,4,0)
+    (#55.01) is greater than 27 characters (30 character max) for an 
+"BLD",9390,1,5,0)
+    Intravenous Piggyback (IVPB) order, the text added by the software 
+"BLD",9390,1,6,0)
+    will cause the infusion rate to exceed the 47 character maximum
+"BLD",9390,1,7,0)
+    in BCMA.
+"BLD",9390,1,8,0)
+ 
+"BLD",9390,1,9,0)
+2.  An IVPB order with a SCHEDULE (#.09) and a STATUS (#100) of "On Call" 
+"BLD",9390,1,10,0)
+    in the PHARMACY PATIENT IV subfile (#55.01) cannot be marked
+"BLD",9390,1,11,0)
+    as given using the Manual Medication Entry [PSB MED LOG NEW ENTRY] 
+"BLD",9390,1,12,0)
+    option.
+"BLD",9390,4,0)
+^9.64PA^53.79^1
+"BLD",9390,4,53.79,0)
+53.79
+"BLD",9390,4,53.79,2,0)
+^9.641^53.79^1
+"BLD",9390,4,53.79,2,53.79,0)
+BCMA MEDICATION LOG  (File-top level)
+"BLD",9390,4,53.79,2,53.79,1,0)
+^9.6411^.35^1
+"BLD",9390,4,53.79,2,53.79,1,.35,0)
+INFUSION RATE
+"BLD",9390,4,53.79,222)
+y^y^p^^^^n^^n
+"BLD",9390,4,53.79,224)
+
+"BLD",9390,4,"APDD",53.79,53.79)
+
+"BLD",9390,4,"APDD",53.79,53.79,.35)
+
+"BLD",9390,4,"B",53.79,53.79)
+
+"BLD",9390,6.3)
+6
+"BLD",9390,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9390,"KRN",.4,0)
+.4
+"BLD",9390,"KRN",.401,0)
+.401
+"BLD",9390,"KRN",.402,0)
+.402
+"BLD",9390,"KRN",.403,0)
+.403
+"BLD",9390,"KRN",.5,0)
+.5
+"BLD",9390,"KRN",.84,0)
+.84
+"BLD",9390,"KRN",3.6,0)
+3.6
+"BLD",9390,"KRN",3.8,0)
+3.8
+"BLD",9390,"KRN",9.2,0)
+9.2
+"BLD",9390,"KRN",9.8,0)
+9.8
+"BLD",9390,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9390,"KRN",9.8,"NM",1,0)
+PSBMLEN^^0^B73011702
+"BLD",9390,"KRN",9.8,"NM","B","PSBMLEN",1)
+
+"BLD",9390,"KRN",19,0)
+19
+"BLD",9390,"KRN",19.1,0)
+19.1
+"BLD",9390,"KRN",101,0)
+101
+"BLD",9390,"KRN",409.61,0)
+409.61
+"BLD",9390,"KRN",771,0)
+771
+"BLD",9390,"KRN",779.2,0)
+779.2
+"BLD",9390,"KRN",870,0)
+870
+"BLD",9390,"KRN",8989.51,0)
+8989.51
+"BLD",9390,"KRN",8989.52,0)
+8989.52
+"BLD",9390,"KRN",8994,0)
+8994
+"BLD",9390,"KRN","B",.4,.4)
+
+"BLD",9390,"KRN","B",.401,.401)
+
+"BLD",9390,"KRN","B",.402,.402)
+
+"BLD",9390,"KRN","B",.403,.403)
+
+"BLD",9390,"KRN","B",.5,.5)
+
+"BLD",9390,"KRN","B",.84,.84)
+
+"BLD",9390,"KRN","B",3.6,3.6)
+
+"BLD",9390,"KRN","B",3.8,3.8)
+
+"BLD",9390,"KRN","B",9.2,9.2)
+
+"BLD",9390,"KRN","B",9.8,9.8)
+
+"BLD",9390,"KRN","B",19,19)
+
+"BLD",9390,"KRN","B",19.1,19.1)
+
+"BLD",9390,"KRN","B",101,101)
+
+"BLD",9390,"KRN","B",409.61,409.61)
+
+"BLD",9390,"KRN","B",771,771)
+
+"BLD",9390,"KRN","B",779.2,779.2)
+
+"BLD",9390,"KRN","B",870,870)
+
+"BLD",9390,"KRN","B",8989.51,8989.51)
+
+"BLD",9390,"KRN","B",8989.52,8989.52)
+
+"BLD",9390,"KRN","B",8994,8994)
+
+"BLD",9390,"QDEF")
+^^^^^^^^^^YES
+"BLD",9390,"QUES",0)
+^9.62^^
+"BLD",9390,"REQB",0)
+^9.611^1^1
+"BLD",9390,"REQB",1,0)
+PSB*3.0*19^2
+"BLD",9390,"REQB","B","PSB*3.0*19",1)
+
+"FIA",53.79)
+BCMA MEDICATION LOG
+"FIA",53.79,0)
+^PSB(53.79,
+"FIA",53.79,0,0)
+53.79IP
+"FIA",53.79,0,1)
+y^y^p^^^^n^^n
+"FIA",53.79,0,10)
+
+"FIA",53.79,0,11)
+
+"FIA",53.79,0,"RLRO")
+
+"FIA",53.79,0,"VR")
+3.0^PSB
+"FIA",53.79,53.79)
+1
+"FIA",53.79,53.79,.35)
+
+"MBREQ")
+0
+"PKG",550,-1)
+1^1
+"PKG",550,0)
+BAR CODE MED ADMIN^PSB^BAR CODE MEDICATION ADMINISTRATION
+"PKG",550,20,0)
+^9.402P^^
+"PKG",550,22,0)
+^9.49I^1^1
+"PKG",550,22,1,0)
+3.0^3040224^3040311^66481
+"PKG",550,22,1,"PAH",1,0)
+75^3130425
+"PKG",550,22,1,"PAH",1,1,0)
+^^12^12^3130425
+"PKG",550,22,1,"PAH",1,1,1,0)
+This Patch Addresses 2 issues.
+"PKG",550,22,1,"PAH",1,1,2,0)
+ 
+"PKG",550,22,1,"PAH",1,1,3,0)
+1.  When the INFUSION RATE field (#.08) in the PHARMACY PATIENT IV subfile
+"PKG",550,22,1,"PAH",1,1,4,0)
+    (#55.01) is greater than 27 characters (30 character max) for an 
+"PKG",550,22,1,"PAH",1,1,5,0)
+    Intravenous Piggyback (IVPB) order, the text added by the software 
+"PKG",550,22,1,"PAH",1,1,6,0)
+    will cause the infusion rate to exceed the 47 character maximum
+"PKG",550,22,1,"PAH",1,1,7,0)
+    in BCMA.
+"PKG",550,22,1,"PAH",1,1,8,0)
+ 
+"PKG",550,22,1,"PAH",1,1,9,0)
+2.  An IVPB order with a SCHEDULE (#.09) and a STATUS (#100) of "On Call" 
+"PKG",550,22,1,"PAH",1,1,10,0)
+    in the PHARMACY PATIENT IV subfile (#55.01) cannot be marked
+"PKG",550,22,1,"PAH",1,1,11,0)
+    as given using the Manual Medication Entry [PSB MED LOG NEW ENTRY] 
+"PKG",550,22,1,"PAH",1,1,12,0)
+    option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSBMLEN")
+0^1^B73011702^B71915409
+"RTN","PSBMLEN",1,0)
+PSBMLEN ;BIRMINGHAM/EFC-BCMA MEDICATION LOG FUNCTIONS ;Mar 2004
+"RTN","PSBMLEN",2,0)
+ ;;3.0;BAR CODE MED ADMIN;**4,9,19,75**;Mar 2004;Build 6
+"RTN","PSBMLEN",3,0)
+ ;Per VHA Directive 2004-038 (or future revisions regarding same), this routine should not be modified.
+"RTN","PSBMLEN",4,0)
+ ;
+"RTN","PSBMLEN",5,0)
+ ; Reference/IA
+"RTN","PSBMLEN",6,0)
+ ; EN^PSJBCMA/2828
+"RTN","PSBMLEN",7,0)
+ ; ENE^PSJBCMA4/3416
+"RTN","PSBMLEN",8,0)
+ ; ENR^PSJBCMA4/3416
+"RTN","PSBMLEN",9,0)
+ ; ^XUSEC/10076
+"RTN","PSBMLEN",10,0)
+ ; ^DPT/10035
+"RTN","PSBMLEN",11,0)
+ ; $$GET^XPAR/2263
+"RTN","PSBMLEN",12,0)
+ ; HLP^DDSUTL/10150
+"RTN","PSBMLEN",13,0)
+ ;
+"RTN","PSBMLEN",14,0)
+EN ;
+"RTN","PSBMLEN",15,0)
+ N PSBCNT,PSBDT,PSBERR,PSBFORM,PSBMED,PSBNOW,PSBSCHT,PSBVARD,PSBX,PSBFREQ,PSBFLAG
+"RTN","PSBMLEN",16,0)
+ K ^TMP("PSB",$J),^TMP("PSJ",$J),PSBREC
+"RTN","PSBMLEN",17,0)
+ W @IOF,!,"Manual Medication Entry",!
+"RTN","PSBMLEN",18,0)
+ I $D(^XUSEC("PSB READ ONLY",DUZ)) W !,"This option is NOT AVAILABLE in PSB READ ONLY mode.",! Q
+"RTN","PSBMLEN",19,0)
+ W !,"Notice: No validation of medications is done with this option."
+"RTN","PSBMLEN",20,0)
+ W !,"Entries in the Med Log created with this option will reflect this"
+"RTN","PSBMLEN",21,0)
+ W !,"in the comments.",!!
+"RTN","PSBMLEN",22,0)
+ S DIC="^DPT(",DIC(0)="AEQM",DIC("A")="Select PATIENT: "
+"RTN","PSBMLEN",23,0)
+ D ^DIC K DIC Q:+Y<1
+"RTN","PSBMLEN",24,0)
+ S DFN=+Y
+"RTN","PSBMLEN",25,0)
+ D EN1
+"RTN","PSBMLEN",26,0)
+ K ^TMP("PSBO",$J)
+"RTN","PSBMLEN",27,0)
+ Q
+"RTN","PSBMLEN",28,0)
+ ;
+"RTN","PSBMLEN",29,0)
+EN1 ;
+"RTN","PSBMLEN",30,0)
+ S %DT="AEQ",%DT("B")="Today",%DT("A")="Select Orders From Date: "
+"RTN","PSBMLEN",31,0)
+ D ^%DT Q:+Y<1  S PSBDT=+Y
+"RTN","PSBMLEN",32,0)
+ W !,"Searching for Orders..."
+"RTN","PSBMLEN",33,0)
+ K ^TMP("PSJ",$J)
+"RTN","PSBMLEN",34,0)
+ D EN^PSJBCMA(DFN,PSBDT,"")
+"RTN","PSBMLEN",35,0)
+ Q:$G(^TMP("PSJ",$J,1,0))=-1
+"RTN","PSBMLEN",36,0)
+ S PSBERR=0
+"RTN","PSBMLEN",37,0)
+ D NOW^%DTC S PSBNOW=%
+"RTN","PSBMLEN",38,0)
+ F PSBX=0:0 S PSBX=$O(^TMP("PSJ",$J,PSBX)) Q:'PSBX  D
+"RTN","PSBMLEN",39,0)
+ .D CLEAN^PSBVT,PSJ^PSBVT(PSBX)
+"RTN","PSBMLEN",40,0)
+ .Q:PSBONX?.N1"P"  ; No Pending Yet
+"RTN","PSBMLEN",41,0)
+ .I "PCS"'[PSBIVT,PSBONX'["U" Q
+"RTN","PSBMLEN",42,0)
+ .I PSBIVT["S",PSBISYR'=1 Q  ;    allow intermittent syringe only
+"RTN","PSBMLEN",43,0)
+ .I PSBIVT["C",PSBCHEMT'="P",PSBISYR'=1 Q
+"RTN","PSBMLEN",44,0)
+ .I PSBIVT["C",PSBCHEMT="A" Q  ;     allow Chemo with intermittent syringe or Piggyback type only
+"RTN","PSBMLEN",45,0)
+ .K ^TMP("PSBO",$J)
+"RTN","PSBMLEN",46,0)
+ .S PSBOUT=0
+"RTN","PSBMLEN",47,0)
+ .D:PSBSCHT="C"
+"RTN","PSBMLEN",48,0)
+ ..;Calculate admin times based on Frequency from IPM
+"RTN","PSBMLEN",49,0)
+ ..S (PSBYES,PSBODD)=0
+"RTN","PSBMLEN",50,0)
+ ..S:$$PSBDCHK1^PSBVT1(PSBSCH) PSBYES=1
+"RTN","PSBMLEN",51,0)
+ ..I PSBYES,PSBADST="" S PSBOUT=1 Q
+"RTN","PSBMLEN",52,0)
+ ..I PSBSCH?2.4N.E S PSBYES=1
+"RTN","PSBMLEN",53,0)
+ ..S PSBFREQ=$$GETFREQ^PSBVDLU1(DFN,PSBONX)
+"RTN","PSBMLEN",54,0)
+ ..I PSBFREQ="O" S PSBYES=1
+"RTN","PSBMLEN",55,0)
+ ..I 'PSBYES,PSBADST="",PSBFREQ<1 S PSBOUT=1 Q
+"RTN","PSBMLEN",56,0)
+ ..I (PSBFREQ#1440'=0),(1440#PSBFREQ'=0) S PSBODD=1
+"RTN","PSBMLEN",57,0)
+ ..I PSBODD,PSBADST'="" S PSBOUT=1 Q
+"RTN","PSBMLEN",58,0)
+ ..I PSBADST="" S PSBADST=$$GETADMIN^PSBVDLU1(DFN,PSBONX,PSBOST,PSBFREQ,PSBDT)
+"RTN","PSBMLEN",59,0)
+ ..E  K ^TMP("PSB",$J,"GETADMIN") S ^TMP("PSB",$J,"GETADMIN",0)=PSBADST
+"RTN","PSBMLEN",60,0)
+ ..F PSBY=1:1 Q:$P(PSBADST,"-",PSBY)=""  I ($P(PSBADST,"-",PSBY)'?2N)&($P(PSBADST,"-",PSBY)'?4N) S PSBOUT=1 Q  ; Validate time(s)
+"RTN","PSBMLEN",61,0)
+ .Q:PSBOUT
+"RTN","PSBMLEN",62,0)
+ .Q:PSBOST>PSBNOW  ; Future Start Date
+"RTN","PSBMLEN",63,0)
+ .I PSBSCHT="O" S (PSBGVN,X,Y)="" D  I (PSBGVN)!(PSBNGF) K PSBGVN,X,Y Q
+"RTN","PSBMLEN",64,0)
+ ..F  S X=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X),-1) Q:'X  D
+"RTN","PSBMLEN",65,0)
+ ...F  S Y=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X,Y),-1) Q:'Y  S:($P(^PSB(53.79,Y,.1),U)=PSBONX)&($P(^PSB(53.79,Y,0),U,9)'="N") PSBGVN=1,(X,Y)=0
+"RTN","PSBMLEN",66,0)
+ .I PSBSCHT="OC" S (PSBGVN,X,Y)="" D  I PSBGVN K PSBGVN,X,Y Q
+"RTN","PSBMLEN",67,0)
+ ..F  S X=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X),-1) Q:'X  D
+"RTN","PSBMLEN",68,0)
+ ...F  S Y=$O(^PSB(53.79,"AOIP",DFN,PSBOIT,X,Y),-1) Q:'Y  S:($P(^PSB(53.79,Y,.1),U)=PSBONX)&($P(^PSB(53.79,Y,0),U,9)'="N") PSBGVN=1,(X,Y)=0
+"RTN","PSBMLEN",69,0)
+ ..S PSBGVN=PSBGVN&('$$GET^XPAR("DIV","PSB ADMIN MULTIPLE ONCALL")) Q:PSBGVN
+"RTN","PSBMLEN",70,0)
+ ..I PSBOSTS'="A"&(PSBOSTS'="R")&(PSBOSTS'="O") S PSBGVN=1 Q  ;Add On Call pharmacy status, PSB*3*75
+"RTN","PSBMLEN",71,0)
+ ..I PSBNGF S PSBGVN=1 Q
+"RTN","PSBMLEN",72,0)
+ .S ^TMP("PSB",$J,PSBSCHT,PSBOITX,PSBX)=PSBONX_U_PSBADST_U_PSBOST_U_PSBOSP_U_PSBOSTS
+"RTN","PSBMLEN",73,0)
+ I PSBERR W ! K DIR S DIR(0)="E" D ^DIR Q:Y="^"
+"RTN","PSBMLEN",74,0)
+ ;
+"RTN","PSBMLEN",75,0)
+EN2 ;
+"RTN","PSBMLEN",76,0)
+ W $$HDR() I '$D(^TMP("PSB",$J)) W !!?5,"No Med Orders Found!",!  Q
+"RTN","PSBMLEN",77,0)
+ S PSBSCHT="",PSBCNT=0
+"RTN","PSBMLEN",78,0)
+ F  S PSBSCHT=$O(^TMP("PSB",$J,PSBSCHT)) Q:PSBSCHT=""  D
+"RTN","PSBMLEN",79,0)
+ .W !  ; Line between order types
+"RTN","PSBMLEN",80,0)
+ .S PSBMED=""
+"RTN","PSBMLEN",81,0)
+ .F  S PSBMED=$O(^TMP("PSB",$J,PSBSCHT,PSBMED)) Q:PSBMED=""  D
+"RTN","PSBMLEN",82,0)
+ ..F PSBX=0:0 S PSBX=$O(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX)) Q:'PSBX  D
+"RTN","PSBMLEN",83,0)
+ ...I $Y>(IOSL-6) W ! K DIR S DIR(0)="E" D ^DIR W:Y $$HDR() I 'Y S PSBSCHT="Z" Q
+"RTN","PSBMLEN",84,0)
+ ...S PSBCNT=PSBCNT+1
+"RTN","PSBMLEN",85,0)
+ ...W !,$J(PSBCNT,2),". ",PSBSCHT,?7,PSBMED
+"RTN","PSBMLEN",86,0)
+ ...W ?40," (",$P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,5),")"
+"RTN","PSBMLEN",87,0)
+ ...S Y=$P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,3)
+"RTN","PSBMLEN",88,0)
+ ...W:$X>44 !
+"RTN","PSBMLEN",89,0)
+ ...W ?45,"Start: ",$E(Y,4,5)_"/"_$E(Y,6,7)_"/"_(1700+$E(Y,1,3))_" "
+"RTN","PSBMLEN",90,0)
+ ...W $E($P(Y,".",2)_"0000",1,4)
+"RTN","PSBMLEN",91,0)
+ ...S Y=$P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,4)
+"RTN","PSBMLEN",92,0)
+ ...W !?45," Stop: ",$E(Y,4,5)_"/"_$E(Y,6,7)_"/"_(1700+$E(Y,1,3))_" "
+"RTN","PSBMLEN",93,0)
+ ...W $E($P(Y,".",2)_"0000",1,4)
+"RTN","PSBMLEN",94,0)
+ ...I $P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,2)]"" W !?7,"Admin Times: ",$P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,2)
+"RTN","PSBMLEN",95,0)
+ ...W !
+"RTN","PSBMLEN",96,0)
+ ...S ^TMP("PSBO",$J,PSBCNT)=$P(^TMP("PSB",$J,PSBSCHT,PSBMED,PSBX),U,1)
+"RTN","PSBMLEN",97,0)
+ F  Q:$Y>(IOSL-5)  W !
+"RTN","PSBMLEN",98,0)
+ K DIR S DIR(0)="NO^1:"_PSBCNT_":0" D ^DIR
+"RTN","PSBMLEN",99,0)
+ I Y S Y=^TMP("PSBO",$J,Y) D NEW^PSBMLEN1(Y) G EN2
+"RTN","PSBMLEN",100,0)
+ Q
+"RTN","PSBMLEN",101,0)
+ ;
+"RTN","PSBMLEN",102,0)
+ ;
+"RTN","PSBMLEN",103,0)
+HDR() ;
+"RTN","PSBMLEN",104,0)
+ W @IOF,"Manual Medication Entry",!," #",?4,"Sc",?7,"Medication",?41,"St"
+"RTN","PSBMLEN",105,0)
+ W !,$TR($J("",IOM)," ","-")
+"RTN","PSBMLEN",106,0)
+ Q ""
+"RTN","PSBMLEN",107,0)
+ ;
+"RTN","PSBMLEN",108,0)
+EDIT    ; Edit Medication Log
+"RTN","PSBMLEN",109,0)
+ N PSBAUDIT
+"RTN","PSBMLEN",110,0)
+ S PSBAUDIT=1
+"RTN","PSBMLEN",111,0)
+ W:'$D(^XUSEC("PSB MANAGER",DUZ)) !!?5,"Notice: You are restricted from editing any entries other than",!,"        those that you have created.",!
+"RTN","PSBMLEN",112,0)
+ S DA=""
+"RTN","PSBMLEN",113,0)
+ S DIC="^DPT(",DIC(0)="AEQM",DIC("A")="Select Patient Name: "
+"RTN","PSBMLEN",114,0)
+ D ^DIC K DIC Q:+Y<1
+"RTN","PSBMLEN",115,0)
+ S DFN=+Y
+"RTN","PSBMLEN",116,0)
+ D EDIT1
+"RTN","PSBMLEN",117,0)
+ K PSBCNT,PSBDT,PSBIEN,PSBSRCH,PSBTMP,DA,DFN,DR,DDSFILE
+"RTN","PSBMLEN",118,0)
+ G EDIT
+"RTN","PSBMLEN",119,0)
+ ;
+"RTN","PSBMLEN",120,0)
+EDIT1   ; 
+"RTN","PSBMLEN",121,0)
+ S %DT="AEQ",%DT("A")="Select Date to Begin Searching Back From: "
+"RTN","PSBMLEN",122,0)
+ W !! S %DT("B")="TODAY" D ^%DT Q:+Y<1  S PSBDT=Y
+"RTN","PSBMLEN",123,0)
+ F  D  Q:'PSBDT
+"RTN","PSBMLEN",124,0)
+ .W @IOF,!,"Searching Date " S Y=PSBDT D D^DIQ W Y
+"RTN","PSBMLEN",125,0)
+ .W !," #  Medication",?45,"St",?50,"D/T Given",?75,"Int"
+"RTN","PSBMLEN",126,0)
+ .W !,$TR($J("",IOM)," ","-")
+"RTN","PSBMLEN",127,0)
+ .S PSBSRCH=PSBDT+.9,PSBCNT=0
+"RTN","PSBMLEN",128,0)
+ .K PSBTMP
+"RTN","PSBMLEN",129,0)
+ .F  S PSBSRCH=$O(^PSB(53.79,"AEDT",DFN,PSBSRCH),-1) Q:'PSBSRCH!(PSBSRCH<PSBDT)  D
+"RTN","PSBMLEN",130,0)
+ ..S PSBIEN=""
+"RTN","PSBMLEN",131,0)
+ ..F  S PSBIEN=$O(^PSB(53.79,"AEDT",DFN,PSBSRCH,PSBIEN),-1) Q:'PSBIEN  D:$P(^PSB(53.79,PSBIEN,0),U,7)=DUZ!($D(^XUSEC("PSB MANAGER",DUZ)))
+"RTN","PSBMLEN",132,0)
+ ...Q:$P(^PSB(53.79,PSBIEN,0),U,9)="N"
+"RTN","PSBMLEN",133,0)
+ ...S PSBCNT=PSBCNT+1,PSBTMP(PSBCNT)=PSBIEN
+"RTN","PSBMLEN",134,0)
+ ...D:$Y>19
+"RTN","PSBMLEN",135,0)
+ ....W ! S DIR(0)="E" D ^DIR
+"RTN","PSBMLEN",136,0)
+ ....W @IOF,!,"Searching Date " S Y=PSBDT D D^DIQ W Y
+"RTN","PSBMLEN",137,0)
+ ....W !," #  Medication",?45,"St",?50,"D/T Given",?75,"Int"
+"RTN","PSBMLEN",138,0)
+ ....W !,$TR($J("",IOM)," ","-")
+"RTN","PSBMLEN",139,0)
+ ...W !,$J(PSBCNT,2),". "
+"RTN","PSBMLEN",140,0)
+ ...W ?5,$$GET1^DIQ(53.79,PSBIEN_",",.08)
+"RTN","PSBMLEN",141,0)
+ ...I $$GET1^DIQ(53.79,PSBIEN_",",.26) W ?5," ("_$$GET1^DIQ(53.79,PSBIEN_",",.26)_")"
+"RTN","PSBMLEN",142,0)
+ ...W ?45,$P(^PSB(53.79,PSBIEN,0),U,9)
+"RTN","PSBMLEN",143,0)
+ ...W ?50,$$GET1^DIQ(53.79,PSBIEN_",",.06)
+"RTN","PSBMLEN",144,0)
+ ...W ?75,$$GET1^DIQ(53.79,PSBIEN_",","ACTION BY:INITIAL")
+"RTN","PSBMLEN",145,0)
+ .I PSBCNT D  Q:Y
+"RTN","PSBMLEN",146,0)
+ ..W ! S DIR(0)="NO^1:"_PSBCNT_":0" D ^DIR
+"RTN","PSBMLEN",147,0)
+ ..I Y S DA=PSBTMP(Y),PSBDT=""
+"RTN","PSBMLEN",148,0)
+ .I 'PSBCNT W !!?5,"No Meds Found!"
+"RTN","PSBMLEN",149,0)
+ .S X1=PSBDT,X2=-1 D C^%DTC S (PSBDT,Y)=X D D^DIQ
+"RTN","PSBMLEN",150,0)
+ .W !!,"Continue With ",Y
+"RTN","PSBMLEN",151,0)
+ .S %=1 D YN^DICN I %'=1 S PSBDT=0
+"RTN","PSBMLEN",152,0)
+ I DA D
+"RTN","PSBMLEN",153,0)
+ .S PSBCOMP="",PSBDFN=$$GET1^DIQ(53.79,DA_",",.01,"I"),PSBONX=$$GET1^DIQ(53.79,DA_",",.11),PSBSTUS=$$GET1^DIQ(53.79,DA_",",.09,"I")
+"RTN","PSBMLEN",154,0)
+ .I PSBONX["V",PSBSTUS'="G" D  Q:PSBCOMP=1
+"RTN","PSBMLEN",155,0)
+ ..S PSBBAGN=$$GET1^DIQ(53.79,DA_",",.26) D INFUSING^PSBVDLU2 Q:PSBCOMP=0
+"RTN","PSBMLEN",156,0)
+ ..I $D(PSBPORA(PSBONX)) S X="" F  S X=$O(PSBPORA(PSBONX,X)),PSBBAG2=$P(PSBPORA(PSBONX,X),U,1),PSBBAGST=$P(PSBPORA(PSBONX,X),U,2) Q:PSBBAG2]""
+"RTN","PSBMLEN",157,0)
+ ..I PSBBAGN=PSBBAG2 S PSBCOMP=0 Q
+"RTN","PSBMLEN",158,0)
+ ..I (PSBBAGN'=PSBBAG2),PSBBAGST'="C" D 
+"RTN","PSBMLEN",159,0)
+ ...W !!,"Bag "_PSBBAG2_" is marked as ",$S(PSBBAGST="I":"Infusing",PSBBAGST="S":"Stopped",1:"unk")
+"RTN","PSBMLEN",160,0)
+ ...W !,"This bag must be completed before bag "_PSBBAGN_" can be edited.",!!
+"RTN","PSBMLEN",161,0)
+ ...K PSBORA,PSBBAGN,PSBBAG2,PSBBAGST
+"RTN","PSBMLEN",162,0)
+ .I PSBONX["V" D PSJ1^PSBVT(PSBDFN,PSBONX)
+"RTN","PSBMLEN",163,0)
+ .S DDSFILE=53.79 D
+"RTN","PSBMLEN",164,0)
+ ..I PSBONX["U" S DR="[PSB MED LOG EDIT]" Q
+"RTN","PSBMLEN",165,0)
+ ..I PSBIVT["P" S DR="[PSB MED LOG EDIT]" Q
+"RTN","PSBMLEN",166,0)
+ ..I PSBIVT["S",PSBISYR=1  S DR="[PSB MED LOG EDIT]" Q
+"RTN","PSBMLEN",167,0)
+ ..I PSBIVT["C",PSBISYR=1  S DR="[PSB MED LOG EDIT]" Q
+"RTN","PSBMLEN",168,0)
+ ..I PSBIVT["C",PSBCHEMT="P"  S DR="[PSB MED LOG EDIT]" Q
+"RTN","PSBMLEN",169,0)
+ ..S DR="[PSB MED LOG EDIT IV]" Q
+"RTN","PSBMLEN",170,0)
+ .D ^DDS
+"RTN","PSBMLEN",171,0)
+ .;One time order reinstated if not given
+"RTN","PSBMLEN",172,0)
+ .D:($P(^PSB(53.79,DA,.1),U,2)="O")&($P(^PSB(53.79,DA,0),U,9)="N") ENR^PSJBCMA4(DFN,$P(^PSB(53.79,DA,.1),U,1))
+"RTN","PSBMLEN",173,0)
+ .D:($P(^PSB(53.79,DA,.1),U,2)="O")&($P(^PSB(53.79,DA,0),U,9)="G") ENE^PSJBCMA4(DFN,$P(^PSB(53.79,DA,.1),U,1))
+"RTN","PSBMLEN",174,0)
+ Q
+"RTN","PSBMLEN",175,0)
+ ;
+"RTN","PSBMLEN",176,0)
+VALID ;
+"RTN","PSBMLEN",177,0)
+ I $G(PSBSTUS)="RM","^RM^"'[("^"_X_"^") W $C(7) S DDSERROR=1 D HLP^DDSUTL("Status of Removed cannot be changed.") Q
+"RTN","PSBMLEN",178,0)
+ I $G(PSBREC(7))'="Entry created with 'Manual Medication Entry' option." D  Q
+"RTN","PSBMLEN",179,0)
+ .I ($D(^PSB(53.79,DA,.5,1,0))),($P($G(^PSB(53.79,DA,.5,1,0)),U,4)="PATCH") D  Q
+"RTN","PSBMLEN",180,0)
+ ..I "^G^N^H^R^RM^"'[("^"_X_"^") W $C(7) S DDSERROR=1 D HLP^DDSUTL("Allowed status codes are Given, Not Given, Held, Refused and Removed.")
+"RTN","PSBMLEN",181,0)
+ .I "^G^N^H^R^"'[("^"_X_"^") W $C(7) S DDSERROR=1 D HLP^DDSUTL("Allowed status codes are Given, Not Given, Held, and Refused.")
+"RTN","PSBMLEN",182,0)
+ I "^G^H^R^"'[("^"_X_"^") W $C(7) S DDSERROR=1 D HLP^DDSUTL("Allowed status codes are Given, Held, and Refused.") Q
+"RTN","PSBMLEN",183,0)
+ ;
+"RTN","PSBMLEN",184,0)
+UNITS ;Check UNITS field for entry of PATCH
+"RTN","PSBMLEN",185,0)
+ I Y'="PATCH" Q
+"RTN","PSBMLEN",186,0)
+ S (DDSERROR,DDSBR)=1
+"RTN","PSBMLEN",187,0)
+ S @DDSREFT@("F"_DDP,DDSDA,DDSFLD,"D")=DDSOLD
+"RTN","PSBMLEN",188,0)
+ W $C(7)
+"RTN","PSBMLEN",189,0)
+ D HLP^DDSUTL("Field cannot be changed to PATCH")
+"RTN","PSBMLEN",190,0)
+ D REFRESH^DDSUTL
+"RTN","PSBMLEN",191,0)
+ Q
+"RTN","PSBMLEN",192,0)
+ ;
+"VER")
+8.0^22.0
+"^DD",53.79,53.79,.35,0)
+INFUSION RATE^FX^^0;11^K:$L(X)>50!($L(X)<1) X
+"^DD",53.79,53.79,.35,3)
+Answer must be 1-50 characters in length.
+"^DD",53.79,53.79,.35,21,0)
+^.001^2^2^3030225^^
+"^DD",53.79,53.79,.35,21,1,0)
+This is the infusion rate for an IV bag, which is passed by Inpatient
+"^DD",53.79,53.79,.35,21,2,0)
+Medications.
+"^DD",53.79,53.79,.35,"DT")
+3121010
+"BLD",9390,6)
+^63
+**END**
+**END**

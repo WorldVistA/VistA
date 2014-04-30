@@ -1,0 +1,215 @@
+$TXT Created by BECKWITH,RALPH at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Thursday, 05/16/13 at 09:46
+=============================================================================
+Run Date: JAN 16, 2014                     Designation: PRC*5.1*173
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #155                    Status: Released
+                  Compliance Date: FEB 16, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*129 <<= must be installed BEFORE `PRC*5.1*173'
+                    (v)PRC*5.1*142 <<= must be installed BEFORE `PRC*5.1*173'
+
+Subject: MONTHLY ACCRUAL DOCUMENT COST CENTER;FILE 442 IEN CONTROL;1358 ADJUSTMENT ERROR
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following three issues:
+  
+ 1. Monthly Accrual Document Cost Center issue.
+  
+ 2. Audit/control File 442 Internal Entry number (IEN) setting.
+  
+ 3. 1358 Adjustments causing FMS SO Document error.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000837673 IFCAP-Purchase Card Accrual Issue:
+  
+ 2. INC000000825983 IFCAP-Other: File 442 IEN DINUM Setting Control
+  
+ 3. INC000000840828 IFCAP-1358 Issue:
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Louisville VAMC
+ VA Central Office
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000837673 IFCAP-Purchase Card Accrual Issue:
+  
+    Problem:
+    --------
+    When site runs the Generate/Rebuild FMS SV-Document off the  
+    Compiled/Print Monthly Accrual in the Accrual (Monthly) [PRCB MONTHLY 
+    ACCRUAL] option, a Cost Center (ex. 615322) will be entered in the
+    Service Voucher (SV) document as 615322 in the Cost Center field and 22
+    in the Sub Cost Center field looking like this:
+  
+    LIN^~SVA^008^CC^94^^4537B^^688^^615322^22^016144101^2696^^^^^^^^^^
+    220^~SVB^27.00^D^^E^
+  
+    This causes the document to be rejected by Financial Management 
+    Systems (FMS) when transmitted.
+  
+  
+    Resolution:
+    -----------                    
+    Modify the SV Document processing for Cost Center and Sub Cost Center
+    to set the full cost center into the Cost Center field and '00' in the
+    Sub Cost Center field like so:
+  
+    LIN^~SVA^008^CC^94^^4537B^^688^^615322^00^016144101^2696^^^^^^^^^^
+    220^~SVB^27.00^D^^E^
+  
+  
+ Routines: PRCB8B
+  
+  
+ 2. INC000000825983 IFCAP-Other: File 442 IEN DINUM Setting Control
+  
+    Problem:
+    --------
+    Entries related to Federal Procurement Data System FPDS data sets
+    into the PROCUREMENT & ACCOUNTING TRANSACTIONS (#442) file cause
+    entries to be written with a very low internal entry number (IEN). This
+    will ultimately cause sites to run out of valid numbers >0 and freeze
+    all order processing, as no new orders can be created in PROCUREMENT &
+    ACCOUNTING TRANSACTIONS (#442) file.
+  
+  
+    Resolution:
+    -----------
+    Modify tag/routine EN8^PRCHNPO6 to check for an IEN below 20,000,000
+    and logically reset the number back to the last determined highest
+    number used for this descending ordered file and insuring the new 
+    valid number is then entered into the file node 0, counter field.
+  
+ Routines: PRCHNPO6
+  
+  
+ 3. INC000000840828 IFCAP-1358 Issue:
+  
+    Problem:
+    --------
+    When a user repeatedly adjusts (max 9,999,999.99 increments allowed)
+    a 1358 and the adjusted 1358 exceeds $99,999,999.99 an incorrect 
+    Service Order (SO) document will be sent to FMS having the amount of
+    the preceding adjustment, not the adjustment amount that caused the
+    $999,999,999.99 overrun.
+  
+    Problem analysis and testing also uncovered error conditions due to
+    the following fields in the PROCUREMENT & ACCOUNTING TRANSACTIONS
+    (#442) file having maximum value errors:
+   
+    SUBAMOUNT1 (#3.4) field (max value of 9999999)
+    NET AMOUNT (#92) field  (max value of 99999999)
+    LIQUIDATED AMOUNT (#93) field (max value of 99999999)
+  
+    Failure of these fields to update also caused TOTAL AMOUNT (#91) field,
+    ACTUAL 1358 BALANCE (#94) field and ESTIMATED COST (#7.2) field to not
+    update correctly.
+  
+    
+    Resolution:
+    -----------
+    Modify Data Dictionary for PROCUREMENT & ACCOUNTING TRANSACTIONS (#442)
+    file, SUBAMOUNT1 (#3.4) field, NET AMOUNT (#92) field, and LIQUIDATED
+    AMOUNT (#93) field to have maximum value of 999,999,999, and 2 decimal
+    digits.
+  
+    Modify CONTROL POINT ACTIVITY (#410) file, ADJUSTMENT $ AMOUNT (#25) 
+    field and TRANSACTION $ AMOUNT (#27) field to have valid entry between
+    -9,999,999 and 9,999,999,and 2 decimal digits. Also, COMMITTED  
+    (ESTIMATED) COST (#20) field to have valid entry between 0 and
+    9,999,999, and 2 decimal digits.
+  
+    Routines:  None
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*173)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*173.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Accrual (Monthly)                [PRCB MONTHLY ACCRUAL] 
+       Adjust (Increase/Decrease) 1358  [PRCEF ADJUST]         
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCB8B
+    Before: B13230822   After: B13408384  **71,142,173**
+Routine Name: PRCHNPO6
+    Before: B22810187   After: B24682336  **129,173**
+ 
+Routine list of preceding patches: 129, 142
+
+=============================================================================
+User Information:
+Entered By  : BECKWITH,RALPH                Date Entered  : OCT 09, 2012
+Completed By: PODLEY,CHRIS                  Date Completed: JAN 09, 2014
+Released By : NELSON,VICKI M                Date Released : JAN 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

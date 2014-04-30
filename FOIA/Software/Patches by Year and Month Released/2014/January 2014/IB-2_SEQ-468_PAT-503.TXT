@@ -1,0 +1,151 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Monday, 12/02/13 at 16:33
+=============================================================================
+Run Date: JAN 31, 2014                     Designation: IB*2*503
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #468                      Status: Released
+                  Compliance Date: MAR 02, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*510    <<= must be installed BEFORE `IB*2*503'
+
+Subject: CY2014 ADMINISTRATIVE FEE UPDATE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses two issues:
+  
+ 1. The administrative charge needs to be updated based on a new dispensing
+    fee for rate types: Reimbursable Insurance, No Fault Insurance, Tort
+    Feasor, Workers Compensation, Humanitarian, Ineligible, Tricare and
+    Tricare Reimbursable Insurance on third party pharmacy prescription
+    claims.
+ 2. There is no space between the line item number and the Bill From date 
+    display if a patient has more than 99 charges in the Cancel/Edit/Add 
+    Patient Charges [IB CANCEL/EDIT/ADD CHARGES] option.
+  
+ Note *** Please be aware patch IB*2*510 (released 01/14/14) is a 
+          required install before implementing this patch. ***
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000923431 CY2014 Administrative Fee Update for 3rd Party RX Claims
+ 2. INC000000835774 LINE NUMBER AND DATE RUN TOGETHER
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Maryland HCS
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000923431 CY2014 Administrative Fee Update for 3rd Party RX Claims
+  
+  Problem:
+  --------
+  The Chief Business Office (CBO) has requested an update to the
+  administrative charge for third party pharmacy prescription with an
+  effective date of January 1st, 2014. The administrative charge for
+  Tricare Reimbursable Insurance and Tricare is $11.56 and the charge for
+  the others is $13.07.
+  
+  Resolution:
+  -----------
+  A post-init routine IB20P503 was created to call a procedure to inactivate
+  rate schedules containing the RX COST charge set for those rate types with
+  an inactive date of December 31, 2013. It also updates the adjustments for
+  those rate types with the new dispensing fee effective from January 1st,
+  2014 in the Rate Schedule (#363) file.
+  
+ 2. INC000000835774 LINE NUMBER AND DATE RUN TOGETHER
+  
+  Problem:
+  --------
+  The line item number and the Bill From date fields run together in the 
+  Cancel/Edit/Add Patient Charges [IB CANCEL/EDIT/ADD CHARGES] option if a
+  patient has more than 99 charges.
+  
+  Resolution:
+  -----------
+  List template IB CHARGES was modified to display one more space
+  between the line item number and the Bill From date for the patient's
+  charges within option [IB CANCEL/EDIT/ADD CHARGES].
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*503):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 3.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+  
+ 4.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P503.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P503
+    Before:       n/a   After:  B7417889  **503**
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : JUN 10, 2013
+Completed By: LANG,MICKEY                   Date Completed: JAN 29, 2014
+Released By : MATHEWS,DEAN                  Date Released : JAN 31, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

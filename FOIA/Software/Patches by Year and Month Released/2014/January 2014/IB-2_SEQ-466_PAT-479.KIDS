@@ -1,0 +1,1194 @@
+Released IB*2*479 SEQ #466
+Extracted from mail message
+**KIDS**:IB*2.0*479^
+
+**INSTALL NAME**
+IB*2.0*479
+"BLD",9121,0)
+IB*2.0*479^INTEGRATED BILLING^0^3120719^y
+"BLD",9121,1,0)
+^^5^5^3120719^
+"BLD",9121,1,1,0)
+This patch addresses two issues. The first issue is about the extract name
+"BLD",9121,1,2,0)
+displaying incorrectly for IV section in the MCCR Site Parameter Display/
+"BLD",9121,1,3,0)
+Edit option. The second issue concerns the CPT codes on an inpatient bill 
+"BLD",9121,1,4,0)
+duplicated thousands of times in the Enter/Edit Billing Information
+"BLD",9121,1,5,0)
+option.
+"BLD",9121,4,0)
+^9.64PA^^
+"BLD",9121,6)
+1^
+"BLD",9121,6.3)
+29
+"BLD",9121,"ABPKG")
+n
+"BLD",9121,"INIT")
+
+"BLD",9121,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9121,"KRN",.4,0)
+.4
+"BLD",9121,"KRN",.401,0)
+.401
+"BLD",9121,"KRN",.402,0)
+.402
+"BLD",9121,"KRN",.403,0)
+.403
+"BLD",9121,"KRN",.5,0)
+.5
+"BLD",9121,"KRN",.84,0)
+.84
+"BLD",9121,"KRN",3.6,0)
+3.6
+"BLD",9121,"KRN",3.8,0)
+3.8
+"BLD",9121,"KRN",9.2,0)
+9.2
+"BLD",9121,"KRN",9.8,0)
+9.8
+"BLD",9121,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",9121,"KRN",9.8,"NM",1,0)
+IBCSC4A^^0^B32672806
+"BLD",9121,"KRN",9.8,"NM",2,0)
+IBCSC4B^^0^B36503632
+"BLD",9121,"KRN",9.8,"NM",3,0)
+IBCSC4E^^0^B45259248
+"BLD",9121,"KRN",9.8,"NM",4,0)
+IBJPI^^0^B21978399
+"BLD",9121,"KRN",9.8,"NM","B","IBCSC4A",1)
+
+"BLD",9121,"KRN",9.8,"NM","B","IBCSC4B",2)
+
+"BLD",9121,"KRN",9.8,"NM","B","IBCSC4E",3)
+
+"BLD",9121,"KRN",9.8,"NM","B","IBJPI",4)
+
+"BLD",9121,"KRN",19,0)
+19
+"BLD",9121,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9121,"KRN",19.1,0)
+19.1
+"BLD",9121,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",9121,"KRN",101,0)
+101
+"BLD",9121,"KRN",409.61,0)
+409.61
+"BLD",9121,"KRN",771,0)
+771
+"BLD",9121,"KRN",771,"NM",0)
+^9.68A^^0
+"BLD",9121,"KRN",779.2,0)
+779.2
+"BLD",9121,"KRN",870,0)
+870
+"BLD",9121,"KRN",870,"NM",0)
+^9.68A^^0
+"BLD",9121,"KRN",8989.51,0)
+8989.51
+"BLD",9121,"KRN",8989.52,0)
+8989.52
+"BLD",9121,"KRN",8994,0)
+8994
+"BLD",9121,"KRN","B",.4,.4)
+
+"BLD",9121,"KRN","B",.401,.401)
+
+"BLD",9121,"KRN","B",.402,.402)
+
+"BLD",9121,"KRN","B",.403,.403)
+
+"BLD",9121,"KRN","B",.5,.5)
+
+"BLD",9121,"KRN","B",.84,.84)
+
+"BLD",9121,"KRN","B",3.6,3.6)
+
+"BLD",9121,"KRN","B",3.8,3.8)
+
+"BLD",9121,"KRN","B",9.2,9.2)
+
+"BLD",9121,"KRN","B",9.8,9.8)
+
+"BLD",9121,"KRN","B",19,19)
+
+"BLD",9121,"KRN","B",19.1,19.1)
+
+"BLD",9121,"KRN","B",101,101)
+
+"BLD",9121,"KRN","B",409.61,409.61)
+
+"BLD",9121,"KRN","B",771,771)
+
+"BLD",9121,"KRN","B",779.2,779.2)
+
+"BLD",9121,"KRN","B",870,870)
+
+"BLD",9121,"KRN","B",8989.51,8989.51)
+
+"BLD",9121,"KRN","B",8989.52,8989.52)
+
+"BLD",9121,"KRN","B",8994,8994)
+
+"BLD",9121,"QDEF")
+^^^^^^^^^^
+"BLD",9121,"QUES",0)
+^9.62^^
+"BLD",9121,"REQB",0)
+^9.611^4^4
+"BLD",9121,"REQB",1,0)
+IB*2.0*438^2
+"BLD",9121,"REQB",2,0)
+IB*2.0*403^2
+"BLD",9121,"REQB",3,0)
+IB*2.0*304^2
+"BLD",9121,"REQB",4,0)
+IB*2.0*339^2
+"BLD",9121,"REQB","B","IB*2.0*304",3)
+
+"BLD",9121,"REQB","B","IB*2.0*339",4)
+
+"BLD",9121,"REQB","B","IB*2.0*403",2)
+
+"BLD",9121,"REQB","B","IB*2.0*438",1)
+
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+479^3120719
+"PKG",200,22,1,"PAH",1,1,0)
+^^5^5^3120719
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. The first issue is about the extract name
+"PKG",200,22,1,"PAH",1,1,2,0)
+displaying incorrectly for IV section in the MCCR Site Parameter Display/
+"PKG",200,22,1,"PAH",1,1,3,0)
+Edit option. The second issue concerns the CPT codes on an inpatient bill 
+"PKG",200,22,1,"PAH",1,1,4,0)
+duplicated thousands of times in the Enter/Edit Billing Information
+"PKG",200,22,1,"PAH",1,1,5,0)
+option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","IBCSC4A")
+0^1^B32672806^B31509518
+"RTN","IBCSC4A",1,0)
+IBCSC4A ;ALB/MJB - MCCR PTF SCREEN  ;24 FEB 89 9:49
+"RTN","IBCSC4A",2,0)
+ ;;2.0;INTEGRATED BILLING;**106,228,339,479**;21-MAR-94;Build 29
+"RTN","IBCSC4A",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBCSC4A",4,0)
+ ;
+"RTN","IBCSC4A",5,0)
+ ;MAP TO DGCRSC4A
+"RTN","IBCSC4A",6,0)
+ ;
+"RTN","IBCSC4A",7,0)
+DX Q:'$D(^DGPT(+IBPTF,0))  S (IBDXC,IBOPC)=0,IBNC="NO DX CODES ENTERED FOR THIS DATE" K ^UTILITY($J,"IBDX")
+"RTN","IBCSC4A",8,0)
+ ;F I=0:0 S I=$O(^DGPT(IBPTF,"M","AM",I)) Q:I'>0  S X=$O(^DGPT(IBPTF,"M","AM",I,0)),IBDX((9999999-$P(I,".",1)),X)=""
+"RTN","IBCSC4A",9,0)
+ ;I '$D(^DGPT(IBPTF,"M","AM")) S IBDX(9999999-DT,1)=""
+"RTN","IBCSC4A",10,0)
+ ;S IBDIA=0 F I=1:1:26 S IBDIA=$O(IBDX(IBDIA)) Q:IBDIA=""  S X=$O(IBDX(IBDIA,0)),M=$S($D(^DGPT(IBPTF,"M",X,0)):^(0),1:"") I M]"" S IBCT=0 F J=5:1:9 S:$P(M,U,J)]"" IBCT=IBCT+1,^UTILITY($J,"IBDX",I,IBCT)=$P(M,U,J) D:J=5 T
+"RTN","IBCSC4A",11,0)
+ ;S IBDIA="" F I=1:1:13 S IBDIA=$O(^UTILITY($J,"IBDX",IBDIA)) Q:IBDIA=""  D ODD S IBDIA=$O(^UTILITY($J,"IBDX",IBDIA)) D:IBDIA]"" EVEN D SETD^IBCSC4C Q:IBDIA']""
+"RTN","IBCSC4A",12,0)
+ ;
+"RTN","IBCSC4A",13,0)
+PRO S IBNC="NO PRO CODES ENTERED FOR THIS DATE",IBOPC=0 K ^UTILITY($J,"IB"),^TMP("IBTYPE",$J)
+"RTN","IBCSC4A",14,0)
+ F I=0:0 S I=$O(^DGPT(IBPTF,"S",I)) Q:I'>0  S J=$S($D(^DGPT(IBPTF,"S",I,0)):^(0),1:"") I J]"" S X=+J,X=$S(X[".":9999999-X,1:(9999999_"."_I)-X),IBOP(X)=$P(J,U)_U_$P(J,U,8,12)
+"RTN","IBCSC4A",15,0)
+ F I=0:0 S I=$O(^DGPT(IBPTF,"P",I)) Q:I'>0  S J=$S($D(^DGPT(IBPTF,"P",I,0)):^(0),1:"") I J]"" S X=+J,X=$S(X[".":9999999-X,1:(9999999_"."_I)-X),IBSP(X)=$P(J,U)_U_$P(J,U,5,9)
+"RTN","IBCSC4A",16,0)
+ S IBP=0 F I=1:1:26 S IBP=$O(IBOP(IBP)) Q:IBP=""  S M=IBOP(IBP),IBCT=0 F J=2:1:6 Q:IBCT=3  S:$P(M,U,J)]"" IBCT=IBCT+1,^UTILITY($J,"IB",I,IBCT)=$P(M,U,J) D:J=2 TP
+"RTN","IBCSC4A",17,0)
+ I I<26 S IBP="" F I=I:1:26 S IBP=$O(IBSP(IBP)) Q:IBP=""  S M=IBSP(IBP),IBCT=0 F J=2:1:6 Q:IBCT=3  S:$P(M,U,J)]"" IBCT=IBCT+1 D:$P(M,U,J)]"" T1 D:J=2 T2
+"RTN","IBCSC4A",18,0)
+ D PTFPS(DFN,IBPTF,+IB("U"),$P(IB("U"),"^",2))
+"RTN","IBCSC4A",19,0)
+ S IBP="" F I=1:1:13 S IBP=$O(^UTILITY($J,"IB",IBP)) Q:IBP=""  D ODDP S IBP=$O(^UTILITY($J,"IB",IBP)) D:IBP]"" EVENP D SETP^IBCSC4C Q:IBP=""
+"RTN","IBCSC4A",20,0)
+ Q
+"RTN","IBCSC4A",21,0)
+ ;
+"RTN","IBCSC4A",22,0)
+ ; ibdxc=31 to skip '^'
+"RTN","IBCSC4A",23,0)
+T I IBCT>0 S IBDXC=IBDXC+1 S:IBDXC=30 IBDXC=31 S ^UTILITY($J,"IBDX",I,IBCT)=^UTILITY($J,"IBDX",I,IBCT)_U_$P($P(M,U,10),".",1)_U_$C(64+IBDXC)_U_$P(M,U,2)_"^"_$S(X'=1:"",'$D(^DGPT(IBPTF,70)):"",1:"D/C")_"^"_$$SC(M) Q
+"RTN","IBCSC4A",24,0)
+ S ^UTILITY($J,"IBDX",I,1)=IBNC_U_$P($P(M,U,10),".",1)_"^^"_$P(^DGPT(IBPTF,"M",X,0),U,2)_"^^"_$$SC(M) Q
+"RTN","IBCSC4A",25,0)
+ ;
+"RTN","IBCSC4A",26,0)
+ODD S X=^UTILITY($J,"IBDX",IBDIA,1),IBWO(0)=$P(X,U,3)_U_$P(X,U,2)_U_$P(X,U,4,6),IBWO(1)=$P(X,U,1) F M=2:1:5 S IBWO(M)=$S($D(^UTILITY($J,"IBDX",IBDIA,M)):^(M),1:"")
+"RTN","IBCSC4A",27,0)
+ Q
+"RTN","IBCSC4A",28,0)
+ ;
+"RTN","IBCSC4A",29,0)
+EVEN S X=^UTILITY($J,"IBDX",IBDIA,1),IBWE(0)=$P(X,U,3)_U_$P(X,U,2)_U_$P(X,U,4,6),IBWE(1)=$P(X,U,1) F M=2:1:5 S IBWE(M)=$S($D(^UTILITY($J,"IBDX",IBDIA,M)):^(M),1:"")
+"RTN","IBCSC4A",30,0)
+ I $P(IBWE(0),U,1)']"" F M=1:1:5 S IBWE(M)=""
+"RTN","IBCSC4A",31,0)
+ Q
+"RTN","IBCSC4A",32,0)
+ ;
+"RTN","IBCSC4A",33,0)
+TP I IBCT>0 S IBOPC=IBOPC+1 S:IBOPC=30 IBOPC=31 S ^UTILITY($J,"IB",I,IBCT)=^UTILITY($J,"IB",I,IBCT)_U_$P(+M,".",1)_U_$C(64+IBOPC) Q
+"RTN","IBCSC4A",34,0)
+ S ^UTILITY($J,"IB",I,1)=IBNC_U_$P(+M,".",1) Q
+"RTN","IBCSC4A",35,0)
+T1 S ^UTILITY($J,"IB",I,IBCT)=$P(M,U,J) Q
+"RTN","IBCSC4A",36,0)
+T2 I IBCT>0 S IBOPC=IBOPC+1 S:IBOPC=30 IBOPC=31 S ^UTILITY($J,"IB",I,IBCT)=^UTILITY($J,"IB",I,IBCT)_U_$P($P(M,U,1),".",1)_U_$C(64+IBOPC)_U_"*" Q
+"RTN","IBCSC4A",37,0)
+ S ^UTILITY($J,"IB",I,1)=IBNC_U_$P($P(M,U,1),".",1)_"^^*" Q
+"RTN","IBCSC4A",38,0)
+ ;
+"RTN","IBCSC4A",39,0)
+ODDP S X=^UTILITY($J,"IB",IBP,1),IBWO(0)=$P(X,U,3)_U_$P(X,U,2)_U_$S($P(X,U,4)="*":"*",$P(X,U,4)="+":"+",1:""),IBWO(1)=$P(X,U,1)_"^"_$P(X,"^",5,13) F M=2:1:5 S IBWO(M)=$S($D(^UTILITY($J,"IB",IBP,M)):^(M),1:"")
+"RTN","IBCSC4A",40,0)
+ Q
+"RTN","IBCSC4A",41,0)
+ ;
+"RTN","IBCSC4A",42,0)
+EVENP S X=^UTILITY($J,"IB",IBP,1),IBWE(0)=$P(X,U,3)_U_$P(X,U,2)_U_$S($P(X,U,4)="*":"*",$P(X,U,4)="+":"+",1:""),IBWE(1)=$P(X,U,1)_"^"_$P(X,"^",5,13) F M=2:1:5 S IBWE(M)=$S($D(^UTILITY($J,"IB",IBP,M)):^(M),1:"")
+"RTN","IBCSC4A",43,0)
+ Q
+"RTN","IBCSC4A",44,0)
+ ;
+"RTN","IBCSC4A",45,0)
+NUL F I=1:1:13 S $P(^DGCR(399,IBIFN,"C"),U,I)=""
+"RTN","IBCSC4A",46,0)
+ Q
+"RTN","IBCSC4A",47,0)
+ ;
+"RTN","IBCSC4A",48,0)
+P S M=($A($E(X,1))-64),S=$E(X,2),IB5=$S($D(^UTILITY($J,"IB",M,S)):^(S),1:"") I IB5]"" Q:$P(^UTILITY($J,"IB",M,1),U,3)=$E(X,1)
+"RTN","IBCSC4A",49,0)
+ F J=M:1:26 Q:'$D(^UTILITY($J,"IB",J))  I $P(^UTILITY($J,"IB",J,1),U,3)=$E(X,1) S M=J,IBA=1 Q
+"RTN","IBCSC4A",50,0)
+ S:'$D(IBA) M=0 K IBA Q
+"RTN","IBCSC4A",51,0)
+D S M=($A($E(X,1))-64),S=$E(X,2),IB4=$S($D(^UTILITY($J,"IBDX",M,S)):^(S),1:"") I IB4]"" Q:$P(^UTILITY($J,"IBDX",M,1),U,3)=$E(X,1)
+"RTN","IBCSC4A",52,0)
+ F J=M:1:26 Q:'$D(^UTILITY($J,"IBDX",J))  I $P(^UTILITY($J,"IBDX",J,1),U,3)=$E(X,1) S M=J,IBA=1 Q
+"RTN","IBCSC4A",53,0)
+ S:'$D(IBA) M=0 K IBA Q
+"RTN","IBCSC4A",54,0)
+ ;
+"RTN","IBCSC4A",55,0)
+SC(M) ;  - check SC flag of movement
+"RTN","IBCSC4A",56,0)
+ ;    input movement node
+"RTN","IBCSC4A",57,0)
+ ;    output flag as to whether sc or not
+"RTN","IBCSC4A",58,0)
+ I '$D(M) Q ""
+"RTN","IBCSC4A",59,0)
+ I M="" Q ""
+"RTN","IBCSC4A",60,0)
+ Q $S($P(M,"^",18)=1:"<SC>",1:"<NSC>")
+"RTN","IBCSC4A",61,0)
+ ;
+"RTN","IBCSC4A",62,0)
+PTFPS(DFN,IBPTF,IBFDT,IBTDT) ; this will return a list of professional
+"RTN","IBCSC4A",63,0)
+ ; services from the ptf records.  If no date range specified, then
+"RTN","IBCSC4A",64,0)
+ ; it will return all services for that ptf entry.
+"RTN","IBCSC4A",65,0)
+ ;  return:  ^utility($j,"IB",count for event,count for procedures) =
+"RTN","IBCSC4A",66,0)
+ ;           pices: 1 = procedure
+"RTN","IBCSC4A",67,0)
+ ;                  2 = date (only if new date)
+"RTN","IBCSC4A",68,0)
+ ;                  3 = sequentual grouping letter (only if new date)  
+"RTN","IBCSC4A",69,0)
+ ;                  4 = "+" to flag as CPT 4 procedure
+"RTN","IBCSC4A",70,0)
+ ;                  5 = if exemption applicable, info for that
+"RTN","IBCSC4A",71,0)
+ ;                6-9 = assoc dx in order
+"RTN","IBCSC4A",72,0)
+ ;                 10 = quantity
+"RTN","IBCSC4A",73,0)
+ ;              11-12 = modifiers
+"RTN","IBCSC4A",74,0)
+ ;                 13 = provider
+"RTN","IBCSC4A",75,0)
+ ;                 14 = location
+"RTN","IBCSC4A",76,0)
+ ;
+"RTN","IBCSC4A",77,0)
+ ; the exemption information returned will be first evaluated at the
+"RTN","IBCSC4A",78,0)
+ ; dx level and if nothing there to exempt, it will be at the procedure
+"RTN","IBCSC4A",79,0)
+ ; level.
+"RTN","IBCSC4A",80,0)
+ ;
+"RTN","IBCSC4A",81,0)
+ N IBX,IBY,IBDT,IBXX,IBP,IBC,IBRMARK,IBDX,IBDXX,IBPP,IB46
+"RTN","IBCSC4A",82,0)
+ K ^TMP("PTF",$J),^TMP("IBPTFPS",$J)
+"RTN","IBCSC4A",83,0)
+ S IBFDT=$G(IBFDT),IBTDT=$G(IBTDT,9999999)_".99999"
+"RTN","IBCSC4A",84,0)
+ ;
+"RTN","IBCSC4A",85,0)
+ ; get starting place for ^utility global
+"RTN","IBCSC4A",86,0)
+ S IBC=+$O(^UTILITY($J,"IB",":"),-1)
+"RTN","IBCSC4A",87,0)
+ ;
+"RTN","IBCSC4A",88,0)
+ D PTFINFOR^DGAPI(DFN,IBPTF) I '$D(^TMP("PTF",$J)) G PTFPSQ
+"RTN","IBCSC4A",89,0)
+ ;
+"RTN","IBCSC4A",90,0)
+ S IBX=0 F  S IBX=$O(^TMP("PTF",$J,IBX)) Q:IBX<1  S IBY=^TMP("PTF",$J,IBX) I $S(IBFDT<+IBY&(IBTDT>+IBY):1,1:0) S ^TMP("IBPTFPS",$J,+IBY)=""
+"RTN","IBCSC4A",91,0)
+ I '$D(^TMP("IBPTFPS",$J)) G PTFPSQ
+"RTN","IBCSC4A",92,0)
+ ;
+"RTN","IBCSC4A",93,0)
+ K ^TMP("PTF",$J)
+"RTN","IBCSC4A",94,0)
+ D ICDINFO^DGAPI(DFN,IBPTF) ;get the dx's for the ptf
+"RTN","IBCSC4A",95,0)
+ ;
+"RTN","IBCSC4A",96,0)
+ S IBDT=0 F  S:'IBC!($D(^UTILITY($J,"IB",IBC))) IBC=IBC+1 S IBDT=$O(^TMP("IBPTFPS",$J,IBDT)) Q:IBDT<1  D
+"RTN","IBCSC4A",97,0)
+ . ; ibc=31 to skip '^'
+"RTN","IBCSC4A",98,0)
+ . S IBD=0 S:IBC=30 IBC=31
+"RTN","IBCSC4A",99,0)
+ . D CPTINFO^DGAPI(DFN,,IBDT) I '$D(^TMP("PTF",$J,46)) Q
+"RTN","IBCSC4A",100,0)
+ . S IB46=$P($G(^TMP("PTF",$J,46,0)),"^",2)_"^"_$P($G(^(0)),"^",4)
+"RTN","IBCSC4A",101,0)
+ . S IBX=0 F  S IBX=$O(^TMP("PTF",$J,46,IBX)) Q:IBX<1  S IBY=^TMP("PTF",$J,46,IBX) D
+"RTN","IBCSC4A",102,0)
+ .. S IBRMARK=""
+"RTN","IBCSC4A",103,0)
+ .. F IBP=5:1:8,16:1:19 S IBDX=$P(IBY,"^",IBP),IBDXX=0 F  S IBDXX=$O(^TMP("PTF",$J,46.1,IBDXX)) Q:IBDXX<1!(IBRMARK)  I $P(^TMP("PTF",$J,46.1,IBDXX),"^",2)=IBDX D
+"RTN","IBCSC4A",104,0)
+ ... F IBPP=3:1:10 I $P(^TMP("PTF",$J,46.1,IBDXX),"^",IBPP) S IBRMARK=IBPP Q
+"RTN","IBCSC4A",105,0)
+ .. S IBD=IBD+1,^UTILITY($J,"IB",IBC,IBD)=$P(IBY,"^",2)_"^"_$S(IBD=1:$P(IBDT,".")_"^"_$C(IBC+64)_"^+^",1:"^^^")_$S(IBRMARK:$P($T(EXEMPT+(IBRMARK-2)),";",3),1:"")_"^"_$P(IBY,"^",5,8)_"^"_$P(IBY,"^",15)_"^"_$P(IBY,"^",3,4)_"^"_IB46
+"RTN","IBCSC4A",106,0)
+ . S IBD=0
+"RTN","IBCSC4A",107,0)
+ . K ^TMP("PTF",$J,46)
+"RTN","IBCSC4A",108,0)
+ ;
+"RTN","IBCSC4A",109,0)
+ ;
+"RTN","IBCSC4A",110,0)
+PTFPSQ K ^TMP("PTF",$J),^TMP("IBPTFPS",$J),^TMP("CPT",$J)
+"RTN","IBCSC4A",111,0)
+ Q
+"RTN","IBCSC4A",112,0)
+ ;
+"RTN","IBCSC4A",113,0)
+EXEMPT ; exemption reasons
+"RTN","IBCSC4A",114,0)
+ ;;SC
+"RTN","IBCSC4A",115,0)
+ ;;AO
+"RTN","IBCSC4A",116,0)
+ ;;IR
+"RTN","IBCSC4A",117,0)
+ ;;SW
+"RTN","IBCSC4A",118,0)
+ ;;MT
+"RTN","IBCSC4A",119,0)
+ ;;HC
+"RTN","IBCSC4A",120,0)
+ ;;CV
+"RTN","IBCSC4A",121,0)
+ ;;SH
+"RTN","IBCSC4A",122,0)
+ ;
+"RTN","IBCSC4B")
+0^2^B36503632^B35934384
+"RTN","IBCSC4B",1,0)
+IBCSC4B ;ALB/MJB - MCCR PTF SCREEN (CONT.) ;24 FEB 89  9:52
+"RTN","IBCSC4B",2,0)
+ ;;2.0;INTEGRATED BILLING;**210,228,304,479**;21-MAR-94;Build 29
+"RTN","IBCSC4B",3,0)
+ ;;Per VHA Directive 10-93-142, this routine should not be modified.
+"RTN","IBCSC4B",4,0)
+ ;
+"RTN","IBCSC4B",5,0)
+ ;MAP TO DGCRSC4B
+"RTN","IBCSC4B",6,0)
+ ;
+"RTN","IBCSC4B",7,0)
+DX Q:$S(IBPTF="":1,'$D(^DGPT(IBPTF,0)):1,1:0)  S IBUC="UNSPECIFIED CODE",IBNC="NO DX CODES ENTERED FOR THIS DATE",IBDXC=0,X="DIAGNOSIS SCREEN" K IBWE,IBWO
+"RTN","IBCSC4B",8,0)
+ W @IOF,?(40-($L(X)\2)),X,! F I=1:1:79 W "="
+"RTN","IBCSC4B",9,0)
+ S IBDIA="" I '$D(^UTILITY($J,"IBDX")) W !!," * No DIAGNOSIS CODES in PTF record for this episode of care." D SELD^IBCSC4C G Q
+"RTN","IBCSC4B",10,0)
+ F I=1:1:13 S IBDIA=$O(^UTILITY($J,"IBDX",IBDIA)) Q:IBDIA=""  D ODD^IBCSC4A S IBDIA=$O(^UTILITY($J,"IBDX",IBDIA)) D:IBDIA]"" EVEN^IBCSC4A D WR D:$Y+6>IOSL ASK Q:IBDIA=""
+"RTN","IBCSC4B",11,0)
+ S IBDIA="" ; D SELD^IBCSC4C
+"RTN","IBCSC4B",12,0)
+ G Q
+"RTN","IBCSC4B",13,0)
+ ;
+"RTN","IBCSC4B",14,0)
+WR N IBDATE
+"RTN","IBCSC4B",15,0)
+ S IBDATE=$$PTFDATE^IBACSV(+$G(IBPTF)) ; Date to be used as a "date of service"
+"RTN","IBCSC4B",16,0)
+ I '$D(IBWE(0)) F B=0:1:5 S IBWE(B)=""
+"RTN","IBCSC4B",17,0)
+ W !!,"Move: " S Y=$P(IBWO(0),U,2) X ^DD("DD") W $S($P(IBWO(0),U,4)]"":$P(IBWO(0),U,4)_" ",1:""),Y," " W:$P(IBWO(0),"^",3)]"" $E($P(^DIC(42.4,$P(IBWO(0),U,3),0),U),1,12) W " ",$P(IBWO(0),"^",5)
+"RTN","IBCSC4B",18,0)
+ I IBDIA]"",IBWE(0)]"" W ?43,"Move: " S Y=$P(IBWE(0),U,2) X ^DD("DD") W $S($P(IBWE(0),U,4)]"":$P(IBWE(0),U,4)_" ",1:""),Y," " W:$P(IBWE(0),"^",3)]"" $E($P(^DIC(42.4,$P(IBWE(0),U,3),0),U),1,12) W " ",$P(IBWE(0),"^",5)
+"RTN","IBCSC4B",19,0)
+ S IBAO=$P(IBWO(0),U,1) I IBAO']"" W:'$D(IBDXY) !,"* ",IBNC S IBDXY=1 F K=1:1:5 S IBWO(K)="" I IBDIA]"" W:K>1 ! D WE Q:IBWO(K)=""&(IBWE(K)="")
+"RTN","IBCSC4B",20,0)
+ I IBAO]"" F K=1:1:5 Q:IBWO(K)=""&(IBWE(K)="")  D
+"RTN","IBCSC4B",21,0)
+ . W !
+"RTN","IBCSC4B",22,0)
+ . I IBWO(K) S X=$S($P(IBWO(0),"^",3)["+":$$CPT^IBACSV(+IBWO(K),IBDATE),1:$$ICD9^IBACSV(+IBWO(K),IBDATE)) D
+"RTN","IBCSC4B",23,0)
+ .. W IBAO,K," - ",$S(X]"":$J($P(X,U),6)_"  "_$E($S($P(IBWO(0),"^",3)["+":$P(X,U,2),1:$P(X,U,3)),1,24),1:IBUC)
+"RTN","IBCSC4B",24,0)
+ . I IBDIA'="" D WE
+"RTN","IBCSC4B",25,0)
+ Q
+"RTN","IBCSC4B",26,0)
+WE S IBAE=$P(IBWE(0),U)
+"RTN","IBCSC4B",27,0)
+ I IBAE="",'$D(IBDXX),IBWE(0)]"" W ?43,"* ",IBNC S (IBWE(1),IBWE(2),IBWE(3),IBWE(4),IBWE(5))="",IBDXX=1
+"RTN","IBCSC4B",28,0)
+ I IBAE]"",IBWE(K)]"" S X=$S($P(IBWE(0),"^",3)["+":$$CPT^IBACSV(+IBWE(K),$G(IBDATE)),1:$$ICD9^IBACSV(+IBWE(K),$G(IBDATE))) D
+"RTN","IBCSC4B",29,0)
+ . W ?43,IBAE,K," - ",$S(X]"":$J($P(X,U),6)_"  "_$E($S($P(IBWE(0),"^",3)["+":$P(X,U,2),1:$P(X,U,3)),1,24),1:IBUC)
+"RTN","IBCSC4B",30,0)
+ Q
+"RTN","IBCSC4B",31,0)
+ASK W !!,"<RETURN> to see more ",$S($D(IBP):"procedure",1:"diagnosis")," codes or '^' to QUIT: " R A:DTIME I '$T!(A["^") S:$D(IBDIA) IBDIA="" S:$D(IBP) IBP="" Q
+"RTN","IBCSC4B",32,0)
+ I A["?" W !!?4,"Enter <RETURN> to view more ",$S($D(IBP):"operation/procedure",1:"movement dates and diagnosis")," codes",!?4,"or '^' to stop the display." G ASK
+"RTN","IBCSC4B",33,0)
+ S A=$S($D(IBP):"OPERATION/PROCEDURE",1:"DIAGNOSIS")_" SCREEN (CONT.)" W !,@IOF,?(40-($L(A)\2)),A,! F S=1:1:79 W "="
+"RTN","IBCSC4B",34,0)
+ Q
+"RTN","IBCSC4B",35,0)
+PRO Q:'$D(IBPTF)  D TYPE S IBUC="UNSPECIFIED CODE",IBNC="NO PRO CODES ENTERED FOR THIS DATE",IBOPC=0,X="OPERATION/PROCEDURE SCREEN",IBNOR="Non-O/R Procedure Date: ",IBSD="Surgery Date: ",IBPRO="Prof Svc Date: "
+"RTN","IBCSC4B",36,0)
+ K IBWE,IBWO
+"RTN","IBCSC4B",37,0)
+ W @IOF,?(40-($L(X)\2)),X,! S X="",$P(X,"=",1,79)="" W X
+"RTN","IBCSC4B",38,0)
+ S IBP="" I '$D(^UTILITY($J,"IB")) W !!," * No PROCEDURE CODES in PTF record for this episode of care." G Q
+"RTN","IBCSC4B",39,0)
+ F I=1:1:13 S IBP=$O(^UTILITY($J,"IB",IBP)) Q:IBP=""  D ODDP^IBCSC4A S IBP=$O(^UTILITY($J,"IB",IBP)) D:IBP]"" EVENP^IBCSC4A D WRP D:$Y+6>IOSL ASK Q:IBP=""
+"RTN","IBCSC4B",40,0)
+ S IBP=""
+"RTN","IBCSC4B",41,0)
+Q K IB3,IB4,IB5,IB6,IB7,IB8,IB9,IBAE,IBAO,IBCT,IBDIA,IBDP,IBDX,IBDXC,IBDXX,IBDXY,IBI,IBNC,IBNOR,IBP,IBPY,IBOP,IBOPC,IBOPX,IBOPY,IBPP,IBPX,IBSD,IBSP,IBWE,IBWO,IBPRO,IBPROT
+"RTN","IBCSC4B",42,0)
+ K %DT,A,B,DIC,F,I,J,K,M,S,X,Y
+"RTN","IBCSC4B",43,0)
+ Q
+"RTN","IBCSC4B",44,0)
+WRP N IBDATE
+"RTN","IBCSC4B",45,0)
+ S IBDATE=$$PTFDATE^IBACSV(+$G(IBPTF)) ; Date to be used as a "date of service"
+"RTN","IBCSC4B",46,0)
+ I '$D(IBWE(0)) F B=0:1:5 S IBWE(B)=""
+"RTN","IBCSC4B",47,0)
+ W !!,$S($P(IBWO(0),U,3)["*":IBNOR,$P(IBWO(0),U,3)["+":IBPRO,1:IBSD) S Y=$P(IBWO(0),U,2) X ^DD("DD") W Y I IBP]"" W ?43,$S($P(IBWE(0),U,3)["*":IBNOR,$P(IBWO(0),U,3)["+":IBPRO,1:IBSD) S Y=$P(IBWE(0),U,2) X ^DD("DD") W Y
+"RTN","IBCSC4B",48,0)
+ S IBAO=$P(IBWO(0),U,1) I IBAO']"" W:'$D(IBOPY) !,"* ",IBNC S IBOPY=1 F K=1:1:5 S IBWO(K)="" I IBP]"" W:K>1 ! D WEP
+"RTN","IBCSC4B",49,0)
+ I IBAO]"" F K=1:1:5 Q:IBWO(K)']""&(IBWE(K)']"")  D
+"RTN","IBCSC4B",50,0)
+ . S X=$S($P(IBWO(0),U,3)["+":$$CPT^IBACSV(+IBWO(K),IBDATE),1:$$ICD0^IBACSV(+IBWO(K),IBDATE)) S:$P(IBWO(0),U,3)["+"&($L($G(^VA(200,+$P(IBWO(K),U,$S(K=1:10,1:13)),0)))) $P(X,U,2)="PROV-"_$P(^(0),U) D
+"RTN","IBCSC4B",51,0)
+ .. W:IBWO(K)]"" !,IBAO,K,"-",$S(X]"":$J($P(X,U,1),5)_$S($L($P(IBWO(K),"^",$S(K=1:2,1:5))):"("_$P(IBWO(K),"^",$S(K=1:2,1:5))_")",1:"    ")_$E($S($P(IBWO(0),U,3)["+":$P(X,U,2),1:$P(X,U,4)),1,24),1:IBUC) W:IBWO(K)']"" !,"" D:IBP]"" WEP
+"RTN","IBCSC4B",52,0)
+ Q
+"RTN","IBCSC4B",53,0)
+WEP S IBAE=$P(IBWE(0),U,1) I IBAE']"",'$D(IBOPX) W ?43,"* ",IBNC S (IBWE(1),IBWE(2),IBWE(3),IBWE(4),IBWE(5))="",IBOPX=1
+"RTN","IBCSC4B",54,0)
+ I IBAE]"",IBWE(K)]"" S X=$S($P(IBWE(0),"^",3)["+":$$CPT^IBACSV(+IBWE(K),$G(IBDATE)),1:$$ICD0^IBACSV(+IBWE(K),$G(IBDATE))) S:$P(IBWE(0),U,3)["+"&($L($G(^VA(200,+$P(IBWE(K),U,$S(K=1:10,1:13)),0)))) $P(X,U,2)="PROV-"_$P(^(0),U) D
+"RTN","IBCSC4B",55,0)
+ . W ?43,IBAE,K,"-",$S(X]"":$J($P(X,U,1),5)_$S($L($P(IBWE(K),"^",$S(K=1:2,1:5))):"("_$P(IBWE(K),"^",$S(K=1:2,1:5))_")",1:"    ")_$E($S($P(IBWE(0),"^",3)["+":$P(X,U,2),1:$P(X,U,4)),1,24),1:IBUC)
+"RTN","IBCSC4B",56,0)
+ Q
+"RTN","IBCSC4B",57,0)
+ ;
+"RTN","IBCSC4B",58,0)
+TYPE ; cleans up the ^utility based on the type of coding
+"RTN","IBCSC4B",59,0)
+ ; save in ^tmp
+"RTN","IBCSC4B",60,0)
+ N IBA,IBB,IBC,IBD,IBE
+"RTN","IBCSC4B",61,0)
+ I '$D(^TMP("IBTYPE",$J)) M ^TMP("IBTYPE",$J)=^UTILITY($J,"IB")
+"RTN","IBCSC4B",62,0)
+ K ^UTILITY($J,"IB")
+"RTN","IBCSC4B",63,0)
+ S (IBA,IBB)=0 F  S IBA=$O(^TMP("IBTYPE",$J,IBA)) Q:IBA<1  D
+"RTN","IBCSC4B",64,0)
+ . I $P($G(^TMP("IBTYPE",$J,IBA,1)),"^",4)["+",IBPROT=5 D  Q
+"RTN","IBCSC4B",65,0)
+ .. ; ibb=31 to skip '^'
+"RTN","IBCSC4B",66,0)
+ .. S IBB=IBB+1,(IBC,IBD)=0 S:IBB=30 IBB=31 F  S IBC=$O(^TMP("IBTYPE",$J,IBA,IBC)) Q:IBC<1  S IBE=^TMP("IBTYPE",$J,IBA,IBC),IBD=IBD+1,^UTILITY($J,"IB",IBB,IBD)=$P(IBE,"^",1,2)_"^"_$C(64+IBB)_"^"_$P(IBE,"^",4,14)
+"RTN","IBCSC4B",67,0)
+ . I $P($G(^TMP("IBTYPE",$J,IBA,1)),"^",4)["+" Q
+"RTN","IBCSC4B",68,0)
+ . I IBPROT'=5 S IBB=IBB+1,(IBC,IBD)=0 S:IBB=30 IBB=31 F  S IBC=$O(^TMP("IBTYPE",$J,IBA,IBC)) Q:IBC<1  D
+"RTN","IBCSC4B",69,0)
+ .. S IBE=^TMP("IBTYPE",$J,IBA,IBC),IBD=IBD+1,^UTILITY($J,"IB",IBB,IBD)=$P(IBE,"^",1)_$S(IBD=1:"^"_$P(IBE,"^",2)_"^"_$C(64+IBB)_$S($L($P(IBE,"^",4)):"^"_$P(IBE,"^",4),1:""),1:"")
+"RTN","IBCSC4B",70,0)
+ Q
+"RTN","IBCSC4E")
+0^3^B45259248^B44983116
+"RTN","IBCSC4E",1,0)
+IBCSC4E ;ALB/ARH - ADD/ENTER PTF/OE DIAGNOSIS ;3/2/94
+"RTN","IBCSC4E",2,0)
+ ;;2.0;INTEGRATED BILLING;**8,106,121,124,210,266,403,479**;21-MAR-94;Build 29
+"RTN","IBCSC4E",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBCSC4E",4,0)
+ ;
+"RTN","IBCSC4E",5,0)
+DXINPT(IBIFN) ; display and ask user to select PTF diagnosis
+"RTN","IBCSC4E",6,0)
+ N IBLIST,IBPTFDX
+"RTN","IBCSC4E",7,0)
+ D PTFDSP(IBIFN),PTFASK I $D(IBLIST) D PTFADD(IBIFN,IBLIST) S POAEDIT=1
+"RTN","IBCSC4E",8,0)
+ ; get POA indicators from QuadraMed for UB-04 inpatient claims
+"RTN","IBCSC4E",9,0)
+ I $$FT^IBCEF(IBIFN)=3 D SETPOA^IBCSC4F(IBIFN)
+"RTN","IBCSC4E",10,0)
+ K ^TMP($J,"IBDX")
+"RTN","IBCSC4E",11,0)
+ Q
+"RTN","IBCSC4E",12,0)
+ ;
+"RTN","IBCSC4E",13,0)
+PTFASK ;
+"RTN","IBCSC4E",14,0)
+ D PTF Q:$G(IBPTFDX)'>0  N X,Y,DIR,DIRUT K IBLIST W !
+"RTN","IBCSC4E",15,0)
+PTFASK1 S DIR("A")="SELECT DIAGNOSIS FROM THE PTF RECORD TO INCLUDE ON THE BILL"
+"RTN","IBCSC4E",16,0)
+ S DIR("?",1)="Enter the alphanumeric preceding the diagnosis you want added to the bill.",DIR("?",2)=""
+"RTN","IBCSC4E",17,0)
+ S DIR("?",3)="To enter more than one separate them by a comma or within a movement use a"
+"RTN","IBCSC4E",18,0)
+ S DIR("?",4)="range separated by a dash.  * indicates the diagnosis is already on the bill."
+"RTN","IBCSC4E",19,0)
+ S DIR("?")="The print order for each diagnosis will be determined by the order in this list."
+"RTN","IBCSC4E",20,0)
+ S DIR(0)="FO^^D ITPTF^IBCSC4E" D ^DIR K DIR Q:$D(DIRUT)!(Y="")
+"RTN","IBCSC4E",21,0)
+ ;
+"RTN","IBCSC4E",22,0)
+ S X=Y D ITPTF S IBLIST=X,DIR("A",1)="YOU HAVE SELECTED "_X_" TO BE ADDED TO THE BILL",DIR("A")="IS THIS CORRECT",DIR("B")="YES"
+"RTN","IBCSC4E",23,0)
+ S DIR(0)="YO" D ^DIR K DIR I $D(DIRUT) K IBLIST Q
+"RTN","IBCSC4E",24,0)
+ I 'Y K IBLIST G PTFASK1
+"RTN","IBCSC4E",25,0)
+ Q
+"RTN","IBCSC4E",26,0)
+ ;
+"RTN","IBCSC4E",27,0)
+PTF ;
+"RTN","IBCSC4E",28,0)
+ Q:'$D(^TMP($J,"IBDX","S"))  N IBX,IBY,IBZ,IBORD,IBNUM K IBPTFDX S IBORD="",IBPTFDX=0
+"RTN","IBCSC4E",29,0)
+ S IBX="" F  S IBX=$O(^TMP($J,"IBDX","S",IBX)) Q:IBX=""  D
+"RTN","IBCSC4E",30,0)
+ . S IBZ=+$G(^TMP($J,"IBDX","S",IBX)) Q:'IBZ
+"RTN","IBCSC4E",31,0)
+ . S IBORD=$E(IBX) Q:IBORD'?1A  S IBNUM=+$E(IBX,2,999) Q:IBNUM'>0
+"RTN","IBCSC4E",32,0)
+ . I IBNUM>$G(IBPTFDX(IBORD)) S IBPTFDX(IBORD)=IBNUM
+"RTN","IBCSC4E",33,0)
+ . I '$D(^IBA(362.3,"AIFN"_+$G(IBIFN),+IBZ)) S IBPTFDX=IBPTFDX+1
+"RTN","IBCSC4E",34,0)
+ Q
+"RTN","IBCSC4E",35,0)
+ ;
+"RTN","IBCSC4E",36,0)
+ITPTF ;
+"RTN","IBCSC4E",37,0)
+ N IBI,IB1,IB2,IB3,IBJ,IBX,IBY,IBZ,IBA
+"RTN","IBCSC4E",38,0)
+ S IBA="",IBX=X
+"RTN","IBCSC4E",39,0)
+ F IBI=1:1 S IBY=$P(IBX,",",IBI) Q:IBY=""  D  Q:'$D(X)  S X=IBA
+"RTN","IBCSC4E",40,0)
+ . I IBY["-" S IBZ=$P(IBY,"-",1),IB2=$P(IBY,"-",2) D  Q:'$D(X)
+"RTN","IBCSC4E",41,0)
+ .. I $E(IBZ,1)'=$E(IB2,1) K X Q
+"RTN","IBCSC4E",42,0)
+ .. S IBY="",IB1=$E(IBZ,2,999),IB2=$E(IB2,2,999),IBZ=$E(IBZ,1) I +IB2'>+IB1 K X Q
+"RTN","IBCSC4E",43,0)
+ .. F IBJ=IB1:1:IB2 S IBY=IBY_IBZ_IBJ_"-" I IBJ>$G(IBPTFDX(IBZ)) Q
+"RTN","IBCSC4E",44,0)
+ . F IBJ=1:1 S IB1=$P(IBY,"-",IBJ) Q:IB1=""  S IB2=$E(IB1,1),IB3=$E(IB1,2,99) D  Q:'$D(X)
+"RTN","IBCSC4E",45,0)
+ .. I IB1'?1U1.3N K X Q
+"RTN","IBCSC4E",46,0)
+ .. I IB2=""!'IB3 K X Q
+"RTN","IBCSC4E",47,0)
+ .. I '$D(IBPTFDX(IB2)) K X Q
+"RTN","IBCSC4E",48,0)
+ .. I IB3>+$G(IBPTFDX(IB2)) K X Q
+"RTN","IBCSC4E",49,0)
+ .. S IBA=IBA_IB2_IB3_","
+"RTN","IBCSC4E",50,0)
+ Q
+"RTN","IBCSC4E",51,0)
+ ;
+"RTN","IBCSC4E",52,0)
+PTFADD(IBIFN,LIST) ;
+"RTN","IBCSC4E",53,0)
+ Q:'$D(^TMP($J,"IBDX","S"))!($G(LIST)="")!('$G(IBIFN))  N IBX,IBY,IBI,IBCD,IBDX
+"RTN","IBCSC4E",54,0)
+ F IBI=1:1 S IBCD=$P(LIST,",",IBI) Q:IBCD=""  D
+"RTN","IBCSC4E",55,0)
+ . S IBDX=+$G(^TMP($J,"IBDX","S",IBCD)) Q:'IBDX
+"RTN","IBCSC4E",56,0)
+ . I ($$ICD9^IBACSV(+IBDX)'=""),'$D(^IBA(362.3,"AIFN"_IBIFN,+IBDX)) I $$ADD^IBCSC4D(+IBDX,IBIFN) W "."
+"RTN","IBCSC4E",57,0)
+ Q
+"RTN","IBCSC4E",58,0)
+ ;
+"RTN","IBCSC4E",59,0)
+PTFDSP(IBIFN) ; display PTF diagnosis within date range of the bill
+"RTN","IBCSC4E",60,0)
+ ; Output:  ^TMP($J,"IBDX") as defined by PTFDXDT^IBCSC4F   and
+"RTN","IBCSC4E",61,0)
+ ;          ^TMP($J,"IBDX","S",x) = DIAGNOSIS w/x=selection identifer for a dx
+"RTN","IBCSC4E",62,0)
+ N IB0,IBPTF,IBTF,IBU,IBFDT,IBTDT,IBDSCH,IBW,IBC,IBA,IBN,IBCNT,IBMCNT,IBMDT,IBMV,IBDT,IBLN,IBLABEL,IBDXCNT,IBI
+"RTN","IBCSC4E",63,0)
+ N IBDX,IBID,IBON,IBY,IBMDRG,X,IBDATE,IEN362,POA
+"RTN","IBCSC4E",64,0)
+ ;
+"RTN","IBCSC4E",65,0)
+ K ^TMP($J,"IBDX") S IBW=41
+"RTN","IBCSC4E",66,0)
+ ;
+"RTN","IBCSC4E",67,0)
+ S IBDATE=$$BDATE^IBACSV(IBIFN) ; The Event Date of the bill
+"RTN","IBCSC4E",68,0)
+ S IB0=$G(^DGCR(399,+$G(IBIFN),0)),IBPTF=$P(IB0,U,8),IBTF=$P(IB0,U,6) Q:'$G(IBPTF)
+"RTN","IBCSC4E",69,0)
+ S IBU=$G(^DGCR(399,+IBIFN,"U")),IBFDT=+IBU,IBTDT=$P(IBU,U,2) Q:$P(IB0,U,5)>2
+"RTN","IBCSC4E",70,0)
+ ;
+"RTN","IBCSC4E",71,0)
+ D PTFDXDT^IBCSC4F(IBPTF,IBFDT,IBTDT,IBTF) S IBDSCH=$P(+$P($G(^TMP($J,"IBDX","M")),U,3),".")
+"RTN","IBCSC4E",72,0)
+ ; ibmcnt=31 to skip '^'
+"RTN","IBCSC4E",73,0)
+ F IBN="M","D" S (IBCNT,IBMCNT,IBMDT)="" F  S IBMDT=$O(^TMP($J,"IBDX",IBN,IBMDT)) Q:'IBMDT  S IBMCNT=IBMCNT+1 S:IBMCNT=30 IBMCNT=31 D
+"RTN","IBCSC4E",74,0)
+ . S IBMV=$G(^TMP($J,"IBDX",IBN,IBMDT)),IBDT=+IBMV,IBMDRG=$P(IBMV,U,4)
+"RTN","IBCSC4E",75,0)
+ . I IBN="M" S IBC=0,IBLABEL="Move",IBA=$C(64+IBMCNT) I 'IBDT S IBDT="D/C"
+"RTN","IBCSC4E",76,0)
+ . I IBN="D" S IBC=41,IBLABEL="Discharge",IBA="X" I 'IBDT S IBDT="NOT DISCHARGED"
+"RTN","IBCSC4E",77,0)
+ . ;
+"RTN","IBCSC4E",78,0)
+ . S IBLN=IBLABEL_": "_$S(+IBDT:$P($$FMTE^XLFDT(+IBDT,2),"@",1),1:IBDT)
+"RTN","IBCSC4E",79,0)
+ . S IBLN=IBLN_" "_$E($P($G(^DIC(42.4,+$P(IBMV,U,2),0)),U,1),1,12)
+"RTN","IBCSC4E",80,0)
+ . S IBLN=IBLN_" "_$J("",(29-$L(IBLN)))_$S(+$P(IBMV,U,3):"<SC>",1:"<NSC>")
+"RTN","IBCSC4E",81,0)
+ . ;
+"RTN","IBCSC4E",82,0)
+ . S IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW)
+"RTN","IBCSC4E",83,0)
+ . S IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBC)_IBLN
+"RTN","IBCSC4E",84,0)
+ . ;
+"RTN","IBCSC4E",85,0)
+ . I '$O(^TMP($J,"IBDX",IBN,IBMDT,"")) S IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBC)_"  No DX Codes Entered For "_IBLABEL
+"RTN","IBCSC4E",86,0)
+ . ;
+"RTN","IBCSC4E",87,0)
+ . S (IBDXCNT,IBI)="" F  S IBI=$O(^TMP($J,"IBDX",IBN,IBMDT,IBI)) Q:'IBI  D
+"RTN","IBCSC4E",88,0)
+ .. S IBDX=^TMP($J,"IBDX",IBN,IBMDT,IBI),IBY=$$ICD9^IBACSV(+IBDX,IBDATE)
+"RTN","IBCSC4E",89,0)
+ .. S IEN362=$O(^IBA(362.3,"AIFN"_IBIFN,+IBDX,""))
+"RTN","IBCSC4E",90,0)
+ .. S IBDXCNT=IBDXCNT+1,IBID=IBA_IBDXCNT,IBON=$S(IEN362:"*",1:" ")
+"RTN","IBCSC4E",91,0)
+ .. S POA="" S:$P(IB0,U,19)=3 POA=$$GETPOA^IBCEU4(IEN362,1) S:POA'="" POA=" ("_POA_") "
+"RTN","IBCSC4E",92,0)
+ .. S IBLN=" "_IBON_IBID_" - "_$P(IBY,U,1)_POA_$J("",(7-$L($P(IBY,U,1))))_$E($P(IBY,U,3),1,23)
+"RTN","IBCSC4E",93,0)
+ .. S IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBC)_IBLN
+"RTN","IBCSC4E",94,0)
+ .. S ^TMP($J,"IBDX","S",IBID)=IBDX
+"RTN","IBCSC4E",95,0)
+ . ;
+"RTN","IBCSC4E",96,0)
+ . I 'IBMDRG,IBN="M" S IBLN="   *** No DRG for Charges ***",IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBC)_IBLN
+"RTN","IBCSC4E",97,0)
+ . I IBMDRG S IBLN=$P($$DRG^IBACSV(+IBMDRG,IBDATE),U,1)_" - "_$E($$DRGTD^IBACSV(+IBMDRG,IBDATE),1,30),IBCNT=IBCNT+1,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBC)_IBLN
+"RTN","IBCSC4E",98,0)
+ ;
+"RTN","IBCSC4E",99,0)
+ I IBDSCH,IBTDT<IBDSCH S IBCNT=2,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBW)_"Discharge: "_$$FMTE^XLFDT(+$P(IBDSCH,"."),2)_" Not In Bill Range"
+"RTN","IBCSC4E",100,0)
+ I 'IBDSCH,IBTDT<DT S IBCNT=2,X(IBCNT)=$G(X(IBCNT))_$J("",IBW),X(IBCNT)=$E(X(IBCNT),1,IBW)_"Discharge:  NOT DISCHARGED"
+"RTN","IBCSC4E",101,0)
+ ;
+"RTN","IBCSC4E",102,0)
+ W @IOF,"=============================== Diagnosis Screen ==============================="
+"RTN","IBCSC4E",103,0)
+ S IBI="" F  S IBI=$O(X(IBI)) Q:'IBI  W !,$E(X(IBI),1,80)
+"RTN","IBCSC4E",104,0)
+ Q
+"RTN","IBCSC4E",105,0)
+ ;
+"RTN","IBCSC4E",106,0)
+DELALL(IBIFN) ; ask/delete all diagnosis on a bill, including all CPT associated Diagnosis
+"RTN","IBCSC4E",107,0)
+ Q:'$O(^IBA(362.3,"AIFN"_+$G(IBIFN),0))
+"RTN","IBCSC4E",108,0)
+ ;
+"RTN","IBCSC4E",109,0)
+ N DIR,DIRUT,DUOUT,DTOUT,X,Y,DIK W !
+"RTN","IBCSC4E",110,0)
+ S DIR("?")="Enter Yes to delete all Diagnosis currently defined for a bill, including any CPT Associated Diagnosis.",DIR("??")="^D DISP1^IBCSC4D("_IBIFN_")"
+"RTN","IBCSC4E",111,0)
+ S DIR("A")="DELETE ALL DIAGNOSIS ON BILL, INCLUDING CPT ASSOCIATED DIAGNOSIS"
+"RTN","IBCSC4E",112,0)
+ S DIR(0)="YO",DIR("B")="NO" D ^DIR K DIR Q:Y'=1
+"RTN","IBCSC4E",113,0)
+ ;
+"RTN","IBCSC4E",114,0)
+ N IBPROC,IBPROCD,IBXRF,IBDX,IBDXI,DIE,DIC,DA,DR
+"RTN","IBCSC4E",115,0)
+ S IBPROC=0 F  S IBPROC=$O(^DGCR(399,IBIFN,"CP",IBPROC)) Q:'IBPROC  D
+"RTN","IBCSC4E",116,0)
+ . S IBPROCD=$G(^DGCR(399,IBIFN,"CP",IBPROC,0)) I "^^^"[$P(IBPROCD,U,11,14) Q
+"RTN","IBCSC4E",117,0)
+ . S DIE="^DGCR(399,"_IBIFN_",""CP"",",DA=IBPROC,DA(1)=IBIFN,DR="10///@;11///@;12///@;13///@" D ^DIE K DA,DIE,DR
+"RTN","IBCSC4E",118,0)
+ ;
+"RTN","IBCSC4E",119,0)
+ S IBXRF="AIFN"_+IBIFN
+"RTN","IBCSC4E",120,0)
+ S IBDX=0 F  S IBDX=$O(^IBA(362.3,IBXRF,IBDX)) Q:'IBDX  D
+"RTN","IBCSC4E",121,0)
+ . S IBDXI=0 F  S IBDXI=$O(^IBA(362.3,IBXRF,IBDX,IBDXI)) Q:'IBDXI  D
+"RTN","IBCSC4E",122,0)
+ .. S DIK="^IBA(362.3,",DA=IBDXI D ^DIK K DIK,DA
+"RTN","IBCSC4E",123,0)
+ W " .... deleted"
+"RTN","IBCSC4E",124,0)
+ Q
+"RTN","IBCSC4E",125,0)
+ ;
+"RTN","IBCSC4E",126,0)
+POAASK ; POA edit
+"RTN","IBCSC4E",127,0)
+ N DIR,DIRUT,DUOUT,DTOUT,DX,ORD,X,Y
+"RTN","IBCSC4E",128,0)
+ W !
+"RTN","IBCSC4E",129,0)
+ S DIR("?")="Enter Yes to edit POA indicators."
+"RTN","IBCSC4E",130,0)
+ S DIR("A")="Edit POA indicators"
+"RTN","IBCSC4E",131,0)
+ S DIR(0)="YO",DIR("B")="NO" D ^DIR K DIR Q:Y'=1
+"RTN","IBCSC4E",132,0)
+ S DIE="^IBA(362.3,",ORD="" F  S ORD=$O(^IBA(362.3,"AO",IBIFN,ORD)) Q:ORD=""  D  Q:$D(Y)  ;
+"RTN","IBCSC4E",133,0)
+ .S DA=$O(^IBA(362.3,"AO",IBIFN,ORD,"")),DX=$$GET1^DIQ(362.3,DA,.01),DR=".04 "_DX D ^DIE
+"RTN","IBCSC4E",134,0)
+ .Q
+"RTN","IBCSC4E",135,0)
+ K DA,DIE,DIR,DR
+"RTN","IBCSC4E",136,0)
+ D CLEAN^DILF
+"RTN","IBCSC4E",137,0)
+ Q
+"RTN","IBJPI")
+0^4^B21978399^B22090434
+"RTN","IBJPI",1,0)
+IBJPI ;DAOU/BHS - IBJP eIV SITE PARAMETERS SCREEN ;14-JUN-2002
+"RTN","IBJPI",2,0)
+ ;;2.0;INTEGRATED BILLING;**184,271,316,416,438,479**;21-MAR-94;Build 29
+"RTN","IBJPI",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","IBJPI",4,0)
+ ;
+"RTN","IBJPI",5,0)
+ ; eIV - Electronic Insurance Verification Interface parameters
+"RTN","IBJPI",6,0)
+ ;
+"RTN","IBJPI",7,0)
+EN ; main entry pt for IBJP IIV SITE PARAMS
+"RTN","IBJPI",8,0)
+ N POP,X,CTRLCOL,VALMHDR,VALMCNT,%DT
+"RTN","IBJPI",9,0)
+ D EN^VALM("IBJP IIV SITE PARAMETERS")
+"RTN","IBJPI",10,0)
+ Q
+"RTN","IBJPI",11,0)
+ ;
+"RTN","IBJPI",12,0)
+HDR ; header 
+"RTN","IBJPI",13,0)
+ S VALMHDR(1)="Only authorized persons may edit this data."
+"RTN","IBJPI",14,0)
+ Q
+"RTN","IBJPI",15,0)
+ ;
+"RTN","IBJPI",16,0)
+INIT ; init vars & list array
+"RTN","IBJPI",17,0)
+ K ^TMP($J,"IBJPI")
+"RTN","IBJPI",18,0)
+ ; Kills data and video control arrays with active list
+"RTN","IBJPI",19,0)
+ D CLEAN^VALM10
+"RTN","IBJPI",20,0)
+ D BLD
+"RTN","IBJPI",21,0)
+ Q
+"RTN","IBJPI",22,0)
+ ;
+"RTN","IBJPI",23,0)
+HELP ; help
+"RTN","IBJPI",24,0)
+ D FULL^VALM1
+"RTN","IBJPI",25,0)
+ W @IOF
+"RTN","IBJPI",26,0)
+ W !,"This screen displays all of the eIV Site Parameters used to manage the"
+"RTN","IBJPI",27,0)
+ W !,"eIV application used for electronic Insurance Verification."
+"RTN","IBJPI",28,0)
+ W !!,"The General Parameters section concerns overall parameters for"
+"RTN","IBJPI",29,0)
+ W !,"monitoring the interface and controlling eIV communication between"
+"RTN","IBJPI",30,0)
+ W !,"VistA and the EC located in Austin."
+"RTN","IBJPI",31,0)
+ W !!,"The Batch Extracts section concerns extract-specific parameters"
+"RTN","IBJPI",32,0)
+ W !,"including active/inactive status and selection criteria."
+"RTN","IBJPI",33,0)
+ W !!,"The Service Type Codes section concerns specifying up to nine"
+"RTN","IBJPI",34,0)
+ W !,"Site Selected Service Type Codes which will be sent with"
+"RTN","IBJPI",35,0)
+ W !,"insurance inquiries."
+"RTN","IBJPI",36,0)
+ D PAUSE^VALM1
+"RTN","IBJPI",37,0)
+ W @IOF
+"RTN","IBJPI",38,0)
+ S VALMBCK="R"
+"RTN","IBJPI",39,0)
+ Q
+"RTN","IBJPI",40,0)
+ ;
+"RTN","IBJPI",41,0)
+EXIT ; exit
+"RTN","IBJPI",42,0)
+ K ^TMP($J,"IBJPI")
+"RTN","IBJPI",43,0)
+ D CLEAN^VALM10
+"RTN","IBJPI",44,0)
+ Q
+"RTN","IBJPI",45,0)
+ ;
+"RTN","IBJPI",46,0)
+BLD ; build screen array
+"RTN","IBJPI",47,0)
+ N IBLN,IBCOL,IBWID,IBIIV,IBIIVB,IBIEN,CT,IBEX1,IBEX2,IBEX,IEN
+"RTN","IBJPI",48,0)
+ N IBST,IBDATA,DISYS,X,STATUS,AIEN,ADATA
+"RTN","IBJPI",49,0)
+ ;
+"RTN","IBJPI",50,0)
+ S (IBLN,VALMCNT)=0,IBCOL=3,IBIIV=$G(^IBE(350.9,1,51))
+"RTN","IBJPI",51,0)
+ ; -- Gen Params
+"RTN","IBJPI",52,0)
+ S IBWID=49
+"RTN","IBJPI",53,0)
+ S IBLN=$$SETN("General Parameters",IBLN,IBCOL,1,)
+"RTN","IBJPI",54,0)
+ S IBLN=$$SET("Days between electronic re-verification checks:  ",$P(IBIIV,U,1),IBLN,IBWID)
+"RTN","IBJPI",55,0)
+ S IBLN=$$SET("Send daily statistical report via MailMan:  ",$S($P(IBIIV,U,2):"YES",$P(IBIIV,U,2)=0:"NO",1:""),IBLN,IBWID)
+"RTN","IBJPI",56,0)
+ I $P(IBIIV,U,2) S IBLN=$$SET("Time of day for daily statistical report:  ",$P(IBIIV,U,3),IBLN,IBWID)
+"RTN","IBJPI",57,0)
+ S IBLN=$$SET("Mail Group for eIV messages:  ",$$MGRP^IBCNEUT5,IBLN,IBWID)
+"RTN","IBJPI",58,0)
+ S IBLN=$$SET("HL7 Response Processing Method:  ",$S($P(IBIIV,U,13)="B":"BATCH",$P(IBIIV,U,13)="I":"IMMEDIATE",1:""),IBLN,IBWID)
+"RTN","IBJPI",59,0)
+ I $P(IBIIV,U,13)="B" D
+"RTN","IBJPI",60,0)
+ . S IBLN=$$SET("HL7 Batch Start Time:  ",$P(IBIIV,U,14),IBLN,IBWID)
+"RTN","IBJPI",61,0)
+ . S IBLN=$$SET("HL7 Batch Stop Time:  ",$P(IBIIV,U,19),IBLN,IBWID)
+"RTN","IBJPI",62,0)
+ . Q
+"RTN","IBJPI",63,0)
+ ;
+"RTN","IBJPI",64,0)
+ S IBLN=$$SET("Contact Person:  ",$S($P(IBIIV,U,16)'="":$$GET1^DIQ(200,$P(IBIIV,U,16)_",",.01,"E"),1:""),IBLN,IBWID)
+"RTN","IBJPI",65,0)
+ S IBLN=$$SET("Send MailMan message if communication problem:  ",$S($P(IBIIV,U,20):"YES",$P(IBIIV,U,20)=0:"NO",1:""),IBLN,IBWID)
+"RTN","IBJPI",66,0)
+ ;
+"RTN","IBJPI",67,0)
+ ; Skip lines in between sections
+"RTN","IBJPI",68,0)
+ S IBLN=$$SET("","",IBLN,0)
+"RTN","IBJPI",69,0)
+ ;
+"RTN","IBJPI",70,0)
+ ; -- Batch Extracts
+"RTN","IBJPI",71,0)
+ S IBWID=43
+"RTN","IBJPI",72,0)
+ S IBLN=$$SETN("Batch Extracts",IBLN,IBCOL,1,)
+"RTN","IBJPI",73,0)
+ S IBLN=$$SET("Extract               Selection  Maximum # to","",IBLN,IBWID)
+"RTN","IBJPI",74,0)
+ S IBLN=$$SETN(" Name          On/Off  Criteria   Extract/Day",IBLN,IBCOL+1,,1)
+"RTN","IBJPI",75,0)
+ ;S IBLN=$$SETN(" Extract Name      On/Off      Selection Criteria",IBLN,IBCOL+1,,1)
+"RTN","IBJPI",76,0)
+ ; Loop thru extracts
+"RTN","IBJPI",77,0)
+ S IEN=0 F  S IEN=$O(^IBE(350.9,1,51.17,IEN)) Q:'IEN  D
+"RTN","IBJPI",78,0)
+ . S IBIIVB=$G(^IBE(350.9,1,51.17,IEN,0))
+"RTN","IBJPI",79,0)
+ . S IBEX=+$P(IBIIVB,U,1)  ; Type
+"RTN","IBJPI",80,0)
+ . I '$F(".1.2.","."_IBEX_".") Q
+"RTN","IBJPI",81,0)
+ . S IBST=$$FO^IBCNEUT1($S($P(IBIIVB,U,1)'="":$$GET1^DIQ(350.9002,IEN_",1,",.01,"E"),1:""),14)
+"RTN","IBJPI",82,0)
+ . S IBST=IBST_$$FO^IBCNEUT1($S(+$P(IBIIVB,U,2):"ON",1:"OFF"),8)
+"RTN","IBJPI",83,0)
+ . S IBEX1=$S(+$P(IBIIVB,U,3)'=0:+$P(IBIIVB,U,3),1:$P(IBIIVB,U,3))
+"RTN","IBJPI",84,0)
+ . S IBEX2=$S(+$P(IBIIVB,U,4)'=0:+$P(IBIIVB,U,4),1:$P(IBIIVB,U,4))
+"RTN","IBJPI",85,0)
+ . S IBST=IBST_$$FO^IBCNEUT1($S(IBEX=1:"n/a",IBEX=2:IBEX1,IBEX=3:IBEX1_"/"_IBEX2,1:"ERROR"),11)
+"RTN","IBJPI",86,0)
+ . S IBST=IBST_$$FO^IBCNEUT1($S(+$P(IBIIVB,U,5):+$P(IBIIVB,U,5),1:$P(IBIIVB,U,5)),14)
+"RTN","IBJPI",87,0)
+ . S IBLN=$$SET(IBST,"",IBLN,IBWID)
+"RTN","IBJPI",88,0)
+ . Q
+"RTN","IBJPI",89,0)
+ ;S IBLN=$$SET("","",IBLN,0)
+"RTN","IBJPI",90,0)
+ S VALMCNT=IBLN
+"RTN","IBJPI",91,0)
+ Q
+"RTN","IBJPI",92,0)
+ ;
+"RTN","IBJPI",93,0)
+SET(TTL,DATA,LN,WID) ;
+"RTN","IBJPI",94,0)
+ ; TTL = caption for field
+"RTN","IBJPI",95,0)
+ ; DATA = field value
+"RTN","IBJPI",96,0)
+ ; LN = current line #
+"RTN","IBJPI",97,0)
+ ; WID = right justify width
+"RTN","IBJPI",98,0)
+ N IBY
+"RTN","IBJPI",99,0)
+ ; update line ct
+"RTN","IBJPI",100,0)
+ S LN=LN+1
+"RTN","IBJPI",101,0)
+ ; offset line by 3 spaces
+"RTN","IBJPI",102,0)
+ S IBY="   "_$J(TTL,WID)_DATA D SET1(IBY,LN,0,$L(IBY))
+"RTN","IBJPI",103,0)
+ Q LN
+"RTN","IBJPI",104,0)
+ ;
+"RTN","IBJPI",105,0)
+SETN(TTL,LN,COL,RV,UN) ;
+"RTN","IBJPI",106,0)
+ ; TTL = caption for field
+"RTN","IBJPI",107,0)
+ ; LN = current line #
+"RTN","IBJPI",108,0)
+ ; COL = column at which to start video attribute
+"RTN","IBJPI",109,0)
+ ; RV = 0/1 flag for reverse video
+"RTN","IBJPI",110,0)
+ ; UN = 0/1 flag for underline
+"RTN","IBJPI",111,0)
+ N IBY
+"RTN","IBJPI",112,0)
+ ; update line ct
+"RTN","IBJPI",113,0)
+ S LN=LN+1
+"RTN","IBJPI",114,0)
+ ; offset line by 2 spaces
+"RTN","IBJPI",115,0)
+ S IBY="  "_TTL D SET1(IBY,LN,COL,$L(TTL),$G(RV),$G(UN))
+"RTN","IBJPI",116,0)
+ Q LN
+"RTN","IBJPI",117,0)
+ ;
+"RTN","IBJPI",118,0)
+SET1(STR,LN,COL,WD,RV,UN) ; Set up ^TMP array with screen data
+"RTN","IBJPI",119,0)
+ ; STR = line text
+"RTN","IBJPI",120,0)
+ ; LN = current line #
+"RTN","IBJPI",121,0)
+ ; COL = column at which to start video attribute
+"RTN","IBJPI",122,0)
+ ; WD = width of video attribute
+"RTN","IBJPI",123,0)
+ ; RV = 0/1 flag for reverse video
+"RTN","IBJPI",124,0)
+ ; UN = 0/1 flag for underline
+"RTN","IBJPI",125,0)
+ D SET^VALM10(LN,STR)
+"RTN","IBJPI",126,0)
+ I $G(RV)'="" D CNTRL^VALM10(LN,COL,WD,IORVON,IORVOFF)
+"RTN","IBJPI",127,0)
+ I $G(UN)'="" D CNTRL^VALM10(LN,COL,WD-1,IOUON,IOUOFF)
+"RTN","IBJPI",128,0)
+ Q
+"RTN","IBJPI",129,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9121,6)
+^466
+**END**
+**END**

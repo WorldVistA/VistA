@@ -1,0 +1,286 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: OR*3*311
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #331                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*337    <<= must be installed BEFORE `OR*3*311'
+                    (v)OR*3*345    <<= must be installed BEFORE `OR*3*311'
+                    (v)OR*3*371    <<= must be installed BEFORE `OR*3*311'
+
+Subject: MOCHA 2.0 ORDER CHECK CPRS CHANGES FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the Medication 
+ Order Check Healthcare Application version 2 software (MOCHA v2.0).  
+ These patches will add a maximum single dose order check to the current 
+ VistA medication order checking system that uses the First DataBank (FDB) 
+ business logic and database.  FDB custom dosing tables will be used to 
+ store custom dosing changes to FDB standard reference drug tables. 
+ Pharmacy Enterprise Customization System (PECS) version 2.2 application 
+ was developed to meet the customization requirements.
+  
+ **NOTE**
+ When this patch is installed in step 4 of the MOCHA v2.0 installation 
+ process, the 'before' checksum of routine ORCMED will be incorrect, as 
+ will the second line of that routine because it will not include patch 
+ OR*3*380. The functionality introduced with patch OR*3*380 is overwritten 
+ by this patch. However, when patch OR*3*381 is installed in step 5 of the 
+ MOCHA v2.0 installation process, that will correct the second line of 
+ routine ORCMED and restore the functionality from patch OR*3*380.
+  
+ This patch will address the following issues identified by the MOCHA v2.0 
+ test sites:
+  
+   1. When a medication quick order is created with a dosage that does not 
+      match any of the local possible dosages associated with that
+      medication, the creator is not warned that dosage checks may not work
+      when the quick order is used to create an order. This patch will
+      enable the software to warn the quick order creator of the unmatched
+      dosage.
+   2. When a medication quick order is created for a drug with only local 
+      possible dosages and the quick order's dosage is free-text, the quick
+      order will not have a dispense drug attached to it. Without a
+      dispense drug, dosage order checks will not occur on orders created
+      with this quick order. This patch will enable the software to warn
+      the clinical application coordinator that dosage order checks will
+      not occur.
+   3. When a prescription is entered through Outpatient Pharmacy Backdoor
+      with a local possible dosage and the associated Computerized Patient 
+      Record System order is either transferred to inpatient or 
+      copied and then changed, the dosage is converted to free text
+      preventing the software from executing the dosage order check. This
+      patch will prevent the software from converting the local possible
+      dosage to free text.
+   4. When transferring, copying, or editing a medication order entered 
+      through Pharmacy, dosage order checks were not properly performed for
+      simple and complex orders containing local possible or free-text 
+      dosages. This patch will enable the software to perform dosage order
+      checks on orders containing local possible and free-text dosages 
+      transferred, copied, or edited from an order entered through 
+      Pharmacy.
+   5. Previously CPRS evaluated a Duplicate Therapy message returned from
+      Pharmacy that checks all the drugs listed in the Duplicate Therapy 
+      message, and if all of those drugs were also in a Duplicate Drug 
+      message, the Duplicate Therapy message was not shown. But if a 
+      duplicate drug was entered in CPRS, and there was also a second drug
+      already on the profile that was part of the duplicate therapy, when 
+      that evaluation was made on that Duplicate Therapy message, there is
+      now one drug in the Duplicate Therapy message that's not in a 
+      Duplicate Drug message, and one drug that is, so the Duplicate
+      Therapy message is shown. With this patch, in this case CPRS still 
+      shows the Duplicate Therapy message but only lists the drug(s) in
+      the Duplicate Therapy that were not also returned in a Duplicate Drug
+      message.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ None
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 1689 N/A
+ See associated Remedy ticket HD849668 for description and resolution.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD756345 6 No duplicate therapy order check displayed to the provider.
+  
+ Problem:
+ -------
+ A provider places a medication order and receives a duplicate therapy 
+ order check message for that order.  The provider places additional 
+ orders and then signs all of the orders at once.  When the provider signs 
+ all of the orders, the duplicate therapy order check message is not 
+ displayed.
+  
+ Resolution:
+ ----------
+ During session order checking, if there are duplicate duplicate therapy 
+ order check messages, the duplicates are supposed to be deleted.  
+ However, too many duplicate therapy order check messages were deleted.  
+ The code has been modified to delete the correct number of duplicate 
+ therapy order check messages.
+  
+ 2. HD849668 OERR - Orders Tab:
+  
+ Problem:
+ -------
+ A pharmacist enters an order using option Patient Prescription Processing 
+ [PSO LM BACKDOOR ORDERS].  A provider then uses CPRS to either copy that 
+ order to a new order and edits the new order or edit the existing order.  
+ When the new or updated order is sent to Pharmacy, the dosage field 
+ contains the drug's strength.  This extraneous information makes it 
+ difficult for patients to read the label that is printed for their 
+ medication.
+  
+ Resolution:
+ ----------
+ The code that loads an existing order into CPRS was modified to correctly 
+ differentiate between a pre-defined dosage and free-text dosages.  This 
+ modification prevents CPRS from sending the order to Pharmacy with 
+ extraneous information in the dosage field.
+  
+  
+ Test Sites:
+ ----------
+ Charleston
+ Tuscaloosa
+ Kansas
+ Boise
+ Palo Alto
+ Northern California - Martinez
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Installation documentation is available.
+  
+ The preferred method is to FTP the file from 
+ ftp://download.vista.domain.ext/.
+ This transmits the file from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Patch Installation:
+  
+  
+ Installation Instructions
+ -------------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of 
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+  
+   5. OR_3_381.KID - HOST file with patch name OR*3*381.
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ Refer to the MOCHA v2.0 Installation Guide PSS_1_P160_MOCHA_CB_IG.doc.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCDPS1
+    Before: B78578103   After: B80784611  **94,117,141,149,195,215,243,
+                                           280,337,311**
+Routine Name: ORCDPS2
+    Before: B67090529   After: B67607141  **94,116,125,131,243,311**
+Routine Name: ORCHECK
+    Before:B120169317   After:B120029142  **7,56,70,94,141,215,243,293,
+                                           280,346,357,352,345,311**
+Routine Name: ORCMED
+    Before: B63172692   After: B75152203  **4,7,38,48,94,141,178,190,195,
+                                           243,306,371,311**
+Routine Name: ORDSGCHK
+    Before:B109034124   After:B109034124  **280,352,345,311**
+Routine Name: ORKPS1
+    Before: B80576469   After: B80576469  **232,272,346,352,345,311**
+Routine Name: ORWDXC
+    Before: B69748924   After: B67359281  **10,141,221,243,280,346,345,311**
+Routine Name: ORWDXR01
+    Before: B28161629   After: B28161629  **187,190,195,215,280,345,311**
+Routine Name: ORWPT
+    Before: B63799384   After: B64148022  **10,85,132,149,206,187,190,
+                                           215,243,280,306,311**
+Routine Name: ORY311
+    Before:       n/a   After:  B4599008  **311**
+ 
+Routine list of preceding patches: 337, 345, 371
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 15, 2009
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

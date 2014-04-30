@@ -1,0 +1,734 @@
+Released VAQ*1.5*44 SEQ #41
+Extracted from mail message
+**KIDS**:VAQ*1.5*44^
+
+**INSTALL NAME**
+VAQ*1.5*44
+"BLD",9473,0)
+VAQ*1.5*44^PATIENT DATA EXCHANGE^0^3130815^y
+"BLD",9473,1,0)
+^^5^5^3130724^
+"BLD",9473,1,1,0)
+This patch addresses 2 issues with Patient Data Exchange (PDX):
+"BLD",9473,1,2,0)
+ 
+"BLD",9473,1,3,0)
+1) Issues adding users to notify for PDX transactions  
+"BLD",9473,1,4,0)
+2) <UNDEFINED> errors occurring due to invalid Health Summary
+"BLD",9473,1,5,0)
+   Component entries.
+"BLD",9473,4,0)
+^9.64PA^^
+"BLD",9473,6.3)
+4
+"BLD",9473,"ABPKG")
+n
+"BLD",9473,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9473,"KRN",.4,0)
+.4
+"BLD",9473,"KRN",.401,0)
+.401
+"BLD",9473,"KRN",.402,0)
+.402
+"BLD",9473,"KRN",.403,0)
+.403
+"BLD",9473,"KRN",.5,0)
+.5
+"BLD",9473,"KRN",.84,0)
+.84
+"BLD",9473,"KRN",3.6,0)
+3.6
+"BLD",9473,"KRN",3.8,0)
+3.8
+"BLD",9473,"KRN",9.2,0)
+9.2
+"BLD",9473,"KRN",9.8,0)
+9.8
+"BLD",9473,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9473,"KRN",9.8,"NM",1,0)
+VAQDBI^^0^B14783513
+"BLD",9473,"KRN",9.8,"NM",2,0)
+VAQREQ06^^0^B19324653
+"BLD",9473,"KRN",9.8,"NM","B","VAQDBI",1)
+
+"BLD",9473,"KRN",9.8,"NM","B","VAQREQ06",2)
+
+"BLD",9473,"KRN",19,0)
+19
+"BLD",9473,"KRN",19.1,0)
+19.1
+"BLD",9473,"KRN",101,0)
+101
+"BLD",9473,"KRN",409.61,0)
+409.61
+"BLD",9473,"KRN",771,0)
+771
+"BLD",9473,"KRN",779.2,0)
+779.2
+"BLD",9473,"KRN",870,0)
+870
+"BLD",9473,"KRN",8989.51,0)
+8989.51
+"BLD",9473,"KRN",8989.52,0)
+8989.52
+"BLD",9473,"KRN",8994,0)
+8994
+"BLD",9473,"KRN","B",.4,.4)
+
+"BLD",9473,"KRN","B",.401,.401)
+
+"BLD",9473,"KRN","B",.402,.402)
+
+"BLD",9473,"KRN","B",.403,.403)
+
+"BLD",9473,"KRN","B",.5,.5)
+
+"BLD",9473,"KRN","B",.84,.84)
+
+"BLD",9473,"KRN","B",3.6,3.6)
+
+"BLD",9473,"KRN","B",3.8,3.8)
+
+"BLD",9473,"KRN","B",9.2,9.2)
+
+"BLD",9473,"KRN","B",9.8,9.8)
+
+"BLD",9473,"KRN","B",19,19)
+
+"BLD",9473,"KRN","B",19.1,19.1)
+
+"BLD",9473,"KRN","B",101,101)
+
+"BLD",9473,"KRN","B",409.61,409.61)
+
+"BLD",9473,"KRN","B",771,771)
+
+"BLD",9473,"KRN","B",779.2,779.2)
+
+"BLD",9473,"KRN","B",870,870)
+
+"BLD",9473,"KRN","B",8989.51,8989.51)
+
+"BLD",9473,"KRN","B",8989.52,8989.52)
+
+"BLD",9473,"KRN","B",8994,8994)
+
+"BLD",9473,"QDEF")
+^^^^^^^^^^YES
+"BLD",9473,"QUES",0)
+^9.62^^
+"BLD",9473,"REQB",0)
+^9.611^1^1
+"BLD",9473,"REQB",1,0)
+VAQ*1.5*32^1
+"BLD",9473,"REQB","B","VAQ*1.5*32",1)
+
+"MBREQ")
+0
+"PKG",190,-1)
+1^1
+"PKG",190,0)
+PATIENT DATA EXCHANGE^VAQ^Module used to manage patient information exchange
+"PKG",190,20,0)
+^9.402P^^
+"PKG",190,22,0)
+^9.49I^1^1
+"PKG",190,22,1,0)
+1.5^2931117^2981209
+"PKG",190,22,1,"PAH",1,0)
+44^3130815
+"PKG",190,22,1,"PAH",1,1,0)
+^^5^5^3130815
+"PKG",190,22,1,"PAH",1,1,1,0)
+This patch addresses 2 issues with Patient Data Exchange (PDX):
+"PKG",190,22,1,"PAH",1,1,2,0)
+ 
+"PKG",190,22,1,"PAH",1,1,3,0)
+1) Issues adding users to notify for PDX transactions  
+"PKG",190,22,1,"PAH",1,1,4,0)
+2) <UNDEFINED> errors occurring due to invalid Health Summary
+"PKG",190,22,1,"PAH",1,1,5,0)
+   Component entries.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","VAQDBI")
+0^1^B14783513^B13163658
+"RTN","VAQDBI",1,0)
+VAQDBI ;ALB/JRP - EXTRACT DATA SEGMENTS ;22-MAR-93
+"RTN","VAQDBI",2,0)
+ ;;1.5;PATIENT DATA EXCHANGE;**44**;NOV 17, 1993;Build 4
+"RTN","VAQDBI",3,0)
+EXTRACT(TRANPTR,ROOT) ;EXTRACT DATA SEGMENTS CONTAINED IN A PDX TRANSACTION
+"RTN","VAQDBI",4,0)
+ ;INPUT  : TRANPTR - Pointer to VAQ - TRANSACTION FILE
+"RTN","VAQDBI",5,0)
+ ;         ROOT - Where to store the information (full global reference)
+"RTN","VAQDBI",6,0)
+ ;                Defaults to ^TMP("VAQ",$J)
+"RTN","VAQDBI",7,0)
+ ;OUTPUT : 0 - Success
+"RTN","VAQDBI",8,0)
+ ;        -1^Error_Text - Error
+"RTN","VAQDBI",9,0)
+ ;NOTES  : Segments returning Extraction Arrays will be stored in
+"RTN","VAQDBI",10,0)
+ ;          ROOT(Segment_Abbreviation,"VALUE",File,Field,Sequence_Number)
+"RTN","VAQDBI",11,0)
+ ;          ROOT(Segment_Abbreviation,"ID",File,Field,Sequence_Number)
+"RTN","VAQDBI",12,0)
+ ;         Segments returning Display Arrays will be stored in
+"RTN","VAQDBI",13,0)
+ ;          ROOT(Segment_Abbreviation,"DISPLAY",Line_Number,0)
+"RTN","VAQDBI",14,0)
+ ;       : Deletion of the output array before calling this routine
+"RTN","VAQDBI",15,0)
+ ;         is the responsibility of the calling application.
+"RTN","VAQDBI",16,0)
+ ;
+"RTN","VAQDBI",17,0)
+ ;CHECK INPUT
+"RTN","VAQDBI",18,0)
+ S TRANPTR=+$G(TRANPTR)
+"RTN","VAQDBI",19,0)
+ Q:('TRANPTR) "-1^Pointer to VAQ - TRANSACTION file not passed"
+"RTN","VAQDBI",20,0)
+ Q:('$D(^VAT(394.61,TRANPTR))) "-1^Transaction did not exist"
+"RTN","VAQDBI",21,0)
+ S ROOT=$G(ROOT)
+"RTN","VAQDBI",22,0)
+ S:(ROOT="") ROOT="^TMP(""VAQ"","_$J_")"
+"RTN","VAQDBI",23,0)
+ ;DECLARE VARIABLES
+"RTN","VAQDBI",24,0)
+ N SEGABB,ERROR,X,SEG,TMP,Y,TMPROOT,PATPTR
+"RTN","VAQDBI",25,0)
+ ;CHECK RELEASE STATUS
+"RTN","VAQDBI",26,0)
+ S TMP=+$P($G(^VAT(394.61,TRANPTR,0)),"^",5)
+"RTN","VAQDBI",27,0)
+ Q:('TMP) "-1^Transaction has not been processed yet"
+"RTN","VAQDBI",28,0)
+ S X=$P($G(^VAT(394.85,TMP,0)),"^",1)
+"RTN","VAQDBI",29,0)
+ ;RELEASE STATUS DOES NOT REQUIRE EXTRACTION OF DATA
+"RTN","VAQDBI",30,0)
+ Q:((X'="VAQ-RSLT")&(X'="VAQ-UNSOL")) 0
+"RTN","VAQDBI",31,0)
+ Q:('$D(^VAT(394.61,TRANPTR,"SEG"))) "-1^Transaction did not contain any data segments"
+"RTN","VAQDBI",32,0)
+ ;GET POINTER TO PATIENT FILE
+"RTN","VAQDBI",33,0)
+ S PATPTR=+$P($G(^VAT(394.61,TRANPTR,0)),"^",3)
+"RTN","VAQDBI",34,0)
+ Q:('PATPTR) "-1^Transaction did not contain pointer to PATIENT file"
+"RTN","VAQDBI",35,0)
+ S ERROR=0
+"RTN","VAQDBI",36,0)
+ S SEG=""
+"RTN","VAQDBI",37,0)
+ ;LOOP THROUGH EACH DATA SEGMENT CONTAINED IN TRANSACTION
+"RTN","VAQDBI",38,0)
+ F  D  Q:((ERROR)!('SEG))
+"RTN","VAQDBI",39,0)
+ .S SEG=$O(^VAT(394.61,TRANPTR,"SEG","B",SEG))
+"RTN","VAQDBI",40,0)
+ .Q:('SEG)
+"RTN","VAQDBI",41,0)
+ .;GET SEGMENT ABBREVIATION
+"RTN","VAQDBI",42,0)
+ .S SEGABB=$P($G(^VAT(394.71,SEG,0)),"^",2)
+"RTN","VAQDBI",43,0)
+ .Q:(SEGABB="")
+"RTN","VAQDBI",44,0)
+ .;MAKE SEGMENT ABBREVIATION NEXT SUBSCRIPT IN ROOT
+"RTN","VAQDBI",45,0)
+ .S TMP=$P(ROOT,"(",1)
+"RTN","VAQDBI",46,0)
+ .S X=$P(ROOT,"(",2)
+"RTN","VAQDBI",47,0)
+ .S Y=$P(X,")",1)
+"RTN","VAQDBI",48,0)
+ .S:(Y="") TMPROOT=TMP_"("_$C(34)_SEGABB_$C(34)_")"
+"RTN","VAQDBI",49,0)
+ .S:(Y'="") TMPROOT=TMP_"("_Y_","_$C(34)_SEGABB_$C(34)_")"
+"RTN","VAQDBI",50,0)
+ .S X=$$SEGXTRCT(TRANPTR,PATPTR,TMPROOT,SEG)
+"RTN","VAQDBI",51,0)
+ Q 0
+"RTN","VAQDBI",52,0)
+SEGXTRCT(TRAN,DFN,ROOT,SEGPTR,OFFSET) ;EXTRACT A DATA SEGMENT
+"RTN","VAQDBI",53,0)
+ ;INPUT  : TRAN - Pointer to VAQ - TRANSACTION file
+"RTN","VAQDBI",54,0)
+ ;         DFN - Pointer to PATIENT file (who to extract)
+"RTN","VAQDBI",55,0)
+ ;         ROOT - Where to store the information (full global reference)
+"RTN","VAQDBI",56,0)
+ ;         SEGPTR - Pointer to VAQ - DATA SEGMENT file (what to extract)
+"RTN","VAQDBI",57,0)
+ ;         OFFSET - Where to begin inserting lines (defaults to 0)
+"RTN","VAQDBI",58,0)
+ ;                  Only used for Display Arrays
+"RTN","VAQDBI",59,0)
+ ;OUTPUT : 0 - Success (Extraction Array)
+"RTN","VAQDBI",60,0)
+ ;         n - Success; number of lines in display (Display Array)
+"RTN","VAQDBI",61,0)
+ ;        -1^Error_Text - Error
+"RTN","VAQDBI",62,0)
+ ;       : If TRAN is passed
+"RTN","VAQDBI",63,0)
+ ;           The patient pointer of the transaction will be used
+"RTN","VAQDBI",64,0)
+ ;           Encryption will be based on the transaction
+"RTN","VAQDBI",65,0)
+ ;           Time & Occurrence limits will be based on the transaction
+"RTN","VAQDBI",66,0)
+ ;         If DFN is passed
+"RTN","VAQDBI",67,0)
+ ;           Encryption will be based on the site parameter
+"RTN","VAQDBI",68,0)
+ ;           Time & Occurrence limits will be based on the site parameter
+"RTN","VAQDBI",69,0)
+ ;       : Pointer to transaction takes precedence over DFN ... if
+"RTN","VAQDBI",70,0)
+ ;         TRAN>0 the DFN will be based on the transaction
+"RTN","VAQDBI",71,0)
+ ;
+"RTN","VAQDBI",72,0)
+ ;CHECK INPUT
+"RTN","VAQDBI",73,0)
+ S TRAN=+$G(TRAN)
+"RTN","VAQDBI",74,0)
+ S DFN=+$G(DFN)
+"RTN","VAQDBI",75,0)
+ Q:(('TRAN)&('DFN)) "-1^Did not pass pointer to transaction or patient"
+"RTN","VAQDBI",76,0)
+ I (TRAN) Q:('$D(^VAT(394.61,TRAN))) "-1^Did not pass valid pointer to VAQ - TRANSACTION file"
+"RTN","VAQDBI",77,0)
+ I (TRAN) S DFN=+$P($G(^VAT(394.61,TRAN,0)),"^",3) Q:('DFN) "-1^Transaction did not contain pointer to PATIENT file"
+"RTN","VAQDBI",78,0)
+ Q:('$D(^DPT(DFN))) "-1^Did not pass valid pointer to PATIENT file"
+"RTN","VAQDBI",79,0)
+ Q:($G(ROOT)="") "-1^Where to store information not passed"
+"RTN","VAQDBI",80,0)
+ S SEGPTR=+$G(SEGPTR)
+"RTN","VAQDBI",81,0)
+ Q:('SEGPTR) "-1^Pointer to VAQ - DATA SEGMENT file not passed"
+"RTN","VAQDBI",82,0)
+ S OFFSET=+$G(OFFSET)
+"RTN","VAQDBI",83,0)
+ ;DECLARE VARIABLES
+"RTN","VAQDBI",84,0)
+ N X,Y,TIMLIM,OCCLIM,NODE,TMP,VAQHSC
+"RTN","VAQDBI",85,0)
+ ;SET TIME & OCCURRENCE LIMITS BASED ON PARAMETER FILE
+"RTN","VAQDBI",86,0)
+ ;  DEFAULT TO 1 YEAR & 10 OCCURRENCES IF NOT THERE
+"RTN","VAQDBI",87,0)
+ I ('TRAN) D
+"RTN","VAQDBI",88,0)
+ .S TMP=+$O(^VAT(394.81,0))
+"RTN","VAQDBI",89,0)
+ .I ('TMP) S TIMLIM="1Y",OCCLIM=10 Q
+"RTN","VAQDBI",90,0)
+ .S NODE=$G(^VAT(394.81,TMP,"LIMITS"))
+"RTN","VAQDBI",91,0)
+ .S TIMLIM=$P(NODE,"^",1)
+"RTN","VAQDBI",92,0)
+ .S:(TIMLIM="") TIMLIM="1Y"
+"RTN","VAQDBI",93,0)
+ .S OCCLIM=$P(NODE,"^",2)
+"RTN","VAQDBI",94,0)
+ .S:('OCCLIM) OCCLIM=10
+"RTN","VAQDBI",95,0)
+ ;SET TIME & OCCURRENCE LIMITS BASED ON TRANSACTION
+"RTN","VAQDBI",96,0)
+ I (TRAN) D
+"RTN","VAQDBI",97,0)
+ .S TIMLIM=""
+"RTN","VAQDBI",98,0)
+ .S OCCLIM=""
+"RTN","VAQDBI",99,0)
+ .S TMP=+$O(^VAT(394.61,TRAN,"SEG","B",SEGPTR,""))
+"RTN","VAQDBI",100,0)
+ .I (TMP) D
+"RTN","VAQDBI",101,0)
+ ..S NODE=$G(^VAT(394.61,TRAN,"SEG",TMP,0))
+"RTN","VAQDBI",102,0)
+ ..S TIMLIM=$P(NODE,"^",2)
+"RTN","VAQDBI",103,0)
+ ..S OCCLIM=$P(NODE,"^",3)
+"RTN","VAQDBI",104,0)
+ ;GET EXTRACTION METHOD
+"RTN","VAQDBI",105,0)
+ S Y=$G(^VAT(394.71,SEGPTR,"XRTN"))
+"RTN","VAQDBI",106,0)
+ Q:(Y="") "-1^Could not determine extraction routine"
+"RTN","VAQDBI",107,0)
+ ;VALIDATE HEALTH SUMMARY COMPONENT ICR 814
+"RTN","VAQDBI",108,0)
+ ;RRA VAQ*1.5*44 TICKET 146245
+"RTN","VAQDBI",109,0)
+ S VAQHSC=$P($G(^VAT(394.71,SEGPTR,0)),"^",4)
+"RTN","VAQDBI",110,0)
+ I +VAQHSC>0 Q:('$D(^GMT(142.1,VAQHSC,0))) "-1^Invalid pointer to Health Summary Component file"
+"RTN","VAQDBI",111,0)
+ ;EXTRACT INFORMATION
+"RTN","VAQDBI",112,0)
+ X ("S X="_Y)
+"RTN","VAQDBI",113,0)
+ Q X
+"RTN","VAQREQ06")
+0^2^B19324653^B17286497
+"RTN","VAQREQ06",1,0)
+VAQREQ06 ;ALB/JFP - REQUEST PDX RECORD,TRANSMIT;01MAR93
+"RTN","VAQREQ06",2,0)
+ ;;1.5;PATIENT DATA EXCHANGE;**4,20,26,32,44**;NOV 17, 1993;Build 4
+"RTN","VAQREQ06",3,0)
+EP ; -- Programmer entry point for sending PDX requests
+"RTN","VAQREQ06",4,0)
+ ; -- This code is used by both request and unsolicited request
+"RTN","VAQREQ06",5,0)
+ ;
+"RTN","VAQREQ06",6,0)
+ D:$D(XRTL) T0^%ZOSV ; -- Capacity start
+"RTN","VAQREQ06",7,0)
+ S VAQDOM="",(POP,DOMCNT)=0 W !!,"Working..."
+"RTN","VAQREQ06",8,0)
+ D PRELOAD
+"RTN","VAQREQ06",9,0)
+ F  S VAQDOM=$O(^TMP("VAQSEG",$J,VAQDOM))  Q:VAQDOM=""  D XMIT
+"RTN","VAQREQ06",10,0)
+ I POP K POP QUIT
+"RTN","VAQREQ06",11,0)
+ S VAQFLAG=1
+"RTN","VAQREQ06",12,0)
+ W !!,"Transactions filed "
+"RTN","VAQREQ06",13,0)
+TASK ; -- Load taskman variables and task off
+"RTN","VAQREQ06",14,0)
+ S ZTRTN="GENXMIT^VAQADM50"
+"RTN","VAQREQ06",15,0)
+ S ZTDESC=$S(VAQOPT="REQ":"PDX, REQUEST",VAQOPT="UNS":"PDX, UNSOLICITED",1:"PDX, GENERATE TRANSMISSION")
+"RTN","VAQREQ06",16,0)
+ S ZTDTH=$H,ZTIO=""
+"RTN","VAQREQ06",17,0)
+ S ZTSAVE("VAQTRN(")=""
+"RTN","VAQREQ06",18,0)
+ I ZTRTN'="" D ^%ZTLOAD
+"RTN","VAQREQ06",19,0)
+ I $D(ZTSK)  W "and queued "
+"RTN","VAQREQ06",20,0)
+ K ZTRTN,ZTDESC,ZTDTH,ZTIO,ZTSAVE,ZTSK
+"RTN","VAQREQ06",21,0)
+ K ^TMP("CMNT",$J),FACDA,NOTI,PARMNODE,DOMDA,X,Y,DOMCNT,LOAD
+"RTN","VAQREQ06",22,0)
+ S:$D(XRT0) XRTN=$T(+0) D:$D(XRT0) T1^%ZOSV ; -- Capacity stop
+"RTN","VAQREQ06",23,0)
+ QUIT
+"RTN","VAQREQ06",24,0)
+ ;
+"RTN","VAQREQ06",25,0)
+XMIT ; -- Makes an entry in the 'PDX TRANSACTION' file
+"RTN","VAQREQ06",26,0)
+ S Y=$$NEWTRAN^VAQFILE Q:Y<0
+"RTN","VAQREQ06",27,0)
+ S DOMCNT=DOMCNT+1 W:(DOMCNT#10)=0 "."
+"RTN","VAQREQ06",28,0)
+ S (VAQPR,DA)=+Y,VAQTRN=$P(Y,"^",2)
+"RTN","VAQREQ06",29,0)
+ S LOAD=$S(VAQOPT="REQ":"LDREQ",VAQOPT="UNS":"LDUNS",1:"LDREQ")
+"RTN","VAQREQ06",30,0)
+ D @LOAD
+"RTN","VAQREQ06",31,0)
+ D:$D(^TMP("VAQNOTI",$J)) MNOTI
+"RTN","VAQREQ06",32,0)
+ D:$D(^TMP("VAQSEG",$J)) MSEG
+"RTN","VAQREQ06",33,0)
+ I VAQOPT="UNS"&($D(^TMP("CMNT",$J))) D CMNT
+"RTN","VAQREQ06",34,0)
+ ; -- Load an array of newly entered transactions
+"RTN","VAQREQ06",35,0)
+ S VAQTRN(VAQPR)=""
+"RTN","VAQREQ06",36,0)
+ ; -- Updates workload file
+"RTN","VAQREQ06",37,0)
+ S X=$$WORKDONE^VAQADS01($S(VAQOPT="REQ":"RQST",VAQOPT="UNS":"SEND",1:""),VAQPR,$G(DUZ))
+"RTN","VAQREQ06",38,0)
+ Q
+"RTN","VAQREQ06",39,0)
+ ;
+"RTN","VAQREQ06",40,0)
+PRELOAD ; -- Loads the constant data for multiple domains
+"RTN","VAQREQ06",41,0)
+ S %DT="ST",X="NOW" D ^%DT S VAQRQDT=Y
+"RTN","VAQREQ06",42,0)
+ S VAQPID=""
+"RTN","VAQREQ06",43,0)
+ S VAQSENPT=""
+"RTN","VAQREQ06",44,0)
+ I VAQDFN>0 D
+"RTN","VAQREQ06",45,0)
+ .S DFN=+VAQDFN
+"RTN","VAQREQ06",46,0)
+ .D PID^VADPT6
+"RTN","VAQREQ06",47,0)
+ .S VAQPID=$P($G(VA("PID")),U,1)
+"RTN","VAQREQ06",48,0)
+ .K VA("PID"),VA("BID")
+"RTN","VAQREQ06",49,0)
+ .S VAQSENPT=$$GETSEN^VAQUTL97(DFN) ; --Sensitive patient
+"RTN","VAQREQ06",50,0)
+ .S:VAQSENPT<0 VAQSENPT=""
+"RTN","VAQREQ06",51,0)
+ ;
+"RTN","VAQREQ06",52,0)
+ S PARMNODE=$G(^VAT(394.81,1,0))
+"RTN","VAQREQ06",53,0)
+ S FACDA=$P(PARMNODE,U,1),DOMDA=$P(PARMNODE,U,2)
+"RTN","VAQREQ06",54,0)
+ S VAQRQSIT=$P($G(^DIC(4,FACDA,0)),U,1)
+"RTN","VAQREQ06",55,0)
+ S VAQRQADD=$P($G(^DIC(4.2,DOMDA,0)),U,1)
+"RTN","VAQREQ06",56,0)
+ ;
+"RTN","VAQREQ06",57,0)
+ S (VAQDZ,VAQDZN)=""
+"RTN","VAQREQ06",58,0)
+ I $G(DUZ)'="" D
+"RTN","VAQREQ06",59,0)
+ .S VAQDZN=$S($D(DUZ):$P(^VA(200,DUZ,0),U,1),1:"")
+"RTN","VAQREQ06",60,0)
+ .S VAQDZ=$S($D(DUZ):DUZ,1:"")
+"RTN","VAQREQ06",61,0)
+ QUIT
+"RTN","VAQREQ06",62,0)
+ ;
+"RTN","VAQREQ06",63,0)
+LDREQ ; -- Sets DR string and non-constant variables, LOAD FOR REQUEST
+"RTN","VAQREQ06",64,0)
+ S:'$D(VAQNOTI) VAQNOTI=0 ; -- UNS does not use notify logic
+"RTN","VAQREQ06",65,0)
+ S VAQAUSIT=$$GETINST^VAQUTL97(VAQDOM)
+"RTN","VAQREQ06",66,0)
+ S DR=".02///VAQ-RQST"
+"RTN","VAQREQ06",67,0)
+ S DR(1,394.61,.03)=".03////"_$S(+VAQDFN>0:+VAQDFN,1:"")
+"RTN","VAQREQ06",68,0)
+ S DR(1,394.61,.04)=".04///"_VAQSENPT
+"RTN","VAQREQ06",69,0)
+ S DR(1,394.61,.05)=".05///VAQ-RQST"
+"RTN","VAQREQ06",70,0)
+ S DR(1,394.61,10)="10///"_VAQNM
+"RTN","VAQREQ06",71,0)
+ S DR(1,394.61,11)="11///"_VAQISSN
+"RTN","VAQREQ06",72,0)
+ S DR(1,394.61,12)="12///"_VAQIDOB
+"RTN","VAQREQ06",73,0)
+ S DR(1,394.61,13)="13///"_VAQPID
+"RTN","VAQREQ06",74,0)
+ S DR(1,394.61,20)="20///"_VAQRQDT
+"RTN","VAQREQ06",75,0)
+ S DR(1,394.61,21)="21///"_VAQDZN
+"RTN","VAQREQ06",76,0)
+ S DR(1,394.61,30)="30///"_VAQRQSIT
+"RTN","VAQREQ06",77,0)
+ S DR(1,394.61,31)="31///"_VAQRQADD
+"RTN","VAQREQ06",78,0)
+ S DR(1,394.61,60)="60///"_VAQAUSIT
+"RTN","VAQREQ06",79,0)
+ S DR(1,394.61,61)="61///"_VAQDOM
+"RTN","VAQREQ06",80,0)
+ S DR(1,394.61,70)="70///"_VAQNOTI
+"RTN","VAQREQ06",81,0)
+ ;
+"RTN","VAQREQ06",82,0)
+ S DIE="^VAT(394.61,"
+"RTN","VAQREQ06",83,0)
+ D ^DIE K DIE,DR
+"RTN","VAQREQ06",84,0)
+ QUIT
+"RTN","VAQREQ06",85,0)
+ ;
+"RTN","VAQREQ06",86,0)
+LDUNS ; -- Sets DR string and non-constant variables, LOAD FOR UNSOLICITED
+"RTN","VAQREQ06",87,0)
+ S VAQAUSIT=$$GETINST^VAQUTL97(VAQDOM)
+"RTN","VAQREQ06",88,0)
+ S DR=".02///VAQ-TUNSL"
+"RTN","VAQREQ06",89,0)
+ S DR(1,394.61,.03)=".03////"_$S(+VAQDFN>0:+VAQDFN,1:"")
+"RTN","VAQREQ06",90,0)
+ S DR(1,394.61,.04)=".04///"_VAQSENPT
+"RTN","VAQREQ06",91,0)
+ S DR(1,394.61,.05)=".05///VAQ-UNSOL"
+"RTN","VAQREQ06",92,0)
+ S DR(1,394.61,10)="10///"_VAQNM
+"RTN","VAQREQ06",93,0)
+ S DR(1,394.61,11)="11///"_VAQISSN
+"RTN","VAQREQ06",94,0)
+ S DR(1,394.61,12)="12///"_VAQIDOB
+"RTN","VAQREQ06",95,0)
+ S DR(1,394.61,13)="13///"_VAQPID
+"RTN","VAQREQ06",96,0)
+ S DR(1,394.61,20)="20///"_VAQRQDT
+"RTN","VAQREQ06",97,0)
+ S DR(1,394.61,21)="21///"_VAQDZN
+"RTN","VAQREQ06",98,0)
+ S DR(1,394.61,50)="50///"_VAQRQDT
+"RTN","VAQREQ06",99,0)
+ S DR(1,394.61,51)="51///"_VAQDZN
+"RTN","VAQREQ06",100,0)
+ S DR(1,394.61,30)="60///"_VAQRQSIT
+"RTN","VAQREQ06",101,0)
+ S DR(1,394.61,31)="61///"_VAQRQADD
+"RTN","VAQREQ06",102,0)
+ S DR(1,394.61,60)="30///"_VAQAUSIT
+"RTN","VAQREQ06",103,0)
+ S DR(1,394.61,61)="31///"_VAQDOM
+"RTN","VAQREQ06",104,0)
+ ;
+"RTN","VAQREQ06",105,0)
+ S DIE="^VAT(394.61,"
+"RTN","VAQREQ06",106,0)
+ D ^DIE K DIE,DR
+"RTN","VAQREQ06",107,0)
+ QUIT
+"RTN","VAQREQ06",108,0)
+MNOTI ; -- Loads the notify multiple
+"RTN","VAQREQ06",109,0)
+ N VAQNOTI,VAQNTF,VAQMSG
+"RTN","VAQREQ06",110,0)
+ S NOTI=""
+"RTN","VAQREQ06",111,0)
+ F  S NOTI=$O(^TMP("VAQNOTI",$J,NOTI))  Q:NOTI=""  D
+"RTN","VAQREQ06",112,0)
+ .;RRA VAQ*1.5*44 TICKET 485092 pass "Notify" ien rather than name as string (dups)
+"RTN","VAQREQ06",113,0)
+ .S VAQNOTI=$G(^TMP("VAQNOTI",$J,NOTI))
+"RTN","VAQREQ06",114,0)
+ .S VAQNTF(394.6171,"+1,"_VAQPR_",",.01)=VAQNOTI
+"RTN","VAQREQ06",115,0)
+ .D UPDATE^DIE("","VAQNTF",,"VAQMSG")
+"RTN","VAQREQ06",116,0)
+ .K VAQNTF,VAQMSG
+"RTN","VAQREQ06",117,0)
+ K DIE,DR,DLAYGO
+"RTN","VAQREQ06",118,0)
+ QUIT
+"RTN","VAQREQ06",119,0)
+ ;
+"RTN","VAQREQ06",120,0)
+MSEG ; -- Loads the data segment muliple
+"RTN","VAQREQ06",121,0)
+ S SEG=""
+"RTN","VAQREQ06",122,0)
+ F  S SEG=$O(^TMP("VAQSEG",$J,VAQDOM,SEG))  Q:(SEG="")  D
+"RTN","VAQREQ06",123,0)
+ .S SEGND=$G(^TMP("VAQSEG",$J,VAQDOM,SEG))
+"RTN","VAQREQ06",124,0)
+ .S VAQJUNK=$$FILESEG^VAQFILE2(394.61,VAQPR,80,$P(SEGND,"^",1),$P(SEGND,"^",3),$P(SEGND,"^",4))
+"RTN","VAQREQ06",125,0)
+ K VAQJUNK
+"RTN","VAQREQ06",126,0)
+ QUIT
+"RTN","VAQREQ06",127,0)
+ ;
+"RTN","VAQREQ06",128,0)
+CMNT ; -- Loads comment for unsolicited request (WORD PROCESSOR FIELD)
+"RTN","VAQREQ06",129,0)
+ S %X="^TMP(""CMNT"",$J,"
+"RTN","VAQREQ06",130,0)
+ S %Y="^VAT(394.61,"_DA_",""CMNT"","
+"RTN","VAQREQ06",131,0)
+ D %XY^%RCR
+"RTN","VAQREQ06",132,0)
+ K %X,%Y
+"RTN","VAQREQ06",133,0)
+ QUIT
+"RTN","VAQREQ06",134,0)
+ ;
+"RTN","VAQREQ06",135,0)
+END ; -- End of code
+"RTN","VAQREQ06",136,0)
+ ;QUIT
+"VER")
+8.0^22.0
+"BLD",9473,6)
+^41
+**END**
+**END**

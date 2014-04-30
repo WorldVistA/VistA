@@ -1,0 +1,569 @@
+$TXT Created by HARRIS,JAMES at DVBCACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Friday, 11/01/13 at 00:42
+=============================================================================
+Run Date: DEC 12, 2013                     Designation: PSB*3*70
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #62                      Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)PSB*3*54    <<= must be installed BEFORE `PSB*3*70'
+                    (v)PSB*3*64    <<= must be installed BEFORE `PSB*3*70'
+                    (v)PSB*3*66    <<= must be installed BEFORE `PSB*3*70'
+                    (v)PSJ*5*279   <<= must be installed BEFORE `PSB*3*70'
+                    (v)PSB*3*74    <<= must be installed BEFORE `PSB*3*70'
+
+Subject: IMR6 - CLINIC ORDER 
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR6 CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, AND IV BAG
+ LOGIC enhancement includes 4 patches which must be installed in the
+ following order:
+  
+ 1.      PSS*1*172
+ 2.      OR*3*266
+ 3.      PSJ*5*279
+ 4.      PSB*3*70
+  
+ ATTENTION: This enhancement also includes a new Graphical User Interface
+ (GUI) executable, BCMA GUI PSB3_P070.EXE. Installation of this GUI is
+ required immediately after the KIDS install for the Patch to function.
+  
+ This version of BCMA was successfully tested in the field against 
+ Wireless Medication Administration version 4.8 at Pittsburgh and Loma 
+ Linda. 
+  
+ For retrieval and installation instructions, please see the Client 
+ Installation Instructions section.
+ **************************************************************************
+  
+ The CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, and IV 
+ BAG LOGIC Project addresses enhancements identified during Inpatient
+ Medications Requirements for Special Focus Group Initial Request Analysis
+ (IMR SFG IRA) Phase III/Phase IV, as well as modifications requested by
+ the Bar Code Medication Administration (BCMA) and Inpatient Medications
+ workgroups.  
+  
+ Please refer to the release notes for a full detailed list and examples 
+ of items included in this patch.
+  
+  
+ Inpatient Medication Records Increment VI
+ =========================================
+ BCMA Clinic Orders.
+  
+ This enhancement provides support for display and administration of
+ medications in the clinic.  A separate view is used to display Clinic 
+ orders versus Inpatient orders.  The user can select Inpatient Order Mode 
+ or Clinic Order Mode to display the corresponding type of order.  The 
+ Cover Sheet and reports have been updated to include clinic order display 
+ and printing.
+  
+ BCMA Witness for High Risk / High Alert Administrations.
+  
+ Medications which are identified as High Risk/High Alert are given 
+ special handling for which a witness review and second signature 
+ is required or recommended, prior to administration. 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+                                                                   New/Mod
+ File Name (Number)                  Field Name (Number)             /Del
+ ---------------------------------   --------------------------    -------
+ BCMA MEDICATION LOG (53.79)         WITNESS DATE/TIME (.28)          New
+                                     ADMIN WITNESSED BY (.29)         New
+                                     WITNESS COMMENT (.31)            New
+   DISPENSE DRUG (53.795)            HIGH RISK/HIGH ALERT (.05)       New
+   ADDITIVES (53.796)                HIGH RISK/HIGH ALERT (.05)       New
+   SOLUTIONS (53.797)                HIGH RISK/HIGH ALERT (.05)       New
+  
+ BCMA MISSING DOSE REQUEST (53.68)   CLINIC (1)                       New
+ BCMA REPORT REQUEST (53.69)         SORT BY (.11)                    Mod
+                                     ORDERS TYPE MODE C/I (4)         New
+                                     CLINIC TO PRINT (5)              New
+  
+  
+ Forms Associated:
+                                                                    New/
+ Form Name                    File Name (Number)                   Mod/Del
+ -------------------------    ---------------------------------    -------
+ PSB MISSING DOSE FOLLOWUP    BCMA MISSING DOSE REQUEST (53.68)      Mod
+ PSBO MD                      BCMA REPORT REQUEST (53.69)            Mod
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                    New/Modified/Deleted
+ ---------------------------        --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                        Type             New/Modified/Deleted
+ ---------------------------        -----------      -------------------- 
+ PSB MISSING DOSE REQUEST           run routine            Deleted
+ PSBO DL                            run routine            Modified
+ PSBO MM                            run routine            Modified
+ PSBO WA                            run routine            Modified
+  
+  
+ Parameter Definitions:             New/Deleted
+ ---------------------------        -----------
+ PSB PRINTER CO MISSING DOSE           New
+  
+  
+ Protocols
+ Associated:
+  
+ Protocol Name                      New/Modified/Deleted
+ ---------------------------        -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                           New/Modified/Deleted
+ ---------------------------        --------------------      
+ PSB CLINICLIST                         New
+ PSB GETCOVERSHEET1                     Modified
+ PSB GETORDERTAB                        Modified
+ PSB MEDS ON PATIENT                    New
+ PSB REPORT                             Modified
+ PSB SUBMIT MISSING DOSE                Modified
+ PSB TRANSACTION                        Modified
+ PSB USERLOAD                           Modified 
+ PSB USERSAVE                           Modified
+ PSB WITNESS                            New
+                                   
+                                   
+ Security Keys Associated:
+  
+ Security Key Name               New/Deleted
+ -----------------------         -----------
+ PSB NO WITNESS                    New
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ PSB DIVISION       KERNEL    8989.52                            Mod
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070506 - Clinic Orders
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO 2265, PSPO 2247
+  
+                 
+ Associated Remedy Tickets:
+ -----------------------------
+ 1.  INC0000000591804 - Error - <UNDEFINED>SCANPT+29^PSBRPC
+     INC0000000801954(dup)
+  
+  Problem:
+  --------
+  When typing in a patient's wristband in BCMA, the "^" is
+  accepted as a valid character, causing a broker error.
+  
+  
+  Resolution:
+  -----------
+  Delphi file fScanWristband.pas was modified to not store the
+  "^" character when it is manually entered.
+  
+ 2.  INC0000000705800 - PSPO #2247 - No prompt for amount given for
+                        injectable med.
+     INC0000000729120(dup)
+     INC0000000333393(dup)
+  
+  Problem:
+  --------
+  Unit dose and IVP orders with multiple dispense drugs, when they have 
+  units of administration of milliliters, do not display the Units of
+  Administration pop up box, if all dispense drugs are not scanned or
+  the drugs are scanned out of order.
+  
+  Resolution:
+  -----------
+  Delphi file MultipleDrugs.PAS was modified to always ask for the
+  units of administration when they are needed.  This data will be
+  stored under the units of administration for the last dispensed drug
+  scanned.
+  
+ 3.  INC0000000711794 - PSPO #2265 - Field populated in error with scanner
+                      using med barcode. 
+  
+  Problem:
+  --------
+  When a medication is scanned outside the allowable time limit window,
+  the Medication Log window appears.  If a barcode is scanned while the
+  window is open the information is entered into the "Enter a comment"
+  box and automatically closes the window.
+  
+  Resolution:
+  -----------
+  Delphi file BCMA_Main.pas was modified to not default the focus to the
+  "ok" button.
+  
+ 4.  INC0000000426560 -  Have to select a check box that they have confirmed
+                       sensitive patient's identities without seeing date 
+                       of birth and SSN
+  
+  Problem:
+  --------
+  The Patient Confirmation form requires the user to click the "Patient
+  Confirmation" check box without seeing a patient's DOB and SSN.
+  
+  Resolution:
+  -----------
+  Delphi file fPtConfirmation.pas was modified to require the user to first
+  click the "accept if you understand the security issues" box to display
+  the SSN and DOB before they click that they verified the patient 
+  information.
+  
+ 5.  INC0000000776745 - Inpatient Medications - IV Orders Issue:
+  
+  Problem:
+  --------
+  A user is unable to use the "Undo Given" option for a medication with a 
+  Pharmacy status of "On Call".
+  
+  Resolution:
+  -----------
+  Delphi file BCMA_Main.pas was modified to allow an order to
+  be "Un-given" for orders with an "On Call" status.
+  
+  
+ 6.  INC0000000776117 - Multiple missing doses are not appearing in BCMA
+  
+  Problem:
+  --------
+  The missing dose request dialog box currently asks the user
+  to "Please Select One Order Drug", even though you have the
+  capability to select multiple missing drugs.
+  
+  Resolution:
+  -----------
+  Delphi file MultipleOrderedDrugs.frm was modified to change the
+  verbiage to "Please Select One or More Ordered Drug(s)".
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Loma Linda
+ Pittsburgh
+ St. Cloud
+  
+  
+ Client Installation Instructions:
+ =================================
+ The software distribution includes these modified files:
+  
+  FILE NAME       DESCRIPTION           FILE VERSION       BYTES   CHECKSUM
+  
+  BCMA.CHM        Client help file                       1,065 KB    n/a
+  BCMA.EXE        Client                  3.0.70.65      2,645 KB    n/a
+  BCMAPar.CHM     Parameters Client help                   143 KB    n/a
+  BCMApar.EXE     Parameters Client       3.0.70.9       1.066 KB    n/a
+  
+  
+   1. Prior client compatible with patch:  NO
+   2. Client can be copied instead of installed:  YES
+   3. Is your site running the CareFusion Wireless Medication
+      Administration (WMA) software? If YES, please contact Carefusion to
+      ensure your site has the latest compatible WMA patch.
+  
+  
+    Note:  Use Binary mode to retrieve the .EXE file.
+  
+    To obtain the updated .EXE, use FTP to retrieve PSB3_0P70.EXE (4,649
+    KB) from one of the following OI Field Offices' ANONYMOUS.SOFTWARE
+    directories:
+  
+     OI Field Office   FTP Address                Directory
+     VA-wide           download.vista.domain.ext  anonymous.software
+     Albany            ftp.fo-albany.domain.ext   anonymous.software
+     Hines             ftp.fo-hines.domain.ext    anonymous.software
+     Salt Lake City    ftp.fo-slc.domain.ext      anonymous.software
+  
+    If BCMA is currently running, please exit BCMA. This client
+    installation patch file can be used to upgrade an existing version of
+    BCMA, or can be used for a brand new installation.
+  
+     1. Double Click on PSB3_0P70.EXE which will launch the InstallShield
+        Wizard.
+  
+     2. When the InstallShield Wizard Welcome screen is displayed, click
+        "Next".
+  
+     3. On the Choose Destination Location screen, simply click "Next"
+        If you would like to change the destination folder to one other
+        than default, click "Browse" to navigate to the folder of your
+        choice. Click "Next".
+  
+     4. On the "Setup Type" Screen select one of the following:
+              a. Typical - installs only the BCMA client program
+                 which is necessary for medication administration.
+              b. Complete - installs the BCMA client and the
+                 GUI BCMA site parameters definition program.
+              c. Custom - allows you to select which programs to install
+                 Typical is selected by default. Click "Next".
+  
+     5. The InstallShield Wizard Ready to Install the Program screen
+        will display. Click "Install" to proceed with the installation.
+  
+     6. The InstallShield Wizard Complete screen will be displayed.
+        Click "Finish" and the BCMA installation is now complete.
+  
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                                               
+              File Name                                            FTP Mode
+ --------------------------------------------------------------------------
+ Release Notes - BCMA V.3.0  (PSB*3*70)                           
+              PSB_3_P70_RN.PDF                                     (binary)
+  
+ Install Guide - PSB*3*70
+              PSB_3_P70_IMR6_IG.PDF                                (binary)
+  
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 6
+              PSB_3_UM_CHAPTERS_1_THRU_6_R1213.PDF                 (binary)
+  
+ BCMA V.3.0 GUI Use Manual - Chapters 7 through 13
+              PSB_3_UM_CHAPTERS_7_THRU_13_R1213.PDF                (binary)
+  
+ BCMA V.3.0 Manager's User Manual
+              PSB_3_MAN_UM_R1213.PDF                               (binary)
+  
+ BCMA V.3.0 Manager's User Manual Change Pages PSB*3*70
+              PSB_3_P70_MAN_UM_CP.PDF                              (binary)
+  
+ BCMA V.3.0 Technical Manual
+              PSB_3_TM_R1213.PDF                                   (binary)
+  
+ BCMA V.3.0 Technical Manual Change Pages PSB*3*70
+              PSB_3_P70_TM_CP.PDF                                  (binary)
+  
+  
+ Patch Installation: 
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not queue this patch to install at a later time nor install this patch
+ while BCMA users are on the system. Installation will take no longer than
+ 5 minutes for the software components and new division parameter.  
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSB*3.0*70):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSB*3.0*70.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//'  respond YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Uninstall Instructions
+ ----------------------
+ This procedure assumes that a backup copy of the routines was done during 
+ the installation process.
+ Only routines are backed-up; other components such as DDs, templates, 
+ protocols, options or HL7 components are not backed up. 
+  
+ To back out the patches, restore the backup copy saved in the MailMan 
+ message. This action will restore the routines to the state before 
+ installing the IMR 6 patches.  
+  
+ Note: In order to completely back out all components, development will 
+ make a patch available for each package that will restore non-routine 
+ components to their pre-IMR 6 state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 101
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBCSUTL
+    Before:B149737589   After:B171997833  **16,13,38,32,50,60,58,68,70**
+Routine Name: PSBMD
+    Before: B75575865   After: B90525242  **23,42,70**
+Routine Name: PSBML
+    Before: B89675982   After:B123316080  **6,3,4,9,11,13,25,45,33,52,70**
+Routine Name: PSBML2
+    Before: B76455791   After: B90238392  **3,18,22,23,13,45,42,70**
+Routine Name: PSBML3
+    Before: B43135068   After: B46997085  **3,13,39,41,70**
+Routine Name: PSBMLLKU
+    Before: B85731436   After:B105244000  **3,9,11,20,13,38,32,56,42,70**
+Routine Name: PSBO
+    Before: B87103799   After:B150383689  **13,32,2,25,28,51,50,42,58,68,70**
+Routine Name: PSBO1
+    Before:  B7501769   After: B19597423  **4,13,32,2,43,28,70**
+Routine Name: PSBOBL
+    Before:  B9096254   After: B10430547  **70**
+Routine Name: PSBOBZ
+    Before: B18129776   After: B19545874  **2,70**
+Routine Name: PSBOCE
+    Before: B83955260   After:B101068370  **32,50,68,70**
+Routine Name: PSBOCI
+    Before: B92815487   After:B103229478  **32,62,68,70**
+Routine Name: PSBOCM
+    Before: B85413465   After:B102788691  **32,50,68,70**
+Routine Name: PSBOCM1
+    Before: B22801470   After: B23772218  **32,50,70**
+Routine Name: PSBOCP
+    Before: B82953642   After: B95743984  **32,50,68,70**
+Routine Name: PSBOCP1
+    Before:  B6438461   After:  B6917771  **32,70**
+Routine Name: PSBODL
+    Before: B85139144   After:B104826569  **5,9,38,32,25,63,68,70**
+Routine Name: PSBODL1
+    Before: B43970993   After: B44703020  **5,9,32,28,68,70**
+Routine Name: PSBODO
+    Before: B36995822   After: B38012086  **5,21,24,38,58,68,70**
+Routine Name: PSBOHDR
+    Before: B25654134   After: B71757590  **5,13,42,74,70**
+Routine Name: PSBOIV
+    Before: B83398690   After: B85319795  **32,68,70**
+Routine Name: PSBOMD
+    Before: B11558325   After: B16573592  **70**
+Routine Name: PSBOMH
+    Before: B83165444   After: B92472533  **5,9,38,57,67,68,70**
+Routine Name: PSBOMH2
+    Before: B46571592   After: B56923677  **6,20,27,26,67,68,70**
+Routine Name: PSBOML
+    Before: B41485291   After: B62348455  **3,11,50,54,70**
+Routine Name: PSBOMM
+    Before:B104750914   After:B142931678  **26,32,56,52,58,70**
+Routine Name: PSBOMT
+    Before: B88222978   After: B91036821  **32,50,70**
+Routine Name: PSBOPE
+    Before: B17458484   After: B20462828  **5,23,32*,70*
+Routine Name: PSBOPM
+    Before: B73285742   After: B75665878  **3,9,13,17,40,70**
+Routine Name: PSBOWA
+    Before: B51492255   After:B134110503  **9,32,56,70**
+Routine Name: PSBPOIV
+    Before: B65823843   After: B73419949  **2,66,70**
+Routine Name: PSBPRN
+    Before: B32147222   After: B41292164  **5,3,13,61,68,70**
+Routine Name: PSBRPC
+    Before:B186718604   After:B225560301  **6,3,4,13,32,28,42,58,66,70**
+Routine Name: PSBRPC1
+    Before: B10114973   After: B25166378  **42,70**
+Routine Name: PSBRPC3
+    Before:   B309181   After:   B291796  **6,3,4,16,13,10,32,28,42,58,68,70**
+Routine Name: PSBVAR
+    Before: B13715777   After: B15144988  *31,70*
+Routine Name: PSBVDLIV
+    Before: B70061917   After: B81051093  **6,38,32,58,70**
+Routine Name: PSBVDLPA
+    Before: B16689356   After: B22291163  **5,16,13,38,32,58,70**
+Routine Name: PSBVDLPB
+    Before: B99542907   After:B106147258  **11,13,38,32,58,68,70**
+Routine Name: PSBVDLTB
+    Before: B13695318   After: B33639693  **3,4,16,68,70**
+Routine Name: PSBVDLU1
+    Before: B63529398   After:B171179505  **13,32,68,70**
+Routine Name: PSBVDLU3
+    Before: B91879754   After: B94081463  **13,38,28,50,64,70**
+Routine Name: PSBVDLUD
+    Before: B85273287   After: B91521932  **11,13,38,32,58,68,70**
+Routine Name: PSBVDLVL
+    Before: B65042783   After: B74523979  **6,3,12,11,13,32,25,61,70**
+Routine Name: PSBVITFL
+    Before: B10030474   After:  B9618228  **31,42,70**
+Routine Name: PSBVT
+    Before: B80815673   After: B98717272  **6,3,38,68,74,70**
+ 
+Routine list of preceding patches: 40, 41, 54, 64, 66, 74
+
+=============================================================================
+User Information:
+Entered By  : NAPOLIELLO,GREG               Date Entered  : MAY 16, 2012
+Completed By: HARRIS,JAMES C                Date Completed: DEC 06, 2013
+Released By : CONNOLLY,BARBARA              Date Released : DEC 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

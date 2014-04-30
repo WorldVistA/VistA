@@ -1,0 +1,501 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: IB*2*385
+Package : IB - INTEGRATED BILLING             Priority: EMERGENCY
+Version : 2       SEQ #473                      Status: Released
+                  Compliance Date: MAR 27, 2014
+=============================================================================
+
+Associated patches: (c)DG*5.3*858      install with patch       `IB*2*385'
+                    (v)IB*2*153    <<= must be installed BEFORE `IB*2*385'
+                    (v)IB*2*195    <<= must be installed BEFORE `IB*2*385'
+                    (v)IB*2*217    <<= must be installed BEFORE `IB*2*385'
+                    (v)IB*2*269    <<= must be installed BEFORE `IB*2*385'
+                    (v)IB*2*293    <<= must be installed BEFORE `IB*2*385'
+                    (v)IB*2*449    <<= must be installed BEFORE `IB*2*385'
+
+Subject: IB VETERANS FINANCIAL ASSESSMENT (VFA) SUPPORT
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ *****************************************************************************
+ Note:  This patch is an emergency release with a 72-hour compliance.
+  
+        This patch is being released in support of the Enrollment System
+        (ES) Discontinue Annual Means Test Renewal project.  Patch IB*2*385
+        (Integrated Billing) is being released along with DG*5.3*858
+        (Registration), IVM*2*154 (Income Verification Match), EAS*1*106
+        (Enrollment Application System) and DGBT*1*24 (Beneficiary Travel)
+        in host file: DG_53_P858.KID.
+   
+        It is imperative that these patches be installed no later than the
+        compliance date.  Your understanding and support is appreciated.
+ *****************************************************************************
+  
+  
+ This patch provides the functional changes for the Integrated Billing 
+ package to properly create Veteran medication copayment exemption records
+ as a result of the discontinuance of the annual Means Test renewal 
+ process.  Any Means Tests with a Date of Test no earlier than one year 
+ before the VFA start date (1/1/13) do not require subsequent tests; the
+ income reported shall stay in effect indefinitely as it relates to the
+ Veteran's responsibility eligibility for medication and medical care
+ copayments.  No changes are required for the administration of medical
+ care copayments.  However, changes are required in the determination of
+ the medication copayment exemption.  An income-based exemption from the
+ medical copayment expires after 365 days, and the Veteran returns to a
+ non-exempt status until a subsequent income statement is submitted to VA
+ that places the Veteran in an exempt status.  This functionality is being
+ provided so that medication copayment exemptions dated within one year of
+ the VFA start date, and are based on income reported through a Means Test,
+ stay in effect indefinitely.
+  
+  
+ OPTIONS
+ ------- 
+ The following Integrated Billing options are being modified:
+  
+    Reprint Single Income Test Reminder Letter [IB RX REPRINT REMINDER]
+    -------------------------------------------------------------------
+    This option allows the user to select a patient and regenerate an
+    income test reminder letter.  The option only allows the user to
+    generate letters for Veterans whose current medication copayment
+    exemption record is based on income (exemption reason is either
+    INCOME<PENSION or INCOME>PENSION).  The system provides a note to the
+    user to warn that the Veteran is not required to take the Means Test if
+    the Veteran has a current Means Test status of MT COPAY REQUIRED or
+    PENDING ADJUDICATION.
+  
+    This option is being modified to incorporate an additional warning 
+    message to the user, if the Veteran's current medication copayment 
+    exemption record is based on a Means Test, and if the exemption date
+    (and thus Means Test effective date) is within one year of the VFA
+    start date. The warning will state that the Veteran's exemption record
+    is based on a Means Test and that the Veteran is not required to take
+    another Means Test.  The system will both issue this warning and not
+    allow the user to re-print the letter.
+  
+    Letters to Exempt Patients [IB RX PRINT EX LETERS]
+    --------------------------------------------------
+    This option generates the letter IB NOW EXEMPT that is stored in the IB
+    FORM LETTER (#354.6) file and sends it to all Veterans stored in the 
+    BILLING PATIENT (#354) who are exempt from the medication copayment but
+    are not SC>50%.
+  
+    The exemption letter prints "Renewal Date: MON, DD YYYY" under the 
+    Veteran's name if the Veteran's exemption record is based on income (a 
+    Means Test or a Copayment Test).  This functionality is being modified
+    to print "Renewal Date: MON, DD YYYY" under the Veteran's name if the
+    Veteran's exemption record is based on a Copayment Test only.
+  
+  
+  
+ BACKGROUND PROCESSES
+ -------------------- 
+ The following Integrated Billing background processes are being modified:
+  
+    Generation of Income Test Reminder Letters
+    ------------------------------------------
+    Income test reminder letters are generated each evening as part of 
+    Integrated Billing's nightly background job.  This process only
+    generates reminder letters for Veterans whose exemption reason is
+    either INCOME<PENSION or INCOME>PENSION.
+  
+    This process is being modified to incorporate an additional edit to 
+    assure that a letter is not printed for a Veteran whose medication 
+    copayment exemption record is based on a Means Test, if the exemption 
+    date (and thus Means Test effective date) is within one year of the VFA
+    start date.
+  
+    Means Test Event Driver Interface
+    ---------------------------------
+    The Integrated Billing application is a subscriber of the Means Test 
+    Event Driver, allowing it to perform any necessary data processing, in 
+    real time, when Means Tests or Copayment Tests are added, edited, or 
+    deleted.  The Integrated Billing Means Test Event Driver interface 
+    software generates medication copayment exemption records when Means 
+    Tests and Copayment Tests are added to the system.
+  
+    When a Means Test or Copayment Test, which has an effective date that
+    is more than a year in the past, is deleted, the system creates a
+    "non-exempt" medication copayment exemption record with the exemption 
+    reason of NO INCOME DATA.  This process is being modified to not create
+    a "non-exempt" exemption record if the exemption in effect before the
+    effective date of the deleted test was based on a Means Test that has
+    an effective date within one year of the VFA start date.
+  
+  
+ APPLICATION PROGRAMMER INTERFACES
+ --------------------------------- 
+ The following Integrated Billing application programmer interfaces (APIs) 
+ are being modified:
+  
+    Veteran Medication Copayment Exemption Status Determination
+    -----------------------------------------------------------
+    Integrated Billing provides an API that allows Vista applications to 
+    retrieve, and alternately display to the screen, a Veteran's medication
+    copayment exemption status (that has been filed within Integrated 
+    Billing) that is effective on a specified date.
+  
+    When the Veteran's exemption status is requested for a date that is 365
+    days after the date of the Veteran's last determined exemption status, 
+    the system generates statements indicating that the status on file is
+    no longer effective, and that a new exemption is required, unless the
+    Veteran is automatically exempted from the copayment.  This rule is
+    being modified to indicate that the status on file is no longer
+    effective unless the Veteran is automatically exempted from the
+    copayment or if the exemption on file is based on a Means Test that has
+    an effective date within one year of the VFA start date.
+  
+    When the Veteran's exemption status is requested for a date that is
+    less recent than the date of the Veteran's current exemption status,
+    the status that is calculated is based on the historical exemption
+    record with an exemption date that was "most recent" to the request
+    date.  If that exemption date is more than 365 days earlier than the
+    request date, the system generates statements indicating that the
+    status on file (for the request date) is no longer effective, and that
+    a new exemption is required, unless the Veteran is automatically
+    exempted from the copayment on the request date.  This rule is being
+    modified to indicate that the status on file is no longer effective
+    unless the Veteran is automatically exempted from the copayment on the
+    request date, or if the historical exemption record is based on a Means
+    Test that has an effective date within one year of the VFA start date.
+  
+    Veteran Medication Copayment Exemption Status Calculation
+    ---------------------------------------------------------
+    Integrated Billing has an API that it uses, when making a medication 
+    copayment billing decision, to retrieve a Veteran's current medication 
+    copayment exemption status (that has been filed within Integrated 
+    Billing) or, if the current status is no longer in effect, to
+    calculate, file, and retrieve the current status.
+  
+    When the Veteran's exemption status is required for a date that is 365 
+    days after the date of the Veteran's current (active) exemption status,
+    the system will calculate and file a new medication copayment exemption
+    record and return that exemption's status.  This rule is being be 
+    modified to only calculate and file a new exemption record if the
+    active exemption on file is not based on a Means Test that has an
+    effective date within one year of the VFA start date.
+  
+    When the Veteran's exemption status is required for a date that is less
+    recent than the date of the Veteran's current exemption status, the 
+    status that is retrieved is based on the historical exemption record
+    with an exemption date that was "most recent" to the request date.  If
+    that exemption date is more than 365 days earlier than the required
+    date, the system will calculate and file a new exemption record that is
+    effective on the required date.  This rule is being modified to only
+    calculate and file a new exemption record if the historical exemption
+    record is not based on a Means Test that has an effective date within 
+    one year of the VFA start date.
+  
+    Medication Copayment Exemption Status Calculation Based on Income
+    -----------------------------------------------------------------
+    Integrated Billing has an API that it uses internally to determine a 
+    Veteran's medication copayment exemption status based on an income test
+    that is in effect on the date that the exemption status is required.
+  
+    If the API retrieves a test with an effective date of more than 365
+    days prior to the date that the exemption status is required, the API
+    will compute the Veteran's exemption status to be non-exempt, with the
+    exemption reason of NO INCOME DATA.  This rule is being modified to 
+    utilize , for the purpose of computing the Veteran's exemption status, 
+    the income from such a test, if that test is a Means Test that has an 
+    effective date within one year of the VFA start date.
+  
+  
+ POST-INSTALL PROCESS
+ -------------------- 
+ It was discovered the code for CATASTROPHICALLY DISABLED in the EXEMPTION
+ REASON (#354.2) file was set to a value with 3 digits.  Auto-exemption
+ reasons should contain a code of 2 digits.  The post-install will update
+ that code to 70, one that isn't being used by the Integrated Billing
+ package.
+  
+  
+  
+  
+ Patch Components:
+ =================
+   
+ Files & Fields Associated:
+ --------------------------
+ N/A
+   
+    
+ Forms Associated:
+ -----------------
+ N/A
+   
+   
+ Mail Groups Associated:
+ -----------------------
+ N/A
+   
+   
+ Options Associated:
+ -------------------
+ Option Name                      Type             New/Modified/Deleted
+ -----------                      ----             --------------------
+ IB RX REPRINT REMINDER           run routine      Modified
+ IB RX PRINT EX LETERS            run routine      Modified
+  
+   
+   
+ Protocols Associated:
+ ---------------------
+ N/A
+   
+   
+ Security Keys Associated:
+ -------------------------
+ N/A
+   
+   
+ Templates Associated:
+ ---------------------
+ The following is a list of templates included in this patch:
+   
+ Template Name            Type        File Name (Number)
+ -------------            ----        ------------------
+ N/A
+   
+     
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+   
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+   
+   
+ Test Sites:
+ -----------
+ Boise VAMC, ID
+ Chillicothe VAMC, OH
+ VA North Texas HCS, TX
+  
+    
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+   
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server. Sites may  also elect to retrieve software directly
+ from a specific server as follows:
+   
+   Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ The following files should be downloaded in the binary FTP mode.
+   
+  Filename                Description
+  --------                -----------
+  IB_2_0_UM_R1113.pdf     Revised Integrated Billing User Manual
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+   
+  
+  
+ Patch Installation:
+ ===================
+   
+ Installation Instructions:
+ --------------------------
+   
+ This patch may be run with users on the system, however because the
+ Registration options need to be placed out of order, we suggest it
+ be installed after business hours.
+   
+ The installation should take less than 2 minutes.
+   
+ The following options should be disabled during installation:
+   
+     Register a Patient                         [DG REGISTER PATIENT]
+     Load/Edit Patient Data                     [DG LOAD PATIENT DATA]
+     Add a New Means Test                       [DG MEANS TEST ADD]
+     Adjudicate a Means Test                    [DG MEANS TEST ADJUDICATE]
+     Complete a Required Means Test             [DG MEANS TEST COMPLETE]
+     Edit an Existing Means Test                [DG MEANS TEST EDIT]
+     Hardships                                  [DGMTH HARDSHIPS]
+     Beneficiary Travel Menu                    [DGBT BENE TRAVEL MENU]
+     Claim Enter/Edit                           [DGBT BENE TRAVEL SCREEN]
+     View of Claim                              [DGBT BENE TRAVEL VIEW]
+     BT Alternate Income Enter/Edit             [DGBT ALTERNATE INCOME]
+     Print/Verify Patient Exemption Status      [IB RX PRINT VERIFY EXEMP]
+     Letters to Exempt Patients                 [IB RX PRINT EX LETERS]
+     Reprint Single Income Test Reminder Letter [IB RX REPRINT REMINDER]
+     MAS Parameter Entry/Edit                   [DG PARAMETER ENTRY] 
+     IVM Financial Query                        [IVM FINANCIAL QUERY] 
+  
+   
+ 1.  OBTAIN PATCHES
+     ==============
+     Obtain the host file DG_53_P858.KID, which contains the following
+     five patch installs:
+   
+         DG*5.3*858
+         EAS*1.0*106
+         IVM*2.0*154
+         DGBT*1*24
+         IB*2.0*385
+   
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+   
+         download.vista.domain.ext
+   
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+   
+         Albany                  ftp.domain.ext
+         Hines                   ftp.domain.ext
+         Salt Lake City          ftp.domain.ext
+   
+     The DG_53_P858.KID host file is located in the 
+     directory.  Use ASCII Mode when downloading the file.
+   
+ 2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file DG_53_P858.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]DG_53_P858.KID).
+   
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+     The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*858
+         EAS*1.0*106
+         IVM*2.0*154
+         DGBT*1*24
+ Build IB*2.0*385 has an Environmental Check Routine
+ Want to RUN the Environment Check Routine? YES// YES
+         IB*2.0*385
+ Will first run the Environment Check Routine, IB20P385
+   
+ Use INSTALL NAME: DG*5.3*858 to install this distribution.
+   
+ 3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+     ==================================================
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     DG*5.3*858):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+ 4.  INSTALL MULTI-BUILD:
+     ====================
+     This is the step to start the installation of this KIDS build.  This
+     will need to be run for DG*5.3*858 multi-build.
+  
+     a.  Choose the Install Package(s) option to start the install.
+     b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*858.
+     c.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//"  enter NO.
+     d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//"  enter YES.
+     e.  When prompted "Enter options you wish to mark as 'Out Of
+         Order':"  enter the following options:
+   
+     Register a Patient                          [DG REGISTER PATIENT]
+     Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+     Add a New Means Test                        [DG MEANS TEST ADD]
+     Adjudicate a Means Test                     [DG MEANS TEST ADJUDICATE]
+     Complete a Required Means Test              [DG MEANS TEST COMPLETE]
+     Edit an Existing Means Test                 [DG MEANS TEST EDIT]
+     Hardships                                   [DGMTH HARDSHIPS]
+     Beneficiary Travel Menu                     [DGBT BENE TRAVEL MENU]
+     Claim Enter/Edit                            [DGBT BENE TRAVEL SCREEN]
+     View of Claim                               [DGBT BENE TRAVEL VIEW]
+     BT Alternate Income Enter/Edit              [DGBT ALTERNATE INCOME]
+     Print/Verify Patient Exemption Status       [IB RX PRINT VERIFY EXEMP]
+     Letters to Exempt Patients                  [IB RX PRINT EX LETERS]
+     Reprint Single Income Test Reminder Letter  [IB RX REPRINT REMINDER]
+     MAS Parameter Entry/Edit                    [DG PARAMETER ENTRY] 
+     IVM Financial Query                         [IVM FINANCIAL QUERY] 
+  
+   
+     f.  When prompted "Enter protocols you wish to mark as 'Out Of
+         Order':"  enter <return>.
+     g.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+         appropriate number of minutes to delay the installation in 
+         order to give users enough time to exit the disabled options
+         before the installation starts.
+     h.  When prompted "Device: Home//"  respond with the correct device.
+  
+ 5.  DELETE POST-INSTALL ROTINE (optional)
+     =====================================
+     The post install routine IB20P385 may be deleted from the system if
+     the post-install process has completed.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P385
+    Before:       n/a   After: B21179841  **385**
+Routine Name: IBAMTED1
+    Before: B21870786   After: B22776911  **15,112,153,385**
+Routine Name: IBAMTED2
+    Before:  B3708640   After:  B4174484  **269,385**
+Routine Name: IBARXEL
+    Before: B16151618   After: B17084396  **34,139,206,217,385**
+Routine Name: IBARXEL1
+    Before: B13814990   After: B15139470  **34,199,217,385**
+Routine Name: IBARXEPL
+    Before: B28025836   After: B29058648  **34,54,190,206,385**
+Routine Name: IBARXEU
+    Before: B19692471   After: B23454054  **20,222,293,385**
+Routine Name: IBARXEU0
+    Before: B11290927   After: B13703927  **139,385**
+Routine Name: IBARXEU1
+    Before: B17685834   After: B18924658  **26,112,74,275,367,449,385**
+Routine Name: IBAUTL6
+    Before: B17850545   After: B18639666  **34,195,385**
+ 
+Routine list of preceding patches: 153, 195, 217, 269, 293, 449
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 25, 2007
+Completed By:                               Date Completed: FEB 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

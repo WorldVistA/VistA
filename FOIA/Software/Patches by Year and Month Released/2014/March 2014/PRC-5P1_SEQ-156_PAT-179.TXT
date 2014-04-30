@@ -1,0 +1,188 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Friday, 09/20/13 at 08:28
+=============================================================================
+Run Date: MAR 31, 2014                     Designation: PRC*5.1*179
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #156                    Status: Released
+                  Compliance Date: MAY 01, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*14  <<= must be installed BEFORE `PRC*5.1*179'
+                    (v)PRC*5.1*98  <<= must be installed BEFORE `PRC*5.1*179'
+
+Subject: NEW SECONDARY INV SITE ISSUE;2237 REQUEST DISPLAY;OBLIGATION PROCESSING ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following 3 issues:
+  
+ 1. Incorrect site when adding new secondary inventory point
+  
+ 2. 2237 Request Display missing comments
+  
+ 3. Purchase Order Issue - Obligations not showing on Running Balance
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000853051 Cannot remove secondary from Primary Inventory
+  
+ 2. INC000000842129 2237 Request Display missing comments
+  
+ 3. INC000000707554 Obligations not showing on Running Balance
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ South Texas VHCS
+ St. Cloud VAMC
+ CMOP National VistA
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000853051 Cannot remove secondary from Primary Inventory
+  
+    Problem:
+    --------
+  
+    When a user is in the Primary Inventory Point Main Menu [PRCP MAIN 
+    MENU] to delete a secondary inventory point, the action works
+    correctly. If the user tries to add a new secondary inventory point
+    after the delete, the new secondary inventory point would have the
+    incorrect site attached to the secondary name.
+  
+  
+    Resolution:
+    -----------                    
+    Modify the secondary inventory point delete/deactivate process, to 
+    insure the original site remains after removing all links to Fund
+    Control Points, for the deleted secondary inventory point.
+  
+ Routines: PRCPUINV
+  
+  
+ 2. INC000000842129 2237 Request Display missing comments
+  
+    Problem:
+    --------
+    Site using option 2237 Request Display [PRCH REQ DSP] to display the
+    2237 (Service) Request for a purchase order, would find at times that
+    comments did not display, which was critical for split requisitions.
+  
+    Resolution:
+    -----------
+    Modify routine to display requisition for Accountable Officer, 
+    Purchasing Agent, and Comments regardless of whether or not the 2237
+    requisition has a status entry in file Request Worksheet (#443).
+  
+ Routines: PRCHDR
+  
+  
+ 3. INC000000707554 Obligations not showing on Running Balance
+  
+    Problem:
+    --------
+    When a user obligates an order, they will at times be able to escape 
+    the obligation process before the Control Point Activity (#410) file, 
+    filing has been completed.  This prevents the obligated dollar amount
+    of an order from showing on the site Running Balance report.
+  
+  
+    Resolution:
+    -----------
+    Modify the routine PRCFAC02, to insure the Control Point Activity 
+    (#410) file obligation process filing is complete before any print 
+    requests within the obligation process are allowed.
+  
+  
+    Routines:  PRCFAC02
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*179)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*179.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       Primary Inventory Point Main Menu    [PRCP MAIN MENU]
+       New Detailed Purchase Card Order     [PRCH ENTER DETAILED ORDER] 
+       New  Simplified Purchase Card Order  [PRCH ENTER SIMPLIFIED ORDER]  
+       New Purchase Order                   [PRCHPC PO ADD]
+       Obligation Processing                [PRCFA OBLIGATION PROCESSING] 
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFAC02
+    Before: B10923843   After: B12584712  **14,179**
+Routine Name: PRCHDR
+    Before:  B5091639   After:  B5871626  **179**
+Routine Name: PRCPUINV
+    Before: B22949954   After: B24749182  **1,98,179**
+ 
+Routine list of preceding patches: 14, 98
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 08, 2013
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 31, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

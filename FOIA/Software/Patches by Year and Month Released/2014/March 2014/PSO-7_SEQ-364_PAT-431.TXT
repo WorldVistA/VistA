@@ -1,0 +1,142 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSO*7*431
+Package : PSO - OUTPATIENT PHARMACY           Priority: EMERGENCY
+Version : 7       SEQ #364                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*416   <<= must be installed BEFORE `PSO*7*431'
+
+Subject: MOCHA 2.0 EMERGENCY PATCH
+
+Category: 
+  - Routine
+  - Enhancement ()
+
+Description:
+============
+
+ This patch is part of MOCHA 2.0 FAST TRACK PATCHES 1.0 build that 
+ contains PSO*7*431 and PSJ*5*299. 
+  
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality. 
+  
+ The following describes the modifications contained within this patch:
+  
+ 1. For order level dosing order check messages that do not require the
+ pharmacist to enter a signature code on the order and where there are more
+ than three disabilities defined for the patient, the dose message in
+ Outpatient Pharmacy for a pending order scrolls off the screen.  Examples
+ of the message would be "FDB dosing information is not available for this
+ drug" or "Drug not matched to NDF".
+  
+ For Max Single Dose messages, the pharmacist is correctly required to sign
+ the order and enter an intervention.  Pharmacists do have the opportunity
+ to see the CPRS dosing message when the pending order is first opened in
+ Outpatient Pharmacy.  The CPRS message is the same message the scrolls off
+ the screen.
+  
+ To correct this, an "Enter to continue" will be displayed to keep the 
+ dose message from scrolling off the screen when the number of 
+ disabilities to be displayed exceeds the screen length.
+  
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch. 
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Associated PSIs: 
+ ----------------
+ N/A 
+  
+  
+ Overview of Remedy Ticket(s):
+ -----------------------------
+ N/A 
+  
+                                                                          
+ Test Sites:
+ -----------
+ BOISE, ID
+ CHARLESTON, SC
+ HEARTLAND WEST, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ FTP Instructions:
+  
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   --------           ----------------
+    PSS_1_160.KID                  PSS*1*160          ASCII
+    PSS_1_173.KID                  PSS*1*173          ASCII
+  
+    MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                   PSJ*5*252
+                                   OR*3*345
+  
+    MOCHA_2_0_FOLLOW_UP_
+      COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                   PSJ*5*257
+                                   GMRA*4*47
+                                   OR*3*311
+  
+    MOCHA_2_0_FAST_TRACK_
+      BUILDS.KID                   PSO*7*431          ASCII
+                                   PSJ*5*299
+  
+  
+       ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCPB
+    Before: B84504044   After: B84573403  **72,71,85,185,143,219,239,201,
+                                           263,303,431**
+Routine Name: PSOMLLD2
+    Before: B28319271   After: B30902022  **143,219,239,225,431**
+Routine Name: PSOORNEW
+    Before: B92394411   After: B92549598  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431**
+ 
+Routine list of preceding patches: 303, 416
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 25, 2013
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

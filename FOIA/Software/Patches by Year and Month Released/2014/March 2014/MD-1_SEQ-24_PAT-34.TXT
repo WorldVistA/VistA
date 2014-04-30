@@ -1,0 +1,136 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 06/19/13 at 07:46
+=============================================================================
+Run Date: MAR 20, 2014                     Designation: MD*1*34
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #24                      Status: Released
+                  Compliance Date: APR 20, 2014
+=============================================================================
+
+Associated patches: (v)MD*1*21     <<= must be installed BEFORE `MD*1*34'
+
+Subject: MODIFY AUTO-COMPLETE OF PROCEDURE TIME  
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+      
+ When utilizing the auto-complete functionality of Clinical Procedures
+ to bring procedures with machine results to a complete status, the system
+ will only look back 5 days from the time the procedure was scheduled.  Any
+ longer than that and the users must bring the procedures to a complete
+ status manually.
+            
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000442635 High Volume Issues
+    Duplicates
+    INC000000794422 Clinical Procedures - MUSE/EKG:
+    INC000000817584 Clinical Procedures - Other:
+      
+  
+ Associated NSR(s):
+ =================
+ N/A
+       
+  
+ Participating Test Sites:
+ ========================
+ Northampton VAMC, MA 
+ Salisbury - W.G. Hefner VAMC, NC 
+ VA West Los Angeles HCS, CA
+  
+            
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1.  HD0000000442635 High Volume Issues
+  
+   Problem:
+   -------
+   The MD PROCESS RESULTS scheduled task will only process results for
+   orders that are requested/scheduled up to 5 days in the past.  The sites
+   wanted to expand the number of days so the results will be picked up for
+   orders requested more than 5 days ago.
+      
+   Resolution:
+   ----------
+   Routine MDHL7XXX will be modified to look back 365 days instead of 5
+   days.       
+      
+      
+ Installation Instructions:
+ =========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users will not
+ be affected.
+  
+ * Recommendation  * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * It is recommended that the MD PROCESS RESULTS Task be unscheduled   *
+ * before the installation of MD*1*34.  Most sites have this task      *
+ * scheduled to run every 90 seconds.  Reschedule the task to run      *
+ * hourly the first time it runs after the install. It may take 10-20  *
+ * minutes to run the first time. Then when it is complete, unschedule *
+ * the task again and reschedule back to your normal interval.         *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+     
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (When prompted for the INSTALL NAME, enter MD*1.0*34):
+       
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+    4. Use the Install Package(s) option and select the package 
+       MD*1.0*34.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 01, 2004;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDHL7XXX
+    Before: B26957233   After: B28032567  **21,34**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 30, 2013
+Completed By:                               Date Completed: MAR 12, 2014
+Released By :                               Date Released : MAR 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

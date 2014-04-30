@@ -1,0 +1,172 @@
+
+=============================================================================
+Run Date: JAN 15, 2014                     Designation: XU*8*550
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #503                      Status: Released
+                  Compliance Date: FEB 15, 2014
+=============================================================================
+
+
+Subject: Resource Usage Monitor (RUM) support for Cache on Windows and Linux OS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Two related patches are being distributed in a single host file. These 
+ patches add Resource Usage Monitor (RUM) support for Cache on Windows and
+ Linux operating systems.
+  
+ XU*8.0*550 - This patch adds code to collect RUM data for Windows and 
+ Linux.
+  
+ KMPR*2.0*2 - This patch removes restrictions to gathering RUM data for 
+ Windows and Linux.
+  
+ 1. Add RUM support for Cache on Windows and Linux operating systems.
+ 2. Remove support for Cache versions less than 4.
+  
+ Patch Components:
+ =================
+ Included in this patch: XU*8.0*550
+                         KMPR*2.0*2
+  
+ Required for install:   KMPR*2.0*1
+                         KMPR*2.0*1
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Fayetteville, NC
+ North Florida/South Georgia
+ Huntington
+ South Texas Valley
+ Tennessee Valley
+ Texas Valley Coastal Bend
+ Tomah
+  
+ Blood Bank Review
+ -----------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*550 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XU*8*550 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ *********************************************************
+ * These installation instructions cover 2 patches:      *
+ *       XU*8.0*550                                      *
+ *       KMPR*2.0*2                                      *
+ *                                                       *
+ * Both patches will be loaded from a single host        *
+ * file (XU_8_550_V1.KID) and installed at the same time.*
+ *********************************************************
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The Post-Installation routine for patch XU*8.0*550 loads the appropriate 
+ ZOSVKR* routine and saves it as %ZOSVKR
+  
+ Installation Instructions and Software Retrieval
+ ================================================
+ - There are no options that need to be disabled.
+ - Users may remain on the system.
+ - This patch should NOT be installed while the RUM Background Driver
+    [KMPR BACKGROUND DRIVER] option is running (this job is queued to run
+    every day, usually at 1 a.m.).
+ - Make sure no other patch is being installed at the same time.
+ - TaskMan does *not* need to be stopped or put in a wait state.
+ - Installation should take less than 2 minutes.
+  
+  
+ 1. Retrieve the host file from the ANONYMOUS.SOFTWARE directory at one of
+    the OI Field Offices.  The preferred method is to FTP the file from
+    DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first
+    available server.  Alternatively, sites may elect to retrieve the file
+    from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.FO-ALBANY.DOMAIN.EXT       anonymous.software
+    Hines               FTP.FO-HINES.DOMAIN.EXT        anonymous.software
+    Salt Lake City      FTP.FO-SLC.DOMAIN.EXT          anonymous.software
+  
+    The software distribution includes:
+  
+  FILE NAME             DESCRIPTION           BLOCK SIZE
+  
+ XU_8_550_V1.KID            KIDS Build           606 blocks
+  
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, select the option Load a 
+    Distribution and select XU_8_550_v1.KID. KIDS will load both patches
+    from the host file.
+  
+  
+ 3. From the Installation Menu, you may elect to use the following option.
+    When prompted for the INSTALL enter the patch XU*8.0*550:
+                                                  **********
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install XU*8*550.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+         There are no menus involved, so menu trees do not need to be 
+         rebuilt.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+         Options, menu  options, or protocols  do not need to be disabled.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;July 7, 2010 10:10 am;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ZOSVKRO
+    Before: B26159240   After: B32060181  **90,94,107,122,143,186,550**
+Routine Name: ZOSVKRT
+    Before:       n/a   After:     B3418  **90,94,107,122,143,186,550**
+Routine Name: ZOSVKRV
+    Before: B30820169   After:    B94057  **90,94,107,122,143,186,550**
+ 
+Routine list of preceding patches: 186
+
+=============================================================================
+User Information:
+Entered By  : KAMAROWSKI,ROBERT             Date Entered  : JUL 07, 2010
+Completed By: BEST,LISA                     Date Completed: JAN 14, 2014
+Released By : MALMIN,PAUL                   Date Released : JAN 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

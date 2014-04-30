@@ -1,0 +1,798 @@
+Released PSJ*5*289 SEQ #253
+Extracted from mail message
+**KIDS**:PSJ*5.0*289^
+
+**INSTALL NAME**
+PSJ*5.0*289
+"BLD",8667,0)
+PSJ*5.0*289^INPATIENT MEDICATIONS^0^3130530^y
+"BLD",8667,1,0)
+^^45^45^3130530^
+"BLD",8667,1,1,0)
+This patch will address the Inpatient Medications portion of
+"BLD",8667,1,2,0)
+the solution to Patient Safety Issue PSPO00001088 and New
+"BLD",8667,1,3,0)
+Service Request (NSR) 20110308.  This patch must be installed
+"BLD",8667,1,4,0)
+after patch PSS*1.0*174.
+"BLD",8667,1,5,0)
+ 
+"BLD",8667,1,6,0)
+Patch PSS*1.0*174 introduced a new field into the
+"BLD",8667,1,7,0)
+IV ADDITIVES File (#52.6).  The new field, STRENGTH (#19)
+"BLD",8667,1,8,0)
+represents the numeric value of one unit-of-use for the
+"BLD",8667,1,9,0)
+medication.
+"BLD",8667,1,10,0)
+ 
+"BLD",8667,1,11,0)
+When viewing an order in Inpatient Medications, there is a
+"BLD",8667,1,12,0)
+hidden action called "DIN", or "Drug Restrictions/Guidelines".
+"BLD",8667,1,13,0)
+With this patch, when DIN is called on an IV order, the
+"BLD",8667,1,14,0)
+IV Additive strength will be displayed along with the Drug Unit.
+"BLD",8667,1,15,0)
+If the IV Additive Strength is not populated, the text "N/A"
+"BLD",8667,1,16,0)
+will appear instead.
+"BLD",8667,1,17,0)
+ 
+"BLD",8667,1,18,0)
+For example (STRENGTH populated):
+"BLD",8667,1,19,0)
+ 
+"BLD",8667,1,20,0)
+Drug restriction/guideline info:
+"BLD",8667,1,21,0)
+ 
+"BLD",8667,1,22,0)
+IV Additive: CEFAZOLIN   Additive Strength: 1 GM
+"BLD",8667,1,23,0)
+ 
+"BLD",8667,1,24,0)
+ 
+"BLD",8667,1,25,0)
+   Orderable Item: CEFAZOLIN INJ
+"BLD",8667,1,26,0)
+ 
+"BLD",8667,1,27,0)
+          No information available
+"BLD",8667,1,28,0)
+ 
+"BLD",8667,1,29,0)
+   Dispense drug: CEFAZOLIN SOD 10GM M/D INJ
+"BLD",8667,1,30,0)
+ 
+"BLD",8667,1,31,0)
+          No information available
+"BLD",8667,1,32,0)
+ 
+"BLD",8667,1,33,0)
+ 
+"BLD",8667,1,34,0)
+For example (STRENGTH not populated):
+"BLD",8667,1,35,0)
+ 
+"BLD",8667,1,36,0)
+IV Additive: CEFAZOLIN PREMIX   Additive Strength: N/A
+"BLD",8667,1,37,0)
+ 
+"BLD",8667,1,38,0)
+ 
+"BLD",8667,1,39,0)
+   Orderable Item: CEFAZOLIN INJ
+"BLD",8667,1,40,0)
+ 
+"BLD",8667,1,41,0)
+          No information available
+"BLD",8667,1,42,0)
+ 
+"BLD",8667,1,43,0)
+   Dispense drug: CEFAZOLIN SOD 1GM INJ *N/F*
+"BLD",8667,1,44,0)
+ 
+"BLD",8667,1,45,0)
+          No information available
+"BLD",8667,4,0)
+^9.64PA^^
+"BLD",8667,6.3)
+2
+"BLD",8667,"ABPKG")
+n
+"BLD",8667,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8667,"KRN",.4,0)
+.4
+"BLD",8667,"KRN",.401,0)
+.401
+"BLD",8667,"KRN",.402,0)
+.402
+"BLD",8667,"KRN",.403,0)
+.403
+"BLD",8667,"KRN",.5,0)
+.5
+"BLD",8667,"KRN",.84,0)
+.84
+"BLD",8667,"KRN",3.6,0)
+3.6
+"BLD",8667,"KRN",3.8,0)
+3.8
+"BLD",8667,"KRN",9.2,0)
+9.2
+"BLD",8667,"KRN",9.8,0)
+9.8
+"BLD",8667,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8667,"KRN",9.8,"NM",1,0)
+PSJDIN^^0^B38154566
+"BLD",8667,"KRN",9.8,"NM","B","PSJDIN",1)
+
+"BLD",8667,"KRN",19,0)
+19
+"BLD",8667,"KRN",19.1,0)
+19.1
+"BLD",8667,"KRN",101,0)
+101
+"BLD",8667,"KRN",409.61,0)
+409.61
+"BLD",8667,"KRN",771,0)
+771
+"BLD",8667,"KRN",779.2,0)
+779.2
+"BLD",8667,"KRN",870,0)
+870
+"BLD",8667,"KRN",8989.51,0)
+8989.51
+"BLD",8667,"KRN",8989.52,0)
+8989.52
+"BLD",8667,"KRN",8994,0)
+8994
+"BLD",8667,"KRN","B",.4,.4)
+
+"BLD",8667,"KRN","B",.401,.401)
+
+"BLD",8667,"KRN","B",.402,.402)
+
+"BLD",8667,"KRN","B",.403,.403)
+
+"BLD",8667,"KRN","B",.5,.5)
+
+"BLD",8667,"KRN","B",.84,.84)
+
+"BLD",8667,"KRN","B",3.6,3.6)
+
+"BLD",8667,"KRN","B",3.8,3.8)
+
+"BLD",8667,"KRN","B",9.2,9.2)
+
+"BLD",8667,"KRN","B",9.8,9.8)
+
+"BLD",8667,"KRN","B",19,19)
+
+"BLD",8667,"KRN","B",19.1,19.1)
+
+"BLD",8667,"KRN","B",101,101)
+
+"BLD",8667,"KRN","B",409.61,409.61)
+
+"BLD",8667,"KRN","B",771,771)
+
+"BLD",8667,"KRN","B",779.2,779.2)
+
+"BLD",8667,"KRN","B",870,870)
+
+"BLD",8667,"KRN","B",8989.51,8989.51)
+
+"BLD",8667,"KRN","B",8989.52,8989.52)
+
+"BLD",8667,"KRN","B",8994,8994)
+
+"BLD",8667,"QUES",0)
+^9.62^^
+"BLD",8667,"REQB",0)
+^9.611^2^2
+"BLD",8667,"REQB",1,0)
+PSS*1.0*174^2
+"BLD",8667,"REQB",2,0)
+PSJ*5.0*227^2
+"BLD",8667,"REQB","B","PSJ*5.0*227",2)
+
+"BLD",8667,"REQB","B","PSS*1.0*174",1)
+
+"MBREQ")
+0
+"PKG",197,-1)
+1^1
+"PKG",197,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",197,20,0)
+^9.402P^^
+"PKG",197,22,0)
+^9.49I^1^1
+"PKG",197,22,1,0)
+5.0^2971215^2980917^11712
+"PKG",197,22,1,"PAH",1,0)
+289^3130530
+"PKG",197,22,1,"PAH",1,1,0)
+^^45^45^3130530
+"PKG",197,22,1,"PAH",1,1,1,0)
+This patch will address the Inpatient Medications portion of
+"PKG",197,22,1,"PAH",1,1,2,0)
+the solution to Patient Safety Issue PSPO00001088 and New
+"PKG",197,22,1,"PAH",1,1,3,0)
+Service Request (NSR) 20110308.  This patch must be installed
+"PKG",197,22,1,"PAH",1,1,4,0)
+after patch PSS*1.0*174.
+"PKG",197,22,1,"PAH",1,1,5,0)
+ 
+"PKG",197,22,1,"PAH",1,1,6,0)
+Patch PSS*1.0*174 introduced a new field into the
+"PKG",197,22,1,"PAH",1,1,7,0)
+IV ADDITIVES File (#52.6).  The new field, STRENGTH (#19)
+"PKG",197,22,1,"PAH",1,1,8,0)
+represents the numeric value of one unit-of-use for the
+"PKG",197,22,1,"PAH",1,1,9,0)
+medication.
+"PKG",197,22,1,"PAH",1,1,10,0)
+ 
+"PKG",197,22,1,"PAH",1,1,11,0)
+When viewing an order in Inpatient Medications, there is a
+"PKG",197,22,1,"PAH",1,1,12,0)
+hidden action called "DIN", or "Drug Restrictions/Guidelines".
+"PKG",197,22,1,"PAH",1,1,13,0)
+With this patch, when DIN is called on an IV order, the
+"PKG",197,22,1,"PAH",1,1,14,0)
+IV Additive strength will be displayed along with the Drug Unit.
+"PKG",197,22,1,"PAH",1,1,15,0)
+If the IV Additive Strength is not populated, the text "N/A"
+"PKG",197,22,1,"PAH",1,1,16,0)
+will appear instead.
+"PKG",197,22,1,"PAH",1,1,17,0)
+ 
+"PKG",197,22,1,"PAH",1,1,18,0)
+For example (STRENGTH populated):
+"PKG",197,22,1,"PAH",1,1,19,0)
+ 
+"PKG",197,22,1,"PAH",1,1,20,0)
+Drug restriction/guideline info:
+"PKG",197,22,1,"PAH",1,1,21,0)
+ 
+"PKG",197,22,1,"PAH",1,1,22,0)
+IV Additive: CEFAZOLIN   Additive Strength: 1 GM
+"PKG",197,22,1,"PAH",1,1,23,0)
+ 
+"PKG",197,22,1,"PAH",1,1,24,0)
+ 
+"PKG",197,22,1,"PAH",1,1,25,0)
+   Orderable Item: CEFAZOLIN INJ
+"PKG",197,22,1,"PAH",1,1,26,0)
+ 
+"PKG",197,22,1,"PAH",1,1,27,0)
+          No information available
+"PKG",197,22,1,"PAH",1,1,28,0)
+ 
+"PKG",197,22,1,"PAH",1,1,29,0)
+   Dispense drug: CEFAZOLIN SOD 10GM M/D INJ
+"PKG",197,22,1,"PAH",1,1,30,0)
+ 
+"PKG",197,22,1,"PAH",1,1,31,0)
+          No information available
+"PKG",197,22,1,"PAH",1,1,32,0)
+ 
+"PKG",197,22,1,"PAH",1,1,33,0)
+ 
+"PKG",197,22,1,"PAH",1,1,34,0)
+For example (STRENGTH not populated):
+"PKG",197,22,1,"PAH",1,1,35,0)
+ 
+"PKG",197,22,1,"PAH",1,1,36,0)
+IV Additive: CEFAZOLIN PREMIX   Additive Strength: N/A
+"PKG",197,22,1,"PAH",1,1,37,0)
+ 
+"PKG",197,22,1,"PAH",1,1,38,0)
+ 
+"PKG",197,22,1,"PAH",1,1,39,0)
+   Orderable Item: CEFAZOLIN INJ
+"PKG",197,22,1,"PAH",1,1,40,0)
+ 
+"PKG",197,22,1,"PAH",1,1,41,0)
+          No information available
+"PKG",197,22,1,"PAH",1,1,42,0)
+ 
+"PKG",197,22,1,"PAH",1,1,43,0)
+   Dispense drug: CEFAZOLIN SOD 1GM INJ *N/F*
+"PKG",197,22,1,"PAH",1,1,44,0)
+ 
+"PKG",197,22,1,"PAH",1,1,45,0)
+          No information available
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSJDIN")
+0^1^B38154566^B31115413
+"RTN","PSJDIN",1,0)
+PSJDIN ;BIR/MV - National Formulary Indicator Utility ;4 MAR 2000/ 4:27 PM
+"RTN","PSJDIN",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**50,56,76,227,289**;16 DEC 97;Build 2
+"RTN","PSJDIN",3,0)
+ ;
+"RTN","PSJDIN",4,0)
+ ; Reference to ^PSSDIN is supported by DBIA# 3166.
+"RTN","PSJDIN",5,0)
+ ; Reference to ^PS(52.6 is supported by DBIA# 1231.
+"RTN","PSJDIN",6,0)
+ ; Reference to ^PS(52.7 is supported by DBIA# 2173.
+"RTN","PSJDIN",7,0)
+ ; Reference to ^PS(50.7 is supported by DBIA# 2180.
+"RTN","PSJDIN",8,0)
+ ; Reference tp ^PSDRUG is supported by DBIA# 2192.
+"RTN","PSJDIN",9,0)
+ ;
+"RTN","PSJDIN",10,0)
+DINIV(FIL,DRGTMP)      ;
+"RTN","PSJDIN",11,0)
+ ;*Find the DD & OI IEN for the additive or solution
+"RTN","PSJDIN",12,0)
+ ;*FIL:    52.6 or 52.7
+"RTN","PSJDIN",13,0)
+ ;*DRGTMP: Additive or Solution's IEN
+"RTN","PSJDIN",14,0)
+ ;
+"RTN","PSJDIN",15,0)
+ NEW PSJDRG,PSJOI,PSJDD,PSJDIN,PSJINDEX
+"RTN","PSJDIN",16,0)
+ S PSJDRG=$P(^PS(FIL,+DRGTMP,0),U,2),PSJOI=$P(^PS(FIL,+DRGTMP,0),U,11)
+"RTN","PSJDIN",17,0)
+ D DIN(PSJOI,PSJDRG)
+"RTN","PSJDIN",18,0)
+ Q
+"RTN","PSJDIN",19,0)
+DIN(PSJOI,PSJDRG)       ;
+"RTN","PSJDIN",20,0)
+ ;*This will issue the Restriction/guideline prompt for both OI & DD
+"RTN","PSJDIN",21,0)
+ ;*PSJOI:   Orderable Item IEN
+"RTN","PSJDIN",22,0)
+ ;*PSJDRG:   Dispense drug IEN
+"RTN","PSJDIN",23,0)
+ ;
+"RTN","PSJDIN",24,0)
+ NEW PSJDIN,PSJDD,PSJINDEX,Y,X,XIT
+"RTN","PSJDIN",25,0)
+ D EN^PSSDIN(PSJOI,PSJDRG)
+"RTN","PSJDIN",26,0)
+ Q:$O(^TMP("PSSDIN",$J,""))=""
+"RTN","PSJDIN",27,0)
+ S PSJDIN=$$PROMPT^PSSDIN
+"RTN","PSJDIN",28,0)
+ W:"DOY"[Y @IOF
+"RTN","PSJDIN",29,0)
+ I PSJDIN="D"!(PSJDIN="Y") D  Q:XIT=U
+"RTN","PSJDIN",30,0)
+ . W !!,"Dispense Drug Text:" W ! D TXD("DD") W !!
+"RTN","PSJDIN",31,0)
+ I PSJDIN="O"!(PSJDIN="Y") D
+"RTN","PSJDIN",32,0)
+ . W !!,"Orderable Item Text:" W ! D TXD("OI") W !!
+"RTN","PSJDIN",33,0)
+ D PAUSE^VALM1,CLEAR^VALM1
+"RTN","PSJDIN",34,0)
+ Q
+"RTN","PSJDIN",35,0)
+TXD(N1) ;
+"RTN","PSJDIN",36,0)
+ ;N1 = "OI" or "DD"
+"RTN","PSJDIN",37,0)
+ ;DISPLAY OI/DD DRUG TEXT
+"RTN","PSJDIN",38,0)
+ N N2,N3,N4,NX S XIT="",NX="PSSDIN"  ;
+"RTN","PSJDIN",39,0)
+ S N2="" F  S N2=$O(^TMP(NX,$J,N1,N2)) Q:'N2!(XIT=U)  D
+"RTN","PSJDIN",40,0)
+ .S N3="" F  S N3=$O(^TMP(NX,$J,N1,N2,N3)) Q:'N3!(XIT=U)  D
+"RTN","PSJDIN",41,0)
+ ..S N4="" F  S N4=$O(^TMP(NX,$J,N1,N2,N3,N4)) Q:'N4!(XIT=U)  D
+"RTN","PSJDIN",42,0)
+ ...W !?5,^TMP(NX,$J,N1,N2,N3,N4) I $Y>15 W ! D HLD S XIT=X
+"RTN","PSJDIN",43,0)
+ Q
+"RTN","PSJDIN",44,0)
+HLD ;
+"RTN","PSJDIN",45,0)
+ W !
+"RTN","PSJDIN",46,0)
+ ;K DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR K DIR
+"RTN","PSJDIN",47,0)
+ K DIR
+"RTN","PSJDIN",48,0)
+ S DIR(0)="E",DIR("A")="Press Return to Continue or ""^"" to Exit: "
+"RTN","PSJDIN",49,0)
+ D ^DIR K DIR
+"RTN","PSJDIN",50,0)
+ W @IOF
+"RTN","PSJDIN",51,0)
+ Q
+"RTN","PSJDIN",52,0)
+NFIV(FIL,PSJIVIEN,PSJNF)        ;
+"RTN","PSJDIN",53,0)
+ ;*Return N/F and msg display for ad/sol.
+"RTN","PSJDIN",54,0)
+ ;*FIL:   "AD" or "SOL"
+"RTN","PSJDIN",55,0)
+ ;*PSIVIEN: Additive or Solution's IEN
+"RTN","PSJDIN",56,0)
+ ;*PSJNF:   0 node from file 50
+"RTN","PSJDIN",57,0)
+ ;*PSJNF("NF"):  Only exist if it is a Non-formulary
+"RTN","PSJDIN",58,0)
+ ;*PSJNF("MSG"): Return the message field to be displayed /w IV names
+"RTN","PSJDIN",59,0)
+ ;
+"RTN","PSJDIN",60,0)
+ S PSJNF=$G(^PSDRUG(+$P($G(^PS(FIL,+PSJIVIEN,0)),U,2),0))
+"RTN","PSJDIN",61,0)
+ S PSJNF("NF")=$S($P(PSJNF,U,9)=1:" *N/F*",1:"")
+"RTN","PSJDIN",62,0)
+ S PSJNF("MSG")=$P(PSJNF,U,10)
+"RTN","PSJDIN",63,0)
+ Q
+"RTN","PSJDIN",64,0)
+DINFLIV(DRG)   ;
+"RTN","PSJDIN",65,0)
+ ;*This module will find all drug text that exist for the Orderable 
+"RTN","PSJDIN",66,0)
+ ;*Items & dispense drugs associated with the Additive(s) & Solution(s)
+"RTN","PSJDIN",67,0)
+ ;*within the IV order.  Once a drug text exist, return the <DIN> 
+"RTN","PSJDIN",68,0)
+ ;*indicator to be displayed within the order view.
+"RTN","PSJDIN",69,0)
+ ;
+"RTN","PSJDIN",70,0)
+ ;*DRG:  Drug array from the IV order
+"RTN","PSJDIN",71,0)
+ NEW PSJFIL,PSJND,PSJX,PSJFL
+"RTN","PSJDIN",72,0)
+ F PSJFIL="AD","SOL" F PSJND=0:0 S PSJND=$O(DRG(PSJFIL,PSJND)) Q:'PSJND!$G(PSJFL)  D
+"RTN","PSJDIN",73,0)
+ . S PSJX=$G(^PS($S(PSJFIL="AD":52.6,1:52.7),+DRG(PSJFIL,PSJND),0)) D EN^PSSDIN($P(PSJX,U,11),$P(PSJX,U,2))
+"RTN","PSJDIN",74,0)
+ . I $O(^TMP("PSSDIN",$J,""))]"" S PSJFL=1 Q
+"RTN","PSJDIN",75,0)
+ I '$G(PSJFL),$G(PSJORD)["P" S PSJFL=$$DINFLUD(+P("PD")),PSJFL=$S(PSJFL]"":1,1:0)
+"RTN","PSJDIN",76,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",77,0)
+ Q $S($G(PSJFL):" <DIN>",1:"")
+"RTN","PSJDIN",78,0)
+ ;
+"RTN","PSJDIN",79,0)
+DINFLUD(PSJOI,PSJDDA) ;
+"RTN","PSJDIN",80,0)
+ ;*This module will find all drug text that exist for the Orderable 
+"RTN","PSJDIN",81,0)
+ ;*items & dispense drugs associated with the unit dose order.  Once
+"RTN","PSJDIN",82,0)
+ ;*a drug text exist, return the <DIN> indicator to be displayed with
+"RTN","PSJDIN",83,0)
+ ;*the order view.
+"RTN","PSJDIN",84,0)
+ ;*PSJOI:  Orderable IEN (Require)
+"RTN","PSJDIN",85,0)
+ ;*PSJDDA: Dispense drug array within the order (Optional)
+"RTN","PSJDIN",86,0)
+ ;
+"RTN","PSJDIN",87,0)
+ NEW PSJFL,PSJDD
+"RTN","PSJDIN",88,0)
+ D EN^PSSDIN(PSJOI) I $O(^TMP("PSSDIN",$J,"OI",0)) K ^TMP("PSSDIN",$J) Q "<DIN>"
+"RTN","PSJDIN",89,0)
+ F PSJDD=0:0 S PSJDD=$O(PSJDDA(PSJDD)) Q:'PSJDD  D
+"RTN","PSJDIN",90,0)
+ . D EN^PSSDIN(,PSJDD) I $O(^TMP("PSSDIN",$J,"DD",0)) S PSJFL=1 Q
+"RTN","PSJDIN",91,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",92,0)
+ Q $S($G(PSJFL):"<DIN>",1:"")
+"RTN","PSJDIN",93,0)
+ ;
+"RTN","PSJDIN",94,0)
+DINHIDE(PSJDFN,PSJORD) ;
+"RTN","PSJDIN",95,0)
+ ;*Display drug text from the hidden action. 
+"RTN","PSJDIN",96,0)
+ ;*PSJDFN: Patient IEN (Require)
+"RTN","PSJDIN",97,0)
+ ;*PSJORD: Order #_"UVP" (Required)
+"RTN","PSJDIN",98,0)
+ ;*DRG:    IV DRG array (Required for IV but Optional for UD orders)
+"RTN","PSJDIN",99,0)
+ ;
+"RTN","PSJDIN",100,0)
+ D:PSJORD["V" IV
+"RTN","PSJDIN",101,0)
+ D:PSJORD["U" UD
+"RTN","PSJDIN",102,0)
+ I PSJORD["P" D
+"RTN","PSJDIN",103,0)
+ . D @($S($P(^PS(53.1,+PSJORD,0),U,4)="U":"UD",1:"IV"))  ;PSJ*5*227 - Unit Dose DIN fix
+"RTN","PSJDIN",104,0)
+ I PSJORD="" D NEWUD
+"RTN","PSJDIN",105,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",106,0)
+ Q
+"RTN","PSJDIN",107,0)
+IV ;
+"RTN","PSJDIN",108,0)
+ ;NEW DRG,DRGI,DRGT,ND,ON55,Y
+"RTN","PSJDIN",109,0)
+ ;D:PSJORD["P" GT531^PSIVORFA(DFN,PSJORD)
+"RTN","PSJDIN",110,0)
+ ;I PSJORD["V" S ON55=PSJORD D GTDRG^PSIVORFB
+"RTN","PSJDIN",111,0)
+ ;*Loop thru IV DRG array to find OI & DD IEN from each AD & SOL.
+"RTN","PSJDIN",112,0)
+ ;
+"RTN","PSJDIN",113,0)
+ NEW FIL,NAME,PSJDD,PSJNF,PSJOI,PSJX,Y,X,PSJXY,STR,UNT,STRUN
+"RTN","PSJDIN",114,0)
+ D FULL^VALM1 W @IOF
+"RTN","PSJDIN",115,0)
+ W !,"Drug restriction/guideline info:"
+"RTN","PSJDIN",116,0)
+ F FIL="AD","SOL" F PSJX=0:0 S PSJX=$O(DRG(FIL,PSJX)) Q:'PSJX  D
+"RTN","PSJDIN",117,0)
+ . NEW X
+"RTN","PSJDIN",118,0)
+ . S PSJXY=1
+"RTN","PSJDIN",119,0)
+ . SET NAME=$P(DRG(FIL,PSJX),U,2)
+"RTN","PSJDIN",120,0)
+ . ;PSJ*5*289 - Add Additive Strength to display.
+"RTN","PSJDIN",121,0)
+ . S STR=$$GET1^DIQ(52.6,$P(DRG(FIL,PSJX),U,1)_",",19)  ; Get STRENGTH from IV Additives File
+"RTN","PSJDIN",122,0)
+ . S UNT=$$GET1^DIQ(52.6,$P(DRG(FIL,PSJX),U,1)_",",2)   ; Get DRUG UNIT from IV Additives File
+"RTN","PSJDIN",123,0)
+ . S STRUN=$G(STR)_" "_$G(UNT)  ; Append DRUG UNIT to STRENGTH
+"RTN","PSJDIN",124,0)
+ . I STR="" S STRUN="N/A"  ; Per Pharmacy User Group - put N/A if the STRENGTH field is not populated.
+"RTN","PSJDIN",125,0)
+ . W !!,"IV "_$S(FIL="AD":"Additive",1:"Solution")_": "_NAME
+"RTN","PSJDIN",126,0)
+ . D NFIV(FIL,+PSJX,.PSJNF) W $G(PSJNF("NF"))_$S(FIL="AD":"   Additive Strength: "_$G(STRUN),1:""),!  ;Put Additive Strength after *N/F*.
+"RTN","PSJDIN",127,0)
+ . S X=$S(FIL="AD":$G(^PS(52.6,+DRG(FIL,PSJX),0)),1:$G(^PS(52.7,+DRG(FIL,PSJX),0)))
+"RTN","PSJDIN",128,0)
+ . S PSJOI=$P(X,U,11),PSJDD=$P(X,U,2) D EN^PSSDIN(+PSJOI,+PSJDD)
+"RTN","PSJDIN",129,0)
+ . D DINOI(PSJOI,3)
+"RTN","PSJDIN",130,0)
+ . D DINDD(PSJDD,3)
+"RTN","PSJDIN",131,0)
+ D:'$G(PSJXY) HLD
+"RTN","PSJDIN",132,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",133,0)
+ Q
+"RTN","PSJDIN",134,0)
+UD ;
+"RTN","PSJDIN",135,0)
+ ;*Loop thru Unit dose order for Orderable Item & Dispense drug
+"RTN","PSJDIN",136,0)
+ ;
+"RTN","PSJDIN",137,0)
+ NEW F,PSJDD,PSJDDX,PSJOI,PSJXY
+"RTN","PSJDIN",138,0)
+ D FULL^VALM1 W @IOF
+"RTN","PSJDIN",139,0)
+ W !,"Drug restriction/guideline info:"
+"RTN","PSJDIN",140,0)
+ S F=$S(PSJORD["U":"^PS(55,PSJDFN,5,+PSJORD,",1:"^PS(53.1,+PSJORD,")
+"RTN","PSJDIN",141,0)
+ S PSJOI=+@(F_".2)") D EN^PSSDIN(PSJOI),DINOI(PSJOI,3)
+"RTN","PSJDIN",142,0)
+ ;*Loop thru dispense drug array
+"RTN","PSJDIN",143,0)
+ F PSJDDX=0:0 S PSJDDX=$O(@(F_"1,"_PSJDDX_")")) Q:'PSJDDX  D
+"RTN","PSJDIN",144,0)
+ . S PSJXY=1
+"RTN","PSJDIN",145,0)
+ . S PSJDD=+@(F_"1,"_PSJDDX_",0)")
+"RTN","PSJDIN",146,0)
+ . D EN^PSSDIN(PSJOI,PSJDD)
+"RTN","PSJDIN",147,0)
+ . D DINDD(PSJDD,3)
+"RTN","PSJDIN",148,0)
+ D:'$G(PSJXY) HLD
+"RTN","PSJDIN",149,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",150,0)
+ Q
+"RTN","PSJDIN",151,0)
+NEWUD ;*New backdoor order doesn't have an order# yet.
+"RTN","PSJDIN",152,0)
+ ;*Loop thru Orderable Item & Dispense drug
+"RTN","PSJDIN",153,0)
+ ;
+"RTN","PSJDIN",154,0)
+ NEW F,PSJDD,PSJDDX,PSJOI,PSJXY
+"RTN","PSJDIN",155,0)
+ D FULL^VALM1 W @IOF
+"RTN","PSJDIN",156,0)
+ W !,"Drug restriction/guideline info:"
+"RTN","PSJDIN",157,0)
+ S PSJOI=+$G(PSGPD) D EN^PSSDIN(PSJOI),DINOI(PSJOI,3)
+"RTN","PSJDIN",158,0)
+ ;*Loop thru dispense drug array
+"RTN","PSJDIN",159,0)
+ F PSJDDX=0:0 S PSJDDX=$O(^PS(53.45,PSJSYSP,2,PSJDDX)) Q:'PSJDDX  D
+"RTN","PSJDIN",160,0)
+ . S PSJXY=1
+"RTN","PSJDIN",161,0)
+ . S PSJDD=+$G(^PS(53.45,PSJSYSP,2,PSJDDX,0))
+"RTN","PSJDIN",162,0)
+ . D EN^PSSDIN(PSJOI,PSJDD)
+"RTN","PSJDIN",163,0)
+ . D DINDD(PSJDD,3)
+"RTN","PSJDIN",164,0)
+ D:'$G(PSJXY) HLD
+"RTN","PSJDIN",165,0)
+ K ^TMP("PSSDIN",$J)
+"RTN","PSJDIN",166,0)
+ Q
+"RTN","PSJDIN",167,0)
+DINOI(PSJOI,COL)    ;
+"RTN","PSJDIN",168,0)
+ ;*Display drug text for Orderable Item
+"RTN","PSJDIN",169,0)
+ ;*OI:   Orderable Item IEN
+"RTN","PSJDIN",170,0)
+ ;*COl:  Column to display the text in
+"RTN","PSJDIN",171,0)
+ ;
+"RTN","PSJDIN",172,0)
+ NEW X,XX
+"RTN","PSJDIN",173,0)
+ W !!,?COL,"Orderable Item: "_$$OINAME^PSJLMUTL(PSJOI)_$$OINF(PSJOI),!
+"RTN","PSJDIN",174,0)
+ I '$O(^TMP("PSSDIN",$J,"OI",PSJOI,0)) W !,?10,"No information available",! Q
+"RTN","PSJDIN",175,0)
+ D TXD("OI") W !
+"RTN","PSJDIN",176,0)
+ Q
+"RTN","PSJDIN",177,0)
+DINDD(PSJDD,COL)        ;
+"RTN","PSJDIN",178,0)
+ ;*Display drug text for Dispense drug
+"RTN","PSJDIN",179,0)
+ ;*PSJDD:  Dispense drug IEN
+"RTN","PSJDIN",180,0)
+ ;*COL:    Column to display the text in
+"RTN","PSJDIN",181,0)
+ ;
+"RTN","PSJDIN",182,0)
+ NEW X
+"RTN","PSJDIN",183,0)
+ W !,?COL,"Dispense drug: "_$$DDNAME^PSJLMUTL(+PSJDD)_$$DDNF(PSJDD),!
+"RTN","PSJDIN",184,0)
+ I '$O(^TMP("PSSDIN",$J,"DD",PSJDD,0)) W !?10,"No information available",! D HLD Q
+"RTN","PSJDIN",185,0)
+ D TXD("DD"),HLD W @IOF
+"RTN","PSJDIN",186,0)
+ Q
+"RTN","PSJDIN",187,0)
+OINF(PSJOI)        ;
+"RTN","PSJDIN",188,0)
+ ;*Return *N/F* if the orderable item is Non-formulary
+"RTN","PSJDIN",189,0)
+ ;*PSJOI: Orderable item IEN
+"RTN","PSJDIN",190,0)
+ ;
+"RTN","PSJDIN",191,0)
+ Q $S($P($G(^PS(50.7,+PSJOI,0)),U,12)=1:" *N/F*",1:"")
+"RTN","PSJDIN",192,0)
+ ;
+"RTN","PSJDIN",193,0)
+DDNF(PSJDD)     ;
+"RTN","PSJDIN",194,0)
+ ;**Return *N/F* if the dispense drug is Non-formulary
+"RTN","PSJDIN",195,0)
+ ;*PSJDD: Dispense drug IEN
+"RTN","PSJDIN",196,0)
+ ;
+"RTN","PSJDIN",197,0)
+ Q $S($P($G(^PSDRUG(+PSJDD,0)),U,9)=1:" *N/F*",1:"")
+"RTN","PSJDIN",198,0)
+        
+"RTN","PSJDIN",199,0)
+  
+"RTN","PSJDIN",200,0)
+   
+"RTN","PSJDIN",201,0)
+       
+"RTN","PSJDIN",202,0)
+  
+"RTN","PSJDIN",203,0)
+         
+"VER")
+8.0^22.0
+"BLD",8667,6)
+^253
+**END**
+**END**

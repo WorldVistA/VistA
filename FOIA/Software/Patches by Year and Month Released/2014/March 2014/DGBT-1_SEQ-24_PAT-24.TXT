@@ -1,0 +1,203 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: DGBT*1*24
+Package : DGBT - BENEFICIARY TRAVEL           Priority: EMERGENCY
+Version : 1        SEQ #24                      Status: Released
+                  Compliance Date: MAR 27, 2014
+=============================================================================
+
+Associated patches: (v)DGBT*1*20   <<= must be installed BEFORE `DGBT*1*24'
+
+Subject: VFA MEANS TEST EXPIRATION ELIMINATION
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ Note:  This patch is an emergency released with a 72-hour compliance.
+  
+ This patch is being released in support of the Enrollment System (ES)
+ Discontinue Annual Means Test Renewal project.  DGBT*1*24 (Beneficiary
+ Travel) is being released along with DG*5.3*858 (Registration), IVM*2*154
+ (Income Verification Match), EAS*1*106 (Enrollment Application System),
+ and IB*2*385 (Integrated Billing)in host file: DG_53_P858.KID.
+  
+ It is imperative that these patches be installed no later than the
+ compliance date.  Your understanding and support is appreciated.
+ ************************************************************************* 
+  
+ The Health Eligibility Center (HEC) requested modifications to the
+ Enrollment System (ES) and VistA Registration, Enrollment and
+ Eligibility (VistA REE) software to support the requirements of the
+ Discontinue Annual Means Test Renewal project.
+   
+ This patch modifies the Beneficiary Travel (BT) v1.0 application as 
+ described below:
+  
+ 1. Removes Means Test (MT) expiration related displays from the 
+ Beneficiary Travel Claim Information <Screen 1> and the BT Alternate 
+ Income Enter/Edit screens.  
+  
+ 2. Where applicable, income information from the most recent Means Test
+ will be displayed on the screen, and the MT Status fields will no longer
+ display "EXPIRED" if the means test status date is older than the BT Claim
+ date by more than 365 days.
+  
+ 3. The new VFA Start Date field in MAS PARAMETERS file (#43) will 
+ now be used as part of the determination of a "current" means test.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+   
+ Forms Associated:
+ -----------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+  
+ Options Associated:
+ -------------------
+ N/A
+   
+   
+ Protocols Associated:
+ ---------------------
+ N/A
+   
+   
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+  
+ Templates Associated:
+ ---------------------
+ N/A
+   
+     
+ New Service Request (NSRs):
+ ---------------------------
+ N/A
+   
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+   
+   
+ Test Sites:
+ -----------
+ Boise VAMC, ID
+ Chillicothe VAMC, OH
+ VA North Texas HCS, TX
+  
+  
+  
+  
+ Problem:
+ -------
+ 1. Changes resulting from the Veterans Financial Assessment business 
+ process will result in the discontinuation of the Veterans means test 
+ expiration. The Beneficiary Travel software currently has in place a 
+ check for means test expiration after one year from the means test 
+ entry.  When this occurs, it causes the non-display of income data and 
+ the display of an expiration message for a means test in both the
+ Beneficiary Travel Claims Screen <1> and the BT Alternate Income 
+ Enter/Edit screens.
+  
+ 2. When displaying the Beneficiary Travel Claims Screen <1>, there is a 
+ display within the Waiver information that shows the calculated means 
+ test expiration date if the waiver software found one to be applicable. 
+  
+ Resolution:
+ ----------
+ 1. The software for the display of the means test information has been 
+ modified to override the "EXPIRED" tag when a means test is available and 
+ determined to be current under new VFA rules.  If a means test is found 
+ that is now considered current, the associated income for that means test 
+ will be displayed as well.  Information display for Low Income and 
+ Alternate income cases is not impacted by this patch.
+  
+ 2. When there is an applicable Waiver information display, if the waiver 
+ is associated with a means test, expiration display is over-written with 
+ "MEANS TEST DO NOT EXPIRE".
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server. Sites may  also elect to retrieve software directly
+ from a specific server as follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ The following files should be downloaded in the binary FTP mode.
+  
+ Filename                    Description
+ --------                    -----------
+ DGBT_1_0_24_BT_UM.PDF    Revised Beneficiary Travel (BT) User Manual
+ DGBT_1_0_24_BT_TM.PDF    Revised Beneficiary Travel (BT) Technical Manual
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+  
+ Patch Installation:
+  
+ Please see the Patch Description for patch DG*5.3*858 for installation 
+ instructions.
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBT1
+    Before:B120702431   After:B127576754  **11,20,24**
+Routine Name: DGBTALTI
+    Before: B50552972   After: B51270693  **20,24**
+Routine Name: DGBTUTL
+    Before: B98577404   After:B104795609  **20,24**
+Routine Name: DGBTUTL1
+    Before: B40695224   After: B55063675  **20,24**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 19, 2013
+Completed By:                               Date Completed: FEB 14, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,93 @@
+
+=============================================================================
+Run Date: JAN 15, 2014                     Designation: KMPR*2*2
+Package : KMPR - CAPACITY MANAGEMENT - RUM    Priority: Mandatory
+Version : 2         SEQ #3                      Status: Released
+                  Compliance Date: FEB 15, 2014
+=============================================================================
+
+
+Subject: Status and Start options update
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Because of the tight integration of patch XU*8.0*550 and patch 
+ KMPR*2.0*2, the patches are being combined in a single host file.
+  
+ 1. The [KMPR START COLLECTION] Start RUM Collection option contains an 
+    Entry Action which prevents sites with Linux and Windows operating 
+    systems from executing this option. Patch XU*8.0*550 removes this 
+    restriction, so the Entry Action is removed from this option.
+ 2. The [KMPD STATUS] status option now uses a call to DISPLAY^KMPDSS1, 
+    which is the standard status call for all Capacity Planning 
+    environment checks.
+ 3. An error would occur when entering a question mark while selecting a 
+    date range for RUM reports.
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Fayetteville, NC
+ North Florida/South Georgia
+ Huntington
+ South Texas Valley
+ Tennessee Valley
+ Texas Valley Coastal Bend
+ Tomah
+  
+ Patch Installation:
+ -----------------
+ **********************************************************
+ * Please see path XU*8*550 for installation instructions.*
+ **********************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CAPACITY MANAGEMENT - RUM;**[Patch List]**;May 28, 2003;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: KMPRBD01
+    Before:  B7459434   After:  B7791408  **1,2**
+Routine Name: KMPRBD02
+    Before: B29338515   After: B30303455  **2**
+Routine Name: KMPRBD04
+    Before: B32011228   After: B32539952  **2**
+Routine Name: KMPRBD05
+    Before:       n/a   After: B15044365  **2**
+Routine Name: KMPRPOST
+    Before:  B1139124   After:   B555999  **2**
+Routine Name: KMPRPT
+    Before:       n/a   After: B53295132  **2**
+Routine Name: KMPRSS
+    Before:  B5472013   After:  B5496431  **1,2**
+Routine Name: KMPRSSA
+    Before: B52658391   After:    Delete  
+Routine Name: KMPRSSB
+    Before:   B988835   After:    Delete  
+Routine Name: KMPRUTL
+    Before: B12308301   After: B12744359  **1,2**
+Routine Name: KMPRUTL1
+    Before: B23590616   After: B23586195  **1,2**
+ 
+Routine list of preceding patches: 1
+
+=============================================================================
+User Information:
+Entered By  : KAMAROWSKI,ROBERT             Date Entered  : JUN 22, 2005
+Completed By: BEST,LISA                     Date Completed: JAN 14, 2014
+Released By : HARROD,PAUL                   Date Released : JAN 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

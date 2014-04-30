@@ -1,0 +1,178 @@
+$TXT Created by CRUMLEY,JAMIE at CPRS30.FO-SLC.DOMAIN.EXT  (KIDS) on Wednesday, 09/12/12 at 16:07
+=============================================================================
+Run Date: DEC 12, 2013                     Designation: OR*3*266
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #325                      Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*266'
+
+Subject: NURSE VERIFY FOR CLINIC ORDERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR6 CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, AND IV BAG
+ LOGIC enhancement includes 4 patches which must be installed in the
+ following order:
+  
+ 1.      PSS*1*172
+ 2.      OR*3*266
+ 3.      PSJ*5*279
+ 4.      PSB*3*70
+  
+ This enhancement also includes a new Graphical User Interface (GUI) BCMA
+ GUI version 3.0.70.65. Installation of this GUI is required immediately
+ after the KIDS install for the Patch to function.
+  
+ The Clinic Orders project has identified a need for the Computerized
+ Patient Record System (CPRS) to send Nurse Verify information to Inpatient
+ Medications V. 5.0 (IPM) for Clinic Orders. This patch will deliver this
+ modification to send nurse verification on both Inpatient Medication and 
+ Clinic Orders in the HL7 (Health Level 7) messages from CPRS to IPM.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ 20070506 - Clinic Orders
+  
+ Test Sites:
+ ===========
+ Central Texas HCS
+ Loma Linda HCS, CA
+ Pittsburgh, PA
+ St. Cloud, MN
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)   New/Modified/Deleted
+ ------------------         -------------------   --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch can be loaded with users in the system. It is strongly
+ suggested it be loaded at a slow time and not during a medication pass.
+ Installation time is less than five minutes.
+  
+ Suggested time to install: non-peak requirement hours.
+  
+  1.  Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter OR*3.0*266
+      
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package
+      OR*3.0*266
+  
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO. 
+      b.  When prompted 'Want to DISABLE Scheduled Options and Menu Options
+          and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORMBLDPS
+    Before: B86048776   After: B86692352  **7,38,54,86,97,94,116,129,141,
+                                           190,195,237,254,243,293,280,
+                                           266**
+ 
+Routine list of preceding patches: 280
+
+=============================================================================
+User Information:
+Entered By  : MALMROSE,CARY                 Date Entered  : AUG 03, 2006
+Completed By: CRUMLEY,JAMIE                 Date Completed: NOV 27, 2013
+Released By : BOSE,MARY ELLEN               Date Released : DEC 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

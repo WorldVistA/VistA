@@ -1,0 +1,373 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSJ*5*257
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #256                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*195   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*252   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*268   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*288   <<= must be installed BEFORE `PSJ*5*257'
+                    (v)PSJ*5*295   <<= must be installed BEFORE `PSJ*5*257'
+
+Subject: MOCHA 2.0 FOLLOW-UP PATCH
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ ****************************  Please Note   *****************************
+ There is a typographical error for the patch number seen during the 
+ install process where the user will see:
+  
+ Queuing background job for PSJ*5*297 Post Install...
+  
+ The messaging should show patch PSJ*5*257 instead of PSJ*5*297. Although 
+ patch name PSJ*5*297 appears, the correct background job is queued.
+  
+ There is also a typographical error for the patch number in the subject 
+ line of the message the installing person gets when the background job 
+ completes:
+  
+ Subj: Background job for PSJ*5*297 Post Install  [#179515] 07/01/13@14:17 
+ 7 lines
+  
+ The Subject of the email should show patch PSJ*5*257 instead of 
+ PSJ*5*297. The message is otherwise correct.
+ *************************************************************************
+  
+  
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality.  The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities. 
+  
+ Patch Information:
+ ------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311
+   5. OR_3_381.KID
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSO*7*431, PSJ*5*299
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ **NOTE**
+ When this patch is installed in step 4 of the MOCHA v2.0 installation 
+ process, the 'before' checksum of routine ORCMED will be incorrect, as 
+ will the second line of that routine because it will not include patch 
+ OR*3*380. The functionality introduced with patch OR*3*380 is overwritten 
+ by this patch. However, when patch OR*3*381 is installed in step 5 of the 
+ MOCHA v2.0 installation process, that will correct the second line of 
+ routine ORCMED and restore the functionality from patch OR*3*380.
+  
+ PSS_1_160 and PSS_1_173 include the components necessary for the
+ interface that will be used in MOCHA v2.0.  The MOCHA 2.0 and 
+ MOCHA 2.0 FOLLOW UP COMBINED BUILD include the modifications to implement
+ Max Single Dose Order checks for the Order Entry Results Reporting (OERR),
+ Inpatient Medications and Outpatient Pharmacy applications.
+  
+ These patches will add a maximum single dose order check to the current
+ VistA medication order checking system that uses the First DataBank (FDB)
+ business logic and database. In this initial phase of dosing
+ functionality, the Maximum Single Dose information will be displayed to
+ the user.  The following scenarios describe the types of messaging added:
+  
+   1. If the dosage entered passes the dosing checks, no message will be
+      displayed.
+  
+   2. If the dosage entered is too high, the Single Dose warning
+      message will be displayed.
+  
+   3. If the dose checks were not able to be performed, a generic message
+      will be displayed notifying the user that a manual check needs to be
+      completed to verify appropriate dosing.
+  
+ **************************************************************************
+ When using the option Compare Transport Global to Current System [XPD 
+ COMPARE TO SYSTEM] with the host file MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD 
+ you will see the following warnings on certain routines:
+  
+ Host file: MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416, 
+ PSJ*5*257, GMRA*4*47, and OR*3*311
+  
+ PSJ*5*257:
+  
+ Routine:  PSIVORFB
+ *** WARNING, your routine has different patches than the incoming routine 
+ ***
+  
+ Routine:  PSJBLDOC, PSJGMRA, PSJOC, PSJOCDI, PSJOEA2
+ *** WARNING, you are missing one or more Patches ***
+  
+ These warnings are due to the sequence of released patches prior to MOCHA 
+ v2.0. Once all the MOCHA v2.0 patches are installed, the second lines of
+ the routines will be updated appropriately.
+ **************************************************************************
+  
+  
+ The following issues are also addressed by this patch:
+  
+ 1. When processing orders for multiple patients using the 
+ Non-Verified/Pending Orders option, the patients list was reset and 
+ the previous patient's profile was redisplayed to the user.  This patch
+ will correct this issue.  CCR 6088.
+  
+ 2. Whenever a single dose amount for an IV order needed to be adjusted, 
+ only under certain circumstance was a note displayed to inform the
+ user the dose had been adjusted.  This change will always display a note
+ to let the users know if the single dose amount has been adjusted.  CCR
+ 6173.
+  
+ 3. If there were multiple Unit Dose/IV orders on the profile that had 
+ drug exceptions, the warning was only displayed for the first order of
+ the group.  This issue existed in Inpatient backdoor only.  CCR 6223.
+  
+ 4. This patch will update the 2nd commented line of the PSJOEA2 routine 
+ to reflect the correct patching order.  No functionality is impacted.  
+ CCR 6311.
+  
+ 5.  To alleviate alert fatigue for those sites using clinics in their 
+ everyday process, a modification has been made to add a new parameter
+ IMO DC/EXPIRED DAY LIMIT field (#6) to CLINIC DEFINITION file (#53.46).
+  
+ This field contains the number of days that DC/Expired orders will be
+ included in the enhanced order checks for drug interaction and therapeutic
+ duplications for clinic orders. If this field is left blank, a default
+ value of 30 days will be used. Sites can define this field to be from 1
+ day up to 120 days for displaying clinic enhanced order checks.
+  
+ In addition, the CLINIC DEFINITION [PSJ CD] option has been updated to 
+ allow enter/edit for the IMO DC/EXPIRED DAY LIMIT field (#6).
+  
+ Based on the number of days defined in the IMO DC/EXPIRED DAY LIMIT field 
+ (#6), the enhanced order checks process will only display discontinued and
+ expired drug interactions and/or duplicate therapy clinic orders that fall
+ within the range defined.
+  
+  
+ Components exported with this patch:
+ ------------------------------------
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ -------------------------------------------------------------------------
+ 53.46       CLINIC DEFINITION         YES   YES   NO                  NO
+ Partial DD: subDD: 53.46      fld: 6
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ ----------------------------   --------           ----------------
+ Inpatient Medications Nurse's PSJ_5_NURSE_UM_R0314.PDF        (binary)  
+   User Manual                 PSJ_5_NURSE_UM_R0314.DOC        (binary)
+  
+ Inpatient Medications         PSJ_5_PHAR_UM_ R0314.PDF        (binary)
+   Pharmacist's User Manual    PSJ_5_PHAR_UM_ R0314.DOC        (binary)
+  
+ Inpatient Supervisor's User   PSJ_5_SUPR_UM_ R0314.PDF        (binary)
+   Manual                      PSJ_5_SUPR_UM_ R0314.DOC        (binary)
+  
+ Inpatient Medications         PSJ_5_TM_ R0314.PDF             (binary)
+   Technical Manual/Security   PSJ_5_TM_ R0314.DOC             (binary)
+   Guide 
+  
+ Dosing Order Check User       PSS_PSJ_PSO_Dosing_Ord_         (binary) 
+    Manual                        Ck_User_Manual.PDF  
+                               PSS_PSJ_PSO_Dosing_Ord_         (binary)
+                                  Ck_User_Manual.DOC
+  
+ Medication Order Check        PSS_1_PSO_7_PSJ_5_RN_R0314.PDF  (binary)
+    Healthcare Application     PSS_1_PSO_7_PSJ_5_RN_ R031.DOC  (binary)
+    (MOCHA) v2.0 Release Notes
+  
+ MOCHA v2.0 Combined Build     PSS_1_P160_MOCHA_CB_IG.PDF      (binary)
+    Installation Guide         PSS_1_P160_MOCHA_CB_IG.DOC      (binary)
+  
+ VistA to MOCHA v2.0 Interface PSS_1_VistA_to_MOCHA_ID.PDF     (binary)
+    Document                   PSS_1_VistA_to_MOCHA_ID.DOC     (binary)
+  
+  
+ FTP Instructions:
+  
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+ File Name                      Contents           Retrieval Format
+ ----------------------------   --------           ----------------
+ PSS_1_160.KID                  PSS*1*160          ASCII
+  
+ PSS_1_173.KID                  PSS*1*173          ASCII
+  
+ MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                PSJ*5*252
+                                OR*3*345
+  
+ MOCHA_2_0_FOLLOW_UP_
+   COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                PSJ*5*257
+                                GMRA*4*47
+                                OR*3*311
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.  Note the following typographical 
+ errors in the install guide:
+  
+ ****************************  Please Note   *****************************
+ There is a typographical error for the patch number seen during the 
+ install process where the user will see:
+  
+ Queuing background job for PSJ*5*297 Post Install...
+  
+ The messaging should show patch PSJ*5*257 instead of PSJ*5*297. Although 
+ patch name PSJ*5*297 appears, the correct background job is queued.
+  
+ There is also a typographical error for the patch number in the subject 
+ line of the message the installing person gets when the background job 
+ completes:
+  
+ Subj: Background job for PSJ*5*297 Post Install  [#179515] 07/01/13@14:17 
+ 7 lines
+  
+ The Subject of the email should show patch PSJ*5*257 instead of 
+ PSJ*5*297. The message is otherwise correct.
+ *************************************************************************
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 105
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGFILED
+    Before: B24429385   After: B25006038  **20,50,63,119,110,111,112,154,
+                                           184,181,257**
+Routine Name: PSGOEC
+    Before: B75069336   After: B75500256  **23,58,110,175,201,134,181,
+                                           260,288,257**
+Routine Name: PSGOT
+    Before: B22872398   After: B23046911  **13,68,90,110,173,134,161,254,
+                                           267,257**
+Routine Name: PSGOTR
+    Before: B19415814   After: B19636030  **110,127,133,129,267,257**
+Routine Name: PSIVOCDS
+    Before:B114348606   After:B131643526  **181,252,257**
+Routine Name: PSIVORC2
+    Before: B59162972   After: B59663678  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267,275,257**
+Routine Name: PSIVORFB
+    Before: B84688439   After: B83657459  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273,267,257**
+Routine Name: PSJ257PO
+    Before:       n/a   After:  B8181415  **257**
+Routine Name: PSJBLDOC
+    Before: B27080671   After: B52892828  **181,263,260,295,252,257**
+Routine Name: PSJCLNOC
+    Before: B82441248   After: B84441536  **260,257**
+Routine Name: PSJCOMV
+    Before: B40002868   After: B40386923  **110,127,267,257**
+Routine Name: PSJGMRA
+    Before: B22580264   After: B26285552  **181,270,260,252,257**
+Routine Name: PSJHL10
+    Before: B74404096   After: B75460781  **58,78,91,109,110,195,257**
+Routine Name: PSJHLV
+    Before: B21639863   After: B21975577  **39,42,78,92,127,133,268,257**
+Routine Name: PSJIMO1
+    Before:       n/a   After: B32765352  **257**
+Routine Name: PSJLIACT
+    Before: B49618322   After: B50131468  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257**
+Routine Name: PSJOC
+    Before: B24678878   After: B32808738  **181,260,252,257**
+Routine Name: PSJOCDI
+    Before: B84788026   After: B93276069  **181,260,252,257**
+Routine Name: PSJOCDS
+    Before: B73599009   After: B73617469  **181,252,257**
+Routine Name: PSJOCDT
+    Before: B55186647   After: B55618824  **181,260,288,257**
+Routine Name: PSJOEA2
+    Before: B29720730   After: B30358376  **127,133,200,267,268,257**
+ 
+Routine list of preceding patches: 195, 252, 268, 275, 288
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 16, 2011
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

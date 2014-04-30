@@ -1,0 +1,233 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Thursday, 11/14/13 at 11:35
+=============================================================================
+Run Date: MAR 13, 2014                     Designation: ECX*3*148
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #133                      Status: Released
+                  Compliance Date: APR 13, 2014
+=============================================================================
+
+Associated patches: (v)ECX*3*44    <<= must be installed BEFORE `ECX*3*148'
+                    (v)ECX*3*105   <<= must be installed BEFORE `ECX*3*148'
+                    (v)ECX*3*123   <<= must be installed BEFORE `ECX*3*148'
+                    (v)ECX*3*144   <<= must be installed BEFORE `ECX*3*148'
+
+Subject: DSS FY 2014 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ During the release of the DSS FY 14 Sustainment patch ECX*3*144, it was
+ discovered that two routines, ECXLARPT and ECXUPRO had incorrect dates
+ listed on line two of the routine.  Typically, the second line of the
+ routine contains the version release date for the package.  For these two
+ routines that date was incorrect.
+  
+ A full review of all ECX routines was done and 6 additional routines were
+ found to have an incorrect date on line two.  They are: ECXAMTL, 
+ ECXUCBOC, ECXUCPT, ECXUDRF, ECXUEC, and ECXUSUR.
+  
+ In addition, during review, routines ECXLARPT and ECXUDRF were found to 
+ have the package name listed as DSS instead of the correct formal name of 
+ DSS EXTRACTS.
+  
+ It was also discovered that two fields in the BCMA EXTRACT (#727.833) 
+ file, COMPONENT UNITS (#32) and COMPONENT DOSE GIVEN (#31), have become
+ purely numeric where in the past they could have included numbers and
+ text.  The text has meaning and will be returned to these fields.
+  
+ Problem #1: Package release date is incorrect on second line of routine
+  
+   ASSOCIATED REMEDY:
+   ==================
+   N/A 
+   
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   On line 2 of the 8 routines listed above, the package release date was
+   incorrect.  The package release date for version 3 of the DSS EXTRACT
+   software was Dec 22, 1997.
+   
+   Resolution:
+   -----------
+   For each of the routines in question, the second line release date was 
+   changed to Dec 22, 1997.
+  
+ Problem #2: The package name on line two was incorrectly identifed as
+             DSS
+  
+   ASSOCIATED REMEDY:
+   ==================
+   N/A
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:
+   --------
+   On line 2 of routines ECXLARPT and ECXUDRF the package was identified 
+   as DSS instead of DSS EXTRACTS.
+  
+   Resolution:
+   -----------
+   The second line of the routines identified above were changed to 
+   indicate DSS EXTRACTS, which is the formal name of the package.
+    
+ Problem #3: The COMPONENT UNITS (#32) field and the COMPONENT DOSE GIVEN
+             (#31) field in the BCMA EXTRACT (#727.833) file have lost the
+             unit portion of the field.
+  
+   ASSOCIATED REMEDY:
+   ==================
+   N/A
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+   
+   Problem:  
+   --------
+   When calculating the cost related fields for the BCMA extract, the 
+   COMPONENT DOSE GIVEN (#31) and COMPONENT UNIT (#32) fields were
+   converted to numeric for the calculation.  Unfortunately, the units were
+   not added back to those fields before they were stored as part of the
+   extract record.
+  
+   Resolution:
+   -----------
+   Before storing the extract record, the COMPONENT UNIT (#32) and
+   COMPONENT DOSE GIVEN (#31) fields will be restored to their source
+   values so that it includes all pertinent information.  Routine ECXBCM
+   has been updated to correct the data in the above mentioned fields.
+  
+ Test Sites:
+ -----------
+ Boston
+ Little Rock
+ North Texas
+  
+ INSTALLATION:
+ =============
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+                  Extract Manager's Options [ECXMGR]
+   
+ Install Time - less than 2 minutes (unless otherwise indicated) 
+  
+ ***********************************************************
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke 
+         the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS
+         -------------
+         Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:  
+  
+              Edits and Distribution ...
+              Utilities ...
+              Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+              Load a Distribution 
+              Print Transport Global
+              Compare Transport Global to Current System
+              Verify Checksums in Transport Global              
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+              Backup a Transport Global     
+    
+    Select Installation Option: 
+    
+    3.   Select Installation Option:
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the 
+               INSTALL NAME, enter ECX*3.0*148):
+  
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It
+             will not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made
+             when this patch is installed.  It compares all components of
+             this patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that
+             are in the transport global.
+  
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch:
+  
+         a.  Choose the Install Package(s) option to start the patch
+             install.  Enter ECX*3.0*148 when prompted for a build 
+             name.
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during 
+             the install?  YES//' answer NO (unless otherwise indicated).
+         c.  When prompted 'Want to DISABLE Scheduled Options, 
+             Menu Options, and Protocols? YES//' hit '<return>'. YES
+             (unless otherwise indicated).
+         d.  When prompted 'Enter options you wish to mark as 'Out 
+             Of Order':'  Enter the following options:
+  
+                      Extract Manager's Options [ECXMGR]
+  
+         e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':' press <return>. 
+         f.  If prompted 'Delay Install (Minutes):  (0-60):  0//'          
+             answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXAMTL
+    Before: B32177564   After: B32177564  **24,44,148**
+Routine Name: ECXBCM
+    Before: B87281360   After: B89945674  **107,127,132,136,143,144,148**
+Routine Name: ECXLARPT
+    Before: B29347556   After: B29347556  **112,120,144,148**
+Routine Name: ECXUCBOC
+    Before: B66849120   After: B66849120  **49,148**
+Routine Name: ECXUCPT
+    Before:  B3005384   After:  B3005384  **49,123,148**
+Routine Name: ECXUDRF
+    Before:    B82697   After:    B82697  **112,148**
+Routine Name: ECXUEC
+    Before: B48196617   After: B48196617  **120,127,148**
+Routine Name: ECXUPRO
+    Before: B27534272   After: B27534272  **49,111,144,148**
+Routine Name: ECXUSUR
+    Before: B28806381   After: B28806381  **49,71,84,93,105,148**
+ 
+Routine list of preceding patches: 44, 105, 123, 144
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 22, 2013
+Completed By:                               Date Completed: FEB 26, 2014
+Released By :                               Date Released : MAR 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

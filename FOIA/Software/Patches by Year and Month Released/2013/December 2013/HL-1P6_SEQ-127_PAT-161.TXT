@@ -1,0 +1,278 @@
+$TXT Created by ADES,ROBERT at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 09/19/13 at 15:16
+=============================================================================
+Run Date: DEC 10, 2013                     Designation: HL*1.6*161
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #127                    Status: Released
+                  Compliance Date: JAN 03, 2014
+=============================================================================
+
+Associated patches: (v)HL*1.6*57   <<= must be installed BEFORE `HL*1.6*161'
+                    (v)HL*1.6*133  <<= must be installed BEFORE `HL*1.6*161'
+                    (v)HL*1.6*146  <<= must be installed BEFORE `HL*1.6*161'
+
+Subject: EDIT LINK;AE XREF;GENACK API;NEWEVENT API
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following:
+  
+ 1) Problems caused while editing active HL Logical Links
+ 2) Problems with "AE" cross reference leading to incorrect setting
+    values and inability to delete.
+ 3) Incorrect documentation for HL7 API GENACK^HLMA1 and potential
+    <UNDEFINED> error.
+ 4) Extrinsic function NEWEVENT^HLEVAPI could potentially execute
+    without returning a value resulting in a <COMMAND> error. 
+  
+ Associated NSR(s):
+ =================
+  
+ Associated Remedy ticket(s):
+ ===========================
+ 1) INC000000217900  Cannot make changes in VistA
+ 2) INC000000716676  ISH-GCebelinski AE xref not cleaned up in 
+                     file 779.4
+ 3) INC000000063271  ISW-0102-23247  Incorrect documentation on HLRESLTA 
+                     for GENACK^HLMA1()
+ 4) INC000000852309  ISA - WHELAR - HL7 - Other:HLEV API
+  
+   
+ Participating Test Sites:
+ ========================
+ Dayton - VA Medical Center 
+ Heartland - East 
+ Hines - Edward Hines Jr. VA Hospital 
+   
+ REMEDY OVERVIEW:
+ ===============
+ 1) INC000000217900  Cannot make changes in VistA 
+  
+ Problem: 
+ --------
+ Users have the ability to edit HL Logical Links via the Link Edit 
+ [HL EDIT LOGICAL LINKS] option while the links are active which 
+ causes the processing of the messages specific to those links to halt. 
+    
+  
+ Resolution:
+ -----------
+ Prior to allowing the user to edit a link via the Link Edit 
+ [HL EDIT LOGICAL LINKS] option, the software check to see
+ if the link is active and if it is will not allow the user to proceed
+ until the link has been shut down.
+  
+ Routines: HLUOPT
+   
+ 2) INC000000716676  ISH-GCebelinski AE xref not cleaned up in 
+                     file 779.4
+ Problem: 
+ --------
+ The "AE" cross reference in the HLO SUBSCRIPTION REGISTRY (#779.41) 
+ file does not remove the cross reference after the corresponding entry 
+ is deleted from the file.
+    
+  
+ Resolution:
+ -----------
+ Modified the New Style Cross Reference so that the "AE" cross reference
+ reflects the correct field values used in the creation of the cross
+ reference so that it is able to correctly remove the cross reference 
+ when the field values are deleted.
+  
+ Data Dictionary:
+ ----------------
+  
+ Before:
+ -------
+    AE (#744)    FIELD    MUMPS    IR    SORTING ONLY
+       Short Descr:  Used to determine if a subscriber is on the subscriber
+                     list.
+       Description:   
+         Set Logic:  S ^HLD(779.4,DA(1),2,"AE",X2(1),X2(2),X2(3),DA)=""
+        Kill Logic:  K ^HLD(779.4,DA(1),2,"AE",X1(1),X1(2),X1(3),DA)
+              X(1):  RECEIVING APPLICATION  (779.41,.01)  (Subscr 1)  (Len 30)
+                     (forwards)
+              X(2):  Computed Code: S X=+$P($G(^HLD(779.4,DA(1),2,DA,0)),"^",6)
+                       (Subscr 2)  (Len 10)  (forwards)
+              X(3):  Computed Code: S X=+$P($G(^HLD(779.4,DA(1),2,DA,0)),"^",2)
+                       (Subscr 3)  (Len 10)  (forwards)
+  
+ After:
+ ------
+  
+    AE (#9999)    RECORD    REGULAR    IR    SORTING ONLY
+       Short Descr:  Used to determine if a subscriber is on the subscriber
+                     list.
+       Description:  The index is: 
+                      
+                     ^HLD(779.4,DA(1),2,"AE", RECEIVING APPLICATION, +FACILITY
+                     LOGICAL LINK, +MIDDLEWARE LOGICAL LINK)="" 
+                      
+                      
+                     **Note that if the logical link fields are null, then their
+                     place in the index will be populated with zero.  
+         Set Logic:  S ^HLD(779.4,DA(1),2,"AE",$E(X(1),1,30),X(4),X(5),DA)=""
+        Kill Logic:  K ^HLD(779.4,DA(1),2,"AE",$E(X(1),1,30),X(4),X(5),DA)
+        Whole Kill:  K ^HLD(779.4,DA(1),2,"AE")
+              X(1):  RECEIVING APPLICATION  (779.41,.01)  (Subscr 1)  (Len 30)
+                     (forwards)
+              X(2):  FACILITY LOGICAL LINK  (779.41,.021)  (Len 10)  (forwards)
+              X(3):  MIDDLEWARE LOGICAL LINK  (779.41,.02)  (Len 10)  (forwards)
+              X(4):  Computed Code: S X=+X(2)
+                       (Subscr 2)
+              X(5):  Computed Code: S X=+X(3)
+   
+                     (Subscr 3)
+   
+ 3) INC000000063271  ISW-0102-23247  Incorrect documentation on HLRESLTA 
+                     for GENACK^HLMA1()
+  
+ Problem: 
+ --------
+ GENACK^HLMA1 is an Application Package Interface (API) that sends an 
+ acknowledgment message when receiving and processing an incoming message.  
+ There are four documentation points that reference this API and they all 
+ have their own variations of what is returned in the variable HLRESLTA.
+  
+ Resolution:
+ -----------
+ Since all references have the potential of being correct and there is no 
+ consistent format for the returned variable, I will update all 
+ documentation referencing the API to notify users not to rely on the documented 
+ format of the HLRESLTA variable.  In addition, I will modify the API to prevent
+ instances where the HLRESLTA is never set resulting in an <UNDEFINED> error
+ if referenced by the calling application. 
+  
+ Routines: HLMA1 
+   
+ 4) INC000000852309  ISA - WHELAR - HL7 - Other:HLEV API 
+  
+ Problem: 
+ --------
+ The NEWEVENT^HLEVAPI API was written as an extrinsic function so it is 
+ supposed to return a value when called.  However, currently it is written
+ so that it could potentially execute without returning a value resulting
+ in a <COMMAND> error.
+  
+ Resolution:
+ -----------
+ Modify the API so that every exit point returns a value.
+  
+  
+ Routines: HLEVAPI
+  
+ DOCUMENTATION RETRIEVAL:
+ =======================
+  Sites may retrieve documentation in one of the following ways:
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany                       ftp.fo-albany.domain.ext
+      Hines                        ftp.fo-hines.domain.ext
+      Salt Lake City               ftp.fo-slc.domain.ext
+      VistA Download Site          download.vista.domain.ext
+  
+      The documentation distribution includes:
+  
+      File Name                   Description              Retrieval Format
+      =========                   ===========              ================
+      hl71_6tm.doc           HL7 Technical Manual              BINARY
+      hl71_6p56_p66.doc      HL7 SITE MANAGER &                BINARY
+                             DEVELOPER MANUAL
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+    1.  Users are allowed to be on the system during the installation.
+  
+    2.  Disable the HL7 1.6 TCPIP services for the multi-listeners running on 
+        all nodes in the cluster. The HLO TCPIP services do NOT need to be
+        disabled.  For example:
+          ISC6A1> TCPIP
+          TCPIP> DISABLE SERVICE HLS5000CACHE  
+   
+    3.  Shutdown all Logical Links, incoming and outgoing filers using
+        the Filer and Link Management options listed below:
+  
+          Stop All Messaging Background Processes [HL STOP ALL]
+  
+    4.  Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This
+        option will load the KIDS package onto your system.
+  
+    5.  This patch is now loaded into a transport global on your system.
+        The next step is to use KIDS to install the Transport global.  On
+        the KIDS menu, under the 'Installation' menu, use the following
+        options:
+  
+           Verify Checksums in Transport Global
+           Print Transport Global 
+           Compare Transport Global to Current System 
+           Backup a Transport Global
+           Install Package(s) 
+  
+        When using the Install Package(s) menu option to install the 
+        patch build, you will be asked several questions.  The questions,
+        and the answers you should supply, are shown below.
+  
+        INSTALL NAME: <HL*1.6*161>
+        Want KIDS to INHIBIT LOGONS during the install?  <NO>
+        Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols?  <YES>
+  
+         Enter the following options:
+  
+         Link Edit           [HL EDIT LOGICAL LINKS]
+  
+    6.  Start up all Logical Links and incoming and outgoing filers using
+        the Filer and Link Management Option's 'Restart/Start All Links
+        and Filers [HL TASK RESTART]' menu option.
+  
+        (Note those links that do not have "autostart" enabled will need
+        to be restarted manually.)
+  
+    7. Enable the HL7 1.6 TCPIP services for the multi-listeners, for example:
+          ISC6A1> TCPIP
+          TCPIP> ENABLE SERVICE HLS5000CACHE
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLEVAPI
+    Before: B63820662   After: B63841968  **109,161**
+Routine Name: HLMA1
+    Before:  B8748290   After:  B8926861  **19,43,91,109,108,133,161**
+Routine Name: HLUOPT
+    Before: B18177059   After: B20065931  **57,161**
+ 
+Routine list of preceding patches: 57, 133
+
+=============================================================================
+User Information:
+Entered By  : ADES,ROBERT                   Date Entered  : MAR 27, 2013
+Completed By: MIRANDA,RAUL                  Date Completed: NOV 20, 2013
+Released By : WHELAN,ROBERT E               Date Released : DEC 10, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

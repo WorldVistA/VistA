@@ -1,0 +1,459 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: DG*5.3*858
+Package : DG - REGISTRATION                   Priority: EMERGENCY
+Version : 5.3       SEQ #777                    Status: Released
+                  Compliance Date: MAR 27, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*536  <<= must be installed BEFORE `DG*5.3*858'
+                    (v)DG*5.3*624  <<= must be installed BEFORE `DG*5.3*858'
+                    (v)DG*5.3*658  <<= must be installed BEFORE `DG*5.3*858'
+                    (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*858'
+                    (v)DG*5.3*834  <<= must be installed BEFORE `DG*5.3*858'
+                    (v)DG*5.3*841  <<= must be installed BEFORE `DG*5.3*858'
+
+Subject: DISCONTINUE ANNUAL MEANS TEST RENEWAL
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Data Dictionary
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is an emergency released with a 72-hour compliance.
+  
+         This patch is being released in support of the Enrollment System
+         (ES) Discontinue Annual Means Test Renewal project.  DG*5.3*858
+         (Registration) is being released along with IVM*2*154 (Income
+         Verification Match), EAS*1*106 (Enrollment Application System),
+         DGBT*1*24 (Beneficiary Travel), and IB*2*385 (Integrated Billing)
+         in host file: DG_53_P858.KID.
+   
+         It is imperative that these patches be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES) and VistA Registration, Enrollment and Eligibility
+  (VistA REE) software to support the requirements of the Discontinue Annual
+  Means Test Renewal project.
+   
+  This patch modifies the Registration v5.3 application as described below:
+   
+  1.  A Means Test (MT) stub record with a status = Required shall be
+      created as follows:
+   
+  - When a person is subject to a MT and there is no MT on file.
+   
+  - When a person is subject to MT and latest Primary MT on file is
+    status = No Longer Required and more than 1 year old.
+   
+  - When a person is subject to MT and latest Primary MT on file is more
+    than 1 year old as of the "VFA Start Date" (Veterans Financial
+    Assessment) of January 1, 2013 and MT Status is MT Copay Exempt, GMT
+    (Geographical Means Test) Copay Required, or Pending Adjudication
+    (where the GMT Threshold is greater than the MT Threshold).
+   
+  2.  The search for a person will no longer display a MT alert if a person
+      is subject to MT and the latest primary MT is less than 1 year old as
+      of the VFA Start Date of January 1, 2013 and MT Status = MT Copay
+      Exempt, GMT Copay Required, MT Copay Required, or Pending
+      Adjudication.
+   
+  3.  The search for a person shall display a Means Test alert as follows:
+   
+  -  When a person is subject to MT and there is no MT on file.
+   
+  -  When a person is subject to MT and latest Primary MT on file is
+     status = Required.
+   
+  -  When a person is subject to MT and latest Primary MT on file is more
+     than 1 year old as of the "VFA Start Date" of January 1, 2013 and MT
+     Status is MT Copay Exempt, GMT Copay Required, or Pending Adjudication
+     (where the GMT Threshold is greater than the MT Threshold).
+   
+  4.  If a Veterans Means Test status = Required the following alert will
+      display:
+                  *** Patient Requires a Means Test ***
+              Primary Means Test Required from (MAY 22, 2012)
+      Note: This alert will not display if there is no stub record in VistA.
+   
+  5.  VistA shall continue to allow the user to add a new Means Test if
+      there is no Means Test on file for the current income year, and the
+      Veteran is subject to Means Testing.
+   
+  6.  An added test will become effective immediately, regardless of the
+      age of the current Primary Means Test.
+   
+  7.  An added test will become effective immediately, regardless of the
+      impact to the Veterans Enrollment Priority and/or Means Test Copay
+      status.
+   
+  8.  VistA shall not allow a user to add a new Means Test if a Veteran
+      is subject to a Means Test and a Means Test exists for the current
+      income year.
+   
+  9.  A user can adjudicate a Means Test for up to 1 year from the
+      effective date of the test if a Means Test status = Pending
+      Adjudication.
+   
+  10. A user must add a new Means Test if adjudicating the test is
+      desired and the Means Test is Pending Adjudication and is more
+      than 1 year old from the effective date of the test.
+   
+  11. If a user attempts to adjudicate a Means Test that is more than 1
+      year old, a prompt will display directing them to use the Add a
+      New Means Test option.
+   
+  12. A Means Test can only be completed within 1 year of the date the
+      stub test was created. If a user tries to complete a required
+      Means Test and the date of test is more than 1 year in the past,
+      a prompt will display to the user directing them to add a New
+      Means Test.
+   
+  13. VistA shall allow a Means Test to be edited for 1 year from the
+      Means Test Effective Date.
+   
+  14. VistA shall display a prompt directing the user to the add a New
+      Means Test option if they attempt to edit an existing Means Test
+      that is more than a year older than the Means Test Effective Date.
+   
+  15. A hardship can only be added during the current income year of the
+      Means Test.
+   
+   
+  Patch Components:
+  =================
+   
+  Files & Fields Associated:
+  --------------------------
+  The following is a list of files included in this patch:
+   
+                                       UP    SEND  DATA                
+                                       DATE  SEC.  COMES  SITE   RSLV  
+  FILE #  NAME                         DD    CODE  W/FILE DATA   PTS 
+  --------------------------------------------------------------------
+  43      MAS PARAMETERS               YES   No    No     N/A    N/A
+   
+  The following is a list of fields included in this patch:
+   
+  Field Name (Number)                        File Name (Number)
+  -------------------                        ------------------
+  VFA START DATE (#1205)                     MAS PARAMETERS (#43)
+  Set to January 1, 2013.  Sites should NOT edit this field. 
+    
+  Forms Associated:
+  -----------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  -----------------------
+  N/A
+   
+   
+  Options Associated:
+  -------------------
+  N/A
+   
+   
+  Protocols Associated:
+  ---------------------
+  N/A
+   
+   
+  Security Keys Associated:
+  -------------------------
+  N/A
+   
+   
+  Templates Associated:
+  ---------------------
+  The following is a list of templates included in this patch:
+   
+  Template Name            Type        File Name (Number)
+  -------------            ----        ------------------
+  N/A
+   
+     
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  Boise VAMC, ID
+  Chillicothe VAMC, OH
+  VA North Texas HCS, TX
+  
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from
+  ftp://download.vista.domain.ext/.  This transmits the files from the first
+  available FTP server. Sites may  also elect to retrieve software directly
+  from a specific server as follows:
+   
+   Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  The following files should be downloaded in the binary FTP mode.
+   
+   Filename                    Description
+   --------                    -----------
+  DG_5_3_P858_REG_UM.PDF      Revised PIMS V. 5.3 Registration Menu User Manual
+  DG_5_3_P858_MTS_UM.PDF      Revised PIMS V. 5.3 Means Test Supervisor Menu
+                                Manual
+   
+  Documentation can also be found on the VA Software Documentation Library at:
+  http://www.domain.ext/vdl/
+   
+  
+  =================== PRE-INSTALLATION INSTRUCTIONS ====================
+  
+  If any of the following menu options are scheduled to run as background
+  jobs, they should be permanently unscheduled as a PRE-INSTALL step:
+  
+  Background print job for EAS MT Letters     [EAS MT LETTER BIG PRINT]
+  Background search for MT Anniversary dates  [EAS MT LETTERS BG SEARCH] 
+  Daily Means Test Expiration Report          [EAS MT EXPIRATION BG PRINT]
+  ======================================================================
+  
+  
+  Patch Installation:
+  ===================
+  
+  Installation Instructions:
+  --------------------------
+   
+  This patch may be run with users on the system, however because the
+  Registration options need to be placed out of order, we suggest it
+  be installed after business hours.
+   
+  This patch takes less than 2 minutes to install.
+   
+  The following options should be disabled during installation:
+   
+          Register a Patient                 [DG REGISTER PATIENT]
+          Load/Edit Patient Data             [DG LOAD PATIENT DATA]
+          Add a New Means Test               [DG MEANS TEST ADD]
+          Adjudicate a Means Test            [DG MEANS TEST ADJUDICATE]
+          Complete a Required Means Test     [DG MEANS TEST COMPLETE]
+          Edit an Existing Means Test        [DG MEANS TEST EDIT]
+          Hardships                          [DGMTH HARDSHIPS]
+          Beneficiary Travel Menu            [DGBT BENE TRAVEL MENU]
+          Claim Enter/Edit                   [DGBT BENE TRAVEL SCREEN]
+          View of Claim                      [DGBT BENE TRAVEL VIEW]
+          BT Alternate Income Enter/Edit     [DGBT ALTERNATE INCOME]
+          Print/Verify Patient Exemption Status
+                                             [IB RX PRINT VERIFY EXEMP]
+          Letters to Exempt Patients
+                                             [IB RX PRINT EX LETERS]
+          Reprint Single Income Test Reminder Letter
+                                             [IB RX REPRINT REMINDER]
+          MAS Parameter Entry/Edit           [DG PARAMETER ENTRY] 
+          IVM Financial Query                [IVM FINANCIAL QUERY] 
+   
+  1.  OBTAIN PATCHES
+      ==============
+   
+      Obtain the host file DG_53_P858.KID, which contains the following
+      five patch installs:
+   
+         DG*5.3*858
+         EAS*1.0*106
+         IVM*2.0*154
+         DGBT*1*24
+         IB*2.0*385
+   
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+   
+         download.vista.domain.ext
+   
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+   
+         Albany                  ftp.domain.ext
+         Hines                   ftp.domain.ext
+         Salt Lake City          ftp.domain.ext
+   
+      The DG_53_P858.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+   
+  2.  From the Installation menu, select the LOAD A DISTRIBUTION option.
+   
+      When prompted for "Enter a Host File:", enter the full directory path
+      where you saved the host file DG_53_P858.KID (e.g.,
+      SYS$SYSDEVICE:[ANONYMOUS]DG_53_P858.KID).
+   
+      When prompted for "OK to continue with Load? NO//", enter "YES."
+   
+      The following will display:
+   
+         Loading Distribution...
+   
+         DG*5.3*858
+         EAS*1.0*106
+         IVM*2.0*154
+         DGBT*1*24
+  Build IB*2.0*385 has an Environmental Check Routine
+  Want to RUN the Environment Check Routine? YES// YES
+         IB*2.0*385
+  Will first run the Environment Check Routine, IB20P385
+   
+  Use INSTALL NAME: DG*5.3*858 to install this distribution.
+   
+  3.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD:
+      ==================================================
+      From the Installation menu, you may select to use the following
+      options (when prompted for the INSTALL NAME, enter
+      DG*5.3*858):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch.  It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+   
+  4.  INSTALL MULTI-BUILD:
+      ====================
+      This is the step to start the installation of this KIDS build.  This
+      will need to be run for DG*5.3*858 multi-build.
+   
+      a.  Choose the Install Package(s) option to start the install.
+      b.  When prompted for the "Select INSTALL NAME:", enter DG*5.3*858.
+      c.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//"  enter NO.
+      d.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+          and Protocols? YES//"  enter YES.
+      e.  When prompted "Enter options you wish to mark as 'Out Of
+          Order':"  enter the following options:
+   
+          Register a Patient               [DG REGISTER PATIENT]
+          Load/Edit Patient Data           [DG LOAD PATIENT DATA]
+          Add a New Means Test             [DG MEANS TEST ADD]
+          Adjudicate a Means Test          [DG MEANS TEST ADJUDICATE]
+          Complete a Required Means Test   [DG MEANS TEST COMPLETE]
+          Edit an Existing Means Test      [DG MEANS TEST EDIT]
+          Hardships                        [DGMTH HARDSHIPS]
+          Beneficiary Travel Menu          [DGBT BENE TRAVEL MENU]
+          Claim Enter/Edit                 [DGBT BENE TRAVEL SCREEN]
+          View of Claim                    [DGBT BENE TRAVEL VIEW]
+          BT Alternate Income Enter/Edit   [DGBT ALTERNATE INCOME]
+          Print/Verify Patient Exemption Status
+                                           [IB RX PRINT VERIFY EXEMP]
+          Letters to Exempt Patients
+                                           [IB RX PRINT EX LETERS]
+          Reprint Single Income Test Reminder Letter
+                                           [IB RX REPRINT REMINDER]
+          MAS Parameter Entry/Edit         [DG PARAMETER ENTRY] 
+          IVM Financial Query              [IVM FINANCIAL QUERY] 
+   
+      f.  When prompted "Enter protocols you wish to mark as 'Out Of
+          Order':"  enter <return>.
+      g.  When prompted "Delay Install (Minutes):  (0-60): 0//"  enter an
+          appropriate number of minutes to delay the installation in 
+          order to give users enough time to exit the disabled options
+          before the installation starts.
+      h.  When prompted "Device: Home//"  respond with the correct device.
+   
+  =================== POST-INSTALLATION INSTRUCTIONS ====================
+   
+  The post-install routine for patch DG*5.3*858 is automatically deleted.
+   
+  The post-install routine for patch EAS*1.0*106 will disable all the
+  menu options for Means Test letters and expiration reports.
+   
+  Please note that patch EAS*1*106 will remove the Automated Means Test 
+  Letter Menu [EAS MT AUTO LETTERS MENU] from all menus the users 
+  currently hold however, any sub-menus or individual options added to 
+  menus will not be removed.  Sub-menus or individual options may be 
+  removed by the site.  The post-install routine for patch EAS*1.0*106
+  is automatically deleted.
+   
+  The post install routine IB20P385 may be deleted from the system if the
+  post-install process has completed.
+  ========================================================================
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG53858P
+    Before:       n/a   After:   B233052  **858**
+Routine Name: DGMTCOR
+    Before: B36016297   After: B36225262  **21,45,182,290,305,330,344,
+                                           495,564,773,840,858**
+Routine Name: DGMTCOU1
+    Before: B13494520   After: B13152902  **33,45,54,335,358,401,436,445,
+                                           564,840,858**
+Routine Name: DGMTE
+    Before: B25460516   After: B27294301  **33,45,182,344,332,433,624,858**
+Routine Name: DGMTEO
+    Before:  B9712187   After: B13226436  **33,45,182,456,858**
+Routine Name: DGMTHL1
+    Before: B63428065   After: B64633533  **182,456,536,858**
+Routine Name: DGMTR
+    Before: B68219377   After: B70325698  **45,93,114,137,141,147,177,
+                                           182,146,305,326,314,344,402,
+                                           426,456,495,672,688,773,840,
+                                           841,858**
+Routine Name: DGMTR1
+    Before: B32321945   After: B32852422  **182,344,433,456,564,688,840,858**
+Routine Name: DGMTU
+    Before: B56759132   After: B55660004  **4,33,182,277,290,374,358,420,
+                                           426,411,332,433,456,476,519,
+                                           451,630,783,799,834,858**
+Routine Name: DGMTU4
+    Before: B68178462   After: B73029877  **182,267,285,347,454,456,476,
+                                           610,658,858**
+Routine Name: DGRPC2
+    Before: B70981451   After: B71389194  **45,69,108,121,205,218,342,
+                                           387,470,467,489,505,507,528,
+                                           451,564,570,657,688,780,797,
+                                           858**
+ 
+Routine list of preceding patches: 536, 624, 658, 797, 834, 841
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 14, 2012
+Completed By:                               Date Completed: FEB 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

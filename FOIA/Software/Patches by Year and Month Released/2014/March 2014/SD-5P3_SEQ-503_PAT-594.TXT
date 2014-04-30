@@ -1,0 +1,200 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 04/17/13 at 14:53
+=============================================================================
+Run Date: MAR 20, 2014                     Designation: SD*5.3*594
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #503                    Status: Released
+                  Compliance Date: APR 20, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*567  <<= must be installed BEFORE `SD*5.3*594'
+
+Subject: EWL 120 DAY LIMIT/DOC UPDATE
+
+Category: 
+  - Informational
+  - Routine
+
+Description:
+============
+
+ This patch addresses two Electronic Waitlist (EWL) issues:
+  
+ 1) The system does not allow a user to create an appointment with an 
+    appointment date that is greater than 120 days from the desired date.
+  
+ 2) The current Electronic Waitlist (EWL) User Manual reflects incorrect 
+    instructions for canceling an appointment.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1) INC000000788754 - Correct EWL Scheduling Beyond 120 Days functionality               
+                      due to directive (2010-027).
+ 2) INC000000617640 - EWL - Update EWL User Manual so true functionality of
+                      software is described.   
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Beckley, WV
+ Central Texas HCS
+ N. Florida/S. Georgia HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1) INC000000788754 - Correct EWL Scheduling Beyond 120 Days functionality
+                      due to directive (2010-027) 
+  
+ Problem:
+ --------
+ The system does not allow a user to create an appointment with an 
+ appointment date that is greater than 120 days from the desired date.
+  
+  
+ Resolution:
+ -----------
+ Routine SDM2A will be modified to allow the creation of an appointment
+ with a date that is greater than 120 days from the desired date. This can be
+ done by entering "NO" at the prompt: "The date is more than 120 days beyond
+ the Desired Date. Add to EWL? YES//". The Electronic Waitlist User Manual p.6  
+ will also be modified to reflect this change.
+  
+  
+ 2) INC000000617640 - EWL - Update EWL User Manual so true functionality of
+                      software is described.   
+  
+ Problem:
+ --------
+ The current Electronic Waitlist (EWL) User Manual reflects incorrect 
+ instructions for canceling an appointment.
+  
+ Resolution:
+ -----------
+ The Electronic Waitlist (EWL) User Manual p.20 verbiage will be corrected to 
+ reflect the proper instruction for canceling an appointment.
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name                   Description              Retrieval Format
+      =========                   ===========              ================
+      EWL_UM.PDF                  User Manual                   BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+   1. Load Transport Global 
+      ----------------------
+      Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+              
+   2. Start Up KIDS 
+      -------------
+      Start up the Kernel Installation and Distribution System Menu [XPD
+      MAIN]: 
+      
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: INStallation
+                                                               ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+   3. Select Installation Option: 
+      ---------------------------
+      NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+      NAME, enter SD*5.3*594):
+       
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+   4. Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+      **This is the step to start the installation of this KIDS patch: 
+  
+      a. Choose the Install Package(s) option to start the patch install.
+  
+      b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+         NO//", respond NO. 
+  
+      c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//", respond YES.
+         
+         Enter options you wish to mark as 'Out Of Order':
+  
+          Appointment Management       [SDAM APPT MGT]
+          Make Appointment             [SDM]
+         
+         When prompted, 'Enter protocols you wish to mark as 'Out of
+         Order':', enter: <ENTER>
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDM2A
+    Before: B19430225   After: B20324106  **446,528,567,594**
+ 
+Routine list of preceding patches: 567
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 05, 2012
+Completed By:                               Date Completed: MAR 17, 2014
+Released By :                               Date Released : MAR 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

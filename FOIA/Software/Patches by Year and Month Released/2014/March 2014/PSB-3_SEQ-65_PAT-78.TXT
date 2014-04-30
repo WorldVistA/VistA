@@ -1,0 +1,154 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/30/14 at 13:49
+=============================================================================
+Run Date: MAR 06, 2014                     Designation: PSB*3*78
+Package : PSB - BAR CODE MED ADMIN            Priority: EMERGENCY
+Version : 3        SEQ #65                      Status: Released
+                  Compliance Date: MAR 14, 2014
+=============================================================================
+
+Associated patches: (v)PSB*3*60    <<= must be installed BEFORE `PSB*3*78'
+                    (v)PSB*3*70    <<= must be installed BEFORE `PSB*3*78'
+
+Subject: IMR VI ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1. An order will not display on the Bar Code Medication Administration
+    (BCMA) Virtual Due List (VDL) properly if the order does not have
+    its first administration time on the hour and the start date and 
+    time are not exactly on the hour.
+ 2. The BCMA PRN Effectiveness Report and Medication Variance Report do 
+    not display the ward name when printed by ward.
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+   
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC0000000963553 - Orders not displaying on VDL
+  
+ 2. INC0000000963461 - Ward not displaying on Reports  
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York HCS
+ Hines VAMC
+ Dublin VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000000963553 - Orders not displaying on VDL
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2526
+  
+    Problem:
+    --------
+    An order will not display on the (BCMA) Virtual Due List (VDL) properly
+    if the order does not have its first administration time on the hour
+    (1:15 pm for example) and the start date and time is not exactly on
+    the hour.
+  
+    Resolution:
+    -----------
+    The software was modified to include minutes and seconds when 
+    calculating the current date and time for determining which orders
+    should be displayed on the VDL.
+  
+  
+ 2. INC00000000963461 - Ward not displaying on Reports  
+  
+    Problem:
+    --------
+    The BCMA PRN Effectiveness Report and Medication Variance Report do not
+    display the ward name when printing the report by ward.
+  
+    Resolution:
+    -----------
+    Routines PSBOMV and PSBOPE were modified to properly set up the PSBHDR
+    array to include all needed array nodes to properly print the Header,
+    including the Ward Location.
+  
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*78):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*78.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOMV
+    Before: B49401054   After: B51967870  **60,78**
+Routine Name: PSBOPE
+    Before: B20462828   After: B22369471  **5,23,32*,70,78*
+Routine Name: PSBVDLTB
+    Before: B33639693   After: B34445687  **3,4,16,68,70,78**
+ 
+Routine list of preceding patches: 60, 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2014
+Completed By:                               Date Completed: MAR 03, 2014
+Released By :                               Date Released : MAR 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

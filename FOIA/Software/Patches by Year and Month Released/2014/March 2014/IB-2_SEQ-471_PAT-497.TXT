@@ -1,0 +1,1038 @@
+$TXT Created by                 at DEVVNN.DOMAIN.EXT  (KIDS) on Wednesday, 01/15/14 at 12:26
+=============================================================================
+Run Date: MAR 11, 2014                     Designation: IB*2*497
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #471                      Status: Released
+                  Compliance Date: APR 10, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*62     <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*141    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*263    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*359    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*444    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*458    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*467    <<= must be installed BEFORE `IB*2*497'
+                    (v)IB*2*473    <<= must be installed BEFORE `IB*2*497'
+
+Subject: E-IV PROVIDER OPERATING RULES
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  
+ **************************************************************************
+ **************************************************************************
+ **************************************************************************
+  
+ Please read this patch description in its entirety before installing. 
+  
+ The post installation routine of this patch contains significant data 
+ conversions.  A purge of some of the eIV data files, IIV RESPONSE (#365) 
+ and IIV TRANSMISSION QUEUE (#365.1), greatly reduces the conversion time.
+ When the purge was run at test sites prior to the install, the 
+ installation of this patch took between 1-4 hours.  When the files were
+ not purged prior to the install, the installation did not complete in a
+ reasonable amount of time.
+  
+ Some sites have not purged eIV data in a long time, if ever.  There is an 
+ option, Purge eIV Transactions [IBCNE PURGE IIV DATA] option, built into 
+ eIV to purge data.  It allows old data to be purged, but retains at least 
+ the last 6 months.  Data older than 6 months in these files is not current
+ enough to be useful. There are instructions on how to run the purge later
+ in this patch description.  If the files have not been recently 
+ purged, this purge may result in significant journaling activity that 
+ could fill up journal disks.  System managers should be made aware so 
+ that journal growth can be monitored and managed accordingly.
+  
+ Unless your site routinely runs the purge, it is CRITICAL that the purge 
+ is executed prior to the install!  The purge should NOT be run on the same
+ night as the installation of this patch.
+  
+ If for some reason the installer does not run the purge, the conversions
+ will take significantly longer and potential for journaling and 
+ installation issues increase.
+  
+ Finally, since the post installation takes quite a while depending on the 
+ site, it is IMPERATIVE that this patch is queued for installation. This is
+ also explained in greater detail in the patch installation instructions
+ later in this patch description.
+  
+ **************************************************************************
+ **************************************************************************
+ **************************************************************************
+  
+ This Integrated Billing (IB) patch introduces substantial changes to
+ VistA's electronic Insurance Verification (eIV) Eligibility Inquiry and 
+ Response Processing in order to meet the Committee on Operating Rules for 
+ Information Exchange (CORE) Operating Rules.
+  
+  
+ Complete list of patch items:
+  
+ 1.      Allow VistA to accept all X12N/5010 codes and qualifiers without 
+ validation since they have already been validated by the Eligibility 
+ Communicator (EC) at the Financial Services Center (FSC) in Austin prior 
+ to transmission to the VA Medical Centers (VAMC).
+  
+ 2.      Allow Vista to accept, store and display additional 
+ policy/benefit information sent from payers which include Military 
+ Personal Information (X12N/5010 MPI), Provider Information (X12N/5010 
+ PRV) and Health Care Diagnosis Code Information (X12N/5010 HI).
+  
+ 3.      Provide the ability for users to view the AAA Error Reporting 
+ Codes and corresponding textual description in the Response Report View 
+ of Process Insurance Buffer [IBCN INSURANCE BUFFER PROCESS] when an 
+ Error Reporting Code is received in response to an X12N/5010 Health Care 
+ Eligibility Benefits Inquiry (270).
+  
+ 4.      Transmit additional statistical information in the daily eIV 
+ registration message (HL7 MFN message) to the FSC.
+  
+ 5.      Transmit the NAME OF INSURED (#17) Field of the INSURANCE TYPE 
+ SUB-FILE (#2.312) in the PID segment of the 270 HL7 message when the 
+ patient is the subscriber and there is a value in the NAME OF INSURED 
+ (#17) field. 
+  
+ 6.      Allow VistA to receive, store and display the AAA additional 
+ Error Message Text on the Response Report View of the Process Insurance 
+ Buffer [IBCN INSURANCE BUFFER PROCESS] when received in an X12N/5010 
+ Health Care Eligibility Benefits Response.
+  
+ 7.      A new option, Update Subscriber Info [IBCN UPDATE SUBSCRIBER 
+ INFO], required to be scheduled upon installation, which updates 
+ subscriber fields in the INSURANCE TYPE SUB-FILE (#2.312), with the 
+ values stored in the PATIENT FILE (#2), when the PT. RELATIONSHIP -  
+ HIPAA (#4.03) field is self (18) and the field is blank and the insurance 
+ policy is Active. The option will then be added to the MCCR SYSTEM 
+ DEFINITION MENU [IB SYSTEM DEFINITION MENU] and require the IB SUPERVISOR
+ key for future periodic use.
+  
+ 8.      Remove Data from 11 Default Service Types codes stored in the IB
+ SITE PARAMETERS FILE (#350.9) and replace with the default SERVICE TYPE
+ CODE 30 - Health Benefit Plan Coverage.
+  
+ 9.      Remove any site selected service type codes from the IB SITE
+ PARAMETERS FILE (#350.9).
+  
+ 10.     Remove Medicare Insurance Intake option [IBCN MEDICARE INSURANCE 
+ INTAKE].
+  
+ 11.     A new Worklist/report, Medicare Potential COB Worklist [IBCNE
+ POTENTIAL COB LIST], of those patients whom Medicare has identified in a
+ 271 HL7 response message as having insurance subsequent to their Medicare
+ insurance.
+  
+ 12.     Provide the ability for users to select an eligibility date for 
+ the Request Electronic Insurance Inquiry [IBCNE REQUEST INQUIRY] that is
+ within the last 12 months or the end of the current month, defaulting to
+ today's date if left blank.
+  
+ 13.     Creation of Data Dictionary fields to allow the storage of 
+ X12N/5010 Health Care Eligibility Benefits Response (271) data elements 
+ to better align with HIPAA data lengths.  Since many of the requested 
+ fields part of Integration Control Registration Agreements (DBIA) with 
+ other VistA Packages, the use of the larger storage capabilities will be 
+ unavailable until the subscribing packages have sufficient time to be 
+ remediated.
+  
+ 14.     Reports and screen displays were modified to allow the display of 
+ increased field lengths above.  Even though most of the increased field 
+ lengths will not be available until other packages using these fields are 
+ remediated, the reports and screen needed to be changed to allow for that 
+ eventuality.  
+  
+  
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PATIENT (#2)                                              Modified
+   INSURANCE TYPE sub-file (#2.312)                        Modified
+                       *SUBSCRIBER ID (#1)                 Modified
+                       INSURED'S STREET 1 (#3.06)          Modified
+                       INSURED'S STREET 2 (#3.07)          Modified
+                       INSURED'S CITY (#3.08)              Modified
+                       NAME OF INSURED (#7.01)             New
+                       SUBSCRIBER ID (#7.02)               New
+                       MILITARY INFO STATUS CODE (#12.01)  New
+                       MILITARY EMPLOYMENT STATUS (#12.02) New
+                       MILITARY GOVT AFFILIATION CODE      New
+                         (#12.03) 
+                       MILITARY PERSONNEL DESCRIPTION      New
+                         (#12.04) 
+                       MILITARY SERVICE RANK CODE (#12.05) New
+                       DATE TIME PERIOD FORMAT QUAL        New
+                         (#12.06) 
+                       DATE TIME PERIOD (#12.07)           New
+                       *NAME OF INSURED (#17)              Modified
+   HEALTH CARE CODE INFORMATION sub-file (#2.31211)        New
+   GROUP REFERENCE INFORMATION sub-file (#2.3129)          New
+   ELIGIBILITY/BENEFIT sub-file (#2.322)                   Modified
+                       ELIGIBILITY/BENEFIT INFO (#.02)     Modified
+                       COVERAGE LEVEL (#.03)               Modified
+                       INSURANCE TYPE (#.05)               Modified
+                       TIME PERIOD QUALIFIER (#.07)        Modified
+                       MONETARY AMOUNT (#.08)              Modified
+                       QUANTITY QUALIFIER (#.1)            Modified
+                       AUTHORIZATION/CERTIFICATION (#.12)  Modified
+                       IN PLAN (#.13)                      Modified
+                       PROCEDURE CODING METHOD (#1.01)     Modified
+                       ENTITY ID CODE (#3.01)              Modified
+                       ENTITY TYPE (#3.02)                 Modified
+                       ENTITY ID QUALIFIER (#3.05)         Modified
+                       ENTITY RELATIONSHIP CODE (#3.06)    New
+                       LOCATION QUALIFIER (#4.08)          Modified
+                       PROVIDER CODE (#5.01)               Modified
+                       REFERENCE ID QUALIFIER (#5.03)      Modified
+   CONTACT INFORMATION sub-file (#2.3226)                  Modified
+                       *COMMUNICATION NUMBER (#.03)        Modified
+                       COMMUNICATION QUALIFIER (#.04)      Modified
+                       COMMUNICATION NUMBER (#1)           New
+   HEALTHCARE SERVICES DELIVERY sub-file (#2.3227)         Modified
+                       QUANTITY QUALIFIER (#.03)           Modified
+                       UNITS OF MEASUREMENT (#.05)         Modified
+                       TIME PERIOD QUALIFIER (#.07)        Modified
+                       DELIVERY FREQUENCY (#.08)           Modified
+                       DELIVERY PATTERN (#.09)             Modified
+   SUBSCRIBER DATES sub-file (#2.3228)                     Modified
+                       DATE QUALIFIER (#.03)               Modified
+                       DATE FORMAT (#.04)                  Modified
+   SUBSCRIBER ADDITIONAL INFO sub-file (#2.3229)           Modified
+                       PLACE OF SERVICE (#.02)             Modified
+                       QUALIFIER (#.04)                    Modified
+                       NATURE OF INJURY CODE (#.05)        New
+                       NATURE OF INJURY CATEGORY (#.06)    New
+                       NATURE OF INJURY TEXT (#.07)        New
+   SUBSCRIBER REFERENCE ID sub-file (#2.32291)             Modified
+                       REFERENCE ID QUALIFIER (#.03)       Modified
+   SERVICE TYPES sub-file (#2.32292)                       Modified
+                       SERVICE TYPES (#.01)                Modified
+   GROUP PROVIDER INFO sub-file (#2.332)                   New
+ IB SITE PARAMETERS (#350.9)                               Modified
+                       DEFAULT SERVICE TYPE CODE 2         Modified
+                         (#60.02) 
+                       DEFAULT SERVICE TYPE CODE 3         Modified
+                         (#60.03) 
+                       DEFAULT SERVICE TYPE CODE 4         Modified
+                         (#60.04) 
+                       DEFAULT SERVICE TYPE CODE 5         Modified
+                         (#60.05) 
+                       DEFAULT SERVICE TYPE CODE 6         Modified
+                         (#60.06) 
+                       DEFAULT SERVICE TYPE CODE 7         Modified
+                         (#60.07) 
+                       DEFAULT SERVICE TYPE CODE 8         Modified
+                         (#60.08) 
+                       DEFAULT SERVICE TYPE CODE 9         Modified
+                         (#60.09) 
+                       DEFAULT SERVICE TYPE CODE 10        Modified
+                         (#60.1) 
+                       DEFAULT SERVICE TYPE CODE 11        Modified
+                         (#60.11) 
+                       LIMIT LENGTH OF EIV FIELDS?         New
+                         (#62.01) 
+ GROUP INSURANCE PLAN (#355.3)                             Modified
+                       *GROUP NAME (#.03)                  Modified
+                       *GROUP NUMBER (#.04)                Modified
+                       GROUP NAME (#2.01)                  New
+                       GROUP NUMBER (#2.02)                New
+ INSURANCE BUFFER (#355.33)                                Modified
+                       SERVICE DATE (#.18)                 New
+                       *GROUP NAME (#40.02)                Modified
+                       *GROUP NUMBER (#40.03)              Modified
+                       *SUBSCRIBER ID (#60.04)             Modified
+                       *NAME OF INSURED (#60.07)           Modified
+                       PT. RELATIONSHIP - HIPAA (#60.14)   Modified
+                       GROUP NAME (#90.01)                 New
+                       GROUP NUMBER (#90.02)               New
+                       SUBSCRIBER ID (#90.03)              New
+                       NAME OF INSURED (#91.01)            New
+ IIV RESPONSE (#365)                                       Modified
+                       *NAME OF INSURED (#1.01)            Modified
+                       *SUBSCRIBER ID (#1.05)              Modified
+                       *GROUP NAME (#1.06)                 Modified
+                       *GROUP NUMBER (#1.07)               Modified
+                       PT. RELATIONSHIP - HIPAA (#8.01)    Modified
+                       MILITARY INFO STATUS CODE (#12.01)  New
+                       MILITARY EMPLOYMENT STATUS (#12.02) New
+                       MILITARY GOVT AFFILIATION CODE      New
+                         (#12.03) 
+                       MILITARY PERSONNEL DESCRIPTION      New
+                         (#12.04) 
+                       MILITARY SERVICE RANK CODE (#12.05) New
+                       DATE TIME PERIOD FORMAT QUAL        New
+                         (#12.06) 
+                       DATE TIME PERIOD (#12.07)           New
+                       NAME OF INSURED (#13.01)            New
+                       SUBSCRIBER ID (#13.02)              New
+                       GROUP NAME  (#14.01)                New
+                       GROUP NUMBER (#14.02)               New
+   HEALTH CARE CODE INFORMATION sub-file (#365.01)         New
+   ELIGIBILITY/BENEFIT sub-file (#365.02)                  Modified
+                       ELIGIBILITY/BENEFIT INFO (#.02)     Modified
+                       COVERAGE LEVEL (#.03)               Modified
+                       INSURANCE TYPE (#.05)               Modified
+                       TIME PERIOD QUALIFIER (#.07)        Modified
+                       MONETARY AMOUNT (#.08)              Modified
+                       QUANTITY QUALIFIER (#.1)            Modified
+                       AUTHORIZATION/CERTIFICATION (#.12)  Modified
+                       IN PLAN (#.13)                      Modified
+                       PROCEDURE CODING METHOD (#1.01)     Modified
+                       ENTITY ID CODE (#3.01)              Modified
+                       ENTITY TYPE (#3.02)                 Modified
+                       ENTITY ID QUALIFIER (#3.05)         Modified
+                       ENTITY RELATIONSHIP CODE (#3.06)    New
+                       LOCATION QUALIFIER (#4.08)          Modified
+                       PROVIDER CODE (#5.01)               Modified
+                       REFERENCE ID QUALIFIER (#5.03)      Modified
+   CONTACT PERSON sub-file (#365.03)                       Modified
+                       *COMMUNICATION NUMBER #1 (#.03)     Modified
+                       *COMMUNICATION NUMBER #2 (#.05)     Modified
+                       *COMMUNICATION NUMBER #3 (#.07)     Modified
+                       COMMUNICATION NUMBER #1 (#1)        New
+                       COMMUNICATION NUMBER #2 (#2)        New
+                       COMMUNICATION NUMBER #3 (#3)        New
+   GROUP PROVIDER INFO sub-file (#365.04)                  New
+   REJECT REASONS sub-file (#365.06)                       Modified
+                       REJECT REASON (#.03)                Modified
+                       ACTION CODE (#.04)                  Modified
+   ADDITIONAL MSGS sub-file (#365.061)                     New
+   SUBSCRIBER DATES sub-file (#365.07)                     Modified
+                       DATE QUALIFIER (#.03)               Modified
+   GROUP REFERENCE INFORMATION sub-file (#365.09)          New
+   CONTACT INFORMATION sub-file (#365.26)                  Modified
+                       *COMMUNICATION NUMBER (#.03)        Modified
+                       COMMUNICATION QUALIFIER (#.04)      Modified
+                       COMMUNICATION NUMBER  (#1)          New
+   HEALTHCARE SERVICES DELIVERY sub-file (#365.27)         Modified
+                       QUANTITY QUALIFIER (#.03)           Modified
+                       UNITS OF MEASUREMENT (#.05)         Modified
+                       TIME PERIOD QUALIFIER (#.07)        Modified
+                       DELIVERY FREQUENCY (#.08)           Modified
+                       DELIVERY PATTERN (#.09)             Modified
+   SUBSCRIBER DATES sub-file (#365.28)                     Modified
+                       DATE QUALIFIER (#.03)               Modified
+                       DATE FORMAT (#.04)                  Modified
+   SUBSCRIBER ADDITIONAL INFO sub-file (#365.29)           Modified
+                       PLACE OF SERVICE (#.02)             Modified
+                       QUALIFIER (#.04)                    Modified
+                       NATURE OF INJURY CODE (#.05)        New
+                       NATURE OF INJURY CATEGORY (#.06)    New
+                       NATURE OF INJURY TEXT (#.07)        New
+   SUBSCRIBER REFERENCE ID sub-file (#365.291)             Modified
+                       REFERENCE ID QUALIFIER (#.03)       Modified
+   SERVICE TYPES sub-file (#365.292)                       Modified
+                       SERVICE TYPES (#.01)                Modified
+ X12 271 REFERENCE IDENTIFICATION (#365.028)               Modified
+ X12 271 UNITS OF MEASUREMENT (#365.029)                   New
+ X12 271 ENTITY RELATIONSHIP CODE (#365.031)               New
+ X12 271 DATE FORMAT QUALIFIER (#365.032)                  New
+ X12 271 YES/NO RESPONSE CODE  (#365.033)                  New
+ X12 271 LOCATION QUALIFER (#365.034)                      New
+ X12 271 PROCEDURE CODING METHOD (#365.035)                New
+ X12 271 DELIVERY PATTERN (#365.036)                       New
+ X12 271 PATIENT RELATIONSHIP (#365.037)                   New
+ X12 271 INJURY CATEGORY (#365.038)                        New
+ X12 271 MILITARY PERSONNEL INFO STATUS CODE (#365.039)    New
+ X12 271 MILITARY GOVT SERVICE AFFILIATION (#365.041)      New
+ X12 271 MILITARY SERVICE RANK (#365.042)                  New
+ X12 271 ENTITY TYPE QUALIFIER (#365.043)                  New
+ X12 271 CODE LIST QUALIFIER (#365.044)                    New
+ X12 271 NATURE OF INJURY CODES (#365.045)                 New
+ X12 271 MILITARY EMPLOYMENT STATUS CODE (#365.046)        New
+ IIV TRANSMISSION QUEUE (#365.1)                           Modified
+                       SERVICE TYPE CODE (#.2)             New
+ IIV RESPONSE REVIEW (#365.2)                              New
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ HL Logical Link:
+                                                           New/Modified/
+ HL Logical Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ HL7 Application Parameters:
+                                                           New/Modified/
+ HL7 Parameter Name                                          Deleted    
+ ------------------                                        -------------
+ N/A
+  
+  
+  
+ HLO Application Registry:
+                                                           New/Modified/
+ HLO Registry Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ MCCR System Definition Menu  menu                         Mofified
+ [IB SYSTEM DEFINITION MENU]                                  
+ Medicare Insurance Intake    run routine                  Delete
+ [IBCN MEDICARE INSURANCE 
+ INTAKE]                                                 
+ Update Subscriber Info       run routine                  New
+ [IBCN UPDATE SUBSCRIBER     
+ INFO]                      
+ eIV Menu[IBCNE IIV MENU]     menu                         Modified 
+ Medicare Potential COB       run routine                  New
+ Worklist[IBCNE POTENTIAL 
+ COB LIST]  
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBCNE MEDICARE COB                                        New 
+ IBCNE MEDICARE COB AC                                     New 
+ IBCNE MEDICARE COB CS                                     New 
+ IBCNE MEDICARE COB DISP                                   New 
+ IBCNE MEDICARE COB EE                                     New 
+  
+  
+ Remote Procedures Associated:
+                                                           New/Modified/
+ Remote Procedure Name                                       Deleted    
+ ---------------------                                     -------------
+ N/A
+  
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBCN PATIENT       Input     PATIENT (#2)                 Modified 
+ INSURANCE                                                 
+ IBCNE GENERAL      Input     IB SITE PARAMETERS (#350.9)  Modified 
+ PARAMETER EDIT  
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ IBCNE              List                                   Modified 
+ ELIGIBILITY/BENEFIT                                       
+ INFO                                                      
+ IBCNE MEDICARE     List                                   New 
+ COB DISPLAY                                               
+ IBCNE MEDICARE     List                                   New 
+ COB LIST                                                  
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20110503 -  Electronic Data Interchange (EDI) New Standards and Operating
+             Rules (Veterans Health Administration) VHA Provider-Side TCRs
+  
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Wilmington, DE
+ Madison, WI
+ Memphis, TN
+ Denver, CO (East Colorado HCS)
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ -----------------------------------------------------------------------
+ Release Notes/Installation Guide        ib_2_p497_rn.pdf     Binary
+ eIV User Guide                          ib_2_p497_eIV_ug.pdf Binary
+ eIV Technical Manual/Security Guide     ib_2_p497_eIV_tm.pdf Binary
+ IB User Manual                          ib_2_p497_um.pdf     Binary
+ IB Technical Manual                     ib_2_p497_tm.pdf     Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ 1.      As part of the requirement to accept all X12 codes and qualifiers 
+ already validated prior to being sent to VistA in the 271 transaction 
+ from FSC's Eligibility Communicator, a number of data elements contained 
+ in entries in the IIV RESPONSE file (#365) and in the INSURANCE TYPE 
+ sub-file (#2.312) of the PATIENT file (#2) need to be converted from a 
+ SET OF CODES to POINTERS to specific code entries in the various X12 
+ files.    The post-install implements this data conversion.  It first 
+ converts the entries the IIV RESPONSE (#365) file and then continues with 
+ the entries in the INSURANCE TYPE (#2.312) sub-file.   
+  
+ Although entries in the INSURANCE TYPE (#2.312) file CANNOT be purged, it 
+ is strongly recommended that any entries in the IIV RESPONSE file (#365) 
+ that are older than 6 months be purged.  This purge can have a 
+ significant impact on how long it takes to run the install with respect 
+ to the data conversion depending when the last time this file was 
+ purged.  In some cases it has never been purged and contains almost ten 
+ years of response data.  Please refer to the pre-installation 
+ instructions for performing the purge.
+  
+ 2.      In order to satisfy the requirement of being able to store longer 
+ fields, a number of fields needed to be duplicated and the post-install 
+ will copy data from the shorter fields to the new, longer fields.
+  
+ 3.      A one-time subscriber update utility must be scheduled upon 
+ installation of the patch. Unless the installation is queued, the 
+ post-install will prompt the installer of the patch to schedule this 
+ activity for off-hours.  If the installation is queued, the new update 
+ utility will be scheduled for Tomorrow at 9 PM.   This is in order to 
+ give the conversions time to complete. NOTE: This part of the process
+ does NOT require that IB users be off the system, or un-scheduling of
+ the eIV Nightly Process [IBCNE IIV BATCH PROCESS] option.
+  
+ 4.      The eIV Nightly Process [IBCNE IIV BATCH PROCESS] option will 
+ need to be unscheduled before performing the installation of the patch.  
+ Once the installation and post-install conversion procedures are 
+ completed, the option will need to be rescheduled.
+  
+  
+ Pre-Installation Instructions
+  
+ The following 2 tasks should be performed before installing IB*2*497.
+  
+ 1.      Purge eIV Transactions [IBCNE PURGE IIV DATA] option
+ ----------------------------------------------------
+ To help reduce the time it takes to perform the installation due 
+ to the data conversion, it is strongly recommended that a day or 
+ two before installing the patch, the Purge eIV Transactions [IBCNE PURGE 
+ IIV DATA] option should be run in order to purge the eligible response
+ records.  This option schedules the purge to run at 8 pm TODAY.  If it
+ is already past 8 PM today, it should start up almost immediately.
+  
+ Note:  Please make sure the purge has completed prior to running the 
+ install. The purge process does NOT require that IB users be off the
+ system, or un-scheduling of the eIV Nightly Process [IBCNE IIV BATCH
+ PROCESS] option.
+   
+  
+ Example of running the eIV option below: 
+  
+ Select OPTION NAME: IBCNE PURGE IIV DATA       Purge eIV Transactions
+ Purge eIV Transactions
+  
+  
+         Purge Electronic Insurance Verification (eIV) Data Files
+  
+  
+  This option will allow you to purge data from the eIV Response File 
+ (#365) and the eIV Transmission Queue File (#365.1).  The data must be at
+ least six months old before it can be purged.  Only insurance transactions
+ that have a transmission status of "Response Received", "Communication
+ Failure", or "Cancelled" may be purged.  You will be allowed to select a
+ date range for this purging.  The default beginning date will be the date
+ of the oldest eligible record in the system.  The default ending date will
+ be six months ago from today's date.  You may modify this default date
+ range.  However, you may not select an ending date that is more recent
+ than six months ago.
+  
+ Enter the purge begin date: 10/10/2003//   (OCT 10, 2003)
+  
+   Enter the purge end date: 03/05/2013//   (MAR 05, 2013)
+  
+  
+  You want to purge all eIV data created between 10/10/2003 and 03/05/2013.
+  
+  OK to continue? NO// YES
+  
+  Task# 155226 has been scheduled to purge the eIV data tonight at 8:00 PM.
+  
+  
+ 2.      eIV Nightly Process [IBCNE IIV BATCH PROCESS] option
+        ----------------------------------------------------      
+ Since the installation of this patch could take a number of hours 
+ to complete due to the conversion procedures, it will be necessary to 
+ unschedule the eIV Nightly Process [IBCNE IIV BATCH PROCESS] option 
+ before installing the patch.  An example of unscheduling this task 
+ below:
+  
+ Select Taskman Management <TEST ACCOUNT> Option: SCHEDule/Unschedule 
+ Options
+  
+ Select OPTION to schedule or reschedule: IBCNE IIV BATCH PROCESS       
+ eIV NIGHT LY PROCESS
+          ...OK? Yes//   (Yes)      (R)
+                           Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID: 279418
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: SEP 4,2013@07:00 @ ? Enter the '@' sign.  
+                             This will automatically delete the date/time
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ _____________________________________________________________________   
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+     Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID:
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME:
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ __________________________________________________________________________
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+ COMMAND: S ? Save the work                       Press <PF1>H for help    
+ Insert
+  
+     Edit Option Schedule
+     Option Name: IBCNE IIV BATCH PROCESS
+     Menu Text: eIV NIGHTLY PROCESS                       TASK ID:
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME:
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+  QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1D
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ __________________________________________________________________________
+ Exit     Save     Next Page     Refresh
+  
+ Enter a command or '^' followed by a caption to jump to a specific field.
+  
+  
+ COMMAND: E  ? Exit, You're done                    Press <PF1>H for 
+ help    Insert
+  
+  
+  
+ Installation Instructions
+ -------------------------
+  
+ It is *strongly* recommended that this patch be installed outside of
+ normal working hours.  This patch contains multiple file/field conversions
+ and running time depends on a number of factors. Running time could be
+ anywhere from a couple hours to numerous hours to install.  Instructions
+ are provided for running install in background.
+  
+ **** NO INTEGRATED BILLING USERS SHOULD BE ON THE SYSTEM DURING 
+ INSTALLATION OF THIS PATCH. ****
+  
+ **** Do not install this patch when the eIV NIGHTLY PROCESS [IBCNE IIV 
+ BATCH PROCESS] background job is running or scheduled to run. Please refer
+ to the Pre-installation instructions for the unscheduling of this
+ option.****
+  
+ There are no additional menu options to disable.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(
+     IB*2.0*497):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//'    
+     
+     Options are being added as well as removed, so Rebuilding Menu Trees 
+     is recommended.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+     Again, no Integrated Billing Users should be on the system and install
+     Should occur outside of normal working hours.
+  
+ 8.  A one-time subscriber update utility must be scheduled upon 
+     installation of the patch. During installation, the post-install
+     routine prompts for the installer to schedule the one time subscriber
+     update utility and will not complete installation until it is
+     scheduled. If the install is queued to run, it will automatically
+     schedule this utility to run TOMORROW @ 9PM.  ***Queuing install is
+     strongly recommended*** 
+  
+  
+ ******** INSTRUCTION FOR QUEUEING INSTALL *************************
+  
+ 8a.  At the 'DEVICE:' prompt, enter 'Q' for Queue to run this in 
+      background. You will then be prompted for 'DEVICE:' again.  This is
+      for where you would like the output from the Queued install to be
+      directed.  You may enter NULL, HFS, or any other DEVICE that allows
+      it to be accessed from a Queued job.   If you choose not to queue the
+      install, there is a good chance that this install will not complete
+      without experiencing a network timeout and will need to be
+      restarted.  While it was written so that the post-install could pick
+      up where it left off, the post-install conversion needs to complete
+      as close to the install which includes the data dictionary changes as
+      possible.
+  
+ ******** INSTRUCTION FOR RUNNING INSTALL IN FOREGROUND **************
+  
+ 8b.  At the 'DEVICE' prompt, hit the return key which will enable the 
+      Install to run in the foreground.  Installation results are displayed
+      to the screen.  The prompt to schedule the one-time subscriber update
+      utility is issued to the installer.  The following shows an example
+      of the message and then the date/time prompt that is generated:
+  
+  
+ Creating Task to update the Insurance Type File... 
+ *************************** IMPORTANT!! ********************************
+ This option will scan through the entire Patient File for patients with 
+ insurance where the relationship to insured is self.  Certain fields in 
+ Insurance Type sub-file will be updated to match the patient data if it 
+ does not already exist.  This will take a while and must be queued to run
+ in the background when there are few users on the system. The default is
+ Tomorrow at 9:00 p.m. AGAIN PLEASE NOTE: This tasked job does NOT require
+ that IB users be off the system, or un-scheduling of the eIV NIGHTLY
+ PROCESS [IBCNE IIV BATCH PROCESS] option when it runs.
+  
+ Enter date/time to queue the option: T+1@2100//
+  
+ Update Subscriber Information Scheduled for SEP 06, 2013@21:00
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ 1. In order to verify the post-install routine was run successfully,
+    please examine the patch entry in the INSTALL file and report any error
+    messages to Product Support.
+  
+ 2. After the installation has completed, and if allowed by your Kernel 
+    site parameter configuration, confirm the post-install routine,
+    IBY497PO, was removed.
+  
+ 3. Once the patch has COMPLETED INSTALLATION, which can take several 
+    hours, reschedule the eIV NIGHTLY PROCESS [IBCNE IIV BATCH PROCESS]
+    option that was unscheduled at pre-installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 120
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBAC
+    Before: B51548829   After: B51549169  **184,497**
+Routine Name: IBCNBAR
+    Before: B44012684   After: B44889067  **82,240,345,413,416,497**
+Routine Name: IBCNBCD
+    Before: B87228703   After: B99276499  **82,251,361,371,416,438,452,497**
+Routine Name: IBCNBEE
+    Before: B46620313   After: B45711543  **82,184,252,251,356,361,371,
+                                           377,416,438,452,497**
+Routine Name: IBCNBES
+    Before:  B7989957   After:  B8711337  **82,184,345,438,497**
+Routine Name: IBCNBES1
+    Before:  B5819262   After:  B5819713  **141,497**
+Routine Name: IBCNBLE
+    Before: B85092127   After:B105786784  **82,231,184,251,371,416,435,
+                                           452,497**
+Routine Name: IBCNBLP
+    Before: B24695524   After: B25507553  **82,497**
+Routine Name: IBCNBMI
+    Before: B90850379   After: B91864404  **82,184,246,251,299,345,361,
+                                           371,413,416,438,452,497**
+Routine Name: IBCNBU1
+    Before: B33733092   After: B34498281  **82,184,263,438,497**
+Routine Name: IBCNEBF
+    Before: B46987961   After: B46385823  **184,271,361,371,416,438,497**
+Routine Name: IBCNEDE
+    Before: B19636990   After: B34057908  **184,271,300,416,438,497**
+Routine Name: IBCNEDE1
+    Before: B43189276   After: B44623085  **184,271,416,438,435,467,497**
+Routine Name: IBCNEDE5
+    Before: B26929333   After: B28666402  **184,271,416,497**
+Routine Name: IBCNEDE6
+    Before: B32927570   After: B32414593  **184,271,345,416,497**
+Routine Name: IBCNEDE7
+    Before: B24645310   After: B27880444  **271,416,438,497**
+Routine Name: IBCNEDST
+    Before:       n/a   After: B52803166  **497**
+Routine Name: IBCNEHL1
+    Before:B244020766   After:B206919324  **300,345,416,444,438,497**
+Routine Name: IBCNEHL2
+    Before: B62824990   After: B70236887  **300,345,416,438,497**
+Routine Name: IBCNEHL3
+    Before: B72667613   After:B168485042  **300,416,497**
+Routine Name: IBCNEHL4
+    Before:B136544352   After:B174356077  **300,416,438,497**
+Routine Name: IBCNEHL5
+    Before:       n/a   After: B11250093  **497**
+Routine Name: IBCNEHLM
+    Before: B21127231   After: B26579443  **184,251,300,416,438,497**
+Routine Name: IBCNEHLQ
+    Before: B43557440   After: B44383583  **184,271,300,361,416,438,467,497**
+Routine Name: IBCNEHLU
+    Before: B53561238   After: B88168048  **184,300,416,438,497**
+Routine Name: IBCNEQU
+    Before:B109122026   After:B126099513  **184,271,416,438,497**
+Routine Name: IBCNERPE
+    Before: B42391865   After: B60593817  **271,300,416,438,497**
+Routine Name: IBCNERPI
+    Before:       n/a   After: B43723857  **497**
+Routine Name: IBCNERTQ
+    Before: B45372080   After: B44184624  **438,467,497**
+Routine Name: IBCNES
+    Before: B25439392   After: B28429551  **416,438,497**
+Routine Name: IBCNES1
+    Before:B120790247   After:B145502085  **416,438,497**
+Routine Name: IBCNES3
+    Before:       n/a   After: B25873283  **497**
+Routine Name: IBCNESI
+    Before:       n/a   After: B17756591  **497**
+Routine Name: IBCNESI1
+    Before:       n/a   After: B73077962  **497**
+Routine Name: IBCNESI2
+    Before:       n/a   After: B50676612  **497**
+Routine Name: IBCNEUT1
+    Before: B33603643   After: B35326232  **184,497**
+Routine Name: IBCNEUT4
+    Before: B50167663   After: B50266196  **184,271,345,416,497**
+Routine Name: IBCNSC4
+    Before: B17661433   After: B18086570  **43,85,103,251,416,497**
+Routine Name: IBCNSEVT
+    Before:  B2530934   After:  B4726698  **6,497**
+Routine Name: IBCNSJ3
+    Before: B16975505   After: B17659726  **28,497**
+Routine Name: IBCNSM31
+    Before: B20882944   After: B21224087  **6,28,68,413,497**
+Routine Name: IBCNSM5
+    Before: B20324152   After: B21379064  **28,497**
+Routine Name: IBCNSMM1
+    Before: B25964261   After: B27818840  **103,359,497**
+Routine Name: IBCNSOK
+    Before: B25432692   After: B26943633  **497**
+Routine Name: IBCNSOK1
+    Before: B12417789   After: B13344891  **497**
+Routine Name: IBCNSP
+    Before: B42954824   After: B48468493  **6,28,43,52,85,251,363,371,416,497**
+Routine Name: IBCNSP0
+    Before: B34211643   After: B37737467  **28,43,52,85,93,103,137,229,
+                                           251,363,371,399,438,458,497**
+Routine Name: IBCNSP01
+    Before: B38322308   After: B52258890  **43,52,85,251,371,377,416,452,497**
+Routine Name: IBCNSP1
+    Before: B59835347   After: B60114361  **6,28,40,43,52,85,103,361,371,
+                                           377,497**
+Routine Name: IBCNSP3
+    Before: B35837178   After: B38854605  **28,52,85,251,371,497**
+Routine Name: IBCNSU2
+    Before: B19118425   After: B19732446  **28,62,497**
+Routine Name: IBCNSU41
+    Before: B21365764   After: B22019975  **52,211,240,497**
+Routine Name: IBCNUPD
+    Before:       n/a   After: B15205533  **497**
+Routine Name: IBJPI5
+    Before: B37149088   After:  B4489364  **438,497**
+Routine Name: IBJTCA1
+    Before: B53091604   After: B52135617  **39,80,106,137,223,276,363,
+                                           384,432,452,473,497**
+Routine Name: IBY497PO
+    Before:       n/a   After:B137982293  **497**
+ 
+Routine list of preceding patches: 62, 141, 359, 458, 467, 473
+
+=============================================================================
+User Information:
+Entered By  :                HRISTOPHER     Date Entered  : JAN 22, 2013
+Completed By:                               Date Completed: FEB 25, 2014
+Released By :                               Date Released : MAR 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

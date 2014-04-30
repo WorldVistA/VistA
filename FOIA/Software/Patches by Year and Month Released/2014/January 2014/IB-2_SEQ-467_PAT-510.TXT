@@ -1,0 +1,147 @@
+$TXT Created by WANG,CHI at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 11/27/13 at 15:26
+=============================================================================
+Run Date: JAN 14, 2014                     Designation: IB*2*510
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #467                      Status: Released
+                  Compliance Date: FEB 13, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*437    <<= must be installed BEFORE `IB*2*510'
+
+Subject: NEED INELIGIBLE AND HUMANITARIAN RATE TYPES UPDATED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues: 
+  
+ 1. The first issue involves the update of the administrative charge based 
+    on a new dispensing fee $13.18 for rate types Humanitarian and
+    Ineligible on third party pharmacy prescription claims. 
+ 2. The second issue is to inactivate the non-billable reason code:
+    CV25 HDHP PLAN NOT BILLED for the Claims Tracking module.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000894124 Need ineligible and humanitarian rate updated 
+ 2. INC000000891112 Integrated Billing - Claims Tracking
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Maryland HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000894124 Need ineligible and humanitarian rate updated
+  
+  Problem:
+  --------
+  As requested by the Chief Business Office (CBO), the Humanitarian and 
+  Ineligible rates need to be updated to bill a new administrative fee of
+  $13.18 for third party prescription with an effective date of August 13,
+  2013.
+  
+  Resolution:
+  -----------
+  A post-init routine IB20P510 was created to call a procedure in routine
+  IB3PSOU to inactivate rate schedules containing the TL-RX FILL charge set
+  for rate types  Humanitarian and Ineligible with an inactive date of
+  August 12, 2013. It also updates the adjustments for those rate types with
+  the new RX-COST charge set and the dispensing fee effective from August 
+  13, 2013 in the Rate Schedule (#363) file.
+  
+ 2. INC000000891112 Integrated Billing - Claims Tracking
+  
+  Problem:
+  --------
+  The Chief Business Office has requested a patch to inactivate the
+  non-billable reason code: CV25 HDHP PLAN NOT BILLED in the Reason Not
+  Billable list for the Claims Tracking module.
+  
+  Resolution:
+  -----------
+  Post-init routine IB20P510 was created to inactivate the non-billable
+  reason code: CV25 in the Claims Tracking Non-Billable Reasons file
+  (#356.8).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*510):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 3.   Select Installation Option: Install Package(s)
+  
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 4.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P510.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P510
+    Before:       n/a   After: B11251231  **510**
+Routine Name: IB3PSOU
+    Before: B19316373   After: B21192131  **437,510**
+ 
+Routine list of preceding patches: 437
+
+=============================================================================
+User Information:
+Entered By  : WANG,CHI                      Date Entered  : SEP 20, 2013
+Completed By: LANG,MICKEY                   Date Completed: JAN 09, 2014
+Released By : MATHEWS,DEAN                  Date Released : JAN 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

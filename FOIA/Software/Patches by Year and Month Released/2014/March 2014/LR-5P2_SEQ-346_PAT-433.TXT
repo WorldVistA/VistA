@@ -1,0 +1,240 @@
+$TXT Created by                       DEV.DEV.DOMAIN.EXT  (KIDS) on Tuesday, 01/14/14 at 12:44
+=============================================================================
+Run Date: MAR 04, 2014                     Designation: LR*5.2*433
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #346                    Status: Released
+                  Compliance Date: APR 04, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*259  <<= must be installed BEFORE `LR*5.2*433'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*433'
+                    (v)LR*5.2*427  <<= must be installed BEFORE `LR*5.2*433'
+
+Subject: ANATOMICAL PATHOLOGY IMAGE FRAMEWORK
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ Blood Bank Clearance
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*433 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*433 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+  
+ Overview of LR*5.2*433:
+ =======================
+ This document describes LR*5.2*433, the Telepathology and Imaging Support. This
+ patch provides event information from the Anatomic Pathology Lab package to
+ VistA Imaging to:
+  
+ 1.  Support a Telepathology Worklist.
+  
+ 2.  Generate HL7 messages to go to a commercial digital pathology system
+  
+ 3.  Enable Imaging to acquire pathology images and associate them with
+     electronically signed Text Integration Utility (TIU) anatomic pathology
+     reports.
+  
+  
+ Distribution of the Software:
+ =============================
+ Distribution will be in the form of a PackMan message originating from 
+ the FORUM Patch Module (FPM).
+  
+  
+ Test Sites:
+ ===========
+ Fayetteville,  NC-Large
+ Honolulu, HI-Small
+ Puget Sound, WA-Integrated, large
+  
+ Remedy Calls:
+ =============
+ This patch does not address any Remedy Calls. 
+  
+ New Service Requests:
+ =====================
+ This patch addresses the following New Service Request (NSR):
+  
+ 20090511 - VistA Imaging Enhancements: Store and Forward Telehealth and
+ Telepathology
+  
+  
+ Patient Safety Issues:
+ ======================
+ There are no Patient Safety Issue (PSI) reports associated with this patch. 
+  
+  
+ LR*5.2*433 Enhancements and Changes:
+ ====================================
+  
+ Files and Fields:
+ ================= 
+ This patch does not contain new or modified files and fields.
+  
+ Mail Groups:
+ ============
+ This patch does not contain new or modified mail groups. 
+  
+ Forms:
+ ======
+ This patch does not contain new or modified forms. 
+  
+ Security Keys:
+ ==============
+ This patch does not contain new or modified security keys. 
+  
+ Remote Procedures:
+ ==================
+ This patch does not contain new or modified remote procedures. 
+  
+ Menu Options:
+ =============
+ This patch does not contain new or modified VistA menu options 
+  
+ Protocols:
+ ==========
+ This patch does not contain new or modified protocols. 
+  
+ Templates:
+ ==========
+ This patch does not contain new or modified templates.
+  
+  
+ Installing LR*5.2*433:
+ ======================
+  
+ Installing LR*5.2*433 involves installing the LR*5.2*433 KIDS package on the
+ VistA system. Before you start the installation, make sure that that patches
+ listed in in the section Associated Patches on are installed.
+  
+ This patch can be loaded while VistA Imaging System is active and users are on
+ the system. Installation will take less than one minute. 
+  
+ To install the LR*5.2*433 KIDS package:
+  
+ 1.  In Vista MailMan use the 'INSTALL/CHECK MESSAGE' option of your 
+     PackMan menu to load the KIDS distribution onto your system.
+  
+ 2.  From the Kernel Installation & Distribution System menu, select 
+     the 'Installation' menu.
+  
+ 3.  After you unpack the KIDS build, use the following options to verify 
+     the contents of the patch and to back up the routines exported.
+  
+      - Verify Checksums in Transport Global [XPD PRINT CHECKSUM]. Run
+        this option if you want to ensure the integrity of the routines in
+        the patch.
+        
+      - Compare Transport Global to Current System [XPD COMPARE TO SYSTEM].
+        Run this option if you want to view all changes that will be made when 
+        the patch is installed. All components (routines, options, and so on) in 
+        the patch will be compared.
+  
+     -  Backup a Transport Global [XPD BACKUP]. Run this option if you want
+        to create a backup message of any routines exported with the patch.
+        The option will NOT back up any of the other changes.
+  
+ 4.  After performing the load and any optional verification steps, install
+     the KIDS file by performing the following steps:
+     
+     -  Run the Install Package(s) [XPD INSTALL BUILD] option.
+        
+     -  When prompted for the install name, enter LR*5.2*433.
+        
+     -  Answer NO to the following prompts, if they appear: 
+  
+        Want KIDS to INHIBIT LOGONs during the install? NO//
+        Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 5.  Compare your output with the output in the following section.
+     
+ This sample below shows the output when the KIDS file is installed for the first
+ time. If you have already installed the patch and are installing the KIDS file
+ in a namespace on which it has previously been installed, your output may be
+ different.
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME:    LR*5.2*433    7/29/13@14:21:10
+     => Lab Version 5.2 Patch 433 - Anatomical Pathology Image Framework - Tes
+  
+ This Distribution was loaded on Jul 29, 2013@14:21:10 with header of
+    Lab Version 5.2 Patch 433 - Anatomical Pathology Image Framework 
+ 07 /26/2013 05:09PM  ;Created on Jul 26, 2013@17:09:33
+    It consisted of the following Install(s):
+      LR*5.2*433
+ Checking Install for Package LR*5.2*433
+  
+ Install Questions for LR*5.2*433
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+  
+  Install Started for LR*5.2*433 :
+                Jul 29, 2013@14:21:20
+  
+ Build Distribution Date: Jul 26, 2013
+  
+  Installing Routines:.......
+                Jul 29, 2013@14:21:21
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  LR*5.2*433 Installed.
+                Jul 29, 2013@14:21:21
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OB63D
+    Before: B28748245   After: B29564352  **121,187,315,350,433**
+Routine Name: LRAPED
+    Before: B32844009   After: B33912945  **1,31,72,115,259,350,427,433**
+Routine Name: LRAPEDC
+    Before:  B5405480   After:  B5938079  **72,259,433**
+Routine Name: LRAPLG1
+    Before:B165428544   After:B169348471  **72,121,248,308,350,427,433**
+Routine Name: LRAPRES
+    Before:B184608349   After:B188361634  **259,295,317,315,350,427,433**
+Routine Name: LRUDEL
+    Before: B24276751   After: B25303229  **1,72,121,201,350,427,433**
+ 
+Routine list of preceding patches: 427
+
+=============================================================================
+User Information:                          Hold Date     : JAN 31, 2014
+Entered By  :                               Date Entered  : JUL 01, 2013
+Completed By:                               Date Completed: JAN 17, 2014
+Released By :                               Date Released : MAR 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

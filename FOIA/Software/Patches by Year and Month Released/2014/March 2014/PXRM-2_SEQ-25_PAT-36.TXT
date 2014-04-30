@@ -1,0 +1,270 @@
+
+=============================================================================
+Run Date: MAR 06, 2014                     Designation: PXRM*2*36
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #25                      Status: Released
+                  Compliance Date: APR 06, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*24   <<= must be installed BEFORE `PXRM*2*36'
+
+Subject: PNEUMOCOCCAL REMINDERS AND WOMEN'S HEALTH TAXONOMY UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ PCV13 (Pneumococcal Conjugate) Vaccine Recommendations
+ ======================================================
+  
+ For Adults with no Previous Pneumococcal Vaccinations: 
+ ------------------------------------------------------
+ The Advisory Committee on Immunization Practices (ACIP) recommends that 
+ adults 19 years of age or older with immunocompromising conditions, 
+ functional or anatomic asplenia, CSF leaks, or cochlear implants, and who 
+ have not previously received PCV13 or PPSV23, should receive a dose of 
+ PCV13 first followed by a dose of PPSV23 at least 8 weeks later. 
+ Subsequent doses of PPSV23 should follow current PPSV23 recommendations 
+ for high risk adults. Specifically, a second PPSV23 dose is recommended 5 
+ years after the first PPSV23 dose for persons aged 19 through 64 years 
+ with functional or anatomic asplenia and for persons with 
+ immunocompromising conditions. A second dose of PPSV23 is not recommended 
+ for persons 19 through 64 years of age with cochlear implants or CSF 
+ leaks. Additionally, those who received one or more doses of PPSV23 
+ before age 65 years for any indication should receive another dose of the 
+ vaccine at age 65 years or older if at least 5 years have elapsed since 
+ their previous PPSV23 dose. If a dose of PPSV23 was received at age 65 
+ years or later, no additional doses of PPSV23 are recommended.
+    
+ For Adults with Previous Pneumococcal Polysaccharide Vaccinations:
+ ------------------------------------------------------------------
+ Adults 19 years of age or older with the aforementioned conditions 
+ (functional or anatomic asplenia, immunocompromising conditions, or those 
+ with CSF leaks or cochlear implants) who have previously received one or 
+ more doses of PPSV23 should be given a dose of PCV13 one or more years 
+ after the last PPSV23 dose was received. For those who require additional 
+ doses of PPSV23, the first such dose should be given no sooner than 8 
+ weeks after PCV13 and at least 5 years since the most recent dose of 
+ PPSV23. 
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000000894115 - PCV13 (Pneumococcal Conjugate) Vaccine 
+                      Recommendations
+ 2. INC000000355037 - Missing CPT code in a taxonomy
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Site(s)
+ ==========================
+ VA Northern California HCS
+ VA Northern Indiana HCS
+ VA New York Harbor HCS
+ VA Longbeach HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000894115 - PCV13 (Pneumococcal Conjugate) Vaccine 
+                      Recommendations 
+ Problem 1:
+ ----------
+ The Centers for Disease Control and Prevention Centers for Disease 
+ Control and Prevention (CDC) have issued recommendations for PCV13 
+ (Pneumococcal Conjugate) Vaccine.
+  
+ Resolution 1:
+ -------------
+ This patch, PXRM*2*36, contains two routines, PXRMP36E and PXRMP36I. They 
+ are init tasks that add new entries to the REMINDER EXCHANGE (#811.8) 
+ file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install. They perform 
+ the following during installation:
+  
+    1. Installation Routine:
+    Rename PNEUMOVAX to PNEUMOVAX POLYSACCHARIDE PPSV23 (does not change 
+    the short name that displays in CPRS or on Health Summary).
+  
+    Rename the reminder term VA-HIGH RISK FOR PNEUMOCOCCAL DZ to 
+    VA-PNEUMOC DZ RISK - HIGH
+  
+    2. Reminders:
+    LONG TERM STEROID USE (LOCAL)
+    VA-BL PNEUMOC RISK IMMUNOCOMPROMISED
+    VA-PNEUMOCOCCAL IMMUNIZATION PPSV23
+    VA-PNEUMOCOCCAL IMMUNIZATION PCV13
+    VA-MHV PNEUMOVAX
+    VA-BL PNEUMOC RECENT CHEMO/IMMUNOSUPPRESSION
+    VA-OB PNEUMOCOCCAL PRIOR VACCINATIONS
+    VA-OB PNEUMOCOCCAL PPSV23 INDICATIONS
+    VA-OB ZOSTER VACCINE DATE
+    VA-OB PNEUMOCOCCAL PCV13 INDICATIONS
+  
+    3. Dialogs
+    VA-PNEUMOCOCCAL IMMUNIZATION PPSV23 PNEUMOVAX
+    VA-PNEUMOCOCCAL IMMUNIZATION PCV13 PREVNAR   
+  
+    4. Taxonomies
+    VA-PNEUMOC DZ RISK - HIGHEST/NOT IMMUNO COMP  
+    VA-PNEUMOC DZ RISK - IMMUNOCOMPROMISED        
+    VA-PNEUMOC DZ RISK - HIGH                     
+    VA-PNEUMOC DZ RISK - CHEMOTHERAPY (includes drug classes and drugs)
+    VA-CERVICAL CA/ABNORMAL PAP         
+    VA-MASTECTOMY                 
+    VA-CERVICAL CANCER SCREEN       
+    VA-WH HYSTERECTOMY W/CERVIX REMOVED      
+    VA-WH PAP SMEAR SCREEN CODES                
+  
+    5. Immunization: PNEUMOCOCCAL CONJUGATE PCV13
+    No mnemonic is being sent out
+  
+    6. Terms
+    STEROIDS - PNEUMOCOCCAL DZ RISK    ( LOCAL)
+    VA-PNEUMOC DZ RISK - CHEMO/IMMUNOSUPP DRUGS   
+    VA-PNEUMOC DZ RISK - CHEMOTHERAPY   
+    VA-PNEUMOC DZ RISK - HIGH   
+    VA-PNEUMOC DZ RISK - HIGHEST/NOT IMMUNO COMP   
+    VA-PNEUMOC DZ RISK - IMMUNOCOMPROMISED   
+    VA-PNEUMOC DZ RISK - LONG TERM STEROIDS   
+    VA-PNEUMOC PCV13 CONTRAINDICATION   
+    VA-PNEUMOC PCV13 DEFERRALS   
+    VA-PNEUMOC PCV13 DX INCORRECT   
+    VA-PNEUMOC PCV13 IMMUNIZATION   
+    VA-PNEUMOC PCV13 ORDER SUPPRESSION   
+    VA-PNEUMOC PCV13 ORDERS   
+    VA-PNEUMOC PPSV23 CONTRAINDICATIONS   
+    VA-PNEUMOC PPSV23 DEFERRALS   
+    VA-PNEUMOC PPSV23 IMMUNIZATION   
+    VA-PNEUMOC PPSV23 INCORRECT DIAGNOSIS   
+    VA-PNEUMOC PPSV23 ORDER SUPPRESSION   
+    VA-PNEUMOC PPSV23 ORDERS   
+  
+  
+ 2. INC000000355037 - Missing CPT code in a taxonomy
+ Problem 2:
+ ----------
+ The VA-WH PAP SMEAR SCREENING reminder has a taxonomy named "VA-WH PAP 
+ SMEAR SCREEN CODES". This taxonomy does not have a 88175 CPT code in it. 
+ From the CPT manual:
+  
+ 88175: Cytopathology, cervical or vaginal (any reporting system), 
+ collected in preservative fluid, automated thinlayer preparation; 
+ screening by automated system, under physician supervision n/a as on 
+ clinical lab.
+  
+ Resolution 2:
+ -------------
+ The 88175 CPT code was added to the taxonomy by the routines PXRMP36E and 
+ PXRMP36I. They are init tasks that add new entries to the REMINDER 
+ EXCHANGE (#811.8) file and the contents of these entries are installed 
+ during the post-init.
+   
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_36.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.
+ It is available as .pdf format.  This file should be downloaded
+ in BINARY format.
+  
+     File Name:            Description:               Protocol:
+     ==========            ============               =========
+     PXRM_2_0_36_IG.PDF    PXRM*2.0*36 Install        BINARY
+                           and Setup Guide
+     PXRM_2_0_36.KID       PXRM*2.0*36 Host File      ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_36_IG.PDF, for complete details.
+  
+ NOTE: DO NOT QUEUE THE INSTALLATION, because this installation asks 
+ questions requiring responses and queuing will stop the installation. 
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_36.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*36
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP36E
+     PXRMP36I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 207
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP36E
+    Before:       n/a   After:  B1366156  **36**
+Routine Name: PXRMP36I
+    Before:       n/a   After:  B9403859  **36**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 03, 2013
+Completed By:                               Date Completed: MAR 05, 2014
+Released By :                               Date Released : MAR 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

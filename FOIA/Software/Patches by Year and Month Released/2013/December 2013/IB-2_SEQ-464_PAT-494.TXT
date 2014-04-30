@@ -1,0 +1,420 @@
+
+=============================================================================
+Run Date: DEC 26, 2013                     Designation: IB*2*494
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #464                      Status: Released
+                  Compliance Date: JAN 25, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*432    <<= must be installed BEFORE `IB*2*494'
+                    (v)IB*2*473    <<= must be installed BEFORE `IB*2*494'
+
+Subject: EPHARMACY OPERATING RULES
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*421
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*494
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*15
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*74
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*295
+  
+ The patches (PSO*7*421, IB*2*494, BPS*1*15, PSX*2*74 and PRCA*4.5*295)
+ are being released in the Kernel Installation and Distribution System 
+ (KIDS) multi-build distribution BPS PSO IB PSX PRCA BUNDLE 8.0.
+  
+ The purpose of this software package is to ensure National Council for
+ Prescription Drug Programs (NCPDP) D.0 - D.9 transactions are functional
+ in the Electronic Data Interchange (EDI) New Standards and Operating Rules 
+ environment and includes annual External Code List (ECL) updates into
+ NCPDP fields.
+  
+ The package also provides the ability to alert the pharmacist at the time of
+ prescription processing regarding the days' supply benefit.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+ 1. Action RX ECME Information in option IBJ Third Party Joint Inquiry 
+    [IBJ THIRD PARTY JOINT INQUIRY] is modified to display an additional
+    line with information on cancelled bills above Payment Information.
+  
+ 2. Several options are decommissioned by the post-install routine IBY494PO
+    for this patch: 
+  
+    a. Option IB Drugs non covered report [IB DRUGS NON COVERED REPORT] is 
+       deleted.
+  
+    b. The e-Pharmacy Menu [IBCNR E-PHARMACY MENU] is modified to remove 
+       the following options from the menu:
+  
+           EHNF   Edit HIPAA NCPDP FLAG
+           ENP    Edit NCPDP PROCESSOR APPLICATION Sub-file
+           EPAY   Edit PAYER APPLICATION Sub-file 
+           EPBM   Edit PBM APPLICATION Sub-file
+           NON    Drugs non covered report
+  
+    c. Tasked option EPHARMACY SHARED MATCHES REPORT - TASKMAN [IBCNR SHARED
+       MATCHES RPT TASK] is deleted and any existing tasks de-scheduled.
+   
+    d. The IB SITE PARAMETERS file (#350.9) is modified to remove fields:
+  
+             Drug Non Covered Recheck Period (#11.02)
+             Non covered Reject Codes sub-file (#350.912)  
+  
+    e. IB Billing Determination is modified to remove call to $$CHCK^IBNCDNC
+       so that there is no check to see if the drug/plan is stored in the
+       IB NDC NON COVERED BY PLAN file (#366.16).
+  
+ 3. Several files and fields are decommissioned by the post-install routine 
+    IBY494PO for this patch:
+  
+    a. NON COVERED REJECT CODES Sub-File (#350.912) is removed from the
+       IB SITE PARAMETERS FILE (#350.9).
+    
+    b. DRUG NONCOVERED RECHECK PERIOD field (#11.02) is removed from the
+       IB SITE PARAMETERS FILE (#350.9).
+    
+    c. IB NDC  NON COVERED BY PLAN file (#366.16) is removed from VistA.
+  
+    d. DBIA# 5185 to allow ECME access to Integrated Billing data for
+       IB NDC NON COVERED BY PLAN file (#366.16) is deactivated.    
+  
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ File Name (#)                                                      New/Mod/
+   Sub-File Name (#)       Field Name (#)                           Deleted
+ -------------------       -------------------                      --------
+ IB SITE PARAMETERS (#350.9)
+                           DRUG NONCOVERED RECHECK PERIOD (#11.02)  Deleted
+                           NON COVERED REJECT CODES (#12)           Deleted
+  
+ IB NDC NON COVERED BY PLAN (#366.16)     Entire File               Deleted
+  
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                      Type             New/Modified/Deleted
+ -----------                      ----             --------------------
+ IBCNR SHARED MATCHES RPT TASK    run routine      Deleted   
+ IBCNR E-PHARMACY MENU            menu             Modified
+ IB DRUGS NON COVERED REPORT      run routine      Deleted
+ IB SITE MGR MENU                 menu             Modified
+ IB TRICARE ENGINE START          run routine      Deleted
+ IB TRICARE ENGINE STOP           run routine      Deleted
+ IB TRICARE MENU                  menu             Deleted
+ IB TRICARE REVERSE               run routine      Deleted
+ IB TRICARE RESUBMIT              run routine      Deleted
+ IB TRICARE REJECT                run routine      Deleted
+ IB TRICARE TRANSMISSION          run routine      Deleted
+ IB TRICARE DEL REJECT            run routine      Deleted 
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name           Type          New/Modified/Deleted
+ -------------           ----          --------------------
+ IBJT ECME RESP INFO     LIST          Modified
+  
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ 20110503 -  Electronic Data Interchange (EDI) New Standards and Operating
+             Rules (Veterans Health Administration) VHA Provider-Side TCRs
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Birmingham VAMC, AL
+ Mountain Home VAMC, TN 
+ Richmond VAMC, VA
+ Little Rock VAMC, AR
+ Jackson VAMC, MS
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                   File Name           FTP Mode
+ --------------------------------------------------------------------
+ IB Release Notes/                    IB_2_0_P494_RN.PDF      Binary
+ Installation Guide (IB*2.0*494)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a post-install routine associated with this patch named
+ POST^IBY494PO. The purpose of the post-install routine is to perform 
+ the decommissioning described above.
+  
+ The post-install routine is automatically deleted by the system if
+ allowed by your Kernel site parameters configuration.  You may delete 
+ routine IBY494PO if the installation was successful and it is not 
+ automatically deleted by KIDS.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch should take less than a minute to install.
+  
+ DO NOT QUEUE the installation of this patch.
+  
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system. Avoid times when ECME
+ claims are being transmitted. Of particular concern are the options below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option.  Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being
+        transmitted to CMOP. Wait for the CMOP transmissions to finish
+        or complete the installation before the transmissions start. Both
+        the CS (Controlled Substances) and the non-CS CMOP transmission
+        options should be checked. Check with Pharmacy Service or your
+        Pharmacy ADPAC to find out when CMOP transmissions occur.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_15_PSO_IB_PSX_PRCA.KID, which contains the
+     following patches:
+  
+         BPS*1.0*15
+         PSO*7.0*421
+         IB*2.0*494
+         PSX*2.0*74
+         PRCA*4.5*295
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+                     download.vista.domain.ext
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+        Albany                  ftp.fo-albany.domain.ext
+        Hines                   ftp.fo-hines.domain.ext
+        Salt Lake City          ftp.fo-slc.domain.ext
+  
+      The BPS_1_15_PSO_IB_PSX_PRCA.KID host file is located in the
+      anonymous.software directory. Use ASCII Mode when downloading the
+      file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_15_PSO_IB_PSX_PRCA.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_15_PSO_IB_PSX_PRCA.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB PSX BUNDLE 8.0
+         BPS*1.0*15
+         PSO*7.0*421
+         IB*2.0*494
+         PSX*2.0*74
+         PRCA*4.5*295
+       Use INSTALL NAME: BPS PSO IB PSX PRCA BUNDLE 8.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB PSX PRCA BUNDLE 8.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB PSX PRCA BUNDLE 8.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         PSX PRCA BUNDLE 8.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//", enter YES unless your system does this in a nightly
+         TaskMan process.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+     e.  When prompted " Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device 
+         but do not queue this install.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In order to verify the patch post-installation routine was run successfully,
+ please examine the Install File for this patch and report any error messages 
+ to Product Support. Please also confirm the patch post-installation routine,
+ IBY494PO, was removed if allowed by your Kernel site parameter configuration.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNSC01
+    Before: B55647455   After: B57572758  **52,137,191,184,232,320,349,
+                                           371,399,416,432,494**
+Routine Name: IBJPS
+    Before:  B3750253   After:  B3719053  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432,494**
+Routine Name: IBJPS2
+    Before: B43690193   After: B40350434  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432,
+                                           494**
+Routine Name: IBJTRX
+    Before: B76083313   After: B80926965  **435,452,494**
+Routine Name: IBNCPDP1
+    Before:B196557252   After:B191529259  **223,276,339,363,383,405,384,
+                                           411,434,437,435,455,452,473,
+                                           494**
+Routine Name: IBY494PO
+    Before:       n/a   After: B92100972  **494**
+ 
+Routine list of preceding patches: 432, 473
+
+=============================================================================
+User Information:
+Entered By  : GUSTAFSON,ERIC S              Date Entered  : DEC 18, 2012
+Completed By: LOSEY,BILL                    Date Completed: OCT 01, 2013
+Released By : POST,HELEN                    Date Released : DEC 26, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

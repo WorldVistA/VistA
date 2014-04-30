@@ -1,0 +1,165 @@
+$TXT Created by KOPP,TERRY at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Friday, 06/07/13 at 10:10
+=============================================================================
+Run Date: FEB 13, 2014                     Designation: XU*8*552
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #504                      Status: Released
+                  Compliance Date: MAR 16, 2014
+=============================================================================
+
+
+Subject: FIXCOPY OF KEYS IN XQSMDCPY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This kernel patch fixes a problem found while using the option Copy One 
+ Users Menus and Keys to others [XQSMD COPY USER] to copy user menus/keys
+ from one user to another.  It may not copy all of the keys to the 'copy
+ to' user that are assigned to the 'copy from' user when the person who is
+ doing the copy is not assigned the XUMGR key, even though the keys to be
+ copied are assigned to this user performing the action.  The problem is
+ being caused by a typo in the routine XQSMDCPY.  There is a line of code
+ where the SECURITY KEY file (#19.1) should be checked for existence of the
+ key's internal entry number but the OPTION file (#19) is referenced
+ instead.  So, unless the internal entry number of the SECURITY KEY (#19.1)
+ file entry is defined in the OPTION file (#19), the key is ignored and not
+ copied.
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+  
+ 1. INC0000000413806 Problem with copy user menus/keys
+  
+ Problem:
+ -------
+ When using the option Copy One Users Menus and Keys to others [XQSMD COPY 
+ USER], all user keys are not being copied when the user executing the 
+ option does not have the XUMGR security key, even if the user executing 
+ the option is assigned these keys and is authorized to delegate them.
+  
+  
+ Resolution:
+ ----------
+ The problem is being caused by a typo in the routine XQSMDCPY.  There is 
+ a line of code where the SECURITY KEY file (#19.1) should be checked for 
+ existence of the key's internal entry number in the SECURITY KEY file 
+ (#19.1), but instead the OPTION file (#19) is referenced.  So, unless the 
+ internal entry number of the SECURITY KEY (#19.1) file entry is defined 
+ in the OPTION file (#19), the key is ignored and not copied.  Fix the 
+ typographical error.
+  
+  
+ Test Sites: (Patch Tracking Message #61671426)
+ ----------
+  
+ ALEXANDRIA, LA
+ BILOXI, MS
+ BLACK HILLS HCS
+ SHREVEPORT, LA
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel end-user documentation is available on the
+ VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+  
+ Patch Installation:
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be queued for installation.  TaskMan does not have to be 
+ stopped, HL7 filers do not need to be stopped, and users may be on the
+ system.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 1 minute to install.
+  
+ There are no options that need to be disabled.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     XU*8.0*552):
+  
+     a.  Print Transport Global - This option lets you print the contents
+         of a Transport Global that is currently loaded in the ^XTMP
+         global.
+     b.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     c.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     d.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer "NO".
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//' answer "NO".
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer "0" to 
+     "60" or "Q" (to queue the output to a printer).
+  
+  
+ Post-Installation Instructions
+ -----------------------------
+ There are no post-installation tasks to complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XQSMDCPY
+    Before: B12531388   After: B12698311  **19,552**
+ 
+Routine list of preceding patches: 19
+
+=============================================================================
+User Information:
+Entered By  : IVEY,JOEL                     Date Entered  : JUL 12, 2010
+Completed By: BEST,LISA                     Date Completed: JAN 17, 2014
+Released By : MALMIN,PAUL                   Date Released : FEB 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,207 @@
+
+=============================================================================
+Run Date: MAR 06, 2014                     Designation: PXRM*2*31
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #26                      Status: Released
+                  Compliance Date: APR 06, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*24   <<= must be installed BEFORE `PXRM*2*31'
+
+Subject: PALLIATIVE CARE PATCH
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The VA Hospice and Palliative Care (HPC) program office has sponsored the 
+ development of this reminder dialog template to document provider-based 
+ palliative care consultations at all sites within VHA. This template is 
+ critical to improving the process and documentation of clinical care, and 
+ facilitating high quality palliative care and programmatic quality 
+ improvement. It is the intent of the HPC program office that this national
+ template be formally distributed to VA palliative care programs for
+ voluntary use throughout VHA in early 2014.
+  
+ The current version of the template, PC-NCT 3.0, for national 
+ distribution, was developed by the Quality Improvement Resource Center 
+ (QuIRC), based in Los Angeles, CA. QuIRC serves as one of three national 
+ Quality Centers that support the HPC's Comprehensive End-of-Life Care 
+ Initiative to foster quality improvement. QuIRC built the template based 
+ on a comprehensive review of the literature and in consultation with a 
+ wide variety of program stakeholders and clinical experts. There has been 
+ extensive involvement from the field in order to obtain concurrence and 
+ refine earlier versions. Our program office goal is to have at least 60% 
+ of the VA facilities adopt the PC-NCT over the next two years.
+  
+ Using an earlier version of PC-NCT in 2010, QuIRC gauged interest from 
+ facilities about participating in a User Community in order to pilot the 
+ template in a clinical setting; garnered feedback regarding the content, 
+ ease of use, and utility of the tool; and assessed surrounding the tool's 
+ adoption and implementation.  After identifying facilities interested in 
+ piloting the tool, QuIRC selected five sites (Baltimore, Battle Creek, 
+ Indianapolis, Birmingham, and Salt Lake) to make up the User Community 
+ based on geographic diversity, palliative care program size and 
+ complexity, academic and non-academic status, and the local availability 
+ of evaluation resources.  The PC-NCT was disseminated to the User 
+ Community sites in August 2010.  User Community conference calls have 
+ been held at least once per month in which we gather valuable feedback to 
+ make ongoing modifications which are reflected in the PC-NCT version 
+ 3.0.  This most recent version captures aspects of care that are most 
+ important to assess during a palliative care consultation in a manner 
+ that is efficient and helpful to clinicians.
+  
+ In order for the HPC performance measure to be met for a given palliative 
+ care consult, four elements must be present - primary diagnosis, CPT code 
+ (ending in 3, 4, or 5), qualified provider (MD/DO, CNS, NP, PA) and 
+ correct DSS code (351 or 353).  For this to occur for an inpatient, the 
+ CPRS location of the patient MUST be changed to an outpatient clinic 
+ location setup for this purpose PRIOR to beginning the note. The reminder 
+ dialog itself has a "change location?" prompt built in.
+  
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1.  INC000000778314 - Palliative Care National Clinical Template (PC-NCT)
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA Greater Los Angeles HCS - West LA Campus 
+ Richard L. Roudebush VAMC - Indianapolis 
+ VA Illiana HCS  - Danville 
+ John D. Dingell VAMC - Detroit 
+  
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1.  INC000000778314 - Palliative Care National Clinical Template (PC-NCT)
+  
+ Problem:
+ --------
+ The Hospice and Palliative Care (HPC) program office has developed this 
+ reminder dialog template to document provider-based palliative care 
+ consultations at all sites within VHA.  This template is critical to 
+ improving the process and documentation of clinical care, and 
+ facilitating high quality palliative care and programmatic quality 
+ improvement.  It is the intent of the HPC program office that this 
+ national template be formally distributed to VA palliative care programs 
+ for voluntary use throughout VHA beginning FY2013.
+  
+ Resolution:
+ -----------
+ The Hospice and Palliatve Care (HPC) Care Reminder dialog template was 
+ created. This patch, PXRM*2*31, contains two routines, PXRMP31E and 
+ PXRMP31I. They are init tasks that add new entries to the REMINDER
+ EXCHANGE (#811.8) file and the contents of these entries are installed
+ during the post-init.  These routines can be deleted after the install.
+ There are two Reminder Exchange entries that will be installed as part of
+ this patch.
+    1. VA-PALLIATIVE CARE CONSULT
+    2. VA-PATCH 31 POST HS COMPONENTS
+  
+  
+ Build Components:
+ =================
+ N/A
+  
+  
+ Data Dictionary:
+ ================
+ REMINDER EXCHANGE (#811.8) FILE
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host
+ file is PXRM_2_0_31.KID.  This file should be downloaded in ASCII format.
+       
+ The preferred method for obtaining these files is to use File Transfer
+ Protocol (FTP) to download them from:
+  
+ ftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve the files directly from a specific server as
+ follows:
+         
+ Albany             ftp.domain.ext
+ Hines              ftp.domain.ext
+ Salt Lake City     ftp.domain.ext
+    
+ Install guide is also available on the above servers.  It is available as
+ .pdf format.  This file should be downloaded in BINARY format.  
+     
+ File Name:            Description:               Protocol:
+ ==========            ============               =========
+ PXRM_2_0_31_IG.PDF    PXRM*2.0*31 Installation   BINARY
+                       and Setup Guide
+ PXRM_2_0_31.KID       PXRM*2.0*31 Host File      ASCII
+            
+ Documentation  can also be found on the VistA Documentation Library (VDL)
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will take
+ five to ten minutes.  Refer to the Install Guide, PXRM_2_0_31_IG.PDF, for
+ complete details.
+    
+ 1.  Use the "Load a Distribution' option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_31.KID
+    
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following
+     options, as desired:
+         Print Transport Global
+         Compare Transport global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+     
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*31
+      
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+     respond 'NO'.
+       
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO// respond 'NO'.
+         
+ 6.  After successful installation, the following init routines may be
+     deleted:
+         PXRMP31I
+         PXRMP31E
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 206
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP31E
+    Before:       n/a   After:  B1037570  **31**
+Routine Name: PXRMP31I
+    Before:       n/a   After:  B2537630  **31**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2013
+Completed By:                               Date Completed: MAR 06, 2014
+Released By :                               Date Released : MAR 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

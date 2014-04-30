@@ -1,0 +1,327 @@
+$TXT Created by HARRIS,JAMES at DVBCACHE.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 07/03/13 at 14:08
+=============================================================================
+Run Date: DEC 12, 2013                     Designation: PSS*1*172
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #158                      Status: Released
+                  Compliance Date: JAN 26, 2014
+=============================================================================
+
+Associated patches: (v)PSS*1*159   <<= must be installed BEFORE `PSS*1*172'
+                    (v)PSS*1*166   <<= must be installed BEFORE `PSS*1*172'
+
+Subject: IMR6 ADD HIGH RISK MEDICATION INDICATOR
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ ******************************* ATTENTION ********************************
+   
+ IMR6 CLINIC ORDERS, WITNESS FOR HIGH RISK/HIGH ALERT DRUGS, AND IV BAG 
+ LOGIC enhancement includes 4 patches which must be installed in the
+ following order:
+  
+ 1.      PSS*1*172
+ 2.      OR*3*266
+ 3.      PSJ*5*279
+ 4.      PSB*3*70
+  
+ This enhancement also includes a new Graphical User Interface (GUI) 
+ executable file, BCMA GUI version 3.0.70.65. Installation of this GUI is
+ required immediately after the KIDS install for the Patch to function.
+  
+ **************************************************************************
+  
+ Inpatient Medication Records Increment VI
+ =========================================
+ This enhancement adds a new field High Risk/High Alert (#1) to the
+ PHARMACY ORDERABLE ITEM file (#50.7) to indicate if a medication is a High
+ Risk High Alert medications that needs a witness during medication
+ administration to patients via the Bar Code Medication Administration
+ (BCMA) GUI client software.
+  
+ This supports the witness enhancements that are implemented in the BCMA
+ patch PSB*3.0*70.
+  
+  
+ T@0 Enhancement (Labels Per Day)
+ ================================ 
+ This enhancement creates the Labels Per Day (#155) field in the IV (#100)
+ multiple in the PHARMACY PATIENT (#55) file. This field is used to define
+ the number of daily labels needed for a continuous IV order when it is
+ different than the number of labels the system would have calculated based
+ on the order's Volume and Infusion Rate.
+  
+ The new INFUSION INSTRUCTIONS (#53.47) file is being implemented to allow
+ sites to set up abbreviations that may be entered into the Infusion Rate
+ field that will be expanded to a longer text string. 
+  
+ The Infusion Instructions Managment [PSS INFINS MGR] menu has been created
+ to hold the new Infusion Instructions Add/Edit [PSS INFINS ADED] option
+ and Infusion Instructions Report [PSS INFINS RPT] option, to allow editing
+ and listing of the contents of the INFUSION INSTRUCTIONS (#53.47) file.
+  
+ The Infusion Instructions Managment [PSS INFINS MGR] menu has been added
+ to the Pharmacy Data Management [PSS MGR] menu.
+  
+ INVALID DATE/TIME for IV Labels
+ --------------------------------
+ This patch adds a new INVALID DATE/TIME field (#9) in the BCMA ID (#105) 
+ sub-file of the IV (#100) sub-file of the PHARMACY PATIENT (#55) file.
+ This new field contains the date/time the IV label was invalidated due to 
+ a change, or edit, made to the IV order. Each time a change is made to 
+ an IV order, the BCMA IV parameters are checked to determine if the 
+ change should invalidate IV labels printed prior to the change, or if the
+ IV labels printed prior to the change should continue to be available for
+ infusing.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+                                                         New/
+ File Name (Number)              Field Name (Number)     Modified/Deleted
+ -----------------------         --------------------    ----------
+ PHARMACY ORDERABLE ITEM         HIGH RISK/HIGH ALERT    New
+ (#50.7)                         (#1) 
+  
+ IV (#100) multiple in the       LABELS PER DAY (#155)   New
+ PHARMACY PATIENT (#55) file 
+  
+ BCMA ID (subfile 55.0105)       INVALID DATE/TIME (#9)  New
+ in BCMA ID (#145) multiple in 
+ PHARMACY PATIENT (#55) 
+  
+ INFUSION INSTRUCTIONS (#53.47)  NAME (#.01)             New
+  
+ INFUSION INSTRUCTIONS (#53.47)  EXPANSION (#1)          New 
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                      Type              New/Modified/Deleted
+ ------------------------         -----------       --------------------
+ PSS EDIT ORDERABLE ITEMS         Run routine       Modified
+ PSS INFINS MGR                   Menu              New
+ PSS INFINS ADED                  Run routine       New
+ PSS INFINS RPT                   Run routine       New
+  
+ Protocols Associated:
+  
+ Protocol Name            New/Modified/Deleted
+ ----------------         -------------------- 
+ N/A
+  
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name                 New/Modified/Deleted
+ -------------------      --------------------      
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)             New/Mod/Del
+ -------------      ----      ------------------             -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070607 - Witness Function for High Risk/High Alert Medications.
+   
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ PSPO 452 - Patient receiving increased titration rate of morphine.
+  
+ Associated Remedy Tickets:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Central Texas
+ Loma Linda
+ Pittsburgh
+ St. Cloud
+  
+  
+ Documentation Retrieval Inst ructions:
+ -------------------------------------
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.fo-albany.domain.ext  <ftp://ftp.fo-albany.domain.ext>
+  Hines          ftp.fo-hines.domain.ext   <ftp://ftp.fo-hines.domain.ext>
+  Salt Lake City ftp.fo-slc.domain.ext     <ftp://ftp.fo-slc.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                   File Name             FTP Mode
+ --------------------------------------------------------------------------
+ Pharmacy Data Managment V. 1.0     PSS_1_TM_R1213.PDF    BINARY   
+ Technical Manual
+  
+ Pharmacy Data Managment V. 1.0     PSS_1_P172_TM_CP.PDF  BINARY
+ Technical Manual Changes Pages
+  
+ Pharmacy Data Management V. 1.0    PSS_1_UM_R1213.PDF    BINARY
+ User Manual
+  
+ Pharmacy Data Management V. 1.0    PSS_1_P172_UM_CP.PDF  BINARY
+ User Manual Changes Pages
+  
+ Pharmacy Data Management V. 1.0    PSS_1_P172_RN.PDF     BINARY
+ IMR 6 Release Notes
+  
+  
+  
+ Patch Installation: 
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Post Install routine EN^PSS172PO checks for the existence of the "NO 
+ ALLERGY ASSESSMENT" entry in the APSP INTERVENTION TYPE (#9009032.3) 
+ file, and for the existence of the "UNABLE TO ASSESS" entry in the APSP 
+ INTERVENTION RECOMMENDATION (#9009032.5) file. If either entry does not 
+ exist, it is added at the first available Internal Entry Number (IEN) in 
+ the file.
+  
+ These file entries were originally exported by patch PSJ*5*267, but could 
+ not be added to the files at sites that contained custom entries in the 
+ files.
+  
+  
+ Installation Instructions
+ -------------------------
+ Do not queue this patch to install at a later time nor install this patch
+ while users are on the system. Installation will take no longer than 5
+ minutes for the software components.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSS*1.0*172):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSS*1.0*172.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', accept the default of YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//  respond NO. 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+  
+ Uninstall Instructions
+ ----------------------
+ This procedure assumes that a backup copy of the routines was done during 
+ the installation process.
+ Only routines are backed-up; other components such as DDs, templates, 
+ protocols, options or HL7 components are not backed up. 
+  
+ To back out the patches, restore the backup copy saved in the MailMan 
+ message. This action will restore the routines to the state before 
+ installing the IMR 6 patches.  
+  
+ Note: In order to completely back out all components, development will 
+ make a patch available for each package that will restore non-routine 
+ components to their pre-IMR 6 state.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS172PO
+    Before:       n/a   After:  B8646990  **172**
+Routine Name: PSSFILED
+    Before: B17863516   After: B18901288  **38,47,172**
+Routine Name: PSSIIRPT
+    Before:       n/a   After: B14146520  **172**
+Routine Name: PSSPOIMO
+    Before:B139401789   After:B139337107  **29,32,38,47,68,102,125,141,
+                                           153,159,166,172**
+ 
+Routine list of preceding patches: 166
+
+=============================================================================
+User Information:
+Entered By  : NAPOLIELLO,GREG               Date Entered  : MAY 29, 2012
+Completed By: BANGRAKULUR,KRISHNA           Date Completed: NOV 27, 2013
+Released By : MIAN,NAEEM                    Date Released : DEC 12, 2013
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

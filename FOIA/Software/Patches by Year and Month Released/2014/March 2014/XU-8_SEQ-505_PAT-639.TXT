@@ -1,0 +1,182 @@
+
+=============================================================================
+Run Date: MAR 10, 2014                     Designation: XU*8*639
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #505                      Status: Released
+                  Compliance Date: APR 10, 2014
+=============================================================================
+
+
+Subject: PIV/PKI ENCRYPTION ENHANCEMENTS AND UTILITIES FOR DEVELOPERS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Patch XU*8.0*639 provides PKI/PIV capabilities which can be incorporated into
+ Delphi applications, this provides developers with the ability to perform code
+ signing using SHA-2 hashing algorithms, and verify user identity via their 
+ PIV card using the user's PIN. 
+ 
+ There is no action for VHA sites required by this patch. This patch is
+ Programmer-Only.  There is no server side (VistA PackMan or KIDS) part to the
+ patch.  There are no client side (Windows executable) components for VHA 
+ production workstations.  The patch is intended for Delphi developers 
+ desiring to add PIV/PKI cryptography capabilities to their applications. 
+  
+ This patch provides support for Delphi versions XE2, XE3, XE4, and XE5.
+ 
+ The patch is distributed as a zip file (XU_8_0_639.zip) on the anonymous 
+ directory sites.  The zip file contains all of the source code and 
+ instructions for use in Delphi applications, as well as example code
+ illustrating how to use encryption in Delphi applications.
+ 
+ The patch priority is Mandatory (since there is no choice for optional).
+  
+  
+ Blood Bank Team Coordination:
+ =============================
+ Clearance - Not required for client-side only patches.
+  
+  
+ Patch Components
+ ================
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Not applicable.  Not tested at field sites.  Not tested independently.  
+ Patch contains shared code that is tested during GUI development and 
+ deployment.  No production client-side or server-side software is 
+ included.
+ 
+ Software & Documentation Retrieval Instructions
+ ----------------------------------------------- 
+ Software is contained in the XU_8_0_P639.zip file.
+  
+ There is no documentation included with this patch.
+  
+ The preferred method for obtaining the file is to use File Transfer 
+ Protocol (FTP) to download it from: ftp://download.vista.domain.ext/
+ 
+ This transmits the files from the first available FTP server. The 
+ file is located in the [] directory. Sites may also
+ elect to retrieve software directly from a specific server as follows:
+  
+  Albany      ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines       ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext  <ftp://ftp.domain.ext>
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ PIV/PKI DEVELOPER UTILTIES    XU_8_0_P639.zip                Binary
+  
+  
+ Routine Information:
+ ====================
+  
+   Server Side:
+   ------------
+   No M routines included
+  
+  
+ List of preceding patches:
+ N/A
+  
+  
+ The client-side (developer) software distribution includes:
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- -------------
+ 11/01/2013  07:40 AM       6,635,580   XU_8_0_P639.zip
+  
+  Client Side:
+  ------------
+  
+ The following is a list of the files included in the zip file and their 
+ calculated sizes.
+  
+  
+    Date       Time            Bytes            Filename
+ ----------  --------       -----------         --------
+ 
+ Directory of PKI folder:
+ 
+ 09/10/2013  10:49 AM       3,459       fPKIPINPrompt.dfm
+ 09/10/2013  10:49 AM       3,539       fPKIPINPrompt.pas
+ 01/29/2014  12:53 PM      18,968       oPKIEncryption.pas
+ 09/19/2013  09:47 AM      18,875       oPKIEncryptionCertificate.pas
+ 09/10/2013  10:49 AM       4,483       oPKIEncryptionData.pas
+ 09/10/2013  10:49 AM       8,354       oPKIEncryptionDataDEAOrder.pas
+ 02/04/2014  11:22 AM      45,340       oPKIEncryptionEngine.pas
+ 09/17/2013  10:38 AM         893       oPKIEncryptionEx.pas
+ 09/10/2013  10:49 AM       1,848       oPKIEncryptionSignature.pas
+ 09/10/2013  10:49 AM      12,318       oPKIServiceEngine.pas
+ 09/13/2013  12:08 PM     521,516       wcrypt2.pas
+ 09/10/2013  10:49 AM      67,166       winSCard.pas
+ 09/10/2013  10:49 AM      13,918       XlfMime.pas
+ 
+        13 File(s)       720,677 bytes
+ 
+  Directory of PKIUtilities:
+ 
+ 08/21/2013  10:50 AM      10,698       fDEAOrder.dfm
+ 08/30/2013  01:18 PM      10,284       fDEAOrder.pas
+ 08/30/2013  01:18 PM           3       fDEAOrder.vlb
+ 08/30/2013  11:31 AM       6,130       fDEASignature.dfm
+ 08/30/2013  11:30 AM       5,961       fDEASignature.pas
+ 08/30/2013  11:31 AM           3       fDEASignature.vlb
+ 08/04/2013  12:44 PM       1,600       fHashValueComparison.dfm
+ 08/04/2013  01:20 PM       2,119       fHashValueComparison.pas
+ 02/19/2014  02:33 PM       4,563       fMain.dfm
+ 02/19/2014  02:33 PM       7,838       fMain.pas
+ 02/19/2014  02:35 PM           3       fMain.vlb
+ 09/16/2013  11:50 AM      19,816       oPKIEncryptionCertificate.pas
+ 09/16/2013  11:46 AM         350       PKIUtilities.dpr
+ 02/19/2014  02:35 PM      20,724       PKIUtilities.dproj
+ 02/19/2014  02:35 PM      12,335       PKIUtilities.dproj.local
+ 02/20/2014  03:46 PM         447       PKIUtilities.identcache
+ 02/19/2014  02:33 PM      62,704       PKIUtilities.res
+ 
+            17 File(s)    165,578 bytes
+ 
+      Total Files Listed:
+               30 File(s)        886,255 bytes
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 11, 2014
+Completed By:                               Date Completed: MAR 05, 2014
+Released By :                               Date Released : MAR 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

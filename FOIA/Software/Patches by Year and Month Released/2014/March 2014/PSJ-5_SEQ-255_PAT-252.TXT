@@ -1,0 +1,343 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: PSJ*5*252
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #255                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*270   <<= must be installed BEFORE `PSJ*5*252'
+                    (v)PSJ*5*271   <<= must be installed BEFORE `PSJ*5*252'
+
+Subject: MEDICATION ORDER CHECK HEALTHCARE APPLICATION v2.0
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of a group of host file patches that make up the new
+ Medication Order Check Healthcare Application v2.0 (MOCHA). These patches
+ contain software that supports MOCHA v2.0 functionality.  The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities. 
+  
+ The following patient safety issue has also been addressed in this 
+ release:
+  
+   PSPO #2069 - CPRS and VistA Inpatient Pharmacy package return inadequate
+     alert message for allergy information.
+  
+  
+ Patch Information:
+ ------------------
+ The following patches will be distributed in a phased release and sites 
+ will be given access to the host files during their scheduled phase of
+ implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311
+   5. OR_3_381.KID
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSO*7*431, PSJ*5*299
+  
+ To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+ PSS_1_160 and PSS_1_173 include the components necessary for the
+ interface that will be used in MOCHA v2.0.  The MOCHA 2.0 and 
+ MOCHA 2.0 FOLLOW UP COMBINED BUILD include the modifications to implement
+ Max Single Dose Order checks for the Order Entry Results Reporting (OERR),
+ Inpatient Medications and Outpatient Pharmacy applications.
+  
+ These patches will add a maximum single dose order check to the current
+ VistA medication order checking system that uses the First DataBank (FDB)
+ business logic and database. In this initial phase of dosing
+ functionality, the Maximum Single Dose information will be displayed to
+ the user.  The following scenarios describe the types of messaging added:
+  
+   1. If the dosage entered passes the dosing checks, no message will be
+      displayed.
+  
+   2. If the dosage entered is too high, the Single Dose warning
+      message will be displayed.
+  
+   3. If the dose checks were not able to be performed, a generic message
+      will be displayed notifying the user that a manual check needs to be
+      completed to verify appropriate dosing.
+  
+ **************************************************************************
+ When using the option Compare Transport Global to Current System [XPD 
+ COMPARE TO SYSTEM] with the host file MOCHA_2_0.KID you will see the 
+ following warnings on certain routines:
+  
+ Host file: MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+  
+ PSJ*5*252:
+  
+ Routine:  PSJBLDOC
+ *** WARNING, your routine has more patches than the incoming routine ***
+  
+ Routine:  PSJGMRA, PSJOC, PSJOCDI
+ *** WARNING, your routine has different patches than the incoming routine 
+ ***
+  
+ These warnings are due to the sequence of released patches prior to MOCHA 
+ v2.0. Once all the MOCHA v2.0 patches are installed, the second lines of
+ the routines will be updated appropriately.
+ **************************************************************************
+  
+ The following issues are also addressed by this patch:
+  
+ 1. When entering or finishing an order with a drug that causes an
+ interaction to the additives/premixes of an IV order, the order is
+ displayed multiple times on the drug interaction warning.  This patch
+ screens out the duplicate and only displays the order one time. Code
+ Change Request (CCR) #3987.
+  
+ 2. The stop date may not be calculated correctly if during the finish of
+ an order an additive is not selected until the accept/edit screen.  
+ The patch will recalculate the stop date when the additive/solution is
+ edited during the finishing of an order. CCR #4336.
+  
+ 3. An undefined error occurred at CPRS+7^PSJOCOR when the dispense drug 
+ used in the order was not tied to an Orderable Item.  This is a data issue
+ but the code is corrected to prevent the error from happening.  
+ HD0000000507452 (CCR #4512).
+  
+ 4. The default response on the allergy alert question "Do you want to
+ intervene?" is set at "NO" for the Inpatient Medications (IP) orders and
+ "YES" for the Outpatient orders. Prior to installation of MOCHA v1.0 the
+ default for IP orders was also set to "YES".  PSPO #2069,
+ HD0000000508384 (CCR #4526)
+  
+ 5. Fix the Single dose amount calculation for Requirement 3.8.11.123.  
+ This change removed the screening of drugs with the VA CLASSIFICATION of
+ "TN" so the "CONTINUED INFUSTION" route can be used in the dosing checks.
+ CCR #4069.
+  
+ 6. The dosing message currently displayed in VistA and Computerized 
+ Patient Record System (CPRS) for orders with a duration greater than or
+ equal to 24 hours is confusing and does not match the requirements. This
+ change corrects the calculation and displays the message clearer when the
+ single dose amount is adjusted.  CCR #4281.
+  
+ 7. Multiple exception messages are displayed for the same drug by CPRS.  
+ This change will help pass a flag to the interface code to eliminate
+ the extra message.  CCR #4290.
+  
+ 8. In order for the dosing checks to work, the unit of Liter had to be
+ used for drugs containing "Potassium".  First DataBank (FDB) is now able
+ to accept Milliliter.  This change removes the unit conversion from "ML"
+ to "L".  CCR #4439.
+  
+ 9. Corrects the spelling of "INTRATHECAL" when checking for the FDB 
+ mapping of this Medication Route.  CCR #4440.
+  
+ 10. If the patient has multiple orders on the profile with the same drug 
+ and the user is entering or finishing an order using the same drug that 
+ is not matched to National Drug File (NDF) or has no GCNSEQNO, the
+ exceptions are displayed twice.  CCR #4523.
+  
+ 11. An unexpected error occurs during dosing check when finishing a 
+ pending unit dose order with a duration less than 24 hours.  The 
+ frequency is incorrectly set to zero. This patch will fix this
+ problem.  CCR #4981.
+  
+ 12. The wrong dosing message was displayed after the Dosage Ordered for a 
+ Unit Dose order was edited. This patch will make sure the correct dosage 
+ is used in the dosing checks.  CCR #4764.
+  
+ 13. Two additional FDB continuous dose routes have to be added to the 
+ dosage check logic for IV orders. They are Cont Intraosseous and Cont 
+ Caudal infusion. The code is modified to check for these two routes.  CCR 
+ #5026.
+  
+  
+ Components exported with this patch:
+ ------------------------------------
+ N/A   (Only routines exported)
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO #2069 - The question "Do you want to intervene?" for a drug allergy 
+ alert was unintentionally changed to "No" with MOCHA v1.0.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. HD0000000507452 - <COMMAND>CPRS+7^PSJOCOR
+  
+ Problem:
+ -------
+ An undefined error occurred at CPRS+7^PSJOCOR
+  
+ Resolution:
+ ----------
+ Modified ^PSJOCOR to correct the problem
+  
+  
+ Test Sites:
+ ----------
+ BOISE, ID
+ CHARLESTON, SC
+ KANSAS CITY, MO
+ NORTHERN CALIFORNIA HCS, CA
+ PALO ALTO HCS, CA
+ TUSCALOOSA, AL
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ ----------------------------  --------                        --------
+ Inpatient Medications Nurse's PSJ_5_NURSE_UM_R0314.PDF        (binary)  
+   User Manual                 PSJ_5_NURSE_UM_R0314.DOC        (binary)
+  
+ Inpatient Medications         PSJ_5_PHAR_UM_ R0314.PDF        (binary)
+   Pharmacist's User Manual    PSJ_5_PHAR_UM_ R0314.DOC        (binary)
+  
+ Inpatient Supervisor's User   PSJ_5_SUPR_UM_ R0314.PDF        (binary)
+   Manual                      PSJ_5_SUPR_UM_ R0314.DOC        (binary)
+  
+ Inpatient Medications         PSJ_5_TM_ R0314.PDF             (binary)
+   Technical Manual/Security   PSJ_5_TM_ R0314.DOC             (binary)
+   Guide 
+  
+ Dosing Order Check User       PSS_PSJ_PSO_Dosing_Ord_         (binary) 
+    Manual                        Ck_User_Manual.PDF  
+                               PSS_PSJ_PSO_Dosing_Ord_         (binary)
+                                  Ck_User_Manual.DOC
+  
+ Medication Order Check        PSS_1_PSO_7_PSJ_5_RN_R0314.PDF  (binary)
+    Healthcare Application     PSS_1_PSO_7_PSJ_5_RN_ R031.DOC  (binary)
+    (MOCHA) v2.0 Release Notes
+  
+ MOCHA v2.0 Combined Build     PSS_1_P160_MOCHA_CB_IG.PDF      (binary)
+    Installation Guide         PSS_1_P160_MOCHA_CB_IG.DOC      (binary)
+  
+ VistA to MOCHA v2.0 Interface PSS_1_VistA_to_MOCHA_ID.PDF     (binary)
+    Document                   PSS_1_VistA_to_MOCHA_ID.DOC     (binary)
+  
+  
+ FTP Instructions:
+  
+ MOCHA 2.0 includes the following patches.  The host files were created
+ to simplify installation at Veterans Health Administration (VHA)
+ facilities and to assist in the phased implementation release method for
+ MOCHA 2.0.
+  
+ File Name                      Contents           Retrieval Format
+ ----------------------------   --------           ----------------
+ PSS_1_160.KID                  PSS*1*160          ASCII
+  
+ PSS_1_173.KID                  PSS*1*173          ASCII
+  
+ MOCHA_2_0.KID                  PSO*7*372          ASCII
+                                PSJ*5*252
+                                OR*3*345
+  
+ MOCHA_2_0_FOLLOW_UP_
+   COMBINED_BUILD.KID           PSO*7*416          ASCII
+                                PSJ*5*257
+                                GMRA*4*47
+                                OR*3*311
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This group of patches will be part of a phased implementation and sites
+ will be given access to the MOCHA V2.0 INSTALLATION GUIDE and patches
+ during their phase of implementation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 69
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVEDT
+    Before: B49813774   After: B51363050  **4,110,127,133,134,181,252**
+Routine Name: PSIVOCDS
+    Before:B112584128   After:B114348606  **181,252**
+Routine Name: PSIVOPT
+    Before: B57262738   After: B58375431  **17,27,58,88,104,110,155,181,
+                                           271,252**
+Routine Name: PSIVORE
+    Before: B42579774   After: B43371041  **18,29,50,56,58,81,110,127,
+                                           133,157,203,213,181,252**
+Routine Name: PSJAPIDS
+    Before: B29473329   After: B34568784  **181,252**
+Routine Name: PSJBLDOC
+    Before: B43936297   After: B27080671  **181,263,252**
+Routine Name: PSJGMRA
+    Before: B26285552   After: B22580264  **181,270,252**
+Routine Name: PSJLIFN
+    Before: B28721093   After: B29270381  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261,252**
+Routine Name: PSJMISC2
+    Before: B11318290   After: B12038651  **181,252**
+Routine Name: PSJOC
+    Before: B27066758   After: B24678878  **181,252**
+Routine Name: PSJOCDI
+    Before: B91203881   After: B84788026  **181,252**
+Routine Name: PSJOCDS
+    Before: B61757941   After: B73599009  **181,252**
+Routine Name: PSJOCDSD
+    Before: B19852742   After: B25300673  **181,252**
+Routine Name: PSJOCERR
+    Before:  B3747914   After:  B3766638  **181,252**
+Routine Name: PSJOCOR
+    Before:  B3349794   After:  B3732046  **181,252**
+Routine Name: PSJOE
+    Before: B83867833   After: B88042799  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252**
+Routine Name: PSJOE1
+    Before: B27457189   After: B28274486  **2,7,25,30,47,56,64,179,181,252**
+ 
+Routine list of preceding patches: 261, 263, 270, 271
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 23, 2010
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

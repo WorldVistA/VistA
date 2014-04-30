@@ -1,0 +1,236 @@
+
+=============================================================================
+Run Date: MAR 24, 2014                     Designation: OR*3*345
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #330                      Status: Released
+                  Compliance Date: JUL 31, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*346    <<= must be installed BEFORE `OR*3*345'
+                    (v)OR*3*357    <<= must be installed BEFORE `OR*3*345'
+
+Subject: MOCHA 2.0 ORDER CHECK CPRS CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of a group of patches that make up the Medication 
+ Order Check Healthcare Application version 2 software (MOCHA v2.0).
+ These patches will add a maximum single dose order check to the current 
+ VistA medication order checking system that uses the First DataBank (FDB) 
+ business logic and database.  FDB custom dosing tables will be used to 
+ store custom dosing changes to FDB standard reference drug tables. 
+ Pharmacy Enterprise Customization System (PECS) version 2.2 application 
+ was developed to meet the customization requirements.
+  
+ Specific issues that have been addressed in this patch include the 
+ following:
+  
+ - On the copy/renew/change of an Infusion or Unit Dose order where the 
+ Dispense Drug was not matched to the National Drug File, there were 
+ multiple duplicative messages indicating the order checks could not be 
+ done.  The duplicate messages will now only display once.
+  
+ - When a pending order does not have a dispense drug assigned and all 
+ drugs associated with the Orderable Item are matched to National Drug 
+ File and another order is placed for the same drug, both a duplicate drug 
+ and duplicate therapy order check are displayed. This has been modified 
+ such that in this situation only the duplicate drug order check will 
+ display.
+  
+ - The status of Non-VA meds were sometimes showing as PENDING in the 
+ DRUG-DRUG order checks when it was in fact ACTIVE.  Now the status will 
+ show as "ACTIVE NON-VA" when an active Non-VA med is returned as an order 
+ check.
+  
+ - CPRS was showing duplicate exception messages when order checks could 
+ not be done for a drug.  With this patch, only a single exception message 
+ is shown.
+  
+ - For 2 unsigned med orders that have a drug interaction and both have 
+ Dispense Drugs, upon signing either one you get the order check showing 
+ the interaction with the other, which is correct.  However, if one of 
+ them is entered as a Free Text Dose and the other has a Dispense Drug, 
+ then when signing the order that has a Dispense Drug the drug interaction 
+ order check was not firing.  This has been addressed such that in all 
+ cases the correct interaction order check shows.
+  
+ - Unit Dose Complex medication doesn't generate Duplicate Drug Order 
+ Check on Accept for Renewal.  This now works as expected.
+  
+ - CPRS can now handle displaying multiple messages relating to General 
+ Dosing order checks for a complex med order.
+  
+ - After the release of OR*3*294, Cache would throw the following error 
+ into the error trap when Remote Data Interoperability could not connect 
+ to the Health Data Repository:  <FUNCTION>zSend+2^%Net.HttpRequest   
+ Since an InterSystems Fix would take too long to be released we decided 
+ to preempt the error in the Order Entry code so this error should no 
+ longer be displayed in the error trap.
+  
+ - In certain scenarios, DRUG INTERACTION would be displayed as the 
+ status of a med in the DRUG-DRUG order checks instead of PENDING or 
+ NON-VERIFIED.  With this patch the correct status will be displayed.
+  
+ - When a drug was entered that was not matched to National Drug File, 
+ two exception messages were returned as order checks that the order 
+ checks could not be done.  Only one relevant message will now be 
+ displayed.
+  
+ - When the First Data Bank (FDB) Server was down or inaccessible, 
+ information from the message that lists what order checks were not 
+ displayed was being dropped when signing off or when the order check 
+ info gets stored with the order. This has been fixed
+  
+ - When an orderable item was setup as both an additive and a non-premix 
+ solution, CPRS never performed enhanced order checks on the orderable 
+ item when it was marked as an additive in an infusion order. 
+ Additionally, for an infusion order with a non-premix solution and an 
+ additive, CPRS performed enhanced order checks for both the non-premix 
+ solution and the additive. CPRS should never perform enhanced order 
+ checks on non-premix solutions. With this patch, CPRS will only perform 
+ enhanced order checks on all orderable items in an infusion order that 
+ are either an additive or a premix solution.
+  
+ - When an Infusion was being entered via CPRS the First Data Bank server 
+ was getting accessed for each of the components (additives and bases) in 
+ the order and thus creating slowdowns for the user.  This has been 
+ streamlined now to only access the server once for Dosage and once for 
+ Enhanced order checks.
+  
+ - If a Unit Dose or Outpatient Med drug is selected, a free text dose is 
+ entered and before the order is accepted all of the dispense drugs are 
+ inactivated in back door, no order checks will occur and no message will 
+ display indicating that order checks were not done.  In this situation, 
+ CPRS will now let the user know that the checks were not done and that 
+ they should do manual checks.
+  
+ - Exception messages were not being displayed for Prospective (newly 
+ entered) drug orders when order checking.  This has been fixed such that 
+ any exceptions on the new order being entered will show to the user.
+  
+ - If an orderable item is tagged as a supply in the scenario where there 
+ are a mixture of dispense drugs (tagged as supply or not supply) tied to 
+ that Orderable Item, if a med is entered through CPRS which would normally
+ result in dup therapy order checks, the duplicate order checks are 
+ screened out and not displayed. It appears this only affects the 
+ prospective drug. Now CPRS will not screen out supply items that the 
+ Duplicate Therapy are based on and the screening is done on the Backdoor 
+ site for the specific dispense drug instead of at the Orderable Item 
+ level.
+  
+ - Lab result order checks will only fire on the first entry to the LOCAL 
+ TERM TEXT multiple (#860.91) in the ORDER CHECK NATIONAL TERM file 
+ (#860.9) if there is more than a single entry. This would cause only the 
+ first entry to be returned as an order check, when there may be other 
+ more recent results. Routine ORKPS has been modified to search through 
+ all entries in the LOCAL TERM TEXT multiple (#860.91) for matches, then 
+ return the most recent result.
+  
+  Components Sent With Patch
+  --------------------------
+    
+  Routine Summary:
+  ================
+  The following is a list of the routine(s) included in this patch.
+    
+  Total number of routines modified: 12
+  Total number of new routines: 0
+  Total number of routines: 12
+   
+  The following is a list of files included in this patch:
+  ========================================================
+  There are no files associated with this patch.   
+    
+  Test Sites:
+  -----------
+  Charleston
+  Tuscaloosa
+  Kansas
+  Boise
+  Palo Alto
+  Northern California - Martinez
+  
+  Remedy Tickets Resolved
+  -----------------------
+  475656 
+    
+   INSTALLATION INSTRUCTIONS:
+   ==========================
+   The following patches will be distributed in a phased release and sites 
+   will be given access to the host files during their scheduled phase of 
+   implementation:
+  
+   1. PSS_1_160.KID
+   2. PSS_1_173.KID
+   3. MOCHA_2_0.KID contains: PSO*7*372, PSJ*5*252, and OR*3*345
+   4. MOCHA_2_0_FOLLOW_UP_COMBINED_BUILD.KID contains: PSO*7*416,
+         PSJ*5*257, GMRA*4*47, and OR*3*311.
+   5. OR_3_381.KID - HOST file with patch name OR*3*381.
+   6. MOCHA_2_0_FAST_TRACK_BUILDS.KID contains: PSJ*5*299, PSO*7*431
+  
+   To find out your wave deployment status, please see:
+  
+ http://vaww.oed.portal.domain.ext/projects/pre/PRE_M2_Deploy_Trng/PRE_VA_User_
+ M2_Deploy_Trng/SitePages/Home.aspx
+  
+  
+   Refer to the MOCHA v2.0 Installation Guide PSS_1_P160_MOCHA_CB_IG.doc.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B109213586   After:B120169317  **7,56,70,94,141,215,243,293,
+                                           280,346,357,352,345,311,269**
+Routine Name: ORDSGCHK
+    Before: B90665074   After:B109034124  **280,352,345,311**
+Routine Name: ORKCHK
+    Before: B42414888   After: B42660256  **6,32,94,105,123,232,267,243,
+                                           280,345**
+Routine Name: ORKCHK4
+    Before: B22903679   After: B27733732  **6,32,74,87,94,123,162,190,
+                                           249,272,345**
+Routine Name: ORKCHK5
+    Before: B43550798   After: B65644966  **6,32,74,94,123,190,280,357,
+                                           345,269**
+Routine Name: ORKCHK6
+    Before: B26376206   After: B28204591  **6,32,74,87,94,123,162,190,
+                                           249,280,272,346,345,269**
+Routine Name: ORKPS
+    Before: B67862708   After: B95306003  **6,32,74,94,123,141,190,232,
+                                           316,272,346,345**
+Routine Name: ORKPS1
+    Before: B76491746   After: B80576469  **232,272,346,352,345,311**
+Routine Name: OROCAPI1
+    Before: B44857555   After: B59009199  **293,346,345,269**
+Routine Name: ORRDI2
+    Before: B25393824   After: B31690107  **232,294,345**
+Routine Name: ORWDXC
+    Before: B61402104   After: B69748924  **10,141,221,243,280,346,345,
+                                           311,269**
+Routine Name: ORWDXR01
+    Before: B20020938   After: B28161629  **187,190,195,215,280,345,311**
+ 
+Routine list of preceding patches: 269, 294
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 01, 2011
+Completed By:                               Date Completed: MAR 24, 2014
+Released By :                               Date Released : MAR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

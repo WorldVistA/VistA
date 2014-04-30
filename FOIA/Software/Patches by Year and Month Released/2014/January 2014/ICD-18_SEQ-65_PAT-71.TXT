@@ -1,0 +1,202 @@
+$TXT Created by GILMORE,JEREMY at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Thursday, 11/14/13 at 07:58
+=============================================================================
+Run Date: JAN 21, 2014                     Designation: ICD*18*71
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #65                     Status: Released
+                  Compliance Date: FEB 21, 2014
+=============================================================================
+
+Associated patches: (v)ICD*18*62   <<= must be installed BEFORE `ICD*18*71'
+                    (v)ICD*18*69   <<= must be installed BEFORE `ICD*18*71'
+
+Subject: VARIOUS DRG GROUPER FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The DRG (Diagnostic Related Group) Grouper is used to compute
+ and display the DRG for a patient based on that patient's diagnoses
+ and any operations/procedures performed. It uses a mixture of 
+ formulas, Diagnosis and Operation identifiers, and tables that rely
+ on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80)
+ and the ICD OPERATION/PROCEDURE file (#80.1). These files,
+ the date, and the age of the patient determine which codes are
+ needed to calculate the proper DRG.
+   
+ This patch corrects various DRG calculations.
+   
+ ASSOCIATED REMEDY TICKETS:
+ ========================== 
+ 1)INC000000754851 - DRG not calculating properly
+ 2)INC000000778639 - DRG discrepancy between VistA & Quantim
+ 3)INC000000765531 - DRG Miscalculations
+ 4)INC000000768433 - MSDRG_Quantim as DRG 330,to VIP Workplace as
+                     DRG 329, to VistA as DRG 329
+ 5)INC000000778275 - DRG 392 Quantim/391 VistA
+   
+     
+ ASSOCIATED NSR's:
+ =================
+ N/A
+        
+     
+ PARTICIPATING TEST SITES:
+ =========================
+ Louisville VA Medical Center - Louisville, KY - Large
+ Upstate New York Health Care System - Integrated/Large
+ VA Pacific Islands Health Care System - Honolulu, HI - Medium
+        
+     
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000754851 - DRG not calculating properly
+   
+     Problem:
+     ========
+     DRG 21 incorrectly calculating to DRG 32 in VistA.
+      
+     Solution:
+     =========
+     Updated routines ICDTBL0D and ICDTBL0E to account for correct
+     diagnosis codes.
+   
+   
+ 2) INC000000778639 - DRG discrepancy between VistA & Quantim
+   
+     Problem:
+     ========
+     DRG 63 incorrectly calculating to DRG 62 in VistA.
+      
+     Solution:
+     =========
+     Updated routines ICDTBL0D and ICDTBL0E to account for correct
+     diagnosis codes.
+   
+   
+ 3) INC000000765531 - DRG Miscalculations
+      
+     Problem:
+     ========
+     DRG is calculating incorrectly in VistA as 371 instead of 
+     372.
+      
+     Solution:
+     =========
+     Updated routines ICDTBL3D and ICDTBL3E to account for correct
+     diagnosis codes.
+        
+             
+ 4) INC000000768433 - MSDRG_Quantim as DRG 330,to VIP Workplace as
+                      DRG 329, to VistA as DRG 329
+       
+     Problem:
+     ========
+     DRG is calculating incorrectly in VistA as DRG 329 instead
+     of DRG 330.
+        
+     Solution:
+     =========
+     Updated routines ICDTBL3D and ICDTBL3E to account for correct
+     diagnosis codes. 
+       
+       
+ 5) INC000000778275 - DRG 392 Quantim/391 VistA
+     
+     Problem:
+     ========
+     DRG 392 incorrectly calculating to DRG 391 in VistA.
+      
+     Solution:
+     =========
+     Updated routines ICDTBL3D and ICDTBL3E to account for correct
+     diagnosis codes.
+   
+        
+ INSTALLATION INSTRUCTIONS:
+ ===========================
+ This patch may be run with users on the system.  However, it would
+ be preferable if Medical Records coders were off the system.
+ Installation will take less than 5 minutes.
+     
+     1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+         the KIDS distribution included with this message.
+         NOTE:  If the required patches are not installed, the transport 
+         global will be removed.  If the transport global is removed you will
+         need to repeat this step.
+     
+     2.  From the Kernel Installation and Distribution System Menu, select
+         the Installation menu.
+     
+     3.  From this menu, you may elect to use the following options
+         (when prompted for INSTALL NAME, enter ICD*18.0*71):
+         a.  Compare Transport Global to Current System  - this option will
+             allow you to view all changes that will be made when the patch
+             is installed.  It compares all components of the patch 
+             (routines, DDs, templates, etc.).
+         b.  Verify Checksums in Transport Global - this option will
+             allow you to ensure the integrity of the routines that are in
+             the transport global.
+         c.  Print Transport Global - this option will allow you to view the
+             components of the KIDS build.
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+     
+     4.  Use the Install Package(s) option and select the package 
+         ICD*18.0*71.
+     
+     5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+         NO//', respond No.
+     
+     6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options, and
+         Protocols? YES//', respond Yes.
+     
+         When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+         enter:
+                PTF Menu  [DG PTF MENU] 
+         When prompted, 'Enter protocols you wish to mark as 'Out Of 
+         Order':', press enter.
+     
+     7.  Following installation of this patch, it is necessary to run the
+         Update Transfer DRG's for Current FY [DG PTF UPDATE TRANSFER
+         DRG's] option in order to make the transfer DRGs correspond to
+         the appropriate grouper. This option updates/recalculates the 
+         transfer DRGs for PTF records opened during the current fiscal
+         year. The option is locked with the DG PTFSUP security key.
+         The Menu path is PTF Menu/Update DRG Information Menu/Update 
+         Transfer DRGs for current FY.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICDTBL0D
+    Before: B22597436   After: B23414132  **56,61,62,71**
+Routine Name: ICDTBL0E
+    Before: B22597494   After: B23414190  **65,62,71**
+Routine Name: ICDTBL3D
+    Before:  B8072801   After:  B9236808  **56,69,71**
+Routine Name: ICDTBL3E
+    Before:  B8072890   After:  B9236898  **65,69,71**
+ 
+Routine list of preceding patches: 62, 69
+
+=============================================================================
+User Information:
+Entered By  : GILMORE,JEREMY                Date Entered  : FEB 05, 2013
+Completed By: CLAASSEN,STEVEN               Date Completed: JAN 16, 2014
+Released By : FITCH,DONNA                   Date Released : JAN 21, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

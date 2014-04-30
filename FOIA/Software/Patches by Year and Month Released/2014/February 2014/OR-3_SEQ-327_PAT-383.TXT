@@ -1,0 +1,190 @@
+$TXT Created by HAWSEY,JASON at CPRS29.FO-SLC.DOMAIN.EXT  (KIDS) on Friday, 11/08/13 at 05:37
+=============================================================================
+Run Date: FEB 05, 2014                     Designation: OR*3*383
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: EMERGENCY
+Version : 3       SEQ #327                      Status: Released
+                  Compliance Date: FEB 07, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*380    <<= must be installed BEFORE `OR*3*383'
+
+Subject: COMPLEX TRANSFER FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Problem:
+ When transferring a complex medication order from Outpatient to Inpatient,
+ if one of the components of the complex order has a free text dosage then
+ upon transfer it is blanked out by the system.  The order dialog displays
+ with one of the component dosages blank and allows the user to place the 
+ order as such resulting in a somewhat corrupted order upon finishing in 
+ backdoor.
+  
+ Solution:
+ OR*3*383 will fix this issue by not performing the logic to clear the 
+ dosage on any orders that are complex orders.
+  
+  
+ **********IMPORTANT NOTICE**********
+  
+ 1. The Pre/Post Installation Review section contains a list of sites that 
+ should NOT install OR*3*383 until explicitly told to do so.
+  
+ 2. If your site is not exempted from installation, you should install 
+ OR*3*383 within 2 days of national release.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The following MOCHA 2.0 test sites should NOT install OR*3*383 until
+ explicitly told to do so by the Pharmacy Re-Engineering development team:
+  
+ Boise, ID
+ Charleston, SC
+ Heartland West HCS, KS
+ Northern California HCS
+ Palo Alto HCS
+ Tuscaloosa, AL
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     OR*3.0*383):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ -----------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMED
+    Before: B62390463   After: B63172692  **4,7,38,48,94,141,178,190,195,
+                                           243,306,371,380,383**
+ 
+Routine list of preceding patches: 380
+
+=============================================================================
+User Information:
+Entered By  : HAWSEY,JASON                  Date Entered  : NOV 06, 2013
+Completed By: SHANE,CLARK                   Date Completed: FEB 05, 2014
+Released By : SCHMIT,BECKY                  Date Released : FEB 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
