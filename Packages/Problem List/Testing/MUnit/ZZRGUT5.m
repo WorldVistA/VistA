@@ -59,8 +59,8 @@ GETHIST ;
  . S FLD=$P(ITEM,U,2)
  . D CHKEQ^XTMUNIT(AUDIT("DATE"),$$EXTDT^GMPLX($P(ITEM,U,3)),"Invalid audit date - "_FLD)
  . D CHKEQ^XTMUNIT(AUDIT("FLD"),FLD_U_$$FLDNAME^GMPLHIST(FLD),"Invalid audit field - "_FLD)
- . D CHKEQ^XTMUNIT(AUDIT("OLD"),$$OLDVAL(FLD,$P(ITEM,U,5)),"Invalid old value - "_FLD)
- . D CHKEQ^XTMUNIT(AUDIT("NEW"),$$NEWVAL(FLD,$P(ITEM,U,6)),"Invalid new value - Item: "_AID_"/"_ITEM_", Field: "_FLD)
+ . D CHKTF^XTMUNIT(AUDIT("OLD")[$$OLDVAL(FLD,$P(ITEM,U,5)),"Invalid old value - "_FLD)
+ . D CHKTF^XTMUNIT(AUDIT("NEW")[$$NEWVAL(FLD,$P(ITEM,U,6)),"Invalid new value - Item: "_AID_"/"_ITEM_", Field: "_FLD)
  . D CHKEQ^XTMUNIT(AUDIT("PROV"),PROV,"Invalid provider - "_FLD)
  . Q:$D(^GMPL(125.8,HIST(AID),1))'>0!('$G(AUDIT("OLDDATE")))
  . S ITEM=^GMPL(125.8,HIST(AID),1)
@@ -70,16 +70,16 @@ GETHIST ;
  ;
 OLDVAL(FLD,VAL) ;
  S OLD(.01)="253.2",OLD(.13)=DT,OLD(1.07)=DT,OLD(.05)="Hypopituitarism (Diabetes Insipidus)"
- S OLD(1.01)="Hypopituitarism (Diabetes Insipidus)",OLD(1.04)="1^TESTMASTER,USER"
- S OLD(1.05)="TESTMASTER,USER",OLD(1.06)="",OLD(1.08)="LAB DIV 050 OOS ID 108",OLD(1101)="C"
+ S OLD(1.01)="Hypopituitarism (Diabetes Insipidus)",OLD(1.04)="USER"
+ S OLD(1.05)="USER",OLD(1.06)="",OLD(1.08)="LAB DIV 050 OOS ID 108",OLD(1101)="C"
  I $D(OLD(FLD)) S VAL=OLD(FLD)
  I (FLD=.13)!(FLD=1.07) S VAL=$$EXTDT^GMPLX(VAL)
  Q VAL
  ;
 NEWVAL(FLD,VAL) ;
  S NVAL(.01)="253.1",NVAL(.13)=DT+1,NVAL(1.07)=DT+1,NVAL(.05)="Diabetes Insipidus"
- S NVAL(1.01)="Hyperpituitarism (Acromegaly or Gigantism)",NVAL(1.04)=DUZ_"^"_$$UNAME^ZZRGUTCM
- S NVAL(1.05)="TEST,USER TWO",NVAL(1.06)="IRM",NVAL(1.08)="SECURE MESSAGING",NVAL(1101)=""
+ S NVAL(1.01)="Hyperpituitarism (Acromegaly or Gigantism)",NVAL(1.04)="TWO"
+ S NVAL(1.05)="TWO",NVAL(1.06)="IRM",NVAL(1.08)="SECURE MESSAGING",NVAL(1101)=""
  I $D(NVAL(FLD)) S VAL=NVAL(FLD)
  I (FLD=.13)!(FLD=1.07) S VAL=$$EXTDT^GMPLX(VAL)
  Q VAL
