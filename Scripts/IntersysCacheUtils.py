@@ -250,6 +250,38 @@ def extractBZIP2Tarball(bzipFile, destDir):
     bz2File.close()
   finally:
     os.chdir(curDir)
+"""
+  Utility function to export all Intersystem classes
+  to individual xml files.
+  @testClient, an instance of VistATestClient, in ready state
+  @destDir, destination directory to store all xml files. If
+   destDir does not exist, it will be created in export process.
+  @diffexport, export in diff friendly format, default is True
+"""
+def exportAllClassesIndividual(testClient, destDir, diffexport=True):
+  connection = testClient.getConnection()
+  testClient.waitForPrompt()
+  qualifier = ""
+  if diffexport:
+    qualifier="/diffexport"
+  dest=os.path.abspath(destDir)  # convert to absolute path
+  connection.send('W $SYSTEM.OBJ.ExportAllClassesIndividual("%s","%s")\r'
+                  % (dest, qualifier))
+  testClient.waitForPrompt()
+  logging.info(connection.before)
+"""
+  Utility function to Import all Intersystem classes.
+  @testClient, an instance of VistATestClient, in ready state
+  @srcDir, source directory where all xml files are stored
+"""
+def importDir(testClient, srcDir):
+  connection = testClient.getConnection()
+  testClient.waitForPrompt()
+  qualifier = "fc" # force action and compile
+  src=os.path.abspath(srcDir)  # convert to absolute path
+  connection.send('W $SYSTEM.OBJ.ImportDir("%s",,"%s")\r' % (src, qualifier))
+  testClient.waitForPrompt()
+  logging.info(connection.before)
 
 """ -------- TEST CODE SECTION -------- """
 def testBackup():
@@ -298,9 +330,34 @@ def testMountDisMountLocalDb():
       logging.info('mount LocalDB: %s' % result.dirPath)
       mountLocalDatabase(result.dirPath, testClient)
 
+def test_exportAllClassesIndividual():
+  from VistATestClient import createTestClientArgParser
+  from VistATestClient import VistATestClientFactory
+  testClientParser = createTestClientArgParser()
+  parser = argparse.ArgumentParser(description='Intersystem Cache Classes Exporter',
+                                   parents=[testClientParser])
+  parser.add_argument('dstDir', help='Output directory to store all exported classes')
+  result = parser.parse_args()
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
+  with testClient:
+    exportAllClassesIndividual(testClient, result.dstDir)
+
+def test_importDir():
+  from VistATestClient import createTestClientArgParser
+  from VistATestClient import VistATestClientFactory
+  testClientParser = createTestClientArgParser()
+  parser = argparse.ArgumentParser(description='Intersystem Cache Classes Importer',
+                                   parents=[testClientParser])
+  parser.add_argument('srcDir', help='source directory that stores all exported classes')
+  result = parser.parse_args()
+  testClient = VistATestClientFactory.createVistATestClientWithArgs(result)
+  with testClient:
+    importDir(testClient, result.srcDir)
+
 def main():
   initConsoleLogging()
-  testMountDisMountLocalDb()
+  test_importDir()
+  #test_exportAllClassesIndividual()
 
 if __name__ == '__main__':
   main()
