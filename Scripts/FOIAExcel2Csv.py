@@ -113,6 +113,10 @@ def convertExcelToCsv(input, output):
         if convFunc:
           cValue = convFunc(cValue)
         curRow.append(cValue)
+      """ get rid of rows just with ID field """
+      if int(curRow[0]) and curRow[1:] == [''] * (len(curRow)-1):
+        logging.debug("Ignore empty row %s " % curRow)
+        continue
       csvWrt.writerow(curRow)
   with open(output, 'rb') as csvFile:
     csvReader = csv.reader(csvFile)
