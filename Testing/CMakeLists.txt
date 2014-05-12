@@ -165,34 +165,6 @@ if (TEST_VISTA_OTJ_SUBMISSION)
   add_subdirectory(OTJ)
 endif()
 
-#---------------------------------------------------------------------------------#
-##### SECTION TO GENERATE FILES FOR COVERAGE (Using CMake V 2.8.9 and Higher) #####
-#---------------------------------------------------------------------------------#
-
-if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
-
-  if(EXISTS ${VISTA_BINARY_DIR}/gtm_coverage.mcov)
-    file(REMOVE ${VISTA_BINARY_DIR}/gtm_coverage.mcov)
-  elseif(EXISTS ${VISTA_BINARY_DIR}/cache_coverage.cmcov)
-    file(REMOVE ${VISTA_BINARY_DIR}/cache_coverage.cmcov)
-  endif()
-
-  option(TEST_VISTA_COVERAGE "Create a coverage map of VistA based off the testing" OFF)
-  if(TEST_VISTA_COVERAGE)
-    find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
-    message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
-    This will also create new text files during the run.")
-
-    file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
-
-    if(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "Cache")
-      file(WRITE ${VISTA_BINARY_DIR}/cache_coverage.cmcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
-    elseif(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "GTM")
-      file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_FRESH_M_DIR}/Packages\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
-    endif()
-  endif()
-endif()
-
 #-----------------------------------------------------------------------------#
 ##### SECTION TO RUN UNIT TESTING #####
 #-----------------------------------------------------------------------------#
@@ -225,9 +197,48 @@ if(TEST_VISTA_MUNIT)
       configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.cmake.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake" @ONLY)
       #Creates the command that will be called for the Test
       add_test(UNITTEST_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
+      list(APPEND munit_test_list "UNITTEST_${package_file_name}")
       set_tests_properties(UNITTEST_${package_file_name} PROPERTIES FAIL_REGULAR_EXPRESSION "QUITTING")
     endif()
   endforeach()
+endif()
+
+#---------------------------------------------------------------------------------#
+##### SECTION TO GENERATE FILES FOR COVERAGE (Using CMake V 2.8.9 and Higher) #####
+#---------------------------------------------------------------------------------#
+
+if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
+
+  if(EXISTS "${TEST_VISTA_OUTPUT_DIR}/Coverage/out.ro")
+    file(REMOVE "${TEST_VISTA_OUTPUT_DIR}/Coverage/out.ro")
+  endif()
+
+  if(EXISTS ${VISTA_BINARY_DIR}/gtm_coverage.mcov)
+    file(REMOVE ${VISTA_BINARY_DIR}/gtm_coverage.mcov)
+  elseif(EXISTS ${VISTA_BINARY_DIR}/cache_coverage.cmcov)
+    file(REMOVE ${VISTA_BINARY_DIR}/cache_coverage.cmcov)
+  endif()
+
+  option(TEST_VISTA_COVERAGE "Create a coverage map of VistA based off the testing" OFF)
+  if(TEST_VISTA_COVERAGE)
+    find_path(TEST_VISTA_FRESH_M_DIR NAMES VistA-M DOC "Path to the folder that contains the routines and globals from OSEHRA")
+    message(WARNING "Selecting the coverage option may cause the tests to run slower as there are more tasks to perform during a given test.
+    This will also create new text files during the run.")
+
+    file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage")
+    file(MAKE_DIRECTORY "${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource")
+
+    if(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "Cache")
+      file(WRITE ${VISTA_BINARY_DIR}/cache_coverage.cmcov "packages:${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
+    elseif(NOT TEST_VISTA_COVERAGE_READABLE AND "${VENDOR_NAME}" STREQUAL "GTM")
+      file(WRITE ${VISTA_BINARY_DIR}/gtm_coverage.mcov "packages:${TEST_VISTA_OUTPUT_DIR}/Coverage/CoverageSource\r\ncoverage_dir:${TEST_VISTA_OUTPUT_DIR}/Coverage")
+    endif()
+    set(VendorArgs "")
+    SetVendorArgs(VendorArgs)
+    set(ARGUMENTS "-o" "${TEST_VISTA_OUTPUT_DIR}/Coverage/routines.ro" "-r" "*" "${VendorArgs}")
+    add_test(COV_PrepareSource ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/Scripts/VistACoveragePrep.py" ${ARGUMENTS})
+    set_property(TEST COV_PrepareSource PROPERTY DEPENDS ${munit_test_list})
+  endif()
 endif()
 
 #-----------------------------------------------------------------------------#
