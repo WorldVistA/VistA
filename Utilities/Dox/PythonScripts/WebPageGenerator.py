@@ -1721,7 +1721,7 @@ class WebPageGenerator:
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("http://code.osehra.org/ProdDemo/Visual/files/%s-%s.html" % (fileNo,
+      return ("http://code.osehra.org/Prod/Visual/files/%s-%s.html" % (fileNo,
             ien))
     def __convertRPCDataReference__(self, variables):
         return self.__convertRtnDataReference__(variables, '8994')
