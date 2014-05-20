@@ -222,7 +222,7 @@ class ConnectWinCache(ConnectMUMPS):
     for routine in routines:
         self.wait('Routine Name')
         self.write(routine)
-    self.wait('Routine Name', tout=60)
+    self.wait('Routine Name', tout=120)
     self.write('')
     self.wait('choice')
     self.write('2')
@@ -316,7 +316,7 @@ class ConnectLinuxCache(ConnectMUMPS):
     for routine in routines:
         self.wait('Routine Name')
         self.write(routine)
-    self.wait('Routine Name', tout=60)
+    self.wait('Routine Name', tout=120)
     self.write('')
     self.wait('choice')
     self.write('2')
@@ -513,7 +513,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
         for routine in routines:
             self.wait('Routine Name')
             self.write(routine)
-        self.wait('Routine Name', tout=60)
+        self.wait('Routine Name', tout=120)
         self.write('')
         self.wait('choice')
         self.write('2')
