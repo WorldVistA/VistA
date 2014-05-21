@@ -305,11 +305,13 @@ Ports:
 
  * EWDRest: 8000 (https)
 
+ * EWDVistATerm: 8081 (https)
+
 Services:
 
  * EWD.js: ${instance}vista-ewdjs
 
-   * This controls both EWDRest and EWD.js
+   * This controls EWD.js, EWDRest, and EWDVistATerm
 
 To control the EWD service type:
 
@@ -322,10 +324,12 @@ function you want to perform.
 
 The log files for EWD.js and EWDRest are located in /home/$instance/log/:
 
- * ewdStartOut.log
- * ewdStartErr.log
+ * ewdjs.log
+ * ewdjsErr.log
  * ewdRestOut.log
  * ewdRestErr.log
+ * ewdVistATermOut.log
+ * ewdVistATermErr.log
 
 Technical Details
 -----------------

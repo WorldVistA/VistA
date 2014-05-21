@@ -43,18 +43,22 @@ source /home/foia/etc/env
 start() {
     # Start EWD.js
     echo "Starting EWD.js"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/tmp && daemon --name ewdjs-${instance} -O $basedir/log/ewdStartOut.log -E $basedir/log/ewdStartErr.log node $basedir/node/ewdStart.js"
+    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdjs-${instance} -O $basedir/log/ewdjs.log -E $basedir/log/ewdjsErr.log --chdir $basedir/ewdjs node ewdStart-gtm.js OSEHRA-Config"
     echo "Starting EWD.js Rest Server"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdRest-${instance} -O $basedir/log/ewdRestOut.log -E $basedir/log/ewdRestErr.log node $basedir/node/ewdRest.js"
+    su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs && daemon --name ewdRest-${instance} -O $basedir/log/ewdRestOut.log -E $basedir/log/ewdRestErr.log node $basedir/ewdjs/ewdRest.js"
+    echo "Starting EWD VistA Term Server"
+    su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs && daemon --name ewdVistATerm-${instance} -O $basedir/log/ewdVistATermOut.log -E $basedir/log/ewdVistATermErr.log node $basedir/ewdjs/VistATerm.js"
 }
 
 # Stop EWD.js background tasks
 stop() {
     # Stop EWD.js
     echo "Stopping EWD.js"
-    curl "https://127.0.0.1:8080/ewdGatewayMgr?password=keepThisSecret%21&exit=true" -k
+    curl "https://127.0.0.1:8080/ewdjsMgr?password=keepThisSecret%21&exit=true" -k
     echo "Stopping EWD.js Rest Server"
     su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdRest-${instance} --stop"
+    echo "Stopping EWD VistA Term Server"
+    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdVistATerm-${instance} --stop"
 }
 
 case "$1" in

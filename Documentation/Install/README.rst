@@ -120,6 +120,8 @@ hard-coded to FOIA
         * xinetd.d - Scripts copied from Scripts/Install/GTM/xinetd.d directory
         * init.d - Scripts copied from Scripts/Install/GTM/etc/init.d directory
 
+    * ewdjs - Contains all of the javascript and html pages for ewdjs
+
     * log - Setup as the GT.M log directory and contains logs from xinetd
       scripts
 
