@@ -42,7 +42,7 @@ class Actions (object):
     def signon (self):
         ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
-            self.VistA.write('S DUZ=1 D ^XUP')
+            self.VistA.write('S DUZ=1,DUZ(0)="@" D ^XUP')
         else:
             self.VistA.write('D ^ZU')
             self.VistA.wait('ACCESS CODE:');

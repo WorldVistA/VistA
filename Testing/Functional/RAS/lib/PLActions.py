@@ -42,7 +42,7 @@ class PLActions (Actions):
     def signon (self):
         ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
-            self.VistA.write('S DUZ=1 D ^XUP')
+            self.VistA.write('S DUZ=1,DUZ(0)="@" D ^XUP')
             self.VistA.wait('OPTION NAME:')
             self.VistA.write('GMPL MGT MENU')
         else:
@@ -82,7 +82,10 @@ class PLActions (Actions):
                 self.VistA.write('AD')
             self.VistA.wait('PROBLEM')
             self.VistA.write(prec[pitem]['icd'].rstrip().lstrip())
-            self.VistA.wait('Ok')
+            index = self.VistA.multiwait(['Ok','PROBLEM'])
+            if index == 1:
+              self.VistA.write(prec[pitem]['snomed'].rstrip().lstrip())
+              self.VistA.wait('Ok')
             self.VistA.write('Yes')
             # if self.acode is not None:
             #    self.VistA.wait('//'); self.VistA.write('')
@@ -273,7 +276,7 @@ class PLActions (Actions):
         self.VistA.wait('Print a new problem list')
         self.VistA.write('N')
 
-    def editsimple(self, ssn, probnum, itemnum, chgval):
+    def editsimple(self, ssn, probnum, itemnum, chgval,snomed=''):
         '''Simple edit of problem, items 1,2,4,5 or 6 only'''
         self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Patient Problem List')
@@ -287,11 +290,17 @@ class PLActions (Actions):
         self.VistA.write(itemnum)  # select 1, 2,4,5,or6
         self.VistA.wait(':')
         self.VistA.write(chgval)
-        rval = self.VistA.multiwait(['Select Item', 'Ok?'])
+        rval = self.VistA.multiwait(['Select Item', 'Ok','A suitable term'])
         if rval == 0:
             self.VistA.write('SC')
         elif rval == 1:
             self.VistA.write('Yes')
+            self.VistA.wait('Select Item')
+            self.VistA.write('SC')
+        elif rval == 2:
+            self.VistA.write(snomed)
+            self.VistA.wait('Ok?')
+            self.VistA.write('')
             self.VistA.wait('Select Item')
             self.VistA.write('SC')
         self.VistA.wait('Select Action')
@@ -361,7 +370,7 @@ class PLActions (Actions):
         self.VistA.write(probnum)  # which patient problem
         self.VistA.wait('Select Item')
         self.VistA.write(itemnum)  # which item to verify?
-        self.VistA.wait(evalue)
+        self.VistA.multiwait(evalue)
         self.VistA.write('^')
         self.VistA.wait('Select Item')
         self.VistA.write('QUIT')
@@ -507,7 +516,7 @@ class PLActions (Actions):
         self.VistA.wait('Create Problem Selection Lists')
         self.VistA.write('')
 
-    def catad (self, listname, catname, icd, spec='', dtext='', seqnum=''):
+    def catad (self, listname, catname, icd, snomed, spec='', dtext='', seqnum=''):
         '''Add a Problem (ICD) to a Category'''
         self.VistA.wait('Problem List Mgt Menu')
         self.VistA.write('Create Problem Selection Lists')
@@ -525,7 +534,7 @@ class PLActions (Actions):
         self.VistA.write(spec)
         self.VistA.wait('PROBLEM')
         self.VistA.write(icd)
-        index = self.VistA.multiwait(['Ok', 'STOP or Select', 'A suitable term was not found'])
+        index = self.VistA.multiwait(['Ok', 'STOP or Select', 'A suitable term'])
         if index == 0:
             self.VistA.write('')
             self.VistA.wait('DISPLAY TEXT')
@@ -551,8 +560,17 @@ class PLActions (Actions):
             self.VistA.wait('PROBLEM')
             self.VistA.write('')
         elif index == 2:
-            self.VistA.write('')
-            self.VistA.wait('PROBLEM')
+            self.VistA.write(snomed)
+            index = self.VistA.multiwait(['Ok', 'A suitable term'])
+            if index == 0:
+              self.VistA.write('')
+              self.VistA.wait('DISPLAY TEXT')
+              self.VistA.write(dtext)
+              self.VistA.wait('... Ok')
+              self.VistA.write('Yes')
+              self.VistA.wait('SEQUENCE')
+              self.VistA.write(seqnum)
+              self.VistA.wait('PROBLEM')
             self.VistA.write('')
         self.VistA.wait('Select Item')
         self.VistA.write('SV')

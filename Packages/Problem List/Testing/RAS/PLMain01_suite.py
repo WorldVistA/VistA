@@ -61,16 +61,16 @@ def pl_test001(test_suite_details):
         pl.addcsv(ssn='333224444', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
         pl.editinactivate(ssn='333224444', probnum='4', resdate='08/29/2010')
         pl.editinactivate(ssn='333224444', probnum='3', resdate='08/29/2010')
-        pl.verplist(ssn='333224444', vlist=['Essential Hypertension',
-                                            'Chronic airway obstruction'])
+        pl.verplist(ssn='333224444', vlist=['Essential',
+                                            'Chronic'])
         pl.verify(ssn='333224444', probnum='1', itemnum='1',
-                     evalue='Essential Hypertension')
+                     evalue=['Essential Hypertension','Essential hypertension'])
         pl.verify(ssn='333224444', probnum='2', itemnum='1',
-                     evalue='Chronic airway obstruction')
+                     evalue=['Chronic airway obstruction','Chronic obstructive lung disease'])
         pl.verify(ssn='333224444', probnum='1', itemnum='1',
-                     evalue='Acute myocardial', view='IA')
+                     evalue=['Acute myocardial'], view='IA')
         pl.verify(ssn='333224444', probnum='2', itemnum='1',
-                     evalue='Congestive Heart Failure', view='IA')
+                     evalue=['Congestive Heart Failure'], view='IA')
         for i in range(4):
             pl.rem(ssn='333224444')
         pl.signoff()
@@ -96,22 +96,22 @@ def pl_test002(test_suite_details):
         pl.addcsv(ssn='888776666', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
         pl.editinactivate(ssn='888776666', probnum='4', resdate='08/29/2010')
         pl.editinactivate(ssn='888776666', probnum='3', resdate='08/29/2010')
-        pl.verplist(ssn='888776666', vlist=['Essential Hypertension',
-                                            'Chronic airway obstruction'])
+        pl.verplist(ssn='888776666', vlist=['Essential',
+                                            'Chronic'])
         pl.verify(ssn='888776666', probnum='1', itemnum='1',
-                     evalue='Essential Hypertension')
+                     evalue=['Essential Hypertension','Essential hypertension'])
         pl.verify(ssn='888776666', probnum='2', itemnum='1',
-                     evalue='Chronic airway obstruction')
+                     evalue=['Chronic airway obstruction','Chronic obstructive lung disease'])
         pl.verify(ssn='888776666', probnum='1', itemnum='1',
-                     evalue='Acute myocardial', view='IA')
+                     evalue=['Acute myocardial'], view='IA')
         pl.verify(ssn='888776666', probnum='2', itemnum='1',
-                     evalue='Congestive Heart Failure', view='IA')
+                     evalue=['Congestive'], view='IA')
         for i in range(4):
             pl.rem(ssn='888776666')
         pl.checkempty(ssn='888776666')
         pl.replace(ssn='888776666', probnum='1')
         pl.verify(ssn='888776666', probnum='1', itemnum='1',
-                     evalue='Essential Hypertension')
+                     evalue=['Essential Hypertension','Essential hypertension'])
         pl.rem(ssn='888776666')
         pl.signoff()
 
@@ -137,7 +137,7 @@ def pl_test003(test_suite_details):
         pl.addcsv(ssn='656771234',
                      pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
         pl.editsimple(ssn='656771234', probnum='1', itemnum='1',
-                        chgval='787.1')
+                        chgval='787.1',snomed='16331000')
         pl.editsimple(ssn='656771234', probnum='1', itemnum='2',
                         chgval='3/26/12')
         pl.editsimple(ssn='656771234', probnum='1', itemnum='4',
@@ -145,13 +145,13 @@ def pl_test003(test_suite_details):
         pl.editsimple(ssn='656771234', probnum='1', itemnum='5',
                         chgval='VISTA')
         pl.verify(ssn='656771234', probnum='1', itemnum='1',
-                     evalue='Heartburn')
+                     evalue=['Heartburn'])
         pl.verify(ssn='656771234', probnum='1', itemnum='2',
-                     evalue='3/26/12')
+                     evalue=['3/26/12'])
         pl.verify(ssn='656771234', probnum='1', itemnum='4',
-                     evalue='MANAGER,SYSTEM')
+                     evalue=['MANAGER,SYSTEM'])
         pl.verify(ssn='656771234', probnum='1', itemnum='5',
-                     evalue='VISTA')
+                     evalue=['VISTA'])
         for i in range(4):
             pl.rem(ssn='656771234')
         pl.checkempty(ssn='656771234')
@@ -178,12 +178,12 @@ def pl_test004(test_suite_details):
         pl.createsellist(listname="List001", clinic='VISTA')
         pl.createcat(listname='List001', catname='cat001')
         pl.createcat(listname='List001', catname='cat002')
-        pl.catad(listname='List001', catname='cat001', icd='787.1')
-        pl.catad(listname='List001', catname='cat001', icd='786.50')
-        pl.catad(listname='List001', catname='cat001', icd='100.0')
-        pl.catad(listname='List001', catname='cat002', icd='780.50')
-        pl.catad(listname='List001', catname='cat002', icd='292.0')
-        pl.catad(listname='List001', catname='cat002', icd='304.90')
+        pl.catad(listname='List001', catname='cat001', icd='787.1', snomed='16331000')
+        pl.catad(listname='List001', catname='cat001', icd='786.50', snomed= '29857009')
+        pl.catad(listname='List001', catname='cat001', icd='100.0', snomed='77377001')
+        pl.catad(listname='List001', catname='cat002', icd='780.50', snomed='53888004')
+        pl.catad(listname='List001', catname='cat002', icd='292.0', snomed='363101005')
+        pl.catad(listname='List001', catname='cat002', icd='304.90', snomed='191816009')
         pl.sellistad(listname='List001', catname='cat001')
         pl.sellistad(listname='List001', catname='cat002')
         pl.versellist(ssn='656454321', clinic='VISTA',
@@ -194,7 +194,7 @@ def pl_test004(test_suite_details):
                   comment='this is a test', onsetdate='t', status='Active',
                   acutechronic='A', service='N', evalue='Heartburn')
         pl.verify(ssn='656454321', probnum='1', itemnum='1',
-                     evalue='Heartburn')
+                     evalue=['Heartburn'])
         pl.rem(ssn='656454321')
         pl.sellistrm(listname='List001')
         pl.sellistrm(listname='List001')
@@ -230,12 +230,12 @@ def pl_test005(test_suite_details):
         pl1.sellistgal(listname="List002", username='Alexander')
         pl1.createcat(listname='List002', catname='cat011')
         pl1.createcat(listname='List002', catname='cat022')
-        pl1.catad(listname='List002', catname='cat011', icd='787.1')
-        pl1.catad(listname='List002', catname='cat011', icd='786.50')
-        pl1.catad(listname='List002', catname='cat011', icd='100.0')
-        pl1.catad(listname='List002', catname='cat022', icd='780.50')
-        pl1.catad(listname='List002', catname='cat022', icd='292.0')
-        pl1.catad(listname='List002', catname='cat022', icd='304.90')
+        pl1.catad(listname='List002', catname='cat011', icd='787.1', snomed='16331000')
+        pl1.catad(listname='List002', catname='cat011', icd='786.50', snomed= '29857009')
+        pl1.catad(listname='List002', catname='cat011', icd='100.0', snomed='77377001')
+        pl1.catad(listname='List002', catname='cat022', icd='780.50', snomed='53888004')
+        pl1.catad(listname='List002', catname='cat022', icd='292.0', snomed='363101005')
+        pl1.catad(listname='List002', catname='cat022', icd='304.90', snomed='191816009')
         pl1.sellistad(listname='List002', catname='cat011')
         pl1.sellistad(listname='List002', catname='cat022')
 
@@ -252,7 +252,7 @@ def pl_test005(test_suite_details):
                    status='Active', acutechronic='A', service='N',
                    evalue='Heartburn')
         pl2.verify(ssn='354623902', probnum='1', itemnum='1',
-                      evalue='Heartburn')
+                      evalue=['Heartburn'])
         pl2.rem(ssn='354623902')
         pl1.sellistrm(listname='List002')
         pl1.sellistrm(listname='List002')
@@ -284,12 +284,12 @@ def pl_test006 (test_suite_details):
         pl.createibform('LAB', 'FORM1', 'Group1', ['428.0', '410.90', '401.9'])
         pl.sellistib('FORM1', 'List003', 'LAB')
         pl.versellist(ssn='345238901', clinic='LAB',
-                   vlist=['List003', 'Group1', 'Congestive Heart Failure', 'Acute myocardial', 'Essential Hypertension'])
+                   vlist=['List003', 'Group1', 'Congestive ', 'Acute myocardial', 'Essential'])
         pl.add(ssn='345238901', clinic='LAB', probnum='1',
                   comment='this is a test', onsetdate='t', status='Active',
                   acutechronic='A', service='N', evalue='Congestive')
         pl.verify(ssn='345238901', probnum='1', itemnum='1',
-                     evalue='Congestive')
+                     evalue=['Congestive'])
         pl.rem('345238901')
         pl.sellistrm(listname='List003')
         pl.catdl(listname='List003', catname='Group1')
@@ -383,20 +383,20 @@ def pl_test009 (test_suite_details):
         pl = PLActions(VistA1, user='fakedoc1', code='1Doc!@#$')
         pl.signon()
         pl.addcsv(ssn='323678904', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
-        pl.verplist(ssn='323678904', vlist=['Essential Hypertension',
-                                            'Chronic airway obstruction',
+        pl.verplist(ssn='323678904', vlist=['Essential',
+                                            'Chronic',
                                             'Acute myocardial',
-                                            'Congestive Heart Failure'])
+                                            'Congestive'])
         pl.signoff()
 
         test_driver.testname = testname + '_02'
         VistA2 = test_driver.connect_VistA(test_suite_details)
         oentry = ORActions(VistA2)
         oentry.signon()
-        oentry.verproblems(ssn='323678904', vlist=['Essential Hypertension',
-                                            'Chronic airway obstruction',
+        oentry.verproblems(ssn='323678904', vlist=['Essential ',
+                                            'Chronic ',
                                             'Acute myocardial',
-                                            'Congestive Heart Failure'])
+                                            'Congestive '])
         oentry.signoff()
         test_driver.testname = testname + '_03'
         VistA3 = test_driver.connect_VistA(test_suite_details)
@@ -538,12 +538,12 @@ def pl_test013(test_suite_details):
         pl.createsellist(listname="List002", clinic='VISTA')
         pl.createcat(listname='List001', catname='cat001')
         pl.createcat(listname='List001', catname='cat002')
-        pl.catad(listname='List001', catname='cat001', icd='787.1')
-        pl.catad(listname='List001', catname='cat001', icd='786.50')
-        pl.catad(listname='List001', catname='cat001', icd='100.0')
-        pl.catad(listname='List001', catname='cat002', icd='780.50')
-        pl.catad(listname='List001', catname='cat002', icd='292.0')
-        pl.catad(listname='List001', catname='cat002', icd='304.90')
+        pl.catad(listname='List002', catname='cat001', icd='787.1', snomed='16331000')
+        pl.catad(listname='List002', catname='cat001', icd='786.50', snomed= '29857009')
+        pl.catad(listname='List002', catname='cat001', icd='100.0', snomed='77377001')
+        pl.catad(listname='List002', catname='cat002', icd='780.50', snomed='53888004')
+        pl.catad(listname='List002', catname='cat002', icd='292.0', snomed='363101005')
+        pl.catad(listname='List002', catname='cat002', icd='304.90', snomed='191816009')
         pl.sellistad(listname='List001', catname='cat001')
         pl.sellistad(listname='List001', catname='cat002')
         pl.resequencecat(listname='List001', catnames=['cat001', 'cat002'])
@@ -579,10 +579,10 @@ def pl_test014(test_suite_details):
         pl.signon()
         pl.rem_all(ssn='656451234')
         pl.addcsv(ssn='656451234', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
-        pl.verplist(ssn='656451234', vlist=['Essential Hypertension',
-                                    'Chronic airway obstruction',
+        pl.verplist(ssn='656451234', vlist=['Essential',
+                                    'Chronic',
                                     'Acute myocardial',
-                                    'Congestive Heart Failure'])
+                                    'Congestive'])
         pl.signoff()
 
         test_driver.testname = testname + '_02'
@@ -591,8 +591,8 @@ def pl_test014(test_suite_details):
         cp.signon()
         cp.cprs_cc_addcomment(ssn='656451234', plnum='2', comment='this is a test')
         cp.cprs_cc_edit(ssn='656451234', plnum='2', loc='VISTA', edititem='4', editvalue='SMITH')
-        cp.cprs_cc_verify(ssn='656451234', plnum='2', vtext='Chronic airway obstruction')
-        cp.cprs_cc_detdisplay(ssn='656451234', plnum='2', vlist=['Chronic airway obstruction', 'SMITH,MARY'])
+        cp.cprs_cc_verify(ssn='656451234', plnum='2', vtext='Chronic')
+        cp.cprs_cc_detdisplay(ssn='656451234', plnum='2', vlist=['Chronic', 'SMITH,MARY'])
         cp.cprs_cc_inactivate(ssn='656451234', plnum='1')
         cp.cprs_cc_remove(ssn='656451234', plnum='4')
         cp.cprs_cc_remove(ssn='656451234', plnum='3')
@@ -622,10 +622,10 @@ def pl_test015(test_suite_details):
         pl1.signon()
         pl1.rem_all(ssn='656451234')
         pl1.addcsv(ssn='656451234', pfile='./Functional/dataFiles/NISTinpatientdata0.csv')
-        pl1.verplist(ssn='656451234', vlist=['Essential Hypertension',
-                                    'Chronic airway obstruction',
+        pl1.verplist(ssn='656451234', vlist=['Essential',
+                                    'Chronic',
                                     'Acute myocardial',
-                                    'Congestive Heart Failure'])
+                                    'Congestive'])
         pl1.editpart1(ssn='656451234', probnum='1', itemnum='1', chgval='786.50')
         #
 
@@ -702,18 +702,18 @@ def pl_test017(resultlog, result_dir, namespace):
         pl.createcat(listname='List001', catname='cat001')
         pl.createcat(listname='List001', catname='cat002')
         pl.createcat(listname='List001', catname='cat003')
-        pl.catad(listname='List001', catname='cat001', icd='785.2', spec='General', dtext='', seqnum='5')
-        pl.catad(listname='List001', catname='cat001', icd='786.50', spec='General', dtext='', seqnum='1')
-        pl.catad(listname='List001', catname='cat001', icd='786.2', spec='General', dtext='PAINFUL cough', seqnum='2')
-        pl.catad(listname='List001', catname='cat001', icd='786.05', spec='General', dtext='Trouble Breathing', seqnum='7')
-        pl.catad(listname='List001', catname='cat002', icd='829.0', spec='N', dtext='', seqnum='19')
-        pl.catad(listname='List001', catname='cat002', icd='807.00', spec='N', dtext='', seqnum='18')
-        pl.catad(listname='List001', catname='cat002', icd='806.12', spec='N', dtext='', seqnum='17')
-        pl.catad(listname='List001', catname='cat002', icd='829.1', spec='N', dtext='', seqnum='16')
-        pl.catad(listname='List001', catname='cat002', icd='802.8', spec='N', dtext='', seqnum='15')
-        pl.catad(listname='List001', catname='cat003', icd='780.50', spec='I', dtext='', seqnum='3')
-        pl.catad(listname='List001', catname='cat003', icd='292.0', spec='I', dtext='DRUG withdrawal', seqnum='1')
-        pl.catad(listname='List001', catname='cat003', icd='304.90', spec='I', dtext='', seqnum='2')
+        pl.catad(listname='List001', catname='cat001', icd='785.2', snomed='75431008', spec='General', dtext='', seqnum='5')
+        pl.catad(listname='List001', catname='cat001', icd='786.50', snomed= '29857009', spec='General', dtext='', seqnum='1')
+        pl.catad(listname='List001', catname='cat001', icd='786.2', snomed='49727002', spec='General', dtext='PAINFUL cough', seqnum='2')
+        pl.catad(listname='List001', catname='cat001', icd='786.05', snomed='267036007', spec='General', dtext='Trouble Breathing', seqnum='7')
+        pl.catad(listname='List001', catname='cat002', icd='829.0', snomed='125605004', spec='N', dtext='', seqnum='19')
+        pl.catad(listname='List001', catname='cat002', icd='807.00', snomed='60667009', spec='N', dtext='', seqnum='18')
+        pl.catad(listname='List001', catname='cat002', icd='806.12', snomed='21978005', spec='N', dtext='', seqnum='17')
+        pl.catad(listname='List001', catname='cat002', icd='829.1', snomed='1370007', spec='N', dtext='', seqnum='16')
+        pl.catad(listname='List001', catname='cat002', icd='802.8', snomed='430984009',spec='N', dtext='', seqnum='15')
+        pl.catad(listname='List001', catname='cat003', icd='780.50', snomed='53888004', spec='I', dtext='', seqnum='3')
+        pl.catad(listname='List001', catname='cat003', icd='292.0', snomed='363101005', spec='I', dtext='DRUG withdrawal', seqnum='1')
+        pl.catad(listname='List001', catname='cat003', icd='304.90', snomed='191816009',spec='I', dtext='', seqnum='2')
         pl.sellistad(listname='List001', catname='cat001', hdrname='FATCAT', seqnum='7')
         pl.sellistad(listname='List001', catname='cat002', hdrname='SKINNYcat', seqnum='1')
         pl.sellistad(listname='List001', catname='cat003', hdrname='blackCAT', seqnum='5')

@@ -26,7 +26,7 @@ Created on November 2012
 @license http://www.apache.org/licenses/LICENSE-2.0
 '''
 
-import time,sys
+import time,sys,re
 # import TestHelper
 from Actions import Actions
 import logging
@@ -43,7 +43,7 @@ class ADTActions (Actions):
     def signon (self):
         ''' This provides a signon via ^XUP or ^ZU depending on the value of acode'''
         if self.acode is None:
-            self.VistA.write('S DUZ=1 D ^XUP')
+            self.VistA.write('S DUZ=1,DUZ(0)="@" D ^XUP')
         else:
             self.VistA.write('D ^ZU')
             self.VistA.wait('ACCESS CODE:')
@@ -816,32 +816,35 @@ class ADTActions (Actions):
     def adt_menu_smoke(self, ssn):
         ''' This method invokes ADT menu actions as a smoke test'''
         self.VistA.wait('Option:')
-        self.VistA.write('veteran id card menu')
-        self.VistA.wait('Veteran ID Card Menu')
-        self.VistA.write('single patient download request')
-        self.VistA.wait('Select PATIENT NAME')
-        self.VistA.write(ssn)
-        self.VistA.wait('Do you still wish to download data')
-        self.VistA.write('yes')
-        self.VistA.wait('Data Download successfully to VIC')
-        #
-        self.VistA.wait('Select PATIENT NAME')
-        self.VistA.write('')
-        self.VistA.wait('Veteran ID Card Menu')
-        self.VistA.write('Problem List Mgt Menu')
-        self.VistA.wait('Problem List Mgt Menu')
-        self.VistA.write('Patient Problem List')
-        self.VistA.wait('Select PATIENT NAME')
-        self.VistA.write(ssn)
-        self.VistA.wait('No data available meeting criteria.')
-        self.VistA.wait('Select Action')
-        self.VistA.write('Quit')
-        self.VistA.wait('Problem List Mgt Menu')
-        self.VistA.write('')
-        self.VistA.wait('Veteran ID Card Menu')
-        self.VistA.write('')
+        self.VistA.write('?')
+        self.VistA.wait('Option:')
+        if not self.VistA.lastconnection.find("Veteran ID Card Menu") == -1:
+          self.VistA.write('veteran id card menu')
+          self.VistA.wait('Veteran ID Card Menu')
+          self.VistA.write('single patient download request')
+          self.VistA.wait('Select PATIENT NAME')
+          self.VistA.write(ssn)
+          self.VistA.wait('Do you still wish to download data')
+          self.VistA.write('yes')
+          self.VistA.wait('Data Download successfully to VIC')
+          #
+          self.VistA.wait('Select PATIENT NAME')
+          self.VistA.write('')
+          self.VistA.wait('Veteran ID Card Menu')
+          self.VistA.write('Problem List Mgt Menu')
+          self.VistA.wait('Problem List Mgt Menu')
+          self.VistA.write('Patient Problem List')
+          self.VistA.wait('Select PATIENT NAME')
+          self.VistA.write(ssn)
+          self.VistA.wait('No data available meeting criteria.')
+          self.VistA.wait('Select Action')
+          self.VistA.write('Quit')
+          self.VistA.wait('Problem List Mgt Menu')
+          self.VistA.write('')
+          self.VistA.wait('Veteran ID Card Menu')
+          self.VistA.write('')
+          self.VistA.wait('ADT Manager Menu')
         # ADT Outputs
-        self.VistA.wait('ADT Manager Menu')
         self.VistA.write('ADT Outputs Menu')
         self.VistA.wait('ADT Outputs Menu')
         self.VistA.write('10-10')
