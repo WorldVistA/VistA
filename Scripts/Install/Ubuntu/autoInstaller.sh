@@ -239,4 +239,4 @@ if $postInstall; then
 fi
 
 # Ensure group permissions are correct
-chmod -R g+rw /home/osehra
+chmod -R g+rw /home/$instance

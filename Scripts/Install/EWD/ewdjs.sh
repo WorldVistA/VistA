@@ -127,7 +127,7 @@ ewd.start(params);
 EOF
 
 # Ensure correct permissions
-chown osehra:osehra $basedir/node/ewdStart.js
+chown $instance:$instance $basedir/node/ewdStart.js
 
 # Install webservice credentials
 su $instance -c "source $basedir/.profile && source $basedir/etc/env && node $basedir/node/registerWSClient.js"

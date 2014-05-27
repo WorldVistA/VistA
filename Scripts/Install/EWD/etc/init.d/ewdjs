@@ -28,6 +28,12 @@
 # Description:       Starts/Stops EWD.js services for VistA.
 ### END INIT INFO
 
+# Make sure we are root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root" 1>&2
+    exit 1
+fi
+
 # Setup environment variables
 # This path will be replaced with the correct $basedir when a VistA instance
 # is created. This script will need to have it hardcoded
@@ -41,6 +47,8 @@ start() {
     echo "Starting EWD.js Rest Server"
     su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdRest-${instance} -O $basedir/log/ewdRestOut.log -E $basedir/log/ewdRestErr.log node $basedir/node/ewdRest.js"
 }
+
+# Stop EWD.js background tasks
 stop() {
     # Stop EWD.js
     echo "Stopping EWD.js"
