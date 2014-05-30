@@ -104,6 +104,24 @@ into a new Development directory
 
 This should only take a few minutes to finish.
 
+Install Vagrant VirtualBox Guest Additions Plugin
+-------------------------------------------------
+
+With the latest versions of VirtualBox and Vagrant the mounting of the shared
+folders may fail. By adding a plugin to Vagrant the Virtualbox Guest Additions
+will be automatically installed when a VM is brought up.
+
+To install the plugin perform the following
+
+.. parsed-literal::
+
+    ~$ :usertype:`cd ~`
+    ~$ :usertype:`vagrant plugin install vagrant-vbguest`
+
+You may see an error that the installer "Could not find the X.Org or XFree86
+Window System, skipping.". This error is ok and will not cause any issues. This
+is because the created VM doesn't contain a GUI/X Window System.
+
 Start the provisioning process
 ------------------------------
 
