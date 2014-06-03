@@ -29,7 +29,7 @@ if VistA.type=='cache':
 
 if '@TEST_VISTA_COVERAGE@'=='ON':
   VistA.wait(PROMPT)
-  VistA.startCoverage()
+  VistA.startCoverage(@TEST_VISTA_COVERAGE_SUBSET@)
 VistA.wait(PROMPT)
 VistA.write('K ^XUTL("XQ",$J)')
 pkgPrefixLst = FindPackagePrefixes('@package_file_name@',

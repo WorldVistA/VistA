@@ -2,7 +2,20 @@ set(ENV{CACHE_INSTANCE} @VISTA_CACHE_INSTANCE@)
 set(ENV{CACHE_NAMESPACE} @VISTA_CACHE_NAMESPACE@)
 set(ENV{CACHE_USERNAME} @VISTA_CACHE_USERNAME@)
 set(ENV{CACHE_PASSWORD} @VISTA_CACHE_PASSWORD@)
-execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@rastest@" "@TEST_VISTA_OUTPUT_DIR@" -n "@VISTA_CACHE_NAMESPACE@" -c "@TEST_VISTA_COVERAGE_READABLE@" -l @LOG_LEVEL@ WORKING_DIRECTORY "@VISTA_SOURCE_DIR@/Testing" ERROR_VARIABLE FunctionalError)
+
+# Parse the subset into a series of strings rather than
+# an array being configured into Python code
+set(SUBSET "@TEST_VISTA_COVERAGE_SUBSET@")
+if(SUBSET)
+  string(REPLACE "[" "" SUBSET ${SUBSET})
+  string(REPLACE "]" "" SUBSET ${SUBSET})
+  string(REPLACE "'" "" SUBSET ${SUBSET})
+else()
+  set(SUBSET "*")
+endif()
+
+# Pass that argument to the -cs option of the RAS test.
+execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@rastest@" "@TEST_VISTA_OUTPUT_DIR@" -n "@VISTA_CACHE_NAMESPACE@" -c "@TEST_VISTA_COVERAGE_READABLE@" -cs ${SUBSET} -l @LOG_LEVEL@ WORKING_DIRECTORY "@VISTA_SOURCE_DIR@/Testing" ERROR_VARIABLE FunctionalError)
 set(ENV{CACHE_INSTANCE} "")
 set(ENV{CACHE_NAMESPACE} "")
 set(ENV{CACHE_USERNAME} "")
