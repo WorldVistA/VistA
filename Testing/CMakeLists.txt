@@ -101,44 +101,6 @@ elseif(CCONTROL_EXECUTABLE)
   include(UseCache)
 endif()
 
-#-----------------------------------------------------------------------------#
-##### SECTION TO RUN UNIT TESTING #####
-#-----------------------------------------------------------------------------#
-OPTION(TEST_VISTA_MUNIT "Run Automated Unit Testing" OFF)
-if(TEST_VISTA_MUNIT)
-  file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
-  # Set up the platform dependent script files
-  foreach(package ${PACKAGES})
-    get_filename_component(package_name ${package} NAME)
-    if(IS_DIRECTORY ${package}/Testing/MUnit)
-      file(GLOB UNIT_TEST_FILES "${VISTA_SOURCE_DIR}/Packages/${package_name}/Testing/MUnit/*.m.in" )
-      foreach(testfile ${UNIT_TEST_FILES})
-        get_filename_component(routine_name ${testfile} NAME_WE)
-        configure_file("${testfile}" "${VISTA_SOURCE_DIR}/Packages/${package_name}/Testing/MUnit/${routine_name}.m")
-      endforeach()
-      file(STRINGS "${package}/Testing/MUnit/TestList" routines )
-      set(send_commands "")
-      foreach(routine_command ${routines})
-        set(send_commands "${send_commands}VistA.write('${routine_command}')\n")
-        set(send_commands "${send_commands}VistA.wait(PROMPT,60)\n")
-      endforeach()
-      string(REPLACE  " " "_" package_file_name "${package_name}")
-      #Configures the python script with the name of the routine
-      set(RoutineImportFile "${SCRIPT_OUTPUT_DIR}/${package_file_name}Routines.ro")
-      set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}RoutineImport.log")
-      set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
-      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}RoutineImport.py")
-      set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}.log")
-      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.py")
-      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.cmake.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake" @ONLY)
-      #Creates the command that will be called for the Test
-      add_test(UNITTEST_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
-      list(APPEND munit_test_list "UNITTEST_${package_file_name}")
-      set_tests_properties(UNITTEST_${package_file_name} PROPERTIES FAIL_REGULAR_EXPRESSION "QUITTING")
-    endif()
-  endforeach()
-endif()
-
 #---------------------------------------------------------------------------------#
 ##### SECTION TO GENERATE FILES FOR COVERAGE (Using CMake V 2.8.9 and Higher) #####
 #---------------------------------------------------------------------------------#
@@ -196,7 +158,6 @@ if(${CMAKE_VERSION} VERSION_GREATER 2.8.8)
     endif()
 
     add_test(COV_PrepareSource ${PYTHON_EXECUTABLE} "${CMAKE_SOURCE_DIR}/Scripts/VistACoveragePrep.py" ${ARGUMENTS})
-    set_property(TEST COV_PrepareSource PROPERTY DEPENDS ${munit_test_list})
   endif()
 endif()
 
@@ -215,6 +176,43 @@ if(TEST_VISTA_XINDEX)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
     #Creates the command that will be called for the Test
     add_test(XINDEX_${package_file_name} ${CMAKE_COMMAND} -P ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake)
+  endforeach()
+endif()
+
+#-----------------------------------------------------------------------------#
+##### SECTION TO RUN UNIT TESTING #####
+#-----------------------------------------------------------------------------#
+OPTION(TEST_VISTA_MUNIT "Run Automated Unit Testing" OFF)
+if(TEST_VISTA_MUNIT)
+  file(GLOB PACKAGES ${VISTA_SOURCE_DIR}/Packages/*)
+  # Set up the platform dependent script files
+  foreach(package ${PACKAGES})
+    get_filename_component(package_name ${package} NAME)
+    if(IS_DIRECTORY ${package}/Testing/MUnit)
+      file(GLOB UNIT_TEST_FILES "${VISTA_SOURCE_DIR}/Packages/${package_name}/Testing/MUnit/*.m.in" )
+      foreach(testfile ${UNIT_TEST_FILES})
+        get_filename_component(routine_name ${testfile} NAME_WE)
+        configure_file("${testfile}" "${VISTA_SOURCE_DIR}/Packages/${package_name}/Testing/MUnit/${routine_name}.m")
+      endforeach()
+      file(STRINGS "${package}/Testing/MUnit/TestList" routines )
+      set(send_commands "")
+      foreach(routine_command ${routines})
+        set(send_commands "${send_commands}VistA.write('${routine_command}')\n")
+        set(send_commands "${send_commands}VistA.wait(PROMPT,60)\n")
+      endforeach()
+      string(REPLACE  " " "_" package_file_name "${package_name}")
+      #Configures the python script with the name of the routine
+      set(RoutineImportFile "${SCRIPT_OUTPUT_DIR}/${package_file_name}Routines.ro")
+      set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}RoutineImport.log")
+      set(RoutineImportDir ${TEST_VISTA_GTM_ROUTINE_DIR})
+      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/Setup/RoutineImport.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}RoutineImport.py")
+      set(logfile "${UNITTEST_LOG_DIR}/${package_file_name}.log")
+      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.py.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.py")
+      configure_file("${CMAKE_CURRENT_SOURCE_DIR}/UnitTest.cmake.in" "${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake" @ONLY)
+      #Creates the command that will be called for the Test
+      add_test(UNITTEST_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
+      set_tests_properties(UNITTEST_${package_file_name} PROPERTIES FAIL_REGULAR_EXPRESSION "QUITTING")
+    endif()
   endforeach()
 endif()
 
