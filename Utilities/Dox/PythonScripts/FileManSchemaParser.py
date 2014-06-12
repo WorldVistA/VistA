@@ -595,6 +595,40 @@ def test_parseFieldTypeSpecifier():
     logging.info("%s: %s" % (typeField,
                   FileManSchemaParser.parseFieldTypeSpecifier(typeField)))
 
+def strongly_connected_components(vertice, edges):
+  """
+  Algorithm that uses Tarjan's strongly connected components algorithm
+  """
+  stack = []
+  index = {} # dictionary that stores index for each vertice
+  lowindex = {} # store lowindex for each vertice
+  stackset = set()
+
+  def visit(v):
+    if v not in edges:
+      yield set([v])
+    index[v] = len(index)
+    lowindex[v] = index[v]
+    stack.append(v)
+    stackset.add(v)
+    for w in edges[v]:
+      if w not in index:
+        for scc in visit(w):
+          yield scc
+        lowindex[v] = min(lowindex[v], lowindex[w])
+      elif w in stackset:
+        lowindex[v] = min(lowindex[v], index[w])
+    if lowindex[v] == index[v]: # found out a scc
+      scc = set(stack[index[v]:])
+      del stack[index[v]:]
+      stackset.difference_update(scc)
+      yield scc
+
+  for v in vertice:
+    if v not in index:
+      for scc in visit(v):
+        yield scc
+
 def strongly_connected_components_iterative(vertices, edges):
   """
   This is a non-recursive version of strongly_connected_components_path.
@@ -649,18 +683,33 @@ def strongly_connected_components_iterative(vertices, edges):
             identified.update(scc)
             yield scc
 
+import unittest
+
 def test_strongly_connected_components_iterative():
   vertices = [1, 2, 3, 4, 5, 6, 7, 8]
   edges = {1: set([2]), 2: set([3, 8]), 3: [4, 7], 4: [5],
            5: [3, 6], 6: [], 7: [4, 6], 8: [1, 7]}
+  expectedRet = [set([6]), set([3,4,5,7]), set([8,1,2])];
   for scc in  strongly_connected_components_iterative(vertices, edges):
-    print(scc)
+    expRet =  expectedRet.pop(0)
+    print scc, expRet
+    assert scc == expRet;
+
+def test_strongly_connected_components():
+  vertices = [1, 2, 3, 4, 5, 6, 7, 8]
+  edges = {1: set([2]), 2: set([3, 8]), 3: [4, 7], 4: [5],
+           5: [3, 6], 6: [], 7: [4, 6], 8: [1, 7]}
+  expectedRet = [set([6]), set([3,4,5,7]), set([8,1,2])];
+  for scc in  strongly_connected_components(vertices, edges):
+    expRet =  expectedRet.pop(0)
+    print scc, expRet
+    assert scc == expRet;
 
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(asctime)s %(message)s')
   #test_parseFieldTypeSpecifier()
-  test_strongly_connected_components_iterative()
+  test_strongly_connected_components()
   testDDZWRFile()
 
 if __name__ == '__main__':
