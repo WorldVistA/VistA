@@ -77,10 +77,11 @@ set(VISTA_CACHE_NAMESPACE "VISTA" CACHE STRING "Cache namespace to store VistA")
 
 if(WIN32)
   configure_file(${VISTA_SOURCE_DIR}/Testing/CacheVerifyTelnet.scp.in ${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp)
-  message(STATUS "Testing if Cache Telnet service is enable:")
+  message(STATUS "Is Cache Telnet service enabled:")
   execute_process(COMMAND "@CTERM_EXECUTABLE@" "/console=cn_iptcp:127.0.0.1[23]" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.scp" "${VISTA_BINARY_DIR}/CacheVerifyTelnet.log" TIMEOUT 5 RESULT_VARIABLE rcode)
-  message(STATUS "Testing if Cache Telnet service is enable: ${rcode}")
-  if ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
+  if(rcode EQUAL 1)
+    message(STATUS "Is Cache Telnet service enabled: Connection established")
+  else ( (rcode EQUAL 0) OR "${rcode}" MATCHES "timeout" )
     message(FATAL_ERROR "Error connecting to Cache ${VISTA_CACHE_INSTANCE} namespace ${VISTA_CACHE_NAMESPACE} via telnet, please enable the telnet setting via"
       " Cache Managements Portal->System->Security Management->Service to switch on %Service_telnet by checking enabled checkbox and save."
       " Also verify that telnet port is set to 23 via Configuration->Device Settings->Telnet Settings ")
