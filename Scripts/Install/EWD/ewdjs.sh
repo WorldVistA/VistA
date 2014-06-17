@@ -82,7 +82,10 @@ su $instance -c "mv $basedir/ewdjs/node_modules/nodem/lib/mumps"$shortnodever".n
 su $instance -c "find $basedir/ewdjs/node_modules/ewdjs -name \"*.m\" -type f -exec cp {} $basedir/p/ \;"
 
 # Setup GTM C Callin
-echo "export GTMCI=\$basedir/ewdjs/node_modules/nodem/resources/calltab.ci" >> $basedir/etc/env
+# with nodem 0.3.3 the name of the ci has changed. Determine using ls -1
+calltab=$(ls -1 $basedir/ewdjs/node_modules/nodem/resources/*.ci)
+echo "export GTMCI=$calltab" >> $basedir/etc/env
+# Ensure nodem routines are in gtmroutines search path
 echo "export gtmroutines=\"\${gtmroutines}\"\" \"\$basedir/ewdjs/node_modules/nodem/src" >> $basedir/etc/env
 
 # Create ewd.js config
