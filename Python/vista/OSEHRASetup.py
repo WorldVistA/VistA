@@ -273,7 +273,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   VistA.wait('VOLUME SET')
   VistA.write('\r\r')
 
-def scheduleXWBListener(VistA):
+def scheduleOption(VistA,optionName):
   # If using Cache as the M environment, Schedule a task to start the
   # XWB Listener Starter on the start up of TaskMan
   VistA.wait(PROMPT)
@@ -285,7 +285,7 @@ def scheduleXWBListener(VistA):
   VistA.wait('Select Taskman Management')
   VistA.write('SCHED')
   VistA.wait('reschedule:')
-  VistA.write('XWB LISTENER STARTER\rY')
+  VistA.write(optionName + '\rY')
   VistA.wait('COMMAND:')
   VistA.write('\r^SPECIAL QUEUEING\rSTARTUP\rS\rE\r')
   VistA.wait('Select Taskman Management')
