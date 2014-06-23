@@ -45,7 +45,7 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDOR_NAME GREP_EXEC OUTP
           endforeach()
         endif()
         if (NOT ExceptionFound)
-          string(REGEX MATCH ^\ \ \ [A-Z]+ tag ${line})
+          string(REGEX MATCH ^\ \ \ [A-Z0-9]+ tag ${line})
           message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
           if(tag AND GREP_EXEC AND source_flag)
             string(REGEX MATCH "\\+[0-9]+" position ${line})
