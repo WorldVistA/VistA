@@ -23,7 +23,7 @@ if [[ -z $instance && $gtmver && $gtm_dist && $basedir ]]; then
 fi
 
 # Set the node version
-nodever="0.10.28"
+nodever="0.10"
 shortnodever="10"
 
 # set the arch
@@ -58,7 +58,7 @@ rm -f ./install.sh
 cd $basedir
 
 # Install node
-su $instance -c "source $basedir/.profile && nvm install $nodever"
+su $instance -c "source $basedir/.profile && nvm install $nodever && nvm alias default 0.10 && nvm use default"
 
 # Put it in the profile too
 echo "nvm use $nodever" >> $basedir/.profile
