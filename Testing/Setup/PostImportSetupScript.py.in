@@ -84,7 +84,9 @@ OSEHRASetup.setupVolumeSet(VistA,"${TEST_VISTA_SETUP_SITE_NAME}",'${TEST_VISTA_S
 if VistA.type=='cache':
   # If using Cache as the M environment, Schedule a task to start the
   # XWB Listener Starter on the start up of TaskMan
-  OSEHRASetup.scheduleXWBListener(VistA)
+  OSEHRASetup.scheduleOption(VistA,'XWB LISTENER STARTER')
+  OSEHRASetup.scheduleOption(VistA,'XMRONT')
+
 # Start TaskMan through the XUP Menu system.
 OSEHRASetup.restartTaskMan(VistA)
 
