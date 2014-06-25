@@ -22,11 +22,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Update the server from repositories
-# TODO: kill output
-# TODO: log status
-# TODO: determine if this needs to be logged
-yum update -y
+yum update -y > /dev/null
 
 # Install baseline packages
-# TODO: detect virtualbox and install additions?
-yum install -y git xinetd perl wget openssh-server expect
+yum install -y git xinetd perl wget curl python openssh-server expect man mysql mysql-server python-argparse sshpass > /dev/null

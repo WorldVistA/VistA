@@ -7,8 +7,8 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "Official Ubuntu 12.04 current daily Cloud Image i386"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-i386-vagrant-disk1.box"
+  config.vm.box = "CentOS 6.4 i386 Minimal"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-i386-v20131103.box"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.network :forwarded_port, guest: 8080, host: 8080 # EWD.js
   config.vm.network :forwarded_port, guest: 8000, host: 8000 # EWD.js Webservices
   config.vm.network :forwarded_port, guest: 8081, host: 8081 # EWD VistA Term
+
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -41,7 +42,7 @@ Vagrant.configure("2") do |config|
   # Define primary box name for all VM providers
   # More VMs could be added here to build a multi-box install and provision
   # accordingly
-  config.vm.define "OSEHRA VistA - Ubuntu", primary: true do |vista|
+  config.vm.define "OSEHRA VistA - CentOS", primary: true do |vista|
   end
 
   # Amazon EC2 configuration
@@ -49,10 +50,10 @@ Vagrant.configure("2") do |config|
     aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
     aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
     aws.keypair_name = ENV['AWS_KEYPAIR_NAME']
-    aws.ami = "ami-d9a98cb0"
+    aws.ami = "ami-fdbdc894"
     aws.instance_type = "t1.micro"
     override.vm.box = "dummy"
-    override.ssh.username = "ubuntu"
+    override.ssh.username = "root"
     override.ssh.private_key_path = ENV['AWS_PRIVATE_KEY']
   end
 
@@ -61,7 +62,7 @@ Vagrant.configure("2") do |config|
     rs.username = ENV['RS_USERNAME']
     rs.api_key = ENV['RS_API_KEY']
     rs.flavor = /512MB/
-    rs.image = /Ubuntu 12.04/
+    rs.image = /CentOS 6.5/
     rs.rackspace_region = :ord
     rs.public_key_path = ENV['RS_PUBLIC_KEY']
     override.ssh.private_key_path = ENV['RS_PRIVATE_KEY']
@@ -145,6 +146,6 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provision :shell do |s|
     s.path = "autoInstaller.sh"
-    s.args = "-e -i " + "#{ENV['instance']}"
+    s.args = "-e -g -i " + "#{ENV['instance']}"
   end
 end
