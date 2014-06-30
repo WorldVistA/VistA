@@ -26,7 +26,7 @@ fi
 
 # Download gtminstall script from SourceForge
 echo "Downloading gtminstall"
-curl --remote-name --progress-bar -L http://downloads.sourceforge.net/project/fis-gtm/GT.M%20Installer/v0.12/gtminstall
+curl -s --remote-name -L http://downloads.sourceforge.net/project/fis-gtm/GT.M%20Installer/v0.12/gtminstall
 
 # Verify hash as we are going to make it executable
 sha1sum -c --status gtminstall_SHA1
@@ -72,6 +72,9 @@ fi
 rm ./gtminstall
 
 # Link GT.M shared library where the linker can find it and refresh the cache
+if [[ $RHEL || -z $ubuntu ]]; then
+    echo "/usr/local/lib" >> /etc/ld.so.conf
+fi
 ln -s /opt/lsb-gtm/"$gtm_ver"_"$gtm_arch"/libgtmshr.so /usr/local/lib
 ldconfig
 echo "Done installing GT.M"

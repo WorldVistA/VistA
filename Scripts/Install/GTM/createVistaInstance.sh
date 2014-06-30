@@ -133,7 +133,13 @@ ln -s $basedir/etc/xinetd.d/vista-vistalink /etc/xinetd.d/$instance-vista-vistal
 ln -s $basedir/etc/init.d/vista /etc/init.d/${instance}vista
 
 # Install init script
-update-rc.d ${instance}vista defaults
+if [[ $ubuntu || -z $RHEL ]]; then
+    update-rc.d ${instance}vista defaults
+fi
+
+if [[ $RHEL || -z $ubuntu ]]; then
+    chkconfig --add ${instance}vista
+fi
 
 # Symlink libs
 su $instance -c "ln -s $gtm_dist $basedir/lib/gtm"
@@ -227,5 +233,12 @@ echo "Done Creating databases"
 # Set permissions
 chown -R $instance:$instance $basedir
 chmod -R g+rw $basedir
+
+# Add firewall rules
+if [[ $RHEL || -z $ubuntu ]]; then
+    sudo iptables -I INPUT 1 -p tcp --dport 9430 -j ACCEPT # RPC Broker
+    sudo iptables -I INPUT 1 -p tcp --dport 8001 -j ACCEPT # VistALink
+    sudo service iptables save
+fi
 
 echo "VistA instance $instance created!"

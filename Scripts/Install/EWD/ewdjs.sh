@@ -44,7 +44,7 @@ cd $basedir/tmp
 
 # Install node.js using NVM (node version manager)
 echo "Downloading NVM installer"
-curl -k --remote-name --progress-bar -L  https://raw.github.com/creationix/nvm/master/install.sh
+curl -s -k --remote-name -L  https://raw.github.com/creationix/nvm/master/install.sh
 echo "Done downloading NVM installer"
 
 # Execute it
@@ -58,21 +58,30 @@ rm -f ./install.sh
 cd $basedir
 
 # Install node
-su $instance -c "source $basedir/.profile && nvm install $nodever && nvm alias default 0.10 && nvm use default"
+su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default 0.10 && nvm use default"
 
-# Put it in the profile too
-echo "nvm use $nodever" >> $basedir/.profile
+# Tell $basedir/etc/env our nodever
+echo "export nodever=$nodever" >> $basedir/etc/env
+
+# Tell nvm to use the node version in .profile or .bash_profile
+if [ -s $basedir/.profile ]; then
+    echo "nvm use $nodever" >> $basedir/.profile
+fi
+
+if [ -s $basedir/.bash_profile ]; then
+    echo "nvm use $nodever" >> $basedir/.bash_profile
+fi
 
 # Create directories for node
 su $instance -c "source $basedir/etc/env && mkdir $basedir/ewdjs"
 
 # Install required node modules
 cd $basedir/ewdjs
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && npm install --quiet nodem >> $basedir/log/nodemInstall.log"
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && npm install --quiet ewdjs >> $basedir/log/ewdjsInstall.log"
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && npm install --quiet ewdliteclient >> $basedir/log/ewdliteclientInstall.log"
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && npm install --quiet ewdrest >> $basedir/log/ewdrestInstall.log"
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && npm install --quiet ewdvistaterm >> $basedir/log/ewdvistatermInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet nodem >> $basedir/log/nodemInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdjs >> $basedir/log/ewdjsInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdliteclient >> $basedir/log/ewdliteclientInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdrest >> $basedir/log/ewdrestInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdvistaterm >> $basedir/log/ewdvistatermInstall.log"
 
 # Copy the right mumps$shortnodever.node_$arch
 su $instance -c "cp $basedir/ewdjs/node_modules/nodem/lib/mumps"$shortnodever".node_$arch $basedir/ewdjs/mumps.node"
@@ -103,7 +112,7 @@ EOF
 chown $instance:$instance $basedir/ewdjs/node_modules/OSEHRA-Config.js
 
 # Use EWD.js installer
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs/node_modules/ewdjs && node install silent >> $basedir/log/ewdInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs/node_modules/ewdjs && node install silent >> $basedir/log/ewdInstall.log"
 
 # Perform renames to ensure paths are right
 perl -pi -e 's#/home/ubuntu#'$basedir'#g' $basedir/ewdjs/node_modules/ewdjs/OSEHRA/*.js
@@ -126,7 +135,7 @@ perl -pi -e 's#'$basedir'/ssl/#'$basedir'/ewdjs/ssl/#g' $basedir/ewdjs/ewdRest.j
 su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/registerWSClient.js $basedir/ewdjs"
 # delete the require('gtm-config') line (only used for ewdjs-gtm standalone install
 perl -pi -e "s#require\(\'gtm-config\'\);# #g" $basedir/ewdjs/registerWSClient.js
-su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs && node registerWSClient.js"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && node registerWSClient.js"
 
 # Modify init.d scripts to reflect $instance
 perl -pi -e 's#/home/foia#'$basedir'#g' $basedir/etc/init.d/ewdjs
@@ -135,7 +144,23 @@ perl -pi -e 's#/home/foia#'$basedir'#g' $basedir/etc/init.d/ewdjs
 ln -s $basedir/etc/init.d/ewdjs /etc/init.d/${instance}vista-ewdjs
 
 # Install init script
-update-rc.d ${instance}vista-ewdjs defaults
+if [[ $ubuntu || -z $RHEL ]]; then
+    update-rc.d ${instance}vista-ewdjs defaults
+fi
+
+if [[ $RHEL || -z $ubuntu ]]; then
+    chkconfig --add ${instance}vista-ewdjs
+fi
+
+# Add firewall rules
+if [[ $RHEL || -z $ubuntu ]]; then
+    sudo iptables -I INPUT 1 -p tcp --dport 8080 -j ACCEPT # EWD.js
+    sudo iptables -I INPUT 1 -p tcp --dport 8000 -j ACCEPT # EWD.js Webservices
+    sudo iptables -I INPUT 1 -p tcp --dport 8081 -j ACCEPT # EWD VistA Term
+
+    sudo service iptables save
+fi
+
 
 echo "Done installing EWD.js"
 service ${instance}vista-ewdjs start

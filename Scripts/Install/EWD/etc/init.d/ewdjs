@@ -38,16 +38,17 @@ fi
 # This path will be replaced with the correct $basedir when a VistA instance
 # is created. This script will need to have it hardcoded
 source /home/foia/etc/env
+export PATH=$PATH:/usr/local/bin
 
 # Start EWD.js background tasks
 start() {
     # Start EWD.js
     echo "Starting EWD.js"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdjs-${instance} -O $basedir/log/ewdjs.log -E $basedir/log/ewdjsErr.log --chdir $basedir/ewdjs node ewdStart-gtm.js OSEHRA-Config"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && daemon --name ewdjs-${instance} -O $basedir/log/ewdjs.log -E $basedir/log/ewdjsErr.log --chdir $basedir/ewdjs node ewdStart-gtm.js OSEHRA-Config"
     echo "Starting EWD.js Rest Server"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs && daemon --name ewdRest-${instance} -O $basedir/log/ewdRestOut.log -E $basedir/log/ewdRestErr.log node $basedir/ewdjs/ewdRest.js"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && daemon --name ewdRest-${instance} -O $basedir/log/ewdRestOut.log -E $basedir/log/ewdRestErr.log node $basedir/ewdjs/ewdRest.js"
     echo "Starting EWD VistA Term Server"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && cd $basedir/ewdjs && daemon --name ewdVistATerm-${instance} -O $basedir/log/ewdVistATermOut.log -E $basedir/log/ewdVistATermErr.log node $basedir/ewdjs/VistATerm.js"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && daemon --name ewdVistATerm-${instance} -O $basedir/log/ewdVistATermOut.log -E $basedir/log/ewdVistATermErr.log node $basedir/ewdjs/VistATerm.js"
 }
 
 # Stop EWD.js background tasks
@@ -56,9 +57,9 @@ stop() {
     echo "Stopping EWD.js"
     curl "https://127.0.0.1:8080/ewdjsMgr?password=keepThisSecret%21&exit=true" -k
     echo "Stopping EWD.js Rest Server"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdRest-${instance} --stop"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && daemon --name ewdRest-${instance} --stop"
     echo "Stopping EWD VistA Term Server"
-    su $instance -c "source $basedir/.profile && source $basedir/etc/env && daemon --name ewdVistATerm-${instance} --stop"
+    su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && daemon --name ewdVistATerm-${instance} --stop"
 }
 
 case "$1" in
