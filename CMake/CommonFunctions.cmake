@@ -83,11 +83,9 @@ function(ReportUnitTestResult PACKAGE_NAME DIRNAME OUTPUT)
      # Captures and prints the failure message
      elseif(line MATCHES "^ ?[^\\^]+\\^${routine_name}+")
        message("${routine_name}: ${line}")
-       set(test_passed FALSE)
-     # Matches the first part of the results line, checking for test failures
-     elseif(line MATCHES "^ ?Checked.*, with [1-9]+ failure")
-       message("${routine_name} in package ${PACKAGE_NAME}:\n${line}")
-       set(test_passed FALSE)
+       if(NOT ${line} MATCHES [iI]ntentional)
+         set(test_passed FALSE)
+       endif()
      # Matches the second part of the results line, checking for errors
      elseif(line MATCHES "encountered [1-9]+ error")
        message("M Error(s) encountered in ${routine_name} in package ${PACKAGE_NAME}")
