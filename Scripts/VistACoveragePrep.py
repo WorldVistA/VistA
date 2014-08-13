@@ -33,7 +33,10 @@ assert testClient
 with testClient as vistAClient:
   vistAClient.setLogFile("CoveragePrep.log")
   RoutineExport = VistARoutineExport()
-  RoutineExport.exportRoutines(testClient,result.outputFile,result.routines,ROUTINE_EXTRACT_EXCLUDE_LIST)
+  if result.routines== ['*']:
+    RoutineExport.exportRoutines(testClient,result.outputFile,result.routines,ROUTINE_EXTRACT_EXCLUDE_LIST)
+  else:
+    RoutineExport.exportRoutines(testClient,result.outputFile,result.routines,None)
   import UnpackRO
   path, filename = os.path.split(result.outputFile)
   UnpackRO.unpack(open(result.outputFile,'r'), sys.stdout, path+'/CoverageSource/')
