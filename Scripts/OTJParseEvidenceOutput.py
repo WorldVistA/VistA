@@ -55,14 +55,17 @@ def WriteRCheck(testClient,outputDir,filename,routinelist=['*']):
     connection.send(routine+"\r")
   connection.expect("Routine")
   connection.send("\r")
-  connection.expect("Device")
-  outputfile = os.path.join(outputDir,filename)
-  connection.send(outputfile + "\r")
-  connection.expect("Parameters")
-  connection.send("\r")
-  connection.expect([testClient.getPrompt(),"overwrite it"],600)
-  connection.send('\r')
-  testClient.waitForPrompt()
+  index = connection.expect(["Device",testClient.getPrompt()])
+  if index == 0:
+    outputfile = os.path.join(outputDir,filename)
+    connection.send(outputfile + "\r")
+    connection.expect("Parameters")
+    connection.send("\r")
+    connection.expect([testClient.getPrompt(),"overwrite it"],600)
+    connection.send('\r')
+    testClient.waitForPrompt()
+  else:
+    print("No routines found for %RCheck")
   connection.send("\r")
 
 def WriteRFind(testClient,outputDir,filename,routinelist=['*']):
@@ -86,14 +89,17 @@ def WriteRFind(testClient,outputDir,filename,routinelist=['*']):
     connection.send(routine+"\r")
   connection.expect("Routine")
   connection.send("\r")
-  connection.expect("Device")
-  outputfile = os.path.join(outputDir,filename)
-  connection.send(outputfile + "\r")
-  connection.expect("Parameters")
-  connection.send("\r")
-  connection.expect([testClient.getPrompt(),"overwrite it"],600)
-  connection.send("\r")
-  testClient.waitForPrompt()
+  index = connection.expect(["Device",testClient.getPrompt()])
+  if index ==0 :
+    outputfile = os.path.join(outputDir,filename)
+    connection.send(outputfile + "\r")
+    connection.expect("Parameters")
+    connection.send("\r")
+    connection.expect([testClient.getPrompt(),"overwrite it"],600)
+    connection.send("\r")
+    testClient.waitForPrompt()
+  else:
+    print("No Routines found for %RFIND")
   connection.send("\r")
 
 def XINDEXParser(outputDir,installname):
