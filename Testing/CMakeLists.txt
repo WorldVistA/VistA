@@ -225,7 +225,7 @@ if(TEST_VISTA_VERIFYFIELDS)
   FindPackages(${VISTA_SOURCE_DIR})
   foreach(package_file_name ${PACKAGES})
     # Configures the CMAKE testing
-    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@VFTest.log")
+    set(LOGFILENAME "${TEST_VISTA_OUTPUT_DIR}/${package_file_name}VFTest.log")
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/VerifyFields.py.in ${VISTA_BINARY_DIR}/Testing/VerifyFields/${package_file_name}VFTest.py @ONLY)
     # Creates the command that will be called for the Test
     add_test(VerifyFields_${package_file_name} ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/VerifyFields/${package_file_name}VFTest.py)
