@@ -33,7 +33,7 @@ if(TEST_VISTA_DOX_CALLERGRAPH)
           set(AllRoutines "${AllRoutines}AllRoutines.append(\"${routine_name}\")\n")
         endforeach()
         string(REPLACE  " " "_" package_file_name "${package_name}")
-        set(logfile "@CALLER_GRAPH_LOG_DIR@/@package_file_name@.log")
+        set(logfile "${CALLER_GRAPH_LOG_DIR}/${package_file_name}.log")
         #Configures the python script with the name of the routine
         configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XindexCallerGraph.py.in
                        ${SCRIPT_OUTPUT_DIR}/${package_file_name}.py)

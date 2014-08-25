@@ -42,7 +42,7 @@ if(TEST_VISTA_FUNCTIONAL_SIK)
       #  Configure the Sikuli files to contain the paths found above
       configure_file("${sikuli}/${sikuli_name}.py.in" "${CMAKE_CURRENT_BINARY_DIR}/Sikuli/${sikuli_name}.sikuli/${sikuli_name}.py")
       configure_file("${sikuli}/${sikuli_name}.html.in" "${CMAKE_CURRENT_BINARY_DIR}/Sikuli/${sikuli_name}.sikuli/${sikuli_name}.html")
-      add_test(FT_${sikuli_name}Sikuli "@SIKULI_EXECUTABLE@" -s -r "${CMAKE_CURRENT_BINARY_DIR}/Sikuli/${sikuli_name}.sikuli")
+      add_test(FT_${sikuli_name}Sikuli "${SIKULI_EXECUTABLE}" -s -r "${CMAKE_CURRENT_BINARY_DIR}/Sikuli/${sikuli_name}.sikuli")
       set_tests_properties(FT_${sikuli_name}Sikuli PROPERTIES FAIL_REGULAR_EXPRESSION "FindFailed")
     endforeach()
   endif()
