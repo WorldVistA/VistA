@@ -86,6 +86,10 @@ Testing Harness:
   * SetupTestingEnvironment_
   * RunningandUploadingTests_
 
+  For information on how to add to the OSEHRA Testing Harness, see:
+
+    * AddingTests_
+
 Once the tests have been run and submitted, the results can be seen on the
 OSEHRA Dashboard, for more information see:
 
@@ -153,6 +157,7 @@ directory and includes:
 .. _ObtainingTestingCode: ObtainingTestingCode.rst
 .. _SetupTestingEnvironment: SetupTestingEnvironment.rst
 .. _RunningandUploadingTests: RunningandUploadingTests.rst
+.. _AddingTests: AddingTests.rst
 .. _ReviewingResults: ReviewingResults.rst
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
 .. _PrepareMComponents: PrepareMComponents.rst
