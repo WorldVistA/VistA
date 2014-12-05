@@ -1,4 +1,4 @@
-ZZRGUTRB ;RGI/CBR,KW/JPS - Unit Tests - RPC Broker ;4/16/2014
+ZZRGUTRB ;RGI/CBR,KW/JPS - Unit Tests - RPC Broker ;12/05/2014
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1
  TSTART
  I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUTRB")
@@ -212,7 +212,7 @@ CTG ;
 PROB ;
  N RET,RET1
  D PROB^ORQQPL3(.RET,+CATIEN)
- S RET1="33572^Diabetes Insipidus^253.5^875~^ICD9("
+ S RET1="33572^Diabetes Insipidus" ;^253.5^875~^ICD9("
  D CHKTF^XTMUNIT($G(RET(1))[RET1,"PROB^ORQQPL3: List details")
  Q
  ;
