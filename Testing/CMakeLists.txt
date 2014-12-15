@@ -171,7 +171,7 @@ if(TEST_VISTA_XINDEX)
   list(APPEND PACKAGES "Uncategorized")
   foreach(package_file_name ${PACKAGES})
     #Configures the CMAKE testing
-    set(LOGFILENAME "@TEST_VISTA_OUTPUT_DIR@/@package_file_name@Test.log")
+    set(LOGFILENAME "${TEST_VISTA_OUTPUT_DIR}/${package_file_name}Test.log")
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.cmake.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.cmake @ONLY)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/XINDEXScript.py.in ${VISTA_BINARY_DIR}/Testing/XINDEX/${package_file_name}Test.py @ONLY)
     #Creates the command that will be called for the Test
