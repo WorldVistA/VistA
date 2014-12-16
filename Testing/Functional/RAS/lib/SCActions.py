@@ -594,7 +594,7 @@ class SCActions (Actions):
         self.VistA.write('1')
         for vitem in DXvlist:
             self.VistA.wait(vitem)
-        self.VistA.wait('Enter Diagnosis :')
+        self.VistA.wait('Diagnosis :')
         self.VistA.write('')
         self.VistA.wait('Problem List')
         self.VistA.write('no')
