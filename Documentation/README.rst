@@ -102,6 +102,12 @@ adding a user)  without using the OSEHRA Utilities, see:
 
   * Initialization_
 
+Generating the OSEHRA VistA-M Dox Pages
+----------------------------------------
+
+The OSEHRA VistA source tree is also used in the generation of the Dox pages
+which can be found at `code.osehra.org/dox`_. For instructions on how to set up
+and execute the steps necessary to generate the HTML files, see setupDox_.
 
 
 Automated Virtual Machine (VM) creation and VistA installation
@@ -158,3 +164,5 @@ directory and includes:
 .. _`M Standards and Conventions`: Standards/SAC.rst
 .. _`PatchSequenceApply`: ../Scripts/PatchSequenceApply.rst
 .. _`BUILD-Delphi`: ../BUILD-Delphi.rst
+.. _`code.osehra.org/dox`: http://code.osehra.org/dox/index.html
+.. _setupDox: setupDox.rst
