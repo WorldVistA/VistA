@@ -34,6 +34,7 @@ from ZWRGlobalParser import getKeys
 from CrossReference import FileManField
 from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
 from WebPageGenerator import getPackageHtmlFileName
+from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
 
 def safeFileName(name):
   """ convert to base64 encoding """
@@ -272,6 +273,7 @@ menu_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
        ("Menu Text", '1', None), # Menu Text
        ("Lock", '3', None), # Lock
+       ("Type", '4', None),
        #("Description", '3.5', getWordProcessingDataBrief), # Description
    )
 def outputDataTableHeader(output, name_list, tName):
@@ -394,21 +396,106 @@ class FileManDataToHtml(object):
         """ generate all option list """
         allOptionList = []
         allMenuList = []
+        serverMenuList = []
         for ien in getKeys(fileManData.dataEntries.keys(), float):
           dataEntry = fileManData.dataEntries[ien]
           allOptionList.append(dataEntry)
           if '4' in dataEntry.fields:
             if dataEntry.fields['4'].value == 'menu':
               allMenuList.append(dataEntry)
+            # Separate list for the "server" OPTIONS
+            elif(dataEntry.fields['4'].value == 'server'):
+              serverMenuList.append(dataEntry);
           else:
             logging.error("ien: %s of file 19 does not have a type" % ien)
+
         self._generateDataListByPackage(allOptionList, "All", option_list_fields,
                                         "Option")
         self._generateDataListByPackage(allMenuList, "All", menu_list_fields,
                                         "Menu")
+
+        self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
         self._generateMenuDependency(allMenuList, allOptionList)
       self._generateDataTableHtml(fileManData, fileNo)
+
       self._convertFileManDataToHtml(fileManData)
+
+  def _generateServerMenu(self, allMenuList,allOptionList, serverMenuList):
+    """
+    Generates a virtual menu based upon content in serverMenuList
+    All "SERVER" type options are sorted based upon value 12 or "Package"
+
+    :param allMenuList: all available menus as dictionary
+    :param allOptionList: all available options as dictionary
+    :param serverMenuList: array of options that have "SERVER" type
+    :return: None
+    """
+    # Add virtual menu for all "Server" type OPTIONS to be a child of
+    menuArray = {}
+    fileDataArray = {}
+    package_name_dict = {"3": "Kernel",
+                         "4": "MailMan",
+                         "5": "Toolkit",
+                         "14": "Lab Service",
+                         "33": "Health Level Seven",
+                         "49": "Integrated Billing",
+                         "52": "IFCAP",
+                         "53": "Accounts Receivable",
+                         "73": "Network Health Exchange",
+                         "82": "CMOP",
+                         "85": "Patient Data Exchange",
+                         "93": "Automated Med Information Exchange",
+                         "99": "EEO Complaint Tracking",
+                         "114": "Fee Basis",
+                         "124": "Medicine",
+                         "127": "Surgery",
+                         "128": "Oncology",
+                         "147": "Remote Order/Entry System",
+                         "149": "Voluntary Timekeepting",
+                         "165": "DSS Extracts",
+                         "181": "Enrollment Application System",
+                         "188": "Functional Independence",
+                         "201": "Health Data & Informatics"}
+    menuArray['0'] = FileManDataEntry(19, "9999990")
+    menuArray['0'].addField(FileManDataField('1', 4, 'MENU TEXT', 'Unknown'))
+    menuArray['0'].addField(FileManDataField('4', 2, 'TYPE', 'menu'))
+    menuArray['0'].type = 'menu'
+    menuArray['0'].name = "19^9999990"
+    fileDataArray['0'] = FileManFileData("9999990", 'TMP' + "1")
+
+    serverMenuEntry = FileManDataEntry(19, "9999999")
+    serverMenuEntry.name = "ZZSERVERMENU"
+    serverMenuEntry.addField(FileManDataField('3.6', 0, 'CREATOR', '200^1'))
+    serverMenuEntry.addField(FileManDataField('1.1', 1, 'UPPERCASE MENU TEXT', 'SERVER VIRTUAL MENU'))
+    serverMenuEntry.addField(FileManDataField('4', 2, 'TYPE', 'menu'))
+    serverMenuEntry.addField(FileManDataField('1', 4, 'MENU TEXT', 'Server Virtual Menu'))
+    serverMenuEntry.addField(FileManDataField('.01', 3, 'NAME', 'ZZSERVERMENU'))
+    for menu in serverMenuList:
+      if '12' in menu.fields:
+        menuIEN = menu.fields['12'].value.split('^')[1]
+        if menuIEN not in menuArray:
+          menuArray[menuIEN] = FileManDataEntry(19, "999999" + menuIEN)
+          menuArray[menuIEN].addField(FileManDataField('1', 4, 'MENU TEXT', package_name_dict[menuIEN]))
+          menuArray[menuIEN].addField(FileManDataField('4', 2, 'TYPE', 'menu'))
+          menuArray[menuIEN].type = 'menu'
+          menuArray[menuIEN].name = "19^999999" + str(menuIEN)
+          fileDataArray[menuIEN]= FileManFileData("999999" + str(menuIEN), 'TMP' + "2")
+      else:
+        menuIEN = '0'
+      tmp = FileManDataEntry(19, menu.ien)
+      tmp.name = "19^" + menu.ien
+      fileDataArray[menuIEN].addFileManDataEntry(len(fileDataArray[menuIEN].dataEntries), tmp)
+      menuArray[menuIEN].addField(FileManDataField('10', 5, 'MENU', fileDataArray[menuIEN]))
+
+    index = 1
+    test = FileManFileData("9999999", 'Server Virtual Menu')
+    for menu in menuArray.keys():
+      allOptionList.append(menuArray[menu])
+      allMenuList.append(menuArray[menu])
+      test.addFileManDataEntry(index, menuArray[menu])
+      index += 1
+    serverMenuEntry.addField(FileManDataField('10', 5, 'MENU', test))
+    allMenuList.append(serverMenuEntry)
 
   def _generateMenuDependency(self, allMenuList, allOptionList):
     menuDict = dict((x.ien, x) for x in allOptionList)
@@ -453,6 +540,8 @@ class FileManDataToHtml(object):
         outJson['option'] = item.name
       if '3' in item.fields:
         outJson['lock'] = item.fields['3'].value
+      if '4' in item.fields:
+        outJson['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, outJson)
       with open(os.path.join(self.outDir, "VistAMenu-%s.json" % item.ien), 'w') as output:
@@ -469,6 +558,8 @@ class FileManDataToHtml(object):
         childDict['option'] = item.name
       if '3' in item.fields:
         childDict['lock'] = item.fields['3'].value
+      if '4' in item.fields:
+        childDict['type'] = item.fields['4'].value
       if item in menuDepDict:
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict)
       logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
