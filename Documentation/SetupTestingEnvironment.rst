@@ -133,17 +133,24 @@ The TEST_VISTA_FRESH_M_DIR is not a required variable for setting up the XINDEX
 testing. The TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES is an option which changes
 the failure condition of the XINDEX tests.  With this option off, the test will
 fail if the XINDEX report returns a fatal error, "F -" in the output.  This
-option will cause a warning in the output "W -" as a failure condition.  The
-GREP_EXECUTABLE is used to find and print the line position of a returned error
-or warning in the source file during the reporting of the error. It can be
-found among the advanced variables like PYTHON_EXECTUABLE. The these variables
-are set in the following manner:
+option will cause a warning in the output "W -" as a failure condition.
+
+Another non-required option is ``TEST_VISTA_XINDEX_IGNORE_EXCEPTIONS``.  This
+option will cause the reporting function to skip the checking of the errors
+against the XINDEXExceptions, thus reporting each found error to the test's
+result.
+
+The GREP_EXECUTABLE is used to find and print the line position of a returned
+error or warning in the source file during the reporting of the error. It can
+be found among the advanced variables like PYTHON_EXECTUABLE. The these
+variables are set in the following manner:
 
 =======================================   ===================================  ======================================
 Variable Name                                 Value for Testing in Caché          Value for Testing in GT.M
 =======================================   ===================================  ======================================
 TEST_VISTA_XINDEX                                    ON/OFF                                  ON/OFF
 TEST_VISTA_XINDEX_WARNINGS_AS_FAILURES               ON/OFF                                  ON/OFF
+TEST_VISTA_XINDEX_IGNORE_EXCEPTIONS                  ON/OFF                                  ON/OFF
 TEST_VISTA_OUTPUT_DIR                       Path to folder where log files        Path to folder where log files
                                             will be stored                        will be stored
 GREP_EXECUTABLE                             Path to Grep Executable               Path to Grep Executable
