@@ -40,7 +40,7 @@ function and all necessary arguments:
    -ro ROUTINEOUTDIR, --routineOutDir ROUTINEOUTDIR
                         path to the directory where GT. M stores routines
 
- Connection Auguments:
+ Connection Arguments:
    Argument for connecting to a VistA instance
 
    -S {1,2}, --system {1,2}
@@ -83,6 +83,42 @@ are removed from the VistA-M source tree and then the exported files are sorted
 into their correct package folder.  The entire process should take
 approximately one hour.
 
+**Note:** In a Cache environment, it is necessary to change the $I value of the
+TELNET device within the File Manager.
+The first step is to identify yourself as a programmer and gain permissions to
+change the files attributes.  Enter \"S DUZ=1 D Q^DI\" to first get
+access to the File Manager and then to start the File Manager.
+At the Select OPTION prompt, enter \"1\" to edit the file entries; at the
+INPUT TO WHAT FILE: prompt, enter the word \"DEVICE\"; and at the
+EDIT WHICH FIELD: prompt enter \"$I\". Enter <Enter> to end the field queries.
+The system will respond with a Select DEVICE NAME: prompt, enter \"TELNET\" to
+bring up an option menu and then enter the option that does not reference GT.M
+or UNIX. When the system responds with $I: TNA//.  Enter \"\|TNT\|\", and
+press enter until the VISTA prompt is reached.
+
+.. parsed-literal::
+
+  VISTA> :usertype:`S DUZ=1 D Q^DI`
+
+  VA FileMan 22.0
+
+  Select OPTION: :usertype:`1`
+
+  INPUT TO WHAT FILE: :usertype:`DEVICE`
+  EDIT WHICH FIELD: ALL// :usertype:`$I`
+  THEN EDIT FIELD: :usertype:`<ENTER>`
+
+  Select DEVICE NAME: :usertype:`TELNET`
+       1  TELNET    TELNET    TNA
+       2  TELNET   GTM-UNIX-TELNET    TELNET   /dev/pts
+  CHOOSE 1-2:  :usertype:`1`
+  $I: TNA// :usertype:`|TNT|`
+
+  Select DEVICE NAME: :usertype:`<ENTER>`
+  Select OPTION:  :usertype:`<ENTER>`
+
+  VISTA>
+
 An example start of the execution of the extractor script can be seen below:
 
 .. parsed-literal::
@@ -103,36 +139,38 @@ This work may include:
 
 * Adding/removing prefixes to existing packages
 * Adding entirely new packages.
-* Adding global entires to existing packages
+* Adding global entries to existing packages
 
 Once the Packages.csv has been updated, move the contents of the Uncategorized
 routines and globals to the `Packages` directory.  We can then re-sort the
 contents using the `PopulatePackages.py` script found in the `Scripts`
 directory in the VistA source tree.
 
+From the `Packages` directory run the following command:
+
 .. parsed-literal::
 
- $ python ~/Work/OSEHRA/Scripts/PopulatePackages.csv < ../Packages.csv
+ $ python ~/Work/OSEHRA/Scripts/PopulatePackages.py < ../Packages.csv
 
 This will take the contents of the Packages.csv and use it to separate the
-loose files in the `Packages` directory into their proper directory.
+files in the current directory into their proper subdirectory.
 
 An example run of the command is shown below:
 
 .. parsed-literal::
 
  $ python ~/Work/OSEHRA/VistA/Scripts/PopulatePackages.py < ../Packages.csv
- 21+PERIOD OF SERVICE.zwr => Registration\Globals\21+PERIOD OF SERVICE.zwr
- 404.92+SCHEDULING REPORT DEFINITION.zwr => Scheduling\Globals\404.92+SCHEDULING REPORT DEFINITION.zwr
- 82.13+DRG CC EXCLUSIONS.zwr => Uncategorized\Globals\82.13+DRG CC EXCLUSIONS.zwr
- PSPPI.zwr => Uncategorized\Globals\PSPPI.zwr
- QIP.zwr => Uncategorized\Globals\QIP.zwr
- GMR.zwr => Uncategorized\Globals\GMR.zwr
- DOPT.zwr => Uncategorized\Globals\DOPT.zwr
- XOB.zwr => Uncategorized\Globals\XOB.zwr
- ERRORS.zwr => Uncategorized\Globals\ERRORS.zwr
- DOSV.zwr => Uncategorized\Globals\DOSV.zwr
- MPR.zwr => Uncategorized\Globals\MPR.zwr
+ 21+PERIOD OF SERVICE.zwr => Registration/Globals/21+PERIOD OF SERVICE.zwr
+ 404.92+SCHEDULING REPORT DEFINITION.zwr => Scheduling/Globals/404.92+SCHEDULING REPORT DEFINITION.zwr
+ 82.13+DRG CC EXCLUSIONS.zwr => Uncategorized/Globals/82.13+DRG CC EXCLUSIONS.zwr
+ PSPPI.zwr => Uncategorized/Globals/PSPPI.zwr
+ QIP.zwr => Uncategorized/Globals/QIP.zwr
+ GMR.zwr => Uncategorized/Globals/GMR.zwr
+ DOPT.zwr => Uncategorized/Globals/DOPT.zwr
+ XOB.zwr => Uncategorized/Globals/XOB.zwr
+ ERRORS.zwr => Uncategorized/Globals/ERRORS.zwr
+ DOSV.zwr => Uncategorized/Globals/DOSV.zwr
+ MPR.zwr => Uncategorized/Globals/MPR.zwr
 
  $
 
