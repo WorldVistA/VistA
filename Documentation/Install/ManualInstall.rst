@@ -26,7 +26,7 @@ The script can be downloaded and executed from the git repository:
 
 .. parsed-literal::
 
-    ~$ :usertype:`curl https://raw.github.com/OSEHRA/VistA/master/Scripts/Install/Ubuntu/autoInstaller.sh | sudo bash`
+    ~$ :usertype:`curl https://raw.githubusercontent.com/OSEHRA/VistA/master/Scripts/Install/Ubuntu/autoInstaller.sh | sudo bash`
 
 This will download and execute the autoInstaller script using the defaults
 embedded in the script.
@@ -36,7 +36,7 @@ following:
 
 .. parsed-literal::
 
-     ~$ :usertype:`curl --remote-name https://raw.github.com/OSEHRA/VistA/master/Scripts/Install/Ubuntu/autoInstaller.sh`
+     ~$ :usertype:`curl --remote-name https://raw.githubusercontent.com/OSEHRA/VistA/master/Scripts/Install/Ubuntu/autoInstaller.sh`
      ~$ :usertype:`chmod +x autoInstaller.sh`
 
 A full explanation of the command-line options of autoInstaller.sh is

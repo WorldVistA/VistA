@@ -44,7 +44,7 @@ cd $basedir/tmp
 
 # Install node.js using NVM (node version manager)
 echo "Downloading NVM installer"
-curl -s -k --remote-name -L  https://raw.github.com/creationix/nvm/master/install.sh
+curl -s -k --remote-name -L  https://raw.githubusercontent.com/creationix/nvm/master/install.sh
 echo "Done downloading NVM installer"
 
 # Execute it
@@ -65,15 +65,28 @@ echo "export nodever=$nodever" >> $basedir/etc/env
 
 # Tell nvm to use the node version in .profile or .bash_profile
 if [ -s $basedir/.profile ]; then
+    echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.profile
     echo "nvm use $nodever" >> $basedir/.profile
 fi
 
 if [ -s $basedir/.bash_profile ]; then
+    echo "source \$HOME/.nvm/nvm.sh" >> $basedir/.bash_profile
     echo "nvm use $nodever" >> $basedir/.bash_profile
 fi
 
 # Create directories for node
 su $instance -c "source $basedir/etc/env && mkdir $basedir/ewdjs"
+
+# Create silent Install script
+cat > $basedir/ewdjs/silent.js << EOF
+{
+    "silent": true,
+    "extras": true
+}
+EOF
+
+# Ensure correct permissions
+chown $instance:$instance $basedir/ewdjs/silent.js
 
 # Install required node modules
 cd $basedir/ewdjs
@@ -111,28 +124,25 @@ EOF
 # Ensure correct permissions
 chown $instance:$instance $basedir/ewdjs/node_modules/OSEHRA-Config.js
 
-# Use EWD.js installer
-su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs/node_modules/ewdjs && node install silent >> $basedir/log/ewdInstall.log"
-
 # Perform renames to ensure paths are right
-perl -pi -e 's#/home/ubuntu#'$basedir'#g' $basedir/ewdjs/node_modules/ewdjs/OSEHRA/*.js
-su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/*.js $basedir/ewdjs/node_modules/"
-perl -pi -e 's#'$basedir'/mumps#'$basedir'/ewdjs/mumps#g' $basedir/ewdjs/node_modules/ewdjs/OSEHRA/*.js
+perl -pi -e 's#/home/ubuntu#'$basedir'#g' $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/*.js
+su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/*.js $basedir/ewdjs/node_modules/"
+perl -pi -e 's#'$basedir'/mumps#'$basedir'/ewdjs/mumps#g' $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/*.js
 
 # VistATerm setup
-su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/VistATerm.js $basedir/ewdjs/node_modules/"
+su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/VistATerm.js $basedir/ewdjs/node_modules/"
 su $instance -c "mkdir $basedir/ewdjs/ewdVistATerm"
 su $instance -c "cp -r $basedir/ewdjs/node_modules/ewdvistaterm/terminal/* $basedir/ewdjs/ewdVistATerm"
-su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/VistATerm.js $basedir/ewdjs"
+su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/VistATerm.js $basedir/ewdjs"
 perl -pi -e 's#'$basedir'/ssl/#'$basedir'/ewdjs/ssl/#g' $basedir/ewdjs/VistATerm.js
 perl -pi -e 's#'$basedir'/www#'$basedir'/ewdjs#g' $basedir/ewdjs/VistATerm.js
 
 # ewdRest setup
-su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/ewdRest.js $basedir/ewdjs"
+su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/ewdRest.js $basedir/ewdjs"
 perl -pi -e 's#'$basedir'/ssl/#'$basedir'/ewdjs/ssl/#g' $basedir/ewdjs/ewdRest.js
 
 # Install webservice credentials
-su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/OSEHRA/registerWSClient.js $basedir/ewdjs"
+su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/registerWSClient.js $basedir/ewdjs"
 # delete the require('gtm-config') line (only used for ewdjs-gtm standalone install
 perl -pi -e "s#require\(\'gtm-config\'\);# #g" $basedir/ewdjs/registerWSClient.js
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && node registerWSClient.js"
