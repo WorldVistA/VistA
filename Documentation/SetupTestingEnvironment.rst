@@ -156,40 +156,93 @@ TEST_VISTA_OUTPUT_DIR                       Path to folder where log files      
 GREP_EXECUTABLE                             Path to Grep Executable               Path to Grep Executable
 =======================================   ===================================  ======================================
 
-
-
 TEST_VISTA_COVERAGE
 ```````````````````
 
-**This capability is only available on systems that have a CMake version that is 2.8.9 or higher.  This option will not show up with earlier versions of CMake.**
+**This capability is only available on systems that have a CMake version that
+is 2.8.9 or higher.  This option will not show up with earlier versions of CMake.**
 
 The TEST_VISTA_COVERAGE option is used to enable a coverage calculation using
 the OSEHRA tests.  It keeps track of the lines of code that are executed during
 the tests and writes files that can be parsed by the testing software and
 displayed on the dashboard after submission.  The coverage is available for
 three types of OSEHRA Testing: XINDEX, MUnit, and the Roll-and-Scroll (RAS)
-tests.
+tests.  The RAS tests currently execute coverage automatically, while the other
+types require the setting of a CMake option to start capturing information
+about the coverage of the test.
 
 
 .. figure:: http://code.osehra.org/content/named/SHA1/033ec97b-cmakeGUICoveragecallout.png
    :align: center
    :alt:  Highlighting the TEST_VISTA_COVERAGE option.
 
-While there are no more variables to set after selecting the
-TEST_VISTA_COVERAGE option, it does display warnings during the configuration.
-These messages warn that the tests will take longer and will create other files
-in addition to the standard log files.  There is a warning that is specific to
-Caché environments, it warns that an Advanced Memory variable may need to be
-changed have the monitor be used.  It give the variable to change and how to
-test it.  The GT.M users will only see the timing warning.
+There are two options which affect the OSEHRA Coverage capability.
+To turn on the coverage for the other types of testing, one should set the
+``TEST_VISTA_COVERAGE`` option to be ON.
+
+The second option to set is named ``TEST_VISTA_COVERAGE_READABLE``.
+It is set to ON by default and appears when the RAS tests have been selected.
+The format of output found in the coverage log file for the RAS tests depends
+on the value of ``TEST_VISTA_COVERAGE_READABLE``.  If set to ON, it will
+write out a human-readable coverage format.  If the option is turned to OFF,
+it will write out a comma separated (CSV) formatted file.
+
+In order to use the CTest parsing of the coverage files for an OSEHRA dashboard
+submission, it is necessary to turn the ``TEST_VISTA_COVERAGE_READABLE`` option
+to OFF. Only when it is set to OFF will this option create files in the
+top-level of the binary directory with the extension of .mcov (GT.M M Coverage)
+or .cmcov (Caché M coverage), which both triggers and contains the information
+needed by the CTest coverage parsing.
+
+========================================   ===================================  ======================================
+Variable Name                                  Human-readable Coverage                    CTest-parsed Coverage
+========================================   ===================================  ======================================
+TEST_VISTA_COVERAGE                                       ON                                     ON
+TEST_VISTA_COVERAGE_READABLE (RAS only)                   ON                                     OFF
+========================================   ===================================  ======================================
+
+Advanced Coverage Variables
+'''''''''''''''''''''''''''
+
+There is one additional variable which can be set when using the OSEHRA
+coverage functionality. ``TEST_VISTA_COVERAGE_SUBSET_DIR``, which can be found
+in the "advanced" section of available CMake variables, allows the focus of the
+coverage calculations to be narrowed.
+
+When this variable is set with the value of a path to a folder which contains
+any number of routine files (``*******.m``), CTest will search (recusively)
+through the directory for all .m files.  These found files will be the only
+routines that are used in the coverage calcuations.  If this variable is not
+used, CTest will calculate coverage over the entirety of the VistA-M routine
+content.
+
+This functionality is especially helpful when calculating the coverage level of
+a project that is going through the OSEHRA Certification process.
+
+=======================================   ===================================  ======================================
+Variable Name                                 Human Readable Coverage                    CTest-parsed Coverage
+=======================================   ===================================  ======================================
+TEST_VISTA_COVERAGE_SUBSET_DIR               Path to folder with .m files            Path to folder with .m files
+=======================================   ===================================  ======================================
+
+CMake Warnings during Configuration
+'''''''''''''''''''''''''''''''''''
+
+When the ``TEST_VISTA_COVERAGE`` option has been selected, CMake will show some
+warnings during the configure step.  These messages are in place to warn
+that the tests may take longer and will create other output files in addition
+to the standard test log files.
+
+Finally, there is a separate warning that is specific to Caché environments, it
+warns that an Advanced Memory variable may need to be changed in order for the
+monitor to be started.  It gives the variable to change and how to test it.
+GT.M users of ``TEST_VISTA_COVERAGE`` will only see the timing warning during
+the configure step.
 
 .. figure:: http://code.osehra.org/content/named/SHA1/32e5ac54-cmakeGUICoverageWarnings.png
    :align: center
    :alt:  After selecting the TEST_VISTA_COVERAGE options, warnings are displayed
           in the output with the Caché specific warning.
-
-This option will create files in the binary directory with the extension of
-.mcov (GT.M M Coverage) or .cmcov (Caché M coverage).
 
 TEST_VISTA_FRESH and TEST_VISTA_SETUP
 ``````````````````````````````````````
@@ -313,6 +366,9 @@ through the Roll and Scroll (RAS) menu interface.
 The number of test suites that utilize the RAS functionality: look for a
 \"Testing/RAS\" directory in the package directory to see the tests that will
 run.  This option does not require any other variables to be set.
+
+**Note**: The RAS tests will run and save the coverage results to a local file
+each time the test is run.
 
 TEST_VISTA_MUNIT
 `````````````````
