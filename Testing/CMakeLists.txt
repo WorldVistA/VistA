@@ -167,6 +167,7 @@ endif()
 
 option(TEST_VISTA_XINDEX "Run XINDEX on every routine in every package" ON)
 if(TEST_VISTA_XINDEX)
+  option(TEST_VISTA_XINDEX_IGNORE_EXCEPTIONS "Ignore the XINDEXExceptions when parsing XINDEX result?" OFF )
   FindPackages(${VISTA_SOURCE_DIR})
   list(APPEND PACKAGES "Uncategorized")
   foreach(package_file_name ${PACKAGES})
