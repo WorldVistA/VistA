@@ -51,7 +51,7 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDOR_NAME GREP_EXEC OUTP
             string(REGEX MATCH "\\+[0-9]+" position ${line})
             string(STRIP ${tag} tag)
             execute_process(COMMAND ${GREP_EXEC} -n -h ^${tag}
-                            "${ARGV6}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
+                            "${ARGV7}/Packages/${PACKAGE_NAME}/Routines/${routine_name}.m"
                             OUTPUT_VARIABLE linematch)
             if(linematch)
 
