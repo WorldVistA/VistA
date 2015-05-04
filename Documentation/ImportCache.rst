@@ -93,21 +93,23 @@ name have meaning:
 
 \- indicates routines which have not been filed.
 
-The next step is to use the newly imported ZGI routine
-to import the VistA globals from the repository:
+The next step is to use the newly imported ZGI routine to import the VistA
+globals from the repository.  This ZGI routine should have been imported in the
+``routines.ro`` file which was created in the PrepareMComponents_ document.
+
+If it is not found in the local instance, you can find ZGI in the ``Scripts``
+directory of the VistA repository.  A ``.ro`` file for only that routine can
+be created by using the command from PrepareMComponents_, but only pass the
+path to the ``VistA/Scripts`` directory as the arguments to the
+``PrepareMComponentsforImport.py`` file.  That ``.ro`` file can be imported
+with the same process as the above files.
+
+Once ZGI is available, execute the ``LIST`` entry point of the ZGI routine
+using the MUMPS ``WRITE`` command to start the import.  An example follows:
 
 .. parsed-literal::
 
-  VISTA> :usertype:`W $$LIST^ZGI("/path-to/VistA/globals.lst")`
-
-This routine will go through all of the globals contained in the list file and
-import them into the VistA instance.  The last package to be imported is the
-Wounded Injured and Ill Warriors.  The example below will demonstrate the
-command and the first/last globals to be imported.
-
-.. parsed-literal::
-
-  VISTA> :usertype:`D LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
+  VISTA> :usertype:`W $$LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
 
   C:/Users/joe.snyder/Desktop/VistA-M/Packages/Accounts Receivable/Globals/340+AR DEBTOR.zwr
 
