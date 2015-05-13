@@ -1,7 +1,7 @@
 ZZRGUTRB ;RGI/CBR,KW/JPS - Unit Tests - RPC Broker ;12/05/2014
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1
  TSTART
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUTRB")
+ I $T(EN^%ut)'="" D EN^%ut("ZZRGUTRB")
  TROLLBACK
  Q
  ;
@@ -34,31 +34,31 @@ ADDSAVE ;
  D ORARY^ZZRGUTCM(.PROB1,.FLDS)
  D ADDSAVE^ORQQPL1(.GMPIFN1,GMPDFN,GMPROV,GMPVAMC,.FLDS)
  S:GMPIFN1>0 GMPIFN1=$O(^AUPNPROB("%"),-1)
- D CHKTF^XTMUNIT(GMPIFN1>0,"NEW^GMPLSAVE: save failed ("_$G(GMPIFN2(0))_")")
+ D CHKTF^%ut(GMPIFN1>0,"NEW^GMPLSAVE: save failed ("_$G(GMPIFN2(0))_")")
  D:GMPIFN1 CHKPRB^ZZRGUTCM(GMPIFN1,.PROB1,"P")
  K FLDS
  D ORARY^ZZRGUTCM(.PROB2,.FLDS)
  D ADDSAVE^ORQQPL1(.GMPIFN2,GMPDFN,GMPROV,GMPVAMC,.FLDS)
  S GMPIFN2=$O(^AUPNPROB("%"),-1)
- D CHKTF^XTMUNIT(GMPIFN2>0,"NEW^GMPLSAVE: save failed ("_$G(GMPIFN2(0))_")")
+ D CHKTF^%ut(GMPIFN2>0,"NEW^GMPLSAVE: save failed ("_$G(GMPIFN2(0))_")")
  D:GMPIFN2 CHKPRB^ZZRGUTCM(GMPIFN2,.PROB2,"P")
  Q
  ;
 PROBL ;
  N LISTP,LISTH
  D PROBL^ORQQPL3(.LISTP,GMPDFN,"A")
- D CHKTF^XTMUNIT(+$G(LISTP(0))=1,"Invalid number of records")
- D CHKEQ^XTMUNIT(GMPIFN1,$P($G(LISTP(1)),U),"Invalid record returned")
+ D CHKTF^%ut(+$G(LISTP(0))=1,"Invalid number of records")
+ D CHKEQ^%ut(GMPIFN1,$P($G(LISTP(1)),U),"Invalid record returned")
  D PROBL^ORQQPL3(.LISTH,GMPDFN,"R")
- D CHKTF^XTMUNIT(+$G(LISTH(0))=1,"Invalid number of records")
- D CHKEQ^XTMUNIT(GMPIFN2,$P($G(LISTH(1)),U),"Invalid record returned")
+ D CHKTF^%ut(+$G(LISTH(0))=1,"Invalid number of records")
+ D CHKEQ^%ut(GMPIFN2,$P($G(LISTH(1)),U),"Invalid record returned")
  Q
  ;
 INACT ;
  N RETURN
  D INACT^ORQQPL2(.RETURN,GMPIFN2)
- D CHKTF^XTMUNIT(RETURN>0,"INACT^ORQQPL2 failed: "_$G(RETURN(0)))
- D CHKEQ^XTMUNIT("I",$P(^AUPNPROB(GMPIFN2,0),U,12),"Problem not inactivated ("_GMPIFN2_")")
+ D CHKTF^%ut(RETURN>0,"INACT^ORQQPL2 failed: "_$G(RETURN(0)))
+ D CHKEQ^%ut("I",$P(^AUPNPROB(GMPIFN2,0),U,12),"Problem not inactivated ("_GMPIFN2_")")
  I RETURN>0 D
  . K ^AUPNPROB("ACTIVE",GMPDFN,"A",GMPIFN2)
  . S ^AUPNPROB("ACTIVE",GMPDFN,"I",GMPIFN2)=""
@@ -67,35 +67,35 @@ INACT ;
 DELETE ;
  N RESULT
  D DELETE^ORQQPL2(.RESULT,GMPIFN2,GMPROV,GMPVAMC,"deletecomment")
- D CHKTF^XTMUNIT(RESULT>0,"DELETE^ORQQPL2 failed: "_$G(RESULT(0)))
- D CHKEQ^XTMUNIT("H",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not deleted ("_GMPIFN2_")")
+ D CHKTF^%ut(RESULT>0,"DELETE^ORQQPL2 failed: "_$G(RESULT(0)))
+ D CHKEQ^%ut("H",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not deleted ("_GMPIFN2_")")
  K RESULT
  D DELLIST^ORQQPL3(.RESULT,GMPDFN)
- D CHKEQ^XTMUNIT(1,$G(RESULT(0)),"DELLIST^ORQQPL3: Number of deleted problems")
- D CHKTF^XTMUNIT($G(RESULT(1))[GMPIFN2_"^I^Essential Hypertension","DELLIST^ORQQPL3: List fields")
- D CHKTF^XTMUNIT($G(RESULT(1))[";^401.9^3100330^"_DT_"^NSC^^H^3^C^^^C^1^^NSC^","DELLIST^ORQQPL3: List Fields2")
+ D CHKEQ^%ut(1,$G(RESULT(0)),"DELLIST^ORQQPL3: Number of deleted problems")
+ D CHKTF^%ut($G(RESULT(1))[GMPIFN2_"^I^Essential Hypertension","DELLIST^ORQQPL3: List fields")
+ D CHKTF^%ut($G(RESULT(1))[";^401.9^3100330^"_DT_"^NSC^^H^3^C^^^C^1^^NSC^","DELLIST^ORQQPL3: List Fields2")
  Q
  ;
 REPLACE ;
  N RETURN
  D REPLACE^ORQQPL2(.RETURN,GMPIFN1)
- D CHKTF^XTMUNIT(RETURN=0,"Error. Replaced an active problem ("_GMPIFN1_")")
+ D CHKTF^%ut(RETURN=0,"Error. Replaced an active problem ("_GMPIFN1_")")
  K RETURN
  D REPLACE^ORQQPL2(.RETURN,GMPIFN2)
- D CHKTF^XTMUNIT(RETURN>0,"REPLACE^ORQQPL2 failed: "_$G(RETURN(0)))
- D CHKEQ^XTMUNIT("P",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not replaced ("_GMPIFN2_")")
+ D CHKTF^%ut(RETURN>0,"REPLACE^ORQQPL2 failed: "_$G(RETURN(0)))
+ D CHKEQ^%ut("P",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not replaced ("_GMPIFN2_")")
  Q
  ;
 VERIFY ;
  N RETURN
  D VERIFY^ORQQPL2(.RETURN,GMPIFN2)
- D CHKTF^XTMUNIT(RETURN'>0,"Error. Verified a permanent problem ("_GMPIFN2_")")
- D CHKEQ^XTMUNIT("Problem Already Verified",$G(RETURN(0)),"Invalid error message")
+ D CHKTF^%ut(RETURN'>0,"Error. Verified a permanent problem ("_GMPIFN2_")")
+ D CHKEQ^%ut("Problem Already Verified",$G(RETURN(0)),"Invalid error message")
  K RETURN
  S $P(^AUPNPROB(GMPIFN2,1),U,2)="T"
  D VERIFY^ORQQPL2(.RETURN,GMPIFN2)
- D CHKTF^XTMUNIT(RETURN>0,"VERIFY^ORQQPL2 failed: "_$G(RETURN(0)))
- D CHKEQ^XTMUNIT("P",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not verified ("_GMPIFN2_")")
+ D CHKTF^%ut(RETURN>0,"VERIFY^ORQQPL2 failed: "_$G(RETURN(0)))
+ D CHKEQ^%ut("P",$P(^AUPNPROB(GMPIFN2,1),U,2),"Problem not verified ("_GMPIFN2_")")
  Q
  ;
 GETCOMM ;
@@ -103,9 +103,9 @@ GETCOMM ;
  D GETCOMM^ORQQPL2(.ORY,GMPIFN2)
  S CNT=0,I=""
  F  S I=$O(ORY(I)) Q:I=""  S CNT=CNT+1
- D CHKEQ^XTMUNIT(2,CNT,"Invalid number of comments: "_CNT)
- D:CNT>0 CHKEQ^XTMUNIT("testcomment4",ORY(1),"Invalid comment returned")
- D:CNT>1 CHKEQ^XTMUNIT("deletecomment",ORY(2),"Invalid comment returned")
+ D CHKEQ^%ut(2,CNT,"Invalid number of comments: "_CNT)
+ D:CNT>0 CHKEQ^%ut("testcomment4",ORY(1),"Invalid comment returned")
+ D:CNT>1 CHKEQ^%ut("deletecomment",ORY(2),"Invalid comment returned")
  Q
  ;
 DUP ;
@@ -115,29 +115,29 @@ DUP ;
  S TXT=$P(PROB2(.05),U,2)
  D ORARY^ZZRGUTCM(.PROB2,.FLDS)
  D ADDSAVE^ORQQPL1(.GMPIFN3,GMPDFN,GMPROV,GMPVAMC,.FLDS)
- D CHKTF^XTMUNIT(GMPIFN3>0,"DUP: save failed ("_$G(GMPIFN3(0))_")")
+ D CHKTF^%ut(GMPIFN3>0,"DUP: save failed ("_$G(GMPIFN3(0))_")")
  S:GMPIFN3>0 GMPIFN3=$O(^AUPNPROB("%"),-1)
  D DUP^ORQQPL1(.PRB,GMPDFN,TRM,TXT)
- D CHKEQ^XTMUNIT(GMPIFN2_"^I",$G(PRB),"DUP: Wrong problem found.")
+ D CHKEQ^%ut(GMPIFN2_"^I",$G(PRB),"DUP: Wrong problem found.")
  Q
  ;
 INITUSER ;
  N RET,SITE
  D INITUSER^ORQQPL1(.RET,DUZ)
  S SITE=$G(^GMPL(125.99,1,0))
- D CHKEQ^XTMUNIT("1",$G(RET(0)),"INITUSER: Is clinical user?")
- D CHKEQ^XTMUNIT("",$G(RET(1)),"INITUSER: Default view")
- D CHKEQ^XTMUNIT($P(SITE,U,2),$G(RET(2)),"INITUSER: Verify transcribed problems?")
- D CHKEQ^XTMUNIT($P(SITE,U,3),$G(RET(3)),"INITUSER: Prompt for chart copy?")
- D CHKEQ^XTMUNIT($P(SITE,U,4),$G(RET(4)),"INITUSER: Use lexicon?")
- D CHKEQ^XTMUNIT($S($P(SITE,U,5)="R":1,1:0),$G(RET(5)),"INITUSER: Chronological or reverse chron listing?")
- D CHKEQ^XTMUNIT("A",$G(RET(6)),"INITUSER: Context problems")
- D CHKEQ^XTMUNIT("0^All",$G(RET(7)),"INITUSER: PROVIDER^NAME")
- D CHKEQ^XTMUNIT("",$G(RET(8)),"INITUSER: user's service/section")
- D CHKEQ^XTMUNIT("",$G(RET(9)),"INITUSER: Service")
- D CHKEQ^XTMUNIT("",$G(RET(10)),"INITUSER: Clinic")
- D CHKEQ^XTMUNIT("",$G(RET(11)),"INITUSER: N/A")
- D CHKEQ^XTMUNIT("1",$G(RET(12)),"INITUSER: Should comments display?")
+ D CHKEQ^%ut("1",$G(RET(0)),"INITUSER: Is clinical user?")
+ D CHKEQ^%ut("",$G(RET(1)),"INITUSER: Default view")
+ D CHKEQ^%ut($P(SITE,U,2),$G(RET(2)),"INITUSER: Verify transcribed problems?")
+ D CHKEQ^%ut($P(SITE,U,3),$G(RET(3)),"INITUSER: Prompt for chart copy?")
+ D CHKEQ^%ut($P(SITE,U,4),$G(RET(4)),"INITUSER: Use lexicon?")
+ D CHKEQ^%ut($S($P(SITE,U,5)="R":1,1:0),$G(RET(5)),"INITUSER: Chronological or reverse chron listing?")
+ D CHKEQ^%ut("A",$G(RET(6)),"INITUSER: Context problems")
+ D CHKEQ^%ut("0^All",$G(RET(7)),"INITUSER: PROVIDER^NAME")
+ D CHKEQ^%ut("",$G(RET(8)),"INITUSER: user's service/section")
+ D CHKEQ^%ut("",$G(RET(9)),"INITUSER: Service")
+ D CHKEQ^%ut("",$G(RET(10)),"INITUSER: Clinic")
+ D CHKEQ^%ut("",$G(RET(11)),"INITUSER: N/A")
+ D CHKEQ^%ut("1",$G(RET(12)),"INITUSER: Should comments display?")
  Q
  ;
 EDIT ;
@@ -153,13 +153,13 @@ EDIT ;
  D EDLOAD^ORQQPL1(.RET,GMPIFN1,GMPROV,GMPVAMC)
  S I=0
  F  S I=$O(RET(I)) Q:(I="")!($P(RET(I),$C(254),2)="1.14")
- D CHKEQ^XTMUNIT("C^CHRONIC",$P($G(RET(I)),$C(254),3),"EDSAVE^ORQQPL1: Save failed")
+ D CHKEQ^%ut("C^CHRONIC",$P($G(RET(I)),$C(254),3),"EDSAVE^ORQQPL1: Save failed")
  Q
  ;
 HISTORY ;
  N RET,EXTDT,DUZN,GMPNAME,CNT,I
  D HIST^ORQQPL2(.RET,GMPIFN2)
- D CHKEQ^XTMUNIT(4,RET(0),"HIST^ORQQPL2: # of events.")
+ D CHKEQ^%ut(4,RET(0),"HIST^ORQQPL2: # of events.")
  S EXTDT=$$EXTDT^GMPLX(DT)
  S DUZN=$P(^VA(200,DUZ,0),U)
  S GMPNAME=$P(^VA(200,GMPROV,0),U)
@@ -169,51 +169,51 @@ HISTORY ;
  . I $G(RET(I))=(EXTDT_U_"PROBLEM removed by "_GMPNAME) S CNT=CNT+1
  . I $G(RET(I))=(EXTDT_U_"PROBLEM placed back on list by "_DUZN) S CNT=CNT+1
  . I $G(RET(I))=(EXTDT_U_"PROBLEM verified by "_DUZN) S CNT=CNT+1
- D CHKEQ^XTMUNIT(4,CNT,"HIST^ORQQPL2: Only "_CNT_" out of 4 history entries match")
+ D CHKEQ^%ut(4,CNT,"HIST^ORQQPL2: Only "_CNT_" out of 4 history entries match")
  Q
  ;
 LIST ;
  N RET,RET1,RET2,RET3,GMPIFN3
  D LIST^ORQQPL3(.RET,GMPDFN,"A")
- D CHKEQ^XTMUNIT(2,$G(RET(0)),"LIST^ORQQPL3: # of active entries")
+ D CHKEQ^%ut(2,$G(RET(0)),"LIST^ORQQPL3: # of active entries")
  S GMPIFN3=+$O(^AUPNPROB("AC",+GMPDFN,""),-1)
  S RET1=GMPIFN1_"^A^Chronic Airway Obstruction, Not Elsewhere Classified"
  S RET2=GMPIFN3_"^A^Essential Hypertension"
- D CHKTF^XTMUNIT($G(RET(1))[RET1,"LIST^ORQQPL1: First entry")
- D CHKTF^XTMUNIT($G(RET(1))["^496.^3100404^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^A^1^^NSC^","LIST^ORQQPL: ENTRY 1A")
- D CHKTF^XTMUNIT($G(RET(2))[RET2,"LIST^ORQQPL1: Second entry")
- D CHKTF^XTMUNIT($G(RET(2))["^401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL1: Second entryA")
+ D CHKTF^%ut($G(RET(1))[RET1,"LIST^ORQQPL1: First entry")
+ D CHKTF^%ut($G(RET(1))["^496.^3100404^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^A^1^^NSC^","LIST^ORQQPL: ENTRY 1A")
+ D CHKTF^%ut($G(RET(2))[RET2,"LIST^ORQQPL1: Second entry")
+ D CHKTF^%ut($G(RET(2))["^401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL1: Second entryA")
  ;
  K RET
  D LIST^ORQQPL3(.RET,GMPDFN,"I")
  S RET3=GMPIFN2_"^I^Essential Hypertension"
- D CHKEQ^XTMUNIT(1,$G(RET(0)),"LIST^ORQQPL3: # of inactive entries")
- D CHKTF^XTMUNIT($G(RET(1))[RET3,"LIST^ORQQPL3: Inactive entry")
- D CHKTF^XTMUNIT($G(RET(1))["401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL3: Inactive entry")
+ D CHKEQ^%ut(1,$G(RET(0)),"LIST^ORQQPL3: # of inactive entries")
+ D CHKTF^%ut($G(RET(1))[RET3,"LIST^ORQQPL3: Inactive entry")
+ D CHKTF^%ut($G(RET(1))["401.9^3100330^"_DT_"^NSC^^P^3;VISTA HEALTH CARE^C^^^C^1^^NSC^","LIST^ORQQPL3: Inactive entry")
  Q
  ;
 USERLST ;
  N ULST
  S ULST=$$GETUSLST^ORQQPL3(DUZ,"")
- D CHKEQ^XTMUNIT(LSTIEN,ULST,"GETUSLST^ORQQPL3: Current user's list")
+ D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Current user's list")
  S ULST=$$GETUSLST^ORQQPL3(0,"")
- D CHKEQ^XTMUNIT(LSTIEN,ULST,"GETUSLST^ORQQPL3: Invalid user and clinic") ;Returns user's list because GETUSLST ignores ORDUZ
+ D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Invalid user and clinic") ;Returns user's list because GETUSLST ignores ORDUZ
  S ULST=$$GETUSLST^ORQQPL3("",GMPCLIN)
- D CHKEQ^XTMUNIT(LSTIEN,ULST,"GETUSLST^ORQQPL3: Clinic's list")
+ D CHKEQ^%ut(LSTIEN,ULST,"GETUSLST^ORQQPL3: Clinic's list")
  Q
  ;
 CTG ;
  N RET,RET1
  D CAT^ORQQPL3(.RET,DUZ,+GMPCLIN)
  S RET1=CATIEN_"^DIABETES"_DT_"^1"
- D CHKEQ^XTMUNIT(RET1,$G(RET(1)),"CAT^ORQQPL3: User's category list")
+ D CHKEQ^%ut(RET1,$G(RET(1)),"CAT^ORQQPL3: User's category list")
  Q
  ;
 PROB ;
  N RET,RET1
  D PROB^ORQQPL3(.RET,+CATIEN)
  S RET1="33572^Diabetes Insipidus" ;^253.5^875~^ICD9("
- D CHKTF^XTMUNIT($G(RET(1))[RET1,"PROB^ORQQPL3: List details")
+ D CHKTF^%ut($G(RET(1))[RET1,"PROB^ORQQPL3: List details")
  Q
  ;
 XTENT ;

@@ -2,7 +2,7 @@ ZZRGUT4 ;RGI/VSL - Unit Tests - Problem List ;4/24/12
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1;
  Q:$T(^GMPLAPI2)=""
  TSTART
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUT4")
+ I $T(EN^%ut)'="" D EN^%ut("ZZRGUT4")
  TROLLBACK
  Q
  ;
@@ -55,108 +55,108 @@ ADDLIST(RETURN) ;
 GETULST ;
  N RETURN
  S RET=$$GETULST^GMPLAPI6(.RETURN)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - USER",RETURN(0),"INVPARAM - USER expected")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - USER",RETURN(0),"INVPARAM - USER expected")
  ;
  K RETURN
  S RET=$$GETULST^GMPLAPI6(.RETURN,USRLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return.")
- D CHKEQ^XTMUNIT("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected")
+ D CHKEQ^%ut(0,RET,"Incorrect return.")
+ D CHKEQ^%ut("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected")
  ;
  K RETURN
  S RET=$$GETULST^GMPLAPI6(.RETURN,DUZ)
- D CHKEQ^XTMUNIT(1,RET,"Incorrect return.")
- D CHKEQ^XTMUNIT($P($G(^VA(200,DUZ,125)),U,2),+RETURN,"Incorrect assigned list")
+ D CHKEQ^%ut(1,RET,"Incorrect return.")
+ D CHKEQ^%ut($P($G(^VA(200,DUZ,125)),U,2),+RETURN,"Incorrect assigned list")
  Q
  ;
 GETCLST ;
  N RETURN
  S RET=$$GETCLST^GMPLAPI6(.RETURN)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPCLIN",RETURN(0),"INVPARAM - GMPCLIN expected")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPCLIN",RETURN(0),"INVPARAM - GMPCLIN expected")
  ;
  K RETURN
  S RET=$$GETCLST^GMPLAPI6(.RETURN,USRLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return.")
- D CHKEQ^XTMUNIT("LOCNFND",$P(RETURN(0),U,1),"PROVNFND expected")
+ D CHKEQ^%ut(0,RET,"Incorrect return.")
+ D CHKEQ^%ut("LOCNFND",$P(RETURN(0),U,1),"PROVNFND expected")
  ;
  K RETURN
  S RET=$$GETCLST^GMPLAPI6(.RETURN,LOC)
- D CHKEQ^XTMUNIT(1,RET,"Incorrect return.")
- D CHKEQ^XTMUNIT($O(^GMPL(125,"C",+LOC,0)),+RETURN,"Incorrect assigned list")
+ D CHKEQ^%ut(1,RET,"Incorrect return.")
+ D CHKEQ^%ut($O(^GMPL(125,"C",+LOC,0)),+RETURN,"Incorrect assigned list")
  Q
  ;
 VALLIST ;
  NEW RET,RETURN
  S RET=$$VALLIST^GMPLAPI6(.RETURN)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
  ;
  K RETURN
  S RET=$$VALLIST^GMPLAPI6(.RETURN,LSTLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
  ;
  K RETURN
  S RET=$$VALLIST^GMPLAPI6(.RETURN,LSTLAST)
- D CHKEQ^XTMUNIT(1,RET,"Incorrect return")
- D CHKEQ^XTMUNIT(1,RETURN,"Incorrect list validation result.")
+ D CHKEQ^%ut(1,RET,"Incorrect return")
+ D CHKEQ^%ut(1,RETURN,"Incorrect list validation result.")
  ;
  Q
  ;
 ASSUSR ;
  N RET,RETURN
  S RET=$$ASSUSR^GMPLAPI6(.RETURN)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
  ;
  K RET,RETURN
  S RET=$$ASSUSR^GMPLAPI6(.RETURN,LSTLAST)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPLUSER",RETURN(0),"INVPARAM - GMPLUSER expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPLUSER",RETURN(0),"INVPARAM - GMPLUSER expected.")
  ;
  K RET,RETURN
  S RET=$$ASSUSR^GMPLAPI6(.RETURN,LSTLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
  ;
  K RET,RETURN
  S RET=$$ASSUSR^GMPLAPI6(.RETURN,LSTLAST,USRLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected.")
  ;
  K RET,RETURN
  S RET=$$ASSUSR^GMPLAPI6(.RETURN,LSTLAST,DUZ)
- D CHKEQ^XTMUNIT(1,RET,"Incorrect return")
- D CHKEQ^XTMUNIT($P(^VA(200,DUZ,125),U,2),LSTLAST,"Incorrect user assigned list.")
+ D CHKEQ^%ut(1,RET,"Incorrect return")
+ D CHKEQ^%ut($P(^VA(200,DUZ,125),U,2),LSTLAST,"Incorrect user assigned list.")
  ;
  Q
  ;
 REMUSR ;
  N RET,RETURN
  S RET=$$REMUSR^GMPLAPI6(.RETURN)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPLLST",RETURN(0),"INVPARAM - GMPLLST expected.")
  ;
  K RET,RETURN
  S RET=$$REMUSR^GMPLAPI6(.RETURN,LSTLAST)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("INVPARAM^Invalid parameter value - GMPLUSER",RETURN(0),"INVPARAM - GMPLUSER expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("INVPARAM^Invalid parameter value - GMPLUSER",RETURN(0),"INVPARAM - GMPLUSER expected.")
  ;
  K RET,RETURN
  S RET=$$REMUSR^GMPLAPI6(.RETURN,LSTLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("LISTNFND",$P(RETURN(0),U,1),"LISTNFND expected.")
  ;
  K RET,RETURN
  S RET=$$REMUSR^GMPLAPI6(.RETURN,LSTLAST,USRLAST+1)
- D CHKEQ^XTMUNIT(0,RET,"Incorrect return")
- D CHKEQ^XTMUNIT("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected.")
+ D CHKEQ^%ut(0,RET,"Incorrect return")
+ D CHKEQ^%ut("PROVNFND",$P(RETURN(0),U,1),"PROVNFND expected.")
  ;
  K RET,RETURN
  S RET=$$REMUSR^GMPLAPI6(.RETURN,LSTLAST,DUZ)
- D CHKEQ^XTMUNIT(1,RET,"Incorrect return")
- D CHKEQ^XTMUNIT($P(^VA(200,DUZ,125),U,2),"","Incorrect user assigned list.")
+ D CHKEQ^%ut(1,RET,"Incorrect return")
+ D CHKEQ^%ut($P(^VA(200,DUZ,125),U,2),"","Incorrect user assigned list.")
  ;
  Q
  ;

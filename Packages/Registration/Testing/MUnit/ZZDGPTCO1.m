@@ -1,8 +1,8 @@
 ZZDGPTCO1 ;kitware/JPS - demo code for a unit test DGPTCO1 routine ;5/10/2012  13:00
  ;;1.0;UNIT TEST;;Apr 19, 2012;Build 1
  ; makes it easy to run tests simply by running this routine and
- ; insures that XTMUNIT will be run only where it is present
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZDGPTCO1")
+ ; insures that %ut will be run only where it is present
+ I $T(EN^%ut)'="" D EN^%ut("ZZDGPTCO1")
  Q
  ;
 STARTUP ; optional entry point
@@ -32,7 +32,7 @@ CHKCHKCUR; Unit test CHKCUR tag in DGPTCO1 routine using a global that will caus
  ;
  TSTART
  D GETDGIEN
- D CHKEQ^XTMUNIT(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
+ D CHKEQ^%ut(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
  S NEWDGIEN=$G(DGIEN)+1
  K ^DG(45.86,"AC",1,DGIEN) S ^DG(45.86,"AC",0,DGIEN)=""
  S ^DG(45.86,"AC",1,NEWDGIEN)="" S ^DG(45.86,"B",3070930,NEWDGIEN)=""
@@ -40,7 +40,7 @@ CHKCHKCUR; Unit test CHKCUR tag in DGPTCO1 routine using a global that will caus
  W ! W "----------------------------------------------",!
  N DGIEN
  S DGIEN=$S($D(^DG(45.86,+$O(^DG(45.86,"AC",1,0)),0)):+^(0),1:"") W DGIEN,!
- S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^XTMUNIT(23,$G(DGIEN),"Return of New DGIEN doesn't match")
+ S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^%ut(23,$G(DGIEN),"Return of New DGIEN doesn't match")
  S DGCLOSE=$P($G(^DG(45.86,NEWDGIEN,0)),U,2) W DGCLOSE,!
  S DGACT=$P($G(^DG(45.86,NEWDGIEN,0)),U,4) W DGACT,!
  W "-------------------------------------------",!
@@ -54,7 +54,7 @@ CHKCHKCUR2 ; Test CHKCUR tag in DGPTCO1 routine with a new global that will caus
  ;
  TSTART
  D GETDGIEN
- D CHKEQ^XTMUNIT(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
+ D CHKEQ^%ut(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
  S NEWDGIEN=$G(DGIEN)+1
  K ^DG(45.86,"AC",1,DGIEN) S ^DG(45.86,"AC",0,DGIEN)=""
  S ^DG(45.86,"AC",1,NEWDGIEN)="" S ^DG(45.86,"B",3070931,NEWDGIEN)=""
@@ -62,7 +62,7 @@ CHKCHKCUR2 ; Test CHKCUR tag in DGPTCO1 routine with a new global that will caus
  W ! W "----------------------------------------------",!
  N DGIEN
  S DGIEN=$S($D(^DG(45.86,+$O(^DG(45.86,"AC",1,0)),0)):+^(0),1:"") W DGIEN,!
- S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^XTMUNIT(23,$G(DGIEN),"Return of New DGIEN doesn't match")
+ S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^%ut(23,$G(DGIEN),"Return of New DGIEN doesn't match")
  S DGCLOSE=$P($G(^DG(45.86,NEWDGIEN,0)),U,2) W DGCLOSE,!
  S DGACT=$P($G(^DG(45.86,NEWDGIEN,0)),U,4) W DGACT,!
  W "-------------------------------------------",!!
@@ -76,7 +76,7 @@ CHKCHKCUR3 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  ;
  TSTART
  D GETDGIEN
- D CHKEQ^XTMUNIT(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
+ D CHKEQ^%ut(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
  S NEWDGIEN=$G(DGIEN)+1
  K ^DG(45.86,"AC",1,DGIEN) S ^DG(45.86,"AC",0,DGIEN)=""
  S ^DG(45.86,"AC",1,NEWDGIEN)="" S ^DG(45.86,"B",3070931,NEWDGIEN)=""
@@ -84,7 +84,7 @@ CHKCHKCUR3 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  W ! W "----------------------------------------------",!
  N DGIEN
  S DGIEN=$S($D(^DG(45.86,+$O(^DG(45.86,"AC",1,0)),0)):+^(0),1:"") W DGIEN,!
- S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^XTMUNIT(23,$G(DGIEN),"Return of New DGIEN doesn't match")
+ S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^%ut(23,$G(DGIEN),"Return of New DGIEN doesn't match")
  S DGCLOSE=$P($G(^DG(45.86,NEWDGIEN,0)),U,2) W DGCLOSE,!
  S DGACT=$P($G(^DG(45.86,NEWDGIEN,0)),U,4) W DGACT,!
  W "-------------------------------------------",!
@@ -98,7 +98,7 @@ CHKCHKCUR4 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  ;
  TSTART
  D GETDGIEN
- D CHKEQ^XTMUNIT(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
+ D CHKEQ^%ut(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
  S NEWDGIEN=$G(DGIEN)+1
  K ^DG(45.86,"AC",1,DGIEN) S ^DG(45.86,"AC",0,DGIEN)=""
  S ^DG(45.86,"AC",1,NEWDGIEN)="" S ^DG(45.86,"B",3101231,NEWDGIEN)=""
@@ -106,7 +106,7 @@ CHKCHKCUR4 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  W ! W "----------------------------------------------",!
  N DGIEN
  S DGIEN=$S($D(^DG(45.86,+$O(^DG(45.86,"AC",1,0)),0)):+^(0),1:"") W DGIEN,!
- S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^XTMUNIT(23,$G(DGIEN),"Return of New DGIEN doesn't match")
+ S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^%ut(23,$G(DGIEN),"Return of New DGIEN doesn't match")
  S DGCLOSE=$P($G(^DG(45.86,NEWDGIEN,0)),U,2) W DGCLOSE,!
  S DGACT=$P($G(^DG(45.86,NEWDGIEN,0)),U,4) W DGACT,!
  W "-------------------------------------------",!
@@ -120,7 +120,7 @@ CHKCHKCUR5 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  ;
  TSTART
  D GETDGIEN
- D CHKEQ^XTMUNIT(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
+ D CHKEQ^%ut(22,$G(DGIEN),"Return of Original GETDGIEN doesn't match")
  S NEWDGIEN=$G(DGIEN)+1
  K ^DG(45.86,"AC",1,DGIEN) S ^DG(45.86,"AC",0,DGIEN)=""
  S ^DG(45.86,"AC",1,NEWDGIEN)="" S ^DG(45.86,"B",3101232,NEWDGIEN)=""
@@ -128,7 +128,7 @@ CHKCHKCUR5 ;  Test CHKCUR tag in DGPTCO1 routine with a new global that will cau
  W ! W "----------------------------------------------",!
  N DGIEN
  S DGIEN=$S($D(^DG(45.86,+$O(^DG(45.86,"AC",1,0)),0)):+^(0),1:"") W DGIEN,!
- S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^XTMUNIT(23,$G(DGIEN),"Return of New DGIEN doesn't match")
+ S DGIEN=$O(^DG(45.86,"B",+$G(DGIEN),0)) W DGIEN,! D CHKEQ^%ut(23,$G(DGIEN),"Return of New DGIEN doesn't match")
  S DGCLOSE=$P($G(^DG(45.86,NEWDGIEN,0)),U,2) W DGCLOSE,!
  S DGACT=$P($G(^DG(45.86,NEWDGIEN,0)),U,4) W DGACT,!
  W "-------------------------------------------",!

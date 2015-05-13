@@ -1,9 +1,9 @@
 ZZUTGETAPPT ;kitware/JNL - code for a unit test GETAPPT tag;07/10/12  11:15
  ;;1.0;UNIT TEST;;JUL 10, 2012;Build 1
  ; makes it easy to run tests simply by running this routine and
- ; insures that XTMUNIT will be run only where it is present
+ ; insures that %ut will be run only where it is present
  TSTART
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZUTGETAPPT")
+ I $T(EN^%ut)'="" D EN^%ut("ZZUTGETAPPT")
  TROLLBACK
  Q
  ;
@@ -38,20 +38,20 @@ CHKRCODE   ; Unit test to test the return code of $$GETAPPT^SDAMA201
  N RCODE S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,,,STRTDATE,ENDDATE,.RCODE,)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(105)
  D CHKERRCODE(106)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;second case is invalid patient id -1, this should just return -1 with error code 114
  S RCODE=0
  D GETAPPT^SDAMA201(INVLDPID,,,,,.RCODE,)
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(114)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;third case is patient id is NULL, this should return -1 and error code 102
  S RCODE=0
  D GETAPPT^SDAMA201(,,,,,.RCODE,)
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(102)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;fourth case is start date is after end date, this should just return -1, with error code 111
@@ -59,7 +59,7 @@ CHKRCODE   ; Unit test to test the return code of $$GETAPPT^SDAMA201
  S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,,,STRTDATE,ENDDATE,.RCODE,)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(111)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;fifth case is invalid fields list, should return -1 and set error code 103
@@ -67,7 +67,7 @@ CHKRCODE   ; Unit test to test the return code of $$GETAPPT^SDAMA201
  S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,FLDLIST,,,,.RCODE,)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(103)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;sixth case is invalid patient status filter list, should return -1 and set error code 112
@@ -75,7 +75,7 @@ CHKRCODE   ; Unit test to test the return code of $$GETAPPT^SDAMA201
  S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,,,,,.RCODE,PSTATLST)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(112)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;seventh case is invalid appointment status filter list, should return -1 and set error code 109
@@ -83,7 +83,7 @@ CHKRCODE   ; Unit test to test the return code of $$GETAPPT^SDAMA201
  S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,,APPTSLST,,,.RCODE,)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE)
  D CHKERRCODE(109)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ;eighth case is invalid appointment status list/patient status combination, should return -1 and set error code 113
@@ -130,12 +130,12 @@ CHKINVALDCOMB(APPTSLST,PSTATLIST) ; check the combination of patient status and 
  S RCODE=0
  D GETAPPT^SDAMA201(TESTPID1,,APPTSLST,,,.RCODE,PSTATLST)
  S ERRMSG="Expected rcode is -1"
- D CHKEQ^XTMUNIT(RCODE,-1,ERRMSG_" real: "_RCODE_" APP: "_APPTSLST_" PAT: "_PSTATLST)
+ D CHKEQ^%ut(RCODE,-1,ERRMSG_" real: "_RCODE_" APP: "_APPTSLST_" PAT: "_PSTATLST)
  D CHKERRCODE(113)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  Q
 CHKERRCODE(ERRCODE) ;
- D CHKTF^XTMUNIT($D(^TMP($J,"SDAMA201","GETAPPT","ERROR",ERRCODE))'=0,"Expecting Error Code is "_ERRCODE)
+ D CHKTF^%ut($D(^TMP($J,"SDAMA201","GETAPPT","ERROR",ERRCODE))'=0,"Expecting Error Code is "_ERRCODE)
  Q
  ;
 CHKPATAPPT ; unit test case to check the appointment date
@@ -145,28 +145,28 @@ CHKPATAPPT ; unit test case to check the appointment date
  ; first case strtdate/enddate
  S STRTDATE=$P(VISN0APPT1P1C1,".",1)
  D GETAPPT^SDAMA201(VISN0PAT1,,,STRTDATE,STRTDATE,.RCODE,)
- D CHKEQ^XTMUNIT(RCODE,1,"Should only have one appointment")
+ D CHKEQ^%ut(RCODE,1,"Should only have one appointment")
  D:RCODE=1 CHKAPPTDETAIL(1,)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ; fld list
  S RCODE=0
  S FLDLIST="1;3;4;12"
  D GETAPPT^SDAMA201(VISN0PAT1,FLDLIST,,STRTDATE,STRTDATE,.RCODE,)
- D CHKEQ^XTMUNIT(RCODE,1,"Should only have one appointment")
+ D CHKEQ^%ut(RCODE,1,"Should only have one appointment")
  D:RCODE=1 CHKAPPTDETAIL(1,.FLDLIST)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ; appointment status
  S RCODE=0
  S FLDLIST="3;4;12"
  D GETAPPT^SDAMA201(VISN0PAT1,,"R",STRTDATE,STRTDATE,.RCODE,)
- D CHKEQ^XTMUNIT(RCODE,1,"Should only have one appointment")
+ D CHKEQ^%ut(RCODE,1,"Should only have one appointment")
  D:RCODE=1 CHKAPPTDETAIL(1,.FLDLIST)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  ; patient status status
  S RCODE=0
  S FLDLIST="3;4;5;6;7;8;9"
  D GETAPPT^SDAMA201(VISN0PAT1,.FLDLIST,"R",STRTDATE,STRTDATE,.RCODE,"O")
- D CHKEQ^XTMUNIT(RCODE,1,"Should only have one appointment")
+ D CHKEQ^%ut(RCODE,1,"Should only have one appointment")
  D:RCODE=1 CHKAPPTDETAIL(1,.FLDLIST)
  I RCODE K ^TMP($J,"SDAMA201","GETAPPT")
  Q
@@ -175,7 +175,7 @@ CHKAPPTDETAIL(NODEID,FLDLIST) ;
  Q:$D(FLDLIST)=0  S I=0 F I=1:1:$L(FLDLIST,";") D CHKAPPTFLDDETAIL(NODEID,$P(FLDLIST,";",I))
  Q
 CHKAPPTFLDDETAIL(NODEID,FLDID) ;
- D CHKEQ^XTMUNIT(^TMP($J,"SDAMA201","GETAPPT",NODEID,FLDID),$TR($P(GETAPPTRST1,U,FLDID),";",U),"FIELD: "_FLDID_" RESULT MISMATCH!")
+ D CHKEQ^%ut(^TMP($J,"SDAMA201","GETAPPT",NODEID,FLDID),$TR($P(GETAPPTRST1,U,FLDID),";",U),"FIELD: "_FLDID_" RESULT MISMATCH!")
  Q
 XTROU ;
  ;;;SDAMA201

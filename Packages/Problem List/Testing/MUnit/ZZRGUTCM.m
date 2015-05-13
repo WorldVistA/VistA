@@ -49,11 +49,11 @@ CHKPRB(IFN,FIELDS,CONDT) ;
  S FLDNO=""
  S R=$$DETAIL(.DBFLDS,IFN)
  F  S FLDNO=$O(FIELDS(FLDNO)) Q:FLDNO=""  D
- . I FLDNO=.05 D CHKEQ^XTMUNIT($P(FIELDS(FLDNO),U,2),$P(DBFLDS(FLDNO),U,2),"Invalid value in field: "_FLDNO) Q
- . I (FLDNO=1.01)&(FIELDS(1.01)="") D CHKEQ^XTMUNIT("1^Unresolved",DBFLDS(FLDNO),"Invalid value in field: "_FLDNO) Q
+ . I FLDNO=.05 D CHKEQ^%ut($P(FIELDS(FLDNO),U,2),$P(DBFLDS(FLDNO),U,2),"Invalid value in field: "_FLDNO) Q
+ . I (FLDNO=1.01)&(FIELDS(1.01)="") D CHKEQ^%ut("1^Unresolved",DBFLDS(FLDNO),"Invalid value in field: "_FLDNO) Q
  . Q:FLDNO=10
- . D CHKEQ^XTMUNIT($P(FIELDS(FLDNO),U),$P(DBFLDS(FLDNO),U),"Invalid value in field: "_FLDNO)
- I $D(CONDT) D CHKEQ^XTMUNIT(CONDT,$P(DBFLDS(1.02),U))
+ . D CHKEQ^%ut($P(FIELDS(FLDNO),U),$P(DBFLDS(FLDNO),U),"Invalid value in field: "_FLDNO)
+ I $D(CONDT) D CHKEQ^%ut(CONDT,$P(DBFLDS(1.02),U))
  Q
  ;
 CHKEDLD(RET) ;
@@ -65,8 +65,8 @@ CHKEDLD(RET) ;
  . S FLD=$P(RET(I),$C(254),2)
  . S IVAL=$P($P(RET(I),$C(254),3),U)
  . S EVAL=$P($P(RET(I),$C(254),3),U,2)
- . I "^.01^.02^.12^.13^1.02^1.08^1.14^1.1^"[("^"_FLD_"^") D CHKEQ^XTMUNIT($P($G(ORG1(FLD)),U),IVAL,"EDLOAD^ORQQPL1: Field "_FLD_" ("_ST_")")
- . I "^.05^"[("^"_FLD_"^") D CHKEQ^XTMUNIT($P($G(ORG1(FLD)),U,2),EVAL,"EDLOAD^ORQQPL1: Field "_FLD_" ("_ST_")")
+ . I "^.01^.02^.12^.13^1.02^1.08^1.14^1.1^"[("^"_FLD_"^") D CHKEQ^%ut($P($G(ORG1(FLD)),U),IVAL,"EDLOAD^ORQQPL1: Field "_FLD_" ("_ST_")")
+ . I "^.05^"[("^"_FLD_"^") D CHKEQ^%ut($P($G(ORG1(FLD)),U,2),EVAL,"EDLOAD^ORQQPL1: Field "_FLD_" ("_ST_")")
  Q
  ;
 SETARY(ARRIN,ARROUT) ;
