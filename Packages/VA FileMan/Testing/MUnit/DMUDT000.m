@@ -140,13 +140,18 @@ DMUDT000 ; VEN/SMH - Unit Test Driver for Date Utilities; 04-MAR-2013
  D CHKEQ^%ut(Y,DT_"."_2215,"%DT=""T"" failing on T@22:15")
  S X="T@22:15:22" D ^%DT
  D CHKEQ^%ut(Y,-1,"%DT=""T"" NOT failing on T@22:15:22")
- S X="NOW" D ^%DT
- D CHKTF^%ut($L($P(Y,".",2))=4,"%DT=""T"" is returning seconds when it shouldn't")
+ ; Check the length of the time portion of the %DT output
+ S X="T@22:00" D ^%DT
+ D CHKTF^%ut($L($P(Y,".",2))=2,"%DT=""T"" didn't return 2 numbers after the decimal: "_Y)
+ S X="T@22:10" D ^%DT
+ D CHKTF^%ut($L($P(Y,".",2))=3,"%DT=""T"" didn't return 3 numbers after the decimal: "_Y)
+ S X="T@22:01" D ^%DT
+ D CHKTF^%ut($L($P(Y,".",2))=4,"%DT=""T"" didn't return 4 numbers after the decimal: "_Y)
  QUIT
  ;
 %DTS ; @TEST - %DT="TS" or "RS" - Return Seconds
  N %DT,X,Y
- S %DT="TS",X="NOW" D ^%DT
+ S %DT="TS",X="T@11:22:44" D ^%DT
  D CHKTF^%ut($L($P(Y,".",2))=6,"%DT=""TS"" is not returning seconds when it should")
  S %DT="RS",X="3/6/2016@11:22:44" D ^%DT
  D CHKEQ^%ut(Y,3160306.112244,"%DT=""RS"" is not returning seconds when it should")
