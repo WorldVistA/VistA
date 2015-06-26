@@ -410,6 +410,17 @@ browser.
 
 Figure 3 - Visual Cross Reference Web page.
 
+Source Code Highlighting
+*************************
+
+To enable the color highlighting of the M routine source page, one additional
+folder is necessary.  Copy the ``code_pretty_scripts`` directory from the
+``Utilities/Dox/Web`` folder into the output web page directory.  The
+folder contains code taken from the `google_code_prettify`_ repository which
+is released under the Apache 2.0 license.
+
+
 .. _`README.rst`: ./README.rst
+.. _`google_code_prettify`: https://github.com/google/code-prettify
 .. _`M Routine Analyzer`: https://github.com/jasonli2000/rgivistatools/tree/fileman_json
 .. _`Prepare M Repository`: ./populateMRepo.rst
