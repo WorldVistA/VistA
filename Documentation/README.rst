@@ -60,15 +60,23 @@ Caché
 
   * InstallCache_
 
-  To install a downloaded CACHE.DAT file as the source of the VistA MUMPS code
-  and follow the instructions here:
+  There are two methods available to import the VistA-M code into the Caché
+  environment.
 
-  * InstallCacheDat_
+        To install a downloaded CACHE.DAT file as the source of the VistA MUMPS code
+        and follow the instructions here:
 
-  For the instructions to import the MUMPS code from the OSEHRA VistA-M
-  Repository into a Caché instance, see
+        * InstallCacheDat_
 
-  * ImportCache_
+        Alternatively, for the instructions to import the MUMPS code from the
+        OSEHRA VistA-M Repository into a Caché instance, see:
+
+        * ImportCache_
+
+  Instructions for additional configuration of the Caché environment can be
+  found here:
+
+  * ConfigureCache_
 
 GT.M
 ````
@@ -148,6 +156,7 @@ directory and includes:
 .. _InstallCache: InstallCache.rst
 .. _InstallCacheDat: InstallCacheDat.rst
 .. _ImportCache: ImportCache.rst
+.. _ConfigureCache: ConfigureCache.rst
 .. _InstallGTM: InstallGTM.rst
 .. _ImportGTM: ImportGTM.rst
 .. _ObtainingTestingCode: ObtainingTestingCode.rst
