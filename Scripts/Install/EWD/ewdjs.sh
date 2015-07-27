@@ -22,9 +22,50 @@ if [[ -z $instance && $gtmver && $gtm_dist && $basedir ]]; then
     echo "The required variables are not set (instance, gtmver, gtm_dist)"
 fi
 
+# Options
+# instance = name of instance
+# used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
+# for guidance
+
+usage()
+{
+    cat << EOF
+    usage: $0 options
+
+    This script will automatically install EWD.js for GT.M
+
+    DEFAULTS:
+      Node Version = Latest 12.x
+
+    OPTIONS:
+      -h    Show this message
+      -v    Node Version to install
+
+EOF
+}
+
+while getopts ":hv:" option
+do
+    case $option in
+        h)
+            usage
+            exit 1
+            ;;
+        v)
+            nodever=$OPTARG
+            ;;
+    esac
+done
+
+echo "nodever $nodever"
+
+# Set defaults for options
+if [ -z $nodever ]; then
+    nodever="0.12"
+fi
+
 # Set the node version
-nodever="0.10"
-shortnodever="10"
+shortnodever=$(echo $nodever | cut -d'.' -f 2)
 
 # set the arch
 arch=$(uname -m | tr -d _)
@@ -58,7 +99,7 @@ rm -f ./install.sh
 cd $basedir
 
 # Install node
-su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default 0.10 && nvm use default"
+su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default $nodever && nvm use default"
 
 # Tell $basedir/etc/env our nodever
 echo "export nodever=$nodever" >> $basedir/etc/env

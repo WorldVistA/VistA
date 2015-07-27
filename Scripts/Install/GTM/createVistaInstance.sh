@@ -166,7 +166,13 @@ chown $instance:$instance $basedir/etc/env
 echo "source $basedir/etc/env" >> $basedir/.bashrc
 
 # Setup base gtmroutines
-gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
+if [[ $gtmver == *"6.2"* ]]; then
+    echo "Adding gtmroutines for GT.M >= 6.2"
+    gtmroutines="\$basedir/r/\$gtmver*($basedir/r)"
+else
+    echo "Adding gtmroutines for GT.M < 6.2"
+    gtmroutines="\$basedir/r/\$gtmver(\$basedir/r)"
+fi
 
 # 64bit GT.M can use a shared library instead of $gtm_dist
 if [ $gtm_arch == "x86_64" ]; then
