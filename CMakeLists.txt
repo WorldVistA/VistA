@@ -18,6 +18,7 @@ project(VISTA NONE)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake ${CMAKE_MODULE_PATH})
 
 include(CTest)
+cmake_policy(SET CMP0053 OLD)
 
 # We do not install anything, so hide the install prefix option.
 set(CMAKE_INSTALL_PREFIX "/" CACHE INTERNAL "This does not install")
