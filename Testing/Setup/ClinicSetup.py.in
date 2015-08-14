@@ -71,9 +71,14 @@ class Clinic(object):
         VistA.write('')
         VistA.wait('ABBREVIATION')
         VistA.write(self.cabr)
-        VistA.wait('FACILITY?')
-        VistA.write('')
-        VistA.wait('SERVICE:')
+        while True:
+          index = VistA.multiwait(['SERVICE','CLINIC MEETS','PATIENT FRIENDLY NAME','ALLOW DIRECT PATIENT','DISPLAY CLIN APPT'])
+          if index == 0:
+            break;
+          if index == 2:
+            VistA.write('')
+          else:
+            VistA.write('Y')
         VistA.write(self.cservice)
         VistA.wait('CLINIC?')
         VistA.write('N')
@@ -119,7 +124,10 @@ class Clinic(object):
         VistA.write('')
         VistA.wait('CHK OUT:')
         VistA.write('')
-        VistA.wait('NO-SHOWS:')
+        index = VistA.multiwait(['ALLOWABLE CONSECUTIVE NO-SHOWS','WORKLOAD VALIDATION'])
+        if index == 1:
+          VistA.write('')
+          VistA.wait('ALLOWABLE CONSECUTIVE NO-SHOWS')
         VistA.write('10')
         VistA.wait('BOOKING')
         VistA.write('365')
