@@ -229,7 +229,7 @@ if $developmentDirectories; then
     su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
     if [[ $gtmver == *"6.2"* ]]; then
         echo "Adding Development directories for GT.M 6.2"
-        perl -pi -e perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
+        perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
     else
         echo "Adding Development directories for GT.M <6.2"
         perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
