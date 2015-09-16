@@ -145,9 +145,6 @@ class SCActions (Actions):
             self.VistA.wait('NO OPEN SLOTS THEN')
             self.VistA.wait('DATE/TIME')
             self.VistA.write('')
-            self.VistA.wait('Select Action:')
-            self.VistA.write('Quit')
-            self.VistA.wait('')
         elif badtimeresp is 'overbook':
             self.VistA.wait('OVERBOOK')
             self.VistA.write('yes')
@@ -159,9 +156,6 @@ class SCActions (Actions):
             self.VistA.write('')
             self.VistA.wait('continue:')
             self.VistA.write('')
-            self.VistA.wait('Select Action:')
-            self.VistA.write('Quit')
-            self.VistA.wait('')
         else:
             self.VistA.wait('CORRECT')
             self.VistA.write('Yes')
@@ -171,9 +165,12 @@ class SCActions (Actions):
             self.VistA.write('')
             self.VistA.wait('continue:')
             self.VistA.write('')
-            self.VistA.wait('Select Action:')
-            self.VistA.write('Quit')
-            self.VistA.wait('')
+        index = self.VistA.multiwait(['Select Action:','APPOINTMENT LETTER'])
+        if index == 1:
+          self.VistA.write('No')
+          self.VistA.wait('Select Action')
+        self.VistA.write('Quit')
+        self.VistA.wait('')
 
     def makeapp_bypat(self, clinic, patient, datetime, loopnum=1, fresh=None, CLfirst=None, prevCO=None):
         '''Makes Appointment for specified user at specified time via Patient view'''
@@ -244,15 +241,15 @@ class SCActions (Actions):
                 self.VistA.write('')
                 self.VistA.wait('continue:')
                 self.VistA.write('')
-            if CLfirst is not None:
-                self.VistA.wait('Select Action:')
+            while True:
+              index = self.VistA.multiwait(['Select Action:','Select CLINIC:','APPOINTMENT LETTER'])
+              if index == 0:
                 self.VistA.write('?\r')
-            else:
-                self.VistA.wait('Select CLINIC:')
+                break
+              elif index == 1:
                 self.VistA.write('')
-                self.VistA.wait('Select Action:')
-                self.VistA.write('?\r')
-        self.VistA.wait('Select Action:')
+              elif index == 2:
+                self.VistA.write('No')
         self.VistA.write('Quit')
         self.VistA.wait('')
 
@@ -305,11 +302,6 @@ class SCActions (Actions):
         if 't+122' in datetime:
             self.VistA.wait('Add to EWL')
             self.VistA.write('Yes')
-            self.VistA.wait('continue')
-            self.VistA.write('')
-            self.VistA.wait('Select Action:')
-            self.VistA.write('Quit')
-            self.VistA.wait('')
         else:
             self.VistA.wait('LENGTH OF APPOINTMENT')
             self.VistA.write('15')
@@ -322,11 +314,14 @@ class SCActions (Actions):
             self.VistA.write('No')
             self.VistA.wait('OTHER INFO:')
             self.VistA.write('')
-            self.VistA.wait('continue:')
-            self.VistA.write('')
-            self.VistA.wait('Select Action:')
-            self.VistA.write('Quit')
-            self.VistA.wait('')
+        self.VistA.wait('continue')
+        self.VistA.write('')
+        index = self.VistA.multiwait(['Select Action:','APPOINTMENT LETTER'])
+        if index == 1:
+          self.VistA.write('No')
+          self.VistA.wait('Select Action')
+        self.VistA.write('Quit')
+        self.VistA.wait('')
 
 
     def set_mademographics(self, clinic, patient, datetime, dgrph, CLfirst=None):
