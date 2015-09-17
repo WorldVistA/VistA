@@ -1016,9 +1016,14 @@ def createClinic(VistA,name,abbrv,service):
   VistA.write('')
   VistA.wait('ABBREVIATION')
   VistA.write(abbrv)
-  VistA.wait('CLINIC MEETS')
-  VistA.write('Y')
-  VistA.wait('SERVICE')
+  while True:
+    index = VistA.multiwait(['SERVICE','CLINIC MEETS','PATIENT FRIENDLY NAME','ALLOW DIRECT PATIENT','DISPLAY CLIN APPT'])
+    if index == 0:
+      break;
+    if index == 2:
+      VistA.write('')
+    else:
+      VistA.write('Y')
   VistA.write(service)
   VistA.wait('NON-COUNT CLINIC')
   VistA.write('N')
@@ -1026,7 +1031,10 @@ def createClinic(VistA,name,abbrv,service):
   VistA.write('301\r\r')
   VistA.wait('TELEPHONE')
   VistA.write('555-555-1414\r\r\r\r\r\r\r\r\r\r\r')
-  VistA.wait('ALLOWABLE CONSECUTIVE NO-SHOWS')
+  index = VistA.multiwait(['ALLOWABLE CONSECUTIVE NO-SHOWS','WORKLOAD VALIDATION'])
+  if index == 1:
+    VistA.write('')
+    VistA.wait('ALLOWABLE CONSECUTIVE NO-SHOWS')
   VistA.write('0')
   VistA.wait('FUTURE BOOKING')
   VistA.write('90')
