@@ -40,7 +40,7 @@ from OSEHRAHelper import ConnectToMUMPS, PROMPT
 
 class Clinic(object):
     def __init__(self, cname, cabr, cstarttime, ctime, cdate, cslots,
-                 cservice, ctype, cxray, cprofiles, ccico, cproviders, cdiagnosis, cvarlen,
+                 cservice, ctype, cxray, cprofiles, ccico, cproviders, cdiagnosisICD10, cdiagnosis, cvarlen,
                  cstopcode):
         self.cname = cname
         self.cabr = cabr
@@ -55,6 +55,7 @@ class Clinic(object):
         self.ccico = ccico
         self.cproviders = cproviders
         self.cdiagnosis = cdiagnosis
+        self.cdiagnosisICD10 = cdiagnosisICD10
         self.cvarlen = cvarlen
         self.cstopcode = cstopcode
     def setup(self, VistA):
@@ -113,13 +114,25 @@ class Clinic(object):
         for diag in self.cdiagnosis:
             VistA.wait('Select DIAGNOSIS')
             VistA.write(diag)
-            if diag != '':
-                VistA.wait('OK')
+            index = VistA.multiwait(['\?\?','OK'])
+            if index == 1:
                 VistA.write('')
                 VistA.wait('new DIAGNOSIS')
                 VistA.write('Yes')
                 VistA.wait('DEFAULT DIAGNOSIS')
                 VistA.write('')
+            else:
+                for diag10 in self.cdiagnosisICD10:
+                    VistA.wait('Select DIAGNOSIS')
+                    VistA.write(diag)
+                    index = VistA.multiwait(['\?\?','OK'])
+                    if index == 1:
+                        VistA.write('')
+                        VistA.wait('new DIAGNOSIS')
+                        VistA.write('Yes')
+                        VistA.wait('DEFAULT DIAGNOSIS')
+                        VistA.write('')
+                break
         VistA.wait('Select DIAGNOSIS')
         VistA.write('')
         VistA.wait('CHK OUT:')
@@ -184,32 +197,32 @@ if VistA.type == 'cache':
 VistA.wait(PROMPT, 60)
 
 '''   (cname, cabr, cstarttime, ctime, cdate, cslots,
-       cservice, ctype, cxray, cprofiles, ccico, cproviders, cdiagnosis, cvarlen,
+       cservice, ctype, cxray, cprofiles, ccico, cproviders, cdiagnosisICD10,cdiagnosis, cvarlen,
        cstopcode):'''
 Clinic('Clinic1', 'C1', '0', '0000-0800', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '16',
-       'Medicine', 'Regular', 'Yes', '', 'YES', ['Alexander'], '', '',
+       'Medicine', 'Regular', 'Yes', '', 'YES', ['Alexander'], '', '', '',
        'Cardiology').setup(VistA)
 
 Clinic('Clinic2', 'C2', '8', '0800-1600', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '16',
-       'Medicine', 'Regular', 'Yes', '', 'YES', ['Alexander'], '', '',
+       'Medicine', 'Regular', 'Yes', '', 'YES', ['Alexander'], '', '', '',
        'Cardiology').setup(VistA)
 
 Clinic('CLINICX', 'CX', '16', '1600-2400', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '16',
-       'Medicine', 'Regular', 'Yes', '', 'NO', ['Alexander'], '', '',
+       'Medicine', 'Regular', 'Yes', '', 'NO', ['Alexander'], '', '', '',
        'Cardiology').setup(VistA)
 
 Clinic('CLInicA', 'CA', '0', '0000-0800', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '16',
-       'Medicine', 'Regular', 'Yes', '', 'NO', ['Alexander'], '', 'Yes',
+       'Medicine', 'Regular', 'Yes', '', 'NO', ['Alexander'], '', '', 'Yes',
        '303').setup(VistA)
 
 Clinic('CLInicB', 'CB', '0', '0000-0800', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '2',
-       'Surgery', 'Employee', 'Yes', '', 'YES', ['Smith', 'Alexander'], ['164.1', '391.8', '402.01'], 'yes',
+       'Surgery', 'Employee', 'Yes', '', 'YES', ['Smith', 'Alexander'], ['164.1', '391.8', '402.01'], ['C38.0', 'I01.8', 'I11.0'], 'yes',
        '435').setup(VistA)
 
 Clinic('CLInicC', 'CC', '0', '0000-0800', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '4',
-       'None', 'Research', 'Yes', '', '', ['Smith'], '', '',
+       'None', 'Research', 'Yes', '', '', ['Smith'], '', '', '',
        '435').setup(VistA)
 
 Clinic('CLInicD', 'CD', '0', '0000-0800', ['t', 't+1', 't+2', 't+3', 't+4', 't+5', 't+6', 't+7'], '4',
-       'Neurology', 'Service Connected', 'Yes', '', '', ['Smith', 'Alexander'], ['191.7'], '',
+       'Neurology', 'Service Connected', 'Yes', '', '', ['Smith', 'Alexander'], ['191.7'], ['C71.7'], '',
        'NEUROLOGY').setup(VistA)
