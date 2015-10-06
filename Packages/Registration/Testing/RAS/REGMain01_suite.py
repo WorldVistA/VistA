@@ -168,26 +168,7 @@ def reg_test004(test_suite_details):
         reg.lodger_checkout(ssn='323554567')
         reg.lodger_checkout(ssn='123455678')
         # DRG Calculation
-        reg.wwgeneric(dlist=[[['Option:'], ['bed control menu']],
-                              [['Option:'], ['DRG Calculation']],
-                              [['Effective Date:'], ['t']],
-                              [['Choose Patient from PATIENT file'], ['Yes']],
-                              [['PATIENT NAME:'], ['123455678']],
-                              [['Transfer to an acute care facility'], ['No']],
-                              [['Discharged against medical advice'], ['No']],
-                              [['PRINCIPAL diagnosis'], ['787.1']],
-                              [['YES//'], ['YES']],
-                              [['SECONDARY diagnosis'], ['786.50']],
-                              [['YES//'], ['YES']],
-                              [['SECONDARY diagnosis'], ['']],
-                              [['Operation/Procedure'], ['31.93']],
-                              [['Yes//'], ['YES']],
-                              [['Operation/Procedure'], ['']],
-                              [['Diagnosis Related Group: +[0-9]+', 'Average Length of Stay\(ALOS\): +[0-9.]+', 'Weight: +[0-9.]+', 'Low Day\(s\): +[0-9]+', 'High Days: +[0-9]+', '392- ESOPHAGITIS'], []],
-                              [['Effective Date'], ['']],
-                              [['Choose Patient from PATIENT file'], ['']],
-                              [['Select PATIENT NAME:'], ['']],
-                              [['Bed Control Menu'], ['']]])
+        reg.drg_calc(ssn='123455678',diag='787.1', ICD10diag='R12.',sdiag='786.50',ICD10sdiag='R07.9',oper='31.93',ICD10oper='0C7S0DZ')
         reg.signoff()
 
         test_driver.post_test_run(test_suite_details)

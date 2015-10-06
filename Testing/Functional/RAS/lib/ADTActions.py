@@ -632,7 +632,7 @@ class ADTActions (Actions):
         self.VistA.wait('Bed Control Menu')
         self.VistA.write('')
 
-    def drg_calc(self, ssn, diag, dnum, sdiag, sdnu, oper, onum):
+    def drg_calc(self, ssn, diag, ICD10diag, sdiag, ICD10sdiag, oper, ICD10oper):
         '''This method performs a DRG Calculation '''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
@@ -650,19 +650,30 @@ class ADTActions (Actions):
         self.VistA.write('No')
         self.VistA.wait('PRINCIPAL diagnosis')
         self.VistA.write(diag)
-        self.VistA.wait('STOP or Select')
-        self.VistA.write(dnum)
+        index = self.VistA.multiwait(['\?\?','OK'])
+        if index == 0:
+          self.VistA.write(ICD10diag)
+          self.VistA.wait('OK')
+        self.VistA.write('')
+        self.VistA.wait('POA FOR PRINCIPAL')
+        self.VistA.write('')
         self.VistA.wait('Enter SECONDARY diagnosis')
         self.VistA.write(sdiag)
-        self.VistA.wait('STOP or Select')
-        self.VistA.write(sdnum)
+        index = self.VistA.multiwait(['\?\?','OK'])
+        if index == 0:
+          self.VistA.write(ICD10diag)
+          self.VistA.wait('OK')
+        self.VistA.write('')
+        self.VistA.wait('POA FOR SECONDARY')
+        self.VistA.write('')
         self.VistA.wait('Enter SECONDARY diagnosis')
         self.VistA.write('')
         self.VistA.wait('Enter Operation/Procedure')
         self.VistA.write(oper)
-        self.VistA.multiwait(['CHOOSE','Select'])
-        self.VistA.write(onum)
-        self.VistA.wait('Enter Operation/Procedure')
+        index = self.VistA.multiwait(['\?\?','Enter Operation/Procedure'])
+        if index == 0:
+          self.VistA.write(ICD10oper)
+          self.VistA.wait('Enter Operation/Procedure')
         self.VistA.write('')
         self.VistA.wait('Effective Date')
         self.VistA.write('')

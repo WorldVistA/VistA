@@ -768,7 +768,7 @@ class SCActions (Actions):
         self.VistA.wait('Select Action:')
         self.VistA.write('')
 
-    def checkout(self, clinic, vlist1, vlist2, icd, mult=None):
+    def checkout(self, clinic, vlist1, vlist2, icd, icd10, mult=None):
         '''Checks a Patient out'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(clinic)
@@ -801,7 +801,10 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Diagnosis')
         self.VistA.write(icd)
-        self.VistA.wait('Ok')
+        index = self.VistA.multiwait(['No records','OK'])
+        if index == 0:
+          self.VistA.write(icd10)
+          self.VistA.wait('OK')
         self.VistA.write('Yes')
         self.VistA.wait('ENCOUNTER')
         self.VistA.write('Yes')
@@ -970,7 +973,7 @@ class SCActions (Actions):
         self.VistA.wait('Select Action:')
         self.VistA.write('')
 
-    def addedit(self, clinic, name, icd):
+    def addedit(self, clinic, name, icd, icd10):
         '''
         Functional but not complete. Exercises the Add/Edit menu but doesn't make any changes
         Same problem as checkout with the CPT codes and the MPI
@@ -1005,7 +1008,10 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('Diagnosis')
         self.VistA.write(icd)
-        self.VistA.wait('Ok')
+        index = self.VistA.multiwait(['No records','Ok'])
+        if index == 0:
+          self.VistA.write(icd10)
+          self.VistA.wait('OK')
         self.VistA.write('Yes')
         self.VistA.wait('ENCOUNTER')
         self.VistA.write('Yes')
