@@ -4,13 +4,20 @@
 .. role:: usertype
     :class: usertype
 
-The GT.M system is available for download from SourceForge_. This will download a compressed package which will need to be extracted before proceeding. The extraction can be in a location of your choice, as during the installation process you will be able to set where the installed files will be placed.  To have a common place where the GT.M files will be placed, we first create a folder within the /opt/ directory which will hold the files. The command used to create the folder is shown below.
+The GT.M system is available for download from SourceForge_. This will download
+a compressed package which will need to be extracted before proceeding. The
+extraction can be in a location of your choice, as during the installation
+process you will be able to set where the installed files will be placed.
+To have a common place where the GT.M files will be placed, we first create a
+folder within the /opt/ directory which will hold the files. The command used
+to create the folder is shown below.
 
 .. parsed-literal::
 
   $ :usertype:`sudo mkdir /opt/gtm`
 
-The next step is to unzip and untar the downloaded files, which is assumed to be in the Downloads directory.
+The next step is to unzip and untar the downloaded files, which is assumed to
+be in the Downloads directory.
 
 .. parsed-literal::
 
@@ -21,7 +28,12 @@ The next step is to unzip and untar the downloaded files, which is assumed to be
   bin               GENOUT.o                lke
   CHK2LEV.m         geteuid                 lke.hlp
 
-To install GT.M, run the configure.sh file from what was just extracted. Since there will be changes made to the system, this step must be run as root or using sudo privileges.  This will start an interactive series of questions which will set up the GT.M installation for the system. See below for an example of the start of the configuration script and the first prompt for the user to enter information.
+To install GT.M, run the configure.sh file from what was just extracted. Since
+there will be changes made to the system, this step must be run as root or
+using sudo privileges.  This will start an interactive series of questions
+which will set up the GT.M installation for the system. See below for an
+example of the start of the configuration script and the first prompt for the
+user to enter information.
 
 .. parsed-literal::
 
@@ -32,7 +44,11 @@ To install GT.M, run the configure.sh file from what was just extracted. Since t
 
   What user account should own the files? (bin)
 
-For the first two options of the configuration, the account and group that would own the GT.M files, accept the default values. At the prompt that asks \"Should execution of GT.M be restricted to this group?\"  enter n, which will let all users access the GT.M environment. See below for the entries that should be set at this point in the configuration script.
+For the first two options of the configuration, the account and group that
+would own the GT.M files, accept the default values. At the prompt that asks
+\"Should execution of GT.M be restricted to this group?\"  enter n, which will
+let all users access the GT.M environment. See below for the entries that
+should be set at this point in the configuration script.
 
 .. parsed-literal::
 
@@ -41,7 +57,14 @@ For the first two options of the configuration, the account and group that would
   Should execution of GT.M be restricted to this group? (y or n)  :usertype:`N`
   In what directory should GT.M be installed?
 
-The next prompt asks \"In what directory should GT.M be installed?\". Here enter a directory that will be used to hold all of the GT.M files, these instructions will put them into /opt/gtm. If the folder that you specify does not exist, you will get a message asking if you want to create it as part of the installation, you should answer yes. If you give it a path to an existing folder, it will warn you that some files may be overwritten during the installation process. Be sure to back up important files in the case that something is lost.
+The next prompt asks \"In what directory should GT.M be installed?\". Here
+enter a directory that will be used to hold all of the GT.M files, these
+instructions will put them into /opt/gtm. If the folder that you specify does
+not exist, you will get a message asking if you want to create it as part of
+the installation, you should answer yes. If you give it a path to an existing
+folder, it will warn you that some files may be overwritten during the
+installation process. Be sure to back up important files in the case that
+something is lost.
 
 .. parsed-literal::
 
@@ -49,7 +72,9 @@ The next prompt asks \"In what directory should GT.M be installed?\". Here enter
   Directory /opt/gtm exists.  If you proceed with this intallation then
   some files will be over-written.  Is it okay to proceed? (y or n)    :usertype:`Y`
 
-The next prompt asks the user if they want to install Unicode support. If you feel it will be necessary, it can be installed, but we will not do it in these instructions. Enter your answer to proceed.
+The next prompt asks the user if they want to install Unicode support. If you
+feel it will be necessary, it can be installed, but we will not do it in these
+instructions. Enter your answer to proceed.
 
 .. parsed-literal::
 
@@ -64,7 +89,10 @@ The next prompt asks the user if they want to install Unicode support. If you fe
 
   Do you want uppercase and lowercase version of the MUMPS routines? (y or n)
 
-Now that files are being installed, it asks if the user would like to keep both uppercase and lowercase versions of the MUMPS routines. We will answer no to maintain consistency between MUMPS and VistA. This will ensure that routine names for both environments are kept entirely in uppercase.
+Now that files are being installed, it asks if the user would like to keep
+both uppercase and lowercase versions of the MUMPS routines. We will answer no
+to maintain consistency between MUMPS and VistA. This will ensure that routine
+names for both environments are kept entirely in uppercase.
 
 .. parsed-literal::
 
@@ -90,9 +118,11 @@ Now that files are being installed, it asks if the user would like to keep both 
   %GDE-I-GDCREATE, Creating Global Directory file
           /opt/gtm/gtmhelp.gld
 
-When installing GT.M in a 64 bit environment, an additional prompt will be shown that asks if you
-want to remove the object files of the installed M Routines.  Removing these object files will make it necessary
-to add the mentioned shared library to the gtmroutines environment variable in lieu of the path to the GT.M distribution.
+When installing GT.M in a 64 bit environment, an additional prompt will be
+shown that asks if you want to remove the object files of the installed M
+Routines.  Removing these object files will make it necessary to add the
+mentioned shared library to the gtmroutines environment variable in lieu of the
+path to the GT.M distribution.
 
 .. parsed-literal::
 
@@ -100,7 +130,11 @@ to add the mentioned shared library to the gtmroutines environment variable in l
   Keep original .o object files (y or n)? :usertype:`N`
 
 
-Now the installation of GT.M is complete. The last prompt asks if the user would like to remove the files in the current directory now that the installation is finished. Answer the prompt with a y or n with your preference. The script will then exit returning to the standard terminal prompt.
+Now the installation of GT.M is complete. The last prompt asks if the user
+would like to remove the files in the current directory now that the
+installation is finished. Answer the prompt with a y or n with your
+preference. The script will then exit returning to the standard terminal
+prompt.
 
 .. parsed-literal::
 
@@ -112,11 +146,14 @@ Now the installation of GT.M is complete. The last prompt asks if the user would
 Creation of Folder Structure
 ----------------------------
 
-The next step is to create a directory that contains the folders and files needed to hold the VistA routines and globals that GT.M will use.
-We will create this folder in the /Downloads directory, but this is not the only location. This location will be used as the database
-directory for VistA. Make a folder called VistA. Inside of that VistA folder, create another folder named 'r' and one named 'o'. The
-'r' folder will hold the routines for VistA while the 'o' folder will contain the compiled version of these routine files in a '.o'
-extension. These steps are shown below.
+The next step is to create a directory that contains the folders and files
+needed to hold the VistA routines and globals that GT.M will use. We will
+create this folder in the /Downloads directory, but this is not the only
+location. This location will be used as the database directory for VistA. Make
+a folder called VistA. Inside of that VistA folder, create another folder named
+'r' and one named 'o'. The 'r' folder will hold the routines for VistA while
+the 'o' folder will contain the compiled version of these routine files in a
+'.o' extension. These steps are shown below.
 
 .. parsed-literal::
 
@@ -126,13 +163,29 @@ extension. These steps are shown below.
   ~/Downloads/VistA$  :usertype:`mkdir o`
   ~/Downloads/VistA$
 
-The next step is to define and create the database that will be used to hold the information needed in the VistA instance. The first step is to source the gtmprofile that was created in the installation of GT.M: source  /opt/gtm/gtmprofile
+The next step is to define and create the database that will be used to hold
+the information needed in the VistA instance. The first step is to source the
+gtmprofile that was created in the installation of GT.M: source
 
-Once this is done we need to alter two environment variables that were just created to point the routines and globals to where the OSEHRA code base will reside. This will set up the environment variables needed to utilize GT.M from the command line. We will be changing the gtmgbldir entry and the gtmroutines entry. These control where the GT.M instance will look for globals and routines when it is running. These entries are set using the export command from the Linux terminal. The gtmgbldir should be set to the path to the VistA folder that was created above followed by 'database'.  The gtmroutines will contain a series of paths that lead to the routine and the object files. The first is the path to the 'o' and 'r' folders within the VistA folder in a special format::
+  ``/opt/gtm/gtmprofile``
+
+Once this is done we need to alter two environment variables that were just
+created to point the routines and globals to where the OSEHRA code base will
+reside. This will set up the environment variables needed to utilize GT.M from
+the command line. We will be changing the gtmgbldir entry and the gtmroutines
+entry. These control where the GT.M instance will look for globals and routines
+when it is running. These entries are set using the export command from the
+Linux terminal. The gtmgbldir should be set to the path to the VistA folder
+that was created above followed by 'database'.  The gtmroutines will contain a
+series of paths that lead to the routine and the object files. The first is the
+path to the 'o' and 'r' folders within the VistA folder in a special format::
 
   /path/to/o(/path/to/r)
 
-The next path points to a specific path which depends on the type of system you are using. In a 64 bit GT.M install, the path should point to the libgtmutil.so file.  On a 32 bit environment, the final entry should be the path to the GT.M installation, in our case in the directory /opt/gtm/.
+The next path points to a specific path which depends on the type of system you
+are using. In a 64 bit GT.M install, the path should point to the libgtmutil.so
+file.  On a 32 bit environment, the final entry should be the path to the GT.M
+installation, in our case in the directory /opt/gtm/.
 
 An example usage of these commands is found below:
 
@@ -165,11 +218,14 @@ The next step is to run the GT.M Global Directory Editor (GDE), accessed via the
 
   GDE>
 
-This command starts the GDE and will change the prompt from the standard terminal one to \"GDE>\". Within the GDE environment, the default database location needs to be changed. Enter the command::
+This command starts the GDE and will change the prompt from the standard
+terminal one to ``GDE>``. Within the GDE environment, the default database
+location needs to be changed. Enter the command::
 
   change -s DEFAULT -f=/home/$user/Downloads/VistA/database
 
-replacing $user with your user name. After that command type exit and the changes will be applied.
+replacing $user with your user name. After that command type exit and the
+changes will be applied.
 
 .. parsed-literal::
 
@@ -181,11 +237,18 @@ replacing $user with your user name. After that command type exit and the change
           /home/osehra/Downloads/VistA/database.gld
   ~/Downloads$
 
-The next step is to create the database that is used from within the VistA folder. This is done using the mupip command. Mupip stands for MUMPS Peripheral Interchange Program. It is used to manage the database and the global directories. We will use mupip to create a database and the Database Structure Editor (DSE) to configure the database in one command.::
+The next step is to create the database that is used from within the VistA
+folder. This is done using the mupip command. Mupip stands for
+``MUMPS Peripheral Interchange Program``. It is used to manage the database and
+the global directories. We will use mupip to create a database and the
+Database Structure Editor (DSE) to configure the database in one command.::
 
   mupip create && dse change -f -key_max=2046 -rec=4096
 
-The \"mupip create\" is what actually creates the database while the \"dse change -f -key_max=1023 -rec=4096\" changes the maximum size of a key which contains a global reference. If this is left at the default value of 255, certain globals will not be able to be imported.
+The \"mupip create\" is what actually creates the database while the
+\"dse change -f -key_max=1023 -rec=4096\" changes the maximum size of a key
+which contains a global reference. If this is left at the default value of 255,
+certain globals will not be able to be imported.
 
 .. parsed-literal::
 
@@ -198,6 +261,29 @@ The \"mupip create\" is what actually creates the database while the \"dse chang
 
   ~/Downloads/VistA$
 
-Now, the environment is set up to import the routines and globals from the OSEHRA code base.
+Now, the environment is set up to import the routines and globals from the
+OSEHRA code base.
+
+Additional Environment Variables
+---------------------------------
+
+FIS-GT.M also utilizes environment variables to enable or disable other
+functionality.  The OSEHRA testing harness recommends that the following
+environment variables are also set:
+
+======================   ====================================== ============================
+ Environment Variable                   Value                              Notes
+======================   ====================================== ============================
+ gtm_zquit_anyway                         1                         GT.M 5.5-000 or later
+ gtm_zinterrupt               I $$JOBEXAM^ZU($ZPOSITION)
+ gtm_lvnullsubs                           2                         GT.M 5.4-000A or later
+ gtm_nocenable                           true                       GT.M 5.3-004A or later
+======================   ====================================== ============================
+
+The full list of environment variables can be found on the following page:
+`Environment Variables`_, with the exception of gtm_lvnullsubs which can be
+found on page 154 of `this pdf`_.
 
 .. _SourceForge: http://sourceforge.net/projects/fis-gtm/
+.. _`Environment Variables`: http://tinco.pair.com/bhaskar/gtm/doc/books/ao/UNIX_manual/ch03s02.html
+.. _`this pdf`: http://tinco.pair.com/bhaskar/gtm/doc/books/pg/UNIX_manual/pg_UNIX_screen.pdf
