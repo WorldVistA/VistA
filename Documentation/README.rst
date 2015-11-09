@@ -139,6 +139,17 @@ For more information regarding using Vagrant with cloud providers:
   * `Amazon Web Services`_
   * Rackspace_
 
+
+OSEHRA Technical Journal
+------------------------
+
+For information on the OSEHRA Certification Process or how to submit your work
+to the OSEHRA Technical Journal, see:
+
+* `OSEHRA Certification Standards`_
+* `Submitting to the OTJ`_
+* `Reviewing Submissions in the OSEHRA Technical Journal`_
+
 Troubleshooting
 ---------------
 
@@ -180,3 +191,6 @@ directory and includes:
 .. _`BUILD-Delphi`: ../BUILD-Delphi.rst
 .. _`code.osehra.org/dox`: http://code.osehra.org/dox/index.html
 .. _setupDox: setupDox.rst
+.. _`OSEHRA Certification Standards`: Standards/OSEHRACertificationStandards.rst
+.. _`Submitting to the OTJ`: submittingToOTJ.rst
+.. _`Reviewing Submissions in the OSEHRA Technical Journal`: reviewOTJSubmission.rst
