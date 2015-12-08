@@ -64,6 +64,11 @@ OSEHRASetup.setupPrimaryHFSDir(VistA,'${TEST_VISTA_SETUP_PRIMARY_HFS_DIRECTORY}'
 
 OSEHRASetup.configureNULLDevice(VistA)
 
+# Change the /dev/tty device (GTM-UNIX-CONSOLE) to set
+# SIGN-ON/SYSTEM DEVICE to be "Yes"
+
+OSEHRASetup.configureConsoleDevice(VistA)
+
 # Create and Christen the New Domain:
 # Enter the site name into the DOMAIN file then
 # christen the domain via the XMUDCHR routine.
