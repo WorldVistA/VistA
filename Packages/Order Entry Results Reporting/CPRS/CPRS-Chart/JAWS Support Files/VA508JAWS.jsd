@@ -1,0 +1,293 @@
+:function VA508Cast
+:Returns variant No Return Description
+:Synopsis Conversion functionality (cast of any type to any other type within reason)
+:Param variant/value No Description
+
+:function getListType
+:Returns string
+:Synopsis returns the type of list such as extended selection, multi-selection, listview, or listbox
+:Param int 
+
+:function isSpecialFocus
+:Returns int
+:Synopsis returns true if we are in a menu, the jaws cursor, invisible cursor, or user cursor is active or if we are in an hj dialog
+:Param int 
+
+:function watchCount
+:Synopsis Used in Debugging
+:Param string 
+
+:function VA508SendMessage
+:Returns int success or failure
+:Synopsis Send message wrapper with common message id for communicating with dll
+:Param handle/Window handle of dll window
+:Param int/wParam wParam
+:Param int/lParam lParam
+
+:function Get4KName
+:Returns string No Return Description
+:Synopsis Returns the window name up to 4k of the data window
+:Param handle/hWnd handle of the data window
+
+:function VA508GetStringValue
+:Returns string Returns the data for a given var property such as a caption
+:Synopsis Returns the data for a given var property such as caption, usually called after getApplicationData has set the data
+:Param string/VarName the var to get
+
+:function VA508GetApplicationData
+:Synopsis tell framework to set contents of data window so we can get that info using getStringValue
+:Param handle/hwnd Handle of window to query for
+:Param int/iQueryCode Query code
+
+:function VA508ResetGlobals
+:Synopsis Clears out some global variables
+
+:function VA508EnsureInitialized
+:Synopsis Makes sure the Script is working with the VA App
+:Description Before the script file tries to communicate with the VA application, it needs to make sure the VA application wants to try and communicate with it.
+
+:function VA508cacheGetVal
+:Returns int No Return Description
+:Synopsis Get a property value from the cache.
+:Param int/iQueryCode No Description
+:Param string/byRef No Description
+
+:function VA508CacheUpdate
+:Synopsis Update the property cache.  Called only by VA508getComponentProp() and VA508 ResetGlobals
+:Param handle/hwnd Handle of the window to cache for, or 0 to clear the cache
+
+:function VA508FieldNameFromQueryCode
+:Returns string No Return Description
+:Synopsis Return the framework field name corresponding to the given query code.
+:Param int/iQueryCode No Description
+
+:function VA508QueryCodeFromFieldName
+:Returns int No Return Description
+:Synopsis Return the query code corresponding to the given framework field name.
+:Param string/sFieldName No Description
+
+:function VA508GetComponentProp
+:Returns int 1 on success, 0 if the property is not found, -1 on error
+:Synopsis returns the requested property of a given window if one is available through the framework
+:Param handle/hWnd handle of control
+:Param string/sProp Name of property
+:Param int/iCacheHandling Whether to update cache, skip the cache, or just use the cache
+:Param string/byRef sVal The property value if found
+
+:function VA508CacheSetVals
+:Synopsis Update the property cache when the framework sends an event indicating property changes.
+:Param handle/hwnd No Description
+:Param int/iDataStatus No Description
+:Param string/sCaption No Description
+:Param string/sValue No Description
+:Param string/sControlType No Description
+:Param string/sState No Description
+:Param string/sInstructions No Description
+:Param string/sItemInstructions No Description
+
+:function VA508GetGridData
+:Returns int No Return Description
+:Synopsis Fills the VA508cacheGrid* globals.
+:Param variant/fromWhere No Description
+:Param int/dontCheck No Description
+
+:function VA508SayData
+:Returns int No Return Description
+:Synopsis function for actually speaking data for control when needed
+:Param handle/hwnd handle of window
+
+:function tvGetFocusItemExpandStateString
+:Returns string No Return Description
+:Synopsis Returns a string with open or closed representing the state of the currently focused tree view node
+:Param handle/hwnd No Description
+
+:function bxTestNum
+:Synopsis used for debugging purposes
+:Param int/n No Description
+
+:function autoCloseIfOpenCombo
+:Synopsis Automatically close a combo box if one is open when tab or shift+tab is pressed
+
+:function VA508TranslateProps
+:Returns int No Return Description
+:Synopsis Handles custom translations of types and states for output.
+:Param string/sTable No Description
+:Param int/iQueryCode No Description
+:Param string/byRef No Description
+:Param string/byRef No Description
+
+:function controlpropGet
+:Returns int No Return Description
+:Synopsis Handles all control property requests.
+:Param string/sOrigin No Description
+:Param string/whichProp No Description
+:Param string/byRef sVal
+:Param string 
+
+:function BraillePropHelper
+:Returns int No Return Description
+:Synopsis Logic for BrailleAddObject* functions to use.
+:Param string/whichProp No Description
+:Param int/nSubtype No Description
+
+:function BrailleClassFound
+:Returns int
+:Synopsis returns true if there was a custom braille class reclass found in the jcf for a custom framework control type
+:Param string 
+:Param int 
+
+:script f2editTreeNode
+:Synopsis Edits the current tree node's name if applicable
+:Description This command simulates a left click on the currently selected node of a Delphi treeView control, which can open the current node's name for editing.  On any other control, the key pressed is passed through to the application.
+
+:function VA508ChangeEvent
+:Synopsis called by framework dll to tell scripts when an event occurs that changes the property of the currently focused control
+:Param handle/hwnd No Description
+:Param int/iDataStatus No Description
+:Param string/sCaption, No Description
+:Param string/sValue, No Description
+:Param string/sControlType No Description
+:Param string/sState No Description
+:Param string/sInstructions No Description
+:Param string/sItemInstructions No Description
+
+:function AnnounceProp
+:Synopsis announce a property if one was set by the changeEvent and it hasn't already been canceled
+:Param int 
+:Param int 
+:Param int 
+
+:function AnnounceEvent
+:Synopsis helper function that is scheduled from changeEvent for speaking changes in framework properties
+
+:function ChangeDocumentWindow
+:Synopsis allows control tab to announce the correct tab when focus in on page tab control and style is set to button or flat button
+:Description allows control tab when pressed on a child object of a page tab to announce the change in page
+:Param int/direction No Description
+
+:function getSelectedTab
+:Returns string No Return Description
+:Synopsis gets the selected tab from a TTabControl when a child control is in focus
+
+:function SelectTab
+:Synopsis Used for TTabControl to activate a new tab using MSAA
+:Param int/direction No Description
+
+:function ClearSuppressFocusChange
+:Synopsis resets the global variable that suppress focus changes from being announced
+
+:function isSpinBox
+:Returns int No Return Description
+:Synopsis returns true if window with handle is a spinbox
+:Param handle/hwnd No Description
+
+:function getValue
+:Returns string No Return Description
+:Synopsis get value for element from framework, falls back on getObjectValue()
+
+:function SpeakCellUnit
+:Returns int No Return Description
+:Synopsis Speaks the aspects of a cell that are different from the last cell visited
+:Param string/str the direction we just moved
+
+:function getCurrentCellHeadersData
+:Returns string No Return Description
+:Synopsis returns the full string of col number, row number, column name, row name, and cell data for the current table cell
+
+:function UpdateBrailleClasses
+:Synopsis Called from autoStartEvent to load jcf settings into memory for braille reclassing
+:Returns int
+
+:function UpdateControlTypes
+:Synopsis Called from autoStartEvent to load jcf settings into memory for custom control type reclassing
+:Returns int
+
+:function ControlTypeFound
+:Returns int
+:Synopsis returns true of a new control type string is found in the jcf file to be spoken instead of the custom framework control type
+:Param string 
+:Param string 
+
+:function ToggleGridSpeechMode
+:Returns string
+:Synopsis toggles whether table headers are announced or not
+:Param int 
+
+:function ToggleGridBrailleMode
+:Returns string
+:Synopsis toggles whether table headers are shown in Braille or not
+:Param int 
+
+:function getAccName
+:Returns string Returns an msaa directly using msaa rather than getObjectName()
+:Synopsis returns an accessible name depending on context
+
+:function getAccValue
+:Returns string No Return Description
+:Synopsis returns an accessible value depending on context
+
+:function getAccState
+:Returns string Returns an msaa state string that can be spoken via msaa directly  rather than getObjectState()
+:Synopsis returns an accessible state depending on context
+
+:function lt_stringCast
+:Returns string
+:Param variant 
+
+:function lt_stringSegmentWithMultiCharDelim
+:Returns string
+:Param string 
+:Param string 
+:Param int 
+
+:function lt_canTryLVCalls
+:Returns int
+
+:function lt_getMSAARect
+:Returns int
+:Param object 
+:Param int 
+:Param int 
+:Param int 
+:Param int 
+:Param int 
+
+:function lt_move
+:Returns int
+:Param string 
+
+:function lt_clearSuppressHighlight
+
+:script moveToTopOfColumn
+:Returns undef
+
+:script moveToBottomOfColumn
+:Returns undef
+
+:script moveToStartOfRow
+:Returns undef
+
+:script moveToEndOfRow
+:Returns undef
+
+:script ltLeftClickCell
+:Synopsis Clicks the current cell with the left mouse button
+:Description This command simulates a left mouse click on the current cell
+
+:script ltRightClickCell
+:Synopsis Clicks the current cell with the right mouse button
+:Description This command simulates a right mouse click on the current cell
+
+:script ltLeftClickHeader
+:Synopsis Clicks the current cell's column header with the left mouse button
+:Description This command simulates a right mouse click on the current cell's column header
+
+:script ltRightClickHeader
+:Synopsis Clicks the current cell's column header with the right mouse button
+:Description This command simulates a right mouse click on the current cell's column header
+
+:script VA508SendCustomCommand
+:Synopsis Custom command for this application
+:Description This is a custom command for this application, implemented directly by the accessibility framework
+
+

@@ -97,6 +97,7 @@ type
     CodeInactive: boolean;
     Reqd: string;
     PromptMode: string;
+    PreviousPromptMode: string;
   end;
 
   TConsultTitles = class

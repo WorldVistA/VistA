@@ -663,21 +663,21 @@ begin
        1: DateValid := False;   //After the not after time
        0: DateValid := True;
     end;
-    //****************************
+    //******************i*********
 
-    TrackingMsg.Add('Checking Cert:');
-    TrackingMsg.Add('  CertDisplayName: '+CertDisplayName);
-    if isDisplayNameCorrect then
-      TrackingMsg.Add('  CertDisplayName is Valid')
-    else
-      TrackingMsg.Add('  CertDisplayName is NOT Valid');
-    TrackingMsg.Add('  Cert Serial Number: '+CertSerialNum);
-    TrackingMsg.Add('  Not After Date: '+NotAfterDate);
-    if Signing then
-      TrackingMsg.Add('  Is Signing Cert: true')
-    else
-      TrackingMsg.Add('  Is Signing Cert: false');
-    TrackingMsg.Add('  CertName: '+CertName);
+//    TrackingMsg.Add('Checking Cert:');
+//    TrackingMsg.Add('  CertDisplayName: '+CertDisplayName);
+//    if isDisplayNameCorrect then
+//      TrackingMsg.Add('  CertDisplayName is Valid')
+//    else
+//      TrackingMsg.Add('  CertDisplayName is NOT Valid');
+//    TrackingMsg.Add('  Cert Serial Number: '+CertSerialNum);
+//    TrackingMsg.Add('  Not After Date: '+NotAfterDate);
+//    if Signing then
+//      TrackingMsg.Add('  Is Signing Cert: true')
+//    else
+//      TrackingMsg.Add('  Is Signing Cert: false');
+//    TrackingMsg.Add('  CertName: '+CertName);
     if not (UsrAltName = '') then
     begin
       if isAltNameMatched then
@@ -742,7 +742,9 @@ begin
         Reason := InvalidDateLine
       else if not RevocationStatusOK then
         Reason := RevocationReason;
-    end;
+    end;    
+
+    if CertName = '' then Status := False;
 
     //Only get the next Cert if Status is false.
     if Status = False then  //--- Get the next certificate
@@ -895,7 +897,7 @@ begin
   SignMsgParam.dwInnerContentType := 0;
   SignMsgParam.pSigningCert := pCertContext;
   SignMsgParam.dwMsgEncodingType := c_ENCODING_TYPE;
-  SignMsgParam.HashAlgorithm.pszObjId := szOID_RSA_SHA1RSA; //szOID_RSA_MD2;
+  SignMsgParam.HashAlgorithm.pszObjId := szOID_RSA_SHA1RSA; //szOID_RSA_SHA256RSA; //szOID_RSA_SHA1RSA; //szOID_RSA_MD2;
   //Include the Signing Cert
   SignMsgParam.cMsgCert := 1;
   SignMsgParam.rgpMsgCert := @pCertContext;

@@ -138,6 +138,7 @@ procedure ForwardAlert(XQAID: string; Recip: string; FWDtype: string; Comment: s
 procedure RenewAlert(XQAID: string);
 function GetSortMethod: string;
 procedure SetSortMethod(Sort: string; Direction: string);
+procedure UpdateIndOrderAlerts();
 
 { Patient List calls }
 
@@ -192,6 +193,8 @@ function GetDFNFromICN(AnICN: string): string;
 { Encounter specific calls }
 
 function GetEncounterText(const DFN: string; Location: integer; Provider: Int64): TEncounterText;  //*DFN*
+function GetActiveICDVersion(ADate: TFMDateTime = 0): String;
+function GetICD10ImplementationDate: TFMDateTime;
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;
                                                          Thru: TFMDateTime = 0);
 procedure ListAdmitAll(Dest: TStrings; const DFN: string);
@@ -229,7 +232,7 @@ var
 begin
   Result := False;
   if (Length(x) < 9) or (Length(x) > 10) then Exit;
-  for i := 1 to 9 do if not (x[i] in ['0'..'9']) then Exit;
+  for i := 1 to 9 do if not CharInSet(x[i], ['0'..'9']) then Exit;
   Result := True;
 end;
 
@@ -239,7 +242,7 @@ var
 begin
   Result := False;
   if Length(x) <> 7 then Exit;
-  for i := 1 to 7 do if not (x[i] in ['0'..'9']) then Exit;
+  for i := 1 to 7 do if not CharInSet(x[i], ['0'..'9']) then Exit;
   Result := True;
 end;
 
@@ -257,7 +260,7 @@ var
   x: string;
 begin
   x := sCallV('ORWU DT', ['NOW']);
-  Result := StrToFloat(x);
+  Result := StrToFloatDef(x, 0.0);
 end;
 
 function MakeRelativeDateTime(FMDateTime: TFMDateTime): string;
@@ -468,6 +471,15 @@ end;
 function UnsignedOrderAlertFollowup(XQAID: string): string;
 begin
   Result := sCallV('ORWORB UNSIG ORDERS FOLLOWUP',[XQAID]);
+end;
+
+procedure UpdateIndOrderAlerts();
+begin
+  if Notifications.IndOrderDisplay then
+  begin
+    Notifications.IndOrderDisplay := False;
+    Notifications.Delete;
+  end;
 end;
 
 procedure UpdateExpiringMedAlerts(PatientDFN: string);
@@ -1174,6 +1186,22 @@ begin
     ProviderName := Piece(x, U, 4);    
 //    ProviderName := sCallV('ORWU1 NAMECVT', [Provider]);
  end;
+end;
+
+function  GetActiveICDVersion(ADate: TFMDateTime = 0): String;
+begin
+  Result := sCallV('ORWPCE ICDVER', [ADate]);
+end;
+
+function GetICD10ImplementationDate: TFMDateTime;
+var
+  impDt: String;
+begin
+  impDt := sCallV('ORWPCE I10IMPDT', [nil]);
+  if impDt <> '' then
+    Result := StrToFMDateTime(impDt)
+  else
+    Result := 3141001;  //Default to 10/01/2014
 end;
 
 procedure ListApptAll(Dest: TStrings; const DFN: string; From: TFMDateTime = 0;

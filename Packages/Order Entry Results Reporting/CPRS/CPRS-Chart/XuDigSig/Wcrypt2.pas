@@ -1,5 +1,5 @@
 //---------------------------------------------------------------------------
-// Copyright 2014 The Open Source Electronic Health Record Alliance
+// Copyright 2014 The Open Source Electronic Health Record Agent
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ interface
 
 uses SysUtils, Windows, Registry, Dialogs, Classes, Forms, Controls,
   StdCtrls;
-
+  
 const
   {
     Most Values from in the const were taken from
@@ -757,7 +757,7 @@ type
     //pStrongSignPara :PCCERT_STRONG_SIGN_PARA ;
     //dwStrongSignFlags: DWORD;
   end;
-
+  
   //CRYPT* function signatures
 
   function CryptAcquireContextA( pHProv: Pointer; pszContainer: PAnsiChar; pszProvider: PAnsiChar; dwProvType: DWORD; dwFlags: DWORD) : boolean; stdcall;
@@ -893,7 +893,7 @@ implementation
   function CertFindCertificateInStore; external CRYPT32 name 'CertFindCertificateInStore';
   function CertAddCertificateContextToStore; external CRYPT32 name 'CertAddCertificateContextToStore';
   function CertDeleteCertificateFromStore; external CRYPT32 name 'CertDeleteCertificateFromStore';
-  function CertCreateCertificateContext; external CRYPT32 name 'CertCreateCertificateContext';
+  function CertCreateCertificateContext; external CRYPT32 name 'CertCreateCertificateContext';  
   function CertGetCertificateChain; external CRYPT32 name 'CertGetCertificateChain';
   function CertGetIntendedKeyUsage; external CRYPT32 name 'CertGetIntendedKeyUsage';
   end.

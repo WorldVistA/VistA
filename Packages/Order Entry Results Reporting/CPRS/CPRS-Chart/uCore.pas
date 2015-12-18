@@ -6,7 +6,7 @@ unit uCore;
 
 interface
 
-uses SysUtils, Windows, Classes, Forms, ORFn, ORNet, rCore, uConst, ORClasses, uCombatVet;
+uses SysUtils, Windows, Classes, Forms, ORFn, rCore, uConst, ORClasses, uCombatVet;
 
 type
   TUser = class(TObject)
@@ -148,6 +148,7 @@ type
     FVisitCategory: Char;                        // A=ambulatory,T=Telephone,H=inpt,E=historic
     FStandAlone:    Boolean;                     // true if visit not related to appointment
     FNotifier:      IORNotifier;                 // Event handlers for location changes
+    FICD10ImplDate:  TFMDateTime;                 // ICD-10-CM Activation Date
     function GetLocationName: string;
     function GetLocationText: string;
     function GetProviderName: string;
@@ -165,18 +166,23 @@ type
     destructor Destroy; override;
     procedure Clear;
     procedure EncounterSwitch(Loc: integer; LocName, LocText: string; DT: TFMDateTime; vCat: Char);
+    procedure SwitchToSaved(ShowInfoBox: boolean);
+    procedure EmptySaved();
+    procedure CreateSaved(Reason: string);
+    function GetICDVersion: String;
     function NeedVisit: Boolean;
-    property DateTime:      TFMDateTime read FDateTime  write SetDateTime;
-    property Inpatient:     Boolean     read FInpatient write SetInpatient;
-    property Location:      Integer     read FLocation  write SetLocation;
-    property LocationName:  string      read GetLocationName write FLocationName;
-    property LocationText:  string      read GetLocationText write FLocationText;
-    property Provider:      Int64       read FProvider  write SetProvider;
-    property ProviderName:  string      read GetProviderName;
-    property StandAlone:    Boolean     read FStandAlone write SetStandAlone;
-    property VisitCategory: Char        read GetVisitCategory write SetVisitCategory;
-    property VisitStr:      string      read GetVisitStr;
-    property Notifier:      IORNotifier read FNotifier implements IORNotifier;
+    property DateTime:        TFMDateTime read FDateTime  write SetDateTime;
+    property Inpatient:       Boolean     read FInpatient write SetInpatient;
+    property Location:        Integer     read FLocation  write SetLocation;
+    property LocationName:    string      read GetLocationName write FLocationName;
+    property LocationText:    string      read GetLocationText write FLocationText;
+    property Provider:        Int64       read FProvider  write SetProvider;
+    property ProviderName:    string      read GetProviderName;
+    property StandAlone:      Boolean     read FStandAlone write SetStandAlone;
+    property VisitCategory:   Char        read GetVisitCategory write SetVisitCategory;
+    property VisitStr:        string      read GetVisitStr;
+    property Notifier:        IORNotifier read FNotifier implements IORNotifier;
+    property ICD10ImplDate: TFMDateTime read FICD10ImplDate;
   end;
 
   TChangeItem = class
@@ -266,12 +272,15 @@ type
     FList: TList;
     FCurrentIndex: Integer;
     FNotifyItem: TNotifyItem;
+    FNotifIndOrders: boolean;
     function GetDFN: string;  //*DFN*
     function GetFollowUp: Integer;
     function GetAlertData: string;
     function GetHighLightSection: String; //CB
+    function GetIndOrderDisplay: Boolean;
     function GetRecordID: string;
     function GetText: string;
+    procedure SetIndOrderDisplay(Value: Boolean);
   public
     constructor Create;
     destructor Destroy; override;
@@ -288,6 +297,7 @@ type
     property RecordID: string  read GetRecordID;
     property Text:     string  read GetText;
     property HighLightSection: String read GetHighLightSection; //cb
+    property IndOrderDisplay:  Boolean read GetIndOrderDisplay write SetIndOrderDisplay;
   end;
 
   TRemoteSite = class
@@ -382,6 +392,7 @@ var
   User: TUser;
   Patient: TPatient;
   Encounter: TEncounter = nil;
+  SavedEncounter: TEncounter = nil;
   Changes: TChanges;
   RemoteSites: TRemoteSiteList;
   RemoteReports: TRemoteReportList;
@@ -394,19 +405,24 @@ var
   TempEncounterText: string;
   TempEncounterDateTime: TFMDateTime;
   TempEncounterVistCat: Char;
-  //TempOutEncounterLoc: Integer;
-  //TempOutEncounterLocName: string;
+  SavedEncounterLoc: Integer; // used to Save Encounter Location when doing clinic meds/ivs
+  SavedEncounterLocName: string;
+  SavedEncounterText: string;
+  SavedEncounterDateTime: TFMDateTime;
+  SavedEncounterVisitCat: Char;
+  SavedEncounterReason: string; //used to store why it will be reverted to the saved value
 
 procedure NotifyOtherApps(const AppEvent, AppData: string);
 procedure FlushNotifierBuffer;
 procedure TerminateOtherAppNotification;
 procedure GotoWebPage(const URL: WideString);
+function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
 function AllowAccessToSensitivePatient(NewDFN: string; var AccessStatus: integer): boolean;
 
 
 implementation
 
-uses rTIU, rOrders, rConsults, uOrders;
+uses ORNet, rTIU, rOrders, rConsults, uOrders;
 
 type
   HlinkNavProc = function(pUnk: IUnknown; szTarget: PWideChar): HResult; stdcall;
@@ -539,8 +555,12 @@ begin
         //
         //Changed to SendMessageTimeout to prevent hang when other app unresponsive  (RV)
         AResult := nil;
+{$WARN SYMBOL_DEPRECATED OFF} // researched
+{$WARN SYMBOL_PLATFORM OFF}
         SendMessageTimeout(HWND_BROADCAST, MsgCode, WPARAM(Application.MainForm.Handle), LPARAM(AnAtom),
                 SMTO_ABORTIFHUNG or SMTO_BLOCK, timeout, AResult^);
+{$WARN SYMBOL_PLATFORM ON}
+{$WARN SYMBOL_DEPRECATED ON}
       finally
       // after all windows have processed the message, remove the text from the table
         GlobalDeleteAtom(AnAtom);
@@ -559,14 +579,18 @@ end;
 procedure TNotifyAppsThread.ResumeIfIdle;
 begin
   if(Suspended) then
+{$WARN SYMBOL_DEPRECATED OFF} // researched
     Resume;
+{$WARN SYMBOL_DEPRECATED ON}
 end;
 
 procedure TNotifyAppsThread.ResumeAndTerminate;
 begin
   Terminate;
   if(Suspended) then
+{$WARN SYMBOL_DEPRECATED OFF} // researched
     Resume;
+{$WARN SYMBOL_DEPRECATED ON}
 end;
 
 procedure TNotifyAppsThread.Execute;
@@ -576,7 +600,9 @@ begin
     if(QueuePending) then
       ProcessQueue(FALSE)
     else if(not Terminated) then
+{$WARN SYMBOL_DEPRECATED OFF} // researched
       Suspend;
+{$WARN SYMBOL_DEPRECATED ON}
   end;
   FRunning := FALSE;
 end;
@@ -820,6 +846,7 @@ constructor TEncounter.Create;
 begin
   inherited;
   FNotifier := TORNotifier.Create(Self, TRUE);
+  FICD10ImplDate := GetICD10ImplementationDate;
 end;
 
 destructor TEncounter.Destroy;
@@ -835,6 +862,36 @@ begin
  Encounter.LocationText := LocText;
  Encounter.VisitCategory := vCat;
  Encounter.DateTime := DT;;
+end;
+
+procedure TEncounter.CreateSaved(Reason: string);
+begin
+    SavedEncounterLoc := Encounter.Location;
+    SavedEncounterLocName := Encounter.LocationName;
+    SavedEncounterText := Encounter.LocationText;
+    SavedEncounterDateTime := Encounter.DateTime;
+    SavedEncounterVisitCat := Encounter.VisitCategory;
+    SavedEncounterReason := Reason;
+end;
+
+procedure TEncounter.EmptySaved();
+begin
+  SavedEncounterLoc := 0;
+  SavedEncounterLocName := '';
+  SavedEncounterText := '';
+  SavedEncounterDateTime := 0;
+  SavedEncounterVisitCat := #0;
+  SavedEncounterReason := '';
+end;
+
+procedure TEncounter.SwitchToSaved(ShowInfoBox: boolean);
+begin
+  if SavedEncounterLoc > 0 then
+  begin
+    if ShowInfoBox then InfoBox(SavedEncounterReason, 'Notice', MB_OK or MB_ICONWARNING);
+    EncounterSwitch(SavedEncounterLoc, SavedEncounterLocName, SavedEncounterText, SavedEncounterDateTime, SavedEncounterVisitCat);
+    EmptySaved();
+  end;
 end;
 
 procedure TEncounter.Clear;
@@ -883,6 +940,22 @@ function TEncounter.GetVisitStr: string;
 begin
   Result :=  IntToStr(FLocation) + ';' + FloatToStr(FDateTime) + ';' + VisitCategory;
   // use VisitCategory property to insure non-null character
+end;
+
+function TEncounter.GetICDVersion: String;
+var
+  cd: TFMDateTime;  //compare date
+begin
+  // if no Enc Dt or Historical, Hospitalization, or Daily Visit compare I-10 Impl dt with TODAY
+  if (FDateTime <= 0) or (FVisitCategory = 'E') or (FVisitCategory = 'H') then
+    cd := FMNow
+  else // otherwise compare I-10 Impl dt with Encounter date/time
+    cd := FDateTime;
+
+  if (FICD10ImplDate > cd) then
+    Result := 'ICD^ICD-9-CM'
+  else
+    Result := '10D^ICD-10-CM';
 end;
 
 function TEncounter.NeedVisit: Boolean;
@@ -1377,6 +1450,7 @@ begin
   FList := TList.Create;
   FCurrentIndex := -1;
   FActive := False;
+  FNotifIndOrders := False;
 end;
 
 destructor TNotifications.Destroy;
@@ -1408,6 +1482,7 @@ begin
   FActive := False;
   FCurrentIndex := -1;
   FNotifyItem := nil;
+  FNotifIndOrders := False;
 end;
 
 function TNotifications.GetDFN: string;  //*DFN*
@@ -1444,6 +1519,15 @@ begin
   if FNotifyItem <> nil then Result := FNotifyItem.HighLightSection else Result := '';
 end;
 
+function TNotifications.GetIndOrderDisplay: Boolean;
+begin
+  Result := FNotifIndOrders;
+end;
+
+procedure TNotifications.SetIndOrderDisplay(Value: Boolean);
+begin
+  FNotifIndOrders := Value;
+end;
 
 procedure TNotifications.Next;
 begin
@@ -1627,6 +1711,16 @@ procedure GotoWebPage(const URL: WideString);
 begin
   if(URLMonHandle <> 0) then
     HlinkNav(nil, PWideChar(URL));
+end;
+
+function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
+var
+  TimeMinutes : TDateTime;
+const
+  MinutesPerDay = 60 * 24;
+begin
+  TimeMinutes := Minutes / MinutesPerDay;
+  result := time1 - TimeMinutes;
 end;
 
 procedure LoadURLMon;

@@ -58,7 +58,7 @@ type
     FPCEListCodesProc: TPCEListCodesProc;
     FPCEItemClass: TPCEItemClass;
     FPCECode: string;
-    FSplitterMove: boolean;
+    FSplitterMove: Boolean;
     FProblems: TStringList;
     function GetCat: string;
     procedure UpdateNewItemStr(var x: string); virtual;
@@ -98,6 +98,8 @@ type
   end;
 
 procedure TfrmPCEBaseMain.lbSectionClick(Sender: TObject);
+var
+  SecItems: TStrings;
 begin
   inherited;
   ClearGrid;
@@ -108,7 +110,10 @@ begin
     lblList.Caption := StringReplace(lbSection.DisplayText[lbSection.ItemIndex],
       '&', '&&', [rfReplaceAll] );
   if (lbSection.DisplayText[lbSection.ItemIndex] = DX_PROBLEM_LIST_TXT) then
-    FastAssign(lbxSection.Items, FProblems);
+  begin
+    SecItems := lbxSection.Items;
+    FastAssign(SecItems, FProblems);
+  end;
 end;
 
 procedure TfrmPCEBaseMain.lbSectionExit(Sender: TObject);
@@ -164,7 +169,7 @@ begin
   ClearGrid;
   SrchCode := (Sender as TButton).Tag;
   if(SrchCode <= LX_Threshold) then
-    LexiconLookup(Code, SrchCode)
+    LexiconLookup(Code, SrchCode, 0, False, '')
   else
   if(SrchCode = PCE_HF) then
     HFLookup(Code)
@@ -241,6 +246,7 @@ begin
           SCode := Piece(lbxSection.Items[j], U, 1);
           SNarr := Piece(lbxSection.Items[j], U, 2);
           if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
+//          if (Pos(APCEItem.Code, SCode) > 0) then
             lbxSection.Checked[j] := False;
         end;
       end;
@@ -346,9 +352,9 @@ procedure TfrmPCEBaseMain.CheckOffEntries;
 { TODO -oRich V. -cCode Set Versioning : Uncomment these lines to prevent acceptance of existing inactive DX codes. }
 const
   TX_INACTIVE_CODE1 = 'The diagnosis of "';
-  TX_INACTIVE_ICD_CODE = '" entered for this encounter' + #13#10 + 'contains an inactive ICD code of "';
-  TX_INACTIVE_SCT_CODE = '" entered for this encounter' + #13#10 + 'contains an inactive SNOMED CT code"';
-  TX_INACTIVE_CODE3 = '" as of the encounter date, and will be removed.' + #13#10#13#10 +
+  TX_INACTIVE_ICD_CODE = '" entered for this encounter contains an inactive ICD code of "';
+  TX_INACTIVE_SCT_CODE = '" entered for this encounter contains an inactive SNOMED CT code';
+  TX_INACTIVE_CODE3 = ' as of the encounter date, and will be removed.' + #13#10#13#10 +
                           'Please select another diagnosis.';
   TC_INACTIVE_CODE = 'Diagnosis Contains Inactive Code';
 var
@@ -371,6 +377,7 @@ begin
           SCode := Piece(lbxSection.Items[j], U, 1);
           SNarr := Piece(lbxSection.Items[j], U, 2);
           if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
+//          if (Pos(APCEItem.Code, SCode) > 0) then
           begin
             if (CurCategory = 'Problem List Items') and ((Pos('#', Piece(lbxSection.Items[j], U, 4)) > 0) or
                (Pos('$', Piece(lbxSection.Items[j], U, 4)) > 0)) then
@@ -458,6 +465,7 @@ begin
     begin
       APCEItem := TPCEItem(lbGrid.Items.Objects[j]);
       if (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
+//      if (SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) then
       begin
         Found := TRUE;
         if(lbxSection.Checked[i]) then break;
@@ -538,6 +546,7 @@ begin
           SCode := Piece(lbxSection.Items[i], U, 1);
           SNarr := Piece(lbxSection.Items[i], U, 2);
           if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)then
+//          if (Pos(APCEItem.Code, SCode) > 0) then
           begin
             NewIdx := i;
             break;
@@ -581,6 +590,7 @@ begin
     begin
       APCEItem := TPCEItem(lbGrid.Items.Objects[i]);
       lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)) //(ACode = (Category + U + Code + U + Narrative));
+//      lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0)) //(ACode = (Category + U + Code + U + Narrative));
     end;
   finally
     FUpdatingGrid := FALSE;

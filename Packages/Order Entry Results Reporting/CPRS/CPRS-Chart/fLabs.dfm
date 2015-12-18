@@ -3,81 +3,81 @@ inherited frmLabs: TfrmLabs
   Top = 237
   HelpContext = 8000
   Caption = 'Laboratory Results Page'
-  ClientHeight = 927
-  ClientWidth = 879
+  ClientHeight = 753
+  ClientWidth = 714
   HelpFile = 'qnoback'
   OnDestroy = FormDestroy
-  ExplicitWidth = 887
-  ExplicitHeight = 959
-  PixelsPerInch = 120
-  TextHeight = 16
+  ExplicitWidth = 722
+  ExplicitHeight = 787
+  PixelsPerInch = 96
+  TextHeight = 13
   inherited shpPageBottom: TShape
-    Top = 921
-    Width = 879
-    ExplicitTop = 921
-    ExplicitWidth = 879
+    Top = 748
+    Width = 714
+    ExplicitTop = 748
+    ExplicitWidth = 714
   end
   inherited sptHorz: TSplitter
-    Height = 921
-    ExplicitHeight = 921
+    Height = 748
+    ExplicitHeight = 748
   end
   object Label1: TLabel [2]
-    Left = 177
-    Top = 108
+    Left = 144
+    Top = 88
     Width = 3
-    Height = 16
+    Height = 13
     Visible = False
   end
   object Label2: TLabel [3]
-    Left = 158
-    Top = 108
+    Left = 128
+    Top = 88
     Width = 3
-    Height = 16
+    Height = 13
     Visible = False
   end
   inherited pnlLeft: TPanel
-    Height = 921
-    Constraints.MinWidth = 46
-    ExplicitHeight = 921
+    Height = 748
+    Constraints.MinWidth = 37
+    ExplicitHeight = 748
     object Splitter1: TSplitter
       Left = 0
-      Top = 601
-      Width = 119
-      Height = 12
+      Top = 488
+      Width = 97
+      Height = 10
       Cursor = crVSplit
       Align = alBottom
       Color = clBtnFace
       ParentColor = False
       OnCanResize = Splitter1CanResize
-      ExplicitWidth = 146
+      ExplicitWidth = 79
     end
     object pnlLefTop: TPanel
       Left = 0
       Top = 0
-      Width = 119
-      Height = 601
+      Width = 97
+      Height = 488
       Align = alClient
       BevelOuter = bvNone
-      Constraints.MinWidth = 37
+      Constraints.MinWidth = 30
       TabOrder = 0
       object lblReports: TOROffsetLabel
         Left = 0
         Top = 0
-        Width = 119
-        Height = 23
+        Width = 97
+        Height = 19
         Align = alTop
         Caption = 'Lab Results'
         HorzOffset = 2
         Transparent = False
         VertOffset = 6
         WordWrap = False
-        ExplicitWidth = 146
+        ExplicitWidth = 79
       end
       object tvReports: TORTreeView
         Left = 0
-        Top = 23
-        Width = 119
-        Height = 578
+        Top = 19
+        Width = 97
+        Height = 469
         Align = alClient
         HideSelection = False
         Indent = 18
@@ -93,56 +93,56 @@ inherited frmLabs: TfrmLabs
     end
     object pnlLeftBottom: TPanel
       Left = 0
-      Top = 613
-      Width = 119
-      Height = 308
+      Top = 498
+      Width = 97
+      Height = 250
       Align = alBottom
       TabOrder = 1
       object lblQualifier: TOROffsetLabel
         Left = 1
         Top = 1
-        Width = 117
-        Height = 26
+        Width = 95
+        Height = 21
         Align = alTop
         HorzOffset = 3
         Transparent = True
         VertOffset = 4
         Visible = False
         WordWrap = False
-        ExplicitWidth = 144
+        ExplicitWidth = 77
       end
       object lblHeaders: TOROffsetLabel
         Left = 1
-        Top = 148
-        Width = 117
-        Height = 21
+        Top = 120
+        Width = 95
+        Height = 17
         Align = alTop
         HorzOffset = 2
         Transparent = False
         VertOffset = 2
         WordWrap = False
-        ExplicitWidth = 144
+        ExplicitWidth = 77
       end
       object lblDates: TOROffsetLabel
         Left = 1
-        Top = 129
-        Width = 117
-        Height = 19
+        Top = 105
+        Width = 95
+        Height = 15
         Align = alTop
         Caption = 'Date Range'
         HorzOffset = 2
         Transparent = False
         VertOffset = 2
         WordWrap = False
-        ExplicitWidth = 144
+        ExplicitWidth = 77
       end
       object lstQualifier: TORListBox
         Left = 1
-        Top = 169
-        Width = 117
-        Height = 138
+        Top = 137
+        Width = 95
+        Height = 112
         Align = alClient
-        ItemHeight = 16
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -155,11 +155,11 @@ inherited frmLabs: TfrmLabs
       end
       object lstHeaders: TORListBox
         Left = 1
-        Top = 68
-        Width = 117
-        Height = 61
+        Top = 55
+        Width = 95
+        Height = 50
         Align = alTop
-        ItemHeight = 16
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 1
@@ -172,11 +172,11 @@ inherited frmLabs: TfrmLabs
       end
       object lstDates: TORListBox
         Left = 1
-        Top = 169
-        Width = 117
-        Height = 138
+        Top = 137
+        Width = 95
+        Height = 112
         Align = alClient
-        ItemHeight = 16
+        ItemHeight = 13
         Items.Strings = (
           'S^Date Range...'
           '1^Today'
@@ -198,23 +198,23 @@ inherited frmLabs: TfrmLabs
       end
       object pnlOtherTests: TORAutoPanel
         Left = 1
-        Top = 27
-        Width = 117
-        Height = 41
+        Top = 22
+        Width = 95
+        Height = 33
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 5
         object bvlOtherTests: TBevel
-          Left = 4
-          Top = 38
-          Width = 110
-          Height = 3
+          Left = 3
+          Top = 31
+          Width = 90
+          Height = 2
         end
         object cmdOtherTests: TButton
-          Left = 14
-          Top = 5
-          Width = 92
-          Height = 31
+          Left = 11
+          Top = 4
+          Width = 75
+          Height = 25
           Caption = 'Other Tests'
           TabOrder = 0
           OnClick = cmdOtherTestsClick
@@ -223,39 +223,38 @@ inherited frmLabs: TfrmLabs
     end
   end
   inherited pnlRight: TPanel
-    Width = 755
-    Height = 921
-    Constraints.MinWidth = 37
+    Width = 613
+    Height = 748
+    Constraints.MinWidth = 30
     OnResize = pnlRightResize
-    ExplicitWidth = 755
-    ExplicitHeight = 921
+    ExplicitWidth = 613
+    ExplicitHeight = 748
     object sptHorzRight: TSplitter
       Left = 0
-      Top = 364
-      Width = 755
-      Height = 5
+      Top = 296
+      Width = 613
+      Height = 4
       Cursor = crVSplit
       Align = alTop
       Visible = False
       OnCanResize = sptHorzRightCanResize
-      ExplicitWidth = 754
     end
     object pnlRightBottom: TPanel
       Left = 0
-      Top = 369
-      Width = 755
-      Height = 527
+      Top = 300
+      Width = 613
+      Height = 428
       Align = alClient
       TabOrder = 0
       object Memo1: TMemo
         Left = 1
         Top = 1
-        Width = 753
-        Height = 24
+        Width = 611
+        Height = 19
         Align = alTop
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         Lines.Strings = (
@@ -270,14 +269,14 @@ inherited frmLabs: TfrmLabs
       end
       object memLab: TRichEdit
         Left = 1
-        Top = 25
-        Width = 753
-        Height = 501
+        Top = 20
+        Width = 611
+        Height = 407
         Align = alClient
         Color = clCream
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         ParentFont = False
@@ -291,17 +290,17 @@ inherited frmLabs: TfrmLabs
       end
       object WebBrowser1: TWebBrowser
         Left = 1
-        Top = 25
-        Width = 753
-        Height = 501
+        Top = 20
+        Width = 611
+        Height = 407
         TabStop = False
         Align = alClient
         TabOrder = 2
         OnDocumentComplete = WebBrowser1DocumentComplete
-        ExplicitWidth = 764
-        ExplicitHeight = 509
+        ExplicitWidth = 602
+        ExplicitHeight = 401
         ControlData = {
-          4C000000433E00006D2900000000000000000000000000000000000000000000
+          4C000000263F0000112A00000000000000000000000000000000000000000000
           000000004C000000000000000000000001000000E0D057007335CF11AE690800
           2B2E126208000000000000004C0000000114020000000000C000000000000046
           8000000000000000000000000000000000000000000000000000000000000000
@@ -310,68 +309,68 @@ inherited frmLabs: TfrmLabs
     end
     object pnlRightTop: TPanel
       Left = 0
-      Top = 55
-      Width = 755
-      Height = 309
+      Top = 45
+      Width = 613
+      Height = 251
       Align = alTop
       TabOrder = 1
       object bvlHeader: TBevel
         Left = 1
-        Top = 75
-        Width = 753
+        Top = 61
+        Width = 611
         Height = 1
         Align = alTop
-        ExplicitWidth = 752
+        ExplicitWidth = 612
       end
       object pnlHeader: TORAutoPanel
         Left = 1
         Top = 1
-        Width = 753
-        Height = 74
+        Width = 611
+        Height = 60
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         object lblDateFloat: TLabel
-          Left = 487
-          Top = 5
-          Width = 73
-          Height = 16
+          Left = 396
+          Top = 4
+          Width = 56
+          Height = 13
           Caption = 'lblDateFloat'
           Visible = False
         end
         object pnlWorksheet: TORAutoPanel
           Left = 0
           Top = 0
-          Width = 753
-          Height = 74
+          Width = 611
+          Height = 60
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 1
           object chkValues: TCheckBox
-            Left = 497
-            Top = 48
-            Width = 115
-            Height = 21
+            Left = 404
+            Top = 39
+            Width = 93
+            Height = 17
             Caption = 'Values'
             Enabled = False
             TabOrder = 5
             OnClick = chkValuesClick
           end
           object chk3D: TCheckBox
-            Left = 405
-            Top = 48
-            Width = 69
-            Height = 21
+            Left = 329
+            Top = 39
+            Width = 56
+            Height = 17
             Caption = '3D'
             Enabled = False
             TabOrder = 4
             OnClick = chk3DClick
           end
           object ragHorV: TRadioGroup
-            Left = 15
+            Left = 12
             Top = 0
-            Width = 262
-            Height = 44
+            Width = 213
+            Height = 36
             Caption = 'Table Format '
             Columns = 2
             ItemIndex = 0
@@ -382,19 +381,19 @@ inherited frmLabs: TfrmLabs
             OnClick = ragHorVClick
           end
           object chkAbnormals: TCheckBox
-            Left = 15
-            Top = 48
-            Width = 272
-            Height = 21
+            Left = 12
+            Top = 39
+            Width = 221
+            Height = 17
             Caption = 'Abnormal Results Only'
             TabOrder = 2
             OnClick = ragHorVClick
           end
           object ragCorG: TRadioGroup
-            Left = 310
+            Left = 252
             Top = 0
-            Width = 262
-            Height = 44
+            Width = 213
+            Height = 36
             Caption = 'Other Formats '
             Columns = 2
             ItemIndex = 0
@@ -405,10 +404,10 @@ inherited frmLabs: TfrmLabs
             OnClick = ragCorGClick
           end
           object chkZoom: TCheckBox
-            Left = 311
-            Top = 48
-            Width = 84
-            Height = 21
+            Left = 253
+            Top = 39
+            Width = 68
+            Height = 17
             Caption = 'Zoom'
             Enabled = False
             TabOrder = 3
@@ -418,45 +417,45 @@ inherited frmLabs: TfrmLabs
         object pnlGraph: TORAutoPanel
           Left = 0
           Top = 0
-          Width = 753
-          Height = 74
+          Width = 611
+          Height = 60
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 2
           object lblGraphInfo: TLabel
             Left = 0
-            Top = 58
-            Width = 753
-            Height = 16
+            Top = 47
+            Width = 611
+            Height = 13
             Align = alBottom
             Caption = 
               'To Zoom, hold down the mouse button while dragging an area to be' +
               ' enlarged.'
-            ExplicitWidth = 458
+            ExplicitWidth = 367
           end
           object chkGraph3D: TCheckBox
-            Left = 199
-            Top = 16
-            Width = 75
-            Height = 21
+            Left = 162
+            Top = 13
+            Width = 61
+            Height = 17
             Caption = '3D'
             TabOrder = 1
             OnClick = chkGraph3DClick
           end
           object chkGraphValues: TCheckBox
-            Left = 340
-            Top = 16
-            Width = 124
-            Height = 21
+            Left = 276
+            Top = 13
+            Width = 101
+            Height = 17
             Caption = 'Values'
             TabOrder = 2
             OnClick = chkGraphValuesClick
           end
           object chkGraphZoom: TCheckBox
-            Left = 59
-            Top = 16
-            Width = 119
-            Height = 21
+            Left = 48
+            Top = 13
+            Width = 97
+            Height = 17
             Caption = 'Zoom'
             TabOrder = 0
             OnClick = chkGraphZoomClick
@@ -465,34 +464,34 @@ inherited frmLabs: TfrmLabs
         object pnlButtons: TORAutoPanel
           Left = 0
           Top = 0
-          Width = 753
-          Height = 74
+          Width = 611
+          Height = 60
           Align = alClient
           BevelOuter = bvNone
           TabOrder = 0
           object lblMostRecent: TLabel
-            Left = 444
-            Top = 20
-            Width = 154
-            Height = 16
+            Left = 361
+            Top = 16
+            Width = 129
+            Height = 13
             Caption = 'Most Recent Lab Data'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
           end
           object lblSample: TLabel
             Left = 1
-            Top = 52
-            Width = 78
-            Height = 16
+            Top = 42
+            Width = 64
+            Height = 13
             Caption = 'Specimen: '
             Color = clWindow
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentColor = False
@@ -500,15 +499,15 @@ inherited frmLabs: TfrmLabs
           end
           object lblDate: TVA508StaticText
             Name = 'lblDate'
-            Left = 185
+            Left = 150
             Top = 2
             Width = 7
-            Height = 18
+            Height = 15
             Alignment = taCenter
             AutoSize = True
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -518,14 +517,14 @@ inherited frmLabs: TfrmLabs
             ShowAccelChar = True
           end
           object cmdNext: TButton
-            Left = 235
-            Top = 12
-            Width = 101
-            Height = 31
+            Left = 191
+            Top = 10
+            Width = 82
+            Height = 25
             Caption = 'Next >'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -533,14 +532,14 @@ inherited frmLabs: TfrmLabs
             OnClick = cmdNextClick
           end
           object cmdPrev: TButton
-            Left = 107
-            Top = 12
-            Width = 101
-            Height = 31
+            Left = 87
+            Top = 10
+            Width = 82
+            Height = 25
             Caption = '< Previous'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -548,14 +547,14 @@ inherited frmLabs: TfrmLabs
             OnClick = cmdPrevClick
           end
           object cmdRecent: TButton
-            Left = 343
-            Top = 12
-            Width = 94
-            Height = 31
+            Left = 279
+            Top = 10
+            Width = 76
+            Height = 25
             Caption = 'Newest >>'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -563,14 +562,14 @@ inherited frmLabs: TfrmLabs
             OnClick = cmdRecentClick
           end
           object cmdOld: TButton
-            Left = 6
-            Top = 12
-            Width = 94
-            Height = 31
+            Left = 5
+            Top = 10
+            Width = 76
+            Height = 25
             Caption = '<< Oldest'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
-            Font.Height = -15
+            Font.Height = -12
             Font.Name = 'MS Sans Serif'
             Font.Style = [fsBold]
             ParentFont = False
@@ -581,16 +580,16 @@ inherited frmLabs: TfrmLabs
       end
       object grdLab: TCaptionStringGrid
         Left = 1
-        Top = 76
-        Width = 753
-        Height = 41
+        Top = 62
+        Width = 611
+        Height = 33
         Align = alTop
         Color = clCream
         DefaultRowHeight = 15
         RowCount = 2
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -15
+        Font.Height = -12
         Font.Name = 'MS Sans Serif'
         Font.Style = []
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing]
@@ -609,9 +608,9 @@ inherited frmLabs: TfrmLabs
       end
       object pnlChart: TPanel
         Left = 1
-        Top = 117
-        Width = 753
-        Height = 105
+        Top = 95
+        Width = 611
+        Height = 85
         Align = alTop
         BevelOuter = bvNone
         Caption = 'no results to graph'
@@ -619,9 +618,9 @@ inherited frmLabs: TfrmLabs
         Visible = False
         object lblGraph: TLabel
           Left = 0
-          Top = 89
-          Width = 464
-          Height = 16
+          Top = 72
+          Width = 370
+          Height = 13
           Alignment = taCenter
           Caption = 
             'Results may be available, but cannot be graphed. Please try an a' +
@@ -630,10 +629,10 @@ inherited frmLabs: TfrmLabs
         object lstTestGraph: TORListBox
           Left = 0
           Top = 0
-          Width = 119
-          Height = 105
+          Width = 97
+          Height = 85
           Align = alLeft
-          ItemHeight = 16
+          ItemHeight = 13
           ParentShowHint = False
           ShowHint = True
           TabOrder = 0
@@ -644,10 +643,10 @@ inherited frmLabs: TfrmLabs
           Pieces = '2'
         end
         object chtChart: TChart
-          Left = 119
+          Left = 97
           Top = 0
-          Width = 634
-          Height = 105
+          Width = 514
+          Height = 85
           AllowPanning = pmNone
           AllowZoom = False
           BackWall.Brush.Color = clWhite
@@ -726,13 +725,13 @@ inherited frmLabs: TfrmLabs
       end
       object lvReports: TCaptionListView
         Left = 1
-        Top = 222
-        Width = 753
-        Height = 86
+        Top = 180
+        Width = 611
+        Height = 70
         Hint = 'To sort, click on column headers|'
         Align = alClient
         Columns = <>
-        Constraints.MinHeight = 62
+        Constraints.MinHeight = 50
         HideSelection = False
         MultiSelect = True
         ReadOnly = True
@@ -751,34 +750,34 @@ inherited frmLabs: TfrmLabs
     object pnlRightTopHeader: TPanel
       Left = 0
       Top = 0
-      Width = 755
-      Height = 55
+      Width = 613
+      Height = 45
       Align = alTop
       TabOrder = 2
       object pnlRightTopHeaderTop: TPanel
         Left = 1
         Top = 1
-        Width = 753
-        Height = 26
+        Width = 611
+        Height = 21
         Align = alTop
         TabOrder = 0
         object lblHeading: TOROffsetLabel
-          Left = 169
+          Left = 137
           Top = 1
-          Width = 463
-          Height = 24
+          Width = 376
+          Height = 19
           Align = alClient
           HorzOffset = 2
           Transparent = False
           VertOffset = 6
           WordWrap = False
-          ExplicitWidth = 462
+          ExplicitWidth = 377
         end
         object lblTitle: TOROffsetLabel
           Left = 1
           Top = 1
-          Width = 168
-          Height = 24
+          Width = 136
+          Height = 19
           Align = alLeft
           HorzOffset = 3
           Transparent = True
@@ -786,10 +785,10 @@ inherited frmLabs: TfrmLabs
           WordWrap = False
         end
         object chkMaxFreq: TCheckBox
-          Left = 632
+          Left = 513
           Top = 1
-          Width = 120
-          Height = 24
+          Width = 97
+          Height = 19
           Align = alRight
           Caption = 'Max/Site OFF'
           TabOrder = 0
@@ -799,9 +798,9 @@ inherited frmLabs: TfrmLabs
       end
       object TabControl1: TTabControl
         Left = 1
-        Top = 27
-        Width = 753
-        Height = 27
+        Top = 22
+        Width = 611
+        Height = 22
         Align = alClient
         HotTrack = True
         Style = tsButtons
@@ -813,32 +812,32 @@ inherited frmLabs: TfrmLabs
     end
     object pnlFooter: TORAutoPanel
       Left = 0
-      Top = 896
-      Width = 755
-      Height = 25
+      Top = 728
+      Width = 613
+      Height = 20
       Align = alBottom
       TabOrder = 3
       object lblSpecimen: TLabel
-        Left = 5
-        Top = 34
-        Width = 75
-        Height = 16
+        Left = 4
+        Top = 28
+        Width = 57
+        Height = 13
         Caption = 'lblSpecimen'
         Visible = False
       end
       object lblSingleTest: TLabel
-        Left = 108
-        Top = 34
-        Width = 79
-        Height = 16
+        Left = 88
+        Top = 28
+        Width = 60
+        Height = 13
         Caption = 'lblSingleTest'
         Visible = False
       end
       object lblFooter: TOROffsetLabel
         Left = 1
         Top = 1
-        Width = 753
-        Height = 31
+        Width = 611
+        Height = 25
         Align = alTop
         Caption = 
           '  KEY: "L" = Abnormal Low, "H" = Abnormal High, "*" = Critical V' +
@@ -847,15 +846,15 @@ inherited frmLabs: TfrmLabs
         Transparent = False
         VertOffset = 2
         WordWrap = False
-        ExplicitWidth = 752
+        ExplicitWidth = 612
       end
       object lstTests: TORListBox
         Left = 1
-        Top = 32
-        Width = 753
-        Height = 21
+        Top = 26
+        Width = 611
+        Height = 17
         Align = alTop
-        ItemHeight = 16
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0

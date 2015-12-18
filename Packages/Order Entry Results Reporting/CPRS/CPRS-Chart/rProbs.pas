@@ -17,7 +17,7 @@ function EditSave(ProblemIFN: string; ProviderID: int64; ptVAMC, PrimUser: strin
 function InitPt(const PatientDFN: string): TStrings ;  //*DFN*
 function InitUser(ProviderID: int64): TStrings ;
 function PatientProviders(const PatientDFN: string): TStrings ;  //*DFN*
-function ProblemList(const PatientDFN: string; Status:string): TStrings ;  //*DFN*
+function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime): TStrings ;  //*DFN*
 function ProblemLexiconSearch(SearchFor: string; ADate: TFMDateTime = 0; Extend: Boolean = False): TStrings ;
 function ProblemNTRTBulletin(term: String; ProviderID: String; PatientID: String; comment: String): String;
 function ProviderFilterList(ProvList: TStringList): TStrings ;
@@ -106,7 +106,7 @@ begin
     View := 'CLF'
   else
     View := 'PLS';
-  CallV('ORQQPL4 LEX',[SearchFor, VIEW, ADate]);
+  CallV('ORQQPL4 LEX',[SearchFor, VIEW, ADate, True]);
   Result := RPCBrokerV.Results ;
 end ;
 
@@ -116,9 +116,9 @@ begin
   result := RPCBrokerV.Results[0];
 end ;
 
-function ProblemList(const PatientDFN: string; Status:string): TStrings ;  //*DFN*
+function ProblemList(const PatientDFN: string; Status:string; ADate: TFMDateTime): TStrings ;  //*DFN*
 begin
-   CallV('ORQQPL PROBLEM LIST',[PatientDFN, status]);
+   CallV('ORQQPL PROBLEM LIST',[PatientDFN, Status, ADate]);
    Result := RPCBrokerV.Results ;
 end ;
 

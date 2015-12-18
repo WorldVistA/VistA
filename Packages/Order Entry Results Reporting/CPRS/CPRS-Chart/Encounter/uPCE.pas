@@ -1000,7 +1000,7 @@ begin
   Category  := Piece(x, U, pnumCategory);
   Narrative := Piece(x, U, pnumNarrative);
   Provider  := StrToInt64Def(Piece(x, U, pnumProvider), 0);
-  Comment   := Piece(x, U, pnumComment);                        
+  Comment   := Piece(x, U, pnumComment);
 end;
 
 
@@ -1599,7 +1599,7 @@ begin
   else
     Result := U + Result;
 
-  Result := Result + U + inherited ItemStr;
+  Result := Result + U + GetDiagnosisText((inherited ItemStr), Code);
 end;
 
 procedure TPCEDiag.Send;

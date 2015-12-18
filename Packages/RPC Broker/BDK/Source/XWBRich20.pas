@@ -293,7 +293,7 @@ type
 
 implementation
 
-uses Printers, Consts, ComStrs, ActnList, StdActns, ShellAPI;
+uses Printers, Consts, ComStrs, ActnList, StdActns, ShellAPI, Types;
 
 type
   PFontHandles = ^TFontHandles;

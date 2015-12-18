@@ -18,8 +18,8 @@ inherited frmReview: TfrmReview
   OnPaint = FormPaint
   OnResize = FormResize
   OnShow = FormShow
-  ExplicitWidth = 695
-  ExplicitHeight = 563
+  ExplicitWidth = 703
+  ExplicitHeight = 564
   PixelsPerInch = 96
   TextHeight = 13
   object laDiagnosis: TLabel [0]
@@ -58,8 +58,6 @@ inherited frmReview: TfrmReview
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
-    ExplicitWidth = 707
-    ExplicitHeight = 238
     object pnlReview: TPanel
       Left = 0
       Top = -2
@@ -90,14 +88,13 @@ inherited frmReview: TfrmReview
         OnMouseDown = lstReviewMouseDown
         OnMouseMove = lstReviewMouseMove
         Caption = 'Signature will be Applied to Checked Items'
-        ExplicitHeight = 99
       end
       object lblSig: TStaticText
         Left = 8
         Top = 8
-        Width = 223
+        Width = 254
         Height = 17
-        Caption = 'All Orders Except Controlled Substance Orders'
+        Caption = 'All Orders Except Controlled Substance EPCS Orders'
         TabOrder = 2
         TabStop = True
       end
@@ -115,9 +112,9 @@ inherited frmReview: TfrmReview
       object lblCSReview: TLabel
         Left = 5
         Top = 7
-        Width = 135
+        Width = 166
         Height = 13
-        Caption = 'Controlled Substance Orders'
+        Caption = 'Controlled Substance EPCS Orders'
       end
       object lstCSReview: TCaptionCheckListBox
         Left = 2
@@ -139,7 +136,7 @@ inherited frmReview: TfrmReview
         OnMouseMove = lstCSReviewMouseMove
       end
       object lblSmartCardNeeded: TStaticText
-        Left = 146
+        Left = 177
         Top = 4
         Width = 135
         Height = 20
@@ -162,8 +159,6 @@ inherited frmReview: TfrmReview
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 427
-    ExplicitWidth = 707
     DesignSize = (
       687
       89)
@@ -286,7 +281,6 @@ inherited frmReview: TfrmReview
       Default = True
       TabOrder = 2
       OnClick = cmdOKClick
-      ExplicitLeft = 546
     end
     object cmdCancel: TButton
       Left = 604
@@ -298,18 +292,16 @@ inherited frmReview: TfrmReview
       Caption = 'Cancel'
       TabOrder = 3
       OnClick = cmdCancelClick
-      ExplicitLeft = 624
     end
     object lblHoldSign: TStaticText
       Left = 179
       Top = 2
-      Width = 268
+      Width = 288
       Height = 17
       Anchors = [akLeft, akTop, akRight]
       Caption = 'These orders can only be signed by the prescribing provider.'
       TabOrder = 4
       Visible = False
-      ExplicitWidth = 288
     end
   end
   object pnlDEAText: TPanel [4]
@@ -320,8 +312,6 @@ inherited frmReview: TfrmReview
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 387
-    ExplicitWidth = 707
     object lblDEAText: TStaticText
       Left = 0
       Top = 0
@@ -337,7 +327,6 @@ inherited frmReview: TfrmReview
         'leted by the practitioner whose name and DEA registration number' +
         ' appear above. '
       TabOrder = 0
-      ExplicitWidth = 707
     end
   end
   object pnlTop: TPanel [5]
@@ -348,7 +337,6 @@ inherited frmReview: TfrmReview
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 4
-    ExplicitWidth = 707
     DesignSize = (
       687
       149)
@@ -363,7 +351,7 @@ inherited frmReview: TfrmReview
       TabOrder = 0
       TabStop = True
       Visible = False
-      ExplicitLeft = 183
+      ExplicitLeft = 163
       ExplicitTop = -1
       ExplicitWidth = 524
       ExplicitHeight = 152
@@ -526,7 +514,6 @@ inherited frmReview: TfrmReview
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 225
       object lblProvInfo: TLabel
         Left = 8
         Top = 3

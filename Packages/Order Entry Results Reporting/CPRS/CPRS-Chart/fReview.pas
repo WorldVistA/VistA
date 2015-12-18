@@ -510,13 +510,13 @@ var
   PrevGrpName, temp: string;
   displayHeader, displaySpacer, displayCSHeader, displayCSSpacer, otherUserOrders, otherhdradded, othercshdradded: boolean;
   I, ColHeight: Integer;
-  t1, t2, NVAinNonCSList, otherinNonCSList: Boolean;
+  t1, t2{, NVAinNonCSList, otherinNonCSList}: Boolean;
 begin
   tempOrderList := TStringList.Create;
   tempOrderList.Clear;
   PrevGrpName := '';
-  NVAinNonCSList := false;
-  otherinNonCSList := false;
+//  NVAinNonCSList := false;
+//  otherinNonCSList := false;
   lstReview.Clear;  // ok to clear without freeing objects since they're part of Changes
   if(FullList) then
   begin
@@ -592,8 +592,8 @@ begin
                end;
               lbIdx := AddItem(ChangeItem);
               SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
-              if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
-              else otherinNonCSList := true;
+//              if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
+//              else otherinNonCSList := true;
             end
             else
             begin
@@ -638,8 +638,8 @@ begin
                       end;         
                       lbIdx := AddItem(ChangeItem);
                       SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
-                      if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
-                      else otherinNonCSList := true;
+//                      if (ChangeItem.OrderDG = 'Non-VA Meds') or (Pos('Non-VA',ChangeItem.Text)>0) then NVAinNonCSList := true
+//                      else otherinNonCSList := true;
                     end
                     else
                     begin
@@ -696,7 +696,7 @@ begin
   txtESCodeChange(Self);
   if pnlOrderAction.Visible then
   begin
-    lblSig.Caption := 'Documents / Orders';
+//    lblSig.Caption := 'Documents / Orders';
     if FShowPanel = SP_NURSE then
     begin
       if GetUserParam('OR SIGNATURE DEFAULT ACTION') = 'OC'
@@ -709,16 +709,19 @@ begin
   end {if pnlOrderAction}
   else
   begin
-    if (User.OrderRole = OR_STUDENT) or (User.OrderRole = OR_NOKEY) or (User.OrderRole = OR_BADKEYS) then
-    begin
-      if otherinNonCSList then lblSig.Caption := 'These Non-Controlled Substance orders will be held until signed. '
-      else lblSig.Caption := ' ';
-      if NVAinNonCSList then lblSig.Caption := lblSig.Caption + 'Non-VA documentation will become active.';
-      
-      lblCSReview.Caption := 'These Controlled Substance orders will be held until signed';
-    end
-    else
-      lblSig.Caption := 'All Orders Except Controlled Substance Orders';
+//    if (User.OrderRole = OR_STUDENT) or (User.OrderRole = OR_NOKEY) or (User.OrderRole = OR_BADKEYS) then
+//    begin
+//      if otherinNonCSList then lblSig.Caption := 'These Non-Controlled Substance orders will be held until signed. '
+//      else lblSig.Caption := ' ';
+//      if NVAinNonCSList then lblSig.Caption := lblSig.Caption + 'Non-VA documentation will become active.';
+//
+//      lblCSReview.Caption := 'These Controlled Substance orders will be held until signed';
+//    end
+//    else
+//    begin
+//      lblSig.Caption := 'All Orders Except Controlled Substance EPCS Orders';
+//    end;
+
   end;
   //Make sure there is enough width for the buttons and lblSig
    //begin BillingAware
@@ -1158,7 +1161,7 @@ const
   TX_SAVERR2 = ', occurred while trying to save:' + CRLF + CRLF;
   TC_SAVERR  = 'Error Saving Order';
 var
-  i, k, idx, AType, PrintLoc, theSts, wardIEN: Integer;
+  i, k, idx, AType, PrintLoc, theSts, wardIEN, checki,checkj: Integer;
   SigSts, RelSts, Nature: Char;
   ESCode, AnID, AnErrMsg: string;
   ChangeItem, TempChangeItem: TChangeItem;
@@ -1171,7 +1174,7 @@ var
   DrugName, Quantity, Directions: string;
   cProvDUZ: Int64;
   AList, ClinicList, WardList: TStringList;
-  IsOk, ContainsIMOOrders, DoNotPrint : Boolean;
+  IsOk, ContainsIMOOrders, DoNotPrint, checkfound : Boolean;
   EncLocName, EncLocText, tempInpLoc: string;
   EncLocIEN: integer;
   EncDT: TFMDateTime;
@@ -1366,6 +1369,19 @@ begin
               OrderList.Add(ChangeItem.ID + U + SS_ONCHART + U + RS_RELEASE + U + NO_WRITTEN);
 
           end; {with lstReview}
+		  
+		 with lstCSReview do for i := 0 to Items.Count - 1 do
+          begin
+            ChangeItem := TChangeItem(Items.Objects[i]);
+            if (ChangeItem <> nil) and (ChangeItem.ItemType = CH_ORD) then
+            begin
+              OrderList.Add(ChangeItem.ID + U + SS_UNSIGNED + U + RS_HOLD + U + Nature);
+              if BILLING_AWARE then
+                if not (User.DUZ = 0) and PersonHasKey(User.DUZ, 'PROVIDER') then
+                   UBACore.SaveUnsignedOrders(ChangeItem.ID+ '1' + GetCheckBoxStatus(ChangeItem.ID) )
+            end
+          end;     {with lstCSReview}
+
         end; {OR_NOKEY, OR_CLERK, OR_NURSE, OR_STUDENT}
 
       OR_PHYSICIAN:
@@ -1684,6 +1700,16 @@ end;
              end;
           end;
 
+      // make sure all cs orders are in the orderlist.  if not add them as usnigned/hold
+      for checki := 0 to CSOrderList.Count -1 do
+      begin
+        checkfound := false;
+        for checkj := 0 to OrderList.Count - 1 do
+        begin
+          if Piece(OrderList[checkj],U,1) = Piece(CSOrderList[checki],U,1) then checkfound := true;
+        end;
+        if not(checkfound) then OrderList.Add(Piece(CSOrderList[checki],U,1) + U + SS_UNSIGNED + U + RS_HOLD + U + Piece(CSOrderList[checki],U,4));
+      end;
 
 
       {release & print orders}
@@ -1760,7 +1786,7 @@ end;
                   //All other scenarios should not print
                  if (ClinicList.count = 0) and (WardList.count = 0) then DoNotPrint := True;
              end;
-          end; 
+          end;
           if (cmdOk.Caption = 'Don''t Sign') and (not frmFrame.TimedOut) and (frmFrame.mnuFile.Tag <> 0) then
                begin
                  tempInpLoc := frmPrintLocation.rpcIsPatientOnWard(patient.dfn);

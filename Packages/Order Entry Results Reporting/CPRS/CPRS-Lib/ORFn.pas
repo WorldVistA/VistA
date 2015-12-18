@@ -13,12 +13,19 @@ const
   BOOLCHAR: array[Boolean] of Char = ('0', '1');
   UM_STATUSTEXT = (WM_USER + 302);               // used to send update status msg to main form
 
+const
+  PreSeparatorChars: TSysCharSet = ['''', '"', '(', '[', '{'];
+  PostSeparatorChars: TSysCharSet = ['''', '"','-', ':', ';', ',', '=', ')', ']', '}', '.', '/', '?'];
+
 var
   ScrollBarHeight: integer = 0;
 
 type
+  TCharacterSet = Set of Char;
   TFMDateTime = Double;
   TORIdleCallProc = procedure(Msg: string);
+{ sundries }
+function CharInSet(AChar: Char; ASetOfChar: TCharacterSet) : Boolean;
 
 { Date/Time functions }
 function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
@@ -103,6 +110,9 @@ function WrappedTextHeightByFont(Canvas: TCanvas; NewFont: TFont; ItemText: stri
 function NumCharsFitInWidth(AFontHandle: THandle; const x: string; const MaxLen: integer): Integer;
 function PopupComponent(Sender: TObject; PopupMenu: TPopupMenu): TComponent;
 procedure ReformatMemoParagraph(AMemo: TCustomMemo);
+
+function WrapTextByPixels(const Value: string; WrapWidth: integer; ACanvas: TCanvas;
+                          PreSeparators, PostSeparators: TSysCharSet): TStringList;
 
 function BlackColorScheme: Boolean;
 function NormalColorScheme: Boolean;
@@ -2288,6 +2298,79 @@ begin
   begin
     Window.VertScrollBar.Position := Window.VertScrollBar.Position + Delta;
     SendMoveMessage(Window);
+  end;
+end;
+
+function CharInSet(AChar: Char; ASetOfChar: TCharacterSet) : Boolean;
+begin
+  result := (AChar in ASetOfChar);
+end;
+
+function SplitUsingSeparators(const Value: string; PreSeparators, PostSeparators: TSysCharSet): TStringList;
+var
+  i: integer;
+  CurrentWord: string;
+  l: integer;
+const DefaultSeparators = [' ', #13, #9];
+begin
+  Result := TStringList.Create;
+  i := 0;
+  CurrentWord := '';
+  l := Length(Value);
+  repeat
+    inc(i);
+    if (i > l) then begin
+      if (CurrentWord <> '') then begin
+        Result.Add(CurrentWord);
+      end;
+    end else if (CharInSet(Value[i], DefaultSeparators)) then begin
+      if (CurrentWord <> '') then begin
+        Result.Add(CurrentWord);
+      end;
+      CurrentWord := '';
+    end else if (CurrentWord <> '') and (CharInSet(Value[i], PostSeparators)) then begin
+      CurrentWord := CurrentWord + Value[i];
+      Result.Add(CurrentWord);
+      CurrentWord := '';
+    end else if (CharInSet(Value[i], PreSeparators)) then begin
+      if (CurrentWord <> '') then begin
+        Result.Add(CurrentWord);
+      end;
+      CurrentWord := Value[i];
+    end else begin
+      CurrentWord := CurrentWord + Value[i];
+    end;
+  until (i > l);
+end;
+
+function WrapTextByPixels(const Value: string; WrapWidth: integer; ACanvas: TCanvas;
+                          PreSeparators, PostSeparators: TSysCharSet): TStringList;
+var
+  WordList: TStringList;
+  i, len: integer;
+begin
+  Result := TStringList.Create;
+  WordList := SplitUsingSeparators(Value, PreSeparators, PostSeparators);
+  try
+    i := 0;
+    while (i < WordList.Count) do begin
+      if Result.Count = 0 then
+        Len := ACanvas.TextWidth(WordList[i])
+      else
+        Len := ACanvas.TextWidth(Result[Result.Count - 1] + ' ' + WordList[i]);
+      if Len > WrapWidth then begin
+        Result.Add(WordList[i]);
+      end else begin
+        if Result.Count = 0 then
+          Result.Add(WordList[i])
+        else
+          Result[Result.Count - 1] := Result[Result.Count - 1] + ' ' + WordList[i];
+      end;
+      inc(i);
+    end;
+  finally
+    if assigned(WordList) then
+      WordList.Free;
   end;
 end;
 

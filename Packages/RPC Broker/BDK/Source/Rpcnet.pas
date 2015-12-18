@@ -154,8 +154,10 @@ begin
      RPCFRM1 := TRPCFRM1.Create(nil);    //P14
      with WRec[inst] do
      begin
+     {$WARN SYMBOL_DEPRECATED OFF}
      hWin := AllocateHWnd(RPCFRM1.wndproc);
-
+     {$WARN SYMBOL_DEPRECATED ON}
+                                 
      WSAStartUp(WINSOCK1_1, WSData);
      WSAUnhookBlockingHook;
 
@@ -172,8 +174,10 @@ begin
      begin
         InUse := False;
         WSACleanup;
+     {$WARN SYMBOL_DEPRECATED OFF}
         DeallocateHWnd(hWin);
-     end;
+     {$WARN SYMBOL_DEPRECATED ON}
+     end;             
 end;
 
 function libGetHostIP1(inst: integer; HostName: PChar;

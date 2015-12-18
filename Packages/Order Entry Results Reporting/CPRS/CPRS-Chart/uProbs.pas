@@ -152,6 +152,8 @@ type
    fSCTDesignation:TKeyVal;   {80002}
    fNTRTRequested: TKeyVal;   {80101}
    fNTRTComment: TKeyVal;     {80102}
+   fCodeDate: TKeyVal;        {80201}
+   fCodeSystem: TKeyVal;      {80202}
    fFieldList:TstringList; {list of fields by name and class (TKeyVal or TComment)}
    fFilerObj:TstringList;
    fCmtIsXHTML: boolean;
@@ -207,6 +209,10 @@ type
    procedure SetDateString(df:TKeyVal;value:string);
    function GetCondition:string;
    procedure SetCondition(value:String);
+   function GetCodeDate: TDateTime;
+   procedure SetCodeDate(value: TDateTime);
+   function GetCodeDateStr: String;
+   procedure SetCodeDateStr(value: String);
  public
    fComments:TList; {comments}
    fCoordExprs:TList; {coordinate expressions}
@@ -237,6 +243,9 @@ type
    property SCTDesignation:TKeyVal read fSCTDesignation write fSCTDesignation;
    property NTRTRequested:TKeyVal read fNTRTRequested write fNTRTRequested;
    property NTRTComment:TKeyVal read fNTRTComment write fNTRTComment;
+   property CodeDate: TDateTime read GetCodeDate write SetCodeDate;
+   property CodeDateStr: String read GetCodeDateStr write SetCodeDateStr;
+   property CodeSystem: TKeyVal read fCodeSystem write fCodeSystem;
    property Problem:TKeyVal read fProblem write fProblem;
    property RespProvider:TKeyVal read fRespProv write fRespProv;
    property EnteredBy:TKeyVal read fEntBy write fEntBy;
@@ -289,7 +298,7 @@ function FixQuotes(Instring: string): string;
 implementation
 
 uses
-  rCore, uCore;//, fProbCmt;
+  rCore, uCore, Types;
 
 const
   Months: array[1..12] of string[3] = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
@@ -534,6 +543,8 @@ begin
   LoadField(fSCTDesignation,'80002','SCTD');
   LoadField(fNTRTRequested, '80101', 'NTRT');
   LoadField(fNTRTComment, '80102', 'NTRTC');
+  LoadField(fCodeDate, '80201', 'CODEDT');
+  LoadField(fCodeSystem, '80202', 'CODESYS');
   LoadComments;
 end;
 
@@ -617,6 +628,8 @@ begin
   fSCTDesignation:=TKeyVal.Create;
   fNTRTRequested := TKeyVal.Create;
   fNTRTComment := TKeyVal.Create;
+  fCodeDate := TKeyVal.create;
+  fCodeSystem := TKeyVal.create;
   fComments:=TList.create;
 end;
 
@@ -697,6 +710,19 @@ begin
       end;
     end;
   end;
+end;
+
+function TProbRec.GetCodeDate: TDateTime;
+var
+  dt:string;
+begin
+  dt := fCodeDate.extern;
+  result := GetTDateTime(dt);
+end;
+
+function TProbRec.GetCodeDateStr: String;
+begin
+  result := fCodeDate.extern;
 end;
 
 function TProbRec.GetCommentCount:integer;
@@ -833,6 +859,16 @@ end;
 function TProbRec.GetCondition:string;
 begin
   result := fCondition.Intern;
+end;
+
+procedure TProbRec.SetCodeDate(value: TDateTime);
+begin
+  SetDate(fCodeDate,value);
+end;
+
+procedure TProbRec.SetCodeDateStr(value: String);
+begin
+  SetDateString(fCodeDate, value);
 end;
 
 procedure TProbRec.SetCondition(value:string);
@@ -1175,7 +1211,7 @@ begin
   for i := 0 to pred(fFieldList.count) do
     begin
       fldID := fFieldList[i];                      
-      if pos(u + fldID + u, '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002') > 0 then
+      if pos(u + fldID + u, '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002^80201^80202^') > 0 then
         {is a field eligible for update}
         begin
           fldVal := TKeyVal(fFieldList.objects[i]).intern;
@@ -1416,7 +1452,7 @@ begin
   result := 'ERROR' ;
   if ((Pos(' ',shortdate) <> 4) or (Pos(',',shortdate) <> 7)) then exit ;  {no spaces or comma}
   for i := 1 to 12 do
-    if Months[i] = UpperCase(Copy(shortdate,1,3)) then month := IntToStr(i);
+    if String(Months[i]) = UpperCase(Copy(shortdate,1,3)) then month := IntToStr(i);
   if month = '' then exit ;    {invalid month name}
   day  := IntToStr(StrToInt(Copy(shortdate,5,2))) ;
   year := IntToStr(StrToInt(Copy(shortdate,8,99))) ;
