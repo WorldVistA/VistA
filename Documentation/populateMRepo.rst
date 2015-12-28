@@ -1,13 +1,15 @@
 =================================
-Populating the VistA-M Repository
+Populate the VistA-M Repository
 =================================
-
 
 The VistA-M repository is used for many things within the OSEHRA Testing
 Harness.  While most of these uses assume that the OSEHRA code is the desired
-VistA to set up, this is not always the case.  There are times when the
-structure of the VistA-M repository is needed but the content would belong to
-a more recent FOIA release or the release of a community vendor.
+version of VistA to set up, this is not always the case.  There are times when
+the structure of the VistA-M repository is needed but the content should belong
+to a more recent FOIA release or the release of a community vendor.
+
+Extract Routines and Globals
+----------------------------
 
 OSEHRA has written a Python script that will export the routines and globals
 from an installed M[UMPS] environment and store the extracted files in the file
@@ -59,7 +61,7 @@ function and all necessary arguments:
                         Cache telnet service port, default is 23
 
 
-An Intersystems Cache environment would use a `-S` value of 1 and would not
+An Intersystems Caché environment would use a `-S` value of 1 and would not
 require the `-ro` argument, but may require a significant amount of connection
 arguments.  An example usage from within a GitBash shell
 could look like this:
@@ -78,9 +80,9 @@ While a call on a system with GT.M, `-S 2`, could look like this utilizing the
   -o ~/Desktop/Log -r ~/Work/OSEHRA/VistA-M -l ~/Desktop/Log
 
 Once the command is entered, the script proceeds to stop the VistA's background
-tasks then exports the routines and globals.  All current files (.zwr and .m)
-are removed from the VistA-M source tree and then the exported files are sorted
-into their correct package folder.  The entire process should take
+tasks and then exports the routines and globals.  All current files (.zwr and .m)
+are removed from the VistA-M source tree and the exported files are sorted
+into their correct package folder. The entire process should take
 approximately one hour.
 
 An example start of the execution of the extractor script can be seen below:
@@ -95,9 +97,12 @@ An example start of the execution of the extractor script can be seen below:
    2014-10-27 09:50:21,562 INFO Import ZGO routine to VistA instance
    <SNIP>
 
-After the extraction of the routines and globals, the last step is to update
-the Packages.csv file found in the top-level directory of the VistA-M
-source tree to account for files in the Uncategorized package.
+Update Packages.csv
+-------------------
+
+After the extraction of the routines and globals, the Packages.csv file found
+in the top-level directory of the VistA-M source tree needs to be updated to
+account for the new files in the Uncategorized directory.
 
 This work may include:
 
@@ -105,10 +110,10 @@ This work may include:
 * Adding entirely new packages.
 * Adding global entries to existing packages
 
-Once the Packages.csv has been updated, move the contents of the Uncategorized
-routines and globals to the `Packages` directory.  We can then re-sort the
-contents using the `PopulatePackages.py` script found in the `Scripts`
-directory in the VistA source tree.
+Once Packages.csv has been updated, move the contents of the Uncategorized
+`Routines` and `Globals` directories to the `Packages` directory.  We can
+then re-sort the contents using the `PopulatePackages.py` script found in
+the `Scripts` directory in the VistA source tree.
 
 From the `Packages` directory run the following command:
 
@@ -138,5 +143,5 @@ An example run of the command is shown below:
 
  $
 
-There you can see some globals are moved into their respective packages while
-the others are moved back into the Uncategorized package.
+In this example, some globals are moved into their respective packages while
+others are moved back into the Uncategorized package.

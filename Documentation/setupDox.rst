@@ -74,7 +74,7 @@ Prepare M Source
 ****************
 
 If the desired version of VistA to generate the Dox pages from is the OSEHRA
-Certified version, then no other preparation is needed other than acquring
+Certified version, then no other preparation is needed other than acquiring
 the VistA-M source tree.
 
 To generate the pages with a different VistA setup, such as a FOIA release or
@@ -325,7 +325,7 @@ That command will print the necessary arguments and flags that need to be set.
                         fileman db call information in JSON format
 
 The following arguments are not optional, and must be set in the command
-before it is able to run succesfully.
+before it is able to run successfully.
 
 * ``-xl`` or ``--xindexLogDir`` - path to the directory contains all the
   XINDEX-based cross reference output that are generated from ctest run
@@ -405,16 +405,28 @@ and the example run of the analyzer:
  2014-10-27 14:03:16,336 INFO End of generating individual routines......
  2014-10-27 14:03:16,463 INFO End of generating web pages....
 
+Depending on the processing power of the machine, it could take from 25 minutes
+to 2 hours to generate the whole web pages with dependency graph.
+
+Source Code Highlighting
+------------------------
+
+To enable the color highlighting of the M routine source page, one additional
+folder is necessary.  Copy the ``code_pretty_scripts`` directory from the
+``Utilities/Dox/Web`` folder into the output web page directory.  The
+folder contains code taken from the `google_code_prettify`_ repository which
+is released under the Apache 2.0 license.
+
+Stylesheet
+----------
+
+Copy the ``DoxygenStyle.css`` file from the Web directory (``Utilities/Dox/Web``) within
+the VistA source tree to the output directory.
 
 Reviewing the results
 ----------------------
 
-Depending on the processing power of the machine, it could take from 25 minutes
-to 2 hours to generate the whole web pages with dependency graph.  To review
-the output web page, just go to the output directory, copy the
-``DoxygenStyle.css`` file from the Web directory (``Utilities/Dox/Web``) within
-the VistA source tree to the output directory and open the index.html file from
-your favorite web browser.
+To review the output web page, open the index.html file from your favorite web browser.
 
 .. figure::
    http://code.osehra.org/content/named/SHA1/a9935090-localDox.png
@@ -423,14 +435,7 @@ your favorite web browser.
 
 Figure 3 - Visual Cross Reference Web page.
 
-Source Code Highlighting
-*************************
 
-To enable the color highlighting of the M routine source page, one additional
-folder is necessary.  Copy the ``code_pretty_scripts`` directory from the
-``Utilities/Dox/Web`` folder into the output web page directory.  The
-folder contains code taken from the `google_code_prettify`_ repository which
-is released under the Apache 2.0 license.
 
 
 .. _`README.rst`: ./README.rst
