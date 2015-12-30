@@ -102,5 +102,42 @@ At the end of the process the article and code is uploaded to the OTJ and,
 after approval by an OTJ Administrator, becomes available for download,
 review, comments, and eventual placement onto the OSEHRA Priority Queue.
 
+Create A New Revision
+---------------------
+
+It is possible to add a new revision to an existing submission. New revisions
+can be created as needed, and may be used for bug fixes or new features. Note
+that if a submission has gone through the OSEHRA certification process, any new
+revisions will need to be recertified.
+
+To create a new revision, go to the OTJ site, log in and select the article
+that to be modified. Once the article submission page is loaded, the current
+revision is displayed under ``Information`` on the right of the page. Use the
+drop-down box to navigate between revisions.
+
+To create a new revision, click on the ``New Revision`` link (Figure 4).
+
+.. figure::
+   http://code.osehra.org/content/named/SHA1/39c87d-newRevision.png
+   :align: center
+   :alt:  OTJ Change current revision or add a new revision
+
+Figure 4 - OSEHRA Technical Journal article submission page
+
+The submission process for a new revision is similar to creating a new
+submission, as described in the beginning of this document. Most fields on the
+``Manage Submission`` page will be populated with information from the previous
+revision. The one exception is the ``Revision Notes`` field. Submitters should
+use this field to describe why a new revision has been created and what has
+changed since the previous revision. This information will be displayed on the
+article submission page and will help users to ensure that they are selecting
+the correct revision.
+
+After the ``Revision Notes`` are entered and other fields are updated as
+needed, click ``Next`` to proceed to the ``Manage Files`` page. As in the
+original submission, select one or more files to upload and agree to the
+appropriate licensing questions. Finally, select whether or not to send a
+notification email and click ``Publish``.
+
 
 .. _`Apache 2.0`: http://www.apache.org/licenses/LICENSE-2.0
