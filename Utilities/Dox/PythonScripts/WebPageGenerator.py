@@ -1028,6 +1028,7 @@ class WebPageGenerator:
                    "%s-->%s" % (depPackage.getName(), package.getName())]
         archList = [package.getName(), depPackage.getName()]
         generateIndexBar(outputFile, inputList, archList)
+        outputFile.write("<title>" + package.getName() + " : "+ depPackage.getName() + "</title>")
         outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
                          (packageHyperLink, depPackageHyperLink))
         #generate the summary part.
