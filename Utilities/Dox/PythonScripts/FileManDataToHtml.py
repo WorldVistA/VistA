@@ -258,6 +258,28 @@ hl7_table_header_fields = (
       <th>Response</th>
      """),
   )
+"""
+fields and logic to convert to html for Protocol List
+"""
+protocol_list_fields = (
+       ("Name", '.01', getFileHtmlLink), # Name
+       ("Type", '4', None), # Type
+       ("Lock", '3', None), # Type
+       ("Description", '3.5', None), # Type
+       ("Entry Action", '20', None), # Type
+       ("Exit Action", '15', None), # Type
+   )
+
+protocol_table_header_fields = (
+    ("""
+      <th colspan="1">Name</th>
+      <th colspan="1">Type</th>
+      <th colspan="1">Lock</th>
+      <th colspan="1">Description</th>
+      <th colspan="1">"Entry Action"</th>
+      <th colspan="1">"Exit Action"</th>
+    """),
+  )
 
 """
 fields and logic to convert to html for option List
@@ -384,14 +406,22 @@ class FileManDataToHtml(object):
         if crossRef:
           allPackages = crossRef.getAllPackages()
           allHl7s = []
+          allProtocols = []
           for package in allPackages.itervalues():
             if package.hl7:
               logging.info("generating HL7 list for package: %s"
                            % package.getName())
               self._generateHL7ListByPackage(package.hl7, package.getName())
               allHl7s.extend(package.hl7)
+            if package.protocol:
+              logging.info("generating Protocol list for package: %s"
+                           % package.getName())
+              self._generateProtocolListByPackage(package.protocol, package.getName())
+              allProtocols.extend(package.protocol)
           if allHl7s:
             self._generateHL7ListByPackage(allHl7s, "All")
+          if allProtocols:
+            self._generateProtocolListByPackage(allProtocols, "All")
       elif fileNo == '19':
         """ generate all option list """
         allOptionList = []
@@ -580,6 +610,15 @@ class FileManDataToHtml(object):
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            hl7_list_fields, "HL7",
                                            hl7_table_header_fields)
+
+  def _generateProtocolListByPackage(self, dataEntryLst, pkgName):
+    """
+      Specific logic to handle HL7 List
+      @TODO move the logic to a specific file
+    """
+    return self._generateDataListByPackage(dataEntryLst, pkgName,
+                                           protocol_list_fields, "Protocols",
+                                           protocol_table_header_fields)
 
   def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields,
                                  listName, custom_header=None):
