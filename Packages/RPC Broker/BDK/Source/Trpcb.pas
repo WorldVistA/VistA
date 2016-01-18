@@ -1789,7 +1789,7 @@ Function ShowApplicationAndFocusOK(anApplication: TApplication): boolean;
 var
   j: integer;
   Stat2: set of (sWinVisForm,sWinVisApp,sIconized);
-  hFGWnd: THandle;
+//  hFGWnd: THandle;
 begin
   Stat2 := []; {sWinVisForm,sWinVisApp,sIconized}
 

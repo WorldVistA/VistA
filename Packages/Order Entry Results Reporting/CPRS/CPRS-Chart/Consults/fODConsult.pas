@@ -1088,10 +1088,16 @@ begin
   txtProvDiag.Font.Color := clBtnText;
   txtProvDiag.Hint       := '';
   if cboService.ItemIEN = 0 then Exit;
+  ProvDx.PreviousPromptMode := ProvDx.PromptMode;
   GetProvDxMode(ProvDx, cboService.ItemID + CSLT_PTR);
   //  Returns:  string  A^B
   //     A = O (optional), R (required) or S (suppress)
   //     B = F (free-text) or L (lexicon)
+  if (ProvDx.PreviousPromptMode <> '') and (ProvDx.PromptMode <> ProvDx.PreviousPromptMode) then
+  begin
+    ProvDx.Code := '';
+    ControlChange(Self);
+  end;
   with ProvDx do if (Reqd = '') or (PromptMode = '') then Exit;
   if ProvDx.Reqd = 'R' then
   begin

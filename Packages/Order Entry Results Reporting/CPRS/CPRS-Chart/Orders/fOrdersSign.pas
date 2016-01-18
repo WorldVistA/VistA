@@ -225,7 +225,7 @@ const
 
 var
   i, k, cidx,cnt, theSts, WardIEN: Integer;
-  ShrinkHeight,oheight,newheight,TotalSH,temph1,temph2,oltemptop,csoltemptop,deatemptop,esigtemptop,oltemph,csoltemph,deatemph,esigtemph: integer;
+  ShrinkHeight,oheight,newheight{,TotalSH},temph1,temph2,oltemptop,csoltemptop,deatemptop,esigtemptop,oltemph,csoltemph,deatemph,esigtemph: integer;
   SignList: TStringList;
   CSSignList: TStringList;
   Obj: TOrder;
@@ -343,7 +343,7 @@ var
   end;
 
 begin
-  DigSigErr := True;
+//  DigSigErr := True;
   CSSelectedList := SelectedList;
   Result := False;
   PrintLoc := 0;
@@ -387,7 +387,7 @@ begin
     with CSSelectedList do for i := 0 to Count - 1 do
       begin
         obj := TOrder(Items[i]);
-        if (obj.IsOrderPendDC) then
+        if (obj.IsControlledSubstance and obj.IsOrderPendDC) then
         begin
           cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text,Obj);
           SigItems.Add(CH_ORD,Obj.ID, cidx);
@@ -478,7 +478,7 @@ begin
       txtEScode.Text := '';
       if ((clstOrders.Count = 0) and (clstCSOrders.Count = 0)) then  Exit;
       pnlProvInfo.Height := lblProvInfo.Height+5+lblProvInfo.Top;
-      TotalSH := 0;
+//      TotalSH := 0;
 
       if clstCSOrders.Count = 0 then
       begin      
@@ -534,6 +534,7 @@ begin
      frmSignOrders.ShowModal;
       if frmSignOrders.OKPressed then
       begin
+        PINResult := prOK;
         Result := True;
         SignList := TStringList.Create;
         CSSignList := TStringList.Create;
@@ -590,7 +591,7 @@ begin
           begin
           LastPINvalue := '';
           //isXuDSigSLogging := true;
-          PINRetrieved := false;
+          PINRetrieved := False;
           //get altusername
           UsrAltName := sCallV('XUS PKI GET UPN', []);
           //if SAN is blank then attempt to retrieve from card to set it
@@ -598,34 +599,31 @@ begin
           begin
             UsrAltName := SetSAN(fOrdersSign.frmSignOrders);
             if not(UsrAltName='')  then
-            begin
-              PINRetrieved := true;
-            end;
+              PINRetrieved := True;
           end;
           //if still blank then cancel digital signing
-          if UsrAltName='' then PINResult := prCancel
+          if UsrAltName='' then   
+            PINResult := prCancel
           else if not(PINRetrieved) then
-          try
-          begin
-            PINLock := sCallV('ORDEA PINLKCHK', []);
-            if PINLock = '1' then PINResult := prLocked
-            else PINResult := checkPINValue(fOrdersSign.frmSignOrders);
-          end
-          except
-            PINResult := prError;
-          end;
+            try
+              PINLock := sCallV('ORDEA PINLKCHK', []);
+              if PINLock = '1' then 
+                PINResult := prLocked
+              else 
+                PINResult := checkPINValue(fOrdersSign.frmSignOrders);
+            except
+              PINResult := prError;
+            end;
 
-          if PINResult=PRError       then ShowMsg('Problem getting PIN.  Cannot Digitally Sign.')
-          else if PINResult=prLocked then
-          begin
+          if PINResult = PRError then 
+            ShowMsg('Problem getting PIN.  Cannot Digitally Sign.')
+          else if PINResult = prLocked then begin
             if PINLock = '0' then sCallV('ORDEA PINLKSET', []);
             ShowMsg('Card has been locked.  Cannot Digitally Sign.')
-          end
-          else if PINResult=prCancel then ShowMsg('Digital Signing has been cancelled.')
-          else
-            begin
-              try
-              begin
+          end else if PINResult=prCancel then 
+            ShowMsg('Digital Signing has been cancelled.')
+          else begin
+            try
               crypto := TCryptography.Create;
               //call rpc to get hash fields other than drug info
               CallV('ORDEA HASHINFO', [Patient.DFN, User.DUZ]);
@@ -705,8 +703,7 @@ begin
                   end;
                 end;
               end;
-              end;
-              finally
+            finally
                 if not(crypto=nil) then
                 begin
                   crypto.Free;
@@ -740,7 +737,7 @@ begin
                     if cidx <> -1 then
                       CSOrder := True;
                   end;
-                  if (CSOrder=False and (frmSignOrders.clstOrders.Checked[cidx]=False)) or (CSOrder and (frmSignOrders.clstCSOrders.Checked[cidx]=False)) then continue;
+                  if ((CSOrder=False) and (frmSignOrders.clstOrders.Checked[cidx]=False)) or (CSOrder and (frmSignOrders.clstCSOrders.Checked[cidx]=False)) then continue;
                   if TOrder(SelectedList.Items[i]).DGroupName = 'Clinic Orders' then ContainsIMOOrders := true;
                   if TOrder(SelectedList.Items[i]).DGroupName = '' then continue;
                   if (Pos('DC', TOrder(SelectedList.Items[i]).ActionOn) > 0) or

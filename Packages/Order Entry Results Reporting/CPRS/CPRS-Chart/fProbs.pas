@@ -136,6 +136,7 @@ type
   private
     FContextString: string;
     FFilterString: string;
+    FI10Active: Boolean;
     FAllProblems: TStringList;      //Unfiltered list of problems
     FProblemsVisible: TStringList;  //Parallels FAllProblems.  "Y" for visible
     FItemData: TStringList;  //Parallels Grid.  String representation of integer indexes into FAllProblems
@@ -187,12 +188,12 @@ const
   TC_PROV_LOC        = 'Incomplete Information';
   TX_INVALID_PATIENT = 'Problem list is unavailable:  Patient DFN is undefined.';
   TC_NO_PATIENT      = 'No patient is selected';
-  TX_INACTIVE_CODE_V = 'references an inactive ICD-9-CM code, and must be updated'  + #13#10 +
+  TX_INACTIVE_CODE_V = 'references an inactive ICD code, and must be updated'  + #13#10 +
                        'using the ''Change'' option before it can be verified.';
-  TC_INACTIVE_CODE   = 'Inactive Code';
-  TX_INACTIVE_ICODE  = 'This problem references an inactive ICD-9-CM code,' + #13#10 +
+  TC_INACTIVE_CODE   = 'Inactive Code';  
+  TX_INACTIVE_ICODE  = 'This problem references an inactive ICD code,' + #13#10 +
                        'and must be updated using the ''Change'' option.';
-  TC_INACTIVE_ICODE  = 'Inactive ICD-9-CM code';
+  TC_INACTIVE_ICODE  = 'Inactive ICD code';
   TX_INACTIVE_SCODE  = 'This problem references an inactive SNOMED CT code,' + #13#10 +
                        'and must be updated using the ''Change'' option.';
   TC_INACTIVE_SCODE  = 'Inactive SNOMED CT code';
@@ -219,7 +220,7 @@ var
 
 implementation
 
-uses fFrame, fProbFlt, fProbLex, rProbs, rcover, fCover, fRptBox,
+uses fFrame, fProbFlt, fProbLex, rProbs, rcover, fCover, fRptBox, rCore,
      fProbCmt, fEncnt, fReportsPrint, fReports, rPCE, DateUtils, VA2006Utils,
      VA508AccessibilityRouter;
 
@@ -234,25 +235,24 @@ begin
 
   if dlgProbs <> nil then
     case BOOLCHAR[frmFrame.CCOWContextChanging] of
-      '1': begin
-             WhyNot := 'Changes to current problem will be discarded.';
-             Result := False;
-           end;
-      '0': begin
-             if WhyNot = 'COMMIT' then
-               begin
-                 FSilent := True;
-                 dlgProbs.Silent := True;
-                 dlgProbs.bbQuitClick(Self);
-               end
-             else
-               begin
-                 dlgProbs.bbQuitClick(Self);
-                 Result := dlgProbs.CanQuit;
-               end;
-           end;
+    '1': begin
+           WhyNot := 'Changes to current problem will be discarded.';
+           Result := False;
+         end;
+    '0': begin
+           if WhyNot = 'COMMIT' then
+             begin
+               FSilent := True;
+               dlgProbs.Silent := True;
+               dlgProbs.bbQuitClick(Self);
+             end
+           else
+             begin
+               dlgProbs.bbQuitClick(Self);
+               Result := dlgProbs.CanQuit;
+             end;
+         end;
     end;
-
 end;
 
 procedure TfrmProblems.ClearPtData;
@@ -320,13 +320,13 @@ var
   ProbRec: TProbRec ;
   ContextString, FilterString: string;
   FilterChanged: boolean;
-  AllProblemsIndex: integer; 
+  AllProblemsIndex: integer;
 begin
   if PLPt = nil then
-    begin
-      InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
-      Exit;
-    end;
+  begin
+    InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
+    Exit;
+  end;
   act := TComponent(Sender).tag ;
   if act = 0 then exit;
    // make sure a visit (time & location) is available before creating the problem
@@ -577,16 +577,6 @@ begin
             ProbRec:=TProbRec.Create(Alist); {create a problem object}
             try
               ProbRec.PIFN := ProblemIFN;
-              if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
-                begin
-                  InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
-                  exit;
-                end
-              else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern) then
-                begin
-                  InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
-                  exit;
-                end;
               if ProbRec.CmtIsXHTML then
                 begin
                   InfoBox(ProbRec.CmtNoEditReason, 'Unable to add new comment', MB_ICONWARNING or MB_OK);
@@ -599,7 +589,7 @@ begin
                   ut := '';
                   If PLUser.usPrimeUser then ut := '1';
                   FastAssign(EditSave(ProblemIFN, pProviderID, PLPt.ptVAMC, ut, ProbRec.FilerObject, ''), AList);
-                  LoadPatientProblems(AList,PlUser.usViewAct[1],true);
+                  LoadPatientProblems(AList, PlUser.usViewAct[1], True);
                 end ;
             finally
               Alist.Free ;
@@ -612,7 +602,7 @@ begin
         Alist := TstringList.create;
         try
           PlUser.usViewAct := 'A';
-          LoadPatientProblems(Alist,'A',false);
+          LoadPatientProblems(Alist, 'A', False);
           SetPiece(FContextString, ';', 3, 'A');
           GetRowCount;
         finally
@@ -624,7 +614,7 @@ begin
         Alist := TstringList.create;
         try
           PlUser.usViewAct := 'I';
-          LoadPatientProblems(Alist,'I',false);
+          LoadPatientProblems(Alist, 'I', False);
           SetPiece(FContextString, ';', 3, 'I');
           GetRowCount;
         finally
@@ -636,7 +626,7 @@ begin
         Alist := TstringList.create;
         try
           PlUser.usViewAct := 'B';
-          LoadPatientProblems(Alist,'B',false);
+          LoadPatientProblems(Alist, 'B', False);
           SetPiece(FContextString, ';', 3, 'B');
           GetRowCount;
         finally
@@ -648,7 +638,7 @@ begin
         Alist := TstringList.create;
         try
           PlUser.usViewAct := 'R';
-          LoadPatientProblems(Alist,'R',false);
+          LoadPatientProblems(Alist, 'R', False);
           SetPiece(FContextString, ';', 3, 'R');
           GetRowCount;
         finally
@@ -950,12 +940,13 @@ end;
 procedure TfrmProblems.FormCreate(Sender: TObject);
 begin
   inherited;
-  FixHeaderControlDelphi2006Bug(HeaderControl);
+//  FixHeaderControlDelphi2006Bug(HeaderControl);
   FAllProblems := TStringList.Create;
   FProblemsVisible := TStringList.Create;
   FItemData := TStringList.Create;
   PageID := CT_PROBLEMS;
   GetFontInfo(Canvas.Handle, gFontWidth, gFontHeight);
+  FI10Active := (Piece(Encounter.GetICDVersion, U, 1) <> 'ICD');
 end;
 
 procedure TfrmProblems.LoadUserParams(Alist:TstringList);
@@ -1008,10 +999,11 @@ end;
 
 procedure TfrmProblems.LoadPatientProblems(AList:TStringList; const Status:char; init:boolean);
 var {init should only be true when initializing a list for a new patient}
-  x, line, ver, prio, comments: string;
+  x, line, ver, prio, comments, cs: String;
   i, j, inactI, inactS: Integer;
   st: char;
   CmtList: TStringList;
+  DateOfInterest: TFMDateTime;
   //SCCond, tmpSCstr: string;
 
   procedure ReverseList(Alist:TstringList);
@@ -1029,6 +1021,7 @@ var {init should only be true when initializing a list for a new patient}
   end;
 
 begin  {Body}
+  FI10Active := (Piece(Encounter.GetICDVersion, U, 1) <> 'ICD');
   CmtList := TStringList.Create;
   if PLFilters=nil then {create view filter lists}
     PLFilters:=TPLFilters.create;
@@ -1046,7 +1039,11 @@ begin  {Body}
       begin
         st:=status;
         if st= '' then st := 'A'; {default to active list}
-        FastAssign(ProblemList(Patient.DFN,St), AList) ;
+        if Patient.Inpatient then   //CQ 21793
+          DateOfInterest := FMNow
+        else
+          DateOfInterest := Encounter.DateTime;
+        FastAssign(ProblemList(Patient.DFN, st, DateOfInterest), AList);
       end;
     if Status = 'R' then
       SetGridPieces('3,4,5,7,8,9')
@@ -1075,12 +1072,12 @@ begin  {Body}
       comments := '';
       CmtList.Clear;
       x := AList[i];
-      if (Piece(x, U, 18) = '#') and (CharAt(UpperCase(Status), 1) in ['A', 'B', 'I', 'R']) then
+      if (Piece(x, U, 18) = '#') and CharInSet(CharAt(UpperCase(Status), 1), ['A', 'B', 'I', 'R']) and (not FI10Active) then
         begin
           ver := '#';      // inactive ICD code flag takes precedence over unverified flag
           if (Piece(x, U, 2) = 'A') then inactI := inactI + 1;
         end
-      else if (Piece(x, U, 18) = '$') and (CharAt(UpperCase(Status), 1) in ['A', 'B', 'I', 'R']) then
+      else if (Piece(x, U, 18) = '$') and CharInSet(CharAt(UpperCase(Status), 1), ['A', 'B', 'I', 'R']) then
         begin
           ver := '#';      // inactive SNOMED CT code flag takes precedence over unverified flag
           if (Piece(x, U, 2) = 'A') then inactS := inactS + 1;
@@ -1103,7 +1100,15 @@ begin  {Body}
       SetPiece(Line, U, 3, Piece(x, U, 3));
 
       if Piece(x, U, 19) <> '' then
-        SetPiece(Line, U, 3, Piece(Line, U, 3) + #13#10 + 'ICD-9-CM Text: ' + MixedCase(Piece(x, U, 19)));
+      begin
+        if Piece(x, U, 20) = 'ICD' then
+          cs := 'ICD-9-CM'
+        else if Piece(x, U, 20) = '10D' then
+          cs := 'ICD-10-CM'
+        else
+          cs := Piece(x, U, 20);
+        SetPiece(Line, U, 3, Piece(Line, U, 3) + #13#10 + cs + ' Text: ' + MixedCase(Piece(x, U, 19)));
+      end;
       if PLUser.usViewComments = '1' then
         begin
           for j := 0 to CmtList.Count-1 do
@@ -1149,27 +1154,27 @@ begin  {Body}
     else
       NoRowSelected;
     pnlRightResize(Self);
-    if (not FWarningShown) and (inactI > 0) and (inactS > 0) and (CharAt(UpperCase(Status), 1) in ['A', 'B']) then
+    if (not FWarningShown) and (inactI > 0) and (inactS > 0) and CharInSet(CharAt(UpperCase(Status), 1), ['A', 'B']) then
       begin
-       InfoBox('There are ' + IntToStr(inactI) + ' active problem(s) flagged with a "#" as having' + #13#10 +
-               'inactive ICD-9-CM codes as of today''s date. There are also ' + #13#10 + IntToStr(inactS) +
-               ' active problem(s) flagged with a "#" as having inactive' + #13#10 +
-               'SNOMED CT codes as of today''s date. Please correct these' + #13#10 +
-               'problems using the "Change" option.', 'Inactive ICD-9-CM & SNOMED CT Codes Found', MB_ICONWARNING or MB_OK);
+       InfoBox('There are ' + IntToStr(inactI) + ' active problem(s) flagged with a "#" as having ' +
+               'inactive ICD codes as of the Encounter date. There are also ' + IntToStr(inactS) +
+               ' active problem(s) flagged with a "#" as having inactive SNOMED CT codes as of ' +
+               'the Encounter date. You may correct these problems using the "Change" option.',
+               'Inactive ICD & SNOMED CT Codes Found', MB_ICONWARNING or MB_OK);
        FWarningShown := True;
       end
-    else if (not FWarningShown) and (inactI > 0) and (CharAt(UpperCase(Status), 1) in ['A', 'B']) then
+    else if (not FWarningShown) and (inactI > 0) and CharInSet(CharAt(UpperCase(Status), 1), ['A', 'B']) then
       begin
-       InfoBox('There are ' + IntToStr(inactI) + ' active problem(s) flagged with a "#" as having' + #13#10 +
-               'inactive ICD-9-CM codes as of today''s date.  Please correct these' + #13#10 +
-               'problems using the "Change" option.', 'Inactive ICD-9-CM Codes Found', MB_ICONWARNING or MB_OK);
+       InfoBox('There are ' + IntToStr(inactI) + ' active problem(s) flagged with a "#" as having ' +
+               'inactive ICD codes as of the Encounter date. You may correct these problems using the "Change" option.',
+               'Inactive ICD Codes Found', MB_ICONWARNING or MB_OK);
        FWarningShown := True;
       end
-    else if (not FWarningShown) and (inactS > 0) and (CharAt(UpperCase(Status), 1) in ['A', 'B']) then
+    else if (not FWarningShown) and (inactS > 0) and CharInSet(CharAt(UpperCase(Status), 1), ['A', 'B']) then
       begin
-       InfoBox('There are ' + IntToStr(inactS) + ' active problem(s) flagged with a "#" as having' + #13#10 +
-               'inactive SNOMED CT codes as of today''s date.  Please correct these' + #13#10 +
-               'problems using the "Change" option.', 'Inactive SNOMED CT Codes Found', MB_ICONWARNING or MB_OK);
+       InfoBox('There are ' + IntToStr(inactS) + ' active problem(s) flagged with a "#" as having ' +
+               'inactive SNOMED CT codes as of the Encounter date. You may correct these problems ' +
+               'using the "Change" option.', 'Inactive SNOMED CT Codes Found', MB_ICONWARNING or MB_OK);
        FWarningShown := True;
       end;
   finally
@@ -1222,7 +1227,7 @@ begin
     Alist.clear;
     if Patient.DFN <> '' then LoadPatientParams(Alist);
     Alist.clear;
-    LoadPatientProblems(AList,PlUser.usViewAct[1],true); {initialize patient list}
+    LoadPatientProblems(AList, PlUser.usViewAct[1], True); {initialize patient list}
     lstView.ItemIndex := -1;
     AList.clear;
     lstCatPick.Clear ;
@@ -1445,6 +1450,8 @@ end;
 procedure TfrmProblems.UpdateProblem(const why:char; Line: string; AllProblemsIndex: integer);
 var
   Alist: TstringList;
+  DateOfInterest: TFMDateTime;
+  SvcCat: Char;
   ProblemIFN: string;
   sv: string;
 begin
@@ -1456,6 +1463,11 @@ begin
     probRec := TProbrec.create(Alist);
     probRec.PIFN := problemIFN;
     ProbRec.RespProvider.DHCPtoKeyVal(inttostr(Encounter.Provider) + u + Encounter.ProviderName);   {REV - V13}
+    SvcCat := Encounter.VisitCategory;
+    if (SvcCat = 'E') or (SvcCat = 'H') then
+      DateOfInterest := FMNow
+    else
+      DateOfInterest := Encounter.DateTime;
     Alist.clear;
     case why of
       'I': begin
@@ -1466,12 +1478,12 @@ begin
              FastAssign(ProblemUpdate(ProbRec.AltFilerObject), AList) ;
            end;
       'V': begin
-            if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
+            if not IsActiveICDCode(ProbRec.Diagnosis.extern, DateOfInterest) then
               begin
                 InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
                 exit;
               end
-            else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern) then
+            else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern, DateOfInterest) then
               begin
                 InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
                 exit;
@@ -1523,13 +1535,20 @@ var
   Alist:TstringList;
   AProbRec: TProbRec;
   ProblemIFN: string;
+  DateOfInterest: TFMDateTime;
+  SvcCat: Char;
 begin
   Alist := TStringList.create;
   ProblemIFN := Piece(MString(wgProbData.ItemIndex), U, 1);
   FastAssign(EditLoad(ProblemIFN, pProviderID, PLPt.ptVAMC), AList) ;
   AProbRec:=TProbRec.Create(Alist); {create a problem object}
+  SvcCat := Encounter.VisitCategory;
+  if (SvcCat = 'E') or (SvcCat = 'H') then
+    DateOfInterest := FMNow
+  else
+    DateOfInterest := Encounter.DateTime;
   try
-    if not IsActiveICDCode(AProbRec.Diagnosis.extern) then
+    if not IsActiveICDCode(AProbRec.Diagnosis.extern, DateOfInterest) then
       begin
         if InfoBox(TX_RESTORE_EDIT, TC_RESTORE_EDIT, MB_YESNO or MB_ICONWARNING) = IDYES then
         begin

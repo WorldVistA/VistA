@@ -10,8 +10,8 @@ inherited frmdlgProb: TfrmdlgProb
   OnClose = FormClose
   OnCreate = FormCreate
   OnShow = FormShow
-  ExplicitWidth = 502
-  ExplicitHeight = 428
+  ExplicitWidth = 510
+  ExplicitHeight = 432
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -19,6 +19,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 357
     Width = 47
     Height = 13
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Recorded'
     Visible = False
   end
@@ -27,6 +31,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 368
     Width = 45
     Height = 13
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Resolved'
     Visible = False
   end
@@ -35,6 +43,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 382
     Width = 41
     Height = 13
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Caption = 'Updated'
     Visible = False
   end
@@ -43,6 +55,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 200
     Width = 494
     Height = 166
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
@@ -54,6 +70,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 1
       Width = 482
       Height = 166
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight, akBottom]
     end
     object lblCmtDate: TOROffsetLabel
@@ -61,6 +81,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 20
       Width = 29
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Date'
       HorzOffset = 6
       Transparent = False
@@ -72,6 +96,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 20
       Width = 50
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Comment'
       HorzOffset = 6
       Transparent = False
@@ -83,10 +111,14 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 6
       Width = 53
       Height = 17
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Comments'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -98,6 +130,10 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 100
       Height = 22
       Hint = 'Add a new comment'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Add comment'
       ParentShowHint = False
@@ -113,6 +149,10 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 100
       Height = 22
       Hint = 'Remove selected comment'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Remove comment'
       ParentShowHint = False
@@ -127,6 +167,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 38
       Width = 475
       Height = 120
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight, akBottom]
       ExtendedSelect = False
       ItemHeight = 13
@@ -146,6 +190,10 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 100
       Height = 22
       Hint = 'Edit selected comment'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Edit comment'
       ParentShowHint = False
@@ -161,6 +209,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 366
     Width = 494
     Height = 28
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
@@ -173,6 +225,10 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 78
       Height = 21
       Hint = 'Cancel problem update...'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Cancel = True
       Caption = 'Cancel'
@@ -188,9 +244,12 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 78
       Height = 21
       Hint = 'Submit problem update...'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'OK'
-      Default = True
       ModalResult = 1
       TabOrder = 2
       OnClick = bbFileClick
@@ -202,6 +261,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 7
       Width = 130
       Height = 15
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       TabStop = False
       Caption = 'Problem Verified'
       TabOrder = 0
@@ -212,6 +275,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 6
       Width = 94
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       TabStop = False
       Color = clInactiveCaptionText
       Enabled = False
@@ -227,6 +294,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 372
     Width = 94
     Height = 21
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -241,6 +312,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 372
     Width = 94
     Height = 21
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -255,6 +330,10 @@ inherited frmdlgProb: TfrmdlgProb
     Top = 0
     Width = 494
     Height = 200
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
@@ -266,10 +345,14 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 4
       Width = 34
       Height = 13
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Activity'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -280,10 +363,14 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 149
       Width = 28
       Height = 13
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Clinic:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -293,10 +380,14 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 105
       Width = 70
       Height = 13
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Resp Provider:'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
@@ -306,6 +397,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 63
       Width = 69
       Height = 13
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Date of Onset:'
     end
     object rgStatus: TKeyClickRadioGroup
@@ -313,6 +408,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 64
       Width = 81
       Height = 124
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Status'
       ItemIndex = 0
       Items.Strings = (
@@ -321,12 +420,17 @@ inherited frmdlgProb: TfrmdlgProb
       TabOrder = 2
       TabStop = True
       OnClick = rgStatusClick
+      OnEnter = rgStatusEnter
     end
     object rgStage: TKeyClickRadioGroup
       Left = 92
       Top = 64
       Width = 87
       Height = 124
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Immediacy'
       Ctl3D = True
       ItemIndex = 2
@@ -344,6 +448,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 18
       Width = 124
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Change problem...'
       TabOrder = 1
@@ -356,6 +464,10 @@ inherited frmdlgProb: TfrmdlgProb
       Width = 294
       Height = 21
       Hint = 'Problem Name'
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       ReadOnly = True
       TabOrder = 0
@@ -368,6 +480,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 52
       Width = 196
       Height = 142
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akTop, akRight]
       Caption = 'Treatment Factors'
       TabOrder = 8
@@ -379,6 +495,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 12
         Width = 35
         Height = 13
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Yes No'
       end
       object ckNSC: TCheckBox
@@ -386,6 +506,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 26
         Width = 160
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Service Connected '
         Enabled = False
@@ -397,6 +521,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 58
         Width = 154
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Radiation '
         Enabled = False
@@ -408,6 +536,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 42
         Width = 154
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Agent Orange '
         Enabled = False
@@ -419,6 +551,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 74
         Width = 149
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Southwest Asia Conditions'
         Enabled = False
@@ -430,6 +566,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 122
         Width = 149
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'Head and/or Neck Cancer'
         Enabled = False
@@ -441,6 +581,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 106
         Width = 149
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Anchors = [akTop, akRight]
         Caption = 'MST'
         Enabled = False
@@ -452,6 +596,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 90
         Width = 170
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Shipboard Hazard and Defense'
         TabOrder = 9
         OnClick = ckNSCClick
@@ -461,6 +609,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 26
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 0
         OnClick = ckNSCClick
@@ -470,6 +622,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 42
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 2
         OnClick = ckNSCClick
@@ -479,6 +635,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 58
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 4
         OnClick = ckNSCClick
@@ -488,6 +648,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 74
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 6
         OnClick = ckNSCClick
@@ -497,6 +661,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 90
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 8
         OnClick = ckNSCClick
@@ -506,6 +674,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 106
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 10
         OnClick = ckNSCClick
@@ -515,6 +687,10 @@ inherited frmdlgProb: TfrmdlgProb
         Top = 122
         Width = 17
         Height = 17
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Enabled = False
         TabOrder = 12
         OnClick = ckNSCClick
@@ -525,6 +701,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 166
       Width = 97
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
       AutoSelect = True
@@ -533,7 +713,7 @@ inherited frmdlgProb: TfrmdlgProb
       DropDownCount = 8
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ItemHeight = 13
@@ -558,6 +738,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 168
       Width = 98
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
       AutoSelect = True
@@ -565,7 +749,7 @@ inherited frmdlgProb: TfrmdlgProb
       DropDownCount = 8
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ItemHeight = 13
@@ -591,6 +775,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 122
       Width = 97
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       Style = orcsDropDown
       AutoSelect = True
@@ -599,7 +787,7 @@ inherited frmdlgProb: TfrmdlgProb
       DropDownCount = 8
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -11
+      Font.Height = -12
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ItemHeight = 13
@@ -625,6 +813,10 @@ inherited frmdlgProb: TfrmdlgProb
       Top = 79
       Width = 96
       Height = 21
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 4
       Text = 'Today'
@@ -643,35 +835,28 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = bbAdd'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = bbRemove'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = lstComments'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = bbEdit'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = pnlBottom'
         'Status = stsDefault')
       (
         'Component = bbQuit'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = bbFile'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = ckVerify'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = edRecDate'
         'Label = Label1'
@@ -687,24 +872,19 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = rgStatus'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = rgStage'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = bbChangeProb'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = edProb'
-        'Property = Hint'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = gbTreatment'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = ckNSC'
         'Status = stsDefault')
@@ -728,8 +908,7 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = cbServ'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = cbLoc'
         'Label = lblLoc'
@@ -740,8 +919,7 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsOK')
       (
         'Component = edOnsetdate'
-        'Property = Caption'
-        'Status = stsOK')
+        'Status = stsDefault')
       (
         'Component = frmdlgProb'
         'Status = stsDefault')

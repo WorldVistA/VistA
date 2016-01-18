@@ -61,13 +61,11 @@ inherited frmSignOrders: TfrmSignOrders
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitTop = 401
-    ExplicitWidth = 723
     object lblDEAText: TStaticText
       Left = 0
       Top = 0
-      Width = 692
-      Height = 43
+      Width = 1574
+      Height = 17
       Margins.Left = 6
       Align = alClient
       Caption = 
@@ -78,7 +76,6 @@ inherited frmSignOrders: TfrmSignOrders
         'leted by the practitioner whose name and DEA registration number' +
         ' appear above. '
       TabOrder = 0
-      ExplicitWidth = 723
     end
   end
   object pnlEsig: TPanel [3]
@@ -89,8 +86,6 @@ inherited frmSignOrders: TfrmSignOrders
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 444
-    ExplicitWidth = 723
     DesignSize = (
       692
       48)
@@ -122,7 +117,6 @@ inherited frmSignOrders: TfrmSignOrders
       Default = True
       TabOrder = 2
       OnClick = cmdOKClick
-      ExplicitLeft = 559
     end
     object cmdCancel: TButton
       Left = 610
@@ -134,7 +128,6 @@ inherited frmSignOrders: TfrmSignOrders
       Caption = 'Cancel'
       TabOrder = 3
       OnClick = cmdCancelClick
-      ExplicitLeft = 641
     end
   end
   object pnlCombined: TORAutoPanel [4]
@@ -145,8 +138,6 @@ inherited frmSignOrders: TfrmSignOrders
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 3
-    ExplicitWidth = 723
-    ExplicitHeight = 238
     DesignSize = (
       692
       245)
@@ -163,13 +154,13 @@ inherited frmSignOrders: TfrmSignOrders
       object lblCSOrderList: TStaticText
         Left = 9
         Top = 20
-        Width = 139
+        Width = 170
         Height = 17
-        Caption = 'Controlled Substance Orders'
+        Caption = 'Controlled Substance EPCS Orders'
         TabOrder = 0
       end
       object lblSmartCardNeeded: TStaticText
-        Left = 154
+        Left = 185
         Top = 19
         Width = 135
         Height = 20
@@ -207,16 +198,15 @@ inherited frmSignOrders: TfrmSignOrders
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 719
       DesignSize = (
         688
         118)
       object lblOrderList: TStaticText
         Left = 10
         Top = 6
-        Width = 223
+        Width = 254
         Height = 17
-        Caption = 'All Orders Except Controlled Susbtance Orders'
+        Caption = 'All Orders Except Controlled Susbtance EPCS Orders'
         TabOrder = 0
       end
       object clstOrders: TCaptionCheckListBox
@@ -239,7 +229,6 @@ inherited frmSignOrders: TfrmSignOrders
         OnMouseDown = clstOrdersMouseDown
         OnMouseMove = clstOrdersMouseMove
         Caption = 'The following orders will be signed -'
-        ExplicitWidth = 712
       end
     end
   end
@@ -251,7 +240,6 @@ inherited frmSignOrders: TfrmSignOrders
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 4
-    ExplicitWidth = 723
     DesignSize = (
       692
       163)
@@ -267,11 +255,11 @@ inherited frmSignOrders: TfrmSignOrders
       TabOrder = 0
       TabStop = True
       Visible = False
-      ExplicitWidth = 723
+      ExplicitWidth = 692
       inherited pnlRight: TPanel
         Left = 419
         Width = 273
-        ExplicitLeft = 450
+        ExplicitLeft = 419
         ExplicitWidth = 273
         inherited Spacer2: TLabel
           Top = 0
@@ -414,7 +402,7 @@ inherited frmSignOrders: TfrmSignOrders
       end
       inherited pnlSCandRD: TPanel
         Width = 419
-        ExplicitWidth = 450
+        ExplicitWidth = 419
         inherited lblSCDisplay: TLabel
           Left = 184
           Top = -2
@@ -430,7 +418,7 @@ inherited frmSignOrders: TfrmSignOrders
           Width = 234
           Align = alNone
           Anchors = [akTop, akRight]
-          ExplicitLeft = 215
+          ExplicitLeft = 184
           ExplicitWidth = 234
         end
       end
@@ -444,7 +432,6 @@ inherited frmSignOrders: TfrmSignOrders
       BevelEdges = []
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 204
       object lblProvInfo: TLabel
         Left = 8
         Top = 3

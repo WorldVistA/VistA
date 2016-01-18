@@ -4491,7 +4491,7 @@ end;
 procedure TfrmFrame.laMHVClick(Sender: TObject);
 begin
   //if laMHV.Caption = 'MHV' then
-  //  ShellExecute(Handle, 'open', PChar('http://www.doma.domain.ext/'), '', '', SW_NORMAL);
+  //  ShellExecute(Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
   ViewInfo(mnuViewMyHealtheVet);
 end;
 
@@ -4538,7 +4538,7 @@ begin
       end;
     4:begin
         if laMHV.Caption = 'MHV' then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.doma.domain.ext/'), '', '', SW_NORMAL);
+          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
       end;
     5:begin
         if fCover.VAAFlag[0] <> '0' then //'0' means subscriber not found
