@@ -41,8 +41,8 @@ NEWPAT ;
  ;
 MKPROB ; Add problem
  N PL
- S ACTDIA="872^253.2"
- S GMPNARR="Hypopituitarism (Diabetes Insipidus)"
+ S ACTDIA="503192^E23.0"  ; "872^253.2"
+ S GMPNARR="Hypopituitarism" ; (Diabetes Insipidus)"
  S GMPONS="3120101"
  S GMPRP=1
  S PL("DIAGNOSIS")=ACTDIA
@@ -50,7 +50,7 @@ MKPROB ; Add problem
  S PL("NARRATIVE")=GMPNARR
  S PL("STATUS")="A"
  S PL("ONSET")=GMPONS
- S PL("LEXICON")="304837"
+ S PL("LEXICON")="7133461"
  S PL("PROVIDER")=GMPRP
  S PL("LOCATION")=GMPCLIN
  S PL("RECORDED")="3120202"
@@ -106,7 +106,7 @@ PXRMOUT ;
  ; Additional information needed for the
  ; Nov 2014 FOIA release PXRM*2.0*26
  S IFI(1,"CODE")=$P(ACTDIA,U,2)
- S IFI(1,"CODESYS")="ICD"
+ S IFI(1,"CODESYS")="10D"
  S IFI(1,"DATE ENTERED")="3031211"
  S IFI(1,"DATE LAST MODIFIED")="3041111"
  S IFI(1,"PROVIDER NARRATIVE")=1
@@ -114,7 +114,7 @@ PXRMOUT ;
  S IFI(1,"STATUS")="A"
  D OUTPUT^PXRMPROB(0,.OCC,.IFI,0,.TEXT)
  S NARRLOC=12
- I $G(TEXT(NARRLOC))=" Modified:" S NARRLOC=23
+ I $G(TEXT(NARRLOC))=" Modified:" S NARRLOC=5
  D CHKTF^%ut($D(TEXT(NARRLOC)),"Provider narrative not defined")
  D CHKEQ^%ut(" Hypopituitarism",$G(TEXT(NARRLOC)))
  ; This information doesnt seem to exist in new output....
