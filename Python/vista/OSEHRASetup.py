@@ -130,6 +130,22 @@ def configureNULLDevice(VistA):
   VistA.wait("Select OPTION")
   VistA.write("")
 
+def configureConsoleDevice(VistA):
+  # Ensure that the console device is correctly configured by adding
+  # sign-on capabilities
+  startFileman(VistA)
+  VistA.write('1')
+  VistA.wait('INPUT TO WHAT FILE')
+  VistA.write('DEVICE')
+  VistA.wait('EDIT WHICH FIELD')
+  VistA.write('SIGN-ON/SYSTEM DEVICE\r')
+  VistA.wait('NAME:')
+  VistA.write('/dev/tty')
+  VistA.wait('SYSTEM DEVICE')
+  VistA.write('Y\r')
+  VistA.wait("Select OPTION")
+  VistA.write("")
+
 def setupVistADomain(VistA,site_name):
   # Enter the site name into the DOMAIN file via FileMan
   startFileman(VistA)
