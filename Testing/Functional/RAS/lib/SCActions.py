@@ -386,7 +386,7 @@ class SCActions (Actions):
             self.VistA.wait(wwset[0])
             self.VistA.write(wwset[1])
 
-    def set_demographics(self, clinic, patient, dgrph, CLfirst=None, patidx=None):
+    def set_demographics(self, clinic, patient, dgrph, emailAddress=None, CLfirst=None, patidx=None):
         '''
         This sets demographics via PD action and has an option to select the clinic
         before setting demographics for a patient via a patient index (patidx) argument.
@@ -410,11 +410,24 @@ class SCActions (Actions):
         for wwset in dgrph:
             self.VistA.wait(wwset[0])
             self.VistA.write(wwset[1])
+        index = self.VistA.multiwait(['DOES THE PATIENT','EMAIL ADDRESS'])
+        if index == 0:
+          if emailAddress != None :
+            self.VistA.write('Y')
+            self.VistA.wait('EMAIL ADDRESS')
+            self.VistA.write(emailAddress)
+          else:
+            self.VistA.write('N')
+        else:
+          if emailAddress != None :
+            self.VistA.write(emailAddress)
+          else:
+            self.VistA.write('')
         self.VistA.wait('Select Action:')
         self.VistA.write('Quit')
         self.VistA.wait('')
 
-    def get_demographics(self, patient, vlist):
+    def get_demographics(self, patient, vlist, emailAddress=None):
         '''This gets the patient demographics via the PD action.'''
         self.VistA.wait('Clinic name:')
         self.VistA.write(patient)  # <--- by patient
@@ -425,7 +438,17 @@ class SCActions (Actions):
         for wwset in vlist:
             self.VistA.wait(wwset[0])
             self.VistA.write(wwset[1])
-        self.VistA.wait('Select Action:')
+        index = self.VistA.multiwait(['DOES THE PATIENT','EMAIL ADDRESS'])
+        if index == 0:
+          if emailAddress != None:
+            self.VistA.write('Y')
+            self.VistA.wait(emailAddress)
+            self.VistA.write('')
+          else:
+            self.VistA.write('N')
+        else:
+          self.VistA.write('')
+        self.VistA.wait('Select Action')
         self.VistA.write('Quit')
         self.VistA.wait('')
 
@@ -605,7 +628,7 @@ class SCActions (Actions):
         # PC
         self.VistA.wait('Select Action:')
         self.VistA.write('PC')
-        self.VistA.wait('is locked')
+        self.VistA.multiwait(['to continue','is locked'])
         self.VistA.write('')
 
     def use_sbar(self, clinic, patient, fresh=None):
@@ -845,7 +868,10 @@ class SCActions (Actions):
         self.VistA.write('Regular')
         self.VistA.wait('continue:')
         self.VistA.write('')
-        self.VistA.wait('Check Out:')
+        index = self.VistA.multiwait(['Check Out:','ROUTING SLIP'])
+        if index == 1:
+          self.VistA.write('N')
+          self.VistA.wait('Check Out')
         self.VistA.write('CI')
         self.VistA.wait_re('CHECKED')
         self.VistA.write('')
@@ -1081,8 +1107,11 @@ class SCActions (Actions):
         self.VistA.write('')
         self.VistA.wait('NUMBER')
         self.VistA.write('')
-        self.VistA.wait('ADDRESS:')
-        self.VistA.write('')
+        index = self.VistA.multiwait(['DOES THE','ADDRESS'])
+        if index == 0:
+          self.VistA.write('Y')
+          self.VistA.wait('EMAIL ADDRESS')
+        self.VistA.write('email3@example.org')
         self.VistA.wait('Select Action')
         self.VistA.write('')
 

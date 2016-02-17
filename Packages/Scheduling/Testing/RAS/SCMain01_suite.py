@@ -392,8 +392,7 @@ def sc_test010(test_suite_details):
                                  ['RELIGIOUS PREFERENCE', 'CELTICISM'],
                                  ['TEMPORARY ADDRESS ACTIVE', 'NO'],
                                  ['PHONE NUMBER', ''],
-                                 ['PAGER NUMBER', ''],
-                                 ['EMAIL ADDRESS', '']])
+                                 ['PAGER NUMBER', '']], emailAddress = 'email@example.org')
         SC.signon()
         SC.get_demographics(patient='323123456',
                         vlist=[['COUNTRY: UNITED STATES', ''],
@@ -416,8 +415,7 @@ def sc_test010(test_suite_details):
                                  ['RELIGIOUS PREFERENCE: CELTICISM', ''],
                                  ['ADDRESS ACTIVE', ''],
                                  ['PHONE NUMBER', ''],
-                                 ['PAGER NUMBER', ''],
-                                 ['EMAIL ADDRESS', '']])
+                                 ['PAGER NUMBER', '']], emailAddress ='email@example.org')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:
