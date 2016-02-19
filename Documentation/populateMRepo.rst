@@ -2,6 +2,9 @@
 Populate the VistA-M Repository
 =================================
 
+.. role:: usertype
+    :class: usertype
+
 The VistA-M repository is used for many things within the OSEHRA Testing
 Harness.  While most of these uses assume that the OSEHRA code is the desired
 version of VistA to set up, this is not always the case.  There are times when
@@ -145,3 +148,61 @@ An example run of the command is shown below:
 
 In this example, some globals are moved into their respective packages while
 others are moved back into the Uncategorized package.
+
+
+Troubleshooting
+---------------
+
+Script Errors on Background Process Shutdown
+++++++++++++++++++++++++++++++++++++++++++++
+
+During the run of the VistAMComponentExtractor, the script attempts to shut
+down some background processes within the VistA environment.  It accesses the
+EVE menu to attempt to stop TaskMan, the MailMan background filer, and the HL7
+background filer by accessing the XUP menus as the DUZ=1 user and accessing the
+EVE menu.
+
+In order to shut down the Mailman background filer,  the script attempts to
+access the ``MailMan Master Menu`` which isn't one of the EVE options.
+The DUZ=1 user needs to be given a ``SECONDARY MENU OPTION`` of ``XMMASTER`` in
+order to access this menu from the EVE menu:
+
+.. parsed-literal::
+
+  VISTA> :usertype:`S DUZ=1 D Q^DI`
+
+  VA FileMan 22.0
+
+
+  Select OPTION: :usertype:`1`  ENTER OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: NEW PERSON// :usertype:`NEW PERSON`         (60 entries)
+  EDIT WHICH FIELD: ALL// :usertype:`SECONDARY MENU OPTIONS`    (multiple)
+     EDIT WHICH SECONDARY MENU OPTIONS SUB-FIELD: ALL//:usertype:`<enter>`
+  THEN EDIT FIELD: :usertype:`<enter>`
+
+
+  Select NEW PERSON NAME: :usertype:`\`1` USER,ONE     DBA
+  Select SECONDARY MENU OPTIONS: :usertype:`XMMASTER`       MailMan Master Menu
+    Are you adding 'XMMASTER' as a new SECONDARY MENU OPTIONS? No// :usertype:`Y`  (Yes)
+    SYNONYM: :usertype:`<enter>`
+  Select SECONDARY MENU OPTIONS: :usertype:`^`
+
+
+Exporting to non-"VistA-M" directory
+++++++++++++++++++++++++++++++++++++
+
+If the wish is to export into a directory that isn't a copy of the VistA-M
+repository, some things will be required to be available in order for the
+script to proceed.
+
+The minimal structure of an output directory requires the presence of:
+
+* A directory named ``Packages``
+* A copy of the ``Packages.csv`` file from the top level of the VistA
+  repository
+
+If these objects are not found, the script will throw an assertion error and
+the execution of the script will stop.
