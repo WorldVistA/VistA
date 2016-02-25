@@ -280,6 +280,29 @@ protocol_table_header_fields = (
       <th colspan="1">"Exit Action"</th>
     """),
   )
+"""
+fields and logic to convert to html for HLO List
+"""
+HLO_list_fields = (
+       ("Name", '.01', getFileHtmlLink), # Name
+       ("Package", '2', getFileHtmlLink), # Type
+       ("HL7 Type Tag", '1/.01', None), # Action Tag
+       ("Action Tag", '1/.04', None), # Action Tag
+       ("Action Routine", '1/.05', None), # Action Routine
+   )
+
+HLO_table_header_fields = (
+    ("""
+      <th rowspan="2">Name</th>
+      <th rowspan="2">Package</th>
+      <th colspan="3">Actions</th>
+    """),
+    ("""
+      <th>HL7 Message Type</th>
+      <th>Action Tag</th>
+      <th>Action Routine</th>
+    """),
+  )
 
 """
 fields and logic to convert to html for option List
@@ -422,6 +445,18 @@ class FileManDataToHtml(object):
             self._generateHL7ListByPackage(allHl7s, "All")
           if allProtocols:
             self._generateProtocolListByPackage(allProtocols, "All")
+      elif fileNo== '779.2':
+        if crossRef:
+          allPackages = crossRef.getAllPackages()
+          allHLOs = []
+          for package in allPackages.itervalues():
+            if package.hlo:
+              logging.info("generating HLO list for package: %s"
+                           % package.getName())
+              self._generateHLOListByPackage(package.hlo, package.getName())
+              allHLOs.extend(package.hlo)
+          if allHLOs:
+            self._generateHLOListByPackage(allHLOs,"All")
       elif fileNo == '19':
         """ generate all option list """
         allOptionList = []
@@ -620,6 +655,15 @@ class FileManDataToHtml(object):
                                            protocol_list_fields, "Protocols",
                                            protocol_table_header_fields)
 
+  def _generateHLOListByPackage(self, dataEntryLst, pkgName):
+    """
+      Specific logic to handle HLO List
+      @TODO move the logic to a specific file
+    """
+    return self._generateDataListByPackage(dataEntryLst, pkgName,
+                                           HLO_list_fields, "HLO",
+                                           HLO_table_header_fields)
+
   def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields,
                                  listName, custom_header=None):
     outDir = self.outDir
@@ -648,8 +692,14 @@ class FileManDataToHtml(object):
         allFields = dataEntry.fields
         output.write("<tr>\n")
         for idx, id in enumerate(list_fields):
-          if id[1] in allFields:
-            value = allFields[id[1]].value
+          # If value has / in it, we take the first value as usual
+          # but assume the information is a "multiple" field and
+          # attempt to find the second bit of information within it
+          idVal,multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1],None)
+          if idVal in allFields:
+            value = allFields[idVal].value
+            if multval:
+              value = self.findSubValue(value,multval)
             if id[-1]:
               value = id[-1](dataEntry, value, crossRef=self.crossRef)
             tableRow[idx] = value
@@ -662,6 +712,16 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write("</div>\n")
       output.write ("</body></html>\n")
+
+  def findSubValue(self,search,multval):
+    vals = ''
+    for i in search.dataEntries:
+      vals += '<ul>'
+      if multval in search.dataEntries[i].fields:
+        vals += search.dataEntries[i].fields[multval].value
+      vals += '</ul>'
+    return vals
+
   def _generateDataTableHtml(self, fileManData, fileNo):
     outDir = self.outDir
     isLargeFile = len(fileManData.dataEntries) > 4500
