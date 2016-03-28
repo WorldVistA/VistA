@@ -171,7 +171,8 @@ if VistA.type=='cache':
     pass
 OSEHRASetup.setupElectronicSignature(VistA,"fakeclerk1","2Cle!@#$","1Cle!@#$","CLERKJ123")
 
-# Add patient to the instance using the Clerk user
+# Add patient to the instance using the registration menu.
+# Not using the Clerk user to avoid dropping the connection on the error when trying to connect to the MPI.
 # and the Register a Patient menu option.
 # The patient can be a veteran but not service connected
 VistA=ConnectToMUMPS("${VISTA_BINARY_DIR}/Testing/Log/AddPatients.log","${VISTA_CACHE_INSTANCE}","${VISTA_CACHE_NAMESPACE}")
@@ -184,5 +185,4 @@ if VistA.type=='cache':
     pass
 # Function arguments:
 # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-OSEHRASetup.signonZU(VistA,"fakeclerk1","1Cle!@#$")
-OSEHRASetup.addPatient(VistA,"Carter,David JR","M","03/02/2001","000000113","N")
+OSEHRASetup.addPatient(VistA,'${VISTA_SOURCE_DIR}/Testing/Functional/dataFiles/patdata0.csv')
