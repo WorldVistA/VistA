@@ -45,7 +45,7 @@ def printMenuTextPairs(VistA,outputFile):
   VistA.write("S DUZ=1 D Q^DI")
   VistA.wait('Select OPTION')
   VistA.write("PRINT FILE ENTRIES")
-  VistA.wait("OUTPUT FROM WHAT FILE")
+  VistA.wait_re("OUTPUT FROM WHAT FILE")
   VistA.write("OPTION")
   index = VistA.multiwait(["CHOOSE","SORT BY"])
   if index == 0:

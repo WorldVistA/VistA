@@ -83,7 +83,7 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   # "@" to remove or set a new file path.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('KERNEL SYSTEM PARAMETERS')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('PRIMARY HFS DIRECTORY')
@@ -116,7 +116,7 @@ def configureNULLDevice(VistA):
   # sign-on capabilities
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DEVICE')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('$I\rSIGN-ON/SYSTEM DEVICE\r')
@@ -136,7 +136,7 @@ def configureConsoleDevice(VistA):
   # sign-on capabilities
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DEVICE')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('SIGN-ON/SYSTEM DEVICE\r')
@@ -151,7 +151,7 @@ def setupVistADomain(VistA,site_name):
   # Enter the site name into the DOMAIN file via FileMan
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DOMAIN\r')
   VistA.wait('Select DOMAIN NAME')
   VistA.write(site_name)
@@ -193,11 +193,11 @@ def setupVistADomain(VistA,site_name):
   VistA.write('UTILITY')
   VistA.wait('UTILITY OPTION')
   VistA.write('RE')
-  VistA.wait('MODIFY WHAT FILE')
+  VistA.wait_re('MODIFY WHAT FILE')
   VistA.write('8989.3\rNO\rY\rY')
   VistA.wait('UTILITY OPTION')
   VistA.write('RE')
-  VistA.wait('MODIFY WHAT FILE')
+  VistA.wait_re('MODIFY WHAT FILE')
   VistA.write('8994.1\rNO\rY\rY\r')
   VistA.wait('Select OPTION')
   VistA.write("")
@@ -209,7 +209,7 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
   #  to match what was queried above
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('14.7')
   VistA.wait('ALL//')
   VistA.write('')
@@ -227,7 +227,7 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
   # if a GT.M system, will create the information but not start it.
   VistA.wait('Select OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('8994.1')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('LISTENER')
@@ -257,7 +257,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   # the CMake value of TEST_VISTA_SETUP_VOLUME_SET.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('14.5\r')
   VistA.wait('Select VOLUME SET')
   VistA.write('`1')
@@ -271,7 +271,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   # Add the Volume set information to the Kernel System Parameters File
   VistA.wait('Select OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('KERNEL SYSTEM PARAMETERS\rVOLUME SET\r\r')
   VistA.wait('Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:')
   VistA.write(site_name + '\r')
@@ -412,7 +412,7 @@ def addInstitution(VistA,inst_name,station_number):
   # multiple additions.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE:')
+  VistA.wait_re('INPUT TO WHAT FILE:')
   VistA.write('4')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('STATION NUMBER')
@@ -436,7 +436,7 @@ def addDivision(VistA,div_name, facility_number,station_number):
   # points back to the recently created Institution
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE:')
+  VistA.wait_re('INPUT TO WHAT FILE:')
   VistA.write('40.8')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('FACILITY NUMBER')
@@ -470,7 +470,7 @@ def setupStrepTest(VistA):
   # area at an Institution.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('ACCESSION\r1')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('.4\r')
@@ -483,7 +483,7 @@ def setupStrepTest(VistA):
   # area at the Vista Health Care institution
   VistA.wait('OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('LABORATORY TEST')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('ACCESSION AREA\r\r')
@@ -499,7 +499,7 @@ def setupStrepTest(VistA):
   # used by the Laboratory
   VistA.wait('OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('ADMINISTRATION SCHEDULE')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('PACKAGE PREFIX\r')
