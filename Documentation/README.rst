@@ -121,6 +121,12 @@ The OSEHRA VistA source tree is also used in the generation of the Dox pages
 which can be found at `code.osehra.org/dox`_. For instructions on how to set up
 and execute the steps necessary to generate the HTML files, see setupDox_.
 
+Routine changes to the VistA Environment
+-----------------------------------------
+
+The OSEHRA VistA framework makes some modifications to the installed VistA
+system when using the ``TEST_VISTA_FRESH`` and ``TEST_VISTA_SETUP`` options.
+For information about the changes and why they were made, see testingChanges_
 
 Automated Virtual Machine (VM) creation and VistA installation
 --------------------------------------------------------------
@@ -163,6 +169,7 @@ directory and includes:
 
   * `M Standards and Conventions`_
 
+.. _testingChanges: testingChanges.rst
 .. _`Troubleshooting Page`:
    http://www.osehra.org/wiki/troubleshooting-installation-and-testing
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
