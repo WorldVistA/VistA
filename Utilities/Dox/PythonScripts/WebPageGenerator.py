@@ -81,7 +81,6 @@ COMMON_HEADER_PART = """
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
-<title>OSEHRA VistA Code Documentation</title>
 <link href="DoxygenStyle.css" rel="stylesheet" type="text/css">
 """
 HEADER_END = """
@@ -399,6 +398,7 @@ class WebPageGenerator:
     def __inlcudeSourceHeader__(self, outputFile):
         for line in self._source_header:
             outputFile.write(line)
+
 #===============================================================================
 # Template method to generate the web pages
 #===============================================================================
@@ -423,6 +423,7 @@ class WebPageGenerator:
     def generateIndexHtmlPage(self):
         outputFile = open(os.path.join(self._outDir, "index.html"), 'wb')
         outputFile.write(COMMON_HEADER_PART)
+        outputFile.write("<title>OSEHRA VistA Code Documentation</title>")
         outputFile.write(GOOGLE_ANALYTICS_JS_CODE)
         outputFile.write(HEADER_END)
         outputFile.write(DEFAULT_BODY_PART)
@@ -462,6 +463,7 @@ class WebPageGenerator:
     def generatePackageNamespaceGlobalMappingPage(self):
         outputFile = open(os.path.join(self._outDir, "Packages_Namespace_Mapping.html"), 'wb')
         self.__includeHeader__(outputFile)
+        outputFile.write("<title>Package Namespace Mapping</title>")
         outputFile.write("<div><h1>%s</h1></div>\n" % "Package Namespace Mapping")
 #        writeSectionHeader("Package Namespace Mapping", "Package Namespace Mapping", outputFile)
         # print the table header
@@ -505,6 +507,7 @@ class WebPageGenerator:
     def generateGlobalNameIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "globals.html"), 'w')
         self.__includeHeader__(outputFile)
+        outputFile.write("<title>Global Index List</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h1>Global Index List</h1>\n</div>\n</div>")
@@ -544,6 +547,7 @@ class WebPageGenerator:
             if item.isFileManFile():
                 allFileManFilesList.append(item)
         self.__includeHeader__(outputFile)
+        outputFile.write("<title>FileMan Files List</title>")
         outputFile.write("<div><h1>%s</h1></div>\n" % "All FileMan Files List Total: %d" % len(allFileManFilesList))
 #        writeSectionHeader("Package Namespace Mapping", "Package Namespace Mapping", outputFile)
         # print the table header
@@ -570,6 +574,7 @@ class WebPageGenerator:
         outputFile = open(os.path.join(self._outDir, "filemansubfiles.html"), 'wb')
         allSubFiles = self._crossRef.getAllFileManSubFiles()
         self.__includeHeader__(outputFile)
+        outputFile.write("<title>Fileman Sub-Files</title>")
         outputFile.write("<div><h1>%s</h1></div>\n" % "All FileMan Sub-Files List Total: %d" % len(allSubFiles))
 #        writeSectionHeader("Package Namespace Mapping", "Package Namespace Mapping", outputFile)
         # print the table header
@@ -615,6 +620,7 @@ class WebPageGenerator:
                     generateIndexBar(outputFile, indexListFileMan)
                 else:
                     generateIndexBar(outputFile, indexListGlobal)
+                outputFile.write("<title>Global: "+globalName+"</title>")
                 outputFile.write("<div class=\"_header\">\n")
                 outputFile.write("<div class=\"headertitle\">")
                 outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
@@ -692,6 +698,7 @@ class WebPageGenerator:
             topDownList.append(fileIter)
         topDownList.reverse()
         package = fileIter.getPackage()
+        outputFile.write("<title>Sub-Field:"+subFile.getFileNo()+"</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write(("<h4>Package: %s</h4>\n</div>\n</div>"
@@ -1021,6 +1028,7 @@ class WebPageGenerator:
                    "%s-->%s" % (depPackage.getName(), package.getName())]
         archList = [package.getName(), depPackage.getName()]
         generateIndexBar(outputFile, inputList, archList)
+        outputFile.write("<title>" + package.getName() + " : "+ depPackage.getName() + "</title>")
         outputFile.write("<div><h1>%s and %s Interaction Details</h1></div>\n" %
                          (packageHyperLink, depPackageHyperLink))
         #generate the summary part.
@@ -1054,6 +1062,7 @@ class WebPageGenerator:
             outputFile = open(os.path.join(self._outDir,
                                          getRoutineSourceHtmlFileNameUnquoted(sourceCodeName)), 'wb')
             self.__inlcudeSourceHeader__(outputFile)
+            outputFile.write("<title>Routine: "+sourceCodeName+"</title>")
             outputFile.write("<div><h1>%s.m</h1></div>\n" % sourceCodeName)
             outputFile.write("<a href=\"%s\">Go to the documentation of this file.</a>" %
                              getRoutineHtmlFileName(routineName))
@@ -1117,6 +1126,7 @@ class WebPageGenerator:
     def generateRoutineIndexPage(self):
         outputFile = open(os.path.join(self._outDir, "routines.html"), 'w')
         self.__includeHeader__(outputFile)
+        outputFile.write("<title>Routine Index List</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h1>Routine Index List</h1>\n</div>\n</div>")
@@ -1481,6 +1491,7 @@ class WebPageGenerator:
         outputFile = open(os.path.join(self._outDir, "packages.html"), 'w')
         self.__includeHeader__(outputFile)
         #write the _header
+        outputFile.write("<title>Package List</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h1>Package List</h1>\n</div>\n</div>")
@@ -1617,6 +1628,7 @@ class WebPageGenerator:
             #write the _header part
             self.__includeHeader__(outputFile)
             generateIndexBar(outputFile, indexList)
+            outputFile.write("<title>Package: "+packageName+"</title>")
             outputFile.write("<div class=\"_header\">\n")
             outputFile.write("<div class=\"headertitle\">")
             outputFile.write("<h1>Package: %s</h1>\n</div>\n</div>" % packageName)
@@ -1847,6 +1859,7 @@ class WebPageGenerator:
         self.__includeHeader__(outputFile)
         # generated the qindex bar
         generateIndexBar(outputFile, indexList)
+        outputFile.write("<title>Routine: "+routineName+"</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h4>Package: %s</h4>\n</div>\n</div>" % getPackageHyperLinkByName(package.getName()))
@@ -1925,6 +1938,7 @@ class WebPageGenerator:
         self.__includeHeader__(outputFile)
         # generated the qindex bar
         generateIndexBar(outputFile, indexList)
+        outputFile.write("<title>Routine:"+routineName+"</title>")
         outputFile.write("<div class=\"_header\">\n")
         outputFile.write("<div class=\"headertitle\">")
         outputFile.write("<h4>Package: %s</h4>\n</div>\n</div>" % getPackageHyperLinkByName(package.getName()))

@@ -39,7 +39,7 @@ for filenum in fileNameLst:
   skipflag=False
   failflag=False
   VistA.write('Verify Fields')
-  VistA.wait('MODIFY WHAT FILE')
+  VistA.wait_re('MODIFY WHAT FILE')
   VistA.write('`'+filenum)
   index = VistA.multiwait(['VERIFY WHICH FIELD','Select UTILITY OPTION','Are you adding a new FILE','MODIFY WHAT FILE'])
   if index == 0:
@@ -94,7 +94,7 @@ for filenum in fileNameLst:
     print "No Entries to verify in File# " + filenum
   elif index == 2:
     VistA.write("No")
-    VistA.wait('MODIFY WHAT FILE')
+    VistA.wait_re('MODIFY WHAT FILE')
     VistA.write('')
     VistA.wait('UTILITY OPTION')
     print "File#" + filenum + " was not able to be found in the system"

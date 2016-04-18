@@ -16,6 +16,7 @@
 import sys
 import os
 import time
+import TestHelper
 from OSEHRAHelper import PROMPT
 
 def startFileman(VistA):
@@ -82,7 +83,7 @@ def setupPrimaryHFSDir(VistA,hfs_dir):
   # "@" to remove or set a new file path.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('KERNEL SYSTEM PARAMETERS')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('PRIMARY HFS DIRECTORY')
@@ -115,7 +116,7 @@ def configureNULLDevice(VistA):
   # sign-on capabilities
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DEVICE')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('$I\rSIGN-ON/SYSTEM DEVICE\r')
@@ -130,11 +131,27 @@ def configureNULLDevice(VistA):
   VistA.wait("Select OPTION")
   VistA.write("")
 
+def configureConsoleDevice(VistA):
+  # Ensure that the console device is correctly configured by adding
+  # sign-on capabilities
+  startFileman(VistA)
+  VistA.write('1')
+  VistA.wait_re('INPUT TO WHAT FILE')
+  VistA.write('DEVICE')
+  VistA.wait('EDIT WHICH FIELD')
+  VistA.write('SIGN-ON/SYSTEM DEVICE\r')
+  VistA.wait('NAME:')
+  VistA.write('/dev/tty')
+  VistA.wait('SYSTEM DEVICE')
+  VistA.write('Y\r')
+  VistA.wait("Select OPTION")
+  VistA.write("")
+
 def setupVistADomain(VistA,site_name):
   # Enter the site name into the DOMAIN file via FileMan
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('DOMAIN\r')
   VistA.wait('Select DOMAIN NAME')
   VistA.write(site_name)
@@ -176,11 +193,11 @@ def setupVistADomain(VistA,site_name):
   VistA.write('UTILITY')
   VistA.wait('UTILITY OPTION')
   VistA.write('RE')
-  VistA.wait('MODIFY WHAT FILE')
+  VistA.wait_re('MODIFY WHAT FILE')
   VistA.write('8989.3\rNO\rY\rY')
   VistA.wait('UTILITY OPTION')
   VistA.write('RE')
-  VistA.wait('MODIFY WHAT FILE')
+  VistA.wait_re('MODIFY WHAT FILE')
   VistA.write('8994.1\rNO\rY\rY\r')
   VistA.wait('Select OPTION')
   VistA.write("")
@@ -192,7 +209,7 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
   #  to match what was queried above
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('14.7')
   VistA.wait('ALL//')
   VistA.write('')
@@ -210,7 +227,7 @@ def setupBoxVolPair(VistA,volume_set,site_name,tcp_port):
   # if a GT.M system, will create the information but not start it.
   VistA.wait('Select OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('8994.1')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('LISTENER')
@@ -240,7 +257,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   # the CMake value of TEST_VISTA_SETUP_VOLUME_SET.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('14.5\r')
   VistA.wait('Select VOLUME SET')
   VistA.write('`1')
@@ -254,7 +271,7 @@ def setupVolumeSet(VistA,site_name,volume_set,namespace=""):
   # Add the Volume set information to the Kernel System Parameters File
   VistA.wait('Select OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('KERNEL SYSTEM PARAMETERS\rVOLUME SET\r\r')
   VistA.wait('Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:')
   VistA.write(site_name + '\r')
@@ -395,7 +412,7 @@ def addInstitution(VistA,inst_name,station_number):
   # multiple additions.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE:')
+  VistA.wait_re('INPUT TO WHAT FILE:')
   VistA.write('4')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('STATION NUMBER')
@@ -419,7 +436,7 @@ def addDivision(VistA,div_name, facility_number,station_number):
   # points back to the recently created Institution
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE:')
+  VistA.wait_re('INPUT TO WHAT FILE:')
   VistA.write('40.8')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('FACILITY NUMBER')
@@ -453,7 +470,7 @@ def setupStrepTest(VistA):
   # area at an Institution.
   startFileman(VistA)
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('ACCESSION\r1')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('.4\r')
@@ -466,7 +483,7 @@ def setupStrepTest(VistA):
   # area at the Vista Health Care institution
   VistA.wait('OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('LABORATORY TEST')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('ACCESSION AREA\r\r')
@@ -482,7 +499,7 @@ def setupStrepTest(VistA):
   # used by the Laboratory
   VistA.wait('OPTION')
   VistA.write('1')
-  VistA.wait('INPUT TO WHAT FILE')
+  VistA.wait_re('INPUT TO WHAT FILE')
   VistA.write('ADMINISTRATION SCHEDULE')
   VistA.wait('EDIT WHICH FIELD')
   VistA.write('PACKAGE PREFIX\r')
@@ -1016,9 +1033,14 @@ def createClinic(VistA,name,abbrv,service):
   VistA.write('')
   VistA.wait('ABBREVIATION')
   VistA.write(abbrv)
-  VistA.wait('CLINIC MEETS')
-  VistA.write('Y')
-  VistA.wait('SERVICE')
+  while True:
+    index = VistA.multiwait(['SERVICE','CLINIC MEETS','PATIENT FRIENDLY NAME','ALLOW DIRECT PATIENT','DISPLAY CLIN APPT'])
+    if index == 0:
+      break;
+    if index == 2:
+      VistA.write('')
+    else:
+      VistA.write('Y')
   VistA.write(service)
   VistA.wait('NON-COUNT CLINIC')
   VistA.write('N')
@@ -1026,7 +1048,10 @@ def createClinic(VistA,name,abbrv,service):
   VistA.write('301\r\r')
   VistA.wait('TELEPHONE')
   VistA.write('555-555-1414\r\r\r\r\r\r\r\r\r\r\r')
-  VistA.wait('ALLOWABLE CONSECUTIVE NO-SHOWS')
+  index = VistA.multiwait(['ALLOWABLE CONSECUTIVE NO-SHOWS','WORKLOAD VALIDATION'])
+  if index == 1:
+    VistA.write('')
+    VistA.wait('ALLOWABLE CONSECUTIVE NO-SHOWS')
   VistA.write('0')
   VistA.wait('FUTURE BOOKING')
   VistA.write('90')
@@ -1097,84 +1122,121 @@ def setupElectronicSignature(VistA,AC,VC1,VC2,sigcode):
   VistA.wait('Toolbox')
   VistA.write('\r\r\r')
 
-# Add patient through the
-# Function arguments:
-# VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
-def addPatient(VistA,name,sex,DOB,SSN,vet):
-  VistA.wait("Core Applications")
-  VistA.write("ADT Manager Menu")
-  index = VistA.multiwait(['to continue','Select ADT Manager Menu'])
-  if index == 0:
-    VistA.write('')
-    VistA.wait('ADT Manager Menu')
-  VistA.write("Registration Menu")
-  VistA.wait("Registration Menu")
-  VistA.write('Register a Patient')
-  index = VistA.multiwait(['PATIENT NAME',"Select 1010 printer"])
-  if index == 1:
-    VistA.write("NULL")
-    VistA.wait('PATIENT NAME')
-  VistA.write(name +'\rY')
-  VistA.wait('SEX')
-  VistA.write(sex)
-  VistA.wait('DATE OF BIRTH')
-  VistA.write(DOB)
-  VistA.wait('SOCIAL SECURITY NUMBER')
-  VistA.write(SSN)
-  VistA.wait('TYPE')
-  VistA.write('NON-VETERAN')
-  VistA.wait('PATIENT VETERAN')
-  VistA.write(vet)
-  VistA.wait('SERVICE CONNECTED')
-  VistA.write('NO')
-  VistA.wait('MULTIPLE BIRTH INDICATOR')
-  VistA.write('')
-  VistA.wait('//')
-  VistA.write('^\r')
-  VistA.wait('MAIDEN NAME:')
-  VistA.write('')
-  VistA.wait('[CITY]')
-  VistA.write('Santa Monica')
-  VistA.wait('[STATE]')
-  VistA.write('California')
-  VistA.wait('ALIAS')
-  VistA.write('')
-  if VistA.type=='cache':
-    # Enter in more information about the patient.
-    VistA.wait('exit:')
-    VistA.write('\r')
-    VistA.wait('Patient Data')
-    VistA.write('Y')
-    VistA.wait('QUIT')
-    VistA.write('4')
-    VistA.wait('COUNTRY')
-    VistA.write('')
-    VistA.wait('STREET ADDRESS')
-    VistA.write('834 Ocean Vista Avenue\r')
-    VistA.wait('ZIP')
-    VistA.write('90401')
-    VistA.wait('CITY')
-    VistA.write('1')
-    VistA.wait('PHONE NUMBER')
-    VistA.write('310-555-2233\r\r')
-    VistA.wait('changes')
-    VistA.write('Y\r')
-    VistA.wait('QUIT')
-    VistA.write('\r\r')
-    VistA.wait('QUIT')
-    VistA.write('1')
-    VistA.wait('PRIMARY NOK')
-    VistA.write('Carter,David J Sr')
-    VistA.wait('RELATIONSHIP')
-    VistA.write('FATHER')
-    VistA.wait('ADDRESS')
-    VistA.write('Y')
-    VistA.wait('WORK PHONE')
-    VistA.write('310-555-9876\r^')
-    VistA.wait('condition')
-    VistA.write('N')
-    VistA.wait('today')
-    VistA.write('Y')
-    VistA.wait('Registration login')
-    VistA.write('NOW')
-    VistA.wait(PROMPT)
+  # Add patient through the
+  # Function arguments:
+  # VistA, Patient Name, Patient Sex,Patient DOB, Patient SSN, Patient Veteran?
+def addPatient(VistA,pfile):
+    '''Add ALL patients from specified CSV '''
+    preader = TestHelper.CSVFileReader()
+    prec = preader.getfiledata(pfile, 'key')
+    for pitem in prec:
+      VistA.write('S DUZ=1 D ^XUP')
+      VistA.wait('Select OPTION NAME')
+      VistA.write('Core Applications\r')
+      VistA.wait("Core Applications")
+      VistA.write("ADT Manager Menu")
+      index = VistA.multiwait(['to continue','Select ADT Manager Menu'])
+      if index == 0:
+        VistA.write('')
+        VistA.wait('ADT Manager Menu')
+      VistA.write("Registration Menu\r")
+      VistA.wait("Registration Menu")
+      VistA.write('Register a Patient')
+      index = VistA.multiwait(['PATIENT NAME',"Select 1010 printer"])
+      if index == 1:
+        VistA.write("NULL")
+        VistA.wait('PATIENT NAME')
+      VistA.write(prec[pitem]['fullname'].rstrip().lstrip())
+      index = VistA.multiwait(['ARE YOU ADDING','Enterprise Search'])
+      VistA.write('Y')
+      if index == 1:
+        while True:
+          index = VistA.multiwait(['FAMILY','GIVEN','MIDDLE NAME','PREFIX','SUFFIX',
+          'DEGREE','SOCIAL SECURITY','DATE OF BIRTH','SEX','MAIDEN NAME','CITY','STATE',
+          'MULTIPLE BIRTH','PHONE NUMBER','ARE YOU ADDING'])
+          if index == 14:
+            VistA.write('Y')
+            break
+          elif index == 6:
+            VistA.write(pitem)
+          elif index == 7:
+            VistA.write(prec[pitem]['dob'].rstrip().lstrip())
+          elif index == 8:
+            VistA.write(prec[pitem]['sex'].rstrip().lstrip())
+          else:
+            VistA.write('')
+        VistA.wait('to continue')
+        VistA.write('')
+        VistA.wait('MULTIPLE BIRTH INDICATOR')
+        VistA.write('')
+        VistA.wait('MAIDEN NAME:')
+        VistA.write('')
+      else:
+        VistA.wait('SEX')
+        VistA.write(prec[pitem]['sex'].rstrip().lstrip())
+        VistA.wait('DATE OF BIRTH')
+        VistA.write(prec[pitem]['dob'].rstrip().lstrip())
+        VistA.wait('SOCIAL SECURITY NUMBER')
+        VistA.write(pitem)
+        VistA.wait('TYPE')
+        VistA.write(prec[pitem]['type'].rstrip().lstrip())
+        VistA.wait('PATIENT VETERAN')
+        VistA.write(prec[pitem]['veteran'].rstrip().lstrip())
+        VistA.wait('SERVICE CONNECTED')
+        VistA.write(prec[pitem]['service'].rstrip().lstrip())
+        VistA.wait('MULTIPLE BIRTH INDICATOR')
+        VistA.write(prec[pitem]['twin'].rstrip().lstrip())
+        index = VistA.multiwait(["Do you still",'FAMILY'])
+        if index == 0:
+          VistA.write('Y')
+          VistA.wait("FAMILY")
+        VistA.write('^\r')
+        VistA.wait('MAIDEN NAME:')
+        VistA.write('')
+      VistA.wait('[CITY]')
+      VistA.write(prec[pitem]['cityob'].rstrip().lstrip())
+      VistA.wait('[STATE]')
+      VistA.write(prec[pitem]['stateob'].rstrip().lstrip())
+      VistA.wait('ALIAS')
+      VistA.write('')
+      searchArray = ['exit:', VistA.prompt]
+      if VistA.type=='cache':
+        searchArray.append(VistA.namespace)
+      index = VistA.multiwait(searchArray)
+      if index == 0:
+        VistA.write('\r')
+        VistA.wait('Patient Data')
+        VistA.write('Y')
+        VistA.wait('QUIT')
+        VistA.write('4')
+        VistA.wait('COUNTRY')
+        VistA.write('')
+        VistA.wait('STREET ADDRESS')
+        VistA.write('834 Ocean Vista Avenue\r')
+        VistA.wait('ZIP')
+        VistA.write('90401')
+        VistA.wait('CITY')
+        VistA.write('1')
+        VistA.wait('PHONE NUMBER')
+        VistA.write('310-555-2233\r\r')
+        VistA.wait('changes')
+        VistA.write('Y\r')
+        VistA.wait('QUIT')
+        VistA.write('\r\r')
+        VistA.wait('QUIT')
+        VistA.write('1')
+        VistA.wait('PRIMARY NOK')
+        VistA.write('Carter,David J Sr')
+        VistA.wait('RELATIONSHIP')
+        VistA.write('FATHER')
+        VistA.wait('ADDRESS')
+        VistA.write('Y')
+        VistA.wait('WORK PHONE')
+        VistA.write('310-555-9876\r^')
+        VistA.wait('condition')
+        VistA.write('N')
+        VistA.wait('today')
+        VistA.write('Y')
+        VistA.wait('Registration login')
+        VistA.write('NOW')
+        VistA.wait(PROMPT)

@@ -12,17 +12,25 @@ instance, follow the steps found in the PrepareMComponents_ document.
 
 Import the Routines
 -------------------
-Importing the routines is done using the MUMPS routine named %RI. This is the MUMPS standard routine to import routines from a .RO file like what was created when the Python scripts were run. To start the GT.M instance in the terminal, simply enter the command:  gtm.
+Importing the routines is done using the MUMPS routine named %RI. This is the
+MUMPS standard routine to import routines from a .RO file like what was created
+when the Python scripts were run. To start the GT.M instance in the terminal,
+simply enter the command:  ``mumps -dir``.
+
+**Note**: If ``mumps`` isn't found when the command is run,  look for the
+environment variable called ``gtm_dist``. The executable will be found in that
+directory.
 
 
 .. parsed-literal::
 
-  ~/Downloads$ :usertype:`gtm`
+  ~/Downloads$ :usertype:`mumps -dir`
 
   GTM>
 
 
-When the \"GTM>\" prompt is there, you are in the GT.M environment and can execute the %RI routine using the command D ^%RI.
+When the ``GTM>`` prompt is there, you are in the GT.M environment and can
+execute the %RI routine using the command D ^%RI.
 
 
 .. parsed-literal::
@@ -34,7 +42,10 @@ When the \"GTM>\" prompt is there, you are in the GT.M environment and can execu
   Formfeed delimited <No>?
 
 
-The routines.ro file that was created earlier is not formfeed delimited, so the default option for the first prompt is the correct one to choose. When the prompt asks for an \"Input Device,\" enter the path to the routines.ro that was created in the earlier step. Our path to the routines.ro is shown entered below.
+The routines.ro file that was created earlier is not formfeed delimited, so the
+default option for the first prompt is the correct one to choose. When the
+prompt asks for an ``Input Device``, enter the path to the routines.ro that was
+created in the earlier step. Our path to the routines.ro is shown entered below.
 
 
 .. parsed-literal::
@@ -48,14 +59,20 @@ The routines.ro file that was created earlier is not formfeed delimited, so the 
 
   Output directory:
 
-This brings the prompt asking for the output directory. The path entered here should point to the r folder that was used to set the gtmroutines environment variable in the previous step.   In our case, the directory was:::
+This brings the prompt asking for the output directory. The path entered here
+should point to the r folder that was used to set the gtmroutines environment
+variable in the previous step.   In our case, the directory was:::
 
   /home/osehra/Downloads/VistA/r/
 
-This is the location where the %RI routine will store the routines that it imports from routines.ro.
+This is the location where the %RI routine will store the routines that it
+imports from routines.ro.
 
-The "Output directory" must include the "r" subdirectory string and must finish with a slash "/".
-After entering the path, the names of the routines that are imported are shown on the terminal window as they are processed. When the routine is finished, it will display the amount of lines restored and the number of routines processed, then show the GT.M prompt.
+The ``Output directory`` must include the "r" subdirectory string and must
+finish with a slash "/". After entering the path, the names of the routines
+that are imported are shown on the terminal window as they are processed. When
+the routine is finished, it will display the amount of lines restored and the
+number of routines processed, then show the GT.M prompt.
 
 
 .. parsed-literal::
@@ -71,12 +88,16 @@ After entering the path, the names of the routines that are imported are shown o
 
   Restored 2349289 lines in 26037 routines
 
-Once the import process finishes, you can verify if it was succesful by visiting the "Output directory" from a terminal and using the "ls" command. This command should show  a large collection of "\*.m" files that were created during the import process.
+Once the import process finishes, you can verify if it was succesful by
+visiting the "Output directory" from a terminal and using the "ls" command.
+This command should show  a large collection of ``*.m`` files that were created
+during the import process.
 
-If you expect to use this testing beyond the XINDEX capacity, there is another .ro file
-that you should import.  It is found in the Testing/Setup directory called \"ZTLOAD1.ro\".
-It contains a new copy of the ZTLOAD1.m file which contains modifications that remove some
-transaction processing code that fails only on the GT.M platform.
+If you expect to use this testing beyond the XINDEX capacity, there is another
+.ro file that you should import.  It is found in the Testing/Setup directory
+called \"ZTLOAD1.ro\". It contains a new copy of the ZTLOAD1.m file which
+contains modifications that remove some transaction processing code that fails
+only on the GT.M platform.
 
 .. parsed-literal::
 
@@ -91,26 +112,41 @@ transaction processing code that fails only on the GT.M platform.
 
   Restored ...
 
-Then, import these two routines from using the ^%RI utility. The next step is to use the newly imported ZGI routine
-to import the VistA globals from the repository
+The next step is to use the newly imported ZGI routine to import the VistA
+globals from the repository.  This ZGI routine should have been imported in the
+``routines.ro`` file which was created in the PrepareMComponents_ step.
+
+If it is not found in the local instance, you can find ZGI in the ``Scripts``
+directory of the VistA repository.  A ``.ro`` file for this routine can be
+created by using the command from PrepareMComponents_, but only pass the path
+to the ``VistA/Scripts`` directory as the arguments to the
+``PrepareMComponentsforImport.py`` file.  That ``.ro`` file can be imported
+with the same process as the above files.
+
+Once ZGI is available, execute the ``LIST`` entry point of the ZGI routine
+using the MUMPS ``WRITE`` command to start the import.  An example follows:
 
 .. parsed-literal::
 
  GTM> :usertype:`W $$LIST^ZGI("/path-to/VistA/globals.lst")`
 
-This will take the globals.lst file and use the entries in it to tell GT.M to import that .zwr file.
+This will take the globals.lst file and use the entries in it to tell GT.M to
+import that .zwr file.
 
-While the routine is running, the names of the .zwr files will be printed to the screen as they are being processed.
-This is going through the OSEHRA Code base and importing all of the .zwr files from each package. The final package
-imported is the \"Wounded Injured and Ill Warriors". After the last global is imported, the program will return to
-the GT.M prompt.
+While the routine is running, the names of the .zwr files will be printed to
+the screen as they are being processed. This is going through the OSEHRA Code
+base and importing all of the .zwr files from each package. The final package
+imported is the ``Wounded Injured and Ill Warriors``. After the last global is
+imported, the program will return to the GT.M prompt.
 
 Configure the VistA Environment
 ---------------------------------
-Some configuration within the VistA environment is necessary before you have a full VistA instance.
+Some configuration within the VistA environment is necessary before you have a
+full VistA instance.
 
-The text below shows the routine that need to be run to configure the VistA instance. The ZTMGRSET routine will configure the VistA instance by
-renaming some system-specific routines. This is done using the command:
+The text below shows the routine that need to be run to configure the VistA
+instance. The ZTMGRSET routine will configure the VistA instance by renaming
+some system-specific routines. This is done using the command:
 
 
 .. parsed-literal::
@@ -209,12 +245,23 @@ renaming some system-specific routines. This is done using the command:
   ALL DONE
   GTM>
 
-After loading a few routines, the configuration will ask you for the names of the box/volume pair of the system, the name of the manager\'s namespace, and the temp directory.  shows the default answers being accepted for these prompts. They can be set if you need a specific name, but we used the defaults of PLA for all names and the /tmp/ directory for the system.
+After loading a few routines, the configuration will ask you for the names of
+the box/volume pair of the system, the name of the manager\'s namespace, and
+the temp directory.  shows the default answers being accepted for these
+prompts. They can be set if you need a specific name, but we used the defaults
+of PLA for all names and the /tmp/ directory for the system.
 
-Note: The NAME OF MANAGER'S UCI, VOLUME SET and PRODUCTION (SIGN-ON) UCI,VOLUME SET prompts should be set to PLA,PLA if more than XINDEX functionality is desired.
+Note: The NAME OF MANAGER'S UCI, VOLUME SET and
+PRODUCTION (SIGN-ON) UCI,VOLUME SET prompts should be set to PLA,PLA if more
+than XINDEX functionality is desired.
 
-It will load and save some other routines, then ask if you \"Want to rename the FileMan routines:.\" We answer this option with a YES. The routine then loads three more routines, checks the % globals, and exits. Now you are ready to start testing the OSEHRA Code base.
+It will load and save some other routines, then ask if you
+\"Want to rename the FileMan routines:.\" We answer this option with a YES. The
+routine then loads three more routines, checks the % globals, and exits. Now
+you are ready to start testing the OSEHRA Code base.
 
-Some developers have encountered errors being displayed during the configuation process.  See the second entry on the Troubleshooting Page to see if the errors are the same and find any solutions.
+Some developers have encountered errors being displayed during the configuation
+process.  See the second entry on the Troubleshooting Page to see if the errors
+are the same and find any solutions.
 
 .. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst

@@ -1,9 +1,9 @@
 ZZUTPATAPPT ;kitware/JNL -code for a unit test PATAPPT tag ;07/10/12  11:15
  ;;1.0;UNIT TEST;;JUL 10, 2012;Build 1
  ; makes it easy to run tests simply by running this routine and
- ; insures that XTMUNIT will be run only where it is present
+ ; insures that %ut will be run only where it is present
  TSTART
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZUTPATAPPT")
+ I $T(EN^%ut)'="" D EN^%ut("ZZUTPATAPPT")
  TROLLBACK
  Q
  ;
@@ -34,31 +34,31 @@ CHKRCODE   ; Unit test to test the return code of $$PATAPPT^SDAMA204
  ;first case is patient id is NULL, this should just return -2
  S RCODE=0
  S RCODE=$$PATAPPT^SDAMA204()
- D CHKEQ^XTMUNIT(RCODE,-1,"Expected return code is -1, real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,"Expected return code is -1, real: "_RCODE)
  D CHKERRCODE(102)
  I RCODE K ^TMP($J,"SDAMA204","PATAPPT")
  ;second case is patient id is -1, this should just return -1
  S RCODE=0
  S RCODE=$$PATAPPT^SDAMA204(-1)
- D CHKEQ^XTMUNIT(RCODE,-1,"Expected return code is -1, real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,"Expected return code is -1, real: "_RCODE)
  D CHKERRCODE(110)
  I RCODE K ^TMP($J,"SDAMA204","PATAPPT")
  ;third case is patient id is 0, this should just return -1
  S RCODE=0
  S RCODE=$$PATAPPT^SDAMA204(0)
- D CHKEQ^XTMUNIT(RCODE,-1,"Expected return code is -1, real: "_RCODE)
+ D CHKEQ^%ut(RCODE,-1,"Expected return code is -1, real: "_RCODE)
  D CHKERRCODE(114)
  I RCODE K ^TMP($J,"SDAMA204","PATAPPT")
  ;fourth case is patient id is 1, this should just return 0 or 1
  Q:'$D(^DPT(1,0))
  S RCODE=0
  S RCODE=$$PATAPPT^SDAMA204(1)
- D CHKTF^XTMUNIT((RCODE>0)!(RCODE=0),"Expected return code is >=0, real: "_RCODE)
+ D CHKTF^%ut((RCODE>0)!(RCODE=0),"Expected return code is >=0, real: "_RCODE)
  I RCODE K ^TMP($J,"SDAMA204","PATAPPT")
  Q
  ;
 CHKERRCODE(ERRCODE) ;
- D CHKTF^XTMUNIT($D(^TMP($J,"SDAMA204","PATAPPT","ERROR",ERRCODE))'=0,"Expecting Error Code is "_ERRCODE)
+ D CHKTF^%ut($D(^TMP($J,"SDAMA204","PATAPPT","ERROR",ERRCODE))'=0,"Expecting Error Code is "_ERRCODE)
  Q
  ;
 XTROU ;

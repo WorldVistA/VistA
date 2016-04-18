@@ -137,13 +137,13 @@ const
   TAG_VSIT = 80;
   RemID    = '50';
 
-  TX_INACTIVE_ICDCODE = 'This problem references an ICD-9-CM code that is not currently active.' + #13#10 +
+  TX_INACTIVE_ICDCODE = 'The ICD-9-CM code for this problem is inactive.' + CRLF + CRLF +
                      'Please correct this code using the ''Problems'' tab.';
   TC_INACTIVE_ICDCODE = 'Inactive ICD-9-CM code';
-  TX_INACTIVE_10DCODE = 'This problem references an ICD-10-CM code that is not currently active.' + #13#10 +
+  TX_INACTIVE_10DCODE = 'The ICD-10-CM code for this problem is inactive.' + CRLF + CRLF +
                      'Please correct this code using the ''Problems'' tab.';
   TC_INACTIVE_10DCODE = 'Inactive ICD-10-CM code';
-  TX_INACTIVE_SCTCODE = 'This problem references an SNOMED CT code that is not currently active.' + #13#10 +
+  TX_INACTIVE_SCTCODE = 'The SNOMED CT code for this problem is inactive.' + CRLF + CRLF +
                      'Please correct this code using the ''Problems'' tab.';
   TC_INACTIVE_SCTCODE = 'Inactive SNOMED CT code';
 
@@ -408,97 +408,85 @@ procedure TfrmCover.CoverItemClick(Sender: TObject);
 var
   i: integer;
   aDetail: string;
+  lb: TORListBox;
 begin
   inherited;
-  with TORListBox(Sender) do
-  begin
-    aDetail := Uppercase(Piece(TORListBox(Sender).Items[TORListBox(Sender).ItemIndex],'^',12));
-    case Tag of
-     TAG_PROB:
-             if ItemIEN > 0  then
+  lb := TORListBox(Sender);
+  if lb.ItemIndex <> -1 then begin
+    aDetail := Uppercase(Piece(lb.Items[lb.ItemIndex],'^',12));
+    case lb.Tag of
+      TAG_PROB:
+             if lb.ItemIEN > 0  then begin
+               i := lb.ItemIndex;
+               if Piece(lb.Items[lb.ItemIndex], U, 13) = '#' then
                begin
-                 i := ItemIndex;
-                 if Piece(Items[ItemIndex], U, 13) = '#' then
-                 begin
-                   if Piece(Items[ItemIndex], U, 16) = '10D' then
-                     InfoBox(TX_INACTIVE_10DCODE, TC_INACTIVE_10DCODE, MB_ICONWARNING or MB_OK)
-                   else
-                     InfoBox(TX_INACTIVE_ICDCODE, TC_INACTIVE_ICDCODE, MB_ICONWARNING or MB_OK);
-                 end
-                 else if Piece(Items[ItemIndex], U, 13) = '$' then
-                   InfoBox(TX_INACTIVE_SCTCODE, TC_INACTIVE_SCTCODE, MB_ICONWARNING or MB_OK);
-                 ItemIndex := i;
-                 ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-               end;
-     TAG_ALLG:
-{ TODO -oRich V. -cART/Allergy : What to do about NKA only via right-click menu?  Add here? }
-             if ItemIEN > 0 then
-               begin
-                 if ARTPatchInstalled then
-                 begin
-                   AllergyBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True, ItemIEN);
-                   //TDP - Fixed allergy form focus problem
-                   if (frmARTAllergy <> nil) and frmARTAllergy.Showing then frmARTAllergy.SetFocus;
-                 end
+                 if Piece(lb.Items[lb.ItemIndex], U, 16) = '10D' then
+                   InfoBox(TX_INACTIVE_10DCODE, TC_INACTIVE_10DCODE, MB_ICONWARNING or MB_OK)
                  else
-                 begin    
-                   ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
-                 end;
-               end;
-     TAG_POST:
-             if DisplayText[ItemIndex] = 'Allergies' then
-               begin
-               ReportBox(DetailPosting('A'), DisplayText[ItemIndex], True);
+                   InfoBox(TX_INACTIVE_ICDCODE, TC_INACTIVE_ICDCODE, MB_ICONWARNING or MB_OK);
                end
-             else if ItemID <> '' then
-               begin
-                 NotifyOtherApps(NAE_REPORT, 'TIU^' + ItemID);
-                 ReportBox(DetailPosting(ItemID), DisplayText[ItemIndex], True);
+               else if Piece(lb.Items[lb.ItemIndex], U, 13) = '$' then
+                 InfoBox(TX_INACTIVE_SCTCODE, TC_INACTIVE_SCTCODE, MB_ICONWARNING or MB_OK);
+               lb.ItemIndex := i;
+               ReportBox(DetailGeneric(lb.ItemIEN, lb.ItemID, aDetail), lb.DisplayText[lb.ItemIndex], True);
+             end;
+      TAG_ALLG:
+    { TODO -oRich V. -cART/Allergy : What to do about NKA only via right-click menu?  Add here? }
+             if lb.ItemIEN > 0 then begin
+               if ARTPatchInstalled then begin
+                 AllergyBox(DetailGeneric(lb.ItemIEN, lb.ItemID, aDetail), lb.DisplayText[lb.ItemIndex], True, lb.ItemIEN);
+                 //TDP - Fixed allergy form focus problem
+                 if (frmARTAllergy <> nil) and frmARTAllergy.Showing then frmARTAllergy.SetFocus;
+               end else begin
+                 ReportBox(DetailGeneric(lb.ItemIEN, lb.ItemID, aDetail), lb.DisplayText[lb.ItemIndex], True);
                end;
-     TAG_MEDS:
-             if (ItemID <> '') and (ItemID <> '0') then
-             begin
-               ReportBox(DetailMed(ItemID), DisplayText[ItemIndex], True);
              end;
-     TAG_RMND:
-             if ItemIEN > 0  then
-             begin
-               ReportBox(DetailReminder(ItemIEN), ClinMaintText + ': ' + DisplayText[ItemIndex], True);
+      TAG_POST:
+             if lb.DisplayText[lb.ItemIndex] = 'Allergies' then begin
+               ReportBox(DetailPosting('A'), lb.DisplayText[lb.ItemIndex], True);
+             end else if lb.ItemID <> '' then begin
+               NotifyOtherApps(NAE_REPORT, 'TIU^' + lb.ItemID);
+               ReportBox(DetailPosting(lb.ItemID), lb.DisplayText[lb.ItemIndex], True);
              end;
-     TAG_LABS:
-             if (ItemID <> '') and (Piece(ItemID,';',1) <> '0') and (not ContainsAlpha(Piece(ItemID,';',1))) then
-             begin
-               ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+      TAG_MEDS:
+             if (lb.ItemID <> '') and (lb.ItemID <> '0') then begin
+               ReportBox(DetailMed(lb.ItemID), lb.DisplayText[lb.ItemIndex], True);
              end;
-     TAG_VITL:
-             if ItemID <> '' then
-               begin
-                 //agp prevent double clicking on Vitals which can cause CPRS to shut down when exiting vitals
-                 TORListBox(Sender).Enabled := false;
-                 SelectVitals(Piece(DisplayText[ItemIndex],Char(9),1)); //Char(9) = Tab Character
-                 ClearPtData;
-                 //agp set InitialRemindersLoaded to False only if reminders are still evaluating. This prevent
-                 //a problem with reminders not finishing the evaluation if the Vital DLL is launch and it prevent
-                 //an automatic re-evaluation of reminders if reminders are done evaluating.
-                 if RemindersEvaluatingInBackground = true then  InitialRemindersLoaded := False;
-                 DisplayPage;
-                 TORListBox(Sender).Enabled := True;
-               end;
-
-     TAG_VSIT:
-             if (ItemID <> '') and (ItemID <> '0') then
-             begin
-               ReportBox(DetailGeneric(ItemIEN, ItemID, aDetail), DisplayText[ItemIndex], True);
+      TAG_RMND:
+             if lb.ItemIEN > 0  then begin
+               ReportBox(DetailReminder(lb.ItemIEN), ClinMaintText + ': ' + lb.DisplayText[lb.ItemIndex], True);
+             end;
+      TAG_LABS:
+             if (lb.ItemID <> '') and (Piece(lb.ItemID,';',1) <> '0') and
+                (not ContainsAlpha(Piece(lb.ItemID,';',1))) then begin
+               ReportBox(DetailGeneric(lb.ItemIEN, lb.ItemID, aDetail), lb.DisplayText[lb.ItemIndex], True);
+             end;
+      TAG_VITL:
+             if lb.ItemID <> '' then begin
+               //agp prevent double clicking on Vitals which can cause CPRS to shut down when exiting vitals
+               TORListBox(Sender).Enabled := false;
+               SelectVitals(Piece(lb.DisplayText[lb.ItemIndex],Char(9),1)); //Char(9) = Tab Character
+               ClearPtData;
+               //agp set InitialRemindersLoaded to False only if reminders are still evaluating. This prevent
+               //a problem with reminders not finishing the evaluation if the Vital DLL is launch and it prevent
+               //an automatic re-evaluation of reminders if reminders are done evaluating.
+               if RemindersEvaluatingInBackground = true then  InitialRemindersLoaded := False;
+               DisplayPage;
+               TORListBox(Sender).Enabled := True;
+             end;
+      TAG_VSIT:
+             if (lb.ItemID <> '') and (lb.ItemID <> '0') then begin
+               ReportBox(DetailGeneric(lb.ItemIEN, lb.ItemID, aDetail), lb.DisplayText[lb.ItemIndex], True);
              end
     else
       //don't try to display a detail report
     end;
-    TORListBox(Sender).SetFocus;
-    if uInit.TimedOut then                       // Fix for CQ: 8011
-      Abort
-    else
-      ItemIndex := -1;
   end;
+  lb.SetFocus;
+  if uInit.TimedOut then                       // Fix for CQ: 8011
+    Abort
+  else
+    lb.ItemIndex := -1;
 end;
 
 procedure TfrmCover.FormClose(Sender: TObject; var Action: TCloseAction);

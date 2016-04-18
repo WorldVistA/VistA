@@ -2,7 +2,7 @@ ZZRGUT5 ;RGI/VSL - Unit Tests - Problem List ;3/28/13
  ;;1.0;UNIT TEST;;Apr 25, 2012;Build 1;
  Q:$T(^GMPLAPI2)=""
  TSTART
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZRGUT5")
+ I $T(EN^%ut)'="" D EN^%ut("ZZRGUT5")
  TROLLBACK
  Q
  ;
@@ -57,15 +57,15 @@ GETHIST ;
  . K AUDIT S %=$$AUDET^GMPLHIST(.AUDIT,HIST(AID))
  . S ITEM=^GMPL(125.8,HIST(AID),0)
  . S FLD=$P(ITEM,U,2)
- . D CHKEQ^XTMUNIT(AUDIT("DATE"),$$EXTDT^GMPLX($P(ITEM,U,3)),"Invalid audit date - "_FLD)
- . D CHKEQ^XTMUNIT(AUDIT("FLD"),FLD_U_$$FLDNAME^GMPLHIST(FLD),"Invalid audit field - "_FLD)
- . D CHKTF^XTMUNIT(AUDIT("OLD")[$$OLDVAL(FLD,$P(ITEM,U,5)),"Invalid old value - "_FLD)
- . D CHKTF^XTMUNIT(AUDIT("NEW")[$$NEWVAL(FLD,$P(ITEM,U,6)),"Invalid new value - Item: "_AID_"/"_ITEM_", Field: "_FLD)
- . D CHKEQ^XTMUNIT(AUDIT("PROV"),PROV,"Invalid provider - "_FLD)
+ . D CHKEQ^%ut(AUDIT("DATE"),$$EXTDT^GMPLX($P(ITEM,U,3)),"Invalid audit date - "_FLD)
+ . D CHKEQ^%ut(AUDIT("FLD"),FLD_U_$$FLDNAME^GMPLHIST(FLD),"Invalid audit field - "_FLD)
+ . D CHKTF^%ut(AUDIT("OLD")[$$OLDVAL(FLD,$P(ITEM,U,5)),"Invalid old value - "_FLD)
+ . D CHKTF^%ut(AUDIT("NEW")[$$NEWVAL(FLD,$P(ITEM,U,6)),"Invalid new value - Item: "_AID_"/"_ITEM_", Field: "_FLD)
+ . D CHKEQ^%ut(AUDIT("PROV"),PROV,"Invalid provider - "_FLD)
  . Q:$D(^GMPL(125.8,HIST(AID),1))'>0!('$G(AUDIT("OLDDATE")))
  . S ITEM=^GMPL(125.8,HIST(AID),1)
- . D CHKEQ^XTMUNIT(AUDIT("OLDDATE"),$$EXTDT^GMPLX($P(ITEM,U,5)),"Invalid note date - "_FLD)
- . D CHKEQ^XTMUNIT(AUDIT("OLDNOTE"),$P(ITEM,U,3),"Invalid old note - "_FLD)
+ . D CHKEQ^%ut(AUDIT("OLDDATE"),$$EXTDT^GMPLX($P(ITEM,U,5)),"Invalid note date - "_FLD)
+ . D CHKEQ^%ut(AUDIT("OLDNOTE"),$P(ITEM,U,3),"Invalid old note - "_FLD)
  Q
  ;
 OLDVAL(FLD,VAL) ;
@@ -144,7 +144,7 @@ UPDPROB ;
 PPROBCNT ;
  N %,TGT
  S %=$$PPROBCNT^GMPLAPI7("TGT")
- D CHKEQ^XTMUNIT("1^0",$G(TGT("GMPLTEST, PATIENT")),"PPROBCNT^GMPLAPI7: Active/Inactive problems")
+ D CHKEQ^%ut("1^0",$G(TGT("GMPLTEST, PATIENT")),"PPROBCNT^GMPLAPI7: Active/Inactive problems")
  Q
  ;
 XTENT ;

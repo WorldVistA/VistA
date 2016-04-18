@@ -55,6 +55,7 @@ type
 
 function GetVisitCat(InitialCat: char; Location: integer; Inpatient: boolean): char;
 function GetDiagnosisText(Narrative: String; Code: String): String;
+function GetFreqOfText(SearchStr: String): integer;
 
 {assign and read values from fPCEData}
 //function SetRPCEncouterInfo(PCEData: TPCEData): boolean;
@@ -74,7 +75,8 @@ procedure LoadcboOther(Dest: TStrings; Location, fOtherApp: Integer);
 
 { Lexicon Lookup Calls }
 function  LexiconToCode(IEN, LexApp: Integer; ADate: TFMDateTime = 0): string;
-procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; Extend: Boolean = false);
+procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; AExtend: Boolean = False; AI10Active: Boolean = False);
+//procedure GetI10Alternatives(Dest: TStrings; SCTCode: string);
 function  IsActiveICDCode(ACode: string; ADate: TFMDateTime = 0): boolean;
 function  IsActiveCPTCode(ACode: string; ADate: TFMDateTime = 0): boolean;
 function  IsActiveSCTCode(ACode: string; ADate: TFMDateTime = 0): boolean;
@@ -168,6 +170,7 @@ uses TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst;
 var
   uLastLocation:  Integer;
   uLastDFN:       String;
+  uLastEncDt:     TFMDateTime;
   uVTypeLastLoc:  Integer;
   uVTypeLastDate: double = 0;
   uDiagnoses:     TStringList;
@@ -231,6 +234,11 @@ begin
   Result := sCallV('ORWPCE GET DX TEXT', [Narrative, Code]);
 end;
 
+function GetFreqOfText(SearchStr: String): integer;
+begin
+  Result := StrToInt(sCallV('ORWLEX GETFREQ', [SearchStr]));
+end;
+
 { Lexicon Lookup Calls }
 
 function LexiconToCode(IEN, LexApp: Integer; ADate: TFMDateTime = 0): string;
@@ -245,23 +253,33 @@ begin
   Result := Piece(sCallV('ORWPCE LEXCODE', [IEN, CodeSys, ADate]), U, 1);
 end;
 
-procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; Extend: Boolean = false);
+procedure ListLexicon(Dest: TStrings; const x: string; LexApp: Integer; ADate: TFMDateTime = 0; AExtend: Boolean = False; AI10Active: Boolean = False);
 var
   CodeSys: string;
   ExtInt: integer;
 begin
   case LexApp of
-  LX_ICD: CodeSys := 'ICD';
-  LX_CPT: CodeSys := 'CHP';
-  LX_SCT: CodeSys := 'GMPX';
+    LX_ICD: CodeSys := 'ICD';
+    LX_CPT: CodeSys := 'CHP';
+    LX_SCT: CodeSys := 'GMPX';
   end;
-  if Extend then
+  if AExtend then
     ExtInt := 1
   else
     ExtInt := 0;
-  CallV('ORWPCE4 LEX', [x, CodeSys, ADate, ExtInt]);
+  if (LexApp = LX_ICD) and AExtend and AI10Active then
+    CallV('ORWLEX GETI10DX', [x, ADate])
+  else
+    CallV('ORWPCE4 LEX', [x, CodeSys, ADate, ExtInt, True]);
   FastAssign(RPCBrokerV.Results, Dest);
 end;
+
+//TODO: Code for I10 mapped alternatives - remove if not reinstated as requirement
+{procedure GetI10Alternatives(Dest: TStrings; SCTCode: string);
+begin
+  CallV('ORWLEX GETALTS', [SCTCode, 'SCT']);
+  FastAssign(RPCBrokerV.Results, Dest);
+end;}
 
 function  IsActiveICDCode(ACode: string; ADate: TFMDateTime = 0): boolean;
 begin
@@ -312,6 +330,8 @@ var
 begin
   uLastLocation := uEncLocation;
   EncDt := Trunc(uEncPCEData.VisitDateTime);
+  if uEncPCEData.VisitCategory = 'E' then EncDt := Trunc(FMNow);
+  uLastEncDt := EncDt;
 
   //add problems to the top of diagnoses.
   uTempList := TstringList.Create;
@@ -454,9 +474,7 @@ var
   i: Integer;
   x: string;
 begin
- //// if (uLastLocation <> uEncLocation) then LoadEncounterForm;
- // if (uLastDFN <> patient.DFN) then LoadEncounterForm;// commented out for CIDC needs.
-  LoadEncounterForm;
+  if (uLastLocation <> uEncLocation) or (uLastDFN <> patient.DFN) or (uLastEncDt <> Trunc(uEncPCEData.VisitDateTime)) then LoadEncounterForm; // reinstated, since CIDC is gone.
   for i := 0 to uDiagnoses.Count - 1 do if CharAt(uDiagnoses[i], 1) = U then
   begin
     x := Piece(uDiagnoses[i], U, 2);
@@ -470,7 +488,7 @@ procedure ListDiagnosisCodes(Dest: TStrings; SectionIndex: Integer);
     diagnosis <TAB> ICDInteger <TAB> .ICDDecimal <TAB> ICD Code }
 var
   i: Integer;
-  t, c, f: string;
+  t, c, f, p, ICDCSYS: string;
 begin
   Dest.Clear;
   i := SectionIndex + 1;           // first line after the section name
@@ -479,11 +497,12 @@ begin
     c := Piece(uDiagnoses[i], U, 1);
     t := Piece(uDiagnoses[i], U, 2);
     f := Piece(uDiagnoses[i], U, 3);
-
+    p := Piece(uDiagnoses[i], U, 4);
+    ICDCSYS := Piece(uDiagnoses[i], U, 5);
     //identify inactive codes.
     if (Pos('#', f) > 0) or (Pos('$', f) > 0) then
       t := '#  ' + t;
-    Dest.Add(c + U + t + U + c + U + f);
+    Dest.Add(c + U + t + U + c + U + f + U + p + U + ICDCSYS);
 
     Inc(i);
   end;
@@ -493,10 +512,12 @@ procedure AddProbsToDiagnoses;
 var
   i: integer;                 //loop index
   EncDT: TFMDateTime;
+  ICDVersion: String;
 begin
   //get problem list
   EncDT := Trunc(uEncPCEData.VisitDateTime);
   uLastDFN := patient.DFN;
+  ICDVersion := piece(Encounter.GetICDVersion, U, 1);
   tCallV(uProblems, 'ORWPCE ACTPROB', [Patient.DFN, EncDT]);
   if uProblems.count > 0 then
   begin
@@ -504,11 +525,12 @@ begin
     uDiagnoses.add(U + DX_PROBLEM_LIST_TXT);
     for i := 1 to (uProblems.count-1) do //start with 1 because strings[0] is the count of elements.
     begin
-      // DON'T INCLUDE 799.9 CODES
-      if (piece(uProblems.Strings[i],U,3) = '799.9') then continue;
-      // add problems to udiagnosis 
+      //filter out 799.9 and inactive codes when ICD-9 is active
+       if (ICDVersion = 'ICD') and (piece(uProblems.Strings[i],U,3) = '799.9') then continue;
+      // otherwise add all active problems (including 799.9, R69, and inactive codes) to udiagnosis
       uDiagnoses.add(piece(uProblems.Strings[i], U, 3) + U + piece(uProblems.Strings[i], U, 2) + U +
-                       piece(uProblems.Strings[i], U, 13));
+                       piece(uProblems.Strings[i], U, 13) + U + piece(uProblems.Strings[i], U, 1) + U +
+                       piece(uProblems.Strings[i], U, 14));
     end;
 
     //1.3.10
@@ -1480,6 +1502,7 @@ end;
 
 initialization
   uLastLocation := 0;
+  uLastEncDt    := 0;
   uVTypeLastLoc := 0;
   uVTypeLastDate := 0;
   uDiagnoses     := TStringList.Create;

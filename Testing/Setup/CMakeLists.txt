@@ -49,12 +49,19 @@ set(logfile "${VISTA_BINARY_DIR}/Testing/Log/Initialize.log")
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Initialize.py.in ${CMAKE_CURRENT_BINARY_DIR}/Initialize.py)
 set(logfile "${VISTA_BINARY_DIR}/Testing/Log/PostImport.log")
 if(GTM_DIST)
-  file(GLOB ImportRoutines "${CMAKE_CURRENT_SOURCE_DIR}/*.ro")
+  file(GLOB ImportRoutines "${CMAKE_CURRENT_SOURCE_DIR}/*gtm.ro")
   foreach(RoutineImportFile ${ImportRoutines})
     get_filename_component(routineName "${RoutineImportFile}" NAME_WE)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RoutineImport.py.in ${CMAKE_CURRENT_BINARY_DIR}/${routineName}Import.py)
   endforeach()
 endif()
+
+file(GLOB ImportRoutines "${CMAKE_CURRENT_SOURCE_DIR}/*all.ro")
+foreach(RoutineImportFile ${ImportRoutines})
+  get_filename_component(routineName "${RoutineImportFile}" NAME_WE)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/RoutineImport.py.in ${CMAKE_CURRENT_BINARY_DIR}/${routineName}Import.py)
+endforeach()
+
 if(VISTA_HAVE_BUILD_TOOL)
   # Mark the FreshVistA target as part of the ALL target if this
   # undocumented option is set (for use by dashboard scripts).

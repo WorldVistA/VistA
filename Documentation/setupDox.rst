@@ -21,7 +21,7 @@ Setting up Environment
 This documentation assumes that you have already set up the OSEHRA VistA
 Testing Harness. If you have not done that yet, please follow the instructions
 available under the
-`Instructions for Establishing and Testing a VistA Installation` section
+``Instructions for Establishing and Testing a VistA Installation`` section
 of the `README.rst`_ in this same directory.
 
 Summary of tools/code bases that are needed
@@ -74,7 +74,7 @@ Prepare M Source
 ****************
 
 If the desired version of VistA to generate the Dox pages from is the OSEHRA
-Certified version, then no other preparation is needed other than acquring
+Certified version, then no other preparation is needed other than acquiring
 the VistA-M source tree.
 
 To generate the pages with a different VistA setup, such as a FOIA release or
@@ -88,8 +88,8 @@ XINDEX based cross reference output and Fileman Schema
 ******************************************************
 To configure the environment to to generate the XINDEX-based cross reference
 output, please start the cmake-gui application from a previously set up testing
-instance, and check the `TEST_VISTA_DOX_CALLERGRAPH` option.
-Click the `Configure` and `Generate` buttons to finish.
+instance, and check the ``TEST_VISTA_DOX_CALLERGRAPH`` option.
+Click the ``Configure`` and ``Generate`` buttons to finish.
 
 .. figure::
    http://code.osehra.org/content/named/SHA1/e36229ab-DoxGUIWindows.png
@@ -208,52 +208,59 @@ Fileman Database Calls
 
 Finally, a single JSON file will need to be generated.  This file contains
 information about the Database calls that routines make to query FileMan for
-data.
+data.  This file is generated using a version of the RGI/PwC tool called the
+`M Routine Analyzer`_ which has been modified by OSEHRA's Jason Li.
 
-This file is generated using a modified version of the RGI/PwC tool called
-the `M Routine Analyzer`_, modified by OSEHRA's Jason Li. If cloned using Git,
-be sure to switch to the `fileman_json` branch before attempting to  compile.
+Download or clone the repository from the website that was linked above.  If
+cloned using Git, be sure to switch to the ``fileman_json`` branch before
+attempting to  compile the tool.
 
+The ``M Routine Analyzer`` requires an environment variable which contains the
+path to the repository of M code to query.  In most cases, this corresponds to
+the `OSEHRA VistA-M Repository`_, but can be one of similar structure. The
+program assumes that the path will be found in the ``VISTA-FOIA`` environment
+variable.  This should be set prior to the running of the analysis.
 
-Some environment variable setup is necessary before running the analyzer.
-If no modifications are made, a `VistA-FOIA`  environment variable must exist
-and should its value set to be the path to the VistA-M source tree.
+**Warning:** a Bash/Windows shell will not allow environment variable names to
+contain a hyphen character, ``-``.  To change the environment variable that the
+tool looks for: change the string found in
+``com/pwc/us/rgi/vista/repository/RepositoryInfo.java`` at `line 220`_.  Change
+the text supplied as an argument in the ``System.getenv()`` call.  It should be
+set to the preferred variable name.  Then you should compile the RepositoryInfo
+class using the ``javac`` tool. The command to complie that class can be found
+below:
 
-**Warning:** a Bash shell will not allow environment variables to be generated
-that have a hyphen character, `-`,  in the name.
+::
 
-To avoid this issue, the environment variable that the tool looks for is set in
-`com/pwc/us/rgi/vista/repository/RepositoryInfo.java` at line 220.  Change the
-text in the `System.getenv()` call to refer to the preferred variable and then
-compile the RepositoryInfo class with the `javac` tool.
-
-.. parsed-literal::
-
+  softhat@hostname: ~/rgivistatools/MParseAnalyze/src$
   $ javac com/pwc/us/rgi/vista/repository/RepositoryInfo.java
 
 When an environment variable is generated and populated, compile the main java
 file for the Routine Analyzer found in
-`com/pwc/us/rgi/vista/tools/MRoutineAnalyzer.java`.
+``com/pwc/us/rgi/vista/tools/MRoutineAnalyzer.java``.
 
-.. parsed-literal::
+::
 
+  softhat@hostname: ~/rgivistatools/MParseAnalyze/src$
   $ javac com/pwc/us/rgi/vista/tools/MRoutineAnalyzer.java
 
-After compiling the routine, execute the class with a set of arguments:
+After compiling the tool, execute the class with a set of arguments:
 
-.. parsed-literal::
+::
 
-  $ java com/pwc/us/rgi/vista/tools/MRoutineAnalyzer repo filemancall -o ~/Work/OSEHRA/filmanDBCall.json
+  softhat@hostname: ~/rgivistatools/MParseAnalyze/src$
+  $ java com/pwc/us/rgi/vista/tools/MRoutineAnalyzer repo filemancall -o ~/Work/OSEHRA/filemanDBCall.json
 
-This will generate the JSON file at the path given in the `-o` argument.  Only
-basic status information will be printed to the screen during the run of the
-command.
+This will generate the Fileman Database JSON file at the path given to the
+``-o`` argument.  Only basic status information will be printed to the screen
+during the run of the analyzer.
 
 Example run:
 
-.. parsed-literal::
+::
 
-  $ java com/pwc/us/rgi/vista/tools/MRoutineAnalyzer repo filemancall -o ~/Work/OSEHRA/filmanDBCall.json
+  softhat@hostname: ~/rgivistatools/MParseAnalyze/src$
+  $ java com/pwc/us/rgi/vista/tools/MRoutineAnalyzer repo filemancall -o ~/Work/OSEHRA/filemanDBCall.json
     Oct 27, 2014 11:21:54 AM com.pwc.us.rgi.vista.tools.MRALogger logInfo
     INFO: Started filemancall.
     Oct 27, 2014 11:25:58 AM com.pwc.us.rgi.vista.tools.MRALogger logInfo
@@ -264,9 +271,9 @@ Run python script to generate the web based documentation.
 
 OSEHRA has written a Python script to generate the HTML pages based upon the
 results from the tests that were just run.  The python script can be found in
-the OSEHRA VistA source tree in the `Utilities/Dox/PythonScripts` directory.
+the OSEHRA VistA source tree in the ``Utilities/Dox/PythonScripts`` directory.
 
-`WebPageGenerator.py` is the python script that generates the Visual Cross
+``WebPageGenerator.py`` is the python script that generates the Visual Cross
 Reference pages. To get the help from the script, just type:
 
 .. parsed-literal::
@@ -318,41 +325,45 @@ That command will print the necessary arguments and flags that need to be set.
                         fileman db call information in JSON format
 
 The following arguments are not optional, and must be set in the command
-before it is able to run succesfully.
+before it is able to run successfully.
 
-* `-xl` or `--xindexLogDir` - path to the directory contains all the
+* ``-xl`` or ``--xindexLogDir`` - path to the directory contains all the
   XINDEX-based cross reference output that are generated from ctest run
-*  `-fs` or `--fileSchemaDir` - path to VistA FileMan Schema log Directory.
+*  ``-fs`` or ``--fileSchemaDir`` - path to VistA FileMan Schema log Directory.
 
   *Note: both of the above directories are found in underneath the Build directory
   of the Testing Harness in the `Docs` directory*
 
-* `-mr` or `--MRepositDir`  - path to OSEHRA VistA-M git repository.
-* `-pr` or  `--patchRepositDir` - path to the VistA Git source directory.
+* ``-mr`` or ``--MRepositDir``  - path to OSEHRA VistA-M git repository.
+* ``-pr`` or  ``--patchRepositDir`` - path to the VistA Git source directory.
 
-* `-db` or `--filemanDbJson` - fileman db call information in JSON format.
+* ``-db`` or ``--filemanDbJson`` - fileman db call information in JSON format.
   This is found {}
 
 All other flags or arguments are optional, but do have an effect on the
 output files.
 
-* `-is` or `--includeSource` -  Flag to generate a web page with the source
+* ``-is`` or ``--includeSource`` -  Flag to generate a web page with the source
   code for each routine
-* `-o` or `--outputDir` - path to the directory to write the web pages into
-* `-gp` or `--gitPath`  - path to directory that contains git executable.
+* ``-o`` or ``--outputDir`` - path to the directory to write the web pages into
+
+  *Note: Ensure that the output directory exists prior to running, otherwise
+  the script will fail*
+
+* ``-gp`` or ``--gitPath``  - path to directory that contains git executable.
 
   *Note: not the the whole path of the git executable*
 
-* `-hd` or `--hasdot` - Flag to denote that you want to generate the caller
+* ``-hd`` or ``--hasdot`` - Flag to denote that you want to generate the caller
   visualizations
-* `-dp` or `--dotpath` -  path to the directory that contains the dot executable.
+* ``-dp`` or ``--dotpath`` -  path to the directory that contains the dot executable.
 
 For debugging purpose, you can specify the output log file:
 
-* `-lf` or `--outputLogFileName` - path to a file to log the output.
+* ``-lf`` or ``--outputLogFileName`` - path to a file to log the output.
 
-The follow figures show an example of the command looks like in windows
-git bash and output from it
+The follow figures show an example of the command looks like in Windows
+Git Bash:
 
 .. parsed-literal::
 
@@ -361,6 +372,8 @@ git bash and output from it
       -o ~/CrossReference/ -hd -dp /usr/local/Graphviz2.30/bin/
       -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
       -db ~/Work/OSEHRA/filemanDBCall.json
+
+and the example run of the analyzer:
 
 .. parsed-literal::
 
@@ -392,16 +405,28 @@ git bash and output from it
  2014-10-27 14:03:16,336 INFO End of generating individual routines......
  2014-10-27 14:03:16,463 INFO End of generating web pages....
 
+Depending on the processing power of the machine, it could take from 25 minutes
+to 2 hours to generate the whole web pages with dependency graph.
+
+Source Code Highlighting
+------------------------
+
+To enable the color highlighting of the M routine source page, one additional
+folder is necessary.  Copy the ``code_pretty_scripts`` directory from the
+``Utilities/Dox/Web`` folder into the output web page directory.  The
+folder contains code taken from the `google_code_prettify`_ repository which
+is released under the Apache 2.0 license.
+
+Stylesheet
+----------
+
+Copy the ``DoxygenStyle.css`` file from the Web directory (``Utilities/Dox/Web``) within
+the VistA source tree to the output directory.
 
 Reviewing the results
 ----------------------
 
-Depends on the machine power, it could take from 25 minutes to 2 hours to
-generate the whole web pages with dependency graph.  To review the output
-web page, just go to the output directory, copy the `DoxgenStyle.css` file
-from the Web directory (`Utilities/Dox/Web`) within the VistA source tree to
-the output directory and open the index.html file from your favorite web
-browser.
+To review the output web page, open the index.html file from your favorite web browser.
 
 .. figure::
    http://code.osehra.org/content/named/SHA1/a9935090-localDox.png
@@ -410,6 +435,12 @@ browser.
 
 Figure 3 - Visual Cross Reference Web page.
 
+
+
+
 .. _`README.rst`: ./README.rst
+.. _`google_code_prettify`: https://github.com/google/code-prettify
 .. _`M Routine Analyzer`: https://github.com/jasonli2000/rgivistatools/tree/fileman_json
+.. _`OSEHRA VistA-M Repository`: https://github.com/OSEHRA/VistA-M
+.. _`line 220`: https://github.com/jasonli2000/rgivistatools/blob/fileman_json/MParseAnalyze/src/com/pwc/us/rgi/vista/repository/RepositoryInfo.java#L220
 .. _`Prepare M Repository`: ./populateMRepo.rst

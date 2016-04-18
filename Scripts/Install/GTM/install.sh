@@ -24,6 +24,46 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Options
+# instance = name of instance
+# used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
+# for guidance
+
+usage()
+{
+    cat << EOF
+    usage: $0 options
+
+    This script will automatically install GT.M
+
+    DEFAULTS:
+      GT.M Version = V6.2-000
+
+    OPTIONS:
+      -h    Show this message
+      -v    GT.M version to install
+
+EOF
+}
+
+while getopts ":hv:" option
+do
+    case $option in
+        h)
+            usage
+            exit 1
+            ;;
+        v)
+            gtm_ver=$OPTARG
+            ;;
+    esac
+done
+
+# Set defaults for options
+if [ -z $gtm_ver ]; then
+    gtm_ver=V6.2-000
+fi
+
 # Download gtminstall script from SourceForge
 echo "Downloading gtminstall"
 curl -s --remote-name -L http://downloads.sourceforge.net/project/fis-gtm/GT.M%20Installer/v0.12/gtminstall
@@ -51,8 +91,6 @@ fi
 
 # Make it executable
 chmod +x gtminstall
-
-gtm_ver=V6.0-002
 
 # Determine processor architecture - used to determine if we can use GT.M
 #                                    Shared Libraries

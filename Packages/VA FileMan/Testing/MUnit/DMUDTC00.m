@@ -4,7 +4,7 @@ DMUDTC00 ; VEN/SMH - Unit Test Driver for %DTC Utilities; 04-MAR-2013
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
  D DT^DICRW
- D EN^XTMUNIT($T(+0),1)
+ D EN^%ut($T(+0),1)
  QUIT
  ;
  ;STARTUP  ; Not used
@@ -18,38 +18,38 @@ DMUDTC00 ; VEN/SMH - Unit Test Driver for %DTC Utilities; 04-MAR-2013
  N X1,X2,X,%Y
  S X1=3101112.22,X2=3101116.08
  D ^%DTC
- D CHKEQ^XTMUNIT(X,-4,"Difference between X1=3101112.22 and X2=3101116.08 is 4 days")
- D CHKEQ^XTMUNIT(%Y,1,"Dates are supposed to be valid")
+ D CHKEQ^%ut(X,-4,"Difference between X1=3101112.22 and X2=3101116.08 is 4 days")
+ D CHKEQ^%ut(%Y,1,"Dates are supposed to be valid")
  ;
  N X1,X2,X,%Y
  S X1=3101100,X2=3101116.08
  D ^%DTC
- D CHKEQ^XTMUNIT(%Y,0,"This difference of dates is uncomputable as an inexact date is used")
+ D CHKEQ^%ut(%Y,0,"This difference of dates is uncomputable as an inexact date is used")
  ;
  N X1,X2,X,%Y
  S X1=3001231,X2=2991231
  D ^%DTC
- D CHKEQ^XTMUNIT(X,366,"Millenium year has 366 days")
+ D CHKEQ^%ut(X,366,"Millenium year has 366 days")
  ;
  N X1,X2,X,%Y
  S X1=3011231,X2=3001231
  D ^%DTC
- D CHKEQ^XTMUNIT(X,365,"2001 has 365 days")
+ D CHKEQ^%ut(X,365,"2001 has 365 days")
  ;
  N X1,X2,X,%Y
  S X1=3041231,X2=3031231
  D ^%DTC
- D CHKEQ^XTMUNIT(X,366,"2004 has 366 days")
+ D CHKEQ^%ut(X,366,"2004 has 366 days")
  ;
  N X1,X2,X,%Y
  S X1=4001231,X2=3991231
  D ^%DTC
- D CHKEQ^XTMUNIT(X,365,"2100 has 365 days")
+ D CHKEQ^%ut(X,365,"2100 has 365 days")
  ;
  N X1,X2,X,%Y
  S X1=4501231,X2=2991231 ; 151 years. Check for numeric overflows.
  D ^%DTC
- D CHKEQ^XTMUNIT(X,365.24*151\1+1,"Numeric overflow")
+ D CHKEQ^%ut(X,365.24*151\1+1,"Numeric overflow")
  ;
  QUIT
  ;
@@ -59,22 +59,22 @@ C ; @TEST - C^%DTC - Adds and subtracts dates
  N X,X1,X2,%H
  S X1=3101229.103139,X2=-2
  D C^%DTC
- D CHKEQ^XTMUNIT(X,3101227.103139,"2 days weren't subtracted correctly")
+ D CHKEQ^%ut(X,3101227.103139,"2 days weren't subtracted correctly")
  N LASTH S LASTH=%H
  N %H,%T,%Y
  D H^%DTC ; Input is X
- D CHKEQ^XTMUNIT(%H,LASTH,"Horolog conversion failed")
- D CHKEQ^XTMUNIT(%T,(10*60*60)+(31*60)+39,"Seconds since mid conversion failed")
+ D CHKEQ^%ut(%H,LASTH,"Horolog conversion failed")
+ D CHKEQ^%ut(%T,(10*60*60)+(31*60)+39,"Seconds since mid conversion failed")
  ;
  N X,X1,X2,%H
  S X1=3101229.103139,X2=3
  D C^%DTC
- D CHKEQ^XTMUNIT(X,3110101.103139,"3 days weren't added correctly")
+ D CHKEQ^%ut(X,3110101.103139,"3 days weren't added correctly")
  N LASTH S LASTH=%H
  N %H,%T,%Y
  D H^%DTC ; Input is X
- D CHKEQ^XTMUNIT(%H,LASTH,"Horolog conversion failed")
- D CHKEQ^XTMUNIT(%T,(10*60*60)+(31*60)+39,"Seconds since mid conversion failed")
+ D CHKEQ^%ut(%H,LASTH,"Horolog conversion failed")
+ D CHKEQ^%ut(%T,(10*60*60)+(31*60)+39,"Seconds since mid conversion failed")
  QUIT
 COMMA ; @TEST - COMMA^%DTC - Format the number with a comma
  ; Input: X - Number you want to format. X2 = Number of decimal digits.
@@ -84,33 +84,33 @@ COMMA ; @TEST - COMMA^%DTC - Format the number with a comma
  ;
  N X,X2,X3
  S X="123332.229" D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),12,"Default length is wrong")
- D CHKEQ^XTMUNIT(X," 123,332.23 ","Comma value is wrong")
+ D CHKEQ^%ut($L(X),12,"Default length is wrong")
+ D CHKEQ^%ut(X," 123,332.23 ","Comma value is wrong")
  ;
  N X,X2,X3
  S X="123332.229",X2=1 D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),12,"Default length is wrong 2")
- D CHKEQ^XTMUNIT(X,"  123,332.2 ","Comma value is wrong 2")
+ D CHKEQ^%ut($L(X),12,"Default length is wrong 2")
+ D CHKEQ^%ut(X,"  123,332.2 ","Comma value is wrong 2")
  ;
  N X,X2,X3
  S X="123332.2291",X2="3$" D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),13,"Default length is wrong 3")
- D CHKEQ^XTMUNIT(X,"$123,332.229 ","Comma value is wrong 3")
+ D CHKEQ^%ut($L(X),13,"Default length is wrong 3")
+ D CHKEQ^%ut(X,"$123,332.229 ","Comma value is wrong 3")
  ;
  N X,X2,X3
  S X="123332.2291",X2="3$",X3=15 D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),15,"Length isn't 15")
- D CHKEQ^XTMUNIT(X,"  $123,332.229 ","Comma value is wrong 4")
+ D CHKEQ^%ut($L(X),15,"Length isn't 15")
+ D CHKEQ^%ut(X,"  $123,332.229 ","Comma value is wrong 4")
  ;
  N X,X2,X3
  S X="123.22",X2="3$" D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),12,"Default length is wrong 5")
- D CHKEQ^XTMUNIT(X,"   $123.220 ","Comma value is wrong 5")
+ D CHKEQ^%ut($L(X),12,"Default length is wrong 5")
+ D CHKEQ^%ut(X,"   $123.220 ","Comma value is wrong 5")
  ;
  N X,X2,X3
  S X="ABCDEDFGHIJK",X2=1 D COMMA^%DTC
- D CHKEQ^XTMUNIT($L(X),12,"Default length is wrong 6")
- D CHKEQ^XTMUNIT(X,"        0.0 ","Comma value is wrong 6")
+ D CHKEQ^%ut($L(X),12,"Default length is wrong 6")
+ D CHKEQ^%ut(X,"        0.0 ","Comma value is wrong 6")
  QUIT
  ;
 DW ; @TEST - DW^%DTC - Return the day of week
@@ -119,31 +119,31 @@ DW ; @TEST - DW^%DTC - Return the day of week
  ;   %Y: Numeric Day of Week, X: Alpha day of week
  N X,%H,%T,%Y
  S X="3121228.224422" D DW^%DTC
- D CHKEQ^XTMUNIT(X,"FRIDAY","28DEC2012 is a Friday")
- D CHKEQ^XTMUNIT(%H,"62819","Horolog not correctly translated")
- D CHKEQ^XTMUNIT(%T,(22*60*60)+(44*60)+22,"Number of seconds since midnight incorrect")
- D CHKEQ^XTMUNIT(%Y,5,"Should be 5 for Friday")
+ D CHKEQ^%ut(X,"FRIDAY","28DEC2012 is a Friday")
+ D CHKEQ^%ut(%H,"62819","Horolog not correctly translated")
+ D CHKEQ^%ut(%T,(22*60*60)+(44*60)+22,"Number of seconds since midnight incorrect")
+ D CHKEQ^%ut(%Y,5,"Should be 5 for Friday")
  ;
  N X,%H,%T,%Y
  S X="3100000" D DW^%DTC
- D CHKEQ^XTMUNIT(X,"","Imprecise date - should be null")
- D CHKEQ^XTMUNIT(%H,"61727","Horolog not correctly translated 2")
- D CHKEQ^XTMUNIT(%T,0,"Imprecise date - seconds should be zero")
- D CHKEQ^XTMUNIT(%Y,-1,"Imprecise date - %Y should be -1")
+ D CHKEQ^%ut(X,"","Imprecise date - should be null")
+ D CHKEQ^%ut(%H,"61727","Horolog not correctly translated 2")
+ D CHKEQ^%ut(%T,0,"Imprecise date - seconds should be zero")
+ D CHKEQ^%ut(%Y,-1,"Imprecise date - %Y should be -1")
  ;
  N X,%H,%T,%Y
  S X="ABCDEF" D DW^%DTC
- D CHKEQ^XTMUNIT(X,"","Invalid input - empty string expected")
- D CHKEQ^XTMUNIT(%H,0,"Invalid input - %H should be 0")
- D CHKEQ^XTMUNIT(%T,0,"Invalid input - %T should be 0")
- D CHKEQ^XTMUNIT(%Y,-1,"Invalid input - %Y should be -1")
+ D CHKEQ^%ut(X,"","Invalid input - empty string expected")
+ D CHKEQ^%ut(%H,0,"Invalid input - %H should be 0")
+ D CHKEQ^%ut(%T,0,"Invalid input - %T should be 0")
+ D CHKEQ^%ut(%Y,-1,"Invalid input - %Y should be -1")
  ;
  N X,%H,%T,%Y
  S X=5 D DW^%DTC
- D CHKEQ^XTMUNIT(X,"","Invalid input - empty string expected")
- D CHKEQ^XTMUNIT(%H,0,"Invalid input - %H should be 0")
- D CHKEQ^XTMUNIT(%T,0,"Invalid input - %T should be 0")
- D CHKEQ^XTMUNIT(%Y,-1,"Invalid input - %Y should be -1")
+ D CHKEQ^%ut(X,"","Invalid input - empty string expected")
+ D CHKEQ^%ut(%H,0,"Invalid input - %H should be 0")
+ D CHKEQ^%ut(%T,0,"Invalid input - %T should be 0")
+ D CHKEQ^%ut(%Y,-1,"Invalid input - %Y should be -1")
  QUIT
  ;
 H ; @TEST - H^%DTC - Convert an FM Date to a $H format date/time
@@ -152,27 +152,27 @@ H ; @TEST - H^%DTC - Convert an FM Date to a $H format date/time
  ;   %Y: Numeric Day of Week
  N X,%H,%T,%Y
  S X="3121228.224422" D H^%DTC
- D CHKEQ^XTMUNIT(%H,"62819","Horolog not correctly translated")
- D CHKEQ^XTMUNIT(%T,(22*60*60)+(44*60)+22,"Number of seconds since midnight incorrect")
- D CHKEQ^XTMUNIT(%Y,5,"Should be 5 for Friday")
+ D CHKEQ^%ut(%H,"62819","Horolog not correctly translated")
+ D CHKEQ^%ut(%T,(22*60*60)+(44*60)+22,"Number of seconds since midnight incorrect")
+ D CHKEQ^%ut(%Y,5,"Should be 5 for Friday")
  ;
  N X,%H,%T,%Y
  S X="3100000" D H^%DTC
- D CHKEQ^XTMUNIT(%H,"61727","Horolog not correctly translated 2")
- D CHKEQ^XTMUNIT(%T,0,"Imprecise date - seconds should be zero")
- D CHKEQ^XTMUNIT(%Y,-1,"Imprecise date - %Y should be -1")
+ D CHKEQ^%ut(%H,"61727","Horolog not correctly translated 2")
+ D CHKEQ^%ut(%T,0,"Imprecise date - seconds should be zero")
+ D CHKEQ^%ut(%Y,-1,"Imprecise date - %Y should be -1")
  ;
  N X,%H,%T,%Y
  S X="ABCDEF" D H^%DTC
- D CHKEQ^XTMUNIT(%H,0,"Invalid input - %H should be 0")
- D CHKEQ^XTMUNIT(%T,0,"Invalid input - %T should be 0")
- D CHKEQ^XTMUNIT(%Y,-1,"Invalid input - %Y should be -1")
+ D CHKEQ^%ut(%H,0,"Invalid input - %H should be 0")
+ D CHKEQ^%ut(%T,0,"Invalid input - %T should be 0")
+ D CHKEQ^%ut(%Y,-1,"Invalid input - %Y should be -1")
  ;
  N X,%H,%T,%Y
  S X=5 D H^%DTC
- D CHKEQ^XTMUNIT(%H,0,"Invalid input - %H should be 0")
- D CHKEQ^XTMUNIT(%T,0,"Invalid input - %T should be 0")
- D CHKEQ^XTMUNIT(%Y,-1,"Invalid input - %Y should be -1")
+ D CHKEQ^%ut(%H,0,"Invalid input - %H should be 0")
+ D CHKEQ^%ut(%T,0,"Invalid input - %T should be 0")
+ D CHKEQ^%ut(%Y,-1,"Invalid input - %Y should be -1")
  QUIT
  ;
 HELP ; @TEST - Exercise Help, no checks.
@@ -212,27 +212,27 @@ NOW ; @TEST - Tests NOW^%DTC
  ; X -> VA FileMan date only.
  N %,%H,%I,X
  D NOW^%DTC
- D CHKEQ^XTMUNIT($L(%,"."),2,"No date/time provided when they should be")
- D CHKTF^XTMUNIT($L($P(%,".",2))>2,"Hours and minutes not provided when they should be")
- D CHKEQ^XTMUNIT(%I(1),+$E(DT,4,5),"Month incorrect")
- D CHKEQ^XTMUNIT(%I(2),+$E(DT,6,7),"Day incorrect")
- D CHKEQ^XTMUNIT(%I(3),$E(DT,1,3),"Year incorrect")
- D CHKEQ^XTMUNIT(X,DT,"VA Fileman date only incorrect")
+ D CHKEQ^%ut($L(%,"."),2,"No date/time provided when they should be")
+ D CHKTF^%ut($L($P(%,".",2))>2,"Hours and minutes not provided when they should be")
+ D CHKEQ^%ut(%I(1),+$E(DT,4,5),"Month incorrect")
+ D CHKEQ^%ut(%I(2),+$E(DT,6,7),"Day incorrect")
+ D CHKEQ^%ut(%I(3),$E(DT,1,3),"Year incorrect")
+ D CHKEQ^%ut(X,DT,"VA Fileman date only incorrect")
  QUIT
  ;
 S ; @TEST - Test S^%DTC
  ; Input: % - Number of seconds since midnight
  ; Output: % - Decimal part of Fileman Date
  N % S %=1 D S^%DTC
- D CHKEQ^XTMUNIT(%,.000001,"1 second didn't convert correctly")
+ D CHKEQ^%ut(%,.000001,"1 second didn't convert correctly")
  N % S %=(13*60*60)+(48*60)+47 D S^%DTC ; 1:48:47 PM
- D CHKEQ^XTMUNIT(%,.134847,"1:48:47 didn't convert correctly")
+ D CHKEQ^%ut(%,.134847,"1:48:47 didn't convert correctly")
  N % S %=0 D S^%DTC
- D CHKEQ^XTMUNIT(%,0,"0 didn't convert correctly")
+ D CHKEQ^%ut(%,0,"0 didn't convert correctly")
  N % S %="ABCDEF" D S^%DTC
- D CHKEQ^XTMUNIT(%,0,"ABCDEF didn't convert correctly")
+ D CHKEQ^%ut(%,0,"ABCDEF didn't convert correctly")
  N % S %="1abcdef" D S^%DTC
- D CHKEQ^XTMUNIT(%,.000001,"1abcdef didn't convert correctly")
+ D CHKEQ^%ut(%,.000001,"1abcdef didn't convert correctly")
  QUIT
 YMD ; @TEST - Test YMD^%DTC
  ; Input: %H - $H format date/time
@@ -241,35 +241,35 @@ YMD ; @TEST - Test YMD^%DTC
  N %H,%,X
  S %H=$H D YMD^%DTC
  N FMTIME S FMTIME=$$FMTFDHT(%H)
- D CHKEQ^XTMUNIT(%,FMTIME,"Time didn't convert correctly")
- D CHKEQ^XTMUNIT(X,DT,"Date didn't convert correctly")
+ D CHKEQ^%ut(%,FMTIME,"Time didn't convert correctly")
+ D CHKEQ^%ut(X,DT,"Date didn't convert correctly")
  ;
  ; Check date sans time
  N %H,%,X
  S %H=$P($H,",") D YMD^%DTC
- D CHKEQ^XTMUNIT(%,0,"Time didn't convert correctly 2")
- D CHKEQ^XTMUNIT(X,DT,"Date didn't convert correctly 2")
+ D CHKEQ^%ut(%,0,"Time didn't convert correctly 2")
+ D CHKEQ^%ut(X,DT,"Date didn't convert correctly 2")
  ;
  ; Now check invalid inputs
  N %H,%,X
  S %H=0 D YMD^%DTC
- D CHKEQ^XTMUNIT(%,0,"Time should be zero for $H of 0")
- D CHKEQ^XTMUNIT(X,"","Date should be null? for $H of 0")
+ D CHKEQ^%ut(%,0,"Time should be zero for $H of 0")
+ D CHKEQ^%ut(X,"","Date should be null? for $H of 0")
  ;
  N %H,%,X
  S %H=1 D YMD^%DTC
- D CHKEQ^XTMUNIT(%,0,"Time should be zero for $H of 1")
- D CHKEQ^XTMUNIT(X,1410101,"Date for $H of 1 is 1410101")
+ D CHKEQ^%ut(%,0,"Time should be zero for $H of 1")
+ D CHKEQ^%ut(X,1410101,"Date for $H of 1 is 1410101")
  ;
  N %H,%,X
  S %H="HELLO" D YMD^%DTC
- D CHKEQ^XTMUNIT(%,0,"Time should be zero for $H of ""HELLO""")
- D CHKEQ^XTMUNIT(X,"","Date should be null for $H of 0")
+ D CHKEQ^%ut(%,0,"Time should be zero for $H of ""HELLO""")
+ D CHKEQ^%ut(X,"","Date should be null for $H of 0")
  ;
  N %H,%,X
  S %H="1HELLO" D YMD^%DTC
- D CHKEQ^XTMUNIT(%,0,"Time should be zero for $H of ""1HELLO""")
- D CHKEQ^XTMUNIT(X,1410101,"Date for $H of ""1HELLO"" should be 1410101")
+ D CHKEQ^%ut(%,0,"Time should be zero for $H of ""1HELLO""")
+ D CHKEQ^%ut(X,1410101,"Date for $H of ""1HELLO"" should be 1410101")
  QUIT
  ;
 YX ; @TEST - Test YX^%DTC
@@ -281,37 +281,37 @@ YX ; @TEST - Test YX^%DTC
  ; $H cum datetime
  N %H,Y,X,%
  S %H="62823,40271" D YX^%DTC
- D CHKEQ^XTMUNIT(Y,"JAN 01, 2013@11:11:11","$H didn't convert correctly")
- D CHKEQ^XTMUNIT(X,3130101,"Fileman date didn't get produced correctly")
- D CHKEQ^XTMUNIT(%,.111111,"Fileman time didn't get produced correctly")
+ D CHKEQ^%ut(Y,"JAN 01, 2013@11:11:11","$H didn't convert correctly")
+ D CHKEQ^%ut(X,3130101,"Fileman date didn't get produced correctly")
+ D CHKEQ^%ut(%,.111111,"Fileman time didn't get produced correctly")
  ;
  ; $H sans time
  N %H,Y,X,%
  S %H=62823 D YX^%DTC
- D CHKEQ^XTMUNIT(Y,"JAN 01, 2013","$H didn't convert correctly 2")
- D CHKEQ^XTMUNIT(X,3130101,"Fileman date didn't get produced correctly 2")
- D CHKEQ^XTMUNIT(%,0,"Fileman time should be zero for $H of 62823")
+ D CHKEQ^%ut(Y,"JAN 01, 2013","$H didn't convert correctly 2")
+ D CHKEQ^%ut(X,3130101,"Fileman date didn't get produced correctly 2")
+ D CHKEQ^%ut(%,0,"Fileman time should be zero for $H of 62823")
  ;
  ; Invalid input
  N %H,Y,X,%
  S %H=0 D YX^%DTC
- D CHKEQ^XTMUNIT(Y,0,"$H of 0 should produce zero date")
- D CHKEQ^XTMUNIT(X,"","$H of 0 should produced a empty fileman date")
- D CHKEQ^XTMUNIT(%,0,"$H of 0 should produce zero time")
+ D CHKEQ^%ut(Y,0,"$H of 0 should produce zero date")
+ D CHKEQ^%ut(X,"","$H of 0 should produced a empty fileman date")
+ D CHKEQ^%ut(%,0,"$H of 0 should produce zero time")
  ;
  ; Invalid input again
  N %H,Y,X,%
  S %H="HELLO" D YX^%DTC
- D CHKEQ^XTMUNIT(Y,0,"$H of ""HELLO"" should produce zero date")
- D CHKEQ^XTMUNIT(X,"","$H of ""HELLO"" should produce a zero fileman date")
- D CHKEQ^XTMUNIT(%,0,"$H of ""HELLO"" should produce zero time")
+ D CHKEQ^%ut(Y,0,"$H of ""HELLO"" should produce zero date")
+ D CHKEQ^%ut(X,"","$H of ""HELLO"" should produce a zero fileman date")
+ D CHKEQ^%ut(%,0,"$H of ""HELLO"" should produce zero time")
  ;
  ; Slightly invalid input
  N %H,Y,X,%
  S %H="62823HELLO" D YX^%DTC
- D CHKEQ^XTMUNIT(Y,"JAN 01, 2013","$H of 62823HELLO should be JAN 01, 2013")
- D CHKEQ^XTMUNIT(X,3130101,"$H of 62823HELLO should be FM Date 3130101")
- D CHKEQ^XTMUNIT(%,0,"$H of 62823HELLO should be FM time zero")
+ D CHKEQ^%ut(Y,"JAN 01, 2013","$H of 62823HELLO should be JAN 01, 2013")
+ D CHKEQ^%ut(X,3130101,"$H of 62823HELLO should be FM Date 3130101")
+ D CHKEQ^%ut(%,0,"$H of 62823HELLO should be FM time zero")
  QUIT
  ;
 FMTFDHT(%H) ; $$ ; Fileman Time from $H Time; Private to DMU routines

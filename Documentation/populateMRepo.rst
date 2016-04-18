@@ -1,13 +1,18 @@
 =================================
-Populating the VistA-M Repository
+Populate the VistA-M Repository
 =================================
 
+.. role:: usertype
+    :class: usertype
 
 The VistA-M repository is used for many things within the OSEHRA Testing
 Harness.  While most of these uses assume that the OSEHRA code is the desired
-VistA to set up, this is not always the case.  There are times when the
-structure of the VistA-M repository is needed but the content would belong to
-a more recent FOIA release or the release of a community vendor.
+version of VistA to set up, this is not always the case.  There are times when
+the structure of the VistA-M repository is needed but the content should belong
+to a more recent FOIA release or the release of a community vendor.
+
+Extract Routines and Globals
+----------------------------
 
 OSEHRA has written a Python script that will export the routines and globals
 from an installed M[UMPS] environment and store the extracted files in the file
@@ -59,7 +64,7 @@ function and all necessary arguments:
                         Cache telnet service port, default is 23
 
 
-An Intersystems Cache environment would use a `-S` value of 1 and would not
+An Intersystems Caché environment would use a `-S` value of 1 and would not
 require the `-ro` argument, but may require a significant amount of connection
 arguments.  An example usage from within a GitBash shell
 could look like this:
@@ -78,46 +83,10 @@ While a call on a system with GT.M, `-S 2`, could look like this utilizing the
   -o ~/Desktop/Log -r ~/Work/OSEHRA/VistA-M -l ~/Desktop/Log
 
 Once the command is entered, the script proceeds to stop the VistA's background
-tasks then exports the routines and globals.  All current files (.zwr and .m)
-are removed from the VistA-M source tree and then the exported files are sorted
-into their correct package folder.  The entire process should take
+tasks and then exports the routines and globals.  All current files (.zwr and .m)
+are removed from the VistA-M source tree and the exported files are sorted
+into their correct package folder. The entire process should take
 approximately one hour.
-
-**Note:** In a Cache environment, it is necessary to change the $I value of the
-TELNET device within the File Manager.
-The first step is to identify yourself as a programmer and gain permissions to
-change the files attributes.  Enter \"S DUZ=1 D Q^DI\" to first get
-access to the File Manager and then to start the File Manager.
-At the Select OPTION prompt, enter \"1\" to edit the file entries; at the
-INPUT TO WHAT FILE: prompt, enter the word \"DEVICE\"; and at the
-EDIT WHICH FIELD: prompt enter \"$I\". Enter <Enter> to end the field queries.
-The system will respond with a Select DEVICE NAME: prompt, enter \"TELNET\" to
-bring up an option menu and then enter the option that does not reference GT.M
-or UNIX. When the system responds with $I: TNA//.  Enter \"\|TNT\|\", and
-press enter until the VISTA prompt is reached.
-
-.. parsed-literal::
-
-  VISTA> :usertype:`S DUZ=1 D Q^DI`
-
-  VA FileMan 22.0
-
-  Select OPTION: :usertype:`1`
-
-  INPUT TO WHAT FILE: :usertype:`DEVICE`
-  EDIT WHICH FIELD: ALL// :usertype:`$I`
-  THEN EDIT FIELD: :usertype:`<ENTER>`
-
-  Select DEVICE NAME: :usertype:`TELNET`
-       1  TELNET    TELNET    TNA
-       2  TELNET   GTM-UNIX-TELNET    TELNET   /dev/pts
-  CHOOSE 1-2:  :usertype:`1`
-  $I: TNA// :usertype:`|TNT|`
-
-  Select DEVICE NAME: :usertype:`<ENTER>`
-  Select OPTION:  :usertype:`<ENTER>`
-
-  VISTA>
 
 An example start of the execution of the extractor script can be seen below:
 
@@ -131,9 +100,12 @@ An example start of the execution of the extractor script can be seen below:
    2014-10-27 09:50:21,562 INFO Import ZGO routine to VistA instance
    <SNIP>
 
-After the extraction of the routines and globals, the last step is to update
-the Packages.csv file found in the top-level directory of the VistA-M
-source tree to account for files in the Uncategorized package.
+Update Packages.csv
+-------------------
+
+After the extraction of the routines and globals, the Packages.csv file found
+in the top-level directory of the VistA-M source tree needs to be updated to
+account for the new files in the Uncategorized directory.
 
 This work may include:
 
@@ -141,10 +113,10 @@ This work may include:
 * Adding entirely new packages.
 * Adding global entries to existing packages
 
-Once the Packages.csv has been updated, move the contents of the Uncategorized
-routines and globals to the `Packages` directory.  We can then re-sort the
-contents using the `PopulatePackages.py` script found in the `Scripts`
-directory in the VistA source tree.
+Once Packages.csv has been updated, move the contents of the Uncategorized
+`Routines` and `Globals` directories to the `Packages` directory.  We can
+then re-sort the contents using the `PopulatePackages.py` script found in
+the `Scripts` directory in the VistA source tree.
 
 From the `Packages` directory run the following command:
 
@@ -174,5 +146,63 @@ An example run of the command is shown below:
 
  $
 
-There you can see some globals are moved into their respective packages while
-the others are moved back into the Uncategorized package.
+In this example, some globals are moved into their respective packages while
+others are moved back into the Uncategorized package.
+
+
+Troubleshooting
+---------------
+
+Script Errors on Background Process Shutdown
+++++++++++++++++++++++++++++++++++++++++++++
+
+During the run of the VistAMComponentExtractor, the script attempts to shut
+down some background processes within the VistA environment.  It accesses the
+EVE menu to attempt to stop TaskMan, the MailMan background filer, and the HL7
+background filer by accessing the XUP menus as the DUZ=1 user and accessing the
+EVE menu.
+
+In order to shut down the Mailman background filer,  the script attempts to
+access the ``MailMan Master Menu`` which isn't one of the EVE options.
+The DUZ=1 user needs to be given a ``SECONDARY MENU OPTION`` of ``XMMASTER`` in
+order to access this menu from the EVE menu:
+
+.. parsed-literal::
+
+  VISTA> :usertype:`S DUZ=1 D Q^DI`
+
+  VA FileMan 22.0
+
+
+  Select OPTION: :usertype:`1`  ENTER OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: NEW PERSON// :usertype:`NEW PERSON`         (60 entries)
+  EDIT WHICH FIELD: ALL// :usertype:`SECONDARY MENU OPTIONS`    (multiple)
+     EDIT WHICH SECONDARY MENU OPTIONS SUB-FIELD: ALL//:usertype:`<enter>`
+  THEN EDIT FIELD: :usertype:`<enter>`
+
+
+  Select NEW PERSON NAME: :usertype:`\`1` USER,ONE     DBA
+  Select SECONDARY MENU OPTIONS: :usertype:`XMMASTER`       MailMan Master Menu
+    Are you adding 'XMMASTER' as a new SECONDARY MENU OPTIONS? No// :usertype:`Y`  (Yes)
+    SYNONYM: :usertype:`<enter>`
+  Select SECONDARY MENU OPTIONS: :usertype:`^`
+
+
+Exporting to non-"VistA-M" directory
+++++++++++++++++++++++++++++++++++++
+
+If the wish is to export into a directory that isn't a copy of the VistA-M
+repository, some things will be required to be available in order for the
+script to proceed.
+
+The minimal structure of an output directory requires the presence of:
+
+* A directory named ``Packages``
+* A copy of the ``Packages.csv`` file from the top level of the VistA
+  repository
+
+If these objects are not found, the script will throw an assertion error and
+the execution of the script will stop.

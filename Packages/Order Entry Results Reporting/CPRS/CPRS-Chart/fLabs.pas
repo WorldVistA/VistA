@@ -629,8 +629,34 @@ begin
 end;
 
 procedure TfrmLabs.SetFontSize(NewFontSize: Integer);
+var
+  pnlRightTopPct: Real;
+  frmLabsHeight, pnlRightHeight: Integer;
+
 begin
+  pnlRightTopPct := (pnlRightTop.Height / (pnlRight.Height - (sptHorzRight.Height + pnlRightTopHeader.Height)));
+  pnlRightTop.Constraints.MaxHeight := 20;
   inherited SetFontSize(NewFontSize);
+  grdLab.Font.Size := NewFontSize;
+  memLab.Font.Size := NewFontSize;
+  pnlButtons.Font.Size := NewFontSize;
+  cmdOld.Font.Size := NewFontSize;
+  cmdPrev.Font.Size := NewFontSize;
+  cmdNext.Font.Size := NewFontSize;
+  cmdRecent.Font.Size := NewFontSize;
+  lblMostRecent.Font.Size := NewFontSize;
+  lblSample.Font.Size := NewFontSize;
+  Memo1.Font.Size := NewFontSize;
+  frmLabsHeight := frmFrame.pnlPatientSelectedHeight - (frmFrame.pnlToolbar.Height + frmFrame.stsArea.Height + frmFrame.tabPage.Height + 2);
+  pnlRightHeight := frmLabsHeight;
+  pnlRightTop.Constraints.MaxHeight := 0;
+  pnlRightTop.Height := (Round((pnlRight.Height - (sptHorzRight.Height + pnlRightTopHeader.Height)) * pnlRightTopPct) - 14);
+  if frmFrame.Height <> frmFrame.frmFrameHeight then
+  begin
+    pnlRight.Height := pnlRightHeight;
+    frmLabs.Height := frmLabsHeight;
+    frmFrame.Height := frmFrame.frmFrameHeight;
+  end;
   FormResize(self);
 end;
 
@@ -3365,11 +3391,7 @@ var
   CurrentNode: TTreeNode;
 begin
   inherited;
-  if (Length(lblHeading.Caption) > 0) and (Length(frmFrame.stsArea.Panels.Items[1].Text) > 0) then
-    begin                                           //ProcessNotfications post-cleanup and clearing of notification message text
-      lblHeading.Caption := '';                     //in the header and status bar display when clicking to view lab results.
-      frmFrame.stsArea.Panels.Items[1].Text := '';
-    end;
+  lblHeading.Caption := '';
   lvReports.Hint := 'To sort, click on column headers|';
   tvReports.TopItem := tvReports.Selected;
   uRemoteCount := 0;

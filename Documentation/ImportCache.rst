@@ -93,21 +93,23 @@ name have meaning:
 
 \- indicates routines which have not been filed.
 
-The next step is to use the newly imported ZGI routine
-to import the VistA globals from the repository:
+The next step is to use the newly imported ZGI routine to import the VistA
+globals from the repository.  This ZGI routine should have been imported in the
+``routines.ro`` file which was created in the PrepareMComponents_ document.
+
+If it is not found in the local instance, you can find ZGI in the ``Scripts``
+directory of the VistA repository.  A ``.ro`` file for only that routine can
+be created by using the command from PrepareMComponents_, but only pass the
+path to the ``VistA/Scripts`` directory as the arguments to the
+``PrepareMComponentsforImport.py`` file.  That ``.ro`` file can be imported
+with the same process as the above files.
+
+Once ZGI is available, execute the ``LIST`` entry point of the ZGI routine
+using the MUMPS ``WRITE`` command to start the import.  An example follows:
 
 .. parsed-literal::
 
-  VISTA> :usertype:`W $$LIST^ZGI("/path-to/VistA/globals.lst")`
-
-This routine will go through all of the globals contained in the list file and
-import them into the VistA instance.  The last package to be imported is the
-Wounded Injured and Ill Warriors.  The example below will demonstrate the
-command and the first/last globals to be imported.
-
-.. parsed-literal::
-
-  VISTA> :usertype:`D LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
+  VISTA> :usertype:`W $$LIST^ZGI("C:/Users/joe.snyder/Desktop/VistA/globals.lst")`
 
   C:/Users/joe.snyder/Desktop/VistA-M/Packages/Accounts Receivable/Globals/340+AR DEBTOR.zwr
 
@@ -238,47 +240,4 @@ rename the routines.
 
   VISTA>
 
-
-The final step needed for the testing is to alter a device within the File
-Manager. We need to change the $I value of the TELNET device to let the Caché
-terminal function as a display for the XINDEX routine, change $I value of
-terminal or TRM device to allow default IO device to work.
-
-The first step is to identify yourself as a programmer and gain permissions to
-change the files attributes.  Enter \"VISTA> S DUZ=1 D Q^DI\" to first get
-access to the File Manager and then to start the File Manager.
-At the Select OPTION prompt, enter \"1\" to edit the file entries; at the
-INPUT TO WHAT FILE: prompt, enter the word \"DEVICE\"; and at the
-EDIT WHICH FIELD: prompt enter \"$I\". Enter <Enter> to end the field queries.
-The system will respond with a Select DEVICE NAME: prompt, enter \"TELNET\" to
-bring up an option menu and then enter the option that does not reference GT.M
-or UNIX. When the system responds with $I: TNA//.  Enter \"\|TNT\|\", and
-press enter. On next Select DEVICE NAME: prompt, enter \"TRM\". After $I: TRM//
-prompt, enter \"\|TRM\|:\|\", press enter until the VISTA prompt is reached.
-
-.. parsed-literal::
-
-  VISTA> :usertype:`S DUZ=1 D Q^DI`
-
-  VA FileMan 22.0
-
-  Select OPTION: :usertype:`1`
-
-  INPUT TO WHAT FILE: :usertype:`DEVICE`
-  EDIT WHICH FIELD: ALL// :usertype:`$I`
-  THEN EDIT FIELD: :usertype:`<ENTER>`
-
-  Select DEVICE NAME: :usertype:`TELNET`
-       1  TELNET    TELNET    TNA
-       2  TELNET   GTM-UNIX-TELNET    TELNET   /dev/pts
-  CHOOSE 1-2:  :usertype:`1`
-  $I: TNA// :usertype:`|TNT|`
-
-  Select DEVICE NAME: :usertype:`TRM`
-  $I: TRM// :usertype:`|TRM|:\|`
-
-  Select DEVICE NAME: :usertype:`<ENTER>`
-  Select OPTION:  :usertype:`<ENTER>`
-
-  VISTA>
 .. _`ObtainingVistAMCode`: ObtainingVistAMCode.rst

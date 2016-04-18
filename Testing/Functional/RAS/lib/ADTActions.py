@@ -444,7 +444,10 @@ class ADTActions (Actions):
         self.VistA.write('NO')
         self.VistA.wait('STATUS:')
         self.VistA.write('')
-        self.VistA.wait('patient:')
+        index = self.VistA.multiwait(['patient:','THIRD PARTY REVIEW'])
+        if index == 1:
+          self.VistA.write('')
+          self.VistA.wait('patient:')
         self.VistA.write('')
         self.VistA.wait('Option:')
         self.VistA.write('')
@@ -632,7 +635,7 @@ class ADTActions (Actions):
         self.VistA.wait('Bed Control Menu')
         self.VistA.write('')
 
-    def drg_calc(self, ssn, diag, dnum, sdiag, sdnu, oper, onum):
+    def drg_calc(self, ssn, diag, ICD10diag, sdiag, ICD10sdiag, oper, ICD10oper):
         '''This method performs a DRG Calculation '''
         self.VistA.wait('Option:')
         self.VistA.write('bed control menu')
@@ -650,19 +653,30 @@ class ADTActions (Actions):
         self.VistA.write('No')
         self.VistA.wait('PRINCIPAL diagnosis')
         self.VistA.write(diag)
-        self.VistA.wait('STOP or Select')
-        self.VistA.write(dnum)
+        index = self.VistA.multiwait(['\?\?','OK'])
+        if index == 0:
+          self.VistA.write(ICD10diag)
+          self.VistA.wait('OK')
+        self.VistA.write('')
+        self.VistA.wait('POA FOR PRINCIPAL')
+        self.VistA.write('')
         self.VistA.wait('Enter SECONDARY diagnosis')
         self.VistA.write(sdiag)
-        self.VistA.wait('STOP or Select')
-        self.VistA.write(sdnum)
+        index = self.VistA.multiwait(['\?\?','OK'])
+        if index == 0:
+          self.VistA.write(ICD10diag)
+          self.VistA.wait('OK')
+        self.VistA.write('')
+        self.VistA.wait('POA FOR SECONDARY')
+        self.VistA.write('')
         self.VistA.wait('Enter SECONDARY diagnosis')
         self.VistA.write('')
         self.VistA.wait('Enter Operation/Procedure')
         self.VistA.write(oper)
-        self.VistA.multiwait(['CHOOSE','Select'])
-        self.VistA.write(onum)
-        self.VistA.wait('Enter Operation/Procedure')
+        index = self.VistA.multiwait(['\?\?','Enter Operation/Procedure'])
+        if index == 0:
+          self.VistA.write(ICD10oper)
+          self.VistA.wait('Enter Operation/Procedure')
         self.VistA.write('')
         self.VistA.wait('Effective Date')
         self.VistA.write('')
@@ -857,9 +871,10 @@ class ADTActions (Actions):
         if sys.platform == 'win32':
             self.VistA.wait('Right Margin')
             self.VistA.write('80')
-        self.VistA.wait('VA FORM 10-10EZ')
-        self.VistA.wait('PAGE 4')
-        self.VistA.wait('Select PATIENT NAME')
+        while True:
+          index = self.VistA.multiwait(['VA FORM 10-10EZ','PAGE 4','Select PATIENT NAME'])
+          if index == 2:
+            break
         self.VistA.write('')
         self.VistA.wait('ADT Outputs Menu')
         self.VistA.write('ADT Third Party Output Menu')
@@ -927,8 +942,8 @@ class ADTActions (Actions):
         self.VistA.wait('-------------------------')
         self.VistA.wait('Disposition Outputs Menu')
         self.VistA.write('Disposition')
-        if self.VistA.type == 'cache':
-            self.VistA.wait('EARLIEST REGISTRATION ON FILE IS')
+        index = self.VistA.multiwait(['EARLIEST REGISTRATION ON FILE IS','NO REGISTRATIONS ON FILE TO START WITH'])
+        if index == 0:
             self.VistA.wait('Start with REGISTRATION DATE:')
             self.VistA.write('')
             self.VistA.wait('Disposition Outputs Menu')
@@ -953,8 +968,6 @@ class ADTActions (Actions):
             self.VistA.write('')
             for vitem in ['REGISTRATION DISPOSITION SUMMARY', 'TOTAL']:
                 self.VistA.wait(vitem)
-        else:
-            self.VistA.wait('NO REGISTRATIONS ON FILE TO START WITH')
         self.VistA.wait('Disposition Outputs Menu')
         self.VistA.write('')
         # Enrollment Reports

@@ -60,15 +60,23 @@ Caché
 
   * InstallCache_
 
-  To install a downloaded CACHE.DAT file as the source of the VistA MUMPS code
-  and follow the instructions here:
+  There are two methods available to import the VistA-M code into the Caché
+  environment.
 
-  * InstallCacheDat_
+        To install a downloaded CACHE.DAT file as the source of the VistA MUMPS code
+        and follow the instructions here:
 
-  For the instructions to import the MUMPS code from the OSEHRA VistA-M
-  Repository into a Caché instance, see
+        * InstallCacheDat_
 
-  * ImportCache_
+        Alternatively, for the instructions to import the MUMPS code from the
+        OSEHRA VistA-M Repository into a Caché instance, see:
+
+        * ImportCache_
+
+  Instructions for additional configuration of the Caché environment can be
+  found here:
+
+  * ConfigureCache_
 
 GT.M
 ````
@@ -85,6 +93,10 @@ Testing Harness:
 
   * SetupTestingEnvironment_
   * RunningandUploadingTests_
+
+  For information on how to add to the OSEHRA Testing Harness, see:
+
+    * AddingTests_
 
 Once the tests have been run and submitted, the results can be seen on the
 OSEHRA Dashboard, for more information see:
@@ -109,6 +121,12 @@ The OSEHRA VistA source tree is also used in the generation of the Dox pages
 which can be found at `code.osehra.org/dox`_. For instructions on how to set up
 and execute the steps necessary to generate the HTML files, see setupDox_.
 
+Routine changes to the VistA Environment
+-----------------------------------------
+
+The OSEHRA VistA framework makes some modifications to the installed VistA
+system when using the ``TEST_VISTA_FRESH`` and ``TEST_VISTA_SETUP`` options.
+For information about the changes and why they were made, see testingChanges_
 
 Automated Virtual Machine (VM) creation and VistA installation
 --------------------------------------------------------------
@@ -127,6 +145,17 @@ For more information regarding using Vagrant with cloud providers:
   * `Amazon Web Services`_
   * Rackspace_
 
+
+OSEHRA Technical Journal
+------------------------
+
+For information on the OSEHRA Certification Process or how to submit your work
+to the OSEHRA Technical Journal, see:
+
+* `OSEHRA Certification Standards`_
+* `Submitting to the OTJ`_
+* `Reviewing Submissions in the OSEHRA Technical Journal`_
+
 Troubleshooting
 ---------------
 
@@ -140,6 +169,7 @@ directory and includes:
 
   * `M Standards and Conventions`_
 
+.. _testingChanges: testingChanges.rst
 .. _`Troubleshooting Page`:
    http://www.osehra.org/wiki/troubleshooting-installation-and-testing
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
@@ -148,11 +178,13 @@ directory and includes:
 .. _InstallCache: InstallCache.rst
 .. _InstallCacheDat: InstallCacheDat.rst
 .. _ImportCache: ImportCache.rst
+.. _ConfigureCache: ConfigureCache.rst
 .. _InstallGTM: InstallGTM.rst
 .. _ImportGTM: ImportGTM.rst
 .. _ObtainingTestingCode: ObtainingTestingCode.rst
 .. _SetupTestingEnvironment: SetupTestingEnvironment.rst
 .. _RunningandUploadingTests: RunningandUploadingTests.rst
+.. _AddingTests: AddingTests.rst
 .. _ReviewingResults: ReviewingResults.rst
 .. _AutomatedVistAConfiguration: AutomatedVistAConfiguration.rst
 .. _PrepareMComponents: PrepareMComponents.rst
@@ -166,3 +198,6 @@ directory and includes:
 .. _`BUILD-Delphi`: ../BUILD-Delphi.rst
 .. _`code.osehra.org/dox`: http://code.osehra.org/dox/index.html
 .. _setupDox: setupDox.rst
+.. _`OSEHRA Certification Standards`: Standards/OSEHRACertificationStandards.rst
+.. _`Submitting to the OTJ`: submittingToOTJ.rst
+.. _`Reviewing Submissions in the OSEHRA Technical Journal`: reviewOTJSubmission.rst

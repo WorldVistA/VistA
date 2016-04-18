@@ -1,20 +1,23 @@
 The CPRSv29 source on the FOIA site:
 
-   https://downloads.va.gov/files/FOIA/Software/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2029/OR_30_306_SRC_scrubbed.zip
+   https://downloads.va.gov/files/FOIA/Software/Patches_By_Application
+   /CPRS%20GUI%20FILES/CPRS%20VERSION%2029/OR_30_306_SRC_scrubbed.zip
 
-contained three files that was released under the 1.1 version of the
+contained three files that were released under the 1.1 version of the
 Mozilla Public license:
 
   "Wcrypt2.pas", "WinSCard.pas", and "XlfMime.pas".
 
 The license for these files is not compatible with the license of this
 repository and cannot be distributed within it.  These files have been
-separated into a different repository and will need to be acquired by
-either downloading or cloning from:
+separated into a different repository and can be acquired by
+either downloading or cloning from the following webpage:
 
    https://github.com/OSEHRA-Sandbox/CPRSv29-XUDigSig
 
-or by recreating the files locally.
+OSEHRA has generated a new set of these files which are found in:
 
-The CMake variable "BUILD_DELPHI_XuDigSig_DIR" should be set to the folder
-that contains these files to build correctly.
+  Packages/Order Entry Results Reporting/CPRS/CPRS-Chart/XuDigSig/
+
+To utilize the original versions, acquire them from the above resource and
+set the CMake variable BUILD_DELPHI_XuDigSig_DIR to be the path to that directory.

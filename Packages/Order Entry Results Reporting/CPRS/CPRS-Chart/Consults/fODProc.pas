@@ -595,11 +595,17 @@ begin
   lblProvDiag.Enabled    := False;
   txtProvDiag.Hint       := '';
   if cboProc.ItemIEN = 0 then Exit;
+  ProvDx.PreviousPromptMode := ProvDx.PromptMode;
   //GetProvDxMode(ProvDx, cboService.ItemID);
   GetProvDxMode(ProvDx, Piece(cboProc.Items[cboProc.ItemIndex], U, 4));
   //  Returns:  string  A^B
   //     A = O (optional), R (required) or S (suppress)
   //     B = F (free-text) or L (lexicon)
+  if (ProvDx.PreviousPromptMode <> '') and (ProvDx.PromptMode <> ProvDx.PreviousPromptMode) then
+   begin
+     ProvDx.Code := '';
+     ControlChange(Self);
+   end;
   with ProvDx do if (Reqd = '') or (PromptMode = '') then Exit;
   if ProvDx.Reqd = 'R' then
     lblProvDiag.Caption := TX_PROVDX_REQD

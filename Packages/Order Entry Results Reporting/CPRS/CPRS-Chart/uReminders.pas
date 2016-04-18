@@ -110,6 +110,8 @@ type
     function Enabled: boolean;
     procedure SetChecked(const Value: boolean);
     procedure UpdateData;
+    function OneValidCode(Choices: TORStringList; ChoicesActiveDates: TList; encDt: TFMDateTime): string;
+    procedure setActiveDates(Choices: TORStringList; ChoicesActiveDates: TList; ActiveDates: TStringList);
     procedure GetData;
     function TrueIndent: integer;
     procedure cbClicked(Sender: TObject);
@@ -226,6 +228,7 @@ type
     FMHTestComplete: integer;
   protected
     function RemDataActive(RData: TRemData; EncDt: TFMDateTime):Boolean;
+    function CompareActiveDate(ActiveDates: TStringList; EncDt: TFMDateTime):Boolean;
     function RemDataChoiceActive(RData: TRemData; j: integer; EncDt: TFMDateTime):Boolean;
     function GetValue: string;
     procedure SetValueFromParent(Value: string);
@@ -2999,7 +3002,7 @@ var
   TempSL: TORStringList;
   RData: TRemData;
   RPrompt: TRemPrompt;
-  Tmp, Tmp2: string;
+  Tmp, Tmp2, ChoiceTmp: string;
   NewLine: boolean;
   dt: TRemDataType;
   pt: TRemPromptType;
@@ -3007,6 +3010,7 @@ var
   ChoicesActiveDates:   TStringList;
   ChoiceIdx: integer;
   Piece7: string;
+  EncDt: TFMDateTime;
 
 begin
   if FHaveData then exit;
@@ -3027,13 +3031,20 @@ begin
                   RData.FActiveDates := TStringList.Create;
                 DateRange := Pieces(Piece(TempSL[idx],U,7),':',2,3);
                 RData.FActiveDates.Add(DateRange);
+                with RData do
+                  begin
+                    FParent := Self;
+                    Piece7 := Piece(Piece(TempSL[idx],U,7),':',1);
+                    FRec3 := TempSL[idx];
+                    SetPiece(FRec3,U,7,Piece7);
+                  end;
               end;
           end;
       if(idx >= 0) and (Pieces(TempSL[idx-1],U,1,6) <> Pieces(TempSL[idx],u,1,6)) then
       begin
         dt := Code2DataType(piece(TempSL[idx], U, r3Type));
         if(dt <> dtUnknown) and ((dt <> dtOrder) or
-          (CharAt(piece(TempSL[idx], U, 11),1) in ['D', 'Q', 'M', 'O', 'A'])) and   //AGP change 26.10 for allergy orders
+          CharInSet(CharAt(piece(TempSL[idx], U, 11),1), ['D', 'Q', 'M', 'O', 'A'])) and   //AGP change 26.10 for allergy orders
           ((dt <> dtMentalHealthTest) or MHTestsOK) then
         begin
           if(not assigned(FData)) then
@@ -3053,7 +3064,7 @@ begin
 //            FRoot := FRec3;
             i := idx + 1;
             ChoiceIdx := 0;
-            while((i < TempSL.Count) and (TempSL.PiecesEqual(i, ['5', FID, FTaxID]))) do
+            while (i < TempSL.Count) and (TempSL.PiecesEqual(i, ['5', FID, FTaxID])) do
             begin
               if (Pieces(TempSL[i-1],U,1,6) = Pieces(TempSL[i],U,1,6)) then
                 begin
@@ -3111,11 +3122,32 @@ begin
                   inc(i);
                 end;
             end;
-            if(assigned(FChoices)) and (FChoices.Count = 1) then // If only one choice just pick it
+            choiceTmp := '';
+            // agp ICD-10 modify this code to handle one valid code against encounter date if combobox contains more than one code.
+            if(assigned(FChoices)) and ((FChoices.Count = 1) or (FChoicesActiveDates.Count = 1)) then // If only one choice just pick it
             begin
+              choiceTmp := FChoices[0];
+            end;
+            if (assigned(FChoices)) and (assigned(FChoicesActiveDates)) and (choiceTmp = '') then
+              begin
+                if (assigned(FParent.FReminder.FPCEDataObj)) then encDT := FParent.FReminder.FPCEDataObj.DateTime
+                else encDT := RemForm.PCEObj.VisitDateTime;
+                choiceTmp := oneValidCode(FChoices, FChoicesActiveDates, encDT);
+              end;
+            //            if(assigned(FChoices)) and (((FChoices.Count = 1) or (FChoicesActiveDates.Count = 1)) or
+//            (oneValidCode(FChoices, FChoicesActiveDates, FParent.FReminder.FPCEDataObj.DateTime) = true)) then // If only one choice just pick it
+            if (choiceTmp <> '') then
+
+            begin
+              if (not assigned(RData.FActiveDates)) then
+              begin
+                RData.FActiveDates := TStringList.Create;
+                setActiveDates(FChoices, FChoicesActiveDates, RData.FActiveDates);
+              end;
+
               FPrompts.Remove(FChoicePrompt);
               KillObj(@FChoicePrompt);
-              Tmp := FChoices[0];
+              Tmp := choiceTmp;
               KillObj(@FChoices);
               cnt := 5;
               if(Piece(FRec3,U,9) = '') then inc(cnt);
@@ -3123,6 +3155,11 @@ begin
               for i := 0 to cnt-1 do
                 Ary[i] := i+4;
               SetPieces(FRec3, U, Ary, Tmp);
+              if (not assigned(RData.FActiveDates)) then
+              begin
+                RData.FActiveDates := TStringList.Create;
+              end;
+
             end;
             if(assigned(FChoices)) then
             begin
@@ -4173,7 +4210,8 @@ var
                   MinX := Prompt.FData.FChoicesMin;
                   MaxX := Prompt.FData.FChoicesMax;
                 end
-                else
+                //agp ICD-10 suppress combobox and label if no values.
+                else if (Ctrl.cbo.Items.Count > 0) then
                 begin
                   GetComboBoxMinMax(Ctrl.cbo, MinX, MaxX);
                   inc(MaxX,18); // Adjust for checkboxes
@@ -4181,8 +4219,10 @@ var
                   Prompt.FData.FChoicesFont := Ctrl.cbo.Font.Handle;
                   Prompt.FData.FChoicesMin := MinX;
                   Prompt.FData.FChoicesMax := MaxX;
-                end;
-              end
+                end
+                else
+                DoLbl := FALSE
+              end   
               else
               if(pt = ptMHTest) or ((pt = ptGaf) and (MHDLLFound = true)) then
               begin
@@ -4940,6 +4980,30 @@ begin
   end;
 end;
 
+//agp ICD-10 add this function to scan for valid codes against encounter date.
+function TRemDlgElement.OneValidCode(Choices: TORStringList; ChoicesActiveDates: TList;
+  encDt: TFMDateTime): string;
+var
+  C,cnt, lastItem: integer;
+  Prompt: TRemPrompt;
+begin
+  cnt := 0;
+  Result := '';
+  Prompt := TRemPrompt.Create();
+  lastItem := 0;
+  for c := 0 to Choices.Count - 1 do
+  begin
+    if (Prompt.CompareActiveDate(TStringList(ChoicesActiveDates[C]), encDt) = TRUE) then
+    begin
+      cnt := cnt + 1;
+      lastItem := c;
+      if (cnt>1) then break;
+    end;
+  end;
+  if (cnt = 1) then Result := Choices[lastItem];
+end;
+
+
 function TRemDlgElement.IndentChildrenInPN: boolean;
 begin
   //if(Box) then
@@ -4968,6 +5032,17 @@ end;
 function TRemDlgElement.ResultDlgID: string;
 begin
   Result := Piece(FRec1, U, 10);
+end;
+
+procedure TRemDlgElement.setActiveDates(Choices: TORStringList; ChoicesActiveDates: TList;
+  ActiveDates: TStringList);
+var
+  c: integer;
+begin
+  for c := 0 to Choices.Count - 1 do
+  begin
+    ActiveDates.Add(TStringList(ChoicesActiveDates[C]).CommaText)
+  end;
 end;
 
 procedure TRemDlgElement.SubCommentChange(Sender: TObject);
@@ -5777,36 +5852,82 @@ function TRemPrompt.PromptOK: boolean;
 var
   pt: TRemPromptType;
   dt: TRemDataType;
-  i: integer;
+  C, i: integer;
+  encDate: TFMDateTime;
 
 begin
   pt := PromptType;
-  if(pt = ptUnknown) or (pt = ptMST) then
+  if (pt = ptUnknown) or (pt = ptMST) then
     Result := FALSE
-  else
-  if(pt = ptDataList) or (pt = ptVitalEntry) or (pt = ptMHTest) or (pt = ptGAF) or
-  (pt = ptWHPapResult) then
+  else if (pt = ptDataList) or (pt = ptVitalEntry) or (pt = ptMHTest) or
+    (pt = ptGAF) or (pt = ptWHPapResult) then
     Result := TRUE
-  else
-  if(pt = ptSubComment) then
+  else if (pt = ptSubComment) then
     Result := FParent.FHasComment
   else
   begin
     dt := RemPromptTypes[PromptType];
-         if(dt = dtAll)        then Result := TRUE
-    else if(dt = dtUnknown)    then Result := FALSE
-    else if(dt = dtHistorical) then Result := FParent.Historical
+    if (dt = dtAll) then
+      Result := TRUE
+    else if (dt = dtUnknown) then
+      Result := FALSE
+    else if (dt = dtHistorical) then
+      Result := FParent.Historical
+    //hanlde combo box prompts that are not assocaite with codes
+    else if ( dt <> dtProcedure) and (dt <> dtDiagnosis) then
+      begin
+         Result := FALSE;
+         if(assigned(FParent.FData)) then
+          begin
+            for i := 0 to FParent.FData.Count - 1 do
+              begin
+                if (TRemData(FParent.FData[i]).DataType = dt) then
+                  begin
+                    Result := TRUE;
+                    break;
+                  end;
+              end;
+          end;
+      end
     else
+    // agp ICD10 change to screen out prompts if taxonomy does not contain active codes for the encounter date.
+    // historical values override the date check.
     begin
       Result := FALSE;
-      if(assigned(FParent.FData)) then
+      if (Assigned(FParent.FData)) then
       begin
-        for i := 0 to FParent.FData.Count-1 do
+        for i := 0 to FParent.FData.Count - 1 do
         begin
-          if(TRemData(FParent.FData[i]).DataType = dt) then
+          if (TRemData(FParent.FData[i]).DataType = dt) then
           begin
-            Result := TRUE;
-            break;
+            if (FParent.Historical) then
+            begin
+              Result := TRUE;
+              break;
+            end
+            else if (TRemData(FParent.FData[i]).FActiveDates <> nil) then
+            begin
+              encDate := TRemData(FParent.FData[i]).FParent.FReminder.FPCEDataObj.DateTime;
+              if (RemDataActive(TRemData(FParent.FData[i]), encDate) = TRUE)
+              then
+                Result := TRUE;
+              break;
+            end
+//            else if (Assigned(TRemData(FParent.FData[i]).FChoices) and (TRemData(FParent.FData[i]).FChoices <> nil)) then
+            else if Assigned(TRemData(FParent.FData[i]).FChoices) then
+            begin
+              encDate := TRemData(FParent.FData[i]).FParent.FReminder.FPCEDataObj.DateTime;
+              for C := 0 to TRemData(FParent.FData[i]).FChoices.Count - 1 do
+              begin
+                if (CompareActiveDate(TStringList(TRemData(FParent.FData[i]).FChoicesActiveDates[C]), encDate) = TRUE) then
+                begin
+                  Result := TRUE;
+                  break;
+                end;
+              end;
+            end;
+            // Result := TRUE;
+            // break;
           end;
         end;
       end;
@@ -6151,26 +6272,47 @@ begin
 end;
 
 function TRemPrompt.RemDataActive(RData: TRemData; EncDt: TFMDateTime):Boolean;
-var
-  ActDt, InActDt: Double;
-  j: integer;
+//var
+//  ActDt, InActDt: Double;
+//  j: integer;
 
 begin
-  Result := FALSE;
-  if assigned(RData.FActiveDates) then
-    for j := 0 to (RData.FActiveDates.Count - 1) do
-      begin
-        ActDt := StrToIntDef(Piece(RData.FActiveDates[j],':',1), 0);
-        InActDt := StrToIntDef(Piece(RData.FActiveDates[j], ':', 2), 9999999);
-        if (EncDt >= ActDt) and (EncDt <= InActDt) then
-          begin
-            Result := TRUE;
-            Break;
-          end;
-      end
+//  Result := FALSE;
+  if assigned(RData.FActiveDates) then Result := CompareActiveDate(RData.FActiveDates, EncDt)
+  //agp ICD-10 move code to it own function to reuse the comparison in other parts of dialogs
+//    for j := 0 to (RData.FActiveDates.Count - 1) do
+//      begin
+//        ActDt := StrToIntDef(Piece(RData.FActiveDates[j],':',1), 0);
+//        InActDt := StrToIntDef(Piece(RData.FActiveDates[j], ':', 2), 9999999);
+//        if (EncDt >= ActDt) and (EncDt <= InActDt) then
+//          begin
+//            Result := TRUE;
+//            Break;
+//          end;
+//      end
   else
     Result := TRUE;
 end;
+
+//agp ICD-10 code was imported from  RemDataActive
+function TRemPrompt.CompareActiveDate(ActiveDates: TStringList; EncDt: TFMDateTime): Boolean;
+  var
+  ActDt, InActDt: Double;
+  j: integer;
+begin
+  Result := FALSE;
+  for j := 0 to (ActiveDates.Count - 1) do
+  begin
+    ActDt := StrToIntDef(Piece(ActiveDates[j], ':', 1), 0);
+    InActDt := StrToIntDef(Piece(ActiveDates[j], ':', 2), 9999999);
+    if (EncDt >= ActDt) and (EncDt <= InActDt) then
+    begin
+      Result := TRUE;
+      break;
+    end;
+  end
+end;
+
 
 function TRemPrompt.RemDataChoiceActive(RData: TRemData; j: integer; EncDt: TFMDateTime):Boolean;
 var

@@ -35,6 +35,7 @@ Created on Jun 14, 2012
 '''
 
 import sys
+import os
 sys.path = ['./Functional/RAS/lib'] + ['./dataFiles'] + ['./Python/vista'] + sys.path
 from SCActions import SCActions
 from ADTActions import ADTActions
@@ -64,7 +65,7 @@ def sc_test001(test_suite_details):
         SC.checkin(clinic=tclinic, vlist=['Three', str(hour), 'CHECKED'])
         SC.signon()
         SC.checkout(clinic=tclinic, vlist1=['Three', str(hour), 'Checked In'],
-                    vlist2=['305.91', 'OTHER DRUG', 'RESULTING'], icd='305.91')
+                    vlist2=['RESULTING'], icd='305.91', icd10='F18.10')
         SC.signon()
         SC.makeapp_bypat(clinic=tclinic, patient='333224444', datetime=time, fresh='No', prevCO='yes')
         SC.signoff()
@@ -163,7 +164,7 @@ def sc_test004(test_suite_details):
                        vlist3=['NEXT AVAILABLE', 'NO', '0'], vlist4=['1933', 'MALE', 'UNANSWERED'],
                        vlist5=['Combat Veteran:', 'No check out information'], mult='3')
         SC.signon()
-        SC.addedit(clinic=tclinic, name='354623902', icd='305.91')
+        SC.addedit(clinic=tclinic, name='354623902', icd='305.91', icd10='F18.10')
         SC.signoff()
 
         test_driver.post_test_run(test_suite_details)
@@ -196,7 +197,7 @@ def sc_test005(test_suite_details):
         SC.discharge(clinic=tclinic, patient='543236666', appnum='3')
         SC.signon()
         SC.checkout(clinic=tclinic, vlist1=['One', 'No Action'],
-                    vlist2=['305.91', 'RESULTING'], icd='305.91', mult='4')
+                    vlist2=['RESULTING'], icd='305.91', icd10='F18.10', mult='4')
         SC = SCActions(VistA, user='fakedoc1', code='1Doc!@#$')
         SC.signon()
         SC.deletecheckout(clinic=tclinic, appnum='3')
@@ -257,11 +258,11 @@ def sc_test007(test_suite_details):
         SC.checkin(clinic=tclinic, vlist=['Five', str(hour), 'CHECKED'], mult='5')
         SC.signon()
         SC.checkout(clinic=tclinic, vlist1=['Five', str(hour), 'Checked In'],
-                    vlist2=['305.91', 'OTHER DRUG', 'RESULTING'], icd='305.91', mult='5')
+                    vlist2=['RESULTING'], icd='305.91', icd10='F18.10', mult='5')
         SC.signon()
         SC.ver_actions(clinic=tclinic, patient='4444',
                        PRvlist=['THREE,PATIENT C', 'ALEXANDER,ROBERT'],
-                       DXvlist=['305.91', 'OTHER DRUG', 'RESULTING'],
+                       DXvlist=['RESULTING'],
                        CPvlist=['THREE,PATIENT C'])
         SC.signoff()
 
@@ -357,7 +358,7 @@ def sc_test010(test_suite_details):
         SC = SCActions(VistA, scheduling='Scheduling')
         time = SC.schtime()
         # this signon() and fix_demographics() is a workaround for gtm bug
-        if VistA.type == 'GTM':
+        if not (os.environ.get('gtm_zquit_anyway') == "1") and (VistA.type == 'GTM'):
             SC.signon()
             SC.fix_demographics(clinic='CLInicA', patient='323123456',
                                 dgrph=[['COUNTRY', ''],
@@ -391,8 +392,7 @@ def sc_test010(test_suite_details):
                                  ['RELIGIOUS PREFERENCE', 'CELTICISM'],
                                  ['TEMPORARY ADDRESS ACTIVE', 'NO'],
                                  ['PHONE NUMBER', ''],
-                                 ['PAGER NUMBER', ''],
-                                 ['EMAIL ADDRESS', '']])
+                                 ['PAGER NUMBER', '']], emailAddress = 'email@example.org')
         SC.signon()
         SC.get_demographics(patient='323123456',
                         vlist=[['COUNTRY: UNITED STATES', ''],
@@ -415,8 +415,7 @@ def sc_test010(test_suite_details):
                                  ['RELIGIOUS PREFERENCE: CELTICISM', ''],
                                  ['ADDRESS ACTIVE', ''],
                                  ['PHONE NUMBER', ''],
-                                 ['PAGER NUMBER', ''],
-                                 ['EMAIL ADDRESS', '']])
+                                 ['PAGER NUMBER', '']], emailAddress ='email@example.org')
         SC.signoff()
         test_driver.post_test_run(test_suite_details)
     except TestHelper.TestError, e:

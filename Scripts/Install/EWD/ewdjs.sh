@@ -22,9 +22,50 @@ if [[ -z $instance && $gtmver && $gtm_dist && $basedir ]]; then
     echo "The required variables are not set (instance, gtmver, gtm_dist)"
 fi
 
+# Options
+# instance = name of instance
+# used http://rsalveti.wordpress.com/2007/04/03/bash-parsing-arguments-with-getopts/
+# for guidance
+
+usage()
+{
+    cat << EOF
+    usage: $0 options
+
+    This script will automatically install EWD.js for GT.M
+
+    DEFAULTS:
+      Node Version = Latest 12.x
+
+    OPTIONS:
+      -h    Show this message
+      -v    Node Version to install
+
+EOF
+}
+
+while getopts ":hv:" option
+do
+    case $option in
+        h)
+            usage
+            exit 1
+            ;;
+        v)
+            nodever=$OPTARG
+            ;;
+    esac
+done
+
+echo "nodever $nodever"
+
+# Set defaults for options
+if [ -z $nodever ]; then
+    nodever="0.12"
+fi
+
 # Set the node version
-nodever="0.10"
-shortnodever="10"
+shortnodever=$(echo $nodever | cut -d'.' -f 2)
 
 # set the arch
 arch=$(uname -m | tr -d _)
@@ -58,7 +99,7 @@ rm -f ./install.sh
 cd $basedir
 
 # Install node
-su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default 0.10 && nvm use default"
+su $instance -c "source $basedir/.nvm/nvm.sh && nvm install $nodever && nvm alias default $nodever && nvm use default"
 
 # Tell $basedir/etc/env our nodever
 echo "export nodever=$nodever" >> $basedir/etc/env
@@ -95,18 +136,24 @@ su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm u
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdliteclient >> $basedir/log/ewdliteclientInstall.log"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdrest >> $basedir/log/ewdrestInstall.log"
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && npm install --quiet ewdvistaterm >> $basedir/log/ewdvistatermInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && npm install --quiet ewd-vista-rpc >> $basedir/log/ewdvistarpcInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && npm install --quiet ewd-vista-security >> $basedir/log/ewdvistasecurityInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && npm install --quiet ewd-vista-handlers >> $basedir/log/ewdvistahandlersInstall.log"
+su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && npm install --quiet ewd-vista-rest >> $basedir/log/ewdvistarestInstall.log"
 
 # Copy the right mumps$shortnodever.node_$arch
-su $instance -c "cp $basedir/ewdjs/node_modules/nodem/lib/mumps"$shortnodever".node_$arch $basedir/ewdjs/mumps.node"
-su $instance -c "mv $basedir/ewdjs/node_modules/nodem/lib/mumps"$shortnodever".node_$arch $basedir/ewdjs/node_modules/nodem/lib/mumps.node"
+su $instance -c "cp $basedir/ewdjs/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/mumps.node"
+su $instance -c "mv $basedir/ewdjs/node_modules/nodem/lib/mumps"$nodever".node_$arch $basedir/ewdjs/node_modules/nodem/lib/mumps.node"
 
 # Copy any routines in ewdjs
-su $instance -c "find $basedir/ewdjs/node_modules/ewdjs -name \"*.m\" -type f -exec cp {} $basedir/p/ \;"
+su $instance -c "find $basedir/ewdjs -name \"*.m\" -type f -exec cp {} $basedir/p/ \;"
+su $instance -c "cd $basedir/p && dos2unix *.m"
 
 # Setup GTM C Callin
 # with nodem 0.3.3 the name of the ci has changed. Determine using ls -1
 calltab=$(ls -1 $basedir/ewdjs/node_modules/nodem/resources/*.ci)
 echo "export GTMCI=$calltab" >> $basedir/etc/env
+
 # Ensure nodem routines are in gtmroutines search path
 echo "export gtmroutines=\"\${gtmroutines}\"\" \"\$basedir/ewdjs/node_modules/nodem/src" >> $basedir/etc/env
 
@@ -120,6 +167,10 @@ module.exports = {
   }
 };
 EOF
+
+# Edit the ewdjs start to disable access/verify code encryption (Development use only!)
+perl -pi -e 's/ewdjs\.start\(params\)\;/ewdjs\.start\(params\, function\(\) \{\n    ewd\.customObj = \{\n      encryptAVCode\: false\n    \}\;\n    require\('\''ewd\-vista\-rest\'\'')\;\n  \}\)\;/g' $basedir/ewdjs/ewdStart-gtm.js
+perl -pi -e 's/  httpPort\: defaults\.port\,/  httpPort\: defaults.port\,\n  childProcess\: \{\n    customModule\: '\''ewd-vista-handlers'\''\n  }\,/g' $basedir/ewdjs/ewdStart-gtm.js
 
 # Ensure correct permissions
 chown $instance:$instance $basedir/ewdjs/node_modules/OSEHRA-Config.js
@@ -143,6 +194,7 @@ perl -pi -e 's#'$basedir'/ssl/#'$basedir'/ewdjs/ssl/#g' $basedir/ewdjs/ewdRest.j
 
 # Install webservice credentials
 su $instance -c "cp $basedir/ewdjs/node_modules/ewdjs/extras/OSEHRA/registerWSClient.js $basedir/ewdjs"
+
 # delete the require('gtm-config') line (only used for ewdjs-gtm standalone install
 perl -pi -e "s#require\(\'gtm-config\'\);# #g" $basedir/ewdjs/registerWSClient.js
 su $instance -c "source $basedir/.nvm/nvm.sh && source $basedir/etc/env && nvm use $nodever && cd $basedir/ewdjs && node registerWSClient.js"
@@ -170,7 +222,6 @@ if [[ $RHEL || -z $ubuntu ]]; then
 
     sudo service iptables save
 fi
-
 
 echo "Done installing EWD.js"
 service ${instance}vista-ewdjs start

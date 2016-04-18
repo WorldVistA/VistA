@@ -172,7 +172,7 @@ export ubuntu=true;
 
 # Install GTM
 cd GTM
-./install.sh
+./install.sh -v V6.2-000
 
 # Create the VistA instance
 ./createVistaInstance.sh -i $instance
@@ -227,13 +227,19 @@ service xinetd restart
 # Add p and s directories to gtmroutines environment variable
 if $developmentDirectories; then
     su $instance -c "mkdir $basedir/{p,p/$gtmver,s,s/$gtmver}"
-    perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
+    if [[ $gtmver == *"6.2"* ]]; then
+        echo "Adding Development directories for GT.M 6.2"
+        perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\*(\$basedir/p\) \$basedir/s/\$gtmver\*(\$basedir/s\) #' $basedir/etc/env
+    else
+        echo "Adding Development directories for GT.M <6.2"
+        perl -pi -e 's#export gtmroutines=\"#export gtmroutines=\"\$basedir/p/\$gtmver\(\$basedir/p\) \$basedir/s/\$gtmver\(\$basedir/s\) #' $basedir/etc/env
+    fi
 fi
 
 # Install EWD.js
 if $installEWD; then
     cd $scriptdir/EWD
-    ./ewdjs.sh
+    ./ewdjs.sh -v 0.12
     cd $basedir
 fi
 

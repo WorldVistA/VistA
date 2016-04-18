@@ -1,8 +1,8 @@
 ZZUTDIDT ;kitware/JNL - demo code for a unit test %DT routine ;01/25/12  11:15
  ;;1.0;UNIT TEST;;Feb 14, 2012;Build 1
  ; makes it easy to run tests simply by running this routine and
- ; insures that XTMUNIT will be run only where it is present
- I $T(EN^XTMUNIT)'="" D EN^XTMUNIT("ZZUTDIDT")
+ ; insures that %ut will be run only where it is present
+ I $T(EN^%ut)'="" D EN^%ut("ZZUTDIDT")
  Q
  ;
 STARTUP ; optional entry point
@@ -33,13 +33,13 @@ CHKDD   ; Unit test DD tag in %DT routine, CHKTF is used to check True or FALSE
  S OUTPUT="JUL 20, 1969@10:00"
  S ERRMSG="DD^%DT conversion failure, input: "_INPUT_" output expected: "_OUTPUT
  S Y=INPUT D DD^%DT
- D CHKTF^XTMUNIT(Y=OUTPUT,ERRMSG_" real: "_Y)
+ D CHKTF^%ut(Y=OUTPUT,ERRMSG_" real: "_Y)
  ; Testing the case with input is 0.0
  S INPUT=0.0
  S OUTPUT="0"
  S ERRMSG="DD^%DT conversion failure, input: "_INPUT_" output expected: "_OUTPUT
  S Y=INPUT D DD^%DT
- D CHKTF^XTMUNIT(Y=OUTPUT,ERRMSG_" real: "_Y)
+ D CHKTF^%ut(Y=OUTPUT,ERRMSG_" real: "_Y)
  ;
  Q
 XTROU ;

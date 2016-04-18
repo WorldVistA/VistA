@@ -307,7 +307,7 @@ class DefaultKIDSBuildInstaller(object):
     exitMenuActionList.append((vistATestClient.getPrompt(), "\r", True))
     expectList = [x[0] for x in exitMenuActionList]
     while True:
-      idx = connection.expect(expectList)
+      idx = connection.expect(expectList,120)
       connection.send("%s\r" % exitMenuActionList[idx][1])
       if exitMenuActionList[idx][2]:
         break

@@ -6,7 +6,7 @@ DMUDIQ00 ;VEN/LGC - UNIT TESTING FM DIQ ; 3/6/13 11:44am
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
  D DT^DICRW
- D EN^XTMUNIT($T(+0),1)
+ D EN^%ut($T(+0),1)
  QUIT
  ;
  ;
@@ -38,7 +38,7 @@ TGET1DIQ ; @TEST - $$GET1^DIQ Single Data Retriever
  N SUBF S SUBF=0
  F  S SUBF=$O(FARRAY(SUBF)) Q:'SUBF  D TGET1(FNMBR,RECORD,SUBF)
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"GET1^DIQ Single Data Retriever failed.")
+ D CHKEQ^%ut(Y,0,"GET1^DIQ Single Data Retriever failed.")
  Q
  ; Enter with a file or subfile number, the record in the file
  ;  to use for evaluation, and the subfile to evaluate.
@@ -115,7 +115,7 @@ TDDIQ ; @TEST - D^DIQ Conversion of Internal to External date
  . I Y'=@NODE D
  .. S ERR=1
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"D^DIQ Date Conversion Internal to External failed.")
+ D CHKEQ^%ut(Y,0,"D^DIQ Date Conversion Internal to External failed.")
  Q
  ;
  ;
@@ -142,7 +142,7 @@ TDTDIQ ; @TEST - DT^DIQ Convert and Display Date
  . I Y'=@NODE D
  ..  S ERR=1
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"DT^DIQ Date Convert and Display failed.")
+ D CHKEQ^%ut(Y,0,"DT^DIQ Date Convert and Display failed.")
  Q
  ;
  ;
@@ -212,7 +212,7 @@ TENDIQ ; @TEST - EN^DIQ Display a Range of Data Elements
  .  S ANS1=$TR(FNAME_$G(ANS1),""""),ANS1=$TR(ANS1," ")
  .  S:ALLPPP'[ANS1 ERR=1
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"EN^DIQ Display Range of Data Elements failed.")
+ D CHKEQ^%ut(Y,0,"EN^DIQ Display Range of Data Elements failed.")
  Q
 TMPFN(FLDNUM,POO) N GLNODE S GLNODE=$NA(POO(0)),GLNODE=$Q(@GLNODE)
 TMPFN1 S:GLNODE="" (NODE,PIECE)="" Q:GLNODE=""  S NODE=$QS(GLNODE,3),PIECE=$QS(GLNODE,4) Q:$QS(GLNODE,5)=FLDNUM  S GLNODE=$Q(@GLNODE) G TMPFN1
@@ -255,7 +255,7 @@ TGETS ; @TEST - GETS^DIQ Data Retriever
  . S GLBLA=$NA(@GLBLA)
  . S:ANS1'=@GLBLA ERR=1
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"GETS^DIQ Data Retriever failed.")
+ D CHKEQ^%ut(Y,0,"GETS^DIQ Data Retriever failed.")
  Q
  ;
  ;
@@ -282,7 +282,7 @@ TYDIQ ; @TEST - Y^DIQ Convert Internal Form of any Data Element to External Form
  . D Y^DIQ
  . I Y'[RSLT S ERR=0
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"Y^DIQ Data Element Conversion Internal to External failed.")
+ D CHKEQ^%ut(Y,0,"Y^DIQ Data Element Conversion Internal to External failed.")
  Q
  ;
  ;
@@ -307,7 +307,7 @@ TENDIQ1 ; @TEST - EN^DIQ1 Retrieve Data from a File for a Particular Entry
  N ERR S ERR=0
  D TENDIQ1A(FNMBR,RECORD)
  S Y=ERR
- D CHKEQ^XTMUNIT(Y,0,"EN^DIQ1 Data from File for Particular Entry failed.")
+ D CHKEQ^%ut(Y,0,"EN^DIQ1 Data from File for Particular Entry failed.")
  Q
  ;
 TENDIQ1A(FNMBR,RECORD) N ANS1,ANS2,DA,DDNODE,DIC,DIQ,DR,FIELD,GLOBAL,NODE,PIECE,POO,SDNODE

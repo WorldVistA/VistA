@@ -5,7 +5,7 @@ DMUDIC00 ; VEN/SMH - A few ^DIC API Unit Tests; 13 JAN 2013
  S IO=$PRINCIPAL
  N DIQUIET S DIQUIET=1
  D DT^DICRW
- D:$$VERSION^XPDUTL("DI")["22.2" EN^XTMUNIT($T(+0),1)
+ D:$$VERSION^XPDUTL("DI")["22.2" EN^%ut($T(+0),1)
  QUIT
  ;
 STARTUP ; Create files 1009.802 (Shadow State) and 1009.801 (Broken File)
@@ -41,14 +41,14 @@ FINDC ; @TEST - FIND^DIC with computed fields in return field list
  ; ^TMP("DILIST",26063,"ID",3,"C4",1)=1
  ;
  ; ZEXCEPT: DIERR ; Comes from the ST
- I $D(DIERR) D FAIL^XTMUNIT("Fileman errored.") QUIT
+ I $D(DIERR) D FAIL^%ut("Fileman errored.") QUIT
  ;
  N COUNTISZERO S COUNTISZERO=0
  ;
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  Q:COUNTISZERO  D
  . I ^TMP("DILIST",$J,"ID",I,"C4",1)=0 S COUNTISZERO=1
  ;
- D CHKEQ^XTMUNIT(COUNTISZERO,0,"Count of counties should be at least one")
+ D CHKEQ^%ut(COUNTISZERO,0,"Count of counties should be at least one")
  ;
 FINDE ; @TEST - Find with "E" flag to return all results in spite of errors.
  ;
@@ -59,7 +59,7 @@ FINDE ; @TEST - Find with "E" flag to return all results in spite of errors.
  ; WATCH FOR NAKED REFERENCES
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  D
  . Q:^(I,.01)'="BAD POINTER"
- . D CHKEQ^XTMUNIT($D(^(.03)),0,".03 node is not supposed to exist")
+ . D CHKEQ^%ut($D(^(.03)),0,".03 node is not supposed to exist")
  ;
  ; Do this again with the "E" flag
  D FIND^DIC(1009.801,,"@;.01;.02;.03;.04;.05;.06","E","BAD") ; Search for entries starting with "BAD"
@@ -67,7 +67,7 @@ FINDE ; @TEST - Find with "E" flag to return all results in spite of errors.
  ; WATCH FOR NAKED REFERENCES
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  D
  . Q:^(I,.01)'="BAD POINTER"
- . D CHKEQ^XTMUNIT($D(^(.03)),1,".03 node supposed to exist")
+ . D CHKEQ^%ut($D(^(.03)),1,".03 node supposed to exist")
  QUIT
  ;
 LISTC ; @TEST - LIST^DIC with computed fields in the field list.
@@ -75,14 +75,14 @@ LISTC ; @TEST - LIST^DIC with computed fields in the field list.
  D LIST^DIC(1009.802,,"@;.01;1;COUNT(COUNTY)")
  ;
  ; ZEXCEPT: DIERR ; Comes from the ST
- I $D(DIERR) D FAIL^XTMUNIT("Fileman errored.") QUIT
+ I $D(DIERR) D FAIL^%ut("Fileman errored.") QUIT
  ;
  N COUNTISZERO S COUNTISZERO=0
  ;
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  Q:COUNTISZERO  D
  . I ^TMP("DILIST",$J,"ID",I,"C4",1)=0 S COUNTISZERO=1
  ;
- D CHKEQ^XTMUNIT(COUNTISZERO,0,"Count of counties should be at least one")
+ D CHKEQ^%ut(COUNTISZERO,0,"Count of counties should be at least one")
  QUIT
  ;
 LISTE ; @TEST - LIST^DIC with "E" flag to return all results in spite of errors.
@@ -94,7 +94,7 @@ LISTE ; @TEST - LIST^DIC with "E" flag to return all results in spite of errors.
  ; WATCH FOR NAKED REFERENCES
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  D
  . Q:^(I,.01)'="BAD POINTER"
- . D CHKEQ^XTMUNIT($D(^(.03)),0,".03 node is not supposed to exist")
+ . D CHKEQ^%ut($D(^(.03)),0,".03 node is not supposed to exist")
  ;
  ; Do this again with the "E" flag
  D FIND^DIC(1009.801,,"@;.01;.02;.03;.04;.05;.06","E") ; Search for entries starting with "BAD"
@@ -102,24 +102,24 @@ LISTE ; @TEST - LIST^DIC with "E" flag to return all results in spite of errors.
  ; WATCH FOR NAKED REFERENCES
  N I F I=0:0 S I=$O(^TMP("DILIST",$J,"ID",I)) Q:'I  D
  . Q:^(I,.01)'="BAD POINTER"
- . D CHKEQ^XTMUNIT($D(^(.03)),1,".03 node supposed to exist")
+ . D CHKEQ^%ut($D(^(.03)),1,".03 node supposed to exist")
  QUIT
  ;
 LISTX1 ; @TEST - LIST^DIC with the new X flag -- Sort by Unindexed field
  D LIST^DIC(1009.802,,"@;.01;5",,,,,5) ; Try to sort by Capital (Unindexed); no X flag
- D CHKTF^XTMUNIT(^TMP("DILIST",$J,"ID",1,5)'="HARTFORD","Without X flag, first entry shouldn't be Hartford")
+ D CHKTF^%ut(^TMP("DILIST",$J,"ID",1,5)'="HARTFORD","Without X flag, first entry shouldn't be Hartford")
  ;
  D LIST^DIC(1009.802,,"@;.01;5","X",,,,5) ; Try again, this time with X
- D CHKTF^XTMUNIT(^TMP("DILIST",$J,"ID",1,5)="HARTFORD","With X flag, first entry should be Hartford")
+ D CHKTF^%ut(^TMP("DILIST",$J,"ID",1,5)="HARTFORD","With X flag, first entry should be Hartford")
  ;
  QUIT
  ;
 LISTX2 ; @TEST - LIST^DIC with the new X flag -- Sort by Computed Expression
  D LIST^DIC(1009.802,,.01,"",,,,"COUNT(COUNTY)>100") ; Get all states with more than 100 counties
- D CHKTF^XTMUNIT(+^TMP("DILIST",$J,0)'=7,"We SHOULDN'T be getting 7 states sans the X flag")
+ D CHKTF^%ut(+^TMP("DILIST",$J,0)'=7,"We SHOULDN'T be getting 7 states sans the X flag")
  ;
  D LIST^DIC(1009.802,,.01,"X",,,,"COUNT(COUNTY)>100") ; Get all states with more than 100 counties
- D CHKEQ^XTMUNIT(+^TMP("DILIST",$J,0),7,"We expect 7 states with more than 100 counties")
+ D CHKEQ^%ut(+^TMP("DILIST",$J,0),7,"We expect 7 states with more than 100 counties")
  ;
  QUIT
  ;
@@ -134,12 +134,12 @@ LISTX3 ; @TEST - LIST^DIC with the new X flag -- Sort by Sort Template
  N RET ; RP style return reference variable
  D BUILDNEW^DIBTED(.RET,1009.802,$NA(DMUST),"DMU NEW STATES W MOST COUNTIES")
  ;
- D CHKTF^XTMUNIT($P(^DIBT(+RET,0),U)="DMU NEW STATES W MOST COUNTIES","Template not created correctly")
+ D CHKTF^%ut($P(^DIBT(+RET,0),U)="DMU NEW STATES W MOST COUNTIES","Template not created correctly")
  ;
  D LIST^DIC(1009.802,,".01;COUNT(COUNTY)","",,,,"[DMU NEW STATES W MOST COUNTIES]")
- D CHKTF^XTMUNIT(+$G(^TMP("DILIST",$J,0))'=6,"6 states' names start with NEW, but template not used")
+ D CHKTF^%ut(+$G(^TMP("DILIST",$J,0))'=6,"6 states' names start with NEW, but template not used")
  ;
  D LIST^DIC(1009.802,,".01;COUNT(COUNTY)","X",,,,"[DMU NEW STATES W MOST COUNTIES]")
- D CHKEQ^XTMUNIT(+^TMP("DILIST",$J,0),6,"6 states' names start with NEW")
- D CHKEQ^XTMUNIT(^TMP("DILIST",$J,"ID",1,.01),"NEW YORK","Of the ""NEW"" states, New York has the most counties")
+ D CHKEQ^%ut(+^TMP("DILIST",$J,0),6,"6 states' names start with NEW")
+ D CHKEQ^%ut(^TMP("DILIST",$J,"ID",1,.01),"NEW YORK","Of the ""NEW"" states, New York has the most counties")
  QUIT

@@ -7,7 +7,7 @@ uses
   StdCtrls, ExtCtrls, VA2006Utils;
 
 type
-  TfraImgText = class(TfraTabStopFalse)
+  TfraImgText = class(TFrame)
     img: TImage;
     lblText: TLabel;
   end;

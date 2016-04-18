@@ -88,6 +88,7 @@ type
     procedure ckTreatments(value: String; ckBox: Integer);
     function  TreatmentsCked(ckBox: Integer):String;
     procedure ckNSCClick(Sender: TObject);
+    procedure rgStatusEnter(Sender: TObject);
   private
     { Private declarations }
     FEditing: Boolean;
@@ -670,6 +671,10 @@ begin
         ckVerify.checked:=(Probrec.condition='P');
       end;  *)
     if Reason <> 'A' then fChanged := False else fChanged := True; {initialize form for changes}
+    if rgStatus.ItemIndex = -1 then
+      InitialFocus := rgStatus
+    else
+      InitialFocus := rgStatus.Buttons[rgStatus.ItemIndex] as TWinControl;
   finally
     alist.free;
   end;
@@ -703,7 +708,7 @@ begin
         mnuAct.Enabled := True ;
         lstView.Enabled := True ;
         bbNewProb.Enabled := true ;
-        if fChanged then LoadPatientProblems(AList,PLUser.usViewAct[1],false);
+        if fChanged then LoadPatientProblems(AList, PLUser.usViewAct[1], False);
       end ;
     Action := caFree;
  finally
@@ -726,9 +731,15 @@ const
 var
   AList: TstringList;
   remcom, vu, ut, PtID: string;
-//  i :Integer;
   NTRTCallResult: String;
+  DateOfInterest: TFMDateTime;
+  SvcCat: Char;
 begin
+  SvcCat := Encounter.VisitCategory;
+  if (SvcCat = 'E') or (SvcCat = 'H') then
+    DateOfInterest := FMNow
+  else
+    DateOfInterest := Encounter.DateTime;
   frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
   if (Reason <> 'R') and (Reason <> 'r') then
     if (rgStatus.itemindex=-1) or (cbProv.itemindex=-1) then
@@ -736,17 +747,19 @@ begin
       InfoBox('Status and Responsible Provider are required.', 'Information', MB_OK or MB_ICONINFORMATION);
       exit;
     end;
-  if Reason in ['C','c','E','e'] then
-    if not IsActiveICDCode(ProbRec.Diagnosis.extern) then
+  if CharInSet(Reason, ['C','c','E','e']) then
+  begin
+    if not IsActiveICDCode(ProbRec.Diagnosis.extern, DateOfInterest) then
     begin
       InfoBox(TX_INACTIVE_ICODE, TC_INACTIVE_ICODE, MB_ICONWARNING or MB_OK);
       exit;
     end
-    else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern) then
+    else if (ProbRec.SCTConcept.extern <> '') and not IsActiveSCTCode(ProbRec.SCTConcept.extern, DateOfInterest) then
     begin
       InfoBox(TX_INACTIVE_SCODE, TC_INACTIVE_SCODE, MB_ICONWARNING or MB_OK);
       exit;
     end;
+  end;
   if BadDates then exit;
   Alist:=TStringList.create;
   try
@@ -929,6 +942,13 @@ begin
  FChanged := True;
 end;
 
+procedure TfrmdlgProb.rgStatusEnter(Sender: TObject);
+begin
+  inherited;
+  bbFile.Default := True;
+  bbFile.Invalidate;
+end;
+
 procedure TfrmdlgProb.cbProvClick(Sender: TObject);
 begin
   SendMessage(cbProv.Handle, CB_SHOWDROPDOWN, 0, 0); {Closes list}
@@ -950,7 +970,8 @@ end;
 
 procedure TfrmdlgProb.SetDefaultProb(Alist: TStringList; prob: string);
 var
-  Today: string;
+  Today, ICDCode: string;
+  EncounterDate : TFMDateTime;
 
   function Permanent: char;
   begin
@@ -969,8 +990,13 @@ var
 
 begin  {BODY }
   Today := PLPt.Today;
+  EncounterDate := Trunc(Encounter.DateTime);
+  if Pos('ICD-9-CM',Piece(prob, u, 3)) > 0 then
+    ICDCode := Piece(Piece(Piece(prob, u, 3),' ',2),')',1)
+  else
+    ICDCode := Piece(prob, u, 3);
   if Piece(prob, u, 4) <> '' then
-    alist.add('NEW' + v + '.01' + v +Piece(prob, u, 4) + u + Piece(prob, u, 3))
+    alist.add('NEW' + v + '.01' + v +Piece(prob, u, 4) + u + ICDCode)
   else
     alist.add('NEW' + v + '.01' + v + u); {no icd code}
   {Leave ien of .05 undefined - let host save routine compute it}
@@ -1001,6 +1027,8 @@ begin  {BODY }
     alist.Add('NEW' + v + '80001' + v + Piece(prob, u, 6) + u + Piece(prob, u, 6)); {SCT Concept}
   if Piece(prob, u, 7) <> '' then
     alist.Add('NEW' + v + '80002' + v + Piece(Piece(prob, u, 7), '|', 1) + u + Piece(Piece(prob, u, 7), '|', 1)); {SCT Designation}
+  alist.add('NEW' + v + '80201' + v + Piece(FloatToStr(EncounterDate),'.',1) + u + FormatFMDateTime('mmm dd yyyy',EncounterDate));   {Code Date/Date of Interest}
+  alist.add('NEW' + v + '80202' + v + Encounter.GetICDVersion);   {Code System}
 end;
 
 
@@ -1127,11 +1155,6 @@ end;
 procedure TfrmdlgProb.FormCreate(Sender: TObject);
 begin
   FSilent := False;
-  if rgStatus.ItemIndex = -1
-  then
-    InitialFocus := rgStatus
-  else
-    InitialFocus := rgStatus.Controls[rgStatus.ItemIndex] as TWinControl;
 end;
 
 { old TPLDlgForm Methods }
@@ -1140,8 +1163,8 @@ constructor TfrmdlgProb.Create(AOwner: TComponent);
 { It is unusual to not call the inherited Create first, but necessary in this case; some
   of the TMStruct objects need to be created before the form gets its OnCreate event.        }
 begin
-  FCtrlMap := TStringList.Create;       { FCtrlMap[n]='CtrlName=PtrID'                        }
   inherited Create(AOwner);
+  FCtrlMap := TStringList.Create;       { FCtrlMap[n]='CtrlName=PtrID'                        }
   FInitialShow := True;
   FModified := False;
   FEditing := False;
@@ -1230,7 +1253,11 @@ end;
 procedure TfrmdlgProb.UMTakeFocus(var Message: TMessage);
 begin
   if FInitialFocus = nil then exit; {PDR}
-  if (FInitialFocus.visible) and (FInitialFocus.enabled) then FInitialFocus.SetFocus;
+  if (FInitialFocus.visible) and (FInitialFocus.enabled) then
+  begin
+    FInitialFocus.SetFocus();
+    Invalidate;
+  end;
 end;
 
 procedure TfrmdlgProb.bbChangeProbClick(Sender: TObject);
@@ -1244,8 +1271,6 @@ begin
     begin
       frmPLLex:=TfrmPLLex.create(Application);
       try
-        if (edProb.Text <> '') then
-          frmPLLex.SetSearchString(edProb.Text);
         frmPLLex.showmodal;
       finally
         frmPLLex.Free;
