@@ -126,11 +126,19 @@ class TestSuiteDriver(object):
             raise IOError
         if config.getboolean('RemoteDetails', 'RemoteConnect'):
             remote_server = config.get('RemoteDetails', 'ServerLocation')
+            remote_port   = int(config.get('RemoteDetails', 'ServerPort'))
+            if not remote_port:
+                remote_port = 22
 
             #get ssh username/password from local user's config file
+            #NB: TODO: VEN/SMH - package now comes up empty. So I edited the .ATF folder
             userConfig = read_suite_config_file()
             uid = userConfig.get(package_name+'-'+test_suite_name, 'SSHUsername')
             pwd = userConfig.get(package_name+'-'+test_suite_name, 'SSHPassword')
+
+            if not uid:
+                uid = config.get('RemoteDetails','SSHUsername')
+                pwd = config.get('RemoteDetails','SSHPassword')
 
             default_namespace = config.getboolean('RemoteDetails', 'UseDefaultNamespace')
             instance = config.get('RemoteDetails', 'Instance')
@@ -140,12 +148,15 @@ class TestSuiteDriver(object):
                 namespace = ''
 
             logging.info('Using REMOTE SERVER from config: ' + str(remote_server))
+            logging.info('Using REMOTE PORT from config: ' + str(remote_port))
             logging.info('Using INSTANCE from config: ' + str(instance))
             logging.info('Using NAMESPACE from config: ' + str(namespace))
             remote_conn_details = RemoteConnection.RemoteConnectionDetails(remote_server,
+                remote_port,
                 uid,
                 pwd,
                 default_namespace)
+            username = ''
         else:
             remote_conn_details = None
             instance = os.getenv('CACHE_INSTANCE','notused')
@@ -269,11 +280,11 @@ class TestDriver(object):
                 pass
             VistA.wait(PROMPT)
 
-        if test_suite_details.remote_conn_details:
-            VistA.wait('ACCESS CODE:')
-            VistA.write(fetch_access_code(test_suite_details, self.testname))
-            VistA.wait('VERIFY CODE:')
-            VistA.write(fetch_verify_code(test_suite_details, self.testname))
+#        if test_suite_details.remote_conn_details:
+#            VistA.wait('ACCESS CODE:')
+#            VistA.write(fetch_access_code(test_suite_details, self.testname))
+#            VistA.wait('VERIFY CODE:')
+#            VistA.write(fetch_verify_code(test_suite_details, self.testname))
 
         return VistA
 
