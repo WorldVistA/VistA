@@ -439,7 +439,10 @@ class ConnectRemoteSSH(ConnectMUMPS):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
     # Connect to the host
-    client.connect(hostname=remote_conn_details.remote_address, username=remote_conn_details.username, password=remote_conn_details.password)
+    client.connect(hostname=remote_conn_details.remote_address,
+                   port=remote_conn_details.remote_port,
+                   username=remote_conn_details.username,
+                   password=remote_conn_details.password)
 
     # Create a client interaction class which will interact with the host
     from paramikoe import SSHClientInteraction
