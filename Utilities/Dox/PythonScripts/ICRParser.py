@@ -10,13 +10,11 @@ from LogManager import logger, initConsoleLogging
 START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
 GENERIC_START_OF_RECORD = re.compile('^( +)?(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
-GENERIC_FIELD_RECORD = re.compile('( )?(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
+GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 # This is dictories of all possible sub-files in the schema
 SUBFILE_FIELDS = {
     'GLOBAL REFERENCE': [
         'FIELD NUMBER',
-        'FIELD NAME',
-        'ACCESS',
         'GLOBAL DESCRIPTION'
     ],
     'COMPONENT/ENTRY POINT': [
@@ -39,6 +37,12 @@ SUBFILE_FIELDS = {
     'EDITOR': [
     ],
     'KEYWORDS': [
+    ],
+    'FIELD NUMBER': [
+        'FIELD NAME',
+        'ACCESS',
+        'FIELD DESCRIPTION',
+        'LOCATION'
     ]
 }
 
