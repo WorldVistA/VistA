@@ -25,6 +25,7 @@ ICR_FILE_KEYWORDS = set([
     'TYPE',
     'DBIC APPROVAL STATUS',
     'NAME',
+    'ROUTINE',
     'ORIGINAL NUMBER',
     # SUB_ID
     'CREATOR',
