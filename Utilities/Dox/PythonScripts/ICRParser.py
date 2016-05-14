@@ -12,6 +12,31 @@ GENERIC_START_OF_RECORD = re.compile('^( +)?(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
 GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 # This is dictories of all possible sub-files in the schema
+ICR_FILE_KEYWORDS = set([
+    'NUMBER',
+    'ID',
+    'IA #',
+    'FILE NUMBER',
+    'GLOBAL ROOT',
+    'DATE CREATED',
+    'CUSTODIAL PACKAGE',
+    'CUSTODIAL ISC',
+    'USAGE',
+    'TYPE',
+    'DBIC APPROVAL STATUS',
+    'NAME',
+    'ORIGINAL NUMBER',
+    # SUB_ID
+    'CREATOR',
+    'GENERAL DESCRIPTION',
+    'STATUS',
+    'DURATION',
+    'MAIL MESSAGE',
+    'GOOD ONLY FOR VERSION',
+    'DBA Comments',
+    'EDITOR'
+])
+
 SUBFILE_FIELDS = {
     'GLOBAL REFERENCE': [
         'FIELD NUMBER',
@@ -46,6 +71,10 @@ SUBFILE_FIELDS = {
     ]
 }
 
+SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in SUBFILE_FIELDS.itervalues()], set()) | set([x for x in SUBFILE_FIELDS.iterkeys()])
+
+ICR_FILE_KEYWORDS = ICR_FILE_KEYWORDS | SUBFILE_KEYWORDS
+
 class ICRParser(object):
     def __init__(self):
         self._totalRecord = 0 # total number of record
@@ -59,8 +88,7 @@ class ICRParser(object):
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 self._curLineNo +=1
-                if len(line.strip()) == 0:
-                    continue
+
                 match = START_OF_RECORD.match(line)
                 if match:
                     self._startOfNewItem(match, line)
@@ -68,7 +96,7 @@ class ICRParser(object):
                 match = GENERIC_START_OF_RECORD.search(line)
                 if not match:
                     match = DBA_COMMENTS.match(line)
-                if match:
+                if match and match.group('name') in ICR_FILE_KEYWORDS:
                     fieldName = match.group('name')
                     self._curField = fieldName
                     if self._isSubFile(fieldName):
@@ -85,6 +113,8 @@ class ICRParser(object):
                     self._curRecord[self._curField].append(line)
                 else:
                     if self._curRecord:
+                        if len(line.strip()) == 0:
+                            continue
                         print 'No field associated with line %s: %s ' % (self._curLineNo, line)
         logger.debug('End of file now')
         if len(self._curStack) > 0:
