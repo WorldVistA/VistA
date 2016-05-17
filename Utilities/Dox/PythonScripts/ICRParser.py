@@ -72,9 +72,19 @@ SUBFILE_FIELDS = {
     ]
 }
 
+
 SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in SUBFILE_FIELDS.itervalues()], set()) | set([x for x in SUBFILE_FIELDS.iterkeys()])
 
 ICR_FILE_KEYWORDS = ICR_FILE_KEYWORDS | SUBFILE_KEYWORDS
+
+WORDS_FIELDS = set([
+    'FIELD DESCRIPTION',
+    'VARIABLES DESCRIPTION',
+    'DBA Comments',
+    'GLOBAL DESCRIPTION',
+    'GENERAL DESCRIPTION',
+    'SUBSCRIBING DETAILS'
+])
 
 class ICRParser(object):
     def __init__(self):
@@ -107,6 +117,8 @@ class ICRParser(object):
                         self._rewindStack();
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
+                    if len(line.strip()) == 0 and self._curField not in WORDS_FIELDS:
+                        continue
                     if not (type(self._curRecord[self._curField]) is list):
                         preVal = self._curRecord[self._curField]
                         self._curRecord[self._curField] = []
@@ -147,7 +159,8 @@ class ICRParser(object):
         restOfLine = line[match.end():]
         allmatches = []
         for m in GENERIC_FIELD_RECORD.finditer(restOfLine):
-            allmatches.append(m);
+            if m.group('name') in ICR_FILE_KEYWORDS: # ignore non-keyword
+                allmatches.append(m);
         if allmatches:
             for idx, rm in enumerate(allmatches):
                 if idx == 0:
