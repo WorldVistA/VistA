@@ -32,6 +32,7 @@ if SCRIPTS_DIR not in sys.path:
 from FileManDateTimeUtil import fmDtToPyDt
 from ZWRGlobalParser import getKeys
 from CrossReference import FileManField
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
 from WebPageGenerator import getPackageHtmlFileName
 from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
@@ -220,6 +221,42 @@ def getFileManFilePointerLink(dataEntry, value, **kargs):
     else:
       logging.error("Unknown File Pointer Value %s" % value)
   return value
+
+""" Requires extra information to be made available on the run of the object.
+
+    ("HL7 Type Tag", '1/.01', "771.2/.01" ,getFreeTextLink), # Action Tag
+
+    In addition to the current file's location, found in entry 1, add the place
+    where the information is available in the target file as part of the second entry.
+    "{File Number}/{Field Number}"
+
+"""
+def getFreeTextLink(dataEntry, value, **kargs):
+  if value:
+    if 'glbData' in kargs:
+      glbData = kargs['glbData']
+      # Acquire the field and file of the target information
+      file,field = kargs["targetField"].split("/");
+      # Check if the target file hasn't already been parsed
+      if file not in glbData.outFileManData.keys():
+        glbData._glbData[file] = FileManFileData(file,
+                                  glbData.getFileManFileNameByFileNo(file))
+        pathName = glbData._allFiles[file]["path"]
+        # Taken from the FileManGlobalDataParser
+        glbData._createDataRootByZWRFile(pathName)
+        glbLoc = glbData._glbLocMap.get(file)
+        for dataRoot in readGlobalNodeFromZWRFileV2(pathName, glbLoc):
+          if not dataRoot:
+            continue
+          glbData._dataRoot = dataRoot
+          fileDataRoot = dataRoot
+          glbData._parseDataBySchema(fileDataRoot, glbData._allSchemaDict[file],
+                                  glbData._glbData[file])
+      # Once the information is available check for the target in any available information in that file
+      for entry in glbData.outFileManData[file].dataEntries:
+        if value == glbData.outFileManData[file].dataEntries[entry].fields[field].value:
+          return '<a href="%s-%s.html">%s</a>' % (file,entry, glbData.outFileManData[file].dataEntries[entry].fields[field].value)
+  return value
 """
 fields and logic to convert to html for RPC List
 """
@@ -285,10 +322,10 @@ fields and logic to convert to html for HLO List
 """
 HLO_list_fields = (
        ("Name", '.01', getFileHtmlLink), # Name
-       ("Package", '2', getFileHtmlLink), # Type
-       ("HL7 Type Tag", '1/.01', None), # Action Tag
+       ("Package", '2', getFileManFilePointerLink), # Type
+       ("HL7 Type Tag", '1/.01', "771.2/.01" ,getFreeTextLink), # Action Tag
        ("Action Tag", '1/.04', None), # Action Tag
-       ("Action Routine", '1/.05', None), # Action Routine
+       ("Action Routine", '1/.05', getRoutineHRefLink), # Action Routine
    )
 
 HLO_table_header_fields = (
@@ -400,10 +437,11 @@ class FileManDataToHtml(object):
   """
     class to Genetate HTML pages based on FileManData
   """
-  def __init__(self, crossRef, outDir):
+  def __init__(self, crossRef, outDir,glbData = None):
     self.crossRef = crossRef
     self.outDir = outDir
-  def outputFileManDataAsHtml(self, fileManDataMap):
+    self.glbData = glbData
+  def outputFileManDataAsHtml(self, gblDataParser):
     """
       This is the entry pointer to generate Html output
       format based on FileMan Data object
@@ -411,6 +449,8 @@ class FileManDataToHtml(object):
     """
     outDir = self.outDir
     crossRef = self.crossRef
+    fileManDataMap = gblDataParser.outFileManData
+    self.dataMap = gblDataParser
     for fileNo in getKeys(fileManDataMap.iterkeys(), float):
       fileManData = fileManDataMap[fileNo]
       if fileNo == '8994':
@@ -453,10 +493,10 @@ class FileManDataToHtml(object):
             if package.hlo:
               logging.info("generating HLO list for package: %s"
                            % package.getName())
-              self._generateHLOListByPackage(package.hlo, package.getName())
+              self._generateHLOListByPackage(package.hlo, package.getName(),gblDataParser )
               allHLOs.extend(package.hlo)
           if allHLOs:
-            self._generateHLOListByPackage(allHLOs,"All")
+            self._generateHLOListByPackage(allHLOs,"All",gblDataParser )
       elif fileNo == '19':
         """ generate all option list """
         allOptionList = []
@@ -655,7 +695,7 @@ class FileManDataToHtml(object):
                                            protocol_list_fields, "Protocols",
                                            protocol_table_header_fields)
 
-  def _generateHLOListByPackage(self, dataEntryLst, pkgName):
+  def _generateHLOListByPackage(self, dataEntryLst, pkgName , fileManDataMap):
     """
       Specific logic to handle HLO List
       @TODO move the logic to a specific file
@@ -698,10 +738,11 @@ class FileManDataToHtml(object):
           idVal,multval = id[1].split('/') if (len(id[1].split('/')) > 1) else (id[1],None)
           if idVal in allFields:
             value = allFields[idVal].value
-            if multval:
-              value = self.findSubValue(value,multval)
+            if multval:  # and (multval in value.dataEntries["1"].fields)
+              value = self.findSubValue(dataEntry, value,multval,id);
+              #value = value.dataEntries["1"].fields[multval].value
             if id[-1]:
-              value = id[-1](dataEntry, value, crossRef=self.crossRef)
+              value = id[-1](dataEntry, value,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
             tableRow[idx] = value
         for item in tableRow:
           #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
@@ -713,14 +754,12 @@ class FileManDataToHtml(object):
       output.write("</div>\n")
       output.write ("</body></html>\n")
 
-  def findSubValue(self,search,multval):
-    vals = ''
-    for i in search.dataEntries:
-      vals += '<ul>'
-      if multval in search.dataEntries[i].fields:
-        vals += search.dataEntries[i].fields[multval].value
-      vals += '</ul>'
-    return vals
+  def findSubValue(self,dataEntry,search,multval, id):
+    vals = []
+    for entry in search.dataEntries:
+      if multval in search.dataEntries[entry].fields:
+        return search.dataEntries[entry].fields[multval].value
+    return ""
 
   def _generateDataTableHtml(self, fileManData, fileNo):
     outDir = self.outDir
