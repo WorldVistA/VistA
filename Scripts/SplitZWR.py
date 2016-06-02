@@ -30,7 +30,12 @@ class SplitZWR:
     def __init__(self, filepath, maxSize):
         self.maxSize = maxSize
         self.dir = os.path.dirname(filepath)
-        self.num, self.name = os.path.basename(filepath).split('+',1)
+        nameSplit = os.path.basename(filepath).split('+',1)
+        if len(nameSplit) > 1:
+           self.num, self.name = nameSplit
+        else:
+           self.num=0
+           self.name=nameSplit[0]
         self.input = open(filepath, 'r')
         self.headers = []
         while len(self.headers) < 2:
