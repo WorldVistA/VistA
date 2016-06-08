@@ -12,6 +12,11 @@ GENERIC_START_OF_RECORD = re.compile('^( +)?(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
 GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
 # This is dictories of all possible sub-files in the schema
+LINES_TO_IGNORE = [
+    re.compile('^(\r\f)?INTEGRATION REFERENCES LIST'),
+    re.compile('^-+$')
+]
+
 ICR_FILE_KEYWORDS = set([
     'NUMBER',
     'ID',
@@ -100,7 +105,9 @@ class ICRParser(object):
             for line in ICRFile:
                 line = line.rstrip("\r\n")
                 self._curLineNo +=1
-
+                """ get rid of lines that are ignored """
+                if self.isIgnoredLine(line):
+                    continue
                 match = START_OF_RECORD.match(line)
                 if match:
                     self._startOfNewItem(match, line)
@@ -216,7 +223,12 @@ class ICRParser(object):
             else:
                 logger.debug('in subFile Fields: %s, record: %s', self._curField, self._curRecord)
                 break
-
+    def isIgnoredLine(self, line):
+        for regEx in LINES_TO_IGNORE:
+            if regEx.match(line):
+                logger.warn('Ignore line %s', line)
+                return True
+        return False
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VistA ICR File Parser')
