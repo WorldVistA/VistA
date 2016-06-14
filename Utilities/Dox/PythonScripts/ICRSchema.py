@@ -2,32 +2,40 @@
 This file defined the reverse engineered ICR fileman schema.
 """
 
-ICR_FILE_KEYWORDS = set([
+""" This is a list of keywords in ICR top level files
+    This list is a sequence order of each fields
+"""
+ICR_FILE_KEYWORDS_LIST = [
     'NUMBER',
-    'ID',
     'IA #',
     'FILE NUMBER',
     'GLOBAL ROOT',
     'DATE CREATED',
-    'DATE ACTIVATED',
     'CUSTODIAL PACKAGE',
     'CUSTODIAL ISC',
     'USAGE',
     'TYPE',
     'DBIC APPROVAL STATUS',
-    'NAME',
     'ROUTINE',
+    'NAME',
+    'REMOTE PROCEDURE',
     'ORIGINAL NUMBER',
-    # SUB_ID
-    'CREATOR',
     'GENERAL DESCRIPTION',
     'STATUS',
     'DURATION',
-    'MAIL MESSAGE',
-    'GOOD ONLY FOR VERSION',
+    'EXPIRATION DATE',
+    'ID',
+    'CREATOR',
     'DBA Comments',
-    'EDITOR'
-])
+    'EDITOR',
+    'DATE ACTIVATED',
+    # SUB_ID
+    'MAIL MESSAGE',
+    'GOOD ONLY FOR VERSION'
+]
+
+""" Convert to a set for fast search """
+ICR_FILE_KEYWORDS = set(ICR_FILE_KEYWORDS_LIST)
 
 SUBFILE_FIELDS = {
     'GLOBAL REFERENCE': [
@@ -55,6 +63,8 @@ SUBFILE_FIELDS = {
     ],
     'KEYWORDS': [
     ],
+    'VIEWER': [
+    ],
     'FIELD NUMBER': [
         'FIELD NAME',
         'ACCESS',
@@ -63,7 +73,7 @@ SUBFILE_FIELDS = {
     ]
 }
 
-
+""" This is to get all the keywords in sub files """
 SUBFILE_KEYWORDS = reduce(set.union, [set(y) for y in SUBFILE_FIELDS.itervalues()], set()) | set([x for x in SUBFILE_FIELDS.iterkeys()])
 
 ICR_FILE_KEYWORDS = ICR_FILE_KEYWORDS | SUBFILE_KEYWORDS
@@ -74,5 +84,13 @@ WORDS_FIELDS = set([
     'DBA Comments',
     'GLOBAL DESCRIPTION',
     'GENERAL DESCRIPTION',
-    'SUBSCRIBING DETAILS'
+    'SUBSCRIBING DETAILS',
+    'COMPONENT DESCRIPTION'
 ])
+
+""" SOME UTILITY FUNCTIONS  """
+def isSubFile(field):
+        return field in SUBFILE_FIELDS
+
+def isSubFileField(subFile, field):
+    return isSubFile(subFile) and field in SUBFILE_FIELDS[subFile]
