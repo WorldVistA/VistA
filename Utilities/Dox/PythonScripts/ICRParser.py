@@ -6,8 +6,8 @@ import argparse
 import pprint
 import logging
 from LogManager import logger, initConsoleLogging
-from ICRSchema import SUBFILE_FIELDS, SUBFILE_KEYWORDS, WORDS_FIELDS, ICR_FILE_KEYWORDS
-from ICRSchema import isSubFile, isSubFileField
+from ICRSchema import SUBFILE_FIELDS, SUBFILE_KEYWORDS, ICR_FILE_KEYWORDS
+from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields
 START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
@@ -54,7 +54,7 @@ class ICRParser(object):
                     else:
                         logger.debug('field name is: %s', fieldName)
                         """ Check to see if fieldName is already in the out list """
-                        if self._curField in WORDS_FIELDS:
+                        if isWordProcessingField(self._curField):
                             if self._ignoreKeywordInWordProcessingFields(fieldName):
                                 self._appendWordsFieldLine(line)
                                 continue
@@ -63,7 +63,7 @@ class ICRParser(object):
                         self._rewindStack();
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
-                    if len(line.strip()) == 0 and self._curField not in WORDS_FIELDS:
+                    if len(line.strip()) == 0 and isWordProcessingField(self._curField):
                         logger.warn('Ignore blank line for current field: [%s]', self._curField)
                         continue
                     self._appendWordsFieldLine(line)

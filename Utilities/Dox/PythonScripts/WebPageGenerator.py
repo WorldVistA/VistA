@@ -223,7 +223,7 @@ def getPackageHyperLinkByName(packageName):
                                       packageName);
 def normalizePackageName(packageName):
     newName = packageName.replace(' ', '_')
-    return newName.replace('-', "_")
+    return newName.replace('-', "_").replace('.', '_').replace('/', '_')
 
 def normalizeGlobalName(globalName):
     import base64

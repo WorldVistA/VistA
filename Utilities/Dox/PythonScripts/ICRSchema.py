@@ -21,17 +21,21 @@ ICR_FILE_KEYWORDS_LIST = [
     'REMOTE PROCEDURE',
     'ORIGINAL NUMBER',
     'GENERAL DESCRIPTION',
+    'GLOBAL REFERENCE',
     'STATUS',
     'DURATION',
     'EXPIRATION DATE',
     'ID',
+    'COMPONENT/ENTRY POINT',
+    'SUBSCRIBING PACKAGE',
     'CREATOR',
     'DBA Comments',
     'EDITOR',
     'DATE ACTIVATED',
     # SUB_ID
     'MAIL MESSAGE',
-    'GOOD ONLY FOR VERSION'
+    'GOOD ONLY FOR VERSION',
+    'DATE/TIME EDITED'
 ]
 
 """ Convert to a set for fast search """
@@ -90,7 +94,10 @@ WORDS_FIELDS = set([
 
 """ SOME UTILITY FUNCTIONS  """
 def isSubFile(field):
-        return field in SUBFILE_FIELDS
+    return field in SUBFILE_FIELDS
 
 def isSubFileField(subFile, field):
     return isSubFile(subFile) and field in SUBFILE_FIELDS[subFile]
+
+def isWordProcessingField(field):
+    return field in WORDS_FIELDS
