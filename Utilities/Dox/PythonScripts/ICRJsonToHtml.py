@@ -5,9 +5,11 @@ import argparse
 import os.path
 import cgi
 import logging
+import pprint
+
 from LogManager import logger, initConsoleLogging
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS, isSubFile, isWordProcessingField
-from WebPageGenerator import getPackageHtmlFileName
+from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
 from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
 from DataTableHtml import data_table_reference, data_table_list_init_setup
 from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
@@ -16,16 +18,138 @@ from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
 from DataTableHtml import outputFileEntryTableList, safeElementId, safeFileName
 
+from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
+
 dox_url = "http://code.osehra.org/dox/"
+
+pkgMap = {
+    'AUTOMATED INFO COLLECTION SYS': 'Automated Information Collection System',
+    'AUTOMATED MED INFO EXCHANGE': 'Automated Medical Information Exchange',
+    'BAR CODE MED ADMIN': 'Barcode Medication Administration',
+    'CLINICAL INFO RESOURCE NETWORK': 'Clinical Information Resource Network',
+    #  u'DEVICE HANDLER',
+    #  u'DISCHARGE SUMMARY',
+    'E CLAIMS MGMT ENGINE': 'E Claims Management Engine',
+    #  u'EDUCATION TRACKING',
+    'EMERGENCY DEPARTMENT': 'Emergency Department Integration Software',
+    #  u'EXTENSIBLE EDITOR',
+    #  u'EXTERNAL PEER REVIEW',
+    'FEE BASIS CLAIMS SYSTEM' : 'Fee Basis',
+    'GEN. MED. REC. - GENERATOR': 'General Medical Record - Generator',
+    'GEN. MED. REC. - I/O' : 'General Medical Record - IO',
+    'GEN. MED. REC. - VITALS' : 'General Medical Record - Vitals',
+    #  u'GRECC',
+    #  u'HEALTH MANAGEMENT PLATFORM',
+    #  u'INDIAN HEALTH SERVICE',
+    #  u'INSURANCE CAPTURE BUFFER',
+    #  u'IV PHARMACY',
+    #  u'MASTER PATIENT INDEX',
+    'MCCR BACKBILLING' : 'MCCR National Database - Field',
+    #  u'MINIMAL PATIENT DATASET',
+    #  u'MOBILE SCHEDULING APPLICATIONS SUITE',
+    #  u'Missing Patient Register',
+    'NATIONAL HEALTH INFO NETWORK' : 'National Health Information Network',
+    #  u'NEW PERSON',
+    #  u'PATIENT ASSESSMENT DOCUM',
+    #  u'PATIENT FILE',
+    #  u'PROGRESS NOTES',
+    #  u'QUALITY ASSURANCE',
+    #  u'QUALITY IMPROVEMENT CHECKLIST',
+    #  u'REAL TIME LOCATION SYSTEM',
+    'TEXT INTEGRATION UTILITIES' : 'Text Integration Utility',
+    #  u'UNIT DOSE PHARMACY',
+    'VA POINT OF SERVICE (KIOSKS)' : 'VA Point of Service',
+    #  u'VDEM',
+    'VENDOR - DOCUMENT STORAGE SYS' : 'Vendor - Document Storage Systems'
+    #  u'VETERANS ADMINISTRATION',
+    #  u'VOLUNTARY SERVICE SYSTEM',
+    #  u'VPFS',
+    #  u'cds',
+    #  u'person.demographics',
+    #  u'person.lookup',
+    #  u'term',
+    #  u'term.access'])
+} # this is the mapping between CUSTODIAL PACKAGE and packages in Dox
+
+def normalizeName(name):
+    return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
+
+pgkUpperCaseNameDict = dict()
+
+def addToPackageMap(icrEntry, pkgName):
+    if 'CUSTODIAL PACKAGE' in icrEntry:
+        icrPkg = icrEntry['CUSTODIAL PACKAGE']
+        if icrPkg not in pkgMap:
+            pkgMap[icrPkg] = pkgName
+            logger.debug('[%s] ==> [%s]', icrPkg, pkgName)
+        elif pkgMap[icrPkg] != pkgName:
+            logger.debug('[%s] mapped to [%s] and [%s]', icrPkg, pkgMap[icrPkg], pkgName)
+
 """ Util function to generate link for the fie """
-def getICRIndividualHtmlFileLinkByIen(ien):
+def getICRIndividualHtmlFileLinkByIen(ien, icrEntry, **kargs):
     return '<a href=\"%s\">%s</a>' % ('ICR-' + ien + '.html', ien)
 
-def getPackageHRefLink(pkgName):
+def getPackageHRefLink(pkgName, icrEntry, **kargs):
+    if pkgName in pkgMap:
+        pkgLink = getPackageHtmlFileName(pkgMap[pkgName])
+        return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
+    crossRef = None
+    if 'crossRef' in kargs:
+        crossRef = kargs['crossRef']
+    if crossRef:
+        if len(pgkUpperCaseNameDict) == 0 :
+            for name in crossRef.getAllPackages().iterkeys():
+                pgkUpperCaseNameDict[name.upper()] = name
+        upperName = normalizeName(pkgName).upper()
+        if upperName in pgkUpperCaseNameDict:
+            addToPackageMap(icrEntry, pgkUpperCaseNameDict[upperName])
+            return '<a href=\"%s%s\">%s</a>' % (dox_url, getPackageHtmlFileName(pgkUpperCaseNameDict[upperName]) , pkgName)
+        pkg = crossRef.getPackageByName(pkgName)
+        if not pkg:
+            pkgRename = normalizeName(pkgName).title()
+            # logger.warn('[%s] renamed as [%s]', pkgName, pkgRename)
+            pkg = crossRef.getPackageByName(pkgRename)
+        if not pkg:
+            pkgRename = normalizeName(pkgName)
+            pkg = crossRef.getPackageByName(pkgRename)
+        if pkg:
+            addToPackageMap(icrEntry, pkg.getName())
+            pkgLink = getPackageHtmlFileName(pkg.getName())
+            return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
+        else:
+            logger.debug('Can not find mapping for package: [%s]', pkgName)
     return pkgName
 
-def getRoutineHRefLink(rtnName):
-    return '<a href=\"%s%s\">%s</a>' % (dox_url, getRoutineHtmlFileName(rtnName), rtnName)
+def getFileManFileHRefLink(fileNo, icrEntry, **kargs):
+    crossRef = None
+    if 'crossRef' in kargs:
+        crossRef = kargs['crossRef']
+    if crossRef:
+        fileInfo = crossRef.getGlobalByFileNo(fileNo)
+        if fileInfo:
+            linkName = getGlobalHtmlFileNameByName(fileInfo.getName())
+            logger.debug('link is [%s]', linkName)
+            # addToPackageMap(icrEntry, fileInfo.getPackage().getName())
+            return '<a href=\"%s%s\">%s</a>' % (dox_url, linkName, fileNo)
+        else:
+            logger.debug('Can not find file: [%s]', fileNo)
+    return fileNo
+
+def getRoutineHRefLink(rtnName, icrEntry, **kargs):
+    crossRef = None
+    if 'crossRef' in kargs:
+        crossRef = kargs['crossRef']
+    if crossRef:
+        routine = crossRef.getRoutineByName(rtnName)
+        if routine:
+            logger.debug('Routine Name is %s, package: %s', routine.getName(), routine.getPackage())
+            # addToPackageMap(icrEntry, routine.getPackage().getName())
+            return '<a href=\"%s%s\">%s</a>' % (dox_url, getRoutineHtmlFileName(routine.getName()), rtnName)
+        else:
+            logger.debug('Can not find routine [%s]', rtnName)
+            logger.debug('After Categorization: routine: [%s], info: [%s]', rtnName, crossRef.categorizeRoutineByNamespace(rtnName))
+    return rtnName
 
 """ A list of fields that are part of the summary page for each package or all """
 summary_list_fields = [
@@ -38,16 +162,24 @@ summary_list_fields = [
     ('DBIC Approval Status', None, None),
     ('Status', None, None),
     ('Usage', None, None),
-    ('File #', 'FILE NUMBER', None),
-    ('Global root', None, None),
+    ('File #', 'FILE NUMBER', getFileManFileHRefLink),
+    # ('Global root', None, None),
     ('Remote Procedure', None, None),
     ('Routine', None, getRoutineHRefLink),
     ('Date Activated', None, None)
 ]
 
+field_convert_map = {
+    'FILE NUMBER': getFileManFileHRefLink,
+    'ROUTINE': getRoutineHRefLink,
+    'CUSTODIAL PACKAGE': getPackageHRefLink,
+    'SUBSCRIBING PACKAGE': getPackageHRefLink
+}
+
 class ICRJsonToHtml(object):
 
-    def __init__(self, outDir):
+    def __init__(self, crossRef, outDir):
+        self._crossRef = crossRef
         self._outDir = outDir
 
     """
@@ -63,7 +195,6 @@ class ICRJsonToHtml(object):
             inputJson = json.load(inputFile)
             self._generateICRSummaryPage(inputJson)
 
-
     """ Utility function to convert icrEntry to summary info """
     def _convertICREntryToSummaryInfo(self, icrEntry):
         summaryInfo = [""]*len(summary_list_fields)
@@ -72,8 +203,8 @@ class ICRJsonToHtml(object):
                 summaryInfo[idx] = icrEntry[id[1]]
             elif id[0].upper() in icrEntry:
                 summaryInfo[idx] = icrEntry[id[0].upper()]
-            if id[2]:
-                summaryInfo[idx] = id[2](summaryInfo[idx])
+            if summaryInfo[idx] and id[2]:
+                summaryInfo[idx] = id[2](summaryInfo[idx], icrEntry, crossRef=self._crossRef)
         return summaryInfo
 
     """ Summary page will contain summary information
@@ -82,7 +213,7 @@ class ICRJsonToHtml(object):
         pkgJson = {} # group by package
         allpgkJson = []
         for icrEntry in inputJson:
-            # self._generateICRIndividualPage(icrEntry)
+            self._generateICRIndividualPage(icrEntry)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -90,6 +221,12 @@ class ICRJsonToHtml(object):
         self._generateICRSummaryPageImpl(allpgkJson, 'ICR List', 'All', True)
         for pkgName, outJson in pkgJson.iteritems():
             self._generateICRSummaryPageImpl(outJson, 'ICR List', pkgName)
+        logger.warn('Total # entry in pkgMap is [%s]', len(pkgMap))
+        logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
+        pprint.pprint(set(pkgJson.keys()) - set(pkgMap.keys()))
+        pprint.pprint(set(pgkUpperCaseNameDict.values()) - set(pkgMap.values()))
+        # pprint.pprint(pkgMap)
+
 
     def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, isForAll=False):
         outDir = self._outDir
@@ -167,10 +304,7 @@ class ICRJsonToHtml(object):
                     output.write("</td>\n")
                     output.write ("</tr>\n")
                     continue
-                if isWordProcessingField(field):
-                    if type(value) is list:
-                        value = "\n".join(value)
-                    value = '<pre>\n' + cgi.escape(value) + '\n</pre>\n'
+                value = self._convertIndividualFieldValue(field, icrJson, value)
                 output.write ("<tr>\n")
                 output.write ("<td>%s</td>\n" % field)
                 output.write ("<td>%s</td>\n" % value)
@@ -197,20 +331,40 @@ class ICRJsonToHtml(object):
                         output.write ("</ol>\n")
                         output.write ("</dd></dl>\n")
                         continue
-                    if isWordProcessingField(field):
-                        if type(value) is list:
-                            value = "\n".join(value)
-                        value = '<pre>\n' + cgi.escape(value) + '\n</pre>\n'
+                    value = self._convertIndividualFieldValue(field, icrEntry, value)
                     output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (field, value))
             output.write ("</li>\n")
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='VistA ICR JSON to Html')
+    def _convertIndividualFieldValue(self, field, icrEntry, value):
+        if isWordProcessingField(field):
+            if type(value) is list:
+                value = "\n".join(value)
+            value = '<pre>\n' + cgi.escape(value) + '\n</pre>\n'
+            return value
+        if field in field_convert_map:
+            if type(value) is list:
+                logger.warn('field: [%s], value:[%s], icrEntry: [%s]', field, value, icrEntry)
+                return value
+            value = field_convert_map[field](value, icrEntry, crossRef=self._crossRef)
+            return value
+        return value
+
+def createArgParser():
+    initParser = createInitialCrossRefGenArgParser()
+    parser = argparse.ArgumentParser(description='VistA ICR JSON to Html',
+                                     parents=[initParser])
     parser.add_argument('icrJsonFile', help='path to the VistA ICR JSON file')
     parser.add_argument('outDir', help='path to the output web page directory')
+    return parser
+
+if __name__ == '__main__':
+    print 'VA FileMan'.title()
+    parser = createArgParser()
     result = parser.parse_args()
     initConsoleLogging()
+    crossRef = parseCrossRefGeneratorWithArgs(result)
+    pprint.pprint(set(crossRef.getAllPackages().keys()))
     # initConsoleLogging(logging.DEBUG)
     if result.icrJsonFile:
-        icrJsonToHtml = ICRJsonToHtml(result.outDir)
+        icrJsonToHtml = ICRJsonToHtml(crossRef, result.outDir)
         icrJsonToHtml.converJsonToHtml(result.icrJsonFile)

@@ -53,6 +53,7 @@ class ICRParser(object):
                         self._startOfSubFile(match, line)
                     else:
                         logger.debug('field name is: %s', fieldName)
+                        logger.debug('cur field is: %s', self._curField)
                         """ Check to see if fieldName is already in the out list """
                         if isWordProcessingField(self._curField):
                             if self._ignoreKeywordInWordProcessingFields(fieldName):
@@ -63,7 +64,7 @@ class ICRParser(object):
                         self._rewindStack();
                         self._findKeyValueInLine(match, line, self._curRecord)
                 elif self._curField and self._curField in self._curRecord:
-                    if len(line.strip()) == 0 and isWordProcessingField(self._curField):
+                    if len(line.strip()) == 0 and not isWordProcessingField(self._curField):
                         logger.warn('Ignore blank line for current field: [%s]', self._curField)
                         continue
                     self._appendWordsFieldLine(line)
