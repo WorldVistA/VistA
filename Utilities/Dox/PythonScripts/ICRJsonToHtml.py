@@ -20,6 +20,7 @@ from DataTableHtml import outputFileEntryTableList, safeElementId, safeFileName
 
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
+from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
 
 dox_url = "http://code.osehra.org/dox/"
 
@@ -75,7 +76,13 @@ pkgMap = {
 def normalizeName(name):
     return name.replace('/', ' ').replace('\'','').replace(',','').replace('.','').replace('&', 'and')
 
+def useAjaxDataTable(len):
+    return len > 4000 # if has more than 4000 entries, use ajax approach
+
 pgkUpperCaseNameDict = dict()
+rpcNameToIenMapping = dict()
+RPC_FILE_NO = '8994'
+RPC_NAME_FIELD_NO = '.01'
 
 def addToPackageMap(icrEntry, pkgName):
     if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -151,9 +158,15 @@ def getRoutineHRefLink(rtnName, icrEntry, **kargs):
             logger.debug('After Categorization: routine: [%s], info: [%s]', rtnName, crossRef.categorizeRoutineByNamespace(rtnName))
     return rtnName
 
+def getRPCHRefLink(rpcName, icrEntry, **kargs):
+    if rpcName in rpcNameToIenMapping:
+        rpcFilename = '%s-%s.html' % (RPC_FILE_NO, rpcNameToIenMapping[rpcName])
+        return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
+    return rpcName
+
 """ A list of fields that are part of the summary page for each package or all """
 summary_list_fields = [
-    ('IEN', 'NUMBER', getICRIndividualHtmlFileLinkByIen),
+    ('IA #', 'NUMBER', getICRIndividualHtmlFileLinkByIen),
     ('Name', None, None),
     ('Type', None, None),
     ('Custodial Package', None, getPackageHRefLink),
@@ -164,7 +177,7 @@ summary_list_fields = [
     ('Usage', None, None),
     ('File #', 'FILE NUMBER', getFileManFileHRefLink),
     # ('Global root', None, None),
-    ('Remote Procedure', None, None),
+    ('Remote Procedure', None, getRPCHRefLink),
     ('Routine', None, getRoutineHRefLink),
     ('Date Activated', None, None)
 ]
@@ -173,15 +186,16 @@ field_convert_map = {
     'FILE NUMBER': getFileManFileHRefLink,
     'ROUTINE': getRoutineHRefLink,
     'CUSTODIAL PACKAGE': getPackageHRefLink,
-    'SUBSCRIBING PACKAGE': getPackageHRefLink
+    'SUBSCRIBING PACKAGE': getPackageHRefLink,
+    'REMOTE PROCEDURE': getRPCHRefLink
 }
+
 
 class ICRJsonToHtml(object):
 
     def __init__(self, crossRef, outDir):
         self._crossRef = crossRef
         self._outDir = outDir
-
     """
     This is the entry point to convert JSON to html web pages
 
@@ -189,7 +203,6 @@ class ICRJsonToHtml(object):
     It will also generate the pages for each individual ICR details
 
     """
-
     def converJsonToHtml(self, inputJsonFile):
         with open(inputJsonFile, 'r') as inputFile:
             inputJson = json.load(inputFile)
@@ -233,14 +246,22 @@ class ICRJsonToHtml(object):
         pkgHtmlName = pkgName
         outFilename = "%s/%s-%s.html" % (outDir, pkgName, listName)
         if not isForAll:
-            pkgHtmlName = getPackageHtmlFileName(pkgName)
+            if pkgName in pkgMap:
+                pkgName = pkgMap[pkgName]
+            pkgHtmlName = pkgName + '-ICR.html'
             outFilename = "%s/%s" % (outDir, pkgHtmlName)
         with open(outFilename, 'w+') as output:
             output.write("<html>\n")
             tName = safeElementId("%s-%s" % (listName, pkgName))
-            outputDataListTableHeader(output, tName)
+            useAjax = useAjaxDataTable(len(inputJson))
+            if useAjax:
+                ajaxSrc = '%s_array.txt' % pkgName
+                outputLargeDataListTableHeader(output, ajaxSrc, tName)
+            else:
+                outputDataListTableHeader(output, tName)
             output.write("<body id=\"dt_example\">")
             output.write("""<div id="container" style="width:80%">""")
+
             if isForAll:
                 output.write("<h1>%s %s</h1>" % (pkgName, listName))
             else:
@@ -251,13 +272,23 @@ class ICRJsonToHtml(object):
             outputDataTableHeader(output, [x[0] for x in summary_list_fields], tName)
             """ table body """
             output.write("<tbody>\n")
-            """ Now convert the ICR Data to Table data """
-            for icrSummary in inputJson:
-                output.write("<tr>\n")
-                for item in icrSummary:
-                    #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
-                    output.write("<td>%s</td>\n" % item)
-            output.write("</tr>\n")
+            if not useAjax:
+                """ Now convert the ICR Data to Table data """
+                for icrSummary in inputJson:
+                    output.write("<tr>\n")
+                    for item in icrSummary:
+                        #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+                        output.write("<td>%s</td>\n" % item)
+                        output.write("</tr>\n")
+            else:
+                logging.info("Ajax source file: %s" % ajaxSrc)
+                """ Write out the data file in JSON format """
+                outJson = {"aaData": []}
+                with open(os.path.join(outDir, ajaxSrc), 'w') as ajaxOut:
+                    outArray =  outJson["aaData"]
+                    for icrSummary in inputJson:
+                        outArray.append(icrSummary)
+                    json.dump(outJson, ajaxOut)
             output.write("</tbody>\n")
             output.write("</table>\n")
             output.write("</div>\n")
@@ -348,6 +379,10 @@ class ICRJsonToHtml(object):
             value = field_convert_map[field](value, icrEntry, crossRef=self._crossRef)
             return value
         return value
+    """ This function will read all entries in RPC file file# 8994 and return a mapping
+        of RPC Name => IEN.
+    """
+
 
 def createArgParser():
     initParser = createInitialCrossRefGenArgParser()
@@ -357,14 +392,20 @@ def createArgParser():
     parser.add_argument('outDir', help='path to the output web page directory')
     return parser
 
+def createRemoteProcedureMapping(result, crossRef):
+    return generateSingleFileFieldToIenMappingBySchema(result.MRepositDir,
+                                                       crossRef,
+                                                       RPC_FILE_NO,
+                                                       RPC_NAME_FIELD_NO)
+
 if __name__ == '__main__':
-    print 'VA FileMan'.title()
     parser = createArgParser()
     result = parser.parse_args()
     initConsoleLogging()
     crossRef = parseCrossRefGeneratorWithArgs(result)
-    pprint.pprint(set(crossRef.getAllPackages().keys()))
+    # pprint.pprint(set(crossRef.getAllPackages().keys()))
     # initConsoleLogging(logging.DEBUG)
     if result.icrJsonFile:
+        rpcNameToIenMapping = createRemoteProcedureMapping(result, crossRef)
         icrJsonToHtml = ICRJsonToHtml(crossRef, result.outDir)
         icrJsonToHtml.converJsonToHtml(result.icrJsonFile)
