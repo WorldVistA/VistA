@@ -32,7 +32,7 @@ class CustomInstaller(DefaultKIDSBuildInstaller):
                seqNo = None, logFile = None, multiBuildList=None,
                duz=17, **kargs):
     print kidsInstallName
-    assert kidsInstallName == "MASH*0.1*0"
+    assert kidsInstallName == "MASH*1.3*0"
     DefaultKIDSBuildInstaller.__init__(self, kidsFile,
                                        kidsInstallName,
                                        seqNo, logFile,
