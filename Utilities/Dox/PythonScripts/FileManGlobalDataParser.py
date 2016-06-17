@@ -435,6 +435,34 @@ class FileManGlobalDataParser(object):
       else:
         logging.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
 
+  """
+  Generate a map Field Value => IEN
+  """
+  def generateFileFieldMap(self, inputFileName, allSchemaDict,
+                           fileNumber, fieldNo):
+    schemaFile = allSchemaDict[fileNumber]
+    if not schemaFile.hasField(fieldNo):
+      logging.error("File does not have a [%s] field, ignore", fieldNo)
+      return
+    keyField = schemaFile.getFileManFieldByFieldNo(fieldNo)
+    keyLoc = keyField.getLocation()
+    if not keyLoc:
+      logging.error("[%s] field does not have a location", fieldNo)
+      return
+    glbLoc = self._glbLocMap[fileNumber]
+    fieldMap = {}
+    for dataRoot in readGlobalNodeFromZWRFileV2(inputFileName, glbLoc):
+      if not dataRoot: continue
+      fileDataRoot = dataRoot
+      (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
+      if detail:
+        fieldMap[detail] = ien
+      elif ien:
+        logging.info("No name associated with ien: %s, file: %s" % (ien, fileNumber))
+      else:
+        logging.info("No index for data with ien: %s, file: %s" % (ien, fileNumber))
+    return fieldMap
+
   def _getKeyNameBySchema(self, dataRoot, keyLoc, keyField):
     floatKey = getKeys(dataRoot, float)
     logging.debug('Total # of entry is %s' % len(floatKey))
@@ -855,6 +883,20 @@ class FileManGlobalDataParser(object):
         return self._fileKeyIndex[fileNo][ien]
     return None
 
+  def _addDataFieldToPointerRef(self, fileNo, ien, dataField):
+    self._pointerRef.setdefault(fileNo, {}).setdefault(ien, set()).add(dataField)
+
+  def _addFileFieldMap(self, fileNo, ien, value):
+    fldDict = self._fileKeyIndex.setdefault(fileNo, {})
+    if ien not in ienDict:
+      ienDict[ien] = value
+
+  def _getFileKeyIndex(self, fileNo, ien):
+    if fileNo in self._fileKeyIndex:
+      if ien in self._fileKeyIndex[fileNo]:
+        return self._fileKeyIndex[fileNo][ien]
+    return None
+
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     logging.debug ("%s" % (fieldAttr.getName() + ':'))
     subFile = fieldAttr.getPointedToSubFile()
@@ -882,6 +924,22 @@ class FileManGlobalDataParser(object):
       if '0' in dataRoot[key]:
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
+
+
+def generateSingleFileFieldToIenMappingBySchema(mRepositDir, crossRef, fileNo, fieldNo):
+  glbDataParser = FileManGlobalDataParser(crossRef)
+  allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(mRepositDir,
+                                                     'Packages'),
+                                                      "*/Globals/*.zwr")
+  allSchemaDict = getAllSchema(allFiles)
+  glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
+                                           allSchemaDict, '1', '^DIC(')
+  return glbDataParser.generateFileFieldMap(allFiles[fileNo]['path'], allSchemaDict, fileNo, fieldNo)
+
+def getAllSchema(allFiles):
+  schemaParser = FileManSchemaParser()
+  allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
+  return allSchemaDict;
 
 def testGlobalParser(crosRef=None):
   parser = createArgParser()
