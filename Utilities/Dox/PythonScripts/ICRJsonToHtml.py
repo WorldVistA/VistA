@@ -94,8 +94,9 @@ def addToPackageMap(icrEntry, pkgName):
             logger.debug('[%s] mapped to [%s] and [%s]', icrPkg, pkgMap[icrPkg], pkgName)
 
 """ Util function to generate link for the fie """
-def getICRIndividualHtmlFileLinkByIen(ien, icrEntry, **kargs):
-    return '<a href=\"%s\">%s</a>' % ('ICR-' + ien + '.html', ien)
+def getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
+    ien = icrEntry['NUMBER']
+    return '<a href=\"%s\">%s</a>' % ('ICR-' + ien + '.html', value)
 
 def getPackageHRefLink(pkgName, icrEntry, **kargs):
     if pkgName in pkgMap:
@@ -166,8 +167,8 @@ def getRPCHRefLink(rpcName, icrEntry, **kargs):
 
 """ A list of fields that are part of the summary page for each package or all """
 summary_list_fields = [
-    ('IA #', 'NUMBER', getICRIndividualHtmlFileLinkByIen),
-    ('Name', None, None),
+    ('IA #', 'NUMBER', None),
+    ('Name', None, getICRIndividualHtmlFileLinkByIen),
     ('Type', None, None),
     ('Custodial Package', None, getPackageHRefLink),
     # ('Custodial ISC', None),
