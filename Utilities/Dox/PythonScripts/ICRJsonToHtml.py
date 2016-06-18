@@ -279,7 +279,7 @@ class ICRJsonToHtml(object):
                     for item in icrSummary:
                         #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
                         output.write("<td>%s</td>\n" % item)
-                        output.write("</tr>\n")
+                    output.write("</tr>\n")
             else:
                 logging.info("Ajax source file: %s" % ajaxSrc)
                 """ Write out the data file in JSON format """
