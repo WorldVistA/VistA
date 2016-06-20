@@ -28,8 +28,8 @@ function(ReportXINDEXResult PACKAGE_NAME PACKAGES_DIR VENDOR_NAME GREP_EXEC OUTP
    string(REPLACE "_" " " PACKAGE_NAME ${PACKAGE_NAME})
    foreach (line ${OUTPUT})
       # the XINDEX will always check the integrity of the routine using checksum
-      if(line MATCHES "^[A-Z0-9%][^ ]+ +\\* \\* .*[cC]hecksum:.*")
-        string(REGEX MATCH "^[A-Z0-9%]+[^ ]" routine_name "${line}")
+      if(line MATCHES "^[A-Za-z0-9%][^ ]+ +\\* \\* .*[cC]hecksum:.*")
+        string(REGEX MATCH "^[A-Za-z0-9%]+[^ ]" routine_name "${line}")
       elseif(line MATCHES ${FAILURE_CONDITION})
         # also assume the file name is ${PACKAGE_NAME}.${routinename}
         set(ExceptionFound FALSE)
