@@ -170,8 +170,7 @@ directory and includes:
   * `M Standards and Conventions`_
 
 .. _testingChanges: testingChanges.rst
-.. _`Troubleshooting Page`:
-   http://www.osehra.org/wiki/troubleshooting-installation-and-testing
+.. _`Troubleshooting Page`: Troubleshooting.rst
 .. _ObtainingandInstallAuxPrograms: ObtainingandInstallAuxPrograms.rst
 .. _ObtainingVistAMCode: ObtainingVistAMCode.rst
 .. _ChoosingMUMPSEnvironment: ChoosingMUMPSEnvironment.rst
