@@ -265,11 +265,15 @@ complete successfully.
 
 To utilize this option on Caché, the TEST_VISTA_FRESH checkbox must be checked
 to tell CMake to configure the correct files. You will also need to create a
-new cache.dat using the steps from earlier and set the
-TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to the location of that newly created
-cache.dat.  It will then shut down the Caché instance, copy the empty database
-in place of the old one, restart Caché, then collect and import the OSEHRA
-routines and globals.
+new cache.dat and  set the TEST_VISTA_FRESH_CACHE_DAT_EMPTY to point to the
+location of that newly created cache.dat.  It will then shut down the Caché
+instance, copy the empty database in place of the old one, restart Caché, then
+collect and import the OSEHRA routines and globals.
+
+**For more help with the generation of the empty cache.dat file:**
+
+See the instructions found in the ``Configuring Caché`` section of the
+`Install Caché`_ document.
 
 
 .. figure:: http://code.osehra.org/content/named/SHA1/974956f3-cmakeGUIFreshcalloutconfigureCache.png
@@ -284,7 +288,7 @@ contains the VistA globals.  This file will be deleted and recreated
 automatically via the 'mupip' command.  The  TEST_VISTA_FRESH_GTM_ROUTINE_DIR
 is the path to the folder that contains the VistA routines.  This folder will
 be removed and recreated so that all routines within the GT.M instance will be
-from the latest import.  The other GT.M specific variable is th
+from the latest import.  The other GT.M specific variable is the
 TEST_VISTA_SETUP_UCI_NAME which is used during the configuring of the VistA
 instance.
 
@@ -304,6 +308,8 @@ TEST_VISTA_SETUP_SITE_NAME                   Name for VistA site                
 TEST_VISTA_SETUP_VOLUME_SET                  Volume set of Instance                      Volume set of VistA instance
 TEST_VISTA_GLOBAL_IMPORT_TIMEOUT             Length of Timeout for Global Import         Length of Timeout for Global Import
 TEST_VISTA_FRESH                                         ON                                        ON
+TEST_VISTA_FRESH_M_DIR                       Path to VistA-M directory                   Path to VistA-M directory
+                                             (or similar repository)                     (or similar repository)
 TEST_VISTA_FRESH_CACHE_DAT_EMPTY             Path to an empty CACHE.dat                            N/A
 TEST_VISTA_FRESH_CACHE_DAT_VISTA           Path to CACHE.dat that holds VistA                      N/A
 TEST_VISTA_FRESH_GTM_GLOBALS_DAT                          N/A                           Path to the database.dat with VistA
@@ -416,3 +422,4 @@ This lets you know that the tests are ready to be run from the command line.
 
 .. _`OSEHRA website`: http://www.osehra.org/document/guis-used-automatic-functional-testing
 .. _M-Tools: https://github.com/OSEHRA-Sandbox/M-Tools/
+.. _`Install Caché`: installCache.rst
