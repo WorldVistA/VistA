@@ -7,6 +7,7 @@ import cgi
 import logging
 import pprint
 
+from datetime import datetime
 from LogManager import logger, initConsoleLogging
 from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS, isSubFile, isWordProcessingField
 from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
@@ -164,6 +165,7 @@ def getRPCHRefLink(rpcName, icrEntry, **kargs):
         rpcFilename = '%s-%s.html' % (RPC_FILE_NO, rpcNameToIenMapping[rpcName])
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
+
 
 """ A list of fields that are part of the summary page for each package or all """
 summary_list_fields = [

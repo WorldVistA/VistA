@@ -5,8 +5,10 @@ import json
 import argparse
 import pprint
 import logging
+
+from datetime import datetime
 from LogManager import logger, initConsoleLogging
-from ICRSchema import SUBFILE_FIELDS, SUBFILE_KEYWORDS, ICR_FILE_KEYWORDS
+from ICRSchema import SUBFILE_FIELDS, SUBFILE_KEYWORDS, ICR_FILE_KEYWORDS, DATE_TIME_FIELD
 from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields
@@ -19,6 +21,15 @@ LINES_TO_IGNORE = [
     re.compile('^(\r\f)?INTEGRATION REFERENCES LIST'),
     re.compile('^-+$')
 ]
+
+def convertDateTimeField(inputDt):
+    try:
+        if inputDt.find('@') < 0:
+            return datetime.strptime(inputDt, '%b %d, %Y').strftime('%Y/%m/%d')
+        else:
+            return datetime.strptime(inputDt, '%b %d, %Y@%H:%M').strftime('%Y/%m/%d %H:%M')
+    except ValueError:
+        return inputDt
 
 """
 This is the class to parse the VA ICR Text file and convert to JSON format.
@@ -102,10 +113,12 @@ class ICRParser(object):
 
         # now find if there is any other name value pair in the same line
         restOfLine = line[match.end():]
+        allFlds = [name]
         allmatches = []
         for m in GENERIC_FIELD_RECORD.finditer(restOfLine):
             if m.group('name') in ICR_FILE_KEYWORDS: # ignore non-keyword
                 allmatches.append(m);
+                allFlds.append(m.group('name'))
         if allmatches:
             for idx, rm in enumerate(allmatches):
                 if idx == 0:
@@ -116,6 +129,10 @@ class ICRParser(object):
                     outObj[allmatches[idx-1].group('name')] = restOfLine[allmatches[idx-1].end():rm.start()].strip()
         else:
             outObj[name] = line[match.end():].strip()
+
+        dtFields = set(allFlds) & DATE_TIME_FIELD
+        for fld in dtFields:
+            outObj[fld] = convertDateTimeField(outObj[fld])
 
     def _startOfSubFile(self, match, line):
         """

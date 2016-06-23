@@ -35,7 +35,9 @@ ICR_FILE_KEYWORDS_LIST = [
     # SUB_ID
     'MAIL MESSAGE',
     'GOOD ONLY FOR VERSION',
-    'DATE/TIME EDITED'
+    'DATE/TIME EDITED',
+    'DEFERRED UNTIL',
+    'REMINDER'
 ]
 
 """ Convert to a set for fast search """
@@ -92,6 +94,15 @@ WORDS_FIELDS = set([
     'COMPONENT DESCRIPTION'
 ])
 
+DATE_TIME_FIELD = set([
+    'DATE/TIME EDITED',
+    'DATE CREATED',
+    'DATE ACTIVATED',
+    'EXPIRATION DATE',
+    'REMINDER',
+    'DEFERRED UNTIL'
+])
+
 """ SOME UTILITY FUNCTIONS  """
 def isSubFile(field):
     return field in SUBFILE_FIELDS
@@ -101,3 +112,6 @@ def isSubFileField(subFile, field):
 
 def isWordProcessingField(field):
     return field in WORDS_FIELDS
+
+def isDateTimeField(field):
+    return field in DATE_TIME_FIELD
