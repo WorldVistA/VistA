@@ -63,6 +63,7 @@ pkgMap = {
     #  u'UNIT DOSE PHARMACY',
     'VA POINT OF SERVICE (KIOSKS)' : 'VA Point of Service',
     #  u'VDEM',
+    'VISTA INTEGRATION ADAPTOR' : 'VistA Integration Adapter',
     'VENDOR - DOCUMENT STORAGE SYS' : 'Vendor - Document Storage Systems'
     #  u'VETERANS ADMINISTRATION',
     #  u'VOLUNTARY SERVICE SYSTEM',
@@ -127,7 +128,7 @@ def getPackageHRefLink(pkgName, icrEntry, **kargs):
             pkgLink = getPackageHtmlFileName(pkg.getName())
             return '<a href=\"%s%s\">%s</a>' % (dox_url, pkgLink , pkgName)
         else:
-            logger.debug('Can not find mapping for package: [%s]', pkgName)
+            logger.warn('Can not find mapping for package: [%s]', pkgName)
     return pkgName
 
 def getFileManFileHRefLink(fileNo, icrEntry, **kargs):
@@ -229,7 +230,7 @@ class ICRJsonToHtml(object):
         pkgJson = {} # group by package
         allpgkJson = []
         for icrEntry in inputJson:
-            self._generateICRIndividualPage(icrEntry)
+            #self._generateICRIndividualPage(icrEntry)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -242,8 +243,65 @@ class ICRJsonToHtml(object):
         pprint.pprint(set(pkgJson.keys()) - set(pkgMap.keys()))
         pprint.pprint(set(pgkUpperCaseNameDict.values()) - set(pkgMap.values()))
         # pprint.pprint(pkgMap)
+        self._generatePkgDepSummaryPage(inputJson)
 
-
+    def _generatePkgDepSummaryPage(self, inputJson):
+        outDep = {}
+        for icrItem in inputJson:
+            curIaNum = icrItem['IA #']
+            # ignore the non-active icrs
+            if 'STATUS' not in icrItem or icrItem['STATUS'] != 'Active':
+                continue
+            if 'CUSTODIAL PACKAGE' in icrItem:
+                curPkg = icrItem['CUSTODIAL PACKAGE']
+                outDep.setdefault(curPkg,{})
+                if 'SUBSCRIBING PACKAGE' in icrItem:
+                    for subPkg in icrItem['SUBSCRIBING PACKAGE']:
+                        if 'SUBSCRIBING PACKAGE' in subPkg:
+                            subPkgName = subPkg['SUBSCRIBING PACKAGE']
+                            subDep = outDep.setdefault(subPkgName, {}).setdefault('dependencies',{})
+                            subDep.setdefault(curPkg, []).append(curIaNum)
+                            curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
+                            curDep.setdefault(subPkgName, []).append(curIaNum)
+        """ Convert outDep to html page """
+        outDir = self._outDir
+        outFilename = "%s/ICR-PackageDep.html" % outDir
+        with open(outFilename, 'w+') as output:
+            output.write("<html>\n")
+            tName = safeElementId("%s-%s" % ('ICR', 'PackageDep'))
+            outputDataListTableHeader(output, tName)
+            output.write("<body id=\"dt_example\">")
+            output.write("""<div id="container" style="width:80%">""")
+            outputDataTableHeader(output, ['Package Name', 'Dependencies Information'], tName)
+            """ table body """
+            output.write("<tbody>\n")
+            """ Now convert the ICR Data to Table data """
+            for pkgName in sorted(outDep.iterkeys()):
+                output.write("<tr>\n")
+                output.write("<td>%s</td>\n" % getPackageHRefLink(pkgName, {'CUSTODIAL PACKAGE': pkgName}, crossRef=self._crossRef))
+                """ Convert the dependencies and dependent information """
+                output.write("<td>\n")
+                output.write ("<ol>\n")
+                for pkgDepType in sorted(outDep[pkgName].iterkeys()):
+                    output.write ("<li>\n")
+                    output.write ("<dt>%s:</dt>\n" % pkgDepType.upper())
+                    depPkgInfo = outDep[pkgName][pkgDepType]
+                    for depPkgName in sorted(depPkgInfo.iterkeys()):
+                        outputInfo = getPackageHRefLink(depPkgName, {'CUSTODIAl PACKAGE': depPkgName}, crossRef=self._crossRef)
+                        outputInfo += ': &nbsp;&nbsp Total # of ICRs %s : [' % len(depPkgInfo[depPkgName])
+                        for icrNo in depPkgInfo[depPkgName]:
+                            outputInfo += getICRIndividualHtmlFileLinkByIen(icrNo, {'NUMBER': icrNo}, crossRef=self._crossRef) + '&nbsp;&nbsp'
+                        outputInfo += ']'
+                        output.write ("<dt>%s:</dt>\n" % outputInfo)
+                    output.write ("</li>\n")
+                output.write ("</ol>\n")
+                output.write("</td>\n")
+                output.write ("</tr>\n")
+            output.write("</tbody>\n")
+            output.write("</table>\n")
+            output.write("</div>\n")
+            output.write("</div>\n")
+            output.write ("</body></html>\n")
     def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, isForAll=False):
         outDir = self._outDir
         pkgHtmlName = pkgName
