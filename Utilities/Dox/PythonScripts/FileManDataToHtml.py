@@ -740,9 +740,17 @@ class FileManDataToHtml(object):
             value = allFields[idVal].value
             if multval:  # and (multval in value.dataEntries["1"].fields)
               value = self.findSubValue(dataEntry, value,multval,id);
-              #value = value.dataEntries["1"].fields[multval].value
-            if id[-1]:
-              value = id[-1](dataEntry, value,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
+            if type(value) is list:
+              tmpValue="<ul>"
+              for entry in value:
+                if id[-1]:
+                  tmpValue += "<li>"+id[-1](dataEntry, entry,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)+"</li>"
+                else:
+                  tmpValue += "<li>"+ entry +"</li>"
+              value = tmpValue+"</ul>"
+            else:
+              if id[-1]:
+                value = id[-1](dataEntry, value,sourceField=id[1], targetField=id[-2], glbData=self.dataMap, crossRef=self.crossRef)
             tableRow[idx] = value
         for item in tableRow:
           #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
@@ -758,8 +766,8 @@ class FileManDataToHtml(object):
     vals = []
     for entry in search.dataEntries:
       if multval in search.dataEntries[entry].fields:
-        return search.dataEntries[entry].fields[multval].value
-    return ""
+        vals.append(search.dataEntries[entry].fields[multval].value)
+    return vals
 
   def _generateDataTableHtml(self, fileManData, fileNo):
     outDir = self.outDir
