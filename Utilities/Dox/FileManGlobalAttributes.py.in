@@ -42,9 +42,9 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
     VistA.write('8' )
     VistA.wait('Select DATA DICTIONARY UTILITY OPTION:')
     VistA.write('1') # list file attributes
-    VistA.wait('START WITH WHAT FILE:')
+    VistA.wait_re('START WITH WHAT FILE:')
     VistA.write(FileManNo)
-    VistA.wait('GO TO WHAT FILE:')
+    VistA.wait_re('GO TO WHAT FILE:')
     VistA.write(FileManNo)
     while True:
       index = VistA.multiwait(['Select SUB-FILE:',
@@ -77,7 +77,8 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
           idx = VistA.multiwait(['Start with field:',
                               'Do you want the entire [0-9-Entry ]*FIELD[S ]* List?',
                               'Do you want the entire [0-9]*-Entry ATTRIBUTE List?',
-                              '\'\^\' TO STOP:'])
+                              '\'\^\' TO STOP:',
+                              '\'\^\' to exit:'])
           if idx == 0:
             # using default
             VistA.write('')
@@ -85,7 +86,7 @@ def listFileManFileAttributes(FileManNo, outputFile, logFile):
           elif idx == 1 or idx == 2:
             VistA.write('Y')
             continue
-          elif idx == 3:
+          elif idx == 3 or idx == 4:
             VistA.write('')
             continue
           else:
