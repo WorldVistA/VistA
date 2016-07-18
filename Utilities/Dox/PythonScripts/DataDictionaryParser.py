@@ -74,7 +74,7 @@ class FileManFieldSectionParser(IDDSectionParser):
     NAME_LOC_REGEX = re.compile("(?P<Name>^[^ ].*) +(?P<Loc>[^ ]*;[^ ]*$)")
     NAME_TYPE_REGEX = re.compile("(?P<Name>^[^ ].*)  +(?P<Type>[^ ]+.*$)")
     POINTER_TO_REGEX = re.compile("^POINTER TO .* \(#(?P<File>[.0-9]+)\)")
-    UNDEFINED_POINTER = re.compile("^POINTER \*\* TO AN UNDEFINED FILE \*\*")
+    UNDEFINED_POINTER = re.compile("POINTER[ *]+ TO AN UNDEFINED FILE")
     SUBFILE_REGEX = re.compile("Multiple #(?P<File>[.0-9]+)")
     DEFAULT_VALUE_INDENT = 32
     DEFAULT_NAME_INDENT = 14
