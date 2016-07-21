@@ -307,6 +307,7 @@ initGlobalLocationMap['0'] = '^DD('
 
 class FileManGlobalDataParser(object):
   def __init__(self, crossRef=None):
+    self.patchDir = None
     self._dataRoot = None
     self._allSchemaDict = None
     self._crossRef = crossRef
@@ -643,14 +644,16 @@ class FileManGlobalDataParser(object):
     patchOrderGen = PatchOrderGenerator()
     patchOrderGen.analyzeVistAPatchDir(self.patchDir +"/Packages")
     with open(output, 'w') as installDataOut:
+      logging.warn("inside the _updateInstallReference")
       for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
         installItem = {}
         installEntry = installData.dataEntries[ien]
         package = self._findInstallPackage(packageList, installEntry.name)
         # if this is the first time the package is found, add an entry in the install JSON data.
         if package not in installJSONData:
-          installJSONData[package]=[]
+          installJSONData[package]={}
         if installEntry.name:
+          logging.warn("Gathering info for: %s" % installEntry.name)
           installItem['name'] = installEntry.name
           installItem['ien'] = installEntry.ien
           installItem['label'] = installEntry.name
@@ -673,7 +676,17 @@ class FileManGlobalDataParser(object):
           testMatch = re.search("\*+",installEntry.name)
           if testMatch is None:
             installItem['packageSwitch'] = True
-          installJSONData[package].append(installItem)
+          installJSONData[package][installEntry.name] = installItem
+      installJSONData['MultiBuild']={}
+      for multiBuildFile in patchOrderGen._multiBuildDict:
+        multibuildItem = {}
+        multibuildItem['name']=os.path.basename(multiBuildFile);
+        multibuildItem['children'] = []
+        for installName in patchOrderGen._multiBuildDict[multiBuildFile]:
+          package = self._findInstallPackage(packageList, installName)
+          multibuildItem['children'].append({"name": installName, "package": package});
+        installJSONData['MultiBuild'][os.path.basename(multiBuildFile)] = multibuildItem
+      logging.warn("About to dump data into %s" % output)
       json.dump(installJSONData,installDataOut)
 
   def _resolveSelfPointer(self):
