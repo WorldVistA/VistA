@@ -1,0 +1,295 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/18/14 at 17:40
+=============================================================================
+Run Date: SEP 16, 2014                     Designation: SD*5.3*615
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #511                    Status: Released
+                  Compliance Date: OCT 01, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*609  <<= must be installed BEFORE `SD*5.3*615'
+
+Subject: FY2015 TABLE MAINTENANCE FOR CLINIC STOP FILE
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch provides Fiscal Year 2015 updates to the CLINIC STOP 
+ file (#40.7) as requested by the Office of Finance, Managerial Cost
+ Accounting Office (MCAO).
+  
+                         *** IMPORTANT NOTE ***
+ **************************************************************************
+ ** This patch should be installed as close to COB on September 30, 2014 **
+ ** as possible, but not after the start of business on October 1, 2014. **
+ ** Early installation of this patch could result in transmission of     **
+ ** incorrect stop codes that will result in errors from Austin.         **
+ ** Coordination with the MAS (Medical Administration Service) PAS       **
+ ** (Program Application Specialist)/ADPAC is imperative, as the patch   **
+ ** will cause changes to the CLINIC STOP file (#40.7). Testing can be   **
+ ** done in a site's mirror account before installation in production to **
+ ** verify changes.                                                      **
+ **                                                                      **
+ ** This patch inactivates, creates and modifies descriptions of stop    **
+ ** codes effective October 1, 2014, therefore, installing early may     **
+ ** modify certain stop codes that may currently be in use at your site. **
+ ** It is advised that clinics with stop codes assigned that will incur  **
+ ** restriction date/type changes should be corrected as soon as         **
+ ** possible after installation. Please keep in mind that new stop code  **
+ ** corrections cannot be assigned until October 1, 2014. All other stop **
+ ** code corrections should be made as early as possible on October 1,   **
+ ** 2014. Sites need to coordinate their DSS CLINICS AND STOP CODES file **
+ ** (#728.44) worksheet maintenance to save the latest FY2014 values     **
+ ** (as of September 30, 2014), and then not change the worksheet to     **
+ ** have FY2015 values until after the DSS Clinic (CLI) extract for      **
+ ** September data has run successfully.                                 **
+ **************************************************************************
+  
+ MCA Site Team Instructions for FY15 Stop Code Patch (SD*5.3*615)
+ ----------------------------------------------------------------
+ This patch makes additions and changes to the CLINIC STOP (Stop Code) 
+ (#40.7) file as of October 1, 2014.
+  
+ - No clinic can be created using any new or reactivated Stop Codes 
+   contained in the patch until after this patch is implemented.
+  
+ - Any clinics using a Stop Code inactivated by the patch should have an
+   active Stop Code assigned. Assigning appropriate active Stop Codes to
+   clinics can be accomplished prior to patch implementation if desired.
+  
+ MCA Site Teams, Scheduling and IRM should coordinate to perform the 
+ following sequence:
+  
+ 1) Run the DSS worksheet option CREATE DSS CLINIC STOP FILE. Then, 
+    make any necessary adjustments before approval so all clinics on the
+    worksheet have setups applicable for the month of September 2014.
+  
+ 2) IRM installs the patch late on September 30 or early on October 1, 
+    2014.
+  
+ 3) Run the NONCONFORMING STOP CODES CLINIC REPORT to list those clinics
+    that need changes in the HOSPITAL LOCATION (#44) file for FY15. Work
+    with Scheduling staff to make changes in file (#44) so that the clinics
+    will have the correct stop codes in place for October 1st clinic
+    appointments. DO NOT make changes using Enter/Edit DSS Stop Codes for
+    Clinics (file #728.44) at this time.
+  
+ 4) Follow normal procedures to run the DSS CLI Extract for September 2014.
+    Updates should not be made for October stop code changes with the
+    ENTER/EDIT DSS STOP CODES FOR CLINICS option prior to running the 
+    September CLI Extract. Perform normal AUDITS for the CLI Extract.
+  
+ 5) After auditing the September CLI Extract proceed with FY15 Stop Code
+    changes to the DSS Clinics and Stop Codes Worksheet clinics:
+  
+    a. Run the CREATE DSS CLINIC STOP CODE FILE option. This option 
+       creates local entries in the DSS CLINIC AND STOP CODES file 
+       (#728.44) and compares file #728.44 to the HOSPITAL LOCATION file
+       (#44) to see if there are any differences since the last time the
+       file was reviewed.
+  
+    b. Use the option CLINICS AND DSS STOP CODES PRINT. This option 
+       produces a worksheet of (A) All Clinics, (C) Active, (I) Inactive, 
+       or only the (U) Unreviewed Clinics that are awaiting approval.
+  
+    c. Update for FY15 as needed using the ENTER/EDIT DSS STOP CODES FOR 
+       CLINICS.
+  
+    d. Approve changes using the APPROVE REVIEWED DSS CLINIC WORKSHEET 
+       option. Finalize all Stop Code changes on the worksheet to be ready 
+       to run the October DSS CLI Extract.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000993578 - FY15 Table Maintenance for Clinic Stop file
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Salisbury, NC
+ Upstate New York HCS
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ INC000000993578 - FY15 Table Maintenance for Clinic Stop file
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested Fiscal Year 2015 updates to the CLINIC STOP file (#40.7).
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2015 updates were submitted by the MCAO to be
+ implemented effective October 1, 2014. Post-init routine SD53FY15 updates
+ the CLINIC STOP file (#40.7) by adding two (2) new stop codes, 
+ inactivating thirty one (31) stop codes, reactivating two (2) stop codes, 
+ and changing the names and restricting type for four (4) stop codes.
+  
+ Listed below are the applicable stop code updates:
+  
+ New Stop Codes being added (effective 10/1/2014):
+  
+ Stop Code   Name/Description        Restriction Type     Restriction Date
+  
+    183      PEER SPECIALIST                S                10/1/2014
+    443      DBQ REFERRAL CLINIC            S                10/1/2014
+  
+ Stop Codes being inactivated (Inactive Date: 10/1/2014):
+  
+ Stop Code: 451, 452, 453, 454, 455, 456, 458, 459, 460, 461, 462, 463,
+            464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 475, 476,
+            477, 478, 479, 482, 483, 484, 485
+  
+ Stop Codes being reactivated (Reactivate Date: 10/1/2014):
+  
+ Stop Code   Name/Description
+    
+    555      HOMELESS VT COM EMP SVC INDIV
+    556      HOMELESS VT COM EMP SVC GRP
+  
+ Stop Codes with Name Change (will take effect when the patch is 
+ installed):
+  
+    225  Old Name: SCI TELEHEALTH
+         New Name: SCI TELEHEALTH VIRTUAL
+  
+         Old Restriction Type: E     New Restriction Type: E
+         Old Restriction Date: N/A   New Restriction Date: 10/1/2014
+  
+    555  Old Name: DRUG DEPENDENCE-GROUP
+         New Name: HOMELESS VT COM EMP SVC INDIV
+  
+         Old Restriction Type: E     New Restriction Type: E
+         Old Restriction Date: N/A   New Restriction Date:
+  
+    556  Old Name: ALCOHOL TREATMENT-GROUP
+         New Name: HOMELESS VT COM EMP SVC GRP
+  
+         Old Restriction Type: E     New Restriction Type: E
+         Old Restriction Date: N/A   New Restriction Date:
+  
+    999  Old Name: EMPLOYEE HEALTH
+         New Name: OCCUPATIONAL HEALTH
+  
+         Old Restriction Type: P           New Restriction Type: P
+         Old Restriction Date: 10/1/2003   New Restriction Date: 10/1/2014
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Install Time - less than 3 minutes
+ Suggested time to install: non-peak requirement hours.
+  
+ NOTE: After the patch is installed, delete the routine SD53MY15 using the
+       Delete Routine [XTRDEL] option.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*615):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, 
+       DD's, templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', answer NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP file (#40.7) post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP file (#40.7). If any discrepancies are
+       found, you should enter a Remedy ticket.
+  
+ Routine Information:
+ ====================
+  
+ The second line of each of these routines now looks like:
+  ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 2
+  
+ The checksums below are new checksums, and can be checked with 
+ CHECK1^XTSUMBLD.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53FY15
+    Before:       n/a   After: B80501247  **615**
+
+=============================================================================
+User Information:                          Hold Date     : SEP 15, 2014
+Entered By  :                               Date Entered  : APR 10, 2014
+Completed By:                               Date Completed: AUG 21, 2014
+Released By :                               Date Released : SEP 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,176 @@
+$TXT Created by               at INOCACHE.ISC-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 01/08/14 at 16:07
+=============================================================================
+Run Date: AUG 14, 2014                     Designation: PSS*1*183
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #162                      Status: Released
+                  Compliance Date: SEP 13, 2014
+=============================================================================
+
+Associated patches: (v)PSS*1*166   <<= must be installed BEFORE `PSS*1*183'
+
+Subject: DEA E-PRESCRIBING CPRS V29 POST RELEASE FIX
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch modifies the Application Programming Interfaces (API), 
+ $$DETOX^PSSOPKI to return a "1" (one) only if the drug name contains 
+ "BUPREN" and the dosage form does not contain "PATCH", otherwise a 0 
+ ("zero").
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ N/A 
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A 
+  
+ Test Sites:
+ -----------
+ Durham, NC
+ Heartland-West HCS, KS
+ Lebanon, PA
+ Providence, RI
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ N/A 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+                                   
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed at any time with users on the system.
+ Suggested time to install: non-peak hours, especially when CPRS users are
+ off the system. Installation will take less than 5 minutes.
+  
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System (KIDS) menu,
+      select the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSS*1.0*183).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+   
+   4. Use the Install Package(s) option and select the package PSS*1.0*183.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSSOPKI
+    Before: B11838560   After: B14161499  **61,69,166,183**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 02, 2014
+Completed By:                               Date Completed: JUL 23, 2014
+Released By :                               Date Released : AUG 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

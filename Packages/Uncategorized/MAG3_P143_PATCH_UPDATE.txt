@@ -1,0 +1,83 @@
+Subj: **HEADS UP** MAG*3*143 INFORMATION
+28 May 2014 15:50:45 -0400 (EDT)  79 lines
+-------------------------------------------------------------------------------
+ 
+****The released patch description on FORUM is incorrect.  Please see the
+patch description located on the VA FTP Anonymous directory for the 
+description and installation process.*****
+ 
+This document describes MAG*3.0*143, the patch that resolves the VistA 
+Imaging Import OCX-Group Pointer Issue for the VistA Imaging (VI) Import 
+Application Programming Interface (API).
+ 
+The VI Import API is a utility created so applications, other than VI, 
+can attach patient document/images to the patient record. The Import API 
+has M routines that are installed on the VistA System and an ActiveX 
+control that is installed on the Background Processor (BP) workstation.
+ 
+Applications implement the Import API through a Remote Procedure Call 
+(RPC) to the VistA System. The RPC accepts an input array of data. Data 
+are validated, and an Import Queue is created in the IMPORT QUEUE file 
+(#2006.034). The BP processes the entries in the Import Queue, and during 
+this process, the BP calls the methods of the Import OCX.  
+ 
+The features and fixes of MAG*3.0*143 are summarized below:
+MAG*3.0*143 addresses the issue of invalid group pointers in the VistA
+IMAGE (#2005) file. The issue occurs when an application that implements
+the Import API attempts to import a group of images and attach the group
+to a Text Integration Utility (TIU) Note.
+ 
+Previous patches that included changes to the Import OCX also have 
+included the BP application. MAG*3.0*143 contains only the Import OCX 
+ActiveX control: MagImportXControl1_143.ocx.
+ 
+Note: 
+After download and before installation, rename this file 
+(MagImportXControl1_143.ocx.) to MagImportXControl1.ocx.  In this 
+document all references to MagImportXControl1.ocx are referring to the 
+renamed file.
+ 
+TEST SITES:
+Department of VA Medical Center in Wichita, KS
+VA Sierra Nevada HCS in Reno, NV
+VA Gulf Coast Veterans HCS in Biloxi, MS
+ 
+Routine MAGIP143 is a post-install routine and is deleted after the KIDS 
+install.
+ 
+---CHECK1^XTSUMBLD is used to generate the checksums.
+ 
+ROUTINE         BEFORE CHECKSUM  AFTER CHECKSUM  PATCH LIST
+MAGIP143        NEW              4214971         143
+ 
+Distribution of Software
+To obtain MAG*3.0*143 files, use File Transfer Protocol (FTP) to retrieve 
+MAG3_ 0P143.KID and MagImportXControl1.143.ocx from one of the following 
+OI Field Offices' ANONYMOUS.SOFTWARE directories:
+ 
+OI Field Office         FTP Address                 Directory
+Albany                  ftp.fo-albany.med.va.gov    anonymous.software    
+Hines                   ftp.fo-hines.med.va.gov     anonymous.software
+Salt Lake City          ftp.fo-slc.med.va.gov       anonymous.software
+ 
+preferred method      ftp.download.vista.med.va.gov  anonymous.software
+ 
+FILE NAME                        TYPE
+MAG3_0P143.KID                    ascii
+MAG3_Op143_Patch_Description.PDF  binary
+MAG3_0P143_PATCH_DESCRIPTION.DOCX binary
+MagImportXControl1.143.ocx        binary
+ 
+The following Remedy help desk calls are addressed in this patch:
+INC000000916733, INC000000934023, INC000000935853, 
+INC000000938833, INC000000951806, INC000000951838, 
+INC000000951848, INC000000951855, INC000000951893,
+INC000000951896.
+ 
+INSTALLATION:
+-Ensure MAG*3*135 has been installed
+-Install MAG*3*143 KIDS build in your VistA system - see patch 
+description on forum
+-Install the OCX on your background processor: see patch description on 
+Forum
+

@@ -1,0 +1,771 @@
+
+=============================================================================
+Run Date: FEB 25, 2015                     Designation: LEX*2*86
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #90                      Status: Released
+                  Compliance Date: MAR 27, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*97    <<= must be installed BEFORE `LEX*2*86'
+
+Subject: Data Dictionary/APIs Fixes
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+  This is a multi-package Kernel Installation and Distribution System
+  (KIDS) distribution consisting of the following three builds:
+     
+     Install
+     Order     Build          Subject                       Requires
+     -------   ----------     -------------------------     ------------
+        1      LEX*2.0*86     Data Dictionary/API Fixes     LEX*2.0*97
+        2      ICD*18.0*67    API Fixes                     ICD*18.0*64
+        3      FB*3.5*157     Modify Diagnosis Storage      FB*3.5*123
+          
+  Install Name:  LEX*2.0*86
+     
+     NOTE:  This message does not contain an installable KIDS build, nor
+            does it contain any routines or data.  The installable KIDS 
+            distribution is contained in KIDS hostfile LEX_2_86.KID and
+            can be obtained using the File Transfer Protocol (FTP) 
+            instructions and installation instructions found in this 
+            patch description.
+   
+     
+  ENHANCEMENTS:
+  ============ 
+   
+    LEX*2.0*86
+    ==========
+     
+ 
+     Data Dictionaries
+     -----------------
+     
+       SNOMED CT HIERARCHY file #757.018 (new)
+       
+          SNOMED CT HIERARCHY file #757.018 is a new file containing the 
+          names of the SNOMED CT Hierarchies.  This is used to populate
+          SNOMED related sub-sets.
+             
+             SNOMED CT HIERARCHY FILE (#757.018)          ^LEX(757.018,
+             
+             FIELD     FIELD
+             NUMBER    NAME
+             
+             .01       NAME (RF), [0;1]
+             .02       ABBREVIATION (F), [0;2]
+             .03       NUMBER (NJ7,0), [0;3]
+             1         SUBSET MEMBERSHIP (Multiple-757.181), [1;0]
+                       .01  SUBSET (MP757.2'), [0;1]
+ 
+       DESIGNATION CODE sub-field (#757.118) (modified)
+  
+          New field HIERARCHY #2 added as a pointer to the SNOMED CT
+          HIERARCHY file 757.018.  This is the SNOMED CT Hierarchy that
+          the concept belongs to.
+ 
+             EXPRESSIONS file (#757.01)                   ^LEX(757.01,
+             DESIGNATION CODE Sub-Field (#757.118)        ^LEX(757.01,DO,7,
+ 
+             FIELD     FIELD
+             NUMBER    NAME
+             
+             .01       DESIGNATION CODE (F), [0;1]
+             1         CODING SYSTEM (P757.03'), [0;2]
+             2         HIERARCHY (P757.018'), [0;3]
+  
+       MAPPINGS file #757.33 (modified)
+       
+          This patch deletes the TRIGGER type cross-reference of the MAPPINGS
+          file #757.33, STATUS HISTORY sub-file #757.333, STATUS field #1, 
+          cross-reference #2.  This trigger was incorrectly populating the
+          CHANGE DATE field #2 of the STATUS HISTORY sub-file #757.333.
+   
+  
+     Routines
+     --------
+           
+       LEX10DL   Changed   Fix ^ up-arrow at top level
+       LEX10PL   Changed   Fix ^ up-arrow at top level
+       LEX10TAX  Changed   Use the Clinical Reminder Subset
+       LEX2086   New       Environment Check
+       LEX2086P  New       Post-Install
+       LEXA      Changed   Retain the mixed case provider narrative
+       LEXA1     Changed   Kill X if DIC(0) contains "A" (ask)
+       LEXAB     Changed   Protect/Verify LEXFIL/LEXFILR ($GET)
+       LEXNDX6   Changed   Modified to match LEXXGP and LEXRX
+       LEXQDRG   New       Code Set Query for DGR Group
+       LEXQDRG2  New       Code Set Query for DGR Group
+       LEXQDRG3  New       Code Set Query for DGR Group
+       LEXQDRG4  New       Code Set Query for DGR Group
+       LEXQID2   Changed   Add Lexicon term to diagnosis query
+       LEXQHL2   Changed   Fix Undefined Error in ICD Procedure display
+       LEXQIP    Changed   Add Lexicon term to procedures query
+       LEXQIP2   Changed   Add Lexicon term to procedures query
+       LEXQIP3   Changed   Add Lexicon term to procedures query
+       LEXQL     Changed   Modified the conditions for the selection to exit
+       LEXRXC    Changed   Only execute the SET logic if errors are found
+       LEXRXC2   Changed   AWRD Index repair moved to LEXRXC3
+       LEXRXC3   Changed   Modified to used LEXXGP logic
+       LEXRXC4   New       Code from LEXRXC3 (split due to size)
+       LEXRXD    Changed   Modified SET ONLY logic
+       LEXRXD4   Changed   Fix APR to use coding system #31
+       LEXTRAN   Changed   Add deactivated terms and designation ID
+       LEXTRAN1  Changed   Add deactivated terms and designation ID
+       LEXU      Changed   Code moved to LEXU6 (Routine too large - SACC)
+       LEXU2     Changed   Added error messages for $$CSDATA
+       LEXU3     Changed   Code moved to LEXU5 (Routine too large - SACC)
+       LEXU4     Changed   Modify $$PERIOD and add $$REUSE and $$LAST
+       LEXU5     New       Code from LEXU3 (split due to size, SACC)
+       LEXU6     New       Code from LEXU (split due to size, SACC)
+       LEXUH     Changed   Documentation changes
+       LEXXGP1   Changed   Modified AWRD for alpha-numeric and numeric ranges
+       LEXXGP2   Changed   Modified ASL for alpha-numeric and numeric ranges
+       LEXXGP3   New       New, Modified SUB, LEXXGP2 split due to size
+       LEXXM1    Changed   Added ICD-10 abbreviations
+       LEXXM2    Changed   Added ICD-10 abbreviations
+       LEXXM3    Changed   Added ICD-10 abbreviations
+       LEXXM4    Changed   Added ICD-10 abbreviations
+       LEXXM5    Changed   Added ICD-10 abbreviations
+       LEXXM6    Changed   Added ICD-10 abbreviations
+       LEXXMM    Changed   Added ICD-10 abbreviations
+         
+        
+     Data
+     ----
+        
+       Subset Definition File #757.2
+        
+          Added an entry for Clinical Reminders Taxonomy
+        
+            NAME: Clinical Reminders Taxonomy
+            GLOBAL REFERENCE: LEX(757.01,
+            HELP ROUTINE ENTRY POINT: XTLK
+            HELP ROUTINE: LEXHLP
+            DISPLAY ROUTINE ENTRY POINT: XTLK
+            DISPLAY ROUTINE: LEXPRNT
+            APPLICATION MNEMONIC: CR1
+            APPLICATION INDEX: WRD
+            APPLICATION USER DEFAULTS: USER DEFAULTS ARE NOT ALLOWED
+            APPLICATION FILE NUMBER: 811.2
+            APPLICATION NAMESPACE: PXRM
+            OVERRIDE USER DEFAULTS: YES
+            APPLICATION DISPLAY CODES: ICD/ICP/10D/10P/CPT/CPC/SCT
+            DESCRIPTION:   This subset contains the entire Lexicon (unfiltered)
+                           and user defaults are not allowed.  
+           
+          Added an entry for Title 38 Service Connected Disability Codes
+ 
+            NAME: Title 38 Service Connected        
+            GLOBAL REFERENCE: LEX(757.01,
+            HELP ROUTINE ENTRY POINT: XTLK        
+            HELP ROUTINE: LEXHLP
+            DISPLAY ROUTINE ENTRY POINT: XTLK     
+            DISPLAY ROUTINE: LEXPRNT
+            DISPLAY CODES: SCC                    
+            APPLICATION MNEMONIC: SCC
+            APPLICATION INDEX: WRD
+            APPLICATION USER DEFAULTS: USER DEFAULTS ARE NOT ALLOWED
+            OVERRIDE USER DEFAULTS: YES
+            APPLICATION FILTER: I $$SO^LEXU(Y,"SCC",+($G(LEXVDT)))
+            APPLICATION DISPLAY CODES: SCC
+            DESCRIPTION:   This subset is artificially created through the use
+                           of a filter (not a physical subset), and contains 
+                           only those expressions which are linked to a Title
+                           38 Service Conected disability code.  
+ 
+ 
+       Displays file #757.31
+        
+          Added an entry for Clinical Reminders Taxonomy
+        
+            TITLE: Clinical Reminders Taxonomy
+            DISPLAY TYPE: CLASSIFICATION CODES
+            DISPLAY: ICD/ICP/10D/10P/CPT/CPC/SCT
+            DESCRIPTION:   Displays classification codes from the International
+                           Classification of Diseases/Diagnosis (ICD), Current
+                           Procedure Terminology (CPT), Healthcare Common 
+                           Procedure Coding System  (HCPCS), Systematized
+                           Nomenclature of Medicine, Clinical Terms
+                           (SNOMED CT).  
+        
+           Added an entry for Title 38 Service Connected Disability Codes
+ 
+            TITLE: Title 38 Service Connected       
+            DISPLAY TYPE: CLASSIFICATION CODES
+            DISPLAY: SCC
+            DESCRIPTION:   Displays Title 38 Service Connected disability 
+                           codes.  
+       
+ 
+     Lexicon APIs
+     ------------
+          
+      $$GETSYN^LEXTRAN1        Get Synonyms for a Code's Term
+          
+        This API was modified to check the Deactivated Flag before adding 
+        synonyms to the output array.  Two new input parameters were added,
+        one to include synonyms Designation Identifiers and the other to 
+        include deactivated synonyms (default is to exclude deactivated 
+        synonyms) in the output array.
+         
+      $$CODE^LEXTRAN           Get Information about a Code
+          
+        Three new input parameters were added; one to include Internal Entry 
+        Numbers (IENs), one to include Designation Identifiers and the other
+        to include deactivated synonyms (default is to exclude deactivated 
+        synonyms) in the output array.
+          
+      EN^LEX10DL               Category/Pruned ICD-10 Diagnosis Lookup
+          
+        This API was modified so a single up-arrow returns the user to 
+        the prompt instead of exiting the lookup.
+          
+      EN^LEX10PL               Character Position ICD-10 Procedure Lookup
+          
+        This API was modified so a single up-arrow returns the user to 
+        the prompt instead of exiting the lookup.
+          
+      EN^LEXQID                CSV ICD Diagnosis Query
+          
+        This API was modified to include the Lexicon term in the display of
+        an ICD-10 Diagnosis code.
+          
+      EN^LEXQIP                CSV ICD Procedure Query
+          
+        This API was modified to include the Lexicon term in the display of
+        an ICD-10 Procedure code.
+          
+      EN^LEXQDRG               New - CSV DRG Calculator
+          
+        This new API, like all of the other LEXQ* namespaced APIs, is 
+        designed to test versioned data based on a date provided by the 
+        user.  It test the data associated with the principle diagnosis, 
+        secondary diagnosis and procedure codes used to calculate a DRG 
+        Group.
+          
+      $$MIX^LEXXM              Convert Text to Mixed Case
+          
+        This API was modified to include the abbreviations that are unique 
+        to the ICD-10 coding system.
+          
+      $$CSDATA^LEXU            Return Information about a Code
+          
+        Two new error checks and error messages were added to this API.  The
+        first checks to see if the code is valid and if not quits with 
+        "-1^Invalid Code."  The second check to see if the code is included 
+        in the specified source (i.e., is the code in the ICD code set) and 
+        if not quit with "-1^Invalid source for code."
+          
+      $$PERIOD^LEXU            Return the Activation Periods for a Code
+          
+        A new error check and error message was added to this API.  It checks
+        to see if the code is included in the specified source (i.e., is the
+        code in the ICD code set) and if not quit with "-1^Invalid source 
+        for code."
+          
+      $$LAST^LEXU              New - Returns the Effective Dates
+          
+        This API returns the last activation date and inactivation date 
+        for a code based on a date provided by the user.  The default input
+        date is TODAY.
+          
+      $$REUSE^LEXU             New - Determine if a Code has been Re-Used
+          
+        This API determines if a code has been re-used.  A code is considered
+        re-used if it has been active, then inactivated, and finally, after 
+        a period of inactivation it gets re-activated but with a new term.
+        This API returns a 1 if the code has been re-used.  Future dates
+        (activation or inactivation) are not considered.
+          
+      $$REVISE^LEXU            New - Determine if a Code has been Revised
+         
+        This API determines if a code has been revised.  A code is considered
+        revised it the term has been changed and there is no break in the
+        activation history (the code remained active).  Future dates
+        (activation or inactivation) are not considered.
+          
+      $$TAX^LEX10CS            LEX10TAX Modified to use new PXRM Subset
+        
+        This API calls $$TAX^LEX10TAX.  The Lexicon lookup in the routine
+        LEX10TAX has been modified to use the new Clinical Reminders subset
+        in the Subset Definitions file 757.2.
+        
+        
+    ICD*18.0*67
+    ===========
+          
+     Routines
+     --------
+          
+       ICD1867   New       Environment Check
+       ICDEX     Changed   Adjust for the changes in ICDEXA through ICDEXD
+       ICDEXA3   Changed   Reduce Comments/Routine Size (SACC)
+       ICDEXC    Changed   Local Codes (CR 1398)
+       ICDEXC4   Changed   New API $$RDX - Resolve Diagnosis Code Fragment
+       ICDEXD2   Changed   Routine size too large, code moved to ICDEXD6 (SACC)
+       ICDEXD5   Changed   Routine size too large, code moved to ICDEXD6 (SACC)
+       ICDEXD6   New       Code from over-sized routines (SACC)
+       ICDEXLK   Changed   Remove application code/Fix "^" Re-Prompt (CR 1395)
+       ICDEXLK2  Changed   Change "^" processing/Fix .01 field suppression
+       ICDEXLK3  Changed   Protect the variable ROOT ($G)
+       ICDEXLK4  Changed   Change variable list, removed FIND and FOUND
+       ICDEXLK5  Changed   Add prompt for IEN when DIC(0) contains A or E
+       ICDEXLK6  Changed   Fix help routines, add DICU, DICS, DIE, and XT
+       ICDEXS    Changed   Update internal documentation
+       ICDXCODE  Changed   Local Codes (CR 1398)
+  
+     ICD APIs
+     --------
+   
+      ICDEXLK                  Special Lookup for files 80 and 80.1
+  
+        Application specific code (QUASAR, DIE, Lab and Scheduling) has been 
+        removed and replace with generic code for all applications.  A prompt
+        was added for user confirmation when only one entry is found.  
+        Up-arrow "^" processing has been modified, a single up-arrow will 
+        return to the user input prompt (CR1395).  Moved processing of 
+        up-arrow (DUOUT, DIRUT and DIROUT), timeouts (DTOUT) into the ICD* 
+        namespace to prevent collisions with FileMan.  Fixed the display when
+        DIC(0) contains "S" (suppress the .01 field).  Add prompt for IEN 
+        lookup when DIC(0) contains A or E (SQA finding).
+  
+      $$ICDDATA^ICDXCODE       Data Retrieval for 2 file solution
+   
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.
+   
+        NOTE:  The API $$ICDDATA^ICDXCODE was part of the two file solution 
+        for ICD-10, where ICD-9 remained in files 80 and 80.1 and ICD-10 was
+        stored in a new and separate file.  This design was replaced by the
+        one file solution where ICD-10 is stored in the same files and ICD-9
+        and uses the API $$ICDDX^ICDEX instead.  The API $$ICDDATA^ICDXCODE
+        will be retired Apr 1, 2017 (18 months after the ICD-10 compliance
+        date).
+   
+      $$ICDDX^ICDEX            Data Retrieval for 1 file solution
+  
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.  (replaces $$ICDDATA^ICDXCODE)
+  
+      $$ICDOP^ICDEX            Data Retrieval for 1 file solution
+   
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.  (replaces $$ICDDATA^ICDXCODE)
+  
+      $$RDX^ICDEX              New API to resolve ICD Diagnosis Code Fragment
+   
+        This API takes a partial code (without decimal) and converts it
+        to an ICD Diagnosis code. (used internally)  Examples:
+  
+          Code Fragment   Effective Date   Resolved to   Coding System
+          -------------   --------------   -----------   -------------
+          311                              311.           1  ICD-9-CM
+          A870                             A87.0         30  ICD-10-CM
+          E8310             06/26/2014     E831.0         1  ICD-9-CM
+          E8310             12/12/2015     E83.10        30  ICD-10-CM
+  
+      $$POAE^ICDEX             New API - Present on Admission Exempt
+   
+        This API returns a 1 if an ICD Diagnosis code is exempt from 
+        Present on Admission (POA) reporting.  POA is an indicator of 
+        the relationship between a diagnosis and inpatient admission, and
+        can include:
+  
+           A diagnosis was present at time of inpatient admission
+           A diagnosis was not present at time of inpatient admission
+           The documentation was insufficient to determine if condition was 
+               present at the time of inpatient admission
+           The provider was unable to clinically determine whether the 
+               condition was present at the time of inpatient admission
+  
+      $$HAC^ICDEX              New API - Hospital Acquired Conditions
+  
+        This API returns a 1 if a diagnosis can be acquired during
+        an inpatient visit.  It is used in conjunction with present on
+        admission (POA) to calculate a DRG group.
+ 
+ 
+    FB*3.5*157
+    ==========
+           
+     Diagnosis entry fails in option Enter Payment for certain diagnosis 
+     codes and fails for all diagnosis codes where patch ICD*18*67 is
+     installed (see Remedy Ticket 1085312).  
+           
+        Problem:
+           
+           Site could not enter ANY Primary Diagnosis codes in options 
+           ENTER PAYMENT or EDIT PAYMENT after patch ICD*18*67 is
+           installed.  Also, before the ICD*18.0**67 was installed
+           there were about 90 diagnosis codes that would store the 
+           incorrect pointer to file ICD DIAGNOSIS [#80]. 
+           
+        Resolution:
+           
+           Modify routines from a three slash (///) stuff to a four slash
+           stuff as the Diagnosis lookup processing returns the internal 
+           code of the diagnosis selected.  File FEE BASIS PAYMENT [#162],
+           field PRIMARY DIAGNOSIS [#28] is expecting the file 80 diagnosis
+           pointer to be updated with a four slash (////) stuff. 
+   
+     Routines
+     --------
+          
+       FB35157   New       Environment Check
+       FBAACO2   Changed   Modified DIE DR string to four slash (////) stuff
+       FBAACO3   Changed   Modified DIE DR string to four slash (////) stuff
+               
+              
+  REMEDY TICKETS:
+  ==============
+      
+    1085312 - Fee Basis Primary Diagnosis entry fails in option Enter Payment
+  
+    
+  DOCUMENTATION RETRIEVAL:
+  =======================
+  
+    The Lexicon and ICD Technical manuals have been updated with descriptions
+    of the changes to the APIs introduced by these patches.  These manuals are
+    available in the [ANONYMOUS.SOFTWARE] directories at the following Internet
+    addresses:
+   
+       Preferred or Specific Server   Internet address
+       ----------------------------   -------------------------
+       First available ftp server     download.vista.domain.ext <-- preferred
+       Albany                         ftp.domain.ext
+       Hines                          ftp.domain.ext
+       Salt Lake City                 ftp.domain.ext
+   
+    The following documents are available via the FTP sites listed above.
+  
+      File Name                     Protocol
+      -------------------           --------
+      LEXTM.PDF                     binary   Lexicon Technical Manual
+      ICDTM.PDF                     binary   ICD Technical Manual
+   
+    After this patch is released, the updated manuals may also be retrieved 
+    from the Internet at http://www.domain.ext/vdl  
+  
+  
+  FTP Software Retrieval
+  ======================
+    
+    Host File                File Name                  FTP Protocol
+    -------------------      ----------------           ------------
+    KIDS Distribution        LEX_2_86.KID                  ASCII
+   
+    This file may be downloaded directly from the following FTP servers:
+    
+         FTP Server               Internet address
+      *  Preferred Server         download.vista.domain.ext  <-- 
+         Albany                   ftp.domain.ext
+         Hines                    ftp.domain.ext
+         Salt Lake City           ftp.domain.ext
+    
+      *  The preferred server download.vista.domain.ext will transmit 
+         the file from the first available FTP server.
+    
+         The file is available in the ANONYMOUS.SOFTWARE directory.  The
+         FTP transfer should take from 3 to 9 seconds.
+  
+    
+  INSTALLATION INSTRUCTIONS:
+  =========================
+    
+    1)  Users may be on the system during the install of LEX*2.0*86,
+        ICD*18.0*67 and FB*3.5*157.  This patch should take from 3 to 15 
+        seconds to install.
+    
+    2)  Make sure user and IO variables (D ^XUP) are setup for programmer
+        access.
+     
+    3)  Distribution Load:
+         
+        Load the patch using the KIDS Installation Menu action 
+        "Load a Distribution" and the KIDS hostfile LEX_2_86.KID which
+        you obtained via FTP. This KIDS file is a multi-package 
+        distribution containing the following KIDS builds with the
+        following install order:
+   
+           Install Order     KIDS Build
+                 1           LEX*2.0*86
+                 2           ICD*18.0*67
+                 3           FB*3.5*157
+     
+    4)  Backup/Verify:
+ 
+        From the KIDS Installation Menu you may elect to use the following
+        options (when prompted for INSTALL NAME, enter LEX*2.0*86):
+ 
+          a.  Select Compare Transport Global to Current System - this 
+              option will allow you to view all changes that will be made
+              when the patch is installed. It compares all components of
+              the patch (routines, DDs, templates, etc.).
+ 
+          b.  Verify Checksums in Transport Global - this option will
+              allow you to ensure the integrity of the routines that are
+              in the transport global.
+ 
+          c.  Print Transport Global - this option will allow you to view 
+              the components of the KIDS build.
+ 
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+ 
+    5)  KIDS Installation:
+   
+        Install the patch using the KIDS Installation Menu action
+        "Install Package(s)" and the install name LEX*2.0*86.
+ 
+          Respond "No" at the "Want KIDS to INHIBIT LOGONs during
+          the install?" prompt.
+    
+          Respond "Yes" at the "Want to DISABLE Scheduled Options,
+          Menu Options, and Protocols?" prompt.
+  
+        a)  When prompted "Enter options you wish to mark as "Out of
+            Order:" enter the following options:
+                                                          
+               Enter Payment        [FBAA ENTER PAYMENT]
+               Edit Payment         [FBAA EDIT PAYMENT]
+    
+        b)  When prompted "Enter protocols you wish to mark as "Out of
+            Order":" press <Enter>
+  
+    6)  Cleanup
+         
+        The Environment Check routines LEX2086, ICD1867 and FB35157,
+        and the Post-Install routine LEX2086P should be deleted using
+        the KERNEL option 'Delete Routines' [XTRDEL] upon completion
+        of the installation.
+ 
+      
+  MULTI-PACKAGE DISTRIBUTION ROUTINE SUMMARY:
+  ==========================================
+  
+    LEX*2.0*86
+    ==========
+  
+      The second line of each of these routines will look like:
+  
+      <tab>;;2.0;<package name>;**[PATCH LIST]**;Sep 23, 1996
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch  Patch List (2nd Line)
+      --------   ------------   -----------  ---------------------
+      LEX2086      <Env Chk>     104276930   86
+      LEX2086P    <Post-Ins>      47694609   86
+      LEX10DL      57481356       57575740   80,86
+      LEX10PL     120447479      120517089   80,86
+      LEX10TAX     83701759       83718162   80,86
+      LEXA         53072237       60933739   3,4,6,19,25,36,38,43,55,73,
+                                             80,86
+      LEXA1        69671285       70223052   3,4,6,11,15,38,55,73,80,86
+      LEXAB        10463880       11071959   25,80,86
+      LEXNDX6      13564352       19709895   80,86
+      LEXQDRG        <new>        71624040   86
+      LEXQDRG2       <new>       132520420   86
+      LEXQDRG3       <new>        41644290   86
+      LEXQDRG4       <new>        80769306   86
+      LEXQHL2      90489365       90501099   62,80,86
+      LEXQID2      35722447       35819355   62,73,80,86
+      LEXQIP       87751371       89007415   62,73,80,86
+      LEXQIP2      10742392       27132313   62,80,86
+      LEXQIP3      28040002       32494278   62,73,80,86
+      LEXQL        69016427       69912200   62,80,86
+      LEXRXC      105521717      113217997   81,80,86
+      LEXRXC2      70264191       84713093   81,86
+      LEXRXC3      17043792      124793632   81,86
+      LEXRXC4        <new>        58726823   81,86
+      LEXRXD       72709975       77578337   81,80,86
+      LEXRXD4      78250103       78539847   81,80,86
+      LEXTRAN      77492995       85105957   41,59,73,80,86
+      LEXTRAN1    109851516      129742637   59,73,51,80,86
+      LEXU        137452070      104256430   2,6,9,15,25,36,73,51,80,86
+      LEXU2       131844732      141683207   80,86
+      LEXU3        65261771       42123384   80,86
+      LEXU4        63972250      129204070   80,86
+      LEXU5          <new>         7267831   80,86
+      LEXU6          <new>         9815713   80,86
+      LEXUH       105430964      105459715   80,86
+      LEXXGP1     211142742      178355594   80,86
+      LEXXGP2     136699834       45882070   80,86
+      LEXXGP3        <new>       141569395   86
+      LEXXM1       23924703       25249418   80,86
+      LEXXM2       28282174       30344305   80,86
+      LEXXM3       82567477       91178873   80,86
+      LEXXM4       52053731       55634624   80,86
+      LEXXM5       16058487       18823320   80,86
+      LEXXM6       53334113       54190610   80,86
+      LEXXMM       37694855       41682628   80,86
+ 
+    ICD*18.0*67
+    ===========
+  
+      The second line of each of these routines will look like:
+  
+      <tab>;;18.0;DRG Grouper;**[PATCH LIST]**;Oct 20, 2000
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch  Patch List (2nd Line)
+      --------   ------------   -----------  ---------------------
+      ICD1867      <Env Chk>      77504315   67
+      ICDEX        73946334       76352814   57,67
+      ICDEXA3     159565550      159086778   57,67
+      ICDEXC      108523477      109821658   57,67
+      ICDEXC4      11534357       30014377   57,67
+      ICDEXD2      91571446       52729540   57,67
+      ICDEXD5      63389361       57426923   57,67
+      ICDEXD6        <new>        20655480   67
+      ICDEXLK     199827276      131568990   57,67
+      ICDEXLK2    168472768      167936583   57,67
+      ICDEXLK3     98024730       98059988   57,67
+      ICDEXLK4     25896513       25474563   57,67
+      ICDEXLK5     75373289       69728185   57,67
+      ICDEXLK6     83204817       93947228   57,67
+      ICDEXS      149154345      148931476   57,67
+      ICDXCODE      7083997        7339576   57,67
+ 
+ 
+    FB*3.5*157
+    ==========
+  
+      The second line of each of these routines will look like:
+  
+      <tab>;;3.5;FEE BASIS;**[PATCH LIST]**;JAN 30, 1995
+  
+                  Checksums      Checksums  
+      Routine    Before Patch   After Patch  Patch List (2nd Line)
+      --------   ------------   -----------  ---------------------
+      FB35157      <Env Chk>      35702831   157
+      FBAACO2      30248280       31897549   4,55,61,77,116,122,133,108,
+                                             135,139,123,157
+      FBAACO3      60345007       62984303   4,38,55,61,116,122,133,108,
+                                             124,143,139,157
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX10DL
+    Before: B57481356   After: B57575740  **80,86**
+Routine Name: LEX10PL
+    Before:B120447479   After:B120517089  **80,86**
+Routine Name: LEX10TAX
+    Before: B83701759   After: B83718162  **80,86**
+Routine Name: LEX2086
+    Before:       n/a   After:B104276930  **86**
+Routine Name: LEX2086P
+    Before:       n/a   After: B47694609  **86**
+Routine Name: LEXA
+    Before: B53072237   After: B60933739  **3,4,6,19,25,36,38,43,55,73,80,86**
+Routine Name: LEXA1
+    Before: B69671285   After: B70223052  **3,4,6,11,15,38,55,73,80,86**
+Routine Name: LEXAB
+    Before: B10463880   After: B11071959  **25,80,86**
+Routine Name: LEXNDX6
+    Before: B13564352   After: B19709895  **80,86**
+Routine Name: LEXQDRG
+    Before:       n/a   After: B71624040  **86**
+Routine Name: LEXQDRG2
+    Before:       n/a   After:B132520420  **86**
+Routine Name: LEXQDRG3
+    Before:       n/a   After: B41644290  **86**
+Routine Name: LEXQDRG4
+    Before:       n/a   After: B80769306  **86**
+Routine Name: LEXQHL2
+    Before: B90489365   After: B90501099  **62,80,86**
+Routine Name: LEXQID2
+    Before: B35722447   After: B35819355  **62,73,80,86**
+Routine Name: LEXQIP
+    Before: B87751371   After: B89007415  **62,73,80,86**
+Routine Name: LEXQIP2
+    Before: B10742392   After: B27132313  **62,80,86**
+Routine Name: LEXQIP3
+    Before: B28040002   After: B32494278  **62,73,80,86**
+Routine Name: LEXQL
+    Before: B69016427   After: B69912200  **62,80,86**
+Routine Name: LEXRXC
+    Before:B105521717   After:B113217997  **81,80,86**
+Routine Name: LEXRXC2
+    Before: B70264191   After: B84713093  **81,86**
+Routine Name: LEXRXC3
+    Before: B17043792   After:B124793632  **81,86**
+Routine Name: LEXRXC4
+    Before:       n/a   After: B58726823  **81,86**
+Routine Name: LEXRXD
+    Before: B72709975   After: B77578337  **81,80,86**
+Routine Name: LEXRXD4
+    Before: B78250103   After: B78539847  **81,80,86**
+Routine Name: LEXTRAN
+    Before: B77492995   After: B85105957  **41,59,73,80,86**
+Routine Name: LEXTRAN1
+    Before:B109851516   After:B129742637  **59,73,51,80,86**
+Routine Name: LEXU
+    Before:B137452070   After:B104256430  **2,6,9,15,25,36,73,51,80,86**
+Routine Name: LEXU2
+    Before:B131844732   After:B141683207  **80,86**
+Routine Name: LEXU3
+    Before: B65261771   After: B42123384  **80,86**
+Routine Name: LEXU4
+    Before: B63972250   After:B129204070  **80,86**
+Routine Name: LEXU5
+    Before:       n/a   After:  B7267831  **80,86**
+Routine Name: LEXU6
+    Before:       n/a   After:  B9815713  **80,86**
+Routine Name: LEXUH
+    Before:B105430964   After:B105459715  **80,86**
+Routine Name: LEXXGP1
+    Before:B211142742   After:B178355594  **80,86**
+Routine Name: LEXXGP2
+    Before:B136699834   After: B45882070  **80,86**
+Routine Name: LEXXGP3
+    Before:       n/a   After:B141569395  **86**
+Routine Name: LEXXM1
+    Before: B23924703   After: B25249418  **80,86**
+Routine Name: LEXXM2
+    Before: B28282174   After: B30344305  **80,86**
+Routine Name: LEXXM3
+    Before: B82567477   After: B91178873  **80,86**
+Routine Name: LEXXM4
+    Before: B52053731   After: B55634624  **80,86**
+Routine Name: LEXXM5
+    Before: B16058487   After: B18823320  **80,86**
+Routine Name: LEXXM6
+    Before: B53334113   After: B54190610  **80,86**
+Routine Name: LEXXMM
+    Before: B37694855   After: B41682628  **80,86**
+ 
+Routine list of preceding patches: 80
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2012
+Completed By:                               Date Completed: FEB 25, 2015
+Released By :                               Date Released : FEB 25, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

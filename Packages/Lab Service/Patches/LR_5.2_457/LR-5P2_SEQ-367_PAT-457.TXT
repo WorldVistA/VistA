@@ -1,0 +1,243 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 01/05/16 at 15:21
+=============================================================================
+Run Date: MAR 23, 2016                     Designation: LR*5.2*457
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #367                    Status: Released
+                  Compliance Date: APR 23, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*405  <<= must be installed BEFORE `LR*5.2*457'
+                    (v)LR*5.2*446  <<= must be installed BEFORE `LR*5.2*457'
+
+Subject: HOWDY ISSUES WITH EXCLUDED CLINICS, DELETION OF SAME DAY DUPLICATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses four (4) issues:
+   
+  1. The "deletion" part of the DELETE SAME DAY DUPLICATES functionality 
+     in the Howdy processing is tasked, and does not fully complete in time
+     to prevent duplicate tests from being accessioned and marked as
+     "Active" in CPRS.
+   
+  2. Repeated, unnecessary N(EW)ing of variables coupled with GOTO logic 
+     can lead to an unresponsive terminal session due to system 
+     parameters in Cache.
+   
+  3. Howdy: DELETE SAME DAY DUPLICATES problem
+   
+  4. Orders placed from an EXCLUDED CLINIC location (EXLOC) should only 
+     be accessioned if scanned (LRHY PATIENT CARD SCAN) on the collection
+     date of the order. If the collection date is other than TODAY (date of
+     the card scan), these orders should not be accessioned.
+  
+ Associated Remedy Ticket(s):
+ ============================
+  
+ 1. INC000000599573  -  DELETE SAME DAY DUPLICATES not working
+  
+         INC000000601615(d)
+         INC000000606186(d)
+         INC000000625734(d)
+         INC000000811097(d)
+         INC000000845135(d)
+  
+ 2. INC000000616610  -  Howdy: Card scanning/manual SSN input issue
+ 3. INC000000879395  -  Howdy: DELETE SAME DAY DUPLICATES problem
+ 4. INC000000843758  -  Lab - Howdy: Excluded Clinics malfunction
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*457 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*457 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*457 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Providence VAMC
+ Wilkes-Barre VAMC
+ Pittsburgh HCS
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000000599573 - DELETE SAME DAY DUPLICATES not working
+    
+    Problem:
+    --------
+    The "deletion" part of the DELETE SAME DAY DUPLICATES functionality in
+    Howdy processing is tasked and does not fully complete in time to
+    prevent these duplicate tests from being accessioned and marked as
+    "Active" in CPRS.
+  
+    Solution:
+    ---------
+    Modify routine LRHYA to add a H(ANG) 5 after the deletion task is
+    initiated in order to allow enough time for the deletion process to
+    complete before the accessioning process begins. 
+     
+    Routine: LRHYA
+  
+ 2. INC000000616610 - Howdy: Card scanning/manual SSN input issue
+  
+    Problem:
+    --------
+    Repeated, unnecessary N(EW)ing of variables coupled with GOTO logic can
+    lead to an unresponsive terminal session due to system parameters in
+    Cache.
+  
+    Solution:
+    ---------
+    Modify GOTO logic to GO to a label after the N(EW)ing to prevent stack
+    overload.
+  
+    Routines: LRHY0, LRHY01  
+  
+  
+  
+ 3. INC000000879395 - Howdy: DELETE SAME DAY DUPLICATES problem
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO # 2627
+  
+    Problem:
+    --------
+    If the field DELETE SAME DAY DUPLICATES (#52) in the HOWDY SITE FILE
+    (#69.86) is set to YES and there are orders from different providers,
+    for the same date, AND with the same collection sample, the order from
+    the second provider is "merged" with the order from first ordering
+    provider. If one of the orders is a duplicate order, when the Howdy
+    Scan Patient Card option is used, the order on the file 69 node that is
+    "merged from" is being shown as cancelled, but the order on the file 69
+    node that the order was "merged to" is accessioned. There is only one
+    duplicate test that should be cancelled, but all tests that were merged
+    (same collection sample) are being shown as cancelled on the original
+    node in file 69, even though they were NOT cancelled.
+  
+    Solution:
+    ---------
+    Modify routine LRHYA such that only the duplicate test is marked as
+    cancelled and other tests with the same collection sample that should
+    be accessioned are accessioned when orders are merged in this
+    situation.
+  
+    Routine: LRHYA
+  
+ 4. INC000000843758 - Lab - Howdy: Excluded Clinics malfunction
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO # 2628
+  
+    Problem:
+    --------
+    Orders placed from an EXCLUDED CLINIC location (EXLOC) should only be
+    accessioned if scanned (LRHY PATIENT CARD SCAN) on the collection date
+    of the order. If the collection date is other than TODAY (date of the
+    card scan), these orders should not be accessioned. There are several
+    scenarios where this is not happening or where other tests from
+    non-excluded clinics are not handled properly when accompanied by tests
+    from excluded clinics. 
+  
+    Solution:
+    ---------
+    Modify routines LRHY0, LRHY01, LRHYA, LRHYB, and LRHYPH0 to handle the
+    identified scenarios properly with respect to the excluded clinic
+    functionality.
+     
+    Routine: LRHY0, LRHY01, LRHYA, LRHYB, LRHYPH0   
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+   1.  Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu.  This
+       option will load the KIDS patch onto your system.
+  
+   2.  The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+   3.  On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+   4.  Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+   5.  On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time.  You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+  
+   6.  Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*457.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRHY0
+    Before: B38508481   After: B40046237  **405,435,446,457**
+Routine Name: LRHY01
+    Before: B41628624   After: B42472273  **405,435,446,457**
+Routine Name: LRHYA
+    Before: B29657209   After: B39254631  **405,446,457**
+Routine Name: LRHYB
+    Before: B41402354   After: B43402214  **405,417,446,457**
+Routine Name: LRHYPH0
+    Before: B38997897   After: B40393749  **405,457**
+ 
+Routine list of preceding patches: 446
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2015
+Completed By:                               Date Completed: MAR 14, 2016
+Released By :                               Date Released : MAR 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

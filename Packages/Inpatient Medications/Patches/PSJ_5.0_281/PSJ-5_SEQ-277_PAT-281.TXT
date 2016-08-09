@@ -1,0 +1,413 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: PSJ*5*281
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #277                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*160   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*199   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*254   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*286   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSS*1*175   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*305   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*309   <<= must be installed BEFORE `PSJ*5*281'
+                    (v)PSJ*5*320   <<= must be installed BEFORE `PSJ*5*281'
+
+Subject: MOCHA UFT ENHANCEMENTS 2 PSJ
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) Enhancements 2 group of patches. A host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+ The host file MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID contains: GMRA*4*46,
+ OR*3*269, PSJ*5*281 and PSO*7*411. In addition, there is the stand alone
+ patch PSS*1*175 which must be installed before the combined build.
+  
+ Important:  Recently released patch GMRA*4*48 contains an Allergy 
+ Assessment Clean Up utility tool that produces a report that identifies 
+ discrepancies between the ADVERSE REACTION ASSESSMENT file (#120.86) and
+ the PATIENT ALLERGIES file (#120.8). It is imperative that GMRA*4*48 be 
+ installed prior to the installation of PSJ*5*281 and its associated
+ patches, and that all data discrepancies identified by GMRA*4*48 have been
+ corrected. If not, then installing PSJ*5*281 and its associated patches
+ may result in drug allergy order checks not displaying in Computerized
+ Patient Record System (CPRS) and pharmacy during the medication order
+ entry processes.
+  
+ ===================================================================== 
+ This patch PSJ*5*281 contains the following functionality:
+  
+ 1. When editing the Pharmacy Orderable Item of a unit dose order in
+ Inpatient Medications, the Dosage Ordered is cleared. Based on the
+ messages from Inpatient to CPRS resulting from the edit, CPRS would
+ discontinue the original order, but CPRS did not create the new order as a
+ result of the pharmacy edit. Inpatient will now send "DOSAGE NOT FOUND" in
+ the message to CPRS when the Dosage Ordered is null on the newly created
+ order, and CPRS now creates the new order appropriately.
+  
+ ******************************NOTE***************************************
+ After install of this patch, the 2nd line of PSJLIACT routine will re-add
+ patch number 257, which was left out when this routine was sent out for 
+ PSJ*5*299.
+ *************************************************************************
+  
+ ================
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ ---------------------------
+ N/A 
+  
+ Mail Groups Associated:
+ ----------------------- 
+ N/A
+  
+ Options Associated:
+ ------------------- 
+ N/A
+  
+ Protocols Associated:
+ --------------------- 
+  
+  Protocol Name                            New/Modified/Deleted
+  -------------                            -------------------- 
+  PSJ DISPLAY DRUG ALLERGIES               Modified
+  
+ Security Keys Associated:
+ ----------------------------------------
+  N/A
+  
+ Templates Associated:
+ --------------------- 
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20080334 - A Clinical decision Support System is being requested to 
+ further enhance drug order checking to improve patient care and reduce 
+ costs. This request is to address work mandated as determined by Patient
+ Safety Incident (PSI) evaluation.
+                                   
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ 457/2072 - Remedy ticket # 130757/173383/510151 - The wrong reactant is
+ being displayed in the allergy check. The drug being ordered is being
+ displayed as the causative agent, but now the actual causative agent will
+ be displayed correctly, from the PATIENT ALLERGIES (#120.8) File.
+  
+ 2069 - CPRS and Vista Pharmacy package return inadequate alert message 
+ for allergy information. Duplicate of PSI 2099.
+  
+ 2530 - Remedy ticket # 960690/960714/975660 - Under certain circumstances,
+ ordering a drug for which a patient has a remote allergy to that drug but
+ no local allergy to that drug, an allergy warning is not displayed in
+ Inpatient Medications. Duplicate to PSI 2549.
+  
+ 2585 - Remedy ticket # 1004240/1015745/1043694/1093605 - Erroneous
+ Allergy/Interaction display.
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. 960714 - AEU reports the site is not getting allergy checks done for 
+ remote allergies when processing medication orders.
+  
+ Problem:
+ -------
+ If the remote reaction was an ADR rather than an Allergy, the
+ remote reaction is not firing allergy order checks in CPRS or in VistA
+ Pharmacy.  It is also not displaying as a remote reaction on the patient 
+ information screen in VistA Pharmacy.  You can see the remote ADR in 
+ CPRS via Remote Data or VistAWeb.
+  
+ Resolution:
+ -----------
+ This patch will correct the code to trigger an allergy alert if the 
+ remote action was an ADR rather than an Allergy.
+  
+ 2. 933381 - Incorrect allergy/drug order checks reported by the site
+  
+ Problem:
+ --------
+ Incorrect allergy/drug order checks reported by the site.
+  
+ Resolution:
+ -----------
+ This patch will correct the code to report correct allergy/drug order 
+ checks.
+  
+ 3. 861870 - IP - Unable to verify an active IV order
+  
+ Problem:
+ --------
+ An issue was introduced in PSJ*5*260 in which a pharmacist is now unable 
+ to verify an active IV order which lacks a verifying pharmacist.  
+ (indicated by the "->" symbol). 
+  
+ Resolution:
+ -----------
+ Modified routine PSJLIACT so that the code introduced in PSJ*5*260 
+ causing this issue has been removed.
+  
+ 4. 769980 - Enhanced Order Checks Not Occurring with Speed Renew
+  
+ Problem:
+ --------
+ When you select multiple unit dose orders using Speed Renew, Enhanced 
+ Order Checks are only performed on the first order.  No order checks 
+ occur for the following orders.
+  
+ Resolution:
+ ----------- 
+ Routines PSGOERS, PSGOER0 and PSJNEWOC have been modified to perform
+ checks on all orders in the Speed Renew.
+  
+ 5. 589406: 5 Pharmacist kicked out when verifying IV orders
+     Duplicate 1058660 
+     Duplicate 174568 
+  
+ Problem:
+ --------
+ When entering an IV order for an IMO patient at a clinic, if that patient 
+ has an appointment scheduled at an IMO clinic, then exiting out of the 
+ order and viewing the Patient Information can cause an UNDEFINED error.
+  
+ Resolution:
+ ----------- 
+ The variable PSGDT gets set and killed at various times during the IV
+ order entry process. If the patient has an appointment in an IMO clinic
+ within the time range used by D SDA^VADPT, routine SDA^PSJLMUTL calls
+ ENC^PSJLMUTL which uses variable PSGDT to set start and stop times for
+ building a ^TMP list of visits. The code now resets PSGDT if it becomes
+ undefined.
+  
+  
+ Test Sites:
+ -----------
+ Maryland HCS
+ Sioux Falls, SD
+ Orlando, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to retrieve the files from
+ download.vista.domain.ext. This transmits the files from the first
+ available server. Sites may also elect to retrieve files directly from a 
+ specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.domain.ext/vdl/
+  
+  FILE NAME                              DESCRIPTION
+  =========                              ===========
+  
+  PSS_1_PSJ_5_PSO_7_RN_R0416.PDF         MOCHA Enhancements 2 Release Notes
+                                          
+  PSS_1_PSJ_5_PSO_7_MOCHA_E2_CB_IG.PDF   MOCHA Enhancements 2 Installation
+                                         Guide
+  
+  PSJ_5_NURSE_UM_R0416.PDF               Inpatient Medications Nurse's 
+                                         User Manual v5.0
+  
+  PSJ_5_PHAR_UM_R0416.PDF                Inpatient Medications Pharmacist's
+                                         User Manual v5.0
+  
+  PSJ_5_TM_R0416.PDF                     Inpatient Medications Technical 
+                                         Manual/Security Guide v5.0
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ MOCHA Enhancements 2 includes the following patches.  The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities for these pharmacy patches.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    PSS_1_175.KID                     PSS*1*175          ASCII
+  
+    MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID   GMRA*4*46          ASCII
+                                      OR*3*269
+                                      PSJ*5*281
+                                      PSO*7*411
+  
+  
+ Installation Instructions
+ -------------------------
+ Refer to the MOCHA Enhancements 2 Installation Guide for installation
+ instructions. 
+  
+  Install Order:
+  
+    1. PSS_1_175.KID
+    2. MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 113
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOD
+    Before: B22325461   After: B24552546  **67,58,111,133,181,286,281**
+Routine Name: PSGOE7
+    Before: B28469184   After: B30726260  **9,26,34,52,55,50,87,111,181,
+                                           254,267,260,288,281**
+Routine Name: PSGOEE
+    Before: B97027844   After:B101870372  **4,7,29,47,64,58,82,91,110,
+                                           111,112,142,179,181,254,267,
+                                           268,281**
+Routine Name: PSGOEF
+    Before: B99911141   After:B103709466  **7,30,29,35,39,47,50,56,80,
+                                           116,110,111,133,153,134,222,
+                                           113,181,260,199,281**
+Routine Name: PSGOER
+    Before: B82580886   After: B85734604  **11,30,29,35,70,58,95,110,111,
+                                           133,141,198,181,246,278,281**
+Routine Name: PSGOER0
+    Before: B22183476   After: B23514547  **11,45,47,50,63,64,70,69,58,
+                                           80,110,127,136,181,281**
+Routine Name: PSGOERS
+    Before: B37263384   After: B39916956  **11,29,35,47,58,110,281**
+Routine Name: PSGOES
+    Before: B22304258   After: B22743395  **12,22,30,34,50,58,111,181,
+                                           263,309,281**
+Routine Name: PSGOEV
+    Before: B81429110   After: B91287532  **5,7,15,28,33,50,64,58,77,78,
+                                           80,110,111,133,171,207,241,267,
+                                           268,260,288,199,281**
+Routine Name: PSGSICH1
+    Before:B129614334   After:B130843550  **254,281**
+Routine Name: PSIV
+    Before: B30428060   After: B30874670  **7,16,29,38,53,56,72,58,110,
+                                           181,267,275,281**
+Routine Name: PSIVEDRG
+    Before: B50075850   After: B50902632  **21,33,50,65,74,84,128,147,
+                                           181,263,281**
+Routine Name: PSIVEDT
+    Before: B51363050   After: B52868787  **4,110,127,133,134,181,252,281**
+Routine Name: PSIVOD
+    Before: B13557709   After: B14160821  **110,127,181,281**
+Routine Name: PSIVOPT1
+    Before: B46129724   After: B48890773  **29,58,101,110,127,181,258,279,281**
+Routine Name: PSIVORC1
+    Before: B79901460   After: B80384488  **1,37,69,110,157,134,181,263,
+                                           270,279,281**
+Routine Name: PSIVORC2
+    Before: B59663678   After: B62051926  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267,275,257,281**
+Routine Name: PSIVORE
+    Before: B43571745   After: B44481597  **18,29,50,56,58,81,110,127,
+                                           133,157,203,213,181,252,305,
+                                           281**
+Routine Name: PSJBLDOC
+    Before: B54439928   After: B59046189  **181,263,260,295,252,257,299,281**
+Routine Name: PSJCOM
+    Before: B39982545   After: B41203922  **110,186,267,281**
+Routine Name: PSJCOM1
+    Before: B47079463   After: B48577144  **110,127,281**
+Routine Name: PSJCOMR
+    Before: B76828040   After: B79145175  **110,127,136,157,181,268,281**
+Routine Name: PSJCOMV
+    Before: B40386923   After: B41513309  **110,127,267,257,281**
+Routine Name: PSJCROC
+    Before:       n/a   After: B43248221  **281**
+Routine Name: PSJDGAL2
+    Before: B21809934   After:B168266917  **260,281**
+Routine Name: PSJDGCK
+    Before:  B7938407   After: B20128970  **260,288,281**
+Routine Name: PSJGMRA
+    Before: B26285552   After: B45646088  **181,270,260,252,257,281**
+Routine Name: PSJHL3
+    Before:B111350623   After: B97470088  **1,11,14,40,42,47,50,56,58,
+                                           92,101,102,123,110,111,152,134,
+                                           226,267,260,281**
+Routine Name: PSJLIACT
+    Before: B51186933   After: B53210467  **15,47,62,58,82,97,80,110,111,
+                                           134,181,247,260,275,257,299,
+                                           281**
+Routine Name: PSJLMUT1
+    Before: B67028323   After: B73799409  **4,27,29,49,58,107,110,146,
+                                           175,201,181,281**
+Routine Name: PSJLMUTL
+    Before: B56316538   After: B56775239  **7,67,58,85,111,160,198,320,281**
+Routine Name: PSJMUTL
+    Before: B37412252   After: B37714348  **8,21,31,160,281**
+Routine Name: PSJNEWOA
+    Before:       n/a   After: B26088515  **281**
+Routine Name: PSJNEWOC
+    Before:       n/a   After:B184689659  **281**
+Routine Name: PSJOC
+    Before: B32808738   After: B62583664  **181,260,252,257,281**
+Routine Name: PSJOCDI
+    Before: B93276069   After:B167459978  **181,260,252,257,281**
+Routine Name: PSJOCDSD
+    Before: B25300673   After: B40217839  **181,252,281**
+Routine Name: PSJOCDT
+    Before: B55618824   After: B60637562  **181,260,288,257,281**
+Routine Name: PSJOCOR
+    Before:  B3732046   After:  B3958232  **181,252,281**
+Routine Name: PSJOE
+    Before: B88042799   After:B103230773  **7,26,29,33,42,50,56,72,58,
+                                           85,95,80,110,111,133,140,151,
+                                           149,181,252,281**
+Routine Name: PSJOE1
+    Before: B28274486   After: B30534447  **2,7,25,30,47,56,64,179,181,
+                                           252,281**
+Routine Name: PSJOEA2
+    Before: B30358376   After: B32521096  **127,133,200,267,268,257,281**
+Routine Name: PSJRXI
+    Before: B22320376   After: B24100017  **3,181,254,267,275,281**
+ 
+Routine list of preceding patches: 199, 278, 279, 286, 299, 305, 309, 320
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2012
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

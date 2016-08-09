@@ -1,0 +1,265 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 05/30/14 at 15:09
+=============================================================================
+Run Date: JUL 01, 2014                     Designation: LEX*2*96
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #86                      Status: Released
+                  Compliance Date: JUL 09, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*95    <<= must be installed BEFORE `LEX*2*96'
+
+Subject: Code Set FY14 4th Qtr Update
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  This patch contains the FY14 4th Quarter Code Set distribution with 43
+  changes effective Jul 01, 2014.  This patch also contains one change from
+  FY13 2nd Qtr (effective Jan 01, 2013), 10 changes from FY14 2nd Qtr
+  (effective Jan 01, 2014), one change from FY14 2nd Qtr (effective Feb 10,
+  2014) and five changes from FY14 3rd Qtr (effective Apr 01, 2014).  This
+  patch installs the data for the following Informational patch:
+   
+            ICPT*6.0*68
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY14 4th Quarter Update
+ 
+      CPT Procedure Additions  (36 Codes)
+      -----------------------
+ 
+        Effective Jan 01, 2014 (FY14 2nd Qtr)                 (7 Codes)
+          0340T   0341T   0342T   0343T   0344T   0345T   0346T
+ 
+        Effective Apr 01, 2014 (FY14 3rd Qtr)                 (2 Codes)
+          3775F   3776F
+ 
+        Effective Jul 01, 2014                               (27 Codes)
+          0347T   0348T   0349T   0350T   0351T   0352T   0353T   0354T
+          0355T   0356T   0358T   0359T   0360T   0361T   0362T   0363T
+          0364T   0365T   0366T   0367T   0368T   0369T   0370T   0371T
+          0372T   0373T   0374T
+ 
+      CPT Procedure Revisions  (8 Codes)
+      -----------------------
+ 
+        Effective Jan 01, 2014 (FY14 2nd Qtr)                  (1 Code)
+          43752
+ 
+        Effective Feb 10, 2014 (FY14 2nd Qtr)                  (1 Code)
+          37236
+ 
+        Effective Jul 01, 2014                                (6 Codes)
+          1040F   43238   64644   64645   64647   81405
+ 
+      HCPCS Procedure Additions  (10 Codes)
+      -------------------------
+ 
+        Effective Apr 01, 2014 (FY14 3rd Qtr)                 (3 Codes)
+          C9021   C9739   C9740
+ 
+        Effective Jul 01, 2014                                (7 Codes)
+          Q9970   Q9974   S0144   S1034   S1035   S1036   S1037
+ 
+      HCPCS Procedure Inactivations  (2 Codes)
+      -----------------------------
+ 
+        Effective Jan 01, 2013 (FY13 2nd Qtr)                  (1 Code)
+          C9369
+ 
+        Effective Jan 01, 2014 (FY14 2nd Qtr)                  (1 Code)
+          Q2033
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jul 01, 2014                                 (1 Code)
+          L0651
+ 
+      CPT Modifier Additions  (3 Codes)
+      ----------------------
+ 
+        Effective Jan 01, 2014 (FY14 2nd Qtr)                  (1 Code)
+          PM
+ 
+        Effective Jul 01, 2014                                (2 Codes)
+          L1      SZ
+ 
+  REMEDY TICKETS:
+  ==============
+ 
+     970939 - HCPCS code C9369 Inactivate Effective Jan 1, 2013
+     983320 - HCPCS code C9369 Inactivate Effective Jan 1, 2013 (Dupe)
+     988800 - CPT code 52356 with Modifiers LT/RT
+ 
+ 
+  TEST SITES:
+  ==========
+ 
+     Upstate New York HCS        Large, Integrated
+     Northern Texas HCS          Large, Integrated
+     Montana HCS                 Medium, Integrated
+ 
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+ 
+    Global Host File:                  LEX_2_96.GBL  (ASCII)
+ 
+    The preferred method is to FTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available FTP server.
+ 
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations.
+ 
+         Hines           ftp.domain.ext
+         Albany          ftp.domain.ext
+         Salt Lake       ftp.domain.ext
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*96.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 20 to 60 minutes to install
+         depending on the system (times are longer for sites that have
+         installed the ICD-10 patch ICD*18.0*57).
+ 
+             Create a backup    20 - 47 minutes (without ICD*18.0*57)
+             Create a backup    22 - 60 minutes (with ICD*18.0*57)
+             Load the Global    .1 - .5 minutes
+             Kids Install       .1 - .5 minutes
+             Total              20 - 61 minutes  
+ 
+     2)  Create a backup of the following global files before continuing:
+ 
+             CPT/HCPCS Procedure         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+ 
+         These backup files may get as large as 1.2 gigabytes (1.4 gigabytes
+         if ICD-10 patch ICD*18.0*57 is installed) .  Make sure space is 
+         available before proceeding.  It should take from 20 to 47 minutes
+         to create the backup files (22 to 60 minutes if ICD*18.0*57 is 
+         installed).
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT/HCPCS Procedure
+             ^LEX             Lexicon Files
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.3,       CPT Modifier
+ 
+     3)  Install the data from the global host file LEX_2_96.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 730 kilobytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         .1 to .5 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+ 
+             >D ^%GI
+ 
+             Global input
+ 
+             Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_96.GBL Parameter: RS=>
+             Globals were saved on 30 May 2014  13:42 PM  Cache
+             with description: LEX*2.0*96/ICPT*6.0*68 Data
+ 
+             Input option: A
+               ^LEXM
+ 
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     5)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     6)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*96.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from .1-.5 minutes
+ 
+     7)  Cleanup
+ 
+         a)  The Environment Check routine LEX2096 and the Post-Install 
+             routine LEX2096P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2096
+    Before:       n/a   After:B160232487  **96**
+Routine Name: LEX2096P
+    Before:       n/a   After: B19637100  **96**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2014
+Completed By:                               Date Completed: JUN 26, 2014
+Released By :                               Date Released : JUL 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

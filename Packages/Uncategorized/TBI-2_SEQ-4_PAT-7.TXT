@@ -1,0 +1,109 @@
+
+=============================================================================
+Run Date: OCT 27, 2014                     Designation: TBI*2*7
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2         SEQ #4                      Status: Released
+                  Compliance Date: NOV 27, 2014
+=============================================================================
+
+
+Subject: TBI Build 2.0.7 - TBI Sprint 12 Deployment
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on the National TBI server located there 
+ using a pre-approved Request for Change Order and Implementation Plan.
+ No effort is required by local sites.  User Acceptance Test is by the direction of the TBI Business Owner and no MOU is required.
+ **********************************************************************
+   
+ TBI Patch 2.0*7 contains code changes (defect fixes and enhancements) to the TBI Registry.
+ These changes are Work Items that were recorded and tracked in the Registries Project Area of RTC.
+ This patch contains the TBI Work Items completed during Sprint 12 for the 9/27/2014 production deployment.
+   
+ TBI Patch 2.0*7 includes the TBI Registry Work Items listed below.
+ 1-35484: MedRedL required field message for select Note title is not displaying next to the field.
+ 2-109772: New Cube Report Screen
+ 3-33338: TBI Wording/Question/Re-Factor Survey form changes
+ 4-20772: TBI Cube Version 2.0
+   
+ Patch Components
+ ================
+   
+ The following describes each component of the TBI Patch 2.0*7
+  
+ 1-35484
+ ---------
+ Issue: DEF- TBI Instruments - MedRed-L - Required Field message for select Note title is not displaying next to the field.
+   
+ Resolution: Required field error message has been moved directly below the Note Title drop down list.
+   
+ 2-109772:
+ ---------
+ Issue:  TBI Business Owner requested a new Cube Report Screen
+   
+ Resolution:  Created the appropriate DB scripts to create the data needed using environmental variables for the Report server.
+   
+ 3-33338:
+ ---------
+ Issue:  TBI Wording/Question/Re-Factor Survey forms need changes
+   
+ Resolution:  Refactored four existing survey forms which were hardcoded with question choice IDs.  Cleaned up the ASPX code and added appropriate question/choice records to the database so the requested questions are available on the two forms.
+   
+ 4-20772:
+ ---------
+ Issue:  Development of Version 2.0 of the TBI Cube is complete and needs to be migrated to Production.
+   
+ Resolution: Version 2.0 has been integrated into the Development system and an informal UAT was performed by the TBI Business Owner.
+   
+ Additional Information:
+ ---------------------------
+   
+ TBI Design and User Documentation on TSPR =
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active
+  
+ Documentation Retrieval Instructions:
+   
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be retrieved from the VistA Documentation Library 
+ (VDL) on the VA Intranet at the following address: www.domain.ext/vdl
+   
+ The documentation is located under Clinical, Traumatic Brain Injury (TBI).
+ -----------------------------------------------------------------------
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+   
+ Test Sites:
+ ----------
+ Lebanon, Palo Alto and Lexington
+ -
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 28, 2014
+Completed By:                               Date Completed: OCT 27, 2014
+Released By :                               Date Released : OCT 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

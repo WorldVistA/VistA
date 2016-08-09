@@ -1,0 +1,144 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/13/15 at 10:47
+=============================================================================
+Run Date: DEC 01, 2015                     Designation: IBD*3*68
+Package : IBD - AUTOMATED INFO COLLECTION SYS Priority: Mandatory
+Version : 3        SEQ #59                      Status: Released
+                  Compliance Date: DEC 31, 2015
+=============================================================================
+
+
+Subject: DD CHANGE FOR TYPE OF VISIT FILE
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ A request was made to update the SHORT NAME (#.015) field in the  
+ TYPE OF VISIT (#357.69) file. This field is computed using a pointer to 
+ the SHORT NAME (#2) field in the CPT (#81) file; a field that is being 
+ removed by patch ICPT*6.0*46. This patch will redefine the computed 
+ expression used in the SHORT NAME (#.015) field to use an API to populate
+ the SHORT NAME data.
+  
+ ASSOCIATED NSR:
+ ==============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001105414 - CPT direct global read in DD - AICS (IBD)
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Pittsburgh HCS
+ Providence VA MC
+ VA Maine HCS 
+  
+  REMEDY OVERVIEW:
+ ================
+ 1. INC000001105414 - CPT direct global read in DD - AICS (IBD)
+   
+ Problem: 
+ --------
+ The SHORT NAME (#2) field in the CPT (#81) file is being deleted by patch
+ ICPT*6.0*46. The TYPE OF VISIT (#357.69) file's SHORT NAME (#.015) field
+ contains a computed expression that will no longer generate the correct
+ information once ICPT*6.0*46 is installed. 
+   
+ Resolution:
+ -----------
+ This patch will change the value of the SHORT NAME (#.015) computed expression
+ to use the CPT^ICPTCOD API which will populate the correct SHORT NAME data. 
+  
+  
+  
+ DATA DICTIONARY:
+ ================
+ Before:
+  
+ 357.69,.015   SHORT NAME              ;  COMPUTED
+  
+               MUMPS CODE:       X ^DD(357.69,.015,9.2) S Y(357.69,.015,101)=$S(
+                                 $D(^ICPT(D0,0)):^(0),1:"") S X=$P(Y(357.69,.015
+                                 ,101),U,2) S D0=Y(357.69,.015,80)
+                                 9.2 = S Y(357.69,.015,80)=$S($D(D0):D0,1:""),Y(
+                                 357.69,.015,1)=$S($D(^IBE(357.69,D0,0)):^(0),1:
+                                 ""),D0=$P(Y(357.69,.015,1),U,1) S:'$D(^ICPT(+D0
+                                 ,0)) D0=-1
+               ALGORITHM:        CODE:SHORT NAME
+               DESCRIPTION:      This field displays the SHORT NAME of the Visit
+                                 CPT stored in the CPT file.  
+  
+ After:
+  
+ 357.69,.015   SHORT NAME              ;  COMPUTED
+  
+               MUMPS CODE:       I $G(D0) S X=$P($$CPT^ICPTCOD(D0),U,3)
+               ALGORITHM:        I $G(D0) S X=$P($$CPT^ICPTCOD(D0),U,3)
+               LAST EDITED:      JUN 04, 2015 
+               DESCRIPTION:      This field displays the SHORT NAME of the Visit
+                                 CPT stored in the CPT file.  
+  
+               TECHNICAL DESCR:  This field uses the $$CPT^ICPTCOD API to return
+                                 the Short Name from the SHORT NAME (VERSIONED)
+                                 (#61) field in the CPT (#81) file. Permission
+                                 to use this API is granted in ICR #1995. 
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IBD*3.0*68)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IBD*3.0*68.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 18, 2015
+Completed By:                               Date Completed: NOV 30, 2015
+Released By :                               Date Released : DEC 01, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,470 @@
+
+=============================================================================
+Run Date: MAY 05, 2015                     Designation: MAG*3*152
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #113                      Status: Released
+                  Compliance Date: JUN 05, 2015
+=============================================================================
+
+
+Subject: VistARad Mainenance IX
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses several VistARad performance problems introduced in 
+ MAG*3.0*133.  It also enables the sites to suppress an incompatible 
+ format warning that appears when VistARad attempts to open some TIF, PDF
+ and JPG files.  Last, it corrects an issue with the installation of
+ Microsoft Visual C++ 2005 Runtime.
+  
+ NOTE   All sites running VistA Imaging 3.0 must install the KIDS portion
+ of this patch. At sites that have implemented VistARad, installation of
+ both the KIDS and the client software is required. The MAG*3.0*152 KIDS
+ is backward-compatible with the MAG*3.0*133 and the MAG*3.0*120 client
+ software. Installation of the client software may be phased in according
+ to each site's needs.
+  
+ Distribution of the Software:
+ =============================
+ The release build of this patch can be downloaded from:
+  
+ OI Field Office     FTP Address               Directory
+ ---------------     ----------------------    ----------------------
+ Albany              ftp.domain.ext  
+ Hines               ftp.domain.ext   
+ Salt Lake City      ftp.domain.ext     
+  
+ Installation instructions are included in this document.
+  
+ Note:   Information about last-minute changes to this patch will be 
+ provided in a readme file. If present, this file will also be located in
+ the MAG3_0P152 directory.
+  
+ Patch Contents:
+ ===============
+ This patch includes software and documentation files.
+  
+ Software:
+ =========
+ -MAG3_0P152.KID - KIDS (Kernel Installation & Distribution System) 
+ package to be installed on the VistA system.
+ -MAG3_0P152_VRAD_setup.exe - VistARad client installation file.
+   
+ Documentation:
+ =============
+ This document provides an overview, explains the changes, and outlines the
+ installation for this patch.
+  
+ Associated Patches:
+ ===================
+ Before MAG*3.0*152 can be installed, the following considerations need to 
+ be made: 
+ -MAG*3.0*133 must be installed.
+  
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+  
+ Phoenix, AZ VA HCS
+ Fayetteville, NC VAMC
+ Salem, VA VAMC
+ Tucson, AZ VA HCS
+  
+ Remedy Calls:
+ ==================
+ The following Remedy help desk calls are addressed in this patch:
+  
+ Poor Performance:
+ INC000000944413  Imaging - VistARad:  Scrolling does not respond as 
+ expected.
+ INC000000951097  Imaging - VistARad:  Poor performance with VistARad 
+ MAG*3.0*133.
+  
+ Warning Suppression Issue:
+ INC000000951118  Imaging - VistARad:  Suppress pop-up message.
+  
+ Microsoft Visual C++ 2005 Runtime Issue
+  
+ NSRs
+ ====
+ There are no New Service Requests (NSRs) being addressed in this patch.
+  
+ Patient Safety Issues
+ ====================
+ There are no Patient Safety Issues being addressed in this patch.
+  
+  
+ Summary
+ =======
+ MAG*3.0*152 addresses the following VistARad issues:
+ -Performance problems with images containing DICOM overlays.
+ -A redundant warning when VistARad attempts to open incompatible 
+ file formats.
+ -Install problems with Microsoft Visual C++ 2005 Runtime.
+  
+ Issue- Poor Performance
+ =======================
+ The MAG*3.0*133 patch introduced several VistARad performance problems 
+ that many sites found unacceptable.  These sites were forced to delay the 
+ deployment of that patch until a resolution of these problems is found. 
+  
+ Problem
+ =======
+ The performance problems of MAG*3.0*133 were caused by an inefficient 
+ implementation of DICOM group 6000 overlay rendering.  
+  
+ Solution
+ ========
+ In MAG*3.0*152, overlays are displayed only when the user does not 
+ interact with the application.  Otherwise, they are hidden.
+  
+ Issue- Warning Suppression Issue
+ ================================
+ When VistARad MAG*3.0*133 encounters a non-radiology image format it 
+ cannot display, it posts a warning: "1 file(s) with .tif, .pdf, or .jpg 
+ extensions failed to open. They are likely scanned documents that may be 
+ viewed using the VistA Imaging Display client."
+  
+ Problem
+ =======
+ Some sites with many non-radiology images found the warning repetitive 
+ and redundant.
+  
+ Solution
+ ========
+ When an "unsupported image format" warning is posted, the program asks 
+ the user if they want to suppress it for the remainder of the VistARad 
+ session.  If the user agrees, the next time an unsupported file is shown, 
+ there will be no warning.
+  
+ Issue- Microsoft Visual C++ 2005 Runtime Not Installed
+ ======================================================
+ The install of the previous VistARad patch does not install the Microsoft 
+ Visual C++ 2005 Runtime redistributable package.
+  
+ Problem
+ =======
+ As a result of this issue, VistARad would not start. Site personnel had 
+ to go to each affected workstation, uninstall MAG*3.0*133, install 
+ MAG*3.0*120 and reinstall MAG*3.0*133
+  
+ Solution
+ ========
+ The MAG*3.0*152 client installer installs the latest version of this 
+ package if it is not present on the VistARad workstation.
+  
+ Routines
+ ========
+ Routine     Checksum    Checksum    Patch
+             Before      After       List
+ MAGJMN1     98640707    98640707    **16,9,22,18,65,76,101,90,115,120,
+                                     133,152**
+ MAGJTU4V    5405270     5008429     **90,115,120,133,152**
+ MAGJUTL5    38140374    38212673    **65,76,101,90,115,104,120,133,152**
+  
+ Data Dictionary
+ ===============
+ There are no new or modified fields or files.
+  
+ Mail Groups
+ ===========
+ There are no new or modified mail groups.
+  
+ Forms
+ =====
+ There are no new or modified forms.
+  
+ Security Keys
+ =============
+ There are no new or modified security keys.
+  
+ Remote Procedures
+ =================
+ There are no new or modified Remote Procedure Calls.
+  
+ Menu Options
+ ============
+ There are no new or modified menu options.
+  
+ Protocols
+ =========
+ There are no new or modified protocols.
+  
+ Templates
+ =========
+ There are no new or modified templates.
+  
+ Intallation:
+ ===========
+ Installation Planning
+ =====================
+ This patch must be installed by the compliance date to conform with the 
+ VHA Directive 2001-023.
+  
+ Installation Prerequisites
+ ==========================
+ Verify that the patches listed in the Associated Patches section 
+ have been installed. 
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing MAG*3.0*152.
+  
+ The patch installation files can be downloaded from one of the OI Field 
+ Office anonymous directories.  All instructions in this section assume 
+ that the distribution files for this patch have been copied to a local 
+ storage location.  For the list of distribution files for this patch, see
+ the Distribution of Software section.
+  
+ VistA System (KIDS) Installation:
+ ================================
+ Installation Steps
+ ==================
+ KIDS installation will take less than one minute.
+  
+ 1. On the VistA system, access the Kernel Installation and Distribution 
+ System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+   a. Run the Load a Distribution option [XPD LOAD DISTRIBUTION] to load 
+   the KIDS distribution.
+   b. When prompted, enter the path and file name (MAG3_0P152.KID) of the 
+   Patch 152 KIDS file.  A Distribution OK! message will be displayed.
+   c. When prompted to continue with the load, enter "YES".
+   d. When prompted to run the Environment Check Routine, enter "YES".
+  
+ 4. After loading the KIDS file, use the following options to verify the 
+ contents of the patch and to back up any affected routines.
+   a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+   option if you want to ensure the integrity of the routines in the patch.
+   b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+   Run this option if you want to view all changes that will be made when 
+   the patch is installed.  All components (routines, options, and so on)
+   in the patch will be compared.
+   c. Backup a Transport Global [XPD BACKUP] - Run this option if you want 
+   to create a backup message of any routines exported with the patch.  It 
+   will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+   a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b. When prompted for the install name, enter "MAG*3.0*152".
+   c. Answer "NO" to the following prompts:
+  
+ Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ 6. When installation is finished, an Install Complete message will be 
+ displayed.
+  
+ KIDS Installation Example
+ ========================= 
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different. 
+  
+ Select Installation Option: Select Installation Option: 6  Install 
+ Package(s)
+ Select INSTALL NAME:    MAG*3.0*152    5/5/14@10:56:02
+      => Version 3.0 Patch 152 - VistARad Maintenance IX  ;Created on May 
+ 05, 2014
+  
+ This Distribution was loaded on May 05, 2014@10:56:02 with header of 
+    Version 3.0 Patch 152 - VistARad Maintenance IX  ;Created on May 05, 
+ 2014@10:
+ 53:35
+    It consisted of the following Install(s):
+     MAG*3.0*152
+ Checking Install for Package MAG*3.0*152
+ Will first run the Environment Check Routine, MAGJMN1
+  
+  
+ Wait for Background Compile program to stop;
+      this might take up to a few minutes..
+  
+ Background Compile Stopped; proceeding with install.
+  
+  
+ Install Questions for MAG*3.0*152
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+ --------------------------------------------------------------------------
+ ------
+  
+  Install Started for MAG*3.0*152 : 
+                May 05, 2014@10:57:22
+  
+ Build Distribution Date: May 05, 2014
+  
+  Installing Routines:
+                May 05, 2014@10:57:22
+  
+  Running Post-Install Routine: POSTINST^MAGJMN1 ... Enabling background 
+ compile 
+ .
+  
+ Background Compile Enabled.
+  
+  
+  
+  Updating Routine file...
+  Updating KIDS files...
+  
+  MAG*3.0*152 Installed. 
+                May 05, 2014@10:57:25
+  
+ VistARad Client Installation
+ ============================
+ The following steps can be used to install VistARad for the first time or
+ to update a workstation that is running VistARad MAG*3.0*120 or 
+ MAG*3.0*133 to VistARad MAG*3.0*152.  Installation should take two to 
+ three minutes.
+  
+ Note:  If a version of VistARad older than MAG*3.0*120 is installed, use 
+ Add/Remove Programs in the Windows Control Panel to remove VistARad 
+ before using the steps below.
+  
+ 1. Log in to the workstation as an administrator, and ensure that no 
+ other programs are running. 
+ 2. Initiate the installation:
+  
+ Windows XP:  Double-click MAG3_0P152_VistARad_Setup.exe to start the 
+ installation wizard.  
+ Windows 7:  Right-click on the MAG3_0P152_VistARad_Setup.exe, and select 
+ the Run as Administrator option to start the installation wizard.
+  
+ 3. After the setup launches
+   a. You may be prompted to install the Microsoft Visual C++ 2005 
+   Redistributable Package.  Click "Install" to complete this step.
+   b. There will be a brief delay as the VistARad installation files are 
+   extracted.
+  
+ Note:  There are no configurable installation options. VistARad will be 
+ installed in:  Windows XP: C:\Program Files\VistA\Imaging\MAG_VistARad 
+ Windows 7: C:\Program Files (x86) \VistA\Imaging\MAG_VistARad.
+  
+ 4. When the Welcome page appears, click "Next".
+ 5. When the Ready to Install page displays, click "Install".
+ 6. Installation of MAG*3.0*152 starts automatically.  After installation 
+ is complete, click "Finish" to exit the wizard.
+ 7. You may be prompted to re-start your workstation in order for the 
+ configuration changes to take effect.  Click "Yes" to complete this step.
+ 8. Use the VistARad shortcut on the desktop or in the Windows Start menu 
+ (Start | Programs | VistA Imaging Programs | MAG_VistARad_Patch152) to 
+ start VistARad.
+ 9. From the Help | About menu, verify that the software client version is 
+ 3.0.152.3
+  
+ Uninstalling MAG*3.0*152 KIDS
+ =============================
+ NOTE:  To uninstall MAG*3.0*152 you had to have selected the "Kernel 
+ Installation & Distribution System" menu option "Backup a Transport 
+ Global" (see KIDS Installation section above, step 4c) before you 
+ installed the patch.
+  
+ If it is necessary to uninstall MAG*3.0*152, administrators will need to 
+ use the PackMan function INSTALL/CHECK MESSAGE.  Check your MailMan 
+ messages for the backup message sent by the Backup a Transport Global 
+ function.
+  
+ 1.      Select the message shown below:
+   
+ Backup of MAG*3.0*152 install on <mmm dd, yyyy>    <user name>
+  
+ 2.      Select the Xtract Packman option
+ 3.      Select the Install/Check Message option
+ 4.      Enter "Yes" at the prompt
+ 5.      Enter "No" at the backup prompt.  There is no need to backup the 
+         backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+  
+ Line 2    Message #43517     Unloading Routine   MAGJMN1
+ (PACKMAN_BACKUP)
+ Line 380  Message #43517     Unloading Routine   MAGJTU4V
+ (PACKMAN_BACKUP)
+ Line 680  Message #43517     Unloading Routine   MAGJUTL5
+ (PACKMAN_BACKUP)
+  
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore// 
+  
+ The MAG*3.0*152 KIDS Uninstall is now complete.
+  
+ Uninstalling VistARad Client MAG*3.0*152
+ ========================================
+ If it is necessary to uninstall the MAG*3.0*152 client, use the Uninstall 
+ option from the Windows Control Panel to uninstall:  "VistARad MAG 3.0 
+ Patch 152".
+  
+ If desired, then install one of the previous versions of VistARad which 
+ was included in MAG*3.0*133 or MAG*3.0*120.
+
+Routine Information:
+====================
+Routine Name: MAGJMN1
+    Checksum:
+  Before:  98640707       After:  98640707
+ Description of Changes:
+  Updated 2nd line only to include this patch for synchronization purposes.
+
+Routine Name: MAGJTU4V
+Routine Name: MAGJUTL5
+ Description of Changes:
+  Updated version control lines
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 01, 2014
+Completed By:                               Date Completed: APR 30, 2015
+Released By :                               Date Released : MAY 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

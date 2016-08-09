@@ -1,0 +1,191 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/27/14 at 16:13
+=============================================================================
+Run Date: MAY 18, 2015                     Designation: PX*1*205
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #158                      Status: Released
+                  Compliance Date: JUN 18, 2015
+=============================================================================
+
+Associated patches: (v)PX*1*29     <<= must be installed BEFORE `PX*1*205'
+                    (v)PX*1*106    <<= must be installed BEFORE `PX*1*205'
+                    (v)PX*1*186    <<= must be installed BEFORE `PX*1*205'
+
+Subject: PREVENT TWO ERRORS AND PREVENT DUPLICATE ON TABLE EDIT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PX*1*205 addresses the following Patient Care Encounter issues:
+  
+  1. Users are receiving an Audit trail undefined error.
+  2. An error (OCC+40^PXBGPRV) is generated when a person class with no 
+     VA code is assigned to a provider.
+  3. There is No CHECK for non-unique names when editing Health 
+     Factors.
+  
+  
+ ASSOCIATED REMEDY TICKETS: 
+ ==========================
+  1. INC000000854295     Patient Care Encounter - General: Audit trail
+                         undefined error
+     INC000000888365(d)  Patient Care Encounter - General: Note in CPRS does
+                         not have an encounter attached to it
+  2. INC000000362063     2 Error OCC+40^PXBGPRV
+     INC000000731523(d)  OCCUP+40^PXBGPRV
+     INC000000900720(d)  Patient Care Encounter - General:
+  3. INC000000605292     No CHECK for non-unique names on editing Health 
+                         Factors 
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ New York Harbor HCS
+ Upstate New York HCS
+ VA Heartland-East
+   
+  
+ Remedy Overview:
+ ================
+ 1. INC000000854295 - Patient Care Encounter - General: Audit trail undefined
+                      error
+  
+ Problem:
+ ========
+ The AUDIT TRAIL field (#80102) of the V POV file (#9000010.07) can have an
+ audit trail with a value of "+". The "+" is added when there are greater than 5
+ audit trail strings. Its purpose is to delineate the 1st audit trail from the
+ last 3 audit trails. Any additional audit trails are eliminated from the string
+ and replaced with the "+" so that the string of audit trails does not become
+ too long. This is done in routine PXKMAIN1. An error occurs in routine PXQFV
+ when the audit trail information is encoded and prepared for display. The "+"
+ is invalid as an audit trail string and the error AUDIT+9^PXQFV occurs.
+  
+ Resolution:
+ ===========
+ The routine PXQFV has been modified to check each audit trail string before
+ processing and it will now ignore the "+".
+  
+    Routine: PXQFV
+  
+  
+ 2. INC000000362063 - 2 Error OCC+40^PXBGPRV
+  
+ Problem:
+ ======== 
+ If you assign a provider a PERSON CLASS field (#8932.1) in the NEW PERSON file
+ (#200) that has no VA CODE field (#5) in the PERSON CLASS file (#8932.1), then
+ this means that the provider is an agency, supplier, etc., rather than a
+ healthcare professional. If that provider is used as a provider in an encounter
+ for a patient then an error occurs.
+  
+ Resolution:
+ ===========
+ Code was added to the PXBPPRV1 routine to display a warning message to the
+ screen if there is no VA CODE for the active PERSON CLASS for a provider. This
+ follows the current system functionality for another PERSON CLASS problem that
+ occurs when none of the person classes for the chosen provider are active on
+ the encounter date.
+  
+    Routine: PXBPPRV1
+  
+  
+ 3. INC000000605292 - No CHECK for non-unique names on editing Health Factors
+  
+ Problem:
+ ======== 
+ If you use the PCE TABLE MAINTENANCE [PXTT TABLE MAINTENANCE] option to edit a
+ table (Education Topic, Examinations, Health Factors, Immunizations, Skin Test,
+ or Treatments) it allows you to modify the NAME (#.01) field to match one 
+ that already exists resulting in a duplicate. It allows this for local 
+ table entries but not national table entries.
+  
+ Resolution:
+ ===========
+ The PXTTU1 routine was modified to check for and not allow duplicate names for
+ local entries as well as national entries.
+  
+    Routine: PXTTU1
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. Suggested time to install:
+ during non-peak requirement hours.            
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter PX*1.0*205).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package PX*1.0*205
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond No.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//" respond Yes.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of 
+       Order':', enter:
+              
+           Appointment Management              [SDAM APPT MGT]
+           PCE TABLE MAINTENANCE               [PXTT TABLE MAINTENANCE]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       Order':', enter:
+  
+           Check Out                           [SDCO APPT CHECK OUT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXBPPRV1
+    Before: B16413731   After: B19041501  **11,19,27,88,124,186,205**
+Routine Name: PXQFV
+    Before: B23307464   After: B23876862  **4,29,205**
+Routine Name: PXTTU1
+    Before:  B2875890   After:  B3016518  **106,205**
+ 
+Routine list of preceding patches: 29, 106, 186
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2014
+Completed By:                               Date Completed: MAY 05, 2015
+Released By :                               Date Released : MAY 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

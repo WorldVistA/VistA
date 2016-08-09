@@ -1,0 +1,198 @@
+
+=============================================================================
+Run Date: MAY 19, 2016                     Designation: PXRM*2*63
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #47                      Status: Released
+                  Compliance Date: JUN 19, 2016
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*63'
+
+Subject: TDAP/ZOSTER/PNEUMO REMINDER UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ PXRM*2.0*63 contains three (3) new immunization clinical reminders, 
+ updates to the national Pneumococcal reminders by the VHA National Center
+ for Health Promotion and Disease Prevention and updates the name of the
+ clinical reminder VA-HEPATITIS C RISK SCREEN.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001285261 - TDAP/ZOSTER/PNEUMO Update Reminder Components 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ VA Northern Indiana Health Care System (Marion, Fort Wayne)
+ VA Gulf Coast Veterans Health Care System (Biloxi)
+ Veterans Health Care System of the Ozarks (Fayetteville)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000001285261 - TDAP/ZOSTER/PNEUMO Update Reminder Components 
+  
+ Problem:
+ ---------
+ PXRM*2.0*63 contains three new immunization clinical reminders, dialogs, 
+ and updates to the Pneumococcal reminders by the VHA National Center for
+ Health Promotion and Disease Prevention.
+  
+    NEW -VA-TETANUS/DIPHTHERIA (TD) IMMUNIZATION - Reminder definition and 
+    dialog.
+      The reminder will apply to all adults aged 19 and older.  Td 
+      (Tetanus and Diphtheria Toxoids) should be given to adults every 10
+      years as booster doses after the primary series of three vaccinations
+      against diphtheria, tetanus, and pertussis that was received during
+      infancy and childhood.
+      This reminder is applicable only if a prior Tdap has been 
+      administered. This prevents both the Tdap reminder and this reminder
+      from displaying at the same time in the patient's record.
+  
+    NEW - VA-TETANUS/DIPHTHERIA/PERTUSSIS (TDAP) IMMUNIZATION - Reminder 
+    definition and dialog.
+      Once for ages 19 and older A single dose of Tdap (Tetanus Toxoid, 
+      Reduced Diphtheria Toxoid and Acellular Pertussis vaccine) should be
+      given regardless of when the last Tetanus containing product was
+      received in adults who have not previously received Tdap.  In
+      addition, pregnant women should receive an additional dose during
+      each pregnancy.
+      **Since Tdap was NOT available before 2005 and was NOT given prior 
+      to 2006, any record of Tdap prior to these dates will be ignored and
+      assumed to be an incorrect entry.
+  
+    NEW - VA-HERPES ZOSTER (SHINGLES) IMMUNIZATION - Reminder definition
+    and dialog.
+      A single dose of shingles vaccine is recommended for adults 60 years 
+      of age and older who do not have contraindications to the vaccine.
+  
+    UPDATE - VA-PNEUMOCOCCAL IMMUNIZATION PCV13 and VA-PNEUMOCOCCAL 
+    IMMUNIZATION PPSV23
+      Update June 2015 - ACIP changed the recommendations to increase the 
+      time period from PCV13 to PPSV23 to one year for patients age 65 and
+      older who are not immunocompromised.  The time period remains 2
+      months for patients age <65 or for patients who are 
+      immunocompromised.  The PPSV23 reminder definition has been updated
+      to follow this guidance.  Both reminders, VA-PNEUMOCOCCAL 
+      IMMUNIZATION PCV13 and VA-PNEUMOCOCCAL IMMUNIZATION PPSV23 had a few
+      entries for found text in the reminder definition that are updated in
+      this version.  The basic logic of the PCV13 reminder has not been
+      changed.  There was one update to the dialog element
+      VA-IM PNEUMOC VHA GUIDANCE LINKS, outlining the new guidelines.  The 
+      VIS date for PPSV23 and PCV13 has been updated.
+  
+    UPDATE - VA-HEPATITIS C RISK ASSESSMENT
+      The name of the clinical reminder VA-HEPATITIS C RISK ASSESSMENT has 
+      been changed to VA-HEPATITIS C RISK SCREEN enabling more disciplines 
+      to use this reminder.
+  
+ Resolution:
+ ------------
+ This patch, PXRM*2.0*63, contains two routines, PXRMP63E and PXRMP63I. 
+ They are init tasks and contain 3 new/updated immunization clinical
+ reminders, dialogs, and updates to the Pneumococcal reminders.
+  
+ These routines can be deleted after the install.
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ===============================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_63.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method is to retrieve files from: 
+  
+         download.vista.domain.ext
+  
+ This transmits the files from the first available server.  Sites may also 
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE 
+ directory at the following OI Field Offices:
+  
+         Albany          domain.ext
+         Hines           domain.ext
+         Salt Lake City  domain.ext
+  
+    File Name:                 Description:               Protocol:
+    ==========                 ============               =========
+    PXRM_2_0_63_IG.PDF         PXRM*2.0*63 Install        BINARY
+                               Guide
+    PXRM_2_0_63.KID            PXRM*2.0*63 Host File      ASCII
+  
+ Documentation can also be found on the VistA Documentation Library (VDL)
+ at:  http://www.domain.ext/vdl/application.asp?appid=60
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install Guide, PXRM_2_0_63_IG.PDF, for
+ complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu. 
+  
+     When prompted to enter a host file type in PXRM_2_0_63.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*63
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be   
+     deleted:
+     PXRMP63E
+     PXRMP63I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 243
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP63E
+    Before:       n/a   After:  B1039762  **63**
+Routine Name: PXRMP63I
+    Before:       n/a   After: B12372527  **63**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 14, 2015
+Completed By:                               Date Completed: MAY 18, 2016
+Released By :                               Date Released : MAY 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

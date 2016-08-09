@@ -1,0 +1,314 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 06/01/15 at 10:11
+=============================================================================
+Run Date: JUN 30, 2015                     Designation: LEX*2*100
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #92                      Status: Released
+                  Compliance Date: JUL 08, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*99    <<= must be installed BEFORE `LEX*2*100'
+
+Subject: Code Set FY15 4th Qtr Update
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  This patch contains the FY15 4th Quarter Code Set distribution with 3
+  changes effective Jul 01, 2015.  This patch also contains one change from
+  FY94 3rd Qtr (effective Jun 01, 1994), one change from FY13 2nd Qtr
+  (effective Jan 01, 2013), 20 changes from FY15 2nd Qtr (effective Jan 01,
+  2015), one change from FY15 2nd Qtr (effective Mar 31, 2015), 11 changes
+  from FY15 3rd Qtr (effective Apr 01, 2015) and one change from FY15 3rd Qtr
+  (effective Jun 30, 2015).  Additionally, this patch exports 4071 changes to
+  the SNOMED CT coding system.  This patch installs the data for the
+  following Informational patch:
+   
+            ICPT*6.0*72
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+       SUBSET DEFINITIONS       #757.2     ^LEXT(       N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY15 4th Quarter Update
+ 
+      CPT Procedure Additions  (13 Codes)
+      -----------------------
+ 
+        Effective Jan 01, 2015 (FY15 2nd Qtr)                (11 Codes)
+          0381T   0382T   0383T   0384T   0385T   0386T   0387T   0388T
+          0389T   0390T   0391T
+ 
+        Effective Jul 01, 2015                                (2 Codes)
+          0392T   0393T
+ 
+      CPT Procedure Inactivations
+      ---------------------------
+ 
+        Effective Jan 01, 2015                                (8 Codes)
+          80440   82000   82003   82055   82101   82145   82205   82520
+ 
+      CPT Procedures Re-Used
+      ----------------------
+ 
+        Effective Jan 01, 2015                                 (1 Code)
+          90620
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Apr 01, 2015                               (11 Codes)
+          C2623   C9445   C9448   C9449   C9450   C9451   C9452   Q5101
+          Q9976   Q9977   Q9978
+ 
+      HCPCS Procedure Inactivations  (3 Codes)
+      -----------------------------
+ 
+        Effective Jun 01, 1994 (FY94 3rd Qtr)                  (1 Code)
+          E1020
+ 
+        Effective Mar 31, 2015 (FY15 2nd Qtr)                  (1 Code)
+          C9136
+ 
+        Effective Jul 01, 2015                                 (1 Code)
+          S8262
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jan 01, 2013                                 (1 Code)
+          J7315
+ 
+      CPT Modifier Inactivations
+      --------------------------
+ 
+        Effective Jun 30, 2015                                 (1 Code)
+          JF
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2015     *     45     --     --      --     45
+        Effective Apr 01, 2015     *     68     --     --      --     68
+        Effective Jul 01, 2015           56     --     --      --     56
+                                      -----  -----  -----  ------  -----
+          Total                         169     --     --      --    169
+        
+                                   *  update from a previous quarter
+ 
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      03/01/2015    839     --     --       2    841
+        SNOMED Terms
+          Synonyms        07/01/2005     16    345     --      --    361
+          Synonyms        07/01/2006     --      2     --      --      2
+          Synonyms        01/31/2007     --     33     --      --     33
+          Synonyms        07/31/2007     --    136     --      --    136
+          Synonyms        01/31/2008     --      2     --      --      2
+          Synonyms        07/31/2008      3      2     --      --      5
+          Synonyms        01/31/2009     --      2     --      --      2
+          Synonyms        07/31/2009     --      1     --      --      1
+          Synonyms        07/31/2010     --      3     --      --      3
+          Synonyms        01/31/2012     --      1     --      --      1
+          Synonyms        01/31/2013     --      2     --      --      2
+          Synonyms        01/31/2014     --      1     --      --      1
+          Synonyms        09/01/2014      4     22     --      --     26
+          Synonyms        01/31/2015     50    630     --      --    680
+          Concepts        03/01/2015    841     --     --      --    841
+          Synonyms        03/01/2015    289      4     --      --    293
+          Fully Specified 03/01/2015    841     --     --      --    841
+                                      -----  -----  -----  ------  -----
+                                       2883   1186     --       2   4071
+ 
+  REMEDY TICKETS:
+  ==============
+ 
+    1226385 - Inactive Lab CPT codes 80440/82000/82055
+    1224746 - Re-Activate HCPCS codes E1018/E1020/E1028/E1029
+    1229707 - Re-Activate HCPCS codes E1018/E1020/E1028/E1029 (Dupe)
+    1234418 - Fix HCPCS code J7315 Name/Description spelling errors
+    1245922 - Modifiers AU/AV/AW with A4217/A5120/A6531/A6532/A6545
+    1250053 - Inactivate Lab Codes 82000-82742 and Reuse CPT code 90620
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Code G8739 was incorrectly identified as a CPT code
+    Numerous alpha modifiers identified as CPT vs. HCPCS
+    Update the SNOMED CT version number in file 757.03
+    Update Hierarchies; Linkage Concept, Link Assertion & Racial Groups
+    Fix duplicate CPT Modifier JE (ambulance code JE discontinued)
+    Removed restrictive keywords from the Excluded Words file #757.04
+ 
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+ 
+    Global Host File:                  LEX_2_100.GBL  (ASCII)
+ 
+    The host file is 98 MB in size and could take up to 3 to 4 minutes to FTP.
+ 
+    The preferred method is to FTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available FTP server.
+ 
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations:
+ 
+         Hines           ftp.domain.ext
+         Albany          ftp.domain.ext
+         Salt Lake       ftp.domain.ext
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*100.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 59 to 82 minutes to install
+         depending on the system.
+ 
+             Create a backup    50 - 70 minutes
+             Load the Global     2 -  3 minutes
+             Kids Install        7 -  9 minutes
+ 
+     2)  Size/Disk Space Requirements:
+ 
+         The changes to the Lexicon, ICD and CPT globals will result in a
+         combined growth of about 15 MB of data.  The import global ^LEXM
+         is about 75 MB in size.  Make sure there is sufficient space for
+         the growth to the VistA globals and the import global before
+         continuing.
+ 
+ 
+     3)  Create a backup of the following global files before continuing:
+ 
+             CPT                         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+             Lexicon Subsets            #757.2       ^LEXT(
+ 
+         These backup files may get as large as 1.8 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 50 to
+         70 minutes to create the backup files.
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+             ^LEXT            Lexicon Subsets
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.3,       CPT Modifier
+ 
+     4)  Install the data from the global host file LEX_2_100.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 75 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         2 to 3 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+            
+            >D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_100.GBL
+            Parameters? "RS" => 
+            Globals were saved on 04 Jun 2015   6:07 PM   Cache
+            with description: LEX*2.0*100/ICPT*6.0*72 Data
+            
+            Input option: A
+            ^LEXM
+            
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     6)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     7)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*100.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from 7 to 9 minutes
+ 
+     8)  Cleanup
+ 
+         a)  The Environment Check routine LEX2100 and the Post-Install 
+             routine LEX2100P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2100
+    Before:       n/a   After:B152642792  **100**
+Routine Name: LEX2100P
+    Before:       n/a   After: B20895599  **100**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 01, 2015
+Completed By:                               Date Completed: JUN 26, 2015
+Released By :                               Date Released : JUN 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

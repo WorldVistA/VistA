@@ -1,0 +1,3526 @@
+KIDS Distribution saved on Jan 22, 2015@14:56:18
+VistA Imaging - Patch 150 - Image Never Existed
+**KIDS**:MAG*3.0*150^
+
+**INSTALL NAME**
+MAG*3.0*150
+"BLD",8085,0)
+MAG*3.0*150^IMAGING^0^3150122^y
+"BLD",8085,1,0)
+^^23^23^3150122^^^^
+"BLD",8085,1,1,0)
+Patch 150 is a patch to complete the Image Never Existed fix that
+"BLD",8085,1,2,0)
+was started in Patch 129 and Patch 135
+"BLD",8085,1,3,0)
+ 
+"BLD",8085,1,4,0)
+IMAGE File (#2005) entries that are deleted when the process to copy the 
+"BLD",8085,1,5,0)
+file to the Image Share (Tier1 Storage) and considered 
+"BLD",8085,1,6,0)
+'Image Never Existed'. 
+"BLD",8085,1,7,0)
+The Display Client will list these images as 'Deleted' images. 
+"BLD",8085,1,8,0)
+This gives the provider the false impression that a relevant image may
+"BLD",8085,1,9,0)
+have been associated with the Patient Record.
+"BLD",8085,1,10,0)
+This Patch modifies 6 routines.
+"BLD",8085,1,11,0)
+The RPC that returns a list of Patient images is changed.  
+"BLD",8085,1,12,0)
+Now, images with the status 'Image Never Existed' will not be 
+"BLD",8085,1,13,0)
+listed with the Deleted Images of a patient.
+"BLD",8085,1,14,0)
+This will check the routines from a BUILD file.
+"BLD",8085,1,15,0)
+Select BUILD NAME:    MAG*3.0*150     IMAGING
+"BLD",8085,1,16,0)
+MAGGI12   value = 101869499
+"BLD",8085,1,17,0)
+MAGGTAU   value = 66990261
+"BLD",8085,1,18,0)
+MAGGTID   value = 85911502
+"BLD",8085,1,19,0)
+MAGGTIG   value = 61207085
+"BLD",8085,1,20,0)
+MAGIP150  value = 4214952
+"BLD",8085,1,21,0)
+MAGLOG    value = 12957603
+"BLD",8085,1,22,0)
+MAGSIXG3  value = 84985360
+"BLD",8085,1,23,0)
+done
+"BLD",8085,4,0)
+^9.64PA^^0
+"BLD",8085,6.3)
+18
+"BLD",8085,"ABNS",0)
+^9.66A^^0
+"BLD",8085,"ABPKG")
+n^n^G.IMAGING DEVELOPMENT TEAM@DOMAIN.EXT
+"BLD",8085,"INI")
+PRE^MAGIP150
+"BLD",8085,"INID")
+n^y^n
+"BLD",8085,"INIT")
+POS^MAGIP150
+"BLD",8085,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8085,"KRN",.4,0)
+.4
+"BLD",8085,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",8085,"KRN",.401,0)
+.401
+"BLD",8085,"KRN",.402,0)
+.402
+"BLD",8085,"KRN",.403,0)
+.403
+"BLD",8085,"KRN",.5,0)
+.5
+"BLD",8085,"KRN",.84,0)
+.84
+"BLD",8085,"KRN",3.6,0)
+3.6
+"BLD",8085,"KRN",3.8,0)
+3.8
+"BLD",8085,"KRN",9.2,0)
+9.2
+"BLD",8085,"KRN",9.8,0)
+9.8
+"BLD",8085,"KRN",9.8,"NM",0)
+^9.68A^7^7
+"BLD",8085,"KRN",9.8,"NM",1,0)
+MAGIP150^^0^B4214952
+"BLD",8085,"KRN",9.8,"NM",2,0)
+MAGGTID^^0^B85911502
+"BLD",8085,"KRN",9.8,"NM",3,0)
+MAGGI12^^0^B101869499
+"BLD",8085,"KRN",9.8,"NM",4,0)
+MAGGTAU^^0^B66990261
+"BLD",8085,"KRN",9.8,"NM",5,0)
+MAGLOG^^0^B12957603
+"BLD",8085,"KRN",9.8,"NM",6,0)
+MAGSIXG3^^0^B84985360
+"BLD",8085,"KRN",9.8,"NM",7,0)
+MAGGTIG^^0^B61207085
+"BLD",8085,"KRN",9.8,"NM","B","MAGGI12",3)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGGTAU",4)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGGTID",2)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGGTIG",7)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGIP150",1)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGLOG",5)
+
+"BLD",8085,"KRN",9.8,"NM","B","MAGSIXG3",6)
+
+"BLD",8085,"KRN",19,0)
+19
+"BLD",8085,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",8085,"KRN",19.1,0)
+19.1
+"BLD",8085,"KRN",101,0)
+101
+"BLD",8085,"KRN",409.61,0)
+409.61
+"BLD",8085,"KRN",771,0)
+771
+"BLD",8085,"KRN",779.2,0)
+779.2
+"BLD",8085,"KRN",870,0)
+870
+"BLD",8085,"KRN",8989.51,0)
+8989.51
+"BLD",8085,"KRN",8989.52,0)
+8989.52
+"BLD",8085,"KRN",8994,0)
+8994
+"BLD",8085,"KRN","B",.4,.4)
+
+"BLD",8085,"KRN","B",.401,.401)
+
+"BLD",8085,"KRN","B",.402,.402)
+
+"BLD",8085,"KRN","B",.403,.403)
+
+"BLD",8085,"KRN","B",.5,.5)
+
+"BLD",8085,"KRN","B",.84,.84)
+
+"BLD",8085,"KRN","B",3.6,3.6)
+
+"BLD",8085,"KRN","B",3.8,3.8)
+
+"BLD",8085,"KRN","B",9.2,9.2)
+
+"BLD",8085,"KRN","B",9.8,9.8)
+
+"BLD",8085,"KRN","B",19,19)
+
+"BLD",8085,"KRN","B",19.1,19.1)
+
+"BLD",8085,"KRN","B",101,101)
+
+"BLD",8085,"KRN","B",409.61,409.61)
+
+"BLD",8085,"KRN","B",771,771)
+
+"BLD",8085,"KRN","B",779.2,779.2)
+
+"BLD",8085,"KRN","B",870,870)
+
+"BLD",8085,"KRN","B",8989.51,8989.51)
+
+"BLD",8085,"KRN","B",8989.52,8989.52)
+
+"BLD",8085,"KRN","B",8994,8994)
+
+"BLD",8085,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8085,"QUES",0)
+^9.62^^
+"BLD",8085,"REQB",0)
+^9.611^1^1
+"BLD",8085,"REQB",1,0)
+MAG*3.0*118^2
+"BLD",8085,"REQB","B","MAG*3.0*118",1)
+
+"INI")
+PRE^MAGIP150
+"INIT")
+POS^MAGIP150
+"MBREQ")
+0
+"PKG",454,-1)
+1^1
+"PKG",454,0)
+IMAGING^MAG^Imaging-V1 to release 
+"PKG",454,20,0)
+^9.402P^^
+"PKG",454,22,0)
+^9.49I^1^1
+"PKG",454,22,1,0)
+3.0^3020319^3020517^126
+"PKG",454,22,1,"PAH",1,0)
+150^3150122^1216
+"PKG",454,22,1,"PAH",1,1,0)
+^^23^23^3150122
+"PKG",454,22,1,"PAH",1,1,1,0)
+Patch 150 is a patch to complete the Image Never Existed fix that
+"PKG",454,22,1,"PAH",1,1,2,0)
+was started in Patch 129 and Patch 135
+"PKG",454,22,1,"PAH",1,1,3,0)
+ 
+"PKG",454,22,1,"PAH",1,1,4,0)
+IMAGE File (#2005) entries that are deleted when the process to copy the 
+"PKG",454,22,1,"PAH",1,1,5,0)
+file to the Image Share (Tier1 Storage) and considered 
+"PKG",454,22,1,"PAH",1,1,6,0)
+'Image Never Existed'. 
+"PKG",454,22,1,"PAH",1,1,7,0)
+The Display Client will list these images as 'Deleted' images. 
+"PKG",454,22,1,"PAH",1,1,8,0)
+This gives the provider the false impression that a relevant image may
+"PKG",454,22,1,"PAH",1,1,9,0)
+have been associated with the Patient Record.
+"PKG",454,22,1,"PAH",1,1,10,0)
+This Patch modifies 6 routines.
+"PKG",454,22,1,"PAH",1,1,11,0)
+The RPC that returns a list of Patient images is changed.  
+"PKG",454,22,1,"PAH",1,1,12,0)
+Now, images with the status 'Image Never Existed' will not be 
+"PKG",454,22,1,"PAH",1,1,13,0)
+listed with the Deleted Images of a patient.
+"PKG",454,22,1,"PAH",1,1,14,0)
+This will check the routines from a BUILD file.
+"PKG",454,22,1,"PAH",1,1,15,0)
+Select BUILD NAME:    MAG*3.0*150     IMAGING
+"PKG",454,22,1,"PAH",1,1,16,0)
+MAGGI12   value = 101869499
+"PKG",454,22,1,"PAH",1,1,17,0)
+MAGGTAU   value = 66990261
+"PKG",454,22,1,"PAH",1,1,18,0)
+MAGGTID   value = 85911502
+"PKG",454,22,1,"PAH",1,1,19,0)
+MAGGTIG   value = 61207085
+"PKG",454,22,1,"PAH",1,1,20,0)
+MAGIP150  value = 4214952
+"PKG",454,22,1,"PAH",1,1,21,0)
+MAGLOG    value = 12957603
+"PKG",454,22,1,"PAH",1,1,22,0)
+MAGSIXG3  value = 84985360
+"PKG",454,22,1,"PAH",1,1,23,0)
+done
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+7
+"RTN","MAGGI12")
+0^3^B101869499
+"RTN","MAGGI12",1,0)
+MAGGI12 ;WOIFO/GEK/SG/JSL - IMAGE FILE API (PROPERTIES) ;
+"RTN","MAGGI12",2,0)
+ ;;3.0;IMAGING;**93,94,122,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGGI12",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGI12",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGI12",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGI12",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGI12",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGI12",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGI12",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGI12",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGI12",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGI12",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGI12",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGI12",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGI12",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGI12",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGI12",17,0)
+ ;;
+"RTN","MAGGI12",18,0)
+ Q
+"RTN","MAGGI12",19,0)
+ ;
+"RTN","MAGGI12",20,0)
+ ;##### RETURNS IEN OF THE GROUP PARENT FOR THE IMAGE
+"RTN","MAGGI12",21,0)
+ ;
+"RTN","MAGGI12",22,0)
+ ; IEN           Internal Entry Number of the image record
+"RTN","MAGGI12",23,0)
+ ;
+"RTN","MAGGI12",24,0)
+ ; Return Values
+"RTN","MAGGI12",25,0)
+ ; =============
+"RTN","MAGGI12",26,0)
+ ;           <0  Error descriptor (see the $$ERROR^MAGUERR)
+"RTN","MAGGI12",27,0)
+ ;            0  Image is not a member of a group
+"RTN","MAGGI12",28,0)
+ ;           >0  IEN of the group parent
+"RTN","MAGGI12",29,0)
+ ;
+"RTN","MAGGI12",30,0)
+ ; Notes
+"RTN","MAGGI12",31,0)
+ ; =====
+"RTN","MAGGI12",32,0)
+ ;
+"RTN","MAGGI12",33,0)
+ ; For a deleted image, the function returns the IEN of the group
+"RTN","MAGGI12",34,0)
+ ; that the image belonged to before it was marked as deleted.
+"RTN","MAGGI12",35,0)
+ ;
+"RTN","MAGGI12",36,0)
+GRPIEN(IEN) ; Returns IEN of the Group parent for the Image.
+"RTN","MAGGI12",37,0)
+ N ERR,NODE
+"RTN","MAGGI12",38,0)
+ S NODE=$$NODE^MAGGI11(IEN,.ERR)
+"RTN","MAGGI12",39,0)
+ I NODE=""  D STORE^MAGUERR(ERR)  Q ERR
+"RTN","MAGGI12",40,0)
+ Q +$P($G(@NODE@(0)),U,10)  ; GROUP PARENT (14)
+"RTN","MAGGI12",41,0)
+ ;
+"RTN","MAGGI12",42,0)
+ ;##### ALLOCATES A NEW RECORD IN THE IMAGE FILE (#2005) AND LOCKS IT
+"RTN","MAGGI12",43,0)
+ ; 
+"RTN","MAGGI12",44,0)
+ ; Return Values
+"RTN","MAGGI12",45,0)
+ ; =============
+"RTN","MAGGI12",46,0)
+ ;           >0  IEN for the new record in the IMAGE file (#2005)
+"RTN","MAGGI12",47,0)
+ ;
+"RTN","MAGGI12",48,0)
+ ; Notes
+"RTN","MAGGI12",49,0)
+ ; =====
+"RTN","MAGGI12",50,0)
+ ;
+"RTN","MAGGI12",51,0)
+ ; The placeholder for the new record (^MAG(2005,IEN) node) is LOCKed 
+"RTN","MAGGI12",52,0)
+ ; by this function. It is responsibility of the caller to unlock the 
+"RTN","MAGGI12",53,0)
+ ; record after it is created or the record creation is canceled.
+"RTN","MAGGI12",54,0)
+ ;
+"RTN","MAGGI12",55,0)
+NEWIEN() ;
+"RTN","MAGGI12",56,0)
+ N DIEN,IEN,NEWIEN,NODE
+"RTN","MAGGI12",57,0)
+ S NEWIEN=0
+"RTN","MAGGI12",58,0)
+ ;---
+"RTN","MAGGI12",59,0)
+ F  D  Q:NEWIEN
+"RTN","MAGGI12",60,0)
+ . S IEN=$O(^MAG(2005," "),-1)+1
+"RTN","MAGGI12",61,0)
+ . ;--- Check the IMAGE AUDIT file for a deleted image
+"RTN","MAGGI12",62,0)
+ . S DIEN=$O(^MAG(2005.1," "),-1)+1
+"RTN","MAGGI12",63,0)
+ . S:DIEN>IEN IEN=DIEN
+"RTN","MAGGI12",64,0)
+ . ;--- If the record already exists, skip it
+"RTN","MAGGI12",65,0)
+ . S NODE=$NA(^MAG(2005,IEN))  Q:$D(@NODE)
+"RTN","MAGGI12",66,0)
+ . ;--- Lock the placeholder in order to make sure that nobody
+"RTN","MAGGI12",67,0)
+ . ;--- else is trying to allocate it at the same time.
+"RTN","MAGGI12",68,0)
+ . D LOCK^DILF(NODE)  E  Q
+"RTN","MAGGI12",69,0)
+ . ;--- Double check that the record has not been created after the
+"RTN","MAGGI12",70,0)
+ . ;--- previous $D() check and the LOCK command (a race condition)
+"RTN","MAGGI12",71,0)
+ . I $D(@NODE)  L -@NODE  Q
+"RTN","MAGGI12",72,0)
+ . ;--- Success
+"RTN","MAGGI12",73,0)
+ . S NEWIEN=IEN
+"RTN","MAGGI12",74,0)
+ . Q
+"RTN","MAGGI12",75,0)
+ ;---
+"RTN","MAGGI12",76,0)
+ Q NEWIEN
+"RTN","MAGGI12",77,0)
+ ;
+"RTN","MAGGI12",78,0)
+ ;##### RETURNS THE PARENT DATA (SUB)FILE REFERENCE
+"RTN","MAGGI12",79,0)
+ ;
+"RTN","MAGGI12",80,0)
+ ; IEN           Internal Entry Number of the image record
+"RTN","MAGGI12",81,0)
+ ;
+"RTN","MAGGI12",82,0)
+ ; Return Values
+"RTN","MAGGI12",83,0)
+ ; =============
+"RTN","MAGGI12",84,0)
+ ;           <0  Error descriptor (see the $$ERROR^MAGUERR)
+"RTN","MAGGI12",85,0)
+ ;            0  Image does not have a parent file reference
+"RTN","MAGGI12",86,0)
+ ;           >0  Parent data file reference (file/subfile number and
+"RTN","MAGGI12",87,0)
+ ;               IEN in the PARENT DATA FILE file (#2005.03) at the
+"RTN","MAGGI12",88,0)
+ ;               same time).
+"RTN","MAGGI12",89,0)
+ ;
+"RTN","MAGGI12",90,0)
+PARFILE(IEN) ;
+"RTN","MAGGI12",91,0)
+ N ERR,NODE,PARENTFILE,PFN0
+"RTN","MAGGI12",92,0)
+ S NODE=$$NODE^MAGGI11(IEN,.ERR)
+"RTN","MAGGI12",93,0)
+ I NODE=""  D STORE^MAGUERR(ERR)  Q ERR
+"RTN","MAGGI12",94,0)
+ ;--- Check if the image record has a parent data file reference
+"RTN","MAGGI12",95,0)
+ S PARENTFILE=$P($G(@NODE@(2)),U,6)  ; PARENT DATA FILE# (16)
+"RTN","MAGGI12",96,0)
+ Q:PARENTFILE="" 0
+"RTN","MAGGI12",97,0)
+ ;--- Check if the pointer to the PARENT DATA FILE
+"RTN","MAGGI12",98,0)
+ ;--- file (#2005.03) is valid
+"RTN","MAGGI12",99,0)
+ S PFN0=$G(^MAG(2005.03,PARENTFILE,0))
+"RTN","MAGGI12",100,0)
+ Q:PFN0="" $$ERROR^MAGUERR(-34,,IEN,PARENTFILE)
+"RTN","MAGGI12",101,0)
+ ;--- Check if file descriptor has a value in FILE POINTER field (.04)
+"RTN","MAGGI12",102,0)
+ Q:$P(PFN0,U,4)="" $$ERROR^MAGUERR(-35,,PARENTFILE)
+"RTN","MAGGI12",103,0)
+ ;--- Return the reference
+"RTN","MAGGI12",104,0)
+ Q PARENTFILE
+"RTN","MAGGI12",105,0)
+ ;
+"RTN","MAGGI12",106,0)
+ ;##### RETURNS STATUS OF THE IMAGE
+"RTN","MAGGI12",107,0)
+ ;
+"RTN","MAGGI12",108,0)
+ ; IEN           Internal Entry Number of the image record
+"RTN","MAGGI12",109,0)
+ ;
+"RTN","MAGGI12",110,0)
+ ; Return Values
+"RTN","MAGGI12",111,0)
+ ; =============
+"RTN","MAGGI12",112,0)
+ ;           <0  Error descriptor (see the $$ERROR^MAGUERR)
+"RTN","MAGGI12",113,0)
+ ;           ""  Status is not defined
+"RTN","MAGGI12",114,0)
+ ;           >0  Image status
+"RTN","MAGGI12",115,0)
+ ;                 ^01: Status code (internal value)
+"RTN","MAGGI12",116,0)
+ ;                 ^02: Description (external value)
+"RTN","MAGGI12",117,0)
+ ;
+"RTN","MAGGI12",118,0)
+STATUS(IEN) ;
+"RTN","MAGGI12",119,0)
+ N ERR,STATUS
+"RTN","MAGGI12",120,0)
+ S STATUS=$$IMGST^MAGGI11(IEN,.ERR)
+"RTN","MAGGI12",121,0)
+ D:ERR<0 STORE^MAGUERR(ERR)
+"RTN","MAGGI12",122,0)
+ Q $S(STATUS>0:STATUS,ERR<0:ERR,1:"")
+"RTN","MAGGI12",123,0)
+ ;
+"RTN","MAGGI12",124,0)
+ ;##### RETURNS THE VIEWABLE STATUS OF THE IMAGE
+"RTN","MAGGI12",125,0)
+ ;
+"RTN","MAGGI12",126,0)
+ ; IEN           IEN of the image record in the file #2005
+"RTN","MAGGI12",127,0)
+ ;
+"RTN","MAGGI12",128,0)
+ ; [FLAGS]       Flags that control execution (can be combined):
+"RTN","MAGGI12",129,0)
+ ;
+"RTN","MAGGI12",130,0)
+ ;                 Q  Perform the integrity checks
+"RTN","MAGGI12",131,0)
+ ;
+"RTN","MAGGI12",132,0)
+ ; [.MESSAGES]   Reference to a local array for messages returned
+"RTN","MAGGI12",133,0)
+ ;               by the image data checks. A node in this array is
+"RTN","MAGGI12",134,0)
+ ;               defined only if the result value contains the 
+"RTN","MAGGI12",135,0)
+ ;               corresponding subscript value (e.g. the "Q" node is
+"RTN","MAGGI12",136,0)
+ ;               defined only if integrity checks fail and the result 
+"RTN","MAGGI12",137,0)
+ ;               contains "Q").
+"RTN","MAGGI12",138,0)
+ ;
+"RTN","MAGGI12",139,0)
+ ; MESSAGES(
+"RTN","MAGGI12",140,0)
+ ;
+"RTN","MAGGI12",141,0)
+ ;   "Q")        Message returned by the integrity checks.
+"RTN","MAGGI12",142,0)
+ ;
+"RTN","MAGGI12",143,0)
+ ;   "R")        Message returned by the Radiology report checks
+"RTN","MAGGI12",144,0)
+ ;               (reserved but not implemented)
+"RTN","MAGGI12",145,0)
+ ;
+"RTN","MAGGI12",146,0)
+ ;   "S")        Message regarding the image status.
+"RTN","MAGGI12",147,0)
+ ;
+"RTN","MAGGI12",148,0)
+ ;   "T")        Message returned by the TIU note checks.
+"RTN","MAGGI12",149,0)
+ ;
+"RTN","MAGGI12",150,0)
+ ; Return Values
+"RTN","MAGGI12",151,0)
+ ; =============
+"RTN","MAGGI12",152,0)
+ ;           ""  Image can be viewed
+"RTN","MAGGI12",153,0)
+ ;          ...  One or more characters that indicate why
+"RTN","MAGGI12",154,0)
+ ;               the image cannot be viewed "as usual":
+"RTN","MAGGI12",155,0)
+ ;
+"RTN","MAGGI12",156,0)
+ ;                 D  Deleted image
+"RTN","MAGGI12",157,0)
+ ;                 Q  Questionable integrity
+"RTN","MAGGI12",158,0)
+ ;                 R  Problem with the Radiology report
+"RTN","MAGGI12",159,0)
+ ;                    (reserved but not implemented)
+"RTN","MAGGI12",160,0)
+ ;                 S  Check the value of the STATUS field
+"RTN","MAGGI12",161,0)
+ ;                 T  Can't view the TIU note
+"RTN","MAGGI12",162,0)
+ ;
+"RTN","MAGGI12",163,0)
+VIEWSTAT(IEN,FLAGS,MESSAGES) ;
+"RTN","MAGGI12",164,0)
+ N MAGCF,MAGVS
+"RTN","MAGGI12",165,0)
+ K MESSAGES  S MAGVS="",MAGCF=$G(FLAGS)
+"RTN","MAGGI12",166,0)
+ D
+"RTN","MAGGI12",167,0)
+ . N BUF,ERR,GRPIEN,NODE,STATUS
+"RTN","MAGGI12",168,0)
+ . ;--- Validate IEN and get the image status
+"RTN","MAGGI12",169,0)
+ . S STATUS=$$IMGST^MAGGI11(IEN,.ERR)
+"RTN","MAGGI12",170,0)
+ . S NODE=$$NODE^MAGGI11(IEN)
+"RTN","MAGGI12",171,0)
+ . ;--- Force the integrity check in case of error(s)
+"RTN","MAGGI12",172,0)
+ . I (ERR<0)!(NODE="")  S MAGCF=MAGCF_"Q" Q
+"RTN","MAGGI12",173,0)
+ . ; gek/ P94t7  if IEN is in a group, we also mark child as "T" if Grp is "T"
+"RTN","MAGGI12",174,0)
+ . S GRPIEN=+$P($G(@NODE@(0)),U,10)
+"RTN","MAGGI12",175,0)
+ . I GRPIEN D
+"RTN","MAGGI12",176,0)
+ . . N GBUF,GNODE
+"RTN","MAGGI12",177,0)
+ . . S GNODE=$$NODE^MAGGI11(GRPIEN)
+"RTN","MAGGI12",178,0)
+ . . S GBUF=$G(@GNODE@(2))
+"RTN","MAGGI12",179,0)
+ . . D:+$P(GBUF,U,6)=8925
+"RTN","MAGGI12",180,0)
+ . . . N IEN,TMP
+"RTN","MAGGI12",181,0)
+ . . . S IEN=+$P(GBUF,U,7)  Q:'IEN
+"RTN","MAGGI12",182,0)
+ . . . S TMP=$$CANDO^TIULP(IEN,"VIEW")  ;P150 IA#2322 
+"RTN","MAGGI12",183,0)
+ . . . S:'TMP MAGVS=MAGVS_"T",MESSAGES("T")=$P(TMP,U,2)
+"RTN","MAGGI12",184,0)
+ . . . Q
+"RTN","MAGGI12",185,0)
+ . . Q
+"RTN","MAGGI12",186,0)
+ . I MAGVS["T" Q
+"RTN","MAGGI12",187,0)
+ . ; gek/ p94t7 __ Done changes
+"RTN","MAGGI12",188,0)
+ . ;--- Check the image status
+"RTN","MAGGI12",189,0)
+ . D:STATUS'<10
+"RTN","MAGGI12",190,0)
+ . . I +STATUS=12  S MAGVS=MAGVS_"D"  Q
+"RTN","MAGGI12",191,0)
+ . . ; Status of 13 will continue and MESSAGES("S") will have reason ;P150
+"RTN","MAGGI12",192,0)
+ . . S MAGVS=MAGVS_"S"
+"RTN","MAGGI12",193,0)
+ . . S MESSAGES("S")=$$MSG^MAGUERR(-33,,$P(STATUS,U,2))
+"RTN","MAGGI12",194,0)
+ . . Q
+"RTN","MAGGI12",195,0)
+ . ;--- Check if the TIU note can be viewed
+"RTN","MAGGI12",196,0)
+ . S BUF=$G(@NODE@(2))
+"RTN","MAGGI12",197,0)
+ . D:+$P(BUF,U,6)=8925
+"RTN","MAGGI12",198,0)
+ . . N IEN,TMP  S IEN=+$P(BUF,U,7)  Q:'IEN
+"RTN","MAGGI12",199,0)
+ . . S TMP=$$CANDO^TIULP(IEN,"VIEW")  ;p150  IA#2322
+"RTN","MAGGI12",200,0)
+ . . S:'TMP MAGVS=MAGVS_"T",MESSAGES("T")=$P(TMP,U,2)
+"RTN","MAGGI12",201,0)
+ . . Q
+"RTN","MAGGI12",202,0)
+ . ;--- Check the status of the group if necessary
+"RTN","MAGGI12",203,0)
+ . I MAGVS'["D",MAGVS'["S"  D
+"RTN","MAGGI12",204,0)
+ . . S GRPIEN=$P($G(@NODE@(0)),U,10)   Q:GRPIEN'>0  ; GROUP PARENT
+"RTN","MAGGI12",205,0)
+ . . S STATUS=$$IMGST^MAGGI11(GRPIEN)  Q:STATUS<10
+"RTN","MAGGI12",206,0)
+ . . ;--- Force the integrity check if the existing
+"RTN","MAGGI12",207,0)
+ . . ;--- image entry belongs to a deleted group.
+"RTN","MAGGI12",208,0)
+ . . I +STATUS=12  S MAGCF=MAGCF_"Q" Q
+"RTN","MAGGI12",209,0)
+ . . ;--- Extend the "non-viewable" group status to the image
+"RTN","MAGGI12",210,0)
+ . . S MAGVS=MAGVS_"S"
+"RTN","MAGGI12",211,0)
+ . . S MESSAGES("S")=$$MSG^MAGUERR(-33,,$P(STATUS,U,2))
+"RTN","MAGGI12",212,0)
+ . . Q
+"RTN","MAGGI12",213,0)
+ . Q
+"RTN","MAGGI12",214,0)
+ ;
+"RTN","MAGGI12",215,0)
+ ;--- Radiology report
+"RTN","MAGGI12",216,0)
+ ; Reserved but not implemented
+"RTN","MAGGI12",217,0)
+ ;
+"RTN","MAGGI12",218,0)
+ ;--- Questionable integrity
+"RTN","MAGGI12",219,0)
+ D:MAGCF["Q"
+"RTN","MAGGI12",220,0)
+ . N MAGQI
+"RTN","MAGGI12",221,0)
+ . D CHK^MAGGSQI(.MAGQI,IEN)
+"RTN","MAGGI12",222,0)
+ . S:'$G(MAGQI(0)) MAGVS=MAGVS_"Q",MESSAGES("Q")=$P(MAGQI(0),U,2)
+"RTN","MAGGI12",223,0)
+ . Q
+"RTN","MAGGI12",224,0)
+ ;
+"RTN","MAGGI12",225,0)
+ ;---
+"RTN","MAGGI12",226,0)
+ Q MAGVS
+"RTN","MAGGI12",227,0)
+ ;+++++   ANNSTAT     *******
+"RTN","MAGGI12",228,0)
+ ;  Determine if this image can be annotated.
+"RTN","MAGGI12",229,0)
+ ;  *** INPUT Parameters  
+"RTN","MAGGI12",230,0)
+ ;  
+"RTN","MAGGI12",231,0)
+ ;  VSTCODE    : The Image 'View Status' numeric code.
+"RTN","MAGGI12",232,0)
+ ;    if this isn't sent as a parameter, it is computed.
+"RTN","MAGGI12",233,0)
+ ;   
+"RTN","MAGGI12",234,0)
+ ;  MAGIEN     : Image IEN (^MAG(2005))
+"RTN","MAGGI12",235,0)
+ ;
+"RTN","MAGGI12",236,0)
+ ; *** OUTPUT Parameters  (optional)
+"RTN","MAGGI12",237,0)
+ ;  DESC    : Text Reason for the result;
+"RTN","MAGGI12",238,0)
+ ;  
+"RTN","MAGGI12",239,0)
+ ; Result Values
+"RTN","MAGGI12",240,0)
+ ; --------------------------
+"RTN","MAGGI12",241,0)
+ ;  RESULT of this call is a numeric value 
+"RTN","MAGGI12",242,0)
+ ;     0 : success, image can be annotated.
+"RTN","MAGGI12",243,0)
+ ;     
+"RTN","MAGGI12",244,0)
+ ;          Values of STATUS field (113) that are okay. 
+"RTN","MAGGI12",245,0)
+ ;     1 :  Viewable   (RESULT will be changed to 0)
+"RTN","MAGGI12",246,0)
+ ;     2 :  QA Reviewed (RESULT will be changed to 0)
+"RTN","MAGGI12",247,0)
+ ;     
+"RTN","MAGGI12",248,0)
+ ;     
+"RTN","MAGGI12",249,0)
+ ;          Values of STATUS field (113) 
+"RTN","MAGGI12",250,0)
+ ;                   that will block Annotation.
+"RTN","MAGGI12",251,0)
+ ;     10 : Image capture is in progress, (Future for groups.)
+"RTN","MAGGI12",252,0)
+ ;     11 : Image Needs Review
+"RTN","MAGGI12",253,0)
+ ;     12 : Image is Deleted.
+"RTN","MAGGI12",254,0)
+ ;     13 : Image Never Existed.  ;introduced in 135,129 ; p150
+"RTN","MAGGI12",255,0)
+ ;     
+"RTN","MAGGI12",256,0)
+ ;          Values of Image "View Status" that will block Annotation
+"RTN","MAGGI12",257,0)
+ ;          ("View Status" is a computed value, not an IMAGE Field)
+"RTN","MAGGI12",258,0)
+ ;     21 : Image has Questionable Integrity issues.
+"RTN","MAGGI12",259,0)
+ ;     22 : User cannot "VIEW" the associated TIU Note. 
+"RTN","MAGGI12",260,0)
+ ;                 due to TIU Business Rules
+"RTN","MAGGI12",261,0)
+ ;     23 : Image is not Viewable by Radiology Rule (Future ) 
+"RTN","MAGGI12",262,0)
+ ;     
+"RTN","MAGGI12",263,0)
+ ;          Values of other codes specific for blocked Annotation 
+"RTN","MAGGI12",264,0)
+ ;     30 : User Cannot "MAKE ADDENDUM" to the associated TIU Note. 
+"RTN","MAGGI12",265,0)
+ ;                 due to TIU Business Rules
+"RTN","MAGGI12",266,0)
+ ;     31 : Image in Rescinded.
+"RTN","MAGGI12",267,0)
+ ;    
+"RTN","MAGGI12",268,0)
+ ;   
+"RTN","MAGGI12",269,0)
+ANNSTAT(MAGIEN,VSTCODE,DESC) ;Annotation Status
+"RTN","MAGGI12",270,0)
+ N ANCODE,FLG,STI,VSTCD,TIUIEN,AMND,MSG,X,X2,GRPIEN
+"RTN","MAGGI12",271,0)
+ ;
+"RTN","MAGGI12",272,0)
+ S ANCODE=$G(VSTCODE)
+"RTN","MAGGI12",273,0)
+ S DESC=""
+"RTN","MAGGI12",274,0)
+ I ANCODE="" D
+"RTN","MAGGI12",275,0)
+ . ; compute View Status Code if not sent.
+"RTN","MAGGI12",276,0)
+ . ; QI Check already done in MAGAII ;S FLG="Q"
+"RTN","MAGGI12",277,0)
+ . S FLG=""
+"RTN","MAGGI12",278,0)
+ . S VSTCD=$$VIEWSTAT(MAGIEN,FLG,.MSG)
+"RTN","MAGGI12",279,0)
+ . ;   example of Result from $$VIEWSTAT 
+"RTN","MAGGI12",280,0)
+ . ;   ""    : success , viewable
+"RTN","MAGGI12",281,0)
+ . ;   "QT"  : a Text String if not viewable   
+"RTN","MAGGI12",282,0)
+ . ;   
+"RTN","MAGGI12",283,0)
+ . ;   -MSG- : is an array of reasons for failure, each letter 
+"RTN","MAGGI12",284,0)
+ . ;           of Result is node of array i.e. MSG("Q")="..."
+"RTN","MAGGI12",285,0)
+ . ;           MSG("T")="..." 
+"RTN","MAGGI12",286,0)
+ . ;    for this call ANNSTAT, we will just get first entry
+"RTN","MAGGI12",287,0)
+ . ;
+"RTN","MAGGI12",288,0)
+ . ;if the View Status Code (VSTCD) is not "", return it's text in MSG
+"RTN","MAGGI12",289,0)
+ . I VSTCD]"" S X=$O(MSG("")) S DESC=$G(MSG(X))
+"RTN","MAGGI12",290,0)
+ . S STI=+$P($G(^MAG(2005,MAGIEN,100)),"^",8)       ; STATUS (113)
+"RTN","MAGGI12",291,0)
+ . ;--- Now get View Status Numeric value
+"RTN","MAGGI12",292,0)
+ . S ANCODE=$$VSTCODE^MAGGAII(VSTCD,STI)
+"RTN","MAGGI12",293,0)
+ . Q
+"RTN","MAGGI12",294,0)
+ ;
+"RTN","MAGGI12",295,0)
+ ; if the View Status Code > 9 then user cannot view the image, so
+"RTN","MAGGI12",296,0)
+ ;   we won't let user annotate the image.
+"RTN","MAGGI12",297,0)
+ ;   and will get a generic description of the code, if DESC is still ""
+"RTN","MAGGI12",298,0)
+ I (ANCODE>9) S DESC=$S(DESC="":$$VSTTEXT(ANCODE),1:DESC) Q ANCODE
+"RTN","MAGGI12",299,0)
+ ; if Image is attached to TIU Note, we check TIU Business Rules.
+"RTN","MAGGI12",300,0)
+ S GRPIEN=$P($G(^MAG(2005,MAGIEN,0)),U,10),GRPIEN=$S(+GRPIEN:GRPIEN,1:MAGIEN)
+"RTN","MAGGI12",301,0)
+ S X2=$G(^MAG(2005,GRPIEN,2))
+"RTN","MAGGI12",302,0)
+ I $P(X2,"^",6)=8925 D
+"RTN","MAGGI12",303,0)
+ . S TIUIEN=$P(X2,"^",7)
+"RTN","MAGGI12",304,0)
+ . ; If we don't have a pointer to 8925, that is DB corruption
+"RTN","MAGGI12",305,0)
+ . ; This would probably already be caught, 
+"RTN","MAGGI12",306,0)
+ . ;    but check in case. VIEWSTAT wasn't run prior to this call.
+"RTN","MAGGI12",307,0)
+ . I 'TIUIEN S ANCODE=21,DESC="Invalid pointer to TIU Package ("_TIUIEN_")" Q
+"RTN","MAGGI12",308,0)
+ . S AMND=$$CANDO^TIULP(TIUIEN,"MAKE ADDENDUM")  ;p150  IA#2322
+"RTN","MAGGI12",309,0)
+ . ; Example of result from TIULP
+"RTN","MAGGI12",310,0)
+ . ;   0^ You may not ADDEND this UNSIGNED PRIMARY CARE.
+"RTN","MAGGI12",311,0)
+ . ;   1
+"RTN","MAGGI12",312,0)
+ . I 'AMND S ANCODE=30,DESC=$P(AMND,"^",2)
+"RTN","MAGGI12",313,0)
+ . Q
+"RTN","MAGGI12",314,0)
+ ; if ANCODE > 9 then TIU Business rule says no Annotation.
+"RTN","MAGGI12",315,0)
+ I (ANCODE>9) S DESC=$S(DESC="":$$VSTTEXT(ANCODE),1:DESC) Q ANCODE
+"RTN","MAGGI12",316,0)
+ ;
+"RTN","MAGGI12",317,0)
+ I $P($G(^MAG(2005,MAGIEN,100)),"^",12)=1 D
+"RTN","MAGGI12",318,0)
+ . ; Image is Rescinded
+"RTN","MAGGI12",319,0)
+ . S ANCODE=31
+"RTN","MAGGI12",320,0)
+ . Q
+"RTN","MAGGI12",321,0)
+ ; if ANCODE > 9 then Image is rescinded and stop Annotation.
+"RTN","MAGGI12",322,0)
+ I (ANCODE>9) S DESC=$$VSTTEXT(ANCODE) Q ANCODE
+"RTN","MAGGI12",323,0)
+ ; If we get here, Image can be annotated.
+"RTN","MAGGI12",324,0)
+ ; - not changing to 0.  Status here is 1 or 2 for viewable.
+"RTN","MAGGI12",325,0)
+ ;S DESC="Image can be annotated."
+"RTN","MAGGI12",326,0)
+ ; Send exact numeric code.  Delphi understands < 10 is viewable
+"RTN","MAGGI12",327,0)
+ ; and can be annotated.
+"RTN","MAGGI12",328,0)
+ S DESC=$$VSTTEXT(ANCODE)
+"RTN","MAGGI12",329,0)
+ Q ANCODE
+"RTN","MAGGI12",330,0)
+ ;
+"RTN","MAGGI12",331,0)
+ ; ##### VSTTEXT  returns a Description of the Status Code.
+"RTN","MAGGI12",332,0)
+ ; 
+"RTN","MAGGI12",333,0)
+ ; CODE is the numeric code for the Annotation Status.
+"RTN","MAGGI12",334,0)
+ ;    This is based on Status, Viewable Status, and 
+"RTN","MAGGI12",335,0)
+ ;    two new return values for Annotation Status. 
+"RTN","MAGGI12",336,0)
+ ;    
+"RTN","MAGGI12",337,0)
+VSTTEXT(CODE) ;Description for Annotation Status
+"RTN","MAGGI12",338,0)
+ N I,DONE,STR
+"RTN","MAGGI12",339,0)
+ S (I,DONE)=0
+"RTN","MAGGI12",340,0)
+ F  D  Q:DONE
+"RTN","MAGGI12",341,0)
+ . S I=I+1
+"RTN","MAGGI12",342,0)
+ . S STR=$T(DATA+I)
+"RTN","MAGGI12",343,0)
+ . I $P(STR,";",3)=CODE S DESC=$P(STR,";",4),DONE=1
+"RTN","MAGGI12",344,0)
+ . I $P(STR,";",3)="END" S DESC=$P(STR,";",4)_CODE,DONE=1
+"RTN","MAGGI12",345,0)
+ . Q
+"RTN","MAGGI12",346,0)
+ Q DESC
+"RTN","MAGGI12",347,0)
+ ; ##### DATA Table for Image Status, View Status,  Annotation Status.
+"RTN","MAGGI12",348,0)
+ ;    
+"RTN","MAGGI12",349,0)
+ ;    the Code is in Piece 3, and the Description is in Piece 4.
+"RTN","MAGGI12",350,0)
+ ;    
+"RTN","MAGGI12",351,0)
+ ; Image STATUS field (113) 
+"RTN","MAGGI12",352,0)
+ ;    Codes 0..12 are the Status Codes from field 113
+"RTN","MAGGI12",353,0)
+ ;    
+"RTN","MAGGI12",354,0)
+ ; Viewable Status and Annotation Status are computed values, 
+"RTN","MAGGI12",355,0)
+ ;    based on, but not equal to STATUS (113)
+"RTN","MAGGI12",356,0)
+ ;    they depend on TIU Business Rules, QI Of image, User Keys.
+"RTN","MAGGI12",357,0)
+ ;    The Codes are computed in other functions.  Description of the 
+"RTN","MAGGI12",358,0)
+ ;    code is returned from this table.
+"RTN","MAGGI12",359,0)
+ ;
+"RTN","MAGGI12",360,0)
+ ;    Codes 21..23 are the Viewable Status Codes. (computed value)
+"RTN","MAGGI12",361,0)
+ ;    Codes 30..31 are Annotation Status Codes.
+"RTN","MAGGI12",362,0)
+DATA ;
+"RTN","MAGGI12",363,0)
+ ;;0;Image is Viewable;
+"RTN","MAGGI12",364,0)
+ ;;1;Image is Viewable.;
+"RTN","MAGGI12",365,0)
+ ;;2;Image is QA Reviewed.;
+"RTN","MAGGI12",366,0)
+ ; 
+"RTN","MAGGI12",367,0)
+ ;;10;Image capture is in progress.; (Future for groups.)
+"RTN","MAGGI12",368,0)
+ ;;11;Image needs review.;
+"RTN","MAGGI12",369,0)
+ ;;12;Image is deleted.;
+"RTN","MAGGI12",370,0)
+ ;;13;Image Never Existed.;  << status for images that didn't exist.  ;p150
+"RTN","MAGGI12",371,0)
+ ;     
+"RTN","MAGGI12",372,0)
+ ;;21;Image has Questionable Integrity issues.;
+"RTN","MAGGI12",373,0)
+ ;;22;User cannot 'View' the associated TIU note. TIU Business Rule.;
+"RTN","MAGGI12",374,0)
+ ;;23;Image is not Viewable by Radiology Rule.; (future) 
+"RTN","MAGGI12",375,0)
+ ;     
+"RTN","MAGGI12",376,0)
+ ;;30;User cannot 'Make Addendum' to the associated TIU Note. TIU Business Rule.;
+"RTN","MAGGI12",377,0)
+ ;;31;Image is Rescinded.;
+"RTN","MAGGI12",378,0)
+ ;;END;User cannot Annotate the Image. Unknown CODE: ;
+"RTN","MAGGI12",379,0)
+ Q
+"RTN","MAGGTAU")
+0^4^B66990261
+"RTN","MAGGTAU",1,0)
+MAGGTAU ;WOIFO/GEK/SG - RPC Calls to update the IMAGING WINDOWS WORKSTATION file ;
+"RTN","MAGGTAU",2,0)
+ ;;3.0;IMAGING;**7,16,8,59,93,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGGTAU",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGTAU",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTAU",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGTAU",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGTAU",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGTAU",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGTAU",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGTAU",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGTAU",11,0)
+ ;; |                                                               |
+"RTN","MAGGTAU",12,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGTAU",13,0)
+ ;; | a medical device.  As such, it may not be changed             |
+"RTN","MAGGTAU",14,0)
+ ;; | in any way.  Modifications to this software may result in an  |
+"RTN","MAGGTAU",15,0)
+ ;; | adulterated medical device under 21CFR820, the use of which   |
+"RTN","MAGGTAU",16,0)
+ ;; | is considered to be a violation of US Federal Statutes.       |
+"RTN","MAGGTAU",17,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTAU",18,0)
+ ;;
+"RTN","MAGGTAU",19,0)
+ Q
+"RTN","MAGGTAU",20,0)
+ ;
+"RTN","MAGGTAU",21,0)
+ ;***** UPDATES INFORMATIONS IN THE IMAGING WINDOWS WORKSTATION
+"RTN","MAGGTAU",22,0)
+ ; RPC: MAGG WRKS UPDATES
+"RTN","MAGGTAU",23,0)
+ ;
+"RTN","MAGGTAU",24,0)
+ ; .MAGRY        Reference to a local variable where the results
+"RTN","MAGGTAU",25,0)
+ ;               are returned to.
+"RTN","MAGGTAU",26,0)
+ ;
+"RTN","MAGGTAU",27,0)
+ ; DATA          Data that should be stored in the IMAGING WINDOWS
+"RTN","MAGGTAU",28,0)
+ ;               WORKSTATION file (#2006.81):
+"RTN","MAGGTAU",29,0)
+ ;                 ^01: Workstation name
+"RTN","MAGGTAU",30,0)
+ ;                 ^02: Date/Time of Capture application (external)
+"RTN","MAGGTAU",31,0)
+ ;                 ^03: Date/Time of Display application (external)
+"RTN","MAGGTAU",32,0)
+ ;                 ^04: Location of the workstation
+"RTN","MAGGTAU",33,0)
+ ;                 ^05: Date/Time of the MAGSETUP (external)
+"RTN","MAGGTAU",34,0)
+ ;                 ^06: Version of the Display application
+"RTN","MAGGTAU",35,0)
+ ;                 ^07: Version of the Capture application
+"RTN","MAGGTAU",36,0)
+ ;                 ^08: Startup mode: 1 = Normal startup,
+"RTN","MAGGTAU",37,0)
+ ;                      2 = Started by CPRS, 3 = Import API
+"RTN","MAGGTAU",38,0)
+ ;                 ^09: OS Version
+"RTN","MAGGTAU",39,0)
+ ;                 ^10: VistaRad version
+"RTN","MAGGTAU",40,0)
+ ;                 ---- Patch MAG*3*59 ----
+"RTN","MAGGTAU",41,0)
+ ;                 ^11: RPCBroker server
+"RTN","MAGGTAU",42,0)
+ ;                 ^12: RPCBroker port
+"RTN","MAGGTAU",43,0)
+ ;                 ---- Patch MAG*3*93 ----
+"RTN","MAGGTAU",44,0)
+ ;                 ^13: Clinical Utilities version
+"RTN","MAGGTAU",45,0)
+ ;                 ^14: TeleReader version
+"RTN","MAGGTAU",46,0)
+ ;                 ^15: Date/Time of the Clinical Utilities (external)
+"RTN","MAGGTAU",47,0)
+ ;                 ^16: Date/Time of the TeleReader (external)
+"RTN","MAGGTAU",48,0)
+ ;                 ^17: Date/Time of the VistaRad (external)
+"RTN","MAGGTAU",49,0)
+ ; 
+"RTN","MAGGTAU",50,0)
+ ; Return Values
+"RTN","MAGGTAU",51,0)
+ ; =============
+"RTN","MAGGTAU",52,0)
+ ;
+"RTN","MAGGTAU",53,0)
+ ; Zero value of the first '^'-piece of the MAGRY indicates that
+"RTN","MAGGTAU",54,0)
+ ; an error occurred during the execution of the procedure. In this
+"RTN","MAGGTAU",55,0)
+ ; case, the MAGRY is formatted as follows:
+"RTN","MAGGTAU",56,0)
+ ;
+"RTN","MAGGTAU",57,0)
+ ; MAGRY                 Result descriptor
+"RTN","MAGGTAU",58,0)
+ ;                         ^01: 0
+"RTN","MAGGTAU",59,0)
+ ;                         ^02: Error message (optional)
+"RTN","MAGGTAU",60,0)
+ ;
+"RTN","MAGGTAU",61,0)
+ ; Otherwise, first '^'-piece of the MAGRY contains the session
+"RTN","MAGGTAU",62,0)
+ ; number (IEN in the IMAGING WINDOWS SESSIONS file (#2006.82)):
+"RTN","MAGGTAU",63,0)
+ ;  
+"RTN","MAGGTAU",64,0)
+ ; MAGRY                 Result descriptor
+"RTN","MAGGTAU",65,0)
+ ;                         ^01: Session IEN (file #2006.82)
+"RTN","MAGGTAU",66,0)
+ ;                         ^02: Message
+"RTN","MAGGTAU",67,0)
+ ;
+"RTN","MAGGTAU",68,0)
+ ; Notes
+"RTN","MAGGTAU",69,0)
+ ; =====
+"RTN","MAGGTAU",70,0)
+ ;
+"RTN","MAGGTAU",71,0)
+ ; This remote procedure is called after user login (local and remote 
+"RTN","MAGGTAU",72,0)
+ ; image view).
+"RTN","MAGGTAU",73,0)
+ ;
+"RTN","MAGGTAU",74,0)
+UPD(MAGRY,DATA) ;RPC [MAGG WRKS UPDATES]
+"RTN","MAGGTAU",75,0)
+ N MAG0,MAGI,MAGIEN,MAGLOC,MAGMODE,MAGNAME,MAGOSVER,MAGPL
+"RTN","MAGGTAU",76,0)
+ N MAGSRV,MAGSTART,MAGVERVR,MAGVERX,X,Y,Z
+"RTN","MAGGTAU",77,0)
+ K MAGGFDA,MAGXERR,MAGXIEN
+"RTN","MAGGTAU",78,0)
+ ;
+"RTN","MAGGTAU",79,0)
+ S MAGNAME=$P(DATA,U,1)
+"RTN","MAGGTAU",80,0)
+ S MAGLOC=$P(DATA,U,4)
+"RTN","MAGGTAU",81,0)
+ S:$P(DATA,U,6) MAGJOB("DISPLAY")=""
+"RTN","MAGGTAU",82,0)
+ S:$P(DATA,U,7) MAGJOB("CAPTURE")=""
+"RTN","MAGGTAU",83,0)
+ S MAGMODE=$P(DATA,U,8)
+"RTN","MAGGTAU",84,0)
+ S MAGOSVER=$P(DATA,U,9)
+"RTN","MAGGTAU",85,0)
+ S MAGVERVR=$P(DATA,U,10)
+"RTN","MAGGTAU",86,0)
+ S:$P(DATA,U,11)]"" MAGJOB("RPCSERVER")=$P(DATA,U,11)
+"RTN","MAGGTAU",87,0)
+ S:$P(DATA,U,12)]"" MAGJOB("RPCPORT")=$P(DATA,U,12)
+"RTN","MAGGTAU",88,0)
+ ;
+"RTN","MAGGTAU",89,0)
+ S MAGIEN=$S($L(MAGNAME):$O(^MAG(2006.81,"B",MAGNAME,"")),1:0)
+"RTN","MAGGTAU",90,0)
+ I 'MAGIEN   D NEWWRKS(MAGNAME,MAGLOC,.MAGIEN)
+"RTN","MAGGTAU",91,0)
+ I MAGIEN<1  S MAGRY="0^Workstation Not on file"  Q
+"RTN","MAGGTAU",92,0)
+ ;
+"RTN","MAGGTAU",93,0)
+ S MAG0=^MAG(2006.81,MAGIEN,0) ; '0' node for use later.
+"RTN","MAGGTAU",94,0)
+ L +^MAG(2006.81,"LOCK",MAGIEN):0
+"RTN","MAGGTAU",95,0)
+ S MAGIEN=+MAGIEN_","
+"RTN","MAGGTAU",96,0)
+ S MAGGFDA(2006.81,MAGIEN,.01)=MAGNAME ; Computer name
+"RTN","MAGGTAU",97,0)
+ S MAGGFDA(2006.81,MAGIEN,3)="@"  ; Delete logoff time for this job
+"RTN","MAGGTAU",98,0)
+ S MAGGFDA(2006.81,MAGIEN,6)=MAGLOC    ; Location free text from .INI
+"RTN","MAGGTAU",99,0)
+ S MAGGFDA(2006.81,MAGIEN,8)=1         ; Active or not
+"RTN","MAGGTAU",100,0)
+ S MAGGFDA(2006.81,MAGIEN,10)="@"      ; Delete session pointer
+"RTN","MAGGTAU",101,0)
+ S MAGGFDA(2006.81,MAGIEN,11)="@"      ; Reset the session error count
+"RTN","MAGGTAU",102,0)
+ S MAGGFDA(2006.81,MAGIEN,13)=MAGOSVER ; Operating system version
+"RTN","MAGGTAU",103,0)
+ ;
+"RTN","MAGGTAU",104,0)
+ ;=== Process the client date/time values (MAG*3*93)
+"RTN","MAGGTAU",105,0)
+ F MAGI="2^5.5","3^5","5^7","15^5.9","16^5.3","17^5.7"  D
+"RTN","MAGGTAU",106,0)
+ . ;--- Convert date/time into internal format
+"RTN","MAGGTAU",107,0)
+ . S %DT="T",X=$P(DATA,U,+MAGI)  D ^%DT
+"RTN","MAGGTAU",108,0)
+ . S $P(DATA,U,+MAGI)=Y
+"RTN","MAGGTAU",109,0)
+ . ;--- Prepare the date/time for storage
+"RTN","MAGGTAU",110,0)
+ . S:Y>-1 MAGGFDA(2006.81,MAGIEN,$P(MAGI,U,2))=Y
+"RTN","MAGGTAU",111,0)
+ . Q
+"RTN","MAGGTAU",112,0)
+ ;
+"RTN","MAGGTAU",113,0)
+ ;=== Process the client version numbers (MAG*3*93)
+"RTN","MAGGTAU",114,0)
+ S MAGVERX=""
+"RTN","MAGGTAU",115,0)
+ F MAGI="6^9","7^9.5","10^9.7","13^9.9","14^9.3"  D
+"RTN","MAGGTAU",116,0)
+ . S X=$P(DATA,U,+MAGI)  Q:X=""
+"RTN","MAGGTAU",117,0)
+ . ;--- Prepare the version number for storage
+"RTN","MAGGTAU",118,0)
+ . S MAGGFDA(2006.81,MAGIEN,$P(MAGI,U,2))=X
+"RTN","MAGGTAU",119,0)
+ . ;--- Whatever application calls, we'll use that version (MAG*3*8)
+"RTN","MAGGTAU",120,0)
+ . S:MAGVERX="" MAGVERX=X
+"RTN","MAGGTAU",121,0)
+ . Q
+"RTN","MAGGTAU",122,0)
+ ;
+"RTN","MAGGTAU",123,0)
+ S X=$P(MAG0,U,12)
+"RTN","MAGGTAU",124,0)
+ S MAGGFDA(2006.81,MAGIEN,12)=X+1 ; Sess count for wrks.
+"RTN","MAGGTAU",125,0)
+ ; Keep PLACE that this wrks logged in.
+"RTN","MAGGTAU",126,0)
+ S MAGPL=$S($G(DUZ(2)):+$$PLACE^MAGBAPI(DUZ(2)),1:0) ; DBI
+"RTN","MAGGTAU",127,0)
+ S:MAGPL MAGGFDA(2006.81,MAGIEN,.04)=MAGPL ; DBI
+"RTN","MAGGTAU",128,0)
+ ;
+"RTN","MAGGTAU",129,0)
+ S MAGSTART=$E($$NOW^XLFDT,1,12)
+"RTN","MAGGTAU",130,0)
+ I $G(DUZ) D
+"RTN","MAGGTAU",131,0)
+ . S MAGGFDA(2006.81,MAGIEN,1)=DUZ
+"RTN","MAGGTAU",132,0)
+ . S MAGGFDA(2006.81,MAGIEN,2)=MAGSTART
+"RTN","MAGGTAU",133,0)
+ . Q
+"RTN","MAGGTAU",134,0)
+ ;
+"RTN","MAGGTAU",135,0)
+ D UPDATE^DIE("S","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",136,0)
+ I $D(DIERR) D RTRNERR(.MAGRY) Q
+"RTN","MAGGTAU",137,0)
+ ; The MAGJOB( array is used by Imaging routines that are
+"RTN","MAGGTAU",138,0)
+ ; called from the Delphi App. 
+"RTN","MAGGTAU",139,0)
+ ; 
+"RTN","MAGGTAU",140,0)
+ S MAGJOB("WRKSIEN")=+MAGIEN
+"RTN","MAGGTAU",141,0)
+ S MAGJOB("VERSION")=MAGVERX
+"RTN","MAGGTAU",142,0)
+ S MAGRY="1^"
+"RTN","MAGGTAU",143,0)
+ ;
+"RTN","MAGGTAU",144,0)
+ ; SESSION : Create new session entry
+"RTN","MAGGTAU",145,0)
+ D GETS^DIQ(200,DUZ_",","29","I","Z","") ; service/section
+"RTN","MAGGTAU",146,0)
+ S MAGSRV=$G(Z(200,DUZ_",",29,"I"))
+"RTN","MAGGTAU",147,0)
+ ;
+"RTN","MAGGTAU",148,0)
+ K MAGGFDA,MAGXERR,MAGXIEN
+"RTN","MAGGTAU",149,0)
+ S MAGGFDA(2006.82,"+1,",.01)=$P(^VA(200,DUZ,0),U,1) ; User
+"RTN","MAGGTAU",150,0)
+ S MAGGFDA(2006.82,"+1,",1)=DUZ ; USER
+"RTN","MAGGTAU",151,0)
+ S MAGGFDA(2006.82,"+1,",2)=MAGSTART ; Sess Start Time
+"RTN","MAGGTAU",152,0)
+ S MAGGFDA(2006.82,"+1,",4)=+MAGIEN ; Wrks
+"RTN","MAGGTAU",153,0)
+ S MAGGFDA(2006.82,"+1,",7)=+MAGSRV ; User's Service/Section
+"RTN","MAGGTAU",154,0)
+ S MAGGFDA(2006.82,"+1,",13)=MAGMODE ; 1=normal 2= started by CPRS
+"RTN","MAGGTAU",155,0)
+ ; DBI - save the logon PLACE in the Session file.
+"RTN","MAGGTAU",156,0)
+ I MAGPL S MAGGFDA(2006.82,"+1,",.04)=MAGPL ; User's Institution (Imaging site param entry)
+"RTN","MAGGTAU",157,0)
+ ;
+"RTN","MAGGTAU",158,0)
+ ; 3.0.8  new fields 9 Client Ver, 9.2 Host Version, 9.4 OS Version 
+"RTN","MAGGTAU",159,0)
+ S MAGGFDA(2006.82,"+1,",9)=MAGVERX ;
+"RTN","MAGGTAU",160,0)
+ S MAGGFDA(2006.82,"+1,",9.2)=$$VERSION^XPDUTL("IMAGING") ;
+"RTN","MAGGTAU",161,0)
+ S MAGGFDA(2006.82,"+1,",9.4)=MAGOSVER ;
+"RTN","MAGGTAU",162,0)
+ ;         
+"RTN","MAGGTAU",163,0)
+ D UPDATE^DIE("","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",164,0)
+ I $D(DIERR) D RTRNERR(.MAGRY) Q
+"RTN","MAGGTAU",165,0)
+ S MAGRY="1^"
+"RTN","MAGGTAU",166,0)
+ I '+MAGXIEN(1) S MAGRY="0^" Q
+"RTN","MAGGTAU",167,0)
+ S MAGJOB("SESSION")=+MAGXIEN(1)
+"RTN","MAGGTAU",168,0)
+ S MAGRY=MAGJOB("SESSION")_"^Session # "_MAGJOB("SESSION")_" Started."
+"RTN","MAGGTAU",169,0)
+ S MAGGFDA(2006.81,+MAGIEN_",",10)=+MAGXIEN(1)
+"RTN","MAGGTAU",170,0)
+ D UPDATE^DIE("","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",171,0)
+ D ACTION("LOGON^")
+"RTN","MAGGTAU",172,0)
+ Q
+"RTN","MAGGTAU",173,0)
+LOGACT(MAGRY,ACTION) ;RPC [MAG3 LOGACTION]
+"RTN","MAGGTAU",174,0)
+ ; Call to log actions for Imaging Session from
+"RTN","MAGGTAU",175,0)
+ ; Delphi interface
+"RTN","MAGGTAU",176,0)
+ D ACTION(ACTION)
+"RTN","MAGGTAU",177,0)
+ S MAGRY="1^Action Logged"
+"RTN","MAGGTAU",178,0)
+ Q
+"RTN","MAGGTAU",179,0)
+ACTION(TXT,LOGTM,MAGSESS) ;Call to log actions for Imaging Workstation Session from other M routines
+"RTN","MAGGTAU",180,0)
+ ; ACTIONS LOGGED
+"RTN","MAGGTAU",181,0)
+ ; LOGON - Session StartTime     LOGOFF - Session End Time
+"RTN","MAGGTAU",182,0)
+ ; IMG   - Image accessed        PAT    - Patient Accessed
+"RTN","MAGGTAU",183,0)
+ ; CAP   - Image Captured  
+"RTN","MAGGTAU",184,0)
+ ; DEL   - Image Deleted         MOD    - Image entry modified
+"RTN","MAGGTAU",185,0)
+ ; NOIMAGE- Image Entry moved to Audit file. "Image Never Existed"  ; p150
+"RTN","MAGGTAU",186,0)
+ ; IMPORT - Import API has been called
+"RTN","MAGGTAU",187,0)
+ ; Data   - a node of data passed to Import API
+"RTN","MAGGTAU",188,0)
+ ; Result - a node of the Result Array from Import API Processing.
+"RTN","MAGGTAU",189,0)
+ ; Image  - one of the Images (full path of import directory) that was imported.
+"RTN","MAGGTAU",190,0)
+ ; PPACT  - A Post processing Action has been processed.
+"RTN","MAGGTAU",191,0)
+ ; VR-VW  - VistaRad Exam displayed
+"RTN","MAGGTAU",192,0)
+ ; VR-INT - VistaRad Exam interpreted
+"RTN","MAGGTAU",193,0)
+ ; API   - parameters sent to CP API, and the API Call i.e. ITIU-MDAPI
+"RTN","MAGGTAU",194,0)
+ ; DFTINDX- If the index fields have no values, call to Patch 17 code to
+"RTN","MAGGTAU",195,0)
+ ;               generate the values for the fields.
+"RTN","MAGGTAU",196,0)
+ ; MOD   - This was intended to log Modifications to Image Entries, it is 
+"RTN","MAGGTAU",197,0)
+ ;         (for now) only called when a group entry has an image added to its multiple.
+"RTN","MAGGTAU",198,0)
+ ;
+"RTN","MAGGTAU",199,0)
+ ; TXT is "^" delimited string
+"RTN","MAGGTAU",200,0)
+ ; $P(1) is code ( see above )   $P(2) is DFN
+"RTN","MAGGTAU",201,0)
+ ; $P(3) is Image IEN            $P(4) reserved for procedure
+"RTN","MAGGTAU",202,0)
+ ; $P(5) reserved for time-stamp $P(6) is Vrad Image Count
+"RTN","MAGGTAU",203,0)
+ ; $P(7) is Vrad Patient Count
+"RTN","MAGGTAU",204,0)
+ ; $P(8) is Vrad User Type (1/0 = Rad/Non-Rad)
+"RTN","MAGGTAU",205,0)
+ ; $P(9) is Vrad REMOTE Read flag (1/0; 1=REMOTE)
+"RTN","MAGGTAU",206,0)
+ ; $P(TXT,"$$",2) is Tracking ID from an Imported Image.  From this we compute Session #, to log actions.
+"RTN","MAGGTAU",207,0)
+ ; LOGTM   - [1|0] Flag to indicate whether or not to log the time of the Action.  Default = 0
+"RTN","MAGGTAU",208,0)
+ ; MAGSESS - Session IEN where the action should be logged.  Default to MAGJOB("SESSION")
+"RTN","MAGGTAU",209,0)
+ ;
+"RTN","MAGGTAU",210,0)
+ N NODE,SESSIEN,MAGGFDA,MAGXERR,MAGXIEN,MAGPROC,LOGX,TRKID
+"RTN","MAGGTAU",211,0)
+ S LOGTM=$G(LOGTM)
+"RTN","MAGGTAU",212,0)
+ I TXT["$$" S TRKID=$P(TXT,"$$",2),TXT=$P(TXT,"$$",1)
+"RTN","MAGGTAU",213,0)
+ S SESSIEN=$S($G(MAGSESS):MAGSESS,$D(MAGJOB("SESSION")):MAGJOB("SESSION"),$G(TRKID)'="":$O(^MAG(2006.82,"E",TRKID,""),-1),1:0)
+"RTN","MAGGTAU",214,0)
+ I 'SESSIEN Q
+"RTN","MAGGTAU",215,0)
+ S NODE="+1,"_SESSIEN_","
+"RTN","MAGGTAU",216,0)
+ I $P(TXT,U,3) S MAGPROC=$P($G(^MAG(2005,$P(TXT,U,3),0)),U,8)
+"RTN","MAGGTAU",217,0)
+ ;
+"RTN","MAGGTAU",218,0)
+ I $P(TXT,U)="PAT" D
+"RTN","MAGGTAU",219,0)
+ . S Z=+$G(^MAG(2006.82,SESSIEN,1))+1
+"RTN","MAGGTAU",220,0)
+ . S MAGGFDA(2006.82,SESSIEN_",",10)=Z
+"RTN","MAGGTAU",221,0)
+ I $P(TXT,U)="IMG" D
+"RTN","MAGGTAU",222,0)
+ . S Z=+$P($G(^MAG(2006.82,SESSIEN,1)),U,2)+1
+"RTN","MAGGTAU",223,0)
+ . S MAGGFDA(2006.82,SESSIEN_",",11)=Z
+"RTN","MAGGTAU",224,0)
+ . D ENTRY^MAGLOG("IMGVW",DUZ,$P(TXT,"^",3),"Wrks",$P(TXT,"^",2),"1")
+"RTN","MAGGTAU",225,0)
+ . D ACCESS^MAGLOG($P(TXT,"^",3))
+"RTN","MAGGTAU",226,0)
+ I $E(TXT,1,3)="CAP" D
+"RTN","MAGGTAU",227,0)
+ . S Z=+$P($G(^MAG(2006.82,SESSIEN,1)),U,3)+1
+"RTN","MAGGTAU",228,0)
+ . S MAGGFDA(2006.82,SESSIEN_",",12)=Z
+"RTN","MAGGTAU",229,0)
+ . D ENTRY^MAGLOG("CAP",DUZ,$P(TXT,"^",3),"Wrks",$P(TXT,"^",2),"1")
+"RTN","MAGGTAU",230,0)
+ I $P(TXT,U,2) D
+"RTN","MAGGTAU",231,0)
+ . S MAGGFDA(2006.82,SESSIEN_",",5)=$P(TXT,U,2)
+"RTN","MAGGTAU",232,0)
+ I LOGTM D
+"RTN","MAGGTAU",233,0)
+ . S X=$$NOW^XLFDT
+"RTN","MAGGTAU",234,0)
+ . S $P(TXT,U,4)=$G(MAGPROC),$P(TXT,U,5)=$E(X,1,12)
+"RTN","MAGGTAU",235,0)
+ S MAGGFDA(2006.821,NODE,.01)=$P(TXT,"|",1)
+"RTN","MAGGTAU",236,0)
+ I $L(TXT,"|")>1 S MAGGFDA(2006.821,NODE,13)=$P(TXT,"|",2,99)
+"RTN","MAGGTAU",237,0)
+ D UPDATE^DIE("S","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",238,0)
+ Q
+"RTN","MAGGTAU",239,0)
+NEWWRKS(MAGNAME,MAGLOC,MAGIEN) ;
+"RTN","MAGGTAU",240,0)
+ I $G(MAGNAME)="" Q
+"RTN","MAGGTAU",241,0)
+ N Y,MAGNFDA,MAGNIEN
+"RTN","MAGGTAU",242,0)
+ S MAGNFDA(2006.81,"+1,",.01)=MAGNAME
+"RTN","MAGGTAU",243,0)
+ S MAGNFDA(2006.81,"+1,",6)=$G(MAGLOC)
+"RTN","MAGGTAU",244,0)
+ D UPDATE^DIE("","MAGNFDA","MAGNIEN")
+"RTN","MAGGTAU",245,0)
+ S MAGIEN=MAGNIEN(1)
+"RTN","MAGGTAU",246,0)
+ Q
+"RTN","MAGGTAU",247,0)
+LOGOFF(MAGRY) ;RPC [MAGG LOGOFF] Call when session is over.
+"RTN","MAGGTAU",248,0)
+ ; This updates session file with logoff time
+"RTN","MAGGTAU",249,0)
+ ;   and marks the session closed.
+"RTN","MAGGTAU",250,0)
+ ;
+"RTN","MAGGTAU",251,0)
+ S MAGRY=1
+"RTN","MAGGTAU",252,0)
+ N MAGGFDA,MAGXERR,MAGXIEN,MAGIEN,MAGSESS,MAGEND,MAGCON
+"RTN","MAGGTAU",253,0)
+ ; The Imaging Workstation file keeps time of login
+"RTN","MAGGTAU",254,0)
+ ; We'll enter the logoff time ($$now^xlfdt) here.
+"RTN","MAGGTAU",255,0)
+ S X=$$NOW^XLFDT
+"RTN","MAGGTAU",256,0)
+ S MAGEND=$E(X,1,12)
+"RTN","MAGGTAU",257,0)
+ Q:'+$G(MAGJOB("WRKSIEN"))
+"RTN","MAGGTAU",258,0)
+ L -^MAG(2006.81,"LOCK",MAGJOB("WRKSIEN"))
+"RTN","MAGGTAU",259,0)
+ S MAGIEN=+MAGJOB("WRKSIEN")_","
+"RTN","MAGGTAU",260,0)
+ S MAGGFDA(2006.81,MAGIEN,3)=MAGEND ; logoff dttm
+"RTN","MAGGTAU",261,0)
+ S MAGGFDA(2006.81,MAGIEN,8)=0 ; Set job number to 0
+"RTN","MAGGTAU",262,0)
+ D UPDATE^DIE("S","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",263,0)
+ ;MAGJOB("WRKSIEN")
+"RTN","MAGGTAU",264,0)
+ Q:(+$G(MAGJOB("SESSION"))=0)
+"RTN","MAGGTAU",265,0)
+ S MAGSESS=+MAGJOB("SESSION")_","
+"RTN","MAGGTAU",266,0)
+ K MAGGFDA,MAGXERR,MAGXIEN
+"RTN","MAGGTAU",267,0)
+ S MAGGFDA(2006.82,MAGSESS,3)=MAGEND
+"RTN","MAGGTAU",268,0)
+ ; calculate the length of the session
+"RTN","MAGGTAU",269,0)
+ S MAGCON=""
+"RTN","MAGGTAU",270,0)
+ S MAGGFDA(2006.82,MAGSESS,14)=MAGCON
+"RTN","MAGGTAU",271,0)
+ D UPDATE^DIE("S","MAGGFDA","MAGXIEN","MAGXERR")
+"RTN","MAGGTAU",272,0)
+ D ACTION("LOGOFF^")
+"RTN","MAGGTAU",273,0)
+ ;
+"RTN","MAGGTAU",274,0)
+ Q
+"RTN","MAGGTAU",275,0)
+RTRNERR(ETXT) ; There was error from UPDATE^DIE quit with error text
+"RTN","MAGGTAU",276,0)
+ S ETXT="0^ERROR  "_MAGXERR("DIERR",1,"TEXT",1)
+"RTN","MAGGTAU",277,0)
+ Q
+"RTN","MAGGTID")
+0^2^B85911502
+"RTN","MAGGTID",1,0)
+MAGGTID ;WOIFO/SRR/RED/SAF/GEK/SG/JSL/NST - Deletion of Images and Pointers ;
+"RTN","MAGGTID",2,0)
+ ;;3.0;IMAGING;**8,59,93,118,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGGTID",3,0)
+ ;;
+"RTN","MAGGTID",4,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGTID",5,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTID",6,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGTID",7,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGTID",8,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGTID",9,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGTID",10,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGTID",11,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGTID",12,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGTID",13,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGTID",14,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGTID",15,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGTID",16,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGTID",17,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTID",18,0)
+ ;;
+"RTN","MAGGTID",19,0)
+ Q
+"RTN","MAGGTID",20,0)
+ ;
+"RTN","MAGGTID",21,0)
+IMAGEDEL(MAGGRY,MAGIEN,MAGGRPDF,REASON) ;RPC [MAGG IMAGE DELETE]
+"RTN","MAGGTID",22,0)
+ ; Call to Delete Image entry from Image file ^MAG(2005
+"RTN","MAGGTID",23,0)
+ ; MAGIEN   Image IEN ^ SYSDEL flag
+"RTN","MAGGTID",24,0)
+ ; MAGGRPDF   group delete flag   1 = group delete allowed
+"RTN","MAGGTID",25,0)
+ ; SYSDEL    Flag that forces delete, even if no KEY
+"RTN","MAGGTID",26,0)
+ ; 
+"RTN","MAGGTID",27,0)
+ N IEN,Y,RY
+"RTN","MAGGTID",28,0)
+ ; 1 in 3rd piece means : DELETE the Image File Also.
+"RTN","MAGGTID",29,0)
+ S MAGGRPDF=+$G(MAGGRPDF),REASON=$G(REASON),IEN=+MAGIEN
+"RTN","MAGGTID",30,0)
+ L +^MAG(2005,IEN):4
+"RTN","MAGGTID",31,0)
+ E  S MAGGRY(0)="Image ID# "_IEN_" is Locked. Delete is Canceled" Q
+"RTN","MAGGTID",32,0)
+ D DELETE(.MAGGRY,MAGIEN,1,MAGGRPDF,REASON)
+"RTN","MAGGTID",33,0)
+ L -^MAG(2005,IEN)
+"RTN","MAGGTID",34,0)
+ Q
+"RTN","MAGGTID",35,0)
+DELETE(RY,MAGIEN,DF,GRPDF,REASON) ;RPC [MAGQ DIK] Entry point for silent call
+"RTN","MAGGTID",36,0)
+ ;RY=Return Array RY(0)="1^SUCCESS" 
+"RTN","MAGGTID",37,0)
+ ;                RY(0)="0^reason for failure"
+"RTN","MAGGTID",38,0)
+ ;                ;NOT RETURNING LIST AT THIS TIME
+"RTN","MAGGTID",39,0)
+ ;                ( RY(1)..RY(n)= IEN's of deleted images.)
+"RTN","MAGGTID",40,0)
+ ;MAGIEN=Image entry number to be deleted
+"RTN","MAGGTID",41,0)
+ ; if MAGIEN has a 2nd piece = 1 then we force delete, don't test 
+"RTN","MAGGTID",42,0)
+ ; for MAG DELETE KEY
+"RTN","MAGGTID",43,0)
+ ; if MAGIEN has a 3rd piece,  it's an Xtra PRocessing Flag ;P150
+"RTN","MAGGTID",44,0)
+ ; Patch 129 Capture and Patch 135 Import API Now send this flag.  ;P150
+"RTN","MAGGTID",45,0)
+ ;DF=Delete file flag - 1=delete the Image file
+"RTN","MAGGTID",46,0)
+ ;                    - 0=don't delete the image file
+"RTN","MAGGTID",47,0)
+ ;
+"RTN","MAGGTID",48,0)
+ S REASON=$G(REASON) I REASON="" S REASON="Unknown reason"
+"RTN","MAGGTID",49,0)
+ S RY(0)="0^Image Delete Failed, reason unknown."
+"RTN","MAGGTID",50,0)
+ I '$D(MAGSYS) D
+"RTN","MAGGTID",51,0)
+ . N Y
+"RTN","MAGGTID",52,0)
+ . D GETENV^%ZOSV  ; IA # 10097 
+"RTN","MAGGTID",53,0)
+ . S MAGSYS=$P(Y,"^",2)
+"RTN","MAGGTID",54,0)
+ . Q
+"RTN","MAGGTID",55,0)
+ N MAGERR,SYSDEL,Z,GRPDEL,MAGACN
+"RTN","MAGGTID",56,0)
+ N XPRC,NOIMG ; P150
+"RTN","MAGGTID",57,0)
+ S XPRC=$$UP^XLFSTR($P(MAGIEN,U,3)) ;P150 The new $p(,,3) says there is XtraPRocessing.
+"RTN","MAGGTID",58,0)
+ S SYSDEL=+$P(MAGIEN,U,2),MAGIEN=+MAGIEN
+"RTN","MAGGTID",59,0)
+ S NOIMG=$S(XPRC="NOIMAGE":1,1:0) ; P150
+"RTN","MAGGTID",60,0)
+ I NOIMG D NOIMAGE(MAGIEN) ;P150
+"RTN","MAGGTID",61,0)
+ ; Check the business rules for deleting an image
+"RTN","MAGGTID",62,0)
+ I 'NOIMG D DELETE^MAGSIMBR(.RY,MAGIEN,SYSDEL) I +RY(0)=0 Q  ;150 put 'NOIMG
+"RTN","MAGGTID",63,0)
+ ;  a couple tests of privilege and valid IEN
+"RTN","MAGGTID",64,0)
+ I '$D(^MAG(2005,MAGIEN,0)) D  Q
+"RTN","MAGGTID",65,0)
+ . S RY(0)="0^Image entry doesn't exist in image file"
+"RTN","MAGGTID",66,0)
+ I +$O(^MAG(2005,MAGIEN,1,0)),+$G(GRPDF)=0 D  Q
+"RTN","MAGGTID",67,0)
+ . S RY(0)="0^Deleting a Group is not allowed."
+"RTN","MAGGTID",68,0)
+ I +$O(^MAG(2005,MAGIEN,1,0)),+$G(GRPDF)'=0 D  Q
+"RTN","MAGGTID",69,0)
+ . N MAGGRP S MAGGRP=MAGIEN N MAGIEN,MAGX,MAGOK,MAGFAIL
+"RTN","MAGGTID",70,0)
+ . S MAGX=0,MAGOK=0,MAGFAIL=0
+"RTN","MAGGTID",71,0)
+ . S GRPDEL=1  ; we are deleting a group - used in DELGRP entry
+"RTN","MAGGTID",72,0)
+ . F  S MAGX=$O(^MAG(2005,MAGGRP,1,MAGX)) Q:'MAGX  D
+"RTN","MAGGTID",73,0)
+ . . S MAGIEN=$P($G(^MAG(2005,MAGGRP,1,MAGX,0)),"^") D DEL1IMG
+"RTN","MAGGTID",74,0)
+ . . I +RY(0) S Z=+$O(RY(""),-1),RY(Z)=RY(Z)_"^"_RY(0),MAGOK=MAGOK+1
+"RTN","MAGGTID",75,0)
+ . . E  S Z=+$O(RY(""),-1)+1,RY(Z)=MAGIEN_"^"_RY(0),MAGFAIL=MAGFAIL+1
+"RTN","MAGGTID",76,0)
+ . . Q
+"RTN","MAGGTID",77,0)
+ . I +MAGFAIL=0 S RY(0)="1^Deletion of Group #"_MAGGRP_" was successful.^"_MAGOK_"^0"
+"RTN","MAGGTID",78,0)
+ . E  S RY(0)="0^Error deleting child image(s). Group Not Deleted.^"_MAGOK_"^"_MAGFAIL
+"RTN","MAGGTID",79,0)
+ . I (+MAGFAIL=0),$G(MAGACN)'="" D  ; No errors and Accession number exists
+"RTN","MAGGTID",80,0)
+ . . N SSEP,OUT
+"RTN","MAGGTID",81,0)
+ . . S SSEP=$$STATSEP^MAGVRS41
+"RTN","MAGGTID",82,0)
+ . . D DELNEW^MAGVD008(.OUT,MAGACN,REASON)  ; Delete studies in P34 data structure by accession number
+"RTN","MAGGTID",83,0)
+ . . I OUT<0 S RY(0)="0^Deletion of Group #"_MAGGRP_" was successful but failed in New: "_$P(OUT,SSEP,2)
+"RTN","MAGGTID",84,0)
+ . . Q
+"RTN","MAGGTID",85,0)
+ . Q
+"RTN","MAGGTID",86,0)
+ ; Ok lets start
+"RTN","MAGGTID",87,0)
+ ; lets delete the parent pointers first.
+"RTN","MAGGTID",88,0)
+DEL1IMG ;
+"RTN","MAGGTID",89,0)
+ N DELMSG,Z,MAGDFN
+"RTN","MAGGTID",90,0)
+ D DELPAR^MAGSDEL2
+"RTN","MAGGTID",91,0)
+ I $G(MAGERR) S RY(0)="0^Error: Deleting Specialty Pointers. Image Not Deleted. "_DELMSG Q
+"RTN","MAGGTID",92,0)
+ ;
+"RTN","MAGGTID",93,0)
+ ; Now delete image record & xref's
+"RTN","MAGGTID",94,0)
+ ; if this Image is member of group DELGRP will delete those pointers
+"RTN","MAGGTID",95,0)
+ ; and delete the Group, if this is only image in it.
+"RTN","MAGGTID",96,0)
+ S MAGDFN=$P($G(^MAG(2005,MAGIEN,0)),"^",7) ; Moved here from below. DELGRP needs MAGDFN now.
+"RTN","MAGGTID",97,0)
+ D DELGRP
+"RTN","MAGGTID",98,0)
+ I $G(MAGERR) S RY(0)="0^Error deleting Group Pointers." Q
+"RTN","MAGGTID",99,0)
+ ;
+"RTN","MAGGTID",100,0)
+ ; write the deleted by, delete reason, and delete date to the file.
+"RTN","MAGGTID",101,0)
+ ; P150   If NOIMAGE,  SetDel was already called.
+"RTN","MAGGTID",102,0)
+ I 'NOIMG D SETDEL(MAGIEN,REASON) ;P150 NOIMG
+"RTN","MAGGTID",103,0)
+ ;
+"RTN","MAGGTID",104,0)
+ ; save the Image record to the archive before we delete it.
+"RTN","MAGGTID",105,0)
+ D ARCHIVE(MAGIEN)
+"RTN","MAGGTID",106,0)
+ ;
+"RTN","MAGGTID",107,0)
+ ; Now let's set the Queue to delete the Image File, if Flag is set
+"RTN","MAGGTID",108,0)
+ I $G(DF) D DELFILE
+"RTN","MAGGTID",109,0)
+ ; 
+"RTN","MAGGTID",110,0)
+ ; we're having "APPXDT" crossref left around, lets delete it first.
+"RTN","MAGGTID",111,0)
+ S X=MAGDFN,DA=MAGIEN D KILPPXD^MAGUXRF
+"RTN","MAGGTID",112,0)
+ ;
+"RTN","MAGGTID",113,0)
+ ; now lets delete the image.
+"RTN","MAGGTID",114,0)
+ K DIK,DA,DA(1),DA(2),DIC,DR,DIE,DIR S DIK="^MAG(2005,",DA=MAGIEN
+"RTN","MAGGTID",115,0)
+ D ^DIK
+"RTN","MAGGTID",116,0)
+ S Z=+$O(RY(""),-1)+1,RY(Z)=MAGIEN
+"RTN","MAGGTID",117,0)
+ ; we were having problems with "AC" so lets check to make sure.
+"RTN","MAGGTID",118,0)
+ I $D(^MAG(2005,"AC",MAGDFN,MAGIEN)) K ^MAG(2005,"AC",MAGDFN,MAGIEN)
+"RTN","MAGGTID",119,0)
+ ; log it.
+"RTN","MAGGTID",120,0)
+ S X=$S(NOIMG:"NOIMAGE",1:"DELETE") ; P150 NOIMG
+"RTN","MAGGTID",121,0)
+ D ENTRY^MAGLOG(X,$G(DUZ),$G(MAGIEN),"PARENT:"_$G(MAGSTORE),$G(MAGDFN),1) ;P150
+"RTN","MAGGTID",122,0)
+ S X=$S(NOIMG:"NOIMAGE^",1:"DEL^") ; 150 NOIMG
+"RTN","MAGGTID",123,0)
+ S X=X_$G(MAGDFN)_"^"_$G(MAGIEN) ; 150 use X instead of "DEL^"
+"RTN","MAGGTID",124,0)
+ D ACTION^MAGGTAU(X,"1")
+"RTN","MAGGTID",125,0)
+ ; The 140 cross reference of 2005.1 has set the Status to 12,  here we change it to 13 ;P150
+"RTN","MAGGTID",126,0)
+ I NOIMG D SETSTAT(MAGIEN,13) ;P150
+"RTN","MAGGTID",127,0)
+ S RY(0)="1^Deletion of Image was Successful." ;P150 
+"RTN","MAGGTID",128,0)
+ ; P150 Put above line back in.  Code below is new for 118.
+"RTN","MAGGTID",129,0)
+ I '$G(GRPDEL),$G(MAGACN)'="" D  ; If we delete a single image in a group and ACN is defined
+"RTN","MAGGTID",130,0)
+ . N SSEP,OUT
+"RTN","MAGGTID",131,0)
+ . S SSEP=$$STATSEP^MAGVRS41
+"RTN","MAGGTID",132,0)
+ . D DELNEW^MAGVD008(.OUT,MAGACN,REASON)  ; Delete studies in P34 data structure by accession number
+"RTN","MAGGTID",133,0)
+ . I OUT<0 S RY(0)="0^Deletion of Image in Legacy was Successful but failed in New: "_$P(OUT,SSEP,2)
+"RTN","MAGGTID",134,0)
+ . E  S RY(0)="1^Deletion of Image was Successful."
+"RTN","MAGGTID",135,0)
+ . Q
+"RTN","MAGGTID",136,0)
+ Q
+"RTN","MAGGTID",137,0)
+NOIMAGE(MAGNOT) ; P150 Whole function is new. This is called when No Image exists.
+"RTN","MAGGTID",138,0)
+ ; Clear the Fields #2,  #2.1 and 102 This is the Abstract, Full and BIG
+"RTN","MAGGTID",139,0)
+ ;   pointers to the Image Share (Image Network Drive) ( Tier1 ) 
+"RTN","MAGGTID",140,0)
+ ; Set Status and Status Reason
+"RTN","MAGGTID",141,0)
+ ; Set SysDel and GrpDel Flags to allow deleting in all instances.
+"RTN","MAGGTID",142,0)
+ N MAGNFDA,MAGGXE,MAGERR,REASDESC,REASDA,MAGDA
+"RTN","MAGGTID",143,0)
+ S REASDESC="Image Never Existed"
+"RTN","MAGGTID",144,0)
+ S REASDA=$O(^MAG(2005.88,"B",REASDESC,""))
+"RTN","MAGGTID",145,0)
+ D SETDEL(MAGNOT,REASDESC) ; Set the Delete Fields. 
+"RTN","MAGGTID",146,0)
+ ;
+"RTN","MAGGTID",147,0)
+ S MAGDA=MAGNOT
+"RTN","MAGGTID",148,0)
+ S MAGNOT=MAGNOT_","
+"RTN","MAGGTID",149,0)
+ S MAGNFDA(2005,MAGNOT,2)="@" ;
+"RTN","MAGGTID",150,0)
+ S MAGNFDA(2005,MAGNOT,2.1)="@"
+"RTN","MAGGTID",151,0)
+ S MAGNFDA(2005,MAGNOT,102)="@"
+"RTN","MAGGTID",152,0)
+ S MAGNFDA(2005,MAGNOT,113)=13
+"RTN","MAGGTID",153,0)
+ S MAGNFDA(2005,MAGNOT,113.3)=REASDA
+"RTN","MAGGTID",154,0)
+ ;;;;;;;
+"RTN","MAGGTID",155,0)
+ D UPDATE^DIE("","MAGNFDA","","MAGGXE")
+"RTN","MAGGTID",156,0)
+ ;  ? ? If Error during UPdate..  Delete the entry.
+"RTN","MAGGTID",157,0)
+ I $D(DIERR) D  S RY=MAGERR Q
+"RTN","MAGGTID",158,0)
+ . D RTRNERR(.MAGERR)
+"RTN","MAGGTID",159,0)
+ . S DA=MAGDA,DIK="^MAG(2005," D ^DIK
+"RTN","MAGGTID",160,0)
+ . K DA,DIC,DIK
+"RTN","MAGGTID",161,0)
+ . D CLEAN^DILF
+"RTN","MAGGTID",162,0)
+ Q
+"RTN","MAGGTID",163,0)
+RTRNERR(ETXT) ; There was error from UPDATE^DIE quit with error text
+"RTN","MAGGTID",164,0)
+ ; P150 this function put in to keep NOIMAGE same
+"RTN","MAGGTID",165,0)
+ S ETXT="0^ERROR  "_MAGGXE("DIERR",1,"TEXT",1)
+"RTN","MAGGTID",166,0)
+ Q
+"RTN","MAGGTID",167,0)
+DELGRP ;del grp ptrs and check to see if this is the last image in the group
+"RTN","MAGGTID",168,0)
+ N MAGGRP,MAGX,MAGQUIT,MAGIFNS,Z
+"RTN","MAGGTID",169,0)
+ S MAGGRP=$P($G(^MAG(2005,MAGIEN,0)),"^",10)
+"RTN","MAGGTID",170,0)
+ Q:'$G(MAGGRP)
+"RTN","MAGGTID",171,0)
+ K DIK,DA,DA(1),DA(2),DIC,DR,DIE,DIR
+"RTN","MAGGTID",172,0)
+ S MAGX=0,MAGQUIT=0
+"RTN","MAGGTID",173,0)
+ F  S MAGX=$O(^MAG(2005,MAGGRP,1,MAGX)) Q:'MAGX  D  Q:MAGQUIT
+"RTN","MAGGTID",174,0)
+ . I +^MAG(2005,MAGGRP,1,MAGX,0)=MAGIEN D
+"RTN","MAGGTID",175,0)
+ . . S DIK="^MAG(2005,MAGGRP,1,",DA(1)=MAGGRP,DA=MAGX D ^DIK S MAGQUIT=1
+"RTN","MAGGTID",176,0)
+ . . ;added DA(1) needed for xref deletion of dicom series 
+"RTN","MAGGTID",177,0)
+ . I $O(^MAG(2005,MAGGRP,1,0))="" D
+"RTN","MAGGTID",178,0)
+ . . I $P($G(^MAG(2005,MAGGRP,2)),"^",6) D
+"RTN","MAGGTID",179,0)
+ . . . ;report is on group - need to delete it
+"RTN","MAGGTID",180,0)
+ . . . S MAGIFNS=MAGIEN,MAGIEN=MAGGRP
+"RTN","MAGGTID",181,0)
+ . . . D DELPAR^MAGSDEL2
+"RTN","MAGGTID",182,0)
+ . . . S MAGIEN=MAGIFNS
+"RTN","MAGGTID",183,0)
+ . . I '$D(MAGERR) D
+"RTN","MAGGTID",184,0)
+ . . . I $T(^MAGVD003)'="" D  ; This check needs to be removed after release of patch 118
+"RTN","MAGGTID",185,0)
+ . . . . N OUT
+"RTN","MAGGTID",186,0)
+ . . . . D GETACN^MAGVD003(.OUT,MAGGRP)  ; Get accession number for this group first
+"RTN","MAGGTID",187,0)
+ . . . . S MAGACN=$S($$ISOK^MAGVAF02(OUT):$$GETVAL^MAGVAF02(OUT),1:"")
+"RTN","MAGGTID",188,0)
+ . . . . Q
+"RTN","MAGGTID",189,0)
+ . . . D SETDEL(MAGGRP,REASON),ARCHIVE(MAGGRP) S DIK="^MAG(2005,",DA=MAGGRP D ^DIK
+"RTN","MAGGTID",190,0)
+ . . . ; Log the Deletion of The Group Header to  ^MAG(2006.95, and ^MAG(2006.82 
+"RTN","MAGGTID",191,0)
+ . . . D ENTRY^MAGLOG("DELETE",$G(DUZ),$G(MAGGRP),"PARENT:"_$G(MAGSTORE),$G(MAGDFN),1,"Group Header deleted")
+"RTN","MAGGTID",192,0)
+ . . . S X="DEL^"_$G(MAGDFN)_"^"_$G(MAGGRP)
+"RTN","MAGGTID",193,0)
+ . . . D ACTION^MAGGTAU(X,"1")
+"RTN","MAGGTID",194,0)
+ . . . S Z=+$O(RY(""),-1)+1,RY(Z)=MAGGRP_"^1^Deletion of Group was Successful."
+"RTN","MAGGTID",195,0)
+ . . . Q
+"RTN","MAGGTID",196,0)
+ . . Q
+"RTN","MAGGTID",197,0)
+ . Q
+"RTN","MAGGTID",198,0)
+ Q
+"RTN","MAGGTID",199,0)
+SETDEL(MAGIEN,REASON) ; set deletion fields
+"RTN","MAGGTID",200,0)
+ N DA,DR,DIE,X
+"RTN","MAGGTID",201,0)
+ ;N %H
+"RTN","MAGGTID",202,0)
+ ;S %H=$H D YMD^%DTC
+"RTN","MAGGTID",203,0)
+ S X=$$NOW^XLFDT
+"RTN","MAGGTID",204,0)
+ ;  gek - changed 3 slash to 4 slash. to stop FM question marks. ??
+"RTN","MAGGTID",205,0)
+ S DR="30////"_DUZ_";30.1////"_X_";30.2////"_REASON
+"RTN","MAGGTID",206,0)
+ S DIE="2005",DA=MAGIEN D ^DIE
+"RTN","MAGGTID",207,0)
+ Q
+"RTN","MAGGTID",208,0)
+ ;
+"RTN","MAGGTID",209,0)
+SETSTAT(MAGIEN,STAT) ; p150 new function.  Set STATUS fields
+"RTN","MAGGTID",210,0)
+ N DA,DR,DIE
+"RTN","MAGGTID",211,0)
+ ; 4 slash. to stop FM question marks. ??
+"RTN","MAGGTID",212,0)
+ S DR="113////"_STAT
+"RTN","MAGGTID",213,0)
+ S DIE="2005.1",DA=MAGIEN D ^DIE
+"RTN","MAGGTID",214,0)
+ Q
+"RTN","MAGGTID",215,0)
+ARCHIVE(MAGARCIE) ;save image data before deletion
+"RTN","MAGGTID",216,0)
+ N DA,DIK,MAGCNT,MAGLAST,SUB,TMP,%X,%Y
+"RTN","MAGGTID",217,0)
+ S MAGCNT=$P(^MAG(2005.1,0),U,4)+1
+"RTN","MAGGTID",218,0)
+ S %X="^MAG(2005,"_MAGARCIE_",",%Y="^MAG(2005.1,"_MAGARCIE_","
+"RTN","MAGGTID",219,0)
+ D %XY^%RCR
+"RTN","MAGGTID",220,0)
+ ;--- GEK 9/29/00 Fix the 3rd piece to be last IEN in file.
+"RTN","MAGGTID",221,0)
+ S MAGLAST=$O(^MAG(2005.1,"A"),-1)
+"RTN","MAGGTID",222,0)
+ S $P(^MAG(2005.1,0),U,4)=MAGCNT
+"RTN","MAGGTID",223,0)
+ I '($P(^MAG(2005.1,0),U,3)=MAGLAST) S $P(^MAG(2005.1,0),U,3)=MAGLAST
+"RTN","MAGGTID",224,0)
+ ;
+"RTN","MAGGTID",225,0)
+ ;--- Fix subfile numbers in the headers of the multiples (MAG*3*93).
+"RTN","MAGGTID",226,0)
+ ;    IF DEFINITIONS OF MULTIPLES OF THE IMAGE AUDIT FILE (#2005.1)
+"RTN","MAGGTID",227,0)
+ ;    CHANGE OR NEW MULTIPLES ARE ADDED, THE FOLLOWING CODE MUST BE
+"RTN","MAGGTID",228,0)
+ ;--- CHECKED AND UPDATED IF NECESSARY!
+"RTN","MAGGTID",229,0)
+ ;
+"RTN","MAGGTID",230,0)
+ F SUB="1^2005.14P","4^2005.1106DA","5^2005.11PA","6^2005.1111A","99^2005.199D"  D
+"RTN","MAGGTID",231,0)
+ . S TMP=$P(SUB,U)  Q:'($D(^MAG(2005.1,MAGARCIE,TMP,0))#2)
+"RTN","MAGGTID",232,0)
+ . S $P(^MAG(2005.1,MAGARCIE,TMP,0),U,2)=$P(SUB,U,2)
+"RTN","MAGGTID",233,0)
+ . Q
+"RTN","MAGGTID",234,0)
+ ;
+"RTN","MAGGTID",235,0)
+ ;--- Create cross-reference entries for the entry
+"RTN","MAGGTID",236,0)
+ S DA=MAGARCIE
+"RTN","MAGGTID",237,0)
+ S DIK="^MAG(2005.1," D IX1^DIK
+"RTN","MAGGTID",238,0)
+ Q
+"RTN","MAGGTID",239,0)
+DELFILE ;Delete image file on server if exists 
+"RTN","MAGGTID",240,0)
+ ;gek 3/21/2003  Changed to stop using FullRes Path for Abs,Big
+"RTN","MAGGTID",241,0)
+ ;   and only Delete .TXT and Alternates if Full is being deleted.
+"RTN","MAGGTID",242,0)
+ N X0,X1,X2,ALTEXT,ALTPATH,MAGXX,XBIG,MAGFILE2
+"RTN","MAGGTID",243,0)
+ N MAGPLC ; DBI - SEB 9/20/2002
+"RTN","MAGGTID",244,0)
+ ; MAGIEN IS ASSUMED TO BE DEFINED.
+"RTN","MAGGTID",245,0)
+ ; MAGXX         - This is IEN in ^MAG(2005, MAGFILEB Expects this to be defined.
+"RTN","MAGGTID",246,0)
+ ; MAGPLC        - "Place" of Full Res Image.  
+"RTN","MAGGTID",247,0)
+ ; ALTEXT        - Extension of the Alternate image file.
+"RTN","MAGGTID",248,0)
+ ; ALTPATH       - Full path of Alternate image file.
+"RTN","MAGGTID",249,0)
+ S X0=^MAG(2005,MAGIEN,0)
+"RTN","MAGGTID",250,0)
+ ;delete Full Res if one exists on Magnetic
+"RTN","MAGGTID",251,0)
+ I $P(X0,U,3) D
+"RTN","MAGGTID",252,0)
+ . S MAGXX=MAGIEN
+"RTN","MAGGTID",253,0)
+ . S MAGPLC=$$DA2PLC^MAGBAPIP(MAGIEN,"F")
+"RTN","MAGGTID",254,0)
+ . D VSTNOCP^MAGFILEB
+"RTN","MAGGTID",255,0)
+ . S X=$$DELETE^MAGBAPI(MAGFILE2,MAGPLC)
+"RTN","MAGGTID",256,0)
+ . ;Delete any other ALTernate files. ( TXT) 
+"RTN","MAGGTID",257,0)
+ . ;gek 3/31/03  Since ALT files are (for now) always on same server as Full
+"RTN","MAGGTID",258,0)
+ . ;    We only attempt to delete them here  (If we have a path to FullRes on Magnetic)
+"RTN","MAGGTID",259,0)
+ . S X2=0
+"RTN","MAGGTID",260,0)
+ . F  S X2=$O(^MAG(2006.1,MAGPLC,2,X2)) Q:'X2  D
+"RTN","MAGGTID",261,0)
+ . . S ALTEXT=$P(^MAG(2006.1,MAGPLC,2,X2,0),"^",1)             ;CR1023
+"RTN","MAGGTID",262,0)
+ . . S ALTPATH=MAGFILE2,$P(ALTPATH,".",$L(ALTPATH,"."))=ALTEXT ;CR1023 for FQDN issue
+"RTN","MAGGTID",263,0)
+ . . S X=$$DELETE^MAGBAPI(ALTPATH,MAGPLC)
+"RTN","MAGGTID",264,0)
+ . Q
+"RTN","MAGGTID",265,0)
+ ;
+"RTN","MAGGTID",266,0)
+ ;delete image abstract if one exists on Magnetic
+"RTN","MAGGTID",267,0)
+ I $P(X0,U,4) D
+"RTN","MAGGTID",268,0)
+ . S MAGXX=MAGIEN
+"RTN","MAGGTID",269,0)
+ . D ABSNOCP^MAGFILEB
+"RTN","MAGGTID",270,0)
+ . S X=$$DELETE^MAGBAPI(MAGFILE2,$$DA2PLC^MAGBAPIP(MAGIEN,"A")) ; DBI - SEB 9/20/2002
+"RTN","MAGGTID",271,0)
+ ;
+"RTN","MAGGTID",272,0)
+ ;delete the big file if one exists on Magnetic
+"RTN","MAGGTID",273,0)
+ S XBIG=$G(^MAG(2005,MAGIEN,"FBIG"))
+"RTN","MAGGTID",274,0)
+ I $P(XBIG,U) D 
+"RTN","MAGGTID",275,0)
+ . S MAGXX=MAGIEN
+"RTN","MAGGTID",276,0)
+ . D BIGNOCP^MAGFILEB
+"RTN","MAGGTID",277,0)
+ . S X=$$DELETE^MAGBAPI(MAGFILE2,$$DA2PLC^MAGBAPIP(MAGIEN,"B")) ; DBI - SEB 9/20/2002
+"RTN","MAGGTID",278,0)
+ Q
+"RTN","MAGGTIG")
+0^7^B61207085
+"RTN","MAGGTIG",1,0)
+MAGGTIG ;WOIFO/GEK/SG/NST - MAGGT Image Get. Callbacks to Get Image lists ; 14 Sep 2010 10:15 AM
+"RTN","MAGGTIG",2,0)
+ ;;3.0;IMAGING;**8,48,93,117,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGGTIG",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGGTIG",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTIG",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGGTIG",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGGTIG",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGGTIG",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGGTIG",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGGTIG",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGGTIG",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGGTIG",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGGTIG",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGGTIG",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGGTIG",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGGTIG",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGGTIG",17,0)
+ ;;
+"RTN","MAGGTIG",18,0)
+ Q
+"RTN","MAGGTIG",19,0)
+GRPCOUNT(MAGRY,MAGIEN) ;
+"RTN","MAGGTIG",20,0)
+ S MAGRY=+$P($G(^MAG(2005,MAGIEN,1,0)),U,4)
+"RTN","MAGGTIG",21,0)
+ Q
+"RTN","MAGGTIG",22,0)
+IMAGES(MAGRY,MAGDFN) ;RPC [MAGG PAT IMAGES]
+"RTN","MAGGTIG",23,0)
+ ;  Call to return a list of images for a patient.
+"RTN","MAGGTIG",24,0)
+ ;   We are returning all images for a patient, Groups are returned
+"RTN","MAGGTIG",25,0)
+ ;   as one Image.
+"RTN","MAGGTIG",26,0)
+ ;   The Images are returned in Rev Chronological Order, latest image
+"RTN","MAGGTIG",27,0)
+ ;   first, oldest image last.
+"RTN","MAGGTIG",28,0)
+ ;   User can reorder at the workstation level.
+"RTN","MAGGTIG",29,0)
+ K MAGRY
+"RTN","MAGGTIG",30,0)
+ N Y,RDT,PRX,CT,IEN,GBLRET,MAGFILE
+"RTN","MAGGTIG",31,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+"RTN","MAGGTIG",32,0)
+ S MAGDFN=+MAGDFN
+"RTN","MAGGTIG",33,0)
+ ;  if no Images for the patient, then quit.
+"RTN","MAGGTIG",34,0)
+ I '$D(^MAG(2005,"APDTPX",MAGDFN)) S MAGRY(0)="1^0" Q
+"RTN","MAGGTIG",35,0)
+ ;   the "APDTPX" cross reference is :
+"RTN","MAGGTIG",36,0)
+ ;     "APDTPX",DFN,Rev Date,Procedure,MAGIEN )
+"RTN","MAGGTIG",37,0)
+ ;
+"RTN","MAGGTIG",38,0)
+ ;  we'll use @ notation, this'll work if an Array or a Global Array is begin returned
+"RTN","MAGGTIG",39,0)
+ S GBLRET=0
+"RTN","MAGGTIG",40,0)
+ S MAGRY="MAGRY"
+"RTN","MAGGTIG",41,0)
+ S CT=0,RDT=""
+"RTN","MAGGTIG",42,0)
+ F  S RDT=$O(^MAG(2005,"APDTPX",MAGDFN,RDT)) Q:'RDT  D
+"RTN","MAGGTIG",43,0)
+ . S PRX="" F  S PRX=$O(^MAG(2005,"APDTPX",MAGDFN,RDT,PRX)) Q:PRX=""  D
+"RTN","MAGGTIG",44,0)
+ . . S IEN=""
+"RTN","MAGGTIG",45,0)
+ . . F  S IEN=$O(^MAG(2005,"APDTPX",MAGDFN,RDT,PRX,IEN)) Q:'IEN  D
+"RTN","MAGGTIG",46,0)
+ . . . Q:$P($G(^MAG(2005,IEN,0)),"^",10)  ; CHILD OF GROUP
+"RTN","MAGGTIG",47,0)
+ . . . Q:$$ISDEL^MAGGI11(IEN)             ; Deleted image
+"RTN","MAGGTIG",48,0)
+ . . . S CT=CT+1
+"RTN","MAGGTIG",49,0)
+ . . . I (CT>100),'GBLRET D ARY2GLB
+"RTN","MAGGTIG",50,0)
+ . . . S MAGFILE=$$INFO^MAGGAII(IEN,"E")
+"RTN","MAGGTIG",51,0)
+ . . . S @MAGRY@(CT)="B2^"_MAGFILE
+"RTN","MAGGTIG",52,0)
+ S @MAGRY@(0)="1^"_CT
+"RTN","MAGGTIG",53,0)
+ Q
+"RTN","MAGGTIG",54,0)
+PHOTOS(MAGRY,MAGDFN) ;RPC [MAGG PAT PHOTOS]
+"RTN","MAGGTIG",55,0)
+ ; Call to return list of all Photo ID's on file for a patient.
+"RTN","MAGGTIG",56,0)
+ ;   We are returning all Photo ID images for a patient.
+"RTN","MAGGTIG",57,0)
+ ;   The Images are returned in Rev Chronological Order, latest image
+"RTN","MAGGTIG",58,0)
+ ;   first, oldest image last.
+"RTN","MAGGTIG",59,0)
+ K MAGRY
+"RTN","MAGGTIG",60,0)
+ N Y,RDT,PRX,CT,IEN,IENS,GBLRET,MAGFILE
+"RTN","MAGGTIG",61,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+"RTN","MAGGTIG",62,0)
+ S MAGDFN=+MAGDFN
+"RTN","MAGGTIG",63,0)
+ ;  if no Photo ID Images for the patient, then quit.
+"RTN","MAGGTIG",64,0)
+ I '$D(^MAG(2005,"APPXDT",MAGDFN,"PHOTO ID")) S MAGRY(0)="1^0" Q
+"RTN","MAGGTIG",65,0)
+ ;   the "APPXDT" cross reference is :
+"RTN","MAGGTIG",66,0)
+ ;     "APPXDT",DFN,Procedure,Rev Date,MAGIEN )
+"RTN","MAGGTIG",67,0)
+ ;
+"RTN","MAGGTIG",68,0)
+ ;  we'll use @ notation, this'll work if an Array or a Global Array is begin returned
+"RTN","MAGGTIG",69,0)
+ S GBLRET=0
+"RTN","MAGGTIG",70,0)
+ S MAGRY="MAGRY"
+"RTN","MAGGTIG",71,0)
+ S CT=0
+"RTN","MAGGTIG",72,0)
+ S RDT="" F  S RDT=$O(^MAG(2005,"APPXDT",MAGDFN,"PHOTO ID",RDT)) Q:RDT=""  D
+"RTN","MAGGTIG",73,0)
+ . S IEN=""
+"RTN","MAGGTIG",74,0)
+ . F  S IEN=$O(^MAG(2005,"APPXDT",MAGDFN,"PHOTO ID",RDT,IEN)) Q:'IEN  D
+"RTN","MAGGTIG",75,0)
+ . . ;Q:$P($G(^MAG(2005,IEN,0)),"^",10)  ; CHILD OF GROUP
+"RTN","MAGGTIG",76,0)
+ . . Q:$$ISDEL^MAGGI11(IEN)             ; Deleted image
+"RTN","MAGGTIG",77,0)
+ . . S IENS(IEN)=""
+"RTN","MAGGTIG",78,0)
+ . . Q
+"RTN","MAGGTIG",79,0)
+ . Q
+"RTN","MAGGTIG",80,0)
+ S IEN="" F  S IEN=$O(IENS(IEN),-1) Q:'IEN  D
+"RTN","MAGGTIG",81,0)
+ . S CT=CT+1
+"RTN","MAGGTIG",82,0)
+ . S MAGFILE=$$INFO^MAGGAII(IEN,"E")
+"RTN","MAGGTIG",83,0)
+ . S @MAGRY@(CT)="B2^"_MAGFILE
+"RTN","MAGGTIG",84,0)
+ . Q
+"RTN","MAGGTIG",85,0)
+ S @MAGRY@(0)="1^"_CT
+"RTN","MAGGTIG",86,0)
+ Q
+"RTN","MAGGTIG",87,0)
+EACHIMG(MAGRY,MAGDFN,MAX) ;RPC [MAGG PAT EACH IMAGE]
+"RTN","MAGGTIG",88,0)
+ ; Call Returns list of recent Patient images.
+"RTN","MAGGTIG",89,0)
+ ;   MAX = maximum number of images to return
+"RTN","MAGGTIG",90,0)
+ ;   MAGDFN = patient DFN
+"RTN","MAGGTIG",91,0)
+ ;   We are returning all images for a patient, and listing each image.
+"RTN","MAGGTIG",92,0)
+ ;   This is called from Capture Window where groups aren't listed.
+"RTN","MAGGTIG",93,0)
+ ;   The Images are returned in Rev Chronological Order, latest image
+"RTN","MAGGTIG",94,0)
+ ;   first, oldest image last.
+"RTN","MAGGTIG",95,0)
+ ;   User can decide how many of the most recent they want to list.
+"RTN","MAGGTIG",96,0)
+ K MAGRY
+"RTN","MAGGTIG",97,0)
+ N Y,RDT,PRX,CT,IEN,GBLRET
+"RTN","MAGGTIG",98,0)
+ S MAX=$S($G(MAX)>0:MAX,1:50) ; 50 IS DEFAULT
+"RTN","MAGGTIG",99,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERRG^MAGGTERR"
+"RTN","MAGGTIG",100,0)
+ S MAGDFN=+MAGDFN
+"RTN","MAGGTIG",101,0)
+ ;  if no Images for the patient, then quit.
+"RTN","MAGGTIG",102,0)
+ I '$D(^MAG(2005,"AC",MAGDFN)) S MAGRY(0)="1^0" Q
+"RTN","MAGGTIG",103,0)
+ ;   the "AC" cross reference is :
+"RTN","MAGGTIG",104,0)
+ ;     "AC",DFN,IEN )
+"RTN","MAGGTIG",105,0)
+ ;
+"RTN","MAGGTIG",106,0)
+ ;  we'll use @ notation, this'll work if an Array or a Global Array is begin returned
+"RTN","MAGGTIG",107,0)
+ S GBLRET=0
+"RTN","MAGGTIG",108,0)
+ S MAGRY="MAGRY"
+"RTN","MAGGTIG",109,0)
+ S CT=0,IEN=""
+"RTN","MAGGTIG",110,0)
+ F  S IEN=$O(^MAG(2005,"AC",MAGDFN,IEN),-1) Q:'IEN  D  Q:(CT>MAX)
+"RTN","MAGGTIG",111,0)
+ . Q:$P($G(^MAG(2005,IEN,0)),U,6)=11  ; NOT LISTING GROUP ENTRIES
+"RTN","MAGGTIG",112,0)
+ . Q:$$ISDEL^MAGGI11(IEN)             ; Skip deleted images
+"RTN","MAGGTIG",113,0)
+ . S CT=CT+1
+"RTN","MAGGTIG",114,0)
+ . I (CT>100),'GBLRET D ARY2GLB
+"RTN","MAGGTIG",115,0)
+ . S @MAGRY@(CT)=$$CAPINFO(IEN)
+"RTN","MAGGTIG",116,0)
+ S @MAGRY@(0)="1^"_CT
+"RTN","MAGGTIG",117,0)
+ Q
+"RTN","MAGGTIG",118,0)
+CAPINFO(IEN) ; RETURN A STRING OF INFORMATION ABOUT THE IMAGE
+"RTN","MAGGTIG",119,0)
+ ; This is for Capture App
+"RTN","MAGGTIG",120,0)
+ N RETY,N2,X,MAGFILE
+"RTN","MAGGTIG",121,0)
+ S MAGFILE=$$INFO^MAGGAII(IEN,"E")
+"RTN","MAGGTIG",122,0)
+ S RETY=$P(MAGFILE,U,1,7)_U
+"RTN","MAGGTIG",123,0)
+ S N2=$G(^MAG(2005,IEN,2))
+"RTN","MAGGTIG",124,0)
+ S RETY=RETY_$$FMTE^XLFDT($P(N2,U,1),"5P")_U
+"RTN","MAGGTIG",125,0)
+ S X=$P(RETY,U,5),X=$$FMTE^XLFDT(X,"5"),X=$P(X,"@")
+"RTN","MAGGTIG",126,0)
+ S $P(RETY,U,5)=X
+"RTN","MAGGTIG",127,0)
+ Q RETY
+"RTN","MAGGTIG",128,0)
+ Q
+"RTN","MAGGTIG",129,0)
+ARY2GLB ; Image count is getting big, switch from array to Global return type
+"RTN","MAGGTIG",130,0)
+ S GBLRET=1
+"RTN","MAGGTIG",131,0)
+ K ^TMP("MAGGTIG",$J)
+"RTN","MAGGTIG",132,0)
+ S MAGRY=""
+"RTN","MAGGTIG",133,0)
+ M ^TMP("MAGGTIG",$J)=MAGRY
+"RTN","MAGGTIG",134,0)
+ K MAGRY
+"RTN","MAGGTIG",135,0)
+ S X=$$RTRNFMT^XWBLIB("GLOBAL ARRAY",1)
+"RTN","MAGGTIG",136,0)
+ S MAGRY=$NA(^TMP("MAGGTIG",$J))
+"RTN","MAGGTIG",137,0)
+ Q
+"RTN","MAGGTIG",138,0)
+GROUP(MAGRY,MAGIEN,NOCHK,FLAGS) ;RPC [MAGG GROUP IMAGES]
+"RTN","MAGGTIG",139,0)
+ ; CalL to Return image list of a Group.
+"RTN","MAGGTIG",140,0)
+ ; MAGIEN        =  the entry in MAG(2005 we assume it is a group.
+"RTN","MAGGTIG",141,0)
+ ; NOCHK         =  flag - Do (or) Not Do QI Check.
+"RTN","MAGGTIG",142,0)
+ N Y,MAGDFN,I,MAGCHILD,MAGCT,MAGTMPAR,MSGX,MAGQI,MAGY,MAGFILE
+"RTN","MAGGTIG",143,0)
+ N MAGNOCHK
+"RTN","MAGGTIG",144,0)
+ S FLAGS=$G(FLAGS)
+"RTN","MAGGTIG",145,0)
+ ;Test BigGroup S BKG=+$G(BKG)
+"RTN","MAGGTIG",146,0)
+ ;Test BigGroup K ^TMP("MAGBGRP")
+"RTN","MAGGTIG",147,0)
+ S MAGIEN=+MAGIEN,MSGX=""
+"RTN","MAGGTIG",148,0)
+ S NOCHK=+$G(NOCHK)
+"RTN","MAGGTIG",149,0)
+ I '$D(^MAG(2005,MAGIEN,0)) S MAGRY(0)="0^ERROR: Image entry "_MAGIEN_" Doesn't exist" Q
+"RTN","MAGGTIG",150,0)
+ I $O(^MAG(2005,MAGIEN,1,0))="" S MAGRY(0)="0^ERROR: There are NO Images defined for this Group" Q
+"RTN","MAGGTIG",151,0)
+ ;
+"RTN","MAGGTIG",152,0)
+ ;  we'll use @ notation, this'll work if an Array or a Global Array is being returned
+"RTN","MAGGTIG",153,0)
+ S MAGRY="MAGRY"
+"RTN","MAGGTIG",154,0)
+ ;
+"RTN","MAGGTIG",155,0)
+ ;  if we are switching to a Global Array because too many images, 
+"RTN","MAGGTIG",156,0)
+ ;  then set MAGRY and clean it up first
+"RTN","MAGGTIG",157,0)
+ ;I +$P($G(^MAG(2005,MAGIEN,1,0)),U,4)>100
+"RTN","MAGGTIG",158,0)
+ D
+"RTN","MAGGTIG",159,0)
+ . S X=$$RTRNFMT^XWBLIB("GLOBAL ARRAY",1)
+"RTN","MAGGTIG",160,0)
+ . S MAGRY=$NA(^TMP("MAGGTIG",$J))
+"RTN","MAGGTIG",161,0)
+ . K @MAGRY
+"RTN","MAGGTIG",162,0)
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+"RTN","MAGGTIG",163,0)
+ ;
+"RTN","MAGGTIG",164,0)
+ ;Test BigGroup I $D(^TMP("MAGBGRP",MAGIEN)) D  Q
+"RTN","MAGGTIG",165,0)
+ ;Test BigGroup . M ^TMP("MAGGTIG",$J)=^TMP("MAGBGRP",MAGIEN)
+"RTN","MAGGTIG",166,0)
+ ;Test BigGroup . Q
+"RTN","MAGGTIG",167,0)
+ ; integrity check, stop if group entry is questionable
+"RTN","MAGGTIG",168,0)
+ ;  NOCHK is sent from Image Delete window (so user with DELETE and SYSTEM keys)
+"RTN","MAGGTIG",169,0)
+ ;    can see group abstracts before the group is deleted.
+"RTN","MAGGTIG",170,0)
+ I 'NOCHK D CHK^MAGGSQI(.MAGQI,MAGIEN) I 'MAGQI(0) D  Q
+"RTN","MAGGTIG",171,0)
+ . S @MAGRY@(0)=MAGQI(0)
+"RTN","MAGGTIG",172,0)
+ ;
+"RTN","MAGGTIG",173,0)
+ S MAGNOCHK=1
+"RTN","MAGGTIG",174,0)
+ S I=0,MAGCT=0,MAGDFN=$P(^MAG(2005,MAGIEN,0),"^",7)
+"RTN","MAGGTIG",175,0)
+ I $D(^MAG(2005,MAGIEN,1,"ADCM")) D
+"RTN","MAGGTIG",176,0)
+ . N INUM,SNUM
+"RTN","MAGGTIG",177,0)
+ . S INUM="" ; GEK 4/3/00  changed Q:'INUM  to  Q:INUM="" below
+"RTN","MAGGTIG",178,0)
+ . F  S INUM=$O(^MAG(2005,MAGIEN,1,"ADCM",INUM)) Q:INUM=""  D
+"RTN","MAGGTIG",179,0)
+ . . S SNUM=""
+"RTN","MAGGTIG",180,0)
+ . . F  S SNUM=$O(^MAG(2005,MAGIEN,1,"ADCM",INUM,SNUM)) Q:SNUM=""  D
+"RTN","MAGGTIG",181,0)
+ . . . S MAGCHILD=""
+"RTN","MAGGTIG",182,0)
+ . . . F  S MAGCHILD=$O(^MAG(2005,MAGIEN,1,"ADCM",INUM,SNUM,MAGCHILD)) Q:'MAGCHILD  D
+"RTN","MAGGTIG",183,0)
+ . . . . S MAGCT=MAGCT+1
+"RTN","MAGGTIG",184,0)
+ . . . . I '$D(^MAG(2005,MAGCHILD)) D INVALID(MAGCHILD,.MSGX) S @MAGRY@(MAGCT)=MSGX Q
+"RTN","MAGGTIG",185,0)
+ . . . . ; Added for MAGQI integrity check
+"RTN","MAGGTIG",186,0)
+ . . . . K MAGY
+"RTN","MAGGTIG",187,0)
+ . . . . D CHKGRPCH^MAGGSQI(.MAGY,MAGIEN,MAGDFN,MAGCHILD) I 'MAGY D INVCH(.MAGY,MAGCHILD) S @MAGRY@(MAGCT)=MAGY Q
+"RTN","MAGGTIG",188,0)
+ . . . . S MAGTMPAR(MAGCHILD)=""
+"RTN","MAGGTIG",189,0)
+ . . . . S MAGFILE=$$INFO^MAGGAII(MAGCHILD,"E")
+"RTN","MAGGTIG",190,0)
+ . . . . S $P(MAGFILE,U,12,13)=INUM_U_SNUM
+"RTN","MAGGTIG",191,0)
+ . . . . S @MAGRY@(MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",192,0)
+ . . . . ;Test BigGroup I 'BKG S @MAGRY@(MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",193,0)
+ . . . . ;Test BigGroup E  S ^TMP("MAGBGRP",MAGIEN,MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",194,0)
+ ;GEK 4/8/99 MODIFIED, because now we have groups, that some entries 
+"RTN","MAGGTIG",195,0)
+ ;                     have dicom numbers and some don't.  So we have to go through the group again.
+"RTN","MAGGTIG",196,0)
+ ;Test BigGroup - Need a Pre/Post init, that fixes Groups where some entries have Dicom values, and some 
+"RTN","MAGGTIG",197,0)
+ ;         don't.  In such a group, we will make Dicom values for the images that don't have them.
+"RTN","MAGGTIG",198,0)
+ ;         Testing in Washington - this will take hours.
+"RTN","MAGGTIG",199,0)
+ ;
+"RTN","MAGGTIG",200,0)
+ S I=0
+"RTN","MAGGTIG",201,0)
+ F  S I=$O(^MAG(2005,MAGIEN,1,I)) Q:'I  D
+"RTN","MAGGTIG",202,0)
+ . S MAGCHILD=+^MAG(2005,MAGIEN,1,I,0)
+"RTN","MAGGTIG",203,0)
+ . I $D(MAGTMPAR(MAGCHILD)) Q
+"RTN","MAGGTIG",204,0)
+ . S MAGCT=MAGCT+1
+"RTN","MAGGTIG",205,0)
+ . I '$D(^MAG(2005,MAGCHILD)) D INVALID(MAGCHILD,.MSGX) S @MAGRY@(MAGCT)=MSGX Q
+"RTN","MAGGTIG",206,0)
+ . ;Added for MAGQI integrity check
+"RTN","MAGGTIG",207,0)
+ . K MAGY
+"RTN","MAGGTIG",208,0)
+ . D CHKGRPCH^MAGGSQI(.MAGY,MAGIEN,MAGDFN,MAGCHILD) I 'MAGY D INVCH(.MAGY,MAGCHILD) S @MAGRY@(MAGCT)=MAGY Q
+"RTN","MAGGTIG",209,0)
+ . S MAGFILE=$$INFO^MAGGAII(MAGCHILD,"E")
+"RTN","MAGGTIG",210,0)
+ . S @MAGRY@(MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",211,0)
+ . ;Test BigGroup        I 'BKG S @MAGRY@(MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",212,0)
+ . ;Test BigGroup        E  S ^TMP("MAGBGRP",MAGIEN,MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",213,0)
+ I FLAGS["D" D  ; Patch 117
+"RTN","MAGGTIG",214,0)
+ . ; Get Deleted images
+"RTN","MAGGTIG",215,0)
+ . S MAGCHILD=0
+"RTN","MAGGTIG",216,0)
+ . F  S MAGCHILD=$O(^MAG(2005.1,"AGP",MAGIEN,MAGCHILD)) Q:'MAGCHILD  D
+"RTN","MAGGTIG",217,0)
+ . . I ($P(^MAG(2005.1,MAGCHILD,100),"^",8)=13) Q  ;If ImageNeverExisted Quit.
+"RTN","MAGGTIG",218,0)
+ . . S MAGCT=MAGCT+1
+"RTN","MAGGTIG",219,0)
+ . . S MAGFILE=$$INFO^MAGGAII(MAGCHILD,"D")
+"RTN","MAGGTIG",220,0)
+ . . S @MAGRY@(MAGCT)="B2^"_MAGFILE
+"RTN","MAGGTIG",221,0)
+ . . Q
+"RTN","MAGGTIG",222,0)
+ S @MAGRY@(0)="1^"_MAGCT
+"RTN","MAGGTIG",223,0)
+ Q
+"RTN","MAGGTIG",224,0)
+INVALID(MAGX,MAGZ) ;
+"RTN","MAGGTIG",225,0)
+ ;
+"RTN","MAGGTIG",226,0)
+ I $$ISDEL^MAGGI11(MAGX)  S MAGZ="B2^"_MAGX_"^^^INVALID Reference to Deleted Image^^66^^^^^^^^"
+"RTN","MAGGTIG",227,0)
+ E  S MAGZ="B2^"_MAGX_"^^^INVALID Image ID (IEN)^^67^^^^^^^^"
+"RTN","MAGGTIG",228,0)
+ ;Added with MAGQI integrity check, 
+"RTN","MAGGTIG",229,0)
+ S MAGTMPAR(MAGX)=""
+"RTN","MAGGTIG",230,0)
+ Q
+"RTN","MAGGTIG",231,0)
+INVCH(MSG,CHILD) ;Added for MAGQI integrity check
+"RTN","MAGGTIG",232,0)
+ ; MSG is passed by reference, we create a MAGFILE equivalent and pass it back.
+"RTN","MAGGTIG",233,0)
+ N EMSG
+"RTN","MAGGTIG",234,0)
+ S EMSG=$P(MSG,U,2)
+"RTN","MAGGTIG",235,0)
+ K MSG
+"RTN","MAGGTIG",236,0)
+ S $P(MSG,U)=CHILD
+"RTN","MAGGTIG",237,0)
+ ; remove dependency on c:\program files.   with   .\bmp\
+"RTN","MAGGTIG",238,0)
+ S $P(MSG,U,2,3)="-1~Questionable Data Integrity^.\bmp\imageQA.bmp"
+"RTN","MAGGTIG",239,0)
+ S $P(MSG,U,4)=$P($G(^MAG(2005,CHILD,2)),U,4)
+"RTN","MAGGTIG",240,0)
+ S $P(MSG,U,6)=$S(($P(MSG,U,6)'=11):"99",1:11)
+"RTN","MAGGTIG",241,0)
+ ;this stops Delphi App from changing Abstract BMP to OFFLINE IMAGE
+"RTN","MAGGTIG",242,0)
+ S $P(MSG,U,10)="M"
+"RTN","MAGGTIG",243,0)
+ ;Send the error message
+"RTN","MAGGTIG",244,0)
+ S $P(MSG,U,17)=EMSG
+"RTN","MAGGTIG",245,0)
+ S MSG="B2^"_MSG
+"RTN","MAGGTIG",246,0)
+ S MAGTMPAR(CHILD)=""
+"RTN","MAGGTIG",247,0)
+ Q
+"RTN","MAGIP150")
+0^1^B4214952
+"RTN","MAGIP150",1,0)
+MAGIP150 ;WOIFO/GEK - INSTALL CODE FOR MAG*3.0*150 ImageNeverExisted ; 25 May 2014  2:23 PM
+"RTN","MAGIP150",2,0)
+ ;;3.0;IMAGING;**150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGIP150",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGIP150",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP150",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGIP150",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGIP150",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGIP150",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGIP150",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGIP150",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGIP150",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGIP150",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGIP150",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGIP150",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGIP150",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGIP150",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGIP150",17,0)
+ ;;
+"RTN","MAGIP150",18,0)
+ ; There are no environment checks here but the MAGIP150 has to be
+"RTN","MAGIP150",19,0)
+ ; referenced by the "Environment Check Routine" field of the KIDS
+"RTN","MAGIP150",20,0)
+ ; build so that entry points of the routine are available to the
+"RTN","MAGIP150",21,0)
+ ; KIDS during all installation phases.
+"RTN","MAGIP150",22,0)
+ ;
+"RTN","MAGIP150",23,0)
+ Q
+"RTN","MAGIP150",24,0)
+ ;
+"RTN","MAGIP150",25,0)
+ ;+++++ INSTALLATION ERROR HANDLING
+"RTN","MAGIP150",26,0)
+ERROR ;
+"RTN","MAGIP150",27,0)
+ S:$D(XPDNM) XPDABORT=1
+"RTN","MAGIP150",28,0)
+ ;--- Display the messages and store them to the INSTALL file
+"RTN","MAGIP150",29,0)
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+"RTN","MAGIP150",30,0)
+ Q
+"RTN","MAGIP150",31,0)
+ ;
+"RTN","MAGIP150",32,0)
+ ;***** POST-INSTALL CODE
+"RTN","MAGIP150",33,0)
+POS ;
+"RTN","MAGIP150",34,0)
+ N CALLBACK
+"RTN","MAGIP150",35,0)
+ D CLEAR^MAGUERR(1)
+"RTN","MAGIP150",36,0)
+ ;
+"RTN","MAGIP150",37,0)
+ ;--- Link new remote procedures to the Broker context option
+"RTN","MAGIP150",38,0)
+ ;*** None for 150  **
+"RTN","MAGIP150",39,0)
+ ;S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAG WINDOWS"))
+"RTN","MAGIP150",40,0)
+ ;I $$CP^MAGKIDS("MAG ATTACH RPCS",CALLBACK)<0  D ERROR  Q
+"RTN","MAGIP150",41,0)
+ ;
+"RTN","MAGIP150",42,0)
+ ;
+"RTN","MAGIP150",43,0)
+ ;--- Misc Updates
+"RTN","MAGIP150",44,0)
+ ;*** None for 150  **
+"RTN","MAGIP150",45,0)
+ ;I $$CP^MAGKIDS("MAG 150 MISC UPDATES ","$$UPDATE^"_$T(+0))<0 D ERROR Q
+"RTN","MAGIP150",46,0)
+ ;
+"RTN","MAGIP150",47,0)
+ ;--- Send the notification e-mail
+"RTN","MAGIP150",48,0)
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+"RTN","MAGIP150",49,0)
+ D INS^MAGQBUT4(XPDNM,DUZ,$$NOW^XLFDT,XPDA)
+"RTN","MAGIP150",50,0)
+ ;
+"RTN","MAGIP150",51,0)
+ Q
+"RTN","MAGIP150",52,0)
+ ;
+"RTN","MAGIP150",53,0)
+ ;***** PRE-INSTALL CODE
+"RTN","MAGIP150",54,0)
+PRE ;
+"RTN","MAGIP150",55,0)
+ ;
+"RTN","MAGIP150",56,0)
+ Q
+"RTN","MAGLOG")
+0^5^B12957603
+"RTN","MAGLOG",1,0)
+MAGLOG ;WOIFO/RED,SRR,MLH - Log image access ;
+"RTN","MAGLOG",2,0)
+ ;;3.0;IMAGING;**17,8,20,59,83,39,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGLOG",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGLOG",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGLOG",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGLOG",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGLOG",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGLOG",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGLOG",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGLOG",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGLOG",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGLOG",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGLOG",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGLOG",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGLOG",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGLOG",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGLOG",17,0)
+ ;;
+"RTN","MAGLOG",18,0)
+ Q
+"RTN","MAGLOG",19,0)
+ ; CALL WITH:
+"RTN","MAGLOG",20,0)
+ ; MAGIMT = TYPE OF ACCESS
+"RTN","MAGLOG",21,0)
+ ; DUZ = USER NO.
+"RTN","MAGLOG",22,0)
+ ; MAGO = IMAGE SUBSCRIPT NO.
+"RTN","MAGLOG",23,0)
+ ; MAGPACK = USER INTERFACE PACKAGE
+"RTN","MAGLOG",24,0)
+ ; MAGDFN = PATIENT NO.
+"RTN","MAGLOG",25,0)
+ ; MAGCT = TOTAL IMAGE COUNT
+"RTN","MAGLOG",26,0)
+ ; MAGAD = ADDITIONAL DATA
+"RTN","MAGLOG",27,0)
+ ; 
+"RTN","MAGLOG",28,0)
+ ; New MAGIMT = NOIMAGE  - Image Entry moved to Audit File. "Image Never Existed" ; p150
+"RTN","MAGLOG",29,0)
+ Q
+"RTN","MAGLOG",30,0)
+ENTRY(MAGIMT,MAGDUZ,MAGO,MAGPACK,MAGDFN,MAGCT,MAGAD) ;
+"RTN","MAGLOG",31,0)
+ I '$D(MAGSYS) S MAGSYS=^%ZOSF("VOL")
+"RTN","MAGLOG",32,0)
+ N MAGC,MSYS,MAGSITE,SITE,NOW
+"RTN","MAGLOG",33,0)
+ S MSYS=$$UP^XLFSTR(MAGSYS)
+"RTN","MAGLOG",34,0)
+ I (MSYS["UNKNOWN"),($D(MAGJOB("WRKSIEN"))) S MSYS=$P(^MAG(2006.81,MAGJOB("WRKSIEN"),0),"^",1)
+"RTN","MAGLOG",35,0)
+ L +^MAG(2006.95,0):10 E  Q  ;entries were being overwritten.
+"RTN","MAGLOG",36,0)
+ S MAGC=$P(^MAG(2006.95,0),"^",3)+1
+"RTN","MAGLOG",37,0)
+ S $P(^MAG(2006.95,0),"^",3,4)=MAGC_"^"_MAGC
+"RTN","MAGLOG",38,0)
+ L -^MAG(2006.95,0)
+"RTN","MAGLOG",39,0)
+ S NOW=$$NOW^XLFDT
+"RTN","MAGLOG",40,0)
+ ;   FLD #'s            .01         1                2          3          4             5         6       7          8               9  
+"RTN","MAGLOG",41,0)
+ S ^MAG(2006.95,MAGC,0)=MAGC_"^"_$G(MAGIMT)_"^"_$G(MAGDUZ)_"^"_MAGO_"^"_MAGPACK_"^"_MSYS_"^"_NOW_"^"_MAGDFN_"^"_MAGCT_"^"_+$G(MAGJOB("SESSION"))
+"RTN","MAGLOG",42,0)
+ S SITE=$$SITE(""),MAGSITE=$P(SITE,"^",2)
+"RTN","MAGLOG",43,0)
+ S $P(^MAG(2006.95,MAGC,0),"^",11)=$P(SITE,"^")
+"RTN","MAGLOG",44,0)
+ S:$G(MAGAD)'="" ^MAG(2006.95,MAGC,100)=MAGAD
+"RTN","MAGLOG",45,0)
+ S ^MAG(2006.95,"B",MAGC,MAGC)=""
+"RTN","MAGLOG",46,0)
+ S ^MAG(2006.95,"AC",NOW,MAGC)=""
+"RTN","MAGLOG",47,0)
+ S ^MAG(2006.95,"C",MAGSITE,NOW,MAGC)=""
+"RTN","MAGLOG",48,0)
+ D ACCESS(MAGO) ; This should be here.  Can now search 2006.95 from "Last Access Date" to "Capture Date" to
+"RTN","MAGLOG",49,0)
+ ; get all Actions logged. We Don't have to search entire Image File.
+"RTN","MAGLOG",50,0)
+ I $G(MAGJOB("SESSION")) S ^MAG(2006.95,"AS",+$G(MAGJOB("SESSION")),MAGC)=""
+"RTN","MAGLOG",51,0)
+ Q
+"RTN","MAGLOG",52,0)
+ACCESS(MAGO) ; Update Field "Last Access Date" in Image File.
+"RTN","MAGLOG",53,0)
+ Q:'$G(MAGO)
+"RTN","MAGLOG",54,0)
+ I '$D(^MAG(2005,MAGO,0)) D  Q
+"RTN","MAGLOG",55,0)
+ . I $D(^MAG(2005.1,MAGO,0)) S $P(^MAG(2005.1,MAGO,0),"^",9)=$$NOW^XLFDT
+"RTN","MAGLOG",56,0)
+ . Q
+"RTN","MAGLOG",57,0)
+ S $P(^MAG(2005,MAGO,0),"^",9)=$$NOW^XLFDT
+"RTN","MAGLOG",58,0)
+ Q
+"RTN","MAGLOG",59,0)
+SITE(RETURN) ;Set SITE to either image acquisition field or the user's division or default to Kernel parameter.
+"RTN","MAGLOG",60,0)
+ ; SITE is the division value and MAGSITE is the value for it's corresponding value in file 2006.1
+"RTN","MAGLOG",61,0)
+ ; either an Imaging site entry or an associated institution.
+"RTN","MAGLOG",62,0)
+ N INST,SITE,MAGSITE
+"RTN","MAGLOG",63,0)
+ S INST=$$KSP^XUPARAM("INST"),MAGSITE="",RETURN=""
+"RTN","MAGLOG",64,0)
+ I $G(MAGO) D
+"RTN","MAGLOG",65,0)
+ . I $D(^MAG(2005,MAGO,0)),$D(^MAG(2005,MAGO,100)) S SITE=$P(^(100),"^",3)
+"RTN","MAGLOG",66,0)
+ . E  I $D(^MAG(2005.1,MAGO,0)),$D(^MAG(2005.1,MAGO,100)) S SITE=$P(^(100),"^",3)
+"RTN","MAGLOG",67,0)
+ . Q
+"RTN","MAGLOG",68,0)
+ I '+$G(SITE),$G(MAGDUZ) D 
+"RTN","MAGLOG",69,0)
+ . I $G(DUZ(2)),$D(^MAG(2006.1,"B",DUZ(2))) S SITE=DUZ(2),MAGSITE=$$PLACE^MAGBAPI(SITE) Q
+"RTN","MAGLOG",70,0)
+ . S SITE=$$FINDSITE^MAGQE7(MAGDUZ)
+"RTN","MAGLOG",71,0)
+ . Q
+"RTN","MAGLOG",72,0)
+ I '+$G(SITE) S SITE=INST  ; ;Last default use the Kernel parameters.
+"RTN","MAGLOG",73,0)
+ I 'MAGSITE S MAGSITE=$S($D(^MAG(2006.1,"B",+SITE)):SITE,1:INST) S MAGSITE=$$PLACE^MAGBAPI(MAGSITE)
+"RTN","MAGLOG",74,0)
+ S RETURN=SITE_"^"_MAGSITE
+"RTN","MAGLOG",75,0)
+ Q RETURN
+"RTN","MAGSIXG3")
+0^6^B84985360
+"RTN","MAGSIXG3",1,0)
+MAGSIXG3 ;WOIFO/SG/NST - LIST OF IMAGES RPCS (CALLBACK) ;
+"RTN","MAGSIXG3",2,0)
+ ;;3.0;IMAGING;**93,117,150**;Mar 19, 2002;Build 18;Jan 22, 2015
+"RTN","MAGSIXG3",3,0)
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","MAGSIXG3",4,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGSIXG3",5,0)
+ ;; | Property of the US Government.                                |
+"RTN","MAGSIXG3",6,0)
+ ;; | No permission to copy or redistribute this software is given. |
+"RTN","MAGSIXG3",7,0)
+ ;; | Use of unreleased versions of this software requires the user |
+"RTN","MAGSIXG3",8,0)
+ ;; | to execute a written test agreement with the VistA Imaging    |
+"RTN","MAGSIXG3",9,0)
+ ;; | Development Office of the Department of Veterans Affairs,     |
+"RTN","MAGSIXG3",10,0)
+ ;; | telephone (301) 734-0100.                                     |
+"RTN","MAGSIXG3",11,0)
+ ;; | The Food and Drug Administration classifies this software as  |
+"RTN","MAGSIXG3",12,0)
+ ;; | a medical device.  As such, it may not be changed in any way. |
+"RTN","MAGSIXG3",13,0)
+ ;; | Modifications to this software may result in an adulterated   |
+"RTN","MAGSIXG3",14,0)
+ ;; | medical device under 21CFR820, the use of which is considered |
+"RTN","MAGSIXG3",15,0)
+ ;; | to be a violation of US Federal Statutes.                     |
+"RTN","MAGSIXG3",16,0)
+ ;; +---------------------------------------------------------------+
+"RTN","MAGSIXG3",17,0)
+ ;;
+"RTN","MAGSIXG3",18,0)
+ ;
+"RTN","MAGSIXG3",19,0)
+ ; This routine uses the following ICRs:
+"RTN","MAGSIXG3",20,0)
+ ;
+"RTN","MAGSIXG3",21,0)
+ ; #3268         Read file #8925 (controlled)
+"RTN","MAGSIXG3",22,0)
+ ; #10060        Read file #200 (supported)
+"RTN","MAGSIXG3",23,0)
+ ; #2321         Read file #8925.1 (controlled)
+"RTN","MAGSIXG3",24,0)
+ ; #2937         Read file #8925 (controlled)
+"RTN","MAGSIXG3",25,0)
+ ;
+"RTN","MAGSIXG3",26,0)
+ ; LOCAL VARIABLE ------ DESCRIPTION
+"RTN","MAGSIXG3",27,0)
+ ;
+"RTN","MAGSIXG3",28,0)
+ ; MAGDATA               See the ^MAGSIXG4.
+"RTN","MAGSIXG3",29,0)
+ ;
+"RTN","MAGSIXG3",30,0)
+ ; TEMPORARY GLOBAL ---- DESCRIPTION
+"RTN","MAGSIXG3",31,0)
+ ;
+"RTN","MAGSIXG3",32,0)
+ ; ^TMP("MAGSIXG3",$J)   See the ^MAGSIXG4.
+"RTN","MAGSIXG3",33,0)
+ ;
+"RTN","MAGSIXG3",34,0)
+ Q
+"RTN","MAGSIXG3",35,0)
+ ;
+"RTN","MAGSIXG3",36,0)
+ ;+++++ APPENDS THE IMAGE ENTRY TO THE RPC RESULT ARRAY
+"RTN","MAGSIXG3",37,0)
+ ;
+"RTN","MAGSIXG3",38,0)
+ ; IMGIEN        IEN of the image record in file #2005 or #2005.1
+"RTN","MAGSIXG3",39,0)
+ ;
+"RTN","MAGSIXG3",40,0)
+ ; DATA          First half ("|"-piece) of the result item
+"RTN","MAGSIXG3",41,0)
+ ;
+"RTN","MAGSIXG3",42,0)
+ ; GRPCNTS       Group counts (result of the $$GRPCT^MAGGI14)
+"RTN","MAGSIXG3",43,0)
+ ;
+"RTN","MAGSIXG3",44,0)
+ ; FLAGS         Control flags for the $$INFO^MAGGAII
+"RTN","MAGSIXG3",45,0)
+ ;
+"RTN","MAGSIXG3",46,0)
+ ; Input Variables
+"RTN","MAGSIXG3",47,0)
+ ; ===============
+"RTN","MAGSIXG3",48,0)
+ ;   MAGDATA
+"RTN","MAGSIXG3",49,0)
+ ;
+"RTN","MAGSIXG3",50,0)
+ ; Output Variables
+"RTN","MAGSIXG3",51,0)
+ ; ================
+"RTN","MAGSIXG3",52,0)
+ ;   MAGDATA, MAGOUT
+"RTN","MAGSIXG3",53,0)
+ ;
+"RTN","MAGSIXG3",54,0)
+ ; Return Values
+"RTN","MAGSIXG3",55,0)
+ ; =============
+"RTN","MAGSIXG3",56,0)
+ ;           <0  Error descriptor (see the $$ERROR^MAGUERR)
+"RTN","MAGSIXG3",57,0)
+ ;            0  Success
+"RTN","MAGSIXG3",58,0)
+ ;
+"RTN","MAGSIXG3",59,0)
+APPEND(IMGIEN,DATA,GRPCNTS,FLAGS) ;
+"RTN","MAGSIXG3",60,0)
+ N IMGINFO,X
+"RTN","MAGSIXG3",61,0)
+ ;
+"RTN","MAGSIXG3",62,0)
+ ;--- Get the internal image data
+"RTN","MAGSIXG3",63,0)
+ S IMGINFO=$$INFO^MAGGAII(IMGIEN,FLAGS,GRPCNTS)
+"RTN","MAGSIXG3",64,0)
+ Q:IMGINFO<0 IMGINFO
+"RTN","MAGSIXG3",65,0)
+ S $P(DATA,U,2)=$P(IMGINFO,U,16)  ; Site Code
+"RTN","MAGSIXG3",66,0)
+ S $P(DATA,U,6)=$P(IMGINFO,U,14)  ; Number of images in the group
+"RTN","MAGSIXG3",67,0)
+ S $P(DATA,U,16)=$P(IMGINFO,U)    ; Image ID (IEN)
+"RTN","MAGSIXG3",68,0)
+ ;
+"RTN","MAGSIXG3",69,0)
+ ;--- Append the image data to the result array
+"RTN","MAGSIXG3",70,0)
+ S MAGDATA("RESCNT")=$G(MAGDATA("RESCNT"))+1
+"RTN","MAGSIXG3",71,0)
+ S $P(DATA,U)=MAGDATA("RESCNT")
+"RTN","MAGSIXG3",72,0)
+ S @MAGDATA@(MAGDATA("RESCNT")+1)=DATA_U_"|"_IMGINFO
+"RTN","MAGSIXG3",73,0)
+ Q:MAGDATA("RESCNT")<76 0  Q:MAGDATA["^" 0
+"RTN","MAGSIXG3",74,0)
+ ;
+"RTN","MAGSIXG3",75,0)
+ ;--- Image count is getting big, switch from
+"RTN","MAGSIXG3",76,0)
+ ;--- a local array to a global node
+"RTN","MAGSIXG3",77,0)
+ S MAGDATA=$NA(^TMP("MAGSIXG1",$J))
+"RTN","MAGSIXG3",78,0)
+ K @MAGDATA  M @MAGDATA=MAGOUT
+"RTN","MAGSIXG3",79,0)
+ S X=$$RTRNFMT^XWBLIB("GLOBAL ARRAY",1)
+"RTN","MAGSIXG3",80,0)
+ K MAGOUT  S MAGOUT=MAGDATA
+"RTN","MAGSIXG3",81,0)
+ Q 0
+"RTN","MAGSIXG3",82,0)
+ ;
+"RTN","MAGSIXG3",83,0)
+ ;+++++ PERFORMS SPECIAL CONVERSION OF THE DATE/TIME
+"RTN","MAGSIXG3",84,0)
+DTE(DTI) ;
+"RTN","MAGSIXG3",85,0)
+ N X  S X=$$FMTE^XLFDT(DTI,"5Z")
+"RTN","MAGSIXG3",86,0)
+ Q $P(X,"@")_" "_$S($P(X,"@",2)'="":$P(X,"@",2),1:"00:01")
+"RTN","MAGSIXG3",87,0)
+ ;
+"RTN","MAGSIXG3",88,0)
+ ;+++++ CALLBACK FUNCTION FOR IMAGE QUERY
+"RTN","MAGSIXG3",89,0)
+ ;
+"RTN","MAGSIXG3",90,0)
+ ; IMGIEN        IEN of the image record (file #2005 or #2005.1)
+"RTN","MAGSIXG3",91,0)
+ ;
+"RTN","MAGSIXG3",92,0)
+ ; FLAGS         Parameters passed into the image query API
+"RTN","MAGSIXG3",93,0)
+ ; .MAGDATA      ($$QUERY^MAGGI13). See the GETIMGS^MAGSIXG1
+"RTN","MAGSIXG3",94,0)
+ ;               for details.
+"RTN","MAGSIXG3",95,0)
+ ;
+"RTN","MAGSIXG3",96,0)
+ ; Input Variables
+"RTN","MAGSIXG3",97,0)
+ ; ===============
+"RTN","MAGSIXG3",98,0)
+ ;   MAGJOB, MAGOUT
+"RTN","MAGSIXG3",99,0)
+ ;
+"RTN","MAGSIXG3",100,0)
+ ; Output Variables
+"RTN","MAGSIXG3",101,0)
+ ; ================
+"RTN","MAGSIXG3",102,0)
+ ;   MAGJOB, MAGOUT, ^TMP("MAGSIXG3",$J,...)
+"RTN","MAGSIXG3",103,0)
+ ;
+"RTN","MAGSIXG3",104,0)
+ ; Return Values
+"RTN","MAGSIXG3",105,0)
+ ; =============
+"RTN","MAGSIXG3",106,0)
+ ;           <0  Error descriptor (see the $$ERROR^MAGUERR)
+"RTN","MAGSIXG3",107,0)
+ ;            0  Continue
+"RTN","MAGSIXG3",108,0)
+ ;           >0  Terminate the query
+"RTN","MAGSIXG3",109,0)
+ ;
+"RTN","MAGSIXG3",110,0)
+QRYCBK(IMGIEN,FLAGS,MAGDATA) ;
+"RTN","MAGSIXG3",111,0)
+ N CAPTAPP,CLASS,EVT,FLTX,GROUP,GRPCNTS,IIFLAGS,IMGNODE
+"RTN","MAGSIXG3",112,0)
+ N ORIG,PKG,PTIEN,RC,SENSIMG,SKIP,SPEC,STATUS,TYPE
+"RTN","MAGSIXG3",113,0)
+ N X,X0,X01,X100,X2,X40
+"RTN","MAGSIXG3",114,0)
+ N MAGFOUND  ; temp loop flag
+"RTN","MAGSIXG3",115,0)
+ S IMGNODE=$$NODE^MAGGI11(IMGIEN)  Q:IMGNODE="" 0
+"RTN","MAGSIXG3",116,0)
+ ;=== Terminate the query when maximum number of records is reached
+"RTN","MAGSIXG3",117,0)
+ I MAGDATA("MAXNUM"),MAGDATA("RESCNT")'<MAGDATA("MAXNUM")  Q 1
+"RTN","MAGSIXG3",118,0)
+ ;
+"RTN","MAGSIXG3",119,0)
+ ;=== Skip, if a group member
+"RTN","MAGSIXG3",120,0)
+ S X0=$G(@IMGNODE@(0))
+"RTN","MAGSIXG3",121,0)
+ Q:$P(X0,U,10) 0         ; GROUP PARENT (14)
+"RTN","MAGSIXG3",122,0)
+ ;
+"RTN","MAGSIXG3",123,0)
+ ;=== Check who captured the image
+"RTN","MAGSIXG3",124,0)
+ S X2=$G(@IMGNODE@(2)),X=+$G(MAGDATA("SAVEDBY"))
+"RTN","MAGSIXG3",125,0)
+ I X  Q:$P(X2,U,2)'=X 0  ; IMAGE SAVE BY (8)
+"RTN","MAGSIXG3",126,0)
+ ;
+"RTN","MAGSIXG3",127,0)
+ ;=== Perform additional screening according to the image counts
+"RTN","MAGSIXG3",128,0)
+ S GRPCNTS=$$GRPCT^MAGGI14(IMGIEN)
+"RTN","MAGSIXG3",129,0)
+ S:GRPCNTS<0 GRPCNTS=""  ;??? Ignore errors
+"RTN","MAGSIXG3",130,0)
+ S GROUP=$$ISGRP^MAGGI11(IMGIEN)
+"RTN","MAGSIXG3",131,0)
+ S SKIP=0  D  Q:SKIP 0
+"RTN","MAGSIXG3",132,0)
+ . ;--- Check if the image entry references "child" images of
+"RTN","MAGSIXG3",133,0)
+ . ;    requested kind(s). Also, safeguard against a wrong object
+"RTN","MAGSIXG3",134,0)
+ . ;--- type in the group header.
+"RTN","MAGSIXG3",135,0)
+ . I $P(GRPCNTS,U,1)>0  S GROUP=1  Q:FLAGS["E"  ; Existing "children"
+"RTN","MAGSIXG3",136,0)
+ . I $P(GRPCNTS,U,2)>0  S GROUP=1  Q:FLAGS["D"  ; Deleted "children"
+"RTN","MAGSIXG3",137,0)
+ . ;--- Skip group headers that do not reference
+"RTN","MAGSIXG3",138,0)
+ . ;--- any "child" images of requested kind(s)
+"RTN","MAGSIXG3",139,0)
+ . I GROUP  S SKIP=1  Q
+"RTN","MAGSIXG3",140,0)
+ . ;--- If existing images are not requested, then
+"RTN","MAGSIXG3",141,0)
+ . ;--- skip existing standalone image entries
+"RTN","MAGSIXG3",142,0)
+ . I FLAGS'["E",'$$ISDEL^MAGGI11(IMGIEN) S SKIP=1 Q
+"RTN","MAGSIXG3",143,0)
+ . Q
+"RTN","MAGSIXG3",144,0)
+ ;
+"RTN","MAGSIXG3",145,0)
+ ;=== Load other data associated with the image
+"RTN","MAGSIXG3",146,0)
+ S X40=$G(@IMGNODE@(40)),X100=$G(@IMGNODE@(100))
+"RTN","MAGSIXG3",147,0)
+ S PTIEN=+$P(X0,U,7)      ; PATIENT (5)
+"RTN","MAGSIXG3",148,0)
+ S PKG=$P(X40,U)          ; PACKAGE INDEX (40)
+"RTN","MAGSIXG3",149,0)
+ S TYPE=$P(X40,U,3)       ; TYPE INDEX (42)
+"RTN","MAGSIXG3",150,0)
+ S EVT=$P(X40,U,4)        ; PROC/EVENT INDEX (43)
+"RTN","MAGSIXG3",151,0)
+ S SPEC=$P(X40,U,5)       ; SPEC/SUBSPEC INDEX (44)
+"RTN","MAGSIXG3",152,0)
+ S ORIG=$P(X40,U,6)       ; ORIGIN INDEX (45)
+"RTN","MAGSIXG3",153,0)
+ S:ORIG="" ORIG="V"       ; Show VA by default
+"RTN","MAGSIXG3",154,0)
+ S SENSIMG=+$P(X100,U,7)  ; CONTROLLED IMAGE (112)
+"RTN","MAGSIXG3",155,0)
+ S STATUS=$P(X100,U,8)    ; STATUS(113)
+"RTN","MAGSIXG3",156,0)
+ S CAPTAPP=$P(X2,U,12)    ; CAPTURE APPLICATION (8.1)
+"RTN","MAGSIXG3",157,0)
+ ;
+"RTN","MAGSIXG3",158,0)
+ ; 150 T2 - if Group and Deleted and only 1 child: get Status of child.
+"RTN","MAGSIXG3",159,0)
+ I GROUP,$$ISDEL^MAGGI11(IMGIEN),$P(GRPCNTS,U,2)=1 D  ;
+"RTN","MAGSIXG3",160,0)
+ . S X=$O(^MAG(2005.1,"AGP",IMGIEN,""))
+"RTN","MAGSIXG3",161,0)
+ . I 'X Q
+"RTN","MAGSIXG3",162,0)
+ . S X=$P($G(^MAG(2005.1,X,100)),"^",8)
+"RTN","MAGSIXG3",163,0)
+ . I X S STATUS=X
+"RTN","MAGSIXG3",164,0)
+ . Q
+"RTN","MAGSIXG3",165,0)
+ ;=== Patch 150-  Status 13 is a Non Existant Image. Don't include in Image List.
+"RTN","MAGSIXG3",166,0)
+ I STATUS=13 Q 0  ;P150
+"RTN","MAGSIXG3",167,0)
+ ;=== Patch 59.  Treat Class as a computed field.
+"RTN","MAGSIXG3",168,0)
+ ;=== Arrange with Mike to change DB.
+"RTN","MAGSIXG3",169,0)
+ S CLASS=$S(TYPE:$P($G(^MAG(2005.83,+TYPE,0)),U,2),1:"")
+"RTN","MAGSIXG3",170,0)
+ I $D(MAGDATA("PKG")),PKG'=""    Q:'$D(MAGDATA("PKG",PKG)) 0
+"RTN","MAGSIXG3",171,0)
+ I $D(MAGDATA("ORIG")),ORIG'=""  Q:'$D(MAGDATA("ORIG",ORIG)) 0
+"RTN","MAGSIXG3",172,0)
+ I $D(MAGDATA("CLS")),CLASS'=""  Q:'$D(MAGDATA("CLS",CLASS)) 0
+"RTN","MAGSIXG3",173,0)
+ I $D(MAGDATA("TYPE")),TYPE      Q:'$D(MAGDATA("TYPE",TYPE)) 0
+"RTN","MAGSIXG3",174,0)
+ ;
+"RTN","MAGSIXG3",175,0)
+ I '(FLAGS["G") D  Q:'MAGFOUND 0  ; doesn't meet the criteria. One strike and you have to quit
+"RTN","MAGSIXG3",176,0)
+ . S MAGFOUND=1
+"RTN","MAGSIXG3",177,0)
+ . I $D(MAGDATA("ISTAT")),'$D(MAGDATA("ISTAT",+STATUS)) S MAGFOUND=0 Q
+"RTN","MAGSIXG3",178,0)
+ . Q
+"RTN","MAGSIXG3",179,0)
+ ;
+"RTN","MAGSIXG3",180,0)
+ I FLAGS["G" D  Q:'MAGFOUND 0  ; Quit. It doesn't meet the criteria
+"RTN","MAGSIXG3",181,0)
+ . S MAGFOUND=0
+"RTN","MAGSIXG3",182,0)
+ . I '$D(MAGDATA("ISTAT")) S MAGFOUND=1 Q  ;nothing to check. It means it is found
+"RTN","MAGSIXG3",183,0)
+ . ; Check for single images first
+"RTN","MAGSIXG3",184,0)
+ . I 'GROUP D  Q
+"RTN","MAGSIXG3",185,0)
+ . . I $D(MAGDATA("ISTAT",+STATUS)) S MAGFOUND=1  ; need this image
+"RTN","MAGSIXG3",186,0)
+ . . Q
+"RTN","MAGSIXG3",187,0)
+ . ;-- check all children in the group
+"RTN","MAGSIXG3",188,0)
+ . N CHI,CHIEN,CHNODE,CH100,CHSTATUS
+"RTN","MAGSIXG3",189,0)
+ . S CHI=0
+"RTN","MAGSIXG3",190,0)
+ . F  S CHI=$O(@IMGNODE@(1,CHI)) Q:CHI'>0  D  Q:MAGFOUND
+"RTN","MAGSIXG3",191,0)
+ . . S CHIEN=+$G(@IMGNODE@(1,CHI,0))
+"RTN","MAGSIXG3",192,0)
+ . . Q:CHIEN'>0
+"RTN","MAGSIXG3",193,0)
+ . . S CHNODE=$$NODE^MAGGI11(CHIEN) Q:CHNODE=""
+"RTN","MAGSIXG3",194,0)
+ . . S CH100=$G(@CHNODE@(100))
+"RTN","MAGSIXG3",195,0)
+ . . S CHSTATUS=$P(CH100,U,8)    ; STATUS(113)
+"RTN","MAGSIXG3",196,0)
+ . . I $D(MAGDATA("ISTAT",+CHSTATUS)) S MAGFOUND=1
+"RTN","MAGSIXG3",197,0)
+ . . Q
+"RTN","MAGSIXG3",198,0)
+ . Q
+"RTN","MAGSIXG3",199,0)
+ ;
+"RTN","MAGSIXG3",200,0)
+ ;=== Skip list entries with no event if event is in
+"RTN","MAGSIXG3",201,0)
+ ;=== the selection criteria (MAG*3*8)
+"RTN","MAGSIXG3",202,0)
+ I $D(MAGDATA("EVT"))   Q:EVT="" 0   Q:'$D(MAGDATA("EVT",EVT)) 0
+"RTN","MAGSIXG3",203,0)
+ ;
+"RTN","MAGSIXG3",204,0)
+ ;=== Skip list entries with no specialty if specialty is in
+"RTN","MAGSIXG3",205,0)
+ ;=== the selection criteria (MAG*3*8)
+"RTN","MAGSIXG3",206,0)
+ I $D(MAGDATA("SPEC"))  Q:SPEC="" 0  Q:'$D(MAGDATA("SPEC",SPEC)) 0
+"RTN","MAGSIXG3",207,0)
+ ;
+"RTN","MAGSIXG3",208,0)
+ ;=== Skip list entries with no capture application if
+"RTN","MAGSIXG3",209,0)
+ ;=== application is in the selection criteria
+"RTN","MAGSIXG3",210,0)
+ I $D(MAGDATA("CAPTAPP"))  Q:CAPTAPP="" 0  Q:'$D(MAGDATA("CAPTAPP",CAPTAPP)) 0
+"RTN","MAGSIXG3",211,0)
+ ;
+"RTN","MAGSIXG3",212,0)
+ ;=== Check the short description
+"RTN","MAGSIXG3",213,0)
+ I $D(MAGDATA("GDESC"))  Q:$$UP^XLFSTR($P(X2,U,4))'[MAGDATA("GDESC") 0
+"RTN","MAGSIXG3",214,0)
+ ;
+"RTN","MAGSIXG3",215,0)
+ ;=== Build the result item
+"RTN","MAGSIXG3",216,0)
+ S $P(FLTX,U,3)=$$RPTITLE($P(X2,U,6),$P(X2,U,7))     ; Report title
+"RTN","MAGSIXG3",217,0)
+ S $P(FLTX,U,4)=$$DTE($P(X2,U,5))                    ; Procedure date
+"RTN","MAGSIXG3",218,0)
+ S $P(FLTX,U,5)=$P(X0,U,8)                           ; Procedure
+"RTN","MAGSIXG3",219,0)
+ S $P(FLTX,U,7)=$P(X2,U,4)                           ; Short descr.
+"RTN","MAGSIXG3",220,0)
+ S $P(FLTX,U,8)=PKG                                  ; Package
+"RTN","MAGSIXG3",221,0)
+ S $P(FLTX,U,9)=$P($G(^MAG(2005.82,+CLASS,0)),U)     ; Class
+"RTN","MAGSIXG3",222,0)
+ S $P(FLTX,U,10)=$P($G(^MAG(2005.83,+TYPE,0)),U)     ; Type
+"RTN","MAGSIXG3",223,0)
+ S $P(FLTX,U,11)=$P($G(^MAG(2005.84,+SPEC,0)),U)     ; (Sub)Specialty
+"RTN","MAGSIXG3",224,0)
+ S $P(FLTX,U,12)=$P($G(^MAG(2005.85,+EVT,0)),U)      ; Proc/Event
+"RTN","MAGSIXG3",225,0)
+ S $P(FLTX,U,13)=$$EXTERNAL^DILFD(2005,45,,ORIG)     ; Origin
+"RTN","MAGSIXG3",226,0)
+ S $P(FLTX,U,14)=$$DTE($P(X2,U))                     ; Capture date
+"RTN","MAGSIXG3",227,0)
+ S $P(FLTX,U,15)=$$GET1^DIQ(200,+$P(X2,U,2)_",",.01) ; Captured by
+"RTN","MAGSIXG3",228,0)
+ ;
+"RTN","MAGSIXG3",229,0)
+ ;=== Flags for $$INFO^MAGGAII
+"RTN","MAGSIXG3",230,0)
+ S IIFLAGS=$$TRFLAGS^MAGUTL05(FLAGS,"DE")
+"RTN","MAGSIXG3",231,0)
+ ;
+"RTN","MAGSIXG3",232,0)
+ ;=== Sparse subset query does not append image entries to the result 
+"RTN","MAGSIXG3",233,0)
+ ;    array right away. It saves them to the temporary buffers in the
+"RTN","MAGSIXG3",234,0)
+ ;    ^TMP("MAGSIXG3",$J) global node instead. After all images are
+"RTN","MAGSIXG3",235,0)
+ ;    preselected, the $$SUBSET^MAGSIXG4 processes those buffers and
+"RTN","MAGSIXG3",236,0)
+ ;=== appends required number of image entries to the result array.
+"RTN","MAGSIXG3",237,0)
+ I MAGDATA("FLAGS")["S"  S RC=0  D  Q $S(RC<0:RC,1:0)
+"RTN","MAGSIXG3",238,0)
+ . N I,TCNT
+"RTN","MAGSIXG3",239,0)
+ . S (MAGDATA("TCNT"),TCNT)=$G(MAGDATA("TCNT"))+1
+"RTN","MAGSIXG3",240,0)
+ . ;--- If the image is associated with the same patient as the
+"RTN","MAGSIXG3",241,0)
+ . ;--- previous one, save it in the regular temporary buffer.
+"RTN","MAGSIXG3",242,0)
+ . I PTIEN=$G(MAGDATA("PREVPT"))  D  Q
+"RTN","MAGSIXG3",243,0)
+ . . S I=$O(^TMP("MAGSIXG3",$J,"R",""),-1)+1
+"RTN","MAGSIXG3",244,0)
+ . . S ^TMP("MAGSIXG3",$J,"R",I)=TCNT_"|"_IMGIEN_"|"_GRPCNTS
+"RTN","MAGSIXG3",245,0)
+ . . S ^TMP("MAGSIXG3",$J,"R",I,0)=FLTX
+"RTN","MAGSIXG3",246,0)
+ . . Q
+"RTN","MAGSIXG3",247,0)
+ . ;--- If the image is associated with a different patient, remember
+"RTN","MAGSIXG3",248,0)
+ . ;--- the new DFN and store the image into the "priority" buffer.
+"RTN","MAGSIXG3",249,0)
+ . S MAGDATA("PREVPT")=PTIEN
+"RTN","MAGSIXG3",250,0)
+ . S ^TMP("MAGSIXG3",$J,"P",TCNT)=TCNT_"|"_IMGIEN_"|"_GRPCNTS
+"RTN","MAGSIXG3",251,0)
+ . S ^TMP("MAGSIXG3",$J,"P",TCNT,0)=FLTX
+"RTN","MAGSIXG3",252,0)
+ . ;--- If the image that precedes the patient change is not in the
+"RTN","MAGSIXG3",253,0)
+ . ;--- "priority" buffer yet, move it there from the regular buffer.
+"RTN","MAGSIXG3",254,0)
+ . S X=TCNT-1  Q:$D(^TMP("MAGSIXG3",$J,"P",X))
+"RTN","MAGSIXG3",255,0)
+ . S I=$O(^TMP("MAGSIXG3",$J,"R",""),-1)  Q:I=""
+"RTN","MAGSIXG3",256,0)
+ . I $P(^TMP("MAGSIXG3",$J,"R",I),"|")'=X  D  Q
+"RTN","MAGSIXG3",257,0)
+ . . S RC=$$ERROR^MAGUERR(-47)  ; This should never happen!
+"RTN","MAGSIXG3",258,0)
+ . . Q
+"RTN","MAGSIXG3",259,0)
+ . M ^TMP("MAGSIXG3",$J,"P",X)=^TMP("MAGSIXG3",$J,"R",I)
+"RTN","MAGSIXG3",260,0)
+ . K ^TMP("MAGSIXG3",$J,"R",I)
+"RTN","MAGSIXG3",261,0)
+ . Q
+"RTN","MAGSIXG3",262,0)
+ ;
+"RTN","MAGSIXG3",263,0)
+ ;=== Append the image item to the result array
+"RTN","MAGSIXG3",264,0)
+ S RC=$$APPEND(IMGIEN,FLTX,GRPCNTS,IIFLAGS)  Q:RC<0 RC
+"RTN","MAGSIXG3",265,0)
+ ;
+"RTN","MAGSIXG3",266,0)
+ ;=== Success
+"RTN","MAGSIXG3",267,0)
+ Q 0
+"RTN","MAGSIXG3",268,0)
+ ;
+"RTN","MAGSIXG3",269,0)
+ ;+++++ RETURNS THE NOTE TITLE
+"RTN","MAGSIXG3",270,0)
+RPTITLE(FILE,IEN) ;
+"RTN","MAGSIXG3",271,0)
+ N TITLE,TMP
+"RTN","MAGSIXG3",272,0)
+ I FILE=8925,IEN>0  D  S TITLE=$P($G(^TIU(8925.1,TMP,0)),U)  ; IA #2321
+"RTN","MAGSIXG3",273,0)
+ . S TMP=+$P($G(^TIU(8925,+IEN,0)),U)   ; IA #2937
+"RTN","MAGSIXG3",274,0)
+ . Q
+"RTN","MAGSIXG3",275,0)
+ Q $S($G(TITLE)'="":TITLE,1:"   ")
+"VER")
+8.0^22.0
+**END**
+**END**

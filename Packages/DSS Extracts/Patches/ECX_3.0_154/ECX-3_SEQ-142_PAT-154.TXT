@@ -1,0 +1,473 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Thursday, 10/08/15 at 11:49
+=============================================================================
+Run Date: NOV 03, 2015                     Designation: ECX*3*154
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #142                      Status: Released
+                  Compliance Date: NOV 06, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*153   <<= must be installed BEFORE `ECX*3*154'
+                    (v)ECX*3*156   <<= must be installed BEFORE `ECX*3*154'
+
+Subject: DSS FY 2016 ANNUAL SUSTAINMENT
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ ***********************************************************************
+ ** This patch is being released with an Emergency status because of  **
+ ** the shortened compliance date and must be installed in all        **
+ ** systems no later than the compliance requirement date. This patch **
+ ** must be installed on or before 11/06/15 so that the October DSS   **
+ ** Extracts can be generated using the updated Fiscal Year 16 logic. **
+ ** Failure to comply with the installation date will cause delays in **
+ ** extracting and reporting data.                                    **
+ ***********************************************************************
+  
+ The MCAO FY16 Extract Enhancements shall provide the means of exporting 
+ data from selected VistA software modules and transmitting it to an MCAO 
+ database residing at the AITC (Austin Information Technology Center). This
+ transfer is accomplished through a set of extract routines, intermediate
+ files, and transmission routines. Data from VistA packages is stored by
+ the extract routines in the intermediate files, where it is temporarily
+ available for local use and auditing. The data is then transmitted to the
+ AITC, where it is formatted and uploaded into commercial software.
+  
+ While not a pre-requisite for installing this patch, it is suggested that 
+ patches SD*5.3*633 and LR*5.2*455 be installed right before installing 
+ this patch.  The SD and LR patches contain related updates for the MCAO 
+ software for this fiscal year update.
+  
+ Included in the MCAO FY16 scope are: 
+      o       MCAO Extract field additions and modifications
+      o       MCAO menu additions and modifications
+      o       MCAO report modifications
+      o       Changes related to user, technical, or business 
+              documentation.
+  
+ Components Sent With Patch
+ --------------------------
+  
+ The following is a list of files included in this patch:
+   
+                                            UP    SEND  DATA               
+                                            DATE  SEC.  COMES  SITE   RSLV 
+ FILE #   NAME                              DD    CODE  W/FILE DATA   PTS 
+ ------------------------------------------------------------------------
+ 727.802  ADMISSION EXTRACT                 YES   NO    NO         
+ 727.808  PHYSICAL MOVEMENT EXTRACT         YES   NO    NO
+ 727.809  UNIT DOSE LOCAL EXTRACT           YES   NO    NO                 
+ 727.81   PRESCRIPTION EXTRACT              YES   NO    NO                 
+ 727.811  SURGERY EXTRACT                   YES   NO    NO                 
+ 727.813  LABORATORY EXTRACT                YES   NO    NO
+ 727.814  RADIOLOGY EXTRACT                 YES   NO    NO                 
+ 727.815  EVENT CAPTURE LOCAL EXTRACT       YES   NO    NO
+ 727.817  TREATING SPECIALTY CHANGE EXTRACT YES   NO    NO
+ 727.819  IV DETAIL EXTRACT                 YES   NO    NO
+ 727.824  LAB RESULTS EXTRACT               YES   NO    NO
+ 727.825  QUASAR EXTRACT                    YES   NO    NO                 
+ 727.826  PROSTHETICS EXTRACT               YES   NO    NO                 
+ 727.827  CLINIC EXTRACT                    YES   NO    NO
+ 727.829  BLOOD BANK EXTRACT                YES   NO    NO
+ 727.833  BCMA EXTRACT                      YES   NO    NO
+ 728.44   CLINICS AND STOP CODES            YES   NO    NO
+  
+ The following is a list of product features for this release:
+ =============================================================
+ 1.  Make Laboratory Blood Bank (LBB) Comparative Report exportable.
+  
+ 2.  Change all references from DSS Identifiers to Stop Code.
+  
+ 3.  Remove the DSS Clinic Stop and DSS Credit Stop columns from all
+     versions of the Clinics & Stop Codes Print report.
+  
+ 4.  Change field name from NUTRITION DIAGNOSIS to PLACEHOLDER in the
+     ECS and ECQ extracts.
+  
+ 5.  Modify ECS extract logic so that certain chaplain workload can be
+     entered for patients with 5 leading zeroes.
+  
+ 6.  Change length of CLINIC IEN field in the ECS and ECQ extracts to allow
+     for longer entries.  The currently existing field will be renamed to
+     PLACEHOLDER while a new CLINIC IEN field is added to accommodate the
+     longer field length. 
+  
+ 7.  Populate related extracts with Camp Lejeune patient status 
+     information. This is subject to the release of Camp Lejeune related
+     patches which will be released at a future date.
+  
+ 8.  Modify the CREATE DSS CLINIC STOP CODE FILE option logic so that
+     the DSS CLINIC STOP and DSS CREDIT STOP fields in file 728.44 are
+     populated from the STOP CODE and CREDIT STOP CODE fields from the
+     corresponding entry in file 44.
+  
+ 9.  Modify the ENTER/EDIT DSS STOP CODES FOR CLINICS option so that the
+     DSS STOP CODE and DSS CLINIC STOP CODE fields can no longer be
+     changed.  The option will also be renamed ENTER/EDIT CLINIC
+     PARAMETERS.
+  
+ 10. Modify the DSS IDENTIFIER NON-CONFORMING CLINICS REPORT by removing
+     the DSS STOP CODE and DSS CREDIT STOP CODE fields from the report.  
+     The option will also be renamed STOP CODE NON-CONFORMING CLINICS
+     REPORT.
+  
+ 11. Modify the DSS CLINIC & STOP CODES VALIDITY REPORT by removing the
+     DSS STOP CODE and DSS CREDIT STOP CODE fields from the report.  The
+     option will also be renamed CLINIC & STOP CODES VALIDITY REPORT.
+  
+ 12. Modify all extract related audit reports so that an extract can be
+     started from within the extract audit report.
+  
+ 13. Add a new field called RAD VERIFY DATE to the RAD extract to identify
+     the date the report was verified.
+  
+ 14. Review all ACTION TO SEND values in file 728.44 and change any
+     values of 3 or 7 to 5.  Values 3 and 7 were previously removed but
+     existing data wasn't updated.
+  
+ 15. Remove cost center conversion logic from ECS extract. Also, identify
+     any existing "do not send" DSS units that don't have a stop code. A
+     report will be generated as part of the patch installation identifying
+     any DSS units that need to be reviewed.
+  
+ 16. Modify ECS extract logic so that all records, regardless of stop code
+     value will be stored.  Any invalid stop codes will be recorded in the
+     extract and the encounter number will show "ECS" to identify records
+     with an invalid stop code.
+  
+ 17. Remove option SDEDIT LOCAL STOP CODE NAME from the Supervisor Menu 
+     [SDSUP] as local stop codes have been inactivated.  This will be done
+     in patch SD*5.3*633.
+  
+ 18. Add BCM to pharmacy options in the maintenance menu.
+  
+ 19. Modify UDP extract so that clinic orders don't report a ward, which
+     has no meaning in this context.
+  
+ 20. Modify ACTION TO SEND choices 4 and 5 to replace the word NATIONAL
+     with CHAR4.
+  
+ 21. Add a new field called CLINIC IEN to the CLI extract.  This field will
+     replace the currently existing field called CLINIC NAME and that
+     field's name will be changed to PLACEHOLDER.
+  
+ 22. Modify logic in the ECS and ECQ extracts so that DSS Units that send
+     no records will get the stop code, credit stop code and the CHAR4
+     code from the DSS unit.
+  
+ 23. Change the NATIONAL CLINIC CODES FOR DSS LIST option to CHAR4 CODES
+     LIST.
+  
+ 24. Allow a user to modify the DSS PRODUCT DEPARTMENT in the ENTER/EDIT
+     CLINIC PARAMETERS option without causing the clinic to become
+     unreviewed.
+  
+ 25. Modify the PRO extract logic so that the cost field is populated when
+     the form requested on is either stock issue or inventory issue.
+  
+ 26. Modify the PRO extract feeder key logic so that a value of "S" (stock
+     issue) or "I" (inventory issue) is appended if the form requested on
+     is either stock issue or inventory issue.
+  
+ 27. Allow for use and storage of ICD-10 related codes in the ADM, CLI,
+     ECS, ECQ and SUR extracts in anticipation of the 10/1/15 
+     implementation date.
+  
+ 28. Modify BCM extract logic to only count the first administration of a
+     medication not counted by the UDP or IVP extracts.  This will apply
+     to medications determined to be multi-dose containers.
+  
+ 29. Add a new field called FORM REQUESTED ON to the PRO extract.
+     
+ 30. Add FORM REQUESTED ON to the printed and exported versions of the 
+     COST BY PSAS HCPC REPORT and the PRO EXTRACT UNUSUAL COST REPORT.
+  
+ 31. Modify LAB RESULTS EXTRACT UNTRANSLATABLE RESULTS REPORT so that up to
+     30 characters of the result are returned.  In the printed version the
+     result will have a + at the end to indicate there is more text.  The
+     exported version will have the entire 30 characters available.  This
+     change will be implemented in the LR*5.2*455 patch.
+  
+ 32. Add a new field called REMARKS to the PRE extract.  This field will
+     identify any prescriptions filled under the Veteran's Choice program.
+  
+ 33. Disable BCM from the PHARMACY EXTRACTS UNUSUAL COST REPORT so that it
+     can no longer be selected.
+  
+ Security Key
+ ------------
+ ECX DSS TEST
+  
+ The purpose of this key is to allow future fiscal year extracts to be run 
+ by test sites only.
+  
+ Print Template
+ --------------
+ ECX CLINIC CODE
+ ECX CLINIC REVIEW EXPORT
+  
+  
+ The following is a list of options included in this patch:
+  
+ Option Name                     Type               New/Modified
+ ------------------              ----               ------------
+ ECX CLN STOP REP                Run                Modified
+ ECX NATIONAL CLINIC             Run                Modified
+ ECX PHA EDIT                    Menu               Modified
+ ECX PHA VOL EDIT                Run                Modified
+ ECX PHA VOL EDIT LOG            Run                Modified
+ ECX STOP CODE VALIDITY          Run                Modified
+ ECXSCEDIT                       Run                Modified
+  
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+  
+ The documentation, including User and Technical manuals will be in the 
+ form of Adobe Acrobat files.
+   
+ Documentation can also be found on the System Design and Development Web 
+ page at: http://www4.domain.ext/vdl/application.asp?appid=35
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP sites listed above.
+  
+ File Description                       File Name                FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                            DSS_3_FY2016_UM.pdf      Binary
+ Technical Manual                       DSS_3_FY2016_TM.pdf      Binary
+ Medical Records Data Definitions Guide DSS_3_FY2016_DD.pdf      Binary
+ Release Notes                          DSS_3_FY2016_RN.pdf      Binary
+  
+  
+ Test Sites:
+ -----------
+ Boston
+ Coatesville
+ Little Rock
+ North Texas
+ Alexandria
+  
+ INSTALLATION:
+ =============
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+  
+ Install Time - less than 5 minutes (unless otherwise indicated)
+  
+ ***********************************************************  
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke the 
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS 
+         -------------
+         Start up the Kernel Installation and Distribution System Menu 
+         [XPD MAIN]: 
+  
+              Edits and Distribution ...  
+              Utilities ...
+              Installation ...  
+     
+    Select Kernel Installation & Distribution System Option: INStallation 
+                                                             ---
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s) 
+              Restart Install of Package(s) 
+              Unload a Distribution 
+              Backup a Transport Global 
+     
+    Select Installation Option:
+  
+    3.   Select Installation Option: 
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the INSTALL
+                NAME, enter ECX*3.0*154):
+        
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will
+             not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option 
+             will allow you to view all changes that will be made when 
+             this patch is installed.  It compares all components of this 
+             patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that are 
+             in the transport global.
+       
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch: 
+     
+        a.  Choose the Install Package(s) option to start the patch
+            install.  Enter ECX*3.0*154 when prompted for a build name.
+        b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion
+            of Install? NO//' respond YES.
+        c.  When prompted 'Want KIDS to INHIBIT LOGONs during the
+            install?  NO//' respond NO.
+        d.  When prompted 'Want to DISABLE Scheduled Options, Menu
+            Options, and Protocols? NO//' respond YES.
+        e.  When prompted 'Enter options you wish to mark as 'Out Of
+            Order':'  Enter the following options:
+   
+                    Extract Manager's Options [ECXMGR]
+  
+        f.  When prompted 'Enter protocols you wish to mark as 'Out Of
+            Order':' press <return>.
+        g. If prompted 'Delay Install (Minutes):  (0-60):  0//'
+           answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P154
+    Before:       n/a   After: B22938446  **154**
+Routine Name: ECXADM
+    Before: B61384151   After: B61935470  **1,4,11,8,13,24,33,39,46,71,
+                                           84,92,107,105,120,127,132,136,
+                                           144,149,154**
+Routine Name: ECXALAR
+    Before: B21790296   After: B23545177  **46,51,112,132,136,149,154**
+Routine Name: ECXAPHA
+    Before: B62748333   After: B64411651  **40,49,66,104,109,113,136,144,154**
+Routine Name: ECXAPRO2
+    Before: B27501495   After: B27505336  **9,21,39,144,154**
+Routine Name: ECXBCM
+    Before: B92776680   After: B95494822  **107,127,132,136,143,144,148,
+                                           149,154**
+Routine Name: ECXBCM1
+    Before:       n/a   After: B10283039  **154**
+Routine Name: ECXEC
+    Before: B80584714   After: B89043397  **11,8,13,24,27,33,39,46,49,
+                                           71,89,92,105,120,127,132,136,
+                                           144,149,154**
+Routine Name: ECXLABN
+    Before: B51700942   After: B52461125  **1,11,8,13,28,24,30,31,32,33,
+                                           39,42,46,70,71,80,92,107,105,
+                                           112,127,132,144,149,154**
+Routine Name: ECXLABR
+    Before: B22824878   After: B24269511  **8,24,33,37,39,46,71,80,107,
+                                           105,112,127,144,154**
+Routine Name: ECXLBBC
+    Before: B41769309   After: B61277456  **120,149,153,154**
+Routine Name: ECXNCL
+    Before:  B1317471   After:  B1343239  **149,154**
+Routine Name: ECXOPRX
+    Before: B65795207   After: B67328800  **10,11,8,13,24,30,33,38,39,
+                                           46,49,71,81,84,92,105,112,120,
+                                           127,136,144,149,154**
+Routine Name: ECXOPRX1
+    Before: B10323095   After: B10575789  **92,107,105,120,127,144,149,154**
+Routine Name: ECXPHAU
+    Before:  B8648371   After:  B8852049  **92,154**
+Routine Name: ECXPHVE
+    Before: B20171490   After: B25113519  **92,120,136,154**
+Routine Name: ECXPRO
+    Before: B47685466   After: B48529101  **9,13,15,21,24,33,39,46,71,
+                                           92,105,120,127,132,136,144,149,
+                                           154**
+Routine Name: ECXPRO1
+    Before: B20868424   After: B20310309  **9,11,13,15,21,24,33,37,39,
+                                           100,105,112,132,154**
+Routine Name: ECXPRO2
+    Before: B12154079   After: B14894548  **9,15,21,24,33,127,132,154**
+Routine Name: ECXPROCT
+    Before: B24695240   After: B31812713  **71,100,144,154**
+Routine Name: ECXQSR
+    Before: B61223139   After: B71545700  **11,8,13,26,24,34,33,35,39,
+                                           43,46,49,64,71,84,92,106,105,
+                                           120,124,127,132,136,144,154**
+Routine Name: ECXQSR1
+    Before: B17814462   After: B18769480  **105,120,127,132,136,144,149,154**
+Routine Name: ECXRAD
+    Before: B45034346   After: B48026824  **11,8,13,16,24,33,39,46,71,
+                                           84,92,105,120,127,136,144,149,
+                                           153,154**
+Routine Name: ECXSCLD
+    Before:B194888922   After:B159034107  **2,8,24,30,71,80,105,112,120,
+                                           126,132,136,142,144,149,154**
+Routine Name: ECXSCLD1
+    Before: B52418084   After: B69216890  **132,136,144,149,154**
+Routine Name: ECXSCRP
+    Before: B29901160   After: B28387744  **57,58,120,126,144,149,154**
+Routine Name: ECXSCX1
+    Before: B94246405   After: B95411432  **8,28,24,27,29,30,31,33,84,
+                                           92,105,127,132,144,149,154**
+Routine Name: ECXSCX3
+    Before: B20792817   After: B21371068  **120,144,149,154**
+Routine Name: ECXSCXN
+    Before: B86791122   After: B90426087  **24,27,29,30,31,32,33,39,46,
+                                           49,52,71,84,92,107,105,120,124,
+                                           127,132,136,144,149,156,154**
+Routine Name: ECXSURG
+    Before: B77182684   After: B79357790  **1,11,8,13,25,24,33,39,41,42,
+                                           46,50,71,84,92,99,105,112,128,
+                                           127,132,144,149,154**
+Routine Name: ECXUD
+    Before: B90665673   After: B91677386  **10,8,24,33,39,46,49,71,84,
+                                           92,107,105,120,127,144,149,154**
+Routine Name: ECXUPRO
+    Before: B30455842   After: B32109188  **49,111,144,148,149,154**
+Routine Name: ECXUPRO1
+    Before:  B8288898   After: B10090164  **49,111,132,137,144,149,154**
+Routine Name: ECXUTL2
+    Before: B73682179   After: B74410083  **8,13,23,24,33,35,39,46,71,
+                                           84,92,105,112,120,127,144,149,
+                                           154**
+Routine Name: ECXUTL3
+    Before: B97549884   After:B101960628  **11,24,32,33,35,37,39,42,46,
+                                           92,105,120,144,149,154**
+Routine Name: ECXUTL4
+    Before: B55297923   After: B46454603  **39,41,46,49,78,92,105,112,
+                                           120,127,154**
+Routine Name: ECXUTL6
+    Before: B61658349   After: B62760554  **92,105,112,119,132,154**
+Routine Name: ECXUTLA
+    Before: B52600854   After: B73834306  **8,14,112,154**
+ 
+Routine list of preceding patches: 153, 156
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 15, 2015
+Completed By:                               Date Completed: OCT 29, 2015
+Released By :                               Date Released : NOV 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

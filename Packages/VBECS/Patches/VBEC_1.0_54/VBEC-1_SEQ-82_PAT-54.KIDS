@@ -1,0 +1,1893 @@
+Released VBEC*1*54 SEQ #82
+Extracted from mail message
+**KIDS**:VBEC*1.0*54^
+
+**INSTALL NAME**
+VBEC*1.0*54
+"BLD",7618,0)
+VBEC*1.0*54^VBECS^0^3150206^y
+"BLD",7618,1,0)
+^^200^200^3150206^
+"BLD",7618,1,1,0)
+VBEC*1*54 is exported as part of the VistA Blood Establishment Computer 
+"BLD",7618,1,2,0)
+System (VBECS) Version 2.0.0 release.
+"BLD",7618,1,3,0)
+ 
+"BLD",7618,1,4,0)
+To meet Food & Drug Administration (FDA) requirements, VBECS related 
+"BLD",7618,1,5,0)
+VistA (Veterans Health Information Systems Technology Architecture) 
+"BLD",7618,1,6,0)
+patches require customer validation in local Test accounts prior to 
+"BLD",7618,1,7,0)
+installation in Production. The user validates the Blood Bank software 
+"BLD",7618,1,8,0)
+for its intended use prior to its acceptance and use for patient care.
+"BLD",7618,1,9,0)
+ 
+"BLD",7618,1,10,0)
+Therefore, to allow adequate time for impact analysis and testing the 
+"BLD",7618,1,11,0)
+changes prior to installation in Production, it is imperative that Office 
+"BLD",7618,1,12,0)
+of Information Technology (OIT) Field Operations coordinate the 
+"BLD",7618,1,13,0)
+installation of Blood Bank software patches with Pathology & Laboratory 
+"BLD",7618,1,14,0)
+Medicine Service staff.
+"BLD",7618,1,15,0)
+ 
+"BLD",7618,1,16,0)
+The VBEC*1*54 patch addresses several issues. Refer to the sample 
+"BLD",7618,1,17,0)
+validation scenarios listed with the correction to verify changes: 
+"BLD",7618,1,18,0)
+ 
+"BLD",7618,1,19,0)
+ 1. 109 VistA MR 103013 - The CPRS Blood Bank Report, Diagnostic Tests
+"BLD",7618,1,20,0)
+      Section has displayed Transfusion Reaction Workup test results
+"BLD",7618,1,21,0)
+      with patient Type and Screen test results. This was not done by
+"BLD",7618,1,22,0)
+      the legacy blood bank system. The change made to the VBECA1B1
+"BLD",7618,1,23,0)
+      routine will eliminate Transfusion Reaction Workup test results
+"BLD",7618,1,24,0)
+      from the Blood Bank Report, Diagnostic Tests Section. Note - the
+"BLD",7618,1,25,0)
+      Transfusion Reactions Section of the CPRS Blood Bank Report does
+"BLD",7618,1,26,0)
+      not change and will still display Transfusion Reaction
+"BLD",7618,1,27,0)
+      Interpretations.
+"BLD",7618,1,28,0)
+      Associated Remedy Tickets: INC000000923654 and INC000000925197.
+"BLD",7618,1,29,0)
+ 
+"BLD",7618,1,30,0)
+      Verification: Locate a patient with a Transfusion Reaction in VBECS.
+"BLD",7618,1,31,0)
+      Using this patient run the CPRS Blood Bank Report and note that
+"BLD",7618,1,32,0)
+      transfusion reaction testing is visible in the Diagnostic Tests
+"BLD",7618,1,33,0)
+      Section and the Transfusion Reactions Section has an interpretation.
+"BLD",7618,1,34,0)
+      Install VBEC*1*54. Repeat the lookup of the CPRS Blood Bank Report
+"BLD",7618,1,35,0)
+      and verify that the transfusion reaction testing is absent in the
+"BLD",7618,1,36,0)
+      CPRS Blood Bank Report, Diagnostic Tests Section. Verify that the
+"BLD",7618,1,37,0)
+      Transfusion Reactions Section of the CPRS Blood Bank Report does
+"BLD",7618,1,38,0)
+      not change and still displays the Transfusion Reaction
+"BLD",7618,1,39,0)
+      Interpretations after VBEC*1*54 is installed.
+"BLD",7618,1,40,0)
+ 
+"BLD",7618,1,41,0)
+ 2. 110 VistA MR 121713 - VBECS was able to accept a specimen  when the
+"BLD",7618,1,42,0)
+      CPRS order was assigned a Lab accession number as the order was
+"BLD",7618,1,43,0)
+      added to a collection list and the specimen was not collected (no
+"BLD",7618,1,44,0)
+      collection date/time). This change requires that the specimen
+"BLD",7618,1,45,0)
+      accession number must also have a collection date and time in VistA
+"BLD",7618,1,46,0)
+      before it can be used in VBECS for processing.
+"BLD",7618,1,47,0)
+ 
+"BLD",7618,1,48,0)
+      Remedy Ticket: INC000000948143
+"BLD",7618,1,49,0)
+ 
+"BLD",7618,1,50,0)
+      Verification: Attempt to accept a VBECS order with a blood bank
+"BLD",7618,1,51,0)
+      specimen that does not have a collection date and time assigned in
+"BLD",7618,1,52,0)
+      VistA but has been assigned an accession number per a Lab collection
+"BLD",7618,1,53,0)
+      list.  VBECS will allow processing of the specimen UID for an order
+"BLD",7618,1,54,0)
+      only when the specimen has a date and time collected assigned after
+"BLD",7618,1,55,0)
+      VBEC*1*54 is installed.
+"BLD",7618,1,56,0)
+ 
+"BLD",7618,1,57,0)
+ 3. 111 VistA MR 061214 - The release of ICD*18.0*57 started a 
+"BLD",7618,1,58,0)
+      retirement countdown for ICR 3990 used to lookup ICD codes. This 
+"BLD",7618,1,59,0)
+      lookup is used by the LRBLPCH (Patient transfusions & hematology 
+"BLD",7618,1,60,0)
+      results) option in VistA Blood Bank. No new transfusion 
+"BLD",7618,1,61,0)
+      data has been entered since LR*5.2*408 (compliance date August 18, 
+"BLD",7618,1,62,0)
+      2011) was installed to turn off VistA Blood Bank. The end 
+"BLD",7618,1,63,0)
+      result is that the LRBLPCH option is obsolete and the change to 
+"BLD",7618,1,64,0)
+      ICD codes is not relevant. The LRBLPCH option will be placed out 
+"BLD",7618,1,65,0)
+      of order with the installation of this patch.
+"BLD",7618,1,66,0)
+ 
+"BLD",7618,1,67,0)
+      Verification: Any attempt to execute the option will return a
+"BLD",7618,1,68,0)
+      message that it is out of order.
+"BLD",7618,1,69,0)
+ 
+"BLD",7618,1,70,0)
+ 4. 112 VistA MR 111914 - Workload configuration and details are not
+"BLD",7618,1,71,0)
+      maintained in the development accounts which results in errors when
+"BLD",7618,1,72,0)
+      the workload process is triggered. Minor changes to the VistA 
+"BLD",7618,1,73,0)
+      workload code prevents the workload process from proceeding when 
+"BLD",7618,1,74,0)
+      there is no workload to process. Changes to the VBECRPCC routine
+"BLD",7618,1,75,0)
+      will prevent the error caused when there is no workload to process.
+"BLD",7618,1,76,0)
+ 
+"BLD",7618,1,77,0)
+      Verification: None
+"BLD",7618,1,78,0)
+ 
+"BLD",7618,1,79,0)
+ 
+"BLD",7618,1,80,0)
+There is also a VistA Blood Establishment Computer Software (VBECS) 
+"BLD",7618,1,81,0)
+2.0.0 server update that is also being released. Please refer 
+"BLD",7618,1,82,0)
+to the VistA Blood Establishment Computer Software (VBECS) 2.0.0 
+"BLD",7618,1,83,0)
+Release Notes for detailed information about corrections in that release.
+"BLD",7618,1,84,0)
+ 
+"BLD",7618,1,85,0)
+ 
+"BLD",7618,1,86,0)
+BLOOD BANK CLEARANCE: 
+"BLD",7618,1,87,0)
+=====================
+"BLD",7618,1,88,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1*54 contains 
+"BLD",7618,1,89,0)
+changes to a package referenced in BBM TEAM REVIEW OF VISTA PATCHES. 
+"BLD",7618,1,90,0)
+This patch does not alter or modify any VistA Blood Bank software design 
+"BLD",7618,1,91,0)
+safeguards or safety critical elements functions.
+"BLD",7618,1,92,0)
+ 
+"BLD",7618,1,93,0)
+RISK ANALYSIS: Changes made by patch VBEC*1*54 have no affect on Blood 
+"BLD",7618,1,94,0)
+Bank software functionality, therefore RISK is none.
+"BLD",7618,1,95,0)
+ 
+"BLD",7618,1,96,0)
+ROUTINE:
+"BLD",7618,1,97,0)
+========
+"BLD",7618,1,98,0)
+VBECA1B1
+"BLD",7618,1,99,0)
+VBECRPCB
+"BLD",7618,1,100,0)
+VBECRPCC
+"BLD",7618,1,101,0)
+ 
+"BLD",7618,1,102,0)
+DATA DICTIONARY:
+"BLD",7618,1,103,0)
+================
+"BLD",7618,1,104,0)
+ N/A
+"BLD",7618,1,105,0)
+ 
+"BLD",7618,1,106,0)
+REMEDY TICKETS:
+"BLD",7618,1,107,0)
+===============
+"BLD",7618,1,108,0)
+INC000000923654
+"BLD",7618,1,109,0)
+INC000000925197
+"BLD",7618,1,110,0)
+INC000000948143
+"BLD",7618,1,111,0)
+ 
+"BLD",7618,1,112,0)
+TEST SITES:
+"BLD",7618,1,113,0)
+===========
+"BLD",7618,1,114,0)
+Durham, NC 
+"BLD",7618,1,115,0)
+ Heartland-East HCS 
+"BLD",7618,1,116,0)
+   >Marion, IL 
+"BLD",7618,1,117,0)
+   >Poplar Bluff, MO 
+"BLD",7618,1,118,0)
+   >St. Louis, MO 
+"BLD",7618,1,119,0)
+ Milwaukee, WI 
+"BLD",7618,1,120,0)
+San Diego, CA
+"BLD",7618,1,121,0)
+San Francisco, CA
+"BLD",7618,1,122,0)
+ 
+"BLD",7618,1,123,0)
+Documentation:  
+"BLD",7618,1,124,0)
+============== 
+"BLD",7618,1,125,0)
+Documentation is available for the VBECS package on the 
+"BLD",7618,1,126,0)
+ANONYMOUS.SOFTWARE directory at one of the following Office of 
+"BLD",7618,1,127,0)
+Information (OI) Field Offices. Sites will be able to utilize
+"BLD",7618,1,128,0)
+Documentation in either the ".PDF" or "DOCX" format after they extract 
+"BLD",7618,1,129,0)
+the ZIP file.
+"BLD",7618,1,130,0)
+ 
+"BLD",7618,1,131,0)
+The preferred method is to FTP the files from:
+"BLD",7618,1,132,0)
+Download.vista.domain.ext
+"BLD",7618,1,133,0)
+ 
+"BLD",7618,1,134,0)
+This transmits files from the first available FTP server. Sites may also 
+"BLD",7618,1,135,0)
+elect to retrieve documentation directly from a specific server as 
+"BLD",7618,1,136,0)
+follows:
+"BLD",7618,1,137,0)
+       Albany                  ftp.domain.ext
+"BLD",7618,1,138,0)
+       Hines                   ftp.domain.ext
+"BLD",7618,1,139,0)
+       Salt Lake City          ftp.domain.ext
+"BLD",7618,1,140,0)
+ 
+"BLD",7618,1,141,0)
+NOTE:  The ZIP file listed below will be listed in each of the 
+"BLD",7618,1,142,0)
+VBECS and LR patches that are part of the VBECS package and associated 
+"BLD",7618,1,143,0)
+patches. It only needs to be downloaded once.
+"BLD",7618,1,144,0)
+ 
+"BLD",7618,1,145,0)
+File Name                                   Retrieval format:  
+"BLD",7618,1,146,0)
+===========                                 ================= 
+"BLD",7618,1,147,0)
+VBECS_2_0_0_DOCS_BUNDLE.ZIP                 BINARY 
+"BLD",7618,1,148,0)
+ 
+"BLD",7618,1,149,0)
+ 
+"BLD",7618,1,150,0)
+The following files are contained in the VBECS_2_0_0_DOCS_BUNDLE.ZIP file 
+"BLD",7618,1,151,0)
+and will not be individually located on the OI Field Office Anonymous 
+"BLD",7618,1,152,0)
+Directories.
+"BLD",7618,1,153,0)
+ 
+"BLD",7618,1,154,0)
+The VBECS_2_0_0_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+"BLD",7618,1,155,0)
+system for use.
+"BLD",7618,1,156,0)
+ 
+"BLD",7618,1,157,0)
+=======================================================================
+"BLD",7618,1,158,0)
+Veterans Health Administration (VHA) Customer Documents:
+"BLD",7618,1,159,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+"BLD",7618,1,160,0)
+Notes.docx
+"BLD",7618,1,161,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+"BLD",7618,1,162,0)
+Notes.pdf
+"BLD",7618,1,163,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+"BLD",7618,1,164,0)
+Manual-Security Guide.docx
+"BLD",7618,1,165,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+"BLD",7618,1,166,0)
+Manual-Security Guide.pdf
+"BLD",7618,1,167,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.docx
+"BLD",7618,1,168,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.pdf
+"BLD",7618,1,169,0)
+VBECS Known Defects and Anomalies.docx
+"BLD",7618,1,170,0)
+VBECS Known Defects and Anomalies.pdf
+"BLD",7618,1,171,0)
+ 
+"BLD",7618,1,172,0)
+Installation Instructions:
+"BLD",7618,1,173,0)
+==========================
+"BLD",7618,1,174,0)
+This patch may be loaded with users on the system.
+"BLD",7618,1,175,0)
+Installation will take less than 5 minutes.
+"BLD",7618,1,176,0)
+ 
+"BLD",7618,1,177,0)
+    1) Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+"BLD",7618,1,178,0)
+       the KIDS distribution included with this message.
+"BLD",7618,1,179,0)
+    2) From the Kernel Installation and Distribution System Menu,
+"BLD",7618,1,180,0)
+       select the Installation menu.
+"BLD",7618,1,181,0)
+    3) From this menu, you may elect to use the following options
+"BLD",7618,1,182,0)
+       (when prompted for the INSTALL NAME, enter VBEC*1.0*54).
+"BLD",7618,1,183,0)
+       a) Backup a Transport Global - this option will create a backup
+"BLD",7618,1,184,0)
+          message of any routines exported with the patch. It will NOT
+"BLD",7618,1,185,0)
+          backup any other changes such as DDs or templates.
+"BLD",7618,1,186,0)
+       b) Compare Transport Global to Current System - this option will
+"BLD",7618,1,187,0)
+          allow you to view all changes that will be made when the patch
+"BLD",7618,1,188,0)
+          is installed. It compares all components of the patch
+"BLD",7618,1,189,0)
+          (routines, DDs, templates, etc.).
+"BLD",7618,1,190,0)
+       c) Verify Checksums in Transport Global - this option will allow
+"BLD",7618,1,191,0)
+          you to ensure the integrity of the routines that are in the
+"BLD",7618,1,192,0)
+          transport global.
+"BLD",7618,1,193,0)
+       d) Print Transport Global - this option will allow you to view 
+"BLD",7618,1,194,0)
+          the components of the KIDS build.
+"BLD",7618,1,195,0)
+    4) Use the Install Package(s) option and select the package 
+"BLD",7618,1,196,0)
+       VBEC*1.0*54.
+"BLD",7618,1,197,0)
+    5) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",7618,1,198,0)
+       NO//'  respond NO
+"BLD",7618,1,199,0)
+    6) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",7618,1,200,0)
+       and Protocols? NO//'  respond NO.
+"BLD",7618,4,0)
+^9.64PA^^
+"BLD",7618,6.3)
+19
+"BLD",7618,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7618,"KRN",.4,0)
+.4
+"BLD",7618,"KRN",.401,0)
+.401
+"BLD",7618,"KRN",.402,0)
+.402
+"BLD",7618,"KRN",.403,0)
+.403
+"BLD",7618,"KRN",.5,0)
+.5
+"BLD",7618,"KRN",.84,0)
+.84
+"BLD",7618,"KRN",3.6,0)
+3.6
+"BLD",7618,"KRN",3.8,0)
+3.8
+"BLD",7618,"KRN",9.2,0)
+9.2
+"BLD",7618,"KRN",9.8,0)
+9.8
+"BLD",7618,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",7618,"KRN",9.8,"NM",1,0)
+VBECA1B1^^0^B35762863
+"BLD",7618,"KRN",9.8,"NM",2,0)
+VBECRPCB^^0^B38154509
+"BLD",7618,"KRN",9.8,"NM",3,0)
+VBECRPCC^^0^B22664928
+"BLD",7618,"KRN",9.8,"NM","B","VBECA1B1",1)
+ 
+"BLD",7618,"KRN",9.8,"NM","B","VBECRPCB",2)
+ 
+"BLD",7618,"KRN",9.8,"NM","B","VBECRPCC",3)
+ 
+"BLD",7618,"KRN",19,0)
+19
+"BLD",7618,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",7618,"KRN",19,"NM",1,0)
+LRBLPCH^^0
+"BLD",7618,"KRN",19,"NM","B","LRBLPCH",1)
+ 
+"BLD",7618,"KRN",19.1,0)
+19.1
+"BLD",7618,"KRN",101,0)
+101
+"BLD",7618,"KRN",409.61,0)
+409.61
+"BLD",7618,"KRN",771,0)
+771
+"BLD",7618,"KRN",779.2,0)
+779.2
+"BLD",7618,"KRN",870,0)
+870
+"BLD",7618,"KRN",8989.51,0)
+8989.51
+"BLD",7618,"KRN",8989.52,0)
+8989.52
+"BLD",7618,"KRN",8994,0)
+8994
+"BLD",7618,"KRN","B",.4,.4)
+ 
+"BLD",7618,"KRN","B",.401,.401)
+ 
+"BLD",7618,"KRN","B",.402,.402)
+ 
+"BLD",7618,"KRN","B",.403,.403)
+ 
+"BLD",7618,"KRN","B",.5,.5)
+ 
+"BLD",7618,"KRN","B",.84,.84)
+ 
+"BLD",7618,"KRN","B",3.6,3.6)
+ 
+"BLD",7618,"KRN","B",3.8,3.8)
+ 
+"BLD",7618,"KRN","B",9.2,9.2)
+ 
+"BLD",7618,"KRN","B",9.8,9.8)
+ 
+"BLD",7618,"KRN","B",19,19)
+ 
+"BLD",7618,"KRN","B",19.1,19.1)
+ 
+"BLD",7618,"KRN","B",101,101)
+ 
+"BLD",7618,"KRN","B",409.61,409.61)
+ 
+"BLD",7618,"KRN","B",771,771)
+ 
+"BLD",7618,"KRN","B",779.2,779.2)
+ 
+"BLD",7618,"KRN","B",870,870)
+ 
+"BLD",7618,"KRN","B",8989.51,8989.51)
+ 
+"BLD",7618,"KRN","B",8989.52,8989.52)
+ 
+"BLD",7618,"KRN","B",8994,8994)
+ 
+"BLD",7618,"QDEF")
+^^^^NO^^^^YES^^NO
+"BLD",7618,"QUES",0)
+^9.62^^
+"BLD",7618,"REQB",0)
+^9.611^^
+"KRN",19,3309,-1)
+0^1
+"KRN",19,3309,0)
+LRBLPCH^Patient transfusions & hematology results^out-of-order^R^^LRBLSUPER^^^^^^LAB SERVICE
+"KRN",19,3309,1,0)
+^19.06^2^2^3141218^^^^
+"KRN",19,3309,1,1,0)
+This option prints transfusions and selected hematology results from
+"KRN",19,3309,1,2,0)
+ one date to another for one or more selected patients.
+"KRN",19,3309,25)
+LRBLPC
+"KRN",19,3309,99.1)
+59016,54388
+"KRN",19,3309,"U")
+PATIENT TRANSFUSIONS & HEMATOL
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",649,-1)
+1^1
+"PKG",649,0)
+VBECS^VBEC^VistA Blood Establishment Computer System
+"PKG",649,20,0)
+^9.402P^^
+"PKG",649,22,0)
+^9.49I^1^1
+"PKG",649,22,1,0)
+1.0^3090423^3080103^1
+"PKG",649,22,1,"PAH",1,0)
+54^3150206
+"PKG",649,22,1,"PAH",1,1,0)
+^^200^200^3150206
+"PKG",649,22,1,"PAH",1,1,1,0)
+VBEC*1*54 is exported as part of the VistA Blood Establishment Computer 
+"PKG",649,22,1,"PAH",1,1,2,0)
+System (VBECS) Version 2.0.0 release.
+"PKG",649,22,1,"PAH",1,1,3,0)
+ 
+"PKG",649,22,1,"PAH",1,1,4,0)
+To meet Food & Drug Administration (FDA) requirements, VBECS related 
+"PKG",649,22,1,"PAH",1,1,5,0)
+VistA (Veterans Health Information Systems Technology Architecture) 
+"PKG",649,22,1,"PAH",1,1,6,0)
+patches require customer validation in local Test accounts prior to 
+"PKG",649,22,1,"PAH",1,1,7,0)
+installation in Production. The user validates the Blood Bank software 
+"PKG",649,22,1,"PAH",1,1,8,0)
+for its intended use prior to its acceptance and use for patient care.
+"PKG",649,22,1,"PAH",1,1,9,0)
+ 
+"PKG",649,22,1,"PAH",1,1,10,0)
+Therefore, to allow adequate time for impact analysis and testing the 
+"PKG",649,22,1,"PAH",1,1,11,0)
+changes prior to installation in Production, it is imperative that Office 
+"PKG",649,22,1,"PAH",1,1,12,0)
+of Information Technology (OIT) Field Operations coordinate the 
+"PKG",649,22,1,"PAH",1,1,13,0)
+installation of Blood Bank software patches with Pathology & Laboratory 
+"PKG",649,22,1,"PAH",1,1,14,0)
+Medicine Service staff.
+"PKG",649,22,1,"PAH",1,1,15,0)
+ 
+"PKG",649,22,1,"PAH",1,1,16,0)
+The VBEC*1*54 patch addresses several issues. Refer to the sample 
+"PKG",649,22,1,"PAH",1,1,17,0)
+validation scenarios listed with the correction to verify changes: 
+"PKG",649,22,1,"PAH",1,1,18,0)
+ 
+"PKG",649,22,1,"PAH",1,1,19,0)
+ 1. 109 VistA MR 103013 - The CPRS Blood Bank Report, Diagnostic Tests
+"PKG",649,22,1,"PAH",1,1,20,0)
+      Section has displayed Transfusion Reaction Workup test results
+"PKG",649,22,1,"PAH",1,1,21,0)
+      with patient Type and Screen test results. This was not done by
+"PKG",649,22,1,"PAH",1,1,22,0)
+      the legacy blood bank system. The change made to the VBECA1B1
+"PKG",649,22,1,"PAH",1,1,23,0)
+      routine will eliminate Transfusion Reaction Workup test results
+"PKG",649,22,1,"PAH",1,1,24,0)
+      from the Blood Bank Report, Diagnostic Tests Section. Note - the
+"PKG",649,22,1,"PAH",1,1,25,0)
+      Transfusion Reactions Section of the CPRS Blood Bank Report does
+"PKG",649,22,1,"PAH",1,1,26,0)
+      not change and will still display Transfusion Reaction
+"PKG",649,22,1,"PAH",1,1,27,0)
+      Interpretations.
+"PKG",649,22,1,"PAH",1,1,28,0)
+      Associated Remedy Tickets: INC000000923654 and INC000000925197.
+"PKG",649,22,1,"PAH",1,1,29,0)
+ 
+"PKG",649,22,1,"PAH",1,1,30,0)
+      Verification: Locate a patient with a Transfusion Reaction in VBECS.
+"PKG",649,22,1,"PAH",1,1,31,0)
+      Using this patient run the CPRS Blood Bank Report and note that
+"PKG",649,22,1,"PAH",1,1,32,0)
+      transfusion reaction testing is visible in the Diagnostic Tests
+"PKG",649,22,1,"PAH",1,1,33,0)
+      Section and the Transfusion Reactions Section has an interpretation.
+"PKG",649,22,1,"PAH",1,1,34,0)
+      Install VBEC*1*54. Repeat the lookup of the CPRS Blood Bank Report
+"PKG",649,22,1,"PAH",1,1,35,0)
+      and verify that the transfusion reaction testing is absent in the
+"PKG",649,22,1,"PAH",1,1,36,0)
+      CPRS Blood Bank Report, Diagnostic Tests Section. Verify that the
+"PKG",649,22,1,"PAH",1,1,37,0)
+      Transfusion Reactions Section of the CPRS Blood Bank Report does
+"PKG",649,22,1,"PAH",1,1,38,0)
+      not change and still displays the Transfusion Reaction
+"PKG",649,22,1,"PAH",1,1,39,0)
+      Interpretations after VBEC*1*54 is installed.
+"PKG",649,22,1,"PAH",1,1,40,0)
+ 
+"PKG",649,22,1,"PAH",1,1,41,0)
+ 2. 110 VistA MR 121713 - VBECS was able to accept a specimen  when the
+"PKG",649,22,1,"PAH",1,1,42,0)
+      CPRS order was assigned a Lab accession number as the order was
+"PKG",649,22,1,"PAH",1,1,43,0)
+      added to a collection list and the specimen was not collected (no
+"PKG",649,22,1,"PAH",1,1,44,0)
+      collection date/time). This change requires that the specimen
+"PKG",649,22,1,"PAH",1,1,45,0)
+      accession number must also have a collection date and time in VistA
+"PKG",649,22,1,"PAH",1,1,46,0)
+      before it can be used in VBECS for processing.
+"PKG",649,22,1,"PAH",1,1,47,0)
+ 
+"PKG",649,22,1,"PAH",1,1,48,0)
+      Remedy Ticket: INC000000948143
+"PKG",649,22,1,"PAH",1,1,49,0)
+ 
+"PKG",649,22,1,"PAH",1,1,50,0)
+      Verification: Attempt to accept a VBECS order with a blood bank
+"PKG",649,22,1,"PAH",1,1,51,0)
+      specimen that does not have a collection date and time assigned in
+"PKG",649,22,1,"PAH",1,1,52,0)
+      VistA but has been assigned an accession number per a Lab collection
+"PKG",649,22,1,"PAH",1,1,53,0)
+      list.  VBECS will allow processing of the specimen UID for an order
+"PKG",649,22,1,"PAH",1,1,54,0)
+      only when the specimen has a date and time collected assigned after
+"PKG",649,22,1,"PAH",1,1,55,0)
+      VBEC*1*54 is installed.
+"PKG",649,22,1,"PAH",1,1,56,0)
+ 
+"PKG",649,22,1,"PAH",1,1,57,0)
+ 3. 111 VistA MR 061214 - The release of ICD*18.0*57 started a 
+"PKG",649,22,1,"PAH",1,1,58,0)
+      retirement countdown for ICR 3990 used to lookup ICD codes. This 
+"PKG",649,22,1,"PAH",1,1,59,0)
+      lookup is used by the LRBLPCH (Patient transfusions & hematology 
+"PKG",649,22,1,"PAH",1,1,60,0)
+      results) option in VistA Blood Bank. No new transfusion 
+"PKG",649,22,1,"PAH",1,1,61,0)
+      data has been entered since LR*5.2*408 (compliance date August 18, 
+"PKG",649,22,1,"PAH",1,1,62,0)
+      2011) was installed to turn off VistA Blood Bank. The end 
+"PKG",649,22,1,"PAH",1,1,63,0)
+      result is that the LRBLPCH option is obsolete and the change to 
+"PKG",649,22,1,"PAH",1,1,64,0)
+      ICD codes is not relevant. The LRBLPCH option will be placed out 
+"PKG",649,22,1,"PAH",1,1,65,0)
+      of order with the installation of this patch.
+"PKG",649,22,1,"PAH",1,1,66,0)
+ 
+"PKG",649,22,1,"PAH",1,1,67,0)
+      Verification: Any attempt to execute the option will return a
+"PKG",649,22,1,"PAH",1,1,68,0)
+      message that it is out of order.
+"PKG",649,22,1,"PAH",1,1,69,0)
+ 
+"PKG",649,22,1,"PAH",1,1,70,0)
+ 4. 112 VistA MR 111914 - Workload configuration and details are not
+"PKG",649,22,1,"PAH",1,1,71,0)
+      maintained in the development accounts which results in errors when
+"PKG",649,22,1,"PAH",1,1,72,0)
+      the workload process is triggered. Minor changes to the VistA 
+"PKG",649,22,1,"PAH",1,1,73,0)
+      workload code prevents the workload process from proceeding when 
+"PKG",649,22,1,"PAH",1,1,74,0)
+      there is no workload to process. Changes to the VBECRPCC routine
+"PKG",649,22,1,"PAH",1,1,75,0)
+      will prevent the error caused when there is no workload to process.
+"PKG",649,22,1,"PAH",1,1,76,0)
+ 
+"PKG",649,22,1,"PAH",1,1,77,0)
+      Verification: None
+"PKG",649,22,1,"PAH",1,1,78,0)
+ 
+"PKG",649,22,1,"PAH",1,1,79,0)
+ 
+"PKG",649,22,1,"PAH",1,1,80,0)
+There is also a VistA Blood Establishment Computer Software (VBECS) 
+"PKG",649,22,1,"PAH",1,1,81,0)
+2.0.0 server update that is also being released. Please refer 
+"PKG",649,22,1,"PAH",1,1,82,0)
+to the VistA Blood Establishment Computer Software (VBECS) 2.0.0 
+"PKG",649,22,1,"PAH",1,1,83,0)
+Release Notes for detailed information about corrections in that release.
+"PKG",649,22,1,"PAH",1,1,84,0)
+ 
+"PKG",649,22,1,"PAH",1,1,85,0)
+ 
+"PKG",649,22,1,"PAH",1,1,86,0)
+BLOOD BANK CLEARANCE: 
+"PKG",649,22,1,"PAH",1,1,87,0)
+=====================
+"PKG",649,22,1,"PAH",1,1,88,0)
+EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1*54 contains 
+"PKG",649,22,1,"PAH",1,1,89,0)
+changes to a package referenced in BBM TEAM REVIEW OF VISTA PATCHES. 
+"PKG",649,22,1,"PAH",1,1,90,0)
+This patch does not alter or modify any VistA Blood Bank software design 
+"PKG",649,22,1,"PAH",1,1,91,0)
+safeguards or safety critical elements functions.
+"PKG",649,22,1,"PAH",1,1,92,0)
+ 
+"PKG",649,22,1,"PAH",1,1,93,0)
+RISK ANALYSIS: Changes made by patch VBEC*1*54 have no affect on Blood 
+"PKG",649,22,1,"PAH",1,1,94,0)
+Bank software functionality, therefore RISK is none.
+"PKG",649,22,1,"PAH",1,1,95,0)
+ 
+"PKG",649,22,1,"PAH",1,1,96,0)
+ROUTINE:
+"PKG",649,22,1,"PAH",1,1,97,0)
+========
+"PKG",649,22,1,"PAH",1,1,98,0)
+VBECA1B1
+"PKG",649,22,1,"PAH",1,1,99,0)
+VBECRPCB
+"PKG",649,22,1,"PAH",1,1,100,0)
+VBECRPCC
+"PKG",649,22,1,"PAH",1,1,101,0)
+ 
+"PKG",649,22,1,"PAH",1,1,102,0)
+DATA DICTIONARY:
+"PKG",649,22,1,"PAH",1,1,103,0)
+================
+"PKG",649,22,1,"PAH",1,1,104,0)
+ N/A
+"PKG",649,22,1,"PAH",1,1,105,0)
+ 
+"PKG",649,22,1,"PAH",1,1,106,0)
+REMEDY TICKETS:
+"PKG",649,22,1,"PAH",1,1,107,0)
+===============
+"PKG",649,22,1,"PAH",1,1,108,0)
+INC000000923654
+"PKG",649,22,1,"PAH",1,1,109,0)
+INC000000925197
+"PKG",649,22,1,"PAH",1,1,110,0)
+INC000000948143
+"PKG",649,22,1,"PAH",1,1,111,0)
+ 
+"PKG",649,22,1,"PAH",1,1,112,0)
+TEST SITES:
+"PKG",649,22,1,"PAH",1,1,113,0)
+===========
+"PKG",649,22,1,"PAH",1,1,114,0)
+Durham, NC 
+"PKG",649,22,1,"PAH",1,1,115,0)
+ Heartland-East HCS 
+"PKG",649,22,1,"PAH",1,1,116,0)
+   >Marion, IL 
+"PKG",649,22,1,"PAH",1,1,117,0)
+   >Poplar Bluff, MO 
+"PKG",649,22,1,"PAH",1,1,118,0)
+   >St. Louis, MO 
+"PKG",649,22,1,"PAH",1,1,119,0)
+ Milwaukee, WI 
+"PKG",649,22,1,"PAH",1,1,120,0)
+San Diego, CA
+"PKG",649,22,1,"PAH",1,1,121,0)
+San Francisco, CA
+"PKG",649,22,1,"PAH",1,1,122,0)
+ 
+"PKG",649,22,1,"PAH",1,1,123,0)
+Documentation:  
+"PKG",649,22,1,"PAH",1,1,124,0)
+============== 
+"PKG",649,22,1,"PAH",1,1,125,0)
+Documentation is available for the VBECS package on the 
+"PKG",649,22,1,"PAH",1,1,126,0)
+ANONYMOUS.SOFTWARE directory at one of the following Office of 
+"PKG",649,22,1,"PAH",1,1,127,0)
+Information (OI) Field Offices. Sites will be able to utilize
+"PKG",649,22,1,"PAH",1,1,128,0)
+Documentation in either the ".PDF" or "DOCX" format after they extract 
+"PKG",649,22,1,"PAH",1,1,129,0)
+the ZIP file.
+"PKG",649,22,1,"PAH",1,1,130,0)
+ 
+"PKG",649,22,1,"PAH",1,1,131,0)
+The preferred method is to FTP the files from:
+"PKG",649,22,1,"PAH",1,1,132,0)
+Download.vista.domain.ext
+"PKG",649,22,1,"PAH",1,1,133,0)
+ 
+"PKG",649,22,1,"PAH",1,1,134,0)
+This transmits files from the first available FTP server. Sites may also 
+"PKG",649,22,1,"PAH",1,1,135,0)
+elect to retrieve documentation directly from a specific server as 
+"PKG",649,22,1,"PAH",1,1,136,0)
+follows:
+"PKG",649,22,1,"PAH",1,1,137,0)
+       Albany                  ftp.domain.ext
+"PKG",649,22,1,"PAH",1,1,138,0)
+       Hines                   ftp.domain.ext
+"PKG",649,22,1,"PAH",1,1,139,0)
+       Salt Lake City          ftp.domain.ext
+"PKG",649,22,1,"PAH",1,1,140,0)
+ 
+"PKG",649,22,1,"PAH",1,1,141,0)
+NOTE:  The ZIP file listed below will be listed in each of the 
+"PKG",649,22,1,"PAH",1,1,142,0)
+VBECS and LR patches that are part of the VBECS package and associated 
+"PKG",649,22,1,"PAH",1,1,143,0)
+patches. It only needs to be downloaded once.
+"PKG",649,22,1,"PAH",1,1,144,0)
+ 
+"PKG",649,22,1,"PAH",1,1,145,0)
+File Name                                   Retrieval format:  
+"PKG",649,22,1,"PAH",1,1,146,0)
+===========                                 ================= 
+"PKG",649,22,1,"PAH",1,1,147,0)
+VBECS_2_0_0_DOCS_BUNDLE.ZIP                 BINARY 
+"PKG",649,22,1,"PAH",1,1,148,0)
+ 
+"PKG",649,22,1,"PAH",1,1,149,0)
+ 
+"PKG",649,22,1,"PAH",1,1,150,0)
+The following files are contained in the VBECS_2_0_0_DOCS_BUNDLE.ZIP file 
+"PKG",649,22,1,"PAH",1,1,151,0)
+and will not be individually located on the OI Field Office Anonymous 
+"PKG",649,22,1,"PAH",1,1,152,0)
+Directories.
+"PKG",649,22,1,"PAH",1,1,153,0)
+ 
+"PKG",649,22,1,"PAH",1,1,154,0)
+The VBECS_2_0_0_DOCS_BUNDLE.ZIP file needs to be extracted on your 
+"PKG",649,22,1,"PAH",1,1,155,0)
+system for use.
+"PKG",649,22,1,"PAH",1,1,156,0)
+ 
+"PKG",649,22,1,"PAH",1,1,157,0)
+=======================================================================
+"PKG",649,22,1,"PAH",1,1,158,0)
+Veterans Health Administration (VHA) Customer Documents:
+"PKG",649,22,1,"PAH",1,1,159,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+"PKG",649,22,1,"PAH",1,1,160,0)
+Notes.docx
+"PKG",649,22,1,"PAH",1,1,161,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Release 
+"PKG",649,22,1,"PAH",1,1,162,0)
+Notes.pdf
+"PKG",649,22,1,"PAH",1,1,163,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+"PKG",649,22,1,"PAH",1,1,164,0)
+Manual-Security Guide.docx
+"PKG",649,22,1,"PAH",1,1,165,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 Technical 
+"PKG",649,22,1,"PAH",1,1,166,0)
+Manual-Security Guide.pdf
+"PKG",649,22,1,"PAH",1,1,167,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.docx
+"PKG",649,22,1,"PAH",1,1,168,0)
+VistA Blood Establishment Computer Software (VBECS) 2.0.0 User Guide.pdf
+"PKG",649,22,1,"PAH",1,1,169,0)
+VBECS Known Defects and Anomalies.docx
+"PKG",649,22,1,"PAH",1,1,170,0)
+VBECS Known Defects and Anomalies.pdf
+"PKG",649,22,1,"PAH",1,1,171,0)
+ 
+"PKG",649,22,1,"PAH",1,1,172,0)
+Installation Instructions:
+"PKG",649,22,1,"PAH",1,1,173,0)
+==========================
+"PKG",649,22,1,"PAH",1,1,174,0)
+This patch may be loaded with users on the system.
+"PKG",649,22,1,"PAH",1,1,175,0)
+Installation will take less than 5 minutes.
+"PKG",649,22,1,"PAH",1,1,176,0)
+ 
+"PKG",649,22,1,"PAH",1,1,177,0)
+    1) Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+"PKG",649,22,1,"PAH",1,1,178,0)
+       the KIDS distribution included with this message.
+"PKG",649,22,1,"PAH",1,1,179,0)
+    2) From the Kernel Installation and Distribution System Menu,
+"PKG",649,22,1,"PAH",1,1,180,0)
+       select the Installation menu.
+"PKG",649,22,1,"PAH",1,1,181,0)
+    3) From this menu, you may elect to use the following options
+"PKG",649,22,1,"PAH",1,1,182,0)
+       (when prompted for the INSTALL NAME, enter VBEC*1.0*54).
+"PKG",649,22,1,"PAH",1,1,183,0)
+       a) Backup a Transport Global - this option will create a backup
+"PKG",649,22,1,"PAH",1,1,184,0)
+          message of any routines exported with the patch. It will NOT
+"PKG",649,22,1,"PAH",1,1,185,0)
+          backup any other changes such as DDs or templates.
+"PKG",649,22,1,"PAH",1,1,186,0)
+       b) Compare Transport Global to Current System - this option will
+"PKG",649,22,1,"PAH",1,1,187,0)
+          allow you to view all changes that will be made when the patch
+"PKG",649,22,1,"PAH",1,1,188,0)
+          is installed. It compares all components of the patch
+"PKG",649,22,1,"PAH",1,1,189,0)
+          (routines, DDs, templates, etc.).
+"PKG",649,22,1,"PAH",1,1,190,0)
+       c) Verify Checksums in Transport Global - this option will allow
+"PKG",649,22,1,"PAH",1,1,191,0)
+          you to ensure the integrity of the routines that are in the
+"PKG",649,22,1,"PAH",1,1,192,0)
+          transport global.
+"PKG",649,22,1,"PAH",1,1,193,0)
+       d) Print Transport Global - this option will allow you to view 
+"PKG",649,22,1,"PAH",1,1,194,0)
+          the components of the KIDS build.
+"PKG",649,22,1,"PAH",1,1,195,0)
+    4) Use the Install Package(s) option and select the package 
+"PKG",649,22,1,"PAH",1,1,196,0)
+       VBEC*1.0*54.
+"PKG",649,22,1,"PAH",1,1,197,0)
+    5) When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",649,22,1,"PAH",1,1,198,0)
+       NO//'  respond NO
+"PKG",649,22,1,"PAH",1,1,199,0)
+    6) When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",649,22,1,"PAH",1,1,200,0)
+       and Protocols? NO//'  respond NO.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+ 
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+YES
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","VBECA1B1")
+0^1^B35762863^B35331122
+"RTN","VBECA1B1",1,0)
+VBECA1B1 ;HIOFO/BNT - VBECS Patient Data API continued ;04/12/2005 03:10
+"RTN","VBECA1B1",2,0)
+ ;;1.0;VBECS;**54**;Apr 14, 2005;Build 19
+"RTN","VBECA1B1",3,0)
+ ;
+"RTN","VBECA1B1",4,0)
+ ; Note: This routine supports data exchange with an FDA registered
+"RTN","VBECA1B1",5,0)
+ ; medical device. As such, it may not be changed in any way without
+"RTN","VBECA1B1",6,0)
+ ; prior written approval from the medical device manufacturer.
+"RTN","VBECA1B1",7,0)
+ ; 
+"RTN","VBECA1B1",8,0)
+ ; Integration Agreements:
+"RTN","VBECA1B1",9,0)
+ ; Call to $$STRIP^XLFSTR is supported by IA: 10104
+"RTN","VBECA1B1",10,0)
+ ; Call to $$FMTE^XLFDT is supported by IA: 10103
+"RTN","VBECA1B1",11,0)
+ ; Call to $$NS^XUAF4 is supported by IA: 2171
+"RTN","VBECA1B1",12,0)
+ ; Call to $$STA^XUAF4 is supported by IA: 2171
+"RTN","VBECA1B1",13,0)
+ ; Call to F4^XUAF4 is supported by IA: 2171
+"RTN","VBECA1B1",14,0)
+ ;
+"RTN","VBECA1B1",15,0)
+ENELE(ELE) ; -- element end event handler
+"RTN","VBECA1B1",16,0)
+ Q
+"RTN","VBECA1B1",17,0)
+ ;
+"RTN","VBECA1B1",18,0)
+CHAR(TEXT) ; -- element char event handler
+"RTN","VBECA1B1",19,0)
+ Q
+"RTN","VBECA1B1",20,0)
+ ;
+"RTN","VBECA1B1",21,0)
+ABOSTELE(ELE,ATR) ; -- element start event handler for Patient ABO/Rh API
+"RTN","VBECA1B1",22,0)
+ I ELE="Patient" S ABO=$G(ATR("abo")),RH=$G(ATR("rh")),ABORH=$G(ATR("abo"))_" "_$G(ATR("rh"))
+"RTN","VBECA1B1",23,0)
+ Q
+"RTN","VBECA1B1",24,0)
+ ;
+"RTN","VBECA1B1",25,0)
+TRSTELE(ELE,ATR) ; -- element start event handler for Patient Transfusion Reaction History API
+"RTN","VBECA1B1",26,0)
+ I ELE="TransfusionReaction" D
+"RTN","VBECA1B1",27,0)
+  . S VBECLN=VBECLN+1,@VBECRES@(VBECLN)=$G(ATR("date"))_"^"_$G(ATR("type"))
+"RTN","VBECA1B1",28,0)
+  . D:$L($G(ATR("comment"))) BLDCMT(ATR("comment"))
+"RTN","VBECA1B1",29,0)
+  . I $G(ATR("unitId"))]"" S @VBECRES@(VBECLN)=@VBECRES@(VBECLN)_"^"_$G(ATR("unitId"))_"^"_$G(ATR("productTypeName"))_"^"_$G(ATR("productTypePrintName"))
+"RTN","VBECA1B1",30,0)
+ Q
+"RTN","VBECA1B1",31,0)
+ ;
+"RTN","VBECA1B1",32,0)
+BLDCMT(STR) ; Build comment text paragraph
+"RTN","VBECA1B1",33,0)
+ N CNT
+"RTN","VBECA1B1",34,0)
+P1 I $L(STR)<80 S CNT=$G(CNT)+1,@VBECRES@(VBECLN,CNT)=STR Q
+"RTN","VBECA1B1",35,0)
+ F L=80:-1:1 Q:$E(STR,L)=" "
+"RTN","VBECA1B1",36,0)
+ S CNT=$G(CNT)+1,@VBECRES@(VBECLN,CNT)=$E(STR,1,L-1),STR=$E(STR,L+1,99999) G P1
+"RTN","VBECA1B1",37,0)
+ ;
+"RTN","VBECA1B1",38,0)
+ABSTELE(ELE,ATR) ; -- element start event handler Patient Antibodies Identified API
+"RTN","VBECA1B1",39,0)
+ I ELE="Antibody" D
+"RTN","VBECA1B1",40,0)
+  . S VBECLN=VBECLN+1,@VBECRES@(VBECLN)=$G(ATR("name"))
+"RTN","VBECA1B1",41,0)
+  . D:$L($G(ATR("comment"))) BLDCMT(ATR("comment"))
+"RTN","VBECA1B1",42,0)
+ Q
+"RTN","VBECA1B1",43,0)
+ ;
+"RTN","VBECA1B1",44,0)
+AVUSTELE(ELE,ATR) ; -- element start event handler Patient Available Units API
+"RTN","VBECA1B1",45,0)
+ I ELE="Patient" S @VBECRES@("UNIT",$J,0)=$$STRIP^XLFSTR($G(ATR("abo"))," ")_"^"_$S($G(ATR("rh"))="P":"POS",$G(ATR("rh"))="N":"NEG",1:"")_U_$G(ATR("dfn"))_U_$G(ATR("firstName"))_U_$G(ATR("lastName"))_U_$G(ATR("dob"))_U_$G(ATR("ssn"))
+"RTN","VBECA1B1",46,0)
+ ;
+"RTN","VBECA1B1",47,0)
+ I ELE="Unit" D
+"RTN","VBECA1B1",48,0)
+  . S IDT=9999999-$G(ATR("dateAssigned")),EDT=$G(ATR("expDate"))
+"RTN","VBECA1B1",49,0)
+  . S EFLG=$S(EDT-DT<2:"*",EDT-DT<1:"**",1:"")
+"RTN","VBECA1B1",50,0)
+  . S EDT=$TR($$FMTE^XLFDT(EDT,"5DZ"),"@"," ")
+"RTN","VBECA1B1",51,0)
+  . S DTYP=$S($G(ATR("status"))="A":"Autologous",$G(ATR("status"))="D":"Directed",1:"")
+"RTN","VBECA1B1",52,0)
+  . ; Added $$STRIP to support 035 VistA MR 030407
+"RTN","VBECA1B1",53,0)
+  . I $G(ATR("divisionCode")) D F4^XUAF4($$STRIP^XLFSTR(ATR("divisionCode")," "),.DIVARR,"","")
+"RTN","VBECA1B1",54,0)
+  . S UDIV=$S($G(DIVARR("NAME"))]"":$G(DIVARR("NAME")),1:"Unknown")
+"RTN","VBECA1B1",55,0)
+  . F  Q:'$D(@VBECRES@("UNIT",$J,IDT))  S IDT=IDT+.0001
+"RTN","VBECA1B1",56,0)
+  . S @VBECRES@("UNIT",$J,IDT)=EFLG_U_EDT_" "_U_$$TRIM^XLFSTR($G(ATR("id")),"LR"," ")_U_$G(ATR("product"))_U_$G(ATR("volume"))_U_$G(ATR("abo"))_U_$G(ATR("rh"))_U_DTYP_U_UDIV_U
+"RTN","VBECA1B1",57,0)
+  . S @VBECRES@("UNIT",$J,IDT)=@VBECRES@("UNIT",$J,IDT)_$S($G(ATR("location"))]"":ATR("location"),1:"BLOOD BANK")_U_$G(ATR("productCode"))_U_$G(ATR("labelid"))
+"RTN","VBECA1B1",58,0)
+  . ;RLM Added the labelid
+"RTN","VBECA1B1",59,0)
+ Q
+"RTN","VBECA1B1",60,0)
+ ;
+"RTN","VBECA1B1",61,0)
+TRANSTEL(ELE,ATR) ; -- element start event handler for Transfusion History API
+"RTN","VBECA1B1",62,0)
+ I ELE="Transfusion" D
+"RTN","VBECA1B1",63,0)
+  . N IDT,TDT,UNITS,VAL
+"RTN","VBECA1B1",64,0)
+  . S VBECLN=VBECLN+1
+"RTN","VBECA1B1",65,0)
+  . S IDT=9999999-$P($G(ATR("date")),".")
+"RTN","VBECA1B1",66,0)
+  . S TDT=9999999-IDT
+"RTN","VBECA1B1",67,0)
+  . S UNITS=+$G(ATR("unitsPooled")) S:UNITS'>0 UNITS=1
+"RTN","VBECA1B1",68,0)
+  . ; 038 VistA MR 031407 - Increment date counter for multiple records
+"RTN","VBECA1B1",69,0)
+  . F  Q:'$D(@VBECRES@("TRAN",IDT))  S IDT=IDT+.0001
+"RTN","VBECA1B1",70,0)
+  . S @VBECRES@("TRAN",IDT)=TDT_"^"_UNITS_"\"_$G(ATR("productTypePrintName"))_";"
+"RTN","VBECA1B1",71,0)
+  . S @VBECRES@("TRAN",$G(ATR("productTypePrintName")))=$G(ATR("productTypeName"))
+"RTN","VBECA1B1",72,0)
+ Q
+"RTN","VBECA1B1",73,0)
+ ;
+"RTN","VBECA1B1",74,0)
+RPTSTELE(ELE,ATR) ; -- element start event handler
+"RTN","VBECA1B1",75,0)
+ I ELE="SpecimenTest" D
+"RTN","VBECA1B1",76,0)
+ . S VBECSTC=VBECSTC+1 D
+"RTN","VBECA1B1",77,0)
+ . . I ATR("printTestName")="DAT Poly CC" Q
+"RTN","VBECA1B1",78,0)
+ . . I ATR("printTestName")="DAT IgG CC" Q
+"RTN","VBECA1B1",79,0)
+ . . I $G(ATR("orderableTestName"))="TRW" Q
+"RTN","VBECA1B1",80,0)
+ . . S @VBECRES@("SPECIMEN",VBECSTC)=$G(ATR("cprsOrderId"))_"^"_$G(ATR("divisionCode"))_"^"_$G(ATR("enteringTechId"))_"^"_$G(ATR("orderableTestName"))_"^"_$G(ATR("printTestName"))_"^"_$G(ATR("requestorId"))
+"RTN","VBECA1B1",81,0)
+ . . S @VBECRES@("SPECIMEN",VBECSTC)=@VBECRES@("SPECIMEN",VBECSTC)_"^"_$G(ATR("result"))_"^"_$G(ATR("testDate"))
+"RTN","VBECA1B1",82,0)
+ . . I $G(ATR("comment"))]"" D
+"RTN","VBECA1B1",83,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,1)=$E($G(ATR("comment")),1,245)
+"RTN","VBECA1B1",84,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,2)=$E($G(ATR("comment")),246,490)
+"RTN","VBECA1B1",85,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,3)=$E($G(ATR("comment")),491,999)
+"RTN","VBECA1B1",86,0)
+ . . I $G(ATR("cannedComment"))]"" I $G(ATR("result"))="Pos" D
+"RTN","VBECA1B1",87,0)
+ . . . S VBECSTN("Antibody Screen Interp")="",VBECSTN("DAT Poly Interp")="",VBECSTN("DAT IgG Interp")="",VBECSTN("DAT Comp Interp")=""
+"RTN","VBECA1B1",88,0)
+ . . . I $G(ATR("printTestName"))]"",'$D(VBECSTN(ATR("printTestName"))) Q
+"RTN","VBECA1B1",89,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,4)=$E($G(ATR("cannedComment")),1,245)
+"RTN","VBECA1B1",90,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,5)=$E($G(ATR("cannedComment")),246,490)
+"RTN","VBECA1B1",91,0)
+ . . . S @VBECRES@("SPECIMEN",VBECSTC,6)=$E($G(ATR("cannedComment")),491,999)
+"RTN","VBECA1B1",92,0)
+ I ELE="ComponentRequest" D
+"RTN","VBECA1B1",93,0)
+ . S VBECCRC=VBECCRC+1 D
+"RTN","VBECA1B1",94,0)
+ . . S @VBECRES@("COMPONENT REQUEST",VBECCRC)=$G(ATR("componentClassName"))_"^"_ATR("unitsRequested")_"^"_$G(ATR("dateRequested"))_"^"_$G(ATR("dateWanted"))_"^"_$G(ATR("requestorId"))_"^"_$G(ATR("enteredById"))_"^"_$G(ATR("cprsOrderId"))
+"RTN","VBECA1B1",95,0)
+ I ELE="Unit" D
+"RTN","VBECA1B1",96,0)
+ . S VBECUNC=VBECUNC+1 D
+"RTN","VBECA1B1",97,0)
+ . . ; fixed VBECUNC variable to address 034 VistA MR 030407
+"RTN","VBECA1B1",98,0)
+ . . S @VBECRES@("UNIT",VBECUNC)=$G(ATR("expDate"))_"^"_$G(ATR("product"))_"^"_$G(ATR("abo"))_"^"_$G(ATR("rh"))_"^"_$G(ATR("divisionCode"))_"^"_$G(ATR("location"))_"^"_$G(ATR("status"))_"^"_$G(ATR("id"))
+"RTN","VBECA1B1",99,0)
+ Q
+"RTN","VBECRPCB")
+0^2^B38154509^B37262884
+"RTN","VBECRPCB",1,0)
+VBECRPCB ;HOIFO/BNT - ORDER LOOKUP BY UID ;03/24/2004
+"RTN","VBECRPCB",2,0)
+ ;;1.0;VBECS;**54**;Apr 14, 2005;Build 19
+"RTN","VBECRPCB",3,0)
+ ;
+"RTN","VBECRPCB",4,0)
+ ; Note: This routine supports data exchange with an FDA registered
+"RTN","VBECRPCB",5,0)
+ ; medical device. As such, it may not be changed in any way without
+"RTN","VBECRPCB",6,0)
+ ; prior written approval from the medical device manufacturer.
+"RTN","VBECRPCB",7,0)
+ ; 
+"RTN","VBECRPCB",8,0)
+ ; Integration Agreements:
+"RTN","VBECRPCB",9,0)
+ ; Reference to $$FIND^DIC supported by IA #2051
+"RTN","VBECRPCB",10,0)
+ ; Reference to $$GET1^DIQ supported by IA #2052
+"RTN","VBECRPCB",11,0)
+ ; Reference to $$CHARCHK^XOBVLIB supported by IA #4090
+"RTN","VBECRPCB",12,0)
+ ; Reference to CHECKUID^LRWU4 supported by IA #4636
+"RTN","VBECRPCB",13,0)
+ ; Reference to LABORATORY TEST file 60 supported by IA #10054
+"RTN","VBECRPCB",14,0)
+ ; Reference to LAB ORDER ENTRY file 69 supported by IA #4774
+"RTN","VBECRPCB",15,0)
+ ; Reference to ACCESSION file 68 supported by IA #4773
+"RTN","VBECRPCB",16,0)
+ ; Reference to PATIENT file 2 supported by IA #10035
+"RTN","VBECRPCB",17,0)
+ ; Reference to $$FMTHL7^XLFDT supported by IA #10103
+"RTN","VBECRPCB",18,0)
+ ;
+"RTN","VBECRPCB",19,0)
+ QUIT
+"RTN","VBECRPCB",20,0)
+ ;
+"RTN","VBECRPCB",21,0)
+ ; -----------------------------------------------------------------------
+"RTN","VBECRPCB",22,0)
+ ;     Private Method supports IA #4633
+"RTN","VBECRPCB",23,0)
+ ; -----------------------------------------------------------------------
+"RTN","VBECRPCB",24,0)
+ORDER(RESULTS,VBUID) ;
+"RTN","VBECRPCB",25,0)
+ ;Bring in UID and RESULTS parameters.
+"RTN","VBECRPCB",26,0)
+ ;UID will be the Universal Identifier for this order.
+"RTN","VBECRPCB",27,0)
+ ;RESULTS will be the array where the data will be stored.
+"RTN","VBECRPCB",28,0)
+ N TEST,ERROR
+"RTN","VBECRPCB",29,0)
+ S VBECCNT=0
+"RTN","VBECRPCB",30,0)
+ S RESULTS=$NA(^TMP("VBECS_UIDLOOKUP",$J))
+"RTN","VBECRPCB",31,0)
+ K @RESULTS
+"RTN","VBECRPCB",32,0)
+ D BEGROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",33,0)
+ I VBUID']"" D  Q
+"RTN","VBECRPCB",34,0)
+  . D ERROR^VBECRPC("No Specimen UID provided")
+"RTN","VBECRPCB",35,0)
+  . D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",36,0)
+ ;
+"RTN","VBECRPCB",37,0)
+ ;D FIND^DIC(68,,.01,,"BLOOD BANK",,,,,"TEST","ERROR")
+"RTN","VBECRPCB",38,0)
+ S VB68=$$CHECKUID^LRWU4(VBUID)
+"RTN","VBECRPCB",39,0)
+ I '+VB68!('$L($P(VB68,"^",2))) D  Q
+"RTN","VBECRPCB",40,0)
+ . D ERROR^VBECRPC("No accession associated with UID '"_VBUID_"'")
+"RTN","VBECRPCB",41,0)
+ . D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",42,0)
+ ;
+"RTN","VBECRPCB",43,0)
+ I $P($G(^LRO(68,$P(VB68,"^",2),0)),"^",2)'="BB" D  Q
+"RTN","VBECRPCB",44,0)
+ . D ERROR^VBECRPC("No Blood Bank accession area associated with UID '"_VBUID_"'")
+"RTN","VBECRPCB",45,0)
+ . D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",46,0)
+ ;
+"RTN","VBECRPCB",47,0)
+ S VBACC=$P(VB68,"^",2)
+"RTN","VBECRPCB",48,0)
+ S VBA=$P(VB68,"^",3)
+"RTN","VBECRPCB",49,0)
+ S VBB=$P(VB68,"^",4)
+"RTN","VBECRPCB",50,0)
+ ;
+"RTN","VBECRPCB",51,0)
+ Q:$P($G(^LRO(68,VBACC,1,VBA,1,VBB,0)),"^",2)'=2  ;Add parameter for 67 if necessary
+"RTN","VBECRPCB",52,0)
+ S LRDFN=$P($G(^LRO(68,VBACC,1,VBA,1,VBB,0)),"^"),DFN=$P($G(^LR(LRDFN,0)),"^",3)
+"RTN","VBECRPCB",53,0)
+ ;Add Collection Date/Time
+"RTN","VBECRPCB",54,0)
+ S VBCOLDT=$P($G(^LRO(68,VBACC,1,VBA,1,VBB,3)),"^")
+"RTN","VBECRPCB",55,0)
+ S VBNAME=$$GET1^DIQ(2,DFN,.01)
+"RTN","VBECRPCB",56,0)
+ ;Add DFN and Name
+"RTN","VBECRPCB",57,0)
+ D ADD^VBECRPC("<PatientName>"_$$CHARCHK^XOBVLIB(VBNAME)_"</PatientName>")
+"RTN","VBECRPCB",58,0)
+ D ADD^VBECRPC("<VistaPatientId>"_$$CHARCHK^XOBVLIB(DFN)_"</VistaPatientId>")
+"RTN","VBECRPCB",59,0)
+ ;Add Accession number
+"RTN","VBECRPCB",60,0)
+ S VBACCN=$P($G(^LRO(68,VBACC,1,VBA,1,VBB,.2)),"^")
+"RTN","VBECRPCB",61,0)
+ D ADD^VBECRPC("<SpecimenAccessionNumber>"_$$CHARCHK^XOBVLIB(VBACCN)_"</SpecimenAccessionNumber>")
+"RTN","VBECRPCB",62,0)
+ S VBORDN=+$P($G(^LRO(68,VBACC,1,VBA,1,VBB,.1)),"^")
+"RTN","VBECRPCB",63,0)
+ ;Add Order Number
+"RTN","VBECRPCB",64,0)
+ D ADD^VBECRPC("<LabOrderNumber>"_$$CHARCHK^XOBVLIB(VBORDN)_"</LabOrderNumber>")
+"RTN","VBECRPCB",65,0)
+ ;Add UID from file 68
+"RTN","VBECRPCB",66,0)
+ S VBUID68=$P($G(^LRO(68,VBACC,1,VBA,1,VBB,.3)),"^")
+"RTN","VBECRPCB",67,0)
+ D ADD^VBECRPC("<SpecimenUID>"_$$CHARCHK^XOBVLIB(VBUID68)_"</SpecimenUID>")
+"RTN","VBECRPCB",68,0)
+ ;Add collection date/time
+"RTN","VBECRPCB",69,0)
+ D ADD^VBECRPC("<CollectionDateTime>"_$$CHARCHK^XOBVLIB($$FMTHL7^XLFDT(VBCOLDT))_"</CollectionDateTime>")
+"RTN","VBECRPCB",70,0)
+ ;Add Tests
+"RTN","VBECRPCB",71,0)
+ D BEGROOT^VBECRPC("LabTests")
+"RTN","VBECRPCB",72,0)
+ S VBC=0 F  S VBC=$O(^LRO(68,VBACC,1,VBA,1,VBB,4,VBC)) Q:'VBC  D
+"RTN","VBECRPCB",73,0)
+ . S VBTEST=+$P($G(^LRO(68,VBACC,1,VBA,1,VBB,4,VBC,0)),"^")
+"RTN","VBECRPCB",74,0)
+ . S VBTNM=$$GET1^DIQ(60,VBTEST,.01)
+"RTN","VBECRPCB",75,0)
+ . ;Add Test Name
+"RTN","VBECRPCB",76,0)
+ . D BEGROOT^VBECRPC("LabTest")
+"RTN","VBECRPCB",77,0)
+ . D ADD^VBECRPC("<LabTestID>"_$$CHARCHK^XOBVLIB(VBTEST)_"</LabTestID>")
+"RTN","VBECRPCB",78,0)
+ . D ADD^VBECRPC("<LabTestName>"_$$CHARCHK^XOBVLIB(VBTNM)_"</LabTestName>")
+"RTN","VBECRPCB",79,0)
+ . D ENDROOT^VBECRPC("LabTest")
+"RTN","VBECRPCB",80,0)
+ ;Close Tests
+"RTN","VBECRPCB",81,0)
+ D ENDROOT^VBECRPC("LabTests")
+"RTN","VBECRPCB",82,0)
+ D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",83,0)
+ K DFN,LRDFN,TEST,VBA,VBACC,VBB,VBC,VBECCNT,VBNAME,VBORDN,VBTEST,VBTNM,VBUID,VBUID68,VBACCN
+"RTN","VBECRPCB",84,0)
+ Q
+"RTN","VBECRPCB",85,0)
+ ;
+"RTN","VBECRPCB",86,0)
+ ; -----------------------------------------------------------------------
+"RTN","VBECRPCB",87,0)
+ ;     Private Method supports IA #4614
+"RTN","VBECRPCB",88,0)
+ ; -----------------------------------------------------------------------
+"RTN","VBECRPCB",89,0)
+ORDNUM(RESULTS,LROIEN) ;
+"RTN","VBECRPCB",90,0)
+ ;
+"RTN","VBECRPCB",91,0)
+ N TEST,QUIT,VBA,VBB
+"RTN","VBECRPCB",92,0)
+ S (VBECCNT,QUIT)=0
+"RTN","VBECRPCB",93,0)
+ S RESULTS=$NA(^TMP("VBECS_ORDLOOKUP",$J))
+"RTN","VBECRPCB",94,0)
+ K @RESULTS
+"RTN","VBECRPCB",95,0)
+ D BEGROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",96,0)
+ I LROIEN']"" D  Q
+"RTN","VBECRPCB",97,0)
+ . D ERROR^VBECRPC("No Lab Order Number provided")
+"RTN","VBECRPCB",98,0)
+ . D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",99,0)
+ ;
+"RTN","VBECRPCB",100,0)
+ I '$D(^LRO(69,"C",LROIEN)) D  Q
+"RTN","VBECRPCB",101,0)
+ . D ERROR^VBECRPC("Lab Order Number "_LROIEN_" not found in file 69")
+"RTN","VBECRPCB",102,0)
+ . D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",103,0)
+ S VBA=0 F  S VBA=$O(^LRO(69,"C",LROIEN,VBA)) Q:'VBA  D  Q:QUIT
+"RTN","VBECRPCB",104,0)
+ . S VBB=0 F  S VBB=$O(^LRO(69,"C",LROIEN,VBA,VBB)) Q:'VBB  D
+"RTN","VBECRPCB",105,0)
+ . . i $p($g(^LRO(69,VBA,1,VBB,1)),"^",4)'="C" s QUIT=1 q  ;Collection status
+"RTN","VBECRPCB",106,0)
+ . . ; Order has been merged.
+"RTN","VBECRPCB",107,0)
+ . . IF $P($G(^LRO(69,VBA,1,VBB,1)),"^",7)]"" S QUIT=1 Q
+"RTN","VBECRPCB",108,0)
+ . . D BEGROOT^VBECRPC("LabTests")
+"RTN","VBECRPCB",109,0)
+ . . S VBC=0 F  S VBC=$O(^LRO(69,VBA,1,VBB,2,VBC)) Q:'VBC  D
+"RTN","VBECRPCB",110,0)
+ . . . D BEGROOT^VBECRPC("LabTest")
+"RTN","VBECRPCB",111,0)
+ . . . S VBLR0=^LRO(69,VBA,1,VBB,2,VBC,0)
+"RTN","VBECRPCB",112,0)
+ . . . S LRDFN=$P(^LRO(69,VBA,1,VBB,0),"^",1),DFN=$P($G(^LR(LRDFN,0)),"^",3)
+"RTN","VBECRPCB",113,0)
+ . . . S VBNAME=$$GET1^DIQ(2,DFN,.01)
+"RTN","VBECRPCB",114,0)
+ . . . S VBTEST=$P($G(VBLR0),"^")
+"RTN","VBECRPCB",115,0)
+ . . . S VBTNM=$$GET1^DIQ(60,VBTEST,.01)
+"RTN","VBECRPCB",116,0)
+ . . . I $P($G(^LRO(69,VBA,1,VBB,2,VBC,0)),"^",3)']"" D  Q
+"RTN","VBECRPCB",117,0)
+ . . . . S QUIT=1
+"RTN","VBECRPCB",118,0)
+ . . . . D ERROR^VBECRPC("Lab Test "_VBTNM_" on order number "_LROIEN_" has not been accessioned")
+"RTN","VBECRPCB",119,0)
+ . . . . D ENDROOT^VBECRPC("LabTest")
+"RTN","VBECRPCB",120,0)
+ . . . S VBUID=$G(^LRO(69,VBA,1,VBB,2,VBC,.3))
+"RTN","VBECRPCB",121,0)
+ . . . S VBCOLDT=$P($G(^LRO(68,$P($G(VBLR0),"^",4),1,$P($G(VBLR0),"^",3),1,$P($G(VBLR0),"^",5),3)),"^")
+"RTN","VBECRPCB",122,0)
+ . . . S VBACCN=$G(^LRO(68,$P($G(VBLR0),"^",4),1,$P($G(VBLR0),"^",3),1,$P($G(VBLR0),"^",5),.2))
+"RTN","VBECRPCB",123,0)
+ . . .;Add DFN and Name
+"RTN","VBECRPCB",124,0)
+ . . . D ADD^VBECRPC("<PatientName>"_$$CHARCHK^XOBVLIB(VBNAME)_"</PatientName>")
+"RTN","VBECRPCB",125,0)
+ . . . D ADD^VBECRPC("<VistaPatientId>"_$$CHARCHK^XOBVLIB(DFN)_"</VistaPatientId>")
+"RTN","VBECRPCB",126,0)
+ . . . D ADD^VBECRPC("<LabOrderNumber>"_$$CHARCHK^XOBVLIB(LROIEN)_"</LabOrderNumber>")
+"RTN","VBECRPCB",127,0)
+ . . . D ADD^VBECRPC("<LabTestID>"_$$CHARCHK^XOBVLIB(VBTEST)_"</LabTestID>")
+"RTN","VBECRPCB",128,0)
+ . . . D ADD^VBECRPC("<LabTestName>"_$$CHARCHK^XOBVLIB(VBTNM)_"</LabTestName>")
+"RTN","VBECRPCB",129,0)
+ . . . D ADD^VBECRPC("<SpecimenAccessionNumber>"_$$CHARCHK^XOBVLIB(VBACCN)_"</SpecimenAccessionNumber>")
+"RTN","VBECRPCB",130,0)
+ . . . D ADD^VBECRPC("<SpecimenUID>"_$$CHARCHK^XOBVLIB(VBUID)_"</SpecimenUID>")
+"RTN","VBECRPCB",131,0)
+ . . . ;Add collection date/time
+"RTN","VBECRPCB",132,0)
+ . . . D ADD^VBECRPC("<CollectionDateTime>"_$$CHARCHK^XOBVLIB($$FMTHL7^XLFDT(VBCOLDT))_"</CollectionDateTime>")
+"RTN","VBECRPCB",133,0)
+ . . . D ENDROOT^VBECRPC("LabTest")
+"RTN","VBECRPCB",134,0)
+ . . . Q
+"RTN","VBECRPCB",135,0)
+ . . D ENDROOT^VBECRPC("LabTests")
+"RTN","VBECRPCB",136,0)
+ . . Q
+"RTN","VBECRPCB",137,0)
+ . Q
+"RTN","VBECRPCB",138,0)
+ D ENDROOT^VBECRPC("UIDLookup")
+"RTN","VBECRPCB",139,0)
+ K DFN,LRDFN,VBA,VBACC,VBB,VBECCNT,VBNAME,VBORDN,VBTEST,VBTNM,VBUID,VBUID68,VBACCN
+"RTN","VBECRPCB",140,0)
+ Q
+"RTN","VBECRPCC")
+0^3^B22664928^B23397469
+"RTN","VBECRPCC",1,0)
+VBECRPCC ;HOIFO/bnt - VBECS VistALink RPC Client Utilities ;07/27/2002  13:00
+"RTN","VBECRPCC",2,0)
+ ;;1.0;VBECS;**54**;Apr 14, 2005;Build 19
+"RTN","VBECRPCC",3,0)
+ ;
+"RTN","VBECRPCC",4,0)
+ ; Note: This routine supports data exchange with an FDA registered
+"RTN","VBECRPCC",5,0)
+ ; medical device. As such, it may not be changed in any way without
+"RTN","VBECRPCC",6,0)
+ ; prior written approval from the medical device manufacturer.
+"RTN","VBECRPCC",7,0)
+ ; 
+"RTN","VBECRPCC",8,0)
+ ; Integration Agreements:
+"RTN","VBECRPCC",9,0)
+ ;  Reference to $$GET^XPAR supported by IA #2263
+"RTN","VBECRPCC",10,0)
+ ;  Reference to $$XMLHDR^XOBVLIB supported by IA #4090
+"RTN","VBECRPCC",11,0)
+ ;
+"RTN","VBECRPCC",12,0)
+ QUIT
+"RTN","VBECRPCC",13,0)
+ ;
+"RTN","VBECRPCC",14,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",15,0)
+ ;                  RPC Client:  Methods Calls
+"RTN","VBECRPCC",16,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",17,0)
+ ;
+"RTN","VBECRPCC",18,0)
+EXECUTE(VBECPRMS) ; -- execute rpc call
+"RTN","VBECRPCC",19,0)
+ ;
+"RTN","VBECRPCC",20,0)
+ ; -- validate parmeters passed
+"RTN","VBECRPCC",21,0)
+ IF '$$VALIDATE(.VBECPRMS) QUIT 0
+"RTN","VBECRPCC",22,0)
+ ;
+"RTN","VBECRPCC",23,0)
+ ; -- call method to build request from parameters array
+"RTN","VBECRPCC",24,0)
+ DO REQUEST(.VBECPRMS)
+"RTN","VBECRPCC",25,0)
+ ;SET VBECPRMS("CLOSE MESSAGE")="<VistaLink messageType='gov.va.med.foundations.rpc.request' ></VistaLink>"
+"RTN","VBECRPCC",26,0)
+ IF $G(VBECPRMS("RESULTS"))="" SET VBECPRMS("RESULTS")=$NA(^TMP("VBECRPC",$J,"XML"))
+"RTN","VBECRPCC",27,0)
+ QUIT $$EXECUTE^VBECVLC(.VBECPRMS)
+"RTN","VBECRPCC",28,0)
+ ;
+"RTN","VBECRPCC",29,0)
+VALIDATE(VBECPRMS) ; -- validate parameters sent in
+"RTN","VBECRPCC",30,0)
+ ; // TODO: Do checks and build validate error message
+"RTN","VBECRPCC",31,0)
+ QUIT 1
+"RTN","VBECRPCC",32,0)
+ ;
+"RTN","VBECRPCC",33,0)
+REQUEST(VBECPRMS) ; -- build xml request
+"RTN","VBECRPCC",34,0)
+ NEW VBECLINE,VBECPI,PTYPE,VBECREQ
+"RTN","VBECRPCC",35,0)
+ SET VBECLINE=0
+"RTN","VBECRPCC",36,0)
+ SET VBECPRMS("MESSAGE TYPE")="gov.va.med.foundations.rpc.request"
+"RTN","VBECRPCC",37,0)
+ SET VBECPRMS("MODE")="singleton"
+"RTN","VBECRPCC",38,0)
+ IF $G(VBECPRMS("REQUEST"))="" SET VBECPRMS("REQUEST")=$NA(VBECPRMS("REQUEST","XML"))
+"RTN","VBECRPCC",39,0)
+ SET VBECREQ=VBECPRMS("REQUEST")
+"RTN","VBECRPCC",40,0)
+ KILL @VBECREQ
+"RTN","VBECRPCC",41,0)
+ ;
+"RTN","VBECRPCC",42,0)
+ DO ADD($$XMLHDR^XOBVLIB())
+"RTN","VBECRPCC",43,0)
+ DO ADD("<VistaLink messageType="""_$G(VBECPRMS("MESSAGE TYPE"))_""" mode="""_$G(VBECPRMS("MODE"))_""" version=""1.0"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xsi:noNamespaceSchemaLocation=""rpcRequest.xsd"" ")
+"RTN","VBECRPCC",44,0)
+ DO ADD("xmlns=""http://domain.ext/Foundations"">")
+"RTN","VBECRPCC",45,0)
+ DO ADD("<RpcHandler version=""1.0"" />")
+"RTN","VBECRPCC",46,0)
+ DO ADD("<Request rpcName="""_$G(VBECPRMS("RPC NAME"))_""" version=""1.0"" rpcClientTimeOut=""900"" >")
+"RTN","VBECRPCC",47,0)
+ DO ADD("<RpcContext><![CDATA["_$G(VBECPRMS("RPC CONTEXT"))_"]]></RpcContext>")
+"RTN","VBECRPCC",48,0)
+ DO ADD("<Params>")
+"RTN","VBECRPCC",49,0)
+ IF $D(VBECPRMS("PARAMS"))>9 DO
+"RTN","VBECRPCC",50,0)
+ . SET VBECPI=0
+"RTN","VBECRPCC",51,0)
+ . FOR  SET VBECPI=$O(VBECPRMS("PARAMS",VBECPI)) Q:'VBECPI  DO
+"RTN","VBECRPCC",52,0)
+ . . SET PTYPE=$G(VBECPRMS("PARAMS",VBECPI,"TYPE"))
+"RTN","VBECRPCC",53,0)
+ . . IF PTYPE="STRING" DO STRING QUIT
+"RTN","VBECRPCC",54,0)
+ . . IF PTYPE="ARRAY" DO ARRAY QUIT
+"RTN","VBECRPCC",55,0)
+ . . IF PTYPE="REF" DO REF QUIT
+"RTN","VBECRPCC",56,0)
+ DO ADD("</Params>")
+"RTN","VBECRPCC",57,0)
+ DO ADD("</Request>")
+"RTN","VBECRPCC",58,0)
+ DO ADD("</VistaLink>")
+"RTN","VBECRPCC",59,0)
+ QUIT
+"RTN","VBECRPCC",60,0)
+ ;
+"RTN","VBECRPCC",61,0)
+STRING ;
+"RTN","VBECRPCC",62,0)
+ DO ADD("<Param type=""string"" position="""_VBECPI_""" >"_$G(VBECPRMS("PARAMS",VBECPI,"VALUE"))_"</Param>")
+"RTN","VBECRPCC",63,0)
+ QUIT
+"RTN","VBECRPCC",64,0)
+ ;
+"RTN","VBECRPCC",65,0)
+ARRAY ;
+"RTN","VBECRPCC",66,0)
+ NEW VBECNAME
+"RTN","VBECRPCC",67,0)
+ DO ADD("<Param type=""array"" position="""_VBECPI_""" >")
+"RTN","VBECRPCC",68,0)
+ DO ADD("<Indices>")
+"RTN","VBECRPCC",69,0)
+ SET VBECNAME="" FOR  SET VBECNAME=$O(VBECPRMS("PARAMS",VBECPI,"VALUE",VBECNAME)) Q:VBECNAME=""  DO
+"RTN","VBECRPCC",70,0)
+ . DO ADD("<Index name="""_VBECNAME_""" value="""_$G(VBECPRMS("PARAMS",VBECPI,"VALUE",VBECNAME))_""" />")
+"RTN","VBECRPCC",71,0)
+ DO ADD("</Indices>")
+"RTN","VBECRPCC",72,0)
+ DO ADD("</Param>")
+"RTN","VBECRPCC",73,0)
+ QUIT
+"RTN","VBECRPCC",74,0)
+ ;
+"RTN","VBECRPCC",75,0)
+REF ;
+"RTN","VBECRPCC",76,0)
+ DO ADD("<Param type=""ref"" position="""_VBECPI_""" >"_$G(VBECPRMS("PARAMS",VBECPI,"VALUE"))_"</Param>")
+"RTN","VBECRPCC",77,0)
+ QUIT
+"RTN","VBECRPCC",78,0)
+ ;
+"RTN","VBECRPCC",79,0)
+ADD(STR) ; -- add string to array
+"RTN","VBECRPCC",80,0)
+ SET VBECLINE=VBECLINE+1
+"RTN","VBECRPCC",81,0)
+ SET @VBECREQ@(VBECLINE)=STR
+"RTN","VBECRPCC",82,0)
+ QUIT
+"RTN","VBECRPCC",83,0)
+ ;
+"RTN","VBECRPCC",84,0)
+INITV(RPC) ; Initialize VBECS VistALink Client parameters
+"RTN","VBECRPCC",85,0)
+ ; Input:  RPC = Parameter Toolkit Instance of RPC Name
+"RTN","VBECRPCC",86,0)
+ ; Output: VBECPRMS or -1^"error specific text" if error occurs setting any VBECPRMS parameter
+"RTN","VBECRPCC",87,0)
+ ;
+"RTN","VBECRPCC",88,0)
+ NEW ENT,PAR
+"RTN","VBECRPCC",89,0)
+ KILL VBECPRMS
+"RTN","VBECRPCC",90,0)
+ SET VBECPRMS("ERROR")=0
+"RTN","VBECRPCC",91,0)
+ IF RPC']"" DO ERR("NO RPC NAME SUPPLIED") QUIT
+"RTN","VBECRPCC",92,0)
+ ; Parameter Toolkit variables
+"RTN","VBECRPCC",93,0)
+ SET ENT="PKG.VBECS" ;Entity
+"RTN","VBECRPCC",94,0)
+ SET PAR="VBECS VISTALINK" ;Parameter
+"RTN","VBECRPCC",95,0)
+ SET VBECPRMS("ADDRESS")=$$GET^XPAR(ENT,PAR,"LISTENER IP ADDRESS","Q")
+"RTN","VBECRPCC",96,0)
+ IF VBECPRMS("ADDRESS")="" DO ERR("NO LISTENER IP ADDRESS FOUND") QUIT
+"RTN","VBECRPCC",97,0)
+ SET VBECPRMS("PORT")=$$GET^XPAR(ENT,PAR,"LISTENER PORT NUMBER","Q")
+"RTN","VBECRPCC",98,0)
+ IF VBECPRMS("PORT")="" DO ERR("NO LISTENER PORT NUMBER FOUND") QUIT
+"RTN","VBECRPCC",99,0)
+ SET VBECPRMS("RPC NAME")=RPC
+"RTN","VBECRPCC",100,0)
+ SET VBECPRMS("RPC CONTEXT")=$$GET^XPAR(ENT,PAR,RPC,"Q")
+"RTN","VBECRPCC",101,0)
+ IF VBECPRMS("RPC CONTEXT")="" DO ERR("UNABLE TO RETRIEVE RPC CONTEXT FOR "_RPC) QUIT
+"RTN","VBECRPCC",102,0)
+ QUIT
+"RTN","VBECRPCC",103,0)
+ ;
+"RTN","VBECRPCC",104,0)
+CHGADPRT(IP,PORT) ; Change the IP Address and Port of the VBECS VistALink Listner
+"RTN","VBECRPCC",105,0)
+ NEW ERR,ENT,PAR
+"RTN","VBECRPCC",106,0)
+ SET ENT="PKG.VBECS" ; Entity
+"RTN","VBECRPCC",107,0)
+ SET PAR="VBECS VISTALINK" ; Parameter
+"RTN","VBECRPCC",108,0)
+ IF IP]"" DO
+"RTN","VBECRPCC",109,0)
+ . DO EN^XPAR(ENT,PAR,"LISTENER IP ADDRESS",IP,.ERR)
+"RTN","VBECRPCC",110,0)
+ . IF ERR QUIT
+"RTN","VBECRPCC",111,0)
+ ;
+"RTN","VBECRPCC",112,0)
+ IF PORT]"" DO
+"RTN","VBECRPCC",113,0)
+ . DO EN^XPAR(ENT,PAR,"LISTENER PORT NUMBER",PORT,.ERR)
+"RTN","VBECRPCC",114,0)
+ . IF ERR QUIT
+"RTN","VBECRPCC",115,0)
+ QUIT ERR
+"RTN","VBECRPCC",116,0)
+ ;
+"RTN","VBECRPCC",117,0)
+CONTEXT(INSTANCE,CONTEXT) ; Adds, or changes, an RPC Instance and
+"RTN","VBECRPCC",118,0)
+ ; it's associated context
+"RTN","VBECRPCC",119,0)
+ ; Set CONTEXT to "@" to delete the instance of the RPC.
+"RTN","VBECRPCC",120,0)
+ ;
+"RTN","VBECRPCC",121,0)
+ NEW ERR,ENT,PAR
+"RTN","VBECRPCC",122,0)
+ SET ENT="PKG.VBECS" ; Entity
+"RTN","VBECRPCC",123,0)
+ SET PAR="VBECS VISTALINK" ; Parameter
+"RTN","VBECRPCC",124,0)
+ DO EN^XPAR(ENT,PAR,INSTANCE,CONTEXT,.ERR)
+"RTN","VBECRPCC",125,0)
+ QUIT ERR
+"RTN","VBECRPCC",126,0)
+ ;
+"RTN","VBECRPCC",127,0)
+ERR(ERRTXT) ; Set VBECPRMS("ERROR") node with error text and quit
+"RTN","VBECRPCC",128,0)
+ S VBECPRMS("ERROR")="1^"_ERRTXT
+"RTN","VBECRPCC",129,0)
+ QUIT
+"RTN","VBECRPCC",130,0)
+ ;
+"RTN","VBECRPCC",131,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",132,0)
+ ;                   Request Format Documentation
+"RTN","VBECRPCC",133,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",134,0)
+ ; 
+"RTN","VBECRPCC",135,0)
+ ; [ Parameter Array Format -->> passed to REQUEST^VBECRPCC(.VBECPRMS) ] 
+"RTN","VBECRPCC",136,0)
+ ; 
+"RTN","VBECRPCC",137,0)
+ ; -- general information
+"RTN","VBECRPCC",138,0)
+ ; VBECPRMS("ADDRESS")="127.0.0.1"
+"RTN","VBECRPCC",139,0)
+ ; VBECPRMS("PORT")=19811
+"RTN","VBECRPCC",140,0)
+ ; VBECPRMS("RPC NAME")="VBECS Order Entry"
+"RTN","VBECRPCC",141,0)
+ ; VBECPRMS("RPC CONTEXT")="VBECS VISTALINK CONTEXT"
+"RTN","VBECRPCC",142,0)
+ ;
+"RTN","VBECRPCC",143,0)
+ ; -- string parameter type
+"RTN","VBECRPCC",144,0)
+ ; VBECPRMS("PARAMS",1,"TYPE")="STRING"
+"RTN","VBECRPCC",145,0)
+ ; VBECPRMS("PARAMS",1,"VALUE")=2
+"RTN","VBECRPCC",146,0)
+ ; VBECPRMS("PARAMS",2,"TYPE")="STRING"
+"RTN","VBECRPCC",147,0)
+ ; VBECPRMS("PARAMS",2,"VALUE")=2961001
+"RTN","VBECRPCC",148,0)
+ ; VBECPRMS("PARAMS",3,"TYPE")="STRING"
+"RTN","VBECRPCC",149,0)
+ ; VBECPRMS("PARAMS",3,"VALUE")=3030101
+"RTN","VBECRPCC",150,0)
+ ;
+"RTN","VBECRPCC",151,0)
+ ; -- sample array parameter type
+"RTN","VBECRPCC",152,0)
+ ; VBECPRMS("PARAMS",4,"TYPE")="ARRAY"
+"RTN","VBECRPCC",153,0)
+ ; VBECPRMS("PARAMS",4,"VALUE","FNAME")="JOE"
+"RTN","VBECRPCC",154,0)
+ ; VBECPRMS("PARAMS",4,"VALUE","LNAME")="GOODMAN"
+"RTN","VBECRPCC",155,0)
+ ;                   
+"RTN","VBECRPCC",156,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",157,0)
+ ;                   
+"RTN","VBECRPCC",158,0)
+ ; [ Sample XML produced by calling REQUEST^VBECRPCC(.VBECPRMS) ]
+"RTN","VBECRPCC",159,0)
+ ; 
+"RTN","VBECRPCC",160,0)
+ ; <?xml version="1.0" encoding="utf-8" ?>
+"RTN","VBECRPCC",161,0)
+ ; <VistaLink type="gov.va.med.foundations.rpc.request" mode="singleton" 
+"RTN","VBECRPCC",162,0)
+ ;   version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+"RTN","VBECRPCC",163,0)
+ ;   xsi:noNamespaceSchemaLocation="rpcRequest.xsd"
+"RTN","VBECRPCC",164,0)
+ ;   xmlns="http://domain.ext/Foundations">
+"RTN","VBECRPCC",165,0)
+ ;   <RpcHandler version="1.0" />
+"RTN","VBECRPCC",166,0)
+ ;   <Request rpcName="VBECS Order Entry" version="1.0"
+"RTN","VBECRPCC",167,0)
+ ;     rpcClientTimeOut="900">
+"RTN","VBECRPCC",168,0)
+ ;      <RpcContext>
+"RTN","VBECRPCC",169,0)
+ ;        <![CDATA[ VBECS VISTALINK ]]>
+"RTN","VBECRPCC",170,0)
+ ;      </RpcContext>
+"RTN","VBECRPCC",171,0)
+ ;      <Params>
+"RTN","VBECRPCC",172,0)
+ ;         <Param type="string" position="1" >2</Param>
+"RTN","VBECRPCC",173,0)
+ ;         <Param type="string" position="2" >2961001</Param>
+"RTN","VBECRPCC",174,0)
+ ;         <Param type="string" position="3" >3030101</Param>
+"RTN","VBECRPCC",175,0)
+ ;         <Param type="array" position="4" >
+"RTN","VBECRPCC",176,0)
+ ;            <Indices>
+"RTN","VBECRPCC",177,0)
+ ;               <Index name="status" value="veteran" />
+"RTN","VBECRPCC",178,0)
+ ;               <Index name="gender" value="male" />
+"RTN","VBECRPCC",179,0)
+ ;            </Indices>
+"RTN","VBECRPCC",180,0)
+ ;         </Param>
+"RTN","VBECRPCC",181,0)
+ ;      </Params>
+"RTN","VBECRPCC",182,0)
+ ;   </Request>
+"RTN","VBECRPCC",183,0)
+ ; </VistaLink>
+"RTN","VBECRPCC",184,0)
+ ;
+"RTN","VBECRPCC",185,0)
+ ; -------------------------------------------------------------------
+"RTN","VBECRPCC",186,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",7618,6)
+^82
+**END**
+**END**
+

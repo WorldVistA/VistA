@@ -1,0 +1,168 @@
+$TXT Created by  at DEV.DEV.FO-HINES.DOMAIN.EXT  (KIDS) on Thursday, 03/26/15 at 09:19
+=============================================================================
+Run Date: NOV 10, 2015                     Designation: RMPR*3*177
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #155                      Status: Released
+                  Compliance Date: DEC 11, 2015
+=============================================================================
+
+
+Subject: PROSTHETICS IPV6 CONVERSION
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ In preparation for the VA's transition from Internet Protocol version 4 
+ (IPv4) to Internet Protocol version 6 (IPv6), the Prosthetics package will
+ require modifications to make it IPv6 ready.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1) INC000001112135 PROSTHETICS IPV6 CONVERSION 
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Puget Sound HCS
+ Central California HCS - Fresno
+   
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1) INC000001112135 PROSTHETICS IPV6 CONVERSION 
+  
+  
+ Problem: 
+ --------
+ Internet Protocol version 6 (IPv6) is the latest version of the Internet 
+ Protocol (IP), the communications protocol that provides an identification
+ and location system for computers on networks and routes traffic across 
+ the Internet. IPv6 was developed by the Internet Engineering Task Force 
+ (IETF) to deal with the long-anticipated problem of IPv4 address 
+ exhaustion. IPv6 is intended to replace IPv4.
+  
+ The VistA  Prosthetics package is only compatible with IPv4 currently and 
+ this effort is to prepare for IPv6 compatibility.
+  
+  
+ Resolution:
+ -----------
+ As part of the transition for Prosthetics, the PROSTHETICS SITE 
+ PARAMETERS FILE (#669.9), DVN IP ADDRESS field (#12) will be modified 
+ like so:
+  
+  
+ DATA DICTIONARY:
+ ================
+  
+ BEFORE:
+ -------
+  
+ STANDARD DATA DICTIONARY #669.9 -- PROSTHETICS SITE PARAMETERS FILE  
+                            FEB 6,2015@14:58:35       PAGE 1  
+ STORED IN ^RMPR(669.9,  (4 ENTRIES)   SITE: Washington OIFO   UCI: 
+ MNT,MNT (VERSION 3.0)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 669.9,12      DVN IP ADDRESS         3;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>35!($L(X)<3) X
+               LAST EDITED:      MAR 26, 2009 
+               HELP-PROMPT:      Answer must be 3-35 characters in length. 
+               DESCRIPTION:      This is the IP address for the Delivery
+                                 Verification Notice DVN for the Patient
+                                 Notificatio Cards.  
+  
+               TECHNICAL DESCR:  This field should be populated in the very
+                                 first site listed with the ?? in file 
+                                 669.9.
+                                 $O(^RMPR(669.9,"B",0)) 
+  
+  
+ AFTER:
+ ------
+  
+ STANDARD DATA DICTIONARY #669.9 -- PROSTHETICS SITE PARAMETERS FILE   
+                             FEB 6,2015@14:58:35      PAGE 1  
+ STORED IN ^RMPR(669.9,  (4 ENTRIES)   SITE: Washington OIFO   UCI: 
+ MNT,MNT (VERSION 3.0)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 669.9,12      DVN IP ADDRESS         3;1 FREE TEXT
+  
+               INPUT TRANSFORM:  K:$L(X)>39!($L(X)<3) X
+               LAST EDITED:      MAR 26, 2009 
+               HELP-PROMPT:      Answer must be 3-39 characters in length. 
+               DESCRIPTION:      This is the IP address for the Delivery
+                                 Verification Notice DVN for the Patient
+                                 Notification Cards.  
+  
+               TECHNICAL DESCR:  This field should be populated in the very
+                                 first site listed with the ?? in file 
+                                 669.9.
+                                 $O(^RMPR(669.9,"B",0))
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*177)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       RMPR*3.0*177.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                 Date Entered  : FEB 06, 2015
+Completed By:                Date Completed: OCT 27, 2015
+Released By :                 Date Released : NOV 10, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

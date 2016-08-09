@@ -1,0 +1,276 @@
+
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: OR*3*361
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #340                      Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*181    <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*346    <<= must be installed BEFORE `OR*3*361'
+                    (v)LEX*2*80    <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*351    <<= must be installed BEFORE `OR*3*361'
+                    (v)IBD*3*63    <<= must be installed BEFORE `OR*3*361'
+                    (v)ICD*18*57   <<= must be installed BEFORE `OR*3*361'
+                    (v)GMPL*2*42   <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*354    <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*371    <<= must be installed BEFORE `OR*3*361'
+                    (v)OR*3*372    <<= must be installed BEFORE `OR*3*361'
+
+Subject: ICD-10 M ONLY OR CHANGES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of the Computerized Patient Records System CPRSv30 
+ project. This project will modify the Computerized Patient Record 
+ System, Text Integration Utilities, Consults, Health Summary, Problem 
+ List, Clinical Reminders, and Order Entry/Results Reporting domains to
+ meet the requirements proposed by the Dept. of Health and Human Services 
+ to adopt ICD-10 code set standards for Clinic Orders.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set 
+ with International Classification of Diseases, Tenth Revision, Clinical 
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after the
+ industry activation date. The classification system consists of more than 
+ 68,000 codes compared to approximately 13,000 ICD-9-CM codes. There are 
+ nearly compared to approximately 13,000 ICD-9-CM codes. There are nearly
+ 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800 procedure 
+ codes.  Both systems also expand the number of characters allotted from 
+ five and four respectively to seven alpha-numeric characters.  This value 
+ does not include the decimal point, which follows the third character for 
+ the ICD-10-CM code set.  There is no decimal point in the ICD-10-PCS code 
+ set.  These code sets have the potential to reveal more about quality of 
+ care, so that data can be used in a more meaningful way to better 
+ understand complications, better design clinically robust algorithms, and 
+ better track the outcomes of care.  ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.  
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated. 
+  
+  
+ Remedy Tickets Resolved
+ =======================
+   1. INC000001019974 - Shelley Weems reports Anti-Coagulation Management 
+      Tool is changing an ICD code from one thing to another resulting in a
+      risk to patient safety.
+   2. INC000000610881 - Routine ORAM1 contained an unsupported reference 
+      to the ICD DIAGNOSIS file (#80) global.  This has been resolved.
+  
+  
+ Associated NSRs:
+ ================
+ N/A 
+  
+  
+ Components Sent With Patch
+ ==========================
+  
+     
+   Routine Summary:
+   ----------------
+   The following is a list of the routine(s) included in this patch.
+     
+   Total number of routines modified: 28
+   Total number of new routines: 1
+   Total number of routines: 28
+  
+    
+   The following is a list of files included in this patch:
+   --------------------------------------------------------
+   N/A
+  
+  
+ Test Sites:
+ ===========
+ Boise
+ Denver
+ Jackson
+ Pittsburg
+ Miami
+ Montana
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a single package KIDS build being 
+ distributed.  The associated host file is named OR_3_361.KID
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ A single documentation update is being provided with this release.  This 
+ file is only available via one of the FTP download directories.
+  
+  
+ File Description               File Name                      FTP Mode
+ ----------------------------------------------------------------------
+ OR*3.0*361                     OR_3_361.KID                   ASCII
+  
+ ICD-10 Production Overview Guide Group 2
+                              ICD-10 Production_Overview_Guide_Group_2.docx
+                                                               Binary
+  
+ Installation Instructions:
+ ==========================
+  
+ Pre-installation Instructions
+ -----------------------------
+ Please retrieve and review the ICD-10 Production Overview Guide Group 2 
+ document referenced above.  This document is intended to provide the 
+ field sites with guidance regarding the association of the ICD-10 grouped 
+ patches.  The document outlines an approach for each site to install 
+ several individual patches that are logically related based on technical 
+ and business dependencies.  These patches have been grouped together by 
+ the ICD-10 Program. Please refer to the detailed installation 
+ instructions within each application specific patch description or 
+ install guide after reading this document.
+  
+  
+ It is not necessary to disable any options. You may install 
+ these routines at any time without interruption to users. It should
+ take less than 10 minutes to install this patch.
+  
+ 1. Use the 'Load a Distribution' option on the KIDS installation menu.
+    When prompted to enter a host file type in OR_3_361.KID
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired (when prompted for INSTALL NAME, enter OR*3.0*361):
+  
+       a. Verify Checksums in Transport Global - This option will 
+          allow you to ensure the integrity of the routines that are 
+          in the transport global.
+     
+       b. Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+     
+       c. Compare Transport Global to Current System - This option 
+          will allow you to view all changes that will be made when 
+          this patch is installed. It compares all components of
+          this patch (routines, DD's, templates, etc.).
+     
+       d. Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will 
+          not backup any other changes such as DD's or templates.
+     
+ 5. Use the Install Package(s) option and select the package 
+    OR*3.0*361
+     
+ 6. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+    YES//" respond NO.  
+     
+ 7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+    and Protocols? YES//" respond NO.          
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no post-install instructions for this patch.  The post-install 
+ routine, ORY361, is not automatically deleted after installation.  If 
+ desired, this routine may be manually deleted from the system once the 
+ installation has successfully completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORAM1
+    Before:B162237541   After:B166176086  **307,339,351,361**
+Routine Name: ORAM2
+    Before:B139162666   After:B144805795  **307,339,354,361**
+Routine Name: ORAMSET
+    Before: B40743224   After: B43363006  **307,361**
+Routine Name: ORAMX
+    Before:B153727620   After:B164083781  **307,339,361**
+Routine Name: ORCDGMRC
+    Before: B39851331   After: B41619023  **4,26,68,100,181,361**
+Routine Name: ORCMGMCK
+    Before: B37075731   After: B38936285  **181,361**
+Routine Name: ORDV04
+    Before: B74664100   After: B78115705  **109,148,160,208,195,241,215,
+                                           274,256,243,306,361**
+Routine Name: ORMBLDGM
+    Before:  B5247581   After:  B5907339  **26,68,97,190,195,280,361**
+Routine Name: ORQ2
+    Before: B51979169   After: B60457146  **12,56,75,94,141,213,195,243,
+                                           282,293,280,346,361**
+Routine Name: ORQ21
+    Before: B35097340   After: B35230929  **141,190,195,215,243,361**
+Routine Name: ORQQPL
+    Before: B25909130   After: B30115835  **9,10,85,173,306,361**
+Routine Name: ORQQPL1
+    Before: B77752949   After: B97265691  **10,85,148,173,203,206,249,
+                                           243,280,306,361**
+Routine Name: ORQQPL2
+    Before: B35231801   After: B37792053  **10,306,361**
+Routine Name: ORQQPL3
+    Before: B52966029   After: B68312739  **10,148,173,243,280,306,361**
+Routine Name: ORQQPL4
+    Before: B10666256   After: B12182023  **306,361**
+Routine Name: ORWDBA1
+    Before: B58828931   After: B58940047  **190,195,229,215,243,361**
+Routine Name: ORWDBA2
+    Before: B27608999   After: B28669388  **195,361**
+Routine Name: ORWDBA3
+    Before: B40638555   After: B40814216  **190,195,243,361**
+Routine Name: ORWDBA4
+    Before: B10113870   After: B10287761  **195,243,361**
+Routine Name: ORWDBA7
+    Before: B17868873   After: B19319125  **195,215,243,361**
+Routine Name: ORWGAPIA
+    Before: B36731546   After: B38611591  **215,251,260,243,372,361**
+Routine Name: ORWIB
+    Before:  B5804851   After:    Delete  
+Routine Name: ORWPCE
+    Before: B53783465   After: B60062605  **10,85,116,173,190,195,215,
+                                           243,295,280,306,361**
+Routine Name: ORWPCE1
+    Before: B67787627   After: B71259369  **10,85,116,132,148,187,190,
+                                           215,243,280,306,361**
+Routine Name: ORWPCE2
+    Before: B50908533   After: B51147724  **10,85,109,116,173,195,243,306,361**
+Routine Name: ORWPCE3
+    Before: B56135760   After: B58956270  **10,85,116,190,280,306,371,361**
+Routine Name: ORWPCE4
+    Before: B12891193   After: B18602559  **10,85,116,173,190,195,215,
+                                           243,295,280,306,361**
+Routine Name: ORY361
+    Before:       n/a   After:  B8049239  **361**
+ 
+Routine list of preceding patches: 181, 346, 351, 354, 371, 372
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2012
+Completed By:                               Date Completed: AUG 05, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

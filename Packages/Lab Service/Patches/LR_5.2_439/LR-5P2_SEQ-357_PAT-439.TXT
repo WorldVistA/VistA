@@ -1,0 +1,184 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 09/03/14 at 10:25
+=============================================================================
+Run Date: JAN 08, 2015                     Designation: LR*5.2*439
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #357                    Status: Released
+                  Compliance Date: FEB 08, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*201  <<= must be installed BEFORE `LR*5.2*439'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*439'
+
+Subject: NP TEST RESULTED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1. Results can be entered on a test that is being cancelled.
+  
+ 2. Problems with a date/time stamp in LRUMDP.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ VISTA Laboratory Package patch LR*5.2*439 contains changes to software 
+ controlled by the ProPath standard titled: BBM Team Review of VistA 
+ Patches. Changes include: 
+ Routine:
+ LRCENDEL - Modify routine LRCENDEL to Lock the accessions in the LAB DATA 
+ file (#63) that are related to the order that is being edited in option
+ LRCENDEL.
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank 
+ Developer and found to have no impact on the VISTA BLOOD BANK SOFTWARE 
+ control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*439 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*439 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to x routines and 
+ x files identified in ProPath standard titled: BBM Team Review of VistA 
+ Patches, group B listing. The changes have no effect on Blood Bank 
+ functionality or medical device control functions. There is no adverse 
+ potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ There are no validation requirements by option
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios by option.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000592999 - Accession number was cancelled/but results still show
+                      up in CPRS
+  
+ 2. INC000000960215 - Lab - Other: modified routine LRUMDP
+     
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Washington DC-VAMC
+ N Florida/S Georgia VA HCS(Malcolm Randall, Gainesville, Lake City VAMC)
+ Mountain Home-VAMC   
+ Wilkes-Barre-VAMC       
+ Manchester-VAMC            
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000592999 - Accession number was cancelled/but results still show
+                      up in CPRS
+  
+ Problem:
+ --------
+ The options, Delete entire order or individual tests [LRCENDEL] and
+ Enter/verify/modify data (manual) [LRENTER], can be performed at the same
+ time by different users. This allows for tests to show as cancelled in the
+ LAB ORDER ENTRY file (#69) when test results have been entered in the LAB
+ DATA file (#63).
+  
+ This is also a problem with the Enter/verify data (auto instrument)
+ [LRVR] option.
+  
+ Solution:
+ ---------
+ Modify routine LRCENDEL to Lock the accessions in the LAB DATA file (#63) 
+ that are related to the order that is being edited in option LRCENDEL.
+   
+ Routine: LRCENDEL  
+  
+ 2. INC000000960215 - Lab - Other: modified routine LRUMDP
+  
+ Problem:
+ --------
+ Routine LRUMDP (W+1) adds "000" to the date/time associated with lab
+ results when using the Print/display preselected lab tests [LRUMD] option.
+ This does no harm if the date/time has a time, however if the date is
+ stored as just the date (no time), it alters the FileMan date to an
+ invalid date.
+  
+ Solution:
+ ---------
+ Modify routine LRUMDP to not add "000" to the date/time stamp.
+     
+ Routine: LRUMDP
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system
+          to avoid problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*439.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCENDEL
+    Before: B45893338   After: B64874476  **100,121,202,221,263,350,439**
+Routine Name: LRUMDP
+    Before: B12075996   After: B12037910  **3,153,201,439**
+ 
+Routine list of preceding patches: 201, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 11, 2014
+Completed By:                               Date Completed: NOV 19, 2014
+Released By :                               Date Released : JAN 08, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

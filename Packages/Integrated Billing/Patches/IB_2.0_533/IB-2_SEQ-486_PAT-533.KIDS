@@ -1,0 +1,1381 @@
+Released IB*2*533 SEQ #486
+Extracted from mail message
+**KIDS**:IB*2.0*533^
+
+**INSTALL NAME**
+IB*2.0*533
+"BLD",9760,0)
+IB*2.0*533^INTEGRATED BILLING^0^3141105^y
+"BLD",9760,1,0)
+^^3^3^3140909^
+"BLD",9760,1,1,0)
+This patch fixes issues where incorrect data is being transmitted in 
+"BLD",9760,1,2,0)
+the PID segment for billing records and appointment generated 
+"BLD",9760,1,3,0)
+inquiries are getting stuck. 
+"BLD",9760,4,0)
+^9.64PA^^
+"BLD",9760,6.3)
+5
+"BLD",9760,"INI")
+PRE^IB20P533
+"BLD",9760,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9760,"KRN",.4,0)
+.4
+"BLD",9760,"KRN",.401,0)
+.401
+"BLD",9760,"KRN",.402,0)
+.402
+"BLD",9760,"KRN",.403,0)
+.403
+"BLD",9760,"KRN",.5,0)
+.5
+"BLD",9760,"KRN",.84,0)
+.84
+"BLD",9760,"KRN",3.6,0)
+3.6
+"BLD",9760,"KRN",3.8,0)
+3.8
+"BLD",9760,"KRN",9.2,0)
+9.2
+"BLD",9760,"KRN",9.8,0)
+9.8
+"BLD",9760,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9760,"KRN",9.8,"NM",1,0)
+IBCNEHLQ^^0^B46752354
+"BLD",9760,"KRN",9.8,"NM",2,0)
+IBCNEDEP^^0^B88960339
+"BLD",9760,"KRN",9.8,"NM","B","IBCNEDEP",2)
+
+"BLD",9760,"KRN",9.8,"NM","B","IBCNEHLQ",1)
+
+"BLD",9760,"KRN",19,0)
+19
+"BLD",9760,"KRN",19.1,0)
+19.1
+"BLD",9760,"KRN",101,0)
+101
+"BLD",9760,"KRN",409.61,0)
+409.61
+"BLD",9760,"KRN",771,0)
+771
+"BLD",9760,"KRN",779.2,0)
+779.2
+"BLD",9760,"KRN",870,0)
+870
+"BLD",9760,"KRN",8989.51,0)
+8989.51
+"BLD",9760,"KRN",8989.52,0)
+8989.52
+"BLD",9760,"KRN",8994,0)
+8994
+"BLD",9760,"KRN","B",.4,.4)
+
+"BLD",9760,"KRN","B",.401,.401)
+
+"BLD",9760,"KRN","B",.402,.402)
+
+"BLD",9760,"KRN","B",.403,.403)
+
+"BLD",9760,"KRN","B",.5,.5)
+
+"BLD",9760,"KRN","B",.84,.84)
+
+"BLD",9760,"KRN","B",3.6,3.6)
+
+"BLD",9760,"KRN","B",3.8,3.8)
+
+"BLD",9760,"KRN","B",9.2,9.2)
+
+"BLD",9760,"KRN","B",9.8,9.8)
+
+"BLD",9760,"KRN","B",19,19)
+
+"BLD",9760,"KRN","B",19.1,19.1)
+
+"BLD",9760,"KRN","B",101,101)
+
+"BLD",9760,"KRN","B",409.61,409.61)
+
+"BLD",9760,"KRN","B",771,771)
+
+"BLD",9760,"KRN","B",779.2,779.2)
+
+"BLD",9760,"KRN","B",870,870)
+
+"BLD",9760,"KRN","B",8989.51,8989.51)
+
+"BLD",9760,"KRN","B",8989.52,8989.52)
+
+"BLD",9760,"KRN","B",8994,8994)
+
+"BLD",9760,"QUES",0)
+^9.62^^
+"BLD",9760,"REQB",0)
+^9.611^2^2
+"BLD",9760,"REQB",1,0)
+IB*2.0*497^1
+"BLD",9760,"REQB",2,0)
+IB*2.0*506^1
+"BLD",9760,"REQB","B","IB*2.0*497",1)
+
+"BLD",9760,"REQB","B","IB*2.0*506",2)
+
+"INI")
+PRE^IB20P533
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+533^3141105
+"PKG",200,22,1,"PAH",1,1,0)
+^^3^3^3141105
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch fixes issues where incorrect data is being transmitted in 
+"PKG",200,22,1,"PAH",1,1,2,0)
+the PID segment for billing records and appointment generated 
+"PKG",200,22,1,"PAH",1,1,3,0)
+inquiries are getting stuck. 
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IB20P533")
+0^^B4428350^n/a
+"RTN","IB20P533",1,0)
+IB20P533 ;ALB/RRA - UPDATE IIV TRANSMISSION QUEUE ; 11/5/14 9:28am
+"RTN","IB20P533",2,0)
+ ;;2.0;INTEGRATED BILLING;**533**;21-MAR-94;Build 5
+"RTN","IB20P533",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P533",4,0)
+ Q
+"RTN","IB20P533",5,0)
+PRE ;  
+"RTN","IB20P533",6,0)
+ ; Update IIV TRANSMISSION QUEUE file (#365.1)
+"RTN","IB20P533",7,0)
+ D MES^XPDUTL("Starting IB*2*533 Pre-Install....")
+"RTN","IB20P533",8,0)
+ D UPDATE
+"RTN","IB20P533",9,0)
+ D MES^XPDUTL("Patch Pre-Install is complete.")
+"RTN","IB20P533",10,0)
+ Q
+"RTN","IB20P533",11,0)
+ ;
+"RTN","IB20P533",12,0)
+UPDATE ; 
+"RTN","IB20P533",13,0)
+ N IBCN0,IBINS,IBWE,IBCNO,IBSD,IBCNT,IBNOW,IBX,IBQF
+"RTN","IB20P533",14,0)
+ S IBX=0,IBCNT=0
+"RTN","IB20P533",15,0)
+ ;LOOP THROUGH TRANSMISSION STATUS TO FIND RECORDS "READY TO TRASMIT"
+"RTN","IB20P533",16,0)
+ D MES^XPDUTL(""),MES^XPDUTL(">>>Processing records.....""")
+"RTN","IB20P533",17,0)
+ F  S IBX=$O(^IBCN(365.1,"AC",1,IBX)) Q:IBX=""  D
+"RTN","IB20P533",18,0)
+ . S IBCN0=$G(^IBCN(365.1,IBX,0)),IBQF=$P($G(IBCN0),"^",11)
+"RTN","IB20P533",19,0)
+ . I IBQF="I" D FILE Q
+"RTN","IB20P533",20,0)
+ . S IBINS=$P($G(IBCN0),"^",13),IBWE=$P($G(IBCN0),"^",10),IBSD=$P($G(IBCN0),"^",12),IBNOW=$$NOW^XLFDT
+"RTN","IB20P533",21,0)
+ . ;QUIT UNLESS THE EXTRACT IS FOR APPOINTMENT (2)
+"RTN","IB20P533",22,0)
+ . Q:IBWE'=2
+"RTN","IB20P533",23,0)
+ . ;QUIT UNLESS THE SERVICE DATE IS IN PAST
+"RTN","IB20P533",24,0)
+ . Q:IBSD>IBNOW
+"RTN","IB20P533",25,0)
+ . ;THE REMAINING RECORDS NEED TO BE CANCELLED AND UPDATED WITH A STATUS DATE OF "NOW" 
+"RTN","IB20P533",26,0)
+ . D FILE Q
+"RTN","IB20P533",27,0)
+ ;process "Hold" records with query flag = Identification
+"RTN","IB20P533",28,0)
+ S IBX=0
+"RTN","IB20P533",29,0)
+ F  S IBX=$O(^IBCN(365.1,"AC",4,IBX)) Q:IBX=""  D
+"RTN","IB20P533",30,0)
+ . I $P($G(^IBCN(365.1,IBX,0)),"^",11)="I" D FILE
+"RTN","IB20P533",31,0)
+ . Q
+"RTN","IB20P533",32,0)
+ ;process "Retry" records with query flag = Identification
+"RTN","IB20P533",33,0)
+ S IBX=0
+"RTN","IB20P533",34,0)
+ F  S IBX=$O(^IBCN(365.1,"AC",6,IBX)) Q:IBX=""  D
+"RTN","IB20P533",35,0)
+ . I $P($G(^IBCN(365.1,IBX,0)),"^",11)="I" D FILE
+"RTN","IB20P533",36,0)
+ . Q
+"RTN","IB20P533",37,0)
+ ;
+"RTN","IB20P533",38,0)
+ D MES^XPDUTL("Total of "_IBCNT_" code"_$S(IBCNT'=1:"s",1:"")_" updated in the IIV TRANSMISSION QUEUE file (#365.1)")
+"RTN","IB20P533",39,0)
+ D MES^XPDUTL("")
+"RTN","IB20P533",40,0)
+ Q
+"RTN","IB20P533",41,0)
+ ;FILE UPDATE
+"RTN","IB20P533",42,0)
+FILE ;
+"RTN","IB20P533",43,0)
+ N DA,DIE,DR,X,Y
+"RTN","IB20P533",44,0)
+ S IBNOW=$$NOW^XLFDT
+"RTN","IB20P533",45,0)
+ S DIE="^IBCN(365.1,",DA=IBX,DR=".04///"_"Cancelled"_";.15///"_IBNOW D ^DIE
+"RTN","IB20P533",46,0)
+ S IBCNT=IBCNT+1
+"RTN","IB20P533",47,0)
+ Q
+"RTN","IBCNEDEP")
+0^2^B88960339^B83976754
+"RTN","IBCNEDEP",1,0)
+IBCNEDEP ;DAOU/ALA - Process Transaction Records ;17-JUN-2002
+"RTN","IBCNEDEP",2,0)
+ ;;2.0;INTEGRATED BILLING;**184,271,300,416,438,506,533**;21-MAR-94;Build 5
+"RTN","IBCNEDEP",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCNEDEP",4,0)
+ ;
+"RTN","IBCNEDEP",5,0)
+ ;  This program finds records needing HL7 msg creation
+"RTN","IBCNEDEP",6,0)
+ ;  Periodically check for stop request for background task
+"RTN","IBCNEDEP",7,0)
+ ;
+"RTN","IBCNEDEP",8,0)
+ ;  Variables
+"RTN","IBCNEDEP",9,0)
+ ;    RETR = # retries allowed
+"RTN","IBCNEDEP",10,0)
+ ;    RETRYFLG = determines if a Transmitted message can be resent
+"RTN","IBCNEDEP",11,0)
+ ;    MGRP = Msg Mailgroup
+"RTN","IBCNEDEP",12,0)
+ ;    FAIL = # of days before failure
+"RTN","IBCNEDEP",13,0)
+ ;    FMSG = Failure Mailman flag
+"RTN","IBCNEDEP",14,0)
+ ;    TMSG = Timeout Mailman flag
+"RTN","IBCNEDEP",15,0)
+ ;    FLDT = Failure date
+"RTN","IBCNEDEP",16,0)
+ ;    FUTDT = Future transmission date
+"RTN","IBCNEDEP",17,0)
+ ;    DFN = Patient IEN
+"RTN","IBCNEDEP",18,0)
+ ;    PAYR = Payer IEN
+"RTN","IBCNEDEP",19,0)
+ ;    DTCRT = Date Created
+"RTN","IBCNEDEP",20,0)
+ ;    BUFF = Buffer File IEN
+"RTN","IBCNEDEP",21,0)
+ ;    NRETR = # of retries accomplished
+"RTN","IBCNEDEP",22,0)
+ ;    IHCNT = Count of successful HL7 msgs
+"RTN","IBCNEDEP",23,0)
+ ;    QUERY = Type of msg
+"RTN","IBCNEDEP",24,0)
+ ;    EXT =  Which extract produced record
+"RTN","IBCNEDEP",25,0)
+ ;    SRVDT = Service Date
+"RTN","IBCNEDEP",26,0)
+ ;    IRIEN = Insurance Record IEN
+"RTN","IBCNEDEP",27,0)
+ ;    NTRAN = # of transmissions accomplished
+"RTN","IBCNEDEP",28,0)
+ ;    OVRIDE = Override Flag
+"RTN","IBCNEDEP",29,0)
+ ;    BNDL = Bundle Verification Flag
+"RTN","IBCNEDEP",30,0)
+ ;
+"RTN","IBCNEDEP",31,0)
+EN ;  Entry point
+"RTN","IBCNEDEP",32,0)
+ ;
+"RTN","IBCNEDEP",33,0)
+ ;  Start processing of data
+"RTN","IBCNEDEP",34,0)
+ K ^TMP("HLS",$J),^TMP("IBQUERY",$J)
+"RTN","IBCNEDEP",35,0)
+ ; Initialize count for periodic TaskMan check
+"RTN","IBCNEDEP",36,0)
+ ;IB*533 RRA CREATE VARIABLES TO ACCOUNT FOR MAX SENT LIMITATIONS
+"RTN","IBCNEDEP",37,0)
+ N IBMAXCNT,IBSENT
+"RTN","IBCNEDEP",38,0)
+ S IBCNETOT=0,IBSENT=0
+"RTN","IBCNEDEP",39,0)
+ ;
+"RTN","IBCNEDEP",40,0)
+ S C1CODE=$O(^IBE(365.15,"B","C1",""))
+"RTN","IBCNEDEP",41,0)
+ ;  Get IB Site Parameters
+"RTN","IBCNEDEP",42,0)
+ S IBCNEP=$G(^IBE(350.9,1,51))
+"RTN","IBCNEDEP",43,0)
+ S RETR=+$P(IBCNEP,U,6),BNDL=$P(IBCNEP,U,23)
+"RTN","IBCNEDEP",44,0)
+ S MGRP=$$MGRP^IBCNEUT5()
+"RTN","IBCNEDEP",45,0)
+ S FAIL=$P(IBCNEP,U,5),TMSG=$P(IBCNEP,U,7),FMSG=$P(IBCNEP,U,20)
+"RTN","IBCNEDEP",46,0)
+ S RETRYFLG=$P(IBCNEP,U,26)        ;set value to (#350.9, 51.26) - IB*2.0*506
+"RTN","IBCNEDEP",47,0)
+ S IBMAXCNT=$P(IBCNEP,U,15)   ;get HL7 MAXIMUM NUMBER - IB*533
+"RTN","IBCNEDEP",48,0)
+ S FLDT=$$FMADD^XLFDT(DT,-FAIL)
+"RTN","IBCNEDEP",49,0)
+ ; Statuses
+"RTN","IBCNEDEP",50,0)
+ ;   1 = Ready To Transmit
+"RTN","IBCNEDEP",51,0)
+ ;   2 = Transmitted
+"RTN","IBCNEDEP",52,0)
+ ;   4 = Hold
+"RTN","IBCNEDEP",53,0)
+ ;   6 = Retry
+"RTN","IBCNEDEP",54,0)
+ ;
+"RTN","IBCNEDEP",55,0)
+ ; If the status is 'HOLD' is this a 'Retry'?   -  IB*2.0*506
+"RTN","IBCNEDEP",56,0)
+ ;  DO HLD   ; this is not to be called unless the status of HOLD is reinstated...see HLD tag
+"RTN","IBCNEDEP",57,0)
+ ;  below and the code within ERROR^IBCNEHL3
+"RTN","IBCNEDEP",58,0)
+ ;
+"RTN","IBCNEDEP",59,0)
+ ; Exit based on stop request
+"RTN","IBCNEDEP",60,0)
+ I $G(ZTSTOP) G EXIT
+"RTN","IBCNEDEP",61,0)
+ ;
+"RTN","IBCNEDEP",62,0)
+TMT ;  If the status is 'Transmitted' - is this a 'Retry' or
+"RTN","IBCNEDEP",63,0)
+ ;  'Comm Failure'
+"RTN","IBCNEDEP",64,0)
+ S IEN=""
+"RTN","IBCNEDEP",65,0)
+ F  S IEN=$O(^IBCN(365.1,"AC",2,IEN)) Q:IEN=""  D  Q:$G(ZTSTOP)
+"RTN","IBCNEDEP",66,0)
+ . ; Update count for periodic check
+"RTN","IBCNEDEP",67,0)
+ . S IBCNETOT=IBCNETOT+1
+"RTN","IBCNEDEP",68,0)
+ . ; Check for request to stop background job, periodically
+"RTN","IBCNEDEP",69,0)
+ . I $D(ZTQUEUED),IBCNETOT#100=0,$$S^%ZTLOAD() S ZTSTOP=1 Q
+"RTN","IBCNEDEP",70,0)
+ . ;
+"RTN","IBCNEDEP",71,0)
+ . NEW TDATA,DTCRT,BUFF,DFN,PAYR,XMSUB,VERID
+"RTN","IBCNEDEP",72,0)
+ . S TDATA=$G(^IBCN(365.1,IEN,0))
+"RTN","IBCNEDEP",73,0)
+ . S DFN=$P(TDATA,U,2),PAYR=$P(TDATA,U,3)
+"RTN","IBCNEDEP",74,0)
+ . S DTCRT=$P(TDATA,U,6)\1,BUFF=$P(TDATA,U,5)
+"RTN","IBCNEDEP",75,0)
+ . S VERID=$P(TDATA,U,11)
+"RTN","IBCNEDEP",76,0)
+ . ;
+"RTN","IBCNEDEP",77,0)
+ . ;  Check against the Failure Date
+"RTN","IBCNEDEP",78,0)
+ . I DTCRT>FLDT Q
+"RTN","IBCNEDEP",79,0)
+ . ;
+"RTN","IBCNEDEP",80,0)
+ . ;  If retries are defined
+"RTN","IBCNEDEP",81,0)
+ . I RETRYFLG="Y" D  Q     ; IB*2.0*506
+"RTN","IBCNEDEP",82,0)
+ .. ;
+"RTN","IBCNEDEP",83,0)
+ .. I '$$PYRACTV^IBCNEDE7(PAYR) Q    ; If Payer is not Nationally Active skip record  -  IB*2.0*506
+"RTN","IBCNEDEP",84,0)
+ .. ;
+"RTN","IBCNEDEP",85,0)
+ .. D SST^IBCNEUT2(IEN,6)    ; mark TQ entry status as 'retry'
+"RTN","IBCNEDEP",86,0)
+ .. Q
+"RTN","IBCNEDEP",87,0)
+ . ;
+"RTN","IBCNEDEP",88,0)
+ . D SST^IBCNEUT2(IEN,5)     ; if RETRYFLG=NO set TQ record to 'communication faliure'
+"RTN","IBCNEDEP",89,0)
+ . ;
+"RTN","IBCNEDEP",90,0)
+ . ;  For msg in the Response file set the status to
+"RTN","IBCNEDEP",91,0)
+ . ; 'Comm Failure'
+"RTN","IBCNEDEP",92,0)
+ . D RSTA^IBCNEUT7(IEN)
+"RTN","IBCNEDEP",93,0)
+ . ;
+"RTN","IBCNEDEP",94,0)
+ . ;  Set Buffer symbol to 'C1' (Comm Failure)    ; used to be 'B12' - ien of 15
+"RTN","IBCNEDEP",95,0)
+ . I BUFF'="" D BUFF^IBCNEUT2(BUFF,C1CODE)        ; set to "#" communication failure - IB*2.0*506
+"RTN","IBCNEDEP",96,0)
+ . ;
+"RTN","IBCNEDEP",97,0)
+ . I PAYR=$$FIND1^DIC(365.12,"","X","~NO PAYER") Q
+"RTN","IBCNEDEP",98,0)
+ . ;
+"RTN","IBCNEDEP",99,0)
+ . ; Issue comm fail MailMan msg only for ver'ns
+"RTN","IBCNEDEP",100,0)
+ . I VERID="V" D CERR^IBCNEDEQ
+"RTN","IBCNEDEP",101,0)
+ ;
+"RTN","IBCNEDEP",102,0)
+ ; Exit for stop request
+"RTN","IBCNEDEP",103,0)
+ I $G(ZTSTOP) G EXIT
+"RTN","IBCNEDEP",104,0)
+ ;
+"RTN","IBCNEDEP",105,0)
+RET ;  If status is 'Retry'     ; retries only exist if the RETRYFLG=YES - IB*2.0*506
+"RTN","IBCNEDEP",106,0)
+ S IEN=""
+"RTN","IBCNEDEP",107,0)
+ F  S IEN=$O(^IBCN(365.1,"AC",6,IEN)) Q:IEN=""  D  Q:$G(ZTSTOP)
+"RTN","IBCNEDEP",108,0)
+ . ; Update count for periodic check
+"RTN","IBCNEDEP",109,0)
+ . S IBCNETOT=IBCNETOT+1
+"RTN","IBCNEDEP",110,0)
+ . ; Check for request to stop background job, periodically
+"RTN","IBCNEDEP",111,0)
+ . I $D(ZTQUEUED),IBCNETOT#100=0,$$S^%ZTLOAD() S ZTSTOP=1 Q
+"RTN","IBCNEDEP",112,0)
+ . ;
+"RTN","IBCNEDEP",113,0)
+ . NEW TDATA,NRETR,PAYR,BUFF,DFN,MSG,RIEN,HIEN,XMSUB,VERID
+"RTN","IBCNEDEP",114,0)
+ . S TDATA=$G(^IBCN(365.1,IEN,0))
+"RTN","IBCNEDEP",115,0)
+ . S NRETR=$P(TDATA,U,8),PAYR=$P(TDATA,U,3)
+"RTN","IBCNEDEP",116,0)
+ . S BUFF=$P(TDATA,U,5),DFN=$P(TDATA,U,2)
+"RTN","IBCNEDEP",117,0)
+ . S VERID=$P(TDATA,U,11)
+"RTN","IBCNEDEP",118,0)
+ . S NRETR=NRETR+1
+"RTN","IBCNEDEP",119,0)
+ . ;
+"RTN","IBCNEDEP",120,0)
+ . ;  If retries are finished, set to communication failure  - IB*2.0*506
+"RTN","IBCNEDEP",121,0)
+ . I NRETR>RETR D  Q
+"RTN","IBCNEDEP",122,0)
+ .. D SST^IBCNEUT2(IEN,5)
+"RTN","IBCNEDEP",123,0)
+ .. ;
+"RTN","IBCNEDEP",124,0)
+ .. ;  Set Buffer symbol to 'C1' (Comm Failure)    ; used to be 'B12' - ien of 15
+"RTN","IBCNEDEP",125,0)
+ .. I BUFF'="" D BUFF^IBCNEUT2(BUFF,C1CODE)        ; set to "#" communication failure - IB*2.0*506
+"RTN","IBCNEDEP",126,0)
+ .. ;
+"RTN","IBCNEDEP",127,0)
+ .. ;  For msg in the Response file set the status to
+"RTN","IBCNEDEP",128,0)
+ .. ; 'Comm Failure'
+"RTN","IBCNEDEP",129,0)
+ .. D RSTA^IBCNEUT7(IEN)
+"RTN","IBCNEDEP",130,0)
+ .. I PAYR=$$FIND1^DIC(365.12,"","X","~NO PAYER") Q
+"RTN","IBCNEDEP",131,0)
+ .. ;
+"RTN","IBCNEDEP",132,0)
+ .. ;I VERID="V" D CERE^IBCNEDEQ      ; removed IB*2.0*506
+"RTN","IBCNEDEP",133,0)
+ . ; If generating retry, set eIV status to comm failure (5) for
+"RTN","IBCNEDEP",134,0)
+ . ; remaining related responses
+"RTN","IBCNEDEP",135,0)
+ . D RSTA^IBCNEUT7(IEN)
+"RTN","IBCNEDEP",136,0)
+ ;
+"RTN","IBCNEDEP",137,0)
+ ; Exit for stop request
+"RTN","IBCNEDEP",138,0)
+ I $G(ZTSTOP) G EXIT
+"RTN","IBCNEDEP",139,0)
+ ;
+"RTN","IBCNEDEP",140,0)
+FIN ; Prioritize requests for statuses 'Retry' and 'Ready to Transmit'
+"RTN","IBCNEDEP",141,0)
+ ;
+"RTN","IBCNEDEP",142,0)
+ ;  Separate inquiries into verifications, identifications,
+"RTN","IBCNEDEP",143,0)
+ ;  and "fishes" - VNUM = Priority of output
+"RTN","IBCNEDEP",144,0)
+ F STA=1,6 S IEN="" D
+"RTN","IBCNEDEP",145,0)
+ . F  S IEN=$O(^IBCN(365.1,"AC",STA,IEN)) Q:IEN=""  D
+"RTN","IBCNEDEP",146,0)
+ .. S IBDATA=$G(^IBCN(365.1,IEN,0)) Q:IBDATA=""
+"RTN","IBCNEDEP",147,0)
+ .. S QUERY=$P(IBDATA,U,11),DFN=$P(IBDATA,U,2),OVRIDE=$P(IBDATA,U,14)
+"RTN","IBCNEDEP",148,0)
+ .. S PAYR=$P(IBDATA,U,3)
+"RTN","IBCNEDEP",149,0)
+ .. I QUERY="V" S VNUM=3
+"RTN","IBCNEDEP",150,0)
+ .. I QUERY'="V" D
+"RTN","IBCNEDEP",151,0)
+ ... I PAYR=$$FIND1^DIC(365.12,,"X","~NO PAYER") S VNUM=5 Q
+"RTN","IBCNEDEP",152,0)
+ ... S VNUM=4
+"RTN","IBCNEDEP",153,0)
+ .. I OVRIDE'="" D
+"RTN","IBCNEDEP",154,0)
+ ... I PAYR=$$FIND1^DIC(365.12,,"X","~NO PAYER") S VNUM=2 Q
+"RTN","IBCNEDEP",155,0)
+ ... S VNUM=1
+"RTN","IBCNEDEP",156,0)
+ .. S ^TMP("IBQUERY",$J,VNUM,DFN,IEN)=""
+"RTN","IBCNEDEP",157,0)
+ ;
+"RTN","IBCNEDEP",158,0)
+LP ;  Loop through priorities, process as either verifications
+"RTN","IBCNEDEP",159,0)
+ ;  or identifications
+"RTN","IBCNEDEP",160,0)
+ N IHCNT,IBSTOP
+"RTN","IBCNEDEP",161,0)
+ S VNUM="",IHCNT=0
+"RTN","IBCNEDEP",162,0)
+ F  S VNUM=$O(^TMP("IBQUERY",$J,VNUM)) Q:VNUM=""  D  Q:$G(ZTSTOP)!$G(QFL)=1!($G(IBSTOP)=1)
+"RTN","IBCNEDEP",163,0)
+ . I VNUM=1!(VNUM=3) D VER Q
+"RTN","IBCNEDEP",164,0)
+ . ;D ID
+"RTN","IBCNEDEP",165,0)
+ ;
+"RTN","IBCNEDEP",166,0)
+EXIT ;  Finish
+"RTN","IBCNEDEP",167,0)
+ K BUFF,CNT,D,D0,DA,DFN,DI,DIC,DIE,DISYS,DQ,DR,DTCRT,EXT,FAIL,FLDT,FUTDT
+"RTN","IBCNEDEP",168,0)
+ K FRDT,FMSG,GT1,HCT,HIEN,HL,HLCDOM,HLCINS,HLCS,HLCSTCP,HLDOM,HLECH,%I,%H
+"RTN","IBCNEDEP",169,0)
+ K HLEID,HLFS,HLHDR,HLINST,HLIP,HLN,HLPARAM,HLPROD,HLQ,HLRESLT,XMSUB
+"RTN","IBCNEDEP",170,0)
+ K HLSAN,HLTYPE,HLX,IBCNEP,IBCNHLP,IEN,IHCNT,IN1,IRIEN,MDTM,MGRP,MSGID,TOT
+"RTN","IBCNEDEP",171,0)
+ K NRETR,NTRAN,OVRIDE,PAYR,PID,QFL,QUERY,RETR,RETRYFLG,RSIEN,SRVDT,STA,TRANSR,X
+"RTN","IBCNEDEP",172,0)
+ K ZMID,^TMP("IBQUERY",$J),Y,DOD,DGREL,TMSG,RSTYPE,OMSGID,QFL
+"RTN","IBCNEDEP",173,0)
+ K IBCNETOT,HLP,SUBID,VNUM,BNDL,IBDATA,PATID,C1CODE
+"RTN","IBCNEDEP",174,0)
+ Q
+"RTN","IBCNEDEP",175,0)
+ ;
+"RTN","IBCNEDEP",176,0)
+VER ;  Initialize HL7 variables protocol for Verifications
+"RTN","IBCNEDEP",177,0)
+ S IBCNHLP="IBCNE IIV RQV OUT"
+"RTN","IBCNEDEP",178,0)
+ D INIT^IBCNEHLO
+"RTN","IBCNEDEP",179,0)
+ ;
+"RTN","IBCNEDEP",180,0)
+ S DFN=""
+"RTN","IBCNEDEP",181,0)
+ F  S DFN=$O(^TMP("IBQUERY",$J,VNUM,DFN)) Q:DFN=""  D  Q:$G(ZTSTOP)!($G(IBSTOP)=1)
+"RTN","IBCNEDEP",182,0)
+ . ;
+"RTN","IBCNEDEP",183,0)
+ . ;  If the INQUIRE SECONDARY INSURANCES flag is 'yes',
+"RTN","IBCNEDEP",184,0)
+ . ;  bundle verifications together, send a continuation pointer
+"RTN","IBCNEDEP",185,0)
+ . I VNUM=3,BNDL D  Q:QFL
+"RTN","IBCNEDEP",186,0)
+ .. S TOT=0,IEN="",QFL=0
+"RTN","IBCNEDEP",187,0)
+ .. F  S IEN=$O(^TMP("IBQUERY",$J,VNUM,DFN,IEN)) Q:IEN=""  S TOT=TOT+1
+"RTN","IBCNEDEP",188,0)
+ . ;
+"RTN","IBCNEDEP",189,0)
+ . S IEN="",OMSGID="",QFL=0,CNT=0
+"RTN","IBCNEDEP",190,0)
+ . F  S IEN=$O(^TMP("IBQUERY",$J,VNUM,DFN,IEN)) Q:IEN=""  D  Q:$G(ZTSTOP)!($G(IBSTOP)=1)
+"RTN","IBCNEDEP",191,0)
+ .. ; Update count for periodic check
+"RTN","IBCNEDEP",192,0)
+ .. S IBCNETOT=IBCNETOT+1
+"RTN","IBCNEDEP",193,0)
+ .. ; Check for request to stop background job, periodically
+"RTN","IBCNEDEP",194,0)
+ .. I $D(ZTQUEUED),IBCNETOT#100=0,$$S^%ZTLOAD() S ZTSTOP=1 Q
+"RTN","IBCNEDEP",195,0)
+ .. ;
+"RTN","IBCNEDEP",196,0)
+ .. D PROC I PID="" Q
+"RTN","IBCNEDEP",197,0)
+ .. ;
+"RTN","IBCNEDEP",198,0)
+ .. I BNDL S HLP("CONTPTR")=$G(OMSGID)
+"RTN","IBCNEDEP",199,0)
+ .. ; D GENERATE^HLMA(HLEID,"GM",1,.HLRESLT,"",.HLP)
+"RTN","IBCNEDEP",200,0)
+ .. D GENERATE^HLMA(IBCNHLP,"GM",1,.HLRESLT,"",.HLP)
+"RTN","IBCNEDEP",201,0)
+ .. K ^TMP("HLS",$J),HLP
+"RTN","IBCNEDEP",202,0)
+ .. ;
+"RTN","IBCNEDEP",203,0)
+ .. ;  If not successful
+"RTN","IBCNEDEP",204,0)
+ .. I $P(HLRESLT,U,2)]"" D HLER^IBCNEDEQ Q
+"RTN","IBCNEDEP",205,0)
+ .. ;  If successful
+"RTN","IBCNEDEP",206,0)
+ .. ; increment counter and quit if reached IBMAXCNT IB*533
+"RTN","IBCNEDEP",207,0)
+ .. S IBSENT=IBSENT+1
+"RTN","IBCNEDEP",208,0)
+ .. I IBMAXCNT'="",IBSENT+1>IBMAXCNT S IBSTOP=1
+"RTN","IBCNEDEP",209,0)
+ .. D SCC^IBCNEDEQ
+"RTN","IBCNEDEP",210,0)
+ .. I BNDL D
+"RTN","IBCNEDEP",211,0)
+ ... I CNT=1 S OMSGID=MSGID
+"RTN","IBCNEDEP",212,0)
+ ;
+"RTN","IBCNEDEP",213,0)
+ K HL,IN1,GT1,PID,DFN,^TMP($J,"HLS")
+"RTN","IBCNEDEP",214,0)
+ Q
+"RTN","IBCNEDEP",215,0)
+ ;
+"RTN","IBCNEDEP",216,0)
+ID ;  Send Identification Msgs
+"RTN","IBCNEDEP",217,0)
+ ;
+"RTN","IBCNEDEP",218,0)
+ ;  Initialize the HL7 variables based on the HL7 protocol
+"RTN","IBCNEDEP",219,0)
+ S IBCNHLP="IBCNE IIV RQI OUT"
+"RTN","IBCNEDEP",220,0)
+ D INIT^IBCNEHLO
+"RTN","IBCNEDEP",221,0)
+ ;
+"RTN","IBCNEDEP",222,0)
+ S DFN=""
+"RTN","IBCNEDEP",223,0)
+ F  S DFN=$O(^TMP("IBQUERY",$J,VNUM,DFN)) Q:DFN=""  D  Q:$G(ZTSTOP)!QFL
+"RTN","IBCNEDEP",224,0)
+ . ; Update count for periodic check
+"RTN","IBCNEDEP",225,0)
+ . S IBCNETOT=IBCNETOT+1
+"RTN","IBCNEDEP",226,0)
+ . ; Check for request to stop background job, periodically
+"RTN","IBCNEDEP",227,0)
+ . I $D(ZTQUEUED),IBCNETOT#100=0,$$S^%ZTLOAD() S ZTSTOP=1 Q
+"RTN","IBCNEDEP",228,0)
+ . ;
+"RTN","IBCNEDEP",229,0)
+ . S TOT=0,IEN="",CNT=0,OMSGID="",QFL=0
+"RTN","IBCNEDEP",230,0)
+ . ;
+"RTN","IBCNEDEP",231,0)
+ . ;  Get the total # of identification msgs for a patient
+"RTN","IBCNEDEP",232,0)
+ . F  S IEN=$O(^TMP("IBQUERY",$J,VNUM,DFN,IEN)) Q:IEN=""  S TOT=TOT+1
+"RTN","IBCNEDEP",233,0)
+ . ;
+"RTN","IBCNEDEP",234,0)
+ . ;  For each identification transaction generate an HL7 msg
+"RTN","IBCNEDEP",235,0)
+ . F  S IEN=$O(^TMP("IBQUERY",$J,VNUM,DFN,IEN)) Q:IEN=""  D
+"RTN","IBCNEDEP",236,0)
+ .. D PROC
+"RTN","IBCNEDEP",237,0)
+ .. ;
+"RTN","IBCNEDEP",238,0)
+ .. I VNUM=4 S HLP("CONTPTR")=$G(OMSGID)
+"RTN","IBCNEDEP",239,0)
+ .. ; D GENERATE^HLMA(HLEID,"GM",1,.HLRESLT,"",.HLP)
+"RTN","IBCNEDEP",240,0)
+ .. D GENERATE^HLMA(IBCNHLP,"GM",1,.HLRESLT,"",.HLP)
+"RTN","IBCNEDEP",241,0)
+ .. K ^TMP("HLS",$J),HLP
+"RTN","IBCNEDEP",242,0)
+ .. ;
+"RTN","IBCNEDEP",243,0)
+ .. ;  If not successful
+"RTN","IBCNEDEP",244,0)
+ .. I $P(HLRESLT,U,2)]"" D HLER^IBCNEDEQ Q
+"RTN","IBCNEDEP",245,0)
+ .. ;
+"RTN","IBCNEDEP",246,0)
+ .. ;  If successful
+"RTN","IBCNEDEP",247,0)
+ .. D SCC^IBCNEDEQ
+"RTN","IBCNEDEP",248,0)
+ .. I VNUM=4 D
+"RTN","IBCNEDEP",249,0)
+ ... I CNT=1 S OMSGID=MSGID
+"RTN","IBCNEDEP",250,0)
+ ;
+"RTN","IBCNEDEP",251,0)
+ Q
+"RTN","IBCNEDEP",252,0)
+ ;
+"RTN","IBCNEDEP",253,0)
+PROC ;  Process TQ record
+"RTN","IBCNEDEP",254,0)
+ S TRANSR=$G(^IBCN(365.1,IEN,0))
+"RTN","IBCNEDEP",255,0)
+ S DFN=$P(TRANSR,U,2),PAYR=$P(TRANSR,U,3),BUFF=$P(TRANSR,U,5)
+"RTN","IBCNEDEP",256,0)
+ S QUERY=$P(TRANSR,U,11),EXT=$P(TRANSR,U,10),SRVDT=$P(TRANSR,U,12)
+"RTN","IBCNEDEP",257,0)
+ S IRIEN=$P(TRANSR,U,13),HCT=0,NTRAN=$P(TRANSR,U,7),NRETR=$P(TRANSR,U,8)
+"RTN","IBCNEDEP",258,0)
+ S SUBID=$P(TRANSR,U,16),OVRIDE=$P(TRANSR,U,14),STA=$P(TRANSR,U,4)
+"RTN","IBCNEDEP",259,0)
+ S FRDT=$P(TRANSR,U,17),PATID=$P(TRANSR,U,19)
+"RTN","IBCNEDEP",260,0)
+ ;
+"RTN","IBCNEDEP",261,0)
+ ;  Build the HL7 msg
+"RTN","IBCNEDEP",262,0)
+ S HCT=HCT+1,^TMP("HLS",$J,HCT)="PRD|NA"
+"RTN","IBCNEDEP",263,0)
+ D PID^IBCNEHLQ I PID=""!(PID?."*") Q
+"RTN","IBCNEDEP",264,0)
+ S HCT=HCT+1,^TMP("HLS",$J,HCT)=$TR(PID,"*","")
+"RTN","IBCNEDEP",265,0)
+ D GT1^IBCNEHLQ I GT1'="",GT1'?."*" S HCT=HCT+1,^TMP("HLS",$J,HCT)=$TR(GT1,"*","")
+"RTN","IBCNEDEP",266,0)
+ D IN1^IBCNEHLQ I IN1'="",IN1'?."*" D
+"RTN","IBCNEDEP",267,0)
+ . S HCT=HCT+1
+"RTN","IBCNEDEP",268,0)
+ . I VNUM=1 S ^TMP("HLS",$J,HCT)=$TR(IN1,"*","") Q
+"RTN","IBCNEDEP",269,0)
+ . I VNUM=2,'BNDL S ^TMP("HLS",$J,HCT)=$TR(IN1,"*","") Q
+"RTN","IBCNEDEP",270,0)
+ . S CNT=CNT+1 I TOT=0 S TOT=1
+"RTN","IBCNEDEP",271,0)
+ . S $P(IN1,HLFS,22)=TOT,$P(IN1,HLFS,21)=CNT
+"RTN","IBCNEDEP",272,0)
+ . S ^TMP("HLS",$J,HCT)=$TR(IN1,"*","")
+"RTN","IBCNEDEP",273,0)
+ ;
+"RTN","IBCNEDEP",274,0)
+ ;  Build multi-field NTE segment
+"RTN","IBCNEDEP",275,0)
+ D NTE^IBCNEHLQ
+"RTN","IBCNEDEP",276,0)
+ ;  If build successful
+"RTN","IBCNEDEP",277,0)
+ I NTE'="",$E(NTE,1)'="*" S HCT=HCT+1,^TMP("HLS",$J,HCT)=$TR(NTE,"*","")
+"RTN","IBCNEDEP",278,0)
+ K NTE
+"RTN","IBCNEDEP",279,0)
+ Q
+"RTN","IBCNEDEP",280,0)
+ ;
+"RTN","IBCNEDEP",281,0)
+ ; The tag HLD was found at the top of this routine.  It was moved
+"RTN","IBCNEDEP",282,0)
+ ; to its own procedure because it isn't needed anymore at this time.
+"RTN","IBCNEDEP",283,0)
+ ; Responses will not have the status of HOLD starting with patch IB*2.0*506.
+"RTN","IBCNEDEP",284,0)
+ ; If HOLD is reinstated, then the logic below must be rewritten for the
+"RTN","IBCNEDEP",285,0)
+ ; appropriate retry logic at that time.
+"RTN","IBCNEDEP",286,0)
+HLD ;  Go through the 'Hold' statuses, see if ready to be 'retried'
+"RTN","IBCNEDEP",287,0)
+ Q  ; Quit added as safety valve
+"RTN","IBCNEDEP",288,0)
+ ;S IEN=""
+"RTN","IBCNEDEP",289,0)
+ ;F  S IEN=$O(^IBCN(365.1,"AC",4,IEN)) Q:IEN=""  D  Q:$G(ZTSTOP)
+"RTN","IBCNEDEP",290,0)
+ ;. ; Update count for periodic check
+"RTN","IBCNEDEP",291,0)
+ ;. S IBCNETOT=IBCNETOT+1
+"RTN","IBCNEDEP",292,0)
+ ;. ; Check for request to stop background job, periodically
+"RTN","IBCNEDEP",293,0)
+ ;. I $D(ZTQUEUED),IBCNETOT#100=0,$$S^%ZTLOAD() S ZTSTOP=1 Q
+"RTN","IBCNEDEP",294,0)
+ ;. ;
+"RTN","IBCNEDEP",295,0)
+ ;. S FUTDT=$P($G(^IBCN(365.1,IEN,0)),U,9)
+"RTN","IBCNEDEP",296,0)
+ ;. ;
+"RTN","IBCNEDEP",297,0)
+ ;. ;  If the future date is today, set status to 'Retry',
+"RTN","IBCNEDEP",298,0)
+ ;. ;  DON'T clear future transmission date. (Need date to see if this is the first
+"RTN","IBCNEDEP",299,0)
+ ;. ;  time that the payer asked us to resubmit this inquiry.)
+"RTN","IBCNEDEP",300,0)
+ ;. I FUTDT'>DT D SST^IBCNEUT2(IEN,6) ;D
+"RTN","IBCNEDEP",301,0)
+ ;. ;. NEW DA,DIE,DR
+"RTN","IBCNEDEP",302,0)
+ ;. ;. S DA=IEN,DIE="^IBCN(365.1,",DR=".09///@" D ^DIE
+"RTN","IBCNEDEP",303,0)
+ ;.. ;
+"RTN","IBCNEDEP",304,0)
+ ;.. D SST^IBCNEUT2(IEN,6)     ; set TQ status to 'retry'
+"RTN","IBCNEDEP",305,0)
+ Q
+"RTN","IBCNEHLQ")
+0^1^B46752354^B44383583
+"RTN","IBCNEHLQ",1,0)
+IBCNEHLQ ;DAOU/ALA - HL7 RQI Message ;17-JUN-2002
+"RTN","IBCNEHLQ",2,0)
+ ;;2.0;INTEGRATED BILLING;**184,271,300,361,416,438,467,497,533**;21-MAR-94;Build 5
+"RTN","IBCNEHLQ",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBCNEHLQ",4,0)
+ ;
+"RTN","IBCNEHLQ",5,0)
+ ;**Program Description**
+"RTN","IBCNEHLQ",6,0)
+ ;  This routine builds an eIV Verification (RQI^I01) or
+"RTN","IBCNEHLQ",7,0)
+ ;  Identification (RQI^I03) request
+"RTN","IBCNEHLQ",8,0)
+ ;
+"RTN","IBCNEHLQ",9,0)
+ ;**Modified by  Date        Reason
+"RTN","IBCNEHLQ",10,0)
+ ;  DAOU/BHS     10/04/2002  Implementing Transmit SSN logic
+"RTN","IBCNEHLQ",11,0)
+ ;  DAOU/DB      03/19/2004  Stripped dashes from SSN (PID, GT1)
+"RTN","IBCNEHLQ",12,0)
+ ;
+"RTN","IBCNEHLQ",13,0)
+EN ;  Entry Point
+"RTN","IBCNEHLQ",14,0)
+ ;  Variables
+"RTN","IBCNEHLQ",15,0)
+ ;    HLFS = Field Separator
+"RTN","IBCNEHLQ",16,0)
+ ;    DFN = Patient IEN
+"RTN","IBCNEHLQ",17,0)
+ ;    PAYR = Payer IEN
+"RTN","IBCNEHLQ",18,0)
+ ;    BUFF = Buffer IEN
+"RTN","IBCNEHLQ",19,0)
+ ;    FRDT = Freshness Date
+"RTN","IBCNEHLQ",20,0)
+ ;
+"RTN","IBCNEHLQ",21,0)
+PID ; Patient Identification Segment
+"RTN","IBCNEHLQ",22,0)
+ N VAFSTR,ICN,NM,I,PID11,EDQ,IBWHO
+"RTN","IBCNEHLQ",23,0)
+ S VAFSTR=",1,7,8,11,",DFN=+$G(DFN)
+"RTN","IBCNEHLQ",24,0)
+ S PID=$$EN^VAFHLPID(DFN,VAFSTR,1)
+"RTN","IBCNEHLQ",25,0)
+ S PID11=$P(PID,HLFS,12)
+"RTN","IBCNEHLQ",26,0)
+ I $P(PID11,HLECH,2)="""""" D
+"RTN","IBCNEHLQ",27,0)
+ . S $P(PID11,HLECH,2)=""
+"RTN","IBCNEHLQ",28,0)
+ . S $P(PID,HLFS,12)=PID11
+"RTN","IBCNEHLQ",29,0)
+ ; Encode special characters into Name and address pieces
+"RTN","IBCNEHLQ",30,0)
+ ; **NOTE: If $$EN^VAFHLPID should, in the future, return more than 11 pieces than the lines below may
+"RTN","IBCNEHLQ",31,0)
+ ;         need to be modified as they currently expect 11 pieces to be returned.
+"RTN","IBCNEHLQ",32,0)
+ I DFN D
+"RTN","IBCNEHLQ",33,0)
+ .; try to get name of insured from NAME OF INSURED
+"RTN","IBCNEHLQ",34,0)
+ .I EXT'=1,$G(IRIEN)'="" D
+"RTN","IBCNEHLQ",35,0)
+ .. S IBWHO=$P($G(^DPT(DFN,.312,IRIEN,0)),U,6)
+"RTN","IBCNEHLQ",36,0)
+ .. I IBWHO'="",IBWHO'="v" Q
+"RTN","IBCNEHLQ",37,0)
+ .. S NM=$P($G(^DPT(DFN,.312,IRIEN,7)),U,1)
+"RTN","IBCNEHLQ",38,0)
+ .I EXT=1,BUFF,$G(NM)="" D
+"RTN","IBCNEHLQ",39,0)
+ .. S IBWHO=$P($G(^IBA(355.33,BUFF,60)),U,5)
+"RTN","IBCNEHLQ",40,0)
+ .. I IBWHO'="",IBWHO'="v" Q
+"RTN","IBCNEHLQ",41,0)
+ .. S NM=$P($G(^IBA(355.33,BUFF,91)),U)
+"RTN","IBCNEHLQ",42,0)
+ .I $G(NM)'="" S NM=$$HLNAME^HLFNC(NM,HLECH)
+"RTN","IBCNEHLQ",43,0)
+ .; if unsuccessful, get patient name from 2/.01
+"RTN","IBCNEHLQ",44,0)
+ .I $G(NM)="" D
+"RTN","IBCNEHLQ",45,0)
+ ..S NM("FILE")=2,NM("IENS")=DFN,NM("FIELD")=.01
+"RTN","IBCNEHLQ",46,0)
+ ..S NM=$$HLNAME^XLFNAME(.NM,"",$E(HLECH)),NM=$S(NM]"":NM,1:HLQ)
+"RTN","IBCNEHLQ",47,0)
+ ..Q
+"RTN","IBCNEHLQ",48,0)
+ .S I=$L(NM,HLFS),NM=$$ENCHL7(NM),$P(PID,HLFS,6,5+I)=NM
+"RTN","IBCNEHLQ",49,0)
+ .S $P(PID,HLFS,12,99)=$$ENCHL7($P(PID,HLFS,12,99))
+"RTN","IBCNEHLQ",50,0)
+ .S ICN=$P($G(^DPT(DFN,"MPI")),U,1)
+"RTN","IBCNEHLQ",51,0)
+ .S $P(PID,HLFS,4)=ICN_HLECH_HLECH_HLECH_"USVHA"_HLECH_"NI"_HLECH_"~"_DFN_HLECH_HLECH_HLECH_"USVHA"_HLECH_"PI"_HLECH_$P($$SITE^VASITE,U,3)_HLECH
+"RTN","IBCNEHLQ",52,0)
+ .Q
+"RTN","IBCNEHLQ",53,0)
+ S FRDT=$$HLDATE^HLFNC($G(FRDT))
+"RTN","IBCNEHLQ",54,0)
+ S $P(PID,HLFS,34)=FRDT
+"RTN","IBCNEHLQ",55,0)
+ Q
+"RTN","IBCNEHLQ",56,0)
+ ;
+"RTN","IBCNEHLQ",57,0)
+GT1 ;  Guarantor Segment
+"RTN","IBCNEHLQ",58,0)
+ N WHO,NM,IDOB,ISEX,SEX,RLIEN,PER,PLIEN,RDATA,IBSDATA,IBADDR
+"RTN","IBCNEHLQ",59,0)
+ ;
+"RTN","IBCNEHLQ",60,0)
+ S GT1=""
+"RTN","IBCNEHLQ",61,0)
+ I $G(QUERY)="I" Q
+"RTN","IBCNEHLQ",62,0)
+ ;
+"RTN","IBCNEHLQ",63,0)
+ ;  If the data was extracted from Buffer get specifics from Buffer file
+"RTN","IBCNEHLQ",64,0)
+ I EXT=1 D
+"RTN","IBCNEHLQ",65,0)
+ . S WHO=$P($G(^IBA(355.33,BUFF,60)),U,5)
+"RTN","IBCNEHLQ",66,0)
+ . I WHO="v"!(WHO="") Q
+"RTN","IBCNEHLQ",67,0)
+ . S NM=$P($G(^IBA(355.33,BUFF,60)),U,7),NM=$$NAME^IBCNEHLU(NM)
+"RTN","IBCNEHLQ",68,0)
+ . S NM=$$HLNAME^HLFNC(NM,HLECH)
+"RTN","IBCNEHLQ",69,0)
+ . S NM=$$ENCHL7(NM)
+"RTN","IBCNEHLQ",70,0)
+ . S $P(GT1,HLFS,3)=NM_HLECH_HLECH_HLECH
+"RTN","IBCNEHLQ",71,0)
+ . S IDOB=$P($G(^IBA(355.33,BUFF,60)),U,8),IDOB=$$HLDATE^HLFNC(IDOB)
+"RTN","IBCNEHLQ",72,0)
+ . S $P(GT1,HLFS,8)=IDOB
+"RTN","IBCNEHLQ",73,0)
+ . S $P(GT1,HLFS,2)=$$SCRUB($G(SUBID))_HLECH_HLECH_HLECH_HLECH_"HC"
+"RTN","IBCNEHLQ",74,0)
+ . Q
+"RTN","IBCNEHLQ",75,0)
+ ;
+"RTN","IBCNEHLQ",76,0)
+ ;  If the data was extracted from non-Buffer, check Patient file
+"RTN","IBCNEHLQ",77,0)
+ I EXT'=1 D
+"RTN","IBCNEHLQ",78,0)
+ . I IRIEN="" Q
+"RTN","IBCNEHLQ",79,0)
+ . S WHO=$P($G(^DPT(DFN,.312,IRIEN,0)),U,6)
+"RTN","IBCNEHLQ",80,0)
+ . I WHO="v"!(WHO="") Q
+"RTN","IBCNEHLQ",81,0)
+ . ;S NM=$P($G(^DPT(DFN,.312,IRIEN,0)),U,17)  ; WCJ;IB*2.0*497
+"RTN","IBCNEHLQ",82,0)
+ . S NM=$P($G(^DPT(DFN,.312,IRIEN,7)),U,1)  ; WCJ;IB*2.0*497
+"RTN","IBCNEHLQ",83,0)
+ . S NM=$$HLNAME^HLFNC(NM,HLECH)
+"RTN","IBCNEHLQ",84,0)
+ . S NM=$$ENCHL7(NM)
+"RTN","IBCNEHLQ",85,0)
+ . S $P(GT1,HLFS,3)=NM_HLECH_HLECH_HLECH
+"RTN","IBCNEHLQ",86,0)
+ . S IDOB=$P($G(^DPT(DFN,.312,IRIEN,3)),U,1),IDOB=$$HLDATE^HLFNC(IDOB)
+"RTN","IBCNEHLQ",87,0)
+ . S $P(GT1,HLFS,8)=IDOB
+"RTN","IBCNEHLQ",88,0)
+ . S $P(GT1,HLFS,2)=$$SCRUB($G(SUBID))_HLECH_HLECH_HLECH_HLECH_"HC"
+"RTN","IBCNEHLQ",89,0)
+ . ;
+"RTN","IBCNEHLQ",90,0)
+ . S IBSDATA=$G(^DPT(DFN,.312,IRIEN,3))
+"RTN","IBCNEHLQ",91,0)
+ . S IBADDR=$$HLADDR^HLFNC($P(IBSDATA,U,6,7),$P(IBSDATA,U,8,10))
+"RTN","IBCNEHLQ",92,0)
+ . S $P(GT1,HLFS,5)=$$ENCHL7(IBADDR)
+"RTN","IBCNEHLQ",93,0)
+ . ;
+"RTN","IBCNEHLQ",94,0)
+ . D CHK
+"RTN","IBCNEHLQ",95,0)
+ . I $P(GT1,HLFS,8)=""&(IDOB'="") S $P(GT1,HLFS,8)=$$HLDATE^HLFNC(IDOB)
+"RTN","IBCNEHLQ",96,0)
+ . I $P(GT1,HLFS,9)=""&(ISEX'="") S $P(GT1,HLFS,9)=ISEX
+"RTN","IBCNEHLQ",97,0)
+ . I $P(GT1,HLFS,9)="",WHO="s" D
+"RTN","IBCNEHLQ",98,0)
+ .. S SEX=$P($G(^DPT(DFN,.312,IRIEN,3)),U,12) ; get policy holder sex
+"RTN","IBCNEHLQ",99,0)
+ .. I SEX="" S SEX=$P(^DPT(DFN,0),U,2),SEX=$S(SEX="M":"F",1:"M") ; if null, use alternative method
+"RTN","IBCNEHLQ",100,0)
+ .. S $P(GT1,HLFS,9)=SEX
+"RTN","IBCNEHLQ",101,0)
+ ;
+"RTN","IBCNEHLQ",102,0)
+ I GT1="" Q
+"RTN","IBCNEHLQ",103,0)
+ S $P(GT1,HLFS,1)=1
+"RTN","IBCNEHLQ",104,0)
+ S GT1="GT1"_HLFS_GT1
+"RTN","IBCNEHLQ",105,0)
+ Q
+"RTN","IBCNEHLQ",106,0)
+ ;
+"RTN","IBCNEHLQ",107,0)
+IN1 ;  Insurance Segment
+"RTN","IBCNEHLQ",108,0)
+ N EFFDT,ELIGDT,EXPDT,PREL,ADMN,ADMDT,IENS
+"RTN","IBCNEHLQ",109,0)
+ S IN1=""
+"RTN","IBCNEHLQ",110,0)
+ ;
+"RTN","IBCNEHLQ",111,0)
+ ;  If the data was extracted from Buffer get specifics from Buffer file
+"RTN","IBCNEHLQ",112,0)
+ I EXT=1 D
+"RTN","IBCNEHLQ",113,0)
+ .S PREL=$P($G(^IBA(355.33,BUFF,60)),U,14)
+"RTN","IBCNEHLQ",114,0)
+ .S ELIGDT=$P($G(TRANSR),U,12) I ELIGDT=DT S ELIGDT=""
+"RTN","IBCNEHLQ",115,0)
+ .S $P(IN1,HLFS,2)=$S(PREL=18:$$SCRUB($G(SUBID)),PREL="":$$SCRUB($G(SUBID)),1:$$SCRUB($G(PATID)))
+"RTN","IBCNEHLQ",116,0)
+ .I PAYR'=$$FIND1^DIC(365.12,"","X","~NO PAYER") D
+"RTN","IBCNEHLQ",117,0)
+ ..S $P(IN1,HLFS,3)=$$ENCHL7($P(^IBE(365.12,PAYR,0),U,2))_HLECH_HLECH_HLECH_"USVHA"_HLECH_"VP"_HLECH
+"RTN","IBCNEHLQ",118,0)
+ ..S $P(IN1,HLFS,4)=$$ENCHL7($P(^IBE(365.12,PAYR,0),U,1))
+"RTN","IBCNEHLQ",119,0)
+ .S $P(IN1,HLFS,8)=$$ENCHL7($P($G(^IBA(355.33,BUFF,40)),U,3))
+"RTN","IBCNEHLQ",120,0)
+ .S $P(IN1,HLFS,9)=$$ENCHL7($P($G(^IBA(355.33,BUFF,40)),U,2))
+"RTN","IBCNEHLQ",121,0)
+ .S EFFDT=$P($G(^IBA(355.33,BUFF,60)),U,2),EFFDT=$$HLDATE^HLFNC(EFFDT)
+"RTN","IBCNEHLQ",122,0)
+ .S EXPDT=$P($G(^IBA(355.33,BUFF,60)),U,3),EXPDT=$$HLDATE^HLFNC(EXPDT)
+"RTN","IBCNEHLQ",123,0)
+ .S $P(IN1,HLFS,12)=EFFDT
+"RTN","IBCNEHLQ",124,0)
+ .S $P(IN1,HLFS,13)=EXPDT
+"RTN","IBCNEHLQ",125,0)
+ .S $P(IN1,HLFS,17)=$$PATREL(PREL)
+"RTN","IBCNEHLQ",126,0)
+ .S $P(IN1,HLFS,26)=$$HLDATE^HLFNC(ELIGDT)
+"RTN","IBCNEHLQ",127,0)
+ ;
+"RTN","IBCNEHLQ",128,0)
+ ;  If the data was extracted from non-Buffer, check Patient file
+"RTN","IBCNEHLQ",129,0)
+ I EXT'=1 D
+"RTN","IBCNEHLQ",130,0)
+ . I IRIEN="" Q
+"RTN","IBCNEHLQ",131,0)
+ . I $$SCRUB($G(SUBID))'=$$SCRUB($P($G(^DPT(DFN,.312,IRIEN,0)),U,2)) Q
+"RTN","IBCNEHLQ",132,0)
+ . S EFFDT=$P($G(^DPT(DFN,.312,IRIEN,0)),U,8),EFFDT=$$HLDATE^HLFNC(EFFDT)
+"RTN","IBCNEHLQ",133,0)
+ . S EXPDT=$P($G(^DPT(DFN,.312,IRIEN,0)),U,4),EXPDT=$$HLDATE^HLFNC(EXPDT)
+"RTN","IBCNEHLQ",134,0)
+ . S $P(IN1,HLFS,12)=EFFDT
+"RTN","IBCNEHLQ",135,0)
+ . S $P(IN1,HLFS,13)=EXPDT
+"RTN","IBCNEHLQ",136,0)
+ . S PREL=$P($G(^DPT(DFN,.312,IRIEN,4)),U,3)
+"RTN","IBCNEHLQ",137,0)
+ . S $P(IN1,HLFS,2)=$S(PREL=18:$$SCRUB($G(SUBID)),PREL="":$$SCRUB($G(SUBID)),1:$$SCRUB($G(PATID)))
+"RTN","IBCNEHLQ",138,0)
+ . I PAYR'=$$FIND1^DIC(365.12,"","X","~NO PAYER") D
+"RTN","IBCNEHLQ",139,0)
+ .. S $P(IN1,HLFS,3)=$$ENCHL7($P(^IBE(365.12,PAYR,0),U,2))_HLECH_HLECH_HLECH_"USVHA"_HLECH_"VP"_HLECH
+"RTN","IBCNEHLQ",140,0)
+ .. S $P(IN1,HLFS,4)=$$ENCHL7($P(^IBE(365.12,PAYR,0),U,1))
+"RTN","IBCNEHLQ",141,0)
+ . S $P(IN1,HLFS,17)=$$PATREL(PREL)
+"RTN","IBCNEHLQ",142,0)
+ . S IENS=IRIEN_","_DFN_","
+"RTN","IBCNEHLQ",143,0)
+ . S $P(IN1,HLFS,8)=$$ENCHL7($$GET1^DIQ(2.312,IENS,21,"E"))
+"RTN","IBCNEHLQ",144,0)
+ . S $P(IN1,HLFS,9)=$$ENCHL7($$GET1^DIQ(2.312,IENS,20,"E"))
+"RTN","IBCNEHLQ",145,0)
+ ;
+"RTN","IBCNEHLQ",146,0)
+ I IN1="" Q
+"RTN","IBCNEHLQ",147,0)
+ ;
+"RTN","IBCNEHLQ",148,0)
+ I $P(IN1,HLFS,17)="" S $P(IN1,HLFS,17)=18
+"RTN","IBCNEHLQ",149,0)
+ S $P(IN1,HLFS,1)=1
+"RTN","IBCNEHLQ",150,0)
+ S IN1="IN1"_HLFS_IN1
+"RTN","IBCNEHLQ",151,0)
+ Q
+"RTN","IBCNEHLQ",152,0)
+ ;
+"RTN","IBCNEHLQ",153,0)
+NTE ;  NTE Segment
+"RTN","IBCNEHLQ",154,0)
+ ; TRANSR is 0 node of TQ, set in PROC^IBCNEDEP
+"RTN","IBCNEHLQ",155,0)
+ S NTE=$$EXTERNAL^DILFD(365.1,.2,,$P($G(TRANSR),U,20)) ; service code from 365.1/.2
+"RTN","IBCNEHLQ",156,0)
+ S NTE="NTE"_HLFS_HLFS_HLFS_NTE
+"RTN","IBCNEHLQ",157,0)
+ Q
+"RTN","IBCNEHLQ",158,0)
+ ;
+"RTN","IBCNEHLQ",159,0)
+CHK ;  Check for spouse or other information in the Patient Relation File
+"RTN","IBCNEHLQ",160,0)
+ ;  DGREL = Relationship (1=Self, 2=Spouse, 3-34,99=Other)
+"RTN","IBCNEHLQ",161,0)
+ NEW IEN,QFL
+"RTN","IBCNEHLQ",162,0)
+ S IEN="",RLIEN="",ISEX="",QFL=0
+"RTN","IBCNEHLQ",163,0)
+ F  S IEN=$O(^DGPR(408.12,"B",DFN,IEN)) Q:IEN=""  D  Q:QFL
+"RTN","IBCNEHLQ",164,0)
+ . S DGREL=$P($G(^DGPR(408.12,IEN,0)),U,2)
+"RTN","IBCNEHLQ",165,0)
+ . ;
+"RTN","IBCNEHLQ",166,0)
+ . ;  If person is veteran, quit
+"RTN","IBCNEHLQ",167,0)
+ . I DGREL=1 Q
+"RTN","IBCNEHLQ",168,0)
+ . ;
+"RTN","IBCNEHLQ",169,0)
+ . ;  If person is spouse, pick that record and quit
+"RTN","IBCNEHLQ",170,0)
+ . I WHO="s",DGREL=2 S RLIEN=IEN,QFL=1 Q
+"RTN","IBCNEHLQ",171,0)
+ . ;
+"RTN","IBCNEHLQ",172,0)
+ . ;  Otherwise it should be an 'other' dependent
+"RTN","IBCNEHLQ",173,0)
+ . S RLIEN=IEN
+"RTN","IBCNEHLQ",174,0)
+ ;
+"RTN","IBCNEHLQ",175,0)
+ I RLIEN="" Q
+"RTN","IBCNEHLQ",176,0)
+ ;
+"RTN","IBCNEHLQ",177,0)
+ ;  Check for Sex, SSN, DOB in INCOME PERSON File
+"RTN","IBCNEHLQ",178,0)
+ S PER=$P(^DGPR(408.12,RLIEN,0),U,3)
+"RTN","IBCNEHLQ",179,0)
+ I PER'["DGPR(408.13" Q
+"RTN","IBCNEHLQ",180,0)
+ S PLIEN=$P(PER,";",1)
+"RTN","IBCNEHLQ",181,0)
+ I PLIEN="" Q
+"RTN","IBCNEHLQ",182,0)
+ S RDATA=$G(^DGPR(408.13,PLIEN,0)),ISEX=$P(RDATA,U,2),IDOB=$P(RDATA,U,3)
+"RTN","IBCNEHLQ",183,0)
+ I $P(RDATA,U,4)'="" N DFN S DFN=$P(RDATA,U,4),ISEX=$P(^DPT(DFN,0),U,2),IDOB=$P(^DPT(DFN,0),U,3)
+"RTN","IBCNEHLQ",184,0)
+ Q
+"RTN","IBCNEHLQ",185,0)
+ ;
+"RTN","IBCNEHLQ",186,0)
+ENCHL7(STR) ; Encode HL7 escape seqs in data fields
+"RTN","IBCNEHLQ",187,0)
+ ;
+"RTN","IBCNEHLQ",188,0)
+ ; Input:
+"RTN","IBCNEHLQ",189,0)
+ ; STR = Field data possible containing HL7 encoding chars
+"RTN","IBCNEHLQ",190,0)
+ ;
+"RTN","IBCNEHLQ",191,0)
+ ; Output Values
+"RTN","IBCNEHLQ",192,0)
+ ; Fn returns string w/converted escape seqs
+"RTN","IBCNEHLQ",193,0)
+ ;
+"RTN","IBCNEHLQ",194,0)
+ N CHR,NEW,RPLC,CNT,LOOP
+"RTN","IBCNEHLQ",195,0)
+ ;
+"RTN","IBCNEHLQ",196,0)
+ ; Replace "\" "&" "~" "|" with \F\ \R\ \E\ \T\ respectively
+"RTN","IBCNEHLQ",197,0)
+ F CHR="\","&","~","|" S CNT=$L(STR,CHR) I CNT>1 D
+"RTN","IBCNEHLQ",198,0)
+ . S NEW=$P(STR,CHR)
+"RTN","IBCNEHLQ",199,0)
+ . S RPLC="\"_$TR(CHR,"|~\&","FRET")_"\"
+"RTN","IBCNEHLQ",200,0)
+ . F LOOP=2:1:CNT S NEW=NEW_RPLC_$P(STR,CHR,LOOP)
+"RTN","IBCNEHLQ",201,0)
+ . S STR=NEW
+"RTN","IBCNEHLQ",202,0)
+ ;
+"RTN","IBCNEHLQ",203,0)
+ Q STR
+"RTN","IBCNEHLQ",204,0)
+ ;
+"RTN","IBCNEHLQ",205,0)
+SCRUB(Z) ; remove all punctuation from the string and convert lowercase to uppercase
+"RTN","IBCNEHLQ",206,0)
+ ; IB*2*416 - used for subscriber and patient ID fields
+"RTN","IBCNEHLQ",207,0)
+ S Z=$$NOPUNCT^IBCEF(Z,1)
+"RTN","IBCNEHLQ",208,0)
+ S Z=$$UP^XLFSTR(Z)
+"RTN","IBCNEHLQ",209,0)
+SCRUBX ;
+"RTN","IBCNEHLQ",210,0)
+ Q Z
+"RTN","IBCNEHLQ",211,0)
+ ;
+"RTN","IBCNEHLQ",212,0)
+PATREL(REL) ; convert pat.relationship to insured from VistA to X12 and return X12 value
+"RTN","IBCNEHLQ",213,0)
+ ; REL - VistA value
+"RTN","IBCNEHLQ",214,0)
+ ; 
+"RTN","IBCNEHLQ",215,0)
+ ; VistA values of Self (18), Spouse (01), and Child (19) remain unchanged,
+"RTN","IBCNEHLQ",216,0)
+ ; anything else is converted to X12 value of Other Adult (34)
+"RTN","IBCNEHLQ",217,0)
+ ;
+"RTN","IBCNEHLQ",218,0)
+ Q $S($G(REL)="":"",".01.18.19."[("."_REL_"."):REL,1:34)
+"VER")
+8.0^22.0
+"BLD",9760,6)
+^486
+**END**
+**END**
+

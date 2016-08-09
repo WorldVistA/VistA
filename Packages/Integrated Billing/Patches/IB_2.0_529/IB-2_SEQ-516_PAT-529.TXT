@@ -1,0 +1,293 @@
+$TXT Created by            A at CARVDD.DOMAIN.EXT  (KIDS) on Monday, 04/11/16 at 10:49
+=============================================================================
+Run Date: JUL 01, 2016                     Designation: IB*2*529
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #516                      Status: Released
+                  Compliance Date: JUL 31, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*516    <<= must be installed BEFORE `IB*2*529'
+                    (v)IB*2*528    <<= must be installed BEFORE `IB*2*529'
+                    (v)IB*2*530    <<= must be installed BEFORE `IB*2*529'
+
+Subject: MEDICAL CARE COLLECTION FUND (MCCF) ENHANCEMENTS PROJECT - EPAYMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ *************************************************************************
+  
+ NOTICE:
+  
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement.
+  
+ *************************************************************************
+  
+ The Medical ePayments Compliance (Phase 2, Iteration 2) project ensures 
+ the Veterans Administrations (VA) compliance with Electronic Funds
+ Transfer (EFT) & Electronic Remittance Advice (ERA) Operating Rules, and
+ enables VA to more effectively use ERA data, resulting in better revenue
+ and cash flow management.  It will provide the infrastructure foundation
+ for electronic exchange of claim payment information and promotes an
+ interoperable system and will reduce the time elapsed between receipt of
+ the Electronic Data Interchange (EDI) 835 Electronic Remittance Advice
+ Transaction and receipt of the Cash Concentration or Disbursement (CCD+)
+ transactions.  It will ensure that trace numbers between payments and
+ remittances can be used by VA, reducing the level of open accounts
+ receivable, allow claim denials to be more quickly addressed, and
+ standardizes Electronic Funds Transfer (EFT) & ERA enrollment to reduce
+ workload burden on VA staff.
+  
+ This patch contains changes to the ePayments (835 and EFT) program area 
+ to ensure compliance. Specifically, enhancements to the Veterans 
+ Health Information Systems and Technology Architecture (VistA) Third Party
+ EDI Lockbox module to increase timely and accurate processing of payments
+ for electronic pharmacy claims in compliance with Health Insurance
+ Portability and Accountability Act (HIPAA) and Veterans Health
+ Administration (VHA) Fiscal Accounting policies will also be required.  
+ The ePayments system is used by Accounts Receivable (AR) staff to process
+ payments from third party payers for both medical and pharmacy claims. The
+ objectives of the requested ePayments software modifications are to
+ expedite accurate payments by enhancing the ePayments software to
+ streamline the user's ability to process the pharmacy 835 while:
+         
+ Complying with HIPAA legislative requirements to meet patient 
+ needs and secure Protected Health Information (PHI).
+         
+ Conducting payment accounting in accordance with the Office of 
+ Management and Budget (OMB) directives.
+         
+ Systematically enforcing VHA Fiscal Accounting policy.
+  
+ This patch adds the following:
+   - Modifies the Insurance Payment Trend Report to accurately identify
+     Insurance Companies listed on the report by including their Tax 
+     Identification Number.
+   - Modifies the Insurance Payment Trend Report to identify
+     whether a patient's claim has an ERA attached to it.
+   - Adds an Index to the EDI TRANSMISSION BATCH file to allow for easier
+     searches
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                         New/Modified/
+   Sub-File Name (#)   Field Name (#)                     Deleted
+ -------------         ------------------------------  -------------
+ EDI TRANSMISSION      DATE FIRST SENT (#1.01)           Modified
+      BATCH (#364.1)
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                                   New/Modified/Deleted
+ -------------                                   --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ List Templates:
+   
+ List Template Name                               New/Modified/Deleted
+ ------------------                               --------------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name       Type      File Name (#)        New/Modified/Deleted
+ -------------       ----      ------------------   --------------------
+ N/A 
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20130518 - Medical ePayments Compliance (Phase 2, Iteration 2)
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Alexandria VA Health Care System (Alexandria, LA)-Station 502
+ Huntington VA Medical Center (Huntington, WV)-Station 581
+ South Texas Veterans Health Care System (San Antonio, TX)-Station 671
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+ File Description                     File Name                FTP Mode
+ ----------------------------------------------------------------------
+ INTEGRATED BILLING User Manual       IB_2_0_UM.PDF            (binary)
+ INTEGRATED BILLING Technical Manual/ IB_2_0_TM.PDF            (binary)
+ Security Guide
+ INTEGRATED BILLING Release Notes     IB_2_0_P529_RN.PDF       (binary)
+ EPAYMENTS USER MANUAL (EDI LOCKBOX)  EPAYMENTS_USER_          (binary)
+                                      MANUAL_R0516.PDF
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Note: 
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement. 
+  
+ Post Install routine will reindex the modified files for the new index.
+  
+ You may delete the post install routine IB20P529 after installation.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ No options or protocols need to be disabled during installation 
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     IB*2.0*529.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  Answer NO. 
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Answer NO
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There are no special post-installation instructions for this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 49
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P529
+    Before:       n/a   After:  B1826457  **529**
+Routine Name: IBOTR2
+    Before: B22290146   After: B26130320  **21,42,52,80,100,118,128,451,
+                                           447,529**
+Routine Name: IBOTR3
+    Before: B51841072   After: B56916184  **42,80,100,118,128,133,447,
+                                           516,528,529**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2014
+Completed By:                               Date Completed: JUN 15, 2016
+Released By :                               Date Released : JUL 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

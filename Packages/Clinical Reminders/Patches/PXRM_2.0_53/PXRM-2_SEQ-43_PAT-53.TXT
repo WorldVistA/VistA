@@ -1,0 +1,234 @@
+$TXT Created by                  CPRS30.DOMAIN.EXT  (KIDS) on Tuesday, 07/21/15 at 14:14
+=============================================================================
+Run Date: SEP 17, 2015                     Designation: PXRM*2*53
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #43                      Status: Released
+                  Compliance Date: OCT 18, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*53'
+
+Subject: REMINDER DIALOG SEARCH REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Description:
+ ------------
+ This patch adds a Reminder Dialog Search Report option to the Reminder Dialog
+ Report menu. The Reminder Dialog Search Report allows sites to find Reminder
+ Dialogs based on search criteria such as Coding Systems, Findings, and Dialog
+ Items.
+  
+  
+ Patch Components:
+ -----------------
+ Bulletins:
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name                   Type               New/Modified/Deleted
+ -----------                   ----               -------------------- 
+ PXRM DIALOG SEARCH REPORT     Option              New
+ PXRM DIALOG TOOLS MENU        MENU                Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ INC000001064706
+  
+ Problem:
+ --------
+ CPRS not filing ICD9 codes in Reminder Dialogs after 10/1/14. This was caused
+ by the AUID cross-reference not being re-built after the most recent Lexicon
+ patch. CPRS not displaying Reminder Dialog Prompts for multiple finding types.
+ The root caused of these problems were addressed by Lexicon, CPRS, and
+ instructions sent to all sites.
+  
+ Resolution:
+ -----------
+ New functionality added to help search for coding system, finding items, and
+ dialog components used in Reminder Dialogs.
+  
+ Test Sites:
+ ----------
+ Hines
+ Orlando
+ Tuscaloosa
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://vista.domain.ext/vdl
+  
+ Title                                 File Name             FTP Mode
+ ----------------------------------------------------------------------
+ Clinical Reminders Manager's Manual   pxrm_2_MM.pdf         Binary 
+ Patch 53 release notes                pxrm_2_0_53_rn.pdf    Binary 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. PXRM*2.0*53):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' NO     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' NO
+  
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 225
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMCVRL
+    Before:       n/a   After: B48796510  **53**
+Routine Name: PXRMDLR2
+    Before:       n/a   After:B230549224  **53**
+Routine Name: PXRMDLRH
+    Before:       n/a   After: B17136839  **53**
+Routine Name: PXRMDUTL
+    Before: B11502615   After: B11560292  **24,26,53**
+Routine Name: PXRMFRPT
+    Before:B184393482   After:B188701531  **12,17,16,18,22,26,53**
+Routine Name: PXRMMSG
+    Before:  B1586253   After:  B4362273  **17,18,53**
+ 
+Routine list of preceding patches: 26
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2014
+Completed By:                               Date Completed: SEP 17, 2015
+Released By :                               Date Released : SEP 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

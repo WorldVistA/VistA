@@ -1,0 +1,243 @@
+
+=============================================================================
+Run Date: JAN 28, 2015                     Designation: IBD*3*66
+Package : IBD - AUTOMATED INFO COLLECTION SYS Priority: Mandatory
+Version : 3        SEQ #58                      Status: Released
+                  Compliance Date: FEB 27, 2015
+=============================================================================
+
+Associated patches: (v)IBD*3*63    <<= must be installed BEFORE `IBD*3*66'
+
+Subject: AICS Speed up Get Diagnoses for Clinic
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Shortly after the release of several ICD-10 patches (LEX*2*80, ICD*18*57,
+ IBD*3*63, etc.), several sites reported that the encounter form dialog in
+ CPRS was taking an average of 1-2 mins to load. This was unacceptable and
+ impacting patient care. 
+  
+ It is important to note that certain encounter forms will take a little
+ longer to load than others due to the varying data intensity levels of the
+ forms. This is particularly true for the National Primary Care FY14-Q4
+ form, which consists of some 1331 diagnoses and over 120 procedures.
+  
+ The six sites who reported the issue include: Asheville, Beckley, Salem, 
+ Northern Indiana, Dallas, & Omaha. After some investigation, it was 
+ determined that half of these sites were still running on VMS servers and 
+ the other half a mixed OS environment (VMS back end with Linux front 
+ end). Some metric tests were performed and it was determined that running
+ on a slower VMS system did contribute to some of the performance issues, 
+ but not entirely all.
+  
+ After further research, it was concluded that several API's that are 
+ called to retrieve encounter form information during the load could be
+ optimized for improvement. One of the API's is DIAG^ORWPCE which is 
+ modified in the OR*3.0*398 patch. The associating API, CHKLST^IBDF18A2 is
+ updated in this patch. These two patches comprise the short term solution
+ and serve to provide an immediate remedy while a long term solution is
+ being developed.
+  
+  
+ This patch addresses the issue noted in Remedy Ticket: INC000001042172  
+   
+  Patch Components
+  ================
+   
+   
+  Files & Fields Associated:
+   
+  File Name (#)          Field Name (#)       New/Modified/Deleted
+  -------------          --------------       --------------------  
+  N/A
+   
+  Forms Associated:
+   
+  Form Name              File (#)              New/Modified/Deleted
+  ---------              --------              --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name                  New/Modified/Deleted
+  ---------------                  --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name     Type             New/Modified/Deleted
+  -----------     ----             --------------------
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name                    New/Modified/Deleted
+  -------------                    --------------------
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name    Type      File Name (#)    New/Modified/Deleted
+  -------------    ----      ------------     --------------------
+  N/A
+   
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  -----------------------------
+   
+   
+  Patient Safety Issues (PSIs):
+  ------------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  INC000001042172
+   
+    Problem:   
+    --------
+    After the installation of Lex 80 and ICD 57 we have 
+    experienced a 30 to 45 second delay before the encounter box pops up.
+  
+  INC000001054218:
+  
+    Problem:
+    --------
+    Users have been experiencing significant delays in accessing
+    encounter forms in CPRS since installing patch PXRM*2*26. Takes
+    anywhere from 30 seconds to 2 minutes for the form to open once 
+    clicking on it.
+  
+  INC000001050760:
+  
+    Problem:
+    --------
+    CPRS encounter form dialog performance issues.
+  
+  
+    Resolution: (applies to all 3 tickets)
+    -----------
+    This patch will update this process to utilize a faster more
+    streamlined API to return the status of each diagnosis in the
+    diagnosis list for a clinic.
+  
+    Technical: (applies to all 3 tickets)
+    ----------
+    The IBDF18A2 routine currently utilizes the STATCHK^IBDUTICD API
+    which calls ICDDATA^ICDXCODE which returns a considerable amount of
+    data in addition to the status, which is what is really needed.
+  
+    IBDF18A2 was updated to utilize the STATCHK^ICDEX API which returns the
+    status and just two other fields. This significantly speeds up the
+    response time for the user.
+    
+  
+  Test Sites:
+  -----------
+  VA Northern Indiana Health Care System, Fort Wayne, IN
+  Beckley VA Medical Center, Beckley, WV 
+  Heartland West HCS, Kansas City, KS 
+  
+   
+  Documentation Retrieval Instructions:
+  -------------------------------------
+   
+  Updated documentation describing the new functionality introduced by 
+  this patch is available.
+   
+  The preferred method is to FTP the files from 
+  ftp://download.vista.domain.ext/. This transmits the files from the first
+  available FTP server. Sites may also elect to retrieve software directly
+  from a specific server as follows:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+   
+  Title                                File Name               FTP Mode
+  ---------------------------------------------------------------------
+   
+  Software Retrieval Instructions:
+  -------------------------------- 
+  This software is being released in a combined build with IBD*3*66. The 
+  file name will be: OR_398_IBD_66.KID
+  
+  The preferred method is to FTP the files from 
+  ftp://download.vista.domain.ext/.
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+  
+   Albany         ftp.domain.ext <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext  <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext    <ftp://ftp.domain.ext>
+  
+   
+  Patch Installation:
+   
+   
+  Pre/Post Installation Overview
+  ------------------------------
+  There are no special considerations for pre-installation or 
+  post-installation.
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  N/A
+  
+  
+  Installation Instructions
+  -------------------------
+  The OR*3.0*398 and IBD*3.0*66 patches are bundled together in host file
+  OR_398_IBD_66.  Please refer to the installation instructions in patch
+  OR*3.0*398 for complete details.
+  
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;AUTOMATED INFO COLLECTION SYS;**[Patch List]**;APR 30, 2003;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBDF18A2
+    Before:  B9535002   After: B10678203  **51,55,63,66**
+ 
+Routine list of preceding patches: 63
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 10, 2014
+Completed By:                               Date Completed: JAN 20, 2015
+Released By :                               Date Released : JAN 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

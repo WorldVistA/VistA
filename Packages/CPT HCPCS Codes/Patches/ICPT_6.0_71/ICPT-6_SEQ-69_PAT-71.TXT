@@ -1,0 +1,105 @@
+
+=============================================================================
+Run Date: APR 01, 2015                     Designation: ICPT*6*71
+Package : ICPT - CPT/HCPCS CODES              Priority: Mandatory
+Version : 6        SEQ #69                      Status: Released
+                  Compliance Date: APR 08, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*98    <<= must be installed BEFORE `ICPT*6*71'
+
+Subject: Code Set FY15 3rd Qtr Update
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch is an informational patch and contains no routines, data, or 
+  data dictionaries.  The data for this patch is exported with the Lexicon 
+  data in patch LEX*2.0*99.  Patch LEX*2.0*99 requires that patch
+  LEX*2.0*98 be previously installed.
+   
+  LEX*2.0*99 writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT COPYRIGHT             #81.2     ^DIC(81.2,   ICR 4491
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+   
+  ENHANCEMENTS
+  ============
+   
+    FY15 3rd Quarter Update
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Apr 01, 2015                                 (1 Code)
+          Q9975
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jan 01, 2015                                (5 Codes)
+          D0351   D3410   D3421   D3425   D3426
+ 
+      CPT Modifier Additions  (7 Codes)
+      ----------------------
+ 
+        Effective Jan 01, 2015 (FY15 2nd Qtr)                 (5 Codes)
+          PO      XE      XP      XS      XU
+ 
+        Effective Apr 01, 2015                                (2 Codes)
+          EX      JF
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2005     *     --     --     --       1      1
+        Effective Jan 01, 2015     *    284     --     --      --    284
+        Effective Apr 01, 2015         5244     --     --      --   5244
+                                      -----  -----  -----  ------  -----
+          Total                        5528     --     --       1   5529
+        
+                                   *  update from a previous quarter
+ 
+  REMEDY TICKETS:
+  ==============
+ 
+    1095869 - Modifiers GP/GO with CPT code 97010
+    1107249 - Add Modifiers XE, XS, XP, XU
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Dental Codes (CDT-4) Revised:
+ 
+      D0351   D3410   D3421   D3425   D3426
+ 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+              
+    Please refer to the patch description for LEX*2.0*99 for instructions 
+    for retrieving the data global host file and installing this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 13, 2014
+Completed By:                               Date Completed: MAR 30, 2015
+Released By :                               Date Released : APR 01, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,164 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/05/14 at 15:00
+=============================================================================
+Run Date: MAR 11, 2015                     Designation: IB*2*538
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #492                      Status: Released
+                  Compliance Date: APR 11, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*510    <<= must be installed BEFORE `IB*2*538'
+
+Subject: CY2015 ADMINISTRATIVE FEE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses two issues:
+  
+ 1. The administrative charge of $13.07 needs to be added to the
+    prescription cost for the rate type: Interagency with an effective date
+    of January 1st, 2014.
+  
+ 2. The administrative charge of $13.10 needs to be added to the
+    prescription cost for the rate types: Reimbursable Insurance, No Fault
+    Insurance, Workers' Compensation, Tort Feasor, Humanitarian, 
+    Ineligible and Interagency with an effective date of January 1st, 2015.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000001069407 RX charges for Interagency
+ 2. INC000001067454 CY2015 administrative fee update for 3rd party RX claims
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+   
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Maryland HCS
+ Tuscaloosa VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001069407 RX charges for Interagency
+  
+ Problem:
+ --------
+ The rate type Interagency needs the new administrative fee of $13.07 with 
+ an effective date of January 1st, 2014.
+  
+ Resolution:
+ -----------
+ The software was modified to inactivate the rate schedule containing the
+ IA-RX FILL charge set for the Interagency rate type with an inactive date
+ of December 31st, 2013 and added the new administrative fee of $13.07 to 
+ the new rate schedule with an effective date of January 1st, 2014.
+  
+ Routines: IB3PSOU
+  
+ 2. INC000001067454 CY2015 administrative fee update for 3rd party RX claims
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested an update to the
+ administrative charge of the 3rd party prescription for these rate types:
+ Reimbursable Insurance, No Fault Insurance, Workers' Compensation, Tort
+ Feasor, Humanitarian, Ineligible and Interagency in the RATE SCHEDULE file
+ (#363).
+  
+ These rate types need the new administrative fee of $13.10 with an 
+ effective date of January 1st, 2015.
+  
+ Resolution:
+ -----------
+ The software was modified to inactivate the rate schedule containing the 
+ RX COST charge set for the rate types: Reimbursable Insurance, No Fault 
+ Insurance, Workers' Compensation, Tort Feasor, Humanitarian, Ineligible 
+ and Interagency with an inactive date of December 31st, 2014 and added 
+ the new administrative fee of $13.10 to the new rate schedules with an 
+ effective date of January 1st, 2015.
+  
+ Routine: IB20P538
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 2.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*538):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 3.   Select Installation Option: Install Package(s)
+   
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+  
+ 4.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P538.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P538
+    Before:       n/a   After:  B9467312  **538**
+Routine Name: IB3PSOU
+    Before: B21192131   After: B21501887  **437,510,538**
+ 
+Routine list of preceding patches: 510
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 14, 2014
+Completed By:                               Date Completed: MAR 05, 2015
+Released By :                               Date Released : MAR 11, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

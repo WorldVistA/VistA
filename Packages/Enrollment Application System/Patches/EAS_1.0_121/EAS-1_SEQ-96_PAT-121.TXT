@@ -1,0 +1,230 @@
+
+=============================================================================
+Run Date: SEP 22, 2014                     Designation: EAS*1*121
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #96                      Status: Released
+                  Compliance Date: OCT 23, 2014
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.0.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.0.2 application version software. 
+  
+ ES 4.0.2 is a maintenance release of the Enrollment System Core (ESC) 
+ application. This version applies 19 updates to correct design and code 
+ defects introduced in previous ES releases.  
+  
+ The following defects were corrected:
+  
+ 1.   CCR 12752. Corrected Veteran merge error when on file Military 
+ Service Episode (MSE) is null. System will now allow proper merge of a 
+ new MSE to the on file person record. 
+  
+ 2.   CCR 12753. Corrected defect of Z05 is not sent when new address 
+ is added to Veteran record where no previous address exists. System will 
+ now properly trigger Z05 message when an initial address is added to 
+ Veteran record from the User Interface (UI).
+  
+ 3.   CCR 12755. Corrected Veteran merge error when on file Employment 
+ status is null. System will now allow proper merge of a new Employment 
+ status to the on file person record. 
+  
+ 4.   CCR 12137/12837. Corrected issue of users unable to enter Rx Copy 
+ or Income test for income years outside the Veteran's Financial 
+ Assessment (VFA) umbrella. System will now allow tests to be entered 
+ according to defined VFA umbrella rules. 
+  
+ 5.   CCR 12878. Corrected issue of workload cases not created when Z11 
+ is not sent due to failed consistency check (CC). System will now create 
+ workload case for all instances of failed CC that blocks the outbound 
+ message. 
+  
+ 6.   CCR 12950. Corrected 'password required' error on user account 
+ search screen. System will now allow subsequent searches for a user id. 
+  
+ 7.   CCR 12968. Corrected issue of phone number not displayed on UI 
+ after Add a Person (AAP). System now displays phone number on the 
+ overview and demographics screen after AAP action. 
+  
+ 8.   CCR 12710. Added additional logger output to internal classes for 
+ use by technical teams during troubleshooting. 
+  
+ 9.   CCR 12723. Corrected Null bread crumb trail on View Health 
+ Benefit Plans (HBP) UI screen. System now displays the HBP bread crumb 
+ trail in the UI. 
+  
+ 10.  CCR 12827. Corrected performance problem on the retrieve 
+ candidates query sent from Income Verification Match (IVM) system. 
+ Internal only. 
+  
+ 11.  CCR 12896. Batch job for AAC letter scheduler is updated to 
+ auto-execute twice per week. 
+  
+ 12.  CCR 12805. Corrected missing discharge type field in the E&E web 
+ service response. System now provides discharge type in the MSE node of 
+ the E&E payload. 
+  
+ 13.  CCR 12635. Updated production Virtual Content Generator (VCG) 
+ service endpoint to avoid using direct server name. 
+  
+ 14.  CCR 12722. Corrected issue of multiple HBP entries inserted to 
+ the history tables during address update. Internal only. 
+  
+ 15.  CCR 12986. Corrected issue of intermittent failures to add 200ESR 
+ correlation to MVI during inbound Z07 processing. System will now add 
+ correlation for all new records during inbound processing. 
+  
+ 16.  CCR 13004. Corrected error on AAP screen if no country is entered 
+ by the user when filling in address and phone details. System will now 
+ default the country field during the AAP process. 
+  
+ 17.  CCR 13008. Corrected error on null county if not entered as part 
+ of address details. System will now populate county if address is based 
+ upon zip code. 
+  
+ 18.  CCR 13013. Corrected issue period of service not being calculated 
+ when non-veteran moves to veteran service connected status. System will 
+ now automatically recalculate period of service upon service connection 
+ status change. 
+  
+  
+ What to Expect:
+ --------------
+ No changes to any VistA packages are required. During deployment of ES 
+ 4.0.2 HL7 messaging to and from ES will be disabled. Implementation is 
+ expected to take less than 8 hours. 
+  
+  
+ Implementation:
+ --------------
+ ESR 4.0.2 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team and the AITC. 
+ No software will be installed at the facilities. ES application will be 
+ unavailable and Veteran enrollment determinations will be delayed until 
+ the deployment is complete.  
+ Messaging to/from the sites as well as E&E web services will be 
+ unavailable during the deployment. An ANR will be created to announce the 
+ deployment which will list all impacted systems and to track the outage.
+  
+  
+ Implementation Date:
+ -------------------
+ September 20, 2014
+  
+  
+ Documentation Retrieval:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Tickets & Overview:
+ -------------------------
+ Problem:
+ -------
+ 1.  #824622  Unable to enter RX Copay Test for IY 2012.
+ CCR 12137 created on 3/13/13.  In ESR Production, the user attempted to 
+ add 2012 IY RX Copay Test and ESR does not display any functionality to 
+ add the information.  The only action button is "Cancel" which appears to 
+ be a defect.  
+  
+ Resolution:
+ ----------
+ Corrected VFA start date umbrella rule in code file 
+ PersonHelperServiceImpl.java 
+  
+ Problem:
+ -------
+ 2.  #1007040  No enrollment transmissions sent to sites.
+ Patient was updated by VBA on 12/20; however, no enrollment transmissions 
+ were sent to the sites.  
+  
+ Resolution:
+ ----------
+ Corrected workload case creation rule logic in code file 
+ UnsolicitedOutboundMessageService.java
+  
+ Problem:
+ -------
+ 3.  #994331  HINQ response failed to update reduced percentage.
+ Incoming HINQ Response failed to update the SC Percentage to reduce it 
+ from 100% to 40%.  The HINQ request should have reduced the SC percentage 
+ or created a work item of the potential SC reduction for manual 
+ intervention.
+  
+ Resolution:
+ ----------
+ Corrected workload case creation rule logic in code file 
+ UnsolicitedOutboundMessageService.java
+  
+ Problem:
+ -------
+ 4.  #1021765  200ESR correlation not created.
+ Enrollment Systems Redesign - External Interface Issue:  No 200ESR 
+ correlation is created in MVI for new Veteran as part of inbound Z07 from 
+ VistA. Captured transactions and payloads show ESR is not even attempting 
+ to generate the 1301. It checks for correlation then just proceeds as if 
+ it found it even though it is clearly not present in the MVI response. 
+  
+ Resolution:
+ ----------
+ Corrected return value logic for has 200ESR() in code file 
+ PersonIdentityTraits.java
+  
+ Problem:
+ -------
+ 5.  #1035614 Period of service does not automatically calculate.
+ Period of service does not automatically recalculate when Veterans Status 
+ changes from Non Veteran (Ineligible to Eligible) creating an 
+ inconsistency that prevents transmission of Veteran status to VistA.
+  
+ Resolution:
+ ----------
+ Updated ILOG rules contents.xmi and ProcessVBAFromMVR.irl files to always 
+ enforce rule to recalculate period of service upon status update.
+  
+  
+ Associated NSR(s):
+ -----------------
+ N/A
+  
+  
+ Reporting Problems:
+ ------------------
+ Problems associated with ES application should be reported via Remedy or 
+ contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 25, 2014
+Completed By:                               Date Completed: SEP 22, 2014
+Released By :                               Date Released : SEP 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

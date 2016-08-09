@@ -1,0 +1,418 @@
+
+=============================================================================
+Run Date: APR 15, 2015                     Designation: MAG*3*154
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #112                      Status: Released
+                  Compliance Date: MAY 16, 2015
+=============================================================================
+
+Associated patches: (v)MAG*3*135       install with patch       `MAG*3*154'
+
+Subject: VistA Imaging Background Processor Maintenance
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ This Background Processor (BP) maintenance patch resolves several issues when 
+ the BP processes image files from the VistA Imaging operation or when the user 
+ sets up the BP parameters.
+  
+ This patch does not update the client version of the Background Processor. The 
+ BP client version will remain at 135.  The features and fixes of MAG*3.0*154 
+ are summarized below:
+  
+ Distribution of Software
+ To obtain MAG*3.0*154 files, use File Transfer Protocol (FTP) to retrieve 
+ MAG3_0P154.KID and other files from one of the following OI Field Offices' 
+ ANONYMOUS.SOFTWARE directories:
+ OI Field Office  FTP Address                Directory
+ Albany           ftp.domain.ext   
+ Hines            ftp.domain.ext    
+ Salt Lake City   ftp.domain.ext      
+  
+ The following files were edited or created in the development of this patch.
+ File Name                         Description
+ MAG3_0P154 .KID                   KIDS build for patch MAG*3.0*154
+ MAG3_0P154_Patch_Description.PDF  Patch Description
+ MAG3_0P154_README.txt, if present, is an informative file associated with the
+ patch.
+  
+ Patch Contents
+ This patch includes software and documentation files.
+  
+ Software
+ * MAG3_0P154 .KID - KIDS (Kernel Installation and Distribution System) package
+ to be installed on the VistA System
+  
+ Documentation
+ This document, MAG3_0P154 _Patch_Description, provides an overview, explains 
+ the changes, and outlines the installation for this patch.
+  
+ Associated Patches
+ This patch must be installed after MAG*3.0*135 and the import OCX (OLE control
+ extension) update patch, MAG*3.0*143.  
+  
+ Test Sites
+ The following sites are test sites for this patch:
+ * Fayetteville VA Medical Center, Fayetteville, NC
+ * Philadelphia VA Medical Center, Philadelphia, PA
+ * Washington DC VA Medical Center, Washington DC
+ * VISN 15 Western Orbit
+  
+ Remedy Calls
+ The following Remedy help desk calls are addressed in this patch:
+ 1. 334440- Increase data field value 2005.2 fields #2, #3, #4 for storage space 
+           (14 digits).
+ 2. 522145- Doesn't allow same network path name for GE MUSE EKG type server.
+ 3. 595732- Background Processor (BP) Monitor task produced the error 
+            <SUBSCRIPT>BPMSG+12^MAGQCBP.
+ 4. 981009- Fix queue numbers being assigned duplicates to new IMPORTs.
+ 5. 968693- Remote Procedure Calls (RPCs) create the error when the BP Verifier
+            is attempting to clear an image.
+ 6. 996668- The user needs to be able to enter a fractional purge factor.
+ 7. 1065099- If an image is on a Jukebox platter that has been marked offline, 
+             it cannot be copied by the Import API (watermarking Rescinded 
+             Advanced Directives image).
+  
+ NSRs
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues
+ There are no patient safety issues associated with this patch.
+  
+ This patch addresses minor issues with the VistA Imaging Background
+ Processor (BP).  It will: 
+ 1. Allow a fractional purge factor to effectively control data storage space 
+    and enlarge the Data Dictionary numeric values that reflect total space, 
+    used space, and free space data elements.
+ 2. Fix the MUSE network location setup issue for multi-divisions.
+ 3. Correct an erroneous parameter being passed when the BP is searching for the
+    VistA Institution file.
+ 4. Eliminate duplicate Import queue numbers.
+ 5. Correct archive image pointer references.
+ 6. Add the ability to enter a fractional purge factor.
+ 7. Fix the Import API to handle watermarking for Rescinded Advanced Directives
+    images on a Jukebox platter and marked as offline.  (Image is not available.)
+  
+ Issue 1 Summary
+ Data Dictionary storage values that define the amount of space for different 
+ repositories were too small.  The data dictionary limited the amount of space 
+ that could be allocated because of the size for the field.  The values need to
+ be expanded to allow increased capacity.  
+  
+ Solution 1
+ The Data Dictionary (DD) field values for 2005.2 fields #2, #3, and #4 were
+ increased for the storage space value, to accept 14 decimal digits for terabyte
+ storage (modify INPUT TRANSFORM).
+   
+ Issue 2 Summary
+ The Network Manager (menu option from the BP) does not allow the same network 
+ path name to be entered for the GE MUSE EKG type server for different sites 
+ that share the same GE MUSE server.
+  
+ Solution 2
+ If the server type is "EKG," the Input Transform Utility (CHKNET^MAGQBUT6) was
+ changed to accept a duplicate server name.  The PHYSICAL REFERENCE (full 
+ network path) will now accept duplicate MUSE server names for sites sharing the
+ same MUSE server (i.e., VISN or Regional) by using the VA FileMan/Edit option. 
+ A GUI fix will come later in a BP patch.)
+  
+ Issue 3 Summary
+ The BP Monitor task produces the following error when the schedule Verifier is 
+ running:  <SUBSCRIPT>BPMSG+12^MAGQCBP.  There is no adverse effect other than
+ the error message displaying in the error log.
+  
+ Solution 3
+ The M code was modified to verify that either the station number or the 
+ institution ID (in routine: MAGQCBP) is in place.
+     S SITE=$P($G(^MAG(2006.1,PLACE,0)),U,1) 
+     S:(SITE'="") SITE=$$LKUP^XUAF4(SITE) ;Get Division #
+     S TMP=$$GET1^DIQ(4,SITE,.01,"E") 
+  
+ Issue 4 Summary
+ When new images were being imported using the Background Processor, they were 
+ sometimes being assigned duplicate queue numbers.  As a result, the image would
+ sometimes not match or not be found, an error would be produced and the image 
+ would not be imported.  The IMAGE BACKGROUND QUEUE POINTER (^MAGQUEUE(2006.031))
+ was (by mistake or corruption) reset to much lower than the last queue number 
+ that was used.
+  
+ Solution 4
+ The M code was added in the routine QUEUE^MAGBAPI to check the existing queue 
+ entry and to ensure that the queue number is unique.
+  
+ Issue 5 Summary
+ The Remote Procedure Call (RPC) creates the error in the error trap when the BP 
+ Verifier is attempting to clear an invalid pointer reference for an archived 
+ image.
+  
+ Solution 5
+ The MAGQBPG1 code was updated to successfully handle the invalid file reference.
+  
+ Issue 6 Summary
+ If the purge factor is set to "1," then the auto purge triggers whenever the 
+ available storage space of Redundant Array of Independent Disks (RAID) is less 
+ or equal to the defined (low) watermark.  This is the same event that would 
+ trigger a RAID group- a method of grouping hard drive space- to advance and, 
+ therefore, it is too late to prepare the next RAID group for its pending role.  
+ When the user sets the purge factor to "2," the purge occurs several times 
+ before the RAID group moves; when set to "1," the purge occurs after the move.  
+ The user needs to be able to enter a fractional purge factor to allow more 
+ effective management of data storage.
+  
+ Solution 6
+ This required Data Dictionary and code changes to allow for a decimal purge fact
+ or.  When the user sets the Purge Factor, they are now able to enter a 
+ fractional purge factor.
+  
+ Issue 7 Summary
+ If an image is on a Jukebox platter that had been marked offline, it cannot be 
+ copied by the Import API and watermarked (according to the rescinded Advanced 
+ Directive).  An error report is generated and the image does not get updated 
+ as a rescinded image but is marked as deleted.
+  
+ Solution 7
+ The M code routine MAGGSIU5 was edited to notify the user that the image is 
+ located on an offline platter and to instruct them to contact Imaging staff to 
+ get the image online.
+  
+ Supported BP Versions
+ When MAG*3.0*154 is released, the list of supported versions of Background 
+ Processor will also change:
+ * Supported Version: MAG*3.0*154, MAG*3.0*143, MAG*3.0*135
+ * No Longer Supported: MAG*3.0*39
+   
+ VistA System Changes
+ Routines
+ This section lists new and modified routines for the VistA System.  For each
+ routine, the second line will contain the following information:
+ * ;;3.0;IMAGING;**[patch list]**;Mar 19, 2002;[Build #][Build Date] 
+ * CHECK1^XTSUMBLD is used to generate the checksums.
+ Please note that the "before" checksum will differ if any test software has 
+ been installed.
+  
+ Routine            Checksum Before     Checksum After    Patch List
+ MAGIP154           NEW                 4013654            **154**
+ MAGBAPI            83920568            85423162           **1,7,8,20,39,154**
+ MAGQBPG1           112714429           113868040     **7,8,20,81,39,135,154**
+ MAGQBUT5           105448474           105589397          **20,81,39,154**
+ MAGQBUT6           144843447           145956336          **39,154**
+ MAGQCBP            116132863           120470319          **39,154**
+ MAGGSIU5           39649203            49972780           **121,135,154**
+ Note: Routine MAGIP154 is a post-install routine and is deleted after the KIDS
+ install.
+  
+ Data Dictionary
+ The following Data Dictionary items are altered in MAG*3.0*154:         
+   Network Location file (#2005.2) - Increase Data Dictionary (DD) field value of
+   the field #2, #3, #4 for the storage space value, so it will accept up to 14 
+   decimal digits for terabyte storage. (Modified INPUT TRANSFORM - DBA approved).
+   Site Parameter file (#2006.1) - Change a Data Dictionary definition to the 
+   field (# 60.5) to accept 1 decimal digit [RAID PURGE FACTOR - DBA approved].
+   
+ Mail Groups
+ This patch contains no new or modified mail groups.
+  
+ Forms
+ This patch contains no new or modified forms.
+  
+ Security Keys
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures
+ This patch contains no new remote procedure calls.
+  
+ Menu Options
+ This patch contains no new menu options.
+  
+ Protocols
+ This patch contains no new or modified protocols.
+  
+ Templates
+ This patch contains no new or modified templates.
+  
+ Installation
+ ============
+  
+ Installation Planning
+ =====================
+  
+ This patch is to be installed on the VistA System.  This patch must be installed 
+ by the compliance date to conform to VHA Directive 2001-023.  This patch can be 
+ loaded while the VistA Imaging System is active, but all Background Processor 
+ tasks should be stopped.  Installation for the KIDS will take less than three 
+ minutes.  Some sites may have more than one BP; please notify all VistA sites 
+ and schedule the updates to occur during non-operational hours.
+  
+ Installation Prerequisites
+ ==========================
+ Before installing this patch, users will need to download the MAG*3.0*154 files 
+ from the Download Server to a local storage location.  Verify that the patches 
+ listed in the section Associated Patches have been previously installed.
+  
+ VistA System (KIDS) Installation
+ ================================
+  
+ Installation Steps
+ 1.     Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2.     Run the Installation option [XPD INSTALLATION MENU].
+ 3.     Load the KIDS file by performing the following steps:
+     a.     Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+     the KIDS distribution.
+     b.     When prompted, enter the path and file name (MAG3_0P154 .KID) of the 
+     Patch 154 KIDS file that was downloaded from the Download Server.
+     c.     When prompted to continue with the load, enter "YES".  A Distribution
+     OK! Message will be displayed when the load is complete.
+ 4.     After loading the KIDS file, use the following options to verify the 
+ contents of the patch.  
+     a.     Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+     option if you want to ensure the integrity of the routines in the patch.
+     b.     Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] - 
+     Run this option if you want to view all changes that will be made when 
+     the patch is installed.  All components (routines, options, and so on) 
+     in the patch will be compared.
+     c.     Back up a Transport Global [XPD BACKUP] - Run this option if you want
+     to create a backup message of any routines exported with the patch.  The 
+     option will NOT back up any of the other changes.
+ 5.     After performing the load and any optional verification steps, install 
+ the KIDS file by performing the following steps:
+     a.     Run the Install Package(s) [XPD INSTALL BUILD] option.
+     b.     When prompted for the install name, enter MAG*3.0*154.
+     c.     Answer NO to the following prompts, if they appear:
+  
+ -------------------------------------------------------------------------
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+ -------------------------------------------------------------------------
+  
+ 6.     When the installation has finished, an Install Completed message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the first 
+ time.  If the user has already installed the patch and is installing the KIDS 
+ file in a namespace on which it has previously been installed, the output will 
+ be different.
+ -------------------------------------------------------------------------
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*154      8/28/14@15:12:21
+      => MAG*3.0*154 BP PATCH  ;Created on Aug 27, 2014@10:22:03
+   
+ This Distribution was loaded on Aug 28, 2014@15:12:21 with header of
+    MAG*3.0*154 BP PATCH  ;Created on Aug 27, 2014@10:22:03
+    It consisted of the following Install(s):
+     MAG*3.0*154
+ Checking Install for Package MAG*3.0*154
+   
+ Install Questions for MAG*3.0*154
+   
+ Incoming Files:
+   
+   
+    2005.2    NETWORK LOCATION  (Partial Definition)
+ Note:  You already have the 'NETWORK LOCATION' File.
+   
+   
+    2006.1    IMAGING SITE PARAMETERS  (Partial Definition)
+ Note:  You already have the 'IMAGING SITE PARAMETERS' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+   
+ DEVICE: HOME//   HERE
+   
+   
+  Install Started for MAG*3.0*154 :
+                Aug 28, 2014@15:12:31
+   
+ Build Distribution Date: Aug 27, 2014
+  
+  Installing Routines:.......
+                Aug 28, 2014@15:12:32
+  
+  Installing Data Dictionaries: ...
+                Aug 28, 2014@15:12:32
+   
+  Running Post-Install Routine: POS^MAGIP154.
+   
+ Post Install Mail Message: Aug 28, 2014@15:12:32
+   
+  Updating Routine file......
+   
+  Updating KIDS files.......
+  
+  MAG*3.0*154 Installed.
+                Aug 28, 2014@15:12:32
+  
+  
+ Install Completed 
+ -----------------------------------------------------------------------
+  
+  
+ VI Background Processor Client Installation
+ ===========================================
+  
+ There is no BP client for MAG*3.0*154.
+  
+
+Routine Information:
+====================
+Routine Name: MAGBAPI
+    Checksum:
+  85423162
+Routine Name: MAGGSIU5
+    Checksum:
+   49972780
+Routine Name: MAGIP154
+    Checksum:
+  4013654
+ Description of Changes:
+  POST INSTALL ROUTINE will be deleted after KIDS installed.
+
+Routine Name: MAGQBPG1
+    Checksum:
+   113868040 
+Routine Name: MAGQBUT5
+    Checksum:
+  105589397
+Routine Name: MAGQBUT6
+    Checksum:
+  145956336
+Routine Name: MAGQCBP
+    Checksum:
+   120470319
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 19, 2014
+Completed By:                               Date Completed: APR 14, 2015
+Released By :                               Date Released : APR 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

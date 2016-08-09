@@ -1,0 +1,528 @@
+$TXT Created by                    DEVESS.DOMAIN.EXT  (KIDS) on Friday, 07/18/14 at 15:52
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: DG*5.3*850
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #780                    Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*319  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*568  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*570  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*653  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*759  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*785  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*787  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*817  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*832  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)LEX*2*80    <<= must be installed BEFORE `DG*5.3*850'
+                    (v)ICD*18*57   <<= must be installed BEFORE `DG*5.3*850'
+                    (v)ICD*18*64   <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*861  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*862  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DG*5.3*870  <<= must be installed BEFORE `DG*5.3*850'
+                    (v)DI*22*170   <<= must be installed BEFORE `DG*5.3*850'
+
+Subject: ADT ICD-10 REMEDIATION
+
+Category: 
+  - Data Dictionary
+  - Print Template
+  - Routine
+  - Enhancement (Mandatory)
+  - Input Template
+  - Other
+  - Sort Template
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide posted on the 
+ Anonymous directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10)
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on 
+ or after the ICD-10 Activation Date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 
+ ICD-9 codes to more than 68,000. Procedure Coding System (ICD-10-PCS) 
+ procedure codes increase from about 3,800 ICD-9 codes to nearly 87,000. 
+ Both systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is 
+ no decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care,
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater specificity
+ and clinical detail to provide information for clinical decision making
+ and outcomes research.
+  
+ This patch updates the Admission, Discharge, Transfer (ADT) package 
+ for ICD Remediation. The Patient Treatment File (PTF) package 
+ has been updated to allow ICD-10 Diagnosis and Procedure codes to be 
+ assigned an episode of care after the ICD-10 activation date, for the 
+ computation of the Diagnosis Related Group (DRG), and for the
+ transmission of ICD-10 codes to the Austin Information Technology Center 
+ (AITC). In addition ICD-10 Diagnosis and Procedure codes will be used to 
+ specify a Catastrophic Disability (CD) for a patient if the Date of 
+ Decision is on or after the ICD-10 activation date.
+  
+ Patch Components
+ ================
+   
+  Files & Fields Associated:
+   
+  File Name (Number)    Field Name (Number)                    New/Mod/Del
+  ------------------    -------------------                    -----------
+  PATIENT (#2)          CD STATUS DIAGNOSIS (#.396)             MODIFIED
+                        CD STATUS PROCEDURES (#.397)            MODIFIED
+                        CD HISTORY (#.399)                      MODIFIED
+                             
+  CATASTROPHIC DISABILITY REASONS(#27.17)
+                        ICD VERSION (#9)                        NEW
+                        LONG DESCRIPTION (#10)                  NEW
+  
+ PTF (#45)              DRG (#9)                                MODIFIED
+                        PROCEDURE DATE (#45.05,.01)             MODIFIED
+                        PROCEDURE 1 (#45.01)                    MODIFIED
+                        PROCEDURE 2 (#45.02)                    MODIFIED
+                        PROCEDURE 3 (#45.03)                    MODIFIED
+                        PROCEDURE 4 (#45.04)                    MODIFIED
+                        PROCEDURE 5 (#45.05)                    MODIFIED
+                        PRINCIPAL DIAGNOSIS (#79)               MODIFIED
+                        SECONDARY DIAGNOSIS 1 (#79.16)          MODIFIED
+                        SECONDARY DIAGNOSIS 2 (#79.17)          MODIFIED
+                        SECONDARY DIAGNOSIS 3 (#79.18)          MODIFIED
+                        SECONDARY DIAGNOSIS 4 (#79.19)          MODIFIED
+                        SECONDARY DIAGNOSIS 5 (#79.201)         MODIFIED
+                        SECONDARY DIAGNOSIS 6 (#79.21)          MODIFIED
+                        SECONDARY DIAGNOSIS 7 (#79.22)          MODIFIED
+                        SECONDARY DIAGNOSIS 8 (#79.23)          MODIFIED
+                        SECONDARY DIAGNOSIS 9 (#79.24)          MODIFIED
+                        SECONDARY DIAGNOSIS 10 (#79.241)        MODIFIED
+                        SECONDARY DIAGNOSIS 11 (#79.242)        MODIFIED
+                        SECONDARY DIAGNOSIS 12 (#79.243)        MODIFIED
+                        SECODNARY DIAGNOSIS 13 (#79.244)        MODIFIED
+                        POA PRINCIPAL DIAGNOSIS (#82.01)        NEW
+                        POA SECONDARY DIAGNOSIS 1 (#82.02)      NEW
+                        POA SECONDARY DIAGNOSIS 2 (#82.03)      NEW
+                        POA SECONDARY DIAGNOSIS 3 (#82.04)      NEW
+                        POA SECONDARY DIAGNOSIS 4 (#82.05)      NEW
+                        POA SECONDARY DIAGNOSIS 5 (#82.06)      NEW
+                        POA SECONDARY DIAGNOSIS 6 (#82.07)      NEW
+                        POA SECONDARY DIAGNOSIS 7 (#82.08)      NEW
+                        POA SECONDARY DIAGNOSIS 8 (#82.09)      NEW
+                        POA SECONDARY DIAGNOSIS 9 (#82.1)       NEW
+                        POA SECONDARY DIAGNOSIS 10 (#82.11)     NEW
+                        POA SECONDARY DIAGNOSIS 11 (#82.12)     NEW
+                        POA SECONDARY DIAGNOSIS 12 (#82.13)     NEW
+                        POA SECONDARY DIAGNOSIS 13 (#82.14)     NEW
+  PTF (#45) Subfile CPT RECORD DATE/TIME (#30)
+                        PRIMARY DIAGNOSIS (#.04)                MODIFIED
+  PTF (#45) Subfile 401 (#40)
+                        OPERATION CODE 1 (#8)                   MODIFIED
+                        OPERATION CODE 2 (#9)                   MODIFIED
+                        OPERATION CODE 3 (#10)                  MODIFIED
+                        OPERATION CODE 4 (#11)                  MODIFIED
+                        OPERATION CODE 5 (#12)                  MODIFIED
+  PTF (#45) Subfile 501 (#50)
+                        ICD 1 (#5)                              MODIFIED
+                        ICD 2 (#6)                              MODIFIED
+                        ICD 3 (#7)                              MODIFIED
+                        ICD 4 (#8)                              MODIFIED
+                        ICD 5 (#9)                              MODIFIED
+                        ICD 6 (#11)                             MODIFIED
+                        ICD 7 (#12)                             MODIFIED
+                        ICD 8 (#13)                             MODIFIED
+                        ICD 9 (#14)                             MODIFIED
+                        ICD 10 (#15)                            MODIFIED
+                        POA FOR ICD 1 (#82.01)                  NEW
+                        POA FOR ICD 2 (#82.02)                  NEW
+                        POA FOR ICD 3 (#82.03)                  NEW
+                        POA FOR ICD 4 (#82.04)                  NEW
+                        POA FOR ICD 5 (#82.05)                  NEW
+                        POA FOR ICD 6 (#82.06)                  NEW
+                        POA FOR ICD 7 (#82.07)                  NEW
+                        POA FOR ICD 8 (#82.08)                  NEW
+                        POA FOR ICD 9 (#82.09)                  NEW
+                        POA FOR ICD 10 (#82.1)                  NEW
+  PTF (#45) Subfile 601 (#60)
+                        PROCEDURE CODE 1 (#4)                   MODIFIED
+                        PROCEDURE CODE 2 (#5)                   MODIFIED
+                        PROCEDURE CODE 3 (#6)                   MODIFIED
+                        PROCEDURE CODE 4 (#7)                   MODIFIED
+                        PROCEDURE CODE 5 (#8)                   MODIFIED
+  
+ PTF EXPANDED CODE (#45.89)
+                        ICD VERSION (#.05)                      NEW
+  
+ INPATIENT CPT CODE (#46)
+                        PRIMARY DIAGNOSIS (#.04)                MODIFIED
+                        SECONDARY DIAGNOSIS 1 (#.05)            MODIFIED
+                        SECONDARY DIAGNOSIS 2 (#.06)            MODIFIED
+                        SECONDARY DIAGNOSIS 3 (#.07)            MODIFIED
+                        SECONDARY DIAGNOSIS 4 (#.21)            MODIFIED
+                        SECONDARY DIAGNOSIS 5 (#.22)            MODIFIED
+                        SECONDARY DIAGNOSIS 6 (#.23)            MODIFIED
+                        SECONDARY DIAGNOSIS 7 (#.24)            MODIFIED
+  
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+   
+  Options Associated:
+  
+      
+  Option Name                    Type             New/Modified/Deleted
+  -----------                    -----------      ------------------------ 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+  
+  
+  Template Name                   Type      File Name (Number)     New/Mod/Del
+  -------------                   ----      ------------------     -----------
+  DGPT EXPANDED CODE LIST         Print     PTF (#45)              Modified
+  DGPT EXPANDED CODE LIST-10      Print     PTF (#45)              Modified
+  DGICD-9                         Print     PTF (#45)              New
+  DGICD-10                        Print     PTF (#45)              New
+  DGPT EXPANDED CODE SORT ICD-10  Sort      PTF (#45)              Modified
+  DGPT EXPANDED CODE SORT ICD-9   Sort      PTF (#45)              Modified
+  DG701                           Input     PTF (#45)              Modified
+  DG501                           Input     PTF (#45)              Modified
+  DG501F                          Input     PTF (#45)              Modified
+  DGENCD CATASTROPHIC DISABILITY  List Temp PATIENT (#2)           Modified
+   
+  Remote Procedure                          New/Mod/Del
+  ----------------                          -----------
+  DG PATIENT TREATMENT DATA                 Modified
+  
+  
+  Additional Information:
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  -----------------------------
+  NSR - Request id: 20070902 ICD-10-CM Conversion  9/5/2007
+  http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20070902
+   
+   
+  Patient Safety Issues (PSIs):
+  ------------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  N/A
+   
+  Test Sites:
+  -----------
+  Pittsburgh HCS, Pittsburgh, PA
+  Coatesville VA Medical Center, Coatesville, PA
+  Carl Vinson VA Medical Center Dublin, GA
+  Boise VA Medical Center Boise, ID
+  G.V. (Sonny) Montgomery VA Medical Center Jackson, MS
+  
+  Documentation Retrieval Instructions:
+  -------------------------------------
+  Updated documentation describing the new functionality introduced by this 
+  patch is available using the File Transfer Protocol (FTP).
+   
+  The preferred method is to FTP the files from 
+  ftp://download.vista.domain.ext/.
+  This transmits the files from the first available FTP server. Sites may 
+  
+  also elect to retrieve software directly from a specific server as 
+  follows:
+   
+   Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+   Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+   Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+   
+  File Description                    File Name                
+  (FTP Mode)
+  --------------------------------------------------------------------------
+  ICD-10 Release Notes (DG*5.3*850)   icd-10_rn_dg_5_3_850.pdf    
+  (Binary)
+  User Manual-PTF Menu                ptf.pdf                     
+  (Binary)
+  User Manual-Menus Intro Orientation dg_5_3_adtbe_um.pdf         
+  (Binary)
+  Production Overview Guide           Production_Overview_Guide_Group_2.pdf
+  (Binary)
+  
+  Patch Installation: 
+   
+  Pre/Post Installation Overview
+  ------------------------------
+  N/A   
+   
+  Installation Instructions
+  -------------------------
+  This patch should be installed during a period of low system activity with
+  ADT users off the system. No options need to be placed out of service. 
+  Installation time is expected to be less than 5 minutes.
+  
+  NOTE:  This patch installs some new data and will appear inactive for
+  a few minutes after the install appears complete.
+  
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+      select the Installation Menu. From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch #
+      (DG*5.3*850):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install. Enter DG*5.3*850.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+   
+  7.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0. 
+   
+  Post-Installation Instructions
+  ------------------------------
+  Due to the process required for install of Files 27.17 and 45.89 it is 
+  not recommended to delete the initialization files in order to maintain 
+  a proper audit trail. However, if the site feels that an audit trail is 
+  no longer needed you may delete the DG53850A through DG53850E files.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 171
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG3PR2
+    Before: B16655720   After: B16122805  **26,606,617,570,850**
+Routine Name: DG53850A
+    Before:       n/a   After:  B2731764  **850**
+Routine Name: DG53850B
+    Before:       n/a   After: B61379295  **850**
+Routine Name: DG53850C
+    Before:       n/a   After:B105178690  **850**
+Routine Name: DG53850D
+    Before:       n/a   After: B13639631  **850**
+Routine Name: DG53850E
+    Before:       n/a   After:B162973581  **850**
+Routine Name: DGENA5
+    Before: B31534116   After: B40195760  **232,688,850**
+Routine Name: DGENCDA2
+    Before: B16601492   After: B16663284  **232,387,653,850**
+Routine Name: DGENLCD1
+    Before: B13497795   After: B18153404  **121,232,387,850**
+Routine Name: DGICD
+    Before:       n/a   After: B13758086  **850**
+Routine Name: DGICDGT
+    Before:       n/a   After: B93717009  **850**
+Routine Name: DGICDL
+    Before:       n/a   After: B31973267  **850**
+Routine Name: DGICP
+    Before:       n/a   After: B26601934  **850**
+Routine Name: DGICPL
+    Before:       n/a   After: B30865954  **850**
+Routine Name: DGMSTR3
+    Before: B50687250   After: B55740424  **195,319,850**
+Routine Name: DGPT50DI
+    Before:  B7892059   After:  B7758522  **510,850**
+Routine Name: DGPT601
+    Before: B13957329   After: B17005208  **64,164,729,850**
+Routine Name: DGPT60PR
+    Before:  B4626791   After:  B4857421  **510,870,850**
+Routine Name: DGPT701
+    Before: B13839159   After: B13785418  **64,164,251,415,729,850**
+Routine Name: DGPT70DI
+    Before: B10532600   After: B12136680  **510,850**
+Routine Name: DGPT70DX
+    Before:  B3771336   After:  B3873659  **510,850**
+Routine Name: DGPTAE03
+    Before:  B6444534   After: B10987387  **8,52,164,850**
+Routine Name: DGPTAE04
+    Before:  B9485293   After:  B9147597  **510,744,870,850**
+Routine Name: DGPTAEE
+    Before: B10850349   After: B10892054  **64,338,678,850**
+Routine Name: DGPTC1
+    Before: B26128925   After: B26022907  **37,413,643,701,850**
+Routine Name: DGPTC2
+    Before: B10137147   After: B11527513  **58,189,643,850**
+Routine Name: DGPTDRG
+    Before: B26343356   After: B50130642  **60,441,510,559,599,606,669,
+                                           729,850**
+Routine Name: DGPTEXPR
+    Before:   B553154   After: B41356547  **850**
+Routine Name: DGPTF
+    Before: B21709372   After: B23028941  **26,58,164,195,397,565,664,850**
+Routine Name: DGPTF2
+    Before: B16869075   After: B17166598  **37,342,643,861,850**
+Routine Name: DGPTF4
+    Before: B24206467   After: B30195949  **114,115,397,510,517,478,683,
+                                           775,850**
+Routine Name: DGPTF41
+    Before:  B9986685   After: B10056872  **64,635,729,850**
+Routine Name: DGPTF5
+    Before:  B3539356   After:  B6981494  **669,701,744,868,850**
+Routine Name: DGPTFAPI
+    Before:  B6885804   After:  B6968721  **309,510,850**
+Routine Name: DGPTFD
+    Before: B15610745   After: B19169268  **60,441,510,785,850**
+Routine Name: DGPTFIC
+    Before: B27049239   After: B52898785  **510,559,599,669,704,744,832,850**
+Routine Name: DGPTFJC
+    Before: B46613574   After: B63564376  **158,510,517,590,636,635,701,
+                                           729,785,850**
+Routine Name: DGPTFM
+    Before: B44873663   After: B72739353  **510,517,590,594,606,635,683,
+                                           696,664,850**
+Routine Name: DGPTFM0
+    Before: B11221145   After: B10244116  **510,517,850**
+Routine Name: DGPTFM1
+    Before: B19186087   After: B18916672  **114,517,635,850**
+Routine Name: DGPTFM2
+    Before: B46843310   After: B50700609  **517,590,606,635,850**
+Routine Name: DGPTFM3
+    Before: B16822857   After: B17913974  **517,590,594,635,696,850**
+Routine Name: DGPTFM4
+    Before: B28140353   After: B31864138  **114,195,397,510,565,775,664,
+                                           759,850**
+Routine Name: DGPTFM5
+    Before: B12890159   After: B13820382  **510,606,850**
+Routine Name: DGPTFM6
+    Before: B20304000   After: B27555849  **164,510,729,850**
+Routine Name: DGPTFM8
+    Before:  B9470941   After:  B7609505  **729,850**
+Routine Name: DGPTFMO
+    Before: B26961325   After: B32031244  **195,397,510,590,594,606,683,
+                                           729,664,850**
+Routine Name: DGPTFQWK
+    Before: B20032997   After: B21436549  **517,594,635,729,850**
+Routine Name: DGPTFTR
+    Before: B20387661   After: B24216608  **37,415,530,601,614,645,787,850**
+Routine Name: DGPTFTR0
+    Before: B15326585   After: B16147582  **247,510,524,850**
+Routine Name: DGPTFTR2
+    Before: B15450104   After: B17811483  **729,850**
+Routine Name: DGPTFVC
+    Before:  B4235217   After:  B4764861  **37,234,850**
+Routine Name: DGPTFVC1
+    Before: B36905971   After: B39436670  **52,58,79,114,164,400,342,466,
+                                           415,493,512,510,544,629,817,
+                                           850**
+Routine Name: DGPTIC10
+    Before:       n/a   After: B95648075  **850**
+Routine Name: DGPTICD
+    Before:  B8832875   After: B10307606  **375,441,510,559,599,606,775,
+                                           785,850**
+Routine Name: DGPTODR
+    Before:  B5634642   After:  B5431903  **510,729,850**
+Routine Name: DGPTOLC2
+    Before: B22638617   After: B25585897  **164,510,559,599,729,850**
+Routine Name: DGPTR0
+    Before: B25588863   After: B26425804  **114,247,338,342,510,524,565,
+                                           678,729,664,850**
+Routine Name: DGPTR1
+    Before: B28617663   After: B29920843  **58,247,338,342,423,415,565,
+                                           678,696,729,781,664,817,850**
+Routine Name: DGPTR2
+    Before: B21647835   After: B22938579  **183,338,423,510,636,729,850**
+Routine Name: DGPTR4
+    Before: B20521487   After: B20498105  **338,423,415,510,565,645,729,
+                                           664,850**
+Routine Name: DGPTRI0
+    Before:       n/a   After: B26605957  **850**
+Routine Name: DGPTRI1
+    Before:       n/a   After: B37319384  **850**
+Routine Name: DGPTRI2
+    Before:       n/a   After: B26956533  **850**
+Routine Name: DGPTRI3
+    Before:       n/a   After: B26611263  **850**
+Routine Name: DGPTRI4
+    Before:       n/a   After: B32872225  **850**
+Routine Name: DGPTSCAN
+    Before: B23094075   After: B23143464  **29,64,114,189,729,850**
+Routine Name: DGPTSUDO
+    Before: B23038460   After: B23608581  **441,510,478,785,850**
+Routine Name: DGPTTS
+    Before: B17615190   After: B17997399  **26,61,164,510,850**
+Routine Name: DGPTTS1
+    Before: B23751705   After: B23805966  **26,64,418,510,478,850**
+Routine Name: DGPTUTL
+    Before: B21993815   After: B22849752  **26,114,234,466,544,850**
+Routine Name: DGPTUTL1
+    Before: B30078992   After: B33275346  **33,45,54,517,635,817,850**
+Routine Name: VAFHLDG1
+    Before: B30271941   After: B28165122  **94,151,190,511,606,614,850**
+Routine Name: VAUTOMA
+    Before: B12495883   After: B13075905  **111,568,850**
+ 
+Routine list of preceding patches: 319, 568, 570, 653, 688, 759, 785, 787
+                           817, 832, 861, 868, 870
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 16, 2011
+Completed By:                               Date Completed: AUG 01, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

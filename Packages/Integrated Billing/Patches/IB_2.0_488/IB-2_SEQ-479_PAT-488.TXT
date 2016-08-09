@@ -1,0 +1,583 @@
+$TXT Created by                      CARVDD.DOMAIN.EXT  (KIDS) on Thursday, 08/07/14 at 23:34
+=============================================================================
+Run Date: SEP 17, 2014                     Designation: IB*2*488
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #479                      Status: Released
+                  Compliance Date: SEP 28, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*133    <<= must be installed BEFORE `IB*2*488'
+                    (v)IB*2*451    <<= must be installed BEFORE `IB*2*488'
+                    (v)IB*2*458    <<= must be installed BEFORE `IB*2*488'
+                    (v)IB*2*473    <<= must be installed BEFORE `IB*2*488'
+                    (v)IB*2*476    <<= must be installed BEFORE `IB*2*488'
+                    (v)IB*2*489    <<= must be installed BEFORE `IB*2*488'
+
+Subject: HIPAA 5010 D.0 LEVEL II PHASE 2
+
+Category: 
+  - Routine
+  - Input Template
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch enables local printing of the new CMS-1500 claim form.
+  
+ **************************************************************************
+ ********************** I M P O R T A N T    N O T E **********************
+ **************************************************************************
+ ***                                                                    ***
+ ***      ONCE THIS PATCH IS INSTALLED, IT CANNOT BE BACKED OUT!        ***
+ ***                                                                    ***
+ ***  Before installing this patch, you must make sure that your site   ***
+ ***  has a sufficient supply of the new, pre-printed CMS-1500 claim    ***
+ ***  forms.  New forms should be loaded into the default printer(s)    ***
+ ***  for these claim forms at your site.                               ***
+ ***                                                                    ***
+ ***  Refer to the Pre/Post Installation Overview Instructions for      ***
+ ***  further mandatory instructions for this patch.  Sites are         ***
+ ***  STRONGLY encouraged to test the printer set up with the new form  ***
+ ***  in a mirror/test account before installing the software in        ***
+ ***  production.                                                       ***
+ ***                                                                    ***
+ ***  Sites that are using Class III software to interface with         ***
+ ***  Billing/Collection vendor software are responsible for            ***
+ ***  contacting their vendors to ensure compatibility with VA          ***
+ ***  software changes.  The vendor(s) may be required to make          ***
+ ***  software changes to ensure a smooth transition to the new         ***
+ ***  CMS-1500 forms.                                                   ***
+ ***                                                                    ***
+ **************************************************************************
+ ********************** I M P O R T A N T    N O T E **********************
+ **************************************************************************
+  
+ This patch is associated with Accounts Receivable PRCA*4.5*300 and each 
+ patch should be installed one after the other.  There is no install order 
+ preference.
+  
+ This Integrated Billing (IB) patch introduces changes to VistA's
+ Integrated Billing Module.
+   
+ Complete list of patch items:
+  
+ 1.  Made the following modifications to Enter/Edit Billing Information 
+     [IB EDIT BILLING INFO] option:
+  
+     a) Removed the ability to force a claim to be printed at the Health
+        Care Clearing House (HCCH) for institutional claims.
+  
+     b) Removed the ability to force a claim to be printed at the Health
+        Care Clearing House (HCCH) for professional claims.
+  
+     c) Provided a Fatal Warning message to the user when EDI - Inst Payer
+        Primary ID on an institutional claim equals HPRNT/SPRNT.
+  
+     d) Provided a Fatal Warning message to the user when EDI - Inst Payer
+        Primary ID on a professional claim equals SPRNT/HPRNT.
+  
+     e) Provided the ability to prevent the authorization of a profession-
+        al claim with no procedures.
+  
+     f) Provided the ability to prevent the authorization of an outpatient
+        institutional claim with no procedures.
+  
+     g) Modified Billing Screen 3 so the payer sequence will display in
+        the picklist of available payers that is displayed when a user
+        enters an ambiguous partial entry at one of the following prompts:
+            - Primary Insurance Policy
+            - Secondary Insurance Policy
+            - Tertiary Insurance Policy
+  
+ 2.  Enhanced Provider ID Maintenance [IBCE PROVIDER MAINT] option with the
+     following modifications:
+  
+     a) Provided the ability for users to enter ONLY a 9 digit ZIP Code
+        for a non-VA facility address.
+  
+     b) Provided the ability to enter only a physical location in Address
+        Line 1 for a non-VA facility.
+  
+ 3.  Enhanced Insurance Company Entry/Edit [IBCN INSURANCE CO EDIT] option
+     with the following modifications:
+  
+     a) Removed the ability to set the EDI - Inst Payer Primary ID equal
+        to HPRNT, SPRNT, IPRNT or PPRNT.
+  
+     b) Removed the ability to set the EDI - Prof Payer Primary ID equal
+        to SPRNT, HPRNT, IPRNT or PPRNT.
+  
+     c) Provided the functionality to set the value for EDI - Transmit?:
+        to YES-LIVE when a new Insurance Company is created.
+  
+ 4.  Provided the ability to view Message Storage Errors for inbound
+     Medicare-equivalent MRAs in the MRA Management Worklist (MRW) [IBCE 
+     MRA MANAGEMENT] option.
+  
+ 5.  Modified the Third Party Joint Inquiry (TPJI) [IBJ THIRD PARTY 
+     JOINT INQUIRY] option to display the message storage error messages
+     which are generated when VistA is unable to upload inbound X12N 5010
+     Health Care Claim Payment/Advice (835) messages in a manner an
+     end-user can understand.
+  
+ 6.  Enhanced the Health Care Claim Transactions (837) with the following
+     modifications:
+  
+     a) Provided the ability to transmit 1 - 12 diagnostic codes (DC1 -
+        DC12) on a professional X12N 5010 Health Care Claim (837)
+        transaction to FSC.
+  
+     b) Prevented the transmission of the following Property and Casualty
+        data in the Service Facility loop of an institutional/professional
+        837 claim transaction:
+            - P & C Contact Name
+            - P & C Contact Telephone Number
+            - P & C Contact Telephone Number Extension
+  
+     c) Provided the ability to transmit a Service Line Charge Amt (INS,
+        Piece 9) with a maximum length equal to 18 numeric in an
+        institutional X12N 5010 Health Care Claim (837) transaction to
+        FSC.
+  
+     d) Provided the ability to transmit a Service Line Non-Covered
+        Charge Amt (INS, Piece 12) with a maximum length equal to 18
+        numeric in an institutional X12N 5010 Health Care Claim (837)
+        transaction to FSC.
+  
+     e) Provided the ability to transmit a professional claim with a Rate
+        Type equal to Workers' Comp to FSC in an X12N 5010 Health Care
+        Claim (837) transactions.
+  
+     f) Provided the ability to transmit an Assignment Code with the
+        value of A in all professional/institutional X12N 5010 Health Care
+        Claim (837) transactions to FSC.
+  
+     g) Provided the ability to transmit institutional/professional
+        claims with Line Item Charge Amounts equal to $0.00.
+  
+     h) Provided the ability to transmit 2 A/N diagnoses pointers with
+        diagnoses on a professional claim to FSC in an X12N 5010 Health
+        Care Claim (837) transaction. 
+  
+ 7.  Enhanced the CMS - 1500 Printed Claim Form in the following ways:
+  
+     a) The IB System no longer prints the following information on a
+        locally printed CMS - 1500 claim form:
+             - Box 8
+                 o    Patient Marital Status
+                 o    Patient Employment
+                 o    Patient Student Status
+  
+             - Box 9
+                 o    9b - Other Insured's DOB
+                 o    9b - Other Insured's Gender
+                 o    9c - Employer's Name
+                 o    9c - School Name
+  
+             - Box 11
+                 o    11b - Employer's Name
+                 o    11b - School Name
+  
+             - Box 19
+                 o    EPSDT Flag
+                 o    Attending Not Hospice Employee
+                 o    Homebound Indicator
+                 o    Special Program Indicator
+                 o    Date Last Seen
+  
+             - Box 30 - Balance Due
+  
+     b) The IB System now prints the following data on a locally printed
+        CMS - 1500 form when available on a professional claim:
+             - Box 10
+                 o    10d - NUCC designated Claim Condition Codes
+  
+             - Box 11
+                 o    11b - Other Claim ID = Qualifier Y4 and Property
+                            and Casualty Number
+  
+             - Box 14 - Date Qualifier
+                 o    484 Last Menstrual Period (LMP, or
+                 o    431 Onset of Current Symptoms or Illness if no
+                          date for LMP
+  
+             - Box 15 - Date Qualifier
+                 o    439 Accident (Occurrence Codes)
+                 o    455 Last X-ray (Chiropractic Claim)
+                 o    453 Acute Manifestation of Chronic Condition
+                          (Chiropractic Claims)
+                 o    471 Prescription (RX Claims)
+                 o    Initial Treatment (Occurrence Code - PT/OT/
+                          Speech/Home IV/Cardiac Rehab)
+                 o    Latest Visit or Consultation
+  
+             - Box 17 - Provider Qualifier
+                 o    DN - Referring Provider
+                 o    DQ - Supervising Provider
+  
+             - Box 19 - Rate Type = Worker's Comp.
+                 o    PWK
+                 o    Report Type Code
+                 o    Transmission Type Code
+                 o    Attachment Control Number
+  
+             - Box 19 - Rate Type not equal to Worker's Comp.
+                 o    Free Text - Maximum 71 characters.
+  
+             - Box 21
+                 o    21A-L - Up to 12 Diagnoses Codes
+                 o    ICD Version Indicator
+  
+             - Box 24E
+                 o    Diagnoses Pointers will be A-L values
+  
+ 8) Made the following modifications to requirements that previously
+    existed:
+  
+     a) Functional Requirement FEAT765: Transmit Revenue/Procedure
+        Codes With Zero Charge Amount - Provided the ability to transmit
+        Revenue/Procedure codes which generate zero charge amounts in
+        837 Health Care Claim Transmissions (PRF, Piece 5 and INS, Piece
+        9).
+  
+     b) Functional Requirement FEAT602: Transmit Service Facility
+        Contact Data - Deleted the ability to transmit the following
+        data with a Professional 837 claim transmission when a Service
+        Facility Communication Number is present on a claim (2310C PER01,
+        PER03):
+            - Contact Function Code: IC Information Contact
+            - Communication Number Qualifier: TE Telephone
+            - Communication Number: Telephone
+            - Communication Number Qualifier: EX Telephone Extension
+            - Communication Number: Extension Number
+        ***NOTE*** The Property and Casualty data entered on Billing
+        Screen 8 will continue to transmit.  The above fields will be
+        relabeled as Property and Casualty data but will not be
+        transmitted in the Service Facility loop.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)             Field Name (#)              New/Modified/Deleted
+ ------------------        ----------------            --------------------
+ INSURANCE COMPANY (#36)                                          Modified
+                           EDI ID NUMBER - PROF (#3.02)           Modified
+                           EDI ID NUMBER - INST (#3.04)           Modified
+ IB ERROR (#350.8)                                    New/Modified Entries
+ IB NON/OTHER VA BILLING PROVIDER (#355.93)                       Modified
+                           STREET ADDRESS (#.05)                  Modified
+                           ZIP CODE (#.08)                        Modified
+                           P&C CONTACT NAME (#1.01)               Modified
+                           P&C CONTACT PHONE NUMBER (#1.02)       Modified
+                           P&C CONTACT PHONE EXTENSION (#1.03)    Modified
+ IB DATA ELEMENT DEFINITION (#364.5)                  New/Modified Entries
+      Screen: I $$INCLUDE^IB488PRE(5,Y)           
+ IB FORM SKELETON DEFINITION (#364.6)                 New/Modified Entries
+      Screen: I $$INCLUDE^IB488PRE(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                       New/Modified Entries
+      Screen: I $$INCLUDE^IB488PRE(7,Y)
+ BILL/CLAIMS(#399)                                                Modified
+                           FORCE CLAIM TO PRINT (#27)             Modified
+                           HOMEBOUND (#236)                       Modified
+                           DATE LAST SEEN (#237)                  Modified
+                           SPECIAL PROGRAM INDICATOR (#238)       Modified
+                           PROPERTY/CASUALTY CLAIM NUMBER (#261)  Modified
+                           FORM LOC 19-UNSPECIFIED DATA (#459)    Modified
+   PROCEDURES sub-file (#399.0304)                                Modified
+                           PURCHASED COST (#19)                   Modified
+                           ATTENDING NOT HOSPICE
+                              EMPLOYEE (#50.03)                   Modified
+                           EPSDT FLAG (#50.07)                    Modified
+                           SERVICE LINE COMMENT (#50.08)          Modified
+                           SERVICE LINE COMMENT
+                              QUALIFIER (#50.09)                  Modified
+   REVENUE CODE sub-file (#399.042)                               Modified
+                           UNITS OF SERVICE (#.03)                Modified
+ RATE TYPE file (#399.3)   ELECTRONIC TRANSMIT (#.1)        Modified Entry
+  
+  
+ Templates Associated:
+                                                              New/Modified/
+ Template Name      Type      File Name (#)                     Deleted
+ -------------      ----      -------------                     ---------
+ IB SCREEN102       Input     BILL/CLAIMS(#399)                 Modified
+ IB SCREEN10H       Input     BILL/CLAIMS(#399)                 Modified
+ IB SCREEN8         Input     BILL/CLAIMS (#399)                Modified
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ 20110503 -  Electronic Data Interchange (EDI) New Standards and Operating
+             Rules (Veterans Health Administration) VHA Provider-Side TCRs
+  
+   
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ Remedy Ticket # 618231  -  Claims Without CPT
+ The claims are being transmitted without CPT codes.  The biller is not
+ inputting CPT codes and the system is not generating an error message.
+  
+ Resolution:
+ -----------
+ Added two fatal edits when authorizing a bill without CPT codes, one for
+ professional claims and one for institutional claims.
+  
+  
+ TEST Sites:
+ ===========
+  Tennessee Valley HCS
+  Mountain Home, TN
+  Richmond, VA
+  Asheville, NC
+  Hampton, VA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                      File Name                  FTP Mode
+ --------------------------------------------------------------------------
+ EDI User Manual                       edi_user_guide_R0814.pdf   Binary
+ IB Release Notes/Installation Guide   IB_2_0_P488_rn.pdf         Binary
+  
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ ****Important Note: There is one **MANDATORY** pre-installation
+     activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to
+ the installation of this patch. ***
+  
+ The site IRM would coordinate with the Billing Department to insure that 
+ the 837 extract/transmission queue is empty. The instructions to empty
+ the queue is as follows:
+  
+ Select the option:   TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL 
+ TRANSMIT]
+  
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+  
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+  
+   Upon selecting this option you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+  
+   You should select 'A' for ALL
+  
+ Once the Billing Department has completed the instruction, the Billing
+ department is to inform IRM that the patch installation could proceed.
+  
+ The pre-installation routine, IB488PRE, defines several new error
+ messages that are used by the Billing Screens.  These new error
+ messages are stored as new entries in the IB ERROR file (#350.8). The
+ pre-installation routine also updates the Rate Type File (#399.3) with
+ the Electronic Billable Flag for Worker's Compensation.  Lastly, the
+ pre-installation routine will delete unused 4010 Output Formatter
+ entries.
+  
+ The post installation routine will recompile the Input Templates for
+ the Billing Screens.
+  
+  
+ Installation Instructions
+ -------------------------
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ******************************************************************
+  
+ The installation will take less than 2 minutes. This patch is associated 
+ with Accounts Receivable PRCA*4.5*300.
+  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter IB*2.0*488).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package IB*2.0*488.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//" respond YES.
+  
+   7. When prompted "Enter options you wish to mark as 'Out Of Order':"
+      Enter the following options:
+  
+             ENTER/EDIT BILLING INFORMATION [IB EDIT BILLING INFO]
+             PROVIDER ID MAINTENANCE  [IBCE PROVIDER MAINT]
+  
+   8. When prompted "Enter protocols you wish to mark as 'Out Of Order':",
+      press the ENTER key by pass the prompt. 
+  
+   9. When prompted "Delay Install (Minutes):  (0-60): 0//", you may press
+      the ENTER key to accept the default. 
+  
+  10. When prompted "DEVICE: HOME//", enter the device you want to print
+      the Install messages.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ Pre install routine IB488PRE and post install routine IBY488PO can be
+ deleted from system upon successful completion of install.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 184
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB488PRE
+    Before:       n/a   After: B27990371  **488**
+Routine Name: IBCBB1
+    Before: B98716914   After:B116504133  **27,52,80,93,106,51,151,148,
+                                           153,137,232,280,155,320,343,
+                                           349,363,371,395,384,432,447,
+                                           488**
+Routine Name: IBCBB2
+    Before: B51205466   After: B54197066  **51,137,210,245,232,296,320,
+                                           349,371,403,432,447,473,488**
+Routine Name: IBCBB7
+    Before: B27582918   After: B28157499  **51,137,240,447,488**
+Routine Name: IBCECOB
+    Before: B17473873   After: B17969465  **137,155,288,432,488**
+Routine Name: IBCECOB1
+    Before:B102535687   After:B112283735  **137,155,288,348,377,417,432,
+                                           447,488**
+Routine Name: IBCECOB2
+    Before:B167373990   After:B183092638  **137,155,433,432,447,488**
+Routine Name: IBCECOB5
+    Before: B13879653   After: B17731543  **137,155,349,417,488**
+Routine Name: IBCECSA5
+    Before: B62841003   After: B69687266  **137,135,263,280,155,349,489,488**
+Routine Name: IBCECSA6
+    Before:B167601727   After:B168448681  **137,135,155,417,431,451,488**
+Routine Name: IBCEF2
+    Before: B64226101   After: B64374819  **52,85,51,137,232,155,296,349,
+                                           403,400,432,488**
+Routine Name: IBCEF22
+    Before: B61306963   After: B79219296  **51,137,135,155,309,349,389,
+                                           432,488**
+Routine Name: IBCEF3
+    Before: B45972715   After: B47162871  **52,84,121,51,152,210,155,348,
+                                           349,389,488**
+Routine Name: IBCEF31
+    Before: B12054415   After: B11345418  **155,296,349,400,432,488**
+Routine Name: IBCEF83
+    Before: B56319703   After: B64584926  **432,488**
+Routine Name: IBCEOB
+    Before: B95746536   After:B100427168  **137,135,265,155,377,407,431,
+                                           432,488**
+Routine Name: IBCEOB0
+    Before: B83008311   After: B90917821  **135,280,155,431,488**
+Routine Name: IBCEOB00
+    Before: B76540225   After: B89820593  **155,349,377,431,488**
+Routine Name: IBCEOB1
+    Before: B69809131   After:B103312053  **137,135,155,296,356,349,431,488**
+Routine Name: IBCEP8B
+    Before: B20063767   After: B34200270  **391,432,476,488**
+Routine Name: IBCEU3
+    Before: B75406373   After:B105297417  **51,137,155,323,348,371,400,
+                                           432,488**
+Routine Name: IBCF2
+    Before: B18859512   After: B20654334  **17,52,88,122,51,137,488**
+Routine Name: IBCF21
+    Before: B13370698   After: B15664460  **8,80,51,488**
+Routine Name: IBCF22
+    Before: B10161856   After: B23925078  **52,80,122,51,210,488**
+Routine Name: IBCF23
+    Before: B40963193   After: B46459420  **52,80,106,122,51,152,137,402,
+                                           432,488**
+Routine Name: IBCF2P
+    Before: B10880923   After: B12251451  **8,52,133,488**
+Routine Name: IBCF2TP
+    Before:  B9069243   After:  B8889377  **488**
+Routine Name: IBCNS2
+    Before: B14096238   After: B24154529  **28,43,80,51,137,155,488**
+Routine Name: IBCNSC
+    Before: B24159861   After: B26150929  **46,137,184,276,320,371,400,488**
+Routine Name: IBCSC10H
+    Before: B48673264   After: B44927826  **432,488**
+Routine Name: IBCSC8
+    Before:  B7203948   After:  B9775351  **432,447,488**
+Routine Name: IBCSCH
+    Before: B49539365   After: B50914116  **52,80,106,124,138,51,148,137,
+                                           161,245,232,287,348,349,374,
+                                           371,395,400,432,447,458,488**
+Routine Name: IBCU7
+    Before: B81426431   After: B76838380  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488**
+Routine Name: IBJTBA1
+    Before: B50433175   After: B55203137  **135,265,155,349,417,451,488**
+Routine Name: IBY488PO
+    Before:       n/a   After:   B892589  **488**
+ 
+Routine list of preceding patches: 133, 451, 458, 473, 476, 489
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 01, 2012
+Completed By:                               Date Completed: SEP 10, 2014
+Released By :                               Date Released : SEP 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

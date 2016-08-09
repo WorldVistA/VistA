@@ -1,0 +1,665 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 04/05/16 at 16:49
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: PSS*1*189
+Package : PSS - PHARMACY DATA MANAGEMENT      Priority: Mandatory
+Version : 1       SEQ #170                      Status: Released
+                  Compliance Date: AUG 06, 2016
+=============================================================================
+
+Associated patches: (v)PSS*1*94    <<= must be installed BEFORE `PSS*1*189'
+                    (v)PSS*1*160   <<= must be installed BEFORE `PSS*1*189'
+                    (v)PSS*1*170   <<= must be installed BEFORE `PSS*1*189'
+                    (v)PSS*1*174   <<= must be installed BEFORE `PSS*1*189'
+                    (v)PSS*1*188   <<= must be installed BEFORE `PSS*1*189'
+                    (v)PSS*1*191   <<= must be installed BEFORE `PSS*1*189'
+
+Subject: GREATER THAN 90 DAYS SUPPLY ENHANCEMENT & MORE 
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ This patch is part of the Pharmacy Safety Updates project which was 
+ established to address specific New Service Requests (NSRs) as well as
+ Remedy Ticket(s) and a Patient Safety Issue (PSI) related to the VistA
+ Pharmacy applications as approved by the Health Systems Enterprise Systems
+ Manager(ESM).
+  
+ This project is comprised of patches from five different applications, as
+ shown below:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+    INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  
+ The following New service Requests (NSRs) are being addressed by this patch:
+  
+  NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+  ---------------------------------------------------------------------------
+  The Outpatient Pharmacy and supporting VistA applications are being modified
+  to allow dispensing of more than 90 day supply fill for outpatient 
+  prescriptions. The new limit will be 365 days and will be set for each drug
+  individually. See below for more information on specific menu 
+  options related to this enhancement.  
+  
+  NSR 20110308 Addition of a STRENGTH Property to IV ADDITIVES and Premixed 
+               IV SOLUTIONS
+  ----------------------------------------------------------------------------
+  Although patches PSJ*5*289 and PSS*1*174 introduced quite a few enhancements
+  to the IV Additives and IV Solutions ordering functionality they did not go
+  far enough in addressing all the issues originally in the NSR. Patches 
+  PSJ*5*313 and PSS*1*189 will extend the display of the IV Additive strength
+  to other parts of the Inpatient Medications and Pharmacy Data Management 
+  applications. In addition, it will also impose a new rule where an Orderable
+  Item can only have one IV Solution for a specific volume when it is marked
+  to be used in the CPRS IV Fluid Order Entry. 
+   
+  NSR 20080907 Inactivate Pharmacy Standard Schedule
+  ----------------------------------------------------------------------------
+  This enhancement is a conversion of an existing Class III software solution
+  that permits an entry in the ADMINISTRATION SCHEDULE file (#51.1) to be 
+  marked as INACTIVE via the Standard Schedule Edit [PSS SCHEDULE EDIT] option.
+  Once marked INACTIVE the schedule is no longer shown on the CPRS 
+  ADMINISTRATION SCHEDULE list.
+  
+   
+ The following Pharmacy Data Management functionality was modified:
+    
+ 1. New MAXIMUM DAYS SUPPLY field (#66) in the DRUG file (#50)
+    This new field shown below was added to the DRUG file (#50) for storing
+    the local maximum day supply value for a medication in an outpatient 
+    prescription.
+  
+    Field Name: MAXIMUM DAYS SUPPLY   Format: Numeric
+  
+    INPUT TRANSFORM: D MXDAYSUP^PSSDDUT2
+    HELP-PROMPT:     This is the maximum number of days supply for this drug. 
+                     Enter ?? for important information regarding default
+                     values and copays.
+  
+    DESCRIPTION:     This field is used to determine the maximum number for
+                     days supply that may be assigned to this drug. If this
+                     field is left blank, the MAXIMUM DAYS SUPPLY is set to
+                     a default of 90 unless the drug is a controlled 
+                     substance or Clozapine. Any value greater than 90
+                     increases the number of potential copay units above 3.
+  
+                     The maximum value allowed for this field is 365 (days)
+                     for most drugs, however:
+  
+                     - Schedule 2 controlled substances have a 30-day maximum
+                       days supply limit
+  
+                     - Schedules 3 thru 5 controlled substances have a 90-day
+                       maximum days supply limit 
+  
+                     - The maximum number of days supply for this drug cannot
+                       exceed the National Drug File (NDF) maximum value if it
+                       exists
+  
+                     - No value can be entered for Clozapine drugs as the
+                       maximum days supply is controlled by the Clozapine
+                       functionality
+  
+ 2. ADMINISTRATION SCHEDULE file (#51.1)
+    a) A new field named INACTIVE (#12) shown below was added to the 
+       ADMINISTRATION SCHEDULE file (#51.1) to allow the filtering inactive
+       schedules when providing a list to the CPRS application.
+  
+       Field Name: INACTIVE      Format: Set of Codes ('1' FOR YES)
+  
+       HELP-PROMPT:    Answer YES to mark this administration schedule entry
+                       as inactive. 
+       DESCRIPTION:    This field is used to indicate that a Standard Schedule
+                       is inactive. Inactive schedules are filtered from the
+                       list of schedules sent to CPRS for selection when users
+                       are placing a medication order.  
+  
+    b) The upper limit for the FREQUENCY (IN MINUTES) field (#2) was increased
+       from 129,600 (90 days) to 525,600 (365 days).
+   
+ 3. MEDICATION INSTRUCTION file (#51)
+    The upper limit for the FREQUENCY (IN MINUTES) field (#31) was increased
+    from 129,600 (90 days) to 525,600 (365 days).
+   
+ 4. IV SOLUTIONS file (#52.7)
+    New INPUT TRANSFORMS have been added to the VOLUME (#2) and USED IN IV
+    FLUID ORDER ENTRY (#17) to enforce the following new rule introduced 
+    relating to this file: 
+   
+    Rule: An Orderable Item can have only ONE IV solution with a specific
+          volume when it is marked to be used in the IV Order Dialog.
+  
+ 5. PSSCOMMON input template
+    The PSSCOMMON input template used by the Drug File Enter/Edit [PSS DRUG
+    ENTER/EDIT] option was modified to include the new MAXIMUM
+    DAYS SUPPLY field (#66) in the DRUG file (#50) so that it can be edited
+    along with the other fields in this option.
+  
+ 6. PSSJ SCHEDULE EDIT Input template
+    The PSSJ SCHEDULE EDIT input template used by the Standard Schedule 
+    Edit [PSS SCHEDULE EDIT] option was modified to include the new INACTIVE
+    field (#12) in the ADMINISTRATION SCHEDULE file (#51.1) so that it can
+    be edited along with the other fields in this option.
+  
+ 7. Edit Orderable Items [PSS EDIT ORDERABLE ITEMS] option 
+    This option was modified to display the IV Additive Strength value as
+    seen below:
+  
+    ... 
+       Orderable Item ->  PIPERACILLIN/TAZOBACTAM
+       Dosage Form    ->  INJ
+  
+    Dispense Drugs:
+    ---------------
+    PIPERACILLIN 3/TAZOBACTAM 0.375GM/VI INJ
+    PIPERACILLIN 2/TAZOBACTAM 0.25GM/VI INJ
+    PIPERACILLIN 4/TAZOBACTAM 0.5GM/VI INJ
+    PIPERACILLIN/TAZOBACTAM         (A)     Additive Strength: 3.375 GM 
+    PIPERACILLIN/TAZOBACTAM         (A)     Additive Strength: 2.25 GM 
+    PIPERACILLIN/TAZOBACTAM         (A)     Additive Strength: 4.5 GM 
+   ...
+  
+ 8. Primary Solution File (IV) [PSSJI SOLN] option
+    This option was modified to enforce a new rule introduced to ensure that
+    an Orderable Item can only have 1 active IV SOLUTION linked to it with a
+    specific VOLUME when the IV SOLUTION is marked YES for the USED IN IV
+    FLUID ORDER ENTRY field (#17). When they user tries to perform an edit
+    that breaks this rule by editing the screen fields VOLUME, USED IN IV
+    FLUID ORDER ENTRY or INACTIVATION DATE, the error message below will be
+    displayed and the editing won't be permitted.
+   
+          Only one Active IV Solution with a specific volume can be linked to
+          an Orderable Item or Dispense Drug when the IV Solution is marked to
+          be used in the CPRS IV Fluid Order Entry.
+  
+ 9. Drug Enter/Edit [PSS DRUG ENTER/EDIT] option 
+    a) This option was modified to allow entry of the new MAXIMUM DAY SUPPLY
+     
+    ...
+    NCPDP DISPENSE UNIT: EACH// 
+    NCPDP QUANTITY MULTIPLIER: 1// 
+    MAXIMUM DAYS SUPPLY: ??
+      This field is used to determine the maximum number for days supply that
+      may be assigned to this drug. The maximum value allowed for this field
+      is 365 (days) for most drugs, however: 
+        
+        - Schedule 2 controlled substances have a 30-day maximum days supply 
+          limit 
+        - Schedules 3 thru 5 controlled substances have a 90-day maximum days
+          supply limit 
+        - The maximum number of days supply for this drug cannot exceed the
+          National Drug File (NDF) maximum value if it exists
+        - No value can be entered for Clozapine drugs as the maximum days
+          supply is controlled by the Clozapine functionality
+    
+    MAXIMUM DAYS SUPPLY: 
+    PRICE PER DISPENSE UNIT: 0.8280
+    ...
+  
+    b) The exact same change described above in #8 was applied to this option
+       where the user can create, edit and link IV Solution entries to a 
+       dispense drug.
+        
+ 10. Lookup into Dispense Drug File [PSS LOOK] option
+    This option was modified to display the new MAXIMUM DAYS SUPPLY (#66)
+    field in the DRUG file (#50) along with the other dispense drug fields for
+    the dispense drug selected, as shown below:
+  
+     ...
+     DISPENSE UNIT:                       VA DISPENSE UNIT:          CAP
+     DISPENSE UNITS/ORDER UNIT: 20        PRICE/DISPENSE UNIT:    0.8280
+     NCPDP DISPENSE UNIT: EACH            NCPDP QUANTITY MULTIPLIER:  1.000
+     MAXIMUM DAYS SUPPLY: 100
+     APPL PKG USE:  Outpatient  Unit Dose  Non-VA Med
+     STRENGTH: 10                       UNIT: MG
+     POSSIBLE DOSAGES:
+     ... 
+  
+ 11. Standard Schedule Edit [PSS SCHEDULE EDIT] option
+    This option was modified to add the new INACTIVE field (#12) in the 
+    ADMINISTRATION SCHEDULE file (#51.1) to be updated for a schedule.
+     
+    ...
+    OTHER LANGUAGE EXPANSION: 
+    INACTIVE: ??
+      This field is used to indicate that a Standard Schedule is inactive.
+      Inactive schedules are filtered from the list of schedules sent to CPRS
+      for selection when users are placing a medication order.
+       
+         Choose from: 
+           1        YES
+    INACTIVE: 
+    ...
+  
+ 12. Administration Schedule File Report [PSS SCHEDULE REPORT] option
+     This option was modified to display the new INACTIVE field (#12)
+     created in the ADMINISTRATION SCHEDULE file (#51.1) as seen below:
+  
+       ADMINISTRATION SCHEDULE FILE REPORT (All)                     PAGE: NN
+       ----------------------------------------------------------------------
+       ...  
+       *Q4H
+            STANDARD ADMINISTRATION TIMES: 01-05-09-13-17-21
+                     OUTPATIENT EXPANSION: EVERY 4 HOURS
+                 OTHER LANGUAGE EXPANSION: 
+                            SCHEDULE TYPE: CONTINUOUS
+                   FREQUENCY (IN MINUTES): 240
+             EXCLUDE FROM ALL DOSE CHECKS: 
+            EXCLUDE FROM DAILY DOSE CHECK: 
+                                 INACTIVE: YES
+      ...
+   
+ 13. Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE ITEMS] &
+     Drug Enter/Edit [PSS DRUG ENTER/EDIT] options
+     A new rule described below is being introduced which is related to the
+     relationship between IV Solutions and Orderable Items.
+   
+     Rule: An Orderable Item can only have ONE IV solution with a specific
+           volume when it is marked to be used in the CPRS IV Order Dialog.
+  
+     This option was modified to check every time the user tries to link a 
+     dispense drug to an orderable item whether the new rule is being broken
+     or not. If the new rule is being broken the message below will be
+     displayed and the user will not be able to proceed with linking the drug
+     to the orderable item.
+   
+        Matching [Dispense Drug Name]  to [Orderable Item Name] would cause
+        the orderable item to have more than one Active IV Solution with the
+        same volume marked to be used in the IV FLUID ORDER ENTRY, which is
+        not allowed.
+   
+        Please, review the IV Solutions associated with this drug before
+        matching it to this orderable item or match it to a different 
+        orderable item.
+   
+ 14. IV Solution Pre-Install Manual Clean-up (Environment Check routine)
+     An environment check routine will run before the patch is installed to
+     ensure that an orderable item does not have more than one IV Solution
+     with the same volume when they are marked YES to be used in the CPRS IV
+     Fluid Order Entry. If at least one orderable item entry is found, the
+     patch installation will be aborted and a Mailman message will be sent
+     to all users holding the following security keys: PSIVMGR, PSJI MGR, 
+     PSNMGR.
+  
+     The message will contain a list of all orderable items that need to be 
+     cleaned up, as seen in the sample message below:
+    
+     Subj: Duplicate IV Solution Volume under same Orderable Item  [#215733]
+     From: PATCH PSS*1*189  In 'IN' basket.   Page 1
+     -------------------------------------------------------------------------
+     The list below shows IV Solutions in your database that need to be
+     cleaned up before patch PSS*1*189 can be installed.
+  
+     Rule: An Orderable Item can only have ONE IV solution with a specific
+           volume when it is marked to be used in the IV Order Dialog.
+  
+     Run Date/Time: Jun 12, 2015@09:49:16
+     -------------------------------------------------------------------------
+     ORDERABLE ITEM (IEN)
+           IV DISPENSE DRUG (IEN)
+              IV SOLUTION (IEN)
+     -------------------------------------------------------------------------
+     DEXTROSE (196)
+        Solution Volume: 1000 ML
+           DEXTROSE 10% IN WATER (620)
+              DEXTROSE 10%  (7)
+           DEXTROSE 5% IN 0.45% NS (623)
+              DEXTROSE 5% 1/2 NS (10)
+           DEXTROSE 5% 1000ML INJ (627)
+          5% DEXTROSE (1)
+  
+ 15. IV Solution Post-Install Automatic Clean-up (Post-install routine)
+     IV Solutions that are no longer used, meaning that either the IV
+     Solution and/or the Dispense Drug and/or the Orderable Item are marked
+     INACTIVE will have the field USED IN IV FLUID ORDER ENTRY set to 'NO'.
+     A list of such IV Solutions will be sent to all users holding the
+     following security keys: PSIVMGR, PSJI MGR, PSNMGR. The message will
+     contain a list of all IV Solutions that have been automatically updated
+     as seen in the sample message below:
+  
+     Subj: Auto-update of the IV Solution file  [#216328] 08/18/15@09:58 
+     From: PATCH PSS*1*189  In 'IN' basket.   Page 1  *New*
+     -------------------------------------------------------------------------
+     The list below shows IV Solutions in your database that had the field
+     USED IN IV FLUID ORDER ENTRY set to 'NO' because either the Orderable
+     Item, the Dispense Drug or the IV Solution itself was marked INACTIVE.
+     
+     Run Date/Time: Aug 18, 2015@09:58:38
+     -------------------------------------------------------------------------
+     ORDERABLE ITEM (IEN)
+        IV DISPENSE DRUG (IEN)
+           IV SOLUTION (IEN/VOLUME)
+     -------------------------------------------------------------------------
+     CEFAZOLIN (106)
+        CEFAZOLIN SOD 1GM INJ (1498)
+           20% DEXTROSE (2/500 ML)   *** INACTIVE DATE: JAN 11, 1994 ***
+           20% DEXTROSE (11/500 ML)   *** INACTIVE DATE: JAN 11, 1994 ***
+  
+ 16. New API for CPRS: $$MAXDS^PSSUTIL1
+     This new API was created for CPRS to retrieve the Maximum Days Supply
+     value for a specific medication. This API is available to CPRS through
+     the Integration Control Registration (ICR) #3239. Below is a detailed 
+     description of the API.
+  
+        $$MAXDS^PSSUTIL1(INPUT)
+        This API accepts an array containing the Pharmacy Orderable Item
+        (required) and Dispense Drug (optional) and returns the maximum number
+        of Days Supply allowed to be dispensed for the specific medication.
+   
+        Parameters:
+        Input:  INPUT("PSOI") (Required)
+                Pointer to the PHARMACY ORDERABLE ITEM file (#50.7). 
+  
+                INPUT("DRUG") (Optional)
+                Pointer to the DRUG file (#50). This parameter is optional.
+                If not passed, the API will return the highest value from all
+                the dispense drugs linked to the Pharmacy Orderable Item.      
+     
+        Output $$MAXDS
+               Maximum number of days supply that can be dispensed for the
+               orderable item and/or dispense drug.
+  
+ 17. IV Additives and Solutions - Display "INACTIVATION DATE"
+  
+     The INACTIVATION DATE will display whenever a VistA lookup is done on
+     IV Additives and Solutions.
+  
+     This was accomplished by making the following two fields identifiers: 
+  
+     FIELD NAME           FIELD NUMBER     FILE NAME/NUMBER
+     ----------------------------------------------------------
+     INACTIVATION DATE         12          IV ADDITIVES (#52.6)
+     INACTIVATION DATE          8          IV SOLUTIONS (#52.7)
+  
+  
+     Note: The following 'HELP'-PROMPT text will display for fields 8 &12
+           "Enter the date this drug was inactivated."
+  
+  
+       ********************* EXAMPLE(1) ADDITIVES *********************
+  
+ Inpatient Drug Management - Additives File [PSSJI DRUG] 
+  
+ Select Inpatient Drug Management Option: Additives File
+ Select IV ADDITIVES PRINT NAME: PIPERACILLIN
+  
+ Lookup: IV ADDITIVES  PRINT NAME
+  1   PIPERACILLIN/TAZOBACTAM              Additive Strength: 3.375 GM
+  2   PIPERACILLIN/TAZOBACTAM              Additive Strength: 2.25 GM 
+  3   PIPERACILLIN/TAZOBACTAM   03-5-2015  Additive Strength: 4.5 GM 
+  
+  
+      ********************* EXAMPLE(2) SOLUTIONS *********************
+  
+ Inpatient Drug Management - Primary Solution File (IV)
+  
+ Select Inpatient Drug Management Option: PRImary Solution File(IV) 
+ Select IV SOLUTIONS PRINT NAME: DEXTROSE 5% / NACL
+   Lookup: PRINT NAME
+      1   DEXTROSE 5% / NACL 0.2%       1000 ML                
+      2   DEXTROSE 5% / NACL 0.33%      1000 ML                
+      3   DEXTROSE 5% / NACL 0.45%      1000 ML   12-03-15     
+      4   DEXTROSE 5% / NACL 0.9%       1000 ML    
+                
+       ********************* END EXAMPLES ********************* 
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)      Field Name (#)                       New/Modified/Deleted
+ ------------------ -----------------------------------  --------------------
+ DRUG (#50)         MAXIMUM DAYS SUPPLY (#66)            New
+  
+ MEDICATION INSTRUCTION (#51)
+                    FREQUENCY (IN MINUTES) (#31)         Modified
+  
+ ADMINISTRATION SCHEDULE (#51.1)
+                    FREQUENCY (IN MINUTES) (#2)          Modified
+                    INACTIVE (#12)                       New
+  
+ IV ADDITIVES (#52.6)
+                    INACTIVATION DATE (#12)              Modified
+  
+ IV SOLUTIONS (#52.7)
+                    VOLUME (#2)                          Modified
+                    INACTIVATION DATE (#8)               Modified
+                    USED IN IV FLUID ORDER ENTRY (#17)   Modified
+  
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name        Type    File Name (#)                New/Modified/Deleted
+ -------------        -----   -------------------------    --------------------
+ PSSCOMMON            INPUT   DRUG (#50)                       Modified
+ PSSJ SCHEDULE EDIT   INPUT   ADMINISTRATION SCHEDULE (#51.1)  Modified
+   
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ 20060601
+ 20111206
+ 20110308
+ 20080907
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00002098
+ PSPO00001088  
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A  
+     
+  
+ TEST Sites:
+ ===========
+ NEW YORK HARBOR HCS
+ LOUISVILLE, KY
+ HEARTLAND EAST
+  
+      
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from the ANONYMOUS.SOFTWARE
+ directory on download.vista.domain.ext. using secure file transfer
+ protocol. This transmits the files from the first available server.
+ Sites may also elect to retrieve files directly from a specific server
+ as follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be retrieved from the VA Software Documentation
+ Library (VDL) on the Internet at the following address:
+ http://www4.domain.ext/vdl.
+  
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ PHARMACY DATA MANAGEMENT RELEASE NOTES  PSS_1_P189_RN.PDF         BINARY
+  
+ PHARMACY DATA MANAGEMENT INSTALLATION   PSS_1_P189_IG.PDF         BINARY
+ GUIDE
+  
+ PHARMACY DATA MANAGEMENT USER MANUAL    PSS_1_UM_R0616.PDF        BINARY
+   
+  
+ Patch Installation: 
+  
+ Pre Installation Overview
+ -------------------------
+ This project is comprised of patches from five different applications as 
+ listed here.  The patches will get released together and the suggested 
+ installation order is as shown.  
+  
+ An installation guide released with patch PSS*1*189, discusses the 
+ installation process as PSS*1*189 is the patch that must be installed 
+ first.
+  
+  APPLICATION/VERSION                                  PATCH
+  -----------------------------------------------------------------
+  PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+  OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+  INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+  NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+  INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  -----------------------------------------------------------------
+  
+ Item #14 above describes in detail the pre-installation requirement for 
+ installing this patch. In summary, the process is required because a new rule
+ will be introduced by this patch that will enforce the following:
+  
+ An Orderable Item can only have ONE IV solution with a specific volume when
+ it is marked to be used in the IV Order Dialog.
+  
+ ***Please note****
+  
+ The pre-installation environment check routine will only execute in 
+ production environments. 
+  
+  
+ Post Installation Overview
+ --------------------------
+ Item #15 above describes in detail the post-installation process for 
+ automatically setting the USED IN IV FLUID ORDER ENTRY field (#17) in the
+ IV SOLUTIONS file (#52.7) to 'NO' for inactive entries. This will prevent
+ inactive entries from being made active again and breaking the rule 
+ described above.
+     
+ Installation Instructions
+ -------------------------
+ Although this installation will take no longer than 3 minutes, it is 
+ recommended that it be installed overnight to prevent any disruption of 
+ service to other users.
+  
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+       When loading the distribution, the following text will display:
+       "Will first run the Environment Check Routine, PSS189EN"
+  
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSS*1.0*189).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSS*1.0*189.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PHARMACY DATA MANAGEMENT;**[Patch List]**;9/30/97;Build 54
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSS189EN
+    Before:       n/a   After: B30409440  **189**
+Routine Name: PSS189PI
+    Before:       n/a   After: B23976606  **189**
+Routine Name: PSSDDUT2
+    Before:B103530932   After:B170893168  **3,21,61,81,95,127,126,139,
+                                           131,143,188,189**
+Routine Name: PSSJSV
+    Before: B76380727   After: B76380719  **20,38,56,59,110,121,143,149,
+                                           146,189**
+Routine Name: PSSLOOK
+    Before: B85846814   After: B86061726  **3,7,15,16,20,24,29,38,68,61,
+                                           87,90,127,147,170,189**
+Routine Name: PSSPOIMN
+    Before: B62103637   After: B82446313  **15,32,34,38,51,57,82,125,189**
+Routine Name: PSSPOIMO
+    Before:B139454544   After:B140931303  **29,32,38,47,68,102,125,141,
+                                           153,159,166,172,191,189**
+Routine Name: PSSSCHED
+    Before: B15804053   After: B16362165  **94,189**
+Routine Name: PSSSCHRP
+    Before:B109553620   After:B109340534  **129,160,189**
+Routine Name: PSSUTIL1
+    Before: B37379824   After: B48136582  **38,66,69,166,189**
+Routine Name: PSSVIDRG
+    Before: B83452863   After: B88124860  **2,10,32,38,125,146,174,189**
+ 
+Routine list of preceding patches: 94, 160, 170, 174, 188, 191
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

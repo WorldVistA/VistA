@@ -1,0 +1,446 @@
+$TXT Created by                      DEVESS.DOMAIN.EXT  (KIDS) on Friday, 04/04/14 at 17:50
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: LR*5.2*422
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #351                    Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*322  <<= must be installed BEFORE `LR*5.2*422'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*422'
+                    (v)LEX*2*80    <<= must be installed BEFORE `LR*5.2*422'
+                    (v)ICD*18*57   <<= must be installed BEFORE `LR*5.2*422'
+                    (v)DG*5.3*850  <<= must be installed BEFORE `LR*5.2*422'
+
+Subject: ANATOMIC PATHOLOGY ICD-10 CLASS 1 REMEDIATION PROJECT
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the
+ Anonymous directory for installation order. This is critical for 
+ proper functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10)
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the ICD-10 activation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ ===============================  WARNING  ================================
+  
+ The ICD-10 Class I Remediation project will update VistA to include the
+ ICD-10 Diagnosis and Procedure codes. The first patches to be delivered
+ by this project will be the STS patches ICD*18.0*57 and LEX*2.0*80 which 
+ will include both the ICD-10 Diagnosis and Procedure codes along with new
+ or updated APIs that will be used by the other VistA applications to
+ select, retrieve and display these new codes.
+  
+ There are several VistA applications that do not currently utilize code
+ set versioning. Those applications are Prosthetics, Home Based Primary
+ Care, and Lab Anatomic Pathology. As a result, these applications
+ currently allow inactive ICD-9 codes to be displayed and selected for
+ ICD-9 dates of service.
+  
+ During the interim, after the installation of the STS ICD-10 Class I
+ Remediation patches and prior to the ICD-10 Implementation date, these 
+ applications will also allow the display and selection of inactive ICD-10 
+ codes including statuses of (Inactive) or (Pending). The users of these 
+ applications should use CAUTION to select ICD-9 or ICD-10 codes that are 
+ appropriate and active.
+  
+ The following examples show how the software would appear in these
+ applications:
+  
+ EXAMPLE #1: Inactive ICD-9 codes.
+ The warning (Inactive) appears at the end of the short description.
+  
+ Select ICD DIAGNOSIS: 100.0// 488.1
+  
+  4 matches found
+  
+     1.  488.1     FLU DT IDEN H1N1 VIRUS (Inactive)
+     2.  488.11    FLU DT 2009 H1N1 W PNEU (Major CC)
+     3.  488.12    FLU-2009 H1N1 W OTH RESP
+     4.  488.19    FLU-2009 H1N1 W OTH MAN (Inactive)
+  
+  Select 1-4:  
+  
+ Select ICD DIAGNOSIS: 
+  
+ EXAMPLE #2: Inactive ICD-10 codes.
+ The warning (Pending) appears at the end of the short description.
+  
+ Select ICD DIAGNOSIS: 100.0// A27.
+  
+ 4 matches found
+  
+     1.  A27.0     Leptospirosis icterohemorrhagica (10/01/2014)
+                   (Pending)
+     2.  A27.81    Aseptic meningitis in leptospirosis (10/01/2014)
+                   (Pending)
+     3.  A27.89    Other forms of leptospirosis (10/01/2014) (Pending) 
+     4.  A27.9     Leptospirosis, unspecified (10/01/2014) (Pending)    
+  
+ When creating or editing records dated after the ICD-10 Activation Date
+ (10/01/2014), the software will correctly screen out both the inactive
+ ICD-9 and inactive ICD-10 codes.
+ ===========================  END OF WARNING  =============================
+  
+  
+ The following functionality within the Anatomic Pathology (AP) application
+ addresses ICD-10 enhancements.
+  
+ 1. Option Updates
+    The following options are modified to replace the word "ICD9CM" to "ICD".
+    a) "Autopsy protocol & ICD9CM coding [LRAPAUDAA]" is changed to "Autopsy
+       protocol & ICD coding [LRAPAUDAA]".
+    b) "ICD9CM coding, anat path [LRAPICD]" is changed to "ICD coding, anat 
+       path [LRAPICD]".
+    c) "FS/Gross/Micro/Dx/ICD9CM Coding [LRAPDGI]" is changed to
+       "FS/Gross/Micro/Dx/ICD Coding [LRAPDGI]".
+    d) "ICD9CM code search [LRAPSI]" is changed to "ICD code search [LRAPSI]".
+  
+ 2. Data Entry Updates 
+    Autopsy (AU), Cytopathology (CY), Electron Microscopy (EM), and Surgical 
+    Pathology (SP) data entry screens now allow the entry and display of the 
+    relevant ICD code sets based on the date of interest. The date of interest
+    for AU is the Autopsy Date/Time. The date of interest for CY, EM, and SP 
+    is date the specimen is received.  
+    a) If the date of interest is prior to the ICD-10 activation date,
+       then ICD-9 codes are available for data entry selection.
+    b) If the date of interest is after the ICD-10 activation date, 
+       then ICD-10 codes are available for data entry selection.
+    c) Screen prompts and displays are modified to replace the word "ICD9CM" 
+       to "ICD".
+    d) The "Select ICD DIAGNOSIS CODE NUMBER:" prompt in the ICD code search
+       [LRAPSI] is changed to "Select ICD Diagnosis:"
+  
+ 3. Report Updates
+    The following reports are modified.
+    a) ICD code search [LRAPSI]
+       - The date range prompt and the Select ICD Diagnosis prompt are
+         interchanged so that the ICD coding set displayed is based on an ICD 
+         coding date. 
+       - A warning message displays if the dates entered overlap the 
+         ICD coding system. The warning message is shown below:-
+          
+          Beginning and Ending dates must both be prior to <Actual ICD-10
+          Activation Date will display here>(ICD-9) 
+            or  both be on or after <Actual ICD-10 Activation Date will 
+            display here>(ICD-10).
+       - A search string displays findings based on a particular ICD coding
+         system. For example, if the dates entered are for ICD-9, then a search 
+         of ICD codes will produce a list of ICD-9 codes, and the same will be 
+         true for ICD-10 codes.
+    b) Five reports are changed to use the API $$ICDDX^ICDEX, instead of 
+       $$ICDDX^ICDCODE, to return ICD information based on the relevant ICD 
+       coding system.
+        - Display surg path reports for a patient [LRAPSPCUM]
+        - Display cytopath reports for a patient [LRAPCYCUM]
+        - Display EM reports for a patient [LRAPEMCUM]
+        - 10% random case review, surg path [LRAPQAR]
+        - Tissue committee review cases [LRAPQAT] 
+  
+    c) An existing problem was corrected in the Tissue committee review cases
+       [LRAPQAT] report. Diagnosis codes from the PTF File (#45) were being  
+       accumulated from previous patients and displayed for subsequent 
+       patients.
+     
+ 4. Data Dictionary Updates
+    The field descriptions in the LAB DATA File (#63) are changed to reflect
+    the general term "ICD" instead of "ICD9CM".
+   
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                       New/Modified/Deleted
+ -------------     -----------------------------------  --------------------
+ LAB DATA (#63)                                         Mod
+                   AUTOPSY ICD CODE SUB-FIELD (63.808) Field (#80)
+                   AUTOPSY ICD CODE (#.01)
+  
+                   EM SUB-FIELD (#63.02) Field (#2)                      
+                   ICD CODE SUB-FIELD (63.203) field (#80)
+                   ICD CODE (#.01)                      Mod
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ LRAPSI                         run routine      Modified
+ LRAPICD                        run routine      Modified
+ LRAPDGI                        run routine      Modified
+ LRAPAUDAA                      run routine      Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 New/Modified/Deleted
+ -------------      ----      ------------------            --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ HD0000000741712 - ICD10: LRAPSI option doesn't display data for EM section
+  
+ Problem:  While testing the Anatomic Pathology application for the ICD10
+           remediation project, it was noted that the ICD code search [LRAPSI]
+           option did not display any details in the Name, ID, Sex, Age, and 
+           ACC # columns for the Electron Microscopy (EM) section even though
+           the selected ICD code was on file.
+  
+ Solution: The problem was related to how the M code checked if an ICD code
+           existed in File (#63). For all the sections (Autopsy, Cytopathology, 
+           and Surgical Pathology), with the exception of Electron Microscopy
+           (EM), the ICD code pointer to File (#80) is stored as a subscript in 
+           File (#63). When checking for ICD code of EM, the code failed to 
+           find any because of the way the data is stored. 
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VAMC, Battle Creek, MI
+ North Chicago, VAMC, Chicago, IL
+ Orlando VAMC, Orlando, FL
+ Phoenix VAMC, Phoenix, AZ
+  
+  
+ Blood Bank Clearance Statement
+ ------------------------------
+ VISTA Laboratory Package patch LR*5.2*422 contains changes to software
+ controlled by VHA DIRECTIVE 2004-058, titled VISTA BLOOD BANK SOFTWARE. Changes
+ include: 
+ Changes to Group B files:
+ 63      LAB DATA
+  
+ Partial DD: field 80
+  
+ Partial DD: subDD: 63.808   field: .01
+ Partial DD: subDD: 63.203   field: .01
+  
+ All of the above changes have been reviewed by the VISTA Blood Bank Developer
+ and found to have no impact on the VISTA BLOOD BANK SOFTWARE control functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*422 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*422 does not alter
+ or modify any software design safeguards or safety critical elements functions.
+  
+ POTENTIAL IMPACT ON SITES: This patch contains changes to 0 routines and 1
+ file identified in Veterans Health Administration (VHA) Directive 2004-058,
+ group B listing. The changes have no effect on Blood Bank functionality or
+ medical device control functions. There is no adverse potential to sites.
+  
+ VALIDATION REQUIREMENTS BY OPTION: 
+ The options affected by this patch do not require validation.
+  
+ MINIMAL TEST CASE SCENARIOS BY OPTION, INCLUSIVE OF ALL CONTROL FUNCTIONS:
+ There are no test case scenarios for this patch.
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to File Transfer Protocol (FTP) the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the Department of Veterans Affairs (VA)
+ Software Documentation Library (VDL) at: http://www4.domain.ext/vdl/
+  
+ File Description          File Name                               FTP Mode
+ --------------------------------------------------------------------------
+ AP User Manual - Revised  apump422.PDF                            (binary)
+ AP CPT Corrections User   lab_5_2_p422_ug.PDF                     (binary)
+    Guide
+ AP Alerts and CPRS Report lab_lr_5_2_422_ug.PDF                   (binary)
+    Changes User Guide
+ AP Electronic Signature   lab_5_2_422_um.PDF                      (binary)
+    User Manual
+ ICD-10 Release Notes for  ICD-10_RN_LR_5_2_422.PDF                (binary)
+    AP (LR*5.2*422) 
+ Production Overview Guide ICD-10_Production_Overview_Guide_       (binary)
+                           Groups_3_4.pdf
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than five minutes
+ to install.
+  
+ The following menu options should be disabled. 
+     LRAP       Anatomic pathology
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (LR*5.2*422):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter LR*5.2*422.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+  
+     LRAP       Anatomic pathology
+                                                       
+     Enter options you wish to mark as 'Out Of Order': <Return>
+  
+     Enter protocols you wish to mark as 'Out Of Order': <Return>
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRAPCUM1
+    Before:  B6249474   After:  B6459175  **315,422**
+Routine Name: LRAPD1
+    Before: B22367539   After: B24459842  **41,91,248,259,317,350,422**
+Routine Name: LRAPDA
+    Before: B88410283   After: B92935176  **72,73,91,121,248,259,295,317,
+                                           365,350,422**
+Routine Name: LRAPICD
+    Before:       n/a   After:B174775261  **422**
+Routine Name: LRAPICD2
+    Before:       n/a   After: B43748147  **422**
+Routine Name: LRAPQAT1
+    Before:  B4707143   After:  B5116733  **201,315,422**
+Routine Name: LRAPX
+    Before:  B5097427   After:  B8577110  **72,259,422**
+Routine Name: LRAUDA
+    Before:  B5184827   After:  B5906621  **72,248,259,322,422**
+Routine Name: LRAUSICD
+    Before:  B4216631   After:  B6291180  **72,253,315,422**
+Routine Name: LRSPRPT1
+    Before: B10719224   After: B10863662  **1,259,315,422**
+Routine Name: LRSPSICD
+    Before:  B4454107   After:  B7174339  **72,253,315,422**
+Routine Name: LRSPSICP
+    Before:  B6145447   After:  B6145397  **72,422**
+Routine Name: LRU
+    Before: B44711331   After: B45238843  **1,72,201,248,350,422**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 26, 2012
+Completed By:                               Date Completed: AUG 08, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

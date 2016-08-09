@@ -1,0 +1,201 @@
+
+=============================================================================
+Run Date: NOV 13, 2014                     Designation: PXRM*2*54
+Package : PXRM - CLINICAL REMINDERS           Priority: EMERGENCY
+Version : 2        SEQ #29                      Status: Released
+                  Compliance Date: NOV 15, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*54'
+
+Subject: NATIONAL EBOLA REMINDER
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ VA is developing policies, procedures, and resources to define our 
+ response and approach to management of individuals who may have been
+ exposed to Ebola Virus Disease.  The VA-EBOLA RISK TRIAGE TOOL 
+ template is a product developed based on the Center for Disease
+ Control and Prevention (CDC) algorithm for evaluating individuals
+ who have traveled in countries with active epidemics of this disease.
+ The collaboration led by Dr. Theresa Cullen in Health Informatics
+ included input from the Office of Public Health, the Office of
+ Primary Care, the National Director for Infectious Disease, Health 
+ Solutions Management, Informatics Patient Safety, Health Information
+ Management, the National Clinical Reminder Committee (NCRC), and the
+ Nashville Usability Lab among others.
+  
+ The template was created for use by VA clinical staff that is evaluating 
+ patients identified as having traveled to involved areas or as having 
+ contact with a known Ebola patient.  Initial identification of 
+ patients with travel or contact risks may be done through several
+ different pathways.  These may include telephone hotlines, public service
+ announcements, or signage at the medical center, all of which will direct
+ patients to the appropriate intake location as established by the
+ facility.  Patient check-in Kiosks in clinic areas will have a screening
+ question about travel to affected areas.  Patients who enter a positive
+ response will be immediately directed to clinic staff.  Clinic check-in
+ staff may also ask the initial questions about travel or contact.
+ Patients with a positive response will also immediately be directed to 
+ clinical staff in compliance with locally established protocols.  The
+ VA-EBOLA RISK TRIAGE TOOL is intended for use by the clinical staff that
+ assesses patients referred through any of these pathways.  Additional
+ clinical information about Ebola is available at the VA Ebola Outbreak
+ site and the CDC Ebola Hemorrhagic Fever home page (see below).
+  
+ The template follows the CDC algorithm in guiding the assessment and 
+ recommending appropriate follow-up and actions based on the findings and
+ risk level identified.  It is intended for use throughout VA as the 
+ approved template for assessing these patients.  It is sponsored by the
+ Office of Public Health which will oversee use, evaluate data collected,
+ and update recommendations as needed for this rapidly evolving disease.
+  
+  
+ RECOMMENDATIONS:
+ ----------------
+ The template was created for use by VA clinical staff evaluating patients
+ identified as having traveled to involved areas or as having contact with
+ a known Ebola patient.
+  
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001077502 - National Ebola Screen Content Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ VA New Jersey HCS
+ VA North Texas HCS 
+ VA Illiana HCS  - Danville, IL
+ James E. Van Zandt VAMC. Altoona, PA
+ Richard L. Roudebush VAMC - Indianapolis, IN
+  
+  
+ REMEDY OVERVIEW:
+ =================
+ 1.  INC000001077502 - National Ebola Screen Content Dialog
+  
+  
+ Problem:
+ ------------
+ The VA National Ebola Screen Content Reminder Dialog should be initiated 
+ and used for patients identified as having traveled to involved areas
+ or as having contact with a known Ebola patient.
+  
+ Resolution:
+ ---------------
+ This patch, PXRM*2*54, contains two routines, PXRMP54E and PXRMP54I.  
+ They are init tasks that add new entries to the REMINDER EXCHANGE 
+ (#811.8) file and the contents of these entries are installed during the 
+ post-init.  These routines can be deleted after the install.  
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_54.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It 
+ is available as .pdf format.  This file should be downloaded in BINARY 
+ format.  
+  
+     File Name:            Description:             Protocol:
+     ==========            ============             =========
+     PXRM_2_0_54_IG.PDF    PXRM*2.0*54 Install      BINARY
+                           and Setup Guide
+     PXRM_2_0_54_CDS.PDF   Ebola Clinical Decision  BINARY
+                           Sheet
+     PXRM_2_0_54.KID       PXRM*2.0*54 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take five minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_54_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in PXRM_2_0_54.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*54
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP54E
+     PXRMP54I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 213
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP54E
+    Before:       n/a   After:   B755087  **54**
+Routine Name: PXRMP54I
+    Before:       n/a   After:  B6112887  **54**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 23, 2014
+Completed By:                               Date Completed: NOV 13, 2014
+Released By :                               Date Released : NOV 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

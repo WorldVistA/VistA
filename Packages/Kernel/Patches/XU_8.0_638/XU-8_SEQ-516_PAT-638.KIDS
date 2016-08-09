@@ -1,0 +1,4165 @@
+Released XU*8*638 SEQ #516
+Extracted from mail message
+**KIDS**:XU*8.0*638^
+
+**INSTALL NAME**
+XU*8.0*638
+"BLD",1513,0)
+XU*8.0*638^KERNEL^0^3150205^y
+"BLD",1513,1,0)
+^^19^19^3140527^
+"BLD",1513,1,1,0)
+This patch is one in a series of patches to support the VA's transition 
+"BLD",1513,1,2,0)
+from IPv4 to IPv6.  IPv6 is a protocol designed to handle the growth rate 
+"BLD",1513,1,3,0)
+of the Internet and to cope with the demanding requirements of services,
+"BLD",1513,1,4,0)
+mobility, and end-to-end security.  A Federal Chief Information Office 
+"BLD",1513,1,5,0)
+(CIO) memo "Transition to IPv6" released in September of 2010 requires
+"BLD",1513,1,6,0)
+agencies to continue their IPv6 transition efforts and has established
+"BLD",1513,1,7,0)
+specific milestones associated with enabling an IPv6 operational
+"BLD",1513,1,8,0)
+capability by the end of FY2014.
+"BLD",1513,1,9,0)
+ 
+"BLD",1513,1,10,0)
+This patch updates several places where IPv4 address formats were 
+"BLD",1513,1,11,0)
+hard-coded in routines, and have now been replaced with calls to 
+"BLD",1513,1,12,0)
+IPv4/IPv6 Application Programmer Interfaces (APIs) to support the VA's 
+"BLD",1513,1,13,0)
+transition to IPv6. Several changes have also been made in algorithms 
+"BLD",1513,1,14,0)
+that will improve the efficiency of IP address handling.
+"BLD",1513,1,15,0)
+ 
+"BLD",1513,1,16,0)
+No current functionality has been changed.  IPv6 functionality for future 
+"BLD",1513,1,17,0)
+support cannot be completely tested until additional changes are made in 
+"BLD",1513,1,18,0)
+VistA, and a test environment is established to replicate the planned VA 
+"BLD",1513,1,19,0)
+network architecture.
+"BLD",1513,4,0)
+^9.64PA^3.081^1
+"BLD",1513,4,3.081,0)
+3.081
+"BLD",1513,4,3.081,222)
+y^y^f^^^^n
+"BLD",1513,4,"B",3.081,3.081)
+
+"BLD",1513,6.3)
+15
+"BLD",1513,"INID")
+^n
+"BLD",1513,"INIT")
+POST^XU8P638
+"BLD",1513,"KRN",0)
+^9.67PA^9002226^22
+"BLD",1513,"KRN",.4,0)
+.4
+"BLD",1513,"KRN",.401,0)
+.401
+"BLD",1513,"KRN",.402,0)
+.402
+"BLD",1513,"KRN",.403,0)
+.403
+"BLD",1513,"KRN",.5,0)
+.5
+"BLD",1513,"KRN",.84,0)
+.84
+"BLD",1513,"KRN",3.6,0)
+3.6
+"BLD",1513,"KRN",3.8,0)
+3.8
+"BLD",1513,"KRN",9.2,0)
+9.2
+"BLD",1513,"KRN",9.8,0)
+9.8
+"BLD",1513,"KRN",9.8,"NM",0)
+^9.68A^12^11
+"BLD",1513,"KRN",9.8,"NM",1,0)
+XUSBSE1^^0^B117144392
+"BLD",1513,"KRN",9.8,"NM",3,0)
+XUSRB4^^0^B18435992
+"BLD",1513,"KRN",9.8,"NM",4,0)
+XLFIPV^^0^B95448764
+"BLD",1513,"KRN",9.8,"NM",5,0)
+XUS1^^0^B28568204
+"BLD",1513,"KRN",9.8,"NM",6,0)
+XU8P638^^0^B37453
+"BLD",1513,"KRN",9.8,"NM",7,0)
+ZIS4ONT^^0^B33135528
+"BLD",1513,"KRN",9.8,"NM",8,0)
+ZISTCP^^0^B28352533
+"BLD",1513,"KRN",9.8,"NM",9,0)
+XUS1A^^0^B12856817
+"BLD",1513,"KRN",9.8,"NM",10,0)
+XLFNSLK^^0^B44384655
+"BLD",1513,"KRN",9.8,"NM",11,0)
+XUS1B^^0^B10471388
+"BLD",1513,"KRN",9.8,"NM",12,0)
+XQ82^^0^B13609484
+"BLD",1513,"KRN",9.8,"NM","B","XLFIPV",4)
+
+"BLD",1513,"KRN",9.8,"NM","B","XLFNSLK",10)
+
+"BLD",1513,"KRN",9.8,"NM","B","XQ82",12)
+
+"BLD",1513,"KRN",9.8,"NM","B","XU8P638",6)
+
+"BLD",1513,"KRN",9.8,"NM","B","XUS1",5)
+
+"BLD",1513,"KRN",9.8,"NM","B","XUS1A",9)
+
+"BLD",1513,"KRN",9.8,"NM","B","XUS1B",11)
+
+"BLD",1513,"KRN",9.8,"NM","B","XUSBSE1",1)
+
+"BLD",1513,"KRN",9.8,"NM","B","XUSRB4",3)
+
+"BLD",1513,"KRN",9.8,"NM","B","ZIS4ONT",7)
+
+"BLD",1513,"KRN",9.8,"NM","B","ZISTCP",8)
+
+"BLD",1513,"KRN",19,0)
+19
+"BLD",1513,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",1513,"KRN",19.1,0)
+19.1
+"BLD",1513,"KRN",101,0)
+101
+"BLD",1513,"KRN",409.61,0)
+409.61
+"BLD",1513,"KRN",771,0)
+771
+"BLD",1513,"KRN",779.2,0)
+779.2
+"BLD",1513,"KRN",870,0)
+870
+"BLD",1513,"KRN",8989.51,0)
+8989.51
+"BLD",1513,"KRN",8989.52,0)
+8989.52
+"BLD",1513,"KRN",8993,0)
+8993
+"BLD",1513,"KRN",8994,0)
+8994
+"BLD",1513,"KRN",8994,"NM",0)
+^9.68A^2^2
+"BLD",1513,"KRN",8994,"NM",1,0)
+XUS GET VISITOR^^0
+"BLD",1513,"KRN",8994,"NM",2,0)
+XUS SET VISITOR^^0
+"BLD",1513,"KRN",8994,"NM","B","XUS GET VISITOR",1)
+
+"BLD",1513,"KRN",8994,"NM","B","XUS SET VISITOR",2)
+
+"BLD",1513,"KRN",9002226,0)
+9002226
+"BLD",1513,"KRN","B",.4,.4)
+
+"BLD",1513,"KRN","B",.401,.401)
+
+"BLD",1513,"KRN","B",.402,.402)
+
+"BLD",1513,"KRN","B",.403,.403)
+
+"BLD",1513,"KRN","B",.5,.5)
+
+"BLD",1513,"KRN","B",.84,.84)
+
+"BLD",1513,"KRN","B",3.6,3.6)
+
+"BLD",1513,"KRN","B",3.8,3.8)
+
+"BLD",1513,"KRN","B",9.2,9.2)
+
+"BLD",1513,"KRN","B",9.8,9.8)
+
+"BLD",1513,"KRN","B",19,19)
+
+"BLD",1513,"KRN","B",19.1,19.1)
+
+"BLD",1513,"KRN","B",101,101)
+
+"BLD",1513,"KRN","B",409.61,409.61)
+
+"BLD",1513,"KRN","B",771,771)
+
+"BLD",1513,"KRN","B",779.2,779.2)
+
+"BLD",1513,"KRN","B",870,870)
+
+"BLD",1513,"KRN","B",8989.51,8989.51)
+
+"BLD",1513,"KRN","B",8989.52,8989.52)
+
+"BLD",1513,"KRN","B",8993,8993)
+
+"BLD",1513,"KRN","B",8994,8994)
+
+"BLD",1513,"KRN","B",9002226,9002226)
+
+"BLD",1513,"QUES",0)
+^9.62^^
+"BLD",1513,"REQB",0)
+^9.611^1^1
+"BLD",1513,"REQB",1,0)
+XU*8.0*605^1
+"BLD",1513,"REQB","B","XU*8.0*605",1)
+
+"FIA",3.081)
+SIGN-ON LOG
+"FIA",3.081,0)
+^XUSEC(0,
+"FIA",3.081,0,0)
+3.081P
+"FIA",3.081,0,1)
+y^y^f^^^^n
+"FIA",3.081,0,10)
+
+"FIA",3.081,0,11)
+
+"FIA",3.081,0,"RLRO")
+
+"FIA",3.081,0,"VR")
+8.0^XU
+"FIA",3.081,3.081)
+0
+"INIT")
+POST^XU8P638
+"KRN",8994,167,-1)
+0^2
+"KRN",8994,167,0)
+XUS SET VISITOR^SETVISIT^XUSBSE1^1^S^^^^^^0
+"KRN",8994,167,1,0)
+^^5^5^3140527^
+"KRN",8994,167,1,1,0)
+This controlled-subscription RPC is used by the Broker Security
+"KRN",8994,167,1,2,0)
+Enhancement on an authenticating VistA system to obtain a BSE TOKEN for an
+"KRN",8994,167,1,3,0)
+authenticated active user. The TOKEN is used to identify and authenticate
+"KRN",8994,167,1,4,0)
+a visiting user on a remote VistA system, which calls back to the
+"KRN",8994,167,1,5,0)
+authenticating system to obtain the authenticated user's demographics.
+"KRN",8994,168,-1)
+0^1
+"KRN",8994,168,0)
+XUS GET VISITOR^GETVISIT^XUSBSE1^1^S^^^^^^1
+"KRN",8994,168,1,0)
+^^6^6^3140527^
+"KRN",8994,168,1,1,0)
+This controlled-subscription RPC is used by the Broker Security 
+"KRN",8994,168,1,2,0)
+Enhancement to check a user's credentials based on a BSE TOKEN that was
+"KRN",8994,168,1,3,0)
+passed to identify and authenticate a visiting user. The remote VistA
+"KRN",8994,168,1,4,0)
+system calls this RPC on the authenticating VistA system to validate if
+"KRN",8994,168,1,5,0)
+the visiting user is permitted to visit, and if so, obtain the
+"KRN",8994,168,1,6,0)
+authenticated user's demographics.
+"KRN",8994,168,2,0)
+^8994.02A^1^1
+"KRN",8994,168,2,1,0)
+TOKEN^1^^1
+"KRN",8994,168,2,"B","TOKEN",1)
+
+"MBREQ")
+0
+"ORD",16,8994)
+8994;16;1;;;;;;;RPCDEL^XPDIA1
+"ORD",16,8994,0)
+REMOTE PROCEDURE
+"PKG",3,-1)
+1^1
+"PKG",3,0)
+KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^
+"PKG",3,22,0)
+^9.49I^1^1
+"PKG",3,22,1,0)
+8.0^3090706^3090706^6
+"PKG",3,22,1,"PAH",1,0)
+638^3150205
+"PKG",3,22,1,"PAH",1,1,0)
+^^19^19^3150205
+"PKG",3,22,1,"PAH",1,1,1,0)
+This patch is one in a series of patches to support the VA's transition 
+"PKG",3,22,1,"PAH",1,1,2,0)
+from IPv4 to IPv6.  IPv6 is a protocol designed to handle the growth rate 
+"PKG",3,22,1,"PAH",1,1,3,0)
+of the Internet and to cope with the demanding requirements of services,
+"PKG",3,22,1,"PAH",1,1,4,0)
+mobility, and end-to-end security.  A Federal Chief Information Office 
+"PKG",3,22,1,"PAH",1,1,5,0)
+(CIO) memo "Transition to IPv6" released in September of 2010 requires
+"PKG",3,22,1,"PAH",1,1,6,0)
+agencies to continue their IPv6 transition efforts and has established
+"PKG",3,22,1,"PAH",1,1,7,0)
+specific milestones associated with enabling an IPv6 operational
+"PKG",3,22,1,"PAH",1,1,8,0)
+capability by the end of FY2014.
+"PKG",3,22,1,"PAH",1,1,9,0)
+ 
+"PKG",3,22,1,"PAH",1,1,10,0)
+This patch updates several places where IPv4 address formats were 
+"PKG",3,22,1,"PAH",1,1,11,0)
+hard-coded in routines, and have now been replaced with calls to 
+"PKG",3,22,1,"PAH",1,1,12,0)
+IPv4/IPv6 Application Programmer Interfaces (APIs) to support the VA's 
+"PKG",3,22,1,"PAH",1,1,13,0)
+transition to IPv6. Several changes have also been made in algorithms 
+"PKG",3,22,1,"PAH",1,1,14,0)
+that will improve the efficiency of IP address handling.
+"PKG",3,22,1,"PAH",1,1,15,0)
+ 
+"PKG",3,22,1,"PAH",1,1,16,0)
+No current functionality has been changed.  IPv6 functionality for future 
+"PKG",3,22,1,"PAH",1,1,17,0)
+support cannot be completely tested until additional changes are made in 
+"PKG",3,22,1,"PAH",1,1,18,0)
+VistA, and a test environment is established to replicate the planned VA 
+"PKG",3,22,1,"PAH",1,1,19,0)
+network architecture.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+11
+"RTN","XLFIPV")
+0^4^B95448764^B87061641
+"RTN","XLFIPV",1,0)
+XLFIPV ;ISD/HGW - IPv4 and IPv6 Utilities ;06/17/14  08:20
+"RTN","XLFIPV",2,0)
+ ;;8.0;KERNEL;**605,638**;Aug 6, 2012;Build 15
+"RTN","XLFIPV",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XLFIPV",4,0)
+ Q
+"RTN","XLFIPV",5,0)
+ ;
+"RTN","XLFIPV",6,0)
+VALIDATE(IP) ; EXTRINSIC. ICR #5844 (supported)
+"RTN","XLFIPV",7,0)
+ ; Validate the format of an IP address (either IPv4 or IPv6).
+"RTN","XLFIPV",8,0)
+ ; Usage:  S Y=$$VALIDATE^XLFIPV(IP)
+"RTN","XLFIPV",9,0)
+ ; Input:  IP (string) - IPv4 or IPv6 Address to be validated.
+"RTN","XLFIPV",10,0)
+ ; Output: returns:
+"RTN","XLFIPV",11,0)
+ ;           1 - if the IP address is in a valid format.
+"RTN","XLFIPV",12,0)
+ ;           0 - if the format is invalid or null input.
+"RTN","XLFIPV",13,0)
+ ;
+"RTN","XLFIPV",14,0)
+ N I,J,X,XLFIELD
+"RTN","XLFIPV",15,0)
+ S X=1
+"RTN","XLFIPV",16,0)
+ I '$D(IP) Q 0
+"RTN","XLFIPV",17,0)
+ I IP?1.3N1P1.3N1P1.3N1P1.3N1P.N S IP=$P(IP,":",1) ;p638 Strip off port information from IPv4 address
+"RTN","XLFIPV",18,0)
+ ; If IP address contains both ":" and "." delimiters, then check IPv4 embedded in IPv6.
+"RTN","XLFIPV",19,0)
+ I (IP[":")&(IP[".") D  Q X  ; IPv4-Mapped.
+"RTN","XLFIPV",20,0)
+ . S IP=$$EXPAND6(IP,6) I IP="" S X=0 Q  ; Change the format of the first six high-order bytes
+"RTN","XLFIPV",21,0)
+ . F I=1:1:6 Q:X=0  D  ; Examine field by field, first six bytes
+"RTN","XLFIPV",22,0)
+ . . S X=$$EXAMINE6($P(IP,":",I))
+"RTN","XLFIPV",23,0)
+ . S XLFIELD=$P(IP,":",7) ; Get last two bytes, IPv4 format
+"RTN","XLFIPV",24,0)
+ . F I=1:1:4 Q:X=0  D  ; Examine field by field, last two bytes
+"RTN","XLFIPV",25,0)
+ . . S X=$$EXAMINE4($P(XLFIELD,".",I))
+"RTN","XLFIPV",26,0)
+ ; If IP address contains ":" delimiter, then IPv6. Otherwise IPv4.
+"RTN","XLFIPV",27,0)
+ I IP[":" D  Q X  ; IPv6 address
+"RTN","XLFIPV",28,0)
+ . S IP=$$EXPAND6(IP,7) I IP="" S X=0 Q  ; Change to a common format
+"RTN","XLFIPV",29,0)
+ . F I=1:1:8 Q:X=0  D  ; Examine field by field
+"RTN","XLFIPV",30,0)
+ . . S X=$$EXAMINE6($P(IP,":",I))
+"RTN","XLFIPV",31,0)
+ I IP'[":" D  Q X  ; IPv4 address
+"RTN","XLFIPV",32,0)
+ . S IP=$$EXPAND4(IP) ; Change to a common format
+"RTN","XLFIPV",33,0)
+ . F I=1:1:4 Q:X=0  D  ; Examine field by field
+"RTN","XLFIPV",34,0)
+ . . S X=$$EXAMINE4($P(IP,".",I))
+"RTN","XLFIPV",35,0)
+ Q 0
+"RTN","XLFIPV",36,0)
+ ;
+"RTN","XLFIPV",37,0)
+FORCEIP4(IP) ; EXTRINSIC. ICR #5844 (supported)
+"RTN","XLFIPV",38,0)
+ ; Convert an IP address (either IPv4 or IPv6) into an IPv4 address in a standardized format: "127.0.0.1".
+"RTN","XLFIPV",39,0)
+ ; Usage:  S Y=$$FORCEIP4^XLFIPV(IP)
+"RTN","XLFIPV",40,0)
+ ; Input:  IP (string) IPv4 or IPv6 Address to be converted.
+"RTN","XLFIPV",41,0)
+ ; Output: returns:  An IPv4 address in "ddd.ddd.ddd.ddd" notation if the input address is valid and has an
+"RTN","XLFIPV",42,0)
+ ;           IPv4 equivalent, or the null address "0.0.0.0" if the input address is invalid, or the null address
+"RTN","XLFIPV",43,0)
+ ;           "0.0.0.0" if an IPv6 address is input which does not have an IPv4 equivalent.
+"RTN","XLFIPV",44,0)
+ ;
+"RTN","XLFIPV",45,0)
+ N I,XLFIELD,XLMAP
+"RTN","XLFIPV",46,0)
+ ; Return null address "0.0.0.0" if address is invalid
+"RTN","XLFIPV",47,0)
+ Q:'$$VALIDATE(IP) "0.0.0.0"
+"RTN","XLFIPV",48,0)
+ I IP?1.3N1P1.3N1P1.3N1P1.3N1P.N S IP=$P(IP,":") ;p638 Strip off port information from IPv4 address
+"RTN","XLFIPV",49,0)
+ S XLMAP="0000:0000:0000:0000:0000:FFFF:"
+"RTN","XLFIPV",50,0)
+ ; If IP address contains both ":" and "." delimiters, then IPv4-Mapped IPv6 address.
+"RTN","XLFIPV",51,0)
+ I (IP[":")&(IP[".") D  Q IP  ; IPv4-Mapped.
+"RTN","XLFIPV",52,0)
+ . S IP=$$EXPAND6(IP,6) I IP="" S IP="0.0.0.0" Q  ; Change the format of the first six high-order bytes
+"RTN","XLFIPV",53,0)
+ . S IP=$$EXPAND4($E(IP,31,49)) ; Get last two bytes, IPv4 format (not interested in first six bytes)
+"RTN","XLFIPV",54,0)
+ I IP[":" D  Q IP  ; IPv6 address (last two bytes might be IPv4-Mapped)
+"RTN","XLFIPV",55,0)
+ . S IP=$$EXPAND6(IP,7) I IP="" S IP="0.0.0.0" Q  ; Change the format to standardized
+"RTN","XLFIPV",56,0)
+ . I IP="0000:0000:0000:0000:0000:0000:0000:0001" S IP="127.0.0.1" Q  ; Loopback address
+"RTN","XLFIPV",57,0)
+ . I $E(IP,1,30)'=XLMAP S IP="0.0.0.0" Q  ; Invalid IPv4-Mapped address
+"RTN","XLFIPV",58,0)
+ . S IP=$$DEC^XLFUTL($E(IP,31,32),16)_"."_$$DEC^XLFUTL($E(IP,33,34),16)_"."_$$DEC^XLFUTL($E(IP,36,37),16)_"."_$$DEC^XLFUTL($E(IP,38,39),16)
+"RTN","XLFIPV",59,0)
+ I IP'[":" D  Q IP  ; IPv4 address
+"RTN","XLFIPV",60,0)
+ . S IP=$$EXPAND4(IP) ; Change to a common format
+"RTN","XLFIPV",61,0)
+ Q "0.0.0.0"
+"RTN","XLFIPV",62,0)
+ ;
+"RTN","XLFIPV",63,0)
+FORCEIP6(IP) ; EXTRINSIC. ICR #5844 (supported)
+"RTN","XLFIPV",64,0)
+ ; Convert an IP address (either IPv4 or IPv6) into an IPv6 address in a standardized format: "2001:0DB8:0000:0000:0000:8A2E:0370:7334".
+"RTN","XLFIPV",65,0)
+ ; Usage:  S Y=$$FORCEIP6^XLFIPV(IP)
+"RTN","XLFIPV",66,0)
+ ; Input:  IP (string) IPv4 or IPv6 Address to be converted.
+"RTN","XLFIPV",67,0)
+ ; Output: returns:  An IPv6 address in "hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh" notation if the
+"RTN","XLFIPV",68,0)
+ ;           input address is valid, or the null address "::0" if the input address is invalid.
+"RTN","XLFIPV",69,0)
+ ;
+"RTN","XLFIPV",70,0)
+ N XLMAP
+"RTN","XLFIPV",71,0)
+ ; Return expanded null address "0000:0000:0000:0000:0000:0000:0000:0000" if address is invalid
+"RTN","XLFIPV",72,0)
+ Q:'$$VALIDATE(IP) "0000:0000:0000:0000:0000:0000:0000:0000"
+"RTN","XLFIPV",73,0)
+ S XLMAP="0000:0000:0000:0000:0000:FFFF:"
+"RTN","XLFIPV",74,0)
+ I IP?1.3N1P1.3N1P1.3N1P1.3N1P.N S IP=$P(IP,":") ;p638 Strip off port information from IPv4 address
+"RTN","XLFIPV",75,0)
+ ; If IP address contains both ":" and "." delimiters, then IPv4 embedded in IPv6.
+"RTN","XLFIPV",76,0)
+ I (IP[":")&(IP[".") D  Q IP  ; IPv4-Mapped address.
+"RTN","XLFIPV",77,0)
+ . S IP=$$EXPAND6(IP,6) I IP="" S IP="0.0.0.0" Q  ; Change the format of the first six high-order bytes
+"RTN","XLFIPV",78,0)
+ . S IP=$E(IP,1,30)_$$CNVF($$EXPAND4($E(IP,31,49))) ; Get last two bytes, IPv4 format -> IPv4-Mapped Address
+"RTN","XLFIPV",79,0)
+ ; If IP address contains ":" delimiter, then IPv6. Otherwise IPv4.
+"RTN","XLFIPV",80,0)
+ I IP[":" D  Q IP  ; IPv6 address
+"RTN","XLFIPV",81,0)
+ . S IP=$$EXPAND6(IP,7) I IP="" S IP="0000:0000:0000:0000:0000:0000:0000:0000" Q  ; Change to a common format
+"RTN","XLFIPV",82,0)
+ I IP'[":" D  Q IP  ; IPv4 address
+"RTN","XLFIPV",83,0)
+ . S IP=XLMAP_$$CNVF($$EXPAND4(IP)) ; IPv4-Mapped IPv6 Address
+"RTN","XLFIPV",84,0)
+ . I IP="0000:0000:0000:0000:0000:FFFF:0000:0000" S IP="0000:0000:0000:0000:0000:0000:0000:0000" Q  ; Null address
+"RTN","XLFIPV",85,0)
+ . I IP="0000:0000:0000:0000:0000:FFFF:7F00:0001" S IP="0000:0000:0000:0000:0000:0000:0000:0001" Q  ; Loopback address
+"RTN","XLFIPV",86,0)
+ Q IP
+"RTN","XLFIPV",87,0)
+ ;
+"RTN","XLFIPV",88,0)
+CONVERT(IP) ; EXTRINSIC. ICR #5844 (supported)
+"RTN","XLFIPV",89,0)
+ ; Convert an IP address (either IPv4 or IPv6) into an IPv6 address in a standardized format, either IPv4 or IPv6 depending
+"RTN","XLFIPV",90,0)
+ ;   upon the Cache system settings.
+"RTN","XLFIPV",91,0)
+ ; Usage:  S Y=$$CONVERT^XLFIPV(IP)
+"RTN","XLFIPV",92,0)
+ ; Input:  IP (string) IPv4 or IPv6 Address to be converted.
+"RTN","XLFIPV",93,0)
+ ; Output: returns:
+"RTN","XLFIPV",94,0)
+ ;           - An IPv4 address if IPv6 is disabled on the system.
+"RTN","XLFIPV",95,0)
+ ;           - An IPv6 address if IPv6 is enabled on the system.
+"RTN","XLFIPV",96,0)
+ ;           - An IPv4 or IPv6 null address if the input cannot be converted.
+"RTN","XLFIPV",97,0)
+ ;
+"RTN","XLFIPV",98,0)
+ N XLV6
+"RTN","XLFIPV",99,0)
+ S XLV6=$$VERSION() ; Is IPv6 enabled on this system?
+"RTN","XLFIPV",100,0)
+ I XLV6=1 S IP=$$FORCEIP6(IP) ; Yes
+"RTN","XLFIPV",101,0)
+ I XLV6=0 S IP=$$FORCEIP4(IP) ; No
+"RTN","XLFIPV",102,0)
+ Q IP
+"RTN","XLFIPV",103,0)
+ ;
+"RTN","XLFIPV",104,0)
+VERSION() ; EXTRINSIC. ICR #5844 (supported)
+"RTN","XLFIPV",105,0)
+ ; Determine the Cache system settings for IPv6.
+"RTN","XLFIPV",106,0)
+ ; Usage:  S Y=$$VERSION^XLFIPV()
+"RTN","XLFIPV",107,0)
+ ; Input:  None.
+"RTN","XLFIPV",108,0)
+ ; Output: returns:
+"RTN","XLFIPV",109,0)
+ ;           1 - if IPv6 is enabled.
+"RTN","XLFIPV",110,0)
+ ;           0 - if IPv6 is disabled.
+"RTN","XLFIPV",111,0)
+ ;
+"RTN","XLFIPV",112,0)
+ N %
+"RTN","XLFIPV",113,0)
+ S %=0
+"RTN","XLFIPV",114,0)
+ I $$VERSION^%ZOSV(1)["Cache" I +$$VERSION^%ZOSV()>2009 S %=$SYSTEM.Process.IPv6Format()
+"RTN","XLFIPV",115,0)
+ Q %
+"RTN","XLFIPV",116,0)
+ ;
+"RTN","XLFIPV",117,0)
+VAL ; OPTION. "Validate IPv4 and IPv6 address" [XLFIPV VALIDATE]
+"RTN","XLFIPV",118,0)
+ N DIR,X,XLFX
+"RTN","XLFIPV",119,0)
+ S DIR(0)="F^3:60",DIR("A")="Enter an IP address to be validated",DIR("B")="127.0.0.1"
+"RTN","XLFIPV",120,0)
+ S DIR("?")="   Validate the format of an IP address."
+"RTN","XLFIPV",121,0)
+ S DIR("??")="^D VALH^XLFIPV"
+"RTN","XLFIPV",122,0)
+ D ^DIR S XLFX=$$VALIDATE(X)
+"RTN","XLFIPV",123,0)
+ I XLFX=0 W !!,?3,X," is NOT a valid address."
+"RTN","XLFIPV",124,0)
+ I XLFX=1 W !!,?3,X," is a valid address."
+"RTN","XLFIPV",125,0)
+ Q
+"RTN","XLFIPV",126,0)
+ ;
+"RTN","XLFIPV",127,0)
+VALH ; Extended help for VAL^XLFIPV
+"RTN","XLFIPV",128,0)
+ W !!,"   This option will validate the format of an IP address (either IPv4 or IPv6)"
+"RTN","XLFIPV",129,0)
+ W !,"   and return ""IP is NOT a valid address"" if the address is in an invalid"
+"RTN","XLFIPV",130,0)
+ W !,"   format, or return ""IP is a valid address"" if the format is correct."
+"RTN","XLFIPV",131,0)
+ Q
+"RTN","XLFIPV",132,0)
+ ;
+"RTN","XLFIPV",133,0)
+IP4 ; OPTION. "Convert any IP address to IPv4" [XLFIPV FORCEIP4]
+"RTN","XLFIPV",134,0)
+ N DIR,X
+"RTN","XLFIPV",135,0)
+ S DIR(0)="F^3:60",DIR("A")="Enter an IP address to be converted to IPv4",DIR("B")="127.0.0.1"
+"RTN","XLFIPV",136,0)
+ S DIR("?")="   Convert an IP address into an IPv4 address in a standardized format."
+"RTN","XLFIPV",137,0)
+ S DIR("??")="^D IP4H^XLFIPV"
+"RTN","XLFIPV",138,0)
+ D ^DIR W !!,?3,$$FORCEIP4(X)
+"RTN","XLFIPV",139,0)
+ Q
+"RTN","XLFIPV",140,0)
+ ;
+"RTN","XLFIPV",141,0)
+IP4H ; Extended help for IP4^XLFIPV
+"RTN","XLFIPV",142,0)
+ W !!,"   This option will take an IP address (either IPv4 or IPv6) and return an"
+"RTN","XLFIPV",143,0)
+ W !,"   IPv4 address in a standardized format.  It will return the null address"
+"RTN","XLFIPV",144,0)
+ W !,"   0.0.0.0 if the passed IP address is invalid.  If an IPv6 address is input"
+"RTN","XLFIPV",145,0)
+ W !,"   which does not have a valid IPv4 equivalent, the null address will be"
+"RTN","XLFIPV",146,0)
+ W !,"   returned."
+"RTN","XLFIPV",147,0)
+ Q
+"RTN","XLFIPV",148,0)
+ ;
+"RTN","XLFIPV",149,0)
+IP6 ; OPTION. "Convert any IP address to IPv6" [XLFIPV FORCEIP6]
+"RTN","XLFIPV",150,0)
+ N DIR,X
+"RTN","XLFIPV",151,0)
+ S DIR(0)="F^3:60",DIR("A")="Enter an IP address to be converted to IPv6",DIR("B")="127.0.0.1"
+"RTN","XLFIPV",152,0)
+ S DIR("?")="   Convert an IP address into an IPv6 address in a standardized format."
+"RTN","XLFIPV",153,0)
+ S DIR("??")="^D IP6H^XLFIPV"
+"RTN","XLFIPV",154,0)
+ D ^DIR W !!,?3,$$FORCEIP6(X)
+"RTN","XLFIPV",155,0)
+ Q
+"RTN","XLFIPV",156,0)
+IP6H ; Extended help for IP6^XLFIPV
+"RTN","XLFIPV",157,0)
+ W !!,"   This option will take an IP address (either IPv4 or IPv6) and return an"
+"RTN","XLFIPV",158,0)
+ W !,"   IPv6 address in a standardized format.  It will return the null address"
+"RTN","XLFIPV",159,0)
+ W !,"   ::0 if the passed IP address is invalid."
+"RTN","XLFIPV",160,0)
+ Q
+"RTN","XLFIPV",161,0)
+ ;
+"RTN","XLFIPV",162,0)
+CON ; OPTION. "Convert any IP address per system settings" [XLFIPV CONVERT]
+"RTN","XLFIPV",163,0)
+ N DIR,X
+"RTN","XLFIPV",164,0)
+ S DIR(0)="F^3:60",DIR("A")="Enter an IP address to be converted",DIR("B")="127.0.0.1"
+"RTN","XLFIPV",165,0)
+ S DIR("?")="   Convert an IP address depending upon system settings."
+"RTN","XLFIPV",166,0)
+ S DIR("??")="^D CONH^XLFIPV"
+"RTN","XLFIPV",167,0)
+ D ^DIR W !!,?3,$$CONVERT(X)
+"RTN","XLFIPV",168,0)
+ Q
+"RTN","XLFIPV",169,0)
+CONH ; Extended help for CON^XLFIPV
+"RTN","XLFIPV",170,0)
+ W !!,"   This option will take an IP address (either IPv4 or IPv6) and return an"
+"RTN","XLFIPV",171,0)
+ W !,"   IP address in a standardized format, depending on system settings.  If"
+"RTN","XLFIPV",172,0)
+ W !,"   IPv6 is disabled on the system, an IPv4 address will be returned.  If"
+"RTN","XLFIPV",173,0)
+ W !,"   IPv6 is enabled on the system, an IPv6 address will be returned.  If an"
+"RTN","XLFIPV",174,0)
+ W !,"   invalid address is entered, a null address will be returned.  If an IPv6"
+"RTN","XLFIPV",175,0)
+ W !,"   is entered, IPv6 is not enabled, and the input address does not have an"
+"RTN","XLFIPV",176,0)
+ W !,"   IPv4 equivalent, a null address will be returned."
+"RTN","XLFIPV",177,0)
+ Q
+"RTN","XLFIPV",178,0)
+ ;
+"RTN","XLFIPV",179,0)
+VER ; OPTION. "Show system settings for IPv6" [XLFIPV VERSION]
+"RTN","XLFIPV",180,0)
+ N X,XLSYS,XLVER
+"RTN","XLFIPV",181,0)
+ S X=$$VERSION,XLSYS=$$VERSION^%ZOSV(1),XLVER=+$$VERSION^%ZOSV()
+"RTN","XLFIPV",182,0)
+ W !!,?3,XLSYS," ",XLVER
+"RTN","XLFIPV",183,0)
+ I X=0 D  Q
+"RTN","XLFIPV",184,0)
+ . I XLSYS["Cache" D  Q
+"RTN","XLFIPV",185,0)
+ . . I XLVER>2009 W !!,"   IPv6 is available but is disabled on this system." Q
+"RTN","XLFIPV",186,0)
+ . . W !!,"   IPv6 is not available on this version of Cache."
+"RTN","XLFIPV",187,0)
+ . W !!,"   IPv6 is not available on this system."
+"RTN","XLFIPV",188,0)
+ I X=1 W !!,"   IPv6 is enabled on this system."
+"RTN","XLFIPV",189,0)
+ Q
+"RTN","XLFIPV",190,0)
+ ;
+"RTN","XLFIPV",191,0)
+EXPAND4(IP) ; INTRINSIC.
+"RTN","XLFIPV",192,0)
+ ; Changes the format of an IPv4 address to a common format that can be validated
+"RTN","XLFIPV",193,0)
+ ; Usage:  S Y=$$EXPAND4^XLFIPV(IP)
+"RTN","XLFIPV",194,0)
+ ; Input:  IP (string) IPv4 address to be reformatted.
+"RTN","XLFIPV",195,0)
+ ; Output: returns:  An IPv4 address in the format "nnn.nnn.nnn.nnn".
+"RTN","XLFIPV",196,0)
+ ;
+"RTN","XLFIPV",197,0)
+ N I,XLFIELD
+"RTN","XLFIPV",198,0)
+ ; Expand hexadecimal address to IPv4 dotted hexadecimal: "0xc0a8010a" -> "0xc0.0xa8.0x10.0x0a"
+"RTN","XLFIPV",199,0)
+ I ($E(IP,1,2)="0x")&(IP'[".") D
+"RTN","XLFIPV",200,0)
+ . S IP="0x"_$E(IP,3,4)_".0x"_$E(IP,5,6)_".0x"_$E(IP,7,8)_".0x"_$E(IP,9,10)
+"RTN","XLFIPV",201,0)
+ F I=1:1:4 D  ; Examine field by field
+"RTN","XLFIPV",202,0)
+ . S XLFIELD=$P(IP,".",I)
+"RTN","XLFIPV",203,0)
+ . ; Convert dotted hexadecimal address to IPv4 dotted decimal: "0xc0.0xa8.0x10.0x0a" -> "192.168.16.10"
+"RTN","XLFIPV",204,0)
+ . I $E(XLFIELD,1,2)="0x" S XLFIELD=$$DEC^XLFUTL($$UP^XLFSTR($E(XLFIELD,3,4)),16) ; Convert HEX field to DEC
+"RTN","XLFIPV",205,0)
+ . S $P(IP,".",I)=XLFIELD
+"RTN","XLFIPV",206,0)
+ ; Convert dotted octal address to IPv4 dotted decimal: "0300.0000.0002.0353" -> "192.0.2.235"
+"RTN","XLFIPV",207,0)
+ I IP?4N1"."4N1"."4N1"."4N D
+"RTN","XLFIPV",208,0)
+ . S IP=$$DEC^XLFUTL($E(IP,1,4),8)_"."_$$DEC^XLFUTL($E(IP,6,9),8)_"."_$$DEC^XLFUTL($E(IP,11,14),8)_"."_$$DEC^XLFUTL($E(IP,16,19),8)
+"RTN","XLFIPV",209,0)
+ Q IP
+"RTN","XLFIPV",210,0)
+ ;
+"RTN","XLFIPV",211,0)
+EXPAND6(IP,ZNUM) ; INTRINSIC.
+"RTN","XLFIPV",212,0)
+ ; Changes the format of an IPv6 address to a common format that can be validated
+"RTN","XLFIPV",213,0)
+ ; Usage:  S Y=$$EXPAND6^XLFIPV(IP)
+"RTN","XLFIPV",214,0)
+ ; Input:  IP (string) IPv6 address to be reformatted.
+"RTN","XLFIPV",215,0)
+ ;         ZNUM The number of expected colons
+"RTN","XLFIPV",216,0)
+ ; Output: returns:  An IPv6 address in the format "hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh".
+"RTN","XLFIPV",217,0)
+ ;
+"RTN","XLFIPV",218,0)
+ N I,XLBLANK,XLCNT,XLFIELD
+"RTN","XLFIPV",219,0)
+ S IP=$P($G(IP),"%") ;p638 Remove routing information
+"RTN","XLFIPV",220,0)
+ I IP[":::" S IP="" Q IP  ; Cannot contain :::
+"RTN","XLFIPV",221,0)
+ I $E(IP,1)="[" S IP=$P($P(IP,"[",2),"]") ; Strip brackets [] from around an address string
+"RTN","XLFIPV",222,0)
+ S XLCNT=ZNUM-($L(IP)-$L($TR(IP,":",""))) ; Count the number of colons needed to be added in short form address
+"RTN","XLFIPV",223,0)
+ I (XLCNT>0)&(IP'["::") S IP="" Q IP  ; If missing a colon, but no "::", then return "" for invalid address
+"RTN","XLFIPV",224,0)
+ I XLCNT>0 S XLBLANK="" S IP=$P(IP,"::",1)_$TR($JUSTIFY(XLBLANK,XLCNT+2)," ",":")_$P(IP,"::",2) ; Expand ::
+"RTN","XLFIPV",225,0)
+ F I=1:1:(ZNUM+1) D  ; Examine field by field
+"RTN","XLFIPV",226,0)
+ . S XLFIELD=$$UP^XLFSTR($P(IP,":",I))
+"RTN","XLFIPV",227,0)
+ . S XLFIELD=$TR($JUSTIFY(XLFIELD,4)," ","0") ; Add leading zeros
+"RTN","XLFIPV",228,0)
+ . S $P(IP,":",I)=XLFIELD
+"RTN","XLFIPV",229,0)
+ Q IP
+"RTN","XLFIPV",230,0)
+ ;
+"RTN","XLFIPV",231,0)
+EXAMINE4(XLFIELD) ; INTRINSIC.
+"RTN","XLFIPV",232,0)
+ ; Examine a single field of an IPv4 address for a valid format
+"RTN","XLFIPV",233,0)
+ ; Usage:  S Y=$$EXAMINE4^XLFIPV(XLFIELD)
+"RTN","XLFIPV",234,0)
+ ; Input:  XLFIELD (string) Field to be examined.
+"RTN","XLFIPV",235,0)
+ ; Output: returns:
+"RTN","XLFIPV",236,0)
+ ;           1 - if the field is valid.
+"RTN","XLFIPV",237,0)
+ ;           0 - if the field is invalid.
+"RTN","XLFIPV",238,0)
+ ;
+"RTN","XLFIPV",239,0)
+ I XLFIELD'?1.3N Q 0  ; Test format NNN
+"RTN","XLFIPV",240,0)
+ I (XLFIELD>255)!(XLFIELD<0) Q 0  ; Test address range
+"RTN","XLFIPV",241,0)
+ Q 1
+"RTN","XLFIPV",242,0)
+ ;
+"RTN","XLFIPV",243,0)
+EXAMINE6(XLFIELD) ; INTRINSIC.
+"RTN","XLFIPV",244,0)
+ ; Examine a single field of an IPv6 address for a valid format
+"RTN","XLFIPV",245,0)
+ ; Usage:  S Y=$$EXAMINE6^XLFIPV(XLFIELD)
+"RTN","XLFIPV",246,0)
+ ; Input:  XLFIELD (string) Field to be examined.
+"RTN","XLFIPV",247,0)
+ ; Output: returns:
+"RTN","XLFIPV",248,0)
+ ;           1 - if the field is valid.
+"RTN","XLFIPV",249,0)
+ ;           0 - if the field is invalid.
+"RTN","XLFIPV",250,0)
+ ;
+"RTN","XLFIPV",251,0)
+ N I,X
+"RTN","XLFIPV",252,0)
+ S XLFIELD=$$UP^XLFSTR(XLFIELD) I XLFIELD'?4E Q 0  ; Test format EEEE
+"RTN","XLFIPV",253,0)
+ S X=1 F I=1:1:4 D
+"RTN","XLFIPV",254,0)
+ . I "0123456789ABCDEF"'[$E(XLFIELD,I) S X=0  ; Test address range, contains 0 through F characters only
+"RTN","XLFIPV",255,0)
+ Q X
+"RTN","XLFIPV",256,0)
+ ;
+"RTN","XLFIPV",257,0)
+CNVF(IP) ; INTRINSIC.
+"RTN","XLFIPV",258,0)
+ ; Expands a decimal IP address "ddd.ddd.ddd.ddd" to hexadecimal fields
+"RTN","XLFIPV",259,0)
+ ; Usage:  S Y=$$CNVF^XLFIPV(IP)
+"RTN","XLFIPV",260,0)
+ ; Input:  IP (string) IPv4 address to be reformatted.
+"RTN","XLFIPV",261,0)
+ ; Output: returns:  The last two bytes of an IPv6 address in the format "hhhh:hhhh".
+"RTN","XLFIPV",262,0)
+ ;
+"RTN","XLFIPV",263,0)
+ N I,XLFIELD,XLOUT
+"RTN","XLFIPV",264,0)
+ S XLOUT=""
+"RTN","XLFIPV",265,0)
+ F I=1:1:4 D  ; Examine field by field
+"RTN","XLFIPV",266,0)
+ . S XLFIELD=$$CNV^XLFUTL($P(IP,".",I),16)
+"RTN","XLFIPV",267,0)
+ . S XLOUT=XLOUT_$TR($JUSTIFY(XLFIELD,2)," ","0") ; Add leading zeros
+"RTN","XLFIPV",268,0)
+ . I I=2 S XLOUT=XLOUT_":"
+"RTN","XLFIPV",269,0)
+ Q XLOUT
+"RTN","XLFIPV",270,0)
+ ;
+"RTN","XLFNSLK")
+0^10^B44384655^B29252865
+"RTN","XLFNSLK",1,0)
+XLFNSLK ;ISF/RWF,ISD/HGW - Calling a DNS server for name lookup ;07/11/14  11:18
+"RTN","XLFNSLK",2,0)
+ ;;8.0;KERNEL;**142,151,425,638**;Jul 10, 1995;Build 15
+"RTN","XLFNSLK",3,0)
+ ;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","XLFNSLK",4,0)
+ ;
+"RTN","XLFNSLK",5,0)
+TEST ;Test entry
+"RTN","XLFNSLK",6,0)
+ N XLF,XL1,XL4,XL6,XNAME,Y,I S (XLF,XL4,XL6)=""
+"RTN","XLFNSLK",7,0)
+ R !,"Enter an IP address to lookup: www.domain.ext//",XNAME:DTIME S:XNAME="" XNAME="www.domain.ext" Q:XNAME["^"
+"RTN","XLFNSLK",8,0)
+ S XL1=XNAME
+"RTN","XLFNSLK",9,0)
+ W !!,"Looking up IPv4 address: ",XL1 D NS(.XLF,XL1,"A",.XL4)
+"RTN","XLFNSLK",10,0)
+ S XL1="XL4" F  S XL1=$Q(@XL1) Q:XL1=""  W !,XL1," = ",@XL1
+"RTN","XLFNSLK",11,0)
+ S Y="" F  S Y=$O(XLF("B",Y)) Q:Y=""  W !,?5,Y," > ",XLF("B",Y)
+"RTN","XLFNSLK",12,0)
+ S XL1=XNAME
+"RTN","XLFNSLK",13,0)
+ W !!,"Looking up IPv6 address: ",XL1 D NS(.XLF,XL1,"AAAA",.XL6)
+"RTN","XLFNSLK",14,0)
+ S XL1="XL6" F  S XL1=$Q(@XL1) Q:XL1=""  W !,XL1," = ",@XL1
+"RTN","XLFNSLK",15,0)
+ S Y="" F  S Y=$O(XLF("B",Y)) Q:Y=""  W !,?5,Y," > ",XLF("B",Y)
+"RTN","XLFNSLK",16,0)
+ W !
+"RTN","XLFNSLK",17,0)
+ Q
+"RTN","XLFNSLK",18,0)
+ ;
+"RTN","XLFNSLK",19,0)
+ADDRESS(N,T) ;Get a IP address from a name
+"RTN","XLFNSLK",20,0)
+ N XLF,Y,I S XLF="",T=$G(T,"A")
+"RTN","XLFNSLK",21,0)
+ I $$VERSION^XLFIPV S T=$G(T,"AAAA")      ; change default from "A" to "AAAA" if VistA has IPv6 enabled
+"RTN","XLFNSLK",22,0)
+ I ^%ZOSF("OS")["OpenM",T="A" D  Q $P(Y,",")
+"RTN","XLFNSLK",23,0)
+ . X "S Y=$ZU(54,13,N)"              ; $ZU(54,13,N) is gethostbyname(N) IPv4 address nslookup
+"RTN","XLFNSLK",24,0)
+ D NS(.XLF,N,T)
+"RTN","XLFNSLK",25,0)
+ S Y="" F I=1:1:XLF("ANCOUNT") S:$D(XLF("AN"_I_"DATA")) Y=Y_XLF("AN"_I_"DATA")_","
+"RTN","XLFNSLK",26,0)
+ Q $E(Y,1,$L(Y)-1)
+"RTN","XLFNSLK",27,0)
+ ;
+"RTN","XLFNSLK",28,0)
+MAIL(RET,N) ;Get the MX address for a domain
+"RTN","XLFNSLK",29,0)
+ ;RET is the return array
+"RTN","XLFNSLK",30,0)
+ N XLF,Y,I,T S XLF="",T="MX"
+"RTN","XLFNSLK",31,0)
+ D NS(.XLF,N,T)
+"RTN","XLFNSLK",32,0)
+ S RET=0,I=0 F  S I=$O(XLF("P",I)) Q:I'>0  D
+"RTN","XLFNSLK",33,0)
+ . S N=XLF("P",I),RET(I)=N_"^"_$G(XLF("B",N)),RET=RET+1
+"RTN","XLFNSLK",34,0)
+ Q
+"RTN","XLFNSLK",35,0)
+ ;
+"RTN","XLFNSLK",36,0)
+NS(XL,NAME,QTYPE,XLFLOG) ;NAME LOOKUP
+"RTN","XLFNSLK",37,0)
+ ;XL is the return array, NAME is the name to lookup,
+"RTN","XLFNSLK",38,0)
+ ;QTYPE is type of lookup, XLFLOG is a debug array returned.
+"RTN","XLFNSLK",39,0)
+ N RI,DNS,CNT,POP N:'$D(XLFLOG) XLFLOG S XL("ANCOUNT")=0,CNT=1
+"RTN","XLFNSLK",40,0)
+ D SAVEDEV
+"RTN","XLFNSLK",41,0)
+NS2 S DNS=$$GETDNS(CNT) I DNS="" G EXIT
+"RTN","XLFNSLK",42,0)
+ D LOG("Call server: "_DNS)
+"RTN","XLFNSLK",43,0)
+ D CALL^%ZISTCP(DNS,53) I POP S CNT=CNT+1 G NS2
+"RTN","XLFNSLK",44,0)
+ D LOG("Got connection, Send message")
+"RTN","XLFNSLK",45,0)
+ D BUILD(NAME,$G(QTYPE,"A")),LOG("Wait for reply")  ; Uses "A" type for IPv4 if QTYPE is not defined
+"RTN","XLFNSLK",46,0)
+ ;Close part of READ
+"RTN","XLFNSLK",47,0)
+ D READ,DECODE
+"RTN","XLFNSLK",48,0)
+ D RESDEV,LOG("Returned question: "_$G(XL("QD1NAME")))
+"RTN","XLFNSLK",49,0)
+ Q
+"RTN","XLFNSLK",50,0)
+EXIT D RESDEV
+"RTN","XLFNSLK",51,0)
+ Q
+"RTN","XLFNSLK",52,0)
+ ;
+"RTN","XLFNSLK",53,0)
+BUILD(Y,T) ;BUILD A QUERY
+"RTN","XLFNSLK",54,0)
+ ; ID,PARAM,#of?, #ofA, #of Auth, #of add,
+"RTN","XLFNSLK",55,0)
+ N X,%,MSG,I
+"RTN","XLFNSLK",56,0)
+ S X=" M"_$C(1,0)_$C(0,1)_$C(0,0)_$C(0,0)_$C(0,0) ;Header
+"RTN","XLFNSLK",57,0)
+ I $E(Y,$L(Y))'="." S:$E(Y,$L(Y))'="." Y=Y_"."                           ;future fix: implies IPv4 address for DNS server
+"RTN","XLFNSLK",58,0)
+ F I=1:1:$L(Y,".") S %=$P(Y,".",I) S:$L(%) X=X_$C($L(%))_% ;Address      ;future fix: implies IPv4 address for DNS server
+"RTN","XLFNSLK",59,0)
+ S X=X_$C(0) ;End of address                                             ;future fix: implies IPv4 address for DNS server
+"RTN","XLFNSLK",60,0)
+ ;Type A=1, NS=2, CNAME=5, MX=15, AAAA=28                                ;p638 Added "AAAA" for IPv6
+"RTN","XLFNSLK",61,0)
+ S MSG=X_$C(0,$$TYPECODE(T))_$C(0,1) ;type and class
+"RTN","XLFNSLK",62,0)
+ D LOG("msg: "_MSG)
+"RTN","XLFNSLK",63,0)
+ U IO S %=$L(MSG) W $C(%\256,%#256)_MSG,!
+"RTN","XLFNSLK",64,0)
+ Q
+"RTN","XLFNSLK",65,0)
+READ ;
+"RTN","XLFNSLK",66,0)
+ N L1,L2,X,$ET S $ET="G RDERR" K RI S RI=0
+"RTN","XLFNSLK",67,0)
+ U IO R L1#2:20 I '$T D LOG("Time-out") G RDERR
+"RTN","XLFNSLK",68,0)
+ S RI=$A(L1,1)*256+$A(L1,2) ;get msg length
+"RTN","XLFNSLK",69,0)
+ F I=1:1:6 R L2#2:20 Q:'$T  S XL($P("ID^CODE^QDCOUNT^ANCOUNT^NSCOUNT^ARCOUNT","^",I))=$S(I>2:$$WBN(L2),I=2:$$BIN16(L2),1:L2)
+"RTN","XLFNSLK",70,0)
+ I '$T D LOG("Time-out") G RDERR
+"RTN","XLFNSLK",71,0)
+ D LOG("Return msg length: "_RI)
+"RTN","XLFNSLK",72,0)
+ F I=13:1:RI U IO R *X:20 Q:'$T  S RI(I)=X ;or use X#1 and $A(X)
+"RTN","XLFNSLK",73,0)
+RDERR ;End of read
+"RTN","XLFNSLK",74,0)
+ D CLOSE^%ZISTCP
+"RTN","XLFNSLK",75,0)
+ Q
+"RTN","XLFNSLK",76,0)
+DECODE ;
+"RTN","XLFNSLK",77,0)
+ N I,IX,X,Y,Z,NN,NN2 Q:RI'>7
+"RTN","XLFNSLK",78,0)
+ I $G(XL("ID"))'=" M" S XL("ERR")="Bad Response" D LOG(XL("ERR")) Q
+"RTN","XLFNSLK",79,0)
+ ;Decode the header
+"RTN","XLFNSLK",80,0)
+ S Z=XL("CODE"),XL("QR")=$E(Z,1),XL("Opcode")=$E(Z,2,5),XL("AA")=$E(Z,6),XL("TC")=$E(Z,7),XL("RD")=$E(Z,8),XL("RA")=$E(Z,9),XL("RCODE")=$E(Z,13,16)
+"RTN","XLFNSLK",81,0)
+ ;The Question section
+"RTN","XLFNSLK",82,0)
+ S IX=13
+"RTN","XLFNSLK",83,0)
+ F NN2=1:1:XL("QDCOUNT") D QD("QD"_NN2)
+"RTN","XLFNSLK",84,0)
+ F NN="AN","NS","AR" I $G(XL(NN_"COUNT")) F NN2=1:1:XL(NN_"COUNT") D RR(NN_NN2)
+"RTN","XLFNSLK",85,0)
+ Q
+"RTN","XLFNSLK",86,0)
+ ;
+"RTN","XLFNSLK",87,0)
+QD(NSP) ;Decode the Question section
+"RTN","XLFNSLK",88,0)
+ N Y
+"RTN","XLFNSLK",89,0)
+ S Y="",IX=IX+$$NAME(IX,.Y,1),XL(NSP_"NAME")=Y
+"RTN","XLFNSLK",90,0)
+ S XL(NSP_"TYPE")=$$BN(RI(IX),RI(IX+1)),IX=IX+2
+"RTN","XLFNSLK",91,0)
+ S XL(NSP_"CLASS")=$$BN(RI(IX),RI(IX+1)),IX=IX+2
+"RTN","XLFNSLK",92,0)
+ Q
+"RTN","XLFNSLK",93,0)
+RR(NSP) ;
+"RTN","XLFNSLK",94,0)
+ N Y,NA
+"RTN","XLFNSLK",95,0)
+ S Y="",IX=IX+$$NAME(IX,.Y,1),XL(NSP_"NAME")=Y,NA=Y
+"RTN","XLFNSLK",96,0)
+ S XL(NSP_"TYPE")=$$BN(RI(IX),RI(IX+1)),IX=IX+2
+"RTN","XLFNSLK",97,0)
+ S XL(NSP_"CLASS")=$$BN(RI(IX),RI(IX+1)),IX=IX+2
+"RTN","XLFNSLK",98,0)
+ S Y=RI(IX)*256+RI(IX+1),Y=Y*256+RI(IX+2),Y=Y*256+RI(IX+3)
+"RTN","XLFNSLK",99,0)
+ S XL(NSP_"TTL")=Y,IX=IX+4
+"RTN","XLFNSLK",100,0)
+ S (X,XL(NSP_"LENGTH"))=$$BN(RI(IX),RI(IX+1)),IX=IX+2 Q:X=0
+"RTN","XLFNSLK",101,0)
+ I XL(NSP_"TYPE")=1 D                                                                       ; IPv4 address
+"RTN","XLFNSLK",102,0)
+ . S XL(NSP_"DATA")=RI(IX)_"."_RI(IX+1)_"."_RI(IX+2)_"."_RI(IX+3),XL("B",NA)=XL(NSP_"DATA")
+"RTN","XLFNSLK",103,0)
+ I XL(NSP_"TYPE")=28 D                                                                      ; IPv6 address
+"RTN","XLFNSLK",104,0)
+ . S XL(NSP_"DATA")=$$H1(RI(IX))_$$H1(RI(IX+1))_":"_$$H1(RI(IX+2))_$$H1(RI(IX+3))_":"
+"RTN","XLFNSLK",105,0)
+ . S XL(NSP_"DATA")=XL(NSP_"DATA")_$$H1(RI(IX+4))_$$H1(RI(IX+5))_":"_$$H1(RI(IX+6))_$$H1(RI(IX+7))_":"
+"RTN","XLFNSLK",106,0)
+ . S XL(NSP_"DATA")=XL(NSP_"DATA")_$$H1(RI(IX+8))_$$H1(RI(IX+9))_":"_$$H1(RI(IX+10))_$$H1(RI(IX+11))_":"
+"RTN","XLFNSLK",107,0)
+ . S XL(NSP_"DATA")=XL(NSP_"DATA")_$$H1(RI(IX+12))_$$H1(RI(IX+13))_":"_$$H1(RI(IX+14))_$$H1(RI(IX+15))
+"RTN","XLFNSLK",108,0)
+ . S XL("B",NA)=XL(NSP_"DATA")
+"RTN","XLFNSLK",109,0)
+ I XL(NSP_"TYPE")=15 D MX(IX)                                                               ; MX entry
+"RTN","XLFNSLK",110,0)
+ S IX=IX+XL(NSP_"LENGTH")
+"RTN","XLFNSLK",111,0)
+ Q
+"RTN","XLFNSLK",112,0)
+NAME(I,NM,F) ;Decode a NAME section
+"RTN","XLFNSLK",113,0)
+ N P,T,Y,X S NM=$G(NM) S:F T=0
+"RTN","XLFNSLK",114,0)
+ F  S X=RI(I) S:(X=0)&F T=T+1 Q:X=0  D  Q:X=0  ;Use X as flag to escape recursion.
+"RTN","XLFNSLK",115,0)
+ . I (X\64)=3 S X=$$NAME((X#64)*256+RI(I+1)+1,.NM,0),X=0 S:F T=T+2 Q
+"RTN","XLFNSLK",116,0)
+ . S NM=NM_$$PART(I+1,X),I=I+X+1 S:F T=T+X+1
+"RTN","XLFNSLK",117,0)
+ Q $G(T)
+"RTN","XLFNSLK",118,0)
+ ;
+"RTN","XLFNSLK",119,0)
+MX(IX) ;Hide IX changes
+"RTN","XLFNSLK",120,0)
+ N Y S Y=$$BN(RI(IX),RI(IX+1))
+"RTN","XLFNSLK",121,0)
+ F  Q:'$D(XL("P",Y))  S Y=Y+1
+"RTN","XLFNSLK",122,0)
+ S XL(NSP_"PREF")=Y,IX=IX+2
+"RTN","XLFNSLK",123,0)
+ S Y="",IX=IX+$$NAME(IX,.Y,1),XL(NSP_"NAME")=Y,XL("P",XL(NSP_"PREF"))=Y
+"RTN","XLFNSLK",124,0)
+ Q
+"RTN","XLFNSLK",125,0)
+ ;
+"RTN","XLFNSLK",126,0)
+BN(Z1,Z2) ;Convert two binary char 16 bit number into ASCII number
+"RTN","XLFNSLK",127,0)
+ Q Z1*256+Z2
+"RTN","XLFNSLK",128,0)
+ ;
+"RTN","XLFNSLK",129,0)
+WBN(Z1) ;Convert two byte string to a ASCII number
+"RTN","XLFNSLK",130,0)
+ Q $A(Z1,1)*256+$A(Z1,2)
+"RTN","XLFNSLK",131,0)
+ ;
+"RTN","XLFNSLK",132,0)
+H2(Z2) ;Convert 2 byte string to HEX
+"RTN","XLFNSLK",133,0)
+ N B S B=$A(Z2,1)*256+$A(Z2,2)
+"RTN","XLFNSLK",134,0)
+ Q $$H(B)
+"RTN","XLFNSLK",135,0)
+ ;
+"RTN","XLFNSLK",136,0)
+H1(Z1) ;Convert decimal number <= 256 to two digit HEX number
+"RTN","XLFNSLK",137,0)
+ N Y S Y=$$CNV^XLFUTL(Z1,16)
+"RTN","XLFNSLK",138,0)
+ Q $$RJ^XLFSTR(Y,2,"0")
+"RTN","XLFNSLK",139,0)
+ ;
+"RTN","XLFNSLK",140,0)
+H(Z1) Q $$BASE^XLFUTL(Z1,10,16)
+"RTN","XLFNSLK",141,0)
+ ;
+"RTN","XLFNSLK",142,0)
+BIN16(S) ;Convert two byte string to 16 bit binary
+"RTN","XLFNSLK",143,0)
+ N K,Y S S=$A(S,1)*256+$A(S,2),Y=""
+"RTN","XLFNSLK",144,0)
+ F K=0:1:15 S Y=(S\(2**K)#2)_Y
+"RTN","XLFNSLK",145,0)
+ Q Y
+"RTN","XLFNSLK",146,0)
+ ;
+"RTN","XLFNSLK",147,0)
+PART(S,L) ;
+"RTN","XLFNSLK",148,0)
+ N R,A S R="" F A=S:1:S+L-1 S R=R_$C(RI(A))
+"RTN","XLFNSLK",149,0)
+ Q R_"."
+"RTN","XLFNSLK",150,0)
+ ;
+"RTN","XLFNSLK",151,0)
+TYPECODE(T) ;
+"RTN","XLFNSLK",152,0)
+ ;1=A:IPv4 address,2=NS:nameserver,5=CNAME,15=MX:mail exchange,28=AAAA:IPv6 address  ;p638 Added "AAAA" for IPv6
+"RTN","XLFNSLK",153,0)
+ I +T Q $S(T=1:"A",T=2:"NS",T=5:"CNAME",T=15:"MX",T=28:"AAAA",1:"ZZ")                ;p638 Added "AAAA" for IPv6
+"RTN","XLFNSLK",154,0)
+ Q $S(T="A":1,T="NS":2,T="CNAME":5,T="MX":15,T="AAAA":28,1:1)                        ;p638 Added "AAAA" for IPv6
+"RTN","XLFNSLK",155,0)
+ ;
+"RTN","XLFNSLK",156,0)
+CLASS(T) ;
+"RTN","XLFNSLK",157,0)
+ Q $S(T=1:"IN",1:"ZZ")
+"RTN","XLFNSLK",158,0)
+ ;
+"RTN","XLFNSLK",159,0)
+GETDNS(I) ;Get the address of our DNS
+"RTN","XLFNSLK",160,0)
+ N L S L=$G(^XTV(8989.3,1,"DNS"))
+"RTN","XLFNSLK",161,0)
+ Q $P(L,",",I)
+"RTN","XLFNSLK",162,0)
+ ;
+"RTN","XLFNSLK",163,0)
+SHOW ;LIST RI AND XL
+"RTN","XLFNSLK",164,0)
+ S O1=RI\3+1,O2=O1*2
+"RTN","XLFNSLK",165,0)
+ F I=1:1:O1 D SW(0,"RI("_I_")=",$G(RI(I))),SW(30,"RI("_(I+O1)_")=",$G(RI(I+O1))),SW(60,"RI("_(I+O2)_")=",$G(RI(I+O2))) W !
+"RTN","XLFNSLK",166,0)
+ Q
+"RTN","XLFNSLK",167,0)
+SW(T,H,V) ;
+"RTN","XLFNSLK",168,0)
+ W ?T,$J(H,8),V
+"RTN","XLFNSLK",169,0)
+ Q
+"RTN","XLFNSLK",170,0)
+SAVEDEV ;Save calling device
+"RTN","XLFNSLK",171,0)
+ D:'$D(IO(0)) HOME^%ZIS D SAVDEV^%ZISUTL("XLFNSLK")
+"RTN","XLFNSLK",172,0)
+ Q
+"RTN","XLFNSLK",173,0)
+RESDEV ;Restore calling device
+"RTN","XLFNSLK",174,0)
+ D USE^%ZISUTL("XLFNSLK"),RMDEV^%ZISUTL("XLFNSLK")
+"RTN","XLFNSLK",175,0)
+ K IO("CLOSE")
+"RTN","XLFNSLK",176,0)
+ Q
+"RTN","XLFNSLK",177,0)
+LOG(M) ;Log Debug messages
+"RTN","XLFNSLK",178,0)
+ S XLFLOG=$G(XLFLOG)+1,XLFLOG(XLFLOG)=M
+"RTN","XLFNSLK",179,0)
+ Q
+"RTN","XLFNSLK",180,0)
+ ;
+"RTN","XLFNSLK",181,0)
+POST ;Stuff a DNS address during install POST init.
+"RTN","XLFNSLK",182,0)
+ N DIC,DR,DIQ,XLF,DIE
+"RTN","XLFNSLK",183,0)
+ S XLF=$P($$PARAM^HLCS2,U,3)
+"RTN","XLFNSLK",184,0)
+ I XLF="T" D BMES^XPDUTL("Test Account DNS address not installed.") Q
+"RTN","XLFNSLK",185,0)
+ S DIC=8989.3,DR=51,DA=1,DIQ="XLF(" D EN^DIQ1 I $L(XLF(8989.3,1,51)) Q
+"RTN","XLFNSLK",186,0)
+ S DR="51///127.0.0.1",DIE="^XTV(8989.3,",DA=1 D ^DIE
+"RTN","XLFNSLK",187,0)
+ D BMES^XPDUTL("DNS address installed.")
+"RTN","XLFNSLK",188,0)
+ Q
+"RTN","XQ82")
+0^12^B13609484^B12833341
+"RTN","XQ82",1,0)
+XQ82 ;SF-ISC.SEA/JLI - CLEAN OLD $JOB DATA OUT OF XUTL("XQ", & OTHERS ;12/03/14  08:32
+"RTN","XQ82",2,0)
+ ;;8.0;KERNEL;**59,67,157,258,312,353,542,554,638**;Jul 10, 1995;Build 15
+"RTN","XQ82",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XQ82",4,0)
+ ;
+"RTN","XQ82",5,0)
+ ;Make sure that can run from a DCL script
+"RTN","XQ82",6,0)
+ N A,X,%DT,Y,J,K,DDATE,HDATE,HJOB,HPID3,XQOS,XQVND
+"RTN","XQ82",7,0)
+ S U="^",DT=$$DT^XLFDT
+"RTN","XQ82",8,0)
+ S HDATE=$H-7 ;Get seven days ago in $H days
+"RTN","XQ82",9,0)
+ S DDATE=$$HTFM^XLFDT(HDATE) ;Get seven days ago in FM format
+"RTN","XQ82",10,0)
+ S XQVND=^%ZOSF("OS"),XQOS=$$OS^%ZOSV,HPID3=$$CNV^XLFUTL($J,16)
+"RTN","XQ82",11,0)
+ S HJOB=$J,DILOCKTM=$G(DILOCKTM,+$G(^DD("DILOCKTM"),1))
+"RTN","XQ82",12,0)
+ ;Do work as a set of sub routines
+"RTN","XQ82",13,0)
+ D L0,L1,L2,L3,L4,L5,L6,L7,L8
+"RTN","XQ82",14,0)
+EXIT ;
+"RTN","XQ82",15,0)
+ Q
+"RTN","XQ82",16,0)
+L0 ;We keep track of jobs by putting data in ^XUTL("XQ",$J).
+"RTN","XQ82",17,0)
+ ;Sign-on time is in ^($J,0) points to sign-on log.
+"RTN","XQ82",18,0)
+ ;Holds the Menu stack.
+"RTN","XQ82",19,0)
+ ;For any entry in user stack '^XUTL("XQ",$J)' w/ date older than 7 days or w/o zero node
+"RTN","XQ82",20,0)
+ ;kill XUTL("XQ",n) and corresponding UTILITY(n), TMP(n), & XUTL(n) nodes.
+"RTN","XQ82",21,0)
+ ;Long running jobs should call TOUCH^XUSCLEAN once a day to update KEEPALIVE.
+"RTN","XQ82",22,0)
+ N %T S J=0
+"RTN","XQ82",23,0)
+ F  S J=$O(^XUTL("XQ",J)) Q:J'>0  I $S('$D(^(J,0)):1,1:^(0)<DDATE) D
+"RTN","XQ82",24,0)
+ . I '$D(^XUTL("XQ",J,0)) K ^XUTL("XQ",J) Q  ;Missing zero node
+"RTN","XQ82",25,0)
+ . I $G(^XUTL("XQ",J,"KEEPALIVE"))>HDATE Q  ;For long running jobs
+"RTN","XQ82",26,0)
+ . I $D(^XUTL("XQ",J,"ZTSKNUM")) L +^%ZTSCH("TASK",^XUTL("XQ",J,"ZTSKNUM")):DILOCKTM Q:'$T  L -^%ZTSCH("TASK",^XUTL("XQ",J,"ZTSKNUM"))
+"RTN","XQ82",27,0)
+ . K ^XUTL("XQ",J),^UTILITY(J),^TMP(J),^XUTL(J)
+"RTN","XQ82",28,0)
+ . Q
+"RTN","XQ82",29,0)
+ Q:'$$CHECK  ;Check if we should skip pass 2.
+"RTN","XQ82",30,0)
+ ;Now to check again for DEAD jobs on local node
+"RTN","XQ82",31,0)
+ F J=0:0 S J=$O(^XUTL("XQ",J)) Q:J'>0  D
+"RTN","XQ82",32,0)
+ . I $$DEAD(J) K ^XUTL("XQ",J),^UTILITY(J),^TMP(J),^XUTL(J)
+"RTN","XQ82",33,0)
+ Q
+"RTN","XQ82",34,0)
+ ;
+"RTN","XQ82",35,0)
+L1 ;Loop thru UTILITY and look for nodes w/o corresponding XUTL("XQ",n)
+"RTN","XQ82",36,0)
+ N A,J
+"RTN","XQ82",37,0)
+ S A="" F  S A=$O(^UTILITY(A)) Q:A=""  D
+"RTN","XQ82",38,0)
+ . I A>0,'$D(^XUTL("XQ",A)) K ^UTILITY(A) Q  ;UTILITY($J) w/o XUTL("XQ",$J) node.
+"RTN","XQ82",39,0)
+ . Q:A>0  Q:"^ROU^GLO^LRLTR^"[("^"_A_"^")
+"RTN","XQ82",40,0)
+ . F J=0:0 S J=$O(^UTILITY(A,J)) Q:J'>0  I '$D(^XUTL("XQ",J)) K ^UTILITY(A,J) ;Remove UTILITY(namespace,$J) w/o XUTL("XQ",$J)
+"RTN","XQ82",41,0)
+ . Q
+"RTN","XQ82",42,0)
+ Q
+"RTN","XQ82",43,0)
+ ;
+"RTN","XQ82",44,0)
+L2 ;Loop thru TMP and look for nodes w/o corresponding XUTL("XQ",n)
+"RTN","XQ82",45,0)
+ N A,J
+"RTN","XQ82",46,0)
+ S A="" F  S A=$O(^TMP(A)) Q:A=""  D
+"RTN","XQ82",47,0)
+ . I A>0,'$D(^XUTL("XQ",A)) K ^TMP(A) Q  ;TMP($J) w/o XUTL("XQ",$J) node.
+"RTN","XQ82",48,0)
+ . Q:A>0  ;Q:"^ROU^GLO^LRLTR^"[("^"_A_"^")
+"RTN","XQ82",49,0)
+ . F J=0:0 S J=$O(^TMP(A,J)) Q:J'>0  I '$D(^XUTL("XQ",J)) K ^TMP(A,J) ;Remove TMP(namespace,$J) w/o XUTL("XQ",$J)
+"RTN","XQ82",50,0)
+ . Q
+"RTN","XQ82",51,0)
+ Q
+"RTN","XQ82",52,0)
+ ;
+"RTN","XQ82",53,0)
+L3 ;Now to cleanup the XTMP global w/ XTMP(namespace,0)<DT
+"RTN","XQ82",54,0)
+ N A,J
+"RTN","XQ82",55,0)
+ S A="" F  S A=$O(^XTMP(A)) Q:A=""  S J=$G(^XTMP(A,0)) I J<DT K ^XTMP(A)
+"RTN","XQ82",56,0)
+ Q
+"RTN","XQ82",57,0)
+ ;
+"RTN","XQ82",58,0)
+L4 ;Now go thru and clean old ^XUSEC(0,"CUR",duz,sign-on) nodes.
+"RTN","XQ82",59,0)
+ D L51("CUR")
+"RTN","XQ82",60,0)
+ Q
+"RTN","XQ82",61,0)
+ ;
+"RTN","XQ82",62,0)
+L5 ;Now go through and clean old ^XUSEC(0,"AS*" nodes.
+"RTN","XQ82",63,0)
+ D L51("AS1"),L51("AS2"),L51("AS4")
+"RTN","XQ82",64,0)
+ Q
+"RTN","XQ82",65,0)
+ ;
+"RTN","XQ82",66,0)
+L6 ;Clean out old build nodes from ^XUTL
+"RTN","XQ82",67,0)
+ N K
+"RTN","XQ82",68,0)
+ S K=""
+"RTN","XQ82",69,0)
+ F  S K=$O(^XUTL("XQO",K)) Q:K=""  D
+"RTN","XQ82",70,0)
+ . I $D(^XUTL("XQO",K,"^BUILD")),($P($H,",",2)-^("^BUILD")>1800)!(^("^BUILD")>$P($H,",",2)) K ^("^BUILD")
+"RTN","XQ82",71,0)
+ Q
+"RTN","XQ82",72,0)
+ ;
+"RTN","XQ82",73,0)
+L7 ;Kill ^DISV for TERMINATED or DISUSER Users.
+"RTN","XQ82",74,0)
+ N DA,USER
+"RTN","XQ82",75,0)
+ S DA="",U="^"
+"RTN","XQ82",76,0)
+ F  S DA=$O(^DISV(DA)) Q:DA=""  S USER=$$ACTIVE^XUSER(DA) I '(+USER) K ^DISV(DA)
+"RTN","XQ82",77,0)
+ Q
+"RTN","XQ82",78,0)
+ ;
+"RTN","XQ82",79,0)
+L8 ;Loop top level of ^XUTL
+"RTN","XQ82",80,0)
+ N A
+"RTN","XQ82",81,0)
+ S A=0
+"RTN","XQ82",82,0)
+ F  S A=$O(^XUTL(A)) Q:'A  I '$D(^XUTL("XQ",A)) K ^XUTL(A)
+"RTN","XQ82",83,0)
+ Q
+"RTN","XQ82",84,0)
+ ;
+"RTN","XQ82",85,0)
+L51(NDX) ;Clean old Sign-on log entries from X-ref
+"RTN","XQ82",86,0)
+ N I,J,FDA,NOW,ERR,IEN
+"RTN","XQ82",87,0)
+ S I="",NOW=$$NOW^XLFDT
+"RTN","XQ82",88,0)
+ F  S I=$O(^XUSEC(0,NDX,I)) Q:I=""  F J=0:0 S J=$O(^XUSEC(0,NDX,I,J)) Q:(J'>0)  D
+"RTN","XQ82",89,0)
+ . ;Look at every entry in the X-ref, check for data record
+"RTN","XQ82",90,0)
+ . I $D(^XUSEC(0,J,0))[0 K ^XUSEC(0,NDX,I,J) Q  ;No data record.
+"RTN","XQ82",91,0)
+ . Q:J'<DDATE  ;Keep for now
+"RTN","XQ82",92,0)
+ . S FDA(3.081,J_",",3)=NOW,FDA(3.081,J_",",16)=1 D UPDATE^DIE("","FDA","IEN","ERR")
+"RTN","XQ82",93,0)
+ . K FDA,IEN,ERR
+"RTN","XQ82",94,0)
+ . Q
+"RTN","XQ82",95,0)
+ Q
+"RTN","XQ82",96,0)
+ ;
+"RTN","XQ82",97,0)
+DEAD(X1) ;Check if X1 is a PID and DEAD
+"RTN","XQ82",98,0)
+ ;Return 1 if should clean, 0 to skip
+"RTN","XQ82",99,0)
+ I X1\1'=X1 Q 0
+"RTN","XQ82",100,0)
+ ;a PID on VMS has a part that is fixed, not so under Linux so the following line was dropped.
+"RTN","XQ82",101,0)
+ I XQOS="VMS",$E($$CNV^XLFUTL(X1,16),1,3)'=$E(HPID3,1,3) Q 0
+"RTN","XQ82",102,0)
+ ;We should only come here
+"RTN","XQ82",103,0)
+ ;is X1 a PID on this node and is PID active?..
+"RTN","XQ82",104,0)
+ I $D(^$JOB(X1))=0 Q 1 ; Job is DEAD
+"RTN","XQ82",105,0)
+ Q 0
+"RTN","XQ82",106,0)
+ ;
+"RTN","XQ82",107,0)
+CHECK() ;Check that we have the right enviroment to do pass 2
+"RTN","XQ82",108,0)
+ ;GTM must be on one big box.
+"RTN","XQ82",109,0)
+ I XQVND["GT.M" Q 0
+"RTN","XQ82",110,0)
+ ;Are we on Cache, ^$JOB is supported.
+"RTN","XQ82",111,0)
+ ;Get value of LOCAL TMP (.07) to see if ^TMP, ^UTILITY and ^XUTL("XQ" are local.
+"RTN","XQ82",112,0)
+ I XQVND["OpenM" Q +$P($G(^XTV(8989.3,1,0)),"^",7) ;p554
+"RTN","XQ82",113,0)
+ Q 0
+"RTN","XQ82",114,0)
+ ;
+"RTN","XU8P638")
+0^6^B37453^n/a
+"RTN","XU8P638",1,0)
+XU8P638 ;ISD/HGW - Patch XU*8*638 Post-init ;02/05/15  14:27
+"RTN","XU8P638",2,0)
+ ;;8.0;KERNEL;**638**;May 30, 2014;Build 15
+"RTN","XU8P638",3,0)
+ Q
+"RTN","XU8P638",4,0)
+POST  ;
+"RTN","XU8P638",5,0)
+ ;I '$D(^XTV(8989.3,1,"PEER")) S ^XTV(8989.3,1,"PEER")="127.0.0.1"
+"RTN","XU8P638",6,0)
+ ;X ^%ZOSF("EON")
+"RTN","XU8P638",7,0)
+ ;W ! D RELOAD^ZTMGRSET W !
+"RTN","XU8P638",8,0)
+ ;X ^%ZOSF("EOFF")
+"RTN","XU8P638",9,0)
+ D PATCH^ZTMGRSET(638)
+"RTN","XU8P638",10,0)
+ Q
+"RTN","XUS1")
+0^5^B28568204^B25184482
+"RTN","XUS1",1,0)
+XUS1 ;SF-ISC/STAFF - SIGNON ;09/23/14  16:06
+"RTN","XUS1",2,0)
+ ;;8.0;KERNEL;**9,59,111,165,150,252,265,419,469,523,543,638**;Jul 10, 1995;Build 15
+"RTN","XUS1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUS1",4,0)
+ ;User setup
+"RTN","XUS1",5,0)
+USER ;
+"RTN","XUS1",6,0)
+ K XUTEXT S XUM=$$USER^XUS1A(),$Y=0
+"RTN","XUS1",7,0)
+ ;Show post sign-on text
+"RTN","XUS1",8,0)
+ F I=0:0 S I=$O(XUTEXT(I)) Q:I'>0  D:$Y>20  W:$E(XUTEXT(I),1)="!" ! W $E(XUTEXT(I),2,999)
+"RTN","XUS1",9,0)
+ . N DIR S DIR(0)="E",DIR("A")="Enter RETURN to continue" D ^DIR W @IOF Q
+"RTN","XUS1",10,0)
+ ;if XUM=9 multi sign-on NOT allowed
+"RTN","XUS1",11,0)
+ I XUM=9 W !!,?8,$$EZBLD^DIALOG(30810.45)
+"RTN","XUS1",12,0)
+ Q:XUM  ;User can't sign-on.
+"RTN","XUS1",13,0)
+SET ;
+"RTN","XUS1",14,0)
+ S Y=$$CHKDIV()
+"RTN","XUS1",15,0)
+ I $P(Y,U,2)>0,$D(^DIC(4,0)) D ASKDIV
+"RTN","XUS1",16,0)
+ S DUZ(2)=+Y D DUZ^XUS1A
+"RTN","XUS1",17,0)
+ ;Check verify code
+"RTN","XUS1",18,0)
+ I $$VCHG D CVC^XUS2 G:$D(DUOUT) H^XUS
+"RTN","XUS1",19,0)
+ S:$P(XOPT,"^",5) XUTT=1 ;Ask Device
+"RTN","XUS1",20,0)
+ D ENQ ;Inquire to Terminal Type
+"RTN","XUS1",21,0)
+ Q
+"RTN","XUS1",22,0)
+ ;
+"RTN","XUS1",23,0)
+VCHG() ;Check if the Verify code needs to be changed
+"RTN","XUS1",24,0)
+ I $D(DUZ("ASH")) Q 0 ;p403
+"RTN","XUS1",25,0)
+ D:'$D(XUSER) USER^XUS(DUZ)
+"RTN","XUS1",26,0)
+ Q:'$L($P(XUSER(1),U,2)) 1 ;Null VC
+"RTN","XUS1",27,0)
+ I $$BROKER^XWBLIB Q:$P(XUSER(0),U,8)=1 0 ;VC never expires, only for BROKER
+"RTN","XUS1",28,0)
+ Q (XUSER(1)+$P(XOPT,U,15))'>$H ;Time to change
+"RTN","XUS1",29,0)
+ ;
+"RTN","XUS1",30,0)
+ASKDIV ;Ask the user for the Division, return Y
+"RTN","XUS1",31,0)
+ N X
+"RTN","XUS1",32,0)
+ S DIC="^VA(200,DUZ,2,",DIC(0)="AEQ",DIC("P")="200.02P",X=$O(^VA(200,DUZ,2,"AX1",1,0)) S:X>0 DIC("B")=$P($$NS^XUAF4(X),U)
+"RTN","XUS1",33,0)
+ D ^DIC I Y'>0 W !,*7,"You must select one." G ASKDIV
+"RTN","XUS1",34,0)
+ Q
+"RTN","XUS1",35,0)
+ ;
+"RTN","XUS1",36,0)
+CHKDIV(CD) ;ef,sr Check if user needs to select Division.
+"RTN","XUS1",37,0)
+ N %,%1,%2,%3,%4
+"RTN","XUS1",38,0)
+ I $G(DUZ("DIV"))>0 Q DUZ("DIV") ;p469 Set outside
+"RTN","XUS1",39,0)
+ S %=$O(^VA(200,DUZ,2,0)),%1=$O(^(%))
+"RTN","XUS1",40,0)
+ I %1,$D(CD) D
+"RTN","XUS1",41,0)
+ . S %2=0,%3=0,CD=0
+"RTN","XUS1",42,0)
+ . F  S %2=$O(^VA(200,DUZ,2,%2)) Q:%2'>0  S %4=^(%2,0),%3=%3+1,CD(%3)=%2_"^"_$$NS^XUAF4(%2)_$S($P(%4,"^",2):"^1",1:"")
+"RTN","XUS1",43,0)
+ . S CD=%3
+"RTN","XUS1",44,0)
+ Q %_"^"_%1
+"RTN","XUS1",45,0)
+ ;
+"RTN","XUS1",46,0)
+ENQ ;Get terminal type
+"RTN","XUS1",47,0)
+ S XUT1="" I XUTT X XUEOFF R X:0 X ^%ZOSF("TYPE-AHEAD") W $C(27,91,99) X "R *X:2 I X=27 F  R X#1:2 S XUT1=XUT1_X Q:'$T!(X=""c"")"
+"RTN","XUS1",48,0)
+ ;Removed code for Wyse 75
+"RTN","XUS1",49,0)
+ X XUEON I XUTT,XUT1["[" S Y=$O(^%ZIS(3.22,"B",XUT1,0)) I Y>0 S X=$P($G(^%ZIS(3.22,Y,0)),"^",2)
+"RTN","XUS1",50,0)
+ I X?1.ANP S DIC="^%ZIS(2,",DIC(0)="MO" D ^DIC I Y>0 S XUIOP(1)=$P(Y,U,2),$P(XUIOP,";",2)=XUIOP(1),^VA(200,DUZ,1.2)=+Y
+"RTN","XUS1",51,0)
+ I '$D(XUIOP(1)),$D(^VA(200,DUZ,1.2)) S X=+^(1.2) I X>0,$D(^%ZIS(2,X,0)) S $P(XUIOP,";",2)=$P(^(0),U)
+"RTN","XUS1",52,0)
+ Q
+"RTN","XUS1",53,0)
+ ;
+"RTN","XUS1",54,0)
+NEXT ;Jump to the next routine
+"RTN","XUS1",55,0)
+ S IOP=XUIOP D ^%ZIS D SAVE ;Save off device/user info
+"RTN","XUS1",56,0)
+ S X=$G(^DISV(DUZ)) ;Add kill by session or day here
+"RTN","XUS1",57,0)
+ S ^DISV(DUZ)=$H
+"RTN","XUS1",58,0)
+ ;Removed UCI jump p469
+"RTN","XUS1",59,0)
+ D AUDIT
+"RTN","XUS1",60,0)
+ S X=$S($D(^VA(200,DUZ,0)):$P($P(^(0),U),","),1:"Unk"),X=$E(X,1,10)_"_"_($J#10000) D SETENV^%ZOSV ;Set Process Name
+"RTN","XUS1",61,0)
+ ;S X=$P(XOPT,U,16) X:X ^%ZOSF("PRIORITY")
+"RTN","XUS1",62,0)
+ D LOG:DUZ,KILL
+"RTN","XUS1",63,0)
+ K ^XUTL("OR",$J),^UTILITY($J),%UCI
+"RTN","XUS1",64,0)
+ G ^XQ
+"RTN","XUS1",65,0)
+ ;
+"RTN","XUS1",66,0)
+SAVE ;
+"RTN","XUS1",67,0)
+ N X
+"RTN","XUS1",68,0)
+ S X="DUZ" F  S X=$Q(@X) Q:X=""  I $D(@X) S ^XUTL("XQ",$J,$TR(X,""""))=@X
+"RTN","XUS1",69,0)
+ F X="DUZ","IO","IO(""IP"")","IO(""CLNM"")","XQVOL" I $D(@X) S ^XUTL("XQ",$J,X)=@X
+"RTN","XUS1",70,0)
+ D SAVEVAR^%ZIS ;Save the HOME device variables
+"RTN","XUS1",71,0)
+ Q
+"RTN","XUS1",72,0)
+ ;
+"RTN","XUS1",73,0)
+LOG ;used by R/S and Broker
+"RTN","XUS1",74,0)
+ N %,XP1,XP2
+"RTN","XUS1",75,0)
+ S XQXFLG("LLOG")=$P($G(^VA(200,DUZ,1.1)),U) ;Save for LOGIN templates
+"RTN","XUS1",76,0)
+ S XP1=$$SLOG($P(XUVOL,U,1),,XUDEV,XUCI,$P(XUENV,U,3))
+"RTN","XUS1",77,0)
+ S %=$$COOKIE($P(^VA(200,DUZ,0),U),XP1) I $L(%) S XQXFLG("ZEBRA")=XP1_"~"_%,$P(^XUSEC(0,XP1,0),U,13)=% L +^XWB("SESSION",XQXFLG("ZEBRA")):60
+"RTN","XUS1",78,0)
+ Q
+"RTN","XUS1",79,0)
+ ;
+"RTN","XUS1",80,0)
+ ;Division updated in DIVSET^XUSRB2
+"RTN","XUS1",81,0)
+ ;The other parameters are in the symbol table with known names.
+"RTN","XUS1",82,0)
+ ;P1=DUZ,P2=$I,P3=$J,P4=EXIT D/T,P5=VOLUME,P6=TASKMAN,P7=XUDEV,P8=UCI,P9=ZIO,P10=NODE,P11=IPV4,P12=CLNM,P13=HANDLE,P14=REMOTE SITE,P15=REMOTE IEN
+"RTN","XUS1",83,0)
+SLOG(P5,P6,P7,P8,P10,P14,P15) ;
+"RTN","XUS1",84,0)
+ ;p638 Changes: Save IPv4 address in field 11 (0;11) and IPv6 address in field 100 (1;1)
+"RTN","XUS1",85,0)
+ N %,I,DA,DIK,N,XL1,XL2,P11,P12,P100
+"RTN","XUS1",86,0)
+ S XL1=$$NOW^XLFDT
+"RTN","XUS1",87,0)
+ S P5=$G(P5),P6=$G(P6),P7=$G(P7),P8=$G(P8),P10=$P($G(P10),".")
+"RTN","XUS1",88,0)
+ S P11=$$FORCEIP4^XLFIPV($G(IO("IP"))),P12=$P($G(IO("CLNM")),"."),P100=$$FORCEIP6^XLFIPV($G(IO("IP")))
+"RTN","XUS1",89,0)
+ I P11="0.0.0.0" S P11=""  ;Do not store null IPv4 address
+"RTN","XUS1",90,0)
+ I P100="0000:0000:0000:0000:0000:0000:0000:0000" S P100=""  ;Do not store null IPv6 address
+"RTN","XUS1",91,0)
+ S N=DUZ_"^"_$I_"^"_$J_"^^"_P5_"^"_P6_"^"_P7_"^"_P8_"^"_$E($G(IO("ZIO")),1,30)_"^"_P10_"^"_P11_"^"_P12
+"RTN","XUS1",92,0)
+ S:$D(DUZ("VISITOR")) $P(N,U,14,15)=DUZ("VISITOR") ;p523
+"RTN","XUS1",93,0)
+ S:$G(DUZ(2))>0 $P(N,"^",17)=DUZ(2)
+"RTN","XUS1",94,0)
+ S:$D(DUZ("REMAPP")) $P(N,U,18)=$P(DUZ("REMAPP"),U) ;p523
+"RTN","XUS1",95,0)
+ F I=XL1:.00000001 L +^XUSEC(0,I):$G(DILOCKTM,5) Q:'$D(^XUSEC(0,I))  L -^XUSEC(0,I)
+"RTN","XUS1",96,0)
+ S ^XUSEC(0,I,0)=N
+"RTN","XUS1",97,0)
+ S ^XUSEC(0,I,1)=P100 ;p638 save IPv6 address in standard format
+"RTN","XUS1",98,0)
+ L -^XUSEC(0,I)
+"RTN","XUS1",99,0)
+ S $P(^XUSEC(0,0),"^",3,4)=I_U_(1+$P(^XUSEC(0,0),"^",4))
+"RTN","XUS1",100,0)
+ S (XL1,DA)=I,DIK="^XUSEC(0," D IX^DIK ;index new entry
+"RTN","XUS1",101,0)
+ S ^XUTL("XQ",$J,0)=XL1 ;save for sign-off
+"RTN","XUS1",102,0)
+ I 'P6 S XL2=$G(^VA(200,DUZ,1.1)),$P(XL2,U,1,3)=XL1_"^0^1",$P(XL2,U,5)="",^VA(200,DUZ,1.1)=XL2  ;Set last Sign-on
+"RTN","XUS1",103,0)
+ Q XL1
+"RTN","XUS1",104,0)
+ ;
+"RTN","XUS1",105,0)
+COOKIE(J1,J2) ;Call VAdeamon for a cookie
+"RTN","XUS1",106,0)
+ N ZZ,%
+"RTN","XUS1",107,0)
+ I $G(XQXFLG("ZEBRA"))=-1 K XQXFLG("ZEBRA") Q "" ;Disabled
+"RTN","XUS1",108,0)
+ Q:$G(IO("IP"))="" "" ;Not using Telnet or SSH
+"RTN","XUS1",109,0)
+ Q:$D(DUZ("VISITOR")) "" ;Don't create Handles for visitors p523
+"RTN","XUS1",110,0)
+ ;
+"RTN","XUS1",111,0)
+ S %=$$CMD^XWBCAGNT(.ZZ,"XWB CREATE HANDLE",J1_"^"_J2) Q:'% ""
+"RTN","XUS1",112,0)
+ Q $G(ZZ(1))
+"RTN","XUS1",113,0)
+ ;
+"RTN","XUS1",114,0)
+AUDIT ;Set-up Audit info
+"RTN","XUS1",115,0)
+ N I,I1,I2
+"RTN","XUS1",116,0)
+ S I=$G(^XTV(8989.3,1,19)),I1=$P(I,U),I2=$P(I,U,2) Q:"asu"'[I1  I (I2>XUNOW)!($P(I,U,3)<XUNOW) Q
+"RTN","XUS1",117,0)
+ I "au"[I1 S:(I1="a")!($D(^XTV(8989.3,1,19.3,"B",DUZ))>1) XQAUDIT=1 Q
+"RTN","XUS1",118,0)
+ S XQAUDIT="" F I=0:0 S I=$O(^XTV(8989.3,1,19.1,"B",I)) Q:I'>0!($L(XQAUDIT)>245)  S XQAUDIT=XQAUDIT_"2^"_I_U
+"RTN","XUS1",119,0)
+ S I1="" F I=0:0 S I1=$O(^XTV(8989.3,1,19.2,"B",I1)) Q:I1']""!($L(XQAUDIT)>245)  S XQAUDIT=XQAUDIT_"3^"_I1_U
+"RTN","XUS1",120,0)
+ Q
+"RTN","XUS1",121,0)
+ ;
+"RTN","XUS1",122,0)
+DD(Y) Q $$FMTE^XLFDT(Y,1)
+"RTN","XUS1",123,0)
+ ;
+"RTN","XUS1",124,0)
+KILL N %UCI,PGM,U,XQUR,XMCHAN G KILL1^XUSCLEAN
+"RTN","XUS1",125,0)
+ Q
+"RTN","XUS1",126,0)
+NO G NO^XUS
+"RTN","XUS1A")
+0^9^B12856817^B12342712
+"RTN","XUS1A",1,0)
+XUS1A ;SF-ISC/STAFF - SIGNON overflow from XUS1 ;12/02/14  13:26
+"RTN","XUS1A",2,0)
+ ;;8.0;KERNEL;**153,149,183,258,265,638**;Jul 10, 1995;Build 15
+"RTN","XUS1A",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUS1A",4,0)
+ Q
+"RTN","XUS1A",5,0)
+USER() ;
+"RTN","XUS1A",6,0)
+ N %B,%E,%T,I1,X1,X2
+"RTN","XUS1A",7,0)
+ S XUTEXT=0,DUZ(2)=$G(DUZ(2),0)
+"RTN","XUS1A",8,0)
+ F I=0:0 S I=$O(^XTV(8989.3,1,"POST",I)) Q:I'>0  D SET("!"_$G(^(I,0)))
+"RTN","XUS1A",9,0)
+ D SET("!"),XOPT
+"RTN","XUS1A",10,0)
+ S %H=$P($H,",",2)
+"RTN","XUS1A",11,0)
+ D SET("!Good "_$S(%H<43200:"morning ",%H<61200:"afternoon ",1:"evening ")_$S($P(XUSER(1),U,4)]"":$P(XUSER(1),U,4),1:$P(XUSER(0),U,1)))
+"RTN","XUS1A",12,0)
+ S I1=$G(^VA(200,DUZ,1.1)),X=(+I1_"0000")
+"RTN","XUS1A",13,0)
+ I X D SET("!     You last signed on "_$S(X\1=DT:"today",X\1+1=DT:"yesterday",1:$$FMTE^XLFDT(X,"1D"))_" at "_$E(X,9,10)_":"_$E(X,11,12))
+"RTN","XUS1A",14,0)
+ I $P(I1,"^",2) S I=$P(I1,"^",2) D SET("!There "_$S(I>1:"were ",1:"was ")_I_" unsuccessful attempt"_$S(I>1:"s",1:"")_" since you last signed on.")
+"RTN","XUS1A",15,0)
+ I $P(XUSER(0),U,12),$$PH(%H,$P(XUSER(0),U,12)) Q 17 ;Time frame
+"RTN","XUS1A",16,0)
+ I +$P(XOPT,U,15) S %=$P(XOPT,U,15)-($H-XUSER(1)) I %<6,%>0 D SET("!     Your Verify code will expire in "_%_" days")
+"RTN","XUS1A",17,0)
+ ;Report new Mail
+"RTN","XUS1A",18,0)
+ N XUXM S %=$$NU^XMGAPI4(1,1,"XUXM") I $G(XUXM) F %=0:0 S %=$O(XUXM(%)) Q:%'>0  D SET("!"_XUXM(%))
+"RTN","XUS1A",19,0)
+ S:$P(XOPT,"^",5) XUTT=1 S DTIME=$P(XOPT,U,10)
+"RTN","XUS1A",20,0)
+ ;Check Multiple Sign-on allowed, X1 signed on flag, X2 0=No,1=Yes,2=1IP
+"RTN","XUS1A",21,0)
+ S X1=$P($G(^VA(200,DUZ,1.1)),U,3),X2=$P(XOPT,U,4)
+"RTN","XUS1A",22,0)
+ I 'X2,X1 Q 9 ;Multi Sign-on not allowed
+"RTN","XUS1A",23,0)
+ I X2=2 D  Q:%B>0 %B ;Only from one IP
+"RTN","XUS1A",24,0)
+ . S %B=0 I '$D(IO("IP")) S:X1 %B=9 Q  ;Can't tell IP,
+"RTN","XUS1A",25,0)
+ . S X1=$$COUNT(DUZ,IO("IP")),%B=$S(X1<0:9,(X1+1)>$P(XOPT,U,19):9,1:0)
+"RTN","XUS1A",26,0)
+USX S $P(^VA(200,DUZ,1.1),U,3)=1
+"RTN","XUS1A",27,0)
+ ;Call XQOR to handle SIGN-ON protocall.
+"RTN","XUS1A",28,0)
+ N XUSER,XUSQUIT ;Protect ourself.
+"RTN","XUS1A",29,0)
+ S DIC="^DIC(19,",X="XU USER SIGN-ON",XUSQUIT=0
+"RTN","XUS1A",30,0)
+ D EN^XQOR
+"RTN","XUS1A",31,0)
+ K X,DIC
+"RTN","XUS1A",32,0)
+ Q XUSQUIT ;If protocol set XUSQUIT will stop sign-on.
+"RTN","XUS1A",33,0)
+ ;
+"RTN","XUS1A",34,0)
+SET(V) ;Set into XUTEXT(XUTEXT), Called from XU USER SIGN-ON protocol.
+"RTN","XUS1A",35,0)
+ S XUTEXT=$G(XUTEXT)+1,XUTEXT(XUTEXT)=V
+"RTN","XUS1A",36,0)
+ Q
+"RTN","XUS1A",37,0)
+ ;
+"RTN","XUS1A",38,0)
+DUZ ;setup duz, also see XUS5
+"RTN","XUS1A",39,0)
+ ;Called from XUSRB, XUESSO1
+"RTN","XUS1A",40,0)
+ S:'$D(XUSER(0)) XUSER(0)=^VA(200,DUZ,0) D:$D(XOPT)[0 XOPT
+"RTN","XUS1A",41,0)
+ S DUZ(0)=$P(XUSER(0),U,4),DUZ(1)="",DUZ("AUTO")=$P(XOPT,"^",6)
+"RTN","XUS1A",42,0)
+ S DUZ(2)=$S($G(DUZ(2))>0:DUZ(2),1:+$P(XOPT,U,17))
+"RTN","XUS1A",43,0)
+ S X=$P($G(^DIC(4,DUZ(2),99)),U,5),DUZ("AG")=$S(X]"":X,1:$P(^XTV(8989.3,1,0),U,8))
+"RTN","XUS1A",44,0)
+ S DUZ("BUF")=($P(XOPT,U,9)="Y"),DUZ("LANG")=$P(XOPT,U,7)
+"RTN","XUS1A",45,0)
+ Q
+"RTN","XUS1A",46,0)
+XOPT ;Build the XOPT string
+"RTN","XUS1A",47,0)
+ N X,I
+"RTN","XUS1A",48,0)
+ S:'$D(XOPT) XOPT=$G(^XTV(8989.3,1,"XUS"))
+"RTN","XUS1A",49,0)
+ S X=$G(^VA(200,DUZ,200))
+"RTN","XUS1A",50,0)
+ F I=4:1:7,9,10,19 I $P(X,U,I)]"" S $P(XOPT,"^",I)=$P(X,U,I)
+"RTN","XUS1A",51,0)
+ Q
+"RTN","XUS1A",52,0)
+ ;
+"RTN","XUS1A",53,0)
+COUNT(IEN,IP) ;Count sign-on log active connect from this IP
+"RTN","XUS1A",54,0)
+ N CNT,IX,IP6
+"RTN","XUS1A",55,0)
+ S CNT="",IX=0,IP6=$$FORCEIP6^XLFIPV(IP) ;p638 use IPv6 xref
+"RTN","XUS1A",56,0)
+ I '$D(^XUSEC(0,"AS5",IEN)) Q 0 ;First sign-on
+"RTN","XUS1A",57,0)
+ I $O(^XUSEC(0,"AS5",IEN,""))'=IP6 Q -1 ;Diff IP
+"RTN","XUS1A",58,0)
+ I $O(^XUSEC(0,"AS5",IEN,""),-1)'=IP6 Q -1 ;Diff IP
+"RTN","XUS1A",59,0)
+ F  S IX=$O(^XUSEC(0,"AS5",IEN,IP6,IX)) Q:'IX  S CNT=CNT+1
+"RTN","XUS1A",60,0)
+ Q CNT ;Return Count
+"RTN","XUS1A",61,0)
+ ;
+"RTN","XUS1A",62,0)
+INTRO(WNM) ;
+"RTN","XUS1A",63,0)
+ Q:'$D(^XTV(8989.3,1,"INTRO",0))
+"RTN","XUS1A",64,0)
+ F I=0:0 S I=$O(^XTV(8989.3,1,"INTRO",I)) Q:I'>0  S X=^(I,0) D
+"RTN","XUS1A",65,0)
+ . I $D(WNM) S @WNM@(I)=X
+"RTN","XUS1A",66,0)
+ . I '$D(WNM) W X,!
+"RTN","XUS1A",67,0)
+ . Q
+"RTN","XUS1A",68,0)
+ Q
+"RTN","XUS1A",69,0)
+ ;
+"RTN","XUS1A",70,0)
+DD(Y) Q $$FMTE^XLFDT(X,"1D")
+"RTN","XUS1A",71,0)
+ ;
+"RTN","XUS1A",72,0)
+PH(%T,%R) ;Check Prohibited time for R/S
+"RTN","XUS1A",73,0)
+ N MSG S MSG=$$PROHIBIT(%T,%R)
+"RTN","XUS1A",74,0)
+ I MSG S XUM(0)=$P(MSG,U,2) Q 1
+"RTN","XUS1A",75,0)
+ D SET("!"),SET("! "_$$EZBLD^DIALOG(30810.62)_" "_$P(MSG,U,2))
+"RTN","XUS1A",76,0)
+ Q 0
+"RTN","XUS1A",77,0)
+ ;
+"RTN","XUS1A",78,0)
+PROHIBIT(%T,%R) ;See if a prohibited time, (Time from $H, restrict range)
+"RTN","XUS1A",79,0)
+ N XMSG,%B,%E
+"RTN","XUS1A",80,0)
+ S %T=%T\60#60+(%T\3600*100),%B=$P(%R,"-",1),%E=$P(%R,"-",2)
+"RTN","XUS1A",81,0)
+ S XMSG=$P($$FMTE^XLFDT(DT_"."_%B,"2P")," ",2,3)_" "_$$EZBLD^DIALOG(30810.61)_" "_$P($$FMTE^XLFDT(DT_"."_%E,"2P")," ",2,3)
+"RTN","XUS1A",82,0)
+ I $S(%E'<%B:%T'>%E&(%T'<%B),1:%T>%B!(%T<%E)) Q "1^"_XMSG ;No
+"RTN","XUS1A",83,0)
+ Q "0^"_XMSG
+"RTN","XUS1B")
+0^11^B10471388^B8805326
+"RTN","XUS1B",1,0)
+XUS1B ;ISF/RWF - Auto sign-on ;12/04/14  14:57
+"RTN","XUS1B",2,0)
+ ;;8.0;KERNEL;**59,337,395,469,543,594,638**;Jul 10, 1995;Build 15
+"RTN","XUS1B",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUS1B",4,0)
+ Q
+"RTN","XUS1B",5,0)
+ ;
+"RTN","XUS1B",6,0)
+AUTOXUS() ;Do the check for XUS and Auto Sign-on
+"RTN","XUS1B",7,0)
+ N %,FG,Y
+"RTN","XUS1B",8,0)
+ I $G(XQXFLG("ASO")) Q 0 ;Already tried once.
+"RTN","XUS1B",9,0)
+ G AUTO
+"RTN","XUS1B",10,0)
+ ;
+"RTN","XUS1B",11,0)
+AUTOXWB() ;Do the check for XWB and Auto Sign-on
+"RTN","XUS1B",12,0)
+ N %,FG,Y,NUNOW
+"RTN","XUS1B",13,0)
+ I $G(XQXFLG("ASO")) Q 0 ;Already tried so skip.
+"RTN","XUS1B",14,0)
+ S XUNOW=$$NOW^XLFDT ;p543
+"RTN","XUS1B",15,0)
+AUTO ;Common code
+"RTN","XUS1B",16,0)
+ I ($T(^XWBCAGNT)="")!($P(XOPT,U,18)="d") S XQXFLG("ZEBRA")=-1 Q 0 ;Disabled
+"RTN","XUS1B",17,0)
+ S Y=$$CHKVIP(),%=0
+"RTN","XUS1B",18,0)
+ I Y>0 S %=$$PREF($P(XOPT,U,18),$P($G(^VA(200,Y,200)),U,18))
+"RTN","XUS1B",19,0)
+ I Y>0,'% S Y=0 ;No Auto signon
+"RTN","XUS1B",20,0)
+ ;check parameter, skip set if yes, default is no p594
+"RTN","XUS1B",21,0)
+ I Y>0,'$$GET^XPAR("SYS","XU594",1,"Q") S DUZ(2)=+FG ;Set Division p543
+"RTN","XUS1B",22,0)
+ Q Y
+"RTN","XUS1B",23,0)
+ ;
+"RTN","XUS1B",24,0)
+CHKVIP() ;Check for a Valid current IP
+"RTN","XUS1B",25,0)
+ N REF,XREF,IEN,R0,ENV,JOB,HNDL,XTMP
+"RTN","XUS1B",26,0)
+ ;D SETUP ;To log data for debug
+"RTN","XUS1B",27,0)
+ S IEN=0,ENV=$$ENV,REF=$G(IO("IP")) I $L(REF) D GETHNDL(.HNDL)
+"RTN","XUS1B",28,0)
+ ;p638   - Look thru the IPv6 X-ref
+"RTN","XUS1B",29,0)
+ I $L(REF) D LKUP("AS4",$$FORCEIP6^XLFIPV(REF)) ;Will set IEN
+"RTN","XUS1B",30,0)
+ Q IEN
+"RTN","XUS1B",31,0)
+ ;
+"RTN","XUS1B",32,0)
+LKUP(XREF,LK) ;Check one X-ref
+"RTN","XUS1B",33,0)
+ N R0,R1,IX,D1,NM ;p543
+"RTN","XUS1B",34,0)
+ S IX=0,IEN=0
+"RTN","XUS1B",35,0)
+ F  S IX=$O(^XUSEC(0,XREF,LK,IX)) Q:'$L(IX)  D CHK Q:IEN>0
+"RTN","XUS1B",36,0)
+ Q
+"RTN","XUS1B",37,0)
+CHK ;Could this be a good one.
+"RTN","XUS1B",38,0)
+ N R0,R1,D1,XIPV6,REF6,XNM,REFNM
+"RTN","XUS1B",39,0)
+ S R0=$G(^XUSEC(0,IX,0))
+"RTN","XUS1B",40,0)
+ ;Check that IP really matches (Q if IPv6<>REF6)
+"RTN","XUS1B",41,0)
+ S XIPV6=$P($G(^XUSEC(0,IX,1)),U,1)  ;Stored IPv6 address
+"RTN","XUS1B",42,0)
+ S REF6=$$FORCEIP6^XLFIPV(REF)       ;Reference address converted to IPv6
+"RTN","XUS1B",43,0)
+ I XIPV6'=REF6 Q
+"RTN","XUS1B",44,0)
+ ;Check entry does not have sign-off D/T. p543
+"RTN","XUS1B",45,0)
+ I $P(R0,U,4) Q
+"RTN","XUS1B",46,0)
+ ;Check that Client name matches
+"RTN","XUS1B",47,0)
+ S XNM=$$LOW^XLFSTR($P(R0,U,12))     ;Stored client name
+"RTN","XUS1B",48,0)
+ S REFNM=$$LOW^XLFSTR($P($G(IO("CLNM")),"."))  ;Reference client name
+"RTN","XUS1B",49,0)
+ I $L(XNM),$L(REFNM),XNM'=REFNM Q
+"RTN","XUS1B",50,0)
+ ;Check date within 8 hours p543
+"RTN","XUS1B",51,0)
+ S D1=$$FMDIFF^XLFDT(XUNOW,IX,2) I (D1>28800)!(D1<-5) Q
+"RTN","XUS1B",52,0)
+ ;Check handle. Use timeout on Lock p543
+"RTN","XUS1B",53,0)
+ S R1=$P(R0,U,13) I $L(R1),$D(HNDL(R1)) D
+"RTN","XUS1B",54,0)
+ . L +^XWB("SESSION",IX_"~"_R1):DILOCKTM I $T L -^XWB("SESSION",IX_"~"_R1) Q
+"RTN","XUS1B",55,0)
+ . ;Remove D LOG after debug.
+"RTN","XUS1B",56,0)
+ . S IEN=+R0,FG=$P(R0,"^",17),XQXFLG("ASO")=IX ;D LOG Q  ;Found a match
+"RTN","XUS1B",57,0)
+ . Q
+"RTN","XUS1B",58,0)
+ Q
+"RTN","XUS1B",59,0)
+ ;
+"RTN","XUS1B",60,0)
+ENV() N Y D GETENV^%ZOSV
+"RTN","XUS1B",61,0)
+ Q Y
+"RTN","XUS1B",62,0)
+ ;
+"RTN","XUS1B",63,0)
+PREF(%1,%2) ;
+"RTN","XUS1B",64,0)
+ Q $S($L(%2):%2,1:%1)
+"RTN","XUS1B",65,0)
+ ;
+"RTN","XUS1B",66,0)
+GETHNDL(RET) ;Get the Handles from the Client
+"RTN","XUS1B",67,0)
+ N %,%1,X,XXX,TS
+"RTN","XUS1B",68,0)
+ ;Don't call Terminal servers/Proxy's
+"RTN","XUS1B",69,0)
+ S TS=$G(IO("IP"))
+"RTN","XUS1B",70,0)
+ I $L(TS),$O(^XTV(8989.3,1,405.2,"B",TS,0)) S XQXFLG("ZEBRA")=-1 Q  ;Disable to TS and Proxy's
+"RTN","XUS1B",71,0)
+ S %=$$CMD^XWBCAGNT(.XXX,"XWB GET HANDLES") I '% S XQXFLG("ZEBRA")=-1 Q  ;Disable on Timeout p543
+"RTN","XUS1B",72,0)
+ Q:'$O(XXX(0))
+"RTN","XUS1B",73,0)
+ ;build array
+"RTN","XUS1B",74,0)
+ S RET=0,%1=1 F %=1:1:$L(XXX(%1),"^") S X=$P(XXX(%1),"^",%) S:X]"" RET(X)="",RET=RET+1
+"RTN","XUS1B",75,0)
+ Q
+"RTN","XUS1B",76,0)
+ ;Temp for data collection
+"RTN","XUS1B",77,0)
+SETUP ;
+"RTN","XUS1B",78,0)
+ N N1,N2
+"RTN","XUS1B",79,0)
+ I '$D(^XTMP("XUSP543","CNT")) S ^XTMP("XUSP543",0)=$$HTFM^XLFDT($H+30)_"^"_XUNOW,^("CNT")=0
+"RTN","XUS1B",80,0)
+ S N1="XUSP543",N2="CNT"
+"RTN","XUS1B",81,0)
+ X "S XTMP=$INCREMENT(^XTMP(N1,N2))"
+"RTN","XUS1B",82,0)
+ S ^XTMP("XUSP543",XTMP,0)=$G(IO("IP"))_U_$G(IO("ZIO"))_U_XUNOW
+"RTN","XUS1B",83,0)
+ Q
+"RTN","XUS1B",84,0)
+ ;
+"RTN","XUS1B",85,0)
+LOG ;Log more data
+"RTN","XUS1B",86,0)
+ M ^XTMP("XUSP543",XTMP,"HNDL")=HNDL
+"RTN","XUS1B",87,0)
+ S ^XTMP("XUSP543",XTMP,"R0")=R0,^("R1")=R1,^("IX")=IX
+"RTN","XUS1B",88,0)
+ Q
+"RTN","XUSBSE1")
+0^1^B117144392^B88363702
+"RTN","XUSBSE1",1,0)
+XUSBSE1 ;ISF/JLI,ISD/HGW - MODIFICATIONS FOR BSE ;12/02/14  13:29
+"RTN","XUSBSE1",2,0)
+ ;;8.0;KERNEL;**404,439,523,595,522,638**;Jul 10, 1995;Build 15
+"RTN","XUSBSE1",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUSBSE1",4,0)
+ ;
+"RTN","XUSBSE1",5,0)
+SETVISIT(RES) ; .RPC "XUS SET VISITOR"
+"RTN","XUSBSE1",6,0)
+ ;Returns a BSE TOKEN
+"RTN","XUSBSE1",7,0)
+ N TOKEN,O,X
+"RTN","XUSBSE1",8,0)
+ S X=$$ACTIVE^XUSER(DUZ) I $P(X,U)<1 S RES=X Q  ;User must be active
+"RTN","XUSBSE1",9,0)
+ S TOKEN=$$HANDLE^XUSRB4("XUSBSE",1)
+"RTN","XUSBSE1",10,0)
+ S ^XTMP(TOKEN,1)=$$ENCRYP^XUSRB1($$GET^XUESSO1(DUZ))
+"RTN","XUSBSE1",11,0)
+ S ^XTMP(TOKEN,3)=+$H ;Set expiration day
+"RTN","XUSBSE1",12,0)
+ L -^XTMP(TOKEN) ;Lock set in $$HANDLE^XUSRB4
+"RTN","XUSBSE1",13,0)
+ S RES=TOKEN
+"RTN","XUSBSE1",14,0)
+ Q
+"RTN","XUSBSE1",15,0)
+ ;
+"RTN","XUSBSE1",16,0)
+GETVISIT(RES,TOKEN) ; .RPC "XUS GET VISITOR"
+"RTN","XUSBSE1",17,0)
+ ;Returns demographics for user indicated by TOKEN
+"RTN","XUSBSE1",18,0)
+ ;  or "-1^error message" if user is not permitted to visit
+"RTN","XUSBSE1",19,0)
+ ;   input  - TOKEN - token value returned by remote site
+"RTN","XUSBSE1",20,0)
+ ;   output - RES - passed by reference, contains user demographics on return
+"RTN","XUSBSE1",21,0)
+ N O,X
+"RTN","XUSBSE1",22,0)
+ S RES="",O=0
+"RTN","XUSBSE1",23,0)
+ I TOKEN="" S X=$$LOGERR("BSE NULL TOKEN") Q  ;Shouldn't come in with a null token
+"RTN","XUSBSE1",24,0)
+ L +^XTMP(TOKEN):10 I '$T Q  ; If ^XTMP is purged, token context will be lost
+"RTN","XUSBSE1",25,0)
+ I ($G(^XTMP(TOKEN,3))-$H) K ^XTMP(TOKEN) Q  ;Check expiration time, and if it has passed
+"RTN","XUSBSE1",26,0)
+ S RES=$G(^XTMP(TOKEN,1)) S:$L(RES) RES=$$DECRYP^XUSRB1(RES)
+"RTN","XUSBSE1",27,0)
+ L -^XTMP(TOKEN) ;Lock set in $$HANDLE^XUSRB4
+"RTN","XUSBSE1",28,0)
+ S:'$L(RES) X=$$LOGERR("BSE GET USER ID") ;p595
+"RTN","XUSBSE1",29,0)
+ Q
+"RTN","XUSBSE1",30,0)
+ ;
+"RTN","XUSBSE1",31,0)
+OLDCAPRI(XWBUSRNM) ; Intrinsic. The old CAPRI code, disable with system parameter XU522.
+"RTN","XUSBSE1",32,0)
+ ; Return 1 if a valid user, else 0.
+"RTN","XUSBSE1",33,0)
+ ; ZEXCEPT: DTIME - Kernel exemption
+"RTN","XUSBSE1",34,0)
+ N XVAL,XOPTION,XVAL522
+"RTN","XUSBSE1",35,0)
+ S XVAL522=$$GET^XPAR("SYS","XU522",1,"Q")  ; p522 system parameter XU522 controls CAPRI login disabling, logging
+"RTN","XUSBSE1",36,0)
+ D:(XVAL522="E"!(XVAL522="L")) APPERROR^%ZTER("OLDCAPRI LOGIN ATTEMPT")  ; p522 record CAPRI login attempt if XU522 = E or L
+"RTN","XUSBSE1",37,0)
+ Q:(XVAL522'="L")&(XVAL522'="N") 0  ; p522 fully activate BSE unless param XU522 = N or L
+"RTN","XUSBSE1",38,0)
+ S XVAL=$$PUT^XUESSO1($P(XWBUSRNM,U,3,99)) ; Sign in as Visitor
+"RTN","XUSBSE1",39,0)
+ I XVAL D
+"RTN","XUSBSE1",40,0)
+ . S XOPTION=$$FIND1^DIC(19,"","X","DVBA CAPRI GUI")
+"RTN","XUSBSE1",41,0)
+ . D SETCNTXT(XOPTION) S DTIME=$$DTIME^XUP(DUZ),DUZ(0)="",DUZ("REMAPP")="^Old CAPRI"
+"RTN","XUSBSE1",42,0)
+ Q $S(XVAL>0:1,1:0)
+"RTN","XUSBSE1",43,0)
+ ;
+"RTN","XUSBSE1",44,0)
+CHKUSER(INPUTSTR) ; Extrinsic. Determines if a BSE sign-on is valid - called from XUSRB
+"RTN","XUSBSE1",45,0)
+ ;   INPUTSTR - input - String of characters from client
+"RTN","XUSBSE1",46,0)
+ ;   return value - 1 if a valid user and application, else 0
+"RTN","XUSBSE1",47,0)
+ ; ZEXCEPT: DTIME - Kernel exemption
+"RTN","XUSBSE1",48,0)
+ N X,XUCODE,XUENTRY,XUSTR,XUTOKEN
+"RTN","XUSBSE1",49,0)
+ I +INPUTSTR=-31,INPUTSTR["DVBA_" Q $$OLDCAPRI(INPUTSTR)
+"RTN","XUSBSE1",50,0)
+ I +INPUTSTR'=-35 S X=$$LOGERR("BSE LOGIN ERROR") Q 0  ; not a BSE login
+"RTN","XUSBSE1",51,0)
+ S INPUTSTR=$P(INPUTSTR,U,2,99)
+"RTN","XUSBSE1",52,0)
+ K ^TMP("XUSBSE1",$J)
+"RTN","XUSBSE1",53,0)
+ S XUCODE=$$DECRYP^XUSRB1(INPUTSTR)
+"RTN","XUSBSE1",54,0)
+ S XUCODE=$$EN^XUSHSH($P(XUCODE,U))
+"RTN","XUSBSE1",55,0)
+ S XUENTRY=$$FIND1^DIC(8994.5,"","X",XUCODE,"ACODE")
+"RTN","XUSBSE1",56,0)
+ I XUENTRY'>0 S X=$$LOGERR("BSE LOGIN ERROR - REMAPP") Q 0  ; invalid remote application
+"RTN","XUSBSE1",57,0)
+ S DUZ("REMAPP")=XUENTRY_U_$$GET1^DIQ(8994.5,XUENTRY_",",.01)
+"RTN","XUSBSE1",58,0)
+ S XUTOKEN=$P($$DECRYP^XUSRB1(INPUTSTR),U,2)
+"RTN","XUSBSE1",59,0)
+ S XUSTR=$P($$DECRYP^XUSRB1(INPUTSTR),U,3,4)
+"RTN","XUSBSE1",60,0)
+ S XUENTRY=$$BSEUSER(XUENTRY,XUTOKEN,XUSTR)
+"RTN","XUSBSE1",61,0)
+ S DTIME=$$DTIME^XUP(DUZ)
+"RTN","XUSBSE1",62,0)
+ I XUENTRY'>0 S X=$$LOGERR("BSE LOGIN ERROR - USER") Q 0  ; invalid user
+"RTN","XUSBSE1",63,0)
+ Q XUENTRY
+"RTN","XUSBSE1",64,0)
+ ;
+"RTN","XUSBSE1",65,0)
+BSEUSER(ENTRY,TOKEN,STR) ; Intrinsic. Returns internal entry number for authenticated user
+"RTN","XUSBSE1",66,0)
+ ;   ENTRY - input - internal entry number in REMOTE APPLICATION file
+"RTN","XUSBSE1",67,0)
+ ;   TOKEN - input - token from authenticating site
+"RTN","XUSBSE1",68,0)
+ ;   STR   - input - remainder of input string (station #^TCP/IP port for station-based authentication)
+"RTN","XUSBSE1",69,0)
+ ;   returns - IEN for authenticated user, or 0 if not authenticated
+"RTN","XUSBSE1",70,0)
+ ; ZEXCEPT: XWBSEC - Kernel exemption, contains error message returned to GUI application
+"RTN","XUSBSE1",71,0)
+ N X,XUIEN,XUCONTXT,XUDEMOG,XCNT,XVAL,ARRAY,XUCACHE,XUCONTXT
+"RTN","XUSBSE1",72,0)
+ S XUIEN=0,XUDEMOG="",XUCONTXT=0
+"RTN","XUSBSE1",73,0)
+ ; Check for cached user authentication (p638)
+"RTN","XUSBSE1",74,0)
+ I $D(^XTMP("XUSBSE1",TOKEN)) D
+"RTN","XUSBSE1",75,0)
+ . S XUCACHE=$G(^XTMP("XUSBSE1",TOKEN)) ; Retrieve cached values
+"RTN","XUSBSE1",76,0)
+ . I $P($P(XUCACHE,U,1),".",1)<$$DT^XLFDT() K ^XTMP("XUSBSE1",TOKEN) Q  ; Do not use if expired (not from today)
+"RTN","XUSBSE1",77,0)
+ . I $P(XUCACHE,U,1)=$$HADD^XLFDT($$NOW^XLFDT(),0,0,0,600) K ^XTMP("XUSBSE1",TOKEN) Q  ; Do not use if expired (older than 600s)
+"RTN","XUSBSE1",78,0)
+ . S XUDEMOG=$P(XUCACHE,U,3,99) ; Get demographics of authenticated user
+"RTN","XUSBSE1",79,0)
+ . I '$$PUT^XUESSO1(XUDEMOG) Q  ; Set VISITOR entry, quit if failed
+"RTN","XUSBSE1",80,0)
+ . S XUIEN=$G(DUZ)
+"RTN","XUSBSE1",81,0)
+ . S XUCONTXT=$P(XUCACHE,U,2),^XUTL("XQ",$J,"DUZ(BSE)")=XUCONTXT ; Set Context Option
+"RTN","XUSBSE1",82,0)
+ . S:(XUIEN>0) ^XTMP("XUSBSE1",TOKEN)=$$NOW^XLFDT()_"^"_$G(XUCONTXT)_"^"_XUDEMOG ; Reset cache to keep authentication alive
+"RTN","XUSBSE1",83,0)
+ I (XUIEN>0)&(XUCONTXT>0) Q XUIEN  ; p638 Use cached authentication
+"RTN","XUSBSE1",84,0)
+ ;
+"RTN","XUSBSE1",85,0)
+ S XCNT=0 F  S XCNT=$O(^XWB(8994.5,ENTRY,1,XCNT)) Q:XCNT'>0  S XVAL=^(XCNT,0) D  Q:XUDEMOG'=""
+"RTN","XUSBSE1",86,0)
+ . ; CODE TO HANDLE CONNECTION TYPE AND CONNECTIONS
+"RTN","XUSBSE1",87,0)
+ . I $P(XVAL,U)="M" S XUDEMOG=$$M2M($P(XVAL,U,3),$P(XVAL,U,2),TOKEN) D CLOSE^XWBM2MC() Q  ; M2M-Broker authentication
+"RTN","XUSBSE1",88,0)
+ . I $P(XVAL,U)="R" S XUDEMOG=$$XWB($P(XVAL,U,3),$P(XVAL,U,2),TOKEN) Q  ; RPC-Broker authentication
+"RTN","XUSBSE1",89,0)
+ . I $P(XVAL,U)="H" S XUDEMOG=$$POST1^XUSBSE2(.ARRAY,$P(XVAL,U,3),$P(XVAL,U,2),$P(XVAL,U,4),"xVAL="_TOKEN) Q  ; HTTP authentication
+"RTN","XUSBSE1",90,0)
+ . I $P(XVAL,U)="S" S XUDEMOG=$$HOME(TOKEN,XVAL,STR) Q  ; Station-number authentication
+"RTN","XUSBSE1",91,0)
+ . Q
+"RTN","XUSBSE1",92,0)
+ ; if invalid set XWBSEC so an error is reported in the GUI application
+"RTN","XUSBSE1",93,0)
+ I +XUDEMOG=-1 S XWBSEC="BSE ERROR - "_$P(XUDEMOG,"^",2)
+"RTN","XUSBSE1",94,0)
+ I $L(XUDEMOG,"^")>2 D
+"RTN","XUSBSE1",95,0)
+ . S XUCONTXT=$P($G(^XWB(8994.5,ENTRY,0)),U,2)
+"RTN","XUSBSE1",96,0)
+ . S XUIEN=$$SETUP(XUDEMOG,XUCONTXT)
+"RTN","XUSBSE1",97,0)
+ S:(XUIEN'>0) X=$$LOGERR("BSE LOGIN ERROR") ;p595
+"RTN","XUSBSE1",98,0)
+ S:(XUIEN>0) ^XTMP("XUSBSE1",TOKEN)=$$NOW^XLFDT()_"^"_$G(XUCONTXT)_"^"_XUDEMOG ; p638 Cache user authentication
+"RTN","XUSBSE1",99,0)
+ Q $S(XUIEN'>0:0,1:XUIEN)
+"RTN","XUSBSE1",100,0)
+ ;
+"RTN","XUSBSE1",101,0)
+XWB(SERVER,PORT,TOKEN) ; Special Broker service
+"RTN","XUSBSE1",102,0)
+ N DEMOSTR,IO,XWBTDEV,XWBRBUF
+"RTN","XUSBSE1",103,0)
+ Q $$CALLBSE^XWBTCPM2(SERVER,PORT,TOKEN)
+"RTN","XUSBSE1",104,0)
+ ;
+"RTN","XUSBSE1",105,0)
+M2M(SERVER,PORT,TOKEN) ; M2M Broker
+"RTN","XUSBSE1",106,0)
+ N DEMOGSTR,XWBCRLFL,RETRNVAL,XUSBSARR
+"RTN","XUSBSE1",107,0)
+ S DEMOGSTR=""
+"RTN","XUSBSE1",108,0)
+ N XWBSTAT,XWBPARMS,XWBTDEV,XWBNULL
+"RTN","XUSBSE1",109,0)
+ S XWBPARMS("ADDRESS")=SERVER,XWBPARMS("PORT")=PORT
+"RTN","XUSBSE1",110,0)
+ S XWBPARMS("RETRIES")=3 ;Retries 3 times to open
+"RTN","XUSBSE1",111,0)
+ ;
+"RTN","XUSBSE1",112,0)
+ I '$$OPEN^XWBRL(.XWBPARMS) Q "NO OPEN"
+"RTN","XUSBSE1",113,0)
+ S XWBPARMS("URI")="XUS GET VISITOR"
+"RTN","XUSBSE1",114,0)
+ D CLEARP^XWBM2MEZ
+"RTN","XUSBSE1",115,0)
+ D SETPARAM^XWBM2MEZ(1,"STRING",TOKEN)
+"RTN","XUSBSE1",116,0)
+ S XWBPARMS("URI")="XUS GET VISITOR"
+"RTN","XUSBSE1",117,0)
+ S XWBPARMS("RESULTS")=$NA(^TMP("XUSBSE1",$J))
+"RTN","XUSBSE1",118,0)
+ S XWBCRLFL=0
+"RTN","XUSBSE1",119,0)
+ D REQUEST^XWBRPCC(.XWBPARMS)
+"RTN","XUSBSE1",120,0)
+ I XWBCRLFL S RETRNVAL="XWBCRLFL IS TRUE" G M2MEXIT
+"RTN","XUSBSE1",121,0)
+ ;
+"RTN","XUSBSE1",122,0)
+ I '$$EXECUTE^XWBVLC(.XWBPARMS) S RETRNVAL="FAILURE ON EXECUTE" G M2MEXIT ;Run RPC and place raw XML results in ^TMP("XWBM2MVLC"
+"RTN","XUSBSE1",123,0)
+ D PARSE^XWBRPC(.XWBPARMS,"XUSBSARR") ;Parse out raw XML and place results in ^TMP("XWBM2MRPC"
+"RTN","XUSBSE1",124,0)
+ S RETRNVAL=$G(XUSBSARR(1))
+"RTN","XUSBSE1",125,0)
+M2MEXIT ;
+"RTN","XUSBSE1",126,0)
+ D CLOSE^XWBM2MEZ
+"RTN","XUSBSE1",127,0)
+ Q RETRNVAL
+"RTN","XUSBSE1",128,0)
+ ;
+"RTN","XUSBSE1",129,0)
+HOME(TOKEN,RAD,BSE) ; Call home station for token.
+"RTN","XUSBSE1",130,0)
+ ;   input TOKEN  - token to identify user to authenticating server
+"RTN","XUSBSE1",131,0)
+ ;   input RAD    - Zero node of application data from REMOTE APPLICATION file (#8994.5)
+"RTN","XUSBSE1",132,0)
+ ;   input BSE    - Station #^TCP/IP port
+"RTN","XUSBSE1",133,0)
+ ; returns        - string of demographic characteristics or "-1^error message"
+"RTN","XUSBSE1",134,0)
+ N X,XUESSO,PORT,STN,IP,STNIEN,XUCACHE,STNPRNT
+"RTN","XUSBSE1",135,0)
+ D:$G(XWBDEBUG) LOG^XWBDLOG("ENTERED HOME BSE: "_BSE) ; DEBUG
+"RTN","XUSBSE1",136,0)
+ Q:$P(RAD,U,2)'=-1 "" ;Not setup right
+"RTN","XUSBSE1",137,0)
+ ;Set Station #, port from passed in data
+"RTN","XUSBSE1",138,0)
+ S STN=$P(BSE,U),PORT=$P(BSE,U,2),XUESSO=""
+"RTN","XUSBSE1",139,0)
+ ; Check if STN is a valid station number in the INSTITUTION file (security check)
+"RTN","XUSBSE1",140,0)
+ S STNIEN=$$LKUP^XUAF4(STN) I STNIEN=0 S XUESSO="-1^"_STN_" WAS NOT FOUND IN FILE 4" Q XUESSO
+"RTN","XUSBSE1",141,0)
+ ; Check if STN is an active facility (security check)
+"RTN","XUSBSE1",142,0)
+ I '$$ACTIVE^XUAF4(STNIEN) S XUESSO="-1^"_STN_" IS NOT AN ACTIVE VA FACILITY" Q XUESSO
+"RTN","XUSBSE1",143,0)
+ S IP=""
+"RTN","XUSBSE1",144,0)
+ ; Look for a valid cached DNS address (less than 1800 seconds old)
+"RTN","XUSBSE1",145,0)
+ S STNPRNT=$P($$PRNT^XUAF4(STN),U,2) S:'+STNPRNT STNPRNT=STN ; Convert subdivision to parent station
+"RTN","XUSBSE1",146,0)
+ S XUCACHE=$G(^XTMP("XUSBSE1",STNPRNT))
+"RTN","XUSBSE1",147,0)
+ I ($D(XUCACHE))&($$HDIFF^XLFDT($H,$P(XUCACHE,U,2),2)<1800) S IP=$P(XUCACHE,U,1)
+"RTN","XUSBSE1",148,0)
+ I '$L(IP) S IP=$$IPFLOC(STNPRNT) ; Get the IP address from  HL LOGICAL LINK file (#870)
+"RTN","XUSBSE1",149,0)
+ I '$L(IP) S IP=$$SITESVC(STNPRNT) ; Get the IP address from VASITESERVICE
+"RTN","XUSBSE1",150,0)
+ I '$L(IP) S XUESSO="-1^ADDRESS FOR STN "_STN_" NOT FOUND"
+"RTN","XUSBSE1",151,0)
+ D:$G(XWBDEBUG) LOG^XWBDLOG("HOME BSE IP: "_IP_" PORT:"_PORT)
+"RTN","XUSBSE1",152,0)
+ I $L(IP) S XUESSO=$$CALLBSE^XWBTCPM2(IP,PORT,TOKEN,STN)
+"RTN","XUSBSE1",153,0)
+ D:$G(XWBDEBUG) LOG^XWBDLOG("LEAVING HOME XUESSO: "_XUESSO)
+"RTN","XUSBSE1",154,0)
+ I XUESSO="Didn't open connection." S XUESSO="-1^COULD NOT CONNECT TO STN "_STN_" USING PORT "_PORT
+"RTN","XUSBSE1",155,0)
+ I XUESSO="No Response" S XUESSO="-1^BSE TOKEN EXPIRED"
+"RTN","XUSBSE1",156,0)
+ Q XUESSO
+"RTN","XUSBSE1",157,0)
+ ;
+"RTN","XUSBSE1",158,0)
+IPFLOC(STN) ;Get the address from the station number from HL LOGICAL LINK file (#870)
+"RTN","XUSBSE1",159,0)
+ ;   input    STN - station number
+"RTN","XUSBSE1",160,0)
+ ;   returns      - IP address or null
+"RTN","XUSBSE1",161,0)
+ N XUSBSE,I,RET,ADD,IP,STNPRNT
+"RTN","XUSBSE1",162,0)
+ S STNPRNT=$P($$PRNT^XUAF4(STN),U,2) S:'+STNPRNT STNPRNT=STN ; Convert subdivision to parent station
+"RTN","XUSBSE1",163,0)
+ ; Look for station number in HL LOGICAL LINK file (#870)
+"RTN","XUSBSE1",164,0)
+ D FIND^DIC(870,,".03;.08","X",STNPRNT,,"C",,,"XUSBSE") ; IA# 5449 "C" index lookup
+"RTN","XUSBSE1",165,0)
+ Q:+$G(XUSBSE("DILIST",0))=0 ""
+"RTN","XUSBSE1",166,0)
+ S I=0,ADD="",IP=""
+"RTN","XUSBSE1",167,0)
+ F  S I=$O(XUSBSE("DILIST","ID",I)) Q:'I  D  Q:IP
+"RTN","XUSBSE1",168,0)
+ . ;HL LOGICAL LINK file (#870) DNS DOMAIN field (#.08)
+"RTN","XUSBSE1",169,0)
+ . S ADD=XUSBSE("DILIST","ID",I,.08) I $L(ADD) D  Q:IP'=""
+"RTN","XUSBSE1",170,0)
+ . . I $$VALIDATE^XLFIPV(ADD) S IP=ADD Q  ;ICR #5844
+"RTN","XUSBSE1",171,0)
+ . . S IP=$$ADDRESS^XLFNSLK(ADD) S:IP="" IP=$$ADDRESS^XLFNSLK(ADD,"A") ; Make 2 attempts to get IP, force IPv4 on second attempt
+"RTN","XUSBSE1",172,0)
+ . . Q
+"RTN","XUSBSE1",173,0)
+ . ;HL LOGICAL LINK file (#870) MAILMAIN DOMAIN field (#.03)
+"RTN","XUSBSE1",174,0)
+ . S ADD=XUSBSE("DILIST","ID",I,.03) I $L(ADD) D  Q:IP'=""
+"RTN","XUSBSE1",175,0)
+ . . I $$VALIDATE^XLFIPV(ADD) S IP=ADD Q  ;ICR #5844
+"RTN","XUSBSE1",176,0)
+ . . S IP=$$ADDRESS^XLFNSLK("VISTA."_ADD) S:IP="" IP=$$ADDRESS^XLFNSLK("VISTA."_ADD,"A") ; Make 2 attempts to get IP, force IPv4 on second attempt
+"RTN","XUSBSE1",177,0)
+ . . Q
+"RTN","XUSBSE1",178,0)
+ I $L(IP) S ^XTMP("XUSBSE1",STNPRNT)=IP_"^"_$H ; Cache the IP address
+"RTN","XUSBSE1",179,0)
+ Q IP
+"RTN","XUSBSE1",180,0)
+ ;
+"RTN","XUSBSE1",181,0)
+SITESVC(STN) ;Get IP from the stn# from VISTASITESERVICE
+"RTN","XUSBSE1",182,0)
+ ;   input   STN - station number
+"RTN","XUSBSE1",183,0)
+ ;   returns     - IP address or null
+"RTN","XUSBSE1",184,0)
+ N DNSADD,IP,STNPRNT
+"RTN","XUSBSE1",185,0)
+ S IP=""
+"RTN","XUSBSE1",186,0)
+ S STNPRNT=$P($$PRNT^XUAF4(STN),U,2) S:'+STNPRNT STNPRNT=STN ; Convert subdivision to parent station
+"RTN","XUSBSE1",187,0)
+ S DNSADD=$$WEBADDRS(STNPRNT)
+"RTN","XUSBSE1",188,0)
+ I $L(DNSADD) S IP=$$ADDRESS^XLFNSLK(DNSADD) S:IP="" IP=$$ADDRESS^XLFNSLK(DNSADD,"A") ; Make 2 attempts to get IP, force IPv4 on second attempt
+"RTN","XUSBSE1",189,0)
+ I $L(IP) S ^XTMP("XUSBSE1",STNPRNT)=IP_"^"_$H ; Cache the IP address
+"RTN","XUSBSE1",190,0)
+ Q IP
+"RTN","XUSBSE1",191,0)
+ ;
+"RTN","XUSBSE1",192,0)
+WEBADDRS(STNNUM) ;
+"RTN","XUSBSE1",193,0)
+ N IP,URL,XUSBSE,RESULTS,I,X,POP
+"RTN","XUSBSE1",194,0)
+ D FIND^DIC(2005.2,,"1","MO","VISTASITESERVICE",,,,,"XUSBSE")
+"RTN","XUSBSE1",195,0)
+ S URL=$G(XUSBSE("DILIST","ID",1,1))
+"RTN","XUSBSE1",196,0)
+ D EN1^XUSBSE2(URL_"/getSite?siteID="_STNNUM,.RESULTS)
+"RTN","XUSBSE1",197,0)
+ S X="" F I=1:1 Q:'$D(RESULTS(I))  I RESULTS(I)["hostname>" S X=$P($P(RESULTS(I),"<hostname>",2),"</hostname>") Q
+"RTN","XUSBSE1",198,0)
+ Q X
+"RTN","XUSBSE1",199,0)
+ ;
+"RTN","XUSBSE1",200,0)
+SETUP(XUDEMOG,XUCONTXT) ; Setup user as visitor, add context option
+"RTN","XUSBSE1",201,0)
+ ;   input XUDEMOG  - string of demographic characteristics
+"RTN","XUSBSE1",202,0)
+ ;   input XUCONTXT - context option to be given to user
+"RTN","XUSBSE1",203,0)
+ ; return value = internal entry number for user, or 0
+"RTN","XUSBSE1",204,0)
+ I '$$PUT^XUESSO1(XUDEMOG) Q 0
+"RTN","XUSBSE1",205,0)
+ I $G(DUZ)'>0 Q 0
+"RTN","XUSBSE1",206,0)
+ D SETCNTXT(XUCONTXT)
+"RTN","XUSBSE1",207,0)
+ Q DUZ
+"RTN","XUSBSE1",208,0)
+ ;
+"RTN","XUSBSE1",209,0)
+SETCNTXT(XOPT) ;
+"RTN","XUSBSE1",210,0)
+ N OPT,XUCONTXT,X
+"RTN","XUSBSE1",211,0)
+ S XUCONTXT="`"_XOPT
+"RTN","XUSBSE1",212,0)
+ I $$FIND1^DIC(19,"","X",XUCONTXT)'>0 S X=$$LOGERR("BSE LOGIN ERROR - CONTEXT") Q  ;Context option not in option file
+"RTN","XUSBSE1",213,0)
+ ;Have to use $D because of screen in 200.03 keeps FIND1^DIC from working.
+"RTN","XUSBSE1",214,0)
+ I '$D(^VA(200,DUZ,203,"B",XOPT)) D
+"RTN","XUSBSE1",215,0)
+ . ; Have to give the user a delegated option
+"RTN","XUSBSE1",216,0)
+ . N XARR S XARR(200.19,"+1,"_DUZ_",",.01)=XUCONTXT
+"RTN","XUSBSE1",217,0)
+ . D UPDATE^DIE("E","XARR")
+"RTN","XUSBSE1",218,0)
+ . ; And now she can give himself the context option
+"RTN","XUSBSE1",219,0)
+ . K XARR S XARR(200.03,"+1,"_DUZ_",",.01)=XUCONTXT
+"RTN","XUSBSE1",220,0)
+ . D UPDATE^DIE("E","XARR") ; Give context option as a secondary menu item
+"RTN","XUSBSE1",221,0)
+ . S ^XUTL("XQ",$J,"DUZ(BSE)")=XUCONTXT
+"RTN","XUSBSE1",222,0)
+ . ; But now we have to remove the delegated option
+"RTN","XUSBSE1",223,0)
+ . S OPT=$$FIND1^DIC(200.19,","_DUZ_",","X",XUCONTXT)
+"RTN","XUSBSE1",224,0)
+ . I OPT>0 D
+"RTN","XUSBSE1",225,0)
+ . . K XARR S XARR(200.19,(OPT_","_DUZ_","),.01)="@"
+"RTN","XUSBSE1",226,0)
+ . . D FILE^DIE("E","XARR")
+"RTN","XUSBSE1",227,0)
+ . . Q
+"RTN","XUSBSE1",228,0)
+ . Q
+"RTN","XUSBSE1",229,0)
+ Q
+"RTN","XUSBSE1",230,0)
+ ;
+"RTN","XUSBSE1",231,0)
+STNTEST ; tests station#-to-IP conversion (IPFLOC,WEBADDRS) used by HOME station#-based callback
+"RTN","XUSBSE1",232,0)
+ N XUSLSTI,XUSLSTV,XUSSTN,XUSIP1,XUSIP2,XUSBSE
+"RTN","XUSBSE1",233,0)
+ W !,"Broker Security Enhancement (BSE) Station Number-to-IP conversion test (for BSE"
+"RTN","XUSBSE1",234,0)
+ W !,"callbacks to home system). Note: It is not necessarily wrong if results differ"
+"RTN","XUSBSE1",235,0)
+ W !,"or are blank. 2 methods' results are listed: HL LOGICAL LINK/VISTASITESERVICE"
+"RTN","XUSBSE1",236,0)
+ ;
+"RTN","XUSBSE1",237,0)
+ D FIND^DIC(2005.2,,"1","MO","VISTASITESERVICE",,,,,"XUSBSE")
+"RTN","XUSBSE1",238,0)
+ W !!," local VISTASITESERVICE server:",!," ",$G(XUSBSE("DILIST","ID",1,1)),"",!
+"RTN","XUSBSE1",239,0)
+ K ^TMP($J,"XUSBSE1")
+"RTN","XUSBSE1",240,0)
+ DO LIST^DIC(4,,"@;.01;11;99;101","IP",,,,"D",,,$NA(^TMP($J,"XUSBSE1")))
+"RTN","XUSBSE1",241,0)
+ S XUSLSTI=0 F  S XUSLSTI=$O(^TMP($J,"XUSBSE1","DILIST",XUSLSTI)) Q:'+XUSLSTI  D
+"RTN","XUSBSE1",242,0)
+ . S XUSLSTV=^TMP($J,"XUSBSE1","DILIST",XUSLSTI,0)
+"RTN","XUSBSE1",243,0)
+ . Q:+$P(XUSLSTV,U,5)
+"RTN","XUSBSE1",244,0)
+ . S XUSSTN=$P(XUSLSTV,U,4) Q:'$$TF^XUAF4(XUSSTN)
+"RTN","XUSBSE1",245,0)
+ . S XUSIP1=$$IPFLOC(XUSSTN),XUSIP2=$$SITESVC(XUSSTN)
+"RTN","XUSBSE1",246,0)
+ . I $L(XUSIP1)!$L(XUSIP2) D
+"RTN","XUSBSE1",247,0)
+ . . W !,XUSSTN,?8,"(",$P(XUSLSTV,U,2),"): " W $S($L(XUSIP1):XUSIP1,1:"blank"),"/",$S($L(XUSIP2):XUSIP2,1:"blank")
+"RTN","XUSBSE1",248,0)
+ . . I $L(XUSIP1),$L(XUSIP2),(XUSIP1'=XUSIP2) W " ***DIFFERENT***"
+"RTN","XUSBSE1",249,0)
+ K ^TMP($J,"XUSBSE1")
+"RTN","XUSBSE1",250,0)
+ Q
+"RTN","XUSBSE1",251,0)
+LOGERR(XUSETXT) ; log an error in error trap for failed login attempts ; p595
+"RTN","XUSBSE1",252,0)
+ ; XUSETXT is the error subject line $ZE
+"RTN","XUSBSE1",253,0)
+ ; The function returns 0 if the error was screened, and 1 if an error was trapped
+"RTN","XUSBSE1",254,0)
+ N XUSAPP
+"RTN","XUSBSE1",255,0)
+ ; ZEXCEPT: XWBSEC - Kernel exemption
+"RTN","XUSBSE1",256,0)
+ ; ZEXCEPT: XUDEMOG - Kernel exemption
+"RTN","XUSBSE1",257,0)
+ S XUSAPP=$P($G(DUZ("REMAPP")),U,2)
+"RTN","XUSBSE1",258,0)
+ I $P($G(XUDEMOG),U,2)="BSE TOKEN EXPIRED" Q 0  ; screen out "TOKEN EXPIRED" errors
+"RTN","XUSBSE1",259,0)
+ I $G(XWBSEC)="BSE ERROR - BSE TOKEN EXPIRED" Q 0  ; screen out "TOKEN EXPIRED" errors
+"RTN","XUSBSE1",260,0)
+ I XUSAPP'="" S XUSETXT=XUSETXT_" ("_XUSAPP_")"
+"RTN","XUSBSE1",261,0)
+ D APPERROR^%ZTER($E(XUSETXT,1,32))
+"RTN","XUSBSE1",262,0)
+ Q 1
+"RTN","XUSRB4")
+0^3^B18435992^B18063785
+"RTN","XUSRB4",1,0)
+XUSRB4 ;ISF/RWF - Build a temporary sign-on token ;01/29/14  14:56
+"RTN","XUSRB4",2,0)
+ ;;8.0;KERNEL;**150,337,395,419,437,499,523,573,596,638**;Jul 10, 1995;Build 15
+"RTN","XUSRB4",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","XUSRB4",4,0)
+ Q
+"RTN","XUSRB4",5,0)
+ ;
+"RTN","XUSRB4",6,0)
+ASH(RET) ;rpc. Auto Signon Handle
+"RTN","XUSRB4",7,0)
+ N HDL
+"RTN","XUSRB4",8,0)
+ S HDL=$$HANDLE("XWBAS",1),RET="~1"_HDL
+"RTN","XUSRB4",9,0)
+ ;Now place user info in it.
+"RTN","XUSRB4",10,0)
+ D TOK(HDL)
+"RTN","XUSRB4",11,0)
+ Q
+"RTN","XUSRB4",12,0)
+ ;
+"RTN","XUSRB4",13,0)
+CCOW(RET) ;rpc. CCOW Auto Signon Handle
+"RTN","XUSRB4",14,0)
+ N HDL,HDL2,X
+"RTN","XUSRB4",15,0)
+ S RET(0)="NO PROXY USER",RET(1)="ERROR"
+"RTN","XUSRB4",16,0)
+ I $$USERTYPE^XUSAP(DUZ,"APPLICATION PROXY") Q  ;No Proxy
+"RTN","XUSRB4",17,0)
+ I $$USERTYPE^XUSAP(DUZ,"CONNECTOR PROXY") Q  ;No Proxy
+"RTN","XUSRB4",18,0)
+ S X=$$ACTIVE^XUSER(DUZ) I 'X S RET(0)=X Q  ;User must be active
+"RTN","XUSRB4",19,0)
+ S HDL=$$HANDLE("XWBCCW",1)
+"RTN","XUSRB4",20,0)
+ ;Return RET(0) the CCOW token, RET(1) the domain name and the Station #
+"RTN","XUSRB4",21,0)
+ S RET(0)="~2"_$$LOW^XLFSTR(HDL),RET(1)=$G(^XMB("NETNAME"))_"^"_$$STA^XUAF4(DUZ(2))
+"RTN","XUSRB4",22,0)
+ ;Now place user info in it.
+"RTN","XUSRB4",23,0)
+ D TOK(HDL)
+"RTN","XUSRB4",24,0)
+ S ^XUTL("XQ",$J,"HDL")=HDL ;Save handle with job
+"RTN","XUSRB4",25,0)
+ Q
+"RTN","XUSRB4",26,0)
+ ;
+"RTN","XUSRB4",27,0)
+HANDLE(NS,LT) ;Return a unique handle into ^XTMP (ef. sup)
+"RTN","XUSRB4",28,0)
+ ;NS is the namespace, LT is the Handle Lifetime in days
+"RTN","XUSRB4",29,0)
+ N %H,A,J,HL
+"RTN","XUSRB4",30,0)
+ I $G(NS)="" Q "" ;Return null if no namespace
+"RTN","XUSRB4",31,0)
+ S LT=$G(LT,1) S:LT>7 LT=7 ;Default to 1
+"RTN","XUSRB4",32,0)
+ S %H=$H,J=NS_($J#2048)_"-"_(%H#7*86400+$P(%H,",",2))_"_",A=$R(10)
+"RTN","XUSRB4",33,0)
+ F  S HL=J_A,A=A+1 L +^XTMP(HL):1 I $T Q:'$D(^XTMP(HL))  L -^XTMP(HL)
+"RTN","XUSRB4",34,0)
+ S ^XTMP(HL,0)=$$HTFM^XLFDT(%H+LT)_"^"_$$DT^XLFDT()
+"RTN","XUSRB4",35,0)
+ ;L -^XTMP(HL) Leave the Unlock to the caller
+"RTN","XUSRB4",36,0)
+ Q HL
+"RTN","XUSRB4",37,0)
+ ;
+"RTN","XUSRB4",38,0)
+TOK(H) ;Store a Token
+"RTN","XUSRB4",39,0)
+ ;H is handle into XTMP
+"RTN","XUSRB4",40,0)
+ N J,T,R,%
+"RTN","XUSRB4",41,0)
+ S T=$$H3^%ZTM($H)
+"RTN","XUSRB4",42,0)
+ S R=$J_"|"_T_"|"_$G(DUZ)_"|"_H
+"RTN","XUSRB4",43,0)
+ S ^XTMP(H,"D",0)="|"_$$ENCRYP^XUSRB1(R)_"|"
+"RTN","XUSRB4",44,0)
+ S ^XTMP(H,"D2")=$G(DUZ(2))
+"RTN","XUSRB4",45,0)
+ S %=$G(IO("IP")) I $L(%),'$$VALIDATE^XLFIPV(%) S %=$P($$ADDRESS^XLFNSLK(%),",")  ;p638
+"RTN","XUSRB4",46,0)
+ S ^XTMP(H,"D3")=%
+"RTN","XUSRB4",47,0)
+ S ^XTMP(H,"CLNM")=$G(IO("CLNM"))
+"RTN","XUSRB4",48,0)
+ S ^XTMP(H,"JOB",$J)=$G(IO("IP"))
+"RTN","XUSRB4",49,0)
+ S ^XTMP(H,"STATUS")="0^New",^("CNT")=0
+"RTN","XUSRB4",50,0)
+ L -^XTMP(H) ;Clear Lock
+"RTN","XUSRB4",51,0)
+ Q
+"RTN","XUSRB4",52,0)
+ ;
+"RTN","XUSRB4",53,0)
+REMOVE(HL) ;Remove (kill) a Handle. p523
+"RTN","XUSRB4",54,0)
+ I $L($G(HL)) K ^XTMP(HL)
+"RTN","XUSRB4",55,0)
+ Q
+"RTN","XUSRB4",56,0)
+ ;
+"RTN","XUSRB4",57,0)
+CHKASH(HL) ;rpc. Check a Auto Signon Handle
+"RTN","XUSRB4",58,0)
+ N HDL,RET,FDA,IEN S HDL=$E(HL,3,999)
+"RTN","XUSRB4",59,0)
+ S RET=$$CHECK(HDL)
+"RTN","XUSRB4",60,0)
+ I RET>0 D
+"RTN","XUSRB4",61,0)
+ . S DUZ("ASH")=1,IEN=DUZ_","
+"RTN","XUSRB4",62,0)
+ . I $$GET1^DIQ(200,IEN,7,"I") S FDA(200,DUZ_",",7)=0 D FILE^DIE("K","FDA") ;p403
+"RTN","XUSRB4",63,0)
+ D REMOVE(HDL) ;Token only good for one try.
+"RTN","XUSRB4",64,0)
+ Q RET
+"RTN","XUSRB4",65,0)
+ ;
+"RTN","XUSRB4",66,0)
+CHKCCOW(HL) ;rpc. Check a CCOW Auto Signon Handle
+"RTN","XUSRB4",67,0)
+ N HDL,RET,T
+"RTN","XUSRB4",68,0)
+ S HDL=$$UP^XLFSTR($E(HL,3,999)),T=$P($G(^XTV(8989.3,1,30),5400),U)
+"RTN","XUSRB4",69,0)
+ S RET=$$CHECK(HDL,T)
+"RTN","XUSRB4",70,0)
+ I RET>0 D
+"RTN","XUSRB4",71,0)
+ . ;This CCOW Token good for more that one try.
+"RTN","XUSRB4",72,0)
+ . S ^XTMP(HDL,"JOB",$J)=$G(IO("IP"))
+"RTN","XUSRB4",73,0)
+ . S ^XTMP(HDL,"STATUS")=(^XTMP(HDL,"STATUS")+1)_"^Active"
+"RTN","XUSRB4",74,0)
+ . S ^XUTL("XQ",$J,"HDL")=HDL ;Save handle with job
+"RTN","XUSRB4",75,0)
+ . S DUZ("CCOW")=1 ;Flag a CCOW sign-on.
+"RTN","XUSRB4",76,0)
+ Q RET
+"RTN","XUSRB4",77,0)
+ ;
+"RTN","XUSRB4",78,0)
+CHECK(HL,TOUT) ;Check a Token
+"RTN","XUSRB4",79,0)
+ N %,J,D,L,M,S,T,CLNM
+"RTN","XUSRB4",80,0)
+ S S=$G(^XTMP(HL,0)) I '$L(S) Q "0^Bad Handle"
+"RTN","XUSRB4",81,0)
+ S S=$G(^XTMP(HL,"D",0)) I '$L(S) Q "0^Bad Handle" ;Now have real token
+"RTN","XUSRB4",82,0)
+ I $E(S)'="|" Q "0^Bad Token"
+"RTN","XUSRB4",83,0)
+ S S=$$DECRYP^XUSRB1($E(S,2,$L(S)-1)) I S="" Q "0^Bad Token"
+"RTN","XUSRB4",84,0)
+ S J=$P(S,"|"),T=$P(S,"|",2),D=$P(S,"|",3),M=$P(S,"|",4)
+"RTN","XUSRB4",85,0)
+ ;Check token time
+"RTN","XUSRB4",86,0)
+ S %=$$H3^%ZTM($H),TOUT=$G(TOUT,90) ; P573 changed 20 to 90 JLI
+"RTN","XUSRB4",87,0)
+ I T+TOUT<% D REMOVE(HL) Q "0^Token Expired" ;Token good for TOUT or 90 seconds
+"RTN","XUSRB4",88,0)
+ ;Check job
+"RTN","XUSRB4",89,0)
+ ;Check that token has handle
+"RTN","XUSRB4",90,0)
+ I M'=HL Q "0^Bad Token"
+"RTN","XUSRB4",91,0)
+ ;Check User
+"RTN","XUSRB4",92,0)
+ I $G(^VA(200,D,0))="" Q "0^Bad User"
+"RTN","XUSRB4",93,0)
+ ;Do IP check
+"RTN","XUSRB4",94,0)
+ S %=$G(IO("IP")),T=0,CLNM=""
+"RTN","XUSRB4",95,0)
+ I $L(%),'$$VALIDATE^XLFIPV(%) S CLNM=%,%=$P($$ADDRESS^XLFNSLK(%),",")  ;p638
+"RTN","XUSRB4",96,0)
+ S CLNM=$S($L($G(IO("CLNM"))):IO("CLNM"),$L(CLNM):CLNM,1:"") ;p499
+"RTN","XUSRB4",97,0)
+ I $L($G(^XTMP(HL,"D3"))),^XTMP(HL,"D3")=% S T=1
+"RTN","XUSRB4",98,0)
+ I 'T,$L(CLNM),$G(^XTMP(HL,"CLNM"))=IO("CLNM") S T=1
+"RTN","XUSRB4",99,0)
+ I 'T,$$LOW^XLFSTR($S($L($G(IO("ZIO"))):IO("ZIO"),1:$G(IO)))[$P($G(^XTMP(HL,"CLNM")),".") S T=1  ;ram p596
+"RTN","XUSRB4",100,0)
+ I 'T Q "0^Different IP" ;p499
+"RTN","XUSRB4",101,0)
+ I $D(^XTMP(HL,"D2")),D>0 S DUZ(2)=^XTMP(HL,"D2")
+"RTN","XUSRB4",102,0)
+ D USER^XUS(D)
+"RTN","XUSRB4",103,0)
+ Q D
+"RTN","XUSRB4",104,0)
+ ;
+"RTN","XUSRB4",105,0)
+ ;
+"RTN","XUSRB4",106,0)
+CCOWPC(RET) ;Return ap
+"RTN","XUSRB4",107,0)
+ N I,XU4
+"RTN","XUSRB4",108,0)
+ S RET(0)="" I '$$BROKER^XWBLIB Q
+"RTN","XUSRB4",109,0)
+ D GETLST^XPAR(.XU4,"SYS","XUS CCOW VAULT PARAM","Q")
+"RTN","XUSRB4",110,0)
+ F I=0,1 S RET(I)=$P($G(XU4(I+1)),"^",2,99)
+"RTN","XUSRB4",111,0)
+ Q
+"RTN","XUSRB4",112,0)
+ ;
+"RTN","XUSRB4",113,0)
+ ;p500
+"RTN","XUSRB4",114,0)
+CCOWIP(RET,CLIENTIP) ;rpc. CCOW Auto Signon Handle for middle tiered application servers
+"RTN","XUSRB4",115,0)
+ N %
+"RTN","XUSRB4",116,0)
+ S %=$G(IO("IP")) ; save original
+"RTN","XUSRB4",117,0)
+ ; get actual ip address instead of localhost address if possible
+"RTN","XUSRB4",118,0)
+ S IO("IP")=$S($G(CLIENTIP)=$$CONVERT^XLFIPV("127.0.0.1"):%,$G(CLIENTIP)="":%,1:$G(CLIENTIP)) ;p638
+"RTN","XUSRB4",119,0)
+ D CCOW(.RET)
+"RTN","XUSRB4",120,0)
+ S IO("IP")=% ; revert to original
+"RTN","XUSRB4",121,0)
+ Q
+"RTN","XUSRB4",122,0)
+ ;
+"RTN","ZIS4ONT")
+0^7^B33135528^B34039996
+"RTN","ZIS4ONT",1,0)
+%ZIS4 ;SFISC/RWF,AC - DEVICE HANDLER SPOOL SPECIFIC CODE (Cache) ;06/16/14  13:23
+"RTN","ZIS4ONT",2,0)
+ ;;8.0;KERNEL;**34,59,69,191,278,293,440,499,524,546,543,584,638**;Jul 10, 1995;Build 15
+"RTN","ZIS4ONT",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","ZIS4ONT",4,0)
+ ;
+"RTN","ZIS4ONT",5,0)
+OPEN ;Called for TRM devices
+"RTN","ZIS4ONT",6,0)
+ G OPN2:$D(IO(1,IO))
+"RTN","ZIS4ONT",7,0)
+ S POP=0 D OP1 G NOPEN:'$D(IO(1,IO))
+"RTN","ZIS4ONT",8,0)
+OPN2 ;
+"RTN","ZIS4ONT",9,0)
+ I $D(%ZISHP),'$D(IOP) W !,$C(7)_" Routing to device "_$P(^%ZIS(1,%E,0),"^",1)_$S($D(^(1)):" "_$P(^(1),"^",1)_" ",1:"")
+"RTN","ZIS4ONT",10,0)
+ Q
+"RTN","ZIS4ONT",11,0)
+NOPEN ;
+"RTN","ZIS4ONT",12,0)
+ I %ZIS'["D",$D(%ZISHP) S POP=1 Q
+"RTN","ZIS4ONT",13,0)
+ I '$D(IOP) W $C(7)_"  [BUSY]" W "  ...  RETRY" S %=2,U="^" D YN^%ZIS1 G OPEN:%=1
+"RTN","ZIS4ONT",14,0)
+ S POP=1 Q
+"RTN","ZIS4ONT",15,0)
+ Q
+"RTN","ZIS4ONT",16,0)
+OP1 N $ET S $ET="G OPNERR^%ZIS4"
+"RTN","ZIS4ONT",17,0)
+ I $D(%ZISLOCK) L +@%ZISLOCK:5 E  S POP=1 Q
+"RTN","ZIS4ONT",18,0)
+ O IO::%ZISTO S:$T IO(1,IO)="" S:'$T POP=1
+"RTN","ZIS4ONT",19,0)
+ Q
+"RTN","ZIS4ONT",20,0)
+OPNERR S POP=1,IO("LASTERR")=$G(IO("ERROR")),IO("ERROR")=$ZE,$EC=""
+"RTN","ZIS4ONT",21,0)
+ Q
+"RTN","ZIS4ONT",22,0)
+ ;
+"RTN","ZIS4ONT",23,0)
+O ;Gets called for all devices
+"RTN","ZIS4ONT",24,0)
+ N X,%A1
+"RTN","ZIS4ONT",25,0)
+ D:%ZIS["L" ZIO
+"RTN","ZIS4ONT",26,0)
+ I $D(IO("S")),$D(^%ZIS(2,IO("S"),10)),^(10)]"" U IO(0) D X10^ZISX ;Open Printer port
+"RTN","ZIS4ONT",27,0)
+OPAR I $D(IOP),%ZTYPE="HFS",$D(%ZIS("HFSIO")),$D(%ZIS("IOPAR")),%ZIS("HFSIO")]"" S IO=%ZIS("HFSIO"),%ZISOPAR=%ZIS("IOPAR")
+"RTN","ZIS4ONT",28,0)
+ S %A=$S($L(%ZISOPAR):%ZISOPAR,%ZTYPE'["TRM":"",$E(%ZISIOST,1)="C":"("_+%Z91_":""C"")",$E(%ZISIOST,1,2)="PK":"("_+%Z91_":""P"")",1:+%Z91)
+"RTN","ZIS4ONT",29,0)
+ S %A=%A_$S(%A["):":"",%ZTYPE["OTH"&($P(%ZTIME,"^",3)="n"):"",1:":"_%ZISTO),%A=""""_IO_""""_$E(":",%A]"")_%A
+"RTN","ZIS4ONT",30,0)
+ D O1 I POP W:'$D(IOP) !,?5,$C(7)_"[Device is BUSY]" Q
+"RTN","ZIS4ONT",31,0)
+ U IO S $X=0,$Y=0
+"RTN","ZIS4ONT",32,0)
+ I $L(%ZISUPAR) S %A1=""""_IO_""":"_%ZISUPAR U @%A1
+"RTN","ZIS4ONT",33,0)
+ G OXECUTE^%ZIS6
+"RTN","ZIS4ONT",34,0)
+ ;
+"RTN","ZIS4ONT",35,0)
+O1 N $ET S $ET="G OPNERR^%ZIS4"
+"RTN","ZIS4ONT",36,0)
+ I $D(%ZISLOCK) L +@%ZISLOCK:5 E  S POP=1 Q
+"RTN","ZIS4ONT",37,0)
+ O @%A S:'$T&(%A?.E1":".N) POP=1 S:'POP IO(1,IO)=""
+"RTN","ZIS4ONT",38,0)
+ S IO("ERROR")=""
+"RTN","ZIS4ONT",39,0)
+ Q
+"RTN","ZIS4ONT",40,0)
+ZIO  ;Obtain Client IP and Node Name if available
+"RTN","ZIS4ONT",41,0)
+ I $D(IO("IP")),$D(IO("ZIO")) Q  ;p499,p524
+"RTN","ZIS4ONT",42,0)
+ N PROCESS
+"RTN","ZIS4ONT",43,0)
+ S IO("ZIO")=$ZIO
+"RTN","ZIS4ONT",44,0)
+ ;Get IP name or number
+"RTN","ZIS4ONT",45,0)
+ I $$OS^%ZOSV="VMS",$G(IO("IP"))="" S IO("IP")=$P($ZF("TRNLNM","SYS$REM_NODE"),":") ;For SSH, p499
+"RTN","ZIS4ONT",46,0)
+ I $$OS^%ZOSV="UNIX",$G(IO("IP"))="" S IO("IP")=$P($SYSTEM.Util.GetEnviron("SSH_CLIENT")," ") ;For SSH, p543
+"RTN","ZIS4ONT",47,0)
+ S PROCESS=##class(%SYS.ProcessQuery).%OpenId($J)
+"RTN","ZIS4ONT",48,0)
+ I ('$L($G(IO("IP"))))&(PROCESS'="") D
+"RTN","ZIS4ONT",49,0)
+ . S IO("IP")=PROCESS.ClientIPAddress ; last resort, get IP address from current process
+"RTN","ZIS4ONT",50,0)
+ . S IO("CLNM")=PROCESS.ClientNodeName
+"RTN","ZIS4ONT",51,0)
+ I '$L($G(IO("ZIO"))) S IO("ZIO")=$G(IO("IP"))
+"RTN","ZIS4ONT",52,0)
+ Q
+"RTN","ZIS4ONT",53,0)
+ ;
+"RTN","ZIS4ONT",54,0)
+SPOOL ;%ZDA=pointer to ^XMB(3.51, %ZFN=spool file Num/Name.
+"RTN","ZIS4ONT",55,0)
+ N %ZOS S %ZOS=$$OS^%ZOSV
+"RTN","ZIS4ONT",56,0)
+ I '$D(^XMB(3.51,0)) W:'$D(IOP) !?5,"The spooler files are not setup in this account." G NO
+"RTN","ZIS4ONT",57,0)
+ I $D(ZISDA) W:'$D(IOP) !?5,$C(7)_"You may not Spool the printing of a Spool document" G NO
+"RTN","ZIS4ONT",58,0)
+ I $D(DUZ)[0 W:'$D(IOP) !,"Must be a valid user." G NO
+"RTN","ZIS4ONT",59,0)
+ ;Get entry in Spool Doc file
+"RTN","ZIS4ONT",60,0)
+R S %ZY=-1 D NEWDOC^ZISPL1:$D(DUZ)=11 G NO:%ZY'>0 S %ZDA=+%ZY,%ZFN=$P(%ZY(0),U,2),IO("DOC")=$P(%ZY(0),U,1) G OK:$D(IO("Q"))
+"RTN","ZIS4ONT",61,0)
+ G:'%ZISB OK I '$P(%ZY,"^",3),%ZFN]"" D SPL3 G NO:%ZFN<0,DOC
+"RTN","ZIS4ONT",62,0)
+ I %ZOS="NT" D  G:%ZFN>255 NO
+"RTN","ZIS4ONT",63,0)
+ . F %ZFN=1:1:260 I '$D(^XMB(3.51,"C",%ZFN))!$D(^(%ZFN,%ZDA)) Q:%ZFN<256  W:'$D(IOP) $C(7)_"  DELETE SOME OTHER DOCUMENT!" Q
+"RTN","ZIS4ONT",64,0)
+ . Q:%ZFN>255  D SPL2 S $P(^XMB(3.51,%ZDA,0),U,2)=%ZFN,^XMB(3.51,"C",%ZFN,%ZDA)=""
+"RTN","ZIS4ONT",65,0)
+ I %ZOS'="NT" D  G:%ZFN=-1 NO ;For VMS & UNIT p546
+"RTN","ZIS4ONT",66,0)
+ . S %ZFN=IO_"SPOOL_no_"_%ZDA_".TMP" D SPL2 Q:%ZFN=-1  S $P(^XMB(3.51,%ZDA,0),U,2)=%ZFN,^XMB(3.51,"C",%ZFN,%ZDA)="",IO=%ZFN
+"RTN","ZIS4ONT",67,0)
+DOC S IO("SPOOL")=%ZDA,^XUTL("XQ",$J,"SPOOL")=%ZDA
+"RTN","ZIS4ONT",68,0)
+ I $D(^%ZIS(1,%ZISIOS,1)),$P(^(1),"^",8),$O(^("SPL",0)) S ^XUTL("XQ",$J,"ADSPL")=%ZISIOS,ZISPLAD=%ZISIOS
+"RTN","ZIS4ONT",69,0)
+OK K %ZDA,%ZFN Q
+"RTN","ZIS4ONT",70,0)
+NO K %ZDA,%ZFN,IO("DOC") S POP=1 Q
+"RTN","ZIS4ONT",71,0)
+ ;
+"RTN","ZIS4ONT",72,0)
+SPL2 ;Open for output
+"RTN","ZIS4ONT",73,0)
+ I %ZOS="NT" O IO:(%ZFN:0) S IO(1,IO)="",^SPOOL(0,IO("DOC"),%ZFN)="",^SPOOL(%ZFN,0)=IO("DOC")_"{"_$H Q
+"RTN","ZIS4ONT",74,0)
+ ;VMS
+"RTN","ZIS4ONT",75,0)
+ O %ZFN:("WNS"):2 G:'$T SPL4 S IO(1,%ZFN)="" Q
+"RTN","ZIS4ONT",76,0)
+ ;
+"RTN","ZIS4ONT",77,0)
+SPL3 ;Open to read
+"RTN","ZIS4ONT",78,0)
+ I %ZOS="NT" G SPL4:'$D(^SPOOL(%ZFN,2147483647)) O IO:(%ZFN:$P(^(2147483647),"{",3)):1 S:'$T ZISPLQ=1 K ^(2147483647) S IO(1,IO)="" Q
+"RTN","ZIS4ONT",79,0)
+ ;VMS
+"RTN","ZIS4ONT",80,0)
+ N $ETRAP S $ETRAP="S $EC="""" G SPL4^%ZIS4"
+"RTN","ZIS4ONT",81,0)
+ O %ZFN:"R":1 S:'$T ZISPLQ=1 G:$ZA<0!('$T) SPL4 S IO(1,%ZFN)="" Q
+"RTN","ZIS4ONT",82,0)
+ ;
+"RTN","ZIS4ONT",83,0)
+SPL4 W:'$D(IOP) !,"Spool file already open" S %ZFN=-1 Q
+"RTN","ZIS4ONT",84,0)
+ ;
+"RTN","ZIS4ONT",85,0)
+CLOSE ;Handle Close and copy to Global
+"RTN","ZIS4ONT",86,0)
+ N %,%ZOS,%Z1,%ZCR,%2,%3,%X,%Y,ZTSK,%ZFN S %ZOS=$$OS^%ZOSV
+"RTN","ZIS4ONT",87,0)
+ I %ZOS="NT",IO=2,$D(IO(1,IO)) K IO(1,IO) C IO
+"RTN","ZIS4ONT",88,0)
+ I %ZOS="VMS",$L(IO),$D(IO(1,IO)) U IO S %ZFN=$ZIO C IO K IO(1,IO)
+"RTN","ZIS4ONT",89,0)
+ I %ZOS="UNIX",$L(IO),$D(IO(1,IO)) C IO K IO(1,IO)
+"RTN","ZIS4ONT",90,0)
+ ;See that ZTSK is set so we will move to the global now.
+"RTN","ZIS4ONT",91,0)
+ S ZTSK=$G(ZTSK,1) D FILE^ZISPL1 I %ZDA'>0 K ZISPLAD Q
+"RTN","ZIS4ONT",92,0)
+ G:%ZOS'="NT" CLVMS ;p546
+"RTN","ZIS4ONT",93,0)
+ S %ZFN=$P(%ZS,"^",2),%ZCR=$C(13),%Y="",%=0,%3=$P(^SPOOL(%ZFN,2147483647),"{",3)
+"RTN","ZIS4ONT",94,0)
+ S %Z1=+$G(^XTV(8989.3,1,"SPL"))
+"RTN","ZIS4ONT",95,0)
+ F %2=1:1:%3 Q:'$D(^SPOOL(%ZFN,%2))  S %X=^SPOOL(%ZFN,%2) D
+"RTN","ZIS4ONT",96,0)
+ . I %Z1<% D LIMIT S %2=%3 Q
+"RTN","ZIS4ONT",97,0)
+ . I %X[$C(13,12) D:$L($P(%X,$C(13))) ADD($P(%X,$C(13))) D ADD("|TOP|") Q
+"RTN","ZIS4ONT",98,0)
+ . D ADD($P(%X,$C(13),1))
+"RTN","ZIS4ONT",99,0)
+ K ^SPOOL(%ZFN),^SPOOL(0,$P(%ZS,U,1)),%Y,%X,%1,%2,%3 D CLOSE^ZISPL1
+"RTN","ZIS4ONT",100,0)
+ Q
+"RTN","ZIS4ONT",101,0)
+ADD(L) S %=%+1,^XMBS(3.519,XS,2,%,0)=L
+"RTN","ZIS4ONT",102,0)
+ Q
+"RTN","ZIS4ONT",103,0)
+LIMIT D ADD("*** INCOMPLETE REPORT  -- SPOOL DOCUMENT LINE LIMIT EXCEEDED ***") S $P(^XMB(3.51,%ZDA,0),"^",11)=1
+"RTN","ZIS4ONT",104,0)
+ Q
+"RTN","ZIS4ONT",105,0)
+CLVMS ;Close for Cache VMS & Linux
+"RTN","ZIS4ONT",106,0)
+ N $ES,$ET S $ET="D:$EC'[""ENDOF"" ^%ZTER,UNWIND^%ZTER S $EC="""" D SPLEX^%ZIS4,UNWIND^%ZTER"
+"RTN","ZIS4ONT",107,0)
+ ;Check Cache version, if 2008 use $ZU, else use system object
+"RTN","ZIS4ONT",108,0)
+ I '$G(XUOSVER) N XUOSVER S XUOSVER=$$VERSION^%ZOSV
+"RTN","ZIS4ONT",109,0)
+ S %ZA=$S(XUOSVER<2010:$ZU(68,40,1),1:##class(%SYSTEM.Process).SetZEOF(1)) ;Handle EOF like DSM
+"RTN","ZIS4ONT",110,0)
+ ;%ZFN Could be set at the top
+"RTN","ZIS4ONT",111,0)
+ S %ZFN=$S($G(%ZFN)]"":%ZFN,1:$P(%ZS,"^",2)) D SPL3 Q:%ZFN']""  U %ZFN S %ZCR=$C(13),%Y=""
+"RTN","ZIS4ONT",112,0)
+ S %Z1=+$G(^XTV(8989.3,1,"SPL")),%=0
+"RTN","ZIS4ONT",113,0)
+ F  R %X#255:5 Q:$ZEOF<0  D  G:%Z1<% SPLEX
+"RTN","ZIS4ONT",114,0)
+ . I %Z1<% D LIMIT Q
+"RTN","ZIS4ONT",115,0)
+ . I %X[$C(12) D  Q
+"RTN","ZIS4ONT",116,0)
+ . . S %Y=$P(%X,$C(12)) D:$L(%Y) ADD(%Y),ADD("|TOP|")
+"RTN","ZIS4ONT",117,0)
+ . . S %Y=$P(%X,$C(12),2) D:$L(%Y) ADD(%Y)
+"RTN","ZIS4ONT",118,0)
+ . . Q
+"RTN","ZIS4ONT",119,0)
+ . D ADD(%X)
+"RTN","ZIS4ONT",120,0)
+ . Q
+"RTN","ZIS4ONT",121,0)
+SPLEX C %ZFN:"D" K:%ZFN]"" IO(1,%ZFN) D CLOSE^ZISPL1 K %Y,%X,%1,%ZFN Q
+"RTN","ZIS4ONT",122,0)
+ ;
+"RTN","ZIS4ONT",123,0)
+ ;
+"RTN","ZIS4ONT",124,0)
+HFS G HFS^%ZISF
+"RTN","ZIS4ONT",125,0)
+REWMT(IO2,IOPAR) ;Rewind Magtape
+"RTN","ZIS4ONT",126,0)
+ N $ETRAP S $ET="G REWERR^%ZIS4"
+"RTN","ZIS4ONT",127,0)
+ U IO2 W *5
+"RTN","ZIS4ONT",128,0)
+ Q 1
+"RTN","ZIS4ONT",129,0)
+REWSDP(IO2,IOPAR) ;Rewind SDP
+"RTN","ZIS4ONT",130,0)
+ G REW1
+"RTN","ZIS4ONT",131,0)
+REWHFS(IO2,IOPAR) ;Rewind Host File.
+"RTN","ZIS4ONT",132,0)
+REW1 ;ZIS set % to the current $I so need to update % if = IO
+"RTN","ZIS4ONT",133,0)
+ N NIO,OP,$ETRAP
+"RTN","ZIS4ONT",134,0)
+ S $ET="G REWERR^%ZIS4"
+"RTN","ZIS4ONT",135,0)
+ C IO2 ;You do a rewind to read the file.
+"RTN","ZIS4ONT",136,0)
+ S OP=$S($ZV["VMS":"RV",1:"RS")
+"RTN","ZIS4ONT",137,0)
+ O IO2:(OP):1 S IO(1,IO2)=""
+"RTN","ZIS4ONT",138,0)
+ Q 1
+"RTN","ZIS4ONT",139,0)
+REWERR ;Error encountered
+"RTN","ZIS4ONT",140,0)
+ S IO("ERROR")=$EC,$ECODE=""
+"RTN","ZIS4ONT",141,0)
+ Q 0
+"RTN","ZISTCP")
+0^8^B28352533^B27837637
+"RTN","ZISTCP",1,0)
+%ZISTCP ;ISC/RWF,ISD/HGW - DEVICE HANDLER TCP/IP CALLS ;07/11/14  11:37
+"RTN","ZISTCP",2,0)
+ ;;8.0;KERNEL;**36,34,59,69,118,225,275,638**;Jul 10, 1995;Build 15
+"RTN","ZISTCP",3,0)
+ ;Per VA Directive 6402, this routine should not be modified.
+"RTN","ZISTCP",4,0)
+ Q
+"RTN","ZISTCP",5,0)
+ ;
+"RTN","ZISTCP",6,0)
+CALL(IP,SOCK,TO) ;Open a socket to the IP address <procedure>
+"RTN","ZISTCP",7,0)
+ N %A,ZISOS,X,NIO
+"RTN","ZISTCP",8,0)
+ S ZISOS=^%ZOSF("OS"),TO=$G(TO,30)
+"RTN","ZISTCP",9,0)
+ N $ETRAP S $ETRAP="G OPNERR^%ZISTCP"
+"RTN","ZISTCP",10,0)
+ S POP=1
+"RTN","ZISTCP",11,0)
+ I '$$VALIDATE^XLFIPV(IP) S IP=$$ADDRESS^XLFNSLK(IP)  ;Lookup the name
+"RTN","ZISTCP",12,0)
+ I '$$VALIDATE^XLFIPV(IP) Q  ;Not in the IP format
+"RTN","ZISTCP",13,0)
+ I (SOCK<1)!(SOCK>65535) Q
+"RTN","ZISTCP",14,0)
+ G CVXD:ZISOS["VAX",CONT:ZISOS["OpenM",CGTM:ZISOS["GT.M",CMSM:ZISOS["MSM"
+"RTN","ZISTCP",15,0)
+ S POP=1
+"RTN","ZISTCP",16,0)
+ Q
+"RTN","ZISTCP",17,0)
+CVXD ;Open VAX DSM Socket
+"RTN","ZISTCP",18,0)
+ S NIO=SOCK
+"RTN","ZISTCP",19,0)
+ O NIO:(TCPCHAN,ADDRESS=IP):TO G:'$T NOOPN
+"RTN","ZISTCP",20,0)
+ U NIO:NOECHO D VAR(NIO)
+"RTN","ZISTCP",21,0)
+ Q
+"RTN","ZISTCP",22,0)
+CMSM ;Open MSM Socket
+"RTN","ZISTCP",23,0)
+ S NIO=56 O NIO::TO G:'$T NOOPN
+"RTN","ZISTCP",24,0)
+ U NIO::"TCP" W /SOCKET(IP,SOCK) I $KEY="" C NIO G NOOPN
+"RTN","ZISTCP",25,0)
+ D VAR(NIO)
+"RTN","ZISTCP",26,0)
+ Q
+"RTN","ZISTCP",27,0)
+CONT ;Open OpenM socket
+"RTN","ZISTCP",28,0)
+ I $$VERSION^%ZOSV'<5 S %A=$ZUTIL(68,55,1)
+"RTN","ZISTCP",29,0)
+ S NIO="|TCP|"_SOCK
+"RTN","ZISTCP",30,0)
+ ;p638 If IP contains ".", use IPv4 IP address (may be IPv4-mapped, so convert)
+"RTN","ZISTCP",31,0)
+ ;     Else use IPv6 address
+"RTN","ZISTCP",32,0)
+ I IP["." D
+"RTN","ZISTCP",33,0)
+ . O NIO:($$FORCEIP4^XLFIPV(IP):SOCK:"-M"::512:512):TO G:'$T NOOPN
+"RTN","ZISTCP",34,0)
+ E  D
+"RTN","ZISTCP",35,0)
+ . O NIO:("["_IP_"]":SOCK:"-M"::512:512):TO G:'$T NOOPN
+"RTN","ZISTCP",36,0)
+ U NIO D VAR(NIO)
+"RTN","ZISTCP",37,0)
+ Q
+"RTN","ZISTCP",38,0)
+CGTM ;Open GT.M Socket
+"RTN","ZISTCP",39,0)
+ S NIO="SCK$"_$P($H,",",2) ;Just needs to be unique for job
+"RTN","ZISTCP",40,0)
+ O NIO:(CONNECT=IP_":"_SOCK_":TCP":ATTACH="client"):TO:"SOCKET"
+"RTN","ZISTCP",41,0)
+ I '$T S POP=1 Q
+"RTN","ZISTCP",42,0)
+ U NIO S NIO("KEY")=$KEY
+"RTN","ZISTCP",43,0)
+ S NIO("SOCKET")=$P(NIO("KEY"),"|",2)
+"RTN","ZISTCP",44,0)
+ I $P(NIO("KEY"),"|")'="ESTABLISHED" D LOG("** ="_NIO("KEY")_"= **") W 1/0 ; PROTOCOL ERROR
+"RTN","ZISTCP",45,0)
+ ;U NIO:(SOCKET=NIO("SOCKET"):WIDTH=512:NOWRAP:IOERROR="TRAP":EXCEPT="G GTMERR^%ZISTCP")
+"RTN","ZISTCP",46,0)
+ U NIO:(SOCKET=NIO("SOCKET"):WIDTH=512:NOWRAP:EXCEPT="G GTMERR^%ZISTCP")
+"RTN","ZISTCP",47,0)
+ D VAR(NIO) S IOF="#" ;Set buffer flush
+"RTN","ZISTCP",48,0)
+ Q
+"RTN","ZISTCP",49,0)
+VAR(%IO) ;Setup IO variables
+"RTN","ZISTCP",50,0)
+ S:'$D(IO(0)) IO(0)=$I
+"RTN","ZISTCP",51,0)
+ S IO=%IO,IO(1,IO)=$G(IP),POP=0
+"RTN","ZISTCP",52,0)
+ ;Set IOF to the normal buffer flush. W @IOF.
+"RTN","ZISTCP",53,0)
+ S IOT="TCP",IOST="P-TCP",IOST(0)=0
+"RTN","ZISTCP",54,0)
+ S IOF=$$FLUSHCHR
+"RTN","ZISTCP",55,0)
+ Q
+"RTN","ZISTCP",56,0)
+NOOPN ;Didn't make the conection
+"RTN","ZISTCP",57,0)
+ S POP=1
+"RTN","ZISTCP",58,0)
+ Q
+"RTN","ZISTCP",59,0)
+OPNERR ;
+"RTN","ZISTCP",60,0)
+ ;D ^%ZTER
+"RTN","ZISTCP",61,0)
+ S POP=1
+"RTN","ZISTCP",62,0)
+ D ERRCLR
+"RTN","ZISTCP",63,0)
+ Q
+"RTN","ZISTCP",64,0)
+UCXOPEN(NIO) ;This call only applies to SERVER jobs tied to UCX/VMS
+"RTN","ZISTCP",65,0)
+ N $ETRAP,%ZISV,%ZISOS S $ETRAP="G OPNERR^%ZISTCP"
+"RTN","ZISTCP",66,0)
+ S %ZISV=$$VERSION^%ZOSV,%ZISOS=^%ZOSF("OS"),POP=1
+"RTN","ZISTCP",67,0)
+ I %ZISOS["DSM",%ZISV<7 O NIO:(SHARE):5 D:$T VAR(NIO)
+"RTN","ZISTCP",68,0)
+ I %ZISOS["DSM",%ZISV'<7 S NIO="SYS$NET" O NIO:(TCPDEV):5 D:$T VAR(NIO)
+"RTN","ZISTCP",69,0)
+ Q
+"RTN","ZISTCP",70,0)
+CLOSE ;Close and reset
+"RTN","ZISTCP",71,0)
+ N NIO,$ETRAP S $ETRAP="G CLOSEX^%ZISTCP"
+"RTN","ZISTCP",72,0)
+ S NIO=IO,IO=$S($G(IO(0))]"":IO(0),1:$P)
+"RTN","ZISTCP",73,0)
+ I NIO]"" C NIO K IO(1,NIO) S IO("CLOSE")=NIO
+"RTN","ZISTCP",74,0)
+CLOSEX D HOME^%ZIS
+"RTN","ZISTCP",75,0)
+ D ERRCLR
+"RTN","ZISTCP",76,0)
+ Q
+"RTN","ZISTCP",77,0)
+ERRCLR ;
+"RTN","ZISTCP",78,0)
+ S:$ECODE]"" IO("LASTERR")=$G(IO("ERROR")),IO("ERROR")=$ECODE,$ECODE=""
+"RTN","ZISTCP",79,0)
+ Q
+"RTN","ZISTCP",80,0)
+ ;
+"RTN","ZISTCP",81,0)
+FLUSHCHR() ;Return the value to write @ of to flush the TCP buffer
+"RTN","ZISTCP",82,0)
+ N OS S OS=$P(^%ZOSF("OS"),"^")
+"RTN","ZISTCP",83,0)
+ Q $S(OS["GT.M":"#",1:"!")
+"RTN","ZISTCP",84,0)
+ ;
+"RTN","ZISTCP",85,0)
+ ;In ZRULE, set ZISQUIT=1 to quit
+"RTN","ZISTCP",86,0)
+LISTEN(SOCK,RTN,ZRULE) ;Listen on socket, run routine, single thread.
+"RTN","ZISTCP",87,0)
+ N %A,ZISOS,X,NIO,EXIT,IOF,IP
+"RTN","ZISTCP",88,0)
+ N $ES,$ET S $ET="D OPNERR^%ZISTCP"
+"RTN","ZISTCP",89,0)
+ S ZISOS=^%ZOSF("OS"),ZRULE=$G(ZRULE)
+"RTN","ZISTCP",90,0)
+ D GETENV^%ZOSV S U="^",XUENV=Y,XQVOL=$P(Y,U,2)
+"RTN","ZISTCP",91,0)
+ S POP=1
+"RTN","ZISTCP",92,0)
+ I $G(^%ZIS(14.5,"LOGON",XQVOL)) Q
+"RTN","ZISTCP",93,0)
+LOOP S POP=1 D LVXD:ZISOS["DSM",LONT:ZISOS["OpenM",LGTM:ZISOS["GT.M",LMSM:ZISOS["MSM"
+"RTN","ZISTCP",94,0)
+ I POP Q  ;Quit Server
+"RTN","ZISTCP",95,0)
+ S EXIT=0,EXIT=$$LAUNCH(NIO,RTN)
+"RTN","ZISTCP",96,0)
+ I $G(^%ZIS(14.5,"LOGON",XQVOL)) S EXIT=1
+"RTN","ZISTCP",97,0)
+ I ZISOS["DSM" X "U NIO:DISCONNECT"
+"RTN","ZISTCP",98,0)
+ E  C NIO ;
+"RTN","ZISTCP",99,0)
+ Q:EXIT  ;Quit server, App set IO("C"), Logon inhibit.
+"RTN","ZISTCP",100,0)
+ G LOOP
+"RTN","ZISTCP",101,0)
+LMSM ;MSM
+"RTN","ZISTCP",102,0)
+ ;For multi thread use MSM's MSERVER process.
+"RTN","ZISTCP",103,0)
+ ;This is the listener for  TCP connects.
+"RTN","ZISTCP",104,0)
+ S NIO=56 O NIO::30 Q:'$T  S POP=0
+"RTN","ZISTCP",105,0)
+ U NIO::"TCP" W /SOCKET("",SOCK)
+"RTN","ZISTCP",106,0)
+ S POP=$$EXIT
+"RTN","ZISTCP",107,0)
+ Q
+"RTN","ZISTCP",108,0)
+LONT ;Open port in Accept mode with standard terminators, standard buffers.
+"RTN","ZISTCP",109,0)
+ N %ZA,%ZB
+"RTN","ZISTCP",110,0)
+ S NIO="|TCP|"_SOCK,%A=0
+"RTN","ZISTCP",111,0)
+ ;(adr:sock:term:ibuf:obuf:queue)
+"RTN","ZISTCP",112,0)
+ O NIO:(:SOCK:"AT"::512:512:3):30 Q:'$T  S POP=0
+"RTN","ZISTCP",113,0)
+ ;Wait on read for a connect
+"RTN","ZISTCP",114,0)
+ U NIO F  D  Q:%A!POP
+"RTN","ZISTCP",115,0)
+ . R *NEWCHAR:60 S %ZA=$ZA,%ZB=$ZB S:$T %A=1 Q:%A
+"RTN","ZISTCP",116,0)
+ . S POP=$$EXIT
+"RTN","ZISTCP",117,0)
+ I POP C NIO Q
+"RTN","ZISTCP",118,0)
+ U NIO:(::"-M") ;Work like DSM
+"RTN","ZISTCP",119,0)
+ Q
+"RTN","ZISTCP",120,0)
+ ;
+"RTN","ZISTCP",121,0)
+LVXD ;Open port and listen
+"RTN","ZISTCP",122,0)
+ ;Use UCX for multiple listeners
+"RTN","ZISTCP",123,0)
+ S NIO=SOCK O NIO:(TCPCHAN):30 Q:'$T  S POP=0
+"RTN","ZISTCP",124,0)
+ U NIO ;Let application wait at the read for a connect.
+"RTN","ZISTCP",125,0)
+ Q
+"RTN","ZISTCP",126,0)
+ ;
+"RTN","ZISTCP",127,0)
+LGTM ;GT.M single thread server
+"RTN","ZISTCP",128,0)
+ N %A K ^TMP("ZISTCP",$J)
+"RTN","ZISTCP",129,0)
+ ;S $ZINTERRUPT="I $$JOBEXAM^ZU($ZPOSITION)"
+"RTN","ZISTCP",130,0)
+ S NIO="SCK$"_$S($J>86400:$J,1:84600+$J) ;Construct a dummy, but "unique" devicename for job
+"RTN","ZISTCP",131,0)
+ D LOG("Open for Listen "_NIO)
+"RTN","ZISTCP",132,0)
+ ;Open the device
+"RTN","ZISTCP",133,0)
+ O NIO:(ZLISTEN=SOCK_":TCP":ATTACH="listener"):30:"SOCKET"
+"RTN","ZISTCP",134,0)
+ I '$T D LOG("Can't Open Socket: "_SOCK) Q
+"RTN","ZISTCP",135,0)
+ U NIO S NIO("ZISTCP",0)=$KEY D LOG("Have port.")
+"RTN","ZISTCP",136,0)
+ ;Start Listening
+"RTN","ZISTCP",137,0)
+ W /LISTEN(1) S NIO("ZISTCP",1)=$KEY D LOG("Start Listening. "_NIO("ZISTCP",1))
+"RTN","ZISTCP",138,0)
+ ;Wait for connection
+"RTN","ZISTCP",139,0)
+ S %A=0,POP=0 F  D  Q:%A!POP
+"RTN","ZISTCP",140,0)
+ . W /WAIT(30) ;Wait for connect
+"RTN","ZISTCP",141,0)
+ . I $P($KEY,"|",1)="CONNECT" S NIO("ZISTCP",2)=$KEY,%A=1
+"RTN","ZISTCP",142,0)
+ . S POP=$$EXIT
+"RTN","ZISTCP",143,0)
+ . Q
+"RTN","ZISTCP",144,0)
+ I POP C NIO Q
+"RTN","ZISTCP",145,0)
+ ;
+"RTN","ZISTCP",146,0)
+ S NIO("SOCK")=$P($G(NIO("ZISTCP",2)),"|",2)
+"RTN","ZISTCP",147,0)
+ D LOG("Got connection on "_NIO("SOCK"))
+"RTN","ZISTCP",148,0)
+ ;Close the main socket
+"RTN","ZISTCP",149,0)
+ C NIO:(SOCKET="listener")
+"RTN","ZISTCP",150,0)
+ ;Use the new socket
+"RTN","ZISTCP",151,0)
+ ;U NIO:(SOCKET=NIO("SOCK"):WIDTH=512:NOWRAP:IOERROR="TRAP":EXCEPT="G GTMERR^%ZISTCP")
+"RTN","ZISTCP",152,0)
+ U NIO:(SOCKET=NIO("SOCK"):WIDTH=512:NOWRAP:EXCEPT="G GTMERR^%ZISTCP")
+"RTN","ZISTCP",153,0)
+ S POP=0
+"RTN","ZISTCP",154,0)
+ Q
+"RTN","ZISTCP",155,0)
+ ;
+"RTN","ZISTCP",156,0)
+GTMERR ;The use will set this as a place to go on a IO error
+"RTN","ZISTCP",157,0)
+ S $ECODE=",U911,"
+"RTN","ZISTCP",158,0)
+ Q
+"RTN","ZISTCP",159,0)
+ ;
+"RTN","ZISTCP",160,0)
+EXIT() ;See if time to exit
+"RTN","ZISTCP",161,0)
+ I $$S^%ZTLOAD Q 1
+"RTN","ZISTCP",162,0)
+ N ZISQUIT S ZISQUIT=0
+"RTN","ZISTCP",163,0)
+ I $L(ZRULE) X ZRULE I $G(ZISQUIT) Q 1
+"RTN","ZISTCP",164,0)
+ Q 0
+"RTN","ZISTCP",165,0)
+ ;
+"RTN","ZISTCP",166,0)
+LAUNCH(IO,RTN) ;Run job for this connection.
+"RTN","ZISTCP",167,0)
+ N NIO,SOCK,EXIT,XQVOL
+"RTN","ZISTCP",168,0)
+ D VAR(IO)
+"RTN","ZISTCP",169,0)
+ S ^XUTL("XQ",$J,0)=$$DT^XLFDT
+"RTN","ZISTCP",170,0)
+ D LOG("Run "_RTN)
+"RTN","ZISTCP",171,0)
+ D @RTN
+"RTN","ZISTCP",172,0)
+ D LOG("Return from call, Exit="_$D(IO("C")))
+"RTN","ZISTCP",173,0)
+ Q $D(IO("C")) ;Use IO("C") to quit server
+"RTN","ZISTCP",174,0)
+ ;
+"RTN","ZISTCP",175,0)
+LOG(MSG) ;LOG STATUS
+"RTN","ZISTCP",176,0)
+ N CNT
+"RTN","ZISTCP",177,0)
+ S CNT=$G(^TMP("ZISTCP",$J))+1,^TMP("ZISTCP",$J)=CNT,^($J,CNT)=MSG
+"RTN","ZISTCP",178,0)
+ Q
+"RTN","ZISTCP",179,0)
+ ;
+"SEC","^DD",3.081,3.081,.01,8.5)
+#
+"SEC","^DD",3.081,3.081,.01,9)
+#
+"SEC","^DD",3.081,3.081,17,8.5)
+#
+"SEC","^DD",3.081,3.081,17,9)
+#
+"SEC","^DIC",3.081,3.081,0,"DD")
+@
+"SEC","^DIC",3.081,3.081,0,"DEL")
+@
+"SEC","^DIC",3.081,3.081,0,"LAYGO")
+@
+"SEC","^DIC",3.081,3.081,0,"RD")
+@
+"SEC","^DIC",3.081,3.081,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",3.081,3.081,0)
+FIELD^^100^23
+"^DD",3.081,3.081,0,"DDA")
+N
+"^DD",3.081,3.081,0,"DIK")
+XUCT03
+"^DD",3.081,3.081,0,"DIKOLD")
+XUCT03
+"^DD",3.081,3.081,0,"DT")
+3140530
+"^DD",3.081,3.081,0,"IX","AC",3.081,3)
+
+"^DD",3.081,3.081,0,"IX","AC2",3.081,3)
+
+"^DD",3.081,3.081,0,"IX","AC3",3.081,3)
+
+"^DD",3.081,3.081,0,"IX","ALDEV",3.081,5)
+
+"^DD",3.081,3.081,0,"IX","AS1",3.081,11)
+
+"^DD",3.081,3.081,0,"IX","AS2",3.081,12)
+
+"^DD",3.081,3.081,0,"IX","AS3",3.081,11)
+
+"^DD",3.081,3.081,0,"IX","AS4",3.081,100)
+
+"^DD",3.081,3.081,0,"IX","AS5",3.081,100)
+
+"^DD",3.081,3.081,0,"IX","CUR",3.081,.01)
+
+"^DD",3.081,3.081,0,"NM","SIGN-ON LOG")
+
+"^DD",3.081,3.081,0,"VRPK")
+XU
+"^DD",3.081,3.081,.001,0)
+DATE/TIME^D^^ ^S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+"^DD",3.081,3.081,.001,21,0)
+^^3^3^3140617^
+"^DD",3.081,3.081,.001,21,1,0)
+This is the date/time that the user signed on.
+"^DD",3.081,3.081,.001,21,2,0)
+To allow more than one sign-on per second the time may have values that 
+"^DD",3.081,3.081,.001,21,3,0)
+show hundredth of a second.
+"^DD",3.081,3.081,.001,"DT")
+3030326
+"^DD",3.081,3.081,.01,0)
+USER^RP200'^VA(200,^0;1^Q
+"^DD",3.081,3.081,.01,1,0)
+^.1
+"^DD",3.081,3.081,.01,1,1,0)
+3.081^CUR^MUMPS
+"^DD",3.081,3.081,.01,1,1,1)
+S ^XUSEC(0,"CUR",$E(X,1,30),DA)=""
+"^DD",3.081,3.081,.01,1,1,2)
+K ^XUSEC(0,"CUR",$E(X,1,30),DA)
+"^DD",3.081,3.081,.01,3)
+
+"^DD",3.081,3.081,.01,10)
+SIGN-ON SYSTEM
+"^DD",3.081,3.081,.01,21,0)
+^^1^1^2920528^^^
+"^DD",3.081,3.081,.01,21,1,0)
+This is the user that signed on.
+"^DD",3.081,3.081,.01,"DT")
+2910618
+"^DD",3.081,3.081,1,0)
+DEVICE $I^F^^0;2^K:$L(X)>30!($L(X)<1) X
+"^DD",3.081,3.081,1,3)
+Answer must be 1-30 characters in length.
+"^DD",3.081,3.081,1,21,0)
+^^1^1^3030326^
+"^DD",3.081,3.081,1,21,1,0)
+This is the device $I that the user signed on to.
+"^DD",3.081,3.081,1,"DT")
+3030326
+"^DD",3.081,3.081,2,0)
+JOB^NJ7,0^^0;3^K:+X'=X!(X>9999999)!(X<0)!(X?.E1"."1N.N) X
+"^DD",3.081,3.081,2,3)
+$J (PARTITION NUMBER) OF SIGN-ON
+"^DD",3.081,3.081,2,21,0)
+1^^1^1^2920528^^^
+"^DD",3.081,3.081,2,21,1,0)
+This is the job number of the user's job.
+"^DD",3.081,3.081,3,0)
+SIGNOFF TIME^D^^0;4^S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+"^DD",3.081,3.081,3,1,0)
+^.1
+"^DD",3.081,3.081,3,1,1,0)
+3.081^AC^MUMPS
+"^DD",3.081,3.081,3,1,1,1)
+K ^XUSEC(0,"CUR",+^XUSEC(0,DA,0),DA)
+"^DD",3.081,3.081,3,1,1,2)
+Q
+"^DD",3.081,3.081,3,1,1,3)
+The CUR x-ref.
+"^DD",3.081,3.081,3,1,1,"%D",0)
+^^2^2^2920528^
+"^DD",3.081,3.081,3,1,1,"%D",1,0)
+This X-ref clears ^XUSEC(0,'CUR' that keeps a list of user sign-ons
+"^DD",3.081,3.081,3,1,1,"%D",2,0)
+that is used by the FIND USER option.
+"^DD",3.081,3.081,3,1,2,0)
+3.081^AC2^MUMPS
+"^DD",3.081,3.081,3,1,2,1)
+N %,Y S %=^XUSEC(0,DA,0) K:$L($P(%,U,11)) ^XUSEC(0,"AS1",$P($P(%,U,11),":"),DA) K:$L($P(%,U,12)) ^XUSEC(0,"AS2",$P($P(%,U,12),":"),DA) S Y=$G(^XUSEC(0,DA,1)) K:$L($P(Y,U)) ^XUSEC(0,"AS4",$P(Y,U),DA)
+"^DD",3.081,3.081,3,1,2,2)
+Q
+"^DD",3.081,3.081,3,1,2,3)
+Remove the 'AS1, 'AS2', and 'AS4' x-ref
+"^DD",3.081,3.081,3,1,2,"%D",0)
+^.101^2^2^3140602^^
+"^DD",3.081,3.081,3,1,2,"%D",1,0)
+This cross-reference removes the 'AS1', 'AS2', and 'AS4' indexes when the
+"^DD",3.081,3.081,3,1,2,"%D",2,0)
+sign-off time is entered.
+"^DD",3.081,3.081,3,1,2,"DT")
+3140602
+"^DD",3.081,3.081,3,1,3,0)
+3.081^AC3^MUMPS
+"^DD",3.081,3.081,3,1,3,1)
+N %,Y S %=^XUSEC(0,DA,0) I $L($P(%,U,11)) K ^XUSEC(0,"AS3",$P(%,U),$P($P(%,U,11),":"),DA) S Y=$G(^XUSEC(0,DA,1)) K:$L($P(Y,U)) ^XUSEC(0,"AS5",$P(%,U),$P(Y,U),DA)
+"^DD",3.081,3.081,3,1,3,2)
+Q
+"^DD",3.081,3.081,3,1,3,3)
+Remove the 'AS3' and 'AS5' x-ref
+"^DD",3.081,3.081,3,1,3,"%D",0)
+^^2^2^3140602^
+"^DD",3.081,3.081,3,1,3,"%D",1,0)
+This cross reference removes the 'AS3' and 'AS5' indexes when the user is
+"^DD",3.081,3.081,3,1,3,"%D",2,0)
+signed off. See fields #11 and #100 for more info.
+"^DD",3.081,3.081,3,1,3,"DT")
+3140602
+"^DD",3.081,3.081,3,21,0)
+^^1^1^2920528^^
+"^DD",3.081,3.081,3,21,1,0)
+This is the time that the user signed-off through H^XUS.
+"^DD",3.081,3.081,3,"DT")
+3140602
+"^DD",3.081,3.081,4,0)
+CPU^F^^0;5^K:$L(X)>16!($L(X)<1) X
+"^DD",3.081,3.081,4,3)
+ANSWER MUST BE 1-16 CHARACTERS IN LENGTH
+"^DD",3.081,3.081,4,21,0)
+^^1^1^2920528^^^
+"^DD",3.081,3.081,4,21,1,0)
+This is the name of the CPU the user signed on to.
+"^DD",3.081,3.081,4,"DT")
+2841005
+"^DD",3.081,3.081,5,0)
+DEVICE^P3.5'^%ZIS(1,^0;7^Q
+"^DD",3.081,3.081,5,1,0)
+^.1
+"^DD",3.081,3.081,5,1,1,0)
+3.081^ALDEV^MUMPS
+"^DD",3.081,3.081,5,1,1,1)
+S ^XUSEC(0,"ALDEV",X)=+^XUSEC(0,DA,0)
+"^DD",3.081,3.081,5,1,1,2)
+Q
+"^DD",3.081,3.081,5,1,1,3)
+ALDEV
+"^DD",3.081,3.081,5,1,1,"%D",0)
+^^3^3^2920528^
+"^DD",3.081,3.081,5,1,1,"%D",1,0)
+The 'ALDEV' X-ref is used to tell which user last sign-on to this
+"^DD",3.081,3.081,5,1,1,"%D",2,0)
+device and the X-ref is not killed.  At the most there would be one entry
+"^DD",3.081,3.081,5,1,1,"%D",3,0)
+for each entry in the device file.
+"^DD",3.081,3.081,5,21,0)
+^^7^7^3030326^
+"^DD",3.081,3.081,5,21,1,0)
+This is a pointer to the Device file showing which device the user
+"^DD",3.081,3.081,5,21,2,0)
+signed-on to. 
+"^DD",3.081,3.081,5,21,3,0)
+With network devices this is not a very useful field anymore.
+"^DD",3.081,3.081,5,21,4,0)
+ 
+"^DD",3.081,3.081,5,21,5,0)
+The 'ALDEV' X-ref is used to tell which user last sign-on to this
+"^DD",3.081,3.081,5,21,6,0)
+device and the X-ref is not killed.  At the most there would be one entry 
+"^DD",3.081,3.081,5,21,7,0)
+for each entry in the device file.
+"^DD",3.081,3.081,5,"DT")
+3030326
+"^DD",3.081,3.081,6,0)
+UCI^F^^0;8^K:$L(X)>8!($L(X)<1) X
+"^DD",3.081,3.081,6,3)
+Answer with the UCI the user signed into.
+"^DD",3.081,3.081,6,21,0)
+^^1^1^2920528^^
+"^DD",3.081,3.081,6,21,1,0)
+This field records the UCI account area where the user had signed on.
+"^DD",3.081,3.081,6,"DT")
+2880701
+"^DD",3.081,3.081,7,0)
+TASK?^S^1:TASK;^0;6^Q
+"^DD",3.081,3.081,7,.1)
+Was this entry made by TaskMan?
+"^DD",3.081,3.081,7,3)
+This field should never be filled in by a user.
+"^DD",3.081,3.081,7,21,0)
+^^4^4^3030326^
+"^DD",3.081,3.081,7,21,1,0)
+This field is set to 1 for entries that are created by TaskMan.  A field
+"^DD",3.081,3.081,7,21,2,0)
+in the Kernel Site Parameters file can be used to make TaskMan "log
+"^DD",3.081,3.081,7,21,3,0)
+sign-ons" for tasks.  When that feature is active, TaskMan makes an entry
+"^DD",3.081,3.081,7,21,4,0)
+in this file every time it runs a task.
+"^DD",3.081,3.081,7,"DT")
+3030326
+"^DD",3.081,3.081,9,0)
+$ZIO (optional)^F^^0;9^K:$L(X)>30!($L(X)<1) X
+"^DD",3.081,3.081,9,3)
+ANSWER MUST BE 1-30 CHARACTERS IN LENGTH
+"^DD",3.081,3.081,9,21,0)
+^^3^3^2920528^^^
+"^DD",3.081,3.081,9,21,1,0)
+On a system with terminal servers this may be the port and server
+"^DD",3.081,3.081,9,21,2,0)
+that the user is signed-on to.  It can provide information not contained
+"^DD",3.081,3.081,9,21,3,0)
+in $I.
+"^DD",3.081,3.081,9,"DT")
+2880801
+"^DD",3.081,3.081,10,0)
+NODE NAME^F^^0;10^K:$L(X)>15!($L(X)<2) X
+"^DD",3.081,3.081,10,3)
+Answer must be 2-15 characters in length.
+"^DD",3.081,3.081,10,21,0)
+^^2^2^3030326^
+"^DD",3.081,3.081,10,21,1,0)
+The VAX/VMS cluster node name or system name on other systems.
+"^DD",3.081,3.081,10,21,2,0)
+Comes from the GETENV^%ZOSV api.
+"^DD",3.081,3.081,10,23,0)
+^^1^1^2891013^^
+"^DD",3.081,3.081,10,23,1,0)
+This is the 4th piece of $ZC(%GETSYI).
+"^DD",3.081,3.081,10,"DT")
+3030326
+"^DD",3.081,3.081,11,0)
+IPV4 ADDRESS^F^^0;11^K:$L(X)>20!($L(X)<7)!'(X?1.3N1P1.3N1P1.3N1P1.3N.E) X
+"^DD",3.081,3.081,11,1,0)
+^.1
+"^DD",3.081,3.081,11,1,1,0)
+3.081^AS1^MUMPS
+"^DD",3.081,3.081,11,1,1,1)
+S:'$P(^XUSEC(0,DA,0),U,4) ^XUSEC(0,"AS1",$P(X,":"),DA)=""
+"^DD",3.081,3.081,11,1,1,2)
+K ^XUSEC(0,"AS1",$P(X,":"),DA)
+"^DD",3.081,3.081,11,1,1,3)
+For Single sign-on
+"^DD",3.081,3.081,11,1,1,"%D",0)
+^^1^1^2970210^^
+"^DD",3.081,3.081,11,1,1,"%D",1,0)
+This index builds a list of IP addresses that the user may be at.
+"^DD",3.081,3.081,11,1,1,"DT")
+2970210
+"^DD",3.081,3.081,11,1,2,0)
+3.081^AS3^MUMPS
+"^DD",3.081,3.081,11,1,2,1)
+N % S %=^XUSEC(0,DA,0) I '$P(%,U,4) S ^XUSEC(0,"AS3",$P(%,U),$P(X,":"),DA)=""
+"^DD",3.081,3.081,11,1,2,2)
+N % S %=^XUSEC(0,DA,0) K ^XUSEC(0,"AS3",$P(%,U),$P(X,":"),DA)
+"^DD",3.081,3.081,11,1,2,3)
+Multi sign-on control
+"^DD",3.081,3.081,11,1,2,"%D",0)
+^.101^3^3^3021021^^
+"^DD",3.081,3.081,11,1,2,"%D",1,0)
+This cross reference builds a list of the IP or DNS name used by a device.
+"^DD",3.081,3.081,11,1,2,"%D",2,0)
+This is used to limit users to multiple sign-on from one IP address.
+"^DD",3.081,3.081,11,1,2,"%D",3,0)
+The X-ref in by DUZ,IP,DA.
+"^DD",3.081,3.081,11,1,2,"DT")
+3021021
+"^DD",3.081,3.081,11,3)
+IPv4 address. Answer must be 7-20 characters in length.
+"^DD",3.081,3.081,11,21,0)
+^^3^3^3140530^
+"^DD",3.081,3.081,11,21,1,0)
+This field holds the IPv4 address of the calling system. Note that under
+"^DD",3.081,3.081,11,21,2,0)
+DHCP IP address are dynamically allocated so more that one client could
+"^DD",3.081,3.081,11,21,3,0)
+have used the same IP address over some time period.
+"^DD",3.081,3.081,11,"DT")
+3140530
+"^DD",3.081,3.081,12,0)
+WORKSTATION NAME^F^^0;12^K:$L(X)>20!($L(X)<3) X
+"^DD",3.081,3.081,12,1,0)
+^.1
+"^DD",3.081,3.081,12,1,1,0)
+3.081^AS2^MUMPS
+"^DD",3.081,3.081,12,1,1,1)
+S:'$P(^XUSEC(0,DA,0),U,4) ^XUSEC(0,"AS2",$P(X,":"),DA)=""
+"^DD",3.081,3.081,12,1,1,2)
+K ^XUSEC(0,"AS2",$P(X,":"),DA)
+"^DD",3.081,3.081,12,1,1,3)
+For single sign-on
+"^DD",3.081,3.081,12,1,1,"%D",0)
+^^1^1^2970210^^^
+"^DD",3.081,3.081,12,1,1,"%D",1,0)
+This index builds a list of WORKSTATION names that the user may be at.
+"^DD",3.081,3.081,12,1,1,"DT")
+2970210
+"^DD",3.081,3.081,12,3)
+Answer must be 3-20 characters in length.
+"^DD",3.081,3.081,12,21,0)
+^^2^2^2970117^
+"^DD",3.081,3.081,12,21,1,0)
+This field holds the workstation name if it has been provide by the
+"^DD",3.081,3.081,12,21,2,0)
+underlaying OS or as part of a RPCBroker signon.
+"^DD",3.081,3.081,12,"DT")
+2970210
+"^DD",3.081,3.081,13,0)
+AUTO SIGNON HANDLE^F^^0;13^K:$L(X)>15!($L(X)<7) X
+"^DD",3.081,3.081,13,3)
+Answer must be 7-15 characters in length.
+"^DD",3.081,3.081,13,21,0)
+^^2^2^2991213^
+"^DD",3.081,3.081,13,21,1,0)
+This field is used internally by the Kernel Auto Sign-on code to store the
+"^DD",3.081,3.081,13,21,2,0)
+handle returned by the ClientAgent on the users system.
+"^DD",3.081,3.081,13,"DT")
+2991213
+"^DD",3.081,3.081,14,0)
+REMOTE STATION ID^F^^0;14^K:$L(X)>6!($L(X)<3) X
+"^DD",3.081,3.081,14,3)
+Answer must be 3-6 characters in length.
+"^DD",3.081,3.081,14,21,0)
+^^5^5^3000208^
+"^DD",3.081,3.081,14,21,1,0)
+This field holds the station id (station #) of a remote site that did the
+"^DD",3.081,3.081,14,21,2,0)
+user authentication. Having this field filled in implies that the user did
+"^DD",3.081,3.081,14,21,3,0)
+not sign-on to the local system but was authenticated at some remote site
+"^DD",3.081,3.081,14,21,4,0)
+that has requested data or services from this system.  The Enterprise
+"^DD",3.081,3.081,14,21,5,0)
+Single Sign-on, and the CPRS remote patient data projects use this field.
+"^DD",3.081,3.081,14,"DT")
+3000208
+"^DD",3.081,3.081,15,0)
+REMOTE USER IEN^NJ9,0^^0;15^K:+X'=X!(X>999999999)!(X<.5)!(X?.E1"."1N.N) X
+"^DD",3.081,3.081,15,3)
+Type a Number between .5 and 999999999, 0 Decimal Digits
+"^DD",3.081,3.081,15,21,0)
+^^6^6^3000208^
+"^DD",3.081,3.081,15,21,1,0)
+This field holds the user IEN of a remote user that was authenticated at a
+"^DD",3.081,3.081,15,21,2,0)
+remote site (field #14).
+"^DD",3.081,3.081,15,21,3,0)
+Having this field filled in implies that the user did not sign-on to the
+"^DD",3.081,3.081,15,21,4,0)
+local system but was authenticated at some remote site that has requested
+"^DD",3.081,3.081,15,21,5,0)
+data or services from this system.  The Enterprise Single Sign-on, and the
+"^DD",3.081,3.081,15,21,6,0)
+CPRS remote patient data projects use this field.
+"^DD",3.081,3.081,15,"DT")
+3000208
+"^DD",3.081,3.081,16,0)
+FORCE CLOSE^S^0:No;1:Yes;^0;16^Q
+"^DD",3.081,3.081,16,21,0)
+^^4^4^3030326^
+"^DD",3.081,3.081,16,21,1,0)
+This field is a flag to indicate that the sign-on record was closed by
+"^DD",3.081,3.081,16,21,2,0)
+some action other than a normal sign-off. IRM used the 'Release User'
+"^DD",3.081,3.081,16,21,3,0)
+option.  The nightly cleanup job closed the record because it was open to
+"^DD",3.081,3.081,16,21,4,0)
+long.
+"^DD",3.081,3.081,16,"DT")
+3030326
+"^DD",3.081,3.081,17,0)
+DIVISION^P4'^DIC(4,^0;17^Q
+"^DD",3.081,3.081,17,.1)
+Division
+"^DD",3.081,3.081,17,21,0)
+^^2^2^3070919^
+"^DD",3.081,3.081,17,21,1,0)
+This field holds the division that the user signed into.
+"^DD",3.081,3.081,17,21,2,0)
+It is used to set the division if the user sign-on is thru AUTO SIGN-ON.
+"^DD",3.081,3.081,17,"DT")
+3070919
+"^DD",3.081,3.081,18,0)
+REMOTE APP^P8994.5'^XWB(8994.5,^0;18^Q
+"^DD",3.081,3.081,18,.1)
+Remote App
+"^DD",3.081,3.081,18,21,0)
+^^3^3^3091027^
+"^DD",3.081,3.081,18,21,1,0)
+If the user came into the system by a remote application like CAPRI
+"^DD",3.081,3.081,18,21,2,0)
+or VistAWeb then this will point to the entry in the remote application
+"^DD",3.081,3.081,18,21,3,0)
+file they used.
+"^DD",3.081,3.081,18,"DT")
+3091027
+"^DD",3.081,3.081,97,0)
+ELAPSED TIME (SECONDS)^CJ8^^ ; ^X ^DD(3.081,97,9.4) S X=$S(Y(3.081,97,5):Y(3.081,97,6),Y(3.081,97,7):X) S Y=X,X=Y(3.081,97,3),X=X_Y
+"^DD",3.081,3.081,97,9)
+^
+"^DD",3.081,3.081,97,9.01)
+3.081^16;3.081^3;3.081^.001
+"^DD",3.081,3.081,97,9.1)
+XUDELTATIME(#.001,#3)_$S(INTERNAL(#16):"*",1:" ")
+"^DD",3.081,3.081,97,9.2)
+S Y(3.081,97,2)=$S($D(^XUSEC(0,D0,0)):^(0),1:"") S X=$S('$D(D0):"",D0<0:"",1:D0),Y(3.081,97,1)=X S X=$P(Y(3.081,97,2),U,4)
+"^DD",3.081,3.081,97,9.3)
+X ^DD(3.081,97,9.2) S X1=Y(3.081,97,1) S X=$S(X&X1:X,1:"") Q:'X  D H^%DTC S XUS1=%H*86400+%T,X=X1 D H^%DTC S XUS2=%H*86400+%T,X=$S(XUS1>XUS2:XUS1-XUS2,1:XUS2-XUS1) S X=X
+"^DD",3.081,3.081,97,9.4)
+X ^DD(3.081,97,9.3) S Y(3.081,97,3)=X,Y(3.081,97,4)=X S X=$P(Y(3.081,97,2),U,16),X=X S X=X,Y(3.081,97,5)=X S X="*",Y(3.081,97,6)=X S X=1,Y(3.081,97,7)=X S X=" "
+"^DD",3.081,3.081,97,21,0)
+^^2^2^2920528^^
+"^DD",3.081,3.081,97,21,1,0)
+This field calculates the number of seconds between sign-on time
+"^DD",3.081,3.081,97,21,2,0)
+and sign-off time.
+"^DD",3.081,3.081,97,"DT")
+3021114
+"^DD",3.081,3.081,98,0)
+LOCATION^CJ15^^ ; ^X ^DD(3.081,98,9.2) S Y(3.081,98,101)=$S($D(^%ZIS(1,D0,1)):^(1),1:"") S X=$P(Y(3.081,98,101),U,1) S D0=Y(3.081,98,80)
+"^DD",3.081,3.081,98,9)
+^
+"^DD",3.081,3.081,98,9.01)
+3.5^.02;3.081^5
+"^DD",3.081,3.081,98,9.1)
+DEVICE:LOCATION
+"^DD",3.081,3.081,98,9.2)
+S Y(3.081,98,80)=$S($D(D0):D0,1:""),Y(3.081,98,1)=$S($D(^XUSEC(0,D0,0)):^(0),1:""),D0=$P(Y(3.081,98,1),U,7) S:'$D(^%ZIS(1,+D0,0)) D0=-1
+"^DD",3.081,3.081,98,21,0)
+^^1^1^2920528^^
+"^DD",3.081,3.081,98,21,1,0)
+This is the location of the device which was used to sign on.
+"^DD",3.081,3.081,98,"DT")
+2931216
+"^DD",3.081,3.081,99,0)
+ELAPSED TIME (MINUTES)^CJ8^^ ; ^X ^DD(3.081,99,9.6) S X=$S(Y(3.081,99,9):Y(3.081,99,10),Y(3.081,99,11):X) S Y=X,X=Y(3.081,99,7),X=X_Y
+"^DD",3.081,3.081,99,9)
+^
+"^DD",3.081,3.081,99,9.01)
+3.081^16;3.081^.001;3.081^3
+"^DD",3.081,3.081,99,9.1)
+$S(INTERNAL(#3):MINUTES(#3,#.001),1:"on line")_$S(INTERNAL(#16):"*",1:" ")
+"^DD",3.081,3.081,99,9.2)
+S Y(3.081,99,1)=$S($D(^XUSEC(0,D0,0)):^(0),1:"") S X=$P(Y(3.081,99,1),U,4),X=X S X=X,Y(3.081,99,2)=$G(X),Y(3.081,99,3)=$G(X) S X=$P(Y(3.081,99,1),U,4)
+"^DD",3.081,3.081,99,9.3)
+X ^DD(3.081,99,9.2) S Y(3.081,99,4)=$G(X) S X=$S('$D(D0):"",D0<0:"",1:D0)
+"^DD",3.081,3.081,99,9.4)
+X ^DD(3.081,99,9.3) S X1=Y(3.081,99,4) S Y=$E(X1_"000",9,10)-$E(X_"000",9,10)*60+$E(X1_"00000",11,12)-$E(X_"00000",11,12),X2=X,X=$P(X,".",1)'=$P(X1,".",1) D ^%DTC:X S X=X*1440+Y S X=X
+"^DD",3.081,3.081,99,9.5)
+X ^DD(3.081,99,9.4) S Y(3.081,99,5)=$G(X) S X=1,Y(3.081,99,6)=$G(X) S X="on line",X=$S(Y(3.081,99,2):Y(3.081,99,5),Y(3.081,99,6):X),Y(3.081,99,7)=$G(X)
+"^DD",3.081,3.081,99,9.6)
+X ^DD(3.081,99,9.5) S Y(3.081,99,8)=$G(X) S X=$P(Y(3.081,99,1),U,16),X=X S X=X,Y(3.081,99,9)=$G(X) S X="*",Y(3.081,99,10)=$G(X) S X=1,Y(3.081,99,11)=$G(X) S X=" "
+"^DD",3.081,3.081,99,21,0)
+^^1^1^2920528^^
+"^DD",3.081,3.081,99,21,1,0)
+This is the amount of time the user has been signed on.
+"^DD",3.081,3.081,99,"DT")
+3100512
+"^DD",3.081,3.081,100,0)
+IPV6 ADDRESS^FX^^1;1^S Y=$$FORCEIP6^XLFIPV(X) S X=Y K:Y="0000:0000:0000:0000:0000:0000:0000:0000" X
+"^DD",3.081,3.081,100,1,0)
+^.1
+"^DD",3.081,3.081,100,1,1,0)
+3.081^AS4^MUMPS
+"^DD",3.081,3.081,100,1,1,1)
+S:'$P(^XUSEC(0,DA,0),U,4) ^XUSEC(0,"AS4",X,DA)=""
+"^DD",3.081,3.081,100,1,1,2)
+K ^XUSEC(0,"AS4",X,DA)
+"^DD",3.081,3.081,100,1,1,3)
+For Single sign-on
+"^DD",3.081,3.081,100,1,1,"%D",0)
+^.101^1^1^3140530^^
+"^DD",3.081,3.081,100,1,1,"%D",1,0)
+This index builds a list of IP addresses that the user may be at.
+"^DD",3.081,3.081,100,1,1,"DT")
+3140530
+"^DD",3.081,3.081,100,1,2,0)
+3.081^AS5^MUMPS
+"^DD",3.081,3.081,100,1,2,1)
+N % S %=^XUSEC(0,DA,0) I '$P(%,U,4) S ^XUSEC(0,"AS5",$P(%,U),X,DA)=""
+"^DD",3.081,3.081,100,1,2,2)
+N % S %=^XUSEC(0,DA,0) K ^XUSEC(0,"AS5",$P(%,U),X,DA)
+"^DD",3.081,3.081,100,1,2,3)
+Multi sign-on control
+"^DD",3.081,3.081,100,1,2,"%D",0)
+^^3^3^3140530^
+"^DD",3.081,3.081,100,1,2,"%D",1,0)
+This cross reference builds a list of the IP or DNS name used by a 
+"^DD",3.081,3.081,100,1,2,"%D",2,0)
+device.  This is used to limit users to multiple sign-on from one IP 
+"^DD",3.081,3.081,100,1,2,"%D",3,0)
+address.  The X-ref is by DUZ,IP,DA.
+"^DD",3.081,3.081,100,1,2,"DT")
+3140530
+"^DD",3.081,3.081,100,3)
+Enter a valid IP address. IPv4 addresses will be stored as an IPv4-mapped IPv6 address.
+"^DD",3.081,3.081,100,21,0)
+^^6^6^3140530^
+"^DD",3.081,3.081,100,21,1,0)
+This field holds the IPv6 address of the calling system. Note that under 
+"^DD",3.081,3.081,100,21,2,0)
+DHCP IP addresses are dynamically allocated so more than one client could 
+"^DD",3.081,3.081,100,21,3,0)
+have used the same IP address over some time period. Note also that under 
+"^DD",3.081,3.081,100,21,4,0)
+IPv6, each client could have more than one IP address. IPv4 addresses 
+"^DD",3.081,3.081,100,21,5,0)
+will be stored as IPv4-mapped IPv6 addresses, and all addresses will be 
+"^DD",3.081,3.081,100,21,6,0)
+stored in expanded IPv6 format.
+"^DD",3.081,3.081,100,"DT")
+3140530
+"^DIC",3.081,3.081,0)
+SIGN-ON LOG^3.081P
+"^DIC",3.081,3.081,0,"GL")
+^XUSEC(0,
+"^DIC",3.081,3.081,"%",0)
+^1.005^1^1
+"^DIC",3.081,3.081,"%",1,0)
+XU
+"^DIC",3.081,3.081,"%","B","XU",1)
+
+"^DIC",3.081,3.081,"%D",0)
+^^2^2^2940913^^^^
+"^DIC",3.081,3.081,"%D",1,0)
+This file records sign-on/sign-off times by user, device, job, UCI,
+"^DIC",3.081,3.081,"%D",2,0)
+and CPU.  It is cross-referenced by user, device, and sign-off time.
+"^DIC",3.081,"B","SIGN-ON LOG",3.081)
+
+"BLD",1513,6)
+^516
+**END**
+**END**
+

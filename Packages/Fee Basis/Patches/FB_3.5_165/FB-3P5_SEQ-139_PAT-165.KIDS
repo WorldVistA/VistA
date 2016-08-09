@@ -1,0 +1,1551 @@
+Released FB*3.5*165 SEQ #139
+Extracted from mail message
+**KIDS**:FB*3.5*165^
+
+**INSTALL NAME**
+FB*3.5*165
+"BLD",10061,0)
+FB*3.5*165^FEE BASIS^0^3151230^y
+"BLD",10061,1,0)
+^^12^12^3151015^^^
+"BLD",10061,1,1,0)
+During installation of patch FB*3.5*165, the post-init routine performs 
+"BLD",10061,1,2,0)
+a one-time (Delete Reject Flag) task that deletes the inappropriate 
+"BLD",10061,1,3,0)
+reject flag from old payment line items which have payment confirmation 
+"BLD",10061,1,4,0)
+or payment cancellation data. Installation of patch FB*3.5*165 also 
+"BLD",10061,1,5,0)
+performs a one-time (Remove Payment from Batch) task that removes old 
+"BLD",10061,1,6,0)
+payments with payment confirmation/cancellation data from in-process 
+"BLD",10061,1,7,0)
+batches.  
+"BLD",10061,1,8,0)
+ 
+"BLD",10061,1,9,0)
+The Print Rejected Payment Items report [FBAA REJECT PRINT] is enhanced 
+"BLD",10061,1,10,0)
+to exclude payments transmitted prior to a user-specified date. The
+"BLD",10061,1,11,0)
+report line which prints the batch number, the voucher date and the
+"BLD",10061,1,12,0)
+voucherer is also modified to accommodate a 7-digit batch number.
+"BLD",10061,4,0)
+^9.64PA^^
+"BLD",10061,6.3)
+7
+"BLD",10061,"ABPKG")
+n
+"BLD",10061,"INID")
+^n
+"BLD",10061,"INIT")
+PS^FBXIP165
+"BLD",10061,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10061,"KRN",.4,0)
+.4
+"BLD",10061,"KRN",.401,0)
+.401
+"BLD",10061,"KRN",.402,0)
+.402
+"BLD",10061,"KRN",.403,0)
+.403
+"BLD",10061,"KRN",.5,0)
+.5
+"BLD",10061,"KRN",.84,0)
+.84
+"BLD",10061,"KRN",3.6,0)
+3.6
+"BLD",10061,"KRN",3.8,0)
+3.8
+"BLD",10061,"KRN",9.2,0)
+9.2
+"BLD",10061,"KRN",9.8,0)
+9.8
+"BLD",10061,"KRN",9.8,"NM",0)
+^9.68A^4^4
+"BLD",10061,"KRN",9.8,"NM",1,0)
+FBAARJP^^0^B54962385
+"BLD",10061,"KRN",9.8,"NM",2,0)
+FBXI165A^^0^B27402130
+"BLD",10061,"KRN",9.8,"NM",3,0)
+FBXIP165^^0^B77466514
+"BLD",10061,"KRN",9.8,"NM",4,0)
+FBXI165C^^0^B17487691
+"BLD",10061,"KRN",9.8,"NM","B","FBAARJP",1)
+
+"BLD",10061,"KRN",9.8,"NM","B","FBXI165A",2)
+
+"BLD",10061,"KRN",9.8,"NM","B","FBXI165C",4)
+
+"BLD",10061,"KRN",9.8,"NM","B","FBXIP165",3)
+
+"BLD",10061,"KRN",19,0)
+19
+"BLD",10061,"KRN",19.1,0)
+19.1
+"BLD",10061,"KRN",101,0)
+101
+"BLD",10061,"KRN",409.61,0)
+409.61
+"BLD",10061,"KRN",771,0)
+771
+"BLD",10061,"KRN",779.2,0)
+779.2
+"BLD",10061,"KRN",870,0)
+870
+"BLD",10061,"KRN",8989.51,0)
+8989.51
+"BLD",10061,"KRN",8989.52,0)
+8989.52
+"BLD",10061,"KRN",8994,0)
+8994
+"BLD",10061,"KRN","B",.4,.4)
+
+"BLD",10061,"KRN","B",.401,.401)
+
+"BLD",10061,"KRN","B",.402,.402)
+
+"BLD",10061,"KRN","B",.403,.403)
+
+"BLD",10061,"KRN","B",.5,.5)
+
+"BLD",10061,"KRN","B",.84,.84)
+
+"BLD",10061,"KRN","B",3.6,3.6)
+
+"BLD",10061,"KRN","B",3.8,3.8)
+
+"BLD",10061,"KRN","B",9.2,9.2)
+
+"BLD",10061,"KRN","B",9.8,9.8)
+
+"BLD",10061,"KRN","B",19,19)
+
+"BLD",10061,"KRN","B",19.1,19.1)
+
+"BLD",10061,"KRN","B",101,101)
+
+"BLD",10061,"KRN","B",409.61,409.61)
+
+"BLD",10061,"KRN","B",771,771)
+
+"BLD",10061,"KRN","B",779.2,779.2)
+
+"BLD",10061,"KRN","B",870,870)
+
+"BLD",10061,"KRN","B",8989.51,8989.51)
+
+"BLD",10061,"KRN","B",8989.52,8989.52)
+
+"BLD",10061,"KRN","B",8994,8994)
+
+"BLD",10061,"QUES",0)
+^9.62^^
+"BLD",10061,"REQB",0)
+^9.611^1^1
+"BLD",10061,"REQB",1,0)
+FB*3.5*132^2
+"BLD",10061,"REQB","B","FB*3.5*132",1)
+
+"INIT")
+PS^FBXIP165
+"MBREQ")
+0
+"PKG",60,-1)
+1^1
+"PKG",60,0)
+FEE BASIS^FB^Used to pay private vendors
+"PKG",60,20,0)
+^9.402P^1^1
+"PKG",60,20,1,0)
+2^^FBPMRG
+"PKG",60,20,1,1)
+
+"PKG",60,20,"B",2,1)
+
+"PKG",60,22,0)
+^9.49I^1^1
+"PKG",60,22,1,0)
+3.5^2950130^2950313
+"PKG",60,22,1,"PAH",1,0)
+165^3151230
+"PKG",60,22,1,"PAH",1,1,0)
+^^12^12^3151230
+"PKG",60,22,1,"PAH",1,1,1,0)
+During installation of patch FB*3.5*165, the post-init routine performs 
+"PKG",60,22,1,"PAH",1,1,2,0)
+a one-time (Delete Reject Flag) task that deletes the inappropriate 
+"PKG",60,22,1,"PAH",1,1,3,0)
+reject flag from old payment line items which have payment confirmation 
+"PKG",60,22,1,"PAH",1,1,4,0)
+or payment cancellation data. Installation of patch FB*3.5*165 also 
+"PKG",60,22,1,"PAH",1,1,5,0)
+performs a one-time (Remove Payment from Batch) task that removes old 
+"PKG",60,22,1,"PAH",1,1,6,0)
+payments with payment confirmation/cancellation data from in-process 
+"PKG",60,22,1,"PAH",1,1,7,0)
+batches.  
+"PKG",60,22,1,"PAH",1,1,8,0)
+ 
+"PKG",60,22,1,"PAH",1,1,9,0)
+The Print Rejected Payment Items report [FBAA REJECT PRINT] is enhanced 
+"PKG",60,22,1,"PAH",1,1,10,0)
+to exclude payments transmitted prior to a user-specified date. The
+"PKG",60,22,1,"PAH",1,1,11,0)
+report line which prints the batch number, the voucher date and the
+"PKG",60,22,1,"PAH",1,1,12,0)
+voucherer is also modified to accommodate a 7-digit batch number.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","FBAARJP")
+0^1^B54962385^B44159952
+"RTN","FBAARJP",1,0)
+FBAARJP ;AISC/GRR - PRINT REJECTS PENDING ACTION ;12/23/15  15:25
+"RTN","FBAARJP",2,0)
+ ;;3.5;FEE BASIS;**132,165**;JAN 30, 1995;Build 7
+"RTN","FBAARJP",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBAARJP",4,0)
+ ; ICR# 10103 XLFDT, ICR# 10005 DT^DICRW
+"RTN","FBAARJP",5,0)
+ D:$D(DT)#10=0 DT^DICRW
+"RTN","FBAARJP",6,0)
+ ; ask batch status to report
+"RTN","FBAARJP",7,0)
+ S DIR(0)="S^1:CENTRAL FEE ACCEPTED;2:VOUCHERED;3:BOTH"
+"RTN","FBAARJP",8,0)
+ S DIR("A")="Select batch status to report"
+"RTN","FBAARJP",9,0)
+ S DIR("B")="BOTH"
+"RTN","FBAARJP",10,0)
+ D ^DIR K DIR Q:$D(DIRUT)
+"RTN","FBAARJP",11,0)
+ S FBSTATL=$S(Y=1:"^F^",Y=2:"^V^",1:"^F^V^")
+"RTN","FBAARJP",12,0)
+ S DIR(0)="D^:DT:EP",DIR("A")="Exclude rejects transmitted before"
+"RTN","FBAARJP",13,0)
+ S DIR("B")=$$FMTE^XLFDT($$FMADD^XLFDT(DT,-730),5)
+"RTN","FBAARJP",14,0)
+ S DIR("?")="  Do not include time.",DIR("?",1)="Enter earliest transmission date for payment to be included on report."
+"RTN","FBAARJP",15,0)
+ S DIR("?",2)="Response must not be a future date."
+"RTN","FBAARJP",16,0)
+ D ^DIR K DIR G:$D(DIRUT) END
+"RTN","FBAARJP",17,0)
+ S FBSTARTD=Y
+"RTN","FBAARJP",18,0)
+ S VAR="FBSTATL^FBSTARTD",VAL="",PGM="START^FBAARJP"
+"RTN","FBAARJP",19,0)
+ D ZIS^FBAAUTL G:FBPOP END
+"RTN","FBAARJP",20,0)
+START U IO W:$E(IOST,1,2)="C-" @IOF K QQ,B S (Q,UL)="",$P(Q,"=",80)="=",$P(UL,"-",80)="-",(FBAAOUT,CNT,FBINTOT)=0
+"RTN","FBAARJP",21,0)
+ D MED:$D(^FBAAC("AH")) G END:FBAAOUT D TRAV:$D(^FBAAC("AG")) G END:FBAAOUT D PHARM:$D(^FBAA(162.1,"AF")) G END:FBAAOUT D CHNH:$D(^FBAAI("AH")) G END:FBAAOUT
+"RTN","FBAARJP",22,0)
+ I 'CNT W !!,*7,"No Rejects Pending!"
+"RTN","FBAARJP",23,0)
+END K FBTYPE,FBVDUZ,FBVD,FBPV,CNT,D,I,PGM,Q,UL,VAL,VAR,Y,Z,A1,A2,A3,B,FBAACPT,FBIN,FBNUM,FBRR,FBINTOT,CPTDESC,FBAAOUT,FBVP,J,K,T,X,L,M,N,S,V,VID,XY,ZS,POP,A,B2,FBINOLD
+"RTN","FBAARJP",24,0)
+ K FBAC,FBAP,FBDX,FBK,FBL,FBPDT,FBPROC,FBSC,FBTD,FBFD,FBSTATL,FBSTARTD,DIRUT
+"RTN","FBAARJP",25,0)
+ D CLOSE^FBAAUTL Q
+"RTN","FBAARJP",26,0)
+MED F B=0:0 S B=$O(^FBAAC("AH",B)) Q:B'>0!(FBAAOUT)  I $D(^FBAA(161.7,B,0)),FBSTATL[(U_^("ST")_U),$$DATEOK(B,FBSTARTD) S B(0)=^FBAA(161.7,B,0),FBTYPE=$P(B(0),"^",3),FBNUM=$P(B(0),"^",1),FBVD=$P(B(0),"^",12),FBVDUZ=$P(B(0),"^",16) D MORE
+"RTN","FBAARJP",27,0)
+ Q
+"RTN","FBAARJP",28,0)
+MORE D HED,HED^FBAACCB,HEDB
+"RTN","FBAARJP",29,0)
+ F J=0:0 S J=$O(^FBAAC("AH",B,J)) Q:J'>0!(FBAAOUT)  F K=0:0 S K=$O(^FBAAC("AH",B,J,K)) Q:K'>0!(FBAAOUT)  F L=0:0 S L=$O(^FBAAC("AH",B,J,K,L)) Q:L'>0!(FBAAOUT)  F M=0:0 S M=$O(^FBAAC("AH",B,J,K,L,M)) Q:M'>0!(FBAAOUT)  D SET^FBAACCB,WRITM
+"RTN","FBAARJP",30,0)
+ Q:FBAAOUT  W !,UL,! D ASKH^FBAACCB0:$E(IOST,1,2)["C-"&('$G(FBNNP)) Q:FBAAOUT  W:'$G(FBNNP) @IOF
+"RTN","FBAARJP",31,0)
+ Q
+"RTN","FBAARJP",32,0)
+HEDB W !,"Batch Number: ",FBNUM,?22,"Voucher Date: ",$$DATX^FBAAUTL(FBVD),?45,"Voucherer: ",$S(FBVDUZ="":"",$D(^VA(200,FBVDUZ,0)):$P(^(0),"^",1),1:"Unknown"),!
+"RTN","FBAARJP",33,0)
+ Q
+"RTN","FBAARJP",34,0)
+WRITM Q:FBAAOUT  S CNT=CNT+1
+"RTN","FBAARJP",35,0)
+ N FBL,FBTXT
+"RTN","FBAARJP",36,0)
+ D REJTXT(162.03,M_","_L_","_K_","_J_",",.FBTXT)
+"RTN","FBAARJP",37,0)
+ S FBL=0 F  S FBL=$O(FBTXT(FBL)) Q:'FBL  D
+"RTN","FBAARJP",38,0)
+ . I $Y+3>IOSL D ASKH^FBAACCB0:$E(IOST,1,2)["C-" Q:FBAAOUT  W @IOF D HED^FBAACCB
+"RTN","FBAARJP",39,0)
+ . W !,FBTXT(FBL)
+"RTN","FBAARJP",40,0)
+ Q
+"RTN","FBAARJP",41,0)
+TRAV F B=0:0 S B=$O(^FBAAC("AG",B)) Q:B'>0!(FBAAOUT)  I $D(^FBAA(161.7,B,0)),FBSTATL[(U_^("ST")_U),$$DATEOK(B,FBSTARTD) S B(0)=^FBAA(161.7,B,0),FBTYPE=$P(B(0),"^",3),FBNUM=$P(B(0),"^",1),FBVD=$P(B(0),"^",12),FBVDUZ=$P(B(0),"^",16) D TMORE
+"RTN","FBAARJP",42,0)
+ Q
+"RTN","FBAARJP",43,0)
+TMORE D HED,HEDP^FBAACCB0,HEDB
+"RTN","FBAARJP",44,0)
+ F J=0:0 S J=$O(^FBAAC("AG",B,J)) Q:J'>0  F K=0:0 S K=$O(^FBAAC("AG",B,J,K)) Q:K'>0  S Y(0)=^FBAAC(J,3,K,0) D SETT^FBAACCB0,WRITT
+"RTN","FBAARJP",45,0)
+ Q:FBAAOUT  W !,UL,! D ASKH^FBAACCB0:$E(IOST,1,2)["C-"&('$G(FBNNP)) Q:FBAAOUT  W:'$G(FBNNP) @IOF
+"RTN","FBAARJP",46,0)
+ Q
+"RTN","FBAARJP",47,0)
+WRITT S CNT=CNT+1
+"RTN","FBAARJP",48,0)
+ N FBL,FBTXT
+"RTN","FBAARJP",49,0)
+ D REJTXT(162.04,K_","_J_",",.FBTXT)
+"RTN","FBAARJP",50,0)
+ S FBL=0 F  S FBL=$O(FBTXT(FBL)) Q:'FBL  D
+"RTN","FBAARJP",51,0)
+ . I $Y+3>IOSL D ASKH^FBAACCB0:$E(IOST,1,2)["C-" Q:FBAAOUT  W @IOF D HEDP^FBAACCB0
+"RTN","FBAARJP",52,0)
+ . W !,FBTXT(FBL)
+"RTN","FBAARJP",53,0)
+ Q
+"RTN","FBAARJP",54,0)
+PHARM F B=0:0 S B=$O(^FBAA(162.1,"AF",B)) Q:B'>0!(FBAAOUT)  I $D(^FBAA(161.7,B,0)),FBSTATL[(U_^("ST")_U),$$DATEOK(B,FBSTARTD) S B(0)=^FBAA(161.7,B,0),FBTYPE=$P(B(0),"^",3),FBNUM=$P(B(0),"^",1),FBVD=$P(B(0),"^",12),FBVDUZ=$P(B(0),"^",16) D PMORE
+"RTN","FBAARJP",55,0)
+ Q
+"RTN","FBAARJP",56,0)
+PMORE D HED,HED^FBAACCB,HEDB
+"RTN","FBAARJP",57,0)
+ F A=0:0 S A=$O(^FBAA(162.1,"AF",B,A)) Q:A'>0!(FBAAOUT)  S FBIN=A D SETV^FBAACCB0 F B2=0:0 S B2=$O(^FBAA(162.1,"AF",B,A,B2)) Q:B2'>0!(FBAAOUT)  I $D(^FBAA(162.1,A,"RX",B2,0)) S Z(0)=^(0) D MORE^FBAACCB1,WRITP
+"RTN","FBAARJP",58,0)
+ Q:FBAAOUT  W !,UL,! D ASKH^FBAACCB0:$E(IOST,1,2)="C-"&('$G(FBNNP)) Q:FBAAOUT  W:'$G(FBNNP) @IOF
+"RTN","FBAARJP",59,0)
+ Q
+"RTN","FBAARJP",60,0)
+WRITP S CNT=CNT+1
+"RTN","FBAARJP",61,0)
+ N FBL,FBTXT
+"RTN","FBAARJP",62,0)
+ D REJTXT(162.11,B2_","_A_",",.FBTXT)
+"RTN","FBAARJP",63,0)
+ S FBL=0 F  S FBL=$O(FBTXT(FBL)) Q:'FBL  D
+"RTN","FBAARJP",64,0)
+ . I $Y+3>IOSL D ASKH^FBAACCB0:$E(IOST,1,2)["C-" Q:FBAAOUT  W @IOF D HED^FBAACCB
+"RTN","FBAARJP",65,0)
+ . W !,FBTXT(FBL)
+"RTN","FBAARJP",66,0)
+ Q
+"RTN","FBAARJP",67,0)
+CHNH F B=0:0 S B=$O(^FBAAI("AH",B)) Q:B'>0!(FBAAOUT)  I $D(^FBAA(161.7,B,0)),FBSTATL[(U_^("ST")_U),$$DATEOK(B,FBSTARTD) S B(0)=^FBAA(161.7,B,0),FBTYPE=$P(B(0),"^",3),FBNUM=$P(B(0),"^",1),FBVD=$P(B(0),"^",12),FBVDUZ=$P(B(0),"^",16) D CMORE
+"RTN","FBAARJP",68,0)
+ Q
+"RTN","FBAARJP",69,0)
+CMORE D HED,HEDC^FBAACCB1,HEDB
+"RTN","FBAARJP",70,0)
+ F I=0:0 S I=$O(^FBAAI("AH",B,I)) Q:I'>0!(FBAAOUT)  I $D(^FBAAI(I,0)) S Z(0)=^(0) D CMORE^FBAACCB1,WRITC
+"RTN","FBAARJP",71,0)
+ Q:FBAAOUT  W !,UL,! D ASKH^FBAACCB0:$E(IOST,1,2)="C-"&('$G(FBNNP)) Q:FBAAOUT  W:'$G(FBNNP) @IOF
+"RTN","FBAARJP",72,0)
+ Q
+"RTN","FBAARJP",73,0)
+WRITC Q:FBAAOUT  S CNT=CNT+1
+"RTN","FBAARJP",74,0)
+ N FBL,FBTXT
+"RTN","FBAARJP",75,0)
+ D REJTXT(162.5,I_",",.FBTXT)
+"RTN","FBAARJP",76,0)
+ S FBL=0 F  S FBL=$O(FBTXT(FBL)) Q:'FBL  D
+"RTN","FBAARJP",77,0)
+ . I $Y+3>IOSL D ASKH^FBAACCB0:$E(IOST,1,2)["C-" Q:FBAAOUT  W @IOF D HEDC^FBAACCB1
+"RTN","FBAARJP",78,0)
+ . W !,FBTXT(FBL)
+"RTN","FBAARJP",79,0)
+ Q
+"RTN","FBAARJP",80,0)
+ ;
+"RTN","FBAARJP",81,0)
+HED ;write header for report if sent to printer
+"RTN","FBAARJP",82,0)
+ Q:$E(IOST,1,2)="C-"
+"RTN","FBAARJP",83,0)
+ W !?3,"REJECTS PENDING ACTION - ",$S(FBSTATL["F^V":"CF Accepted & Vouchered",FBSTATL["F":"Central Fee Accepted",FBSTATL["V":"Vouchered",1:"")," Trans Since: ",$$FMTE^XLFDT(FBSTARTD,5),!?3,$E(Q,1,74),!
+"RTN","FBAARJP",84,0)
+ Q
+"RTN","FBAARJP",85,0)
+ ;
+"RTN","FBAARJP",86,0)
+REJTXT(FBFILE,FBIENS,FBTXT) ; get reject text for line item
+"RTN","FBAARJP",87,0)
+ ; input
+"RTN","FBAARJP",88,0)
+ ;   FBFILE - (required) Sub-File (162.03, 162.04, 162.1, or 162.5)
+"RTN","FBAARJP",89,0)
+ ;   FBIENS - (required) IENS of line item, FileMan DBS format
+"RTN","FBAARJP",90,0)
+ ;   FBTXT  - array passed by reference, will be initialzed
+"RTN","FBAARJP",91,0)
+ ; output
+"RTN","FBAARJP",92,0)
+ ;   FBTXT  - array of text with format
+"RTN","FBAARJP",93,0)
+ ;            FBTXT(0)=count of lines
+"RTN","FBAARJP",94,0)
+ ;            FBTXT(#)=line of text
+"RTN","FBAARJP",95,0)
+ ;             where # is sequential number starting at 1
+"RTN","FBAARJP",96,0)
+ ;
+"RTN","FBAARJP",97,0)
+ N FBC,FBD,FBFIELDS,FBLST,FBRIENS
+"RTN","FBAARJP",98,0)
+ K FBTXT
+"RTN","FBAARJP",99,0)
+ S (FBC,FBTXT(0))=0
+"RTN","FBAARJP",100,0)
+ ; check inputs
+"RTN","FBAARJP",101,0)
+ Q:"^162.03^162.04^162.11^162.5^"'[("^"_$G(FBFILE)_"^")
+"RTN","FBAARJP",102,0)
+ Q:$G(FBIENS)=""
+"RTN","FBAARJP",103,0)
+ ;
+"RTN","FBAARJP",104,0)
+ ; determine field numbers based on file
+"RTN","FBAARJP",105,0)
+ ; FBFIELDS will contain the numbers of the following fields/sub-file
+"RTN","FBAARJP",106,0)
+ ;   piece 1 = batch number
+"RTN","FBAARJP",107,0)
+ ;   piece 2 = amount paid
+"RTN","FBAARJP",108,0)
+ ;   piece 3 = reject status
+"RTN","FBAARJP",109,0)
+ ;   piece 4 = reject reason
+"RTN","FBAARJP",110,0)
+ ;   piece 5 = old batch number
+"RTN","FBAARJP",111,0)
+ ;   piece 6 = interface reject
+"RTN","FBAARJP",112,0)
+ ;   piece 7 = reject code
+"RTN","FBAARJP",113,0)
+ ;   piece 8 = reject code sub-file number
+"RTN","FBAARJP",114,0)
+ I FBFILE="162.03" S FBFIELDS="7^2^19^20^21^21.3^21.6^162.031"
+"RTN","FBAARJP",115,0)
+ I FBFILE="162.04" S FBFIELDS="1^2^4^5^6^6.3^6.6^162.041"
+"RTN","FBAARJP",116,0)
+ I FBFILE="162.11" S FBFIELDS="13^6.5^17^18^19^19.3^19.6^162.111"
+"RTN","FBAARJP",117,0)
+ I FBFILE="162.5" S FBFIELDS="20^8^13^14^15^15.3^15.6^162.515"
+"RTN","FBAARJP",118,0)
+ ;
+"RTN","FBAARJP",119,0)
+ S FBD(5)=$$GET1^DIQ(FBFILE,FBIENS,$P(FBFIELDS,"^",5)) ; old batch
+"RTN","FBAARJP",120,0)
+ Q:FBD(5)=""  ; line is not rejected
+"RTN","FBAARJP",121,0)
+ S FBD(6)=$$GET1^DIQ(FBFILE,FBIENS,$P(FBFIELDS,"^",6),"I") ; inter. rej.
+"RTN","FBAARJP",122,0)
+ ;
+"RTN","FBAARJP",123,0)
+ ; 1st line
+"RTN","FBAARJP",124,0)
+ S FBC=FBC+1
+"RTN","FBAARJP",125,0)
+ S FBTXT(FBC)=$$LJ^XLFSTR($S(FBD(6):"Central Fee",1:"Local")_" Reject",20)_"Old Batch #: "_FBD(5)
+"RTN","FBAARJP",126,0)
+ ;
+"RTN","FBAARJP",127,0)
+ ; line for reject reason (if any)
+"RTN","FBAARJP",128,0)
+ S FBD(4)=$$GET1^DIQ(FBFILE,FBIENS,$P(FBFIELDS,"^",4)) ; reject reason
+"RTN","FBAARJP",129,0)
+ I FBD(4)]"" S FBC=FBC+1,FBTXT(FBC)="Reject Reason: "_FBD(4)
+"RTN","FBAARJP",130,0)
+ ;
+"RTN","FBAARJP",131,0)
+ ; lines for reject codes (if any)
+"RTN","FBAARJP",132,0)
+ ; get list of entries in REJECT CODE multiple
+"RTN","FBAARJP",133,0)
+ D GETS^DIQ(FBFILE,FBIENS,$P(FBFIELDS,"^",7)_"*","","FBLST")
+"RTN","FBAARJP",134,0)
+ ;
+"RTN","FBAARJP",135,0)
+ ; loop thru REJECT CODE entries
+"RTN","FBAARJP",136,0)
+ S FBRIENS=""
+"RTN","FBAARJP",137,0)
+ F  S FBRIENS=$O(FBLST($P(FBFIELDS,"^",8),FBRIENS)) Q:FBRIENS=""  D
+"RTN","FBAARJP",138,0)
+ . N FBARR,FBRC,FBLI
+"RTN","FBAARJP",139,0)
+ . S FBRC=FBLST($P(FBFIELDS,"^",8),FBRIENS,.01) ; REJECT CODE
+"RTN","FBAARJP",140,0)
+ . Q:FBRC=""
+"RTN","FBAARJP",141,0)
+ . ; get description of code from file 161.99
+"RTN","FBAARJP",142,0)
+ . D RCDES(FBRC,,.FBARR)
+"RTN","FBAARJP",143,0)
+ . ;
+"RTN","FBAARJP",144,0)
+ . ; add code and first line of description to output array
+"RTN","FBAARJP",145,0)
+ . S FBC=FBC+1
+"RTN","FBAARJP",146,0)
+ . S FBTXT(FBC)=$$LJ^XLFSTR("Rej Code: "_FBRC,16)
+"RTN","FBAARJP",147,0)
+ . I $D(FBARR(1,0)) S FBTXT(FBC)=FBTXT(FBC)_FBARR(1,0)
+"RTN","FBAARJP",148,0)
+ . ;
+"RTN","FBAARJP",149,0)
+ . ; loop thru remaining description lines
+"RTN","FBAARJP",150,0)
+ . S FBLI=1 F  S FBLI=$O(FBARR(FBLI)) Q:'FBLI  D
+"RTN","FBAARJP",151,0)
+ . . Q:'$D(FBARR(FBLI,0))
+"RTN","FBAARJP",152,0)
+ . . ; add description line to output array
+"RTN","FBAARJP",153,0)
+ . . S FBC=FBC+1
+"RTN","FBAARJP",154,0)
+ . . S FBTXT(FBC)="                "_FBARR(FBLI,0)
+"RTN","FBAARJP",155,0)
+ ;
+"RTN","FBAARJP",156,0)
+ S FBTXT(0)=FBC
+"RTN","FBAARJP",157,0)
+ Q
+"RTN","FBAARJP",158,0)
+ ;
+"RTN","FBAARJP",159,0)
+RCDES(FBRC,FBRM,FBARR) ; Reject Code Description
+"RTN","FBAARJP",160,0)
+ ; input
+"RTN","FBAARJP",161,0)
+ ;   FBRC  - reject code external value
+"RTN","FBAARJP",162,0)
+ ;   FBRM  - (optional) right margin, default 60
+"RTN","FBAARJP",163,0)
+ ;   FBARR - array, passed by reference, not FBWP, will be initialized
+"RTN","FBAARJP",164,0)
+ ; output
+"RTN","FBAARJP",165,0)
+ ;   FBARR - array contained formatted description
+"RTN","FBAARJP",166,0)
+ ;           where
+"RTN","FBAARJP",167,0)
+ ;             FBARR(0)=line count
+"RTN","FBAARJP",168,0)
+ ;             FBARR(1,0)=1st line of description
+"RTN","FBAARJP",169,0)
+ ;             FBARR(2,0)=2nd line of description
+"RTN","FBAARJP",170,0)
+ ;
+"RTN","FBAARJP",171,0)
+ ; note: some variables newed because DIWP call is stepping on I
+"RTN","FBAARJP",172,0)
+ N A,B,DIWL,DIWR,DIWF,FBI,FBRCI,FBWP,FBX,I,J,K,L,M
+"RTN","FBAARJP",173,0)
+ ;
+"RTN","FBAARJP",174,0)
+ S FBRM=$G(FBRM,60)
+"RTN","FBAARJP",175,0)
+ K FBARR
+"RTN","FBAARJP",176,0)
+ Q:$G(FBRC)=""
+"RTN","FBAARJP",177,0)
+ ;
+"RTN","FBAARJP",178,0)
+ ; find IEN of code
+"RTN","FBAARJP",179,0)
+ S FBRCI=$$FIND1^DIC(161.99,,"X",FBRC)
+"RTN","FBAARJP",180,0)
+ ;
+"RTN","FBAARJP",181,0)
+ ; if entry found then load description from file
+"RTN","FBAARJP",182,0)
+ S:FBRCI FBX=$$GET1^DIQ(161.99,FBRCI_",",1,"","FBWP")
+"RTN","FBAARJP",183,0)
+ ; if entry not found use default description
+"RTN","FBAARJP",184,0)
+ S:'FBRCI FBWP(1)="Reject reason code is not currently defined in list."
+"RTN","FBAARJP",185,0)
+ ;
+"RTN","FBAARJP",186,0)
+ ; reformat description
+"RTN","FBAARJP",187,0)
+ K ^UTILITY($J,"W")
+"RTN","FBAARJP",188,0)
+ S DIWL=1,DIWR=FBRM,DIWF=""
+"RTN","FBAARJP",189,0)
+ S FBI=0 F  S FBI=$O(FBWP(FBI)) Q:'FBI  S X=FBWP(FBI) D ^DIWP
+"RTN","FBAARJP",190,0)
+ ;
+"RTN","FBAARJP",191,0)
+ ; move description into output array
+"RTN","FBAARJP",192,0)
+ M FBARR=^UTILITY($J,"W",DIWL)
+"RTN","FBAARJP",193,0)
+ ;
+"RTN","FBAARJP",194,0)
+ K ^UTILITY($J,"W")
+"RTN","FBAARJP",195,0)
+ Q
+"RTN","FBAARJP",196,0)
+ ;
+"RTN","FBAARJP",197,0)
+DATEOK(FBATID,FBSTART) ;Compares batch transmission date to start date
+"RTN","FBAARJP",198,0)
+ ; Returns 0 if transmission date earlier than start date
+"RTN","FBAARJP",199,0)
+ ; Returns 1 if transmission date equals or is later
+"RTN","FBAARJP",200,0)
+ N FBX,FBY
+"RTN","FBAARJP",201,0)
+ Q:FBATID'>0 0 Q:FBSTART="" 0
+"RTN","FBAARJP",202,0)
+ S FBY=$P($P($G(^FBAA(161.7,FBATID,0)),U,14),".")
+"RTN","FBAARJP",203,0)
+ S FBX=$S(FBY="":1,FBY<FBSTART:0,1:1)
+"RTN","FBAARJP",204,0)
+ Q FBX
+"RTN","FBXI165A")
+0^2^B27402130^n/a
+"RTN","FBXI165A",1,0)
+FBXI165A ;OI&T/LKG - POST-INIT CONVERSION FB*3.5*165 ;11/17/15  17:07
+"RTN","FBXI165A",2,0)
+ ;;3.5;FEE BASIS;**165**;JAN 30, 1995;Build 7
+"RTN","FBXI165A",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBXI165A",4,0)
+ ;
+"RTN","FBXI165A",5,0)
+ W !,"This FB*3.5*165 conversion routine should not be called directly." Q
+"RTN","FBXI165A",6,0)
+ ;
+"RTN","FBXI165A",7,0)
+ ; ICRs
+"RTN","FBXI165A",8,0)
+ ;  #2053    FILE^DIE
+"RTN","FBXI165A",9,0)
+ ;  #2054    CLEAN^DILF
+"RTN","FBXI165A",10,0)
+ ;  #10141   BMES^XPDUTL, MES^XPDUTL
+"RTN","FBXI165A",11,0)
+ ;
+"RTN","FBXI165A",12,0)
+IN ;Entry point for removing payment lines with populated DATE PAID
+"RTN","FBXI165A",13,0)
+ ; or CANCELLATION DATE from in process but not yet transmitted batches
+"RTN","FBXI165A",14,0)
+ D BMES^XPDUTL("    Removing paid or payment cancelled payment lines from")
+"RTN","FBXI165A",15,0)
+ D MES^XPDUTL("        not yet transmitted batches.")
+"RTN","FBXI165A",16,0)
+ N FBCANDT,FBCHANGE,FBH,FBLCNT,FBPAID,FBSTATUS,FBTOTAL,FBTYPE
+"RTN","FBXI165A",17,0)
+ N FBB2L,FBB3L,FBB5L,FBB9L,FBBCTR S (FBB2L,FBB3L,FBB5L,FBB9L)=0
+"RTN","FBXI165A",18,0)
+ S FBH=0
+"RTN","FBXI165A",19,0)
+ F  S FBH=$O(^FBAA(161.7,FBH)) Q:+FBH'=FBH  S FBSTATUS=$P($G(^FBAA(161.7,FBH,"ST")),U) I "^T^F^V^"'[("^"_FBSTATUS_"^") D
+"RTN","FBXI165A",20,0)
+ . S FBTYPE=$P($G(^FBAA(161.7,FBH,0)),U,3) Q:"^B2^B3^B5^B9^"'[("^"_FBTYPE_"^")
+"RTN","FBXI165A",21,0)
+ . S FBCHANGE=0
+"RTN","FBXI165A",22,0)
+ . I FBTYPE="B3" D
+"RTN","FBXI165A",23,0)
+ . . N FBCHK,FBI,FBJ,FBK,FBL S (FBI,FBJ,FBK,FBL)=0
+"RTN","FBXI165A",24,0)
+ . . F  S FBI=$O(^FBAAC("AC",FBH,FBI)) Q:'FBI  F  S FBJ=$O(^FBAAC("AC",FBH,FBI,FBJ)) Q:'FBJ  F  S FBK=$O(^FBAAC("AC",FBH,FBI,FBJ,FBK)) Q:'FBK  F  S FBL=$O(^FBAAC("AC",FBH,FBI,FBJ,FBK,FBL)) Q:'FBL  D
+"RTN","FBXI165A",25,0)
+ . . . S FBPAID=$P($P($G(^FBAAC(FBI,1,FBJ,1,FBK,1,FBL,0)),U,14),".")
+"RTN","FBXI165A",26,0)
+ . . . S FBCANDT=$P($P($G(^FBAAC(FBI,1,FBJ,1,FBK,1,FBL,2)),U,4),"."),FBCHK=$P($G(^(2)),U,3)
+"RTN","FBXI165A",27,0)
+ . . . Q:FBPAID=""&(FBCANDT="")
+"RTN","FBXI165A",28,0)
+ . . . I FBCANDT="",FBPAID<3110107,FBCHK="" Q
+"RTN","FBXI165A",29,0)
+ . . . Q:FBPAID>3130306  Q:FBCANDT>3130306
+"RTN","FBXI165A",30,0)
+ . . . S FBCHANGE=1,FBB3L=FBB3L+1
+"RTN","FBXI165A",31,0)
+ . . . N FBARR,FBIENS,FBDATE,FBERR S FBIENS=FBL_","_FBK_","_FBJ_","_FBI_","
+"RTN","FBXI165A",32,0)
+ . . . S ^XTMP("FB*3.5*165","RMVPAY",162.03,FBH,FBIENS)="7^5:"_$P($G(^FBAAC(FBI,1,FBJ,1,FBK,1,FBL,0)),U,6)
+"RTN","FBXI165A",33,0)
+ . . . S FBDATE=$S(FBCANDT>FBPAID:FBCANDT,1:FBPAID)
+"RTN","FBXI165A",34,0)
+ . . . S FBARR(162.03,FBIENS,7)="@",FBARR(162.03,FBIENS,5)=FBDATE
+"RTN","FBXI165A",35,0)
+ . . . D FILE^DIE("K","FBARR","FBERR")
+"RTN","FBXI165A",36,0)
+ . . . D:$D(FBERR) MES^XPDUTL("    Error updating file 162.03 record with IENS "_FBIENS)
+"RTN","FBXI165A",37,0)
+ . I FBTYPE="B9" D
+"RTN","FBXI165A",38,0)
+ . . N FBI S FBI=0
+"RTN","FBXI165A",39,0)
+ . . F  S FBI=$O(^FBAAI("AC",FBH,FBI)) Q:'FBI  D
+"RTN","FBXI165A",40,0)
+ . . . S FBPAID=$P($P($G(^FBAAI(FBI,2)),U),"."),FBCANDT=$P($P($G(^(2)),U,5),".")
+"RTN","FBXI165A",41,0)
+ . . . Q:FBPAID=""&(FBCANDT="")
+"RTN","FBXI165A",42,0)
+ . . . Q:FBPAID>3130306  Q:FBCANDT>3130306
+"RTN","FBXI165A",43,0)
+ . . . S FBCHANGE=1,FBB9L=FBB9L+1
+"RTN","FBXI165A",44,0)
+ . . . N FBARR,FBIENS,FBDATE,FBERR S FBIENS=FBI_","
+"RTN","FBXI165A",45,0)
+ . . . S ^XTMP("FB*3.5*165","RMVPAY",162.5,FBH,FBIENS)="20^19:"_$P($G(^FBAAI(FBI,0)),U,16)
+"RTN","FBXI165A",46,0)
+ . . . S FBDATE=$S(FBCANDT>FBPAID:FBCANDT,1:FBPAID)
+"RTN","FBXI165A",47,0)
+ . . . S FBARR(162.5,FBIENS,20)="@",FBARR(162.5,FBIENS,19)=FBDATE
+"RTN","FBXI165A",48,0)
+ . . . D FILE^DIE("K","FBARR","FBERR")
+"RTN","FBXI165A",49,0)
+ . . . D:$D(FBERR) MES^XPDUTL("    Error updating file 162.5 record with IENS "_FBIENS)
+"RTN","FBXI165A",50,0)
+ . I FBTYPE="B2" D
+"RTN","FBXI165A",51,0)
+ . . N FBI,FBJ S (FBI,FBJ)=0
+"RTN","FBXI165A",52,0)
+ . . F  S FBI=$O(^FBAAC("AD",FBH,FBI)) Q:'FBI  F  S FBJ=$O(^FBAAC("AD",FBH,FBI,FBJ)) Q:'FBJ  D
+"RTN","FBXI165A",53,0)
+ . . . S FBPAID=$P($P($G(^FBAAC(FBI,3,FBJ,0)),U,6),".")
+"RTN","FBXI165A",54,0)
+ . . . S FBCANDT=$P($P($G(^FBAAC(FBI,3,FBJ,0)),U,8),".")
+"RTN","FBXI165A",55,0)
+ . . . Q:FBPAID=""&(FBCANDT="")
+"RTN","FBXI165A",56,0)
+ . . . Q:FBPAID>3130306  Q:FBCANDT>3130306
+"RTN","FBXI165A",57,0)
+ . . . S FBCHANGE=1,FBB2L=FBB2L+1
+"RTN","FBXI165A",58,0)
+ . . . N FBARR,FBIENS,FBERR S FBIENS=FBJ_","_FBI_","
+"RTN","FBXI165A",59,0)
+ . . . S ^XTMP("FB*3.5*165","RMVPAY",162.04,FBH,FBIENS)="1"
+"RTN","FBXI165A",60,0)
+ . . . S FBARR(162.04,FBIENS,1)="@"
+"RTN","FBXI165A",61,0)
+ . . . D FILE^DIE("K","FBARR","FBERR")
+"RTN","FBXI165A",62,0)
+ . . . D:$D(FBERR) MES^XPDUTL("    Error updating file 162.04 record with IENS "_FBIENS)
+"RTN","FBXI165A",63,0)
+ . I FBTYPE="B5" D
+"RTN","FBXI165A",64,0)
+ . . N FBI,FBJ S (FBI,FBJ)=0
+"RTN","FBXI165A",65,0)
+ . . F  S FBI=$O(^FBAA(162.1,"AE",FBH,FBI)) Q:'FBI  F  S FBJ=$O(^FBAA(162.1,"AE",FBH,FBI,FBJ)) Q:'FBJ  D
+"RTN","FBXI165A",66,0)
+ . . . S FBPAID=$P($P($G(^FBAA(162.1,FBI,"RX",FBJ,2)),U,8),".")
+"RTN","FBXI165A",67,0)
+ . . . S FBCANDT=$P($P($G(^FBAA(162.1,FBI,"RX",FBJ,2)),U,11),".")
+"RTN","FBXI165A",68,0)
+ . . . Q:FBPAID=""&(FBCANDT="")
+"RTN","FBXI165A",69,0)
+ . . . Q:FBPAID>3130306  Q:FBCANDT>3130306
+"RTN","FBXI165A",70,0)
+ . . . S FBCHANGE=1,FBB5L=FBB5L+1
+"RTN","FBXI165A",71,0)
+ . . . N FBARR,FBIENS,FBERR S FBIENS=FBJ_","_FBI_","
+"RTN","FBXI165A",72,0)
+ . . . S ^XTMP("FB*3.5*165","RMVPAY",162.11,FBH,FBIENS)="13"
+"RTN","FBXI165A",73,0)
+ . . . S FBARR(162.11,FBIENS,13)="@"
+"RTN","FBXI165A",74,0)
+ . . . D FILE^DIE("K","FBARR","FBERR")
+"RTN","FBXI165A",75,0)
+ . . . D:$D(FBERR) MES^XPDUTL("    Error updating file 162.11 record with IENS "_FBIENS)
+"RTN","FBXI165A",76,0)
+ . I FBCHANGE D
+"RTN","FBXI165A",77,0)
+ . . S:FBSTATUS="" FBSTATUS="NULL" S FBBCTR(FBSTATUS)=$G(FBBCTR(FBSTATUS))+1
+"RTN","FBXI165A",78,0)
+ . . D CNTTOT^FBAARB(FBH)
+"RTN","FBXI165A",79,0)
+ . . N FBARR,FBIENS,FBERR S FBIENS=FBH_","
+"RTN","FBXI165A",80,0)
+ . . S FBARR(161.7,FBIENS,8)=FBTOTAL,FBARR(161.7,FBIENS,10)=FBLCNT
+"RTN","FBXI165A",81,0)
+ . . I FBTYPE="B9" S FBARR(161.7,FBIENS,9)=FBLCNT
+"RTN","FBXI165A",82,0)
+ . . I FBTYPE="B5" D
+"RTN","FBXI165A",83,0)
+ . . . N FBMCNT,FBM S FBMCNT=0,FBM=""
+"RTN","FBXI165A",84,0)
+ . . . F  S FBM=$O(^FBAA(162.1,"AE",FBH,FBM)) Q:FBM=""  S FBMCNT=FBMCNT+1
+"RTN","FBXI165A",85,0)
+ . . . S FBARR(161.7,FBIENS,9)=FBMCNT
+"RTN","FBXI165A",86,0)
+ . . D FILE^DIE("K","FBARR","FBERR")
+"RTN","FBXI165A",87,0)
+ . . D:$D(FBERR) MES^XPDUTL("    Error updating batch file 161.7 entry with IENS "_FBIENS)
+"RTN","FBXI165A",88,0)
+ ;Output statistics
+"RTN","FBXI165A",89,0)
+ D BMES^XPDUTL("*** Statistics For Removing Payments From Batches ***")
+"RTN","FBXI165A",90,0)
+ N FBCNT S FBCNT=0
+"RTN","FBXI165A",91,0)
+ S FBSTATUS=""
+"RTN","FBXI165A",92,0)
+ F  S FBSTATUS=$O(FBBCTR(FBSTATUS)) Q:FBSTATUS=""  D
+"RTN","FBXI165A",93,0)
+ . S FBH="Batches of Status '"_FBSTATUS_"' Updated: "_FBBCTR(FBSTATUS)
+"RTN","FBXI165A",94,0)
+ . D MES^XPDUTL(FBH)
+"RTN","FBXI165A",95,0)
+ . S FBCNT=FBCNT+FBBCTR(FBSTATUS)
+"RTN","FBXI165A",96,0)
+ D BMES^XPDUTL("Total Number of Batches Updated: "_FBCNT)
+"RTN","FBXI165A",97,0)
+ S FBH="B2 Batch Payment Lines Edited: "_FBB2L D BMES^XPDUTL(FBH)
+"RTN","FBXI165A",98,0)
+ S FBH="B3 Batch Payment Lines Edited: "_FBB3L D MES^XPDUTL(FBH)
+"RTN","FBXI165A",99,0)
+ S FBH="B5 Batch Payment Lines Edited: "_FBB5L D MES^XPDUTL(FBH)
+"RTN","FBXI165A",100,0)
+ S FBH="B9 Batch Payment Lines Edited: "_FBB9L D MES^XPDUTL(FBH)
+"RTN","FBXI165A",101,0)
+ D BMES^XPDUTL("Total Number of Payment Lines Edited: "_(FBB2L+FBB3L+FBB5L+FBB9L))
+"RTN","FBXI165A",102,0)
+ D CLEAN^DILF
+"RTN","FBXI165A",103,0)
+ Q
+"RTN","FBXI165A",104,0)
+ ;
+"RTN","FBXI165A",105,0)
+ ;FBXI165A
+"RTN","FBXI165C")
+0^4^B17487691^n/a
+"RTN","FBXI165C",1,0)
+FBXI165C ;OI&T/LKG - FB*3.5*165 PAYMENT REMOVAL FROM BATCH REPORT ;11/30/15  11:28
+"RTN","FBXI165C",2,0)
+ ;;3.5;FEE BASIS;**165**;JAN 30, 1995;Build 7
+"RTN","FBXI165C",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBXI165C",4,0)
+ ;
+"RTN","FBXI165C",5,0)
+ ; ICRs
+"RTN","FBXI165C",6,0)
+ ;  2056    $$GET1^DIQ(), GETS^DIQ()
+"RTN","FBXI165C",7,0)
+ ;  10103   $$FMTE^XLFDT()
+"RTN","FBXI165C",8,0)
+ I '$D(^XTMP("FB*3.5*165")) D  Q
+"RTN","FBXI165C",9,0)
+ . W !,?5,"There are no entries in the compile file for the FB*3.5*165 conversion.",!?10,"The file must have been purged."
+"RTN","FBXI165C",10,0)
+ . R !,"Hit <RETURN> to continue. ",X:DTIME
+"RTN","FBXI165C",11,0)
+ N POP S %ZIS="Q" D ^%ZIS Q:POP
+"RTN","FBXI165C",12,0)
+ I $D(IO("Q")) D   Q 
+"RTN","FBXI165C",13,0)
+ . S ZTRTN="ENTRY^FBXI165C",ZTDESC="RPT: FB*3.5*165 PAYMENT REMOVAL FROM BATCH"
+"RTN","FBXI165C",14,0)
+ . D ^%ZTLOAD,HOME^%ZIS K ZTSK,IO("Q")
+"RTN","FBXI165C",15,0)
+ENTRY ;
+"RTN","FBXI165C",16,0)
+ U IO
+"RTN","FBXI165C",17,0)
+ N FBABORT,FBFILE,FBBATCH,FBIENS,FBL,FBP,FBQUIT,FBSTRG,X S FBP=0,FBABORT=0
+"RTN","FBXI165C",18,0)
+ D HDR
+"RTN","FBXI165C",19,0)
+ I '$D(^XTMP("FB*3.5*165","RMVPAY")) W !!,"There are no payment entries removed from batches." G EXIT
+"RTN","FBXI165C",20,0)
+ S FBFILE="",FBBATCH="",FBIENS=""
+"RTN","FBXI165C",21,0)
+ F  S FBFILE=$O(^XTMP("FB*3.5*165","RMVPAY",FBFILE)) Q:FBFILE=""  D  Q:FBABORT
+"RTN","FBXI165C",22,0)
+ . F  S FBBATCH=$O(^XTMP("FB*3.5*165","RMVPAY",FBFILE,FBBATCH)) Q:FBBATCH=""  D  Q:FBABORT
+"RTN","FBXI165C",23,0)
+ . . F  S FBIENS=$O(^XTMP("FB*3.5*165","RMVPAY",FBFILE,FBBATCH,FBIENS)) Q:FBIENS=""  D  Q:FBABORT
+"RTN","FBXI165C",24,0)
+ . . . N FBVALS
+"RTN","FBXI165C",25,0)
+ . . . S FBSTRG=^XTMP("FB*3.5*165","RMVPAY",FBFILE,FBBATCH,FBIENS)
+"RTN","FBXI165C",26,0)
+ . . . D GETDATA(FBFILE,FBBATCH,FBIENS,FBSTRG,.FBVALS)
+"RTN","FBXI165C",27,0)
+ . . . D:FBL+8>IOSL HDR Q:FBABORT
+"RTN","FBXI165C",28,0)
+ . . . W !,"BATCH TYPE: ",FBVALS("FBTYPE"),?25,"STATUS: ",$$GET1^DIQ(161.7,FBBATCH_",",11) S FBL=FBL+1
+"RTN","FBXI165C",29,0)
+ . . . W !," DATE PAID: ",FBVALS("DATE PAID"),?40,"CHECK NUMBER: ",FBVALS("CHECK") S FBL=FBL+1
+"RTN","FBXI165C",30,0)
+ . . . W !," CANCELLATION DATE: ",FBVALS("CANCEL DT") S FBL=FBL+1
+"RTN","FBXI165C",31,0)
+ . . . W !," CURRENT BATCH: ",FBVALS("BATCH"),?40,"FORMER BATCH: ",FBVALS("OLD BATCH") S FBL=FBL+1
+"RTN","FBXI165C",32,0)
+ . . . W !," DATE FINALIZED: ",FBVALS("DATE FINAL"),?40,"FORMER DATE FINAL: ",$G(FBVALS("OLD DT FINAL")) S FBL=FBL+1
+"RTN","FBXI165C",33,0)
+EXIT I 'FBABORT W !!,"<End of Report>" R:$E(IOST,1,2)="C-" X:DTIME
+"RTN","FBXI165C",34,0)
+ W:FBABORT !!,"<Report Aborted>"
+"RTN","FBXI165C",35,0)
+ D ^%ZISC
+"RTN","FBXI165C",36,0)
+ S:$D(ZTQUEUED) ZTREQ="@"
+"RTN","FBXI165C",37,0)
+ Q
+"RTN","FBXI165C",38,0)
+GETDATA(FBFNBR,FBBAT,FBIENS,FBSTR,FBARR) ;Returns values in FBARR
+"RTN","FBXI165C",39,0)
+ N X,Y
+"RTN","FBXI165C",40,0)
+ S FBARR("OLD BATCH")=$$GET1^DIQ(161.7,FBBAT_",",.01)
+"RTN","FBXI165C",41,0)
+ I FBFNBR=162.04 D  Q
+"RTN","FBXI165C",42,0)
+ . N FBERR,FBTMP
+"RTN","FBXI165C",43,0)
+ . D GETS^DIQ(FBFNBR,FBIENS,"1;8;9;10;7","","FBTMP","FBERR")
+"RTN","FBXI165C",44,0)
+ . S FBARR("BATCH")=FBTMP(FBFNBR,FBIENS,1),FBARR("DATE PAID")=FBTMP(FBFNBR,FBIENS,8)
+"RTN","FBXI165C",45,0)
+ . S FBARR("CHECK")=FBTMP(FBFNBR,FBIENS,9),FBARR("CANCEL DT")=FBTMP(FBFNBR,FBIENS,10)
+"RTN","FBXI165C",46,0)
+ . S FBARR("DATE FINAL")=FBTMP(FBFNBR,FBIENS,7),FBARR("FBTYPE")="B2"
+"RTN","FBXI165C",47,0)
+ I FBFNBR=162.03 D  Q
+"RTN","FBXI165C",48,0)
+ . N FBERR,FBTMP,FBX,X,Y
+"RTN","FBXI165C",49,0)
+ . D GETS^DIQ(FBFNBR,FBIENS,"7;12;35;36;5","","FBTMP","FBERR")
+"RTN","FBXI165C",50,0)
+ . S FBARR("BATCH")=FBTMP(FBFNBR,FBIENS,7),FBARR("DATE PAID")=FBTMP(FBFNBR,FBIENS,12)
+"RTN","FBXI165C",51,0)
+ . S FBARR("CHECK")=FBTMP(FBFNBR,FBIENS,35),FBARR("CANCEL DT")=FBTMP(FBFNBR,FBIENS,36)
+"RTN","FBXI165C",52,0)
+ . S FBARR("DATE FINAL")=FBTMP(FBFNBR,FBIENS,5),FBARR("FBTYPE")="B3"
+"RTN","FBXI165C",53,0)
+ . S FBX=$P($P(FBSTR,"^",2),":",2),X=$$FMTE^XLFDT(FBX,1) X ^%ZOSF("UPPERCASE")
+"RTN","FBXI165C",54,0)
+ . S FBARR("OLD DT FINAL")=Y
+"RTN","FBXI165C",55,0)
+ I FBFNBR=162.11 D  Q
+"RTN","FBXI165C",56,0)
+ . N FBERR,FBTMP
+"RTN","FBXI165C",57,0)
+ . D GETS^DIQ(FBFNBR,FBIENS,"13;28;30;31","","FBTMP","FBERR")
+"RTN","FBXI165C",58,0)
+ . S FBARR("BATCH")=FBTMP(FBFNBR,FBIENS,13),FBARR("DATE PAID")=FBTMP(FBFNBR,FBIENS,28)
+"RTN","FBXI165C",59,0)
+ . S FBARR("CHECK")=FBTMP(FBFNBR,FBIENS,30),FBARR("CANCEL DT")=FBTMP(FBFNBR,FBIENS,31)
+"RTN","FBXI165C",60,0)
+ . S FBARR("DATE FINAL")="",FBARR("FBTYPE")="B5"
+"RTN","FBXI165C",61,0)
+ I FBFNBR=162.5 D  Q
+"RTN","FBXI165C",62,0)
+ . N FBERR,FBTMP,FBX,X,Y
+"RTN","FBXI165C",63,0)
+ . D GETS^DIQ(FBFNBR,FBIENS,"20;45;48;49;19","","FBTMP","FBERR")
+"RTN","FBXI165C",64,0)
+ . S FBARR("BATCH")=FBTMP(FBFNBR,FBIENS,20),FBARR("DATE PAID")=FBTMP(FBFNBR,FBIENS,45)
+"RTN","FBXI165C",65,0)
+ . S FBARR("CHECK")=FBTMP(FBFNBR,FBIENS,48),FBARR("CANCEL DT")=FBTMP(FBFNBR,FBIENS,49)
+"RTN","FBXI165C",66,0)
+ . S FBARR("DATE FINAL")=FBTMP(FBFNBR,FBIENS,19),FBARR("FBTYPE")="B9"
+"RTN","FBXI165C",67,0)
+ . S FBX=$P($P(FBSTR,"^",2),":",2),X=$$FMTE^XLFDT(FBX,1) X ^%ZOSF("UPPERCASE")
+"RTN","FBXI165C",68,0)
+ . S FBARR("OLD DT FINAL")=Y
+"RTN","FBXI165C",69,0)
+ Q
+"RTN","FBXI165C",70,0)
+HDR ;
+"RTN","FBXI165C",71,0)
+ I $E(IOST,1,2)="C-",FBP R !,"Hit <RETURN> to continue, '^' to Exit",FBQUIT:DTIME I FBQUIT["^" S FBABORT=1 Q
+"RTN","FBXI165C",72,0)
+ S FBP=FBP+1 W @IOF,?20,"REPORT OF PAYMENTS REMOVED FROM BATCHES",?65,"Page: ",FBP,!
+"RTN","FBXI165C",73,0)
+ S FBL=2
+"RTN","FBXI165C",74,0)
+ Q
+"RTN","FBXI165C",75,0)
+ ;
+"RTN","FBXI165C",76,0)
+ ;FBXI165C
+"RTN","FBXIP165")
+0^3^B77466514^n/a
+"RTN","FBXIP165",1,0)
+FBXIP165 ;OIPD/SAB - PATCH INSTALL ROUTINE ;12/28/2015
+"RTN","FBXIP165",2,0)
+ ;;3.5;FEE BASIS;**165**;JAN 30, 1995;Build 7
+"RTN","FBXIP165",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","FBXIP165",4,0)
+ ; 
+"RTN","FBXIP165",5,0)
+ ; ICRs
+"RTN","FBXIP165",6,0)
+ ;  #2053   FILE^DIE
+"RTN","FBXIP165",7,0)
+ ;  #2056   $$GET1^DIQ
+"RTN","FBXIP165",8,0)
+ ;  #10103  $$FMADD^XLFDT, $$FMTE^XLFDT
+"RTN","FBXIP165",9,0)
+ ;  #10141  BMES^XPDUTL, MES^XPDUTL, $$NEWCP^XPDUTL
+"RTN","FBXIP165",10,0)
+ ;
+"RTN","FBXIP165",11,0)
+PS ; post-install entry point
+"RTN","FBXIP165",12,0)
+ ; create KIDS checkpoints with call backs
+"RTN","FBXIP165",13,0)
+ N FBX,Y
+"RTN","FBXIP165",14,0)
+ F FBX="DELREJ","RMVPAY" D
+"RTN","FBXIP165",15,0)
+ . S Y=$$NEWCP^XPDUTL(FBX,FBX_"^FBXIP165")
+"RTN","FBXIP165",16,0)
+ . I 'Y D BMES^XPDUTL("ERROR Creating "_FBX_" Checkpoint.")
+"RTN","FBXIP165",17,0)
+ Q
+"RTN","FBXIP165",18,0)
+ ;
+"RTN","FBXIP165",19,0)
+RMVPAY ; remove payments that are paid or cancelled from in-process batch
+"RTN","FBXIP165",20,0)
+ G IN^FBXI165A
+"RTN","FBXIP165",21,0)
+ Q
+"RTN","FBXIP165",22,0)
+ ;
+"RTN","FBXIP165",23,0)
+DELREJ ; delete inappropriate reject flags from old payments
+"RTN","FBXIP165",24,0)
+ N DA,DIERR,FBBAT,FBC,FBCKNUM,FBDT132,FBDTC,FBDTF,FBDTP
+"RTN","FBXIP165",25,0)
+ N FBFILE,FBIENS,FBX
+"RTN","FBXIP165",26,0)
+ D BMES^XPDUTL("    Deleting inappropriate reject flags on payments. This may take some time.")
+"RTN","FBXIP165",27,0)
+ ;
+"RTN","FBXIP165",28,0)
+ ;
+"RTN","FBXIP165",29,0)
+ S FBDT132=3130307 ; patch FB*3.5*132 compliance date
+"RTN","FBXIP165",30,0)
+ ;
+"RTN","FBXIP165",31,0)
+ ; set header for XTMP with purge date in 180 days
+"RTN","FBXIP165",32,0)
+ S ^XTMP("FB*3.5*165",0)=$$FMADD^XLFDT(DT,180)_"^"_DT_"^From patch FB*3.5*165 post init."
+"RTN","FBXIP165",33,0)
+ ;
+"RTN","FBXIP165",34,0)
+ D MES^XPDUTL("      processing sub-file 162.03...")
+"RTN","FBXIP165",35,0)
+ D INITCNT
+"RTN","FBXIP165",36,0)
+ S FBFILE=162.03
+"RTN","FBXIP165",37,0)
+ ; loop thru rejected payments using x-ref on OLD BATCH NUMBER
+"RTN","FBXIP165",38,0)
+ ; loop thru old batch number
+"RTN","FBXIP165",39,0)
+ S FBBAT=0 F  S FBBAT=$O(^FBAAC("AH",FBBAT)) Q:'FBBAT  D
+"RTN","FBXIP165",40,0)
+ . ; loop thru patient
+"RTN","FBXIP165",41,0)
+ . N DA
+"RTN","FBXIP165",42,0)
+ . S DA(3)=0 F  S DA(3)=$O(^FBAAC("AH",FBBAT,DA(3))) Q:'DA(3)  D
+"RTN","FBXIP165",43,0)
+ . . ; loop thru vendor
+"RTN","FBXIP165",44,0)
+ . . S DA(2)=0 F  S DA(2)=$O(^FBAAC("AH",FBBAT,DA(3),DA(2))) Q:'DA(2)  D
+"RTN","FBXIP165",45,0)
+ . . . ; loop thru initial treatment date
+"RTN","FBXIP165",46,0)
+ . . . S DA(1)=0
+"RTN","FBXIP165",47,0)
+ . . . F  S DA(1)=$O(^FBAAC("AH",FBBAT,DA(3),DA(2),DA(1))) Q:'DA(1)  D
+"RTN","FBXIP165",48,0)
+ . . . . ; loop thru service provided
+"RTN","FBXIP165",49,0)
+ . . . . S DA=0
+"RTN","FBXIP165",50,0)
+ . . . . F  S DA=$O(^FBAAC("AH",FBBAT,DA(3),DA(2),DA(1),DA)) Q:'DA  D
+"RTN","FBXIP165",51,0)
+ . . . . . S FBDTP=$P($G(^FBAAC(DA(3),1,DA(2),1,DA(1),1,DA,0)),U,14) ; paid
+"RTN","FBXIP165",52,0)
+ . . . . . S FBDTC=$P($G(^FBAAC(DA(3),1,DA(2),1,DA(1),1,DA,2)),U,4) ; canc
+"RTN","FBXIP165",53,0)
+ . . . . . S FBCKNUM=$P($G(^FBAAC(DA(3),1,DA(2),1,DA(1),1,DA,2)),U,3)
+"RTN","FBXIP165",54,0)
+ . . . . . Q:'$$OKDEL
+"RTN","FBXIP165",55,0)
+ . . . . . ;
+"RTN","FBXIP165",56,0)
+ . . . . . S FBIENS=DA_","_DA(1)_","_DA(2)_","_DA(3)_","
+"RTN","FBXIP165",57,0)
+ . . . . . ;
+"RTN","FBXIP165",58,0)
+ . . . . . ; save current reject data to XTMP
+"RTN","FBXIP165",59,0)
+ . . . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJ")=^FBAAC(DA(3),1,DA(2),1,DA(1),1,DA,"FBREJ")
+"RTN","FBXIP165",60,0)
+ . . . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJC")=^FBAAC(DA(3),1,DA(2),1,DA(1),1,DA,"FBREJC")
+"RTN","FBXIP165",61,0)
+ . . . . . ;
+"RTN","FBXIP165",62,0)
+ . . . . . ; delete reject flag
+"RTN","FBXIP165",63,0)
+ . . . . . S FBX=$$DELREJ^FBAARR3(FBFILE,FBIENS)
+"RTN","FBXIP165",64,0)
+ . . . . . I 'FBX D MES^XPDUTL("  Problem encountered while deleting reject flag for record with IENS "_FBIENS)
+"RTN","FBXIP165",65,0)
+ . . . . . I 'FBX,$P(FBX,U,2)'="" D MES^XPDUTL("    "_$P(FBX,U,2))
+"RTN","FBXIP165",66,0)
+ . . . . . ;
+"RTN","FBXIP165",67,0)
+ . . . . . ; populate payment date finalized using value from batch
+"RTN","FBXIP165",68,0)
+ . . . . . I FBDTF?7N D
+"RTN","FBXIP165",69,0)
+ . . . . . . N FBFDA,DIERR
+"RTN","FBXIP165",70,0)
+ . . . . . . S FBFDA(162.03,FBIENS,5)=FBDTF
+"RTN","FBXIP165",71,0)
+ . . . . . . D FILE^DIE("","FBFDA")
+"RTN","FBXIP165",72,0)
+ . . . . . . I $G(DIERR)'="" D MES^XPDUTL("  Error updating date finalized for record with IENS "_FBIENS)
+"RTN","FBXIP165",73,0)
+ D SHOWCNT
+"RTN","FBXIP165",74,0)
+ ;
+"RTN","FBXIP165",75,0)
+ D MES^XPDUTL("      processing file 162.5...")
+"RTN","FBXIP165",76,0)
+ D INITCNT
+"RTN","FBXIP165",77,0)
+ S FBFILE=162.5
+"RTN","FBXIP165",78,0)
+ ; loop thru rejected payments using x-ref on OLD BATCH NUMBER
+"RTN","FBXIP165",79,0)
+ ; loop thru old batch number
+"RTN","FBXIP165",80,0)
+ S FBBAT=0 F  S FBBAT=$O(^FBAAI("AH",FBBAT)) Q:'FBBAT  D
+"RTN","FBXIP165",81,0)
+ . ; loop thru invoice
+"RTN","FBXIP165",82,0)
+ . N DA
+"RTN","FBXIP165",83,0)
+ . S DA=0 F  S DA=$O(^FBAAI("AH",FBBAT,DA)) Q:'DA  D
+"RTN","FBXIP165",84,0)
+ . . S FBDTP=$P($G(^FBAAI(DA,2)),U,1) ; paid
+"RTN","FBXIP165",85,0)
+ . . S FBDTC=$P($G(^FBAAI(DA,2)),U,5) ; canc
+"RTN","FBXIP165",86,0)
+ . . Q:'$$OKDEL
+"RTN","FBXIP165",87,0)
+ . . ;
+"RTN","FBXIP165",88,0)
+ . . S FBIENS=DA_","
+"RTN","FBXIP165",89,0)
+ . . ;
+"RTN","FBXIP165",90,0)
+ . . ; save current reject data to XTMP
+"RTN","FBXIP165",91,0)
+ . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJ")=^FBAAI(DA,"FBREJ")
+"RTN","FBXIP165",92,0)
+ . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJC")=^FBAAI(DA,"FBREJC")
+"RTN","FBXIP165",93,0)
+ . . ;
+"RTN","FBXIP165",94,0)
+ . . ; delete reject flag
+"RTN","FBXIP165",95,0)
+ . . S FBX=$$DELREJ^FBAARR3(FBFILE,FBIENS)
+"RTN","FBXIP165",96,0)
+ . . I 'FBX D MES^XPDUTL("  Problem encountered while deleting reject flag for record with IENS "_FBIENS)
+"RTN","FBXIP165",97,0)
+ . . I 'FBX,$P(FBX,U,2)'="" D MES^XPDUTL("    "_$P(FBX,U,2))
+"RTN","FBXIP165",98,0)
+ . . ;
+"RTN","FBXIP165",99,0)
+ . . ; populate payment date finalized using value from batch
+"RTN","FBXIP165",100,0)
+ . . I FBDTF?7N D
+"RTN","FBXIP165",101,0)
+ . . . N FBFDA,DIERR
+"RTN","FBXIP165",102,0)
+ . . . S FBFDA(162.5,FBIENS,19)=FBDTF
+"RTN","FBXIP165",103,0)
+ . . . D FILE^DIE("","FBFDA")
+"RTN","FBXIP165",104,0)
+ . . . I $G(DIERR)'="" D MES^XPDUTL("  Error updating date finalized for record with IENS "_FBIENS)
+"RTN","FBXIP165",105,0)
+ D SHOWCNT
+"RTN","FBXIP165",106,0)
+ ;
+"RTN","FBXIP165",107,0)
+ D MES^XPDUTL("      processing sub-file 162.04...")
+"RTN","FBXIP165",108,0)
+ D INITCNT
+"RTN","FBXIP165",109,0)
+ S FBFILE=162.04
+"RTN","FBXIP165",110,0)
+ ; loop thru rejected payments using x-ref on OLD BATCH NUMBER
+"RTN","FBXIP165",111,0)
+ ; loop thru old batch number
+"RTN","FBXIP165",112,0)
+ S FBBAT=0 F  S FBBAT=$O(^FBAAC("AG",FBBAT)) Q:'FBBAT  D
+"RTN","FBXIP165",113,0)
+ . ; loop thru patient
+"RTN","FBXIP165",114,0)
+ . N DA
+"RTN","FBXIP165",115,0)
+ . S DA(1)=0 F  S DA(1)=$O(^FBAAC("AG",FBBAT,DA(1))) Q:'DA(1)  D
+"RTN","FBXIP165",116,0)
+ . . ; loop thru travel payment date
+"RTN","FBXIP165",117,0)
+ . . S DA=0 F  S DA=$O(^FBAAC("AG",FBBAT,DA(1),DA)) Q:'DA  D
+"RTN","FBXIP165",118,0)
+ . . . S FBDTP=$P($G(^FBAAC(DA(1),3,DA,0)),U,6) ; paid
+"RTN","FBXIP165",119,0)
+ . . . S FBDTC=$P($G(^FBAAC(DA(1),3,DA,0)),U,8) ; canc
+"RTN","FBXIP165",120,0)
+ . . . Q:'$$OKDEL
+"RTN","FBXIP165",121,0)
+ . . . ;
+"RTN","FBXIP165",122,0)
+ . . . S FBIENS=DA_","_DA(1)_","
+"RTN","FBXIP165",123,0)
+ . . . ;
+"RTN","FBXIP165",124,0)
+ . . . ; save current reject data to XTMP
+"RTN","FBXIP165",125,0)
+ . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJ")=^FBAAC(DA(1),3,DA,"FBREJ")
+"RTN","FBXIP165",126,0)
+ . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJC")=^FBAAC(DA(1),3,DA,"FBREJC")
+"RTN","FBXIP165",127,0)
+ . . . ;
+"RTN","FBXIP165",128,0)
+ . . . ; delete reject flag
+"RTN","FBXIP165",129,0)
+ . . . S FBX=$$DELREJ^FBAARR3(FBFILE,FBIENS)
+"RTN","FBXIP165",130,0)
+ . . . I 'FBX D MES^XPDUTL("  Problem encountered while deleting reject flag for record with IENS "_FBIENS)
+"RTN","FBXIP165",131,0)
+ . . . I 'FBX,$P(FBX,U,2)'="" D MES^XPDUTL("    "_$P(FBX,U,2))
+"RTN","FBXIP165",132,0)
+ D SHOWCNT
+"RTN","FBXIP165",133,0)
+ ;
+"RTN","FBXIP165",134,0)
+ D MES^XPDUTL("      processing sub-file 162.11...")
+"RTN","FBXIP165",135,0)
+ D INITCNT
+"RTN","FBXIP165",136,0)
+ S FBFILE=162.11
+"RTN","FBXIP165",137,0)
+ ; loop thru rejected payments using x-ref on OLD BATCH NUMBER
+"RTN","FBXIP165",138,0)
+ ; loop thru old batch number
+"RTN","FBXIP165",139,0)
+ S FBBAT=0 F  S FBBAT=$O(^FBAA(162.1,"AF",FBBAT)) Q:'FBBAT  D
+"RTN","FBXIP165",140,0)
+ . ; loop thru invoice
+"RTN","FBXIP165",141,0)
+ . N DA
+"RTN","FBXIP165",142,0)
+ . S DA(1)=0 F  S DA(1)=$O(^FBAA(162.1,"AF",FBBAT,DA(1))) Q:'DA(1)  D
+"RTN","FBXIP165",143,0)
+ . . ; loop thru prescription
+"RTN","FBXIP165",144,0)
+ . . S DA=0 F  S DA=$O(^FBAA(162.1,"AF",FBBAT,DA(1),DA)) Q:'DA  D
+"RTN","FBXIP165",145,0)
+ . . . S FBDTP=$P($G(^FBAA(162.1,DA(1),"RX",DA,2)),U,8) ; paid
+"RTN","FBXIP165",146,0)
+ . . . S FBDTC=$P($G(^FBAA(162.1,DA(1),"RX",DA,2)),U,11) ; canc
+"RTN","FBXIP165",147,0)
+ . . . Q:'$$OKDEL
+"RTN","FBXIP165",148,0)
+ . . . ;
+"RTN","FBXIP165",149,0)
+ . . . S FBIENS=DA_","_DA(1)_","
+"RTN","FBXIP165",150,0)
+ . . . ;
+"RTN","FBXIP165",151,0)
+ . . . ; save current reject data to XTMP
+"RTN","FBXIP165",152,0)
+ . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJ")=^FBAA(162.1,DA(1),"RX",DA,"FBREJ")
+"RTN","FBXIP165",153,0)
+ . . . M ^XTMP("FB*3.5*165","DELREJ",FBFILE,FBBAT,FBIENS,"FBREJC")=^FBAA(162.1,DA(1),"RX",DA,"FBREJC")
+"RTN","FBXIP165",154,0)
+ . . . ;
+"RTN","FBXIP165",155,0)
+ . . . ; delete reject flag
+"RTN","FBXIP165",156,0)
+ . . . S FBX=$$DELREJ^FBAARR3(FBFILE,FBIENS)
+"RTN","FBXIP165",157,0)
+ . . . I 'FBX D MES^XPDUTL("  Problem encountered while deleting reject flag for record with IENS "_FBIENS)
+"RTN","FBXIP165",158,0)
+ . . . I 'FBX,$P(FBX,U,2)'="" D MES^XPDUTL("    "_$P(FBX,U,2))
+"RTN","FBXIP165",159,0)
+ D SHOWCNT
+"RTN","FBXIP165",160,0)
+ ;
+"RTN","FBXIP165",161,0)
+ D MES^XPDUTL("    Done deleting inappropriate reject flags.")
+"RTN","FBXIP165",162,0)
+ Q
+"RTN","FBXIP165",163,0)
+OKDEL() ; check reject for inappropriate reject flag
+"RTN","FBXIP165",164,0)
+ ; Input
+"RTN","FBXIP165",165,0)
+ ;   FBDT132 - compiance date for FB*3.5*132
+"RTN","FBXIP165",166,0)
+ ;   FBDTP   - DATE PAID
+"RTN","FBXIP165",167,0)
+ ;   FBDTC   - CANCELLATION DATE
+"RTN","FBXIP165",168,0)
+ ;   FBBAT   - OLD BATCH NUMBER
+"RTN","FBXIP165",169,0)
+ ;   FBC(    - counters
+"RTN","FBXIP165",170,0)
+ ;   FBFILE  - file or sub-file number
+"RTN","FBXIP165",171,0)
+ ;   FBCKNUM - FBCKNUM only defined when FBFILE = 162.03
+"RTN","FBXIP165",172,0)
+ ; Output
+"RTN","FBXIP165",173,0)
+ ;   FBDTF  - DATE FINALIZED for batch FBBAT
+"RTN","FBXIP165",174,0)
+ ;   FBC(   - counters
+"RTN","FBXIP165",175,0)
+ ; Return value
+"RTN","FBXIP165",176,0)
+ ;   0 or 1, true (=1) if reject flag should be deleted
+"RTN","FBXIP165",177,0)
+ ;
+"RTN","FBXIP165",178,0)
+ N FBOLD
+"RTN","FBXIP165",179,0)
+ ;
+"RTN","FBXIP165",180,0)
+ ; increment count of rejects
+"RTN","FBXIP165",181,0)
+ S FBC("REJ")=FBC("REJ")+1
+"RTN","FBXIP165",182,0)
+ ;
+"RTN","FBXIP165",183,0)
+ ; Skip if line item not confirmed or cancelled
+"RTN","FBXIP165",184,0)
+ I 'FBDTP,'FBDTC Q 0
+"RTN","FBXIP165",185,0)
+ ;   if outp/anc, not cancelled, date paid exists but < 1/1/2011 and
+"RTN","FBXIP165",186,0)
+ ;   check number is blank then don't treat as a confirmed payment.
+"RTN","FBXIP165",187,0)
+ ;   Prior to version 3.5 the DATE PAID was populated by transmission
+"RTN","FBXIP165",188,0)
+ ;   to Central FEE instead of a value returned by Central FEE.
+"RTN","FBXIP165",189,0)
+ ;   CHECK NUMBER is better indicator of actual payment except for
+"RTN","FBXIP165",190,0)
+ ;   0 dollar line items which were not transmitted to Central FEE until
+"RTN","FBXIP165",191,0)
+ ;   patch FB*3.5*116.  Earliest install of FB*3.5*116 is Jan 7, 2011.
+"RTN","FBXIP165",192,0)
+ I FBFILE=162.03,'FBDTC,FBDTP,FBDTP<3110107,FBCKNUM="" Q 0
+"RTN","FBXIP165",193,0)
+ ;
+"RTN","FBXIP165",194,0)
+ ; increment count of rejects with payment confirmation/cancellation
+"RTN","FBXIP165",195,0)
+ S FBC("REJC")=FBC("REJC")+1
+"RTN","FBXIP165",196,0)
+ ;
+"RTN","FBXIP165",197,0)
+ ; don't delete if batch status is not vouchered
+"RTN","FBXIP165",198,0)
+ I $S(FBBAT:$$GET1^DIQ(161.7,FBBAT_",",11,"I"),1:"")'="V" D  Q 0
+"RTN","FBXIP165",199,0)
+ . S FBC("NVOU")=FBC("NVOU")+1
+"RTN","FBXIP165",200,0)
+ ;
+"RTN","FBXIP165",201,0)
+ ; determine if is an old payment
+"RTN","FBXIP165",202,0)
+ S FBOLD=0
+"RTN","FBXIP165",203,0)
+ S FBDTF=$S(FBBAT:$$GET1^DIQ(161.7,FBBAT_",",13,"I"),1:"") ; finalized
+"RTN","FBXIP165",204,0)
+ I FBDTF,FBDTF<FBDT132 S FBOLD=1
+"RTN","FBXIP165",205,0)
+ I 'FBOLD,FBDTP,FBDTP<FBDT132 S FBOLD=1
+"RTN","FBXIP165",206,0)
+ I 'FBOLD,FBDTC,FBDTC<FBDT132 S FBOLD=1
+"RTN","FBXIP165",207,0)
+ ; don't delete if not an old payment
+"RTN","FBXIP165",208,0)
+ I 'FBOLD S FBC("NOLD")=FBC("NOLD")+1 Q 0
+"RTN","FBXIP165",209,0)
+ ;
+"RTN","FBXIP165",210,0)
+ ; passed all checks to delete the reject flag
+"RTN","FBXIP165",211,0)
+ S FBC("DELR")=FBC("DELR")+1
+"RTN","FBXIP165",212,0)
+ Q 1
+"RTN","FBXIP165",213,0)
+ ;
+"RTN","FBXIP165",214,0)
+INITCNT ; initalize counters for file/sub-file
+"RTN","FBXIP165",215,0)
+ S FBC("REJ")=0 ; count of line items flagged as rejected
+"RTN","FBXIP165",216,0)
+ S FBC("REJC")=0 ; count of rejected line items with pay conf/canc
+"RTN","FBXIP165",217,0)
+ S FBC("NVOU")=0 ; count of inapp. rejects not vouchered so not deleted
+"RTN","FBXIP165",218,0)
+ S FBC("NOLD")=0 ; count of inapp. rejects not old so not deleted
+"RTN","FBXIP165",219,0)
+ S FBC("DELR")=0 ; count of reject flags deleted
+"RTN","FBXIP165",220,0)
+ Q
+"RTN","FBXIP165",221,0)
+SHOWCNT ; show counts for file/sub-file
+"RTN","FBXIP165",222,0)
+ N FBTYPE,FBX
+"RTN","FBXIP165",223,0)
+ I FBFILE=162.03 S FBTYPE="outpatient/ancillary"
+"RTN","FBXIP165",224,0)
+ I FBFILE=162.04 S FBTYPE="travel"
+"RTN","FBXIP165",225,0)
+ I FBFILE=162.11 S FBTYPE="pharmacy"
+"RTN","FBXIP165",226,0)
+ I FBFILE=162.5 S FBTYPE="inpatient"
+"RTN","FBXIP165",227,0)
+ S FBX=$J($FN(FBC("REJ"),","),10)_" "_FBTYPE_" payment lines were flagged as rejected."
+"RTN","FBXIP165",228,0)
+ D MES^XPDUTL(FBX)
+"RTN","FBXIP165",229,0)
+ S FBX=$J($FN(FBC("REJC"),","),10)_" of these rejects are inappropriate because the payment line"
+"RTN","FBXIP165",230,0)
+ D MES^XPDUTL(FBX)
+"RTN","FBXIP165",231,0)
+ S FBX="           also has payment confirmation or payment cancellation data."
+"RTN","FBXIP165",232,0)
+ D MES^XPDUTL(FBX)
+"RTN","FBXIP165",233,0)
+ S FBX=$J($FN(FBC("DELR"),","),10)_" of the inappropriate reject flags were deleted."
+"RTN","FBXIP165",234,0)
+ D MES^XPDUTL(FBX)
+"RTN","FBXIP165",235,0)
+ I FBC("NVOU")>0 D
+"RTN","FBXIP165",236,0)
+ . S FBX=$J($FN(FBC("NVOU"),","),10)_" of the inappropriate reject flags could not be deleted"
+"RTN","FBXIP165",237,0)
+ . D MES^XPDUTL(FBX)
+"RTN","FBXIP165",238,0)
+ . S FBX="           because the batch status is not vouchered."
+"RTN","FBXIP165",239,0)
+ . D MES^XPDUTL(FBX)
+"RTN","FBXIP165",240,0)
+ I FBC("NOLD")>0 D
+"RTN","FBXIP165",241,0)
+ . S FBX=$J($FN(FBC("NOLD"),","),10)_" of the inappropriate reject flags could not be deleted"
+"RTN","FBXIP165",242,0)
+ . D MES^XPDUTL(FBX)
+"RTN","FBXIP165",243,0)
+ . S FBX="           because the payment is not prior to "_$$FMTE^XLFDT(FBDT132)_"."
+"RTN","FBXIP165",244,0)
+ . D MES^XPDUTL(FBX)
+"RTN","FBXIP165",245,0)
+ Q
+"RTN","FBXIP165",246,0)
+ ;
+"RTN","FBXIP165",247,0)
+ ;FBXIP165
+"VER")
+8.0^22.0
+"BLD",10061,6)
+^139
+**END**
+**END**
+

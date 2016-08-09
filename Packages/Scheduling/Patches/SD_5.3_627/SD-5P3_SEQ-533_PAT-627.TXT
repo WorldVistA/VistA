@@ -1,0 +1,884 @@
+$TXT Created by                at DEVVFF.DOMAIN.EXT  (KIDS) on Friday, 01/15/16 at 20:46
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SD*5.3*627
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #533                    Status: Released
+                  Compliance Date: AUG 03, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*132  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*257  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*478  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*536  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*544  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*545  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*567  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*582  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*586  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*592  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*622  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*630  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)SD*5.3*635  <<= must be installed BEFORE `SD*5.3*627'
+                    (v)GMRC*3*83   <<= must be installed BEFORE `SD*5.3*627'
+
+Subject: VISTA SCHEDULING ENHANCEMENT E1-E2
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ *The VHA Release Board has NOT provided approval for this patch to be    *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+ The Veterans Health Administration (VHA) Access and Clinic Administrative 
+ Program (ACAP) has requested an enterprise enhancement for the 
+ VistA Scheduling Package. The enhancement will reduce operating cost for
+ VHA and improve operational efficiencies resulting in patient centered
+ access to care, coordinated care, increased customer satisfaction, and 
+ the reduction of excessive cycle/wait time used for scheduling patients.
+    
+ The following patches along with VS GUI v2.0.0.5 provide a VistA 
+ Scheduling (VS) Graphical User Interface (GUI) for the Patient 
+ Information Management Systems (PIMS) Scheduling package:
+  
+ GMRC*3.0*83
+ SD*5.3*627 (This patch)
+ SD*5.3*628
+ SD*5.3*643
+ SD*5.3*642
+ SD*5.3*645
+  
+ Note: The patches noted above are to be installed in the order listed 
+ except for SD*5.3*645 which is a standalone patch and can be installed at 
+ any time.
+  
+ **************************************************************************
+ *              PLEASE TAKE NOTE OF THE FOLLOWING CHANGE                  *
+ *                                                                        *
+ * The option 'Multiple CLinic Display/Booking' [SDMULTICLINIC] must be   *
+ * disabled because it is not compatible with the changes distributed in  *
+ * this patch. OI&T must use 'Edit Options' under 'Menu Management' in    *
+ * EVE to mark [SDMULTICLINIC] as 'Out of Order'.                         *
+ *                                                                        *
+ **************************************************************************
+  
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                Field Name (#)             NEW/MODIFIED/DELETED
+ -------------                --------------             --------------------
+ HOSPITAL LOCATION            NAME                       Modified
+  (#44)                        (#.01)
+ HOSPITAL LOCATION            TYPE                       Modified
+  (#44)                        (#2)
+ PRIVILED USER SUB-FILE       PRIVILEGED USER            Modified
+  (#44.04)                     (#.01)
+ PROVIDER SUB-FILE            PROVIDER                   Modified
+  (#44.1)                      (#.01)
+ RECALL REMINDERS             USER WHO ENTERED RECALL    Modified
+  (#403.5)                     (#7)
+ RECALL REMINDERS             DATE/TIME RECALL ADDED     New
+  (#403.5)                     (#7.5)                                        
+ RECALL REMINDERS REMOVED     USER WHO ENTERED RECALL    Modified
+  (#403.56)                    (#7)
+ RECALL REMINDERS REMOVED     DATE/TIME RECALL ADDED     New
+  (#403.56)                    (#7.5)                                        
+ SD WAIT LIST                 ORIGINATING DATE           Modified
+  (#409.3)                     (#1)
+ SD WAIT LIST                 WL SPECIFIC HOSPITAL LOCATION   NEW
+  (#409.3)                     (#8.5)
+ SD WAIT LIST                 DATE/TIME ENTERED          New
+  (#409.3)                     (#9.5)                                        
+ SD WAIT LIST                 ENROLLMENT PRIORITY        New
+  (#409.3)                     (#10.5)                                       
+ SD WAIT LIST                 CURRENT STATUS             Modified
+  (#409.3)                     (#23)                                         
+ SD WAIT LIST                 PATIENT CONTACT            New
+  (#409.3)                     (#44)                                         
+ SDEC APPLICATION             MAJOR VERSION              New
+  (#409.81)                    (#.01)                                        
+ SDEC APPLICATION             MINOR VERSION              New
+  (#409.81)                    (#.02)                                        
+ SDEC APPLICATION             BUILD                      New
+  (#409.81)                    (#.03)                                        
+ SDEC ACCESS BLOCK            RESOURCE                   New
+  (#409.821)                   (#.01)                                        
+ SDEC ACCESS BLOCK            STARTTIME                  New
+  (#409.821)                   (#.02)                                        
+ SDEC ACCESS BLOCK            ENDTIME                    New
+  (#409.821)                   (#.03)                                        
+ SDEC ACCESS BLOCK            SLOTS                      New
+  (#409.821)                   (#.04)                                        
+ SDEC ACCESS BLOCK            ACCESS TYPE                New
+  (#409.821)                   (#.05)                                        
+ SDEC ACCESS BLOCK            NOTE                       New
+  (#409.821)                   (#1)                                          
+ SDEC ACCESS GROUP            ACCESS GROUP               New
+  (#409.822)                   (#.01)                                        
+ SDEC ACCESS TYPE             ACCESS TYPE NAME           New
+  (#409.823)                   (#.01)                                        
+ SDEC ACCESS TYPE             INACTIVE                   New
+  (#409.823)                   (#.02)                                        
+ SDEC ACCESS TYPE             DEPARTMENT NAME            New
+  (#409.823)                   (#.03)                                        
+ SDEC ACCESS TYPE             DISPLAY COLOR              New
+  (#409.823)                   (#.04)                                        
+ SDEC ACCESS TYPE             RED                        New
+  (#409.823)                   (#.05)                                        
+ SDEC ACCESS TYPE             GREEN                      New
+  (#409.823)                   (#.06)                                        
+ SDEC ACCESS TYPE             BLUE                       New
+  (#409.823)                   (#.07)                                        
+ SDEC ACCESS TYPE             PREVENT ACCESS             New
+  (#409.823)                   (#.08)                                        
+ SDEC ACCESS GROUP TYPE       ACCESS GROUP               New
+  (#409.824)                   (#.01)                                        
+ SDEC ACCESS GROUP TYPE       ACCESS TYPE                New
+  (#409.824)                   (#.02)                                        
+ SDEC RESOURCE                RESOURCE                   New
+  (#409.831)                   (#.01)                                        
+ SDEC RESOURCE                RESOURCE TYPE              New
+  (#409.831)                   (#.012)                                       
+ SDEC RESOURCE                DATE/TIME ENTERED          New
+  (#409.831)                   (#.015)                                       
+ SDEC RESOURCE                ENTERED BY USER            New
+  (#409.831)                   (#.016)                                       
+ SDEC RESOURCE                INACTIVE                   New
+  (#409.831)                   (#.02)                                        
+ SDEC RESOURCE                INACTIVATED DATE/TIME      New
+  (#409.831)                   (#.021)                                       
+ SDEC RESOURCE                INACTIVATED BY USER        New
+  (#409.831)                   (#.022)                                       
+ SDEC RESOURCE                REACTIVATED DATE/TIME      New
+  (#409.831)                   (#.025)                                       
+ SDEC RESOURCE                REACTIVATED BY USER        New
+  (#409.831)                   (#.026)                                       
+ SDEC RESOURCE                TIME SCALE                 New
+  (#409.831)                   (#.03)                                        
+ SDEC RESOURCE                HOSPITAL LOCATION          New
+  (#409.831)                   (#.04)                                        
+ SDEC RESOURCE                LETTER TEXT                New
+  (#409.831)                   (#1)                                          
+ SDEC RESOURCE                NO SHOW LETTER             New
+  (#409.831)                   (#1201)                                       
+ SDEC RESOURCE                CLINIC CANCELLATION LETTER New
+  (#409.831)                   (#1301)                                       
+ SDEC RESOURCE                ASSOCIATED VISTA CLINICS   New
+  (#409.831)                   (#2001)                                       
+ SDEC RESOURCE GROUP          NAME                       New
+  (#409.832)                   (#.01)                                        
+ SDEC RESOURCE GROUP          INACTIVATION DATE          New
+  (#409.832)                   (#.02)                                        
+ SDEC RESOURCE GROUP          RESOURCE                   New
+  (#409.832)                   (#1)                                          
+ SDEC RESOURCE USER           RESOURCENAME               New
+  (#409.832)                   (#.01)                                        
+ SDEC RESOURCE USER           USERNAME                   New
+  (#409.833)                   (#.02)                                        
+ SDEC RESOURCE USER           OVERBOOK                   New
+  (#409.833)                   (#.03)                                        
+ SDEC RESOURCE USER           MODIFY SCHEDULE            New
+  (#409.833)                   (#.04)                                        
+ SDEC RESOURCE USER           MODIFY APPOINTMENTS        New
+  (#409.833)                   (#.05)                                        
+ SDEC RESOURCE USER           MASTEROVERBOOK             New
+  (#409.833)                   (#.06)                                        
+ SDEC ADDITIONAL RESOURCE     NAME                       New
+  (#409.834)                   (#.01)                                        
+ SDEC ADDITIONAL RESOURCE     INACTIVE                   New
+  (#409.834)                   (#2)                                          
+ SDEC APPOINTMENT             STARTTIME                  New
+  (#409.84)                    (#.01)                                        
+ SDEC APPOINTMENT             ENDTIME                    New
+  (#409.84)                    (#.02)                                        
+ SDEC APPOINTMENT             CHECKIN                    New
+  (#409.84)                    (#.03)                                        
+ SDEC APPOINTMENT             CHECK IN TIME ENTERED      New
+  (#409.84)                    (#.04)                                        
+ SDEC APPOINTMENT             PATIENT                    New
+  (#409.84)                    (#.05)                                        
+ SDEC APPOINTMENT             ACCESS TYPE ID             New
+  (#409.84)                    (#.06)                                        
+ SDEC APPOINTMENT             RESOURCE                   New
+  (#409.84)                    (#.07)                                        
+ SDEC APPOINTMENT             DATA ENTRY CLERK           New
+  (#409.84)                    (#.08)                                        
+ SDEC APPOINTMENT             DATE APPT MADE             New
+  (#409.84)                    (#.09)                                        
+ SDEC APPOINTMENT             NOSHOW                     New
+  (#409.84)                    (#.1)                                         
+ SDEC APPOINTMENT             NOSHOW DATE/TIME           New
+  (#409.84)                    (#.101)                                       
+ SDEC APPOINTMENT             NOSHOW BY USER             New
+  (#409.84)                    (#.102)                                       
+ SDEC APPOINTMENT             REBOOK DATETIME            New
+  (#409.84)                    (#.11)                                        
+ SDEC APPOINTMENT             CANCEL DATETIME            New
+  (#409.84)                    (#.12)                                        
+ SDEC APPOINTMENT             CANCELLED BY USER          New
+  (#409.84)                    (#.121)                                       
+ SDEC APPOINTMENT             CANCELLATION REASON        New                 
+  (#409.84)                    (#.122)                                       
+ SDEC APPOINTMENT             WALKIN                     New
+  (#409.84)                    (#.13)                                        
+ SDEC APPOINTMENT             CHECKOUT                   New
+  (#409.84)                    (#.14)                                        
+ SDEC APPOINTMENT             V PROVIDER IEN             New                 
+  (#409.84)                    (#.15)                                        
+ SDEC APPOINTMENT             PROVIDER                   New                 
+  (#409.84)                    (#.16)                                        
+ SDEC APPOINTMENT             STATUS                     New
+  (#409.84)                    (#.17)                                        
+ SDEC APPOINTMENT             LENGTH OF APPT             New
+  (#409.84)                    (#.18)                                        
+ SDEC APPOINTMENT             PREV APPT STATUS           New
+  (#409.84)                    (#.19)                                        
+ SDEC APPOINTMENT             DESIRED DATE OF APPOINTMENT  New
+  (#409.84)                    (#.2)                                         
+ SDEC APPOINTMENT             EXTERNAL ID                New
+  (#409.84)                    (#.21)                                        
+ SDEC APPOINTMENT             APPT REQUEST TYPE          New
+  (#409.84)                    (#.22)                                        
+ SDEC APPOINTMENT             NOTE                       New
+  (#409.84)                    (#1)                                          
+ SDEC PREFERENCES AND SPECIAL PATIENT                    New
+  (#409.845)                   (#.01)                                        
+ SDEC PREFERENCES AND SPECIAL PREFERENCES                New
+  (#409.845)                   (#1)                                          
+ PREFERENCES SUB-FILE         PREFERENCE                 New
+  (#409.8451)                  (#.01)                                        
+ PREFERENCES SUB-FILE         DATE/TIME ADDED            New
+  (#409.8451)                  (#2)                                          
+ PREFERENCES SUB-FILE         ADDED BY USER              New
+  (#409.8451)                  (#3)                                          
+ PREFERENCES SUB-FILE         INACTIVE DATE              New
+  (#409.8451)                  (#4)                                          
+ PREFERENCES SUB-FILE         INACTIVATED BY USER        New
+  (#409.8451)                  (#5)                                          
+ PREFERENCES SUB-FILE         REMARKS                    New
+  (#409.8451)                  (#6)                                          
+ SDEC APPT REQUEST            PATIENT                    New
+  (#409.85)                    (#.01)
+ SDEC APPT REQUEST            CREATE DATE                New
+  (#409.85)                    (#1)
+ SDEC APPT REQUEST            INSTITUTION                New
+  (#409.85)                    (#2)
+ SDEC APPT REQUEST            REQUEST TYPE               New
+  (#409.85)                    (#4)
+ SDEC APPT REQUEST            REQ SPECIFIC CLINIC        New
+  (#409.85)                    (#8)
+ SDEC APPT REQUEST            REQ SERVICE/SPECIALTY      New
+  (#409.85)                    (#8.5)
+ SDEC APPT REQUEST            ORIGINATING USER           New
+  (#409.85)                    (#9)
+ SDEC APPT REQUEST            DATE/TIME ENTERED          New
+  (#409.85)                    (#9.5)
+ SDEC APPT REQUEST            PRIORITY                   New
+  (#409.85)                    (#10)
+ SDEC APPT REQUEST            ENROLLMENT PRIORITY        New
+  (#409.85)                    (#10.5)
+ SDEC APPT REQUEST            REQUESTED BY               New
+  (#409.85)                    (#11)
+ SDEC APPT REQUEST            PROVIDER                   New
+  (#409.85)                    (#12)
+ SDEC APPT REQUEST            SCHEDULED DATE OF APPT     New
+  (#409.85)                    (#13)
+ SDEC APPT REQUEST            DATE APPT. MADE            New
+  (#409.85)                    (#13.1)
+ SDEC APPT REQUEST            APPT CLINIC                New
+  (#409.85)                    (#13.2)
+ SDEC APPT REQUEST            APPT INSTITUTION           New
+  (#409.85)                    (#13.3)
+ SDEC APPT REQUEST            APPT STOP CODE             New
+  (#409.85)                    (#13.4)
+ SDEC APPT REQUEST            APPT CREDIT STOP CODE      New
+  (#409.85)                    (#13.5)
+ SDEC APPT REQUEST            APPT STATION NUMBER        New
+  (#409.85)                    (#13.6)
+ SDEC APPT REQUEST            APPT CLERK                 New
+  (#409.85)                    (#13.7)
+ SDEC APPT REQUEST            APPT STATUS                New
+  (#409.85)                    (#13.8)
+ SDEC APPT REQUEST            SERVICE CONNECTED PERCENTAGE  New
+  (#409.85)                    (#14)
+ SDEC APPT REQUEST            SERVICE CONNECTED PRIORITY New
+  (#409.85)                    (#15)
+ SDEC APPT REQUEST            DATE DISPOSITIONED         New
+  (#409.85)                    (#19)
+ SDEC APPT REQUEST            DISPOSITIONED BY           New
+  (#409.85)                    (#20)
+ SDEC APPT REQUEST            DISPOSITION                New
+  (#409.85)                    (#21)
+ SDEC APPT REQUEST            CID/PREFERRED DATE OF APPT New
+  (#409.85)                    (#22)
+ SDEC APPT REQUEST            CURRENT STATUS             New
+  (#409.85)                    (#23)
+ SDEC APPT REQUEST            COMMENTS                   New
+  (#409.85)                    (#25)
+ SDEC APPT REQUEST            MULTIPLE APPOINTMENT RTC   New
+  (#409.85)                    (#41)
+ SDEC APPT REQUEST            MULT APPT RTC INTERVAL     New
+  (#409.85)                    (#42)
+ SDEC APPT REQUEST            MULT APPT NUMBER           New
+  (#409.85)                    (#43)
+ SDEC APPT REQUEST            MRTC CALC PREF DATES       New
+  (#409.85)                    (#43.5)
+ SDEC APPT REQUEST            PATIENT CONTACT            New
+  (#409.85)                    (#44)
+  
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ SDEC IDX REFRESH               run routine              NEW
+ SDECRPC                        Broker (Client/Server)   NEW
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ SDEC ADD APPOINTMENT              NEW
+ SDEC CANCEL APPOINTMENT           NEW
+ SDEC CHECKIN APPOINTMENT          NEW
+ SDEC NOSHOW APPOINTMENT           NEW
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ SDECZMENU
+ SDECZMGR
+  
+ Templates Associated:
+  
+ Template Name         Type    File Name (#)           New/Modified/Deleted
+ -------------         ----    ------------------      --------------------
+ SDB                   INPUT   HOSPITAL LOCATION (44)    Modified
+ SDRR RECALL CARD ADD  INPUT   RECALL REMINDERS (403.5)  Modified
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Asheville
+ Chillicothe VAMC
+ Hudson Valley
+ Salt Lake City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description             File Name                           FTP Mode
+ --------------------------------------------------------------------------
+ SCHEDULING User Manual       VSE_UG.PDF                           (binary)
+ SCHEDULING Technical Manual  VSE_TM.PDF                           (binary)
+ SCHEDULING Security Guide    VSE_SG.PDF                           (binary)
+ SCHEDULING Install Guide     VSE_Install_Guide.PDF                (binary)
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  There is not a Pre-Installation routine.
+  The Post-Installation routine does the following functions:
+   1. Registers the new RPCs to the SDECRPC option.
+   2. Checks the validity of existing cross-references that are used by
+      Remote Procedures of VS GUI.
+      No changes are made.
+   3. Initializes new Mumps cross-references:
+       - "AVADPR" in the HOSPITAL LOCATION file (#44)
+       - "AG" in the HOSPITAL LOCATION file (#44)
+       - "AC" in the SD WAIT LIST file (#409.3)
+       - "AD" in the SD WAIT LIST file (#409.3)
+       - "AE" in the SD WAIT LIST file (#409.3)
+       - "E"  in the SD WAIT LIST FILE (#409.3)
+       - "AC" in the RECALL REMINDERS file (#403.5)
+       - "AC" in the RECALL REMINDERS REMOVED file (#403.56)
+   4. Populates the new SDEC RESOURCE file (#409.831) with clinics from the 
+      HOSPITAL LOCATION file (#44) as clinic resources, providers and privileged
+      users as provider resources.
+   5. Adds AVAILABLE and UNAVAILABLE entries to the new SDEC ACCESS TYPE
+      file (#409.823).
+   6. Populates the new SDEC APPOINTMENT file (#409.84) from existing patient
+      appointments in the PATIENT file (#2).
+   7. Schedules the SDEC IDX REFRESH option in TaskMan.
+  
+  
+ Pre-Installation Instructions
+ ------------------------------
+ Given that this patch takes some time to install, the following instructions
+ are provided to assist OI&T personnel with its installation and output capture
+ without having to tie up a computer screen. Just before selecting the device
+ for the installation output, perform the following steps to queue the
+ installation:
+  
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by entering a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// QUEUE TO PRINT ON
+ DEVICE: HOME// P-MESSAGE
+  
+  1 P-MESSAGE-ABC   HFS FILE => MESSAGE
+  2 P-MESSAGE-HFS   HFS FILE => MESSAGE
+  
+ Choose 1-2> 2  P-MESSAGE-HFS  HFS FILE => MESSAGE
+  
+ Subject: PATCH SD*5.3*627 QUEUED INSTALL <<== enter this Subject title
+  
+      Select one of the following:
+  
+           M         Me
+           P         Postmaster
+  
+ From whom: Me// 
+ Send mail to: DOEIRM,JOHN//  <<== Your name will echo here  
+ Select basket to send to: IN//   
+ And Send to: 
+  
+ Request Start Time: Jun 24, 2015@14:37:20// T@14:40  (JUN 24, 
+ 2015@14:40:00)
+ Install Queued!
+  
+  
+ Note: once the installation has completed, you should have a Mailman 
+ message in your 'IN' box.
+  
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***
+ -------------------------
+ This patch may not be installed with Scheduling Package users on the 
+ test system and it is recommended that it be installed during non-peak 
+ hours. The installation time will vary from site to site depending on 
+ the size of their database.
+  
+  
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+  the Installation Menu. From this menu, you may elect to use the
+  following option. When prompted for the INSTALL enter the patch #
+  (SD*5.3*627):
+  
+  a. Backup a Transport Global - This option will create a backup
+  message of any routines exported with this patch. It will not
+  backup any other changes such as DD's or templates.
+  b. Compare Transport Global to Current System - This option will
+  allow you to view all changes that will be made when this patch
+  is installed. It compares all components of this patch
+  (routines, DD's, templates, etc.).
+  c. Verify Checksums in Transport Global - This option will allow
+  you to ensure the integrity of the routines that are in the
+  transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+  choose the patch to install. Enter SD*5.3*627.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+  Install? NO//', respond YES.
+  
+ 6. When prompted 'ENTER the date and time to start the schedule of the
+    SDEC IDX REFRESH nightly job:' respond with <ENTER> to accept the
+    default.
+  
+ 7. When prompted 'Do you want to schedule the SEC IDX REFRESH option
+    to run now?', respond YES.
+  
+ 8. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+  respond NO.
+  
+ 9. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+  Protocols? NO//', respond YES.
+  Options to mark as out of order:
+  
+    Scheduling Manager's Menu        [SDMGR]
+    Supervisor Menu                  [SDSUP]
+    Scheduling Menu                  [SDUSER]
+    Set up a Clinic                  [SDBUILD]
+  
+ 10. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After the installation is complete:
+   1. Users that need access to the VistA Scheduling client will need to be
+      assigned the appropriate Security Keys - SDECZMENU and/or SDECZMGR.
+      See the SCHEDULING Install Guide for details.
+   2. Users that need access to the VistA Scheduling client will need the
+      SDECRPC option defined as a secondary menu option.
+      See the SCHEDULING Install Guide for details.
+   3. In order for the Resource Management Report to work correctly please
+      ensure that patch SD*5.3*628 is installed following each installation
+      of SD*5.3*627.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 249
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAM2
+    Before: B28969353   After: B30803018  **250,296,327,478,446,627**
+Routine Name: SDAMWI1
+    Before: B10737470   After: B14489968  **94,167,206,168,544,627**
+Routine Name: SDAPIAP
+    Before:  B8835503   After: B10732233  **27,132,627**
+Routine Name: SDAUT2
+    Before: B31407723   After: B42702600  **206,168,186,478,627**
+Routine Name: SDB
+    Before: B18180788   After: B18505043  **20,63,167,455,568,586,627**
+Routine Name: SDB1
+    Before: B23427765   After: B24033507  **20,183,221,567,627**
+Routine Name: SDC
+    Before: B27191984   After: B27637649  **15,32,79,132,167,478,487,523,
+                                           545,627**
+Routine Name: SDCNP0
+    Before: B37888084   After: B40198602  **132,167,478,517,572,592,627**
+Routine Name: SDCNSLT
+    Before: B40912591   After: B41631358  **478,496,630,627**
+Routine Name: SDCO1
+    Before: B29919726   After: B32537404  **27,132,149,193,250,296,446,
+                                           538,627**
+Routine Name: SDCODEL
+    Before:  B9522371   After: B11313917  **20,27,44,97,105,110,132,257,627**
+Routine Name: SDEC
+    Before:       n/a   After:B119334331  **627**
+Routine Name: SDEC01
+    Before:       n/a   After: B31785408  **627**
+Routine Name: SDEC01A
+    Before:       n/a   After: B81925987  **627**
+Routine Name: SDEC01B
+    Before:       n/a   After: B44978361  **627**
+Routine Name: SDEC02
+    Before:       n/a   After: B32953550  **627**
+Routine Name: SDEC03
+    Before:       n/a   After: B10323049  **627**
+Routine Name: SDEC04
+    Before:       n/a   After: B18857087  **627**
+Routine Name: SDEC05
+    Before:       n/a   After: B17215588  **627**
+Routine Name: SDEC06
+    Before:       n/a   After:  B7162903  **627**
+Routine Name: SDEC07
+    Before:       n/a   After:B222963350  **627**
+Routine Name: SDEC07A
+    Before:       n/a   After: B68824292  **627**
+Routine Name: SDEC07B
+    Before:       n/a   After: B38090532  **627**
+Routine Name: SDEC08
+    Before:       n/a   After:B196754600  **627**
+Routine Name: SDEC09
+    Before:       n/a   After: B40258209  **627**
+Routine Name: SDEC12
+    Before:       n/a   After: B29844447  **627**
+Routine Name: SDEC13
+    Before:       n/a   After: B12841797  **627**
+Routine Name: SDEC14
+    Before:       n/a   After:  B7453405  **627**
+Routine Name: SDEC15
+    Before:       n/a   After:  B4187047  **627**
+Routine Name: SDEC16
+    Before:       n/a   After: B47386290  **627**
+Routine Name: SDEC17
+    Before:       n/a   After:  B1597668  **627**
+Routine Name: SDEC18
+    Before:       n/a   After:B103998587  **627**
+Routine Name: SDEC19
+    Before:       n/a   After:  B8445487  **627**
+Routine Name: SDEC20
+    Before:       n/a   After:  B5301458  **627**
+Routine Name: SDEC21
+    Before:       n/a   After:  B7740640  **627**
+Routine Name: SDEC22
+    Before:       n/a   After:  B7903904  **627**
+Routine Name: SDEC23
+    Before:       n/a   After:  B8880360  **627**
+Routine Name: SDEC24
+    Before:       n/a   After:  B8031928  **627**
+Routine Name: SDEC25
+    Before:       n/a   After:B107893271  **627**
+Routine Name: SDEC25A
+    Before:       n/a   After:  B6651279  **627**
+Routine Name: SDEC25B
+    Before:       n/a   After: B10232111  **627**
+Routine Name: SDEC26
+    Before:       n/a   After:  B6836926  **627**
+Routine Name: SDEC27
+    Before:       n/a   After:B106344952  **627**
+Routine Name: SDEC28
+    Before:       n/a   After: B71646964  **627**
+Routine Name: SDEC29
+    Before:       n/a   After: B31682392  **627**
+Routine Name: SDEC30
+    Before:       n/a   After:  B3786070  **627**
+Routine Name: SDEC31
+    Before:       n/a   After: B25481973  **627**
+Routine Name: SDEC32
+    Before:       n/a   After: B69352136  **627**
+Routine Name: SDEC33
+    Before:       n/a   After: B10928495  **627**
+Routine Name: SDEC34
+    Before:       n/a   After: B41388078  **627**
+Routine Name: SDEC35
+    Before:       n/a   After:  B8873158  **627**
+Routine Name: SDEC36
+    Before:       n/a   After:  B3226334  **627**
+Routine Name: SDEC37
+    Before:       n/a   After:  B7567190  **627**
+Routine Name: SDEC38
+    Before:       n/a   After: B35171696  **627**
+Routine Name: SDEC40
+    Before:       n/a   After: B66764561  **627**
+Routine Name: SDEC44
+    Before:       n/a   After:  B8409964  **627**
+Routine Name: SDEC45
+    Before:       n/a   After:B118776780  **627**
+Routine Name: SDEC46
+    Before:       n/a   After: B11804599  **627**
+Routine Name: SDEC47
+    Before:       n/a   After: B35928564  **627**
+Routine Name: SDEC48
+    Before:       n/a   After: B25736375  **627**
+Routine Name: SDEC49
+    Before:       n/a   After: B57319976  **627**
+Routine Name: SDEC50
+    Before:       n/a   After: B81989355  **627**
+Routine Name: SDEC51
+    Before:       n/a   After:B124307281  **627**
+Routine Name: SDEC52
+    Before:       n/a   After:B134090636  **627**
+Routine Name: SDEC52A
+    Before:       n/a   After: B49259718  **627**
+Routine Name: SDEC52B
+    Before:       n/a   After: B20509023  **627**
+Routine Name: SDEC53
+    Before:       n/a   After: B19046849  **627**
+Routine Name: SDEC54
+    Before:       n/a   After:B197526561  **627**
+Routine Name: SDEC54A
+    Before:       n/a   After: B18379020  **627**
+Routine Name: SDEC55
+    Before:       n/a   After: B16588920  **627**
+Routine Name: SDEC55A
+    Before:       n/a   After: B79593054  **627**
+Routine Name: SDEC56
+    Before:       n/a   After: B35889062  **627**
+Routine Name: SDEC57
+    Before:       n/a   After: B39358442  **627**
+Routine Name: SDEC57A
+    Before:       n/a   After:B103325420  **627**
+Routine Name: SDECALV
+    Before:       n/a   After: B21735458  **627**
+Routine Name: SDECALV1
+    Before:       n/a   After: B23447725  **627**
+Routine Name: SDECALVR
+    Before:       n/a   After:  B5946964  **627**
+Routine Name: SDECAPI
+    Before:       n/a   After: B60453354  **627**
+Routine Name: SDECAPI4
+    Before:       n/a   After: B83504203  **627**
+Routine Name: SDECAR
+    Before:       n/a   After: B56209815  **627**
+Routine Name: SDECAR1
+    Before:       n/a   After:B118549716  **627**
+Routine Name: SDECAR2
+    Before:       n/a   After:B118404786  **627**
+Routine Name: SDECDEV
+    Before:       n/a   After:  B4544261  **627**
+Routine Name: SDECDIQ1
+    Before:       n/a   After: B23533098  **627**
+Routine Name: SDECDIS
+    Before:       n/a   After:  B9266353  **627**
+Routine Name: SDECEKL
+    Before:       n/a   After:  B3200595  **627**
+Routine Name: SDECERR
+    Before:       n/a   After:   B718946  **627**
+Routine Name: SDECF
+    Before:       n/a   After:  B5042632  **627**
+Routine Name: SDECF2
+    Before:       n/a   After:  B1878114  **627**
+Routine Name: SDECFUNC
+    Before:       n/a   After:  B8710927  **627**
+Routine Name: SDECGMR
+    Before:       n/a   After:   B946861  **627**
+Routine Name: SDECIDX
+    Before:       n/a   After: B43106825  **627**
+Routine Name: SDECINI1
+    Before:       n/a   After:B187190488  **627**
+Routine Name: SDECINI2
+    Before:       n/a   After:B137379509  **627**
+Routine Name: SDECINIT
+    Before:       n/a   After: B30544543  **627**
+Routine Name: SDECLK
+    Before:       n/a   After:  B9204662  **627**
+Routine Name: SDECLOC
+    Before:       n/a   After:  B4435373  **627**
+Routine Name: SDECNEW
+    Before:       n/a   After:  B4856106  **627**
+Routine Name: SDECPAT
+    Before:       n/a   After:  B3637810  **627**
+Routine Name: SDECPAT1
+    Before:       n/a   After:  B1134752  **627**
+Routine Name: SDECPAT2
+    Before:       n/a   After:   B255586  **627**
+Routine Name: SDECPAT3
+    Before:       n/a   After:  B6176667  **627**
+Routine Name: SDECPAT4
+    Before:       n/a   After:  B9974559  **627**
+Routine Name: SDECPT
+    Before:       n/a   After:  B2478759  **627**
+Routine Name: SDECPTCX
+    Before:       n/a   After:  B4715537  **627**
+Routine Name: SDECPTPC
+    Before:       n/a   After:   B160453  **627**
+Routine Name: SDECPTPL
+    Before:       n/a   After: B13347416  **627**
+Routine Name: SDECRMG
+    Before:       n/a   After:B157648695  **627**
+Routine Name: SDECRMG1
+    Before:       n/a   After:B130816452  **627**
+Routine Name: SDECRMG2
+    Before:       n/a   After: B65998765  **627**
+Routine Name: SDECRPC
+    Before:       n/a   After:  B6073216  **627**
+Routine Name: SDECRT
+    Before:       n/a   After:  B5803317  **627**
+Routine Name: SDECRT0
+    Before:       n/a   After: B18723369  **627**
+Routine Name: SDECRT1
+    Before:       n/a   After: B72713204  **627**
+Routine Name: SDECRT2
+    Before:       n/a   After:  B4377091  **627**
+Routine Name: SDECSFGR
+    Before:       n/a   After:  B2111835  **627**
+Routine Name: SDECU
+    Before:       n/a   After: B22991058  **627**
+Routine Name: SDECU2
+    Before:       n/a   After: B28139017  **627**
+Routine Name: SDECUT1A
+    Before:       n/a   After: B65268393  **627**
+Routine Name: SDECUTL
+    Before:       n/a   After: B57837892  **627**
+Routine Name: SDECUTL1
+    Before:       n/a   After:B111920247  **627**
+Routine Name: SDECUTL2
+    Before:       n/a   After:B135475615  **627**
+Routine Name: SDECV
+    Before:       n/a   After:B107508145  **627**
+Routine Name: SDECWL
+    Before:       n/a   After: B53903000  **627**
+Routine Name: SDECWL1
+    Before:       n/a   After:B116385737  **627**
+Routine Name: SDECWL2
+    Before:       n/a   After:B102907164  **627**
+Routine Name: SDECWL3
+    Before:       n/a   After: B12297706  **627**
+Routine Name: SDM1A
+    Before: B78000980   After:B121204157  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622,
+                                           627**
+Routine Name: SDN
+    Before: B30846315   After: B32745405  **32,79,398,478,627**
+Routine Name: SDNACT
+    Before: B29097285   After: B32382178  **63,380,549,568,622,627**
+Routine Name: SDREACT
+    Before: B20261844   After: B21351976  **63,167,380,568,627**
+Routine Name: SDRRISRU
+    Before: B13362967   After: B14287203  **536,627**
+Routine Name: SDWLPL
+    Before: B39152733   After: B39936287  **327,394,417,446,538,627**
+ 
+Routine list of preceding patches: 257, 536, 538, 545, 567, 586, 592, 622
+                           630
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 02, 2014
+Completed By:                               Date Completed: APR 29, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,490 @@
+$TXT Created by                   CHEY20.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 04/14/15 at 12:33
+=============================================================================
+Run Date: AUG 13, 2015                     Designation: ICD*18*79
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #75                     Status: Released
+                  Compliance Date: SEP 12, 2015
+=============================================================================
+
+Associated patches: (v)ICD*18*64   <<= must be installed BEFORE `ICD*18*79'
+                    (v)ICD*18*74   <<= must be installed BEFORE `ICD*18*79'
+                    (v)ICD*18*77   <<= must be installed BEFORE `ICD*18*79'
+
+Subject: MULTIPLE DRG CALCULATION CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The DRG (Diagnostic Related Group) Grouper is used to compute
+ and display the DRG for a patient based on that patient's diagnoses
+ and any operations/procedures performed.  It uses a mixture of 
+ formulas, Diagnosis and Operation identifiers, and tables that rely
+ on data added to the DRG file (#80.2), the ICD DIAGNOSIS file (#80)
+ and the ICD OPERATION/PROCEDURE file (#80.1).  These files,
+ the date, and the age of the patient determine which codes are
+ needed to calculate the proper DRG.
+      
+ This patch corrects various DRG calculations.
+      
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1)INC000001105357 - DRG discrepancy between VistA & Quantim
+ 2)INC000000771778 - Applications-VistA
+ 3)INC000000916658 - DRG Miscalculation
+      duplicate:
+      INC000001018850 - DRG Grouper - Other:
+ 4)INC000000819435 - DRG Miscalculation
+      duplicate:
+      INC000000908911 - DRG Grouper - Other:
+ 5)INC000000825825 - DRG Grouper - Other:
+ 6)INC000000511613 - DRG in Quantim is different than Vista
+      duplicate:
+      INC000001000524 - DRG Grouper - Other:
+ 7)INC000000592003 - DRG not calculating correctly 
+ 8)INC000000774522 - Applications-VistA
+ 9)INC000000741767 - Upload from Quantim to VIP, the DRG changes
+      duplicate:
+      INC000001015130 - DRG Grouper - Other: DRG Miscalculation
+ 10)INC000000755085 - DRG discrepancy between VistA & Quantim
+ 11)INC000000764939 - MSDRG205 in Quantim crossed over as MSDRG 11
+                      in VIP Workplace and VistA   
+ 12)INC000000772736 - DRG discrepancy between VistA & Quantim
+ 13)INC000000858724 - DRG Grouper - Other:
+ 14)INC000000871227 - DRG Grouper - Other:
+ 15)INC000000885620 - DRG Discrepancy between VistA & Quantim
+ 16)INC000000985792 - DRG Calculations error
+ 17)INC000000988808 - DRG Grouper - Other: Miscalculation
+      duplicate:
+      INC000001042341 - DRG Grouper - Other:
+ 18)INC000001107006 - DRG Grouper - Other:
+ 19)INC000000745802 - DRG not calculating correctly
+      duplicates:
+      INC000000761494 - DRG Discrepancy
+      INC000000775800 - DRG discrepancy between VistA & Quantim
+      INC000000812450 - MAS - DRG:
+      INC000000866709 - DRG Grouper - Other:
+      INC000000888977 - DRG discrepancy between VistA & Quantim
+      INC000001015135 - DRG Grouper - Other: DRG Miscalculation
+ 20)INC000001107007 - DRG Grouper - Other:
+ 21)INC000001043553 - DRG Grouper - Other:
+ 22)INC000001115186 - DRG Grouper - Other:
+      duplicate:
+      INC000001225092 - DRG CALCULATION
+ 23)INC000001221164 - DRG Grouper - Other:
+      duplicates:
+      INC000001248229 - DRG Grouper - Other:Quantim DRG is different  
+                        than Vista
+      INC000001248458 - DRG Discrepancy
+      INC000001288113 - MAS - DRG:
+      INC000001255789 - DRG Grouper - Other:  receiving two different DRGs 
+                        on a patient.
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+           
+        
+ PARTICIPATING TEST SITES:
+ =========================
+ Louisville VAMC
+ Upstate New York HCS
+ VA Pacific Islands HCS (Honolulu)
+           
+        
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000001105357 - DRG discrepancy between VistA & Quantim
+   
+        Problem:
+        ========
+        DRG 65 incorrectly calculating to DRG 64 in VistA.
+         
+        Solution:
+        =========
+        Updated routine ICDTBL0G to account for correct diagnosis
+        codes.
+   
+   
+ 2) INC000000771778 - Applications-VistA
+   
+        Problem:
+        ========
+        DRG 3 incorrectly calculating to DRG 4 in VistA.
+         
+        Solution:
+        =========
+        Updated the MAJOR O.R. PROCEDURE (#20) field for procedure
+        codes 31.29 OTHER PERM TRACHEOSTOMY and 39.65 EXTRACORPOREAL
+        MEMBRANE OXYGEN.
+   
+   
+ 3) INC000000916658 - DRG Miscalculation
+      
+        Problem:
+        ========
+        DRG 4 incorrectly calculating to DRG 3 in VistA.
+         
+        Solution:
+        =========
+        Updated the MAJOR O.R. PROCEDURE (#20) field for procedure
+        codes 31.1 TEMPORARY TRACHEOSTOMY.
+      
+      
+ 4) INC000000819435 - DRG Miscalculation
+      
+        Problem:
+        ========
+        DRG 132 incorrectly calculating to DRG 134 in VistA.
+         
+        Solution:
+        =========
+        Updated the DRG GROUPER EFFECTIVE DATE (#.01) sub-field of 
+        the DRG GROUPER (#71) field for procedure code 76.76 - OPEN
+        REDUCT MANDIBLE FX.
+      
+      
+ 5) INC000000825825 - DRG Grouper - Other:
+         
+        Problem:
+        ========
+        DRG 131 incorrectly calculating to DRG 133 in VistA.
+         
+        Solution:
+        =========
+        Updated the DRG GROUPER EFFECTIVE DATE (#.01) sub-field of 
+        the DRG GROUPER (#71) field for procedure codes 76.74 - OPEN
+        REDUCT MAXILLARY FX, 76.79 - OPEN REDUCT FACE FX NEC and 
+        76.92 - SYN IMPLANT TO FACE BONE.
+           
+                
+ 6) INC000000511613 - DRG in Quantim is different than Vista
+          
+        Problem:
+        ========
+        DRG 281 incorrectly calculating to DRG 282 in VistA.
+           
+        Solution:
+        =========
+        Updated routines ICDTBL2C, ICDTBL2D, ICDTBL2E, ICDTBL2F 
+        and ICDTBL2G to account for correct diagnosis codes. 
+          
+          
+ 7) INC000000592003 - DRG not calculating correctly
+        
+        Problem:
+        ========
+        This ticket addresses multiple issues:
+        
+        A) DRG 981 incorrectly calculating to DRG 208 in VistA.
+    
+        B) DRG 243 incorrectly calculating to DRG 259 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2C, ICDTBL2D, ICDTBL2E, ICDTBL2F 
+        and ICDTBL2G to account for correct diagnosis codes.
+    
+    
+ 8) INC000000774522 - Applications-VistA
+        
+        Problem:
+        ========
+        This ticket addresses multiple issues:
+        
+        A) DRG 222 incorrectly calculating to DRG 224 in VistA.
+    
+        B) DRG 223 incorrectly calculating to DRG 225 in VistA.
+     
+        Solution:
+        =========
+        Updated routines ICDTBL2C, ICDTBL2D, ICDTBL2E, ICDTBL2F and
+        ICDTBL2G to account for correct diagnosis codes.
+   
+   
+ 9) INC000000741767 - Upload from Quantim to VIP, the DRG changes
+        
+        Problem:
+        ========
+        DRG 291 incorrectly calculating to DRG 286 in VistA.
+    
+        Solution:
+        =========
+        Updated routines ICDTBL2D, ICDTBL2E, ICDTBL2F and
+        ICDTBL2G to account for correct diagnosis codes.
+   
+   
+ 10) INC000000755085 - DRG discrepancy between VistA & Quantim
+        
+        Problem:
+        ========
+        DRG 219 incorrectly calculating to DRG 216 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2D, ICDTBL2E, ICDTBL2F and ICDTBL2G
+        to account for correct diagnosis codes.
+   
+   
+ 11) INC000000764939 - MSDRG205 in Quantim crossed over as MSDRG 11
+                         in VIP Workplace and VistA
+        
+        Problem:
+        ========
+        DRG 205 incorrectly calculating to DRG 11 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL0E, ICDTBL0F and ICDTBL0G to account for
+        correct diagnosis codes.
+  
+   
+ 12) INC000000772736 - DRG discrepancy between VistA & Quantim
+   
+        Problem:
+        ========
+        DRG 281 incorrectly calculating to DRG 280 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2D, ICDTBL2E, ICDTBL2F and ICDTBL8G
+        to account for correct diagnosis codes.
+    
+    
+ 13) INC000000858724 - DRG Grouper - Other:
+   
+        Problem:
+        ========
+        DRG 308 incorrectly calculating to DRG 286 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2E, ICDTBL2F and ICDTBL2G to account
+        for correct diagnosis codes.
+   
+   
+ 14) INC000000871227 - DRG Grouper - Other:
+   
+        Problem:
+        ========
+        DRG 282 incorrectly calculating to DRG 280 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2E, ICDTBL2F and ICDTBL2G to account
+        for correct diagnosis codes.
+    
+    
+ 15) INC000000885620 - DRG Discrepancy between VistA & Quantim
+   
+        Problem:
+        ========
+        DRG 238 incorrectly calculating to DRG 237 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2E, ICDTBL2F and ICDTBL2G to account
+        for correct diagnosis codes.
+   
+    
+ 16) INC000000985792 - DRG Calculations error
+   
+        Problem:
+        ========
+        DRG 222 incorrectly calculating to DRG 224 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2F and ICDTBL2G to account for
+        correct diagnosis codes.
+   
+   
+ 17) INC000000988808 - DRG Grouper - Other: Miscalculation
+   
+        Problem:
+        ========
+        DRG 309 incorrectly calculating to DRG 287 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2F and ICDTBL2G to account for
+        correct diagnosis codes.
+  
+  
+ 18) INC000001107006 - DRG Grouper - Other:
+   
+        Problem:
+        ========
+        DRG 981 incorrectly calculating to DRG 208 in VistA.
+         
+        Solution:
+        =========
+        Updated routine ICDTBL2G to account for correct diagnosis codes.
+  
+  
+ 19) INC000000745802 - DRG not calculating correctly
+  
+        Problem:
+        ========
+        DRG 291 incorrectly calculating to DRG 293 in VistA.
+         
+        Solution:
+        =========
+        Updated routines ICDTBL2F and ICDTBL2G to account for correct
+        diagnosis codes.
+  
+  
+ 20) INC000001107007 - DRG Grouper - Other:
+  
+        Problem:
+        ========
+        DRG 262 incorrectly calculating to DRG 293 in VistA.
+         
+        Solution:
+        =========
+        Updated routine ICDTBL2G to account for correct diagnosis
+        codes.
+   
+   
+ 21) INC000001043553 - DRG Grouper - Other:
+  
+        Problem:
+        ========
+        DRG 98 incorrectly calculating to DRG 23 in VistA.
+         
+        Solution:
+        =========
+        Updated the IDENTIFIER (#1.2) field of the ICD DIAGNOSIS (#80)
+        file for diagnosis code 288.60 - LEUKOCYTOSIS NOS.
+  
+  
+ 22) INC000001115186 - DRG Grouper - Other:
+  
+        Problem:
+        ========
+        DRG 462 incorrectly calculating to DRG 470 in VistA.
+         
+        Solution:
+        =========
+        Updated routine ICDTBL4G to account for Bilateral or Multiple Major
+        Joint Procedures of the Lower Extremities.
+  
+  
+ 23) INC000001221164 - DRG Grouper - Other:
+  
+        Problem:
+        ========
+        DRG 484 should not be active after FY 2014.
+         
+        Solution:
+        =========
+        Inactivated DRG 484 for FY2015.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ===========================
+ This patch may be run with users on the system.  However, it would
+ be preferable if Medical Records coders were off the system.
+ Installation will take less than 5 minutes.
+        
+        1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+            the KIDS distribution included with this message.
+            NOTE:  If the required patches are not installed, the transport 
+            global will be removed.  If the transport global is removed you
+            will need to repeat this step.
+        
+        2.  From the Kernel Installation and Distribution System Menu, select
+            the Installation menu.
+        
+        3.  From this menu, you may elect to use the following options
+            (when prompted for INSTALL NAME, enter ICD*18.0*79):
+            a.  Compare Transport Global to Current System  - this option will
+                allow you to view all changes that will be made when the patch
+                is installed.  It compares all components of the patch 
+                (routines, DDs, templates, etc.).
+            b.  Verify Checksums in Transport Global - this option will
+                allow you to ensure the integrity of the routines that are in
+                the transport global.
+            c.  Print Transport Global - this option will allow you to view the
+                components of the KIDS build.
+            d.  Backup a Transport Global - This option will create a backup
+                message of any routines exported with this patch. It will not
+                backup any other changes such as DD's or templates.
+        
+        4.  Use the Install Package(s) option and select the package 
+            ICD*18.0*79.
+        
+        5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+            NO//', respond No.
+        
+        6.  When prompted, 'Want to DISABLE Scheduled Options, Menu Options,
+            and Protocols? YES//', respond Yes.
+        
+            When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+            enter: PTF Menu  [DG PTF MENU]
+   
+            When prompted, 'Enter protocols you wish to mark as 'Out Of 
+            Order':', press enter.
+   
+        7.  Following installation of this patch, it is necessary to run the
+            Update Transfer DRG's for Current FY [DG PTF UPDATE TRANSFER
+            DRGs] option in order to make the transfer DRGs correspond to
+            the appropriate grouper.  This option updates/recalculates the 
+            transfer DRGs for PTF records opened during the current fiscal
+            year. The option is locked with the DG PTFSUP security key.
+            The Menu path is PTF Menu/Update DRG Information Menu/Update 
+            Transfer DRGs for current FY.
+  
+        8.  The post install routines ^ICD1879P and ^ICD1879S can be removed 
+            after the successful installation of ICD*18.0*79.  Use the VistA
+            option Delete Routines [XTRDEL] to remove the routines.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1879P
+    Before:       n/a   After:   B852134  **79**
+Routine Name: ICD1879S
+    Before:       n/a   After: B20537391  **79**
+Routine Name: ICDDRG8
+    Before: B32166933   After: B32166768  **1,2,10,20,24,31,77,79**
+Routine Name: ICDTBL0E
+    Before: B23895138   After: B25030279  **65,62,71,74,79**
+Routine Name: ICDTBL0F
+    Before: B24417174   After: B25559023  **72,74,79**
+Routine Name: ICDTBL0G
+    Before: B24417183   After: B26412213  **77,79**
+Routine Name: ICDTBL2C
+    Before: B51015005   After: B52038834  **50,49,54,55,61,62,64,79**
+Routine Name: ICDTBL2D
+    Before: B49902612   After: B56204226  **56,55,61,62,64,79**
+Routine Name: ICDTBL2E
+    Before: B49902881   After: B59221942  **65,64,79**
+Routine Name: ICDTBL2F
+    Before: B50198543   After: B59892518  **72,79**
+Routine Name: ICDTBL2G
+    Before: B51747313   After: B61465625  **77,79**
+Routine Name: ICDTBL4G
+    Before: B29278562   After: B30232913  **77,79**
+ 
+Routine list of preceding patches: 64, 74, 77
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 15, 2015
+Completed By:                               Date Completed: AUG 10, 2015
+Released By :                               Date Released : AUG 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

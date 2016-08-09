@@ -1,0 +1,176 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/02/14 at 09:28
+=============================================================================
+Run Date: FEB 03, 2015                     Designation: TIU*1*285
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #261                      Status: Released
+                  Compliance Date: MAR 06, 2015
+=============================================================================
+
+Associated patches: (v)TIU*1*157   <<= must be installed BEFORE `TIU*1*285'
+
+Subject: TIU FIX REVIEW UNSIGNED ADDITIONAL SIGNATURES REPORT INDEX
+
+Category: 
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ This patch will resolve a problem with the Review unsigned additional 
+ signatures option [TIU REVIEW MRT ADD SGNR] report.  The problem was that
+ some documents with unsigned additional signatures were not showing up on
+ the report.  The underlying issue was found to be a problem with the AC
+ index in TIU MULTIPLE SIGNATURE file (#8925.7).  This patch corrects the
+ report by fixing the deficiency with the AC index logic.  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) INC000000496538 - Report discrepancies
+    DUPLICATES: 
+    INC000000313078 - Data not showing on report
+    INC000000963468 - TIU Search fails to bring all users from CATEGORY
+                      SERVICE
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Battle Creek VAMC, MI 
+ James J. Peters VAMC (Bronx), NY
+ VA Pittsburgh HCS, PA
+    
+ Overview of Remedy ticket(s):
+ ============================= 
+ 1) INC000000496538 - Report discrepancies
+   
+    Problem:
+    --------  
+    The Review unsigned additional signatures option [TIU REVIEW MRT ADD 
+    SGNR] uses the AC index of the TIU MULTIPLE SIGNATURE file (#8925.7). 
+    The AC index only exists once for multiple TIU MULTIPLE SIGNATURE
+    records for the same TIU document and when one of these additional
+    signers signs the TIU Document the AC index is deleted even if there
+    are other additional signers that have yet to sign the document.
+  
+    Resolution:
+    -----------   
+    Modify the data dictionary for TIU MULTIPLE SIGNATURE file (#8925.7) so
+    that the AC index is corrected to include the record pointer for file 
+    #8925.7.  This will ensure that a unique AC index entry is created for 
+    each additional signer. The post install routine TIU285PS is jobbed off
+    and runs in the background.  It rebuilds the AC index and when finished
+    a mailman message will be sent to the user installing the patch and
+    mail group 'G.TIU CACS'.
+  
+  
+ DATA DICTIONARY CHANGES:
+ =========================
+  
+   BEFORE:
+   -------
+  
+   Record Indexes:
+  
+   AC (#568)    RECORD    MUMPS    IR    ACTION
+       Short Descr:  Index by note entry date and note ien
+       Description:  This index is to facilitate the lookup of documents that
+                     require additional signatures.  This index will sort the
+                     documents by the document entry date/time. The mumps set
+                     and kill logic for this index will control the existence of
+                     nodes in the "AC" index.  Nodes will only exist for
+                     documents that have unsigned additional signatures.  
+         Set Logic:  I $D(^TIU(8925,X2(1),0)) S ^TIU(8925.7,"AC",$P($G(^TIU(8925
+                     ,X2(1),12)),U),X2(1))=""
+          Set Cond:  S X=(X2(1)'=""&(X2(2)=""))
+        Kill Logic:  I $D(^TIU(8925,X2(1),0)) K ^TIU(8925.7,"AC",$P($G(^TIU(8925
+                     ,X2(1),12)),U),X2(1))
+         Kill Cond:  S X=X2(2)'=""
+        Whole Kill:  K ^TIU(8925.7,"AC")
+              X(1):  TIU DOCUMENT NUMBER  (8925.7,.01)  (forwards)
+              X(2):  COSIGNATURE DATE/TIME  (8925.7,.04)  (forwards)
+  
+   AFTER:
+   ------
+   Record Indexes:
+  
+   AC (#568)    RECORD    MUMPS    IR    ACTION
+       Short Descr:  Index by note entry date and note ien
+       Description:  This index is to facilitate the lookup of documents that
+                     require additional signatures.  This index will sort the
+                     documents by the document entry date/time. The mumps set
+                     and kill logic for this index will control the existence of
+                     nodes in the "AC" index.  Nodes will only exist for
+                     documents that have unsigned additional signatures.  
+         Set Logic:  I $D(^TIU(8925,X2(1),0)) S ^TIU(8925.7,"AC",$P($G(^TIU(8925
+                     ,X2(1),12)),U),X2(1),DA)=""
+          Set Cond:  S X=(X2(1)'=""&(X2(2)=""))
+        Kill Logic:  I $D(^TIU(8925,X2(1),0)) K ^TIU(8925.7,"AC",$P($G(^TIU(8925
+                     ,X2(1),12)),U),X2(1),DA)
+         Kill Cond:  S X=X2(2)'=""
+        Whole Kill:  K ^TIU(8925.7,"AC")
+              X(1):  TIU DOCUMENT NUMBER  (8925.7,.01)  (forwards)
+              X(2):  COSIGNATURE DATE/TIME  (8925.7,.04)  (forwards)
+  
+  
+ Installation Instructions:
+ ==========================
+ It is not necessary to disable any options.  Users should not add additional
+ signers while this patch is installing.  It should take less than 15 minutes
+ to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*285)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package TIU*1.0*285.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIU285PS
+    Before:       n/a   After: B11102968  **285**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 14, 2014
+Completed By:                               Date Completed: JAN 21, 2015
+Released By :                               Date Released : FEB 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

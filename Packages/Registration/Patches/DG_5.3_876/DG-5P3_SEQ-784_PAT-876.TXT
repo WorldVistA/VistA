@@ -1,0 +1,303 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 08/18/14 at 10:22
+=============================================================================
+Run Date: NOV 13, 2014                     Designation: DG*5.3*876
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #784                    Status: Released
+                  Compliance Date: DEC 14, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*428  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*712  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*797  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*800  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*825  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*857  <<= must be installed BEFORE `DG*5.3*876'
+                    (v)DG*5.3*863  <<= must be installed BEFORE `DG*5.3*876'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 12
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ DG*5.3*428, DG*5.3*712, DG*5.3*797, DG*5.3*800, DG*5.3*825, 
+ DG*5.3*857, and DG*5.3*863 are required builds for patch DG*5.3*876.
+  
+ NOTE: The messaging enhancements for the new SELF IDENTIFIED GENDER
+       (#.024) field in the PATIENT (#2) File are being distributed
+       in three VistA namespaces: DG, RG and MPIF. The patches should
+       be installed in the following order: DG*5.3*876, RG*1.0*61, 
+       and then MPIF*1.0*59. After installing DG*5.3*876, it is not
+       necessary to wait for the bulletin from the queued Master 
+       Patient Index (MPI) Employee data seeding process to complete 
+       before moving on with installing RG*1.0*61. However, it is 
+       recommended that these three patches be installed within a
+       short time window, preferably on the same date if possible.
+  
+ Issue #1
+ The remote procedure call (RPC), VAFC VOA ADD PATIENT, was enhanced
+ to include a new optional parameter, PARAM("MBI"), which represents
+ the MULTIPLE BIRTH INDICATOR (#994) from the PATIENT file (#2). If 
+ provided, it will ensure that when an add/update event is sent to 
+ the Master Patient Index (MPI), that the MBI value will be placed on
+ the Primary View (PV), the 200 ESR correlation and the preferred 
+ facility in the MPI.
+ An additional modification was also made to the RPC's processing 
+ routine, VAFCPTAD, to replace the 4 slash ('/') stuff in the FileMan
+ (FM) call on the VETERAN Y/N field (#1901) in the PATIENT file (#2)
+ with 3 slashes ('/') to meet current standards.
+  
+ Issue #2
+ The following Data Dictionary changes have been made to the PATIENT
+ (#2) file.
+  
+ Added the field, SELF IDENTIFIED GENDER (#.024), which is a set of
+ codes that allows the patient to identify their preferred sexual
+ orientation if they choose to provide that information. 
+  
+ Added a FIELD INDEX type cross-reference, AVAC024, to the SELF 
+ IDENTIFIED GENDER (#.024) field described above.
+  
+   This new cross-reference makes use of the DG FIELD MONITOR tool
+   that was released in patch DG*5.3*527. This tool utilizes the VAFC
+   MPIPD FIELD TRIGGER protocol, which creates an entry in the ADT/HL7
+   PIVOT (#391.71) file, as well as sets the VAFCF variable to capture
+   the fields that have been modified during an edit. This field will
+   be included in the Health Level Seven (HL7) 2.4 messages generated
+   by the MPI/PD applications. Routine VAFCTR supports this effort.
+  
+ The post-init routine, DG876PST, will create the new FIELD INDEX type
+ cross-reference noted above, and also ensure that auditing is turned
+ on.
+  
+ Issue #3
+ Modifications were made to the Patient MPI/PD Data Inquiry option, 
+ [RG EXCEPTION TF INQUIRY], to include the following PATIENT (#2) 
+ fields so that if they exist, will be viewable upon execution:
+  
+           - SELF IDENTIFIED GENDER (#.024)
+           - PERIOD OF SERVICE (#.323)
+   
+ Issue #4
+ Modifications were made to the ADT-A08 and ACK-A31 Health Level 
+ Seven (HL7) messages sent to the Master Patient Index (MPI) to 
+ accurately capture the name fields entered or edited in VistA. 
+   - The ADT-A08 HL7 message has included an OBX segment which will
+     contain the NAME field (#.01) of the PATIENT File (#2), and the
+     FAMILY (LAST) LAST NAME (#1), GIVEN (FIRST) NAME (#2), MIDDLE 
+     NAME (#3), SUFFIX (#5), and PREFIX (#4) fields of the NAME 
+     COMPONENTS File (#20).
+   - The ACK-A31 HL7 application acknowledgement sent to the MPI in
+     response to an ADT-A31 will include an ERR segment with the
+     same data, Patient Name and Name Components, as described in
+     the ADT-A08 HL7 message above. 
+    
+ Issue #5
+ Enhancements were made to the ADT-A08 and ACK-A31 HL7 messages sent
+ to the MPI to include the following fields from the PATIENT File 
+ (#2):
+   - SELF IDENTIFIED GENDER (#.024)
+   - PERIOD OF SERVICE (#.323)
+   - TYPE (#391)
+   - VETERAN (Y/N)? (#1901) 
+ VETERAN (Y/N)? (#1901) and TYPE (#391) will be located on the ZEL
+ segment, PERIOD OF SERVICE (#.323) will be located on the ZSP 
+ segment, and SELF IDENTIFIED GENDER (#.024) will be located on the
+ OBX segment of the HL7 message.  
+  
+ Issue #6
+ To address Remedy ticket INC000000994947, modifications were made
+ to the DPTLK routine to ensure that when a barcode reader converts 
+ a Veteran Health Information Card (VHIC) or Department of Defense
+ (DOD) Common Access Card (CAC) barcode to lowercase, that the
+ barcode input is then converted back to uppercase, matching the
+ format that is actually stored, allowing for successful patient 
+ lookups.
+  
+ Issue #7
+ A seeding process, for moving PATIENT (#2) records that are of the
+ TYPE (#391), "EMPLOYEE", to the Master Patient Index (MPI), will
+ be run as part of the post-initialization process in routine, 
+ DG876PST. Employee patient records that are found in the PATIENT 
+ (#2) file will be transmitted to the MPI using the existing ADT-A31
+ Health Level Seven (HL7) message. Emails indicating the process
+ completion, number of A31 HL7 messages sent and number of errors
+ generated will be transmitted to the user installing the patch, as
+ well as to MPI developers.
+  
+ Issue #8
+ Modifications were made to the HL7 EVN segment builder in the 
+ VAFCQRY2 routine to address the issue of mismatched DUZ and user name
+ being sent to the Master Veteran Index (MVI) in the A08 HL7 update 
+ message. User information (DUZ and Name) for the EVN segment will now 
+ either come from the ADT/HL7 PIVOT file (#391.71) entry if available 
+ or from the user who has scheduled the option, VAFC BATCH UPDATE, to 
+ run. 
+  
+ Patch Components:
+ =================
+   Files & Fields Associated:
+  
+   File Name (Number)    Field Name (Number)     New/Modified/Deleted 
+   ------------------    -------------------     --------------------
+   PATIENT (#2)          SELF IDENTIFIED         New
+                          GENDER (#.024)
+  
+   Options Associated:
+  
+   Option Name           Type                    New/Modified/Deleted
+   -----------           ----                    --------------------
+   RG EXCEPTION TF       RUN ROUTINE             Modified
+    INQUIRY
+  
+   Remote Procedures Associated:
+  
+   Remote Procedure Name
+   ---------------------
+   VAFC VOA ADD PATIENT
+  
+ Documentation Update:
+ =====================
+ The following MASTER PATIENT INDEX/PATIENT DEMOGRAPHICS (MPI/PD)
+ VISTA documentation is available, updated for patches DG*5.3*876,
+ MPIF*1.0*59, and RG*1.0*61.  Facilities should download the revised
+ documentation listed as follows:
+  
+     User Manual                         RG1_0_UM.PDF
+     Technical Manual                    RG1_0_TM.PDF
+    
+ The preferred retrieval method is to FTP from the ANONYMOUS.SOFTWARE
+ directory at: DOWNLOAD.VISTA.DOMAIN.EXT
+ This transmits the file from the first available FTP server.
+ Sites may also elect to retrieve software directly from one
+ of the following servers.
+  
+ OI Field Office         FTP Address                  Directory
+ ------------------------------------------------------------------
+ Albany             ftp.domain.ext     ANONYMOUS.SOFTWARE
+ Hines              ftp.domain.ext      ANONYMOUS.SOFTWARE
+ Salt Lake City     ftp.domain.ext        ANONYMOUS.SOFTWARE
+  
+ Note:  These files must be transferred in binary or IMAGE,
+        not ASCII, mode.
+   
+ The documents can also be downloaded from the VistA Documentation
+ Library (VDL) Web page in both Acrobat PDF and MS-Word DOC formats:
+   
+     http://www.domain.ext/vdl/application.asp?appid=16
+   
+ Associated Remedy Ticket(s):
+ ============================
+ INC000000994947 - Veterans Health ID Card (VHIC) Barcode scanning 
+                   issues
+   
+ Associated New Service Request (NSR):
+ =====================================
+ There is no associated NSR with the patch.
+    
+ Test Sites:
+ ===========
+ Columbus OH VAMC
+ Connecticut HCS
+ Salisbury NC VAMC
+        
+ Installation Instructions:
+ ==========================
+ This patch takes less than 2 minutes to install.  This patch should
+ be loaded during non-peak hours to minimize disruption to the users.
+    
+ 1.  Users are allowed on the system during patch installation.
+   
+ 2.  The HL7 incoming filers should be stopped.  Use the Monitor,
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and
+     Link Management Options [HL MENU FILER LINK MGT] menu on the
+     HL7 Main Menu [HL MAIN MENU].
+     
+ 3.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     Note: TEXT PRINT/DISPLAY option in the PackMan menu will display
+           the patch text only.
+     
+ 4.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+   
+ 5.  From this menu, you may elect to use the following options:
+      (a)  Backup a Transport Global.
+      (b)  Compare Transport Global to Current System.
+      (c)  Verify Checksums in Transport Global.
+      (d)  Print Transport Global.
+   
+ 6.  Use the Install Package(s) option and select the package DG*5.3*876.
+       
+ 7.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDs will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+    
+ 8.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+     
+ 9.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? YES//', respond YES.  The following OPTIONS should be
+     disabled during the installation.
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+         
+ 10. After patch installation has completed, restart the HL7 incoming
+     filers.  Use the Monitor, Start, Stop Filers [HL FILER MONITOR]
+     option on the Filer and Link Management Options [HL MENU FILER 
+     LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG876PST
+    Before:       n/a   After: B57829017  **876**
+Routine Name: DPTLK
+    Before:B114088511   After:B116067548  **32,72,93,73,136,157,197,232,
+                                           265,277,223,327,244,513,528,
+                                           541,576,600,485,633,629,647,
+                                           769,857,876**
+Routine Name: VAFCPDAT
+    Before: B50668087   After: B52025374  **333,414,474,505,707,712,837,
+                                           863,876**
+Routine Name: VAFCPDT2
+    Before: B26407080   After: B28085527  **414,505,627,697,797,876**
+Routine Name: VAFCPTAD
+    Before: B64926627   After: B69026178  **149,800,876**
+Routine Name: VAFCQRY2
+    Before: B18262302   After: B18522846  **428,876**
+Routine Name: VAFCSB
+    Before:  B8780845   After: B15691481  **707,756,825,876**
+Routine Name: VAFCTR
+    Before:  B2482346   After:  B3892761  **575,648,653,712,876**
+ 
+Routine list of preceding patches: 428, 797, 800, 825, 857, 863
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 12, 2013
+Completed By:                               Date Completed: OCT 27, 2014
+Released By :                               Date Released : NOV 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

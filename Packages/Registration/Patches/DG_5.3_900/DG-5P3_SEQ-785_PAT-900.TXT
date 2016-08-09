@@ -1,0 +1,198 @@
+$TXT Created by                . at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 09/10/14 at 09:19
+=============================================================================
+Run Date: DEC 02, 2014                     Designation: DG*5.3*900
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #785                    Status: Released
+                  Compliance Date: JAN 02, 2015
+=============================================================================
+
+
+Subject: REGISTRATION RPC CHANGE FOR VIA PROJECT
+
+Category: 
+  - Other
+
+Description:
+============
+
+  Patch DG*5.3*900 addresses one issue:
+  
+        1.  Modify existing RPC for VIA Project
+ 
+  ASSOCIATED REMEDY: 
+  ==================
+  1.)  INC000001055166 - Modify existing RPC for VIA Project
+ 
+  ASSOCIATED NSR: 
+  ===============
+  N/A
+ 
+  TEST SITES:
+  ===========
+  Test waiver obtained
+ 
+  Remedy Overview:
+  ================
+  1.)  INC000001055166 - Modify existing RPC for VIA Project
+ 
+  Problem:
+  --------
+ 
+  The VistA integration Adaptor (VIA) project requires access to certain 
+  Remote Procedure Calls (RPCs) that are part of the REGISTRATION package. 
+  The purpose of this patch is to publish one additional RPC allowing access
+  for use by VIA by setting the field APP PROXY ALLOWED field (#.11) of the 
+  REMOTE PROCEDURE file (#8994) to YES. This patch deals specifically with
+  the VAFCTFU CONVERT ICN TO DFN RPC.
+ 
+  Resolution:
+  -----------
+  The APP PROXY ALLOWED (#.11) field in the REMOTE PROCEDURE (#8994) file is 
+  held in global ^XWB(8994), in the 11th piece of the ^XWB(8994,IEN,0) node 
+  (Where: IEN = internal number for Remote Procedure Call).
+ 
+  This field must be set to "Allowed" if this RPC is to be run by an APPLICATION
+  PROXY user.  The default is to NOT allow access.
+ 
+  The RPC for VAFCTFU CONVERT ICN TO DFN needs to have the above field set to
+  "Allowed", as part of the VIA project.
+ 
+  Patch Components:
+  =================
+  
+  Files & Fields Associated:
+  
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A 
+  
+  Forms Associated:
+  
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A 
+  
+  Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A 
+  
+  Options Associated:
+  
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A 
+  
+  Protocols Associated:
+  
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A 
+  
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A 
+  
+  Templates Associated:
+  
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A 
+  
+  Additional Information:
+  
+  Remote Procedure Calls modified:
+  -------------------------------
+  VAFCTFU CONVERT ICN TO DFN RPC
+  
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A 
+  
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A 
+   
+  Documentation Retrieval Instructions:
+  ------------------------------------- 
+  N/A
+  
+  Patch Installation:
+  ===================
+  
+  Pre/Post Installation Overview:
+  -------------------------------
+  This patch has no special requirements for the pre or post installation. 
+  The installation is a typical installation from a PackMan message.
+  
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system. This patch should 
+  take less than 5 minutes to install. 
+  
+  No menu options need to be disabled.
+  
+  Installation Instructions:
+  --------------------------
+  This installation will install modified Remote Procedure Calls (RPCs).
+  
+  1.  Choose the PackMan message containing this patch.
+  
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the patch 
+      #DG*5.3*900:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'
+      Respond: No
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//' 
+      Respond: No
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+  Post-Installation Instructions:
+  -------------------------------
+  N/A 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 10, 2014
+Completed By:                               Date Completed: DEC 02, 2014
+Released By :                               Date Released : DEC 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

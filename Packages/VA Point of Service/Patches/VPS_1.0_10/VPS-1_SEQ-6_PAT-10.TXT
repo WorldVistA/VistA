@@ -1,0 +1,286 @@
+
+=============================================================================
+Run Date: APR 25, 2016                     Designation: VPS*1*10
+Package : VPS - VA POINT OF SERVICE (KIOSKS)  Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: MAY 26, 2016
+=============================================================================
+
+
+Subject: VITALS KIOSK - PHASE 1
+
+Category: 
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ VPS*1*10 is being released as part of a combined build which includes 
+ VPS*1*14
+  
+ The VPS*1*10 patch implements remote procedures (RPCs) in the VPS 
+ namespace to provide the capability to enter and view patient vital sign 
+ measurements through the consuming application interface.  The routines 
+ implementing the VPS*1*10 RPCs integrate VA POINT OF SERVICE (KIOSKS) 
+ with the VistA Vitals package.  The RPCs provide the capability for 
+ consuming application user interfaces such as kiosks, to enter patient 
+ vitals data (temperature, blood pressure, pulse) into the VistA Vitals 
+ package, or to display patient vitals data read from the VistA Vitals 
+ package.
+  
+ Patch Components:
+ ===============================
+  
+                                   RUN
+         RPC NAME                ROUTINE         TAG
+ __________________________________________________________________________
+ VPS RETRIEVE PATIENT VITALS     VPSVTL01        GET             NEW
+ VPS STORE VITALS                VPSVTL02        WRITE           NEW
+  
+  
+ Files & Fields Associated:
+ ===============================
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+ ===============================
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+ ===============================
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+ ===============================
+  
+ Option Name                 Type                  New/Modified/Deleted
+ -----------                 ----                  --------------------
+ VPS KIOSK INTERFACE       BROKER (CLIENT/SERVER)  MODIFIED
+  
+  
+ Protocols Associated:
+ ===============================
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+ ===============================
+  
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+ ===============================
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ ===============================
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ 1.  Oklahoma City VA Medical Center
+ 2.  VA Pittsburgh Healthcare System
+ 3.  Portland Medical Center
+ 4.  Dayton Medical Center
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server.
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany          domain.ext
+ Hines           domain.ext
+ Salt Lake City  domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                    SFTP Mode
+ -----------------------------------------------------------------------
+                         VPS_Combined_10_14_docs.zip        Binary
+  
+ Containing the following files:
+  
+ Installation Guide          VPS_Combined_10_14_IG.pdf
+ VPS Technical Manual        VPS_Technical Manual.pdf
+ Release Notes               VPS_Combined_10_14_RN.pdf 
+  
+  
+ Patch Installation:
+ ===============================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no Pre-Installation instructions for VPS FY15 1.0 patch.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no Menu Options to disable for VPS FY15 1.0.
+  
+  
+ Installation Instructions:
+ ===============================
+  
+ 1.  Obtain the host file VPS_FY15_1-0.KID, which contains the 
+     following patches:
+          VPS*1*10
+          VPS*1*14
+  
+     Sites can retrieve VistA software from download.vista.domain.ext
+     This will transmit the files from the first available SFTP server.
+                                                            
+     Sites may retrieve the software and/or documentation directly using 
+     Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+     directory at the following OI Field Offices:
+  
+     Albany          domain.ext
+     Hines           domain.ext
+     Salt Lake City  domain.ext
+  
+     The VPS_FY15_1-0.KID host file is located in the  
+     directory. Use ASCII Mode when downloading the file.
+  
+ 2.  Start up KIDS
+  
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:  
+  
+ 3.  From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file VPS_FY15_1-0.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]VPS_FY15_1-0.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       This Distribution contains Transport Globals for the following 
+       Package(s): 
+  
+         VPS FY15 1.0
+         VPS*1.0*10
+         VPS*1.0*14 
+  
+       OK to continue with Load? NO// YES
+  
+       Distribution OK!
+  
+       Want to Continue with Load? YES// 
+       Loading Distribution...
+  
+       VPS*1*10
+  
+      Use INSTALL NAME: VPS FY15 1.0 to install this Distribution.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//NO     
+     Note: Menu Trees do not need to be rebuilt for VPS FY 15 1.0 install.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//NO
+  
+     Note:  Logons do not need to be inhibited for VPS FY15 1.0 install.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//NO
+  
+     Note:  Scheduled options, Menu Options, and Protocols are not 
+            required to be disabled for VPS FY15 1.0  install.
+  
+ 8.  Enter the Device you want to print the Install messages.
+     You can queue the install by enter a 'Q' at the device prompt.
+     Enter a '^' to abort the install.
+  
+  
+ Post-Installation Instructions:
+ ===============================
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VA POINT OF SERVICE (KIOSKS);**[Patch List]**;July 8, 2015;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPSVTL01
+    Before:       n/a   After: B12016894  **10**
+Routine Name: VPSVTL02
+    Before:       n/a   After: B18366231  **10**
+
+=============================================================================
+User Information:                          Hold Date     : APR 14, 2016
+Entered By  :                               Date Entered  : MAY 22, 2015
+Completed By:                               Date Completed: MAR 30, 2016
+Released By :                               Date Released : APR 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

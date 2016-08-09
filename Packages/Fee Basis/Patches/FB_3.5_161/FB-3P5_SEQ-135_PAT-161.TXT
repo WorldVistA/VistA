@@ -1,0 +1,152 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/04/15 at 13:11
+=============================================================================
+Run Date: DEC 02, 2015                     Designation: FB*3.5*161
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #135                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+
+Subject: PATIENT MRA PENDING TRANSMISSION DELETES WHEN AUTHORIZATION IS DELETED
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ With this patch, the pending transmission Patient Master Record Adjustment
+ (MRA) record is deleted from the FEE BASIS PATIENT MRA (#161.26) file when
+ the linked patient authorization is deleted.
+  
+ Associated Remedy Ticket:
+ =========================
+ 1) INC000001233802 Patient MRA deletion issue
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Aleda E. Lutz VA Medical Center
+ St. Cloud VA Medical Center
+ Upstate New York HCS
+  
+ Remedy Overview:
+ ================ 
+ 1) INC000001233802 Patient MRA deletion issue
+  
+  
+ Problem:
+ --------
+ Patient MRA's pending transmission were not being deleted from the FEE 
+ BASIS PATIENT MRA (#161.26) file when a linked patient authorization was 
+ deleted from the FEE BASIS PATIENT (#161) file.
+  
+ Resolution:
+ -----------
+ The Data Dictionary for FEE BASIS PATIENT file (#161) has been changed to 
+ include a new style MUMPS action cross-reference for the FROM DATE (#.01) 
+ in the AUTHORIZATION (#1) multiple. 
+  
+ Also, routine FBUCDD2 will examine the FEE BASIS PATIENT MRA file 
+ (#161.26) for any patient MRAs linked to the deleted authorization and 
+ remove those MRAs from the file.
+  
+ Routine (new): FBUCDD2
+  
+ Data Dictionary:
+ ----------------
+ Data Dictionary for FEE BASIS PATIENT file (#161) AUTHORIZATION (#1) 
+ multiple:
+  
+ Before:
+ -------
+ N/A
+  
+ After:
+ ------
+          RECORD INDEX:     AMRA (#1207)    MUMPS        ACTION
+              Short Descr:  This index deletes associated MRAs when the
+                            Authorization is deleted.
+              Description:  This index deletes associated MRAs in the MRA
+                            TRANSMISSION (#161.26) file when the
+                            authorization is deleted.  
+                Set Logic:  Q
+               Kill Logic:  D:X2(1)="" DELB^FBUCDD2(.DA)
+                     X(1):  FROM DATE  (161.01,.01)  (forwards)
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. You may queue the install if you wish.
+ It should take less than two minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*161)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       FB*3.5*161.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+                                                        
+          Enter Authorization         [FBAA ENTER AUTHORIZATION]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBUCDD2
+    Before:       n/a   After:   B918000  **161**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 25, 2015
+Completed By:                               Date Completed: NOV 19, 2015
+Released By :                               Date Released : DEC 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

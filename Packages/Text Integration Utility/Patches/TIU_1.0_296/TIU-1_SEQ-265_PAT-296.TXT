@@ -1,0 +1,281 @@
+$TXT Created by               VIPDEV11.AAC.DOMAIN.EXT  (KIDS) on Tuesday, 03/15/16 at 12:26
+=============================================================================
+Run Date: APR 04, 2016                     Designation: TIU*1*296
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #265                      Status: Released
+                  Compliance Date: MAY 05, 2016
+=============================================================================
+
+
+Subject: TIU TEXT ALERT NOTIFICATION 
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Input Template
+  - Routine
+
+Description:
+============
+
+ Patch TIU*1*296 modifies the Text Integration Utilities (TIU) application 
+ to send a TIU alert to the appropriate service provider(s) immediately
+ after a staff member screens a patient and signs the associated note. This
+ functionality is needed so that after staff members have screened patients
+ for potential risks (weight loss or gain, homelessness, substance abuse,
+ etc.), the service provider(s) will be alerted prior to the note being
+ co-signed by the licensed clinician responsible for reviewing and
+ approving the note. Prior to this modification, TIU alerts were not sent
+ to all service providers. This resulted in missed opportunities to provide
+ needed services for patients while the patients are on site, and forced
+ staff to take time to contact patients and reschedule needed services.
+  
+ This patch utilizes one new file (TIU TEXT EVENTS (#8925.71)) used to 
+ define the words or phrase that will be searched for in a TIU document 
+ (progress note, consult, etc.). If the words or phrase are found in the 
+ TIU document, then an alert is sent to the team specified in the TIU TEXT 
+ EVENTS file.
+  
+ One new menu option-Text Event Edit [TIU TEXT EVENT EDIT]-will be added to
+ the TIU Maintenance Menu [TIU IRM MAINTENANCE MENU]. This option is used
+ only to set up a text event in the TIU TEXT EVENTS file.
+  
+ IMPORTANT: Any TIU document that is to be used for these alerts MUST have 
+ the MUMPS code 'D TASK^TIUTIUS(DA)' entered in the POST-SIGNATURE CODE 
+ (#4.9) field in the TIU DOCUMENT DEFINITION (#8925.1) file.
+  
+ The NSR for this intake addresses the following requirements:
+ VHBAO: NEED2949: Provide the ability for users to send TIU text alerts
+ created by non-clinical staff in CPRS to service providers before being
+ co-signed by a licensed clinician.
+  
+ This intake has been implemented locally at the Clement J. Zablocki
+ VA Medical Center in Milwaukee, Wisconsin, and is an enhancement to an
+ existing web application/service.
+  
+  
+ Patch Components:
+ -----------------
+ Routines, File, Fields
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ TIU TEXT EVENTS (#8925.71)  NAME       .01               New
+                             STATUS     .02               New
+                             CASE SENSITIVE
+                                        .03               New
+                             INCLUDE SPACES
+                                        .04               New
+                             TEXT TO SEARCH
+                                         1                New
+                             ALERT MESSAGE
+                                         2                New
+                             SIGNER ALERT MESSAGE
+                                         2.1              New
+                             SEARCH STRING
+                                         3                New
+                             CPRS TEAM   4                New (Multiple)
+                                  CPRS TEAM  .01          New  
+                             VISIT LOCATION
+                                         5                New (Multiple)
+                                  VISIT LOCATION
+                                             .01          New
+                             VISIT LOCATION STRING
+                                         5.1              New
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+  
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ TIU TEXT EVENT EDIT    Edit                       New
+ TIU IRM MAINTENANCE MENU
+                        Menu                     Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)  New/Modified/Deleted 
+ -------------        ----      ------------------  --------------------
+ TIU TEXT EVENT EDIT  INPUT     TIU TEXT EVENTS
+                                      (#8925.71)      New
+                      
+ Additional Information:
+ None
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR20130811    CPRS - TIU Text Alerts intake entails modifying the
+ Computerized Patient Record System (CPRS) Consult/Request
+ Tracking package to send a Text Integration Utilities (TIU) alert
+ to the appropriate service provider immediately after a non-clinical
+ staff member screens a patient and signs the associated CPRS note.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+  VAMC Milwaukee, WI
+  VAMC Cheyenne, WY
+  VAMC Augusta, GA
+  New York Harbor Health Care System
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing the
+ new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly 
+ using Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation 
+ Library at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ TIU Technical Manual 
+ TIU Clinical Coordinator and User Manual
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+  
+ Pre-Installation Instructions:
+ ------------------------------
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ Disable the following options during installation:
+ TIU Maintenance Menu [TIU IRM MAINTENANCE MENU]
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. TIU*1.0*296):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//' Enter YES
+  
+ 6.  Want KIDS to INHIBIT LOGONs during the install?
+     NO// Enter NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//' Enter YES
+  
+     a.  Enter options you wish to mark as 'Out Of Order': Enter "TIU IRM
+         MAINTENANCE MENU".
+     b.  Enter options you wish to mark as 'Out Of Order': Press ENTER
+     c.  Enter protocols you wish to mark as 'Out Of Order': Press ENTER
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0-60): 0//' Enter 0
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no post installation actions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIURS
+    Before: B64898838   After: B66323141  **3,4,20,67,79,98,107,58,100,
+                                           109,179,157,227,274,296**
+Routine Name: TIUTIUS
+    Before:       n/a   After: B33045323  **296**
+ 
+Routine list of preceding patches: 274
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 15, 2015
+Completed By:                               Date Completed: MAR 16, 2016
+Released By :                               Date Released : APR 04, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

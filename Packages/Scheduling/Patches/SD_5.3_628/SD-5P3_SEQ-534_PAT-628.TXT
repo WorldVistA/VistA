@@ -1,0 +1,356 @@
+$TXT Created by                at DEVVVV.DOMAIN.EXT  (KIDS) on Tuesday, 01/12/16 at 09:55
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SD*5.3*628
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #534                    Status: Released
+                  Compliance Date: AUG 03, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*627  <<= must be installed BEFORE `SD*5.3*628'
+
+Subject: VISTA SCHEDULING ENHANCEMENT 3 (VSE)
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ ***************************** PLEASE NOTE ********************************
+ *                                                                        *
+ * The VHA Release Board has NOT provided approval for this patch to be   *
+ * installed in ANY production environment.                               *
+ *                                                                        *
+ * NOTE: This patch is ONLY to be loaded into a TEST environment until    *
+ * approval from the VHA Release Board is obtained to load into facility  *
+ * production environments.                                               *
+ *                                                                        *
+ **************************************************************************
+  
+  
+ This patch contains server side functionality for the VistA Scheduling
+ Enhancements (VSE) Enhancements 3 (E3) project. The VSE E3 project 
+ implements a GUI reporting application designed to run on user
+ workstations, and launches via a button in the Reports tab in the VSE
+ Enhancement 1 (E1) VistA Scheduling GUI application.
+  
+ This patch contains server functionality to perform the following 
+ tasks:
+  
+ 1) Extract appointment and encounter data from VistA Scheduling.
+ 2) Aggregate extracted data for a specified date range.
+ 3) Format the aggregated data in a predefined XML schema.
+ 4) Send the XML data to a requesting application through the RPC Broker.
+  
+ The report is not available from any legacy VistA option.
+  
+ The only functionality available within legacy VistA is an option to 
+ queue the data extraction and compilation process via VistA option VistA 
+ Scheduling GUI Resource Mgmt Report Data Compile [SDEC REPORT DATA]. This
+ option has also been added to the Option Scheduling (#19.2) file to run
+ once a day at 3 A.M. as a regularly scheduled background task. The
+ compiled data is stored in the ^XTMP("SDVSE") and ^XTMP("SDCEX") globals
+ for a full year's worth of report data when the scheduled option runs the
+ first time. Each subsequent run will only collect appointment related 
+ metrics data for the past 90 days. 
+  
+ After the SDEC REPORT DATA background job completes, a MailMan message 
+ will be sent to the user that scheduled the option or that installed the 
+ patch. This MailMan message can be turned off by changing the ENTRY 
+ ACTION for the option through FileMan. By default, the ENTRY ACTION sets 
+ the variable SDECMAIL=1. To turn the MailMan message functionality off, 
+ either delete the ENTRY ACTION field entirely, or set the SDECMAIL 
+ variable to zero.
+  
+  
+ NAME: SDEC REPORT DATA
+   MENU TEXT: VistA Scheduling GUI Resource Mgmt Report Data
+   TYPE: run routine                     CREATOR: TOMLIN,BRIAN
+   PACKAGE: SCHEDULING                   E ACTION PRESENT: YES
+   X ACTION PRESENT: YES
+  DESCRIPTION:   This option allows Scheduling Administrators to initiate 
+ the VistA Scheduling GUI Resource Management Report data compilation.
+   EXIT ACTION: D EXITOPT^SDCED          ENTRY ACTION: S SDECMAIL=1
+   ROUTINE: QUEUE^SDCED                  TIMESTAMP: 63516,28327
+   SCHEDULING RECOMMENDED: YES
+   UPPERCASE MENU TEXT: VISTA SCHEDULING GUI RESOURCE 
+  
+  
+ This patch adds a New Style cross-reference on the OUTPATIENT ENCOUNTERS 
+ file (#409.68). The 'D' index is created as a compound index on the DATE 
+ field (#.01) and the CHECK OUT PROCESS COMPLETION field (#.07). The 'D'
+ index is only used by the VistA Scheduling GUI Resource Management Report
+ to identify potential Provider Outpatient Encounters to include in the
+ report metrics.
+  
+ VistA Remote Procedure Call (RPC) SD VSE FILTER RPC is available for the
+ VistA Scheduling GUI application to return the list of Report Types
+ (Mental Health, Primary Care, Specialty Care), the list of available date
+ aggregates (Year, Quarter, Month, Week, Date), and the date range
+ corresponding to the selected date aggregate. The values returned by SD
+ VSE FILTER RPC are used to populate the corresponding E3 report filters.
+  
+ VistA Remote Procedure Call (RPC) SD VSE REPORT RPC returns the report 
+ data corresponding to the values selected by the initial three filters 
+ (Report Type, Date Aggregate, Date Range). 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#) New/Modified/Deleted
+ --------------------   -----------------------------------  
+ OUTPATIENT ENCOUNTER   DATE (.01) Modified with New Index
+  (409.68)              CHECK OUT PROCESS COMPLETION
+                          (.07) Modified with New Index
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Functions Associated:
+  
+ Function Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+ HL Logical Link:
+  
+ HL Logical Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ HL7 Application Parameters:
+  
+ HL7 Parameter Name               New/Modified/Deleted
+ ------------------               --------------------
+ N/A
+  
+ HLO Application Registry:
+  
+ HLO Registry Name                New/Modified/Deleted
+ ------------------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ SDEC REPORT DATA               run routine      New
+ SDMGR                          menu             Modified
+  
+ Parameter Definitions:
+  
+ Parameter Name                                  New/Modified/Deleted
+ --------------                                  --------------------
+ SDEC MENTAL HEALTH STOP CODES                   New
+ SDEC PRIMARY CARE STOP CODES                    New
+ SDEC SPECIALTY CARE STOP CODES                  New
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Remote Procedure Calls:
+  
+ RPC Name                                        New/Modified/Deleted
+ --------                                        --------------------
+ SD VSE FILTER RPC                               New
+ SD VSE REPORT RPC                               New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)        New/Modified/Deleted
+ -------------      ----      ------------------   --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Asheville
+ Chillicothe
+ Hudson Valley
+ Salt Lake City
+  
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+  
+ Albany:                 domain.ext
+ Hines:                  domain.ext
+ Salt Lake City:         domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                            File Name           FTP Mode
+ --------------------------------------------------------------------------
+ SCHEDULING Technical Manual                 VSE_TM.PDF          (binary)
+  
+  
+  
+ Patch Installation in TEST ONLY ***DO NOT INSTALL INTO PRODUCTION***:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The Post Install routine will add new Parameters that are associated with 
+ pre-determined Stop Codes. These Stop Codes are used to identify clinics 
+ to be included in the VistA Scheduling GUI Resource Management Reports for
+ clinic metrics. The categories for these stop codes will be related to
+ Primary Care, Specialty Care and Mental Health clinics only.
+  
+ The Post Install routine will queue a background job to re-index the 
+ OUTPATIENT ENCOUNTER file (#409.68) in order to create the new 'D' 
+ cross-reference used to identify Provider Encounters used in the VSE GUI 
+ Resource Management Reports.
+  
+ The Post Install routine will also schedule the SDEC REPORT DATA option 
+ to run at 3:00 AM every morning. The last thing the Post Install routine
+ will do is trigger the background process to collect the VistA Scheduling
+ appointment data to be used by the VistA Scheduling GUI Resource
+ Management Reporting tool.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the test system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions in TEST ONLY ***DO NOT INSTALL INTO 
+ PRODUCTION***
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SD*5.3*628):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SD*5.3*628.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 371
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD628PST
+    Before:       n/a   After: B50060258  **628**
+Routine Name: SDCED
+    Before:       n/a   After:B153388689  **628**
+Routine Name: SDCED1
+    Before:       n/a   After:B153290319  **628**
+Routine Name: SDCED2
+    Before:       n/a   After: B72509426  **628**
+Routine Name: SDECRPT
+    Before:       n/a   After: B10301780  **628**
+Routine Name: SDECSTP
+    Before:       n/a   After: B58569948  **628**
+Routine Name: SDECXML
+    Before:       n/a   After:B121803076  **628**
+Routine Name: SDECXML1
+    Before:       n/a   After: B60170099  **628**
+Routine Name: SDECXML2
+    Before:       n/a   After: B67559212  **628**
+Routine Name: SDECXML3
+    Before:       n/a   After: B81460812  **628**
+Routine Name: SDECXML4
+    Before:       n/a   After:B104004316  **628**
+Routine Name: SDECXML5
+    Before:       n/a   After:B102847161  **628**
+Routine Name: SDECXUTL
+    Before:       n/a   After: B79794674  **628**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 08, 2014
+Completed By:                               Date Completed: MAY 03, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

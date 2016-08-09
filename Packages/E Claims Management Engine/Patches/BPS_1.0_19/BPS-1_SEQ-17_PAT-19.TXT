@@ -1,0 +1,691 @@
+
+=============================================================================
+Run Date: FEB 08, 2016                     Designation: BPS*1*19
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #17                      Status: Released
+                  Compliance Date: MAR 10, 2016
+=============================================================================
+
+Associated patches: (v)BPS*1*14    <<= must be installed BEFORE `BPS*1*19'
+                    (v)BPS*1*15    <<= must be installed BEFORE `BPS*1*19'
+                    (v)BPS*1*17    <<= must be installed BEFORE `BPS*1*19'
+                    (v)BPS*1*18    <<= must be installed BEFORE `BPS*1*19'
+
+Subject: EPHARMACY NCPDP CONTINUOUS MAINTENANCE STANDARDS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ pharmacy (ePharmacy) billing system.  Below is a list of all the
+ applications involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    OUTPATIENT PHARMACY (OP) V. 7.0                       PSO*7*427
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2*534
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1*19
+    CONSOLIDATED MAIL OUTPATIENT PHARMACY (CMOP) V. 2.0   PSX*2*77
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                 PSS*1*188
+  
+ Patches PSX*2*77 and PSS*1*188 are being released as stand-alone patches,
+ while the other three patches (PSO*7*427, IB*2*534, BPS*1*19) are being
+ released in the Kernel Installation and Distribution System (KIDS)
+ multi-build distribution BPS PSO IB BUNDLE 6.0.  The two stand-alone 
+ patches and multi-build distribution can be installed in any order and 
+ do not need to installed at the same time.
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+ 1.  The VistA ePharmacy system is modified to support new data elements 
+     for NCPDP versions E.0 through E.6.
+  
+     a.  The BPS NCPDP FIELD DEFS (#9002313.91) file was updated with new
+         and modified NCPDP field information.
+  
+     b.  The BPS NCPDP REJECT CODES (#9002313.93) file with new and 
+         modified NCPDP reject codes.
+  
+     c.  The claims submission process was updated to send data for new 
+         NCPDP fields for which VistA has data to send.  In addition, some
+         existing fields were updated to include additional NCPDP values.  
+         The list of NCPDP fields that had modifications and also have 
+         a major impact on NCPDP processing is below.
+  
+         Patient Segment
+         ---------------
+         B08-7A - Patient Street Address Line
+         B09-7B - Patient Street Address Line 2
+         B38-1Y - Patient ID Associated Country Code
+  
+         Prescriber Segment
+         ------------------
+         B26-7T - Prescriber Telephone Number Extension
+         B27-7U - Prescriber Street Address Line 1
+         B28-7V - Prescriber Street Address Line 2
+         B40-3A - Prescriber Alternate ID Associated Country Code
+         B41-3B - Prescriber ID Associated Country Code
+         B42-3C - Prescriber Country Code
+  
+         Pricing Segment
+         ---------------
+         479-H8 - Other Amount Claimed Submitted Qualifier
+  
+         Coordination of Benefits/Other Payers Segment
+         ---------------------------------------------
+         342-HC - Other Payer Amount Paid Qualifier)
+         393-MV - Benefit Stage Qualifier)
+         339-6C - Other Payer ID Qualifier)
+  
+     d.  The claims response process was updated to include new NCPDP 
+         fields and to process existing NCPDP fields that had changes to
+         the data that can be returned by the third party payer.  The list
+         of NCPDP fields that had modifications and also have a major
+         impact on NCPDP processing is below.
+  
+         Response Insurance Segment
+         --------------------------
+         568-J7 - Payer ID Qualifier
+  
+         Response Pricing Segment
+         ------------------------
+         561-AZ - Percentage Sales Tax Basis Paid
+         564-J3 - Other Amount Paid Qualifier
+  
+         Response Coordination of Benefits/Other Payers Segment
+         ------------------------------------------------------
+         B23-7Q - Other Payer Help Desk Telephone Number Extension
+  
+         Response Intermediary Segment
+         -----------------------------
+         B52-8R - Response Intermediary Authorization Count
+         B53-8S - Response Intermediary Authorization Type ID
+         B54-8T - Response Intermediary Authorization ID
+         B51-8Q - Intermediary Message
+  
+ 2.  The Close Claim [CLO] action on the ECME User Screen [BPS USER SCREEN]
+     option was modified to prevent a claim from being closed if the
+     claim has open rejects on the Pharmacist worklist.
+  
+ 3.  The Rx Not Processed for Site bulletin was modified to direct the 
+     user to the correct ECME option in order to get more information on
+     the reject.
+  
+ 4.  The Rx Not Processed for Site bulletin was modified to include the
+     associated ECME number, if it exists.
+  
+ 5.  The Claim Results and Status [BPS MENU RPT CLAIM STATUS] menu was 
+     modified to include a new Non-Billable Status Report [BPS RPT
+     NON-BILLABLE REPORT] option.  This new report will provide users with
+     a tool to identify prescriptions that are not being billed and the
+     reason the prescription was not billed.
+  
+ 6.  If a TRICARE or CHAMPVA inpatient claim is reversed by the inpatient
+     auto reversal process of the BPS NIGHTLY BACKGROUND JOB, the
+     transaction will be filed in the PSO AUDIT LOG (#52.87) file as a
+     bypass prescription so that it will be displayed on the 
+     TRICARE-CHAMPVA Bypass/Override Report, which is part of the
+     Outpatient Pharmacy application.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ BPS CLAIMS (#9002313.02)                                  Modified
+                       PATIENT TELEPHONE NUMBER (#326)     Modified
+                       PATIENT STREET ADDRESS LINE 1       New
+                         (#2008) 
+                       PATIENT STREET ADDRESS LINE 2       New
+                         (#2009) 
+                       PATIENT ID ASSOC COUNTRY CODE       New
+                         (#2038) 
+   TRANSACTIONS sub-file (#9002313.0201)                   Modified
+                       EMPLOYER TELEPHONE NUMBER (#320)    Modified
+                       PRESCRIBER TELEPHONE NUMBER         Modified
+                         (#498.12) 
+                       SERVICE PROVIDER COUNTRY CODE       New
+                         (#1093) 
+                       AUTH REP STREET ADDRESS LINE 1      New
+                         (#2013) 
+                       AUTH REP STREET ADDRESS LINE 2      New
+                         (#2014) 
+                       EMPLOYER STREET ADDRESS LINE 1      New
+                         (#2015) 
+                       EMPLOYER STREET ADDRESS LINE 2      New
+                         (#2016) 
+                       EMPLOYER CONTACT FIRST NAME (#2017) New
+                       EMPLOYER CONTACT LAST NAME (#2018)  New
+                       EMPLOYER PHONE NUMBER EXT (#2019)   New
+                       FACILITY STREET ADDRESS LINE 1      New
+                         (#2020) 
+                       FACILITY STREET ADDRESS LINE 2      New
+                         (#2021) 
+                       PAY TO STREET ADDRESS LINE 1        New
+                         (#2024) 
+                       PAY TO STREET ADDRESS LINE 2        New
+                         (#2025) 
+                       PRESCRIBER PHONE NUMBER EXT (#2026) New
+                       PRESCRIBER STREET ADDR LINE 1       New
+                         (#2027) 
+                       PRESCRIBER STREET ADDR LINE 2       New
+                         (#2028) 
+                       PURCHASER STREET ADDRESS LINE1      New
+                         (#2029) 
+                       PURCHASER STREET ADDRESS LINE2      New
+                         (#2030) 
+                       SERVICE PROV STREET ADD LINE 1      New
+                         (#2031) 
+                       SERVICE PROV STREET ADD LINE 2      New
+                         (#2032) 
+                       AUTH REP COUNTRY CODE (#2034)       New
+                       EMPLOYER COUNTRY CODE (#2035)       New
+                       FACILITY COUNTRY CODE (#2037)       New
+                       PAY TO COUNTRY CODE (#2039)         New
+                       PRES ALT ID ASSOC COUNTRY CODE      New
+                         (#2040) 
+                       PRES ID ASSOC COUNTRY CODE (#2041)  New
+                       PRESCRIBER COUNTRY CODE (#2042)     New
+                       PURCHASER ID ASSOC COUNTRY CD       New
+                         (#2043) 
+                       INTERMEDIARY ID COUNT (#2044)       New
+                       LAST KNOWN BIN NUMBER (#2056)       New
+                       LAST KNOWN PROCESSOR CNTRL NUM      New
+                         (#2057) 
+                       LAST KNOWN GROUP ID (#2058)         New
+                       LAST KNOWN CARDHOLDER ID (#2059)    New
+                       YEAR OF LAST PAID CLAIM (#2060)     New
+                       MONTH OF LAST PAID CLAIM (#2061)    New
+   INTERMEDIARY ID MULTIPLE sub-file (#9002313.022044)     New
+                       INTERMEDIARY ID COUNTER (#.01)      New
+                       INTERMEDIARY ID TYPE CODE (#2045)   New
+                       INTERMEDIARY ID TYPE ENTITY (#2046) New
+                       INTERMEDIARY ID QUALIFIER (#2047)   New
+                       INTERMEDIARY ID (#2048)             New
+                       INTERMEDIARY ID STATE/PROV ADD      New
+                         (#2049) 
+                       INTERMEDIARY ID RELATION CODE       New
+                         (#2050) 
+                       INTERMEDIARY ID COUNTRY CODE        New
+                         (#2055) 
+  
+ BPS RESPONSES (#9002313.03)                               Modified
+                       PAYER ID QUALIFIER (#568)           Modified
+   RESPONSES sub-file (#9002313.0301)                      Modified
+                       HELP DESK TELEPHONE NUMBER (#550)   Modified
+                       PERCENTAGE SALES TAX BASIS PD       Modified
+                         (#561) 
+                       HELP DESK TELEPHONE NUMBER EXT      New
+                         (#2022) 
+                       PRO SERVICE FEE CONT/REIM AMT       New
+                         (#2033) 
+                       RESPONSE INTERMEDIARY AUTH CNT      New
+                         (#2052) 
+   RESPONSE INTERMEDIARY MULTIPLE sub-file (#9002313.032052)New
+                       RESPONSE INTERMEDIARY COUNTER       New
+                         (#.01) 
+                       INTERMEDIARY MESSAGE (#2051)        New
+                       RESPONSE INTERMED AUTH TYPE ID      New
+                         (#2053) 
+                       RESPONSE INTERMEDIARY AUTH ID       New
+                         (#2054) 
+   OTHER PAYER ID MLTPL sub-file (#9002313.035501)         Modified
+                       OTHER PAYER HELPDESK PHONE EXT      New
+                         (#2023) 
+  
+ BPS NCPDP OTHER PAYER AMT PAID QUAL (#9002313.2)          New
+  
+ BPS CERTIFICATION (#9002313.31)                           Modified
+   COB MULTIPLE sub-file (#9002313.3123)                   Modified
+                       OTHER PAYER ID QUALIFIER (#.03)     Modified
+   OTHER PAYER AMT PAID MULTIPLE sub-file (#9002313.31231) Modified
+                       OTHER PAYER AMT PAID QUALIFIER      Modified
+                         (#.02) 
+   BENEFIT STAGE MULT sub-file (#9002313.31234)            Modified
+                       BENEFIT STAGE QUALIFIER (#.02)      Modified
+   OTHER AMT CLAIMED MULT sub-file (#9002313.3124)         Modified
+                       OTHER AMOUNT CLAIMED QUALIFIER      Modified
+                         (#.02) 
+  
+ BPS PAYER RESPONSE OVERRIDES (#9002313.32)                Modified
+                       PERCENTAGE SALES TAX BASIS PD       New
+                         (#2.01) 
+                       OTHER AMOUNT PAID QUALIFIER (#2.02) New
+                       PAYER ID QUALIFIER (#2.03)          New
+                       HELP DESK TELEPHONE NUMBER EXT      New
+                         (#2.04) 
+                       PRO SERVICE FEE CONT/REIM AMT       New
+                         (#2.05) 
+                       OTHER PAYER HELPDESK PHONE EXT      New
+                         (#2.06) 
+                       RESPONSE INTERMED AUTH TYPE ID      New
+                         (#2.07) 
+                       RESPONSE INTERMEDIARY AUTH ID       New
+                         (#2.08) 
+                       INTERMEDIARY MESSAGE (#3.01)        New
+  
+ BPS LOG OF TRANSACTIONS (#9002313.57)                     Modified
+   COB OTHER PAYERS sub-file (#9002313.5714)               Modified
+                       OTHER PAYER ID QUALIFIER (#.03)     Modified
+   OTHER PAYER AMT PAID MULTIPLE sub-file (#9002313.57141) Modified
+                       OTHER PAYER AMT PAID QUALIFIER      Modified
+                         (#.02) 
+  
+ BPS TRANSACTION (#9002313.59)                             Modified
+   COB OTHER PAYERS sub-file (#9002313.5914)               Modified
+                       OTHER PAYER ID QUALIFIER (#.03)     Modified
+   OTHER PAYER AMT PAID MULTIPLE sub-file (#9002313.59141) Modified
+                       OTHER PAYER AMT PAID QUALIFIER      Modified
+                         (#.02) 
+  
+ BPS REQUESTS (#9002313.77)                                Modified
+   COB OTHER PAYERS sub-file (#9002313.778)                Modified
+                       OTHER PAYER ID QUALIFIER (#.03)     Modified
+   OTHER PAYER AMT PAID MULTIPLE sub-file (#9002313.7781)  Modified
+                       OTHER PAYER AMT PAID QUALIFIER      Modified
+                         (#.02) 
+  
+ BPS NCPDP FIELD DEFS (#9002313.91)                        Modified
+  
+ BPS NCPDP FORMATS (#9002313.92)                           Modified
+   INTERMEDIARY SEGMENT sub-file (#9002313.9229)           New
+   LAST KNOWN 4RX SEGMENT sub-file (#9002313.923)          New
+  
+ BPS NCPDP REJECT CODES (#9002313.93)                      Modified
+  
+ BPS NCPDP FIELD CODES (#9002313.94)                       Deleted
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted
+ -----------                  ----                         -------------
+ Claim Results and Status [BPS MENU RPT CLAIM STATUS]    
+                              menu                         Modified
+ Non-Billable Status Report [BPS RPT NON-BILLABLE REPORT]
+                              run routine                  New
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted
+ -------------                                             -------------
+ N/A
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted
+ -----------------                                         -------------
+ N/A
+  
+  
+ Templates:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20130514 - NCPDP Continuous Maintenance Standards (Phase 2, Iteration 2)
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ VA Heartland West (Integrated)-Station 589
+ Central Arkansas Veterans Healthcare System (Little Rock, AR)-Station 598
+ Birmingham VA Medical Center (Birmingham, AL)-Station 521
+ Hunter Holmes McGuire VA Medical Center (Richmond, VA)-Station 652
+ James H. Quillen VA Medical Center (Mountain Home, TN)-Station 621
+ Lexington VA Medical Center (Lexington, KY)-Station 596
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+  
+ The preferred method is to FTP the files from
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server.  Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+  
+ Title                                 File Name               FTP Mode
+ ----------------------------------------------------------------------
+ Release Notes/Installation Guide      BPS_1_P19_RN.PDF        Binary
+ User Manual                           BPS_1_UM_R0116.PDF      Binary
+ Technical Manual/Security Guide       BPS_1_TM_R0116.PDF      Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is a pre-install routine associated with this patch named
+ EN^BPS19PRE. The purpose of the pre install routine is to:
+  
+  a. Update NCPDP field definitions in BPS NCPDP FIELD DEFS (#9002313.91)
+  
+  b. Update the NCPDP reject codes/descriptions in BPS NCPDP REJECT CODES
+     (#9002313.93).
+  
+ You may delete routine BPS19PRE if the installation was successful.
+  
+  
+ There is a post-install routine associated with this patch named
+ EN^BPS19PST. The purpose of the post install routine is to:
+  
+  a. Loop through the BPS REQUESTS (#9002313.77) entries and change the 
+     OTHER PAYER AMT PAID QUALIFIER (#.02) field in the OTHER PAYER AMT
+     PAID MULTIPLE (#9002313.7781) subfile from a set of codes to a
+     pointer.
+  
+  b. Loop through the BPS TRANSACTION (#9002313.59) entries and change the
+     OTHER PAYER AMT PAID QUALIFIER (#.02) field in the OTHER PAYER AMT
+     PAID MULTIPLE (#9002313.59141) subfile from a set of codes to a
+     pointer.
+  
+  c. Loop through the BPS LOG OF TRANSACTION (#9002313.57) entries and 
+     change the OTHER PAYER AMT PAID QUALIFIER (#.02) field in the OTHER
+     PAYER AMT PAID MULTIPLE (#9002313.57141) subfile from a set of codes
+     to a pointer.
+  
+  d. Loop through the BPS CERTIFICATION (#9002313.31) entries and change 
+     the OTHER PAYER AMT PAID QUALIFIER (#.02) field in the OTHER PAYER AMT
+     PAID MULTIPLE (#9002313.31231) subfile from a set of codes to a
+     pointer.
+  
+  e. Remove the BPS NCPDP FIELD CODES (#9002313.94) data and database
+     definition.
+  
+ Depending on the number of records in the BPS TRANSACTION (#9002313.59),
+ BPS LOG OF TRANSACTION (#9002313.57), and BPS CERTIFICATION (#9002313.31)
+ files, the conversion of those files may take some time to run so this
+ part of the post-install will be queued to run as a background
+ post-install task. A mail message will be sent indicating the results of
+ this portion of post-install process.
+  
+ You may delete routine BPS19PST if the installation was successful and
+ the mailman message indicates that the post-install was successful.
+  
+  
+ Installation Instructions
+ -------------------------
+ To avoid disruptions, these patches should be installed during non-peak
+ hours when there is minimal activity on the system. Avoid times when ECME
+ claims are being transmitted. Of particular concern are the options below.
+  
+     1. BPS NIGHTLY BACKGROUND JOB [BPS NIGHTLY BACKGROUND JOB]
+        Do not install the patch when ECME claims are being generated
+        by the BPS Nightly Background Job option. Wait for this job to
+        finish or complete the installation before this job starts.
+  
+     2. Scheduled CS Transmission [PSXR SCHEDULED CS TRANS] and
+        Scheduled Non-CS Transmission [PSXR SCHEDULED NON-CS TRANS]
+        Do not install the patch when prescriptions are being
+        transmitted to CMOP. Wait for the CMOP transmissions to finish
+        or complete the installation before the transmissions start. Both
+        the CS (Controlled Substances) and the non-CS CMOP transmission
+        options should be checked. Check with Pharmacy Service or your
+        Pharmacy ADPAC to find out when CMOP transmissions occur.
+  
+ This multi-build installation should take less than 5 minutes to 
+ install.
+  
+ This multi-build installation can be queued but should not be queued at a 
+ time when the BPS NIGHTY BACKGROUND JOB or CMOP transmission processes
+ are scheduled.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  OBTAIN PATCHES
+     --------------
+     Obtain the host file BPS_1_19_PSO_IB.KID, which contains the
+     following patches:
+  
+         BPS*1.0*19
+         PSO*7.0*427
+         IB*2.0*534
+  
+     Sites can retrieve VistA software from the following FTP addresses.
+     The preferred method is to FTP the files from:
+  
+                     download.vista.domain.ext
+  
+     This will transmit the files from the first available FTP server.
+     Sites may also elect to retrieve software directly from a specific
+     server as follows:
+  
+        Albany                  ftp.domain.ext
+        Hines                   ftp.domain.ext
+        Salt Lake City          ftp.domain.ext
+  
+     The BPS_1_19_PSO_IB.KID host file is located in the 
+     directory. Use ASCII Mode when downloading the file.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu option
+     [XPD MAIN]:
+  
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+     Select Kernel Installation & Distribution System Option: INStallation
+                                                              ---
+          Load a Distribution
+          Print Transport Global
+          Compare Transport Global to Current System
+          Verify Checksums in Transport Global
+          Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+          Backup a Transport Global
+  
+     Select Installation Option:
+  
+ 3.  LOAD TRANSPORT GLOBAL FOR MULTI-BUILD
+     -------------------------------------
+     From the Installation menu, select the Load a Distribution option.
+  
+     When prompted for "Enter a Host File:", enter the full directory path
+     where you saved the host file BPS_1_19_PSO_IB.KID (e.g.,
+     SYS$SYSDEVICE:[ANONYMOUS]BPS_1_19_PSO_IB.KID).
+  
+     When prompted for "OK to continue with Load? NO//", enter "YES."
+  
+     The following will display:
+  
+       Loading Distribution...
+  
+         BPS PSO IB BUNDLE 6.0
+         IB*2.0*534
+         BPS*1.0*19
+         PSO*7.0*427
+  
+       Use INSTALL NAME: BPS PSO IB BUNDLE 6.0 to install this
+       Distribution.
+  
+ 4.  RUN OPTIONAL INSTALLATION OPTIONS FOR MULTI-BUILD
+     -------------------------------------------------
+     From the Installation menu, you may select to use the following
+     options (when prompted for the INSTALL NAME, enter
+     BPS PSO IB BUNDLE 6.0):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will not
+         backup any other changes such as data dictionaries or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, data dictionaries, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  INSTALL MULTI-BUILD
+     -------------------
+     This is the step to start the installation of this KIDS patch.  This
+     will need to be run for the BPS PSO IB BUNDLE 6.0.
+  
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted for the "Select INSTALL NAME:", enter BPS PSO IB
+         BUNDLE 6.0.
+     c.  When prompted "Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? YES//", enter YES unless your system does this in a 
+         nightly TaskMan process.
+     d.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         YES//", enter NO.
+     e.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", enter NO.
+     f.  When prompted "Device: HOME//", respond with the correct device.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ In order to verify the patch post-installation routine was run
+ successfully, please examine the Install File for this patch and report
+ any error messages to Product Support. Please also confirm the patch pre-
+ and post-installation routines, BPS19PRE and BPS19PST, were removed if
+ allowed by your Kernel site parameter configuration.
+  
+ You may delete the pre-install routine BPS19PRE if the installation was
+ successful.
+  
+ You may delete the post-install routine BPS19PST if the installation was
+ successful and the mailman message indicates that the post-install was
+ successful.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**;JUN 2004;Build 18
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS19PRE
+    Before:       n/a   After:  B6858890  **19**
+Routine Name: BPS19PST
+    Before:       n/a   After: B32874086  **19**
+Routine Name: BPSECA1
+    Before: B14865597   After: B14554293  **1,5,8,10,15,19**
+Routine Name: BPSECMP2
+    Before:B189210451   After:B193647932  **1,5,6,7,8,10,11,19**
+Routine Name: BPSECMPS
+    Before:B102705765   After:B117919679  **1,2,5,6,7,10,11,15,19**
+Routine Name: BPSECX0
+    Before: B36997821   After: B39590401  **1,5,8,10,15,19**
+Routine Name: BPSJHLT
+    Before: B56892934   After: B56866826  **1,10,15,19**
+Routine Name: BPSJZPR
+    Before: B67732564   After: B69333659  **1,10,15,19**
+Routine Name: BPSNCPD1
+    Before: B55346306   After: B55779572  **1,3,5,6,7,8,9,10,11,15,19**
+Routine Name: BPSNCPD3
+    Before: B63091448   After: B64625279  **1,5,6,7,8,10,11,15,19**
+Routine Name: BPSNCPDP
+    Before: B93011711   After: B93601523  **1,3,4,2,5,6,7,8,10,11,19**
+Routine Name: BPSOSCC
+    Before: B26536547   After: B27473638  **1,2,5,8,10,11,19**
+Routine Name: BPSOSCD
+    Before: B85972758   After:B104589879  **1,3,2,5,7,8,10,11,15,19**
+Routine Name: BPSOSCE
+    Before: B12911947   After: B13028933  **1,5,7,8,10,11,15,19**
+Routine Name: BPSOSCF
+    Before: B30647894   After: B30984367  **1,5,8,10,15,19**
+Routine Name: BPSOSH2
+    Before:B138588771   After:B141967265  **1,5,8,10,15,19**
+Routine Name: BPSPRRX3
+    Before:B136159744   After:B123904591  **8,10,11,19**
+Routine Name: BPSPRRX6
+    Before:B112918559   After:B114820084  **8,10,11,19**
+Routine Name: BPSRPAY
+    Before: B34787453   After: B35888506  **1,7,10,15,19**
+Routine Name: BPSRPT0
+    Before: B22597769   After: B27167649  **1,5,7,10,11,19**
+Routine Name: BPSRPT1
+    Before: B54969091   After: B58952344  **1,5,7,8,10,11,19**
+Routine Name: BPSRPT3
+    Before: B39556380   After:B122921088  **1,3,5,7,11,14,19**
+Routine Name: BPSRPT4
+    Before: B93729370   After: B99407580  **1,5,7,8,10,11,19**
+Routine Name: BPSRPT5
+    Before:B146517138   After:B167824717  **1,3,5,7,8,10,11,19**
+Routine Name: BPSRPT7
+    Before:B107914214   After:B164190587  **1,3,5,7,8,10,11,19**
+Routine Name: BPSRPT8
+    Before:B178450227   After:B147944651  **1,3,5,7,8,10,11,19**
+Routine Name: BPSSCRCL
+    Before: B75888961   After: B82378286  **1,3,5,7,8,11,15,19**
+Routine Name: BPSTEST
+    Before:B102852240   After:B147504088  **6,7,8,10,11,15,19**
+Routine Name: BPSUTIL2
+    Before: B52546743   After: B53070606  **7,8,10,11,17,19**
+ 
+Routine list of preceding patches: 14, 15, 17
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 26, 2014
+Completed By:                               Date Completed: FEB 04, 2016
+Released By :                               Date Released : FEB 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

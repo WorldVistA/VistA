@@ -1,0 +1,263 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/07/14 at 12:03
+=============================================================================
+Run Date: APR 08, 2015                     Designation: DG*5.3*886
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #792                    Status: Released
+                  Compliance Date: MAY 09, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*375  <<= must be installed BEFORE `DG*5.3*886'
+                    (v)DG*5.3*864  <<= must be installed BEFORE `DG*5.3*886'
+
+Subject: SAC ERROR/BAI INDICATOR/DRG FREQUENCY REPORT/ADT MANUAL UPDATE
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses 4 issues:
+  
+ 1. Bad Address Indicator is not working as the help prompt suggests.  User
+    needs to manually remove the indicator when entering changes.
+   
+ 2. There was a Standards and Conventions (SAC) violation discovered
+    during the testing of patch DG*5.3*864.
+  
+ 3. User manual needs to be updated to reflect functionality changes from 
+    prior patch DG*5.3*93.
+  
+ 4. Diagnosis Related Group (DRG) Frequency Report is not showing all 
+    patients in the Service category.
+       
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC0000000894678    Bad Address Indicator not working correctly
+ 2. INC0000000899851    SAC Violation in Patch DG*5.3*864
+ 3. INC0000000962973    Update ADT User Manual
+ 4. INC0000000964483    DRG Frequency Report not showing data correctly
+  
+  
+  
+ Participating Test Sites:
+ =========================
+ James H. Quillen VA Medical Center (Mountain Home)
+ Tuscaloosa VA Medical Center
+ VA Heartland - West
+  
+  
+    
+ Remedy Overview:
+ =================
+  
+ 1. INC0000000894678 -  Bad Address Indicator not working correctly
+   
+ Problem:
+ --------   
+ When manually changing an address, the Bad Address Indicator does not
+ "automatically" get removed as per the help text. To remove the indicator 
+ you must enter the "@" symbol.
+    
+      
+ Resolution:
+ ----------- 
+ The help text for the PATIENT file (#2) BAD ADDRESS INDICATOR field 
+ (#.121) was changed to advise the user to manually remove the indicator 
+ by entering the "@" symbol. The Master Patient Index Patient Demographics
+ (MPI/PD) Veterans Health Information Systems and Technology Architecture
+ (VISTA) Exception Handling, MPI/PD VISTA Programmer Manual, MPI/PD VISTA 
+ Technical Manual and MPI/PD VISTA User Manual were updated to
+ reflect the change.
+   
+     
+ 2. INC0000000899851 -   SAC Violation in Patch DG*5.3*864
+    
+ Problem: 
+ --------
+ During the testing of patch DG*5.3*864, a SAC violation was discovered.  
+ There is a non-incremental lock in routine DGREG.  
+     
+ Resolution:
+ -----------
+ Modified routine DGREG to add an incremental lock, this change did not  
+ affect the functionality of the current routine.
+    
+  
+ 3. INC0000000962973 -  Update ADT User manual
+   
+ Problem:
+ --------   
+ The Admission Discharge Transfer (ADT) Bed Control Menu User Manual
+ is not reflecting the functionality change that was completed in
+ prior patch DG*5.3*93.
+  
+    
+ Resolution:
+ -----------  
+ The ADT Bed Control Menu User Manual was updated to show changes.
+    
+  
+ 4. INC0000000964483 -DRG Frequency Report not showing data correctly   
+   
+ Problem:
+ --------   
+ Currently, the DRG Frequency Report is not showing patients in all
+ sections according to the DRG codes. Any code over 600 does not show
+ separated in the correct Service category of the report. 
+  
+    
+ Resolution:
+ -----------  
+ Modified DGPTODF1 routine to the 2008 Medicare Severity Diagnosis
+ Related Group (MS-DRG) update.  This update changed the report to 
+ allow numbers larger than 600 to show in the service categories.
+ Added code to DGPTODF1 to prevent DIVIDE error when there  
+ is only one DRG for the date range selected and it is over 600. 
+   
+  
+ Data Dictionary:
+ ================
+  
+ The following partial Data Dictionary entries are included:
+   
+   
+                                       UP    SEND  DATA                USER
+                                       DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                 DD    CODE  W/FILE  DATA  PTRS  RIDE
+ --------------------------------------------------------------------------
+  
+ 2           Patient                    YES   NO    NO                  NO
+  
+ Partial DD: subDD:          fld: .121
+   
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ======================== 
+ Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name      Description                        Retrieval Format
+      =========      ===========                        ================
+      RG1_0_EH.PDF   MPI/PD VISTA Exception Handling    BINARY
+      RG1_0_PM.PDF   MPI/PD VISTA Programmer Manual     BINARY
+      RG1_0_TM.PDF   MPI/PD VISTA Technical Manual      BINARY
+      RG1_0_UM.PDF   MPI/PD VISTA User Manual           BINARY
+      BC.PDF         User Manual-Bed Control Menu       BINARY 
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+                           http://www.domain.ext/vdl
+  
+  
+  
+  
+ Installation Instructions:
+ ==========================
+ It is recommended that installation occur during Non-Peak hours.
+ If installed during the normal workday, it is recommended that the
+ the Registration users be off the system. Other VISTA users will 
+ not be affected.
+  
+ Install Time - less than 2 minutes.
+  
+    1.   Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.
+  
+    2.   Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:
+  
+             Edits and Distribution ...
+             Utilities ...
+             Installation ...
+             Patch Monitor Main Menu ...
+  
+       Select Kernel Installation & Distribution System Option: INStallation
+  
+            1      Load a Distribution
+            2      Verify Checksums in Transport Global
+            3      Print Transport Global
+            4      Compare Transport Global to Current System
+            5      Backup a Transport Global
+            6      Install Package(s)
+                   Restart Install of Package(s)
+                   Unload a Distribution
+  
+       Select Installation Option:
+  
+     3.   From this menu, you may elect to use the following options
+          (When prompted for the INSTALL NAME, enter DG*5.3*886):
+  
+          a. Print Transport Global - this option will allow you to view
+             the components of the KIDS build.
+          b. Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed. It compares all components of this patch
+             (routines, DD's, templates, etc.).
+          c. Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+          d. Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+  
+     4.   Use the Install Package(s) option and select the package
+          DG*5.3*886.
+  
+          a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+              NO//', answer NO
+          b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+              Options, and Protocols? YES//', answer YES.
+                
+              Register a Patient       [DG REGISTER PATIENT]
+              Load/Edit Patient Data   [DG LOAD PATIENT DATA]
+              DRG Frequency Report     [DG PTF FREQUENCY REPORT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPTODF1
+    Before: B18845032   After: B19628919  **375,886**
+Routine Name: DGREG
+    Before: B47583853   After: B48715273  **1,32,108,147,149,182,245,250,
+                                           513,425,533,574,563,624,658,
+                                           864,886**
+ 
+Routine list of preceding patches: 375, 864
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 27, 2014
+Completed By:                               Date Completed: APR 01, 2015
+Released By :                               Date Released : APR 08, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

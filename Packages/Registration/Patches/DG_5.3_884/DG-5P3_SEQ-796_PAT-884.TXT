@@ -1,0 +1,734 @@
+
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: DG*5.3*884
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #796                    Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*850  <<= must be installed BEFORE `DG*5.3*884'
+                    (v)DG*5.3*862  <<= must be installed BEFORE `DG*5.3*884'
+                    (v)DG*5.3*867  <<= must be installed BEFORE `DG*5.3*884'
+                    (v)DG*5.3*898  <<= must be installed BEFORE `DG*5.3*884'
+                    (v)DG*5.3*905  <<= must be installed BEFORE `DG*5.3*884'
+
+Subject: ICD-10 PATIENT TREATMENT FILE MODIFICATIONS PROJECT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Input Template
+  - Data Dictionary
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+  
+  
+ Overview:
+  
+ This patch introduces additional International Classification of Diseases,
+ Tenth Revision (ICD-10) implementation-related modifications into the
+ Veterans Health Information Systems and Technology Architecture (VistA)
+ Registration V5.3 package.  The enhancements being made support the
+ existing business processes in the Admission Discharge Transfer (ADT) &
+ Patient Treatment File (PTF) modules.  
+  
+ Scope:
+  
+ The Patient Treatment File (PTF) Modifications project will increase the 
+ maximum allowable codes in the entry, display, lookup, view, print, 
+ storage, and transmission of the ICD-10 code sets in the VistA legacy and 
+ HealtheVet systems.  Effective as of the ICD-10 activation date, 
+ Veterans Health Administration (VHA) will be able to utilize the ICD-10
+ code sets to include the increased number of diagnosis and procedures
+ which can be recorded in its day-to-day operations (e.g. entry, display,
+ lookup, print, storage, internal and/or external transmission) for
+ inpatient episodes of care with discharges on or after this date.
+  
+ The ICD-10 PTF Modifications project supports the expansion of the number 
+ of ICD-10 Diagnosis, Present on Admission (POA) indicators, and Procedure 
+ and Surgical codes that may be contained in a patient treatment record.  
+ The user will now be able to enter up to 25 ICD-10 diagnosis codes with 
+ their associated POA indicators in each Movement (501) screen and in the 
+ Discharge (701) screen of a patient treatment record.  The user will also 
+ be able to enter up to 25 ICD-10 procedure codes in each Surgical Episode 
+ (401) screen and in each Non-OR Procedure (601) screen.
+  
+ Functional Overview:
+  
+ * System enhancements and modifications are being made to the existing
+   software components in the ADT & PTF modules.
+  
+    - The 501 transactions will allow up to 25 diagnosis codes and POA 
+      indicators per patient movement.
+  
+    - The 401 Surgeries and 601 Procedures will allow up to 25 
+      operation/procedure codes for each event.
+  
+    - The 701 transaction will allow one principal diagnosis with a POA
+      indicator and up to 24 secondary diagnoses with POA indicators
+      (data stored in 702 record) for a total of 25 diagnosis codes and
+      25 POA Indicators.
+  
+ * Modified Options:
+   This patch modifies the code for the following options to support
+   the expansion of the number of ICD-10 Diagnosis, Present on Admission
+   (POA) indicators, and Procedure and Surgical codes that may be contained
+   in a given PTF record:
+       
+    - DRG Calculation [DG DRG CALCULATION]
+    - Load/Edit PTF Data [DG PTF SCREEN]
+    - Open Closed Census Records [DGPT CENSUS OPEN RECORD]
+    - Open Released or Transmitted Census Records [DGPT CENSUS OPEN 
+      RELEASED]
+    - Quick Load/Edit PTF Data [DG PTF QUICK LOAD]
+    - Release Closed Census Records [DGPT CENSUS RELEASE RECORD]
+    - Transmit Census Records [DGPT CENSUS TRANSMIT]
+    - Set Up Non-VA PTF Record [DG PTF FEE BASIS ADD]
+  
+ * Modified Reports: 
+   This patch modifies the code for the following reports to support
+   the expansion of the number of ICD-10 Diagnosis, Present on Admission
+   (POA) indicators, and Procedure and Surgical codes that may be contained
+   in a given PTF record:
+   
+    - Inquire Census Record [DGPT CENSUS INQUIRE]
+    - Comprehensive Census Report [DGPT CENSUS RECORD REPORT]
+    - Comprehensive Report by Admission [DG PTF COMPREHENSIVE REPORT]
+    - Diagnostic Code PTF Record Search [DG PTF ICD DIAGNOSTIC SEARCH]
+    - DRG Information Report [DG PTF DRG INFORMATION OUTPUT]
+    - DRG Case Mix Summary [DG PTF DRG CASE MIX SUMMARY]
+    - Inquire PTF Record [DG PTF COMPREHENSIVE INQUIRY]
+    - Patient Summary by Admission [DG PTF SUMMARY DIAG/OP OUTPUT]
+    - Surgical Code PTF Record Search [DG PTF ICD SURGICAL SEARCH]
+    - Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRG'S]
+    - Validity Check of PTF Record [DG PTF VALIDITY CHECK]
+  
+ * Delete POA Indicator when Associated Diagnosis is Deleted:
+   When a user deletes an ICD-10 diagnosis code within the following PTF 
+   options, its associated Present on Admission (POA) indicator is 
+   automatically deleted:
+  
+    - Load/Edit PTF Data [DG PTF SCREEN]
+    - Quick Load/Edit PTF Data [DG PTF QUICK LOAD]
+    - Set Up Non-VA PTF Record [DG PTF FEE BASIS ADD]
+  
+   This change applies to the deletion of primary, secondary, and 501 
+   movement diagnosis codes.
+  
+ * Prevent Population of POA if Associated Diagnosis is Not Present:
+   A user will not be able to enter a POA indicator field when an 
+   associated ICD-10 diagnosis code is not present within the following PTF
+   options:
+  
+    - Load/Edit PTF Data [DG PTF SCREEN]
+    - Quick Load/Edit PTF Data [DG PTF QUICK LOAD]
+    - Set Up Non-VA PTF Record [DG PTF FEE BASIS ADD]
+  
+   This change applies to POA indicator fields associated with primary, 
+   secondary, and 501 movement diagnosis codes.
+  
+ * Allow Duplicate ICD Codes for 401 Surgeries and 601 Procedures: 
+   A user will be able to enter duplicate ICD codes for 401 Surgery and 
+   601 Procedure transactions within the following options:
+  
+    - Load/Edit PTF Data [DG PTF SCREEN]
+    - Quick Load/Edit PTF Data [DG PTF QUICK LOAD]
+    - Set Up Non-VA PTF Record [DG PTF FEE BASIS ADD]
+  
+   NOTE: Entry of duplicate ICD codes will NOT be allowed for 701 
+         Primary/Secondary Diagnosis or 501 Movement transactions.
+  
+ * Entry of Gender-specific ICD Codes: 
+   A user will be able to enter any gender-specific ICD-10 code into a 501 
+   Movement, 401 Surgery, and 601 Procedure transaction whether or not it 
+   matches the patient's gender.  Within the following options, the user 
+   will receive a warning message when attempting to enter a
+   gender-specific ICD-10 code for a patient of the opposite gender, but
+   the user will not be prevented from entering the gender-specific code:
+  
+    - Load/Edit PTF Data [DG PTF SCREEN]
+    - Quick Load/Edit PTF Data [DG PTF QUICK LOAD]
+    - Set Up Non-VA PTF Record [DG PTF FEE BASIS ADD]
+  
+ * PTF/Austin Information Technology Center Interface:
+   System enhancements and modifications are being made to the existing
+   software interface between the VistA PTF module and the Austin
+   Information Technology Center (AITC).  VistA PTF collects diagnosis
+   and procedure information on inpatient episodes of care and based on
+   a user defined trigger event, transmits the data to the AITC for
+   inclusion in the PTF Master File (Data Store). Additionally, VistA
+   PTF collects census data (diagnosis/POA and procedure/surgery) 
+   quarterly on current inpatients and transmits that data to the AITC. 
+  
+   - Modifications are being made to the content of PTF Transmission (VistA
+     Mailman) messages to accommodate the inclusion of up to twenty-five
+     (25) ICD-10 Diagnosis and associated Present on Admission (POA)
+     indicators and up to twenty-five (25) each ICD-10 Procedure and
+     Surgical codes that could be included in a record for transmission.
+  
+   - Modifications are being made to the delivery of the PTF Transmission 
+     messages to the Austin Information Technology Center (AITC).  The 
+     messages will be sent to a new queue; Q-PTI.DOMAIN.EXT.  The confirmation
+     messages from the AITC will be sent to a new local mail group called 
+     'PTI'.  The new 'PTI' mail group will replace the current 'PTT' mail
+     group and should contain the same member recipients.
+  
+   - Modifications are being made to the 099 Transmission, 099 Transmission
+     for Census, and Record Output (RPO) options to ensure acceptance of
+     the following Mailman message transaction types when  transmitted to
+     the new PTI queue at the AITC: 
+  
+       099 - Request to delete a PTF record at the AITC.
+       150 - Request a printout for a single admission record for a 
+             patient.
+       151 - Request a printout for all admissions for a patient.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)   Field Name (Number)                  New/Mod/Delete
+ ------------------   -------------------                  --------------
+ PTF (#45)              
+                      PRINCIPAL DIAGNOSIS   (#79)          MODIFIED
+                      SECONDARY DIAGNOSIS 1 (#79.16)       MODIFIED
+                      SECONDARY DIAGNOSIS 2 (#79.17)       MODIFIED
+                      SECONDARY DIAGNOSIS 3 (#79.18)       MODIFIED
+                      SECONDARY DIAGNOSIS 4 (#79.19)       MODIFIED
+                      SECONDARY DIAGNOSIS 5 (#79.201)      MODIFIED
+                      SECONDARY DIAGNOSIS 6 (#79.21)       MODIFIED
+                      SECONDARY DIAGNOSIS 7 (#79.22)       MODIFIED
+                      SECONDARY DIAGNOSIS 8 (#79.23)       MODIFIED
+                      SECONDARY DIAGNOSIS 9 (#79.24)       MODIFIED
+                      SECONDARY DIAGNOSIS 10 (#79.241)     MODIFIED
+                      SECONDARY DIAGNOSIS 11 (#79.242)     MODIFIED
+                      SECONDARY DIAGNOSIS 12 (#79.243)     MODIFIED
+                      SECODNARY DIAGNOSIS 13 (#79.244)     MODIFIED
+                      SECONDARY DIAGNOSIS 14 (#79.245)     NEW
+                      SECONDARY DIAGNOSIS 15 (#79.246)     NEW
+                      SECONDARY DIAGNOSIS 16 (#79.247)     NEW
+                      SECONDARY DIAGNOSIS 17 (#79.248)     NEW
+                      SECONDARY DIAGNOSIS 18 (#79.249)     NEW
+                      SECONDARY DIAGNOSIS 19 (#79.2491)    NEW
+                      SECONDARY DIAGNOSIS 20 (#79.24911)   NEW
+                      SECONDARY DIAGNOSIS 21 (#79.24912)   NEW
+                      SECONDARY DIAGNOSIS 22 (#79.24913)   NEW
+                      SECONDARY DIAGNOSIS 23 (#79.24914)   NEW
+                      SECONDARY DIAGNOSIS 24 (#79.24915)   NEW
+                      POA PRINCIPAL DIAGNOSIS (#82.01)     MODIFIED
+                      POA SECONDARY DIAGNOSIS 1 (#82.02)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 2 (#82.03)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 3 (#82.04)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 4 (#82.05)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 5 (#82.06)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 6 (#82.07)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 7 (#82.08)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 8 (#82.09)   MODIFIED
+                      POA SECONDARY DIAGNOSIS 9 (#82.1)    MODIFIED
+                      POA SECONDARY DIAGNOSIS 10 (#82.11)  MODIFIED
+                      POA SECONDARY DIAGNOSIS 11 (#82.12)  MODIFIED
+                      POA SECONDARY DIAGNOSIS 12 (#82.13)  MODIFIED
+                      POA SECONDARY DIAGNOSIS 13 (#82.14)  MODIFIED
+                      POA SECONDARY DIAGNOSIS 14 (#82.15)  NEW
+                      POA SECONDARY DIAGNOSIS 15 (#82.16)  NEW
+                      POA SECONDARY DIAGNOSIS 16 (#82.17)  NEW
+                      POA SECONDARY DIAGNOSIS 17 (#82.18)  NEW
+                      POA SECONDARY DIAGNOSIS 18 (#82.19)  NEW
+                      POA SECONDARY DIAGNOSIS 19 (#82.2)   NEW
+                      POA SECONDARY DIAGNOSIS 20 (#82.21)  NEW
+                      POA SECONDARY DIAGNOSIS 21 (#82.22)  NEW
+                      POA SECONDARY DIAGNOSIS 22 (#82.23)  NEW
+                      POA SECONDARY DIAGNOSIS 23 (#82.24)  NEW
+                      POA SECONDARY DIAGNOSIS 24 (#82.25)  NEW
+                      
+ PTF (#45) Subfile 401 (#40)
+                      OPERATION CODE 1 (#8)                 MODIFIED
+                      OPERATION CODE 2 (#9)                 MODIFIED
+                      OPERATION CODE 3 (#10)                MODIFIED
+                      OPERATION CODE 4 (#11)                MODIFIED
+                      OPERATION CODE 5 (#12)                MODIFIED
+                      OPERATION CODE 6 (#13)                NEW
+                      OPERATION CODE 7 (#14)                NEW
+                      OPERATION CODE 8 (#15)                NEW
+                      OPERATION CODE 9 (#16)                NEW
+                      OPERATION CODE 10 (#17)               NEW
+                      OPERATION CODE 11 (#18)               NEW
+                      OPERATION CODE 12 (#19)               NEW
+                      OPERATION CODE 13 (#20)               NEW
+                      OPERATION CODE 14 (#21)               NEW
+                      OPERATION CODE 15 (#22)               NEW
+                      OPERATION CODE 16 (#23)               NEW
+                      OPERATION CODE 17 (#24)               NEW
+                      OPERATION CODE 18 (#25)               NEW
+                      OPERATION CODE 19 (#26)               NEW
+                      OPERATION CODE 20 (#27)               NEW
+                      OPERATION CODE 21 (#28)               NEW
+                      OPERATION CODE 22 (#29)               NEW
+                      OPERATION CODE 23 (#30)               NEW
+                      OPERATION CODE 24 (#31)               NEW
+                      OPERATION CODE 25 (#32)               NEW
+  
+ PTF (#45) Subfile 501 (#50)
+                        ICD 1 (#5)                          MODIFIED
+                        ICD 2 (#6)                          MODIFIED
+                        ICD 3 (#7)                          MODIFIED
+                        ICD 4 (#8)                          MODIFIED
+                        ICD 5 (#9)                          MODIFIED
+                        ICD 6 (#11)                         MODIFIED
+                        ICD 7 (#12)                         MODIFIED
+                        ICD 8 (#13)                         MODIFIED
+                        ICD 9 (#14)                         MODIFIED
+                        ICD 10 (#15)                        MODIFIED
+                        ICD 11 (#81.01)                     NEW
+                        ICD 12 (#81.02)                     NEW
+                        ICD 13 (#81.03)                     NEW
+                        ICD 14 (#81.04)                     NEW
+                        ICD 15 (#81.05)                     NEW
+                        ICD 16 (#81.06)                     NEW
+                        ICD 17 (#81.07)                     NEW
+                        ICD 18 (#81.08)                     NEW
+                        ICD 19 (#81.09)                     NEW
+                        ICD 20 (#81.1)                      NEW
+                        ICD 21 (#81.11)                     NEW
+                        ICD 22 (#81.12)                     NEW
+                        ICD 23 (#81.13)                     NEW
+                        ICD 24 (#81.14)                     NEW
+                        ICD 25 (#81.15)                     NEW
+                        POA FOR ICD 1 (#82.01)              MODIFIED
+                        POA FOR ICD 2 (#82.02)              MODIFIED
+                        POA FOR ICD 3 (#82.03)              MODIFIED
+                        POA FOR ICD 4 (#82.04)              MODIFIED
+                        POA FOR ICD 5 (#82.05)              MODIFIED
+                        POA FOR ICD 6 (#82.06)              MODIFIED
+                        POA FOR ICD 7 (#82.07)              MODIFIED
+                        POA FOR ICD 8 (#82.08)              MODIFIED
+                        POA FOR ICD 9 (#82.09)              MODIFIED
+                        POA FOR ICD 10 (#82.1)              MODIFIED
+                        POA FOR ICD 11 (#82.11)             NEW
+                        POA FOR ICD 12 (#82.12)             NEW
+                        POA FOR ICD 13 (#82.13)             NEW
+                        POA FOR ICD 14 (#82.14)             NEW
+                        POA FOR ICD 15 (#82.15)             NEW
+                        POA FOR ICD 16 (#82.16)             NEW
+                        POA FOR ICD 17 (#82.17)             NEW
+                        POA FOR ICD 18 (#82.18)             NEW
+                        POA FOR ICD 19 (#82.19)             NEW
+                        POA FOR ICD 20 (#82.2)              NEW
+                        POA FOR ICD 21 (#82.21)             NEW
+                        POA FOR ICD 22 (#82.22)             NEW
+                        POA FOR ICD 23 (#82.23)             NEW
+                        POA FOR ICD 24 (#82.24)             NEW
+                        POA FOR ICD 25 (#82.25)             NEW
+  
+ PTF (#45) Subfile 601 (#60)
+                        PROCEDURE CODE 1 (#4)               MODIFIED
+                        PROCEDURE CODE 2 (#5)               MODIFIED
+                        PROCEDURE CODE 3 (#6)               MODIFIED
+                        PROCEDURE CODE 4 (#7)               MODIFIED
+                        PROCEDURE CODE 5 (#8)               MODIFIED
+                        PROCEDURE CODE 6 (#9)               MODIFIED
+                        PROCEDURE CODE 7 (#10)              MODIFIED
+                        PROCEDURE CODE 8 (#11)              MODIFIED
+                        PROCEDURE CODE 9 (#12)              MODIFIED
+                        PROCEDURE CODE 10 (#13)             MODIFIED
+                        PROCEDURE CODE 11 (#14)             NEW
+                        PROCEDURE CODE 12 (#15)             NEW
+                        PROCEDURE CODE 13 (#16)             NEW
+                        PROCEDURE CODE 14 (#17)             NEW
+                        PROCEDURE CODE 15 (#18)             NEW
+                        PROCEDURE CODE 16 (#19)             NEW
+                        PROCEDURE CODE 17 (#20)             NEW
+                        PROCEDURE CODE 18 (#21)             NEW
+                        PROCEDURE CODE 19 (#22)             NEW
+                        PROCEDURE CODE 20 (#23)             NEW
+                        PROCEDURE CODE 21 (#24)             NEW
+                        PROCEDURE CODE 22 (#25)             NEW
+                        PROCEDURE CODE 23 (#26)             NEW
+                        PROCEDURE CODE 24 (#27)             NEW
+                        PROCEDURE CODE 25 (#28)             NEW
+  
+ Forms Associated:
+  
+ Form Name     File #       New/Modified/Deleted
+ ---------     ------       --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name       New/Modified/Deleted
+ ---------------       --------------------
+ PTI                   New
+  
+ Options Associated:
+  
+ Option Name              Type         New/Modified/Deleted
+ -----------              ----         --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name           New/Modified/Deleted
+ -------------           -------------------- 
+ N/A 
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name         New/Modified/Deleted
+ ---------------------         -------------------- 
+ DG PATIENT TREATMENT DATA     Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name    Type      File Name (Number)  New/Modified/Deleted 
+ -------------    ----      ------------------  --------------------
+ DG401-10P        Input     PTF (#45)           New    
+ DG501-10D        Input     PTF (#45)           New    
+ DG501F-10D       Input     PTF (#45)           New    
+ DG601            Input     PTF (#45)           Modified
+ DG601-10P        Input     PTF (#45)           New    
+ DG701-10D        Input     PTF (#45)           New    
+  
+  
+ Integration Control Registrations (ICRs):
+  
+ ICR #     ICR Name                         New/Modified/Deleted
+ -----     --------                         --------------------
+ 418       DBIA418                          Modified
+ 1372      PTF file access                  Modified
+ 3157      Patient Treatment File Data      Modified
+ 3164      DG Patient Treatment Data        Modified
+ 3511      DBIA3511                         Modified
+ 6130      DGPTFUT                          New
+  
+  
+ Database:
+  
+ PTF AUSTIN ERROR CODES (#45.64) - 148 new error codes are being added to 
+ this file. Please refer to the Release Notes associated with this patch
+ for a complete list of these new error codes.
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR #20070902 - ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+  
+ Test Sites:
+ ----------
+ The following sites participated in testing this software.
+  * Detroit, MI
+  * Madison, WI
+  * Richmond, VA 
+  * West Haven, CT
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ------------------------------------------------ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. 
+  
+ Patch DG*5.3*884 (Registration) is being released along with GMTS*2.7*111
+ (Health Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab
+ Service), ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406
+ (Order Entry/Results Reporting) in a multi-package build (host
+ file).
+  
+ Because this is a multi-package build, it can only be distributed as a
+ host file; no builds are included in the patch messages. The name of the
+ host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one of
+ the anonymous file transfer protocol (ftp) directories listed below. 
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is also available and can be obtained from one of the anonymous 
+ file transfer protocol (ftp) directories listed below.
+  
+ The preferred method is to FTP the files from: 
+  
+  ftp://download.vista.domain.ext/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Note: 
+  - Please use the 'Binary' transfer method for retrieval of .pdf files
+  - Please use the 'ASCII' transfer method for retrieval of .KID files
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The software distribution includes these file(s):
+ -------------------------------------------------------------------------
+ ICD_10_PTF_MODIFICATIONS.KID
+  
+  
+ The documentation includes these titles and file names:
+ -------------------------------------------------------------------------
+     Title: Admission Discharge Transfer DG*5.3*884 Release Notes    
+ File Name: DG_5_3_884_RN.pdf
+  
+     Title: Admission Discharge Transfer PTF Menu User Manual
+ File Name: ptf.pdf
+  
+     Title: Admission Discharge Transfer Technical Manual
+ File Name: pimstm.pdf
+  
+     Title: Clinical Reminders Index Technical Manual
+ File Name: pxrm_index_tm.pdf
+  
+     Title: ICD-10 PTF Installation Guide (all patches)
+ File Name: ICD_10_PTF_MODIFICATIONS_IG.PDF
+  
+  
+ Patch Installation:
+ ==================================================
+ Detailed information regarding pre-installation items, post-installation
+ items, and installation instructions can be found in the Installation
+ Guide: ICD_10_PTF_Modifications_IG.PDF. This document may be obtained from
+ one of the anonymous file transfer protocol (ftp) directories listed in
+ the 'Software & Documentation Retrieval Instructions' of this patch
+ description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG884P
+    Before:       n/a   After:B172982622  **884**
+Routine Name: DGICDGT
+    Before: B93717009   After: B98953906  **850,884**
+Routine Name: DGICP
+    Before: B26601934   After: B28102080  **850,884**
+Routine Name: DGPT101
+    Before: B13245456   After: B16555084  **8,164,180,247,415,678,696,884**
+Routine Name: DGPT101P
+    Before:  B4327695   After: B14198290  **164,678,664,884**
+Routine Name: DGPT401
+    Before:  B8757458   After: B22199810  **164,729,884**
+Routine Name: DGPT501
+    Before: B11578445   After: B15677318  **64,164,529,729,884**
+Routine Name: DGPT501P
+    Before:  B3510968   After: B13121491  **884**
+Routine Name: DGPT50DI
+    Before:  B7758522   After: B12005227  **510,850,884**
+Routine Name: DGPT50MS
+    Before:  B4605823   After:  B6178285  **142,729,884**
+Routine Name: DGPT535
+    Before:  B8073530   After:  B7151570  **64,164,729,884**
+Routine Name: DGPT601
+    Before: B17005208   After: B21745672  **64,164,729,850,884**
+Routine Name: DGPT60PR
+    Before:  B4857421   After:  B4921445  **510,870,850,884**
+Routine Name: DGPT701
+    Before: B13785418   After: B25074534  **64,164,251,415,729,850,884**
+Routine Name: DGPT701P
+    Before:  B2908139   After: B17213050  **164,415,884**
+Routine Name: DGPT702
+    Before:  B2277722   After: B12007365  **884**
+Routine Name: DGPT70DI
+    Before: B12136680   After: B18406929  **510,850,884**
+Routine Name: DGPT70DX
+    Before:  B3873659   After:  B4054092  **510,850,884**
+Routine Name: DGPTAE
+    Before: B14522606   After: B19185351  **58,415,884**
+Routine Name: DGPTAE01
+    Before:  B9393836   After: B10894380  **58,342,466,664,867,884**
+Routine Name: DGPTAE02
+    Before: B19628803   After: B26206444  **8,22,39,114,176,251,247,270,
+                                           446,418,482,466,683,729,884**
+Routine Name: DGPTAE03
+    Before: B10987387   After:  B8625430  **8,52,164,850,884**
+Routine Name: DGPTAE04
+    Before:  B9147597   After: B12240703  **510,744,870,850,884**
+Routine Name: DGPTAEE
+    Before: B10892054   After: B24445151  **64,338,678,850,884**
+Routine Name: DGPTAEE1
+    Before: B21575685   After: B39125544  **338,565,678,729,664,884**
+Routine Name: DGPTAEE2
+    Before: B14351045   After: B30765062  **8,338,415,565,729,664,884**
+Routine Name: DGPTC1
+    Before: B26112849   After: B29467995  **37,413,643,701,850,905,884**
+Routine Name: DGPTC2
+    Before: B11527513   After: B12393502  **58,189,643,850,884**
+Routine Name: DGPTDDCR
+    Before: B88922399   After:B172287843  **478,862,884**
+Routine Name: DGPTDRG
+    Before: B50130642   After: B52220100  **60,441,510,559,599,606,669,
+                                           729,850,884**
+Routine Name: DGPTF099
+    Before: B11108603   After: B12766033  **884**
+Routine Name: DGPTF09X
+    Before:  B7765866   After:  B8106091  **58,884**
+Routine Name: DGPTF1
+    Before: B34378858   After: B35051519  **69,114,195,397,342,415,565,
+                                           664,884**
+Routine Name: DGPTF2
+    Before: B17166598   After: B26229374  **37,342,643,861,850,884**
+Routine Name: DGPTF4
+    Before: B30195949   After: B30569279  **114,115,397,510,517,478,683,
+                                           775,850,884**
+Routine Name: DGPTF41
+    Before: B10056872   After: B11239143  **64,635,729,850,884**
+Routine Name: DGPTF5
+    Before:  B6981494   After:  B6998580  **669,701,744,868,850,884**
+Routine Name: DGPTFAPI
+    Before:  B6968721   After:  B6178065  **309,510,850,884**
+Routine Name: DGPTFD
+    Before: B19169268   After: B23594019  **60,441,510,785,850,884**
+Routine Name: DGPTFIC
+    Before: B52898785   After: B57159054  **510,559,599,669,704,744,832,
+                                           850,884**
+Routine Name: DGPTFJC
+    Before: B63564376   After: B64477474  **158,510,517,590,636,635,701,
+                                           729,785,850,884**
+Routine Name: DGPTFM
+    Before: B72739353   After: B81427420  **510,517,590,594,606,635,683,
+                                           696,664,850,884**
+Routine Name: DGPTFM0
+    Before: B10244116   After: B17632645  **510,517,850,884**
+Routine Name: DGPTFM1
+    Before: B18916672   After: B36433048  **114,517,635,850,884**
+Routine Name: DGPTFM4
+    Before: B31864138   After: B35748755  **114,195,397,510,565,775,664,
+                                           759,850,884**
+Routine Name: DGPTFM5
+    Before: B13820382   After: B15479197  **510,606,850,884**
+Routine Name: DGPTFM6
+    Before: B28907671   After: B36495035  **164,510,729,850,898,884**
+Routine Name: DGPTFM7
+    Before: B21219043   After: B21631380  **78,590,594,683,729,884**
+Routine Name: DGPTFMO
+    Before: B32031244   After: B42799242  **195,397,510,590,594,606,683,
+                                           729,664,850,884**
+Routine Name: DGPTFQWK
+    Before: B21436549   After: B26393553  **517,594,635,729,850,884**
+Routine Name: DGPTFTR
+    Before: B24216608   After: B55260983  **37,415,530,601,614,645,787,
+                                           850,884**
+Routine Name: DGPTFTR3
+    Before: B13488826   After: B13787675  **568,884**
+Routine Name: DGPTFUT
+    Before:       n/a   After: B38258055  **884**
+Routine Name: DGPTFUT1
+    Before:       n/a   After:  B3593858  **884**
+Routine Name: DGPTFVC1
+    Before: B39436670   After: B42593524  **52,58,79,114,164,400,342,466,
+                                           415,493,512,510,544,629,817,
+                                           850,884**
+Routine Name: DGPTFVC3
+    Before: B10783685   After: B11851601  **164,729,884**
+Routine Name: DGPTIC10
+    Before:B100685699   After: B94542788  **850,905,884**
+Routine Name: DGPTOD1
+    Before:  B9627005   After:  B9059489  **158,238,375,744,884**
+Routine Name: DGPTODCM
+    Before: B17786774   After: B17949456  **375,884**
+Routine Name: DGPTOLC2
+    Before: B25585897   After: B35887229  **164,510,559,599,729,850,884**
+Routine Name: DGPTR0
+    Before: B26425804   After: B26801939  **114,247,338,342,510,524,565,
+                                           678,729,664,850,884**
+Routine Name: DGPTR2
+    Before: B22938579   After: B31431930  **183,338,423,510,636,729,850,884**
+Routine Name: DGPTR3
+    Before:  B4042057   After:  B3570598  **183,729,884**
+Routine Name: DGPTR4
+    Before: B20498105   After: B21708537  **338,423,415,510,565,645,729,
+                                           664,850,884**
+Routine Name: DGPTRI0
+    Before: B26605957   After: B27141499  **850,884**
+Routine Name: DGPTRI1
+    Before: B37319384   After: B45682125  **850,884**
+Routine Name: DGPTRI2
+    Before: B26956533   After: B35680960  **850,884**
+Routine Name: DGPTRI3
+    Before: B26611263   After: B26721345  **850,884**
+Routine Name: DGPTRI4
+    Before: B32872225   After: B69886418  **850,884**
+Routine Name: DGPTRNU
+    Before:       n/a   After: B55750657  **884**
+Routine Name: DGPTRNU1
+    Before:       n/a   After:  B7245862  **884**
+Routine Name: DGPTRPO
+    Before: B17649764   After: B20840184  **884**
+Routine Name: DGPTSCAN
+    Before: B23143464   After: B25305178  **29,64,114,189,729,850,884**
+Routine Name: DGPTSUDO
+    Before: B23608581   After: B31462240  **441,510,478,785,850,884**
+Routine Name: DGPTTS
+    Before: B17997399   After: B24184788  **26,61,164,510,850,884**
+Routine Name: DGPTTS1
+    Before: B23805966   After: B28870180  **26,64,418,510,478,850,884**
+Routine Name: DGPTTS2
+    Before: B14533867   After: B22200737  **549,478,884**
+ 
+Routine list of preceding patches: 568, 862, 867, 898, 905
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 05, 2014
+Completed By:                               Date Completed: AUG 28, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

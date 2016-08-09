@@ -1,0 +1,224 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 01/22/14 at 16:14
+=============================================================================
+Run Date: JUL 30, 2014                     Designation: PSO*7*318
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #367                      Status: Released
+                  Compliance Date: AUG 30, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*206   <<= must be installed BEFORE `PSO*7*318'
+                    (v)PSO*7*383   <<= must be installed BEFORE `PSO*7*318'
+
+Subject: PENDING REFILL/REPRINT DESIGNATION/INCORRECT DATA IN CPRS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch resolves the following three issues:
+  
+ 1) The maximum number of refills displayed for a pending order is incorrect.
+     
+ 2) The word REPRINT incorrectly displays on a label and label log when using
+    the following option: Print from Suspense File [PSO PNDLBL]
+  
+ 3) The detailed display for an IV order in CPRS also shows information for a
+    different prescription. 
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) INC000000271316  When editing the number of refills for a pending order
+                     the RX PATIENT STATUS is not taken into account.
+  
+ 2) INC000000275878  Print From Suspense and Labels 
+  
+ 3) INC000000737285  New IV order associated with 1992 prescription data
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Oklahoma City VA Medical Center
+ South Texas HCS
+ Erie VA Medical Center
+  
+   
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000271316  When editing a pending order's refills, the RX PATIENT
+                     STATUS is not taken into account.
+  
+   
+ Problem:
+ --------
+ For a pending order, Rx Patient Status is not used to determine the maximum
+ number of refills allowed.
+  
+ Resolution:
+ -----------
+ Modify processing to check the RX PATIENT STATUS to determine the maximum
+ number of refills allowed.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSODIR3
+  
+  
+ 2) INC000000275878  Print From Suspense and Labels
+  
+ Problem:
+ --------
+ When using the Print from Suspense File option [PSO PNDLBL] the word
+ REPRINT prints on the label and displays in the label log. This is
+ incorrect, the initial print is not a reprint.
+  
+ Resolution:
+ -----------
+ Modify processing so that the word REPRINT does not display on the label or
+ print log for the initial print from suspense.
+  
+ Technical Resolution:
+ ---------------------
+ The variable REPRINT is used as a flag to determine if the label being printed
+ is a reprint. The current code uses the $D function to test the flag. In this
+ instance, the $G function should be used. Will change the $D to a $G to check
+ for the value of the REPRINT variable.
+  
+  
+ 3) INC000000737285  New IV order associated with 1992  prescription data        
+  
+ Problem:
+ --------
+ In CPRS, the detail display for an inpatient IV prescription contains
+ information that does not match the prescription being viewed. This is
+ because some of the data used to build the display is mistakenly processed
+ as an outpatient prescription.  This data is called the "package reference".
+  
+ The package reference data for an IV is alpha numeric.  i.e. 1V,2V,3V
+ The number represents the number of IVs ordered for a patient.  If a patient
+ has had 3 IV orders, then the package reference for the 3rd prescription is 3V.
+ During processing VistA is dropping the alpha character leaving only a numeric
+ value.  This value is treated as an internal entry number for an outpatient
+ prescription. As a result, information showing in the "dispense drugs" section 
+ of the detailed display does not match previously displayed information.
+  
+  
+ Resolution:
+ -----------
+ Modify processing so the detail display for an IV order does not contain
+ information that belongs to another prescription.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOORRL
+  
+ Please review the example below.
+ a. The prescription ordered is DEXTROSE 50% INJ,SOLN.
+ b. The "dispense drugs" section displays LACTASE 3000 UNT TAB
+  
+ **************************** E X A M P L E ********************************
+  
+ DEXTROSE 50% INJ,SOLN  1 ML 1 Bag/Day in
+ DEXTROSE 5% (BRAUN) INJ,SOLN  50 ml IVPB 2 ml/hr
+    
+ Activity:
+ 07/02/2013 14:52  New Order entered by XXXXXXXXXX (OI&T STAFF)
+      Order Text:        DEXTROSE 5% (BRAUN) INJ,SOLN  50 ml IVPB 2 ml/hr
+      Nature of Order:   ELECTRONICALLY ENTERED
+      Elec Signature:    XXXXXXXXXX (OI&T STAFF) on 07/02/2013 15:06
+  
+ 07/02/2013 15:15  Change entered by XXXXXXXXXX (OI&T STAFF)
+      Changed to:        DEXTROSE 50% INJ,SOLN  1 ML 1 Bag/Day in
+                         DEXTROSE 5% (BRAUN) INJ,SOLN  50 ml IVPB 2 ml/hr
+      Nature of Order:   SERVICE CORRECTION
+      Signature:         SERVICE CORRECTION TO SIGNED ORDER
+       
+ Dispense Drugs (units/dose):  LACTASE 3000 UNT TAB () <<<<This is incorrect
+ Last Filled:                  7/2/13
+ Refills Remaining:            7
+ Filled:                       7/2/13 (Window)
+ Prescription#:                2057184
+ Pharmacist:                   XXXXXXXXX
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ You may install the patch at any time without interruption to users.  It
+ should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*318)
+   
+         a.  Verify Checksums in Transport Global - This option will
+             allow you to ensure the integrity of the routines that 
+             are in the transport global.
+         b.  Print Transport Global - This option will allow you to
+             view the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option
+             will allow you to view all changes that will be made when
+             this patch is installed.  It compares all components of
+             this patch(routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a
+             backup message of any routines exported with this patch.
+             It will not backup any other changes such as DD's or 
+             templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PSO*7.0*318.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//" respond YES.
+  
+           Patient Prescription Processing    [PSO LM BACKDOOR ORDERS]
+           Print from Suspense File           [PSO PNDLBL]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODIR3
+    Before: B27252502   After: B29211268  **3,46,184,222,206,318**
+Routine Name: PSOLBL1
+    Before: B31448686   After: B31449940  **107,110,225,326,367,318**
+Routine Name: PSOLBLN
+    Before: B63718452   After: B63716659  **16,36,71,107,110,117,135,233,
+                                           251,387,379,367,383,318**
+Routine Name: PSOORRL
+    Before: B64370128   After: B64833222  **4,20,9,34,54,82,124,132,159,
+                                           214,225,318**
+Routine Name: PSOTALK1
+    Before:  B4301681   After:  B4302149  **135,318**
+ 
+Routine list of preceding patches: 206, 383
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 30, 2008
+Completed By:                               Date Completed: JUL 28, 2014
+Released By :                               Date Released : JUL 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

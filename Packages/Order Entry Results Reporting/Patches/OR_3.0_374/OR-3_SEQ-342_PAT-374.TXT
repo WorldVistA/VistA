@@ -1,0 +1,240 @@
+$TXT Created by               at CPRS29.DOMAIN.EXT  (KIDS) on Tuesday, 05/06/14 at 16:17
+=============================================================================
+Run Date: AUG 11, 2014                     Designation: OR*3*374
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #342                      Status: Released
+                  Compliance Date: SEP 11, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*218    <<= must be installed BEFORE `OR*3*374'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*374'
+                    (v)OR*3*349    <<= must be installed BEFORE `OR*3*374'
+
+Subject: CPRS V29 FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address issues identified with Computerized Patient 
+ Record System (CPRS) version 29 during its phased national rollout.  The 
+ following issues are addressed:
+  
+ 1. A problem was identified where a left-over array from the routine 
+    ORDEA would cause the Pharmacy completion/finishing process to 
+    erroneously report a 'FAIL TO FIND HASH' error. CQ 21505
+  
+ 2. An issue was discovered with editing the pick-up route on renewal 
+    orders. If the parameter ORWDPS ROUTING DEFAULT was set to 'No Default'
+    and the provider attempted to edit the route after accepting the
+    renewed order, but before signing, a hard error could result.
+    CQ 21559
+  
+ 3. In the 29 release, a holder of the ORELSE and PROVIDER keys can 
+    release a controlled substance without PIV entry.  If they enter it for
+    an authorized prescriber and then choose to Release w/o MD signature, 
+    they can select policy and the system only asks for an electronic 
+    signature without asking for the PIV card.  This means that there is
+    now an electronically signed controlled substance order without a
+    digital signature.  The change in this patch causes the Release w/o MD
+    signature to block this scenario with a message of "Controlled
+    Substance outpatient meds may not be released without a clinician's
+    signature!". CQ 21489
+  
+ 4. Currently in the 29 release, when a prescriber's Pharmacy profile 
+    becomes inactive between the time a controlled substance order is  
+    signed in CPRS and finishing of the pending order, a CPRS notification 
+    is not generated to the prescriber alerting s(he) to the inactive
+    status. Changes in this patch and the associating PSO*7*430 patch will 
+    auto discontinue the order and trigger a notification under this
+    scenario. CQ 21725
+  
+ 5. The OR EPCS CS RX BY PROVIDER option was not properly reporting. The 
+    option (which is tasked) will now call the correct line tag to report
+    the provider's prescriptions. CQ 21446
+  
+ 6. The OR EPCS USERS option was not handling providers who had an expired 
+    DEA number but a valid VA #. The option will now correctly allow edits
+    to users who have a VA # even if there DEA# is expired. CQ 21502
+  
+ 7. Patch OR*3*306 should not have exported the routine ORYCHKE. This patch
+    will delete the routine. CQ 21484
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ OR EPCS CS RX BY PROVIDER    RUN ROUTINE              MODIFIED
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. INC000000900338   <SUBSCRIPT>SAVCHG+12^ORWDXR01 when attempting to 
+                      edit a renewed order
+  
+ Problem:
+ -------
+ After installing CPRS v29, errors began appearing in the error trap 
+ related to renewing Outpatient Pharmacy prescriptions through the 
+ Computerized Patient Record System (CPRS). The problem was caused by the 
+ mishandling of the parameter ORWDPS ROUTING DEFAULT when the value was 
+ set to No Default.
+  
+ Resolution:
+ ----------
+ The routine ORWDXR was modified to check the parameter first for the 
+ default value. If that value is set to No Default, the previous (renewed) 
+ order will be evaluated and the default pick-up route will be used for 
+ the new order. If the previous order had no value for pick-up route, the 
+ default for the new order will be Window.
+  
+ Test Sites:
+ ----------
+ Durham, NC
+ Heartland-West HCS, KS
+ Lebanon, PA
+ Providence, RI 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes 
+ to install. 
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #(ex.
+     OR*3.0*374):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ There is a post-installation routine, ORY374, that will be deleted in a 
+ future patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCACT01
+    Before: B73162250   After: B75438939  **94,116,134,141,163,187,190,
+                                           213,243,306,374**
+Routine Name: ORDEA
+    Before: B85981983   After: B85690484  **306,374**
+Routine Name: ORDEA01
+    Before: B39471115   After: B44517612  **218,374**
+Routine Name: ORWDXR
+    Before: B55649537   After: B59460463  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331,306,349,
+                                           374**
+Routine Name: ORY374
+    Before:       n/a   After:  B4039046  **374**
+Routine Name: ORYCHKE
+    Before:  B2490043   After:    Delete  
+ 
+Routine list of preceding patches: 218, 349
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 17, 2013
+Completed By:                               Date Completed: JUL 23, 2014
+Released By :                               Date Released : AUG 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

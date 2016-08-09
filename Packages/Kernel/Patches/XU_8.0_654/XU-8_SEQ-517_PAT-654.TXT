@@ -1,0 +1,279 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Wednesday, 05/27/15 at 09:14
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: XU*8*654
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #517                      Status: Released
+                  Compliance Date: OCT 03, 2015
+=============================================================================
+
+Associated patches: (v)XU*8*502    <<= must be installed BEFORE `XU*8*654'
+
+Subject: MFS PARAMETERS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket#: None.
+ Test Sites:
+  - Cleveland VAMC
+  - Hampton Roads VAMC
+  - South Texas HCS
+  - St. Louis VAMC
+  
+  
+                         XU*8*654
+  
+ This patch distributes the parameters required by Master File Server (MFS)
+ to support data standardization messaging.
+  
+ 1) Adds new entries into the MASTER FILE PARAMETERS FILE(#4.001):
+  
+ Imm Admin Routes  
+ Imm Body Sites  
+ Imm Contraindications  
+ Imm Info Sources  
+ Imm Manufacturers
+ Imm Procedures  
+ Imm Refusal Reasons  
+ Imm VIS  
+ Skin Tests 
+  
+ 2) Adds new entries into the MD5 Signature FILE(#4.005):
+  
+ Imm Admin Routes  
+ Imm Body Sites 
+ Imm Contraindications  
+ Imm Info Sources  
+ Imm Manufacturers
+ Imm Procedures  
+ Imm Refusal Reasons  
+ Imm VIS  
+ Skin Tests 
+  
+ 3) Updates the subfile FIELD NUMBER(#4.00511):
+  
+ Select OPTION: DATA DICTIONARY UTILITIES  
+ Select DATA DICTIONARY UTILITY OPTION: LIST FILE ATTRIBUTES  
+  START WITH WHAT FILE: MD5 Signature// 
+       GO TO WHAT FILE: MD5 Signature// 
+       Select SUB-FILE: FILE/SUBFILE NUMBER  
+       Select SUB-FILE: 1  FIELD NUMBER
+ Select LISTING FORMAT: STANDARD//   
+ Start with field: FIRST// 
+ DEVICE: 0;0;999  Network
+ STANDARD DATA DICTIONARY #4.00511 -- FIELD NUMBER SUB-FILE   
+                                                     FEB 3,2015@07:26:02  
+ PAGE 1
+ STORED IN ^DIC(4.005,D0,1,D1,1,   SITE: SF CIOFO, KERNEL PATCH ACCOUNT   
+ UCI: KR N,KRN
+     
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ This is the field number of file/subfile to be included in MD5 procedure 
+ of the Master File Server (MFS).
+  
+   (NOTE: Kernel's File Access Security has been installed in this UCI.)
+  
+  
+ CROSS
+ REFERENCED BY: FIELD NUMBER(B)
+  
+ 4.00511,.01   FIELD NUMBER     0;1 FREE TEXT (Multiply asked)
+  
+     INPUT TRANSFORM:  K:+X'=X!(X>999999)!(X<.001) X S:$D(X) DINUM=X
+     LAST EDITED:      JAN 30, 2015 
+     HELP-PROMPT:      Select field number of file/subfile to be 
+                       included in MD5 procedure of the Master File 
+                       Server (MFS). 
+     DESCRIPTION:      Number of file/subfile to be included in MD5
+                       procedure of the Master File Server (MFS).  
+  
+     NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+     CROSS-REFERENCE:  4.00511^B 
+                       1)= S ^DIC(4.005,DA(2),1,DA(1),1,"B",$E(X,1,30)
+                       ,DA)=""
+  
+                       2)= K ^DIC(4.005,DA(2),1,DA(1),1,"B",$E(X,1,30)
+                       ,DA)
+  
+  
+ 4.00511,1     SEQUENCE               0;2 NUMBER
+  
+      INPUT TRANSFORM:  K:+X'=X!(X>99999)!(X<1)!(X?.E1"."1N.N) X
+      LAST EDITED:      JAN 30, 2015 
+      HELP-PROMPT:      Type the sequence # the field will be taken in 
+                        MD5 hash, a number between 1 and 99999. 
+      DESCRIPTION:      Order sequence, the field will be taken in MD5
+                        hash.  
+  
+      RECORD INDEXES:   AC (#174) (WHOLE FILE #4.005)
+  
+ 4.00511,2     External/Internal      0;3 SET
+  
+         'I' FOR INTERNAL; 
+         'E' FOR EXTERNAL; 
+     LAST EDITED:      JAN 30, 2015 
+     HELP-PROMPT:      Enter the type of FileMan value to use, 
+                       Internal or External. 
+     DESCRIPTION:      Get External or internal Fileman value. Default
+                       = External 
+  
+     NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+  
+ 4.00511,3     VUID FROM FILE         0;4 NUMBER
+  
+     INPUT TRANSFORM:  K:+X'=X!(X>999999999999)!(X<1)!(X?.E1"."9N.N) X
+     LAST EDITED:      APR 26, 2006 
+     HELP-PROMPT:      Enter the number of the file being pointed to.  
+                       Type '@' and press Enter to clear this setting 
+     DESCRIPTION:      If Pointer type field to .01 (Name), replace
+                       Name with VUID of pointed file. Field holds
+                       Pointed File #.  
+  
+  
+ 4.00511,4     Distinct values        0;5 SET
+  
+         '0' FOR NO; 
+         '1' FOR YES; 
+     LAST EDITED:      JAN 30, 2015 
+     HELP-PROMPT:      Enter 1 for 'YES', if the field value must be 
+                       unique, else enter 0 for 'NO'. 
+     DESCRIPTION:      If this field is set to 'YES' and the field
+                       value already exists, only repeated value will
+                       be excluded from MD5, other record's fields
+                       will not be affected.  
+  
+  
+ 4.00511,5     POST-PROCESSING LOGIC  1;E1,245 MUMPS
+  
+    INPUT TRANSFORM:  K:$L(X)>245 X D:$D(X) ^DIM
+    HELP-PROMPT:      Enter Standard MUMPS code 
+    DESCRIPTION:      This is Standard MUMPS code that gets executed
+                      for field exceptional treatment.
+  
+  
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: 3/5/2015
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*654 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*654 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*654
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ The routines XUMF654, and XUMF654P will be deleted at the end of this
+ patch installation. If you wish to get the checksum values, you can
+ 'Verify Checksums in Transport Global' prior to patch install:
+  
+ Select Kernel Installation & Distribution System Option: INstallation
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 2  Verify Checksums in Transport Global
+ Select INSTALL NAME:    XU*8.0*654     Loaded from Distribution    
+ 3/5/15@06:52:
+ 51
+      => XU*8.0*654 3/5/15
+  
+ This Distribution was loaded on Mar 05, 2015@06:52:51 with header of 
+    XU*8.0*654 3/5/15
+    It consisted of the following Install(s):
+      XU*8.0*654
+  
+ Want each Routine Listed with Checksums: Yes//   YES
+ DEVICE: HOME//   Network
+  
+ PACKAGE: XU*8.0*654     Mar 25 2015 7:26 pm                          
+ PAGE 1                                   
+ --------------------------------------------------------------------------
+  
+ XUMF5I    value = 99383408
+ XUMF5II   value = 14398872
+ XUMF654   value = 20814597
+ XUMF654P  value = 71310407
+  
+    4 Routines checked, 0 failed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;July 10, 1995;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUMF5I
+    Before: B96778215   After: B99383408  **383,407,502,654**
+Routine Name: XUMF5II
+    Before: B13619076   After: B14398872  **407,654**
+Routine Name: XUMF654
+    Before:       n/a   After: B20814597  **654**
+Routine Name: XUMF654P
+    Before:       n/a   After: B71310407  **654**
+ 
+Routine list of preceding patches: 502
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 15, 2014
+Completed By:                               Date Completed: SEP 01, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

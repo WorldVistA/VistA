@@ -1,0 +1,255 @@
+
+=============================================================================
+Run Date: APR 04, 2014                     Designation: PRC*5.1*187
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #157                    Status: Released
+                  Compliance Date: MAY 05, 2014
+=============================================================================
+
+
+Subject: VDL DOCUMENTATION UPDATE FOR IFCAP MAIL GROUPS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  *****************************************************************
+  *****************************************************************
+  *****************************************************************
+      This is an INFORMATIONAL patch that includes updates to
+      the IFCAP Version 5.1 Security Guide and IFCAP Version 5.1
+      Technical Manual, regarding MailMan group names.
+  *****************************************************************
+  *****************************************************************
+  *****************************************************************
+  
+  
+ ASSOCIATED NSR(s):
+ =================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+ ===========================
+ INC000000212302 - VDL documentation missing on IFCAP mail groups
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ N/A
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ INC000000212302 - VDL documentation missing on IFCAP mail groups
+  
+   Problem: 
+   =======
+   Site reported that IFCAP MailMan group documentation was missing in VDL 
+   documentation for IFCAP manuals - Security Guide & Technical Manual.
+  
+   IFCAP Version 5.1 SECURITY GUIDE
+   --------------------------------
+   The IFCAP V.5.1 Security Guide, section "3.2 Mail Groups" states "A 
+   listing and description of Mail Groups appears in chapter 6 of the
+   IFCAP V 5.1 Technical Manual." 
+  
+   That statement isn't true.  They're in chapter 7, page 7-7.
+  
+  
+   IFCAP Version 5.1 TECHNICAL GUIDE
+   ---------------------------------
+   The listing of MailMan group names is incomplete and not in 
+   alphabetical order.
+  
+  
+   Resolution:  
+   ==========
+  
+   IFCAP Version 5.1 SECURITY GUIDE
+   --------------------------------
+   Chapter 3. IFCAP Security Keys and Other Features, the following 
+   sections have been updated to reflect the following without reference to
+   specific chapters:
+  
+   (1)  3.2. Mail Groups
+        A listing and description of Mail Groups appears in the IFCAP 
+        V.5.1 Technical Manual.
+  
+   (2)  3.3  Bulletins
+        A listing and description of Bulletins appears in the IFCAP V.5.1 
+        Technical Manual.
+  
+   (3)  3.4  Archiving/Purging
+        A description of the archiving and purging processes appears in 
+        the IFCAP V5.1 Technical Manual.
+  
+  
+   IFCAP Version 5.1  TECHNICAL MANUAL
+   -----------------------------------
+   The IFCAP Technical Manual V5.1, Chapter 7 - Other Exported Components, 
+   Section 7.6 Mail Groups, Table 7.7: Mail Groups, has been updated to
+   include the following Mail Groups:
+  
+  
+ Mail Group              Purpose
+ ==================================================================
+  
+ CRD              This is the mail group for Fiscal (electronic receiving
+                  reports).  This mail group also receives the
+                  confirmations for the transfer of payments from IFCAP to
+                  CAPPS.
+  
+ EDV              Ref PRC*5*84. This is the Mail Group for the processing
+                  of the Dun & Bradstreet numbers in the IFCAP Vendor file.
+  
+ FMZ              Created by XM*999*81.  Receives messages from Austin.
+                  This mail group receives confirmation message for
+                  transactions sent to Q-FMZ.DOMAIN.EXT.  Staff assigned to
+                  this mail group may be in Fiscal or IRM Service.
+  
+ FPC AUSTIN MESSAGES     CASCA financial data from Austin Finance Center
+                         for major construction appropriations.  
+                         The mail group receives the following messages:
+                         F04/LTR   F02/LTR   F52/LTR   F10/LTR   516/LTR
+                         F08/LTR   FPC/LTR
+  
+ ISM              Left existing "purpose" but added reference to the patch
+                  PRC*5.1*63.
+  
+ OGR AUSTIN MESSAGES     This mail group is used for receipt of procurement
+                         history (PHA) confirmation messages.  This mail
+                         group will also receive the PHA transaction record
+                         that is transmitted to Austin.  It receives LOG
+                         reports from Austin.  All processed mail messages
+                         from ISMS will also be sent to this mail group as
+                         well as FPDS accepted/rejected messages.
+  
+                         IFCAP Message Router messages (File #458) for
+                         Transaction Codes which are sent to this mail
+                         group include:
+                         IFC-833   IFC-834   IFC-836   IFC-839 IFC-840   
+                         IFC-841   IFC-843   IFC-844   IFC-845   IFC-DO1   
+                         IFC-ERR   IFC-HLS   IFC-MSG   IFC-OHC   IFC-OHG   
+                         IFC-OHS   IFC-OLS   IFC-ONA   IFC-OPE   IFC-PFA
+                         IFC-PKE   IFC-SHA   IFC-SSO   ISM-POA
+  
+                         Also receives LG9/LTR messages.
+    
+ OLP                     Left existing "purpose" but added reference to the
+                         patch PRC*5.1*153.
+  
+ PRC 1358 MONITORS       Left existing "purpose" but added reference to the
+                         patch PRC*5.1*130.
+  
+ PRCPLO CLRS             Left existing "purpose" but added reference to the
+ NOTIFICATIONS           to patches PRC*5.1*83 and PRC*5.1*98:
+     
+                         The following individuals should be added to this
+                         mail group: IFCAP IRM support staff, IFCAP
+                         Application Coordinators, and Supply Systems
+                         Analysts responsible for the transmission of the
+                         GIP data to the PCLO.
+  
+ PRCV AUDIT              Left existing "purpose" but added reference to the
+ FILE ALERTS             patch PRC*5.1*81 and the following statement:
+    
+                         This mail group is to be used ONLY by the Bay
+                         Pines VAMC (Dynamed).  Do NOT add names to these
+                         mail groups if you are not at the Bay Pines VAMC.
+                         SITES NOT IMPLEMENTING THE DYNAMED-IFCAP INTERFACE
+                         WILL NEVER USE THESE MAIL GROUPS.
+  
+ PRCV ITEM               Left existing "purpose" but added reference to the
+ VENDOR EDITS            patch PRC*5.1*81 and the following statement:
+  
+                         This mail group is to be used ONLY by the Bay 
+                         Pines VAMC (Dynamed).  Do NOT add names to these
+                         mail groups if you are not at the Bay Pines VAMC.
+                         SITES NOT IMPLEMENTING THIS DYNAMED-IFCAP
+                         INTERFACE WILL NEVER USE THESE MAIL GROUPS.
+  
+  
+ Added these as a Notation or as part of the table:
+  
+ VHACO10FPCLRS@e2k.domain.ext -- New Outlook E-Mail Group -- PRC*5.1*98:
+    The new Microsoft (MS) Outlook mail group which will receive all 
+    messages concerning transaction activity.  This MS Outlook mail 
+    group is primarily for interested staff external to your site 
+    and will not impact the messages currently sent to site staff.
+  
+ VHANIFMO -- Outlook E-Mail Group -- PRC*5.1*145 & PRC*5.1*121:
+    If an NIF (National Item File) maintenance error occurs, an e-mail is
+    being sent to Outlook e-mail group 'VHA NIF Maintenance Office@domain.ext'
+    when it should be going to 'VHANIFMO', which is the SMTP address for 
+    VHA NIF Maintenance Office.
+  
+ <Site Specific> -- VistA Mail Group -- PRC*5.1*1:
+    HL7 -- TCP/IP (Components) -- Applications...
+    Update the applications PRCP_SS_VISTA and PRCP_SSTATION to ACTIVE
+    status using the option, EA Application Edit [HL EDIT APPL PARAM]. The
+    other application protocol settings should be:
+                 (STATUS)  ACTIVE
+             COUNTRY CODE  US 
+      HL7 FIELD SEPARATOR  | |
+  HL7 ENCODING CHARACTERS  ~^\&
+               MAIL GROUP  <your own mailgroup set to receive HL7 alerts>
+  
+  
+  
+ NOTE:  In some instances, IFCAP sends some mail messages using 
+        "addressee" and "domain name" information in the CALM/LOG BATCH 
+        TYPE LIST file instead of mail groups.  
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ Sites may retrieve documentation in one of the following ways:
+  
+ 1) The preferred method is to FTP the files from
+    download.vista.domain.ext, which will transmit the files from the
+    first available FTP server.
+  
+ (2) Sites may also elect to retrieve documentation directly from the 
+     ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+     Albany          ftp.domain.ext
+     Hines           ftp.domain.ext
+     Salt Lake City  ftp.domain.ext
+  
+     The documentation distribution includes: 
+    
+     File Name                    Description              Retrieval Format
+     =========                    ===========              ================
+     ifcp5_1security_guide.PDF    IFCAP Security Manual    BINARY
+     ifcp5_1tech_manual.PDF       IFCAP Technical Manual   BINARY
+  
+ (3) Once released, documentation may be retrieved from VISTA Documentation
+     Library (VDL) on the Internet at the following address:
+     http://www.domain.ext/vdl 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ ****** This is an informational patch ONLY. ******
+ ****** There is NO install to be done.      ******
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 29, 2014
+Completed By:                               Date Completed: MAR 28, 2014
+Released By :                               Date Released : APR 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

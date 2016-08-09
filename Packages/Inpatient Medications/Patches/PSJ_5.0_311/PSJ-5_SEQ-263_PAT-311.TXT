@@ -1,0 +1,239 @@
+
+=============================================================================
+Run Date: OCT 27, 2014                     Designation: PSJ*5*311
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #263                      Status: Released
+                  Compliance Date: NOV 27, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*311'
+
+Subject: MOCHA 2.0 POST DEPLOYMENT FOLLOW UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of MOCHA 2.0 POST RELEASE FOLLOW UP 1.0 build that 
+ includes PSJ*5*311 and PSO*7*436.
+  
+ This patch PSJ*5*311 corrects the following issue:
+  
+ 1. Remedy Ticket #1008789 - A site found that an error occurred when
+ entering a new clinic using the CLINIC DEFINITION [PSJ CD] option.  The
+ error does not occur when the user edits an existing clinic.
+  
+ The PSJIMO1 routine has been modified to pass the ADMINISTER INPATIENT
+ MED? parameter which is used to determine if the clinic is an Inpatient
+ Medication for Outpatient (IMO) clinic. This value is used by the system
+ to evaluate whether the user modified the value for the IMO DC/EXPIRED DAY
+ LIMIT prompt.  Depending on the action taken by the user, the 
+ system defines or deletes the CIMOU, CIMOI or CIMO cross reference for use
+ during order checking for clinic orders.  Additionally a post install 
+ routine PSJ311PO will run to re-build the CIMOU, CIMOI, CIMO, CIMOCLU and 
+ CIMOCLI cross references for PHARMACY PATIENT file (#55) and NON-VERIFIED
+ ORDERS file (#53.1).
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Forms Associated:
+  
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  N/A
+  
+  
+ Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          -------------------- 
+  N/A
+  
+  
+ Options Associated:
+  
+  Option Name                 Type       Action
+  -----------                 ----       ------
+  N/A
+  
+  
+ Protocols Associated:
+  
+  Protocol Name                            New/Modified/Deleted
+  -------------                            -------------------- 
+  N/A  
+  
+  
+ Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+  
+  
+ Templates Associated:
+  
+  Template Name     Type        File Name (Number)  New/Modified/Deleted
+  -------------     ----        ------------------  --------------------
+  N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1008789 - Parameter error encountered using the CLINIC DEFINITION 
+ [PSJ CD] option: <PARAMETER>IMOKILL^PSJIMO1
+  
+ Test Sites:
+ -----------
+ CHARLESTON, SC
+ HEARTLAND WEST, MO
+ PALO ALTO HCS, CA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A.
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to FTP the file from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Alternatively, sites may elect to retrieve the file 
+ from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+    Albany              FTP.DOMAIN.EXT        
+    Hines               FTP.DOMAIN.EXT         
+    Salt Lake City      FTP.DOMAIN.EXT           
+  
+ The MOCHA 2.0 POST RELEASE FOLLOW UP 1.0 software distribution includes: 
+  
+    File Name                      Contents           Retrieval Format
+    ----------------------------   ---------          ----------------
+    MOCHA_2_0_POST_RELEASE_                           ASCII
+       FOLLOW_UP.KID               PSO*7*436       
+                                   PSJ*5*311
+  
+ Installation Instructions
+ -------------------------
+ It is not necessary to disable options and this patch may be queued for
+ install. It is recommended to install this patch during non-peak hours 
+ and it should take less than 2 minutes to install this patch.
+  
+ 1.  Download MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID into your local
+     directory.
+  
+ 2.  From the Kernel Installation & Distribution System (KIDS) menu, select
+     Installation.
+  
+ 3.  Select the Load a Distribution and enter the directory that you 
+     FTP'ed the host file to and MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID.  
+     Example:  USER$:[ABC]MOCHA_2_0_POST_RELEASE_FOLLOW_UP.KID 
+  
+ 4.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter "MOCHA 2.0 POST RELEASE FOLLOW UP 1.0"):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 5.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter "MOCHA 2.0 POST RELEASE FOLLOW UP 1.0" at the INSTALL
+         NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+         and Protocols? NO//'  answer NO
+  
+ Post-Installation Instructions
+ ------------------------------
+ During installation, the Inpatient Medications patch queues a post install
+ routine (PSJ311PO) that re-builds the clinic order cross references for
+ NON-VERIFIED ORDERS file (#53.1) and PHARMACY PATIENT file (#55).
+ Depending on the size of your facility, this post install can take up to
+ three hours to run. Upon completion the following message will be sent to
+ the patch installer.
+  
+ Subj: Background job for PSJ*5*311 Post Install  [#179515] 06/07/14@14:17
+ 7 lines
+ From: INPT PHARMACY  In 'IN' basket.   Page 1
+ --------------------------------------------------------------------------
+ The new cross references for clinic orders have been created:
+      File 53.1 - CIMO
+       File 55  - CIMOU and CIMOCLU for Unit Dose Sub-file.
+       File 55  - CIMOI AND CIMOCLI for IV Sub-file.
+  
+ The background job 3364273 began Jun 07, 2014@14:17:06 and 
+ ended Jun 7, 2014@14:17:08.
+  
+ Enter message action (in IN basket): Ignore//
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;9/30/97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJ311PO
+    Before:       n/a   After:  B8179938  **311**
+Routine Name: PSJIMO1
+    Before: B65823354   After: B67864783  **257,299,311**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 23, 2014
+Completed By:                               Date Completed: OCT 27, 2014
+Released By :                               Date Released : OCT 27, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

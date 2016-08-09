@@ -1,0 +1,202 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/12/13 at 13:39
+=============================================================================
+Run Date: APR 24, 2014                     Designation: OR*3*286
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #337                      Status: Released
+                  Compliance Date: MAY 25, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*285    <<= must be installed BEFORE `OR*3*286'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*286'
+
+Subject: UPDATE PROVIDER ON ORDER CHANGE/CHART COPIES PRINT/METRIC CONV
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 4 issues within the ORDER ENTRY/RESULTS REPORTING 
+ (OERR) package:
+  
+ 1. Changing an unsigned order does not update the entering provider.
+  
+ 2. Chart Copies are enabled for printing even when no format has 
+    been set up.
+  
+ 3. There is a discrepancy in metric measure conversions for weight between
+    the Cover Sheet and the Vitals entry form.
+  
+ 4. Delayed radiology orders are being canceled when the release event 
+    occurs with a Missing/Invalid Patient location error
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1. INC000000069647   Entering provider on changed order
+  
+ 2. INC000000069727   SELECTED ORDERS WILL NOT PRINT
+  
+ 3. INC000000427314   Discrepancy between weight on Vitals and CPRS
+  
+ 4. INC000000276742   Missing/Invalid Patient location in Delayed Discharge
+                      Radiology Orders
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Washington, D.C. VAMC
+ Sierra Nevada VAMC
+ Central Plains HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC000000069647   Entering provider on changed order
+  
+    Problem:
+    ========
+    When a signed order is changed, the entering provider is updated to the
+    provider who is changing the order. However, when changing an unsigned
+    order the entering provider is not updated. 
+  
+    Background:
+    ===========
+    When signed orders are changed, a new order is created replacing the
+    old order. When unsigned orders are changed, the entry data is updated
+    in the original order. 
+  
+    Solution:
+    =========
+    Routine ORCSAVE has been modified to update the entering provider of
+    the New Order activity when a new order is modified by different
+    provider.
+  
+ 2. INC000000069727   SELECTED ORDERS WILL NOT PRINT
+  
+    Problem:
+    ========
+    In Computerized Patient Record System (CPRS), a manual print of an
+    order will have the Chart Copies option enabled even when no format has
+    been set up for Chart Copies. In addition, when Chart Copies is setup
+    to prompt to print when an order is signed the print window prompt
+    appears even though no format has been set up. 
+  
+    Solution:
+    =========
+    Routine ORWD2 has been modified to disable the Chart Copies option if
+    no format has been set up.
+  
+ 3. INC000000427314   Discrepancy between weight on Vitals and CPRS
+  
+    Problem:
+    ========
+    The CPRS Cover Sheet is not showing the same metric units as Vitals.
+   
+    Solution:
+    =========
+    Routine ORQQVI has been updated to use the same conversion rates and
+    rounding to the same decimal as Vitals.
+  
+ 4. INC000000276742   Missing/Invalid Patient location in Delayed Discharge
+                      Radiology Orders
+   
+    Problem: 
+    ========
+    The problem occurs when the user creates a delayed radiology order.
+    When the event occurs the order is automatically canceled with
+    Missing/Invalid Patient location for the reason. This happens because
+    the location is not saved on delayed radiology orders.
+   
+    Solution:
+    =========
+    The code has been modified so that the location gets saved on delayed
+    radiology orders.
+  
+    Routine ORCSAVE has been modified to stop the LOC variable from getting
+    set to null when the package is radiology and it is a delayed order.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+     Select Kernel Installation & Distribution System Option: 
+                  Installation
+  
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter "OR*3.0*286"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+ 4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSAVE
+    Before: B93570621   After: B98247986  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286**
+Routine Name: ORQQVI
+    Before: B34255984   After: B35437287  **10,198,215,250,260,285,286**
+Routine Name: ORWD2
+    Before: B30457086   After: B33111344  **10,215,286**
+ 
+Routine list of preceding patches: 285, 306
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 09, 2008
+Completed By:                               Date Completed: APR 22, 2014
+Released By :                               Date Released : APR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

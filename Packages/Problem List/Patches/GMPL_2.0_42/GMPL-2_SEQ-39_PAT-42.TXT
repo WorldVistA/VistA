@@ -1,0 +1,498 @@
+
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: GMPL*2*42
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #39                      Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)GMPL*2*28   <<= must be installed BEFORE `GMPL*2*42'
+                    (v)GMPL*2*36   <<= must be installed BEFORE `GMPL*2*42'
+                    (v)LEX*2*80    <<= must be installed BEFORE `GMPL*2*42'
+                    (v)PX*1*199    <<= must be installed BEFORE `GMPL*2*42'
+                    (v)ICD*18*57   <<= must be installed BEFORE `GMPL*2*42'
+                    (v)GMPL*2*44   <<= must be installed BEFORE `GMPL*2*42'
+
+Subject: PROBLEM LIST SUPPORT FOR ICD-10-CM
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is part of the Computerized Patient Records System CPRSv30.A 
+ project. This project will modify CPRS, TIU, GMRC, GMTS, GMPL, PXRM, and 
+ OERR to meet the requirements proposed by the Dept. of Health and Human 
+ Services to adopt ICD-10 code set standards.
+  
+ On January 16, 2009, the Centers for Medicare & Medicaid Services (CMS) 
+ released a final rule for replacing the 30-year-old ICD-9-CM code set with
+ International Classification of Diseases, Tenth Revision, Clinical 
+ Modification (ICD-10-CM) and International Classification of Diseases, 
+ Tenth Revision, Procedure Coding System (ICD-10-PCS) with dates of 
+ service, or date of discharge for inpatients, that occur on or after 
+ the industry activation date. The classification system consists of more
+ than 68,000 codes, compared to approximately 13,000 ICD-9-CM codes. There
+ are nearly 87,000 ICD-10-PCS codes, while ICD-9-CM has nearly 3,800
+ procedure codes. Both systems also expand the number of characters
+ allotted from five and four respectively to seven alpha-numeric
+ characters. This value does not include the decimal point, which follows
+ the third character for the ICD-10-CM code set. There is no decimal point
+ in the ICD-10-PCS code set. These code sets have the potential to reveal
+ more about quality of care, so that data can be used in a more meaningful
+ way to better understand complications, better design clinically robust
+ algorithms, and better track the outcomes of care. ICD-10-CM also
+ incorporates greater specificity and clinical detail to provide
+ information for clinical decision making and outcomes research.
+  
+ This is the Problem List patch to support the requirements of ICD-10-CM
+ implementation. The Problem Search function will continue to originate 
+ with the Problem List Subset of SNOMED CT and follow the algorithm 
+ introduced by the Problem List Data Standardization effort and CPRS v29.
+ Prior to the ICD-10-CM implementation date, the selected
+ SNOMED CT code will continue to be resolved to the corresponding
+ ICD-9-CM code(s), and all of the Problem List display and print options
+ will continue to render the diagnostic codes as ICD-9-CM.
+  
+ Beginning on the ICD-10-CM implementation date, the selected SNOMED CT 
+ code will be resolved to the corresponding ICD-10-CM code(s), and all of 
+ the Problem List display and print options will render the diagnostic
+ codes as either ICD-9-CM or ICD-10-CM, depending upon the date when the 
+ code for the problem was last edited.
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+  
+ Patch Components:
+ =================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)          Field Name (Number)       New/Modified/Deleted
+ ------------------          ----------------------    --------------------
+ PROBLEM FILE (#9000011)     DATE OF INTEREST (#80201)          NEW
+ PROBLEM FILE (#9000011)     CODING SYSTEM (#80202)             NEW
+  
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A                   N/A        N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A                      N/A
+  
+ Options Associated:
+  
+ Option Name                     Type               New/Modified/Deleted
+ -----------                     ----               -------------------- 
+ GMPL BUILD ENC FORM LIST        Run Routine              Modified
+ GMPL USER LOOK-UP FILTER        Run Routine              Modified
+ GMPL USER LOOK-UP DISPLAY       Run Routine              Modified
+ GMPL USER LOOK-UP VOCABULARY    Run Routine              Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ GMPL ANNOTATE                                  Modified
+ GMPL EDIT NEW NOTE                             Modified
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name     Type      File Name (Number)      New/Modified/Deleted
+ -------------     ----      ------------------      --------------------
+ GMPL DATA ENTRY   PROTOCOL  LIST TEMPLATE(#409.61)        MODIFIED
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ 1. INC000000935290 - EN+38^GMPLSAVE error.
+ 2. INC000001007105 - UNDEFINED>EN+38^GMPLSAVE.
+  
+ Problem:
+ --------
+ 1. The ICD column of the GMPL DATA ENTRY List Manager display is not wide 
+ enough and truncates the ICD-10 code at 7 chars.
+  
+ 2. When a problem/diagnosis is added to the Problem List via PCE Vista, a 
+ duplicate check is performed on the problem against a patient's existing 
+ list of problems. A bug has been discovered with this duplicate check, 
+ whereby only the provider narrative on file is converted to all 
+ upper-case before comparison and the incoming narrative string on the 
+ other side of the equation is not. This results in an unequal string 
+ comparison and inaccurate duplicate check. Especially when the incoming 
+ narrative string is a mixed case of characters.
+  
+ 3. An "UNDEFINED" error is reported when trying to view the details 
+ display of a QUASAR problem entry that contains no data in the MAPPED 
+ EXPRESSIONS file.
+  
+ 4. The Encounter form incorrectly identifies problems that have inactive 
+ ICD codes (those with a # sign next to them). The code was using the Date 
+ of Interest or Date Entered fields, instead of the Encounter date if
+ defined.
+  
+ 5. When utilizing PCE's Check Out Interview (IN) option to add ICD-9 
+ diagnoses to the Problem List for a pre-ICD10 implementation date
+ encounter, an "Invalid ICD Diagnosis" message is displayed.
+  
+ 6. Users were able to add ICD-10 diagnosis codes to an encounter with a 
+ visit date prior to ICD-10 implementation.
+  
+ 7. When adding a new problem and performing a Lexicon lookup within the
+ Problem List ListManger app,a user cannot select a SNOMED CT diagnosis
+ that is mapped to multiple ICD-9 target codes and receives a message that
+ the diagnosis has an inactive code. The user is advised to edit before 
+ adding. This is a bug where the ICD code validity check is performed 
+ incorrectly and does not honor multiple target codes.
+ inactive code.
+  
+ 8. When adding a new problem within the Problem List ListManager app, the 
+ system is not saving/filing the SNOMED CT code to the Problems file 
+ causing only the primary mapped ICD-9 diagnosis code to display after the 
+ diagnosis description. This creates a misconception that the problem is 
+ a legacy ICD-9 problem when in fact it is a SNOMED CT problem.
+  
+ 9. An <UNDEFINED>ADD1+15^GMPL1 server error is received when adding a new 
+ problem via the "Problem List Data Entry" menu option in ListManager.
+  
+ 10. When updating a legacy ICD-9 problem to its SNOMED CT equivalent 
+ within the Problem List ListManager, the system correctly updates the 
+ SNOMED CT description but not the label and code. The incorrect label of 
+ the mapped ICD-10-CM code R69 was displaying instead, when it should be 
+ the SNOMED CT label and code. This occurs in an environment where ICD-10 
+ is active.
+  
+ 11. A user is unable to inactivate an existing ICD-9 diagnosis code within
+ CPRS Problem List when ICD-10 is active. User receives the following 
+ error message: "Unable to update record: Invalid ICD Diagnosis (Problem 
+ IEN#)"
+  
+ 12. A user is unable to annotate an existing problem with an inactive 
+ ICD-9 code without having to update/change the problem to an equivalent 
+ SNOMED CT term in CPRS v30.A, whether the date is before/after Oct 1, 
+ 2014.
+  
+ 13. Several CPRS v30.B test sites were receiving undefined errors 
+ (<UNDEFINED> DIAGNOSI+3^GMPLUTL1 *PL("DX_DATE_OF_INTEREST")) while 
+ testing the Add to Problem List functionality on the Encounter form 
+ dialog. These test sites had the GMPL*2*42 v16 patch installed but not 
+ the PX*1*199 yet, which introduces this PL("DX_DATE_OF_INTEREST") array
+ element.
+  
+ 14. An issue (CCREG-230) was discovered while testing a CCR requirement 
+ (SPEC 10 & 10.1), whereby the tester was required to enter an encounter 
+ in PCE with an encounter date prior to ICD-10 activation date and 
+ associate a HEPC or HIV ICD-9 code with it. This code was subsequently 
+ added to the Problem List. The system date is on or after ICD-10 
+ activation date.
+  
+ However during this process of adding to the Problem List, the ICD-9 
+ encounter date did not get honored and appropriately filed as the date of 
+ interest in the Problem file. Because of this, the Problem List API 
+ utilized/filed the current date (ICD-10 activation date) instead as the 
+ date of interest which is incorrect. Thereby causing the code set 
+ versioning to work incorrectly.
+  
+ 15. When GMPL*2*42 v16 was installed into production at a few sites, it 
+ generated a slew of reminder evaluation (MailMan) error messages. This 
+ was caused by not shutting down the reminder evaluation during the 
+ re-indexing process of the post-install.
+  
+ 16. When selecting a SNOMED CT term mapped to multiple ICD-9 target codes 
+ from the Lexicon Search results and clicking to Add to the Problem list 
+ from the Encounter form dialog, only the primary ICD-9 diagnosis code is 
+ saved to the Problem file. The secondary ICD-9 diagnosis code(s) are not 
+ being filed to the Problem file.
+  
+ Resolution:
+ -----------
+ 1. The width of the ICD column for the GMPL DATA ENTRY list template has
+ been modified to 8 chars to accommodate for a full ICD-10 code display.
+  
+ 2. The incoming narrative string will be converted to all upper-case 
+ before making a similar comparison with the narrative on file. This will 
+ result in an apples to apples comparison and accurate duplicate check.
+  
+ 3. The array that contains the multiple ICD target code data will always 
+ be set to NULL if there is no data in the MAPPED EXPRESSIONS file. This 
+ will resolve the "UNDEFINED" error for this array value.
+  
+ 4. The code has been modified to utilize the Encounter date if defined to 
+ correctly identify inactive problems on the Encounter form.
+  
+ 5. The Problem List API has been modified to utilize the patient's 
+ encounter date (if defined) to check for code validity instead of today's 
+ date.
+  
+ 6. CPRS will display a message to the user that ICD-10 diagnosis codes 
+ cannot be added to an ICD-9 encounter and prohibit from doing so.
+  
+ 7. Validity check has been modified to now honor multiple mapped ICD
+ target codes and performs the check correctly. Users can now add SNOMED 
+ CT diagnoses that are mapped to multiple ICD-9 target codes without 
+ receiving the erroneous inactive message.
+  
+ 8. The SNOMED CT codes will now be saved and filed to the Problems file. 
+ The correct coding system (SNOMED CT) will now be appended to the
+ description and displayed appropriately when adding problems via the 
+ Problem List ListManager.
+  
+ 9. Modified the GMPL1 routine so that the undefined variable is no longer 
+ undefined.
+  
+ 10. Modified the GMPLEDT4 routine so that the correct coding system label
+ and code (SNOMED CT) will now display when editing a problem in the
+ ListManager.
+  
+ 11. Modified the CPRS GUI v30.A and GMPLUTL & GMPLUTL1 routines so that a 
+ user will now be able to inactivate an existing ICD-9 problem within CPRS 
+ when ICD-10 is active. The ICD validation API in DIAGNOSI^GMPLUTL1, was 
+ utilizing a post-ICD10 date of interest to evaluate against an ICD9 code, 
+ which generated an Invalid ICD Diagnosis error message when trying to 
+ inactivate. This has been resolved to pass in the correct ICD coding 
+ system instead of using the coding type DIAG input parameter.
+  
+ 12. Modified the CPRS GUI v30.A and GMPL,GMPL1, & GMPLEDT1 routines so 
+ that a user will now be able to annotate an existing problem with 
+ inactive ICD-9 codes without having to update/change the problem to a SCT 
+ equivalent term.
+  
+ 13. Modified the code to resolve the undefined error and accomodate the
+ scenario whereby the GMPL*2*42 patch is installed without the PX*1*199
+ patch. This scenario would never occur when this patch is nationally 
+ released, as the GMPL*2*42 patch will require PX*1*199.
+  
+ 14. Modified the GMPL API (CREATE^GMPLUTL) so that it processes and 
+ stores the correct date of interest (ICD-9 encounter date in this case) 
+ appropriately.
+  
+ 15. After some analysis, it was determined that the re-indexing logic was 
+ no longer needed and could be removed, since the Problem file DD is 
+ exported along with the indexes. This prevents the reminder evaluation 
+ error messages from occurring.
+  
+ 16. Modified the subroutine that retrieves the mapped ICD-9 codes so that 
+ it is date of interest aware and utilizes the correct mapping definition 
+ for retrieval. This allows for the appropriate retrieval and storage of 
+ the correct secondary ICD-9 codes to the Problem file.
+  
+ Test Sites:
+ ===========
+ Boise, ID
+ Detroit, MI
+ Ft.Harrison, MT
+ Jackson, MS
+ Miami, FL
+ Pittsburgh, PA
+  
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================ 
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. There is a single package KIDS build being 
+ distributed. The associated host file is named GMPL_2_42.KID.
+  
+ GMPL*2.0*42 is part of the ICD-10 Group 2 patches. Please download and 
+ read the "ICD-10 Production Overview Guide Group 2" document prior to 
+ installing this patch. This document is an installation guide and 
+ provides the Group 2 patch installation order that must be followed prior 
+ to installing this patch.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Some documentation can also be found on the VA Software Documentation
+ Library at:  http://www.domain.ext/vdl/
+  
+ File Description               File Name                      FTP Mode
+ ----------------------------------------------------------------------
+ Technical Manual               gmpl_2_0_42_tm.pdf             Binary
+ User Manual                    gmpl_2_0_42_um.pdf             Binary
+ GMPL*2.0*42                    GMPL_2_42.KID                  ASCII
+ ICD-10 Production Overview     ICD-10 Production_Overview     Binary
+ Guide Group 2                  _Guide_Group_2.docx
+  
+  
+ Patch Installation:
+ ===================
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is one pre/post installation routine (GMPLY42) exported with this 
+ patch. The pre install routine will remove the current Problem file 
+ Data Dictionary as a new one is exported with this patch. The post
+ install routine will disable four GMPL options (see above under Options)
+ and update the out of order display text accordingly.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ Please retrieve and review the ICD-10 Production Overview Guide Group 2 
+ document referenced above. This document is intended to provide the 
+ field sites with guidance regarding the association of the ICD-10 Group 2 
+ patches. The document outlines an approach for each site to install 
+ several individual patches that are logically related based on technical 
+ and business dependencies. These patches have been grouped together by 
+ the ICD-10 Program. Please refer to the detailed installation 
+ instructions within each application specific patch description or 
+ install guide after reading this document.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 1 minute
+ to install.
+  
+        1. From the Kernel Installation & Distribution System menu, select 
+           the Installation menu.  
+     
+        2. From this menu, choose to Load a Distribution and enter the 
+           location of the Host File GMPL_2_42.KID
+  
+        3. From the same menu, you may select to use the following options:
+           (when prompted for INSTALL NAME, enter GMPL*2.0*42)
+    
+            a. Verify Checksums in Transport Global - This option will 
+                allow you to ensure the integrity of the routines that are 
+                in the transport global.
+     
+            b. Print Transport Global - This option will allow you to view
+                the components of the KIDS build.
+     
+            c. Compare Transport Global to Current System - This option 
+                will allow you to view all changes that will be made when 
+                this patch is installed. It compares all components of
+                this patch (routines, DD's, templates, etc.).
+     
+            d. Backup a Transport Global - This option will create a backup
+                message of any routines exported with this patch. It will 
+                not backup any other changes such as DD's or templates.
+     
+        4. Use the Install Package(s) option and select the package 
+           GMPL*2.0*42
+     
+        5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+           NO//" respond NO.  
+     
+        6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+           and Protocols? NO//" respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ None. The post-install routine will run automatically to disable four 
+ GMPL options (see above under Options) and update the out of order display
+ text accordingly. The pre and post-install routine (GMPLY42) may be 
+ deleted after the patch installation has completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 47
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPL
+    Before: B28597779   After: B26898783  **3,11,28,42**
+Routine Name: GMPL1
+    Before: B27012106   After: B38061003  **3,20,28,43,42**
+Routine Name: GMPLBLCK
+    Before: B56283038   After: B57283175  **28,42**
+Routine Name: GMPLBLD
+    Before: B39542631   After: B40896802  **3,28,33,36,42**
+Routine Name: GMPLBLD1
+    Before: B34149613   After: B34803359  **3,28,36,42**
+Routine Name: GMPLBLD2
+    Before: B50049989   After: B52174697  **3,28,36,42**
+Routine Name: GMPLBLD3
+    Before: B23258990   After: B23961246  **28,42**
+Routine Name: GMPLBLDC
+    Before: B36845008   After: B38822286  **3,7,28,36,42**
+Routine Name: GMPLCODE
+    Before: B11967458   After: B13729689  **28,43,42**
+Routine Name: GMPLDISP
+    Before: B41666174   After: B47156024  **21,26,35,36,42**
+Routine Name: GMPLEDT1
+    Before: B36199470   After: B33830935  **17,20,26,28,35,42**
+Routine Name: GMPLEDT3
+    Before: B29964655   After: B31817969  **26,35,36,42**
+Routine Name: GMPLEDT4
+    Before: B19794628   After: B27462939  **5,43,42**
+Routine Name: GMPLENFM
+    Before: B31415115   After: B41380995  **3,4,7,26,35,36,42**
+Routine Name: GMPLHIST
+    Before: B17659917   After: B21062644  **7,26,31,35,36,42**
+Routine Name: GMPLHS
+    Before: B20917122   After: B23837275  **22,26,35,36,42**
+Routine Name: GMPLMGR
+    Before: B26246096   After: B28233953  **21,28,36,42**
+Routine Name: GMPLMGR2
+    Before: B27300832   After: B29140181  **26,28,36,42**
+Routine Name: GMPLPRNT
+    Before: B33959958   After: B38258909  **1,13,26,41,36,42**
+Routine Name: GMPLSAVE
+    Before: B95717448   After:B110665367  **26,31,35,37,38,36,42**
+Routine Name: GMPLUTL
+    Before: B51218894   After: B62326591  **3,6,8,10,16,26,35,39,36,42**
+Routine Name: GMPLUTL1
+    Before: B58284693   After: B59613376  **3,8,7,9,26,35,39,36,42**
+Routine Name: GMPLUTL2
+    Before: B80938362   After: B87546177  **10,18,21,26,35,36,42**
+Routine Name: GMPLUTL3
+    Before: B16541154   After: B19624792  **14,15,19,25,26,36,42**
+Routine Name: GMPLX
+    Before: B82126474   After:B101606054  **7,23,26,28,27,36,42**
+Routine Name: GMPLX1
+    Before: B78242398   After: B90046918  **3,26,35,36,42**
+Routine Name: GMPLY42
+    Before:       n/a   After:  B2131928  **42**
+ 
+Routine list of preceding patches: 36, 43
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 23, 2011
+Completed By:                               Date Completed: AUG 05, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

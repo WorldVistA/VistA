@@ -1,0 +1,307 @@
+
+=============================================================================
+Run Date: MAR 03, 2016                     Designation: WEBN*1.1*3
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #3                    Status: Released
+                  Compliance Date: MAR 03, 2016
+=============================================================================
+
+
+Subject: NUMI Application 14 . 3
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  
+   Patch WEBN*1.1*3 addresses the following twelve Remedy tickets:
+  
+ 1.   INC000000860295 - NUMI invalidates stays when Veterans Health
+                        Information Systems and Technology Architecture 
+                        (VistA)is down.
+  
+ 2.   INC000001059706 - NUMI not always saving reason code on "Not Met" 
+                        reviews.
+  
+ 3.   INC000000882340 - NUMI Reports include one extra day outside of
+                        selected date range.
+  
+ 4.   INC000000878979 - Report #12 always displays "no records found" if
+                        filtering criteria is "Service/Section".
+  
+ 5.   INC000000711901 - Text box has incorrect message when a review is
+                        saved.
+  
+ 6.   INC000000436600 - Report #7 does not look up a patient by initial+4;
+                        displays confusing message.
+  
+ 7.   INC000000866442 - Criteria Not Met Elaboration text is lost on not 
+                        met reviews when they are unlocked and edited.
+  
+ 8.   INC000001093525 - Manual VistA Sync errors, nightly/hourly/24-hour
+                        manual Synchronizer crashes on bad VistA data.
+  
+ 9.   INC000000375565 - NUMI should not allow copying an admission review
+                        to a continued stay date.
+  
+ 10.  INC000000946312 - Care Enhanced Review Management
+                        Enterprise(CERMe)legal disclaimer text on NUMI
+                        screen displays needs to be updated.
+  
+ 11.  INC000001231842 - NUMI should be fixed to report the failure instead
+                        of falsely reporting success.
+  
+ 12.  INC000001243857 - Attending needs to be carried over from last known
+                        value on Worklist and elsewhere.
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+    N/A   
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+    Bay Pines VAMC
+    Gainesville (NFSG)
+    Omaha VAMC
+  
+  
+ Remedy Overview:
+ ================
+ 1.   INC000000860295
+ Duplicates:  INC000000872725, INC00000879464, INC00001049785,
+  INC00001105218, INC00001104591, INC00001102317, INC00001062371,
+  INC00001044629, INC00001027121, INC00001021755, INC00001019894,
+  INC00001017124, INC00001007114, INC00001058705, INC00001118602
+  
+    Problem: 
+    NUMI inappropriately invalidates stays if a user clicks on a stay when 
+    their VistA system is down, or when network problems prevent NUMI from
+    connecting to their Vista system. NUMI moves the stay to the Patient 
+    Stay Admin screen where it must be "validated" which takes time; users
+    typically report these as "lost" stays and do not enter reviews on 
+    them. The lists are cumulative and growing large at many sites. The 
+    NUMI v.1.1.14.3 build will detect VistA connection problems and let 
+    the user know to try again later rather than invalidating the stay.  It
+    also fixes features of the DELETE and RESTORE buttons on the Patient
+    Stay Admin screen which can be used to delete a stay if it is not 
+    found in VistA and restore the stay if it still exists in VistA.
+  
+    Resolution:
+    The History.aspx.cs file was changed to redirect the Uniform Resource 
+    Locator (URL) and added the VistA down check based on the Medical
+    Domain Web Services (MDWS) (visit method) service call.
+  
+  
+  
+ 2.   INC000001059706
+ Duplicates:  INC000001254870
+  
+    Problem: 
+    NUMI is not always saving the reason code on "Not Met" reviews. The
+    not met reviews are saved in 2 separate transactions, first the
+    review, then the reason code, so the reason code save is 
+    failing after the review save succeeds. No error message is displayed
+    to the user when the reason code is not saved.
+  
+    Resolution: 
+    PrimaryReview.aspx.cs and PatientReviewManager.cs were changed and the
+    method signature for SavePrimaryReview was changed to accept one more
+    string parameter by reference.
+  
+  
+ 3.      INC000000882340 
+ Duplicates: INC000000877737, INC000000900221, INC000000912841,
+  INC000000919339, INC000001054134, INC000001266601
+  
+    Problem: 
+    NUMI Reports include one extra day outside of the selected date range.
+    The Review Date will be the date used to determine if a stay should
+    be included in the report output.
+  
+    Resolution: 
+    The following files were corrected:PatientDetails.aspx.cs,
+    PatientLevelMetNotMet.aspx.cs, PatientLevelMetNotMetCustom.aspx.cs,
+    PhysicianAdvisor.aspx.cs, PhysicianUMAdvisorResponse.aspx.cs,
+    ReasonsCSReviews.aspx.cs, ReasonsforAdmReviews.aspx.cs,
+    SummaryMetNotMet.aspx.cs, SummaryRLOCReason.aspx.cs and
+    Unscheduled30DayReadmit.aspx.cs
+  
+  
+ 4.   INC000000878979
+  
+    Problem: 
+    Report #12 always displays "no records found" if filtering criteria is
+    "Service/Section".  Any other filter correctly finds the reviews.
+  
+    Resolution: 
+    Corrections were made to the procedure dbo.usp_Report_DetailedPatient.
+  
+  
+ 5.   INC000000711901
+  
+    Problem: 
+    When a report is saved, the text box inaccurately says "This review
+    will now lock into the NUMI database. Further changes require an
+    administrator. Are you sure you are ready to lock this review?"
+    However, the person who enters the review can unlock and edit or
+    delete the review, so the 2nd sentence needs to be removed or
+    corrected.
+  
+    Resolution: 
+    The second sentence has been removed from the message dialog box that
+    appears while saving the review.
+  
+  
+ 6.   INC000000436600
+  
+    Problem: 
+    Report #7 does not look up a patient by initial+4. It displays a 
+    confusing message instead: "Please select . . . " without anything
+    to select from. 
+  
+    Resolution: 
+    Corrections were made to the procedure
+    dbo.usp_lookupValue_PatinetnameListHasReviews so that initial+4 
+    can be used to look up patients for Report #7.
+  
+  
+ 7.   INC000000866442
+  
+    Problem: 
+    Criteria Not Met Elaboration text is lost on "not met" reviews when
+    they are unlocked and edited.  The text is saved in the NUMI
+    database on copied reviews, but the user cannot see it from the 
+    NUMI application. 
+  
+    Resolution: 
+    Changes were made to ReviewItems.cs and Review.aspx.cs to display 
+    Criteria Not Met Elaboration text when reviews are unlocked and
+    edited.
+  
+  
+ 8.   INC000001093525
+ Duplicates:  INC000001093523
+  
+    Problem: 
+    Manual VistA Synchronizer errors and occasional crashes during
+    nightly, hourly, and  24-hour manual Synchronizer attempts on bad
+    VistA data. Lodger admissions should be excluded from 
+    Synchronizer data retrieval. 
+  
+    Resolution: 
+    Lodger type admissions will not be displayed to the user for
+    selection. 
+  
+  
+ 9.   INC000000375565
+  
+    Problem: 
+    NUMI should not allow copying an admission review to a continued stay
+    date. 
+  
+    Resolution: 
+    PrimaryReview.aspx.cs and Review.aspx.cs has been changed so that the
+    "copy" button will no longer be available for admission reviews.
+  
+  
+ 10.  INC000000946312
+  
+    Problem: 
+    CERMe legal disclaimer/copyright text on NUMI screen displays needs to 
+    be updated. 
+  
+    Resolution: 
+    An extra menu item has been added under the Help Menu and allows users
+    to view the entire copyright text.
+  
+  
+ 11.  INC000001231842
+  
+    Problem: 
+    Currently NUMI cannot tell when a Manual VistA Synchronization failed
+    and reports false success.  It should display an appropriate error
+    message when the user's VistA system is down and the synchronization
+    has failed. 
+  
+    Resolution: On the Manual VistA Synchronization page, when the user
+    clicks on the Find Stays in VistA button, upon entering the search
+    criteria, the error message "VistA unreachable, Please try again
+    later" is displayed to the user if, for any reason, NUMI
+    is not able to connect to  VistA. The staysynchronizer.cs,
+    patientstaymanager.cs and syncondemand.aspx.cs files were modified
+    to add the error message.
+  
+  
+ 12.  INC000001243857
+  
+    Problem: 
+    Attending and/or provider need to be carried over from last known
+    value on the Patient Selection Worklist and elsewhere.  
+  
+    Resolution: 
+    If a movement does not include attending and/or provider, NUMI will
+    look back to the most recent previous movement(s) to fill in the
+    missing field(s). The admission record in these cases should not
+    have values missing. Changes were made to the NumiStay.cs file.
+  
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+ directory at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library
+ at:      http://www4.domain.ext/vdl/
+  
+   
+ FILE NAME                          DESCRIPTION
+ =========                          ===========
+ numi_14_3_ug.pdf                   NUMI User Guide v14 3.
+ numi_14_3_serversetupguide.pdf     NUMI Server Setup Guide v14.3.
+ numi_14_3_sysmgmtguide.pdf         NUMI System Management Guide v14.3.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based web application build. This is a centralized server
+ promotion. No installation is required at local sites.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 11, 2015
+Completed By:                               Date Completed: FEB 12, 2016
+Released By :                               Date Released : MAR 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

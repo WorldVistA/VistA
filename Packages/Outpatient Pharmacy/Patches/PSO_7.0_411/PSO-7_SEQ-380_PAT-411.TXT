@@ -1,0 +1,381 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: PSO*7*411
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #380                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*294   <<= must be installed BEFORE `PSO*7*411'
+                    (v)PSS*1*175   <<= must be installed BEFORE `PSO*7*411'
+                    (v)PSO*7*427   <<= must be installed BEFORE `PSO*7*411'
+                    (v)PSO*7*429   <<= must be installed BEFORE `PSO*7*411'
+                    (v)PSO*7*436   <<= must be installed BEFORE `PSO*7*411'
+                    (v)PSO*7*438   <<= must be installed BEFORE `PSO*7*411'
+
+Subject: MOCHA UFT ENHANCEMENTS 2 PSO
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) Enhancements 2 group of patches. A host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+ The host file MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID contains: PSO*7*411,
+ PSJ*5*281, OR*3*269 and GMRA*4*46. In addition, there is the stand alone
+ patch PSS*1*175 which must be installed before the combined build.
+  
+ Important:  Recently released patch GMRA*4*48 contains an Allergy 
+ Assessment Clean Up utility tool that produces a report that identifies 
+ discrepancies between the ADVERSE REACTION ASSESSMENT file (#120.86) and
+ the PATIENT ALLERGIES file (#120.8). It is imperative that GMRA*4*48 be 
+ installed prior to the installation of PSO*7*411 and its associated
+ patches, and that all data discrepancies identified by GMRA*4*48 have been
+ corrected. If not, then installing PSO*7*411 and its associated patches
+ may result in drug allergy order checks not displaying in Computerized
+ Patient Record System (CPRS) and pharmacy during the medication order
+ entry processes.
+  
+ This patch PSO*7*411 contains the following functionality:
+  
+ 1. This patch adds BSA (m2) to the Medication Profile report [PSO P]
+ option header display.
+  
+ 2. Add to the backdoor pharmacy order entry process functionality to
+ evaluate the orderable item for a specific patient using the Clinical
+ Reminder Order Check (CROC) API.
+  
+ 3. Modifies the hidden DA option to display all allergy order checks when 
+ multiple allergy checks exist for an order.
+  
+ 4. Modifies the patient information screen to display remote allergies.
+  
+ 5. Modifies the hidden CK option to display allergy information.
+  
+ 6. Adds functionality for requiring an intervention if the allergy is 
+ severe.
+  
+ 7. Adds sign/symptoms to allergy order check display for remote orders. 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+  
+ Forms Associated:
+ ----------------- 
+  N/A 
+  
+  
+ Mail Groups Associated:
+ -----------------------
+  N/A
+  
+  
+ Options Associated:
+ ------------------- 
+  N/A
+  
+  
+ Protocols Associated:
+ ---------------------
+  N/A  
+  
+  
+ Security Keys Associated:
+ -------------------------
+  N/A
+  
+  
+ Templates Associated:
+ ---------------------
+  N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ 20080334 - A Clinical decision Support System is being requested to 
+ further enhance drug order checking to improve patient care and reduce 
+ costs. This request is to address work mandated as determined by Patient
+ Safety Incident (PSI) evaluation.
+  
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ 457/2072 - Remedy ticket # 130757/173383/510151 - The wrong reactant is
+ being displayed in the allergy check. The drug being ordered is being
+ displayed as the causative agent, but now the actual causative agent will
+ be displayed correctly, from the PATIENT ALLERGIES (#120.8) File.
+  
+ 2530 - Remedy ticket # 960690/960714/975660 - Under certain circumstances,
+ ordering a drug for which a patient has a remote allergy to that drug but
+ no local allergy to that drug, an allergy warning is not displayed in
+ Outpatient Pharmacy. Duplicate of PSI 2549.
+  
+ 2561 - If a patient has a drug on the remote profile, but not on the local
+ profile, and you enter a drug that causes a drug-drug interaction order
+ check against that remote drug, the order check does not display in
+ Outpatient Pharmacy.
+  
+ 2585 - Remedy ticket # 1004240/1015745/1043694/1093605 - Erroneous
+ Allergy/Interaction display
+  
+ 2069 - CPRS and Vista Pharmacy package return inadequate alert message 
+ for allergy information. Duplicate of PSI 2099.
+                                             
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. 960714 - AEU reports the site is not getting allergy checks done for 
+ remote allergies when processing medication orders.
+  
+ Problem:
+ -------
+ If the remote reaction was an Adverse Drug Reaction (ADR) rather than an
+ Allergy, the remote reaction is not firing allergy order checks in CPRS or
+ in VistA Pharmacy.  It is also not displaying as a remote reaction on the
+ patient information screen in VistA Pharmacy.  You can see the remote ADR
+ in CPRS via Remote Data or VistaWeb.
+  
+ Resolution:
+ -----------
+ This patch will correct the code to trigger an allergy alert if the 
+ remote action was an ADR rather than an Allergy.
+  
+ 2. 933381 - Incorrect allergy/drug order checks reported by the site
+  
+ Problem:
+ --------
+ Incorrect allergy/drug order checks reported by the site.
+  
+  
+ Resolution:
+ -----------
+ This patch will correct the code to report correct allergy/drug order 
+ checks.
+  
+ 3. 1055309 - Pharmacist does not see the Provider Override Reason for 
+ an allergy alert when verifying an order that was finished by a 
+ technician.
+  
+ Problem:
+ --------
+ If an order was originally entered through CPRS and an allergy was 
+ shown to the person entering the order, and a Provider Override reason 
+ was entered, and a technician finishes that order in Pharmacy, the 
+ technician will see that Provider Override Reason. But if that order then 
+ goes into a Non-Verified state, the Pharmacist will not see that Provider
+ Override reason when verifying the order.
+  
+ Resolution:
+ ---------
+ The Pharmacist will now see the same Provider Override Reason that the 
+ technician saw.
+     
+ 4. 1232967 - Drug Interactions against pending outpatient orders with only
+ a PHARMACY ORDERABLE ITEM (#50.7) File entry assigned, but no DRUG (#50)
+ File entry assigned, do not display in Outpatient Pharmacy.
+  
+ Problem:
+ --------
+ If a prescription is entered through Outpatient Pharmacy that has a drug 
+ interaction against an entry in the PENDING OUTPATIENT ORDERS (#52.41)
+ File, and that pending order only has a PHARMACY ORDERABLE ITEM (#50.7) 
+ File entry assigned, but no DRUG (#50) File entry assigned, that
+ interaction order check will not display to the pharmacist.
+  
+ Resolution:
+ -----------
+ Drug interactions against pending outpatient orders with only a PHARMACY 
+ ORDERABLE ITEM (#50.7) File entry assigned, but no DRUG (#50) File entry
+ assigned, will now display during the medication order entry process in
+ Outpatient Pharmacy.
+  
+  
+ Blood Bank Clearance:
+ ---------------------
+ n/a
+        
+  
+ Test Sites:
+ -----------
+ Maryland HCS
+ Sioux Falls, SD
+ Orlando, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by
+ this patch is available.
+  
+ The preferred method is to use Secure File Transfer Protocol (SFTP) to 
+ retrieve the files from download.vista.domain.ext. This transmits the
+ files from the first available server. Sites may also elect to
+ retrieve documentation directly from a specific server as follows:
+  
+ Albany:         domain.ext
+ Hines:          domain.ext
+ Salt Lake City: domain.ext
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www.domain.ext/vdl/
+  
+  FILE NAME                              DESCRIPTION
+  =========                              ===========
+  
+  PSS_1_PSJ_5_PSO_7_RN_R0416.PDF         MOCHA Enhancements 2 Release Notes
+  
+  PSS_1_PSJ_5_PSO_7_MOCHA_E2_CB_IG.PDF   MOCHA Enhancements 2 Installation
+                                         Guide
+  
+  PSO_7_MAN_UM_R0416.PDF                 Outpatient Pharmacy Manager's 
+                                         User Manual v7.0
+  
+  PSO_7_PHAR_UM_R0416.PDF                Outpatient Pharmacy Pharmacist's 
+                                         User Manual v7.0
+  
+  PSO_7_TECH_UM_R0416.PDF                Outpatient Pharmacy Technician's 
+                                         User Manual v7.0
+  
+  PSO_7_TM_R0416.PDF                     Outpatient Pharmacy Technical 
+                                         Manual/Security Guide v7.0
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ MOCHA Enhancements 2 includes the following patches. The host files
+ were created to simplify installation at Veterans Health Administration
+ (VHA) facilities for these pharmacy patches.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    PSS_1_175.KID                     PSS*1*175          ASCII
+  
+    MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID   GMRA*4*46          ASCII
+                                      OR*3*269
+                                      PSJ*5*281
+                                      PSO*7*411 
+               
+  
+ Installation Instructions 
+ -------------------------
+ Refer to the MOCHA Enhancements 2 Installation Guide for installation
+ instructions.
+  
+   Install Order:
+  
+     1. PSS_1_175.KID
+     2. MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 95
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCAN2
+    Before: B85372649   After: B85734991  **8,18,62,46,88,164,235,148,
+                                           259,281,287,251,375,379,396,
+                                           390,372,416,411**
+Routine Name: PSOCROC
+    Before:       n/a   After:  B8829845  **411**
+Routine Name: PSODDPR2
+    Before:B107649994   After:B133640558  **251,375,379,390,372,416,411**
+Routine Name: PSODDPR5
+    Before:B160751448   After:B163007377  **251,375,379,390,372,416,438,411**
+Routine Name: PSODDPR7
+    Before: B68911471   After:B148972341  **390,411**
+Routine Name: PSODDPRE
+    Before:B133385173   After:B139774341  **251,375,387,379,390,372,416,411**
+Routine Name: PSODEM
+    Before: B15804329   After: B16428757  **5,19,233,258,326,390,411**
+Routine Name: PSODGAL1
+    Before: B81652199   After:B113259514  **251,401,390,424,429,411**
+Routine Name: PSODGAL2
+    Before: B20866110   After:B104733405  **390,411**
+Routine Name: PSODGAL3
+    Before:       n/a   After:B172651497  **411**
+Routine Name: PSODRG
+    Before: B79401497   After: B93593274  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427,411**
+Routine Name: PSONEW
+    Before: B43522881   After: B33443923  **11,27,32,46,94,130,268,225,
+                                           251,379,390,417,313,411**
+Routine Name: PSONEWOA
+    Before:       n/a   After: B40166209  **411**
+Routine Name: PSONEWOC
+    Before:       n/a   After: B28895423  **411**
+Routine Name: PSOOCKV1
+    Before:       n/a   After: B14894586  **411**
+Routine Name: PSOORCPY
+    Before: B32700347   After: B34153930  **10,21,27,32,46,100,117,148,
+                                           313,411**
+Routine Name: PSOOREDT
+    Before: B80361820   After: B82334396  **4,20,27,37,57,46,78,102,104,
+                                           119,143,148,260,281,304,289,
+                                           298,379,377,391,313,427,411**
+Routine Name: PSOORNE4
+    Before: B98202057   After:B101859322  **11,27,32,36,46,75,96,103,99,
+                                           117,131,225,386,390,391,313,
+                                           411**
+Routine Name: PSOORNEW
+    Before: B93914156   After: B94643833  **11,23,27,32,55,46,71,90,94,
+                                           106,131,133,143,237,222,258,
+                                           206,225,251,386,390,391,372,
+                                           416,431,313,408,436,411**
+Routine Name: PSOORUT2
+    Before: B95782995   After: B97954565  **11,146,132,182,233,243,261,
+                                           268,264,305,390,411**
+Routine Name: PSOQRART
+    Before:  B5971862   After:  B6101502  **294,411**
+Routine Name: PSORENW
+    Before: B44953613   After: B47375085  **11,27,30,46,71,96,100,130,
+                                           148,206,388,390,417,313,411**
+Routine Name: PSORENW0
+    Before: B83644019   After: B84910963  **11,27,32,59,64,46,71,96,100,
+                                           130,237,206,251,375,379,372,
+                                           411**
+Routine Name: PSORENW4
+    Before: B62985403   After: B66539714  **11,23,27,32,37,64,46,75,71,
+                                           100,130,117,152,148,264,225,
+                                           301,390,313,411**
+Routine Name: PSOUTL
+    Before:B132826044   After:B147729082  **1,21,126,174,218,259,324,390,
+                                           313,411**
+Routine Name: PSOVER1
+    Before:B126246906   After:B126108249  **32,46,90,131,202,207,148,243,
+                                           268,281,324,358,251,375,387,
+                                           379,390,372,416,411**
+ 
+Routine list of preceding patches: 294, 427, 429, 436, 438
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 22, 2012
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

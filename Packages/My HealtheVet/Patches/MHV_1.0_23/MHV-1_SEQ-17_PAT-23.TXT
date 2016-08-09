@@ -1,0 +1,135 @@
+
+=============================================================================
+Run Date: FEB 05, 2016                     Designation: MHV*1*23
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #17                      Status: Released
+                  Compliance Date: MAR 07, 2016
+=============================================================================
+
+
+Subject: MYHEALTHEVET REL 16.1 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MHV Release 2016.1.0.0 will be promoted to Production on Saturday, 
+ February 6th, 2016 starting at 10:00PM EST.
+  
+ Infrastructure & Interface (I&I) Team Enhancements
+ ==================================================
+  
+ - Epic 235033 - Message Delivery Notifications and Content Changes
+  
+ - Send VA Health Summary - Basic and Alternate Flow
+ User will be able to see all content updates, see the summary table for
+ Send My VA Health Summary Requests, and send the VA Health Summary file
+ one Direct email address.
+  
+ - VA Health Summary Background Job
+ MHV system will run a daily automated background job at configurable
+ intervals every day.
+  
+ - Opt-In to Receive Send My Health Summary Delivery Notification
+ Premium MHV account users in VA CCD Direct field test group, can go to the
+ Profiles page and setup their email preference to receive email
+ notification about the delivery status when the Health Summary has been
+ sent.
+  
+ - Turn Off Send My Health Summary Email Notification
+ Premium MHV account users in VA CCD Direct field test group, can 
+ go to the Profiles page and setup their email preference to opt out of
+ receiving email notifications about the delivery status of the Health
+ Summary. 
+  
+ - Epic 235029 - MHV Federated Credential New User Registration
+ Enhancements
+ MHV Federated Credential pilot users will be able to see the redesigned 
+ Login Box on the My HealtheVet Home page with Login and Register Buttons.
+ Login will take the users to the "Your Login, Your Choice" page where
+ they will have the option of logging in with a MHV User ID and Password or
+ with Sign-in Partners.
+ MHV users will be able to login with their MHV User ID and Password 
+ from the secondary "Your Login, Your Choice" page.
+  
+  
+ Veteran Facing Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ - Epic 234919 - Update default for complete message options 
+ Healthcare Team Member (HCT) will be able to mark the message as complete
+ as default option after replying to a message thread.
+  
+ - Epic 249975 - Save new messages to CPRS
+ Healthcare Team Member (HCT) will be able to save new messages to CPRS 
+ Progress Notes. Option displayed when sending a new message to the 
+ patient.
+  
+ - Epic 259987 - Prescription (RX) Tracking
+ Business rule change Premium or Advanced account users shall be able to
+ view tracking information for prescriptions in the Prescription Tracking,
+ Rx refill or Refill history pages based on prescription routing window or
+ mail order.
+  
+ - Story 272287 - Change RxTracking status job e-mail notification cronjob 
+ (configurable automated system scheduling job) time from 7AM to 8AM EST.
+  
+ - Defect 249242 - Finish message options displays reminder option when 
+ message is assigned to another user.
+  
+ Sustainment Team
+ ================
+  
+ - Defect 272923 - Increase the MHV Portal timeout value from 20 minutes to
+ 25 minutes
+  
+ - Defect 251033 - Resolve vulnerability to Arbitrary File Upload
+  
+ - Defect 267947 - Clean up the production database table 
+ EVAULT.MESSAGE_TRACE_LOG
+  
+ - Defect 264967 - Add a primary key to the TRACE_PRC_LOG table and update 
+ the logger procedure to handle it
+  
+ - Defect 259475 - Setup an automated process to clean up the metrics table
+  
+ - Defect 237666 - Limit messages from the Oracle job scheduler to failures
+ or errors
+  
+ - Defect 229045 - Partition the Blue Button download tables using the 
+ CREATED_DATE column and cleanup old data
+  
+ SRE Team
+ ========
+  
+ - Release of Increment 3 features to Prod Lite environment (Field Test
+ Only)
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch is only for information.  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ MHV Documentation can be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2016
+Completed By:                               Date Completed: FEB 01, 2016
+Released By :                               Date Released : FEB 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

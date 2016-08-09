@@ -1,0 +1,160 @@
+
+=============================================================================
+Run Date: JAN 15, 2016                     Designation: WEBP*1*2
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: FEB 15, 2016
+=============================================================================
+
+
+Subject: PATIENT-CENTERED MANAGEMENT MODULE (PCMM) WEB APPLICATION, VERSION 1.2
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP-1.2 provides several upgrades and enhancements for the national
+ release of PCMM Web.
+   
+ Enhancements:
+ ==============
+  
+ NON-VA CARE
+ -----------------------------------------------------------------------
+ Functionality to capture non-va care has been added in WEBP*1*2.
+ Provide the ability to capture, view, and manage Non-VA Providers that are
+ providing Non-VA Care (formerly Fee Basis) to the patient through the VA. 
+ Non-VA Care consists of three categories:
+  -Veteran's Choice
+  -Community Nursing Home
+  -Veteran State Home 
+  
+ New Menus in PCMM Web will allow a user to search for Non-VA Providers 
+ and Non-VA practices. Users will be required to assign a Non-VA Practice
+ to a Non-VA Provider and then to the patient. 
+  
+ The user is given an option to assign the patient to a special care type
+ PACT team, "Non-VA Care", to allow a Care Coordinator to manage the
+ population of patients receiving Non-VA Care paid for by the VA.
+  
+  
+ All other Non-VA provider assignments to patients with other Specialties,
+ except Primary Care, will only be displayed in the CPRS Window no changes 
+ to current functionality.  the current functionality of capturing and 
+ displaying Private Sector and DOD Non-VA Providers is still available to 
+ the user thru the new Non-VA Providers process.
+  
+  
+ HOME BASED PRIMARY CARE
+ ---------------------------------------------------------------------
+ Provide the ability to remove Home Based Primary Care (HBPC) as a FOCUS 
+ of the care type "Primary Care" and created a new specialty care type of 
+ "Primary Care - HBPC". This care type functions as a special Primary Care 
+ PACT team that will not follow the same validation rules as a Primary 
+ Care PACT team and will have no pending status. Assignment to this care 
+ type will be "Active" automatically without using encounters. A patient 
+ will only be assigned to either a PC PACT team or a PC-HBPC PACT team at 
+ any given time within the same 3 digit station code. This new 
+ functionality allows this special PACT team to display in the CPRS header 
+ the same as for PC PACT teams by indicating the team name and the 
+ assigned PCP and AP, if assigned. In the CPRS window, a new tag will 
+ appear indicating this new care type of "Primary Care - HBPC" by using 
+ the tag of "HBPC:" instead of "PACT:".
+  
+ FORTIFY
+ -----------------------------------------------------------------------
+ Fortify SCAN Updates: Non-functional updates were made to the PCMM
+ application to remediate security scan findings, no functional changes
+ were required.
+  
+   
+ Implementation:
+ ===============
+ The PCMM Web WEBP-1.2 is a centrally managed web-based application and 
+ will be implemented as a one-time installation by the PCMM Technical Team
+ (HP). PCMM Web 1.1 was installed at four facilities that transitioned to 
+ PCMM Web in its Initial Operating Capability (IOC) stage:
+   585 Iron Mountain
+   614 Memphis
+   648 Portland
+   691 West Los Angeles
+   
+ Implementation Files:
+ =====================
+  None
+  
+  
+ Test Sites:
+ ----------
+ N/A
+   
+  
+ Documentation:
+ ==============
+ The following documentation is available with the release of PCMM Web 
+ WEBP-1.2:
+  
+ Title                            File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ User Guide                       SD_53_603.UM.PDF           binary
+ Release Notes                    SD_53_603.TM.PDF           binary
+ Installation Guide               SD_53_603.IG.PDF           binary
+ Technical Manual                 SD_53_603.TM.PDF           binary
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ The files listed above will be obtainable via FTP. The preferred method 
+ will be to FTP the files from:
+  
+    download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server. Sites may 
+ elect to retrieve manuals directly from a specific server as follows:
+  
+    CIO FIELD OFFICE         FTP ADDRESS                 DIRECTORY
+  
+    Albany             ftp.domain.ext   []
+    Hines              ftp.domain.ext    []
+    Salt Lake City     ftp.domain.ext      []
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www.domain.ext/vdl/
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 05, 2015
+Completed By:                               Date Completed: JAN 14, 2016
+Released By :                               Date Released : JAN 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

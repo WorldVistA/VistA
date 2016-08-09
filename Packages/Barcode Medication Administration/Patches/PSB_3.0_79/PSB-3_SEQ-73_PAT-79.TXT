@@ -1,0 +1,174 @@
+
+=============================================================================
+Run Date: APR 06, 2016                     Designation: PSB*3*79
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #73                      Status: Released
+                  Compliance Date: JUN 10, 2016
+=============================================================================
+
+Associated patches: (v)PSB*3*72    <<= must be installed BEFORE `PSB*3*79'
+
+Subject: ADD CALL TO PROTOCOL TO ADMINISTRATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch contains updates to the Bar Code Medication Administration 
+ (BCMA) package to support the Enterprise Health Management Platform (eHMP)
+ package.
+  
+ This patch ensures that any changes made to medications via Bar Code 
+ Medical Administration in VistA can be shared with eHMP subscribers.
+ This patch contains two routines PSBML and PSBVPR which are called by the 
+ new protocol PSB EVSEND VPR. The PSB EVSEND VPR protocol has the HMP PSB 
+ EVENTS attached to it.
+  
+ ****NOTE****
+ This patch is part of a pre-requisite, multi-build host file which 
+ contains all the patches needed prior to installation of the HMP 2.0 
+ package.  This patch name is HMP PREREQUISITE BUNDLE 2.0.  The 
+ multi-build contains the following patches:
+  
+ GMRC*3.0*80
+ MD*1.0*38
+ OR*3.0*390
+ PSB*3.0*79
+ TIU*1.0*106
+ TIU*1.0*298
+ USR*1.0*37
+  
+ This patch will be installed during a PHASE IMPLEMENTATION
+  
+ To see the current status and target dates for Sites/VISN/Regions please 
+ refer to the following site:
+  
+ http://vaww.oed.portal.domain.ext/pm/iehr/vista_evolution/ehmpdeployment/eHMP%
+ 20v12/Forms/All%20Items.aspx?RootFolder=/pm/iehr/vista_evolution/ehmpdeplo
+ yment/eHMP%20v12/Resources/Waves%20and%20Timelines
+  
+ Patch Components
+ ================
+  
+ Files and Fields Associated:
+ ----------------------------
+ There are no new or modified files or fields in this patch.
+  
+ Forms Associated:
+ -----------------
+ There are no new or modified forms in this patch.
+  
+ Mail Groups Associated:
+ -----------------------
+ There are no new or modified mail groups in this patch.
+  
+ Options Associated:
+ -------------------
+ There are no new or modified options in this patch.
+  
+ Protocols Associated:
+ ---------------------
+  
+ ****NOTE****
+ The following protocol will be modified with the installation of the HMP 
+ 2.0 KIDs build to include the new HMP protocol.
+  
+ Protocol Name                           New/Modified/Deleted
+ -------------                           --------------------
+ PSB EVSEND VPR                             New
+  
+   NAME: PSB EVSEND VPR
+   ITEM TEXT: MEDICATION ADMINISTRATION EVENTS
+   TYPE: extended action                 CREATOR: xxxx
+   DESCRIPTION:  The purpose of this protocol is to send notification of 
+                 events that modify the BCMA MEDICATION LOG file (#53.79).
+   ITEM: HMP PSB EVENTS
+  
+  
+ Security Keys Associated:
+ -------------------------
+ There are no new or modified security keys in this patch.
+  
+ Templates Associated:
+ ---------------------
+ There are no new or modified templates in this patch.
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ NSR #20150408 - VistA Evolution Enterprise Health Management Platform 
+ (eHMP)
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ There are no PSIs associated with this patch.
+  
+ Remedy Tickets(s) & Overview:
+ -----------------------------
+ There are no Remedy Tickets associated with this patch.
+  
+ Test Sites:
+ -----------
+ Hampton, VA
+ Portland, OR
+ San Diego, CA
+ Loma Linda, CA
+ San Antonio, TX
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+  
+  
+ File Name                    Description             Retrieval Format
+ ---------                    -----------             ----------------
+ psb_3_tm.doc             Bar Code Medication         Binary
+                          Administration (BCMA)
+                          Technical Manual/Security Guide
+  
+ This will also be available in PDF format. 
+  
+ Patch Installation:
+ -------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ There are no options or protocols that need to be placed out of order 
+ during the installation of the patch.
+  
+ This patch is part of the multi-build HMP PREREQUISITE BUNDLE 2.0; please 
+ refer to patch HMP 2.0 Installation Guide for complete installation
+ instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 172
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBML
+    Before:B127507803   After:B134214064  **6,3,4,9,11,13,25,45,33,52,
+                                           70,72,79**
+Routine Name: PSBVPR
+    Before:       n/a   After:  B2149221  **79**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 03, 2014
+Completed By:                               Date Completed: APR 06, 2016
+Released By :                               Date Released : APR 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

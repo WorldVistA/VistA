@@ -1,0 +1,160 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Wednesday, 04/29/15 at 16:08
+=============================================================================
+Run Date: NOV 03, 2015                     Designation: LR*5.2*455
+Package : LR - LAB SERVICE                    Priority: EMERGENCY
+Version : 5.2       SEQ #365                    Status: Released
+                  Compliance Date: NOV 06, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*420  <<= must be installed BEFORE `LR*5.2*455'
+
+Subject: UPDATE DATA EXTRACT LOGIC FOR DSS
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ The logic for storing test results in the Decision Support Software (DSS)
+ laboratory results (LAR) extract is being modified.  
+  
+ Currently, lab results are truncated at 20 characters.  This update will 
+ expand the results to 30 characters.
+  
+ This patch is being released in conjunction with the DSS annual 
+ sustainment patch, ECX*3*154, and should be installed at the same time as 
+ patch ECX*3*154.  Order of installation doesn't matter.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+  
+ Components Sent With Patch 
+ --------------------------
+ Files & Fields Associated:
+  
+ File Name (#)                  Field Name (#)       New/Modified/Deleted
+ -------------                  --------------       --------------------
+ LAB DSS LAR EXTRACT (#64.036)  RESULTS (#1)         Modified
+  
+ Documentation Retrieval:
+ ------------------------ 
+ There are no documentation updates related to this patch.
+    
+ Test Sites:
+ -----------
+ Boston
+ North Texas
+ Coatesville
+ Alexandria
+ Little Rock
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants, be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+                 Extract Manager's Options [ECXMGR]
+  
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  START UP KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+    
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter LR*5.2*455):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch
+         install.  Enter LR*5.2*455.
+  
+     b.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+         Install? NO//', respond NO.
+     
+     c.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+  
+     d.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' answer NO 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPDAR
+    Before: B36352191   After: B37041646  **143,169,258,307,326,386,385,
+                                           394,399,420,455**
+ 
+Routine list of preceding patches: 420
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 17, 2015
+Completed By:                               Date Completed: OCT 28, 2015
+Released By :                               Date Released : NOV 03, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,930 @@
+$TXT Created by                  at MNTVLL.DOMAIN.EXT  (KIDS) on Thursday, 03/19/15 at 15:21
+=============================================================================
+Run Date: MAY 12, 2015                     Designation: IB*2*516
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #495                      Status: Released
+                  Compliance Date: MAY 27, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*66     <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*68     <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*93     <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*139    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*370    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*404    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*431    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*437    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*448    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*451    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*458    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*476    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*488    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*494    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*497    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*506    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*515    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*519    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*521    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*526    <<= must be installed BEFORE `IB*2*516'
+                    (v)IB*2*533    <<= must be installed BEFORE `IB*2*516'
+
+Subject: EBILLING - CLAIMS COMPLIANCE
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+  - Input Template
+
+Description:
+============
+
+ *************************************************************************
+ Important Note: There is one **MANDATORY** pre-installation activity
+ associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to the
+ installation of this patch.
+  
+ Please reference instructions from the Pre/Post Installation Overview for 
+ further details.
+  
+ Additionally, the patch installation instructions include a menu rebuild
+ to remove a deleted option.  It is **STRONGLY SUGGESTED** that the rebuild
+ of primary menu trees occurs during non-peak hours.  The patch should 
+ either be installed during non-peak hours, or you may enter NO to the 
+ Rebuild Menus prompt if your system does this in a nightly TaskMan 
+ process.
+  
+ Important Note: After Initial Operating Capabilities (IOC) was completed, 
+ the ICD10 development team discovered a Severity Level 3 defect: 
+  
+ The attending provider's name is not being automatically added to Billing
+ screen 10, Section 3 when a bill is created by the AutoBiller and the
+ provider has a valid National Provider Identifier (NPI). Note that the 
+ attending provider's name transmits when the biller manually adds it to 
+ the bill.
+  
+ This has been logged as Remedy ticket INC000001243424 and will be 
+ addressed in a future release.
+ **************************************************************************
+  
+ This Integrated Billing (IB) patch introduces changes to VistA's 
+ Electronic Claims processing in order to meet the Committee on Operating 
+ Rules for Information Exchange (CORE) Operating Rules.
+  
+ Complete List of patch items:
+  
+ 1. Enter/Edit Billing Information [IB EDIT BILLING INFO]
+  
+     a) Provide the ability for users to authorize a claim for Skilled 
+        Nursing Facility (SNF) with a revenue code(s) less than 100 (remove
+        existing fatal error for codes outside the 100-999 range).
+  
+     b) Provide the ability for users to add National Drug Codes to non-
+        prescription claims.
+  
+     c) Provide the ability for users to add a description to a claim with 
+        a procedure code that ends in 99 or contains the following in the
+        code description:
+            Not Otherwise Classified
+            Not Otherwise
+            Unlisted
+            Not listed
+            Unspecified
+            Unclassified
+            Not otherwise specified
+            Non-specified
+            Not elsewhere specified
+            Not elsewhere
+            Nos (Note: Include "nos ", "nos;", "nos,")
+            Noc (Note: Include "noc ", "noc;", "noc,")
+  
+     d) Prevent the ability to authorize claims with non-billable
+        providers [provider has no National Provider Identification Number
+        (NPI)] on the claim.
+  
+     e) Prevent the ability to authorize a Fee Basis claim with a non-VA 
+        Lab or Facility that has no NPI.
+  
+     f) Provide the ability to authorize a claim with Service Facility
+        data that does not have a Lab or Facility Taxonomy Code without
+        displaying a Warning (remove existing warning).
+  
+     g) Provide the ability to print a TRICARE claim with a
+         TRICARE-specific Pay-to Provider.
+  
+     h) Provide the ability for users to re-sequence Diagnoses Codes (DX) 
+        after Procedures have been associated with the DX (Pointers) 
+        without breaking the association.
+  
+     i) Provide the ability for users to view a list of the following Code 
+        sets by Code number when they enter ?? for Help on Billing Screen 
+        4 and 5:
+            Occurrence Codes
+            Condition Codes
+            Value Codes
+  
+     j) Provide the ability for users to lookup a Code from one of the 
+        following Code sets using the code number:
+            Occurrence Codes
+            Condition Codes
+            Value Codes
+  
+ 2. Insurance Company Editor
+  
+     a) Remove functionality that provides the ability for a site to set a 
+        parameter that forces all claims to a particular payer, to use the 
+        VAMC as the Billing Provider instead of the lowest enumerated 
+        Billing Provider.
+  
+     b) Change the Plan Type description for the Plan Type = FI- FEP 
+        (Federal Employee Plan) to Do Not Use for BC/BS when users enter 
+        ?? for Help at a Plan Type field.
+  
+ 3. Reports
+  
+     a) Add the display of the new Health Plan Identifier (HPID) and the 
+        Other Entity Identifier (OEID) to the Insurance Company EDI 
+        Parameter Report [IBCN INSURANCE EDI REPORT].
+  
+     b) Remove the display of the Billing Provider override parameter from 
+        the Insurance Company EDI Parameter Report [IBCN INSURANCE EDI
+        REPORT].
+  
+     c) Provide the ability to display partial or complete new HIPAA 
+        compliant electronic 270/271 Health Care Eligibility Benefit 
+        Inquiry and Response fields on IB reports.
+  
+     d) Provide the ability for users to sort and display the 
+        Re-Generate Unbilled Amounts Report [IBT RE-GEN UNBILLED 
+        REPORT] by Division.
+  
+     e) Deleted Insurance Company Billing Provider Flag Rpt/Msg [IBCN INS
+        BILL PROV FLAG RPT] which is no longer needed.
+  
+ 4. Third Party Joint Inquiry (TPJI) [IBJ THIRD PARTY JOINT INQUIRY]
+  
+     a) Provide the ability for users to see that a claim in TPJI, Active 
+        and Inactive claim lists, is an Institutional or a Professional 
+        claim.
+  
+     b) Provide the ability for users to view the Co-payment amount 
+        associated with a claim in TPJI
+  
+ 5. COB Management Worklist (CBW) [IBCE COB MANAGEMENT]
+  
+     a) Provide the ability for users to sort and display the CBW by 
+        Division Transactions.
+  
+ 6. Transactions
+  
+     a) Provide the ability to transmit the HPID in the Institutional/
+        Professional 837 claim transaction (Loops 2010BB and 2330B) - 
+        continue to transmit legacy primary and secondary IDs in the 
+        Institutional/Professional 837 claim transaction.
+  
+     b) Provide the ability to transmit the same NPI (organizational) for 
+        a Service Facility and a Rendering Provider (individual) on an 
+        Institutional/Professional 837 claim transaction.
+  
+     c) Remove monthly Mailman messages that notify CBO of how sites have
+         the EDI Parameter for Billing Provider set.
+  
+     d) Prevent an Institutional/Professional 837 claim transaction with a 
+        Y4 Property and Casualty Number Qualifier with no corresponding
+        Property and Casualty Number.
+  
+     e) Provide the ability to transmit the TRICARE Pay-to Provider on all 
+        claims with Rate Type equal to TRICARE and TRICARE REIMB. INS 
+        (Loop 2010AB).
+  
+     f) Provide the ability to transmit a NDC code and units on a non-
+        prescription 837 claim transaction.
+  
+ 7. Correct Rejected/Denied Bill (CRD) [IB CORRECT REJECTED/DENIED] and
+    Copy and Cancel (CLON) [IB COPY AND CANCEL]
+  
+     a) Remove the Security Key, IB CLON, from the OPTION (#19) File that
+        locked the CLON option.
+  
+     b) Remove the ability for users to CRD secondary/tertiary claims.
+  
+     c) Provide the ability for as many fields as possible to be copied 
+        from an original claim to a copy.
+  
+ 8. View Cancelled Claim [IB VIEW CANCEL BILL]
+  
+     a) A new option to provide the ability to see all the data that was in
+        a cancelled claim.
+  
+ 9. Provider ID Maintenance [IBCE PROVIDER MAINT]
+  
+     a) Provide the ability for users to define an Outside Facility that 
+        is a sole-proprietorship with an NPI number that is also used by
+        the provider who is the sole-proprietor.
+  
+ 10. MCCR Site Parameter Display/Edit [IBJ MCCR SITE PARAMETERS]
+  
+     a) Provide the ability for users to define a Pay-to Provider to be 
+        used only on claims with a Rate Type equal to TRICARE or TRICARE
+        REIMB. INS.
+  
+     b) Lock the new Tricare Pay-to Provider functionality Printed CMS -
+        1500 and UB - 04 Forms with new security key, IB EDIT PAY-TO TC.
+  
+     c) Lock the existing Pay-to Provider functionality Printed CMS -
+        1500 and UB - 04 Forms with new security key, IB EDIT PAY-TO.
+  
+ 11. Printed CMS - 1500 and UB-04 Forms
+  
+     a) Provide the ability to print an NDC code on a non-prescription 
+        claim.
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PATIENT (#2)
+   INSURANCE TYPE sub-file (#2.312)
+                       NEW GROUP NAME (#20)                Modified
+                       NEW GROUP NUMBER (#21)              Modified
+ INSURANCE COMPANY (#36)                                   Modified
+                       SEND LAB OR FAC IDS FOR VAMC        Modified
+                         (#4.07)
+                       USE VAMC AS BILL PROV ON 1500       Modified
+                         (#4.11)
+                       USE VAMC AS BILL PROV ON UB04       Modified
+                         (#4.12)
+                       USE BILL PROV VAMC ADDRESS          Modified
+                         (#4.13)
+ IB SITE PARAMETERS (#350.9)                               Modified
+                       DEFAULT TRICARE PAY-TO PROV         New
+                         (#11.04) 
+   TRICARE PAY-TO PROVIDERS sub-file (#350.929)            New
+                       TC FACILITY (#.01)                  New
+                       TC NAME (#.02)                      New
+                       TC FEDERAL TAX NUMBER (#.03)        New
+                       TC TELEPHONE NUMBER (#.04)          New
+                       TC PARENT PAY-TO PROVIDER (#.05)    New
+                       TC STREET ADDRESS 1 (#1.01)         New
+                       TC STREET ADDRESS 2 (#1.02)         New
+                       TC CITY (#1.03)                     New
+                       TC STATE (#1.04)                    New
+                       TC ZIP (#1.05)                      New
+ GROUP INSURANCE PLAN (#355.3)                             Modified
+                       ELECTRONIC PLAN TYPE (#.15)         Modified
+ IB NON/OTHER VA BILLING PROVIDER (#355.93)                Modified
+                       SOLE PROPRIETORSHIP (#.17)          New
+                       NON-VA PROVIDER (#.18)              New
+ IB DATA ELEMENT DEFINITION (#364.5)                       Modified
+      Screen: I $$INCLUDE^IBY516PR(5,Y)
+ IB FORM SKELETON DEFINITION (#364.6)                      Modified
+      Screen: I $$INCLUDE^IBY516PR(6,Y)
+ IB FORM FIELD CONTENT (#364.7)                            Modified
+      Screen: I $$INCLUDE^IBY516PR(7,Y)
+ BILL/CLAIMS (#399)                                        Modified
+                       PRIMARY NODE 7 (#371)               New
+                       SECONDARY NODE 7 (#372)             New
+                       TERTIARY NODE 7 (#373)              New
+                       PRIMARY INSURANCE HPID (#471)       New
+                       SECONDARY INSURANCE HPID (#472)     New
+                       TERTIARY INSURANCE HPID (#473)      New
+                       PROPERTY/CASUALTY CLAIM NUMBER      Modified
+                         (#261)
+   CONDITION CODE sub-file (#399.040)
+                       CONDITION CODE (#.01)               Modified
+   OCCURRENCE CODE sub-file (#399.041)
+                       OCCURRENCE CODE (#.01)              Modified
+   VALUE CODE sub-file (#399.047)
+                       VALUE CODE (#.01)                   Modified
+   PROCEDURES sub-file (#399.0304)                         Modified
+                       PROCEDURE DESCRIPTION (#51)         New
+                       NDC (#53)                           New
+                       UNITS (#54)                         New
+  
+  
+  
+ Bulletins Associated:
+                                                           New/Modified/
+ Bulletin Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Dialogs Associated:
+                                                           New/Modified/
+ Dialog Name                                                 Deleted    
+ -----------                                               -------------
+ N/A
+  
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+  
+ Functions Associated:
+                                                           New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Help Frames Associated:
+                                                           New/Modified/
+ Help Frame Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IB COPY AND CANCEL           run routine                  Modified 
+ IB VIEW CANCEL BILL          run routine                  New 
+ IBCN INS BILL PROV FLAG      run routine                  Delete 
+ RPT                                                       
+  
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ N/A
+  
+  
+  
+ Parameter Template:
+                                                           New/Modified/
+ Template Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBCEM CSA CANCEL/CLONE BILL                               New
+ IBCEM CSA MSG MENU                                        Modified
+ IBJP IB PAY-TO DIVISION ADD                               Modified 
+ IBJP IB PAY-TO PROVIDER ADD                               Modified 
+ IBJP IB PAY-TO PROVIDER DEL                               Modified 
+ IBJP IB PAY-TO PROVIDER EDIT                              Modified 
+ IBJP IB PAY-TO PROVIDERS MENU                             Modified 
+ IBJP IB TRICARE PAY-TO ASSOCIATIONS MENU                  New 
+ IBJP IB TRICARE PAY-TO DIVISION ADD                       New 
+ IBJP IB TRICARE PAY-TO PROVIDER ADD                       New 
+ IBJP IB TRICARE PAY-TO PROVIDER DEL                       New 
+ IBJP IB TRICARE PAY-TO PROVIDER DIVISIONS                 New 
+ IBJP IB TRICARE PAY-TO PROVIDER EDIT                      New 
+ IBJP IB TRICARE PAY-TO PROVIDERS MENU                     New 
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ IB EDIT PAY-TO                                            New 
+ IB EDIT PAY-TO TC                                         New 
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IB SCREEN3         Input     BILL/CLAIMS (#399)           Modified 
+ IBEDIT INS CO1     Input     INSURANCE COMPANY (#36)      Modified 
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ Template Name      Type                                     Deleted    
+ -------------      ----                                   -------------
+ IBJP IB PAY-TO     List                                   Modified 
+ ASSOCIATIONS                                              
+ IBJP IB PAY-TO     List                                   Modified 
+ PROVIDERS                                                 
+ IBJP IB TRICARE    List                                   New 
+ PAY-TO ASSOCS                                             
+ IBJP IB TRICARE    List                                   New 
+ PAY-TO PROVS                                              
+  
+  
+ Templates, Print Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBNOTVER           Print     PATIENT (#2)                 Modified
+  
+  
+  
+ Templates, Sort Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ #20110503  Electronic Data Interchange (EDI) New Standards and Operating
+ Rules (Veterans Health Administration) VHA Provider-Side TCRs.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ Baltimore, MD
+ Richmond, VA
+ Minneapolis, MN
+ Omaha, NE
+ Sioux Falls, SD
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ IB Release Notes/Installation Guide  ib_2_0_p516_rn.pdf         Binary
+ EDI User Guide                       edi_user_guide_r0415.pdf   Binary
+ Integrated Billing (IB) V. 2.0 
+ Technical Manual                     ib_2_0_tm_r0415.pdf        Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ ****Important Note: There is one **MANDATORY** pre-installation
+     activity associated with this install.
+  
+ The IB Staff MUST empty the 837 extract/transmission queue PRIOR to
+ the installation of this patch. ***
+  
+ The site Information Resource Management (IRM) would coordinate with the
+ Billing Department to insure that the 837 extract/transmission queue is
+ empty. The Billing Department should be aware of the set of instructions
+ to be executed. If not billing supervisor can be contacted. Once the
+ Billing Department has completed the instruction, the Billing department
+ is to inform IRM that the patch installation could proceed.
+  
+ The instructions to empty the queue are as follows:
+  
+ Select the option:   TRANSMIT EDI BILLS - MANUAL [IBCE 837 MANUAL 
+ TRANSMIT]
+  
+   What is the purpose of this option?
+    This option is used to by-pass the normal daily/nightly transmission
+    queues if the need arises to get the claim to the payer quickly.
+  
+   When is this option used?
+    There are occasions when there is a need to transmit a claim(s)
+    immediately instead of waiting for the batching frequency as scheduled
+    in the MCCR Site Parameter.  This option will allow sending individual
+    claim(s) or all claims in a ready for extract status.
+  
+   Upon selecting this option you will be prompted with the following:
+     Select one of the following:
+      A  Transmit (A)LL bills in READY FOR EXTRACT status
+      S  Transmit only (S)ELECTED bills
+  
+   You should select 'A' for ALL
+  
+ Once the Billing Department has completed the instruction, the Billing
+ department is to inform IRM that the patch installation could proceed.
+  
+ There are no other mandatory pre-installation activities associated
+ with this package.
+  
+ ****Important Note: After IOC was completed, the ICD10 development team
+     discovered a Severity Level 3 defect: 
+  
+ The attending provider's name is not being automatically added to Billing
+ screen 10, Section 3 when a bill is created by the AutoBiller and the
+ provider has a valid NPI. Note that the attending provider's name
+ transmits when the biller manually adds it to the bill.
+   
+ This has been logged as Remedy ticket INC000001243424 and will be 
+ addressed in a future release.
+  
+ The pre-installation routine will delete unused Output Formatter entries.
+  
+ The pre and post installation routines will recompile the Input Templates
+ for the Billing Screens.
+  
+  
+ Installation Instructions
+ -------------------------
+  
+   ******************************************************************
+   *  You should install this patch during non-peak hours, when no  *
+   *  Integrated Billing or Accounts Receivable users are on the    *
+   *  system.                                                       *
+   ******************************************************************
+  
+  
+         ****There are no options to disable.
+  
+ Install Time: Less than 10 minutes.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     IB*2.0*516.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     d.  Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//'  You may answer NO if your system does this in a
+     nightly TaskMan process. 
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  Answer NO
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// Answer NO
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ Routines IBY516PO and IBY516PR can be manually deleted by IT/IRM upon
+ completion of the installation.
+  
+ New Security Keys IB EDIT PAY-TO and IB EDIT PAY-TO TC should be assigned 
+ to the Billing Supervisor.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 123
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBATLM3A
+    Before: B22313695   After: B24217228  **115,516**
+Routine Name: IBBFAPI
+    Before: B43623282   After: B43892084  **267,297,249,317,361,384,404,516**
+Routine Name: IBCAPP2
+    Before: B43298709   After: B49339546  **432,447,516**
+Routine Name: IBCBB11
+    Before: B97720533   After: B95727608  **51,343,363,371,395,392,401,
+                                           384,400,436,432,516**
+Routine Name: IBCBB7
+    Before: B28157499   After: B28514446  **51,137,240,447,488,516**
+Routine Name: IBCC
+    Before: B57603103   After: B65165308  **2,19,77,80,51,142,137,161,
+                                           199,241,155,276,320,358,433,
+                                           432,447,516**
+Routine Name: IBCCC
+    Before: B20967189   After: B22970985  **80,109,106,51,320,433,432,447,516**
+Routine Name: IBCCC2
+    Before:B108841715   After:B113680571  **80,106,124,138,51,151,137,
+                                           161,182,211,245,155,296,320,
+                                           348,349,371,400,433,432,447,
+                                           516**
+Routine Name: IBCD3
+    Before: B31598371   After: B32514703  **14,55,52,91,106,125,51,148,
+                                           160,137,210,245,260,405,384,
+                                           516**
+Routine Name: IBCECOB
+    Before: B17969465   After: B27628888  **137,155,288,432,488,516**
+Routine Name: IBCECOB1
+    Before:B112283735   After:B141608790  **137,155,288,348,377,417,432,
+                                           447,488,516**
+Routine Name: IBCECOB2
+    Before:B183092638   After:B183699434  **137,155,433,432,447,488,516**
+Routine Name: IBCECSA4
+    Before: B60720503   After: B61845851  **137,155,320,371,433,516**
+Routine Name: IBCEF
+    Before: B58449164   After: B64641917  **52,80,51,137,288,296,361,371,
+                                           447,516**
+Routine Name: IBCEF11
+    Before: B67207596   After: B80990662  **51,137,155,309,335,348,349,
+                                           371,432,447,473,516**
+Routine Name: IBCEF21
+    Before: B23776552   After: B23973664  **51,296,371,389,448,516**
+Routine Name: IBCEF22
+    Before: B79219296   After: B90984490  **51,137,135,155,309,349,389,
+                                           432,488,516**
+Routine Name: IBCEF3
+    Before: B47162871   After: B47786755  **52,84,121,51,152,210,155,348,
+                                           349,389,488,516**
+Routine Name: IBCEF31
+    Before: B11345418   After: B14588723  **155,296,349,400,432,488,516**
+Routine Name: IBCEF72
+    Before: B54190068   After: B57296289  **232,320,349,432,516**
+Routine Name: IBCEF73A
+    Before: B55865498   After: B43076924  **343,374,395,391,400,432,516**
+Routine Name: IBCEF74A
+    Before: B39969650   After: B39038241  **320,343,349,395,400,432,516**
+Routine Name: IBCEF76
+    Before: B45722940   After: B48153213  **320,349,400,432,516**
+Routine Name: IBCEF77
+    Before: B24927059   After: B27920356  **232,280,155,290,291,320,348,
+                                           349,516**
+Routine Name: IBCEF78
+    Before:  B4445010   After:  B7140538  **371,516**
+Routine Name: IBCEF79
+    Before:B170462166   After:B118916763  **400,419,432,516**
+Routine Name: IBCEFP
+    Before:B115077680   After:B115631357  **432,447,473,516**
+Routine Name: IBCEOB0
+    Before: B90917821   After: B91995821  **135,280,155,431,488,516**
+Routine Name: IBCEOB01
+    Before: B24417822   After: B25712240  **377,516**
+Routine Name: IBCEP8
+    Before:B129710257   After:B134052747  **51,137,232,288,320,343,374,
+                                           377,391,400,436,432,476,516**
+Routine Name: IBCEP81
+    Before: B65647537   After: B67515820  **343,391,400,476,516**
+Routine Name: IBCEP82
+    Before: B73798180   After: B72564022  **343,374,377,391,516**
+Routine Name: IBCEP8B
+    Before: B34200270   After: B35610752  **391,432,476,488,516**
+Routine Name: IBCEPB
+    Before: B10650639   After:  B7598816  **320,348,349,400,516**
+Routine Name: IBCEQ1A
+    Before: B62926268   After: B67430449  **232,348,349,516**
+Routine Name: IBCF21
+    Before: B15664460   After: B16291620  **8,80,51,488,516**
+Routine Name: IBCF23A
+    Before: B19444201   After: B20324273  **51,432,516**
+Routine Name: IBCF31
+    Before: B19588940   After: B19880263  **17,52,80,51,516**
+Routine Name: IBCNBLE
+    Before:B108261556   After:B108261560  **82,231,184,251,371,416,435,
+                                           452,497,519,516**
+Routine Name: IBCNBLE1
+    Before: B32174406   After: B32419797  **184,271,416,435,467,516**
+Routine Name: IBCNBLP
+    Before: B25507553   After: B28291070  **82,497,516**
+Routine Name: IBCNBLP1
+    Before: B31255881   After: B34470080  **82,133,516**
+Routine Name: IBCNEHLQ
+    Before: B46752354   After: B49920378  **184,271,300,361,416,438,467,
+                                           497,533,516**
+Routine Name: IBCNRP
+    Before: B21440357   After: B23991821  **251,516**
+Routine Name: IBCNRP5
+    Before: B56002389   After: B56117515  **276,516**
+Routine Name: IBCNRPM1
+    Before:  B6996620   After:  B7640127  **251,516**
+Routine Name: IBCNRPMT
+    Before:  B4118434   After:  B4159618  **251,516**
+Routine Name: IBCNRPS2
+    Before: B22515799   After: B24644732  **276,516**
+Routine Name: IBCNRRP3
+    Before: B55033574   After: B58110020  **251,276,516**
+Routine Name: IBCNS
+    Before: B27665348   After: B28265165  **28,43,80,82,133,399,516**
+Routine Name: IBCNS1
+    Before: B35071030   After: B42707809  **28,60,52,85,107,51,137,240,
+                                           371,516**
+Routine Name: IBCNS2
+    Before: B24154529   After: B29335309  **28,43,80,51,137,155,488,516**
+Routine Name: IBCNS3
+    Before: B62573337   After: B60729122  **287,399,416,516**
+Routine Name: IBCNSBL1
+    Before: B33740946   After: B37090504  **6,28,82,249,276,516**
+Routine Name: IBCNSC1
+    Before: B90495985   After: B80307925  **62,137,232,291,320,348,349,
+                                           371,400,519,516**
+Routine Name: IBCNSC3
+    Before: B18009103   After: B18386728  **28,46,68,516**
+Routine Name: IBCNSC4
+    Before: B18086570   After: B18719019  **43,85,103,251,416,497,516**
+Routine Name: IBCNSGE
+    Before:B103633903   After: B98010090  **296,400,521,516**
+Routine Name: IBCNSGM
+    Before: B42642306   After: B42739860  **400,516**
+Routine Name: IBCNSJ14
+    Before:  B9289898   After:  B9400113  **28,516**
+Routine Name: IBCNSJ2
+    Before: B21486680   After: B22855491  **28,516**
+Routine Name: IBCNSJ4
+    Before: B28671454   After: B30114071  **28,62,516**
+Routine Name: IBCNSJ5
+    Before: B19164548   After: B19961411  **43,516**
+Routine Name: IBCNSM2
+    Before: B21029266   After: B21200856  **28,103,139,516**
+Routine Name: IBCNSM3
+    Before: B14271242   After: B15749953  **6,28,85,211,251,399,506,516**
+Routine Name: IBCNSM31
+    Before: B21224087   After: B21467883  **6,28,68,413,497,516**
+Routine Name: IBCNSM5
+    Before: B21379064   After: B22650774  **28,497,516**
+Routine Name: IBCNSMM
+    Before: B20650555   After: B21594622  **103,133,184,516**
+Routine Name: IBCNSP
+    Before: B48468493   After: B49297563  **6,28,43,52,85,251,363,371,
+                                           416,497,516**
+Routine Name: IBCNSP0
+    Before: B37737467   After: B38008161  **28,43,52,85,93,103,137,229,
+                                           251,363,371,399,438,458,497,
+                                           516**
+Routine Name: IBCNSP11
+    Before: B11695386   After: B11721673  **28,43,85,103,137,251,399,516**
+Routine Name: IBCNSUR
+    Before: B24160231   After: B24287477  **103,276,506,516**
+Routine Name: IBCNSUR1
+    Before: B56652391   After: B57694333  **103,225,276,516**
+Routine Name: IBCNSUX
+    Before: B16195424   After: B16407219  **103,516**
+Routine Name: IBCNSUX1
+    Before: B20036863   After: B20451867  **103,133,516**
+Routine Name: IBCOMA1
+    Before: B29547296   After: B34536686  **103,516**
+Routine Name: IBCOMC2
+    Before: B12700505   After: B12669229  **103,153,516**
+Routine Name: IBCONS1
+    Before: B75219188   After: B79511698  **66,80,137,516**
+Routine Name: IBCOPP2
+    Before: B19008544   After: B20749250  **28,62,93,516**
+Routine Name: IBCOPP3
+    Before:  B9597460   After: B10453963  **28,516**
+Routine Name: IBCRBC
+    Before: B11588633   After: B13081185  **52,80,106,51,137,245,370,516**
+Routine Name: IBCSC3
+    Before: B37249647   After: B37464352  **8,43,52,80,82,51,137,232,320,
+                                           377,516**
+Routine Name: IBCSC4D
+    Before: B61931126   After: B75384760  **55,62,91,106,124,51,210,403,
+                                           400,461,516**
+Routine Name: IBCSCE1
+    Before:  B7420897   After:  B7430380  **516**
+Routine Name: IBCU7
+    Before: B77808645   After:B111564056  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461,516**
+Routine Name: IBCU74
+    Before: B35879024   After: B36449231  **228,260,339,432,516**
+Routine Name: IBCVA0
+    Before: B10445232   After: B10440495  **52,361,371,516**
+Routine Name: IBJDF51
+    Before: B57886181   After: B58912743  **123,185,240,356,452,516**
+Routine Name: IBJPS
+    Before:  B3981041   After:  B4384435  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432,494,461,516**
+Routine Name: IBJPS2
+    Before: B41765087   After: B45274108  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432,
+                                           494,461,516**
+Routine Name: IBJPS3
+    Before: B89166752   After:B111722417  **400,432,516**
+Routine Name: IBJPS4
+    Before: B28407182   After: B36439628  **400,516**
+Routine Name: IBJTCA1
+    Before: B54215341   After: B59453492  **39,80,106,137,223,276,363,
+                                           384,432,452,473,497,521,516**
+Routine Name: IBJTCA2
+    Before: B23068552   After: B40902439  **39,80,155,320,516**
+Routine Name: IBJTLA1
+    Before: B10714466   After: B11361045  **39,80,61,51,153,137,183,276,
+                                           451,516**
+Routine Name: IBJTLB1
+    Before: B11067077   After: B11794378  **39,80,61,137,276,451,516**
+Routine Name: IBJTU1
+    Before:  B7894877   After:  B7959085  **39,80,276,451,516**
+Routine Name: IBJTU31
+    Before:  B7603119   After:  B8926798  **39,61,516**
+Routine Name: IBNCPDP3
+    Before: B84831779   After: B84489638  **223,276,342,363,383,384,411,
+                                           435,452,516**
+Routine Name: IBNCPDP5
+    Before: B80347970   After: B80792303  **411,452,526,516**
+Routine Name: IBNCPDS1
+    Before: B10933965   After: B11865744  **411,452,516**
+Routine Name: IBNCPEV
+    Before: B97561964   After:B102192248  **342,363,383,384,411,435,452,
+                                           521,516**
+Routine Name: IBNCPEV1
+    Before: B65821785   After: B67774383  **342,339,363,411,435,452,516**
+Routine Name: IBOTR3
+    Before: B29774240   After: B31663645  **42,80,100,118,128,133,447,516**
+Routine Name: IBRBUL
+    Before: B36492961   After: B39836566  **70,95,121,153,195,347,452,516**
+Routine Name: IBRFN3
+    Before: B29612898   After: B30451954  **61,133,210,309,389,516**
+Routine Name: IBRFN4
+    Before: B25630558   After: B27444633  **301,305,389,516**
+Routine Name: IBTOBI1
+    Before: B18898112   After: B19861632  **276,377,516**
+Routine Name: IBTRCD0
+    Before: B16113018   After: B16868309  **458,516**
+Routine Name: IBTUBO
+    Before: B25696439   After: B35610159  **19,31,32,91,123,159,192,235,
+                                           248,155,516**
+Routine Name: IBTUBO1
+    Before: B47180115   After: B62446159  **19,31,32,91,123,159,247,155,
+                                           277,339,399,516**
+Routine Name: IBTUBO2
+    Before: B33667876   After: B49823798  **19,31,32,91,123,159,192,155,
+                                           309,347,437,516**
+Routine Name: IBTUBO3
+    Before: B23289291   After: B28228475  **123,159,192,155,277,516**
+Routine Name: IBTUBOA
+    Before: B30890238   After: B37900623  **19,31,32,91,123,159,192,155,
+                                           276,516**
+Routine Name: IBTUBUL
+    Before: B21781134   After: B72452562  **19,123,159,217,155,356,516**
+Routine Name: IBVCB
+    Before:       n/a   After:B123320263  **516**
+Routine Name: IBVCB1
+    Before:       n/a   After:B135425175  **516**
+Routine Name: IBVCB2
+    Before:       n/a   After:B110047132  **516**
+Routine Name: IBY516PO
+    Before:       n/a   After:  B4162987  **516**
+Routine Name: IBY516PR
+    Before:       n/a   After: B10110091  **516**
+ 
+Routine list of preceding patches: 139, 370, 404, 437, 448, 451, 461, 506
+                           519, 521, 526, 533
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 02, 2013
+Completed By:                               Date Completed: APR 24, 2015
+Released By :                               Date Released : MAY 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

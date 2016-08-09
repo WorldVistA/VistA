@@ -1,0 +1,134 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/08/15 at 13:02
+=============================================================================
+Run Date: MAR 10, 2015                     Designation: DVBA*2.7*191
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #166                    Status: Released
+                  Compliance Date: APR 10, 2015
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*185<<= must be installed BEFORE `DVBA*2.7*191'
+
+Subject: QUEUED INSUFF REPORT UNDEF ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DVBA*2.7*191 corrects an undefined error that occurs when queueing a
+ detailed report using the DVBA C INSUFFICIENT EXAM RPT [Insufficient Exam 
+ Report] option.
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ===========================
+ INC000000952512 - AMIE - C and P:
+  
+ Duplicate:
+ INC000001029082
+  
+            
+ ASSOCIATED NSR:
+ ==============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Hines VAMC
+ Lebanon VAMC
+ Providence VAMC
+ North FL/South GA HCS
+ Upstate NY HCS
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ INC000000952512 - AMIE - C and P:
+  
+   Problem:
+   -------
+   When using DVBA C INSUFFICIENT EXAM RPT [Insufficient Exam Report]
+   option and queueing a detailed report to output as a mailman message, 
+   an <undefined> error occurs due to an uninitialized variable.
+  
+   Resolution:
+   ----------
+   Routine DVBCIRPT will be modified to initialize variable DVBADLMTR which
+   will prevent the undefined error from occurring.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  
+ This patch can be installed with users in the system, but it is 
+ recommended that it be installed when user activity is very low.
+  
+ Installation time will be less than one minute.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter DVBA*2.7*191)
+   
+       a.  Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+       b.  Print Transport Global - This option will allow you to view
+           the components of the KIDS build.
+       c.  Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when this 
+           patch is installed.  It compares all components of this patch
+           (routines, DD's, templates, etc.).
+       d.  Backup a Transport Global - This option will create a backup
+           message of any routines exported with this patch. It will not
+           backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       DVBA*2.7*191.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond 'NO'.
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond 'YES'.
+  
+       a. When prompted "Enter options you wish to mark as "Out of Order:",
+          enter the following option:
+  
+          DVBA C INSUFFICIENT EXAM RPT       [Insufficient Exam Report]
+  
+       b. When prompted "Enter protocols you wish to mark as "Out of
+          Order:", press Enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBCIRPT
+    Before: B48439537   After: B49088411  **13,19,27,149,184,185,191**
+ 
+Routine list of preceding patches: 185
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 27, 2014
+Completed By:                               Date Completed: MAR 03, 2015
+Released By :                               Date Released : MAR 10, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

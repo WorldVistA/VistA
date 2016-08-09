@@ -1,0 +1,141 @@
+
+=============================================================================
+Run Date: JUN 30, 2015                     Designation: ICPT*6*72
+Package : ICPT - CPT/HCPCS CODES              Priority: Mandatory
+Version : 6        SEQ #70                      Status: Released
+                  Compliance Date: JUL 08, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*99    <<= must be installed BEFORE `ICPT*6*72'
+
+Subject: Code Set FY15 4th Qtr Update
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch is an informational patch and contains no routines, data, or 
+  data dictionaries.  The data for this patch is exported with the Lexicon 
+  data in patch LEX*2.0*100.  Patch LEX*2.0*100 requires that patch
+  LEX*2.0*99 be previously installed.
+    
+  LEX*2.0*100 writes to the following files:
+    
+      CPT                       #81       ^ICPT(       ICR 4489
+      CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+      CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+ 
+    
+  ENHANCEMENTS
+  ============
+ 
+    FY15 4th Quarter Update
+ 
+      CPT Procedure Additions  (13 Codes)
+      -----------------------
+ 
+        Effective Jan 01, 2015 (FY15 2nd Qtr)                (11 Codes)
+          0381T   0382T   0383T   0384T   0385T   0386T   0387T   0388T
+          0389T   0390T   0391T
+ 
+        Effective Jul 01, 2015                                (2 Codes)
+          0392T   0393T
+ 
+      CPT Procedure Inactivations
+      ---------------------------
+ 
+        Effective Jan 01, 2015                                (8 Codes)
+          80440   82000   82003   82055   82101   82145   82205   82520
+ 
+      CPT Procedures Re-Used
+      ----------------------
+ 
+        Effective Jan 01, 2015                                 (1 Code)
+          90620
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Apr 01, 2015                               (11 Codes)
+          C2623   C9445   C9448   C9449   C9450   C9451   C9452   Q5101
+          Q9976   Q9977   Q9978
+ 
+      HCPCS Procedure Inactivations  (3 Codes)
+      -----------------------------
+ 
+        Effective Jun 01, 1994 (FY94 3rd Qtr)                  (1 Code)
+          E1020
+ 
+        Effective Mar 31, 2015 (FY15 2nd Qtr)                  (1 Code)
+          C9136
+ 
+        Effective Jul 01, 2015                                 (1 Code)
+          S8262
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jan 01, 2013                                 (1 Code)
+          J7315
+ 
+      CPT Modifier Inactivations
+      --------------------------
+ 
+        Effective Jun 30, 2015                                 (1 Code)
+          JF
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2015     *     45     --     --      --     45
+        Effective Apr 01, 2015     *     68     --     --      --     68
+        Effective Jul 01, 2015           56     --     --      --     56
+                                      -----  -----  -----  ------  -----
+          Total                         169     --     --      --    169
+        
+                                   *  update from a previous quarter   
+ 
+  REMEDY TICKETS:
+  ==============
+ 
+    1226385 - Inactive Lab CPT codes 80440/82000/82055
+    1224746 - Re-Activate HCPCS codes E1018/E1020/E1028/E1029
+    1229707 - Re-Activate HCPCS codes E1018/E1020/E1028/E1029 (Dupe)
+    1234418 - Fix HCPCS code J7315 Name/Description spelling errors
+    1245922 - Modifiers AU/AV/AW with A4217/A5120/A6531/A6532/A6545
+    1250053 - Inactivate Lab Codes 82000-82742 and Reuse CPT code 90620
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Code G8739 was incorrectly identified as a CPT code
+    Numerous alpha modifiers identified as CPT vs. HCPCS
+    Fix duplicate CPT Modifier JE (ambulance code JE discontinued)
+ 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+               
+    Please refer to the patch description for LEX*2.0*100 for instructions 
+    for retrieving the data global host file and installing this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 01, 2015
+Completed By:                               Date Completed: JUN 26, 2015
+Released By :                               Date Released : JUN 30, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

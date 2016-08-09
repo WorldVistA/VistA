@@ -1,0 +1,163 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/07/12 at 15:35
+=============================================================================
+Run Date: APR 10, 2014                     Designation: OR*3*367
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #333                      Status: Released
+                  Compliance Date: MAY 11, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*347    <<= must be installed BEFORE `OR*3*367'
+
+Subject: CHILD EVENT FIXES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the CPRS package:
+  
+ 1) CPRS is not properly removing redundant dialogs when child events are 
+    used
+ 2) Child events are not able to be created if there are pending patient 
+    events
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Associated Remedy ticket(s):
+ ===========================
+ 1) INC000000143762 - Delayed orders duplicate prompt for admit order
+ 2) INC000000508634 - <UNDEFINED>LAPSED+7^OREVNTX 
+  
+ Participating Test Sites:
+ ========================
+ Central Plains HCS - VA Northwest Iowa HCS 
+ Indianapolis - Richard L. Roudebush VA Medical Center
+ Philadelphia - VA Medical Center
+  
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1) INC000000143762 - Delayed orders duplicate prompt for admit order
+   
+ Problem:
+ --------
+ The problem occurs when the user uses a child event to write delayed 
+ orders. If the default dialog used is also an item in the order set, CPRS 
+ will display the dialog twice. This happens because a child event doesn't 
+ have a default dialog. It inherits it from the parent.
+  
+ Resolution:
+ -----------
+ Changed the remote procedure call that returns the default dialog, it 
+ will now return the parent default dialog for child events.
+  
+ Routine OREVNTX1 (DFTDLG tag) has been modified to change the variable 
+ EVTID to the internal entry number of the parent event, if one exists
+  
+  
+ 2) INC000000508634 - <UNDEFINED>LAPSED+7^OREVNTX
+   
+ Problem:
+ --------
+ The problem occurs when the user tries to create a child event. If there 
+ are any pending patient events for the parent event, the user is not 
+ allowed to add a child event. The user should get the following error 
+ message displayed on the screen:
+  
+ "You may not make XXXXXX a parent
+ at this time because there are unprocessed delayed orders assigned to it."
+  
+ Currently, instead of the error message, a hard 
+ <UNDEFINED>LAPSED+7^OREVNTX error will occur. This occurs because the 
+ code is allowing a ")" at the end of the internal entry number of the 
+ event.
+  
+ Resolution:
+ -----------
+ Modified the code to force the internal entry number to be numeric.
+  
+ Routine OREV4 (PARENTOK tag) has been modified to have a "+" in front of 
+ the variable PIEN 
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+    Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter OR*3.0*367):
+    
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package
+     OR*3.0*367.
+    
+     a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+         install? NO//", answer NO.
+     b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+         Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OREV4
+    Before: B23656896   After: B24244068  **141,367**
+Routine Name: OREVNTX1
+    Before: B76466044   After: B77890224  **141,165,149,243,280,347,367**
+ 
+Routine list of preceding patches: 347
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 05, 2012
+Completed By:                               Date Completed: MAR 28, 2014
+Released By :                               Date Released : APR 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

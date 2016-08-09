@@ -1,0 +1,128 @@
+
+=============================================================================
+Run Date: APR 30, 2014                     Designation: WEBB*1*1
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: MAY 01, 2014
+=============================================================================
+
+
+Subject: Bed Management Solutions Version 1.2 Release
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ This patch announces the National Release of Bed Management Solutions 
+ (BMS) Version 1.2. No additional action is necessary for sites except to
+ communicate the below modifications of BMS v1.2 to users.  This new BMS
+ 1.2 version addresses defects and there are no new enhancements.
+  
+ Bed Management Solutions v1.2 includes the following fixes:
+ 1) Resolve defect for when a patient is removed from the Patient Pending 
+ Bed Placement(PPBP) list, the Wait Time continues to calculate.
+ 2) Remove tracers from log file used for troubleshooting.
+ 3) Replace the patched build with a fresh build based on a changeset.  
+ The change incorporates recommended updates from analysis performed by 
+ Microsoft.
+  
+ ASSOCIATED REMEDY TICKET(s):
+ INC000000934581 -POC states there is a wait time of 719 hours 6 minutes.
+ POC further states there seems to be an error in the script. 
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ North Texas HCS
+ Upstate NY
+ Indianapolis
+ Lexington
+ NY Harbor
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  INC000000934581 -POC states there is a wait time of 719 hours,6 minutes.
+  POC further states there seems to be an error in the script.
+  
+    Problem:
+    ========
+    The "wait-time" field on the PPBP list continues to calculate after the
+    patient has been removed from the list.  When viewing past entries the 
+    "wait-time" displays the number of hours since the patient was entered.
+    The "wait-time" should display the number of hours from the time the  
+    patient was entered to the time the patient was removed.
+    
+    Solution:
+    =========
+   Update BMS code so that the "wait-time" on the PPBP list shows the
+   number of hours from the time the patient was entered to the time the
+   patient was removed.
+  
+ OTHER ISSUES OVERVIEW:
+ ======================
+     
+   Problem:
+   ========
+   Tracers used for troubleshooting were left in source code.
+   
+   Solution:
+   =========
+   Removed tracers from log file used for troubleshooting.   
+   
+   Problem:
+   ========
+   Users reported slow response times.
+  
+   Solution:
+   ========
+   Analysis was performed on BMS v1.1. BMS team implemented recommended 
+   updates received from analysis performed by Microsoft.  
+   Updates addressed the way multiple processes are managed through 
+   threading modules. Problems with threading can greatly affect the 
+   resources used by the application. The update includes the use of a new 
+   threading method that handles how the multiple threads are accessed 
+   by the VI Service.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+  
+ IMPLEMENTATION:
+ ===============
+   The BMS application is a centrally managed web-based application hosted 
+   at AITC. BMS version 1.2 will be loaded into BMS Production account by 
+   AITC staff.  No software will be installed at the facilities.
+  
+ Reporting Problems:
+ ===================
+   If there are problems associated with the BMS application they should be
+   reported via Remedy by contacting the National Service Desk (NSD) 
+   1-888-596-4357 for assistance.
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 18, 2014
+Completed By:                               Date Completed: APR 22, 2014
+Released By :                               Date Released : APR 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

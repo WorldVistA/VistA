@@ -1,0 +1,208 @@
+************************************************************************
+=============================================================================
+Run Date: FEB 11, 2016                     Designation: TBI*2*4
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #11                      Status: Released
+                  Compliance Date: MAR 12, 2016
+=============================================================================
+
+
+Subject: Build 2.0.4 Deployment of Sprint 10 Work Items 
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ************************************************************************
+ Note: This patch was loaded on the National TBI Server at the Austin 
+ Information Technology Center by technical support staff.  There is 
+ nothing for local sites to do.
+ ************************************************************************
+  
+ ==========================================================================
+ ===
+ This patch contains the TBI Work Items completed for this release:
+ TBI Patch 2.0*4 Deployment of Sprint 10 Work Items includes the following 
+ enhancements and fixes: 
+  
+ TBI-49685:  Choice Removal/Save Troubleshoot/JScript errors
+ TBI-29346: TBI Production Data Update
+ TBI-20772: Inconsistent data selection for Cube
+  
+  
+ Patch Components:
+ -----------------
+ The following describes each component of the TBI Patch 2.0*4
+  
+ TBI-49685:  Choice Removal/Save Troubleshoot/JScript errors
+  
+ When DME code was deployed to production new questions and choice id's 
+ were added for all new instruments.  A new choice was also added for 
+ every radio button element ( 67 questions )  on the existing TBI 
+ FOLLOW-UP form.  This choice is titled 'not asked (due to responses to 
+ other questions').  This choice has never been visible on this form or 
+ selectable by the user.  Since this form was refactored and pulls from 
+ the database now, this new choice un-did all front-end logic references. 
+ Because indexes are used to 'show/hide' form elements, this extra element 
+ threw all 67 radio questions off. 
+  
+ TBI-29346: TBI Production Data Update
+  
+ Site was updated to use the Test CPRS account. Until it was corrected, 
+ all data entered at the facility via TBI instruments within CPRS was 
+ entered into the Pre-Production database.   Since the TBI Instruments URL 
+ was updated, the data is going correctly into the Production database.    
+ The stakeholder has requested that the data entered into the 
+ Pre-production (Test) environment by the facility between be copied from 
+ Pre-Production into the Production database. 
+  
+ To perform this request, below are the required tasks.
+  
+ 1.       Determine which tables/data were affected by TBI instruments 
+ updates.
+ a.       Look for TBI instrument items entered by this facility.
+ b.      The auto-generated primary keys cannot be used as a determining 
+ factor.
+ 2.       Perform analysis of data & records to be transferred 
+ (Counts/metrics - used for verification of transfer).
+ 3.       Create an ETL process to transfer the specified data from the 
+ Pre-Production Server to the Production server.
+ 4.       Test ETL from Pre-Prod (SQL40) to Dev (SQL70)- (db [RegistryQA] 
+ -> [registry] (prod copy))
+ 5.       Compare Counts/Metrics from Pre-Prod (SQL40) to Dev (SQL70) for 
+ facility, if same schedule for production. 
+ 6.       Update connection from Dev (SQL70) to Prod (SQL20).
+  
+ TBI-20772: Inconsistent data selection for Cube
+  
+ Stakeholder feedback:
+    Dim Institution:  ***Can we group VHA->VISN->Station?
+   Dim Patient:
+ o Age Group @ Screen Date (should be Evaluation date instead of Screen 
+ date)
+ o OEF / OIF / OND Roster (Check on numbers.appear to be reversed)
+   Dim Question:  Question #, Question Text:  Can these be combined into a 
+ single value??
+   Dim Time:
+ o Month (Can this be displayed as Jan / Feb / Mar / etc. instead of 
+ numerically?)
+ o Time Key (just display date as all times are 00000000???)
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC1005239 - Lost connection resulted in the loss of data entered by 
+ the user. 
+  
+ Problem:
+ -------
+ User entering data into TBI instrument when system lost connection and 
+ data was lost. 
+  
+ Resolution:
+ ----------
+ DateTime fixed. 
+  
+  
+ 2.INC1016926 - Error at save resulted in user losing all data entered.
+  
+  
+ Problem:
+ -------
+ User is unable to save her draft in the TBI registry. When she clicks 
+ save, the information she has entered is wiped out.
+  
+ Resolution:
+  ------------
+  
+ Issue resolved by changes applied by Work Item TBI-49685.
+  
+ 3. INC1019823 - Error at save resulted in user losing all data entered.
+ Problem:
+ -------
+ User requests assistance with the TBI application.  POC states he enters 
+ data, when attempting to save the information, the application deletes 
+ the data. 
+  
+ Resolution:
+ ----------
+ Issue resolved by changes applied by Work Item TBI-49685
+  
+ 4. INC10021569-Patient data entered was wiped out.
+  
+ Problem:
+ -------
+ TBI lost information on a particular patient and needs to be retrieved. 
+ This happened on 06/10/14 at about 3:00 PM ET. 
+  
+ Resolution:
+ ----------
+ Issue resolved by changes applied by Work Item TBI-49685.
+  
+ 5. INC1004295 - Lost connection resulted in the loss of data entered by 
+ the user.
+  
+ Problem:
+ ------------
+ User reports a connection issue with TBI. She was attempting to input 
+ information for the second level evaluation but was not able to connect. 
+ On the first instrument she was able to log in but could not save. 
+  
+ Resolution:
+ ----------
+ Issue resolved by changes applied by Work Item TBI-49685.
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Documentation describing the functionality introduced by this patch is 
+ available.
+  
+  
+ The preferred method is to FTP the files from 
+ download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+  
+  
+  
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ User Manual                       TBIUM.PDF               Binary
+ Technical Manual                  TBITM.PDF               Binary
+ User Manual                       TBIINSUM.PDF            Binary
+ User Manual                       TBIPTUM.PDF             Binary
+  
+ Routine Information:
+ ====================
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:                          Hold Date     : JUL 25, 2014
+Entered By  :                               Date Entered  : JUN 21, 2014
+Completed By:                               Date Completed: FEB 11, 2016
+Released By :                               Date Released : FEB 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

@@ -1,0 +1,231 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/04/14 at 16:19
+=============================================================================
+Run Date: MAY 19, 2014                     Designation: DGBT*1*22
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #25                      Status: Released
+                  Compliance Date: JUN 19, 2014
+=============================================================================
+
+Associated patches: (v)DGBT*1*21   <<= must be installed BEFORE `DGBT*1*22'
+
+Subject: DUPLICATE VENDOR, VIEW OF CLAIM ERROR, UNDEFINED COMPLT+3, DIVISION CHANGING
+
+Category: 
+  - Routine
+
+Description:
+============
+
+    This patch addresses five issues:
+  
+    1. After the release of patch DGBT*1.0*20, it is possible to inadvertently
+       modify the Division of existing claims.
+  
+    2. Special Mode claims are being rejected, with a generic  "DATA DID NOT
+       FILE DUE TO ERRORS" message.
+          
+    3. Users are reporting getting an <UNDEFINED>COMPLT+3^DGBTE *% error when
+       entering claims.
+    
+    4. A subscript error occurs when using the View of Claim 
+       [DGBT BENE TRAVEL VIEW] option.
+  
+    5. Users are being returned to the Beneficiary Travel Menu [DGBT BENE 
+       TRAVEL MENU] after completing a claim.
+    
+    
+    Associated NSR(s):
+    ------------------
+    N/A
+     
+     
+    Associated Remedy ticket(s):
+    ----------------------------
+  
+    1. INC000000844015 - Bene Travel - General: [division issue]
+  
+    2. INC000000850540 - Bene Travel - claim not saved
+        DUP: INC000000863456 - Bene Travel - General: Error using Special Mode
+  
+    3. INC000000864939 - Bene Travel - General:ERROR $ZE= 
+                         <UNDEFINED>COMPLT+3^DGBTE *%
+  
+    4. INC000000872050 - Bene Travel - General: View of Claim error (Missing
+                         Division field)
+    
+    5. INC000000892783 - Bene Travel - return to pt prompt
+     
+  
+    Participating Test Sites:
+    -------------------------
+    North Florida / South Georgia VA HCS  (Lake City VAMC)
+    Fayetteville - Veterans Health Care System of the Ozarks 
+     
+    REMEDY OVERVIEW:
+    ----------------
+   
+    1. INC000000844015 - Bene Travel - General: [division issue]
+   
+     Problem:
+     --------
+     Before the introduction of patch DGBT*1.0*20, it was not possible to
+     modify the DIVISION (#11) field of an existing Beneficiary Travel 
+     claim (#392) file. When using the Claim Enter/Edit [DGBT BENE TRAVEL
+     SCREEN] option, users are inadvertently modifying the division when
+     editing existing claims.
+  
+     Resolution:
+     -----------
+     Modified routines DGBTE1 and DGBTE to retain the division of existing 
+     claims during the claim enter/edit process.
+  
+    2. INC000000850540 - Bene Travel - claim not saved
+    
+     Problem:
+     --------
+     When entering a special mode claim, if the selected Vendor has duplicate 
+     Vendor name's in the VENDOR (#440) file, the claim will not get filed
+     and the generic error message, "DATA DID NOT FILE DUE TO ERRORS", will
+     display. This is due to the FILE^DIE call using the external format of 
+     the vendor name.
+  
+     Resolution:
+     -----------
+     Modified routine DGBTSP, DGBTSP1 and DGBTCDSP to use the internal IEN of 
+     the Vendor. Also modified routine DGBTSP1 to display a more 
+     detailed error message that may occur during any FILE^DIE call.
+     Example of error message: 
+     The value of field SP MODE DEPARTURE ADDRESS1 in file
+     BENEFICIARY TRAVEL CLAIM cannot be deleted.
+        
+    3. INC000000864939 - Bene Travel - General:ERROR $ZE=
+                         <UNDEFINED>COMPLT+3^DGBTE *%
+    
+     Problem:
+     --------
+     When a user enters an "^" at the prompt, "Complete claim for 
+     JUL 15,2013@11:00 ? Yes//", when entering a special mode claim, an 
+     undefined error will occur when the user exits the Beneficiary Travel
+     application.
+  
+     Resolution:
+     -----------
+     Modified routine DGBTE to properly handle an "^" at the complete claim 
+     prompt for special mode claims.
+        
+        
+    4. INC000000872050 - Bene Travel - General: View of Claim error (Missing
+                         Division field)
+    
+     Problem:
+     --------
+     When opening an existing claim with the View of Claim [DGBT BENE TRAVEL
+     VIEW] option, a subscript error, <SUBSCRIPT>SCREEN+6^DGBTCD ^DG(40.8,""), 
+     can occur.
+  
+     Resolution:
+     -----------
+     Added data validation to routine DGBTCD to prevent the subscript error
+     from occurring. If for some reason the DIVISION (#11) field of the
+     BENEFICIARY TRAVEL CLAIM (#392) file record is blank, then it will  
+     display a message to the user that they need to correct the entry
+     via the Claim/Enter Edit [DGBT BENE TRAVEL SCREEN] option.
+     Example of message: 
+  >> WARNING! No DIVISION specified for this claim, please correct
+          through Claim Enter/Edit
+  
+  
+  
+    5. INC000000892783 - Bene Travel - return to pt prompt
+    
+     Problem:
+     --------
+     CBO has asked that previous functionality be restored, by returning users
+     to the "Select PATIENT" prompt after completing a claim.
+  
+     Resolution:
+     -----------
+     Modified routines DGBTE and DGBTCDSP to redisplay the "Select PATIENT"
+     prompt after entering a claim.
+  
+   
+  Installation Instructions:
+  ==========================
+   
+    Installation will take less than 2 minutes.
+   
+    Suggested time to install: Non-peak requirement hours.
+    
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter DGBT*1.0*22)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+    
+     4. Use the Install Package(s) option and select the package DGBT*1.0*22.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? YES//" respond YES. 
+  
+        When prompted to select the options you would like to place out of
+        order, enter the following:
+    
+            [DGBT BENE TRAVEL MENU]      Beneficiary Travel Menu
+  
+     7. When prompted to select the protocols you would like to place out
+        of order, Press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;Beneficiary Travel;**[Patch List]**;September 25, 2001;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGBTCD
+    Before: B27058166   After: B28350736  **2,7,9,20,22**
+Routine Name: DGBTCDSP
+    Before: B35536857   After: B37725892  **20,21,22**
+Routine Name: DGBTE
+    Before: B44311699   After: B48237300  **2,19,20,22**
+Routine Name: DGBTE1
+    Before: B29858650   After: B31350623  **8,12,13,20,21,22**
+Routine Name: DGBTSP
+    Before:B183996110   After:B184770476  **20,22**
+Routine Name: DGBTSP1
+    Before: B78025858   After: B84121685  **20,22**
+ 
+Routine list of preceding patches: 21
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 20, 2012
+Completed By:                               Date Completed: MAY 01, 2014
+Released By :                               Date Released : MAY 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

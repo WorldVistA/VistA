@@ -1,0 +1,65 @@
+
+=============================================================================
+Run Date: NOV 03, 2014                     Designation: ICD*18*76
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #70                     Status: Released
+                  Compliance Date: NOV 10, 2014
+=============================================================================
+
+
+Subject: Code Set FY15 1st Qtr Update
+
+Category: 
+  - Informational
+
+Description:
+============
+
+  This patch is an informational patch and contains no routines, data, or 
+  data dictionaries.  The data for this patch is exported with the Lexicon 
+  data in patch LEX*2.0*97.  Patch LEX*2.0*97 requires that patch
+  LEX*2.0*96, LEX*2.0*87 and PXRM*2.0*36 be previously installed.
+  
+  LEX*2.0*97 writes to the following files:
+  
+       ICD DIAGNOSIS             #80       ^ICD9(       ICR 4485
+ 
+   
+  ENHANCEMENTS
+  ============
+   
+    This patch exports updates the ICD CODES NOT CC WITH sub-file #80.03.
+    These are ICD codes that are not considered as Complication/comorbidity
+    with the code named in the CODE NUMBER field #.01 of the ICD DIAGNOSIS 
+    file #80.  This update is limited to ICD-9.
+ 
+ 
+  Remedy Tickets:
+  ==============
+ 
+    None
+ 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+             
+    Please refer to the patch description for LEX*2.0*97 for instructions 
+    for retrieving the data global host file and installing this patch.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 01, 2014
+Completed By:                               Date Completed: NOV 03, 2014
+Released By :                               Date Released : NOV 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

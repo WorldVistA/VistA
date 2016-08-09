@@ -1,0 +1,263 @@
+$TXT Created by                 CPRS30.DOMAIN.EXT  (KIDS) on Wednesday, 01/28/15 at 08:31
+=============================================================================
+Run Date: JAN 27, 2016                     Designation: OR*3*395
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #360                      Status: Released
+                  Compliance Date: FEB 27, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*315    <<= must be installed BEFORE `OR*3*395'
+                    (v)OR*3*361    <<= must be installed BEFORE `OR*3*395'
+                    (v)OR*3*384    <<= must be installed BEFORE `OR*3*395'
+
+Subject: MISC UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1. Modified Date does not appear in the Problem List Clinical Reports
+    within CPRS V29. CQ 21708, HD 926500
+  
+ 2. The Pharmacy Re-engineering team reported an issue with the 
+ Application Programming Interface (API) that is used to check for the 
+ presence of a specific orderable item within quick orders. The text of 
+ the message referred to them as Lab orderable items, rather than Pharmacy 
+ orderable items. This patch corrects this problem. CQ 21451
+  
+ 3. This patch will remove all components of the National Utility that
+ was delivered in Test patch OR*3*378  which was never nationally released.
+ Components of the National Utility included routines ORUTLA1, ORUTLA2,
+ ORUTLA3, menu(s) ORE CAC MGR and ORE ORDER INSTRUCTIONS and Parameters
+ ORE CLEAN UP UTIL LAST RUN DT and ORE CLEAN UP UTIL START DATE.
+ This will only affect sites that were Test sites for patch OR*3*378.
+  
+ 4. There are certain scenarios where medications with only Local Possible
+ Dosages (LPD) were appending the drug name to the dosage when performing 
+ Dosing Order Checks and when sending the order to backdoor pharmacy.  The
+ presence of this extra data would cause the Dosing order checks to fail.
+ This patch removes the drug name from the dosage when performing the 
+ Dosing checks and when sending the order to backdoor pharmacy.
+  
+ Example: Drug name with a dosage string like " 1 TABLET CAFFEINE 
+    100/ERGOTAMINE 1MG TAB" order created in CPRS and LPD dose exceeds
+    the single dose limit did not result in a Dosing order check.
+  
+ 5. When performing the dose check on an order with a local possible 
+ dosage, the OR GTX INSTRUCTIONS dialog response is sent to the Pharmacy 
+ dosing API.  In certain instances, the value for this dialog response is 
+ not acceptable as a dose string and the dosing order check is not 
+ performed. An Drug name example of this would be similar to the other
+ local possible dose issue.
+  
+ 6. Error IV+7^ORDSGCHK was happening due to orders placed by the Class 
+ III software VISTA CHEMOTHERAPY MANAGER.  This patch makes a defensive 
+ change to prevent this error.  Remedy Ticket 1034188
+  
+ 7. The Quick Order Search API needs to be updated to use the DISPLAY 
+ GROUP to identify a quick order, rather than PACKAGE. CQ 22166.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+  
+  
+  
+ Options Associated:
+  
+ Option Name            Type            New/Modified/Deleted
+ -----------            ----            -------------------- 
+ ORE CAC MGR            menu            Deleted (OR*3*378 test sites only)
+ ORE ORDER INSTRUCTIONS run routine     Deleted (OR*3*378 test sites only)
+   CLEANUP                                          
+  
+ Parameters Associated:
+  
+ Parameter Name
+ --------------
+ ORE CLEAN UP UTIL LAST RUN DT          Deleted (OR*3*378 test sites only) 
+ ORE CLEAN UP UTIL START DATE           Deleted (OR*3*378 test sites only)
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ 1. INC000000926500   Modified date does not appear in the Problem List 
+                      report in CPRS v29.
+ 2. INC000001034188   IV+7^ORDSGCHK Error
+  
+ Problem:
+ -------
+ Changes to the Problem List in v29 resulted in issues in the VistA Web
+ display of the Modified Date in the Problem List Clinical Reports. 
+ Specifically, the VA-DoD Problem List had issues with text from the 
+ problem description being imported into the date column.
+  
+ Resolution:
+ ----------
+ The changes from v29 were removed so that the VA-DoD Problem List reports 
+ will function correctly.
+  
+ 2. INC0000001034188   IV+7^ORDSGCHK Error
+  
+ Problem:
+ -------
+ Error IV+7^ORDSGCHK was happening due to orders placed by the Class 
+ III software VISTA CHEMOTHERAPY MANAGER. 
+  
+ Solution:
+ --------
+ This patch makes changes to prevent the errors. The problem has been 
+ reported to the vendor, also.
+  
+ Test Sites:
+ ----------
+ Heartland West, KS
+ Mountain Home, TN
+ San Diego, CA 
+  
+ Patch Installation:
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. OR*3.0*395):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+     <Provide the installer with guidance on whether or not menu trees need
+     to be rebuilt.  For instance the menu trees do not need rebuilt if 
+     there are no menus involved in the patch or their system rebuilds menu
+     trees nightly using TaskMan. If they must answer YES to rebuild the 
+     menu trees, warn them that it could affect users on the system and 
+     installation times will increase.>
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+     <Provide the installer with guidance on whether or not to inhibit 
+     logons.>
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' 
+     <Provide the installer with guidance on whether or not to disable 
+     scheduled Options, menu options, and protocols.>
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions
+ -----------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDSGCHK
+    Before:B102045357   After:B110004235  **280,352,345,311,384,395**
+Routine Name: ORDV04
+    Before: B78115705   After: B62541465  **109,148,160,208,195,241,215,
+                                           274,256,243,306,361,395**
+Routine Name: ORMBLDPS
+    Before: B86692352   After: B94048957  **7,38,54,86,97,94,116,129,141,
+                                           190,195,237,254,243,293,280,
+                                           266,395**
+Routine Name: ORUQO
+    Before: B15426804   After: B18883882  **315,395**
+Routine Name: ORUTLA1
+    Before:       n/a   After:    Delete  
+Routine Name: ORUTLA2
+    Before:       n/a   After:    Delete  
+Routine Name: ORUTLA3
+    Before:       n/a   After:    Delete  
+Routine Name: ORWDXC
+    Before: B67359281   After: B69940726  **10,141,221,243,280,346,345,
+                                           311,395**
+Routine Name: ORY395
+    Before:       n/a   After: B15368598  **395**
+ 
+Routine list of preceding patches: 266, 315, 361, 384
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 25, 2014
+Completed By:                               Date Completed: JAN 27, 2016
+Released By :                               Date Released : JAN 27, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

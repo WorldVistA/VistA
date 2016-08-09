@@ -1,0 +1,275 @@
+$TXT Created by                     DAYT79.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 01/15/15 at 18:45
+=============================================================================
+Run Date: FEB 18, 2015                     Designation: VPR*1*4
+Package : VPR - VIRTUAL PATIENT RECORD        Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: MAR 21, 2015
+=============================================================================
+
+Associated patches: (v)VPR*1*2     <<= must be installed BEFORE `VPR*1*4'
+
+Subject: XML UPDATES
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch to the Virtual Patient Record (VPR) package updates the VPR GET 
+ PATIENT DATA remote procedure call (RPC) that extracts patient health data
+ from a Veterans Health Information Systems and Technology Architecture 
+ (VistA) database in Extensible Markup Language (XML) format, requested by
+ the Joint Legacy Viewer (JLV) and Virtual Lifetime Electronic Record (VLER)
+ projects. Data domains updated are:
+   * Consults
+   * Demographics
+   * Documents
+   * Immunizations
+   * Medications
+   * Orders
+   * Problems
+   * Visits
+   * Vitals
+  
+ An option to allow viewing the XML results is also included in this
+ patch.  The View XML results option [VPR TEST XML] may be assigned
+ to users who desire or need to see the raw results of this RPC; the input
+ parameters will be prompted for and passed into the RPC, and the results
+ displayed onscreen.
+  
+ For example:
+  
+ Select OPTION NAME:    VPR TEST XML     View XML results
+ View XML results
+ Select PATIENT NAME:    AVIVAPATIENT,TWENTYONE        2-14-34    000009999     
+  YES     SC VETERAN                    PROVIDER,EIGHTEEN  PRIMARY CARE TEAM2
+  
+  Enrollment Priority: GROUP 3    Category: IN PROCESS    End Date: 
+  
+ Select DOMAIN: VITALS
+ Select START DATE: 11-1-2014  (NOV 01, 2014)
+ Select STOP DATE: 11-1-2014  (NOV 01, 2014)
+ Select TOTAL #items: 
+  
+ <results version='1.02' timeZone='-0700' >
+ <vitals total='1' >
+ <vital>
+ <entered value='3141103.143428' />
+ <facility code='500D' name='SLC-FO HMP DEV' />
+ <location code='23' name='GENERAL MEDICINE' />
+ <measurements>
+ <measurement id='53157' vuid='4500634' name='BLOOD PRESSURE' value='128/66' 
+ units='mm[Hg]' high='210/110' low='100/60' />
+ <measurement id='53161' vuid='4688724' name='HEIGHT' value='71' units='in' 
+ metricValue='180.34' metricUnits='cm' />
+ <measurement id='53160' vuid='4500636' name='PULSE' value='92' units='/min' 
+ high='120' low='60' />
+ <measurement id='53164' vuid='4500635' name='PAIN' value='2' />
+ <measurement id='53163' vuid='4500637' name='PULSE OXIMETRY' value='95' 
+ units='%' high='100' low='50' />
+ <measurement id='53159' vuid='4688725' name='RESPIRATION' value='16' 
+ units='/min' high='30' low='8' />
+ <measurement id='53158' vuid='4500638' name='TEMPERATURE' value='98.5' 
+ units='F' metricValue='36.9' metricUnits='C' high='102' low='95' />
+ <measurement id='53162' vuid='4500639' name='WEIGHT' value='102' units='lb' 
+ metricValue='46.36' metricUnits='kg' bmi='14' />
+ </measurements>
+ <taken value='3141101.1903' />
+ </vital>
+ </vitals>
+ </results>
+  
+  
+ Select DOMAIN: 
+ Select PATIENT NAME: 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ VPR TEST XML           Action             New
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Tickets & Overview:
+ --------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ San Diego, CA
+ Loma Linda, CA
+ Greater Los Angeles Health Care System
+  
+  
+ Documentation Retrieval Instructions
+ ====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from:
+  ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library:
+  http://www4.domain.ext/vdl/
+  
+ Title                         File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ VPR Technical Manual          VPR_TM.PDF                   binary
+  
+  
+ Patch Installation
+ ==================
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 1 minute 
+ to install.
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME, enter VPR*1.0*4.
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted Want KIDS to Rebuild Menu Trees Upon Completion of 
+     Install? NO// enter NO.
+  
+ 6.  When prompted Want KIDS to INHIBIT LOGONs during the install?
+     NO// enter NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// enter NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0  60): 0// respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ Assign the new VPR TEST XML option to users who desire or need to test the 
+ VPR GET PATIENT DATA RPC.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VIRTUAL PATIENT RECORD;**[Patch List]**;Sep 01, 2011;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VPRD
+    Before: B29175301   After: B35636643  **1,2,4**
+Routine Name: VPRDGMPL
+    Before: B27827751   After: B28051660  **1,2,4**
+Routine Name: VPRDGMRC
+    Before: B10880986   After: B12856313  **1,4**
+Routine Name: VPRDGMV
+    Before: B41671211   After: B42263746  **1,4**
+Routine Name: VPRDOR
+    Before: B13221791   After: B17346787  **1,4**
+Routine Name: VPRDPS
+    Before: B18817165   After: B20707464  **1,4**
+Routine Name: VPRDPSO
+    Before: B15569449   After: B16064542  **1,4**
+Routine Name: VPRDPSOR
+    Before: B39128356   After: B39578958  **1,4**
+Routine Name: VPRDPT
+    Before: B70553505   After: B81010751  **1,4**
+Routine Name: VPRDPXIM
+    Before: B15866293   After: B16291131  **2,4**
+Routine Name: VPRDTIU
+    Before: B81103735   After: B83582740  **1,2,4**
+Routine Name: VPRDTST
+    Before:       n/a   After: B11854461  **4**
+Routine Name: VPRDVSIT
+    Before: B89271062   After:B100077212  **1,2,4**
+ 
+Routine list of preceding patches: 2
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 10, 2014
+Completed By:                               Date Completed: FEB 18, 2015
+Released By :                               Date Released : FEB 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

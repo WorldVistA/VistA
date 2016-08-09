@@ -1,0 +1,307 @@
+
+=============================================================================
+Run Date: JUL 08, 2016                     Designation: WEBP*1*6
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #6                      Status: Released
+                  Compliance Date: AUG 07, 2016
+=============================================================================
+
+
+Subject: PCMM WEB V1.6 UPDATES
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*6 will implement configuration changes to improve system 
+ performance and corrects defects reported by sites who have completed 
+ installation of PCMM Web. 
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ RTC 223851 - CPRS Window was displaying 'No PACT/HBPC assigned at any VA 
+ location' when patient is assigned to PACT teams but should have been 
+ displaying team assignments regardless of the location, The CPRS Window 
+ will now display all of the patient's team assignments regardless of 
+ location.
+ CA-SDM Tickets:
+ I9484398FY16
+ I9342833FY16
+  
+ RTC 236423 - CPRS window was displaying REMOTE assignments before the 
+ display of LOCAL assignments but should display REMOTE assignments after 
+ all LOCAL assignments. CPRS Window will now display the REMOTE 
+ assignments after all LOCAL assignments.
+ CA-SDM Tickets:
+ I8388448FY16
+  
+ RTC 259951 - When creating a New Position from the Team Position list, 
+ the Expected FTE is not required but is displayed as a required field 
+ (with a red asterisk) after creating the new position. The red asterisk 
+ was removed since the Expected FTE is not required for the selected 
+ position.
+  
+ RTC 283745- Patient Search was displaying duplicate patient names when a 
+ patient is assigned to several positions on a HBPC team. Patient Search 
+ will now only display one patient name entry even if the patient is 
+ assigned to multiple positions on the same HBPC team.
+  
+ RTC 312190- The assigned Lead Coordinator staff member name was not 
+ displaying correctly in the CPRS window and the assigned MHTC staff 
+ member name was not displaying correctly in CPRS header. The patient's 
+ assigned MHTC staff member name will now display in the CPRS header as 
+ expected and the patient's assigned Lead Coordinator staff member name 
+ will now display in the CPRS window as expected.
+ CA-SDM Tickets:
+ I8609399FY16
+  
+ RTC 174962- Find in VistA search stops when it reaches 500 records in a 
+ staff search and some staff members are not returned in the VistA search 
+ as expected, therefore they can't be pulled in to PCMM Web to be assigned 
+ to a position. PCMM Web will now provide a more precise VistA search that 
+ narrows the parameters so that the needed staff records are filtered more 
+ precisely and appropriate records are included in the 500 records that 
+ are returned then the appropriate staff can be selected and assigned.
+ CA-SDM Tickets:
+ R8875753FY16
+  
+ RTC 302823 - PCMM Web was not unassigning staff members, inactivating the 
+ active positions and inactivating the team as expected when the user is 
+ trying to inactivate a team after patients have been re-assigned to 
+ another team. Users will need to use the "Add Entry" button to inactivate 
+ a team in the Status Change Timeline section on the team profile screen 
+ and then the VistA system will un-staff all active positions, inactivate
+ all active positions and inactivate the team at one time.
+  
+ RTC 318621: The historical FTE assignments / values are included in the 
+ Current FTE totals for assigned staff members but should not be included. 
+ Historical FTE values from inactivated positions will no longer be 
+ included when displaying the active staff member's current FTE count.
+  
+ RTC 309265 - When a staff member has a future termination date in VistA, 
+ PCMM Web evaluates the termination date field to consider if a staff 
+ member is active. However when a future date is entered in the field, Web 
+ considered the staff member "separated" but should not and the staff 
+ member could not be assigned. PCMM Web will now determine if a staff 
+ member has been terminated by evaluating if the staff member is active or 
+ inactive by evaluating the Status field in VistA. If the status is 
+ active, the staff member will be pulled into Web even if a future 
+ termination date is in VistA. In order to keep the termination dates 
+ synced in PCMM Web and VistA, the Staff Update job has been updated to 
+ run at 0430 ET.
+ CA-SDM Tickets:
+ I7865143FY16
+  
+ RTC 319529: The auto-inactivation (AI) jobs are running longer than 
+ expected and get interrupted during nightly maintenance of the servers. 
+ The AI jobs have been optimized to run faster and changed to sort and 
+ prioritize sites that need to be moved to the top of the queue for 
+ processing.
+  
+ RTC 203425 -The Provider FTE Report is including historical FTE values 
+ for inactive teams and positions in the FTE VACANCY calculations and 
+ column. The report has been changed to exclude all inactive teams and/or 
+ positions from being displayed and the FTE values associated with the 
+ inactive teams and/or positions will not be included in the calculations 
+ that are provided in the report in the FTE Vacancy column.
+  
+ RTC 310928 - Alerts need to be archived. A process has been created to 
+ archive alerts based on type and date created.  In the PCMM Web back-end 
+ database, Informational Alerts will be removed from the CLOSED folder 
+ after 30 days and placed in an archive folder and Actionable Alerts will 
+ be removed from the CLOSED folder after 60 days and placed in an archive 
+ folder. The closed informational archive folder will be purged after 1 
+ year and the closed actionable archive folder will be purged after 2 
+ years.
+ CA-SDM Tickets:
+ R9538736FY16
+ I9094647FY16
+ I8399771FY16 
+  
+ RTC 226849 - PCMM Web is displaying validation errors with a different 
+ patient and team message in the validator while assigning HBPC team to a 
+ patient. The validator has been changed to restrict its behavior to just 
+ the patient assignment being worked on so the error no longer appears for 
+ other patients than the one being assigned to the HBPC team.
+  
+ RTC 303423 - When inactivating a Team in PCMM Web, the VistA files 404.58 
+ Team History and 404.59 Team Position History are not updating the Status 
+ Reason for the Team Inactivation.  Java code in PCMM Web has been updated 
+ to synch back to VistA files for both 404.58 Team History and 404.59 Team 
+ Position History where the correct Status Reason is displayed during Team 
+ Inactivation and Reactivation.
+  
+ RTC 189952 - The Staff Assignment validator was not displaying an error 
+ or warning message when a staff member had duplicate assignments. Updated 
+ this validator to detect and flag duplicate assignments with the same 
+ staff member, position and time.
+  
+ RTC 327602 - PCMM Web needs to add an additional Facility Type of MORC so 
+ PCMM Web will include sites that are defined as MORC in the institution 
+ file in VistA and allow users to open these teams that migrated in and 
+ process patient assignments. Added Facility Type of MORC so these 
+ divisions are now displayed in Web in the Station login dropdown and the 
+ Create a Team station dropdown and this allows the users to log into 
+ these divisions and create new teams or open existing teams to continue 
+ patient assignments. 
+ CA-SDM Tickets:
+ I8646590FY16
+  
+ RTC 332919 - The CPRS Header Sync process was taking too long to update 
+ and in some cases it took over one hour to complete. Changed the 
+ transaction management of the CPRS Header Sync by including 3 separate
+ levels of thread execution for each site and patient which allows better
+ control over threading, scheduling and transaction processing. This
+ allowed the CPRS Header Sync job to avoid locking and long wait times in
+ CPRS Header synchronization.
+ CA-SDM Tickets:
+ I9517678FY16
+ I8596214FY16
+ I8598166FY16
+ I8576714FY16
+ R8559634FY16
+ I8537763FY16
+ I8537410FY16
+ R7667497FY16
+ I9227476FY16
+ I9271627FY16
+ I9297296FY16
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*6 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ Details are above
+ R9538736FY16
+ I9517678FY16
+ I9484398FY16
+ I9342833FY16
+ I9297296FY16
+ I9271627FY16
+ I9227476FY16
+ I9094647FY16
+ R8875753FY16
+ I8609399FY16
+ R7667497FY16
+ I7865143FY16
+ I8388448FY16
+ I8399771FY16
+ I8537410FY16
+ I8537763FY16
+ R8559634FY16
+ I8576714FY16
+ I8596214FY16
+ I8598166FY16
+ I8646590FY16
+  
+  
+ Test Sites (UFT):
+ -----------------
+ 570 VA Central California Health Care System
+ 519 West Texas VA Health Care System
+ 528 VA Western New York Healthcare System at Buffalo
+ 691 VA West Los Angeles Healthcare Center
+ 693 VA Southern Nevada Healthcare System (VASNHS)
+ 664 VA San Diego Healthcare System  
+  
+ Documentation:
+ ==============
+  
+ Title                            File Name                 SFTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 16, 2016
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 08, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,150 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 11/24/15 at 12:16
+=============================================================================
+Run Date: MAY 23, 2016                     Designation: PSJ*5*326
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #276                      Status: Released
+                  Compliance Date: JUN 23, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*196   <<= must be installed BEFORE `PSJ*5*326'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*326'
+                    (v)PSJ*5*279   <<= must be installed BEFORE `PSJ*5*326'
+
+Subject: INVALIDATED LABEL RPT/MAR RPT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)  UNDEFINED EN2+4^PSJIBAG *ON- Invalidated Labels Report
+ 2)  7 Day MAR not pulling all orders
+  
+ Trouble ticket(s):
+ ==================
+ 1)  INC000000973359 - UNDEFINED EN2+4^PSJIBAG *ON - Invalidated Labels
+                       Report
+     Duplicate:
+     INC000000976162 - UNDEFINED EN2+4^PSJIBAG *ON
+  
+ 2)  I6437462FY16    - 7 Day MAR not pulling all orders
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Hines
+ Bedford
+ Upstate New York
+  
+  
+ Trouble Ticket Overview:
+ ========================
+ Issue 1 - INC000000973359 
+   
+ Problem: 
+ -------
+ An active IV order was modified by changing the solution. When the order was
+ finished and accepted, a new IV order was created that invalidated an IV 
+ label(s).  The user sent the Invalidated Labels Report to the printer but 
+ it never showed up. 
+  
+ Resolution:
+ -----------
+ Modifications were made to the PSJIBAG routine to pass the appropriate values
+ for ON & PSJSYSU, so the report will be sent to the printer.
+  
+ Issue 2 - I6437462FY16
+   
+ Problem: 
+ --------
+ Not all Inpatient Medications are showing on the Medication Administration
+ Report (MAR) when you select to not include Clinic Orders.  Due to the way
+ CPRS is currently working, an inpatient patient could have an inpatient 
+ order with a Clinic name stored in the PHARMACY PATIENT File (#55).  When
+ the MAR is run to NOT include Clinic orders, this order will not show on the
+ report even though it is an inpatient order.  Clinic orders are defined
+ as an inpatient medication for an Outpatient patient where there is a 
+ CLINIC location and an APPOINTMENT DATE/TIME.
+  
+  
+ Resolution:
+ -----------
+ Modifications were made to 3 routines, PSGMAR0, PSGMMAR0 & PSGMMIV to add
+ an additional check for an APPOINTMENT DATE/TIME if there is a CLINIC 
+ name stored in the PHARMACY PATIENT file (#55).
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  
+ This patch should be installed during non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (When prompted for INSTALL NAME, enter PSJ*5.0*326)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*326.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", Respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", Respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGMAR0
+    Before: B73008660   After: B73287282  **8,15,20,111,145,196,326**
+Routine Name: PSGMMAR0
+    Before: B70416578   After: B70665522  **8,15,20,111,145,196,326**
+Routine Name: PSGMMIV
+    Before: B48999295   After: B49203096  **20,21,58,111,131,145,267,275,326**
+Routine Name: PSJIBAG
+    Before: B43933390   After: B44108809  **279,326**
+ 
+Routine list of preceding patches: 196, 275, 279
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 24, 2015
+Completed By:                               Date Completed: MAY 16, 2016
+Released By :                               Date Released : MAY 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,199 @@
+$TXT Created by              at CPRS30.DOMAIN.EXT  (KIDS) on Thursday, 12/19/13 at 07:55
+=============================================================================
+Run Date: APR 14, 2014                     Designation: OR*3*384
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #334                      Status: Released
+                  Compliance Date: AUG 31, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*311    <<= must be installed BEFORE `OR*3*384'
+
+Subject: MOCHA DOSING ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ 1) Upon initial entry of a Drug order in CPRS with a free text dosage, 
+    the dosage check is performed appropriately.  However, when taking 
+    the copy or change action in CPRS on that same order, upon accepting 
+    the order, no dosing checks are performed.  This issue has been 
+    resolved so that the dosing order checks are consistently performed 
+    for all drug actions where appropriate.
+  
+ 2) When the copy or change action in CPRS on a drug order that originally
+    had a Possible Dosage selected as the dosage, but changing it to a free
+    text dosage upon copy/change, the orignial Possible Dosage was used to 
+    perform the dosing check which was not correct.  This issue has been 
+    resolved such that the new free text dosage is used to perform the 
+    dosing check in this scenario.
+  
+ 3) If a preceding or trailing space could be automatically stripped off of
+    a dosage before being evaluated for dosing checks, then unknowing 
+    providers could be spared of the aggravation of a manual warning 
+    message for an improperly formatted free text dose.
+  
+    When reviewing test site reports, space issues have been identified are
+    a fairly common issue:
+    <space>1 TABLET 
+    1 TABLET<space> 
+    1 TABLET<space space> 
+    10mg<space> 
+    and so on.
+  
+    First - these could be entered by the provider.
+    Second - these could be older orders that were copied/changed and had
+    the spaces added 
+  
+  
+ ** PLEASE NOTE THE COMPLIANCE DATE  FOR THIS PATCH IS EXTENDED **
+  
+ Patch  OR*3*311 has a compliance date of July 31, 2014 and is part of the 
+ Mocha phased release.
+  
+ Because patch OR*3*384 requires OR*3*311, the compliance date of 
+ OR*3*384 is extended to August 31, 2014
+  
+  
+  Patch Components
+  ================
+   
+  Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)  New/Modified/Deleted
+  ------------------         -------------------  --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name             File #       New/Modified/Deleted
+  ---------             ------       --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  New Service Requests (NSRs)
+  ----------------------------  
+  N/A
+   
+  Patient Safety Issues (PSIs)
+  -----------------------------
+  PSPO #2495 Submitted on 11/06/2013
+     Subject:  When a CPRS outpatient medication order is edited via the 
+     COPY or CHANGE function, the Dispense Drug from the previous 
+     outpatient medication order is used in the Dose Check
+   
+  Remedy Ticket(s) & Overview
+  ---------------------------
+  N/A
+   
+  Test Sites:
+  ----------
+   
+   
+  Patch Installation:
+  
+  Installation Instructions
+  -------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users. This patch should take less than 5 
+  minutes to install.
+   
+  Pre-Installation Instructions
+  -----------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch #(ex.
+      OR*3.0*384):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install.
+   
+  5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//'     
+   
+  6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'
+   
+  7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO// 
+   
+  8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+   
+  Post-Installation Instructions
+  -----------------------------
+  N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDSGCHK
+    Before:B109034124   After:B102045357  **280,352,345,311,384**
+ 
+Routine list of preceding patches: 311
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 18, 2013
+Completed By:                               Date Completed: APR 14, 2014
+Released By :                               Date Released : APR 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

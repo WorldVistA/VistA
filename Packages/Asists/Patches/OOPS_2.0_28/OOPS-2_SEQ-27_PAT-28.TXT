@@ -1,0 +1,210 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/28/15 at 14:17
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: OOPS*2*28
+Package : OOPS - ASISTS                       Priority: Mandatory
+Version : 2        SEQ #27                      Status: Released
+                  Compliance Date: AUG 07, 2016
+=============================================================================
+
+Associated patches: (v)OOPS*2*23   <<= must be installed BEFORE `OOPS*2*28'
+
+Subject: TOTAL DAYS; LOC OF INJURY GUI DEFECTS
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch fixes the following issues:
+  
+ 1)  Total Days Issue
+ 2)  Save Location of Injury detail edits
+ 3)  Incident Report Location of Injury availability
+  
+ Associated NSR:
+ ==============
+ N/A 
+  
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1)  INC000000495746    Total Days Issue
+ 2)  INC000001036307    ASISTS - Other:
+ 3)  INC000001046480    ASISTS - Other:
+  
+   
+  
+ Participating Test Sites:
+ =========================
+ Central Plains HCS - VA Nebraska Western Iowa Health Care System 
+ New York Harbor Healthcare System
+ Maryland Health Care System 
+  
+   
+ REMEDY OVERVIEW:
+ ================
+  
+ 1)  INC000000495746    Total Days Issue
+   
+ Problem: 
+ --------
+ Issues occur while trying to display the "total days" for an Incident 
+ Outcome when a patient has more than 50 records in the INCIDENT OUTCOME 
+ (#95) subfile in the ASISTS ACCIDENT REPORTING (#2260) file. The issue
+ occurs because the form is programmed to account for a max of 50 records
+ so anything greater than 50 will display random, often extremely large,
+ numeric values.
+    
+  
+ Resolution:
+ -----------
+ ASISTS no longer limits the number of records it can process which will 
+ fix the potential for erroneous data to display. 
+   
+ 2)  INC000001036307    ASISTS - Other:
+   
+ Problem: 
+ --------
+ If editing a "Location of Injury" that has other values with all uppercase
+ characters, when the data is saved, it is saved to the incorrect record.  This
+ occurs because VistA sorts the records differently than ASISTS does, which
+ leads to confusion during the save process.
+    
+   
+ Resolution:
+ -----------
+ ASISTS has been changed to no longer assume the lists are in the same order and
+ evaluate the selected entry directly when identifying the record number.  This
+ will ensure the correct data is saved to the correct file. 
+  
+ 3)  INC000001046480    ASISTS - Other:
+   
+ Problem: 
+ --------
+ While determining if the Incident Report form should make the "Location
+ of Injury Detail" drop down available, it tries to ensure there is 
+ a value first.  The problem is, the validation code checks for more 
+ than one record before making it available rather than checking for at
+ least one record.  Therefore, instances where a "Location of Injury" has
+ exactly one "Location of Injury Detail" item, it will not display.
+    
+  
+ Resolution:
+ -----------
+ Modify the validation code to populate the dropdown box when more than zero
+ (0) record exists.
+  
+  
+  
+ SOFTWARE AND DOCUMENTATION RETRIEVAL:
+ =====================================
+ The KIDS build is attached to this message.
+  
+ The ASIST GUI Executable file will need to be downloaded.  Sites might 
+ also want to  download the ASISTS User Manual and ASISTS Installation 
+ Guide.
+  
+ Sites may retrieve these files in one of the following ways:
+  1.  The preferred method is to SFTP the files from:
+  
+     download.vista.domain.ext
+  
+     This will transmit the files from the first available SFTP Server.
+  
+  
+ 2.  Sites may retrieve the software and/or documentation directly using 
+     Secure  File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE
+     directory at
+  
+  
+     CIO FIELD OFFICE        FTP ADDRESS                  
+     ---------------        -----------                  
+     Albany:                 domain.ext
+     Hines:                  domain.ext    
+     Salt Lake City:         domain.ext
+  
+    
+     FILE NAMES         DESCRIPTION             FORMAT          SIZE(kb)
+     ----------         -----------             ------          --------
+     oops2_p28.exe      ASISTS executable       BINARY             10326
+     oops2_0um.pdf      ASISTS User Manual      BINARY              5232
+     oops2_0ig.pdf      ASISTS Install Guide    BINARY               400
+  
+  
+ **************************************************************************
+ NOTE: It has been determined that the install will not work with sites 
+ using System Center Configuration Manager (SCCM) as a method of
+ distribution.  This is not a defect of ASISTS or the install file, but
+ rather SCCM's inability to work with the install file because it requires
+ user interaction.  Due to certain customizable options available during
+ the interactive install and following the initial ASISTS Installation user
+ manual, it has been determined future distributions will go out as
+ previous versions have as an INTERACTIVE INSTALL so this install WILL NOT
+ work at sites using SCCM. 
+ **************************************************************************
+  
+        ================ INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options.  You may install 
+ these routines at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter OOPS*2.0*28)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       OOPS*2.0*28.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;ASISTS;**[Patch List]**;Jun 03, 2002;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OOPSGUI1
+    Before: B34497365   After: B34497535  **4,8,7,11,15,18,20,21,23,28**
+ 
+Routine list of preceding patches: 23
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2015
+Completed By:                               Date Completed: JUL 06, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

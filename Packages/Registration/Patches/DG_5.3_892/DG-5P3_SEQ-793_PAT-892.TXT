@@ -1,0 +1,246 @@
+$TXT Created by                   at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/06/15 at 13:50
+=============================================================================
+Run Date: MAY 04, 2015                     Designation: DG*5.3*892
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #793                    Status: Released
+                  Compliance Date: JUN 04, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*650  <<= must be installed BEFORE `DG*5.3*892'
+                    (v)DG*5.3*851  <<= must be installed BEFORE `DG*5.3*892'
+
+Subject: UNDEF CONF ADDRESS,PRF ISSUES
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+  
+  Patch DG*5.3*892 addresses 3 issues:
+       
+  1.)  Undefined error when entering Confidential Address
+  2.)  PRF Assignment Action Not Linked Report issue
+  3.)  Documentation change needed for MISSING PATIENT PRF
+                         
+   
+  ASSOCIATED REMEDY: 
+  ==================
+  1.)  INC000000988855 - Undefined error when entering Confidential Address
+  2.)  INC000001015144 - PRF Assignment Action Not Linked Report issue
+  3.)  INC000001019231 - Documentation change needed for MISSING PATIENT PRF
+  
+    
+  ASSOCIATED NSR: 
+  ===============
+  N/A
+  
+   
+  PARTICIPATING TEST SITES: 
+  =========================
+  Tuscaloosa - VA Medical Center
+  North Florida/South Georgia VHS(Lake City) 
+  Salisbury VA Medical Center
+  
+   
+  
+  Remedy Overview:
+  ================
+  1.)  Undefined error when entering Confidential Address   
+  
+  Problem:
+  --------
+  An undefined error occurs in Load/Edit Patient Data [DG LOAD PATIENT DATA
+  option when entering a Confidential Address if the city field is greater
+  than fifteen characters in length and no ZIP Code was previously entered.
+     
+  Resolution:
+  -----------
+  When the length of a city is more than 15 characters, a CITY ABBREVIATION 
+  lookup is done.  ZIP Code is needed for this lookup.  Resolution is to
+  skip the CITY ABBREVIATION check in routine ^DGREGTZL if ZIP Code was
+  omitted. The city would instead be truncated to a length of 15 characters.
+  
+  
+  2.)  PRF Assignment Action Not Linked Report issue
+  
+  Problem:
+  --------
+  Patient Record Flags (PRF) can be transferred between sites.  When 
+  transferred, all related actions are also transferred.  All actions must be
+  linked to a TIU (Text Integration Utility) document.  The Assignment Action
+  Not Linked Report lists actions that are not linked to a TIU document.
+  The problem is that TIU documents are NOT transferred between sites, by
+  design.  Sites do not want to see transferred actions on this report.
+     
+  Resolution:
+  -----------
+  Modify routine ^DGPFRAL1 to check for a change of flag assignment.  If the
+  flag was transferred, do not report missing TIU link for actions prior to 
+  the transfer date.
+    
+  
+  3.)  Documentation change needed for MISSING PATIENT PRF
+   
+  Problem:
+  --------
+  When patch DG*5.3*869 was released, a new Patient Record Flag (MISSING 
+  PATIENT) was added to the PRF NATIONAL FLAG (#26.15)file.  Documentation
+  and training related to this patch were presented with the below
+  information:
+  
+  Creates a new mail group, DGPF MISSING PT FLAG REVIEW. Members of this mail 
+  group will be notified via a Mailman message when a patient has been assigned 
+  the National, Category I - MISSING PATIENT PRF.
+  
+  This information is incorrect and needs to be updated in documentation on the 
+  VDL website.
+    
+  Resolution:
+  -----------
+  The following documents should be updated with the correct information:
+  
+  Missing Patient PRF Release Notes
+  Document -- Missing_patient_prf_release_notes.doc (Page:  #6)
+  
+  From:
+  -----
+  Creates a new mail group, DGPF MISSING PT FLAG REVIEW.  Members of this 
+  mail group will be notified via a Mailman message when a patient has been
+  assigned the National, Category I - MISSING PATIENT PRF.
+  
+  To:
+  ---
+  Creates a new mail group, DGPF MISSING PT FLAG REVIEW.  Members of this 
+  mail group will receive messages when the patient's flag needs to be 
+  reviewed, following existing PRF review processes of continue, inactivate
+  or delete.
+  
+  Patient Record Flags User Guide  
+  Document -- patient_record_flags_user_guide.pdf (Page:  #4)
+  
+  From:
+  -----
+  Patch DG*5.3*869 installs a NEW National Category I Patient Record Flag 
+  (PRF), MISSING PATIENT and creates a new mail group, DGPF MISSING PT FLAG
+  REVIEW. Members of this mail group will be notified via a MailMan message
+  when a patient has been assigned the National, Category I - MISSING 
+  PATIENT PRF.
+  
+  To:
+  ---
+  Patch DG*5.3*869 installs a NEW National Category I Patient Record Flag 
+  (PRF), MISSING PATIENT and creates a new mail group, DGPF MISSING PT FLAG
+  REVIEW.  Members of this mail group will receive messages when the 
+  patient's flag needs to be reviewed, following existing PRF review 
+  processes of continue, inactivate or delete.
+  
+  
+  
+  
+  Documentation Retrieval Instructions:
+  -------------------------------------
+  Updated documentation addressed by this patch is available using the File 
+  Transfer Protocol (FTP).
+   
+  The preferred method is to FTP the files from 
+  ftp://download.vista.domain.ext/.
+  
+  This transmits the files from the first available FTP server. Sites may 
+  also elect to retrieve software directly from a specific server as 
+  follows:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+  The documentation will be in the form of Adobe Acrobat files.
+   
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www4.domain.ext/vdl/
+   
+  
+  
+  File Description          File Name                             FTP Mode
+  ------------------------------------------------------------------------
+  PRF User Guide            DG_5_3_P892_UG.PDF                     Binary
+  Missing PRF Release Notes DG_5_3_P892_RN.PDF                     Binary
+  
+  
+  Installation Instructions:
+  --------------------------
+  This patch may be run with users on the system, but it is recommended
+  that it be queued to run after normal business hours.
+   
+  Installation will take less than 5 minutes.
+  Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*892).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         DG*5.3*892.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//",  respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+           Load/Edit Patient Data [DG LOAD PATIENT DATA]
+           Register a Patient [DG REGISTER PATIENT]
+           Assignment Action Not Linked Report [DGPF ACTION NOT LINKED REPORT]
+           Tracking Report [DGEN NEACL MGT RPT2]
+                   
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPFRAL1
+    Before: B71862269   After: B80104203  **554,650,892**
+Routine Name: DGREGTZL
+    Before: B49877397   After: B51269802  **851,892**
+ 
+Routine list of preceding patches: 650, 851
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 11, 2014
+Completed By:                               Date Completed: APR 20, 2015
+Released By :                               Date Released : MAY 04, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

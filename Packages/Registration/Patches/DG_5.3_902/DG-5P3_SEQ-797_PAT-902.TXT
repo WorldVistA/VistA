@@ -1,0 +1,349 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 12/22/14 at 12:21
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: DG*5.3*902
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #797                    Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*711  <<= must be installed BEFORE `DG*5.3*902'
+                    (v)DG*5.3*863  <<= must be installed BEFORE `DG*5.3*902'
+                    (v)DG*5.3*876  <<= must be installed BEFORE `DG*5.3*902'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 13
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+ DG*5.3*711, DG*5.3*863, and DG*5.3*876 are required builds for patch
+ DG*5.3*902.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed
+       in three VistA namespaces: DG, RG and MPIF. DG*5.3*902 must be 
+       installed before either MPIF*1.0*60 and RG*1.0*62, as the new
+       ICN fields that are being exported in this patch will be 
+       populated during the post install processing of the MPIF*1.0*60 
+       patch. Once DG*5.3*902 has been installed, patches RG*1.0*62
+       and MPIF*1.0*60 can be installed in any order.
+  
+ Issue #1
+ Modifications were made to the Admissions, Discharges and Transfers
+ (ADT) A19 Health Level Seven (HL7) message builder code in routine
+ VAFCQRY to update the ZEL, ZSP and OBX message segments to include
+ VETERAN (Y/N)? (#1901), TYPE (#391), PERIOD OF SERVICE (#.323) and 
+ SELF IDENTIFIED GENDER (#.024) fields from the PATIENT (#2) file.
+     
+ Issue #2
+ The following Data Dictionary changes have been made to the PATIENT
+ (#2) file.
+  
+ Added the fields, FULL ICN (#991.1) and FULL ICN HISTORY (#991.91),
+ which will contain the complete Integration Control Number (ICN) value
+ (Identifier, Delimiter, Checksum and optional Encryption Scheme).
+  
+ A non-lookup cross-reference ("AFICN") has been created on the FULL ICN
+ (#991.1) field. In addition, auditing has been enabled for both fields.
+  
+ Modified the Data Definition (DD) of the DATE OF DEATH LAST UPDATED
+ (#.354) and LAST EDITED BY (#.355) fields to add a HELP-PROMPT.
+  
+ Enabled auditing and added a FIELD INDEX type cross-references (X-Ref)
+ on the following fields:
+  
+      Field Number     Field Name                    X-Ref
+      -------------------------------------------------------
+      .352             DEATH ENTERED BY              AVAFC352
+      .353             SOURCE OF NOTIFICATION        AVAFC353
+      .354             DATE OF DEATH LAST UPDATED    AVAFC354
+      .355             LAST EDITED BY                AVAFC355
+  
+   This new cross-references makes use of the DG FIELD MONITOR tool
+   that was released in patch DG*5.3*527. This tool utilizes the VAFC
+   MPIPD FIELD TRIGGER protocol, which creates an entry in the ADT/HL7
+   PIVOT (#391.71) file, as well as sets the VAFCF variable to capture
+   the fields that have been modified during an edit. This field will
+   be included in the Health Level Seven (HL7) 2.4 messages generated
+   by the MPI/PD applications. Routine VAFCTR supports this effort.
+  
+ The post-init routine DG902PST will create the new FIELD INDEX type
+ cross-references and ensure that auditing has been enabled for these
+ four fields noted above.
+      
+ Issue #3
+ Modifications were made to routine VAFCPDAT to change the display name
+ of SELF-IDENTIFIED GENDER to SELF-IDENTIFIED GENDER IDENTITY if shown 
+ upon executing any of the following options: 
+     
+      - Patient MPI/PD Data Inquiry [RG EXCEPTION TF INQUIRY]
+      - MPI/PD Exception Handling [RG EXCEPTION HANDLING]
+      - Remote Patient Data Query Menu [RG REMOTE PDAT MENU]
+    
+ Issue #4
+ Modifications were made to routine VAFCTR so that any changes to the
+ DEATH ENTERED BY (#.352), SOURCE OF NOTIFICATION (#.353), DATE OF 
+ DEATH LAST UPDATED (#.354) and LAST EDITED BY (#.355) fields captured
+ by the AVAFC### cross-references (noted in Issue #2 above), will be 
+ transmitted by a Health Level Seven (HL7) update message to the Master
+ Patient Index (MPI).
+     
+ Issue #5
+ Modifications were made to routine VAFCHIS, which maintains the 
+ existing ICN HISTORY (#992) multiple (sub-file #2.0992), to now also
+ update the new FULL ICN HISTORY (#991.91) multiple (sub-file #2.0991)
+ in the PATIENT (#2) file. The FULL ICN HISTORY will contain the 
+ complete ICN as a single field value.
+         
+ Issue #6
+ Modifications were made to the ADT-A19 HL7 message builder code in
+ routines VAFCQRY and VAFCSB to support the new Date of Death
+ requirements to the MPI. DEATH ENTERED BY (#.352), SOURCE OF 
+ NOTIFICATION (#.353), DATE OF DEATH LAST UPDATED (#.354) and LAST
+ EDITED BY (#.355) fields from the PATIENT (#2) file will be added to
+ the OBX message segment of the ADT-A19 HL7 message. Additional Date of
+ Death supporting code will be exported in patches MPIF*1.0*60 and 
+ RG*1.0*62.
+   
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ PATIENT (#2)               DATE OF DEATH LAST   MODIFIED
+                             UPDATED (#.354)
+                            LAST EDITED BY       MODIFIED
+                             (#.355)
+                            FULL ICN (#991.1)    NEW
+                            FULL ICN HISTORY     NEW
+                             (#991.91)
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ BIRMINGHAM AL VAMC
+ CENTRAL ALABAMA HCS
+ MINNEAPOLIS VA HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from the ANONYMOUS.SOFTWARE
+ directory at: ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=16
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Programmer Manual          RG1_0_P62PM.PDF                    (binary)
+ User Manual                RG1_0_P62UM.PDF                    (binary)
+ Technical Manual           RG1_0_P62TM.PDF                    (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-init routine DG902PST will create the new FIELD INDEX type 
+ cross-references and ensure that auditing has been turned on for each of
+ the following fields in the PATIENT (#2) file:
+  
+      - DEATH ENTERED BY (#.352)
+      - SOURCE OF NOTIFICATION (#.353)
+      - DATE OF DEATH LAST UPDATED (#.354)
+      - LAST EDITED BY (#.355)
+  
+ The Post-Install routine DG902PST can be deleted after the patch has been
+ installed.    
+   
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ The following OPTIONS should be disabled during installation:
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*902):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+ The Post-Install routine DG902PST can be deleted after the patch has been
+ installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG902PST
+    Before:       n/a   After: B25954935  **902**
+Routine Name: VAFCHIS
+    Before: B12925674   After: B14349143  **149,255,307,711,902**
+Routine Name: VAFCPDAT
+    Before: B52025374   After: B52424341  **333,414,474,505,707,712,837,
+                                           863,876,902**
+Routine Name: VAFCQRY
+    Before: B14904724   After: B23196961  **428,575,627,707,863,902**
+Routine Name: VAFCSB
+    Before: B15691481   After: B32788021  **707,756,825,876,902**
+Routine Name: VAFCTR
+    Before:  B3892761   After:  B4435550  **575,648,653,712,876,902**
+ 
+Routine list of preceding patches: 711, 876
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2014
+Completed By:                               Date Completed: SEP 15, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

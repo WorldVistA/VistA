@@ -1,0 +1,273 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 09/09/14 at 11:41
+=============================================================================
+Run Date: JAN 14, 2015                     Designation: ICD*18*77
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #71                     Status: Released
+                  Compliance Date: JAN 21, 2015
+=============================================================================
+
+Associated patches: (v)ICD*18*64   <<= must be installed BEFORE `ICD*18*77'
+                    (v)ICD*18*72   <<= must be installed BEFORE `ICD*18*77'
+                    (v)LEX*2*97    <<= must be installed BEFORE `ICD*18*77'
+
+Subject: FY2015 ANNUAL DRG GROUPER PATCH
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch provides the annual update to the Medicare Severity Diagnosis 
+ Related Group (MS-DRG) Grouper v28.0.
+       
+ No code files are included in the patch, as all changes are handled 
+ programmatically by the pre-init routines ICD1877*.
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+   
+ PLEASE NOTE: 
+     Please take note of the shortened compliance date. The changes
+     included in this patch were effective as of 10/1/2014 per the Federal
+     Register Vol. 79, No. 163, dated August 22, 2014. 
+   
+ ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC000001042834 - FY2015 ANNUAL DRG GROUPER UPDATE
+  
+   
+ ASSOCIATED NSRs:
+ ================
+ N/A
+  
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ Manchester VAMC
+ Upstate New York HCS
+  
+          
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000001042834 - FY2015 ANNUAL DRG GROUPER UPDATE
+   
+      The following changes were published in the Federal Register, Vol. 79,
+      No. 163, dated August 22, 2014 with an effective date of October 1,
+      2014. All page references below are for this annual update and
+      resource documents can be found at http://www.cms.hhs.gov/.
+   
+      Note: For FY2015 there are no new, revised or deleted diagnosis 
+            or procedure codes which are usually announced in Tables 6A
+            (New Diagnosis Codes), 6B (New Procedure Codes), 6C (Invalid
+            Diagnosis Codes), 6D (Invalid Procedure Codes), 6E (Revised
+            Diagnosis Code Titles), and 6F (Revised Procedure Codes).  
+       
+   Changes include:
+       
+      I.   Revised DRGs.
+       
+     II.   Revised DRG relative weights & average length of stay (ALOS)
+           values for all DRGs.
+   
+    III.   DRG reclassification changes to the Grouper.
+     
+       
+   This is a summary of the additions/changes made:
+       
+      I.   Routine ICD1877A was written to update the DRG file (#80.2).
+  
+           NEW DRGs for FY 2015
+           --------------------
+           MS-DRG 266 Endovascular Cardiac Valve Replacement with MCC
+           MS-DRG 267 Endovascular Cardiac Valve Replacement without MCC
+           MS-DRG 518 Back & Neck Procedure Except Spinal Fusion with MCC
+                      or Disc Device/Neurostimulator
+           MS-DRG 519 Back & Neck Procedure Except Spinal Fusion with CC
+           MS-DRG 520 Back & Neck Procedure Except Spinal Fusion without
+                      CC/MCC
+  
+  
+           INACTIVATED DRGs for FY 2015
+           ----------------------------
+           MS-DRG 490 Back & Neck Procedures Except Spinal Fusion with
+                      CC/MCC or Disc Device/Neurostimulator
+           MS-DRG 491 Back & Neck Procedures Except Spinal Fusion without
+                      CC/MCC or Disc Device/Neurostimulator
+  
+  
+     II.   Routine ICD1877A is also used to update the finalized values for 
+           DRG relative weights and average length of stay (ALOS).
+   
+     Note: Routines ICDDRG0 and ICDTBL0G-9G were added/modified to complete
+           the proper grouping of the existing diagnosis codes and procedure
+           codes.
+        
+  
+      III. DRG RECLASSIFICATION.
+           
+      Changes to other DRGs:
+      ----------------------
+       1. MDC 5 (p.49890)
+       a. Effective 10/1/2014 cases that have a procedure code of 35.05
+          through 35.09 will move from MS-DRGs 216-221 to the newly created
+          MS-DRGs 266 or 267.   
+  
+       
+       2. MDC 8 (p.49899)
+       a. Effective 10/1/2014 cases that were previously assigned to MS-DRGs
+          490 or 491 will be reassigned to newly created MS-DRGs 518, 519 or
+          520.
+   
+  
+       3. MDC 15 (p.49901)
+       a. Effective 10/1/2014 cases that have any of the following secondary
+          diagnosis codes V17.0, V17.2, V17.49, V18.0, V18.19, V18.8 or
+          V50.3 will be assigned to MS-DRG 795 instead of MS-DRG 794.
+  
+  
+       4. Surgical Hierarchies (P.49903)
+       a. Ranking of surgical DRGs has changed as follows:
+          MDC 5 - MS-DRGs 266 and 267 above MS-DRG 222
+   
+          MDC 8 - remove MS-DRGs 490 and 491
+                - MS-DRGs 518, 519 and 520 above MS-DRG 492
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ NOTE: Please do not forget to do step 6. This is a very important step 
+ as it updates/recalculates the transfer DRGs for Patient Treatment 
+ File (PTF) records opened during the current fiscal year.
+     
+ This patch can be loaded with users on the system.  However, it would 
+ be preferable if Medical Records coders were off the system.
+        
+ Install Time - 5 to 10 minutes.
+        
+       
+ This patch does not involve global file restoration. Nonetheless, we
+ suggest you create global saves on files #80 (^ICD9), #80.1 (^ICD0) and
+ #80.2 (^ICD) in the event problems develop during the install.  If it
+ became necessary to use the saved files, you should first kill all the
+ records (except the zero node) before applying the global restores.
+        
+    1. From the Kernel Installation and Distribution System Menu, select
+       the Installation menu.
+        
+    2. From this menu, you may elect to use the following options:
+       (when prompted for INSTALL NAME, enter ICD*18.0*77)
+           a.  Backup a Transport Global - this option will create a backup
+               message of any routines exported with the patch.  It will NOT
+               backup any other changes such as DDs or templates.
+           b.  Compare Transport Global to Current System  - this option will
+               allow you to view all changes that will be made when the patch
+               is installed.  It compares all components of the patch 
+               (routines, DDs, templates, etc.).
+           c.  Verify Checksums in Transport Global - this option will
+               allow you to ensure the integrity of the routines that are in
+               the transport global. 
+           d.  Print Transport Global - this option will allow you to view
+               the components of the KIDS build.
+        
+    3. Use the Install Package(s) option and select the package 
+       ICD*18.0*77.
+        
+    4. When prompted, 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//', respond NO
+        
+    5. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//', respond YES.
+       
+       When prompted, 'Enter options you wish to mark as 'Out Of Order':',
+       enter:
+              PTF Menu  [DG PTF MENU]
+    
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       Order':', press enter.
+    
+    6. Following installation of this patch, it is necessary to run the
+       Update Transfer DRGs for Current FY [DG PTF UPDATE TRANSFER DRGs] 
+       option in order to make the transfer DRGs correspond to the appropriate 
+       grouper.  This option updates/recalculates the transfer DRGs for PTF 
+       records opened during the current fiscal year. The option is locked 
+       with the DG PTFSUP security key.  The Menu path is PTF Menu/Update DRG 
+       Information Menu/Update Transfer DRGs for current FY.
+        
+    7. All routines beginning with ICD1877* can be deleted after the patch
+       has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1877A
+    Before:       n/a   After: B66610687  **77**
+Routine Name: ICD1877F
+    Before:       n/a   After: B57709083  **77**
+Routine Name: ICD1877G
+    Before:       n/a   After: B58487221  **77**
+Routine Name: ICD1877H
+    Before:       n/a   After: B59032246  **77**
+Routine Name: ICD1877I
+    Before:       n/a   After: B57526258  **77**
+Routine Name: ICD1877J
+    Before:       n/a   After: B59956681  **77**
+Routine Name: ICD1877K
+    Before:       n/a   After: B62896396  **77**
+Routine Name: ICD1877L
+    Before:       n/a   After:  B8028776  **77**
+Routine Name: ICD1877O
+    Before:       n/a   After:  B2720490  **77**
+Routine Name: ICD1877P
+    Before:       n/a   After:   B817027  **77**
+Routine Name: ICDDRG0
+    Before: B61340814   After: B61340898  **1,2,7,10,14,17,20,24,27,30,
+                                           31,32,33,37,45,50,53,56,65,72,
+                                           77**
+Routine Name: ICDDRG5
+    Before: B35156082   After: B44288391  **2,5,7,10,20,22,31,37,64,77**
+Routine Name: ICDDRG8
+    Before: B23765373   After: B32166933  **1,2,10,20,24,31,77**
+Routine Name: ICDTBL0G
+    Before:       n/a   After: B24417183  **77**
+Routine Name: ICDTBL1G
+    Before:       n/a   After: B10223882  **77**
+Routine Name: ICDTBL2G
+    Before:       n/a   After: B51747313  **77**
+Routine Name: ICDTBL3G
+    Before:       n/a   After:  B9932263  **77**
+Routine Name: ICDTBL4G
+    Before:       n/a   After: B29278562  **77**
+Routine Name: ICDTBL5G
+    Before:       n/a   After:  B7448758  **77**
+Routine Name: ICDTBL6G
+    Before:       n/a   After: B13348573  **77**
+Routine Name: ICDTBL7G
+    Before:       n/a   After: B16745831  **77**
+Routine Name: ICDTBL8G
+    Before:       n/a   After: B25476879  **77**
+Routine Name: ICDTBL9G
+    Before:       n/a   After:  B5060429  **77**
+ 
+Routine list of preceding patches: 64, 72
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 07, 2014
+Completed By:                               Date Completed: JAN 09, 2015
+Released By :                               Date Released : JAN 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

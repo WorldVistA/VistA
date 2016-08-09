@@ -1,0 +1,197 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: PRED*3*1
+Package : PRED - PHARMACY DATA UPDATE (DATUP) Priority: Mandatory
+Version : 3         SEQ #1                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+
+Subject: DATUP 3.0
+
+Category: 
+  - Other
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+ Data and Table Update Process (DATUP)supports the Medication Order Check
+ Healthcare Application (MOCHA) by performing data source updates. MOCHA 
+ conducts order checks using First DataBank's (FDB) Drug Information Framework
+ (DIF) within the existing VistA pharmacy application. FDB is a data product 
+ that provides the latest identification and safety information on medications. 
+ Additionally, FDB provides the latest algorithms used to perform order checks.
+ DATUP processes the data updates associated with FDB's DIF. 
+  
+ The order checks performed by MOCHA include: 
+ 1. Drug-Drug Order Check - Check interactions between two or more drugs,
+    including interaction monographs.
+ 2. Duplicate Therapy Order Check - Check for duplicated drug classifications
+    between two or more drugs.
+ 3. Drug-Dose Order Check - Check minimum and maximum single doses, verify the
+    dosing schedule, and provide the normal dosing range.   
+  
+  
+ There are three major enhancements to the DATUP version 3.0 software:
+ 1. Implementation of SFTP for DATUP. This updates the DATUP source code to
+    use Apache SFTP instead of Apache FTP.
+ 2. Update DATUP WebLogic Server to v12 so that DATUP is compliant with the
+    TRM.
+ 3. Modifications were made to make DATUP 3.0 TRM compliant.
+  
+  
+ Patch Components: 
+ ----------------- 
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Chillicothe VAMC
+ Mann-Grandstaff VAMC
+ Nebraska/Western Iowa HCS (Omaha)
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/
+  
+  
+ Title                           File Name                    FTP Mode
+ -----------------------------------------------------------------------
+ DATUP Local Install Guide       PRED_3_0_IGL_R0516.PDF       Binary
+ DATUP National Install Guide    PRED_3_0_IGN_R0516.PDF       Binary
+ DATUP Release Notes             PRED_3_0_RN_R0516.PDF        Binary
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 16, 2016
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

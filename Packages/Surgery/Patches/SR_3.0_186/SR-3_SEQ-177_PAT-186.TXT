@@ -1,0 +1,166 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 01/28/16 at 12:32
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: SR*3*186
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #177                      Status: Released
+                  Compliance Date: JUN 02, 2016
+=============================================================================
+
+Associated patches: (v)SR*3*41     <<= must be installed BEFORE `SR*3*186'
+                    (v)SR*3*184    <<= must be installed BEFORE `SR*3*186'
+
+Subject: ADDENDUM ERROR, INTERFACE SETUP DEFECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses two (2) issues:
+  
+ 1.   When a user edits the PROSTHESIS INSTALLED data for a completed
+      surgery case using the Operation option [SROMEN-OP] of the
+      Operation Menu option [SROPER] of the Surgery Menu option
+      [SROMENU] and answers "NO" when prompted to create an addendum,
+      an application error occurs.
+  
+ 2.   When a user edits Surgery Flag Interface Fields and enters a
+      caret ("^") to escape the edit session prior to completion, the
+      application erroneously adds a field delimiter to the selected
+      category record in the SURGERY INTERFACE PARAMETER File (#133.2).
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000001248855 - Addendum Error
+ 2. INC000001261081 - Interface Setup Defect
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Birmingham VAMC
+ Miami HCS
+  
+ Remedy Overview:
+ ================
+ 1. INC000001248855 - Addendum Error
+   
+ Problem:
+ --------
+ When a user edits the PROSTHESIS INSTALLED data for a completed surgery
+ case using the Operation option [SROMEN-OP] of the Operation Menu option
+ [SROPER] of the Surgery Menu option [SROMENU] and answers "NO" when
+ prompted to create an addendum, an application error occurs. The software
+ tries to restore the pre-edit PROSTHESIS INSTALLED data and errors out
+ with an UNDEFINED in routine ^SROESNRA. This results in the changes being
+ recorded in the VistA Surgery package but no addendum created in CPRS.
+  
+ Resolution:
+ -----------
+ The error occurs because the routine SROESNR1 contains a comment table
+ that does not contain a complete list of the Surgery File (#130)
+ PROSTHESIS INSTALLED subfile (#130.01) fields. The program is modified to
+ include all of the fields.
+  
+ Routines: SROESNR1
+  
+ 2. INC000001261081 - Interface Setup Defect
+   
+ Problem:
+ --------
+ When a user edits Surgery Flag Interface Fields and enters a caret ("^")
+ to escape the edit session prior to completion, the application
+ erroneously adds a field delimiter to the selected category record in the
+ SURGERY INTERFACE PARAMETER File (#133.2). The extra field delimiter
+ displaces existing values into incorrect fields causing some fields to
+ appear null or empty. This displacement occurs because the code in routine
+ ^SRHLSCRN neglects to check for the return of a user entered caret ("^")
+ after a call to the FileMan Reader API (^DIR).
+  
+ Resolution:
+ -----------
+ The program ^SRHLSCRN is modified to check whether a caret ("^") is 
+ returned by the call to ^DIR.  If it is, the modified code gracefully
+ exits the application rather than continuing with the data update.
+  
+ ***Please Note***
+  
+ This patch corrects the defect created as a result of using the up-arrow 
+ ("^") to exit the "Flag Interface Fields" [SRHL INTERFACE FLDS]  option.  
+ Due to the pre-patch defect, the potential for corrupt data entries exists
+ in the SURGERY INTERFACE PARAMATER file (#133.2). This would be unique to
+ each site and is to be addressed by Field Implementation Service and
+ local/regional VistA Application Support.
+  
+  
+ Routines: SRHLSCRN
+  
+   ==================== Installation Instructions ====================
+   The install time for this patch is less than 2 minutes.
+  
+   NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the KIDS patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+     
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+      options:
+              Print Transport Global
+              Compare Transport Global to Current System
+              Backup a Transport Global
+  
+      To preserve a copy of the routines exported in this patch prior to
+      installation, you should use the 'Backup a Transport Global' option
+      at this time. You may also compare the routines in your production
+      account to the routines in the patch by using the 'Compare a
+      Transport Global to Current System' option.
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' 
+      menu and select the package 'SR*3.0*186'.
+  
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//', choose 'NO'.
+  
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery ;**[Patch List]**;24 Jun 93;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SRHLSCRN
+    Before: B26127710   After: B26150504  **41,186**
+Routine Name: SROESNR1
+    Before: B55559388   After: B56593567  **100,143,157,176,182,184,186**
+ 
+Routine list of preceding patches: 41, 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 04, 2015
+Completed By:                               Date Completed: APR 21, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

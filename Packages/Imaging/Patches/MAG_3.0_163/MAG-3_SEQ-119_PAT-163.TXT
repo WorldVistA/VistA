@@ -1,0 +1,506 @@
+MAGIP163  Calculated   22319494
+=============================================================================
+Run Date: DEC 11, 2015                     Designation: MAG*3*163
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #119                      Status: Released
+                  Compliance Date: JAN 11, 2016
+=============================================================================
+
+
+Subject: MAG INDEX TERMS UPDATE
+
+Category: 
+  - Other
+
+Description:
+============
+
+ The MAG Index Terms are used in VistA Imaging Capture to index images, 
+ which allows clinicians to apply sort filters when viewing or researching 
+ images.  Sites must have the most recent index terms, otherwise they 
+ might encounter issues when images are viewed across sites or within the 
+ Veterans Integrated Service Network (VISN).
+ MAG*3.0*163 will update the current MAG VistA Imaging Index Term files 
+ for the Veterans Health Administration (VHA) and Indian Health Services 
+ (IHS) sites accordingly. 
+ MAG*3.0*163 is a MAG Index Term update patch which will add:
+  
+ 1)  New Origin: URBAN (in CAPITAL letters), active for IHS sites only
+  
+ 2) New Specialty :  Diagnostic Interventional Radiology 
+ Abbreviation:  DIR
+ Associate with existing Procedure/Events:  Biopsy, Pain Management and CT 
+ Angiography
+  
+ 3) New Specialty:  Radiation Oncology 
+ Abbreviation:  RONC
+ Associate with existing Procedure/Events:  Pain Management and 
+ Brachytherapy
+  
+ 4) New Specialty:  Physical Therapy, active for IHS sites only
+ Abbreviation:  PT
+ Associate with existing Procedure/Events:  Wound Assessment and Physical 
+ Therapy
+  
+ 5) Add the existing specialty of Hematology, Medical to the existing 
+ Procedure/Event of the Blood Component Form
+  
+  
+ Routine Information
+ ===================
+ This section lists modified routines for this patch.  For each routine, 
+ the second line will contain the following information: 
+  
+ * ;;3.0;IMAGING;**163**;Mar 19, 2002;Build 19 * 
+  
+ CHECK1^XTSUMBLD is used to generate the routine checksums.
+  
+ Routine         Checksum Before         Checksum After          Patch List
+ MAGIP163        None                    23600897                **163**
+  
+ Routine MAGIP163 is a KIDS installation routine that is automatically 
+ deleted after the KIDS installation.
+  
+  
+ Associated Patches
+ ==================
+ There are no associated patches for MAG*3.0*163.
+  
+ Distribution of Software
+ ========================
+ To obtain MAG*3.0*163 files, use File Transfer protocol (FTP) to retrieve 
+ MAG3_0P163.KID and other files from one of the following OI Field 
+ Offices' ANONYMOUS.SOFTWARE directories.  
+  
+ Albany          ftp.domain.ext        
+ Hines           ftp.domain.ext         
+ Salt Lake City  ftp.domain.ext           
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www.domain.ext/vdl/.
+  
+ Patch Components
+ ================
+ This patch includes software and documentation files.  This document, 
+ MAG3_0P163_Patch_Description.pdf, provides an overview, explains the 
+ changes, and outlines the installation for this patch.  
+ MAG3_0P163_README.txt, if present, is an informative file associated with 
+ the patch.  Any late-breaking news about this patch will be found in this 
+ README file.
+  
+ Software
+ ========
+ MAG3_0P163.KID - KIDS (Kernel Installation and Distribution System) - 
+ KIDS build for Patch 163
+  
+ Documentation
+ =============
+ This document, MAG3_0P163_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Forms Associated
+ ================
+ There are no new forms.
+  
+ Mail Groups Associated
+ ======================
+ There are no new mail groups in this patch.
+  
+ Options Associated
+ ==================
+ There are no new options in this patch.
+  
+ Protocols Associated
+ ====================
+ There are no new protocols in this patch.
+  
+ Security Keys Associated
+ ========================
+ There are no new security keys in this patch.
+  
+ Templates Associated
+ ====================
+ There are no new templates in this patch.
+  
+ Additional Information
+ ======================
+ New Service Requests (NSRs)
+ ===========================
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues (PSIs)
+ ============================
+ There are no patient safety issues associated with this patch. 
+  
+ National Service Desk (NSD) Ticket(s) & Overview
+ ===========================
+ The following NSD help desk calls and Code CRs are addressed in this 
+ patch:
+  
+ 1.  Create new Index Terms for VistA Imaging Capture.  NSD ticket: 
+ INC000001282384
+  
+  
+ Problem
+ =======
+ Due to other system changes, terms in the VistA Imaging system need to be 
+ updated.  The changes made in this patch are detailed below:
+  
+ Create new Patch for Mag INDEX TERMS update - (Create new Index Terms for 
+ VistA Imaging Capture)
+ New Origin: URBAN (in CAPITAL letters), active for IHS sites only
+  
+ New Specialty :  Diagnostic Interventional Radiology 
+ Abbreviation:  DIR
+ Associate with existing Procedure/Events:  Biopsy, Pain Management and CT 
+ Angiography
+  
+ New Specialty:  Radiation Oncology 
+ Abbreviation:  RONC
+ Associate with existing Procedure/Events:  Pain Management and 
+ Brachytherapy
+  
+ New Specialty:  Physical Therapy, active for IHS sites only
+ Abbreviation:  PT
+ Associate with existing Procedure/Events:  Wound Assessment and Physical 
+ Therapy
+  
+ Resolution
+ ==========
+ The MAG INDEX TERMS were revised and will be distributed to the sites. 
+ (e.g., File#2005.84 Image Index for Specialty/Subspecialty and #2005.85 
+ Image Index for Procedure/Event).
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+    VISN 15 -Eastern Orbit-St Louis, Marion, Poplar Bluff-Integrated
+    Greater Los Angeles Healthcare System- Integrated
+    Indian Health Services
+  
+ Documentation Retrieval Instructions
+ ====================================
+ There are no document retrieval instructions.
+  
+ Patch Installation
+ ==================
+ Update Planning
+ ===============
+ This patch is to be installed on the VistA System.  This patch must be 
+ installed by the compliance date to conform to VHA Directive 2001-023.
+  
+ All sites running VistA Imaging 3.0 must install the KIDS portion of this 
+ patch.  This patch can be loaded while the VistA Imaging System is active 
+ and users are on the system.  Installing the MAG*3.0*163 KIDS takes 2-5 
+ minutes.
+  
+ Update Prerequisites
+ ====================
+ Before installing this patch, users will need to download and install the 
+ MAG*3.0*163 files from the download server to a local storage location.  
+ The KIDS file should be downloaded in the ASCII format.
+  
+ VistA System (KIDS) Installation
+ ================================
+ This patch must be installed by the compliance date to conform with VHA 
+ Directive 2001-023.
+  
+ NOTE:  All sites running VistA Imaging 3.0 must install the KIDS portion 
+ of this patch. 
+  
+ The time that it will take to install the various components of this 
+ patch is as follows: 
+    Installing the KIDS takes approximately 3 minutes.
+    Take time to write down the restore code for purposes of restoring the 
+ backup during KIDS installation (e.g., Restore Code:  5462942169).  The 
+ code is also sent to the installer in a VistA e-mail.
+    Take time to review the installation instructions in this document 
+ before beginning the installation.
+  
+ Users may be on the system during installation.
+  
+ Installation Prerequisites
+ ==========================
+ Users can download the patch installation files from the OI Field Office 
+ Anonymous FTP sites.  All instructions in this section assume that the 
+ distribution files for this patch have been copied to a local storage 
+ location.  For the list of distribution files for this patch, see Page 1 
+ of this document.
+  
+ Installing the VistA/RPMS System (KIDS)
+ =======================================
+ Installing the MAG*3.0*163 involves installing the file MAG3_0P163.KID on 
+ the VistA or RPMS(IHS) system.
+  
+ Installing the KIDS Package
+ ===========================
+ To install the KIDS package:
+ 1.  Access the Kernel Installation and Distribution System Menu [XPD 
+     MAIN].
+ 2.  Run the installation option [XPD INSTALLATION MENU].
+ 3.  Load the KIDS file by performing the following steps:
+   a.  Run the #1 Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+       load the KIDS distribution.
+   b.  When prompted, enter the full path and file name (MAG3_0P163.KID) 
+       that you downloaded from the OIFO FTP server.
+   c.  When prompted to continue with the load, enter "YES". A message 
+       will be displayed when the load is complete.
+ 4.  Install the KIDS files by performing the following steps:
+   a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+   b.  When prompted for the install name, enter MAG*3.0*163.
+   c.  Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 5.  After performing the environmental check steps, the MAG Index Terms 
+ update will continue after the user enters "Y" for yes or press <Enter> 
+ for the following steps:
+   a.  Update Imaging Index Terms with the latest Distribution (Y/N)?  Yes
+   b.  Write down the restore code available.  (It will also be mailed to 
+       the person responsible for installing MAG*3.0*163.)
+  
+ Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ backup
+  
+ Restore Code: 5510712838
+  
+  Installing Data Dictionaries: ......
+                Aug 17, 2015@09:33:58
+  
+  Installing Data: 
+                Aug 17, 2015@09:33:58
+  
+  Running Post-Install Routine: POS^MAGIP163.
+  
+ Post Install Mail Message: Aug 17, 2015@09:33:58
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*163 Installed. 
+                Aug 17, 2015@09:33:58
+  
+ 6.  When the installation has finished, an Install Completed message will 
+ be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time.  If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: MAG3_0P163.KID
+  
+ KIDS Distribution saved on Aug 14, 2015@08:31:54
+ Comment: VistA Imaging V3 - Patch 163 T1 - MAG index terms update
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*163
+ Distribution OK! 
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    MAG*3.0*163
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*163      8/17/15@09:32:33
+      => VistA Imaging V3 - Patch 163 T1 - MAG index terms update  
+ ;Created on 
+  
+ This Distribution was loaded on Aug 17, 2015@09:32:33 with header of 
+    VistA Imaging V3 - Patch 163 T1 - MAG index terms update  ;Created on 
+ Aug 14,
+  2015@08:31:54
+    It consisted of the following Install(s):
+     MAG*3.0*163
+ Checking Install for Package MAG*3.0*163
+  
+ Install Questions for MAG*3.0*163
+  
+ Incoming Files:
+  
+  
+    2005      IMAGE  (Partial Definition)
+ Note:  You already have the 'IMAGE' File.
+  
+  
+    2005.82   IMAGE INDEX FOR CLASS  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR CLASS' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.83   IMAGE INDEX FOR TYPES  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR TYPES' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.84   IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY' File.
+ I will OVERWRITE your data with mine.
+  
+  
+    2005.85   IMAGE INDEX FOR PROCEDURE/EVENT  (including data)
+ Note:  You already have the 'IMAGE INDEX FOR PROCEDURE/EVENT' File.
+ I will OVERWRITE your data with mine.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// HERE
+  
+  
+  Install Started for MAG*3.0*163 : 
+                Aug 17, 2015@09:33:55
+  
+ Build Distribution Date: Aug 14, 2015
+  
+  Installing Routines:..
+                Aug 17, 2015@09:33:55
+  
+  Running Pre-Install Routine: PRE^MAGIP163.
+  
+ Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ backup****
+  
+ Restore Code:  5510712838
+  
+  
+  Installing Data Dictionaries: ......
+                Aug 17, 2015@09:33:58
+  
+  Installing Data: 
+                Aug 17, 2015@09:33:58
+  
+  Running Post-Install Routine: POS^MAGIP163.
+  
+ Post Install Mail Message: Aug 17, 2015@09:33:58
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*163 Installed. 
+                Aug 17, 2015@09:33:58
+  
+  MAG*3.0*163 Installed.
+  
+  
+ MAG*3.0*163 installation is complete.
+  
+ NOTE:  For a VHA VistA site, make sure the new Specialty, Diagnostic 
+ Interventional Radiology (DIR), is displayed on the Imaging Capture 
+ Application (Specialty) listing after MAG*3.0*163 is installed.
+  
+ NOTE:  For an IHS RPMS site, make sure the Origins, TRIBAL and URBAN, 
+ are active.
+  
+ Uninstalling VistA Imaging MAG*3.0*163
+ ======================================
+ NOTE: MAG*3.0*163 only comes with a KIDS update; there is not a Client 
+ APP update.
+  
+ If the KIDS installation fails and it becomes necessary to uninstall 
+ MAG*3.0*163, use the following uninstall instructions.  Please follow the 
+ restore procedures to restore the Index Terms files with your restore 
+ code (see MAG*3.0*61 Patch Description - Rolling Back a File Update).
+  
+ Go to the MAG SYS MENU:  Imaging System Manager Menu?IX Image Index 
+ Conversion Menu...?UTIL Conversion Utilities...?IDXR   Image Index Terms 
+ Restore.
+  
+ The menu choices will be displayed as shown below.
+  
+ MAG SYS MENU     Imaging System Manager Menu
+  
+    HL7    Imaging HL7 Messaging Maintenance ...
+    IX     Image Index Conversion Menu ...
+    LS     Edit Network Location STATUS
+    TR     Telereader Menu ...
+           Ad hoc Enterprise Site Report
+           Configure AE Security Matrix Settings
+           Delete Image Group
+           . . .               
+           Importer Menu ...
+           Track Offline Jukebox Images
+  
+ Next, select the Imaging System Manager Menu Option: IX Image Index 
+ Conversion Menu.(shown above) and then select the Image Index Conversion 
+ Menu Option: UTIL  Conversion Utilities... (shown below).
+  
+    GEN    Generate Image Indices
+    EXP    Export Image Index Data
+    RPT    Print Image Index Report
+    COMM   Commit Image Indices
+    UTIL   Conversion Utilities ...
+    VAL    Image Index Validate Menu ...
+  
+ Then, select the Conversion Utilities Option:  IDXR Image Index Terms 
+ Restore.
+  
+    SET    File Setup
+    MAP    Mapping File Edit
+    INDX   Image Index Edit
+    STAT   View Conversion Status
+    IDXU   Image Index Terms Update
+    IDXR   Image Index Terms Restore
+    IDXS   Image Index Specialty/Subspecialty Status
+    IDXP   Image Index Procedure/Event Status
+  
+ To Undo the Index Term updates and restore this site's Index Term files, 
+ use the Restore Code that was included in the last INDEX TERMS UPDATE.
+  
+ Enter Restore Code: xxxxxxxxxx
+ Continue to restore Index Terms? N// YES
+ Done.
+
+Routine Information:
+====================
+Routine Name: MAGIP163
+    Checksum:
+  MAGIP163  Calculated   22319494
+ Description of Changes:
+  POST INSTALL routine
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 13, 2015
+Completed By:                               Date Completed: DEC 04, 2015
+Released By :                               Date Released : DEC 11, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

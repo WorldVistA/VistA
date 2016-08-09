@@ -1,0 +1,196 @@
+
+=============================================================================
+Run Date: AUG 26, 2015                     Designation: IVM*2*158
+Package : IVM - INCOME VERIFICATION MATCH     Priority: EMERGENCY
+Version : 2       SEQ #134                      Status: Released
+                  Compliance Date: AUG 31, 2015
+=============================================================================
+
+Associated patches: (v)IVM*2*132   <<= must be installed BEFORE `IVM*2*158'
+
+Subject: CATASTROPHIC DISABILITY OUTBOUND HL7 CHANGES
+
+Category: 
+  - Routine
+  - Enhancement ()
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+   Note:  This patch is being released in support of the Enrollment Customer
+          Enhancements (ECE) and Enrollment System Enhancements (ESE)
+          projects.
+  
+          IVM*2*158 (Income Verification Match) is being released along 
+          with DG*5.3*894 (Registration) in host file DG_53_P894.KID.
+  
+          It is imperative that this patch be installed no later than the
+          compliance date.  Your understanding and support is appreciated.
+   
+ **************************************************************************
+  
+ The Department of Veterans Affairs (VA) is amending its regulation 
+ concerning the manner in which VA determines that a Veteran is 
+ Catastrophically Disabled (CD) for purposes of enrollment Priority Group 
+ 4.  The current regulation relies on specific codes from the ICD-9-CM and 
+ CPT.  It has been requested to eliminate the use of ICD-9-CM and CPT 
+ codes when adding or updating the Veterans' CD data.  The Health 
+ Eligibility Center (HEC) requested modifications to the
+ Enrollment System (ES) and VistA Registration, Enrollment and
+ Eligibility (Vista REE) software to support the requirements for the 
+ Catastrophic Disability Initiative.  This patch modifies the HL7 Z07
+ consistency check rules for the ZCD segments. 
+  
+ This patch modifies the Income Verification Match v2.0 application as 
+ described below:
+  
+  
+ 1. If the VETERAN CATASTROPHICALLY DISABLED? (#.39) field of the 
+    PATIENT (#2) file equals "Y" and no CD DESCRIPTORS are on file,  CD 
+    STATUS DIAGNOSES, CD STATUS PROCEDURES and CD STATUS CONDITIONS will be 
+    sent on the HL7 Z07 message.
+  
+ 2. If the VETERAN CATASTROPHICALLY DISABLED? (#.39) field of the PATIENT 
+    (#2) file equals "Y" and new CD STATUS DESCRIPTORS are on File, CD 
+    DESCRIPTORS in lieu of CD STATUS DIAGNOSES, CD STATUS PROCEDURES and CD 
+    STATUS CONDITIONS will be sent on the HL7 Z07 message.
+  
+ 3. If the VETERAN CATASTROPHICALLY DISABLED? (#.39) field of the PATIENT 
+    (#2) file equals "N", it will not send anything.
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+      
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A                 
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+    
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA NY Harbor Healthcare System
+ VA Central Iowa Health Care System
+ 
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+     
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+   
+  The preferred method is to FTP the files from ftp://download.vista.med.va
+  .gov/.  This transmits the files from the first available FTP server.
+  
+  Sites may also elect to retrieve software directly from a specific
+  server as follows: 
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+         The following file will be available usually within 1 - 3 days at 
+         http://www.domain.ext/vdl/application.asp?appid=55:
+  
+         File Name             Contents                   Retrieval format
+         ---------             --------                   ----------------
+         IVM_2_P158_TM.PDF     Technical Manual              Binary
+  
+ Installation Instructions:
+ -------------------------
+ Installation instructions for IVM*2*158 can be found in the DG*5.3*894 
+ patch description.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**;JUL 8,1996;Build 44
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMZ7CCD
+    Before: B26024788   After: B32237910  **105,132,158**
+ 
+Routine list of preceding patches: 132
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 30, 2014
+Completed By:                               Date Completed: AUG 04, 2015
+Released By :                               Date Released : AUG 26, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

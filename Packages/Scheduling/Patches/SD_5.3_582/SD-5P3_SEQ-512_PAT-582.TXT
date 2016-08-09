@@ -1,0 +1,213 @@
+$TXT Created by             MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/04/14 at 14:00
+=============================================================================
+Run Date: SEP 30, 2014                     Designation: SD*5.3*582
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #512                    Status: Released
+                  Compliance Date: OCT 31, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*566  <<= must be installed BEFORE `SD*5.3*582'
+                    (v)SD*5.3*571  <<= must be installed BEFORE `SD*5.3*582'
+
+Subject: SDRR INACT CLIN, CONVERT RET PROV, DATE 2ND RR SENT ISSUES
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+ This patch will fix the following issues:
+  
+ 1. An issue that allows users to select clinics for recall reminders that
+    are inactive or scheduled to be inactive on the selected recall date.  
+  
+ 2. An issue with menu option Convert Retired Providers/Clinic Recalls
+    [SDRR CONVERT ENTRIES].
+  
+ 3. A display issue with the Date Second Reminder Sent field when doing a
+    Recall Patient Inquiry [SDRR PATIENT INQUIRY].
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000467530 - Able to enter inactive clinics in Recall Reminder
+ 2. INC000000465807 - Problem with Option: Convert Retired Providers/
+                      Clinic Recalls
+    Duplicate: INC000000498125 - Recall Reminders Reports - Returned Data
+               INC000000764693 - All recalls are being moved from all 
+                                 clinics when a provider has multiple 
+                                 clinics
+ 3. INC000000517302 - Issue with Date Second Reminder Sent field
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Cleveland - VA Medical Center
+ Connecticut - VA Medical Center
+ Salisbury - Va Medical Center
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000467530 - Able to enter inactive clinics in Recall Reminder
+  
+    Problem:
+    --------
+    Users are able to do add/edits in Recall Reminders and select clinics
+    that are inactive or are scheduled to be inactive at the time of the
+    selected recall date.
+  
+    Resolution:
+    -----------
+    Branching logic has been added to Input Template [SDRR RECALL CARD ADD]
+    that will call a new API added to routine SDRRUTL to determine if the
+    selected clinic will be allowed.  The new API (SCREEN1) will check to
+    see if the selected clinic is inactive, and if so, will display a
+    warning message to the user indicating when the clinic was Inactivated
+    and return the user to the Recall Date prompt.
+    
+    If the clinic contains a scheduled (future) inactivation date, this
+    will be compared to the selected Recall Date.  If the selected Recall
+    Date is prior to the scheduled inactivation date, selection of that
+    clinic will be allowed; otherwise, it will not be allowed, a warning
+    message will be displayed and the user taken back to the Recall Date
+    prompt.
+  
+    If the clinic is currently inactive, but contains a scheduled (future)
+    reactivation date, the selected Recall Date will be compared to this
+    date and if it is after the reactivation date, selection of that clinic
+    will be allowed.  If the selected Recall Date is prior to the
+    reactivation date, a warning message will be displayed and the user
+    taken back to the Recall Date prompt.
+  
+ 2. INC000000465807 - Problem with Option:  Convert Retired Providers/
+                      Clinic Recalls
+  
+    Problem:
+    --------
+    When using menu option Convert Retired Providers/Clinic Recalls [SDRR
+    CONVERT ENTRIES], the user is given the option to change the clinic,
+    as well as, the provider.  When electing to do so, the user will first
+    enter the old clinic and then the new clinic, followed by a selected
+    date range.  The problem is, the software will change all clinics for
+    the provider, for the selected date range, even if the recalls are not
+    for the identified old clinic.
+  
+    Resolution:
+    -----------
+    Routine SDRR5 will be modified to check each of the providers recalls
+    in the RECALL REMINDERS file (#403.5), for both the selected date range
+    and the selected old clinic, and only change those where the clinic
+    matches the selected old clinic.
+  
+ 3. INC000000517302 - Issue with Date Second Reminder Sent field
+  
+    Problem:
+    --------
+    When running the option Recall Patient Inquiry [SDRR PATIENT INQUIRY],
+    if the patient has more than one active recall reminder and a second
+    letter has been printed for one of them, the patient inquiry report
+    will print the same date in the Date Second Reminder Sent field for
+    all of the patient's recalls that display after the recall that had
+    the second letter printed.  A FileMan Inquiry into the actual Recall
+    Reminders file reveals that only the one recall has actually had a
+    second letter printed.  This is a cosmetic print issue with the
+    Recall Patient Inquiry option.  Once the variable for the date second
+    reminder sent is set, it is not being killed or reset, so the same
+    value is printed for all subsequent recalls in the report.
+  
+    Resolution:
+    -----------
+    Routines SDRRINQ and SDRRINQ1 will be modified to kill the variable
+    once it is used so that it will either print a null value for the
+    subsequent recall reminders or be properly reset to the correct value,
+    when applicable.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than five minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter SD*5.3*582)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       SD*5.3*582.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Add/Edit Clinic Recall Patient            [SDRR CARD ADD]
+          Convert Retired Providers/Clinic Recalls  [SDRR CONVERT ENTRIES]
+          Recall Patient Inquiry                    [SDRR PATIENT INQUIRY]
+          Appointment Management                    [SDAM APPT MGT]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRR5
+    Before:  B9146765   After:  B9036168  **536,582**
+Routine Name: SDRRINQ
+    Before: B77175038   After: B78118992  **536,566,582**
+Routine Name: SDRRINQ1
+    Before: B58933113   After: B59730952  **536,566,582**
+Routine Name: SDRRUTL
+    Before: B50446681   After: B59389500  **536,571,582**
+ 
+Routine list of preceding patches: 566, 571
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 04, 2011
+Completed By:                               Date Completed: SEP 29, 2014
+Released By :                               Date Released : SEP 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

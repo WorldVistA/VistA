@@ -1,0 +1,165 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/04/14 at 08:43
+=============================================================================
+Run Date: OCT 23, 2014                     Designation: PRC*5.1*176
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #162                    Status: Released
+                  Compliance Date: NOV 23, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*23  <<= must be installed BEFORE `PRC*5.1*176'
+                    (v)PRC*5.1*46  <<= must be installed BEFORE `PRC*5.1*176'
+                    (v)PRC*5.1*150 <<= must be installed BEFORE `PRC*5.1*176'
+                    (v)PRC*5.1*161 <<= must be installed BEFORE `PRC*5.1*176'
+
+Subject: 1358 DELIVER TO ISSUE, DUPLICATE 1358'S AND INVALID BOCS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 2 issues:
+  
+ 1. A duplicate 1358 is created if 2 people are obligating a request
+    at the same time.
+  
+ 2. Invalid entries in the "B" and "C" cross references in the BUDGET
+    OBJECT CODE (#420.2) file (BOC) are causing the wrong BOC code 
+    Description to display when using the ADD/EDIT BOC [PRCB BOC
+    ADD/EDIT] option.
+  
+ Associated NSR(s):
+ =================
+  N/A
+   
+ Associated Remedy ticket(s):
+ ===========================
+ 1.      INC0000000746223 - 1358 duplicate transaction processed
+ 2.      INC0000000766422 - BOC displaying incorrectly
+         duplicate:  INC0000000772559  Bad B&C Cross Refs in 420.2
+   
+  
+ Participating test Sites:
+ ========================
+  Heartland - East
+  St. Cloud 
+  
+ Remedy Overview:
+ ===============
+   
+ 1.      HD0000000746223 - 1358 duplicate transaction processed
+  
+ Problem:
+ --------
+ A duplicate 1358 transaction is created if two users obligate the same Request
+ in the CONTROL POINT ACTIVITY (#410) file  at the same time, using the
+ OBLIGATE 1358 [PRCEF OBLIGATE] option or the ADJUST (INCREASE/DECREASE)
+ 1358 [PRCEF ADJUST] option.
+  
+  
+ Resolution:
+ -----------
+ Routines PRCEADJ1, PRCESOE, PRCESOE1, PRCHPAT and PRCS58OB were modified
+ to check for a lock on the CONTROL POINT ACTIVITY (#410) file when
+ obligating a request, thus disallowing 2 users from creating duplicate
+ 1358 transactions.
+  
+ 2.     HD00000000766422 - BOC displaying incorrectly
+  
+ Problem:
+ --------
+ Invalid entries in the "B" and "C" cross references in the BUDGET OBJECT
+ CODE (#420.2) file are causing the wrong BOC code Description to display when
+ using the ADD/EDIT BOC [PRCB BOC ADD/EDIT] option.
+  
+ Resolution:
+ -----------
+ Post install routine PRC176P will re-index the "B" and "C" cross
+ references, deleting the invalid entries.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*176)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*176.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+       Obligate 1358                                    [PRCEF OBLIGATE]
+       Adjust (Increase/Decrease) 1358                  [PRCEF ADJUST]
+       Add/Edit BOC                                     [PRCB BOC ADD/EDIT]]  
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+  
+     7. You may delete the routine PRC176P from your production system after 
+        the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC176P
+    Before:       n/a   After:  B5915069  **176**
+Routine Name: PRCEADJ1
+    Before: B21219878   After: B21789521  **23,176**
+Routine Name: PRCESOE
+    Before: B55601870   After: B57132541  **148,153,161,176**
+Routine Name: PRCESOE1
+    Before:  B6935148   After:  B8978157  **176**
+Routine Name: PRCHPAT
+    Before: B14700547   After: B15186880  **46,176**
+Routine Name: PRCS58OB
+    Before: B23875458   After: B27156148  **148,150,176**
+ 
+Routine list of preceding patches: 23, 46, 150, 161
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 24, 2012
+Completed By:                               Date Completed: OCT 16, 2014
+Released By :                               Date Released : OCT 23, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

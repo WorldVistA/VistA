@@ -1,0 +1,297 @@
+$TXT Created by                   at DEVESS.DOMAIN.EXT  (KIDS) on Monday, 03/24/14 at 17:47
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: MC*2.3*44
+Package : MC - MEDICINE                       Priority: Mandatory
+Version : 2.3        SEQ #41                    Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)MC*2.3*42   <<= must be installed BEFORE `MC*2.3*44'
+                    (v)LEX*2*80    <<= must be installed BEFORE `MC*2.3*44'
+                    (v)ICD*18*57   <<= must be installed BEFORE `MC*2.3*44'
+
+Subject: ICD-10 UPDATE FOR MEDICAL DIAGNOSIS/ICD CODE FILE #697.5
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the Anonymous 
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ This patch updates the MEDICAL DIAGNOSIS/ICD CODES File (#697.5) with ICD-10
+ codes. A Medical Diagnosis may be associated with both ICD-9 and ICD-10 codes.
+  
+ For example, in Rheumatology, when a user selects a medical diagnosis, the 
+ ICD code that is populated in the file is the ICD code set that is active at
+ the time of the procedure date.
+  
+    -  If the procedure date is prior to the implementation date of the ICD-10
+       code set, then the ICD-9 code mapped to the medical diagnosis will be 
+       populated.
+    -  If the procedure date is on or after the implementation date of the 
+       ICD-10 code set, then the ICD-10 code mapped to the medical diagnosis 
+       will be populated.  
+  
+   
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)     Field Name (#)                       New/Modified/Deleted
+ -------------     -----------------------------------  --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 New/Modified/Deleted
+ -------------      ----      ------------------            --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VAMC, Battle Creek, MI
+ Detroit VAMC, Detroit, MI
+ Houston VAMC, Houston, TX
+ North Chicago VAMC, Chicago, IL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description
+   File Name                                       FTP Mode
+ --------------------------------------------------------------------------
+ Medicine Technical Manual
+   MC_2_3TM.pdf                                    (binary)
+ Medicine Release Notes
+   ICD-10_RN_MC_2_3_43_44.pdf                      (binary)
+ Production Overview Guide
+   ICD-10_Production_Overview_Guide_Groups_3_4.pdf (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ The following menu options should be disabled. 
+     MCMEDICINE SITE MGR MENU       Medicine Menu
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (MC*2.3*44):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter MC*2.3*44.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+  
+     MCMEDICINE SITE MGR MENU       Medicine Menu
+  
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After the patch is installed and the MailMan message is generated, delete the 
+ following routines using the Delete Routines [XTRDEL] option.
+ MC44PS10  MC44PS11  MC44PS12  MC44PS13  MC44PS14  MC44PS15  MC44PS16  MC44PS17
+ MC44PS18  MC44PS19  MC44PS20  MC44PS21  MC44PS22  MC44PST0  MC44PST1  MC44PST2
+ MC44PST3  MC44PST4  MC44PST5  MC44PST6  MC44PST7  MC44PST8  MC44PST9
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.3;Medicine;**[Patch List]**;09/13/1996;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MC44PS10
+    Before:       n/a   After: B32216509  **44**
+Routine Name: MC44PS11
+    Before:       n/a   After:B119768142  **44**
+Routine Name: MC44PS12
+    Before:       n/a   After: B78330054  **44**
+Routine Name: MC44PS13
+    Before:       n/a   After: B70120589  **44**
+Routine Name: MC44PS14
+    Before:       n/a   After: B45592662  **44**
+Routine Name: MC44PS15
+    Before:       n/a   After: B33126373  **44**
+Routine Name: MC44PS16
+    Before:       n/a   After: B64098085  **44**
+Routine Name: MC44PS17
+    Before:       n/a   After:B100716699  **44**
+Routine Name: MC44PS18
+    Before:       n/a   After: B96609729  **44**
+Routine Name: MC44PS19
+    Before:       n/a   After: B34160961  **44**
+Routine Name: MC44PS20
+    Before:       n/a   After: B43596900  **44**
+Routine Name: MC44PS21
+    Before:       n/a   After: B96487161  **44**
+Routine Name: MC44PS22
+    Before:       n/a   After: B38749849  **44**
+Routine Name: MC44PST0
+    Before:       n/a   After: B88346236  **44**
+Routine Name: MC44PST1
+    Before:       n/a   After: B89802234  **44**
+Routine Name: MC44PST2
+    Before:       n/a   After: B56548153  **44**
+Routine Name: MC44PST3
+    Before:       n/a   After: B62371296  **44**
+Routine Name: MC44PST4
+    Before:       n/a   After: B35157262  **44**
+Routine Name: MC44PST5
+    Before:       n/a   After: B62942710  **44**
+Routine Name: MC44PST6
+    Before:       n/a   After: B31566461  **44**
+Routine Name: MC44PST7
+    Before:       n/a   After: B69839955  **44**
+Routine Name: MC44PST8
+    Before:       n/a   After: B69718864  **44**
+Routine Name: MC44PST9
+    Before:       n/a   After: B66025880  **44**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2012
+Completed By:                               Date Completed: AUG 08, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

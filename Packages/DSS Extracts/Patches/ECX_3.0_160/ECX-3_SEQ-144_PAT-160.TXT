@@ -1,0 +1,194 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Friday, 12/04/15 at 15:32
+=============================================================================
+Run Date: MAY 02, 2016                     Designation: ECX*3*160
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #144                      Status: Released
+                  Compliance Date: JUN 02, 2016
+=============================================================================
+
+Associated patches: (v)ECX*3*154   <<= must be installed BEFORE `ECX*3*160'
+
+Subject: DSS FY 2016 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Since the release of the DSS FY 16 Annual Sustainment patch ECX*3*154,
+ there have been a couple of issues identified.  The first issue is with
+ the CBOC Activity Report.  The clinic data was moved in the CLINIC EXTRACT
+ file (#727.827) and the report uses that information to group data on the
+ report.  Extracts created using the FY16 logic will no longer have clinic
+ data in the old location, which will cause an error in this report.  The 
+ second issue is with the logic for determining if a medication given 
+ throug BCMA is considered a multi-dose medication.  The multi-dose logic 
+ is applied to both unit dose type medications as well as IV type 
+ medications.  The logic is being modified so it only applies to unit dose 
+ type medications.
+  
+ This patch will correct these issues.
+  
+ Problem #1: CBOC Activity report causes an error. 
+  
+   ASSOCIATED CA Service Desk:
+   ==========================
+   I6535680FY16
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   When a user attempts to run the CBOC Activity Report and selects an 
+   extract that was created using the FY16 logic, the report throws an
+   error and kicks the user off the system.
+  
+   Resolution:
+   -----------
+   The routine ECXUCBOC was updated so that the clinic information is
+   obtained from the correct location depending on the fiscal year logic
+   used to create the extract.
+  
+  
+ Problem #2: Certain IV orders are being missed by the BCMA extract
+  
+   ASSOCIATED CA Service Desk:
+   ==========================
+   I6680642FY16
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   -------- 
+   After release of the patch, it was determined that the logic for 
+   determining multi-dose containers shouldn't apply to IV type orders.  
+   In general, only unit dose type orders are delivered in multi-dose
+   containers so the logic should only apply to those types of orders.  In
+   addition, BCMA records with a status of infusing will now be considered
+   for inclusion in the extract.
+  
+   Resolution:
+   -----------
+   The logic in routine ECXBCM was changed so that a check is made to 
+   determine if the order being processed in the BCMA extract is an IV or
+   a unit dose type order.  If it's an IV type order the check to determine
+   if the order is a multi-dose order is not applied.  Also, all BCMA 
+   records with a status of infusing are now considered for inclusion in the
+   extract.  The result is that all IV orders will be counted when doing the
+   BCMA extract.
+  
+ Test Sites:
+ -----------
+ Boston
+ Little Rock
+ Alexandria
+  
+ INSTALLATION:
+ =============
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+                  Extract Manager's Options [ECXMGR]
+   
+ Install Time - less than 2 minutes (unless otherwise indicated) 
+  
+ ***********************************************************
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke 
+         the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS
+         -------------
+         Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:  
+  
+              Edits and Distribution ...
+              Utilities ...
+              Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+              Load a Distribution 
+              Print Transport Global
+              Compare Transport Global to Current System
+              Verify Checksums in Transport Global              
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+              Backup a Transport Global     
+    
+    Select Installation Option: 
+    
+    3.   Select Installation Option:
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the 
+               INSTALL NAME, enter ECX*3.0*160):
+  
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It
+             will not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made
+             when this patch is installed.  It compares all components of
+             this patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that
+             are in the transport global.
+  
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch:
+  
+         a.  Choose the Install Package(s) option to start the patch
+             install.  Enter ECX*3.0*160 when prompted for a build 
+             name.
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during 
+             the install?  NO//' answer NO.
+         c.  When prompted 'Want to DISABLE Scheduled Options, 
+             Menu Options, and Protocols? NO//' answer YES.
+         d.  When prompted 'Enter options you wish to mark as 'Out 
+             Of Order':'  Enter the following options:
+  
+                      Extract Manager's Options [ECXMGR]
+  
+         e.  If prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':' press <return>. 
+         f.  If prompted 'Delay Install (Minutes):  (0-60):  0//'          
+             answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997 ;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXBCM
+    Before: B95494822   After: B97333580  **107,127,132,136,143,144,148,
+                                           149,154,160**
+Routine Name: ECXUCBOC
+    Before: B95678239   After: B98139250  **49,148,149,160**
+ 
+Routine list of preceding patches: 154
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 17, 2015
+Completed By:                               Date Completed: APR 29, 2016
+Released By :                               Date Released : MAY 02, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,93 @@
+
+=============================================================================
+Run Date: MAY 27, 2015                     Designation: OHRS*1.4*13
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #13                    Status: Released
+                  Compliance Date: JUN 27, 2015
+=============================================================================
+
+
+Subject: OHRS 1.4.13 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Occupational Health Record-Keeping 
+ System (OHRS) version 1.4.13. No additional action is necessary for sites 
+ except to communicate the below modifications of OHRS 1.4.13 to users. 
+ This new OHRS 1.4.13 version addresses the vulnerability defects mentioned 
+ on the NSOC-WASA report and there are no new enhancements.
+ 
+ This build corrects 1 issue within the OHRS application and replaces
+ Occupational Health Record-Keeping System (OHRS) version 1.4.12.
+ 
+ 1) Web Application and PII Are Available Unencrypted Over HTTP -
+ 
+  ASSOCIATED REMEDY TICKET(s):
+ ==========================
+ 
+ 1) INC000001052585 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA Medium Vulnerability:A9: Insufficient Transport Layer Protection 
+   
+   
+ ASSOCIATED NSR(s):
+ ==================
+   N/A
+ 
+ PARTICIPATING TEST SITES:
+ =========================
+   Amarillo VAHCS -  Amarillo, TX
+   NJHCS - EO Campus, East Orange, NJ
+   Northern California HCS East Bay -  Martinez, CA
+   Philadelphia VAMC - Philadelphia, PA
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000001052585 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA Medium Vulnerability:A9: Insufficient Transport Layer Protection 
+  
+    Problem:
+      The CISS-OHRS web application does not contain sufficient transport layer
+      protection which makes it available unencrypted Over HTTP (port 80). This 
+      security vulnerability allows sniffing of user and patient credentials 
+      which contains sensitive information including passwords, PII, SSN, and 
+      session cookies. 
+ 
+   Solution: 
+       Implement a fix to secure the channel by converting it to SSL via HTTPS.
+       HTTPS communication protocol encrypts and decrypts page requests as well 
+       as the pages that are returned by the CISS-OHRS Web server. This change
+       protects against eavesdropping and man-in-the-middle attacks which will
+       also prevent sniffing of user and patient credentials, PII, and SSNs.
+   
+ DOCUMENTATION:
+ ======================
+     The User Guide is available on VA Documentation Library (VDL) at:
+     http://www.domain.ext/vdl/ in the HealtheVet section.
+   
+ ADDITIONAL INFORMATION:
+ =======================
+     If you have any questions concerning the implementation of this
+     application, please contact the VA Service Desk at 1-888-596-4357 or 
+     log a Remedy Ticket via Remedy for CISS-OHRS.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 10, 2015
+Completed By:                               Date Completed: MAY 26, 2015
+Released By :                               Date Released : MAY 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

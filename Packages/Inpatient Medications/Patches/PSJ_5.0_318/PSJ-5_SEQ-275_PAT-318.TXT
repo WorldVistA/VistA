@@ -1,0 +1,238 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 02/11/16 at 09:22
+=============================================================================
+Run Date: MAR 17, 2016                     Designation: PSJ*5*318
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #275                      Status: Released
+                  Compliance Date: APR 17, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*318'
+                    (v)PSJ*5*308   <<= must be installed BEFORE `PSJ*5*318'
+
+Subject: Order Set displays wrong drug/Order checks/Med History
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)  CPRS order Details not showing med history
+ 2)  Order set displays wrong drug when you enter "?" at the Dispense Drug
+     prompt
+ 3)  Pending and Non-Verified clinic orders not participating in Drug
+     Interaction and Dup Therapy order checks.
+  
+ Associated Remedy tickets:
+ =========================
+ 1) INC000001234796:     Med History not showing in CPRS Details        
+      
+      DUPLICATES:
+      -----------
+      INC000001221888    Meds not showing in Med History in CPRS
+  
+ 2) INC000001237431:     Order set displays the wrong drug when you
+                         enter "?" at the Dispense Drug prompt.
+  
+ 3) INC000001238506:     Pending and Non-Verified clinic orders are not
+                         participating in Outpatient Pharmacy drug 
+                         interaction and duplicate therapy order checks.
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ ========================
+ Upstate New York
+ Central Texas
+  
+  
+ Remedy Overview:
+ ===============
+ 1) INC000001234796:    Medication History is not showing in CPRS Details
+  
+   Problem:
+   --------
+   When a patient has multiple orders with the same orderable item, one 
+   having a clinic ordering location, while the patient is still an 
+   Inpatient, after discharge the Medication History disappears
+   from Details in CPRS.
+  
+   Resolution:
+   -----------
+   A modification to routine PSJBCMA will fix this issue so that the 
+   Medication History will display properly.
+  
+  
+ 2) INC000001237431:  Order set displays the wrong drug when you enter "?"
+                      at the Dispense Drug prompt.
+  
+   Problem:
+   --------
+   When doing an edit in the Order Set Enter/Edit option of the SUPERVISOR'S
+   MENU, if a "?" is entered at the Select DISPENSE DRUG: dispense drug name 
+   and dose:// the system is displaying the wrong drug.
+  
+   Resolution:
+   -----------
+   A modification needs to be made to the Data Dictionary of the 
+   UNIT DOSE ORDER SET file (#53.2), DISPENSE DRUG field (#.01) 
+   EXECUTABLE HELP section to ensure the system pulls the correct drug 
+   name.
+  
+ 3) INC000001238506:  Pending and Non-Verified Clinic Orders are not
+                      participating in the Drug Interaction and Duplicate
+                      Therapy order checks.
+  
+   Problem:
+   --------
+   Pending and Non-Verified Clinic Orders are not participating in
+   Outpatient Pharmacy drug interaction and duplicate order checks.
+  
+   Resolution:
+   -----------
+   This patch will modify one routine, PSJCLNOC, to use the proper 
+   format when checking the variable PSJSTAT. Even though this is an
+   Outpatient issue, the fix is in Inpatient Medications routine.
+  
+ Data Dictionary:
+ ===============
+ BEFORE:       
+  
+  53.23,.01         DISPENSE DRUG        0;1 POINTER TO DRUG FILE (#50)
+                                    (Required) (Multiply asked)
+  
+                   INPUT TRANSFORM:S DIC("S")="I $P($G(^PSDRUG(+Y,2)),""^"")=+$G
+                                 (^PS(53.2,$S($D(DA(2)):DA(2),1:DA(1)),2,$S($D(D
+                                 A(2)):DA(1),1:DA),0))&($P($G(^PSDRUG(+Y,2)),""^
+                                 "",3)[""U"")" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0
+                                  X
+                   LAST EDITED:  JUL 26, 1996 
+                   DESCRIPTION:  This is the medication(s), and related
+                                 information, that will actually be dispensed by
+                                 pharmacy for this order.  
+  
+                   SCREEN:       S DIC("S")="I $P($G(^PSDRUG(+Y,2)),""^"")=+$G(^
+                                 PS(53.2,$S($D(DA(2)):DA(2),1:DA(1)),2,$S($D(DA(
+                                 2)):DA(1),1:DA),0))&($P($G(^PSDRUG(+Y,2)),""^""
+                                 ,3)[""U"")"
+                   EXPLANATION:  Only dispense drugs that are marked for Unit Do
+                                 se use and that are tied to this order's ORDERA
+                                 BLE ITEM are selectable.
+                   EXECUTABLE HELP:S X(1)=+$G(^PS(53.2,DA(1),2,DA,0)) I X(1) S X
+                                 (1)=$P($G(^PS(50.7,X(1),0)),"^") I X(1)]"" D EN
+                                 ^DDIOL("("_X(1)_" is the drug for this order.")
+                                  K DA(2)
+                   CROSS-REFERENCE:53.23^B 
+                                 1)= S ^PS(53.2,DA(2),2,DA(1),2,"B",$E(X,1,30),D
+                                 A)=""
+  
+                                 2)= K ^PS(53.2,DA(2),2,DA(1),2,"B",$E(X,1,30),D
+                                 A)
+  
+  
+ AFTER:
+  
+  53.23,.01       DISPENSE DRUG          0;1 POINTER TO DRUG FILE (#50)
+                                    (Required) (Multiply asked)
+  
+                 INPUT TRANSFORM:S DIC("S")="I $P($G(^PSDRUG(+Y,2)),""^"")=+$G(^
+                                 PS(53.2,$S($D(DA(2)):DA(2),1:DA(1)),2,$S($D(DA(
+                                 2)):DA(1),1:DA),0))&($P($G(^PSDRUG(+Y,2)),""^""
+                                 ,3)[""U"")" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+                 LAST EDITED:    JUL 26, 1996 
+                 DESCRIPTION:    This is the medication(s), and related
+                                 information, that will actually be dispensed by
+                                 pharmacy for this order.  
+  
+                 SCREEN:         S DIC("S")="I $P($G(^PSDRUG(+Y,2)),""^"")=+$G(^
+                                 PS(53.2,$S($D(DA(2)):DA(2),1:DA(1)),2,$S($D(DA(
+                                 2)):DA(1),1:DA),0))&($P($G(^PSDRUG(+Y,2)),""^""
+                                 ,3)[""U"")"
+                 EXPLANATION:    Only dispense drugs that are marked for Unit Do
+                                 se use and that are tied to this order's ORDERA
+                                 BLE ITEM are selectable.
+                 EXECUTABLE HELP:S X(1)=+$G(^PS(53.2,DA(2),2,DA,0)) I X(1) S X(1
+                                 )=$P($G(^PS(50.7,X(1),0)),"^") I X(1)]"" D EN^D
+                                 DIOL("("_X(1)_" is the Orderable Item for this 
+                                 order.)") K DA(2)
+                 CROSS-REFERENCE:53.23^B 
+                                 1)= S ^PS(53.2,DA(2),2,DA(1),2,"B",$E(X,1,30),D
+                                 A)=""
+  
+                                 2)= K ^PS(53.2,DA(2),2,DA(1),2,"B",$E(X,1,30),D
+                                 A)
+  
+  
+  
+ Installation Instructions:
+ =========================
+ It is recommended that the install take place during non-peak hours.
+  
+ Install Time - less than 2 minutes.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*318)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       PSJ*5.0*318.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJBCMA
+    Before:B122612748   After:B124935631  **32,41,46,57,63,66,56,69,58,
+                                           81,91,104,111,112,186,159,173,
+                                           190,113,225,253,267,279,308,
+                                           318**
+Routine Name: PSJCLNOC
+    Before: B86092468   After: B86118340  **260,257,299,318**
+ 
+Routine list of preceding patches: 299, 308
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 22, 2015
+Completed By:                               Date Completed: MAR 08, 2016
+Released By :                               Date Released : MAR 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

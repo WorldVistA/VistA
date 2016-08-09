@@ -1,0 +1,132 @@
+
+=============================================================================
+Run Date: NOV 02, 2015                     Designation: IVM*2*159
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #135                      Status: Released
+                  Compliance Date: DEC 02, 2015
+=============================================================================
+
+Associated patches: (v)IVM*2*151   <<= must be installed BEFORE `IVM*2*159'
+
+Subject: MVI/IVM NOT DINUMING RACE/ETHNICITY CORRECTLY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch IVM*2*159 addresses one issue:
+  
+ 1.  The incoming Health Level Seven (HL7) message process for updates  
+     from the Enrollment System (ES) is not correctly dinuming  
+     patients' ethnicities and/or multiple races.
+  
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED REMEDY TICKET: 
+ =========================
+ 1.  INC000001012817  MVI/IVM process is not dinuming patients ethnicities 
+                      or multiple races correctly
+  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Battle Creek VAMC
+ Upstate New York HCS
+ W.G. (Bill) Hefner VAMC (Salisbury)
+  
+   
+ Remedy Overview:
+ ================
+ 1.  INC000001012817  MVI/IVM process is not dinuming patients ethnicities 
+                      or multiple races correctly
+  
+     Problem:
+     --------
+     The Master Veteran Index (MVI) process that handles incoming HL7
+     messages for IVM is not correctly dinuming patients' ethnicities
+     or multiple races. 
+     "Dinum" refers to how the RACE INFORMATION (#2.02) and ETHNICITY
+     INFORMATION (#2.06) fields are stored and referenced in the 
+     PATIENT (#2) file. This is not immediately noticeable but issues
+     can occur when this information is accessed elsewhere in the VistA  
+     system and when the data is transported to third parties.
+     
+     Resolution:
+     -----------
+     Modify routine ^IVMPREC9 (PROCESS INCOMING Z05 EVENT TYPE HL7
+     MESSAGES). Change the code that processes race and ethnicity
+     filings at the AUTOAUPM tagline from $$ADD^DGENDBS to FILE^DICN.
+     This will store the RACE INFORMATION (#2.02) and ETHNICITY
+     INFORMATION (#2.06) fields correctly in the PATIENT (#2) file.
+  
+  
+  
+  
+ Software Retrieval:
+ ===================
+ Patches for this installation are combined in host file DG_53_P897.KID. 
+  
+ Installation of this host file should be coordinated among the packages 
+ affected since only one installation is necessary.
+  
+ The patches are:
+  
+  DG*5.3*897
+  IVM*2.0*159
+  
+ Sites may retrieve the KIDS build in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from 
+  download.vista.domain.ext which will transmit the files from the first 
+  available FTP server.
+  
+  (2) Sites may also elect to retrieve the patch directly from a specific
+  server as follows:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   --------------     ------------------------     ------------------
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext        
+  
+  
+         
+ Installation Instructions:
+ ==========================
+ This patch will be released in conjunction with a Registration patch,
+ DG*5.3*897, as part of a combined build.
+  
+ Please refer to the Installation Instructions of DG*5.3*897 for 
+ information on how to install this combined build.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INCOME VERIFICATION MATCH;**[Patch List]**; 21-OCT-94;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMPREC9
+    Before: B65534530   After: B71223010  **34,58,115,121,151,159**
+ 
+Routine list of preceding patches: 151
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 13, 2014
+Completed By:                               Date Completed: OCT 20, 2015
+Released By :                               Date Released : NOV 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

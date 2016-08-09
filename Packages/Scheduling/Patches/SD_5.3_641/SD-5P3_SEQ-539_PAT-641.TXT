@@ -1,0 +1,178 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/23/16 at 15:11
+=============================================================================
+Run Date: JUL 19, 2016                     Designation: SD*5.3*641
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #539                    Status: Released
+                  Compliance Date: AUG 19, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*641'
+                    (v)SD*5.3*635  <<= must be installed BEFORE `SD*5.3*641'
+
+Subject: SD LETTERS & PAT DOD DISPLAY ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch release includes two bug fixes:
+  
+ 1. Fixes an issue that caused the patient's Date of Death warning message
+    to not always show when changing to a different patient in the
+    Appointment Management.
+  
+ 2. Fixes an issue that caused extra characters on the clinic's telephone 
+    number on a scheduling letter.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC1286531       Scheduling - Appointment MGT:
+ 2. INC1289228       Scheduling Letter Issue
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA New Jersey Health Care System (East Orange, Lyons)
+ Coatesville VA Medical Center
+ South Texas Veterans Health Care System (San Antonio, Kerrville)
+  
+  
+ Remedy Overview:
+ ================
+ 1. INC1286531   Scheduling - Appointment MGT:
+  
+    Problem:
+    --------
+    When selecting Change Patient [PT] action in the Appointment Management
+    [SDAM APPT MGT] screen, the patient's Date of Death warning message
+    is not always showing.
+  
+    Resolution:
+    -----------
+    Routine SDAM10 has been modified to make sure patient's Date of Death
+    warning message is displayed if the patient passed away.
+  
+ 2. INC1289228   Scheduling Letter Issue
+  
+    Problem:
+    --------
+    Extra characters are printed after the clinic's telephone number 
+    on a scheduling letter sent or given to the patient. For example,
+  
+       Telephone:  (000)000-0000^ or Telephone:  (000)000-0000^519
+  
+    Resolution:
+    -----------
+    Routines SDCP and SDLT have been modified to print clinic's telephone
+    number only without printing any extra characters on the scheduling
+    letter. 
+  
+  
+ Installation Instructions:
+ ==========================
+ Scheduling users should be off the system when this patch is installed.
+  
+ Install Time - less than 2 minutes.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Startup KIDS
+    ------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution system Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter SD*5.3*641):
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not 
+       backup any other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when this patch
+       is installed. It compares all components of this patch (routines,
+       DD's, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch
+       install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//', answer YES.
+      
+       When prompted, 'Enter options you wish to mark as 'Out Of order':',
+       enter the following options:
+  
+       Appointment Management    [SDAM APPT MGT]
+       Print Scheduling Letters  [SDPRLETTERS]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of 
+       Order':', enter the following protocol:
+  
+       Change Patient            [SDAM PATIENT CHANGE]     
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAM10
+    Before:  B8926237   After:  B9911529  **189,258,403,478,491,641**
+Routine Name: SDCP
+    Before: B26039984   After: B26248762  **140,171,187,354,622,635,641**
+Routine Name: SDLT
+    Before: B28750556   After: B28779463  **185,213,281,330,398,523,441,
+                                           555,622,641**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 24, 2015
+Completed By:                               Date Completed: JUL 11, 2016
+Released By :                               Date Released : JUL 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

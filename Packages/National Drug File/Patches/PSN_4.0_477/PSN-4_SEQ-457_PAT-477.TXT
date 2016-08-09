@@ -1,0 +1,140 @@
+
+=============================================================================
+Run Date: APR 11, 2016                     Designation: PSN*4*477
+Package : PSN - NATIONAL DRUG FILE            Priority: EMERGENCY
+Version : 4       SEQ #457                      Status: Released
+                  Compliance Date: APR 12, 2016
+=============================================================================
+
+Associated patches: (v)PSN*4*473   <<= must be installed BEFORE `PSN*4*477'
+
+Subject: PMI UPDATE - APRIL 2016
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+ IMPORTANT NOTE: As directed by the Secretary of the Department of Veterans
+ Affairs, this patch is being released with a 24 hour compliance date for
+ installation.
+  
+ This patch provides updates to data in several of the files associated with the
+ Patient Medication Instruction Sheet (PMI) portion of the National Drug File
+ (NDF) application.  The seven files are: 
+    50.621        PMI-ENGLISH              
+    50.622        PMI-SPANISH              
+    50.623        PMI MAP-ENGLISH          
+    50.624        PMI MAP-SPANISH          
+    50.625        WARNING LABEL-ENGLISH    
+    50.626        WARNING LABEL-SPANISH    
+    50.627        WARNING LABEL MAP     
+  
+ The environment check routine for this patch checks to see that the installer
+ is a valid user.  The post-install routine for this patch deletes existing
+ entries in these files, loads the new data, and rematches entries in the VA
+ PRODUCT file (#50.68) to the proper PMIs.  The source of the data for the PMIs
+ is First Data Bank.  Medication instruction sheets contained in this patch were
+ created from the First Data Bank release dated 4/06/2016.
+  
+  
+ Associated Remedy Tickets: 
+ ==========================
+ I8272479FY16
+  
+ Test Sites: 
+ ===========
+ N/A 
+  
+ Installation Instructions and Software Retrieval: 
+ =================================================
+  
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one 
+ of the OI Field Offices.  The preferred method is to retrieve the file
+ using Secure File Transfer Protocol (SFTP) from DOWNLOAD.VISTA.DOMAIN.EXT,
+ which will transmit the file from the first available server.  
+ Alternatively, sites may elect to retrieve the file from a specific OI
+ Field Office.  
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY 
+    Albany              DOMAIN.EXT        
+    Hines               DOMAIN.EXT         
+    Salt Lake City      DOMAIN.EXT           
+  
+ The software distribution includes: 
+  
+  FILE NAME             DESCRIPTION           BLOCK SIZE 
+  
+ NDF4P477.KID            KIDS Build           171917 blocks
+  
+ Users may remain on the system while this patch is installed.  Installation 
+ (excluding the time required to download the file to your system) takes less
+ than ten minutes.  This patch should be installed during non-peak requirement
+ hours.  The Print a PMI Sheet [PSNPMIS PRINT], Patient Prescription Processing
+ [PSO LM BACKDOOR ORDERS], Release Medication [PSO RELEASE], and Reprint an
+ Outpatient Rx Label [PSO RXRPT] options should be placed out of order during
+ the installation.  
+  
+ 1.  Retrieve the file NDF4P477.KID using one of the methods described 
+     above.  
+  
+ 2.  From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+  
+ 3.  From this menu, select the option Load a Distribution and select 
+     NDF4P477.KID.  
+  
+ 4.  From this menu, you may choose to use the option Verify Checksums in 
+     Transport Global.  When prompted, select PSN*4.0*477. All components 
+     of this patch are new, so the option Backup a Transport Global and 
+     the option Compare Transport Global to Current System do not have 
+     to be invoked.  
+  
+ 5.  Use the Install Package(s) option and select PSN*4.0*477.  
+  
+ 6.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//" 
+     respond NO.  
+  
+ 7.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? YES//" respond YES.  Select the following options 
+     to disable.  
+  
+            Option Name                Menu Text 
+            -----------------------    ------------------------------
+            PSNPMIS PRINT              Print a PMI Sheet 
+            PSO LM BACKDOOR ORDERS     Patient Prescription Processing 
+            PSO RELEASE                Release Medication 
+            PSO RXRPT                  Reprint an Outpatient Rx Label 
+  
+ 8.  Note: The environment check routine PSN477E and the post-install 
+     routine PSN477P will be automatically deleted from your system upon
+     completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 107
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN477E
+    Before:       n/a   After:   B217686  **477**
+Routine Name: PSN477P
+    Before:       n/a   After:  B1382823  **477**
+
+=============================================================================
+User Information:                          Hold Date     : APR 11, 2016
+Entered By  :                               Date Entered  : MAR 08, 2016
+Completed By:                               Date Completed: APR 07, 2016
+Released By :                               Date Released : APR 11, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

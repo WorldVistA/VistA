@@ -1,0 +1,264 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/10/16 at 13:22
+=============================================================================
+Run Date: APR 20, 2016                     Designation: SD*5.3*647
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #532                    Status: Released
+                  Compliance Date: MAY 01, 2016
+=============================================================================
+
+
+Subject: COMMUNITY CARE CONSULT STOP CODE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ Veterans Health Administration (VHA) created over 2.5 million 
+ authorizations for Veterans to receive care in the community in fiscal 
+ year 2015 - an 8.6% increase in authorizations when compared to fiscal 
+ year 2014.
+  
+ The Access and Clinic Administration Program (ACAP) requested that the 
+ Stop Code Council establish a new Stop Code to track Community Care 
+ Consults. Tracking Community Care Consults is a high priority of the 
+ Secretary of the VA and Congress. The enormous volume and importance of 
+ Community Care Consults means that VA needs a tracking mechanism to 
+ identify these consults; this patch adds a new stop code 669, COMMUNITY 
+ CARE CONSULT, to the CLINIC STOP (#40.7) file as requested by the Office 
+ of Finance, Managerial Cost Accounting Office (MCAO).
+  
+                         *** IMPORTANT NOTE ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of May 1, 2016.  **
+ ** This patch should be installed as close to Close of Business (COB)   **
+ ** on April 30, 2016 as possible, but not after May 1, 2016. Early      **
+ ** installation of this patch could result in transmission of incorrect **
+ ** Stop Codes that will result in errors from Austin. Coordination with **
+ ** the MAS (Medical Administration Service) PAS (Program Application    **
+ ** Specialist)/ADPAC (Automated Data Processing Application Coordinator)**
+ ** is imperative as the patch will cause changes to the CLINIC STOP     **
+ ** (#40.7) file. Testing can be done in a site's mirror account before  **
+ ** installation in production to verify changes. This patch creates a   **
+ ** Stop Code that is effective May 1, 2016; please keep in mind that    **
+ ** new Stop Code corrections should not be assigned in MAS/Scheduling   **
+ ** until May 1, 2016.                                                   **
+ **************************************************************************
+  
+      MCA (Managerial Cost Accounting) Sites Team Instructions for the
+                      FY16 Emergency Stop Code Patch:
+ --------------------------------------------------------------------------
+  
+ This patch makes an addition to the CLINIC STOP (#40.7) file as of 
+ May 1, 2016.
+  
+ No Clinics can be created using the new Stop Code contained in the patch
+ until after this patch is implemented.
+  
+ MCA Sites Teams, Scheduling, and IRM (Information Resource Management)
+ should coordinate to perform the following sequence:
+  
+   1. Run the DSS worksheet menu option, Create DSS Clinic Stop Code File
+      [ECXSCLOAD]. Then, make any necessary adjustments before approval so
+      all clinics on the worksheet have setups applicable for the month of
+      April 2016.
+  
+   2. IRM installs the patch late on April 30 or early on May 1, 2016.
+  
+   3. Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE 
+      REP] to list those clinics that need changes in the HOSPITAL LOCATION
+      (#44) file. DO NOT make changes using the menu option, Enter/Edit
+      Clinic Parameters [ECXSCEDIT] for the CLINICS AND STOP 
+      CODES (#728.44) file at this time. Work with Scheduling staff to
+      make changes in the HOSPITAL LOCATION (#44) file so that the clinics
+      will have the correct Stop Codes in place for May 1st Non VA clinic
+      consult appointments.
+  
+   4. Follow normal procedures to run the DSS CLI Extract and ECS Extract
+      for April 2016. Do not edit clinic changes for the May Stop Code
+      change with the menu option, Enter/Edit Clinic Parameters [ECXSCEDIT]
+      or in DSS Unit Setup Screens in Event Capture prior to running the
+      April CLI Extract. It is the edit, not the "approve" that changes the
+      values included in the extract. Perform normal AUDITS for the CLI
+      Extract.
+  
+   5. After auditing and receiving confirmation of successful deblocking of
+      the transmitted April CLI Extract, proceed with the Stop Code change
+      to the DSS Clinics and Stop Codes Worksheet clinics and in any DSS
+      Units set to Send No Records to PCE.
+  
+   6. For this emergency patch:
+  
+      a. Run the menu option, Create DSS Clinic Stop Code File [ECXSCLOAD].
+         This option creates local entries in the CLINICS AND STOP CODE
+         (#728.44) file and compares this file to the HOSPITAL LOCATION
+         (#44) file to see if there are any differences since the last time
+         the file was reviewed.
+  
+      b. Use the menu option, Clinics and DSS Stop Codes Print [ECXSCLIST]
+         to identify existing clinics with stop code 674 in the primary
+         position. Coordinate with clinic makers to identify and edit MAS
+         Clinic Set-up for those existing clinics which fit the Community
+         Care consult criteria. Not all active clinics with 674 will fit
+         the Community Care criteria. Only non-count clinics using 674 in
+         the primary position may be changed to stop code 669; all other
+         Stop Code changes will require a new clinic. This option produces
+         a worksheet of (A) All Clinics, (C) Active, (D) Duplicate, (I)
+         Inactive, (U) Unreviewed Clinics that are awaiting
+         approval, and (X) Export to Text File for Spreadsheet.
+  
+      c. Update for the patch as needed using the menu option, Enter/Edit
+         Clinic Parameters [ECXSCEDIT]. Clinics changed to use stop
+         code 669 in the primary or secondary position should be assigned
+         Action to Send Code = 6.
+  
+      d. Approve the changes using menu option, Approve Reviewed DSS
+         Clinic Worksheet [ECXSCAPPROV]. Finalize all Stop Code changes on
+         the worksheet to be ready to run the April DSS CLI Extract.
+  
+      e. Make needed Stop Code changes in Event Capture to DSS Units set to
+         Send No Records to PCE.
+  
+  
+ Associated Remedy/CA SDM Ticket(s):
+ ===================================
+ I7883117FY16    Request for an expedited patch to update the Clinic Stop 
+                 (#40.7) file
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Pittsburgh VAMC
+ Philadelphia VAMC
+ Salisbury, NC
+  
+  
+ Remedy/CA SDM Ticket Overview:
+ ==============================
+ I7883117FY16    Request for an expedited patch to update the Clinic Stop
+                 (#40.7) file
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested adding a new Stop Code COMMUNITY CARE CONSULT to the CLINIC STOP
+ (#40.7) file.
+  
+ Resolution:
+ -----------
+ A post-init routine SD53M16A has been created for updating the CLINIC STOP
+ (#40.7) file by adding one (1) new Stop Code COMMUNITY CARE CONSULT to 
+ the CLINIC STOP (#40.7) file.
+  
+ New Stop Code being added (will take effect when the patch is installed):
+  
+ Stop Code  Name/Description        Restriction Type     Restriction Date
+  
+    669     COMMUNITY CARE CONSULT         E
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Install Time - less than 2 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ NOTE:   After the patch is installed, delete the routine SD53M16A using
+         the Delete Routine [XTRDEL] option.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+           NAME, enter SD*5.3*647):
+    
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow 
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, DD's,
+       templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', answer NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP (#40.7) file post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP (#40.7) file. If any discrepancies
+       are found, you should enter a CA SDM ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53M16A
+    Before:       n/a   After: B68171997  **647**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 08, 2016
+Completed By:                               Date Completed: APR 20, 2016
+Released By :                               Date Released : APR 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,110 @@
+$TXT Created by              at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Tuesday, 01/07/14 at 07:48
+=============================================================================
+Run Date: SEP 16, 2014                     Designation: XWB*1.1*63
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #48                    Status: Released
+                  Compliance Date: OCT 17, 2014
+=============================================================================
+
+
+Subject: Fix DT bug in M2M Broker
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects a bug that was introduced in patch XWB*1.1*62.
+ The variable DT was being set when the connections was made. This
+ patch moves the setting of DT to before each transaction.
+ 
+ 
+ Remedy Tickets:
+ ===============
+  950569
+ 
+ 
+ Thanks to Test Sites
+ ====================
+  Wilkes-Barre, PA
+  Black Hills HCS, PA
+  Sioux Falls, SD
+ 
+    
+ Blood Bank Clearance  1/15/2014
+ ====================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XWB*1.1*63 contains
+ changes to a package referenced in ProPath standard titled: BBM Team Review
+ of VistA Patches. This patch does not alter or modify any VistA Blood Bank
+ software design safeguards or safety critical elements functions.
+ 
+ RISK ANALYSIS: Changes made by patch XWB*1.1*63 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ Installation Instructions
+ =========================
+  >>>You need to coordinate with your Regional Business Critical System team.
+    The Imaging Support person needs to close all connections from the DICOM
+    Gateway to the VistA System before this patch is installed. After the
+    patch is install, the DICOM Gateway can then reestablish the connections.   
+  >>>Users may remain on the system.
+  >>>TaskMan does *NOT* need to be placed in a wait state.
+                                                         
+  1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.
+     This option will load the KIDS package onto your system.
+    
+  2. The patch has now been loaded into a transport global on your 
+     system. You now need to use KIDS to install the transport global.  
+     
+  3. On the KIDS menu, under the 'Installation' menu, use the 
+     following options: 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global
+          Backup a Transport Global 
+    
+  4. Verify that there is no activity with the DICOM Gateway
+  
+  5. On the KIDS menu, in the 'Installation' menu, use the following option: 
+          Select Installation Option: Install Package(s) 
+          Select INSTALL NAME: XWB*1.1*63
+                               ==========
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO//
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+  6. Imaging Support needs to reestablish all connections from the DICOM
+     Gateway to the VistA system.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.1;RPC BROKER;**[Patch List]**;Mar 28, 1997;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XWBVLL
+    Before: B17198371   After: B17237977  **28,41,34,62,63**
+ 
+Routine list of preceding patches: 62
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 26, 2013
+Completed By:                               Date Completed: SEP 11, 2014
+Released By :                               Date Released : SEP 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

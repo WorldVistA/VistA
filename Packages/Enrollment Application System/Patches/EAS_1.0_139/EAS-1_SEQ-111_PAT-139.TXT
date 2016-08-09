@@ -1,0 +1,191 @@
+
+=============================================================================
+Run Date: JUN 21, 2016                     Designation: EAS*1*139
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #111                      Status: Released
+                  Compliance Date: JUL 22, 2016
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.3.1
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.3.1 application version software. 
+   
+ ES 4.3.1 is a maintenance release of the Enrollment System Core (ESC)
+ application. This version applies 27 updates to correct design, code and
+ security related defects introduced in previous ES releases.  
+   
+ The following Rational Team Concert Work Items (RTC WI) are associated with ES
+ 4.3.1
+ =============
+ 1.     RTC WI 279159.  Updated ES messaging format to send an explicit delete
+        for agency code on the ZPD segment of the Z11 message when the field
+        has been deleted by ES. 
+   
+ 2.     RTC WI 280813. Addressed defect in ES where Z07 fails to upload if it
+        contains a military APO/AE address. ES is updated to bypass US city/
+        state validation rules for an APO address.   
+   
+ 3.     RTC WI 288240. Updated ES code to not allow VistA to change on file
+        Verified Non Veteran status to Veteran status. 
+   
+ 4.     RTC WI 286492. Updated ES code to not allow user to query MSDS Broker
+        if Veteran is in locked state due to no enrollment determination. MSDS
+        may only be queried for a record that has an existing registration
+        event. 
+   
+ 5.     RTC WI 286516. Addressed defect of ES not populating address to the
+        primary view for new registrations from VistA Z07. Updated ES code to
+        delay adding ESR 200 Correlation in MVI until we have address
+        populated in incoming person from Inbound Z07 message. 
+   
+ 6.     RTC WI 288710. Updated ES validation rules for the Spouse Marriage
+        Date to not allow dates that are prior to the veteran or spouse date
+        of birth.
+   
+ 7.     RTC WI 277655.Updated VOA processing rules to prevent catastrophic
+        edit flag from being set on the primary view due to VOA retrieving
+        the 200DOD correlation instead of the primary view. ES is updated to
+        use the primary view traits during VOA processing. SDM ticket#
+        I7407534FY16. 
+   
+ 8.     RTC WI 292736. Updated ES handbook report processing to prevent
+        automatic retrigger of undeliverable handbook mail for records
+        that are flagged as returned by USPS. 
+   
+ 9.     RTC WI 293077. Updated ES with a separate user capability for 'Manage
+        VOA Applications' that is separately authorized from Add A Person
+        (AAP) capability to prevent users having both capabilities when
+        assigned only the AAP permission. 
+   
+ 10.    RTC WI 294530. Updated ES rules for sharing ZMH on Z11 regardless of
+        MSDS query status to allow sharing of the HEC Military Service Episode
+        (MSE) to VistA.       
+   
+ 11.    RTC WI 191335. Updated ES to automatically remove cancel/decline
+        remarks if the cancel/decline status is changed from Yes to No. 
+   
+ 12.    RTC WI 294904. Correct application error in ES AAP registration for
+        records that are known to MVI but have no 200ESR correlation. ES is
+        updated to add the ESR correlation during the AAP process. SDM Ticket
+        # I8046975FY16
+   
+ 13.    RTC WI 295264. Updated ES VFA processing rules to correct issues of
+        calculating income test under the VFA umbrella. Rules updated as
+        required to calculate less than 1 year old as of the VFA start date
+        or later than VFA start date. In above both cases Income Test should
+        be considered as current if test effective date >= VFA start date
+        minus 1 year. Otherwise it will considered as expired. SDM Ticket #
+        I5839741FY15/I8090309FY16
+   
+ 14.    RTC WI 294787. Updated ES to correct defect of missing data on
+        Medicare part B when user selects to copy Part A to Part B. 
+   
+ 15.    RTC WI 300103. Updated ES code to populate lock status under Merge
+        record so that ES won't allow user to edit the primary Veteran
+        associated with Merge record while the merge is in progress. 
+                                                                   
+ 16.    RTC WI 301597. Fortify Critical Findings updates to address issue of
+        'Protect the Struts 1 Servlet from ClassLoader Manipulation attacks'.
+   
+ 17.    RTC WI 311693. ES is updated to Stop Creating Worklist Item when
+        veteran submits Medicaid on the VOA application, ES is updated to
+        accept and save the Medicaid status. 
+ 
+ 18.    RTC WI 304901. Updated ES code to address application error during
+        update of financials by a user. ES is updated to add an empty element
+        to address the display error when no selection for Spouse Lived With
+        Patient is made on Spouse screen. 
+   
+ 19.    RTC WI 311375. Fortify Critical Findings updates to address issue of
+        'Privacy Violation'. 
+   
+ 20.    RTC WI 309253. Updated ES code to correctly log ESR/VOA Exception in
+        voa.VOA_ENROLLMENT_APPLICATION table for VOA application submission
+        when the application fails to process. SDM # I8259357FY16 
+   
+ 21.    RTC WI 193158. Updated ES code to populate the VOA application date as
+        Means Test effective date. 
+   
+ 22.    RTC WI 317397. Fortify Critical Findings updates to address issue of
+        'Null Dereferences'. 
+  
+ 23.    RTC WI 192424. Updated ES code to change ES report queries to use
+        vpid_value instead of vpid_id when linking to PSIM fields. 
+ 
+ 24.    RTC WI 317751. Updated the Insurance validation logic in the ES VOA
+        web service code to avoid application failures due to missing
+        insurance address fields. 
+ 
+ 25.    RTC WI 319505. Fortify Critical Findings updates to address issue of
+        'Insecure Randomness'
+ 
+ 26.    RTC WI 319733. Fortify Critical Findings updates to address issue of
+        'Hardcoded Encryption Key'
+ 
+ 27.    RTC WI 320785. Updated ES code to correct Null Pointer Exception to
+        fix rule flow error with ProcessFinancialInfo rule flow during VOA
+        application processing. 
+ 
+ 
+   
+  What to Expect:
+  ===============
+  No changes to any VistA packages are required. During deployment of ES 4.3.1
+  HL7 messaging to and from ES will be disabled as well as E&E web services
+  and ES to IVM Bi-Directional services. Implementation is expected to take
+  less than 8 hours. 
+   
+   
+  Implementation:
+  ===============
+  ESR 4.3.1 is a centrally managed web-based application and will be
+  implemented as a one-time rollout by the ES Technical team and the AITC. No
+  software will be installed at the facilities. ES application will be
+  unavailable during the deployment window. 
+   
+   
+  Implementation Date:
+  ====================
+  June 18, 2016
+     
+  Associated Service Desk Manager Tickets:
+  ===========================
+  I7407534FY16
+  I8046975FY16
+  I5839741FY15
+  I8090309FY16
+  I8259357FY16
+ 
+  Reporting Problems:
+  ===================
+  Problems associated with ES application should be reported via CA Service
+  Desk Manager (SDM) or contact the National Help Desk (NHD) 1-888-596-4357
+  for assistance.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 01, 2016
+Completed By:                               Date Completed: JUN 20, 2016
+Released By :                               Date Released : JUN 21, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

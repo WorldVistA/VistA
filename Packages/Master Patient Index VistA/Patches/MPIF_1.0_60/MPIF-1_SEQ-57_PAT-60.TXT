@@ -1,0 +1,311 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Tuesday, 01/13/15 at 12:28
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: MPIF*1*60
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #57                      Status: Released
+                  Compliance Date: OCT 17, 2015
+=============================================================================
+
+Associated patches: (v)MPIF*1*41   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)MPIF*1*48   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)MPIF*1*52   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)MPIF*1*56   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)MPIF*1*58   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)MPIF*1*59   <<= must be installed BEFORE `MPIF*1*60'
+                    (v)DG*5.3*902  <<= must be installed BEFORE `MPIF*1*60'
+
+Subject: MASTER VETERAN INDEX VISTA ISSUES - ITERATION 13
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ MPIF*1.0*41, MPIF*1.0*48, MPIF*1.0*52, MPIF*1.0*56, MPIF*1.0*58,
+ MPIF*1.0*59 and DG*5.3*902 are required builds for patch MPIF*1.0*60.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed
+       in three VistA namespaces: DG, RG and MPIF. DG*5.3*902 is 
+       required to be installed prior to installing MPIF*1.0*60, as 
+       the new ICN fields that are being exported in that patch will
+       be populated during the post install processing of this patch.
+       Once DG*5.3*902 has been installed, patches RG*1.0*62 and 
+       MPIF*1.0*60 can be installed in any order.
+  
+ Issue #1
+ Enhancements were made to several routines (MPIFAPI, MPIFAPI1, MPIF001,
+ MPIF002, MPIFBT3, MPIFQ0) to provide the ability for the Master Patient
+ Index (MPI) internal processes to retrieve and update (/populate) the
+ FULL ICN (#991.1) field in the PATIENT (#2) file. This is the initial
+ step in replacing the existing separate Integration Control Number
+ (ICN) fields (Ie. INTEGRATION CONTROL NUMBER (#991.01) and ICN CHECKSUM
+ (#991.02)) with a single field.
+  
+ The post-init routine MPIFP60 will initially seed the new FULL ICN 
+ (#991.1) and FULL ICN HISTORY (#991.91) fields, with the INTEGRATION
+ CONTROL NUMBER (#991.01) and ICN CHECKSUM (#991.02) of existing 
+ patient records in the PATIENT (#2) file that have been assigned a 
+ National ICN value. 
+     
+ Issue #2
+ Modifications were made to the Admissions, Discharges and Transfers
+ (ADT) A31 Health Level Seven (HL7) message builder code in routine 
+ MPIFA31B to support the new Date of Death requirements to the MPI.
+ DEATH ENTERED BY (#.352), SOURCE OF NOTIFICATION (#.353), DATE OF
+ DEATH LAST UPDATED (#.354) and LAST EDITED BY (#.355) fields from the
+ PATIENT (#2) file will be added to the OBX message segment of the 
+ ADT-A31 HL7 message. Additional Date of Death supporting code will be
+ exported in patches DG*5.3*902 and RG*1.0*62.
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ BIRMINGHAM AL VAMC
+ CENTRAL ALABAMA HCS
+ MINNEAPOLIS VA HCS
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from the ANONYMOUS.SOFTWARE
+ directory at: ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=16
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ Programmer Manual          RG1_0_P62PM.PDF                    (binary)
+ User Manual                RG1_0_P62UM.PDF                    (binary)
+ Technical Manual           RG1_0_P62TM.PDF                    (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post-init routine MPIFP60 will populate the FULL ICN (#991.1) field and
+ the FULL ICN HISTORY (#991.91) multiple from the existing patients in the 
+ PATIENT (#2) file that have a national ICN value. These new fields were 
+ exported in patch DG*5.3*902. The Post-Install process will be automatically
+ tasked to run in the background, as the run-time will vary based on the 
+ number of records contained in the PATIENT (#2) file, but could run an hour
+ or more at the larger sites.
+  
+ The Post-Install routine MPIFP60 can be deleted after the task has
+ completed. 
+  
+ Note: No additional message traffic will be created due to the seeding of
+       the FULL ICN field (#991.1) and FULL ICN HISTORY multiple (#991.91).
+       This is just a local population within the site's PATIENT File (#2).     
+   
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+  
+ The following OPTIONS should be disabled during installation:
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*60):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+        Register a Patient              [DG REGISTER PATIENT]
+        Load/Edit Patient Data          [DG LOAD PATIENT DATA]
+        Electronic 10-10EZ Processing   [EAS EZ 1010EZ PROCESSING]
+        Preregister a Patient           [DGPRE PRE-REGISTER OPTION]
+        UPDATE BATCH JOB FOR HL7 v2.3   [VAFC BATCH UPDATE]
+        MPI/PD Patient Admin Coordinator Menu   [RG ADMIN COORD MENU]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+ The post-install will automatically be tasked to run in the background. The 
+ routine MPIFP60 can be deleted once the task "MPI/PD - Populate new Full 
+ ICN fields" has run to completion. In addition, the user who installed this
+ patch will be notified via a mailman message when that process has been
+ completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIF001
+    Before: B53763903   After: B95852413  **1,3,9,16,18,21,27,33,35,41,
+                                           45,48,60**
+Routine Name: MPIF002
+    Before: B18349548   After: B18953001  **20,27,33,43,52,60**
+Routine Name: MPIFA31B
+    Before: B22496134   After: B23651277  **22,24,27,28,31,25,44,46,54,59,60**
+Routine Name: MPIFAPI
+    Before: B50736449   After: B56470744  **1,3,14,16,17,21,27,28,33,35,
+                                           37,43,45,44,46,48,55,56,60**
+Routine Name: MPIFAPI1
+    Before: B26546765   After: B30048923  **37,41,60**
+Routine Name: MPIFBT3
+    Before: B16478020   After: B16907329  **1,3,10,17,21,24,28,31,33,35,
+                                           43,52,58,60**
+Routine Name: MPIFP60
+    Before:       n/a   After:  B8697002  **60**
+Routine Name: MPIFQ0
+    Before: B73016774   After: B73801651  **1,3,8,14,13,16,17,21,20,24,
+                                           26,28,31,33,35,38,43,52,54,56,
+                                           60**
+ 
+Routine list of preceding patches: 56, 58, 59
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2014
+Completed By:                               Date Completed: SEP 15, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

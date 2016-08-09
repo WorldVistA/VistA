@@ -1,0 +1,164 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 06/09/15 at 10:56
+=============================================================================
+Run Date: OCT 15, 2015                     Designation: ECX*3*156
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #140                      Status: Released
+                  Compliance Date: NOV 01, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*153   <<= must be installed BEFORE `ECX*3*156'
+
+Subject: CLI EXTRACT AND LBB PRE-EXTRACT AUDIT REPORT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*156 addresses two issues:
+  
+  1. The Clinic Visit Extract is not properly building the FEEDER KEY (#9) 
+     field value in the CLINIC EXTRACT (#727.827) file.
+  
+  2. The LBB Pre-Extract Audit Report [ECX LBB PRE-EXTRACT] option is not
+     picking up all entries.
+   
+  
+ *************************************************************************
+ NOTE: This patch has a shortened compliance date of 11/1/15 because
+ it has to be installed before DSS FY 2016 ANNUAL SUSTAINMENT patch
+ ECX*3.0*154.
+ *************************************************************************
+  
+ ASSOCIATED REMEDY TICKETS: 
+ ==========================
+ 1)  INC000001118943 - DSS - Feeder Key Issue
+ 2)  INC000001237213 - DSS - LBB Blood Extract data does not match VBECS
+                     
+   
+ ASSOCIATED NSR:
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Manchester VA Medical Center
+ VA North Florida/South Georgia HCS
+   
+  
+ Remedy Overview:
+ ================
+ 1)  INC000001118943 - DSS - Feeder Key Issue
+                                                
+   Problem:
+   --------
+   There is a misspelling of a global node reference in routine ECXSCXN, 
+   which is causing the FEEDER KEY (#9) field to be improperly built in the
+   CLINIC EXTRACT (#727.827) file.
+      
+   Resolution:
+   -----------
+   Modified a global node reference in routine ECXSCXN from "ECXDL" to 
+   "ECXCL".
+  
+     Before:
+     -------
+     ^TMP($J,"ECXDL",ECXCLIN)
+  
+     After:
+     ------
+     ^TMP($J,"ECXCL",ECXCLIN)
+  
+  
+ 2)  INC000001237213 - DSS - LBB Blood Extract data does not match VBECS 
+   
+   Problem:
+   --------
+   The LBB Pre-Extract Audit Report [ECX LBB PRE-EXTRACT] option is only
+   looping through the DATE/TIME OF TRANSFUSION (#9) subscript of the "C"
+   cross-reference in the VBECS DSS EXTRACT file (#6002.03). When
+   multiple entries share the same DATE/TIME OF TRANSFUSION, only the
+   first entry is picked up by the audit report.
+       
+   Resolution:
+   -----------
+   Modified routines ECXLBB1 and ECXPLBB to store and loop through the 
+   record IEN subscript, within the DATE/TIME OF TRANSFUSION (#9)
+   "C" cross-reference, in order to pick up all entries. 
+   
+   
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter ECX*3.0*156).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         ECX*3.0*156.
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond YES. 
+  
+         When prompted to select the options  you would like to place out 
+         of order, enter the following: 
+  
+                Clinic Visit Extract            [ECXSCX]
+                LBB Pre-Extract Audit Report    [ECX LBB PRE-EXTRACT] 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXLBB1
+    Before: B27728068   After: B28281573  **105,102,120,127,144,156**
+Routine Name: ECXPLBB
+    Before: B26831922   After: B27165081  **78,92,105,136,143,149,153,156**
+Routine Name: ECXSCXN
+    Before: B86270275   After: B86791122  **24,27,29,30,31,32,33,39,46,
+                                           49,52,71,84,92,107,105,120,124,
+                                           127,132,136,144,149,156**
+ 
+Routine list of preceding patches: 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2015
+Completed By:                               Date Completed: OCT 08, 2015
+Released By :                               Date Released : OCT 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

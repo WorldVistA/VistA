@@ -1,0 +1,252 @@
+$TXT Created by                   HEV.MYHEALTH.DOMAIN.EXT  (KIDS) on Tuesday, 02/16/16 at 21:56
+=============================================================================
+Run Date: MAR 24, 2016                     Designation: MHV*1*24
+Package : MHV - MYHEALTHEVET                  Priority: EMERGENCY
+Version : 1        SEQ #18                      Status: Released
+                  Compliance Date: MAR 31, 2016
+=============================================================================
+
+Associated patches: (v)MHV*1*22    <<= must be installed BEFORE `MHV*1*24'
+
+Subject: EMERGENCY MHV*1.0*24 Workload Credit-Display Patient Problem ICD-10
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ EMERGENCY MHV*1.0*24 Workload Credit-Display Patient Problem ICD-10
+ ************************************************************************
+ Compliance date for this emergency patch is Thursday, March 31, 2016.  
+ MHV Secure Message Workload functionality will be released to all sites 
+ via the server on April 2, 2016. 
+ It is imperative that all sites follow the compliance date of this patch.
+ ************************************************************************
+  
+ Secure Messaging (SM) allows patients and clinicians to email each other
+ securely and confidentially, and allows clinicians to post those email
+ threads to the medical record as progress notes.
+  
+ Relationships between patients and clinicians are established based on
+ Primary Care Management Module (PCMM) providers, clinic appointments and
+ Order Entry/Results Reporting (OE/RR) teams.  Secure Messaging uses 
+ triage groups based on these relationships to manage which patients are
+ able to email which providers.  
+  
+ More information on Secure Messaging can
+ be found on the MyHealtheVet (MHV) product web site (intranet)
+ http://vaww1.domain.ext/MYHEALTHEVET/ and MHV web site www.myhealth.domain.ext.
+  
+  
+ Summary
+ -------
+ This patch addresses the issue related to retrieving the ICD-10 
+ description for the Patient Problem Items that are mapped to ICD-10 
+ diagnosis in CPRS.
+  
+ This has an impact for the providers who are using SM Workload Credit 
+ (WLC) functionality, when selecting a Patient Problem Item.
+ Providers need to validate that the SNOMED-CT is associated to the 
+ correct ICD-10 Diagnosis that will be filed with the Workload Credit.
+  
+ My HealtheVet (MHV) Emergency VistA Patch (MHV*1.0*24) will address 
+ the following issue:
+  
+  
+  - JAZZ Story 272695: SM Add ICD-10 Description to Problem Items 
+ in WLC form (VistA patch 24)
+ Patch MHV*1*24 is correcting the lookup of the Patient Problem List,
+ enabling retrieval of ICD-10 Description for Problem Items from a patient
+ record that have been mapped to a SNOMED-CT and ICD-10, consistent with
+ CPRS functionality, after October 1, 2015.
+ This fix will retrieve the ICD-10 Description in addition to the current
+ SNOMED-CT description that will be displayed on the SM GUI, via the MHV
+ SM HL7 2.4 interface and MHV Ensemble service.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                       
+ New/Modified/Deleted
+ -------------          -----------------------------------  
+ --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                 
+ New/Modified/Deleted
+ -------------      ----      ------------------            
+ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Site:
+ ----------
+ Portland   - 648
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software for this patch is distributed as KIDS build MHV*1.0*24 via
+ PackMan message.
+ The My HealtheVet documentation describing the new WLC user functionality 
+ is available:
+ Secure Messaging User Guide:
+ https://www.myhealth.domain.ext/mhv-portal-web/ShowBinary/BEA%20Repository/pdf
+ /SMUserGuide.pdf  
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using 
+ Secure File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory
+ at the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+  
+ Patch Installation:
+ ===================
+  
+ Installation Instructions Overview
+ ---------------------------------- 
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. The patch is distributed in KIDS format
+ in a PackMan message. This patch requires MHV*1*22 and
+ installation time is less than 5 minutes.
+  
+ Installation Instructions
+ -------------------------
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+         INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS
+     -------------
+     From the Kernel Installation & Distribution System menu, select the
+         Installation menu
+  
+ 3.  Select Installation Option:
+     ---------------------------
+     NOTE:  The following are OPTIONAL however it is strongly recommended
+ to be used when installing the MHV*1.0*24 patch - (When prompted for the
+ INSTALL NAME, enter MHV*1.0*24):
+  
+     a.  Verify Checksums in Transport Global - This option (#2) will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+     b.  Compare Transport Global to Current System - This option (#4) will
+         allow you to view all changes that will be made when this
+         patch is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Backup a Transport Global - This option (#5) will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates. 
+         <<<--This option it is strongly recommended to be used when 
+         installing the MHV*1.0*24 patch-->>>
+  
+  
+ 4.  Select Installation Option: Install Package(s)
+     ----------------------------------------------
+     Use the Install Package(s) option and select the package MHV*1.0*24.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO //'
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO //' respond NO.
+  
+ 7.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     press <return>
+  
+ 8.  When prompted 'Enter protocols you wish to mark as 'Out Of Order':'
+     press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;My HealtheVet;**[Patch List]**;Mar 05, 2014;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MHVUMRPC
+    Before: B47575713   After: B53770789  **11,22,24**
+ 
+Routine list of preceding patches: 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2016
+Completed By:                               Date Completed: MAR 24, 2016
+Released By :                               Date Released : MAR 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

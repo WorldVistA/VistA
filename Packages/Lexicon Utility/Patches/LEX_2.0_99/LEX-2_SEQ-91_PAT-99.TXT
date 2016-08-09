@@ -1,0 +1,241 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 03/06/15 at 17:28
+=============================================================================
+Run Date: APR 01, 2015                     Designation: LEX*2*99
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #91                      Status: Released
+                  Compliance Date: APR 08, 2015
+=============================================================================
+
+Associated patches: (v)LEX*2*98    <<= must be installed BEFORE `LEX*2*99'
+
+Subject: Code Set FY15 3rd Qtr Update
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+  This patch contains the FY15 3rd Quarter Code Set distribution with 3
+  changes effective Apr 01, 2015.  This patch also contains 10 changes from
+  FY15 2nd Qtr (effective Jan 01, 2015).  This patch installs the data for
+  the following Informational patch:
+   
+            ICPT*6.0*71
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT CATEGORY              #81.1     ^DIC(81.1,   ICR 4490
+       CPT COPYRIGHT             #81.2     ^DIC(81.2,   ICR 4491
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+       SUBSET DEFINITIONS       #757.2     ^LEXT(       N/A
+   
+ 
+  ENHANCEMENTS
+  ============
+   
+    FY15 3rd Quarter Update
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Apr 01, 2015                                 (1 Code)
+          Q9975
+ 
+      HCPCS Procedure Revisions
+      -------------------------
+ 
+        Effective Jan 01, 2015                                (5 Codes)
+          D0351   D3410   D3421   D3425   D3426
+ 
+      CPT Modifier Additions  (7 Codes)
+      ----------------------
+ 
+        Effective Jan 01, 2015 (FY15 2nd Qtr)                 (5 Codes)
+          PO      XE      XP      XS      XU
+ 
+        Effective Apr 01, 2015                                (2 Codes)
+          EX      JF
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2005     *     --     --     --       1      1
+        Effective Jan 01, 2015     *    284     --     --      --    284
+        Effective Apr 01, 2015         5244     --     --      --   5244
+                                      -----  -----  -----  ------  -----
+          Total                        5528     --     --       1   5529
+        
+                                   *  update from a previous quarter
+ 
+ 
+  REMEDY TICKETS:
+  ==============
+ 
+    1095869 - Modifiers GP/GO with CPT code 97010
+    1107249 - Add Modifiers XE, XS, XP, XU
+ 
+  OTHER CHANGES:
+  =============
+ 
+    Dental Codes (CDT-4) Revised:
+ 
+      D0351   D3410   D3421   D3425   D3426
+ 
+ 
+  FTP SOFTWARE RETRIEVAL:
+  =======================
+ 
+    Global Host File:                  LEX_2_99.GBL  (ASCII)
+ 
+    The host file is 256 MB in size and could take up to 7 minutes to FTP.
+ 
+    The preferred method is to FTP the files from download.vista.domain.ext,
+    which will transmit the files from the first available FTP server.
+ 
+    The files may also be downloaded directly from a particular FTP
+    location at the following locations:
+ 
+         Hines           ftp.domain.ext
+         Albany          ftp.domain.ext
+         Salt Lake       ftp.domain.ext
+ 
+         Files are available in the ANONYMOUS.SOFTWARE directory. 
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*99.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 20 to 50 minutes to install
+         depending on the system.
+ 
+             Create a backup    10-30 minutes
+             Load the Global     2- 4 minutes
+             KIDS Install        8-16 minutes
+ 
+     2)  Create a backup of the following global files before continuing:
+ 
+             CPT                         #81         ^ICPT(
+             CPT Category                #81.1       ^DIC(81.1,
+             CPT Copyright               #81.2       ^DIC(81.2,
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+             Lexicon Subsets            #757.2       ^LEXT(
+ 
+         These backup files may get as large as 1.8 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 10 to
+         30 minutes to create the backup files.
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+             ^LEXT            Lexicon Subsets
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.1,       CPT Category
+             ^DIC(81.2,       CPT Copyright
+             ^DIC(81.3,       CPT Modifier
+ 
+     3)  Install the data from the global host file LEX_2_99.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 198 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         2 to 4 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+ 
+            D ^%GI
+            
+            Global input
+            
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_99.GBL
+            Parameters? "RS" => 
+            Globals were saved on 06 Mar 2015   4:15 PM   Cache
+            with description: LEX*2.0*99/ICPT*6.0*71 Data
+            
+            Input option: A
+            ^LEXM
+ 
+ 
+     4)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     5)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     6)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*99.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDS install should take from 8-16 minutes
+ 
+     7)  Cleanup
+ 
+         a)  The Environment Check routine LEX2099 and the Post-Install 
+             routine LEX2099P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2099
+    Before:       n/a   After:B138657762  **99**
+Routine Name: LEX2099P
+    Before:       n/a   After: B19636583  **99**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 13, 2014
+Completed By:                               Date Completed: MAR 30, 2015
+Released By :                               Date Released : APR 01, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,357 @@
+
+=============================================================================
+Run Date: MAR 17, 2015                     Designation: WEBV*1*32
+Package : WEBV - VISTA WEB                    Priority: Mandatory
+Version : 1        SEQ #27                      Status: Released
+                  Compliance Date: APR 17, 2015
+=============================================================================
+
+
+Subject: Update VistAWeb with multiple bug fixes
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ ***************************** PLEASE NOTE *******************************
+ *                                                                       *
+ * Version 16.1.6 of VistAWeb (build last updated 1/13/15) will be       *
+ * promoted to the production server for national release on 3/19/2015   *
+ *                                                                       *
+ * NOTE: This patch is loaded on the National VistAWeb server. There is  *
+ * nothing that local sites can or need to do besides communicate        *
+ * changes to users.                                                     *
+ *                                                                       *
+ *************************************************************************
+  
+ VistAWeb (VW) v16.1.6 includes a fix for the following issues:
+  
+ 1.  The 'COPY TO CLIPBOARD' button in the Allergies section of VistAWeb is
+     not copying data correctly.
+  
+ 2.  The VistAWeb user guide is currently out of date and needs to be
+     updated to reflect current functionality in the VistAWeb application. 
+  
+ 3.  All occurrences of the acronym 'NwHIN' and 'NHIN' need to be replaced
+     with the term ' Non-VA' or appropriate wording as defined by the
+     Virtual Lifetime Electronic Record (VLER) Health team.
+  
+ 4.  When a patient has multiple names (legal name followed by alias')
+     listed in their C32 file, the names are being displayed inaccurately
+     in VistAWeb.
+  
+ 5.  The 'Problem' section of the C32 file is not displaying data properly
+     for most partners.
+  
+ 6.  The VistAWeb user guide needs to be updated to include verbiage that
+     informs the users of the hover-over capabilities within the VistAWeb
+     application.
+  
+ 7.  Emergency Contact information is missing/incorrect on C32 file.
+  
+ 8.  VistAWeb style sheets do not display any information in three fields
+     for the 'Immunization Reaction' section of the C32 file.
+  
+ 9.  Multiple fields in the Vitals section of a C32 file display nothing in
+     fields where there is no data. Normally when a field is null, the
+     field will contain ' -- ' (double hyphens).
+  
+ 10. VistAWeb style sheets are displaying the dispense date where the
+     medication expiration date should be.
+  
+ 11. The Lab Results section of the MedVA C32 does not display the
+     Result-Unit field for a result that has the type 'IVL_PQ'.
+  
+ 12. In the Lab Results section of a C32, the Result-Unit field displays in
+     a way which can be misleading and difficult to read.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1.  INC000000771376 - Clipboard button not copying correct text
+  
+ 2.  INC000000951932 - User Guide needs to be Updated
+  
+ 3.  INC000000968186 - Replace terms NwHIN or NHIN terms with Non-VA
+  
+ 4.  INC000000975798 - Do not concatenate patient name and patient alias
+                       name
+  
+ 5.  INC000001012220 - Update display order of Problem Code field
+  
+ 6.  INC000001017112 - Notify User to Hover Over Fields to see complete 
+                       contents
+  
+ 7.  INC000001038959 - Emergency Contact Information Missing/Incorrect
+  
+ 8.  INC000001008906 - VW is not displaying Immunization Series, Reaction,
+                       Comments.
+  
+ 9.  INC000000995050 - Vital Signs Table Displaying Double Dashes
+                       Inconsistently
+  
+ 10. INC000001028894 - Wrong path used for Medication Expiration Date
+  
+ 11. INC000000906586 - Certain MedVA test results are not displaying
+  
+ 12. INC000000752965 - Add four empty spaces between lab results value and
+                       result units.
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Puget Sound
+ Indianapolis
+ Richmond
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.  INC000000771376 - Clipboard button not copying correct text
+  
+     Problem:
+     ======== 
+     The 'COPY TO CLIPBOARD' button in the Allergies section of the
+     VistAWeb application is currently not copying the correct data. 
+  
+     Resolution:
+     ===========
+     Updated the DetailPage.aspx file to allow the 'COPY TO CLIPBOARD'
+     button to copy the correct data.
+  
+  
+ 2.  INC000000951932 - User Guide needs to be Updated
+  
+     Problem:
+     ======== 
+     The VistAWeb user guide is currently out of date and needs to be
+     updated to reflect current functionality in the VistAWeb application.   
+  
+     Resolution:
+     ===========
+     Updated text and screen shots in the VistAWeb user guide to keep it
+     in sync with VistAWeb's current functionality. 
+  
+  
+ 3.  INC000000968186 - Replace terms NwHIN or NHIN terms with Non-VA
+  
+     Problem:
+     ======== 
+     All occurrences of the acronyms 'NwHIN' and 'NHIN' need to be replaced
+     with the term 'Non-VA' or appropriate wording as defined by the VLER
+     Health team.
+  
+     Resolution:
+     ===========
+     Updated the VistAWeb application to use the term 'Non-VA' or
+     appropriate wording instead of the NwHIN/NHIN acronyms.
+  
+  
+ 4.  INC000000975798 - Do not concatenate patient name and patient alias
+                       name
+  
+     Problem:
+     ======== 
+     When a patient has multiple names (legal name followed by alias)
+     listed in their C32 file, the names are being displayed inaccurately
+     in VistAWeb. VistAWeb is currently not able to handle multiple names
+     correctly. 
+  
+     Resolution:
+     ===========
+     Modified the 'cda2detail.xsl' file to process multiple patient
+     names/aliases correctly. If multiple names are present, any additional
+     names will be displayed prefaced with 'Alias:'. 
+  
+  
+ 5.  INC000001012220 - Update display order of Problem Code field
+  
+     Problem:
+     ======== 
+     The 'Problem' section of the C32 file is not displaying data properly
+     for most partners.
+  
+     Resolution:
+     ===========
+     Modified 'nhinCommon.xsl' to pull data from the correct location for the
+     'Problem' section.
+  
+  
+ 6.  INC000001017112 - Notify User to Hover Over Fields to see complete
+                       contents
+  
+     Problem:
+     ========
+     The VistAWeb user guide needs to be updated to include verbiage that
+     informs the users of the hover-over capabilities within the VistAWeb
+     application.
+  
+     Resolution:
+     ===========
+     Updated the VistAWeb user guide to include verbiage regarding the
+     hover-over capabilities within the application.
+  
+  
+ 7.  INC000001038959 - Emergency Contact Information Missing/Incorrect
+  
+     Problem:
+     ======== 
+     Emergency contact information being passed through to VistAWeb is
+     not displayed with the correct information for that contact. A C32
+     with multiple emergency contacts is displayed as one contact with
+     the information of all entries added to the one contact displayed.
+     This made it impossible to distinguish which contact's information
+     went with which contact.
+  
+     Resolution:
+     ===========
+     Modified the cda2detail.xsl file to now recognize and display multiple
+     contacts correctly.
+  
+  
+ 8.  INC000001008906 - VW is not displaying Immunization Series,
+                       Reaction, Comments.
+  
+     Problem:
+     ======== 
+     VistAWeb style sheets do not display any information in three fields
+     for the 'Immunization Reaction' section of the C32. The series,
+     reaction, and comments sections are not being displayed even when the
+     C32 contains that data.
+  
+     Resolution:
+     ===========
+     The templates that were designed to retrieve this information had
+     invalid XPaths and did not reference where the data actually was. The
+     templates for those three fields have been modified to now display
+     such information.
+  
+  
+ 9. INC000000995050 - Vital Signs Table Displaying Double Dashes
+                       Inconsistently
+  
+     Problem:
+     ======== 
+     Multiple fields in the Vitals section of a C32 display nothing in
+     fields where there is no data. Normally when a field is null, that
+     field will contain ' -- ' (double hyphens) displayed with a flyover
+     display of 'Not Available'. The lack of double hyphens may lead users
+     to think data may be present but not displayed.
+  
+     Resolution:
+     ===========
+     In the vitals section the fields had a condition that would display
+     ' -- ', although this condition was dependent on a value existing in
+     each field. The sections have been rearranged so they will display
+     ' -- ' when the field is empty or null.
+  
+  
+ 10. INC000001028894 - Wrong path used for Medication Expiration Date
+  
+     Problem:
+     ======== 
+     VistAWeb style sheets are displaying the dispense date where the
+     medication expiration date should be.
+  
+     Resolution:
+     ===========
+     The Medication Expiration template has been rearranged so that the
+     correct date now appears first before checking in other locations.
+  
+  
+ 11. INC000000906586 - Certain MedVA test results are not displaying
+  
+     Problem:
+     ======== 
+     The Lab Results section of the MedVA C32 does not display the
+     Result-Unit field for a result that has the type 'IVL_PQ'.
+  
+     Resolution:
+     ===========
+     Added a reference to the template that retrieves the Result-Unit
+     to now look for the value of 'IVL_PQ'.
+  
+  
+ 12. INC000000752965 - Add four empty spaces between lab results value and
+                       result units
+  
+     Problem:
+     ======== 
+     In the Lab Results section of a C32, the Result-Unit field displays
+     in a way which can be misleading and difficult to read. If a
+     Result-Unit has both a result and a unit which are numeric the values
+     may run together and appear as one value.
+  
+     Resolution:
+     ===========
+     For the Result-Unit field, four spaces were added between the result
+     and the unit data types.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ N/A
+  
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+ Please refer to the VistAWeb CPRS Access and Installation Guide, the 
+ VistAWeb User Manual and the VistAWeb Technical Guide for more
+ information. The manuals are provided in Microsoft Word and Adobe PDF
+ formats on the web at the following addresses:
+  
+     http://www.domain.ext/vdl 
+     http://vista.domain.ext/vistaweb
+  
+ The Adobe PDF files are also available for FTP transfer. The preferred
+ method is to FTP the files from:
+  
+      - download.vista.domain.ext.
+  
+ This transmits the files from the first available FTP server. 
+ Sites may also elect to retrieve documents directly from a specific 
+ server, as shown below. These files MUST be obtained in BINARY mode.
+  
+ CIO FIELD OFFICE FTP ADDRESS DIRECTORY:
+  
+ Albany               ftp.domain.ext []
+ Hines                ftp.domain.ext  []
+ Salt Lake City       ftp.domain.ext    []
+  
+ Username is "anonymous" without the quotes. You must FTP in BINARY mode.
+ Once in the FTP server, change directory into the software directory 
+ (i.e., cd software). The names of the files are as shown below:
+  
+ WEBV_1_32_UM.PDF
+      and
+ WEBV_1_32_IG.ZIP
+  
+ The following files can be found in the WEBV_1_32_IG.zip
+ file:
+  
+ NVW_Prod_v16_1_6_Install_Guide_20141104.doc
+ NVW_Prod_v16_1_6_Install_Guide_20141104.pdf
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 23, 2013
+Completed By:                               Date Completed: MAR 05, 2015
+Released By :                               Date Released : MAR 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,781 @@
+$TXT Created by                          DEVESS.DOMAIN.EXT  (KIDS) on Tuesday, 05/06/14 at 16:19
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: ICD*18*64
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #68                     Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `ICD*18*64'
+                    (v)ICD*18*57   <<= must be installed BEFORE `ICD*18*64'
+                    (v)ICD*18*65   <<= must be installed BEFORE `ICD*18*64'
+                    (v)ICD*18*72   <<= must be installed BEFORE `ICD*18*64'
+
+Subject: ICD-10 DRG GROUPER
+
+Category: 
+  - Other
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide posted on the 
+ Anonymous directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ National Patch Module Patch - DRG Grouper
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10)
+ Class 1 Software Remediation project replaces the 30-year-old set of
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use.
+ Dates of service, or dates of discharge for inpatients, that occur on or
+ after the ICD-10 Activation Date will use the ICD-10 code set.
+ Clinical Modification (ICD-10-CM) diagnosis codes increase from about
+ 13,000 ICD-9 codes to more than 68,000. Procedure Coding System
+ (ICD-10-PCS) procedure codes increase from about 3,800 ICD-9 codes to
+ nearly 87,000. Both systems also expand the number of characters 
+ allotted to seven alpha-numeric characters. This value does not include
+ the decimal point, which follows the third character for the ICD-10-CM
+ code set. There is no decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of
+ care, so that data can be used in a more meaningful way to better
+ understand complications, better design clinically robust algorithms,
+ and better track the outcomes of care. ICD-10-CM also incorporates
+ greater specificity and clinical detail to provide information for
+ clinical decision making and outcomes research.
+  
+ The patch ICD*18.0*64 makes the following changes to the Diagnosis 
+ Related Group (DRG) application:
+  
+ - Calculation of DRG code for ICD-10 diagnosis codes and ICD-10 procedure 
+ codes
+ - Makes ICD-9 DRG Calculation routines compliant with ICD-10 file changes
+ - Makes ICD Code Inquiry Option compliant with new Standards and 
+ Terminology Services (STS) Application Program Interface (API) changes
+ - Added Present on Admission (POA) indicator as part of calculating DRG 
+ value
+ - Removed hardcoded business rules from DRG Calculation and made the 
+ calculating data-driven based on the data downloaded from the Centers for 
+ Medicare & Medicaid Services (CMS) website, and loaded the existing and
+ new global files
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)        Field Name (#)                  New/Modified/Deleted
+ -------------        --------------                  --------------------
+ ICD DIAGNOSIS (#80)
+                      MDC13 (#1.4)                    Data modified
+                      MDC24 (#1.5)                    Data modified
+                      MDC25 (#1.6)                    Data modified
+                      POA EXEMPT (#1.9)               New plus data loaded
+                      PDX (#1.11)                     New plus data loaded
+                      DRG GROUPER (#71)               Data modified
+                      MAJOR DIAGNOSTIC CATEGORY (#72) Data modified
+                      ICD-10 IDENTIFIER (#73)         New plus data loaded
+                      COMPLICATION/COMORBIDITY (#103,1) 
+                                                      Data modified
+                      COMPLICATION/COMORBIDITY (#103,2)
+                                                      New plus data loaded
+  
+ ICD OPERATION/PROCEDURE (#80.1)
+                      MDC24 (#1.5)                    Data modified
+                      DRG GROUPER (#71)               Data modified
+  
+ DRG (#80.2)                       
+                      DRG GROUPER EFFECTIVE DATE (sub-file)(#80.271)
+                      COMPLICATION/COMORBIDITY FLAG (#2)    New Set Value
+ DRG SURGICAL HIERARCHY (#80.5)                             New File
+ DRG HAC (#80.6)                                            New File
+ DRG DIAGNOSIS IDENTIFIER CODES (#82)                       New File
+ DRG PROCEDURE IDENTIFIER CODES (#82.1)                     New File
+ DRG PROCEDURE CODE COMBINATIONS (#82.11)                   New File
+ DRG DIAGNOSIS CODE COMBINATIONS (#82.12)                   New File
+ DRG CC EXCLUSIONS (#82.13)                                 New File
+                                                      
+ ICD DIAGNOSIS File (#80) Modified:
+  
+ .01       CODE NUMBER (RF), [0;1]
+ 1.1       CODING SYSTEM (*P80.4'), [1;1]
+ 1.11      PDX EXCLUSION CODE (P82.13'), [1;11]
+ 1.2       IDENTIFIER (F), [1;2]
+ 1.3       UNACCEPTABLE AS PRINCIPAL DX (S), [1;3]
+ 1.4       MDC13 (NJ2,0), [1;4]
+ 1.5       MDC24 (S), [1;5]
+ 1.6       MDC25 (S), [1;6]
+ 1.7       ICD EXPANDED (S), [1;7]
+ 1.8       EXCLUDE FROM LOOKUP (CJ1), [ ; ]
+ 1.9       POA EXEMPT (S), [1;9]
+ 10        SEX (Multiple-80.04), [5;0]
+           .01  SEX EFFECTIVE DATE (D), [0;1]
+           1    SEX (S), [0;2]
+ 11        AGE LOW (Multiple-80.011), [6;0]
+           .01  AGE LOW EFFECTIVE DATE (D), [0;1]
+           1    AGE LOW (NJ2,0), [0;2]
+ 12        AGE HIGH (Multiple-80.012), [7;0]
+           .01  AGE HIGH EFFECTIVE DATE (D), [0;1]
+           1    AGE HIGH (NJ3,0), [0;2]
+ 20        ICD CODES NOT TO USE WITH (Multiple-80.01), [N;0]
+           .01  ICD CODE NOT TO USE WITH (MP80'X), [0;1]
+ 30        ICD CODES REQUIRED WITH (Multiple-80.02), [R;0]
+           .01  ICD CODE REQUIRED WITH (MP80'X), [0;1]
+ 40        ICD CODES NOT CC WITH (Multiple-80.03), [2;0]
+           .01  ICD CODE NOT CC WITH (MP80'), [0;1]
+ 66        STATUS (Multiple-80.066), [66;0]
+           .01  STATUS EFFECTIVE DATE (RD), [0;1]
+           .02  STATUS (RS), [0;2]
+ 67        DIAGNOSIS (Multiple-80.067), [67;0]
+           .01  DIAGNOSIS EFFECTIVE DATE (MRD), [0;1]
+           1    DIAGNOSIS (RF), [0;2]
+ 68        DESCRIPTION (Multiple-80.068), [68;0]
+           .01  DESCRIPTION EFFECTIVE DATE (MRD), [0;1]
+           1    DESCRIPTION (RF), [1;1]
+           2    NON-SDO DESCRIPTIVE KEYWORDS (F), [2;1]
+ 71        DRG GROUPER (Multiple-80.071), [3;0]
+           .01  DRG GROUPER EFFECTIVE DATE (MMD), [0;1]
+           1    DRG (Multiple-80.711), [1;0]
+                .01  DRG (MP80.2'), [0;1]
+ 72        MAJOR DIAGNOSTIC CATEGORY (Multiple-80.072), [4;0]
+           .01  MDC EFFECTIVE DATE (MD), [0;1]
+           1    MDC (P80.3'), [0;2]
+ 73        DRG DIAGNOSIS IDENTIFIER CODES (Multiple-80.073), [73;0]
+           .01  DRG DIAGNOSIS IDENTIFIER CODE (MP82'), [0;1]
+ 103       COMPLICATION/COMORBIDITY (Multiple-80.0103), [69;0]
+           .01  CC EFFECTIVE DATE (D), [0;1]
+           1    COMPLICATION/COMORBIDITY (S), [0;2]
+           2    PRIMARY (S), [0;3]
+  
+ ICD OPERATION/PROCEDURE File (#80.1) Modified:
+  
+ .01       CODE NUMBER (RF), [0;1]
+ 1.1       CODING SYSTEM (*P80.4'), [1;1]
+ 1.2       IDENTIFIER (F), [1;2]
+ 1.5       MDC24 (S), [1;5]
+ 1.7       ICD EXPANDED (S), [1;7]
+ 1.8       EXCLUDE FROM LOOKUP (CJ1), [ ; ]
+ 10        SEX (Multiple-80.11), [3;0]
+           .01  SEX EFFECTIVE DATE (D), [0;1]
+           1    SEX (S), [0;2]
+ 20        MAJOR O.R. PROC (F), [M;1]
+ 66        STATUS (Multiple-80.166), [66;0]
+           .01  STATUS EFFECTIVE DATE (RD), [0;1]
+           .02  STATUS (RS), [0;2]
+ 67        OPERATION/PROCEDURE (Multiple-80.167), [67;0]
+           .01  OPER/PROCEDURE EFFECTIVE DATE (MRD), [0;1]
+           1    OPERATION/PROCEDURE (RF), [0;2]
+ 68        DESCRIPTION (Multiple-80.168), [68;0]
+           .01  DESCRIPTION EFFECTIVE DATE (MRD), [0;1]
+           1    DESCRIPTION (RF), [1;1]
+           2    NON-SDO DESCRIPTIVE KEYWORDS (F), [2;1]
+ 71        DRG GROUPER (Multiple-80.171), [2;0]
+           .01  DRG GROUPER EFFECTIVE DATE (MD), [0;1]
+           1    MAJOR DIAGNOSTIC CATEGORIES (Multiple-80.1711), [1;0]
+                .01  MAJOR DIAGNOSTIC CATEGORY (MP80.3'), [0;1]
+                1    DRG (Multiple-80.17111), [1;0]
+                     .01  DRG (MP80.2'), [0;1]
+ 73        DRG PROCEDURE IDENTIFIER CODES (Multiple-80.173), [73;0]
+           .01  DRG PROCEDURE IDENTIFIER CODE (MP82.1'), [0;1]
+  
+ DRG File (#80.2)
+ .01       NAME (R), [0;1]
+ .06       SURGERY (S), [0;6]
+ 1         DESCRIPTION (Multiple-80.21), [1;0]
+           .01  DESCRIPTION (MF), [0;1]
+ 2         WEIGHT (NJ8,3), [0;2]
+ 3         LOW TRIM(days) (NJ2,0), [0;3]
+ 4         HIGH TRIM(days) (NJ3,0), [0;4]
+ 5         MDC# (RP80.3'), [0;5]
+ 7         WEIGHT(nonAffil) (NJ8,2), [0;7]
+ 7.5       WEIGHT(IntAffil) (NJ8,2), [0;11]
+ 10        AVG LENGTH OF STAY(days) (NJ8,2), [0;8]
+ 11        LOCAL LOW TRIM(Days) (NJ2,0), [0;9]
+ 12        LOCAL HIGH TRIM(Days) (NJ3,0), [0;10]
+ 13        LOCAL BREAKEVEN (NJ5,1), [0;12]
+ 14        ACTIVATION DATE (D), [0;13]
+ 15        INACTIVE (S), [0;14]
+ 16        INACTIVATION DATE (D), [0;15]
+ 20        FISCAL YEAR WEIGHTS&TRIMS (Multiple-80.22), [FY;0]
+           .01  FISCAL YEAR WEIGHTS&TRIMS (MDX), [0;1]
+           2    WEIGHT (NJ9,3), [0;2]
+           2.5  WEIGHT(nonAffil) (NJ7,2), [0;8]
+           2.6  WEIGHT(IntAfill) (NJ8,2), [0;10]
+           3    LOW TRIM(days) (NJ2,0), [0;3]
+           4    HIGH TRIM(days) (NJ3,0), [0;4]
+           4.5  AVG LENGTH OF STAY(days) (NJ9,2), [0;9]
+           5    *** (NJ5,0), [0;5]
+           6    LOCAL LOW TRIM(days) (NJ2,0), [0;6]
+           7    LOCAL HIGH TRIM(days) (NJ3,0), [0;7]
+ 30        BREAKEVEN FISCAL YEAR/QUARTER (Multiple-80.23), [BE;0]
+           .01  BREAKEVEN FISCAL YEAR/QUARTER (NJ3,0XO), [0;1]
+           1    SERVICE (Multiple-80.24), [S;0]
+                .01  SERVICE (SX), [0;1]
+                1    BREAK EVEN DAYS (RNJ5,1), [0;2]
+           2    MEDICAL CENTER BREAKEVEN (RNJ5,1), [0;2]
+ 66        EFFECTIVE DATE (Multiple-80.266), [66;0]
+           .01  EFFECTIVE DATE (RD), [0;1]
+           .03  STATUS (RS), [0;3]
+           .05  MDC# (RP80.3'), [0;5]
+           .06  SURGERY (RS), [0;6]
+ 68        DESCRIPTION (VERSIONED) (Multiple-80.268), [68;0]
+           .01  EFFECTIVE DATE (MD), [0;1]
+           1    DESCRIPTION (Multiple-80.2681), [1;0]
+                .01  DESCRIPTION (MF), [0;1]
+ 71        DRG GROUPER EFFECTIVE DATE (Multiple-80.271), [2;0]
+           .01  DRG GROUPER EFFECTIVE DATE (D), [0;1]
+           1    REFERENCE (F), [0;3]
+           2    COMPLICATION/COMORBIDITY FLAG (S), [0;4]
+ 900       REFERENCE (F), [MC1;1]
+  
+ DRG SURGICAL HIERARCHY File (#80.5) New:
+  
+ .01       EFFECTIVE DATE (RD), [0;1]
+ 1         MDC (Multiple-80.51), [1;0]
+           .01  MDC (MRMP80.3'), [0;1]
+           1    DRG (Multiple-80.511), [2;0]
+                .01  DRG (MRMP80.2'), [0;1]
+                1    ORDER (NJ4,0), [0;2]
+  
+ DRG HAC File (#80.6) New:
+  
+ 1         HAC DESCRIPTION (F), [0;2]
+ 2         DIAGNOSIS CODE (Multiple-80.62), [1;0]
+           .01  DIAGNOSIS CODE (MP80'), [0;1]
+           1    PRIMARY (S), [0;2]
+ 3         PROCEDURE CODES (Multiple-80.63), [2;0]
+           .01  PROCEDURE CODES (MP80.1'), [0;1]
+  
+ DRG DIAGNOSIS IDENTIFIER CODES File (#82) New:
+  
+ .01       IDENTIFIER CODE (RF), [0;1]
+ 1         DESCRIPTION (F), [0;2]
+  
+ DRG PROCEDURE IDENTIFIER CODES File (#82.1) New:
+ .01       IDENTIFIER CODE (RF), [0;1]
+ 1         DESCRIPTION (F), [0;2]
+  
+ DRG PROCEDURE CODE COMBINATIONS File (#82.11) New:
+  
+ .01       IDENTIFIER CODE (RP82.1'), [0;1]
+ 1         BLOCK (Multiple-82.111), [BL;0]
+           .01  BLOCK (MRNJ4,0), [0;1]
+           1    ONE OF (Multiple-82.1111), [ONE;0]
+                .01  ONE OF (MP80.1'), [0;1]
+           2    WITH ONE OF 1 (Multiple-82.1112), [WITH1;0]
+                .01  WITH ONE OF 1 (MRP80.1'), [0;1]
+           3    WITH ONE OF 2 (Multiple-82.1113), [WITH2;0]
+                .01  WITH ONE OF 2 (MRP80.1'), [0;1]
+           4    WITH ONE OF 3 (Multiple-82.1114), [WITH3;0]
+                .01  WITH ONE OF 3 (MRP80.1'), [0;1]
+           5    WITH ONE OF 4 (Multiple-82.1115), [WITH4;0]
+                .01  WITH ONE OF 4 (MRP80.1'), [0;1]
+           6    MDC (Multiple-82.1116), [MDC;0]
+                .01  MDC (MRP80.3'), [0;1]
+                1    DRG (Multiple-82.11161), [DRG;0]
+                     .01  DRG (MRP80.2'), [0;1]
+  
+ DRG DIAGNOSIS CODE COMBINATIONS File (#82.12) New:
+  
+ .01       IDENTIFIER CODE (RP82'), [0;1]
+ 1         BLOCK (Multiple-82.121), [BL;0]
+           .01  BLOCK (MRNJ4,0), [0;1]
+           1    ONE OF (Multiple-82.1211), [ONE;0]
+                .01  ONE OF (MRP80'), [0;1]
+           2    WITH ONE OF 1 (Multiple-82.1212), [WITH1;0]
+                .01  WITH ONE OF 1 (MRP80'), [0;1]
+           3    WITH ONE OF 2 (Multiple-82.1213), [WITH2;0]
+                .01  WITH ONE OF 2 (MRP80'), [0;1]
+           4    WITH ONE OF 3 (Multiple-82.1214), [WITH3;0]
+                .01  WITH ONE OF 3 (MRP80'), [0;1]
+           5    WITH ONE OF 4 (Multiple-82.1215), [WITH4;0]
+                .01  WITH ONE OF 4 (MRP80'), [0;1]
+           6    MDC (Multiple-82.1216), [MDC;0]
+                .01  MDC (MRP80.3'), [0;1]
+                1    DRG (Multiple-82.12161), [DRG;0]
+                     .01  DRG (MRP80.2'), [0;1]
+  
+ DRG CC EXCLUSIONS (#82.13) File New:
+ .01       EXCLUSION CODE (RF), [0;1]
+ 1         PDX (Multiple-82.131), [1;0]
+           .01  PDX (MRP80'), [0;1]
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)         New/Modified/Deleted
+ -------------      ----      ------------------    --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+  
+ VAMC, Boise, ID
+ VAMC, Dublin, GA
+ G.V. Sonny Montgomery VAMC, Jackson, MS
+ VAMC, Pittsburgh, PA 
+ Coatesville VA Medical Center, Coatesville, PA
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/. This transmits the files from the first 
+ available FTP server. Sites may also elect to retrieve software directly 
+ from specific server as follows:
+  
+ Albany  ftp.domain.ext        <ftp://ftp.domain.ext>
+ Hines   ftp.domain.ext         <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext    <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                   File Name               
+ FTP Mode
+ --------------------------------------------------------------------------
+ User Manual                        drg_18_um.pdf           
+ (Binary)
+ Technical Manual/Security Guide    drg_18_tm.pdf           
+ (Binary)
+ ICD-10 Release Notes (ICD*18*64)   ICD-10_RN_ICD_18_64.pdf 
+ (Binary)
+ Production Overview Guide          Production_Overview_Guide_Group_2.pdf
+ (Binary)
+  
+ FTP Software Retrieval:
+ =======================
+  
+ The preferred method is to FTP the file from 
+ ftp://download.vista.domain.ext/. This transmits the files from the first 
+ available FTP server. Sites may also elect to retrieve software directly 
+ from specific server as follows:
+  
+ Albany  ftp.domain.ext        <ftp://ftp.domain.ext>
+ Hines   ftp.domain.ext         <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext    <ftp://ftp.domain.ext>
+  
+ Host File                File Name                  FTP Protocol
+ -------------------      ----------------           ------------
+ Data Host File           ICD_18_64.GBL              ASCII
+  
+  
+ Patch Installation
+ ==================
+  
+   
+  This patch requires the import global ^ICDLOAD to be installed prior 
+  to installation of the patch. The ^ICDLOAD global is delivered in the
+  data file ICD_18_64.GBL.
+  
+  The ICD*18*64 development team obtained the exemption to use $ZU(68,28) 
+  in routine ICD1864B from SACC committee on 2/25/2014, in order that the 
+  ICDLOAD global can be removed programmatically. The user will not 
+  therefore have to delete the global manually.
+  
+  User will be asked questions prior to installing the patch.
+  
+  The installation process of the patch runs the routine ICD1864A, which 
+  loads the DRG data. In the end of the process the ^ICDLOAD global is 
+  killed programmatically.
+  
+  
+  PLEASE NOTE: During the installation there are various ICD Codes required
+  to be in the DRG load file that were removed from the Lexicon globals.
+  These codes will cause the following messages to appear:
+  
+  Starting File #80 JUL 31, 2014@12:15:39
+  
+  ICD Code: H40.141 not in file #80
+  
+  ....
+  
+  These are not error messages, but rather audit messages showing that 
+  expired codes are not in the Lexicon and can be ignored.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+  1a) This patch requires installation of the following data file:  
+  ICD_18_64.GBL which contains the ^ICDLOAD global.
+  
+  1b) The following globals must be backed up during initial installation 
+  of this patch and as well as every time it has to be re-installed after 
+  the following patches: ICD*18.0*57 and LEX*2.0*80.    
+           ICD DIAGNOSIS File (#80)               ^ICD9
+           ICD OPERATION/PROCEDURE File (#80.1)   ^ICD0
+           DRG File (#80.2)                       ^ICD
+  NOTE:  
+  Please refer to Sections 2-6 for instructions on retrieving the file, 
+  backing up the existing files and installing the new file.
+  
+  1c) It is recommended that this patch be installed during non-peak 
+  hours to minimize potential disruption to users as extensive changes
+  are made to existing files ICD DIAGNOSIS File (#80), 
+  ICD OPERATION/PROCEDURE File (#80.1) and DRG File (#80.2).
+  
+  1d) All steps leading up to the KIDS Installation may be done with 
+  the users on the system. Administrative Users Only must be off of 
+  the system during the KIDS installation. Applications, particularly
+  Admission Discharge Transfer (ADT), Integrated Billing (IB) and
+  Diagnosis Related Grouper (DRG), could encounter significant errors
+  if exercised during the install.
+  
+  1e) Installation of ICD*18*64 should NOT be performed at the time frame
+  when IB MT NIGHT COMP is running. Since installation of ICD*18*64 can
+  take from 1 to 5 hours it is recommended to run it before the IB MT NIGHT
+  COMP job:
+  - Make all preparations ahead - perform steps 3, 5 and 6 of the 
+    Pre-Installation Instructions. This might take 2 hours and can be done
+    during normal working hours,
+  - Determine the time when IB nightly job is scheduled to run in the  
+    system,
+  - Count 5 hours back from this time to determine the time when 
+    ICD*18*64 installation can be started. 
+  
+  1f) Do not Interrupt the Installation - If the pre-install runs and 
+  deletes the ICD files and the post-install does not run, the site may
+  be left with either missing or incomplete ICD files.
+  
+  1g) Do not Queue this Installation -This installation is interactive.
+  If it is queued, it will hang and not install.
+  
+  1h) Do not install if Windows Updates are Scheduled/Pending - Check
+  with local network support that no Windows updates are scheduled for
+  the period of the ICD-10 install. Also, check the toolbar and see if
+  there is a Windows Update icon for a pending Windows update from a
+  previous push. A Windows update will disrupt the session and the 
+  KIDS installation.
+  
+  1i) The average install time for this patch is approximately 1-5 
+  hours based on each site's mirror and production environment
+  configuration, number of users on the system and background processes
+  running at the time of the installation.
+  
+  2) Global backup and installation timing:
+  
+          Backup
+          --------------
+          ICD DIAGNOSIS     ^ICD9    214 MB    10 to    25 minutes
+          ICD PROCEDURE     ^ICD0    129 MB     6 to    15 minutes
+          DRG               ^ICD     2.8 MB     1 to     5 minutes
+          Total Backup             345.8 MB    17 to    45 minutes
+             
+          Data Host File
+          --------------
+          FTP          ICD_18_64.GBL       69 GB    4 to  10 minutes
+          Global Restore ^%GI ^ICDLOAD     20 MB    4 to  10 minutes
+          Total Data                       89 MB    8 to  20 minutes
+             
+  3) Create a backup of the following global files before continuing:
+          ICD DIAGNOSIS File (#80)               ^ICD9
+          ICD OPERATION/PROCEDURE File (#80.1)   ^ICD0
+          DRG File (#80.2)                       ^ICD
+             
+  Make sure space is available before proceeding. It should take from 17 to
+  45 minutes to create the backup files.
+           
+  When you are creating a backup of non-subscripted globals, you are
+  saving the entire global. You should use the utility ^%GO for
+  non-subscripted globals, and when prompted for a global, enter the global
+  root (global name only, no open parenthesis, no file number and no
+  commas, as shown below). If you are working in an environment where %GO
+  will not run (usually due to sharing of globals between environments) 
+  please use %GOGEN.
+   
+     Example with %GO:
+   
+          >D ^%GO
+   
+          Global output
+          Device: xxxxxx:[yyyyyy]ICD9.GBL  
+              where xxxxxx and yyyyyy specify your home folder
+              for example: USER2$:[USERNAME]
+          Parameters? "WNS" => (Skip)
+          Description (^ for self-loading): 
+   
+          All Globals? No => No
+          Global ^ICD9
+          Global ^ (Skip)
+          1 global selected from 638 available globals.
+                          ICD9
+          1 global written
+   
+     Example with %GOGEN:
+          >D ^%GOGEN
+           Device: xxxxxx:[yyyyyy]ICD9.GEN
+              where xxxxxx and yyyyyy specify your home folder
+              for example: USER2$:[USERNAME]
+           Parameters? "WNS" => (Skip) 
+           Warning:  Use a "V" format to avoid problems with control
+           characters.
+           Global ^ICD9 -- NOTE: translation in effect
+           Global ^ (Skip)
+    
+                  Enter          To create a Backup copy of:
+                  ------         ---------------------------
+                  ICD9           ICD DIAGNOSIS File
+                  ICD0           ICD OPERATION/PROCEDURE File
+                  ICD            DRG File
+   
+  4) Set up user and IO variables (D ^XUP) for programmer access.
+  
+  5) Transfer the ICD_18_64.GBL file from the FTP server to your 
+     folder in the environment in which you are installing.
+  
+  6) Install the data from the global host file ICD_18_64.GBL.  
+     This file contains the import global ^ICDLOAD.
+   
+     This global is approximately 20 megabytes in size. Make sure
+     there is sufficient space available to load this global. The 
+     loading of the global should take from 8 to 20 minutes.
+   
+     From the Programmer prompt, execute the following routine:
+       >D ^%GI
+  
+       Global input
+  
+       Device: USER$:[USERNAME]ICD_18_64.GBL
+       Parameters? "RS" => 
+       Globals were saved on 21 Feb 2014   3:55 PM   Cache
+       with description: Data file for ICD*18.0*64 installation
+  
+       Input option: a
+       ^ICDLOAD 
+  
+ Installation Instructions
+ -------------------------
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu. From this menu, you may elect to use the
+      following option. When prompted for the INSTALL enter the patch #
+      (ICD*18.0*64):
+   
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch to install. Enter ICD*18.0*64.
+   
+      Respond "Yes" at the "Have you made a copy of file #80 (^ICD9),
+      file #80.1 (^ICD0) and file #80.2 (^ICD)?"
+   
+      Respond "Yes" at the "Do you want to continue?"
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      respond NO.
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond YES and enter the following menu options 
+      to disable:
+      Enter options you wish to mark as 'Out Of Order': ICD DRG GROUPER
+      Enter options you wish to mark as 'Out Of Order': DG DRG CALCULATION
+      Enter options you wish to mark as 'Out Of Order': LOAD/EDIT PTF DATA
+      Enter options you wish to mark as 'Out Of Order': IBT EDIT TRACKING
+      ENTRY
+      Enter options you wish to mark as 'Out Of Order': IB EDIT BILLING
+      INFO
+      Enter options you wish to mark as 'Out Of Order': DG PTF DRG
+      INFORMATION OUTPUT
+  
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+               
+   
+  The KIDS install should take from 1 to 5 hours.      
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+  The Post-Install routines ICD1864,ICD1864A,B,C,L and P should be deleted
+  using the KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+  installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 103
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD10TB0
+    Before:       n/a   After:  B7031640  **64**
+Routine Name: ICD10TB1
+    Before:       n/a   After:  B9911744  **64**
+Routine Name: ICD10TB2
+    Before:       n/a   After: B18222140  **64**
+Routine Name: ICD10TB3
+    Before:       n/a   After:  B6789079  **64**
+Routine Name: ICD10TB4
+    Before:       n/a   After:  B9167308  **64**
+Routine Name: ICD10TB5
+    Before:       n/a   After:  B7411864  **64**
+Routine Name: ICD10TB6
+    Before:       n/a   After:  B7217970  **64**
+Routine Name: ICD10TB7
+    Before:       n/a   After:  B3864507  **64**
+Routine Name: ICD10TB8
+    Before:       n/a   After:  B7326303  **64**
+Routine Name: ICD10TB9
+    Before:       n/a   After:  B3049940  **64**
+Routine Name: ICD1864A
+    Before:       n/a   After:B168364316  **64**
+Routine Name: ICD1864B
+    Before:       n/a   After: B65361906  **64**
+Routine Name: ICDCOD
+    Before:  B5702581   After:  B7196903  **7,57,64**
+Routine Name: ICDCODLK
+    Before:       n/a   After: B33886229  **64**
+Routine Name: ICDDG010
+    Before:       n/a   After: B87527545  **64**
+Routine Name: ICDDRG
+    Before: B34375895   After: B61462104  **2,7,10,14,20,31,37,57,64**
+Routine Name: ICDDRG5
+    Before: B33887705   After: B35156082  **2,5,7,10,20,22,31,37,64**
+Routine Name: ICDDRGM
+    Before: B31028651   After:B190593495  **7,36,57,64**
+Routine Name: ICDDRGX
+    Before: B26050820   After: B28133843  **1,2,5,7,10,14,20,24,27,31,64**
+Routine Name: ICDDRGX1
+    Before:       n/a   After: B12298991  **64**
+Routine Name: ICDDRGX2
+    Before:       n/a   After:B156836573  **64**
+Routine Name: ICDDRGX3
+    Before:       n/a   After: B25217688  **64**
+Routine Name: ICDDRGXM
+    Before: B10793046   After: B11815979  **31,50,62,64**
+Routine Name: ICDDSLK
+    Before:       n/a   After:B118601308  **64**
+Routine Name: ICDGTDRG
+    Before:  B3954114   After:  B3882310  **7,12,14,17,57,64**
+Routine Name: ICDREF
+    Before:   B499599   After:   B572987  **14,17,57,64**
+Routine Name: ICDRGAPI
+    Before:       n/a   After: B53995245  **64**
+Routine Name: ICDSELDS
+    Before:       n/a   After: B42651368  **64**
+Routine Name: ICDSELPS
+    Before:       n/a   After: B30531047  **64**
+Routine Name: ICDTBL2C
+    Before: B51314411   After: B51015005  **50,49,54,55,61,62,64**
+Routine Name: ICDTBL2D
+    Before: B50198003   After: B49902612  **56,55,61,62,64**
+Routine Name: ICDTBL2E
+    Before: B50198273   After: B49902881  **65,64**
+Routine Name: ICDTBL8A
+    Before: B24430641   After: B25027347  **37,34,43,45,46,49,64**
+Routine Name: ICDTBL8B
+    Before: B25187689   After: B25669193  **45,46,49,54,64**
+Routine Name: ICDTBL8C
+    Before: B24982928   After: B25174597  **50,49,54,61,64**
+Routine Name: ICDTBL8D
+    Before: B25476852   After: B25677376  **56,61,62,64**
+Routine Name: ICDTBL8E
+    Before: B25476861   After: B25715742  **65,64**
+Routine Name: ICDTBL9B
+    Before:  B4777979   After:  B4890646  **45,54,64**
+Routine Name: ICDTBL9C
+    Before:  B4782468   After:  B4895199  **50,54,64**
+Routine Name: ICDTBL9D
+    Before:  B5060180   After:  B5269928  **56,69,64**
+Routine Name: ICDTBL9E
+    Before:  B5060300   After:  B5179109  **65,69,64**
+Routine Name: ICDTLB4A
+    Before: B17888489   After: B18195336  **14,64**
+Routine Name: ICDTLB4B
+    Before: B17888498   After: B18194277  **20,64**
+Routine Name: ICDTLB6
+    Before: B35811469   After: B36196041  **2,5,10,64**
+Routine Name: ICDTLB61
+    Before:  B1234931   After:  B1300182  **10,22,64**
+Routine Name: ICDTLB6A
+    Before: B36834501   After: B37224357  **14,17,64**
+Routine Name: ICDTLB6B
+    Before: B51496024   After: B51960750  **20,22,64**
+Routine Name: ICDTLB6C
+    Before: B58422258   After: B58914547  **24,30,64**
+ 
+Routine list of preceding patches: 30, 57, 62, 69
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 09, 2012
+Completed By:                               Date Completed: AUG 01, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

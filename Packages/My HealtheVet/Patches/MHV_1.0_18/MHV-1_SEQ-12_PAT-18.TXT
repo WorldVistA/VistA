@@ -1,0 +1,168 @@
+
+=============================================================================
+Run Date: MAR 20, 2015                     Designation: MHV*1*18
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #12                      Status: Released
+                  Compliance Date: APR 20, 2015
+=============================================================================
+
+
+Subject: MYHEALTHEVET REL 12.12 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MHV 12.12 will be promoted to production on Saturday, March 21, 2015.  
+  
+ Infrastructure & Interface (I&I) Team Enhancements
+ ==================================================
+  
+ -> Epic 138594: MHV Federated Credentials Admin Portal
+  
+ ----- MHV Federated Credentials Admin Portal.
+ As a Help Desk Administrator, MHV system shall update the user profile 
+ that logs in using Federated Credentials.
+  
+ -> Epic 138596: CCD Direct - Message Delivery Notification Enhancements
+  
+ ----- MHV BB CCD Direct
+ Changes to the Blue Button Continuity of Care Document (CCD) via Direct 
+ feature.
+  
+ -> Epic 144740: Health Summary (VA CCD) rebranding to VA Health Summary
+  
+ ----- Rebranding of Health Summary (VA CCD) to VA Health Summary
+ Changes to the Health Summary (VA CCD) to VA Health Summary throughout 
+ CCD Direct. 
+  
+ -> Epic 140949: Account Synchronization with MVI
+  
+ ----- Phase 1 consists of following features: 
+ Perform a series of record comparisons with results
+ Identify any inconsistencies 
+  
+  
+  
+ Veteran Facing Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ -> Epic 128147: Personal Identity Verification (PIV) Card - 
+ Administrative Portal Integration
+  
+ ----- Update Login page for Admin Portal 
+         MHV administrators can use their PIV card to log into the admin 
+ portal. 
+ ----- Invalid Credentials or Administrator is not in the IAM Data Store 
+         MHV administrators can receive an error message if they enter 
+ invalid credentials or if their data is not in the IAM data store.
+ ----- IAM authenticates the user successfully but user does not have an 
+ active admin portal role in MHV
+         MHV administrators will not be able to access MHV admin Portal 
+ tabs if they do not have an active role in MHV admin portal.
+ ----- Reopen new browser within time-out interval
+         MHV administrators will be able to open the MHV admin portal 
+ without re-logging in if SSOi session has not logged out.  
+ ----- IAM authenticates the user successfully but there is a 
+ communication error 
+         MHV administrators will not have access to MHV admin Portal there 
+ is a communication error with IAM. 
+  
+  
+ -> Epic 128147:   Personal Identity Verification (PIV) Card - SM Provider 
+ Integration
+  
+ ----- Update Login page for SM Provider 
+         SM Providers can use their PIV card to log into the SM 
+ Application. 
+ ----- Invalid Credentials or Provider is not in the IAM Data Store 
+         SM Providers will receive an error message if they enter invalid 
+ credentials or if their data is not in the IAM data store. 
+ ----- IAM authenticates the user successfully but user does not have 
+ access in Secure Messaging
+         SM Providers will not have access to the SM Application if they 
+ are not an active user in SM
+ ----- IAM authenticates the user successfully but user is not opted- in 
+ Secure Messaging
+         SM Providers will not have access to the SM Application if they 
+ are not opted-in
+ ----- IAM authenticates the user successfully but communication error 
+ with SM 
+         SM Providers will not have access to the SM Application if there 
+ is a communication error between IAM and SM. 
+  
+ -> Epic 138635: Prescription Tracking - Email Notification
+  
+ ----- Update Registration page 
+         MHV users will be able to select to receive email notification 
+ for Rx Refill shipments during registration. 
+ ----- Update Profiles page
+         MHV users will be able to select to receive email notification 
+ for Rx Refill shipments by updating their profile. 
+ ----- Update Prescription Tracking Summary Page 
+         MHV users will be able to access the Profile screen from 
+ Prescription Tracking Summary page to turn on/off Email Notifications
+ ----- Update Refill Prescriptions Summary Page 
+         MHV users will be able to access the Profile screen from Refill 
+ Prescription Summary page to turn on/off Email Notifications
+ ----- Update Prescriptions History Summary Page 
+         MHV users will be able to access the Profile screen from Refill 
+ Prescription Summary page to turn on/off Email Notifications
+ ----- Send Email Notification with Shipment Information 
+         MHV users will be able to receive an email notification with Rx 
+ Shipment information if they have turned on the preference to receive 
+ the notifications
+  
+ -> Epic 135962:  Delete Button For Patients
+ ----- SM Patient users will be able to see the Delete button in the Inbox 
+ and Personal folders 
+  
+ -> Epic 50521: Workload Credit Enhancements - PHASE 1 and Phase 2
+  
+ ----- New HL7 Interface for Patient Classification Lookup
+ ----- New HL7 Interface for Patient Problems Lookup
+ ----- New HL7 Interface for Diagnosis Codes Lookup
+ ----- New HL7 Interface for Filer
+ ----- New HL7 Interface for ECS Procedures Lookup
+ ----- New HL7 Interface for DSS Units Lookup 
+  
+ Sustainment Team
+ ================
+  
+ -> MHV00032937:  The PHR Extract for ChemistryHematology failed because 
+ of an oversized field or record
+  
+ System ReEngineering (SRE) Team
+ ================
+  
+ -> SRE Epic 45169:   MHV Session Management
+  
+ ----- MHV session management enhancement so that capacity and 
+ sustainability of the application is increased and so that the MHV 
+ Program can align with Enterprise objectives (see OneVA EA) and meet 
+ capacity demands of the future.
+  
+ -> SRE Epic 128042:  PHR-R Maintenance and Sustainment - Release 2 (Field 
+ Testing)
+ ----- PHR Manager component of MHV to be redesigned so that it can handle 
+ increased load on the system as well as is consistent with the MHV 
+ Website Redesign architecture.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 09, 2015
+Completed By:                               Date Completed: MAR 19, 2015
+Released By :                               Date Released : MAR 20, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

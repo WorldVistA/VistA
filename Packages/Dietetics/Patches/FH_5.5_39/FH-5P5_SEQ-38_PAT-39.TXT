@@ -1,0 +1,128 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 06/03/15 at 17:09
+=============================================================================
+Run Date: AUG 20, 2015                     Designation: FH*5.5*39
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #38                    Status: Released
+                  Compliance Date: SEP 20, 2015
+=============================================================================
+
+Associated patches: (v)FH*5.5*37   <<= must be installed BEFORE `FH*5.5*39'
+
+Subject: ADD NEW FOOD ALLERGIES TO FHSELA2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issue:
+  
+ 1. A recent New Term Rapid Turnaround (NTRT) push has added one new food
+    allergy and updated two existing food allergies to the GMR ALLERGIES 
+    file (#120.82).
+  
+    ASSOCIATED NSR(S):
+    ==================
+    N/A
+  
+    ASSOCIATED REMEDY TICKETS:
+    ==========================
+    1. INC000001260817 - PSPO 1380 changes needed due to NTRT
+  
+    PARTICIPATING TEST SITES:
+    =========================
+    Upstate New York
+    VA New York Harbor HCS
+    VA North Florida/South Georgia HCS
+  
+    REMEDY OVERVIEW:
+    ================
+    1. INC000001260817 - PSPO 1380 changes needed due to NTRT
+  
+    Patient Safety Issue:
+    --------------------
+    PSPO 1380
+  
+    Problem:
+    --------
+    A recent New Term Rapid Turnaround (NTRT) push has added one new food 
+    allergy and updated two existing food allergies to the GMR ALLERGIES
+    file (#120.82). 
+  
+         PAWPAW (New)
+         MULBERRY (Updated)
+         MOLASSES (Updated)
+  
+    Resolution:
+    -----------
+    The hard coded list in routine FHSELA2 (which should match the GMR 
+    ALLERGIES file) will be modified to add PAWPAW, MULBERRY,and MOLASSESS.
+    These food allergies will now be presented to the user in the N&FS menu
+    option Create/Map Food Preference to Allergies [FHSELA].
+  
+    Routine: FHSELA
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+    This patch may be loaded with users on the system.  You may wish to 
+    install it during non-peak hours. Installation will take less than 1 
+    minute.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+   
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+   
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+   
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+      
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+   
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+   
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'FH*5.5*39'.
+   
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'. 
+   
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B121957526   After:B125209870  **8,13,23,25,28,35,37,39**
+ 
+Routine list of preceding patches: 37
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 02, 2015
+Completed By:                               Date Completed: AUG 18, 2015
+Released By :                               Date Released : AUG 20, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,140 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 03/16/15 at 10:24
+=============================================================================
+Run Date: OCT 26, 2015                     Designation: IB*2*546
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #500                      Status: Released
+                  Compliance Date: NOV 25, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*356    <<= must be installed BEFORE `IB*2*546'
+
+Subject: ADDING COPAY EXEMPTION FAILED ALERT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix an issue identified while running the Queue Means Test
+ Compilation of Charges [IB MT NIGHT COMP] background job that leads to a
+ runaway alert process where hundreds of thousands of alerts are generated
+ for a single record/instance.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001107435    Integrated Billing - Application Error:
+    Duplicates:
+    INC000001294806    Integrated Billing - Other: Triggering of excess 
+                       alerts
+    INC000001301898    Electronic Claims Management Engine - Integrated 
+                       Billing Issue:
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Palo Alto HCS
+ Phoenix HCS
+ Puget Sound HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001107435    Integrated Billing - Application Error:
+  
+ Problem: 
+ --------
+ While the IB MT NIGHT COMP job is running it has the potential to process
+ records that lead to the generation of the same alert infinitely until 
+ the process is terminated manually.  This occurs when a record needs
+ to be updated and the update fails and the alert process is triggered.
+ During the alert process the variable IBDA is overwritten which is 
+ subsequently used by the main process to identify "the last record 
+ processed" so it starts all over.  
+   
+ Resolution:
+ -----------
+ Prior to setting IBDA variable for the alert process, it is "Newed" so that
+ upon exiting the alert process the variable returns to its prior value
+ allowing the processing of the records to continue without restarting.
+  
+ Routine: IBAERR3
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users but it 
+ should not be installed while the IB MT NIGHT COMP job is running.  It
+ should take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*546)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*546.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+       Queue Means Test Compilation of Charges  [IB MT NIGHT COMP]
+       Print/Verify Patient Exemption Status    [IB RX PRINT VERIFY EXEMP]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBAERR3
+    Before: B26662158   After: B26668242  **356,546**
+ 
+Routine list of preceding patches: 356
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 06, 2015
+Completed By:                               Date Completed: OCT 22, 2015
+Released By :                               Date Released : OCT 26, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

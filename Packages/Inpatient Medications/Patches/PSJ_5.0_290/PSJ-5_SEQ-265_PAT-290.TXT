@@ -1,0 +1,163 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/06/15 at 12:45
+=============================================================================
+Run Date: FEB 09, 2015                     Designation: PSJ*5*290
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #265                      Status: Released
+                  Compliance Date: MAR 12, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*83    <<= must be installed BEFORE `PSJ*5*290'
+                    (v)PSJ*5*244   <<= must be installed BEFORE `PSJ*5*290'
+
+Subject: Erroneous order deleted message & Last Transfer date
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+   
+ 1) '...Order deleted' was display in the ListMan order view for a non-verified
+    IV when entering a new order, but no order was or should be deleted.
+   
+ 2) Last Transferred field not updating when last movement is deleted.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC000000403854 - "...Order deleted" displayed in the order view screen 
+                      when copying active IV order
+    Duplicates:
+    -----------
+    INC000000589992
+    INC000000412654  
+  
+ 2) INC000000707885 - Question regarding "Last Transferred" field in 
+                      demographic header 
+  
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ Oklahoma City VAMC
+ Upstate NY HCS
+  
+    
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000403854 - '...Order deleted' was display in the order view screen 
+    when copying active IV order
+  
+  
+    Problem:
+    --------
+    The problem occurs when copying an IV order using Inpatient Order Entry
+    [PSJ OE] option.  When the user selects a verified IV order and chooses
+    'CO' to copy the order and when prompted, "Do you want to copy this
+    order?", answers 'Yes', after processing order checks, the text
+    '...Order deleted' will be displayed.  This message should not be
+    displayed as nothing is actually being deleted and this causes
+    confusion for the end users.
+  
+    Resolution:
+    -----------
+    Routine PSIVORE2 has been modified to stop the '...Order deleted' message 
+    from being displayed when there is no actual order being deleted.
+  
+ 2) INC000000707885 - Question regarding "Last Transferred" field in
+                      demographic header.
+  
+    Problem:
+    --------
+    When an interward transfer is entered and then deleted, the Last
+    Transferred field in the demographic header still shows the deleted
+    transfer date and not the most recent actual transfer.
+  
+    Resolution:
+    -----------
+    Routine PSJADT has been modified to update the UD LAST TRANSFERRED DATE
+    field (#62.04) in the PHARMACY PATIENT file (#55).
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PSJ*5.0*290):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        PSJ*5.0*290.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVORE2
+    Before: B13789762   After: B15145270  **21,58,101,244,290**
+Routine Name: PSJADT
+    Before: B23121742   After: B24019355  **3,30,51,50,83,290**
+ 
+Routine list of preceding patches: 83, 244
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2012
+Completed By:                               Date Completed: JAN 29, 2015
+Released By :                               Date Released : FEB 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

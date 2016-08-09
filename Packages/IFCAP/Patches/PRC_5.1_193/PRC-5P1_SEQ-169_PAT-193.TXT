@@ -1,0 +1,157 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Monday, 05/02/16 at 08:05
+=============================================================================
+Run Date: JUL 05, 2016                     Designation: PRC*5.1*193
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #169                    Status: Released
+                  Compliance Date: AUG 05, 2016
+=============================================================================
+
+Associated patches: (v)PRC*5.1*116 <<= must be installed BEFORE `PRC*5.1*193'
+                    (v)PRC*5.1*138 <<= must be installed BEFORE `PRC*5.1*193'
+
+Subject: UNIVERSAL DATE QUERY FOR ANNUAL ARCHIVE/PURGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Modify the Annual IFCAP Purge process to be controlled by a
+    universal date process
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. I6246134FY16 Build IFCAP Annual Purge date control
+               
+  
+ Participating Test Sites:
+ ========================
+ Connecticut
+ Providence
+ Coatesville
+  
+  
+ Remedy Overview:
+ =============== 
+ 1. I6246134FY16 Build IFCAP Annual Purge date control
+  
+    Problem:
+    --------
+    Correct the IFCAP Annual Purge process to use a universal date
+    query to control incorrect date entry during the archive/purge
+    process to prevent massive file data reconstruction when incorrect
+    dates are entered during the purge processing.
+    
+    Resolution:
+    -----------                    
+    Create a universal date query utility for the archive/purge process
+    that will prevent a user from entering a more current date that 
+    would cause detrimental data loss and prevent time consuming
+    file restores.
+  
+    Only a fiscal year ending date 7+ years in arrears will be allowed.
+  
+    The following purge steps will be modified for the date control:
+  
+    STEP 1   Find Archivable IFCAP records
+    STEP 5   Load IFCAP file 442 documents into PurgeMaster
+    STEP 6   Load IFCAP file 410 documents into PurgeMaster
+    STEP 7   Load IFCAP file 417 data into PurgeMaster
+    STEP 13  FILE 423, Purge ALL Code Sheets
+    
+    Routines: PRCGPUTL (new), PRCGARCF, PRCG237Q, PRCG238Q, PRCG239Q
+              PRCFACPR
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*193)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*193.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond YES. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following options:
+  
+     FIND ARCHIVABLE IFCAP RECORDS   [PRCG ARCHIVE FIND]
+     LOAD IFCAP FILE 442 DOCUMENTS   [PRCG LOAD 442 PURGEMASTER]
+     LOAD IFCAP FILE 410 DOCUMENTS   [PRCG LOAD 410 PURGEMASTER]
+     LOAD IFCAP FILE 417 DATA INTO   [PRCG LOAD 417 PURGMASTER]
+     Purge All Code Sheets           [PRCHPM CS PURGE ALL]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFACPR
+    Before:  B9176613   After:  B9027343  **116,193**
+Routine Name: PRCG237Q
+    Before: B17692851   After: B15950680  **95,193**
+Routine Name: PRCG238Q
+    Before: B21013963   After: B15097552  **193**
+Routine Name: PRCG239Q
+    Before: B13453904   After: B11630074  **95,138,193**
+Routine Name: PRCGARCF
+    Before:  B8833451   After:  B6742034  **193**
+Routine Name: PRCGPUTL
+    Before:       n/a   After:  B3265914  **193**
+ 
+Routine list of preceding patches: 116, 138
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2016
+Completed By:                               Date Completed: JUN 17, 2016
+Released By :                               Date Released : JUL 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

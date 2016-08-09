@@ -1,0 +1,141 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/13/15 at 11:04
+=============================================================================
+Run Date: DEC 09, 2015                     Designation: IB*2*482
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #502                      Status: Released
+                  Compliance Date: JAN 08, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*447    <<= must be installed BEFORE `IB*2*482'
+
+Subject: REPORT DISCREPANCY NOT RESOLVED
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY] option, and 
+ the ECME Billing Events Report [IB ECME BILLING EVENTS] option do not
+ match if the PRICE PER DISPENSE UNIT (#16) field in the DRUG (#50) file is
+ changed while an RX for that Drug is between Fill time and Release time.
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC0000000607082 IB*2*455-Report Discrepancy not resolved
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Chillicothe VA Medical Center
+ VA Maryland Health Care System 
+ VA Tennessee Valley Health Care System
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC0000000607082 IB*2*455-Report Discrepancy not resolved
+  
+  Problem:
+  --------
+  Site user reported that IB*2.0*455 didn't resolve the discrepancy issue
+  based on the original design. The design uses the drug cost on the proper
+  fill/refill number in the PRESCRIPTION (#52) file to calculate the bill
+  amount when the prescription is released from e-Pharmacy to IB/AR for the
+  ECME claim creation. 
+  
+  The bill amount on the ECME Billing Events Report [IB ECME BILLING 
+  EVENTS] is actually calculated from the same drug cost of the
+  PRESCRIPTION (#52) file in the e-Pharmacy transaction before the release
+  of the prescription. The e-Pharmacy transaction date and the prescription
+  release date can be several days apart. If there is an adjustment for the
+  drug cost within that time frame, the issue will be present.
+  
+  Resolution:
+  -----------
+  There is a new function added to routine IBCRCC. The drug cost passed from
+  the e-Pharmacy transaction and stored in the COST (#.304) field of the IB
+  NCPDP EVENT LOG (#366.14) file is used to calculate the bill amount for
+  the ECME claim creation in IB/AR.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+  
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*482):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+  
+ 4.   Select Installation Option: Install Package(s)
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 39
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCRCC
+    Before: B34225525   After: B44291194  **52,80,106,138,245,223,309,
+                                           347,370,383,427,455,447,482**
+ 
+Routine list of preceding patches: 447
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 01, 2012
+Completed By:                               Date Completed: DEC 01, 2015
+Released By :                               Date Released : DEC 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

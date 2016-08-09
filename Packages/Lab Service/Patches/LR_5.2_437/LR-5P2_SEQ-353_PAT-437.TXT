@@ -1,0 +1,187 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 03/03/14 at 14:49
+=============================================================================
+Run Date: SEP 10, 2014                     Designation: LR*5.2*437
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #353                    Status: Released
+                  Compliance Date: OCT 11, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*286  <<= must be installed BEFORE `LR*5.2*437'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*437'
+
+Subject: DELTA CHECKS, EXECUTE CODES, INTERIM REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 3 issues:
+  
+ 1. Execute code does not perform correctly when a lab test is added to a
+    previously verified accession.
+  
+ 2. Convert delta checks to new format.
+  
+ 3. <STORE> error when array fills up in micro
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*437 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*437 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*437 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000069071 - Type of DELTA check problem (EXECUTE CODE PROBLEM)
+  
+ 2. INC000000914053 - Lab - LEDI
+  
+ 3. INC000000955950 - Lab: Microbiology
+    
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland - East
+ Minneapolis - VA Medical Center
+ Providence, RI VAMC 
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000069071 - Type of DELTA check problem (EXECUTE CODE PROBLEM)
+  
+    Problem:
+    --------
+    The EXECUTE CODE file (#62.07) is used to store a variety of program
+    instructions that are used in various programs in the LAB package.
+  
+    The execute code should be performed at both the start and the end of
+    the data review/edit of lab test results but if a test is added to an
+    already resulted/verified accession, the execute code is only performed
+    at the beginning of the data review/edit.
+  
+    Solution:
+    ---------
+    Modify routine LRVER4 to always perform the EXECUTE code at both the
+    beginning and the end of the review/edit of lab test results.
+  
+    Routine: LRVER4  
+  
+ 2. INC000000914053 - Lab - LEDI 
+  
+    Problem:
+    --------
+    LEDI IV (LR*5.2*350) converted references to the execution of delta 
+    checks to a new coding format. A reference was overlooked in routine
+    LRVR5. 
+  
+    Solution:
+    ---------
+    Modify routine LRVR5 to invoke the delta check processing in the new 
+    coding format for consistency.
+  
+    Routine:  LRVR5  
+  
+ 3. INC000000955950 - Lab: Microbiology
+  
+    Problem:
+    --------
+    Coding to put lines of text into an array for printing in a window 
+    leads to <STORE> error as array fills up partition under unusual
+    circumstances.
+  
+    Solution:
+    ---------
+    Modify routines LRMIPSZ5 and LR7OSMZ5 to handle all circumstances when 
+    formatting the text to be printed in the window.
+  
+    Routine: LRMIPSZ5, LR7OSMZ5
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch can
+    be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*437'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OSMZ5
+    Before: B61988118   After: B62120859  **121,187,244,350,437**
+Routine Name: LRMIPSZ5
+    Before: B61501584   After: B61637205  **350,437**
+Routine Name: LRVER4
+    Before: B82238256   After: B82283549  **14,42,112,121,140,171,153,
+                                           188,279,283,286,350,437**
+Routine Name: LRVR5
+    Before: B12201851   After: B12268085  **1,42,153,263,283,286,437**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 06, 2013
+Completed By:                               Date Completed: SEP 04, 2014
+Released By :                               Date Released : SEP 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

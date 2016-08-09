@@ -1,0 +1,242 @@
+$TXT Created by                 MDEVB.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 05/24/16 at 13:57
+=============================================================================
+Run Date: JUL 13, 2016                     Designation: PSO*7*458
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #382                      Status: Released
+                  Compliance Date: JUL 29, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*411   <<= must be installed BEFORE `PSO*7*458'
+
+Subject: MOCHA ENHANCEMENTS 2 FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ PSO*7*458 is a maintenance patch post release of MOCHA Enhancements 2 
+ (ME2) which corrects two user interface/display issues that are a part of 
+ the ME2 software version. One of the two issues prevents the local 
+ Station Name from appearing in certain circumstances on the allergy order 
+ check display. To minimize the confusion to the end users in the field, 
+ it is recommended to install this patch update be installed as soon as 
+ possible and for this reason the compliance date has been set to 
+ 7/29/2016 shorter than the normal patch compliance window.
+  
+ This patch will provide bug fixes for three items identified late in the 
+ testing stage of MOCHA Enhancements 2 (ME2).
+  
+ Issue 1 (RTC 278670):  Removed unnecessary 'Press Return to Continue' 
+ prompts under certain circumstances related to duplicate therapy warnings 
+ with discontinued scripts.
+  
+ Solution 1: This issue was fixed with a simple change to one routine in 
+ the Outpatient Pharmacy application. No data changes were involved. The 
+ only change the user will notice is that in the scenario which the patch 
+ addresses, the user will only see one 'Press Return to Continue' prompt, 
+ and not the erroneous second prompt.
+  
+ Issue 2 (RTC 200277/287822): Certain circumstances were preventing the
+ display of local site information for allergy cases where a remote site
+ had the same severity, reactant, and observed/historical status.  The
+ circumstances are now accounted for in display sorting so all sites, local
+ or remote, will display as required.
+  
+ Solution 2: This issue was fixed with a simple change to one routine in 
+ the Outpatient Pharmacy application. No data changes were involved. The 
+ only change the user will notice is that in the scenario which the patch 
+ addresses, the user will see that the allergy that has caused the alert 
+ was entered in the local facility, in addition to the remote 
+ facility(ies).
+         
+ Issue 3 (RTC 323484): When using the CK 'Check Interactions' Hidden Action
+ in Outpatient Pharmacy, if the first drug/item alphabetically in the
+ patient profile is marked as supply item in the DRUG File (#50), and the 
+ user enters <ret> at the 'Drug' prompt, drug interaction and duplicate 
+ therapy order checks will not display for the profile drug/items.
+  
+ Solution 3: This issue was fixed with a simple change to one routine in 
+ the Outpatient Pharmacy application. No data changes were involved. The 
+ routine that initiates the drug interaction and duplicate therapy order
+ checks does a check on the supply status of the first drug/item in the
+ patient profile list, and if it is a supply, it will not do these order
+ checks. That logic is valid for the order entry process, since profile
+ drug/items are not checked against each other during order entry, and the
+ first drug/item in the profile list is the drug/item being ordered
+ (prospective drug). This same logic is applied to the CK Hidden Action,
+ but for the CK Hidden Action, the first drug/item in the list
+ alphabetically comes from the patient profile when <ret> is entered at the
+ 'Drug' prompt, but even if that drug/item is a supply, these order checks
+ still need to occur, because profile drugs are checked against other
+ profile drugs in the CK Hidden Action.
+  
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A 
+      
+  
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+  
+  
+  Blood Bank Clearance:
+  ---------------------
+  N/A
+  
+   
+  Patch Components:
+  -----------------
+   
+   
+  Files & Fields Associated:
+   
+  File Name (Number)      Field Name (Number)     New/Modified/Deleted
+  ------------------      -------------------     --------------------
+  N/A
+   
+   
+  Forms Associated:
+   
+  Form Name       File #  New/Modified/Deleted
+  ---------       ------  --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+   
+  Mail Group Name New/Modified/Deleted
+  --------------- --------------------
+  N/A
+   
+   
+  Options Associated:
+   
+  Option Name     Type    New/Modified/Deleted
+  -----------     ----    -------------------- 
+  N/A
+   
+   
+  Protocols Associated:
+   
+  Protocol Name   New/Modified/Deleted
+  -------------   -------------------- 
+  N/A
+   
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+   
+  Template Name   Type    File Name (Number)  New/Modified/Deleted 
+  -------------   ----    ------------------  --------------------
+  N/A
+   
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+   
+   
+  Defect Tracking System Ticket(s) & Overview:
+  --------------------------------------------
+  278670
+  200277
+  287822
+  323484
+   
+  Test Sites:
+  ----------
+  Sioux Falls VA Health Care System
+  Orlando VA Medical Center
+  
+   
+  Documentation Retrieval Instructions:
+  ------------------------------------- 
+  There are no documentation changes for this patch.
+   
+  
+  Patch Installation:
+  
+  Installation Instructions:
+  --------------------------
+  These patches should be installed when the Outpatient Pharmacy and 
+  Inpatient Medications applications are not in use, and CPRS (Computerized
+  Patient Record System) usage is at a minimum, particululary medication
+  activities.
+  
+   
+  1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+     TEXT PRINT/DISPLAY option in the PackMan menu will display the
+     patch text only].
+   
+  2. From the Kernel Installation and Distribution System (KIDS)
+     menu, select the Installation menu.
+   
+  3. From this menu, you may elect to use the following options:
+     (when prompted for INSTALL NAME, enter PSO*7.0*458)
+   
+     a.  Backup a Transport Global - this option will create a backup
+         message of any routines exported with the patch.  It will
+         NOT backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System  - this option
+         will allow you to view all changes that will be made when
+         the patch is installed.  It compares all components of the
+         patch (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - this option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+     d.  Print Transport Global - this option will allow you to view
+         the components of the KIDS build.
+   
+  4. Use the Install Package(s) option and select the package
+     PSO*7.0*458
+   
+  5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', respond NO.
+   
+  6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', respond NO.
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  There is no pre or post installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSODDPR2
+    Before:B133640558   After:B132703820  **251,375,379,390,372,416,411,458**
+Routine Name: PSODGAL3
+    Before:B172651497   After:B175130072  **411,458**
+Routine Name: PSODRG
+    Before: B93593274   After: B93820988  **20,23,36,53,54,46,112,139,
+                                           207,148,243,268,324,251,375,
+                                           387,398,390,427,411,458**
+ 
+Routine list of preceding patches: 411
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2016
+Completed By:                               Date Completed: JUL 13, 2016
+Released By :                               Date Released : JUL 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,4999 @@
+Released EDP*2*2 SEQ #4
+Extracted from mail message
+**KIDS**:EDP*2.0*2^
+
+**INSTALL NAME**
+EDP*2.0*2
+"BLD",8751,0)
+EDP*2.0*2^EMERGENCY DEPARTMENT^0^3140520^y
+"BLD",8751,1,0)
+^^82^82^3140205^
+"BLD",8751,1,1,0)
+EDIS Patch Description (EDP*2.0*2)              
+"BLD",8751,1,2,0)
+ 
+"BLD",8751,1,3,0)
+Routines
+"BLD",8751,1,4,0)
+--------
+"BLD",8751,1,5,0)
+The second line of each of these routines now looks like:
+"BLD",8751,1,6,0)
+;;2.0;EMERGENCY DEPARTMENT;**6,2**;Dec 3, 2012;Build 1
+"BLD",8751,1,7,0)
+Or
+"BLD",8751,1,8,0)
+The second line of each of these routines now looks like:
+"BLD",8751,1,9,0)
+;;2.0;EMERGENCY DEPARTMENT;**2**;Dec 3, 2012;Build 1
+"BLD",8751,1,10,0)
+ 
+"BLD",8751,1,11,0)
+EDPFAA
+"BLD",8751,1,12,0)
+EDPRPT1
+"BLD",8751,1,13,0)
+EDPRPT2
+"BLD",8751,1,14,0)
+EDPRPT7
+"BLD",8751,1,15,0)
+EDPRPT7C
+"BLD",8751,1,16,0)
+EDPRPT10
+"BLD",8751,1,17,0)
+EDPRPTBV
+"BLD",8751,1,18,0)
+EDPQLE
+"BLD",8751,1,19,0)
+EDPLPCE
+"BLD",8751,1,20,0)
+EDPQPCE
+"BLD",8751,1,21,0)
+EDPFLEX
+"BLD",8751,1,22,0)
+EDPLEX
+"BLD",8751,1,23,0)
+EDPX
+"BLD",8751,1,24,0)
+EDPLOG
+"BLD",8751,1,25,0)
+EDPCONV
+"BLD",8751,1,26,0)
+ 
+"BLD",8751,1,27,0)
+Pre/Post Installation Overview
+"BLD",8751,1,28,0)
+------------------------------
+"BLD",8751,1,29,0)
+LEX*2.0*80 must be installed prior to this patch
+"BLD",8751,1,30,0)
+ICD*18.0*57 must be installed prior to this patch
+"BLD",8751,1,31,0)
+EDP*2.0*6 must be installed prior to this patch
+"BLD",8751,1,32,0)
+PX*1.0*199 must be installed with this patch (prior to or after). 
+"BLD",8751,1,33,0)
+ 
+"BLD",8751,1,34,0)
+Installation Instructions
+"BLD",8751,1,35,0)
+-------------------------
+"BLD",8751,1,36,0)
+This patch may be installed with users on the system, although it is 
+"BLD",8751,1,37,0)
+recommended that it be installed during non-peak hours to minimize
+"BLD",8751,1,38,0)
+potential disruption to users.  This patch should take less than 5 
+"BLD",8751,1,39,0)
+minutes to install.
+"BLD",8751,1,40,0)
+ 
+"BLD",8751,1,41,0)
+ 
+"BLD",8751,1,42,0)
+Pre-Installation Instructions
+"BLD",8751,1,43,0)
+-----------------------------
+"BLD",8751,1,44,0)
+1.  Choose the PackMan message containing this patch.
+"BLD",8751,1,45,0)
+ 
+"BLD",8751,1,46,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+"BLD",8751,1,47,0)
+ 
+"BLD",8751,1,48,0)
+3.  From the Kernel Installation and Distribution System Menu, select
+"BLD",8751,1,49,0)
+    the Installation Menu.  From this menu, you may elect to use the
+"BLD",8751,1,50,0)
+    following option. When prompted for the INSTALL, enter the patch #
+"BLD",8751,1,51,0)
+    (EDP*2.0*2):
+"BLD",8751,1,52,0)
+ 
+"BLD",8751,1,53,0)
+    a. Backup a Transport Global - This option will create a backup
+"BLD",8751,1,54,0)
+       message of any routines exported with this patch. It will not
+"BLD",8751,1,55,0)
+       back up any other changes such as DDs or templates.
+"BLD",8751,1,56,0)
+ 
+"BLD",8751,1,57,0)
+    b. Compare Transport Global to Current System - This option will
+"BLD",8751,1,58,0)
+       allow you to view all changes that will be made when this patch
+"BLD",8751,1,59,0)
+       is installed.  It compares all components of this patch
+"BLD",8751,1,60,0)
+       (routines, DDs, templates, etc.).
+"BLD",8751,1,61,0)
+ 
+"BLD",8751,1,62,0)
+    c. Verify Checksums in Transport Global - This option will allow
+"BLD",8751,1,63,0)
+       you to ensure the integrity of the routines that are in the
+"BLD",8751,1,64,0)
+       transport global.
+"BLD",8751,1,65,0)
+ 
+"BLD",8751,1,66,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"BLD",8751,1,67,0)
+    choose the patch to install. Enter EDP*2.0*2.
+"BLD",8751,1,68,0)
+ 
+"BLD",8751,1,69,0)
+5.  When prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+"BLD",8751,1,70,0)
+    Install? NO//, respond NO.
+"BLD",8751,1,71,0)
+ 
+"BLD",8751,1,72,0)
+6.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+"BLD",8751,1,73,0)
+    respond NO.
+"BLD",8751,1,74,0)
+ 
+"BLD",8751,1,75,0)
+7.  When prompted Want to DISABLE Scheduled Options, Menu Options, and
+"BLD",8751,1,76,0)
+    Protocols? NO//, respond NO.
+"BLD",8751,1,77,0)
+ 
+"BLD",8751,1,78,0)
+8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+"BLD",8751,1,79,0)
+ 
+"BLD",8751,1,80,0)
+Post-Installation Instructions
+"BLD",8751,1,81,0)
+------------------------------
+"BLD",8751,1,82,0)
+EDPCONV may need to be run if this is an upgrade from prior to EDIS 1.0.
+"BLD",8751,4,0)
+^9.64PA^^
+"BLD",8751,6)
+8^
+"BLD",8751,6.3)
+23
+"BLD",8751,"ABPKG")
+n
+"BLD",8751,"INI")
+
+"BLD",8751,"INID")
+n^y^n
+"BLD",8751,"INIT")
+EDP22PST
+"BLD",8751,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8751,"KRN",.4,0)
+.4
+"BLD",8751,"KRN",.401,0)
+.401
+"BLD",8751,"KRN",.402,0)
+.402
+"BLD",8751,"KRN",.403,0)
+.403
+"BLD",8751,"KRN",.5,0)
+.5
+"BLD",8751,"KRN",.84,0)
+.84
+"BLD",8751,"KRN",3.6,0)
+3.6
+"BLD",8751,"KRN",3.8,0)
+3.8
+"BLD",8751,"KRN",9.2,0)
+9.2
+"BLD",8751,"KRN",9.8,0)
+9.8
+"BLD",8751,"KRN",9.8,"NM",0)
+^9.68A^16^15
+"BLD",8751,"KRN",9.8,"NM",1,0)
+EDPFAA^^0^B37763699
+"BLD",8751,"KRN",9.8,"NM",2,0)
+EDPRPT1^^0^B51586751
+"BLD",8751,"KRN",9.8,"NM",3,0)
+EDPRPT2^^0^B26475007
+"BLD",8751,"KRN",9.8,"NM",4,0)
+EDPRPT7^^0^B23000869
+"BLD",8751,"KRN",9.8,"NM",5,0)
+EDPRPT7C^^0^B24197469
+"BLD",8751,"KRN",9.8,"NM",6,0)
+EDPRPT10^^0^B32122849
+"BLD",8751,"KRN",9.8,"NM",7,0)
+EDPRPTBV^^0^B30889629
+"BLD",8751,"KRN",9.8,"NM",8,0)
+EDPQLE^^0^B55054483
+"BLD",8751,"KRN",9.8,"NM",9,0)
+EDPLPCE^^0^B39952113
+"BLD",8751,"KRN",9.8,"NM",10,0)
+EDPQPCE^^0^B6816999
+"BLD",8751,"KRN",9.8,"NM",11,0)
+EDPFLEX^^0^B10693270
+"BLD",8751,"KRN",9.8,"NM",12,0)
+EDPX^^0^B16354064
+"BLD",8751,"KRN",9.8,"NM",13,0)
+EDPLOG^^0^B64279489
+"BLD",8751,"KRN",9.8,"NM",15,0)
+EDPCONV^^0^B70928886
+"BLD",8751,"KRN",9.8,"NM",16,0)
+EDPLEX^^0^B11049187
+"BLD",8751,"KRN",9.8,"NM","B","EDPCONV",15)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPFAA",1)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPFLEX",11)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPLEX",16)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPLOG",13)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPLPCE",9)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPQLE",8)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPQPCE",10)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPT1",2)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPT10",6)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPT2",3)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPT7",4)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPT7C",5)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPRPTBV",7)
+
+"BLD",8751,"KRN",9.8,"NM","B","EDPX",12)
+
+"BLD",8751,"KRN",19,0)
+19
+"BLD",8751,"KRN",19.1,0)
+19.1
+"BLD",8751,"KRN",101,0)
+101
+"BLD",8751,"KRN",409.61,0)
+409.61
+"BLD",8751,"KRN",771,0)
+771
+"BLD",8751,"KRN",779.2,0)
+779.2
+"BLD",8751,"KRN",870,0)
+870
+"BLD",8751,"KRN",8989.51,0)
+8989.51
+"BLD",8751,"KRN",8989.52,0)
+8989.52
+"BLD",8751,"KRN",8994,0)
+8994
+"BLD",8751,"KRN","B",.4,.4)
+
+"BLD",8751,"KRN","B",.401,.401)
+
+"BLD",8751,"KRN","B",.402,.402)
+
+"BLD",8751,"KRN","B",.403,.403)
+
+"BLD",8751,"KRN","B",.5,.5)
+
+"BLD",8751,"KRN","B",.84,.84)
+
+"BLD",8751,"KRN","B",3.6,3.6)
+
+"BLD",8751,"KRN","B",3.8,3.8)
+
+"BLD",8751,"KRN","B",9.2,9.2)
+
+"BLD",8751,"KRN","B",9.8,9.8)
+
+"BLD",8751,"KRN","B",19,19)
+
+"BLD",8751,"KRN","B",19.1,19.1)
+
+"BLD",8751,"KRN","B",101,101)
+
+"BLD",8751,"KRN","B",409.61,409.61)
+
+"BLD",8751,"KRN","B",771,771)
+
+"BLD",8751,"KRN","B",779.2,779.2)
+
+"BLD",8751,"KRN","B",870,870)
+
+"BLD",8751,"KRN","B",8989.51,8989.51)
+
+"BLD",8751,"KRN","B",8989.52,8989.52)
+
+"BLD",8751,"KRN","B",8994,8994)
+
+"BLD",8751,"PRE")
+
+"BLD",8751,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8751,"QUES",0)
+^9.62^^
+"BLD",8751,"REQB",0)
+^9.611^5^4
+"BLD",8751,"REQB",1,0)
+EDP*2.0*6^1
+"BLD",8751,"REQB",3,0)
+LEX*2.0*80^1
+"BLD",8751,"REQB",4,0)
+ICD*18.0*57^1
+"BLD",8751,"REQB",5,0)
+PX*1.0*199^0
+"BLD",8751,"REQB","B","EDP*2.0*6",1)
+
+"BLD",8751,"REQB","B","ICD*18.0*57",4)
+
+"BLD",8751,"REQB","B","LEX*2.0*80",3)
+
+"BLD",8751,"REQB","B","PX*1.0*199",5)
+
+"INIT")
+EDP22PST
+"MBREQ")
+0
+"PKG",650,-1)
+1^1
+"PKG",650,0)
+EMERGENCY DEPARTMENT^EDP^Emergency Department Information System
+"PKG",650,20,0)
+^9.402P^^
+"PKG",650,22,0)
+^9.49I^1^1
+"PKG",650,22,1,0)
+2.0^3111222^3111222^520736415
+"PKG",650,22,1,"PAH",1,0)
+2^3140520^520736445
+"PKG",650,22,1,"PAH",1,1,0)
+^^82^82^3140520
+"PKG",650,22,1,"PAH",1,1,1,0)
+EDIS Patch Description (EDP*2.0*2)              
+"PKG",650,22,1,"PAH",1,1,2,0)
+ 
+"PKG",650,22,1,"PAH",1,1,3,0)
+Routines
+"PKG",650,22,1,"PAH",1,1,4,0)
+--------
+"PKG",650,22,1,"PAH",1,1,5,0)
+The second line of each of these routines now looks like:
+"PKG",650,22,1,"PAH",1,1,6,0)
+;;2.0;EMERGENCY DEPARTMENT;**6,2**;Dec 3, 2012;Build 1
+"PKG",650,22,1,"PAH",1,1,7,0)
+Or
+"PKG",650,22,1,"PAH",1,1,8,0)
+The second line of each of these routines now looks like:
+"PKG",650,22,1,"PAH",1,1,9,0)
+;;2.0;EMERGENCY DEPARTMENT;**2**;Dec 3, 2012;Build 1
+"PKG",650,22,1,"PAH",1,1,10,0)
+ 
+"PKG",650,22,1,"PAH",1,1,11,0)
+EDPFAA
+"PKG",650,22,1,"PAH",1,1,12,0)
+EDPRPT1
+"PKG",650,22,1,"PAH",1,1,13,0)
+EDPRPT2
+"PKG",650,22,1,"PAH",1,1,14,0)
+EDPRPT7
+"PKG",650,22,1,"PAH",1,1,15,0)
+EDPRPT7C
+"PKG",650,22,1,"PAH",1,1,16,0)
+EDPRPT10
+"PKG",650,22,1,"PAH",1,1,17,0)
+EDPRPTBV
+"PKG",650,22,1,"PAH",1,1,18,0)
+EDPQLE
+"PKG",650,22,1,"PAH",1,1,19,0)
+EDPLPCE
+"PKG",650,22,1,"PAH",1,1,20,0)
+EDPQPCE
+"PKG",650,22,1,"PAH",1,1,21,0)
+EDPFLEX
+"PKG",650,22,1,"PAH",1,1,22,0)
+EDPLEX
+"PKG",650,22,1,"PAH",1,1,23,0)
+EDPX
+"PKG",650,22,1,"PAH",1,1,24,0)
+EDPLOG
+"PKG",650,22,1,"PAH",1,1,25,0)
+EDPCONV
+"PKG",650,22,1,"PAH",1,1,26,0)
+ 
+"PKG",650,22,1,"PAH",1,1,27,0)
+Pre/Post Installation Overview
+"PKG",650,22,1,"PAH",1,1,28,0)
+------------------------------
+"PKG",650,22,1,"PAH",1,1,29,0)
+LEX*2.0*80 must be installed prior to this patch
+"PKG",650,22,1,"PAH",1,1,30,0)
+ICD*18.0*57 must be installed prior to this patch
+"PKG",650,22,1,"PAH",1,1,31,0)
+EDP*2.0*6 must be installed prior to this patch
+"PKG",650,22,1,"PAH",1,1,32,0)
+PX*1.0*199 must be installed with this patch (prior to or after). 
+"PKG",650,22,1,"PAH",1,1,33,0)
+ 
+"PKG",650,22,1,"PAH",1,1,34,0)
+Installation Instructions
+"PKG",650,22,1,"PAH",1,1,35,0)
+-------------------------
+"PKG",650,22,1,"PAH",1,1,36,0)
+This patch may be installed with users on the system, although it is 
+"PKG",650,22,1,"PAH",1,1,37,0)
+recommended that it be installed during non-peak hours to minimize
+"PKG",650,22,1,"PAH",1,1,38,0)
+potential disruption to users.  This patch should take less than 5 
+"PKG",650,22,1,"PAH",1,1,39,0)
+minutes to install.
+"PKG",650,22,1,"PAH",1,1,40,0)
+ 
+"PKG",650,22,1,"PAH",1,1,41,0)
+ 
+"PKG",650,22,1,"PAH",1,1,42,0)
+Pre-Installation Instructions
+"PKG",650,22,1,"PAH",1,1,43,0)
+-----------------------------
+"PKG",650,22,1,"PAH",1,1,44,0)
+1.  Choose the PackMan message containing this patch.
+"PKG",650,22,1,"PAH",1,1,45,0)
+ 
+"PKG",650,22,1,"PAH",1,1,46,0)
+2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+"PKG",650,22,1,"PAH",1,1,47,0)
+ 
+"PKG",650,22,1,"PAH",1,1,48,0)
+3.  From the Kernel Installation and Distribution System Menu, select
+"PKG",650,22,1,"PAH",1,1,49,0)
+    the Installation Menu.  From this menu, you may elect to use the
+"PKG",650,22,1,"PAH",1,1,50,0)
+    following option. When prompted for the INSTALL, enter the patch #
+"PKG",650,22,1,"PAH",1,1,51,0)
+    (EDP*2.0*2):
+"PKG",650,22,1,"PAH",1,1,52,0)
+ 
+"PKG",650,22,1,"PAH",1,1,53,0)
+    a. Backup a Transport Global - This option will create a backup
+"PKG",650,22,1,"PAH",1,1,54,0)
+       message of any routines exported with this patch. It will not
+"PKG",650,22,1,"PAH",1,1,55,0)
+       back up any other changes such as DDs or templates.
+"PKG",650,22,1,"PAH",1,1,56,0)
+ 
+"PKG",650,22,1,"PAH",1,1,57,0)
+    b. Compare Transport Global to Current System - This option will
+"PKG",650,22,1,"PAH",1,1,58,0)
+       allow you to view all changes that will be made when this patch
+"PKG",650,22,1,"PAH",1,1,59,0)
+       is installed.  It compares all components of this patch
+"PKG",650,22,1,"PAH",1,1,60,0)
+       (routines, DDs, templates, etc.).
+"PKG",650,22,1,"PAH",1,1,61,0)
+ 
+"PKG",650,22,1,"PAH",1,1,62,0)
+    c. Verify Checksums in Transport Global - This option will allow
+"PKG",650,22,1,"PAH",1,1,63,0)
+       you to ensure the integrity of the routines that are in the
+"PKG",650,22,1,"PAH",1,1,64,0)
+       transport global.
+"PKG",650,22,1,"PAH",1,1,65,0)
+ 
+"PKG",650,22,1,"PAH",1,1,66,0)
+4.  From the Installation Menu, select the Install Package(s) option and
+"PKG",650,22,1,"PAH",1,1,67,0)
+    choose the patch to install. Enter EDP*2.0*2.
+"PKG",650,22,1,"PAH",1,1,68,0)
+ 
+"PKG",650,22,1,"PAH",1,1,69,0)
+5.  When prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+"PKG",650,22,1,"PAH",1,1,70,0)
+    Install? NO//, respond NO.
+"PKG",650,22,1,"PAH",1,1,71,0)
+ 
+"PKG",650,22,1,"PAH",1,1,72,0)
+6.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+"PKG",650,22,1,"PAH",1,1,73,0)
+    respond NO.
+"PKG",650,22,1,"PAH",1,1,74,0)
+ 
+"PKG",650,22,1,"PAH",1,1,75,0)
+7.  When prompted Want to DISABLE Scheduled Options, Menu Options, and
+"PKG",650,22,1,"PAH",1,1,76,0)
+    Protocols? NO//, respond NO.
+"PKG",650,22,1,"PAH",1,1,77,0)
+ 
+"PKG",650,22,1,"PAH",1,1,78,0)
+8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+"PKG",650,22,1,"PAH",1,1,79,0)
+ 
+"PKG",650,22,1,"PAH",1,1,80,0)
+Post-Installation Instructions
+"PKG",650,22,1,"PAH",1,1,81,0)
+------------------------------
+"PKG",650,22,1,"PAH",1,1,82,0)
+EDPCONV may need to be run if this is an upgrade from prior to EDIS 1.0.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+16
+"RTN","EDP22PST")
+0^^B737172^n/a
+"RTN","EDP22PST",1,0)
+EDP22PST ;SLC/BWF - Post-init for facility install ;9/3/13 11:08am
+"RTN","EDP22PST",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDP22PST",3,0)
+ ;
+"RTN","EDP22PST",4,0)
+ D ROLES
+"RTN","EDP22PST",5,0)
+ Q
+"RTN","EDP22PST",6,0)
+ ;
+"RTN","EDP22PST",7,0)
+ROLES ; add Resident and Nurse roles to 'Edit Closed' worksheet
+"RTN","EDP22PST",8,0)
+ N WSIEN,NURIEN,RESIEN
+"RTN","EDP22PST",9,0)
+ S WSIEN=$O(^EDPB(232.6,"B","Edit Closed",0)) Q:'WSIEN
+"RTN","EDP22PST",10,0)
+ S NURIEN=$O(^EDPB(232.5,"C","N",0)) I NURIEN D ADD(WSIEN,NURIEN)
+"RTN","EDP22PST",11,0)
+ S RESIEN=$O(^EDPB(232.5,"C","R",0)) I RESIEN D ADD(WSIEN,RESIEN)
+"RTN","EDP22PST",12,0)
+ Q
+"RTN","EDP22PST",13,0)
+ADD(WSIEN,IEN) ;
+"RTN","EDP22PST",14,0)
+ ; do not add this role if it is already here
+"RTN","EDP22PST",15,0)
+ Q:$D(^EDPB(232.6,WSIEN,3,"B",IEN))
+"RTN","EDP22PST",16,0)
+ S FDA(232.63,"+1,"_WSIEN_",",.01)=IEN
+"RTN","EDP22PST",17,0)
+ D UPDATE^DIE(,"FDA") K FDA
+"RTN","EDP22PST",18,0)
+ Q
+"RTN","EDPCONV")
+0^15^B70928886^B69787121
+"RTN","EDPCONV",1,0)
+EDPCONV ;SLC/MKB - Process incoming mail to convert local ED Visits ;2/28/12 08:33am
+"RTN","EDPCONV",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDPCONV",3,0)
+ ;
+"RTN","EDPCONV",4,0)
+AREA(DIV) ; -- Return #231.9 ien for DIVision (#4 ien)
+"RTN","EDPCONV",5,0)
+ Q +$O(^EDPB(231.9,"C",DIV,0))
+"RTN","EDPCONV",6,0)
+ ;
+"RTN","EDPCONV",7,0)
+VST(OLD) ; -- Copy OLD(node) ER visit entry into ^EDP(230)
+"RTN","EDPCONV",8,0)
+ N X,I,EDPY,EDPSITE,EDPDIFF,EDPAREA,EDPSTA,EDPLOG,EDPI,PNM,SSN
+"RTN","EDPCONV",9,0)
+ S EDPSITE=$G(OLD("SITE")),X=$G(OLD("TZ")),EDPDIFF=0 ;$$TZONE(X)
+"RTN","EDPCONV",10,0)
+ S EDPAREA=$$AREA(EDPSITE) Q:EDPAREA<1
+"RTN","EDPCONV",11,0)
+ S EDPSTA=$$STA^XUAF4(EDPSITE)            ;station number
+"RTN","EDPCONV",12,0)
+ F I=0,1,2,3,4,6,9 S OLD(I)=$G(OLD(I))    ;defined
+"RTN","EDPCONV",13,0)
+ S X=$P(OLD(0),U,5),EDPY=$$NEW(230,X) Q:EDPY<1
+"RTN","EDPCONV",14,0)
+ S PNM=$P(OLD(0),U),SSN=$P(OLD(0),U,3)    ;patient name, ssn
+"RTN","EDPCONV",15,0)
+ S EDPLOG(0)=X_U_EDPSITE_U_EDPAREA_U_PNM_U_SSN_U_$P(OLD(6),U,2)_U_$G(OLD("CLOSED"))_U_$P(OLD(4),U,4,5)_U_$$ARR($P(OLD(0),U,6))_U_$$PID(PNM,SSN) ;_U_EDPDIFF
+"RTN","EDPCONV",16,0)
+ S X=$P(OLD(9),U,3) S:'X X=$P(OLD(6),U,3) ;disposition
+"RTN","EDPCONV",17,0)
+ S EDPLOG(1)=$P(OLD(1),U)_U_$$DISP(X)_U_$P(OLD(9),U,2)_U_$P(OLD(9),U)_U_$$DEL($P(OLD(4),U,7))
+"RTN","EDPCONV",18,0)
+ S X=$P(OLD(2),U) S:$L(X) EDPLOG(2)=X
+"RTN","EDPCONV",19,0)
+ S EDPLOG(3)=U_$$STS($P(OLD(0),U,4))_U_$$ACU($P(OLD(4),U,3))_U_$$LOC($P(OLD(3),U,2))_U_$P(OLD(4),U)_U_$P(OLD(4),U,2)_U_$P(OLD(4),U,6)_U_$P(OLD(6),U)
+"RTN","EDPCONV",20,0)
+ I $D(OLD(8)) M EDPLOG(4)=OLD(8) S $P(EDPLOG(4,0),U,2)="230.04A" D
+"RTN","EDPCONV",21,0)
+ . S EDPI=0 F  S EDPI=$O(EDPLOG(4,EDPI)) Q:EDPI<1  D
+"RTN","EDPCONV",22,0)
+ .. S X=$P($G(EDPLOG(4,EDPI,0)),U,2) Q:'$L(X)  ;code -> ien
+"RTN","EDPCONV",23,0)
+ .. I X?1"ICD-9-CODE-".E S X=$P(X,"-",4)
+"RTN","EDPCONV",24,0)
+ .. I X["/" S X=$P(X,"/")
+"RTN","EDPCONV",25,0)
+ .. ;Begin EDP*2.0*2 CHANGES.
+"RTN","EDPCONV",26,0)
+ .. S X=$$ICDDX^EDPLEX(X,$P($G(^EDP(230,EDPY,0),2781001),U,8)),$P(EDPLOG(4,EDPI,0),U,2)=$S(X>0:+X,1:"")
+"RTN","EDPCONV",27,0)
+ .. ;End EDP*2.0*2 CHANGES.
+"RTN","EDPCONV",28,0)
+ ; Save/Xref log entry
+"RTN","EDPCONV",29,0)
+ M ^EDP(230,EDPY)=EDPLOG
+"RTN","EDPCONV",30,0)
+ D XREF(230,EDPY)
+"RTN","EDPCONV",31,0)
+ ;
+"RTN","EDPCONV",32,0)
+ ; Set History from Movement nodes
+"RTN","EDPCONV",33,0)
+ S EDPI="MVT" F  S EDPI=$O(OLD(EDPI)) Q:EDPI'?1"MVT"1.N  D HIST(EDPI,EDPY)
+"RTN","EDPCONV",34,0)
+ ;
+"RTN","EDPCONV",35,0)
+ ; Create Orders list for active visits
+"RTN","EDPCONV",36,0)
+ I '$G(OLD("CLOSED")) S X=EDPLOG(0) D ORDERS(EDPY,X)
+"RTN","EDPCONV",37,0)
+ ;
+"RTN","EDPCONV",38,0)
+ S OLD(230)=EDPY ;return new ien
+"RTN","EDPCONV",39,0)
+ Q
+"RTN","EDPCONV",40,0)
+ ;
+"RTN","EDPCONV",41,0)
+HIST(MVTI,LOG) ; -- Copy OLD(MVTI) into ^EDP(230.1)
+"RTN","EDPCONV",42,0)
+ N EDPY,MVT,ACT
+"RTN","EDPCONV",43,0)
+ S EDPY=$$NEW(230.1,LOG) Q:EDPY<1
+"RTN","EDPCONV",44,0)
+ S MVT=OLD(MVTI)
+"RTN","EDPCONV",45,0)
+ S ACT(0)=LOG_U_$P(MVT,U,2)_U_U_$P($G(^EDP(230,LOG,0)),U,4,6)
+"RTN","EDPCONV",46,0)
+ S ACT(3)=U_$$STS($P(MVT,U,3))_U_$$ACU($P(MVT,U,4))_U_$$LOC($P(MVT,U,5))_U_$P(MVT,U,6,8)
+"RTN","EDPCONV",47,0)
+ ; Save/Xref history
+"RTN","EDPCONV",48,0)
+ M ^EDP(230.1,EDPY)=ACT
+"RTN","EDPCONV",49,0)
+ D XREF(230.1,EDPY)
+"RTN","EDPCONV",50,0)
+ Q
+"RTN","EDPCONV",51,0)
+ ;
+"RTN","EDPCONV",52,0)
+NEW(FILE,X) ; -- Return ien of new entry in FILE
+"RTN","EDPCONV",53,0)
+ N DO,DIC,DA,Y
+"RTN","EDPCONV",54,0)
+ S DIC="^EDP("_FILE_",",DIC(0)="LF" D FILE^DICN
+"RTN","EDPCONV",55,0)
+ Q +Y
+"RTN","EDPCONV",56,0)
+ ;
+"RTN","EDPCONV",57,0)
+XREF(FILE,DA) ; -- Set all xrefs for DA in FILE
+"RTN","EDPCONV",58,0)
+ N DIK
+"RTN","EDPCONV",59,0)
+ S DIK="^EDP("_FILE_"," D IX1^DIK
+"RTN","EDPCONV",60,0)
+ Q
+"RTN","EDPCONV",61,0)
+ ;
+"RTN","EDPCONV",62,0)
+PID(NM,ID) ; -- Return brief id (L0000) for patient
+"RTN","EDPCONV",63,0)
+ N Y S Y=$E(NM)_$E(ID,6,9)
+"RTN","EDPCONV",64,0)
+ Q Y
+"RTN","EDPCONV",65,0)
+ ;
+"RTN","EDPCONV",66,0)
+TZONE(X) ; -- Return #minutes local offset for time zone
+"RTN","EDPCONV",67,0)
+ N Y S Y=$E(X)_(60*$E(X,2,3)+$E(X,4,5))
+"RTN","EDPCONV",68,0)
+ Q Y
+"RTN","EDPCONV",69,0)
+ ;
+"RTN","EDPCONV",70,0)
+ACU(X) ; -- Return[/add] #233.1 ien for Acuity X
+"RTN","EDPCONV",71,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",72,0)
+ N Y,NODE S NODE=$G(OLD("ACU"_+X)) Q:NODE="" $$NOVALUE
+"RTN","EDPCONV",73,0)
+ S X=$P(NODE,U,2),Y=""
+"RTN","EDPCONV",74,0)
+ S:$L(X) Y=+$O(^EDPB(233.1,"AB","acuity",X,0)) Q:Y Y
+"RTN","EDPCONV",75,0)
+ ; add local item
+"RTN","EDPCONV",76,0)
+ N FDA,FDAIEN,DIERR,ERR,NM
+"RTN","EDPCONV",77,0)
+ S NM=$P(NODE,U),NM=$S(NM["-":$P(NM,"-",2),1:NM)
+"RTN","EDPCONV",78,0)
+ S FDA(233.1,"+1,",.01)=EDPSTA_".acuity."_$$LOW^XLFSTR(NM)
+"RTN","EDPCONV",79,0)
+ S FDA(233.1,"+1,",.02)=X
+"RTN","EDPCONV",80,0)
+ S FDA(233.1,"+1,",.03)=X
+"RTN","EDPCONV",81,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",82,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",83,0)
+ Q Y
+"RTN","EDPCONV",84,0)
+ ;
+"RTN","EDPCONV",85,0)
+STS(X) ; -- Return[/add] #233.1 ien for Status X
+"RTN","EDPCONV",86,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",87,0)
+ N Y,NODE
+"RTN","EDPCONV",88,0)
+ S NODE=$G(OLD("STS"_+X)),Y="" Q:NODE="" $$NOVALUE
+"RTN","EDPCONV",89,0)
+ S X=$P(NODE,U,1) S:$L(X) Y=+$O(^EDPB(233.1,"AC","status",X,0)) Q:Y Y
+"RTN","EDPCONV",90,0)
+ S X=$P(NODE,U,4) S:$L(X) Y=+$O(^EDPB(233.1,"AB","status",X,0)) Q:Y Y
+"RTN","EDPCONV",91,0)
+ ; add local item
+"RTN","EDPCONV",92,0)
+ N FDA,FDAIEN,DIERR,ERR
+"RTN","EDPCONV",93,0)
+ S FDA(233.1,"+1,",.01)=EDPSTA_".status."_$$LOW^XLFSTR(X)
+"RTN","EDPCONV",94,0)
+ S FDA(233.1,"+1,",.02)=$P(NODE,U)           ;text
+"RTN","EDPCONV",95,0)
+ S FDA(233.1,"+1,",.03)=X                    ;display/abbreviation
+"RTN","EDPCONV",96,0)
+ S:$P(NODE,U,6)="Y" FDA(233.1,"+1,",.05)="A" ;admission flag
+"RTN","EDPCONV",97,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",98,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",99,0)
+ Q Y
+"RTN","EDPCONV",100,0)
+ ;
+"RTN","EDPCONV",101,0)
+DEL(X) ; -- Return[/add] #233.1 ien for Delay Reason X
+"RTN","EDPCONV",102,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",103,0)
+ N Y,NODE
+"RTN","EDPCONV",104,0)
+ S NODE=$G(OLD("DEL"_+X)),Y="" Q:NODE="" $$NOVALUE
+"RTN","EDPCONV",105,0)
+ S X=$P(NODE,U,1) S:$L(X) Y=+$O(^EDPB(233.1,"AC","delay",X,0)) Q:Y Y
+"RTN","EDPCONV",106,0)
+ S X=$P(NODE,U,3) S:$L(X) Y=+$O(^EDPB(233.1,"AB","delay",X,0)) Q:Y Y
+"RTN","EDPCONV",107,0)
+ ; add local item
+"RTN","EDPCONV",108,0)
+ N FDA,FDAIEN,DIERR,ERR
+"RTN","EDPCONV",109,0)
+ S FDA(233.1,"+1,",.01)=EDPSTA_".delay."_$$LOW^XLFSTR(X)
+"RTN","EDPCONV",110,0)
+ S FDA(233.1,"+1,",.02)=$P(NODE,U)     ;name
+"RTN","EDPCONV",111,0)
+ S FDA(233.1,"+1,",.03)=$P(NODE,U,3)   ;abbreviation
+"RTN","EDPCONV",112,0)
+ S FDA(233.1,"+1,",.05)=$P(NODE,U,5)   ;report flag
+"RTN","EDPCONV",113,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",114,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",115,0)
+ Q Y
+"RTN","EDPCONV",116,0)
+ ;
+"RTN","EDPCONV",117,0)
+ARR(X) ; -- Return[/add] #233.1 ien for Arrival Mode X
+"RTN","EDPCONV",118,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",119,0)
+ N Y,NODE
+"RTN","EDPCONV",120,0)
+ S NODE=$G(OLD("ARR"_+X)),Y="" Q:NODE="" $$NOVALUE
+"RTN","EDPCONV",121,0)
+ S X=$P($P(NODE,U)," ") S:$L(X) Y=+$O(^EDPB(233.1,"AC","source",X,0)) Q:Y Y
+"RTN","EDPCONV",122,0)
+ ; add local item
+"RTN","EDPCONV",123,0)
+ N FDA,FDAIEN,DIERR,ERR
+"RTN","EDPCONV",124,0)
+ S FDA(233.1,"+1,",.01)=EDPSTA_".source."_$$LOW^XLFSTR(X)
+"RTN","EDPCONV",125,0)
+ S FDA(233.1,"+1,",.02)=X
+"RTN","EDPCONV",126,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",127,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",128,0)
+ Q Y
+"RTN","EDPCONV",129,0)
+ ;
+"RTN","EDPCONV",130,0)
+DISP(X) ; -- Return[/add] #233.1 ien for Disposition code X
+"RTN","EDPCONV",131,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",132,0)
+ N Y,NODE
+"RTN","EDPCONV",133,0)
+ S NODE=$G(OLD("DIS"_X)),Y="" Q:NODE="" $$NOVALUE
+"RTN","EDPCONV",134,0)
+ S:X X=$P(NODE,U,5) ;ien -> abbreviation
+"RTN","EDPCONV",135,0)
+ I $L(X) S Y=+$O(^EDPB(233.1,"AB","disposition",X,0)) Q:Y Y
+"RTN","EDPCONV",136,0)
+ E  S X=$P(NODE,U) S:$L(X) Y=+$O(^EDPB(233.1,"AC","disposition",X,0)) Q:Y Y
+"RTN","EDPCONV",137,0)
+ ; add local item
+"RTN","EDPCONV",138,0)
+ N FDA,FDAIEN,DIERR,ERR
+"RTN","EDPCONV",139,0)
+ S X=$P($P(NODE,U)," ") ;1st word, for name
+"RTN","EDPCONV",140,0)
+ S FDA(233.1,"+1,",.01)=EDPSTA_".disposition."_$$LOW^XLFSTR(X)
+"RTN","EDPCONV",141,0)
+ S FDA(233.1,"+1,",.02)=$P(NODE,U)        ;Display Name
+"RTN","EDPCONV",142,0)
+ S FDA(233.1,"+1,",.03)=$P(NODE,U,5)      ;Abbreviation
+"RTN","EDPCONV",143,0)
+ S:$P(NODE,U,7) FDA(233.1,"+1,",.05)="M"  ;Missed Opportunity
+"RTN","EDPCONV",144,0)
+ S:$P(NODE,U,6) FDA(233.1,"+1,",.05)="A"  ;Admission
+"RTN","EDPCONV",145,0)
+ S:$P(NODE,U,8) FDA(233.1,"+1,",.05)="VA" ;VA Admission
+"RTN","EDPCONV",146,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",147,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",148,0)
+ Q Y
+"RTN","EDPCONV",149,0)
+ ;
+"RTN","EDPCONV",150,0)
+LOC(X) ; -- Return[/add] #231.8 ien for Location X
+"RTN","EDPCONV",151,0)
+ I $G(X)="" Q ""
+"RTN","EDPCONV",152,0)
+ N Y,NODE
+"RTN","EDPCONV",153,0)
+ S NODE=$G(OLD("LOC"_+X)) S:NODE="" NODE="UNKNOWN^UNK^^0^^^0"
+"RTN","EDPCONV",154,0)
+ S X=$P(NODE,U,2),Y=""
+"RTN","EDPCONV",155,0)
+ S:$L(X) Y=+$O(^EDPB(231.8,"AC",EDPSITE,EDPAREA,X,0)) Q:Y Y
+"RTN","EDPCONV",156,0)
+ ; add local item
+"RTN","EDPCONV",157,0)
+ N FDA,FDAIEN,DIERR,ERR,X
+"RTN","EDPCONV",158,0)
+ S FDA(231.8,"+1,",.01)=$TR($P(NODE,U),"-") ;Name
+"RTN","EDPCONV",159,0)
+ S FDA(231.8,"+1,",.02)=EDPSITE             ;Institution ien
+"RTN","EDPCONV",160,0)
+ S FDA(231.8,"+1,",.03)=EDPAREA             ;Area ien
+"RTN","EDPCONV",161,0)
+ S FDA(231.8,"+1,",.04)='$P(NODE,U,4)       ;Inactive
+"RTN","EDPCONV",162,0)
+ S FDA(231.8,"+1,",.05)=$P(NODE,U,6)        ;Sequence
+"RTN","EDPCONV",163,0)
+ S FDA(231.8,"+1,",.06)=$P(NODE,U,2)        ;Display Name
+"RTN","EDPCONV",164,0)
+ S X=$P(NODE,U,7),X=$S(X=2:0,X=0:2,1:1)
+"RTN","EDPCONV",165,0)
+ S FDA(231.8,"+1,",.07)=X                   ;Display When
+"RTN","EDPCONV",166,0)
+ S FDA(231.8,"+1,",.08)=$$STS($P(NODE,U,8)) ;Default Status ien
+"RTN","EDPCONV",167,0)
+ S FDA(231.8,"+1,",.1)=$P(NODE,U,9)         ;Shared Name [Room]
+"RTN","EDPCONV",168,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPCONV",169,0)
+ S Y=$S('$D(DIERR):+$G(FDAIEN(1)),1:"")
+"RTN","EDPCONV",170,0)
+LCQ ;exit
+"RTN","EDPCONV",171,0)
+ Q Y
+"RTN","EDPCONV",172,0)
+ ;
+"RTN","EDPCONV",173,0)
+NOVALUE() Q $O(^EDPB(233.1,"B","edp.reserved.novalue",0))
+"RTN","EDPCONV",174,0)
+ ;
+"RTN","EDPCONV",175,0)
+ORDERS(LOG,NODE) ; -- build Orders multiple
+"RTN","EDPCONV",176,0)
+ N ORLIST,DFN,IN,OUT,ORI,ORIFN,STS,REL,PKG,X,Y,DIC,DA
+"RTN","EDPCONV",177,0)
+ S DFN=+$P(NODE,U,6) Q:DFN<1
+"RTN","EDPCONV",178,0)
+ S IN=$P(NODE,U,8) Q:IN<1  Q:IN<$$FMADD^XLFDT(DT,-1)  ;old
+"RTN","EDPCONV",179,0)
+ S OUT=$P(NODE,U,9) S:OUT<1 OUT=$$NOW^XLFDT
+"RTN","EDPCONV",180,0)
+ K ^TMP("ORR",$J) D EN^ORQ1(DFN_";DPT(",,1,,IN,OUT) S ORI=0
+"RTN","EDPCONV",181,0)
+ F  S ORI=$O(^TMP("ORR",$J,ORLIST,ORI)) Q:ORI<1  S ORIFN=+$G(^(ORI)) D
+"RTN","EDPCONV",182,0)
+ . Q:$O(^EDP(230,LOG,8,"B",ORIFN,0))
+"RTN","EDPCONV",183,0)
+ . S X=$$GET1^DIQ(100,ORIFN_",",5,"I") Q:(X=10)!(X=11)  ;unreleased
+"RTN","EDPCONV",184,0)
+ . S STS=$S("^1^2^7^12^13^14^"[(U_X_U):"C","^3^6^9^15^"[(U_X_U):"A",1:"N")
+"RTN","EDPCONV",185,0)
+ . S REL=$$GET1^DIQ(100.008,"1,"_ORIFN_",",16,"I")
+"RTN","EDPCONV",186,0)
+ . S X=$$GET1^DIQ(100,ORIFN_",","12:1")
+"RTN","EDPCONV",187,0)
+ . S PKG=$S($E(X,1,2)="LR":"L",$E(X,1,2)="PS":"M",$E(X,1,2)="RA":"R",X="GMRC":"C",1:"A")
+"RTN","EDPCONV",188,0)
+ . ; add to subfile
+"RTN","EDPCONV",189,0)
+ . K X,Y,DIC,DA
+"RTN","EDPCONV",190,0)
+ . S DIC="^EDP(230,"_LOG_",8,",DIC(0)="LZ",DA(1)=LOG,X=+ORIFN
+"RTN","EDPCONV",191,0)
+ . S DIC("DR")=".02///"_PKG_";.03///"_STS_";.05///"_REL
+"RTN","EDPCONV",192,0)
+ . ;S:$$VAL("stat") DIC("DR")=DIC("DR")_";.04///1"
+"RTN","EDPCONV",193,0)
+ . D FILE^DICN
+"RTN","EDPCONV",194,0)
+ K ^TMP("ORR",$J,ORLIST)
+"RTN","EDPCONV",195,0)
+ Q
+"RTN","EDPCONV",196,0)
+ ;
+"RTN","EDPCONV",197,0)
+ ; ------- fix ICD9 Code field -------
+"RTN","EDPCONV",198,0)
+ ;
+"RTN","EDPCONV",199,0)
+ICD ; -- convert ICD codes to #80 iens
+"RTN","EDPCONV",200,0)
+ N EDP1,EDP2,X0,X,Y
+"RTN","EDPCONV",201,0)
+ S EDP1=0 F  S EDP1=$O(^EDP(230,EDP1)) Q:EDP1<1  I $D(^(EDP1,4)) D
+"RTN","EDPCONV",202,0)
+ . S EDP2=0 F  S EDP2=$O(^EDP(230,EDP1,4,EDP2)) Q:EDP2<1  S X0=$G(^(EDP2,0)) D
+"RTN","EDPCONV",203,0)
+ .. S X=$P(X0,U,2) Q:'$L(X)
+"RTN","EDPCONV",204,0)
+ .. I X?1"ICD-9-CODE-".E S X=$P(X,"-",4)
+"RTN","EDPCONV",205,0)
+ .. I X["/" S X=$P(X,"/")
+"RTN","EDPCONV",206,0)
+ .. S Y=$$ICDDX^ICDCODE(X)
+"RTN","EDPCONV",207,0)
+ .. I Y>0 S $P(^EDP(230,EDP1,4,EDP2,0),U,2)=+Y
+"RTN","EDPCONV",208,0)
+ Q
+"RTN","EDPCONV",209,0)
+ ;
+"RTN","EDPCONV",210,0)
+SHOWICD(BEG,END) ; -- show Dx nodes from BEG to END
+"RTN","EDPCONV",211,0)
+ N IEN,DA,X0,X
+"RTN","EDPCONV",212,0)
+ S BEG=$G(BEG,0),END=$G(END,9999999)
+"RTN","EDPCONV",213,0)
+ S IEN=BEG F  S IEN=$O(^EDP(230,IEN)) Q:(IEN<1)!(IEN>END)  I $D(^(IEN,4)) D
+"RTN","EDPCONV",214,0)
+ . S DA=0 F  S DA=$O(^EDP(230,IEN,4,DA)) Q:DA<1  S X0=$G(^(DA,0)) D
+"RTN","EDPCONV",215,0)
+ .. S X=$P(X0,U,2) Q:X=""  ;show any non-ien value
+"RTN","EDPCONV",216,0)
+ .. I $S(X<0:1,+X'=X:1,X[".":1,1:0) W !,IEN,?10,DA,?15,X0
+"RTN","EDPCONV",217,0)
+ Q
+"RTN","EDPCONV",218,0)
+ ;
+"RTN","EDPCONV",219,0)
+ ; ------ fix Tracking Room-Bed file #231.8 ------
+"RTN","EDPCONV",220,0)
+ ;
+"RTN","EDPCONV",221,0)
+MARK(STN) ; -- mark duplicate locations with correct ien,
+"RTN","EDPCONV",222,0)
+ ;             for repointing from STN to Institution ien set
+"RTN","EDPCONV",223,0)
+ N AREA,NM,IEN,LOC
+"RTN","EDPCONV",224,0)
+ S AREA=+$O(^EDPB(231.8,"AC",STN,0))
+"RTN","EDPCONV",225,0)
+ S NM="" F  S NM=$O(^EDPB(231.8,"AC",STN,AREA,NM)) Q:NM=""  D
+"RTN","EDPCONV",226,0)
+ . S LOC=+$O(^EDPB(231.8,"AC",STN,AREA,NM,0))  ;keep 1st, or
+"RTN","EDPCONV",227,0)
+ . I $G(^EDPB(231.8,LOC,"FIX")) S LOC=^("FIX") ;manually set to desired
+"RTN","EDPCONV",228,0)
+ . S IEN=LOC F  S IEN=+$O(^EDPB(231.8,"AC",STN,AREA,NM,IEN)) Q:IEN<1  S ^EDPB(231.8,IEN,"FIX")=LOC
+"RTN","EDPCONV",229,0)
+ Q
+"RTN","EDPCONV",230,0)
+ ;
+"RTN","EDPCONV",231,0)
+LOOP ; -- loop through Log,History files and repoint if FIX node exists
+"RTN","EDPCONV",232,0)
+ N FILE,IEN,LOC,FIX
+"RTN","EDPCONV",233,0)
+ F FILE=230,230.1 D
+"RTN","EDPCONV",234,0)
+ . S IEN=0 F  S IEN=$O(^EDP(FILE,IEN)) Q:IEN<1  S LOC=$P($G(^(IEN,3)),U,4) I LOC D
+"RTN","EDPCONV",235,0)
+ .. S FIX=+$G(^EDPB(231.8,LOC,"FIX"))
+"RTN","EDPCONV",236,0)
+ .. I FIX S $P(^EDP(FILE,IEN,3),U,4)=FIX
+"RTN","EDPCONV",237,0)
+ Q
+"RTN","EDPCONV",238,0)
+ ;
+"RTN","EDPCONV",239,0)
+DIK ; -- remove duplicate entries from #231.8
+"RTN","EDPCONV",240,0)
+ N IEN,DA,DIK
+"RTN","EDPCONV",241,0)
+ S IEN=0 F  S IEN=$O(^EDPB(231.8,IEN)) Q:IEN<1  I $G(^(IEN,"FIX")) D
+"RTN","EDPCONV",242,0)
+ . S DA=IEN,DIK="^EDPB(231.8," D ^DIK
+"RTN","EDPCONV",243,0)
+ Q
+"RTN","EDPFAA")
+0^1^B37763699^B36904209
+"RTN","EDPFAA",1,0)
+EDPFAA ;SLC/KCM - RPC Calls to Facility ;5/2/12 3:36pm
+"RTN","EDPFAA",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPFAA",3,0)
+ ;
+"RTN","EDPFAA",4,0)
+BOOT(APP) ; bootstrap appliction
+"RTN","EDPFAA",5,0)
+ D USER
+"RTN","EDPFAA",6,0)
+ D APP(APP)
+"RTN","EDPFAA",7,0)
+ Q
+"RTN","EDPFAA",8,0)
+USER ; set bootstrap USER node
+"RTN","EDPFAA",9,0)
+ N X,TSIEN,ROLEIEN,ROLE,ROLENM,DFLTBRD,DFLTWSHT
+"RTN","EDPFAA",10,0)
+ S X("duz")=DUZ
+"RTN","EDPFAA",11,0)
+ S X("userNm")=$P($G(^VA(200,DUZ,0)),U)
+"RTN","EDPFAA",12,0)
+ S X("timeOut")=$$GET^XPAR("USR^DIV^SYS","ORWOR TIMEOUT CHART",1,"I")
+"RTN","EDPFAA",13,0)
+ S:'X("timeOut") X("timeOut")=$$DTIME^XUP(DUZ)
+"RTN","EDPFAA",14,0)
+ S:'X("timeOut") X("timeOut")=300
+"RTN","EDPFAA",15,0)
+ S X("timeOut")=X("timeOut")*1000        ; milliseconds
+"RTN","EDPFAA",16,0)
+ S X("countDown")=$$GET^XPAR("USR^SYS^PKG","ORWOR TIMEOUT COUNTDOWN",1,"I")
+"RTN","EDPFAA",17,0)
+ S:'X("countDown") X("countDown")=10
+"RTN","EDPFAA",18,0)
+ S X("countDown")=X("countDown")*1000    ; milliseconds
+"RTN","EDPFAA",19,0)
+ S TSIEN=$O(^EDPB(231.7,"B",DUZ,""))
+"RTN","EDPFAA",20,0)
+ I TSIEN S ROLEIEN=$O(^EDPB(231.7,"AC",EDPSITE,AREA,TSIEN,""))
+"RTN","EDPFAA",21,0)
+ I $G(ROLEIEN) D
+"RTN","EDPFAA",22,0)
+ .S X("roleID")=ROLEIEN
+"RTN","EDPFAA",23,0)
+ .S ROLENM=$$GET1^DIQ(232.5,ROLEIEN,.01,"E"),X("roleName")=ROLENM
+"RTN","EDPFAA",24,0)
+ .S ROLE=$$GET1^DIQ(232.5,ROLEIEN,.02,"E"),X("roleAbbr")=ROLE
+"RTN","EDPFAA",25,0)
+ .S DFLTWSHT=$$GET1^DIQ(232.5,ROLEIEN,.04,"E"),X("defaultWorksheet")=DFLTWSHT
+"RTN","EDPFAA",26,0)
+ .S DFLTBRD=$$GET1^DIQ(232.5,ROLEIEN,.05,"I"),X("defaultBoard")=DFLTBRD
+"RTN","EDPFAA",27,0)
+ .; Gather all available worksheets for this role
+"RTN","EDPFAA",28,0)
+ .D LDWSLIST^EDPBWS(EDPSITE,AREA,ROLEIEN)
+"RTN","EDPFAA",29,0)
+ D XML^EDPX($$XMLA^EDPX("user",.X,""))
+"RTN","EDPFAA",30,0)
+ I $D(^XUSEC("XUPROGMODE",DUZ))>0 D XML^EDPX("<auth name=""debug"" />")
+"RTN","EDPFAA",31,0)
+ D XML^EDPX("</user>")
+"RTN","EDPFAA",32,0)
+ Q
+"RTN","EDPFAA",33,0)
+APP(APP) ; set bootstrap APP node
+"RTN","EDPFAA",34,0)
+ N X,AREA
+"RTN","EDPFAA",35,0)
+ S X("name")=APP
+"RTN","EDPFAA",36,0)
+ S X("site")=DUZ(2)
+"RTN","EDPFAA",37,0)
+ S X("siteNm")=$$NAME^XUAF4(X("site"))
+"RTN","EDPFAA",38,0)
+ S X("station")=$$STA^XUAF4(DUZ(2))
+"RTN","EDPFAA",39,0)
+ S X("time")=$$NOW^XLFDT
+"RTN","EDPFAA",40,0)
+ S X("version")=$$VERSRV^EDPQAR
+"RTN","EDPFAA",41,0)
+ S X("vistaSession")=$$SESSID
+"RTN","EDPFAA",42,0)
+ D XML^EDPX($$XMLA^EDPX("app",.X,""))
+"RTN","EDPFAA",43,0)
+ D AREA
+"RTN","EDPFAA",44,0)
+ I APP="cpe-ui-reports" D RPTS
+"RTN","EDPFAA",45,0)
+ I APP="cpe-ui-care" D ROLES
+"RTN","EDPFAA",46,0)
+ D XML^EDPX("</app>")
+"RTN","EDPFAA",47,0)
+ Q
+"RTN","EDPFAA",48,0)
+AREA ; set default area node
+"RTN","EDPFAA",49,0)
+ N X
+"RTN","EDPFAA",50,0)
+ S X("area")=$$DFLTAREA^EDPQAR(""),AREA=X("area")
+"RTN","EDPFAA",51,0)
+ I X("area") S X("areaNm")=$P(^EDPB(231.9,X("area"),0),U)
+"RTN","EDPFAA",52,0)
+ D XML^EDPX($$XMLA^EDPX("defaultArea",.X))
+"RTN","EDPFAA",53,0)
+ Q
+"RTN","EDPFAA",54,0)
+RPTS ; set auth nodes for reports
+"RTN","EDPFAA",55,0)
+ I $D(^XUSEC("EDPR EXPORT",DUZ))>0 D XML^EDPX("<auth name=""rptExport"" />")
+"RTN","EDPFAA",56,0)
+ I $D(^XUSEC("EDPR PROVIDER",DUZ))>0 D XML^EDPX("<auth name=""rptProvider"" />")
+"RTN","EDPFAA",57,0)
+ I $D(^XUSEC("EDPR XREF",DUZ))>0 D XML^EDPX("<auth name=""rptXRef"" />")
+"RTN","EDPFAA",58,0)
+ I $D(^XUSEC("EDPR ADHOC",DUZ))>0 D XML^EDPX("<auth name=""rptAdhoc"" />")
+"RTN","EDPFAA",59,0)
+ Q
+"RTN","EDPFAA",60,0)
+ROLES ; set up roles
+"RTN","EDPFAA",61,0)
+ N ROLE S ROLE=0         ; TEMPORARY!!
+"RTN","EDPFAA",62,0)
+ I DUZ=20011 S ROLE=573
+"RTN","EDPFAA",63,0)
+ I DUZ=20014 S ROLE=272
+"RTN","EDPFAA",64,0)
+ I DUZ=20013 S ROLE=426
+"RTN","EDPFAA",65,0)
+ I DUZ=20028 S ROLE=623
+"RTN","EDPFAA",66,0)
+ I 'ROLE S ROLE=459
+"RTN","EDPFAA",67,0)
+ S X("id")=ROLE
+"RTN","EDPFAA",68,0)
+ S X("displayName")=$$CLNAME^USRLM(ROLE)
+"RTN","EDPFAA",69,0)
+ D XML^EDPX($$XMLA^EDPX("role",.X))
+"RTN","EDPFAA",70,0)
+ S IEN=$O(^EDPB(232.5,"C",EDPSITE,AREA,ROLE,0)) Q:'IEN
+"RTN","EDPFAA",71,0)
+ S BRD=$P(^EDPB(232.5,IEN,0),U,5)
+"RTN","EDPFAA",72,0)
+ D XML^EDPX("<board defaultName='"_BRD_"' />")
+"RTN","EDPFAA",73,0)
+ Q
+"RTN","EDPFAA",74,0)
+ ; TODO: provide a mechanism to rebuild role list if AREA changes
+"RTN","EDPFAA",75,0)
+ N X,ROLE,IEN,BRD,DONE,ERR
+"RTN","EDPFAA",76,0)
+ S ROLE=0,DONE=0
+"RTN","EDPFAA",77,0)
+ F  S ROLE=$O(^EDPB(232.5,"C",EDPSITE,AREA,ROLE)) Q:'ROLE  D  Q:DONE
+"RTN","EDPFAA",78,0)
+ . Q:'$$ISA^USRLM(DUZ,ROLE,.ERR,DT)
+"RTN","EDPFAA",79,0)
+ . S DONE=1
+"RTN","EDPFAA",80,0)
+ . S X("id")=ROLE
+"RTN","EDPFAA",81,0)
+ . S X("displayName")=$$CLNAME^USRLM(ROLE)
+"RTN","EDPFAA",82,0)
+ . D XML^EDPX($$XMLA^EDPX("role",.X))
+"RTN","EDPFAA",83,0)
+ . S IEN=$O(^EDPB(232.5,"C",EDPSITE,AREA,ROLE,0)) Q:'IEN
+"RTN","EDPFAA",84,0)
+ . S BRD=$P(^EDPB(232.5,IEN,0),U,5)
+"RTN","EDPFAA",85,0)
+ . D XML^EDPX("<board defaultName='"_BRD_"' />")
+"RTN","EDPFAA",86,0)
+ Q
+"RTN","EDPFAA",87,0)
+SESS ; set up session -- (OLD from version 1?)
+"RTN","EDPFAA",88,0)
+ N X,TSIEN,ROLEIEN,ROLENM,ROLE,DFLTWSHT,DFLTBRD,DFLTROOM
+"RTN","EDPFAA",89,0)
+ S X("duz")=DUZ
+"RTN","EDPFAA",90,0)
+ S X("userNm")=$P($G(^VA(200,DUZ,0)),U)
+"RTN","EDPFAA",91,0)
+ S X("site")=DUZ(2)
+"RTN","EDPFAA",92,0)
+ S X("siteNm")=$$NAME^XUAF4(X("site"))
+"RTN","EDPFAA",93,0)
+ S X("station")=$$STA^XUAF4(DUZ(2))
+"RTN","EDPFAA",94,0)
+ S X("time")=$$NOW^XLFDT
+"RTN","EDPFAA",95,0)
+ S X("worksheets")=($D(^XUSEC("EDPF WORKSHEETS",DUZ))>0)
+"RTN","EDPFAA",96,0)
+ S X("rptExport")=($D(^XUSEC("EDPR EXPORT",DUZ))>0)
+"RTN","EDPFAA",97,0)
+ S X("rptProvider")=($D(^XUSEC("EDPR PROVIDER",DUZ))>0)
+"RTN","EDPFAA",98,0)
+ S X("rptXRef")=($D(^XUSEC("EDPR XREF",DUZ))>0)
+"RTN","EDPFAA",99,0)
+ S X("rptAdhoc")=($D(^XUSEC("EDPR ADHOC",DUZ))>0)
+"RTN","EDPFAA",100,0)
+ S X("progMode")=($D(^XUSEC("XUPROGMODE",DUZ))>0)
+"RTN","EDPFAA",101,0)
+ S X("version")=$$VERSRV^EDPQAR
+"RTN","EDPFAA",102,0)
+ ;
+"RTN","EDPFAA",103,0)
+ ;DRP Begin EDP*2.0*2 changes
+"RTN","EDPFAA",104,0)
+ ; added line below
+"RTN","EDPFAA",105,0)
+ S X("icd10ActDate")=$$IMPDATE^EDPLEX("10D")
+"RTN","EDPFAA",106,0)
+ ;End EDP*2.0*2 changes
+"RTN","EDPFAA",107,0)
+ ;
+"RTN","EDPFAA",108,0)
+ ; PATCH 6 - BWF - Adding 'defaultRoom' = true/false to identify wheteher or not a default room has been set.
+"RTN","EDPFAA",109,0)
+ S DFLTROOM=$$GET1^DIQ(231.9,AREA,1.12,"I")
+"RTN","EDPFAA",110,0)
+ S X("defaultRoom")=$S(DFLTROOM:"true",1:"false")
+"RTN","EDPFAA",111,0)
+ ;
+"RTN","EDPFAA",112,0)
+ ; This code to enable VEHU training.
+"RTN","EDPFAA",113,0)
+ ;N AREA
+"RTN","EDPFAA",114,0)
+ ;S AREA=$$GET^XPAR(DUZ_";VA(200,","EDPF USER AREA",1,"Q")
+"RTN","EDPFAA",115,0)
+ ;I AREA S X("area")=AREA,X("areaNm")=$P($G(^EDPB(231.9,AREA,0)),U)
+"RTN","EDPFAA",116,0)
+ ;
+"RTN","EDPFAA",117,0)
+ ;TDP - Patch 2 change to use new EDIS timeout parameter
+"RTN","EDPFAA",118,0)
+ ;S X("timeOut")=$$GET^XPAR("USR^DIV^SYS","ORWOR TIMEOUT CHART",1,"I")
+"RTN","EDPFAA",119,0)
+ S X("timeOut")=$$GET^XPAR("USR^DIV^SYS","EDP APP TIMEOUT",1,"I")
+"RTN","EDPFAA",120,0)
+ S:'X("timeOut") X("timeOut")=$$DTIME^XUP(DUZ)
+"RTN","EDPFAA",121,0)
+ S:'X("timeOut") X("timeOut")=300
+"RTN","EDPFAA",122,0)
+ S X("timeOut")=X("timeOut")*1000        ; milliseconds
+"RTN","EDPFAA",123,0)
+ ;
+"RTN","EDPFAA",124,0)
+ ;TDP - Patch 2 change to use new EDIS timeout countdown parameter
+"RTN","EDPFAA",125,0)
+ ;S X("countDown")=$$GET^XPAR("USR^SYS^PKG","ORWOR TIMEOUT COUNTDOWN",1,"I")
+"RTN","EDPFAA",126,0)
+ S X("countDown")=$$GET^XPAR("USR^SYS^PKG","EDP APP COUNTDOWN",1,"I")
+"RTN","EDPFAA",127,0)
+ S:'X("countDown") X("countDown")=10
+"RTN","EDPFAA",128,0)
+ S X("countDown")=X("countDown")*1000    ; milliseconds
+"RTN","EDPFAA",129,0)
+ S TSIEN=$O(^EDPB(231.7,"B",DUZ,""))
+"RTN","EDPFAA",130,0)
+ I TSIEN S ROLEIEN=$$GET1^DIQ(231.7,TSIEN,.06,"I")
+"RTN","EDPFAA",131,0)
+ I $G(ROLEIEN) D
+"RTN","EDPFAA",132,0)
+ .S X("roleID")=ROLEIEN
+"RTN","EDPFAA",133,0)
+ .S ROLENM=$$GET1^DIQ(232.5,ROLEIEN,.01,"E"),X("roleName")=ROLENM
+"RTN","EDPFAA",134,0)
+ .S ROLE=$$GET1^DIQ(232.5,ROLEIEN,.02,"E"),X("roleAbbr")=ROLE
+"RTN","EDPFAA",135,0)
+ .S DFLTWSHT=$$GET1^DIQ(232.5,ROLEIEN,.04,"E"),X("defaultWorksheet")=DFLTWSHT
+"RTN","EDPFAA",136,0)
+ .S DFLTBRD=$$GET1^DIQ(232.5,ROLEIEN,.05,"I"),X("defaultBoard")=DFLTBRD
+"RTN","EDPFAA",137,0)
+ D XML^EDPX($$XMLA^EDPX("user",.X))
+"RTN","EDPFAA",138,0)
+ Q
+"RTN","EDPFAA",139,0)
+SESSID() ; Return the next session identifier
+"RTN","EDPFAA",140,0)
+ ; May lock any string, does not have to be actual global node
+"RTN","EDPFAA",141,0)
+ ; Use ^XTMP("EDP... to assure uniqueness to this package
+"RTN","EDPFAA",142,0)
+ ;
+"RTN","EDPFAA",143,0)
+ L +^XTMP("EDP-LOCK-SESSION-ID"):10  E  Q 0
+"RTN","EDPFAA",144,0)
+ N X S X=$$GET^XPAR("PKG","EDPW SESSION ID",1,"I")+1
+"RTN","EDPFAA",145,0)
+ I X>4294967295 S X=1  ; wrap around if bigger than 32-bit uint
+"RTN","EDPFAA",146,0)
+ D EN^XPAR("PKG","EDPW SESSION ID",1,X)
+"RTN","EDPFAA",147,0)
+ L -^XTMP("EDP-LOCK-SESSION-ID")
+"RTN","EDPFAA",148,0)
+ Q X
+"RTN","EDPFAA",149,0)
+ ;
+"RTN","EDPFAA",150,0)
+VIEWS ; Return views allowed for this user
+"RTN","EDPFAA",151,0)
+ N I,X,ID
+"RTN","EDPFAA",152,0)
+ F I=1:1 S X=$P($T(OPTIONS+I),";",3,99) Q:X="zzzzz"  D
+"RTN","EDPFAA",153,0)
+ . I $$ACCESS^XQCHK(DUZ,$$LKOPT^XPDMENU($P(X,U)))>0 D
+"RTN","EDPFAA",154,0)
+ . . D XML^EDPX($$XMLS^EDPX("view",$P(X,U,3),$P(X,U,2)))
+"RTN","EDPFAA",155,0)
+ Q
+"RTN","EDPFAA",156,0)
+OPTIONS ;; options visible in Tracking System
+"RTN","EDPFAA",157,0)
+ ;;EDPF TRACKING VIEW SIGNIN^Sign In^1
+"RTN","EDPFAA",158,0)
+ ;;EDPF TRACKING VIEW TRIAGE^Triage^2
+"RTN","EDPFAA",159,0)
+ ;;EDPF TRACKING VIEW UPDATE^Update^3
+"RTN","EDPFAA",160,0)
+ ;;EDPF TRACKING VIEW DISPOSITION^Disposition^4
+"RTN","EDPFAA",161,0)
+ ;;EDPF TRACKING VIEW EDIT CLOSED^Edit Closed^5
+"RTN","EDPFAA",162,0)
+ ;;EDPF TRACKING VIEW BOARD^Display Board^6
+"RTN","EDPFAA",163,0)
+ ;;EDPF TRACKING VIEW STAFF^Assign Staff^7
+"RTN","EDPFAA",164,0)
+ ;;EDPF TRACKING VIEW REPORTS^Reports^8
+"RTN","EDPFAA",165,0)
+ ;;EDPF TRACKING VIEW CONFIGURE^Configure^9
+"RTN","EDPFAA",166,0)
+ ;;zzzzz
+"RTN","EDPFLEX")
+0^11^B10693270^B1745474
+"RTN","EDPFLEX",1,0)
+EDPFLEX ;SLC/KCM - Lexicon Utilities ;2/28/12 08:33am
+"RTN","EDPFLEX",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDPFLEX",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","EDPFLEX",4,0)
+ ;
+"RTN","EDPFLEX",5,0)
+ ;    $$DIAGSRCH^LEX10CS      ICR   5681
+"RTN","EDPFLEX",6,0)
+ ;....CONFIG^LEXSET...........ICR...1609
+"RTN","EDPFLEX",7,0)
+ ;....LOOK^LEXA...............ICR...2950
+"RTN","EDPFLEX",8,0)
+ ;
+"RTN","EDPFLEX",9,0)
+ICD(TEXT) ; Return Lexicon hits for TEXT
+"RTN","EDPFLEX",10,0)
+ ; Begin EDP*2.0*2 changes drp 04052012 
+"RTN","EDPFLEX",11,0)
+ N LEX,X,Y,I,ICD,CPT,NAME,IEN,EDPCSYS,EDPRTN,EDPDOI,EDPMSG,EDPLMT
+"RTN","EDPFLEX",12,0)
+ S EDPDOI=$P(REQ("inTS",1),"."),EDPLMT='($G(REQ("ignoreThreshold",1),0)),EDPMSG=0
+"RTN","EDPFLEX",13,0)
+ S EDPCSYS=$$CSYS^EDPLEX(EDPDOI),EDPICDVER=$$VER^EDPLEX(EDPCSYS) ;drp
+"RTN","EDPFLEX",14,0)
+ ; Add validation for ICDVER after the set.
+"RTN","EDPFLEX",15,0)
+ D CONFIG^LEXSET("ICD","ICD",EDPDOI)
+"RTN","EDPFLEX",16,0)
+ I EDPCSYS="ICD" D LOOK^LEXA(TEXT,"ICD",999,"",EDPDOI) D ICD9(.LEX)
+"RTN","EDPFLEX",17,0)
+ I EDPCSYS="10D" D
+"RTN","EDPFLEX",18,0)
+ . S EDPMSG=$$TOOHI^EDPLEX(TEXT,EDPCSYS,EDPLMT)
+"RTN","EDPFLEX",19,0)
+ . I EDPLMT,+EDPMSG S LEX(1,"MSG")=$P(EDPMSG,U,2)
+"RTN","EDPFLEX",20,0)
+ . I '+EDPMSG S EDPRTN=$$DIAGSRCH^LEX10CS(TEXT,.LEX,EDPDOI,999) D
+"RTN","EDPFLEX",21,0)
+ . . S:+EDPRTN=-1 LEX(1,"MSG")=$S($P($G(EDPRTN),"^",2):$P($G(EDPRTN),"^",2),1:"NO MATCH FOUND")
+"RTN","EDPFLEX",22,0)
+ . .Q
+"RTN","EDPFLEX",23,0)
+ . S LEX(1,"2HI")=+EDPMSG
+"RTN","EDPFLEX",24,0)
+ . D ICD10(.LEX)
+"RTN","EDPFLEX",25,0)
+ .Q
+"RTN","EDPFLEX",26,0)
+ K EDPICDVER
+"RTN","EDPFLEX",27,0)
+ Q
+"RTN","EDPFLEX",28,0)
+ ;
+"RTN","EDPFLEX",29,0)
+ICD9(LEX) ; BUILD ICD 9 SEARCH ARRAY 
+"RTN","EDPFLEX",30,0)
+ ; this tag was renamed, but is essentially the old code with one change.
+"RTN","EDPFLEX",31,0)
+ N I,ITEM
+"RTN","EDPFLEX",32,0)
+ D XML^EDPX("<items>")
+"RTN","EDPFLEX",33,0)
+ S I=0 F  S I=$O(LEX("LIST",I)) Q:I<1  D
+"RTN","EDPFLEX",34,0)
+ . K ITEM
+"RTN","EDPFLEX",35,0)
+ . S IEN=$P(LEX("LIST",I),U),X=$P(LEX("LIST",I),U,2),CPT=""
+"RTN","EDPFLEX",36,0)
+ . ;replaced line below with one that follows
+"RTN","EDPFLEX",37,0)
+ . ;S ICD=$P($P(X,"ICD-9-CM ",2),")") I $L(ICD) S NAME=X
+"RTN","EDPFLEX",38,0)
+ . S ICD=$P($P(X,EDPICDVER_" ",2),")") I $L(ICD) S NAME=X ;$P(X,"ICD-9-CM ",2) removed hardcoded ref drp
+"RTN","EDPFLEX",39,0)
+ . E  S CPT=$P($P(X,"CPT-4 ",2),")"),NAME=X ;$P(X," (CPT-4")
+"RTN","EDPFLEX",40,0)
+ . I '$L(ICD),'$L(CPT) Q
+"RTN","EDPFLEX",41,0)
+ . S:$E(NAME,$L(NAME))="*" NAME=$E(NAME,1,$L(NAME)-2)
+"RTN","EDPFLEX",42,0)
+ . S ITEM("text")=NAME,ITEM("ien")=IEN,ITEM("icdType")=EDPICDVER
+"RTN","EDPFLEX",43,0)
+ . I $L(ICD) S ITEM("code")=ICD,ITEM("type")="POV",ITEM("icd")=ICD
+"RTN","EDPFLEX",44,0)
+ . I $L(CPT) S ITEM("code")=CPT,ITEM("type")="CPT",ITEM("cpt")=CPT
+"RTN","EDPFLEX",45,0)
+ . S Y=$$XMLA^EDPX("item",.ITEM) D XML^EDPX(Y)
+"RTN","EDPFLEX",46,0)
+ D XML^EDPX("</items>")
+"RTN","EDPFLEX",47,0)
+ Q
+"RTN","EDPFLEX",48,0)
+ICD10(LEX) ; BUILD ICD 10 SEARCH ARRAY THERE ARE NO CPT'S
+"RTN","EDPFLEX",49,0)
+ ;tag added 04052012 drp EDP*2.0*2
+"RTN","EDPFLEX",50,0)
+ N I,ITEM
+"RTN","EDPFLEX",51,0)
+ D XML^EDPX("<items>")
+"RTN","EDPFLEX",52,0)
+ S I=0 F  S I=$O(LEX(I)) Q:I<1  D
+"RTN","EDPFLEX",53,0)
+ . K ITEM S X=""
+"RTN","EDPFLEX",54,0)
+ . S ITEM("thresholdReached")=$G(LEX(1,"2HI"),-1) ; Value should be 0 or 1, -1 denotes error state
+"RTN","EDPFLEX",55,0)
+ . S:$D(LEX(I,"MSG")) ITEM("userMessage")=LEX(I,"MSG")
+"RTN","EDPFLEX",56,0)
+ . S:$D(LEX(I,"IDS",1)) IEN=$P(LEX(I,"IDS",1),U),X=LEX(I,"IDS"),ITEM("childrenCount")=0
+"RTN","EDPFLEX",57,0)
+ . S:$D(LEX(I,"CAT")) IEN="",X=LEX(I,"MENU"),ITEM("childrenCount")=$P(LEX(I,0),U,3)
+"RTN","EDPFLEX",58,0)
+ . S ICD=$P($G(LEX(I,0),$G(LEX(I,"MSG"))),U) I $L(ICD),$L(X) S NAME=X_" ("_$G(EDPICDVER)_" "_ICD_")"
+"RTN","EDPFLEX",59,0)
+ . I '$L(ICD) Q 
+"RTN","EDPFLEX",60,0)
+ . I $G(NAME)'="" S:$E(NAME,$L(NAME))="*" NAME=$E(NAME,1,$L(NAME)-2)
+"RTN","EDPFLEX",61,0)
+ . S ITEM("text")=$G(NAME),ITEM("icdType")=EDPICDVER
+"RTN","EDPFLEX",62,0)
+ . S:$G(IEN)'="" ITEM("ien")=IEN
+"RTN","EDPFLEX",63,0)
+ . I $L(ICD) S ITEM("code")=ICD,ITEM("type")="POV",ITEM("icd")=ICD
+"RTN","EDPFLEX",64,0)
+ . ;M ITEM(I)=LEX(I)
+"RTN","EDPFLEX",65,0)
+ . S Y=$$XMLQA^EDPX("item",.ITEM) D XML^EDPX(Y)
+"RTN","EDPFLEX",66,0)
+ .Q
+"RTN","EDPFLEX",67,0)
+ D XML^EDPX("</items>")
+"RTN","EDPFLEX",68,0)
+ Q
+"RTN","EDPLEX")
+0^16^B11049187^n/a
+"RTN","EDPLEX",1,0)
+EDPLEX ;ALB/DRP - EDIS API'S ;8/28/2012
+"RTN","EDPLEX",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDPLEX",3,0)
+ ;
+"RTN","EDPLEX",4,0)
+ ; API's used for ICD10 implementation created for patch EDP*2.0*2
+"RTN","EDPLEX",5,0)
+ ;    $$IMPDATE^LEXU      ICR   5679
+"RTN","EDPLEX",6,0)
+ ;    $$FREQ^LEXU         ICR   5679
+"RTN","EDPLEX",7,0)
+ ;    $$MAX^LEXU          ICR   5679
+"RTN","EDPLEX",8,0)
+ ;    $$ICDOP^ICDEX       ICR   5747
+"RTN","EDPLEX",9,0)
+ ;    $$ICDDX^ICDEX       ICR   5747
+"RTN","EDPLEX",10,0)
+ ;
+"RTN","EDPLEX",11,0)
+VER(EDPCSYS) ; CODING SYSTEM is passed in
+"RTN","EDPLEX",12,0)
+ ;Input: Coding System Identifier (ICD,10D)
+"RTN","EDPLEX",13,0)
+ ;Output: Returns the Nomenclature string used by GUI displays.
+"RTN","EDPLEX",14,0)
+ N IMPDT,EDPCSTR S EDPCSTR=-1
+"RTN","EDPLEX",15,0)
+ S:EDPCSYS="ICD" EDPCSTR=$S($D(^LEX(757.03,1,0))#10:$P($G(^LEX(757.03,1,0)),U,2),1:"ICD-9-CM")
+"RTN","EDPLEX",16,0)
+ S:EDPCSYS="10D" EDPCSTR=$S($D(^LEX(757.03,30,0))#10:$P(^LEX(757.03,30,0),U,2),1:"ICD-10-CM")
+"RTN","EDPLEX",17,0)
+ Q EDPCSTR
+"RTN","EDPLEX",18,0)
+ ;
+"RTN","EDPLEX",19,0)
+CSYS(EDPEDDT) ; Select proper Coding system based on Implementation date
+"RTN","EDPLEX",20,0)
+ ; input    Date of Interest
+"RTN","EDPLEX",21,0)
+ ; output...coding system active for date.
+"RTN","EDPLEX",22,0)
+ ;
+"RTN","EDPLEX",23,0)
+ Q:$G(EDPEDDT)="" "-1^"_$ZN_" Date In, Parameter not optional."
+"RTN","EDPLEX",24,0)
+ N EDPLIMPDT,EDPLCSYS
+"RTN","EDPLEX",25,0)
+ S EDPLCSYS="10D"
+"RTN","EDPLEX",26,0)
+ S EDPLIMPDT=$$IMPDATE^LEXU(EDPLCSYS)
+"RTN","EDPLEX",27,0)
+ S:EDPEDDT<EDPLIMPDT EDPLCSYS="ICD"
+"RTN","EDPLEX",28,0)
+ Q EDPLCSYS
+"RTN","EDPLEX",29,0)
+ ;
+"RTN","EDPLEX",30,0)
+IMPDATE(EDPCSYS) ; Returns Implementation date of the ICD code set
+"RTN","EDPLEX",31,0)
+ ;Input       CSYS = System abbreviation for the coding system
+"RTN","EDPLEX",32,0)
+ ;Output      Implementation Date
+"RTN","EDPLEX",33,0)
+ ;
+"RTN","EDPLEX",34,0)
+ Q $$IMPDATE^LEXU(EDPCSYS)
+"RTN","EDPLEX",35,0)
+ ;
+"RTN","EDPLEX",36,0)
+TOOHI(X,EDPCSYS,EDPLMT) ; CHECK TERM FOR FREQUENCY AGAINST MAX ALLOWED - RETURN WARNING IF TOO LARGE
+"RTN","EDPLEX",37,0)
+ ; Input     Search string         (X)
+"RTN","EDPLEX",38,0)
+ ;           Coding system         (CSYS)
+"RTN","EDPLEX",39,0)
+ ;           Honor Threshold Flag  (EDPLMT)
+"RTN","EDPLEX",40,0)
+ ; Output    Threshold exceeded Message flag (with Message if failed)
+"RTN","EDPLEX",41,0)
+ ;
+"RTN","EDPLEX",42,0)
+ N EDPLCOUNT,EDPLALLOWED,EDPLRTN
+"RTN","EDPLEX",43,0)
+ S EDPLCOUNT=$$FREQ^LEXU(X),EDPLALLOWED=$$MAX^LEXU(EDPCSYS),EDPLRTN=0
+"RTN","EDPLEX",44,0)
+ I EDPLMT,EDPLCOUNT>EDPLALLOWED D
+"RTN","EDPLEX",45,0)
+ .S EDPLRTN="1^Searching for "_X_" requires inspecting "_EDPLCOUNT_" records to determine if they match the search criteria. This could take quite some time. Suggest refining the search by further specifying "_X_".  Do you wish to continue?"
+"RTN","EDPLEX",46,0)
+ .Q
+"RTN","EDPLEX",47,0)
+ Q EDPLRTN
+"RTN","EDPLEX",48,0)
+ ;
+"RTN","EDPLEX",49,0)
+ICDDATA(EDPCSYS,EDPCODE,EDPDATE,EDPFRMT) ; ICD data for code
+"RTN","EDPLEX",50,0)
+ ;Moved here from ICDXCODE, as that API will be retired
+"RTN","EDPLEX",51,0)
+ ;
+"RTN","EDPLEX",52,0)
+ ; Input:
+"RTN","EDPLEX",53,0)
+ ;
+"RTN","EDPLEX",54,0)
+ ;   EDPCSYS   Coding system                           Required     
+"RTN","EDPLEX",55,0)
+ ;   EDPCODE   Code/IEN/variable pointer               Required
+"RTN","EDPLEX",56,0)
+ ;   EDPDATE   Code Set Date (default = TODAY)
+"RTN","EDPLEX",57,0)
+ ;   EDPFRMT   Code format "I" internal (IEN - DEFAULT)    
+"RTN","EDPLEX",58,0)
+ ;                      "E" external (CODE)
+"RTN","EDPLEX",59,0)
+ ;                      
+"RTN","EDPLEX",60,0)
+ ; Output:
+"RTN","EDPLEX",61,0)
+ ; 
+"RTN","EDPLEX",62,0)
+ ;  Diagnosis returns an 20 piece string delimited by "^"
+"RTN","EDPLEX",63,0)
+ ;  
+"RTN","EDPLEX",64,0)
+ ;    1  IEN of code in file 80
+"RTN","EDPLEX",65,0)
+ ;    2  ICD Dx Code                  (#.01)
+"RTN","EDPLEX",66,0)
+ ;    3  Identifier                   (#1.2)
+"RTN","EDPLEX",67,0)
+ ;    4  Versioned Dx                 (67 multiple)
+"RTN","EDPLEX",68,0)
+ ;    5  Unacceptable as Principal Dx (#1.3)
+"RTN","EDPLEX",69,0)
+ ;    6  Major Dx Cat                 (72 multiple)
+"RTN","EDPLEX",70,0)
+ ;    7  MDC13                        (#1.4)
+"RTN","EDPLEX",71,0)
+ ;    8  Compl/Comorb                 (103 multiple)
+"RTN","EDPLEX",72,0)
+ ;    9  ICD Expanded                 (#1.7)
+"RTN","EDPLEX",73,0)
+ ;    10 Status                       (66 multiple)
+"RTN","EDPLEX",74,0)
+ ;    11 Sex                          (10 multiple)
+"RTN","EDPLEX",75,0)
+ ;    12 Inactive Date                (66 multiple)
+"RTN","EDPLEX",76,0)
+ ;    13 MDC24                        (#1.5)
+"RTN","EDPLEX",77,0)
+ ;    14 MDC25                        (#1.6)
+"RTN","EDPLEX",78,0)
+ ;    15 Age Low                      (11 multiple)
+"RTN","EDPLEX",79,0)
+ ;    16 Age High                     (12 multiple)
+"RTN","EDPLEX",80,0)
+ ;    17 Activation Date              (66 multiple)
+"RTN","EDPLEX",81,0)
+ ;    18 Message                      
+"RTN","EDPLEX",82,0)
+ ;    19 Complication/Comorbidity     (103 multiple)
+"RTN","EDPLEX",83,0)
+ ;    20 Coding System                (#1.1)
+"RTN","EDPLEX",84,0)
+ ;
+"RTN","EDPLEX",85,0)
+ ;   Procedures returns A 14 piece string delimited by "^"
+"RTN","EDPLEX",86,0)
+ ;   
+"RTN","EDPLEX",87,0)
+ ;    1  IEN of code in file 80.1
+"RTN","EDPLEX",88,0)
+ ;    2  ICD procedure code           (#.01)
+"RTN","EDPLEX",89,0)
+ ;    3  Identifier                   (#1.2)
+"RTN","EDPLEX",90,0)
+ ;    4  MDC24                        (#1.5)
+"RTN","EDPLEX",91,0)
+ ;    5  Versioned Oper/Proc          (67 multiple)
+"RTN","EDPLEX",92,0)
+ ;    6  <null>
+"RTN","EDPLEX",93,0)
+ ;    7  <null>
+"RTN","EDPLEX",94,0)
+ ;    8  <null>
+"RTN","EDPLEX",95,0)
+ ;    9  ICD Expanded                 (#1.7)
+"RTN","EDPLEX",96,0)
+ ;    10 Status                       (66 multiple)
+"RTN","EDPLEX",97,0)
+ ;    11 Use with Sex                 (10 multiple)
+"RTN","EDPLEX",98,0)
+ ;    12 Inactive Date                (66 multiple)
+"RTN","EDPLEX",99,0)
+ ;    13 Activation Date              (66 multiple)
+"RTN","EDPLEX",100,0)
+ ;    14 Message
+"RTN","EDPLEX",101,0)
+ ;    15 Coding System                (#1.1)
+"RTN","EDPLEX",102,0)
+ ;     
+"RTN","EDPLEX",103,0)
+ ;    or
+"RTN","EDPLEX",104,0)
+ ;
+"RTN","EDPLEX",105,0)
+ ;    -1^Error Description
+"RTN","EDPLEX",106,0)
+ ;    
+"RTN","EDPLEX",107,0)
+ N ROOT,SYS
+"RTN","EDPLEX",108,0)
+ S EDPDATE=$P($G(EDPDATE),".",1),SYS=$$SYS^ICDEX($G(EDPCSYS),$G(EDPDATE)) S:+SYS'>0 SYS=$$SYS^ICDEX($G(EDPCODE))
+"RTN","EDPLEX",109,0)
+ Q:+SYS'>0 "-1^Invalid coding system specified"
+"RTN","EDPLEX",110,0)
+ S ROOT=$$ROOT^ICDEX(SYS) Q:'$L(ROOT) "-1^Invalid Global Root"
+"RTN","EDPLEX",111,0)
+ Q:ROOT["ICD9" $$ICDDX^ICDEX($G(EDPCODE),$G(EDPDATE),$G(SYS),$G(EDPFRMT,"I"))
+"RTN","EDPLEX",112,0)
+ Q:ROOT["ICD0" $$ICDOP^ICDEX($G(EDPCODE),$G(EDPDATE),$G(SYS),$G(EDPFRMT,"I"))
+"RTN","EDPLEX",113,0)
+ Q "-1^Not found"
+"RTN","EDPLEX",114,0)
+ ;
+"RTN","EDPLEX",115,0)
+ICDDX(EDPCODE,EDPCDT,EDPDFN,EDPSRC) ; Return ICD Dx Code Info
+"RTN","EDPLEX",116,0)
+ ;Moved here from ICDXCODE, as that API will be retired
+"RTN","EDPLEX",117,0)
+ ; Input:
+"RTN","EDPLEX",118,0)
+ ;
+"RTN","EDPLEX",119,0)
+ ;     CODE  Code/IEN (required)
+"RTN","EDPLEX",120,0)
+ ;     CDT   Date (default = TODAY)
+"RTN","EDPLEX",121,0)
+ ;     DFN   Not in use
+"RTN","EDPLEX",122,0)
+ ;     SRC   Source
+"RTN","EDPLEX",123,0)
+ ;             0 = exclude local codes
+"RTN","EDPLEX",124,0)
+ ;             1 = include local codes
+"RTN","EDPLEX",125,0)
+ ;
+"RTN","EDPLEX",126,0)
+ ; Output:
+"RTN","EDPLEX",127,0)
+ ;
+"RTN","EDPLEX",128,0)
+ ;     Returns an 19 piece string delimited by ^
+"RTN","EDPLEX",129,0)
+ ;  
+"RTN","EDPLEX",130,0)
+ ;      1  IEN of code in file 80
+"RTN","EDPLEX",131,0)
+ ;      2  ICD-9 Dx Code (#.01)
+"RTN","EDPLEX",132,0)
+ ;      3  Id (#2)
+"RTN","EDPLEX",133,0)
+ ;      4  Versioned Dx (67 multiple)
+"RTN","EDPLEX",134,0)
+ ;      5  Unacceptable as Principal Dx (#101)
+"RTN","EDPLEX",135,0)
+ ;      6  Major Dx Cat (#5)
+"RTN","EDPLEX",136,0)
+ ;      7  MDC13 (5.5)
+"RTN","EDPLEX",137,0)
+ ;      8  Compl/Comorb (#70)
+"RTN","EDPLEX",138,0)
+ ;      9  ICD Expanded (#8) 1:Yes 0:No
+"RTN","EDPLEX",139,0)
+ ;     10  Status (66 multiple)
+"RTN","EDPLEX",140,0)
+ ;     11  Sex (#9.5)
+"RTN","EDPLEX",141,0)
+ ;     12  Inactive Date (66 multiple)
+"RTN","EDPLEX",142,0)
+ ;     13  MDC24 (#5.7)
+"RTN","EDPLEX",143,0)
+ ;     14  MDC25 (#5.9)
+"RTN","EDPLEX",144,0)
+ ;     15  Age Low (#14)
+"RTN","EDPLEX",145,0)
+ ;     16  Age High (#15)
+"RTN","EDPLEX",146,0)
+ ;     17  Activation Date (.01 of 66 multiple)
+"RTN","EDPLEX",147,0)
+ ;     18  Message
+"RTN","EDPLEX",148,0)
+ ;     19  Versioned Complication/Comorbidity (#103)
+"RTN","EDPLEX",149,0)
+ ;
+"RTN","EDPLEX",150,0)
+ ;       or
+"RTN","EDPLEX",151,0)
+ ;
+"RTN","EDPLEX",152,0)
+ ;     -1^Error Description
+"RTN","EDPLEX",153,0)
+ ;
+"RTN","EDPLEX",154,0)
+ Q $$ICDDX^ICDEX($G(EDPCODE),$G(EDPCDT),1,$G(EDPSRC,"I"))
+"RTN","EDPLOG")
+0^13^B64279489^B58048189
+"RTN","EDPLOG",1,0)
+EDPLOG ;SLC/KCM - Update ED Log - Update ;2/28/12 08:33am
+"RTN","EDPLOG",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPLOG",3,0)
+ ;
+"RTN","EDPLOG",4,0)
+ ;TODO:  add transaction processing
+"RTN","EDPLOG",5,0)
+ ;
+"RTN","EDPLOG",6,0)
+UPD(REQ,REMOVE,RESTORE) ; Update a record
+"RTN","EDPLOG",7,0)
+ N REC,EDPFAIL D NVPARSE^EDPX(.REC,REQ)
+"RTN","EDPLOG",8,0)
+ S EDPFAIL=0
+"RTN","EDPLOG",9,0)
+ N IEN S IEN=$$VAL("id")
+"RTN","EDPLOG",10,0)
+ I '$G(IEN) D FAIL("upd",2300007) Q EDPFAIL
+"RTN","EDPLOG",11,0)
+ I '$D(^EDP(230,IEN,0)) D FAIL("upd",2300006) Q EDPFAIL
+"RTN","EDPLOG",12,0)
+ N ERR S ERR=$$VALID^EDPLOG1(.REC) I $L(ERR) D FAIL("upd",ERR) Q EDPFAIL
+"RTN","EDPLOG",13,0)
+ N AMB S AMB="(ambulance en route)"
+"RTN","EDPLOG",14,0)
+ ;
+"RTN","EDPLOG",15,0)
+ ; compute the local time & "no value" ien
+"RTN","EDPLOG",16,0)
+ N TIME S TIME=$$NOW^XLFDT
+"RTN","EDPLOG",17,0)
+ N EDPNOVAL S EDPNOVAL=+$O(^EDPB(233.1,"B","edp.reserved.novalue",0))
+"RTN","EDPLOG",18,0)
+ ; before allowing remove, check the required fields
+"RTN","EDPLOG",19,0)
+ S REMOVE=$G(REMOVE,0)!$P(^EDP(230,IEN,0),U,7)  ; removing or closed
+"RTN","EDPLOG",20,0)
+ S RESTORE=$G(RESTORE,"") ; restoring to board
+"RTN","EDPLOG",21,0)
+ I REMOVE D RDY2RMV I 'REC("closed") Q EDPFAIL
+"RTN","EDPLOG",22,0)
+ I REMOVE S REC("closedBy")=$G(DUZ) ; if we are removing, set up the 'closedBy' and 'closed' value
+"RTN","EDPLOG",23,0)
+ ;
+"RTN","EDPLOG",24,0)
+ ; get the existing log entry
+"RTN","EDPLOG",25,0)
+ N X0,X1,X2,X3,AREA,I
+"RTN","EDPLOG",26,0)
+ S X0=^EDP(230,IEN,0),X1=$G(^(1)),X2=$G(^(2)),X3=$G(^(3))
+"RTN","EDPLOG",27,0)
+ S AREA=$P(X0,U,3),^EDPB(231.9,AREA,230)=$H  ; last update timestamp
+"RTN","EDPLOG",28,0)
+ ;
+"RTN","EDPLOG",29,0)
+ ; if we are restoring to the board, set 'closed' to "" (removing the closed status)
+"RTN","EDPLOG",30,0)
+ ; and set the bed to the waiting room
+"RTN","EDPLOG",31,0)
+ I RESTORE D
+"RTN","EDPLOG",32,0)
+ .S REC("closed")="",REC("bed")=$P(^EDPB(231.9,AREA,1),U,12),REC("restoredBy")=$G(DUZ),REC("restorePatient")=1,REC("outTS")=""
+"RTN","EDPLOG",33,0)
+ .; if a bed is not defined at this point, use the EDIS_DEFAULT bed
+"RTN","EDPLOG",34,0)
+ .I 'REC("bed") S REC("bed")=$O(^EDPB(231.8,"B","EDIS_DEFAULT",0))
+"RTN","EDPLOG",35,0)
+ ;
+"RTN","EDPLOG",36,0)
+ N NAME,DFN,SSN,PCE
+"RTN","EDPLOG",37,0)
+ S NAME=$$VAL("name"),DFN=$$VAL("dfn"),SSN=""
+"RTN","EDPLOG",38,0)
+ I DFN S SSN=$P(^DPT(DFN,0),U,9)
+"RTN","EDPLOG",39,0)
+ I '$P(X0,U,8),((NAME'=AMB)!DFN) S REC("inTS")=TIME
+"RTN","EDPLOG",40,0)
+ ; Update any fields that have values passed in
+"RTN","EDPLOG",41,0)
+ N FDA,FDAIEN,DIERR,HIST
+"RTN","EDPLOG",42,0)
+ D SETFDA(X0,4,"name",.04)
+"RTN","EDPLOG",43,0)
+ ;D SETFDA(X0,5,"ssn",.05) -- NtoL
+"RTN","EDPLOG",44,0)
+ D SETFDA(X0,6,"dfn",.06)
+"RTN","EDPLOG",45,0)
+ D SETFDA(X0,7,"closed",.07)
+"RTN","EDPLOG",46,0)
+ D SETFDA(X0,8,"inTS",.08)
+"RTN","EDPLOG",47,0)
+ D SETFDA(X0,9,"outTS",.09)
+"RTN","EDPLOG",48,0)
+ D SETFDA(X0,10,"arrival",.1)
+"RTN","EDPLOG",49,0)
+ D SETFDA(X0,14,"clinic",.14)
+"RTN","EDPLOG",50,0)
+ D SETFDA(X1,1,"complaint",1.1)
+"RTN","EDPLOG",51,0)
+ D SETFDA(X2,1,"compLong",2)
+"RTN","EDPLOG",52,0)
+ D SETFDA(X3,2,"status",3.2)
+"RTN","EDPLOG",53,0)
+ D SETFDA(X3,3,"acuity",3.3)
+"RTN","EDPLOG",54,0)
+ D SETFDA(X3,4,"bed",3.4)
+"RTN","EDPLOG",55,0)
+ D SETFDA(X3,5,"provider",3.5)
+"RTN","EDPLOG",56,0)
+ D SETFDA(X3,6,"nurse",3.6)
+"RTN","EDPLOG",57,0)
+ D SETFDA(X3,7,"resident",3.7)
+"RTN","EDPLOG",58,0)
+ D SETFDA(X3,8,"comment",3.8)
+"RTN","EDPLOG",59,0)
+ D SETFDA(X1,5,"delay",1.5)
+"RTN","EDPLOG",60,0)
+ D SETFDA(X1,2,"disposition",1.2)
+"RTN","EDPLOG",61,0)
+ ; 10-18-2011 bwf: add handling of fields related to removal and restoring of patient to the board
+"RTN","EDPLOG",62,0)
+ I $G(REMOVE) D
+"RTN","EDPLOG",63,0)
+ .D SETFDA(X0,16,"closedBy",.072) ; DFN of the user who 'closed' this record.
+"RTN","EDPLOG",64,0)
+ I $G(RESTORE) D
+"RTN","EDPLOG",65,0)
+ .; bwf - 2/16/2012
+"RTN","EDPLOG",66,0)
+ .; The following fields should only be set if this record is actually being restored to the board
+"RTN","EDPLOG",67,0)
+ .; There is a trigger x-ref that we need to stay consistent and not be changing every time we save the log entry.
+"RTN","EDPLOG",68,0)
+ .D SETFDA(X0,17,"restorePatient",.073) ; flag - if the entry is found to have been 'Removed In Error'
+"RTN","EDPLOG",69,0)
+ .D SETFDA(X0,18,"restoredBy",.074) ; DFN of the user who 'restored' this patient to the board. Triggers Restored By Date/Time field
+"RTN","EDPLOG",70,0)
+ ; end changes
+"RTN","EDPLOG",71,0)
+ D UPDHOLD^EDPLOGH(.FDA,IEN,$P(X3,U,4))
+"RTN","EDPLOG",72,0)
+ I $G(FDA(230,IEN_",",1.2)) S FDA(230,IEN_",",1.3)=TIME
+"RTN","EDPLOG",73,0)
+ I $L(NAME)&$L(SSN) S FDA(230,IEN_",",.11)=$E(NAME)_$E(SSN,6,9)
+"RTN","EDPLOG",74,0)
+ I $$VAL("updDiag") S HIST(230.1,"+1,",9.1)=$G(HIST(230.1,"+1,",9.1))_"4;"
+"RTN","EDPLOG",75,0)
+ ;
+"RTN","EDPLOG",76,0)
+ L +^EDP(230,IEN):3 E  D FAIL("upd",2300015) Q EDPFAIL
+"RTN","EDPLOG",77,0)
+ ; be sure to unlock before quitting!
+"RTN","EDPLOG",78,0)
+ I $$COLLIDE^EDPLOGH(IEN,$$VAL("loadTS")) L -^EDP(230,IEN) Q EDPFAIL
+"RTN","EDPLOG",79,0)
+ I $$BEDGONE^EDPLOGH(AREA,$P(X3,U,4),$P(X3,U,9),$$VAL("bed")) D FAIL("upd",2300016) L -^EDP(230,IEN) Q EDPFAIL
+"RTN","EDPLOG",80,0)
+ I $D(HIST)>9 D SAVE^EDPLOGH(IEN,TIME,.HIST)
+"RTN","EDPLOG",81,0)
+ I $D(FDA)>9 D FILE^DIE("","FDA","ERR")
+"RTN","EDPLOG",82,0)
+ I '$D(DIERR),$$VAL("updDiag") D UPDDIAG
+"RTN","EDPLOG",83,0)
+ L -^EDP(230,IEN)
+"RTN","EDPLOG",84,0)
+ I $D(DIERR) D FAIL("upd",2300008) Q EDPFAIL
+"RTN","EDPLOG",85,0)
+ ;
+"RTN","EDPLOG",86,0)
+ M ^XDJE(1)=PCE
+"RTN","EDPLOG",87,0)
+ D UPDVISIT^EDPLPCE(IEN,.PCE)
+"RTN","EDPLOG",88,0)
+ ;
+"RTN","EDPLOG",89,0)
+ I (DFN&'$P(X0,U,6))!($G(REC("inTS"))&'$P(X0,U,8)) D EVT^EDPLOGA(IEN)
+"RTN","EDPLOG",90,0)
+ ;
+"RTN","EDPLOG",91,0)
+ D XML^EDPX("<upd status='ok' id='"_IEN_"' />")
+"RTN","EDPLOG",92,0)
+ Q EDPFAIL
+"RTN","EDPLOG",93,0)
+UPDDIAG ; process diagnoses
+"RTN","EDPLOG",94,0)
+ ; called from UPD^EDPLOG
+"RTN","EDPLOG",95,0)
+ ; expects REC,PCE,IEN,TIME,AREA to be defined
+"RTN","EDPLOG",96,0)
+ ; drp BEGIN EDP*2.0*2
+"RTN","EDPLOG",97,0)
+ N DIAG,I,FDA,FDAIEN,ERR,CODED,CODE,EDPLCIEN,EDPLCSYS
+"RTN","EDPLOG",98,0)
+ S DIAG="diagnosis-0",I=0,CODED=$P($G(^EDPB(231.9,AREA,1)),U,2)
+"RTN","EDPLOG",99,0)
+ F  S DIAG=$O(REC(DIAG)) Q:$E(DIAG,1,10)'="diagnosis-"  D
+"RTN","EDPLOG",100,0)
+ . S I=I+1,REC("diagnosis",I)=REC(DIAG),REC("inTS",I)=REC("inTS")
+"RTN","EDPLOG",101,0)
+ . I CODED S PCE($P(REC(DIAG),U),I)=REC(DIAG)
+"RTN","EDPLOG",102,0)
+ I $D(REC("diagnosis"))<10 Q
+"RTN","EDPLOG",103,0)
+ ; replace the diagnosis multiple
+"RTN","EDPLOG",104,0)
+ D DELDIAG(IEN)
+"RTN","EDPLOG",105,0)
+ S FDA(230,IEN_",",1.4)=TIME
+"RTN","EDPLOG",106,0)
+ S I=0 F  S I=$O(REC("diagnosis",I)) Q:'I  D
+"RTN","EDPLOG",107,0)
+ . Q:$P(REC("diagnosis",I),U,6)  ; entry being removed
+"RTN","EDPLOG",108,0)
+ . S EDPLCIEN=$P(REC("diagnosis",I),U,2)
+"RTN","EDPLOG",109,0)
+ . S EDPLCSYS=$$CSYS^EDPLEX(REC("inTS",I)) ; added drp
+"RTN","EDPLOG",110,0)
+ . ; EDPLCIEN for ICD9 will be a file 757.01 IEN
+"RTN","EDPLOG",111,0)
+ . ; for ICD10 "10D" codes it will be a File 80 IEN.
+"RTN","EDPLOG",112,0)
+ . ; Process below converts 757.01 pointer to an 80 pointer
+"RTN","EDPLOG",113,0)
+ . I EDPLCSYS="ICD" D
+"RTN","EDPLOG",114,0)
+ . . S CODE=$S(+EDPLCIEN:$$ONE^LEXU(EDPLCIEN,REC("inTS",I),EDPLCSYS),1:"") ;drp patch 2
+"RTN","EDPLOG",115,0)
+ . . S:'$L(CODE) CODE=$P($P(REC("diagnosis",I),U,3),"/",1)
+"RTN","EDPLOG",116,0)
+ . . S:$L(CODE) EDPLCIEN=$P($$ICDDATA^EDPLEX(EDPLCSYS,CODE,REC("inTS",I),"E"),U,1) ;drp patch 2
+"RTN","EDPLOG",117,0)
+ . .Q
+"RTN","EDPLOG",118,0)
+ . S FDA(230.04,"+"_I_","_IEN_",",.01)=$P(REC("diagnosis",I),U,4)
+"RTN","EDPLOG",119,0)
+ . S FDA(230.04,"+"_I_","_IEN_",",.02)=EDPLCIEN
+"RTN","EDPLOG",120,0)
+ . ;drp END EDP*2.0*2 CHANGES
+"RTN","EDPLOG",121,0)
+ . S FDA(230.04,"+"_I_","_IEN_",",.03)=$P(REC("diagnosis",I),U,8)
+"RTN","EDPLOG",122,0)
+ D UPDATE^DIE("","FDA","FDAIEN","ERR")
+"RTN","EDPLOG",123,0)
+ Q
+"RTN","EDPLOG",124,0)
+DELDIAG(IEN) ; delete the diagnosis multiple
+"RTN","EDPLOG",125,0)
+ I '$O(^EDP(230,IEN,4,0)) Q  ; no child nodes
+"RTN","EDPLOG",126,0)
+ N DA,DIK S DA=0,DA(1)=IEN,DIK="^EDP(230,"_DA(1)_",4,"
+"RTN","EDPLOG",127,0)
+ F  S DA=$O(^EDP(230,IEN,4,DA)) Q:'DA  D ^DIK
+"RTN","EDPLOG",128,0)
+ Q
+"RTN","EDPLOG",129,0)
+HAVEDIAG() ; return true if a diagnosis is present
+"RTN","EDPLOG",130,0)
+ ; expects REC to be defined
+"RTN","EDPLOG",131,0)
+ N FOUND S FOUND=0
+"RTN","EDPLOG",132,0)
+ N DIAG S DIAG="diagnosis-0"
+"RTN","EDPLOG",133,0)
+ F  S DIAG=$O(REC(DIAG)) Q:$E(DIAG,1,10)'="diagnosis-"  D  Q:FOUND
+"RTN","EDPLOG",134,0)
+ . I '$P(REC(DIAG),U,6) S FOUND=1  ; 6th piece is delete flag
+"RTN","EDPLOG",135,0)
+ Q FOUND
+"RTN","EDPLOG",136,0)
+ ;
+"RTN","EDPLOG",137,0)
+RDY2RMV ; check required fields & set up so ready to remove
+"RTN","EDPLOG",138,0)
+ ; called from UPD, expects REC and IEN and TIME
+"RTN","EDPLOG",139,0)
+ ;
+"RTN","EDPLOG",140,0)
+ ; check special dispositions first
+"RTN","EDPLOG",141,0)
+ N DISP,CLOSE
+"RTN","EDPLOG",142,0)
+ S DISP=+$$VAL("disposition"),CLOSE=0
+"RTN","EDPLOG",143,0)
+ I DISP=+$O(^EDPB(233.1,"B","edp.disposition.error",0)) S CLOSE=1
+"RTN","EDPLOG",144,0)
+ I DISP=+$O(^EDPB(233.1,"B","edp.disposition.nec",0)) S CLOSE=1
+"RTN","EDPLOG",145,0)
+ I DISP=+$O(^EDPB(233.1,"B","edp.disposition.left",0)) S CLOSE=1
+"RTN","EDPLOG",146,0)
+ I CLOSE S:'$$VAL("outTS") REC("outTS")=TIME S REC("closed")=1 Q
+"RTN","EDPLOG",147,0)
+ ;
+"RTN","EDPLOG",148,0)
+ ; check the generally required fields
+"RTN","EDPLOG",149,0)
+ N MISSING S MISSING=""
+"RTN","EDPLOG",150,0)
+ S REC("closed")=0
+"RTN","EDPLOG",151,0)
+ I '$L($$VAL("complaint")) S MISSING=MISSING_"Complaint "
+"RTN","EDPLOG",152,0)
+ I '$$VAL("bed") S MISSING=MISSING_"Room/Area "
+"RTN","EDPLOG",153,0)
+ I '$$VAL("provider") S MISSING=MISSING_"Provider "
+"RTN","EDPLOG",154,0)
+ I $$NOVAL("acuity") S MISSING=MISSING_"Acuity "
+"RTN","EDPLOG",155,0)
+ ;
+"RTN","EDPLOG",156,0)
+ ; check the other disposition required fields
+"RTN","EDPLOG",157,0)
+ N X1,AREA,MIN,STS,OUT
+"RTN","EDPLOG",158,0)
+ S AREA=$P(^EDP(230,IEN,0),U,3),STS=$P($G(^(3)),U,2)
+"RTN","EDPLOG",159,0)
+ S X1=$G(^EDPB(231.9,AREA,1))
+"RTN","EDPLOG",160,0)
+ S MIN=$$VAL("inTS") S:'MIN MIN=$P(^EDP(230,IEN,0),U,8)
+"RTN","EDPLOG",161,0)
+ S OUT=$$VAL("outTS") S:'OUT OUT=TIME
+"RTN","EDPLOG",162,0)
+ S MIN=$$FMDIFF^XLFDT(OUT,MIN,2)\60
+"RTN","EDPLOG",163,0)
+ I $P(X1,U,1),'$$HAVEDIAG S MISSING=MISSING_"Diagnosis "
+"RTN","EDPLOG",164,0)
+ I $P(X1,U,3),$$NOVAL("disposition") S MISSING=MISSING_"Disposition "
+"RTN","EDPLOG",165,0)
+ ; (client parses for string "Delay Reason" to know whether to enable delay reason control)
+"RTN","EDPLOG",166,0)
+ ; bwf 4/26/13 - per Dr. Gelman, want delay reason no matter whether patient is in observation or not.
+"RTN","EDPLOG",167,0)
+ ;               replaced line below with the one that follows
+"RTN","EDPLOG",168,0)
+ ;I $P(X1,U,4),(MIN>$P(X1,U,5)),$$NOVAL("delay"),'$$OBS(STS) S MISSING=MISSING_"Delay Reason "
+"RTN","EDPLOG",169,0)
+ I $P(X1,U,4),(MIN>$P(X1,U,5)),$$NOVAL("delay") S MISSING=MISSING_"Delay Reason "
+"RTN","EDPLOG",170,0)
+ I $L(MISSING) D FAIL("upd","Fields required for removal are missing:  "_MISSING) Q
+"RTN","EDPLOG",171,0)
+ S:'$$VAL("outTS") REC("outTS")=TIME S REC("closed")=1
+"RTN","EDPLOG",172,0)
+ Q
+"RTN","EDPLOG",173,0)
+VAL(X) ; Returns parameter value or null
+"RTN","EDPLOG",174,0)
+ ; HTTP passes HTML-escaped values in an array as REC(param)
+"RTN","EDPLOG",175,0)
+ Q $G(REC(X))
+"RTN","EDPLOG",176,0)
+ ;
+"RTN","EDPLOG",177,0)
+NOVAL(X) ; Returns true if value is empty, 0, or edp.reserved.novalue
+"RTN","EDPLOG",178,0)
+ ; expects EDPNOVAL to be defined
+"RTN","EDPLOG",179,0)
+ I +$G(REC(X))=0 Q 1
+"RTN","EDPLOG",180,0)
+ I +$G(REC(X))=EDPNOVAL Q 1
+"RTN","EDPLOG",181,0)
+ Q 0
+"RTN","EDPLOG",182,0)
+ ;
+"RTN","EDPLOG",183,0)
+OBS(X) ; Returns 1 or 0, if observation status X
+"RTN","EDPLOG",184,0)
+ Q ($P($G(^EDPB(233.1,+$G(X),0)),U,5)["O")
+"RTN","EDPLOG",185,0)
+ ;
+"RTN","EDPLOG",186,0)
+SETFDA(NODE,P,SUB,FLD) ; Creates value in FDA & HIST arrays as appropriate
+"RTN","EDPLOG",187,0)
+ ; from UPD, expects REC, FDA, HIST to be defined
+"RTN","EDPLOG",188,0)
+ Q:'$D(REC(SUB))               ; value not sent in message
+"RTN","EDPLOG",189,0)
+ Q:$P(NODE,U,P)=REC(SUB)       ; value is the same
+"RTN","EDPLOG",190,0)
+ ; don't save switch from null to 0 or NOVAL to 0
+"RTN","EDPLOG",191,0)
+ ; since 0 is always sent as none value for combo box fields
+"RTN","EDPLOG",192,0)
+ I (REC(SUB)=0),($P(NODE,U,P)=""),("^.1^1.2^1.5^3.2^3.3^3.4^3.5^3.6^3.7^"[(U_FLD_U)) Q
+"RTN","EDPLOG",193,0)
+ I (REC(SUB)=0),($P(NODE,U,P)=EDPNOVAL),("^.1^1.2^1.5^3.2^3.3^"[(U_FLD_U)) Q
+"RTN","EDPLOG",194,0)
+ ;
+"RTN","EDPLOG",195,0)
+ I REC(SUB)="" S REC(SUB)="@"  ; we must be deleting field if empty
+"RTN","EDPLOG",196,0)
+ S FDA(230,IEN_",",FLD)=REC(SUB)
+"RTN","EDPLOG",197,0)
+ ; save the changed fields in the history
+"RTN","EDPLOG",198,0)
+ I $L(REC(SUB)) D
+"RTN","EDPLOG",199,0)
+ . S HIST(230.1,"+1,",9.1)=$G(HIST(230.1,"+1,",9.1))_FLD_";"
+"RTN","EDPLOG",200,0)
+ . S:FLD=.07 FLD=.0701    ; closed
+"RTN","EDPLOG",201,0)
+ . S:FLD=1.1 FLD=.07      ; complaint
+"RTN","EDPLOG",202,0)
+ . S:FLD=1.2 FLD=.11      ; disposition
+"RTN","EDPLOG",203,0)
+ . S:FLD=1.5 FLD=.12      ; delay
+"RTN","EDPLOG",204,0)
+ . S HIST(230.1,"+1,",FLD)=REC(SUB)
+"RTN","EDPLOG",205,0)
+ . ; check for updated providers
+"RTN","EDPLOG",206,0)
+ . S:FLD=3.5 PCE("PRV",1)=REC(SUB),PCE("PRI")=REC(SUB)  ; primary provider
+"RTN","EDPLOG",207,0)
+ . S:FLD=3.6 PCE("PRV",2)=REC(SUB)                      ; nurse
+"RTN","EDPLOG",208,0)
+ . S:FLD=3.7 PCE("PRV",3)=REC(SUB)                      ; resident
+"RTN","EDPLOG",209,0)
+ Q
+"RTN","EDPLOG",210,0)
+FAIL(ELEM,MSG) ; creates failure node for returned XML
+"RTN","EDPLOG",211,0)
+ N X,EDPFAIL
+"RTN","EDPLOG",212,0)
+ S EDPFAIL=0
+"RTN","EDPLOG",213,0)
+ I +MSG S MSG=$$MSG^EDPX(MSG)
+"RTN","EDPLOG",214,0)
+ S X="<"_ELEM_" id='"_$$VAL("id")_"' status='fail' msg='"_MSG_"' />"
+"RTN","EDPLOG",215,0)
+ D XML^EDPX(X)
+"RTN","EDPLOG",216,0)
+ S EDPFAIL=1
+"RTN","EDPLOG",217,0)
+ Q EDPFAIL
+"RTN","EDPLPCE")
+0^9^B39952113^B32808524
+"RTN","EDPLPCE",1,0)
+EDPLPCE ;SLC/KCM - Create a Visit ;2/28/12 08:33am
+"RTN","EDPLPCE",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDPLPCE",3,0)
+ ;
+"RTN","EDPLPCE",4,0)
+  ; ; DBIA#  SUPPORTED
+"RTN","EDPLPCE",5,0)
+ ; -----  ---------  ------------------------------------
+"RTN","EDPLPCE",6,0)
+ ;  1894  Cont Sub   ENCEVENT^PXAPI
+"RTN","EDPLPCE",7,0)
+ ;  1889  Cont Sub   DATA2PCE^PXAPI
+"RTN","EDPLPCE",8,0)
+  ; $$CODEC^ICDEX  Sup   ICR   5747
+"RTN","EDPLPCE",9,0)
+ ;
+"RTN","EDPLPCE",10,0)
+UPDVISIT(LOG,PCE) ; Get / Create a Visit
+"RTN","EDPLPCE",11,0)
+ ; PCE is list of potential updates to the visit
+"RTN","EDPLPCE",12,0)
+ ; PCE(TYP,n)=type^ien^code^label^add^del^upd^prim^qty
+"RTN","EDPLPCE",13,0)
+ N DFN,TS,LOC,X0,I,X
+"RTN","EDPLPCE",14,0)
+ S X0=^EDP(230,LOG,0),DFN=$P(X0,U,6),TS=$P(X0,U,8),LOC=$P(X0,U,14)
+"RTN","EDPLPCE",15,0)
+ I 'LOC S LOC=$$DFLTLOC(DFN)
+"RTN","EDPLPCE",16,0)
+ I 'DFN!('TS)!('LOC) Q 0  ; not enough info
+"RTN","EDPLPCE",17,0)
+ ;
+"RTN","EDPLPCE",18,0)
+ N EDPDATA,EDPVISIT,EDPPCHG
+"RTN","EDPLPCE",19,0)
+ S EDPVISIT=$P(X0,U,12),EDPPCHG=0 S:'EDPVISIT TS=$$TS4VISIT(DFN,LOC,TS)
+"RTN","EDPLPCE",20,0)
+ ;
+"RTN","EDPLPCE",21,0)
+ ; if closed record and no visit, bail
+"RTN","EDPLPCE",22,0)
+ I $P(X0,U,7),'EDPVISIT Q 0
+"RTN","EDPLPCE",23,0)
+ ;
+"RTN","EDPLPCE",24,0)
+ ; if no visit, but diagnoses exist, xfer the diagnoses
+"RTN","EDPLPCE",25,0)
+ I 'EDPVISIT D XFERDIAG(LOG,.PCE)
+"RTN","EDPLPCE",26,0)
+ ; remove current primary provider(s) if there is a new one
+"RTN","EDPLPCE",27,0)
+ I EDPVISIT,$G(PCE("PRI")) D
+"RTN","EDPLPCE",28,0)
+ . N IPRV,XPRV,OLDPRI,EDPLCSYS,EDPLCIEN ; Begin EDP*2.0*2 changes
+"RTN","EDPLPCE",29,0)
+ . K ^TMP("PXKENC",$J)
+"RTN","EDPLPCE",30,0)
+ . D ENCEVENT^PXAPI(EDPVISIT)
+"RTN","EDPLPCE",31,0)
+ . S IPRV=0 F  S IPRV=$O(^TMP("PXKENC",$J,EDPVISIT,"PRV",IPRV)) Q:'IPRV  D
+"RTN","EDPLPCE",32,0)
+ .. S XPRV=^TMP("PXKENC",$J,EDPVISIT,"PRV",IPRV,0)
+"RTN","EDPLPCE",33,0)
+ .. Q:$P(XPRV,U,4)'="P"
+"RTN","EDPLPCE",34,0)
+ .. I +XPRV'=$G(PCE("PRI")) S EDPDATA("PROVIDER",IPRV,"NAME")=+XPRV,EDPDATA("PROVIDER",IPRV,"PRIMARY")=0
+"RTN","EDPLPCE",35,0)
+ ; add any new providers that were entered
+"RTN","EDPLPCE",36,0)
+ S I=0 F  S I=$O(PCE("PRV",I)) Q:'I  D
+"RTN","EDPLPCE",37,0)
+ . S EDPDATA("PROVIDER",I,"NAME")=+PCE("PRV",I)
+"RTN","EDPLPCE",38,0)
+ . I +PCE("PRV",I)=$G(PCE("PRI")) S EDPDATA("PROVIDER",I,"PRIMARY")=1,EDPPCHG=1
+"RTN","EDPLPCE",39,0)
+ ; update diagnoses
+"RTN","EDPLPCE",40,0)
+ ; DRP 04062012 Begin EDP*2.0*2 Changes  
+"RTN","EDPLPCE",41,0)
+ S I=0 F  S I=$O(PCE("POV",I)) Q:'I  D
+"RTN","EDPLPCE",42,0)
+ . S X=PCE("POV",I)
+"RTN","EDPLPCE",43,0)
+ . Q:'($P(X,U,5)!$P(X,U,6)!$P(X,U,7))  ; no updates for this diagnosis
+"RTN","EDPLPCE",44,0)
+ . I $P(X,U,2) D
+"RTN","EDPLPCE",45,0)
+ .. S EDPLCSYS=$$CSYS^EDPLEX(TS)
+"RTN","EDPLPCE",46,0)
+ .. I EDPLCSYS="ICD" D
+"RTN","EDPLPCE",47,0)
+ ... N EDPLCIEN S EDPLCIEN=$$ONE^LEXU($P(X,U,2),TS,EDPLCSYS)
+"RTN","EDPLPCE",48,0)
+ ... Q:'$L(EDPLCIEN)
+"RTN","EDPLPCE",49,0)
+ ... S:$L(EDPLCIEN) $P(X,U,2)=$P($$ICDDATA^EDPLEX(EDPLCSYS,EDPLCIEN,TS,"E"),U,1) ;drp patch 2
+"RTN","EDPLPCE",50,0)
+ ...Q
+"RTN","EDPLPCE",51,0)
+ .. N CODE S CODE=$$CODEC^ICDEX(80,$P(X,U,2))
+"RTN","EDPLPCE",52,0)
+ .. S $P(X,U,3)=CODE
+"RTN","EDPLPCE",53,0)
+ . Q:'$L($P(X,U,3))                   ; not coded
+"RTN","EDPLPCE",54,0)
+ . S EDPLCIEN=$P($$ICDDATA^EDPLEX("DIAG",$P(X,U,3),TS,"E"),U,1) Q:'EDPLCIEN
+"RTN","EDPLPCE",55,0)
+ . S EDPDATA("DX/PL",I,"DIAGNOSIS")=EDPLCIEN
+"RTN","EDPLPCE",56,0)
+ . ;DRP end EDP*2.0*2 changes
+"RTN","EDPLPCE",57,0)
+ . S EDPDATA("DX/PL",I,"NARRATIVE")=$P(X,U,4)
+"RTN","EDPLPCE",58,0)
+ . I $P(X,U,8) S EDPDATA("DX/PL",I,"PRIMARY")=1
+"RTN","EDPLPCE",59,0)
+ . I $P(X,U,6) S EDPDATA("DX/PL",I,"DELETE")=1
+"RTN","EDPLPCE",60,0)
+ ; update procedures
+"RTN","EDPLPCE",61,0)
+ S I=0 F  S I=$O(PCE("CPT",I)) Q:'I  D
+"RTN","EDPLPCE",62,0)
+ . S X=PCE("CPT",I)
+"RTN","EDPLPCE",63,0)
+ . Q:'($P(X,U,5)!$P(X,U,6)!$P(X,U,7))  ; no updates for this procedure
+"RTN","EDPLPCE",64,0)
+ . I $P(X,U,2) D
+"RTN","EDPLPCE",65,0)
+ .. N CODE S CODE=$$CPTONE^LEXU($P(X,U,2),TS)
+"RTN","EDPLPCE",66,0)
+ .. S $P(X,U,3)=CODE
+"RTN","EDPLPCE",67,0)
+ . Q:'$L($P(X,U,3))                   ; not coded
+"RTN","EDPLPCE",68,0)
+ . S IEN=+$O(^ICPT("B",$P(X,U,3),0))
+"RTN","EDPLPCE",69,0)
+ . S EDPDATA("PROCEDURE",I,"PROCEDURE")=IEN
+"RTN","EDPLPCE",70,0)
+ . S EDPDATA("PROCEDURE",I,"QTY")=$S($P(X,U,9):$P(X,U,9),1:1)
+"RTN","EDPLPCE",71,0)
+ . S EDPDATA("PROCEDURE",I,"NARRATIVE")=$P(X,U,4)
+"RTN","EDPLPCE",72,0)
+ . I $P(X,U,6) S EDPDATA("PROCEDURE",I,"DELETE")=1
+"RTN","EDPLPCE",73,0)
+ ; exit if no updates
+"RTN","EDPLPCE",74,0)
+ Q:'$D(EDPDATA) 0
+"RTN","EDPLPCE",75,0)
+ ;
+"RTN","EDPLPCE",76,0)
+ N EDPKG,EDPSRC,EDPERR,OK
+"RTN","EDPLPCE",77,0)
+ S EDPKG=$O(^DIC(9.4,"B","EMERGENCY DEPARTMENT",0))
+"RTN","EDPLPCE",78,0)
+ S EDPSRC="EDP TRACKING LOG"
+"RTN","EDPLPCE",79,0)
+ S EDPDATA("ENCOUNTER",1,"PATIENT")=DFN
+"RTN","EDPLPCE",80,0)
+ S EDPDATA("ENCOUNTER",1,"HOS LOC")=LOC
+"RTN","EDPLPCE",81,0)
+ S EDPDATA("ENCOUNTER",1,"SERVICE CATEGORY")="A"
+"RTN","EDPLPCE",82,0)
+ S EDPDATA("ENCOUNTER",1,"ENCOUNTER TYPE")="P"
+"RTN","EDPLPCE",83,0)
+ I 'EDPVISIT S EDPDATA("ENCOUNTER",1,"ENC D/T")=TS
+"RTN","EDPLPCE",84,0)
+ S OK=$$DATA2PCE^PXAPI("EDPDATA",EDPKG,EDPSRC,.EDPVISIT,,,,EDPPCHG,.EDPERR)
+"RTN","EDPLPCE",85,0)
+ I OK<1 D
+"RTN","EDPLPCE",86,0)
+ . N NOW S NOW=$$NOW^XLFDT
+"RTN","EDPLPCE",87,0)
+ . S ^XTMP("EDPERR-PCE-"_LOG,0)=$$FMADD^XLFDT(NOW,7)_U_NOW_U_"ED PCE Error"
+"RTN","EDPLPCE",88,0)
+ . S ^XTMP("EDPERR-PCE-"_LOG,"VISIT")=EDPVISIT_U_OK
+"RTN","EDPLPCE",89,0)
+ . M ^XTMP("EDPERR-PCE-"_LOG,"DATA")=EDPDATA
+"RTN","EDPLPCE",90,0)
+ . M ^XTMP("EDPERR-PCE-"_LOG,"ERR")=EDPERR
+"RTN","EDPLPCE",91,0)
+ ;
+"RTN","EDPLPCE",92,0)
+ ; update the visit pointer in 230
+"RTN","EDPLPCE",93,0)
+ I EDPVISIT,OK,($P(X0,U,12)'=EDPVISIT) D
+"RTN","EDPLPCE",94,0)
+ . N FDA,DIERR,ERR
+"RTN","EDPLPCE",95,0)
+ . S FDA(230,LOG_",",.12)=EDPVISIT
+"RTN","EDPLPCE",96,0)
+ . D FILE^DIE("","FDA","ERR")
+"RTN","EDPLPCE",97,0)
+ Q
+"RTN","EDPLPCE",98,0)
+XFERDIAG(LOG,PCE) ; Setup diagnosis list based on entries in 230
+"RTN","EDPLPCE",99,0)
+ ;DRP 04062012 Begin EDP*2.0*2 ICD10 CHANGES
+"RTN","EDPLPCE",100,0)
+ N IEN,X0,CODE,EDPDOI,EDPLCIEN
+"RTN","EDPLPCE",101,0)
+ K PCE("POV")  ; not worried about adds & subtracts, so start over
+"RTN","EDPLPCE",102,0)
+ S IEN=0 F  S IEN=$O(^EDP(230,LOG,4,IEN)) Q:'IEN  D
+"RTN","EDPLPCE",103,0)
+ . S X0=$G(^EDP(230,LOG,4,IEN,0)),EDPDOI=$P(^EDP(230,LOG,0),U,8) ; GET DATE OF INTEREST
+"RTN","EDPLPCE",104,0)
+ . S PCE("POV",IEN)="POV^^^^1",EDPLCIEN=$P(X0,U,2)
+"RTN","EDPLPCE",105,0)
+ . S CODE=$P($$ICDDATA^EDPLEX("DIAG",EDPLCIEN,EDPDOI),U,2)
+"RTN","EDPLPCE",106,0)
+ . ;DRP End EDP*2.0*2 Changes
+"RTN","EDPLPCE",107,0)
+ . S $P(PCE("POV",IEN),U,3)=CODE        ; code
+"RTN","EDPLPCE",108,0)
+ . S $P(PCE("POV",IEN),U,4)=$P(X0,U)    ; text
+"RTN","EDPLPCE",109,0)
+ . S $P(PCE("POV",IEN),U,8)=$P(X0,U,3)  ; primary
+"RTN","EDPLPCE",110,0)
+ Q
+"RTN","EDPLPCE",111,0)
+DELVISIT(LOG) ; Delete visit for stub entry
+"RTN","EDPLPCE",112,0)
+ N EDPVISIT S EDPVISIT=$P(^EDP(230,LOG,0),U,12)
+"RTN","EDPLPCE",113,0)
+ Q:'EDPVISIT
+"RTN","EDPLPCE",114,0)
+ ;
+"RTN","EDPLPCE",115,0)
+ N FDA,DIERR,ERR
+"RTN","EDPLPCE",116,0)
+ S FDA(230,LOG_",",.12)="@"
+"RTN","EDPLPCE",117,0)
+ D FILE^DIE("","FDA","ERR")
+"RTN","EDPLPCE",118,0)
+ ;
+"RTN","EDPLPCE",119,0)
+ S OK=$$DELVFILE^PXAPI("ALL",EDPVISIT,"EMERGENCY DEPARTMENT","EDP TRACKING LOG")
+"RTN","EDPLPCE",120,0)
+ Q
+"RTN","EDPLPCE",121,0)
+DFLTLOC(DFN) ; Return the default location for the ED
+"RTN","EDPLPCE",122,0)
+ N EDPLST,I,LST,TM,BEG,END,LOCS
+"RTN","EDPLPCE",123,0)
+ D GETLST^XPAR(.EDPLST,EDPSITE_";DIC(4,","EDPF LOCATION","Q")
+"RTN","EDPLPCE",124,0)
+ S TM=$E($P($$NOW^XLFDT,".",2)_"0000",1,4)
+"RTN","EDPLPCE",125,0)
+ ; put time ranges first, then sequence
+"RTN","EDPLPCE",126,0)
+ S I=0 F  S I=$O(EDPLST(I)) Q:'I  D
+"RTN","EDPLPCE",127,0)
+ . ; put sequence at end of list
+"RTN","EDPLPCE",128,0)
+ . I EDPLST(I)'["-" S LST(+EDPLST(I)*1000)=EDPLST(I),LOCS(+$P(EDPLST(I),U,2))="" Q
+"RTN","EDPLPCE",129,0)
+ . ; put time ranges at top of list
+"RTN","EDPLPCE",130,0)
+ . S BEG=+$P(EDPLST(I),"-"),END=+$P(EDPLST(I),"-",2)
+"RTN","EDPLPCE",131,0)
+ . I (TM<BEG)!(TM>END) Q  ; eliminating times that don't include NOW
+"RTN","EDPLPCE",132,0)
+ . S LST(I)=EDPLST(I),LOCS(+$P(EDPLST(I),U,2))=""
+"RTN","EDPLPCE",133,0)
+ ;
+"RTN","EDPLPCE",134,0)
+ ; look for visits to ED locations within the last hour
+"RTN","EDPLPCE",135,0)
+ N BACKTO,VTM,VLOC,LOC
+"RTN","EDPLPCE",136,0)
+ S BACKTO=$$FMADD^XLFDT($$NOW^XLFDT,0,-1),LOC=0
+"RTN","EDPLPCE",137,0)
+ I $G(DFN) D
+"RTN","EDPLPCE",138,0)
+ . S VTM="" F  S VTM=$O(^AUPNVSIT("AET",DFN,VTM),-1) Q:VTM<BACKTO  D
+"RTN","EDPLPCE",139,0)
+ .. S VLOC=0 F  S VLOC=$O(^AUPNVSIT("AET",DFN,VTM,VLOC)) Q:'VLOC  D  Q:LOC
+"RTN","EDPLPCE",140,0)
+ ... I $D(LOCS(VLOC)) S LOC=VLOC
+"RTN","EDPLPCE",141,0)
+ Q:LOC LOC
+"RTN","EDPLPCE",142,0)
+ ;
+"RTN","EDPLPCE",143,0)
+ ; otherwise, return the highest ranked location
+"RTN","EDPLPCE",144,0)
+ S I=$O(LST(0)) S:I LOC=$P(LST(I),U,2)
+"RTN","EDPLPCE",145,0)
+ Q LOC
+"RTN","EDPLPCE",146,0)
+ ;
+"RTN","EDPLPCE",147,0)
+TS4VISIT(DFN,LOC,TS) ; Return visit time if there is already a visit
+"RTN","EDPLPCE",148,0)
+ N BACKTO,VTM,VLOC,VCAT,NEWTS
+"RTN","EDPLPCE",149,0)
+ S BACKTO=$$FMADD^XLFDT($$NOW^XLFDT,0,-1),NEWTS=""
+"RTN","EDPLPCE",150,0)
+ S VTM="" F  S VTM=$O(^AUPNVSIT("AET",DFN,VTM),-1) Q:VTM<BACKTO  D
+"RTN","EDPLPCE",151,0)
+ . S VLOC=0 F  S VLOC=$O(^AUPNVSIT("AET",DFN,VTM,VLOC)) Q:'VLOC  Q:VLOC'=LOC  D
+"RTN","EDPLPCE",152,0)
+ .. S VCAT="" F  S VCAT=$O(^AUPNVSIT("AET",DFN,VTM,VLOC,VCAT)) Q:VCAT'="P"  D
+"RTN","EDPLPCE",153,0)
+ ... S NEWTS=VTM
+"RTN","EDPLPCE",154,0)
+ Q:NEWTS NEWTS
+"RTN","EDPLPCE",155,0)
+ Q TS
+"RTN","EDPLPCE",156,0)
+ ;
+"RTN","EDPLPCE",157,0)
+TEST ; Test creation of encounter
+"RTN","EDPLPCE",158,0)
+ N DFN S DFN=100679
+"RTN","EDPLPCE",159,0)
+ S LOC=$$GET^XPAR(DUZ(2)_";DIC(4,","EDPF LOCATION")
+"RTN","EDPLPCE",160,0)
+ ;
+"RTN","EDPLPCE",161,0)
+ N EDPKG,EDPSRC,OK
+"RTN","EDPLPCE",162,0)
+ S EDPKG=$O(^DIC(9.4,"B","EMERGENCY DEPARTMENT",0))
+"RTN","EDPLPCE",163,0)
+ S EDPSRC="EDP TRACKING LOG"
+"RTN","EDPLPCE",164,0)
+ S EDPDATA("ENCOUNTER",1,"PATIENT")=DFN
+"RTN","EDPLPCE",165,0)
+ S EDPDATA("ENCOUNTER",1,"HOS LOC")=LOC
+"RTN","EDPLPCE",166,0)
+ S EDPDATA("ENCOUNTER",1,"SERVICE CATEGORY")="A"
+"RTN","EDPLPCE",167,0)
+ S EDPDATA("ENCOUNTER",1,"ENCOUNTER TYPE")="P"
+"RTN","EDPLPCE",168,0)
+ S EDPDATA("ENCOUNTER",1,"ENC D/T")=$$NOW^XLFDT
+"RTN","EDPLPCE",169,0)
+ ;
+"RTN","EDPLPCE",170,0)
+ ;S EDPDATA("DX/PL",1,"DIAGNOSIS")=$O(^ICD9("BA","V70.3 ",0))
+"RTN","EDPLPCE",171,0)
+ ;S EDPDATA("PROCEDURE",1,"PROCEDURE")=$O(^ICPT("B","99201",0))
+"RTN","EDPLPCE",172,0)
+ S EDPDATA("PROVIDER",1,"NAME")=9066
+"RTN","EDPLPCE",173,0)
+ ;
+"RTN","EDPLPCE",174,0)
+ S OK=$$DATA2PCE^PXAPI("EDPDATA",EDPKG,EDPSRC,.EDPVISIT)
+"RTN","EDPLPCE",175,0)
+ Q
+"RTN","EDPQLE")
+0^8^B55054483^B43232281
+"RTN","EDPQLE",1,0)
+EDPQLE ;SLC/KCM - Retrieve Log Entry ;2/28/12 08:33am
+"RTN","EDPQLE",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPQLE",3,0)
+ ;
+"RTN","EDPQLE",4,0)
+ ; ; DBIA#  SUPPORTED
+"RTN","EDPQLE",5,0)
+ ; -----  ---------  ------------------------------------
+"RTN","EDPQLE",6,0)
+ ;  1894  Cont Sub   ENCEVENT^PXAPI
+"RTN","EDPQLE",7,0)
+ ;
+"RTN","EDPQLE",8,0)
+GET(LOG,CHOICES) ; Get a log entry by request
+"RTN","EDPQLE",9,0)
+ N CURBED,CURVAL,PERSON,CODED,CHTS,CHLOAD,CLINIC
+"RTN","EDPQLE",10,0)
+ S AREA=$P(^EDP(230,LOG,0),U,3)
+"RTN","EDPQLE",11,0)
+ S CHTS=$P($G(^EDPB(231.9,AREA,231)),U),CHLOAD=(CHTS'=CHOICES)
+"RTN","EDPQLE",12,0)
+ N EDPTIME S EDPTIME=$$NOW^XLFDT
+"RTN","EDPQLE",13,0)
+ N EDPNOVAL S EDPNOVAL=+$O(^EDPB(233.1,"B","edp.reserved.novalue",0))
+"RTN","EDPQLE",14,0)
+ D LOG(LOG)
+"RTN","EDPQLE",15,0)
+ D XML^EDPX("<choices ts='"_CHTS_"' >")
+"RTN","EDPQLE",16,0)
+ D BEDS,PERSONS,CODED,CLINICS
+"RTN","EDPQLE",17,0)
+ D:CHLOAD CHOICES^EDPQLE1(AREA)
+"RTN","EDPQLE",18,0)
+ D CLINLST^EDPQLE1($P(^EDP(230,LOG,0),U,14)) ; time-sensitive, get every time
+"RTN","EDPQLE",19,0)
+ D XML^EDPX("</choices>")
+"RTN","EDPQLE",20,0)
+ Q
+"RTN","EDPQLE",21,0)
+LOG(LOG) ; return the log entry as XML
+"RTN","EDPQLE",22,0)
+ N X,X0,X1,X3
+"RTN","EDPQLE",23,0)
+ ;
+"RTN","EDPQLE",24,0)
+ L +^EDP(230,LOG):3
+"RTN","EDPQLE",25,0)
+ S X0=^EDP(230,LOG,0),X1=$G(^(1)),X3=$G(^(3))
+"RTN","EDPQLE",26,0)
+ S X("loadTS")=$$NOW^XLFDT
+"RTN","EDPQLE",27,0)
+ L -^EDP(230,LOG)
+"RTN","EDPQLE",28,0)
+ ;
+"RTN","EDPQLE",29,0)
+ ; Set up encounter info into ^TMP if necessary so we can use it later
+"RTN","EDPQLE",30,0)
+ ;   see if visit present, if diagnosis coded or missing provider
+"RTN","EDPQLE",31,0)
+ I $P(X0,U,12),($P($G(^EDPB(231.9,AREA,1)),U,2)!('$P(X3,U,5))) D
+"RTN","EDPQLE",32,0)
+ . K ^TMP("PXKENC",$J)
+"RTN","EDPQLE",33,0)
+ . D ENCEVENT^PXAPI($P(X0,U,12))
+"RTN","EDPQLE",34,0)
+ ;
+"RTN","EDPQLE",35,0)
+ ; Get Provider from PCE if we don't have one
+"RTN","EDPQLE",36,0)
+ ;    this is commented out for now since we don't have a way to
+"RTN","EDPQLE",37,0)
+ ;    let the user know the provider was pulled in and needed to be saved
+"RTN","EDPQLE",38,0)
+ ; I '$P(X3,U,5),$P(X0,U,12) S X("md")=$$PRIMPCE($P(X0,U,12)),PERSON("provider")=X("md")
+"RTN","EDPQLE",39,0)
+ ;
+"RTN","EDPQLE",40,0)
+ S X("id")=LOG
+"RTN","EDPQLE",41,0)
+ S X("site")=$P(X0,U,2)
+"RTN","EDPQLE",42,0)
+ S X("area")=$P(X0,U,3)
+"RTN","EDPQLE",43,0)
+ S X("name")=$P(X0,U,4)
+"RTN","EDPQLE",44,0)
+ S X("dfn")=$P(X0,U,6)
+"RTN","EDPQLE",45,0)
+ S X("ssn")=$S(X("dfn"):$P(^DPT(X("dfn"),0),U,9),1:"")
+"RTN","EDPQLE",46,0)
+ S X("dob")=$$DOB(X("dfn"))
+"RTN","EDPQLE",47,0)
+ S X("closed")=$P(X0,U,7)
+"RTN","EDPQLE",48,0)
+ S X("inTS")=$P(X0,U,8)
+"RTN","EDPQLE",49,0)
+ S X("outTS")=$P(X0,U,9)
+"RTN","EDPQLE",50,0)
+ S X("arrival")=$$CODE($P(X0,U,10)),CODED("arrival")=X("arrival")
+"RTN","EDPQLE",51,0)
+ S X("visit")=$P(X0,U,12)
+"RTN","EDPQLE",52,0)
+ S X("clinic")=$P(X0,U,14),CLINIC=X("clinic")
+"RTN","EDPQLE",53,0)
+ S X("complaint")=$P(X1,U,1)
+"RTN","EDPQLE",54,0)
+ S X("compLong")=$G(^EDP(230,LOG,2))
+"RTN","EDPQLE",55,0)
+ S X("status")=$$CODE($P(X3,U,2)),CODED("status")=X("status")
+"RTN","EDPQLE",56,0)
+ S X("acuity")=$$CODE($P(X3,U,3))
+"RTN","EDPQLE",57,0)
+ S X("bed")=+$P(X3,U,4)
+"RTN","EDPQLE",58,0)
+ S X("md")=+$P(X3,U,5),PERSON("provider")=X("md")
+"RTN","EDPQLE",59,0)
+ S X("nurse")=+$P(X3,U,6),PERSON("nurse")=X("nurse")
+"RTN","EDPQLE",60,0)
+ S X("res")=+$P(X3,U,7),PERSON("resident")=X("res")
+"RTN","EDPQLE",61,0)
+ S X("comment")=$P(X3,U,8)
+"RTN","EDPQLE",62,0)
+ S X("delay")=$$CODE($P(X1,U,5)),CODED("delay")=X("delay")
+"RTN","EDPQLE",63,0)
+ S X("disposition")=$$CODE($P(X1,U,2)),CODED("disposition")=X("disposition")
+"RTN","EDPQLE",64,0)
+ S X("required")=$$REQ(.X)
+"RTN","EDPQLE",65,0)
+ S CURBED=X("bed")_U_$P(X3,U,9)  ; for later use by BEDS
+"RTN","EDPQLE",66,0)
+ ;
+"RTN","EDPQLE",67,0)
+ D XML^EDPX("<logEntry>")
+"RTN","EDPQLE",68,0)
+ D XMLE^EDPX(.X)
+"RTN","EDPQLE",69,0)
+ ;
+"RTN","EDPQLE",70,0)
+ ; Get diagnosis from PCE if it is coded entry required AND patient has a VISIT
+"RTN","EDPQLE",71,0)
+ I $P($G(^EDPB(231.9,AREA,1)),U,2),$P(X0,U,12) D
+"RTN","EDPQLE",72,0)
+ . D DIAGPCE($P(X0,U,12))
+"RTN","EDPQLE",73,0)
+ E  D
+"RTN","EDPQLE",74,0)
+ . D DIAGFREE(LOG)
+"RTN","EDPQLE",75,0)
+ ;
+"RTN","EDPQLE",76,0)
+ I X("dfn") D PRF^EDPFPTC(X("dfn"))  ; patient record flags
+"RTN","EDPQLE",77,0)
+ ;
+"RTN","EDPQLE",78,0)
+ D XML^EDPX("</logEntry>")
+"RTN","EDPQLE",79,0)
+ Q
+"RTN","EDPQLE",80,0)
+PRIMPCE(EDPVISIT) ; return primary provider from PCE
+"RTN","EDPQLE",81,0)
+ ;for provider
+"RTN","EDPQLE",82,0)
+ ; LST(n)="PRV"^ien^^^name^primary/secondary flag
+"RTN","EDPQLE",83,0)
+ N I,X,PRIM
+"RTN","EDPQLE",84,0)
+ S PRIM=""
+"RTN","EDPQLE",85,0)
+ S I=0 F  S I=$O(^TMP("PXKENC",$J,EDPVISIT,"PRV",I)) Q:'I  D  Q:PRIM
+"RTN","EDPQLE",86,0)
+ . S X=^TMP("PXKENC",$J,EDPVISIT,"PRV",I,0)
+"RTN","EDPQLE",87,0)
+ . Q:$P(X,U,4)'="P"
+"RTN","EDPQLE",88,0)
+ . S PRIM=$P(X,U)
+"RTN","EDPQLE",89,0)
+ Q:'PRIM ""
+"RTN","EDPQLE",90,0)
+ Q:'$D(^XUSEC("PROVIDER",PRIM)) ""
+"RTN","EDPQLE",91,0)
+ Q:'$$ALLOW^EDPFPER(PRIM,"P") ""
+"RTN","EDPQLE",92,0)
+ Q PRIM
+"RTN","EDPQLE",93,0)
+ ;
+"RTN","EDPQLE",94,0)
+DIAGPCE(EDPVISIT) ; add PCE diagnoses
+"RTN","EDPQLE",95,0)
+ Q:'EDPVISIT
+"RTN","EDPQLE",96,0)
+ ;BEGIN EDP*2.0*2 CHANGES replace line below with one that follows
+"RTN","EDPQLE",97,0)
+ N I,X,CODE,EDPLVDT,EDPLCIEN,EDPLCTYPE
+"RTN","EDPQLE",98,0)
+ S I=0 F  S I=$O(^TMP("PXKENC",$J,EDPVISIT,"POV",I)) Q:'I  D
+"RTN","EDPQLE",99,0)
+ . K X S X=^TMP("PXKENC",$J,EDPVISIT,"POV",I,0)
+"RTN","EDPQLE",100,0)
+ . S X("type")="POV",EDPLVDT=$P($G(^TMP("PXKENC",$J,EDPVISIT,"VST",EDPVISIT,0)),U)
+"RTN","EDPQLE",101,0)
+ . S EDPLCIEN=$P(X,U),EDPLCTYPE=$$VER^EDPLEX($$CSYS^EDPLEX(EDPLVDT)) ;DRP Added this line
+"RTN","EDPQLE",102,0)
+ . S:EDPLCIEN (X("code"),CODE)=$P($$ICDDATA^EDPLEX("DIAG",EDPLCIEN,EDPLVDT),U,2)
+"RTN","EDPQLE",103,0)
+ . S X("label")=^AUTNPOV($P(X,U,4),0),X("icdType")=EDPLCTYPE,X("ien")=EDPLCIEN
+"RTN","EDPQLE",104,0)
+ . S:X("label")'[EDPLCTYPE X("label")=X("label")_" ("_$G(EDPLCTYPE)_" "_$G(CODE)_")" ; drp added this line
+"RTN","EDPQLE",105,0)
+ . ;END EDP*2.0*2 CHANGES
+"RTN","EDPQLE",106,0)
+ . S X("primary")=($P(X,U,12)="P")
+"RTN","EDPQLE",107,0)
+ . D XML^EDPX($$XMLA^EDPX("diagnosis",.X))
+"RTN","EDPQLE",108,0)
+ S I=0 F  S I=$O(^TMP("PXKENC",$J,EDPVISIT,"CPT",I)) Q:'I  D
+"RTN","EDPQLE",109,0)
+ . K X S X=^TMP("PXKENC",$J,EDPVISIT,"CPT",I,0)
+"RTN","EDPQLE",110,0)
+ . S X("type")="CPT"
+"RTN","EDPQLE",111,0)
+ . S CODE=$O(^ICPT("B",$P(X,U),0)) S:CODE CODE=$P(^ICPT(CODE,0),U)
+"RTN","EDPQLE",112,0)
+ . S X("code")=CODE
+"RTN","EDPQLE",113,0)
+ . S X("label")=^AUTNPOV($P(X,U,4),0)
+"RTN","EDPQLE",114,0)
+ . S X("quantity")=$P(X,U,16)
+"RTN","EDPQLE",115,0)
+ . D XML^EDPX($$XMLA^EDPX("proc",.X))
+"RTN","EDPQLE",116,0)
+ Q
+"RTN","EDPQLE",117,0)
+DIAGFREE(LOG) ; add free text diagnoses
+"RTN","EDPQLE",118,0)
+ N DIAG,CODE,LABEL,X4
+"RTN","EDPQLE",119,0)
+ S DIAG=0 F  S DIAG=$O(^EDP(230,LOG,4,DIAG)) Q:'DIAG  D
+"RTN","EDPQLE",120,0)
+ . S EDPLVDT=$P(^EDP(230,LOG,0),U,8) ;drp EDP*2.0*2 added to retrieve Date of Interest
+"RTN","EDPQLE",121,0)
+ . S X4=^EDP(230,LOG,4,DIAG,0)
+"RTN","EDPQLE",122,0)
+ . ;BEGIN EDP*2.0*2 CHANGES
+"RTN","EDPQLE",123,0)
+ . S X4("type")="POV"
+"RTN","EDPQLE",124,0)
+ . S EDPLCIEN=$P(X4,U,2) S:EDPLCIEN CODE=$P($$ICDDATA^EDPLEX("DIAG",EDPLCIEN,EDPLVDT),U,2) ;drp
+"RTN","EDPQLE",125,0)
+ . S:$G(CODE)'="" X4("code")=CODE,EDPLCTYPE=$$VER^EDPLEX($$CSYS^EDPLEX(EDPLVDT)),X4("ien")=EDPLCIEN
+"RTN","EDPQLE",126,0)
+ . S:$G(EDPLCTYPE)'="" X4("icdType")=EDPLCTYPE ; added this line drp
+"RTN","EDPQLE",127,0)
+ . S X4("label")=$P(X4,U,1)
+"RTN","EDPQLE",128,0)
+ . S:X4("label")'[$G(EDPLCTYPE) X4("label")=X4("label")_" ("_$G(EDPLCTYPE)_" "_$G(CODE)_")" ; drp added this line
+"RTN","EDPQLE",129,0)
+ . ;drp END EDP*2.0*2 CHANGES
+"RTN","EDPQLE",130,0)
+ . S X4("primary")=+$P(X4,U,3)
+"RTN","EDPQLE",131,0)
+ . D XML^EDPX($$XMLA^EDPX("diagnosis",.X4))
+"RTN","EDPQLE",132,0)
+ Q
+"RTN","EDPQLE",133,0)
+DOB(DFN) ; Return date of birth (external)
+"RTN","EDPQLE",134,0)
+ I 'DFN Q ""
+"RTN","EDPQLE",135,0)
+ N VA,VADM,X,Y
+"RTN","EDPQLE",136,0)
+ D DEM^VADPT
+"RTN","EDPQLE",137,0)
+ Q $P(VADM(3),U,2)_"   Age "_VADM(4)
+"RTN","EDPQLE",138,0)
+ ;
+"RTN","EDPQLE",139,0)
+CODE(IEN) ; set NOVAL code to 0 when returning code
+"RTN","EDPQLE",140,0)
+ Q:IEN=EDPNOVAL 0
+"RTN","EDPQLE",141,0)
+ Q +IEN
+"RTN","EDPQLE",142,0)
+ ;
+"RTN","EDPQLE",143,0)
+BEDS ; add a list of available room/beds for this area
+"RTN","EDPQLE",144,0)
+ D XML^EDPX("<bedList>")
+"RTN","EDPQLE",145,0)
+ D XML^EDPX($$XMLS^EDPX("bed",0,"None"))   ;non-selected
+"RTN","EDPQLE",146,0)
+ N BED,X0,MULTI,SEQ,OCCUPIED,MYBED
+"RTN","EDPQLE",147,0)
+ S BED=0 F  S BED=$O(^EDPB(231.8,"C",EDPSITE,AREA,BED)) Q:'BED  D
+"RTN","EDPQLE",148,0)
+ . S SEQ=$P(^EDPB(231.8,BED,0),U,5) S:'SEQ SEQ=99999
+"RTN","EDPQLE",149,0)
+ . ; PATCH 6 (BWF - 4/24/2013) - Additional filter for EDIS_DEFAULT
+"RTN","EDPQLE",150,0)
+ . I $$GET1^DIQ(231.8,BED,.01,"E")="EDIS_DEFAULT" Q
+"RTN","EDPQLE",151,0)
+ . S SEQ(SEQ,BED)=""
+"RTN","EDPQLE",152,0)
+ S SEQ=0 F  S SEQ=$O(SEQ(SEQ)) Q:'SEQ  D
+"RTN","EDPQLE",153,0)
+ . S BED=0 F  S BED=$O(SEQ(SEQ,BED)) Q:'BED  D
+"RTN","EDPQLE",154,0)
+ .. S X0=^EDPB(231.8,BED,0)
+"RTN","EDPQLE",155,0)
+ .. ; QUIT if inactive bed
+"RTN","EDPQLE",156,0)
+ .. I $P(X0,U,4) Q
+"RTN","EDPQLE",157,0)
+ .. ; QUIT if occupied, unless own bed or multi-assign
+"RTN","EDPQLE",158,0)
+ .. S MULTI=+$P(X0,U,9) S:MULTI=3 MULTI=0 ; single non-ed
+"RTN","EDPQLE",159,0)
+ .. S OCCUPIED=$D(^EDP(230,"AL",EDPSITE,AREA,BED))!$D(^EDP(230,"AH",EDPSITE,AREA,BED))
+"RTN","EDPQLE",160,0)
+ .. S MYBED=(BED=+CURBED)!(BED=$P(CURBED,U,2))
+"RTN","EDPQLE",161,0)
+ .. I OCCUPIED,'MYBED,'MULTI Q
+"RTN","EDPQLE",162,0)
+ .. ;
+"RTN","EDPQLE",163,0)
+ .. S X("data")=BED
+"RTN","EDPQLE",164,0)
+ .. S X("label")=$P(X0,U,6)_"  ("_$P(X0,U)_")"
+"RTN","EDPQLE",165,0)
+ .. S X("ref")=$P(X0,U,8)
+"RTN","EDPQLE",166,0)
+ .. D XML^EDPX($$XMLA^EDPX("bed",.X))
+"RTN","EDPQLE",167,0)
+ D XML^EDPX("</bedList>")
+"RTN","EDPQLE",168,0)
+ Q
+"RTN","EDPQLE",169,0)
+PERSONS ; add the internal/external values for persons
+"RTN","EDPQLE",170,0)
+ N ROLE,NAME,LOCID,IEN,X
+"RTN","EDPQLE",171,0)
+ D XML^EDPX("<persons>")
+"RTN","EDPQLE",172,0)
+ F ROLE="provider","nurse","resident" S LOCID=$G(PERSON(ROLE)) D
+"RTN","EDPQLE",173,0)
+ . Q:'LOCID
+"RTN","EDPQLE",174,0)
+ . S NAME=$P(^VA(200,LOCID,0),U)
+"RTN","EDPQLE",175,0)
+ . S X("data")=LOCID,X("label")=NAME
+"RTN","EDPQLE",176,0)
+ . D XML^EDPX($$XMLA^EDPX(ROLE,.X))
+"RTN","EDPQLE",177,0)
+ D XML^EDPX("</persons>")
+"RTN","EDPQLE",178,0)
+ Q
+"RTN","EDPQLE",179,0)
+CODED ; add internal/external values for codes
+"RTN","EDPQLE",180,0)
+ N NAME,X
+"RTN","EDPQLE",181,0)
+ D XML^EDPX("<selected>")
+"RTN","EDPQLE",182,0)
+ S X="" F  S X=$O(CODED(X)) Q:X=""  I CODED(X) D
+"RTN","EDPQLE",183,0)
+ . S NAME=$P($G(^EDPB(233.1,CODED(X),0)),U,2) Q:NAME=""
+"RTN","EDPQLE",184,0)
+ . D XML^EDPX($$XMLS^EDPX(X,CODED(X),NAME))
+"RTN","EDPQLE",185,0)
+ D XML^EDPX("</selected>")
+"RTN","EDPQLE",186,0)
+ Q
+"RTN","EDPQLE",187,0)
+CLINICS ; add internal/external values for clinic
+"RTN","EDPQLE",188,0)
+ Q:'CLINIC
+"RTN","EDPQLE",189,0)
+ N NAME,X
+"RTN","EDPQLE",190,0)
+ D XML^EDPX("<clinics>")
+"RTN","EDPQLE",191,0)
+ S NAME=$P($G(^SC(CLINIC,0)),U)
+"RTN","EDPQLE",192,0)
+ S X("data")=CLINIC,X("label")=NAME
+"RTN","EDPQLE",193,0)
+ D XML^EDPX($$XMLA^EDPX("clinic",.X))
+"RTN","EDPQLE",194,0)
+ D XML^EDPX("</clinics>")
+"RTN","EDPQLE",195,0)
+ Q
+"RTN","EDPQLE",196,0)
+REQ(VAL) ; return the fields required to close this entry
+"RTN","EDPQLE",197,0)
+ ; called from LOG, AREA is assumed to be defined
+"RTN","EDPQLE",198,0)
+ N NEED,PARAM
+"RTN","EDPQLE",199,0)
+ S PARAM=$G(^EDPB(231.9,AREA,1)),NEED=""
+"RTN","EDPQLE",200,0)
+ I $P(PARAM,U,1) S $P(NEED,",",1)="diag"
+"RTN","EDPQLE",201,0)
+ I $P(PARAM,U,3) S $P(NEED,",",2)="disp"
+"RTN","EDPQLE",202,0)
+ ; bwf - 4/26/13 - per Dr. Gelman, want delay reason no matter whether patient is in observation or not.
+"RTN","EDPQLE",203,0)
+ ;               - replaced line below with one that follows
+"RTN","EDPQLE",204,0)
+ ;I $$DLYREQ,$$NOTOBS,$$EXCEED S $P(NEED,",",3)="delay"
+"RTN","EDPQLE",205,0)
+ I $$DLYREQ,$$EXCEED S $P(NEED,",",3)="delay"
+"RTN","EDPQLE",206,0)
+ Q NEED
+"RTN","EDPQLE",207,0)
+ ;
+"RTN","EDPQLE",208,0)
+DLYREQ() ; return true if delay params set to required
+"RTN","EDPQLE",209,0)
+ ; called from REQ, PARAM is assumed to be defined
+"RTN","EDPQLE",210,0)
+ Q $P(PARAM,U,4)&$P(PARAM,U,5)
+"RTN","EDPQLE",211,0)
+ ;
+"RTN","EDPQLE",212,0)
+NOTOBS() ; return true if not in observation status
+"RTN","EDPQLE",213,0)
+ ; called from REQ, VAL is assumed to be defined
+"RTN","EDPQLE",214,0)
+ N STS S STS=+$G(VAL("status"))
+"RTN","EDPQLE",215,0)
+ Q:'STS 1
+"RTN","EDPQLE",216,0)
+ Q:$P(^EDPB(233.1,STS,0),U,5)["O" 0
+"RTN","EDPQLE",217,0)
+ Q 1
+"RTN","EDPQLE",218,0)
+ ;
+"RTN","EDPQLE",219,0)
+EXCEED() ; return true if delay time exceeded
+"RTN","EDPQLE",220,0)
+ ; called from REQ, VAL and PARAM are assumed to be defined
+"RTN","EDPQLE",221,0)
+ N IN S IN=$G(VAL("inTS"))
+"RTN","EDPQLE",222,0)
+ N OUT S OUT=$G(VAL("outTS")) S:'OUT OUT=EDPTIME
+"RTN","EDPQLE",223,0)
+ N MAX S MAX=$P(PARAM,U,5)
+"RTN","EDPQLE",224,0)
+ Q ($$FMDIFF^XLFDT(OUT,IN,2)\60)>MAX
+"RTN","EDPQPCE")
+0^10^B6816999^B3317665
+"RTN","EDPQPCE",1,0)
+EDPQPCE ;SLC/KCM - Retrieve PCE information for ED Visits ;2/28/12 08:33am
+"RTN","EDPQPCE",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPQPCE",3,0)
+ ;
+"RTN","EDPQPCE",4,0)
+DXPRI(AREA,LOG) ; return primary diagnosis
+"RTN","EDPQPCE",5,0)
+ N DXLST
+"RTN","EDPQPCE",6,0)
+ D DXALL(AREA,LOG,.DXLST)
+"RTN","EDPQPCE",7,0)
+ Q $G(DXLST(1)) ;$P( ,U,2)
+"RTN","EDPQPCE",8,0)
+ ;
+"RTN","EDPQPCE",9,0)
+DXALL(AREA,LOG,DXLST) ; build list of diagnoses for a visit
+"RTN","EDPQPCE",10,0)
+ N EDPVISIT S EDPVISIT=$P(^EDP(230,LOG,0),U,12)
+"RTN","EDPQPCE",11,0)
+ I EDPVISIT,$P($G(^EDPB(231.9,AREA,1)),U,2) D DXPCE(EDPVISIT,.DXLST) I 1
+"RTN","EDPQPCE",12,0)
+ E  D DXFREE(LOG,.DXLST)
+"RTN","EDPQPCE",13,0)
+ Q
+"RTN","EDPQPCE",14,0)
+DXPCE(EDPVISIT,DXLST) ; return a list of diagnoses from PCE
+"RTN","EDPQPCE",15,0)
+ ; DRP 04062012 ADD ICD10 API CALLS EDP*2.0*2 Begin
+"RTN","EDPQPCE",16,0)
+ N I,X,CODE,NAME,DX,EDPLVDT,EDPLCIEN,EDPLCTYPE
+"RTN","EDPQPCE",17,0)
+ K ^TMP("PXKENC",$J)
+"RTN","EDPQPCE",18,0)
+ D ENCEVENT^PXAPI(EDPVISIT)
+"RTN","EDPQPCE",19,0)
+ S I=0,DX=0 F  S I=$O(^TMP("PXKENC",$J,EDPVISIT,"POV",I)) Q:'I  D
+"RTN","EDPQPCE",20,0)
+ . S X=^TMP("PXKENC",$J,EDPVISIT,"POV",I,0)
+"RTN","EDPQPCE",21,0)
+ . S EDPLVDT=$P($G(^TMP("PXKENC",$J,EDPVISIT,"VST",EDPVISIT,0)),U,1)
+"RTN","EDPQPCE",22,0)
+ . S EDPLCTYPE=$$VER^EDPLEX($$CSYS^EDPLEX(EDPLVDT))
+"RTN","EDPQPCE",23,0)
+ . S EDPLCIEN=$P(X,U)
+"RTN","EDPQPCE",24,0)
+ . S CODE=$P($$ICDDATA^EDPLEX("DIAG",EDPLCIEN,EDPLVDT),U,2) ; DRP 
+"RTN","EDPQPCE",25,0)
+ . ;DRP end EDP*2.0*2 changes
+"RTN","EDPQPCE",26,0)
+ . S NAME=^AUTNPOV($P(X,U,4),0)
+"RTN","EDPQPCE",27,0)
+ . S:NAME'[EDPLCTYPE NAME=NAME_" ("_$G(EDPLCTYPE)_" "_CODE_")"
+"RTN","EDPQPCE",28,0)
+ . S DX=DX+1,DX($S($P(X,U,12)="P":DX,1:DX*10000))=CODE_U_NAME_U_EDPLCTYPE
+"RTN","EDPQPCE",29,0)
+ S X="",DXLST=DX F I=1:1 S X=$O(DX(X)) Q:X=""  S DXLST(I)=DX(X)
+"RTN","EDPQPCE",30,0)
+ Q
+"RTN","EDPQPCE",31,0)
+DXFREE(LOG,DXLST) ; return free text diagnoses from ED LOG file
+"RTN","EDPQPCE",32,0)
+ N I,CODE,NAME,X4,DX,EDPLVDT,EDPLCIEN,EDPLCTYPE
+"RTN","EDPQPCE",33,0)
+ S I=0,DX=0 F  S I=$O(^EDP(230,LOG,4,I)) Q:'I  D
+"RTN","EDPQPCE",34,0)
+ . S X4=^EDP(230,LOG,4,I,0)
+"RTN","EDPQPCE",35,0)
+ . ; DRP 04062012 ADD ICD10 API CALLS EDP*2.0*2 Begin
+"RTN","EDPQPCE",36,0)
+ . S EDPLVDT=$P(^EDP(230,LOG,0),U,8) ;added this line DRP
+"RTN","EDPQPCE",37,0)
+ . S EDPLCIEN=$P(X4,U,2) S:EDPLCIEN CODE=$P($$ICDDATA^EDPLEX("DIAG",EDPLCIEN,EDPLVDT),U,2)
+"RTN","EDPQPCE",38,0)
+ . S:$G(CODE)'="" EDPLCTYPE=$$VER^EDPLEX($$CSYS^EDPLEX(EDPLVDT))
+"RTN","EDPQPCE",39,0)
+ . S NAME=$P(X4,U,1)
+"RTN","EDPQPCE",40,0)
+ . S:NAME'[$G(EDPLCTYPE) NAME=NAME_" ("_$G(EDPLCTYPE)_" "_$G(CODE)_")" ; drp added this line
+"RTN","EDPQPCE",41,0)
+ . S DX=DX+1,DX($S(+$P(X4,U,3):DX,1:DX*10000))=$G(CODE)_U_NAME_U_$G(EDPLCTYPE)
+"RTN","EDPQPCE",42,0)
+ . ;DRP end EDP*2.0*2 changes
+"RTN","EDPQPCE",43,0)
+ S X="",DXLST=DX F I=1:1 S X=$O(DX(X)) Q:X=""  S DXLST(I)=DX(X)
+"RTN","EDPQPCE",44,0)
+ Q
+"RTN","EDPQPCE",45,0)
+DXFREE2(LOG,DXLST) ; return ONLY the free text diagnosis
+"RTN","EDPQPCE",46,0)
+ N I,CODE,NAME,X4,DX
+"RTN","EDPQPCE",47,0)
+ S I=0,DX=0 F  S I=$O(^EDP(230,LOG,4,I)) Q:'I  D
+"RTN","EDPQPCE",48,0)
+ . S X4=^EDP(230,LOG,4,I,0)
+"RTN","EDPQPCE",49,0)
+ . S NAME=$P(X4,U,1)
+"RTN","EDPQPCE",50,0)
+ . S DX=DX+1,DX($S(+$P(X4,U,3):DX,1:DX*10000))=NAME
+"RTN","EDPQPCE",51,0)
+ S X="",DXLST=DX F I=1:1 S X=$O(DX(X)) Q:X=""  S DXLST(I)=DX(X)
+"RTN","EDPQPCE",52,0)
+ Q
+"RTN","EDPRPT1")
+0^2^B51586751^B50357723
+"RTN","EDPRPT1",1,0)
+EDPRPT1 ;SLC/MKB - Activity Report ;4/25/13 3:15pm
+"RTN","EDPRPT1",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPRPT1",3,0)
+ ;
+"RTN","EDPRPT1",4,0)
+ACT(BEG,END,CSV) ; Get Activity Report for EDPSITE by date range
+"RTN","EDPRPT1",5,0)
+ N LOG,X,X0,X1,X3,DX,IN,OUT,ROW,PROV,I,CUTOFF
+"RTN","EDPRPT1",6,0)
+ N ELAPSE,TRIAGE,WAIT,ADMDEC,ADMDEL,ALL,ADM,NOT,DISP
+"RTN","EDPRPT1",7,0)
+ D INIT ;set counters, sums to 0
+"RTN","EDPRPT1",8,0)
+ D:'$G(CSV) XML^EDPX("<logEntries>") I $G(CSV) D  ;headers
+"RTN","EDPRPT1",9,0)
+ . N TAB S TAB=$C(9)
+"RTN","EDPRPT1",10,0)
+ . ;***pij 4/19/2013 changed ED to IEN
+"RTN","EDPRPT1",11,0)
+ . ;S X="ED"_TAB_"Time In"_TAB_"Time Out"_TAB_"Complaint"_TAB_"MD"_TAB_"Acuity"_TAB_"Elapsed"_TAB_"Triage"_TAB_"Wait"_TAB_"Dispo"_TAB_"Adm Dec"_TAB_"Adm Delay"_TAB_"Diagnosis"_TAB_"ICD9"
+"RTN","EDPRPT1",12,0)
+ . ;DRP EDP*2.0*2 Begin
+"RTN","EDPRPT1",13,0)
+ . ;***
+"RTN","EDPRPT1",14,0)
+ . S X="IEN"_TAB_"Time In"_TAB_"Time Out"_TAB_"Complaint"_TAB_"MD"_TAB_"Acuity"_TAB_"Elapsed"_TAB_"Triage"_TAB_"Wait"_TAB_"Dispo"_TAB_"Adm Dec"_TAB_"Adm Delay"_TAB_"Diagnosis"_TAB_"ICD"_TAB_"ICD Type"
+"RTN","EDPRPT1",15,0)
+ . ;End EDP*2.0*2 Changes
+"RTN","EDPRPT1",16,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPT1",17,0)
+ S IN=BEG-.000001
+"RTN","EDPRPT1",18,0)
+LOOP F  S IN=$O(^EDP(230,"ATI",EDPSITE,IN)) Q:'IN  Q:IN>END  D  I '$D(ZTQUEUED),$$LONG D ZTSAVE Q
+"RTN","EDPRPT1",19,0)
+ . S LOG=0 F  S LOG=+$O(^EDP(230,"ATI",EDPSITE,IN,LOG)) Q:LOG<1  D
+"RTN","EDPRPT1",20,0)
+ .. S X0=^EDP(230,LOG,0),X1=$G(^(1)),X3=$G(^(3))
+"RTN","EDPRPT1",21,0)
+ .. S OUT=$P(X0,U,9),DX=$$DXPRI^EDPQPCE(+$P(X0,U,3),LOG)
+"RTN","EDPRPT1",22,0)
+ .. K ROW S ROW("id")=LOG,ALL=ALL+1
+"RTN","EDPRPT1",23,0)
+ .. S ROW("inTS")=$S($G(CSV):$$EDATE^EDPRPT(IN),1:IN)
+"RTN","EDPRPT1",24,0)
+ .. S ROW("outTS")=$S($G(CSV):$$EDATE^EDPRPT(OUT),1:OUT)
+"RTN","EDPRPT1",25,0)
+ .. S ROW("complaint")=$P(X1,U)
+"RTN","EDPRPT1",26,0)
+ .. S DISP=$$ECODE^EDPRPT($P(X1,U,2))
+"RTN","EDPRPT1",27,0)
+ .. ;TDP - Patch 2 mod to catch all dispositions
+"RTN","EDPRPT1",28,0)
+ .. I DISP="" S DISP=$$DISP^EDPRPT($P(X1,U,2))
+"RTN","EDPRPT1",29,0)
+ .. S ROW("disposition")=DISP
+"RTN","EDPRPT1",30,0)
+ .. S ROW("arrival")=$$ENAME^EDPRPT($P(X1,U,10))
+"RTN","EDPRPT1",31,0)
+ .. S ROW("acuity")=$$ECODE^EDPRPT($P(X3,U,3))
+"RTN","EDPRPT1",32,0)
+ .. S ROW("md")=$$EPERS^EDPRPT($P(X3,U,5))
+"RTN","EDPRPT1",33,0)
+ .. S:$P(X3,U,5) PROV(+$P(X3,U,5))=""
+"RTN","EDPRPT1",34,0)
+ .. ;DRP Begin EDP*2.0*2 Changes
+"RTN","EDPRPT1",35,0)
+ .. S ROW("icd")=$P(DX,U,1),ROW("dx")=$P(DX,U,2),ROW("icdType")=$P(DX,U,3)
+"RTN","EDPRPT1",36,0)
+ .. ;End EDP*2.0*2 Changes
+"RTN","EDPRPT1",37,0)
+ .. S:'$L(DISP) DISP="none" S DISP(DISP)=DISP(DISP)+1
+"RTN","EDPRPT1",38,0)
+ .. ;
+"RTN","EDPRPT1",39,0)
+A1 .. ; calculate times
+"RTN","EDPRPT1",40,0)
+ .. ; S:OUT="" OUT=NOW ;for calculations
+"RTN","EDPRPT1",41,0)
+ .. S ELAPSE=$S(OUT:($$FMDIFF^XLFDT(OUT,IN,2)\60),1:0)
+"RTN","EDPRPT1",42,0)
+ .. S ROW("elapsed")=ELAPSE_$S(ELAPSE>359:" *",1:"")
+"RTN","EDPRPT1",43,0)
+ .. S ALL("elapsed")=ALL("elapsed")+ELAPSE
+"RTN","EDPRPT1",44,0)
+ .. S DISP(DISP,"elapsed")=DISP(DISP,"elapsed")+ELAPSE
+"RTN","EDPRPT1",45,0)
+ .. ;
+"RTN","EDPRPT1",46,0)
+ .. S X=$$ACUITY^EDPRPT(LOG),TRIAGE=0 ;S:X<1 X=OUT
+"RTN","EDPRPT1",47,0)
+ .. S:X TRIAGE=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPT1",48,0)
+ .. S ROW("triage")=TRIAGE,ALL("triage")=ALL("triage")+TRIAGE
+"RTN","EDPRPT1",49,0)
+ .. S DISP(DISP,"triage")=DISP(DISP,"triage")+TRIAGE
+"RTN","EDPRPT1",50,0)
+ .. ;
+"RTN","EDPRPT1",51,0)
+ .. S X=$$LVWAITRM^EDPRPT(LOG),WAIT=0
+"RTN","EDPRPT1",52,0)
+ .. S:X WAIT=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPT1",53,0)
+ .. S ROW("wait")=WAIT,ALL("wait")=ALL("wait")+WAIT
+"RTN","EDPRPT1",54,0)
+ .. S DISP(DISP,"wait")=DISP(DISP,"wait")+WAIT
+"RTN","EDPRPT1",55,0)
+ .. ;
+"RTN","EDPRPT1",56,0)
+ .. S X=$$ADMIT^EDPRPT(LOG) I X<1 D
+"RTN","EDPRPT1",57,0)
+ ... S NOT=NOT+1,NOT("elapsed")=NOT("elapsed")+ELAPSE
+"RTN","EDPRPT1",58,0)
+ ... S NOT("triage")=NOT("triage")+TRIAGE
+"RTN","EDPRPT1",59,0)
+ ... S NOT("wait")=NOT("wait")+WAIT
+"RTN","EDPRPT1",60,0)
+ ... ;***pij 4/19/2013 if variables are null, change to zero
+"RTN","EDPRPT1",61,0)
+ ... S ROW("admDec")=0
+"RTN","EDPRPT1",62,0)
+ ... S ROW("admDel")=0
+"RTN","EDPRPT1",63,0)
+ ... ;***
+"RTN","EDPRPT1",64,0)
+ .. E  D  ;decision to admit
+"RTN","EDPRPT1",65,0)
+ ... S ADMDEC=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPT1",66,0)
+ ... S ADMDEL=$S(OUT:($$FMDIFF^XLFDT(OUT,X,2)\60),1:0)
+"RTN","EDPRPT1",67,0)
+ ... S ROW("admDec")=ADMDEC,ROW("admDel")=ADMDEL
+"RTN","EDPRPT1",68,0)
+ ... S ADM=ADM+1,ADM("elapsed")=ADM("elapsed")+ELAPSE
+"RTN","EDPRPT1",69,0)
+ ... S ADM("triage")=ADM("triage")+TRIAGE
+"RTN","EDPRPT1",70,0)
+ ... S ADM("wait")=ADM("wait")+WAIT
+"RTN","EDPRPT1",71,0)
+ ... S ADM("admDec")=ADM("admDec")+ADMDEC
+"RTN","EDPRPT1",72,0)
+ ... S ADM("admDel")=ADM("admDel")+ADMDEL
+"RTN","EDPRPT1",73,0)
+ ... S DISP(DISP,"admDec")=DISP(DISP,"admDec")+ADMDEC
+"RTN","EDPRPT1",74,0)
+ ... S DISP(DISP,"admDel")=DISP(DISP,"admDel")+ADMDEL
+"RTN","EDPRPT1",75,0)
+ .. ;
+"RTN","EDPRPT1",76,0)
+ .. I '$G(CSV) S X=$$XMLA^EDPX("log",.ROW) D XML^EDPX(X) Q
+"RTN","EDPRPT1",77,0)
+ .. S X=ROW("id")
+"RTN","EDPRPT1",78,0)
+ .. ;Begin EDP*2.0*2 Changes
+"RTN","EDPRPT1",79,0)
+ .. F I="inTS","outTS","complaint","md","acuity","elapsed","triage","wait","disposition","admDec","admDel","dx","icd","icdType" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPT1",80,0)
+ .. ;End EDP*2.0*2 Changes
+"RTN","EDPRPT1",81,0)
+ .. D ADD^EDPCSV(X)
+"RTN","EDPRPT1",82,0)
+ I $D(ZTSAVE) D TASK^EDPRPT Q  ;too long -> queue rest of report
+"RTN","EDPRPT1",83,0)
+ D:'$G(CSV) XML^EDPX("</logEntries>")
+"RTN","EDPRPT1",84,0)
+ ;
+"RTN","EDPRPT1",85,0)
+A2 ; calculate & include averages
+"RTN","EDPRPT1",86,0)
+ Q:ALL<1  ;no visits found
+"RTN","EDPRPT1",87,0)
+ S ALL("type")="All Patients",NOT("type")="Not Admitted",ADM("type")="Admitted"
+"RTN","EDPRPT1",88,0)
+ F I="elapsed","triage","wait" S ALL(I)=$$ETIME^EDPRPT(ALL(I)\ALL)
+"RTN","EDPRPT1",89,0)
+ F I="elapsed","triage","wait" S NOT(I)=$S(NOT:$$ETIME^EDPRPT(NOT(I)\NOT),1:"00:00")
+"RTN","EDPRPT1",90,0)
+ F I="elapsed","triage","wait","admDec","admDel" S ADM(I)=$S(ADM:$$ETIME^EDPRPT(ADM(I)\ADM),1:"00:00")
+"RTN","EDPRPT1",91,0)
+ F I="admDec","admDel" S ALL(I)=ADM(I)
+"RTN","EDPRPT1",92,0)
+ S ALL("total")=ALL,NOT("total")=NOT,ADM("total")=ADM
+"RTN","EDPRPT1",93,0)
+ S X="" F  S X=$O(DISP(X)) Q:X=""  I DISP(X) D
+"RTN","EDPRPT1",94,0)
+ . S DISP(X,"total")=DISP(X),DISP(X,"type")=X
+"RTN","EDPRPT1",95,0)
+ . F I="elapsed","triage","wait","admDec","admDel" S DISP(X,I)=$$ETIME^EDPRPT(DISP(X,I)\DISP(X))
+"RTN","EDPRPT1",96,0)
+ ;
+"RTN","EDPRPT1",97,0)
+A3 I $G(CSV) D  Q  ;CSV format
+"RTN","EDPRPT1",98,0)
+ . N TAB,D S TAB=$C(9)
+"RTN","EDPRPT1",99,0)
+ . D BLANK^EDPCSV
+"RTN","EDPRPT1",100,0)
+ . S X=TAB_"Total Patients"_TAB_ALL_TAB_TAB_TAB_TAB_ALL("elapsed")_TAB_ALL("triage")_TAB_ALL("wait")_TAB_TAB_ALL("admDec")_TAB_ALL("admDel")
+"RTN","EDPRPT1",101,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT1",102,0)
+ . S X=TAB_TAB_TAB_TAB_"Total"_TAB_"Visit"_TAB_"Triage"_TAB_"Wait"_TAB_"Adm Dec"_TAB_"Adm Del"
+"RTN","EDPRPT1",103,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT1",104,0)
+ . S X=TAB_TAB_TAB_"Patients Not Admitted"_TAB_NOT_TAB_NOT("elapsed")_TAB_NOT("triage")_TAB_NOT("wait")
+"RTN","EDPRPT1",105,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT1",106,0)
+ . S X=TAB_TAB_TAB_"Patients Admitted"_TAB_ADM_TAB_ADM("elapsed")_TAB_ADM("triage")_TAB_ADM("wait")_TAB_ADM("admDec")_TAB_ADM("admDel")
+"RTN","EDPRPT1",107,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT1",108,0)
+ . S X=TAB_TAB_TAB_"Disposition" D ADD^EDPCSV(X)
+"RTN","EDPRPT1",109,0)
+ . S D="" F  S D=$O(DISP(D)) Q:D=""  I DISP(D) D
+"RTN","EDPRPT1",110,0)
+ .. S X=D_TAB_DISP(D)_TAB_DISP(D,"elapsed")_TAB_DISP(D,"triage")_TAB_DISP(D,"wait")_TAB_DISP(D,"admDec")_TAB_DISP(D,"admDel")
+"RTN","EDPRPT1",111,0)
+ .. D ADD^EDPCSV(X)
+"RTN","EDPRPT1",112,0)
+ D XML^EDPX("<averages>")
+"RTN","EDPRPT1",113,0)
+ S X=$$XMLA^EDPX("average",.ALL) D XML^EDPX(X)
+"RTN","EDPRPT1",114,0)
+ S X=$$XMLA^EDPX("average",.NOT) D XML^EDPX(X)
+"RTN","EDPRPT1",115,0)
+ S X=$$XMLA^EDPX("average",.ADM) D XML^EDPX(X)
+"RTN","EDPRPT1",116,0)
+ S I="" F  S I=$O(DISP(I)) Q:I=""  I DISP(I) K ROW M ROW=DISP(I) S X=$$XMLA^EDPX("average",.ROW) D XML^EDPX(X)
+"RTN","EDPRPT1",117,0)
+ D XML^EDPX("</averages>")
+"RTN","EDPRPT1",118,0)
+ ; include list of providers assigned
+"RTN","EDPRPT1",119,0)
+ I $O(PROV(0)) D PROV^EDPRPT(.PROV)
+"RTN","EDPRPT1",120,0)
+ Q
+"RTN","EDPRPT1",121,0)
+ ;
+"RTN","EDPRPT1",122,0)
+INIT ; Initialize counters and sums
+"RTN","EDPRPT1",123,0)
+ N I,DA,X,Y,J S (ALL,ADM,NOT)=0
+"RTN","EDPRPT1",124,0)
+ F I="elapsed","triage","wait" S (ALL(I),NOT(I),ADM(I))=0
+"RTN","EDPRPT1",125,0)
+ F I="admDec","admDel" S ADM(I)=0
+"RTN","EDPRPT1",126,0)
+ S X="" F  S X=$O(^EDPB(233.1,"AB","disposition",X)) Q:X=""  D
+"RTN","EDPRPT1",127,0)
+ . S DA=0 F  S DA=$O(^EDPB(233.1,"AB","disposition",X,DA)) Q:DA<1  D
+"RTN","EDPRPT1",128,0)
+ .. S Y=$$ECODE^EDPRPT(DA) Q:'$L(Y)  S DISP(Y)=0
+"RTN","EDPRPT1",129,0)
+ .. F I="elapsed","triage","wait","admDec","admDel" S DISP(Y,I)=0
+"RTN","EDPRPT1",130,0)
+ ;TDP - Patch 2, Added additional disposition inits to prevent undefined
+"RTN","EDPRPT1",131,0)
+ ;      errors.
+"RTN","EDPRPT1",132,0)
+ ;S I=EDPSTA_"."_$P($P(X0,U),".",2)
+"RTN","EDPRPT1",133,0)
+ S I=EDPSTA_".disposition"
+"RTN","EDPRPT1",134,0)
+ S X=0 F  S X=$O(^EDPB(233.2,"AS",I,X)) Q:X=""  D
+"RTN","EDPRPT1",135,0)
+ . S DA=0 F  S DA=$O(^EDPB(233.2,"AS",I,X,DA)) Q:DA=""  D
+"RTN","EDPRPT1",136,0)
+ .. S Y=$P($G(^EDPB(233.2,"AS",I,X,DA)),U)
+"RTN","EDPRPT1",137,0)
+ .. I '$L(Y) S Y=$E($TR($P($G(^EDPB(233.2,"AS",I,X,DA)),U,2)," ","_"),1,30)
+"RTN","EDPRPT1",138,0)
+ .. I $L(Y),'$D(DISP(Y)) D
+"RTN","EDPRPT1",139,0)
+ ... S DISP(Y)=0
+"RTN","EDPRPT1",140,0)
+ ... F J="elapsed","triage","wait","admDec","admDel" S DISP(Y,J)=0
+"RTN","EDPRPT1",141,0)
+ S DISP("none")=0 F I="elapsed","triage","wait","admDec","admDel" S DISP("none",I)=0
+"RTN","EDPRPT1",142,0)
+ S CUTOFF=$P($$HADD^XLFDT($H,,,,6),",",2) K ZTSAVE
+"RTN","EDPRPT1",143,0)
+ Q
+"RTN","EDPRPT1",144,0)
+ ;
+"RTN","EDPRPT1",145,0)
+LONG() ; -- report running too long?
+"RTN","EDPRPT1",146,0)
+ ;H 1 ;for testing only
+"RTN","EDPRPT1",147,0)
+ Q ($P($H,",",2)>CUTOFF)
+"RTN","EDPRPT1",148,0)
+ ;
+"RTN","EDPRPT1",149,0)
+ZTSAVE ; Set up ZTSAVE to task remainder of report
+"RTN","EDPRPT1",150,0)
+ N I F I="BEG","END","IN" S ZTSAVE(I)=""
+"RTN","EDPRPT1",151,0)
+ F I="ALL","NOT","ADM" S ZTSAVE(I)=""
+"RTN","EDPRPT1",152,0)
+ F I="ALL(","NOT(","ADM(","DISP(","PROV(" S ZTSAVE(I)=""
+"RTN","EDPRPT1",153,0)
+ S ZTRTN="TASK^EDPRPT1",ZTDESC="EDIS Activity Report"
+"RTN","EDPRPT1",154,0)
+ ; bwf - 2/27/2012: This code seems to be incomplete. Adding kill statement to clean up ZTSAVE,ZTRTN and ZTDESC.
+"RTN","EDPRPT1",155,0)
+ ; my guess is there needs to be the final call to ACTUALLY TASK this
+"RTN","EDPRPT1",156,0)
+ K ZTRTN,ZTDESC,ZTSAVE
+"RTN","EDPRPT1",157,0)
+ Q
+"RTN","EDPRPT1",158,0)
+ ;
+"RTN","EDPRPT1",159,0)
+TASK ; -- entry point to complete report in the background
+"RTN","EDPRPT1",160,0)
+ N NOW S NOW=$$NOW^XLFDT()
+"RTN","EDPRPT1",161,0)
+ D LOOP
+"RTN","EDPRPT1",162,0)
+ M ^XTMP("EDIS-"_ZTSK)=EDPXML K EDPXML
+"RTN","EDPRPT1",163,0)
+ S ^XTMP("EDIS-"_ZTSK,0)=$$FMADD^XLFDT(NOW,1)_U_NOW_"^EDIS Activity Report"
+"RTN","EDPRPT1",164,0)
+ K ZTSK
+"RTN","EDPRPT1",165,0)
+ Q
+"RTN","EDPRPT10")
+0^6^B32122849^B30220543
+"RTN","EDPRPT10",1,0)
+EDPRPT10 ;SLC/MKB - Admissions Report ;4/25/13 3:15pm
+"RTN","EDPRPT10",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPRPT10",3,0)
+ ;
+"RTN","EDPRPT10",4,0)
+ADM(BEG,END,CSV) ; Get Admissions Report for EDPSITE by date range
+"RTN","EDPRPT10",5,0)
+ N IN,OUT,LOG,X,X0,X1,X3,DX,DISP,ROW,TAB
+"RTN","EDPRPT10",6,0)
+ N ELAPSE,TRIAGE,WAIT,ADMDEC,ADMDEL
+"RTN","EDPRPT10",7,0)
+ D INIT ;set counters, sums to 0
+"RTN","EDPRPT10",8,0)
+ D:'$G(CSV) XML^EDPX("<logEntries>") I $G(CSV) D  ;headers
+"RTN","EDPRPT10",9,0)
+ . S TAB=$C(9)
+"RTN","EDPRPT10",10,0)
+ . ;***pij 4/19/2013 changed ED to IEN
+"RTN","EDPRPT10",11,0)
+ . ;S X="ED"_TAB_"Time Out"_TAB_"Complaint"_TAB_"MD"_TAB_"Acuity"_TAB_"Dispo"_TAB_"Adm Dec"_TAB_"Adm Delay"_TAB_"Diagnosis"_TAB_"ICD9" ;_TAB_"ER Spec Visit"
+"RTN","EDPRPT10",12,0)
+ . ;Begin EDP*2.0*2 changes - drp
+"RTN","EDPRPT10",13,0)
+ . S X="IEN"_TAB_"Time Out"_TAB_"Complaint"_TAB_"MD"_TAB_"Acuity"_TAB_"Dispo"_TAB_"Adm Dec"_TAB_"Adm Delay"_TAB_"Diagnosis"_TAB_"ICD"_TAB_"ICD Type" ;_TAB_"ER Spec Visit"
+"RTN","EDPRPT10",14,0)
+ . ;end EDP*2.0*2 changes
+"RTN","EDPRPT10",15,0)
+ . ;***
+"RTN","EDPRPT10",16,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPT10",17,0)
+ S IN=BEG-.000001
+"RTN","EDPRPT10",18,0)
+ F  S IN=$O(^EDP(230,"ATI",EDPSITE,IN)) Q:'IN  Q:IN>END  S LOG=0 F  S LOG=+$O(^EDP(230,"ATI",EDPSITE,IN,LOG)) Q:LOG<1  D
+"RTN","EDPRPT10",19,0)
+ . S X0=^EDP(230,LOG,0),X1=$G(^(1)),X3=$G(^(3))
+"RTN","EDPRPT10",20,0)
+ . Q:'+$P(X1,U,2)
+"RTN","EDPRPT10",21,0)
+ . S DISP=$$ECODE^EDPRPT($P(X1,U,2)),OUT=$P(X0,U,9)
+"RTN","EDPRPT10",22,0)
+ . ;TDP - Patch 2 change to capture entries without abbreviations
+"RTN","EDPRPT10",23,0)
+ . ;Q:DISP=""  Q:'$D(CNT($$UP^XLFSTR(DISP)))  ;visits w/admit disp
+"RTN","EDPRPT10",24,0)
+ . ;S:DISP="" DISP="NONE"
+"RTN","EDPRPT10",25,0)
+ . I DISP="" S DISP=$$DISP^EDPRPT($P(X1,U,2))
+"RTN","EDPRPT10",26,0)
+ . ;Q:'$D(CNT($$UP^XLFSTR(DISP)))  ;visits w/admit disp
+"RTN","EDPRPT10",27,0)
+ . ;TDP - Patch 2, added VADMIT1 call for additional VA Admit check
+"RTN","EDPRPT10",28,0)
+ . I '$D(CNT($$UP^XLFSTR(DISP))),'$$VADMIT1^EDPRPT2($P(X1,U,2)) Q  ;visits w/admit disp
+"RTN","EDPRPT10",29,0)
+ . S DX=$$DXPRI^EDPQPCE(+$P(X0,U,3),LOG)
+"RTN","EDPRPT10",30,0)
+ . K ROW S ROW("id")=LOG
+"RTN","EDPRPT10",31,0)
+ . S ROW("outTS")=$S($G(CSV):$$EDATE^EDPRPT(OUT),1:OUT)
+"RTN","EDPRPT10",32,0)
+ . S ROW("complaint")=$P(X1,U)
+"RTN","EDPRPT10",33,0)
+ . S ROW("md")=$$EPERS^EDPRPT($P(X3,U,5))
+"RTN","EDPRPT10",34,0)
+ . S ROW("acuity")=$$ECODE^EDPRPT($P(X3,U,3))
+"RTN","EDPRPT10",35,0)
+ . S ROW("disposition")=DISP,DISP=$$UP^XLFSTR(DISP)
+"RTN","EDPRPT10",36,0)
+ . ;Begin EDP*2.0*2 changes - drp
+"RTN","EDPRPT10",37,0)
+ . S ROW("icd")=$P(DX,U),ROW("dx")=$P(DX,U,2),ROW("icdType")=$P(DX,U,3)
+"RTN","EDPRPT10",38,0)
+ . ; ER Special Visit ?? -- ck ^DPT dispositions
+"RTN","EDPRPT10",39,0)
+ . S CNT("ALL")=CNT("ALL")+1,CNT(DISP)=CNT(DISP)+1
+"RTN","EDPRPT10",40,0)
+ . ;
+"RTN","EDPRPT10",41,0)
+A1 . ; calculate times
+"RTN","EDPRPT10",42,0)
+ . ; S:OUT="" OUT=NOW
+"RTN","EDPRPT10",43,0)
+ . S ELAPSE=$S(OUT:($$FMDIFF^XLFDT(OUT,IN,2)\60),1:0)
+"RTN","EDPRPT10",44,0)
+ . F I="ALL",DISP S MIN(I,"elapsed")=MIN(I,"elapsed")+ELAPSE
+"RTN","EDPRPT10",45,0)
+ . ;
+"RTN","EDPRPT10",46,0)
+ . S X=$$ACUITY^EDPRPT(LOG),TRIAGE=0 ;S:X<1 X=OUT
+"RTN","EDPRPT10",47,0)
+ . S:X TRIAGE=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPT10",48,0)
+ . F I="ALL",DISP S MIN(I,"triage")=MIN(I,"triage")+TRIAGE
+"RTN","EDPRPT10",49,0)
+ . ;
+"RTN","EDPRPT10",50,0)
+ . S X=$$LVWAITRM^EDPRPT(LOG),WAIT=0 ;leave waiting room
+"RTN","EDPRPT10",51,0)
+ . S:X WAIT=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPT10",52,0)
+ . F I="ALL",DISP S MIN(I,"wait")=MIN(I,"wait")+WAIT
+"RTN","EDPRPT10",53,0)
+ . ;
+"RTN","EDPRPT10",54,0)
+ . S X=$$ADMIT^EDPRPT(LOG) ;decision to admit
+"RTN","EDPRPT10",55,0)
+ . S ADMDEC=$S(X:($$FMDIFF^XLFDT(X,IN,2)\60),1:0)
+"RTN","EDPRPT10",56,0)
+ . F I="ALL",DISP S MIN(I,"admDec")=MIN(I,"admDec")+ADMDEC
+"RTN","EDPRPT10",57,0)
+ . S ROW("admDec")=ADMDEC
+"RTN","EDPRPT10",58,0)
+ . ;
+"RTN","EDPRPT10",59,0)
+ . S ADMDEL=$S(X:($$FMDIFF^XLFDT(OUT,X,2)\60),1:0)
+"RTN","EDPRPT10",60,0)
+ . F I="ALL",DISP S MIN(I,"admDel")=MIN(I,"admDel")+ADMDEL
+"RTN","EDPRPT10",61,0)
+ . S ROW("admDel")=ADMDEL
+"RTN","EDPRPT10",62,0)
+ . ;
+"RTN","EDPRPT10",63,0)
+ . I '$G(CSV) S X=$$XMLA^EDPX("log",.ROW) D XML^EDPX(X) Q
+"RTN","EDPRPT10",64,0)
+ . S X=ROW("id")
+"RTN","EDPRPT10",65,0)
+ . F I="outTS","complaint","md","acuity","disposition","admDec","admDel","dx","icd","icdType" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPT10",66,0)
+ . ;End EDP*2.0*2 changes - drp
+"RTN","EDPRPT10",67,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPT10",68,0)
+ D:'$G(CSV) XML^EDPX("</logEntries>")
+"RTN","EDPRPT10",69,0)
+ ;
+"RTN","EDPRPT10",70,0)
+A2 ; calculate & include averages
+"RTN","EDPRPT10",71,0)
+ Q:CNT("ALL")<1  ;no visits found
+"RTN","EDPRPT10",72,0)
+ I $G(CSV) D  Q  ;return as CSV
+"RTN","EDPRPT10",73,0)
+ . ;***pij 4/19/2013 changed field to Elapsed from Visit
+"RTN","EDPRPT10",74,0)
+ . ;S X=TAB_TAB_TAB_"     Activity Summary"_TAB_"Total"_TAB_"Visit"_TAB_"Triage"_TAB_"Wait"_TAB_"Adm Dec"_TAB_"Adm Delay"
+"RTN","EDPRPT10",75,0)
+ . S X=TAB_TAB_TAB_"     Activity Summary"_TAB_"Total"_TAB_"Elapsed"_TAB_"Triage"_TAB_"Wait"_TAB_"Adm Dec"_TAB_"Adm Delay"
+"RTN","EDPRPT10",76,0)
+ . ;***
+"RTN","EDPRPT10",77,0)
+ . D BLANK^EDPCSV,ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT10",78,0)
+ . S X=TAB_TAB_TAB_"Total Patients VA Admitted"_TAB_CNT("ALL")
+"RTN","EDPRPT10",79,0)
+ . F I="elapsed","triage","wait","admDec","admDel" D
+"RTN","EDPRPT10",80,0)
+ .. S Y=MIN("ALL",I)\CNT("ALL"),X=X_TAB_$S(Y:$$ETIME^EDPRPT(Y),1:"0:00")
+"RTN","EDPRPT10",81,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT10",82,0)
+ . S X=TAB_TAB_TAB_"     Disposition" D ADD^EDPCSV(X)
+"RTN","EDPRPT10",83,0)
+ . S DISP="" F  S DISP=$O(CNT(DISP)) Q:DISP=""  I DISP'="ALL",CNT(DISP) D
+"RTN","EDPRPT10",84,0)
+ .. S X=TAB_TAB_TAB_DISP_TAB_CNT(DISP)
+"RTN","EDPRPT10",85,0)
+ .. F I="elapsed","triage","wait","admDec","admDel" D
+"RTN","EDPRPT10",86,0)
+ ... S Y=MIN(DISP,I)\CNT(DISP),X=X_TAB_$S(Y:$$ETIME^EDPRPT(Y),1:"0:00")
+"RTN","EDPRPT10",87,0)
+ .. D ADD^EDPCSV(X)
+"RTN","EDPRPT10",88,0)
+ ; or as XML
+"RTN","EDPRPT10",89,0)
+ D XML^EDPX("<averages>")
+"RTN","EDPRPT10",90,0)
+ S DISP="" F  S DISP=$O(CNT(DISP)) Q:DISP=""  I CNT(DISP) D
+"RTN","EDPRPT10",91,0)
+ . S MIN(DISP,"type")=$S(DISP="ALL":"Total Patients VA Admitted",1:DISP)
+"RTN","EDPRPT10",92,0)
+ . S MIN(DISP,"total")=CNT(DISP)
+"RTN","EDPRPT10",93,0)
+ . F I="elapsed","triage","wait","admDec","admDel" D
+"RTN","EDPRPT10",94,0)
+ .. S X=MIN(DISP,I)\CNT(DISP)
+"RTN","EDPRPT10",95,0)
+ .. S MIN(DISP,I)=$S(X:$$ETIME^EDPRPT(X),1:"0:00")
+"RTN","EDPRPT10",96,0)
+ . K ROW M ROW=MIN(DISP)
+"RTN","EDPRPT10",97,0)
+ . S X=$$XMLA^EDPX("average",.ROW) D XML^EDPX(X)
+"RTN","EDPRPT10",98,0)
+ D XML^EDPX("</averages>")
+"RTN","EDPRPT10",99,0)
+ K CNT,MIN
+"RTN","EDPRPT10",100,0)
+ Q
+"RTN","EDPRPT10",101,0)
+ ;
+"RTN","EDPRPT10",102,0)
+INIT ; Initialize counters and sums
+"RTN","EDPRPT10",103,0)
+ N I,DISP,DA,X,Y
+"RTN","EDPRPT10",104,0)
+ ;F D="VA","T","ICU","OBS","ALL" D
+"RTN","EDPRPT10",105,0)
+ S DISP="" F  S DISP=$O(^EDPB(233.1,"AB","disposition",DISP)) Q:DISP=""  D
+"RTN","EDPRPT10",106,0)
+ . Q:'$$VADMIT^EDPRPT2(DISP)
+"RTN","EDPRPT10",107,0)
+ . S CNT(DISP)=0
+"RTN","EDPRPT10",108,0)
+ . F I="elapsed","triage","wait","admDec","admDel" S MIN(DISP,I)=0
+"RTN","EDPRPT10",109,0)
+ ;TDP - Patch 2, Added additional disposition inits to prevent undefined
+"RTN","EDPRPT10",110,0)
+ ;      errors and capture dispositions without abbreviations
+"RTN","EDPRPT10",111,0)
+ S Y=EDPSTA_".disposition"
+"RTN","EDPRPT10",112,0)
+ S X=0 F  S X=$O(^EDPB(233.2,"AS",Y,X)) Q:X=""  D
+"RTN","EDPRPT10",113,0)
+ . S DA=0 F  S DA=$O(^EDPB(233.2,"AS",Y,X,DA)) Q:DA=""  D
+"RTN","EDPRPT10",114,0)
+ .. S DISP=$P($G(^EDPB(233.2,"AS",Y,X,DA)),U)
+"RTN","EDPRPT10",115,0)
+ .. I '$L(DISP) S DISP=$E($TR($P($G(^EDPB(233.2,"AS",Y,+X,DA)),U,2)," ","_"),1,30)
+"RTN","EDPRPT10",116,0)
+ .. I $L(DISP),'$D(CNT(DISP)),(($$VADMIT^EDPRPT2(DISP))!($$VADMIT1^EDPRPT2(X))) D
+"RTN","EDPRPT10",117,0)
+ ... S DISP=$$UP^XLFSTR(DISP)
+"RTN","EDPRPT10",118,0)
+ ... S CNT(DISP)=0
+"RTN","EDPRPT10",119,0)
+ ... F I="elapsed","triage","wait","admDec","admDel" S MIN(DISP,I)=0
+"RTN","EDPRPT10",120,0)
+ ;S CNT("NONE")=0 F I="elapsed","triage","wait","admDec","admDel" S MIN("NONE",I)=0
+"RTN","EDPRPT10",121,0)
+ S CNT("ALL")=0
+"RTN","EDPRPT10",122,0)
+ F I="elapsed","triage","wait","admDec","admDel" S MIN("ALL",I)=0
+"RTN","EDPRPT10",123,0)
+ Q
+"RTN","EDPRPT10",124,0)
+ ;
+"RTN","EDPRPT10",125,0)
+ECODE(IEN) ; Return external value for a Code
+"RTN","EDPRPT10",126,0)
+ Q:IEN $P($G(^EDPB(233.1,IEN,0)),U,2) ;name
+"RTN","EDPRPT10",127,0)
+ Q ""
+"RTN","EDPRPT2")
+0^3^B26475007^B24332800
+"RTN","EDPRPT2",1,0)
+EDPRPT2 ;SLC/MKB - Delay Report ;6/13/12 12:33pm
+"RTN","EDPRPT2",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPRPT2",3,0)
+ ;
+"RTN","EDPRPT2",4,0)
+DEL(BEG,END,CSV) ; Get Delay Report for EDPSITE by date range
+"RTN","EDPRPT2",5,0)
+ ;   CNT = counters
+"RTN","EDPRPT2",6,0)
+ ;   MIN = accumulate #minutes
+"RTN","EDPRPT2",7,0)
+ N IN,OUT,LOG,X,X0,X1,X3,DX,ELAPSE,ADMDEC,ADMDEL,DISP,VADISP,CNT,MIN,DEL,ACU,ED,NOT
+"RTN","EDPRPT2",8,0)
+ D INIT ;set counters, sums to 0
+"RTN","EDPRPT2",9,0)
+ D:'$G(CSV) XML^EDPX("<logEntries>") I $G(CSV) D  ;headers
+"RTN","EDPRPT2",10,0)
+ . N TAB S TAB=$C(9)
+"RTN","EDPRPT2",11,0)
+ . ;drp 9/27/2012 begin EDP*2.0*2 changes
+"RTN","EDPRPT2",12,0)
+ . S X="ED IEN"_TAB_"Patient Name"_TAB_"Time In"_TAB_"Elapsed"_TAB_"Dispo"_TAB_"Delay Reason"_TAB_"MD"_TAB_"Adm Dec"_TAB_"Adm Delay"_TAB_"Acuity"_TAB_"Diagnosis"_TAB_"ICD"_TAB_"ICD Type"
+"RTN","EDPRPT2",13,0)
+ . ;End EDP*2.0*2 Changes
+"RTN","EDPRPT2",14,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPT2",15,0)
+ S IN=BEG-.000001
+"RTN","EDPRPT2",16,0)
+ F  S IN=$O(^EDP(230,"ATI",EDPSITE,IN)) Q:'IN  Q:IN>END  S LOG=0 F  S LOG=+$O(^EDP(230,"ATI",EDPSITE,IN,LOG)) Q:LOG<1  D
+"RTN","EDPRPT2",17,0)
+ . S X0=^EDP(230,LOG,0),X1=$G(^(1)),X3=$G(^(3))
+"RTN","EDPRPT2",18,0)
+ . S ACU=$$ECODE^EDPRPT($P(X3,U,3)),DEL=+$P(X1,U,5),CNT=CNT+1
+"RTN","EDPRPT2",19,0)
+ . S DISP=$$ECODE^EDPRPT($P(X1,U,2)),VADISP=$$VADMIT(DISP)
+"RTN","EDPRPT2",20,0)
+ . ;TDP - Patch 2 mod to catch all dispositions listed as VA admit
+"RTN","EDPRPT2",21,0)
+ . I VADISP=0 S VADISP=$$VADMIT1($P(X1,U,2))
+"RTN","EDPRPT2",22,0)
+ . I DISP="" S DISP=$$DISP^EDPRPT($P(X1,U,2))
+"RTN","EDPRPT2",23,0)
+ . S OUT=$P(X0,U,9) ;S:OUT="" OUT=NOW
+"RTN","EDPRPT2",24,0)
+ . S ELAPSE=$S(OUT:($$FMDIFF^XLFDT(OUT,IN,2)\60),1:0),MIN=MIN+ELAPSE
+"RTN","EDPRPT2",25,0)
+D1 . ; all admissions
+"RTN","EDPRPT2",26,0)
+ . S (ADMDEC,ADMDEL)=0
+"RTN","EDPRPT2",27,0)
+ . S X=$$ADMIT^EDPRPT(LOG) I X D
+"RTN","EDPRPT2",28,0)
+ .. S ADMDEC=$$FMDIFF^XLFDT(X,IN,2)\60
+"RTN","EDPRPT2",29,0)
+ .. S:ADMDEC CNT("DEC")=CNT("DEC")+1,MIN("DEC")=MIN("DEC")+ADMDEC
+"RTN","EDPRPT2",30,0)
+ .. S ADMDEL=$S(OUT:($$FMDIFF^XLFDT(OUT,X,2)\60),1:0)
+"RTN","EDPRPT2",31,0)
+D2 . ; VA admissions only
+"RTN","EDPRPT2",32,0)
+ . I VADISP D
+"RTN","EDPRPT2",33,0)
+ .. S CNT("VA")=CNT("VA")+1
+"RTN","EDPRPT2",34,0)
+ .. S MIN("VA")=MIN("VA")+ELAPSE
+"RTN","EDPRPT2",35,0)
+ .. S MIN("VADEC")=MIN("VADEC")+ADMDEC
+"RTN","EDPRPT2",36,0)
+ .. S MIN("VADEL")=MIN("VADEL")+ADMDEL
+"RTN","EDPRPT2",37,0)
+ .. S:ADMDEL>359 CNT("VADEL6")=CNT("VADEL6")+1
+"RTN","EDPRPT2",38,0)
+D3 . ; elapsed visit time >=6 hrs
+"RTN","EDPRPT2",39,0)
+ . S:ELAPSE>1380 CNT("23+")=CNT("23+")+1
+"RTN","EDPRPT2",40,0)
+ . I ELAPSE>359 D
+"RTN","EDPRPT2",41,0)
+ .. S CNT("6+")=CNT("6+")+1
+"RTN","EDPRPT2",42,0)
+ .. S:VADISP CNT("VA6")=CNT("VA6")+1
+"RTN","EDPRPT2",43,0)
+ .. S DX=$$DXPRI^EDPQPCE(+$P(X0,U,3),LOG)
+"RTN","EDPRPT2",44,0)
+ .. N ROW S ROW("id")=LOG
+"RTN","EDPRPT2",45,0)
+ .. S ROW("patientName")=$S($P(X0,U,6)'="":$$GET1^DIQ(2,$P(X0,U,6),.01,"E"),1:$P(X0,U,4))
+"RTN","EDPRPT2",46,0)
+ .. S ROW("inTS")=$S($G(CSV):$$EDATE^EDPRPT(IN),1:IN)
+"RTN","EDPRPT2",47,0)
+ .. S ROW("elapsed")=$$ETIME^EDPRPT(ELAPSE)_" *"
+"RTN","EDPRPT2",48,0)
+ .. S ROW("disposition")=DISP
+"RTN","EDPRPT2",49,0)
+ .. S ROW("acuity")=ACU
+"RTN","EDPRPT2",50,0)
+ .. S ROW("delayReason")=$$ENAME^EDPRPT(DEL)
+"RTN","EDPRPT2",51,0)
+ .. S ROW("md")=$$EPERS^EDPRPT($P(X3,U,5))
+"RTN","EDPRPT2",52,0)
+ .. S ROW("dx")=$P(DX,U,2)
+"RTN","EDPRPT2",53,0)
+ .. S ROW("icd")=$P(DX,U,1)
+"RTN","EDPRPT2",54,0)
+ .. S ROW("icdType")=$P(DX,U,3)
+"RTN","EDPRPT2",55,0)
+ .. S ROW("admDec")=ADMDEC
+"RTN","EDPRPT2",56,0)
+ .. S ROW("admDel")=ADMDEL
+"RTN","EDPRPT2",57,0)
+ .. D LOCTIMES ;split Elapsed into Time in/out of ED
+"RTN","EDPRPT2",58,0)
+ .. S ROW("timeInED")=$$ETIME^EDPRPT(ED)
+"RTN","EDPRPT2",59,0)
+ .. S ROW("timeOutED")=$$ETIME^EDPRPT(NOT)
+"RTN","EDPRPT2",60,0)
+ .. I '$G(CSV) S X=$$XMLA^EDPX("log",.ROW) D XML^EDPX(X) Q
+"RTN","EDPRPT2",61,0)
+ .. S X=ROW("id")
+"RTN","EDPRPT2",62,0)
+ .. ;Begin EDP*2.0*2 Changes
+"RTN","EDPRPT2",63,0)
+ .. F I="patientName","inTS","elapsed","disposition","delayReason","md","admDec","admDel","acuity","dx","icd","icdType" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPT2",64,0)
+ .. ; End EDP*2.0*2 changes
+"RTN","EDPRPT2",65,0)
+ .. F I="patientName","inTS","elapsed","disposition","delayReason","md","admDec","admDel","acuity","dx" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPT2",66,0)
+ .. D ADD^EDPCSV(X)
+"RTN","EDPRPT2",67,0)
+ D:'$G(CSV) XML^EDPX("</logEntries>")
+"RTN","EDPRPT2",68,0)
+ Q
+"RTN","EDPRPT2",69,0)
+ ;
+"RTN","EDPRPT2",70,0)
+D4 ; return counts and averages
+"RTN","EDPRPT2",71,0)
+ D XML^EDPX("<averages>")
+"RTN","EDPRPT2",72,0)
+ S X="<average type='All Patients' total='"_CNT_"' avgTime='"_$S(CNT:$$ETIME^EDPRPT(MIN/CNT),1:0)_"' num6hr='"_CNT("6+")_"' num23hr='"_CNT("23+")_"' avgAdmDec='"_$S(CNT("DEC"):$$ETIME^EDPRPT(MIN("DEC")/CNT("DEC")),1:0)_"' />"
+"RTN","EDPRPT2",73,0)
+ D XML^EDPX(X)
+"RTN","EDPRPT2",74,0)
+ S X="<average type='Not VA Admitted' total='"_(CNT-CNT("VA"))_"' avgTime='"_$S(CNT-CNT("VA"):$$ETIME^EDPRPT((MIN-MIN("VA")/(CNT-CNT("VA")))),1:0)_"' />"
+"RTN","EDPRPT2",75,0)
+ D XML^EDPX(X)
+"RTN","EDPRPT2",76,0)
+ S X="<average type='VA Admitted' total='"_CNT("VA")_"' num6hr='"_CNT("VA6")_"' numAdmDel6hr='"_CNT("VADEL6")
+"RTN","EDPRPT2",77,0)
+ S X=X_"' avgAdmDel='"_$S(CNT("VA"):$$ETIME^EDPRPT(MIN("VADEL")/CNT("VA")),1:0)_"' avgAdmDec='"_$S(CNT("VA"):$$ETIME^EDPRPT(MIN("VADEC")/CNT("VA")),1:0)_"' />"
+"RTN","EDPRPT2",78,0)
+ D XML^EDPX(X)
+"RTN","EDPRPT2",79,0)
+ D XML^EDPX("</averages>")
+"RTN","EDPRPT2",80,0)
+ Q
+"RTN","EDPRPT2",81,0)
+ ;
+"RTN","EDPRPT2",82,0)
+INIT ; Initialize counters and sums
+"RTN","EDPRPT2",83,0)
+ N I S (CNT,MIN)=0
+"RTN","EDPRPT2",84,0)
+ F I="DEC","VA","VA6","VADEL6","6+","23+" S CNT(I)=0
+"RTN","EDPRPT2",85,0)
+ F I="DEC","VA","VADEC","VADEL" S MIN(I)=0
+"RTN","EDPRPT2",86,0)
+ Q
+"RTN","EDPRPT2",87,0)
+ ;
+"RTN","EDPRPT2",88,0)
+VADMIT(X) ; -- Return 1 or 0, if disposition indicates a VA admission
+"RTN","EDPRPT2",89,0)
+ I $G(X)="" Q 0
+"RTN","EDPRPT2",90,0)
+ N I,Y S X=$$UP^XLFSTR(X)
+"RTN","EDPRPT2",91,0)
+ S I=+$O(^EDPB(233.1,"AB","disposition",X,0))
+"RTN","EDPRPT2",92,0)
+ S Y=$S($P($G(^EDPB(233.1,I,0)),U,5)["V":1,1:0)
+"RTN","EDPRPT2",93,0)
+ Q Y
+"RTN","EDPRPT2",94,0)
+ ;
+"RTN","EDPRPT2",95,0)
+VADMIT1(X) ; -- Return 1 or 0, if disposition indicates a VA admission
+"RTN","EDPRPT2",96,0)
+ I +$G(X)=0 Q 0
+"RTN","EDPRPT2",97,0)
+ N Y
+"RTN","EDPRPT2",98,0)
+ S Y=$S($P($G(^EDPB(233.1,X,0)),U,5)["V":1,1:0)
+"RTN","EDPRPT2",99,0)
+ Q Y
+"RTN","EDPRPT2",100,0)
+ ;
+"RTN","EDPRPT2",101,0)
+LOCTIMES ; -- Returns time in ED and NOT ed locations
+"RTN","EDPRPT2",102,0)
+ ; Expects LOG, IN, OUT from above
+"RTN","EDPRPT2",103,0)
+ N LIST,I,TM,LOC,X,T1,T2,TYPE
+"RTN","EDPRPT2",104,0)
+ S LIST(IN)="ED",LIST(OUT)="NOT"
+"RTN","EDPRPT2",105,0)
+ S I=0 F  S I=$O(^EDP(230.1,"B",LOG,I)) Q:I<1  D
+"RTN","EDPRPT2",106,0)
+ . S TM=+$P($G(^EDP(230.1,I,0)),U,2),LOC=+$P($G(^(3)),U,4) Q:'LOC
+"RTN","EDPRPT2",107,0)
+ . S X=$P($G(^EDPB(231.8,LOC,0)),U,9)
+"RTN","EDPRPT2",108,0)
+ . S LIST(TM)=$S(X>2:"NOT",1:"ED")
+"RTN","EDPRPT2",109,0)
+ ; get time in each type of location
+"RTN","EDPRPT2",110,0)
+ S (ED,NOT)=0,TYPE=LIST(IN)
+"RTN","EDPRPT2",111,0)
+ S (T1,T2)=IN
+"RTN","EDPRPT2",112,0)
+ F  S T2=$O(LIST(T2)) Q:T2<1  D
+"RTN","EDPRPT2",113,0)
+ . S X=LIST(T2) I T2<OUT,X=TYPE Q
+"RTN","EDPRPT2",114,0)
+ . S @TYPE=@TYPE+$$FMDIFF^XLFDT(T2,T1,2) ;#seconds
+"RTN","EDPRPT2",115,0)
+ . S T1=T2,TYPE=X
+"RTN","EDPRPT2",116,0)
+ S ED=ED\60,NOT=NOT\60                   ;#minutes
+"RTN","EDPRPT2",117,0)
+ Q
+"RTN","EDPRPT7")
+0^4^B23000869^B20666458
+"RTN","EDPRPT7",1,0)
+EDPRPT7 ;SLC/MKB - Exposure Report ;2/28/12 08:33am
+"RTN","EDPRPT7",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**2**;Feb 24, 2012;Build 23
+"RTN","EDPRPT7",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","EDPRPT7",4,0)
+ ;
+"RTN","EDPRPT7",5,0)
+EXP(IEN,CSV) ; Get Exposure Report for IEN at EDPSITE
+"RTN","EDPRPT7",6,0)
+ S IEN=+$G(IEN)  Q:IEN<1  Q:'$D(^EDP(230,IEN,0))
+"RTN","EDPRPT7",7,0)
+ I $G(CSV) D EXP^EDPRPT7C(IEN) Q  ;CSV format instead
+"RTN","EDPRPT7",8,0)
+ N BEG,END,LIST,LOG,IN,OUT,X,X0,Y,RLIST,TREAT,OTHER,MD,RN,RES,I,J,RIN,ROUT
+"RTN","EDPRPT7",9,0)
+ N SHIFT D SETUP^EDPRPT5 ;build SHIFT(#)
+"RTN","EDPRPT7",10,0)
+ I 'SHIFT D ERR^EDPRPT(2300013) Q
+"RTN","EDPRPT7",11,0)
+ S X0=^EDP(230,IEN,0),BEG=$P(X0,U,8),END=$P(X0,U,9)
+"RTN","EDPRPT7",12,0)
+ S:'BEG BEG=$P(X0,U) S:'END END=$$NOW^EDPRPT
+"RTN","EDPRPT7",13,0)
+ D ROOMS(IEN,END)
+"RTN","EDPRPT7",14,0)
+ ; put IEN info into XML
+"RTN","EDPRPT7",15,0)
+ D XML^EDPX("<patient>")
+"RTN","EDPRPT7",16,0)
+ D ADD(IEN),STAFF(IEN)
+"RTN","EDPRPT7",17,0)
+ D XML^EDPX("</patient>")
+"RTN","EDPRPT7",18,0)
+E1 ; look for patients also in ED between BEG and END
+"RTN","EDPRPT7",19,0)
+ D FIND(BEG,END) ;create LIST(#) list of ien's to check
+"RTN","EDPRPT7",20,0)
+ S LOG=0 F  S LOG=+$O(LIST(LOG)) Q:'LOG  I LOG'=IEN D
+"RTN","EDPRPT7",21,0)
+ . S X0=$G(^EDP(230,LOG,0)),IN=$P(X0,U,8),OUT=$P(X0,U,9)
+"RTN","EDPRPT7",22,0)
+ . D ROOMS(LOG,OUT)
+"RTN","EDPRPT7",23,0)
+ . ; compare treatment rooms
+"RTN","EDPRPT7",24,0)
+ . S I=0 F  S I=$O(RLIST(IEN,I)) Q:I<1  D
+"RTN","EDPRPT7",25,0)
+ .. S RIN=$P(RLIST(IEN,I),U,2),ROUT=$P(RLIST(IEN,I),U,3)
+"RTN","EDPRPT7",26,0)
+ .. S J=0 F  S J=$O(RLIST(LOG,J)) Q:J<1  I +RLIST(IEN,I)=+RLIST(LOG,J) D
+"RTN","EDPRPT7",27,0)
+ ... S X=$P(RLIST(LOG,J),U,2) Q:X>ROUT     ;in to room after IEN left
+"RTN","EDPRPT7",28,0)
+ ... ;I (RIN<=X)&(X<=ROUT) S TREAT(LOG)="" Q
+"RTN","EDPRPT7",29,0)
+ ... S X=$P(RLIST(LOG,J),U,3) Q:X&(X<RIN)  ;out of room before IEN came
+"RTN","EDPRPT7",30,0)
+ ... ;I (RIN<=X)&(X<=ROUT) S TREAT(LOG)="" Q
+"RTN","EDPRPT7",31,0)
+ ... S TREAT(LOG)=""
+"RTN","EDPRPT7",32,0)
+ . I '$D(TREAT(LOG)) S OTHER(LOG)=""
+"RTN","EDPRPT7",33,0)
+E2 ; return treatment room patients
+"RTN","EDPRPT7",34,0)
+ I $O(TREAT(0)) D
+"RTN","EDPRPT7",35,0)
+ . D XML^EDPX("<treatmentRoom>")
+"RTN","EDPRPT7",36,0)
+ . S LOG=0 F  S LOG=$O(TREAT(LOG)) Q:LOG<1  D ADD(LOG),STAFF(LOG)
+"RTN","EDPRPT7",37,0)
+ . D XML^EDPX("</treatmentRoom>")
+"RTN","EDPRPT7",38,0)
+ ; return other ED patients
+"RTN","EDPRPT7",39,0)
+ I $O(OTHER(0)) D
+"RTN","EDPRPT7",40,0)
+ . D XML^EDPX("<otherPatients>")
+"RTN","EDPRPT7",41,0)
+ . S LOG=0 F  S LOG=$O(OTHER(LOG)) Q:LOG<1  D ADD(LOG),STAFF(LOG)
+"RTN","EDPRPT7",42,0)
+ . D XML^EDPX("</otherPatients>")
+"RTN","EDPRPT7",43,0)
+E3 ; return staff on duty
+"RTN","EDPRPT7",44,0)
+ D XML^EDPX("<onDutyStaff>")
+"RTN","EDPRPT7",45,0)
+ I $O(MD(0)) D
+"RTN","EDPRPT7",46,0)
+ . D XML^EDPX("<doctors>")
+"RTN","EDPRPT7",47,0)
+ . S I=0 F  S I=$O(MD(I)) Q:I<1  D
+"RTN","EDPRPT7",48,0)
+ .. S X="<md name='"_$$ESC^EDPX(MD(I))_"' />"
+"RTN","EDPRPT7",49,0)
+ .. D XML^EDPX(X)
+"RTN","EDPRPT7",50,0)
+ . D XML^EDPX("</doctors>")
+"RTN","EDPRPT7",51,0)
+ I $O(RN(0)) D
+"RTN","EDPRPT7",52,0)
+ . D XML^EDPX("<nurses>")
+"RTN","EDPRPT7",53,0)
+ . S I=0 F  S I=$O(RN(I)) Q:I<1  D
+"RTN","EDPRPT7",54,0)
+ .. S X="<rn name='"_$$ESC^EDPX(RN(I))_"' />"
+"RTN","EDPRPT7",55,0)
+ .. D XML^EDPX(X)
+"RTN","EDPRPT7",56,0)
+ . D XML^EDPX("</nurses>")
+"RTN","EDPRPT7",57,0)
+ I $O(RES(0)) D
+"RTN","EDPRPT7",58,0)
+ . D XML^EDPX("<residents>")
+"RTN","EDPRPT7",59,0)
+ . S I=0 F  S I=$O(RES(I)) Q:I<1  D
+"RTN","EDPRPT7",60,0)
+ .. S X="<md name='"_$$ESC^EDPX(RES(I))_"' />"
+"RTN","EDPRPT7",61,0)
+ .. D XML^EDPX(X)
+"RTN","EDPRPT7",62,0)
+ . D XML^EDPX("</residents>")
+"RTN","EDPRPT7",63,0)
+ D XML^EDPX("</onDutyStaff>")
+"RTN","EDPRPT7",64,0)
+ Q
+"RTN","EDPRPT7",65,0)
+ ;
+"RTN","EDPRPT7",66,0)
+FIND(IN,OUT) ; create LIST(#) of visits at same time
+"RTN","EDPRPT7",67,0)
+ N TIME,I,X K LIST
+"RTN","EDPRPT7",68,0)
+ S TIME=+$P(IN,".") ;ck today's arrivals
+"RTN","EDPRPT7",69,0)
+ F  S TIME=$O(^EDP(230,"ATI",EDPSITE,TIME)) Q:TIME<1!(TIME>OUT)  D
+"RTN","EDPRPT7",70,0)
+ . S I=0 F  S I=$O(^EDP(230,"ATI",EDPSITE,TIME,I)) Q:I<1  D
+"RTN","EDPRPT7",71,0)
+ .. S X=$P($G(^EDP(230,I,0)),U,9) I X,X<IN Q  ;left before IEN arrived
+"RTN","EDPRPT7",72,0)
+ .. S LIST(I)=""
+"RTN","EDPRPT7",73,0)
+ Q
+"RTN","EDPRPT7",74,0)
+ ;
+"RTN","EDPRPT7",75,0)
+ROOMS(LOG,OUT) ; Return RLIST(LOG,n) = room ^ time in ^ time out
+"RTN","EDPRPT7",76,0)
+ N N,D,I,X,LAST S N=0,LAST=""
+"RTN","EDPRPT7",77,0)
+ S D=0 F  S D=$O(^EDP(230.1,"ADF",LOG,D)) Q:D<1  S I=+$O(^(D,0)) D
+"RTN","EDPRPT7",78,0)
+ . S X=+$P($G(^EDP(230.1,I,3)),U,4) Q:'X  Q:X=LAST  ;no location change
+"RTN","EDPRPT7",79,0)
+ . S:N $P(RLIST(LOG,N),U,3)=D ;time in of next room = time out of prev
+"RTN","EDPRPT7",80,0)
+ . S N=N+1,RLIST(LOG,N)=X_U_D,LAST=X ;new room
+"RTN","EDPRPT7",81,0)
+ I N,'$P(RLIST(LOG,N),U,3) S $P(RLIST(LOG,N),U,3)=OUT
+"RTN","EDPRPT7",82,0)
+ Q
+"RTN","EDPRPT7",83,0)
+ ;
+"RTN","EDPRPT7",84,0)
+ADD(LOG) ; Add row to XML for each room used during visit
+"RTN","EDPRPT7",85,0)
+ N EDPI,EDPX,ROW,LABS,XRAY,X,X0
+"RTN","EDPRPT7",86,0)
+ S EDPI=0 F  S EDPI=$O(RLIST(LOG,EDPI)) Q:EDPI<1  S EDPX=RLIST(LOG,EDPI) D
+"RTN","EDPRPT7",87,0)
+ . K ROW S ROW("id")=LOG ;only return for EDPI=1 ??
+"RTN","EDPRPT7",88,0)
+ . S ROW("roomName")=$P($G(^EDPB(231.8,+EDPX,0)),U)
+"RTN","EDPRPT7",89,0)
+ . S X=$P(EDPX,U,2)
+"RTN","EDPRPT7",90,0)
+ . S ROW("shiftIn")=$$SHIFT^EDPRPT5(X),ROW("inTS")=X
+"RTN","EDPRPT7",91,0)
+ . S X=$P(EDPX,U,3)
+"RTN","EDPRPT7",92,0)
+ . S ROW("shiftOut")=$$SHIFT^EDPRPT5(X),ROW("outTS")=X
+"RTN","EDPRPT7",93,0)
+ . ;TDP - Patch 2 mod to capture all dispositions
+"RTN","EDPRPT7",94,0)
+ . S X=$P($G(^EDP(230,LOG,1)),U,2),ROW("disposition")=$S($$ECODE^EDPRPT(X)'="":$$ECODE^EDPRPT(X),1:$$DISP^EDPRPT(X))
+"RTN","EDPRPT7",95,0)
+ . S X0=$G(^EDP(230,LOG,0)),X=$P(X0,U,10),ROW("arrival")=$$ENAME^EDPRPT(X)
+"RTN","EDPRPT7",96,0)
+ . ;Begin EDP*2.0*2 changes - drp added icd and icdtype column headers to line below
+"RTN","EDPRPT7",97,0)
+ . S X=$$DXPRI^EDPQPCE(+$P(X0,U,3),LOG),ROW("dx")=$P(X,U,2),ROW("icd")=$P(X,U,1),ROW("icdType")=$P(X,U,3)
+"RTN","EDPRPT7",98,0)
+ . ;End EDP*2.0*2 changes - drp
+"RTN","EDPRPT7",99,0)
+ . S LABS=$D(^EDP(230,LOG,8,"AC","L")),XRAY=$D(^("R")),X=""
+"RTN","EDPRPT7",100,0)
+ . I LABS!XRAY D  S X=X_" ordered"
+"RTN","EDPRPT7",101,0)
+ .. I LABS&XRAY S X="Labs and Imaging" Q
+"RTN","EDPRPT7",102,0)
+ .. S:LABS X="Labs" S:XRAY X="Imaging"
+"RTN","EDPRPT7",103,0)
+ . S ROW("notes")=X
+"RTN","EDPRPT7",104,0)
+ . S X=$$XMLA^EDPX("row",.ROW) D XML^EDPX(X)
+"RTN","EDPRPT7",105,0)
+ Q
+"RTN","EDPRPT7",106,0)
+ ;
+"RTN","EDPRPT7",107,0)
+STAFF(LOG) ; save staff involved in patient care
+"RTN","EDPRPT7",108,0)
+ N D,I,X,ACT S LOG=+$G(LOG)
+"RTN","EDPRPT7",109,0)
+ S D=0 F  S D=$O(^EDP(230.1,"ADF",LOG,D)) Q:D<1  S I=+$O(^(D,0)) D
+"RTN","EDPRPT7",110,0)
+ . S ACT=$G(^EDP(230.1,I,3))
+"RTN","EDPRPT7",111,0)
+ . S X=+$P(ACT,U,5) S:X MD(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7",112,0)
+ . S X=+$P(ACT,U,6) S:X RN(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7",113,0)
+ . S X=+$P(ACT,U,7) S:X RES(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7",114,0)
+ Q
+"RTN","EDPRPT7C")
+0^5^B24197469^B22153636
+"RTN","EDPRPT7C",1,0)
+EDPRPT7C ;SLC/MKB - Exposure Report (CSV format) ;4/25/13 3:15pm
+"RTN","EDPRPT7C",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPRPT7C",3,0)
+ ;
+"RTN","EDPRPT7C",4,0)
+EXP(IEN) ; Get Exposure Report for IEN at EDPSITE
+"RTN","EDPRPT7C",5,0)
+ S IEN=+$G(IEN)  Q:IEN<1  Q:'$D(^EDP(230,IEN,0))
+"RTN","EDPRPT7C",6,0)
+ N BEG,END,LIST,LOG,IN,OUT,X,X0,Y,RLIST,TREAT,OTHER,MD,RN,RES,I,J,RIN,ROUT,TAB
+"RTN","EDPRPT7C",7,0)
+ N SHIFT D SETUP^EDPRPT5 ;build SHIFT(#)
+"RTN","EDPRPT7C",8,0)
+ I 'SHIFT D ERR^EDPRPT(2300013) Q
+"RTN","EDPRPT7C",9,0)
+ S X0=^EDP(230,IEN,0),BEG=$P(X0,U,8),END=$P(X0,U,9),TAB=$C(9)
+"RTN","EDPRPT7C",10,0)
+ S:'BEG BEG=$P(X0,U) S:'END END=$$NOW^EDPRPT
+"RTN","EDPRPT7C",11,0)
+ D ROOMS(IEN,END)
+"RTN","EDPRPT7C",12,0)
+ ; put IEN info into CSV
+"RTN","EDPRPT7C",13,0)
+ ;***pij 4/19/2013 changed ED to IEN
+"RTN","EDPRPT7C",14,0)
+ ;S X="ED"_TAB_"Room"_TAB_"Shift - Time In"_TAB_"Shift - Time Out"_TAB_"Diagnosis"_TAB_"Dispo"_TAB_"Arr Mode"_TAB_"Notes"
+"RTN","EDPRPT7C",15,0)
+ ;Begin EDP*2.0*2 changes drp
+"RTN","EDPRPT7C",16,0)
+ S X="IEN"_TAB_"Room"_TAB_"Shift - Time In"_TAB_"Shift - Time Out"_TAB_"Diagnosis"_TAB_"ICD"_TAB_"ICD Type"_TAB_"Dispo"_TAB_"Arr Mode"_TAB_"Notes"
+"RTN","EDPRPT7C",17,0)
+ ;End EDP*2.0*2 Changes
+"RTN","EDPRPT7C",18,0)
+ ;***
+"RTN","EDPRPT7C",19,0)
+ D ADD^EDPCSV(X),BLANK^EDPCSV ;headers
+"RTN","EDPRPT7C",20,0)
+ S X=TAB_TAB_"Contagious Patient Information"
+"RTN","EDPRPT7C",21,0)
+ D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPT7C",22,0)
+ D ADD(IEN),STAFF(IEN)
+"RTN","EDPRPT7C",23,0)
+ D BLANK^EDPCSV
+"RTN","EDPRPT7C",24,0)
+E1 ; look for patients also in ED between BEG and END
+"RTN","EDPRPT7C",25,0)
+ D FIND(BEG,END) ;create LIST(#) list of ien's to check
+"RTN","EDPRPT7C",26,0)
+ S LOG=0 F  S LOG=+$O(LIST(LOG)) Q:'LOG  I LOG'=IEN D
+"RTN","EDPRPT7C",27,0)
+ . S X0=$G(^EDP(230,LOG,0)),IN=$P(X0,U,8),OUT=$P(X0,U,9)
+"RTN","EDPRPT7C",28,0)
+ . D ROOMS(LOG,OUT)
+"RTN","EDPRPT7C",29,0)
+ . ; compare treatment rooms
+"RTN","EDPRPT7C",30,0)
+ . S I=0 F  S I=$O(RLIST(IEN,I)) Q:I<1  D
+"RTN","EDPRPT7C",31,0)
+ .. S RIN=$P(RLIST(IEN,I),U,2),ROUT=$P(RLIST(IEN,I),U,3)
+"RTN","EDPRPT7C",32,0)
+ .. S J=0 F  S J=$O(RLIST(LOG,J)) Q:J<1  I +RLIST(IEN,I)=+RLIST(LOG,J) D
+"RTN","EDPRPT7C",33,0)
+ ... S X=$P(RLIST(LOG,J),U,2) Q:X>ROUT     ;in to room after IEN left
+"RTN","EDPRPT7C",34,0)
+ ... ;I (RIN<=X)&(X<=ROUT) S TREAT(LOG)="" Q
+"RTN","EDPRPT7C",35,0)
+ ... S X=$P(RLIST(LOG,J),U,3) Q:X&(X<RIN)  ;out of room before IEN came
+"RTN","EDPRPT7C",36,0)
+ ... ;I (RIN<=X)&(X<=ROUT) S TREAT(LOG)="" Q
+"RTN","EDPRPT7C",37,0)
+ ... S TREAT(LOG)=""
+"RTN","EDPRPT7C",38,0)
+ . I '$D(TREAT(LOG)) S OTHER(LOG)=""
+"RTN","EDPRPT7C",39,0)
+E2 ; return treatment room patients
+"RTN","EDPRPT7C",40,0)
+ ;***pij 4/19/2013
+"RTN","EDPRPT7C",41,0)
+ ;D ADD^EDPCSV(TAB_TAB_"Exposed in Treatment Room"),BLANK^EDPCSV
+"RTN","EDPRPT7C",42,0)
+ D ADD^EDPCSV(TAB_TAB_"Patients Directly Exposed in Different Treatment Rooms"),BLANK^EDPCSV
+"RTN","EDPRPT7C",43,0)
+ ;***
+"RTN","EDPRPT7C",44,0)
+ I '$O(TREAT(0)) D ADD^EDPCSV(TAB_TAB_"  None")
+"RTN","EDPRPT7C",45,0)
+ E  S LOG=0 F  S LOG=$O(TREAT(LOG)) Q:LOG<1  D ADD(LOG),STAFF(LOG)
+"RTN","EDPRPT7C",46,0)
+ D BLANK^EDPCSV
+"RTN","EDPRPT7C",47,0)
+ ; return other ED patients
+"RTN","EDPRPT7C",48,0)
+ D ADD^EDPCSV(TAB_TAB_"Other ED Patients"),BLANK^EDPCSV
+"RTN","EDPRPT7C",49,0)
+ I '$O(OTHER(0)) D ADD^EDPCSV(TAB_TAB_"  None")
+"RTN","EDPRPT7C",50,0)
+ E  S LOG=0 F  S LOG=$O(OTHER(LOG)) Q:LOG<1  D ADD(LOG),STAFF(LOG)
+"RTN","EDPRPT7C",51,0)
+ D BLANK^EDPCSV
+"RTN","EDPRPT7C",52,0)
+E3 ; return staff on duty
+"RTN","EDPRPT7C",53,0)
+ N MAX,MORE D ADD^EDPCSV(TAB_TAB_"On Duty Staff")
+"RTN","EDPRPT7C",54,0)
+ D ADD^EDPCSV(TAB_"Doctors"_TAB_"Nurses"_TAB_"Residents")
+"RTN","EDPRPT7C",55,0)
+ S MAX=+$G(RN) S:$G(MD)>MAX MAX=+MD S:$G(RES)>MAX MAX=+RES
+"RTN","EDPRPT7C",56,0)
+ S MORE=1,(MD,RN,RES)=0 F  D  Q:'MORE
+"RTN","EDPRPT7C",57,0)
+ . S:MD'="" MD=$O(MD(MD)) S:RN'="" RN=$O(RN(RN))
+"RTN","EDPRPT7C",58,0)
+ . S:RES'="" RES=$O(RES(RES)) ;get next
+"RTN","EDPRPT7C",59,0)
+ . I MD="",RN="",RES="" S MORE=0 Q  ;done
+"RTN","EDPRPT7C",60,0)
+ . S X=TAB_$S(MD:MD(MD),1:"")_TAB_$S(RN:RN(RN),1:"")_TAB_$S(RES:RES(RES),1:"")
+"RTN","EDPRPT7C",61,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPT7C",62,0)
+ Q
+"RTN","EDPRPT7C",63,0)
+ ;
+"RTN","EDPRPT7C",64,0)
+FIND(IN,OUT) ; create LIST(#) of visits at same time
+"RTN","EDPRPT7C",65,0)
+ N TIME,I,X K LIST
+"RTN","EDPRPT7C",66,0)
+ S TIME=+$P(IN,".") ;ck today's arrivals
+"RTN","EDPRPT7C",67,0)
+ F  S TIME=$O(^EDP(230,"ATI",EDPSITE,TIME)) Q:TIME<1!(TIME>OUT)  D
+"RTN","EDPRPT7C",68,0)
+ . S I=0 F  S I=$O(^EDP(230,"ATI",EDPSITE,TIME,I)) Q:I<1  D
+"RTN","EDPRPT7C",69,0)
+ .. S X=$P($G(^EDP(230,I,0)),U,9) I X,X<IN Q  ;left before IEN arrived
+"RTN","EDPRPT7C",70,0)
+ .. S LIST(I)=""
+"RTN","EDPRPT7C",71,0)
+ Q
+"RTN","EDPRPT7C",72,0)
+ ;
+"RTN","EDPRPT7C",73,0)
+ROOMS(LOG,OUT) ; Return RLIST(LOG,n)= room ^ time in ^ time out
+"RTN","EDPRPT7C",74,0)
+ N N,D,I,X,LAST S N=0,LAST=""
+"RTN","EDPRPT7C",75,0)
+ S D=0 F  S D=$O(^EDP(230.1,"ADF",LOG,D)) Q:D<1  S I=+$O(^(D,0)) D
+"RTN","EDPRPT7C",76,0)
+ . S X=+$P($G(^EDP(230.1,I,3)),U,4) Q:'X  Q:X=LAST  ;no location change
+"RTN","EDPRPT7C",77,0)
+ . S:N $P(RLIST(LOG,N),U,3)=D ;time in of next room = time out of prev
+"RTN","EDPRPT7C",78,0)
+ . S N=N+1,RLIST(LOG,N)=X_U_D,LAST=X ;new room
+"RTN","EDPRPT7C",79,0)
+ I N,'$P(RLIST(LOG,N),U,3) S $P(RLIST(LOG,N),U,3)=OUT
+"RTN","EDPRPT7C",80,0)
+ Q
+"RTN","EDPRPT7C",81,0)
+ ;
+"RTN","EDPRPT7C",82,0)
+ADD(LOG) ; Add row to CSV for each room used during visit
+"RTN","EDPRPT7C",83,0)
+ N EDPI,EDPX,ROW,LABS,XRAY,X,X0
+"RTN","EDPRPT7C",84,0)
+ S EDPI=0 F  S EDPI=$O(RLIST(LOG,EDPI)) Q:EDPI<1  S EDPX=RLIST(LOG,EDPI) D
+"RTN","EDPRPT7C",85,0)
+ . S ROW=$S(EDPI=1:LOG,1:"")_TAB_$P($G(^EDPB(231.8,+EDPX,0)),U)
+"RTN","EDPRPT7C",86,0)
+ . S X=$P(EDPX,U,2) ;shiftTimeIn
+"RTN","EDPRPT7C",87,0)
+ . S ROW=ROW_TAB_$$SHIFT^EDPRPT5(X)_" - "_$$EDATE^EDPRPT(X)
+"RTN","EDPRPT7C",88,0)
+ . S X=$P(EDPX,U,3) ;shiftTimeOut
+"RTN","EDPRPT7C",89,0)
+ . S ROW=ROW_TAB_$$SHIFT^EDPRPT5(X)_" - "_$$EDATE^EDPRPT(X)
+"RTN","EDPRPT7C",90,0)
+ . S X0=$G(^EDP(230,LOG,0)),X=$$DXPRI^EDPQPCE(+$P(X0,U,3),LOG)
+"RTN","EDPRPT7C",91,0)
+ . S ROW=ROW_TAB_$P(X,U,2) ;Dx
+"RTN","EDPRPT7C",92,0)
+ . ;DRP Begin EDP*2.0*2 Changes
+"RTN","EDPRPT7C",93,0)
+ . S ROW=ROW_TAB_$P(X,U,1) ; added ICD Code
+"RTN","EDPRPT7C",94,0)
+ . S ROW=ROW_TAB_$P(X,U,3) ;added ICDType 
+"RTN","EDPRPT7C",95,0)
+ . ;End EDP*2.0*2 Changes
+"RTN","EDPRPT7C",96,0)
+ . ;TDP - Patch 2 mod to capture all dispositions
+"RTN","EDPRPT7C",97,0)
+ . S X=$P($G(^EDP(230,LOG,1)),U,2),ROW=ROW_TAB_$S($$ECODE^EDPRPT(X)'="":$$ECODE^EDPRPT(X),1:$$DISP^EDPRPT(X)) ;dis
+"RTN","EDPRPT7C",98,0)
+ . S X=$P(X0,U,10),ROW=ROW_TAB_$$ENAME^EDPRPT(X) ;arrival
+"RTN","EDPRPT7C",99,0)
+ . S LABS=$D(^EDP(230,LOG,8,"AC","L")),XRAY=$D(^("R")),X=""
+"RTN","EDPRPT7C",100,0)
+ . I LABS!XRAY D  S X=X_" ordered"
+"RTN","EDPRPT7C",101,0)
+ .. I LABS&XRAY S X="Labs and Imaging" Q
+"RTN","EDPRPT7C",102,0)
+ .. S:LABS X="Labs" S:XRAY X="Imaging"
+"RTN","EDPRPT7C",103,0)
+ . S ROW=ROW_TAB_X ;notes
+"RTN","EDPRPT7C",104,0)
+ . D ADD^EDPCSV(ROW)
+"RTN","EDPRPT7C",105,0)
+ Q
+"RTN","EDPRPT7C",106,0)
+ ;
+"RTN","EDPRPT7C",107,0)
+STAFF(LOG) ; save staff involved in patient care
+"RTN","EDPRPT7C",108,0)
+ N D,I,X,ACT S LOG=+$G(LOG)
+"RTN","EDPRPT7C",109,0)
+ S D=0 F  S D=$O(^EDP(230.1,"ADF",LOG,D)) Q:D<1  S I=+$O(^(D,0)) D
+"RTN","EDPRPT7C",110,0)
+ . S ACT=$G(^EDP(230.1,I,3))
+"RTN","EDPRPT7C",111,0)
+ . S X=+$P(ACT,U,5) S:X MD(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7C",112,0)
+ . S X=+$P(ACT,U,6) S:X RN(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7C",113,0)
+ . S X=+$P(ACT,U,7) S:X RES(X)=$$EPERS^EDPRPT(X)
+"RTN","EDPRPT7C",114,0)
+ Q
+"RTN","EDPRPTBV")
+0^7^B30889629^B28273730
+"RTN","EDPRPTBV",1,0)
+EDPRPTBV ;SLC/MKB - BVAC Report ;4/25/13 03:15pm
+"RTN","EDPRPTBV",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPRPTBV",3,0)
+ ;
+"RTN","EDPRPTBV",4,0)
+EN(BEG,END,CSV) ; Get Activity Report for EDPSITE by date range
+"RTN","EDPRPTBV",5,0)
+ N LOG,X,X0,X1,X3,DX,IN,OUT,ROW,ICD,I
+"RTN","EDPRPTBV",6,0)
+ N ELAPSE,TRIAGE,ADMDEC,ADMDEL,CNT,ADM,MIN,AVG
+"RTN","EDPRPTBV",7,0)
+ D INIT ;set counters, sums to 0
+"RTN","EDPRPTBV",8,0)
+ D:'$G(CSV) XML^EDPX("<logEntries>") I $G(CSV) D  ;headers
+"RTN","EDPRPTBV",9,0)
+ . N TAB S TAB=$C(9)
+"RTN","EDPRPTBV",10,0)
+ . ;Begin EDP*2.0*2 changes
+"RTN","EDPRPTBV",11,0)
+ . S X="Patient"_TAB_"Time In"_TAB_"Time Out"_TAB_"Complaint"_TAB_"MD"_TAB_"Acuity"_TAB_"Elapsed"_TAB_"Triage"_TAB_"Dispo"_TAB_"Admit Dec"_TAB_"Admit Delay"_TAB_"Diagnosis"_TAB_"ICD"_TAB_"ICD Type"
+"RTN","EDPRPTBV",12,0)
+ . ;End EDP*2.0*2 Changes
+"RTN","EDPRPTBV",13,0)
+ . ;***pij 4/19/2013 removed Unemploy
+"RTN","EDPRPTBV",14,0)
+ . ;S X=X_TAB_"Viet Vet"_TAB_"Agent Orange"_TAB_"OEF/OIF"_TAB_"Pers Gulf"_TAB_"VA Pension"_TAB_"POW"_TAB_"Serv Conn %"_TAB_"Purp Hrt"_TAB_"Unemploy"_TAB_"Combat End"
+"RTN","EDPRPTBV",15,0)
+ . S X=X_TAB_"Viet Vet"_TAB_"Agent Orange"_TAB_"OEF/OIF"_TAB_"Pers Gulf"_TAB_"VA Pension"_TAB_"POW"_TAB_"Serv Conn %"_TAB_"Purp Hrt"_TAB_"Combat End"
+"RTN","EDPRPTBV",16,0)
+ . ;***
+"RTN","EDPRPTBV",17,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPTBV",18,0)
+ S IN=BEG-.000001
+"RTN","EDPRPTBV",19,0)
+ F  S IN=$O(^EDP(230,"ATI",EDPSITE,IN)) Q:'IN  Q:IN>END  S LOG=0 F  S LOG=+$O(^EDP(230,"ATI",EDPSITE,IN,LOG)) Q:LOG<1  D
+"RTN","EDPRPTBV",20,0)
+ . S X0=^EDP(230,LOG,0),X1=$G(^(1)),X3=$G(^(3))
+"RTN","EDPRPTBV",21,0)
+ . S DX=$$BVAC(+$P(X0,U,3),LOG) Q:DX=""  ;no codes in range
+"RTN","EDPRPTBV",22,0)
+ . S CNT=CNT+1,OUT=$P(X0,U,9) ;S:OUT="" OUT=NOW
+"RTN","EDPRPTBV",23,0)
+ . S ELAPSE=$S(OUT:($$FMDIFF^XLFDT(OUT,IN,2)\60),1:0)
+"RTN","EDPRPTBV",24,0)
+ . S MIN("elapsed")=MIN("elapsed")+ELAPSE
+"RTN","EDPRPTBV",25,0)
+ . S X=$$ACUITY^EDPRPT(LOG),TRIAGE=0 ;S:X<1 X=OUT
+"RTN","EDPRPTBV",26,0)
+ . S:X TRIAGE=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPTBV",27,0)
+ . S MIN("triage")=MIN("triage")+TRIAGE
+"RTN","EDPRPTBV",28,0)
+ . S (ADMDEC,ADMDEL)=""
+"RTN","EDPRPTBV",29,0)
+ . S X=$$ADMIT^EDPRPT(LOG) I X S ADM=ADM+1 D   ;decision to admit
+"RTN","EDPRPTBV",30,0)
+ .. S ADMDEC=($$FMDIFF^XLFDT(X,IN,2)\60)
+"RTN","EDPRPTBV",31,0)
+ .. S ADMDEL=$S(OUT:($$FMDIFF^XLFDT(OUT,X,2)\60),1:0)
+"RTN","EDPRPTBV",32,0)
+ .. S MIN("admDec")=MIN("admDec")+ADMDEC
+"RTN","EDPRPTBV",33,0)
+ .. S MIN("admDel")=MIN("admDel")+ADMDEL
+"RTN","EDPRPTBV",34,0)
+ . ;
+"RTN","EDPRPTBV",35,0)
+BV1 . ; add row to report
+"RTN","EDPRPTBV",36,0)
+ . ;S ICD=$P($G(^ICD9(+$P(X4,U,2),0)),U) Q:ICD<290  Q:ICD>316
+"RTN","EDPRPTBV",37,0)
+ . K ROW S ROW("patient")=$P(X0,U,4)
+"RTN","EDPRPTBV",38,0)
+ . S ROW("inTS")=$S($G(CSV):$$EDATE^EDPRPT(IN),1:IN)
+"RTN","EDPRPTBV",39,0)
+ . S ROW("outTS")=$S($G(CSV):$$EDATE^EDPRPT(OUT),1:OUT)
+"RTN","EDPRPTBV",40,0)
+ . S ROW("complaint")=$P(X1,U)
+"RTN","EDPRPTBV",41,0)
+ . S ROW("md")=$$EPERS^EDPRPT($P(X3,U,5))
+"RTN","EDPRPTBV",42,0)
+ . S ROW("acuity")=$$ECODE^EDPRPT($P(X3,U,3))
+"RTN","EDPRPTBV",43,0)
+ . S ROW("elapsed")=ELAPSE_$S(ELAPSE>359:" *",1:"")
+"RTN","EDPRPTBV",44,0)
+ . S ROW("triage")=TRIAGE
+"RTN","EDPRPTBV",45,0)
+ . S ROW("disposition")=$$ECODE^EDPRPT($P(X1,U,2))
+"RTN","EDPRPTBV",46,0)
+ . S ROW("admDec")=ADMDEC,ROW("admDel")=ADMDEL
+"RTN","EDPRPTBV",47,0)
+ .; S ROW("icd")=$P(DX,U),ROW("dx")=$P(DX,U,2) replaced this line with one below
+"RTN","EDPRPTBV",48,0)
+ . S ROW("icd")=$P(DX,U),ROW("dx")=$P(DX,U,2),ROW("icdType")=$P(DX,"^",3)
+"RTN","EDPRPTBV",49,0)
+ . ; get other patient attributes from VADPT
+"RTN","EDPRPTBV",50,0)
+ . N DFN,VAEL,VASV,VAMB,VAERR
+"RTN","EDPRPTBV",51,0)
+ . S DFN=$P(X0,U,6) I DFN D 8^VADPT D
+"RTN","EDPRPTBV",52,0)
+ .. S ROW("vietnam")=$S(VASV(1):"Y",1:"N")
+"RTN","EDPRPTBV",53,0)
+ .. S ROW("agentOrange")=$S(VASV(2):"Y",1:"N")
+"RTN","EDPRPTBV",54,0)
+ .. S ROW("iraq")=$S(VASV(11)!VASV(12)!VASV(13):"Y",1:"N")
+"RTN","EDPRPTBV",55,0)
+ .. S ROW("persGulf")=$P($G(^DPT(DFN,.322)),U,10)
+"RTN","EDPRPTBV",56,0)
+ .. S ROW("vaPension")=$S(VAMB(4):"Y",1:"N")
+"RTN","EDPRPTBV",57,0)
+ .. S ROW("pow")=$S(VASV(4):"Y",1:"N")
+"RTN","EDPRPTBV",58,0)
+ .. S ROW("servConnPct")=+$P(VAEL(3),U,2)
+"RTN","EDPRPTBV",59,0)
+ .. S ROW("purpleHeart")=$S(VASV(9):"Y",1:"N")
+"RTN","EDPRPTBV",60,0)
+ .. ; ROW("unemployable")=$P($G(^DGEN(27.11,DFN,"E")),U,17) ;or VAPD(7)=3^NOT EMPLOYED ??
+"RTN","EDPRPTBV",61,0)
+ .. ;***pij 4/19/2013 VASV(10,1)=3011216^DEC 16,2001
+"RTN","EDPRPTBV",62,0)
+ .. S ROW("combatEndDT")=$P($G(VASV(10,1)),U)
+"RTN","EDPRPTBV",63,0)
+ .. I CSV,ROW("combatEndDT") S ROW("combatEndDT")=$$FMTE^XLFDT(ROW("combatEndDT"),"2D")
+"RTN","EDPRPTBV",64,0)
+ .. ;S ROW("combatEndDT")=$P($G(VASV(10,1)),U,2)
+"RTN","EDPRPTBV",65,0)
+ .. ;***
+"RTN","EDPRPTBV",66,0)
+BV2 . ;
+"RTN","EDPRPTBV",67,0)
+ . I '$G(CSV) S X=$$XMLA^EDPX("log",.ROW) D XML^EDPX(X) Q
+"RTN","EDPRPTBV",68,0)
+ . S X=ROW("patient")
+"RTN","EDPRPTBV",69,0)
+ . F I="inTS","outTS","complaint","md","acuity","elapsed","triage","disposition","admDec","admDel","dx","icd","icdType" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPTBV",70,0)
+ . ;End EDP*2.0*2 Changes
+"RTN","EDPRPTBV",71,0)
+ . ;***pij 4/19/2013 deleted unemployable
+"RTN","EDPRPTBV",72,0)
+ . ;F I="vietnam","agentOrange","iraq","persGulf","vaPension","pow","servConn%","purpleHeart","unemployable","combatEndDT" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPTBV",73,0)
+ . F I="vietnam","agentOrange","iraq","persGulf","vaPension","pow","servConn%","purpleHeart","combatEndDT" S X=X_$C(9)_$G(ROW(I))
+"RTN","EDPRPTBV",74,0)
+ . ;***
+"RTN","EDPRPTBV",75,0)
+ . D ADD^EDPCSV(X)
+"RTN","EDPRPTBV",76,0)
+ D:'$G(CSV) XML^EDPX("</logEntries>")
+"RTN","EDPRPTBV",77,0)
+ ;
+"RTN","EDPRPTBV",78,0)
+BV3 ; calculate & include averages
+"RTN","EDPRPTBV",79,0)
+ Q:CNT<1  ;no visits found
+"RTN","EDPRPTBV",80,0)
+ S ELAPSE=$$ETIME^EDPRPT(MIN("elapsed")\CNT),AVG("elapsed")=ELAPSE
+"RTN","EDPRPTBV",81,0)
+ S TRIAGE=$$ETIME^EDPRPT(MIN("triage")\CNT),AVG("triage")=TRIAGE
+"RTN","EDPRPTBV",82,0)
+ S ADMDEC=$S(ADM:$$ETIME^EDPRPT(MIN("admDec")\ADM),1:"00:00")
+"RTN","EDPRPTBV",83,0)
+ S ADMDEL=$S(ADM:$$ETIME^EDPRPT(MIN("admDel")\ADM),1:"00:00")
+"RTN","EDPRPTBV",84,0)
+ S AVG("admDec")=ADMDEC,AVG("admDel")=ADMDEL,AVG("total")=CNT
+"RTN","EDPRPTBV",85,0)
+ ;
+"RTN","EDPRPTBV",86,0)
+ I $G(CSV) D  Q  ;CSV format
+"RTN","EDPRPTBV",87,0)
+ . N TAB,D S TAB=$C(9)
+"RTN","EDPRPTBV",88,0)
+ . D BLANK^EDPCSV
+"RTN","EDPRPTBV",89,0)
+ . ;***pij 4/19/2013 added extra/needed TAB
+"RTN","EDPRPTBV",90,0)
+ . ;S X=TAB_"Total Patients"_TAB_CNT_TAB_"Averages Per Patient"_TAB_TAB_TAB_ELAPSE_TAB_TRIAGE_TAB_ADMDEC_TAB_ADMDEL
+"RTN","EDPRPTBV",91,0)
+ . S X=TAB_"Total Patients"_TAB_CNT_TAB_"Averages Per Patient"_TAB_TAB_TAB_ELAPSE_TAB_TRIAGE_TAB_TAB_ADMDEC_TAB_ADMDEL
+"RTN","EDPRPTBV",92,0)
+ . ;***
+"RTN","EDPRPTBV",93,0)
+ . D ADD^EDPCSV(X),BLANK^EDPCSV
+"RTN","EDPRPTBV",94,0)
+ D XML^EDPX("<averages>")
+"RTN","EDPRPTBV",95,0)
+ S X=$$XMLA^EDPX("average",.AVG) D XML^EDPX(X)
+"RTN","EDPRPTBV",96,0)
+ D XML^EDPX("</averages>")
+"RTN","EDPRPTBV",97,0)
+ Q
+"RTN","EDPRPTBV",98,0)
+ ;
+"RTN","EDPRPTBV",99,0)
+INIT ; Initialize counters and sums
+"RTN","EDPRPTBV",100,0)
+ N I,X S (CNT,ADM)=0
+"RTN","EDPRPTBV",101,0)
+ F I="elapsed","triage","admDec","admDel" S MIN(I)=0
+"RTN","EDPRPTBV",102,0)
+ Q
+"RTN","EDPRPTBV",103,0)
+ ;
+"RTN","EDPRPTBV",104,0)
+ECODE(IEN) ; Return external value for a Code
+"RTN","EDPRPTBV",105,0)
+ Q:IEN $P($G(^EDPB(233.1,IEN,0)),U,2) ;name
+"RTN","EDPRPTBV",106,0)
+ Q ""
+"RTN","EDPRPTBV",107,0)
+ ;
+"RTN","EDPRPTBV",108,0)
+BVAC(AREA,LOG) ; -- Return ICD^text of diagnosis in range, else null
+"RTN","EDPRPTBV",109,0)
+ N X,Y,I,EDPDX S Y=""
+"RTN","EDPRPTBV",110,0)
+ D DXALL^EDPQPCE(AREA,LOG,.EDPDX)
+"RTN","EDPRPTBV",111,0)
+ ; drp Begin EDP*2.0*2 Changes
+"RTN","EDPRPTBV",112,0)
+ S I=0 F  S I=$O(EDPDX(I)) Q:I<1  D
+"RTN","EDPRPTBV",113,0)
+ . S X=$G(EDPDX(I))
+"RTN","EDPRPTBV",114,0)
+ . I 290<=+X,+X<=316 S Y=X
+"RTN","EDPRPTBV",115,0)
+ . I $E(X,1)["F",10<=+($E(X,2,8)),+($E(X,2,8))<=99 S Y=X
+"RTN","EDPRPTBV",116,0)
+ .Q
+"RTN","EDPRPTBV",117,0)
+ ; End EDP*2.0*2 Changes
+"RTN","EDPRPTBV",118,0)
+ Q Y
+"RTN","EDPX")
+0^12^B16354064^B12709600
+"RTN","EDPX",1,0)
+EDPX ;SLC/KCM - Common Utilities ;6/8/12 12:09pm
+"RTN","EDPX",2,0)
+ ;;2.0;EMERGENCY DEPARTMENT;**6,2**;Feb 24, 2012;Build 23
+"RTN","EDPX",3,0)
+ ;
+"RTN","EDPX",4,0)
+ESC(X) ; Escape for XML transmission
+"RTN","EDPX",5,0)
+ ; Q $ZCONVERT(X,"O","HTML")  ; uncomment for fastest performance on Cache
+"RTN","EDPX",6,0)
+ ;
+"RTN","EDPX",7,0)
+ N I,Y,QOT S QOT=""""
+"RTN","EDPX",8,0)
+ S Y=$P(X,"&") F I=2:1:$L(X,"&") S Y=Y_"&amp;"_$P(X,"&",I)
+"RTN","EDPX",9,0)
+ S X=Y,Y=$P(X,"<") F I=2:1:$L(X,"<") S Y=Y_"&lt;"_$P(X,"<",I)
+"RTN","EDPX",10,0)
+ S X=Y,Y=$P(X,">") F I=2:1:$L(X,">") S Y=Y_"&gt;"_$P(X,">",I)
+"RTN","EDPX",11,0)
+ S X=Y,Y=$P(X,"'") F I=2:1:$L(X,"'") S Y=Y_"&apos;"_$P(X,"'",I)
+"RTN","EDPX",12,0)
+ S X=Y,Y=$P(X,QOT) F I=2:1:$L(X,QOT) S Y=Y_"&quot;"_$P(X,QOT,I)
+"RTN","EDPX",13,0)
+ Q Y
+"RTN","EDPX",14,0)
+ ;
+"RTN","EDPX",15,0)
+UES(X) ; Unescape XML
+"RTN","EDPX",16,0)
+ Q X  ; java side is unescaping this already
+"RTN","EDPX",17,0)
+ ; Q $ZCONVERT(X,"I","HTML")
+"RTN","EDPX",18,0)
+ ;
+"RTN","EDPX",19,0)
+UESREQ(REQ) ; Unescape HTTP post
+"RTN","EDPX",20,0)
+ N I,X
+"RTN","EDPX",21,0)
+ S X="" F  S X=$O(REQ(X)) Q:X=""  D
+"RTN","EDPX",22,0)
+ . S I=0 F  S I=$O(REQ(X,I)) Q:'I  D
+"RTN","EDPX",23,0)
+ . . S REQ(X,I)=$$UES(REQ(X,I))
+"RTN","EDPX",24,0)
+ Q
+"RTN","EDPX",25,0)
+VAL(X,R) ; Returns parameter value or null
+"RTN","EDPX",26,0)
+ ; HTTP passes HTML-escaped values in an array as REC(param,1)
+"RTN","EDPX",27,0)
+ Q $G(R(X,1))
+"RTN","EDPX",28,0)
+ ;
+"RTN","EDPX",29,0)
+NVPARSE(LST,IN) ; Parses tab delimited name-value pairs into array
+"RTN","EDPX",30,0)
+ N I,X,TAB,NM,VAL
+"RTN","EDPX",31,0)
+ S TAB=$C(9)
+"RTN","EDPX",32,0)
+ F I=1:1:$L(IN,TAB) S X=$P(IN,TAB,I),NM=$P(X,"="),VAL=$P(X,"=",2,999) S:$L(NM) LST(NM)=VAL
+"RTN","EDPX",33,0)
+ Q
+"RTN","EDPX",34,0)
+XMLS(TAG,DATA,LBL) ; Return XML node as <TAG data="9" label="XXX" />
+"RTN","EDPX",35,0)
+ Q "<"_TAG_" data="""_$$ESC(DATA)_""" label="""_$$ESC(LBL)_""" />"
+"RTN","EDPX",36,0)
+ ;
+"RTN","EDPX",37,0)
+XMLA(TAG,ATT,END) ; Return XML node as <TAG att1="a" att2="b"... />
+"RTN","EDPX",38,0)
+ N NODE S NODE="<"_TAG_" "
+"RTN","EDPX",39,0)
+ N X
+"RTN","EDPX",40,0)
+ ;S X="" F  S X=$O(ATT(X)) Q:X=""  I $L(ATT(X)) S NODE=NODE_X_"="""_$$ESC(ATT(X))_""" "
+"RTN","EDPX",41,0)
+ S X="" F  S X=$O(ATT(X)) Q:X=""  S NODE=NODE_X_"="""_$$ESC(ATT(X))_""" "
+"RTN","EDPX",42,0)
+ S NODE=NODE_$G(END,"/")_">"
+"RTN","EDPX",43,0)
+ Q NODE
+"RTN","EDPX",44,0)
+ ;
+"RTN","EDPX",45,0)
+XMLQA(EDPTAG,EDPATT,EDPEND) ; Return XML node as <TAG att1="a" att2="b"... />
+"RTN","EDPX",46,0)
+ ; tag is built this way to work with most any output array.drp 04122012 patch2
+"RTN","EDPX",47,0)
+ ; tag added with EDP*2.0*2
+"RTN","EDPX",48,0)
+ N EDPLNODE,EDPLSUB,EDPLX
+"RTN","EDPX",49,0)
+ S EDPLNODE="<"_EDPTAG_" "
+"RTN","EDPX",50,0)
+ S EDPLX="EDPATT" F  S EDPLX=$Q(@EDPLX) Q:EDPLX=""  D
+"RTN","EDPX",51,0)
+ . I $L($G(@EDPLX)) D
+"RTN","EDPX",52,0)
+ . . S EDPLSUB=$QL(EDPLX) ;returns number of subscripts
+"RTN","EDPX",53,0)
+ . . S EDPLNODE=EDPLNODE_$QS(EDPLX,EDPLSUB)_"="""_$$ESC(@EDPLX)_""" " ;makes an attribute out of the subscript
+"RTN","EDPX",54,0)
+ . .Q
+"RTN","EDPX",55,0)
+ .Q
+"RTN","EDPX",56,0)
+ S EDPLNODE=EDPLNODE_$G(EDPEND,"/")_">"
+"RTN","EDPX",57,0)
+ Q EDPLNODE
+"RTN","EDPX",58,0)
+ ; end EDP*2.0*2 changes - drp
+"RTN","EDPX",59,0)
+XMLE(SRC) ; Append list to XML array as elements
+"RTN","EDPX",60,0)
+ N X,NODE
+"RTN","EDPX",61,0)
+ S X="" F  S X=$O(SRC(X)) Q:X=""  D
+"RTN","EDPX",62,0)
+ . S NODE="<"_X_">"_$$ESC(SRC(X))_"</"_X_">"
+"RTN","EDPX",63,0)
+ . D XML(NODE)
+"RTN","EDPX",64,0)
+ Q
+"RTN","EDPX",65,0)
+XML(X) ; Add a line of XML to be returned
+"RTN","EDPX",66,0)
+ S EDPXML=$G(EDPXML)+1
+"RTN","EDPX",67,0)
+ S EDPXML(EDPXML)=X
+"RTN","EDPX",68,0)
+ Q
+"RTN","EDPX",69,0)
+XMLG(X,EDPCNT,EDPXML) ; Add line of XML to global array
+"RTN","EDPX",70,0)
+ S EDPCNT=$G(EDPCNT)+1
+"RTN","EDPX",71,0)
+ S @EDPXML@(EDPCNT)=X
+"RTN","EDPX",72,0)
+ Q
+"RTN","EDPX",73,0)
+CODE(X) ; Return internal value for a code
+"RTN","EDPX",74,0)
+ Q $O(^EDPB(233.1,"B",X,0))
+"RTN","EDPX",75,0)
+ ;
+"RTN","EDPX",76,0)
+SAVERR(TYP,ERR) ; Output a save error
+"RTN","EDPX",77,0)
+ D XML^EDPX("<save status='"_TYP_"' >"_ERR_"</save>")
+"RTN","EDPX",78,0)
+ Q
+"RTN","EDPX",79,0)
+SAVERRG(EDPXML,TYP,ERR) ;
+"RTN","EDPX",80,0)
+ D XMLG^EDPX("<save status='"_TYP_"' >"_ERR_"</save>",EDPCNT,EDPXML)
+"RTN","EDPX",81,0)
+ Q
+"RTN","EDPX",82,0)
+MSG(MSG) ; Write out error message
+"RTN","EDPX",83,0)
+ I MSG=1       S X="some error"
+"RTN","EDPX",84,0)
+ I MSG=2300001 S X="Station Number is missing"
+"RTN","EDPX",85,0)
+ I MSG=2300002 S X="Patient is already active in log"
+"RTN","EDPX",86,0)
+ I MSG=2300003 S X="Unable to create lock for new record"
+"RTN","EDPX",87,0)
+ I MSG=2300004 S X="Error creating new record"
+"RTN","EDPX",88,0)
+ I MSG=2300005 S X="Error creating sub-record"
+"RTN","EDPX",89,0)
+ I MSG=2300006 S X="Missing log record"
+"RTN","EDPX",90,0)
+ I MSG=2300007 S X="Missing log IEN"
+"RTN","EDPX",91,0)
+ I MSG=2300008 S X="Error updating record"
+"RTN","EDPX",92,0)
+ I MSG=2300009 S X="Error updating sub-record"
+"RTN","EDPX",93,0)
+ I MSG=2300010 S X="Command missing or not recognized:  "
+"RTN","EDPX",94,0)
+ I MSG=2300011 S X="Unknown report type"
+"RTN","EDPX",95,0)
+ I MSG=2300012 S X="Missing or invalid date range"
+"RTN","EDPX",96,0)
+ I MSG=2300013 S X="Shift times not defined for this site"
+"RTN","EDPX",97,0)
+ I MSG=2300014 S X="Name missing"
+"RTN","EDPX",98,0)
+ I MSG=2300015 S X="Unable to lock record"
+"RTN","EDPX",99,0)
+ I MSG=2300016 S X="The selected room/area is now occupied."
+"RTN","EDPX",100,0)
+ I MSG=2300017 S X="Report too big, unable to task."
+"RTN","EDPX",101,0)
+ I MSG=2300018 S X="Required parameters missing or invalid."
+"RTN","EDPX",102,0)
+ I MSG=2300019 S X="Default bed missing or invalid."
+"RTN","EDPX",103,0)
+ Q $$ESC^EDPX(X)
+"VER")
+8.0^22.0
+"BLD",8751,6)
+^4
+**END**
+**END**
+

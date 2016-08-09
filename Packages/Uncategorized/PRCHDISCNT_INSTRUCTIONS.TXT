@@ -1,0 +1,112 @@
+PRCHDISCNT Input Template Install Instructions
+
+
+Install Instructions:
+--------------------
+
+1. Verify that patch PRC*5.1*189 has been backed out of the VistA production system (4 routines restored to pre-patch version).
+2. Obtain the KIDS build file (PRCHDISCNT.KID) for template restoration as outlined in the Host File Retrieval instructions.
+3. FTP the file into your site’s default directory (ASCII).
+4. From the Kernel Installation & Distribution System (KIDS) menu, select the Installation menu.
+5. Next, select the Load a Distribution option.
+6. Enter the default directory and host file name when prompted.
+7. When prompted, “Want to Continue with Load? YES//”, answer YES.
+8. Select the Install Package(s) option.
+9. Enter PRCHDISCNT TEMPLATE at the Select INSTALL NAME: prompt.
+10. When prompted “Want KIDS to INHIBIT LOGONs during the install? NO//, answer NO.
+11. When prompted, “Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//”, answer No.
+
+Install Example:
+--------------------
+
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+
+Select Kernel Installation & Distribution System Option: Installa
+tion
+
+Select Installation Option: Install Package(s)
+Select INSTALL NAME: PRCHDISCNT TEMPLATE      7/1/15@09:30:23
+     => INPUT TEMPLATE  ;Created on Jun 30, 2015@14:43:29
+
+This Distribution was loaded on Jul 01, 2015@09:30:23 with header of 
+   INPUT TEMPLATE  ;Created on Jun 30, 2015@14:43:29
+   It consisted of the following Install(s):
+PRCHDISCNT TEMPLATE
+Checking Install for Package PRCHDISCNT TEMPLATE
+
+Install Questions for PRCHDISCNT TEMPLATE
+
+Want KIDS to INHIBIT LOGONs during the install? NO// 
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME//   SSH VIRTUAL TERMINAL
+
+                              PRCHDISCNT TEMPLATE                               
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+ Installing PACKAGE COMPONENTS: 
+ 
+ Installing INPUT TEMPLATE
+               Jul 01, 2015@09:31:05
+
+ Updating Routine file...
+
+ Updating KIDS files...
+
+ BUILD PRCHDISCNT TEMPLATE **Couldn't Add to file**
+
+ PRCHDISCNT TEMPLATE Installed. 
+               Jul 01, 2015@09:31:05
+
+ No link to PACKAGE file
+
+ NO Install Message sent 
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+          R,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T
+   40%    .             25             50             75               .
+Complete  F,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,G
+
+Install Completed
+
+Select Installation Option:
+
+Select Kernel Installation & Distribution System Option: 
+
+Do you really want to halt? YES//
+
+
+To confirm Input Template:
+
+>D P^DI
+VA FileMan 22.0
+Select OPTION: 5  INQUIRE TO FILE ENTRIES
+OUTPUT FROM WHAT FILE: INPUT TEMPLATE// 
+Select INPUT TEMPLATE:    PRCHDISCNT  
+                              (Jul 29, 1994@13:32)          File #442  
+ANOTHER ONE: 
+STANDARD CAPTIONED OUTPUT? Yes//   (Yes)
+Include COMPUTED fields:  (N/Y/R/B): NO// BOTH Computed Fields and Record Number (IEN)
+
+NUMBER: 742                             NAME: PRCHDISCNT
+  DATE CREATED: JUL 29, 1994@13:32
+  FILE: PROCUREMENT & ACCOUNTING TRANSACTIONS
+
+EDIT FIELDS (c): DISCOUNT
+EDIT FIELDS (c):    DISCOUNT ITEM
+EDIT FIELDS (c):    S:X="Q" Y=1
+EDIT FIELDS (c):    S:'$D(PRCHD("CN")) Y=1
+EDIT FIELDS (c):    ITEM COUNT///^S X=PRCHD("AC")
+EDIT FIELDS (c):    S:PRCHD("CN")=".OM" Y=1
+EDIT FIELDS (c):    CONTRACT #///^S X=PRCHD("CN")
+EDIT FIELDS (c):    PERCENT/DOLLAR AMOUNT
+EDIT FIELDS (c): PROMPT PAYMENT TERMS//NET
+EDIT FIELDS (c):    PROMPT PAYMENT PERCENT
+EDIT FIELDS (c):    DAYS (TERM)//30
+EDIT FIELDS (c):    S:'$D(PRCHD("*")) Y=""
+EDIT FIELDS (c):    ASTR.///^S X=PRCHD("*")
+  COMPILED (c): NO
+

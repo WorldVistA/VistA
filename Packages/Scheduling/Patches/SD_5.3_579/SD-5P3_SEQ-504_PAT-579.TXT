@@ -1,0 +1,298 @@
+$TXT Created by             MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/05/13 at 14:40
+=============================================================================
+Run Date: JUN 03, 2014                     Designation: SD*5.3*579
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #504                    Status: Released
+                  Compliance Date: JUL 04, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*569  <<= must be installed BEFORE `SD*5.3*579'
+
+Subject: RECALL REMINDER PRINTING ISSUE 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix the following Recall Reminder issues:
+  
+ 1. Add date letter printed and first letter of patient's last name and
+    last four digits of patient's social security number to the recall 
+    letters.
+  
+ 2. Fix <UNDEFINED>DATE+21^SDRRTSK error.
+  
+ 3. Fix <UNDEFINED>DQD1+7^SDRRRECL error.
+  
+ 4. Fix <UNDEFINED>DQD4+7^SDRRRECL error.
+  
+ 5. Fix <UNDEFINED>START+17^SDRRTSK1 error.
+  
+ 6. Fix the problem of the suffix in a patient's name is printing before
+    the last name in the letter salutation.
+  
+ 7. Removal of the comma between city and state when printing the recall
+    reminder of a patient's address.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000426114 - letters not dated and do not contain letter and last
+                      4.
+ 2. INC000000440303 - letters not printing on one printer.
+    Duplicate:
+    INC000000795808 - Scheduling - Recall Reminder:
+    INC000000978542 - Recall function
+ 3. INC000000812157 - <UNDEFINED>DQD1+7^SDRRRECL error.
+ 4. INC000000812162 - <UNDEFINED>DQD4+7^SDRRRECL error.
+ 5. INC000000812170 - <UNDEFINED>START+17^SDRRTSK1 error.
+ 6. INC000000456023 - Letter prints with Suffix listed before last name.
+    Duplicate:
+    INC000000461030 - Recall Letters printing with the Suffix after the 
+                      middle name rather than after the last name.
+ 7. INC000000880311 - Scheduling - recall Reminder: coding discrepancy in
+                      patient address.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ New York HCS
+ Sioux Falls VAMC
+  
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000426114 - letters not dated and do not contain letter and last 
+                      4.
+  
+    Problem:
+    --------
+    Site requested to add the date the Recall letter is printed, the first
+    letter of the patient's name and the last four digits of the patient's
+    social security number to Recall letters.
+  
+    This is the format for all other scheduling letters. Site requested
+    this information to be added to the letters to become standardized to
+    national packages.
+    
+    Resolution:
+    -----------
+    Routines SDRRTSK and SDRRRECL have been modified to add the date the 
+    letter was printed, the first letter of the patient's last name 
+    followed by the last four digits of their social security number on the
+    upper right part of the Recall letter when using the Auto Print for
+    Recall Reminder [SDRR TASK JOB] or Print Letter by Patient
+    under the Clinic Recall Print Menu [SDRR PRINT MENU] menu options.
+  
+    This change only applies to recall letters; recall cards will not be
+    affected.
+  
+  
+ 2. INC000000440303 - letters not printing on one printer.
+  
+    Problem:
+    --------
+    A site reported that recall letters are not printing on a printer due
+    to an <UNDEFINED>DATE+21^SDRRTSK error occurring when the nightly
+    background job runs.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRTSK to check if the record exist in the RECALL
+    REMINDERS (#403.5) file so that the error no longer occurs.
+  
+  
+ 3. INC000000812157 - <UNDEFINED>DQD1+7^SDRRRECL error.
+  
+    Problem:
+    --------
+    An undefined error, <UNDEFINED>DQD1+7^SDRRRECL, occurs when running
+    the option Print Letters by Provider under the Clinic Recall Print menu
+    [SDRR PRINT MENU] menu option.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRRECL to check if the record exists in the RECALL 
+    REMINDERS (#403.5) file so that the error no longer occurs.
+  
+  
+ 4. INC000000812162 - <UNDEFINED>DQD4+7^SDRRRECL error
+    
+    Problem:
+    --------
+    An undefined error, <UNDEFINED>DQD4+7^SDRRRECL, occurs when running
+    Print Letters by Team option under the Clinic Recall Print Menu [SDRR
+    PRINT MENU] menu option.                            
+  
+    Resolution:
+    -----------
+    Modified routine SDRRRECL to check if the record exists in the RECALL
+    REMINDERS (#403.5) file so that the error no longer occurs.
+  
+  
+ 5. INC000000812170 - <UNDEFINED>START+17^SDRRTSK1 error
+  
+    Problem:
+    --------
+    An undefined error, <UNDEFINED>START+17^SDRRTSK1, occurs when running
+    Auto Print for Recall Reminder Cards [SDRR TASK JOB CARD] menu option.
+  
+    Resolution:
+    -----------
+    Modified routine SDRRTSK1 to check if the record exists in the RECALL
+    REMINDERS (#403.5) file so that the error no longer occurs.
+  
+  
+ 6. INC000000456023 - Letter prints with Suffix listed before last name
+  
+    Problem:
+    --------
+    When a patient has a suffix in their name, such as, JR, SR, II, III,
+    etc., the patient's name on the letters and cards are printing the
+    suffix in front of the patient's last name.
+  
+    For example, the letter/card salutation is being printed as:
+  
+    FIRST MIDDLE JR LAST
+  
+    Instead of:
+  
+    FIRST MIDDLE LAST JR
+  
+    This problem occurs with the background print as well as the manual 
+    letter print.
+  
+    Resolution:
+    -----------
+    Routines SDRRTSK, SDRRTSK1, SDRRRECL, and SDRRRECP have been modified
+    so that the patient's salutation correctly prints the suffix in the
+    patient's name, when applicable.
+  
+  
+ 7. INC000000880311 - Scheduling - Recall Reminder: coding discrepancy in 
+                      patient address
+  
+    Problem:
+    --------
+    A site requested to remove the comma between city and state on a 
+    patient's address when printing the recall reminder letter.
+  
+    This is the format for all other scheduling letters.
+  
+    Resolution:
+    -----------
+    Routines SDRRTSK, SDRRTSK1, SDRRRECL, and SDRRRECP have been modified 
+    so that the format of the recall patient's address can be properly 
+    printed.
+  
+  
+ Installation Instructions:
+ ==========================
+ Do NOT install this patch when scheduled Recall Reminder task jobs are 
+ Running. These scheduled jobs include:
+  
+    Auto Print for Recall Reminder         [SDRR TASK JOB]
+    Auto Print for Recall Reminder Cards   [SDRR TASK JOB CARD]
+    Clean Up Clinic Recall Entries         [SDRR CLEAN-UP]
+  
+ It is recommended that the Recall Reminder users be off the system. Other
+ VistA users will not be affected.
+  
+ Install Time - less than 3 minutes.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution...
+         Utilities...
+         Installation...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*579):
+  
+    a. Backup a Transport Global - This option will create a backup 
+       message of any routines exported with this patch. It will not backup
+       any other changes such as DD's or templates.
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, 
+       DD's, templates, etc.).
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+       NO//' answer NO 
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+       Options, and Protocols? YES//' answer YES
+  
+       Auto Print for Recall Reminder            [SDRR TASK JOB]
+       Clinic Recall Print Menu                  [SDRR PRINT MENU]
+       Auto Print for Recall Reminder Cards      [SDRR TASK JOB CARD]
+       Recall Reminder Main Menu                 [SDRR RECALL MAIN MENU]
+       Clean Up Clinic Recall Entries            [SDRR CLEAN-UP]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRRRECL
+    Before: B91056668   After:B102965608  **536,561,569,579**
+Routine Name: SDRRRECP
+    Before: B68844995   After: B69269047  **536,569,579**
+Routine Name: SDRRTSK
+    Before: B13148697   After: B16436609  **536,579**
+Routine Name: SDRRTSK1
+    Before:  B7882942   After:  B9538954  **536,579**
+ 
+Routine list of preceding patches: 569
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 11, 2011
+Completed By:                               Date Completed: MAY 30, 2014
+Released By :                               Date Released : JUN 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

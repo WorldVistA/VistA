@@ -1,0 +1,197 @@
+
+=============================================================================
+Run Date: SEP 16, 2015                     Designation: VBEC*1*86
+Package : VBEC - VBECS                        Priority: Mandatory
+Version : 1        SEQ #86                      Status: Released
+                  Compliance Date: SEP 24, 2015
+=============================================================================
+
+
+Subject: SEPTEMBER 2015 WINDOWS UPDATES FOR VBECS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch serves to alert VA facilities using the Vista Blood 
+ Establishment Computer Software (VBECS) that Microsoft Windows Updates 
+ are available for immediate installation.
+  
+ If the VBECS servers are serviced by a second group, i.e. a Regional Data 
+ Center, it is the responsibility of the local IRM support person for 
+ VBECS to ensure that all parties who need to see this Update Information 
+ for 'their' VBECS system sees it. The local support should follow local 
+ policies to forward such information to their Server Administrators. 
+  
+ Sites who have not installed VBECS have no action to take with this 
+ informational patch.
+  
+ This patch is released with a seven (7) day compliance because the 
+ updates address security vulnerabilities in Microsoft Windows. Failure to 
+ comply with the installation of Windows Updates could expose the VBECS 
+ servers and software to security threats. 
+  
+ BLOOD BANK CLEARANCE 
+ ===================== 
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch VBEC*1.0*86 contains 
+ changes to a package referenced in BBM Team Review of VISTA Patches. This 
+ patch does not alter or modify any VistA Blood Bank software design 
+ safeguards or safety critical elements functions.
+  
+ RISK ANALYSIS: Changes made by patch VBEC*1.0*86 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Windows Updates 
+ ================ 
+ If your servers are maintained at a data center, ignore this section 
+ since data center personnel will install updates.
+  
+ This Microsoft Windows Update patch must be installed on the VBECS 
+ servers:
+  
+ KB890830*
+  
+ *Note: Windows Update KB890830 is a malicious software removal tool and 
+ does not appear in the list of applied patches after installation.
+  
+ The VBECS development team must test every Microsoft Windows update. Once 
+ the development team is satisfied that the update causes no adverse 
+ effects, Health Product Support (HPS) will give the sites permission to 
+ apply the update by releasing this informational patch. 
+  
+ Updates are approved with Windows Server Update Service. Approved updates 
+ will be downloaded to your servers automatically. However, a server 
+ administrator must install the updates locally.
+  
+ Windows Update instructions:
+ ============================
+  
+ 1) Since most updates require a reboot, coordinate a time with the Blood
+    Bank manager to apply the updates. All Blood Bank users must be logged
+    off the VBECS server before updates can begin. 
+  
+ 2) At the agreed upon down time, log on to the VBECS cluster as a user 
+    with server administrator privileges. 
+  
+ 3) Use the Cluster Administrator Tool to verify which node is active 
+    (Windows Updates should not be installed on an active node):
+  
+    a. Click on START, CONTROL PANEL, ADMINISTRATIVE TOOLS, CLUSTER
+       ADMINISTRATOR. 
+    b. If the OPEN CONNECTION TO CLUSTER window appears, enter the 
+       VBECS cluster name and click OK. 
+    c. When Cluster Administrator has opened click on the folder titled 
+       "Groups". 
+    d. The server name listed on the right side under the Owner column 
+       is the "Active" node.
+    e. Record the server name listed under Owner, this is the active 
+       node. The other server in the VBECS cluster is the passive node.
+    f. Log off of the VBECS cluster server once the server name of the 
+       active node is determined. 
+  
+ 4) Log on to the passive node of the VBECS cluster as a user with 
+    server administrator privileges. 
+  
+ 5) Verify all users (other than the user installing the Windows updates) 
+    are off the VBECS server (do not proceed until all users are logged 
+    off):
+  
+    a. Open Task Manager: click on START, RUN; Type TASKMGR and click OK.
+    b. Select the USERS tab to see the users who are logged on to the 
+       server.
+    c. Right click on each user's name and click on SEND MESSAGE to send 
+       a message to the user asking them to log off the system. 
+    d. Wait for all users to logoff. If a user's status is Disconnected,
+       right click the user's name and click on LOG OFF.
+    e. Close TASK MANAGER after all users are logged off the server. 
+  
+ 6) A yellow shield shaped icon should appear in the System Tray (lower 
+    right corner of desktop) indicating updates are available for
+    installation. 
+  
+ 7) If the yellow shield shaped icon fails to appear after waiting one 
+    minute, perform the following steps: 
+  
+    a. Click on START, RUN. 
+    b. Type WUAUCLT.EXE /DETECTNOW and click OK. 
+    c. The yellow shield shaped icon can take up to 30 minutes to appear 
+       after entering the WUAUCLT.EXE /DETECTNOW command. 
+    d. If the icon does not appear after 30 minutes, click on START,
+       ADMINISTRATIVE TOOLS, SERVICES.   
+    e. Right-click the service named "Automatic Updates" and select 
+       RESTART.
+    f. If the yellow shield icon does not appear within 5 minutes,
+       contact the VA Service Desk (VASD) or file a Remedy ticket.
+  
+ 8) Click on the yellow shield shaped icon in the System Tray. 
+  
+ 9) Leave Express Install selected. Click INSTALL. 
+  
+ 10) When the update process is complete, you may be prompted to reboot. 
+     Reboot the server at this time. 
+  
+ 11) After the reboot is completed (this may take several minutes), 
+     log on to the passive node that is now fully patched. Open the
+     Cluster Administrator tool and perform these steps in order
+     (Note: Now that VBECS test has been migrated to the 2.0
+     environment, You don't need to move the Test group): 
+  
+    a. Expand the Groups folder. 
+    b. Right click the VBECS Group PROD and select TAKE OFFLINE.
+    c. Right click the Group 1 and select TAKE OFFLINE.
+    d. Right click the Group 0 and select TAKE OFFLINE.
+    e. Right click on the Cluster Group and select MOVE GROUP - wait
+       until the group is ONLINE before proceeding to the next step
+       (this may take up to 5 minutes).
+    f. Right click on each remaining groups and select MOVE GROUP 
+       (VBECS Group PROD, Group 1, and Group 0).
+    g. Right click on Group 0 and select BRING ONLINE - wait until the 
+       group is ONLINE before proceeding to the next step 
+       (this may take up to 5 minutes).
+    h. Right click on Group 1 and select BRING ONLINE.
+    i. Right click on VBECS Group PROD and select BRING ONLINE.
+    j. Examine the Resources folder. All resources should be owned by
+       the server that has just been patched (making it the active node).
+    k. Close Cluster Administrator.
+  
+ 12) Log off the patched server which is now the active node.
+  
+ 13) Log on to the unpatched server and repeat steps 5-10.
+  
+ 14) At this point, if the Server Windows Update process is complete and 
+    there are no outstanding issues, notify the Blood Bank Manager that 
+    the VBECS system is once again available for use. If any issues are 
+    encountered, contact the VA Service Desk (VASD) or file a Remedy 
+    ticket. 
+  
+ ========================================================================
+  
+ NOTE: Do not change the system! The U.S. Food and Drug Administration 
+ classifies this software as a medical device. Unauthorized modifications 
+ will render this device an adulterated medical device under Section 501 
+ of the Medical Device Amendments to the Federal Food, Drug, and Cosmetic 
+ Act. Acquiring and implementing this software through the Freedom of 
+ Information Act require the implementer to assume total responsibility 
+ for the software and become a registered manufacturer of a medical 
+ device, subject to FDA regulations. Adding to or updating VBECS software 
+ without permission is prohibited.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 16, 2015
+Completed By:                               Date Completed: SEP 16, 2015
+Released By :                               Date Released : SEP 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,206 @@
+
+=============================================================================
+Run Date: NOV 09, 2015                     Designation: DGBT*1*27
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #28                      Status: Released
+                  Compliance Date: DEC 10, 2015
+=============================================================================
+
+Associated patches: (v)DGBT*1*26   <<= must be installed BEFORE `DGBT*1*27'
+
+Subject: TIMEOUT, INTRO TEXT, CONNECTION, APPT STATUS AND CLAIMER NAME ISSUES
+
+Category: 
+  - Other
+
+Description:
+============
+
+  
+ This patch addresses 5 issues:
+  
+    1. Users are not being logged out of Dashboard when they exit Internet 
+       Explorer.
+  
+    2. If a site's introductory text displayed at login is not stored in 
+       numerically sequential subscripts, Bene Travel (BT) Dashboard
+       encounters an error.
+  
+    3. Random connection related issues when using BT Dashboard
+  
+    4. BT Dashboard is displaying an incorrect appointment status.
+  
+    5. BT Dashboard stops working if a user with an apostrophe in their name 
+       logs in.
+  
+      
+ Associated NSR(s):
+ =================
+ N/A
+     
+     
+ Associated Remedy ticket(s):
+ ===========================
+ 1. INC000000774328 - [pending patch] Web site for Beneficiary Travel 
+                      Dashboard 1.0 does not ask user for access/verify.
+  
+ 2. INC000000775924 - error displaying site intro text from non-sequential
+                      numeric nodes
+  
+ 3. INC000000789376 - Error when accessing BT dashboard.
+    Duplicates:
+    INC000000790101 - Dashboard issue [0 mileage]
+    INC000000809982 - Bene Travel - General:[HyperEvent:unknown 12031]
+    INC000000847521 - Bene Travel - Dashboard Connectivity Issues:
+  
+ 4. INC000000833381 - Bene Travel - Dashboard Other: ACT REQ/CHECKED OUT*
+  
+ 5. INC000000891700 - BT Dashboard - apostrophe in name causes error
+    Duplicate:
+    INC000001048643 - Bene Travel - Dashboard Connectivity Issues
+  
+     
+ Participating Test Sites:
+ ========================
+ Birmingham VAMC
+ Dayton VAMC
+ N. Texas HCS
+     
+      
+ REMEDY OVERVIEW:
+ ===============
+   
+ 1. INC000000774328 - [pending patch] Web site for Beneficiary Travel 
+                      Dashboard 1.0 does not ask user for access/verify.
+   
+    Problem:
+    --------
+    The Dashboard inactivity timeout is too long.
+  
+    Resolution:
+    -----------
+    Modified dgbtLogin.csp to decrease the inactivity timeout, the amount of 
+    time until a clerk is automatically logged off, from 6000 seconds to 
+    1200 seconds.
+  
+  
+ 2. INC000000775924 - error displaying site intro text from non-sequential 
+                       numeric nodes
+   
+    Problem:
+    --------
+    An error occurs in BT Dashboard when the sites intro text is stored in an
+    array with non-sequential subscripts. This is due to a FOR loop, written 
+    with a linear increment, attempting to display subscripts of the intro 
+    array that do not exist.
+  
+    Resolution:
+    -----------
+    Modified dgbtLogin.csp to use a parameterless FOR loop, which will only 
+    display subscripts of the array that exist.
+  
+  
+ 3. INC000000789376 - Error when accessing BT dashboard.
+   
+    Problem:
+    --------
+    Users are reporting HyperEvent errors randomly when using BT Dashboard.
+    These issues are related to connectivity issues, network latency, and 
+    failure of the BING API to complete multiple requests.
+  
+    Resolution:
+    -----------
+    Added a number of checks to the BING API call in dgbtDashboard.csp to 
+    retry if an error is encountered during the first attempt.
+  
+  
+ 4. INC000000833381 - Bene Travel - Dashboard Other: ACT REQ/CHECKED OUT*
+   
+    Problem:
+    --------
+    The $$STATUS^SDAM1 API is being called with incorrect parameters which
+    results in an incorrect appointment status being displayed in BT 
+    Dashboard.
+  
+    Resolution:
+    -----------
+    Modified the 4th parameter in the $$STATUS^SDAM1 API in the dgbt.Patient
+    class to correctly reference the 0th node of the patient appointment
+    entry in the PATIENT (#2) file.
+        
+  
+ 5. INC000000891700 - BT Dashboard - apostrophe in name causes error
+   
+    Problem:
+    --------
+    If a clerk with an apostrophe in their name logs into BT Dashboard,
+    anyone attempting to login afterwards will receive a JavaScript error,
+    preventing use of the application. The error will persist for all clerks 
+    until the claimer list is automatically purged at the end of the day.
+  
+    Resolution:
+    -----------
+    Modified the dgbt.DashboardCb class to use double quotes, to avoid 
+    various syntax errors when a name contains an apostrophe.
+  
+  
+ SOFTWARE DISTRIBUTION:
+ ====================== 
+ Sites may retrieve the new XML directly via FTP. The preferred method is to 
+ FTP the files from:
+   
+         download.vista.domain.ext
+   
+  This transmits the files from the first available FTP server.  
+   
+  Sites may also elect to retrieve the file directly from the
+  ANONYMOUS.SOFTWARE directory from a specific server as follows:
+   
+  Albany:             ftp.domain.ext
+  Hines:              ftp.domain.ext
+  Salt Lake City:     ftp.domain.ext
+   
+  Filename                    Description           Format
+  ========                    ===========           ======
+  DGBT_1_27.XML               Dashboard XML         Binary
+  
+   
+  NOTE: The size of the file once downloaded will be 40.8 KB
+  
+     
+ Installation Instructions:
+ ==========================
+   
+  Use Cache Studio to import the source code XML. 
+  Note: Cache Studio should be connected to your VistA server in your
+        station's namespace.
+  
+ 1.  Click the Tools menu and select Import Local.
+  
+ 2.  Browse to the XML source code file retrieved from 
+     download.vista.domain.ext.
+  
+ 3.  Click the Open button.
+  
+ 4.  Ensure the Add Imported Items to Project checkbox is not selected and 
+     that Compile Imported Items is selected.
+  
+ 5.  Click the OK button to import the Beneficiary Travel Dashboard .csp
+     project file. 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 28, 2015
+Completed By:                               Date Completed: NOV 04, 2015
+Released By :                               Date Released : NOV 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,258 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 06/06/14 at 09:24
+=============================================================================
+Run Date: OCT 24, 2014                     Designation: ECX*3*151
+Package : ECX - DSS EXTRACTS                  Priority: EMERGENCY
+Version : 3       SEQ #135                      Status: Released
+                  Compliance Date: OCT 31, 2014
+=============================================================================
+
+Associated patches: (v)ECX*3*140   <<= must be installed BEFORE `ECX*3*151'
+
+Subject: FY15 DSS LOINC CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *********************NOTE:********************************* 
+ * THIS PATCH NEEDS TO BE IMPLEMENTED AFTER THE SEPTEMBER  *
+ * Lab Results (LAR) EXTRACT IS RUN AND BEFORE THE OCTOBER *
+ * LAR EXTRACT IS RUN.                                     *
+ ***********************************************************
+  
+ Patch ECX*3.0*151 will update the DSS LOINC FILE (#727.29) file by adding
+ 36 new Logical Observation Identifiers Names and Codes (LOINC) codes.
+      
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+     
+     
+ Associated Remedy Ticket:
+ -------------------------
+ 1. INC000001012864 - FY2015 LOINC Code Update
+      
+     
+ Participating Test Sites:
+ -------------------------
+ Louisville VA Medical Center
+ New York Harbor HCS
+ Providence VA Medical Center
+     
+      
+ REMEDY OVERVIEW:
+ ---------------- 
+ 1. INC000001012864 - FY2015 LOINC Code Update
+   
+    Problem:
+    --------
+    The Managerial Cost Accounting Office (MCAO) has requested an update to  
+    the DSS LOINC FILE (#727.29) file. This patch will add 36 codes to the 
+    file.
+  
+    Resolution:
+    -----------
+    This patch updates the DSS LOINC FILE (#727.29) file by adding 36 new 
+    LOINC codes. 
+   
+    The new entries that will be added to the DSS LOINC FILE (#727.29)
+    file:
+  
+    For LAR Test #34 with DSS Test Name "Hepatitis C Antibody" and
+    Reporting Unit of "NEG-POS OR NONREACTIVE-REACTIVE":
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------        
+        39008-8         HCV Ab Fld Ql IB
+        51657-5         HCV Ab Fld Ql
+        72376-7         HCV Ab SerPlBld Ql EIA.rapid
+                                        
+    For LAR Test #35 with DSS Test Name "HIV Screening Antibody" and  
+    Reporting Unit of "NEG-POS OR NONREACTIVE-REACTIVE":
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        22356-0         HIV1 Ab Ser-aCnc
+        22357-8         HIV1+2 Ab Ser-aCnc
+        35438-1         HIV1 Ab Sal EIA-aCnc
+        41143-9         HIV1 Ab Sal-aCnc
+        43599-0         HIV1 Ab Ser IF-aCnc
+        48345-3         HIV 1+O+2 Ab SerPl Ql
+        48346-1         HIV 1+O+2 Ab SerPl-aCnc
+        49483-1         HIV1 Ser EIA-Imp
+        5220-9          HIV1 Ab Ser EIA-aCnc
+        5223-3          HIV1+2 Ab Ser EIA-aCnc
+        57975-5         HIV 1+O+2 Ab Fld Ql
+        68961-2         HIV1 Ab SerPlBld Ql EIA.rapid
+        69668-2         HIV 1 & 2 Ab SerPl EIA.rapid
+        73905-2         HIV1+2 IgG SerPl Ql EIA.rapid
+        73906-0         HIV1+2 IgG Bld Ql EIA.rapid
+                                        
+    For LAR Test #38 with DSS Test Name "HIV Viral Load" and Reporting  
+    Unit of "COPIES/ML":     
+        
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        47359-5         HIV1 RNA SerPl Donr Ql Amp Prb
+        62469-2         HIV1 RNA SerPl PCR-aCnc
+        70241-5         HIV1 RNA # Plas PCR DL=20
+                                        
+    For LAR Test #41 with DSS Test Name "Hepatitis A AB" and Reporting  
+    Unit of "NEG-POS":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        51913-2         HAV IgG+IgM Ser Ql
+                                        
+    For LAR Test #42 with DSS Test Name "Hepatitis A IgM AB" and Reporting  
+    Unit of "NEG-POS":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        22315-6         HAV IgM Ser-aCnc
+        5182-1          HAV IgM Ser RIA-aCnc
+                                        
+    For LAR Test #43 with DSS Test Name "Hepatitis A IgG AB" and Reporting  
+    Unit of "NEG-POS":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        5179-7          HAV IgG Ser EIA-aCnc
+        5180-5          HAV IgG Ser RIA-aCnc
+                                        
+    For LAR Test #46 with DSS Test Name "Hepatitis B Core AB" and Reporting  
+    Unit of "NEG-POS OR NONREACTIVE-REACTIVE":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        39005-4         HBV core Ab Fld Ql
+                                        
+    For LAR Test #47 with DSS Test Name "Hepatitis B e AG" and Reporting  
+    Unit of "NEG-POS OR NONREACTIVE-REACTIVE":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        31845-1         HBV e Ag Ser-aCnc
+        39007-0         HBV e Ag XXX Ql
+        5191-2          HBV e Ag Ser EIA-aCnc
+                                        
+    For LAR Test #81 with DSS Test Name "Hepatitis B Surface AG" and  
+    Reporting Unit of "NEG-POS OR NONREACTIVE-REACTIVE":  
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        58452-4         HBV surface Ag Ser-aCnc
+        63557-3         HBV surface Ag SerPl EIA-aCnc
+        65633-0         HBV surface Ag SerPl Ql Cfm
+        70154-0         HBV surface Ag SerPl Cfm-%
+                                        
+    For LAR Test #84 with DSS Test Name "Hepatitis B e AB" and Reporting  
+    Unit of "NEG-POS OR NONREACTIVE-REACTIVE":       
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        39006-2         HBV e Ab Fld Ql
+                                        
+    For LAR Test #88 with DSS Test Name "Hepatitis C Genotype" and Reporting 
+    Unit of "TEXT":     
+  
+        LOINC Code      LOINC Short Name
+        ----------      ----------------
+        48575-5         HCV Gentyp XXX PCR
+  
+  
+   
+  Installation Instructions:
+  ==========================
+  
+  **DO NOT INSTALL UNTIL ALL PRE-INSTALL INSTRUCTIONS HAVE BEEN COMPLETED**
+   
+  PRE-INSTALL
+  -----------
+  Contact the site DSS POC and review the following steps with them:
+      1. Has the September LAR EXTRACT been run to completion? If NO, get
+         a time frame for when it will be completed, audited, and reviewed
+         for issues?
+      2. Has the audit report - Laboratory Results (LAR) Extract Audit [ECX
+         LAR SOURCE AUDIT] - been completed and reviewed against the 
+         extract with no issues found?  If NO, please have them complete 
+         it and review it against the extract for issues.
+      3. Has the Lab Results DSS LOINC Code Report [ECX LAR LOINC RPT] 
+         been run and reviewed for inconsistencies or errors?
+      4. Does the DSS POC approve that the site has fully completed the 
+         September LAR EXTRACT and has not started anything with the 
+         October LAR EXTRACT?  If YES, proceed with installation of the 
+         patch into the site.
+    
+  INSTALL
+  -------    
+   
+     ***************************NOTE****************************  
+     * It is not necessary to disable any options.  You may    *
+     * install these routines at any time without interruption *
+     * to users.                                               *
+     ***********************************************************
+     
+    Installation will take less than 2 minutes.
+   
+    Suggested time to install: Non-peak requirement hours.
+    
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter ECX*3.0*151)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this patch
+              is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+    
+     4. Use the Install Package(s) option and select the package ECX*3.0*151.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+        Protocols? NO//" respond NO.
+     
+  ** 7. During install, verify that all entries were added successfully.
+        If an error is displayed, please open a new Remedy ticket.  
+  
+     8. You may delete the routine ECX3P151 from your production system after 
+        the patch has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22,1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P151
+    Before:       n/a   After: B26322267  **151**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 27, 2014
+Completed By:                               Date Completed: OCT 21, 2014
+Released By :                               Date Released : OCT 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

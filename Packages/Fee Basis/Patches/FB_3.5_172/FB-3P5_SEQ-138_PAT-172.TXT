@@ -1,0 +1,190 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/17/16 at 14:16
+=============================================================================
+Run Date: MAY 12, 2016                     Designation: FB*3.5*172
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #138                    Status: Released
+                  Compliance Date: JUN 11, 2016
+=============================================================================
+
+
+Subject: SECURITY KEYS FOR SEPARATION OF DUTIES
+
+Category: 
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch FB*3.5*172 is a Fee Basis patch for the VistA Fee Separation
+ of Duties project.
+  
+ Patch FB*3.5*172 creates three new security keys which will be referenced
+ in software exported by subsequent patch FB*3.5*154. Once patch
+ FB*3.5*172 is installed sites can allocate the new security keys to
+ appropriate users prior to installation of patch FB*3.5*154 to lessen the
+ risk of downtime when FB*3.5*154 is installed and the new keys are
+ required to access software functions.
+  
+ Detailed descriptions of the enhancements follow:
+  
+ 01. SECURITY KEYS
+  
+     This patch adds three new security keys.  The new keys will give
+     sites more control of user's access to the package functions once
+     patch FB*3.5*154 is installed. Additionally, once patch FB*3.5*154
+     is installed many functions currently locked by the FBAASUPERVISOR
+     key will instead be locked by the FBAA LEVEL 2 key. Users may be
+     assigned more than one of these keys.  The keys exported by patch
+     FB*3.5*172 are listed below:
+  
+     Key: FBAA LEVEL 1 AUTH
+     Permits the holder to enter and edit 7079 authorizations, 7078 
+     authorizations, civil hospital notifications, nursing home movements,
+     and unauthorized claims.
+  
+     Key: FBAA LEVEL 1 PMT
+     Permits the holder to enter and edit invoices and payments.  
+  
+     Key: FBAA LEVEL 2
+     Permits the holder to certify a batch for payment, queue data for 
+     transmission to Central FEE, void payments, and update contract and
+     rate data for nursing home vendors. The holder of this key can also
+     bypass some user and status restrictions during selection of a payment
+     or batch. This key is normally assigned to a lead clerk or supervisor.
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated:
+  
+  Security Key Name          New/Modified/Deleted
+  -----------------          --------------------
+  FBAA LEVEL 1 AUTH          New
+  FBAA LEVEL 1 PMT           New
+  FBAA LEVEL 2               New
+  
+ Templates Associated: N/A
+  
+ Additional Information: N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20090309 Emergency Patch VistA Fee - Separation of Duties - Assignment of
+          Keys
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ NORTHERN INDIANA HCS
+ SAGINAW, MI
+ TUCSON, AZ
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ The software is distributed in the PackMan message generated from the
+ National Patch Module on Forum. No additional documentation is distributed
+ with patch FB*3.5*172.
+  
+ Documentation for the Fee Basis package can be found on the VA Software
+ Documentation Library at: http://www4.domain.ext/vdl/
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ After the patch is installed the new security keys can be 
+ allocated to appropriate user accounts.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ This patch may be installed with users on the system. This patch should
+ take less than 5 minutes to install.
+  
+ There are no options to disable.
+  
+  
+ Installation Instructions:
+ --------------------------
+ During installation three new security keys are created.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option. 
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select 
+     the Installation Menu.  From this menu, you may elect to use the 
+     following options. When prompted for the INSTALL NAME enter the patch
+     #(ex. FB*3.5*172):
+     a. Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DDs or templates.
+     b. Compare Transport Global to Current System - This option will 
+        (allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch routines,
+        DDs, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option 
+     and choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+     NO//'  answer NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//'  answer NO. 
+  
+ 7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 8. ASSIGN NEW SECURITY KEYS TO APPROPRIATE USERS
+    ---------------------------------------------
+    Patches FB*3.5*154 and DSIF*3.2*38 national release training will
+    include instructions on assignment of new security keys. No action is
+    required until you have received the training.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 17, 2016
+Completed By:                               Date Completed: MAY 04, 2016
+Released By :                               Date Released : MAY 12, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

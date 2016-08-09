@@ -1,0 +1,207 @@
+
+=============================================================================
+Run Date: MAY 14, 2015                     Designation: IB*2*511
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #496                      Status: Released
+                  Compliance Date: JUN 06, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*451    <<= must be installed BEFORE `IB*2*511'
+                    (v)IB*2*452    <<= must be installed BEFORE `IB*2*511'
+                    (v)IB*2*488    <<= must be installed BEFORE `IB*2*511'
+
+Subject: ePAYMENTS COMPLIANCE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+   Patch IB*2.0*511 is part of a multi-build: 
+       BPS IB PRCA EPAYMENTS BUNDLE 1.0
+   See patch PRCA*4.5*298 for the complete description.
+  
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ payment (ePayments) system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*298
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*511
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1.0*17
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+   
+ 1. The Third Party Joint Inquiry option [IBJ THIRD PARTY JOINT INQUIRY] is
+    modified to include an Auto-Post Status indicator after the Electronic
+    Remittance Advice (ERA) on the TPJI Bill Charges screen.  The indicator
+    is displayed if the ERA is an Auto-Posting candidate.
+  
+ 2. The Third Party Joint Inquiry option [IBJ THIRD PARTY JOINT INQUIRY] is
+    modified to include detail of an Electronic Explanation of Benefits 
+    (EEOB) Deletion on the following screens.
+  
+  
+    - Bill Charges
+    - Comment History
+  
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ File Name (#)                                                   New/Modified/
+   Sub-File Name (#)    Field Name (#)                              Deleted
+ -------------------    -------------------                      -------------
+ EXPLANATION OF BENEFITS (#361.1)
+                        EEOB REMOVED(#102)                         New
+   MOVE/COPY/REMOVE HISTORY SUB-FILE (#361.1101)
+                        DATE/TIME EEOB MOVED (#.01)                Modified      
+                        EEOB MOVE/COPY/REMOVE BY (#.02)            Modified
+                        MOVE/COPY/REMOVE REASON (#.03)             Modified
+                        MOVE/COPY/REMOVE EVENT (#.05)              Modified
+     
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type               New/Modified/Deleted
+ -----------       ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ NSR - Request id: 20110503 Electronic Data Interchange (EDI) New 
+       Standards and Operating Rules (Veterans Health Administration)
+       VHA Provider-Side TCRs  05/19/2011 
+       
+       http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503  
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  VA Puget Sound Health Care System
+  VA Southern Nevada Healthcare System (VASNHS) - Las Vegas
+  New Mexico VA Health Care System - Albuquerque
+  Tuscaloosa VA Medical Center
+  Central Alabama Veterans Health Care System (CAVHCS)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ ----------------------------------------------------------------------
+ IB Release Notes/Installation       IB_2_0_P511_RN.PDF         Binary
+ Guide (IB*2.0*511)    
+  
+   
+ Patch Installation: 
+  
+ Installation Instructions
+ -------------------------
+ See patch PRCA*4.5*298 for installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-1994;Build 106
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEOB4
+    Before: B17512247   After: B24468385  **451,511**
+Routine Name: IBJTBA1
+    Before: B55203137   After: B75349267  **135,265,155,349,417,451,488,511**
+Routine Name: IBNCPDPU
+    Before:B114125068   After:B122718985  **223,276,347,383,405,384,437,
+                                           435,452,511**
+ 
+Routine list of preceding patches: 452, 488
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 23, 2013
+Completed By:                               Date Completed: APR 24, 2015
+Released By :                               Date Released : MAY 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

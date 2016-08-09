@@ -1,0 +1,197 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 12/16/14 at 12:22
+=============================================================================
+Run Date: JUN 10, 2015                     Designation: VDEF*1*12
+Package : VDEF - VDEF                         Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: JUL 11, 2015
+=============================================================================
+
+Associated patches: (v)VDEF*1*11   <<= must be installed BEFORE `VDEF*1*12'
+
+Subject: TIME_VDEFUTIL INPUT TRANSFORM AND WAKEUP PERIOD DD
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will fix the input transform utility that inadvertently
+ restricted the values to greater than 30 days and update the REQUEST
+ QUEUE WAKEUP PERIOD description to reflect how the field is
+ defined.
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001065808    VDEF - Other:
+ 2. INC000001094661    REQUEST QUEUE WAKEUP PERIOD
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Birmingham
+ Dayton 
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001065808    VDEF - Other:
+   
+ Problem: 
+ --------
+ When patch VDEF*1.0*11 was released, it inadvertently restricted the 
+ REQUEST QUEUE WAKEUP PERIOD field (#.02) and the CHECK-OUT TIME LIMIT
+ field (#.05) of the VDEF REQUEST QUEUE file (#579.3) and the VDEF 
+ MONITOR DELAY field (#.02) of the VDEF PARAMETERS file (#579.5)  
+ date fields to times of greater than 30 days by editing input
+ transform utility $$TIMEI^VDEFUTIL when only the ARCHIVAL PARAMETER (#.04)
+ of the VDEF REQUEST QUEUE file (#579.3) was intended.
+   
+ Resolution:
+ -----------
+ This patch will restore the utility back to its pre-VDEF*1.0*11 form
+ which will remove the restrictions from the REQUEST QUEUE WAKEUP PERIOD
+ field (#.02) and the CHECK-OUT TIME LIMIT field (#.05) of the VDEF 
+ REQUEST QUEUE file (#579.3) and the VDEF MONITOR DELAY field (#.02) of
+ the VDEF PARAMETERS file (#579.5) and modify the input transform directly
+ for the ARCHIVAL PARAMETER field (#.04) in the VDEF REQUEST QUEUE file
+ (#579.3) directly to restrict to values greater than 30 days.
+  
+ Routine: VDEFUTIL
+  
+ DATA DICTIONARY:
+ ================
+ Before:
+  
+ 579.3,.04     ARCHIVAL PARAMETER     0;4 NUMBER (Required)
+  
+         INPUT TRANSFORM:  S X=$$TIMEI^VDEFUTIL(X) I 'X K X
+         OUTPUT TRANSFORM: S Y=$$TIMEE^VDEFUTIL(Y)
+         LAST EDITED:      FEB 24, 2012 
+         HELP-PROMPT:      Enter time in xxD yyH zzM wwS format. The 
+                           minimum allowable time is 30D. 
+         DESCRIPTION:      The minimum number of seconds an already
+                           processed entry in a Request Queue will be kept
+                           in the Queue for archival purposes before it is
+                           purged by the VDEF Monitor process.
+  
+ After:
+  
+  
+ 579.3,.04     ARCHIVAL PARAMETER     0;4 NUMBER (Required)
+  
+         INPUT TRANSFORM:  S X=$$TIMEI^VDEFUTIL(X) I 'X!(X<2592000) K X         
+         OUTPUT TRANSFORM: S Y=$$TIMEE^VDEFUTIL(Y)
+         LAST EDITED:      FEB 24, 2012 
+         HELP-PROMPT:      Enter time in xxD yyH zzM wwS format. The 
+                           minimum allowable time is 30D. 
+         DESCRIPTION:      The minimum number of seconds an already
+                           processed entry in a Request Queue will be kept
+                           in the Queue for archival purposes before it is
+                           purged by the VDEF Monitor process.  
+  
+ 2. INC000001094661    REQUEST QUEUE WAKEUP PERIOD
+   
+ Problem: 
+ --------
+ The "HELP-PROMPT" and "DESCRIPTION" for the REQUEST QUEUE WAKEUP PERIOD 
+ (#.02) in the VDEF REQUEST QUEUE file (#579.3) contradict the INPUT
+ TRANSFORM and documentation of the field.
+   
+ Resolution:
+ -----------
+ Update the "HELP-PROMPT" and "DESCRIPTION" to reflect what is documented
+ in the manuals and how the field is defined.
+  
+  
+ DATA DICTIONARY:
+ ================
+ Before:
+  
+ 579.3,.02     REQUEST QUEUE WAKEUP PERIOD 0;2 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  S X=$$TIMEI^VDEFUTIL(X) I 'X K X
+               OUTPUT TRANSFORM: S Y(0)=Y S Y=$$TIMEE^VDEFUTIL(Y)
+               LAST EDITED:      SEP 26, 2003 
+               HELP-PROMPT:      Type a number between 1 and 999999999, 0 
+                                 Decimal Digits 
+               DESCRIPTION:      Number of seconds in which this queue's Request
+                                 Processor will resubmit itself for execution.
+  
+   
+ After:
+  
+  
+ 579.3,.02     REQUEST QUEUE WAKEUP PERIOD 0;2 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  S X=$$TIMEI^VDEFUTIL(X) I 'X K X
+               OUTPUT TRANSFORM: S Y(0)=Y S Y=$$TIMEE^VDEFUTIL(Y)
+               LAST EDITED:      DEC 16, 2014 
+               HELP-PROMPT:      Enter time in xxD yyH zzM wwS format. 
+               DESCRIPTION:      A period of time (in days, hours, minutes, and
+                                 seconds) that TaskMan uses to calculate how
+                                 long to wait before it resumes processing the
+                                 Request queue.  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter VDEF*1.0*12)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        VDEF*1.0*12.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VDEF;**[Patch List]**;Dec 28, 2004;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VDEFUTIL
+    Before: B20903183   After: B21088978  **3,10,11,12**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 16, 2014
+Completed By:                               Date Completed: MAY 14, 2015
+Released By :                               Date Released : JUN 10, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

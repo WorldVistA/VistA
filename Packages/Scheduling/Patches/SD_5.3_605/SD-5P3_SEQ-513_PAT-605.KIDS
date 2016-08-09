@@ -1,0 +1,889 @@
+Released SD*5.3*605 SEQ #513
+Extracted from mail message
+**KIDS**:SD*5.3*605^
+
+**INSTALL NAME**
+SD*5.3*605
+"BLD",9397,0)
+SD*5.3*605^SCHEDULING^0^3140506^y
+"BLD",9397,1,0)
+^^6^6^3130509^
+"BLD",9397,1,1,0)
+This patch will address two issues:
+"BLD",9397,1,2,0)
+- Duplicate encounters are being created for visits causing patient data 
+"BLD",9397,1,3,0)
+to not link correctly.
+"BLD",9397,1,4,0)
+- The display in the Make Consult Appointment [SC MAKE CONSULT 
+"BLD",9397,1,5,0)
+APPOINTMENT] is truncating the Consult Name, causing incorrect consults 
+"BLD",9397,1,6,0)
+to be scheduled.
+"BLD",9397,4,0)
+^9.64PA^^
+"BLD",9397,6.3)
+9
+"BLD",9397,"ABPKG")
+n
+"BLD",9397,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9397,"KRN",.4,0)
+.4
+"BLD",9397,"KRN",.401,0)
+.401
+"BLD",9397,"KRN",.402,0)
+.402
+"BLD",9397,"KRN",.403,0)
+.403
+"BLD",9397,"KRN",.5,0)
+.5
+"BLD",9397,"KRN",.84,0)
+.84
+"BLD",9397,"KRN",3.6,0)
+3.6
+"BLD",9397,"KRN",3.8,0)
+3.8
+"BLD",9397,"KRN",9.2,0)
+9.2
+"BLD",9397,"KRN",9.8,0)
+9.8
+"BLD",9397,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9397,"KRN",9.8,"NM",1,0)
+SDVSIT^^0^B36437638
+"BLD",9397,"KRN",9.8,"NM",2,0)
+SDCNSLT^^0^B40924838
+"BLD",9397,"KRN",9.8,"NM","B","SDCNSLT",2)
+
+"BLD",9397,"KRN",9.8,"NM","B","SDVSIT",1)
+
+"BLD",9397,"KRN",19,0)
+19
+"BLD",9397,"KRN",19.1,0)
+19.1
+"BLD",9397,"KRN",101,0)
+101
+"BLD",9397,"KRN",409.61,0)
+409.61
+"BLD",9397,"KRN",771,0)
+771
+"BLD",9397,"KRN",779.2,0)
+779.2
+"BLD",9397,"KRN",870,0)
+870
+"BLD",9397,"KRN",8989.51,0)
+8989.51
+"BLD",9397,"KRN",8989.52,0)
+8989.52
+"BLD",9397,"KRN",8994,0)
+8994
+"BLD",9397,"KRN","B",.4,.4)
+
+"BLD",9397,"KRN","B",.401,.401)
+
+"BLD",9397,"KRN","B",.402,.402)
+
+"BLD",9397,"KRN","B",.403,.403)
+
+"BLD",9397,"KRN","B",.5,.5)
+
+"BLD",9397,"KRN","B",.84,.84)
+
+"BLD",9397,"KRN","B",3.6,3.6)
+
+"BLD",9397,"KRN","B",3.8,3.8)
+
+"BLD",9397,"KRN","B",9.2,9.2)
+
+"BLD",9397,"KRN","B",9.8,9.8)
+
+"BLD",9397,"KRN","B",19,19)
+
+"BLD",9397,"KRN","B",19.1,19.1)
+
+"BLD",9397,"KRN","B",101,101)
+
+"BLD",9397,"KRN","B",409.61,409.61)
+
+"BLD",9397,"KRN","B",771,771)
+
+"BLD",9397,"KRN","B",779.2,779.2)
+
+"BLD",9397,"KRN","B",870,870)
+
+"BLD",9397,"KRN","B",8989.51,8989.51)
+
+"BLD",9397,"KRN","B",8989.52,8989.52)
+
+"BLD",9397,"KRN","B",8994,8994)
+
+"BLD",9397,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",9397,"QUES",0)
+^9.62^^
+"BLD",9397,"REQB",0)
+^9.611^2^2
+"BLD",9397,"REQB",1,0)
+SD*5.3*219^2
+"BLD",9397,"REQB",2,0)
+SD*5.3*496^2
+"BLD",9397,"REQB","B","SD*5.3*219",1)
+
+"BLD",9397,"REQB","B","SD*5.3*496",2)
+
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+605^3140506
+"PKG",16,22,1,"PAH",1,1,0)
+^^6^6^3140506
+"PKG",16,22,1,"PAH",1,1,1,0)
+This patch will address two issues:
+"PKG",16,22,1,"PAH",1,1,2,0)
+- Duplicate encounters are being created for visits causing patient data 
+"PKG",16,22,1,"PAH",1,1,3,0)
+to not link correctly.
+"PKG",16,22,1,"PAH",1,1,4,0)
+- The display in the Make Consult Appointment [SC MAKE CONSULT 
+"PKG",16,22,1,"PAH",1,1,5,0)
+APPOINTMENT] is truncating the Consult Name, causing incorrect consults 
+"PKG",16,22,1,"PAH",1,1,6,0)
+to be scheduled.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","SDCNSLT")
+0^2^B40924838^B40644653
+"RTN","SDCNSLT",1,0)
+SDCNSLT ;ALB/HAG-LINK APPOINTMENTS TO CONSULTS; 4/12/05 3:44pm
+"RTN","SDCNSLT",2,0)
+ ;;5.3;Scheduling;**478,496,605**;Aug 13, 1993;Build 9
+"RTN","SDCNSLT",3,0)
+A ;===GET ACTIVE AND PENDING CONSULT
+"RTN","SDCNSLT",4,0)
+ N A,ND,CNT,CONS,CPRSTAT,DTENTR,DTIN,DTLMT,DTR,NOS,NOSHOW,SENDER,SERVICE,SRV,P8,PROC,PT,PTNM,STATUS
+"RTN","SDCNSLT",5,0)
+ K TMP S NOSHOW="no-show",CNT=0,$P(DSH,"-",IOM-1)="",PT=DFN,X1=DT,X2=-365 D C^%DTC S DTLMT=X
+"RTN","SDCNSLT",6,0)
+ S A=":" F  S A=$O(^GMR(123,"F",PT,A),-1) Q:'+A  S ND=$G(^GMR(123,A,0)) Q:ND=""  S PROC=$P($G(^GMR(123,A,1.11)),U),DTENTR=$P(ND,U) I DTENTR>DTLMT S CPRSTAT=$P(ND,U,12) D:CPRSTAT=5!(CPRSTAT=6)!(CPRSTAT=8)!(CPRSTAT=13)
+"RTN","SDCNSLT",7,0)
+ .I STPCOD'="" S SRV=$P(ND,U,5) Q:'+SRV  I $D(^GMR(123.5,"AB1",STPCOD,SRV)) S PTIEN=$P(ND,U,2) D
+"RTN","SDCNSLT",8,0)
+ ..I CPRSTAT=8 S SHOW=0 Q:$D(^SC("AWAS1",A))  S NOS=$O(^GMR(123,A,40,":"),-1) Q:'+NOS  S X2=$P($G(^GMR(123,A,40,NOS,0)),U),X1=DT D ^%DTC Q:X'=""&(X>180)  D SCHED(PTIEN,STPCOD,.SHOW) Q:'SHOW
+"RTN","SDCNSLT",9,0)
+ ..;CPRSTAT 13 is a cancel
+"RTN","SDCNSLT",10,0)
+ ..I CPRSTAT=13 S NOS=$O(^GMR(123,A,40,":"),-1) Q:'+NOS  S NOS=$O(^GMR(123,A,40,NOS),-1) Q:'+NOS  S X2=$P($G(^GMR(123,A,40,NOS,0)),U),X1=DT D ^%DTC Q:X'=""&(X>180)  S COMMENT=$G(^GMR(123,A,40,NOS,1,1,0)) Q:COMMENT'[NOSHOW
+"RTN","SDCNSLT",11,0)
+ ..S:+PTIEN PTNM=$P(^DPT(PTIEN,0),U) S SERVICE=$P(^GMR(123.5,SRV,0),U),STATUS=$P(^ORD(100.01,CPRSTAT,0),U),SENDER=$P(ND,U,14) S:+SENDER SENDER=$P(^VA(200,SENDER,0),U)
+"RTN","SDCNSLT",12,0)
+ ..S Y=DTENTR D DD^%DT S DTIN=Y,DTR=$E(DTENTR,4,5)_"/"_$E(DTENTR,6,7)_"/"_$E(DTENTR,2,3)_"@"_$P(Y,"@",2)
+"RTN","SDCNSLT",13,0)
+ ..S CNT=CNT+1,TMP(CNT)=PTIEN_U_SERVICE_U_SENDER_U_STATUS_U_DTR_U_A_U_DTIN_U_$P(ND,U,17)_U_PROC
+"RTN","SDCNSLT",14,0)
+ Q:'$D(TMP)
+"RTN","SDCNSLT",15,0)
+QST N DIR,DTOUT,DUOUT,CNSULT
+"RTN","SDCNSLT",16,0)
+ S DIR(0)="Y",DIR("A")="Will this appointment be for a CONSULT/PROCEDURE",DIR("B")="YES",DIR("?")="Answer 'Y'es if appointment is for a Consult or Procedure." W ! D ^DIR S CNSULT=Y
+"RTN","SDCNSLT",17,0)
+ I CNSULT[U!(CNSULT=0)!(CNSULT="") K TMP Q
+"RTN","SDCNSLT",18,0)
+HDR W !!,"Please select from the list of consult(s), press 0 for none.",! ;LLS 12-MAR-2014 SD*5.3*605
+"RTN","SDCNSLT",19,0)
+ W !,PTNM,!!,"# Service",?68,"Cons #",!,DSH ;LLS 12-MAR-2014 SD*5.3*605
+"RTN","SDCNSLT",20,0)
+ S A=0 F  S A=$O(TMP(A)) Q:'+A  S ND=TMP(A),P8=$P(ND,U,8) D  ;LLS - 12-MAR-2014 SD*5.3*605
+"RTN","SDCNSLT",21,0)
+ . W !,A,".",?3,$S(P8="P":$E($P(ND,U,9),1,63),1:$E($P(ND,U,2),1,63)),?68,$P(ND,U,6) W !,?4,"Request DT: ",$E($P(ND,U,5),1,14),?31,"FROM: ",$E($P(ND,U,3),1,33),?71,"TYPE: ",$S(P8="P":"P",P8="C":"C",1:"") ;LLS 12-MAR-2014 SD*5.3*605
+"RTN","SDCNSLT",22,0)
+ W !
+"RTN","SDCNSLT",23,0)
+READ R !,"Select Consult: ",CONS:DTIME G:CONS="" A
+"RTN","SDCNSLT",24,0)
+ I CONS=0!(CONS[U) W " ... NONE." K TMP Q
+"RTN","SDCNSLT",25,0)
+ I "? "[CONS W !," Select consult by number on the left side." G READ
+"RTN","SDCNSLT",26,0)
+ I '$D(TMP(CONS)) W *7," ?? Select consult by number on the left side." G READ
+"RTN","SDCNSLT",27,0)
+ S CNSLTLNK=$P(TMP(CONS),U,6)
+"RTN","SDCNSLT",28,0)
+ Q
+"RTN","SDCNSLT",29,0)
+SCHED(PTIEN,STPCOD,SHOW) ;===CONSULT IS SCHEDULE NOW CHECK IF IT HAS APPOINTMENT BY STOP CODE.
+"RTN","SDCNSLT",30,0)
+ N APT,CLNC,B,S1,S2,S3,S4,STOP,STOPCOD,X,Y
+"RTN","SDCNSLT",31,0)
+ S %DT="ST",X="T-1" D ^%DT S APT=Y,S1=0,STOP=0 F  S APT=$O(^DPT(PTIEN,"S",APT)) Q:'+APT!(STOP)  S S1=1,CLNC=$P(^DPT(PTIEN,"S",APT,0),U) I CLNC'="" S STOPCOD=$P(^SC(CLNC,0),U,7) I STOPCOD'="" S S2=0 I STOPCOD=STPCOD S S2=1 D
+"RTN","SDCNSLT",32,0)
+ .S S3=0,S4=0,B=0 F  S B=$O(^SC(CLNC,"S",APT,1,B)) Q:'+B!(STOP)  S S3=1 D
+"RTN","SDCNSLT",33,0)
+ ..I ($P($G(^SC(CLNC,"S",APT,1,B,0)),U)=PTIEN) S S4=1,STOP=1,SHOW=0
+"RTN","SDCNSLT",34,0)
+ I S1=0 S SHOW=1 Q  ;show if no appointment in the patient side
+"RTN","SDCNSLT",35,0)
+ I S2=0 S SHOW=1 Q  ;show if stop code does not match
+"RTN","SDCNSLT",36,0)
+ I S3=0 S SHOW=1 Q  ;show if no appointment in the clinic
+"RTN","SDCNSLT",37,0)
+ I S4=0 S SHOW=1 Q  ;show if patient does not match in appointment
+"RTN","SDCNSLT",38,0)
+ Q
+"RTN","SDCNSLT",39,0)
+LINK(SC,SDY,SD,CNSLTLNK) ;===LINK APPOINTMENT TO CONSULT
+"RTN","SDCNSLT",40,0)
+ N DA,DIE,DR,TDA,X
+"RTN","SDCNSLT",41,0)
+ S TDA=SDY,DA(2)=SC,DA(1)=SD,DA=TDA,DIE="^SC("_DA(2)_",""S"","_DA(1)_",1,",DR="688////^S X=CNSLTLNK" D ^DIE
+"RTN","SDCNSLT",42,0)
+ Q
+"RTN","SDCNSLT",43,0)
+EDITCS(SD,TMPD,TMPYCLNC,CNSLTLNK) ;===MARK CONSULT AS SCHEDULED
+"RTN","SDCNSLT",44,0)
+ N CSCHDT,SNDPRV,TME,X,Y,COMMENT,ER
+"RTN","SDCNSLT",45,0)
+ S %DT="ST",X="NOW" D ^%DT S CSCHDT=Y
+"RTN","SDCNSLT",46,0)
+ S SNDPRV=$P($G(^GMR(123,CNSLTLNK,0)),U,14),Y=SD D DD^%DT S TME=$P($P(Y,"@",2),":",1,2)
+"RTN","SDCNSLT",47,0)
+ S COMMENT(1)=$P(TMPYCLNC,U,2)_" Consult Appt. on "_$E(SD,4,5)_"/"_$E(SD,6,7)_"/"_$E(SD,2,3)_" @ "_TME
+"RTN","SDCNSLT",48,0)
+ S COMMENT(2)=TMPD
+"RTN","SDCNSLT",49,0)
+ D SCH^SDQQCN2(.ER,CNSLTLNK,SNDPRV,CSCHDT,0,,.COMMENT) K COMMENT
+"RTN","SDCNSLT",50,0)
+ Q
+"RTN","SDCNSLT",51,0)
+CANCEL ;===appt was cancelled then mark consult as edit/resubmit, add comment.
+"RTN","SDCNSLT",52,0)
+ N APPT,CONSULT,CPRSSTAT,ER,GM40,GMRND,SDPATNT,USER,SNDPRV,J
+"RTN","SDCNSLT",53,0)
+ ;Variables CNDIE, CNDA and CNINDX used in calling routine for Cancel letter printed comment in consult.
+"RTN","SDCNSLT",54,0)
+ S:$D(SCLNK) CONSULT=SCLNK
+"RTN","SDCNSLT",55,0)
+ S:'$D(SCLNK) CONSULT=$P($G(^SC(SDSC,"S",SDTTM,1,SDPL,"CONS")),U)
+"RTN","SDCNSLT",56,0)
+ Q:'+CONSULT
+"RTN","SDCNSLT",57,0)
+ S:$D(SCSNOD) SDPATNT=$P(SCSNOD,U)
+"RTN","SDCNSLT",58,0)
+ S:'$D(SCSNOD) SDPATNT=$P($G(^SC(SDSC,"S",SDTTM,1,SDPL,0)),U)
+"RTN","SDCNSLT",59,0)
+ S CPRSSTAT=$P($G(^GMR(123,CONSULT,0)),U,12) I CPRSSTAT'="" S CPRSSTAT=$P($G(^ORD(100.01,CPRSSTAT,0)),U) Q:CPRSSTAT'="SCHEDULED"
+"RTN","SDCNSLT",60,0)
+ S SNDPRV=$P($G(^GMR(123,CONSULT,0)),U,14)
+"RTN","SDCNSLT",61,0)
+ S USER=$P(^VA(200,DUZ,0),U),Y=SDTTM D DD^%DT S APPT=$E(SDTTM,4,5)_"/"_$E(SDTTM,6,7)_"/"_$E(SDTTM,2,3)_" @ "_$P(Y,"@",2)
+"RTN","SDCNSLT",62,0)
+ S COMMENT(1)=$P(^SC(SDSC,0),U)_" Appt. on "_APPT_" was cancelled"_$S($D(SDWH):$S(SDWH["P":" by the Patient.",SDWH["C":" by the Clinic.",1:"."),$D(SDADM):" for administrative purposes.",1:", whole clinic.")
+"RTN","SDCNSLT",63,0)
+ S CNINDX=2 S:$D(TMPD) COMMENT(2)="Remarks: "_TMPD,CNINDX=CNINDX+1 K TMPD
+"RTN","SDCNSLT",64,0)
+ N SDERR S SDERR=$$STATUS^GMRCGUIS(CONSULT,6,3,SNDPRV,"","",.COMMENT)
+"RTN","SDCNSLT",65,0)
+ S CNDIE="^GMR(123,"_CONSULT_",40,",CNDA=+$G(COMMENT(0))
+"RTN","SDCNSLT",66,0)
+ K COMMENT,DA
+"RTN","SDCNSLT",67,0)
+ S AUTO(SDSC,SDTTM,SDPATNT)=CONSULT
+"RTN","SDCNSLT",68,0)
+ S DA(2)=SDSC,DA(1)=SDTTM,DA=SDPL,DIE="^SC("_DA(2)_",""S"","_DA(1)_",1,",DR="688///@" D ^DIE
+"RTN","SDCNSLT",69,0)
+ K SCSNOD,SDADM,SCLNK
+"RTN","SDCNSLT",70,0)
+ Q
+"RTN","SDCNSLT",71,0)
+AUTOREB(SC,NDATE,LNK,CY) ;===AUTO REBOOK
+"RTN","SDCNSLT",72,0)
+ N DIC,DA,DIE,DR,Y,TME,SNDPRV,CSCHDT,COMMENT,ER
+"RTN","SDCNSLT",73,0)
+ S DA(2)=SC,DA(1)=NDATE,DA=CY,DIE="^SC("_DA(2)_",""S"","_DA(1)_",1,",DR="688////^S X=LNK" D ^DIE
+"RTN","SDCNSLT",74,0)
+ S Y=NDATE D DD^%DT S TME=$P(Y,"@",2)
+"RTN","SDCNSLT",75,0)
+ S COMMENT(1)=$P(^SC(SC,0),U)_" Consult Appt. on "_$E(NDATE,4,5)_"/"_$E(NDATE,6,7)_"/"_$E(NDATE,2,3)_" @ "_TME_" (Auto Rebooked)."
+"RTN","SDCNSLT",76,0)
+ S %DT="ST",X="NOW" D ^%DT S CSCHDT=Y
+"RTN","SDCNSLT",77,0)
+ S SNDPRV=$P($G(^GMR(123,LNK,0)),U,14)
+"RTN","SDCNSLT",78,0)
+ D SCH^SDQQCN2(.ER,LNK,SNDPRV,CSCHDT,0,,.COMMENT) K COMMENT
+"RTN","SDCNSLT",79,0)
+ Q
+"RTN","SDCNSLT",80,0)
+NOSHOW(SC,SDDTM,CNPAT,CNSTLNK,CN,AUTO,NSDIE,NSDA) ;
+"RTN","SDCNSLT",81,0)
+ ;Appt. was a NoShow, then mark Consult as Edit/Resubmit, add comment using silent call to notify user.
+"RTN","SDCNSLT",82,0)
+ ;Variables NSDIE and NSDA used in calling routine for NoShow letter printed comment in consult.
+"RTN","SDCNSLT",83,0)
+ N CSNOD,CPRSSTAT,NOSHOW,CSRQSRV,TPRNT,CSPRT,USER,Y,APPT,COMMENT,DA,DIC,DUZ2,DIC,DR,GM40,GMRND,ER,SNDPRV,J
+"RTN","SDCNSLT",84,0)
+ S CSNOD=$G(^GMR(123,CNSTLNK,0)),CPRSSTAT=$P(CSNOD,U,12),SNDPRV=$P(CSNOD,U,14),NOSHOW="no-show",AUTO(SC,SDDTM,CNPAT)=CNSTLNK
+"RTN","SDCNSLT",85,0)
+ I CPRSSTAT'="" S CPRSSTAT=$P($G(^ORD(100.01,CPRSSTAT,0)),U) Q:CPRSSTAT'="SCHEDULED"
+"RTN","SDCNSLT",86,0)
+ S CSRQSRV=$P(CSNOD,U,5) I CSRQSRV'="" S TPRNT=$P($G(^GMR(123.5,CSRQSRV,123)),U,9) I TPRNT'="" S:$P($G(^%ZIS(1,TPRNT,0)),U)'="" CSPRT=$P(^(0),U) ;reprint consult
+"RTN","SDCNSLT",87,0)
+ S USER=$P(^VA(200,DUZ,0),U),Y=SDDTM D DD^%DT S APPT=$E(SDDTM,4,5)_"/"_$E(SDDTM,6,7)_"/"_$E(SDDTM,2,3)_" @ "_$P(Y,"@",2)
+"RTN","SDCNSLT",88,0)
+ S COMMENT(1)=$P(^SC(SC,0),U)_" Appt. on "_APPT_" was a "_NOSHOW_"." ;no-show is a key word used by a search do not change
+"RTN","SDCNSLT",89,0)
+ N SDERR S SDERR=$$STATUS^GMRCGUIS(CNSTLNK,6,3,SNDPRV,"","",.COMMENT)
+"RTN","SDCNSLT",90,0)
+ S NSDIE="^GMR(123,"_CNSTLNK_",40,",NSDA=+$G(COMMENT(0))
+"RTN","SDCNSLT",91,0)
+ K COMMENT,DA
+"RTN","SDCNSLT",92,0)
+ S DA(2)=SC,DA(1)=SDDTM,DA=CN,DIE="^SC("_DA(2)_",""S"","_DA(1)_",1,",DR="688///@" D ^DIE
+"RTN","SDCNSLT",93,0)
+ I $D(CSPRT) D EN^GMRCP5(CNSTLNK,"C",CSPRT)
+"RTN","SDCNSLT",94,0)
+ K CNSTLNK Q
+"RTN","SDVSIT")
+0^1^B36437638^B31344109
+"RTN","SDVSIT",1,0)
+SDVSIT ;MJK/ALB - Visit Tracking Processing ; 12/19/12 10:13am
+"RTN","SDVSIT",2,0)
+ ;;5.3;Scheduling;**27,44,75,96,132,161,219,605**;Aug 13, 1993;Build 9
+"RTN","SDVSIT",3,0)
+ ;
+"RTN","SDVSIT",4,0)
+AEUPD(SDVIEN,SDATYPE,SDOEP) ; -- update one entry in multiple
+"RTN","SDVSIT",5,0)
+ ; input: SDVIEN := Visit file pointer
+"RTN","SDVSIT",6,0)
+ ;        SDATYPE := Appointment Type                         [optional]
+"RTN","SDVSIT",7,0)
+ ;         SDOEP := ien of ^SCE that is the parent encounter [optional]
+"RTN","SDVSIT",8,0)
+ ;
+"RTN","SDVSIT",9,0)
+ N SDOE,DA,DR,DE,DQ,DIE,SD0,SDVSIT,SDT,SDLOCK,SDCL0
+"RTN","SDVSIT",10,0)
+ ;
+"RTN","SDVSIT",11,0)
+ G AEUPDQ:'$G(^AUPNVSIT(+$G(SDVIEN),0)) S SD0=^(0)
+"RTN","SDVSIT",12,0)
+ S SDT=+SD0
+"RTN","SDVSIT",13,0)
+ S SDVSIT("DFN")=$P(SD0,U,5)
+"RTN","SDVSIT",14,0)
+ I ('SDVSIT("DFN")) G AEUPDQ
+"RTN","SDVSIT",15,0)
+ ;
+"RTN","SDVSIT",16,0)
+ ; -- set lock data and lock
+"RTN","SDVSIT",17,0)
+ S SDLOCK("DFN")=$P(SD0,U,5)
+"RTN","SDVSIT",18,0)
+ S SDLOCK("EVENT DATE/TIME")=SDT
+"RTN","SDVSIT",19,0)
+ D LOCK(.SDLOCK)
+"RTN","SDVSIT",20,0)
+ ;
+"RTN","SDVSIT",21,0)
+ ; -- quit if encounter does exist for visit
+"RTN","SDVSIT",22,0)
+ IF $O(^SCE("AVSIT",SDVIEN,0)) G AEUPDQ
+"RTN","SDVSIT",23,0)
+ ;
+"RTN","SDVSIT",24,0)
+ S SDVSIT("DIV")=+$P($G(^SC(+$P(SD0,U,22),0)),U,15)
+"RTN","SDVSIT",25,0)
+ S SDVSIT("DIV")=$$DIV(SDVSIT("DIV"))
+"RTN","SDVSIT",26,0)
+ I ('SDVSIT("DIV")) G AEUPDQ
+"RTN","SDVSIT",27,0)
+ ;
+"RTN","SDVSIT",28,0)
+ S SDVSIT("CLN")=+$P(SD0,U,8)
+"RTN","SDVSIT",29,0)
+ ; -- this may not be needed any longer but doesn't hurt (mjk)
+"RTN","SDVSIT",30,0)
+ I $P($G(^DIC(40.7,+$P(SD0,U,8),0)),U,2)=900 S SDVSIT("CLN")=+$P($G(^SC(+$P(SD0,U,22),0)),U,7)
+"RTN","SDVSIT",31,0)
+ I 'SDVSIT("CLN") G AEUPDQ
+"RTN","SDVSIT",32,0)
+ ;
+"RTN","SDVSIT",33,0)
+ S:$P(SD0,U,22) SDVSIT("LOC")=$P(SD0,U,22)
+"RTN","SDVSIT",34,0)
+ S:$P(SD0,U,21) SDVSIT("ELG")=$P(SD0,U,21)
+"RTN","SDVSIT",35,0)
+ S SDVSIT("TYP")=$G(SDATYPE)
+"RTN","SDVSIT",36,0)
+ S SDVSIT("PAR")=$G(SDOEP)
+"RTN","SDVSIT",37,0)
+ S SDVSIT("ORG")=2
+"RTN","SDVSIT",38,0)
+ S SDVSIT("REF")=""
+"RTN","SDVSIT",39,0)
+ S SDOE=$$SDOE(SDT,.SDVSIT,SDVIEN,$G(SDOEP))
+"RTN","SDVSIT",40,0)
+ S SDCL0=$G(^SC(+SDVSIT("LOC"),0))
+"RTN","SDVSIT",41,0)
+ D CSTOP(SDOE,SDCL0,.SDVSIT,SDT)  ;Process credit stop if applicable
+"RTN","SDVSIT",42,0)
+AEUPDQ D UNLOCK(.SDLOCK)
+"RTN","SDVSIT",43,0)
+ Q
+"RTN","SDVSIT",44,0)
+ ;
+"RTN","SDVSIT",45,0)
+APPT(DFN,SDT,SDCL,SDVIEN) ; -- process appt
+"RTN","SDVSIT",46,0)
+ ; input        DFN = ien of patient file entry
+"RTN","SDVSIT",47,0)
+ ;              SDT = visit date internal format
+"RTN","SDVSIT",48,0)
+ ;             SDCL = ien of hospital location file entry
+"RTN","SDVSIT",49,0)
+ ;           SDVIEN = Visit file pointer [optional]
+"RTN","SDVSIT",50,0)
+ ;
+"RTN","SDVSIT",51,0)
+ N SDVSIT,SDOE,DA,DIE,DR,SDPT,SDSC,SDCL0,SDDA,SDLOCK
+"RTN","SDVSIT",52,0)
+ ;
+"RTN","SDVSIT",53,0)
+ ; -- set lock data and lock
+"RTN","SDVSIT",54,0)
+ S SDLOCK("DFN")=DFN
+"RTN","SDVSIT",55,0)
+ S SDLOCK("EVENT DATE/TIME")=SDT
+"RTN","SDVSIT",56,0)
+ D LOCK(.SDLOCK)
+"RTN","SDVSIT",57,0)
+ ;
+"RTN","SDVSIT",58,0)
+ ; -- set node vars
+"RTN","SDVSIT",59,0)
+ S SDPT=$G(^DPT(DFN,"S",SDT,0))
+"RTN","SDVSIT",60,0)
+ S SDCL0=$G(^SC(SDCL,0)),SDDA=+$$FIND^SDAM2(DFN,SDT,SDCL)
+"RTN","SDVSIT",61,0)
+ S SDSC=$G(^SC(SDCL,"S",SDT,1,SDDA,0))
+"RTN","SDVSIT",62,0)
+ S SDVSIT("CLN")=$P(SDCL0,U,7),SDVSIT("DIV")=$$DIV($P(SDCL0,U,15))
+"RTN","SDVSIT",63,0)
+ ;
+"RTN","SDVSIT",64,0)
+ ; -- do checks
+"RTN","SDVSIT",65,0)
+ I 'SDPT!('SDSC)!($P(SDCL0,U,3)'="C") G APPTQ
+"RTN","SDVSIT",66,0)
+ I SDCL,+SDPT'=SDCL G APPTQ
+"RTN","SDVSIT",67,0)
+ I $P(SDPT,U,20) G APPTQ
+"RTN","SDVSIT",68,0)
+ I 'SDVSIT("CLN")!('SDVSIT("DIV")) G APPTQ
+"RTN","SDVSIT",69,0)
+ ;
+"RTN","SDVSIT",70,0)
+ ; -- set the rest
+"RTN","SDVSIT",71,0)
+ S SDVSIT("DFN")=DFN,SDVSIT("LOC")=SDCL
+"RTN","SDVSIT",72,0)
+ S:$P(SDSC,U,10) SDVSIT("ELG")=$P(SDSC,U,10)
+"RTN","SDVSIT",73,0)
+ S:$P(SDPT,U,16) SDVSIT("TYP")=$P(SDPT,U,16)
+"RTN","SDVSIT",74,0)
+ ;
+"RTN","SDVSIT",75,0)
+ ; -- call logic to add opt encounter(s)
+"RTN","SDVSIT",76,0)
+ S SDVSIT("ORG")=1,SDVSIT("REF")=SDDA,SDOE=$$SDOE(SDT,.SDVSIT,$G(SDVIEN))
+"RTN","SDVSIT",77,0)
+ I SDOE D
+"RTN","SDVSIT",78,0)
+ .N DA,DIE,DR
+"RTN","SDVSIT",79,0)
+ .S DA=SDT,DA(1)=DFN,DR="21////"_SDOE,DIE="^DPT("_DFN_",""S""," D ^DIE
+"RTN","SDVSIT",80,0)
+ ;
+"RTN","SDVSIT",81,0)
+ D CSTOP(SDOE,SDCL0,.SDVSIT,SDT)  ;Process credit stop if applicable
+"RTN","SDVSIT",82,0)
+ ;
+"RTN","SDVSIT",83,0)
+APPTQ D UNLOCK(.SDLOCK)
+"RTN","SDVSIT",84,0)
+ Q
+"RTN","SDVSIT",85,0)
+ ;
+"RTN","SDVSIT",86,0)
+CSTOP(SDOE,SDCL0,SDVSIT,SDT) ;Process credit stop
+"RTN","SDVSIT",87,0)
+ ;Input: SDOE=encounter ien
+"RTN","SDVSIT",88,0)
+ ;Input: SDCL0=zeroeth node of HOSPITAL LOCATION file record
+"RTN","SDVSIT",89,0)
+ ;Input: SDVSIT=visit data array (pass by reference)
+"RTN","SDVSIT",90,0)
+ ;Input: SDT=encounter date/time
+"RTN","SDVSIT",91,0)
+ ; -- does clinic have a credit stop code?
+"RTN","SDVSIT",92,0)
+ ; -- process only if non non-count and not equal to credit
+"RTN","SDVSIT",93,0)
+ ;
+"RTN","SDVSIT",94,0)
+ I SDOE,$P(SDCL0,U,18),($P(SDCL0,U,18)'=SDVSIT("CLN")),($P(SDCL0,U,17)'="Y") D
+"RTN","SDVSIT",95,0)
+ . N X,SDVIENSV,SDVIENOR
+"RTN","SDVSIT",96,0)
+ . S X=$G(^DIC(40.7,$P(SDCL0,U,18),0))
+"RTN","SDVSIT",97,0)
+ .; -- is stop code active?
+"RTN","SDVSIT",98,0)
+ . I $S('$P(X,U,3):1,1:SDT<$P(X,U,3)) D
+"RTN","SDVSIT",99,0)
+ . . S SDVSIT("CLN")=$P(SDCL0,U,18)
+"RTN","SDVSIT",100,0)
+ . . S SDVIENOR=$G(SDVSIT("ORG"))
+"RTN","SDVSIT",101,0)
+ . . S SDVSIT("ORG")=4
+"RTN","SDVSIT",102,0)
+ . . S SDVSIT("PAR")=SDOE
+"RTN","SDVSIT",103,0)
+ . . S SDVIENSV=$G(SDVSIT("VST"))
+"RTN","SDVSIT",104,0)
+ . . K SDVSIT("VST")
+"RTN","SDVSIT",105,0)
+ . . S X=$$SDOE(SDT,.SDVSIT)
+"RTN","SDVSIT",106,0)
+ . . IF X D LOGDATA^SDAPIAP(X)
+"RTN","SDVSIT",107,0)
+ . .;
+"RTN","SDVSIT",108,0)
+ . .; -- restore SDVSIT
+"RTN","SDVSIT",109,0)
+ . . S SDVSIT("CLN")=$P(SDCL0,U,7)
+"RTN","SDVSIT",110,0)
+ . . S SDVSIT("ORG")=SDVIENOR
+"RTN","SDVSIT",111,0)
+ . . S SDVSIT("VST")=SDVIENSV
+"RTN","SDVSIT",112,0)
+ . . K SDVSIT("PAR")
+"RTN","SDVSIT",113,0)
+ . . Q
+"RTN","SDVSIT",114,0)
+ . Q
+"RTN","SDVSIT",115,0)
+ Q
+"RTN","SDVSIT",116,0)
+ ;
+"RTN","SDVSIT",117,0)
+DISP(DFN,SDT,SDVIEN) ; -- process disposition
+"RTN","SDVSIT",118,0)
+ ; input        DFN = ien of patient file entry
+"RTN","SDVSIT",119,0)
+ ;              SDT = visit date internal format
+"RTN","SDVSIT",120,0)
+ ;             SDIV = ien of med ctr file entry
+"RTN","SDVSIT",121,0)
+ ;           SDVIEN = Visit file pointer [optional]
+"RTN","SDVSIT",122,0)
+ ;
+"RTN","SDVSIT",123,0)
+ N SDVSIT,SDOE,DA,DIE,DR,SDIS,SDDA,SDLOCK
+"RTN","SDVSIT",124,0)
+ ;
+"RTN","SDVSIT",125,0)
+ ; -- set lock data and lock
+"RTN","SDVSIT",126,0)
+ S SDLOCK("DFN")=DFN
+"RTN","SDVSIT",127,0)
+ S SDLOCK("EVENT DATE/TIME")=SDT
+"RTN","SDVSIT",128,0)
+ D LOCK(.SDLOCK)
+"RTN","SDVSIT",129,0)
+ ;
+"RTN","SDVSIT",130,0)
+ ; -- set up array and other vars
+"RTN","SDVSIT",131,0)
+ D ARRAY(.DFN,.SDT,.SDDA,.SDIS,.SDVSIT)
+"RTN","SDVSIT",132,0)
+ ;
+"RTN","SDVSIT",133,0)
+ ; -- do checks
+"RTN","SDVSIT",134,0)
+ I $P(SDIS,U,2)=2!($P(SDIS,U,2)="")!($P(SDIS,U,18)) G DISPQ
+"RTN","SDVSIT",135,0)
+ I 'SDVSIT("CLN")!('SDVSIT("DIV")) G DISPQ
+"RTN","SDVSIT",136,0)
+ ;
+"RTN","SDVSIT",137,0)
+ ; -- call logic to add opt encounter/visit
+"RTN","SDVSIT",138,0)
+ S SDOE=$$SDOE(SDT,.SDVSIT,$G(SDVIEN))
+"RTN","SDVSIT",139,0)
+ I SDOE S DA=SDDA,DA(1)=DFN,DR="18////"_SDOE,DIE="^DPT("_DFN_",""DIS""," D ^DIE
+"RTN","SDVSIT",140,0)
+DISPQ D UNLOCK(.SDLOCK)
+"RTN","SDVSIT",141,0)
+ Q
+"RTN","SDVSIT",142,0)
+ ;
+"RTN","SDVSIT",143,0)
+ARRAY(DFN,SDT,SDDA,SDIS,SDVSIT) ; -- setup sdvsit for disposition
+"RTN","SDVSIT",144,0)
+ S SDDA=9999999-SDT
+"RTN","SDVSIT",145,0)
+ S SDIS=$G(^DPT(DFN,"DIS",SDDA,0))
+"RTN","SDVSIT",146,0)
+ S SDVSIT("CLN")=$O(^DIC(40.7,"C",102,0))
+"RTN","SDVSIT",147,0)
+ S SDVSIT("DIV")=$$DIV(+$P(SDIS,U,4))
+"RTN","SDVSIT",148,0)
+ S:$P(SDIS,U,13) SDVSIT("ELG")=$P(SDIS,U,13)
+"RTN","SDVSIT",149,0)
+ S SDVSIT("DFN")=DFN
+"RTN","SDVSIT",150,0)
+ S SDVSIT("ORG")=3
+"RTN","SDVSIT",151,0)
+ S SDVSIT("REF")=SDDA
+"RTN","SDVSIT",152,0)
+ S SDVSIT("VST")=""
+"RTN","SDVSIT",153,0)
+ S SDVSIT("TYP")=9
+"RTN","SDVSIT",154,0)
+ Q
+"RTN","SDVSIT",155,0)
+ ;
+"RTN","SDVSIT",156,0)
+LOCK(SDLOCK) ; -- lock "ADFN" node
+"RTN","SDVSIT",157,0)
+ F  L +^SCE("ADFN",+$G(SDLOCK("DFN")),+$G(SDLOCK("EVENT DATE/TIME"))):$G(DILOCKTM,3) Q:$T  ;LLS - 28-MAR-14 - SD*5.3*605 added timeout on lock
+"RTN","SDVSIT",158,0)
+ Q
+"RTN","SDVSIT",159,0)
+ ;
+"RTN","SDVSIT",160,0)
+UNLOCK(SDLOCK) ; -- unlock "ADFN" node
+"RTN","SDVSIT",161,0)
+ L -^SCE("ADFN",+$G(SDLOCK("DFN")),+$G(SDLOCK("EVENT DATE/TIME")))
+"RTN","SDVSIT",162,0)
+ Q
+"RTN","SDVSIT",163,0)
+ ;
+"RTN","SDVSIT",164,0)
+DIV(DIV) ; -- determine med div
+"RTN","SDVSIT",165,0)
+ I $P($G(^DG(43,1,"GL")),U,2),$D(^DG(40.8,+DIV,0)) G DIVQ ; multi-div?
+"RTN","SDVSIT",166,0)
+ S DIV=+$O(^DG(40.8,0))
+"RTN","SDVSIT",167,0)
+DIVQ Q DIV
+"RTN","SDVSIT",168,0)
+ ;
+"RTN","SDVSIT",169,0)
+ ; -- see bottom of SDVSIT0 for additional doc
+"RTN","SDVSIT",170,0)
+ ;
+"RTN","SDVSIT",171,0)
+SDOE(SDT,SDVSIT,SDVIEN,SDOEP) ; -- get visit & encounter
+"RTN","SDVSIT",172,0)
+ ;LLS 18-FEB-2014 - SD*5.3*605 This fix assumes there is only one visit for any exact D/T for any one patient
+"RTN","SDVSIT",173,0)
+ ;                             Parent-child visits are protected by check of SDVSIT("PAR")
+"RTN","SDVSIT",174,0)
+ N SDTR,SDI ;LLS 18-FEB-2014 - SD*5.3*605 added
+"RTN","SDVSIT",175,0)
+ S SDTR=9999999-$P(SDT,".") ;LLS 18-FEB-2014 - SD*5.3*605 added
+"RTN","SDVSIT",176,0)
+ I SDT["." S SDTR=SDTR_"."_$P(SDT,".",2) ;LLS 18-FEB-2014 - SD*5.3*605 added
+"RTN","SDVSIT",177,0)
+ I '$D(SDVSIT("PAR")) S SDVIEN=$O(^AUPNVSIT("AA",DFN,SDTR,"")) ;LLS 18-FEB-2014 - SD*5.3*605
+"RTN","SDVSIT",178,0)
+ S SDVSIT("VST")=$G(SDVIEN)
+"RTN","SDVSIT",179,0)
+ IF 'SDVSIT("VST") D VISIT^SDVSIT0(SDT,.SDVSIT)
+"RTN","SDVSIT",180,0)
+ Q $$NEW^SDVSIT0(SDT,.SDVSIT)
+"RTN","SDVSIT",181,0)
+ ;
+"RTN","SDVSIT",182,0)
+ ;
+"RTN","SDVSIT",183,0)
+DATECHCK(DATETIME) ;Validate FileMan date/time
+"RTN","SDVSIT",184,0)
+ ;Input  : DATETIME - Date and optional time in FileMan format
+"RTN","SDVSIT",185,0)
+ ;Output : DATETIME - Valid date/time in FileMan format
+"RTN","SDVSIT",186,0)
+ ;Notes  : If time was not included on input, time will not be included
+"RTN","SDVSIT",187,0)
+ ;         on output
+"RTN","SDVSIT",188,0)
+ ;       : If time rolls past midnight, 235959 (one second before
+"RTN","SDVSIT",189,0)
+ ;         midnight) will be used
+"RTN","SDVSIT",190,0)
+ ;       : Current date/time will be returned on NULL input
+"RTN","SDVSIT",191,0)
+ ;       : Current date will be used if input date is not valid
+"RTN","SDVSIT",192,0)
+ ;
+"RTN","SDVSIT",193,0)
+ ;Check input
+"RTN","SDVSIT",194,0)
+ Q:($G(DATETIME)="") $$NOW^XLFDT()
+"RTN","SDVSIT",195,0)
+ ;Declare variables
+"RTN","SDVSIT",196,0)
+ N DATE,TIME,HR,MIN,SEC,X,Y,%DT
+"RTN","SDVSIT",197,0)
+ ;Break out date & time
+"RTN","SDVSIT",198,0)
+ S DATE=$P(DATETIME,".",1)
+"RTN","SDVSIT",199,0)
+ S TIME=$P(DATETIME,".",2)_"000000"
+"RTN","SDVSIT",200,0)
+ ;Validate date
+"RTN","SDVSIT",201,0)
+ S X=DATE
+"RTN","SDVSIT",202,0)
+ S %DT="X"
+"RTN","SDVSIT",203,0)
+ D ^%DT
+"RTN","SDVSIT",204,0)
+ ;Date not valid - use current date
+"RTN","SDVSIT",205,0)
+ S:(Y<0) DATE=$$DT^XLFDT()
+"RTN","SDVSIT",206,0)
+ ;No time - return date
+"RTN","SDVSIT",207,0)
+ Q:('TIME) DATE
+"RTN","SDVSIT",208,0)
+ ;Break out hours, minutes, and seconds
+"RTN","SDVSIT",209,0)
+ S HR=$E(TIME,1,2)
+"RTN","SDVSIT",210,0)
+ S MIN=$E(TIME,3,4)
+"RTN","SDVSIT",211,0)
+ S SEC=$E(TIME,5,6)
+"RTN","SDVSIT",212,0)
+ ;Validate seconds - increment minutes if needed
+"RTN","SDVSIT",213,0)
+ S:(SEC>59) MIN=MIN+1,SEC=SEC-60
+"RTN","SDVSIT",214,0)
+ ;Validate minutes - increment hours if needed
+"RTN","SDVSIT",215,0)
+ S:(MIN>59) HR=HR+1,MIN=MIN-60
+"RTN","SDVSIT",216,0)
+ ;Validate hours - revert to one second before midnight
+"RTN","SDVSIT",217,0)
+ S:(HR>23) HR=23,MIN=59,SEC=59
+"RTN","SDVSIT",218,0)
+ ;Append leading zeros to hours, minutes, and seconds
+"RTN","SDVSIT",219,0)
+ S HR="00"_HR
+"RTN","SDVSIT",220,0)
+ S HR=$E(HR,($L(HR)-1),$L(HR))
+"RTN","SDVSIT",221,0)
+ S MIN="00"_MIN
+"RTN","SDVSIT",222,0)
+ S MIN=$E(MIN,($L(MIN)-1),$L(MIN))
+"RTN","SDVSIT",223,0)
+ S SEC="00"_SEC
+"RTN","SDVSIT",224,0)
+ S SEC=$E(SEC,($L(SEC)-1),$L(SEC))
+"RTN","SDVSIT",225,0)
+ ;Rebuild time
+"RTN","SDVSIT",226,0)
+ S TIME=HR_MIN_SEC
+"RTN","SDVSIT",227,0)
+ ;Done - return date and time (trailing zeros removed)
+"RTN","SDVSIT",228,0)
+ Q +(DATE_"."_TIME)
+"VER")
+8.0^22.0
+"BLD",9397,6)
+^513
+**END**
+**END**
+

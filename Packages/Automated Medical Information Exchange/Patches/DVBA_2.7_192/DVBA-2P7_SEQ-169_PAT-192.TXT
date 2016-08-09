@@ -1,0 +1,625 @@
+$TXT Created by                at DEVFEX.DOMAIN.EXT  (KIDS) on Thursday, 08/13/15 at 14:39
+=============================================================================
+Run Date: OCT 23, 2015                     Designation: DVBA*2.7*192
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #169                    Status: Released
+                  Compliance Date: NOV 23, 2015
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*186<<= must be installed BEFORE `DVBA*2.7*192'
+                    (v)DVBA*2.7*190<<= must be installed BEFORE `DVBA*2.7*192'
+
+Subject: CAPRI - ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ I. OVERVIEW
+  
+    This patch, DVBA*2.7*192, and CAPRI GUI v192 provide enhancements in 
+    C&P Exam templates, data processing and tracking, data retrieval, and 
+    data accuracy.  Changes are being made to the AMIE package files and
+    fields to support the CAPRI GUI. 
+  
+  
+  
+  
+      Note: Some AMIE files are being changed to accommodate functional 
+            changes to the CAPRI GUI.  However, the functionality of
+            corresponding AMIE options has not been updated to mirror
+            changes to the GUI.
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+  
+     1. INC000001249163 - The "Cytology" or "Surgical Pathology" report
+        freezes.
+  
+     2. INC000001008110 - CAPRI - Other: Des Moines insufficient exam error
+  
+        Duplicate: INC000001303460
+  
+     3. INC000001305051 - CAPRI patch 190 has apparently broken the mouse 
+        scroll wheel
+  
+        Duplicate: INC000001302423
+  
+ III. FUNCTIONAL OVERVIEW
+  
+     The following is an overview of the changes and primary functionality
+     that will be delivered in CAPRI GUI v192 and this VistA patch 
+     (DVBA*2.7*192).
+  
+     1. The following Remedy tickets are being addressed:
+  
+        a. INC000001249163-CAPRI/DoD issue any patient with more than two
+          cytology records or surgical path records on the DoD tab will
+          cause CAPRI to go into an endless loop when selecting any record
+          other than the first two.
+  
+     Problem
+     -------
+  
+     While running the "Cytology" or "Surgical Pathology" report from the
+     DoD tab, if the date range for the report produces more than two
+     records, selecting the third record or below will cause CAPRI to go
+     into an endless loop and freeze.
+  
+     Solution
+     --------
+  
+     Modify the record parsing logic so that it correctly relates the
+     record, based on the header info passed in, to the corresponding
+     record selected in CAPRI.
+  
+        b. INC000001008110 - CAPRI - Other: Des Moines insufficient exam 
+           error.
+  
+     Problem
+     -------
+   
+     While running the Detailed Insufficient Exam report in CAPRI, if the 
+     first record identified in the specified data range has an original
+     2507 EXAM (#396.4) record without a DATE OF EXAM (#.06), the current
+     logic fails to set the variable DVBADTE which is used to display the
+     date in an external format leading to an undefined error.
+  
+     Solution
+     --------
+   
+     Prior to displaying the report, the code will verify the DVBADTE is
+     set and instances where it is not, it will be set to null which
+     essentially displays a blank for that value rather than resulting in
+     an undefined error.
+  
+        c. INC000001305051 - CAPRI patch 190 has apparently broken the 
+           mouse scroll wheel in the exam results window of the C&P exam 
+   
+     Problem
+     -------
+     CAPRI patch 190 added scroll wheel functionality to the view exam
+     window of the C&P Exam request which disabled the scroll wheel 
+     functionality for the exam result window.
+  
+     Solution
+     --------
+  
+     Scroll wheel functionality has been removed from the view exam
+     window, which in turn will allow scroll wheel functionality in 
+     the exam result window.
+  
+     2. The following defects that were reported directly to the CAPRI
+        development team are being addressed.
+        
+        a. Updated the function of the OK button click when sending the
+           exam to VVA.  It ensures that claim attachment objects that are
+           allocated for the send to VLER DAS are deallocated correctly.  
+           There is no visible difference for the end-user.
+   
+     3. The following enhancements that were requested by Veterans Health
+        Administration Veterans Affairs Central Office (VHAVACO) and the 
+        Veterans Benefits Administration (VBA) are being addressed:
+  
+           Note: The following contain enhancements that modify both CAPRI 
+           and AMIE software.
+  
+        a. Reorder the display of exam requests from newest to oldest
+           on the C&P Exams Tab.  Sort functionality, default ascending,
+           has been added to allow user to view either oldest to newest
+           or newest to oldest.  If a user changes tabs after changing the 
+           sort to descending the C&P Exams tab will default back to 
+           ascending order.
+           
+  
+        b. CAPRI GUI reports (File|reports menu):
+           Add the CLAIM TYPE field (#9.1) and SPECIAL CONSIDERATION(S)
+           field (#50) of the 2507 REQUEST file (#396.3) to four 
+           reports, both plain text and Excel output. In addition 
+           to CLAIM TYPE and SPECIAL CONSIDERATION(S) add 
+           "Priority of Exam" field (#9) to the "Insufficient Exam
+           Report". The four reports involved are:
+  
+           (1) Insufficient Exam Report
+           
+           Note: the Summary report selection will no longer be available.
+                 This report output will be the detailed report.
+  
+           (2) Pending C&P Exams
+  
+           (3) Exam Requests by date range
+  
+           (4) Request Status by date range
+  
+        c. Add the ability to retry all Virtual VA (VVA) transmissions
+           within the CAPRI GUI. The button for retry capabilities is
+           labeled "Retransmit". This option is available from the Virtual 
+           VA Transmission Status Window. The end user can, through both
+           the File menu option and Report Builder, continue to close or
+           cancel the transmission without retransmitting even if the
+           transmission of a file(s) to VVA fails. The retransmit button is
+           not displayed when the "Transmit File to VVA" succeeds.
+  
+        d. Add the ability for Veterans Benefits Administration (VBA) users
+           to review and print Veterans Health Administration completed
+           Compensation & Pension examination reports regardless of the
+           requesting office. This includes statuses "RELEASED TO RO, NOT
+           PRINTED" and "COMPLETED, PRINTED BY RO". VBA personnel do not
+           require assignment of the DVBA C SUPERVISOR security key.
+  
+        e. Removed the below obsolete fields when viewing the Exam Request
+           Template in the Add New C&P Exam screen:
+         
+           (1) All references to M21-1MR 
+           (2) All references to 38CFR 
+           (3) Any procedure notes
+  
+        f. Modifications to the CAPRI Contract Referral (CCR) screen:
+  
+           The CAPRI alerts screen has been modified to display a new 
+           message in the "Resolve The Alert" section of the screen. 
+        
+           (1) The "Resolve This Alert" message has been changed to display
+               the following when exams exist: You have X (the number)
+               vendor exam requests ready for download.
+  
+           (2) The "Resolve This Alert" message has been changed to display
+               the following when no exams exist: You have no vendor exam
+               requests ready for download.
+  
+           (3) The notification message displayed on the popup window
+               previously displayed "Vendor(s) Exam Results have been
+               processed for this patient." The new notification message
+               displays "Vendor Exam Results have been downloaded for this
+               patient."
+  
+        g. Modification to CAPRI Contract Referral (CCR). Four fields have
+           been removed from the "C&P Exam Request Report Management"
+           screen:
+    
+           (1) STATUS
+           (2) EXAM LOCATION 
+           (3) DATE OF EXAM 
+           (4) EXAMINING PROVIDER
+  
+       h. The following has been removed from the CCR - Contractor Editor
+          screen: 
+  
+           Email Address
+  
+       i. Add the ability in the CAPRI Contract Referral (CCR) module to
+          maintain and review remarks added  when referring exams to a
+          contractor. Those remarks will be available and viewable when the
+          exam report is returned by the contractor.
+  
+       j. The "AMIS 290" and "AMIS 290 by division" reports have been
+          disabled in the CAPRI GUI. "AMIS 290 for the Regional Office" 
+          and "AMIS 290 Report For C&P" have been disabled in the Automated
+          Medical Information Exchange (AMIE) System. CAPRI displays the
+          URL http://vaww.demo.domain.ext/dmareports.asp to get these reports.
+          The AMIE options "AMIS 290 for the Regional Office" and "AMIS 290
+          Report for C&P " have been changed to redirect the user to the
+          new URL for these reports.
+  
+     4. New Security Keys
+  
+        None 
+  
+     5. File Changes
+  
+        a. "2507 EXAM" file (#396.4) DD partial Modification
+  
+        Add the "REMARKS SENT TO CONTRACTOR" field (#103) word processing 
+        field.
+  
+     6. New/Modified Remote Procedures -
+     
+        a. New
+        
+           DVBA CAPRI SETCONTREMARKS
+           DVBA CAPRI GETCONTREMARKS
+  
+     7. New/Modified Routines -
+  
+        a. New
+  
+           DVBACREM
+           DVBA192P
+           DVBCIRP2
+  
+        b. Modified 
+    
+           DVBAB6
+           DVBCIUTL
+           DVBAB82
+           DVBABEBD
+           DVBABURL
+           DVBARSBD
+           DVBCAMIS
+           DVBCAMRO
+           DVBCRPRT
+  
+     8. New/Modified Options
+  
+        None 
+  
+ IV. TECHNICAL COMPONENTS
+  
+    The following section describes the technical components being   
+    exported with this patch.
+                                      
+                                UP      SEND    DATA    USER
+                                DATE    SEC.    COMES   OVER  RSLV
+ FILE #        FILE NAME        DD      CODE    W/FILE  RIDE PTRS
+   
+ -------------------------------------------------------------------------
+ --------------------------------------------------------------------------
+  
+ 396.4         2507 EXAM        YES     YES     NO      NO
+   Partial DD: subDD: 396.4      fld: 103
+  
+     1. The following Routines are being added/modified:
+  
+        a. Modify: DVBAB6
+           
+           This routine has been modified to add "CLAIM TYPE" and 
+           "SPECIAL CONSIDERATION(S)" to the CAPRI GUI, "Pending C&P Exams
+           Report".
+  
+        b. Modify: DVBCIUTL
+           
+           This routine has been modified to add "CLAIM TYPE", "SPECIAL
+           CONSIDERATION(S)" and "PRIORITY OF EXAM" to the CAPRI GUI,
+           "Insufficient Exam Report". The code has been changed to  
+           eliminate an undefined error in the "Insufficient Exam Report"
+  
+        c. Modify: DVBABEBD
+          
+           This routine has been modified to add "CLAIM TYPE" and 
+           "SPECIAL CONSIDERATION(S)" to the CAPRI GUI, "Exam Request By
+           Date Range Report".
+  
+        d. Modify: DVBARSBD 
+     
+           This routine has been modified to add "CLAIM TYPE" and "SPECIAL
+           CONSIDERATION(S)" to the CAPRI GUI, "Request Status By Date
+           Range Report".
+  
+        e. Modify: DVBAB82 
+  
+           This routine has been modified to allow Veterans Benefits
+           Administration (VBA) users to review, print, and reprint
+           Veterans Health Administration completed Compensation & Pension
+           examination reports located under the Compensation and Pension
+           Record Interchange "C&P Exams" tab of the patient record
+           regardless of the requesting office.
+  
+        f. Modify: DVBCRPRT
+  
+           In addition to DVBAB82 this routine has been modified to allow
+           Veterans Benefits Administration (VBA) users to review, print
+           and reprint Veterans Health Administration completed
+           Compensation & Pension examination reports located under the
+           Compensation and Pension Record Interchange "C&P Exams" tab of
+           the patient record regardless of the requesting office.
+  
+        g. New DVBCIRP2
+          
+           This routine fixes the "Undefined" DVBABIEN error in the   
+           Insufficient Exam Report. This routine also removes the
+           "Priority of Exam" filter from the Insufficient Exam Report. The
+           new insufficient exam report uses the following criteria
+           when including an exam on the report. The exam has an
+           Insufficient reason assigned and has been reported to MAS within
+           the date range specified by the user.
+  
+           The new report has three new fields: Claim Type, Special
+           Consideration(s), and Priority Of Exam.
+  
+        h. Modify: DVBCAMIS
+  
+           Changes made to disable the Automated Medical Information System
+           (AMIS) 290 report.
+  
+        i. Modify: DVBCAMRO
+  
+           Changes made to disable the Automated Medical Information System
+           (AMIS) 290 report.
+  
+        j. Modify: DVBABURL
+  
+           Changes made to disable the Automated Medical Information System
+           (AMIS) 290 report.
+  
+        k. New: DVBACREM
+  
+           This routine saves and retrieves the exam request remarks sent
+           to the Contractor. These remarks are stored and retrieved from
+           the "2507 REQUEST" file (#396.4), field (#103).
+  
+        l. New DVBA192P
+  
+           This routine is the post install routine for patch 
+           "DVBA*2.7*192". This routine will be automatically deleted 
+            after the patch install is complete.
+  
+               It sets the "DVBAB CAPRI VICAP URL" Parameter Definition
+               Value "http://vaww.demo.domain.ext/dmareports.asp".
+  
+     2. The following entries are being added to the REMOTE PROCEDURES
+        (#8994) file:
+  
+        a. DVBA CAPRI GETCONTREMARKS
+  
+           The RPC gets remarks sent to the contractor from "2507 EXAM"
+           file (#396.4), "REMARKS SENT TO CONTRACTOR", field (#103).
+  
+        b. DVBA CAPRI SETCONTREMARKS
+  
+           The RPC sets remarks sent to the contractor into the "2507 EXAM"
+           file (#396.4), "REMARKS SENT TO CONTRACTOR", field (#103). 
+  
+     3. The following options have been added to the OPTION (#19) file:
+  
+        None
+  
+     4. The following new security key will be added to the SECURITY KEY
+        (#19.1) file:
+      
+        None
+  
+     5. Add the DVBAB CAPRI VICAP URL parameter to the "PARAMETER 
+        DEFINITION" file (#8989.51). The parameter is referenced in the 
+        AMIE 290 reports mentioned above in this patch description. The
+        value is http://vaww.demo.domain.ext/dmareports.asp.
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+  
+     1. VistA Patch DVBA*2.7*192
+  
+        a. The VistA server software is being distributed as a PackMan
+           patch message through the National Patch Module (NPM). The KIDS
+           build for this patch is DVBA*2.7*192.
+  
+     2. CAPRI GUI v192 Client Software & User Documentation
+  
+        a. The CAPRI GUI v192 client software is being distributed as an
+           executable CAPRI.exe ([DVBA_27_P192_02.ZIP]). The installed
+           executable for this patch is client version 192.02 with a size
+           of 16.0 MB.
+           
+  
+           The CAPRI GUI v192 client software and documentation for this
+           patch may be retrieved directly using FTP. The preferred method
+           is to FTP the files from:
+  
+              download.vista.domain.ext
+  
+           This transmits the files from the first available FTP server.
+           Sites may also elect to retrieve software directly from a 
+           specific server as follows:
+  
+           OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+  
+           Albany           ftp.domain.ext  []
+           Hines            ftp.domain.ext   []
+           Salt Lake City   ftp.domain.ext     []
+  
+         The following files will be available:
+  
+         File Name       Contents        Retrieval format
+         ---------       ------------    ----------------------
+  
+           DVBA_27_P192_02.ZIP File(s) indented below:      BINARY
+          - CAPRI.exe            CAPRI v192 executable
+          - VACAPRIVVA.dll       Virtual VA dynamically linked library
+          - CAPRI_Help.chm       CAPRI On-line Help
+          - CAPRI.map            CAPRI error map
+          - CAPRISession.r2w     Reflections session configuration
+          - ssh_config           Secure Shell configuration       
+          - CAPRI_GUI_ISG.doc    CAPRI GUI Installation Supplemental Guide
+          - Libeay32.dll         VLER /DAS dynamically linked library
+          - Ssleay32.dll         VLER /DAS dynamically linked library
+          - QPDF.exe             Support PDF compression and Linearization
+          - QPDF13.dll           Support PDF compression and Linearization
+          - LIBGCC_S_DW2-1.dll   Support PDF compression and Linearization
+          - LIBSTDC++-6.dll      Support PDF compression and Linearization
+  
+         DVBA_27_P192_RN.PDF     Patch Release Notes          BINARY
+         DVBA_27_P192_UM.PDF     Updated CAPRI User Manual    BINARY 
+         CAPRI_SYSADMINTECHGUIDE_DVBA_27_TM.PDF SAT Guide     BINARY
+  
+        The VistA Documentation Library (VDL) web site will also contain 
+        the 'Release Notes' and updated 'CAPRI User Manual'. This web site
+        is usually updated within 1-3 days of the patch release date.
+  
+        The VDL web address for CAPRI user documentation is:
+  
+           http://www.domain.ext/vdl/application.asp?appid=133
+  
+  VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+     1. Users on the System
+  
+        a. This patch (DVBA*2.7*192) should be installed during non-peak 
+           times while CAPRI users are using the previously released
+           version of the CAPRI GUI (i.e. DVBA_27_190.exe).
+  
+        b. Once the installation of this patch has been completed, CAPRI 
+           users should be upgraded to the new released version of the
+           CAPRI GUI (CAPRI.exe [DVBA_27_P192_02.ZIP]). Please refer to the
+           CAPRI_GUI_ISG.doc document within the DVBA_27_P192_02.zip file
+           for supplemental installation instructions regarding the
+           installation of the following files:
+  
+             VACAPRIVVA.dll        Virtual VA dynamically linked library
+             CAPRI_Help.chm        CAPRI On-line Help
+             CAPRI.map             CAPRI error map
+             CAPRISession.r2w      Reflections session configuration
+             ssh_config            Secure Shell configuration
+             Libeay32.dll          VLER /DAS dynamically linked library
+             Ssleay32.dll          VLER /DAS dynamically linked library
+             QPDF.exe              Support PDF compression and 
+                                   Linearization
+             QPDF13.dll            Support PDF compression and 
+                                   Linearization
+             LIBGCC_S_DW2-1.dll    Support PDF compression and 
+                                   Linearization
+             LIBSTDC++-6.dll       Support PDF compression and 
+                                   Linearization
+  
+        c. This patch modifies routines used by the CAPRI GUI application 
+           and the Automated Medical Information Exchange (AMIE) package.
+           It should be installed during non-peak hours to minimize
+           disruption to users and to reduce the possibility of errors when
+           the routines are updated.
+  
+     2. VistA Options
+  
+        a. The following VistA options should be disabled while installing
+           this patch: NONE.
+  
+     3. Software Installation Time
+  
+        a. The estimated installation time for VistA patch DVBA*2.7*192 is 
+           less than 5 minutes during off peak hours
+  
+     4. Required Builds
+  
+        a. The following is a list of REQUIRED builds for this KIDS
+           distribution (DVBA*2.7*192). KIDS will not allow the
+           installation of this patch without their prior installation.
+  
+         Required Builds:
+         ----------------
+             DVBA*2.7*186
+             DVBA*2.7*190
+  
+  VII. INSTALLATION INSTRUCTIONS:
+  
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+  
+     2. From the 'Kernel Installation & Distribution System' menu, select
+        the Installation menu.
+  
+     3. From this menu, you may now elect to use the following options 
+        (when prompted for INSTALL NAME, enter DVBA*2.7*192).
+  
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any changes such as DDs or templates.
+  
+        b. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch 
+           (routines, DDs, templates, etc.).
+  
+        c. Verify Checksums in Transport Global - This option will allow 
+           you to ensure the integrity of the routines that are in the
+           transport global.
+  
+        d. Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+  
+     4. Use the Install Package(s) option and select package DVBA*2.7*192.
+  
+     5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//', respond NO.
+  
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', it is recommended you answer NO.
+  
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//', respond NO.
+  
+     8. If CAPRI GUI users have not already been upgraded to the new 
+        version of the CAPRI GUI v192 (CAPRI.exe [DVBA_27_P192_02.ZIP]), 
+        they should be upgraded as soon as possible upon installation of 
+        this patch.
+  
+   VIII. TEST SITES
+  
+    The following sites participated in the testing of the CAPRI GUI v192
+    and DVBA*2.7*192 server software.
+  
+     Test Sites:
+     ---------- 
+  
+     *Alexandria 
+     *Greater LA
+     *Denver
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA192P
+    Before:       n/a   After:  B1459756  **192**
+Routine Name: DVBAB6
+    Before: B57291338   After: B67138708  **35,90,108,168,185,190,192**
+Routine Name: DVBAB82
+    Before:B120585412   After:B137858381  **42,90,100,119,156,149,179,
+                                           181,184,185,192**
+Routine Name: DVBABEBD
+    Before:  B8904032   After: B13866320  **57,108,185,190,192**
+Routine Name: DVBABURL
+    Before:  B7360044   After:  B7872092  **104,136,143,149,168,181,186,192**
+Routine Name: DVBACREM
+    Before:       n/a   After:  B2557988  **192**
+Routine Name: DVBARSBD
+    Before:B106363771   After:B142334503  **179,185,189,190,192**
+Routine Name: DVBCAMIS
+    Before: B14811175   After: B18105359  **17,149,184,192**
+Routine Name: DVBCAMRO
+    Before: B10848195   After: B13590807  **17,149,184,192**
+Routine Name: DVBCIRP2
+    Before:       n/a   After: B81228394  **192**
+Routine Name: DVBCIUTL
+    Before: B63990855   After: B91825542  **13,17,19,149,184,185,192**
+Routine Name: DVBCRPRT
+    Before: B14877180   After: B19769692  **31,42,119,192**
+ 
+Routine list of preceding patches: 186, 190
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 29, 2015
+Completed By:                               Date Completed: OCT 21, 2015
+Released By :                               Date Released : OCT 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

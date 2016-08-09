@@ -1,0 +1,167 @@
+$TXT Created by                 at MNTVUU.DOMAIN.EXT  (KIDS) on Thursday, 12/19/13 at 14:35
+=============================================================================
+Run Date: JUL 15, 2014                     Designation: PSX*2*75
+Package : PSX - CMOP                          Priority: Mandatory
+Version : 2        SEQ #66                      Status: Released
+                  Compliance Date: AUG 08, 2014
+=============================================================================
+
+Associated patches: (v)PSX*2*64    <<= must be installed BEFORE `PSX*2*75'
+                    (v)PSX*2*70    <<= must be installed BEFORE `PSX*2*75'
+
+Subject: NTE5 duplication; PSXMAIL KEY; Controlled Substance RX pull
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+ This patch modifies the Consolidate Mail Outpatient Pharmacy (CMOP) v2.0 
+ application as described below:
+  
+ 1.  A correction was made to not have duplicate Notes and Comments (NTE)5
+     segments after a CMOP Re-Transmit option was performed.
+ 2.  A typo was corrected in the key description for PSXMAIL key.
+ 3.  A correction was made to not allow Controlled Substance to be pulled
+     early if site parameters are not set for it to be pulled.
+  
+  
+ Associated Remedy tickets:
+ =========================
+ 1.  INC000000910015 - NTE5 duplication in Re-Transmit CMOP Data option
+     [PSXR RETRANSMIT]
+ 2.  INC000000585757 - Typo in Key description for PSXMAIL key
+ 3.  INC000000387500 - Controlled Substance RX pulled out of suspend too
+                       far ahead
+     Duplicates:
+     INC000000336012 - Controlled substances being pulled too early for
+                       CMOP
+     INC000000707557 - Controlled substances being pulled too early
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Ralph H Johnson VA Medical Center - Charleston
+ Memphis VA Medical Center
+ North Chicago VA Medical Center
+  
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. INC000000910015 - NTE5 duplication in CMOP Re-Transmit 
+  
+    Patient Safety Issue:
+    ---------------------
+    PSPO #2476
+  
+    Problem:
+    --------
+    Site reported that when performing Re-Transmit CMOP Data option [PSXR
+    RETRANSMIT] the MultiRX NTE5 segment would duplicate with multiple
+    patients.
+   
+    Resolution:
+    ------------
+    Modified routine PSXBLD1 to reset the variable which stores the NTE5 
+    segment after each patient.
+   
+  
+ 2. INC000000585757 - Typo in Key description for PSXMAIL key
+   
+    Problem:
+    --------
+    Misspelling of the word "designates" in the description for PSXMAIL 
+    security key.
+  
+    Resolution:
+    -----------
+    Modified description to properly spell word.
+  
+  
+ 3. INC000000387500 - Controlled Substance RX pulled out of suspend too
+    far ahead.
+  
+    Patient Safety Issue:
+    -------------------
+    PSPO #2499
+  
+    Problem:
+    --------
+    Controlled substance RX being pulled too early when suspended for CMOP.
+   
+    Resolution:
+    -----------
+    Modify routine to check if RX is a Controlled Substance and use proper
+    field with site parameters.
+   
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter PSX*2.0*75).      
+  
+    a. Backup a Transport Global - this option will create a backup
+       message of any routines exported with the patch. It will NOT
+       backup any other changes such as DDs or templates.
+    b. Compare Transport Global to Current System - this option will allow
+       you to view all changes that will be made when the patch is
+       installed.
+    c. Verify Checksums in Transport Global - this option will ensure the
+       integrity of the routines that are in the transport global.
+    d. Print Transport Global - this option will allow you to view the
+       components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package PSX*2.0*75.
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install? NO//",
+    respond No.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", respond No.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CMOP;**[Patch List]**;11 Apr 97;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSXBLD1
+    Before: B26372191   After: B26394320  **3,18,19,42,41,49,57,64,75**
+Routine Name: PSXRSUS
+    Before: B75996121   After: B76907219  **2,3,24,23,26,28,41,57,48,70,75**
+ 
+Routine list of preceding patches: 64, 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 12, 2013
+Completed By:                               Date Completed: JUL 03, 2014
+Released By :                               Date Released : JUL 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

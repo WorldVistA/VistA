@@ -1,0 +1,219 @@
+$TXT Created by              at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 01/11/16 at 06:49
+=============================================================================
+Run Date: JAN 20, 2016                     Designation: ONC*2.2*7
+Package : ONC - ONCOLOGY                      Priority: EMERGENCY
+Version : 2.2         SEQ #3                    Status: Released
+                  Compliance Date: JAN 23, 2016
+=============================================================================
+
+Associated patches: (v)ONC*2.2*4   <<= must be installed BEFORE `ONC*2.2*7'
+
+Subject: ICD-10 and PTF Required Updates
+
+Category: 
+  - Routine
+  - Print Template
+  - Data Dictionary
+
+Description:
+============
+
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA OncoTrax package.  The purpose of this release is to update
+ the functionality as described below.
+  
+ All Data Dictionary modifications and additions have been reviewed and
+ approved by the Data Base Administrator. 
+  
+ 1. The Oncology software was not allowing entering/editing of inactive ICD9
+ codes. Also not allowing entering, editing and printing of new ICD10 codes.
+ To fix this issue, the SECONDARY DIAGNOSIS #1 - #10 and CAUSE OF DEATH fields
+ needed to be modified.  The input and output transform screens and look-up
+ routines for these fields have been corrected.
+  
+ 2. The Oncology [AUTOMATIC CASEFINDING-PTF SEARCH] option needed to be updated.
+ Ten more IDC-10 Secondary Diagnosis fields were added to the PTF (#45) file
+ so our Casefinding Search option will now need to look for data in these
+ newly added fields.
+ 
+ 3. The ACOS and State/VACCR data download options needed to be updated to
+ correct an issue with the TEXT--USUAL OCCUPATION data item.  The options were
+ sending and displaying a value of "UNKNOWN" for the TEXT--USUAL OCCUPATION item
+ for every case.  The options [CREATE ACOS DATA DOWNLOAD], [CREATE A REPORT TO
+ PREVIEW ACOS OUTPUT], [CREATE STATE/VACCR DATA DOWNLOAD] and [CREATE A REPORT
+ TO PREVIEW STATE/VACCR OUTPUT] have been modified to correct this issue so the
+ correct Occupation will be sent and displayed. 
+  
+ CA Service Desk Manager Incident # Addressed: I5987442FY16
+  
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 10 routines. 
+  
+ Files & Fields Associated:     
+ File Name (#)              Field Name (#)                   New/Modified/Deleted
+ -------------              ------------------               --------------------
+ ONCOLOGY PATIENT (#160)    CAUSE OF DEATH (#19)               Modified
+                            SECONDARY DIAGNOSIS #1 (#25.91)    Modified
+                            SECONDARY DIAGNOSIS #2 (#25.92)    Modified
+                            SECONDARY DIAGNOSIS #3 (#25.93)    Modified
+                            SECONDARY DIAGNOSIS #4 (#25.94)    Modified
+                            SECONDARY DIAGNOSIS #5 (#25.95)    Modified
+                            SECONDARY DIAGNOSIS #6 (#25.96)    Modified
+                            SECONDARY DIAGNOSIS #7 (#25.97)    Modified
+                            SECONDARY DIAGNOSIS #8 (#25.98)    Modified
+                            SECONDARY DIAGNOSIS #9 (#25.99)    Modified
+                            SECONDARY DIAGNOSIS #10 (#25.9901) Modified
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                                        Type    New/Modified/Deleted
+ -----------                                        ----    --------------------
+ N/A 
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ ONCO XABSTRACT RECORD      Print     #165.5            Modified
+ ONCOY58                    Print     #165.5            Modified 
+ ONC DISEASE INDEX          Print     #9000010.07       Modified
+  
+ Test Sites
+ ==========
+ Hines VAMC 
+ Washington, DC VAMC 
+ West Haven, Ct
+  
+ Documentation Retrieval:
+ ========================
+ There are no documentation changes with this patch but the existing Oncology
+ documentation is available on the ANONYMOUS.SOFTWARE directory at one
+ of the following Office of Information (OI) Field Offices.  
+     Albany
+     Hines
+     Salt Lake City
+   
+ Sites may retrieve Oncology documentation in one of the following ways.
+ (1) The preferred method is to FTP the files from     
+     download.vista.domain.ext, which will transmit the files from the
+     first available FTP server.
+ (2) Sites may also elect to retrieve documentation directly from a
+     specific server listed below.
+        Albany              ftp.domain.ext     
+        Hines               ftp.domain.ext
+        Salt Lake City      ftp.domain.ext  
+ (3) Documentation can also be retrieved from the VistA Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.domain.ext/vdl.
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ There is no pre- or post-installation routine for this patch. 
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation will take less than 5 minutes.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ 1. Load the distribution.
+ Choose the PackMan message containing this patch and invoke the 
+ INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//' Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONCACDU1
+    Before: B36708524   After: B36326632  **1,4,7**
+Routine Name: ONCACDU2
+    Before:B117837157   After:B117684945  **1,4,7**
+Routine Name: ONCFUNC
+    Before: B47880653   After: B52220927  **1,7**
+Routine Name: ONCOANC1
+    Before: B21219299   After: B21183660  **1,7**
+Routine Name: ONCOCFP
+    Before: B50437593   After: B60462094  **1,7**
+Routine Name: ONCOCFP1
+    Before:       n/a   After: B82107874  **7**
+Routine Name: ONCOCOC
+    Before:  B6349998   After:  B6585655  **1,7**
+Routine Name: ONCODIS
+    Before:   B774066   After:   B774180  **1,4,7**
+Routine Name: ONCOPRT1
+    Before: B57470448   After: B85682347  **1,7**
+Routine Name: ONCPL
+    Before:  B3168179   After:  B3172227  **1,7**
+ 
+Routine list of preceding patches: 4
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 06, 2015
+Completed By:                               Date Completed: JAN 20, 2016
+Released By :                               Date Released : JAN 20, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

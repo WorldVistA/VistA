@@ -1,0 +1,212 @@
+$TXT Created by                  CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Tuesday, 08/12/14 at 11:11
+=============================================================================
+Run Date: OCT 21, 2014                     Designation: PSJ*5*305
+Package : PSJ - INPATIENT MEDICATIONS         Priority: EMERGENCY
+Version : 5       SEQ #261                      Status: Released
+                  Compliance Date: OCT 23, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*141   <<= must be installed BEFORE `PSJ*5*305'
+                    (v)PSJ*5*252   <<= must be installed BEFORE `PSJ*5*305'
+                    (v)PSJ*5*279   <<= must be installed BEFORE `PSJ*5*305'
+
+Subject: IMR 6 FOLLOW UP TO PSJ*5*279
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSJ*5*279 inadvertently introduced the following issues and this 
+ patch, PSJ*5*305 will address these issues.
+  
+ 1)  The "Infusion Rate" and "Number of Labels per Day" fields for the
+     IV Type CHEMOTHERAPY; ADMIXTURE and CHEMOTHERAPY; SYRINGE (Continuous)
+     are not allowing the use of the "@" functionality nor prompting the
+     user for the "Number of Labels per Day". This patch fixes this 
+     problem.
+  
+ 2)  The Infusion instruction names with defined expansions will duplicate
+     the expansion if the name is the leading text in the expansion
+     itself. For example, if the abbreviation or term is "SEE" and the
+     expanded form is "SEE PROVIDER COMMENTS" it would erroneously expand
+     to "SEE PROVIDER COMMENTS PROVIDER COMMENTS". The potential for harm
+     exists if confusion results from the odd rate instructions on an
+     order/label. This patch corrects this issue.
+  
+ 3)  When the Infusion Rate field is populated with "text@0" (or defined
+     label limit of 0), the software is defaulting to (P)RINT at the label
+     print option. The software previously defaulted to (B)YPASS when the
+     user entered "@0" (for zero (0) scheduled labels) in the Infusion Rate
+     field. This patch fixes this problem.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)        New/Modified/Deleted
+ ------------------         -------------------        --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+     
+ Option Name                  Type               New/Modified/Deleted
+ -----------                  ----               -------------------- 
+ N/A 
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)     New/Modified/Deleted 
+ -------------      ----      ------------------     --------------------
+ N/A 
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 958051 (959958 dup)
+ 961596
+ 960735
+  
+  
+ Test Sites:
+ -----------
+ NEW JERSEY HCS
+ OKLAHOMA CITY, OK
+ PITTSBURGH HCS
+ UPSTATE NEW YORK HCS
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+ File Description                        File Name             FTP Mode
+ --------------------------------------------------------------------------
+ N/A 
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ N/A 
+                                   
+  
+ Installation Instructions
+ -------------------------
+ Do not install this patch while Inpatient Medications options are
+ being used. If this is not possible, we recommend to install during
+ Non-Peak hours. Installation will take no longer than 5 minutes.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+   2. From the Kernel Installation & Distribution System (KIDS) menu,
+      select the Installation menu.
+  
+   3. From this menu, you may select to use the following options
+      (when prompted for INSTALL NAME, enter PSJ*5.0*305).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+   
+   4. Use the Install Package(s) option and select the package PSJ*5.0*305.
+   
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//", respond NO.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVEDT1
+    Before:B111693180   After:B112839091  **3,7,41,47,50,64,58,116,110,
+                                           111,113,267,279,305**
+Routine Name: PSIVORE
+    Before: B43371041   After: B43571745  **18,29,50,56,58,81,110,127,
+                                           133,157,203,213,181,252,305**
+Routine Name: PSIVORE1
+    Before: B25786480   After: B25869208  **58,110,127,133,279,305**
+Routine Name: PSIVSP
+    Before: B42203793   After: B42459538  **30,37,41,50,56,74,83,111,133,
+                                           138,134,213,229,279,305**
+Routine Name: PSIVWL
+    Before: B33207502   After: B33431217  **41,54,74,84,93,110,111,141,305**
+Routine Name: PSJLIVFD
+    Before: B63427206   After: B63240013  **7,50,63,64,58,81,91,80,116,
+                                           110,111,180,134,181,254,267,
+                                           228,279,305**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 04, 2013
+Completed By:                               Date Completed: OCT 21, 2014
+Released By :                               Date Released : OCT 21, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

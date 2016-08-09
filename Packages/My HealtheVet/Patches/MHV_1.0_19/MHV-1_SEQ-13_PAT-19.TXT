@@ -1,0 +1,138 @@
+
+=============================================================================
+Run Date: JUN 18, 2015                     Designation: MHV*1*19
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #13                      Status: Released
+                  Compliance Date: JUL 19, 2015
+=============================================================================
+
+
+Subject: MYHEALTHEVET REL 12.13 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MHV 12.13 will be promoted to production on Saturday, June 20, 2015.
+  
+ Infrastructure & Interface (I&I) Team Enhancements
+ ==================================================
+  
+ - Epic 162159 - MHV Account Synchronization Phase2
+ - Epic 162158 - MHV Blue Button (BB) Continuity of Care Document (CCD) 
+ Direct
+ - Epic 177517 - VLER Health Authorization Form
+ - Epic 162152 - Federated Credentials - New User Registration
+ - Epic 162156 - Federated Credentials - Admin Portal
+  
+ Veteran Facing Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ Secure Messaging Opt-in and Opt Out Implementation:
+  
+ - Epic 155629 - Ability to block patients by Facility 
+ - Epic 151939 - Refresh Patient/Triage Group association every 4 hours
+ - Epic 160092 - Ability to select all messages when saving as CPRS 
+ Progress Note
+ - Epic 29294 - Ability to auto-save messages to the draft folder
+ - Epic 151054 - Ability for Surrogates to receive new message email 
+ notifications
+  
+ Rx Tracking Notifications
+  
+ Innovations Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ BBMI Enhancements: (Epic 123965:  My HealtheVet VA Medical Images and 
+ Reports - Field Test Only)
+  
+ - Download VA Medical Images and Reports to Copy for a Provider
+ - View VA Medical Images and Reports Summary Table - Ten Records or Less
+ - View VA Medical Images and Reports Summary Table - No Records Found
+ - VA Medical Images and Reports are not available
+ - Alternate Flow: Navigate to Blue Button via the Personal Information Tab
+ - Save VA Medical Images and Reports from Download
+ - Account Activity Logging
+  
+ MHV Appointment Email Reminders Enhancements (Epic 128585:  Appointment 
+ Email Reminders)
+  
+ - Background Job
+ - Date/Time of Appointment
+ - Location Field
+ - Includes Cancelled Appointments
+ - Send email for all future appointments for subscribed users with 3 or 
+ 15 day appointment in the future
+ - Migrate to use HDR Pathways and PHRR
+  
+ SM Provider API Enhancements:
+  
+ - Support for DFN and a new interface for current user
+ - Support for the new fine grained user blocking
+  
+ Sustainment Team
+ ================
+  
+ Secure Messaging
+  
+ - JAZZ 181023 - 508 - Resolve 57 alternative text issues from May 2015 
+ 508 compliance scan
+ - JAZZ 181025 - 508 - Resolve 131 text and background color issues from 
+ May 2015 508 compliance scan
+ - JAZZ 184295 - 508 Fix Left Navigation ID, Link Conflict with Skip 
+ navigation
+  
+ MHV
+  
+ - JAZZ 112148 - Incorrect JavaScript comment and object name syntax when 
+ adding Immunization info
+ - JAZZ 166140 - "Retire *.bluebutton file format from VA Blue Button 
+ download options
+ - JAZZ 182545 - The MHV HLA launch page shows a System Error sometimes  
+  
+ HLA and MHV
+  
+ - JAZZ 162883 - HLA MHVID value does not match the MHV UserProfileID 
+ value due to incorrect MHV UserID length
+  
+ DATABASE
+  
+ - JAZZ 177035 - BlueButton Cleanup
+ - JAZZ 180327 - Update the MHV_TOOLS package to add 2 columns
+ - JAZZ 128008 - Delete job 5001 and remove the stored procedure 
+ MHVREFRESHAPPT from production and SysTest
+ - JAZZ 181538 - Delete rows from phr_study_job table where created_date < 
+ trunc(sysdate - 21)
+  
+ System ReEngineering (SRE) Team
+ ===============================
+  
+ SRE WEBLOGIC
+  
+ - Jazz181111 - PHR-R 12.13 - Multi-client Appointment capabilities
+  
+ SRE DATABASE
+  
+ - Jazz174505 - SQL tuning on SQL text from new AWR report after March 
+ Release and add index to the SMS tables
+ - Jazz179042 - Update Database Provisioning - CCDA Extract Type
+ - Jazz180342 - Add Multiple Appointment Client Support to PHR-R
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 11, 2015
+Completed By:                               Date Completed: JUN 16, 2015
+Released By :                               Date Released : JUN 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

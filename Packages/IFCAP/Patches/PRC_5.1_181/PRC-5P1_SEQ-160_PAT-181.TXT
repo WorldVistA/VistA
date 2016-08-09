@@ -1,0 +1,169 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Wednesday, 01/15/14 at 13:09
+=============================================================================
+Run Date: SEP 03, 2014                     Designation: PRC*5.1*181
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #160                    Status: Released
+                  Compliance Date: OCT 04, 2014
+=============================================================================
+
+Associated patches: (v)PRC*5.1*171 <<= must be installed BEFORE `PRC*5.1*181'
+
+Subject: DUPLICATE TRANS FOR ORDER;PROMPT PAY AMEND ISSUE 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  
+ This patch will address the following 2 issues:
+  
+ 1. Duplicate transaction numbers occur when closing out of connectivity 
+    while entering a Detailed Purchase Card Order.
+  
+ 2. Amendment of purchase order for Prompt Pay Type creates incorrect Fund 
+    Control Point (FCP) adjustment as seen on the Running Balance report.
+  
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000755922  Purchase Card Orders - duplicate transaction numbers
+  
+ 2. INC000000751811  Purchase order issue
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Alexandria VAMC
+ St. Cloud VAMC
+ Mountain Home VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000755922  Purchase Card Orders - duplicate transaction numbers
+  
+    Problem:
+    --------
+    When a user reaches a Sort Group query when entering a New Detailed
+    Purchase Card Order [PRCH ENTER DETAILED ORDER], they sometimes close
+    their connectivity to escape the order entry due to an earlier mistake
+    made in an entry.  When the user returns to the order using Edit
+    Detailed Purchase Card Order [PRCH EDIT DETAILED ORDER] they create a
+    2nd transaction entry in file CONTROL POINT ACTIVITY (#410) pointing to
+    the same order.
+  
+    Resolution:
+    -----------                    
+    Modify the file CONTROL POINT ACTIVITY (#410) filer for order, to set
+    the cross reference pointer to the current requisition prior to asking
+    Sort Group.  Upon returning to edit the order, the process will now
+    have the original requisition linked to the order and not create a
+    duplicate transaction.
+  
+    Routines: PRCH410
+  
+  
+ 2. INC000000751811  Purchase order issue
+  
+    Problem:
+    --------
+    Problem reported that when Prompt Pay % is amended on Purchase Order, 
+    the correct adjustment is not made to the FCP or the Running Balance
+    report.
+  
+    Resolution:
+    -----------
+    Modify PRCFFUD to insure the correct adjustment is calculated after the
+    Prompt Pay Discount has been run against the order when the amended 
+    order is processed back to the base order.  This will insure the Prompt
+    Pay discount adjustment is based on the newly updated net amount for 
+    amended order.
+  
+    Routines: PRCFFUD 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ This patch may be installed during normal working hours with all users on 
+ the system. However, as it is necessary to disable some menu options when
+ installing this patch it is recommended that the install be done during
+ non-peak hours.
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*181)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*181.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" hit Enter.  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', hit Enter. 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       New Detailed Purchase Card Order   [PRCH ENTER DETAILED ORDER]
+       New Simplified Purchase Card Order [PRCH ENTER SIMPLIFIED ORDER]
+       New Purchase Order                 [PRCHPC PO ADD]
+       Amendment Processing               [PRCFA AMENDMENT PROCESSING]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCFFUD
+    Before: B37053317   After: B40042829  **181**
+Routine Name: PRCH410
+    Before: B43608419   After: B48806860  **123,171,181**
+ 
+Routine list of preceding patches: 171
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 25, 2013
+Completed By:                               Date Completed: AUG 20, 2014
+Released By :                               Date Released : SEP 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

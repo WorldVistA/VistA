@@ -1,0 +1,1505 @@
+Released LR*5.2*438 SEQ #358
+Extracted from mail message
+**KIDS**:LR*5.2*438^
+
+**INSTALL NAME**
+LR*5.2*438
+"BLD",9643,0)
+LR*5.2*438^LAB SERVICE^0^3141017^y
+"BLD",9643,1,0)
+^^134^134^3140715^
+"BLD",9643,1,1,0)
+The patch addresses three (3) issues:
+"BLD",9643,1,2,0)
+ 
+"BLD",9643,1,3,0)
+1.      Users report being unable to perform MRSA testing on deceased 
+"BLD",9643,1,4,0)
+patients but they are allowed to proceed through the accessioning process 
+"BLD",9643,1,5,0)
+without an early warning that the test has been cancelled.
+"BLD",9643,1,6,0)
+2.      LRGEN skips rows of results when the SITE/SPECIMEN prompt is 
+"BLD",9643,1,7,0)
+answered with the default (ANY) and it frequently displays/prints 
+"BLD",9643,1,8,0)
+unnecessary headers.
+"BLD",9643,1,9,0)
+3.      Under certain circumstances, the Group Verify (GA) option allows 
+"BLD",9643,1,10,0)
+the verification of results marked as Not Performed.
+"BLD",9643,1,11,0)
+ 
+"BLD",9643,1,12,0)
+Associated NSR(s):
+"BLD",9643,1,13,0)
+------------------
+"BLD",9643,1,14,0)
+N/A
+"BLD",9643,1,15,0)
+ 
+"BLD",9643,1,16,0)
+Associated Remedy ticket(s):
+"BLD",9643,1,17,0)
+==========================
+"BLD",9643,1,18,0)
+1.      INC000000500271 - MRSA testing on death
+"BLD",9643,1,19,0)
+2.      INC000000069164 - LRGEN missing results
+"BLD",9643,1,20,0)
+-       INC000000069285 (d)
+"BLD",9643,1,21,0)
+-       INC000000069419 (d)
+"BLD",9643,1,22,0)
+-       INC000000180798 (d)
+"BLD",9643,1,23,0)
+-       INC000000069205 (d)
+"BLD",9643,1,24,0)
+3. INC000000937699 - Group Verify ignoring NP
+"BLD",9643,1,25,0)
+ 
+"BLD",9643,1,26,0)
+Associated NSR(s):
+"BLD",9643,1,27,0)
+==================
+"BLD",9643,1,28,0)
+N/A
+"BLD",9643,1,29,0)
+ 
+"BLD",9643,1,30,0)
+Participating Test Sites:
+"BLD",9643,1,31,0)
+=========================
+"BLD",9643,1,32,0)
+TBD
+"BLD",9643,1,33,0)
+ 
+"BLD",9643,1,34,0)
+Remedy Overview:
+"BLD",9643,1,35,0)
+================
+"BLD",9643,1,36,0)
+ 
+"BLD",9643,1,37,0)
+1.      INC000000500271 - MRSA Testing on Death
+"BLD",9643,1,38,0)
+ 
+"BLD",9643,1,39,0)
+Problem:
+"BLD",9643,1,40,0)
+--------
+"BLD",9643,1,41,0)
+Laboratory staff indicates that they are not able to perform MRSA testing 
+"BLD",9643,1,42,0)
+on patients who are deceased.  The application will not allow them to 
+"BLD",9643,1,43,0)
+accession specimens or enter results for the MRSA test on deceased 
+"BLD",9643,1,44,0)
+patients. Further, the user is allowed to progress through the 
+"BLD",9643,1,45,0)
+accessioning session without an early warning that an order has been 
+"BLD",9643,1,46,0)
+canceled.
+"BLD",9643,1,47,0)
+ 
+"BLD",9643,1,48,0)
+Resolution:
+"BLD",9643,1,49,0)
+-----------
+"BLD",9643,1,50,0)
+To avoid having MRSA tests cancelled at either patient death or 
+"BLD",9643,1,51,0)
+discharge, the desired test should be added as an Exempt Orderable Item 
+"BLD",9643,1,52,0)
+for the Death and/or Discharge event in the Delayed Orders/Auto-DC Set-up 
+"BLD",9643,1,53,0)
+function.
+"BLD",9643,1,54,0)
+ 
+"BLD",9643,1,55,0)
+Additionally, the routine LROE is modified to provide clear, early 
+"BLD",9643,1,56,0)
+feedback to the user that a test has been cancelled and will not be 
+"BLD",9643,1,57,0)
+accessioned.
+"BLD",9643,1,58,0)
+ 
+"BLD",9643,1,59,0)
+2.      INC000000069164 - LRGEN Missing Results
+"BLD",9643,1,60,0)
+  
+"BLD",9643,1,61,0)
+Problem:
+"BLD",9643,1,62,0)
+--------
+"BLD",9643,1,63,0)
+The defect occurs when using the LRGEN option (General report for 
+"BLD",9643,1,64,0)
+selected tests) and when there are more than six (6) analytes on the 
+"BLD",9643,1,65,0)
+selected tests.  When the SITE/SPECIMEN prompt is answered with the 
+"BLD",9643,1,66,0)
+default (ANY), the application only displays the first set of headings 
+"BLD",9643,1,67,0)
+and results - that is: it only properly displays the first six results 
+"BLD",9643,1,68,0)
+and skips the remaining results.  This typically occurs on the results 
+"BLD",9643,1,69,0)
+for the last date of service.  Though no results are displayed, 
+"BLD",9643,1,70,0)
+unnecessary headers are displayed or printed.
+"BLD",9643,1,71,0)
+ 
+"BLD",9643,1,72,0)
+Resolution:
+"BLD",9643,1,73,0)
+-----------
+"BLD",9643,1,74,0)
+Multiple modifications and the addition of a function to routine LRGEN1, 
+"BLD",9643,1,75,0)
+correct the missing results and unnecessary header issues.
+"BLD",9643,1,76,0)
+ 
+"BLD",9643,1,77,0)
+3.      INC000000937699 - Group Verify Ignoring NP
+"BLD",9643,1,78,0)
+  
+"BLD",9643,1,79,0)
+Problem:
+"BLD",9643,1,80,0)
+--------
+"BLD",9643,1,81,0)
+When Group Verify (GA) is used to verify results for a Work Load Area 
+"BLD",9643,1,82,0)
+that contains accessions that have tests that have been marked as Not 
+"BLD",9643,1,83,0)
+Performed on a prior date, the option can erroneously verify results that 
+"BLD",9643,1,84,0)
+may have been entered for the accession.
+"BLD",9643,1,85,0)
+ 
+"BLD",9643,1,86,0)
+Resolution:
+"BLD",9643,1,87,0)
+-----------
+"BLD",9643,1,88,0)
+A modification to routine LRGV2 prevents the verification of any results 
+"BLD",9643,1,89,0)
+that may be associated with Not Performed test(s).
+"BLD",9643,1,90,0)
+ 
+"BLD",9643,1,91,0)
+Components:
+"BLD",9643,1,92,0)
+===========
+"BLD",9643,1,93,0)
+N/A
+"BLD",9643,1,94,0)
+ 
+"BLD",9643,1,95,0)
+Installation Instructions:
+"BLD",9643,1,96,0)
+==========================
+"BLD",9643,1,97,0)
+   The install time for this patch is less than 2 minutes. This patch can
+"BLD",9643,1,98,0)
+   be installed when Laboratory users are on the system.
+"BLD",9643,1,99,0)
+ 
+"BLD",9643,1,100,0)
+   NOTE: Kernel patches must be current on the target system to avoid
+"BLD",9643,1,101,0)
+         problems loading and/or installing this patch.
+"BLD",9643,1,102,0)
+ 
+"BLD",9643,1,103,0)
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+"BLD",9643,1,104,0)
+      option will load the KIDS patch onto your system.
+"BLD",9643,1,105,0)
+ 
+"BLD",9643,1,106,0)
+   2. The patch has now been loaded into a Transport global on your
+"BLD",9643,1,107,0)
+      system. You now need to use KIDS to install the transport global.
+"BLD",9643,1,108,0)
+ 
+"BLD",9643,1,109,0)
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+"BLD",9643,1,110,0)
+      select the 'Installation' menu.
+"BLD",9643,1,111,0)
+ 
+"BLD",9643,1,112,0)
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+"BLD",9643,1,113,0)
+      that all routines have the correct checksums.
+"BLD",9643,1,114,0)
+    
+"BLD",9643,1,115,0)
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+"BLD",9643,1,116,0)
+      options:
+"BLD",9643,1,117,0)
+              Print Transport Global
+"BLD",9643,1,118,0)
+              Compare Transport Global to Current System
+"BLD",9643,1,119,0)
+              Backup a Transport Global
+"BLD",9643,1,120,0)
+ 
+"BLD",9643,1,121,0)
+      To preserve a copy of the routines exported in this patch prior to 
+"BLD",9643,1,122,0)
+      installation, you should use the 'Backup a Transport Global' option 
+"BLD",9643,1,123,0)
+      at this time. You may also compare the routines in your production
+"BLD",9643,1,124,0)
+      account to the routines in the patch by using the 'Compare a
+"BLD",9643,1,125,0)
+      Transport Global to Current System' option.
+"BLD",9643,1,126,0)
+ 
+"BLD",9643,1,127,0)
+   6. Use the 'Install Package(s)' option under the 'Installation' menu
+"BLD",9643,1,128,0)
+      and select the package 'LR*5.2*438'.
+"BLD",9643,1,129,0)
+ 
+"BLD",9643,1,130,0)
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+"BLD",9643,1,131,0)
+      choose 'NO'.
+"BLD",9643,1,132,0)
+ 
+"BLD",9643,1,133,0)
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+"BLD",9643,1,134,0)
+      Protocols? YES//', choose 'NO'.
+"BLD",9643,4,0)
+^9.64PA^^
+"BLD",9643,6.3)
+18
+"BLD",9643,"ABPKG")
+n
+"BLD",9643,"INID")
+^
+"BLD",9643,"INIT")
+
+"BLD",9643,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9643,"KRN",.4,0)
+.4
+"BLD",9643,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9643,"KRN",.401,0)
+.401
+"BLD",9643,"KRN",.402,0)
+.402
+"BLD",9643,"KRN",.403,0)
+.403
+"BLD",9643,"KRN",.5,0)
+.5
+"BLD",9643,"KRN",.84,0)
+.84
+"BLD",9643,"KRN",3.6,0)
+3.6
+"BLD",9643,"KRN",3.8,0)
+3.8
+"BLD",9643,"KRN",9.2,0)
+9.2
+"BLD",9643,"KRN",9.8,0)
+9.8
+"BLD",9643,"KRN",9.8,"NM",0)
+^9.68A^5^3
+"BLD",9643,"KRN",9.8,"NM",2,0)
+LRGEN1^^0^B24124923
+"BLD",9643,"KRN",9.8,"NM",3,0)
+LRGV2^^0^B10100135
+"BLD",9643,"KRN",9.8,"NM",5,0)
+LROE^^0^B35554046
+"BLD",9643,"KRN",9.8,"NM","B","LRGEN1",2)
+
+"BLD",9643,"KRN",9.8,"NM","B","LRGV2",3)
+
+"BLD",9643,"KRN",9.8,"NM","B","LROE",5)
+
+"BLD",9643,"KRN",19,0)
+19
+"BLD",9643,"KRN",19.1,0)
+19.1
+"BLD",9643,"KRN",101,0)
+101
+"BLD",9643,"KRN",409.61,0)
+409.61
+"BLD",9643,"KRN",771,0)
+771
+"BLD",9643,"KRN",779.2,0)
+779.2
+"BLD",9643,"KRN",870,0)
+870
+"BLD",9643,"KRN",8989.51,0)
+8989.51
+"BLD",9643,"KRN",8989.52,0)
+8989.52
+"BLD",9643,"KRN",8994,0)
+8994
+"BLD",9643,"KRN","B",.4,.4)
+
+"BLD",9643,"KRN","B",.401,.401)
+
+"BLD",9643,"KRN","B",.402,.402)
+
+"BLD",9643,"KRN","B",.403,.403)
+
+"BLD",9643,"KRN","B",.5,.5)
+
+"BLD",9643,"KRN","B",.84,.84)
+
+"BLD",9643,"KRN","B",3.6,3.6)
+
+"BLD",9643,"KRN","B",3.8,3.8)
+
+"BLD",9643,"KRN","B",9.2,9.2)
+
+"BLD",9643,"KRN","B",9.8,9.8)
+
+"BLD",9643,"KRN","B",19,19)
+
+"BLD",9643,"KRN","B",19.1,19.1)
+
+"BLD",9643,"KRN","B",101,101)
+
+"BLD",9643,"KRN","B",409.61,409.61)
+
+"BLD",9643,"KRN","B",771,771)
+
+"BLD",9643,"KRN","B",779.2,779.2)
+
+"BLD",9643,"KRN","B",870,870)
+
+"BLD",9643,"KRN","B",8989.51,8989.51)
+
+"BLD",9643,"KRN","B",8989.52,8989.52)
+
+"BLD",9643,"KRN","B",8994,8994)
+
+"BLD",9643,"QUES",0)
+^9.62^^
+"BLD",9643,"REQB",0)
+^9.611^4^3
+"BLD",9643,"REQB",1,0)
+LR*5.2*221^2
+"BLD",9643,"REQB",2,0)
+LR*5.2*350^2
+"BLD",9643,"REQB",4,0)
+LR*5.2*432^2
+"BLD",9643,"REQB","B","LR*5.2*221",1)
+
+"BLD",9643,"REQB","B","LR*5.2*350",2)
+
+"BLD",9643,"REQB","B","LR*5.2*432",4)
+
+"MBREQ")
+0
+"PKG",26,-1)
+1^1
+"PKG",26,0)
+LAB SERVICE^LR^CORE LAB SYSTEM
+"PKG",26,20,0)
+^9.402P^1^1
+"PKG",26,20,1,0)
+2^^LRXDRPT
+"PKG",26,20,1,1)
+
+"PKG",26,20,"B",2,1)
+
+"PKG",26,22,0)
+^9.49I^1^1
+"PKG",26,22,1,0)
+5.2^2940927^2981028^66481
+"PKG",26,22,1,"PAH",1,0)
+438^3141017
+"PKG",26,22,1,"PAH",1,1,0)
+^^134^134^3141017
+"PKG",26,22,1,"PAH",1,1,1,0)
+The patch addresses three (3) issues:
+"PKG",26,22,1,"PAH",1,1,2,0)
+ 
+"PKG",26,22,1,"PAH",1,1,3,0)
+1.      Users report being unable to perform MRSA testing on deceased 
+"PKG",26,22,1,"PAH",1,1,4,0)
+patients but they are allowed to proceed through the accessioning process 
+"PKG",26,22,1,"PAH",1,1,5,0)
+without an early warning that the test has been cancelled.
+"PKG",26,22,1,"PAH",1,1,6,0)
+2.      LRGEN skips rows of results when the SITE/SPECIMEN prompt is 
+"PKG",26,22,1,"PAH",1,1,7,0)
+answered with the default (ANY) and it frequently displays/prints 
+"PKG",26,22,1,"PAH",1,1,8,0)
+unnecessary headers.
+"PKG",26,22,1,"PAH",1,1,9,0)
+3.      Under certain circumstances, the Group Verify (GA) option allows 
+"PKG",26,22,1,"PAH",1,1,10,0)
+the verification of results marked as Not Performed.
+"PKG",26,22,1,"PAH",1,1,11,0)
+ 
+"PKG",26,22,1,"PAH",1,1,12,0)
+Associated NSR(s):
+"PKG",26,22,1,"PAH",1,1,13,0)
+------------------
+"PKG",26,22,1,"PAH",1,1,14,0)
+N/A
+"PKG",26,22,1,"PAH",1,1,15,0)
+ 
+"PKG",26,22,1,"PAH",1,1,16,0)
+Associated Remedy ticket(s):
+"PKG",26,22,1,"PAH",1,1,17,0)
+==========================
+"PKG",26,22,1,"PAH",1,1,18,0)
+1.      INC000000500271 - MRSA testing on death
+"PKG",26,22,1,"PAH",1,1,19,0)
+2.      INC000000069164 - LRGEN missing results
+"PKG",26,22,1,"PAH",1,1,20,0)
+-       INC000000069285 (d)
+"PKG",26,22,1,"PAH",1,1,21,0)
+-       INC000000069419 (d)
+"PKG",26,22,1,"PAH",1,1,22,0)
+-       INC000000180798 (d)
+"PKG",26,22,1,"PAH",1,1,23,0)
+-       INC000000069205 (d)
+"PKG",26,22,1,"PAH",1,1,24,0)
+3. INC000000937699 - Group Verify ignoring NP
+"PKG",26,22,1,"PAH",1,1,25,0)
+ 
+"PKG",26,22,1,"PAH",1,1,26,0)
+Associated NSR(s):
+"PKG",26,22,1,"PAH",1,1,27,0)
+==================
+"PKG",26,22,1,"PAH",1,1,28,0)
+N/A
+"PKG",26,22,1,"PAH",1,1,29,0)
+ 
+"PKG",26,22,1,"PAH",1,1,30,0)
+Participating Test Sites:
+"PKG",26,22,1,"PAH",1,1,31,0)
+=========================
+"PKG",26,22,1,"PAH",1,1,32,0)
+TBD
+"PKG",26,22,1,"PAH",1,1,33,0)
+ 
+"PKG",26,22,1,"PAH",1,1,34,0)
+Remedy Overview:
+"PKG",26,22,1,"PAH",1,1,35,0)
+================
+"PKG",26,22,1,"PAH",1,1,36,0)
+ 
+"PKG",26,22,1,"PAH",1,1,37,0)
+1.      INC000000500271 - MRSA Testing on Death
+"PKG",26,22,1,"PAH",1,1,38,0)
+ 
+"PKG",26,22,1,"PAH",1,1,39,0)
+Problem:
+"PKG",26,22,1,"PAH",1,1,40,0)
+--------
+"PKG",26,22,1,"PAH",1,1,41,0)
+Laboratory staff indicates that they are not able to perform MRSA testing 
+"PKG",26,22,1,"PAH",1,1,42,0)
+on patients who are deceased.  The application will not allow them to 
+"PKG",26,22,1,"PAH",1,1,43,0)
+accession specimens or enter results for the MRSA test on deceased 
+"PKG",26,22,1,"PAH",1,1,44,0)
+patients. Further, the user is allowed to progress through the 
+"PKG",26,22,1,"PAH",1,1,45,0)
+accessioning session without an early warning that an order has been 
+"PKG",26,22,1,"PAH",1,1,46,0)
+canceled.
+"PKG",26,22,1,"PAH",1,1,47,0)
+ 
+"PKG",26,22,1,"PAH",1,1,48,0)
+Resolution:
+"PKG",26,22,1,"PAH",1,1,49,0)
+-----------
+"PKG",26,22,1,"PAH",1,1,50,0)
+To avoid having MRSA tests cancelled at either patient death or 
+"PKG",26,22,1,"PAH",1,1,51,0)
+discharge, the desired test should be added as an Exempt Orderable Item 
+"PKG",26,22,1,"PAH",1,1,52,0)
+for the Death and/or Discharge event in the Delayed Orders/Auto-DC Set-up 
+"PKG",26,22,1,"PAH",1,1,53,0)
+function.
+"PKG",26,22,1,"PAH",1,1,54,0)
+ 
+"PKG",26,22,1,"PAH",1,1,55,0)
+Additionally, the routine LROE is modified to provide clear, early 
+"PKG",26,22,1,"PAH",1,1,56,0)
+feedback to the user that a test has been cancelled and will not be 
+"PKG",26,22,1,"PAH",1,1,57,0)
+accessioned.
+"PKG",26,22,1,"PAH",1,1,58,0)
+ 
+"PKG",26,22,1,"PAH",1,1,59,0)
+2.      INC000000069164 - LRGEN Missing Results
+"PKG",26,22,1,"PAH",1,1,60,0)
+  
+"PKG",26,22,1,"PAH",1,1,61,0)
+Problem:
+"PKG",26,22,1,"PAH",1,1,62,0)
+--------
+"PKG",26,22,1,"PAH",1,1,63,0)
+The defect occurs when using the LRGEN option (General report for 
+"PKG",26,22,1,"PAH",1,1,64,0)
+selected tests) and when there are more than six (6) analytes on the 
+"PKG",26,22,1,"PAH",1,1,65,0)
+selected tests.  When the SITE/SPECIMEN prompt is answered with the 
+"PKG",26,22,1,"PAH",1,1,66,0)
+default (ANY), the application only displays the first set of headings 
+"PKG",26,22,1,"PAH",1,1,67,0)
+and results - that is: it only properly displays the first six results 
+"PKG",26,22,1,"PAH",1,1,68,0)
+and skips the remaining results.  This typically occurs on the results 
+"PKG",26,22,1,"PAH",1,1,69,0)
+for the last date of service.  Though no results are displayed, 
+"PKG",26,22,1,"PAH",1,1,70,0)
+unnecessary headers are displayed or printed.
+"PKG",26,22,1,"PAH",1,1,71,0)
+ 
+"PKG",26,22,1,"PAH",1,1,72,0)
+Resolution:
+"PKG",26,22,1,"PAH",1,1,73,0)
+-----------
+"PKG",26,22,1,"PAH",1,1,74,0)
+Multiple modifications and the addition of a function to routine LRGEN1, 
+"PKG",26,22,1,"PAH",1,1,75,0)
+correct the missing results and unnecessary header issues.
+"PKG",26,22,1,"PAH",1,1,76,0)
+ 
+"PKG",26,22,1,"PAH",1,1,77,0)
+3.      INC000000937699 - Group Verify Ignoring NP
+"PKG",26,22,1,"PAH",1,1,78,0)
+  
+"PKG",26,22,1,"PAH",1,1,79,0)
+Problem:
+"PKG",26,22,1,"PAH",1,1,80,0)
+--------
+"PKG",26,22,1,"PAH",1,1,81,0)
+When Group Verify (GA) is used to verify results for a Work Load Area 
+"PKG",26,22,1,"PAH",1,1,82,0)
+that contains accessions that have tests that have been marked as Not 
+"PKG",26,22,1,"PAH",1,1,83,0)
+Performed on a prior date, the option can erroneously verify results that 
+"PKG",26,22,1,"PAH",1,1,84,0)
+may have been entered for the accession.
+"PKG",26,22,1,"PAH",1,1,85,0)
+ 
+"PKG",26,22,1,"PAH",1,1,86,0)
+Resolution:
+"PKG",26,22,1,"PAH",1,1,87,0)
+-----------
+"PKG",26,22,1,"PAH",1,1,88,0)
+A modification to routine LRGV2 prevents the verification of any results 
+"PKG",26,22,1,"PAH",1,1,89,0)
+that may be associated with Not Performed test(s).
+"PKG",26,22,1,"PAH",1,1,90,0)
+ 
+"PKG",26,22,1,"PAH",1,1,91,0)
+Components:
+"PKG",26,22,1,"PAH",1,1,92,0)
+===========
+"PKG",26,22,1,"PAH",1,1,93,0)
+N/A
+"PKG",26,22,1,"PAH",1,1,94,0)
+ 
+"PKG",26,22,1,"PAH",1,1,95,0)
+Installation Instructions:
+"PKG",26,22,1,"PAH",1,1,96,0)
+==========================
+"PKG",26,22,1,"PAH",1,1,97,0)
+   The install time for this patch is less than 2 minutes. This patch can
+"PKG",26,22,1,"PAH",1,1,98,0)
+   be installed when Laboratory users are on the system.
+"PKG",26,22,1,"PAH",1,1,99,0)
+ 
+"PKG",26,22,1,"PAH",1,1,100,0)
+   NOTE: Kernel patches must be current on the target system to avoid
+"PKG",26,22,1,"PAH",1,1,101,0)
+         problems loading and/or installing this patch.
+"PKG",26,22,1,"PAH",1,1,102,0)
+ 
+"PKG",26,22,1,"PAH",1,1,103,0)
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+"PKG",26,22,1,"PAH",1,1,104,0)
+      option will load the KIDS patch onto your system.
+"PKG",26,22,1,"PAH",1,1,105,0)
+ 
+"PKG",26,22,1,"PAH",1,1,106,0)
+   2. The patch has now been loaded into a Transport global on your
+"PKG",26,22,1,"PAH",1,1,107,0)
+      system. You now need to use KIDS to install the transport global.
+"PKG",26,22,1,"PAH",1,1,108,0)
+ 
+"PKG",26,22,1,"PAH",1,1,109,0)
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+"PKG",26,22,1,"PAH",1,1,110,0)
+      select the 'Installation' menu.
+"PKG",26,22,1,"PAH",1,1,111,0)
+ 
+"PKG",26,22,1,"PAH",1,1,112,0)
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+"PKG",26,22,1,"PAH",1,1,113,0)
+      that all routines have the correct checksums.
+"PKG",26,22,1,"PAH",1,1,114,0)
+    
+"PKG",26,22,1,"PAH",1,1,115,0)
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+"PKG",26,22,1,"PAH",1,1,116,0)
+      options:
+"PKG",26,22,1,"PAH",1,1,117,0)
+              Print Transport Global
+"PKG",26,22,1,"PAH",1,1,118,0)
+              Compare Transport Global to Current System
+"PKG",26,22,1,"PAH",1,1,119,0)
+              Backup a Transport Global
+"PKG",26,22,1,"PAH",1,1,120,0)
+ 
+"PKG",26,22,1,"PAH",1,1,121,0)
+      To preserve a copy of the routines exported in this patch prior to 
+"PKG",26,22,1,"PAH",1,1,122,0)
+      installation, you should use the 'Backup a Transport Global' option 
+"PKG",26,22,1,"PAH",1,1,123,0)
+      at this time. You may also compare the routines in your production
+"PKG",26,22,1,"PAH",1,1,124,0)
+      account to the routines in the patch by using the 'Compare a
+"PKG",26,22,1,"PAH",1,1,125,0)
+      Transport Global to Current System' option.
+"PKG",26,22,1,"PAH",1,1,126,0)
+ 
+"PKG",26,22,1,"PAH",1,1,127,0)
+   6. Use the 'Install Package(s)' option under the 'Installation' menu
+"PKG",26,22,1,"PAH",1,1,128,0)
+      and select the package 'LR*5.2*438'.
+"PKG",26,22,1,"PAH",1,1,129,0)
+ 
+"PKG",26,22,1,"PAH",1,1,130,0)
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+"PKG",26,22,1,"PAH",1,1,131,0)
+      choose 'NO'.
+"PKG",26,22,1,"PAH",1,1,132,0)
+ 
+"PKG",26,22,1,"PAH",1,1,133,0)
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+"PKG",26,22,1,"PAH",1,1,134,0)
+      Protocols? YES//', choose 'NO'.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","LRGEN1")
+0^2^B24124923^B16882594
+"RTN","LRGEN1",1,0)
+LRGEN1 ;SLC/RWF-GENERAL DATA DISPLAY ;2/19/91  10:35
+"RTN","LRGEN1",2,0)
+ ;;5.2;LAB SERVICE;**201,221,438**;Sep 27, 1994;Build 18
+"RTN","LRGEN1",3,0)
+DQ ;dequeued from LRGEN
+"RTN","LRGEN1",4,0)
+ N LRPDT,LRPTF,LRPAGE
+"RTN","LRGEN1",5,0)
+ S LRPDT=$$FMTE^XLFDT($$NOW^XLFDT,"5MZ")
+"RTN","LRGEN1",6,0)
+ S LRPRTF="Report Range  [ "_$$FMTE^XLFDT($P(LRSDT,"."),"5MZ")_" - "_$$FMTE^XLFDT(9999999-$P(LREDT,"."),"5MZ")_" ]"
+"RTN","LRGEN1",7,0)
+ K LRNOTE,LRSV S (LRPAGE,LRNOTE,LREND)=0,LRIOM=80
+"RTN","LRGEN1",8,0)
+ S:'$G(LRIDT) LRIDT=1 W:$E(IOST,1,2)="C-" @IOF
+"RTN","LRGEN1",9,0)
+ S $P(LRDASH,"-",(LRIOM-1))="",$P(LREQUAL,"=",(LRIOM-1))=""
+"RTN","LRGEN1",10,0)
+ S LRWPL=IOSL-(3*LRIX)/LRIX
+"RTN","LRGEN1",11,0)
+ S:$D(ZTQUEUED) ZTREQ="@" U IO
+"RTN","LRGEN1",12,0)
+ S LRCW=LRCW-3,LRDPF=$P(^LR(LRDFN,0),U,2),DFN=$P(^(0),U,3)
+"RTN","LRGEN1",13,0)
+ S LREDT=$$AEDT(LRDFN,LRSUB,LRIDT,LREDT,LRTP)
+"RTN","LRGEN1",14,0)
+ D DT^LRX,PT^LRX,HEAD
+"RTN","LRGEN1",15,0)
+ F  D NX Q:LREND!(LRIDT<1)!(LRIDT>LREDT)
+"RTN","LRGEN1",16,0)
+ D WRTLN
+"RTN","LRGEN1",17,0)
+ K LRDASH,LREQUAL,LRAGE,LRRB,LRTREAT,LRUNKNOW,SEX,AGE,LRLAST,LRIOM
+"RTN","LRGEN1",18,0)
+ D KVAR^VADPT
+"RTN","LRGEN1",19,0)
+ Q
+"RTN","LRGEN1",20,0)
+WRTLN W ! W:$E(IOST,1,2)="P-" @IOF D ^%ZISC Q
+"RTN","LRGEN1",21,0)
+AEDT(LRD,LRS,LRI,LRE,LRT) ;return Actual End DaTe
+"RTN","LRGEN1",22,0)
+    ;(DFN,SUB{e.g.: "CH"},entered start date,entered end date,type)
+"RTN","LRGEN1",23,0)
+    N LREA,LRX,LRZ,LRN,LRR S (LREA,LRX)=LRI
+"RTN","LRGEN1",24,0)
+    F  S LRX=$O(^LR(LRD,LRS,LRX)) Q:LRX<1!(LRX>LRE)  D
+"RTN","LRGEN1",25,0)
+    . S LRZ=$S($D(^LR(LRD,LRS,LRX,0)):^(0),1:"") Q:'$P(LRZ,U,3)  I LRT,LRT'=$P(LRZ,U,5) Q
+"RTN","LRGEN1",26,0)
+    . S LRN=1,LRR=0 F  S LRR=+$O(LRND(LRR)) Q:LRR<1  S:$D(^LR(LRD,LRS,LRX,LRND(LRR))) LRN=0
+"RTN","LRGEN1",27,0)
+    . Q:LRN  S LREA=LRX
+"RTN","LRGEN1",28,0)
+    Q LREA  ;return last qualifying LRIDT
+"RTN","LRGEN1",29,0)
+NX I LRY'<LRWPL D BOT:LRSC=LRIX,HEAD:'LREND Q:LREND  I LRSC>1,LRSUB(LRSC)=LRSUB(LRSC-1) D NSET Q
+"RTN","LRGEN1",30,0)
+ I LRIDT>1,$S(+$O(^LR(LRDFN,LRSUB,LRIDT))<1:1,+$O(^(LRIDT))>LREDT:1,1:0),LRSC<LRIX S LRY=LRWPL Q
+"RTN","LRGEN1",31,0)
+ S:LRIDT>1 LRIDT=+$O(^LR(LRDFN,LRSUB,LRIDT)) I LRIDT<1!(LRIDT>LREDT) D  Q
+"RTN","LRGEN1",32,0)
+ . I LRSC>1,LRSUB(LRSC)=LRSUB(LRSC-1) D NSET
+"RTN","LRGEN1",33,0)
+ . S LRY=LRWPL D BOT,LAST
+"RTN","LRGEN1",34,0)
+ S Z=$S($D(^LR(LRDFN,LRSUB,LRIDT,0)):^(0),1:"") Q:'$P(Z,U,3)  I LRTP,LRTP'=$P(Z,U,5) Q
+"RTN","LRGEN1",35,0)
+ S LRNOP=1,II=0 F  S II=+$O(LRND(II)) Q:II<1  S:$D(^LR(LRDFN,LRSUB,LRIDT,LRND(II))) LRNOP=0
+"RTN","LRGEN1",36,0)
+ Q:LRNOP  I $D(LRSUB(LRSC+1)),LRSUB(LRSC+1)=LRSUB(LRSC) S LRSV(LRY)=LRIDT
+"RTN","LRGEN1",37,0)
+ D LRPR
+"RTN","LRGEN1",38,0)
+ Q
+"RTN","LRGEN1",39,0)
+NSET S LRSSP=0 F  S LRSSP=+$O(LRSV(LRSSP)) Q:LRSSP<1  S LRIDT=LRSV(LRSSP),Z=^LR(LRDFN,LRSUB,LRIDT,0) D LRPR
+"RTN","LRGEN1",40,0)
+ S LRIDT=LRIDT(LRSC-1),LRY=LRWPL
+"RTN","LRGEN1",41,0)
+ Q
+"RTN","LRGEN1",42,0)
+LRPR N LRSAMP
+"RTN","LRGEN1",43,0)
+ S X=+Z,LRTN=$P(Z,U,5),LRSAMP="?" S:LRTN'="" LRSAMP=$S($D(^LAB(61,LRTN,0)):$E(^(0),1,3),1:"?")
+"RTN","LRGEN1",44,0)
+ S LRDAT=$$FMTE^XLFDT(X,"5MZ")
+"RTN","LRGEN1",45,0)
+ S T="      "
+"RTN","LRGEN1",46,0)
+ S:X["." T=" "_$E(X_"00000",9,10)_":"_$E(X_"0000",11,12)_" "
+"RTN","LRGEN1",47,0)
+ S LRFOOT=" "
+"RTN","LRGEN1",48,0)
+ I $O(^LR(LRDFN,LRSUB,LRIDT,1,0))>0 D
+"RTN","LRGEN1",49,0)
+ . S:'$D(LRNOTE(-1,LRIDT)) LRNOTE=$G(LRNOTE)+1,LRNOTE(LRNOTE)=LRIDT,LRNOTE(-1,LRIDT)=LRNOTE S LRFOOT=$C(LRNOTE(-1,LRIDT)+64)
+"RTN","LRGEN1",50,0)
+ W !,LRFOOT," ",LRDAT S LRY=LRY+1
+"RTN","LRGEN1",51,0)
+ W !,?13,LRSAMP,?20 S X=$D(^LR(LRDFN,LRSUB,LRIDT,0)),LRX=$X,LRY=LRY+1
+"RTN","LRGEN1",52,0)
+ F I=S1:1:S2 D
+"RTN","LRGEN1",53,0)
+ . S X=$S($D(^LR(LRDFN,LRSUB,LRIDT,LRND(I))):^(LRND(I)),1:""),LRFFLG=$P(X,U,2),X=$P(X,U)
+"RTN","LRGEN1",54,0)
+ . W ?LRX,@$S(X'=""&$D(LRPR(I)):LRPR(I),1:"$J(X,LRCW)")," ",LRFFLG
+"RTN","LRGEN1",55,0)
+ . S LRX=LRX+3+LRCW
+"RTN","LRGEN1",56,0)
+ Q
+"RTN","LRGEN1",57,0)
+HEAD Q:'$G(LRIDT)!($G(LREND))
+"RTN","LRGEN1",58,0)
+ S:'$G(LRY) LRY=2 S:'$D(LRPRTF) $P(LRPRTF," ",20)=""
+"RTN","LRGEN1",59,0)
+ S $P(LRDASH,"-",(LRIOM-1))="",$P(LREQUAL,"=",(LRIOM-1))=""
+"RTN","LRGEN1",60,0)
+ S LREND=0 I '$G(LRBOT) F  Q:LREND  D HD1 Q:'(LRIDT<1!(LRIDT>LREDT))  S LREND=1 F II=1:1:LRIX I LRIDT(II)>0,LRIDT(II)<LREDT S LREND=0 Q
+"RTN","LRGEN1",61,0)
+ Q:$G(LREND)
+"RTN","LRGEN1",62,0)
+ S:'$D(LRPDT) LRPDT=$$FMTE^XLFDT($$NOW^XLFDT,"5MZ")
+"RTN","LRGEN1",63,0)
+ I $G(LRSC)=1 D
+"RTN","LRGEN1",64,0)
+ . S LRPAGE=$G(LRPAGE)+1,LRY=2 W @IOF
+"RTN","LRGEN1",65,0)
+ . W !,"WORK COPY: ",PNM,"  ",SSN,"  Age:",AGE," ",?50,"Prt Date:",LRPDT
+"RTN","LRGEN1",66,0)
+ . W !,$$CJ^XLFSTR(LRPRTF_"     Pg:"_LRPAGE,LRIOM) S LRY=LRY+1
+"RTN","LRGEN1",67,0)
+ S X=9999999-$O(^LR(LRDFN,"CH",LRIDT)) W !! W:'$L($G(LRHDR(LRSC,1))) ?13,"SPEC" W ?20,LRHDR(LRSC) S LRY=LRY+2
+"RTN","LRGEN1",68,0)
+ I $L(LRHDR(LRSC,2)) W !,$S($D(LRTHER):" Ther.",1:"  Ref")," Range",?17,LRHDR(LRSC,2) S LRY=LRY+1
+"RTN","LRGEN1",69,0)
+ I $L(LRHDR(LRSC,1)) W !,?13,"SPEC",?20,LRHDR(LRSC,1) S LRY=LRY+1
+"RTN","LRGEN1",70,0)
+ W !,LREQUAL S LRY=LRY+1
+"RTN","LRGEN1",71,0)
+ Q
+"RTN","LRGEN1",72,0)
+HD1 Q:$G(LREND)
+"RTN","LRGEN1",73,0)
+ S LRIDT(LRSC)=LRIDT,LRSC=$S(LRSC<LRIX:LRSC+1,1:1),LRIDT=$G(LRIDT(LRSC)) Q:'LRIDT  S S1=LRIX(LRSC)+1,S2=LRIX(LRSC+1)
+"RTN","LRGEN1",74,0)
+ I LRSC=1 K LRNOTE,LRSV S LRNOTE=0
+"RTN","LRGEN1",75,0)
+ I LRSUB'=LRSUB(LRSC) S LRSUB=LRSUB(LRSC) K LRSV
+"RTN","LRGEN1",76,0)
+ Q
+"RTN","LRGEN1",77,0)
+LAST Q:$G(LRLAST)  W !,$$CJ^XLFSTR("[  *** End Of Report ***  ]",LRIOM),!
+"RTN","LRGEN1",78,0)
+ S LREND=1,LRLAST=1 D B2
+"RTN","LRGEN1",79,0)
+ Q
+"RTN","LRGEN1",80,0)
+BOT ;D KEYCOM^LRX:$E(IOST,1,2)'="C-"
+"RTN","LRGEN1",81,0)
+ I $E(IOST,1,2)'="C-" D
+"RTN","LRGEN1",82,0)
+ . W !,LREQUAL
+"RTN","LRGEN1",83,0)
+ . W !!,"  ------------------------------  COMMENTS  ------------------------------"
+"RTN","LRGEN1",84,0)
+ . W !,"  Key:  'L' = reference Low,  'H' = reference Hi, '*' = critical range"
+"RTN","LRGEN1",85,0)
+ N II
+"RTN","LRGEN1",86,0)
+ W !,LRDASH
+"RTN","LRGEN1",87,0)
+ I $G(LRNOTE) F II=1:1:LRNOTE  S LRIDT1=LRNOTE(II) D
+"RTN","LRGEN1",88,0)
+ . ;I LRY'<LRWPL D B1 Q:$G(LREND)  S LRBOT=1 D HEAD K LRBOT
+"RTN","LRGEN1",89,0)
+ . W !,$C(II+64) S J=0 F  S J=$O(^LR(LRDFN,LRSUB,LRIDT1,1,J)) Q:J<1  D
+"RTN","LRGEN1",90,0)
+ . . W ?5,^(J,0) W:$O(^LR(LRDFN,LRSUB,LRIDT1,1,J)) !
+"RTN","LRGEN1",91,0)
+ K LRNOTE S LRNOTE=0
+"RTN","LRGEN1",92,0)
+ S LREND=$S(+$O(^LR(LRDFN,LRSUB,LRIDT))<1:1,+$O(^(LRIDT))>LREDT:1,1:0) I LREND D LAST Q
+"RTN","LRGEN1",93,0)
+B1 W !,"WORK COPY - DO NOT FILE   ",PNM,?60,SSN S LRY=2
+"RTN","LRGEN1",94,0)
+ I $E(IOST,1,2)="C-" W !?20," PRESS '^' TO STOP REPORT " R X:DTIME S:X="" X=1 S LREND=".^"[X Q:$G(LREND)
+"RTN","LRGEN1",95,0)
+ Q
+"RTN","LRGEN1",96,0)
+B2 ;Return to menu
+"RTN","LRGEN1",97,0)
+ I $E(IOST,1,2)="C-" W !?20," PRESS 'Enter' TO RETURN TO THE MENU " R X:DTIME
+"RTN","LRGEN1",98,0)
+ Q
+"RTN","LRGV2")
+0^3^B10100135^B9894517
+"RTN","LRGV2",1,0)
+LRGV2 ;DALOI/STAFF - PART2 OF INSTRUMENT GROUP VERIFY DATA ;02/11/11  12:21
+"RTN","LRGV2",2,0)
+ ;;5.2;LAB SERVICE;**121,153,269,350,438**;Sep 27, 1994;Build 18
+"RTN","LRGV2",3,0)
+ ;
+"RTN","LRGV2",4,0)
+ N LRGVP,LRSB,LRX
+"RTN","LRGV2",5,0)
+ ;
+"RTN","LRGV2",6,0)
+ I $P(LR0,U,8)'[LRMETH S $P(^LR(LRDFN,"CH",LRIDT,0),U,8)=LRMETH_";"_$P(LR0,U,8)
+"RTN","LRGV2",7,0)
+ S LRLDT=LRIDT
+"RTN","LRGV2",8,0)
+ D FINDPS
+"RTN","LRGV2",9,0)
+ I LRLDT="" W !,"NO DELTA SAMPLE",!
+"RTN","LRGV2",10,0)
+ ;
+"RTN","LRGV2",11,0)
+ ; If results exist in ^LR then delete results from LAH.
+"RTN","LRGV2",12,0)
+ I LRVF D
+"RTN","LRGV2",13,0)
+ . S LRX=1
+"RTN","LRGV2",14,0)
+ . F  S LRX=$O(^LR(LRDFN,"CH",LRIDT,LRX)) Q:LRX'>0  I ^(LRX)'["pending" K ^LAH(LRLL,1,LRSQ,LRX)
+"RTN","LRGV2",15,0)
+ ;
+"RTN","LRGV2",16,0)
+ S LRX=1
+"RTN","LRGV2",17,0)
+ F  S LRX=$O(^LAH(LRLL,1,LRSQ,LRX)) Q:LRX'>0  I $D(^TMP("LR",$J,"TMP",LRX)) S LRSB(LRX)=^LAH(LRLL,1,LRSQ,LRX)
+"RTN","LRGV2",18,0)
+ ;
+"RTN","LRGV2",19,0)
+ S LRVRM=1,(LRDELTA,LRCRIT,LRCNT,LRNX)=0
+"RTN","LRGV2",20,0)
+ F  S LRNX=$O(LRORD(LRNX)) Q:LRNX'>0  D DC
+"RTN","LRGV2",21,0)
+ ;
+"RTN","LRGV2",22,0)
+ I 'LRVRFYAL,(LRDELTA!LRCRIT) D NOP Q
+"RTN","LRGV2",23,0)
+ ;
+"RTN","LRGV2",24,0)
+ S LREXEC=LRCFL D ^LREXEC:LRCFL]""
+"RTN","LRGV2",25,0)
+ ;
+"RTN","LRGV2",26,0)
+ S:'$P(^LR(LRDFN,"CH",LRIDT,0),U,5) $P(^LR(LRDFN,"CH",LRIDT,0),U,5)=LRSPEC
+"RTN","LRGV2",27,0)
+ ;
+"RTN","LRGV2",28,0)
+ ; Move comments from LAH to LR
+"RTN","LRGV2",29,0)
+ I $O(^LAH(LRLL,1,LRSQ,1,0)) D LRSBCOM^LRVR4
+"RTN","LRGV2",30,0)
+ ;
+"RTN","LRGV2",31,0)
+ ; Verify results and update files.
+"RTN","LRGV2",32,0)
+ K LRPRGSQ
+"RTN","LRGV2",33,0)
+ D V11^LRVR3
+"RTN","LRGV2",34,0)
+ W !!,">> Accession #: ",LRAN," VERIFIED <<"
+"RTN","LRGV2",35,0)
+ ;
+"RTN","LRGV2",36,0)
+ ; Display results which were not verified.
+"RTN","LRGV2",37,0)
+ I $O(^LAH(LRLL,1,LRSQ,1))>1 D
+"RTN","LRGV2",38,0)
+ . W !,"  STILL TO BE VERIFIED:"
+"RTN","LRGV2",39,0)
+ . S LRX=1
+"RTN","LRGV2",40,0)
+ . F  S LRX=$O(^LAH(LRLL,1,LRSQ,LRX)) Q:LRX<1  W ?25,$$GET1^DID(63.04,LRX,"","LABEL"),!
+"RTN","LRGV2",41,0)
+ ;
+"RTN","LRGV2",42,0)
+ D DASH^LRX
+"RTN","LRGV2",43,0)
+ ;
+"RTN","LRGV2",44,0)
+ K LRSB
+"RTN","LRGV2",45,0)
+ Q
+"RTN","LRGV2",46,0)
+ ;
+"RTN","LRGV2",47,0)
+ ;
+"RTN","LRGV2",48,0)
+DC ; Perform range and delta checks
+"RTN","LRGV2",49,0)
+ ;
+"RTN","LRGV2",50,0)
+ N LRCW,LRQ,X,Y
+"RTN","LRGV2",51,0)
+ ;
+"RTN","LRGV2",52,0)
+ S LRSB=+LRORD(LRNX),LRTS=$S($D(^TMP("LR",$J,"TMP",LRSB)):^(LRSB),1:0) Q:'LRTS
+"RTN","LRGV2",53,0)
+ S X=$P($G(LRSB(LRSB)),U),X1="",LRFLG=""
+"RTN","LRGV2",54,0)
+ I X=""!(X["pending") Q
+"RTN","LRGV2",55,0)
+ I LRLDT'="" S X1=$G(^LR(LRDFN,"CH",LRLDT,LRSB))
+"RTN","LRGV2",56,0)
+ ;
+"RTN","LRGV2",57,0)
+ ; Setup variable for range and delta checking
+"RTN","LRGV2",58,0)
+ D V25^LRVER5
+"RTN","LRGV2",59,0)
+ ;
+"RTN","LRGV2",60,0)
+ ; Display test name, results
+"RTN","LRGV2",61,0)
+ S X=$P(LRSB(LRSB),"^"),LRCW=8
+"RTN","LRGV2",62,0)
+ W !,$P(^LAB(60,+LRTS,0),"^"),?31,@LRFP," "
+"RTN","LRGV2",63,0)
+ ;
+"RTN","LRGV2",64,0)
+ ; Do delta checking
+"RTN","LRGV2",65,0)
+ S X=$P(LRSB(LRSB),"^"),Y=0,LRQ=""
+"RTN","LRGV2",66,0)
+ I LRDEL'="" S LRQ=1 D XDELTACK^LRVERA S:Y LRDELTA=Y
+"RTN","LRGV2",67,0)
+ ;
+"RTN","LRGV2",68,0)
+ ; Do range checking
+"RTN","LRGV2",69,0)
+ D RANGE^LRVR4
+"RTN","LRGV2",70,0)
+ I LRFLG["*" S LRCRIT=1
+"RTN","LRGV2",71,0)
+ ;
+"RTN","LRGV2",72,0)
+ ; Display test flags and units
+"RTN","LRGV2",73,0)
+ W $$LJ^XLFSTR(LRFLG,2),?56," ",$P(LRNGS,"^",7)
+"RTN","LRGV2",74,0)
+ I LRFLG["*" D DISPFLG^LRVER4
+"RTN","LRGV2",75,0)
+ ;
+"RTN","LRGV2",76,0)
+ Q
+"RTN","LRGV2",77,0)
+ ;
+"RTN","LRGV2",78,0)
+ ;
+"RTN","LRGV2",79,0)
+NOP ;
+"RTN","LRGV2",80,0)
+ W !,">> Accession #: ",LRAN," NOT VERIFIED"
+"RTN","LRGV2",81,0)
+ I LRDELTA W " - DELTA check flag"
+"RTN","LRGV2",82,0)
+ I LRCRIT W " - CRITICAL range flag"
+"RTN","LRGV2",83,0)
+ W " <<"
+"RTN","LRGV2",84,0)
+ I $E(IOST,1,2)="C-" W $C(7)
+"RTN","LRGV2",85,0)
+ Q
+"RTN","LRGV2",86,0)
+ ;
+"RTN","LRGV2",87,0)
+ ;
+"RTN","LRGV2",88,0)
+INFO ;
+"RTN","LRGV2",89,0)
+ W !,"Sequence #: ",LRSQ
+"RTN","LRGV2",90,0)
+ S X=$P(^LAH(LRLL,1,LRSQ,0),"^",1),Y=$P(^(0),"^",2)
+"RTN","LRGV2",91,0)
+ W:$L(X)!$L(Y) ?20,"TRAY: ",X,?33,"CUP: ",Y,?45,"DUPLICATE "
+"RTN","LRGV2",92,0)
+ Q
+"RTN","LRGV2",93,0)
+ ;
+"RTN","LRGV2",94,0)
+ ;
+"RTN","LRGV2",95,0)
+FINDPS ; Find previous specimen to use for delta check
+"RTN","LRGV2",96,0)
+ ; Specimen needs to be within "days back (LRTM60)" parameter and have
+"RTN","LRGV2",97,0)
+ ; a dataname in common with a dataname on the sequence entry in LAH.
+"RTN","LRGV2",98,0)
+ ;
+"RTN","LRGV2",99,0)
+ N LRQUIT,LRX
+"RTN","LRGV2",100,0)
+ ;
+"RTN","LRGV2",101,0)
+ S LRQUIT=0
+"RTN","LRGV2",102,0)
+ F  S LRLDT=$O(^LR(LRDFN,"CH",LRLDT)) Q:'LRLDT  D  Q:LRQUIT
+"RTN","LRGV2",103,0)
+ . I LRLDT>LRTM60 S LRLDT="",LRQUIT=1 Q
+"RTN","LRGV2",104,0)
+ . S LRX=$G(^LR(LRDFN,"CH",LRLDT,0))
+"RTN","LRGV2",105,0)
+ . I $P(LRX,U,5)'=LRSPEC!('$P(LRX,U,3)) Q
+"RTN","LRGV2",106,0)
+ . S LRX=1
+"RTN","LRGV2",107,0)
+ . F  S LRX=$O(^LAH(LRLL,1,LRSQ,LRX)) Q:LRX'>0  I $D(^LR(LRDFN,"CH",LRLDT,LRX)) S LRQUIT=1 Q
+"RTN","LRGV2",108,0)
+ ;
+"RTN","LRGV2",109,0)
+ Q
+"RTN","LROE")
+0^5^B35554046^B36200686
+"RTN","LROE",1,0)
+LROE ;DALOI/CJS/FHS-LAB ORDER ENTRY AND ACCESSION ;8/11/97
+"RTN","LROE",2,0)
+ ;;5.2;LAB SERVICE;**100,121,201,221,263,286,360,423,432,438**;Sep 27, 1994;Build 18
+"RTN","LROE",3,0)
+ K LRORIFN,LRNATURE,LREND,LRORDRR
+"RTN","LROE",4,0)
+ S LRLWC="WC"
+"RTN","LROE",5,0)
+ D ^LRPARAM
+"RTN","LROE",6,0)
+ I $G(LREND) S LREND=0 Q
+"RTN","LROE",7,0)
+L5 ;
+"RTN","LROE",8,0)
+NEXT ;from LROE1
+"RTN","LROE",9,0)
+ K DIR
+"RTN","LROE",10,0)
+ I $D(LROESTAT) D:$P(LRPARAM,U,14) ^LRCAPV I $G(LREND) K LRLONG,LRPANEL Q
+"RTN","LROE",11,0)
+ S (LRODT,X,DT)=$$DT^XLFDT(),LRODT0=$$FMTE^XLFDT(DT,5)
+"RTN","LROE",12,0)
+ I '$D(^LRO(69,DT,1,0)) S ^LRO(69,DT,0)=DT,^LRO(69,DT,1,0)="^69.01PA^^",^LRO(69,"B",DT,DT)=""
+"RTN","LROE",13,0)
+ I $D(^LAB(69.9,1,"RO")),+$H'=+$P(^("RO"),U) D
+"RTN","LROE",14,0)
+ . W $C(7),!,"ROLLOVER ",$S($P(^("RO"),U,2):"IS RUNNING.",1:"HAS NOT RUN.")," ACCESSIONING SHOULDN'T BE DONE NOW.",$C(7),!
+"RTN","LROE",15,0)
+ . S DIR("A")="  Are you sure you want to continue",DIR(0)="Y",DIR("B")="No"
+"RTN","LROE",16,0)
+ I $T D ^DIR G END:$D(DIRUT) I Y'=1 W !,"OK, try later." Q
+"RTN","LROE",17,0)
+ S X="T-7",%DT="" D ^%DT S LRTM7=+Y
+"RTN","LROE",18,0)
+ ;W @IOF
+"RTN","LROE",19,0)
+ K DIC,LRSND,LRSN
+"RTN","LROE",20,0)
+ W !!,"Select Order number: " R LRORD:DTIME Q:LRORD["^"!(LRORD[".")!($D(LRLONG)&(LRORD=""))
+"RTN","LROE",21,0)
+ W @IOF S M9=0 G QUICK^LROE1:LRORD=""
+"RTN","LROE",22,0)
+ I $L(LRORD)>8 W !,"The order number entered is too long." H 1 G NEXT
+"RTN","LROE",23,0)
+ S:LRORD?.N LRORD=+LRORD IF LRORD'?.N D QMSG G NEXT
+"RTN","LROE",24,0)
+ I '$D(^LRO(69,"C",LRORD)) W !!?10,"No order exist with that number ",$C(7),! G NEXT
+"RTN","LROE",25,0)
+ S (LRCHK,LRNONE)=1,(M9,LRODT)=0
+"RTN","LROE",26,0)
+ F  S LRODT=+$O(^LRO(69,"C",LRORD,LRODT)) Q:LRODT<1  D
+"RTN","LROE",27,0)
+ . S DA=0 F  S DA=$O(^LRO(69,"C",LRORD,LRODT,DA)) Q:DA<1  S LRCHK=LRCHK-1 S:LRNONE'=2 LRNONE=0 D LROE2
+"RTN","LROE",28,0)
+ I DOD'="" S Y=DOD D DD^LRX W !,!,?5,@LRVIDO,"Patient ",PNM," died on: ",Y,@LRVIDOF W !
+"RTN","LROE",29,0)
+ I '$$GOT(LRORD,LRODT) W !,"All tests for this order have been canceled." H 1 G NEXT
+"RTN","LROE",30,0)
+ I DOD'="" D  I Y=0!($D(DIRUT)) K DIRUT,DTOUT,DUOUT,Y D KVAR^LRX G NEXT
+"RTN","LROE",31,0)
+ . K Y
+"RTN","LROE",32,0)
+ . S DIR(0)="Y"
+"RTN","LROE",33,0)
+ . S DIR("A")="Do you wish to continue with this accession [Yes/No]"
+"RTN","LROE",34,0)
+ . S DIR("T")=120
+"RTN","LROE",35,0)
+ . D ^DIR K DIR
+"RTN","LROE",36,0)
+ I LRNONE=2,LRCHK<1 W !,"The order has already been partially accessioned." H 1
+"RTN","LROE",37,0)
+ I LRNONE=2,LRCHK>0 W !,"The order has already been accessioned." H 1 G NEXT
+"RTN","LROE",38,0)
+ I LRNONE=1 W !,"No order exists with that number." H 1 G NEXT
+"RTN","LROE",39,0)
+ ;I '$$GOT(LRORD,LRODT) G NEXT ;W !!,"All tests for this order have been canceled.",!,"Are you sure you want to accession it" S %=1 D YN^DICN I %'=1 G NEXT
+"RTN","LROE",40,0)
+ K DIR S DIR("A")="Is this the correct order",DIR(0)="Y"
+"RTN","LROE",41,0)
+ S DIR("B")="Yes"
+"RTN","LROE",42,0)
+ D ^DIR K DIR
+"RTN","LROE",43,0)
+ I $D(DIRUT)!(Y'=1) K LRSN G NEXT
+"RTN","LROE",44,0)
+ L +^LRO(69,"C",LRORD):$G(DILOCKTM,3)
+"RTN","LROE",45,0)
+ I '$T W !?5,"Someone else is editing this Order",!!,$C(7) G NEXT
+"RTN","LROE",46,0)
+ K %DT
+"RTN","LROE",47,0)
+ S LRSTATUS="C",%DT("B")=""
+"RTN","LROE",48,0)
+ D TIME K %DT
+"RTN","LROE",49,0)
+ D:$G(LRCDT)<1 UNL69 G NEXT:LRCDT<1
+"RTN","LROE",50,0)
+ S LRTIM=+LRCDT
+"RTN","LROE",51,0)
+ ;S:'$P(^LRO(69,LRODT,1,LRSN,0),U,8) $P(^(0),U,8)=LRTIM
+"RTN","LROE",52,0)
+ S LRUN=$P(LRCDT,U,2) K LRCDT,LRSN
+"RTN","LROE",53,0)
+MORE I M9>1 K DIR S DIR("A")="Do you have the entire order",DIR(0)="Y" D ^DIR K DIR S:Y=1 M9=0
+"RTN","LROE",54,0)
+ I $D(DIRUT) D UNL69 G NEXT
+"RTN","LROE",55,0)
+ S (LRODT,LRSND)=0
+"RTN","LROE",56,0)
+ F  S LRODT=$O(^LRO(69,"C",LRORD,LRODT)) Q:LRODT<1  D
+"RTN","LROE",57,0)
+ . S LRSND=0
+"RTN","LROE",58,0)
+ . F  S LRSND=$O(^LRO(69,"C",LRORD,LRODT,LRSND)) Q:LRSND<1  D
+"RTN","LROE",59,0)
+ . . I $D(^LRO(69,LRODT,1,LRSND,1)),$P(^(1),U,4)="C" Q
+"RTN","LROE",60,0)
+ . . S LRSN(LRSND)=LRSND,LRSN=LRSND
+"RTN","LROE",61,0)
+ . . K LRAA D Q15^LROE2 K LRSN
+"RTN","LROE",62,0)
+ D TASK,UNL69
+"RTN","LROE",63,0)
+ G NEXT
+"RTN","LROE",64,0)
+ ;
+"RTN","LROE",65,0)
+ ;
+"RTN","LROE",66,0)
+LROE2 ;
+"RTN","LROE",67,0)
+ I '$D(^LRO(69,LRODT,1,DA,0)) Q
+"RTN","LROE",68,0)
+ I $D(^LRO(69,LRODT,1,DA,1)) D
+"RTN","LROE",69,0)
+ . I $P(^LRO(69,LRODT,1,DA,1),U,4)="C" S LRNONE=2,LRCHK=LRCHK+1 Q
+"RTN","LROE",70,0)
+ . I $P(^LRO(69,LRODT,1,DA,0),U,4)="LC",$P(^LRO(69,LRODT,1,DA,1),U,4)="" S LRNONE=2,LRCHK=LRCHK+1
+"RTN","LROE",71,0)
+ ;
+"RTN","LROE",72,0)
+ K LRSN
+"RTN","LROE",73,0)
+ S (LRSN,LRSN(DA))=+DA
+"RTN","LROE",74,0)
+ I '$D(^LRO(69,LRODT,1,LRSN,0)) Q
+"RTN","LROE",75,0)
+ S M9=$G(M9)+1,LRZX=^LRO(69,LRODT,1,LRSN,0),LRDFN=+LRZX,LRDPF=$P(^LR(LRDFN,0),U,2),DFN=$P(^(0),U,3) D PT^LRX W !,PNM,?30,SSN S LRWRDS=LRWRD
+"RTN","LROE",76,0)
+ W ?45,"Requesting location: ",$P(LRZX,U,7) S Y=$P(LRZX,U,5) D DD^LRX W !,"Date/Time Ordered: ",Y,?45,"By: ",$S($D(^VA(200,+$P(LRZX,U,2),0)):$P(^(0),U),1:"")
+"RTN","LROE",77,0)
+ S LRSVSN=LRSN D ORDER^LROS S LRSN=LRSVSN
+"RTN","LROE",78,0)
+ Q
+"RTN","LROE",79,0)
+ ;
+"RTN","LROE",80,0)
+ ;
+"RTN","LROE",81,0)
+QMSG W !,"Enter the order entry number assigned when the test was ordered."
+"RTN","LROE",82,0)
+ W:'$D(LRLONG) !,"If the test has not been ordered, type the RETURN key to order the test."
+"RTN","LROE",83,0)
+ W !,"To exit, type the ""^"" key and RETURN key."
+"RTN","LROE",84,0)
+ Q
+"RTN","LROE",85,0)
+ ;
+"RTN","LROE",86,0)
+ ;
+"RTN","LROE",87,0)
+YN R X:DTIME S:'$T DTOUT=1 Q:X=""!(X["N")!(X["Y")
+"RTN","LROE",88,0)
+ W !,"Answer 'Y' or 'N': " G YN
+"RTN","LROE",89,0)
+ ;
+"RTN","LROE",90,0)
+ ;
+"RTN","LROE",91,0)
+EN ;
+"RTN","LROE",92,0)
+LROEN S LRNCWL=1
+"RTN","LROE",93,0)
+ D LROE,END K LRNCWL
+"RTN","LROE",94,0)
+ Q
+"RTN","LROE",95,0)
+ ;
+"RTN","LROE",96,0)
+ ;
+"RTN","LROE",97,0)
+EN01 ; ENTER ORDER # THEN ENTER DATA
+"RTN","LROE",98,0)
+STAT ;
+"RTN","LROE",99,0)
+ D ^LRPARAM
+"RTN","LROE",100,0)
+ I '$D(LRLABKY) W !!?10,"You do not have the proper security Keys",! Q
+"RTN","LROE",101,0)
+ ;
+"RTN","LROE",102,0)
+ ; Select peforming laboratory
+"RTN","LROE",103,0)
+ S X=$$SELPL^LRVERA(DUZ(2))
+"RTN","LROE",104,0)
+ I X<1 D END Q
+"RTN","LROE",105,0)
+ I X'=DUZ(2) N LRPL S LRPL=X
+"RTN","LROE",106,0)
+ ;
+"RTN","LROE",107,0)
+ S LRLONG="",LRPANEL=0,LROESTAT=""
+"RTN","LROE",108,0)
+ S %H=$H-60 D YMD^LRX S LRTM60=9999999-X
+"RTN","LROE",109,0)
+ D LROE K LRTM60,LRLONG,LREND,LROESTAT
+"RTN","LROE",110,0)
+ D END
+"RTN","LROE",111,0)
+ Q
+"RTN","LROE",112,0)
+ ;
+"RTN","LROE",113,0)
+ ;
+"RTN","LROE",114,0)
+TIME ;from LROE1, LRORD1
+"RTN","LROE",115,0)
+ S %DT="SET" W !,"Collection Date@Time: ",$S($D(%DT("B")):%DT("B"),1:"NOW"),"//" R X:DTIME I '$T!(X="^") S LRCDT=-1 Q
+"RTN","LROE",116,0)
+ S:X="" X=$S($D(%DT("B")):%DT("B"),1:"N")
+"RTN","LROE",117,0)
+ W:X["?" !!,"You may enter ""T@U"" or just ""U"", for Today at Unknown time",!!
+"RTN","LROE",118,0)
+ I X["@U",$P(X,"@U",2)="" S X=$P(X,"@U",1) D ^%DT G TIME:Y<1 S LRCDT=+Y_"^1" Q
+"RTN","LROE",119,0)
+ S:X="U" LRCDT=DT_"^1"
+"RTN","LROE",120,0)
+ I X'="U" D ^%DT D:X'["?" TIME1 G TIME:X["?" S LRCDT=+Y_"^" G TIME:Y'["."
+"RTN","LROE",121,0)
+ Q
+"RTN","LROE",122,0)
+ ;
+"RTN","LROE",123,0)
+TIME1 S X1=X,Y1=Y D TIME2 S X=X1,Y=Y1 K X1,Y1
+"RTN","LROE",124,0)
+ Q
+"RTN","LROE",125,0)
+ ;
+"RTN","LROE",126,0)
+TIME2 S X="N",%DT="ST" D ^%DT Q:Y1'>Y  F  W !,"You have specified a collection time in the future.  Are you sure" S %=2 D YN^DICN Q:%  W !,"Answer 'Y'es or 'N'o."
+"RTN","LROE",127,0)
+ S:%'=1 X="?" S X1=X
+"RTN","LROE",128,0)
+ Q
+"RTN","LROE",129,0)
+ ;
+"RTN","LROE",130,0)
+ ;
+"RTN","LROE",131,0)
+TASK ;
+"RTN","LROE",132,0)
+ I $D(LRLABLIO),$D(LRLBL) S ZTRTN="ENT^LRLABLD",ZTDTH=$H,ZTDESC="LAB LABELS",ZTIO=LRLABLIO,ZTSAVE("LRLBL(")="" D ^%ZTLOAD
+"RTN","LROE",133,0)
+ K LRLBL
+"RTN","LROE",134,0)
+ I $D(LRCSQ),'$O(^XTMP("LRCAP",LRCSQ,DUZ,0)) K ^XTMP("LRCAP",LRCSQ,DUZ),LRCSQ
+"RTN","LROE",135,0)
+ I $D(LRCSQ),$P($G(^LRO(68,+LRAA,0)),U,16) D STD^LRCAPV
+"RTN","LROE",136,0)
+ D STOP^LRCAPV K LRCOM,LRSPCDSC,LRCCOM,LRTCOM
+"RTN","LROE",137,0)
+ Q
+"RTN","LROE",138,0)
+ ;
+"RTN","LROE",139,0)
+ ;
+"RTN","LROE",140,0)
+END K DIR,DIRUT,GOT
+"RTN","LROE",141,0)
+ D ^LRORDK,LROEND^LRORDK,STOP^LRCAPV
+"RTN","LROE",142,0)
+ Q
+"RTN","LROE",143,0)
+ ;
+"RTN","LROE",144,0)
+ ;
+"RTN","LROE",145,0)
+GOT(ORD,ODT) ;See if all tests have been canceled
+"RTN","LROE",146,0)
+ N I,SN,ODT
+"RTN","LROE",147,0)
+ S (GOT,ODT,SN)=0
+"RTN","LROE",148,0)
+ F  S ODT=$O(^LRO(69,"C",ORD,ODT)) Q:ODT<1  D
+"RTN","LROE",149,0)
+ . S SN=0 F  S SN=$O(^LRO(69,"C",ORD,ODT,SN)) Q:SN<1!(GOT)  D
+"RTN","LROE",150,0)
+ . . Q:'$D(^LRO(69,ODT,1,SN,0))
+"RTN","LROE",151,0)
+ . . S I=0 F  S I=$O(^LRO(69,ODT,1,SN,2,I)) Q:I<1  I $D(^(I,0)),'$P(^(0),"^",11) S GOT=1 Q
+"RTN","LROE",152,0)
+ Q GOT
+"RTN","LROE",153,0)
+ ;
+"RTN","LROE",154,0)
+ ;
+"RTN","LROE",155,0)
+UNL69 ;
+"RTN","LROE",156,0)
+ L -^LRO(69,"C",+$G(LRORD))
+"RTN","LROE",157,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9643,6)
+^358
+**END**
+**END**
+

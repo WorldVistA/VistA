@@ -1,0 +1,2028 @@
+
+=============================================================================
+Run Date: AUG 04, 2016                     Designation: DI 22.2
+Package : DI - VA FILEMAN                     Priority: Mandatory
+Version : 22.2                                  Status: Released
+                  Compliance Date: OCT 04, 2016
+=============================================================================
+
+
+Subject: VA FILEMAN
+
+Category: 
+  - Informational
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ This patch addresses FileMan 22.2 enhancements and some bug fixes.
+  
+ 
+ *******************************************************************************
+ **                                                                           **
+ **                        >>>  CAUTION!!  <<<                                **
+ **                                                                           **
+ **                    This not a typical installation!                       **
+ **                                                                           **
+ **     This install needs all users to be off the system and logons to       **
+ **     be inhibited, which is why XPDKRN is needed.                          **
+ **     Use D ^XPDKRN from the programmer prompt to install this build.       **
+ **     This must not be installed using the usual methods.                   **
+ **     Please adhere to the installation instructions in this message.       **
+ **                                                                           ** 
+ **                                                                           **
+ *******************************************************************************
+ 
+ 
+ Enhancements:
+ =============
+  
+ FileMan 22.2 enhancements from the Open Source Electronic Health Record
+ Alliance (OSEHRA) will include the following functionalities within the FileMan
+ application and features:
+  
+        -ScreenMan functionality Changes
+        -Internationalization
+        -Data Analysis Tool Changes
+        -Application Programmer Interface (API) Changes
+        -Data Dictionary Changes
+        -Installation and Distribution Changes
+        -Defect fixes and Remediated items
+        -Other Enhancements such as -
+         o      User Interface changes 
+         o      Select prompt: Extended Selection by Internal Entry Number (IEN) 
+         o      Allow terminal emulators deeper than 24 lines  
+         o      Printing multiples in sorted orders
+         o      Enhanced control of input templates and FileMan browser 
+                enhancements 
+  
+ Please refer to the FileMan 22.2 Release Notes for a more detailed list of 
+ enhancements.  
+ 
+ PATCH COMPONENTS:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)       Field Name (Number)               New/Modified/Deleted
+ ------------------       -------------------               --------------------
+ PRINT TEMPLATE (#.4)                                                   Modified
+                      LANGUAGE OF HEADING (.4,709.1)                    New
+                      LANGUAGE IN WHICH COMPILED (.4,1819.1             New
+                      BUILDS(S)(.4,21400)                               New
+                      CANOIC FOR THIS FILE CANONIC (.4,21409)           New
+                      PRINT FIELDS (.4,1620)                            Modified 
+ SORT TEMPLATE (#.401)                                                  Modified
+                      FROM VALUE COMPUTATION FCOMPUTED (.4014,21401)    New
+                      TO VALUE COMPUTATIONS TCOMPUTED (.4014,21402)     New
+                      ENTRIES (.401,6666)                               New
+                      BUILD(S)(.401,21400)                              New 
+                      CANOIC FOR THIS FILE CAANOIC (.401,21409)         New
+ INPUT TEMPLATE (#.402)                                                 Modified
+                      BUILD(S)(.402,21400)                              New
+                      CANONIC FOR THIS FILE CANONIC (.402,21409)        New
+ FORM (#.403)                                                           Modified
+                      NEW CODE: 'u' for users last name (.4032,7)       Modified
+                      BUILD(S)(.403,21400)                              New
+                      COMPUTED MULTIPLE COMP MUL (.4032.98)             New
+                      COMPUTED MUL PTR COMP MUL PTR (.4032,98.1)        New
+ BLOCK (#.404)                                                          Modified
+                      CAPTION (.4044,1)                                 Modified
+                      UNIQUE NAME (.4044,3.1)                           Modified
+ IMPORT TEMPLATE (#.46)                                                 Modified
+ MUMPS OPERATING SYSTEM (#.7)                                           Modified 
+                      RIGHT MARGIN (.7,9)                               New
+                      CHECK EXISTENCE OF UCI (.7,10)                    New
+                      ECHO OFF (.7,11)                                  New
+                      ECHO ON (.7,12)                                   New
+                      TURN OFF READ TERMINATORS TRMOFF (.7,12)          New
+                      TURN ON READ TERMINATORS TRMON (.7,22)            New
+                      GET READ TERMINATOR TRMRD(.7,23)                  New
+                      DISABLE TYPE AHEAD BUFFERING NO-TYPE-AHEAD (.7,31)New
+                      ENABLE TYPE AHEAD BUFFERING TYPE-AHEAD(.7,32)     New
+                      DELETE ROUTINE DEL(.7,2620)                       New
+                      LOAD ROUTINE INTO ARRAY LOAD(.7,2621)             New
+                      SELECT ROUTINES RSEL(.7,2622)                     New
+                      HIGHEST CHARACTER VALUE HIGHESTCHAR (.7,21400)    New 
+ DIALOG (#.8)                                                           Modified
+                      PARAMETER (.84,5)                                 New
+                      TRANSLATION (.84,7)                               New
+                      CALLED FROM ENTRY POINT 5 (.84,8)                 New
+ LANGUAGE (#.85)                                                        Modified
+                      TWO LETTER CODE (.85,.02)                         New
+                      THREE LETTER CODE (.85,.03)                       New
+                      FOUR LETTER CODE (.85,.04)                        New
+                      ALT THREE LETTER CODE (.85,.05)                   New
+                      SCOPE (.85,.06)                                   New
+                      TYPE (.85,.07)                                    New
+                      LINGUISTIC CATEGORY (.85,.08)                     New 
+                      MEMBER OF LANGUAGE SET (.85,.09)                  New
+ META DATA DICTIONARY (#.9)                                             New
+                      LOOKUP TERM (.9,.02)                              New
+                      DATA DICTIONARY NUMBER (.9,.03)                   New
+                      FIELD NUMBER (.9,.04)                             New 
+ FILE (#1)                                                              Modified
+                      TRANSLATION (1,1.008)                             New
+                      LANGUAGE (1,1.008,.001)                           New 
+                      TRANSLATION (1,1.008,.01)                         New
+                      LAST DD MODIFICATION (1,21,.214)                  New
+                      BUILD (1,21400)                                   New
+                      NAME (1,.01)                                      Modified
+                      PACKAGE NAME (1.005,1)                            Modified
+ AUDIT (#1.1)                                                           Modified
+                      ACCESSED (1.1,.06)                                New
+                      OLD W-P TEXT (1.1,2.14)                           New
+                      PATIENT (1.1,2.9)                                 New
+                      ENTRY NAME (1.1,1)                                Modified
+                      FIELD NAME (1.1,1,1)                              Modified
+                      OLD VALUE (1.1,2)                                 Modified
+                      NEW VALUE (1.1,3)                                 Modified
+ 
+ Forms Associated: N/A 
+  
+ Form Name                   File #               New/Modified/Deleted 
+ ---------                   ------               -------------------
+ 
+ Mail Groups Associated: N/A
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+  
+ Options Associated:
+  
+ Option Name                   Type               New/Modified/Deleted
+ -----------                   ----               -------------------- 
+ 
+ DI DDU                        MENU                 Modified
+ DDU FIND POINTERS INTO A FILE RUN ROUTINE          New
+ DDU UPDATE META DD            RUN ROUTINE          New
+ DIAUDIT                       MENU                 Modified
+ DIAUDIT MONITOR USER          RUN ROUTINE          New
+ DIAUDIT SHOW PAST CHG TO DDs  RUN ROUTINE          New
+ DDS SCREEN MENU               MENU                 Modified
+ DDS PRINT A FORM              RUN ROUTINE          New
+ DDS CUSTOMIZE COLORS          RUN ROUTINE          New
+ DDS CLONE A FORM              RUN ROUTINE          New
+                
+ Protocols Associated: N/A
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ DDXP-DDEFINE
+ DIEXTRACT
+  
+ Templates Associated: N/A
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+  
+ Additional Information:  
+  
+  
+ New Service Requests (NSRs): 
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+ 
+ 
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. I7439065FY16 DIEFU needs to be modified
+  
+ Problem:
+ -------
+ TM issues were, mostly at least, resultant from a known issue. ISC has worked
+ with Indian Health Service regarding TM issues and found a problem with block
+ contention. DIEFU kills ^TMP("DIERR",$J, ^TMP("DIMSG",$J, and 
+ ^TMP("DIHELP",$J, ; with numerous processes contending to access this data that 
+ is packed into the same block it becomes a bottleneck. The situation was fixed 
+ by creating bogus nodes using " f i=540000000:1000:549990000 
+ s $p(^TMP("DIERR",i),"#",2047)=i(and also for "DIHELP" and "DIMSG"), 
+ this spreads the data amongst several hundred blocks rather than just a few. 
+ After that (in all production instances, i.e. BE and all FEs) taskman started 
+ working through tasks and dropping again.
+ 
+ Resolution:
+ ----------
+ $D tests have been inserted in the CLEAN submodule of DIEFU so that prior to
+ trying to kill the nodes ^TMP("DIERR",$J, ^TMP("DIMSG",$J, and ^TMP("DIHELP",$J,
+ the routine first checks for their existence. This eliminates the contention
+ bottleneck.
+ 
+ 
+ 
+ TEST SITES
+ ==========
+ Lebanon
+ Muskogee
+ West Palm Beach 
+  
+ Blood Bank Clearance Statement
+ ==============================
+ 
+ Subject: Blood Bank Review of Patch DI 22.2 (VA FILEMAN)
+ 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch DI 22.2 contains changes to
+ a package referenced in ProPath standard titled: BBM Team Review of VistA
+ Patches. The following utilities and database calls were validated to ensure
+ that the changes do not adversely affect Blood Bank functionality.
+ $$FIND1^DIC - Finder (Single Record)
+ $$GET1^DIQ - Single Data Retriever
+ C^%DTC - Date/Time Utility
+ DD^%DT - Internal to External Date
+ FILESEC^DDMOD - Set File Protection Security Codes
+ GETS^DIQ - Data Retriever
+ IX^DIC - Lookup/Add
+ LIST^DIC - Lister
+ ^%DT - Internal to External Date
+ ^%DTC - Date/Time Utility
+ ^DIR - Reader
+ 
+ RISK ANALYSIS: Changes made by patch DI 22.2 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ Software and Documentation Retrieval Instructions:
+ ==================================================
+ Software being released as a host file and/or documentation describing the 
+ new functionality introduced by this patch is available.
+ 
+ The preferred method is to retrieve files from download.vista.domain.ext. 
+ This transmits the files from the first available server. Sites may also elect
+ to retrieve files directly from a specific server.
+ 
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the 
+ following OI Field Offices:
+ 
+ Albany               domain.ext       
+ Hines                domain.ext        
+ Salt Lake City       domain.ext          
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+ 
+ Title                                     File Name
+ ----------------------------------------------------------------------------
+ FileMan 22.2 User Manual                 fm22_2um1.pdf
+ FileMan 22.2 Advanced User Manual        fm22_2um2.pdf
+ FileMan 22.2 Developer's Guide           fm22_2dg.pdf
+ FileMan 22.2 Installation Guide          fm22_2ig.pdf
+ FileMan 22.2 Technical Manual            fm22_2tm.pdf
+ FileMan 22.2 Release Notes               fm22_2rn.pdf
+ FileMan 22.2 KIDS Build                  va_fileman_22_2.kid
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ It is recommended that this host file patch be installed outside of normal
+ business hours to avoid any complications resulting from users on the system.
+ Users need to be off the system during installation. User login must be 
+ inhibited prior to installation.
+ Installation will take approximately 10 minutes.  Please refer to the
+ FileMan 22.2E Installation Guide. 
+  
+ Pre-Installation Instructions 
+ -----------------------------
+ 
+ 1. INITIATE SYSTEM VARIABLES AND HALT BACKGROUND PROCESSES
+    ------------------------------------------------------- 
+     a) Check that current version in PACKAGE FILE is set to 22.0
+          D P^DI
+          VA FileMan 22.2
+          Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
+          Input to what File: DEVICE// PACKAGE
+            1   PACKAGE                          (294 entries)
+            2   PACKAGE INTERFACE                (128 entries)
+            3   PACKAGE SIZE                     (5182 entries)
+            4   PACKAGE TYPE                     (529 entries)
+          CHOOSE 1-4: 1  PACKAGE                    (294 entries)
+          EDIT WHICH FIELD: ALL// CURRENT VERSION  
+          THEN EDIT FIELD: 
+  
+          Select PACKAGE NAME: VA FILEMAN       DI
+          CURRENT VERSION: 22.2// 22.0
+          Select PACKAGE NAME: 
+  
+     b) Stop all background filers (MailMan,OE/RR,IB,HL7)
+        and TaskMan, including all Submanagers.
+       
+     c) Check that there are no background jobs running and that
+        nobody is using the system:
+          D THIS^%SS
+        The display should show no jobs running. 
+  
+   
+ 2. LOAD TRANSPORT GLOBAL:
+    ----------------------
+     a) Inhibit logons:
+          VISTAG1:VISTA>D P^DI
+          VA FileMan 22.0
+          Select OPTION: 1  ENTER OR EDIT FILE ENTRIES 
+          INPUT TO WHAT FILE: DOMAIN// 14.5  VOLUME SET  (1 entry)
+          EDIT WHICH FIELD: ALL// INHIBIT LOGONS?  
+          THEN EDIT FIELD: 
+  
+          Select VOLUME SET: ROU  
+          INHIBIT LOGONS?: NO// YES  YES
+ 
+          Select VOLUME SET: 
+             
+     b) Load Distribution:
+  
+          VISTAG1:VISTA>D ^XPDKRN               
+          KIDS 8.0
+  
+          Select KIDS OPTION: 1  LOAD A DISTRIBUTION
+          Enter a Host File: VA_FILEMAN_22_2.KID
+  
+          KIDS Distribution saved on FEB 18, 2016@11:34
+          Comment: VA FileMan KIDS build
+  
+          This Distribution contains Transport Globals for the following
+          Package(s):
+            VA FILEMAN 22.2
+              Distribution OK!
+  
+          Want to Continue with Load? YES// YES
+          Loading Distribution...
+  
+          Build VA FILEMAN 22.2 has an Environmental Check Routine
+          Want to RUN the Environment Check Routine? YES// 
+            VA FILEMAN 22.2
+          Will first run the Environment Check Routine, DI222ENV
+  
+          Use INSTALL NAME: VA FILEMAN 22.2 to install this Distribution. 
+ 
+ 3. VERIFY CHECKSUMS IN TRANSPORT GLOBAL
+    ------------------------------------
+    This option will allow you to ensure the integrity of the routines
+    that are in the transport global.
+ 
+ 4. COMPARE TRANSPORT GLOBAL TO CURRENT SYSTEM
+    ------------------------------------------
+    This option will allow you to view all changes that will be made when
+    this patch is installed. It compares all components of these patch
+    routines, DDs, templates, etc.)
+ 
+ 5. BACKUP A TRANSPORT GLOBAL
+    -------------------------
+    This option will create a backup message of any routines exported with
+    this patch. It will not backup any other changes such as DDs or templates.
+ 
+  
+ Installation Instructions:
+ --------------------------
+    Invoke the ^XPDKRN menu again and select the INSTALL PACKAGE(S) option.
+    Select VA FILEMAN 22.2 as the package you want to install.
+ 
+       >D ^XPDKRN
+  
+       KIDS 8.0
+ 
+       Select KIDS OPTION: 6  INSTALL PACKAGE(S)
+       Select INSTALL NAME: VA FILEMAN 22.2      7/9/15@18:42:28
+               => FM22E - 2.19  ;Created on Jul 09, 2015@14:19:34
+  
+       This Distribution was loaded on Jul 09, 2015@18:42:28 with header of 
+         FM22E - 2.19  ;Created on Jul 09, 2015@14:19:34
+         It consisted of the following Install(s):
+       VA FILEMAN 22.2
+       Checking Install for Package VA FILEMAN 22.2
+       Will first run the Environment Check Routine, DI222ENV
+  
+  
+       Install Questions for VA FILEMAN 22.2
+   
+       Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//YES 
+  
+       Want KIDS to INHIBIT LOGONs during the install? NO// 
+       Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+       [At this juncture the system will display installation details and a
+       series of dots ........ ]
+       Answer 'no' to any subsequent questions.
+  
+       When the installation is complete the system will display:
+  
+       Install Completed
+  
+ Post-Installation Instructions:
+ -------------------------------
+   
+        RESET 'INHIBIT LOGONS' FLAG
+        ---------------------------
+        The INIBIT LOGONS field must now be changed back to 'NO'.
+  
+           VISTAG1:VISTA>D P^DI
+           VA FileMan 22.2
+           Select OPTION: 1  ENTER OR EDIT FILE ENTRIES 
+           INPUT TO WHAT FILE: DOMAIN// 14.5  VOLUME SET  (1 entry)
+           EDIT WHICH FIELD: ALL// INHIBIT LOGONS?  
+           THEN EDIT FIELD: 
+  
+           Select VOLUME SET: ROU  
+           INHIBIT LOGONS?: YES// NO
+  
+           Select VOLUME SET: 
+  
+        Restart Task Manager
+        START background filer
+        Start TCP Listener
+ 
+                PLEASE NOTE: THE FOLLOWING ROUTINES WILL BE REMOVED BY THE
+                             INSTALLER:
+                        DI222ENV  ENVIRONMENT CHECKER
+                        DI222PRE  PRE-INSTLL ROUTNE
+                        DI222POS  POST INSTALL ROUTINE 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;22.2;VA FileMan;;Jan 05, 2016;Build 44**[Patch List]**
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DDBR
+    Before: B25668351   After: B27928380  
+Routine Name: DDBR0
+    Before: B28053678   After: B30133325  
+Routine Name: DDBR1
+    Before: B25527512   After: B27590224  
+Routine Name: DDBR2
+    Before: B18132393   After: B19392203  
+Routine Name: DDBR3
+    Before:  B5944498   After:  B7154824  
+Routine Name: DDBR4
+    Before:  B5966808   After:  B7172370  
+Routine Name: DDBRAHT
+    Before:  B4949527   After:  B6074129  
+Routine Name: DDBRAHTE
+    Before:  B9266325   After: B10611099  
+Routine Name: DDBRAHTJ
+    Before: B27757179   After: B28989718  
+Routine Name: DDBRAHTR
+    Before:  B5518571   After:  B6663673  
+Routine Name: DDBRAP
+    Before: B20394336   After: B21286713  
+Routine Name: DDBRGE
+    Before: B33963703   After: B36108596  
+Routine Name: DDBRP
+    Before:  B7827437   After: B10722120  
+Routine Name: DDBRS
+    Before:  B7552054   After:  B8794520  
+Routine Name: DDBRT
+    Before:   B741492   After:  B1633354  
+Routine Name: DDBRU
+    Before: B14423440   After: B17431997  
+Routine Name: DDBRU2
+    Before: B19040052   After: B20981215  
+Routine Name: DDBRWB
+    Before: B10042518   After:  B9715266  
+Routine Name: DDBRZIS
+    Before:  B4633204   After:  B6108382  
+Routine Name: DDD
+    Before:       n/a   After: B10838418  
+Routine Name: DDFIX
+    Before: B34827908   After: B36577437  
+Routine Name: DDGF
+    Before:  B4423126   After:  B5519028  
+Routine Name: DDGF0
+    Before: B25027446   After: B26523769  
+Routine Name: DDGF1
+    Before: B15421268   After: B16870170  
+Routine Name: DDGF2
+    Before: B26775169   After: B28408555  
+Routine Name: DDGF3
+    Before: B18845288   After: B20371538  
+Routine Name: DDGF4
+    Before: B13679708   After: B15021926  
+Routine Name: DDGFADL
+    Before:  B2671775   After:  B3692753  
+Routine Name: DDGFAPC
+    Before: B13297793   After: B14672215  
+Routine Name: DDGFASUB
+    Before:  B3315910   After:  B3918186  
+Routine Name: DDGFBK
+    Before: B17114924   After: B18475641  
+Routine Name: DDGFBSEL
+    Before:  B8262299   After:  B9505169  
+Routine Name: DDGFEL
+    Before: B23630225   After: B25086726  
+Routine Name: DDGFFLD
+    Before:  B8644618   After:  B9993556  
+Routine Name: DDGFFLDA
+    Before: B16727888   After: B18284414  
+Routine Name: DDGFFM
+    Before:  B9987556   After: B41069883  
+Routine Name: DDGFH
+    Before:   B395328   After:  B1245880  
+Routine Name: DDGFHBK
+    Before:  B7385241   After:  B8528950  
+Routine Name: DDGFLOAD
+    Before: B22059738   After: B23710288  
+Routine Name: DDGFORD
+    Before:  B2460433   After:  B3420707  
+Routine Name: DDGFPG
+    Before: B23138384   After: B24625467  
+Routine Name: DDGFSV
+    Before:  B7314628   After:  B8541810  
+Routine Name: DDGFU
+    Before: B29159512   After: B30665174  
+Routine Name: DDGFUPDB
+    Before:  B3726300   After:  B4787290  
+Routine Name: DDGFUPDP
+    Before: B12105221   After: B13390173  
+Routine Name: DDGLBXA
+    Before: B46623248   After: B48292692  
+Routine Name: DDGLBXA1
+    Before: B30714831   After: B32231311  
+Routine Name: DDGLCBOX
+    Before:  B9150750   After: B10328314  
+Routine Name: DDGLIB0
+    Before: B20400267   After: B29674136  
+Routine Name: DDGLIBH
+    Before: B29790926   After: B31785030  
+Routine Name: DDGLIBP
+    Before: B24781099   After: B26667130  
+Routine Name: DDGLIBW
+    Before: B24898127   After: B26287446  
+Routine Name: DDGLIBW1
+    Before:  B9890973   After: B11201559  
+Routine Name: DDIOL
+    Before:  B4782116   After:  B5891755  
+Routine Name: DDMAP
+    Before: B14387582   After: B15867168  
+Routine Name: DDMAP1
+    Before: B14650716   After: B15605256  
+Routine Name: DDMAP2
+    Before:  B9899609   After: B11192451  
+Routine Name: DDMOD
+    Before:  B1174741   After:  B2071346  
+Routine Name: DDMP
+    Before: B53755241   After: B57481148  
+Routine Name: DDMP1
+    Before: B37404358   After: B39565384  
+Routine Name: DDMP2
+    Before: B53006642   After: B55322964  
+Routine Name: DDMPSM
+    Before: B27486073   After: B29335475  
+Routine Name: DDMPSM1
+    Before:  B6673866   After:  B7915816  
+Routine Name: DDMPU
+    Before: B20848526   After: B22659440  
+Routine Name: DDR
+    Before: B29370219   After: B31022548  
+Routine Name: DDR0
+    Before: B14972616   After: B23114894  
+Routine Name: DDR1
+    Before:  B3500801   After:  B4512237  
+Routine Name: DDR2
+    Before: B22919151   After: B25439727  
+Routine Name: DDR3
+    Before:  B9851680   After: B11239426  
+Routine Name: DDR4
+    Before:   B857826   After:  B1772348  
+Routine Name: DDS
+    Before: B31450099   After: B41055756  
+Routine Name: DDS0
+    Before: B17534410   After: B22730797  
+Routine Name: DDS01
+    Before: B28553785   After: B47586789  
+Routine Name: DDS02
+    Before: B11950195   After: B17073915  
+Routine Name: DDS1
+    Before: B21230991   After: B35932494  
+Routine Name: DDS10
+    Before: B10373560   After: B11502029  
+Routine Name: DDS11
+    Before: B26452550   After: B29500378  
+Routine Name: DDS2
+    Before: B29800319   After: B61755945  
+Routine Name: DDS3
+    Before:  B4581605   After:  B7245440  
+Routine Name: DDS4
+    Before: B25495567   After: B29777257  
+Routine Name: DDS41
+    Before: B34976567   After: B38730782  
+Routine Name: DDS5
+    Before: B12777081   After: B14241867  
+Routine Name: DDS6
+    Before: B16185530   After: B19073525  
+Routine Name: DDS7
+    Before:  B7738138   After:  B9013748  
+Routine Name: DDSBOX
+    Before:  B2906838   After:  B4077085  
+Routine Name: DDSCAP
+    Before:  B2190144   After:  B2750849  
+Routine Name: DDSCLONE
+    Before: B32365681   After: B34488219  
+Routine Name: DDSCLONF
+    Before: B10184911   After: B11906438  
+Routine Name: DDSCOM
+    Before:  B4839627   After: B19472431  
+Routine Name: DDSCOMP
+    Before: B10341404   After: B11529597  
+Routine Name: DDSDBLK
+    Before: B15133523   After: B16553924  
+Routine Name: DDSDEL
+    Before: B10534871   After: B11913064  
+Routine Name: DDSDFRM
+    Before: B31183752   After: B32993072  
+Routine Name: DDSFO
+    Before:  B1190467   After:  B2126985  
+Routine Name: DDSIT
+    Before:  B1569310   After:  B2487635  
+Routine Name: DDSLIB
+    Before: B17100322   After: B17777553  
+Routine Name: DDSM
+    Before: B25983453   After: B34216671  
+Routine Name: DDSM1
+    Before: B11644006   After: B11523019  
+Routine Name: DDSMSG
+    Before: B10631309   After: B11858691  
+Routine Name: DDSOPT
+    Before:   B652844   After:  B2344312  
+Routine Name: DDSPRNT
+    Before: B26878473   After: B28407292  
+Routine Name: DDSPRNT1
+    Before: B18163731   After: B20842428  
+Routine Name: DDSPRNT2
+    Before: B18479951   After: B20410518  
+Routine Name: DDSPTR
+    Before: B25461281   After: B28379986  
+Routine Name: DDSR
+    Before: B29562587   After: B45050720  
+Routine Name: DDSR1
+    Before:  B1636731   After:  B6676810  
+Routine Name: DDSRP
+    Before:       n/a   After: B36577164  
+Routine Name: DDSRSEL
+    Before:  B8693029   After: B11199841  
+Routine Name: DDSRUN
+    Before:  B2550961   After:  B5044107  
+Routine Name: DDSSTK
+    Before:  B1711699   After:  B3056649  
+Routine Name: DDSU
+    Before: B22175755   After: B34694640  
+Routine Name: DDSUTL
+    Before: B18293025   After: B19652326  
+Routine Name: DDSVAL
+    Before: B25787277   After: B28368691  
+Routine Name: DDSVALF
+    Before: B30831904   After: B33855573  
+Routine Name: DDSVALM
+    Before:  B5387719   After:  B6483638  
+Routine Name: DDSWP
+    Before:  B3580883   After:  B8815095  
+Routine Name: DDSZ
+    Before: B32217811   After: B42530736  
+Routine Name: DDSZ1
+    Before: B22388260   After: B24826596  
+Routine Name: DDSZ2
+    Before: B17948480   After: B23052762  
+Routine Name: DDSZ3
+    Before:  B1926701   After:  B2866725  
+Routine Name: DDU
+    Before:   B712403   After:  B1857334  
+Routine Name: DDUCHK
+    Before: B21651338   After: B23435560  
+Routine Name: DDUCHK1
+    Before: B17200786   After: B18846452  
+Routine Name: DDUCHK2
+    Before: B24582136   After: B26266857  
+Routine Name: DDUCHK3
+    Before: B14287511   After: B15806653  
+Routine Name: DDUCHK4
+    Before: B46185101   After: B47902863  
+Routine Name: DDUCHK5
+    Before: B47635403   After: B49412970  
+Routine Name: DDW
+    Before: B13706967   After: B15406426  
+Routine Name: DDW1
+    Before: B35716441   After: B37115775  
+Routine Name: DDW2
+    Before: B15021652   After: B12471917  
+Routine Name: DDW3
+    Before: B33093950   After: B34584012  
+Routine Name: DDW4
+    Before: B16553813   After: B17904243  
+Routine Name: DDW5
+    Before: B24888839   After: B26414736  
+Routine Name: DDW6
+    Before: B31281843   After: B32889430  
+Routine Name: DDW7
+    Before:  B6516379   After:  B7635665  
+Routine Name: DDW8
+    Before: B22378592   After: B23635071  
+Routine Name: DDW9
+    Before: B23518433   After: B24619666  
+Routine Name: DDWC
+    Before: B23490999   After: B23421692  
+Routine Name: DDWC1
+    Before:  B5009740   After:  B6445722  
+Routine Name: DDWF
+    Before:  B9603106   After: B10500186  
+Routine Name: DDWG
+    Before: B14677654   After: B15269416  
+Routine Name: DDWH
+    Before:  B3185984   After:  B4200666  
+Routine Name: DDWK
+    Before:  B5092843   After:  B6178385  
+Routine Name: DDWT1
+    Before: B45373000   After: B53373348  
+Routine Name: DDXP
+    Before:  B3590587   After:  B4629625  
+Routine Name: DDXP1
+    Before: B15606226   After: B17196384  
+Routine Name: DDXP2
+    Before:  B6576038   After:  B7748960  
+Routine Name: DDXP3
+    Before: B17301860   After: B18969142  
+Routine Name: DDXP31
+    Before: B20692287   After: B22007457  
+Routine Name: DDXP32
+    Before: B13169417   After: B14666243  
+Routine Name: DDXP33
+    Before:  B2789660   After:  B3828714  
+Routine Name: DDXP4
+    Before: B38381988   After: B40604854  
+Routine Name: DDXP41
+    Before:  B1773695   After:  B2701373  
+Routine Name: DDXP5
+    Before:  B1183350   After:  B2110456  
+Routine Name: DDXPLIB
+    Before:  B7394383   After:  B8677165  
+Routine Name: DI
+    Before:   B532793   After:  B1429151  
+Routine Name: DI222ENV
+    Before:       n/a   After:  B3722542  
+Routine Name: DI222POS
+    Before:       n/a   After:  B3131638  
+Routine Name: DI222PRE
+    Before:       n/a   After:  B1694439  
+Routine Name: DIA
+    Before: B17168950   After: B18972189  
+Routine Name: DIA1
+    Before: B10599883   After: B12075159  
+Routine Name: DIA2
+    Before:  B5595456   After:  B7629072  
+Routine Name: DIA3
+    Before: B16113145   After: B18051947  
+Routine Name: DIAC
+    Before:  B1298530   After:  B2195051  
+Routine Name: DIALOG
+    Before: B22797753   After: B27863944  
+Routine Name: DIALOGU
+    Before:  B3145146   After:  B4153073  
+Routine Name: DIALOGZ
+    Before:       n/a   After: B31531395  
+Routine Name: DIAR
+    Before: B24454367   After: B26280585  
+Routine Name: DIARA
+    Before: B19467500   After: B20855553  
+Routine Name: DIARB
+    Before:  B9134010   After: B10456808  
+Routine Name: DIARCALC
+    Before:  B3381221   After:  B5073199  
+Routine Name: DIARR
+    Before: B16923066   After: B18571184  
+Routine Name: DIARR1
+    Before: B14932310   After: B16411492  
+Routine Name: DIARR2
+    Before:  B8613867   After:  B9907769  
+Routine Name: DIARR3
+    Before: B16237107   After: B17847141  
+Routine Name: DIARR4
+    Before:  B5868926   After:  B7030868  
+Routine Name: DIARR5
+    Before:  B6820344   After:  B7953714  
+Routine Name: DIARR6
+    Before:  B7401609   After:  B8628227  
+Routine Name: DIARU
+    Before: B20100830   After: B21726996  
+Routine Name: DIARX
+    Before: B12785921   After: B14216575  
+Routine Name: DIAU
+    Before: B19507595   After: B41683481  
+Routine Name: DIAUTL
+    Before: B26328475   After: B46874181  
+Routine Name: DIAX
+    Before: B21509890   After: B23231912  
+Routine Name: DIAXD
+    Before: B35519233   After: B37592439  
+Routine Name: DIAXERR
+    Before:   B890700   After:  B1780069  
+Routine Name: DIAXF
+    Before:   B562279   After:  B1449405  
+Routine Name: DIAXM
+    Before: B16270833   After: B17885467  
+Routine Name: DIAXM1
+    Before:  B8039610   After:  B9291996  
+Routine Name: DIAXM2
+    Before: B13932144   After: B15412470  
+Routine Name: DIAXM3
+    Before:  B7862445   After:  B9163491  
+Routine Name: DIAXMS
+    Before: B10933866   After: B12362596  
+Routine Name: DIAXP
+    Before:  B3340268   After:  B4414566  
+Routine Name: DIAXT
+    Before:  B4066248   After:  B5181778  
+Routine Name: DIAXU
+    Before: B16898634   After: B18498616  
+Routine Name: DIB
+    Before: B16059050   After: B17787049  
+Routine Name: DIBT
+    Before: B23941529   After: B29844061  
+Routine Name: DIBT1
+    Before: B11073477   After: B14001395  
+Routine Name: DIBTED
+    Before: B28324690   After: B40468292  
+Routine Name: DIC
+    Before: B24503257   After: B29628849  
+Routine Name: DIC0
+    Before: B17141668   After: B18893079  
+Routine Name: DIC1
+    Before: B33532125   After: B37687855  
+Routine Name: DIC11
+    Before:  B6987696   After:  B8607649  
+Routine Name: DIC2
+    Before: B15561296   After: B17206841  
+Routine Name: DIC3
+    Before: B34032053   After: B35814036  
+Routine Name: DIC4
+    Before: B15533015   After: B17790701  
+Routine Name: DIC5
+    Before:  B8363930   After:  B9674492  
+Routine Name: DICA
+    Before: B40776716   After: B45092892  
+Routine Name: DICA1
+    Before: B22861458   After: B25546414  
+Routine Name: DICA2
+    Before:  B9330032   After: B10576557  
+Routine Name: DICA3
+    Before:  B4698553   After:  B7421017  
+Routine Name: DICATT
+    Before: B12133640   After: B17660563  
+Routine Name: DICATT0
+    Before: B10735912   After: B12102578  
+Routine Name: DICATT1
+    Before: B10153075   After: B11875453  
+Routine Name: DICATT2
+    Before: B17164607   After: B23559444  
+Routine Name: DICATT22
+    Before:  B9541646   After: B11464555  
+Routine Name: DICATT3
+    Before: B13498872   After: B15287897  
+Routine Name: DICATT4
+    Before: B26200153   After: B28137187  
+Routine Name: DICATT5
+    Before:  B9779432   After: B11152518  
+Routine Name: DICATT6
+    Before:  B7715029   After:  B9524880  
+Routine Name: DICATTA
+    Before: B12286908   After: B18987371  
+Routine Name: DICATTD
+    Before: B23131583   After: B27978166  
+Routine Name: DICATTD0
+    Before:  B1401370   After:  B2307008  
+Routine Name: DICATTD1
+    Before:  B5668488   After:  B6743431  
+Routine Name: DICATTD2
+    Before:  B2690922   After:  B3643072  
+Routine Name: DICATTD3
+    Before:  B4797995   After:  B5847768  
+Routine Name: DICATTD4
+    Before:  B1867202   After:  B5443066  
+Routine Name: DICATTD5
+    Before:   B552302   After:  B1419696  
+Routine Name: DICATTD6
+    Before: B12176733   After: B13447789  
+Routine Name: DICATTD7
+    Before:  B1064039   After:  B1948254  
+Routine Name: DICATTD8
+    Before: B14438142   After: B15765391  
+Routine Name: DICATTD9
+    Before:   B674492   After:  B1541946  
+Routine Name: DICATTDD
+    Before:  B3311332   After:  B4330013  
+Routine Name: DICATTDE
+    Before: B26617595   After: B31229801  
+Routine Name: DICATTDK
+    Before:  B6186767   After:  B7425997  
+Routine Name: DICATTDM
+    Before:  B9565613   After: B12766660  
+Routine Name: DICD
+    Before: B16725142   After: B18297180  
+Routine Name: DICE
+    Before: B18620023   After: B20329477  
+Routine Name: DICE0
+    Before: B10295375   After: B11581533  
+Routine Name: DICE1
+    Before:  B7475344   After:  B8720638  
+Routine Name: DICE2
+    Before: B11493276   After: B12876222  
+Routine Name: DICE3
+    Before:  B1299075   After:  B2207245  
+Routine Name: DICE4
+    Before:  B9783820   After: B11076030  
+Routine Name: DICE7
+    Before:  B9250554   After: B10568912  
+Routine Name: DICF
+    Before: B33106724   After: B47335625  
+Routine Name: DICF0
+    Before: B12584324   After: B14114322  
+Routine Name: DICF1
+    Before: B22563783   After: B48040228  
+Routine Name: DICF2
+    Before: B29582212   After: B31296383  
+Routine Name: DICF3
+    Before:  B5692609   After: B10308338  
+Routine Name: DICF4
+    Before: B22658578   After: B24119134  
+Routine Name: DICF5
+    Before:  B8451936   After:  B9668428  
+Routine Name: DICFIX
+    Before: B20991038   After: B25806223  
+Routine Name: DICFIX1
+    Before:  B1890975   After:  B3384004  
+Routine Name: DICL
+    Before: B11597333   After: B15338681  
+Routine Name: DICL1
+    Before: B11775035   After: B13013658  
+Routine Name: DICL10
+    Before:  B5892963   After:  B7020082  
+Routine Name: DICL2
+    Before: B15655174   After: B17598475  
+Routine Name: DICL3
+    Before: B13578651   After: B14868046  
+Routine Name: DICLGFT
+    Before:       n/a   After: B16067395  
+Routine Name: DICLIB
+    Before:  B1097888   After:  B2019954  
+Routine Name: DICLIX
+    Before: B20618709   After: B22107946  
+Routine Name: DICLIX0
+    Before:  B4617184   After:  B5705612  
+Routine Name: DICLIX1
+    Before:  B6822180   After:  B7998172  
+Routine Name: DICM
+    Before: B36720423   After: B38919649  
+Routine Name: DICM0
+    Before: B25538869   After: B27206150  
+Routine Name: DICM1
+    Before: B16657448   After: B18002840  
+Routine Name: DICM2
+    Before:  B8700741   After:  B9866599  
+Routine Name: DICM3
+    Before: B10723692   After: B13249655  
+Routine Name: DICN
+    Before: B15919106   After: B19431875  
+Routine Name: DICN0
+    Before: B14460486   After: B15610587  
+Routine Name: DICN1
+    Before: B20209194   After: B25974113  
+Routine Name: DICOMP
+    Before: B24351991   After: B30497111  
+Routine Name: DICOMP0
+    Before: B15729828   After: B23226068  
+Routine Name: DICOMP1
+    Before: B13110629   After: B17939447  
+Routine Name: DICOMPU
+    Before:       n/a   After: B27930318  
+Routine Name: DICOMPV
+    Before: B15537137   After: B17398066  
+Routine Name: DICOMPW
+    Before: B15090622   After: B18132022  
+Routine Name: DICOMPX
+    Before:  B5953691   After:  B8429619  
+Routine Name: DICOMPY
+    Before:  B6198892   After:  B7396482  
+Routine Name: DICOMPZ
+    Before: B28747091   After: B32491368  
+Routine Name: DICQ
+    Before: B21798425   After: B24625448  
+Routine Name: DICQ1
+    Before: B30188713   After: B37466935  
+Routine Name: DICR
+    Before: B24140546   After: B25667667  
+Routine Name: DICRW
+    Before: B13427185   After: B16633452  
+Routine Name: DICRW1
+    Before:  B1218551   After:  B2103622  
+Routine Name: DICU
+    Before:  B9534558   After: B10882056  
+Routine Name: DICU1
+    Before: B27478967   After: B40453187  
+Routine Name: DICU11
+    Before:  B8569785   After:  B9783712  
+Routine Name: DICU2
+    Before: B28509022   After: B33741056  
+Routine Name: DICUF
+    Before:  B5596498   After:  B6875885  
+Routine Name: DICUIX
+    Before: B19486149   After: B22242347  
+Routine Name: DICUIX1
+    Before: B16679043   After: B18574038  
+Routine Name: DICUIX2
+    Before: B23523996   After: B41432193  
+Routine Name: DID
+    Before: B55438001   After: B63792365  
+Routine Name: DID1
+    Before: B22350667   After: B28866184  
+Routine Name: DID2
+    Before: B19378755   After: B22093336  
+Routine Name: DIDC
+    Before: B11995156   After: B13994272  
+Routine Name: DIDG
+    Before: B10960393   After: B12858782  
+Routine Name: DIDGFTPT
+    Before:       n/a   After: B21145327  
+Routine Name: DIDH
+    Before:  B9242602   After: B13186338  
+Routine Name: DIDH1
+    Before: B18710612   After: B22350242  
+Routine Name: DIDT
+    Before: B22414014   After: B25746733  
+Routine Name: DIDTC
+    Before: B31993211   After: B33887681  
+Routine Name: DIDU
+    Before: B38421854   After: B40609213  
+Routine Name: DIDU1
+    Before:  B5010653   After:  B6095790  
+Routine Name: DIDU2
+    Before: B10520607   After: B11796295  
+Routine Name: DIDX
+    Before: B14174516   After: B16519592  
+Routine Name: DIE
+    Before: B26226750   After: B29116200  
+Routine Name: DIE0
+    Before:  B9621443   After: B11334699  
+Routine Name: DIE1
+    Before: B32974046   After: B34953688  
+Routine Name: DIE17
+    Before: B34171966   After: B35585158  
+Routine Name: DIE2
+    Before: B21631586   After: B25349292  
+Routine Name: DIE3
+    Before:  B9307492   After: B10943342  
+Routine Name: DIE9
+    Before:  B9317908   After: B10675634  
+Routine Name: DIED
+    Before: B33714299   After: B41585163  
+Routine Name: DIEF
+    Before: B43636398   After: B48573761  
+Routine Name: DIEF1
+    Before: B37487550   After: B39614600  
+Routine Name: DIEFU
+    Before: B18137241   After: B20975822  
+Routine Name: DIEFW
+    Before:  B5964760   After:  B7404912  
+Routine Name: DIEH
+    Before: B24331424   After: B27393692  
+Routine Name: DIEH1
+    Before:  B2037708   After:  B3577246  
+Routine Name: DIEKMSG
+    Before: B13754310   After: B15262264  
+Routine Name: DIENV
+    Before:  B1881673   After:  B2815520  
+Routine Name: DIENVSTP
+    Before:  B1954124   After:  B2894514  
+Routine Name: DIENVWRN
+    Before:  B5804254   After:  B7000076  
+Routine Name: DIEQ
+    Before: B11843797   After: B14901755  
+Routine Name: DIEQ1
+    Before:  B2395851   After:  B3429657  
+Routine Name: DIET
+    Before:  B6774952   After: B11283464  
+Routine Name: DIETED
+    Before: B42722493   After: B45067450  
+Routine Name: DIEV
+    Before: B33978709   After: B36777734  
+Routine Name: DIEV1
+    Before: B10577263   After: B12004777  
+Routine Name: DIEVK
+    Before: B23210233   After: B24972299  
+Routine Name: DIEVK1
+    Before: B14431637   After: B16518737  
+Routine Name: DIEVS
+    Before:  B3815613   After:  B4943939  
+Routine Name: DIEZ
+    Before: B21739471   After: B23918443  
+Routine Name: DIEZ0
+    Before: B17398012   After: B20800523  
+Routine Name: DIEZ1
+    Before: B16252996   After: B18056790  
+Routine Name: DIEZ2
+    Before: B48725159   After: B53194545  
+Routine Name: DIEZ3
+    Before:  B2833570   After:  B3807911  
+Routine Name: DIEZ4
+    Before: B22103124   After: B23510065  
+Routine Name: DIFG
+    Before: B17306918   After: B18869356  
+Routine Name: DIFG0
+    Before: B13017489   After: B14386875  
+Routine Name: DIFG0A
+    Before:  B7422979   After:  B8351422  
+Routine Name: DIFG0B
+    Before:  B4034159   After:  B5025483  
+Routine Name: DIFG1
+    Before:  B9173679   After: B10463937  
+Routine Name: DIFG2
+    Before:  B9929124   After: B11230402  
+Routine Name: DIFG3
+    Before: B17999346   After: B19652188  
+Routine Name: DIFG3A
+    Before:  B6410567   After:  B7522041  
+Routine Name: DIFG4
+    Before: B14961226   After: B16448348  
+Routine Name: DIFG4A
+    Before:  B6028140   After:  B7088173  
+Routine Name: DIFG5
+    Before: B16513320   After: B18021042  
+Routine Name: DIFG6
+    Before: B17537334   After: B19058636  
+Routine Name: DIFG7
+    Before:  B4341549   After:  B6871293  
+Routine Name: DIFGA
+    Before: B21866378   After: B23615392  
+Routine Name: DIFGA1
+    Before:  B2167559   After:  B3142085  
+Routine Name: DIFGB
+    Before: B13963719   After: B15490569  
+Routine Name: DIFGG
+    Before: B11898926   After: B13263400  
+Routine Name: DIFGG2
+    Before: B17557890   After: B19125840  
+Routine Name: DIFGG4
+    Before:  B9827589   After: B11111543  
+Routine Name: DIFGGI
+    Before: B13638842   After: B15056912  
+Routine Name: DIFGGSB
+    Before:   B882763   After:  B1781341  
+Routine Name: DIFGGSB1
+    Before: B21174339   After: B22841765  
+Routine Name: DIFGGSB2
+    Before:  B7123478   After:  B8319924  
+Routine Name: DIFGGU
+    Before: B12026537   After: B13370535  
+Routine Name: DIFGO
+    Before:  B7118045   After:  B7273098  
+Routine Name: DIFGSRV
+    Before:  B1407297   After:  B2333771  
+Routine Name: DIFROM
+    Before: B24289999   After: B21951457  
+Routine Name: DIFROM0
+    Before: B13850662   After: B15620746  
+Routine Name: DIFROM1
+    Before: B12716761   After: B23066669  
+Routine Name: DIFROM11
+    Before: B11759100   After: B13141618  
+Routine Name: DIFROM12
+    Before:  B8387975   After:  B9654265  
+Routine Name: DIFROM2
+    Before:  B9241921   After: B15414347  
+Routine Name: DIFROM3
+    Before: B12146265   After: B14677007  
+Routine Name: DIFROM4
+    Before:  B5388270   After:  B6552448  
+Routine Name: DIFROM41
+    Before: B20867863   After: B22559845  
+Routine Name: DIFROM42
+    Before:  B5025929   After:  B6144143  
+Routine Name: DIFROM5
+    Before: B20181834   After: B21900952  
+Routine Name: DIFROM6
+    Before:  B9672128   After: B10969310  
+Routine Name: DIFROM7
+    Before: B12460475   After: B15087439  
+Routine Name: DIFROMH
+    Before: B15353616   After: B17189435  
+Routine Name: DIFROMH1
+    Before: B14570089   After: B16119787  
+Routine Name: DIFROMS
+    Before:  B3574527   After:  B4678953  
+Routine Name: DIFROMS1
+    Before: B15170577   After: B16610107  
+Routine Name: DIFROMS2
+    Before: B26731486   After: B31819880  
+Routine Name: DIFROMS3
+    Before: B24457545   After: B26073826  
+Routine Name: DIFROMS4
+    Before: B10964465   After: B12258348  
+Routine Name: DIFROMS5
+    Before:  B8826233   After: B12245418  
+Routine Name: DIFROMSB
+    Before:  B3298690   After:  B4332596  
+Routine Name: DIFROMSC
+    Before:  B3076804   After:  B4164530  
+Routine Name: DIFROMSD
+    Before:  B9701096   After: B10982400  
+Routine Name: DIFROMSE
+    Before: B11744556   After: B13094714  
+Routine Name: DIFROMSI
+    Before: B22932428   After: B24744090  
+Routine Name: DIFROMSK
+    Before:  B4168722   After:  B5223956  
+Routine Name: DIFROMSO
+    Before:  B4762626   After:  B5767152  
+Routine Name: DIFROMSP
+    Before: B20264792   After: B21733587  
+Routine Name: DIFROMSR
+    Before: B15623883   After: B17113161  
+Routine Name: DIFROMSS
+    Before:  B9509991   After: B10810089  
+Routine Name: DIFROMSU
+    Before: B14095296   After: B15676610  
+Routine Name: DIFROMSV
+    Before:   B143588   After:   B979166  
+Routine Name: DIFROMSX
+    Before: B11516704   After: B12999194  
+Routine Name: DIFROMSY
+    Before: B10531174   After: B11979232  
+Routine Name: DIG
+    Before: B30125105   After: B55499432  
+Routine Name: DIH
+    Before:  B7595077   After: B10185198  
+Routine Name: DII
+    Before: B19377008   After: B17528638  
+Routine Name: DII1
+    Before:  B1032872   After:  B1965958  
+Routine Name: DIIS
+    Before:   B519161   After:  B1545212  
+Routine Name: DIISC
+    Before:       n/a   After:   B831241  
+Routine Name: DIISS
+    Before: B20343943   After: B21843033  
+Routine Name: DIK
+    Before: B47561240   After: B53961903  
+Routine Name: DIK1
+    Before: B15344498   After: B16901852  
+Routine Name: DIKC
+    Before: B62037611   After: B64145913  
+Routine Name: DIKC1
+    Before: B26788475   After: B28214253  
+Routine Name: DIKC2
+    Before: B26790488   After: B28509510  
+Routine Name: DIKCBLD
+    Before: B39733013   After: B42177431  
+Routine Name: DIKCDD
+    Before:  B1225005   After:  B2173295  
+Routine Name: DIKCFORM
+    Before: B62031760   After: B64062743  
+Routine Name: DIKCP
+    Before: B23897104   After: B25441798  
+Routine Name: DIKCP1
+    Before: B42219628   After: B44465262  
+Routine Name: DIKCP2
+    Before:  B5867235   After:  B7080565  
+Routine Name: DIKCP3
+    Before: B13830895   After: B15175559  
+Routine Name: DIKCR
+    Before: B67682296   After: B69752924  
+Routine Name: DIKCU
+    Before: B26724872   After: B28216786  
+Routine Name: DIKCU1
+    Before: B27078408   After: B28599486  
+Routine Name: DIKCU2
+    Before: B20094003   After: B21441532  
+Routine Name: DIKCUTL
+    Before: B10299705   After: B12167996  
+Routine Name: DIKCUTL1
+    Before: B25551653   After: B27102729  
+Routine Name: DIKCUTL2
+    Before: B36745109   After: B38364492  
+Routine Name: DIKCUTL3
+    Before: B33630819   After: B35461317  
+Routine Name: DIKD
+    Before: B11219173   After: B12632602  
+Routine Name: DIKD1
+    Before:  B8180058   After:  B9346222  
+Routine Name: DIKD2
+    Before:  B6201758   After:  B7315815  
+Routine Name: DIKK
+    Before: B37541773   After: B39314531  
+Routine Name: DIKK1
+    Before: B11375543   After: B12525660  
+Routine Name: DIKK2
+    Before: B31667790   After: B33519760  
+Routine Name: DIKKDD
+    Before:  B1270060   After:  B2218310  
+Routine Name: DIKKFORM
+    Before:  B9396145   After: B10561415  
+Routine Name: DIKKP
+    Before: B20976608   After: B22571450  
+Routine Name: DIKKUTL
+    Before: B51065893   After: B53260963  
+Routine Name: DIKKUTL1
+    Before: B39320611   After: B41055800  
+Routine Name: DIKKUTL2
+    Before: B12003281   After: B13210431  
+Routine Name: DIKKUTL3
+    Before: B24457201   After: B25954679  
+Routine Name: DIKKUTL4
+    Before: B12465956   After: B13650195  
+Routine Name: DIKZ
+    Before: B29922049   After: B31939615  
+Routine Name: DIKZ0
+    Before: B25444668   After: B27339994  
+Routine Name: DIKZ1
+    Before: B14104346   After: B15632984  
+Routine Name: DIKZ11
+    Before:  B5036083   After:  B6082881  
+Routine Name: DIKZ2
+    Before:  B9360499   After: B10710541  
+Routine Name: DIL
+    Before:  B9955284   After: B13339114  
+Routine Name: DIL0
+    Before:  B8723089   After: B12098388  
+Routine Name: DIL1
+    Before: B10946402   After: B13766809  
+Routine Name: DIL11
+    Before:  B7236650   After: B11509462  
+Routine Name: DIL2
+    Before: B12870035   After: B13437509  
+Routine Name: DILF
+    Before:  B8456514   After:  B9709908  
+Routine Name: DILFD
+    Before:   B516904   After:  B1401850  
+Routine Name: DILIBF
+    Before: B26157808   After: B29537328  
+Routine Name: DILL
+    Before:  B8919415   After: B11498371  
+Routine Name: DIM
+    Before:  B4740054   After:  B5891817  
+Routine Name: DIM1
+    Before: B14065747   After: B15236463  
+Routine Name: DIM2
+    Before: B15444024   After: B17761345  
+Routine Name: DIM3
+    Before: B11429272   After: B12877285  
+Routine Name: DIM4
+    Before:  B9161757   After: B10464687  
+Routine Name: DINIT
+    Before: B26128318   After: B39059419  
+Routine Name: DINIT0
+    Before:  B7958527   After: B11557024  
+Routine Name: DINIT001
+    Before: B63567021   After: B72430307  
+Routine Name: DINIT002
+    Before: B62886779   After: B76113374  
+Routine Name: DINIT003
+    Before:  B2409541   After:  B3431923  
+Routine Name: DINIT004
+    Before: B58633717   After: B60455281  
+Routine Name: DINIT005
+    Before: B57435368   After: B60033850  
+Routine Name: DINIT006
+    Before: B56554334   After: B59216648  
+Routine Name: DINIT007
+    Before: B57304633   After: B59912627  
+Routine Name: DINIT008
+    Before: B56893811   After: B59527605  
+Routine Name: DINIT009
+    Before: B56957219   After: B59561769  
+Routine Name: DINIT00A
+    Before: B55860566   After: B58480928  
+Routine Name: DINIT00B
+    Before: B55501589   After: B58103907  
+Routine Name: DINIT00C
+    Before: B56044144   After: B58710346  
+Routine Name: DINIT00D
+    Before: B54554913   After: B57151031  
+Routine Name: DINIT00E
+    Before: B55853935   After: B58498517  
+Routine Name: DINIT00F
+    Before: B63813397   After: B66465311  
+Routine Name: DINIT00G
+    Before: B75544162   After: B78395376  
+Routine Name: DINIT00H
+    Before: B58152986   After: B60690748  
+Routine Name: DINIT00I
+    Before: B55116853   After: B57637843  
+Routine Name: DINIT00J
+    Before: B56683284   After: B59189130  
+Routine Name: DINIT00K
+    Before: B60905186   After: B67795802  
+Routine Name: DINIT00L
+    Before: B60045282   After: B64462187  
+Routine Name: DINIT00M
+    Before: B58167920   After: B60781442  
+Routine Name: DINIT00N
+    Before: B52903716   After: B55538312  
+Routine Name: DINIT00O
+    Before: B77990082   After: B80964832  
+Routine Name: DINIT00P
+    Before: B45640693   After: B48197368  
+Routine Name: DINIT00Q
+    Before: B56790232   After: B59595625  
+Routine Name: DINIT00R
+    Before: B49045160   After: B51715182  
+Routine Name: DINIT00S
+    Before: B44086643   After: B46713836  
+Routine Name: DINIT00T
+    Before: B50751846   After: B53433352  
+Routine Name: DINIT00U
+    Before: B50182151   After: B52654166  
+Routine Name: DINIT00V
+    Before: B51781941   After: B71569778  
+Routine Name: DINIT00W
+    Before: B48882759   After: B51445937  
+Routine Name: DINIT00X
+    Before: B69293238   After: B72371962  
+Routine Name: DINIT00Y
+    Before: B54955522   After: B57507136  
+Routine Name: DINIT00Z
+    Before: B59277456   After: B61895734  
+Routine Name: DINIT010
+    Before:  B2002861   After:  B3010635  
+Routine Name: DINIT011
+    Before: B61888833   After:B225360279  
+Routine Name: DINIT012
+    Before:  B8758657   After:B234854182  
+Routine Name: DINIT013
+    Before: B10208469   After: B38887683  
+Routine Name: DINIT02
+    Before:  B3191209   After:  B4210727  
+Routine Name: DINIT07
+    Before:  B4609612   After:  B9894895  
+Routine Name: DINIT08
+    Before: B25013828   After: B26898086  
+Routine Name: DINIT0F0
+    Before: B44055355   After: B46243125  
+Routine Name: DINIT0F1
+    Before: B52011854   After: B54266844  
+Routine Name: DINIT0F2
+    Before: B51790503   After: B54089103  
+Routine Name: DINIT0F3
+    Before: B27655287   After: B29533241  
+Routine Name: DINIT0F4
+    Before: B53667473   After: B55946103  
+Routine Name: DINIT0F5
+    Before: B81255234   After: B87765949  
+Routine Name: DINIT0F6
+    Before: B53017808   After: B56025723  
+Routine Name: DINIT0F7
+    Before: B56208641   After: B59250647  
+Routine Name: DINIT0F8
+    Before: B65240472   After: B66633570  
+Routine Name: DINIT0F9
+    Before: B57110980   After: B63015236  
+Routine Name: DINIT0FA
+    Before: B58401988   After: B60723858  
+Routine Name: DINIT0FB
+    Before: B57833769   After: B60248979  
+Routine Name: DINIT0FC
+    Before: B55136678   After: B57388116  
+Routine Name: DINIT0FD
+    Before: B55973646   After: B58264912  
+Routine Name: DINIT0FE
+    Before: B80145779   After: B82621885  
+Routine Name: DINIT0FF
+    Before: B48919155   After: B52329209  
+Routine Name: DINIT0FG
+    Before: B57756643   After: B68611736  
+Routine Name: DINIT0FH
+    Before: B52779667   After: B55059221  
+Routine Name: DINIT0FI
+    Before: B58102687   After: B60382365  
+Routine Name: DINIT0FJ
+    Before: B54610541   After: B56894475  
+Routine Name: DINIT0FK
+    Before: B56748713   After: B59065915  
+Routine Name: DINIT0FL
+    Before: B62197690   After: B64700712  
+Routine Name: DINIT0FM
+    Before: B58172938   After: B60624948  
+Routine Name: DINIT0FN
+    Before: B24126083   After: B25931709  
+Routine Name: DINIT1
+    Before: B10646101   After: B12360755  
+Routine Name: DINIT11
+    Before: B17127660   After: B18791706  
+Routine Name: DINIT11A
+    Before: B15789039   After: B17793940  
+Routine Name: DINIT11B
+    Before:  B6241009   After: B11511548  
+Routine Name: DINIT11C
+    Before:  B7866085   After: B22387975  
+Routine Name: DINIT12
+    Before: B20226922   After: B51543357  
+Routine Name: DINIT120
+    Before: B58743169   After: B61819750  
+Routine Name: DINIT121
+    Before: B58611552   After: B98041607  
+Routine Name: DINIT122
+    Before: B58321132   After: B60955922  
+Routine Name: DINIT123
+    Before: B56229608   After: B64814409  
+Routine Name: DINIT124
+    Before: B57572918   After: B60295980  
+Routine Name: DINIT125
+    Before: B57121800   After: B59801726  
+Routine Name: DINIT126
+    Before: B58510951   After: B61118441  
+Routine Name: DINIT127
+    Before:  B2715009   After:  B3747387  
+Routine Name: DINIT13
+    Before: B10871558   After: B17813928  
+Routine Name: DINIT14
+    Before: B10578447   After: B11872169  
+Routine Name: DINIT2
+    Before:   B971786   After:  B1891408  
+Routine Name: DINIT20
+    Before: B15809446   After: B36574363  
+Routine Name: DINIT21
+    Before: B10884786   After: B31320733  
+Routine Name: DINIT22
+    Before:  B3912587   After:  B5025069  
+Routine Name: DINIT220
+    Before:  B1099641   After:  B2043695  
+Routine Name: DINIT24
+    Before: B25392355   After: B62432777  
+Routine Name: DINIT25
+    Before: B31690399   After: B33729725  
+Routine Name: DINIT250
+    Before: B11576041   After: B13018271  
+Routine Name: DINIT255
+    Before:  B8413693   After:  B9749007  
+Routine Name: DINIT26
+    Before: B17208491   After: B18703817  
+Routine Name: DINIT260
+    Before: B19706298   After: B21490196  
+Routine Name: DINIT27
+    Before: B35103735   After: B37180089  
+Routine Name: DINIT270
+    Before: B32003143   After: B34089349  
+Routine Name: DINIT271
+    Before: B17239946   After: B18924552  
+Routine Name: DINIT27A
+    Before:  B8506286   After:  B9871068  
+Routine Name: DINIT27B
+    Before:  B6030106   After:  B7297212  
+Routine Name: DINIT27C
+    Before:  B5691809   After:  B6940631  
+Routine Name: DINIT27D
+    Before:  B5274201   After:  B6479247  
+Routine Name: DINIT27E
+    Before:  B4092836   After:  B5241954  
+Routine Name: DINIT27F
+    Before: B20710916   After: B22562982  
+Routine Name: DINIT27G
+    Before: B20702921   After: B22554263  
+Routine Name: DINIT27H
+    Before:  B1344286   After:  B2285584  
+Routine Name: DINIT27I
+    Before:  B2736047   After:  B3789317  
+Routine Name: DINIT27J
+    Before:  B9420524   After: B10846622  
+Routine Name: DINIT27K
+    Before:  B9676970   After: B11113300  
+Routine Name: DINIT28
+    Before:  B4452657   After:  B5591883  
+Routine Name: DINIT285
+    Before: B26202992   After: B28139826  
+Routine Name: DINIT286
+    Before:  B4756684   After:  B5921454  
+Routine Name: DINIT287
+    Before:  B1304706   After:  B2236304  
+Routine Name: DINIT290
+    Before: B59086880   After: B61600804  
+Routine Name: DINIT291
+    Before: B61668042   After: B72547342  
+Routine Name: DINIT292
+    Before: B58098725   After: B58763255  
+Routine Name: DINIT293
+    Before: B67309993   After: B69838263  
+Routine Name: DINIT294
+    Before: B49164290   After: B70239879  
+Routine Name: DINIT295
+    Before: B61437783   After: B61001773  
+Routine Name: DINIT296
+    Before: B60102403   After: B61111809  
+Routine Name: DINIT297
+    Before: B69953463   After: B72793217  
+Routine Name: DINIT298
+    Before: B57951359   After: B60603521  
+Routine Name: DINIT299
+    Before: B10446003   After: B11871329  
+Routine Name: DINIT29P
+    Before:  B2253208   After:  B7504880  
+Routine Name: DINIT2A0
+    Before: B63373592   After: B66040270  
+Routine Name: DINIT2A1
+    Before: B60024148   After: B62722550  
+Routine Name: DINIT2A2
+    Before: B67467623   After: B70329797  
+Routine Name: DINIT2A3
+    Before: B70618834   After: B73365108  
+Routine Name: DINIT2A4
+    Before: B35710310   After: B37901832  
+Routine Name: DINIT2A5
+    Before: B57815971   After: B60347141  
+Routine Name: DINIT2A6
+    Before:  B2017389   After:  B2991299  
+Routine Name: DINIT2AA
+    Before: B55114296   After: B57638034  
+Routine Name: DINIT2AB
+    Before:  B2841376   After:  B3912858  
+Routine Name: DINIT2AC
+    Before:  B1314275   After:  B2278361  
+Routine Name: DINIT2B0
+    Before:  B8450368   After:  B9765642  
+Routine Name: DINIT2B1
+    Before:  B3642256   After:  B4748286  
+Routine Name: DINIT2B2
+    Before: B15410391   After: B17014453  
+Routine Name: DINIT2B3
+    Before: B62405976   After: B64912134  
+Routine Name: DINIT2B4
+    Before:  B4650007   After:  B5790309  
+Routine Name: DINIT2B5
+    Before: B12848512   After: B14345202  
+Routine Name: DINIT2B6
+    Before: B12719140   After: B14212678  
+Routine Name: DINIT2B7
+    Before: B53454503   After: B55775121  
+Routine Name: DINIT2B8
+    Before: B26959485   After: B28776643  
+Routine Name: DINIT2B9
+    Before: B64263670   After: B66773764  
+Routine Name: DINIT2BA
+    Before: B14808510   After: B16378248  
+Routine Name: DINIT2BB
+    Before: B40140855   After: B42253993  
+Routine Name: DINIT2BC
+    Before:  B8865364   After: B10229990  
+Routine Name: DINIT2BD
+    Before:  B3870920   After:  B4985866  
+Routine Name: DINIT2BE
+    Before: B20967631   After: B22683961  
+Routine Name: DINIT2C0
+    Before: B58002996   After: B60822451  
+Routine Name: DINIT3
+    Before: B15662131   After: B17341309  
+Routine Name: DINIT4
+    Before: B11956513   After: B12812168  
+Routine Name: DINIT41
+    Before: B13576228   After: B14988866  
+Routine Name: DINIT42
+    Before: B28933576   After: B31196537  
+Routine Name: DINIT5
+    Before: B13319405   After: B15723509  
+Routine Name: DINIT6
+    Before: B12686138   After: B22938048  
+Routine Name: DINIT901
+    Before:       n/a   After: B85623390  
+Routine Name: DINIT902
+    Before:       n/a   After: B86841795  
+Routine Name: DINIT903
+    Before:       n/a   After:B147912253  
+Routine Name: DINIT904
+    Before:       n/a   After: B87770910  
+Routine Name: DINIT905
+    Before:       n/a   After: B84819072  
+Routine Name: DINIT906
+    Before:       n/a   After: B90363901  
+Routine Name: DINIT907
+    Before:       n/a   After: B82368551  
+Routine Name: DINIT908
+    Before:       n/a   After: B82086452  
+Routine Name: DINIT909
+    Before:       n/a   After: B86398562  
+Routine Name: DINIT910
+    Before:       n/a   After: B79015650  
+Routine Name: DINIT911
+    Before:       n/a   After:B123929853  
+Routine Name: DINITPST
+    Before:   B491612   After:  B1367770  
+Routine Name: DINVGTM
+    Before:       n/a   After:  B2956114  
+Routine Name: DINVGUX
+    Before:       n/a   After:  B2932531  
+Routine Name: DINVONT
+    Before: B14160734   After: B15719632  
+Routine Name: DINZONT
+    Before: B12229228   After: B13598186  
+Routine Name: DIO
+    Before: B12057737   After: B13548175  
+Routine Name: DIO0
+    Before: B16558960   After: B21842242  
+Routine Name: DIO1
+    Before: B11457291   After: B12770470  
+Routine Name: DIO2
+    Before:  B7178489   After:  B7793084  
+Routine Name: DIO3
+    Before:  B7177657   After:  B8830579  
+Routine Name: DIO4
+    Before:  B9747835   After: B12741730  
+Routine Name: DIOC
+    Before:  B1435051   After:  B2399793  
+Routine Name: DIOQ
+    Before:  B1463015   After:  B2413213  
+Routine Name: DIOS
+    Before: B14469040   After: B16064556  
+Routine Name: DIOS1
+    Before:  B1670584   After:  B2655026  
+Routine Name: DIOU
+    Before: B11969375   After: B13380985  
+Routine Name: DIOZ
+    Before: B10657404   After: B12266733  
+Routine Name: DIP
+    Before: B28763431   After: B34639315  
+Routine Name: DIP0
+    Before: B17622044   After: B21077640  
+Routine Name: DIP1
+    Before: B25462384   After: B36571552  
+Routine Name: DIP10
+    Before:  B8287887   After:  B9608293  
+Routine Name: DIP100
+    Before: B12175538   After: B13819708  
+Routine Name: DIP11
+    Before: B21981037   After: B25404299  
+Routine Name: DIP12
+    Before:  B9165504   After: B17779972  
+Routine Name: DIP2
+    Before: B12951211   After: B15374985  
+Routine Name: DIP21
+    Before: B16717337   After: B19043346  
+Routine Name: DIP22
+    Before: B12126480   After: B16538008  
+Routine Name: DIP23
+    Before:   B554582   After:  B1422176  
+Routine Name: DIP3
+    Before: B16222623   After: B20640006  
+Routine Name: DIP31
+    Before:  B1903129   After:  B2886127  
+Routine Name: DIP4
+    Before:  B4476979   After:  B5844593  
+Routine Name: DIP5
+    Before: B18516723   After: B23938966  
+Routine Name: DIPT
+    Before: B14839866   After: B16317420  
+Routine Name: DIPTED
+    Before: B42280045   After: B44306671  
+Routine Name: DIPZ
+    Before: B17402853   After: B19433071  
+Routine Name: DIPZ0
+    Before:  B4753333   After:  B5805208  
+Routine Name: DIPZ1
+    Before:  B4286273   After:  B5600344  
+Routine Name: DIPZ2
+    Before: B13159894   After: B14004625  
+Routine Name: DIQ
+    Before: B47760134   After: B71954744  
+Routine Name: DIQ1
+    Before:  B6672194   After:  B9302112  
+Routine Name: DIQG
+    Before: B36451220   After: B41416251  
+Routine Name: DIQGDD
+    Before: B16587512   After: B18255834  
+Routine Name: DIQGDD0
+    Before:  B3663281   After:  B4764255  
+Routine Name: DIQGDDF
+    Before:  B3292905   After:  B4391991  
+Routine Name: DIQGDDT
+    Before: B20904294   After: B22595580  
+Routine Name: DIQGDDU
+    Before:  B4331401   After:  B5433403  
+Routine Name: DIQGQ
+    Before: B30616945   After: B33841336  
+Routine Name: DIQGU
+    Before:  B6424161   After:  B8063338  
+Routine Name: DIQGU0
+    Before:  B4654245   After:  B5767563  
+Routine Name: DIQQ
+    Before: B18980237   After: B16261341  
+Routine Name: DIQQ1
+    Before:  B1488662   After:  B2401852  
+Routine Name: DIQQQ
+    Before:  B7471721   After:  B6836791  
+Routine Name: DIR
+    Before: B22624291   After: B37985105  
+Routine Name: DIR0
+    Before: B21095297   After: B22086566  
+Routine Name: DIR01
+    Before: B25281390   After: B38819262  
+Routine Name: DIR02
+    Before:  B6319642   After:  B6432976  
+Routine Name: DIR03
+    Before: B22304897   After: B24484673  
+Routine Name: DIR0H
+    Before:  B3512813   After:  B5478992  
+Routine Name: DIR0K
+    Before:  B4393676   After:  B7143453  
+Routine Name: DIR0W
+    Before: B12191085   After: B13467073  
+Routine Name: DIR1
+    Before: B25120452   After: B33938437  
+Routine Name: DIR2
+    Before: B16440397   After: B21976864  
+Routine Name: DIR3
+    Before: B11438385   After: B13302663  
+Routine Name: DIRCR
+    Before:  B5670256   After:  B6806574  
+Routine Name: DIRQ
+    Before:  B1276937   After:  B2200667  
+Routine Name: DIS
+    Before: B22841666   After: B24614952  
+Routine Name: DIS0
+    Before: B11743531   After: B13137581  
+Routine Name: DIS1
+    Before: B11677620   After: B13217519  
+Routine Name: DIS2
+    Before:  B8667742   After: B10029736  
+Routine Name: DIS3
+    Before:  B1940736   After:  B2907754  
+Routine Name: DIT
+    Before: B12321898   After: B14200499  
+Routine Name: DIT0
+    Before:  B4265897   After:  B5572177  
+Routine Name: DIT1
+    Before: B22503370   After: B24365604  
+Routine Name: DIT2
+    Before:  B2969296   After:  B3938706  
+Routine Name: DIT3
+    Before: B10579039   After: B12035981  
+Routine Name: DITC
+    Before: B11832198   After: B13087165  
+Routine Name: DITC0
+    Before:  B6520423   After:  B7619177  
+Routine Name: DITC1
+    Before:  B8421674   After:  B9707084  
+Routine Name: DITC2
+    Before: B15598931   After: B17112853  
+Routine Name: DITC3
+    Before:  B5783907   After:  B6929705  
+Routine Name: DITCP
+    Before:       n/a   After:B105236319  
+Routine Name: DITCP0
+    Before:       n/a   After:  B8883877  
+Routine Name: DITCPL
+    Before:       n/a   After:  B9679636  
+Routine Name: DITM
+    Before:  B9985415   After: B11344209  
+Routine Name: DITM1
+    Before:  B3879160   After:  B4887374  
+Routine Name: DITM2
+    Before:  B9327932   After: B10523901  
+Routine Name: DITMGM1
+    Before:  B5206664   After:  B6287319  
+Routine Name: DITMGM2
+    Before:  B5464405   After:  B6487548  
+Routine Name: DITMGM2A
+    Before: B11996814   After: B12976488  
+Routine Name: DITMGM2B
+    Before:  B7155774   After:  B8272429  
+Routine Name: DITMGM2C
+    Before:  B7149742   After:  B8273244  
+Routine Name: DITMGMRG
+    Before: B10793866   After: B12275591  
+Routine Name: DITMGMRI
+    Before:  B5784623   After:  B6859350  
+Routine Name: DITMU1
+    Before:   B682376   After:  B1543233  
+Routine Name: DITMU2
+    Before:  B2289547   After:  B3266560  
+Routine Name: DITMU3
+    Before:   B604292   After:  B1470446  
+Routine Name: DITMU4
+    Before: B11043482   After: B12237288  
+Routine Name: DITP
+    Before:  B9073053   After: B11755027  
+Routine Name: DITR
+    Before: B11172020   After: B12610542  
+Routine Name: DITR1
+    Before: B25341107   After: B26751650  
+Routine Name: DIU
+    Before:  B9210427   After: B11251626  
+Routine Name: DIU0
+    Before:  B9844434   After: B11173712  
+Routine Name: DIU1
+    Before: B24307273   After: B26162371  
+Routine Name: DIU2
+    Before: B13401511   After: B16087582  
+Routine Name: DIU20
+    Before:  B7688182   After:  B8365450  
+Routine Name: DIU21
+    Before: B13262833   After: B14825975  
+Routine Name: DIU3
+    Before:  B9509759   After: B14441340  
+Routine Name: DIU31
+    Before: B12809945   After: B14822365  
+Routine Name: DIU4
+    Before:  B6823741   After:  B8056103  
+Routine Name: DIU5
+    Before:   B525476   After:  B1417830  
+Routine Name: DIUCANON
+    Before:       n/a   After:  B3571666  
+Routine Name: DIUTL
+    Before:  B3270948   After:  B7082619  
+Routine Name: DIV
+    Before: B15822662   After: B17758582  
+Routine Name: DIVC
+    Before: B18523655   After: B19993557  
+Routine Name: DIVR
+    Before: B33990555   After: B50776190  
+Routine Name: DIVR1
+    Before: B31375752   After: B33434318  
+Routine Name: DIVRE
+    Before: B13326016   After: B15036132  
+Routine Name: DIVRE1
+    Before:   B740464   After:  B1628386  
+Routine Name: DIVRPTR
+    Before:       n/a   After: B11708453  
+Routine Name: DIVU
+    Before:  B5363094   After:  B6517128  
+Routine Name: DIWE
+    Before: B10401197   After: B14863732  
+Routine Name: DIWE1
+    Before: B15137861   After: B16240420  
+Routine Name: DIWE11
+    Before:  B7208531   After:  B4200843  
+Routine Name: DIWE12
+    Before:  B7432676   After:  B8698127  
+Routine Name: DIWE2
+    Before:  B9522420   After: B11116076  
+Routine Name: DIWE3
+    Before: B40970790   After: B39883630  
+Routine Name: DIWE4
+    Before: B14110150   After: B17560786  
+Routine Name: DIWE5
+    Before: B13434593   After:  B9514610  
+Routine Name: DIWF
+    Before:  B7080204   After:  B8345466  
+Routine Name: DIWP
+    Before: B12664290   After: B14057388  
+Routine Name: DIWW
+    Before:  B8743804   After: B10037102  
+Routine Name: DIX
+    Before:  B3921519   After:  B4600032  
+Routine Name: DIXC
+    Before:  B8674364   After: B11391155  
+Routine Name: DMSQ
+    Before: B23371454   After: B25331680  
+Routine Name: DMSQD
+    Before: B36958882   After: B39149252  
+Routine Name: DMSQE
+    Before:  B1411402   After:  B2359664  
+Routine Name: DMSQF
+    Before: B43258505   After: B45570375  
+Routine Name: DMSQF1
+    Before: B26206660   After: B28214346  
+Routine Name: DMSQF2
+    Before: B32449248   After: B34562098  
+Routine Name: DMSQP
+    Before:  B4690298   After:  B5848348  
+Routine Name: DMSQP1
+    Before: B10265076   After: B11682814  
+Routine Name: DMSQP2
+    Before: B16765933   After: B18446247  
+Routine Name: DMSQP3
+    Before: B50289282   After: B52830880  
+Routine Name: DMSQP4
+    Before:  B4063575   After:  B5199261  
+Routine Name: DMSQP5
+    Before: B14044880   After: B15649646  
+Routine Name: DMSQP6
+    Before: B33008511   After: B35161409  
+Routine Name: DMSQS
+    Before:  B7790765   After:  B9123119  
+Routine Name: DMSQT
+    Before: B60107894   After: B62601684  
+Routine Name: DMSQT1
+    Before:  B2302596   After:  B3298822  
+Routine Name: DMSQU
+    Before: B48989916   After: B51341690  
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2015
+Completed By:                               Date Completed: AUG 03, 2016
+Released By :                               Date Released : AUG 04, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

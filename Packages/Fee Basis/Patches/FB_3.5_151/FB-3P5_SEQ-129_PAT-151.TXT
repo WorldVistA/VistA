@@ -1,0 +1,374 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 05/19/14 at 15:57
+=============================================================================
+Run Date: OCT 30, 2014                     Designation: FB*3.5*151
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #129                    Status: Released
+                  Compliance Date: NOV 29, 2014
+=============================================================================
+
+Associated patches: (v)FB*3.5*32   <<= must be installed BEFORE `FB*3.5*151'
+                    (v)FB*3.5*108  <<= must be installed BEFORE `FB*3.5*151'
+
+Subject: RETAIN HISTORICAL DATA ENHANCEMENT
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+ This is the first of two Fee Basis patches for the VistA Fee Separation of
+ Duties project.  This patch enhances Fee Basis to retain historical data
+ for selected fields in order to maintain complete records on actions for
+ accounting, information integrity and control. The second patch, 
+ FB*3.5*154, will be released at a later time and it contains enhancements 
+ to enforce separation of duties.
+  
+ Patch FB*3.5*151 will enhance the Fee Basis package as follows:
+  
+ 1. RETAIN DATE OF REQUEST FOR ADDITIONAL INFORMATION LETTER
+  
+    This patch adds the DATE REQ INFO SENT (#19.6) field to the FEE BASIS
+    UNAUTHORIZED CLAIMS (#162.7) file. This field contains the most recent
+    date a request for additional information letter was sent for the
+    claim. This field is automatically populated by the software when 
+    letters are generated and when the Update Date Letter Sent [FBUC UPDATE
+    DATE LETTER SENT] option is used. The field will not reflect activity
+    that occurred prior to installation of the patch.
+  
+  
+ 2. AUDIT VALUE OF 13 DATA FIELDS FOR UNAUTHORIZED CLAIMS
+  
+    This patch enhances the software to maintain a history of changes to 
+    the value of thirteen fields in the FEE BASIS UNAUTHORIZED CLAIMS 
+    (#162.7) file. The system will retain the date and time of the change,
+    the old value, the new value, and the person that made the change.  
+    Once the patch is installed the system will retain this information for
+    the following fields:
+       STATUS  (#24)
+       DISPOSITION  (#10) 
+       DATE CLAIM RECEIVED  (#.01) 
+       DATE REQ INFO SENT (#19.6)
+       DATE VALID CLAIM RECEIVED  (#7)
+       DATE OF DISPOSITION  (#11)
+       REOPEN CLAIM DATE  (#21)
+       NOTICE OF DISAGREEMENT RECV'D  (#50)
+       STATEMENT OF THE CASE ISSUED  (#51)
+       DATE SUBSTANTIVE APPEAL RECV'D  (#52)
+       DATE APPEAL DISPOSITIONED  (#53)
+       DATE APPEALED TO COVA  (#54)
+       DATE COVA APPEAL DISPOSITIONED  (#55)
+  
+  
+ 3. MODIFY DISPLAY UNAUTHORIZED CLAIM OPTION
+  
+    This patch modifies the Display Unauthorized Claim [FBUC DISPLAY 
+    UNAUTHORIZED] option to optionally show historical data. After a claim
+    has been selected the option will either state there is no historical
+    audit data for the claim or it will ask 'Show historical audit data?
+    NO//'.  If the user responds YES to the question the output will
+    include a new section that displays all changes to the value of the 
+    thirteen monitored fields since installation of this patch.
+  
+    An example of the new output section follows:
+  
+                < HISTORICAL AUDIT DATA (since patch FB*3.5*151)>
+  
+  CHANGED DATE/TIME: MAR 12, 2014@14:13:18
+    FIELD: NOTICE OF DISAGREEMENT RECV'D  NEW VALUE: MAR 12, 2014
+    CHANGED BY: FEECLERK,FIRST A
+  CHANGED DATE/TIME: MAR 12, 2014@14:13:19
+    FIELD: STATUS                         OLD VALUE: DISPOSITIONED
+    NEW VALUE: APPEAL/NOTICE OF DISAGREE RECV
+    CHANGED BY: FEECLERK,FIRST A
+  
+  
+ 4. AUDIT VALUE OF 5 DATA FIELDS FOR AUTHORIZATIONS
+  
+    This patch enhances the software to maintain a history of changes to 
+    the value of five fields in the AUTHORIZATION multiple of the FEE BASIS
+    PATIENT (#161) file. The system will retain the date and time of the
+    change, the old value, the new value, and the person that made the
+    change.  Once the patch is installed the system will retain this
+    information for the following fields:
+       FROM DATE (#.01)
+       TO DATE (#.02)
+       DISCHARGE TYPE (#.06)
+       PURPOSE OF VISIT CODE (#.07)
+       TREATMENT TYPE CODE (#.095)
+  
+  
+ 5. ADD HISTORICAL AUTHORIZATION DATA REPORT 
+  
+    This patch adds a new menu option called Historical Authorization Data
+    Report [FBAA AUTH DATA AUDIT RPT]. The option displays the current 
+    authorization data and the historical audit data for an authorization.
+    The historical audit data displays all changes to the value of the five
+    monitored fields since installation of this patch. This option is
+    located on the Outputs Main Menu [FBAA OUTPUTS MENU] under the Medical
+    Fee Main Menu [FBAA MEDICAL MAIN MENU].
+  
+    An example of the new report follows:
+  
+  Historical Authorization Data Report             MAR 13, 2014@15:11:09
+  Patient: FEEPATIENT,FEE C   Pt.ID: 000-00-5401
+  
+  Current Authorization Data: 
+  FROM DATE: MAR 13, 2014                 TO DATE: APR 15, 2014
+    FEE PROGRAM: OUTPATIENT               PRIMARY SERVICE AREA: ALBANY
+    PURPOSE OF VISIT CODE: OPT - SC 50% OR MORE
+    TREATMENT TYPE CODE: SHORT TERM FEE STATUS
+    PATIENT TYPE CODE: MEDICAL            ACCIDENT RELATED (Y/N): NO
+    POTENTIAL COST RECOVERY CASE: NO      CLERK:                
+    PRINT AUTHORIZATION (Y/N): Y
+  
+  Historical Audit Data (since patch FB*3.5*151): 
+  CHANGED DATE/TIME: MAR 13, 2014@15:09:12
+    FIELD: FROM DATE                      NEW VALUE: MAR 13, 2014
+    CHANGED BY: FEECLERK,FIRST
+  CHANGED DATE/TIME: MAR 13, 2014@15:09:50
+    FIELD: TO DATE                        NEW VALUE: APR 12, 2014
+    CHANGED BY: FEECLERK,FIRST
+  CHANGED DATE/TIME: MAR 13, 2014@15:09:50
+    FIELD: PURPOSE OF VISIT CODE          NEW VALUE: OPT - SC 50% OR MORE
+    CHANGED BY: FEECLERK,FIRST
+  CHANGED DATE/TIME: MAR 13, 2014@15:09:50
+    FIELD: TREATMENT TYPE CODE            NEW VALUE: SHORT TERM FEE STATUS
+    CHANGED BY: FEECLERK,FIRST
+  CHANGED DATE/TIME: MAR 13, 2014@15:10:55
+    FIELD: TO DATE                        OLD VALUE: APR 12, 2014
+    NEW VALUE: APR 15, 2014               CHANGED BY: FEECLERK,FIRST
+  
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)      New/Modified/Deleted
+ ------------------         -------------------      --------------------
+ FEE BASIS PATIENT (#161)   FROM DATE (#.01)           Cross-reference
+   AUTHORIZATION multiple   TO DATE (#.02)             Cross-reference
+                            DISCHARGE TYPE (#.06)      Cross-reference
+                            PURPOSE OF VISIT CODE      Cross-reference
+                            (#.07)
+                            TREATMENT TYPE CODE        Cross-reference
+                            (#.095)
+                            DATA AUDIT (#293)          New
+                            
+  
+ FEE BASIS UNAUTHORIZED     DATE CLAIM RECEIVED        Cross-reference
+ CLAIMS (#162.7)            (#.01)
+                            DATE VALID CLAIM RECEIVED  Cross-reference
+                            (#7) 
+                            DISPOSITION (#10)          Cross-reference
+                            DATE OF DISPOSITION (#11)  Cross-reference
+                            DATE LETTER SENT (#19.5)   Cross-reference
+                            DATE REQ INFO SENT (#19.6) New
+                            REOPEN CLAIM DATE (#21)    Cross-reference
+                            STATUS  (#24)              Cross-reference
+                            NOTICE OF DISAGREEMENT     Cross-reference
+                            RECV'D (#50)
+                            STATEMENT OF THE CASE      Cross-reference
+                            ISSUED (#51)
+                            DATE SUBSTANTIVE APPEAL    Cross-reference
+                            RECV'D (#52)
+                            DATE APPEAL DISPOSITIONED  Cross-reference
+                            (#53)
+                            DATE APPEALED TO COVA      Cross-reference
+                            (#54)
+                            DATE COVA APPEAL           Cross-reference
+                            DISPOSITIONED (#55)
+                            DATA AUDIT (#293)          New
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: 
+  
+ Option Name               Type            New/Modified/Deleted
+ -----------               ----            -------------------- 
+ FBAA AUTH DATA AUDIT RPT  Routine         New
+ FBAA OUTPUTS MENU         Menu            Use as Link
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ 20090309 Emergency Patch VistA Fee - Separation of Duties - Assignment of 
+ Keys 
+  
+  
+ Patient Safety Issues (PSIs): N/A
+ -----------------------------
+  
+  
+ Remedy Ticket(s) & Overview: N/A
+ ----------------------------
+  
+ Test Sites:
+ ----------
+  Aleda E. Lutz VA Medical Center, Saginaw (Medium) 
+  Wilkes-Barre VA Medical Center (Large)
+  VA Maryland Health Care System (Integrated)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+  Fee Basis User Manual        FEE3_5_UM_R1014.PDF             (binary)
+  Fee Basis Technical Manual   FEE3_5_TM_R1014.PDF             (binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ The post install routine automatically recompiles any compiled input
+ templates which reference one or more of the following fields in the
+ AUTHORIZATION multiple of the FEE BASIS PATIENT (#161) file:
+   FROM DATE (#.01)
+   TO DATE (#.02)
+   DISCHARGE TYPE (#.06)
+   PURPOSE OF VISIT CODE (#.07)
+   TREATMENT TYPE CODE (#.095)
+  
+ Just the FBAA AUTHORIZATION input template will be recompiled at a 
+ site with no local modifications and no locally developed software.
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ There are no pre-installation instructions for this patch.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection in the OPTION (#19) file be disabled to prevent
+ possible conflicts while running the KIDS Install. Other VISTA users will
+ not be affected.
+   Enter Authorization [FBAA ENTER AUTHORIZATION]
+  
+  
+ Installation Instructions:
+ --------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     #(ex. FB*3.5*151):
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//' answer NO unless your system does not do this in a
+     nightly TaskMan process.    
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer YES if installing during work hours.
+  
+     When prompted 'Enter options you wish to mark as 'Out Of
+     Order':'  Enter the following option:
+       Enter Authorization [FBAA ENTER AUTHORIZATION]
+  
+     When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <return>.
+  
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' answer 0.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ 9.  (Optional) Delete the FBXIP151 install routine.
+  
+     Routine FBXIP151 is a post install routine that is invoked when the 
+     patch is installed. Routine FBXIP151 can be deleted after a successful
+     installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAAAUD
+    Before:       n/a   After:  B5207373  **151**
+Routine Name: FBAAAUDR
+    Before:       n/a   After:  B6423644  **151**
+Routine Name: FBSHAUT
+    Before: B73848186   After: B76425162  **13,108,151**
+Routine Name: FBUCAUD
+    Before:       n/a   After:  B6338424  **151**
+Routine Name: FBUCDIS
+    Before: B16705793   After: B20964227  **32,151**
+Routine Name: FBXIP151
+    Before:       n/a   After:  B1135179  **151**
+ 
+Routine list of preceding patches: 32, 108
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2013
+Completed By:                               Date Completed: OCT 09, 2014
+Released By :                               Date Released : OCT 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

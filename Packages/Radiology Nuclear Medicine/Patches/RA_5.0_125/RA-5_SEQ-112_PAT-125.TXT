@@ -1,0 +1,218 @@
+$TXT Created by                    at DEV.DEV.DOMAIN.EXT  (KIDS) on Wednesday, 01/27/16 at 10:45
+=============================================================================
+Run Date: JUL 19, 2016                     Designation: RA*5*125
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #112                      Status: Released
+                  Compliance Date: AUG 19, 2016
+=============================================================================
+
+Associated patches: (v)RA*5*47     <<= must be installed BEFORE `RA*5*125'
+                    (v)RA*5*106    <<= must be installed BEFORE `RA*5*125'
+
+Subject: THE PARENT TRAP; RETURN TO SENDER & HL7 RESEND
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. Correct a bug in the way the 'Incomplete Exam Report' handles 
+    descendant studies.
+ 2. Correct the bug issue in routine RAHLR1 which leaves the procedure 
+    flag variable being defined. 
+ 3. HL7 applications thought to be excluded also receive v2.4 HL7 messages.
+ 4. Correct the voice recognition duplicate message issue.
+  
+ Associated Ticket(s):
+ =====================
+ 1. INC000001287775 - Radiology - HL7 Issue
+ 2. INC000001239118 - 6 Radiology - HL7 Issue: Messages
+ 3. INC000000944315 - Radiology - HL7 Issue
+ 4. R6223790FY16 - Radiology Service HL7 work 6 WAS | Vista needs to stop
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Charleston VAMC
+ Martinsburg VAMC 
+  
+ Ticket Overview:
+ ================
+ 1. INC000001287775 - Radiology - HL7 Issue
+  
+ Problem:
+ --------
+ A bug in the 'Incomplete Exam Report' [RA INCOMPLETE] option incorrectly 
+ handles the descendant studies associated with exam sets or print sets. 
+ The variable RACN in routine RADLQ3 is incorrectly reset to the site 
+ specific accession number, preventing the $O from performing as intended.
+   
+ Resolution:
+ -----------
+ Within routine RADLQ3, the variable RACN is preserved by the NEW
+ command.
+  
+ Routine: RADLQ3
+    
+ 2. INC000001239118 - 6 Radiology - HL7 Issue: Messages
+  
+ Problem:
+ --------
+ A bug in routine RAHLR1 leaves a parent procedure flag variable
+ defined after series of descendant studies has been built into Health
+ Level Seven (HL7) v2.4 Order (ORM) messages. These ORM messages are 
+ then broadcast to other HL7 subscribers with the erroneous parent 
+ procedure flag.
+   
+ Resolution:
+ -----------
+ Clear the parent procedure flag for each study prior to executing the
+ parent procedure function to build v2.4 HL7 ORM messages.
+  
+ Routine: RAHLR1
+   
+ 3. INC000000944315 - Radiology - HL7 Issue
+  
+ Problem:
+ --------
+ When a user executes the 'Resend Radiology HL7 Messages By Date 
+ Range' [RA HL7 RESEND BY DATE RANGE] option, the HL7 applications thought 
+ to be excluded also receive v2.4 HL7 messages.
+            
+ Resolution:
+ -----------
+ The routine RAHLRU will be updated to include the software 
+ responsible for excluding all non-user selected HL7 applications from
+ receiving rebroadcast v2.4 HL7 messages.
+   
+ Note:
+ -----
+ 'Resend Radiology HL7 Messages By Date Range' allows the user to 
+ select the HL7 Application, in this case the receiving application, to
+ messages to be re-broadcast. This option does not look at the HL7 version 
+ when deciding which subscribers receive re-broadcast HL7 messages.
+  
+ Routine: RAHLRU
+   
+ 4. R6223790FY16 - Radiology Service HL7 work 6. WAS | Vista needs to stop 
+                   re-broadcasting to the original sender.
+  
+ Problem:
+ --------
+ The voice recognition vendor that initiated the broadcast of the
+ v2.4 HL7 ORU to the VistA Radiology has that same message broadcast back
+ to them. This is a result of the voice recognition vendor initiating the
+ broadcast being a subscriber to VistA Radiology side ORU v2.4 report
+ events.
+   
+ Resolution:
+ -----------
+ VistA Radiology will add the functionality to identify
+ the HL7 sending application of the v2.4 HL7 ORU HL7 message from our 
+ vendor and exclude that voice recognition vendor from the list of
+ subscribers.
+  
+ Routine: RAHLRU
+  
+     ==================== Installation Instructions ====================
+  This patch cannot be installed with Radiology/Nuclear Medicine users on
+  the system. This patch should take less than five minutes to install.
+   
+  All VistA Radiology users are to be off the system. Voice Recognition 
+  and Radiology based PACS activities are to be paused while RA*5.0*125 is
+  installed.
+   
+  1. Shutdown HL7 messaging between the VistA RIS and non-VistA RIS 
+     applications, by using the "Filer and Link Management Options [menu]".
+  
+  2. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+     option will load the KIDS patch onto your system.
+   
+  3. The patch has now been loaded into a Transport global on your
+     system. You now need to use KIDS to install the transport global.
+   
+  4. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+     select the 'Installation' menu.
+   
+  5. Use the 'Verify Checksum in Transport Global' option and verify
+     that all routines have the correct checksums.
+   
+  6. On the KIDS menu, under the 'Installation' menu, use the following
+     options:
+             Print Transport Global
+             Compare Transport Global to Current System
+             Backup a Transport Global
+   
+        Preserve a copy of the routines exported in this patch prior to
+        installation, you should use the 'Backup a Transport Global' option
+        at this time. You may also compare the routines in your production
+        account to the routines in the patch by using the 'Compare a
+        Transport Global to Current System' option.
+  
+  7. Use the 'Install Package(s)' option under the 'Installation' menu 
+     and select the package 'RA*5.0*125.
+   
+     When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//, 
+     choose 'NO'.
+   
+     When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//', choose YES.
+      
+     When prompted, 'Enter options you wish to mark as 'Out Of order':', 
+     enter the following options:
+      
+     Disable the following VistA RIS options:
+     ----------------------------------------
+     Exam Entry/Edit Menu            [RA EXAMEDIT]
+     Incomplete Exam Report          [RA INCOMPLETE]
+     Delinquent Status Report        [RA DELINQUENT]
+     Resend Radiology HL7 Message    [RA HL7 MESSAGE RESEND]
+     Resend Radiology HL7 Messages By Date Range [RA HL7 RESEND BY 
+     DATE RANGE]
+      
+  
+  8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  
+   ==================== Post-Installation Instructions ====================
+     Restart HL7 messaging between the VistA RIS and non-VistA RIS
+     applications, by using the "Filer and Link Management Options [menu]".
+  
+  The installation of RA*5.0*125 is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RADLQ3
+    Before: B23869496   After: B24380581  **87,93,47,125**
+Routine Name: RAHLR1
+    Before: B24833741   After: B25001746  **47,125**
+Routine Name: RAHLRU
+    Before: B44912236   After: B50865830  **10,25,81,103,47,125**
+ 
+Routine list of preceding patches: 47
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2015
+Completed By:                               Date Completed: JUL 12, 2016
+Released By :                               Date Released : JUL 19, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

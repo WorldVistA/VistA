@@ -1,0 +1,239 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 06/23/14 at 09:52
+=============================================================================
+Run Date: AUG 14, 2015                     Designation: MD*1*37
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #27                      Status: Released
+                  Compliance Date: SEP 14, 2015
+=============================================================================
+
+Associated patches: (v)MD*1*11     <<= must be installed BEFORE `MD*1*37'
+                    (v)MD*1*20     <<= must be installed BEFORE `MD*1*37'
+
+Subject: PROCEDURE AUTO CHECK-IN ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following 4 issues:
+  
+ 1) Procedure Auto Check-in functionality with Clinical Procedures (CP) 
+    does not work if you have a patient with two or more appointments 
+    scheduled for the same day, with two different procedures, in two 
+    different clinics. It will only check-in one, causing the user to have
+    to perform manual check-ins for the  other procedures.
+  
+ 2) When Patch MD*1.0*23 was released, the Implementation Guide was not 
+    updated completely. There are references to a 'Permissions Button' and
+    instructions on how to use the Permissions Button' in the CP Console
+    GUI that no longer exist.
+  
+ 3) During data entry in menu Auto Study Check-In Setup [MD AUTO CHECK-IN 
+    SETUP] option, if the user attempts to use an "^" (up-caret) to exit
+    the option during a procedure/Clinic lookup, an UNDEF (Undefined) error
+    will occur.
+  
+ 4) During the release of patch MD*1.0*23, an interface routine was not 
+    included with the patch distribution by mistake.  This routine,
+    MDHL7M3, needs to be available for sites if they plan to use a GE Image
+    Vault Electrocardiogram Storage Device.
+  
+            
+ Associated Remedy tickets:
+ ==========================
+ 1) INC000000451758  Auto Study Check-In Not Working
+    DUPLICATES:
+    INC000000721020  Auto Check In not working - Intermittent Issue
+ 2) INC000000626367  Patch 23 documentation error
+ 3) INC000001007464  Clinical Procedures - Auto Check-in
+ 4) INC000000590845  interface image vault - Tucson
+      
+  
+ Associated NSR(s):
+ ==================
+ N/A
+       
+  
+ Participating Test Sites:
+ =========================
+ Salisbury VAMC, NC
+ Central Plains HCS (Iowa City) 
+  
+  
+ REMEDY OVERVIEW:
+ ================           
+ 1) INC000000451758 Auto Study Check-In Not Working
+  
+ Problem: #1
+ -----------
+ When using the Procedure Auto Check-in functionality with Clinical 
+ Procedures, if you have a patient with two or more appointments scheduled
+ for the same day, with two different procedures, in two different clinics,
+ the system will not Auto Check in multiple procedures.  It will only
+ check-in one causing the user to have to perform manual check-ins for
+ the other procedures.  
+   
+ Resolution: #1
+ --------------
+ Routine MDWOR will be modified to allow multiple procedures with 
+ different clinics to Auto Check-in.
+      
+      
+ 2) INC000000626367  Patch 23 documentation error
+      
+ Problem: #2
+ -----------
+ When Patch MD*1*23 was released, the Implementation Guide was not updated
+ completely.  There are references to a 'Permissions Button' and 
+ instructions on how to use the  'Permissions Button' in the CP Console GUI
+ that no longer exists. 
+      
+ Resolution: #2
+ --------------
+ A new copy of the Implementation Guide is being released with this patch 
+ with the references to the 'Permissions Button' removed.
+      
+   
+ 3) INC000001007464  Clinical Procedures - Auto Check-in
+  
+ Problem: #3
+ -----------
+ During data entry in menu Auto Study Check-In Setup [MD AUTO CHECK-IN 
+ SETUP] option, if the user attempts to use an "^" (up-caret)  to exit the
+ option during a Procedure/Clinic lookup, an UNDEF (Undefined) error will
+ occur at E1+1^MDWSETUP.
+      
+ Resolution: # 3
+ ---------------
+ A modification will be made in routine MDWSETUP to read the "^" (up-caret) 
+ and then exit without an error.
+      
+  
+ 4) INC000000590845  interface image vault - Tucson
+  
+ Problem: #4
+ -----------
+ During the Release of patch MD*1.0*23, an interface routine was not 
+ included with the patch distribution by mistake.  This routine, MDHL7M3, 
+ needs to be available for sites if they plan to use a GE Image Vault
+ Electrocardiogram Storage Device.
+      
+ Resolution: #4 
+ --------------
+ Routine MDHL7M3 will be included for distribution with this patch.
+      
+      
+ Documentation Distribution:
+ ===========================
+ Documentation is available on the ANONYMOUS.SOFTWARE directory at one of
+ the following Office of Information (OI) Field Offices.
+  
+ The preferred method is to FTP the files from: Download.vista.domain.ext
+  
+ This transmits files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+       Albany                  ftp.domain.ext
+       Hines                   ftp.domain.ext
+       Salt Lake City          ftp.domain.ext
+  
+ File Name:             Description:                     Protocol:
+ ==========             ============                     =========
+ md_1_p23_impg.pdf      Implementation Guide             Binary
+                        (Updated Version)
+  
+ Documentation may be found on the System Design and Development Web 
+ page at:  http://www.domain.ext/vdl
+      
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users will not
+ be affected.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+     
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*37):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch (routines,
+         DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? NO//', answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Apr 15, 2003;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDHL7M3
+    Before:       n/a   After:  B3288924  **37**
+Routine Name: MDWOR
+    Before: B42202068   After: B43803580  **14,11,21,20,37**
+Routine Name: MDWSETUP
+    Before: B65119245   After: B68509741  **14,11,37**
+ 
+Routine list of preceding patches: 20
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 05, 2013
+Completed By:                               Date Completed: JUL 28, 2015
+Released By :                               Date Released : AUG 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

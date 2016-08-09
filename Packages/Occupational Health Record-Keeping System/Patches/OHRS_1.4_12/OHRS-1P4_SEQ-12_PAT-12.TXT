@@ -1,0 +1,134 @@
+
+=============================================================================
+Run Date: MAR 26, 2015                     Designation: OHRS*1.4*12
+Package : OHRS - OCCUPAT HEALTH RECORD-KEEPIN Priority: Mandatory
+Version : 1.4        SEQ #12                    Status: Released
+                  Compliance Date: APR 26, 2015
+=============================================================================
+
+
+Subject: OHRS 1.4.12 Maintenance Release
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This is to announce the updates to OHRS web application
+ version 1.4.12 will be rolled out nationally March 27, 2015.
+ 
+ This patch announces the National Release of Occupational 
+ Health Record-Keeping System (OHRS) version 1.4.12. 
+ No additional action is necessary for sites except to 
+ communicate the below modifications of OHRS 1.4.12 to users. 
+ This new OHRS 1.4.12 version addresses the vulnerability
+ defects mentioned on the NSOC-WASA report and there are no 
+ new enhancement.
+ 
+ This build corrects 3 issues within the OHRS application and replaces
+ Occupational Health Record-Keeping System (OHRS) version 1.4.11.
+ 
+ The three code fixes implemented in this build, OHRS 1.4.12 are:
+ 
+ 1) Reflected Cross-Site Scripting (XSS) Attacks -
+    This fix handles the sanitation and filtering of all user inputs 
+    and outputs which prevents cross site scripting to be executed by 
+    an attacker which can do harm on the system.
+ 
+ 2) Displays Detailed Error Messages -
+    This fix removes the detailed error messages getting displayed 
+    and instead got replaced by a simple error page.
+ 
+ 3) Session Tokens In URL  -
+    This fix removed the session ids that was getting displayed on the 
+    URL when an error occurs.
+ 
+ ASSOCIATED REMEDY TICKET(s):
+ ==========================
+ 
+ 1) INC000001052579 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA High Vulnerability: A2: Cross-Site Scripting (XSS). 
+   
+ 2) INC000001052586 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA Medium Vulnerability: A6: Security Misconfiguration: 
+          Web Application Displays Detailed Error Messages. 
+   
+ 3) INC000001052591  - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA Low Vulnerability: A3: Broken Authentication 
+         and Session Management: Web Application Passes Session Tokens In URL.
+   
+ ASSOCIATED NSR(s):
+ ==================
+   N/A
+ 
+ PARTICIPATING TEST SITES:
+ =========================
+   Amarillo VAHCS -  Amarillo, TX
+   Madison VA Medical Center - Madison, WI
+   Northern California HCS East Bay -  Martinez, CA
+   Philadelphia VAMC - Philadelphia, PA
+ 
+ 
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) INC000001052579 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+       NSOC WASA High Vulnerability: A2: Cross-Site Scripting (XSS). 
+ 
+    Problem:
+     
+       Web Application is Vulnerable to Reflected Cross-Site Scripting (XSS)
+          Attacks.
+       The web application does not properly sanitize all user input and output. 
+       Code can be entered into the URL and run on the user's browser, 
+         becoming a reflected XSS attack. 
+ 
+ 2) INC000001052586 - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+       NSOC WASA Medium Vulnerability: A6: Security Misconfiguration: 
+       Web Application Displays Detailed Error Messages. 
+   
+    Problem:
+    
+       The application displays detailed error messages under certain
+       conditions, which may provide details about the inner workings of the 
+       application to an attacker.
+ 
+ 3) INC000001052591  - OCCUPATIONAL HEALTH RECORD-KEEPING SYSTEM - OHRS-Other:
+      NSOC WASA Low Vulnerability: A3: Broken Authentication
+      and Session Management: Web Application Passes Session Tokens In URL.
+    
+    Problem:
+       The web application sends session ID tokens in the URL whenever there is
+       an error or when a user logs out. This can provide user login
+       information to the attacker. 
+ 
+   DOCUMENTATION:
+ ======================
+     The User Guide is available on VA Documentation Library (VDL) at:
+     http://www.domain.ext/vdl/ in the HealtheVet section.
+   
+   
+  ADDITIONAL INFORMATION:
+ =======================
+     If you have any questions concerning the implementation of this 
+     application, please contact the VA Service Desk at 1-888-596-4357
+     or log a Remedy Ticket via Remedy for CISS-OHRS
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2015
+Completed By:                               Date Completed: MAR 25, 2015
+Released By :                               Date Released : MAR 26, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

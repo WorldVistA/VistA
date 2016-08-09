@@ -1,0 +1,291 @@
+$TXT Created by               CMNT.FO-BIRM.DOMAIN.EXT  (KIDS) on Thursday, 03/31/16 at 18:29
+=============================================================================
+Run Date: JUL 07, 2016                     Designation: PSJ*5*313
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #279                      Status: Released
+                  Compliance Date: AUG 07, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*257   <<= must be installed BEFORE `PSJ*5*313'
+                    (v)PSJ*5*281   <<= must be installed BEFORE `PSJ*5*313'
+                    (v)PSS*1*189   <<= must be installed BEFORE `PSJ*5*313'
+
+Subject: IV ADDITIVE & SOLUTION ORDER ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Pharmacy Safety Updates project which was 
+ established to address specific New Service Requests (NSRs) as well as
+ Remedy Ticket(s) and a Patient Safety Issue (PSI) related to the VistA
+ Pharmacy applications as approved by the Health Systems Enterprise Systems
+ Manager(ESM).
+  
+ This project is comprised of patches from five different applications, as
+ shown below:
+   
+    APPLICATION/VERSION                                  PATCH
+    -----------------------------------------------------------------
+    PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+    OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+    INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+    NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+    INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  
+  
+ The following New service Request (NSR) is being addressed by this patch:
+   
+  NSR 20110308 Addition of a STRENGTH Property to IV ADDITIVES and Premixed 
+               IV SOLUTIONS
+  ----------------------------------------------------------------------------
+  Although patches PSJ*5*289 and PSS*1*174 introduced quite a few enhancements
+  to the IV Additives and IV Solutions ordering functionality they did not go
+  far enough in addressing all the issues originally in the NSR. Patches 
+  PSJ*5*313 and PSS*1*189 will extend the display of the IV Additive strength
+  to other parts of the Inpatient Medications and Pharmacy Data Management 
+  applications. In addition, it will also impose a new rule where an Orderable
+  Item can only have one IV Solution for a specific volume when it is marked
+  to be used in the CPRS IV Fluid Order Entry. 
+  
+  
+ The following Inpatient Medications functionality was modified:
+    
+ 1. Inpatient Order Entry [PSJ OE] option
+    This option was updated to display the IV Additive strength when more
+    than one is available for the Orderable Item. There are two different
+    points where the IV Additive strength is displayed when finishing an
+    order:
+  
+    a) Finishing a Unit Dose order
+    ...
+    DC   Discontinue          FL   (Flag)
+    ED   Edit                 FN   Finish
+    Select Item(s): Next Screen// FN   Finish  
+    IV TYPE: PIGGYBACK// 
+    Select ADDITIVE: 
+      1  PIPERACILLIN/TAZOBACTAM          Additive Strength: 3.375 GM
+      2  PIPERACILLIN/TAZOBACTAM          Additive Strength: 2.25 GM
+      3  PIPERACILLIN/TAZOBACTAM          Additive Strength: 4.5 GM
+    Select (1 - 3): 
+    
+   b) Finishing an IV order
+   
+    ...      
+    DC   Discontinue          FL   (Flag)
+    ED   Edit                 FN   Finish
+    Select Item(s): Next Screen// FN   Finish  
+    IV TYPE: PIGGYBACK// 
+  
+    More than one dispense IV Additives are available for:
+     Orderable Item: PIPERACILLIN/TAZOBACTAM INJ
+       Ordered Dose: 5 GM
+    
+    Please, select the correct dispense IV Additive below for this order:
+  
+      1  PIPERACILLIN/TAZOBACTAM          Additive Strength: 3.375 GM
+      2  PIPERACILLIN/TAZOBACTAM          Additive Strength: 2.25 GM
+      3  PIPERACILLIN/TAZOBACTAM          Additive Strength: 4.5 GM
+  
+   Select (1 - 3): 3  PIPERACILLIN/TAZOBACTAM   Additive Strength: 4.5 GM
+   ...
+   
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (#)        Field Name (#)                       New/Modified/Deleted
+ ------------------   --------------------------------     --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name             File #                              New/Modified/Deleted
+ ---------             ------                              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                           New/Modified/Deleted
+ ---------------                                           --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                     Type                      New/Modified/Deleted
+ -----------                     ----                      --------------------
+ N/A
+   
+ Protocols Associated:
+  
+ Protocol Name                                             New/Modified/Deleted
+ -------------                                             --------------------
+ N/A
+    
+ Security Keys Associated:
+  
+ Security Key Name                                         New/Modified/Deleted
+ -------------                                             --------------------
+ N/A 
+  
+ Templates Associated:
+  
+ Template Name        Type    File Name (#)                New/Modified/Deleted
+ -------------        -----   -------------------------    --------------------
+ N/A  
+    
+ New Service Requests (NSRs):
+ ----------------------------
+ 20110308
+  
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00001088
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 1050689-Additive strength not showing when processing the IV orders in 
+         backdoor pharmacy
+  
+ TEST Sites:
+ ===========
+ LOUISVILLE, KY
+ NEW YORK HARBOR HCS
+ HEARTLAND EAST 
+      
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may also
+ elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the
+ following OI Field Offices:
+  
+    Albany:                 domain.ext
+    Hines:                  domain.ext     
+    Salt Lake City:         domain.ext
+  
+  
+   Documentation can also be retrieved from the VA Software Documentation
+   Library (VDL) on the Internet at the following address:
+   http://www4.domain.ext/vdl.
+  
+  
+ File Description                        File Name                FTP Mode
+ --------------------------------------------------------------------------
+ INPATIENT MEDICATIONS PHARMACIST'S      PSJ_5_PHAR_UM_R0616.PDF   BINARY
+ USER MANUAL
+  
+ INPATIENT MEDICATIONS NURSE'S USER      PSJ_5_NUR_UM_R0616.PDF    BINARY
+ MANUAL
+  
+ INPATIENT MEDICATIONS SUPERVISOR'S      PSJ_5_SUPR_UM_R0616.PDF   BINARY
+ USER MANUAL
+  
+ Patch Installation: 
+  
+ Pre Installation Overview
+ --------------------------
+ This project is comprised of patches from five different applications as 
+ listed here.  The patches will get released together and the suggested 
+ installation order is as shown.  
+  
+ An installation guide released with patch PSS*1*189, discusses the 
+ installation process as PSS*1*189 is the patch that must be installed 
+ first.
+  
+  APPLICATION/VERSION                                  PATCH
+  -----------------------------------------------------------------
+  PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+  OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+  INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+  NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+  INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+  -----------------------------------------------------------------
+  
+ Post Installation Overview
+ --------------------------
+ N/A
+  
+     
+ Installation Instructions
+ -------------------------
+ Although this installation will not take much time, it is recommended 
+ that it be installed overnight to prevent any disruption of service to 
+ other users.
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+    2. From the Kernel Installation & Distribution System (KIDS) menu,
+       select the Installation menu.
+  
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSJ*5.0*313).
+      a. Backup a Transport Global - This option will create a backup
+         message of any routines exported with the patch. It will NOT
+         back up any other changes such as DDs or templates.
+      b. Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed. It compares all components of the patch (routines,
+         DDs, templates, etc.).
+      c. Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+      d. Print Transport Global - This option will allow you to view the
+         components of the KIDS build.
+  
+   4. Use the Install Package(s) option and select the package PSJ*5.0*313.
+  
+   5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+      respond NO.
+  
+   6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSIVEDRG
+    Before: B50902632   After: B54894901  **21,33,50,65,74,84,128,147,
+                                           181,263,281,313**
+Routine Name: PSIVORC2
+    Before: B62051926   After: B64197207  **29,49,50,65,58,85,101,110,
+                                           127,151,181,267,275,257,281,
+                                           313**
+Routine Name: PSJHL4A
+    Before: B59459040   After: B64745608  **105,111,154,170,159,134,197,
+                                           226,263,313**
+Routine Name: PSJLIFN
+    Before: B29270381   After: B52671541  **1,29,34,37,42,47,50,56,94,
+                                           80,116,110,181,261,252,313**
+ 
+Routine list of preceding patches: 252, 281
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 26, 2015
+Completed By:                               Date Completed: JUL 07, 2016
+Released By :                               Date Released : JUL 07, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,91 @@
+
+=============================================================================
+Run Date: APR 30, 2014                     Designation: XU*8*643
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #507                      Status: Released
+                  Compliance Date: MAY 31, 2014
+=============================================================================
+
+
+Subject: Unschedule the OPTION: List of NPI data for CBO
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Remedy ticket#: INC000001000695
+  
+  
+                 XU*8*643
+  
+ This is an informational patch to guide sites how to delete the option 
+ [XUS NPI CBO LIST] "List of NPI data for CBO" from the TaskMan.
+  
+  
+ Background:
+ =========== 
+ There is a monthly email being generated from VistA that is NPI related 
+ and no longer needed. Erin Potter, eBusiness Solutions, VHA Chief 
+ Business Office, requested  the report [XUS NPI CBO LIST] to be shut off.
+  
+  
+ PATCH INSTRUCTIONS:
+ ===================
+  
+ Please use the following instructions to delete the tasked job:
+  
+ Systems Manager Menu
+  
+ Select Systems Manager Menu Option: TASKman Management
+  
+ Select Taskman Management Option: SCHedule/UnscheduleOptions
+  
+ Select OPTION to schedule or reschedule: XUS NPI CBO LIST       List of 
+ NPI data for CBO
+          ...OK? Yes//   (Yes)      (R)
+                           Edit Option Schedule
+     Option Name:        @   < ==========================  Enter "@" sign
+  
+     Menu Text: List of NPI data for CBO                  TASK ID: 8969940
+   
+ __________________________________________________________________________
+  
+   QUEUED TO RUN AT WHAT TIME: MAY 1,2014@20:00              
+  
+ DEVICE FOR QUEUED JOB OUTPUT:
+  
+ QUEUED TO RUN ON VOLUME SET:
+  
+       RESCHEDULING FREQUENCY: 1M(1,15)                      
+  
+              TASK PARAMETERS:
+  
+             SPECIAL QUEUEING:
+  
+ ______________________________________________________________________
+  
+  
+  
+   WARNING: DELETIONS ARE DONE IMMEDIATELY!
+            (EXITING WITHOUT SAVING WILL NOT RESTORE DELETED RECORDS.)
+ Are you sure you want to delete this entire record (Y/N)?  y <== Enter "Y"
+                                                                  to delete
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 17, 2014
+Completed By:                               Date Completed: APR 24, 2014
+Released By :                               Date Released : APR 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

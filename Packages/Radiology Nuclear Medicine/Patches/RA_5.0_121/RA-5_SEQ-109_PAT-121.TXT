@@ -1,0 +1,182 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 06/29/15 at 13:25
+=============================================================================
+Run Date: AUG 12, 2015                     Designation: RA*5*121
+Package : RA - RADIOLOGY/NUCLEAR MEDICINE     Priority: Mandatory
+Version : 5       SEQ #109                      Status: Released
+                  Compliance Date: SEP 12, 2015
+=============================================================================
+
+
+Subject:   UPDATES TO THE RAD CPT BY PROC TYPE FILE (#73.2) AND DIAGNOSIS FILE (78.3)
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will correct the following 2 issues:
+       
+ 1. The Radiology Program Office sends out an updated listing of the
+    Radiology Current Procedural Terminology (CPT) by Procedure Type (73.2)
+    on a yearly basis. This update needs to be distributed to the sites.
+  
+ 2. The Radiology Program Office has requested file updates to the FILE
+    78.3 (DIAGNOSIS CODE FILE)
+                 
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000001115943 - 2015 file update of 73.2 CPT BY PROCEDURE TYPE
+      
+ 2. INC000001119483 - File update of 78.3 DIANOSIS CODE FILE
+      
+ Associated NSR(s):
+ ==================
+ N/A
+       
+ Participating Test Sites:
+ =========================
+ Upstate New York (Albany)
+ Providence VAMC
+ Maryland HCS (Perry Point)
+      
+ Remedy Overview:
+ ================     
+ 1. HD0000001115943 2015 file update of 73.2 CPT BY PROCEDURE TYPE
+       
+    Problem:
+    --------
+    The RADIOLOGY CPT BY PROCEDURE TYPE file (#73.2) needs to be updated 
+    with the yearly updates provided by the Radiology Program Office.
+        
+    Resolution:
+    -----------     
+    This patch will update the RADIOLOGY CPT BY PROCEDURE TYPE file 
+    (#73.2) file for distribution to the sites.
+   
+    Routine: RA121PRE
+     
+ 2. INC000001119483 - File update of 78.3 DIANOSIS CODE FILE
+    
+    Problem:
+    --------
+    The DIAGNOSIS CODE file (#78.3) needs to be updated with the updates
+    provided by the Radiology Program Office.
+        
+    Resolution:
+    -----------     
+    This patch will add the following Diagnosis Codes to the DIAGNOSIS 
+    CODE file (#78.3).
+  
+  1210  LUNGRADS 0: INCOMPLETE
+  1211  LUNGRADS 1: NEGATIVE
+  1212  LUNGRADS 2: BENIGN NODULE APPEARANCE OR BEHAVIOR
+  1213  LUNGRADS 3: PROBABLY BENIGN NODULE
+  1214  LUNGRADS 4A: SUSPICIOUS NODULE
+  1215  LUNGRADS 4B: SUSPICIOUS NODULE
+  1216  LUNGRADS 4X:  SUSPICIOUS NODULE WITH ADDITIONAL FEATURES
+  1217  LUNGRADS 5: SIGNIFICANT INCIDENTAL FINDING
+  1218  LUNGRADS C: PRIOR LUNG CANCER
+  1250  PR 1
+  1251  PR 2A
+  1252  PR 2B
+  1253  PR 3A
+  1254  PR 3B
+  1255  PR 4A
+  1256  PR 4B
+  1260  NVCC
+  1261  VACAA
+  1262  CONTRACT
+  1263  NOT ORDERED BY VA
+  1111  ALMOST ENTIRELY FATTY
+  1112  SCATTERED AREAS OF FIBROGLANDULAR DENSITY
+  1113  HETEROGENEOUSLY DENSE
+  1114  EXTREMELY DENSE
+  1300  INCIDENTAL LUNG NODULE(NONSCREENING)
+  
+  Routine: RA121PRE
+     
+    ==================== Installation Instructions ====================
+   If installed during the normal workday, it is recommended that the 
+   the Radiology users be off the system. Other VISTA users will not be
+   affected. Install Time should take less than 2 minutes, PRE Install
+   Routine, RA121PRE, can be deleted after the installation.
+      
+ 1. Load Transport Global:
+    ----------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2. Start Up KIDS :
+    ---------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]: 
+         Edits and Distribution ...  
+         Utilities ...  
+         Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3. Select Installation Option: 
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter RA*5.0*121):
+       
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch (routines,
+        DD's, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+      
+ 4. Select Installation Option: Install Package(s):
+    -----------------------------------------------
+    **This is the step to start the installation of this KIDS patch: 
+  
+  a. Choose the Install Package(s) option to start the patch install.
+  
+  b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+      NO//, choose 'NO'.
+  
+  c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, choose  'NO'. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+VERSION ;;5.0;Radiology/Nuclear Medicine;**[Patch List]**;Mar 16, 1998;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RA121PRE
+    Before:       n/a   After: B36357872  **121**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2015
+Completed By:                               Date Completed: AUG 05, 2015
+Released By :                               Date Released : AUG 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,663 @@
+Released TIU*1*285 SEQ #261
+Extracted from mail message
+**KIDS**:TIU*1.0*285^
+
+**INSTALL NAME**
+TIU*1.0*285
+"BLD",9704,0)
+TIU*1.0*285^TEXT INTEGRATION UTILITIES^0^3140702^y
+"BLD",9704,1,0)
+^^8^8^3140701^
+"BLD",9704,1,1,0)
+TIU FIX REPORT INDEX
+"BLD",9704,1,2,0)
+ 
+"BLD",9704,1,3,0)
+This patch will resolve a problem with the TIU REVIEW MRT ADD SGNR 
+"BLD",9704,1,4,0)
+report.  The report was not displaying all documents with 
+"BLD",9704,1,5,0)
+unsigned additional signatures.  The underlying issue was found to be a 
+"BLD",9704,1,6,0)
+problem with the AC index in file 8925.7 (TIU MULTIPLE SIGNATURE).  This 
+"BLD",9704,1,7,0)
+patch corrects the report by fixing the deficiency with the AC index 
+"BLD",9704,1,8,0)
+logic.  The post install routine rebuilds the AC index.
+"BLD",9704,4,0)
+^9.64PA^8925.7^1
+"BLD",9704,4,8925.7,0)
+8925.7
+"BLD",9704,4,8925.7,222)
+y^y^f^^^^n
+"BLD",9704,4,"B",8925.7,8925.7)
+
+"BLD",9704,6.3)
+5
+"BLD",9704,"ABPKG")
+n
+"BLD",9704,"INID")
+^n
+"BLD",9704,"INIT")
+QUE^TIU285PS
+"BLD",9704,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9704,"KRN",.4,0)
+.4
+"BLD",9704,"KRN",.401,0)
+.401
+"BLD",9704,"KRN",.402,0)
+.402
+"BLD",9704,"KRN",.403,0)
+.403
+"BLD",9704,"KRN",.5,0)
+.5
+"BLD",9704,"KRN",.84,0)
+.84
+"BLD",9704,"KRN",3.6,0)
+3.6
+"BLD",9704,"KRN",3.8,0)
+3.8
+"BLD",9704,"KRN",9.2,0)
+9.2
+"BLD",9704,"KRN",9.8,0)
+9.8
+"BLD",9704,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9704,"KRN",9.8,"NM",1,0)
+TIU285PS^^0^B11102968
+"BLD",9704,"KRN",9.8,"NM","B","TIU285PS",1)
+
+"BLD",9704,"KRN",19,0)
+19
+"BLD",9704,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9704,"KRN",19.1,0)
+19.1
+"BLD",9704,"KRN",101,0)
+101
+"BLD",9704,"KRN",409.61,0)
+409.61
+"BLD",9704,"KRN",771,0)
+771
+"BLD",9704,"KRN",779.2,0)
+779.2
+"BLD",9704,"KRN",870,0)
+870
+"BLD",9704,"KRN",8989.51,0)
+8989.51
+"BLD",9704,"KRN",8989.52,0)
+8989.52
+"BLD",9704,"KRN",8994,0)
+8994
+"BLD",9704,"KRN","B",.4,.4)
+
+"BLD",9704,"KRN","B",.401,.401)
+
+"BLD",9704,"KRN","B",.402,.402)
+
+"BLD",9704,"KRN","B",.403,.403)
+
+"BLD",9704,"KRN","B",.5,.5)
+
+"BLD",9704,"KRN","B",.84,.84)
+
+"BLD",9704,"KRN","B",3.6,3.6)
+
+"BLD",9704,"KRN","B",3.8,3.8)
+
+"BLD",9704,"KRN","B",9.2,9.2)
+
+"BLD",9704,"KRN","B",9.8,9.8)
+
+"BLD",9704,"KRN","B",19,19)
+
+"BLD",9704,"KRN","B",19.1,19.1)
+
+"BLD",9704,"KRN","B",101,101)
+
+"BLD",9704,"KRN","B",409.61,409.61)
+
+"BLD",9704,"KRN","B",771,771)
+
+"BLD",9704,"KRN","B",779.2,779.2)
+
+"BLD",9704,"KRN","B",870,870)
+
+"BLD",9704,"KRN","B",8989.51,8989.51)
+
+"BLD",9704,"KRN","B",8989.52,8989.52)
+
+"BLD",9704,"KRN","B",8994,8994)
+
+"BLD",9704,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9704,"QUES",0)
+^9.62^^
+"BLD",9704,"REQB",0)
+^9.611^1^1
+"BLD",9704,"REQB",1,0)
+TIU*1.0*157^2
+"BLD",9704,"REQB","B","TIU*1.0*157",1)
+
+"FIA",8925.7)
+TIU MULTIPLE SIGNATURE
+"FIA",8925.7,0)
+^TIU(8925.7,
+"FIA",8925.7,0,0)
+8925.7IP
+"FIA",8925.7,0,1)
+y^y^f^^^^n
+"FIA",8925.7,0,10)
+
+"FIA",8925.7,0,11)
+
+"FIA",8925.7,0,"RLRO")
+
+"FIA",8925.7,0,"VR")
+1.0^TIU
+"FIA",8925.7,8925.7)
+0
+"INIT")
+QUE^TIU285PS
+"IX",8925.7,8925.7,"AC",0)
+8925.7^AC^Index by note entry date and note ien^MU^^R^IR^I^8925.7^^^^^A
+"IX",8925.7,8925.7,"AC",.1,0)
+^^5^5^3041108^
+"IX",8925.7,8925.7,"AC",.1,1,0)
+This index is to facilitate the lookup of documents that require 
+"IX",8925.7,8925.7,"AC",.1,2,0)
+additional signatures.  This index will sort the documents by the 
+"IX",8925.7,8925.7,"AC",.1,3,0)
+document entry date/time. The mumps set and kill logic for this index
+"IX",8925.7,8925.7,"AC",.1,4,0)
+will control the existence of nodes in the "AC" index.  Nodes will only
+"IX",8925.7,8925.7,"AC",.1,5,0)
+exist for documents that have unsigned additional signatures.
+"IX",8925.7,8925.7,"AC",1)
+I $D(^TIU(8925,X2(1),0)) S ^TIU(8925.7,"AC",$P($G(^TIU(8925,X2(1),12)),U),X2(1),DA)=""
+"IX",8925.7,8925.7,"AC",1.4)
+S X=(X2(1)'=""&(X2(2)=""))
+"IX",8925.7,8925.7,"AC",2)
+I $D(^TIU(8925,X2(1),0)) K ^TIU(8925.7,"AC",$P($G(^TIU(8925,X2(1),12)),U),X2(1),DA)
+"IX",8925.7,8925.7,"AC",2.4)
+S X=X2(2)'=""
+"IX",8925.7,8925.7,"AC",2.5)
+K ^TIU(8925.7,"AC")
+"IX",8925.7,8925.7,"AC",11.1,0)
+^.114IA^2^2
+"IX",8925.7,8925.7,"AC",11.1,1,0)
+1^F^8925.7^.01^^^F
+"IX",8925.7,8925.7,"AC",11.1,2,0)
+2^F^8925.7^.04^^^F
+"IX",8925.7,8925.7,"AES",0)
+8925.7^AES^Find records requiring selected user's attention/signature^R^^R^IR^I^8925.7^^^^^S
+"IX",8925.7,8925.7,"AES",.1,0)
+^^3^3^2991021^
+"IX",8925.7,8925.7,"AES",.1,1,0)
+This multi-field cross-reference by EXPECTED SIGNER, TIU DOCUMENT NUMBER,
+"IX",8925.7,8925.7,"AES",.1,2,0)
+IEN will facilitate finding records for which a user has been listed as an
+"IX",8925.7,8925.7,"AES",.1,3,0)
+additional signer.
+"IX",8925.7,8925.7,"AES",1)
+S ^TIU(8925.7,"AES",X(1),X(2),DA)=""
+"IX",8925.7,8925.7,"AES",1.4)
+S X=$S(+$P($G(^TIU(8925.7,DA,0)),U,4):0,1:1)
+"IX",8925.7,8925.7,"AES",2)
+K ^TIU(8925.7,"AES",X(1),X(2),DA)
+"IX",8925.7,8925.7,"AES",2.4)
+
+"IX",8925.7,8925.7,"AES",2.5)
+K ^TIU(8925.7,"AES")
+"IX",8925.7,8925.7,"AES",11.1,0)
+^.114IA^2^2
+"IX",8925.7,8925.7,"AES",11.1,1,0)
+1^F^8925.7^.03^^1^F
+"IX",8925.7,8925.7,"AES",11.1,2,0)
+2^F^8925.7^.01^^2^F
+"MBREQ")
+0
+"PKG",470,-1)
+1^1
+"PKG",470,0)
+TEXT INTEGRATION UTILITIES^TIU^Text Integration Utilities 
+"PKG",470,20,0)
+^9.402P^^
+"PKG",470,22,0)
+^9.49I^1^1
+"PKG",470,22,1,0)
+1.0^3010801^3010806^66481
+"PKG",470,22,1,"PAH",1,0)
+285^3140702
+"PKG",470,22,1,"PAH",1,1,0)
+^^8^8^3140702
+"PKG",470,22,1,"PAH",1,1,1,0)
+TIU FIX REPORT INDEX
+"PKG",470,22,1,"PAH",1,1,2,0)
+ 
+"PKG",470,22,1,"PAH",1,1,3,0)
+This patch will resolve a problem with the TIU REVIEW MRT ADD SGNR 
+"PKG",470,22,1,"PAH",1,1,4,0)
+report.  The report was not displaying all documents with 
+"PKG",470,22,1,"PAH",1,1,5,0)
+unsigned additional signatures.  The underlying issue was found to be a 
+"PKG",470,22,1,"PAH",1,1,6,0)
+problem with the AC index in file 8925.7 (TIU MULTIPLE SIGNATURE).  This 
+"PKG",470,22,1,"PAH",1,1,7,0)
+patch corrects the report by fixing the deficiency with the AC index 
+"PKG",470,22,1,"PAH",1,1,8,0)
+logic.  The post install routine rebuilds the AC index.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","TIU285PS")
+0^1^B11102968^n/a
+"RTN","TIU285PS",1,0)
+TIU285PS ; SLC/DJH - Patch 285 post-install routine ; 5/21/14 1:47pm
+"RTN","TIU285PS",2,0)
+ ;;1.0;TEXT INTEGRATION UTILITIES;**285**;Jun 20, 1997;Build 5
+"RTN","TIU285PS",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","TIU285PS",4,0)
+ Q
+"RTN","TIU285PS",5,0)
+EN ; reindex the "AC" index on file 8925.7
+"RTN","TIU285PS",6,0)
+ ;
+"RTN","TIU285PS",7,0)
+ N TIUD0,NAMSP,TIUDOC
+"RTN","TIU285PS",8,0)
+ S NAMSP=$$NAMSP
+"RTN","TIU285PS",9,0)
+ I $P($G(^XTMP(NAMSP,0,"STATUS")),U)="COMPLETED" Q
+"RTN","TIU285PS",10,0)
+ K ^TIU(8925.7,"AC")
+"RTN","TIU285PS",11,0)
+ ;
+"RTN","TIU285PS",12,0)
+ S TIUD0=0
+"RTN","TIU285PS",13,0)
+ F  S TIUD0=$O(^TIU(8925.7,TIUD0)) Q:'TIUD0  D
+"RTN","TIU285PS",14,0)
+ . S TIUDOC=+$G(^TIU(8925.7,TIUD0,0))
+"RTN","TIU285PS",15,0)
+ . I 'TIUDOC!'+$G(^TIU(8925,TIUDOC,0)) Q  ; skip if no tiu doc ptr or record
+"RTN","TIU285PS",16,0)
+ . I $P($G(^TIU(8925.7,TIUD0,0)),U,4) Q  ; skip if signed
+"RTN","TIU285PS",17,0)
+ . S ^TIU(8925.7,"AC",$P($G(^TIU(8925,TIUDOC,12)),U),$G(TIUDOC),TIUD0)=""
+"RTN","TIU285PS",18,0)
+ S $P(^XTMP(NAMSP,0,"STATUS"),U)="COMPLETED"  ;  Set Completed status
+"RTN","TIU285PS",19,0)
+ S $P(^XTMP(NAMSP,0,"STATUS"),U,3)=$$NOW^XLFDT  ;  Set completed date/time
+"RTN","TIU285PS",20,0)
+ D MAIL
+"RTN","TIU285PS",21,0)
+ Q
+"RTN","TIU285PS",22,0)
+ ;
+"RTN","TIU285PS",23,0)
+MAIL ;
+"RTN","TIU285PS",24,0)
+ N CNT,MSG,XMY,XMDUZ,DIFROM,XMSUB,XMTEXT,I,NMSP,VAR
+"RTN","TIU285PS",25,0)
+ S CNT=1,XMY(DUZ)="",XMY("G.TIU CACS")=""
+"RTN","TIU285PS",26,0)
+ S XMSUB="INDEX REBUILD POST INSTALL",XMTEXT="MSG(",XMDUZ="Patch TIU*1.0*285"
+"RTN","TIU285PS",27,0)
+ S MSG(CNT)="",CNT=CNT+1
+"RTN","TIU285PS",28,0)
+ S MSG(CNT)="Patch TIU*1.0*285 post install routine has completed",CNT=CNT+1
+"RTN","TIU285PS",29,0)
+ S MSG(CNT)="",CNT=CNT+1
+"RTN","TIU285PS",30,0)
+ S MSG(CNT)="For more information about the related issue, review patch TIU*1*285",CNT=CNT+1
+"RTN","TIU285PS",31,0)
+ S MSG(CNT)=""
+"RTN","TIU285PS",32,0)
+ D ^XMD
+"RTN","TIU285PS",33,0)
+ Q
+"RTN","TIU285PS",34,0)
+ ;
+"RTN","TIU285PS",35,0)
+QUE ;  Entry point from KIDS Install
+"RTN","TIU285PS",36,0)
+ N NAMSP,PATCH,JOBN,ZTSK,ZTRTN,ZTIO,ZTDTH,ZTDESC,ZTSAVE,BEGDT,PURGDT
+"RTN","TIU285PS",37,0)
+ S NAMSP=$$NAMSP ;TIU285PS
+"RTN","TIU285PS",38,0)
+ S JOBN="TIU FIX REPORT INDEX",PATCH="TIU*1.0*285"
+"RTN","TIU285PS",39,0)
+ ;
+"RTN","TIU285PS",40,0)
+ I $D(^XTMP(NAMSP)) D  Q
+"RTN","TIU285PS",41,0)
+ . D BMES^XPDUTL("=============================================================")
+"RTN","TIU285PS",42,0)
+ . D MES^XPDUTL("Cannot queue background job!")
+"RTN","TIU285PS",43,0)
+ . D MES^XPDUTL("This job was previously run on "_$$FMTE^XLFDT($P($G(^XTMP(NAMSP,0,"STATUS")),"^",2)))
+"RTN","TIU285PS",44,0)
+ . D MES^XPDUTL("to run it again, ^XTMP('"_NAMSP_"') must be deleted.")
+"RTN","TIU285PS",45,0)
+ . D MES^XPDUTL("=============================================================")
+"RTN","TIU285PS",46,0)
+ ;
+"RTN","TIU285PS",47,0)
+ ; INITIALIZE ^XTMP
+"RTN","TIU285PS",48,0)
+ S BEGDT=$$NOW^XLFDT,PURGDT=$$FMADD^XLFDT(BEGDT,90)  ;90 day life
+"RTN","TIU285PS",49,0)
+ S ^XTMP(NAMSP,0)=PURGDT_"^"_BEGDT_"^"_PATCH
+"RTN","TIU285PS",50,0)
+ S ^XTMP(NAMSP,0,"STATUS")="RUN^"_$$NOW^XLFDT_"^^^"
+"RTN","TIU285PS",51,0)
+ ;
+"RTN","TIU285PS",52,0)
+ D BMES^XPDUTL("=============================================================")
+"RTN","TIU285PS",53,0)
+ D MES^XPDUTL("Queuing background job for "_JOBN_"...")
+"RTN","TIU285PS",54,0)
+ D MES^XPDUTL("Start time: "_$$HTE^XLFDT($H))
+"RTN","TIU285PS",55,0)
+ D MES^XPDUTL("A Mailman message will be sent when it finishes")
+"RTN","TIU285PS",56,0)
+ D MES^XPDUTL("==============================================================")
+"RTN","TIU285PS",57,0)
+ ;
+"RTN","TIU285PS",58,0)
+ S ZTRTN="EN^"_NAMSP,ZTIO=""
+"RTN","TIU285PS",59,0)
+ S ZTDESC="Background job "_JOBN_" updated via "_PATCH,ZTSAVE("JOBN")=""
+"RTN","TIU285PS",60,0)
+ S ZTDTH=$$FMTH^XLFDT($$NOW^XLFDT)  ; start time now
+"RTN","TIU285PS",61,0)
+ D ^%ZTLOAD
+"RTN","TIU285PS",62,0)
+ D:$D(ZTSK)
+"RTN","TIU285PS",63,0)
+ . D MES^XPDUTL("*** Task #"_ZTSK_" Queued! ***")
+"RTN","TIU285PS",64,0)
+ . D BMES^XPDUTL("")
+"RTN","TIU285PS",65,0)
+ D BMES^XPDUTL("")
+"RTN","TIU285PS",66,0)
+ K XPDQUES
+"RTN","TIU285PS",67,0)
+ Q
+"RTN","TIU285PS",68,0)
+ ;
+"RTN","TIU285PS",69,0)
+NAMSP() ;
+"RTN","TIU285PS",70,0)
+ Q $T(+0)
+"SEC","^DIC",8925.7,8925.7,0,"AUDIT")
+@
+"SEC","^DIC",8925.7,8925.7,0,"DD")
+@
+"SEC","^DIC",8925.7,8925.7,0,"LAYGO")
+@
+"SEC","^DIC",8925.7,8925.7,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",8925.7,8925.7,0)
+FIELD^^.08^9
+"^DD",8925.7,8925.7,0,"DDA")
+N
+"^DD",8925.7,8925.7,0,"DT")
+3000127
+"^DD",8925.7,8925.7,0,"ID",.03)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^VA(200,+$P(^(0),U,3),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(200,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",8925.7,8925.7,0,"IX","AE",8925.7,.01)
+
+"^DD",8925.7,8925.7,0,"IX","AE1",8925.7,.03)
+
+"^DD",8925.7,8925.7,0,"IX","B",8925.7,.01)
+
+"^DD",8925.7,8925.7,0,"NM","TIU MULTIPLE SIGNATURE")
+
+"^DD",8925.7,8925.7,0,"VRPK")
+TIU
+"^DD",8925.7,8925.7,.01,0)
+TIU DOCUMENT NUMBER^RP8925'^TIU(8925,^0;1^Q
+"^DD",8925.7,8925.7,.01,1,0)
+^.1
+"^DD",8925.7,8925.7,.01,1,1,0)
+8925.7^B
+"^DD",8925.7,8925.7,.01,1,1,1)
+S ^TIU(8925.7,"B",$E(X,1,30),DA)=""
+"^DD",8925.7,8925.7,.01,1,1,2)
+K ^TIU(8925.7,"B",$E(X,1,30),DA)
+"^DD",8925.7,8925.7,.01,1,2,0)
+8925.7^AE^MUMPS
+"^DD",8925.7,8925.7,.01,1,2,1)
+I $L($P(^TIU(8925.7,+DA,0),U,3)) S ^TIU(8925.7,"AE",+X,+$P(^TIU(8925.7,+DA,0),U,3),DA)=""
+"^DD",8925.7,8925.7,.01,1,2,2)
+I $L($P(^TIU(8925.7,+DA,0),U,3)) K ^TIU(8925.7,"AE",+X,+$P(^TIU(8925.7,+DA,0),U,3),DA)
+"^DD",8925.7,8925.7,.01,1,2,"%D",0)
+^^2^2^2961127^^
+"^DD",8925.7,8925.7,.01,1,2,"%D",1,0)
+This multi-field, MUMPS-type cross-reference by document and expected
+"^DD",8925.7,8925.7,.01,1,2,"%D",2,0)
+cosigner facilitates the identification of privilege to sign the document.
+"^DD",8925.7,8925.7,.01,1,2,"DT")
+2960610
+"^DD",8925.7,8925.7,.01,3)
+Please select the document for which this cosignature is expected.
+"^DD",8925.7,8925.7,.01,21,0)
+^^1^1^2940321^
+"^DD",8925.7,8925.7,.01,21,1,0)
+This is the record number in the TIU DOCUMENT FILE (#8925).
+"^DD",8925.7,8925.7,.01,"DT")
+3140521
+"^DD",8925.7,8925.7,.02,0)
+COSIGNATURE NEEDED^S^1:YES;0:NO;^0;2^Q
+"^DD",8925.7,8925.7,.02,3)
+Please indicate whether the cosignature is required.
+"^DD",8925.7,8925.7,.02,"DT")
+2940418
+"^DD",8925.7,8925.7,.03,0)
+EXPECTED SIGNER^*P200'^VA(200,^0;3^S DIC("S")="I +$$SCREEN^TIURA1(+$G(^TIU(8925.7,DA,0)),+Y)" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",8925.7,8925.7,.03,1,0)
+^.1^^-1
+"^DD",8925.7,8925.7,.03,1,1,0)
+8925.7^AE1^MUMPS
+"^DD",8925.7,8925.7,.03,1,1,1)
+I $L($P(^TIU(8925.7,+DA,0),U)) S ^TIU(8925.7,"AE",+$P(^TIU(8925.7,+DA,0),U),+X,DA)=""
+"^DD",8925.7,8925.7,.03,1,1,2)
+I $L($P(^TIU(8925.7,+DA,0),U)) K ^TIU(8925.7,"AE",+$P(^TIU(8925.7,+DA,0),U),+X,DA)
+"^DD",8925.7,8925.7,.03,1,1,"%D",0)
+^^2^2^2961127^^
+"^DD",8925.7,8925.7,.03,1,1,"%D",1,0)
+This multi-field, MUMPS-type cross-reference by document and expected
+"^DD",8925.7,8925.7,.03,1,1,"%D",2,0)
+cosigner facilitates the identification of privilege to sign the document.
+"^DD",8925.7,8925.7,.03,1,1,"DT")
+2960610
+"^DD",8925.7,8925.7,.03,3)
+Enter the person whom you expect to sign.
+"^DD",8925.7,8925.7,.03,12)
+Certain persons shouldn't be selected.
+"^DD",8925.7,8925.7,.03,12.1)
+S DIC("S")="I +$$SCREEN^TIURA1(+$G(^TIU(8925.7,DA,0)),+Y)"
+"^DD",8925.7,8925.7,.03,21,0)
+^^1^1^2961127^
+"^DD",8925.7,8925.7,.03,21,1,0)
+This is the person who the author expects to sign the document.
+"^DD",8925.7,8925.7,.03,"DT")
+3041215
+"^DD",8925.7,8925.7,.04,0)
+COSIGNATURE DATE/TIME^D^^0;4^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",8925.7,8925.7,.04,3)
+Please enter the date/time of cosignature
+"^DD",8925.7,8925.7,.04,21,0)
+^^1^1^2940322^
+"^DD",8925.7,8925.7,.04,21,1,0)
+This is the date/time at which the cosignature was obtained.
+"^DD",8925.7,8925.7,.04,"DT")
+3140521
+"^DD",8925.7,8925.7,.05,0)
+ACTUAL COSIGNER^P200'^VA(200,^0;5^Q
+"^DD",8925.7,8925.7,.05,1,0)
+^.1
+"^DD",8925.7,8925.7,.05,1,1,0)
+^^TRIGGER^8925.7^.09
+"^DD",8925.7,8925.7,.05,1,1,1)
+D TRIGGER^TIU199
+"^DD",8925.7,8925.7,.05,1,1,2)
+Q
+"^DD",8925.7,8925.7,.05,1,1,"CREATE VALUE")
+NO EFFECT
+"^DD",8925.7,8925.7,.05,1,1,"DELETE VALUE")
+NO EFFECT
+"^DD",8925.7,8925.7,.05,1,1,"DT")
+3050706
+"^DD",8925.7,8925.7,.05,1,1,"FIELD")
+SIGNED BY SURROGATE
+"^DD",8925.7,8925.7,.05,3)
+Please indicate the user who actually cosigned the document.
+"^DD",8925.7,8925.7,.05,21,0)
+^.001^4^4^3050831^^
+"^DD",8925.7,8925.7,.05,21,1,0)
+This field contains the person who actually signed for this Additional 
+"^DD",8925.7,8925.7,.05,21,2,0)
+Signer. This field will trigger field .09 (Signed by Surrogate). That 
+"^DD",8925.7,8925.7,.05,21,3,0)
+trigger will check if the Actual Co-signer is a surrogate for the Expected
+"^DD",8925.7,8925.7,.05,21,4,0)
+Signer. If so the .09 field will be set to 1. If not it will be set to 0.
+"^DD",8925.7,8925.7,.05,"DT")
+3050706
+"^DD",8925.7,8925.7,.06,0)
+COSIGNER'S SIGNATURE BLOCK^F^^0;6^K:$L(X)>60!($L(X)<3) X
+"^DD",8925.7,8925.7,.06,3)
+Answer must be 3-60 characters in length
+"^DD",8925.7,8925.7,.06,"DT")
+3000126
+"^DD",8925.7,8925.7,.07,0)
+COSIGNER'S TITLE^F^^0;7^K:$L(X)>60!($L(X)<2) X
+"^DD",8925.7,8925.7,.07,3)
+Answer must be 2-60 characters in length
+"^DD",8925.7,8925.7,.07,"DT")
+3000126
+"^DD",8925.7,8925.7,.08,0)
+COSIGNATURE MODE^S^E:electronic;C:chart;^0;8^Q
+"^DD",8925.7,8925.7,.08,3)
+Please indicate the method by which cosignature was obtained.
+"^DD",8925.7,8925.7,.08,"DT")
+2940322
+"^DD",8925.7,8925.7,.09,0)
+SIGNED BY SURROGATE^S^0:NO;1:YES;^0;9^Q
+"^DD",8925.7,8925.7,.09,5,1,0)
+8925.7^.05^1
+"^DD",8925.7,8925.7,.09,21,0)
+^^6^6^3050718^
+"^DD",8925.7,8925.7,.09,21,1,0)
+This field is set by a trigger on the .05 field (ACTUAL COSIGNER). The 
+"^DD",8925.7,8925.7,.09,21,2,0)
+trigger will check if the actual cosigner is a surrogate for the expected 
+"^DD",8925.7,8925.7,.09,21,3,0)
+signer at the time of signing. If so this field will be set to 1. If 
+"^DD",8925.7,8925.7,.09,21,4,0)
+not it will be set to 0. This will enable other processes to know if the 
+"^DD",8925.7,8925.7,.09,21,5,0)
+Additional Signer was signed by a surrogate as the assignment of the 
+"^DD",8925.7,8925.7,.09,21,6,0)
+surrogate is temporary and cannot be checked at a later date.
+"^DD",8925.7,8925.7,.09,"DT")
+3050706
+"^DIC",8925.7,8925.7,0)
+TIU MULTIPLE SIGNATURE^8925.7P
+"^DIC",8925.7,8925.7,0,"GL")
+^TIU(8925.7,
+"^DIC",8925.7,8925.7,"%D",0)
+^^5^5^2980612^^^^
+"^DIC",8925.7,8925.7,"%D",1,0)
+This file is intended to accommodate the case where multiple cosignatures 
+"^DIC",8925.7,8925.7,"%D",2,0)
+are applied to a document (e.g., team or multi-disciplinary notes, discharge 
+"^DIC",8925.7,8925.7,"%D",3,0)
+planning check-lists, etc.).  Rather than adding a multiple to the TIU 
+"^DIC",8925.7,8925.7,"%D",4,0)
+Document file, this file supports a 3NF decomposition, allowing multiple 
+"^DIC",8925.7,8925.7,"%D",5,0)
+cosignatures to be applied to the same document.
+"^DIC",8925.7,"B","TIU MULTIPLE SIGNATURE",8925.7)
+
+"BLD",9704,6)
+^261
+**END**
+**END**
+

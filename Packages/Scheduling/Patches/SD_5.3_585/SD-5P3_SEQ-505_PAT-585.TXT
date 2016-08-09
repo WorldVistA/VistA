@@ -1,0 +1,238 @@
+$TXT Created by                    MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/19/13 at 09:30
+=============================================================================
+Run Date: JUL 07, 2014                     Designation: SD*5.3*585
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #505                    Status: Released
+                  Compliance Date: AUG 07, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*496  <<= must be installed BEFORE `SD*5.3*585'
+                    (v)SD*5.3*562  <<= must be installed BEFORE `SD*5.3*585'
+
+Subject: OUT OF SYNC ISSUES AND 8100 ERROR CODE ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will fix the following issues with locally created codes in the
+ ELIGIBILITY CODE file (#8):
+  
+    - OUT OF SYNC problem when making an appointment,
+    - OUT OF SYNC problem when adding a patient to the wait list,
+    - Ambulatory Care Nightly Transmission generating reject errors due to
+      software not recognizing local eligibility codes having an Internal
+      Entry Number (IEN) greater than 99.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) HD0000000135595 - OUT OF SYNC problem when making an appointment
+ 2) HD0000000492324 - OUT OF SYNC problem when adding patient to wait list
+ 3) HD0000000582622 - IEMM issue
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Connecticut HCS
+ New York HCS
+ North Chicago, IL
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1) HD0000000135595 - OUT OF SYNC problem when making an appointment
+  
+    Problem:
+    --------
+    Sites are permitted to create local eligibility codes via Registration
+    menu option Eligibility Code Enter/Edit [DG ELIG CODE ENTER/EDIT].
+    These codes are maintained in the ELIGIBILITY CODE file (#8) and also
+    stored in the Primary Eligibility Code field (#.361) of the PATIENT
+    file (#2) for the patient. When a local eligibility code is created,
+    the user must specify the MAS eligibility code, from the MAS 
+    ELIGIBILITY file (#8.1), that the local code will point to. The local
+    eligibility code can only be linked to one MAS eligibility code, which
+    is stored in the MAS Eligibility Code field (#8) of the ELIGIBILITY
+    CODE file (#8). A check is then made to ensure the patient's Service 
+    Connected Percentage, Service Connected designation and Primary Eligibility 
+    Code are in sync. The Scheduling software uses the MAS ELIGIBILITY CODE 
+    file (#8.1), which cannot be locally modified, when checking the primary
+    eligibility. If a locally created eligibility code (from file #8)
+    is returned by the Registration API, Scheduling does not recognize it
+    and presents the OUT OF SYNC warning message. Additionally, the user is 
+    not presented with the prompt - "Is This Appointment for a Service          
+    Connected Condition?".
+  
+    Resolution:
+    -----------
+    Routine SDM4 will be modified to extract the MAS Eligibility Code for
+    the patient before checking to see if the patient's eligibility
+    records are out of sync. This will insure the OUT OF SYNC warning
+    message only displays when applicable and that the user will
+    appropriately receive the prompt - "Is This Appointment for a Service
+    Connected Condition?".
+  
+ 2) HD0000000492324 - OUT OF SYNC problem when adding patient to Wait List
+  
+    Problem:
+    --------
+    Sites are permitted to create local Eligibility Codes via Registration
+    menu option Eligibility Code Enter/Edit [DG ELIG CODE ENTER/EDIT].
+    These codes are maintained in the ELIGIBILITY CODE file (#8) and also
+    stored in the Primary Eligibility Code field (#.361) of the PATIENT
+    file (#2) for the patient.  When adding a patient to the Electronic 
+    Wait List the software calls a Registration API to retrieve the
+    patient's primary eligibility.  A check is then made to insure the
+    patient's Service Connected Percentage, Service Connected designation 
+    and Primary Eligibility Code are in sync. The Electronic Wait 
+    List software uses the MAS ELIGIBILITY CODE file (#8.1), which cannot be
+    locally modified, when checking the primary eligibility. If a
+    locally created eligibility code (from file #8) is returned by the
+    Registration API, the Electronic Wait List does not recognize it and
+    presents the OUT OF SYNC warning message.  Additionally, the user
+    is not presented with the prompt - "Is This Appointment for a Service       
+    Connected Condition? (Y or N)?".
+  
+    Resolution:
+    -----------
+    Routine SDWLSC will be modified to extract the MAS Eligibility Code for
+    the patient before checking to see if the patient's eligibility
+    records are out of sync.  This will insure the OUT OF SYNC warning
+    message only displays when applicable and that the user will
+    appropriately receive the prompt - "Is This Appointment for a Service
+    Connected Condition?(Y or N)?".
+  
+ 3) HD0000000582622 - IEMM issue
+  
+    Problem:
+    --------
+    The Ambulatory Care Nightly Transmission process calls API MTI^SCDXUTLO
+    to calculate the patient's Means Test Indicator, passing in several
+    input parameters, including the Internal Entry Number (IEN) for the
+    patient's primary eligibility from the ELIGIBILITY CODE file (#8).  If
+    the value of the IEN that is passed in is greater than 99, it generates
+    as 8100 reject error (invalid Means Test Indicator), which places the
+    outpatient encounter on the Incomplete Encounter Management (IEMM)
+    Error report [SCENI IEMM ERROR REPORT]. In some cases, an IEN
+    greater than 99 may be valid and therefore, should not reject the
+    outpatient encounter and generate an 8100 reject error.
+  
+    Resolution:
+    -----------
+    Routine SCDXUTL0 will be modified to verify the eligibility code being
+    passed in is valid, rather than checking the value of the IEN that is
+    passed in.  This will allow the software to correctly calculate the
+    patient's Means Test Indicator and only generate 8100 reject errors 
+    when applicable.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users can be on the system during the installation of this patch.
+  
+ Installation should take less than 5 minutes.
+  
+ 1.  LOAD TRANSPORT GLOBAL
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2.  START UP KIDS
+     -------------
+     Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+  
+     Select Kernel Installation & Distribution System Option:  INStallation
+                                                               ---
+  
+     1     Load a Distribution
+     2     Verify Checksums in Transport Global
+     3     Print Transport Global
+     4     Compare Transport Global to Current System
+     5     Backup a Transport Global
+     6     Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*585):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch.  It will NOT
+         backup any other changes such as DDs or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch
+         (routines, DDs, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will ensure
+         the integrity of the routines that are in the transport global.
+  
+     d.  Print Transport Global - This option will allow you to view
+         the components of the KIDS build.
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*585.
+  
+     a.  When prompted "Want KIDS to INHIBIT LOGONS during the
+         install? NO//", respond NO.
+  
+     b.  When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//", respond YES.
+  
+         1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+            Appointment Management               [SDAM APPT MGT]
+            Make Appointment                     [SDM]
+            Enter/Edit Wait List (Sch/PCMM)      [SD WAIT LIST ENTER/EDIT]
+            Ambulatory Care Nightly Transmission.. 
+            to NPCDB                             [SCDX AMBCAR NIGHTLY XMIT]
+            Load/Edit Patient Data               [DG LOAD PATIENT DATA]
+            Incomplete Encounter Error Report    [SCENI IEMM ERROR REPORT] 
+  
+         2) When prompted "Enter protocols you wish to mark as "Out of
+            Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCDXUTL0
+    Before: B36068306   After: B37535896  **44,55,69,77,85,110,122,94,
+                                           66,132,180,235,256,258,325,451,
+                                           441,562,585**
+Routine Name: SDM4
+    Before: B35143578   After: B43568059  **263,273,327,394,417,496,585**
+Routine Name: SDWLSC
+    Before:  B9739922   After: B14766682  **394,417,585**
+ 
+Routine list of preceding patches: 496, 562
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 28, 2011
+Completed By:                               Date Completed: JUL 01, 2014
+Released By :                               Date Released : JUL 07, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

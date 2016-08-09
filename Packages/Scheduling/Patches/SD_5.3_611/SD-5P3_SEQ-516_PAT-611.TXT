@@ -1,0 +1,238 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 06/02/14 at 13:14
+=============================================================================
+Run Date: DEC 01, 2014                     Designation: SD*5.3*611
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #516                    Status: Released
+                  Compliance Date: DEC 31, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*446  <<= must be installed BEFORE `SD*5.3*611'
+                    (v)SD*5.3*505  <<= must be installed BEFORE `SD*5.3*611'
+                    (v)SD*5.3*547  <<= must be installed BEFORE `SD*5.3*611'
+                    (v)SD*5.3*594  <<= must be installed BEFORE `SD*5.3*611'
+
+Subject: EWL UNDEF ERR, DISPLAY ISSUE AND WAIT LIST ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses four Electronic Wait List [EWL] issues:
+  
+ 1. Clinics with an inactive date in the SD WL CLINIC LOCATION file (#409.32)
+    can create wait list entries when using the MAKE APPOINTMENT [SDAM APPT
+    MAKE] protocol.
+  
+ 2. Undefined error occurring when creating an entry using the ENTER/EDIT 
+    WAIT LIST (Sch/PCMM) [SD WAIT LIST ENTER/EDIT].
+  
+ 3. When using the INQUIRE WAIT LIST (Sch/PCMM) [SD WAIT LIST INQUIRY] option 
+    user is prompted to select an entry to view but all entries are displayed.
+  
+ 4. When using the Enrollment Wait List (Sch/PCMM) Statistic Report [SD 
+    WAIT LIST ENROLL REPORT] option there is a calculation error in the 
+    DO NOT REMOVE DATE COLUMN.  
+  
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ===========================
+ 1. INC000000884012 - Scheduling - EWL:       
+    Duplicate:
+    INC000000882445 - Scheduling - EWL:
+ 2. INC000000349070 - EN+6^SDWLE113 *SDWLDA - CLOSE MULTI EWL ENTRIES IF
+                      ASSIGNED TO PCMM TEAM
+    Duplicate: 
+    INC000000540230 - SDWL E113 ERROR
+ 3. INC000000278191 - Inquire Wait List (Sch/PCMM) Display           
+ 4. INC000001001617 - Scheduling - EWL:
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Heartland-West HCS
+ Oklahoma City, OK
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000884012 - Scheduling - EWL
+  
+ Problem:
+ --------
+ Clinics with an inactive date in the SD WL CLINIC LOCATION file (#409.32)
+ are still allowed to create wait list entries using the MAKE APPOINTMENT
+ [SDAM APPT MAKE] protocol.
+  
+ Resolution:
+ -----------
+ Routine SDM1 and SDM2A will be modified by implementing a check for a date
+ in the DATE INACTIVATED (#3) field of the SD WL CLINIC LOCATION (#409.32)
+ file. If the clinic has an inactive date there will be no prompt to add
+ that patient to the wait list when scheduling a next available
+ appointment.  
+  
+  
+ 2. INC000000349070 - EN+6^SDWLE113 *SDWLDA - CLOSE MULTI EWL ENTRIES IF
+                      ASSIGNED TO PCMM TEAM
+  
+ Problem:
+ --------
+ When creating an entry using the ENTER/EDIT WAIT LIST (Sch/PCMM)
+ [SD WAIT LIST ENTER/EDIT] option using the PCMM TEAM ASSIGNMENT wait list
+ type an undefined error occurs.
+  
+ Resolution:
+ -----------
+ Routine SDWLRP1 will be modified to prevent an undefined error from 
+ occurring by stopping variables SDWLDA,SDWLDUZ, and SDWLDFN from being
+ killed before the exit logic.
+  
+  
+ 3. INC000000278191 - Inquire Wait List (Sch/PCMM) Display 
+                                                                            
+ Problem:
+ --------
+ When using the INQUIRE WAIT LIST (Sch/PCMM) [SD WAIT LIST INQUIRY] option
+ the user is prompted to select an entry to view but all entries are
+ displayed.
+   
+ Resolution:
+ -----------
+ Routine SDWLI will be modified to use the PATIENT (#2) file instead of the 
+ SD WAIT LIST (#409.3) file to obtain the patient IEN (Internal Entry 
+ Number) so that the prompt to select entry will not occur. This change
+ will mimic the functionality of the WAIT LIST DISPLAY [SD WAIT LIST
+ DISPLAY] protocol in the APPOINTMENT MANAGEMENT [SDAM APPT MGT] option.
+  
+  
+ 4. INC000001001617 - Scheduling - EWL:
+  
+ Problem:
+ --------
+ When using the Enrollment Wait List (Sch/PCMM) Statistic Report [SD WAIT
+ LIST ENROLL REPORT] option there is a calculation error in the DO NOT
+ REMOVE DATE COLUMN.
+  
+ Resolution:
+ -----------
+ Routine SDWLROIS will be modified by fixing the line of code that sets
+ conditions for whether a record is calculated into the DO NOT REMOVE DATE
+ COLUMN of the Enrollment Wait List (Sch/PCMM) Statistic Report [SD WAIT 
+ LIST ENROLL REPORT].
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be installed with users in the system, but it is recommended
+ that it be installed when user activity is very low.
+  
+ Installation time will be less than five minutes.
+  
+ 1. Load Transport Global 
+    ----------------------
+    Choose the PackMan message containing this patch and invoke the 
+    INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2. Start Up KIDS 
+    -------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]: 
+      
+       Edits and Distribution ...  
+       Utilities ...  
+       Installation ...  
+    
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+        Load a Distribution 
+        Print Transport Global 
+        Compare Transport Global to Current System 
+        Verify Checksums in Transport Global 
+        Install Package(s) 
+        Restart Install of Package(s) 
+        Unload a Distribution 
+        Backup a Transport Global 
+    
+ 3. Select Installation Option: 
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+    NAME, enter SD*5.3*611):
+       
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+      
+ 4. Select Installation Option: Install Package(s) 
+    ---------------------------------------------------
+    **This is the step to start the installation of this KIDS patch: 
+  
+     a. Choose the Install Package(s) option to start the patch install.
+  
+     b. When prompted, "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO. 
+  
+     c. When prompted, "Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//", respond YES.
+         
+        Enter options you wish to mark as 'Out Of Order':
+  
+        Inquire Wait List (Sch/PCMM)           [SD WAIT LIST INQUIRY]
+        Appointment Management                 [SDAM APPT MGT]
+        Enrollment Wait List (Sch/PCMM)...
+          Statistic Report                     [SD WAIT LIST ENROLL REPORT]
+  
+        When prompted, 'Enter protocols you wish to mark as 'Out of Order':
+  
+        Make Appointment                       [SDAM APPT MAKE]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDM1
+    Before: B53130837   After: B54343109  **32,167,168,80,223,263,273,
+                                           408,327,478,490,446,547,611**
+Routine Name: SDM2A
+    Before: B20324106   After: B21288152  **446,528,567,594,611**
+Routine Name: SDWLI
+    Before: B73452514   After: B76987504  **263,327,394,446,524,505,611**
+Routine Name: SDWLROIS
+    Before: B30723054   After: B30485085  **412,415,446,611**
+Routine Name: SDWLRP1
+    Before: B62974233   After: B64566987  **263,273,485,497,446,611**
+ Description of Changes:
+  
+
+ 
+Routine list of preceding patches: 505, 547, 594
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 11, 2014
+Completed By:                               Date Completed: NOV 20, 2014
+Released By :                               Date Released : DEC 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

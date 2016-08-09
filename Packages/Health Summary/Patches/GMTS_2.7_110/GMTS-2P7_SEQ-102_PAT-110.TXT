@@ -1,0 +1,191 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/05/14 at 18:22
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: GMTS*2.7*110
+Package : GMTS - HEALTH SUMMARY               Priority: Mandatory
+Version : 2.7       SEQ #102                    Status: Released
+                  Compliance Date: SEP 05, 2014
+=============================================================================
+
+Associated patches: (v)GMTS*2.7*82 <<= must be installed BEFORE `GMTS*2.7*110'
+                    (v)GMTS*2.7*99 <<= must be installed BEFORE `GMTS*2.7*110'
+
+Subject: Health Factor Component Header Change and Health Summary AdHoc report
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following three issues in the Health Summary 
+ package:   
+   
+ 1) The PCE HEALTH FACTORS SELECTED (SHF)component header displays "Visit 
+    Date" although it may actual be either the event date or the visit
+    date.
+  
+ 2) The MAS CONTACTS (CON) component displaying incorrect work phone 
+    number information for the patient.
+    
+ 3) The SURGERY SEL NON OR PROCEDURES (SNSR) component does not allow 
+    selection of all the available CPT codes.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+      
+ ASSOCIATED REMEDY:
+ ==================
+ 1.   INC000000601000 - PCE HEALTH FACTOR COMPONET ISSUE
+ 2.   INC000000892660 - Health Summary - Other:
+      Duplicate:
+      INC000000903268 - Health Summary - Health Summary Component:
+ 3.   INC000000856093 - 6 OERR - Reports Tab:
+      
+ PARTICIPATING TEST SITES:
+ =========================
+ Central TX HCS
+ Hudson Valley HCS
+ North TX HCS
+      
+ REMEDY OVERVIEW:
+ ================
+ 1.   INC000000601000 - PCE HEALTH FACTOR COMPONET ISSUE
+  
+      Problem:
+      --------
+      Health summary for health factor says "visit date" but is displaying 
+      either the event date or the visit date.
+     
+      Resolution:
+      -----------
+      Modify the program to have the column header read "Event/Visit Date"
+      located at HDR+3^GMTSPXFP.
+  
+ 2.   INC000000892660 - Health Summary - Other:
+  
+      Problem:
+      --------
+      The Health Summary report for the component CON-MAS Contact is reporting
+      the incorrect work phone number for the patient.
+  
+      Resolution:
+      -----------
+      The work phone number can be fixed in section WORK ^GMTSMHCI by doing a 
+      call to OPD^VADPT to get the correct work phone number.
+  
+ 3.   INC000000856093 - 6 OERR - Reports Tab:
+  
+      Problem:
+      --------
+      The Health Summary report for the component SNSR is not listing all
+      CPT code for selection.
+  
+      Resolution:
+      -----------
+      The Health Summary report selection of the CPT codes will be resolved by
+      a program modification to ^GMTSADH5.  Allowing file 81- the CPT code 
+      file- to go against the "BA" indexed file will render codes for selection.
+  
+ DOCUMENTATION:
+ ==============
+ The Health Summary User Manual has been updated to reflect the enhancements 
+ provided by this patch.
+     
+ Sites may retrieve the documentation directly via FTP.
+ The preferred method is to FTP the files from:
+    
+    download.vista.domain.ext
+    
+ which will transmit the file from the first available FTP server.
+    
+ Sites may also elect to retrieve the documentation directly from
+ a specific server as follows:
+    
+    Albany          ftp.domain.ext
+    Hines           ftp.domain.ext
+    Salt Lake City  ftp.domain.ext
+    
+    File Name                Contents         Retrieval Format
+    ---------                --------         ----------------
+    hsum_2_7_110_um.pdf      User Manual      Binary
+    
+ Documentation for Health Summary can also be found
+ in the Clinical section of the VA Software Document Library:
+    
+    http://www.domain.ext/vdl
+    
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+    
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option. 
+    
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+           Edits and Distribution ... 
+           Utilities ...
+           Installation ...
+    
+      Select Kernel Installation & Distribution System Option:
+      Installation
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+    
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "GMTS*2.7*110"):
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+    
+  4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;Health Summary;**[Patch List]**;Oct 20, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMTSADH5
+    Before: B43046802   After: B46673093  **36,35,37,49,63,110**
+Routine Name: GMTSMHCI
+    Before: B11062334   After: B11159676  **99,110**
+Routine Name: GMTSPXFP
+    Before: B19095007   After: B19319385  **8,10,28,56,58,62,69,82,110**
+ 
+Routine list of preceding patches: 63, 82, 99
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 13, 2013
+Completed By:                               Date Completed: JUL 31, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

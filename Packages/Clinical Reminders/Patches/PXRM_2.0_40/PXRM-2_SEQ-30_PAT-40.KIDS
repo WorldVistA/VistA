@@ -1,0 +1,379 @@
+Released PXRM*2*40 SEQ #30
+Extracted from mail message
+**KIDS**:PXRM*2.0*40^
+
+**INSTALL NAME**
+PXRM*2.0*40
+"BLD",8805,0)
+PXRM*2.0*40^CLINICAL REMINDERS^0^3140728^y
+"BLD",8805,1,0)
+^^6^6^3140728^^^^
+"BLD",8805,1,1,0)
+This patch corrects a problem with the "AB" index of file #100.21 not
+"BLD",8805,1,2,0)
+being populated when copying a reminder patient list to an OE/RR team
+"BLD",8805,1,3,0)
+list. In the post-init it checks all existing lists in file #100.21 and
+"BLD",8805,1,4,0)
+ensures the "AB" index is populated for all of them.
+"BLD",8805,1,5,0)
+
+"BLD",8805,1,6,0)
+
+"BLD",8805,4,0)
+^9.64PA^^0
+"BLD",8805,6.3)
+202
+"BLD",8805,"ABPKG")
+n
+"BLD",8805,"INI")
+PRE^PXRMP40I
+"BLD",8805,"INIT")
+POST^PXRMP40I
+"BLD",8805,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8805,"KRN",.4,0)
+.4
+"BLD",8805,"KRN",.4,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",.401,0)
+.401
+"BLD",8805,"KRN",.402,0)
+.402
+"BLD",8805,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",.403,0)
+.403
+"BLD",8805,"KRN",.403,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",.5,0)
+.5
+"BLD",8805,"KRN",.84,0)
+.84
+"BLD",8805,"KRN",3.6,0)
+3.6
+"BLD",8805,"KRN",3.8,0)
+3.8
+"BLD",8805,"KRN",9.2,0)
+9.2
+"BLD",8805,"KRN",9.8,0)
+9.8
+"BLD",8805,"KRN",9.8,"NM",0)
+^9.68A^2^1
+"BLD",8805,"KRN",9.8,"NM",2,0)
+PXRMP40I^^0^B5014583
+"BLD",8805,"KRN",9.8,"NM","B","PXRMP40I",2)
+
+"BLD",8805,"KRN",19,0)
+19
+"BLD",8805,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",19.1,0)
+19.1
+"BLD",8805,"KRN",101,0)
+101
+"BLD",8805,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",409.61,0)
+409.61
+"BLD",8805,"KRN",409.61,"NM",0)
+^9.68A^^0
+"BLD",8805,"KRN",771,0)
+771
+"BLD",8805,"KRN",779.2,0)
+779.2
+"BLD",8805,"KRN",870,0)
+870
+"BLD",8805,"KRN",8989.51,0)
+8989.51
+"BLD",8805,"KRN",8989.52,0)
+8989.52
+"BLD",8805,"KRN",8994,0)
+8994
+"BLD",8805,"KRN","B",.4,.4)
+
+"BLD",8805,"KRN","B",.401,.401)
+
+"BLD",8805,"KRN","B",.402,.402)
+
+"BLD",8805,"KRN","B",.403,.403)
+
+"BLD",8805,"KRN","B",.5,.5)
+
+"BLD",8805,"KRN","B",.84,.84)
+
+"BLD",8805,"KRN","B",3.6,3.6)
+
+"BLD",8805,"KRN","B",3.8,3.8)
+
+"BLD",8805,"KRN","B",9.2,9.2)
+
+"BLD",8805,"KRN","B",9.8,9.8)
+
+"BLD",8805,"KRN","B",19,19)
+
+"BLD",8805,"KRN","B",19.1,19.1)
+
+"BLD",8805,"KRN","B",101,101)
+
+"BLD",8805,"KRN","B",409.61,409.61)
+
+"BLD",8805,"KRN","B",771,771)
+
+"BLD",8805,"KRN","B",779.2,779.2)
+
+"BLD",8805,"KRN","B",870,870)
+
+"BLD",8805,"KRN","B",8989.51,8989.51)
+
+"BLD",8805,"KRN","B",8989.52,8989.52)
+
+"BLD",8805,"KRN","B",8994,8994)
+
+"BLD",8805,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",8805,"QUES",0)
+^9.62^^
+"BLD",8805,"REQB",0)
+^9.611^1^1
+"BLD",8805,"REQB",1,0)
+PXRM*2.0*26^2
+"BLD",8805,"REQB","B","PXRM*2.0*26",1)
+
+"INI")
+PRE^PXRMP40I
+"INIT")
+POST^PXRMP40I
+"MBREQ")
+0
+"PKG",364,-1)
+1^1
+"PKG",364,0)
+CLINICAL REMINDERS^PXRM^Clinical Reminders^^^3011030
+"PKG",364,20,0)
+^9.402P^^
+"PKG",364,22,0)
+^9.49I^1^1
+"PKG",364,22,1,0)
+2.0^3050204
+"PKG",364,22,1,"PAH",1,0)
+40^3140728
+"PKG",364,22,1,"PAH",1,1,0)
+^^6^6^3140728
+"PKG",364,22,1,"PAH",1,1,1,0)
+This patch corrects a problem with the "AB" index of file #100.21 not
+"PKG",364,22,1,"PAH",1,1,2,0)
+being populated when copying a reminder patient list to an OE/RR team
+"PKG",364,22,1,"PAH",1,1,3,0)
+list. In the post-init it checks all existing lists in file #100.21 and
+"PKG",364,22,1,"PAH",1,1,4,0)
+ensures the "AB" index is populated for all of them.
+"PKG",364,22,1,"PAH",1,1,5,0)
+
+"PKG",364,22,1,"PAH",1,1,6,0)
+
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PXRMP40I")
+0^2^B5014583^n/a
+"RTN","PXRMP40I",1,0)
+PXRMP40I ;SLC/PKR - Inits for PXRM*2.0*40. ;01/14/2014
+"RTN","PXRMP40I",2,0)
+ ;;2.0;CLINICAL REMINDERS;**40**;Feb 04, 2005;Build 202
+"RTN","PXRMP40I",3,0)
+ Q
+"RTN","PXRMP40I",4,0)
+ ;==========================================
+"RTN","PXRMP40I",5,0)
+CHKAB ;Check all entries in the file #100.21 Member multiple and make sure
+"RTN","PXRMP40I",6,0)
+ ;they are in the "AB" index.
+"RTN","PXRMP40I",7,0)
+ D BMES^XPDUTL("Checking ^OR(100.21,""AB"") index.")
+"RTN","PXRMP40I",8,0)
+ N IEN,IND,MLIST,TNAME,VPTR
+"RTN","PXRMP40I",9,0)
+ S IEN=0
+"RTN","PXRMP40I",10,0)
+ F  S IEN=$O(^OR(100.21,IEN)) Q:+IEN=0  D
+"RTN","PXRMP40I",11,0)
+ . S IND=0
+"RTN","PXRMP40I",12,0)
+ . F  S IND=+$O(^OR(100.21,IEN,10,IND)) Q:IND=0  D
+"RTN","PXRMP40I",13,0)
+ .. S VPTR=$P(^OR(100.21,IEN,10,IND,0),U,1)
+"RTN","PXRMP40I",14,0)
+ .. I VPTR="" Q
+"RTN","PXRMP40I",15,0)
+ .. I $D(^OR(100.21,"AB",VPTR,IEN,IND)) Q
+"RTN","PXRMP40I",16,0)
+ .. S TNAME=$P(^OR(100.21,IEN,0),U,1)
+"RTN","PXRMP40I",17,0)
+ .. S MLIST(TNAME)=IEN
+"RTN","PXRMP40I",18,0)
+ .. S ^OR(100.21,"AB",VPTR,IEN,IND)=""
+"RTN","PXRMP40I",19,0)
+ I '$D(MLIST) D MES^XPDUTL("No patients were missing from the ""AB"" index.") Q
+"RTN","PXRMP40I",20,0)
+ D BMES^XPDUTL("Added entries to the ""AB"" index for the following teams:")
+"RTN","PXRMP40I",21,0)
+ S TNAME=""
+"RTN","PXRMP40I",22,0)
+ F  S TNAME=$O(MLIST(TNAME)) Q:TNAME=""  D
+"RTN","PXRMP40I",23,0)
+ . D MES^XPDUTL("  "_TNAME)
+"RTN","PXRMP40I",24,0)
+ Q
+"RTN","PXRMP40I",25,0)
+ ;
+"RTN","PXRMP40I",26,0)
+ ;==========================================
+"RTN","PXRMP40I",27,0)
+PRE ;Pre-init
+"RTN","PXRMP40I",28,0)
+ ;Disable options and protocols
+"RTN","PXRMP40I",29,0)
+ D OPTION^PXRMUTIL("DISABLE")
+"RTN","PXRMP40I",30,0)
+ D PROTOCOL^PXRMUTIL("DISABLE")
+"RTN","PXRMP40I",31,0)
+ Q
+"RTN","PXRMP40I",32,0)
+ ;
+"RTN","PXRMP40I",33,0)
+ ;==========================================
+"RTN","PXRMP40I",34,0)
+POST ;Post-init
+"RTN","PXRMP40I",35,0)
+ D SETPVER^PXRMUTIL("2.0P40")
+"RTN","PXRMP40I",36,0)
+ D CHKAB
+"RTN","PXRMP40I",37,0)
+ ;Enable options and protocols
+"RTN","PXRMP40I",38,0)
+ D OPTION^PXRMUTIL("ENABLE")
+"RTN","PXRMP40I",39,0)
+ D PROTOCOL^PXRMUTIL("ENABLE")
+"RTN","PXRMP40I",40,0)
+ D SENDIM^PXRMP40I
+"RTN","PXRMP40I",41,0)
+ Q
+"RTN","PXRMP40I",42,0)
+ ;
+"RTN","PXRMP40I",43,0)
+ ;==========================================
+"RTN","PXRMP40I",44,0)
+SENDIM ;Send install message.
+"RTN","PXRMP40I",45,0)
+ N FROM,NODE,PARAM,SYSTEM,SUBJECT,TO,VALUE
+"RTN","PXRMP40I",46,0)
+ S NODE="PXRM*2.0*40"
+"RTN","PXRMP40I",47,0)
+ K ^TMP(NODE,$J)
+"RTN","PXRMP40I",48,0)
+ ;DBIA #1131 for ^XMB("NETNAME")
+"RTN","PXRMP40I",49,0)
+ S FROM="PXRM*2.0*40 Install@"_^XMB("NETNAME")
+"RTN","PXRMP40I",50,0)
+ ;DBIA #2541
+"RTN","PXRMP40I",51,0)
+ S SYSTEM=$$KSP^XUPARAM("WHERE")
+"RTN","PXRMP40I",52,0)
+ I $$PROD^XUPROD(1) S TO("G.CLINICAL REMINDERS SUPPORT@FORUM.DOMAIN.EXT")=""
+"RTN","PXRMP40I",53,0)
+ E  D
+"RTN","PXRMP40I",54,0)
+ . N MGIEN,MGROUP
+"RTN","PXRMP40I",55,0)
+ . S MGIEN=$G(^PXRM(800,1,"MGFE"))
+"RTN","PXRMP40I",56,0)
+ . S MGROUP=$S(MGIEN'="":"G."_$$GET1^DIQ(3.8,MGIEN,.01),1:DUZ)
+"RTN","PXRMP40I",57,0)
+ . S TO(MGROUP)=""
+"RTN","PXRMP40I",58,0)
+ S SUBJECT="Install of PXRM*2.0*40"
+"RTN","PXRMP40I",59,0)
+ S ^TMP(NODE,$J,1,0)="PXRM*2.0*40 has been installed."
+"RTN","PXRMP40I",60,0)
+ S ^TMP(NODE,$J,2,0)="System is "_SYSTEM
+"RTN","PXRMP40I",61,0)
+ D SEND^PXRMMSG(NODE,SUBJECT,.TO,FROM)
+"RTN","PXRMP40I",62,0)
+ Q
+"RTN","PXRMP40I",63,0)
+ ;
+"VER")
+8.0^22.0
+**END**
+**END**
+

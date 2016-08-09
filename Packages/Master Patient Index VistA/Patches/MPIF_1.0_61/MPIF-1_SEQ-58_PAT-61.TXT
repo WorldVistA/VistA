@@ -1,0 +1,361 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Thursday, 11/05/15 at 09:18
+=============================================================================
+Run Date: DEC 15, 2015                     Designation: MPIF*1*61
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #58                      Status: Released
+                  Compliance Date: JAN 15, 2016
+=============================================================================
+
+Associated patches: (v)MPIF*1*51   <<= must be installed BEFORE `MPIF*1*61'
+                    (v)MPIF*1*54   <<= must be installed BEFORE `MPIF*1*61'
+                    (v)MPIF*1*56   <<= must be installed BEFORE `MPIF*1*61'
+                    (v)MPIF*1*60   <<= must be installed BEFORE `MPIF*1*61'
+
+Subject: ENTERPRISE REGISTRATION - MVI ITERATION 14
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+ * There is a pre-install check that is done to ensure sites followed the *
+ * post-install instructions contained in patch MPIF*1.0*56. If that      *
+ * setup was not completely done, this patch will not install. This is to *
+ * ensure site's users do not have errors after installation.  Refer to   *
+ * the install instructions of patch MPIF*1.0*56 for more information.    *
+ *                                                                        *
+ * This patch may be installed with users on the system, however we       *
+ * strongly advise that it be installed after business hours.             *
+ **************************************************************************
+  
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       three VistA namespaces: DG, RG and MPIF.
+       The enhancements related to this patch are only being distributed in
+       the DG and MPIF VistA namespaces. MPIF*1.0*61 should be installed
+       before DG*5.3*915 for non-legacy sites, as the new registration 
+       functionality being exported in this patch will not work without 
+       MPIF*1.0*61. (Do NOT install MPIF*1.0*61 on legacy sites.)
+       Therefore it is recommended that these patches be installed in the
+       following order on non-legacy sites: 
+              MPIF*1.0*61 and then DG*5.3*915.
+       
+       DG*5.3*915 should be installed immediately after installing 
+       MPIF*1.0*61.
+  
+  
+ This enhancement patch provides support for patch DG*5.3*915 and the new 
+ Enterprise Registration processes to improve the Veterans' experience at 
+ VA facilities by allowing new local patients to be looked up directly in 
+ the Master Veteran Index (MVI).  The data from the new patient's MVI 
+ record is automatically imported into the local site as well as an 
+ attempt to obtain the Enrollment System (ES) data when possible. 
+ In addition, this Enterprise Registration also allows for lookup and import
+ of Department of Defense (DoD) data if the patient is a new patient to the
+ VA system.
+  
+  
+ New Application Programmer Interfaces (API):
+ PATIENT^MPIFXMLP - This new API allows the Registration (DG) package to 
+ do a probabilistic search in the MVI using a web service call.  Traits
+ passed in to the API will be utilized to search for existing patients on
+ the MVI.  If no existing patients are found, the MVI will search DoD
+ records for an existing record match. Any patients found will be returned
+ to the Registration (DG) package.
+  
+ ENP^MPIFVER - This API will take results received from the probabilistic
+ search and present them to the user for viewing and selection.  If a 
+ record is selected, the API will verify data and return information to the 
+ Registration (DG) package about the record that was selected and verified.
+  
+ GETICN^MPIFXMLI - This API will allow the Registration (DG) package to 
+ add a patient to the MVI system.  Traits passed in will be used to  create
+ the MVI record via a web service call.  Upon successful completion a new
+ Integration Control Number (ICN) will be returned.
+  
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Battle Creek VAMC
+ Upstate NY HCS
+ West Palm Beach VAMC
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The pre-init routine MPIFP61 will verify that sites followed the
+ post-install instructions contained in the released patch MPIF*1.0*56.
+ If that setup was not completed successfully, then this patch will not
+ install, which will ensure that site's users do not encounter errors
+ after installing this patch. Please refer to the install instructions of
+ patch MPIF*1.0*56 for additional information.   
+  
+ As part of the post installation process, sites will be required to
+ manually modify the MPI_PSIM_EXECUTE web server entry in their
+ production account to ensure it is directed at the MVI load balancer. This
+ will ensure messages are reliably routed when specific nodes are down.  
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system, however we strongly advise that it be
+ installed after business hours.  
+ The associated patch DG*5.3*915 should be installed immediately after this
+ patch is installed.  
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+   
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. MPIF*1.0*61):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt Computerized Patient Record System (CPRS) users.  If your
+     facility has the XQBUILDTREEQUE nightly batch job tasked to run, 
+     answer NO to this question. The nightly job will rebuild the menus
+     as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES. The following OPTIONS should be 
+     disabled during the installation.
+       
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, update the MPI_PSIM_EXECUTE
+ entry through the Web Server Manager option [XOBW WEB SERVER MANAGER],
+ modifying the SERVER address to now point to the MVI load balancer address
+ of ps-prd.aac.domain.ext. 
+    *** NOTE: This should ONLY BE UPDATED in your PRODUCTION account, ***
+    ***       NOT in your test or mirror accounts.                    ***
+ See example below:
+  
+ Option: XOBW WEB SERVER MANAGER     Web Server Manager
+   
+                        HWSC Web Server Manager
+                       Version: 1.0     Build: 31
+  
+  ID    Web Server Name           IP Address or Domain Name:Port
+  1    *CDS SERVER                127.0.0.1:22
+  2    *MPI_PSIM_EXECUTE          vhaacsapp34.aac.domain.ext:7957
+  3    *PEPS                      mocha.pharmacy.healthevet.domain.ext:8010
+    
+  
+           Legend:  *Enabled
+ AS  Add Server                          TS  (Test Server)
+ ES  Edit Server                         WS  Web Service Manager
+ DS  Delete Server                       CK  Check Web Service Availability
+ EP  Expand Entry                        LK  Lookup Key Manager
+ EP  Expand Entry                        LK  Lookup Key Manager
+ Select Action:Quit// ES   Edit Server
+ Select Web Server:  (1-3): 2
+ NAME: MPI_PSIM_EXECUTE//
+ SERVER: vaauspsimweblogic3.vha.domain.ext Replace ... With ps-prd.aac.domain.ext
+   Replace
+    ps-prd.aac.domain.ext
+ PORT: 7957//
+ DEFAULT HTTP TIMEOUT: 30//
+ STATUS: ENABLED//
+  
+ Security Credentials
+ ====================
+ LOGIN REQUIRED: NO//
+  
+ SSL Setup
+ =========
+ SSL ENABLED: FALSE//   FALSE
+  
+ Authorize Web Services
+ ======================
+ Select WEB SERVICE: MPI_PSIM_EXECUTE//
+   WEB SERVICE: MPI_PSIM_EXECUTE//
+   STATUS: ENABLED//
+ Select WEB SERVICE:
+                        HWSC Web Server Manager
+                       Version: 1.0     Build: 31
+  
+  ID    Web Server Name           IP Address or Domain Name:Port
+  1    *CDS SERVER                127.0.0.1:22
+  2    *MPI_PSIM_EXECUTE          ps-prd.aac.domain.ext:7957
+  3    *PEPS                      mocha.pharmacy.healthevet.domain.ext:8010
+  
+  
+           Legend:  *Enabled
+ AS  Add Server                          TS  (Test Server)
+ ES  Edit Server                         WS  Web Service Manager
+ DS  Delete Server                       CK  Check Web Service Availability
+ EP  Expand Entry                        LK  Lookup Key Manager
+ Select Action:Quit//    QUIT
+  
+  
+ Finally, restart the HL7 incoming filers. Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management
+ Options [HL MENU FILER LINK MGT] menu on the HL7 Main Menu
+ [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFA24B
+    Before: B11247511   After: B11454543  **22,28,31,25,43,44,51,61**
+Routine Name: MPIFAPI
+    Before: B56470744   After: B56281714  **1,3,14,16,17,21,27,28,33,35,
+                                           37,43,45,44,46,48,55,56,60,61**
+Routine Name: MPIFHWSC
+    Before:  B6654102   After: B12341980  **56,61**
+Routine Name: MPIFP61
+    Before:       n/a   After:  B1342979  **61**
+Routine Name: MPIFRES
+    Before: B25967604   After: B63380413  **1,7,10,15,17,21,26,28,33,35,
+                                           43,39,52,54,61**
+Routine Name: MPIFVER
+    Before:       n/a   After: B52880836  **61**
+Routine Name: MPIFXMLG
+    Before:       n/a   After: B11296898  **61**
+Routine Name: MPIFXMLI
+    Before:       n/a   After: B39708353  **61**
+Routine Name: MPIFXMLP
+    Before:       n/a   After: B91197563  **61**
+ 
+Routine list of preceding patches: 51, 54, 60
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 17, 2015
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : DEC 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

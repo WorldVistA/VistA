@@ -1,0 +1,222 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: EAS*1*111
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #105                      Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)EAS*1*71    <<= must be installed BEFORE `EAS*1*111'
+
+Subject: RECEIVE CONVERSION/REVERSAL TESTS FROM ES
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  *****************************************************************************
+  Note:  This patch is being released in support of the Enrollment Customer
+         Enhancements (ECE) and Enrollment System Enhancements (ESE) projects
+         and the Enrollment System (ES) 3.12 release.  EAS*1*111 (Enrollment
+         Application System) is released with DG*5.3*865 (Registration) and
+         EAS*1*107 (Enrollment Application System) in host file DG_53_P865.KID.
+   
+         It is imperative that this patch be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *****************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES), and VistA Registration, Enrollment and Eligibility
+  (VistA REE) software to support the requirements of the Receive
+  Conversion/Reversal Tests from ES initiative.
+   
+  This patch modifies the Enrollment Application System v1.0 application as
+  described below:
+   
+  1.  Add protocols to support ORU Z06 messages from ESR for
+      Converted/Reversed tests.
+   
+     - New entries in the Protocol file #101 have been created to support
+       ORU Z06 from ESR.  New ORU (Unsolicited transmission type) protocols
+       have been added for inbound messages:
+        (where nnn is the VistA site number)
+         EAS ESR nnn ORU-Z06 SERVER
+         EAS ESR nnn ORU-Z06 CLIENT
+   
+    The post-install routine EAS1111P will define the protocols associated
+    with this patch.  The protocols are active with the install of the patch.
+   
+  2.  VistA will not send an ORU Z07 back to ESR when it processes an ORU
+      Z06 from ESR.
+   
+     - The ORU Z07 message to ESR will be suppressed when an ORU Z06 is
+       processed.
+   
+  3.  Processing converted and reversed tests for ESR.
+   
+     - VistA will accept an ORU Z06 message even when a Converted Means
+       Test or Rx Copay Test associated with the Means Test is not on file
+       for the income year being converted.  When processing a Converted
+       Means Test or Converted Rx Copay Test associated with the Means
+       Test, VistA will accept the test even if a test is not on file for
+       the converted income year.
+   
+  4.  Reversed test.
+   
+     - VistA will accept a Z06 message when a Reversed Means Test or Rx
+       Copay Test associated with the Means Test is received from ESR.  
+       There will be no restrictions on the Means Test Status or Rx Copay
+       Status in order to Reverse a Means Test or an Rx Copay Test.
+   
+   
+  Patch Components:
+  ------------------
+   
+  Files & Fields Associated:
+  
+  File Name         Number    Field Name     Number  New/Modified/Deleted
+  -------------     ------    ------------   ------  --------------------
+  N/A
+   
+    
+  Forms Associated:
+  
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+   
+  Mail Groups Associated:
+  
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+   
+  Options Associated:
+  
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               --------------------
+  N/A
+   
+   
+  Protocols Associated:
+  
+  Protocol Name                             New/Modified/Deleted
+  -------------                             --------------------
+  EAS ESR nnn ORU-Z06 SERVER                   New
+  EAS ESR nnn ORU-Z06 CLIENT                   New
+   
+   
+  Security Keys Associated:
+  
+  Security Key Name
+  -----------------
+  N/A
+   
+   
+  Templates Associated:
+  
+  Template Name     Type        File Name (Number)    New/Modified/Deleted
+  -----------       ----        ------------------    --------------------
+  N/A
+   
+     
+ Additional Information: 
+  
+  New Service Request (NSRs):
+  ---------------------------
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  -----------
+  West Texas VA Health Care System, Big Spring, TX
+  Fargo VA Health Care System, Fargo, ND
+  Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+  VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+    
+    
+  Documentation Retrieval Instructions:
+  =====================================
+  Updated documentation describing the new functionality introduced by this 
+  patch is available.
+   
+  The preferred method is to FTP the files from
+  ftp://download.vista.domain.ext/.  This transmits the files from the first
+  available FTP server. Sites may also elect to retrieve software directly
+  from a specific server as follows:
+   
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+  
+   
+ Installation Instructions:
+ --------------------------
+  
+ Please see the DG*5.3*865 Patch Description for installation 
+ Instructions. 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;07-MAR-13;Build 59
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1111P
+    Before:       n/a   After: B24211665  **111**
+Routine Name: EASPREC3
+    Before: B11323531   After: B11366491  **71,111**
+Routine Name: EASPREC6
+    Before:       n/a   After: B83152765  **111**
+Routine Name: EASUM6
+    Before:       n/a   After: B30233395  **111**
+Routine Name: EASUM9
+    Before:       n/a   After: B40763985  **111**
+ 
+Routine list of preceding patches: 71
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : FEB 20, 2013
+Completed By:                               Date Completed: NOV 19, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

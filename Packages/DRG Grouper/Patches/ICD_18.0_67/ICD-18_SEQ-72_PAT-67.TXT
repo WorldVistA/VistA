@@ -1,0 +1,228 @@
+
+=============================================================================
+Run Date: FEB 25, 2015                     Designation: ICD*18*67
+Package : ICD - DRG GROUPER                   Priority: Mandatory
+Version : 18        SEQ #72                     Status: Released
+                  Compliance Date: MAR 27, 2015
+=============================================================================
+
+Associated patches: (v)ICD*18*64   <<= must be installed BEFORE `ICD*18*67'
+
+Subject: API Fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This is a multi-package Kernel Installation and Distribution System
+  (KIDS) distribution consisting of the following three builds:
+     
+     Install
+     Order     Build          Subject                       Requires
+     -------   ----------     -------------------------     ------------
+        1      LEX*2.0*86     Data Dictionary/API Fixes     LEX*2.0*97
+        2      ICD*18.0*67    API Fixes                     ICD*18.0*64
+        3      FB*3.5*157     Modify Diagnosis Storage      FB*3.5*123
+          
+  Install Name:  LEX*2.0*86
+     
+     NOTE:  This message does not contain an installable KIDS build, nor
+            does it contain any routines or data.  The installable KIDS 
+            distribution is contained in KIDS hostfile LEX_2_86.KID and
+            can be obtained using the File Transfer Protocol (FTP) 
+            instructions and installation instructions found in the 
+            patch description for LEX*2.0*86.
+     
+  ENHANCEMENTS:
+  ============ 
+   
+    Routines
+    --------
+   
+      ICD1867   New       Environment Check
+      ICDEX     Changed   Adjust for the changes in ICDEXA through ICDEXD
+      ICDEXA3   Changed   Reduce Comments/Routine Size (SACC)
+      ICDEXC    Changed   Local Codes (CR 1398)
+      ICDEXC4   Changed   New API $$RDX - Resolve Diagnosis Code Fragment
+      ICDEXD2   Changed   Routine size too large, code moved to ICDEXD6 (SACC)
+      ICDEXD5   Changed   Routine size too large, code moved to ICDEXD6 (SACC)
+      ICDEXD6   New       Code from over-sized routines (SACC)
+      ICDEXLK   Changed   Remove application code/Fix "^" Re-Prompt (CR 1395)
+      ICDEXLK2  Changed   Change "^" processing/Fix .01 field suppression
+      ICDEXLK3  Changed   Protect the variable ROOT ($G)
+      ICDEXLK4  Changed   Change variable list, removed FIND and FOUND
+      ICDEXLK5  Changed   Add prompt for IEN when DIC(0) contains A or E
+      ICDEXLK6  Changed   Fix help routines, add DICU, DICS, DIE, and XT
+      ICDEXS    Changed   Update internal documentation
+      ICDXCODE  Changed   Local Codes (CR 1398)
+     
+    
+    ICD APIs
+    --------
+   
+      ICDEXLK                  Special Lookup for files 80 and 80.1
+   
+        Application specific code (QUASAR, DIE, Lab and Scheduling) has been 
+        removed and replace with generic code for all applications.  A prompt
+        was added for user confirmation when only one entry is found.  
+        Up-arrow "^" processing has been modified, a single up-arrow will 
+        return to the user input prompt (CR1395).  Moved processing of 
+        up-arrow (DUOUT, DIRUT and DIROUT), timeouts (DTOUT) into the ICD* 
+        namespace to prevent collisions with FileMan.  Fixed the display when
+        DIC(0) contains "S" (suppress the .01 field).  Add prompt for IEN 
+        lookup when DIC(0) contains A or E (SQA finding).
+   
+      $$ICDDATA^ICDXCODE       Data Retrieval for 2 file solution
+   
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.
+          
+        NOTE:  The API $$ICDDATA^ICDXCODE was part of the two file solution 
+        for ICD-10, where ICD-9 remained in files 80 and 80.1 and ICD-10 was
+        stored in a new and separate file.  This design was replaced by the
+        one file solution where ICD-10 is stored in the same files and ICD-9
+        and uses the API $$ICDDX^ICDEX instead.  The API $$ICDDATA^ICDXCODE
+        will be retired Apr 1, 2017 (18 months after the ICD-10 compliance
+        date).
+   
+      $$ICDDX^ICDEX            Data Retrieval for 1 file solution
+   
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.  (replaces $$ICDDATA^ICDXCODE)
+   
+      $$ICDOP^ICDEX            Data Retrieval for 1 file solution
+   
+        This API has been modified to return data on local VA codes (CR 1398).
+        VA local codes cannot be used after Oct 1, 1991; however there still 
+        remains a requirement to display them.  (replaces $$ICDDATA^ICDXCODE)
+   
+      $$RDX^ICDEX              New API to resolve ICD Diagnosis Code Fragment
+   
+        This API takes a partial code (without decimal) and converts it
+        to an ICD Diagnosis code. (used internally)  Examples:
+   
+          Code Fragment   Effective Date   Resolved to   Coding System
+          -------------   --------------   -----------   -----------
+          311                              311.           1  ICD-9-CM
+          A870                             A87.0         30  ICD-10-CM
+          E8310             06/26/2014     E831.0         1  ICD-9-CM
+          E8310             12/12/2015     E83.10        30  ICD-10-CM
+   
+      $$POAE^ICDEX             New API - Present on Admission Exempt
+   
+        This API returns a 1 if an ICD Diagnosis code is exempt from 
+        Present on Admission (POA) reporting.  POA is an indicator of 
+        the relationship between a diagnosis and inpatient admission, and
+        can include:
+   
+           A diagnosis was present at time of inpatient admission
+           A diagnosis was not present at time of inpatient admission
+           The documentation was insufficient to determine if condition was 
+               present at the time of inpatient admission
+           The provider was unable to clinically determine whether the 
+               condition was present at the time of inpatient admission
+  
+      $$HAC^ICDEX              New API - Hospital Acquired Conditions
+   
+        This API returns a 1 if a diagnosis can be acquired during
+        an inpatient visit.  It is used in conjunction with present on
+        admission (POA) to calculate a DRG group.
+  
+  
+  REMEDY TICKETS:
+  ==============
+  
+    None
+  
+  
+  DOCUMENTATION RETRIEVAL:
+  =======================
+  
+    The ICD Technical manual has been updated with descriptions of the changes
+    to the APIs introduced by this patch.  This manual is available in the 
+    [ANONYMOUS.SOFTWARE] directories at the following Internet addresses:
+    
+       Preferred or Specific Server   Internet address
+       ----------------------------   -------------------------
+       First available ftp server     download.vista.domain.ext <-- preferred
+       Albany                         ftp.domain.ext
+       Hines                          ftp.domain.ext
+       Salt Lake City                 ftp.domain.ext
+    
+    The following document is available via the FTP sites listed above.
+   
+      File Name                     Protocol
+      -------------------           --------
+      ICDTM.PDF                     binary   ICD Technical Manual
+   
+    After this patch is released, the updated manuals may also be retrieved 
+    from the Internet at http://www.domain.ext/vdl
+  
+   
+  INSTALLATION INSTRUCTIONS:
+  =========================
+   
+    Please refer to the patch description for LEX*2.0*86 for instructions 
+    for retrieving and installing this patch.
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;18.0;DRG Grouper;**[Patch List]**;Oct 20, 2000;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ICD1867
+    Before:       n/a   After: B77504315  **67**
+Routine Name: ICDEX
+    Before: B73946334   After: B76352814  **57,67**
+Routine Name: ICDEXA3
+    Before:B159565550   After:B159086778  **57,67**
+Routine Name: ICDEXC
+    Before:B108523477   After:B109821658  **57,67**
+Routine Name: ICDEXC4
+    Before: B11534357   After: B30014377  **57,67**
+Routine Name: ICDEXD2
+    Before: B91571446   After: B52729540  **57,67**
+Routine Name: ICDEXD5
+    Before: B63389361   After: B57426923  **57,67**
+Routine Name: ICDEXD6
+    Before:       n/a   After: B20655480  **67**
+Routine Name: ICDEXLK
+    Before:B199827276   After:B131568990  **57,67**
+Routine Name: ICDEXLK2
+    Before:B168472768   After:B167936583  **57,67**
+Routine Name: ICDEXLK3
+    Before: B98024730   After: B98059988  **57,67**
+Routine Name: ICDEXLK4
+    Before: B25896513   After: B25474563  **57,67**
+Routine Name: ICDEXLK5
+    Before: B75373289   After: B69728185  **57,67**
+Routine Name: ICDEXLK6
+    Before: B83204817   After: B93947228  **57,67**
+Routine Name: ICDEXS
+    Before:B149154345   After:B148931476  **57,67**
+Routine Name: ICDXCODE
+    Before:  B7083997   After:  B7339576  **57,67**
+ 
+Routine list of preceding patches: 57
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 06, 2012
+Completed By:                               Date Completed: FEB 25, 2015
+Released By :                               Date Released : FEB 25, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

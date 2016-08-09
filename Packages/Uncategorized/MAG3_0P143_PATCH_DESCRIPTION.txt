@@ -1,0 +1,351 @@
+ 
+
+
+
+
+
+
+
+Patch 143
+Import OCX-Group Pointer Issue
+Patch Description
+
+
+VistA Imaging
+MAG*3.0*143
+February 14, 2014
+
+	
+
+
+
+
+
+
+
+
+Patch 143 Patch Description 
+February 14, 2014
+Property of the US Government
+This is a controlled document. No changes to this document may be made without the express written consent of VistA Imaging development group.
+While every effort has been made to assure the accuracy of the information provided, this document may include technical inaccuracies and/or typographical errors. Changes are periodically made to the information herein and incorporated into new editions of this document.
+Product names mentioned in this document may be trademarks or registered trademarks of their respective companies, and are hereby acknowledged.
+VistA Imaging Office of Enterprise Development
+Department of Veterans Affairs
+Internet: http://www.va.gov/imaging
+VA intranet: http://www.va.gov/imaging
+
+Revision Table
+RevDateNotes1.008-Jan-2014Initial draft, Garrett Kirin1.130-Jan-2014Review, Supriya Vattikuti1.212-Feb-2014Final review, Garrett Kirin1.314-Feb-2014Action item complete, Garrett Kirin
+Contents
+
+Patch 143 Overview	1
+Distribution of Software	1
+Patch Contents	2
+Software	2
+Documentation	2
+Associated Patches	2
+Test Sites	2
+Remedy Calls	2
+NSRs	2
+Patient Safety Issues	2
+Patch 143 Changes	4
+Summary	4
+Issue	4
+Problem	4
+Solution	4
+Import OCX Changes	4
+VistA System Changes	4
+Routines	4
+Data Dictionary	5
+Mail Groups	5
+Forms	5
+Security Keys	5
+Remote Procedures	5
+Menu Options	5
+Protocols	5
+Templates	5
+Installation	7
+Installation Planning	7
+Installation Prerequisites	7
+VistA System (KIDS) Installation	7
+Installation Steps	7
+KIDS Installation Example	8
+Import OCX Installation	9
+Manual Installation	9
+Uninstalling the Import OCX MAG*3.0*143	11
+
+
+This page is intentionally blank.
+
+
+Patch 143 Overview
+
+This document describes MAG*3.0*143, the patch that resolves the VistA Imaging Import OCX-Group Pointer Issue for the VistA Imaging (VI) Import Application Programming Interface (API).
+
+The VI Import API is a utility created so applications, other than VI, can attach patient document/images to the patient record. The Import API has M routines that are installed on the VistA System and an ActiveX control that is installed on the Background Processor (BP) workstation.
+
+Applications implement the Import API through a Remote Procedure Call (RPC) to the VistA System. The RPC accepts an input array of data. Data are validated, and an Import Queue is created in the IMPORT QUEUE file (#2006.034). The BP processes the entries in the Import Queue, and during this process, the BP calls the methods of the Import OCX.  
+
+The features and fixes of MAG*3.0*143 are summarized below:
+* MAG*3.0*143 addresses the issue of invalid group pointers in the VistA IMAGE (#2005) file. The issue occurs when an application that implements the Import API attempts to import a group of images and attach the group to a Text Integration Utility (TIU) Note.
+
+Previous patches that included changes to the Import OCX also have included the BP application. MAG*3.0*143 contains only the Import OCX ActiveX control: MagImportXControl1_143.ocx.
+
+Note: 
+After download and before installation, rename this file (MagImportXControl1_143.ocx.) to MagImportXControl1.ocx.  In this document all references to MagImportXControl1.ocx are referring to the renamed file.
+
+
+
+Distribution of Software
+To obtain MAG*3.0*143 files, use File Transfer Protocol (FTP) to retrieve MAG3_ 0P143.KID and MagImportXControl1.143.ocx from one of the following OI Field Offices' ANONYMOUS.SOFTWARE directories:
+
+OI Field Office		FTP Address				Directory
+-------------------		----------------				-------------
+Albany				ftp.fo-albany.med.va.gov	anonymous.software
+Hines				ftp.fo-hines.med.va.gov		anonymous.software
+Salt Lake City		ftp.fo-slc.med.va.gov		anonymous.software
+
+ File Name								Description
+---------------								----------------
+MAG3_0P143.KID 					KIDS build for patch MAG*3.0*143
+MagImportXControl1.143.ocx 			Fixed software for MAG*3.0*143
+
+NOTE: Any late-breaking news about this patch will be found in a readme file. If present, this file will also be located in the MAG3_0P143 directory.
+
+Patch Contents
+This patch includes software and documentation files. 
+Software
+* MAG3_0P143.KID – KIDS (Kernel Installation and Distribution System) package to be installed on the VistA System
+* MagImportXControl1.143.ocx 
+Documentation 
+This document, MAG3_0P143_Patch_Description.pdf, provides an overview, explains the changes, and outlines the installation for this patch. MAG3_0P143_README.txt is an informative file associated with the patch.
+Associated Patches
+This patch must be installed after MAG*3.0*135.
+Test Sites
+The following sites are test sites for this patch:
+* Department of VA Medical Center in Wichita, KS
+* VA Sierra Nevada HCS in Reno, NV
+* VA Gulf Coast Veterans HCS in Biloxi, MS
+Remedy Calls
+The following Remedy help desk calls are addressed in this patch:
+* INC000000916733, INC000000934023, INC000000935853, INC000000938833, INC000000951806, INC000000951838, INC000000951848, INC000000951855, INC000000951893, and INC000000951896.
+NSRs
+There are no new service requests addressed in this patch.
+Patient Safety Issues
+There are no patient safety issues associated with this patch.
+
+This page is intentionally blank.
+
+
+Patch 143 Changes
+
+Summary
+When a group of images is imported through the Import API and attached to a TIU Note, the BP calls the Import OCX to process the import. During the process, an entry is made in the IMAGE (#2005) file for the group and for each image to be imported. The images are then copied to the Image Share. The last step in the process is to link the TIU Note to the Image Group. This link is made by the RPC MAG3 TIU IMAGE.
+Issue
+In Clinical Display, the user selects an Image Group to display. However, the images do not open, instead a warning dialog is shown, stating, “Questionable integrity: Missing parent image pointer.” Also, in the VistA System error trap, the error “ERROR=<SUBSCRIPT>FILE+7~MAGGNTI” is logged.
+Problem
+In this case, when a group entry is being linked to a TIU Image, the value of the group pointer that is sent as a parameter in the MAG3 TIU IMAGE RPC is null and the images are not linked to the TIU Note.
+The pointer from IMAGE File (#2005) to TIU Document (#8925) doesn’t set. Also, the pointer from TIU EXTERNAL DATA LINK File (#8925.91) to IMAGE File (#2005) doesn’t set.
+Solution
+A change in Patch 135 import OCX inadvertently changed the parameter that was sent to the MAG3 TIU IMAGE RPC. The parameter that was sent was always null. The fix is to change the incorrect parameter to the correct parameter.  
+Import OCX Changes
+There is a modification to the Import OCX method to send the correct parameter in the RPC call that links the TIU Note to the Image Group. No other methods are modified. 
+VistA System Changes
+Routines
+This section lists new and modified routines for the VistA System. For each routine, the second line will contain the following information:
+* ;;3.0;IMAGING;**[patch list]**;Mar 19, 2002;[Build #][Build Date] 
+* CHECK1^XTSUMBLD is used to generate the checksums.
+Please note that the “before” checksum may differ if any test software has been installed.
+RoutineChecksum BeforeChecksum AfterPatch ListMAGIP143NEW4214971143
+Routine MAGIP143 is a post-install routine and is deleted after the KIDS install. 
+Data Dictionary
+There are no data dictionary changes for MAG*3.0*143. 
+Mail Groups
+This patch contains no new or modified mail groups.
+Forms
+This patch contains no new or modified forms.
+Security Keys
+This patch contains no new or modified security keys.
+Remote Procedures
+This patch contains no new remote procedure calls.
+Menu Options
+This patch contains no new menu options.
+Protocols
+This patch contains no new or modified protocols.
+Templates
+This patch contains no new or modified templates.
+
+This page is intentionally blank.
+
+
+
+Installation
+
+Installation Planning
+This patch is to be installed on the VistA System and on the BP machines. MAG*3.0*143 only includes the Import OCX: MagImportXControl1.143.ocx. The BPs need to be closed while the setup.exe is running. This patch must be installed by the <<insert compliance date here >> compliance date to conform with VHA Directive 2001-023.
+This patch may be loaded while VistA Imaging System is active. Installation for the KIDS will take less than one minute. Installation for the Import OCX will take less than one minute.
+Installation Prerequisites
+Before installing this patch, you will need to download the MAG*3.0*143 files from the Download Server to a local storage location. Verify that the patches listed in the section Associated Patches on page 2 have been installed.
+VistA System (KIDS) Installation 
+Installation Steps
+1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+2. Run the Installation option [XPD INSTALLATION MENU].
+3. Load the KIDS file by performing the following steps:
+a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load the KIDS distribution.
+b. When prompted, enter the path and file name (MAG3_0P143.KID) of the Patch 143 KIDS file that you downloaded from the Download Server.
+c. When prompted to continue with the load, enter YES. A Distribution OK! message will be displayed when the load is complete.
+4. After loading the KIDS file, use the following options to verify the contents of the patch. This is a good time to back up any affected routines.
+a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] – Run this option if you want to ensure the integrity of the routines in the patch.
+b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] – Run this option if you want to view all changes that will be made when the patch is installed. All components (routines, options, and so on) in the patch will be compared.
+c. Back up a Transport Global [XPD BACKUP] – Run this option if you want to create a backup message of any routines exported with the patch. The option will NOT back up any of the other changes.
+5. After performing the load and any optional verification steps, install the KIDS file by performing the following steps:
+a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+b. When prompted for the install name, enter MAG*3.0*143.
+c. Answer NO to the following prompts, if they appear:
+
+Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+
+Want KIDS to INHIBIT LOGONs during the install? NO//
+
+6. When the installation has finished, an Install Completed message will be displayed.
+KIDS Installation Example
+This example shows the output when the KIDS file is installed for the first time. If you have already installed the patch and are installing the KIDS file in a namespace on which it has previously been installed, your output may be different.
+Select Installation Option: INstall Package(s)
+Select INSTALL NAME:    MAG*3.0*143    2/14/14@00:36:07
+     => VistA Imaging V3.0 Patch 143 - Import API OCX Group Pointer Issue  ;Cr
+ 
+This Distribution was loaded on Feb 14, 2014@00:36:07 with header of
+   VistA Imaging V3.0 Patch 143 - Import API OCX Group Pointer Issue  ;Created o
+n Feb 14, 2014@00:32:15
+   It consisted of the following Install(s):
+    MAG*3.0*143
+Checking Install for Package MAG*3.0*143
+ 
+Install Questions for MAG*3.0*143
+ 	
+ 
+ 
+Want KIDS to INHIBIT LOGONs during the install? NO//
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+ 
+DEVICE: HOME//   HERE   MAG*3.0*143
+
+ Feb 14, 2014@00:36:15
+ 
+ Running Pre-Install Routine: PRE^MAGIP143
+ 
+ Running Post-Install Routine: POS^MAGIP143
+ 
+Post Install Mail Message: Feb 14, 2014@00:36:15
+ 
+ Updating Routine file...
+ 
+ Updating KIDS files...
+ 
+ MAG*3.0*143 Installed.
+ Feb 14, 2014@00:36:15
+ 
+
+Install Completed
+
+Import OCX Installation
+The Import OCX software for this patch will be installed manually. The file MagImportXControl1.OCX needs to be installed and registered according to the instructions that follow. After the client installation is completed, log in to an updated workstation, then use the Help | About menu option to verify the version number is 30.50.143.1
+Manual Installation 
+Manually register the Import API OCX: MagImportXControl1.ocx:
+1. Close the BP application (don't just "stop," but close the application).
+2. To register the OCX, you need to run the Command prompt as an administrator (even if you have administrator privileges, you still need to select Run As Administrator).
+3. Open the start menu and type "cmd" into the search box. 
+4. Hold Ctrl + Shift and press Enter.
+
+5. This runs the Command window in Administrator Mode.
+
+
+
+6. Change directory to  c:\program files (x86)\vista\imaging\lib.
+Unregister the current OCX:
+ … \Lib>regsvr32 MagImportXControl1.ocx /u-.
+
+
+7. Rename existing OCX as 135 version (not required) …\Lib>rename MagImportXControl1.ocx MagImportXControl1.135.ocx.
+8. Rename the file : MagImportXControl1_143.ocx. to MagImportXControl1.ocx
+Install the new Import API OCX Control MagImportXControl1.ocx  into the …\Lib directory. 
+
+Register the new OCX:  …\Lib>regsvr32 MagImportXControl1.ocx.
+9. You can now restart the BP application:a. OCX version numbers:
+* The file version for the 135 OCX (old OCX) is 30.50.135.10.
+* The file version for the 143 OCX (new OCX) is 30.50.143.1
+
+
+There is an alternate way to run the Command prompt as an administrator:
+
+1. Click the Start button, and choose > All Programs > Accessories. 
+2. Right-click on Command prompt, select Run As Administrator. 
+
+
+Possible error messages:
+
+1. When registering the new OCX, this error message will be displayed if you are not running as an administrator.
+
+2. If you get this error, try changing the directory to c:\program files (x86)\vista\imaging\lib and then try to register again. 
+
+
+Uninstalling the Import OCX MAG*3.0*143
+If necessary, uninstall the MAG*3.0*143 Import OCX by following these steps:
+1. Uninstall the BP MAG*3.0*135, then reinstall it.
+2. This will unregister the Import OCX from Patch 143 and will reinstall the Import OCX from Patch 135. 
+iv	Import OCX-Group Pointer Issue Patch Description	February 2014
+	VistA Imaging MAG*3.0*143
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	iii
+	VistA Imaging MAG*3.0*143
+
+
+
+
+
+
+
+
+4	Import OCX-Group Pointer Issue Patch Description	February 2014
+	VistA Imaging MAG*3.0*143
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	3
+	VistA Imaging MAG*3.0*143
+
+
+
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	1
+	VistA Imaging MAG*3.0*143
+
+
+12	Import OCX-Group Pointer Issue Patch Description	February 2014
+	VistA Imaging MAG*3.0*143
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	7
+	VistA Imaging MAG*3.0*143
+
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	5
+	VistA Imaging MAG*3.0*143
+
+
+
+
+
+
+February 2014	Import OCX-Group Pointer Issue Patch Description	11
+	VistA Imaging MAG*3.0*143
+
+
+
+
+8	Import OCX-Group Pointer Issue Patch Description	February 2014
+	VistA Imaging MAG*3.0*143
+
+

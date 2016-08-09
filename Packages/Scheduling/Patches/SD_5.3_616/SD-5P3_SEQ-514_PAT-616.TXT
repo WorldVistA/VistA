@@ -1,0 +1,144 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Tuesday, 04/29/14 at 16:52
+=============================================================================
+Run Date: OCT 28, 2014                     Designation: SD*5.3*616
+Package : SD - SCHEDULING                     Priority: EMERGENCY
+Version : 5.3       SEQ #514                    Status: Released
+                  Compliance Date: NOV 04, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*616'
+
+Subject: Update to CLINIC EDIT LOG report
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ As part of the Fiscal Year (FY) 15 Decision Support System (DSS) updates,
+ the Clinic Edit Log report [SD CLINIC EDIT LOG] will be modified so that
+ the output can be displayed in an "^" delimited string, which can then be
+ imported into a spreadsheet.
+  
+ **NOTE: As this patch is related to the DSS FY15 updates, it should be 
+ installed at the same time as patch ECX*3*149, which contains the DSS FY15
+ updates.  It is suggested that this patch be installed prior to patch 
+ ECX*3*149.
+  
+ The clinic Edit Log Report [SD CLINIC EDIT LOG] appears on the Setup for
+ DSS Clinic Information [ECX SETUP CLINIC] menu.  This option allows you to
+ identify changes made to entries in the HOSPITAL LOCATION file (#44).  
+ This report is sortable by USER NAME or by DATE CHANGED and identifies the
+ field changed (each change is reported individually) and includes the old
+ and new values as well as who made the change and which entry was
+ changed.  This option can be assigned as a standalone option for
+ Scheduling users, as needed. 
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ There are no Remedy tickets associated with this patch.
+  
+ Components Sent With Patch 
+ --------------------------
+  
+ No components are sent with this patch.
+  
+ Documentation Retrieval:
+ ------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation, including User and Technical manuals will be in the 
+ form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=35
+  
+ Below is a list of the files related to this patch that will be needed and
+ available via the FTP sites listed above.
+  
+ File Description                     File Name                FTP Mode
+ ----------------------------------------------------------------------- 
+ User Manual                            DSS_3_FY2015_UM.pdf      Binary
+ Technical Manual                       DSS_3_FY2015_TM.pdf      Binary
+ Medical Records Data Definitions Guide DSS_3_FY2015_DD.pdf      Binary
+ Release Notes                          DSS_3_FY2015_RN.pdf      Binary
+   
+ TEST SITES
+ ----------
+ Boston
+ Augusta
+ Little Rock
+ North Texas
+  
+ INSTALLATION
+ ============
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ 1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+ 3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter SD*5.3*616):
+         a.  Backup a Transport Global
+         b.  Compare Transport Global to Current System
+         c.  Verify Checksums in Transport Global
+  
+ 4.  Use the Install Package(s) option and select the package SD*5.3*616.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', you may respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     you may respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD44AUDI
+    Before: B10879260   After: B34851124  **568,616**
+ 
+Routine list of preceding patches: 568
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 18, 2014
+Completed By:                               Date Completed: OCT 23, 2014
+Released By :                               Date Released : OCT 28, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

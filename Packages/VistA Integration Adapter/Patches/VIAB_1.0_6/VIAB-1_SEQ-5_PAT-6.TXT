@@ -1,0 +1,147 @@
+
+=============================================================================
+Run Date: JAN 28, 2016                     Designation: VIAB*1*6
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: FEB 28, 2016
+=============================================================================
+
+
+Subject: VIA release 1.0.12.0
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The VIA release 1.0.12.0 was created to fix the following issues reported 
+ in Production by the consuming applications. 
+  
+ RTC Defects:
+ ============
+  
+ 1.) ID: 227270
+  
+     Problem:
+     --------
+     String index out of range error on match against 583 Vista Production 
+     server.
+  
+     Solution:
+     ---------
+     Code change to prevent the application from throwing an error when 
+     the data is received in an unexpected format.
+  
+  
+ 2.) ID: 222250
+  
+     Problem:
+     --------
+     The ICD and Java Documentation needs to be enhanced for the writeNote 
+     service.
+  
+     Solution:
+     ---------
+     Updated the Java documentation for the writeNote service.
+  
+  
+ 3.) ID: 218914
+  
+     Problem:
+     --------
+     loginVIA returns generic message "invalid A/V Codes" when password 
+     has expired.
+  
+     Solution:
+     ---------
+     Code change to pass through Vista error instead of overriding the 
+     error message
+  
+  
+ 4.) ID: 218912
+     
+     Problem:
+     --------
+     Issues with getAppointments data in Production - 
+     MedicalReconciliationTool.
+  
+     Solution:
+     ---------
+     Code change to retrieve the correct patient local PID when retrieving 
+     appointments from remote sites.
+  
+  
+ 5.) ID: 177460
+     
+     Problem:
+     --------
+     Vista Site 517 is blocking VIA from using the 'VAFCTFU CONVERT ICN TO 
+     DFN' RPC.
+  
+     Solution:
+     ---------
+     Replaced RPC call with a search of patients stored in the Vista 
+     server that match the MPI PID received.
+  
+ 6.) ID: 177451
+     Problem:
+     --------
+     Error on Unit Dose medications when one of the dates is empty 
+     (Stop/Start dates) - getAllMeds.
+  
+     Solution:
+     ---------
+     Defect fixed in release 1.0.9.0 by Java Code change.
+  
+  
+ 7.) ID: 235451
+     
+     Problem:
+     --------
+     VIA-E_EmrSvc_WriteSimpleOrderByPolicy casting code issue.
+  
+     Solution:
+     ---------
+     Code changed to remove cast error.
+  
+  
+ 8.) ID: 235090 
+     
+     Problem:
+     --------
+     VIA-E-EmrSvc_SELECT_service crashes when the bad DOB format was 
+     applied. 
+  
+     Solution:
+     ---------
+     Code changed to remove error thrown on bad format date.
+  
+  
+ 9.) ID: 196850
+  
+     Problem:
+     ---------
+     WSDL in pre-production has an embedded http address
+  
+     Solution:
+     ---------
+     Network changes were made to correct the issue.  WSDL's are now 
+     sending back HTTPS addresses.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 09, 2015
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : JAN 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

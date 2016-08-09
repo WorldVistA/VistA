@@ -1,0 +1,305 @@
+
+=============================================================================
+Run Date: MAY 22, 2014                     Designation: DG*5.3*812
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #778                    Status: Released
+                  Compliance Date: JUN 22, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*671  <<= must be installed BEFORE `DG*5.3*812'
+                    (v)DG*5.3*688  <<= must be installed BEFORE `DG*5.3*812'
+
+Subject: RESOLVE UNDEFINED ERROR IN PATIENT MOVEMENT & ANNUAL INCOME MULTIPLIER
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following:
+  
+ - Resolves an <UNDEFINED> error which occurs when the DGPMDDCN routine is 
+ invoked from the 'APR' mumps cross reference associated with the PRIMARY 
+ PHYSICIAN (#.08) field of the PATIENT MOVEMENT (#405) file. 
+  
+ - Updates the input transform and executable help text for the ALL OTHER INCOME
+   (#.17) field in the INDIVIDUAL ANNUAL INCOME (#408.21) file.  The input 
+   transform now allows the user to append a '*' to calculate an annual total.
+   The executable help text will reflect this functionality.
+  
+ NOTE: This patch has been developed together with patch EAS*1*110 and they
+       will be released as a distribution file DG_53_P812.KID. 
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC0000000342968    - Undefined error (DG*5.3*671 code change?)
+    INC0000000374835(d) - Encountered an error in DGPMDDCN when editing data in
+                          file 405, field .08  
+ 2. INC0000000315498    - LTC Copay test no longer calculated yearly total
+    INC0000000341958(d) - same as remedy 315498
+    INC0000000376853(d) - entering monthly amounts * 12 fails to annualize
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Alexandria VA Medical Center - Pineville
+ Boise VA Medical Center
+ Tuscaloosa VA Medical Center
+ VA Western NY HCS
+  
+ Remedy Overview:
+ ================
+ 1. INC0000000342968 - Undefined error (DG*5.3*671 code change?)
+  
+ Problem:
+ --------
+ In the DGPMDDCN routine, there was a case where it proceeds without first 
+ setting the variable DGFLD before calling the KILL tag. This ends up 
+ resulting in an undefined error: <UNDEFINED>E+1^DIE1.
+  
+ Resolution:
+ -----------
+ A MUMPS cross-reference on the PRIMARY PHYSICIAN field (#.08) of the PATIENT
+ MOVEMENT (#405) file is calling the DGPMDDCN routine to update the
+ PROVIDER (#.104) field in the PATIENT (#2) file. The update code is also
+ calling ^DIE. This second FileMan call of ^DIE within ^DIE is causing the
+ reported error. The call will be replaced with the database server call
+ UPDATE^DIE.
+  
+ 2. INC0000000315498  LTC Copay test no longer calculated yearly total
+  
+ Problem:
+ --------
+ When financial information is entered for a patient on the Current 
+ Calendar Year Gross Income Screen <5>, the annual amount does not 
+ automatically calculate from the monthly amount when an asterisk is
+ appended to the value of the ALL OTHER INCOME (#.17) field in the
+ INDIVIDUAL ANNUAL INCOME (#408.21) file, as the help text indicates it
+ should.
+  
+ Resolution:
+ -----------
+ The input transform will be modified to provide the functionality of
+ multiplying a monthly amount into an annual amount when a "*" is added. The
+ executable help will also be updated to reflect this functionality.
+  
+ The post install routine DG812P is included to compile all Input/Print 
+ templates linked to the modified field.
+  
+ Data Dictionary Changes:
+ ========================
+  
+ BEFORE:
+ -------
+ 408.21,.17    ALL OTHER INCOME       0;17 NUMBER
+  
+               ANNUAL ALL OTHER INCOME   
+               INPUT TRANSFORM:  S:X["$" X=$P(X,"$",2) K:X'?.N.1".".2N!(X>999999
+                                 9)!(X<0)!(X?.E1"."3.N) X
+               LAST EDITED:      JUL 12, 2006 
+               HELP-PROMPT:      Type a Dollar amount between 0 and 9999999, 2 
+                                 Decimal Digits 
+               TECHNICAL DESCR:  This field is shared by Income Screening and
+                                 Means Test.  Both applications maintain this
+                                 field. 
+                                  
+                                 When 408.31/2.11 MEANS TEST VERSION is Null or
+                                 '0', this field displays on screen as 'All
+                                 Other Income'.  It contains the amount of
+                                 annual net income from a farm or business
+                                 received the previous calendar year.  
+                                  
+                                 When 408.31/2.11 MEANS TEST VERSION is '1',
+                                 this field displays on screen as 'Net Income
+                                 from Farm, Ranch, Property, Bus.'. It contains
+                                 the net income amount from your farm, ranch,
+                                 property or business received during the
+                                 previous calendar year.  
+  
+               EXECUTABLE HELP:  D:$G(DGMTYPT)=3 17^EASECDD D:$G(DGMTYPT)'=3 17^
+                                 DGMTDD4
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  408.21^AENR17^MUMPS 
+                                 1)= D E40821^DGRTRIG(DA)
+                                 2)= D E40821^DGRTRIG(DA)
+                                 3)=  DO NOT DELETE
+                                 This cross-reference is used to notify HEC of
+                                 changes that may affect enrollment.
+  
+ AFTER:
+ ------
+ 408.21,.17    ALL OTHER INCOME       0;17 NUMBER
+  
+               ANNUAL ALL OTHER INCOME   
+               INPUT TRANSFORM:  S:$E(X,1)="$" X=$P(X,"$",2) S:X?.N.".".N1"*" X=
+                                 X*12 S X=$P(X_".00",".",1,2) K:X'?.N1"."1.2N!(X
+                                 >9999999)!(X<0)!(X?.E1"."3.N) X
+               LAST EDITED:      MAR 12, 2013 
+               HELP-PROMPT:      Type a Dollar amount between 0 and 9999999, 2 
+                                 Decimal Digits.  
+               DESCRIPTION:      Enter in this field the annual amount of all
+                                 other income received during the previous
+                                 calendar year.  
+                                  
+                                 A monthly amount can be entered with an '*'
+                                 after it.  
+  
+               TECHNICAL DESCR:  This field is shared by Income Screening and
+                                 Means Test.  Both applications maintain this
+                                 field. 
+                                  
+                                 When 408.31/2.11 MEANS TEST VERSION is Null or
+                                 '0', this field displays on screen as 'All
+                                 Other Income'.  It contains the amount of
+                                 annual net income from a farm or business
+                                 received the previous calendar year.  
+                                  
+                                 When 408.31/2.11 MEANS TEST VERSION is '1',
+                                 this field displays on screen as 'Net Income
+                                 from Farm, Ranch, Property, Bus.'. It contains
+                                 the net income amount from your farm, ranch,
+                                 property or business received during the
+                                 previous calendar year.  
+  
+               EXECUTABLE HELP:  D:$G(DGMTYPT)=3 17^EASECDD D:$G(DGMTYPT)'=3 17^
+                                 DGMTDD4
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  408.21^AENR17^MUMPS 
+                                 1)= D E40821^DGRTRIG(DA)
+                                 2)= D E40821^DGRTRIG(DA)
+                                 3)=  DO NOT DELETE
+                                 This cross-reference is used to notify HEC of
+                                 changes that may affect enrollment.
+                               
+ Installation Instructions:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system. However, as it is necessary to disable some menu options when
+ installing this patch it is recommended that the install be done during
+ non-peak hours. (Installing during peak hours may result in an unusually
+ long install time.)
+  
+ Install Time - less than 2 minutes.
+  
+ NOTE: This patch has been developed together with patch EAS*1*110 and they
+       will be released as a distribution file DG_53_P812.KID.
+       Installing DG*5.3*812 will also install EAS*1.0*110.
+  
+  
+ 1.  Retrieve the KIDS distribution host file. This patch is
+     distributed in a host file due to the amount of data contained in
+     the patch.  The name of the host file is:
+  
+          DG_53_P812.KID
+  
+      Sites can retrieve VistA software from the following FTP addresses.
+      The preferred method is to FTP the files from:
+  
+           download.vista.domain.ext
+  
+      This will transmit the files from the first available FTP server.
+      Sites may also elect to retrieve software directly from a specific
+      server as follows:
+  
+           Albany                  ftp.domain.ext
+           Hines                   ftp.domain.ext
+           Salt Lake City          ftp.domain.ext
+  
+      The DG_53_P812.KID host file is located in the 
+      directory.  Use ASCII Mode when downloading the file.
+              
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          
+          Load a Distribution 
+          Print Transport Global
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Load the KIDS distribution that is contained in file DG_53_P812.KID
+     using the Load a Distribution option on the Installation menu.
+  
+ 4.  Select Installation Option: 
+     -------------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter DG*5.3*812):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 5.  Select Installation Option: Install Package(s) 
+      ---------------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? YES//' answer YES
+  
+ 6.  When prompted 'Enter options you wish to mark as 'Out Of 
+      Order':'  Enter the following options:
+  
+     [EASEC LTC COPAY TEST ADD]       Add a New LTC Copayment Test
+     [EASEC LTC COPAY TEST EDIT]      Edit an Existing LTC Copayment Test
+  
+ 7.  The routine DG812P will be removed from the system after the patch 
+     has been successfully installed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;REGISTRATION;**[Patch List]**;Aug 13,1993;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DG812P
+    Before:       n/a   After:  B6393671  **812**
+Routine Name: DGMTDD4
+    Before: B70665086   After: B89252073  **688,812**
+Routine Name: DGPMDDCN
+    Before: B21852300   After: B22498487  **54,498,671,812**
+ 
+Routine list of preceding patches: 671, 688
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2009
+Completed By:                               Date Completed: MAY 15, 2014
+Released By :                               Date Released : MAY 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

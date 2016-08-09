@@ -1,0 +1,99 @@
+
+=============================================================================
+Run Date: NOV 26, 2014                     Designation: NHIN*1*3
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1         SEQ #2                      Status: Released
+                  Compliance Date: DEC 27, 2014
+=============================================================================
+
+
+Subject: VLER eHEALTH EXCHANGE 6.0.1.3 INFORMATION PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this patch on December 7, 2014, between 12:00 AM - 
+ 3:00 AM EST
+ on the eHealth Exchange (formerly VLER and
+ formerly NHIN) servers located there using a pre-approved Request for 
+ Change Order and Implementation Plan.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOU are required.
+ **********************************************************************
+   
+ eHealth Exchange (formerly VLER and formerly NHIN) Adapter Patch 6.0.1.3 
+ contains code changes (defect fixes and enhancements) to the eHealth 
+ Exchange Adapter module.  These changes are Work Items that were recorded 
+ and tracked in the eHealth Exchange area of RTC.  This patch contains the 
+ Work Items completed during production deployment. 
+  
+ The scope of this patch release includes the AAOID and Display Name 
+ patches for Increment 1, Release 1.  These patches address the following:
+  
+ Issue 1: Assigning Authority Organization Identifier (AAOID): 
+ When initiating a patient discovery the system was returning the 
+ incorrect assigning authority ID due to the fact that some partners have 
+ multiple assigning authority IDs and the system had trouble deciphering. 
+  
+ The patch ensures that the correct assigning authority is used when 
+ patient discoveries are executed.
+  
+ Impacts to Healthcare: As a result of this issue, partners with a 
+ different HC vs AA OID have bad correlations for any correlations created 
+ after Adapter 6.0 was deployed.  These incorrect correlations may cause 
+ VA initiated Document Queries to fail because the VA outbound query would 
+ include their AA OID (which is wrong) and patient ID in the request for 
+ documents.
+  
+ Solution: Updated MVI1301DataAdapter Class to use the AAOID instead of 
+ the HCID for setting the correlated ID in the 1301 request sent to MVI.
+  
+  
+ Issue 2: When inbound/outbound document queries are initiated, the proper 
+ display name is not populated.  The patch includes the ability for all 
+ inbound/outbound queries to populate the proper display name when 
+ executing document queries.
+  
+ Impacts to Healthcare: HealtheCONNECTIONS reports that VA is not 
+ populating the displayName attribute for the Document Query in Adapter 
+ 6.0.
+  
+ Solution: Reimplemented STS lookup for display name.
+  
+  
+ Testing Process: The testing process included drafting test cases focused 
+ on executing patient discovery queries and ensuring that the proper AAOID 
+ is identified. In addition to AAOID testing, test cases were drafted to 
+ ensure that the proper display name is populated when initiating document 
+ queries. Testing for the AAOID functionality included 4 partners while 
+ display name testing included 5 partners. Test results were documented in 
+ a Test Evaluation Report and signed off by the business. 
+  
+ Test sites: N/A; VA eHealth Exchange is a middleware application. 
+ Testing was conducted at AITC.
+  
+ Remedy tickets: None
+  
+ Production Deployment Date: December 7, 2014
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 14, 2014
+Completed By:                               Date Completed: NOV 26, 2014
+Released By :                               Date Released : NOV 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

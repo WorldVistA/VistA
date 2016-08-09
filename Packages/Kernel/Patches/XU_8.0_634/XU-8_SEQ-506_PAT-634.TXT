@@ -1,0 +1,313 @@
+$TXT Created by             KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 12/05/13 at 04:32
+=============================================================================
+Run Date: APR 30, 2014                     Designation: XU*8*634
+Package : XU - KERNEL                         Priority: Mandatory
+Version : 8       SEQ #506                      Status: Released
+                  Compliance Date: MAY 29, 2014
+=============================================================================
+
+Associated patches: (v)XU*8*616    <<= must be installed BEFORE `XU*8*634'
+
+Subject: UPDATE PERSON CLASS 10/1/2013
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Remedy ticket: NC000000877476
+ Tracking Message #: 62809972
+ Test sites:
+ - CENTRAL TEXAS HCS
+ - MONTANA HCS
+ - SOUTH TEXAS HCS
+  
+  
+                 XU*8*634
+  
+ This patch includes the following updates:
+  
+ 1) Updates the Definition for Person Class entries:
+  
+ NUMBER: 609
+  
+ PROVIDER TYPE: Respiratory, Rehabilitative and Restorative Service 
+ Providers
+ CLASSIFICATION: Orthotist             
+ STATUS: Active
+ VA CODE: V130213                      
+ X12 CODE: 222Z00000X
+ PECIALTY CODE: 55
+ DEFINITION:   A health care professional who is specifically educated and
+  trained to manage comprehensive orthotic patient care, including
+  musculoskeletal and neuromuscular anomalies resulting from injuries or 
+  disease processes involving the lower extremity, upper extremity or
+  spinal segment/s and positional deformation of the cranium. Orthotists
+  assess specific patient needs, formulate an appropriate treatment plan,
+  implement the treatment plan and provide follow-up care.   Source:
+  American Board for Certification in Orthotics, Prosthetics, and
+  Pedorthics, Inc. [7/1/2010: modified, 7/1/2013: modified]
+   
+  Additional Resources: American Board for Certification in Orthotics, 
+  Prosthetics and Pedorthics, Inc., www.abcop.org and Board of 
+  Certification/Accreditation, International, www.bocusa.org.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 22            
+ CLASSIFICATION CODE (c): 2Z
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER: 610
+  
+ PROVIDER TYPE: Respiratory, Rehabilitative and Restorative Service 
+ Providers
+ CLASSIFICATION: Prosthetist           
+ STATUS: Active
+ VA CODE: V130214                      
+ X12 CODE: 224P00000X
+ SPECIALTY CODE: 56
+  DEFINITION:   A health care professional who is specifically educated and
+  trained to manage comprehensive prosthetic patient care for individuals 
+  who have sustained complete or partial limb loss or absence. Prosthetists
+  assess specific patient needs, formulate an appropriate treatment plan,
+  implement the treatment plan and provide follow-up care.   Source:
+  American Board for Certification in Orthotics, Prosthetics, and 
+  Pedorthics, Inc. [7/1/2010: modified, 7/1/2013: modified]
+   
+  Additional Resources: American Board for Certification in Orthotics, 
+  Prosthetics and Pedorthics, Inc., www.abcop.org and Board of 
+  Certification/Accreditation, International, www.bocusa.org.  
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 22            
+ CLASSIFICATION CODE (c): 4P
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ NUMBER: 745
+  
+ PROVIDER TYPE: Allopathic and Osteopathic Physicians
+ CLASSIFICATION: Oral and Maxillofacial Surgery
+ STATUS: Active                        
+ VA CODE: V182000
+ X12 CODE: 204E00000X                  
+ SPECIALTY CODE: 85
+ DEFINITION:   Oral and maxillofacial surgeons are trained to recognize and
+  treat a wide spectrum of diseases, injuries and defects in the head, 
+  neck, face, jaws and the hard and soft tissues of the oral and
+  maxillofacial region. They are also trained to administer anesthesia, and
+  provide care in an office setting. They are trained to treat problems
+  such as the extraction of wisdom teeth, misaligned jaws, tumors and cysts
+  of the jaw and mouth, and to perform dental implant surgery.   Source:
+  American College of Surgeons, 2013. [7/1/2013: definition added, source
+  added, additional resources added] 
+   
+  Additional Resources: American Board of Oral and Maxillofacial Surgery 
+  and American Association of Oral and Maxillofacial Surgeons
+  While this is generally considered a specialty of dentistry, physicians 
+  can also be board certified as oral and maxillofacial surgeons through
+  the American Board of Oral and Maxillofacial Surgery.
+ INDIVIDUAL/NON: INDIVIDUAL
+ PROVIDER TYPE CODE (c): 20            
+ CLASSIFICATION CODE (c): 4E
+ AREA OF SPECIALIZATION CODE (c): 00000
+  
+ 2) This patch provides a tool to automate updates to the PERSON 
+ CLASS(#8932.1) file. Sites will automatically receive the latest
+ updates when National updates the FORUM Master PERSON CLASS(#8932.1) file.
+ The updates will be broadcasted to VistA sites that are registered
+ in the Patch Tracking module as having installed this patch. 
+  
+ New Server Menu Option
+ ======================
+  
+ NAME: XUPCSRVR           
+ MENU TEXT: UPDATE PERSON CLASS SERVER
+ TYPE: server 
+ CREATOR: USER NAME
+ PACKAGE: KERNEL
+ DESCRIPTION:
+   This option extracts email information from Forum account to
+   update Person Class file (#8932.1).  
+ ROUTINE: S1^XUPCSRVR 
+ SERVER ACTION: RUN IMMEDIATELY
+ UPPERCASE MENU TEXT: UPDATE PERSON CLASS SERVER
+  
+ New Mail Group
+ ==============
+ NAME: PERSON CLASS UPDATE               TYPE: public
+   ALLOW SELF ENROLLMENT?: YES           RESTRICTIONS: UNRESTRICTED
+ MEMBER:
+  DESCRIPTION:   This mail group is to receive updated Person Class 
+ messages from the Master Person Class file from Forum account.
+   ORGANIZER: POSTMASTER
+  
+ Example Server Message
+ ======================
+ Mail Message From: <TRAN.BAA@KRN.FO-OAKLAND.DOMAIN.EXT>  Dated: 
+ 07/12/2013 09:32
+ Subject: UPDATE PERSON CLASS ENTRIES #745,609,610  Jul 12, 2013
+  
+ 745$$DAT:745^Allopathic and Osteopathic Physicians^Oral and Maxillofacial 
+ Surgery^^ a^^V182000^204E00000X^^85
+ 745$$DEF:Oral and maxillofacial surgeons are trained to recognize and 
+ treat a wide 
+ 745$$DEF:spectrum of diseases, injuries and defects in the head, neck, 
+ face, jaws 
+ 745$$DEF:and the hard and soft tissues of the oral and maxillofacial 
+ region. They 
+ 745$$DEF:are also trained to administer anesthesia, and provide care in 
+ an office 
+ 745$$DEF:setting. They are trained to treat problems such as the 
+ extraction of 
+ 745$$DEF:wisdom teeth, misaligned jaws, tumors and cysts of the jaw and 
+ mouth, and 
+ 745$$DEF:to perform dental implant surgery.   Source: American College of 
+ 745$$DEF:Surgeons, 2013. [7/1/2013: definition added, source added, 
+ additional 
+ 745$$DEF:resources added]
+ 745$$DEF: 
+ 745$$DEF:Additional Resources: American Board of Oral and Maxillofacial 
+ Surgery 
+ 745$$DEF:and American Association of Oral and Maxillofacial Surgeons
+ 745$$DEF: 
+ 745$$DEF:While this is generally considered a specialty of dentistry, 
+ physicians 
+ 745$$DEF:can also be board certified as oral and maxillofacial surgeons 
+ through 
+ 745$$DEF:the American Board of Oral and Maxillofacial Surgery.
+ 745$$END
+ -------------------
+ 609$$DAT:609^Respiratory, Rehabilitative and Restorative Service 
+ Providers^Orthotist^^a^^V130213^222Z00000X^^55
+ 609$$DEF:A health care professional who is specifically educated and 
+ trained to 
+ 609$$DEF:manage comprehensive orthotic patient care, including 
+ musculoskeletal and 
+ 609$$DEF:neuromuscular anomalies resulting from injuries or disease 
+ processes 
+ 609$$DEF:involving the lower extremity, upper extremity or spinal 
+ segment/s and 
+ 609$$DEF:positional deformation of the cranium. Orthotists assess 
+ specific patient 
+ 609$$DEF:needs, formulate an appropriate treatment plan, implement the 
+ treatment 
+ 609$$DEF:plan and provide follow-up care.   Source: American Board for 
+ 609$$DEF:Certification in Orthotics, Prosthetics, and Pedorthics, Inc. 
+ [7/1/2010: 
+ 609$$DEF:modified, 7/1/2013: modified]
+ 609$$DEF: 
+ 609$$DEF:Additional Resources: American Board for Certification in 
+ Orthotics, 
+ 609$$DEF:Prosthetics and Pedorthics, Inc., www.abcop.org and Board of 
+ 609$$DEF:Certification/Accreditation, International, www.bocusa.org.
+ 609$$END
+ -------------------
+ 610$$DAT:610^Respiratory, Rehabilitative and Restorative Service 
+ Providers^ Prosthetist^^a^^V130214^224P00000X^^56
+ 610$$DEF:A health care professional who is specifically educated and 
+ trained to 
+ 610$$DEF:manage comprehensive prosthetic patient care for individuals who 
+ have 
+ 610$$DEF:sustained complete or partial limb loss or absence. Prosthetists 
+ assess 
+ 610$$DEF:specific patient needs, formulate an appropriate treatment plan, 
+ 610$$DEF:implement the treatment plan and provide follow-up care.   
+ Source: 
+ 610$$DEF:American Board for Certification in Orthotics, Prosthetics, and 
+ 610$$DEF:Pedorthics, Inc. [7/1/2010: modified, 7/1/2013: modified]
+ 610$$DEF: 
+ 610$$DEF:Additional Resources: American Board for Certification in 
+ Orthotics, 
+ 610$$DEF:Prosthetics and Pedorthics, Inc., www.abcop.org and Board of 
+ 610$$DEF:Certification/Accreditation, International, www.bocusa.org.
+ 610$$END
+ -------------------
+  
+ Blood Bank Team Coordination
+ ============================
+ Blood Bank Clearance: July 24, 2013 
+  
+  EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XU*8*634 contains 
+  changes to a package referenced in VHA OI SEPG SOP 192-023 Review of 
+  VISTA Patches for Effects on VISTA Blood Bank Software. This patch does 
+  not alter or modify any VistA Blood Bank software design safeguards or 
+  safety critical elements functions.
+   
+  RISK ANALYSIS: Changes made by patch XU*8*634 have no effect on Blood 
+  Bank software functionality, therefore RISK is none.
+   
+  Installation Instructions
+  =========================
+  
+  1. Users ARE allowed to be on the system during the installation. 
+     However, it is recommended that the patch be installed during
+     non-peak time. It will take about two minutes to install the
+     patch, but you may queue the installation if you wish.
+   
+  2. You DO NOT need to stop TaskMan or the background filers.
+   
+  3. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This      
+     option will load the KIDS package onto your system.
+   
+  4. The patch has now been loaded into a Transport global on your system. 
+     You now need to use KIDS to install the Transport global. On the KIDS
+     menu, under the 'Installation' menu, use the following options:
+   
+                  Verify Checksums in Transport Global
+                  Print Transport Global
+                  Compare Transport Global to Current System
+                  Backup a Transport Global
+   
+     On the KIDS menu, under the 'Installation' menu, use the following
+     option:
+                  Install Package(s)  
+                  Select INSTALL NAME:XU*8.0*634
+                                      ==========
+  
+   Accept the defaults for the following install questions:  
+   Want KIDS to INHIBIT LOGONs during the install?  NO//
+   Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+  
+  
+ Post installation:
+ ------------------
+  
+ Optional step: 
+  
+ You may use FileMan menu to add your name as a member of the Person Class 
+ Update mail group to receive updated messages:
+  
+  
+ Select OPTION: ENTER OR EDIT FILE ENTRIES
+ INPUT TO WHAT FILE: MAIL GROUP 
+ EDIT WHICH FIELD: ALL// MEMBER
+    EDIT WHICH MEMBER SUB-FIELD: ALL// 
+ THEN EDIT FIELD: 
+ Select MAIL GROUP NAME:    PERSON CLASS UPDATE
+ Select MEMBER: << ENTER YOUR NAME HERE
+   MEMBER: YOUR NAME// 
+   TYPE: 
+ Select MEMBER:
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;8.0;KERNEL;**[Patch List]**;Jul 10, 1995;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XUPCSRVR
+    Before:       n/a   After: B53806210  **634**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 09, 2013
+Completed By:                               Date Completed: APR 08, 2014
+Released By :                               Date Released : APR 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

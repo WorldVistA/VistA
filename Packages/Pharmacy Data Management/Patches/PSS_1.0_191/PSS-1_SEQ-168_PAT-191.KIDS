@@ -1,0 +1,2821 @@
+Released PSS*1*191 SEQ #168
+Extracted from mail message
+**KIDS**:PSS*1.0*191^
+
+**INSTALL NAME**
+PSS*1.0*191
+"BLD",9242,0)
+PSS*1.0*191^PHARMACY DATA MANAGEMENT^0^3160113^y
+"BLD",9242,1,0)
+^^95^95^3160111^
+"BLD",9242,1,1,0)
+Patch PSS*1.0*191 provides enhancements to Pharmacy Data Management 
+"BLD",9242,1,2,0)
+to support changes to the BCMA and Inpatient Medications
+"BLD",9242,1,3,0)
+applications for Transdermal Administrations.
+"BLD",9242,1,4,0)
+ 
+"BLD",9242,1,5,0)
+******************************* ATTENTION ********************************
+"BLD",9242,1,6,0)
+  
+"BLD",9242,1,7,0)
+Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+"BLD",9242,1,8,0)
+Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+"BLD",9242,1,9,0)
+enhancement includes 5 patches which must be installed in the following
+"BLD",9242,1,10,0)
+order:
+"BLD",9242,1,11,0)
+ 
+"BLD",9242,1,12,0)
+1.      PSS*1*191
+"BLD",9242,1,13,0)
+2.      PSJ*5*315
+"BLD",9242,1,14,0)
+3.      PSB*3*83
+"BLD",9242,1,15,0)
+4.      OR*3*417
+"BLD",9242,1,16,0)
+5.      PSB*3*87
+"BLD",9242,1,17,0)
+ 
+"BLD",9242,1,18,0)
+ATTENTION: This enhancement also includes a new Graphical User Interface
+"BLD",9242,1,19,0)
+(GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+"BLD",9242,1,20,0)
+required immediately after the KIDS install for the Patch to function.
+"BLD",9242,1,21,0)
+ 
+"BLD",9242,1,22,0)
+For retrieval and installation instructions, please see the Client 
+"BLD",9242,1,23,0)
+Installation Instructions section.
+"BLD",9242,1,24,0)
+**************************************************************************
+"BLD",9242,1,25,0)
+ 
+"BLD",9242,1,26,0)
+These enhancements are made to address NSR 20141012. 
+"BLD",9242,1,27,0)
+     They include: 
+"BLD",9242,1,28,0)
+ 
+"BLD",9242,1,29,0)
+     1. Currently Sites have to create fake removal orders to allow for 
+"BLD",9242,1,30,0)
+appropriate removal of medications in BCMA.  This patch will alleviate 
+"BLD",9242,1,31,0)
+that issue by adding a field to the ORDERABLE ITEM (#50.7) file titled 
+"BLD",9242,1,32,0)
+PROMPT FOR REMOVAL IN BCMA (#12).  This field implements changes that will
+"BLD",9242,1,33,0)
+support enhancements to the BCMA and Inpatient Medication applications to 
+"BLD",9242,1,34,0)
+display the removal times in Inpatient Medication orders using rules 
+"BLD",9242,1,35,0)
+determined by the value of this field. The PROMPT FOR REMOVAL IN BCMA 
+"BLD",9242,1,36,0)
+(#12) field can be set for Orderable Items that require removal to the 
+"BLD",9242,1,37,0)
+following values:
+"BLD",9242,1,38,0)
+ 
+"BLD",9242,1,39,0)
+     NULL/0=No Removal Required 
+"BLD",9242,1,40,0)
+     1 = Removal at Next Administration 
+"BLD",9242,1,41,0)
+     2 = Removal Period Optional Prior to Next Administration  
+"BLD",9242,1,42,0)
+     3 = Removal Period Required Prior to Next Administration
+"BLD",9242,1,43,0)
+ 
+"BLD",9242,1,44,0)
+     2. A post installation routine, PSS1P191, will update the new PROMPT
+"BLD",9242,1,45,0)
+FOR REMOVAL IN BCMA (#12) field to a value of 1 for all Orderable Items
+"BLD",9242,1,46,0)
+with a Dosage Form that contain the word "PATCH".  A message will be sent
+"BLD",9242,1,47,0)
+to the installer as well as all users holding the PSJU and PSJI MGR keys
+"BLD",9242,1,48,0)
+providing a list of Orderable items that were updated during this process.
+"BLD",9242,1,49,0)
+The PROMPT FOR REMOVAL IN BCMA (#12) field is only updated if it is
+"BLD",9242,1,50,0)
+currently set to a value of NULL so subsequent installations will not 
+"BLD",9242,1,51,0)
+update the PROMPT FOR REMOVAL IN BCMA (#12) field again.
+"BLD",9242,1,52,0)
+ 
+"BLD",9242,1,53,0)
+     3. Routines edited for this patch will add the prompt "PROMPT FOR 
+"BLD",9242,1,54,0)
+REMOVAL IN BCMA:" to the following three options:
+"BLD",9242,1,55,0)
+ 
+"BLD",9242,1,56,0)
+     - Edit Orderable Items [PSS EDIT ORDERABLE ITEMS]
+"BLD",9242,1,57,0)
+     - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+"BLD",9242,1,58,0)
+     - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE  
+"BLD",9242,1,59,0)
+       ITEMS]
+"BLD",9242,1,60,0)
+ 
+"BLD",9242,1,61,0)
+     4. Patch PSS*1.0*172 inadvertently missed adding the prompt, HIGH 
+"BLD",9242,1,62,0)
+RISK/HIGH ALERT, to the following options, which is being added in 
+"BLD",9242,1,63,0)
+this patch:
+"BLD",9242,1,64,0)
+ 
+"BLD",9242,1,65,0)
+      - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+"BLD",9242,1,66,0)
+      - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE
+"BLD",9242,1,67,0)
+        ITEMS]
+"BLD",9242,1,68,0)
+ 
+"BLD",9242,1,69,0)
+5. A second post install routine PSSP191A will create another
+"BLD",9242,1,70,0)
+email report.  This report will display orders for Medications Requiring 
+"BLD",9242,1,71,0)
+Removal that do not contain the necessary file structures to allow for 
+"BLD",9242,1,72,0)
+the new removal functionality to execute.  The primary purpose for this 
+"BLD",9242,1,73,0)
+information is to allow the site to determine the approximate amount of 
+"BLD",9242,1,74,0)
+resources needed to discontinue these orders and re-create them after 
+"BLD",9242,1,75,0)
+patch PSJ*5*315 is installed.  Until the PSJ*5*315 patch is installed the 
+"BLD",9242,1,76,0)
+capability for processing these orders will not be available.  More 
+"BLD",9242,1,77,0)
+detailed procedures and recommendations for this process are in the 
+"BLD",9242,1,78,0)
+installation section of this Patch Description. A copy of this report 
+"BLD",9242,1,79,0)
+will be added to the Pharmacy Data Management [PSS MGR] menu as the Orders
+"BLD",9242,1,80,0)
+for MRRs With Removal Properties [PSS MRR ORDERS DIAGNOSTIC RPT] option.
+"BLD",9242,1,81,0)
+ 
+"BLD",9242,1,82,0)
+       6. Two more reports will be added to the Orderable Item Management 
+"BLD",9242,1,83,0)
+[PSS ORDERABLE ITEM MANAGEMENT] sub menu as options. The new report
+"BLD",9242,1,84,0)
+options, Orderable Items that Require Removal Report [PSS MRR ORDERABLE
+"BLD",9242,1,85,0)
+ITEMS RPT] option and Orderable Items Report for High Risk\High Alert [PSS
+"BLD",9242,1,86,0)
+HR/HA ORDERABLE ITEMS RPT] option, will allow review of the settings in
+"BLD",9242,1,87,0)
+the Orderable Items file (#50.7) for the values of the respective fields
+"BLD",9242,1,88,0)
+indicated in the report titles.
+"BLD",9242,1,89,0)
+ 
+"BLD",9242,1,90,0)
+      PSS*1.0*191 does not have any dependencies for installation.
+"BLD",9242,1,91,0)
+       The full functionality introduced in this patch will not be
+"BLD",9242,1,92,0)
+       available until patches PSJ*5.0*315, PSB*3.0*83 and PSB*3.0*87 
+"BLD",9242,1,93,0)
+       are installed.
+"BLD",9242,1,94,0)
+ 
+"BLD",9242,1,95,0)
+       Pre-existing orders will remain unaffected with installation.
+"BLD",9242,4,0)
+^9.64PA^50.7^1
+"BLD",9242,4,50.7,0)
+50.7
+"BLD",9242,4,50.7,2,0)
+^9.641^50.7^1
+"BLD",9242,4,50.7,2,50.7,0)
+PHARMACY ORDERABLE ITEM  (File-top level)
+"BLD",9242,4,50.7,2,50.7,1,0)
+^9.6411^12^1
+"BLD",9242,4,50.7,2,50.7,1,12,0)
+PROMPT FOR REMOVAL IN BCMA
+"BLD",9242,4,50.7,222)
+y^n^p^^^^n^^n
+"BLD",9242,4,50.7,224)
+ 
+"BLD",9242,4,"APDD",50.7,50.7)
+ 
+"BLD",9242,4,"APDD",50.7,50.7,12)
+ 
+"BLD",9242,4,"B",50.7,50.7)
+ 
+"BLD",9242,6.3)
+40
+"BLD",9242,"ABPKG")
+n
+"BLD",9242,"INID")
+^y
+"BLD",9242,"INIT")
+PSS1P191
+"BLD",9242,"KRN",0)
+^9.67PA^9002226^21
+"BLD",9242,"KRN",.4,0)
+.4
+"BLD",9242,"KRN",.401,0)
+.401
+"BLD",9242,"KRN",.402,0)
+.402
+"BLD",9242,"KRN",.402,"NM",0)
+^9.68A^^0
+"BLD",9242,"KRN",.403,0)
+.403
+"BLD",9242,"KRN",.403,"NM",0)
+^9.68A^^
+"BLD",9242,"KRN",.5,0)
+.5
+"BLD",9242,"KRN",.84,0)
+.84
+"BLD",9242,"KRN",3.6,0)
+3.6
+"BLD",9242,"KRN",3.8,0)
+3.8
+"BLD",9242,"KRN",9.2,0)
+9.2
+"BLD",9242,"KRN",9.8,0)
+9.8
+"BLD",9242,"KRN",9.8,"NM",0)
+^9.68A^7^7
+"BLD",9242,"KRN",9.8,"NM",1,0)
+PSSPOIMO^^0^B139454544
+"BLD",9242,"KRN",9.8,"NM",2,0)
+PSSNCPDP^^0^B38616221
+"BLD",9242,"KRN",9.8,"NM",3,0)
+PSSPOIM1^^0^B61410040
+"BLD",9242,"KRN",9.8,"NM",4,0)
+PSSMRRDG^^0^B30196189
+"BLD",9242,"KRN",9.8,"NM",5,0)
+PSSHRHAI^^0^B20428006
+"BLD",9242,"KRN",9.8,"NM",6,0)
+PSSP191A^^0^B32545924
+"BLD",9242,"KRN",9.8,"NM",7,0)
+PSSMRRI^^0^B22465430
+"BLD",9242,"KRN",9.8,"NM","B","PSSHRHAI",5)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSMRRDG",4)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSMRRI",7)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSNCPDP",2)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSP191A",6)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSPOIM1",3)
+ 
+"BLD",9242,"KRN",9.8,"NM","B","PSSPOIMO",1)
+ 
+"BLD",9242,"KRN",19,0)
+19
+"BLD",9242,"KRN",19,"NM",0)
+^9.68A^5^5
+"BLD",9242,"KRN",19,"NM",1,0)
+PSS HR/HA ORDERABLE ITEMS RPT^^0
+"BLD",9242,"KRN",19,"NM",2,0)
+PSS MRR ORDERS DIAGNOSTIC RPT^^0
+"BLD",9242,"KRN",19,"NM",3,0)
+PSS MRR ORDERABLE ITEMS RPT^^0
+"BLD",9242,"KRN",19,"NM",4,0)
+PSS MGR^^2
+"BLD",9242,"KRN",19,"NM",5,0)
+PSS ORDERABLE ITEM MANAGEMENT^^2
+"BLD",9242,"KRN",19,"NM","B","PSS HR/HA ORDERABLE ITEMS RPT",1)
+ 
+"BLD",9242,"KRN",19,"NM","B","PSS MGR",4)
+ 
+"BLD",9242,"KRN",19,"NM","B","PSS MRR ORDERABLE ITEMS RPT",3)
+ 
+"BLD",9242,"KRN",19,"NM","B","PSS MRR ORDERS DIAGNOSTIC RPT",2)
+ 
+"BLD",9242,"KRN",19,"NM","B","PSS ORDERABLE ITEM MANAGEMENT",5)
+ 
+"BLD",9242,"KRN",19.1,0)
+19.1
+"BLD",9242,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",9242,"KRN",101,0)
+101
+"BLD",9242,"KRN",409.61,0)
+409.61
+"BLD",9242,"KRN",771,0)
+771
+"BLD",9242,"KRN",779.2,0)
+779.2
+"BLD",9242,"KRN",870,0)
+870
+"BLD",9242,"KRN",8989.51,0)
+8989.51
+"BLD",9242,"KRN",8989.52,0)
+8989.52
+"BLD",9242,"KRN",8994,0)
+8994
+"BLD",9242,"KRN",9002226,0)
+9002226
+"BLD",9242,"KRN","B",.4,.4)
+ 
+"BLD",9242,"KRN","B",.401,.401)
+ 
+"BLD",9242,"KRN","B",.402,.402)
+ 
+"BLD",9242,"KRN","B",.403,.403)
+ 
+"BLD",9242,"KRN","B",.5,.5)
+ 
+"BLD",9242,"KRN","B",.84,.84)
+ 
+"BLD",9242,"KRN","B",3.6,3.6)
+ 
+"BLD",9242,"KRN","B",3.8,3.8)
+ 
+"BLD",9242,"KRN","B",9.2,9.2)
+ 
+"BLD",9242,"KRN","B",9.8,9.8)
+ 
+"BLD",9242,"KRN","B",19,19)
+ 
+"BLD",9242,"KRN","B",19.1,19.1)
+ 
+"BLD",9242,"KRN","B",101,101)
+ 
+"BLD",9242,"KRN","B",409.61,409.61)
+ 
+"BLD",9242,"KRN","B",771,771)
+ 
+"BLD",9242,"KRN","B",779.2,779.2)
+ 
+"BLD",9242,"KRN","B",870,870)
+ 
+"BLD",9242,"KRN","B",8989.51,8989.51)
+ 
+"BLD",9242,"KRN","B",8989.52,8989.52)
+ 
+"BLD",9242,"KRN","B",8994,8994)
+ 
+"BLD",9242,"KRN","B",9002226,9002226)
+ 
+"BLD",9242,"QDEF")
+^^^^NO^^^^YES^^NO
+"BLD",9242,"QUES",0)
+^9.62^^
+"BLD",9242,"REQB",0)
+^9.611^2^2
+"BLD",9242,"REQB",1,0)
+PSS*1.0*127^2
+"BLD",9242,"REQB",2,0)
+PSS*1.0*172^2
+"BLD",9242,"REQB","B","PSS*1.0*127",1)
+ 
+"BLD",9242,"REQB","B","PSS*1.0*172",2)
+ 
+"FIA",50.7)
+PHARMACY ORDERABLE ITEM
+"FIA",50.7,0)
+^PS(50.7,
+"FIA",50.7,0,0)
+50.7I
+"FIA",50.7,0,1)
+y^n^p^^^^n^^n
+"FIA",50.7,0,10)
+ 
+"FIA",50.7,0,11)
+ 
+"FIA",50.7,0,"RLRO")
+ 
+"FIA",50.7,0,"VR")
+1.0^PSS
+"FIA",50.7,50.7)
+1
+"FIA",50.7,50.7,12)
+ 
+"INIT")
+PSS1P191
+"KRN",19,10551,-1)
+2^4
+"KRN",19,10551,0)
+PSS MGR^Pharmacy Data Management^^M^10000000082^^^^^^^517
+"KRN",19,10551,10,0)
+^19.01IP^89^89
+"KRN",19,10551,10,57,0)
+10568^^7
+"KRN",19,10551,10,57,"^")
+PSS ORDERABLE ITEM MANAGEMENT
+"KRN",19,10551,10,89,0)
+14556
+"KRN",19,10551,10,89,"^")
+PSS MRR ORDERS DIAGNOSTIC RPT
+"KRN",19,10551,"U")
+PHARMACY DATA MANAGEMENT
+"KRN",19,10568,-1)
+2^5
+"KRN",19,10568,0)
+PSS ORDERABLE ITEM MANAGEMENT^Orderable Item Management^^M^10000000082^^^^^^^
+"KRN",19,10568,10,0)
+^19.01IP^8^8
+"KRN",19,10568,10,7,0)
+14558^^6
+"KRN",19,10568,10,7,"^")
+PSS MRR ORDERABLE ITEMS RPT
+"KRN",19,10568,10,8,0)
+14559^^7
+"KRN",19,10568,10,8,"^")
+PSS HR/HA ORDERABLE ITEMS RPT
+"KRN",19,10568,"U")
+ORDERABLE ITEM MANAGEMENT
+"KRN",19,14556,-1)
+0^2
+"KRN",19,14556,0)
+PSS MRR ORDERS DIAGNOSTIC RPT^Orders for MRRs With Removal Properties^^R^^^^^^^^PHARMACY DATA MANAGEMENT
+"KRN",19,14556,1,0)
+^^7^7^3151020^
+"KRN",19,14556,1,1,0)
+This option enables you to determine which active orders contain 
+"KRN",19,14556,1,2,0)
+Orderable Items that have the new "Prompt for Removal in BCMA" flag value 
+"KRN",19,14556,1,3,0)
+set to 1, 2 or 3 that need to be discontinued and entered as New (not 
+"KRN",19,14556,1,4,0)
+copied, edited or renewed) AFTER the installation of Pharmacy Inpatient 
+"KRN",19,14556,1,5,0)
+Medications PSJ*5.0*315. Failure to re-create these orders could result
+"KRN",19,14556,1,6,0)
+in confusing information to display on the BCMA VDL if displayed along
+"KRN",19,14556,1,7,0)
+side newer MRR orders that do have the updated removal information.
+"KRN",19,14556,25)
+EN^PSSMRRDG
+"KRN",19,14556,"U")
+ORDERS FOR MRRS WITH REMOVAL P
+"KRN",19,14558,-1)
+0^3
+"KRN",19,14558,0)
+PSS MRR ORDERABLE ITEMS RPT^Orderable Items that Require Removal Report^^R^^^^^^^^PHARMACY DATA MANAGEMENT
+"KRN",19,14558,1,0)
+^^11^11^3151022^
+"KRN",19,14558,1,1,0)
+This option enables you to determine which Orderable Items have the new 
+"KRN",19,14558,1,2,0)
+"Prompt for Removal in BCMA" flag value set to 1, 2 or 3. These OIs are 
+"KRN",19,14558,1,3,0)
+Medications Requiring Removal. Values 2 and 3 allow medication-free 
+"KRN",19,14558,1,4,0)
+periods between administrations and Removal Times to be set during order 
+"KRN",19,14558,1,5,0)
+creation.  Value 2 items will have this as an option.  Value 3 items will 
+"KRN",19,14558,1,6,0)
+be required to have these medication-free periods defined.
+"KRN",19,14558,1,7,0)
+ 
+"KRN",19,14558,1,8,0)
+                       A         ALL
+"KRN",19,14558,1,9,0)
+     1        Removal at Next Administration
+"KRN",19,14558,1,10,0)
+     2        Removal Period Optional Prior to Next Administration
+"KRN",19,14558,1,11,0)
+     3        Removal Period Required Prior to Next Administration"
+"KRN",19,14558,25)
+INIT^PSSMRRI
+"KRN",19,14558,"U")
+ORDERABLE ITEMS THAT REQUIRE R
+"KRN",19,14559,-1)
+0^1
+"KRN",19,14559,0)
+PSS HR/HA ORDERABLE ITEMS RPT^Orderable Items Report for High Risk\High Alert^^R^^^^^^^^PHARMACY DATA MANAGEMENT
+"KRN",19,14559,1,0)
+^^6^6^3151022^
+"KRN",19,14559,1,1,0)
+This option enables you to determine which Orderable Items have the "High 
+"KRN",19,14559,1,2,0)
+Risk/High Alert" flag value set to 1, 2 or 3.
+"KRN",19,14559,1,3,0)
+                       A         ALL
+"KRN",19,14559,1,4,0)
+     1        HIGH RISK/ALERT-NO WITNESS REQUIRED IN BCMA
+"KRN",19,14559,1,5,0)
+     2        RECOMMEND WITNESS IN BCMA-HIGH RISK/ALERT
+"KRN",19,14559,1,6,0)
+     3        WITNESS REQUIRED IN BCMA-HIGH RISK/ALERT
+"KRN",19,14559,25)
+INIT^PSSHRHAI
+"KRN",19,14559,"U")
+ORDERABLE ITEMS REPORT FOR HIG
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",517,-1)
+1^1
+"PKG",517,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",517,20,0)
+^9.402P^^
+"PKG",517,22,0)
+^9.49I^1^1
+"PKG",517,22,1,0)
+1.0^2970930^2971014^11595
+"PKG",517,22,1,"PAH",1,0)
+191^3160113
+"PKG",517,22,1,"PAH",1,1,0)
+^^95^95^3160113
+"PKG",517,22,1,"PAH",1,1,1,0)
+Patch PSS*1.0*191 provides enhancements to Pharmacy Data Management 
+"PKG",517,22,1,"PAH",1,1,2,0)
+to support changes to the BCMA and Inpatient Medications
+"PKG",517,22,1,"PAH",1,1,3,0)
+applications for Transdermal Administrations.
+"PKG",517,22,1,"PAH",1,1,4,0)
+ 
+"PKG",517,22,1,"PAH",1,1,5,0)
+******************************* ATTENTION ********************************
+"PKG",517,22,1,"PAH",1,1,6,0)
+  
+"PKG",517,22,1,"PAH",1,1,7,0)
+Clinical Ancillary Services (CAS) Development-Delivery of Pharmacy 
+"PKG",517,22,1,"PAH",1,1,8,0)
+Enhancements (DDPE) VA Inpatient Medication Administration - Transdermal
+"PKG",517,22,1,"PAH",1,1,9,0)
+enhancement includes 5 patches which must be installed in the following
+"PKG",517,22,1,"PAH",1,1,10,0)
+order:
+"PKG",517,22,1,"PAH",1,1,11,0)
+ 
+"PKG",517,22,1,"PAH",1,1,12,0)
+1.      PSS*1*191
+"PKG",517,22,1,"PAH",1,1,13,0)
+2.      PSJ*5*315
+"PKG",517,22,1,"PAH",1,1,14,0)
+3.      PSB*3*83
+"PKG",517,22,1,"PAH",1,1,15,0)
+4.      OR*3*417
+"PKG",517,22,1,"PAH",1,1,16,0)
+5.      PSB*3*87
+"PKG",517,22,1,"PAH",1,1,17,0)
+ 
+"PKG",517,22,1,"PAH",1,1,18,0)
+ATTENTION: This enhancement also includes a new Graphical User Interface
+"PKG",517,22,1,"PAH",1,1,19,0)
+(GUI) executable, BCMA GUI PSB3_P083.EXE. Installation of this GUI is
+"PKG",517,22,1,"PAH",1,1,20,0)
+required immediately after the KIDS install for the Patch to function.
+"PKG",517,22,1,"PAH",1,1,21,0)
+ 
+"PKG",517,22,1,"PAH",1,1,22,0)
+For retrieval and installation instructions, please see the Client 
+"PKG",517,22,1,"PAH",1,1,23,0)
+Installation Instructions section.
+"PKG",517,22,1,"PAH",1,1,24,0)
+**************************************************************************
+"PKG",517,22,1,"PAH",1,1,25,0)
+ 
+"PKG",517,22,1,"PAH",1,1,26,0)
+These enhancements are made to address NSR 20141012. 
+"PKG",517,22,1,"PAH",1,1,27,0)
+     They include: 
+"PKG",517,22,1,"PAH",1,1,28,0)
+ 
+"PKG",517,22,1,"PAH",1,1,29,0)
+     1. Currently Sites have to create fake removal orders to allow for 
+"PKG",517,22,1,"PAH",1,1,30,0)
+appropriate removal of medications in BCMA.  This patch will alleviate 
+"PKG",517,22,1,"PAH",1,1,31,0)
+that issue by adding a field to the ORDERABLE ITEM (#50.7) file titled 
+"PKG",517,22,1,"PAH",1,1,32,0)
+PROMPT FOR REMOVAL IN BCMA (#12).  This field implements changes that will
+"PKG",517,22,1,"PAH",1,1,33,0)
+support enhancements to the BCMA and Inpatient Medication applications to 
+"PKG",517,22,1,"PAH",1,1,34,0)
+display the removal times in Inpatient Medication orders using rules 
+"PKG",517,22,1,"PAH",1,1,35,0)
+determined by the value of this field. The PROMPT FOR REMOVAL IN BCMA 
+"PKG",517,22,1,"PAH",1,1,36,0)
+(#12) field can be set for Orderable Items that require removal to the 
+"PKG",517,22,1,"PAH",1,1,37,0)
+following values:
+"PKG",517,22,1,"PAH",1,1,38,0)
+ 
+"PKG",517,22,1,"PAH",1,1,39,0)
+     NULL/0=No Removal Required 
+"PKG",517,22,1,"PAH",1,1,40,0)
+     1 = Removal at Next Administration 
+"PKG",517,22,1,"PAH",1,1,41,0)
+     2 = Removal Period Optional Prior to Next Administration  
+"PKG",517,22,1,"PAH",1,1,42,0)
+     3 = Removal Period Required Prior to Next Administration
+"PKG",517,22,1,"PAH",1,1,43,0)
+ 
+"PKG",517,22,1,"PAH",1,1,44,0)
+     2. A post installation routine, PSS1P191, will update the new PROMPT
+"PKG",517,22,1,"PAH",1,1,45,0)
+FOR REMOVAL IN BCMA (#12) field to a value of 1 for all Orderable Items
+"PKG",517,22,1,"PAH",1,1,46,0)
+with a Dosage Form that contain the word "PATCH".  A message will be sent
+"PKG",517,22,1,"PAH",1,1,47,0)
+to the installer as well as all users holding the PSJU and PSJI MGR keys
+"PKG",517,22,1,"PAH",1,1,48,0)
+providing a list of Orderable items that were updated during this process.
+"PKG",517,22,1,"PAH",1,1,49,0)
+The PROMPT FOR REMOVAL IN BCMA (#12) field is only updated if it is
+"PKG",517,22,1,"PAH",1,1,50,0)
+currently set to a value of NULL so subsequent installations will not 
+"PKG",517,22,1,"PAH",1,1,51,0)
+update the PROMPT FOR REMOVAL IN BCMA (#12) field again.
+"PKG",517,22,1,"PAH",1,1,52,0)
+ 
+"PKG",517,22,1,"PAH",1,1,53,0)
+     3. Routines edited for this patch will add the prompt "PROMPT FOR 
+"PKG",517,22,1,"PAH",1,1,54,0)
+REMOVAL IN BCMA:" to the following three options:
+"PKG",517,22,1,"PAH",1,1,55,0)
+ 
+"PKG",517,22,1,"PAH",1,1,56,0)
+     - Edit Orderable Items [PSS EDIT ORDERABLE ITEMS]
+"PKG",517,22,1,"PAH",1,1,57,0)
+     - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+"PKG",517,22,1,"PAH",1,1,58,0)
+     - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE  
+"PKG",517,22,1,"PAH",1,1,59,0)
+       ITEMS]
+"PKG",517,22,1,"PAH",1,1,60,0)
+ 
+"PKG",517,22,1,"PAH",1,1,61,0)
+     4. Patch PSS*1.0*172 inadvertently missed adding the prompt, HIGH 
+"PKG",517,22,1,"PAH",1,1,62,0)
+RISK/HIGH ALERT, to the following options, which is being added in 
+"PKG",517,22,1,"PAH",1,1,63,0)
+this patch:
+"PKG",517,22,1,"PAH",1,1,64,0)
+ 
+"PKG",517,22,1,"PAH",1,1,65,0)
+      - Drug Enter/Edit [PSS DRUG ENTER/EDIT]
+"PKG",517,22,1,"PAH",1,1,66,0)
+      - Dispense Drug/Orderable Item Maintenance [PSS MAINTAIN ORDERABLE
+"PKG",517,22,1,"PAH",1,1,67,0)
+        ITEMS]
+"PKG",517,22,1,"PAH",1,1,68,0)
+ 
+"PKG",517,22,1,"PAH",1,1,69,0)
+5. A second post install routine PSSP191A will create another
+"PKG",517,22,1,"PAH",1,1,70,0)
+email report.  This report will display orders for Medications Requiring 
+"PKG",517,22,1,"PAH",1,1,71,0)
+Removal that do not contain the necessary file structures to allow for 
+"PKG",517,22,1,"PAH",1,1,72,0)
+the new removal functionality to execute.  The primary purpose for this 
+"PKG",517,22,1,"PAH",1,1,73,0)
+information is to allow the site to determine the approximate amount of 
+"PKG",517,22,1,"PAH",1,1,74,0)
+resources needed to discontinue these orders and re-create them after 
+"PKG",517,22,1,"PAH",1,1,75,0)
+patch PSJ*5*315 is installed.  Until the PSJ*5*315 patch is installed the 
+"PKG",517,22,1,"PAH",1,1,76,0)
+capability for processing these orders will not be available.  More 
+"PKG",517,22,1,"PAH",1,1,77,0)
+detailed procedures and recommendations for this process are in the 
+"PKG",517,22,1,"PAH",1,1,78,0)
+installation section of this Patch Description. A copy of this report 
+"PKG",517,22,1,"PAH",1,1,79,0)
+will be added to the Pharmacy Data Management [PSS MGR] menu as the Orders
+"PKG",517,22,1,"PAH",1,1,80,0)
+for MRRs With Removal Properties [PSS MRR ORDERS DIAGNOSTIC RPT] option.
+"PKG",517,22,1,"PAH",1,1,81,0)
+ 
+"PKG",517,22,1,"PAH",1,1,82,0)
+       6. Two more reports will be added to the Orderable Item Management 
+"PKG",517,22,1,"PAH",1,1,83,0)
+[PSS ORDERABLE ITEM MANAGEMENT] sub menu as options. The new report
+"PKG",517,22,1,"PAH",1,1,84,0)
+options, Orderable Items that Require Removal Report [PSS MRR ORDERABLE
+"PKG",517,22,1,"PAH",1,1,85,0)
+ITEMS RPT] option and Orderable Items Report for High Risk\High Alert [PSS
+"PKG",517,22,1,"PAH",1,1,86,0)
+HR/HA ORDERABLE ITEMS RPT] option, will allow review of the settings in
+"PKG",517,22,1,"PAH",1,1,87,0)
+the Orderable Items file (#50.7) for the values of the respective fields
+"PKG",517,22,1,"PAH",1,1,88,0)
+indicated in the report titles.
+"PKG",517,22,1,"PAH",1,1,89,0)
+ 
+"PKG",517,22,1,"PAH",1,1,90,0)
+      PSS*1.0*191 does not have any dependencies for installation.
+"PKG",517,22,1,"PAH",1,1,91,0)
+       The full functionality introduced in this patch will not be
+"PKG",517,22,1,"PAH",1,1,92,0)
+       available until patches PSJ*5.0*315, PSB*3.0*83 and PSB*3.0*87 
+"PKG",517,22,1,"PAH",1,1,93,0)
+       are installed.
+"PKG",517,22,1,"PAH",1,1,94,0)
+ 
+"PKG",517,22,1,"PAH",1,1,95,0)
+       Pre-existing orders will remain unaffected with installation.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+ 
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+YES
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+8
+"RTN","PSS1P191")
+0^^B13324610^n/a
+"RTN","PSS1P191",1,0)
+PSS1P191 ;ALB/DRP POST INSTALL TO UPDATE ORDERABLE ITEM FILE ;06/18/15
+"RTN","PSS1P191",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**191**;9/30/97;Build 40
+"RTN","PSS1P191",3,0)
+ ;
+"RTN","PSS1P191",4,0)
+INIT ; Initialize Variables
+"RTN","PSS1P191",5,0)
+ N PSSOIEN,PSSDRG,PSSDRGP,PSSDSG,PSSSPCE,PSSDUZ,PSSLN,PSSDDRG,PSSINACT,PSSINACTP,PSSDDIEN,PSSDSGF
+"RTN","PSS1P191",6,0)
+ N XMDUZ,XMSUB,XMTEXT,XMY,X
+"RTN","PSS1P191",7,0)
+ S PSSDUZ=DUZ
+"RTN","PSS1P191",8,0)
+ K ^TMP($J,"PSS191"),^XTMP("PSS191")
+"RTN","PSS1P191",9,0)
+ D MAIN,QUE^PSSP191A
+"RTN","PSS1P191",10,0)
+ Q
+"RTN","PSS1P191",11,0)
+ ;
+"RTN","PSS1P191",12,0)
+MAIN ;
+"RTN","PSS1P191",13,0)
+ D UPD50P7,MAKERPT,SENDRPT
+"RTN","PSS1P191",14,0)
+ Q
+"RTN","PSS1P191",15,0)
+ ;
+"RTN","PSS1P191",16,0)
+UPD50P7 ;
+"RTN","PSS1P191",17,0)
+ S PSSDRG=""
+"RTN","PSS1P191",18,0)
+ F  S PSSDRG=$O(^PS(50.7,"ADF",PSSDRG)) Q:PSSDRG=""  D
+"RTN","PSS1P191",19,0)
+ .S PSSDSG=""
+"RTN","PSS1P191",20,0)
+ . F  S PSSDSG=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG)) Q:PSSDSG=""  D
+"RTN","PSS1P191",21,0)
+ .. S PSSOIEN=""
+"RTN","PSS1P191",22,0)
+ .. F  S PSSOIEN=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG,PSSOIEN)) Q:PSSOIEN=""  D
+"RTN","PSS1P191",23,0)
+ ... I $G(^PS(50.606,PSSDSG,0))["PATCH",'+$G(^PS(50.7,PSSOIEN,4)) D
+"RTN","PSS1P191",24,0)
+ .... S PSSDSGF=^PS(50.606,PSSDSG,0)
+"RTN","PSS1P191",25,0)
+ .... S DIE="^PS(50.7,",DR="12////1",DA=PSSOIEN D ^DIE K DA,DR,DIE
+"RTN","PSS1P191",26,0)
+ .... S PSSDDIEN=""
+"RTN","PSS1P191",27,0)
+ .... F  S PSSDDIEN=$O(^PS(50.7,"A50",PSSOIEN,PSSDDIEN)) Q:PSSDDIEN=""  D
+"RTN","PSS1P191",28,0)
+ ..... S:$G(PSSDDIEN)]"" PSSDDRG=$P(^PSDRUG(PSSDDIEN,0),"^"),PSSINACT=$G(^PSDRUG(PSSDDIEN,"I"),"NONE")
+"RTN","PSS1P191",29,0)
+ ..... S ^XTMP("PSS191",$J,PSSDRG_" - "_PSSDSGF,PSSINACT,PSSDDRG,PSSDDIEN)=""
+"RTN","PSS1P191",30,0)
+ .....Q
+"RTN","PSS1P191",31,0)
+ ....Q
+"RTN","PSS1P191",32,0)
+ ...Q
+"RTN","PSS1P191",33,0)
+ ..Q
+"RTN","PSS1P191",34,0)
+ .Q
+"RTN","PSS1P191",35,0)
+ Q
+"RTN","PSS1P191",36,0)
+ ;
+"RTN","PSS1P191",37,0)
+MAKERPT ;
+"RTN","PSS1P191",38,0)
+ S ^TMP($J,"PSS191")=""
+"RTN","PSS1P191",39,0)
+ S ^TMP($J,"PSS191",0)=" "
+"RTN","PSS1P191",40,0)
+ S ^TMP($J,"PSS191",1)=" "
+"RTN","PSS1P191",41,0)
+ S ^TMP($J,"PSS191",2)="     The following Orderable Items have the Dosage Form Patch and "
+"RTN","PSS1P191",42,0)
+ S ^TMP($J,"PSS191",3)="     the Prompt for Removal in BCMA field was updated to a value"
+"RTN","PSS1P191",43,0)
+ S ^TMP($J,"PSS191",4)="     of 1 by Patch PSS*1*191"
+"RTN","PSS1P191",44,0)
+ S ^TMP($J,"PSS191",5)=" "
+"RTN","PSS1P191",45,0)
+ S ^TMP($J,"PSS191",6)="ORDERABLE ITEM                  INACTIVE      DISPENSE DRUG     "
+"RTN","PSS1P191",46,0)
+ S ^TMP($J,"PSS191",7)="NAME - DOSAGE FORM              DATE          NAME                       IEN "
+"RTN","PSS1P191",47,0)
+ S ^TMP($J,"PSS191",8)="------------------------------  ------------  -------------------------  ------"
+"RTN","PSS1P191",48,0)
+ S ^TMP($J,"PSS191",9)=" "
+"RTN","PSS1P191",49,0)
+ S ^TMP($J,"PSS191",10)=" "
+"RTN","PSS1P191",50,0)
+ I $O(^XTMP("PSS191",$J,""))="" S ^TMP($J,"PSS191",11)="NO DRUGS TO LIST" Q
+"RTN","PSS1P191",51,0)
+ S PSSLN=11,$P(PSSSPCE," ",30)=""
+"RTN","PSS1P191",52,0)
+ S PSSDRG=""
+"RTN","PSS1P191",53,0)
+ F  S PSSDRG=$O(^XTMP("PSS191",$J,PSSDRG)) Q:PSSDRG=""  D
+"RTN","PSS1P191",54,0)
+ . S PSSINACT="",PSSDRGP=PSSDRG
+"RTN","PSS1P191",55,0)
+ . F  S PSSINACT=$O(^XTMP("PSS191",$J,PSSDRG,PSSINACT)) Q:PSSINACT=""  D
+"RTN","PSS1P191",56,0)
+ .. S PSSDDRG="",PSSINACTP=PSSINACT
+"RTN","PSS1P191",57,0)
+ .. F  S PSSDDRG=$O(^XTMP("PSS191",$J,PSSDRG,PSSINACT,PSSDDRG)) Q:PSSDDRG=""  D
+"RTN","PSS1P191",58,0)
+ ... S PSSDDIEN=""
+"RTN","PSS1P191",59,0)
+ ... F  S PSSDDIEN=$O(^XTMP("PSS191",$J,PSSDRG,PSSINACT,PSSDDRG,PSSDDIEN)) Q:PSSDDIEN=""  D
+"RTN","PSS1P191",60,0)
+ .... S ^TMP($J,"PSS191",PSSLN)=$E(PSSDRGP_PSSSPCE,1,30)_"  "_$E($$FMTE^XLFDT(PSSINACTP,5)_PSSSPCE,1,12)_"  "_$E(PSSDDRG_PSSSPCE,1,25)_"  "_$E(PSSDDIEN_PSSSPCE,1,6)
+"RTN","PSS1P191",61,0)
+ .... S (PSSDRGP,PSSINACTP)=" "
+"RTN","PSS1P191",62,0)
+ .... S PSSLN=PSSLN+1
+"RTN","PSS1P191",63,0)
+ ....Q
+"RTN","PSS1P191",64,0)
+ ...Q
+"RTN","PSS1P191",65,0)
+ ..Q
+"RTN","PSS1P191",66,0)
+ .Q
+"RTN","PSS1P191",67,0)
+ Q
+"RTN","PSS1P191",68,0)
+SENDRPT ;Send report to user
+"RTN","PSS1P191",69,0)
+ N DIFROM ; Prevent pre-mature termination of mailman
+"RTN","PSS1P191",70,0)
+ S X="" F  S X=$O(^XUSEC("PSJI MGR",X)) Q:'X  S XMY(X)=""
+"RTN","PSS1P191",71,0)
+ S X="" F  S X=$O(^XUSEC("PSJU MGR",X)) Q:'X  S XMY(X)=""
+"RTN","PSS1P191",72,0)
+ S XMSUB="PHARMACY ORDERABLE ITEM MANAGEMENT",XMTEXT="^TMP("_$J_","_"""PSS191"""_",",XMDUZ=.5,XMY(PSSDUZ)=""
+"RTN","PSS1P191",73,0)
+ D ^XMD
+"RTN","PSS1P191",74,0)
+ K ^TMP($J,"PSS191"),^XTMP("PSS191")
+"RTN","PSS1P191",75,0)
+ Q
+"RTN","PSSHRHAI")
+0^5^B20428006^n/a
+"RTN","PSSHRHAI",1,0)
+PSSHRHAI ;BIRMINGHAM/GN-Orderable Items High Risk/High Alert Report ;9/25/15 10:03am
+"RTN","PSSHRHAI",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**191**;9/30/97;Build 40
+"RTN","PSSHRHAI",3,0)
+ ;
+"RTN","PSSHRHAI",4,0)
+ Q
+"RTN","PSSHRHAI",5,0)
+INIT ; Initialize Variables
+"RTN","PSSHRHAI",6,0)
+ N PSSOIEN,PSSDRG,PSSDSG,PSSSPCE,PSSLN,PSSDDRG,PSSINACT,PSSDDIEN,PSSDSGF,PAGNO,PSSMRR,TERM
+"RTN","PSSHRHAI",7,0)
+ N PSSQ,PSSVAL,PSSDRGS,PSSDSGI,PSSHRA,PSSINACTS
+"RTN","PSSHRHAI",8,0)
+ S PAGNO=0,$P(PSSSPCE," ",30)="",PSSQ=0
+"RTN","PSSHRHAI",9,0)
+ D MAIN
+"RTN","PSSHRHAI",10,0)
+ K POP,DTOUT,DUOUT,Y
+"RTN","PSSHRHAI",11,0)
+ Q
+"RTN","PSSHRHAI",12,0)
+ ;
+"RTN","PSSHRHAI",13,0)
+MAIN ;
+"RTN","PSSHRHAI",14,0)
+ D ASKUSR Q:PSSQ
+"RTN","PSSHRHAI",15,0)
+ ;open print device
+"RTN","PSSHRHAI",16,0)
+ D OPEN^%ZISUTL("PSSMRRI") Q:POP
+"RTN","PSSHRHAI",17,0)
+ S TERM=$S($E($G(IOST),1,2)="C-":1,1:0)
+"RTN","PSSHRHAI",18,0)
+ U IO
+"RTN","PSSHRHAI",19,0)
+ D PRNHDR,GET50P7
+"RTN","PSSHRHAI",20,0)
+ ;close print device
+"RTN","PSSHRHAI",21,0)
+ D CLOSE^%ZISUTL("PSSMRRI")
+"RTN","PSSHRHAI",22,0)
+ Q
+"RTN","PSSHRHAI",23,0)
+ ;
+"RTN","PSSHRHAI",24,0)
+GET50P7 ;
+"RTN","PSSHRHAI",25,0)
+ S (PSSDRG,PSSDRGS)=""
+"RTN","PSSHRHAI",26,0)
+ F  S PSSDRG=$O(^PS(50.7,"ADF",PSSDRG)) Q:(PSSDRG="")!PSSQ  D
+"RTN","PSSHRHAI",27,0)
+ .S PSSDSG="",PSSDRGP=PSSDRG
+"RTN","PSSHRHAI",28,0)
+ . F  S PSSDSG=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG)) Q:(PSSDSG="")!PSSQ  D
+"RTN","PSSHRHAI",29,0)
+ .. S PSSOIEN=""
+"RTN","PSSHRHAI",30,0)
+ .. F  S PSSOIEN=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG,PSSOIEN)) Q:(PSSOIEN="")!PSSQ  D
+"RTN","PSSHRHAI",31,0)
+ ... S PSSHRA=$P($G(^PS(50.7,PSSOIEN,0)),U,14)
+"RTN","PSSHRHAI",32,0)
+ ... I PSSVAL[+PSSHRA S PSSINACT=$P(^PS(50.7,PSSOIEN,0),U,4) D
+"RTN","PSSHRHAI",33,0)
+ .... S PSSDSGF=$P(^PS(50.606,PSSDSG,0),U),PSSDSGI=$P(^PS(50.606,PSSDSG,0),U,2),PSSDDIEN="",PSSDRG=PSSDRG_" - "_PSSDSGF
+"RTN","PSSHRHAI",34,0)
+ .... F  S PSSDDIEN=$O(^PS(50.7,"A50",PSSOIEN,PSSDDIEN)) Q:(PSSDDIEN="")!PSSQ  D
+"RTN","PSSHRHAI",35,0)
+ ..... S:$G(PSSDDIEN)]"" PSSDDRG=$P(^PSDRUG(PSSDDIEN,0),"^"),PSSDSGI=$S(PSSDSGI="":" ",1:PSSDSGI)
+"RTN","PSSHRHAI",36,0)
+ ..... D PRNLN
+"RTN","PSSHRHAI",37,0)
+ .....Q
+"RTN","PSSHRHAI",38,0)
+ ....Q
+"RTN","PSSHRHAI",39,0)
+ ...Q
+"RTN","PSSHRHAI",40,0)
+ ..Q
+"RTN","PSSHRHAI",41,0)
+ .Q
+"RTN","PSSHRHAI",42,0)
+ Q
+"RTN","PSSHRHAI",43,0)
+ ;
+"RTN","PSSHRHAI",44,0)
+ASKUSR ; Prompt user for input values
+"RTN","PSSHRHAI",45,0)
+ K DIR
+"RTN","PSSHRHAI",46,0)
+ S DIR(0)="SB^A:ALL;1:1;2:2;3:3",DIR("B")="A",DIR("A")="Print Report for (A)ll or Specific HR/HA Flag values(1,2,3)"
+"RTN","PSSHRHAI",47,0)
+ S (DIR("?"),DIR("??"))="^D HELP^PSSHRHAI"
+"RTN","PSSHRHAI",48,0)
+ D ^DIR K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) W !!,"Nothing queued to print.",! S PSSQ=1 Q
+"RTN","PSSHRHAI",49,0)
+ S PSSVAL=X
+"RTN","PSSHRHAI",50,0)
+ W:PSSVAL="1" !!,"This report will be for items that do not require a witness in BCMA",!
+"RTN","PSSHRHAI",51,0)
+ W:PSSVAL="2" !!,"This report will be for items that recommend a witness in BCMA",!
+"RTN","PSSHRHAI",52,0)
+ W:PSSVAL="3" !!,"This report will be for items that require a witness in BCMA",!
+"RTN","PSSHRHAI",53,0)
+ W:PSSVAL="A" !!,"This report will be for all High Risk/High Alert witness related items ",!
+"RTN","PSSHRHAI",54,0)
+ K DIR S DIR(0)="Y",DIR("A")="Is this correct",DIR("B")="Y" D ^DIR K DIR I Y'=1 G ASKUSR
+"RTN","PSSHRHAI",55,0)
+ S:PSSVAL="A" PSSVAL="123"
+"RTN","PSSHRHAI",56,0)
+ W $C(7),!!?3,"This report is designed for 132 column output!",!
+"RTN","PSSHRHAI",57,0)
+ Q
+"RTN","PSSHRHAI",58,0)
+ ;
+"RTN","PSSHRHAI",59,0)
+HELP ;
+"RTN","PSSHRHAI",60,0)
+ Q:$L(X)<2
+"RTN","PSSHRHAI",61,0)
+ D Q23
+"RTN","PSSHRHAI",62,0)
+ S X="",DIR("L")="" ;Setting DIR("L") suppresses extra help display.
+"RTN","PSSHRHAI",63,0)
+ Q
+"RTN","PSSHRHAI",64,0)
+Q23 ;
+"RTN","PSSHRHAI",65,0)
+ W !,"Enter 'A' to run report for All Orderable Items. Enter '1, 2 or 3'"
+"RTN","PSSHRHAI",66,0)
+ W !,"to show only the selected values."
+"RTN","PSSHRHAI",67,0)
+ W !,"                  Select one of the following:"
+"RTN","PSSHRHAI",68,0)
+ W !,"     A        ALL"
+"RTN","PSSHRHAI",69,0)
+ W !,"     1        HIGH RISK/ALERT-NO WITNESS REQUIRED IN BCMA"
+"RTN","PSSHRHAI",70,0)
+ W !,"     2        RECOMMEND WITNESS IN BCMA-HIGH RISK/ALERT"
+"RTN","PSSHRHAI",71,0)
+ W !,"     3        WITNESS REQUIRED IN BCMA-HIGH RISK/ALERT",!
+"RTN","PSSHRHAI",72,0)
+ Q
+"RTN","PSSHRHAI",73,0)
+ ;
+"RTN","PSSHRHAI",74,0)
+PRNHDR ; Heading
+"RTN","PSSHRHAI",75,0)
+ Q:PSSQ
+"RTN","PSSHRHAI",76,0)
+ S PAGNO=PAGNO+1
+"RTN","PSSHRHAI",77,0)
+ W @IOF
+"RTN","PSSHRHAI",78,0)
+ W !,?57,$E($$FMTE^XLFDT($$NOW^XLFDT),1,18)
+"RTN","PSSHRHAI",79,0)
+ W !,?42,"High Risk/High Alert for Orderable Items Report",?125,"Page ",PAGNO
+"RTN","PSSHRHAI",80,0)
+ W !,?5,"ORDERABLE ITEM                  OI INACTIVE   HRHA  DISPENSE DRUG (DD)              DD INACTIVE"
+"RTN","PSSHRHAI",81,0)
+ W !,?5,"NAME - DOSAGE FORM              DATE          VAL   NAME                            DATE "
+"RTN","PSSHRHAI",82,0)
+ W !,?5,"------------------------------  ------------  ----  ------------------------------  -----------"
+"RTN","PSSHRHAI",83,0)
+ Q
+"RTN","PSSHRHAI",84,0)
+ ;
+"RTN","PSSHRHAI",85,0)
+PRNLN ;Write line on report
+"RTN","PSSHRHAI",86,0)
+ N PSSDRGP,PSSINACTP,PSSHRAP
+"RTN","PSSHRHAI",87,0)
+ S:PSSDRGS=PSSDRG (PSSDRGP,PSSINACTP,PSSHRAP)=" "
+"RTN","PSSHRHAI",88,0)
+ S:PSSDRGS'=PSSDRG (PSSDRGS,PSSDRGP)=PSSDRG,(PSSINACTS,PSSINACTP)=PSSINACT,PSSHRAP="  "_PSSHRA_" "
+"RTN","PSSHRHAI",89,0)
+ W !,?5,$E(PSSDRGP_PSSSPCE,1,30)_"  "_$E($$FMTE^XLFDT(PSSINACTP,5)_PSSSPCE,1,12)_"  "_$E(PSSHRAP_PSSSPCE,1,4)_"  "_$E(PSSDDRG_PSSSPCE,1,30)_"  "_$E(PSSDSGI_PSSSPCE,1,12)
+"RTN","PSSHRHAI",90,0)
+ I $Y>(IOSL-1) D:$G(TERM) PAUSE D PRNHDR
+"RTN","PSSHRHAI",91,0)
+ Q
+"RTN","PSSHRHAI",92,0)
+ ;
+"RTN","PSSHRHAI",93,0)
+PAUSE Q:'$G(TERM)
+"RTN","PSSHRHAI",94,0)
+ N X
+"RTN","PSSHRHAI",95,0)
+ U IO(0) W !!,"Press RETURN to continue, '^' to exit"
+"RTN","PSSHRHAI",96,0)
+ R X:$G(DTIME) I (X="^")!('$T) S PSSQ=1 Q
+"RTN","PSSHRHAI",97,0)
+ U IO
+"RTN","PSSHRHAI",98,0)
+ Q
+"RTN","PSSHRHAI",99,0)
+ ;
+"RTN","PSSMRRDG")
+0^4^B30196189^n/a
+"RTN","PSSMRRDG",1,0)
+PSSMRRDG ;BIRMINGHAM/GN/DRP-Diagnostic Report only, does not update ;9/25/15 10:03am
+"RTN","PSSMRRDG",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**191**;9/30/97;Build 40
+"RTN","PSSMRRDG",3,0)
+ Q
+"RTN","PSSMRRDG",4,0)
+ ;
+"RTN","PSSMRRDG",5,0)
+EN(P1) ;Check for MRR meds missing the 2.1 node which is new and would be
+"RTN","PSSMRRDG",6,0)
+ ;there if an order was created and Finished after patch PSJ*3*315
+"RTN","PSSMRRDG",7,0)
+ ; Input param: P1 = default is null and checks for 2.1 node
+"RTN","PSSMRRDG",8,0)
+ ;                  = if pass in a value, then it will not check 2.1
+"RTN","PSSMRRDG",9,0)
+ ;
+"RTN","PSSMRRDG",10,0)
+ W ! K %ZIS,IOP,ZTSK S %ZIS("B")="",%ZIS="QM" D ^%ZIS I POP Q
+"RTN","PSSMRRDG",11,0)
+ I $E($G(IOST),1,2)="C-" W $C(7),!?5,"It is recommended to Queue this report to a printer for Large sites, enter Q at Device prompt",!
+"RTN","PSSMRRDG",12,0)
+ I '$D(IO("Q")) N TERM U IO S:$E(IOSL,1)'["9" TERM=$S($E($G(IOST),1,2)="C-":1,1:0) D MAIN,^%ZISC Q
+"RTN","PSSMRRDG",13,0)
+ S ZTRTN="MAIN^PSSMRRDG",ZTDESC="Orders for MRRs With Removal Properties" D ^%ZTLOAD K IO("Q")
+"RTN","PSSMRRDG",14,0)
+ Q
+"RTN","PSSMRRDG",15,0)
+ ;
+"RTN","PSSMRRDG",16,0)
+MAIN ; main control
+"RTN","PSSMRRDG",17,0)
+ N DFN,MRR,MRRAR,ORD,STP,ORDTOT,DDOI,DDTXT,QQ,YY,STS,PSSID,PSSLOC,PSSQ,PSSPATCH,ORDSDT
+"RTN","PSSMRRDG",18,0)
+ N CLNODE,LIN,MRRFL,OI,PAGNO,POP
+"RTN","PSSMRRDG",19,0)
+ N $ESTACK,$ETRAP S $ETRAP="D ERRTRP^PSSMRRDG" ;
+"RTN","PSSMRRDG",20,0)
+ S P1=$G(P1)   ;define P1 to null if not passed
+"RTN","PSSMRRDG",21,0)
+ S PSSPATCH=$S($G(P2):1,1:'$$PATCH^XPDUTL("PSJ*5.0*315"))
+"RTN","PSSMRRDG",22,0)
+ ;build array of OI's that are mrr and their flag value
+"RTN","PSSMRRDG",23,0)
+ F QQ=0:0 S QQ=$O(^PSDRUG("ASP",QQ)) Q:QQ=""  D
+"RTN","PSSMRRDG",24,0)
+ . F YY=0:0 S YY=$O(^PSDRUG("ASP",QQ,YY)) Q:'YY  D
+"RTN","PSSMRRDG",25,0)
+ .. S OI=$P(^PSDRUG(YY,2),U)
+"RTN","PSSMRRDG",26,0)
+ .. S MRRFL=$P($G(^PS(50.7,OI,4)),U,1)
+"RTN","PSSMRRDG",27,0)
+ .. S:MRRFL MRRAR(OI)=MRRFL
+"RTN","PSSMRRDG",28,0)
+ ..Q
+"RTN","PSSMRRDG",29,0)
+ .Q
+"RTN","PSSMRRDG",30,0)
+ ;
+"RTN","PSSMRRDG",31,0)
+ ; Use Ord Stop Date XREF to look for current orders
+"RTN","PSSMRRDG",32,0)
+ S ORDTOT=0,PSSQ=0,PAGNO=0,ORDSDT=DT
+"RTN","PSSMRRDG",33,0)
+ F  S ORDSDT=$O(^PS(55,"AUD",ORDSDT)) Q:ORDSDT=""  D
+"RTN","PSSMRRDG",34,0)
+ . S DFN=0
+"RTN","PSSMRRDG",35,0)
+ . F  S DFN=$O(^PS(55,"AUD",ORDSDT,DFN)) Q:DFN=""  D
+"RTN","PSSMRRDG",36,0)
+ .. S ORD=0
+"RTN","PSSMRRDG",37,0)
+ .. F  S ORD=$O(^PS(55,"AUD",ORDSDT,DFN,ORD)) Q:ORD=""  D
+"RTN","PSSMRRDG",38,0)
+ ... S STS=$P($G(^PS(55,DFN,5,ORD,0)),U,9)
+"RTN","PSSMRRDG",39,0)
+ ... S CLNODE=$G(^PS(55,DFN,5,ORD,8),0)
+"RTN","PSSMRRDG",40,0)
+ ... ;non Active type order, quit dont include
+"RTN","PSSMRRDG",41,0)
+ ... I (STS="D")!(STS="E")!(STS="DE")!(STS="DR") Q
+"RTN","PSSMRRDG",42,0)
+ ... S PSSID=$S('$D(^DPT(DFN,0)):"NONE",1:$E($P($G(^DPT(DFN,0)),U,1),1)_$E($P($G(^DPT(DFN,0)),U,9),6,9))
+"RTN","PSSMRRDG",43,0)
+ ... D CHKORD        ;check and then set ^TMP for sort
+"RTN","PSSMRRDG",44,0)
+ ...Q
+"RTN","PSSMRRDG",45,0)
+ ..Q
+"RTN","PSSMRRDG",46,0)
+ .Q
+"RTN","PSSMRRDG",47,0)
+ D:$D(^TMP("PSSMRRDG")) PRINT
+"RTN","PSSMRRDG",48,0)
+ D:ORDTOT=0 HDR
+"RTN","PSSMRRDG",49,0)
+ I 'PSSQ W !!,"Total Orders found: ",ORDTOT,!
+"RTN","PSSMRRDG",50,0)
+ W !!,"Press RETURN to continue....." R X:$G(DTIME) ;pause before returning to Detail screen
+"RTN","PSSMRRDG",51,0)
+ K ^TMP("PSSMRRDG")
+"RTN","PSSMRRDG",52,0)
+ Q
+"RTN","PSSMRRDG",53,0)
+ ;
+"RTN","PSSMRRDG",54,0)
+CHKORD ;check if Order qualifies and then print on report
+"RTN","PSSMRRDG",55,0)
+ ; return mrrfl which is positive or true  (1,2,3)
+"RTN","PSSMRRDG",56,0)
+ F QQ=0:0 S QQ=$O(^PS(55,DFN,5,ORD,1,QQ)) Q:'QQ  D
+"RTN","PSSMRRDG",57,0)
+ . S DDOI=+$P($G(^PS(55,DFN,5,ORD,.2)),U)
+"RTN","PSSMRRDG",58,0)
+ . S MRR=$G(MRRAR(DDOI))
+"RTN","PSSMRRDG",59,0)
+ . Q:'MRR      ;don't report not a MRR med
+"RTN","PSSMRRDG",60,0)
+ . ;   don't report if has a 2.1 node, unless P1 overrides
+"RTN","PSSMRRDG",61,0)
+ . I $G(P1)="",$D(^PS(55,DFN,5,ORD,2.1)) Q
+"RTN","PSSMRRDG",62,0)
+ . S PSSLOC=$S($$CLINIC(CLNODE):$P(^SC(+^PS(55,DFN,5,ORD,8),0),U,1),$G(^DPT(DFN,.1))]"":^DPT(DFN,.1),1:"UNKNOWN")
+"RTN","PSSMRRDG",63,0)
+ . S DDTXT=$$GET1^DIQ(55.07,QQ_","_ORD_","_DFN,"DISPENSE DRUG")
+"RTN","PSSMRRDG",64,0)
+ . S ^TMP("PSSMRRDG",PSSLOC,PSSID)=DDTXT_U_STS_U_MRR
+"RTN","PSSMRRDG",65,0)
+ .Q
+"RTN","PSSMRRDG",66,0)
+ Q
+"RTN","PSSMRRDG",67,0)
+ ;
+"RTN","PSSMRRDG",68,0)
+PRINT ;
+"RTN","PSSMRRDG",69,0)
+ N STR S PSSLOC=""
+"RTN","PSSMRRDG",70,0)
+  F  S PSSLOC=$O(^TMP("PSSMRRDG",PSSLOC)) Q:PSSLOC=""!PSSQ  D
+"RTN","PSSMRRDG",71,0)
+ . D HDR S PSSID=""
+"RTN","PSSMRRDG",72,0)
+ . F  S PSSID=$O(^TMP("PSSMRRDG",PSSLOC,PSSID)) Q:PSSID=""!PSSQ  D
+"RTN","PSSMRRDG",73,0)
+ .. S STR=^TMP("PSSMRRDG",PSSLOC,PSSID),DDTXT=$P(STR,U),STS=$P(STR,U,2),MRR=$P(STR,U,3)
+"RTN","PSSMRRDG",74,0)
+ .. D WRITELN S ORDTOT=ORDTOT+1
+"RTN","PSSMRRDG",75,0)
+ .. I $Y>(IOSL-1) D PAUSE Q:PSSQ
+"RTN","PSSMRRDG",76,0)
+ ..Q
+"RTN","PSSMRRDG",77,0)
+ . D PAUSE Q:PSSQ
+"RTN","PSSMRRDG",78,0)
+ .Q
+"RTN","PSSMRRDG",79,0)
+ Q
+"RTN","PSSMRRDG",80,0)
+ ;
+"RTN","PSSMRRDG",81,0)
+HDR ;Write a heading on report
+"RTN","PSSMRRDG",82,0)
+ S PAGNO=PAGNO+1
+"RTN","PSSMRRDG",83,0)
+ W @IOF
+"RTN","PSSMRRDG",84,0)
+ W !,$E($$FMTE^XLFDT($$NOW^XLFDT),1,18),?125,"Page ",PAGNO
+"RTN","PSSMRRDG",85,0)
+ I 'PSSPATCH D H1,BODY Q
+"RTN","PSSMRRDG",86,0)
+ D H2,BODY
+"RTN","PSSMRRDG",87,0)
+ Q
+"RTN","PSSMRRDG",88,0)
+ ;
+"RTN","PSSMRRDG",89,0)
+H1 ; heading for Pre-PSJ315 install
+"RTN","PSSMRRDG",90,0)
+ W !,?2,"The following ACTIVE Orders are for Medications Requiring Removal (MRR). Prior to Installation of PSJ*5*315 these orders"
+"RTN","PSSMRRDG",91,0)
+ W !,?2,"should be reviewed for planning purposes, but no action taken. Once PSJ*5*315 is installed they will need to be d/c'd and"
+"RTN","PSSMRRDG",92,0)
+ W !,?2,"re-entered after coordinating with your ADPAC."
+"RTN","PSSMRRDG",93,0)
+ Q
+"RTN","PSSMRRDG",94,0)
+H2 ; heading for Post-PSJ315 install
+"RTN","PSSMRRDG",95,0)
+ W !,?2,"The following ACTIVE orders for medications that Require Removal (MRR) were finished prior to install of Patch PSJ*5*315."
+"RTN","PSSMRRDG",96,0)
+ W !,?2,"These orders must be re-entered. They may not be copied, renewed or edited to create new orders."
+"RTN","PSSMRRDG",97,0)
+ W !,?33,"Any changes to these orders should be coordinated with your ADPAC."
+"RTN","PSSMRRDG",98,0)
+ Q
+"RTN","PSSMRRDG",99,0)
+BODY ;
+"RTN","PSSMRRDG",100,0)
+ W !!,?50," Sort by Patient within Ward  "_$G(PSSLOC,"NONE FOUND")
+"RTN","PSSMRRDG",101,0)
+ W !!,"Patient",?10,"Patient",?30,"Orderable",?75,"Ordr",?80,"MRR"
+"RTN","PSSMRRDG",102,0)
+ W !,"ID",?10,"Loc",?30,"Item Name",?75,"Sts",?80,"Val"
+"RTN","PSSMRRDG",103,0)
+ S $P(LIN,"-",132)=""
+"RTN","PSSMRRDG",104,0)
+ W !,LIN
+"RTN","PSSMRRDG",105,0)
+ Q
+"RTN","PSSMRRDG",106,0)
+ ;
+"RTN","PSSMRRDG",107,0)
+WRITELN ;Write line on report
+"RTN","PSSMRRDG",108,0)
+ W !,PSSID,?10,PSSLOC,?30,DDTXT,?76,STS,?81,MRR
+"RTN","PSSMRRDG",109,0)
+ Q
+"RTN","PSSMRRDG",110,0)
+ ;
+"RTN","PSSMRRDG",111,0)
+PAUSE ;
+"RTN","PSSMRRDG",112,0)
+ Q:'($G(TERM))
+"RTN","PSSMRRDG",113,0)
+ N X
+"RTN","PSSMRRDG",114,0)
+ W !!,"Press RETURN to continue, '^' to exit"
+"RTN","PSSMRRDG",115,0)
+ R X:$G(DTIME) I (X="^")!('$T) S PSSQ=1 Q
+"RTN","PSSMRRDG",116,0)
+ U IO
+"RTN","PSSMRRDG",117,0)
+ Q
+"RTN","PSSMRRDG",118,0)
+ ;
+"RTN","PSSMRRDG",119,0)
+CLINIC(CL) ;Is this a Clinic order that would show on the VDL in CO mode also?
+"RTN","PSSMRRDG",120,0)
+ Q:'($P(CL,"^",2)?7N!($P(CL,"^",2)?7N1".".N)) 0  ;no appt date, IM ord
+"RTN","PSSMRRDG",121,0)
+ Q:'$D(^PS(53.46,"B",+CL)) 0                     ;no PTR to 44, IM ord
+"RTN","PSSMRRDG",122,0)
+ N A S A=$O(^PS(53.46,"B",+CL,"")) Q:'A 0        ;no 53.46 ien, IM ord
+"RTN","PSSMRRDG",123,0)
+ Q $P(^PS(53.46,A,0),"^",4)                      ;Send to BCMA? flag
+"RTN","PSSMRRDG",124,0)
+ ;
+"RTN","PSSMRRDG",125,0)
+TST(P2) ;
+"RTN","PSSMRRDG",126,0)
+ S P2=$G(P2),P1=1
+"RTN","PSSMRRDG",127,0)
+ D EN(P1)
+"RTN","PSSMRRDG",128,0)
+ Q
+"RTN","PSSMRRDG",129,0)
+ ;
+"RTN","PSSMRRDG",130,0)
+ERRTRP ; Error trap processing
+"RTN","PSSMRRDG",131,0)
+ N Z,PROBLEM
+"RTN","PSSMRRDG",132,0)
+ S Z(1,1)=$$EC^%ZOSV ; mumps error location and description
+"RTN","PSSMRRDG",133,0)
+ S Z="A SYSTEM ERROR HAS BEEN DETECTED AT THE FOLLOWING LOCATION"
+"RTN","PSSMRRDG",134,0)
+ S PROBLEM=7
+"RTN","PSSMRRDG",135,0)
+ D ^%ZTER ; record the error in the trap
+"RTN","PSSMRRDG",136,0)
+ G UNWIND^%ZTER ; unwind stack levels
+"RTN","PSSMRRDG",137,0)
+ Q
+"RTN","PSSMRRI")
+0^7^B22465430^n/a
+"RTN","PSSMRRI",1,0)
+PSSMRRI ;ALB/DRP PRINT MRR ITEMS ;06/18/15
+"RTN","PSSMRRI",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**191**;9/30/97;Build 40
+"RTN","PSSMRRI",3,0)
+ ;
+"RTN","PSSMRRI",4,0)
+ Q
+"RTN","PSSMRRI",5,0)
+INIT ;
+"RTN","PSSMRRI",6,0)
+ N PSSOIEN,PSSDRG,PSSDSG,PSSSPCE,PSSLN,PSSDDRG,PSSINACT,PSSDDIEN,PSSDSGF,PAGNO,PSSMRR,PSSDRGS,PSSINACTS,PSSDSGI
+"RTN","PSSMRRI",7,0)
+ N PSSQ,PSSVAL,TERM
+"RTN","PSSMRRI",8,0)
+ S PAGNO=0,$P(PSSSPCE," ",30)="",PSSQ=0
+"RTN","PSSMRRI",9,0)
+ D MAIN
+"RTN","PSSMRRI",10,0)
+ K POP,DTOUT,DUOUT,Y
+"RTN","PSSMRRI",11,0)
+ Q
+"RTN","PSSMRRI",12,0)
+ ;
+"RTN","PSSMRRI",13,0)
+MAIN ;
+"RTN","PSSMRRI",14,0)
+ D ASKUSR Q:PSSQ
+"RTN","PSSMRRI",15,0)
+ ;open print device
+"RTN","PSSMRRI",16,0)
+ D OPEN^%ZISUTL("PSSMRRI",,) I $G(POP) W !!,"Nothing queued to print.",! Q
+"RTN","PSSMRRI",17,0)
+ S TERM=$S($E($G(IOST),1,2)="C-":1,1:0)
+"RTN","PSSMRRI",18,0)
+ U IO
+"RTN","PSSMRRI",19,0)
+ D PRNHDR,GET50P7
+"RTN","PSSMRRI",20,0)
+ ;close print device
+"RTN","PSSMRRI",21,0)
+ D CLOSE^%ZISUTL("PSSMRRI")
+"RTN","PSSMRRI",22,0)
+ Q
+"RTN","PSSMRRI",23,0)
+ ;
+"RTN","PSSMRRI",24,0)
+ASKUSR ; Prompt user for inout values
+"RTN","PSSMRRI",25,0)
+ K DIR
+"RTN","PSSMRRI",26,0)
+ S DIR(0)="SB^A:ALL;1:1;2:2;3:3",DIR("B")="A",DIR("A")="Enter 'A' to run report for all Orderable Items. Enter '1, 2 or 3' to show only the selected values."
+"RTN","PSSMRRI",27,0)
+ S (DIR("?"),DIR("??"))="^D HELP^PSSMRRI"
+"RTN","PSSMRRI",28,0)
+ D ^DIR K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) W !!,"Nothing queued to print.",! S PSSQ=1 Q
+"RTN","PSSMRRI",29,0)
+ S PSSVAL=X
+"RTN","PSSMRRI",30,0)
+ W:PSSVAL="1" !!,"This report will be for items requiring removal at the next administration ",!
+"RTN","PSSMRRI",31,0)
+ W:PSSVAL="2" !!,"This report will be for items with optional removal prior to next administration. ",!
+"RTN","PSSMRRI",32,0)
+ W:PSSVAL="3" !!,"This report will be for items that require removal prior to the next administration. ",!
+"RTN","PSSMRRI",33,0)
+ W:PSSVAL="A" !!,"This report will be for all items that require removal.",!
+"RTN","PSSMRRI",34,0)
+ K DIR S DIR(0)="Y",DIR("A")="Is this correct",DIR("B")="Y" D ^DIR K DIR I Y'=1 G ASKUSR
+"RTN","PSSMRRI",35,0)
+ S:PSSVAL="A" PSSVAL="123"
+"RTN","PSSMRRI",36,0)
+ W $C(7),!!?3,"This report is designed for 132 column output!",!
+"RTN","PSSMRRI",37,0)
+ Q
+"RTN","PSSMRRI",38,0)
+HELP ;
+"RTN","PSSMRRI",39,0)
+  Q:$L(X)<2
+"RTN","PSSMRRI",40,0)
+  D Q23
+"RTN","PSSMRRI",41,0)
+  S X="",DIR("L")="" ;Setting DIR("L") suppresses extra help display.
+"RTN","PSSMRRI",42,0)
+  Q
+"RTN","PSSMRRI",43,0)
+Q23 ;
+"RTN","PSSMRRI",44,0)
+ W !,"Enter 'A' to run report for all Orderable Items. Enter '1, 2 or 3'"
+"RTN","PSSMRRI",45,0)
+ W !,"to show only the selected values."
+"RTN","PSSMRRI",46,0)
+ W !,"                  Select one of the following:"
+"RTN","PSSMRRI",47,0)
+ W !,"     A        ALL"
+"RTN","PSSMRRI",48,0)
+ W !,"     1        Removal at Next Administration"
+"RTN","PSSMRRI",49,0)
+ W !,"     2        Removal Period Optional Prior to Next Administration"
+"RTN","PSSMRRI",50,0)
+ W !,"     3        Removal Period Required Prior to Next Administration",!
+"RTN","PSSMRRI",51,0)
+ Q
+"RTN","PSSMRRI",52,0)
+ ;
+"RTN","PSSMRRI",53,0)
+GET50P7 ;
+"RTN","PSSMRRI",54,0)
+ S (PSSDRG,PSSDRGS)=""
+"RTN","PSSMRRI",55,0)
+ F  S PSSDRG=$O(^PS(50.7,"ADF",PSSDRG)) Q:(PSSDRG="")!PSSQ  D
+"RTN","PSSMRRI",56,0)
+ .S PSSDSG=""
+"RTN","PSSMRRI",57,0)
+ . F  S PSSDSG=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG)) Q:(PSSDSG="")!PSSQ  D
+"RTN","PSSMRRI",58,0)
+ .. S PSSOIEN=""
+"RTN","PSSMRRI",59,0)
+ .. F  S PSSOIEN=$O(^PS(50.7,"ADF",PSSDRG,PSSDSG,PSSOIEN)) Q:(PSSOIEN="")!PSSQ  D
+"RTN","PSSMRRI",60,0)
+ ... S PSSMRR=$G(^PS(50.7,PSSOIEN,4))
+"RTN","PSSMRRI",61,0)
+ ... I PSSVAL[+PSSMRR S PSSINACT=$P(^PS(50.7,PSSOIEN,0),U,4) D
+"RTN","PSSMRRI",62,0)
+ .... S PSSDSGF=$P(^PS(50.606,PSSDSG,0),U),PSSDDIEN="",PSSDRG=PSSDRG_" - "_PSSDSGF
+"RTN","PSSMRRI",63,0)
+ .... F  S PSSDDIEN=$O(^PS(50.7,"A50",PSSOIEN,PSSDDIEN)) Q:(PSSDDIEN="")!PSSQ  D
+"RTN","PSSMRRI",64,0)
+ ..... S:$G(PSSDDIEN)]"" PSSDDRG=$P(^PSDRUG(PSSDDIEN,0),"^"),PSSDSGI=$G(^PSDRUG(PSSDDIEN,"I")),PSSDSGI=$S(PSSDSGI="":" ",1:PSSDSGI)
+"RTN","PSSMRRI",65,0)
+ ..... D PRNLN
+"RTN","PSSMRRI",66,0)
+ .....Q
+"RTN","PSSMRRI",67,0)
+ ....Q
+"RTN","PSSMRRI",68,0)
+ ...Q
+"RTN","PSSMRRI",69,0)
+ ..Q
+"RTN","PSSMRRI",70,0)
+ .Q
+"RTN","PSSMRRI",71,0)
+ Q
+"RTN","PSSMRRI",72,0)
+ ;
+"RTN","PSSMRRI",73,0)
+PRNHDR ; Heading
+"RTN","PSSMRRI",74,0)
+ Q:PSSQ
+"RTN","PSSMRRI",75,0)
+ S PAGNO=PAGNO+1
+"RTN","PSSMRRI",76,0)
+ W @IOF
+"RTN","PSSMRRI",77,0)
+ W !,?57,$E($$FMTE^XLFDT($$NOW^XLFDT),1,18)
+"RTN","PSSMRRI",78,0)
+ W !,?19,"Orderable Items Report on Medications Requiring Removal (MRR) Prompt for Removal in BCMA Value",?125,"Page ",PAGNO
+"RTN","PSSMRRI",79,0)
+ W !,?5,"ORDERABLE ITEM                  OI INACTIVE   MRR  DISPENSE DRUG (DD)              DD INACTIVE"
+"RTN","PSSMRRI",80,0)
+ W !,?5,"NAME - DOSAGE FORM              DATE          VAL  NAME                            DATE "
+"RTN","PSSMRRI",81,0)
+ W !,?5,"------------------------------  ------------  ---  ------------------------------  -----------"
+"RTN","PSSMRRI",82,0)
+ Q
+"RTN","PSSMRRI",83,0)
+ ;
+"RTN","PSSMRRI",84,0)
+PRNLN ;Write line on report
+"RTN","PSSMRRI",85,0)
+ N PSSDRGP,PSSINACTP,PSSMRRP
+"RTN","PSSMRRI",86,0)
+ S:PSSDRGS=PSSDRG (PSSDRGP,PSSINACTP,PSSMRRP)=" "
+"RTN","PSSMRRI",87,0)
+ S:PSSDRGS'=PSSDRG (PSSDRGS,PSSDRGP)=PSSDRG,PSSINACTP=PSSINACT,PSSMRRP=" "_PSSMRR_" "
+"RTN","PSSMRRI",88,0)
+ W !,?5,$E(PSSDRGP_PSSSPCE,1,30)_"  "_$E($$FMTE^XLFDT(PSSINACTP,5)_PSSSPCE,1,12)_"  "_$E(PSSMRRP_PSSSPCE,1,3)_"  "_$E(PSSDDRG_PSSSPCE,1,30)_"  "_$E($$FMTE^XLFDT(PSSDSGI,5)_PSSSPCE,1,12)
+"RTN","PSSMRRI",89,0)
+ I $Y>(IOSL-1) D:$G(TERM) PAUSE D PRNHDR
+"RTN","PSSMRRI",90,0)
+ Q
+"RTN","PSSMRRI",91,0)
+ ;
+"RTN","PSSMRRI",92,0)
+PAUSE Q:'$G(TERM)
+"RTN","PSSMRRI",93,0)
+ N X
+"RTN","PSSMRRI",94,0)
+ U IO(0) W !!,"Press RETURN to continue, '^' to exit"
+"RTN","PSSMRRI",95,0)
+ R X:$G(DTIME) I (X="^")!('$T) S PSSQ=1 Q
+"RTN","PSSMRRI",96,0)
+ U IO
+"RTN","PSSMRRI",97,0)
+ Q
+"RTN","PSSMRRI",98,0)
+ ;
+"RTN","PSSNCPDP")
+0^2^B38616221^B27408503
+"RTN","PSSNCPDP",1,0)
+PSSNCPDP ;BIR/LE - Pharmacy Data Management DD Utility ;10/30/97 9:41
+"RTN","PSSNCPDP",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**127,191**;9/30/97;Build 40
+"RTN","PSSNCPDP",3,0)
+ ;
+"RTN","PSSNCPDP",4,0)
+ Q
+"RTN","PSSNCPDP",5,0)
+EN ;
+"RTN","PSSNCPDP",6,0)
+ N ZZX
+"RTN","PSSNCPDP",7,0)
+ I $G(PSSNQM3) K PSSNQM3 Q  ;killing PSSNQM3 so that a secondary ? entered would get full help text message
+"RTN","PSSNCPDP",8,0)
+ D HDR
+"RTN","PSSNCPDP",9,0)
+ D EACH:$P($G(^PSDRUG(DA,"EPH")),"^",2)="EA"
+"RTN","PSSNCPDP",10,0)
+ D GRAM:$P($G(^PSDRUG(DA,"EPH")),"^",2)="GM"
+"RTN","PSSNCPDP",11,0)
+ D MILL:$P($G(^PSDRUG(DA,"EPH")),"^",2)="ML"
+"RTN","PSSNCPDP",12,0)
+ W !
+"RTN","PSSNCPDP",13,0)
+ Q
+"RTN","PSSNCPDP",14,0)
+ ;
+"RTN","PSSNCPDP",15,0)
+ ;Help  text for NCPDP QUANTITY MULTIPLIER field (#83) of DRUG file (#50).
+"RTN","PSSNCPDP",16,0)
+HDR ;
+"RTN","PSSNCPDP",17,0)
+ W !?5,"The value in the NCPDP QUANTITY MULTIPLIER field is multiplied by the"
+"RTN","PSSNCPDP",18,0)
+ W !?5,"VISTA dispensed quantity of the drug for ePharmacy prescriptions,"
+"RTN","PSSNCPDP",19,0)
+ W !?5,"resulting in the NCPDP quantity that should be electronically billed"
+"RTN","PSSNCPDP",20,0)
+ W !?5,"to a Third Party Insurance Company."
+"RTN","PSSNCPDP",21,0)
+ Q
+"RTN","PSSNCPDP",22,0)
+ ;
+"RTN","PSSNCPDP",23,0)
+EACH ;Each help text
+"RTN","PSSNCPDP",24,0)
+ W !!?5,"Most products with a NCPDP DISPENSE UNIT of EA (EACH) should have the"
+"RTN","PSSNCPDP",25,0)
+ W !?5,"NCPDP QUANTITY MULTIPLIER field set to 1 (one) because the VA dispensed"
+"RTN","PSSNCPDP",26,0)
+ W !?5,"quantity is the same quantity that should be billed to the Third Party"
+"RTN","PSSNCPDP",27,0)
+ W !?5,"Insurance Companies. HOWEVER some exceptions require a value different"
+"RTN","PSSNCPDP",28,0)
+ W !?5,"than 1 (one). See examples below:"
+"RTN","PSSNCPDP",29,0)
+ W !!?10,"Drug: ORTHO TRI-CYCLEN TAB,28    Quantity Dispensed: 3 CYCLES"
+"RTN","PSSNCPDP",30,0)
+ W !!?5,"The Quantity Dispensed above indicates how many 28-day cycles are"
+"RTN","PSSNCPDP",31,0)
+ W !?5,"being dispensed (3). However, the Third Party Insurance Companies need"
+"RTN","PSSNCPDP",32,0)
+ W !?5,"to know how many TABLETS are being dispensed. Therefore, the correct"
+"RTN","PSSNCPDP",33,0)
+ W !?5,"value for the NCPDP QUANTITY MULTIPLIER would be 28. The correct quantity"
+"RTN","PSSNCPDP",34,0)
+ R !?5,"Enter to continue:  ",ZZX:60 W $C(13)
+"RTN","PSSNCPDP",35,0)
+ W ?5,"to submit electronically is 3 x 28 = 84 tablets."
+"RTN","PSSNCPDP",36,0)
+ W !!?5,"A similar case is METHYLPREDNISOLONE 4MG TAB DOSEPAK,21, which is"
+"RTN","PSSNCPDP",37,0)
+ W !?5,"dispensed in packages (PKG) and not in tablets. The NCPDP QUANTITY"
+"RTN","PSSNCPDP",38,0)
+ W !?5,"MULTIPLIER for this product is 21."
+"RTN","PSSNCPDP",39,0)
+ Q
+"RTN","PSSNCPDP",40,0)
+ ;
+"RTN","PSSNCPDP",41,0)
+GRAM ;Gram help text
+"RTN","PSSNCPDP",42,0)
+ W !!?5,"Most products with a NCPDP DISPENSE UNIT of GM (GRAMS) should have the"
+"RTN","PSSNCPDP",43,0)
+ W !?5,"NCPDP QUANTITY MULTIPLIER set to 1 (one). HOWEVER for products dispensed"
+"RTN","PSSNCPDP",44,0)
+ W !?5,"in units such as TUBE, the NCPDP QUANTITY MULTIPLIER field should contain"
+"RTN","PSSNCPDP",45,0)
+ W !?5,"the number of GRAMS contained in 1 TUBE. See examples below:"
+"RTN","PSSNCPDP",46,0)
+ W !!?10,"Drug:  GENTAMICIN SO4 0.3% OINT,OPH   Quantity Dispensed: 1 TUBE"
+"RTN","PSSNCPDP",47,0)
+ W !!?5,"The Quantity Dispensed above indicates how many tubes are being dispensed"
+"RTN","PSSNCPDP",48,0)
+ W !?5,"(1). However, the Third Party Insurance Companies need to know how many"
+"RTN","PSSNCPDP",49,0)
+ W !?5,"GRAMS are being dispensed. The correct value for the NCPDP QUANTITY"
+"RTN","PSSNCPDP",50,0)
+ R !?5,"Enter to continue:  ",ZZX:60 W $C(13)
+"RTN","PSSNCPDP",51,0)
+ W ?5,"MULTIPLIER field for this product is 3.5, because there are 3.5 grams in"
+"RTN","PSSNCPDP",52,0)
+ W !?5,"each tube. The correct quantity to submit electronically will be"
+"RTN","PSSNCPDP",53,0)
+ W !?5,"3.5 x 1 = 3.5 grams."
+"RTN","PSSNCPDP",54,0)
+ W !!?5,"Another example is IPRATROPIUM BR 17MCG/SPRAY AEROSOL,INHL., which is"
+"RTN","PSSNCPDP",55,0)
+ W !?5,"dispensed by the number of inhalers used to fill the prescription. Each"
+"RTN","PSSNCPDP",56,0)
+ W !?5,"inhaler contains 12.9 grams of IPRATROPIUM, so the NCPDP QUANTITY"
+"RTN","PSSNCPDP",57,0)
+ W !?5,"MULTIPLIER for this product will be 12.9."
+"RTN","PSSNCPDP",58,0)
+ Q
+"RTN","PSSNCPDP",59,0)
+ ;
+"RTN","PSSNCPDP",60,0)
+MILL ;Milliliter help text
+"RTN","PSSNCPDP",61,0)
+ W !!?5,"Most products with a NCPDP DISPENSE UNIT of ML (Milliliters) should have"
+"RTN","PSSNCPDP",62,0)
+ W !?5,"this field set to 1 (one). HOWEVER for some drugs that are dispensed in"
+"RTN","PSSNCPDP",63,0)
+ W !?5,"units such as VIAL or BOTTLE, the NCPDP QUANTITY MULTIPLIER field should"
+"RTN","PSSNCPDP",64,0)
+ W !?5,"contain the number of MILILLITERS contained in 1 VIAL or BOTTLE for this"
+"RTN","PSSNCPDP",65,0)
+ W !?5,"drug. See examples below:"
+"RTN","PSSNCPDP",66,0)
+ W !!?10,"Drug:   INSULIN,NPH,HUMAN 100UNT/ML INJ   Quantity Dispensed  3 VIALS"
+"RTN","PSSNCPDP",67,0)
+ W !!?5,"The Quantity Dispensed above indicates how many vials are being dispensed"
+"RTN","PSSNCPDP",68,0)
+ W !?5,"(3). However, the Third Party Insurance Companies need to know how many"
+"RTN","PSSNCPDP",69,0)
+ W !?5,"milliliters are being dispensed. The correct value for the NCPDP QUANTITY"
+"RTN","PSSNCPDP",70,0)
+ W !?5,"MULTIPLIER field for this product is 10, because there are 10 milliliters"
+"RTN","PSSNCPDP",71,0)
+ W !?5,"in each vial. The correct quantity to submit electronically will be "
+"RTN","PSSNCPDP",72,0)
+ W !?5,"3 x 10 = 30 milliliters."
+"RTN","PSSNCPDP",73,0)
+ R !?5,"Enter to continue:  ",ZZX:60 W $C(13) W "                              "
+"RTN","PSSNCPDP",74,0)
+ W !?5,"Another example is DARBEPOETIN ALFA,RECOMBINANT 150MCG/0.3ML SYR INJ,"
+"RTN","PSSNCPDP",75,0)
+ W !?5,"SURECLICK which is dispensed by the number of syringes used for the "
+"RTN","PSSNCPDP",76,0)
+ W !?5,"prescription. Each syringe contains 0.3 ML of DARBEPOETIN, so the NCPDP"
+"RTN","PSSNCPDP",77,0)
+ W !?5,"QUANTITY MULTIPLIER for this product will be 0.3. Notice in this case the"
+"RTN","PSSNCPDP",78,0)
+ W !?5,"NCPDP QUANTITY MULTIPLIER is less than 1."
+"RTN","PSSNCPDP",79,0)
+ W !
+"RTN","PSSNCPDP",80,0)
+ Q
+"RTN","PSSNCPDP",81,0)
+ ;
+"RTN","PSSNCPDP",82,0)
+ ;*191
+"RTN","PSSNCPDP",83,0)
+12 ;CHECK BCMA Prompt for removal flag
+"RTN","PSSNCPDP",84,0)
+ I '$G(PSDOSE) N PSDOSE S PSDOSE=$P(^PS(50.7,+DA,0),"^",2)
+"RTN","PSSNCPDP",85,0)
+ I X<1,$G(PSDOSE),^PS(50.606,PSDOSE,0)'="PATCH" Q
+"RTN","PSSNCPDP",86,0)
+ I X>0,$G(PSDOSE),^PS(50.606,PSDOSE,0)'="PATCH" D
+"RTN","PSSNCPDP",87,0)
+ .N VAL S VAL=X
+"RTN","PSSNCPDP",88,0)
+ .D EN^DDIOL("The dosage form for this orderable item is not PATCH.","","!!")
+"RTN","PSSNCPDP",89,0)
+ .K DIR,DIRUT,DUOUT,DTOUT S DIR(0)="Y",DIR("B")="N"
+"RTN","PSSNCPDP",90,0)
+ .S DIR("A")="Are you sure you want to designate this medication as requiring removal"
+"RTN","PSSNCPDP",91,0)
+ .S DIR("?")="Enter Y for Yes or N for No." D ^DIR K DIR
+"RTN","PSSNCPDP",92,0)
+ .I 'Y S X=$P($G(^PS(50.7,DA,4)),"^") D EN^DDIOL("No Changes were recorded.") Q
+"RTN","PSSNCPDP",93,0)
+ .S:Y X=VAL
+"RTN","PSSNCPDP",94,0)
+ Q
+"RTN","PSSNCPDP",95,0)
+ ;
+"RTN","PSSNCPDP",96,0)
+D12 ;
+"RTN","PSSNCPDP",97,0)
+ D EN^DDIOL("ENTRY OF 1, 2 OR 3 IS REQUIRED FOR DOSAGE FORM PATCH.")
+"RTN","PSSNCPDP",98,0)
+ D EN^DDIOL("Enter the value that applies to this orderable item.")
+"RTN","PSSNCPDP",99,0)
+ D EN^DDIOL("Choose from:","","!,?5")
+"RTN","PSSNCPDP",100,0)
+ D EN^DDIOL("1        Removal at Next Administration","","!,?7")
+"RTN","PSSNCPDP",101,0)
+ D EN^DDIOL("2        Removal Period Optional Prior to Next Administration","","!,?7")
+"RTN","PSSNCPDP",102,0)
+ D EN^DDIOL("3        Removal Period Required Prior to Next Administration","","!,?7")
+"RTN","PSSNCPDP",103,0)
+ D EN^DDIOL(" ","","!")
+"RTN","PSSNCPDP",104,0)
+ Q
+"RTN","PSSNCPDP",105,0)
+ ;
+"RTN","PSSNCPDP",106,0)
+D13 ;
+"RTN","PSSNCPDP",107,0)
+ N PSDOSE S PSDOSE=$P(^PS(50.7,+DA,0),"^",2)
+"RTN","PSSNCPDP",108,0)
+ I $G(PSDOSE),^PS(50.606,PSDOSE,0)="PATCH" D EN^DDIOL("ENTRY OF 1, 2 OR 3 IS REQUIRED FOR DOSAGE FORM PATCH.")
+"RTN","PSSNCPDP",109,0)
+ D EN^DDIOL("Enter the value that applies to this orderable item.")
+"RTN","PSSNCPDP",110,0)
+ Q
+"RTN","PSSNCPDP",111,0)
+ ;
+"RTN","PSSP191A")
+0^6^B32545924^n/a
+"RTN","PSSP191A",1,0)
+PSSP191A ;BIRMINGHAM/GN/DRP-Diagnostic Report only, does not update ; 9/25/15 2:36pm
+"RTN","PSSP191A",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**191**;9/30/97;Build 40
+"RTN","PSSP191A",3,0)
+ Q
+"RTN","PSSP191A",4,0)
+ ;
+"RTN","PSSP191A",5,0)
+QUE ; Que the job in the background
+"RTN","PSSP191A",6,0)
+ N NAMSP,PATCH,JOBN,ZTSK,ZTRTN,ZTIO,ZTDTH,ZTDESC,Y,ZTQUEUED,ZTREQ,ZTSAVE,CNT,SBJM
+"RTN","PSSP191A",7,0)
+ S NAMSP="PSSP191A"
+"RTN","PSSP191A",8,0)
+ S JOBN="PSS*1*191 Post Install Diagnostic Report"
+"RTN","PSSP191A",9,0)
+ S PATCH="PSS*1*191"
+"RTN","PSSP191A",10,0)
+ S Y=$$NOW^XLFDT S ZTDTH=$$FMTH^XLFDT(Y)
+"RTN","PSSP191A",11,0)
+ ;
+"RTN","PSSP191A",12,0)
+ D BMES^XPDUTL("=============================================================")
+"RTN","PSSP191A",13,0)
+ D MES^XPDUTL("Queuing background job for "_JOBN_"...")
+"RTN","PSSP191A",14,0)
+ D MES^XPDUTL("Start time: "_$$HTE^XLFDT(ZTDTH))
+"RTN","PSSP191A",15,0)
+ D MES^XPDUTL("A MailMan message will be sent to the installer upon Post")
+"RTN","PSSP191A",16,0)
+ D MES^XPDUTL("Install Completion.  This may take an hour.")
+"RTN","PSSP191A",17,0)
+ D MES^XPDUTL("==============================================================")
+"RTN","PSSP191A",18,0)
+ ;
+"RTN","PSSP191A",19,0)
+ S ZTRTN="EN^"_NAMSP,ZTIO=""
+"RTN","PSSP191A",20,0)
+ S (SBJM,ZTDESC)="Background job for "_JOBN
+"RTN","PSSP191A",21,0)
+ S ZTSAVE("JOBN")="",ZTSAVE("ZTDTH")="",ZTSAVE("DUZ")="",ZTSAVE("SBJM")=""
+"RTN","PSSP191A",22,0)
+ D ^%ZTLOAD
+"RTN","PSSP191A",23,0)
+ D:$D(ZTSK)
+"RTN","PSSP191A",24,0)
+ . D MES^XPDUTL("*** Task #"_ZTSK_" Queued! ***")
+"RTN","PSSP191A",25,0)
+ . D BMES^XPDUTL("")
+"RTN","PSSP191A",26,0)
+ . S ZTSAVE("ZTSK")=""
+"RTN","PSSP191A",27,0)
+ D BMES^XPDUTL("")
+"RTN","PSSP191A",28,0)
+ K XPDQUES
+"RTN","PSSP191A",29,0)
+ Q
+"RTN","PSSP191A",30,0)
+ ;
+"RTN","PSSP191A",31,0)
+EN(P1) ;Check for MRR meds missing the 2.1 node which is new and would be
+"RTN","PSSP191A",32,0)
+ ;there if an order was created and finished after patch PSJ*3*315
+"RTN","PSSP191A",33,0)
+ ; Input param: P1 = default is null and checks for 2.1 node (used for testing)
+"RTN","PSSP191A",34,0)
+ ;                  = if pass in a value, then it will not check 2.1
+"RTN","PSSP191A",35,0)
+ ;
+"RTN","PSSP191A",36,0)
+ N PSSDFN,PSSMRRAR,PSSORD,PSSDDOI,PSSOI,PSSDUZ,PSSLN,PSSMRRFL,PSSSPCE
+"RTN","PSSP191A",37,0)
+ N CLNODE,DDTXT,MRR,PAGNO,QQ,YY,STS,ID,LOC,STP,ORDTOT,ORDSDT
+"RTN","PSSP191A",38,0)
+ N XMDUZ,XMSUB,XMTEXT,XMY,X,DIFROM
+"RTN","PSSP191A",39,0)
+ S PSSDUZ=DUZ,ORDSDT=$$NOW^XLFDT
+"RTN","PSSP191A",40,0)
+ K ^TMP($J,"PSSP191A"),^XTMP("PSSP191A")
+"RTN","PSSP191A",41,0)
+ ;build array of OI's that are mrr and their flag value
+"RTN","PSSP191A",42,0)
+ F QQ=0:0 S QQ=$O(^PSDRUG("ASP",QQ)) Q:QQ=""  D
+"RTN","PSSP191A",43,0)
+ . F YY=0:0 S YY=$O(^PSDRUG("ASP",QQ,YY)) Q:'YY  D
+"RTN","PSSP191A",44,0)
+ .. S PSSOI=$P(^PSDRUG(YY,2),U)
+"RTN","PSSP191A",45,0)
+ .. S PSSMRRFL=$P($G(^PS(50.7,PSSOI,4)),U,1)
+"RTN","PSSP191A",46,0)
+ .. S:PSSMRRFL PSSMRRAR(PSSOI)=PSSMRRFL
+"RTN","PSSP191A",47,0)
+ ;
+"RTN","PSSP191A",48,0)
+ S P1=$G(P1)   ;define P1 to null if not passed
+"RTN","PSSP191A",49,0)
+ S PAGNO=0,ORDTOT=0
+"RTN","PSSP191A",50,0)
+ ; Use Ord Stop Date XREF to look for current orders
+"RTN","PSSP191A",51,0)
+ F  S ORDSDT=$O(^PS(55,"AUD",ORDSDT)) Q:ORDSDT=""  D
+"RTN","PSSP191A",52,0)
+ . S PSSDFN=0
+"RTN","PSSP191A",53,0)
+ . F  S PSSDFN=$O(^PS(55,"AUD",ORDSDT,PSSDFN)) Q:PSSDFN=""  D
+"RTN","PSSP191A",54,0)
+ .. S PSSORD=0
+"RTN","PSSP191A",55,0)
+ .. F  S PSSORD=$O(^PS(55,"AUD",ORDSDT,PSSDFN,PSSORD)) Q:PSSORD=""  D
+"RTN","PSSP191A",56,0)
+ ... S STS=$P($G(^PS(55,PSSDFN,5,PSSORD,0)),U,9)
+"RTN","PSSP191A",57,0)
+ ... S CLNODE=$G(^PS(55,PSSDFN,5,PSSORD,8))
+"RTN","PSSP191A",58,0)
+ ... ;non Active type order, quit dont include
+"RTN","PSSP191A",59,0)
+ ... I (STS="D")!(STS="E")!(STS="DE")!(STS="DR") Q
+"RTN","PSSP191A",60,0)
+ ... S ID=$S('$D(^DPT(PSSDFN,0)):"NONE",1:$E($P($G(^DPT(PSSDFN,0)),U,1),1)_$E($P($G(^DPT(PSSDFN,0)),U,9),6,9))
+"RTN","PSSP191A",61,0)
+ ... D CHKORD        ;check and then print line on report
+"RTN","PSSP191A",62,0)
+ ...Q
+"RTN","PSSP191A",63,0)
+ ..Q
+"RTN","PSSP191A",64,0)
+ .Q
+"RTN","PSSP191A",65,0)
+ D MAKERPT,SENDRPT
+"RTN","PSSP191A",66,0)
+ Q
+"RTN","PSSP191A",67,0)
+ ;
+"RTN","PSSP191A",68,0)
+CHKORD ;check if Order qualifies and then print on report
+"RTN","PSSP191A",69,0)
+ ; return mrrfl which is positive or true  (1,2,3)
+"RTN","PSSP191A",70,0)
+ F QQ=0:0 S QQ=$O(^PS(55,PSSDFN,5,PSSORD,1,QQ)) Q:'QQ  D
+"RTN","PSSP191A",71,0)
+ . S PSSDDOI=+$P($G(^PS(55,PSSDFN,5,PSSORD,.2)),U)
+"RTN","PSSP191A",72,0)
+ . S MRR=$G(PSSMRRAR(PSSDDOI))
+"RTN","PSSP191A",73,0)
+ . Q:'MRR      ;don't report not a MRR med
+"RTN","PSSP191A",74,0)
+ . ;   don't report if has a 2.1 node, unless P1 overrides
+"RTN","PSSP191A",75,0)
+ . I $G(P1)="",$D(^PS(55,PSSDFN,5,PSSORD,2.1)) Q
+"RTN","PSSP191A",76,0)
+ . S LOC=$S($$CLINIC(CLNODE):$P(^SC(+^PS(55,PSSDFN,5,PSSORD,8),0),U,1),$G(^DPT(PSSDFN,.1))]"":^DPT(PSSDFN,.1),1:"UNKNOWN")
+"RTN","PSSP191A",77,0)
+ . S DDTXT=$$GET1^DIQ(55.07,QQ_","_PSSORD_","_PSSDFN,"DISPENSE DRUG")
+"RTN","PSSP191A",78,0)
+ . S ^XTMP("PSSP191A",$J,LOC,ID)=DDTXT_U_STS_U_MRR
+"RTN","PSSP191A",79,0)
+ .Q
+"RTN","PSSP191A",80,0)
+ Q
+"RTN","PSSP191A",81,0)
+MAKERPT ;
+"RTN","PSSP191A",82,0)
+ S ^TMP($J,"PSSP191A")=""
+"RTN","PSSP191A",83,0)
+ S ^TMP($J,"PSSP191A",0)=" "
+"RTN","PSSP191A",84,0)
+ S ^TMP($J,"PSSP191A",1)=" "
+"RTN","PSSP191A",85,0)
+ S ^TMP($J,"PSSP191A",2)="Active Orders for Medications Requiring Removal (MRR)."
+"RTN","PSSP191A",86,0)
+ S ^TMP($J,"PSSP191A",3)="Prior to Installation of PSJ*5*315 these orders should be "
+"RTN","PSSP191A",87,0)
+ S ^TMP($J,"PSSP191A",4)="reviewed for planning purposes, but no action taken."
+"RTN","PSSP191A",88,0)
+ S ^TMP($J,"PSSP191A",5)=" Once PSJ*5*315 is installed they will need to be Discontinued"
+"RTN","PSSP191A",89,0)
+ S ^TMP($J,"PSSP191A",6)=" and re-entered after coordinating with your Pharmacy ADPAC."
+"RTN","PSSP191A",90,0)
+ S ^TMP($J,"PSSP191A",7)=" This report can be recalled from the PSS MGR Menu."
+"RTN","PSSP191A",91,0)
+ S ^TMP($J,"PSSP191A",8)=" "
+"RTN","PSSP191A",92,0)
+ S ^TMP($J,"PSSP191A",9)="             Sorted by Patient within Ward"
+"RTN","PSSP191A",93,0)
+ S ^TMP($J,"PSSP191A",10)="Pat    Patient               Orderable             Ordr  MRR"
+"RTN","PSSP191A",94,0)
+ S ^TMP($J,"PSSP191A",11)="ID     Loc                   Item Name             Sts   Val"
+"RTN","PSSP191A",95,0)
+ S ^TMP($J,"PSSP191A",12)="-----  --------------------  --------------------  ----  ---"
+"RTN","PSSP191A",96,0)
+ S ^TMP($J,"PSSP191A",13)=" "
+"RTN","PSSP191A",97,0)
+ S PSSLN=14,$P(PSSSPCE," ",20)=""
+"RTN","PSSP191A",98,0)
+ N STR S LOC=""
+"RTN","PSSP191A",99,0)
+ F  S LOC=$O(^XTMP("PSSP191A",$J,LOC)) Q:LOC=""  D
+"RTN","PSSP191A",100,0)
+ . S ID=""
+"RTN","PSSP191A",101,0)
+ . F  S ID=$O(^XTMP("PSSP191A",$J,LOC,ID)) Q:ID=""  D
+"RTN","PSSP191A",102,0)
+ .. S STR=^XTMP("PSSP191A",$J,LOC,ID),DDTXT=$P(STR,U),STS=$P(STR,U,2),MRR=$P(STR,U,3)
+"RTN","PSSP191A",103,0)
+ .. S ^TMP($J,"PSSP191A",PSSLN)=$E(ID_PSSSPCE,1,5)_"  "_$E($$FMTE^XLFDT(LOC,5)_PSSSPCE,1,20)_"  "_$E(DDTXT_PSSSPCE,1,20)_"  "_$E(STS_PSSSPCE,1,4)_"  "_$E(MRR_PSSSPCE,1,3)
+"RTN","PSSP191A",104,0)
+ .. S ORDTOT=ORDTOT+1,PSSLN=PSSLN+1
+"RTN","PSSP191A",105,0)
+ ..Q
+"RTN","PSSP191A",106,0)
+ .Q
+"RTN","PSSP191A",107,0)
+ S PSSLN=PSSLN+1,^TMP($J,"PSSP191A",PSSLN)="Total Orders found: "_ORDTOT
+"RTN","PSSP191A",108,0)
+ Q
+"RTN","PSSP191A",109,0)
+ ;
+"RTN","PSSP191A",110,0)
+CLINIC(CL) ;Is this a Clinic order that would show on the VDL in CO mode also?
+"RTN","PSSP191A",111,0)
+ Q:'($P(CL,"^",2)?7N!($P(CL,"^",2)?7N1".".N)) 0  ;no appt date, IM ord
+"RTN","PSSP191A",112,0)
+ Q:'$D(^PS(53.46,"B",+CL)) 0                     ;no PTR to 44, IM ord
+"RTN","PSSP191A",113,0)
+ N A S A=$O(^PS(53.46,"B",+CL,"")) Q:'A 0        ;no 53.46 ien, IM ord
+"RTN","PSSP191A",114,0)
+ Q $P(^PS(53.46,A,0),"^",4)                      ;Send to BCMA? flag
+"RTN","PSSP191A",115,0)
+ ;
+"RTN","PSSP191A",116,0)
+SENDRPT ;Send report to user
+"RTN","PSSP191A",117,0)
+ S XMY(PSSDUZ)=""
+"RTN","PSSP191A",118,0)
+ S X="" F  S X=$O(^XUSEC("PSJI MGR",X)) Q:'X  S XMY(X)=""
+"RTN","PSSP191A",119,0)
+ S X="" F  S X=$O(^XUSEC("PSJU MGR",X)) Q:'X  S XMY(X)=""
+"RTN","PSSP191A",120,0)
+ S X="" F  S X=$O(^XUSEC("PSJU RPH",X)) Q:'X  S XMY(X)=""
+"RTN","PSSP191A",121,0)
+ S X="" F  S X=$O(^XUSEC("PSJ RPHARM",X)) Q:'X  S XMY(X)=""
+"RTN","PSSP191A",122,0)
+ S XMSUB="PHARMACY ORDERABLE ITEM MANAGEMENT",XMTEXT="^TMP("_$J_","_"""PSSP191A"""_",",XMDUZ=.5,XMY(PSSDUZ)=""
+"RTN","PSSP191A",123,0)
+ D ^XMD
+"RTN","PSSP191A",124,0)
+ K ^TMP($J,"PSSP191A"),^XTMP("PSSP191A")
+"RTN","PSSP191A",125,0)
+ Q
+"RTN","PSSP191A",126,0)
+ ;
+"RTN","PSSP191A",127,0)
+TST ;
+"RTN","PSSP191A",128,0)
+ N P1 S P1=1
+"RTN","PSSP191A",129,0)
+ D EN(P1)
+"RTN","PSSP191A",130,0)
+ Q
+"RTN","PSSP191A",131,0)
+ ;
+"RTN","PSSPOIM1")
+0^3^B61410040^B61796505
+"RTN","PSSPOIM1",1,0)
+PSSPOIM1 ;BIR/RTR,WRT-Manual create of Orderable Item continued ; 4/28/09 4:36pm
+"RTN","PSSPOIM1",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**29,38,47,141,153,159,166,191**;9/30/97;Build 40
+"RTN","PSSPOIM1",3,0)
+ ;
+"RTN","PSSPOIM1",4,0)
+CHK S PSNO=0 I $G(PSMAN) W !!,"Matching ",PSNAME,!,"   to",!,SPHOLD," ",$P($G(^PS(50.606,+DOSEPTR,0)),"^"),!
+"RTN","PSSPOIM1",5,0)
+ I '$G(PSMAN) S PSMC=$P($G(^PS(50.7,PSSP,0)),"^") W !!,"Matching ",PSNAME,!,"   to",!,PSMC," ",$P($G(^PS(50.606,+$P(^PS(50.7,PSSP,0),"^",2),0)),"^"),!
+"RTN","PSSPOIM1",6,0)
+ K DIR S DIR(0)="Y",DIR("B")="YES",DIR("A")="Is this OK" D ^DIR
+"RTN","PSSPOIM1",7,0)
+ K PSMAN S:Y=0 PSNO=1 I Y'=1,'PSNO S PSOUT=1
+"RTN","PSSPOIM1",8,0)
+ Q
+"RTN","PSSPOIM1",9,0)
+END K ^TMP($J,"PSSOO"),PSSSSS,PSCREATE,^TMP("PSSLOOP",$J)
+"RTN","PSSPOIM1",10,0)
+ K AAA,ANS,APLU,COMM,DA,DIC,DIE,DOSEFORM,DOSEFV,DOSEPTR,DR,FFF,MATCH,NEWSP,NODE,NOFLAG,OTH,POINT,PSCNT,PSIEN,PSMAN,PSMC,PSNAME,PSNO,PSSP,PSND,PSOUT,SPHOLD,SPR,TMPTR,TT,VAGEN,X,Y,ZZ,PSOOOUT,PSXDATE,PSXADATE,PSXSDATE,AAAAA,BBBBB,ZXX,PSXDDATE Q
+"RTN","PSSPOIM1",11,0)
+MESS W !!,"This option enables you to match Dispense Drugs to an entry in the Pharmacy",!,"Orderable Item file, or create a new Pharmacy Orderable Item entry for a",!,"Dispense Drug.",! Q
+"RTN","PSSPOIM1",12,0)
+MESSZ S ^TMP("PSSLOOP",$J,DUZ)="" W !!,"This option is for matching IV Additives, IV Solutions, and all Dispense Drugs",!,"marked with an I, O, or U in the Application Packages' Use field to an",!,"Orderable Item."
+"RTN","PSSPOIM1",13,0)
+ W !,"You will need to keep accessing this option until all drugs are matched.",!,"A check will be done every time this option is exited to see if the matching",!,"process is complete.",!!
+"RTN","PSSPOIM1",14,0)
+ K DIR S DIR(0)="E" D ^DIR K DIR I X["^"!($D(DTOUT)) S PSOUT=1
+"RTN","PSSPOIM1",15,0)
+ Q
+"RTN","PSSPOIM1",16,0)
+CHECK W !!!,"Checking Drug files, please wait..."
+"RTN","PSSPOIM1",17,0)
+ S X1=DT,X2=-365 D C^%DTC S PSZXDATE=X,DONEFLAG=1
+"RTN","PSSPOIM1",18,0)
+ F FFFF=0:0 S FFFF=$O(^PSDRUG(FFFF)) Q:'FFFF!('DONEFLAG)  S QQNM=$P($G(^PSDRUG(FFFF,0)),"^") I QQNM'="",$D(^PSDRUG("B",QQNM)) D  I ZZG I USAGE["O"!(USAGE["I")!(USAGE["U") I '$P($G(^PSDRUG(FFFF,2)),"^") S DONEFLAG=0
+"RTN","PSSPOIM1",19,0)
+ .S USAGE=$P($G(^PSDRUG(FFFF,2)),"^",3)
+"RTN","PSSPOIM1",20,0)
+ .S ZZG=1 S PSZZDATE=+$P($G(^PSDRUG(FFFF,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",21,0)
+ I DONEFLAG=1 D
+"RTN","PSSPOIM1",22,0)
+ .F QQQ=0:0 S QQQ=$O(^PS(52.6,QQQ)) Q:'QQQ!('DONEFLAG)  S PSZNAME=$P($G(^PS(52.6,QQQ,0)),"^") I PSZNAME'="",$D(^PS(52.6,"B",PSZNAME)),$P($G(^PS(52.6,QQQ,0)),"^",2),'$P($G(^(0)),"^",11) D  I ZZG S DONEFLAG=0
+"RTN","PSSPOIM1",23,0)
+ ..S ZZG=1 S PSZZDATE=+$P($G(^PS(52.6,QQQ,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",24,0)
+ .I DONEFLAG F QQQ=0:0 S QQQ=$O(^PS(52.7,QQQ)) Q:'QQQ!('DONEFLAG)  S PSZNAME=$P($G(^PS(52.7,QQQ,0)),"^") I PSZNAME'="",$D(^PS(52.7,"B",PSZNAME)),$P($G(^PS(52.7,QQQ,0)),"^",2),'$P($G(^(0)),"^",11) D  I ZZG S DONEFLAG=0
+"RTN","PSSPOIM1",25,0)
+ ..S ZZG=1 S PSZZDATE=+$P($G(^PS(52.7,QQQ,"I")),"^") I PSZZDATE,PSZZDATE<PSZXDATE S ZZG=0
+"RTN","PSSPOIM1",26,0)
+MAIL I DONEFLAG W !!!,?3,"You are finished matching to the Orderable Item File!",!!,"A clean-up job is being queued now, and when it is finished, you will"
+"RTN","PSSPOIM1",27,0)
+ I  W !,"receive a mail message informing you of its completion.",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSPOIM1",28,0)
+ I $G(DONEFLAG) S PSSOMAIL=1,PSOUDUZ=DUZ S ZTRTN="DATE^PSSPOIM1",ZTIO="",ZTDTH=$H,ZTDESC="ORDERABLE ITEM CLEAN UP",ZTSAVE("DUZ")="",ZTSAVE("PSSOMAIL")="" D ^%ZTLOAD
+"RTN","PSSPOIM1",29,0)
+ I 'DONEFLAG W $C(7),$C(7),!!?5,"There are still Drugs not matched, you will need to come back",!?5,"and continue matching Drugs!",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSPOIM1",30,0)
+ K DONEFLAG,QQQ,QQNM,PSZZDATE,PSZXDATE,ZZG,USAGE,FFFF,PSZNAME Q
+"RTN","PSSPOIM1",31,0)
+OTHER W @IOF W !,"There are other Dispense Drugs with the same VA Generic Name and same Dose",!,"Form already matched to orderable items. Choose a number to match, or enter",!,"'^' to enter a new one.",!!?6,"Disp. drug -> ",PSNAME,! Q
+"RTN","PSSPOIM1",32,0)
+EN(PSVAR) ;
+"RTN","PSSPOIM1",33,0)
+ W !?3,"Now editing Orderable Item:",!?3,$P(^PS(50.7,PSVAR,0),"^"),"   ",$P($G(^PS(50.606,+$P(^(0),"^",2),0)),"^")
+"RTN","PSSPOIM1",34,0)
+ W ! K DIE N MFLG S PSBEFORE=$P(^PS(50.7,PSVAR,0),"^",4),PSBEFORE1=+$P(^PS(50.7,PSVAR,0),"^",2),PSAFTER=0,PSINORDE=""
+"RTN","PSSPOIM1",35,0)
+ S DIE="^PS(50.7,",DA=PSVAR,DR="5;6" D ^DIE K DIE I $D(DTOUT)!($D(Y)>10) Q
+"RTN","PSSPOIM1",36,0)
+ K DIR S DIR(0)="DO",DIR("A")="INACTIVE DATE" D  D ^DIR K DIR I $G(Y)["^"!($D(DTOUT))!($G(DUOUT)) Q
+"RTN","PSSPOIM1",37,0)
+ .I $G(PSBEFORE) S Y=PSBEFORE D DD^%DT S DIR("B")=$G(Y)
+"RTN","PSSPOIM1",38,0)
+ I $G(PSBEFORE),'$G(Y) W ?40,"Inactive Date deleted!"
+"RTN","PSSPOIM1",39,0)
+ S PSSDTENT=$G(Y) I $G(Y) D DD^%DT W ?40,$G(Y)
+"RTN","PSSPOIM1",40,0)
+ S PSSOTH=$P($G(^PS(59.7,1,40.2)),"^"),DIE="^PS(50.7,"
+"RTN","PSSPOIM1",41,0)
+ S DR=".05;@1;D SETF^PSSPOIMO;.06;D DFR^PSSPOIMO(PSBEFORE1);10//YES;I X=""Y"" S Y=""@2"";S:$G(DUOUT) Y=""@3"";" D
+"RTN","PSSPOIM1",42,0)
+ .S DR=DR_"D PDCHK^PSSPOIMO S:PSSFG Y=""@1"";S:$G(DUOUT) Y=""@3"";@2;K DIE(""NO^""),DIRUT;D MRSEL^PSSPOIMO;.07;.08;1;12//0;7;S:'$G(PSSOTH) Y=""@3"";7.1;@3" ;*191
+"RTN","PSSPOIM1",43,0)
+ D ^DIE S PSAFTER=$P(^PS(50.7,PSVAR,0),"^",4) K DIE,PSSOTH,^TMP("PSJMR",$J),^TMP("PSSDMR",$J) I $D(PSSOU),'$G(PSSOU) D MRSEL^PSSPOIMO K ^TMP("PSJMR",$J)
+"RTN","PSSPOIM1",44,0)
+ S:PSBEFORE&('PSAFTER) PSINORDE="D" S:PSAFTER PSINORDE="I"
+"RTN","PSSPOIM1",45,0)
+ I PSINORDE'="" D REST^PSSPOIDT(PSVAR)
+"RTN","PSSPOIM1",46,0)
+ K PSBEFORE,PSBEFORE1,PSAFTER,PSINORDE
+"RTN","PSSPOIM1",47,0)
+IMMUN ;PSS*1*141 FOR 'IMMUNIZATIONS DOCUMENTATION BY BCMA'
+"RTN","PSSPOIM1",48,0)
+ I $O(^PSDRUG("AOC",PSVAR,"IM000"))'["IM" G SYN ;ASK WHEN APPROPRIATE
+"RTN","PSSPOIM1",49,0)
+ W ! S DIE="^PS(50.7,",DA=PSVAR,DR=9 D ^DIE K DIE
+"RTN","PSSPOIM1",50,0)
+SYN I $G(Y)["^"!($G(DIRUT))!$D(DTOUT)!($D(Y)>10) G FINS
+"RTN","PSSPOIM1",51,0)
+ W ! K DIC S:'$D(^PS(50.7,PSVAR,2,0)) ^PS(50.7,PSVAR,2,0)="^50.72^0^0" S DIC="^PS(50.7,"_PSVAR_",2,",DA(1)=PSVAR,DIC(0)="QEAMZL",DIC("A")="Select SYNONYM: ",DLAYGO=50.72 D ^DIC K DIC
+"RTN","PSSPOIM1",52,0)
+ I Y<0!($D(DTOUT))!($D(DUOUT)) K:'$O(^PS(50.7,PSVAR,2,0)) ^PS(50.7,PSVAR,2,0) G FIN
+"RTN","PSSPOIM1",53,0)
+ W ! S DA=+Y,DIE="^PS(50.7,"_PSVAR_",2,",DA(1)=PSVAR,DR=.01 D ^DIE K DIE G SYN
+"RTN","PSSPOIM1",54,0)
+FIN D EN^PSSPOIDT(PSVAR) I $G(PSVAR1) D EN2^PSSHL1(PSVAR,"MAD") G FINS
+"RTN","PSSPOIM1",55,0)
+ D EN2^PSSHL1(PSVAR,"MUP")
+"RTN","PSSPOIM1",56,0)
+FINS K PSVAR,PSVAR1 Q
+"RTN","PSSPOIM1",57,0)
+ ;
+"RTN","PSSPOIM1",58,0)
+DATE ;
+"RTN","PSSPOIM1",59,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(50.7,ZZZ)) Q:'ZZZ  S PSOTYPE=$P($G(^PS(50.7,ZZZ,0)),"^",3) D
+"RTN","PSSPOIM1",60,0)
+ .I PSOTYPE,'$D(^PS(52.6,"AOI",ZZZ)),'$D(^PS(52.7,"AOI",ZZZ)),'$P($G(^PS(50.7,ZZZ,0)),"^",4) K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE Q
+"RTN","PSSPOIM1",61,0)
+ .Q:PSOTYPE
+"RTN","PSSPOIM1",62,0)
+ .D SUPP
+"RTN","PSSPOIM1",63,0)
+ .I '$D(^PSDRUG("ASP",ZZZ)),'$P($G(^PS(50.7,ZZZ,0)),"^",4) K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE Q
+"RTN","PSSPOIM1",64,0)
+ .D:'$P($G(^PS(50.7,ZZZ,0)),"^",4)
+"RTN","PSSPOIM1",65,0)
+ ..S PSDFLAG=0 F WW=0:0 S WW=$O(^PSDRUG("ASP",ZZZ,WW)) Q:'WW!(PSDFLAG)  S PSAPPL=$P($G(^PSDRUG(WW,2)),"^",3) I PSAPPL["I"!(PSAPPL["O")!(PSAPPL["U") S PSDFLAG=1
+"RTN","PSSPOIM1",66,0)
+ ..I 'PSDFLAG K DIE S DIE="^PS(50.7,",DA=ZZZ,DR=".04////"_DT D ^DIE K DIE
+"RTN","PSSPOIM1",67,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(52.7,ZZZ)) Q:'ZZZ  S RRRR=$P($G(^PS(52.7,ZZZ,0)),"^",11) I RRRR,'$P($G(^PS(50.7,RRRR,0)),"^",3) K DIE S DA=ZZZ,DIE="^PS(52.7,",DR="9////"_"@" D ^DIE K DIE
+"RTN","PSSPOIM1",68,0)
+ F ZZZ=0:0 S ZZZ=$O(^PS(52.6,ZZZ)) Q:'ZZZ  S RRRR=$P($G(^PS(52.6,ZZZ,0)),"^",11) I RRRR,'$P($G(^PS(50.7,RRRR,0)),"^",3) K DIE S DA=ZZZ,DIE="^PS(52.6,",DR="15////"_"@" D ^DIE K DIE
+"RTN","PSSPOIM1",69,0)
+ D:$G(PSCREATE) MAIL^PSSCREAT
+"RTN","PSSPOIM1",70,0)
+ I '$G(PSSOMAIL) K PSOTYPE,DA,DIE,WW,RRRR,PSDFLAG,PSAPPL,GGG,HHH,ZZZZZ Q
+"RTN","PSSPOIM1",71,0)
+ S PSOTEXT(1)="You have completed the matching process required for the installation of",PSOTEXT(2)="Outpatient V. 7.0 and Inpatient Medications V. 5.0!"
+"RTN","PSSPOIM1",72,0)
+ S XMDUZ=.5,XMY(DUZ)="",XMTEXT="PSOTEXT(",XMSUB="Pharmacy Orderable Item File" D ^XMD
+"RTN","PSSPOIM1",73,0)
+ S PSSITE=+$O(^PS(59.7,0)) S $P(^PS(59.7,PSSITE,80),"^",2)=3 K PSSITE
+"RTN","PSSPOIM1",74,0)
+ D ^%ZISC K PSOTYPE,DA,DIE,WW,RRRR,PSDFLAG,PSAPPL,GGG,HHH,ZZZZZ,PSSOMAIL S:$D(ZTQUEUED) ZTREQ="@" Q
+"RTN","PSSPOIM1",75,0)
+RMES W !!,"This report takes a long time to first build the data to print, then to",!,"actually print the data. To avoid tying up a terminal for a long period of time,",!,"the report must be QUEUED to a printer."
+"RTN","PSSPOIM1",76,0)
+ W !!,"This report must be QUEUED to a printer!"
+"RTN","PSSPOIM1",77,0)
+ Q
+"RTN","PSSPOIM1",78,0)
+KMES W !!,"Due to the length of this report, and to avoid tying up a terminal for a long",!,"time, this report must be QUEUED to a printer!"
+"RTN","PSSPOIM1",79,0)
+ Q
+"RTN","PSSPOIM1",80,0)
+SUPP ;Mark as supply
+"RTN","PSSPOIM1",81,0)
+ N SSSUP,SSSIN,SSSAP,SSLOOP,SSSQUE,SSSQUEY,SSSQDATE,SLIP,SLDO,SLDP
+"RTN","PSSPOIM1",82,0)
+ S (SSSQUE,SSSQUEY)=0 F SSLOOP=0:0 S SSLOOP=$O(^PSDRUG("ASP",ZZZ,SSLOOP)) Q:'SSLOOP!(SSSQUEY)  D
+"RTN","PSSPOIM1",83,0)
+ .I $P($G(^PSDRUG(SSLOOP,0)),"^",3)["S" S SSSAP=$P($G(^(2)),"^",3),SSSIN=$P($G(^("I")),"^") D
+"RTN","PSSPOIM1",84,0)
+ ..I SSSAP["O"!(SSSAP["I")!(SSSAP["U") I 'SSSIN S $P(^PS(50.7,ZZZ,0),"^",9)=1 S (SSSQUEY,SSSQUE)=1 Q
+"RTN","PSSPOIM1",85,0)
+ ..I SSSAP["O"!(SSSAP["I")!(SSSAP["U") I +SSSIN>DT S $P(^PS(50.7,ZZZ,0),"^",9)=1 S SSSQUE=1,SSSQDATE($E(SSSIN,1,7))=""
+"RTN","PSSPOIM1",86,0)
+ I 'SSSQUEY,SSSQUE,$O(SSSQDATE(0)) F SLIP=0:0 S SLIP=$O(SSSQDATE(SLIP)) Q:'SLIP  D
+"RTN","PSSPOIM1",87,0)
+ .S ZTRTN="ENT^PSSPOIDT",ZTDESC="Supply update for Orderable Item",ZTIO="",ZTDTH=SLIP_.01 S SLDO=$G(PSSORDIT),SLDP=$G(PSSCROSS) S PSSORDIT=ZZZ,PSSCROSS=1 S ZTSAVE("PSSORDIT")="",ZTSAVE("PSSCROSS")="" D ^%ZTLOAD D
+"RTN","PSSPOIM1",88,0)
+ ..S PSSORDIT=$G(SLDO) K:'PSSORDIT PSSORDIT
+"RTN","PSSPOIM1",89,0)
+ ..S PSSCROSS=$G(SLDP) K:'PSSCROSS PSSCROSS
+"RTN","PSSPOIM1",90,0)
+ Q
+"RTN","PSSPOIM1",91,0)
+ ;
+"RTN","PSSPOIMO")
+0^1^B139454544^B139337107
+"RTN","PSSPOIMO",1,0)
+PSSPOIMO ;BIR/RTR/WRT-Edit Orderable Item Name and Inactive date ; 4/28/09 4:39pm
+"RTN","PSSPOIMO",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**29,32,38,47,68,102,125,141,153,159,166,172,191**;9/30/97;Build 40
+"RTN","PSSPOIMO",3,0)
+ S PSSITE=+$O(^PS(59.7,0)) I +$P($G(^PS(59.7,PSSITE,80)),"^",2)<2 W !!?3,"Orderable Item Auto-Create has not been completed yet!",! K PSSITE K DIR S DIR("A")="Press RETURN to continue",DIR(0)="E" D ^DIR K DIR Q
+"RTN","PSSPOIMO",4,0)
+ K PSSITE W !!,"This option enables you to edit Orderable Item names, Formulary status,",!,"drug text, Inactive Dates, and Synonyms."
+"RTN","PSSPOIMO",5,0)
+EN I $D(PSOIEN) L -^PS(50.7,PSOIEN)
+"RTN","PSSPOIMO",6,0)
+ K PSSCROSS,DTOUT,DUOUT,DIRUT
+"RTN","PSSPOIMO",7,0)
+ K DIC ; S PY=$P($G(^PS(59.7,1,31)),"^",2)
+"RTN","PSSPOIMO",8,0)
+ S PSS1="W ""  ""_$P(^PS(50.606,$P(^PS(50.7,+Y,0),""^"",2),0),""^"")_""  ""_$S($P($G(^PS(50.7,+Y,0)),""^"",4):$E($P(^(0),""^"",4),4,5)_""-""_$E($P(^(0),""^"",4),6,7)_""-""_$E($P(^(0),""^"",4),2,3),1:"""")"
+"RTN","PSSPOIMO",9,0)
+ S PSS2=" S NF=$P($G(^PS(50.7,+Y,0)),""^"",12) I NF S NF=""   N/F"" W NF"
+"RTN","PSSPOIMO",10,0)
+ S DIC("W")=PSS1_PSS2,DIC("S")="I '$P($G(^PS(50.7,+Y,0)),""^"",3)"
+"RTN","PSSPOIMO",11,0)
+ ;PSO*7*102;ONLY SEARCH B AND C X-REFS
+"RTN","PSSPOIMO",12,0)
+ S $P(PLINE,"-",79)="" W !! K PSOUT S DIC="^PS(50.7,",DIC(0)="QEAMZ",D="B^C" D MIX^DIC1 K DIC,PY,D G:Y<0!($D(DTOUT))!($D(DUOUT)) END
+"RTN","PSSPOIMO",13,0)
+ S PSOIEN=+Y,PSOINAME=$P(Y,"^",2),PSDOSE=+$P(^PS(50.7,PSOIEN,0),"^",2) L +^PS(50.7,PSOIEN):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I '$T W !,$C(7),"Another person is editing this one." Q
+"RTN","PSSPOIMO",14,0)
+ W !!!,?5,"Orderable Item -> ",PSOINAME,!?5,"Dosage Form    -> ",$P($G(^PS(50.606,PSDOSE,0)),"^"),!
+"RTN","PSSPOIMO",15,0)
+ K DIR S DIR("?")=" ",DIR("?",1)="Enter 'Yes' to see all of the Dispense Drugs, IV Additives, and IV Solutions",DIR("?",2)="that are matched to this Orderable Item. IV Additives will be identified with"
+"RTN","PSSPOIMO",16,0)
+ S DIR("?",3)="an (A), and IV Solutions with an (S)."
+"RTN","PSSPOIMO",17,0)
+ S DIR(0)="Y",DIR("B")="YES",DIR("A")="List all Drugs/Additives/Solutions tied to this Orderable Item" D ^DIR K DIR I Y["^"!($D(DTOUT))!($D(DUOUT)) G EN
+"RTN","PSSPOIMO",18,0)
+ I Y D DISP
+"RTN","PSSPOIMO",19,0)
+EDIT K DIR W ! S DIR(0)="Y",DIR("A")="Are you sure you want to edit this Orderable Item",DIR("B")="NO",DIR("?")="Answer YES to edit the fields associated with this Orderable Item." D ^DIR K DIR I 'Y!($D(DTOUT))!($D(DUOUT)) G EN
+"RTN","PSSPOIMO",20,0)
+ W !!?3,"Now editing Orderable Item:",!?3,PSOINAME,"   ",$P($G(^PS(50.606,PSDOSE,0)),"^")
+"RTN","PSSPOIMO",21,0)
+DIR K DIR S DIR(0)="F^3:40",DIR("B")=PSOINAME,DIR("A")="Orderable Item Name" D ^DIR
+"RTN","PSSPOIMO",22,0)
+ I Y["^"!($D(DUOUT))!($D(DTOUT)) G EN
+"RTN","PSSPOIMO",23,0)
+ I X[""""!($A(X)=45)!('(X'?1P.E))!(X?2"z".E) W $C(7),!!?5,"??" G DIR
+"RTN","PSSPOIMO",24,0)
+ I X'=PSOINAME S ZZFLAG=0 D @$S('$P($G(^PS(50.7,PSOIEN,0)),"^",3):"CHECK",1:"ZCHECK") I ZZFLAG G DIR
+"RTN","PSSPOIMO",25,0)
+ S PSONEW=X,DIE="^PS(50.7,",DA=PSOIEN,DR=".01////"_X D ^DIE I PSONEW'=PSOINAME W !!,"Name changed from  ",PSOINAME,!?15,"to  ",PSONEW
+"RTN","PSSPOIMO",26,0)
+ S PSSDTENT=0 W ! K DIE N MFLG S PSBEFORE=$P(^PS(50.7,PSOIEN,0),"^",4),PSAFTER=0,PSINORDE="" D
+"RTN","PSSPOIMO",27,0)
+ .;If reactivate OI, prompt to reactivate DD's only if there are any, then always give message saying OI now Active. If Inactivate, prompt to inactivate any active DD's if there are any, and give message
+"RTN","PSSPOIMO",28,0)
+ .;but if OI is reactivated, and there are no activities matched to it, and user does not want to activate the drugs, then inactivate the OI again, and give a clear message explaining this.
+"RTN","PSSPOIMO",29,0)
+ .W !,"This Orderable Item is "_$S($P($G(^PS(50.7,PSOIEN,0)),"^",12):"Non-Formulary.",1:"Formulary."),!
+"RTN","PSSPOIMO",30,0)
+ .I $P($G(^PS(50.7,PSOIEN,0)),"^",10) W !,"This Orderable Item is marked as a Non-VA Med.",!
+"RTN","PSSPOIMO",31,0)
+ .S DIE="^PS(50.7,",DA=PSOIEN,DR=6 S PSCREATE=1 D ^DIE K DIE,PSCREATE I $D(DTOUT)!($D(Y)>10) Q
+"RTN","PSSPOIMO",32,0)
+ .;PSS*1*102;ADD DRUG TEXT AS SYNONYM IS REQUESTED BY USER
+"RTN","PSSPOIMO",33,0)
+ .D ADDSYN^PSSPOIMP
+"RTN","PSSPOIMO",34,0)
+ .K DIR S DIR(0)="DO",DIR("A")="INACTIVE DATE" D  D ^DIR K DIR I $G(Y)["^"!($D(DTOUT))!($G(DUOUT)) Q
+"RTN","PSSPOIMO",35,0)
+ ..I $G(PSBEFORE) S Y=PSBEFORE D DD^%DT S DIR("B")=$G(Y)
+"RTN","PSSPOIMO",36,0)
+ .I $G(PSBEFORE),'$G(Y) W ?40,"Inactive Date deleted!"
+"RTN","PSSPOIMO",37,0)
+ .S PSSDTENT=$G(Y) I $G(Y) D DD^%DT W ?40,$G(Y)
+"RTN","PSSPOIMO",38,0)
+ .S PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSPOIMO",39,0)
+ .S DIE="^PS(50.7,",DA=PSOIEN N PSSFG,PSSOU
+"RTN","PSSPOIMO",40,0)
+ .S DR=".05;@1;D SETF^PSSPOIMO;.06;D DFR^PSSPOIMO(PSDOSE);10//YES;I X=""Y"" S Y=""@2"";S:$G(DUOUT) Y=""@3"";" D
+"RTN","PSSPOIMO",41,0)
+ ..S DR=DR_"D PDCHK^PSSPOIMO S:PSSFG Y=""@1"";S:$G(DUOUT) Y=""@3"";@2;K DIE(""NO^""),DIRUT;D MRSEL^PSSPOIMO;.07;.08;1;12//0;7;S:'$G(PSSOTH) Y=""@3"";7.1;@3" ;*191
+"RTN","PSSPOIMO",42,0)
+ .S PSCREATE=1 D ^DIE K DIE,PSCREATE,PSSOTH,^TMP("PSJMR",$J),^TMP("PSSDMR",$J) I $D(PSSOU),'$G(PSSOU) D MRSEL K ^TMP("PSJMR",$J)
+"RTN","PSSPOIMO",43,0)
+ .S $P(^PS(50.7,PSOIEN,0),"^",4)=PSSDTENT,PSAFTER=PSSDTENT
+"RTN","PSSPOIMO",44,0)
+ S:PSBEFORE&('$P(^PS(50.7,PSOIEN,0),"^",4)) PSINORDE="D" S:$P(^PS(50.7,PSOIEN,0),"^",4) PSINORDE="I"
+"RTN","PSSPOIMO",45,0)
+ I PSINORDE'="" D CHECK^PSSPOID2(PSOIEN) D
+"RTN","PSSPOIMO",46,0)
+ .I PSINORDE="D" D  Q
+"RTN","PSSPOIMO",47,0)
+ ..I $O(PSSDACTI(0))!($O(PSSSACTI(0)))!($O(PSSAACTI(0))) D
+"RTN","PSSPOIMO",48,0)
+ ...W !!,"There are inactive "_$S($O(PSSDACTI(0)):"drugs, ",1:"")_$S($O(PSSAACTI(0)):"additives, ",1:"")_$S($O(PSSSACTI(0)):"solutions,",1:""),!,"matched to this Pharmacy Orderable Item."
+"RTN","PSSPOIMO",49,0)
+ .I $O(PSSDACT(0))!($O(PSSSACT(0)))!($O(PSSAACT(0))) D
+"RTN","PSSPOIMO",50,0)
+ ..W !!,"There are active "_$S($O(PSSDACT(0)):"drugs, ",1:"")_$S($O(PSSAACT(0)):"additives, ",1:"")_$S($O(PSSSACT(0)):"solutions,",1:""),!,"matched to this Pharmacy Orderable Item."
+"RTN","PSSPOIMO",51,0)
+ I $G(PSINORDE)="D" I $O(PSSDACTI(0))!($O(PSSSACTI(0)))!($O(PSSAACTI(0))) D REST^PSSPOIDT(PSOIEN)
+"RTN","PSSPOIMO",52,0)
+ I $G(PSINORDE)="I" I $O(PSSDACT(0))!($O(PSSSACT(0)))!($O(PSSAACT(0))) D REST^PSSPOIDT(PSOIEN)
+"RTN","PSSPOIMO",53,0)
+ S DIK="^PS(50.7,",DA=PSOIEN,DIK(1)=.04 D EN^DIK K DIK
+"RTN","PSSPOIMO",54,0)
+ K PSBEFORE,PSAFTER,PSINORDE,PSSDTENT,PSSDACT,PSSDACTI,PSSSACT,PSSSACTI,PSSAACT,PSSAACTI
+"RTN","PSSPOIMO",55,0)
+IMMUN ;PSS*1*141 FOR 'IMMUNIZATIONS DOCUMENTATION BY BCMA'
+"RTN","PSSPOIMO",56,0)
+ I $O(^PSDRUG("AOC",PSOIEN,"IM000"))'["IM" G SYN ;ASK WHEN APPROPRIATE
+"RTN","PSSPOIMO",57,0)
+ W ! S DIE="^PS(50.7,",DA=PSOIEN,DR=9 D ^DIE K DIE
+"RTN","PSSPOIMO",58,0)
+SYN I $G(Y)["^"!($G(DIRUT))!$D(DTOUT)!($D(Y)>10) G EN
+"RTN","PSSPOIMO",59,0)
+ W ! K DIC S:'$D(^PS(50.7,PSOIEN,2,0)) ^PS(50.7,PSOIEN,2,0)="^50.72^0^0" S DIC="^PS(50.7,"_PSOIEN_",2,",DA(1)=PSOIEN,DIC(0)="QEAMZL",DIC("A")="Select SYNONYM: ",DLAYGO=50.72 D ^DIC K DIC
+"RTN","PSSPOIMO",60,0)
+ I Y<0!($D(DUOUT))!($D(DTOUT)) K:'$O(^PS(50.7,PSOIEN,2,0)) ^PS(50.7,PSOIEN,2,0) D EN^PSSPOIDT(PSOIEN),EN2^PSSHL1(PSOIEN,"MUP") G EN
+"RTN","PSSPOIMO",61,0)
+ W ! S DA=+Y,DIE="^PS(50.7,"_PSOIEN_",2,",DA(1)=PSOIEN,DR=.01 D ^DIE K DIE G SYN
+"RTN","PSSPOIMO",62,0)
+ D EN^PSSPOIDT(PSOIEN),EN2^PSSHL1(PSOIEN,"MUP")
+"RTN","PSSPOIMO",63,0)
+ G EN
+"RTN","PSSPOIMO",64,0)
+END K ZZFLAG,DIC,DIR,DIE,DTOUT,DUOUT,DIRUT,FLAG,PSOINAME,PSOUT,PSDOSE,PSONEW,UPFLAG,VV,ZZ,AA,BB,Y,AAA,SSS,PSOARR,PSOARRAD,PLINE I $D(PSOIEN) L -^PS(50.7,PSOIEN) K PSOIEN
+"RTN","PSSPOIMO",65,0)
+ Q
+"RTN","PSSPOIMO",66,0)
+DISP N PSSLFLAG,PSSLDATE S FLAG=1 D HEAD F ZZ=0:0 S ZZ=$O(^PSDRUG("ASP",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  S FLAG=0 D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ W !,$P($G(^PSDRUG(ZZ,0)),"^") W:$P($G(^PSDRUG(ZZ,0)),"^",9) "   N/F" D DTE
+"RTN","PSSPOIMO",67,0)
+ Q:$G(PSOUT)
+"RTN","PSSPOIMO",68,0)
+ S (FLAG,PSSLFLAG)=0
+"RTN","PSSPOIMO",69,0)
+ F ZZ=0:0 S ZZ=$O(^PS(52.6,"AOI",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ D
+"RTN","PSSPOIMO",70,0)
+ .S PSSLFLAG=1
+"RTN","PSSPOIMO",71,0)
+ .W !,$P($G(^PS(52.6,ZZ,0)),"^"),?42,"(A)"
+"RTN","PSSPOIMO",72,0)
+ .S PSSLDATE=$P($G(^PS(52.6,ZZ,"I")),"^") I PSSLDATE D DTEX
+"RTN","PSSPOIMO",73,0)
+ Q:$G(PSOUT)
+"RTN","PSSPOIMO",74,0)
+ ;I $G(PSSLFLAG) W !
+"RTN","PSSPOIMO",75,0)
+ F ZZ=0:0 S ZZ=$O(^PS(52.7,"AOI",PSOIEN,ZZ)) Q:'ZZ!($G(PSOUT))  D:($Y+5)>IOSL HEAD Q:$G(PSOUT)  I ZZ D
+"RTN","PSSPOIMO",76,0)
+ .W !,$P($G(^PS(52.7,ZZ,0)),"^"),?31,$P($G(^(0)),"^",3),?42,"(S)"
+"RTN","PSSPOIMO",77,0)
+ .S PSSLDATE=$P($G(^PS(52.7,ZZ,"I")),"^") I PSSLDATE D DTEX
+"RTN","PSSPOIMO",78,0)
+ Q
+"RTN","PSSPOIMO",79,0)
+HEAD I 'FLAG W ! K DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" D ^DIR K DIR I 'Y S PSOUT=1 Q
+"RTN","PSSPOIMO",80,0)
+ W @IOF W !,?6,"Orderable Item ->  ",PSOINAME,!?6,"Dosage Form    ->  ",$P($G(^PS(50.606,+$P($G(^PS(50.7,PSOIEN,0)),"^",2),0)),"^"),!!,"Dispense Drugs:"_$S('FLAG:" (continued)",1:""),!,"---------------"
+"RTN","PSSPOIMO",81,0)
+ Q
+"RTN","PSSPOIMO",82,0)
+ADDIT ;If orderable item is flagged for IV
+"RTN","PSSPOIMO",83,0)
+ S AA=$O(^PS(52.6,"AOI",PSOIEN,0))
+"RTN","PSSPOIMO",84,0)
+ S BB=$O(^PS(52.7,"AOI",PSOIEN,0))
+"RTN","PSSPOIMO",85,0)
+ I 'AA,'BB W $C(7),!,"This Orderable Item is flagged for IV use, but currently there are no IV",!,"Additives or IV Solutions matched to this Orderable Item!" G EDIT
+"RTN","PSSPOIMO",86,0)
+ G SOL
+"RTN","PSSPOIMO",87,0)
+CHECK ;
+"RTN","PSSPOIMO",88,0)
+ S ZZFLAG=0 F VV=0:0 S VV=$O(^PS(50.7,"ADF",X,PSDOSE,VV)) Q:'VV  I VV,'$P($G(^PS(50.7,VV,0)),"^",3) S ZZFLAG=1
+"RTN","PSSPOIMO",89,0)
+ I ZZFLAG W $C(7),!!?5,"There is already an Orderable Item with this same name and Dosage Form",!?5,"that is not flagged as 'IV'. Use the 'DISPENSE DRUG/ORDERABLE ITEM",!?5,"MAINTENANCE' option if you want to re-match to this Orderable Item!",!
+"RTN","PSSPOIMO",90,0)
+ Q
+"RTN","PSSPOIMO",91,0)
+ZCHECK ;
+"RTN","PSSPOIMO",92,0)
+ S ZZFLAG=0 F VV=0:0 S VV=$O(^PS(50.7,"ADF",X,PSDOSE,VV)) Q:'VV  I VV,$P($G(^PS(50.7,VV,0)),"^",3) S ZZFLAG=1
+"RTN","PSSPOIMO",93,0)
+ I ZZFLAG W $C(7),!!?5,"There is already an Orderable Item with the same name and Dosage Form,",!?5,"that is flagged for 'IV' use.",!
+"RTN","PSSPOIMO",94,0)
+ Q
+"RTN","PSSPOIMO",95,0)
+SOL ;
+"RTN","PSSPOIMO",96,0)
+ K DIR S DIR(0)="Y",DIR("B")="YES",DIR("A")="List all Additives and Solutions tied to this Orderable Item" D ^DIR K DIR G:Y["^"!($D(DTOUT)) EN G:Y=0 EDIT
+"RTN","PSSPOIMO",97,0)
+ H 1 K PSOARR,PSOARRAD S AAA=$O(^PS(52.6,"AOI",PSOIEN,0)) I AAA,$D(^PS(52.6,AAA,0)) S PSOARRAD=AAA
+"RTN","PSSPOIMO",98,0)
+ F SSS=0:0 S SSS=$O(^PS(52.7,"AOI",PSOIEN,SSS)) Q:'SSS  S:$D(^PS(52.7,SSS,0)) PSOARR(SSS)=""
+"RTN","PSSPOIMO",99,0)
+ S FLAG=1,UPFLAG=0 D SHEAD F ZZ=0:0 S ZZ=$O(PSOARR(ZZ)) Q:'ZZ!($G(PSOUT))!($G(UPFLAG))  S FLAG=0 D:($Y+7)>IOSL SHEAD Q:$G(PSOUT)!($G(UPFLAG))  I ZZ W !,$P($G(^PS(52.7,ZZ,0)),"^"),"   ",$P($G(^(0)),"^",3)
+"RTN","PSSPOIMO",100,0)
+ G:$G(PSOUT) EN
+"RTN","PSSPOIMO",101,0)
+ G EDIT
+"RTN","PSSPOIMO",102,0)
+SHEAD I 'FLAG W ! K DIR S DIR(0)="E",DIR("A")="Press RETURN to continue" D ^DIR K DIR I 'Y S:Y="" PSOUT=1 S:Y=0 UPFLAG=1 Q
+"RTN","PSSPOIMO",103,0)
+ W @IOF W !?6,"Orderable Item ->  ",PSOINAME,?68,"(IV)",!?6,"Dosage Form    ->  ",$P($G(^PS(50.606,+$P($G(^PS(50.7,PSOIEN,0)),"^",2),0)),"^"),!,PLINE I FLAG,'$G(PSOARRAD) W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",104,0)
+ I 'FLAG W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",105,0)
+ I FLAG,$G(PSOARRAD) W !,$P($G(^PS(52.6,PSOARRAD,0)),"^"),"    ","(IV Additive)",! I $D(PSOARR) W !?5,"IV Solutions:",!
+"RTN","PSSPOIMO",106,0)
+ Q
+"RTN","PSSPOIMO",107,0)
+DTE I $D(^PSDRUG(ZZ,"I")) S Y=$P(^PSDRUG(ZZ,"I"),"^") D DD^%DT W ?50,Y K Y
+"RTN","PSSPOIMO",108,0)
+ Q
+"RTN","PSSPOIMO",109,0)
+DTEX S Y=$G(PSSLDATE) D DD^%DT W ?50,$G(Y) K Y
+"RTN","PSSPOIMO",110,0)
+ Q
+"RTN","PSSPOIMO",111,0)
+IVMSG ; display a message if the CORRESPONDING IV field is entered
+"RTN","PSSPOIMO",112,0)
+ ;
+"RTN","PSSPOIMO",113,0)
+ S PSSIVMSG=$P(^PS(50.7,PSOIEN,0),"^",11) I PSSIVMSG="" Q
+"RTN","PSSPOIMO",114,0)
+ S PSSIVFRM=$P(^PS(50.7,PSSIVMSG,0),"^",2) I PSSIVFRM S PSSIVFRM=$P(^PS(50.606,PSSIVFRM,0),"^")
+"RTN","PSSPOIMO",115,0)
+ S PSSIVMSG=$P(^PS(50.7,PSSIVMSG,0),"^")_" "_PSSIVFRM
+"RTN","PSSPOIMO",116,0)
+ W !!,"The Corresponding IV Item is currently identified as: "_PSSIVMSG,!
+"RTN","PSSPOIMO",117,0)
+ K PSSIVFRM,PSSIVMSG
+"RTN","PSSPOIMO",118,0)
+ Q
+"RTN","PSSPOIMO",119,0)
+UDMSG ; display a message if the CORRESPONDING UD field is entered
+"RTN","PSSPOIMO",120,0)
+ ;
+"RTN","PSSPOIMO",121,0)
+ S PSSUDMSG=$P(^PS(50.7,PSOIEN,0),"^",10) I PSSUDMSG="" Q
+"RTN","PSSPOIMO",122,0)
+ S PSSUDFRM=$P(^PS(50.7,PSSUDMSG,0),"^",2) I PSSUDFRM S PSSUDFRM=$P(^PS(50.606,PSSUDFRM,0),"^")
+"RTN","PSSPOIMO",123,0)
+ S PSSUDMSG=$P(^PS(50.7,PSSUDMSG,0),"^")_" "_PSSUDFRM
+"RTN","PSSPOIMO",124,0)
+ W !!,"The Corresponding UD Item is currently identified as: "_PSSUDMSG,!
+"RTN","PSSPOIMO",125,0)
+ K PSSUDMSG,PSSUDFRM
+"RTN","PSSPOIMO",126,0)
+ Q
+"RTN","PSSPOIMO",127,0)
+DFR(PSDOSE) ; dosage form med routes - called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",128,0)
+ D SETF
+"RTN","PSSPOIMO",129,0)
+ N MR,MRNODE,XX K ^TMP("PSSDMR",$J)
+"RTN","PSSPOIMO",130,0)
+ S (MCT,MR)=0 F  S MR=$O(^PS(50.606,PSDOSE,"MR",MR)) Q:'MR  D
+"RTN","PSSPOIMO",131,0)
+ .S XX=+$G(^PS(50.606,PSDOSE,"MR",MR,0)) Q:'XX  S MRNODE=$G(^PS(51.2,XX,0)) I $P($G(MRNODE),"^",4)'=1 Q
+"RTN","PSSPOIMO",132,0)
+ .S MCT=MCT+1,^TMP("PSSDMR",$J,MCT)=$P(MRNODE,U),^TMP("PSSDMR",$J,"B",XX)=""
+"RTN","PSSPOIMO",133,0)
+ D DFRL
+"RTN","PSSPOIMO",134,0)
+ Q
+"RTN","PSSPOIMO",135,0)
+DFRL W !!," List of med routes associated with the DOSAGE FORM of the orderable item:",!
+"RTN","PSSPOIMO",136,0)
+ S MCT=0 I '$O(^TMP("PSSDMR",$J,MCT)) W !,?3,"NO MED ROUTE DEFINED"
+"RTN","PSSPOIMO",137,0)
+ F  S MCT=$O(^TMP("PSSDMR",$J,MCT)) Q:'MCT  W !,?3,$G(^(MCT))
+"RTN","PSSPOIMO",138,0)
+ D EN^DDIOL(" If you answer YES to the next prompt, the DEFAULT MED ROUTE (if populated)",,"!!")
+"RTN","PSSPOIMO",139,0)
+ D EN^DDIOL(" and this list (if populated) will be displayed as selectable med routes",,"!")
+"RTN","PSSPOIMO",140,0)
+ D EN^DDIOL(" during medication ordering dialog. If you answer NO, the DEFAULT MED ROUTE",,"!")
+"RTN","PSSPOIMO",141,0)
+ D EN^DDIOL(" (if populated) and POSSIBLE MED ROUTES list will be displayed instead.",,"!") W !
+"RTN","PSSPOIMO",142,0)
+ ;K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",143,0)
+ Q
+"RTN","PSSPOIMO",144,0)
+PDR ; possible med routes - called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",145,0)
+ N MCT,MR,MRNODE,XX K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",146,0)
+ S (XX,MCT)=0 F  S XX=$O(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),3,"B",XX)) Q:'XX  S MRNODE=$G(^PS(51.2,XX,0)),MCT=MCT+1,^TMP("PSSMR",$J,MCT)=$P(MRNODE,U)
+"RTN","PSSPOIMO",147,0)
+ I $O(^TMP("PSSMR",$J,0)) D
+"RTN","PSSPOIMO",148,0)
+ .W !!," List of Possible Med Routes associated with the orderable item:",!
+"RTN","PSSPOIMO",149,0)
+ .S MCT=0 F  S MCT=$O(^TMP("PSSMR",$J,MCT)) Q:'MCT  W !,?3,$G(^(MCT))
+"RTN","PSSPOIMO",150,0)
+ W ! K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",151,0)
+ Q
+"RTN","PSSPOIMO",152,0)
+PDCHK ; called by DR string at DIR+20^PSSPOIMO
+"RTN","PSSPOIMO",153,0)
+ N ANS,D,DIC,DIE,DO,DICR,DR,DIR,PSOUT,PSSDA,PSSX,PSSXA,PSSY,Q,X,Y,Z
+"RTN","PSSPOIMO",154,0)
+ S DIR(0)="PO^51.2:EMZ",DIR("A")="POSSIBLE MED ROUTES",DIR("S")="I $P(^(0),U,4)" S PSOUT=0
+"RTN","PSSPOIMO",155,0)
+ S DIR("PRE")="I X=""?"" D MRTHLP^PSSPOIMO"
+"RTN","PSSPOIMO",156,0)
+ F  D PDR,^DIR D  I PSOUT Q
+"RTN","PSSPOIMO",157,0)
+ .I (X="")!$D(DTOUT)!$D(DUOUT) S PSOUT=1 Q
+"RTN","PSSPOIMO",158,0)
+ .I X="@",$D(PSSY) S ANS=DA D:$$DASK  Q
+"RTN","PSSPOIMO",159,0)
+ ..N DIK,DA S DA(1)=ANS,DIK="^PS(50.7,"_DA(1)_",3,"
+"RTN","PSSPOIMO",160,0)
+ ..S DA=$O(^PS(50.7,DA(1),3,"B",PSSY,"")) I DA="" Q
+"RTN","PSSPOIMO",161,0)
+ ..D ^DIK K PSSY,DIR("B")
+"RTN","PSSPOIMO",162,0)
+ .I Y="" W "  ??" Q
+"RTN","PSSPOIMO",163,0)
+ .I $D(^PS(50.7,DA,3,"B",+Y)) D  Q
+"RTN","PSSPOIMO",164,0)
+ ..I $D(DIR("B")) K PSSY,DIR("B") Q
+"RTN","PSSPOIMO",165,0)
+ ..S DIR("B")=Y(0,0),PSSY=+Y Q
+"RTN","PSSPOIMO",166,0)
+ .S PSSXA=Y(0,0),PSSX=+Y D DFR(+$P(^PS(50.7,DA,0),"^",2))
+"RTN","PSSPOIMO",167,0)
+ .I $G(PSSX) S ANS=$$ASK() I 'ANS Q
+"RTN","PSSPOIMO",168,0)
+ .S PSSDA(50.711,"+1,"_DA_",",.01)=+PSSX
+"RTN","PSSPOIMO",169,0)
+ .D UPDATE^DIE("","PSSDA")
+"RTN","PSSPOIMO",170,0)
+ .K ^TMP("PSSMR",$J)
+"RTN","PSSPOIMO",171,0)
+ D DP
+"RTN","PSSPOIMO",172,0)
+ Q
+"RTN","PSSPOIMO",173,0)
+ASK() ; confirm adding the new entry
+"RTN","PSSPOIMO",174,0)
+ N DIR,X,Y W ! S DIR(0)="YO",DIR("B")="YES"
+"RTN","PSSPOIMO",175,0)
+ I $D(^TMP("PSSDMR",$J)),'$D(^TMP("PSSDMR",$J,"B",PSSX)) S DIR("B")="NO",DIR("A",1)="The selected entry does not match to any of the dosage form med routes."
+"RTN","PSSPOIMO",176,0)
+ W $C(7) S DIR("A")="  Are you adding '"_PSSXA_"' as a new POSSIBLE MED ROUTE" D ^DIR
+"RTN","PSSPOIMO",177,0)
+ Q $S(Y=1:1,1:0)
+"RTN","PSSPOIMO",178,0)
+DASK() ; delete possible med route
+"RTN","PSSPOIMO",179,0)
+ N DIR
+"RTN","PSSPOIMO",180,0)
+ W $C(7) S DIR("A")="     SURE YOU WANT TO DELETE ",DIR(0)="Y" D ^DIR
+"RTN","PSSPOIMO",181,0)
+ Q $S(Y=1:1,1:0)
+"RTN","PSSPOIMO",182,0)
+MRTHLP ; help of possible med route
+"RTN","PSSPOIMO",183,0)
+ N DIC,RTE,D
+"RTN","PSSPOIMO",184,0)
+ S RTE=0 F  S RTE=$O(^PS(50.7,DA,3,"B",RTE)) Q:'RTE   D EN^DDIOL($P($G(^PS(51.2,RTE,0)),"^"),,"!,?4")
+"RTN","PSSPOIMO",185,0)
+ W ! D EN^DDIOL("Enter the most common MED ROUTE associated with this Orderable Item.",,"!,?5")
+"RTN","PSSPOIMO",186,0)
+ D EN^DDIOL("ONLY MED ROUTES MARKED FOR USE BY ALL PACKAGES ARE SELECTABLE.",,"!,?5")
+"RTN","PSSPOIMO",187,0)
+ Q
+"RTN","PSSPOIMO",188,0)
+DP ; check the existence of Default Med Route & Possible Med Routes
+"RTN","PSSPOIMO",189,0)
+ N D,DIC,DIE,DO,DICR,DR,DIR,Q,X,Y,Z
+"RTN","PSSPOIMO",190,0)
+ I '$P($G(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),0)),"^",6)&('$O(^PS(50.7,$S($G(PSVAR):PSVAR,1:PSOIEN),3,0))) D
+"RTN","PSSPOIMO",191,0)
+ .S PSR(1)=" You have not selected ANY med routes to display during order entry. In"
+"RTN","PSSPOIMO",192,0)
+ .S PSR(2)=" order to have med routes displayed during order entry, you must either"
+"RTN","PSSPOIMO",193,0)
+ .S PSR(3)=" define a DEFAULT MED ROUTE and/or at least one POSSIBLE MED ROUTE, or"
+"RTN","PSSPOIMO",194,0)
+ .S PSR(4)=" answer YES to the USE DOSAGE FORM MED ROUTE LIST prompt."
+"RTN","PSSPOIMO",195,0)
+ .S PSR(5)=" **WITH THE CURRENT SETTINGS, NO MED ROUTES WILL DISPLAY FOR SELECTION ",PSR(5,"F")="!!"
+"RTN","PSSPOIMO",196,0)
+ .S PSR(6)=" DURING ORDER ENTRY FOR THIS ORDERABLE ITEM**"
+"RTN","PSSPOIMO",197,0)
+ .D EN^DDIOL(.PSR),EN^DDIOL(" ","","!")
+"RTN","PSSPOIMO",198,0)
+ .K DIR S DIR(0)="Y",DIR("?",1)="If you select NO, you will continue to loop back to the Default Med Route"
+"RTN","PSSPOIMO",199,0)
+ .S DIR("?")="prompt until either a selection is made or you answer YES to this prompt to proceed."
+"RTN","PSSPOIMO",200,0)
+ .S DIR("A",1)="",DIR("A",2)="The current setting is usually only appropriate for supply items."
+"RTN","PSSPOIMO",201,0)
+ .S DIR("A")="Continue with NO med route displaying for selection during order entry",DIR("B")="NO"
+"RTN","PSSPOIMO",202,0)
+ .D ^DIR K DIR W ! I 'Y!($D(DTOUT))!($D(DUOUT)) S PSSFG=1
+"RTN","PSSPOIMO",203,0)
+ .S:Y PSSFG=0
+"RTN","PSSPOIMO",204,0)
+ E  S PSSFG=0
+"RTN","PSSPOIMO",205,0)
+ Q
+"RTN","PSSPOIMO",206,0)
+ ;
+"RTN","PSSPOIMO",207,0)
+SETF ;
+"RTN","PSSPOIMO",208,0)
+ S PSSOU=0 K ^TMP("PSJMR",$J) D MEDRT^PSSJORDF($S($G(PSVAR):PSVAR,1:PSOIEN))
+"RTN","PSSPOIMO",209,0)
+ I '$D(^TMP("PSJMR",$J)) S DIE("NO^")="",PSSFG=1
+"RTN","PSSPOIMO",210,0)
+ E  S PSSFG=0 K DIE("NO^")
+"RTN","PSSPOIMO",211,0)
+ Q
+"RTN","PSSPOIMO",212,0)
+MRSEL ;
+"RTN","PSSPOIMO",213,0)
+ K ^TMP("PSJMR",$J) D MEDRT^PSSJORDF($S($G(PSVAR):PSVAR,1:PSOIEN))
+"RTN","PSSPOIMO",214,0)
+ W !,"The following Med Routes will now be displayed during order entry:"
+"RTN","PSSPOIMO",215,0)
+ N I S (PSSOU,I)=0 F  S I=$O(^TMP("PSJMR",$J,I)) Q:'I   W !,$P(^(I),"^",2) S PSSOU=1
+"RTN","PSSPOIMO",216,0)
+ W:'PSSOU !,"(None)"
+"RTN","PSSPOIMO",217,0)
+ W ! S PSSOU=1
+"RTN","PSSPOIMO",218,0)
+ Q
+"RTN","PSSPOIMO",219,0)
+ ;
+"VER")
+8.0^22.0
+"^DD",50.7,50.7,12,0)
+PROMPT FOR REMOVAL IN BCMA^*SX^0:No Removal Required;1:Removal at Next Administration;2:Removal Period Optional Prior to Next Administration;3:Removal Period Required Prior to Next Administration;^4;1^D 12^PSSNCPDP
+"^DD",50.7,50.7,12,3)
+ 
+"^DD",50.7,50.7,12,4)
+D D13^PSSNCPDP
+"^DD",50.7,50.7,12,12)
+ 
+"^DD",50.7,50.7,12,12.1)
+S DIC("S")="N DSP,PSDOSE S DSP=1 S PSDOSE=$P(^PS(50.7,+DA,0),""^"",2) S:((Y=0)&$G(PSDOSE)&(^PS(50.606,PSDOSE,0)[""PATCH"")) DSP=0 I DSP"
+"^DD",50.7,50.7,12,21,0)
+^.001^26^26^3150730^^^^
+"^DD",50.7,50.7,12,21,1,0)
+This field will allow for the following values.  
+"^DD",50.7,50.7,12,21,2,0)
+ 
+"^DD",50.7,50.7,12,21,3,0)
+        NULL/0 = No Removal Required. Duration of Administration field
+"^DD",50.7,50.7,12,21,4,0)
+        does not display when Pharmacist is finishing the order. This is
+"^DD",50.7,50.7,12,21,5,0)
+        consistent with existing functionality for tablets, capsules and
+"^DD",50.7,50.7,12,21,6,0)
+        other unit dose medications not requiring removal.
+"^DD",50.7,50.7,12,21,7,0)
+         
+"^DD",50.7,50.7,12,21,8,0)
+        1 = Removal at Next Administration. Duration of Administration 
+"^DD",50.7,50.7,12,21,9,0)
+        field does not display when pharmacist is finishing the order.
+"^DD",50.7,50.7,12,21,10,0)
+        BCMA user will be prompted for removal automatically at next
+"^DD",50.7,50.7,12,21,11,0)
+        administration.
+"^DD",50.7,50.7,12,21,12,0)
+         
+"^DD",50.7,50.7,12,21,13,0)
+        2 = Removal Period Optional Prior to Next Administration.
+"^DD",50.7,50.7,12,21,14,0)
+        Pharmacist is prompted for Duration of Administration when 
+"^DD",50.7,50.7,12,21,15,0)
+        finishing the order; however, this field is optional/not 
+"^DD",50.7,50.7,12,21,16,0)
+        required to finish the order. If Duration of Administration is
+"^DD",50.7,50.7,12,21,17,0)
+        entered by the pharmacist finishing the order, the BCMA user
+"^DD",50.7,50.7,12,21,18,0)
+        will be prompted for removal when the Duration of 
+"^DD",50.7,50.7,12,21,19,0)
+        Administration has ended. If no Duration of Administration is
+"^DD",50.7,50.7,12,21,20,0)
+        entered, BCMA user will be prompted for removal at next
+"^DD",50.7,50.7,12,21,21,0)
+        administration.
+"^DD",50.7,50.7,12,21,22,0)
+         
+"^DD",50.7,50.7,12,21,23,0)
+        3 = Removal Period Required Prior to Next Administration. 
+"^DD",50.7,50.7,12,21,24,0)
+        Pharmacist is prompted for Duration of Administration, which is 
+"^DD",50.7,50.7,12,21,25,0)
+        required to finish the order. BCMA user will be prompted for
+"^DD",50.7,50.7,12,21,26,0)
+        removal after the Duration of Administration has ended.
+"^DD",50.7,50.7,12,23,0)
+^.001^2^2^3150730^^^^
+"^DD",50.7,50.7,12,23,1,0)
+This prompt will allow BCMA to display the removal times in Inpatient 
+"^DD",50.7,50.7,12,23,2,0)
+Med orders using rules determined by the values stored here.
+"^DD",50.7,50.7,12,"DEL",1,0)
+N PSDOSE S PSDOSE=$P(^PS(50.7,+DA,0),"^",2) I $G(PSDOSE),^PS(50.606,PSDOSE,0)["PATCH" D D12^PSSNCPDP
+"^DD",50.7,50.7,12,"DT")
+3150730
+"BLD",9242,6)
+^168
+**END**
+**END**
+

@@ -1,0 +1,487 @@
+
+=============================================================================
+Run Date: JUN 11, 2015                     Designation: XWB*1.1*60
+Package : XWB - RPC BROKER                    Priority: Mandatory
+Version : 1.1        SEQ #49                    Status: Released
+                  Compliance Date: JUL 12, 2015
+=============================================================================
+
+
+Subject: RPC Broker BDK - IPv6 Enabled Broker
+
+Category: 
+  - Informational
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ Patch XWB*1.1*60 RPC Broker Development Kit (BDK) IPv6 Enabled, with 
+ support for Delphi XE4, XE5, XE6, and XE7. This patch removes support for
+ older versions of Delphi. This patch also deprecates the use of the 
+ SharedBroker client for applications compiled with this new BDK.
+  
+ This patch is one in a series of patches to support the VA's transition 
+ from IPv4 to IPv6.  IPv6 is a protocol designed to handle the growth rate 
+ of the Internet and to cope with the demanding requirements of services,
+ mobility, and end-to-end security.  
+  
+ There is no action for VHA sites required by this patch. This patch is
+ Programmer-Only Client-Only.  There is no server side (VistA PackMan or
+ KIDS) part to the patch.  There are no client side (Windows executable)
+ programs for VHA production workstations.  The patch is intended for
+ Delphi developer client workstations only.  The patch includes two 'beta'
+ Windows executable programs to assist in development and testing, but
+ these programs have not been field tested, have not received Section 508
+ approval, nor have they been approved for installation on production
+ workstations:
+  
+  * ClAgent.exe - An IPv4/IPv6 dual-stack implementation of the RPC Broker 
+                  Client Agent, which is used for Auto Sign-On (when
+                  enabled for the user in VistA). Note that Auto Sign-On
+                  will work erratically when IPv6 is enabled on the VA
+                  network, as VistA will see multiple IP addresses for the
+                  workstation and consider them multiple workstations. In 
+                  other words, IPv4 applications will only Auto Sign-On
+                  with other IPv4 applications, and IPv6 applications will
+                  only Auto Sign-On with other IPv6 applications.
+  * ServerList.exe - A GUI tool to set registry entries for default VistA 
+                  server(s). Users can set entries for their own defaults
+                  only, while System Administrators can right-click (to run
+                  as Administrator) and set entries for all users on that
+                  workstation. It also allows setting the Secure Shell
+                  (SSH) username for the VistA server, so that all GUI 
+                  applications compiled with this new BDK will
+                  automatically connect to VistA using Attachmate SSH.
+  
+ RPC Broker Patch XWB*1.1*60 provides Windows client support for IPv4/IPv6
+ dual-stack environment using new Application Programmer Interfaces 
+ (APIs).  This patch also upgrades from WinSock 1.1 to WinSock 2.2. By 
+ using this BDK for development of a Delphi client application, the 
+ application will be protocol independent and will be able to connect to 
+ both IPv4 and IPv6 VistA servers.
+  
+ The old-style broker (where VistA calls back to a different port on the 
+ client workstation when making a connection) is being deprecated in this 
+ BDK. Applications compiled with this BDK will no longer be able to use 
+ the old-style broker. The new-style broker (where VistA calls back to the 
+ originating port on the client workstation) is the only broker style 
+ supported by IPv6. The VistA listener will continue to support legacy GUI 
+ applications that use the old-style broker until all applications have 
+ migrated to the new-style broker. The new-style broker (where VistA calls 
+ back to the originating port on the client workstation) is the preferred 
+ use as it provides additional security not found in the old-style broker.
+  
+ The patch is distributed as a zip file (XWB_1_1_P60.zip) on the anonymous 
+ directory sites.  The zip file contains all of the source code and 
+ instructions for compiling and installing for each version of Delphi 
+ listed above, as well as a few sample programs.
+  
+ The installation requires less than 30 Megabytes of disk space on a 
+ workstation.
+  
+ Blood Bank Clearance
+ ====================
+ Clearance - Not required for client-side only patches.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)  Field Name (Number)              New/Modified/Deleted
+ ------------------  -------------------              --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                Type                      New/Modified/Deleted
+ ---------                ----                      -------------------- 
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type                      New/Modified/Deleted
+ -----------            ----                      -------------------- 
+ N/A
+  
+ Protocols Associated:
+ --------------------
+ N/A
+  
+ Security Keys Associated:
+ ------------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name       Type    File Name (Number)   New/Modified/Deleted 
+ -------------       ----    ------------------   --------------------
+ N/A
+  
+ Remote Procedure Calls Associated:
+  
+ RPC Name               Type               New/Modified/Deleted
+ --------               ----               --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  INC000000063535 RPC Broker and multidivisional station numbers
+  INC000000198176 RPC Broker always makes the main window visible
+  INC000000758490 Upgrade RPC broker for IPv6
+  INC000000901719 Security/Logon Issue from CPRS changing verify code
+  
+ 1. INC000000063535 RPC Broker and multidivisional station numbers
+  
+ Problem:
+ -------
+ In testing CCOW implementation of CPRS at a multidivisional site, it was 
+ discovered that the property RPCBroker.User.Division is not being 
+ populated consistently. If the user has one division assigned, the 
+ property contains "pointer to INSTITUTION file (#4)^institution 
+ name^station number". If the user has multiple divisions assigned, the 
+ property is populated with only the divisional station number without the 
+ second or third pieces.
+  
+ Resolution:
+ ----------
+ The software is working correctly.  The intended result is only to set 
+ the DUZ(2) variable in the user's environment to the pointer to the 
+ selected division in the INSTITUTION file (#4) and to update the sign-on 
+ log.  Information regarding the selected division should be derived from 
+ the DUZ(2) environment variable if it is required.
+  
+ 2. INC000000198176 RPC Broker always makes the main window visible
+  
+ Problem:
+ -------
+ After connecting to the server and authenticating the user, RPC Broker 
+ always makes the main window visible. The problem is that the Broker does 
+ not examine the Application.ShowMainForm property. Therefore, if the main 
+ form should not be shown during the application startup (or at all), then 
+ there is no clean way to do this. Of course it is possible to hide the 
+ form right after connecting to the server but this produces an unsightly 
+ blip of the main form.
+  
+ Resolution:
+ ----------
+ The suggested resolution cannot be incorporated into the Broker 
+ Development Kit (BDK).  The MainForm property is derived from 
+ vcl.Forms.TForm which does not include the ShowMainForm property.  The 
+ ShowMainForm property is set in the main project file only when creating 
+ a Delphi application, and is not available to the RPC Broker components 
+ in the Broker Development Kit (BDK).
+  
+ 3. INC000000758490 Upgrade RPC broker for IPv6
+  
+ Problem:
+ -------
+ A Federal Chief Information Office (CIO) memo "Transition to IPv6" 
+ released in September of 2010 requires agencies to continue their IPv6 
+ transition efforts and has established specific milestones associated 
+ with enabling an IPv6 operational capability by the end of FY2014.  
+ Microsoft has released WinSock APIs to provide IPv4/IPv6 dual-stack TCPIP 
+ capability.  The RPC Broker client used by most VA GUI applications needs 
+ to be upgraded to use these new APIs, and the VistA code modified to 
+ support IPv6 addressing.
+  
+ Resolution:
+ ----------
+ This patch upgrades VistA RPC Broker Development Kit (BDK) code to use
+ new Windows IPv4/IPv6 APIs.  RPC Broker Client Agent (ClAgent.exe) and 
+ Server List (ServerList.exe) applications to support IPv4/IPv6 will be
+ developed and released under separate patch IDs using the new BDK.  'Beta'
+ versions of these applications are included in this patch to assist
+ developers in their programming and testing, but the applications should
+ not be installed in a production environment as they have not been field
+ tested in production.
+  
+ 4. INC000000901719 Security/Logon Issue from CPRS changing verify code
+  
+ Problem:
+ -------
+ When the access and verify code are entered into CPRS in one string 
+ (example "abcd123;vfcode*99") into the access code box, and the user is 
+ prompted to change the verify code, then the box containing the old 
+ verify code is not populated and the user cannot change the verify code.
+  
+ Resolution:
+ ----------
+ The value entered in the access code box have been split into access code 
+ and verify code values prior to being concatenated and sent to VistA for 
+ authentication.  This provides the old data needed to be passed to the 
+ form to change the verify code.  
+  
+  
+ Test Sites:
+ ----------
+ Not applicable.  Not tested at field sites.  Not tested independently.  
+ Patch contains shared code that is tested during GUI development and 
+ deployment.  No production client-side or server-side software is 
+ included.
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ The most up-to-date VA Kernel Remote Procedure Call (RPC) Broker end-user
+ documentation is available on the VHA Software Document Library (VDL) at
+ the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=23
+   
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+  
+ Software is contained in the XWB_1_1_P60.zip file.          
+  
+ Documentation is contained in the XWB_1_1_P60_README.txt file, which
+ contains updated instructions for installing the RPC Broker BDK.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+     ftp://download.vista.domain.ext/
+ This transmits the files from the first available FTP server.  The files 
+ are located in the [] directory. Sites may also elect 
+ to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Title                         File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ BDK32 IPv6 Enabled            XWB_1_1_P60.zip                Binary
+ XWB*1.1*60 READ ME            XWB_1_1_P60_README.txt         Ascii
+  
+  
+ Routine Information:
+ ====================
+  
+   Server Side:
+   ------------
+   No M routines included
+  
+  
+ List of preceding patches:
+   XWB*1.1*13, XWB*1.1*26, XWB*1.1*47, XWB*1.1*50
+  
+  
+ The client-side (developer) software distribution includes:
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- ---------------
+ 04/15/2015  10:10 AM         5,275,138 XWB_1_1_P60.zip 
+   Client Side:
+   ------------
+  
+ The following is a list of the files included in the zip file and their 
+ CRC-32 values assuming that the zip file has been unzipped into the 
+ directory (C:\Program Files (x86)\Vista). The locations would differ if
+ the files are installed under another location.
+  
+  
+    Date       Time            Bytes    Filename
+ ----------  --------       ----------- -------------
+  Directory of C:\Program Files (x86)\Vista\BDK32
+  
+ 04/15/2015  10:05 AM    <DIR>          .
+ 04/15/2015  10:05 AM    <DIR>          ..
+ 09/29/2014  04:06 PM         2,926,592 ClAgent.exe
+ 04/15/2015  09:54 AM    <DIR>          Help
+ 04/15/2015  10:04 AM             5,284 README XWB_1_1_P60.TXT
+ 04/15/2015  10:02 AM    <DIR>          Samples
+ 04/09/2015  08:24 AM         3,276,800 ServerList.exe
+ 04/15/2015  09:55 AM    <DIR>          Source
+                3 File(s)      6,208,676 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Help
+  
+ 04/15/2015  09:54 AM    <DIR>          .
+ 04/15/2015  09:54 AM    <DIR>          ..
+ 04/10/2014  12:52 PM           511,778 Broker_1_1.chm
+                1 File(s)        511,778 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples
+  
+ 04/15/2015  10:02 AM    <DIR>          .
+ 04/15/2015  10:02 AM    <DIR>          ..
+ 04/15/2015  09:54 AM    <DIR>          BrokerEx
+ 04/15/2015  09:54 AM    <DIR>          BSE
+                0 File(s)              0 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\BrokerEx
+  
+ 04/15/2015  09:54 AM    <DIR>          .
+ 04/15/2015  09:54 AM    <DIR>          ..
+ 03/04/2014  02:21 PM               386 BrokerExample.cfg
+ 03/04/2014  02:21 PM             1,618 BrokerExample.dof
+ 03/04/2014  02:21 PM               434 BrokerExample.dpr
+ 04/15/2015  09:25 AM             9,389 BrokerExample.dproj
+ 04/15/2015  09:25 AM                62 BrokerExample.dproj.local
+ 04/15/2015  09:22 AM         3,131,392 BrokerExample.exe
+ 04/15/2015  09:25 AM               215 BrokerExample.identcache
+ 04/15/2015  09:22 AM             2,220 BrokerExample.res
+ 04/15/2015  09:22 AM               372 BrokerExample.VA508
+ 05/08/2014  11:19 AM               766 BrokerExample_Icon.ico
+ 11/19/2014  10:02 AM            21,134 fBrokerExample.dfm
+ 11/19/2014  09:56 AM            17,115 fBrokerExample.pas
+ 11/19/2014  10:02 AM                 3 fBrokerExample.vlb
+ 03/04/2014  02:23 PM             1,354 fOkToTerminate.dfm
+ 03/04/2014  02:23 PM               447 fOkToTerminate.pas
+ 03/04/2014  02:23 PM            83,095 frmVistAAbout.dfm
+ 03/04/2014  02:23 PM             9,165 frmVistAAbout.pas
+ 03/04/2014  02:23 PM            83,095 fVistAAbout.dfm
+ 03/04/2014  02:23 PM             9,163 fVistAAbout.pas
+               19 File(s)      3,371,425 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Samples\BSE
+  
+ 04/15/2015  09:54 AM    <DIR>          .
+ 04/15/2015  09:54 AM    <DIR>          ..
+ 04/07/2006  04:35 PM               386 BseSample1.cfg
+ 04/07/2006  04:35 PM             1,465 BseSample1.dof
+ 02/15/2006  04:09 PM               202 BseSample1.dpr
+ 11/19/2014  10:03 AM             8,614 BseSample1.dproj
+ 11/19/2014  10:03 AM                62 BseSample1.dproj.local
+ 05/12/2014  09:11 AM         2,367,488 BseSample1.exe
+ 11/19/2014  10:03 AM               199 BseSample1.identcache
+ 02/23/2006  01:19 PM               100 BseSample1.inc
+ 05/12/2014  09:11 AM             2,044 BseSample1.res
+ 05/08/2014  11:19 AM               766 BseSample1_Icon.ico
+ 11/19/2014  10:03 AM             6,385 fBseSample1.dfm
+ 05/08/2014  11:35 AM             5,672 fBseSample1.pas
+               12 File(s)      2,393,383 bytes
+  
+  Directory of C:\Program Files (x86)\vista\BDK32\Source
+  
+ 04/15/2015  09:55 AM    <DIR>          .
+ 04/15/2015  09:55 AM    <DIR>          ..
+ 04/15/2014  09:38 AM             2,724 AddServer.dfm
+ 09/22/2014  11:55 AM             1,466 AddServer.pas
+ 09/22/2014  12:11 PM            17,382 CCOWRPCBroker.pas
+ 09/22/2014  12:11 PM             1,427 CCOW_const.pas
+ 04/09/2014  02:21 PM               877 fDebugInfo.dfm
+ 09/22/2014  12:12 PM             1,082 fDebugInfo.pas
+ 09/22/2014  12:13 PM             1,357 fPlinkpw.dfm
+ 09/22/2014  12:13 PM             1,513 fPlinkpw.pas
+ 07/22/2013  08:09 AM             5,723 frmSignonMessage.dfm
+ 09/23/2014  08:10 AM             1,528 frmSignonMessage.pas
+ 07/22/2013  08:10 AM               891 fRPCBErrMsg.dfm
+ 12/18/2013  10:49 AM             1,673 fRPCBErrMsg.pas
+ 07/22/2013  08:11 AM             6,205 fSgnonDlg.dfm
+ 12/18/2013  10:49 AM             1,105 fSgnonDlg.pas
+ 05/14/2014  07:48 AM             6,488 fSignonConfigColor.dfm
+ 05/14/2014  07:48 AM             1,029 fSignonConfigColor.pas
+ 09/11/2013  09:11 AM               979 fSSHUsername.dfm
+ 09/11/2013  09:10 AM             1,505 fSSHUsername.pas
+ 05/08/2014  09:19 AM             4,013 Hash.pas
+ 10/12/2007  01:17 PM             3,146 IISBase.inc
+ 04/15/2015  08:38 AM            26,309 Loginfrm.dfm
+ 04/15/2015  08:38 AM            15,630 Loginfrm.pas
+ 01/07/2014  09:06 AM             3,163 MFunStr.pas
+ 03/27/2014  09:08 AM             4,759 RpcbEdtr.pas
+ 07/22/2013  08:30 AM             1,667 RpcbErr.dfm
+ 12/18/2013  11:00 AM             7,616 RpcbErr.pas
+ 04/15/2014  10:28 AM            10,060 Rpcconf1.dfm
+ 05/14/2014  10:20 AM            11,628 Rpcconf1.pas
+ 05/14/2014  10:20 AM                 3 Rpcconf1.vlb
+ 04/09/2014  02:48 PM               359 Rpcnet.dfm
+ 04/15/2014  10:25 AM            11,877 Rpcnet.pas
+ 12/18/2013  11:06 AM            10,880 RpcSLogin.pas
+ 07/22/2013  08:39 AM             6,269 SelDiv.dfm
+ 12/18/2013  11:08 AM             8,124 SelDiv.pas
+ 05/08/2014  09:35 AM             6,406 SgnonCnf.dfm
+ 05/08/2014  09:35 AM            19,534 SgnonCnf.pas
+ 04/17/2014  02:36 PM           338,054 Splash.bmp
+ 05/08/2014  11:50 AM           782,769 Splvista.dfm
+ 04/09/2014  03:16 PM             2,090 Splvista.pas
+ 05/08/2014  11:50 AM               119 Splvista.vlb
+ 06/10/2004  11:36 AM               406 TCCOWRPCBroker.bmp
+ 10/08/2014  08:14 AM            85,062 TRPCB.pas
+ 11/20/2013  03:20 PM             5,911 VCEdit.dfm
+ 01/07/2014  09:11 AM             8,995 VCEdit.pas
+ 02/09/2004  11:12 AM             2,604 VERGENCECONTEXTORLib_TLB.dcr
+ 12/18/2013  11:12 AM            63,908 VERGENCECONTEXTORLib_TLB.pas
+ 11/19/2014  03:43 PM            41,315 Wsockc.pas
+ 05/14/2014  07:50 AM             4,630 XlfSid.pas
+ 04/07/2015  04:18 PM             6,979 XMLbroker.pas
+ 05/14/2014  10:24 AM             1,539 XWBReg.pas
+ 05/08/2014  10:10 AM            49,151 XWBRich20.pas
+ 09/03/2014  11:15 AM            10,801 Xwbut1.pas
+ 10/01/2012  12:01 PM               766 XWB_D2010_Icon2.ico
+ 05/04/2004  04:36 PM             1,832 XWB_DXE4.dcr
+ 04/07/2015  04:15 PM               811 XWB_DXE4.dpk
+ 04/07/2015  04:19 PM            15,126 XWB_DXE4.dproj
+ 04/07/2015  04:19 PM             1,523 XWB_DXE4.dproj.local
+ 09/05/2014  12:35 PM               282 XWB_DXE4.identcache
+ 04/07/2015  04:19 PM             1,552 XWB_DXE4.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE5.dcr
+ 04/07/2015  04:13 PM               811 XWB_DXE5.dpk
+ 04/07/2015  04:13 PM            15,537 XWB_DXE5.dproj
+ 04/07/2015  04:13 PM             1,743 XWB_DXE5.dproj.local
+ 04/07/2015  04:12 PM             1,552 XWB_DXE5.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE6.dcr
+ 04/07/2015  04:07 PM               811 XWB_DXE6.dpk
+ 04/07/2015  04:09 PM            24,307 XWB_DXE6.dproj
+ 04/07/2015  04:09 PM             1,963 XWB_DXE6.dproj.local
+ 04/07/2015  04:07 PM               182 XWB_DXE6.identcache
+ 04/07/2015  04:09 PM             1,552 XWB_DXE6.res
+ 05/04/2004  04:36 PM             1,832 XWB_DXE7.dcr
+ 04/07/2015  04:05 PM               811 XWB_DXE7.dpk
+ 04/15/2015  08:42 AM            25,973 XWB_DXE7.dproj
+ 04/15/2015  08:42 AM             2,183 XWB_DXE7.dproj.local
+ 04/07/2015  04:05 PM               182 XWB_DXE7.identcache
+ 04/15/2015  08:42 AM             1,552 XWB_DXE7.res
+ 10/01/2012  12:01 PM               766 XWB_R2010_Icon7.ico
+ 04/07/2015  04:17 PM             2,210 XWB_RXE4.dpk
+ 04/07/2015  04:19 PM            12,822 XWB_RXE4.dproj
+ 04/07/2015  04:19 PM             4,173 XWB_RXE4.dproj.local
+ 04/07/2015  04:19 PM             2,884 XWB_RXE4.identcache
+ 04/07/2015  04:18 PM             1,300 XWB_RXE4.res
+ 05/12/2014  01:23 PM             4,265 XWB_RXE4.VA508
+ 04/07/2015  04:12 PM             1,954 XWB_RXE5.dpk
+ 04/07/2015  04:12 PM            13,134 XWB_RXE5.dproj
+ 04/07/2015  04:12 PM             4,999 XWB_RXE5.dproj.local
+ 11/19/2014  09:31 AM             2,884 XWB_RXE5.identcache
+ 04/07/2015  04:12 PM             1,300 XWB_RXE5.res
+ 10/08/2014  09:10 AM             2,154 XWB_RXE5.VA508
+ 04/07/2015  04:09 PM             1,954 XWB_RXE6.dpk
+ 04/07/2015  04:09 PM            13,029 XWB_RXE6.dproj
+ 04/07/2015  04:09 PM             5,219 XWB_RXE6.dproj.local
+ 11/19/2014  09:34 AM             2,884 XWB_RXE6.identcache
+ 04/07/2015  04:09 PM             1,300 XWB_RXE6.res
+ 10/08/2014  01:10 PM             2,154 XWB_RXE6.VA508
+ 04/15/2015  08:05 AM             1,954 XWB_RXE7.dpk
+ 04/15/2015  08:40 AM            27,190 XWB_RXE7.dproj
+ 04/15/2015  08:40 AM             5,669 XWB_RXE7.dproj.local
+ 04/15/2015  08:40 AM             2,458 XWB_RXE7.identcache
+ 04/15/2015  08:40 AM             1,300 XWB_RXE7.res
+ 04/15/2015  08:39 AM             2,154 XWB_RXE7.VA508
+              101 File(s)      1,839,387 bytes
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 27, 2012
+Completed By:                               Date Completed: JUN 02, 2015
+Released By :                               Date Released : JUN 11, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

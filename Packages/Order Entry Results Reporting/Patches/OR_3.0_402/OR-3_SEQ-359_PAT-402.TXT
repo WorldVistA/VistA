@@ -1,0 +1,166 @@
+$TXT
+=============================================================================
+Run Date: DEC 22, 2015                     Designation: OR*3*402
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #359                      Status: Released
+                  Compliance Date: JAN 22, 2016
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*402'
+                    (v)OR*3*311    <<= must be installed BEFORE `OR*3*402'
+
+Subject: ADD DIAG CODES TO RAD RPT, FIX ISSUE WITH CPRS ORDER CHECKS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING (OR) package:
+  
+ 1. The primary and secondary diagnostic codes are missing from the
+    standard radiology report.
+  
+ 2. Duplicate drug therapy order checks are not being displayed when an 
+    outpatient medication order is placed against an active clinic
+    Inpatient Medications for Outpatients (IMO) order that is considered a
+    duplicate drug therapy by the pharmacy package.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKET(S): 
+ ============================
+ 1. INC000000958890 - Missing primary diagnostic code from standard
+                      radiology report
+                      PSPO #2560
+ 2. INC000000833162 - Duplicate drug therapy order checks not displaying
+                      for outpatient meds ordered against active clinical
+                      orders (IMO)
+  
+  
+ TEST SITES:
+ ===========
+ Illiana HCS
+ Hudson Valley HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000958890 - Missing primary diagnostic code from standard 
+                      radiology report
+  
+    Patient Safety Issue: PSPO #2560
+  
+    Problem:
+    ========
+    The primary and secondary diagnostic codes are missing from the 
+    standard radiology report.
+  
+    Resolution:
+    ===========
+    Modified the API RR^ORDV03 to insert the primary and secondary
+    diagnostic codes after the Primary and Secondary Diagnostic Code labels
+    into the standard radiology report.
+  
+  
+ 2. INC000000833162 - Duplicate drug therapy order checks not displaying 
+                      for outpatient meds ordered against active clinical
+                      orders (IMO)
+  
+    Problem:
+    ========
+    The duplicate drug therapy order checks are not being displayed for 
+    outpatient medications that are checked against active clinical IMO
+    orders when they are qualified to be displayed as duplicate therapies.
+  
+    Resolution:
+    ===========
+    Modified the API DT^ORKPS1 to include IMO orders as part of duplicate
+    therapy order checking.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+    
+      Select Kernel Installation & Distribution System Option: Installation
+  
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*402):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+  
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*402.
+  
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDV03
+    Before: B47046777   After: B59633983  **109,208,215,243,402**
+Routine Name: ORKPS1
+    Before: B80576469   After: B85828947  **232,272,346,352,345,311,402**
+ 
+Routine list of preceding patches: 243, 311
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 15, 2014
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : DEC 22, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

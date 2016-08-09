@@ -1,0 +1,181 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 06/27/14 at 10:46
+=============================================================================
+Run Date: SEP 10, 2014                     Designation: IB*2*531
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #478                      Status: Released
+                  Compliance Date: SEP 30, 2014
+=============================================================================
+
+
+Subject: FY15 IB STOP CODE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2015 changes.
+  
+ *** PLEASE NOTE ***
+ There is a shortened Compliance Date for this patch. As these Billing 
+ Clinic Stop Codes go into effect 10/1/14 - compliance by 9/30/14 is 
+ urgently requested.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001003895    FY15 IB STOP CODE UPDATE
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines, FL
+ St. Cloud, MN
+ Upstate NY HCS (Buffalo)
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001003895    FY15 IB STOP CODE UPDATE
+   
+    Problem: 
+    --------
+    As requested by the Chief Business Office (CBO), the IB CLINIC
+    STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+    reflect changes for Fiscal Year 2015.
+   
+    Resolution:
+    -----------
+    Add and update requested Stop Codes as described below:
+  
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 183    OCT  1,2014  BASIC CARE      PEER SPECIALIST               OVERRIDE
+ 443    OCT  1,2014  NON-BILLABLE    DBQ REFERRAL CLINIC           OVERRIDE
+ 555    OCT  1,2014  NON-BILLABLE    HOMELESS VT COM EMP SVC INDIV OVERRIDE
+ 556    OCT  1,2014  NON-BILLABLE    HOMELESS VT COM EMP SVC GRP   OVERRIDE
+ 339184 OCT  1,2014  SPECIALTY CARE  MATERNITY CARE COORDINATORA   OVERRIDE
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ OLD: 
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 225    OCT  1,2012  BASIC CARE      SCI TELEHEALTH                NONE  
+ 999    OCT  1,2002  NON-BILLABLE    EMPLOYEE HEALTH               OVERRIDE
+  
+  
+ NEW:
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 225    OCT  1,2014  BASIC CARE      SCI TELEHEALTH VIRTUAL        NONE  
+ 999    OCT  1,2014  NON-BILLABLE    OCCUPATIONAL HEALTH           OVERRIDE
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install this patch at
+ any time without interruption to users.  It should take less than 2
+ minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*531)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*531.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+     7. You may delete routine IB20P531 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added.  See below:
+     NOTE: If any type of error message is displayed during installation
+     create a REMEDY ticket to resolve the issue.  
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    183  PEER SPECIALIST
+  
+    443  DBQ REFERRAL CLINIC
+  
+    555  HOMELESS VT COM EMP SVC INDIV
+  
+    556  HOMELESS VT COM EMP SVC GRP
+  
+    339184  MATERNITY CARE COORDINATOR
+  
+      5 entries added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    999  OCCUPATIONAL HEALTH
+  
+    225  SCI TELEHEALTH VIRTUAL
+  
+      2 updates added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P531
+    Before:       n/a   After: B11799643  **531**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 25, 2014
+Completed By:                               Date Completed: SEP 04, 2014
+Released By :                               Date Released : SEP 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

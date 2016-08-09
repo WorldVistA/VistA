@@ -1,0 +1,152 @@
+$TXT Created by  at MNTVBB.FO-ALBANY.DOMAIN.EXT  (KIDS) on Wednesday, 07/08/15 at 16:20
+=============================================================================
+Run Date: NOV 16, 2015                     Designation: IB*2*553
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #501                      Status: Released
+                  Compliance Date: DEC 16, 2015
+=============================================================================
+
+
+Subject: OCCURRENCE SPAN CODES UPDATE
+
+Category: 
+  - Other
+
+Description:
+============
+
+ The purpose of this patch is to update the names of 11 Occurrence Span
+ Codes in the MCCR UTILITY (#399.1) file.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001276498 Integrated Billing - Occurrence Span Codes
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Bay Pines HCS
+ Central Plains HCS
+ Caribbean HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001276498 Integrated Billing - Occurrence Span Codes
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested an update to names of 11 
+ Occurrence Span Codes in the MCCR UTILITY (#399.1) file.
+  
+ Resolution:
+ -----------
+ A post init routine IB20P553 was created to update the following names of
+ 11 Occurrence Span Codes:
+  
+   Code #    Name
+   ------    ---------------------------------------
+     70      QUALIFYING STAY DATES FOR SNF USE ONLY
+     71      PRIOR STAY DATES
+     72      ID OF OPT TIME ASSOC WITH AN IP HOSP ADMIT & IP CLM FOR PYMT
+     73      BENEFITS ELIGIBILITY PERIOD
+     74      NONCOVERED LEVEL OF CARE
+     75      SNF LEVEL OF CARE
+     76      PATIENT LIABILITY
+     77      PROVIDER LIABILITY PERIOD
+     78      SNF PRIOR STAY DATES
+     79      PAYER CODE
+     80      PRIOR SAME-SNF STAY DATES FOR PAYMENT BAN PURPOSES
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+   
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+     
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+   
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+    
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*553):
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P553.
+   
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P553
+    Before:       n/a   After:  B5641432  **553**
+
+=============================================================================
+User Information:
+Entered By  :                      Date Entered  : JUL 01, 2015
+Completed By:                   Date Completed: NOV 04, 2015
+Released By :                   Date Released : NOV 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

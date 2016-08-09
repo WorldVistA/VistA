@@ -1,0 +1,149 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 08/14/14 at 16:45
+=============================================================================
+Run Date: MAY 06, 2015                     Designation: PSN*4*406
+Package : PSN - NATIONAL DRUG FILE            Priority: Mandatory
+Version : 4       SEQ #420                      Status: Released
+                  Compliance Date: JUN 05, 2015
+=============================================================================
+
+Associated patches: (v)PSN*4*157   <<= must be installed BEFORE `PSN*4*406'
+
+Subject: INACTIVE DRUG INGREDIENTS AS CAUSATIVE AGENTS SCREEN
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSN*4.0*406 addresses the following issue:
+  
+ 1.      When entering allergies for patients the software allows for 
+ assigning inactive Drug Ingredients from the Drug Ingredients file 
+ (#50.416) as Causative Agents.
+  
+   
+ ASSOCIATED REMEDY: 
+ ==================
+ 1.      INC000001003900 - Allergy package allows for assigning inactive 
+ Drug Ingredients as Causative Agents
+   
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Oklahoma City VAMC
+ Maryland HCS
+ Aleda E. Lutz VA Medical Center (Saginaw)
+  
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1.      INC000001003900 - Allergy package allows for assigning inactive 
+ Drug Ingredients as Causative Agents 
+  
+ Problem:
+ --------
+ When entering allergies for patients the software allows for assigning 
+ inactive Drug Ingredients from the Drug Ingredients file (#50.416) as 
+ Causative Agents. There are also patient allergies with some of these 
+ inactive Drug Ingredients currently assigned as Causative Agents that 
+ need to be corrected.
+    
+ Solution:
+ ---------
+ Modified routine PSNDI to filter out inactive Drug Ingredients when 
+ returning data to the Adverse Reaction Tracking application for selection 
+ as a causative agent. A report was created listing patients with inactive 
+ Drug Ingredients currently assigned as Causative Agents that need to be 
+ corrected (includes DFN and the inactive Drug Ingredient(s)). The report
+ will be printed to the screen and emailed to the person installing the
+ patch so it can be forwarded to the appropriate clinical staff. (Note the
+ report includes only Drug Ingredients entered as the Causative Agent, only
+ allergies that are not marked as entered in error, and only for patients
+ not deceased). This patch does not correct the problem for adverse
+ reactions entered through CPRS - a separate CPRS patch will be addressing
+ this issue in that package.
+  
+  
+  
+ Installation Instructions:
+ --------------------------
+ National Drug File (NDF) users should be off the system when this 
+ patch is installed. Installation will take less than 5 minutes. 
+ This patch should be installed during non-peak requirement hours.
+  
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter PSN*4.0*406).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch 
+            is installed
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package 
+         PSN*4.0*406
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+         respond NO.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//", respond NO.
+              
+      7. If there are any patient allergies involving an inactive
+         ingredient assigned as a causative agent they will appear on the
+         report printed to the screen. The report will also be sent as a   
+         mailman message to the mailbox of the person installing the 
+         patch.  Then the report can be forwarded to the appropriate
+         clinical staff so the entries can be corrected.
+  
+       *****************************************************************
+       ******* AT THIS POINT PLEASE FORWARD THE MAILMAN MESSAGE ********
+       ******* THAT WAS SENT TO YOU WHICH CONTAINS THE REPORT.  ********
+       ******* PLEASE FORWARD IT TO THE APPROPRIATE CLINICAL    ********
+       ******* STAFF.                                           ********
+       *****************************************************************
+  
+     8. When the patch has been completely installed delete routine
+         PSN4P406.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN4P406
+    Before:       n/a   After: B12038376  **406**
+Routine Name: PSNDI
+    Before:  B9494997   After:  B9558388  **80,109,157,406**
+ 
+Routine list of preceding patches: 157
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 02, 2014
+Completed By:                               Date Completed: APR 30, 2015
+Released By :                               Date Released : MAY 06, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

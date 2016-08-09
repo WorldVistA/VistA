@@ -1,0 +1,171 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/12/14 at 12:59
+=============================================================================
+Run Date: FEB 09, 2015                     Designation: PSJ*5*312
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #266                      Status: Released
+                  Compliance Date: MAR 12, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*312'
+
+Subject: CLINIC ORDERS DISAPPEAR & ACTIVE ORDERS EXPIRED
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1.  Clinic orders that are finished with a Start Date greater than 72
+     hours in the past do not appear on the Inpatient Profile.
+  
+ 2.  Active inpatient orders are being expired by the system at midnight.
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Associated Remedy tickets:
+ =========================
+ 1.  INC000000971226 -  Clinic orders, when finished with a Start Date
+                        greater than 72 hours in the past, do not appear
+                        on the Inpatient Profile.
+  
+ 2.  INC000000983188 -  Active inpatient orders are being expired by the
+                        system at midnight.
+  
+  
+ Participating Test Sites:
+ ========================
+ Oklahoma City VAMC
+ Tennessee Valley HCS
+ Upstate NY HCS
+  
+  
+ Remedy Overview:
+ ===============
+ 1.  INC000000971226 
+  
+   Patient Safety Issue:
+   --------------------
+   PSPO000002540
+  
+   Problem:
+   --------
+   When Clinic Orders are finished by pharmacy with Start and Stop Dates
+   greater than 72 hours in the past, they do not appear on the Long
+   profile.
+  
+   Resolution:
+   ------------
+   The routine, PSJO1, was modified to ensure that the expired orders show
+   on the Long profile.
+  
+  
+ 2:  INC000000983188
+  
+   Patient Safety Issue:
+   --------------------
+   PSPO000002553
+  
+   Problem:
+   --------
+   When the pharmacist is processing a pending one-time IV order and then 
+   does a Speed Finish on a pending renewal for a Unit Dose order for the 
+   same patient, the subsequent Unit Dose order will have the same Stop 
+   Date as the IV order.  
+  
+   Resolution:
+   ------------
+   After exiting the option Non-Verified/Pending Orders [PSJU VBW], any 
+   remaining variables will now be cleaned up so they are not held over 
+   when another option is invoked.  (Option Non-Verified/Pending Orders 
+   [PSJU VBW] was modified, no routines were modified.)
+  
+  
+ Other Components:
+ =================
+ OPTION file (#19), OPTION: PSJU VBW, EXIT ACTION: D KILL^XUSCLEAN
+  
+  
+ Installation Instructions:
+ =========================
+ It is recommended that the install take place during non-peak hours.
+  
+ Install Time - less than 2 minutes. 
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter PSJ*5.0*312):
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package PSJ*5.0*312.
+    
+     a.  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//,
+         answer NO
+     b.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", answer NO.
+     c.  When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJO1
+    Before: B46556084   After: B46301239  **3,47,56,58,109,110,127,162,
+                                           181,275,292,299,312**
+ 
+Routine list of preceding patches: 299
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 07, 2014
+Completed By:                               Date Completed: FEB 04, 2015
+Released By :                               Date Released : FEB 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

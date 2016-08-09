@@ -1,0 +1,159 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 03/12/13 at 16:02
+=============================================================================
+Run Date: MAY 30, 2014                     Designation: TIU*1*278
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #257                      Status: Released
+                  Compliance Date: JUN 30, 2014
+=============================================================================
+
+Associated patches: (v)TIU*1*224   <<= must be installed BEFORE `TIU*1*278'
+
+Subject: REDUNDANT PROGRESS NOTES DISPLAY
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration
+ Utilities package:
+  
+ 1. Redundant progress notes title display
+ 2. Spelling error in TIU Template field
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000620409 - some note titles show names two ways <xxx> and 
+                      some don't, is there a fix?
+    Duplicates:
+    INC000000752694 - Progress Note title displays more than once in CPRS.
+  
+ 2. INC000000226367 - Spelling error in TIU Template Field (VANOD skin 
+                      template)
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+   
+  
+ TEST SITES:
+ ========== 
+ Fargo VAMC, ND
+ Philadelphia VAMC, PA
+ Pittsburgh VA HCS, PA 
+  
+  
+ REMEDY TICKET OVERVIEW:
+ ======================
+ 1. INC000000620409 - some note titles show names two ways <xxx> and 
+                      some don't, is there a fix?
+  
+   Problem:
+   -------
+   When selecting a New Note from the Notes tab in CPRS, several progress 
+   note titles appear twice in sequence: once in the form TITLE, and once
+   in the form TITLE <TITLE>.  This is redundant and confusing for users.
+  
+   Resolution:
+   ----------
+   Changed the indexing routine TIUDD1 so that each full title appears 
+   only once.
+  
+   Technical:
+   ---------
+   Abbreviations and Print Names which are not identical to the Name of 
+   the progress note will still appear separately.  This fix to routine
+   TIUDD1 prevents an Abbreviation or Print Name which is exactly the same
+   as the Name from appearing a second time.
+  
+   This issue will be corrected with post-install routine TIU10278 which
+   will be deleted after running.
+  
+  
+ 2. INC000000226367  - Spelling error in TIU Template Field (VANOD skin 
+                       template)
+  
+   Problem:
+   -------
+   There is a spelling error in the ITEMS section of the TIU TEMPLATE 
+   FIELD file (#8927.1) for the template "JJS WA BS ACT".  The phrase
+   "Walks Frequently" is spelled "Walks Freguently".
+  
+   Resolution:
+   ----------
+   Corrected the spelling error, if the error is present in the installing 
+   environment.
+  
+   Technical:
+   ---------
+   This issue will be corrected with post-install routine TIU10278 which
+   will be deleted after running.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*278)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*278.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Feb 20, 2013;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIU10278
+    Before:       n/a   After:   B224996  **278**
+Routine Name: TIUDD1
+    Before: B57939687   After: B59361058  **7,51,115,163,224,278**
+ 
+Routine list of preceding patches: 224
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 20, 2013
+Completed By:                               Date Completed: MAY 23, 2014
+Released By :                               Date Released : MAY 30, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

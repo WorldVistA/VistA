@@ -1,0 +1,170 @@
+
+=============================================================================
+Run Date: JUN 18, 2015                     Designation: PSO*7*439
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #374                      Status: Released
+                  Compliance Date: JUL 18, 2015
+=============================================================================
+
+
+Subject: FDA MEDICATION GUIDES AUTOMATIC PRINTING JAVA COMPONENT UPGRADE
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ FDA Medication Guides Automatic Printing Java software allows pharmacists 
+ to automatically print FDA Medication Guides for a specific medication 
+ when one is Available and a prescription is being filled. This software 
+ must be installed on a print server for the functionality to work 
+ correctly. 
+                                                           
+ This patch is to upgrade the FDA Medication Guides Automatic Printing 
+ component to support Acrobat Reader 11.0. Windows registry keys for 
+ Acrobat Reader 11 have been added to NetworkServiceTaskSetting.reg file 
+ and PDFBox library JAR files have been upgraded.
+  
+ If your site is currently utilizing the FDA Med Guide Auto Printing 
+ software using Adobe Reader 10, the updated Java Application Components in
+ this release, provides the necessary components to allow sites to upgrade
+ to Adobe Reader 11. Please refer to the "FDA Medication Guides Project
+ Install Guide" for detailed instructions on retrieving and installing the
+ necessary software.
+  
+ ******If your site does not utilize the FDA Med Guide Auto Printing 
+ software, no further action on PSO*7*439 is necessary.******
+  
+ Associated NSR(S):
+ ---------------------------
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ ---------------------------
+ Palo Alto HCS 
+ Clarksburg VAMC
+ Wilmington VAMC
+ VISN 2 (Albany) HCS
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ INC000000866323 - FDA Med Guides in Outpatient Pharmacy stopped printing 
+ when the print server was auto upgraded to Adobe Reader 11.
+  
+  
+ INC000000882763 - FDA Med Guides in Outpatient Pharmacy stopped printing 
+ when the print server was auto upgraded to Adobe Reader 11.
+  
+  
+ Patient Safety Issue:
+ ---------------------
+ N/A
+  
+ Problem:
+ --------
+ Automatic printing of FDA Med Guides was originally developed for use 
+ with Acrobat Reader 10.0. As Acrobat Reader 11 is the latest supported 
+ version in VA, Acrobat 11 automatic updates are being pushed out to the 
+ Windows servers by SCCM. This breaks the FDA Med Guides Automatic 
+ Printing component.
+  
+ This patch is to upgrade the FDA Medication Guides Automatic Printing 
+ Java component to support Acrobat Reader 11.
+  
+ Resolution:
+ -----------
+ No code changes were made for this upgrade. The scripts were changed to 
+ add Windows registry keys for Adobe Acrobat 11.
+  
+ Documentation Retrieval:
+ ---------------------------
+ The documentation can be obtained from the ANONYMOUS.SOFTWARE directory 
+ at one of the OI Field Offices. The preferred method is to FTP the files
+ from DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the files from the
+ first available server. Alternatively, sites may elect to retrieve the
+ files from a specific OI Field Office.
+  
+    OI FIELD OFFICE     FTP ADDRESS                    DIRECTORY
+    Albany              FTP.DOMAIN.EXT       
+    Hines               FTP.DOMAIN.EXT        
+    Salt Lake City      FTP.DOMAIN.EXT          
+   
+ The documentation distribution includes:
+  
+ FILE NAME                                    DESCRIPTION
+ ---------------------------------------------------------------------
+ PHAR_FDA_MED_GUIDE_AUTO_PSO_7_439_IG.PDF    FDA Medication Guides 
+                                             Project Install Guide
+   
+ Documentation can also be retrieved from the VA Software Documentation 
+ Library (VDL) on the Internet at the following address, 
+ http://www.domain.ext/vdl. 
+  
+   
+ Project Installation Instructions:
+ ---------------------------
+ The FDA Medication Guide Automatic Printing (Increment 3) project 
+ contains a Java Application component, which is distributed in the 
+ PSO_7_P439.ZIP file. This file contains a folder called 
+ FDAMedGuidesPrinter that should be installed on Pharmacy user computers. 
+ The FDAMedGuidesPrinter contains the software and repository that will be 
+ used for retrieving and storing FDA Medication Guides via Outpatient 
+ Pharmacy or National Drug File applications. For detailed installation 
+ instructions please refer to the "FDA Medication Guides Project 
+ Installation Guide" document.
+  
+  
+ FTP Instructions:
+ ---------------------------
+ The files listed below may be obtained via FTP.  The preferred method is 
+ to FTP the files from: download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve software directly from a specific server as
+ follows:
+  
+ CIO FIELD OFFICE     FTP ADDRESS                 DIRECTORY
+ ----------------     -------------------------   --------------------
+ Albany              ftp.domain.ext    []
+ Hines               ftp.domain.ext     []
+ Salt Lake City      ftp.domain.ext       []
+  
+  
+ File Name           Retrieval Format
+ --------------      ----------------
+ PSO_7_P439.ZIP      BINARY
+  
+  
+ Java Application Component Installation Instructions:
+ =====================================================
+ In order to install the Java Application component follow these steps:
+  
+   1. Uninstall the old version of FDA Medication Guides Automatic Printing
+      Java component. Follow the instructions given in the 
+      Installation Guide
+  
+   2. Unzip the PSO_7_P439.ZIP file 
+  
+   3. Follow the installation instructions given in the Installation Guide.
+      Note: you must have administrator rights on the machine when you 
+            run it.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 30, 2014
+Completed By:                               Date Completed: JUN 18, 2015
+Released By :                               Date Released : JUN 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

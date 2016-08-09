@@ -1,0 +1,242 @@
+$TXT Created by               DEVESS.DOMAIN.EXT  (KIDS) on Tuesday, 03/31/15 at 10:31
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: ROR*1.5*25
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #26                    Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*884  <<= must be installed BEFORE `ROR*1.5*25'
+                    (v)ROR*1.5*27  <<= must be installed BEFORE `ROR*1.5*25'
+
+Subject: UPDATES TO SUPPORT ENHANCED ICD-10 PTF PROCEDURES AND DIAGNOSES
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+  
+ This patch includes several modifications to the Clinical Case
+  Registries (CCR) package to support the changes being made to PTF as a
+  result of ICD-10 implementation.  PTF now stores 25 diagnoses and 
+  procedures in the PTF file (#45).  The changes to the CCR system are:
+   
+     1. Modifies the HL7 nightly extract job Registry Update & Data 
+        Extraction [ROR TASK] to extract up to 25 ICD-10 diagnoses and
+        procedures.
+   
+     2. Modifies the selection logic for all CCR reports that screen the
+        output based on diagnosis to check the additional fields added to
+        the PTF file (#45) for ICD-10.
+   
+     3. A modification to the HL7 nightly extract Admitting Diagnosis
+        segment to only extract the data from the PTF file (#45) for the
+        PRINCIPAL DIAGNOSIS pre-1986 field (#80) if the PRINCIPAL
+        DIAGNOSIS field (#79) does not contain any data.
+  
+     4. The version of the CCR software is updated to 1.5.25. 
+   
+   
+   
+  Patch Components:
+  -----------------
+  
+  File Data Included:
+   
+  File Name (Number)         Entry Name              New/Modified/Deleted
+  ------------------         ------------------      --------------------
+  ROR METADATA file          SECONDARY DIAGNOSIS 10  New
+  (#799.2)                   SECONDARY DIAGNOSIS 11  New
+                             SECONDARY DIAGNOSIS 12  New
+                             SECONDARY DIAGNOSIS 13  New
+                             SECONDARY DIAGNOSIS 14  New
+                             SECONDARY DIAGNOSIS 15  New
+                             SECONDARY DIAGNOSIS 16  New
+                             SECONDARY DIAGNOSIS 17  New 
+                             SECONDARY DIAGNOSIS 18  New
+                             SECONDARY DIAGNOSIS 19  New
+                             SECONDARY DIAGNOSIS 20  New
+                             SECONDARY DIAGNOSIS 21  New
+                             SECONDARY DIAGNOSIS 22  New
+                             SECONDARY DIAGNOSIS 23  New
+                             SECONDARY DIAGNOSIS 24  New
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  NSR #20070902 - ICD-10-CM Conversion
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+  
+  Test Sites:
+  ----------
+  The following sites participated in testing this software.
+   * Detroit, MI
+   * Madison, WI
+   * Richmond, VA 
+   * West Haven, CT
+  
+  Software & Documentation Retrieval Instructions (GUI):
+  ----------------------------------------------------- 
+   
+  GUI Update
+  ----------
+  IMPORTANT NOTE:  This patch includes a revised Graphical User 
+  Interface (GUI) application which must be distributed to the 
+  appropriate workstations.  After the patch is installed correctly,
+  and the GUI is updated, the version of the GUI will be 1.5.25.
+  
+  File Name         Contents      Transfer Mode  
+  ---------         -----------   -------------
+  ROR1_5P25GUI.ZIP  Zipped GUI    BINARY
+   
+  The file listed above may be obtained via File Transfer Protocol
+  (FTP).  The preferred method is to file transfer protocol (ftp)
+  the file from: Download.vista.domain.ext.
+   
+  This transmits the file from the first available file transfer protocol 
+  (ftp) server.  Sites may also elect to retrieve software directly from a
+  specific server as indicated in the software and documentation retrieval
+  instructions below.
+   
+  Software & Documentation Retrieval Instructions (M-code):
+  --------------------------------------------------------- 
+  The software for this set of patches is not being distributed through the
+  National Patch Module. 
+  
+  Patch ROR*1.5*25 is being released along with DG*5.3*884 (Registration),
+  GMTS*2.7*111 (Health Summary), IB*2.0*522 (Integrated Billing),
+  LR*5.2*442 (Lab Service), and OR*3.0*406 (Order Entry/Results Reporting)
+  in a multi-package build (host file).
+  
+  Because this is a multi-package build, it can only be distributed as a
+  host file; no builds are included in the patch messages. The name of the
+  host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one
+  of the anonymous file transfer protocol (ftp) directories.
+  
+  The software is distributed in the following file:
+                                                           File Transfer 
+                                                           Protocol (ftp)
+  File Name             Description                        Mode
+  ----------------------------------------------------------------------- 
+  ICD_10_PTF_MODIFICATIONS.KID                             ASCII
+                        KIDS multi-package build (host file) 
+  
+  
+  The documentation has been updated and is distributed in the following
+  files. Each zip file contains both the .DOC and .PDF formats. 
+    
+                                                           File Transfer 
+                                                           Protocol (ftp)
+  File Name             Description                        Mode
+  ----------------------------------------------------------------------- 
+  ROR1_5P25DOC1.ZIP     ROR User Manual                    BINARY
+   
+  ROR1_5P25DOC2.ZIP     Release Notes,                     BINARY
+                        Technical Manual/Security Guide
+  
+  ICD_10_PTF_MODIFICATIONS_IG.PDF                          BINARY
+                        ICD-10 PTF Installation Guide (all patches)
+  
+   
+  The preferred method is to file transfer protocol (ftp) the files from: 
+  
+   ftp://download.vista.domain.ext/
+  
+  This transmits the files from the first available file transfer 
+  protocol (ftp) server. Sites may also elect to retrieve software directly
+  from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  Documentation can also be found on the VA Software Documentation Library 
+  at: http://www.domain.ext/vdl/
+  
+  Patch Installation:
+  ================================================== 
+  Detailed information regarding pre-installation items, post-installation
+  items, and installation instructions can be found in the Installation
+  Guide: ICD_10_PTF_Modifications_IG.PDF. This document may be obtained
+  from one of the anonymous file transfer protocol (ftp) directories listed
+  in the 'Software & Documentation Retrieval Instructions' of this patch
+  description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORHL081
+    Before: B53807054   After: B53447433  **19,25**
+Routine Name: RORP025
+    Before:       n/a   After:  B6132875  **25**
+Routine Name: RORUPD09
+    Before: B11144111   After: B11230376  **18,25**
+Routine Name: RORUTL11
+    Before:  B4209534   After:  B4346474  **13,14,15,17,18,20,19,21,22,
+                                           24,27,25**
+Routine Name: RORX013A
+    Before: B78520195   After: B79404657  **1,13,19,21,25**
+Routine Name: RORX015A
+    Before: B96662849   After: B90387034  **1,8,13,19,21,25**
+Routine Name: RORXU010
+    Before: B16438309   After: B14122091  **8,19,25**
+ 
+Routine list of preceding patches: 27
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 25, 2014
+Completed By:                               Date Completed: AUG 28, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

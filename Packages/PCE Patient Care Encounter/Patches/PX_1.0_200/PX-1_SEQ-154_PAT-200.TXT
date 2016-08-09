@@ -1,0 +1,163 @@
+$TXT Created by                  CHEYL57.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 04/24/14 at 08:11
+=============================================================================
+Run Date: SEP 11, 2014                     Designation: PX*1*200
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #154                      Status: Released
+                  Compliance Date: OCT 12, 2014
+=============================================================================
+
+
+Subject: NEW RPC FOR VISTA IMMUNIZATION PROJECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to create a Remote Procedure Call (RPC) that 
+ can be used to store immunization data in the Patient Care
+ Encounter (PCE) package. The RPC was written generically to allow
+ other types of data in the future. 
+  
+ The patch also removes an obsolete RPC, NHIN GET VISTA DATA, from the
+ broker option, NHIN APPLICATION PROXY, and replaces it with the PX SAVE
+ DATA and VPR GET PATIENT DATA Remote Procedure Calls (RPCs).
+  
+  
+ Patch Components: 
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A 
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ NHIN APPLICATION PROXY  Broker            Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ HAMPTON (VAMC)
+ SOUTH TEXAS HCS
+ CLEVELAND R3 OI&T 
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A 
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ This patch may be installed with users on the system. This patch should 
+ take less than 5 minutes to install.
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the patch 
+     # PX*1.0*200:
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' Respond with NO
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' Respond with NO
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRPC
+    Before:       n/a   After: B39810837  **200**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 17, 2014
+Completed By:                               Date Completed: SEP 11, 2014
+Released By :                               Date Released : SEP 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

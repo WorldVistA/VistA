@@ -1,0 +1,234 @@
+$TXT Created by         at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 02/11/13 at 17:15
+=============================================================================
+Run Date: JUL 17, 2014                     Designation: SD*5.3*564
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #507                    Status: Released
+                  Compliance Date: AUG 17, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*204  <<= must be installed BEFORE `SD*5.3*564'
+                    (v)SD*5.3*346  <<= must be installed BEFORE `SD*5.3*564'
+                    (v)SD*5.3*458  <<= must be installed BEFORE `SD*5.3*564'
+
+Subject: PCMM - PATIENT MULTI ASSIGNMENT BY SELECTED CLINIC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address several inconsistencies in a list of patients
+ selected and displayed as available ones for multi assignment by 
+ appointment in a clinic. That list of patients is available in PCMM GUI.
+ Additionally this patch will address a problem with incorrect indication 
+ of the patient Primary Care assignment if a hanging cross-reference in 
+ the Patient Team Position Assignment file (# 404.43) is evaluated as a 
+ valid one. 
+  
+ Associated Remedy tickets:
+ ==========================  
+ 1) HD0000000362573 - GUI Multiple Patient Assignment question
+ 2) HD0000000372116 - Patients available for multi assignment should be in
+                      no assignment status to any PC position.
+ 3) HD0000000372120 - If patients are selected for multi assignment by
+                      appointments for a clinic then only kept appointments
+                      should be counted.
+ 4) HD0000000383775 - Site cannot assign a patient to a PC role
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Fayetteville, NC
+ Salisbury, NC
+  
+  
+ Remedy Overview:
+ ================
+ 1) HD0000000362573 - GUI Multiple Patient Assignment question
+  
+ Problem:
+ ========
+ When a user unassigns a patient in the PCMM GUI then attempts to make a 
+ multi-assignment, using the same patient, the system does not make the 
+ patient available for new assignment to the original position if the 
+ assignment occurs during the same month as the unassignment.
+  
+ This issue is produced by selecting the following options in PCMM GUI 
+ once the initial unassignment has been made:
+  
+ - Select Patient/Multiple Assignments/Position Assignment
+ - Select a Team
+ - Select a Position
+ - Select Patients by Appointments
+ - Select by Clinic
+ - Select Get List by date range (a patient list available for a new 
+   assignment will be displayed)
+ - Select Include All (Patients are then moved over to new assignments;
+   next the user selects 'Save' to save the current assignments.)
+  
+ Patients selected for the assignment following the above criteria are 
+ matched against exceptions that represent patients with assignment dates 
+ for the indicated Position. Those exceptions might include patients that 
+ were already unassigned from the position to be assigned again, which
+ eliminates them from a selection for a new assignment.
+  
+ Resolution:
+ ===========
+ Routine SCMCBK has been modified to perform an additional search of 
+ previously generated exceptions to include patients that are available 
+ for assignment and have been unassigned from that particular Position.  
+ An expected patient will now be available in the multi-assignment list 
+ scenario as described in the problem section.
+   
+ 2) HD0000000372116 - Patients available for multi assignment should be in
+                      no assignment status for any PC position.
+  
+ Problem:
+ ========
+ A list of patients displayed as being available for assignment, might 
+ include patients that are already assigned to other Primary Care teams.  
+ Those patients can also be selected; however, they would not be assigned 
+ to the selected Position.  The problem is that those patients are being 
+ displayed as available for assignment but they shouldn't be.
+  
+ Resolution:
+ ===========
+ Routine SCMCBK has been modified so when the final selection of the 
+ patient list is reviewed and finds patients that are assigned to a 
+ different Primary Care team; those patients are eliminated from the list 
+ and will no longer be displayed for Primary Care team assignment.
+  
+  
+ 3) HD0000000372120 - If patients are selected for multi assignment by
+                      appointments for a clinic then only kept appointments
+                      should be counted.
+ Problem:
+ ========
+ When patients are selected for assignment following the criteria as 
+ described in Problem 1, appointments that are not 'kept' (for example:  
+ "No-Show" appointments and future appointments) are included in the list.
+ The problem is that those patients who do not have any 'kept' appointments
+ are available for selection.  If patients are selected for
+ multi-assignment by appointments for a clinic then only 'kept'
+ appointments should be counted.
+  
+ Resolution:
+ ===========
+ Routine SCAPMC28 has been modified to eliminate appointments that do not 
+ have a pointer to the OUTPATIENT ENCOUNTER file (#409.68).  Appointments 
+ identified by the scheduling API: SDAPI^SDAMA301 will include 
+ appointments in the OUTPATIENT ENCOUNTER field (#21) of the APPOINTMENT 
+ multiple sub-file (#2.98) in the PATIENT file (#2).  
+  
+  
+ 4) HD00000000383775 - Site cannot assign a patient to a PC role
+  
+ Problem:
+ ========
+ A site reported that a user could not assign a patient to a Primary Care 
+ Position because a window with the date to be assigned, displays an 
+ option to assign a Primary Care as unavailable for selection; despite the 
+ fact that the patient is not assigned to any Primary Care Position.
+  
+ Resolution:
+ ===========
+ Routines SCAPMCU2 and SCMCTPU2 have been modified to delete a hanging 
+ cross-reference and to provide a proper identification of patients for 
+ Primary Care assignments.
+  
+ Technical:
+ ==========
+ The function "GETPCTP" of routine SCAPMCU2 and the function "CHKROLE" of 
+ routine SCMCTPU2 are called to determine the patient assignment status 
+ regarding the Primary Care Team and Position. Information returned by 
+ those API's is incorrect if the related code encounters APCPOS 
+ cross-reference in the PATIENT TEAM POSITION ASSIGNMENT file (# 404.43) 
+ that points to non-existing entry in that file. An existing $G function 
+ interprets the missing entry as an existing one and returns a pointer to
+ the Primary Care team.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch may be installed with users on the system.
+  
+ Install Time - Less than 5 minutes
+     
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+    the KIDS distribution included with this message.
+  
+    NOTE:  If the required patches are not installed, the transport 
+           global will be removed.  If the transport global is removed
+           you will need to repeat this step.
+     
+ 2. From the Kernel Installation and Distribution System Menu, select
+    the Installation menu.
+     
+ 3. From this menu, you may elect to use the following options
+    (when prompted for INSTALL NAME, enter SD*5.3*564):
+      a. Compare Transport Global to Current System  - this option will
+         allow you to view all changes that will be made when the patch
+         is installed.  It compares all components of the patch 
+         (routines, DDs, templates, etc.).
+      b. Verify Checksums in Transport Global - this option will
+         allow you to ensure the integrity of the routines that are in
+         the transport global.
+      c. Print Transport Global - this option will allow you to view the
+         components of the KIDS build.
+      d. Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     
+ 4. Use the Install Package(s) option and select the package SD*5.3*564.
+     
+ 5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+    NO//', respond NO.
+     
+ 6. When prompted,'Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? YES//', respond Yes.
+    
+    When prompted,'Enter options you wish to mark as 'Out Of Order':',
+    enter:
+          
+     Team/Position Assignment/Re-Assignment [SCMC PATIENT ASSIGN/UNASSIGN]
+          
+ 7. When prompted, 'Enter protocols you wish to mark as 'Out of Order':',
+    enter:
+  
+     Mass Team Unassignment                [SCMC MU MASS TEAM UNASSIGNMENT]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCAPMC28
+    Before: B26899437   After: B31673868  **41,140,346,564**
+Routine Name: SCAPMCU2
+    Before: B44993468   After: B47183046  **41,177,205,458,564**
+Routine Name: SCMCBK
+    Before: B49541298   After: B67929176  **41,51,148,157,177,205,564**
+Routine Name: SCMCTPU2
+    Before:  B8191584   After:  B8888936  **41,148,204,564**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 08, 2009
+Completed By:                               Date Completed: JUL 02, 2014
+Released By :                               Date Released : JUL 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

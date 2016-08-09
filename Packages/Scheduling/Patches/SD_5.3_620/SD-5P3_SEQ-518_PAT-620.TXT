@@ -1,0 +1,266 @@
+$TXT Created by                    MNTVUU.DOMAIN.EXT  (KIDS) on Monday, 07/21/14 at 16:08
+=============================================================================
+Run Date: MAR 10, 2015                     Designation: SD*5.3*620
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #518                    Status: Released
+                  Compliance Date: APR 09, 2015
+=============================================================================
+
+
+Subject: PCMM WEB DATA EXTRACTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to provide sites with a means to extract 
+ Vista legacy Primary Care Management Module (PCMM) data for comparison to
+ Patient-Centered Management Module-Web (PCMM Web) for data migration prior
+ to the implementation of PCMM Web patch SD*5.3*603.
+  
+ *******************************ATTENTION********************************
+ DO NOT run the "SCMC PCMM EXTRACT ROUTINES" listed below until your
+ site has been scheduled to begin the PCMM data validation and migration
+ process.  Each site will be contacted by the Implementation Manager to
+ schedule PCMM data validation and migration.
+ ************************************************************************
+  
+ Technical Summary
+ =================
+ 1.  Routine SCRPTEAM is a new routine that extracts data from the TEAM 
+     file (404.51) for comparison to PCMMR data.
+ 2.  Routine SCRPTHST is a new routine that extracts data from the TEAM 
+     HISTORY file (404.58) for comparison to PCMMR data.
+ 3.  Routine SCRPTPOS is a new routine that extracts data from the TEAM 
+     POSITION file (404.57) for comparison to PCMMR data.
+ 4.  Routine SCRPTPHS is a new routine that extracts data from the TEAM 
+     POSITION HISTORY file (404.59) for comparison to PCMMR data.
+ 5.  Routine SCRPPTA is a new routine that extracts data from the PATIENT
+     TEAM ASSIGNMENT file (404.42) for comparison to PCMMR data.
+ 6.  Routine SCRPPTPA is a new routine that extracts data from the PATIENT
+     TEAM POSITION ASSIGNMENT file (404.43) for comparison to PCMMR data.
+ 7.  Routine SCRPPRAH is a new routine that extracts data from the 
+     PRECEPTOR ASSIGNMENT HISTORY file (404.53) for comparison to PCMMR
+     data.
+ 8.  Routine SCRPPAHS is a new routine that extracts data from the POSITION
+     ASSIGNMENT HISTORY file (404.52) for comparison to PCMMR data.
+ 9.  A new security key PCMM DATA EXTRACTS is necessary to run the extract 
+     routine options.
+  
+  
+ Additional Information:
+ ----------------------
+  
+ DO NOT run the extract options in this patch until your site has been 
+ scheduled to begin the PCMM data validation and migration process.  
+ Each site will be contacted by the Implementation Manager to schedule 
+ PCMM data validation and migration
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ File Name (#)          Field Name (#)              New/Modified/Deleted
+ -------------          --------------------------  --------------------
+ N/A
+  
+ Forms Associated:
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+ Mail Group Name                            New/Modified/Deleted
+ ---------------                            --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                     Type       New/Modified/Deleted
+ -----------                     ----       --------------------
+ SCMC PCMM EXTRACT ROUTINES       menu      new
+ SCMC TEAM FILE EXTRACT           routine   new
+ SCMC TEAM HISTORY FILE EXTRACT   routine   new
+ SCMC TEAM POSITION EXTRACT       routine   new
+ SCMC TEAM POS HISTORY EXTRACT    routine   new
+ SCMC PAT TEAM ASSIGN EXTRACT     routine   new
+ SCMC PAT TEAM POS ASGN EXTRACT   routine   new
+ SCMC POSITION ASSIGN EXTRACT     routine   new
+ SCMC PRECEPTOR ASSIGN EXTRACT    routine   new
+  
+ Protocols Associated:
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+ Security Key Name                 New/Modified/Deleted
+ -----------------                 -------------------- 
+ PCMM DATA EXTRACTS                new
+  
+ Remote Procedures Associated:
+ RPC Name                          New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Templates Associated:
+ Template Name      Type      File Name (#)          New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Memphis VAMC - Memphis, TN
+ Iron Mountain VAMC - Iron Mountain, MI
+ VA West Los Angeles HCS  - Los Angeles, CA
+ Portland VAMC - Portland, OR
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ File Description                   File Name                     FTP Mode
+ --------------------------------------------------------------------------
+ PCMM Web-VistA Data Extract Guide  SD_53_620_DM.pdf              binary
+ Release Notes                      SD_53_620_RN.pdf              binary
+  
+ Patch Installation:
+ ===================
+  
+ Please refer to the PCMM Web-VistA Data Extract Guide for complete
+ details.
+  
+ Installation Overview
+ ---------------------
+  
+ 1. DO NOT run the Post Installation instructions in this patch on the
+    Production System until your site has been scheduled to begin the PCMM
+    Data Mitigation process.  
+    Each site will be contacted by the PCMM Implementations Manager to 
+    schedule PCMM Data Mitigation.
+ 2. This patch may be installed with users on the system.  This patch 
+    should take less than 2 minutes to install. 
+ 3. The file extract processing may be system resource intensive.  
+    It is recommended that the Post Installation portion of this patch be 
+    scheduled for non-peak hours.
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ No special instructions.
+  
+ Installation Instructions
+ -------------------------
+  
+ This patch will install eight data extract routines, nine menu options, 
+ and one security key.
+  
+ 1. Login to the "backend" database server (i.e. ecp node), if applicable
+    to your site.
+ 2. Choose the PackMan message containing this patch.
+ 3. Choose the INSTALL/CHECK MESSAGE PackMan option.  
+ 4. From the Kernel Installation and Distribution System Menu, select the
+    Installation Menu.  From this menu, you may elect to use the following
+    options. When prompted for the INSTALL NAME enter SD*5.3*620
+    a. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport
+       global.
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, DDs,
+       templates, etc.).
+    c. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DDs or templates.
+ 5. From the Installation Menu, select the Install Package(s) option and
+    choose the patch to install.  Enter SD*5.3*620
+ 6. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+    Install? NO//' respond NO
+ 7. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+    respond NO
+ 8. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//' respond NO
+ 9. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+  
+ Post-Installation Instructions (to be executed once site is scheduled for 
+ PCMM Web Data Mitigation)
+ -------------------------------------------------------------------------
+  
+ Please refer to the PCMM Web-VistA Data Extract Guide for complete 
+ details.
+  
+ NOTE:  DO NOT run the extract options on the Production system until your
+ site has been scheduled to begin the PCMM Data Mitigation process.
+ Extract options may be run in test accounts to verify functionality, 
+ however, the FTP step should not be run in the test account.
+  
+ Each site will be contacted by the Implementation Manager to schedule 
+ PCMM Data Mitigation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCRPPAHS
+    Before:       n/a   After: B22427775  **620**
+Routine Name: SCRPPRAH
+    Before:       n/a   After: B13384637  **620**
+Routine Name: SCRPPTA
+    Before:       n/a   After: B18005623  **620**
+Routine Name: SCRPPTPA
+    Before:       n/a   After: B20107233  **620**
+Routine Name: SCRPTEAM
+    Before:       n/a   After: B15183519  **620**
+Routine Name: SCRPTHST
+    Before:       n/a   After:  B8383528  **620**
+Routine Name: SCRPTPHS
+    Before:       n/a   After:  B9381464  **620**
+Routine Name: SCRPTPOS
+    Before:       n/a   After: B35911981  **620**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 15, 2014
+Completed By:                               Date Completed: JAN 06, 2015
+Released By :                               Date Released : MAR 10, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

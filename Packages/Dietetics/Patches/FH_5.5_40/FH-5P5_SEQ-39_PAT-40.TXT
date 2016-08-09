@@ -1,0 +1,178 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 11/12/15 at 13:51
+=============================================================================
+Run Date: FEB 24, 2016                     Designation: FH*5.5*40
+Package : FH - DIETETICS                      Priority: Mandatory
+Version : 5.5        SEQ #39                    Status: Released
+                  Compliance Date: MAR 26, 2016
+=============================================================================
+
+Associated patches: (v)FH*5.5*39   <<= must be installed BEFORE `FH*5.5*40'
+
+Subject: ADD NEW FOOD ALLERGY TO FHSELA2
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the food Allergy Sorbitol which will be added to
+ the Dietetics package. The patch will also modify allergy type food
+ preference IODINE data line in routine FHSELA2 to include General Medical
+ Record (GMR) ALLERGY IODINE for mapping.
+  
+ ASSOCIATED CA SDM TICKETS:
+ ==========================
+ 1. I6210894FY16 - Food Allergy Sorbitol needs to be added to the
+                   Dietetics package. 
+  
+ 2. I6283388FY16 - IODINE - Food Allergy 
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Upstate New York (Albany)
+ North Florida / South Georgia (Lake City)
+ New York Harbor (Brooklyn)
+  
+ CA SDM TICKETS OVERVIEW:
+ ========================
+ 1. I6210894FY16 - Food Allergy Sorbitol needs to be added to the
+                   Dietetics package. 
+  
+ Problem:
+ --------
+ The New Term Rapid Turnaround (NTRT) Allergy team has accepted a request
+ to add SORBITOL as a food allergy to the GMR ALLERGY file (#120.82). It
+ will soon be available nationwide. It must be added to the routine FHSELA2
+ in order to be mapped as an allergy type food preference dislike in the
+ Dietetics package.
+  
+ Resolution:
+ -----------
+ Routing FHSELA2 has a hard coded list of food allergies. It uses
+ this hard coded list to present to the user for adding a food 
+ allergy preference dislike to the FOOD PREFERENCES file (#115.2) 
+ and then map it to a matching record in the GMR ALLERGY file 
+ (#120.89). Sorbitol will added to the hard coded list of food 
+ allergies in routine FHSELA2 so it may be presented to the user.
+  
+ Routine: FHSELA2
+  
+ 2. I6283388FY16 - IODINE - Food Allergy
+  
+ Problem:
+ --------
+ A request has been submitted to the NTRT Allergy team to update the drug
+ allergy Iodine to a drug/food allergy. This is to address the issue with a
+ patient who is allergic to Iodine from food sources. In the Nutrition and
+ Food Service package, the FOOD PREFERENCES (#115.2) already has an IODINE
+ record and it maps to the GMR ALLERGIES (#120.82) file's record IODIZED
+ SALT. It needs to map to the GMR ALLERGIES (#120.82) file's record IODINE
+ as well.
+  
+ Resolution:
+ -----------
+ The IODINE food preference data code line in routine FHSELA2 will be
+ modified to include IODINE as a food, drug/food allergy it can map to.
+  
+ Routine: FHSELA2
+  
+ Technical Note:
+ --------------
+ The (EP) - Enter/Edit Food Preferences [FHSEL1] option will not allow the
+ user to manually map the allergy type food preference ALLERGY - IODINE
+ to GMR Allergy record IODINE until its allergy date is updated from
+ drug to drug/food. The (CP) - Create/Map Food Preferences to Allergies
+ [FHSELA] option will map the allergy type food preference ALLERGY -
+ IODINE to the GMR Allergy record IODINE. 
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+   
+  Installation will take less than 2 minutes. Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter FH*5.5*40)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package FH*5.5*40
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//" respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.5;DIETETICS;**[Patch List]**;Jan 28, 2005;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FHSELA2
+    Before:B125209870   After:B127039563  **8,13,23,25,28,35,37,39,40**
+ Description of Changes:
+  Before patch FH*5.5*40 installation
+  ===================================
+  Line FHSELA2+1
+  --------------
+   ;;5.5;DIETETICS;**8,13,23,25,28,35,37,39**;Jan 28, 2005;Build 3
+   
+  Line FPS+142^FHSELA2
+  --------------------
+   ;;IODINE;IODIZED SALT
+   
+  After patch FH*5.5*40 installation
+  ==================================
+  FHSELA2+1
+  ---------
+  ;;5.5;DIETETICS;**8,13,23,25,28,35,37,39,40**;Jan 28, 2005;Build 
+   
+  Inserted comment lines between FHSELA2+22:TMPGL^FHSELA2
+  -------------------------------------------------------
+   ;10/26/2015 SLC/GDU FH*5.5*40 Adding/Updating the following food 
+  allergies:
+   ;  SORBITOL, IODINE
+   
+  FPS+144^FHSELA2 (line count adjusted for inserted comments)
+   ;;IODINE;IODIZED SALT;IODINE
+   
+  Comment line containing data inserted at the end of routine
+   ;;SORBITOL;SORBITOL
+
+ 
+Routine list of preceding patches: 39
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 27, 2015
+Completed By:                               Date Completed: FEB 23, 2016
+Released By :                               Date Released : FEB 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

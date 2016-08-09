@@ -1,0 +1,1261 @@
+Released PSS*1*194 SEQ #171
+Extracted from mail message
+**KIDS**:PSS*1.0*194^
+
+**INSTALL NAME**
+PSS*1.0*194
+"BLD",10053,0)
+PSS*1.0*194^PHARMACY DATA MANAGEMENT^0^3160120^y
+"BLD",10053,1,0)
+^^11^11^3150923^
+"BLD",10053,1,1,0)
+This patch addresses three (3) issues:
+"BLD",10053,1,2,0)
+ 
+"BLD",10053,1,3,0)
+1. Users may not be aware that changing a drug's strength does not change
+"BLD",10053,1,4,0)
+   the concentration.
+"BLD",10053,1,5,0)
+ 
+"BLD",10053,1,6,0)
+2. The FileMan Description on the SYNONYM (#.01) field of the SYNONYM 
+"BLD",10053,1,7,0)
+   SUB-FIELD (#50.1) file for the DRUG (#50) file does not match the
+"BLD",10053,1,8,0)
+   Input Transform.
+"BLD",10053,1,9,0)
+ 
+"BLD",10053,1,10,0)
+3. Incorrect cross references may remain, and errors may occur during
+"BLD",10053,1,11,0)
+   execution of the PSS EDIT TEXT option.
+"BLD",10053,4,0)
+^9.64PA^50^1
+"BLD",10053,4,50,0)
+50
+"BLD",10053,4,50,2,0)
+^9.641^50.1^1
+"BLD",10053,4,50,2,50.1,0)
+SYNONYM  (sub-file)
+"BLD",10053,4,50,2,50.1,1,0)
+^9.6411^.01^1
+"BLD",10053,4,50,2,50.1,1,.01,0)
+SYNONYM
+"BLD",10053,4,50,222)
+y^n^p^^^^n^^n
+"BLD",10053,4,50,224)
+
+"BLD",10053,4,"APDD",50,50.1)
+
+"BLD",10053,4,"APDD",50,50.1,.01)
+
+"BLD",10053,4,"B",50,50)
+
+"BLD",10053,6.3)
+9
+"BLD",10053,"ABPKG")
+n
+"BLD",10053,"INID")
+^n
+"BLD",10053,"INIT")
+POSTINT^PSSP194
+"BLD",10053,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10053,"KRN",.4,0)
+.4
+"BLD",10053,"KRN",.401,0)
+.401
+"BLD",10053,"KRN",.402,0)
+.402
+"BLD",10053,"KRN",.403,0)
+.403
+"BLD",10053,"KRN",.5,0)
+.5
+"BLD",10053,"KRN",.84,0)
+.84
+"BLD",10053,"KRN",3.6,0)
+3.6
+"BLD",10053,"KRN",3.8,0)
+3.8
+"BLD",10053,"KRN",9.2,0)
+9.2
+"BLD",10053,"KRN",9.8,0)
+9.8
+"BLD",10053,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",10053,"KRN",9.8,"NM",1,0)
+PSSDOSER^^0^B81302930
+"BLD",10053,"KRN",9.8,"NM",2,0)
+PSSTXT^^0^B18969862
+"BLD",10053,"KRN",9.8,"NM","B","PSSDOSER",1)
+
+"BLD",10053,"KRN",9.8,"NM","B","PSSTXT",2)
+
+"BLD",10053,"KRN",19,0)
+19
+"BLD",10053,"KRN",19.1,0)
+19.1
+"BLD",10053,"KRN",101,0)
+101
+"BLD",10053,"KRN",409.61,0)
+409.61
+"BLD",10053,"KRN",771,0)
+771
+"BLD",10053,"KRN",779.2,0)
+779.2
+"BLD",10053,"KRN",870,0)
+870
+"BLD",10053,"KRN",8989.51,0)
+8989.51
+"BLD",10053,"KRN",8989.52,0)
+8989.52
+"BLD",10053,"KRN",8994,0)
+8994
+"BLD",10053,"KRN","B",.4,.4)
+
+"BLD",10053,"KRN","B",.401,.401)
+
+"BLD",10053,"KRN","B",.402,.402)
+
+"BLD",10053,"KRN","B",.403,.403)
+
+"BLD",10053,"KRN","B",.5,.5)
+
+"BLD",10053,"KRN","B",.84,.84)
+
+"BLD",10053,"KRN","B",3.6,3.6)
+
+"BLD",10053,"KRN","B",3.8,3.8)
+
+"BLD",10053,"KRN","B",9.2,9.2)
+
+"BLD",10053,"KRN","B",9.8,9.8)
+
+"BLD",10053,"KRN","B",19,19)
+
+"BLD",10053,"KRN","B",19.1,19.1)
+
+"BLD",10053,"KRN","B",101,101)
+
+"BLD",10053,"KRN","B",409.61,409.61)
+
+"BLD",10053,"KRN","B",771,771)
+
+"BLD",10053,"KRN","B",779.2,779.2)
+
+"BLD",10053,"KRN","B",870,870)
+
+"BLD",10053,"KRN","B",8989.51,8989.51)
+
+"BLD",10053,"KRN","B",8989.52,8989.52)
+
+"BLD",10053,"KRN","B",8994,8994)
+
+"BLD",10053,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",10053,"QUES",0)
+^9.62^^
+"BLD",10053,"REQB",0)
+^9.611^2^2
+"BLD",10053,"REQB",1,0)
+PSS*1.0*55^2
+"BLD",10053,"REQB",2,0)
+PSS*1.0*155^2
+"BLD",10053,"REQB","B","PSS*1.0*155",2)
+
+"BLD",10053,"REQB","B","PSS*1.0*55",1)
+
+"FIA",50)
+DRUG
+"FIA",50,0)
+^PSDRUG(
+"FIA",50,0,0)
+50I
+"FIA",50,0,1)
+y^n^p^^^^n^^n
+"FIA",50,0,10)
+
+"FIA",50,0,11)
+
+"FIA",50,0,"RLRO")
+
+"FIA",50,0,"VR")
+1.0^PSS
+"FIA",50,50)
+1
+"FIA",50,50,9)
+
+"FIA",50,50.1)
+1
+"FIA",50,50.1,.01)
+
+"INIT")
+POSTINT^PSSP194
+"MBREQ")
+0
+"PKG",488,-1)
+1^1
+"PKG",488,0)
+PHARMACY DATA MANAGEMENT^PSS^Maintenance of Pharmacy files.
+"PKG",488,20,0)
+^9.402P^^
+"PKG",488,22,0)
+^9.49I^1^1
+"PKG",488,22,1,0)
+1.0^2970930^3000316^66481
+"PKG",488,22,1,"PAH",1,0)
+194^3160120
+"PKG",488,22,1,"PAH",1,1,0)
+^^11^11^3160120
+"PKG",488,22,1,"PAH",1,1,1,0)
+This patch addresses three (3) issues:
+"PKG",488,22,1,"PAH",1,1,2,0)
+ 
+"PKG",488,22,1,"PAH",1,1,3,0)
+1. Users may not be aware that changing a drug's strength does not change
+"PKG",488,22,1,"PAH",1,1,4,0)
+   the concentration.
+"PKG",488,22,1,"PAH",1,1,5,0)
+ 
+"PKG",488,22,1,"PAH",1,1,6,0)
+2. The FileMan Description on the SYNONYM (#.01) field of the SYNONYM 
+"PKG",488,22,1,"PAH",1,1,7,0)
+   SUB-FIELD (#50.1) file for the DRUG (#50) file does not match the
+"PKG",488,22,1,"PAH",1,1,8,0)
+   Input Transform.
+"PKG",488,22,1,"PAH",1,1,9,0)
+ 
+"PKG",488,22,1,"PAH",1,1,10,0)
+3. Incorrect cross references may remain, and errors may occur during
+"PKG",488,22,1,"PAH",1,1,11,0)
+   execution of the PSS EDIT TEXT option.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","PSSDOSER")
+0^1^B81302930^B77903107
+"RTN","PSSDOSER",1,0)
+PSSDOSER ;BIR/RTR-Dose edit option ; 21 Sep 2015  8:37 PM
+"RTN","PSSDOSER",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**34,38,50,57,47,68,82,125,129,144,155,194**;9/30/97;Build 9
+"RTN","PSSDOSER",3,0)
+ ;Reference to ^PS(50.607 supported by DBIA #2221
+"RTN","PSSDOSER",4,0)
+ ;Reference to ^PS(59 supported by DBIA #1976
+"RTN","PSSDOSER",5,0)
+ ;
+"RTN","PSSDOSER",6,0)
+ ;have an entry point for NDF to call when rematching
+"RTN","PSSDOSER",7,0)
+DOS ;Edit dosages
+"RTN","PSSDOSER",8,0)
+ D CHECK^PSSUTLPR I $G(PSSNOCON) K PSSNOCON D END Q
+"RTN","PSSDOSER",9,0)
+ D END
+"RTN","PSSDOSER",10,0)
+ W !! S DIC(0)="QEAMZ",DIC("A")="Select Drug: ",DIC="^PSDRUG(" D ^DIC K DIC I Y<1!($D(DTOUT))!($D(DUOUT)) D END W ! Q
+"RTN","PSSDOSER",11,0)
+ S PSSIEN=+Y,PSSNAME=$P($G(^PSDRUG(PSSIEN,0)),"^"),PSSIND=$P($G(^("I")),"^"),PSSNFID=$P($G(^(0)),"^",9)
+"RTN","PSSDOSER",12,0)
+ S PSSPKG=$P($G(^PSDRUG(PSSIEN,2)),"^",3)
+"RTN","PSSDOSER",13,0)
+ W !!,"This entry is marked for the following PHARMACY packages:"
+"RTN","PSSDOSER",14,0)
+ W:PSSPKG["O" !,"Outpatient" W:PSSPKG["U" !,"Unit Dose"
+"RTN","PSSDOSER",15,0)
+ W:PSSPKG["I" !,"IV" W:PSSPKG["W" !,"Ward Stock"
+"RTN","PSSDOSER",16,0)
+ W:PSSPKG["N" !,"Controlled Substances" W:PSSPKG["X" !,"Non-VA Med"
+"RTN","PSSDOSER",17,0)
+ I PSSPKG'["O",PSSPKG'["U",PSSPKG'["I",PSSPKG'["W",PSSPKG'["N",PSSPKG'["X" W !," (none)"
+"RTN","PSSDOSER",18,0)
+ K PSSPKG L +^PSDRUG(PSSIEN):$S($G(DILOCKTM)>0:DILOCKTM,1:3) I '$T W !!,$C(7),"Another person is editing this drug.",! K DIR S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR G DOS
+"RTN","PSSDOSER",19,0)
+ W !!,PSSNAME_$S($G(PSSNFID):"    *N/F*",1:"") W ?52,"Inactive Date: "_$S($G(PSSIND):$E(PSSIND,4,5)_"/"_$E(PSSIND,6,7)_"/"_$E(PSSIND,2,3),1:"")
+"RTN","PSSDOSER",20,0)
+ S (PSSIZZ,PSSOZZ,PSSSKIPP)=0
+"RTN","PSSDOSER",21,0)
+RES ;
+"RTN","PSSDOSER",22,0)
+ D STUN
+"RTN","PSSDOSER",23,0)
+ I PSSST="",$O(^PSDRUG(PSSIEN,"DOS1",0)) K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1")
+"RTN","PSSDOSER",24,0)
+ S PSSXYZ=0 D CHECK
+"RTN","PSSDOSER",25,0)
+ I PSSXYZ,PSSUPRA="NN" D MPD K:$D(PSSZ) PSSZ Q
+"RTN","PSSDOSER",26,0)
+ D:$G(PSSST) XNWS I $G(PSSST),$O(^PSDRUG(PSSIEN,"DOS1",0)) D STR G SKIP
+"RTN","PSSDOSER",27,0)
+ I PSSXYZ,'$O(^PSDRUG(PSSIEN,"DOS1",0)) D  D ^DIR K DIR I Y=1 S PSSSKIPP=1 D EN2^PSSUTIL(PSSIEN,1) G RES
+"RTN","PSSDOSER",28,0)
+ .K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Create Possible Dosages for this drug",DIR("?")=" "
+"RTN","PSSDOSER",29,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages will be created for this"
+"RTN","PSSDOSER",30,0)
+ .S DIR("?",3)="drug, based on the match to the National Drug File."
+"RTN","PSSDOSER",31,0)
+ .W !!!,"This drug can have Possible Dosages, but currently does not have any.",!
+"RTN","PSSDOSER",32,0)
+ .I PSSUPRA["N" W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",33,0)
+ .W !
+"RTN","PSSDOSER",34,0)
+SKIP ;
+"RTN","PSSDOSER",35,0)
+ K PSSXYZ,PSSZ
+"RTN","PSSDOSER",36,0)
+ I '$O(^PSDRUG(PSSIEN,"DOS1",0)) G LOCX
+"RTN","PSSDOSER",37,0)
+DOSA S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^")
+"RTN","PSSDOSER",38,0)
+ W !!,"Strength => "_$S($E($G(PSSST),1)=".":"0",1:"")_$G(PSSST)_"   Unit => "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") W !
+"RTN","PSSDOSER",39,0)
+ I PSSUPRA["N",'PSSSKIPP,'$G(PSSZ) S PSSZ=1 D
+"RTN","PSSDOSER",40,0)
+ .W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",41,0)
+ K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS1"",",DIC(0)="QEAMLZ",DLAYGO=50,DIC("A")="Select DISPENSE UNITS PER DOSE: " D  D ^DIC K DIC,DLAYGO I Y<1!($D(DTOUT))!($D(DUOUT)) G DOSLOC
+"RTN","PSSDOSER",42,0)
+ .S DIC("W")="W ""  ""_$S($E($P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2),1)=""."":""0"",1:"""")_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",2)_""    ""_$P($G(^PSDRUG(PSSIEN,""DOS1"",+Y,0)),""^"",3)"
+"RTN","PSSDOSER",43,0)
+ S PSSDOSA=+Y,PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSDOSER",44,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;S:'$G(PSSOTH) Y=""@1"";@1;2",DIE="^PSDRUG("_PSSIEN_",""DOS1""," D ^DIE K DIE D:'$D(Y)&('$D(DTOUT)) BCMA G:$D(Y)!($D(DTOUT)) DOSLOC  ;;<*144 - RJS
+"RTN","PSSDOSER",45,0)
+ G DOSA
+"RTN","PSSDOSER",46,0)
+DOSLOC ;
+"RTN","PSSDOSER",47,0)
+ S (PSSPCI,PSSPCO)=0 K:$D(PSSZ) PSSZ
+"RTN","PSSDOSER",48,0)
+ F PSSPCZ=0:0 S PSSPCZ=$O(^PSDRUG(PSSIEN,"DOS1",PSSPCZ)) Q:'PSSPCZ  D
+"RTN","PSSDOSER",49,0)
+ .I $P($G(^PSDRUG(PSSIEN,"DOS1",PSSPCZ,0)),"^",2)'="" S:$P($G(^(0)),"^",3)["I" PSSPCI=1 S:$P($G(^(0)),"^",3)["O" PSSPCO=1
+"RTN","PSSDOSER",50,0)
+ I PSSPCI,PSSPCO W !! K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Enter/Edit Local Possible Dosages" D  D ^DIR K DIR I Y'=1 K PSSPCI,PSSPCO,PSSPCZ W ! D ULK G DOS
+"RTN","PSSDOSER",51,0)
+ .S DIR("?")=" ",DIR("?",1)="Possible Dosages exist for both Outpatient Pharmacy and Inpatient Medications.",DIR("?",2)="Local Possible Dosages can be added, but will not be displayed for selection"
+"RTN","PSSDOSER",52,0)
+ .S DIR("?",3)="as long as there are Possible Dosages.",DIR("?",4)=" ",DIR("?",5)="Enter 'Y' to Enter/Edit Local Possible Dosages."
+"RTN","PSSDOSER",53,0)
+ K PSSPCI,PSSPCO,PSSPCZ
+"RTN","PSSDOSER",54,0)
+LOCX ;
+"RTN","PSSDOSER",55,0)
+ I $G(PSSSKIPP) G LOC
+"RTN","PSSDOSER",56,0)
+ I $G(PSSIZZ),$G(PSSOZZ) G LOC
+"RTN","PSSDOSER",57,0)
+ K PSSONLYI,PSSONLYO
+"RTN","PSSDOSER",58,0)
+ I $G(PSSIZZ),'$G(PSSOZZ) S PSSONLYO=1
+"RTN","PSSDOSER",59,0)
+ I $G(PSSOZZ),'$G(PSSIZZ) S PSSONLYI=1
+"RTN","PSSDOSER",60,0)
+ S PSSTALK=1,PSSDIEN=PSSIEN D LOC^PSSUTIL K PSSONLYO,PSSONLYI,PSSTALK,PSSDIEN
+"RTN","PSSDOSER",61,0)
+ ;MAKE SURE THOSE ARE THE VARIABLES YOU NEED TO SET
+"RTN","PSSDOSER",62,0)
+LOC ; Edit local dose
+"RTN","PSSDOSER",63,0)
+ D STUN,NATND,PR
+"RTN","PSSDOSER",64,0)
+ W ! K DIC S DA(1)=PSSIEN,DIC="^PSDRUG("_PSSIEN_",""DOS2"",",DLAYGO=50,DIC(0)="QEAMLZ" D  D ^DIC K DIC,DLAYGO I Y<1!($D(DTOUT))!($D(DUOUT)) D ULK G DOS
+"RTN","PSSDOSER",65,0)
+ .S DIC("W")="W ""  ""_$P($G(^PSDRUG(PSSIEN,""DOS2"",+Y,0)),""^"",2)"
+"RTN","PSSDOSER",66,0)
+ S PSSDOSA=+Y,PSSOTH=$S($P($G(^PS(59.7,1,40.2)),"^"):1,1:0)
+"RTN","PSSDOSER",67,0)
+ W ! K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=".01;S:'$G(PSSOTH) Y=""@1"";3;@1;1",DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE,PSSOTH
+"RTN","PSSDOSER",68,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS2",PSSDOSA,0)),"^")="" G LOC
+"RTN","PSSDOSER",69,0)
+ D:'$D(Y)&('$D(DTOUT)) BCMA1 I $D(Y)!($D(DTOUT)) D ULK G DOS
+"RTN","PSSDOSER",70,0)
+ I '$D(Y)&('$D(DTOUT)),$$TEST^PSSDSPOP(PSSIEN) K DA,DIE,DR,DIDEL S DA(1)=PSSIEN,DA=PSSDOSA,DR="4;5",DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE,DA,DR,DIDEL I $D(Y)!($D(DTOUT)) D ULK G DOS
+"RTN","PSSDOSER",71,0)
+ G LOC
+"RTN","PSSDOSER",72,0)
+ Q
+"RTN","PSSDOSER",73,0)
+STR ;Edit strength
+"RTN","PSSDOSER",74,0)
+ N PSSIENS,PSS11
+"RTN","PSSDOSER",75,0)
+ ;W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOSER",76,0)
+ ;W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") D MS^PSSDSPOP
+"RTN","PSSDOSER",77,0)
+ W ! K DIR S DIR(0)="Y",DIR("?")="Changing the strength will update all possible dosages for this Drug",DIR("B")="NO",DIR("A")="Edit Strength" D ^DIR K DIR I 'Y W ! Q
+"RTN","PSSDOSER",78,0)
+ W !!,"Changing the strength will not change the concentration."
+"RTN","PSSDOSER",79,0)
+ W ! K DIR S DIR(0)="Y"
+"RTN","PSSDOSER",80,0)
+ S DIR("?")="Changes in strength do not cause changes in concentration."
+"RTN","PSSDOSER",81,0)
+ S DIR("B")="NO",DIR("A")="Are you sure you need to change the strength" D ^DIR K DIR I 'Y W ! Q
+"RTN","PSSDOSER",82,0)
+ W ! K DIE S DIE="^PSDRUG(",DA=PSSIEN,DR=901 D ^DIE K DIE W !
+"RTN","PSSDOSER",83,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" K ^PSDRUG(PSSIEN,"DOS") K ^PSDRUG(PSSIEN,"DOS1") W !!,"Deleting Strength has deleted all Possible Dosages!",!
+"RTN","PSSDOSER",84,0)
+ Q
+"RTN","PSSDOSER",85,0)
+CHECK ;
+"RTN","PSSDOSER",86,0)
+ K PSSNAT,PSSNATND,PSSNATDF,PSSNATUN,PSSNATST,PSSIZZ,PSSOZZ
+"RTN","PSSDOSER",87,0)
+ S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^") I 'PSSNAT!('PSSNAT1) Q
+"RTN","PSSDOSER",88,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT) S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSDOSER",89,0)
+ S PSSUPRA=$$SUPRA^PSSUTIL3(PSSNAT)
+"RTN","PSSDOSER",90,0)
+ ;I $G(PSSST) S PSSXYZ=1 Q
+"RTN","PSSDOSER",91,0)
+ Q:'PSSNATDF!('PSSNATUN)!($G(PSSNATST)="")
+"RTN","PSSDOSER",92,0)
+ Q:'$D(^PS(50.606,PSSNATDF,0))!('$D(^PS(50.607,PSSNATUN,0)))
+"RTN","PSSDOSER",93,0)
+ I PSSNATST'?.N&(PSSNATST'?.N1".".N) Q
+"RTN","PSSDOSER",94,0)
+ I $D(^PS(50.606,"ACONI",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPI",PSSNATDF,0)) S (PSSXYZ,PSSIZZ)=1
+"RTN","PSSDOSER",95,0)
+ I $D(^PS(50.606,"ACONO",PSSNATDF,PSSNATUN)),$O(^PS(50.606,"ADUPO",PSSNATDF,0)) S (PSSXYZ,PSSOZZ)=1
+"RTN","PSSDOSER",96,0)
+ Q
+"RTN","PSSDOSER",97,0)
+END K PSSIZZ,PSSOZZ,PSSSKIPP,PSSNFID,PSSNAT,PSSNAT1,PSSNATND,PSSNATDF,PSSNATUN,PSSNOCON,PSSST,PSSUN,PSSIEN,PSSNAME,PSSIND,PSSDOSA,PSSXYZ,PSSNATST
+"RTN","PSSDOSER",98,0)
+ Q
+"RTN","PSSDOSER",99,0)
+ULK ;
+"RTN","PSSDOSER",100,0)
+ Q:'$G(PSSIEN)
+"RTN","PSSDOSER",101,0)
+ N XX,DNSNAM,DNSPORT,DVER,DMFU S XX=""
+"RTN","PSSDOSER",102,0)
+ I '$G(PSSHUIDG) D DRG^PSSHUIDG(PSSIEN) D
+"RTN","PSSDOSER",103,0)
+ .F XX=0:0 S XX=$O(^PS(59,XX)) Q:'XX  D
+"RTN","PSSDOSER",104,0)
+ ..S DVER=$$GET1^DIQ(59,XX_",",105,"I"),DMFU=$$GET1^DIQ(59,XX_",",105.2)
+"RTN","PSSDOSER",105,0)
+ ..I DVER="2.4" S DNSNAM=$$GET1^DIQ(59,XX_",",2006),DNSPORT=$$GET1^DIQ(59,XX_",",2007) I DNSNAM'=""&(DMFU="YES") D DRG^PSSDGUPD(PSSIEN,"",DNSNAM,DNSPORT)
+"RTN","PSSDOSER",106,0)
+ L -^PSDRUG(PSSIEN)
+"RTN","PSSDOSER",107,0)
+ Q
+"RTN","PSSDOSER",108,0)
+BCMA ;
+"RTN","PSSDOSER",109,0)
+ I $P($G(^PSDRUG(PSSIEN,2)),"^",3)'["I",$P($G(^(2)),"^",3)'["U" Q
+"RTN","PSSDOSER",110,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS1",PSSDOSA,0)),"^",3)'["I" Q
+"RTN","PSSDOSER",111,0)
+ K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=3,DIE="^PSDRUG("_PSSIEN_",""DOS1""," D ^DIE K DIE
+"RTN","PSSDOSER",112,0)
+ Q
+"RTN","PSSDOSER",113,0)
+BCMA1 ;
+"RTN","PSSDOSER",114,0)
+ I $P($G(^PSDRUG(PSSIEN,2)),"^",3)'["I",$P($G(^(2)),"^",3)'["U" Q
+"RTN","PSSDOSER",115,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS2",PSSDOSA,0)),"^",2)'["I" Q
+"RTN","PSSDOSER",116,0)
+ K DIE S DA(1)=PSSIEN,DA=PSSDOSA,DR=2,DIE="^PSDRUG("_PSSIEN_",""DOS2""," D ^DIE K DIE
+"RTN","PSSDOSER",117,0)
+ Q
+"RTN","PSSDOSER",118,0)
+STUN S PSSST=$P($G(^PSDRUG(PSSIEN,"DOS")),"^"),PSSUN=$P($G(^("DOS")),"^",2)
+"RTN","PSSDOSER",119,0)
+ Q
+"RTN","PSSDOSER",120,0)
+NATND S PSSNAT=+$P($G(^PSDRUG(PSSIEN,"ND")),"^",3),PSSNAT1=$P($G(^("ND")),"^")
+"RTN","PSSDOSER",121,0)
+ S PSSNATND=$$DFSU^PSNAPIS(PSSNAT1,PSSNAT) S PSSNATDF=$P(PSSNATND,"^"),PSSNATST=$P(PSSNATND,"^",4),PSSNATUN=$P(PSSNATND,"^",5)
+"RTN","PSSDOSER",122,0)
+ Q
+"RTN","PSSDOSER",123,0)
+PR I PSSST'=""!(PSSNATST'=""),(PSSUN!(PSSNATUN)) D
+"RTN","PSSDOSER",124,0)
+ .W !!,"Strength: "_$S($E($S(PSSST'="":PSSST,1:PSSNATST),1)=".":"0",1:"")_$S(PSSST'="":PSSST,1:PSSNATST)
+"RTN","PSSDOSER",125,0)
+ .W ?30,"Unit: "_$P($G(^PS(50.607,+$S(PSSUN:PSSUN,1:PSSNATUN),0)),"^")
+"RTN","PSSDOSER",126,0)
+ E  W !!,"Strength: ",?30,"Unit: "
+"RTN","PSSDOSER",127,0)
+ Q
+"RTN","PSSDOSER",128,0)
+ ;
+"RTN","PSSDOSER",129,0)
+ ;
+"RTN","PSSDOSER",130,0)
+XNWS ;
+"RTN","PSSDOSER",131,0)
+ N PSSDESTP S PSSDESTP=1
+"RTN","PSSDOSER",132,0)
+ W !!,"Strength from National Drug File match => "_$S($E($G(PSSNATST),1)=".":"0",1:"")_$G(PSSNATST)_"    "_$P($G(^PS(50.607,+$G(PSSUN),0)),"^")
+"RTN","PSSDOSER",133,0)
+ W !,"Strength currently in the Drug File    => "_$S($E($P($G(^PSDRUG(PSSIEN,"DOS")),"^"),1)=".":"0",1:"")_$P($G(^PSDRUG(PSSIEN,"DOS")),"^")_"    "_$S($P($G(^PS(50.607,+$G(PSSUN),0)),"^")'["/":$P($G(^(0)),"^"),1:"") D MS^PSSDSPOP
+"RTN","PSSDOSER",134,0)
+ K PSSDESTP
+"RTN","PSSDOSER",135,0)
+ Q
+"RTN","PSSDOSER",136,0)
+MPD ; manually enter poosible dosage
+"RTN","PSSDOSER",137,0)
+ I $P($G(^PSDRUG(PSSIEN,"DOS")),"^")="" S:$P(^PSDRUG(PSSIEN,"ND"),"^",2)]"" ^PSDRUG(PSSIEN,"DOS")=PSSNATST_"^"_PSSNATUN
+"RTN","PSSDOSER",138,0)
+ I PSSXYZ,'$O(^PSDRUG(PSSIEN,"DOS1",0)) D  D ^DIR K DIR I 'Y W ! K PSSXYZ K:$D(PSSZ) PSSZ I '$O(^PSDRUG(PSSIEN,"DOS1",0)) G LOCX Q
+"RTN","PSSDOSER",139,0)
+ .K DIR S DIR(0)="Y",DIR("B")="N",DIR("A")="Do you want to manually enter possible dosages",DIR("?")=" "
+"RTN","PSSDOSER",140,0)
+ .S DIR("?",1)="This drug meets the criteria to have Possible Dosages, but it currently does",DIR("?",2)="not have any. If you answer 'YES', Possible Dosages can be manually entered for this drug."
+"RTN","PSSDOSER",141,0)
+ .W !!!,"This drug can have Possible Dosages, but currently does not have any.",!
+"RTN","PSSDOSER",142,0)
+ .S PSSZ=1 W !,"This drug has been set within the National Drug File to "_$S(PSSUPRA="NN":"not ",1:"")_"auto create "_$S(PSSUPRA="NO":"only one ",PSSUPRA="NB":"two ",1:""),!,"possible dosage"_$S(PSSUPRA="NO":".",1:"s."),!
+"RTN","PSSDOSER",143,0)
+ D XNWS,STR,DOSA
+"RTN","PSSDOSER",144,0)
+ Q
+"RTN","PSSP194")
+0^^B63709524^n/a
+"RTN","PSSP194",1,0)
+PSSP194 ;DAL/DSK-PSS*1.0*194 POST INSTALL ROUTINE
+"RTN","PSSP194",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**194**;9/30/97;Build 9
+"RTN","PSSP194",3,0)
+ ;;
+"RTN","PSSP194",4,0)
+ Q
+"RTN","PSSP194",5,0)
+ ;
+"RTN","PSSP194",6,0)
+POSTINT ; POST INSTALL ENTRY POINT.
+"RTN","PSSP194",7,0)
+ ;
+"RTN","PSSP194",8,0)
+ N ZTDESC,ZTIO,ZTDTH,ZTRTN,ZTSAVE
+"RTN","PSSP194",9,0)
+ S ZTDESC="PSS*1*194 Post Install",ZTIO="",ZTDTH=$H,ZTRTN="POST^PSSP194",ZTSAVE("DUZ")=""
+"RTN","PSSP194",10,0)
+ D ^%ZTLOAD
+"RTN","PSSP194",11,0)
+ D BMES^XPDUTL("PSS*1*194 Post Install Task Queued.")
+"RTN","PSSP194",12,0)
+ D BMES^XPDUTL("You will receive a MailMan message")
+"RTN","PSSP194",13,0)
+ D BMES^XPDUTL("when task #"_$G(ZTSK)_" has completed.")
+"RTN","PSSP194",14,0)
+ K ZTDESC,ZTDTH,ZTIO,ZTRTN,ZTSAVE
+"RTN","PSSP194",15,0)
+ Q
+"RTN","PSSP194",16,0)
+ ;
+"RTN","PSSP194",17,0)
+POST ;correct cross references and send mail message
+"RTN","PSSP194",18,0)
+ ;
+"RTN","PSSP194",19,0)
+ ;  ^XTMP("PSSP194" used to document changes made
+"RTN","PSSP194",20,0)
+ ;  Changes are sent in MailMan message to installer
+"RTN","PSSP194",21,0)
+ ;  ^XTMP is kept for 90 days in case questions arise later
+"RTN","PSSP194",22,0)
+ ;  and mail message has been deleted
+"RTN","PSSP194",23,0)
+ ;
+"RTN","PSSP194",24,0)
+ N PSSNOW
+"RTN","PSSP194",25,0)
+ S PSSNOW=$$NOW^XLFDT()
+"RTN","PSSP194",26,0)
+ ;in case this routine is run more than once, delete old ^XTMP entry
+"RTN","PSSP194",27,0)
+ K ^XTMP("PSSP194")
+"RTN","PSSP194",28,0)
+ S ^XTMP("PSSP194",0)=$$FMADD^XLFDT(PSSNOW,90)_"^"_PSSNOW_"^PSS*1.0*194 Post Install Routine PSSP194"
+"RTN","PSSP194",29,0)
+ D NAME,MAIL
+"RTN","PSSP194",30,0)
+ Q
+"RTN","PSSP194",31,0)
+ ;
+"RTN","PSSP194",32,0)
+NAME ;Search for incorrect cross references
+"RTN","PSSP194",33,0)
+ ;If length is exactly 30, pre-PSS*1*194 version of PSSTXT
+"RTN","PSSP194",34,0)
+ ;may not have deleted or changed the cross reference correctly
+"RTN","PSSP194",35,0)
+ ;If length is more than 30, change to 30 to be consistent
+"RTN","PSSP194",36,0)
+ ;with FileMan logic
+"RTN","PSSP194",37,0)
+ ;
+"RTN","PSSP194",38,0)
+ N PSSEQ,PSSTR,PSSIEN,PSSINDEX
+"RTN","PSSP194",39,0)
+ D CHECK
+"RTN","PSSP194",40,0)
+ ;
+"RTN","PSSP194",41,0)
+ S PSSEQ=""
+"RTN","PSSP194",42,0)
+ ;
+"RTN","PSSP194",43,0)
+ ;Delete cross references which need to be deleted
+"RTN","PSSP194",44,0)
+ F  S PSSEQ=$O(^XTMP("PSSP194","CROSS",PSSEQ)) Q:PSSEQ=""  D
+"RTN","PSSP194",45,0)
+ . S PSSTR=^XTMP("PSSP194","CROSS",PSSEQ)
+"RTN","PSSP194",46,0)
+ . S PSSIEN=$P(PSSTR,"^"),PSSINDEX=$P(PSSTR,"^",3)
+"RTN","PSSP194",47,0)
+ . K ^PS(51.7,"B",PSSINDEX,PSSIEN)
+"RTN","PSSP194",48,0)
+ ;
+"RTN","PSSP194",49,0)
+ ;Set cross references which need to  be set
+"RTN","PSSP194",50,0)
+ F  S PSSEQ=$O(^XTMP("PSSP194","B_SET",PSSEQ)) Q:PSSEQ=""  D
+"RTN","PSSP194",51,0)
+ . S PSSTR=^XTMP("PSSP194","B_SET",PSSEQ)
+"RTN","PSSP194",52,0)
+ . S PSSIEN=$P(PSSTR,"^"),PSSINDEX=$P(PSSTR,"^",3)
+"RTN","PSSP194",53,0)
+ . S ^PS(51.7,"B",PSSINDEX,PSSIEN)=""
+"RTN","PSSP194",54,0)
+ ;
+"RTN","PSSP194",55,0)
+ ;Kill long cross references and set truncated cross references
+"RTN","PSSP194",56,0)
+ F  S PSSEQ=$O(^XTMP("PSSP194","LONG",PSSEQ)) Q:PSSEQ=""  D
+"RTN","PSSP194",57,0)
+ . S PSSTR=^XTMP("PSSP194","LONG",PSSEQ)
+"RTN","PSSP194",58,0)
+ . ;kill the >30 length cross reference
+"RTN","PSSP194",59,0)
+ . S PSSIEN=$P(PSSTR,"^"),PSSINDEX=$P(PSSTR,"^",2)
+"RTN","PSSP194",60,0)
+ . K ^PS(51.7,"B",PSSINDEX,PSSIEN)
+"RTN","PSSP194",61,0)
+ . ;set correct cross reference.
+"RTN","PSSP194",62,0)
+ . ;This set could potentially occur twice due to part IND
+"RTN","PSSP194",63,0)
+ . ;but at least it would be set.
+"RTN","PSSP194",64,0)
+ . S PSSINDEX=$P(PSSTR,"^",3)
+"RTN","PSSP194",65,0)
+ . ;check for null value in case this was a file fragment
+"RTN","PSSP194",66,0)
+ . I PSSINDEX]"" S ^PS(51.7,"B",PSSINDEX,PSSIEN)=""
+"RTN","PSSP194",67,0)
+ Q
+"RTN","PSSP194",68,0)
+ ;
+"RTN","PSSP194",69,0)
+CHECK ;Check cross reference and correct if necessary
+"RTN","PSSP194",70,0)
+ ;
+"RTN","PSSP194",71,0)
+ N PSSNAME,PSSUB
+"RTN","PSSP194",72,0)
+ S PSSINDEX="",PSSEQ=0
+"RTN","PSSP194",73,0)
+ F  S PSSINDEX=$O(^PS(51.7,"B",PSSINDEX)) Q:PSSINDEX=""  D
+"RTN","PSSP194",74,0)
+ . Q:$L(PSSINDEX)<30
+"RTN","PSSP194",75,0)
+ . S PSSIEN=""
+"RTN","PSSP194",76,0)
+ . F  S PSSIEN=$O(^PS(51.7,"B",PSSINDEX,PSSIEN)) Q:PSSIEN=""  D
+"RTN","PSSP194",77,0)
+ . . S PSSNAME=$P($G(^PS(51.7,PSSIEN,0)),"^")
+"RTN","PSSP194",78,0)
+ . . I $E(PSSNAME,1,30)'=PSSINDEX D
+"RTN","PSSP194",79,0)
+ . . . ;"CROSS" subscript = cross reference was not deleted 
+"RTN","PSSP194",80,0)
+ . . . ;                    because of previous logic issue
+"RTN","PSSP194",81,0)
+ . . . ;                    in routine PSSTXT so need to delete
+"RTN","PSSP194",82,0)
+ . . . ;"LONG" subscript  = cross reference is longer than
+"RTN","PSSP194",83,0)
+ . . . ;                    30 characters; truncate to 30
+"RTN","PSSP194",84,0)
+ . . . ;                    to be consistent with FileMan
+"RTN","PSSP194",85,0)
+ . . . S PSSEQ=PSSEQ+1,PSSUB=$S($L(PSSINDEX)=30:"CROSS",1:"LONG")
+"RTN","PSSP194",86,0)
+ . . . ;set data string for ease of sending MailMan message later
+"RTN","PSSP194",87,0)
+ . . . S ^XTMP("PSSP194",PSSUB,PSSEQ)=PSSIEN_"^"_$S(PSSUB="CROSS":PSSNAME,1:PSSINDEX)_"^"_$S(PSSUB="CROSS":PSSINDEX,1:$E(PSSNAME,1,30))
+"RTN","PSSP194",88,0)
+ . . . D IND
+"RTN","PSSP194",89,0)
+ Q
+"RTN","PSSP194",90,0)
+ ;
+"RTN","PSSP194",91,0)
+IND ;double check to make sure there is a valid index
+"RTN","PSSP194",92,0)
+ ;
+"RTN","PSSP194",93,0)
+ I PSSNAME'="",'$D(^PS(51.7,"B",PSSNAME,PSSIEN)),'$D(^PS(51.7,"B",$E(PSSNAME,1,30),PSSIEN)) D
+"RTN","PSSP194",94,0)
+ . ;For an unknown reason, the name is not present -- truncated or not
+"RTN","PSSP194",95,0)
+ . ; -- as a cross reference.
+"RTN","PSSP194",96,0)
+ . ;This is probably not a real issue at sites, but am allowing for the
+"RTN","PSSP194",97,0)
+ . ;possibility.
+"RTN","PSSP194",98,0)
+ . ;
+"RTN","PSSP194",99,0)
+ . ;If PSSNAME is null, a file fragment probably exists which was caused
+"RTN","PSSP194",100,0)
+ . ;by a previous error.  Leave the file fragment "as is" because side
+"RTN","PSSP194",101,0)
+ . ;effects of deleting file fragments are not known.
+"RTN","PSSP194",102,0)
+ . ;
+"RTN","PSSP194",103,0)
+ . S ^XTMP("PSSP194","B_SET",PSSEQ)=PSSIEN_"^"_PSSNAME_"^"_$E(PSSNAME,1,30)
+"RTN","PSSP194",104,0)
+ Q
+"RTN","PSSP194",105,0)
+ ;
+"RTN","PSSP194",106,0)
+MAIL ;send Mail message
+"RTN","PSSP194",107,0)
+ ;
+"RTN","PSSP194",108,0)
+ N XMY,PSLINE,PSSPACE,XMDUZ,XMY,XMSUB,A,XMTEXT,PSFLG
+"RTN","PSSP194",109,0)
+ K XMY
+"RTN","PSSP194",110,0)
+ S PSFLG=0,PSLINE=1,PSSPACE="                                        "
+"RTN","PSSP194",111,0)
+ ;send MailMan message to installer
+"RTN","PSSP194",112,0)
+ S XMDUZ="POST-INSTALL,PSS*1.0*194",XMY(DUZ)="",XMSUB="POST-INSTALL PSS*1.0*194 INFORMATION"
+"RTN","PSSP194",113,0)
+ S A(PSLINE)=""
+"RTN","PSSP194",114,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",115,0)
+ S A(PSLINE)="    PSS*1.0*194 POST-INSTALL"
+"RTN","PSSP194",116,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",117,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",118,0)
+ S A(PSLINE)="    The content of this message is informational only."
+"RTN","PSSP194",119,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",120,0)
+ S A(PSLINE)="    No action needs to be taken."
+"RTN","PSSP194",121,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",122,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",123,0)
+ S PSSEQ=""
+"RTN","PSSP194",124,0)
+ F  S PSSEQ=$O(^XTMP("PSSP194",PSSEQ)) Q:PSSEQ=""  D
+"RTN","PSSP194",125,0)
+ . I PSSEQ="CROSS" S PSFLG=1 D MCROSS
+"RTN","PSSP194",126,0)
+ . I PSSEQ="B_SET" S PSFLG=1 D MBSET
+"RTN","PSSP194",127,0)
+ . I PSSEQ="LONG" S PSFLG=1 D MLONG
+"RTN","PSSP194",128,0)
+ I 'PSFLG D
+"RTN","PSSP194",129,0)
+ . S PSLINE=PSLINE+1
+"RTN","PSSP194",130,0)
+ . S A(PSLINE)="    The DRUG TEXT (#51.7) file was checked and no issues were found."
+"RTN","PSSP194",131,0)
+ ;set mail message in ^XTMP in case mail message accidentally deleted
+"RTN","PSSP194",132,0)
+ M ^XTMP("PSSP194","MAIL")=A
+"RTN","PSSP194",133,0)
+ ;send mail message
+"RTN","PSSP194",134,0)
+ S XMTEXT="A(" D ^XMD
+"RTN","PSSP194",135,0)
+ ;delete task from TaskManager list
+"RTN","PSSP194",136,0)
+ S ZTREQ="@"
+"RTN","PSSP194",137,0)
+ Q
+"RTN","PSSP194",138,0)
+ ;
+"RTN","PSSP194",139,0)
+MCROSS ;Incorrect cross reference was deleted
+"RTN","PSSP194",140,0)
+ ;
+"RTN","PSSP194",141,0)
+ N PSSUB,PSSTR,PSSIEN,PSSNAME,PSSCROSS
+"RTN","PSSP194",142,0)
+ ;set top level of ^XMTP subscript for ease of troublehshooting later if necessary
+"RTN","PSSP194",143,0)
+ S ^XTMP("PSSP194",PSSEQ)="Incorrect Cross References which were deleted by post-install routine PSSP194"
+"RTN","PSSP194",144,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",145,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",146,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",147,0)
+ S A(PSLINE)="The following entries in the DRUG TEXT (#51.7) file had"
+"RTN","PSSP194",148,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",149,0)
+ S A(PSLINE)="incorrect cross references deleted."
+"RTN","PSSP194",150,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",151,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",152,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",153,0)
+ S A(PSLINE)="    IEN          Name"
+"RTN","PSSP194",154,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",155,0)
+ S A(PSLINE)="    ------------ ---------------------------------------------"
+"RTN","PSSP194",156,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",157,0)
+ S A(PSLINE)="                      Incorrect Cross Reference Deleted"
+"RTN","PSSP194",158,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",159,0)
+ S A(PSLINE)="                      ---------------------------------------"
+"RTN","PSSP194",160,0)
+ D STR
+"RTN","PSSP194",161,0)
+ Q
+"RTN","PSSP194",162,0)
+ ;
+"RTN","PSSP194",163,0)
+MBSET ;No cross references existed, so cross references were set
+"RTN","PSSP194",164,0)
+ ;
+"RTN","PSSP194",165,0)
+ N PSSUB,PSSTR,PSSIEN,PSSNAME,PSSCROSS
+"RTN","PSSP194",166,0)
+ ;set top level of ^XTMP subscript for ease of troubleshooting later if necessary
+"RTN","PSSP194",167,0)
+ S ^XTMP("PSSP194",PSSEQ)="No cross references existed, so cross reference was set"
+"RTN","PSSP194",168,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",169,0)
+ S A(PSLINE)="The following entries in the DRUG TEXT (#51.7) file had no cross references,"
+"RTN","PSSP194",170,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",171,0)
+ S A(PSLINE)="so cross references were set."
+"RTN","PSSP194",172,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",173,0)
+ S A(PSLINE)=""
+"RTN","PSSP194",174,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",175,0)
+ S A(PSLINE)="    IEN          Name"
+"RTN","PSSP194",176,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",177,0)
+ S A(PSLINE)="    ------------ ---------------------------------------------"
+"RTN","PSSP194",178,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",179,0)
+ S A(PSLINE)="                      Cross Reference Set"
+"RTN","PSSP194",180,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",181,0)
+ S A(PSLINE)="                      ------------------------------"
+"RTN","PSSP194",182,0)
+ D STR
+"RTN","PSSP194",183,0)
+ Q
+"RTN","PSSP194",184,0)
+ ;
+"RTN","PSSP194",185,0)
+MLONG ;Long cross references which were truncated
+"RTN","PSSP194",186,0)
+ ;
+"RTN","PSSP194",187,0)
+ N PSSUB,PSSTR,PSSIEN,PSSCROSS
+"RTN","PSSP194",188,0)
+ ;set top level of ^XTMP subscript for ease of troubleshooting later if necessary
+"RTN","PSSP194",189,0)
+ S ^XTMP("PSSP194",PSSEQ)="Long cross references which were truncated"
+"RTN","PSSP194",190,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",191,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",192,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",193,0)
+ S A(PSLINE)="The following entries in the DRUG TEXT (#51.7) file had long"
+"RTN","PSSP194",194,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",195,0)
+ S A(PSLINE)="cross references deleted and truncated cross references set."
+"RTN","PSSP194",196,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",197,0)
+ S A(PSLINE)=""
+"RTN","PSSP194",198,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",199,0)
+ S A(PSLINE)="    IEN          Long Cross Reference Deleted"
+"RTN","PSSP194",200,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",201,0)
+ S A(PSLINE)="    ------------ ---------------------------------------------"
+"RTN","PSSP194",202,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",203,0)
+ S A(PSLINE)="                      Truncated Cross Reference Set"
+"RTN","PSSP194",204,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",205,0)
+ S A(PSLINE)="                      ------------------------------"
+"RTN","PSSP194",206,0)
+ D STR
+"RTN","PSSP194",207,0)
+ Q
+"RTN","PSSP194",208,0)
+ ;
+"RTN","PSSP194",209,0)
+STR ;set data in mail message array
+"RTN","PSSP194",210,0)
+ S PSLINE=PSLINE+1
+"RTN","PSSP194",211,0)
+ S A(PSLINE)=" "
+"RTN","PSSP194",212,0)
+ S PSSUB=""
+"RTN","PSSP194",213,0)
+ F  S PSSUB=$O(^XTMP("PSSP194",PSSEQ,PSSUB)) Q:PSSUB=""  D
+"RTN","PSSP194",214,0)
+ . S PSSTR=^XTMP("PSSP194",PSSEQ,PSSUB),PSSIEN=$P(PSSTR,"^"),PSSNAME=$P(PSSTR,"^",2),PSSCROSS=$P(PSSTR,"^",3)
+"RTN","PSSP194",215,0)
+ . S PSLINE=PSLINE+1
+"RTN","PSSP194",216,0)
+ . S A(PSLINE)="    "_PSSIEN_$E(PSSPACE,1,14-$L(PSSIEN))_$S(PSSNAME]"":PSSNAME,1:"No name on entry")
+"RTN","PSSP194",217,0)
+ . S PSLINE=PSLINE+1
+"RTN","PSSP194",218,0)
+ . S A(PSLINE)="                      "_$S(PSSCROSS]"":PSSCROSS,1:"None -- no name on entry")
+"RTN","PSSP194",219,0)
+ Q
+"RTN","PSSP194",220,0)
+ ;
+"RTN","PSSTXT")
+0^2^B18969862^B14808188
+"RTN","PSSTXT",1,0)
+PSSTXT ;BIR/WRT-Edit DRUG TEXT file routine ; 11/15/01 8:11
+"RTN","PSSTXT",2,0)
+ ;;1.0;PHARMACY DATA MANAGEMENT;**29,55,194**;9/30/97;Build 9
+"RTN","PSSTXT",3,0)
+BEGIN S PSSNFI=1,PSSFG=0 W !,"This option enables you to edit entries in the DRUG TEXT file.",!! F PSSQQ=1:1 K DA D ASK Q:PSSFG
+"RTN","PSSTXT",4,0)
+DONE K DA,PSSFG,PSSQQ,PSSNFI,NAME,PSSENT,PSSBEG,PSSEND,PSSSRT,PSSXX
+"RTN","PSSTXT",5,0)
+ K %,D,D0,DI,DIE,DLAYGO,DQ,DR,X,Y
+"RTN","PSSTXT",6,0)
+ Q
+"RTN","PSSTXT",7,0)
+ ;
+"RTN","PSSTXT",8,0)
+ASK W ! S DIC="^PS(51.7,",DIC(0)="QEALMN",DLAYGO=51.7 D ^DIC K DIC I Y<0 S PSSFG=1 Q
+"RTN","PSSTXT",9,0)
+ S PSSENT=+Y D WRIT,REVW W ! S DA=PSSENT S DIE="^PS(51.7,"
+"RTN","PSSTXT",10,0)
+ D NAME I PSSFG Q
+"RTN","PSSTXT",11,0)
+ D TEXT I PSSFG Q
+"RTN","PSSTXT",12,0)
+ W !
+"RTN","PSSTXT",13,0)
+ S DR="1;2" D ^DIE,CHECKI
+"RTN","PSSTXT",14,0)
+ Q
+"RTN","PSSTXT",15,0)
+CHECK I '$O(^PS(51.7,DA,2,0)),'$D(^PS(50.7,"DTXT",DA)),'$D(^PSDRUG("DTXT",DA)) S DIK="^PS(51.7," D ^DIK K DIK
+"RTN","PSSTXT",16,0)
+ Q
+"RTN","PSSTXT",17,0)
+ ;
+"RTN","PSSTXT",18,0)
+WRIT W !!,"There may be entries in your DRUG file and PHARMACY ORDERABLE ITEM file linked",!,"to this Drug Text Name. Editing information related to this Drug Text entry",!
+"RTN","PSSTXT",19,0)
+ W "will affect the display of information related to these.",!
+"RTN","PSSTXT",20,0)
+ Q
+"RTN","PSSTXT",21,0)
+ ;
+"RTN","PSSTXT",22,0)
+REVW K DIR S DIR("A")="Do you want to review the list of drugs and orderable items linked to this Drug Text entry? ",DIR(0)="Y",DIR("B")="YES"
+"RTN","PSSTXT",23,0)
+ S DIR("?",1)="Answering 'Yes' will list all entries in the Drug file or Orderable Item file",DIR("?",2)="that are linked to this drug text entry.  The list could be long, so a "
+"RTN","PSSTXT",24,0)
+ S DIR("?")="device can be entered to print a hard copy, if desired."
+"RTN","PSSTXT",25,0)
+ D ^DIR K DIR
+"RTN","PSSTXT",26,0)
+ I Y=1 D  D RPT^PSSDTR
+"RTN","PSSTXT",27,0)
+ . S PSSSRT="S"
+"RTN","PSSTXT",28,0)
+ . S (PSSXX,PSSBEG,PSSEND)=$P($G(^PS(51.7,PSSENT,0)),"^",1)
+"RTN","PSSTXT",29,0)
+ Q
+"RTN","PSSTXT",30,0)
+ ;
+"RTN","PSSTXT",31,0)
+OUTMSG W !!,"IMPORTANT!! After editing the Drug Text Name OR Text, review the drugs and",!?12,"orderable items linked to this entry for accuracy."
+"RTN","PSSTXT",32,0)
+ Q
+"RTN","PSSTXT",33,0)
+ ;
+"RTN","PSSTXT",34,0)
+CHECKI I $P($G(^PS(51.7,DA,0)),"^",2) D MSG
+"RTN","PSSTXT",35,0)
+ Q
+"RTN","PSSTXT",36,0)
+ ;
+"RTN","PSSTXT",37,0)
+MSG W !!,"Because this entry was inactivated, drugs and orderable items that are linked",!,"to this entry will no longer display the text associated with this entry."
+"RTN","PSSTXT",38,0)
+ W !,"You should review all drugs and orderable items associated with this Drug Text",!,"entry and update appropriately.",!
+"RTN","PSSTXT",39,0)
+ Q
+"RTN","PSSTXT",40,0)
+ ;
+"RTN","PSSTXT",41,0)
+NAME ;
+"RTN","PSSTXT",42,0)
+ N PSSNAME
+"RTN","PSSTXT",43,0)
+ W ! K DIR S DIR(0)="Y",DIR("A")="Do you want to edit the Drug Text Name",DIR("B")="NO" D ^DIR K DIR
+"RTN","PSSTXT",44,0)
+ I X["^" S PSSFG=1 Q
+"RTN","PSSTXT",45,0)
+ D OUTMSG
+"RTN","PSSTXT",46,0)
+ I '$G(Y) Q
+"RTN","PSSTXT",47,0)
+ S PSSNAME=$P($G(^PS(51.7,DA,0)),"^",1)
+"RTN","PSSTXT",48,0)
+ W ! K DIR S DIR(0)="FO^1:75",DIR("A")="Drug Text Name: ",DIR("B")=PSSNAME D ^DIR K DIR
+"RTN","PSSTXT",49,0)
+ I $G(X)["^" S PSSFG=1 Q
+"RTN","PSSTXT",50,0)
+ I X'="",X'=PSSNAME D
+"RTN","PSSTXT",51,0)
+ . I X["@" W "  **DELETIONS ARE NOT ALLOWED!" Q
+"RTN","PSSTXT",52,0)
+ . S ^PS(51.7,"B",$E(X,1,30),DA)=""
+"RTN","PSSTXT",53,0)
+ . K ^PS(51.7,"B",$E(PSSNAME,1,30),DA)
+"RTN","PSSTXT",54,0)
+ . S $P(^PS(51.7,DA,0),"^",1)=X
+"RTN","PSSTXT",55,0)
+ Q
+"RTN","PSSTXT",56,0)
+ ;
+"RTN","PSSTXT",57,0)
+TEXT ;
+"RTN","PSSTXT",58,0)
+ W ! K DIR S DIR(0)="Y",DIR("A")="Do you want to edit the text for this entry",DIR("B")="YES" D ^DIR K DIR
+"RTN","PSSTXT",59,0)
+ I $G(X)["^" S PSSFG=1 Q
+"RTN","PSSTXT",60,0)
+ I '+($G(Y)) Q
+"RTN","PSSTXT",61,0)
+ W !!,"WARNING: The absence of text lines will cause this Drug Text entry"
+"RTN","PSSTXT",62,0)
+ W !,"         to be completely deleted."
+"RTN","PSSTXT",63,0)
+ W ! S DIR(0)="E",DIR("A")="Press Return to continue" D ^DIR K DIR
+"RTN","PSSTXT",64,0)
+ W ! S DR="3" D ^DIE,CHECK
+"RTN","PSSTXT",65,0)
+ ;set flag if all text was deleted which deleted this entry
+"RTN","PSSTXT",66,0)
+ I '$O(^PS(51.7,DA,2,0)) D
+"RTN","PSSTXT",67,0)
+ . S PSSFG=1
+"RTN","PSSTXT",68,0)
+ . W !!,"   **** **** **** **** **** **** **** **** **** **** ****"
+"RTN","PSSTXT",69,0)
+ . W !!,"   The absence of text lines caused this Drug Text entry"
+"RTN","PSSTXT",70,0)
+ . W !,"   to be completely deleted."
+"RTN","PSSTXT",71,0)
+ . W !!,"   Therefore, Synonym and Inactivation Date"
+"RTN","PSSTXT",72,0)
+ . W !,"   will not be asked."
+"RTN","PSSTXT",73,0)
+ . W !!,"   **** **** **** **** **** **** **** **** **** **** ****",!!
+"RTN","PSSTXT",74,0)
+ . S DIR(0)="E",DIR("A")="   Press Return to continue" D ^DIR K DIR
+"RTN","PSSTXT",75,0)
+ . W !
+"RTN","PSSTXT",76,0)
+ Q
+"RTN","PSSTXT",77,0)
+ ;
+"UP",50,50.1,-1)
+50^1
+"UP",50,50.1,0)
+50.1
+"VER")
+8.0^22.0
+"^DD",50,50,9,0)
+SYNONYM^50.1A^^1;0
+"^DD",50,50,9,20,0)
+^.3LA^1^1
+"^DD",50,50,9,20,1,0)
+PH
+"^DD",50,50,9,21,0)
+^.001^5^5^3000524^^^^
+"^DD",50,50,9,21,1,0)
+This multiple contains the Synonym, NDC Code, Intended Use, VSN, Order 
+"^DD",50,50,9,21,2,0)
+Unit, Price per Order Unit, Dispense Units per Order Unit, Price per 
+"^DD",50,50,9,21,3,0)
+Dispense Unit, and Vendor fields. It is used for a quick code for look 
+"^DD",50,50,9,21,4,0)
+ups or to locate NDCs to increment the drug's inventory when orders 
+"^DD",50,50,9,21,5,0)
+are received.
+"^DD",50,50.1,0)
+SYNONYM SUB-FIELD^NL^405^9
+"^DD",50,50.1,0,"NM","SYNONYM")
+
+"^DD",50,50.1,.01,0)
+SYNONYM^MFX^^0;1^K:$L(X)>40!($L(X)<1) X
+"^DD",50,50.1,.01,.1)
+TRADE NAME
+"^DD",50,50.1,.01,1,0)
+^.1
+"^DD",50,50.1,.01,1,1,0)
+50^C
+"^DD",50,50.1,.01,1,1,1)
+S ^PSDRUG("C",$E(X,1,40),DA(1),DA)=""
+"^DD",50,50.1,.01,1,1,2)
+K ^PSDRUG("C",$E(X,1,40),DA(1),DA)
+"^DD",50,50.1,.01,1,1,3)
+Do not Delete.
+"^DD",50,50.1,.01,1,1,"%D",0)
+^.101^2^2^3000505^^^
+"^DD",50,50.1,.01,1,1,"%D",1,0)
+This field is used as a quick code for lookups. It is also used to locate 
+"^DD",50,50.1,.01,1,1,"%D",2,0)
+NDCs to increment the drug's inventory when orders are received.
+"^DD",50,50.1,.01,3)
+ANSWER MUST BE 1-40 CHARACTERS IN LENGTH
+"^DD",50,50.1,.01,21,0)
+^^3^3^3150921^
+"^DD",50,50.1,.01,21,1,0)
+This field is used as a quick code for look ups or to locate
+"^DD",50,50.1,.01,21,2,0)
+NDCs so the drug's inventory can be incremented when orders 
+"^DD",50,50.1,.01,21,3,0)
+are received.
+"^DD",50,50.1,.01,23,0)
+^^1^1^3150921^
+"^DD",50,50.1,.01,23,1,0)
+free text.
+"^DD",50,50.1,.01,"DT")
+3150921
+"BLD",10053,6)
+^171
+**END**
+**END**
+

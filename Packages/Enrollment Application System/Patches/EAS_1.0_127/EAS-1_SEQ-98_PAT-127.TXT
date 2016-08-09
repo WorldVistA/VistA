@@ -1,0 +1,138 @@
+
+=============================================================================
+Run Date: DEC 08, 2014                     Designation: EAS*1*127
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: EMERGENCY
+Version : 1        SEQ #98                      Status: Released
+                  Compliance Date: DEC 10, 2014
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 4.0.4
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this informational patch is to announce the release of the
+ Enrollment System (ES) 4.0.4 application version software. 
+  
+ ES 4.0.4 is a maintenance release of the Enrollment System Core (ESC) 
+ application. This version applies 2 updates to correct critical code 
+ defects introduced in previous ES releases.  
+  
+ The following defects were corrected:
+  
+ 1.   CCR 11534. Corrected Z10 Builder logic to place the correct source of test
+      indicator when receiving site is grandchild. 
+  
+ 2.   CCR 13415. Corrected handling of Null gender codes send in identity traits
+      from MVI. 
+  
+  
+ What to Expect:
+ --------------
+ No changes to any VistA packages are required. During deployment of ES 
+ 4.0.4 HL7 messaging to and from ES will be disabled. Implementation is 
+ expected to take less than 2 hours. 
+  
+  
+ Implementation:
+ --------------
+ ESR 4.0.4 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team and the AITC. 
+ No software will be installed at the facilities. ES application will be 
+ unavailable and Veteran enrollment determinations will be delayed until 
+ the deployment is complete.  
+ 
+ Messaging to/from the sites as well as E&E web services will be 
+ unavailable during the deployment. An ANR will be created to announce the 
+ deployment which will list all impacted systems and to track the outage.
+  
+  
+ Implementation Date:
+ -------------------
+ December 6, 2014
+  
+  
+ Documentation Retrieval:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ --------------------------- 
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ ----------------------------
+ N/A
+  
+  
+ Remedy Tickets & Overview:
+ -------------------------
+ Problem:
+ -------
+ 1.  Remedy Ticket # 1029515 identified an issue where a financial assessment
+ conducted by a grandchild satellite site of the transmitting site was causing
+ the Z10 builder to send a SOURCE OF TEST as 'OTHER FACILITY' rather than
+ 'VAMC'.  The result is the owning site not being able to edit the Means/RX
+ Copay test, if necessary, once the message is received and uploaded.  The
+ parent facility of 657GJ is a child facility of 657A5, which in turn, is a
+ child facility of site 657.  The ES views a financial assessment conducted by
+ 657GJ as having a parent of 657A5, since this did not match the receiving
+ facility of 657, the ZMT-18 was being set to a code of '4' (Other Facility).  
+ The ORF/ORU Z10 builder logic is modified to recognize the Site Conducting Test
+ as a grandchild to the receiving facility and set the Source of Test as '1'
+ (VAMC).  This will allow the 'owning' site to edit the means / RX Copay test as
+ necessary. 
+                                                                        
+ Resolution:
+ ----------
+ Refactored Z10 builder logic to correctly identify when a receiving site is
+ grandchild and appropriately set the Source of Test indicator as VAMC.
+  
+ Problem:
+ -------
+ 2.  #1080567. ES application displays stack trace error for veteran identity
+ traits received without an identified gender. Impacted records cannot be
+ searched, edited, or added; resulting in delay of enrollment determination.   
+  
+ Resolution:
+ ----------
+ Corrected ES person logic to allow null/unidentified gender to be passed in and
+ accepted without error. Removed duplicate person retrieval searches upon Add a
+ Person which was compounding the seeding of this issue. 
+  
+  
+ Associated NSR(s):
+ -----------------
+ N/A
+  
+  
+ Reporting Problems:
+ ------------------
+ Problems associated with ES application should be reported via Remedy or 
+ contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 03, 2014
+Completed By:                               Date Completed: DEC 08, 2014
+Released By :                               Date Released : DEC 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

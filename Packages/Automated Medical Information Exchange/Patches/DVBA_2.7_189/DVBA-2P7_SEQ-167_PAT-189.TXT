@@ -1,0 +1,821 @@
+$TXT Created by                 DEVFEX.DOMAIN.EXT  (KIDS) on Monday, 03/02/15 at 10:32
+=============================================================================
+Run Date: APR 17, 2015                     Designation: DVBA*2.7*189
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #167                    Status: Released
+                  Compliance Date: MAY 18, 2015
+=============================================================================
+
+
+Subject: CAPRI ENHANCEMENTS
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+
+Description:
+============
+
+  I. OVERVIEW
+   
+     This patch (DVBA*2.7*189) and CAPRI GUI v189 provide enhancements
+     and changes to CAPRI and to the AMIE package (files/fields only).
+     These file/field changes support CAPRI GUI enhancements which
+     provide improvements in C&P Exam templates, data processing and
+     tracking, data retrieval, and data accuracy.
+   
+     Note: There are changes being made to the AMIE files/fields
+           to accommodate the GUI changes; however, the AMIE options
+           that may be impacted by these changes are not being updated
+           to reflect the new GUI functionality.
+   
+   
+   II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+       
+     a. INC000001112581 - After CAPRI was updated, patch DVBA*2.7*187,
+        exams are not being released to the RO
+  
+            Duplicates:          INC000001115314
+                                 INC000001117884
+                                 INC000001118225
+                                 INC000001118586
+                                 INC000001118599
+                                 INC000001118623
+                                 INC000001118633
+                                 INC000001118702
+                                 INC000001118975
+                                 INC000001119466
+                                 INC000001120349
+                                 INC000001123552
+  
+  III. FUNCTIONAL OVERVIEW
+    
+     The following is an overview of the changes and primary functionality
+     that will be delivered in CAPRI GUI v189 and this VistA patch 
+     (DVBA*2.7*189).
+     
+    1. The following Remedy tickets are being addressed:
+      
+       a. INC000001112581 - After CAPRI was updated, patch DVBA*2.7*187,
+          exams are not being released to the RO.
+  
+       Problem
+       -------
+  
+       When a Patient record was retrieved by Social Security Number,
+       the IEN internal record number returned was treated as an
+       integer. A signed integer has a range of -2147483648 ..
+       2147483647. Some of the Vista systems had modified their
+       Patient file to prepend a fixed number to the IEN. This made
+       the value larger than the maximum for an integer and CAPRI
+       would throw an error.
+  
+       Solution
+       --------
+  
+       The Patient record IEN is now handled as a set of characters
+       and is not converted to an integer number. 
+   
+    2. The following defects that were reported directly to the CAPRI
+       development team are being addressed:
+   
+       a. Double line displays on FILE menu when user does not have VVA
+          or DAS security keys
+       
+       Problem
+       Double line displays on the FILE menu when user does not have
+       security keys DVBA CAPRI GETDOCSFROMVLER and DVBA CAPRI GETVBADOCS.
+   
+       Solution
+       Disable extra menu bar line when a user does not have the DVBA
+       CAPRI GETDOCSFROMVLER and DVBA CAPRI GETVBADOCS security keys.
+   
+       b. Get Docs from Virtual VA menu item disabled
+   
+       Problem
+       If the VLER DAS URL was not available, the Get Docs from Virtual
+       VA menu item was disabled. NOTE:  CAPRI patch DVBA*2.7*186
+       distributed the VLER DAS production URL as an entry in PARAMETER
+       DEFINITION file (8989.51); therefore, the VLER DAS Production
+       URL should always be available. 
+   
+       Solution
+       If the DAS URL is not available, the Get Docs from DAS menu
+       item is disabled.
+   
+    3. The following enhancements that were requested by Veterans Benefits 
+       Administration (VBA), Veterans Administration Central Office (VACO)
+       and Disability and Medical Assessment (DMA) are being addressed:
+   
+       Note: The following enhancements are for CAPRI GUI only. AMIE
+       functionality has not been modified.
+   
+       a. Update Exam Request Cancellation Reasons to C&P Exam tab
+          View C&P Exam screen.
+  
+          The following cancellations reasons will be selectable:
+  
+          1. DUPLICATE REQUEST
+          2. EXAM REQUESTED AT DIFFERENT LOCATION
+          3. EXAM REQUESTED IN ERROR
+          4. INCOMPLETE REQUEST 
+          5. UNABLE TO CONTACT VETERAN
+          6. VETERAN DIED 
+          7. VETERAN FAILED TO REPORT
+          8. VETERAN FAILED TO RSVP
+          9. VETERAN HOSPITALIZED
+          10. VETERAN IS EMPLOYEE
+          11. VETERAN REFUSED EXAM 
+  
+  
+          The following cancellation reasons will no longer be selectable:
+  
+          1. ADEQUATE MEDICAL EVIDENCE
+          2. DUPLICATE EXAM
+          3. EMPLOYEE
+          4. EXAM NAME DELETED FROM FILE
+          5. FAILED TO REPORT
+          6. INCORRECT JURISDICTION
+          7. INCORRECT TEST ORDERED  
+          8. NO EXAMS ORDERED
+          9. NOT ENOUGH INFORMATION
+          10. UNDELIVERED NOTIFICATION
+          11. VET REFUSED EXAM THIS LOCATION
+          12. VETERAN CANCELLED EXAM FOR DBQ
+          13. VETERAN WITHDREW CLAIM
+   
+       b. Remove "Priority of Exam" field from the C&P Exam Request and
+          add new field called "Claim Type" which is a required, single 
+          select field. Both Add New C&P Exam and View C&P Exam CAPRI
+          GUI screens have been modified.
+  
+          The following data elements will be selectable from the Claim 
+          Type field:
+  
+          1. BDD - DOD SHA
+          2. BDD
+          3. IDES
+          4. INCREASE ONLY
+          5. ORIGINAL
+          6. QUICK START
+          7. SUPPLEMENTAL
+  
+          The Priority of Exam field will no longer be displayed and the
+          following data elements will no longer be selectable:
+  
+          1. AGENT ORANGE
+          2. INCREASE
+          3. INSUFFICIENT EXAM
+          4. ORIGINAL NSC
+          5. ORIGINAL SC
+          6. OTHER
+          7. POW
+          8. REVIEW
+          9. TERMINAL
+  
+  
+       c. Add "SPECIAL CONSIDERATION(S)" required, multi-select field to
+          the C&P Exam Request. Both Add New C&P Exam and View C&P Exam
+          CAPRI GUI screens have been modified.
+  
+          The following data elements will be selectable from the 2507 
+          SPECIAL CONSIDERATION(S) required, multi-select field:
+  
+          1. AGE OF CLAIM
+          2. FDC
+          3. HOMELESS
+          4. NOT APPLICABLE
+          5. POW
+          6. TERMINAL
+   
+       d. Update list of Insufficiency Reasons for Insufficient Exam
+          Request to the CAPRI GUI screen "Add New Insufficient C&P Exam",
+          which was previously labled "Add New C&P Exam" screen.
+  
+          The following Insufficient reasons have been added:
+  
+          1. CASE REQUIRED EXAM BY A SPECIALIST
+          2. CONFLICTING INFORMATION IN REPORT
+          3. FAILED TO ADDRESS ALL CONDITIONS REQUESTED
+          4. FAILED TO COMPLY WITH BVA REMAND INSTRUCTIONS
+          5. FAILED TO PROVIDE DIAGNOSIS
+          6. FAILED TO PROVIDE MEDICAL OPINION
+          7. FAILED TO PROVIDE RATIONALE
+          8. FAILED TO PROVIDE REQUESTED/REQUIRED INFORMATION
+          9. IN-PERSON EXAMINATION WAS NOT PERFORMED
+  
+          The following insufficient reasons will no longer be selectable:
+  
+          1. DIAGNOSIS INCONSISTENT WITH EVIDENCE
+          2. EXAM PREVIOUSLY RETURNED AS INSUFFICIENT, RETURN AGAIN 
+             INSUFFICIENT
+          3. EYE EXAM IS INSUFFICIENT
+          4. FAILED TO PERFORM REQUESTED SPECIALIST EXAM
+          5. FAILED TO PROVIDE ADDITIONAL EXAM RECOMMENDED BY EXAMING 
+             PHYSICIAN
+          6. FAILED TO PROVIDE RANGE OF MOTION
+          7. FAILED TO PROVIDE REQUESTED MEDICAL OPINION
+          8. FAILED TO PROVIDE TEST ROUTINELY DONE FOR SPECIFIC CONDITION
+          9. FAILED TO REVIEW TEST RESULTS BEFORE MAKING DIAGNOSIS
+          10. OTHER
+   
+       e. Add the ability to store a Yes value on the CAPRI GUI "Add New 
+          Insufficient C&P Exam" screen from an Insufficient Request and
+          the ability to store a No value on the Add New C&P Exam screen
+          from a 2507 New Request.
+  
+       f. Add the Ability to save and display "free text" cancellation 
+          comments.
+  
+          The following areas in CAPRI GUI have been modified:
+  
+          1. CAPRI GUI C&P Exam Request has been modified to save 
+             cancellation comments on the 2507 Request, Exam Detail
+             screen. 
+          2. Cancellation comments will now be stored in VistA. 
+          3. Cancellation comments will not be displayed in the CAPRI 
+             cancellation emails, but will continue to be displayed in
+             MAILMAN notifications.
+          4. Cancellation comments will now be displayed on the CAPRI GUI 
+             Request
+          5. Status by Date Range report. 
+  
+    4. New Security Keys
+       N/A
+   
+    5. File Changes
+   
+       a. 2507 INSUFFICIENT REASONS (#396.94) DD partial
+          Modified
+   
+          A new field #1, INACTIVE has been added to the
+          2507 INSUFFICIENT REASONS (#396.94) file.
+          This field denotes if the INSUFFICIENT REASON is inactive.
+          The valid values for this field is from a set of code. Y
+          for Yes, denoting the  INSUFFICIENT REASON is inactive. N
+          for No, denoting the field is active.
+   
+   
+       b. 2507 SPECIAL CONSIDERATIONS (#396.25)
+          New
+   
+   
+       c. 2507 CLAIM TYPE (#396.27)
+          New
+   
+   
+       d. 2507 REQUEST FILE (#396.3) DD partial
+          Modified
+   
+          A new field, #9.1 CLAIM TYPE has been added. This field
+          will be populated only through the CAPRI GUI. This new
+          subfile is a multiple which points to the new
+          2507 CLAIM TYPE file (#396.27)
+   
+          A new field, #50 SPECIAL CONSIDERATIONS has been added.
+          This field will be populated only through the CAPRI
+          GUI. This new field is a multiple which points to the
+          new SPECIAL CONSIDERATIONS file (#396.25)
+          
+          A new field, #51 INSUFFICIENT REQUEST has been added.
+          This field is a Yes / No set of codes field. This field
+          will be populated only through the CAPRI GUI.
+   
+     
+       e. 2507 EXAM FILE (#396.4) DD partial
+          Modified
+   
+          To Support the request to save the Cancellation Comments,
+          from the View C&P Exams screen of the Capri GUI. Field #53
+          CANCELLATION COMMENTS word processing field was added to
+          store the saved Comments      
+   
+   
+       f. 2507 Cancellation Reason (#396.5)
+          Modified
+   
+          To support the request to update Cancellation Reasons, the
+          STATUS field #.02 was added; Data Type Set of Codes: select
+          '1' for Active and '0' for Inactive
+   
+    6. New/Modified Remote Procedures
+   
+         a. DVBA CAPRI LISTSPCLCONSID
+            New
+            This RPC returns an array (listing) of valid Special
+            Considerations that can be linked to a 2507 request.
+   
+            INPUT PARAMETER: N/A
+   
+         b. DVBA CAPRI GETSPCLCONSID
+            New
+            This RPC returns an array of special considerations
+            linked to a 2507 request.
+   
+            INPUT PARAMETER: 2507 REQUEST IEN
+              PARAMETER TYPE: LITERAL
+              REQUIRED: YES
+              SEQUENCE NUMBER: 1
+   
+         c. DVBA CAPRI SETSPCLCONSID
+            New
+            This RPC sets the passed-in special considerations and
+            links them to the passed-in 2507 request.
+   
+            INPUT PARAMETER: 2507 REQUEST IEN
+              PARAMETER TYPE: LITERAL
+              REQUIRED: YES
+              SEQUENCE NUMBER: 1
+   
+            INPUT PARAMETER: SPECIAL CONSIDERATION LIST
+              PARAMETER TYPE: LIST
+              REQUIRED: YES
+              SEQUENCE NUMBER: 2
+      
+         d. DVBA CAPRI LISTINSUFRSN
+            New
+            This RPC returns a list (array) of valid Insufficient
+            Reasons that can be linked to a 2507 exam.
+   
+            INPUT PARAMETER: N/A
+   
+         e. DVBA CAPRI GETCLAIMTYPE
+            New
+            This RPC returns a list (array) of Claim Types
+            associated with a valid 2507 Request
+   
+            INPUT PARAMETER: REQIEN
+              PARAMETER TYPE: LITERAL
+              REQUIRED: YES
+              SEQUENCE NUMBER: 1
+   
+         f. DVBA CAPRI LISTCLAIMTYPE
+            New
+            This RPC returns a list (array) of valid Claim Types
+   
+            INPUT PARAMETER: N/A
+   
+         g. DVBA CAPRI SETCLAIMTYPE
+            New
+            This RPC returns the status of Claim Types passed to be set
+            to a valid 2507 Request
+   
+            INPUT PARAMETER: REQIEN
+              PARAMETER TYPE: LITERAL
+              REQUIRED: YES
+              SEQUENCE NUMBER: 1
+   
+            INPUT PARAMETER: ARRAYCT
+              PARAMETER TYPE: LIST
+              REQUIRED: YES
+              SEQUENCE NUMBER: 2
+   
+         h. DVBA CAPRI GETCANCELREASON
+            New
+            This RPC will Get a list of Active Cancellation Reasons
+            for display and selection.
+   
+            INPUT PARAMETER: LIST
+              PARAMETER TYPE: LIST
+              REQUIRED: YES
+              SEQUENCE NUMBER: 1
+    
+  
+    7.  New/Modified Routines
+   
+         a. DVBACPR1
+            New
+            This routine provides list, get and set features for several
+            CAPRI RPCs:
+              DVBA CAPRI LISTSPCLCONSID
+              DVBA CAPRI GETSPCLCONSID
+              DVBA CAPRI SETSPCLCONSID
+              DVBA CAPRI LISTINSUFRSN
+              DVBA CAPRI GETCLAIMTYPE
+              DVBA CAPRI LISTCLAIMTYPE
+              DVBA CAPRI SETCLAIMTYPE
+            
+         b. DVBAB1A
+            Modified
+            This routine modification adds SPECIAL CONSIDERATION(S) and
+            CLAIM TYPE output to the CAPRI Exam Complete email driver.
+            This routine is called by the CAPRI GUI (RPC.)
+   
+         c. DVBCBULL
+            Modified
+            This routine modification adds SPECIAL CONSIDERATION(S) and
+            CLAIM TYPE output to the CANCELLATION BULLETIN.
+   
+         d. DVBCANRS
+            New
+            This routine provides list, get and set features for 
+            CANCELLATION REASON
+            RPCs:   
+              DVBA CAPRI GETCANCELREASON
+            
+         e. DVBARSBD
+            Modified
+            This routine modification adds CANCELLATION REASON and 
+            CANCELLATION COMMENT to the "Request Status by Date Range
+            report" in plain text within the CAPRI GUI and exported to
+            Excel.cvs on the users PC.
+   
+   
+  IV. TECHNICAL COMPONENTS
+   
+    The following section describes the technical components being exported
+    with this patch. 
+   
+   
+                                          UP    SEND  DATA    USER
+                                          DATE  SEC.  COMES   OVER  RSLV
+   FILE #      FILE NAME                  DD    CODE  W/FILE  RIDE  PTRS
+   ---------------------------------------------------------------------
+   
+   396.25      2507 SPECIAL CONSIDERATIONS  YES  YES   NO          
+   
+   396.27      2507 CLAIM TYPE             YES   YES   NO 
+   
+   396.3       2507 REQUEST                YES   YES   NO     NO
+   Partial DD: subDD: 396.3      fld: 51
+               subDD: 396.31
+               subDD: 396.32
+   
+   396.4       2507 EXAM                  YES   YES   NO      NO
+   Partial DD: subDD: 396.4      fld: 53
+   
+   396.5       2507 CANCELLATION REASON   YES   YES   NO      NO
+   Partial DD: subDD: 396.5      fld: .02
+                                 fld: .01
+   
+   396.94      2507 INSUFFICIENT REASONS  YES   YES   NO      NO
+   Partial DD: subDD: 396.94     fld: 1
+   
+   
+    NOTE: 
+  
+        a. 2507 INSUFFICIENT REASONS (#396.94) is an existing file that
+           wilL get updated in the postinstall routine. Some new reasons
+           will be added, some will be deactivated.
+   
+        b. 2507 SPECIAL CONSIDERATIONS (#396.25) is a new file that will
+           get updated in the post-install routine. New SPECIAL
+           CONSIDERATIONS will be added.
+   
+        c. 2507 CLAIM TYPE (#396.27) is a new file that will get updated
+           iN the post-install routine. New CLAIM TYPE will be added.
+  
+        d. 2507 CANCELLATION REASON (#396.5) is an existing file that
+           will get updated in the post-install routine. New
+           Cancellation Reasons will be added and the STATUS field will
+           be set to active, and the old cancellation comments will be
+           set to inactive.
+   
+        e. 2507 CANCELLATION REASON (#396.5), field .01 NAME max length
+           has been changed from 30 to 40.
+   
+          The following CLAIM TYPE entries have been added:
+          (file #396.27)
+   
+          1. BDD - DOD SHA
+          2. BDD
+          3. IDES
+          4. INCREASE ONLY
+          5. ORIGINAL
+          6. QUICK START
+          7. SUPPLEMENTAL
+   
+          The following Insufficient Reasons have been
+          inactivated: (file #396.94)
+   
+          1. DIAGNOSIS INCONSISTENT WITH EVIDENCE
+          2. EXAM PREVIOUSLY RETURNED AS INSUFFICIENT,
+             RETURN AGAIN INSUFFICIENT
+          3. EYE EXAM IS INSUFFICIENT
+          4. FAILED TO PERFORM REQUESTED SPECIALIST EXAM
+          5. FAILED TO PROVIDE ADDITIONAL EXAM RECOMMENDED
+             BY EXAMINING PHYSICIAN
+          6. FAILED TO PROVIDE RANGE OF MOTION
+          7. FAILED TO PROVIDE REQUESTED MEDICAL OPINION
+          8. FAILED TO PROVIDE TEST ROUTINELY DONE FOR
+             SPECIFIC CONDITION
+          9. FAILED TO REVIEW TEST RESULTS BEFORE MAKING
+             DIAGNOSIS
+          10. OTHER
+   
+          The following Insufficient Reasons have been added:
+          (file #396.94)
+   
+          1. FAILED TO PROVIDE REQUESTED/REQUIRED INFORMATION
+          2. FAILED TO PROVIDE MEDICAL OPINION
+          3. FAILED TO COMPLY WITH BVA REMAND INSTRUCTIONS
+          4. FAILED TO PROVIDE DIAGNOSIS
+          5. FAILED TO PROVIDE RATIONALE
+          6. CONFLICTING INFORMATION IN REPORT
+          7. FAILED TO ADDRESS ALL CONDITIONS REQUESTED
+          8. IN-PERSON EXAMINATION WAS NOT PERFORMED
+          9. CASE REQUIRED EXAM BY A SPECIALIST
+   
+          The following Cancellation Reasons have been
+          deactivated: (file #396.5)
+   
+          1. ADEQUATE MEDICAL EVIDENCE
+          2. DUPLICATE EXAM
+          3. EMPLOYEE
+          4. EXAM NAME DELETED FROM FILE
+          5. FAILED TO REPORT
+          6. INCORRECT JURISDICTION
+          7. INCORRECT TEST ORDERED
+          8. NO EXAMS ORDERED
+          9. NOT ENOUGH INFORMATION
+          10. UNDELIVERED NOTIFICATION
+          11. VET REFUSED EXAM THIS LOCATION
+          12. VETERAN CANCELLED EXAM FOR DBQ
+          13. VETERAN WITHDREW CLAIM 
+   
+          The following Cancellation Reasons have been added:
+          (file #396.5)
+   
+          1. DUPLICATE REQUEST
+          2. EXAM REQUESTED AT DIFFERENT LOCATION
+          3. EXAM REQUESTED IN ERROR
+          4. UNABLE TO CONTACT VETERAN
+          5. VETERAN FAILED TO REPORT
+          6. VETERAN HOSPITALIZED
+          7. VETERAN IS EMPLOYEE
+          8. VETERAN REFUSED EXAM
+          9. VETERAN FAILED TO RSVP
+   
+          The following SPECIAL CONSIDERATIONS have been
+          added: (file #396.25)
+   
+          1. AGE OF CLAIM
+          2. FDC
+          3. HOMELESS
+          4. NOT APPLICABLE
+          5. POW
+          6. TERMINAL
+   
+   
+    1. The following Routines are being added/modified:
+   
+       a. Modify: DVBCBULL
+           Description of changes:
+           SPECIAL CONSIDERATION(S) and CLAIM TYPE will be added to the
+           exam cancellation bulletin.
+           
+       b. Modify: DVBAB1A
+           Description of changes:
+           SPECIAL CONSIDERATION(S) and CLAIM TYPE will be added to the
+           exam complete email.
+   
+       c. New: DVBACPR1
+           Description:
+           This routine provides list, get and set features for several
+           CAPRI RPCs
+   
+       d. New: DVBCANRS
+           Description:
+           This routine provides list, get and set features for 
+           Cancellation Reasons and Cancellation Comment CAPRI RPCs
+   
+       e. Modify: DVBARSBD 
+          Description:
+          This routine modification adds CANCELLATION REASON and 
+          CANCELLATION COMMENT to the "Request Status by Date Range
+          report" in plain text within the CAPRI GUI and exported
+          to Excel.cvs on the users PC.    
+   
+    2. The following entries are being added to the REMOTE PROCEDURES
+       (#8994) file:
+   
+       a. Added
+   
+          DVBA CAPRI LISTSPCLCONSID
+          DVBA CAPRI GETSPCLCONSID
+          DVBA CAPRI SETSPCLCONSID
+          DVBA CAPRI LISTINSUFRSN
+          DVBA CAPRI GETCLAIMTYPE
+          DVBA CAPRI LISTCLAIMTYPE
+          DVBA CAPRI SETCLAIMTYPE
+          DVBA CAPRI GETCANCELREASON
+   
+       b. Modified 
+          N/A
+   
+    3. The following option has been updated in the OPTION (#19) file:
+   
+        a. NAME: DVBA CAPRI GUI
+           MENU TEXT: Capri GUI (Broker)
+   
+    4. The following new security key will be added to the SECURITY KEY
+       (#19.1) file:
+          N/A
+   
+   
+  V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+      
+    1. VistA Patch DVBA*2.7*189
+     
+       a. The VistA server software is being distributed as a PackMan patch
+          message through the National Patch Module (NPM). The KIDS build
+          for this patch is DVBA*2.7*189.
+   
+    2. CAPRI GUI v189 Client Software & User Documentation
+   
+       a.  The CAPRI GUI v189 client software is being distributed as
+           executable CAPRI.exe ([DVBA_27_P189_03.ZIP]). The 
+           installed executable for this patch is client version 
+           189.03 with a size of 16,466 KB.
+  
+   
+           The CAPRI GUI v189 client software and documentation for this
+           patch may be retrieved directly using FTP. The preferred method
+           is to FTP the files from:
+   
+              download.vista.domain.ext
+   
+          This transmits the files from the first available FTP server.
+          Sites may also elect to retrieve software directly from a 
+          specific server as follows:
+   
+          OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+          -----------------       -----------                ---------
+          Albany            ftp.domain.ext   []
+          Hines             ftp.domain.ext    []
+          Salt Lake City    ftp.domain.ext      []
+   
+         The following files will be available:
+   
+         File Name             Contents                  Retrieval format
+         ---------             --------                  ----------------
+         DVBA_27_P189_03.ZIP   File(s) indented below:      BINARY
+          - CAPRI.exe          CAPRI v189 executable
+          - VACAPRIVVA.dll     Virtual VA dynamically linked library
+          - CAPRI_Help.chm     CAPRI On-line Help
+          - CAPRI.map          CAPRI error map
+          - CAPRISession.r2w   Reflections session configuration
+          - ssh_config         Secure Shell configuration       
+          - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+          - Libeay32.dll       VLER /DAS dynamically linked library
+          - Ssleay32.dll       VLER /DAS dynamically linked library
+          - QPDF.exe           Support PDF compression and Linearization
+          - QPDF13.dll         Support PDF compression and Linearization
+          - LIBGCC_S_DW2-1.dll Support PDF compression and Linearization
+          - LIBSTDC++-6.dll    Support PDF compression and Linearization
+   
+         DVBA_27_P189_RN.PDF   Patch Release Notes          BINARY
+         DVBA_27_P189_UM.PDF   Updated CAPRI User Manual    BINARY 
+   
+        The VistA Documentation Library (VDL) web site will also contain 
+        the 'Release Notes' and updated 'CAPRI User Manual'. This web
+        site is usually updated within 1-3 days of the patch release date.
+   
+        The VDL web address for CAPRI user documentation is:
+       
+           http://www.domain.ext/vdl/application.asp?appid=133
+   
+   
+  VI. INSTALLATION REQUIREMENTS/NOTES:
+   
+   1. Users On the System
+   
+      a. This patch (DVBA*2.7*189) may be installed while CAPRI users are
+         still using the previously released version of the CAPRI GUI
+         (i.e. DVBA_27_187.exe).
+   
+      b. Once the installation of this patch has been completed, CAPRI 
+         users should be upgraded to the new released version of the
+         CAPRI GUI (CAPRI.exe [DVBA_27_P189_03.ZIP]). Please refer to
+         the CAPRI_GUI_ISG.doc document within the DVBA_27_P189_03.ZIP
+         file for supplemental installation instructions regarding the
+         installation of the following files:
+  
+         VACAPRIVVA.dll        Virtual VA dynamically linked library
+         CAPRI_Help.chm        CAPRI On-line Help
+         CAPRI.map             CAPRI error map
+         CAPRISession.r2w      Reflections session configuration
+         ssh_config            Secure Shell configuration
+         Libeay32.dll          VLER /DAS dynamically linked library
+         Ssleay32.dll          VLER /DAS dynamically linked library
+         QPDF.exe              Support PDF compression and Linearization
+         QPDF13.dll            Support PDF compression and Linearization
+         LIBGCC_S_DW2-1.dll    Support PDF compression and Linearization
+         LIBSTDC++-6.dll       Support PDF compression and Linearization
+   
+      c. This patch modifies routines used by the CAPRI GUI application 
+         and the Automated Medical Information Exchange (AMIE) package. It
+         should be installed during non-peak hours to minimize disruption 
+         to users and to reduce the possibility of errors when the 
+         routines are updated.
+   
+   2. VistA Options
+          
+      a. The following VistA options should be disabled while installing
+         this patch: NONE.
+   
+   3. Software Installation Time
+   
+      a. The estimated installation time for VistA patch DVBA*2.7*189 is 
+         less than 5 minutes during off peak hours.
+    
+   4. Required Builds
+   
+      a. The following is a list of REQUIRED builds for this KIDS
+         distribution (DVBA*2.7*189). KIDS will not allow the installation
+         of this patch without their prior installation.
+   
+         Required Builds:
+         ----------------
+         DVBA*2.7*184
+         DVBA*2.7*187
+   
+   
+  VII. INSTALLATION INSTRUCTIONS:
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+        the KIDS distribution included with this message.
+   
+     2. From the 'Kernel Installation & Distribution System' menu, select
+        the Installation menu.
+   
+     3. From this menu, you may now elect to use the following options
+        (when prompted for INSTALL NAME, enter DVBA*2.7*189).
+   
+        a. Backup a Transport Global - This option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any changes such as DDs or templates.
+        b. Compare Transport Global to Current System - This option will
+           allow you to view all changes that will be made when the patch
+           is installed.  It compares all components of the patch
+           (routines, DDs, templates, etc.).
+        c. Verify Checksums in Transport Global - This option will allow
+           you to ensure the integrity of the routines that are in the
+           transport global.
+        d. Print Transport Global - this option will allow you to view the
+           components of the KIDS build.
+   
+     4. Use the Install Package(s) option and select package DVBA*2.7*189.
+   
+     5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+        Install? NO//', respond NO.
+   
+     6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+        NO//', it is recommended you answer NO.
+   
+     7. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+        and Protocols? NO//', respond NO.
+   
+     8. If CAPRI GUI users have not already been upgraded to the new 
+        version of the CAPRI GUI v189 (CAPRI.exe [DVBA_27_P189_03.ZIP]), 
+        they should be upgraded as soon as possible upon installation of 
+        this patch.
+   
+   
+  VIII. TEST SITES
+   
+    The following sites participated in the testing of the CAPRI GUI v189
+    and DVBA*2.7*189 server software.
+   
+     Test Sites:
+     ---------- 
+     * Tomah
+     * Pittsburgh
+     * Baltimore (Perry Point)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA189P
+    Before:       n/a   After: B62924382  **189**
+Routine Name: DVBAB1A
+    Before: B29208076   After: B41988424  **185,187,189**
+Routine Name: DVBACPR1
+    Before:       n/a   After: B24355117  **189**
+Routine Name: DVBARSBD
+    Before: B58585815   After:B106348391  **179,185,189**
+Routine Name: DVBCANRS
+    Before:       n/a   After:  B1041993  **189**
+Routine Name: DVBCBULL
+    Before: B19523211   After: B29784919  **42,184,189**
+ 
+Routine list of preceding patches: 184, 187
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 12, 2014
+Completed By:                               Date Completed: APR 15, 2015
+Released By :                               Date Released : APR 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

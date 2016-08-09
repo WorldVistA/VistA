@@ -1,0 +1,267 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 06/30/14 at 11:42
+=============================================================================
+Run Date: JAN 28, 2015                     Designation: XT*7.3*137
+Package : XT - TOOLKIT                        Priority: Mandatory
+Version : 7.3       SEQ #110                    Status: Released
+                  Compliance Date: FEB 28, 2015
+=============================================================================
+
+Associated patches: (v)XT*7.3*45   <<= must be installed BEFORE `XT*7.3*137'
+                    (v)XT*7.3*62   <<= must be installed BEFORE `XT*7.3*137'
+
+Subject: VALVERIFY ERRS, ALERT ERRS, NEW STYLE XREFS, AND TEST PAT INDIC
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch XT*7.3*137 addresses the following patient merge issues:
+  
+  1. User Manual update to document causes of fields failing validation
+     and preventing patient merge.
+  2. Incorrect merge processing for DINUM'd fields that have a new style
+     cross reference.
+  3. PATIENT file (#2) ALIAS field (#2.01) duplicated by patient merge.
+  4. PATIENT file (#2) TEST PATIENT INDICATOR field (#.6) being copied
+     to merged records. 
+  
+ BLOOD BANK REVIEW
+ =================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch XT*7.3*137 contains 
+ changes to a package referenced in ProPath standard titled: BBM Team 
+ Review of VistA Patches. This patch does not alter or modify any VistA 
+ Blood Bank software design safeguards or safety critical elements 
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch XT*7.3*137 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+          
+ ASSOCIATED REMEDY: 
+ ==================
+  1. INC000000245400 - Duplicate Record Identified
+  2. INC000000241993 - Problem Merging Patient Data in a file with 3 NEW
+                       Style X-REF's
+  3. INC000000237030 - Alias during merge can make a duplicate alias
+  4. INC000000217841 - Test Patient Indicator remains after merge    
+  
+   
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+   
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Augusta VA Medical Center
+ Tuscaloosa VA Medical Center
+   
+  
+ Remedy Overview:
+ ================
+ 1. INC000000245400 - Duplicate Record Identified
+  
+ Problem:
+ ========
+ When a user runs the Identify Potential Merge Problems [XDR VALID CHECK] 
+ option, in some instances they may get the errors similar to the one 
+ below:
+  
+   Field .3602 [MILITARY DISABILITY RETIREMENT] IENS=242217, value: 0^NO
+   Eligibility verified at the HEC...NO EDITING!
+  
+ Next, when the Schedule Process to Merge Verified Duplicates [XDR MERGE
+ READY DUPLICATES] option is run, the merge may or may not fail because of
+ the errors listed when the Identify Potential Merge Problems [XDR VALID
+ CHECK] was run.
+    
+ Resolution:
+ ===========
+ The Identify Potential Merge Problems [XDR VALID CHECK] menu option is not
+ a precise predictor of whether or not a patient merge should fail due to
+ data validation problems. 
+  
+ The VA Documentation Library (VDL) will be updated to include an
+ explanation of the differences between the Identify Potential Merge 
+ Problems [XDR VALID CHECK] option and the Schedule Process to Merge
+ Verified Duplicates [XDR MERGE READY DUPLICATES] option when they
+ validate fields.
+  
+  
+ 2. INC000000241993 - Problem Merging Patient Data in a file with 3 NEW 
+                      Style X-REF's  
+  
+ Problem:
+ --------
+ If a file is pointing to the PATIENT file (#2) by its .01 field, and if 
+ that .01 field is DINUM'd, and the cross reference is a new style cross
+ reference then the cross reference is not being properly merged by the
+ patient merge process. An example of a field with a cross reference of 
+ this type is the FLUORIDE MONITOR RUN DATE field (#5) of the DENTAL 
+ PATIENT file (#220).
+  
+ Resolution:
+ -----------
+ Modified routine ^XDRMERG2 to check for new style cross-references and
+ if so call ^DIQ to get the field data from the 'FROM' patient, then call
+ ^DIE to add the data to the 'TO' Patient.
+  
+  
+ 3. INC000000237030 - Alias during merge can make a duplicate alias 
+   
+ Problem:
+ --------
+ If a patient is merged into another patient that has a matching name 
+ ALIAS field (#2.01,.01) and matching ALIAS SSN field (#2.01,1) then the 
+ ALIAS is being duplicated in the merged patient. For example:
+  
+    Patient Name                            Patient Alias
+    ------------                            -------------
+    1) SMITH,GARRY (ssn: 111-22-3333)       SMITH,GORDON (ssn:222-33-2222)
+                                            SMITH,BYRON  (ssn:444-33-4444)
+  
+    2) SMITH,GARY (ssn: 000-00-9000)        SMITH,GORDON (ssn:222-33-2222)
+                                            SMITH,TREY   (ssn:222-33-9090)
+  
+  The result of merging Patient #1 above into Patient #2 would have been:
+  
+    Patient Name                          Patient Alias
+    ------------                          -------------
+     SMITH,GARY (ssn: 000-00-9000)         SMITH,GORDON (ssn:222-33-2222)
+                                           SMITH,GORDON (ssn:222-33-2222) 
+                                           SMITH,BYRON  (ssn:444-33-4444)
+                                           SMITH,TREY   (ssn:222-33-9090)
+                                           SMITH,GARRY  (ssn:111-22-3333)
+   
+ SMITH,GORDON (ssn:222-33-2222) would be duplicated as an alias in the
+ resulting patient.
+  
+ Resolution:
+ -----------
+ Modified routine ^XDRMERGA to check the Patient file (#2) ALIAS 
+ multiple field (#2.01) of the merging records for matching name ALIAS
+ and ALIAS SSN.  If so, then the alias is excluded from the patient merge.
+  
+ 4. INC000000217841 - Test Patient Indicator remains after merge
+  
+ Problem:
+ --------
+ If a patient who has the TEST PATIENT INDICATOR field (# .6) of the
+ PATIENT file (#2) set to 'YES' is merged into a patient who does not
+ have the TEST PATIENT INDICATOR set to 'YES' then the resulting patient
+ WILL have the TEST PATIENT INDICATOR set to 'YES'.
+  
+ Resolution:
+ -----------
+ Modified routine ^XDRMERGA to add a warning message and verification
+ prompt to the Approve verified duplicates for merging
+ [XDR APPROVE FOR MERGE]. If the user chooses to merge a TEST patient into
+ a real patient they are prompted 'Merge the above pair (a test patient
+ into a real patient) SURE?'. A response of 'Y' or 'N' is required. Routine
+ ^XDRMERGB was modified so that If they answer 'Y' then the TEST PATIENT
+ INDICATOR field (# .6) is not merged. If they Answer 'N' then the pair is
+ not approved and will not be merged.
+  
+ DOCUMENTATION RETRIEVAL:
+ ------------------------ 
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name                   Description              Retrieval Format
+      =========                   ===========              ================
+      xt_73_p137_um.PDF                User Manual                   BINARY
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. Suggested time to install:
+ during non-peak hours.            
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter XT*7.3*137).      
+  
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch is
+           installed.
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+        d. Print Transport Global - this option will allow you to view
+           the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package XT*7.3*137
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+       respond No.
+  
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//" respond Yes.
+  
+       When prompted, 'Enter options you wish to mark as 'Out Of 
+       Order':', enter:
+              
+           Approve verified duplicates      
+           for merging                         [XDR APPROVE FOR MERGE]
+         
+           Schedule Process to Merge        
+           Verified Duplicates                 [XDR MERGE READY DUPLICATES]
+  
+       When prompted, 'Enter protocols you wish to mark as 'Out Of
+       Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.3;TOOLKIT;**[Patch List]**;Apr 25, 1995;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: XDRMERG2
+    Before: B64126230   After: B75408024  **23,38,40,42,46,62,137**
+Routine Name: XDRMERGA
+    Before: B63181099   After: B98063543  **23,28,37,40,45,137**
+Routine Name: XDRMERGB
+    Before: B76785661   After: B79750683  **23,137**
+ 
+Routine list of preceding patches: 45, 62
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 08, 2014
+Completed By:                               Date Completed: NOV 12, 2014
+Released By :                               Date Released : JAN 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

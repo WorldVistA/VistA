@@ -1,0 +1,129 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 03/30/16 at 14:40
+=============================================================================
+Run Date: MAY 17, 2016                     Designation: ECX*3*163
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #145                      Status: Released
+                  Compliance Date: JUN 17, 2016
+=============================================================================
+
+Associated patches: (v)ECX*3*159   <<= must be installed BEFORE `ECX*3*163'
+
+Subject: FY17 CHANGES FOR 4 CHAR CDS NATIONAL CLINIC (#728.441) FILE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch ECX*3.0*163 updates the SHORT DESCRIPTION (#1) field of 3 existing 
+ entries in the NATIONAL CLINIC (#728.441) file.
+  
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A  
+  
+  
+ ASSOCIATED CA SDM TICKET:
+ ========================= 
+ 1. I7805291FY16 - FY17 Changes for National Clinic entries
+  
+   
+ PARTICIPATING TEST SITES:
+ =========================
+ Dublin VAMC
+ New York Harbor HCS
+ Providence VAMC
+   
+  
+ CA SDM OVERVIEW:
+ ================
+ 1. I7805291FY16
+                      
+    Problem:
+    --------
+    A request was made by the Managerial Cost Accounting Office (MCAO) to
+    update the SHORT DESCRIPTION (#1) field of 3 existing entries in the 
+    NATIONAL CLINIC (#728.441) file.
+  
+    Resolution:
+    -----------
+    Routine ECX3P163 has been created to update the NATIONAL CLINIC 
+    (#728.441) file by modifying the SHORT DESCRIPTION (#1) field of 
+    3 existing entries effective 10/1/2016.
+  
+  
+    The descriptions of the following entries have changed:
+   
+    Code    New Short Description
+    ----    ---------------------
+    DMHC    PRRC Day Hospital
+    DMTC    PRRC Day Treatment
+    PDSC    PTSD Clinical Team Program
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes. 
+ Suggested time to install: non-peak requirement hours.
+   
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+   
+    3. From this menu, you may select to use the following options (when
+       prompted for INSTALL NAME, enter ECX*3.0*163).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+    4. Use the Install Package(s) option and select the package ECX*3.0*163
+   
+    5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//",
+       respond NO.
+   
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? NO//", respond NO.
+   
+ ** 7. During install, verify that all entries were added successfully.
+       If an error is displayed, please create a ticket.  
+   
+    8. You may delete the routine ECX3P163 from your production system 
+       after the patch has been successfully verified.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECX3P163
+    Before:       n/a   After:  B3777024  **163**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 02, 2016
+Completed By:                               Date Completed: MAY 11, 2016
+Released By :                               Date Released : MAY 17, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

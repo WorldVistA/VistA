@@ -1,0 +1,724 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Monday, 08/18/14 at 17:55
+=============================================================================
+Run Date: OCT 22, 2014                     Designation: IB*2*461
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #481                      Status: Released
+                  Compliance Date: NOV 05, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `IB*2*461'
+                    (v)IB*2*458    <<= must be installed BEFORE `IB*2*461'
+                    (v)ICD*18*57   <<= must be installed BEFORE `IB*2*461'
+                    (v)ICD*18*64   <<= must be installed BEFORE `IB*2*461'
+                    (v)IB*2*488    <<= must be installed BEFORE `IB*2*461'
+                    (v)IB*2*494    <<= must be installed BEFORE `IB*2*461'
+
+Subject: IB ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Input Template
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Group_8A.pdf) posted on the Anonymous.Software 
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+                  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service or dates of discharge for inpatients, that occur on or 
+ after the implementation date, will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+  
+ This patch updates Integrated Billing (IB) to accommodate ICD-10 code 
+ versions when activated.  Integrated Billing (IB) will expand the ICD code 
+ sets used to include both ICD-9 and ICD-10.  In each case where the ICD-9 
+ code sets are currently used the new ICD-10 codes set will be available 
+ when activated.  The following modifications are required for Integrated 
+ Billing (IB) to be compliant.   In all the following cases when a date is 
+ concerned it is relative to the ICD-10 Activation Date.
+  
+ The short name or description of both Diagnosis and Procedures has been 
+ extended from 30 characters to 60 characters in ICD-10.  Display screens 
+ throughout IB have been modified to display an expanded Code description, 
+ where possible.  In many cases the full expanded 60 character descriptions 
+ could not be used due to space limitations.
+                  
+ Most searches for ICD codes no longer allow a view of the entire list of 
+ codes, starting at the first code, using '?'.  This is now only available 
+ if Inactive Codes are also viewed as in the Bill Diagnosis entry/edit.  
+ Since the list of ICD codes is now so large viewing the entire list takes 
+ some time.
+                  
+ Both ICD-9 and ICD-10 Diagnosis and Procedure codes will be available 
+ within Integrated Billing, based on the date of service and the ICD-10 
+ activation date.
+                  
+                  
+ Bill Coding Version
+ -------------------
+ The Bill Statement Covers To Date will determine the ICD code version 
+ allowed on the bill.  Each bill must be coded in either ICD-9 or ICD-10.
+ -  ICD-9 codes if the Statement To Date is before the ICD-10 activation
+ -  ICD-10 codes if the Statement To Date is on/after the ICD-10 activation
+                  
+ The ICD Diagnosis and ICD Procedures on a bill must be consistent and part 
+ of the same coding version.  A new Bill Edit Check will enforce coding 
+ version consistency.
+                  
+ Bill Inpatient Timeframe
+ ------------------------
+ An inpatient bill will be allowed to span the ICD-10 activation date.  
+ For Inpatient stays that span the ICD-10 activation date a bill coded in 
+ ICD-10 may cover care before the activation date.
+                  
+ Bill Outpatient Timeframe
+ -------------------------
+ An Outpatient bill may not span the ICD-10 Activation Date.  
+                  
+ -  When creating an Outpatient bill and the Statement From Date entered is 
+    before the ICD-10 activation date the default for the Statement To Date 
+    will be one day before the activation date.
+                  
+ -  When creating an Outpatient bill and the Statement From Date entered is 
+    before the ICD-10 activation date then a Statement To Date after the 
+    activation date will not be allowed.
+                  
+ -  When editing Outpatient bill dates on Screen 7 the Statement From Date 
+    and Statement To Date will not be allowed to span the ICD-10 
+    activation date.
+                  
+ -  An additional edit check error has been added if the Statement From Date 
+    and Statement To Date span the ICD-10 activation date.
+                  
+ Bill Enter/Edit of Diagnosis and Procedures
+ -------------------------------------------
+ On a Bill the look up and selection of ICD Diagnosis and Procedures has 
+ been updated to accommodate the two ICD coding versions: ICD-9 and ICD-10.
+                  
+ A bill should not have both ICD-9 and ICD-10 codes.
+                  
+ For both ICD Diagnosis and ICD Procedures the Statement To Date or end 
+ date of the bill will determine which set of codes are available on the 
+ bill.  Bills with a Statement To Date less than the ICD-10 activation date 
+ will allow ICD-9 codes.  Bills with a Statement To Date on or after the 
+ ICD-10 activation date will allow ICD-10 codes.
+                  
+ When certain Diagnosis are displayed for selection on a bill the inactive 
+ codes are displayed but not allowed to be placed on the bill.  In these 
+ cases active and inactive codes of the coding version applicable to the 
+ bill will be displayed.
+                  
+ -  Bill Diagnosis on Screen 4 for Inpatient and Screen 5 for Outpatient.
+ -  Patient Reason for Visit on Screen 10 for Outpatient UB04.
+                  
+ The short name or description of both Diagnosis and Procedures has been 
+ extended from 30 characters to 60 characters in ICD-10.  The display of 
+ these names has been lengthened to the extent available on the screens.
+                  
+ External Cause of Injury codes ICD-9 began with E as the first character.
+ External Cause of Injury codes ICD-10 begin with V, W, X, or Y.
+ -  Entry of External Cause of Injury (E) codes is limited to 3 in ICD-9.  
+ -  There is no restriction on the number of codes in ICD-10 for either  
+    E codes or the V, W, X or Y External Cause of Injury codes.
+                  
+ Bill Charge DRG Calculation
+ ---------------------------
+ The calculation of the DRG used for charges on Inpatient Institutional 
+ bills has been updated. This DRG is based on the Movement data in PTF and 
+ is displayed under each movement Diagnosis on the Screen 4 PTF Diagnosis.
+                  
+ -  The Present on Admission (POA) indicator assigned to a Diagnosis in PTF 
+    will be included in the calculation.
+                  
+ -  The DRG calculation will be based on the code version of the
+    Diagnosis assigned to the movement.  Inpatient bills that span the 
+    ICD-10 activation date may have ICD-10 codes assigned for movements 
+    before the ICD-10 activation.  In this case the DRG calculation will be 
+    based on ICD-10 although the movement date is within the ICD-9 
+    timeframe.
+                  
+ Bill Procedure Coding Method
+ ----------------------------
+ The BILL/CLAIMS PROCEDURE CODING METHOD (#399,.09) has been modified from 
+ ICD-9-CM to ICD. This change affects both the field and the display on 
+ Screen 4 and Screen 5 of Enter/Edit Billing Information [IB EDIT BILLING 
+ INFO] option.
+                  
+ Bill Edit Checks
+ ----------------
+ Several Bill Edit Checks have been modified or added primarily due to 
+ changes in the definitions of ICD-10 Diagnosis.  Several of these coding 
+ rules being checked are based on a type of diagnosis that is defined by 
+ the first character of the code.  With the transition to ICD-10 the 
+ character identifying the type has changed in some cases.  For example the 
+ External Cause of Injury codes.  
+    ICD-9 External Cause of Injury codes first character is an E
+    ICD-10 External Cause of Injury codes first character is V, W, X, or Y
+                  
+ The result is the following updates to the Bill Edit Checks differentiated 
+ by the code version:
+                  
+ -  Principle Diagnosis cannot begin with an E code for ICD-9
+ -  Principle Diagnosis cannot begin with a V, W, X, or Y code for ICD-10
+                  
+ -  Inpatient Principle Diagnosis begins with a V code warning for ICD-9
+ -  Inpatient Principle Diagnosis begins with a Z code warning for ICD-10
+                  
+ -  More than 3 E codes on a bill warning for ICD-9
+    Note there is no corresponding limit on the number of V, W, X or Y 
+    codes in ICD-10
+                  
+ -  Pregnancy Diagnosis on the bill with no corresponding Occurrence Code 
+    10 Last Menstrual Period error, the determination of Pregnancy code 
+    is updated for code version:
+    Diagnosis in ICD-9:  V22*-V24*, V27*-V28*, 630*-677
+    Diagnosis in ICD-10: O00.*-O9A.*, Z34.*-Z36.*, Z37.*-Z39.*, Z3A.*
+                  
+ -  An Outpatient bill's Statement Dates cannot span the ICD-10 activation.
+    There is no corresponding limit on Inpatient bills.  Inpatient bills 
+    may span the ICD-10 activation date.
+                  
+ -  The code version of all ICD codes on the bill must match the code 
+    version defined by the Statement To Date, either ICD-9 or ICD-10.  
+    This includes the ICD codes in the following fields:
+         Bill Diagnosis (screens 4/5)
+         Admitting Diagnosis (screen 10), Inpatient
+         Patient Reason for Visit Diagnosis (screen 10, Outpatient)
+         Bill Procedures (screens 4/5)
+                  
+ Default Prescription Diagnosis Site Parameter
+ ---------------------------------------------
+ A site parameter exists to provide a Default Diagnosis that is 
+ automatically added to a bill when a Prescription is added to the bill.  
+ This capability is updated to accommodate both an ICD-9 and ICD-10 
+ Diagnosis.
+                  
+ -  The existing IB SITE PARAMETERS, DEFAULT RX REFILL DX (#350.9, 1.29) 
+    will remain available for the ICD-9 version Diagnosis.  
+                  
+ -  A new IB SITE PARAMETERS field DEFAULT RX REFILL DX ICD-10 
+    (#350.9, 7.05) is created for the ICD-10 version of the Diagnosis.
+    When this patch is installed this new field will be set to a default 
+    value of Z76.0 - Encounter for issue of repeat prescription
+                  
+ One of the two Default Rx Diagnosis will be viewable and editable based on 
+ date in the MCCR Site Parameter Display/Edit [IBJ MCCR SITE PARAMETERS] 
+ option, IB Site Parameter Screen.
+                  
+ When editing a bill in Enter/Edit Billing Information the Default 
+ Diagnosis automatically added to a bill when a prescription is added will 
+ be determined based on the bill Statement To Date.  The ICD-10 Default 
+ Diagnosis will be automatically added to bills with a Statement To Date on 
+ or after the ICD-10 Activation date.
+                  
+ Form Output Extract - IB 837 Transmission
+ -------------------------------------------
+ The EDI Extract of a claim has been updated to be ICD-10 compliant.
+ The Diagnosis and Procedure Qualifiers that identify the codes on the EDI 
+ extracts have been updated to distinguish between ICD-9 and ICD-10 codes.  
+ Note the External Cause of Injury Diagnosis codes are uniquely identified 
+ on the UB04 form.  The following are the types of diagnosis and procedures 
+ extracted and their corresponding Qualifier.
+                  
+ -  DC1-Principle Diagnosis (not External Cause of Injury) ICD-9 is BK
+ -  DC1-Principle Diagnosis (not External Cause of Injury) ICD-10 is ABK
+                  
+ -  DC1-Diagnosis (not Principle/External Cause of Injury-UB) ICD-9 is BF
+ -  DC1-Diagnosis (not Principle/External Cause of Injury-UB) ICD-10 is ABF
+                  
+ -  DC1-Diagnosis External Cause of Injury (E) on UB04 ICD-9 is BN
+ -  DC1-Diagnosis External Cause of Injury (V,X,W,Y) on UB04 ICD-10 ABN
+                  
+ -  DC1-Diagnosis External Cause of Injury (E) on CMS ICD-9 is BF
+ -  DC1-Diagnosis External Cause of Injury (V,X,W,Y) on CMS ICD-10 is ABF
+                  
+ -  PC1-Principle Procedure ICD-9 is BR
+ -  PC1-Principle Procedure ICD-10 is BBR
+                  
+ -  PC1-Procedure (not Principle) ICD-9 is BQ
+ -  PC1-Procedure (not Principle) ICD-10 is BBQ
+                  
+ -  CLIA-Admitting Diagnosis (Inpatient) ICD-9 is BJ
+ -  CL1A-Admitting Diagnosis (Inpatient) ICD-10 is ABJ
+                  
+ -  CL1A-Patient Reason for Visit (UB04 - Outpatient) ICD-9 is PR
+ -  CL1A-Patient Reason for Visit (UB04 - Outpatient) ICD-10 is APR
+                  
+ Note this patch only updates the EDI Extract for the Code Qualifiers. 
+ eClaims has already updated the EDI Extract for the extended Code length, 
+ where needed.
+                  
+ Form Output Extract - UB-04 Locally Printed
+ -------------------------------------------
+ The ICD-10 Diagnosis code is 8 characters with a decimal, however the 
+ printed UB-04 allows only 7 characters for the Diagnosis.  The decimal in 
+ the Diagnosis code is not required to print since it is implied.  
+ Therefore the decimal will be removed from all Diagnosis printed on a 
+ bill, allowing the Diagnosis to fit correctly in the UB-04 form locators:
+    FL 67     - Principle Diagnosis
+    FL 67A-Q  - Other Diagnosis
+    FL 69     - Admitting Diagnosis (Inpatient)
+    FL 70a-c  - Patient Reason for Visit (Outpatient)
+    FL 72a-c  - External Cause of Injury (ECI) codes
+                  
+ The External Cause of Injury (ECI) section (FL 72a-c) is no longer used.  
+ Therefore the ICD-10 ECI codes (V, W, X, Y codes) will be printed with the 
+ other Bill Diagnosis in Form Locators 67A-Q.
+                  
+ Third Party Joint Inquiry
+ -------------------------
+ The short name or description of both Diagnosis and Procedures has been 
+ extended from 30 characters to 60 characters in ICD-10.  The TPJI Bill 
+ Procedure and Bill Diagnosis Screens have been update to display the 
+ entire ICD code description.
+                  
+ Claims Tracking
+ ---------------
+ The primary updates required for Claims Tracking were to displays and the 
+ addition of the Present On Admission indicator.
+                  
+ -  The CLAIMS TRACKING, ADMITTING REASON (ICD) (#356, .3) name was changed 
+    to the more generic, ICD from ICD-9.
+                  
+ -  The Patients Admitting Movements Admitting Diagnosis is displayed on 
+    both the Claims Tracking Extended screen and the Claims Tracking 
+    Appeal/Denial Extended screen.  However if the appeal/denial review 
+    date was after the patient was discharged the Admitting Diagnosis 
+    was not found or displayed on the Appeal/Denial Extended screen.  This 
+    has been corrected.
+                  
+ The Inpatient Diagnosis and Procedures and DRG calculation have been 
+ updated for ICD-10.  The Diagnosis Update (DU) and Procedure Update (PU) 
+ actions available to enter codes to calculate an DRG for Inpatient stays:
+                  
+ -  The Inpatient Diagnosis selection display of active and inactive codes 
+    will be limited to the coding version applicable to the admission 
+    date of the stay.
+                  
+ -  An new INPATIENT DIAGNOSIS, POA INDICATOR (#356.9, .05) has been added 
+    with the following selections to indicate if the diagnosis related 
+    condition was present when the patient was admitted:
+    Y = Present at the time of inpatient admission
+    N = Not present at the time of inpatient admission 
+    U = Documentation is insufficient to determine if condition was present 
+    W = Provider is unable to clinically determine if condition was present
+    This POA indicator will default to Yes when a Diagnosis is entered.
+                  
+ -  Within the Update actions the list of Diagnosis (DU) has been updated 
+    to display the code version and the POA indicator.
+                  
+ -  Within the Update actions the list of Procedure (PU) has been updated 
+    to display the code version.
+                  
+ -  The DRG calculation has been updated to include the new POA Indicator.
+                  
+                  
+ Technical Description:
+ ======================
+                  
+ In Claims Tracking two API's that get Outpatient encounter data had been 
+ retired but were still being used:  SDCO3 (#403) and SDCO4 (#404).  These 
+ two API's have been replaced by the supported API SDOE (#2546).  The 
+ Expanded Claims Tracking Screen and Inquire to Claims Tracking report 
+ use these APIs, but the API update results in no functional change.
+                  
+ ICD API (#3990) ICDCODE previously used to get ICD Diagnosis and Procedure 
+ data is being retired and replaced by the new ICD API (#5747) ICDEX.
+ All instances in IB of the use of ICDCODE have been replaced by ICDEX.
+                  
+ Throughout IB the functions in the utility IBACSV are used to get the data 
+ on the various codes, including ICD Diagnosis and Procedures.  Therefore 
+ many of the changes necessary for conversion to ICD-10 were accomplished 
+ by updating the API calls in this utility.
+                  
+ The IB ERROR (#350.8) codes have been updated in the post-init:
+ -  IB071:  The existing IB NO DX Error code (IB071) message updated, 
+            ICD-9 replaced with ICD: A claim must contain an ICD diagnosis.
+ -  IB354:  A new IB354 Error Code has been added: Statement Covers To date 
+            cannot span into ICD-10 effective period.
+ -  IB355:  A new IB355 Error Code has been added: The Principal (first-
+            entered) diagnosis cannot begin with a V, W, X or Y.
+ -  IB356:  A new IB356 Error Code has been added: ICD Code Set Version 
+            does not correspond to Statement Covers To Date.
+                  
+ The following IB FORM FIELD CONTENT (#364.7) entry's Format Code (1) have 
+ been modified.  These entries are deleted in the pre-init and re-added 
+ during the install to ensure an accurate update.
+                  
+ IB 837 Transmission: Inpatient UB Form
+ -  Entry #40 - PC1:  Procedure Code Qualifiers - BR/BQ
+ -  Entry #1635 - CL1A-15:  Admitting Diagnosis - BJ/ABJ
+                  
+ IB 837 Transmission: Outpatient UB Form
+ -  Entry #1617 - CL1A-17:  Patient Reason for Visit (1) Qualifier - PR/APR
+ -  Entry #1619 - CL1A-19:  Patient Reason for Visit (2) Qualifier - PR/APR
+ -  Entry #1620 - CL1A-20:  Patient Reason for Visit (2) Diagnosis
+ -  Entry #1621 - CL1A-21:  Patient Reason for Visit (3) Qualifier - PR/APR
+ -  Entry #1622 - CL1A-22:  Patient Reason for Visit (3) Diagnosis
+                  
+ Locally Printed:  UB-04 Form
+ -  Entry #1298 - FL-67:  PRIN DIAG CODE (FL-67/1/1)
+ -  Entry #1346 - FL-67:  OTHER DIAG CODE 1 (FL-67A/1/1)
+ -  Entry #1347 - FL-67:  OTHER DIAG CODE 2 (FL-67B/1/1)
+ -  Entry #1348 - FL-67:  OTHER DIAG CODE 3 (FL-67C/1/1)
+ -  Entry #1349 - FL-67:  OTHER DIAG CODE 4 (FL-67D/1/1)
+ -  Entry #1350 - FL-67:  OTHER DIAG CODE 5 (FL-67E/1/1)
+ -  Entry #1351 - FL-67:  OTHER DIAG CODE 6 (FL-67F/1/1)
+ -  Entry #1352 - FL-67:  OTHER DIAG CODE 7 (FL-67G/1/1)
+ -  Entry #1353 - FL-67:  OTHER DIAG CODE 8 (FL-67H/1/1)
+ -  Entry #1354 - FL-67:  OTHER DIAG CODE 9 (FL-67I/1/1)
+ -  Entry #1302 - FL-67:  OTHER DIAG CODE 10(FL-67J/1/1)
+ -  Entry #1314 - FL-67:  OTHER DIAG CODE 11(FL-67K/1/1)
+ -  Entry #1315 - FL-67:  OTHER DIAG CODE 12(FL-67L/1/1)
+ -  Entry #1355 - FL-67:  OTHER DIAG CODE 13(FL-67M/1/1)
+ -  Entry #1356 - FL-67:  OTHER DIAG CODE 14(FL-67N/1/1)
+ -  Entry #1357 - FL-67:  OTHER DIAG CODE 15(FL-67O/1/1)
+ -  Entry #1358 - FL-67:  OTHER DIAG CODE 16(FL-67P/1/1)
+ -  Entry #1359 - FL-67:  OTHER DIAG CODE 17(FL-67Q/1/1)
+ -  Entry #1370 - FL-69:  ADM DIAG CODE (FL-69)
+ -  Entry #1407 - FL-70:  PATIENT REASON DX (FL-70/1/1)
+ -  Entry #1408 - FL-70:  PATIENT REASON DX (FL-70/1/2)
+ -  Entry #1409 - FL-70:  PATIENT REASON DX (FL-70/1/3)
+ -  Entry #1371 - FL-72:  ECI (FL-72A/1/1)
+ -  Entry #1412 - FL-72:  ECI (FL-72B/1/1)
+ -  Entry #1414 - FL-72:  ECI (FL-72C/1/1)
+                  
+ Note the Bill Diagnosis Qualifiers BN/ABN, BF/ABF, BK/ABK have also 
+ changed however the related Form Field entry #41 - DC1 Diagnosis Code 
+ calls a procedure to determine the Diagnosis Qualifiers.  This procedure 
+ has been updated so entry #41 has not changed and does not need to be 
+ exported (ID1^IBCEF2).
+                  
+ Two Input Templates are re-compiled in the post-init.  The templates did 
+ not change but a field edited within templates did change:  BILL/CLAIMS 
+ PROCEDURE CODING METHOD (#399,.09).  Therefore the templates are not 
+ exported but re-compiled:
+ -  IB SCREEN4 - Enter/Edit of Inpatient Billing information
+ -  IB SCREEN5 - Enter/Edit of Outpatient Billing Information
+                  
+ The following options have been updated with this patch:
+ -  Third Party Joint Inquiry [IBJ THIRD PARTY JOINT INQUIRY]
+ -  Enter/Edit Billing Information [IB EDIT BILLING INFO]
+ -  MCCR Site Parameter Display/Edit [IBJ MCCR SITE PARAMETERS] 
+ -  Claims Tracking Edit [IBT EDIT TRACKING ENTRY]
+ -  Inquire to Claims Tracking [IBT OUTPUT CLAIM INQUIRY]
+ -  View/Print EDI Bill Extract Data [IBCE EDI VIEW/PRINT EXTRACT]
+                  
+                  
+ Patch Components:
+ =================
+                  
+ Files & Fields Associated:
+                  
+ File Name (Number)            Field Name (Number)                Change
+ ------------------            -------------------                ---------
+ IB SITE PARAMETERS (#350.9)   DEFAULT RX REFILL DX ICD-10 (7.05)  New
+ CLAIMS TRACKING (#356)        ADMITTING REASON (ICD) (.3)         Modified
+ INPATIENT DIAGNOSIS (#356.9)  POA INDICATOR (.05)                 New
+ BILL/CLAIMS (#399)            PROCEDURE  CODING METHOD (.09)      Modified
+                  
+ File & Field Data Entries: 
+                  
+ File Name (Number)            Date Entry                          Change
+ ------------------            -------------------                ---------
+ IB ERROR File (#350.8)        Entry Code IB071                    Modified 
+ IB ERROR File (#350.8)        Entry Code IB354                    New
+ IB ERROR File (#350.8)        Entry Code IB355                    New
+ IB ERROR File (#350.8)        Entry Code IB356                    New
+                  
+ IB SITE PARAMETERS (#350.9)   DEFAULT RX REFILL DX ICD-10         New
+                  
+ IB FORM FIELD CONTENT File (#364.7)   (32 entries modified)
+ Entry #40:    837   - Procedure Code Qualifier                    Modified
+ Entry #1298:  UB-04 - PRIN DIAG CODE (FL-67/1/1)                  Modified
+ Entry #1302:  UB-04 - OTHER DIAG CODE 10(FL-67J/1/1)              Modified
+ Entry #1314:  UB-04 - OTHER DIAG CODE 11(FL-67K/1/1)              Modified
+ Entry #1315:  UB-04 - OTHER DIAG CODE 12(FL-67L/1/1)              Modified
+ Entry #1346:  UB-04 - OTHER DIAG CODE 1 (FL-67A/1/1)              Modified
+ Entry #1347:  UB-04 - OTHER DIAG CODE 2 (FL-67B/1/1)              Modified
+ Entry #1348:  UB-04 - OTHER DIAG CODE 3 (FL-67C/1/1)              Modified
+ Entry #1349:  UB-04 - OTHER DIAG CODE 4 (FL-67D/1/1)              Modified
+ Entry #1350:  UB-04 - OTHER DIAG CODE 5 (FL-67E/1/1)              Modified
+ Entry #1351:  UB-04 - OTHER DIAG CODE 6 (FL-67F/1/1)              Modified
+ Entry #1352:  UB-04 - OTHER DIAG CODE 7 (FL-67G/1/1)              Modified
+ Entry #1353:  UB-04 - OTHER DIAG CODE 8 (FL-67H/1/1)              Modified
+ Entry #1354:  UB-04 - OTHER DIAG CODE 9 (FL-67I/1/1)              Modified
+ Entry #1355:  UB-04 - OTHER DIAG CODE 13(FL-67M/1/1)              Modified
+ Entry #1356:  UB-04 - OTHER DIAG CODE 14(FL-67N/1/1)              Modified
+ Entry #1357:  UB-04 - OTHER DIAG CODE 15(FL-67O/1/1)              Modified
+ Entry #1358:  UB-04 - OTHER DIAG CODE 16(FL-67P/1/1)              Modified
+ Entry #1359:  UB-04 - OTHER DIAG CODE 17(FL-67Q/1/1)              Modified
+ Entry #1370:  UB-04 - ADM DIAG CODE (FL-69)                       Modified
+ Entry #1371:  UB-04 - ECI (FL-72A/1/1)                            Modified
+ Entry #1407:  UB-04 - PATIENT REASON DX (FL-70/1/1)               Modified
+ Entry #1408:  UB-04 - PATIENT REASON DX (FL-70/1/2)               Modified
+ Entry #1409:  UB-04 - PATIENT REASON DX (FL-70/1/3)               Modified
+ Entry #1412:  UB-04 - ECI (FL-72B/1/1)                            Modified
+ Entry #1414:  UB-04 - ECI (FL-72C/1/1)                            Modified
+ Entry #1617:  837   - Patient Reason for Visit Qualifier (1)      Modified
+ Entry #1619:  837   - Patient Reason for Visit Qualifier (2)      Modified
+ Entry #1620:  837   - Patient Reason for Visit (2)                Modified
+ Entry #1621:  837   - Patient Reason for Visit Qualifier (3)      Modified
+ Entry #1622:  837   - Patient Reason for Visit (3)                Modified
+ Entry #1635:  837   - Code List Qualifier Code (BJ)               Modified
+                  
+ Forms Associated:  NA
+ Mail Groups Associated:  NA
+ Options Associated:  NA - None Exported
+ Protocols Associated:  NA
+ Security Keys Associated:  NA
+ Templates Associated:  NA - None Exported
+ Patient Safety Issues (PSIs):  NA
+ Remedy Ticket(s) & Overview:  NA
+                  
+ New Service Requests (NSRs):
+ ----------------------------  
+ NSR 20070902, ICD-10-CM Conversion
+                  
+ Test Sites:
+ ----------
+ Boise
+ Detroit
+ Dublin
+ Houston
+ North Chicago
+ Northampton
+ Orlando
+          
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+                  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/
+                  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+                  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+                  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:  http://www4.domain.ext/vdl/
+                  
+ Title                         File Name                           FTP Mode
+ --------------------------------------------------------------------------
+ IB v2.0 User Manual       IB_2_0_R0914_UM.PDF                      Binary
+ IB v2.0 Technical Manual  IB_2_0_R0914_TM.PDF                      Binary
+ IB*2*461 Release Notes    ICD-10_RN_IB_2_461.PDF                   Binary
+ ICD-10 Overview Guide     ICD-10_PROD_OVERVIEW_GUIDE_GROUP_8A.PDF  Binary
+                  
+                  
+ Patch Installation:
+ ==================
+                  
+ Pre-Installation Overview:
+ --------------------------
+ The Pre-init (IBY461PR) will complete the following:
+                  
+ -  Deletes 32 entries in the IB FORM FIELD CONTENT (#364.7) file updated 
+    by this patch.  entries are re-added by the installation:  Entry #: 
+    40,   1298, 1302, 1314, 1315, 1346, 1347, 1348, 1349, 1350, 1351, 1352, 
+    1353, 1354, 1355, 1356, 1357, 1358, 1359, 1370, 1371, 1407, 1408, 1409, 
+    1412, 1414, 1617, 1619, 1620, 1621, 1622, 1635
+                  
+ Post-Installation Overview:
+ -------------------------------
+ The Post-init (IBY461PO) will complete the following:
+                  
+ -  Set value of the new IB SITE PARAMETERS, DEFAULT RX REFILL DX ICD-10 
+    (#350.9,7.05) to Z76.0 Encounter for issue of repeat prescription.
+ -  Recompile two Input Templates.  The templates did not change so they 
+    are not exported but one of the fields edited in the templates did 
+    change:  IB SCREEN4 and IB SCREEN5.
+ -  Update one entry in the IB ERROR (#350.8):  IB NO DX Error code (IB071)
+ -  Add three new IB ERROR (#350.8) codes: IB354, IB355, IB356
+                  
+                  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during non-peak hours when no Integrated 
+ Billing users are on the system to minimize potential disruption to users.  
+ Make sure that when installing the patch the Queue Means Test Compilation 
+ of Charges [IB MT NIGHT COMP] is not running.  This patch should take 
+ less than 5 minutes to install.
+                  
+                  
+ 1.  Choose the PackMan message containing this patch.
+                  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+                  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL NAME enter the 
+     patch #: IB*2.0*461
+                  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+                  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+                  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+                  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.  Enter IB*2.0*461.
+                  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     respond NO.
+                  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'    respond NO.
+                  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//    respond YES
+                               
+ 8.  Enter options you wish to mark as 'Out Of Order': enter the following
+                               
+      Third Party Joint Inquiry        [IBJ THIRD PARTY JOINT INQUIRY]
+      Enter/Edit Billing Information   [IB EDIT BILLING INFO]
+      MCCR Site Parameter Display/Edit [IBJ MCCR SITE PARAMETERS] 
+      Claims Tracking Edit             [IBT EDIT TRACKING ENTRY]
+      Inquire to Claims Tracking       [IBT OUTPUT CLAIM INQUIRY]
+      View/Print EDI Bill Extract Data [IBCE EDI VIEW/PRINT EXTRACT]
+                  
+ 9.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+                  
+ 10. You may delete the pre and post init routines after the 
+     installation:  IBY461PR, IBY461PO.
+                  
+                  
+ Post-Installation Instructions:
+ -------------------------------
+ There are no Post-installation actions required by this patch.
+                  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 58
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBACSV
+    Before: B17068380   After: B25291630  **210,266,461**
+Routine Name: IBCA
+    Before: B24308332   After: B24815247  **43,80,109,106,137,312,461**
+Routine Name: IBCBB
+    Before: B73668257   After: B76368179  **80,51,137,288,327,361,371,
+                                           377,400,432,461**
+Routine Name: IBCBB0
+    Before: B13617325   After: B23527911  **377,400,461**
+Routine Name: IBCBB2
+    Before: B54197066   After: B57578092  **51,137,210,245,232,296,320,
+                                           349,371,403,432,447,473,488,
+                                           461**
+Routine Name: IBCBB21
+    Before: B14595417   After: B16839261  **51,137,210,232,155,291,348,
+                                           349,403,400,432,447,461**
+Routine Name: IBCEF2
+    Before: B64374819   After: B68782434  **52,85,51,137,232,155,296,349,
+                                           403,400,432,488,461**
+Routine Name: IBCEU4
+    Before: B53347889   After: B53666319  **51,137,210,155,290,403,461**
+Routine Name: IBCRBG
+    Before: B58097586   After: B66489178  **52,80,106,51,142,159,210,245,
+                                           382,389,461**
+Routine Name: IBCSC102
+    Before: B41181952   After: B41297495  **432,447,461**
+Routine Name: IBCSC10B
+    Before: B42359591   After: B44148706  **432,461**
+Routine Name: IBCSC4
+    Before: B25396440   After: B25534082  **52,51,210,245,155,287,349,
+                                           403,400,461**
+Routine Name: IBCSC4D
+    Before: B60745629   After: B61931126  **55,62,91,106,124,51,210,403,
+                                           400,461**
+Routine Name: IBCSC5
+    Before: B17112329   After: B17240137  **52,125,51,210,266,288,287,
+                                           309,389,447,461**
+Routine Name: IBCSC5C
+    Before: B51873840   After: B52563078  **27,52,130,51,160,260,309,315,
+                                           339,347,363,381,405,432,461**
+Routine Name: IBCSCH1
+    Before: B35678936   After: B35679785  **106,125,51,245,266,395,458,461**
+Routine Name: IBCU4
+    Before: B20382256   After: B24388158  **109,122,137,245,349,371,399,461**
+Routine Name: IBCU7
+    Before: B76838380   After: B77808645  **62,52,106,125,51,137,210,245,
+                                           228,260,348,371,432,447,488,
+                                           461**
+Routine Name: IBCU72
+    Before: B16150008   After: B16208907  **62,210,473,461**
+Routine Name: IBJPS
+    Before:  B3719053   After:  B3981041  **39,52,70,115,143,51,137,161,
+                                           155,320,348,349,377,384,400,
+                                           432,494,461**
+Routine Name: IBJPS2
+    Before: B40350434   After: B41765087  **39,52,115,143,51,137,161,155,
+                                           320,348,349,377,384,400,432,
+                                           494,461**
+Routine Name: IBJTBB
+    Before:  B2945074   After:  B2939768  **39,210,461**
+Routine Name: IBJTBC
+    Before: B13013403   After: B14403478  **39,80,51,137,210,349,461**
+Routine Name: IBTOBI4
+    Before: B21631408   After: B21974181  **91,125,51,210,266,389,461**
+Routine Name: IBTRDD
+    Before:  B7262514   After:  B7274149  **458,461**
+Routine Name: IBTRE3
+    Before: B26529518   After: B29082624  **10,60,210,266,461**
+Routine Name: IBTRE4
+    Before: B28379338   After: B28830584  **10,210,266,461**
+Routine Name: IBTRE6
+    Before: B15005544   After: B22956072  **210,461**
+Routine Name: IBTRED0
+    Before: B23670458   After: B23857712  **160,210,317,276,458,461**
+Routine Name: IBTRV2
+    Before: B22166861   After: B23882166  **60,210,266,461**
+Routine Name: IBY461PO
+    Before:       n/a   After: B11297610  **461**
+Routine Name: IBY461PR
+    Before:       n/a   After:  B2709631  **461**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 23, 2011
+Completed By:                               Date Completed: OCT 21, 2014
+Released By :                               Date Released : OCT 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

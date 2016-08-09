@@ -1,0 +1,137 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 02/11/14 at 13:24
+=============================================================================
+Run Date: JUL 02, 2014                     Designation: HL*1.6*162
+Package : HL - HEALTH LEVEL SEVEN             Priority: Mandatory
+Version : 1.6       SEQ #128                    Status: Released
+                  Compliance Date: AUG 02, 2014
+=============================================================================
+
+Associated patches: (v)HL*1.6*161  <<= must be installed BEFORE `HL*1.6*162'
+
+Subject: EDIT/ADD LOGICAL LINK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ To allow for the creation of new links via the Link Edit [HL EDIT LOGICAL 
+ LINKS] option, the validation logic will allow users to proceed to the 
+ edit screen if the link is new.  Also, it will allow users to proceed if
+ the Logical Link is a Multithreaded Listener regardless of the SHUTDOWN 
+ LLP ? (#14) field value in the HL LOGICAL LINK (#870) file.
+  
+ Associated Remedy ticket:
+ ========================
+ INC000000952806 HL7 - Logical Links: Patch 161 breaks the 
+           option to create a new link from File and Link Mgmt
+ Duplicates:
+ -----------
+ INC000000956680 HL7 - Logical Links:
+ INC000000985759 HL7 - Logical Links:edit problem
+ INC000000986232 Lab - POC:Problem adding a new LA7POCn entry 
+                       to the #870 file using "Edit Link"
+ INC000000993680 HL7 - Logical Links:
+   
+ Participating test Site:
+ =======================
+ Upstate New York - Western NY HCS
+ Hudson Valley HCS, NY 
+ Detroit/Allen Park - John D. Dingell VA Medical Center
+ Mountain Home - VA Medical Center
+  
+  
+ REMEDY OVERVIEW:
+ ===============
+ INC000000952806 
+  
+ Problem: 
+ --------
+ When creating new links via the Link Edit [HL EDIT LOGICAL LINKS] option
+ it allows it to be created, but it is not immediately available to edit 
+ through the option since it is not considered "shutdown" according to 
+ the SHUTDOWN LLP ? (#14) field in the HL LOGICAL LINK (#870) file.
+    
+ Resolution:
+ ----------
+ The validation logic has been modified to identify new links by checking 
+ if the link has a LLP TYPE (#2) field value in the HL LOGICAL LINK (#870) 
+ file populated as an indicator the HL LOGICAL LINK is newly created or 
+ incomplete (missing the REQUIRED LLP TYPE (#2) field).  Also,  
+ the new validation logic will allow Logical Links to be edited if the 
+ TCP/IP SERVICE TYPE (#400.03) field equals 'M' for MULTI LISTENER
+ regardless of the SHUTDOWN LLP ? (#14) field value in the HL LOGICAL LINK 
+ (#870) file.
+  
+  
+ Routines: HLUOPT
+  
+        ================INSTALLATION INSTRUCTIONS =================
+ This patch can be loaded with users on the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+   
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter HL*1.6*162)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package HL*1.6*162.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+  
+    7.  When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':',  Enter the following options:
+  
+         Link Edit           [HL EDIT LOGICAL LINKS]
+  
+        When prompted 'Enter protocols you wish to mark as 'Out Of
+        Order':', press <ENTER>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.6;HEALTH LEVEL SEVEN;**[Patch List]**;Oct 13, 1995;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HLUOPT
+    Before: B20065931   After: B20706314  **57,161,162**
+ 
+Routine list of preceding patches: 161
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 06, 2014
+Completed By:                               Date Completed: JUN 26, 2014
+Released By :                               Date Released : JUL 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,493 @@
+Released PRCA*4.5*281 SEQ #268
+Extracted from mail message
+**KIDS**:PRCA*4.5*281^
+
+**INSTALL NAME**
+PRCA*4.5*281
+"BLD",8718,0)
+PRCA*4.5*281^ACCOUNTS RECEIVABLE^0^3120510^y
+"BLD",8718,1,0)
+^^10^10^3111129^^
+"BLD",8718,1,1,0)
+The purpose of this patch is to replace direct global reads into the ICD
+"BLD",8718,1,2,0)
+OPERATION/PROCEDURE file (#80.1) and the ICD DIAGNOSIS file (#80) with a
+"BLD",8718,1,3,0)
+DRG API $$CODEC^ICDEX instead.
+"BLD",8718,1,4,0)
+ 
+"BLD",8718,1,5,0)
+This patch updates one routine in the CBO Data Extract process. A DRG
+"BLD",8718,1,6,0)
+Grouper API is being used to retrieve the ICD-9/ICD-10 procedure code
+"BLD",8718,1,7,0)
+or ICD-9/ICD-10 diagnosis code for the data extract process to format
+"BLD",8718,1,8,0)
+and place them in a flat file via a nightly process. The nightly process
+"BLD",8718,1,9,0)
+in the Accounts Receivable Nightly Process Background Job option will then
+"BLD",8718,1,10,0)
+ftp the data directly to the Boston Allocation Resource Center (ARC).
+"BLD",8718,4,0)
+^9.64PA^^
+"BLD",8718,6.3)
+6
+"BLD",8718,"KRN",0)
+^9.67PA^779.2^20
+"BLD",8718,"KRN",.4,0)
+.4
+"BLD",8718,"KRN",.401,0)
+.401
+"BLD",8718,"KRN",.402,0)
+.402
+"BLD",8718,"KRN",.403,0)
+.403
+"BLD",8718,"KRN",.5,0)
+.5
+"BLD",8718,"KRN",.84,0)
+.84
+"BLD",8718,"KRN",3.6,0)
+3.6
+"BLD",8718,"KRN",3.8,0)
+3.8
+"BLD",8718,"KRN",9.2,0)
+9.2
+"BLD",8718,"KRN",9.8,0)
+9.8
+"BLD",8718,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",8718,"KRN",9.8,"NM",1,0)
+RCXVDC4^^0^B31186754
+"BLD",8718,"KRN",9.8,"NM","B","RCXVDC4",1)
+
+"BLD",8718,"KRN",19,0)
+19
+"BLD",8718,"KRN",19.1,0)
+19.1
+"BLD",8718,"KRN",101,0)
+101
+"BLD",8718,"KRN",409.61,0)
+409.61
+"BLD",8718,"KRN",771,0)
+771
+"BLD",8718,"KRN",779.2,0)
+779.2
+"BLD",8718,"KRN",870,0)
+870
+"BLD",8718,"KRN",8989.51,0)
+8989.51
+"BLD",8718,"KRN",8989.52,0)
+8989.52
+"BLD",8718,"KRN",8994,0)
+8994
+"BLD",8718,"KRN","B",.4,.4)
+
+"BLD",8718,"KRN","B",.401,.401)
+
+"BLD",8718,"KRN","B",.402,.402)
+
+"BLD",8718,"KRN","B",.403,.403)
+
+"BLD",8718,"KRN","B",.5,.5)
+
+"BLD",8718,"KRN","B",.84,.84)
+
+"BLD",8718,"KRN","B",3.6,3.6)
+
+"BLD",8718,"KRN","B",3.8,3.8)
+
+"BLD",8718,"KRN","B",9.2,9.2)
+
+"BLD",8718,"KRN","B",9.8,9.8)
+
+"BLD",8718,"KRN","B",19,19)
+
+"BLD",8718,"KRN","B",19.1,19.1)
+
+"BLD",8718,"KRN","B",101,101)
+
+"BLD",8718,"KRN","B",409.61,409.61)
+
+"BLD",8718,"KRN","B",771,771)
+
+"BLD",8718,"KRN","B",779.2,779.2)
+
+"BLD",8718,"KRN","B",870,870)
+
+"BLD",8718,"KRN","B",8989.51,8989.51)
+
+"BLD",8718,"KRN","B",8989.52,8989.52)
+
+"BLD",8718,"KRN","B",8994,8994)
+
+"BLD",8718,"QUES",0)
+^9.62^^
+"BLD",8718,"REQB",0)
+^9.611^1^1
+"BLD",8718,"REQB",1,0)
+PRCA*4.5*262^2
+"BLD",8718,"REQB","B","PRCA*4.5*262",1)
+
+"MBREQ")
+0
+"PKG",53,-1)
+1^1
+"PKG",53,0)
+ACCOUNTS RECEIVABLE^PRCA^FMS
+"PKG",53,20,0)
+^9.402P^1^1
+"PKG",53,20,1,0)
+2^^PRCAMRG
+"PKG",53,20,1,1)
+
+"PKG",53,20,"B",2,1)
+
+"PKG",53,22,0)
+^9.49I^1^1
+"PKG",53,22,1,0)
+4.5^2950913^2960627
+"PKG",53,22,1,"PAH",1,0)
+281^3120510
+"PKG",53,22,1,"PAH",1,1,0)
+^^10^10^3120510
+"PKG",53,22,1,"PAH",1,1,1,0)
+The purpose of this patch is to replace direct global reads into the ICD
+"PKG",53,22,1,"PAH",1,1,2,0)
+OPERATION/PROCEDURE file (#80.1) and the ICD DIAGNOSIS file (#80) with a
+"PKG",53,22,1,"PAH",1,1,3,0)
+DRG API $$CODEC^ICDEX instead.
+"PKG",53,22,1,"PAH",1,1,4,0)
+ 
+"PKG",53,22,1,"PAH",1,1,5,0)
+This patch updates one routine in the CBO Data Extract process. A DRG
+"PKG",53,22,1,"PAH",1,1,6,0)
+Grouper API is being used to retrieve the ICD-9/ICD-10 procedure code
+"PKG",53,22,1,"PAH",1,1,7,0)
+or ICD-9/ICD-10 diagnosis code for the data extract process to format
+"PKG",53,22,1,"PAH",1,1,8,0)
+and place them in a flat file via a nightly process. The nightly process
+"PKG",53,22,1,"PAH",1,1,9,0)
+in the Accounts Receivable Nightly Process Background Job option will then
+"PKG",53,22,1,"PAH",1,1,10,0)
+ftp the data directly to the Boston Allocation Resource Center (ARC).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","RCXVDC4")
+0^1^B31186754^B17742675
+"RTN","RCXVDC4",1,0)
+RCXVDC4 ;DAOU/ALA-AR Data Extraction Data Creation ;02-JUL-03
+"RTN","RCXVDC4",2,0)
+ ;;4.5;Accounts Receivable;**201,227,228,248,251,256,262,281**;Mar 20, 1995;Build 6
+"RTN","RCXVDC4",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCXVDC4",4,0)
+ ;
+"RTN","RCXVDC4",5,0)
+ ; Procedures 
+"RTN","RCXVDC4",6,0)
+ Q
+"RTN","RCXVDC4",7,0)
+D399PC ;
+"RTN","RCXVDC4",8,0)
+ I RCXVD0="" Q
+"RTN","RCXVDC4",9,0)
+ N RCXVD,RCXVDA,RCXVB,RCXVPC,RCXVP1,RCXVP2,RCXVP3,RCXVMULT
+"RTN","RCXVDC4",10,0)
+ N RCXVDT3,RCXVCP,RCXVPCDT,RCXVPS1,RCXVPS2,RCXVPS,RCXVPSER,RCXVNPI,RCXVCNT,RCXVMH
+"RTN","RCXVDC4",11,0)
+ ;RCXVPC=PROC. CODE IEN, RCXVCP=CPT CODE IEN
+"RTN","RCXVDC4",12,0)
+ ; LOOP THRU PROC.
+"RTN","RCXVDC4",13,0)
+ S (RCXVPC,RCXVCNT)=0
+"RTN","RCXVDC4",14,0)
+ K ^TMP($J,"MTCH")
+"RTN","RCXVDC4",15,0)
+ F  S RCXVPC=$O(^DGCR(399,RCXVD0,"CP",RCXVPC)) Q:'RCXVPC  D D399PCA
+"RTN","RCXVDC4",16,0)
+ S RCXVPC=0
+"RTN","RCXVDC4",17,0)
+ F  S RCXVPC=$O(^DGCR(399,RCXVD0,"RC",RCXVPC)) Q:'RCXVPC  D D39942
+"RTN","RCXVDC4",18,0)
+ K ^TMP($J,"MTCH")
+"RTN","RCXVDC4",19,0)
+ Q
+"RTN","RCXVDC4",20,0)
+D399PCA ;
+"RTN","RCXVDC4",21,0)
+ S RCXVD=$G(^DGCR(399,RCXVD0,"CP",RCXVPC,0)) Q:RCXVD=""
+"RTN","RCXVDC4",22,0)
+ S RCXVP1=$P(RCXVD,U,1),RCXVVP="",RCXVVP1=""
+"RTN","RCXVDC4",23,0)
+ ;
+"RTN","RCXVDC4",24,0)
+ I RCXVP1'="",$P(RCXVP1,";",2)'="ICD0(" D
+"RTN","RCXVDC4",25,0)
+ . S RCXVVP="^"_$P(RCXVP1,";",2)_$P(RCXVP1,";",1)_",0)"
+"RTN","RCXVDC4",26,0)
+ . I RCXVVP'="" S RCXVVP1=$P($G(@RCXVVP),U,1)_RCXVU  ; ICD10 in *281 - CPT code will not have a ICD code qualifier, so delimiter is added to account for qualifier field.
+"RTN","RCXVDC4",27,0)
+ ;
+"RTN","RCXVDC4",28,0)
+ ; ICD10 in *281 - procedure code by calling API #5747 (80.1,ien)
+"RTN","RCXVDC4",29,0)
+ I RCXVP1'="",$P(RCXVP1,";",2)="ICD0(" D
+"RTN","RCXVDC4",30,0)
+ . S RCXVVP1=$P($$CODEC^ICDEX(80.1,$P(RCXVP1,";")),U)
+"RTN","RCXVDC4",31,0)
+ . S:RCXVVP1=-1 RCXVVP1=""
+"RTN","RCXVDC4",32,0)
+ . ; ICD10 in *281 - determine procedure code qualifier by calling API #5747
+"RTN","RCXVDC4",33,0)
+ . ; $$CODECS^ICDEX(CODE/IEN,FILE,CDT) coding system for code ien/file.
+"RTN","RCXVDC4",34,0)
+ . ; Procedure code qualifiers ICD-9, ICD-10, etc.
+"RTN","RCXVDC4",35,0)
+ . I RCXVVP1'="" S RCXVVP1=RCXVVP1_RCXVU_$P($$CODECS^ICDEX(RCXVP1,80.1,$P(RCXVD,U,2)),U,1) ; procedure code and qualifier.
+"RTN","RCXVDC4",36,0)
+ ;
+"RTN","RCXVDC4",37,0)
+ I RCXVVP1="" D  S RCXVVP1=RCXVU  ; ICD10 in *281 - need to add delimiter for ICD proc code qualifier if no proc.
+"RTN","RCXVDC4",38,0)
+ . NEW CT
+"RTN","RCXVDC4",39,0)
+ . S CT=$G(^TMP("RCXVBREC",$J,0))+1,^TMP("RCXVBREC",$J,0)=CT
+"RTN","RCXVDC4",40,0)
+ . S ^TMP("RCXVBREC",$J,CT,0)="Bill # "_$P($G(^DGCR(399,RCXVD0,0)),"^",1)_" has a bad CPT code at IEN # "_RCXVPC_" check ^DGCR(399,"_RCXVD0_",""CP"","_RCXVPC_",0)"
+"RTN","RCXVDC4",41,0)
+ S RCXVDA=RCXVBLNA_RCXVU_RCXVVP1 ; PROC. ICD10 in *281 - RCXVVP1 contains the record for the PROC and ICD code qualifier (PROC_DELIMITER_QUALIFIER). Qualifier can be NULL.
+"RTN","RCXVDC4",42,0)
+ S RCXVDT=$P(RCXVD,U,2)
+"RTN","RCXVDC4",43,0)
+ S RCXVPCDT=$E($$HLDATE^HLFNC(RCXVDT),1,8)
+"RTN","RCXVDC4",44,0)
+ S RCXVDA=RCXVDA_RCXVU_RCXVPCDT ; DT 
+"RTN","RCXVDC4",45,0)
+ S RCXVP1=$P(RCXVD,U,11),RCXVP2=""
+"RTN","RCXVDC4",46,0)
+ ;
+"RTN","RCXVDC4",47,0)
+ ; ICD10 in *281 - diagnosis code by calling API #5747 (80,ien)
+"RTN","RCXVDC4",48,0)
+ I RCXVP1'="" D
+"RTN","RCXVDC4",49,0)
+ . S RCXVP1=$P($G(^IBA(362.3,RCXVP1,0)),U,1)
+"RTN","RCXVDC4",50,0)
+ . S RCXVP2=$P($$CODEC^ICDEX(80,RCXVP1),U)
+"RTN","RCXVDC4",51,0)
+ . S:RCXVP2=-1 RCXVP2=""
+"RTN","RCXVDC4",52,0)
+ . ; ICD10 in *281 - determine diagnosis code qualifier by calling API #5747
+"RTN","RCXVDC4",53,0)
+ . ; $$CODECS^ICDEX(CODE/IEN,FILE,CDT) coding system for code ien/file.
+"RTN","RCXVDC4",54,0)
+ . ; Diagnosis code qualifiers ICD-9, ICD-10, etc.
+"RTN","RCXVDC4",55,0)
+ . I RCXVP2'="" S RCXVP2=RCXVP2_RCXVU_$P($$CODECS^ICDEX(RCXVP1,80,$P(RCXVD,U,2)),U,1) ; diagnosis code and qualifier.
+"RTN","RCXVDC4",56,0)
+ ;
+"RTN","RCXVDC4",57,0)
+ S:RCXVP2="" RCXVP2=RCXVU  ; ICD10 in *281 - need to add delimiter for ICD ASSOC DXN (1) code qualifier if no ASSOC DXN (1).
+"RTN","RCXVDC4",58,0)
+ S RCXVDA=RCXVDA_RCXVU_RCXVP2 ; ASSOC DXN (1)
+"RTN","RCXVDC4",59,0)
+ S RCXVP1=$P(RCXVD,U,7),RCXVP2=""
+"RTN","RCXVDC4",60,0)
+ I RCXVP1'="" S RCXVP2=$P($G(^SC(RCXVP1,0)),U,1)
+"RTN","RCXVDC4",61,0)
+ S RCXVDA=RCXVDA_RCXVU_RCXVP2 ; ASSC. CLNC (P) 
+"RTN","RCXVDC4",62,0)
+ S RCXVP1=$P(RCXVD,U,18),(RCXVP2,RCXVPS,RCXVPSER,RCXVNPI)=""
+"RTN","RCXVDC4",63,0)
+ I RCXVP1'="" S RCXVP2=$$GET1^DIQ(200,RCXVP1_",",.01,"E"),RCXVNPI=$P($$NPI^XUSNPI("Individual_ID",RCXVP1),RCXVU,1) S:+RCXVNPI<1 RCXVNPI="" D
+"RTN","RCXVDC4",64,0)
+ . S RCXVPS=$$GET^XUA4A72(RCXVP1,RCXVDT)
+"RTN","RCXVDC4",65,0)
+ . S RCXVPS=$P(RCXVPS,U,3)
+"RTN","RCXVDC4",66,0)
+ . S RCXVPSER=$$GET1^DIQ(200,RCXVP1_",",29,"E")
+"RTN","RCXVDC4",67,0)
+ . Q
+"RTN","RCXVDC4",68,0)
+ ;provider^provider npi^specialty^service/section
+"RTN","RCXVDC4",69,0)
+ S RCXVDA=RCXVDA_RCXVU_RCXVP2_RCXVU_RCXVNPI_RCXVU_RCXVPS_RCXVU_RCXVPSER
+"RTN","RCXVDC4",70,0)
+ S RCXVCNT=RCXVCNT+1,^TMP($J,RCXVBLN,"4-399A",RCXVCNT)=RCXVDA
+"RTN","RCXVDC4",71,0)
+ ; LOOP THRU CPT
+"RTN","RCXVDC4",72,0)
+ S RCXVCP=0,RCXVMULT=0
+"RTN","RCXVDC4",73,0)
+ F  S RCXVCP=$O(^DGCR(399,RCXVD0,"CP",RCXVPC,"MOD",RCXVCP)) Q:'RCXVCP  D
+"RTN","RCXVDC4",74,0)
+ .  Q:'($D(^DGCR(399,RCXVD0,"CP",RCXVPC,"MOD",RCXVCP,0)))
+"RTN","RCXVDC4",75,0)
+ . ; ^DGCR(399,D0,CP,D1,MOD,D2,0)= (#.01) CPT MODIFIER SEQUENCE [1N]
+"RTN","RCXVDC4",76,0)
+ . ; (#.02) CPT ==>MODIFIER [2P:81.3]
+"RTN","RCXVDC4",77,0)
+ . S RCXVP1=$P($G(^DGCR(399,RCXVD0,"CP",RCXVPC,"MOD",RCXVCP,0)),U,2)
+"RTN","RCXVDC4",78,0)
+ . Q:RCXVP1=""
+"RTN","RCXVDC4",79,0)
+ . S RCXVMULT=RCXVMULT+1
+"RTN","RCXVDC4",80,0)
+ . S RCXVP2=$P($G(^DIC(81.3,RCXVP1,0)),U,1)
+"RTN","RCXVDC4",81,0)
+ . S ^TMP($J,RCXVBLN,"4-399A",RCXVCNT,RCXVMULT)=RCXVP2
+"RTN","RCXVDC4",82,0)
+ . Q
+"RTN","RCXVDC4",83,0)
+ ;
+"RTN","RCXVDC4",84,0)
+ ; *256 - loop through 399.042 to find CPT procedure
+"RTN","RCXVDC4",85,0)
+MATCH N RCXVCPT1,RCXVFND,X
+"RTN","RCXVDC4",86,0)
+ S RCXVCPT1=$P(RCXVD,";",1)  ;proc
+"RTN","RCXVDC4",87,0)
+ S (RCXVFND,RCXVCP)=0
+"RTN","RCXVDC4",88,0)
+ F  S RCXVCP=$O(^DGCR(399,RCXVD0,"RC",RCXVCP)) Q:'RCXVCP!RCXVFND  D
+"RTN","RCXVDC4",89,0)
+ . Q:$D(^TMP($J,"MTCH",RCXVCP))  ;quit if CPT proc match
+"RTN","RCXVDC4",90,0)
+ . S RCXVD1=$G(^DGCR(399,RCXVD0,"RC",RCXVCP,0))
+"RTN","RCXVDC4",91,0)
+ . Q:RCXVD1=""
+"RTN","RCXVDC4",92,0)
+ . S X=$P(RCXVD1,U,6)  ;CPT proc
+"RTN","RCXVDC4",93,0)
+ . I RCXVCPT1'="",X'="",RCXVCPT1=X D
+"RTN","RCXVDC4",94,0)
+ .. S RCXVFND=1
+"RTN","RCXVDC4",95,0)
+ .. S X=$P(RCXVD1,U)
+"RTN","RCXVDC4",96,0)
+ .. S RCXVDB=RCXVBLNA_RCXVU_$$GET1^DIQ(399.2,X_",",.01,"E") ; Revenue Code
+"RTN","RCXVDC4",97,0)
+ .. S X=$P(RCXVD1,U,6)
+"RTN","RCXVDC4",98,0)
+ .. S RCXVDB=RCXVDB_RCXVU_$$GET1^DIQ(81,X_",",.01,"E") ; Procedures [P]
+"RTN","RCXVDC4",99,0)
+ .. S RCXVDB=RCXVDB_RCXVU_RCXVPCDT ; PROC. DT
+"RTN","RCXVDC4",100,0)
+ .. S RCXVDB=RCXVDB_RCXVU_$P(RCXVD1,U,2) ; Charges
+"RTN","RCXVDC4",101,0)
+ .. S ^TMP($J,RCXVBLN,"4-399B",RCXVCNT)=RCXVDB
+"RTN","RCXVDC4",102,0)
+ .. S ^TMP($J,"MTCH",RCXVCP)=""
+"RTN","RCXVDC4",103,0)
+ I 'RCXVFND S ^TMP($J,RCXVBLN,"4-399B",RCXVCNT)=""
+"RTN","RCXVDC4",104,0)
+ Q
+"RTN","RCXVDC4",105,0)
+ ;  
+"RTN","RCXVDC4",106,0)
+D39942 ; charge
+"RTN","RCXVDC4",107,0)
+ N X
+"RTN","RCXVDC4",108,0)
+ Q:$D(^TMP($J,"MTCH",RCXVPC))
+"RTN","RCXVDC4",109,0)
+ S RCXVD1=$G(^DGCR(399,RCXVD0,"RC",RCXVPC,0))
+"RTN","RCXVDC4",110,0)
+ Q:RCXVD1=""
+"RTN","RCXVDC4",111,0)
+ S X=$P(RCXVD1,U)
+"RTN","RCXVDC4",112,0)
+ S RCXVDB=RCXVBLNA_RCXVU_$$GET1^DIQ(399.2,X_",",.01,"E") ; Revenue Code
+"RTN","RCXVDC4",113,0)
+ S RCXVDB=RCXVDB_RCXVU_""  ;No CPT proc
+"RTN","RCXVDC4",114,0)
+ S RCXVDB=RCXVDB_RCXVU_"" ; No proc dt
+"RTN","RCXVDC4",115,0)
+ S RCXVDB=RCXVDB_RCXVU_$P(RCXVD1,U,2) ; Charges
+"RTN","RCXVDC4",116,0)
+ S RCXVCNT=RCXVCNT+1
+"RTN","RCXVDC4",117,0)
+ S ^TMP($J,RCXVBLN,"4-399A",RCXVCNT)=""
+"RTN","RCXVDC4",118,0)
+ S ^TMP($J,RCXVBLN,"4-399B",RCXVCNT)=RCXVDB
+"RTN","RCXVDC4",119,0)
+ Q
+"RTN","RCXVDC4",120,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",8718,6)
+^268
+**END**
+**END**
+

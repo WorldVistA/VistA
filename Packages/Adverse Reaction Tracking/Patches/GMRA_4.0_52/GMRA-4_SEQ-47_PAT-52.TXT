@@ -1,0 +1,236 @@
+$TXT Created by                CPRS30.DOMAIN.EXT  (KIDS) on Wednesday, 06/01/16 at 14:22
+=============================================================================
+Run Date: JUL 13, 2016                     Designation: GMRA*4*52
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #47                      Status: Released
+                  Compliance Date: AUG 13, 2016
+=============================================================================
+
+Associated patches: (v)GMRA*4*46   <<= must be installed BEFORE `GMRA*4*52'
+
+Subject: ALLERGY ORDER CHECK SIGNS/SYMPTOMS FOLLOW-UP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains bug fixes for issues identified late in the testing
+ stage of patch GMRA*4*46.
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)      Field Name (Number)     New/Modified/Deleted
+ ------------------      -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name       File #  New/Modified/Deleted
+ ---------       ------  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name     Type    New/Modified/Deleted
+ -----------     ----    -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name   New/Modified/Deleted
+ -------------   -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name   Type    File Name (Number)  New/Modified/Deleted 
+ -------------   ----    ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO 3222 Error PASS+10^GMRADPT *%("") received when the mechanism field 
+           for an allergy is null.
+  
+ Problem:
+ --------
+ This error prevents users from receiving drug-allergy order check 
+ messages when ordering or finishing medication orders. It also prevents 
+ the display of adverse reactions in the Computerized Patient Record 
+ System (CPRS).
+  
+ Resolution:
+ -----------
+ See the resolution for RTC 328799 below in the Defect Tracking System 
+ Ticket(s) & Overview section.
+  
+  
+ Defect Tracking System Ticket(s) & Overview:
+ --------------------------------------------
+ 1. RTC 281175 Free-Text Dosage Does Not Generate Adverse Reaction Order 
+               Check Message
+  
+ Problem:
+ --------
+ Given a patient with a documented adverse reaction to a drug ingredient,
+ when a provider orders a medication with that ingredient in the 
+ computerized patient record system (CPRS) and enters a free text dosage,
+ the adverse reaction order check message is not displayed in CPRS (the
+ order check message does display during the pharmacy order finishing
+ process).
+  
+ Resolution:
+ -----------
+ After installing this patch, the adverse reaction order check
+ message will display in CPRS.
+  
+ 2. RTC 300867 Drug-Allergy Order Check Messages for Local and Remote 
+               Reactions are Not Combined
+  
+ Problem:
+ --------
+ Given a patient with a local observed reaction to a drug with no severity
+ and a remote observed reaction to the same drug, when a provider orders a
+ medication that could cause an adverse reaction, two separate drug-allergy
+ order check messages are displayed in CPRS.
+  
+ Resolution:
+ -----------
+ After installing this patch, one combined order check message (showing
+ data from both the local and remote reactions) will display in CPRS.
+  
+ 3. RTC 328799 Error <SUBSCRIPT>PASS+10^GMRADPT *%("")
+    I9074984FY16 subscript/undefined errors after MOCHA enhancement 
+                 patches installation 
+  
+ Problem:
+ --------
+ When retrieving a list of patient allergies for building the CWAD (Crisis 
+ notes, clinical Warnings, Allergies and advanced Directive) string 
+ displayed in the Postings button in the CPRS header bar, a subscript 
+ error is generated for reactions that have no value for the MECHANISM 
+ (#17) field in the PATIENT ALLERGIES file (#120.8). This error prevents 
+ the Postings button from correctly displaying the patient's CWAD string, 
+ prevents CPRS from displaying adverse reactions and prevents the 
+ drug-allergy order check from functioning. In Pharmacy, it prevents users 
+ from finishing orders.
+  
+ Resolution:
+ -----------
+ After installing this patch, the error is no longer generated for adverse 
+ reactions that have no value for the MECHANISM (#17) field.
+  
+  
+ Test Sites:
+ ----------
+ VA Maryland Health Care System
+ Sioux Falls VA Health Care System
+ Orlando VA Medical Center
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There is no pre nor post installation for this patch.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system.  This patch should 
+ take less than 5 minutes to install.  There are no options to disable for 
+ this installation.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch #
+     (ex. GMRA*4.0*52):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     enter GMRA*4.0*52.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', answer NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//', answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRADPT
+    Before: B83164261   After: B83390495  **2,10,46,52**
+Routine Name: GMRAOR
+    Before:B151697530   After:B152346772  **2,13,26,37,41,42,44,46,52**
+ 
+Routine list of preceding patches: 46
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 25, 2016
+Completed By:                               Date Completed: JUL 12, 2016
+Released By :                               Date Released : JUL 13, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

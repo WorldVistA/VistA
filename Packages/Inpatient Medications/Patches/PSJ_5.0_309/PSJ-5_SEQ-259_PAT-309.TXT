@@ -1,0 +1,149 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 04/22/14 at 12:50
+=============================================================================
+Run Date: AUG 26, 2014                     Designation: PSJ*5*309
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #259                      Status: Released
+                  Compliance Date: SEP 26, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*134   <<= must be installed BEFORE `PSJ*5*309'
+                    (v)PSJ*5*263   <<= must be installed BEFORE `PSJ*5*309'
+
+Subject: CHANGE ORDER RENEWAL MESSAGE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following two issues with the Inpatient
+ Medications package:
+  
+ 1) Warning message displayed twice for order sets.
+  
+ 2) Change to medication order renewal error message.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1) INC0000000593769 - Message "Do you wish to continue with the
+                       current order? YES//" is displayed twice.
+    Duplicate(s):
+    ------------
+    INC000000749332
+  
+ 2) INC0000000240590 - Medication Not Renewable
+  
+  
+ Participating Test Sites
+ ========================
+ Hines VAMC
+ Indianapolis VAMC
+ N. Chicago VAMC
+ Oklahoma City VAMC
+  
+  
+ Remedy Overview:
+ ================
+ 1) INC0000000593769 - Message "Do you wish to continue with the
+                       current order? YES//" is displayed twice.
+  
+    Problem:
+    --------
+    When entering a new order in Inpatient Order Entry [PSJ OE] using an 
+    order set, if a duplicate order check occurs, the user will be prompted 
+    with the question, "Do you wish to continue with the current order?" 
+    twice.
+  
+    Resolution:
+    -----------
+    Modified routine PSGOES so that the warning message only occurs once.
+  
+  
+ 2. INC0000000240590 - Medication Not Renewable
+  
+    Problem:
+    --------
+    The Inpatient Medications Workgroup has decided that the message which 
+    displays in CPRS when an expired order is past its renewal cutoff time, 
+    "Expired Time Limit Exceeded" is too ambiguous for users and has 
+    requested that the message read: "Expired - Order Renewal Time Limit 
+    Exceeded. New order required to continue therapy."
+  
+    Resolution:
+    -----------
+    Modified routine PSJORREN so that the message now reads:
+    "Expired - Order Renewal Time Limit Exceeded. New order required to 
+    continue therapy." 
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSJ*5.0*309):
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSJ*5.0*309.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGOES
+    Before: B22369472   After: B22304258  **12,22,30,34,50,58,111,181,263,309**
+Routine Name: PSJORREN
+    Before: B20851674   After: B21870443  **50,70,58,89,91,110,127,134,309**
+ 
+Routine list of preceding patches: 134, 263
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 21, 2014
+Completed By:                               Date Completed: AUG 20, 2014
+Released By :                               Date Released : AUG 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

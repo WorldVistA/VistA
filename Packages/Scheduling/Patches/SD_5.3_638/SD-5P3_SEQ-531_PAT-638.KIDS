@@ -1,0 +1,1071 @@
+Released SD*5.3*638 SEQ #531
+Extracted from mail message
+**KIDS**:SD*5.3*638^
+
+**INSTALL NAME**
+SD*5.3*638
+"BLD",10020,0)
+SD*5.3*638^SCHEDULING^0^3150930^y
+"BLD",10020,1,0)
+^^12^12^3150917^^
+"BLD",10020,1,1,0)
+Patch SD*5.3*638 addresses three Remedy ticket issues:
+"BLD",10020,1,2,0)
+ 
+"BLD",10020,1,3,0)
+1. A request has been made to discontinue the bi-monthly EWL transmissions
+"BLD",10020,1,4,0)
+to Austin. This process is handled through the SD WAIT LIST TRANS TO AAC 
+"BLD",10020,1,5,0)
+[SD Wait List Trans to AAC] option. 
+"BLD",10020,1,6,0)
+ 
+"BLD",10020,1,7,0)
+2. Users are unable to remove data from the DATE INACTIVATED (#3) field 
+"BLD",10020,1,8,0)
+in the SD WL CLINIC LOCATION (#409.32) file if there are open wait list 
+"BLD",10020,1,9,0)
+entries.
+"BLD",10020,1,10,0)
+ 
+"BLD",10020,1,11,0)
+3. When adding wait list entries by service specialty, if a specific 
+"BLD",10020,1,12,0)
+clinic is added and auditing is on, a subscript error will occur.
+"BLD",10020,4,0)
+^9.64PA^^
+"BLD",10020,6.3)
+8
+"BLD",10020,"INID")
+^y
+"BLD",10020,"INIT")
+EN^SDWL638
+"BLD",10020,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10020,"KRN",.4,0)
+.4
+"BLD",10020,"KRN",.401,0)
+.401
+"BLD",10020,"KRN",.402,0)
+.402
+"BLD",10020,"KRN",.403,0)
+.403
+"BLD",10020,"KRN",.5,0)
+.5
+"BLD",10020,"KRN",.84,0)
+.84
+"BLD",10020,"KRN",3.6,0)
+3.6
+"BLD",10020,"KRN",3.8,0)
+3.8
+"BLD",10020,"KRN",9.2,0)
+9.2
+"BLD",10020,"KRN",9.8,0)
+9.8
+"BLD",10020,"KRN",9.8,"NM",0)
+^9.68A^3^3
+"BLD",10020,"KRN",9.8,"NM",1,0)
+SDWLTR^^0^B80952316
+"BLD",10020,"KRN",9.8,"NM",2,0)
+SDWLPE^^0^B36521496
+"BLD",10020,"KRN",9.8,"NM",3,0)
+SDWLE2^^0^B16172339
+"BLD",10020,"KRN",9.8,"NM","B","SDWLE2",3)
+
+"BLD",10020,"KRN",9.8,"NM","B","SDWLPE",2)
+
+"BLD",10020,"KRN",9.8,"NM","B","SDWLTR",1)
+
+"BLD",10020,"KRN",19,0)
+19
+"BLD",10020,"KRN",19,"NM",0)
+^9.68A^^0
+"BLD",10020,"KRN",19.1,0)
+19.1
+"BLD",10020,"KRN",101,0)
+101
+"BLD",10020,"KRN",409.61,0)
+409.61
+"BLD",10020,"KRN",771,0)
+771
+"BLD",10020,"KRN",779.2,0)
+779.2
+"BLD",10020,"KRN",870,0)
+870
+"BLD",10020,"KRN",8989.51,0)
+8989.51
+"BLD",10020,"KRN",8989.52,0)
+8989.52
+"BLD",10020,"KRN",8994,0)
+8994
+"BLD",10020,"KRN","B",.4,.4)
+
+"BLD",10020,"KRN","B",.401,.401)
+
+"BLD",10020,"KRN","B",.402,.402)
+
+"BLD",10020,"KRN","B",.403,.403)
+
+"BLD",10020,"KRN","B",.5,.5)
+
+"BLD",10020,"KRN","B",.84,.84)
+
+"BLD",10020,"KRN","B",3.6,3.6)
+
+"BLD",10020,"KRN","B",3.8,3.8)
+
+"BLD",10020,"KRN","B",9.2,9.2)
+
+"BLD",10020,"KRN","B",9.8,9.8)
+
+"BLD",10020,"KRN","B",19,19)
+
+"BLD",10020,"KRN","B",19.1,19.1)
+
+"BLD",10020,"KRN","B",101,101)
+
+"BLD",10020,"KRN","B",409.61,409.61)
+
+"BLD",10020,"KRN","B",771,771)
+
+"BLD",10020,"KRN","B",779.2,779.2)
+
+"BLD",10020,"KRN","B",870,870)
+
+"BLD",10020,"KRN","B",8989.51,8989.51)
+
+"BLD",10020,"KRN","B",8989.52,8989.52)
+
+"BLD",10020,"KRN","B",8994,8994)
+
+"BLD",10020,"QDEF")
+^^^^^^^^^^YES
+"BLD",10020,"QUES",0)
+^9.62^^
+"BLD",10020,"REQB",0)
+^9.611^2^2
+"BLD",10020,"REQB",1,0)
+SD*5.3*446^2
+"BLD",10020,"REQB",2,0)
+SD*5.3*554^2
+"BLD",10020,"REQB","B","SD*5.3*446",1)
+
+"BLD",10020,"REQB","B","SD*5.3*554",2)
+
+"INIT")
+EN^SDWL638
+"MBREQ")
+0
+"PKG",16,-1)
+1^1
+"PKG",16,0)
+SCHEDULING^SD^APPOINTMENTS,PROFILES,LETTERS,AMIS REPORTS
+"PKG",16,20,0)
+^9.402P^^
+"PKG",16,22,0)
+^9.49I^1^1
+"PKG",16,22,1,0)
+5.3^2930813
+"PKG",16,22,1,"PAH",1,0)
+638^3150930
+"PKG",16,22,1,"PAH",1,1,0)
+^^12^12^3150930
+"PKG",16,22,1,"PAH",1,1,1,0)
+Patch SD*5.3*638 addresses three Remedy ticket issues:
+"PKG",16,22,1,"PAH",1,1,2,0)
+ 
+"PKG",16,22,1,"PAH",1,1,3,0)
+1. A request has been made to discontinue the bi-monthly EWL transmissions
+"PKG",16,22,1,"PAH",1,1,4,0)
+to Austin. This process is handled through the SD WAIT LIST TRANS TO AAC 
+"PKG",16,22,1,"PAH",1,1,5,0)
+[SD Wait List Trans to AAC] option. 
+"PKG",16,22,1,"PAH",1,1,6,0)
+ 
+"PKG",16,22,1,"PAH",1,1,7,0)
+2. Users are unable to remove data from the DATE INACTIVATED (#3) field 
+"PKG",16,22,1,"PAH",1,1,8,0)
+in the SD WL CLINIC LOCATION (#409.32) file if there are open wait list 
+"PKG",16,22,1,"PAH",1,1,9,0)
+entries.
+"PKG",16,22,1,"PAH",1,1,10,0)
+ 
+"PKG",16,22,1,"PAH",1,1,11,0)
+3. When adding wait list entries by service specialty, if a specific 
+"PKG",16,22,1,"PAH",1,1,12,0)
+clinic is added and auditing is on, a subscript error will occur.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","SDWL638")
+0^^B2480458^n/a
+"RTN","SDWL638",1,0)
+SDWL638 ;ALB/JAM - STOP EWL AAC SCHEDULED TRANSMISSIONS ;May 7, 2015
+"RTN","SDWL638",2,0)
+ ;;5.3;Scheduling;**638**;AUG 13, 1993;Build 8
+"RTN","SDWL638",3,0)
+ ;
+"RTN","SDWL638",4,0)
+ ;
+"RTN","SDWL638",5,0)
+ Q
+"RTN","SDWL638",6,0)
+ ; Reference/ICR
+"RTN","SDWL638",7,0)
+ ; REMOVE SCHEDULED OPTIONS FROM #19.2/6121
+"RTN","SDWL638",8,0)
+ ; XPDMENU CALL/1157 
+"RTN","SDWL638",9,0)
+ ;
+"RTN","SDWL638",10,0)
+ ;
+"RTN","SDWL638",11,0)
+EN ;Validate user and initialize variables.
+"RTN","SDWL638",12,0)
+ I '$D(DUZ) D BMES^XPDUTL("*** PROGRAMMER NOT DEFINED ***") Q
+"RTN","SDWL638",13,0)
+ N SDWLOPT,SDWLIEN
+"RTN","SDWL638",14,0)
+ S SDWLOPT="SD WAIT LIST TRANS TO AAC",SDWLIEN=$O(^DIC(19,"B",SDWLOPT,""))
+"RTN","SDWL638",15,0)
+ D OPTOUT
+"RTN","SDWL638",16,0)
+ I SDWLIEN D DELTSK
+"RTN","SDWL638",17,0)
+ Q
+"RTN","SDWL638",18,0)
+OPTOUT ;Disable EWL transmission option.
+"RTN","SDWL638",19,0)
+ N SDWLTEXT
+"RTN","SDWL638",20,0)
+ S SDWLTEXT="This functionality is now accomplished by CDW/VSSC"
+"RTN","SDWL638",21,0)
+ D OUT^XPDMENU(SDWLOPT,SDWLTEXT)
+"RTN","SDWL638",22,0)
+ D BMES^XPDUTL(SDWLOPT_" option has been placed out of order.")
+"RTN","SDWL638",23,0)
+ Q
+"RTN","SDWL638",24,0)
+DELTSK ;Confirm option entry exists in the OPTION SCHEDULING (#19.2) file and delete scheduled task as needed.
+"RTN","SDWL638",25,0)
+ N DA,DIK
+"RTN","SDWL638",26,0)
+ S DA=""
+"RTN","SDWL638",27,0)
+ F  S DA=$O(^DIC(19.2,"B",SDWLIEN,DA)) Q:'+DA  D
+"RTN","SDWL638",28,0)
+ . S ^XTMP("SDWLOPT",$J,0)=$$FMADD^XLFDT(DT+90)_"^"_DT_"^copy of EWL Transmission Task^"_DA
+"RTN","SDWL638",29,0)
+ . M ^XTMP("SDWLOPT",$J,"DIC",19.2,DA)=^DIC(19.2,DA)
+"RTN","SDWL638",30,0)
+ . S DIK="^DIC(19.2," D ^DIK
+"RTN","SDWL638",31,0)
+ . D BMES^XPDUTL("Scheduled option "_SDWLOPT_" has been removed.")
+"RTN","SDWL638",32,0)
+ Q
+"RTN","SDWLE2")
+0^3^B16172339^B14498008
+"RTN","SDWLE2",1,0)
+SDWLE2 ;;IOFO BAY PINES/TEH - WAITING LIST-ENTER/EDIT;06/12/2002 ; 20 Aug 2002  2:10 PM
+"RTN","SDWLE2",2,0)
+ ;;5.3;scheduling;**263,397,424,446,638**;AUG 13 1993;Build 8
+"RTN","SDWLE2",3,0)
+ ;
+"RTN","SDWLE2",4,0)
+ ;
+"RTN","SDWLE2",5,0)
+ ;******************************************************************
+"RTN","SDWLE2",6,0)
+ ;                             CHANGE LOG
+"RTN","SDWLE2",7,0)
+ ;                                               
+"RTN","SDWLE2",8,0)
+ ;   DATE                        PATCH                   DESCRIPTION
+"RTN","SDWLE2",9,0)
+ ;   ----                        -----                   -----------
+"RTN","SDWLE2",10,0)
+ ;   06/06/06                    SD*5.3*446              Allow selection of a clinic after specialty is entered
+"RTN","SDWLE2",11,0)
+ ;   09/21/15                    SD*5.3*638              Resets the DA variable back to the appropriate record number before field data is added to avoid conflicts when entries are audited.
+"RTN","SDWLE2",12,0)
+ ;   
+"RTN","SDWLE2",13,0)
+ ;      
+"RTN","SDWLE2",14,0)
+ ;Service/Specialty sub-routine
+"RTN","SDWLE2",15,0)
+ ;
+"RTN","SDWLE2",16,0)
+EN K DIR,DIC,DR I $D(SDWLSS) S X=$$EXTERNAL^DILFD(409.3,7,,SDWLSS)
+"RTN","SDWLE2",17,0)
+ S SDWLERR=0 I $D(SDWLSS) S DIC("B")=$S($D(SDWLSS):X,1:"") I DIC("B")="" K DIC("B")
+"RTN","SDWLE2",18,0)
+ S DIC(0)="AEQ",DIC=409.31,DIC("A")="Select Service/Specialty: "
+"RTN","SDWLE2",19,0)
+ S DIC("S")="I $D(^SDWL(409.31,""E"",SDWLINE,+Y)),$D(^SDWL(409.31,+Y,""I"")),$P(^SDWL(409.31,+Y,""I"",($O(^SDWL(409.31,+Y,""I"",""B"",SDWLINE,""""))),0),U,4)=""""" D ^DIC
+"RTN","SDWLE2",20,0)
+ I X["^" S DUOUT=1 G END
+"RTN","SDWLE2",21,0)
+ I Y<0 W *7," Required" G EN
+"RTN","SDWLE2",22,0)
+ S SDWLSSX=+Y  ; 446
+"RTN","SDWLE2",23,0)
+ N SDSP S SDSP=$$GET1^DIQ(409.31,SDWLSSX,.01,"I") ; get pointer to 40.7
+"RTN","SDWLE2",24,0)
+ N SDD,SDCL,SDORG S SDCL="",SDORG=DT S SDD=$$CHKENC^SDWLQSC1(DFN,SDORG,SDCL,SDSP,1)
+"RTN","SDWLE2",25,0)
+ I SDD D APPTDIS N DIR,Y D  I Y["^"!'Y S DUOUT=1 Q
+"RTN","SDWLE2",26,0)
+ .W !!,"This patient has already scheduled appointments."
+"RTN","SDWLE2",27,0)
+ .S DIR(0)="Y^A0",DIR("B")="NO",DIR("A")="Are you sure you want to continue"
+"RTN","SDWLE2",28,0)
+ .D ^DIR
+"RTN","SDWLE2",29,0)
+ ;
+"RTN","SDWLE2",30,0)
+ I '$$CLIN() Q:$G(DUOUT)  S DIE="^SDWL(409.3,",DR="7////^S X=SDWLSSX" D ^DIE  ; 446
+"RTN","SDWLE2",31,0)
+ K DIR,DIC,DIE,DR,Y,DUOUT
+"RTN","SDWLE2",32,0)
+END Q
+"RTN","SDWLE2",33,0)
+APPTDIS ;display already created appt/encounters
+"RTN","SDWLE2",34,0)
+ ;from ^TMP($J,"APPT")
+"RTN","SDWLE2",35,0)
+ N STR,SCNT
+"RTN","SDWLE2",36,0)
+ Q:'$D(^TMP($J,"APPT"))
+"RTN","SDWLE2",37,0)
+ S SCNT="" F  S SCNT=$O(^TMP($J,"APPT",SCNT)) Q:SCNT=""  D
+"RTN","SDWLE2",38,0)
+ .S STR=^TMP($J,"APPT",SCNT)
+"RTN","SDWLE2",39,0)
+ .N ZZ F ZZ=2,3,4,15 S SDD(ZZ)=$P($P(STR,"^",ZZ),";",2)
+"RTN","SDWLE2",40,0)
+ .N SD S SD=$P(STR,U) D  S Y=SD D D^DIQ S SDD(1)=Y ; date conv
+"RTN","SDWLE2",41,0)
+ ..I SDD(3)="SCHEDULED/KEPT" S SDD(3)=$S(SD<DT:"KEPT",1:"SCHEDULED")
+"RTN","SDWLE2",42,0)
+ .;DISPLAY
+"RTN","SDWLE2",43,0)
+ .I SCNT=1 D DPH(SCNT,.SDD)
+"RTN","SDWLE2",44,0)
+ .D DPHD(SCNT,.SDD)
+"RTN","SDWLE2",45,0)
+ Q
+"RTN","SDWLE2",46,0)
+DPH(SCNT,SDD) ;display appt header
+"RTN","SDWLE2",47,0)
+ W !!,"Appointment(s) for: "_SDD(4)
+"RTN","SDWLE2",48,0)
+ W !?3,"Appt Date/Time",?25,"Status",?42,"Clinic",?60,"Institution",! N SDL S $P(SDL,"-",79)="" W SDL,!
+"RTN","SDWLE2",49,0)
+ Q
+"RTN","SDWLE2",50,0)
+DPHD(SCNT,SDD) ;
+"RTN","SDWLE2",51,0)
+ W !,SCNT,?3,SDD(1),?25,SDD(3),?42,SDD(2),?60,SDD(15)
+"RTN","SDWLE2",52,0)
+ Q
+"RTN","SDWLE2",53,0)
+ ;
+"RTN","SDWLE2",54,0)
+CLIN() ; 446
+"RTN","SDWLE2",55,0)
+ N DA,DIC,DIE,DIK,DR,SDWLCL,SDWLEST,X,Y
+"RTN","SDWLE2",56,0)
+ S DIC=409.32,DIC(0)="AEQ",DIC("A")="WL SPECIFIC CLINIC related to this SPECIALTY (optional): ",DIC("S")="I $$VAL^SDWLE2(+Y)"
+"RTN","SDWLE2",57,0)
+ D ^DIC
+"RTN","SDWLE2",58,0)
+ I X["^" S DUOUT=1 Q 0
+"RTN","SDWLE2",59,0)
+ Q:X="" 0
+"RTN","SDWLE2",60,0)
+ S SDWLCL=+Y
+"RTN","SDWLE2",61,0)
+ ; Need to delete the old entry and create anew to change the wait list type
+"RTN","SDWLE2",62,0)
+ S SDWLEST=$$GET1^DIQ(409.3,SDWLDA,27,"I")
+"RTN","SDWLE2",63,0)
+ S DIK="^SDWL(409.3,",DA=SDWLDA
+"RTN","SDWLE2",64,0)
+ D ^DIK
+"RTN","SDWLE2",65,0)
+ S DIC(0)="LX",X=SDWLDFN,DIC="^SDWL(409.3," D FILE^DICN
+"RTN","SDWLE2",66,0)
+ S DA=+Y ;Patch SD*5.3*638 Resets the DA variable back to the appropriate record number before field data is added to avoid conflicts when entries are audited.
+"RTN","SDWLE2",67,0)
+ L:DA'=SDWLDA +^SDWL(409.3,DA):$G(DILOCKTM,3),-^SDWL(409.3,SDWLDA):$G(DILOCKTM,3) ;Patch SD*5.3*638 adds timeouts using DILOCKTM
+"RTN","SDWLE2",68,0)
+ S SDWLDA=DA
+"RTN","SDWLE2",69,0)
+ S DIE="^SDWL(409.3,",DR="1////^S X=DT;2////^S X=SDWLINE;4////^S X=4;8////^S X=SDWLCL;9////^S X=DUZ;27////^S X=SDWLEST"
+"RTN","SDWLE2",70,0)
+ D ^DIE
+"RTN","SDWLE2",71,0)
+ Q 1
+"RTN","SDWLE2",72,0)
+VAL(Y) ; 446
+"RTN","SDWLE2",73,0)
+ N TMP
+"RTN","SDWLE2",74,0)
+ D GETS^DIQ(409.32,Y,".01;.02;2;4","I","TMP")
+"RTN","SDWLE2",75,0)
+ Q:TMP(409.32,Y_",",.02,"I")'=SDWLINE 0  ; Wrong institution
+"RTN","SDWLE2",76,0)
+ Q:TMP(409.32,Y_",",2,"I")="" 0  ; No activation date entered
+"RTN","SDWLE2",77,0)
+ Q:TMP(409.32,Y_",",4,"I")'="" 0  ; Inactivation date entered
+"RTN","SDWLE2",78,0)
+ Q $$GET1^DIQ(44,TMP(409.32,Y_",",.01,"I"),8,"I")=$$GET1^DIQ(409.31,SDWLSSX,.01,"I")  ; Does the clinic have the right stop code?
+"RTN","SDWLPE")
+0^2^B36521496^B33375093
+"RTN","SDWLPE",1,0)
+SDWLPE ;IOFO BAY PINES/TEH - WAIT LIST - PARAMETER WAIT LIST ENTER/EDIT ; 5/24/11 11:27am
+"RTN","SDWLPE",2,0)
+ ;;5.3;scheduling;**263,280,288,397,491,554,638**;AUG 13 1993;Build 8
+"RTN","SDWLPE",3,0)
+ ;
+"RTN","SDWLPE",4,0)
+ ;SD/491 - identify clinic institution through DIVISION ---> INSTITUTION path
+"RTN","SDWLPE",5,0)
+EN ;
+"RTN","SDWLPE",6,0)
+ ;OPTION HEADER
+"RTN","SDWLPE",7,0)
+ ;
+"RTN","SDWLPE",8,0)
+ D HD
+"RTN","SDWLPE",9,0)
+ ;
+"RTN","SDWLPE",10,0)
+ ;SELECT FILE TO EDIT
+"RTN","SDWLPE",11,0)
+ ;
+"RTN","SDWLPE",12,0)
+EN1 D SEL G END:X["^",END:X=""
+"RTN","SDWLPE",13,0)
+ ;
+"RTN","SDWLPE",14,0)
+ ;EDIT PARAMETER FILE
+"RTN","SDWLPE",15,0)
+ ;
+"RTN","SDWLPE",16,0)
+ D EDIT G EN:'$D(Y)
+"RTN","SDWLPE",17,0)
+ G END
+"RTN","SDWLPE",18,0)
+ Q
+"RTN","SDWLPE",19,0)
+ ;
+"RTN","SDWLPE",20,0)
+SEL ;SELECT PARAMETER FILE
+"RTN","SDWLPE",21,0)
+ S DIR(0)="SO^1:Wait List Service/Specialty File;2:Wait List Clinic Location"
+"RTN","SDWLPE",22,0)
+ S DIR("L",1)="Select one of the following:"
+"RTN","SDWLPE",23,0)
+ S DIR("L",2)=""
+"RTN","SDWLPE",24,0)
+ S DIR("L",3)="    1. Wait List Service/Specialty (409.31)"
+"RTN","SDWLPE",25,0)
+ S DIR("L")="    2. Wait List Clinic Location (409.32)"
+"RTN","SDWLPE",26,0)
+ D ^DIR S SDWLF=X
+"RTN","SDWLPE",27,0)
+ K DIR,DILN,DINDEX
+"RTN","SDWLPE",28,0)
+ Q
+"RTN","SDWLPE",29,0)
+EDIT ;EDIT FILE PARAMETERS
+"RTN","SDWLPE",30,0)
+ I SDWLF=1 D SB1 Q:$D(DUOUT)
+"RTN","SDWLPE",31,0)
+ I SDWLF=2 D SB2 Q:$D(DUOUT)
+"RTN","SDWLPE",32,0)
+ Q
+"RTN","SDWLPE",33,0)
+SB1 S DIC(0)="AEQMZ",DIC("A")="Select DSS ID: ",DIC="^DIC(40.7,",DIC("S")="I '$P(^DIC(40.7,+Y,0),U,3)"
+"RTN","SDWLPE",34,0)
+ D ^DIC
+"RTN","SDWLPE",35,0)
+ I X["^" I $D(DA),'$D(^SDWL(409.31,DA,"I")) S DIK="^SDWL(409.31," D ^DIK S DUOUT=1 Q
+"RTN","SDWLPE",36,0)
+ Q:Y<0  Q:$D(DUOUT)  S SDWLDSS=+Y
+"RTN","SDWLPE",37,0)
+ I '$D(^SDWL(409.31,"B",SDWLDSS)) D
+"RTN","SDWLPE",38,0)
+ .S DIC(0)="LX",X=SDWLDSS,DIC="^SDWL(409.31," K DO D FILE^DICN
+"RTN","SDWLPE",39,0)
+ S DA=$O(^SDWL(409.31,"B",SDWLDSS,""))
+"RTN","SDWLPE",40,0)
+SB1A S DIR(0)="PAO^4:EMZ" D ^DIR
+"RTN","SDWLPE",41,0)
+ I X="" W *7," Required" G SB1A
+"RTN","SDWLPE",42,0)
+ I X["^" D:'$D(^SDWL(409.31,DA,"I"))  S DUOUT=1 Q
+"RTN","SDWLPE",43,0)
+ .S DIK="^SDWL(409.31," D ^DIK
+"RTN","SDWLPE",44,0)
+ S X=$$GET1^DIQ(4,+Y_",",11)
+"RTN","SDWLPE",45,0)
+ I X'["N"!'$$TF^XUAF4(+Y) W !,*7,"Invalid Entry. Must be 'National' Institution." G SB1A
+"RTN","SDWLPE",46,0)
+ I '$D(^SDWL(409.31,DA,"I","B",+Y)) D
+"RTN","SDWLPE",47,0)
+ .S DA(1)=DA,DIC="^SDWL(409.31,"_DA(1)_","_"""I"""_",",DIC("P")=409.311,X=+Y K D0 D FILE^DICN I +Y S DA=+Y
+"RTN","SDWLPE",48,0)
+ I $D(^SDWL(409.31,DA,"I","B",+Y)) S DA(1)=DA,DA=$O(^(+Y,0))
+"RTN","SDWLPE",49,0)
+ K DIC,DIE,DIR,DR
+"RTN","SDWLPE",50,0)
+ W ! S DR="1;3",DIE="^SDWL(409.31,"_DA(1)_","_"""I"""_"," D ^DIE
+"RTN","SDWLPE",51,0)
+ I $P(^SDWL(409.31,DA(1),"I",DA,0),U,2)="" D
+"RTN","SDWLPE",52,0)
+ .W *7,!,"This ENTRY requires an ACTIVATION DATE. ENTRY deleted."
+"RTN","SDWLPE",53,0)
+ .S DIK="^SDWL(409.31,"_DA(1)_","_"""I"""_"," D ^DIK I '$P(^SDWL(409.31,DA(1),"I",0),U,3) D
+"RTN","SDWLPE",54,0)
+ ..S DIK="^SDWL(409.31,",DA=DA(1) D ^DIK
+"RTN","SDWLPE",55,0)
+ K DA,DA(1),SDWLDSS,DIC,DR,DIE,DI,DIEDA,DIG,DIH,DIIENS,DIR,DIU,DIV
+"RTN","SDWLPE",56,0)
+ Q
+"RTN","SDWLPE",57,0)
+SB2 N STR,INST,DIC,SDWLSC,SDWLSTOP S SDWLSTOP=0
+"RTN","SDWLPE",58,0)
+ W ! S DIC(0)="AEMNZ",DIC("A")="Select Clinic: ",DIC=44
+"RTN","SDWLPE",59,0)
+ S DIC("S")="S SDWLX=$G(^SC(+Y,0)),SDWLY=$G(^(""I"")) I $P(SDWLX,U,3)=""C"",$P(SDWLY,U,1)'>$P(SDWLY,U,2)"
+"RTN","SDWLPE",60,0)
+ S DIC("W")="S STR=$$CLIN^SDWLPE(+Y) I STR W ?50,""- "",$E($P(STR,U,3),1,25),""("",$P(STR,U,2),"")"""
+"RTN","SDWLPE",61,0)
+ D ^DIC I Y<1 K DIC,DA Q
+"RTN","SDWLPE",62,0)
+ Q:$D(DUOUT)  S SDWLSC=+Y S INST=+STR  ;$$CLIN(SDWLSC)
+"RTN","SDWLPE",63,0)
+ I $P(STR,U,6)'="" W !,*7,$P(STR,U,6) G SB2
+"RTN","SDWLPE",64,0)
+ N SDANEW S SDANEW=""
+"RTN","SDWLPE",65,0)
+ I '$D(^SDWL(409.32,"B",SDWLSC)) D
+"RTN","SDWLPE",66,0)
+ .S DIC(0)="LX",X=SDWLSC,DIC="^SDWL(409.32," D FILE^DICN
+"RTN","SDWLPE",67,0)
+ .N DA S DA=$O(^SDWL(409.32,"B",SDWLSC,"")) S SDANEW=DA
+"RTN","SDWLPE",68,0)
+ .S DIE="^SDWL(409.32,",DR=".02////^S X=INST" D ^DIE
+"RTN","SDWLPE",69,0)
+ N DA,SDA S DA=$O(^SDWL(409.32,"B",SDWLSC,"")),SDA=DA
+"RTN","SDWLPE",70,0)
+ S DR="1",DIE="^SDWL(409.32," D ^DIE
+"RTN","SDWLPE",71,0)
+ I SDANEW,'X D  D ESB2 H 1 G SB2
+"RTN","SDWLPE",72,0)
+ .W *7,!!,"This ENTRY requires an ACTIVATION DATE. ENTRY deleted."
+"RTN","SDWLPE",73,0)
+ .S DA=SDANEW S DIK="^SDWL(409.32," D ^DIK
+"RTN","SDWLPE",74,0)
+ I '$P(^SDWL(409.32,SDA,0),U,3) I $P(^SDWL(409.32,SDA,0),U,2) S DR="2////^S X=DUZ" D ^DIE ;Checks to see whether the ACTIVATION DATE ENTERED BY field is filled before filling it  SD*5.3*554
+"RTN","SDWLPE",75,0)
+ N DIC
+"RTN","SDWLPE",76,0)
+ S SDWLSCN=$P($G(^SDWL(409.32,SDA,0)),U,1) D  Q:SDWLSTOP
+"RTN","SDWLPE",77,0)
+ .I $D(^SDWL(409.3,"SC",SDWLSCN))&'$P($G(^SDWL(409.32,SDA,0)),U,4) D  ; Patch SD*5.3*638 adds a check for data in the DATE INACTIVATED (#3) field of the SD WL CLINIC LOCATION (409.32) file before evaluating open wait list entries.
+"RTN","SDWLPE",78,0)
+ ..S SDWLN="",SDWLCNT=0 F  S SDWLN=$O(^SDWL(409.3,"SC",SDWLSCN,SDWLN)) Q:SDWLN=""  D
+"RTN","SDWLPE",79,0)
+ ...S X=$G(^SDWL(409.3,SDWLN,0)) I '$D(^SDWL(409.3,SDWLN,"DIS")) S SDWLCNT=SDWLCNT+1,^TMP("SDWLPE",$J,"DIS",SDWLN,SDWLCNT)=X,SDWLSTOP=1
+"RTN","SDWLPE",80,0)
+ ..I SDWLSTOP W !,"This Clinic has Patients on the Wait List and can not be inactivated."  H 2 Q
+"RTN","SDWLPE",81,0)
+ N SDTEST S SDTEST="" I $G(SDWLN) S SDTEST=$$GET1^DIQ(409.32,SDWLN,3) ;Set Variable SDTEST equal to the information in the INACTIVATED DATE field
+"RTN","SDWLPE",82,0)
+ S DR="3",DIE="^SDWL(409.32," D ^DIE I $G(X)'=SDTEST D  ; Populates the INACTIVATED DATE ENTERED BY field only if the INACTIVATED DATE field is filled - SD*5.3*554
+"RTN","SDWLPE",83,0)
+ .I X'="" S DR="4////^S X=+DUZ" D ^DIE
+"RTN","SDWLPE",84,0)
+ .E  S DR="4////^S X=@" D ^DIE ;SD*5.3*554
+"RTN","SDWLPE",85,0)
+ESB2 ;
+"RTN","SDWLPE",86,0)
+ K DR,DIE,DIC,Y,X,SDWLY,DIC(0),DO,DA,DI,DIW,SDWLX,SDWLSCN,SDWLF
+"RTN","SDWLPE",87,0)
+ Q
+"RTN","SDWLPE",88,0)
+SWT ;SWITCH FOR INACTIVATION OF PARAMETER FILE
+"RTN","SDWLPE",89,0)
+ Q
+"RTN","SDWLPE",90,0)
+HD ;HEADER
+"RTN","SDWLPE",91,0)
+ W:$D(IOF) @IOF W !!,?80-$L("Wait List Parameter Enter/Edit")\2,"Wait List Parameter Enter/Edit",!
+"RTN","SDWLPE",92,0)
+ W !,?80-$L("------------------------------")\2,"------------------------------",!
+"RTN","SDWLPE",93,0)
+END K SDWLSTOP,DIR,DIC,DR,DIK,SDWLX,SDWLSCN,SDWLF,SDWLY,SDWLSC,SDWLN,SDWLCNT,SDWLDSS,DUOUT,X,Y
+"RTN","SDWLPE",94,0)
+ Q
+"RTN","SDWLPE",95,0)
+CLIN(CL) ;identify clinic institution through DIVISON ----> INSTITUTION path.
+"RTN","SDWLPE",96,0)
+ ; function to return:
+"RTN","SDWLPE",97,0)
+ ;                     1                        2                     3               4                    5       6        7
+"RTN","SDWLPE",98,0)
+ ; - Institution pointer to ^DIC(4 _U_ STATION number (# 99) _U_ INST Name _U_ DIV Pointer to ^DG(40.8 _U_N/L_U_Message_U_TYPE
+"RTN","SDWLPE",99,0)
+ ;           ( INST^STA NUM^SNAM^DIV^N/L^MESS^TYPE )
+"RTN","SDWLPE",100,0)
+ ;           N/L - N -National/L -Local
+"RTN","SDWLPE",101,0)
+ ;           TYPE - type of entry in file # 44 (field #2)
+"RTN","SDWLPE",102,0)
+ ;                 C:CLINIC
+"RTN","SDWLPE",103,0)
+ ;                 M:MODULE
+"RTN","SDWLPE",104,0)
+ ;                 W:WARD
+"RTN","SDWLPE",105,0)
+ ;                 Z:OTHER LOCATION
+"RTN","SDWLPE",106,0)
+ ;                 N:NON-CLINIC STOP
+"RTN","SDWLPE",107,0)
+ ;                 F:FILE AREA
+"RTN","SDWLPE",108,0)
+ ;                 I:IMAGING
+"RTN","SDWLPE",109,0)
+ ;                OR:OPERATING ROOM
+"RTN","SDWLPE",110,0)
+ ;           
+"RTN","SDWLPE",111,0)
+ ;        with optional Message:
+"RTN","SDWLPE",112,0)
+ ;        
+"RTN","SDWLPE",113,0)
+ ;        if STA=""
+"RTN","SDWLPE",114,0)
+ ;        -  INST^^SNAM^DIV^N/L^' - No Station Number on file' ^ TYPE
+"RTN","SDWLPE",115,0)
+ ;          or
+"RTN","SDWLPE",116,0)
+ ;        -  0^^^DIV^^' - No Institution has been identified '^ TYPE
+"RTN","SDWLPE",117,0)
+ ;        -  0^^^-1^^'  - No Division has been identified' ^ TYPE
+"RTN","SDWLPE",118,0)
+ ;        
+"RTN","SDWLPE",119,0)
+ ;        if entry is inactivated:
+"RTN","SDWLPE",120,0)
+ ;        
+"RTN","SDWLPE",121,0)
+ ;        -  INST^^SNAM^DIV^N/L^' - Inactive treating medical facility' ^ TYPE
+"RTN","SDWLPE",122,0)
+ ;        -  -1^^^^^' -  No clinic on file' ^
+"RTN","SDWLPE",123,0)
+ ;        
+"RTN","SDWLPE",124,0)
+ I +CL=0!'$D(^SC(+CL)) Q -1_"^^^^^ - No clinic on file^"
+"RTN","SDWLPE",125,0)
+ N SDWMES,STN,DIV,INS,SNL,STR,SNAM S SDWMES="",STN=""
+"RTN","SDWLPE",126,0)
+ N TYPE S TYPE=$$GET1^DIQ(44,CL_",",2,"E")
+"RTN","SDWLPE",127,0)
+ S DIV=+$$GET1^DIQ(44,CL_",",3.5,"I")
+"RTN","SDWLPE",128,0)
+ I DIV=0 S SDWMES=" - No Division has been identified" Q 0_"^^^"_-1_"^^"_SDWMES_U_TYPE
+"RTN","SDWLPE",129,0)
+ S INS=+$$GET1^DIQ(40.8,DIV_",",.07,"I")
+"RTN","SDWLPE",130,0)
+ I INS=0 S SDWMES=" - No Institution has been identified" Q 0_"^^^"_DIV_"^^"_SDWMES_U_TYPE
+"RTN","SDWLPE",131,0)
+ E  S STR=$$NS^XUAF4(INS),STN=$P(STR,U,2),SNAM=$P(STR,U) ;station number and name
+"RTN","SDWLPE",132,0)
+ I STN="" S SDWMES=" - No Station Number on file"
+"RTN","SDWLPE",133,0)
+ I '$$TF^XUAF4(INS) S SDWMES=SDWMES_" - Inactive treating medical facility"
+"RTN","SDWLPE",134,0)
+ S SNL=$$GET1^DIQ(4,INS_",",11,"I")
+"RTN","SDWLPE",135,0)
+ Q INS_U_STN_U_SNAM_U_DIV_U_SNL_U_SDWMES_U_TYPE
+"RTN","SDWLTR")
+0^1^B80952316^B79675127
+"RTN","SDWLTR",1,0)
+SDWLTR ;IOFO BAY PINES/DMR - WAIT LIST TRANSMISSION TO ACC;06/12/2002 ; 29 Aug 2002  2:54 PM  ; Compiled April 12, 2007 09:51:10
+"RTN","SDWLTR",2,0)
+ ;;5.3;scheduling;**270,420,446,638**;AUG 13 1993;Build 8
+"RTN","SDWLTR",3,0)
+ Q
+"RTN","SDWLTR",4,0)
+INIT ;
+"RTN","SDWLTR",5,0)
+ Q  ;This option is being deactivated with patch SD*5.3*638. Transmission functionality is now accomplished by CDW/VSSC 
+"RTN","SDWLTR",6,0)
+ S (DFN,REC,WLNAMEF,WLNAMEL,WLNAMEM,WLNAME,WLNAMES,NAME,DOB,SEX,RACE,MT,MTT,SSN,SSNP,STATE,STA,ZCODE,COUNTY,CTY,PHONE,SERCON,HINS,POS,PEC,PECN,PECNN,MCAID,POW,PH,ENROLLN,ENROLL,PREFACN,PREFAC,J,JJ,INST,INSTN,CSTOP,STOP,CLINIC,INST,N,MN)=""
+"RTN","SDWLTR",7,0)
+ S (SWIEN,ICNUM,WLREC,WLORDT,WLTYPE,WLTEAMN,WLTEAM,WLPOSN,WLPOS,WLSPECN,WLSPEC,WLCLN,WLCL,WL,WLC,WLS,WLPRI,WLREQ,WLREMOV,WLDNMOV,WLDOD,WLRDFD,WLESTA,WLDDOA,WLCSTA,HOLD,PCMNUM,PCMMT,PCMMP,VER,WL,VETS,NUM,CLN)=""
+"RTN","SDWLTR",8,0)
+ S (WLD2,WLC2,WLI2,WLSC2,WLCS2,WLS2,WLAS2,WLSCP2,WLPRI2,WLA2)=""
+"RTN","SDWLTR",9,0)
+ S VER="1.0",N=0,MN=0,INST=+DUZ(2)
+"RTN","SDWLTR",10,0)
+DATA ;Check for data and setup arrays.
+"RTN","SDWLTR",11,0)
+ I +$P($G(^SDWL(409.31,0)),"^",4)>.5 D
+"RTN","SDWLTR",12,0)
+ .S J=0 F  S J=$O(^SDWL(409.31,"E",J)) Q:J=""  D
+"RTN","SDWLTR",13,0)
+ ..S JJ=0 F  S JJ=$O(^SDWL(409.31,"E",J,JJ)) Q:JJ=""  D
+"RTN","SDWLTR",14,0)
+ ...S CSTOP="",CSTOP=^SDWL(409.31,+JJ,0)
+"RTN","SDWLTR",15,0)
+ ...S ^TMP("409.31",$J,+J,+CSTOP)=""
+"RTN","SDWLTR",16,0)
+ ...Q
+"RTN","SDWLTR",17,0)
+ I +$P($G(^SDWL(409.32,0)),"^",4)>.5 D
+"RTN","SDWLTR",18,0)
+ .S J=0 F  S J=$O(^SDWL(409.32,"C",J)) Q:J=""  D
+"RTN","SDWLTR",19,0)
+ ..S JJ=0 F  S JJ=$O(^SDWL(409.32,"C",J,JJ)) Q:JJ=""  D
+"RTN","SDWLTR",20,0)
+ ...S CLINIC="",CLINIC=$P($G(^SDWL(409.32,+JJ,0)),"^",1)
+"RTN","SDWLTR",21,0)
+ ...S ^TMP("409.32",$J,+J,+CLINIC)=""
+"RTN","SDWLTR",22,0)
+ ...Q
+"RTN","SDWLTR",23,0)
+ I +$P($G(^SDWL(409.3,0)),"^",4)<1 D NODATA,KILL Q
+"RTN","SDWLTR",24,0)
+ D START,MESS^SDWLTR1(.MN),NODATA,KILL
+"RTN","SDWLTR",25,0)
+ Q
+"RTN","SDWLTR",26,0)
+START ;Loop 409.3, get DFN file 2 info.
+"RTN","SDWLTR",27,0)
+ N SDWLREJN,SDWLSREM,SDWLINTR,SDWL120F,SDWLMULT,SDWLINTE,SDWLIDES  ; sd/446
+"RTN","SDWLTR",28,0)
+ F  S DFN=$O(^SDWL(409.3,"B",DFN)) Q:DFN=""  D
+"RTN","SDWLTR",29,0)
+ .D DEM^VADPT
+"RTN","SDWLTR",30,0)
+ .S (WLNAMEL,WLNAMEF,WLNAMEM,WLNAMES,WLNAME,NAME(1))="" S WLNAME("FILE")=2,WLNAME("IENS")=DFN,WLNAME("FIELD")=.01
+"RTN","SDWLTR",31,0)
+ .S NAME(1)=$$HLNAME^XLFNAME(.WLNAME,"","^") S WLNAMEL=$P($G(NAME(1)),"^",1),WLNAMEF=$P($G(NAME(1)),"^",2),WLNAMEM=$P($G(NAME(1)),"^",3),WLNAMES=$P($G(NAME(1)),"^",4)
+"RTN","SDWLTR",32,0)
+ .S NAME=WLNAMEL_"^"_WLNAMEF_"^"_WLNAMEM_" "_WLNAMES
+"RTN","SDWLTR",33,0)
+ .S DOB="" S DOB=$P($G(VADM(3)),"^",1)
+"RTN","SDWLTR",34,0)
+ .S SEX="" S SEX=$P($G(VADM(5)),"^",1)
+"RTN","SDWLTR",35,0)
+ .S RACE="" S RACE=$P($G(VADM(8)),"^",1)
+"RTN","SDWLTR",36,0)
+ .S (SSN,SSNP)="" S SSN=$P($G(VADM(2)),"^",1) I SSN["P" S SSNP="P",SSN=$E(SSN,1,9)
+"RTN","SDWLTR",37,0)
+ .S (MT,MTT)="" S MT=$$LST^DGMTU(DFN,DT,1) I MT'="" S MTT=1,MT=$P($G(MT),"^",4)
+"RTN","SDWLTR",38,0)
+ .I MT="" S MT=$$LST^DGMTU(DFN,DT,2) I MT'="" S MTT=2,MT=$P($G(MT),"^",4)
+"RTN","SDWLTR",39,0)
+ .D ADD^VADPT
+"RTN","SDWLTR",40,0)
+ .S (STATE,STA)="" S STA=$P($G(VAPA(5)),"^",1) D
+"RTN","SDWLTR",41,0)
+ ..I STA'="" S STATE=$E("00",$L(STA)+1,2)_STA
+"RTN","SDWLTR",42,0)
+ .S ZCODE="" S ZCODE=$G(VAPA(6))
+"RTN","SDWLTR",43,0)
+ .S (COUNTY,CTY)="" S COUNTY=$P($G(VAPA(7)),"^",1) D
+"RTN","SDWLTR",44,0)
+ ..I COUNTY'=""&(STATE'="") S CTY=$$GET1^DIQ(5.01,COUNTY_","_STATE,"VA COUNTY CODE") D
+"RTN","SDWLTR",45,0)
+ ...S COUNTY="" I CTY'="" S COUNTY=STATE_CTY
+"RTN","SDWLTR",46,0)
+ .S PHONE="" S PHONE=$G(VAPA(8))
+"RTN","SDWLTR",47,0)
+ .S SERCON="" S SERCON=$$GET1^DIQ(2,DFN_",",.302)
+"RTN","SDWLTR",48,0)
+ .S HINS="" S HINS=$$GET1^DIQ(2,DFN_",",.3192,"I")
+"RTN","SDWLTR",49,0)
+ .S (POSN,POS)="" S POSN=$$GET1^DIQ(2,DFN_",",.323,"I") I POSN'="" S POS=$$GET1^DIQ(21,POSN_",",.03)
+"RTN","SDWLTR",50,0)
+ .S (PEC,PECN,PECNN)="" S PECN=$$GET1^DIQ(2,DFN_",",.361,"I") I PECN'="" S PECNN=$$GET1^DIQ(8,PECN_",",8,"I") I PECNN'="" S PEC=$$GET1^DIQ(8.1,PECNN_",",3)
+"RTN","SDWLTR",51,0)
+ .S VETS="" S VETS=$$GET1^DIQ(2,DFN_",",1901,"I")
+"RTN","SDWLTR",52,0)
+ .S MCAID="" S MCAID=$$GET1^DIQ(2,DFN_",",.381,"I"),MCAID=$S(MCAID=1:"Y",MCAID=0:"N",1:"")
+"RTN","SDWLTR",53,0)
+ .S POW="" S POW=$$GET1^DIQ(2,DFN_",",.525,"I")
+"RTN","SDWLTR",54,0)
+ .S PH="" S PH=$$GET1^DIQ(2,DFN_",",.531,"I")
+"RTN","SDWLTR",55,0)
+ .S (ENROLLN,ENROLL,ENROLSUB)="" S ENROLLN=$$GET1^DIQ(2,DFN_",",27.01,"I") I ENROLLN'="" S ENROLL=$$GET1^DIQ(27.11,ENROLLN_",",.01,"I")
+"RTN","SDWLTR",56,0)
+ .S ENROLLP="" I ENROLLN'="" S ENROLLP=$$GET1^DIQ(27.11,ENROLLN_",",.07,"I") I ENROLLP D
+"RTN","SDWLTR",57,0)
+ ..S ENROLSUB=$$GET1^DIQ(27.11,ENROLLN_",",.12) I ENROLSUB'="" S ENROLLP=ENROLLP_ENROLSUB
+"RTN","SDWLTR",58,0)
+ .S (PREFACN,PREFAC)="" S PREFACN=$$GET1^DIQ(2,DFN_",",27.02,"I") I PREFACN'="" S PREFAC=$$GET1^DIQ(4,PREFACN_",",99)
+"RTN","SDWLTR",59,0)
+ .S ICNUM="" S ICNUM=$$GET1^DIQ(2,DFN_",",991.01)
+"RTN","SDWLTR",60,0)
+ .S PCMNUM="" S PCMNUM=$P($$NMPCPR^SCAPMCU2(DFN,DT,1),"^",1) D
+"RTN","SDWLTR",61,0)
+ ..I PCMNUM<0!(PCMNUM="") S PCMNUM="",PCMMP="^^"
+"RTN","SDWLTR",62,0)
+ ..I PCMNUM>0 D
+"RTN","SDWLTR",63,0)
+ ...S (PCMML,PCMMF,PCMMM,NAME(1),PCMMP)="" S PCMM("FILE")=200,PCMM("IENS")=PCMNUM,PCMM("FIELD")=.01
+"RTN","SDWLTR",64,0)
+ ...S NAME(1)=$$HLNAME^XLFNAME(.PCMM,"","^") S PCMML=$P(NAME(1),"^",1),PCMMF=$P(NAME(1),"^",2),PCMMM=$P(NAME(1),"^",3)
+"RTN","SDWLTR",65,0)
+ ...S PCMMP=PCMML_"^"_PCMMF_"^"_PCMMM
+"RTN","SDWLTR",66,0)
+ .S PCMMT="" S PCMMT=$P($$NMPCTM^SCAPMCU2(DFN,DT,1),"^",2)
+"RTN","SDWLTR",67,0)
+ .S SWIEN="" F  S SWIEN=$O(^SDWL(409.3,"B",DFN,SWIEN)) Q:SWIEN=""  D
+"RTN","SDWLTR",68,0)
+ ..S (WLREC,WLORDT,WLTYPE,WLINSTN,WLTEAMN,WLTEAM,WLPOSN,WLPOS,WLSPECN,WLSPEC,WLCLN,WLCL,WLPRI,WLREQ)=""
+"RTN","SDWLTR",69,0)
+ ..S (WLREMOV,WLDNMOV,WLDOD,WLRDFD,WLDDOA,WLESTA,WLCSTA,WLPHY,WLPCMT,WLINST,INSTN,WL,WLC,WLS,NUM)=""
+"RTN","SDWLTR",70,0)
+ ..S (WLA2,WLD2,WLC2,WLI2,WLSC2,WLCS2,WLS2,WLCL2,WLAS2,WLSCP2,WLPRI2,WLROR2,WLROC2)=""
+"RTN","SDWLTR",71,0)
+ ..S WLREC=^SDWL(409.3,SWIEN,0)
+"RTN","SDWLTR",72,0)
+ ..S WLORDT=$P(WLREC,"^",2)
+"RTN","SDWLTR",73,0)
+ ..S WLTYPE=$P(WLREC,"^",5)
+"RTN","SDWLTR",74,0)
+ ..S WLINSTN=$P(WLREC,"^",3) I WLINSTN'="" S X=$$GET1^DIQ(4,+WLINSTN_",",99),WLINST=$P(X,U,1),INSTN=$$GET1^DIQ(4,+WLINSTN_",",.01)
+"RTN","SDWLTR",75,0)
+ ..S WLTEAMN=$P(WLREC,"^",6) I WLTEAMN'="" S WLTEAM=$P($G(^SCTM(404.51,WLTEAMN,0)),"^",1)
+"RTN","SDWLTR",76,0)
+ ..S WLPOSN=$P(WLREC,"^",7) I WLPOSN'="" S WLPOS=$P($G(^SCTM(404.57,WLPOSN,0)),"^",1)
+"RTN","SDWLTR",77,0)
+ ..S WLSPECN=$P(WLREC,"^",8) I WLSPECN'="" S WLS=$G(^SDWL(409.31,WLSPECN,0)),WLSPEC=$$GET1^DIQ(40.7,WLS_",",1)
+"RTN","SDWLTR",78,0)
+ ..S WLCLN=$P(WLREC,"^",9) I WLCLN'="" S WLC=$P(^SDWL(409.32,WLCLN,0),"^",1),WLCL=$P($G(^SC(WLC,0)),"^",1) D
+"RTN","SDWLTR",79,0)
+ ...I WLC'="" S NUM=$E("000000",$L(WLC)+1,6)_WLC
+"RTN","SDWLTR",80,0)
+ ..I WLSPECN=""&(WLCLN'="") S WL=$P(^SDWL(409.32,WLCLN,0),"^",1),WLSPECN=$P($G(^SC(WL,0)),"^",7),WLSPEC=$$GET1^DIQ(40.7,WLSPECN_",",1)
+"RTN","SDWLTR",81,0)
+ ..S WLPRI=$P(WLREC,"^",11)
+"RTN","SDWLTR",82,0)
+ ..S WLREQ=$P(WLREC,"^",12)
+"RTN","SDWLTR",83,0)
+ ..S WLREMOV=$P(WLREC,"^",14)
+"RTN","SDWLTR",84,0)
+ ..S WLDNMOV=$P($G(^SDWL(409.3,SWIEN,"DNR")),"^",1),WLDOD=$P($G(^SDWL(409.3,SWIEN,"DIS")),"^",1),WLRDFD=$P($G(^SDWL(409.3,SWIEN,"DIS")),"^",3)
+"RTN","SDWLTR",85,0)
+ ..S WLDDOA=$P(WLREC,"^",16),WLCSTA=$P(WLREC,"^",17),WLESTA=$P(WLREC,"^",20)
+"RTN","SDWLTR",86,0)
+ ..I $P($G(WLREC),"^",23)'=""&($D(^SDWL(409.3,SWIEN,"SDAPT"))) S WLA2=$P(WLREC,"^",23),WLREC2=^SDWL(409.3,SWIEN,"SDAPT") D
+"RTN","SDWLTR",87,0)
+ ...S WLD2=$P($G(WLREC2),"^",1),WLC2=$$GET1^DIQ(409.3,SWIEN_",",13.2),WLI2=$$GET1^DIQ(409.3,SWIEN_",",13.3),WLSC2=$P($G(WLREC2),"^",4),WLCS2=$$GET1^DIQ(409.3,SWIEN_",",13.5)
+"RTN","SDWLTR",88,0)
+ ...S WLS2=$P($G(WLREC2),"^",6),WLAS2=$P($G(WLREC2),"^",8),WLCL2=$$GET1^DIQ(409.3,SWIEN_",",13.7),WLROC2=$$GET1^DIQ(409.3,SWIEN_",",30)
+"RTN","SDWLTR",89,0)
+ ...S WLSCP2=$P($G(^SDWL(409.3,SWIEN,"SC")),"^",1),WLPRI2=$P($G(^SDWL(409.3,SWIEN,"SC")),"^",2),WLROR2=$$GET1^DIQ(409.3,SWIEN_",",29,"I")
+"RTN","SDWLTR",90,0)
+ ...S WLROC2=$$GET1^DIQ(409.3,SWIEN_",",30)
+"RTN","SDWLTR",91,0)
+ ..D FLAGS^SDWLTR1(SWIEN,.SDWLREJN,.SDWLSREM,.SDWLINTR,.SDWL120F,.SDWLMULT,.SDWLINTE,.SDWLIDES)  ; sd/446
+"RTN","SDWLTR",92,0)
+ ..Q:SWIEN=HOLD  D
+"RTN","SDWLTR",93,0)
+ ...D CHECK
+"RTN","SDWLTR",94,0)
+ ...I N>39 D MESS^SDWLTR1(.MN) K ^TMP("EWL",$J) S N=0
+"RTN","SDWLTR",95,0)
+ ...S N=N+1
+"RTN","SDWLTR",96,0)
+ ...S ^TMP("EWL",$J,SWIEN_N,0)="#"_WLINST_"^"_VER_"^"_INSTN_"^"_WLCL_"^"_NUM_"^"_WLSPEC_"^"_WLTYPE_"^"_NAME_"^"_DFN_"^"_DOB_"^"_SEX_"^"_RACE_"^"_SSN_"^"_SSNP_"^"_STATE_"^"_COUNTY_"^"_ZCODE_"^"_PHONE
+"RTN","SDWLTR",97,0)
+ ...S ^TMP("EWL",$J,SWIEN_N,0)=^TMP("EWL",$J,SWIEN_N,0)_"^"_MT_"^"_MTT_"^"_SERCON_"^"_HINS_"^"_POS_"^"_PEC_"^"_VETS_"^"_MCAID_"^"_POW_"^"_PH_"^"_ENROLL_"^"_ENROLLP_"^"_PREFAC
+"RTN","SDWLTR",98,0)
+ ...S ^TMP("EWL",$J,SWIEN_N,0)=^TMP("EWL",$J,SWIEN_N,0)_"^"_ICNUM_"^"_PCMNUM_"^"_PCMMP_"^"_PCMMT_"^"_WLORDT_"^"_WLTEAM_"^"_WLPOS_"^"_WLPRI_"^"_WLREQ_"^"_WLDOD_"^"_WLRDFD_"^"_WLDDOA_"^"_WLCSTA_"^"_WLESTA_"^"_WLREMOV_"^"_WLDNMOV
+"RTN","SDWLTR",99,0)
+ ...S ^TMP("EWL",$J,SWIEN_N,0)=^TMP("EWL",$J,SWIEN_N,0)_"^"_WLA2_"^"_WLD2_"^"_WLC2_"^"_WLI2_"^"_WLSC2_"^"_WLCS2_"^"_WLS2_"^"_WLCL2_"^"_WLAS2_"^"_WLSCP2_"^"_WLPRI2_"^"_WLROR2
+"RTN","SDWLTR",100,0)
+ ...S ^TMP("EWL",$J,SWIEN_N,0)=^TMP("EWL",$J,SWIEN_N,0)_"^"_WLROC2_"^"_SDWLREJN_"^"_SDWLSREM_"^"_SDWLINTR_"^"_SDWL120F_"^"_SDWLMULT_"^"_SDWLINTE_"^"_SDWLIDES_"^$"  ; sd/446
+"RTN","SDWLTR",101,0)
+ ...S HOLD=SWIEN
+"RTN","SDWLTR",102,0)
+ ...Q
+"RTN","SDWLTR",103,0)
+ Q
+"RTN","SDWLTR",104,0)
+NODATA ;No data in ^SDWL(409.3)
+"RTN","SDWLTR",105,0)
+ S N=0,MN=MN+1
+"RTN","SDWLTR",106,0)
+ I +$P($G(^SDWL(409.31,0)),"^",4)<1 D SET
+"RTN","SDWLTR",107,0)
+ I +$P($G(^SDWL(409.32,0)),"^",4)<1 D SET
+"RTN","SDWLTR",108,0)
+ I +$P($G(^SDWL(409.31,0)),"^",4)>.5 D SET2
+"RTN","SDWLTR",109,0)
+ I +$P($G(^SDWL(409.32,0)),"^",4)>.5 D SET3
+"RTN","SDWLTR",110,0)
+MESS2 ;
+"RTN","SDWLTR",111,0)
+ N XMSUB,XMY,XMTEXT,XMDUZ
+"RTN","SDWLTR",112,0)
+ S XMSUB="EWL FILE TRANSMISSION"_" MESSAGE # "_MN
+"RTN","SDWLTR",113,0)
+ S XMY("G.SD WAIT LIST TRANS TO AAC")=""
+"RTN","SDWLTR",114,0)
+ S XMTEXT="^TMP(""EWL"",$J,"
+"RTN","SDWLTR",115,0)
+ S XMDUZ="POSTMASTER"
+"RTN","SDWLTR",116,0)
+ D ^XMD
+"RTN","SDWLTR",117,0)
+ Q
+"RTN","SDWLTR",118,0)
+SET ;Save data if no pat. on wait list.
+"RTN","SDWLTR",119,0)
+ S ^TMP("EWL",$J,INST,0)="#"_INST_"^"_1.1_"$"
+"RTN","SDWLTR",120,0)
+ Q
+"RTN","SDWLTR",121,0)
+SET2 ;Set nodata global for ser/spec file 409.31
+"RTN","SDWLTR",122,0)
+ S J=0 F  S J=$O(^TMP("409.31",$J,J)) Q:J=""  D
+"RTN","SDWLTR",123,0)
+ .S JJ=0 F  S JJ=$O(^TMP("409.31",$J,J,JJ)) Q:JJ=""  D
+"RTN","SDWLTR",124,0)
+ ..S (INSTN,NAME,CSTOP,CLN)="",CLINIC=0,CSTOP=$$GET1^DIQ(40.7,JJ_",",1),NAME=$$GET1^DIQ(4,J_",",.01),INSTN=$$GET1^DIQ(4,J_",",99) D SAVE
+"RTN","SDWLTR",125,0)
+ ..Q
+"RTN","SDWLTR",126,0)
+ Q
+"RTN","SDWLTR",127,0)
+SET3 ;Set nodata global for clinic file 409.32
+"RTN","SDWLTR",128,0)
+ S J=0 F  S J=$O(^TMP("409.32",$J,J)) Q:J=""  D
+"RTN","SDWLTR",129,0)
+ .S JJ=0 F  S JJ=$O(^TMP("409.32",$J,J,JJ)) Q:JJ=""  D
+"RTN","SDWLTR",130,0)
+ ..S (INSTN,NAME,CSTOP,STOP,CLINIC,CLN)="",CLINIC=$P($G(^SC(JJ,0)),"^",1),CLN=JJ,NAME=$$GET1^DIQ(4,J_",",.01),INSTN=$$GET1^DIQ(4,J_",",99),STOP=$P($G(^SC(JJ,0)),"^",7),CSTOP=$$GET1^DIQ(40.7,STOP_",",1) D SAVE
+"RTN","SDWLTR",131,0)
+ ..Q
+"RTN","SDWLTR",132,0)
+ Q
+"RTN","SDWLTR",133,0)
+SAVE ;Save nodata info.
+"RTN","SDWLTR",134,0)
+ S U="^",N=N+1,NUM=0 I CLN'="" S NUM=$E("000000",$L(CLN)+1,6)_CLN
+"RTN","SDWLTR",135,0)
+ S ^TMP("EWL",$J,INST_N,0)="#"_INSTN_U_1.2_"^"_NAME_U_CLINIC_U_NUM_U_CSTOP_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U
+"RTN","SDWLTR",136,0)
+ S ^TMP("EWL",$J,INST_N,0)=^TMP("EWL",$J,INST_N,0)_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_0_U_"$"
+"RTN","SDWLTR",137,0)
+ Q
+"RTN","SDWLTR",138,0)
+CHECK ;Deletes array entry if data for spec/cln/inst.
+"RTN","SDWLTR",139,0)
+ I WLTYPE=3 D
+"RTN","SDWLTR",140,0)
+ .I $D(^TMP("409.31",$J,+WLINSTN,+WLS)) K ^TMP("409.31",$J,+WLINSTN,+WLS)
+"RTN","SDWLTR",141,0)
+ I WLTYPE=4 D
+"RTN","SDWLTR",142,0)
+ .I $D(^TMP("409.32",$J,+WLINSTN,+WLC)) K ^TMP("409.32",$J,+WLINSTN,+WLC)
+"RTN","SDWLTR",143,0)
+ Q
+"RTN","SDWLTR",144,0)
+KILL ;
+"RTN","SDWLTR",145,0)
+ K ^TMP("EWL",$J),^TMP("409.31",$J),^TMP("409.32",$J)
+"RTN","SDWLTR",146,0)
+ K DFN,REC,WLNAMEF,WLNAMEL,WLNAMEM,WLNAME,NAME,DOB,SEX,RACE,MT,MTT,SSN,SSNP,STATE,STA,ZCODE,COUNTY,CTY,PHONE,SERCON,HINS,POS,PEC,PECN,PECNN,MCAID,POW,PH,ENROLLN,ENROLL,PREFACN,PREFAC,J,JJ,INST,INSTN,CSTOP,STOP,CLINIC,INST,N,MN
+"RTN","SDWLTR",147,0)
+ K SWIEN,ICNUM,WLREC,WLORDT,WLTYPE,WLTEAMN,WLTEAM,WLPOSN,WLPOS,WLSPECN,WLSPEC,WLCLN,WLCL,WL,WLC,WLS,WLPRI,WLREQ,WLREMOV,WLDNMOV,WLDOD,WLRDFD,WLESTA,WLDDOA,WLCSTA,HOLD,PCMNUM,PCMMT,PCMMP,VER,WL,VETS,NUM,CLN
+"RTN","SDWLTR",148,0)
+ K ENROLL,ENROLLP,ENROLSUB,WLNAMES,WLD2,WLC2,WLI2,WLSC2,WLCS2,WLS2,WLCL2,WLAS2,WLSCP2,WLPRI2,WLA2,WLROR2,WLROC2,WLREC2,PCMM,PCMMF,PCMML,PCMMM,POSN,WLINST,WLINSTN,WLPCMT,WLPHY,X,VADM,VAPA
+"RTN","SDWLTR",149,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10020,6)
+^531
+**END**
+**END**
+

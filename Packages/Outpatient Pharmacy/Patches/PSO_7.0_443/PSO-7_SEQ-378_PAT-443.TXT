@@ -1,0 +1,120 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 01/05/15 at 16:40
+=============================================================================
+Run Date: MAR 03, 2016                     Designation: PSO*7*443
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #378                      Status: Released
+                  Compliance Date: APR 02, 2016
+=============================================================================
+
+Associated patches: (v)PSO*7*76    <<= must be installed BEFORE `PSO*7*443'
+
+Subject: RX TRANS TO CMOP PUT ON HOLD
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue:
+ A prescription that has been transmitted to Consolidated Mail Outpatient 
+ Pharmacy (CMOP) can be put on Hold in Outpatient Pharmacy backdoor.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000001056921  Rx put on Hold after transmitted to CMOP
+  
+ Associated NSRs:
+ ================
+ N/A
+    
+ Participating Test Sites:
+ =========================
+ Louis Stokes VAMC (Cleveland, OH)
+ Martinsburg VAMC, WV
+  
+ Remedy Overview:
+ ================
+ 1. INC000001056921 -  Rx put on Hold after transmitted to CMOP
+   
+ PSPO:
+ ===== 
+ PSPO #2675
+   
+ Problem: 
+ --------
+ A prescription that has been transmitted to the CMOP can be put on Hold.
+  
+ Resolution:
+ -----------
+ Modify routine PSOCMOPA so if the prescription has been transmitted it
+ cannot be put on Hold.
+  
+ Technical Resolution:
+ ---------------------
+ Modify EN+4^PSOCMOPA, if Transmitted or Retransmitted display message
+ that the prescription cannot be put on Hold. 
+  
+  
+ Installation Instructions:
+ ==========================
+ Pharmacy users should not be processing prescriptions while patch is being
+ installed.  It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*443)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSO*7.0*443.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOCMOPA
+    Before: B14884284   After: B16159826  **61,76,443**
+ 
+Routine list of preceding patches: 76
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 30, 2014
+Completed By:                               Date Completed: FEB 18, 2016
+Released By :                               Date Released : MAR 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

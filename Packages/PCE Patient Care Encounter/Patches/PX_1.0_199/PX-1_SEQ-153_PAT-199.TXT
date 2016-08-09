@@ -1,0 +1,490 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 06/25/14 at 14:20
+=============================================================================
+Run Date: AUG 05, 2014                     Designation: PX*1*199
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #153                      Status: Released
+                  Compliance Date: AUG 26, 2014
+=============================================================================
+
+Associated patches: (v)PX*1*62     <<= must be installed BEFORE `PX*1*199'
+                    (v)PX*1*146    <<= must be installed BEFORE `PX*1*199'
+                    (v)PX*1*165    <<= must be installed BEFORE `PX*1*199'
+                    (v)PX*1*194    <<= must be installed BEFORE `PX*1*199'
+                    (v)LEX*2*80    <<= must be installed BEFORE `PX*1*199'
+                    (v)ICD*18*57   <<= must be installed BEFORE `PX*1*199'
+                    (v)SD*5.3*593  <<= must be installed BEFORE `PX*1*199'
+                    (v)PX*1*203    <<= must be installed BEFORE `PX*1*199'
+
+Subject: PCE ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide posted on the 
+ Anonymous directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on 
+ or after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven alpha-
+ numeric characters. This value does not include the decimal point, which 
+ follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ This patch prepares the Patient Care Encounter (PCE) package for 
+ utilizing the ICD-10 codes when they become active. Forty-nine existing
+ routines were modified, one routine which contains ICD-10 related
+ utilities was added, two routines to control ICD-10 diagnosis look-up were
+ added, and one pre-installation routine is included in the build. 
+ Throughout the package, both in the M code and in the Data Dictionary, 
+ instances of reference to ICD-9 were frequently changed to a generic 
+ reference such as ICD or Diagnosis. The ICD-9 label is retained
+ in a few places where only ICD-9 codes will be displayed. All reports 
+ have been reformatted to accommodate the longer ICD-10 codes and the
+ longer descriptions. Essentially though, the users should experience very
+ little change. In addition, other VistA packages which utilize PCE services
+ through API calls should experience no change in functionality. The API
+ parameters for both Input and Output have remained the same.
+   
+ Example of the updated text changes where ICD-9 will now be generic:
+  
+ * * * * *
+   
+ Old:
+     Associated Primary Diagnosis ICD9 Code not in File 80
+  
+ New:
+     Associated Primary Diagnosis ICD Code not in File 80
+   
+   
+ Examples of the updated places where ICD-9 or ICD-10 will be individually
+ specified based on the transaction date or report date range:
+  
+ * * * * *
+  
+   Select ICD-9 Diagnosis: 100.81
+     or
+   Select ICD-10 Diagnosis: F17.209
+  
+ * * * * *
+   
+   HELP SCREEN               ALL DIAGNOSES (ICD-9 CODES)
+   ITEM  CODE      DESCRIPTION
+   1     001.1     CHOLERA DUE TO VIBRIO CHOLERAE EL TOR
+   2     001.9     CHOLERA, UNSPECIFIED
+   3     002.0     TYPHOID FEVER
+  
+     or
+  
+   HELP SCREEN               ALL DIAGNOSES (ICD-10 CODES)
+   ITEM  CODE      DESCRIPTION
+   1     A00.0     CHOLERA DUE TO VIBRIO CHOLERAE 01, BIOVAR CHOLERAE
+   2     A00.1     CHOLERA DUE TO VIBRIO CHOLERAE 01, BIOVAR ELTOR
+   3     A00.9     CHOLERA, UNSPECIFIED
+  
+ * * * * *
+  
+   3 Most Frequent ICD9 Diagnoses:
+             Code                    Description                 Frequency
+            -------- ------------------------------------------  ---------
+        1.  280.8    IRON DEFIC ANEMIA NEC                            4
+        2.  305.79   OTHER SYMPATHOMIMETIC, NEC                       3
+        3.  812.09   FX UPPER HUMERUS NEC-CL                          2
+  
+     or
+  
+   3 Most Frequent ICD10 Diagnoses:
+             Code                    Description                 Frequency
+            -------- ------------------------------------------  ---------
+        1.  A00.0    Cholera due to Vibrio cholerae 01, biovar        4
+        2.  E08.649  Diabetes due to underlying condition w hyp       3
+        3.  H21.253  Iridoschisis, bilateral                          2
+   
+   
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)             Field Name (Number)    New/Modified/Deleted
+ -----------------------       ---------------------   -----------------------
+ V POV     (#9000010.07)       POV            (#.01)   Modified, text only
+                               ICD NARRATIVE (#.019)   Modified, new algorithm
+                               CLINICAL TERM  (#.15)   Modified, text only
+                    HEAD AND/OR NECK CANCER (#80006)   Modified, text only
+                     "ACR" new style cross reference   Modified, description &
+                                                       new ICD-10 format added
+  
+ V CPT     (#9000010.18)       DIAGNOSIS      (#.05)   Modified input transform
+                               DIAGNOSIS 2    (#.09)   Modified input transform
+                               DIAGNOSIS 3    (#.1 )   Modified input transform
+                               DIAGNOSIS 4    (#.11)   Modified input transform
+                               DIAGNOSIS 5    (#.12)   Modified input transform
+                               DIAGNOSIS 6    (#.13)   Modified input transform
+                               DIAGNOSIS 7    (#.14)   Modified input transform
+                               DIAGNOSIS 8    (#.15)   Modified input transform
+  
+ TREATMENT (#9999999.17)       File Description        Modified, text only
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                        New/Modified/Deleted
+ -------------                        -------------------- 
+ Diagnosis (ICD-9) [PXCE POV ADD]     Modified
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ This ICD-10 Remediation patch was not created as a result of any Remedy 
+ Tickets however Remedy Ticket INC000000820913 was created to document 
+ that PX*1.0*199 patch fixes a pre-existing condition as described 
+ immediately below.
+  
+ PCE does not retrieve DG codes associated with the AICS encounter form 
+ for the clinic being used.  (PCE Encounter Data Entry - Supervisor.  Go 
+ to Check Out Interview)  This was found to be an error in logic by the 
+ routine PXBGPOV4 in existing ICD-9 code.  The ICD10 Remediation 
+ development team (HP) fixed this for both ICD9 and ICD10 in the PCE patch 
+ PX*1.0*199.  We want the problem documented so that users are aware that 
+ this is not an AICS problem and will be fixed when this PX*1.0*199 patch 
+ gets loaded.
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ Boise VA Medical Center, Boise, ID
+ G.V. (Sonny) Montgomery VA Medical Center, Jackson, MS
+ John D. Dingell VA Medical Center, Detroit, MI
+ Miami VA Healthcare System, Miami, FL
+ Montana HCS
+ Battle Creek VAMC, Battle Creek, MI
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www.domain.ext/vdl/
+  
+ Title                                     File Name               FTP Mode
+ --------------------------------------------------------------------------
+ ICD-10 Release Notes  (PX*1*199)          ICD-10_RN_PX_1_199.PDF  (binary)
+ Production Overview Guide Group 2         Production_Overview_    (binary)
+                                           Guide_Group_2.pdf
+ Technical Manual                          pxtm.pdf                (binary)
+ User Manual                               pxum.pdf                (binary)
+ User Manual Appendices                    pxumappx.pdf            (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch will run a brief pre-installation routine that will update the
+ PXCE POV ADD protocol. The routine PX10P199 will not be automatically
+ deleted. You may keep it or delete it per your local standards.
+ There is no post-installation routine nor any special steps.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1a) It is recommended that this patch be installed during non-peak hours. 
+  
+ 1b) All steps leading up to the KIDS Installation may be done with the 
+ users on the system. Users must be off of the system during the KIDS 
+ installation. There is a long list of applications that use PCE services 
+ to file data, and there is very real potential for errors to occur if 
+ this is installed while those services are in use.
+  
+ 1c) TaskMan must remain running but in a WAIT state for the duration of 
+ the KIDS installation. Once the install is complete, restore TaskMan by 
+ removing TaskMan from a WAIT state.
+  
+ 1d) This patch should take less than ten (10) minutes to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ As noted above, users, background filers, CPRS RPC ports, etc.
+ should be off the system, shut down or disabled before applying this
+ patch. Approximately 30 packages utilize PCE services and over 50
+ routines are being modified. To avoid <EDITED> errors and avoid
+ database degradation the system must be quiescent.
+  
+ 1.  Choose the PackMan message containing this patch (PX*1.0*199).
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     PX*1.0*199 :
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'     
+       We recommend answering YES, unless your system rebuilds menu
+     trees nightly using TaskMan or you are installing other patches 
+     after this one for which you will also Rebuild Menu Trees.
+     Answering YES will increase installation time and need only be done
+     once after installing multiple patches.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+     You may answer NO since all users should be off the system anyway.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// 
+  
+     You may answer NO since all users should be off the system anyway.
+     
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+  
+ There are no post-installation steps that need to be executed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 51
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: AUPNSICD
+    Before:  B1050074   After:  B1233832  **121,149,190,194,199**
+Routine Name: PX10P199
+    Before:       n/a   After:  B8361541  **199**
+Routine Name: PXAICPTV
+    Before: B16278915   After: B23770661  **15,73,74,111,121,130,168,194,199**
+Routine Name: PXAIIMMV
+    Before:   B492495   After:  B4109825  **199**
+Routine Name: PXAIPL
+    Before:  B4827876   After:  B5170500  **69,124,168,199**
+Routine Name: PXAIPOV
+    Before: B24363290   After: B24084108  **28,73,69,108,112,130,124,174,
+                                           168,203,199**
+Routine Name: PXAIPOVV
+    Before:  B2638479   After:  B2657796  **121,194,199**
+Routine Name: PXAISKV
+    Before:   B439136   After:  B3940836  **199**
+Routine Name: PXBAICS
+    Before:   B415459   After:   B492354  **199**
+Routine Name: PXBDCPT
+    Before: B45424112   After: B52464094  **11,73,89,108,121,124,199**
+Routine Name: PXBDPOV
+    Before: B26935577   After: B32766424  **124,168,199**
+Routine Name: PXBDREQ
+    Before:  B9032260   After:  B9107608  **73,124,199**
+Routine Name: PXBGPL2
+    Before: B14646395   After: B14633423  **11,199**
+Routine Name: PXBGPOV
+    Before: B11193623   After: B11410055  **11,112,149,124,168,199**
+Routine Name: PXBGPOV2
+    Before: B37370726   After: B43166443  **1,5,11,136,149,124,203,199**
+Routine Name: PXBGPOV3
+    Before: B13078399   After: B13265811  **11,199**
+Routine Name: PXBGPOV4
+    Before: B17114546   After: B18370344  **11,28,121,199**
+Routine Name: PXBHLP3
+    Before: B15121600   After: B18181575  **11,19,62,199**
+Routine Name: PXBPCPT
+    Before: B50760397   After: B52397890  **11,73,89,112,121,132,149,124,
+                                           190,199**
+Routine Name: PXBPCPT2
+    Before:  B7116983   After: B10905536  **124,170,199**
+Routine Name: PXBPL
+    Before: B19131975   After: B25222448  **11,94,115,130,168,199**
+Routine Name: PXBPPOV
+    Before: B22074119   After: B34159394  **11,28,92,121,149,124,170,182,199**
+Routine Name: PXBPPOV1
+    Before: B23470728   After: B24879639  **11,112,121,124,199**
+Routine Name: PXBSTOR
+    Before: B42381168   After: B42386628  **73,88,149,124,164,203,199**
+Routine Name: PXBUTL2
+    Before:  B3542412   After:  B4486692  **121,199**
+Routine Name: PXCACPT
+    Before: B47966106   After: B43989781  **27,33,73,121,124,194,199**
+Routine Name: PXCADXP1
+    Before: B24306608   After: B21605401  **24,33,194,199**
+Routine Name: PXCAPL
+    Before: B33553090   After: B30996914  **24,27,115,130,168,194,199**
+Routine Name: PXCAPL1
+    Before:  B6017229   After:  B6900352  **33,115,130,168,199**
+Routine Name: PXCAPL2
+    Before:  B8360764   After:  B9344999  **33,115,130,168,199**
+Routine Name: PXCAPOV
+    Before: B38043079   After: B35019386  **24,27,33,121,130,124,168,199**
+Routine Name: PXCASK
+    Before: B12106125   After: B15678860  **27,124,199**
+Routine Name: PXCAVIMM
+    Before: B17122556   After: B20851145  **27,124,199**
+Routine Name: PXCEAE1
+    Before: B12204747   After: B16220510  **22,73,199**
+Routine Name: PXCECPT
+    Before: B65495033   After: B73855102  **14,27,73,89,112,121,136,124,
+                                           170,164,182,199**
+Routine Name: PXCECPT1
+    Before:  B2104203   After:  B3081673  **170,164,199**
+Routine Name: PXCEPOV
+    Before: B17257132   After: B13988253  **27,121,124,170,168,199**
+Routine Name: PXCEPOV1
+    Before: B33219732   After: B39167369  **134,149,124,170,203,199**
+Routine Name: PXCEVFI4
+    Before: B27747505   After: B26873797  **124,203,199**
+Routine Name: PXCEVFI5
+    Before:  B5688048   After:  B5687740  **14,99,124,199**
+Routine Name: PXCEVIMM
+    Before: B27090719   After: B31390321  **27,124,199**
+Routine Name: PXDSLK
+    Before:       n/a   After: B44674639  **199**
+Routine Name: PXDXUTL
+    Before:       n/a   After:  B9983043  **199**
+Routine Name: PXPXRM
+    Before: B12998169   After: B24754616  **119,199**
+Routine Name: PXPXRMI2
+    Before: B80236604   After: B86987846  **119,194,199**
+Routine Name: PXQUTL3A
+    Before: B55110955   After: B55077296  **29,199**
+Routine Name: PXRHS01
+    Before: B10447211   After: B10447211  **73,199**
+Routine Name: PXRHS12
+    Before:  B8236713   After:  B8270720  **73,199**
+Routine Name: PXRRFDP
+    Before: B66324541   After: B74055950  **3,10,12,18,31,121,199**
+Routine Name: PXRRFDSD
+    Before: B22536054   After: B37724715  **3,10,12,31,54,121,199**
+Routine Name: PXRRMDR
+    Before: B37941513   After: B38033243  **124,174,168,199**
+Routine Name: PXRRMDR1
+    Before: B19546467   After: B20723539  **174,168,199**
+Routine Name: PXRRPAPI
+    Before: B63792719   After: B64147348  **18,121,165,199**
+Routine Name: PXRRPCE3
+    Before: B26611053   After: B39482453  **121,146,199**
+Routine Name: PXRRPCE4
+    Before: B25666281   After: B24619827  **199**
+Routine Name: PXSCH4
+    Before:  B8097371   After:  B7784412  **194,199**
+Routine Name: PXSELDS
+    Before:       n/a   After: B47899921  **199**
+Routine Name: PXUTL1
+    Before: B10780309   After: B11838187  **25,134,149,199**
+ 
+Routine list of preceding patches: 29, 62, 146, 165, 182, 194, 203
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2011
+Completed By:                               Date Completed: JUL 31, 2014
+Released By :                               Date Released : AUG 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

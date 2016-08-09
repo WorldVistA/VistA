@@ -1,0 +1,260 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/07/14 at 17:21
+=============================================================================
+Run Date: DEC 10, 2014                     Designation: PSB*3*76
+Package : PSB - BAR CODE MED ADMIN            Priority: EMERGENCY
+Version : 3        SEQ #66                      Status: Released
+                  Compliance Date: DEC 17, 2014
+=============================================================================
+
+Associated patches: (v)PSB*3*47    <<= must be installed BEFORE `PSB*3*76'
+                    (v)PSB*3*70    <<= must be installed BEFORE `PSB*3*76'
+
+Subject: BCMA REPORT, VDL, BCMA2PCE AND UNDEFINED ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 6 issues:
+  
+ 1. The Bar Code Medication Administration (BCMA) Missed Medications
+    report does not include orders with a status of "Renewed" 
+ 2. BCMA incorrectly rounds a patient's height down on the BCMA Virtual Due
+    List (VDL) and on report headers, and incorrectly calculates a
+    patient's weight on report headers.
+ 3. Orders with a start time exactly the same as the last administration
+    time will display as not due in the BCMA Medication Administration
+    History (MAH) report.
+ 4. The undefined error <UNDEFINED>FILEIT+10^PSBML *PSBHDR occurs
+    when logging into BCMA.
+ 5. Immunizations given as Clinic orders in BCMA are not recorded in the 
+    V IMMUNIZATIONS (#9000010.11) file. 
+ 6. BCMA accepts a partial scan of a patient's SSN when scanning a patient's
+    wristband.
+  
+ Associated NSR(s):
+ ==================
+  N/A
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1.     INC000000765254 - BCMA Missed Medications report does not include
+                          orders with a status of "Renewed".
+ 2.     INC000000425989 - Patient's Height in BCMA does not match Height in
+                          Vitals
+ 3.     INC000000728163 - Meds display as not due on MAH
+ 4.     IN0000000865087 - <UNDEFINED>FILEIT+10^PSBML *PSBHDR
+        Duplicates:
+        -----------
+        IN0000000872819
+        IN0000000919744
+        IN0000000948603
+        IN0000001003365
+        IN0000001014778
+  
+ 5.     INC000000967514 - BCMA2PCE Breaks with Clinic Orders
+ 6.     INC000001003352 - BCMA allows a partial scan of an SSN
+        Duplicate:
+        ----------
+        IN0000001O38828
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Saginaw VA Medical Center 
+ Syracuse VA Medical Center
+  
+  
+ REMEDY OVERVIEW
+ ===============
+   
+ 1. INC0000000765254 -  BCMA Missed Medications report does not include
+                        orders with a status of "Renewed".
+  
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO #2333
+  
+ Problem:
+ --------
+ The BCMA Missed Medications report does not include orders with a STATUS (#28) 
+ of "Renewed" in the PHARMACY PATIENT (#55) file. 
+  
+ Resolution:
+  -----------
+ Routine PSBOMM was modified to include orders with a STATUS (#28) of "Renewed"
+ on the BCMA Missed Medications report.
+  
+ 2. INC00000000425989 - Patient's height and weight in BCMA does not match
+                        height and weight in Vitals
+  
+ Problem:
+ --------
+ BCMA incorrectly rounds a patient's height down on the BCMA Virtual Due 
+ List (VDL) and on all patient specific report headers, and incorrectly
+ calculates a patient's Weight on patient specific report headers.
+  
+ Resolution:
+ -----------
+ Routines PSBRPC and PSBOHDR were modified to round a patient's height to 
+ the nearest centimeter for the BCMA VDL and patient specific report
+ headers, and to correctly calculate a patient's weight on BCMA patient
+ specific report headers.
+  
+  
+ 3. INC00000000728163 - Meds display as not due on MAH
+  
+ Problem:
+ --------
+ Orders with a start time exactly the same as the last scheduled
+ administration time of the day will display as not due in the BCMA MAH
+ report.
+  
+ Resolution:
+ -----------
+ Routine PSBOMH was modified to display any orders whose start time is less than
+ or equal to the day's last scheduled administration time.
+  
+ 4. INC00000000865087 - <UNDEFINED>FILEIT+10^PSBML *PSBHDR
+  
+ Problem:
+ --------
+ An undefined error occurs in BCMA when logging into a patient who has had 
+ a pain score entered in BCMA and then was marked "Entered in Error" in the
+ Vitals or Vitals Lite GUIs, and the site is using the Shared Broker 
+ Client last modified in 2012.
+  
+ Resolution:
+ -----------
+ Routine PSBRPC was modified to New the variable PSBHDR when calling
+ SCANPT^PSBRPC.
+  
+ 5. INC00000000967514 - BCMA2PCE Breaks with Clinic Orders
+  
+ Problem:
+ --------
+ Immunizations given as Clinic orders in BCMA are not recorded in the
+ V IMMUNIZATIONS (#9000010.11) file.
+  
+ Resolution:
+ -----------
+ Routines PSBPXFL and PSBPXLP were modified to record these outpatient
+ immunizations in the V IMMUNIZATIONS (#9000010.11) file.
+  
+ 6. INC00000001003352 - BCMA allows a partial scan of an SSN
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPB #2617
+  
+ Problem:
+ --------
+ BCMA accepts a partial scan of a patient's SSN when scanning a patient's
+ wristband.
+  
+ Resolution:
+ -----------
+ Routine PSBRPC was modified to only accept a full 9 digit SSN when scanning a
+ patient's wristband.
+  
+ NOTES:
+ ------
+    Routines APSPFUNC and BDGF2 called from PSBOHDR and PSBRPC are 
+    Indian Health Services only routines and will display as an XINDEX
+    error when installing this patch in VA Accounts.  This functionality
+    was introduced by patch PSB*3.0*42. This enhancement is intended to
+    enable the BCMA application to recognize whether it is operating in
+    the Indian Health Service (IHS) or Veterans Health Administration (VHA)
+    environment, and respond by recognizing and displaying the patient
+    identifier appropriate to the environment. This will enable a single
+    version of BCMA to be maintained by VHA and yet be installed and
+    operate in a "plug and play" fashion in an IHS or Tribal facility
+    running Resource and Patient Management System (RPMS).
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*76):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*76.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//" respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+   
+     Immunizations Documentation by BCMA Nightly Task [PSB PX BCMA2PCE TASK]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOHDR
+    Before: B71757590   After: B72570130  **5,13,42,74,70,76**
+Routine Name: PSBOMH
+    Before: B92472533   After: B93146324  **5,9,38,57,67,68,70,76**
+Routine Name: PSBOMM
+    Before:B142931678   After:B145771681  **26,32,56,52,58,70,76**
+Routine Name: PSBPXFL
+    Before:  B3537740   After:  B6217206  **47,76**
+Routine Name: PSBPXLP
+    Before:  B5503745   After:  B5753737  **47,76**
+Routine Name: PSBRPC
+    Before:B225560301   After:B227617470  **6,3,4,13,32,28,42,58,66,70,76**
+ 
+Routine list of preceding patches: 47, 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 14, 2014
+Completed By:                               Date Completed: NOV 20, 2014
+Released By :                               Date Released : DEC 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

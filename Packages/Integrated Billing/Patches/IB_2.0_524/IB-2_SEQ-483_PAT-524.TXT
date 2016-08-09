@@ -1,0 +1,215 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/23/14 at 13:46
+=============================================================================
+Run Date: OCT 31, 2014                     Designation: IB*2*524
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #483                      Status: Released
+                  Compliance Date: DEC 01, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*118    <<= must be installed BEFORE `IB*2*524'
+                    (v)IB*2*429    <<= must be installed BEFORE `IB*2*524'
+
+Subject: IB ACTION TYPE UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following two issues: 
+  
+ 1. Updates to the IB ACTION TYPE file (#350.1) and the IB ACTION CHARGE
+    file (#350.2).
+  
+ 2. The IBJD BILLING LAG TIME report showing the last patient with blank
+    information on the first page and the name then repeated on the top of
+    the next page with the associated claim activity data.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000983291 Menu Additions
+ 2. INC000000766238 Functionality Issue: spool device
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Altoona VAMC
+ Erie VAMC
+ Maryland HCS (Baltimore)
+ Salisbury - W. G. (Bill) Hefner VAMC
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000983291 Menu Additions
+  
+ Problem:
+ --------
+ The Chief Business Office (CBO) has requested a patch to add 3 actions for
+ the Fee Service INPT Per Diem type and 3 actions for the Fee Service NSC
+ RX Copay type to the IB Action Type file (#350.1). The billing rates for
+ those new action types will be added to the IB Action Charge file (#350.2)
+ as well.
+  
+ Resolution:
+ -----------
+ Post init routine IB20P524 uses the DG INPT PER DIEM type and the PSO NSC
+ RX COPAY type as the base to create these 6 new actions in the IB ACTION 
+ TYPE file (#350.1) and the associated billing rates with the effective
+ date of 03/12/2014 in the IB ACTION CHARGE file (#350.2) detailed below.
+  
+  IB action types in file (#350.1)
+  --------------------------------
+  FEE SERV INPT PER DIEM NEW
+  FEE SERV INPT PER DIEM CANCEL
+  FEE SERV INPT PER DIEM UPDATE
+  FEE SERV NSC RX COPAY NEW
+  FEE SERV NSC RX COPAY CANCEL
+  FEE SERV NSC RX UPDATE
+  
+  IB billing rates in file (#350.2)
+  ---------------------------------
+  the new FEE SERV INPT PER DIEM NEW rate of $10
+  the new FEE SERV NSC RX COPAY NEW rate of $8, additional amount of $1
+  the new FEE SERV NSC RX COPAY CANCEL rate of $8, additional amount of $1
+  the new FEE SERV NSC RX COPAY UPDATE rate of $8, additional amount of $1
+  
+ Routine IBEBR was also modified to add those new billing rate types:
+ FEE SERV INPT PER DIEM and FEE SERV NSC RX CO-PAY (RX1) to the selective
+ list in the ENTER/EDIT BILLING RATES [IB BILLING RATES FILE] option.
+  
+  
+ 2. INC000000766238 Functionality Issue: spool device
+  
+ Problem:
+ --------
+ When the BILLING LAG TIME REPORT [IBJD BILLING LAG TIME] option is run to
+ the screen or to the spooler, the last entry on the page contains only the
+ first two fields of the data (patient name and SSN). The top of the next
+ page repeats the patient's name and SSN followed by the remaining fields:
+ Bill #, Date of Care, Check Out, and Days.
+  
+ Resolution:
+ -----------
+ The software in routine IBJDB12 was modified to correct the display of the
+ associated claim activity data for the patient when it reaches end of 
+ page.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+    
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+   
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+    
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*524):
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+    
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+    
+ 5.   During install, verify that all entries were added successfully.
+      If an error is displayed, please file a Remedy Ticket. Example of
+      successful installation:
+  
+     IB*2*524 Post-Install .....
+  
+ >>> Adding new action type to IB Action Type file #350.1...
+  >> FEE SERV INPT PER DIEM NEW added
+  >> FEE SERV INPT PER DIEM CANCEL added
+  >> FEE SERV INPT PER DIEM UPDATE added
+  >> FEE SERV NSC RX COPAY NEW added
+  >> FEE SERV NSC RX COPAY CANCEL added
+  >> FEE SERV NSC RX COPAY UPDATE added
+  
+ >>> Adding new billing rate to IB Action Charge file #350.2...
+  >> The billing rate for FEE SERV INPT PER DIEM NEW added
+  >> The billing rate for FEE SERV NSC RX COPAY NEW added
+  >> The billing rate for FEE SERV NSC RX COPAY CANCEL added
+  >> The billing rate for FEE SERV NSC RX COPAY UPDATE added
+   
+     IB*2*524 Post-Install Complete
+  
+ 6.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P524.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 24
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P524
+    Before:       n/a   After: B26802086  **524**
+Routine Name: IBEBR
+    Before: B22111673   After: B23037770  **34,52,429,524**
+Routine Name: IBJDB12
+    Before: B47224040   After: B48647865  **69,100,118,524**
+ 
+Routine list of preceding patches: 118, 429
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 16, 2014
+Completed By:                               Date Completed: OCT 20, 2014
+Released By :                               Date Released : OCT 31, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

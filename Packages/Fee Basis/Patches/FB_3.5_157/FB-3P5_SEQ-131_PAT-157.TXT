@@ -1,0 +1,112 @@
+
+=============================================================================
+Run Date: FEB 25, 2015                     Designation: FB*3.5*157
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #131                    Status: Released
+                  Compliance Date: MAR 27, 2015
+=============================================================================
+
+
+Subject: MODIFY DIAGNOSIS STORAGE IN OPTION ENTER PAYMENT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+  This is a multi-package Kernel Installation and Distribution System
+  (KIDS) distribution consisting of the following three builds:
+     
+     Install
+     Order     Build          Subject                       Requires
+     -------   ----------     -------------------------     ------------
+        1      LEX*2.0*86     Data Dictionary/API Fixes     LEX*2.0*97
+        2      ICD*18.0*67    API Fixes                     ICD*18.0*64
+        3      FB*3.5*157     Modify Diagnosis Storage      FB*3.5*123
+          
+  Install Name:  LEX*2.0*86
+     
+     NOTE:  This message does not contain an installable KIDS build, nor
+            does it contain any routines or data.  The installable KIDS 
+            distribution is contained in KIDS hostfile LEX_2_86.KID and
+            can be obtained using the File Transfer Protocol (FTP) 
+            instructions and installation instructions found in the 
+            patch description for LEX*2.0*86.
+   
+     
+  ENHANCEMENTS:
+  ============ 
+   
+    Diagnosis entry fails in option Enter Payment for certain diagnosis 
+    codes and fails for all diagnosis codes where patches ICD*18*67 and
+    LEX*2.0*86 are installed (see Remedy Ticket 1085312).  
+           
+      Problem:
+           
+         Site could not enter ANY Primary Diagnosis codes in options 
+         ENTER PAYMENT (or editing a duplicate payment if found) after
+         patches ICD*18*67 and LEX*2.0*86 were installed. Also, before the
+         outside patches were installed there were about 90 diagnosis codes
+         that would store with the incorrect pointer to file ICD DIAGNOSIS
+         [#80].
+           
+      Resolution:
+           
+         Modify routines from a three slash (///) stuff to a four slash
+         stuff as the Diagnosis lookup processing returns the internal 
+         code of the diagnosis selected.  File FEE BASIS PAYMENT [#162],
+         field PRIMARY DIAGNOSIS [#28] is expecting the file 80 diagnosis
+         pointer to be updated with a four slash (////) stuff. 
+   
+    Routines
+    --------
+          
+      FB35157   New       Environment Check
+      FBAACO2   Changed   Modified DIE DR string to four slash (////) stuff
+      FBAACO3   Changed   Modified DIE DR string to four slash (////) stuff
+               
+              
+  REMEDY TICKETS:
+  ==============
+      
+    1085312 - Fee Basis Primary Diagnosis entry fails in option Enter Payment
+  
+  
+  INSTALLATION INSTRUCTIONS:
+  =========================
+   
+    Please refer to the patch description for LEX*2.0*86 for instructions 
+    for retrieving and installing this patch.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FB35157
+    Before:       n/a   After: B35702831  **157**
+Routine Name: FBAACO2
+    Before: B30248280   After: B31897549  **4,55,61,77,116,122,133,108,
+                                           135,139,123,157**
+Routine Name: FBAACO3
+    Before: B60345007   After: B62984303  **4,38,55,61,116,122,133,108,
+                                           124,143,139,157**
+ 
+Routine list of preceding patches: 123
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 25, 2014
+Completed By:                               Date Completed: FEB 19, 2015
+Released By :                               Date Released : FEB 25, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

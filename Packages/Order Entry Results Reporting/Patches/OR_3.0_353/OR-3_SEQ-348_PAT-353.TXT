@@ -1,0 +1,345 @@
+$TXT Created by                    DEVLEX.DOMAIN.EXT  (KIDS) on Thursday, 04/17/14 at 15:25
+=============================================================================
+Run Date: SEP 04, 2014                     Designation: OR*3*353
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #348                      Status: Released
+                  Compliance Date: OCT 30, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*80    <<= must be installed BEFORE `OR*3*353'
+                    (v)ICD*18*57   <<= must be installed BEFORE `OR*3*353'
+                    (v)OR*3*361    <<= must be installed BEFORE `OR*3*353'
+                    (v)OR*3*385    <<= must be installed BEFORE `OR*3*353'
+
+Subject: GROUP NOTES ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Other
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+  
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ This patch, in conjunction with GroupNotes.exe, is intended to:
+  
+ 1.  Provide the ability to search on ICD-10-CM diagnosis codes. The 
+     search function is performed on the Group Notes Encounter Form
+     screen and through the use of the 'Other Diagnosis' button.
+  
+ 2.  Provide the ability to add/edit/store active ICD-10 diagnosis 
+     codes (up to 8 alphanumeric characters including the decimal point
+     that follows the 3rd character) from the Group Notes encounter
+     form screen.
+  
+ 3.  If the user tries to select the inactive diagnosis from the 
+     Problem List, a warning shall display for inactive ICD-9-CM and
+     ICD-10-CM diagnosis.
+  
+ 4.  Provide the ability to update the current ICD-9-CM diagnosis code 
+     within the problem list items to an active ICD-10-CM diagnosis
+     code.
+  
+ 5.  Provide the ability to select and add an active ICD diagnosis on 
+     the Encounter Form Data screen via:
+       - The diagnosis "pick lists" in the Diagnosis Section or;
+       - By using the 'Other Diagnosis' selection button.
+  
+ 6.  Provide the ability to display ICD-10 diagnosis codes and 
+     descriptions within the Group Notes "Encounter Form" window.
+  
+ 7.  Provide an RPC to retrieve the activation date for any given 
+     coding system (ICD-9-CM, ICD-10-CM, etc.)
+  
+ 8.  In the Progress Notes screen of the Group Notes application, the 
+     ICD-9-CM and ICD-10-CM diagnosis codes and descriptions for
+     encounter(s) shall display as follows:
+       - Multiple patient selection:  
+         in the 'Encounter Data for all patients'
+         field, any ICD-9-CM and ICD-10-CM diagnostic 
+         code and descriptions that were entered for 
+         the group encounter shall display.
+       - Single patient selection:  
+         in the 'Encounter Data for XX patient' field,
+         any ICD-9-CM and ICD-10-CM diagnostic code 
+         and descriptions that were entered for that 
+         patient's encounter shall display.
+  
+ NOTE: Functionality specific to activation of the ICD-10 code set shall 
+ not be seen by end users until the code set has been activated.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)               New/Modified/Deleted
+ ------------------------------------------------------------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                  New/Modified/Deleted
+ ---------------                                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name               Type                     New/Modified/Deleted
+ -----------               ----                     --------------------
+ OR GN SET LOCATIONS       Broker (Client/Server)   Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)           New/Modified/Deleted
+ -------------      ----      ------------------      --------------------
+ N/A
+  
+ Additional Information:
+  
+  
+ Remote Procedure Call (RPC):
+  
+ RPC Name                                             New/Modified/Deleted
+ ---------------                                      --------------------
+ ORWGN IDTVALID                                       New
+ ORWGN MAXFRQ                                         New
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ John D. Dingell VA Medical Center, Detroit, MI
+ Orlando VA Medical Center, Orlando, FL
+ Battle Creek VA Medical Center, Battle Creek, MI
+ G.V. (Sonny) Montgomery VA Medical Center, Jackson, MS
+ Michael E. DeBakey VA Medical Center, Houston, TX
+ VA Eastern Colorado Health Care System, Denver, CO
+   
+  
+ Software and Documentation Retrieval Instructions:
+ --------------------------------------------------
+ This section contains the following software and documentation files that 
+ support the new functionality introduced by this patch, as well as, the 
+ last file which contains the Delphi source code, are exported as part of 
+ this patch:
+  
+ The preferred method is to FTP the files from
+  
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/application.asp?appid=142
+  
+ File Description                 File Name        
+ (FTP Mode)
+ -------------------------------------------------------------------------
+ Contains file(s) indented below  OR1_0p353_GUI.zip  
+ (Binary)
+                                                       
+ - Group Notes Executable         GroupNotes.EXE   
+  
+ - Group Notes Help File          CPRSGN.hlp
+  
+ Group Notes/Encounter 
+  Collection User Manual          gnum.pdf
+  
+ ICD-10 Release Notes (OR*3*353)  ICD-10_RN_OR_3_353.pdf
+  
+ Production Overview Guide        ICD-10_Prod_Overview_Guide_
+ (Binary)                         Groups_5_6_7.pdf 
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no pre installation routines.  Patch consists of a 
+ single routine with no file or template updates and one post install 
+ routine as documented in the Post Installation Instructions. The Windows
+ clients will need to install the Group Notes Executable listed in the
+ Software and Documentation Retrieval Instructions.
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system, although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 
+ minutes to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter the patch #
+     (OR*3.0*353):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter OR*3.0*353.
+  
+ 5.  When prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//, respond NO.
+  
+ 6.  When prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+     respond NO.
+  
+ 7.  When prompted Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, respond NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ The routine OR30353P is used to insure registration of the new Group
+ Notes RPC's introduced with this patch.  As the Menu Option that these 
+ RPC's are registered to (OR CPRS GUI CHART) belongs to the CPRS namespace 
+ there is a possibility that new patches released after this one might 
+ overwrite and remove these registrations.  In the event his happens the 
+ IRM can rerun this routine with a call to REG^OR30353P and it will fix the
+ registration problem without damaging the CPRS application. Please note
+ that OR*3.0*385 will NOT cause this issue.  If the site does not feel that
+ they need this capability then they may delete this routine using the
+ KERNEL option 'Delete Routines' [XTRDEL].
+  
+  
+ GUI Executable Installation Instructions
+ ----------------------------------------
+ The Group Notes GUI client software is being distributed as a Windows
+ installation package. Installation of the application is performed 
+ without user intervention by Windows administrator.
+  
+ If you need to install GUI manually please verify that workstation 
+ is configured for VistA GUI applications and you have enough privileges 
+ for installation (Any workstation configured for CPRS will run 
+ Group Notes)
+  
+ Manual installation steps:
+ 1. Copy the Group Notes executable (GroupNotes.exe) and the Group 
+    Notes help file (CPRSGN.hlp) to the machine's hard drive or to 
+    a server permanently connected to the machine.
+ 2. Create a shortcut for GroupNotes.exe. Alternatively you may add 
+    Group Notes to the Tools menu of CPRS.
+ 3. Make sure a properly configured HOSTS file is present on the 
+    machine.
+  
+ For details on setup of VistA user accounts please refer to the GUI
+ Implementation Guide (GNIM.pdf)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: OR30353P
+    Before:       n/a   After:  B2333047  **353**
+Routine Name: ORWGN
+    Before:  B1285558   After:  B3652539  **222,353**
+ 
+Routine list of preceding patches: 222
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 15, 2011
+Completed By:                               Date Completed: AUG 22, 2014
+Released By :                               Date Released : SEP 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

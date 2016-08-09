@@ -1,0 +1,205 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 04/07/16 at 14:43
+=============================================================================
+Run Date: JUN 15, 2016                     Designation: EC*2*129
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #123                      Status: Released
+                  Compliance Date: JUL 16, 2016
+=============================================================================
+
+Associated patches: (v)EC*2*110    <<= must be installed BEFORE `EC*2*129'
+                    (v)EC*2*126    <<= must be installed BEFORE `EC*2*129'
+
+Subject: INACTIVE ECS SELECTABLE, REMOVE FILES AND ECOB ERROR
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch addresses the following three (3) remedy issues:
+  1. <SYNTAX>GET+2^ECOB error.
+  2. Remove EVENT CAPTURE PROCEDURE File (#720) and EVENT CODE SCREENING 
+     File (#720.2) flagged for deletion in patch EC*2*5. 
+  3. An active DSS Unit with inactive Event Code Screens is presented as
+     selectable in ECS GUI data entry. 
+  
+            
+  
+ Associated Remedy Tickets:
+ ==========================
+    
+ 1. INC000000528014 - <SYNTAX>GET+2^ECOB error
+    Duplicates:
+    INC00000963472  - <SYNTAX>GET+2^ECOB
+    INC00000826945  - Event Capture - Receiving Report Error:
+    INC00000743849  - GET+2^ECOB
+    INC00000737743  - <SYNTAX>GET+2^ECOB
+    INC000001306078 - EC - Other:<SYNTAX>GET+2^ECOB
+  
+ 2. INC000000540311 - Remove Files #720 and #720.2 flagged by EC*2*5 for
+                      deletion.
+  
+ 3. INC000000764353 - DSS Unit with inactive Event Code Screens selectable
+      
+   
+ Associated NSR(s):
+ ==================
+ N/A                                                                         
+  
+  
+ Participating Test Sites:
+ =========================
+ Upstate New York HCS
+ Louisville VAMC
+ Huntington VAMC
+  
+  
+  
+ Remedy Ticket Overview:
+ =======================
+  
+ 1. INC528014 - <SYNTAX>GET+2^ECOB error
+  
+    Problem: 
+    --------
+    Site reported seeing the GET+2^ECOB error in the error trap sporadically 
+    several times during the day. Users at one site reported seeing the error
+    when the Event Capture GUI application is being closed. Typically, it's the
+    system folks that notice the errors and not the EC GUI users. Attempts
+    to duplicate the error have not been successful. The error occurs because 
+    the global node, ^XTMP("ECOBUF",DUZ,n) referred to as the handle is missing
+    when passed as an input parameter for a Remote Procedure Call (RPC).
+    This handle gets built by a previous RPC call. For example at a site,
+    one will notice the handle ^XTMP("ECOBUF",11111,1) missing but global
+    nodes ^XTMP("ECOBUF",11111,2), ^XTMP("ECOBUF",11111,3), etc. are
+    intact.
+  
+    Resolution:
+    -----------
+    Routines ECOB and ECOBU were modified to prevent the error from occurring.
+  
+  
+ 2. INC540311
+  
+    Problem: 
+    --------
+    Site has requested the removal of EVENT CAPTURE PROCEDURE File (#720) and
+    EVENT CODE SCREENING File (#720.2) flagged for deletion in patch EC*2*5.
+  
+    Resolution:
+    ----------- 
+    According to Event Capture Release Notes for EC*2*5, Files (#720) and
+    (#720.2) were flagged and would be deleted in a future patch. Routine 
+    EC2P129 will remove the files along with data and associated templates.
+  
+  
+ 3. INC764353 - DSS Unit with inactive Event Code Screens selectable
+                      
+    Problem: 
+    --------
+    Site reported that when an Event Capture location has an active DSS unit 
+    but the event code screen associated with that DSS unit are inactive,
+    then the DSS unit is presented as selectable in the ECS GUI patient
+    entry options.
+  
+    Resolution:
+    -----------
+    Modified routine UNTCHK^ECUERPC that is linked to RPC, EC GETUSRDSSUNIT.
+    This RPC returns a list of active DSS units based on a specified location 
+    and user. A check was added to determine the active status of Event Code 
+    Screens associated with a DSS Unit. If there are no active event code 
+    screens associated with a DSS Unit, then the DSS Unit is not returned
+    in the RPC list.
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, but it is recommended 
+ that it be queued to run after normal business hours.
+  
+ Install Time - less than 3 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+  
+ This patch will kill the unsubscripted globals ^ECP and ^ECK. On a Cache 
+ system, the prevention of unsubscripted global kills is a system wide 
+ setting that must be modified using the $ZU command. If unsubscripted global
+ kill is disabled, at the programmer prompt, issue the following command to 
+ enable unsubscripted global kills:
+  
+            >S X=$ZU(68,28,0)
+  
+   
+  1. Choose the PackMan message containing this patch and invoke the
+     INSTALL/CHECK MESSAGE PackMan option.
+  
+  2. From the Kernel Installation & Distribution System menu, select 
+     the Installation menu.  
+  
+  3. From this menu, you may select to use the following options: 
+     (when prompted for INSTALL NAME, enter EC*2.0*129)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       EC*2.0*129.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+  
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? NO//", respond NO.
+  
+  NOTE: After the patch is installed, delete the routine EC2P129 by using
+        Delete Routine [XTRDEL] option.
+  
+        On a Cache system, if the global protection was removed prior to 
+        installing the patch. This protection needs to be reinstated
+        using the $ZU command. At the programmer prompt, issue the following
+        command to disable unsubscripted global kills:
+  
+          >S X=$ZU(68,28,1)
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P129
+    Before:       n/a   After:  B1254538  **129**
+Routine Name: ECOB
+    Before: B22576998   After: B26321793  **100,107,110,129**
+Routine Name: ECOBU
+    Before:B159516513   After:B163524421  **100,129**
+Routine Name: ECUERPC
+    Before: B57953932   After: B62941200  **25,32,33,46,47,59,72,95,114,
+                                           126,129**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 13, 2015
+Completed By:                               Date Completed: JUN 09, 2016
+Released By :                               Date Released : JUN 15, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

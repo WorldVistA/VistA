@@ -1,0 +1,199 @@
+$TXT Created by          at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Friday, 11/07/14 at 16:45
+=============================================================================
+Run Date: JAN 05, 2015                     Designation: IB*2*532
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #487                      Status: Released
+                  Compliance Date: FEB 04, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*461    <<= must be installed BEFORE `IB*2*532'
+
+Subject: BILL TYPE DEFINITION CHANGE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses 2 issues. 
+    
+ 1. The first issue is about a new entry - LABORATORY SERVICES PROVIDED TO 
+    NON-PATIENTS added to the MCCR Utility file (#399.1) for UB-04 Bill 
+    Classification on the second digit type of bill.
+     
+ 2. The second issue concerns several misspellings in the display messages 
+    for the chiropractic-related dates and the statement covers dates in
+    the [IB EDIT BILLING INFO] Enter/Edit Billing Information option.
+    
+ ASSOCIATED REMEDY TICKET(S): 
+ ============================
+ 1. INC000001026311 Integrated Billing - Other
+ 2. INC000001041697 Integrated Billing - Other
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Tennessee Valley HCS (Nashville)
+ VA Maryland HCS (Perry Point)
+ VA Caribbean HCS (San Juan)
+  
+ Remedy Overview:
+ ================
+ 1. INC000001026311 Integrated Billing - Other
+  
+ Problem:
+ --------
+ The Chief Business Office has requested a new entry - LABORATORY SERVICES
+ PROVIDED TO NON-PATIENTS added to the MCCR Utility file (#399.1) for UB-04
+ Bill Classification that will replace the old bill classification 4-HUMANIT.
+ EMERG (OPT/ESRD) on the second digit type of bill.
+  
+ Solution:
+ ---------
+ A post-init routine was created to add a new entry to the MCCR Utility file 
+ for UB-04 Bill Classification as detailed below:
+  
+ UB-04 BILL CLASSIFICATION                         CODE  LOCATION OF CARE
+ ---------------------------------------------     ----  ----------------
+ LABORATORY SERVICES PROVIDED TO NON-PATIENTS       4         1,3
+  
+ The software was also modified to automatically set up the UB-04 bill 
+ classification to 4-LABORATORY SERVICES PROVIDED TO NON-PATIENTS
+ in the UB-04 BILL CLASSIFICATION field (#.25) of the BILL/CLAIMS file (#399)
+ when the bill is initial created and the BILLING EVENT INFORMATION SOURCE:
+ 4- HUMANITARIAN EMERGENCY (OPT./ESRD) is selected in the Enter/Edit Billing
+ Information [IB EDIT BILLING INFO] option.
+  
+ Routines: IB20P532, IBCU4
+  
+ 2. INC000001041697 Integrated Billing - Other
+  
+ Problem:
+ --------
+ The display messages for the chiropractic-related dates and the statement
+ covers dates contain several misspellings (for an example: Cannot proceed
+ the 'Start Date'!) and they can display in the [IB EDIT BILLING INFO]
+ Enter/Edit Billing Information option when the dates entered don't go
+ through the input transform checks successfully.  
+  
+ Solution:
+ ---------
+ The software was modified to correct the misspellings in the messages 
+ displayed for these fields: STATEMENT COVERS FROM (#151), STATEMENT COVERS
+ TO (#152), LAST XRAY DATE (#245), DATE OF INITIAL TREATMENT (#246) and
+ DATE OF ACUTE MANIFESTATION (#247) of the BILL/CLAIMS file (#399) if the
+ input transform checks are failed. The misspelling in the help prompt of
+ the LAST XRAY DATE (#245) field was corrected as well below.
+  
+                                        UP    SEND  DATA                USER
+                                        DATE  SEC.  COMES   SITE  RSLV  OVER
+ FILE #      FILE NAME                  DD    CODE  W/FILE  DATA  PTRS  RIDE
+ ---------------------------------------------------------------------------
+  
+ 399         BILL/CLAIMS                YES   NO    NO                  NO
+ Partial DD: subDD: 399    fld: 245
+  
+ Routine: IBCU4
+  
+     ==================== INSTALLATION INSTRUCTIONS ====================
+  It is recommended that this patch be installed outside of normal business
+  hours to avoid any complications resulting from users on the system.
+  Installation will take less than 2 minutes.
+  
+  1.   LOAD TRANSPORT GLOBAL:
+       ----------------------
+       Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.
+   
+  2.   START UP KIDS:
+       --------------
+       Start up the Kernel Installation and Distribution System Menu
+  
+       [XPD MAIN]: 
+    
+              Edits and Distribution ...  
+              Utilities ...  
+              Installation ...
+     
+       Select Kernel Installation & Distribution System Option: INStallation
+              Load a Distribution 
+              Print Transport Global 
+              Compare Transport Global to Current System 
+              Verify Checksums in Transport Global 
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution 
+              Backup a Transport Global 
+  
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE: When prompted for the INSTALL NAME, enter IB*2.0*532.
+  
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+  
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+  
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+    
+ 4.   Select Installation Option: Install Package(s)
+     
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+     
+ 5.   CLEAN UP POST-INIT ROUTINE:
+      ---------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P532.
+  
+ 6.   Example of successful installation.
+  
+      IB*2.0*532 Post-Install starts .....
+  
+ >>> Adding new UB-04 Bill Classification entries to MCCR Utility file (#399.1)
+     #4 LABORATORY SERVICES PROVIDED TO NON-PATIENTS added
+  
+     IB*2.0*532 Post-Install is complete.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 26
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P532
+    Before:       n/a   After:  B4848244  **532**
+Routine Name: IBCU4
+    Before: B24388158   After: B24318712  **109,122,137,245,349,371,399,
+                                           461,532**
+ 
+Routine list of preceding patches: 461
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 02, 2014
+Completed By:                               Date Completed: DEC 23, 2014
+Released By :                               Date Released : JAN 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

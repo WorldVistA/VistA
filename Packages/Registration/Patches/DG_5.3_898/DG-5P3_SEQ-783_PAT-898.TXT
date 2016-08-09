@@ -1,0 +1,186 @@
+$TXT Created by                    DEVESS.DOMAIN.EXT  (KIDS) on Thursday, 08/28/14 at 16:18
+=============================================================================
+Run Date: OCT 14, 2014                     Designation: DG*5.3*898
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #783                    Status: Released
+                  Compliance Date: OCT 21, 2014
+=============================================================================
+
+Associated patches: (v)DG*5.3*850  <<= must be installed BEFORE `DG*5.3*898'
+
+Subject:   PATCH FOR 601 DISCHARGE DATE
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ The purpose of this patch is to correct an issue with the exception 
+ handling in the DG PTF LOAD/EDIT 601 screen where the Procedure date is 
+ checked against the Discharge date.  This patch will not allow a 
+ procedure date past the discharge date to be entered.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)       New/Modified/Deleted
+ -------------          --------------       --------------------  
+ N/A
+  
+ Forms Associated:
+  
+ Form Name              File (#)              New/Modified/Deleted
+ ---------              --------              --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name     Type             New/Modified/Deleted
+ -----------     ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                    New/Modified/Deleted
+ -------------                    --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name    Type      File Name (#)    New/Modified/Deleted
+ -------------    ----      ------------     --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Pittsburgh HCS, Pittsburgh, PA
+ Coatesville VA Medical Center, Coatesville, PA
+ Boise VA Medical Center Boise, ID
+   
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ N/A
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch installs one routine, routine DGPTFM6, according to the 
+ Pre-Installation instructions. There are no Post-Installation 
+ instructions. 
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes
+ to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL, enter the patch #
+     (DG*5.3*898):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        back up any other changes such as DDs or templates.
+  
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DDs, templates, etc.).
+  
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter DG*5.3*898.
+  
+ 5.  If prompted Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//, respond NO.
+  
+ 6.  If prompted Want KIDS to INHIBIT LOGONs during the install? NO//,
+     respond NO.
+  
+ 7.  If prompted Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//, respond NO.
+  
+ 8.  If prompted Delay Install (Minutes):  (0 - 60): 0//, respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGPTFM6
+    Before: B27555849   After: B28907671  **164,510,729,850,898**
+ 
+Routine list of preceding patches: 850
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 28, 2014
+Completed By:                               Date Completed: OCT 03, 2014
+Released By :                               Date Released : OCT 14, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

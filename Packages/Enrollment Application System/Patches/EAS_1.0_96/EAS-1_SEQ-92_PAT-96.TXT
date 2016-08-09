@@ -1,0 +1,359 @@
+
+=============================================================================
+Run Date: JUL 09, 2014                     Designation: EAS*1*96
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #92                      Status: Released
+                  Compliance Date: AUG 09, 2014
+=============================================================================
+
+Associated patches: (v)EAS*1*71    <<= must be installed BEFORE `EAS*1*96'
+
+Subject: INACTIVATE HL7 MESSAGING WITH HEC LEGACY
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+    *************************************************************************
+    Note:  This patch is released in support of decommissioning the HEC
+           Legacy system.  EAS*1*96 is released along with IVM*2*156 (Income
+           Verification Match) in host file: EAS_1_P96.KID.
+     
+           It is imperative that these patches be installed no later than
+           the compliance date.  Your understanding and support is
+           appreciated.
+    *************************************************************************
+ 
+ 
+ The Enrollment System (ES) became the official System of Record on 
+ March 29, 2009. The Health Eligibility Center Legacy (HECL) system will 
+ be decommissioned shortly after all sites have installed this suite of patches.
+ This patch will inactivate the HL7 protocols utilized for messaging with the
+ HECL.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ ClearQuest entry: ESR_CodeCR8792 - VistA patch to inactivate HL7 messaging 
+ with HEC Legacy.  
+  
+   
+ TECHNICAL DESCRIPTION
+ =====================
+ The post-install process of this patch, EAS1096P, disables the appropriate
+ protocols to stop communication with HEC Legacy (HECL) when the patch
+ is installed.           
+  
+ Note: the "nnn" equates to the site's Station Number in the protocol
+ names below.
+  
+ PROTOCOL (File #101)
+  
+ 1)  The DISABLE (#2) field of the PROTOCOL (#101) file for the following 
+     protocols will be updated with the text "Disable VistA to HEC Messaging".
+  
+    File# 101 - PROTOCOL
+  
+         VAMC nnn ORU-Z04 SERVER H   
+         VAMC nnn ORU-Z04 SERVER V
+         VAMC nnn ORU-Z05 SERVER
+         VAMC nnn ORU-Z10 SERVER                                               
+         VAMC nnn ORU-Z11 SERVER                                                
+         VAMC nnn ORF-Z10 SERVER 
+         VAMC nnn ORF-Z11 SERVER
+         VAMC nnn QRY-Z07 SERVER
+         VAMC nnn MFN-ZEG SERVER  
+   
+ 2) Dual messaging which sends outbound messages to both HEC Legacy and
+    the ES system is modified. The following HEC Legacy subscriber
+    protocols are removed from the VAMC server protocols:
+  
+    File# 101 - PROTOCOL
+  
+         VAMC nnn ORU Z07 CLIENT  removed from VAMC nnn ORU-Z07 SERVER
+         VAMC nnn ORU Z09 CLIENT  removed from VAMC nnn ORU-Z09 SERVER
+         VAMC nnn ORF Z07 CLIENT  removed from VAMC nnn ORF-Z07 SERVER
+  
+ 3) The RESPONSE PROCESSING ROUTINE (#772) field on the following protocols is
+    changed from D ORF^IVMCM to D ORF^EASCM
+  
+        VAMC nnn QRY-Z10 SERVER
+        VAMC nnn QRY-Z11 SERVER 
+   
+ 4) An Error Message will be provided should any of the standard 
+    Protocols listed above be missing from the site. All available 
+    Protocols will be reset per the information above. 
+  
+ 
+ DATA DICTIONARY CHANGES
+ =======================
+ N/A 
+ 
+ Test Sites:
+ -----------
+ Chillicothe VAMC
+ VA New York Harbor HCS
+ VA Health Care Upstate New York
+ 
+  
+ 
+ SOFTWARE RETRIEVAL
+ ------------------
+ The software for this patch is not being distributed through the National
+ Patch Module. This patch is being distributed as a host file. The host
+ file will contain the following two KIDS builds:
+  
+              Host file name: EAS_1_P96.KID
+  
+                      Builds: EAS*1.0*96
+                              IVM*2.0*156
+  
+ Sites may retrieve the software directly using File Transfer Protocol
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field
+ Offices:
+  
+                   Albany   : ftp.domain.ext
+                   Hines    : ftp.domain.ext
+             Salt Lake City : ftp.domain.ext
+     First Available Server : download.vista.domain.ext
+   
+  The following file will be available:
+      File Name         Description
+      -------------     --------------
+      EAS_1_P96.KID     Host File containing KIDS software distribution
+   
+  Note:Use ASCII mode when transferring the .KID file.
+ 
+  
+ ********** P R E - I N S T A L L  I N S T R U C T I O N S ********
+  
+ This patch should NOT be installed while the IVM BACKGROUND JOB [IVM
+ BACKGROUND JOB] is running.  
+ 
+ 1) Stop all messaging background processes:
+ 
+    Example:
+    =======
+ 
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+ 
+    Select Filer and Link Management Options Option: SA  Stop All
+    Messaging Background Processes
+ 
+    Okay to shut down all Links and Filers? "YES"
+    Shutting down all Links and Filers...   
+ 
+ 2) Using the option Link Edit [HL EDIT LOGICAL LINKS] option, disable
+    AUTOSTART for the LLnnVISN link.
+ 
+ 
+    Example:
+    =======
+ 
+    Select Filer and Link Management Options  Option: ED  Link Edit
+  
+    Select HL LOGICAL LINK NODE: LLnnVISN  
+  
+                           HL7 LOGICAL LINK
+    -------------------------------------------------------------------------
+                 NODE: LLnnVISN                        DESCRIPTION:
+  
+             INSTITUTION:
+  
+          MAILMAN DOMAIN:
+  
+               AUTOSTART: Disabled    <<<< HERE >>>>
+  
+              QUEUE SIZE: 10    
+  
+                LLP TYPE: TCP                           
+  
+              DNS DOMAIN:
+  
+    -------------------------------------------------------------------------
+    Exit     Save     Refresh
+  
+    COMMAND: E                             Press <PF1>H for help   
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ This patch may be installed during normal working hours; This patch may be
+ run with users on the system.
+ 
+  
+ Install Time - less than 2 minutes
+  
+       
+ 1.  LOAD TRANSPORT GLOBAL 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 2.  START UP KIDS  
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+  
+   Select Kernel Installation & Distribution System Option: INStallation 
+                                                            --- 
+          Load a Distribution  
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+  
+  
+ 3.  Select Installation Option:  
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter EAS*1.0*96):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+  
+ 4.  Select Installation Option: Install Package(s)
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+   
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' take the default of NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu 
+         Options, and Protocols? NO//' take the default of NO
+                                          
+ 5.  You may delete the post-installation routine EAS1096P.
+ 
+ ********** P O S T - I N S T A L L  I N S T R U C T I O N S ********
+  
+ After installation, restart all Links and Filers.  Verify that the 
+ LLnnVISN link remains shutdown.
+  
+    Example:
+    ========
+ 
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+ 
+  
+ Select Filer and Link Management Options Option: RA 
+ Restart/Start All Links and Filers
+ 
+ Shutdown and restart ALL AUTOSTART links and filers. Okay? YES
+ Restarting all Autostart-Enabled Links and Filers...
+ 
+ Example:
+ =======
+ 
+    SM     Systems Link Monitor
+    FL     Monitor, Start, Stop Filers
+    LM     TCP Link Manager Start/Stop
+    SA     Stop All Messaging Background Processes
+    RA     Restart/Start All Links and Filers
+    DF     Default Filers Startup
+    SL     Start/Stop Links
+    PI     Ping (TCP Only)
+    ED     Link Edit
+    ER     Link Errors ...
+  
+ Select Filer and Link Management Options  Option: sm  Systems Link Monitor
+  
+           SYSTEM LINK MONITOR for XYZ VAMC (T System)
+             
+                 MESSAGES  MESSAGES   MESSAGES  MESSAGES  DEVICE  
+      NODE       RECEIVED  PROCESSED  TO SEND   SENT      TYPE     STATE   
+  
+     AMB-CARE                         17                   MM     Halting
+     BC KEVC     140       140        140       140        NC     Shutdown
+     EPI-LAB                          125                  MM     Halting
+     LA7UI1                           8                           Shutdown
+ >>  LLnnVISN                         846                NC       Shutdown 
+     LLESROUT                         362                  NC     Shutdown
+     MPIVA       386       386        389       388        NC     Shutdown
+     MPIVA DIR   29                             38         NC     Shutdown
+     NPTF                             130                  MM     Halting
+     PCMM                             1799140              MM     Halting
+  
+      Incoming filers running => 2            TaskMan running 
+      Outgoing filers running => 1            Link Manager running
+                                              Monitor CURRENT
+      Select a Command:
+  (N)EXT  (B)ACKUP  (A)LL LINKS  (S)CREENED  (V)IEWS  (Q)UIT  (?) HELP:  
+  
+ NOTE: The LLnnVISN link is in a SHUTDOWN state.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1071B
+    Before: B26013480   After: B28016852  **71,96**
+Routine Name: EAS1096P
+    Before:       n/a   After:  B5144422  **96**
+Routine Name: EASCM
+    Before: B80510854   After: B80540897  **71,96**
+ 
+Routine list of preceding patches: 71
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2009
+Completed By:                               Date Completed: JUL 09, 2014
+Released By :                               Date Released : JUL 09, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

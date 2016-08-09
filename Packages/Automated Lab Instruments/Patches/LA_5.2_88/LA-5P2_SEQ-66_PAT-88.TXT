@@ -1,0 +1,240 @@
+
+=============================================================================
+Run Date: AUG 01, 2016                     Designation: LA*5.2*88
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #66                    Status: Released
+                  Compliance Date: SEP 30, 2016
+=============================================================================
+
+Associated patches: (v)LA*5.2*80   <<= must be installed BEFORE `LA*5.2*88'
+                    (v)LA*5.2*84   <<= must be installed BEFORE `LA*5.2*88'
+                    (v)LA*5.2*85   <<= must be installed BEFORE `LA*5.2*88'
+
+Subject: AUTOVERIFY
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ The build for this patch is distributed as part of a multi-package build
+ that contains LR*5.2*458 and LA*5.2*88.  Initially developed at the 
+ Kansas City VAMC, it contains functionality to enable Auto Verification
+ and Auto Release of normal lab results. This new process involves
+ automatic review and release of test results based on a lab-established
+ set of boundaries, also referred as rules, rule sets, and algorithms.  Lab
+ results that are in a "normal" range, as pre-determined by the laboratory,
+ will transmit directly from the middleware to VistA lab files and on to
+ Computerized Patient Record System (CPRS) without the intermediate step of
+ requiring a lab technologist to manually review and sign off on these
+ normal lab results.  This process will eliminate the need for a qualified
+ technologist to manually approve all "normal" results before those results
+ are filed in VistA Lab files and available for clinicians to view in CPRS.
+  
+ Each VAMC site will determine which instruments will use this
+ functionality as it can be set up on an instrument by instrument basis.  
+ Essentially VistA Lab instruments are set up as either being available for
+ auto verification or not available for auto verification.  If an
+ instrument is set up for auto verification, then a lab result passing the
+ rule set will be filed by the middleware in VistA lab files and available
+ in CPRS and a lab result that cannot pass the rule set will be held in the
+ middleware system for review by a lab technologist.
+  
+ In support of this auto verification and auto release functionality, this 
+ patch will add two new application proxy users.  'LRLAB,AUTO RELEASE' is
+ used to indicate that the results in VistA Lab were released by an
+ automated Lab process without human interventions.  'LRLAB,AUTO VERIFY' is
+ used to indicate that the results were "approved" by an automated process
+ using a rules based system.
+  
+  
+ Patch Components 
+ ================
+  
+ Files & Fields Associated: 
+  
+ File Name (Number)       Field Name (Number)     New/Modified/Deleted 
+ ------------------       -------------------     --------------------
+ AUTO INSTRUMENT (#62.4)  AUTO RELEASE (#99)      New 
+  
+ LA7 MESSAGE LOG BULLETINS (#62.485) 
+  
+ The following are new entries in the file LA7 MESSAGE LOG BULLETINS
+ (#62.485):
+  
+ CODE: 301 TEXT: Msg #|1|, User |2| [DUZ: |3|] does not own the LRVERIFY
+ security key. Auto Release not allowed for accession UID |4|.
+     SEND ALERT: YES
+    
+ CODE: 302 TEXT: Msg #|1|, User |2| [DUZ: |3|] is not an active user on the
+ system. Auto Release not allowed for accession UID |4|.
+     SEND ALERT: YES
+              
+ CODE: 303 TEXT: Msg #|1|, No verifying user or application proxy found. 
+ Auto Release not allowed for accession UID |2|.
+     SEND ALERT: YES
+    
+ CODE: 304 TEXT: Msg #|1|, User |2| [DUZ: |3|] is not a valid user to 
+ verify results. Auto Release not allowed for accession UID |4|.
+     SEND ALERT: YES
+                 
+ CODE: 305 TEXT: Msg #|1|, User |2| [DUZ: |3|] is not allowed to verify. 
+ Only auto verification enabled for this instrument. Auto Release not
+ allowed for accession UID |4|.
+     SEND ALERT: YES
+  
+ CODE: 306 TEXT: Msg #|1|, User |2| [DUZ: |3|] is not allowed to verify. 
+ Only tech verification enabled for this instrument.  Auto Release not
+ allowed for accession UID |4|.
+     SEND ALERT: YES
+  
+ CODE: 307 TEXT: Msg #|1|, Auto Release not allowed for accession UID |2|.
+ Results have previously been released.
+     SEND ALERT: YES
+  
+ Parameter Definitions Associated: 
+  
+ Parameter Definition Name             New/Modified/Deleted 
+ -------------------------             --------------------
+ LA UI AUTO RELEASE MASTER             New
+ LA UI PROVIDER CONTACT INFO           New
+  
+ New Service Requests (NSRs): 
+ ==============================
+ NSR# 20131009: Employ laboratory autoverification in the Veterans Health 
+ Administration. 
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*88 does not contain
+ any changes to the VISTA BLOOD BANK Software as defined by ProPath standard
+ titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*88 does not alter
+ or modify any software design safeguards or safety critical elements
+ functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*88 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes made,
+ no specific validation requirements exist as a result of installation of this
+ patch.
+  
+  
+ Test Sites: 
+ ===========
+ Kansas City VAMC (Alpha) 
+ Tucson (Beta) 
+ Tampa (Beta) 
+ Iowa City (Beta) 
+ Fresno (Beta) 
+  
+  
+ Software and Documentation Retrieval Information 
+ ==============================
+  VistA Laboratory patch LR*5.2*458 software is distributed by Host File,
+ along with LA*5.2*88.  Software is available on the SOFTWARE.DIR directory
+ at one of the following Office of Information (OI) Field Offices.  The
+ preferred method is to retrieve the file using Secure File Transfer
+ Protocol (SFTP) from download.vista.domain.ext, which transmits files from
+ the first available SFTP server.
+         Albany                     ftp.domain.ext 
+         Hines                      ftp.domain.ext 
+         Salt Lake City             ftp.domain.ext 
+                                    
+ File Name                   Contents               Retrieval Format 
+ ------------------          --------------------   ----------------
+ LAB_AUTORELEASE_1_0.KID     Host File containing       ASCII 
+                             KIDS software distribution 
+  
+ LAB_AUTORELEASE_1_0_DOCS.ZIP, which contains both .pdf and .doc formatted 
+ file of the following documents:
+  
+ Lab AutoRelease 1.0 User Guide
+ Lab AutoRelease 1.0 Technical Manual     
+ Lab AutoRelease 1.0 Installation, Back Out, Rollback Guide           
+ Lab UI HL V1.6 Upgrade Interface Specifications Document
+  
+ The VistA Documentation Library (VDL ) web site will also contain the 
+ above referenced documents. This website is usually updated within 1-3
+ days of the patch release date. The VDL web address for Laboratory
+ Universal Interface user documentation is:
+ http://www.domain.ext/vdl/application.asp?appid=120
+  
+  
+ Installation Instructions 
+ =========================
+ This patch, LA*5.2*88, is part of a combined build for Laboratory 
+ Autoverification Enhancement patch.  
+  
+ This patch may be loaded with users on the system.  You may want to 
+ install it during non-peak hours.  Installation will take less than 
+ 10 minutes.
+  
+ Please refer to the Lab AutoRelease 1.0 Installation, Back Out, Rollback
+ Guide for comprehensive installation instructions and post installation
+ configuration.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27, 1994;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LA7UCFG
+    Before:  B4239468   After:B137316017  **66,88**
+Routine Name: LA7UCFG1
+    Before:       n/a   After: B29526912  **88**
+Routine Name: LA7UIO1
+    Before: B66837499   After: B75417661  **66,74,88**
+Routine Name: LA7UTILB
+    Before: B12063183   After: B23365722  **74,88**
+Routine Name: LA7VHL
+    Before: B32679919   After: B38289473  **27,46,62,64,67,74,88**
+Routine Name: LA7VHLU8
+    Before: B10483894   After: B60447079  **74,88**
+Routine Name: LA7VHLU9
+    Before: B19044226   After: B33364706  **68,74,88**
+Routine Name: LA7VIN
+    Before: B29668237   After: B31997123  **46,67,74,88**
+Routine Name: LA7VIN1
+    Before: B53484134   After: B65233143  **46,64,74,88**
+Routine Name: LA7VIN2
+    Before: B44814406   After: B46992282  **46,64,74,88**
+Routine Name: LA7VIN2A
+    Before: B32994528   After: B34119950  **74,88**
+Routine Name: LA7VIN4
+    Before: B77376354   After: B81803911  **46,64,67,66,74,85,88**
+Routine Name: LA7VIN4A
+    Before: B19473776   After: B23154184  **74,80,88**
+Routine Name: LA7VIN5
+    Before: B69080940   After: B85555425  **46,64,68,74,84,88**
+Routine Name: LA7VIN5A
+    Before: B32697215   After: B34608326  **46,64,67,72,66,74,88**
+Routine Name: LA7VORC
+    Before: B18625097   After: B22779822  **46,64,68,88**
+Routine Name: LA88
+    Before:       n/a   After: B37005513  **88**
+Routine Name: LA88A
+    Before:       n/a   After:B100793409  **88**
+ 
+Routine list of preceding patches: 80, 84, 85
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 29, 2015
+Completed By:                               Date Completed: JUL 28, 2016
+Released By :                               Date Released : AUG 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

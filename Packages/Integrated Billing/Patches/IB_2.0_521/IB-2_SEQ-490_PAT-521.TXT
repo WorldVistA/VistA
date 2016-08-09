@@ -1,0 +1,234 @@
+
+=============================================================================
+Run Date: FEB 09, 2015                     Designation: IB*2*521
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #490                      Status: Released
+                  Compliance Date: MAR 11, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*400    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*416    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*431    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*488    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*494    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*497    <<= must be installed BEFORE `IB*2*521'
+                    (v)IB*2*519    <<= must be installed BEFORE `IB*2*521'
+
+Subject: HEALTH PLAN IDENTIFIER (HPID) IMPLEMENTATION BUILD 2
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+  The Health Plan Identifier (HPID) project implements a new national
+  standard of having a single identifier to use on electronic transmissions
+  pertaining to health care. All entities that are financially responsible
+  for care are assigned a HPID or Other Entity Identifier (OEID), used for
+  entities that aren't traditional health plans. This new standard 
+  increases interoperability by replacing clearinghouse-specific
+  identifiers for health plans.
+    
+  This patch builds on the Integrated Billing (IB) HPID Build 1 patch 
+  (IB*2.0*519) to enable it to:
+    Provide the ability to transmit and receive HPID/OEID in applicable  
+     electronic data interchange (EDI) transactions. 
+    Include the HPID/OEID for eBilling, eInsurance and ePharmacy on 
+     selected screens and reports. 
+   
+  Below is a list of all the applications involved in this project along 
+  with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*521
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1.0*18
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*302
+   
+  The patches (IB*2.0*521, BPS*1.0*18 and PRCA*4.5*302) are being released 
+  in the Kernel Installation and Distribution System (KIDS) multi-build 
+  distribution as BPS IB PRCA HPID BUNDLE 2.0. 
+   
+  Patch Components
+  ================
+    
+   Files & Fields Associated:
+    
+   File Name (Number)                Field Name (Number)     New/Mod/Del
+   ------------------                -------------------     -----------
+   
+   INSURANCE COMPANY (#36)           HPID/OEID (#8.01)          MOD
+                                     NIF ID    (#8.04)          MOD
+   
+   EXPLANATION OF BENEFITS (#361.1)  HPID/OEID (#2.06)          NEW
+   
+   
+   Forms Associated:
+    
+   Form Name             File #       New/Modified/Deleted
+   ---------             ------       --------------------
+   N/A
+      
+   Mail Groups Associated:
+    
+   Mail Group Name          New/Modified/Deleted
+   ---------------          --------------------
+   N/A
+      
+   Options Associated:
+         
+   Option Name                    Type             New/Modified/Deleted
+   -----------                    -----------      ------------------------
+   N/A
+    
+   Protocols Associated:
+    
+   Protocol Name                  New/Modified/Deleted
+   -------------                  -------------------- 
+   N/A
+      
+   Security Keys Associated:
+    
+   Security Key Name
+   -----------------
+   N/A
+    
+    
+   Templates Associated:
+   
+   
+   Template Name                   Type      File Name (Number) New/Mod/Del
+   -------------                   ----      ------------------ -----------
+   N/A
+  
+   Remote Procedure                          New/Mod/Del
+   -------------                             -----------
+   N/A  
+   
+   Additional Information:
+   N/A
+    
+    
+   New Service Requests (NSRs):
+   -----------------------------
+   NSR - Request ID: 20110503 Electronic Data Interchange (EDI) New 
+         Standards and Operating Rules (Veterans Health Administration)
+         VHA Provider-Side TCRs  05/19/2011 
+         http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503
+    
+    
+   Patient Safety Issues (PSIs):
+   ------------------------------
+   N/A
+    
+   Remedy Ticket(s) & Overviews:
+   -----------------------------
+   N/A
+    
+   Test Sites:
+   -----------
+   White River Junction, VT
+   Houston, TX
+   Walla Walla, WA
+   Tampa, FL
+  
+  
+   Documentation Retrieval Instructions:
+   -------------------------------------
+   Updated documentation describing the new functionality introduced by
+   this patch is available using the File Transfer Protocol (FTP).
+  
+   The preferred method is to FTP the files from 
+   ftp://download.vista.domain.ext/. This transmits the files from the
+   first available FTP server. Sites may also elect to retrieve software
+   directly from a specific server as follows:
+  
+    Albany         ftp.domain.ext  
+ <ftp://ftp.domain.ext>
+    Hines          ftp.domain.ext   
+ <ftp://ftp.domain.ext>
+    Salt Lake City ftp.domain.ext     
+ <ftp://ftp.domain.ext>
+  
+  
+   The documentation will be in the form of Adobe Acrobat files.
+  
+   Documentation can also be found on the VA Software Documentation 
+   Library at: http://www4.domain.ext/vdl/
+  
+   File Description                        File Name               FTP Mode
+   -------------------------------------------------------------------------
+   Release Notes/Installation Guide        ib_2_0_p521_rn.pdf        Binary
+   IB User Manual                          ib_2_0_um_r0115.pdf       Binary
+   eIV User Guide                          ib_2_0_eiv_ug_r0115.pdf   Binary  
+   EDI User Guide                          edi_user_guide_r0115.pdf  Binary
+   
+   
+   Patch Installation: 
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   The components sent with this patch IB*2.0*521 have been included in the 
+   HOST File BPS_IB_PRCA_HPID_BUNDLE_2_0.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch BPS*1.0*18.
+   
+   
+   Installation Instructions
+   -------------------------
+   The components sent with this patch IB*2.0*521 have been included in the 
+   HOST File BPS_IB_PRCA_HPID_BUNDLE_2_0.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch BPS*1.0*18.
+   
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 33
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCEOB00
+    Before: B89820593   After: B90317109  **155,349,377,431,488,521**
+Routine Name: IBCNERPD
+    Before: B44163811   After: B67426555  **184,252,416,521**
+Routine Name: IBCNERPE
+    Before: B70614398   After: B71200892  **271,300,416,438,497,506,519,521**
+Routine Name: IBCNHHLO
+    Before: B10205311   After: B11459482  **519,521**
+Routine Name: IBCNHUT1
+    Before: B19672959   After: B19687028  **519,521**
+Routine Name: IBCNSGE
+    Before: B96506496   After:B103633903  **296,400,521**
+Routine Name: IBJTCA1
+    Before: B52135617   After: B54215341  **39,80,106,137,223,276,363,
+                                           384,432,452,473,497,521**
+Routine Name: IBJTRX
+    Before: B80926965   After: B86052927  **435,452,494,521**
+Routine Name: IBNCPEV
+    Before: B94277434   After: B97561964  **342,363,383,384,411,435,452,521**
+Routine Name: IBY521PO
+    Before:       n/a   After:   B792423  **521**
+Routine Name: IBY521PR
+    Before:       n/a   After:   B793833  **521**
+ 
+Routine list of preceding patches: 400, 488, 494, 519
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 04, 2014
+Completed By:                               Date Completed: JAN 16, 2015
+Released By :                               Date Released : FEB 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

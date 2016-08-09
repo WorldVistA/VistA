@@ -1,0 +1,302 @@
+
+=============================================================================
+Run Date: SEP 24, 2015                     Designation: WEBB*1*5
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: OCT 25, 2015
+=============================================================================
+
+
+Subject: BED MANAGEMENT SOLUTION 1.5
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Subject:  BED MANAGEMENT SOLUTION VERSION 1.5
+ 
+ Category:  INFORMATIONAL
+ 
+ Description:
+ ===========
+  
+ This patch announces the National Release of Bed Management Solutions 
+ (BMS) version 1.5. No additional action is necessary for sites except to
+ communicate the below modifications of BMS v1.5 to users.  This new BMS
+ 1.5 version addresses defects and there are no new enhancements.
+  
+ This build corrects seven issues within the BMS application:
+  
+ 1) Resolve defect on the Patient Movement Report by Date where it doesn't
+    contain all of the correct movements.
+ 
+ 2) Resolve a defect on the National level Icon Report, so it doesn't
+    run by default for all of the sites.
+  
+ 3) Resolve a defect on the Scheduled Admission by Date report, which 
+    currently displays the patient's full SSN under the Patient Name
+    column.  
+    
+ 4) Resolve a defect on the Scheduled Admissions (next 7 days) report, 
+    which currently displays the patient's full SSN under the Patient 
+    Name column.  
+ 
+ 5) Resolve a defect where the ampersand "&" symbol causes an unhandled
+    Exception error in BMS.
+ 
+ 6) Resolve a defect where BMS contingency reports won't be saved to the
+    Contingency folder when the BMS Ward name includes one of the 
+    following special characters: (/\:*?"<>|)
+ 
+ 7) Resolve issues associated with user login by providing a link to the
+    BMS Point of Contact (POC) list for first line assistance and 
+    verification of access. 
+ 
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+  
+ 1) Remedy Incident # INC000001084183:  When running the Patient Movement 
+    by Date Report and selecting a date range, movements updated in VistA 
+    outside of  the date range do not appear in the report. When running 
+    reports for a specified timeframe, movements edited later (represented 
+    by the "Entered D/T" column in BMS) do not show up, unless the date 
+    of the movement report is extended to include the date the movement 
+    was modified. Also, Specialty Transfers are not properly filtered.
+  
+ 2) Remedy Incident #INC000001256965:  Fix parameters for the Icon 
+    Report so it doesn't run by default for all of the sites.  
+ 
+ 3) Remedy Incident # INC000001233670:  The "scheduled admissions by 
+    date" report displays the patient's FULL SSN under the "Patient Name" 
+    column (not the patient's name). The BMS user manual says the 
+    patient's name should be displayed. Determined the correct format 
+    should be "LastName (L1234)".
+  
+ 4) Remedy Incident #INC000001233683: The scheduled admissions (next 7 
+    days) report displays the patient's FULL SSN under the "Patient Name" 
+    column. The BMS user manual says the first letter of the patient's 
+    last name and the last 4 of the SSN should be displayed. Determined 
+    the correct format should be "LastName (L1234)".
+ 
+ 5) Remedy Incident #INC000001259968: Fix ampersand "&" issue which 
+    causes unhandled exception error in 2 areas of BMS.
+ 
+ 6) Remedy Incident #INC000001259975: Fix Contingency Report issue: 
+    When a BMS Ward Name contains the following special characters 
+    (/\:*?"<>|), the contingency report for that ward doesn't get 
+    created.  
+ 
+ 
+ 7) Remedy Incident #INC000001288554: Need link below on sign in page, 
+    with text If you are having issues logging into the BMS application 
+    please click link and find your POC at your site. Contact them for
+    assistance. 
+ 
+ 
+  
+ ASSOCIATED NSR(s):
+ ==================
+    N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+    North Texas HCS
+    Indianapolis
+    NY Harbor   
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1) Incident # INC000001084183:  When running the Patient Movement by
+    Date Report and selecting a date range, movements updated in VistA 
+    outside of  the date range do not appear in the report.  
+    
+    Problem:
+    ========
+    The Patient Movement by Date report is using the "entered date and
+    time" field to determine the Admissions, Discharges and Transfers 
+    to display in the report, instead of the "movement date and time". 
+    This causes movements entered outside the timeframe selected not 
+    To show up in the report, even if the movements are inside the 
+    Selected timeframe.  Also the Specialty transfers are not currently
+    being filtered for the end date, so the end date for Specialty
+    Transfers is always the current date/time. 
+    
+    Solution:
+    =========
+    This release will apply fixes to the report parameters to use the
+    "movement date and time" instead of "entered date and time" for
+    filtering Admissions, Discharges and Transfers. The Specialty 
+    Transfers will be filtered the same. 
+  
+ 2) Incident #INC000001256965:  Fix parameters for the Icon Report
+    so it doesn't run by default for all of the sites. 
+ 
+    Problem:
+    ========
+    Currently, when users with BMS National privileges select the 
+    "Report" button from the Administration page / Add/Edit Icon page 
+    in BMS, the Icon report runs by default for all of the facilities;  
+    therefore, it is possible for a Nationa user to inadvertently run 
+    an Icon Report for all of the facilities. Running this large report 
+    during peak hours could cause an impact BMS system performance, or 
+    even potentially cause the server to go down.  
+    
+    Solution:
+    =========
+    Default the Facility to be blank (no facilities selected), so 
+    the National user has to manually select the facilities. When the
+    "Report" button from the Administration page / Add/Edit Icon page is   
+    selected, the report parameters are displayed and the user must select 
+    the facilities for which they want to run the report, or select the
+    "(select all)" checkbox to run the report.
+ 
+ 3) Incident # INC000001233670:  The "scheduled admissions by date
+    report displays the patient's FULL SSN under the "Patient Name" 
+    column, not the patient's name. 
+  
+    Problem:
+    ========
+    The BMS user manual and the report itself says the patient's name 
+    should be displayed, but the full SSN is displayed instead.
+    Privacy also dictates the use of full SSN should be limited. 
+   
+    Solution:
+    =========
+    This release will implement a change in the report parameters to
+    display the patient's name in the following format: 
+    LastName (L1234). Corresponding changes to the user guide will 
+    be made.
+ 
+  
+ 4) Incident #INC000001233683: The scheduled admissions (next 7 days)
+    report displays the patient's FULL SSN under the "Patient Name" 
+    column.  
+  
+    Problem:
+    ========
+    The BMS user manual and the report itself says the patient's name 
+    should be displayed, but the full SSN is displayed instead.
+    Privacy also dictates the use of full SSN should be limited. 
+   
+    Solution:
+    =========
+    This release will implement a change in the report parameters to
+    display the patient's name in the following format: 
+    LastName (L1234). Corresponding changes to the user guide will 
+    be made.
+  
+ 5) Incident #INC000001259968: Fix ampersand "&" issue which 
+    causes unhandled exception error in 2 areas of BMS.
+  
+    Problem:
+    ========
+    Currently, when an ampersand "&" is  used in a Facility Name 
+    or in a VistA Ward Name, BMS may display an unhandled exception 
+    error for certain transactions.  
+       - When "&" is used in the Facility Name and a Bed Summary Report 
+         is run from the VISN page, an unhandled exception error occurs. 
+       - when trying to delete a BMS ward where there is an association 
+         to a VistA Ward with an "&" in the name, an unhandled exception 
+         error occurs.   
+    
+    Solution:
+    =========
+    Implement a code fix to handle the ampersand "&" correctly without 
+    causing an unhandled exception error. 
+ 
+ 6) Incident #INC000001259975: Fix Contingency Report issue: 
+    When a BMS Ward Name contains the following special characters 
+    (/\:*?"<>|), the contingency report for that ward doesn't get 
+    created.  
+ 
+    Problem:
+    ========
+    The BMS Contingency Settings page allows the user to set up network
+    storage area to backup an image of the current Ward Whiteboard for 
+    BMS contingency planning. When performing this action, a list of 
+    wards defined for the current facility is displayed and the user 
+    enters a valid network share path for the Whiteboard Report to be 
+    saved. Currently, if the BMS Ward contains any of the following 
+    special characters: (/\:*?"<>|) the report is not saved, because 
+    windows doesn't recognize the special characters, so doesn't save 
+    the report.   
+    
+    Solution:
+    =========
+    Special characters will be replaced with an "_" for contingency 
+    reporting purposes, so the reports are saved. Modifications to 
+    the user guide will indicate this change.
+ 
+ 7) Incident #INC000001288554: Need link below on sign in page, 
+    with text If you are having issues logging into the BMS application 
+    please click link and find your POC at your site. Contact them for
+    assistance. 
+ 
+    Problem:
+    ========
+    Currently, when hospital staff try to log into BMS and receive an 
+    error, they contact the National Service Desk (NSD) for assistance. 
+    This may not be necessary in cases where they have not been provided 
+    with access to BMS. In many cases it's best to start dialog with their 
+    supervisor or BMS site coordinator to request or verify their access
+    before contacting NSD.   
+    
+    Solution:
+    =========
+    Add a link on the login page to the BMS Points of Contact (POCs) 
+    advising users to contact their site POC if they are having issues
+    accessing BMS.  The BMS POCs will verify their access and ensure users 
+    have the proper privileges before routing to NSD.
+ 
+ 
+ 
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    N/A
+  
+ 
+ IMPLEMENTATION:
+ ===============
+   The BMS application is a centrally managed web-based application hosted 
+   at AITC. BMS version 1.5 will be loaded into BMS Production account by 
+   AITC staff.  No software will be installed at the facilities.
+  
+ 
+ Reporting Problems:
+ ===================
+   If there are problems associated with the BMS application they should be
+   reported via Remedy by contacting the National Service Desk (NSD) 
+   1-888-596-4357 for assistance.
+  
+ 
+ DOCUMENTATION INFORMATION:
+ ==========================
+   The BMS User Guide and BMS Technical Manual are being updated in 
+   Conjunction with this release.
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 10, 2015
+Completed By:                               Date Completed: AUG 31, 2015
+Released By :                               Date Released : SEP 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

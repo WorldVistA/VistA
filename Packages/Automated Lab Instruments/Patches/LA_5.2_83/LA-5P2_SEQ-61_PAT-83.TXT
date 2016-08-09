@@ -1,0 +1,155 @@
+$TXT Created by               SCOTT at MNTVUU.DOMAIN.EXT  (KIDS) on Wednesday, 03/05/14 at 17:22
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: LA*5.2*83
+Package : LA - AUTOMATED LAB INSTRUMENTS      Priority: Mandatory
+Version : 5.2        SEQ #61                    Status: Released
+                  Compliance Date: JUL 18, 2014
+=============================================================================
+
+Associated patches: (v)LA*5.2*40   <<= must be installed BEFORE `LA*5.2*83'
+                    (v)LA*5.2*81   <<= must be installed BEFORE `LA*5.2*83'
+
+Subject: SUBSCRIPT ERROR LRMIEDZ
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch modifies code in the VITEK LITERAL routine LAMIVTL4 that uses 
+ improper subscripting in a $ORDER function causing a Subscript Error.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*83 does not
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LA*5.2*83 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LA*5.2*83 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated Remedy Tickets:
+ ==========================
+ INC000000965986 - LRMIEDZ Subscript Error
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ VA Heartland East (Marion, IL.)
+ VA Hudson HCS
+ Salisbury VAMC
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000000965986 - LRMIEDZ Subscript Error
+   
+ Problem:
+ --------
+ The VITEK LITERAL routine LAMIVTL4 incorrectly sets the variable LRTS to 
+ null at INIT+1. Later, the routine calls UNDO^LRMIEDZ where the variable
+ is used to access the ACCESSION FILE (#68).  The null value causes a 
+ Subscript Error and knocks the user out of VistA.
+   
+ Resolution:
+ -----------
+ The patch modifies LAMIVTL4 in two (2) places:
+  
+    1. An erroneous subscript is removed from the reference to ^LRO(68,...)
+       at INIT+1. The extra subscript caused the returned value of a $ORDER
+       to be null.
+  
+    2. A new line of code is added after VER1+2. The added line tests the
+       value of LRTS and assures that it is non-null prior to the call to 
+       ^LRMIEDZ.
+  
+       Routine: LAMIVTL4
+   
+    ==================== Installation Instructions ====================
+  
+    This patch may be loaded with users on the system. You may wish to 
+    install it during non-peak hours.  Installation will take less than 1 
+    minute. It is recommended to disable the VITEK LITERAL [LA VITEK 
+    LITERAL] option at the "DISABLE Scheduled Options, Menu Options, and
+    Protocols?" prompt.
+  
+    NOTE: Kernel patches must be current on the target system to avoid 
+    problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LA*5.2*83.
+  
+       When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+  
+       When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond YES.
+                
+       a. When prompted "Enter options you wish to mark as 'Out of 
+          Order':", enter the following option:
+  
+          VITEK LITERAL          [LA VITEK LITERAL]
+  
+       b. When prompted "Enter protocols you wish to mark as 'Out of
+          Order':", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;AUTOMATED LAB INSTRUMENTS;**[Patch List]**;Sep 27,1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LAMIVTL4
+    Before: B21256729   After: B21673826  **12,31,40,83**
+ 
+Routine list of preceding patches: 40
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 10, 2014
+Completed By:                               Date Completed: JUN 12, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

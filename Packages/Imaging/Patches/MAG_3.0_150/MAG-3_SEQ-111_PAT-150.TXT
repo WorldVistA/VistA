@@ -1,0 +1,436 @@
+
+=============================================================================
+Run Date: APR 09, 2015                     Designation: MAG*3*150
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #111                      Status: Released
+                  Compliance Date: MAY 10, 2015
+=============================================================================
+
+Associated patches: (v)MAG*3*118   <<= must be installed BEFORE `MAG*3*150'
+
+Subject: Image Never Existed
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This document describes MAG*3.0*150, the patch that resolves the Image Never
+ Existed issue that occurs when deleting IMAGE File (#2005) entries.
+    
+ This patch is not compatible with MAG*3.0*138 and should not be installed 
+ at sites running MAG*3.0*138.  The features and fixes of MAG*3.0*150 are 
+ summarized below:
+    
+ Distribution of Software:
+ =========================
+ To obtain MAG*3.0*150 files after testing, use FTP to retrieve 
+ MAG3_0P150.KID and other files from one of the following OI Field Offices' 
+ ANONYMOUS.SOFTWARE directories:
+    
+ OI Field Office          FTP Address                    Directory
+ Albany                   ftp.fo-albany.med.va.gov       anonymous.software
+ Hines                    ftp.fo-hines.med.va.gov        anonymous.software
+ Salt Lake City           ftp.fo-slc.med.va.gov          anonymous.software
+    
+ The following Kernel Installation and Distribution System (KIDS) build was 
+ edited in the development of this patch.
+    
+ File Name                Description
+ MAG3_0P150.KID                KIDS build for patch MAG*3.0*150
+    
+ NOTE: Any late-breaking news about this patch will be found in a readme file.
+   
+ Patch Contents:
+ ===============
+ This patch includes the following files: 
+    
+ Software:
+ *        MAG3_0P150.KID - KIDS (Kernel Installation and Distribution System) 
+ package to be installed on the VistA or RPMS System.
+    
+ Documentation: 
+    
+ This document, MAG3_0P150_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch. 
+    
+ Associated Patches:
+ ===================
+ This patch must be installed after MAG*3.0*118.
+    
+ Test Sites:
+ ===========
+ The following sites are test sites for this patch:
+ *        Salem, Virginia (large)
+ *        Salt Lake City, Utah (large)
+    
+ Remedy Calls:
+    
+ =============
+ The following Remedy help desk calls are addressed in this patch:
+ Image Never Existed:
+ *        INC000000944269- 0KB file size "Image Never Existed" issue
+ *        INC000000992143- "Image Never Existed" issue
+    
+ NSRs
+ There are no new service requests addressed in this patch.
+    
+ Patient Safety Issues
+ There are no patient safety issues associated with this patch. 
+    
+    
+    
+ Patch MAG*3.0*150 Changes:
+ ==========================
+ Image Never Existed Summary:
+    
+ When an image is deleted, two main processes occur:
+ 1)        Queues are created for the Background Processor (BP) to copy the
+           images from Tier 2 (Image Share) to Tier 3 storage (JukeBox)
+           and the images are deleted from the Tier 2 storage.
+    
+ 2)        The image entry is copied to the IMAGE AUDIT File (#2005.1) and
+           is deleted from the IMAGE File (#2005).  
+    
+ Issue Summary:
+    
+ In the Imaging Display client, the Image List window displays a list of images
+ for a patient and each list entry shows the status of the image.  The issue
+ dealt with in this patch is when the image shows a status of "Deleted Image"
+ when the image never existed. This status implies that there was once an image
+ that has since been deleted.  This gives the user the incorrect assumption 
+ that an image did exist at one time, when in fact, it never did.  
+    
+ Solution:
+    
+ When an Image Never Existed situation occurs on the Import API and Clinical 
+ Capture workstation, a NOIMAGE flag is included in the Remote Procedure Call
+ to delete an image. 
+    
+ Previous to the patch, the Delete function ignored this flag.  Changes in 
+ MAG*3.0*150 have been made to handle the NOIMAGE flag.
+    
+ Background Processor: 
+    
+ When the NOIMAGE flag is detected, the Delete function will clear the pointers
+ to Tier 2 storage before copying the image entry to the IMAGE AUDIT File
+ (#2005.1), and the Delete function will not set a Delete Queue for this image.
+    
+ These two changes will stop the errors from occurring in the BP, because no 
+ Delete Queue will have been created. 
+   
+ Image Display: 
+   
+ The Delete function will also set the status of the image to "Image Never
+ Existed."  When the Image List window processes a list of patient images, it
+ will ignore any image entry with a status of "Image Never Existed."
+ Consequently, the user will not have a false impression that there ever was
+ an image. 
+   
+ VistA System Changes:
+ =====================
+   
+ Routines
+ This section lists new and modified routines for the VistA System.  For each
+ routine, the second line will contain the following information:
+ *        ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 17;Oct 27, 2014
+   
+ *        CHECK1^XTSUMBLD is used to generate the checksums.
+ Please note that the "before" checksum may differ if any test software has been 
+ installed.
+   
+ Routine      Checksum Before  Checksum After   Patch List
+ MAGGI12      97013744         101869499        **93, 94, 122, 150**
+ MAGGTAU      66867957         66990261         **7, 16, 8, 59, 93, 150**
+ MAGGTID      64976541         85911502         **8, 59, 93, 118, 150**
+ MAGGTIG      59987290         61207085         **8, 48, 93, 117**
+ MAGIP150     NEW              4214952          **150**
+ MAGLOG       12733539         12957603         **17, 8, 20, 59, 83, 39, 150**
+ MAGSIXG      380973956        84985360         **93, 117, 150**
+    
+ Routine MAGIP150 is a post-install routine and is deleted after the KIDS
+ install.
+   
+   
+ Data Dictionary
+ This patch does not modify any files or fields. 
+   
+ Mail Groups
+ This patch contains no new or modified mail groups.
+   
+ Forms
+ This patch contains no new or modified forms.
+   
+ Security Keys
+ This patch contains no new or modified security keys.
+   
+ Remote Procedures
+ This patch contains no new remote procedure calls.
+   
+ Menu Options
+ This patch contains no new menu options.
+   
+ Protocols
+ This patch contains no new or modified protocols.
+   
+ Templates
+ This patch contains no new or modified templates.
+   
+   
+ Installation:
+ =============
+   
+ Installation Planning:
+   
+ MAG*3.0*150 is to be installed on the VistA System.  This patch must be 
+ installed by the compliance date to conform to the VHA Directive 2001-023.
+ This patch may be loaded while VistA Imaging System is active. Installation for 
+ the KIDS will take less than one minute. 
+   
+ Installation Prerequisites:
+ Before installing this patch, you will need to download the MAG*3.0*150 files 
+ from one of the OI Field Offices FTP servers. Verify that the patches listed
+ in the section Associated Patches on Page 2 have been installed.
+   
+   
+ VistA System (KIDS) Installation:
+ =================================
+   
+ Installation Steps
+ 1.   Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+   
+ 2.   Run the Installation option [XPD INSTALLATION MENU].
+   
+ 3.   Load the KIDS file by performing the following steps:
+      a.  Run the Load a Distribution [XPD LOAD DISTRIBUTION]
+          option to load the KIDS distribution.
+        
+      b.  When prompted, enter the path and file name (MAG3_0P150.KID) 
+          of the MAG*3.0*150 KIDS file that you downloaded from the 
+          Download Server.
+          
+      c.  When prompted to continue with the load, enter "YES". A 
+          Distribution OK! Message will be displayed when the load is 
+          complete.
+        
+ 4.   After loading the KIDS file, use the following options to 
+      verify the contents of the patch. This is a good time to back 
+      up any affected routines.
+   
+      a.  Verify Checksums in Transport Global [XPD PRINT 
+          CHECKSUM] - Run this option if you want to ensure the integrity 
+          of the routines in the patch.
+   
+      b.  Compare Transport Global to Current System [XPD COMPARE 
+          TO SYSTEM] - Run this option if you want to view all changes 
+          that will be made when the patch is installed. All components 
+          (routines, options, and so on) in the patch will be compared.
+   
+      c.  Back up a Transport Global [XPD BACKUP] - Run this option if 
+          you want to create a backup message of any routines exported with 
+          the patch. The option will NOT back up any of the other changes.
+   
+ 5.   After performing the load and any optional verification steps, 
+      install the KIDS file by performing the following steps:
+   
+      a.  Run the Install Package(s) [XPD INSTALL BUILD] option.
+   
+      b.  When prompted for the install name, enter MAG*3.0*150.
+   
+      c.  Answer "NO" to the following prompts, if they appear:
+   
+         Want KIDS to INHIBIT LOGONs during the install? No//NO
+         Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//NO
+         Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+   
+ 6.    When the installation has finished, an Install Completed 
+       message will be displayed.
+   
+ KIDS Installation Example:
+ ==========================
+ This example shows the output when the KIDS file is installed for the first
+ time.  If you have already installed the patch and are installing the KIDS
+ file in a namespace on which it has previously been installed, your output
+ may be different.
+   
+ Select INSTALL NAME:    MAG*3.0*150    10/27/14@13:48:39
+      => VistA Imaging V3 - Patch 150- Image Never Existed  ;Created on 
+ Oct27, 2014@13:20:46
+ This Distribution was loaded on Oct 27, 2014@13:48:39 with header of
+    VistA Imaging V3 - Patch 150- Image Never Existed  ;Created on Oct 
+ 27, 2014
+ @13:20:46
+    It consisted of the following Install(s):
+     MAG*3.0*150
+ Checking Install for Package MAG*3.0*150
+   
+ Install Questions for MAG*3.0*150
+   
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+   
+ Enter the Device you want to print the Install messages.
+ You can queue the install by entering a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+    
+ DEVICE: HOME//   HERE
+ MAG*3.0*150   Oct 27, 2014@13:48:45
+  Running Pre-Install Routine: PRE^MAGIP150
+  Running Post-Install Routine: POS^MAGIP150
+  Post Install Mail Message: Oct 27, 2014@13:48:45
+  Updating Routine file...
+  Updating KIDS files...
+    
+  MAG*3.0*150 Installed.
+                Oct 27, 2014@13:48:45
+ Install Completed
+   
+   
+ Uninstalling MAG*3.0*150:
+ =========================
+ Imaging MAG*3.0*150 has a KIDS Install only.  There are no Imaging Client 
+ updates to this patch.
+   
+ NOTE:  To uninstall MAG*3.0*150 you had to have selected the "Kernel 
+ Installation & Distribution System" menu option:  "Backup a Transport Global" 
+ (see installation section above) before you installed the patch.
+   
+ If it is necessary to uninstall MAG*3.0*150, administrators will need to use
+ the Packman function INSTALL/CHECK MESSAGE.  Check your MailMan 
+ messages for the backup message sent by the "Backup a Transport Global" 
+ function.
+   
+ 1.         Select the message shown below:
+   
+ Backup of MAG*3.0*150 install on <mmm dd, yyyy>    <user name>
+   
+ 2.        Select the Xtract Packman option
+ 3.        Select the Install/Check Message option
+ 4.        Enter 'Yes' at the prompt
+ 5.        Enter "No" at the backup prompt.  (a backup is not necessary)
+    
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+   
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+   
+   
+ Warning:  Installing this message will cause a permanent update of 
+ globals and routines.
+ Do you really want to do this? NO// YES
+    
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+   
+    
+ Shall I preserve the routines on disk in a separate back-up message? 
+ YES// NO
+ No backup message built.
+   
+ Line 2    Message #43517     Unloading Routine   MAGGI12 
+ (PACKMAN_BACKUP)
+ Line 380  Message #43517     Unloading Routine   MAGGTAU 
+ (PACKMAN_BACKUP)
+ Line 658  Message #43517     Unloading Routine   MAGGTID 
+ (PACKMAN_BACKUP)
+ Line 890  Message #43517     Unloading Routine   MAGLOG (PACKMAN_BACKUP)
+ Line 965  Message #43517     Unloading Routine   MAGSIXG3 
+ (PACKMAN_BACKUP)
+   
+ Select PackMan function:<return>
+   
+ Enter message action (in IN basket): Ignore//
+ *Bold type above indicates input from the user.
+   
+ The Uninstall is now complete.
+   
+
+Routine Information:
+====================
+Routine Name: MAGGI12
+    Checksum:
+  101869499
+ Description of Changes:
+  Comments in this routine were updated with 
+  13 : Image Never Existed.  No Code was changed.
+
+Routine Name: MAGGTAU
+    Checksum:
+  66990261
+ Description of Changes:
+  Comments were update to describe the 'NOIMAGE' value of the 
+  'Flag' input parameter.  No code was changed.
+
+Routine Name: MAGGTID
+    Checksum:
+  85911502
+ Description of Changes:
+  When the Image Delete function is called.  This routine will querry the 
+  Flag parameter.  If the Flag paremeter has the value 'NOIMAGE' then the 
+  status will be changed to Image Never Existed. Also, it will not 
+  create a JukeBox Queue.  
+
+Routine Name: MAGGTIG
+    Checksum:
+  61207085
+ Description of Changes:
+  This routine is called when compiling a list of images for 
+  a patient.  
+  If an Image has STATUS=13  (Image Never Existed),  it will 
+  not be returned in the list of images for the patient.
+
+Routine Name: MAGIP150
+    Checksum:
+  4214952
+ Description of Changes:
+  This is the standard install routine for VistA Imaging Patches.
+  It has the Pre and Post tags that are called during the install.
+  It also sends the install message to the Imaging Utility :
+  MAG ENTERPRISE. 
+  For Patch 150 there are no Pre-Install or Post-Install actions.
+
+Routine Name: MAGLOG
+    Checksum:
+  12957603
+ Description of Changes:
+  Comments were updated to describe the 'NOIMAGE' and the new
+  STATUS field value of 13 (Image Never Existed)
+  No code was changed.
+
+Routine Name: MAGSIXG3
+    Checksum:
+  84985360
+ Description of Changes:
+  This routine is called when compiling a list of images for a 
+  patient's Image when the Image is an Image Group.  It lists each image
+  in the Image Group.  It has been changed so that it will not return
+  images that have status 13 (Image Never Existed).
+
+
+=============================================================================
+User Information:
+Entered By  : KIRIN,GARRETT                 Date Entered  : MAR 24, 2014
+Completed By: CLAYTON,DOUGLAS               Date Completed: MAR 18, 2015
+Released By : JERNIGAN,JEANNIE M            Date Released : APR 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

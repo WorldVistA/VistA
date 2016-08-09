@@ -1,0 +1,145 @@
+$TXT Created by               at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 09/08/15 at 08:22
+=============================================================================
+Run Date: SEP 29, 2015                     Designation: PSN*4*441
+Package : PSN - NATIONAL DRUG FILE            Priority: EMERGENCY
+Version : 4       SEQ #437                      Status: Released
+                  Compliance Date: OCT 06, 2015
+=============================================================================
+
+Associated patches: (v)PSN*4*454   <<= must be installed BEFORE `PSN*4*441'
+
+Subject: TRADE NAME ALLERGY DRUG CLASS UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PSN*4.0*441 addresses the following issue:
+  
+ 1. INC000001243262 - Tramadol, Clonazepam, and Diazepam patient allergies 
+ with a Trade Name in the Reactant field need to be updated to account for 
+ VA DRUG CLASS changes distributed with the National Drug File Data Update 
+ patch PSN*4.0*453.
+  
+ **NOTE** This patch should be installed as soon as possible AFTER 
+ installing patches PSN*4.0*453 and PSN*4.0*454 so that there is no 
+ discrepancy between NDF data and the related patient allergies. This 
+ patch contains an environment check routine that will stop the 
+ installation of this patch if the data changes distributed with patch 
+ PSN*4.0*453 are not yet installed.
+   
+ ***NOTE***  There might be some non-standardized Patient Allergy entries 
+ (e.g., where the Reactant is ULTRACET TAB) that will NOT be updated by 
+ either of the patches. Please watch for a follow up Outlook message with 
+ further instructions and search templates to use for the additional clean 
+ up that might be needed after installing patch PSN*4.0*441.
+  
+  
+ ASSOCIATED REMEDY: 
+ ==================
+ 1. INC000001243262 - Trade Name allergies to Tramadol, Clonazepam, and 
+ Diazepam need to be updated.
+  
+ ASSOCIATED NSR: 
+ ===============
+ N/A  
+  
+ PARTICIPATING TEST SITES: 
+ =========================
+ Oklahoma City VAMC
+ Chillicothe VAMC
+ Central Plains HCS
+ Palo Alto HCS
+   
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000001243262 - Trade Name allergies to Tramadol, Clonazepam, and 
+ Diazepam need to be updated.
+  
+ Problem:
+ --------
+ Some Tramadol, Clonazepam, and Diazepam VA Products had incorrect VA Drug 
+ Classes. NDF Data Update Patch PSN*4.0*453 updates the classes for these 
+ products (CN101 - OPIOID ANALGESICS for Tramadol,Tramadol/Acetaminophen, 
+ and Acetaminophen/Tramadol, CN302 - BENZODIAZEPINE DERIVATIVE
+ SEDATIVES/HYPNOTICS for Clonazepam and Diazepam) as well as the related 
+ patient allergies but it doesn't account for patient allergies where the 
+ Reactant field contains a Trade Name. These allergies still need to be 
+ updated to include the correct class.
+    
+ Solution:
+ ---------
+ This patch (PSN*4.0*441) updates patient allergies where the GMR Allergy 
+ field contains Tramadol, Tramadol/Acetaminophen, Acetaminophen/Tramadol,
+ Clonazepam, or Diazepam VA Generic and where the Reactant field contains a
+ Trade Name for one of the corresponding VA Products. Allergies entered in
+ error and allergies for deceased patients will not be updated. Note some
+ sites might not have any Trade Name patient allergies affected by the
+ class changes in patch PSN*4.0*453.
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users. The installation may take some time; 
+ therefore it is recommended that it be queued for non-peak hours.
+    
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PSN*4.0*441):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PSN*4.0*441.
+  
+ 5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 7.  After the installation completes successfully delete routine PSN441P.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;NATIONAL DRUG FILE;**[Patch List]**; 30 Oct 98;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSN441E
+    Before:       n/a   After:   B793571  **441**
+Routine Name: PSN441P
+    Before:       n/a   After: B14629287  **441**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 04, 2015
+Completed By:                               Date Completed: SEP 23, 2015
+Released By :                               Date Released : SEP 29, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

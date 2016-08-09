@@ -1,0 +1,285 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 06/10/15 at 15:06
+=============================================================================
+Run Date: NOV 02, 2015                     Designation: PSB*3*86
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #71                      Status: Released
+                  Compliance Date: DEC 02, 2015
+=============================================================================
+
+Associated patches: (v)PSB*3*72    <<= must be installed BEFORE `PSB*3*86'
+                    (v)PSB*3*76    <<= must be installed BEFORE `PSB*3*86'
+                    (v)PSB*3*80    <<= must be installed BEFORE `PSB*3*86'
+
+Subject: RPT HEADER, UNDEF IN PSBRPC, WEIGHT, PSBPRN AND MED VAR CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch Addresses 7 issues:
+  
+ 1.  An Undefined error occurs at SCANPT+49^PSBRPC if an accent (`) mark is
+     passed in when manually keying in a patient's wristband.
+ 2.  Bar Code Medication Administration (BCMA) report headers display the
+     last ward and room/bed the patient was admitted to after they are 
+     discharged.
+ 3.  BCMA report headers and the BCMA Virtual Due List (VDL) round a
+     patient's weight to less significant digits than the Computerized Record
+     System (CPRS) application when converting weight from pounds to kilograms.
+ 4.  BCMA report headers display the diagnosis for a patient's last
+     admission after the patient has been discharged. 
+ 5.  The BCMA Coversheet is loading slowly for long term care patients.
+ 6.  The Unit Dose tab of the BCMA VDL loads slowly for long term care
+     patients.
+ 7.  The BCMA Medication Variance report displays the medication name twice
+     under the medication field of the report
+  
+ Associated NSR(s):
+ ------------------
+ N/A
+   
+ Associated Remedy ticket(s):
+ -------------------------
+ 1.  INC000001039982 - UNDEFINED>SCANPT+49^PSBRPC
+ 2.  INC000001045983 - BCMA report headers displays ward and room/bed after
+                       discharge.
+ 3.  INC000001093719 - A patient's weight in BCMA displays differently than
+                       in CPRS                    
+ 4.  IN0000001228282 - BCMA report headers display the diagnosis for a
+                       patient's last admission  after discharge
+ 5.  INC000001253386 - BCMA coversheet loading very slow for long term 
+                       patients
+ 6.  INC000001260877 - BCMA Unit Dose tab loading slowly for long term care
+                       patients 
+ 7.  INC000001261136 - Medication Variance report displays med name twice
+                         
+  
+ PARTICIPATING TEST SITES:
+ -------------------------
+ Salisbury - W.G. (Bill) Hefner VA Medical Center
+ VA Pittsburgh Healthcare System
+ Wilkes-Barre - VA Medical Center
+  
+  
+ REMEDY OVERVIEW
+ ---------------
+   
+ 1.  INC000001039982 - UNDEFINED>SCANPT+49^PSBRPC
+  
+ Problem:
+ --------
+ An Undefined error occurs at SCANPT+49^PSBRPC if an accent (`) mark is passed
+ in when a user is manually keying in a patient's wristband.
+  
+ Resolution:
+ -----------
+ Routine PSBRPC was modified to quit and return the message "Invalid Patient
+ Lookup" if an accent mark (`) is entered when scanning.
+  
+ 2.  INC0000001045983 - BCMA report headers displays ward and room/bed after
+                        discharge.
+  
+ Problem:
+ --------
+ BCMA report headers continue to display the last ward and room/bed a patient
+ was admitted to after they are discharged.
+  
+ Resolution:
+ -----------
+ Routine PSBOHDR was modified to no longer display the ward or room/bed after
+ the patient is discharged.
+  
+ 3.  INC0000001093719 - A patient's weight in BCMA displays differently than
+                        in CPRS
+  
+ Problem:
+ --------
+ The BCMA report headers and the BCMA Virtual Due List (VDL) round a patient's
+ weight to less significant digits than the Computerized Patient Record System
+ (CPRS) application when converting weight from pounds to kilograms.
+  
+ Resolution:
+ -----------
+ Routines PSBOHDR and PSBRPC were modified to use a conversion factor of
+ 2.20462262 pounds/kilogram instead of 2.2 when calculating a patient's weight.
+  
+ 4.  INC000001228282 - BCMA report headers display the diagnosis for a
+                       patient's last admission after discharge
+ Problem:
+ --------
+ BCMA report headers continue to display the diagnosis for a patient's last
+ admission after the patient has been discharged.
+  
+ Resolution:
+ -----------
+ Routine PSBOHDR was modified to no longer display the diagnosis from the last
+ admission after the patient has been discharged.
+  
+ 5. INC000001253386 - BCMA coversheet loading very slow for long term
+                      patients
+  
+ Problem:
+ --------
+ The BCMA Coversheet is loading slowly for long term care patients.  The issue
+ is caused by a dangling variable PSBSTRT, which is set to the date of the first
+ pro re nata (PRN) medication administered after a patient is admitted, by
+ routine PSBPRN.  This variable is not being cleaned when using the unreleased
+ version of Shared Broker XWB_1.1_58, and causing the Coversheet to loop through
+ all PRN medications administered to the patient since admission.  
+  
+ Resolution:
+ -----------
+ Routine PSBPRN was modified to New the PSBSTRT variable to ensure it is
+ properly cleaned up when exiting the PSB GETPRNS Remote Procedure Call (RPC). 
+ This will prevent the old date from hanging around when the coversheet is
+ loaded.
+  
+ 6.  INC000001260877 -  BCMA Unit Dose tab loading slowly for long term care     
+  
+ Problem:
+ --------
+ The Unit Dose tab of the BCMA VDL loads slowly for long term care patients. 
+ This is caused by the PSB GETPRNS RPC, which loops through all of a patient's
+ administered PRN medications since they were admitted, which could be several
+ years' worth of data.
+  
+ Resolution:
+ -----------
+ Routine PSBPRN was modified to limit the time frame to search for patient's
+ administered PRN medications to 35 days, or the value of the PSB MED HIST DAYS
+ BACK parameter, whichever is greater.
+  
+ 7.  INC000001261136 - Medication Variance report displays med name twice
+  
+ Problem:
+ --------
+ The BCMA Medication Variance report displays the medication name twice under
+ the medication field of the report.
+  
+ Resolution:
+ -----------
+ Routine PSBOMV was modified to only write the medication name once.
+  
+ NOTES:
+ ------
+    Routines APSPFUNC and BEHOVM called from PSBOHDR and PSBRPC are 
+    Indian Health Services only routines and will display as an XINDEX
+    error when installing this patch in VA Accounts.  This functionality
+    was introduced by patch PSB*3.0*42. This enhancement is intended to
+    enable the BCMA application to recognize whether it is operating in
+    the Indian Health Service (IHS) or Veterans Health Administration (VHA)
+    environment, and respond by recognizing and displaying the patient
+    identifier appropriate to the environment. This will enable a single
+    version of BCMA to be maintained by VHA and yet be installed and
+    operate in a "plug and play" fashion in an IHS or Tribal facility
+    running Resource and Patient Management System (RPMS).
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ File Description                                               
+              File Name                                            FTP Mode
+ --------------------------------------------------------------------------
+  
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 6
+              PSB_3_UM_CHAPTERS_1_THRU_6_R1115.PDF                 (binary)
+  
+  
+ BCMA V.3.0 GUI User Manual - Chapters 1 through 6 Change Pages
+              PSB_3_P86_UM_CHAPTERS_1_THRU_6_CP.PDF                (binary)
+  
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*86):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*86.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSBOHDR
+    Before: B72570130   After: B75325987  **5,13,42,74,70,76,86**
+Routine Name: PSBOMV
+    Before: B55477289   After: B58207995  **60,78,72,86**
+Routine Name: PSBPRN
+    Before: B42972466   After: B49031208  **5,3,13,61,68,70,80,86**
+Routine Name: PSBRPC
+    Before:B227617470   After:B231592999  **6,3,4,13,32,28,42,58,66,70,76,86**
+ 
+Routine list of preceding patches: 72, 76, 80
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 19, 2015
+Completed By:                               Date Completed: OCT 27, 2015
+Released By :                               Date Released : NOV 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

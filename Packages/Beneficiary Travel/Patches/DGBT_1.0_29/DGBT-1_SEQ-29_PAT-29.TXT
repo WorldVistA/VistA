@@ -1,0 +1,136 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DGBT*1*29
+Package : DGBT - BENEFICIARY TRAVEL           Priority: Mandatory
+Version : 1        SEQ #29                      Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)EAS*1*113   <<= must be installed BEFORE `DGBT*1*29'
+
+Subject: Beneficiary Travel Bulletin
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch is to notify the VAMC facilities of a Beneficiary Travel (BT)
+ Bulletin being released with the Enrollment System (ES) 4.1 VistA support
+ patches for the Enrollment Customer Enhancements (ECE) and Enrollment System
+ Enhancements (ESE) projects. The DG_53_P891.KID host file includes patch
+ EAS*1*113 which adds the following enhancements.
+  
+ An enhancement to the ES HL7 ORU-Z06 message sends the BT Financial
+ Indicator (BTFI) to VistA in the ZMT-31 segment-sequence. The BTFI will
+ be stored to the BT FINANCIAL INDICATOR (#4) field of the ANNUAL MEANS
+ TEST (#408.31) file.
+                                                 
+ A BT CLAIMS PROCESSING Mail group will be automatically created in VistA
+ to receive a new BT Bulletin named EAS BT CLAIMS PROCESSING.  Users who
+ validate BT eligibility based on income or process BT claims should be
+ added to the mail group.
+  
+ When an IVM converted/reversal income test is received from ES, a check will
+ be done to see if the BT Financial Indicator is different than the BT
+ Financial Indicator on file (e.g. the new Financial Indicator is 1 (YES)
+ and the BT Financial Indicator on File is 0 (No),or the new status is 0 (NO)
+ and the BT Financial Indicator on File is 1 (Yes) or a null).  If the BT
+ Financial Indicator has changed, a bulletin will be sent to the BT CLAIMS
+ PROCESSING Mail group.
+  
+    The bulletin will contain the following information:
+  
+   Mail Message From: Health Eligibility Center    Date: MM/DD/YYYY HH:MM
+   Subject: IVM-Beneficiary Travel Financial Indicator upload FOR<DFN>
+  
+   An Income Verification Match verified Beneficiary Travel information
+   has been uploaded for the following patient.
+  
+   Patient Name:
+   LAST 4 OF SSN:  
+   ICN:
+   DFN:
+   STATION NUMBER:
+   Prev Category:
+   New Category:
+   Date of Test:
+   Income Year of Conversion:
+ 
+  
+ The BT Financial Indicator may be viewed on the Means Test or RX Copay Test
+ summary screen using the View a Past Means Test [DG MEANS TEST VIEW TEST] or
+ View a Past Copay Test [DG CO-PAY TEST VIEW TEST] options respectively.
+ 
+ Select DATE OF TEST: 5-9-2015//        MEANS TEST       MT COPAY REQUIRED 
+ IVM  PRIMARY
+ 
+               Patient: REGPATIENT,ONE             Date of Test: MAY 09, 2015   
+      Total Dependents: 0                          Type Of Test: MEANS TEST     
+                Status: MT COPAY REQUIRED   Date/Time Completed: JAN 06, 2015   
+ Primary Test For Year: YES                      Source Of Test: IVM            
+                Income:                            Completed By:                
+             Net Worth:              Date/Time Category Changed: JAN 26, 2015@08
+   Deductible Expenses:                     Category Changed By:                
+ Agreed to Pay Deduct.: YES               Adjudicated Date/Time:                
+  Declines Income Info:                 No Longer Required Date:                
+          MT Threshold: $30978                   
+         GMT Threshold:                  BT Financial Indicator: YES
+  Date Vet Signed Test:                          
+    Means Test Signed?:                          
+ 
+       Refused to Sign:                          
+ 
+ Date IVM MT Completed: FEB 06, 2015             
+ COMMENT(S):
+ Z06 MT via Edb
+   ** DETAILED MEANS TEST INCOME INFORMATION IS NOT AVAILABLE **
+ 
+ 
+  
+   Documentation Retrieval Instructions:
+   =====================================
+  Updated documentation describing the new functionality introduced by 
+  patch EAS*1*113 is available.
+   
+  The preferred method is to FTP the files from
+  ftp://download.vista.domain.ext/.  This transmits the files from the 
+  first available FTP server.  Sites may also elect to retrieve software
+  directly from a specific server as follows:
+   
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+  
+ Title                              File Name                   FTP Mode
+ -----------------------------------------------------------------------
+ Beneficiary Travel User Manual       DGBT_1_29P_UM.PDF         Binary 
+ Beneficiary Travel Technical Manual  DGBT_1_29P_TM.PDF         Binary
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 22, 2015
+Completed By:                               Date Completed: DEC 17, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,566 @@
+
+=============================================================================
+Run Date: NOV 26, 2014                     Designation: PX*1*201
+Package : PX - PCE PATIENT CARE ENCOUNTER     Priority: Mandatory
+Version : 1       SEQ #155                      Status: Released
+                  Compliance Date: DEC 26, 2014
+=============================================================================
+
+Associated patches: (v)PX*1*199    <<= must be installed BEFORE `PX*1*201'
+
+Subject: VISTA IMMUNIZATION ENHANCEMENTS 1.0
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+  
+ **********************************************************************
+ NOTE:  This patch contains updates to the Data Dictionary for several 
+ files that are also used by Indian Health Service.  In order to 
+ maintain compatibility with the Indian Health Service version of these 
+ files, fields used by Indian Health Service that will not be used by 
+ the Department of Veterans Affairs have been included.  In some cases, 
+ these fields reference files and/or routines that will not be deployed 
+ by the Department of Veterans Affairs.  These fields are included with 
+ the VA's Database Administrator's approval.
+ **********************************************************************
+  
+ The Veterans Health Information Systems and Technology Architecture
+ (VistA) Immunizations Enhancements (VIMM) 1.0 project modifies existing
+ immunization files and adds additional files to enable VA to quickly and
+ reliably document and exchange standardized immunization information on
+ beneficiaries across services and departments. Additionally, modifications
+ support Certification for Meaningful Use as well as VistA Evolution
+ requirements. This provides a Veteran patient-centric vaccine record
+ exchangeable with the external community. Clinicians will have access to a
+ more complete medical history in the VistA electronic medical record
+ resulting in improved health status as well as public health monitoring.
+  
+ The goals for the VIMM 1.0 project are to deliver an Initial Operating
+ Capability comprised of standard, interoperable immunization data for
+ exchange with external trading partners based on the modernization of
+ the VistA Patient Care Encounter (PCE) package.
+  
+ This patch provides the following new features:
+  
+ 1) The vaccines in the IMMUNIZATION (#9999999.14) file are standardized to
+    match the Center for Disease Control (CDC)'s table of administered
+    vaccines at 
+    http://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=cvx. 
+  
+    During the post installation, records in the IMMUNIZATION file are
+    modified and new immunization records are added to mirror entries 
+    from the CDC table. Existing records are assigned a Vaccine
+    Administered (CVX) code. CVX codes are developed and maintained by the
+    CDC. They identify the type of vaccine product used.
+  
+    A new field (CLASS) has been added to identify each record as NATIONAL
+    or LOCAL. Only records with a CLASS of NATIONAL are selectable. The
+    NAME and INACTIVE FLAG of NATIONAL records will be updated to match the
+    CDC Standard. Other CDC information has been added to the record for
+    future use.
+  
+    There may be more than one record with the same CVX code. A record is 
+    selected as the standard based on the following selection rules:
+    o An entry that does not have the INACTIVE FLAG marked will be given 
+      precedence over an entry that is marked INACTIVE.
+    o An entry that was distributed nationally with the immunization
+      package will be given precedence over an entry that was created
+      locally.
+    o An entry that was created in the VistA instance where this patch
+      is being installed will be given precedence over an entry imported
+      from another VAMC. 
+    o ACTION/RECOMMENDATION: In order to guide the program to selecting a
+      facility's choice on which of two conflicting entries for the same
+      CVX code will be marked as NATIONAL, for any entries in the
+      IMMUNIZATION file that represent the same concept, mark all except
+      one of them as INACTIVE.
+  
+    If a record is not the standard, the CLASS will be set to LOCAL and 
+    (HISTORICAL) will be appended to the name. The INACTIVE FLAG will be
+    set to INACTIVE.
+  
+ 2) Data stored in the DIAGNOSIS (#.08) field in the V IMMUNIZATION 
+    (#9000010.11) file are moved to a new field, PRIMARY DIAGNOSIS (#1304).
+    This field is blank in most records. Values stored in DIAGNOSIS 2
+    (#.09), DIAGNOSIS 3 (#.1), DIAGNOSIS 4 (#.11), DIAGNOSIS 5 (#.12),
+    DIAGNOSIS 6 (#.13), DIAGNOSIS 7 (#.14) and DIAGNOSIS 8 (#.15) are moved
+    to the multiple OTHER DIAGNOSES (#3).
+  
+ 3) The options, PXTT EDIT IMMUNIZATIONS and PXTT IN/ACTIVATE IMMUNIZATION 
+    have been placed out of order. Future updates to the IMMUNIZATION file
+    will be provided in the short term by patches. In the long term the
+    IMMUNIZATION file will be maintained by the Master File Server.
+  
+ 4) Indian Health Service (IHS) fields have been included in the files for 
+    this patch for purposes of code convergence, even though the VA does
+    not use them. Of those fields, the following point to files or call
+    routines that are included in the IHS Resource and Patient Management
+    System (RPMS) but not in VistA:
+   
+    File Name (Number)   Field Name (Number)        IHS File/Routine
+    ------------------   -------------------        ----------------
+    V IMMUNIZATION  
+       (#9000010.11)     VAC ELIGIBILITY (#.14)     BI TABLE ELIGIBILITY
+                                                       CODES (#9002084.83)
+                         NDC (#.16)                 BI TABLE NDC CODES 
+                                                         (#9002084.95)
+    IMMUNIZATION             
+       (#9999999.14)     VACCINE GROUP (SERIES      BI TABLE VACCINE GROUP
+                            TYPE) (#.09)               (SERIES TYPE)
+                                                       (#9002084.93)
+                         BRAND #1 (#1.01)           BIUTL5
+                         BRAND #2 (#1.03)           BIUTL5
+                         BRAND #3 (#1.05)           BIUTL5
+                         BRAND #4 (#1.07)           BIUTL5
+                         BRAND #5 (#1.09)           BIUTL5
+  
+    IMMUNIZATION LOT 
+       (#9999999.41)     NDC CODE (#.17)            BI TABLE NDC CODES 
+                                                       (#9002084.95)
+  
+ Patch Components: 
+ ----------------- 
+  
+ Files & Fields Associated:
+  
+ File Name (Number)     Field Name (Number)           New/Modified/Deleted
+ ------------------     -------------------           --------------------
+ VACCINE INFORMATION
+    STATEMENT (#920)    NAME (#.01)                          New
+                        EDITION DATE (#.02)                  New
+                        EDITION STATUS (#.03)                New
+                        LANGUAGE (#.04)                      New
+                        VIS TEXT (#2)                        New
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #920.99)        New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#920.99)               New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file (#920.99)     New
+                        VIS URL (#101)                       New
+  
+ IMMUNIZATION INFO 
+    SOURCE (#920.1)     SOURCE (#.01)                        New
+                        HL7 CODE (#.02)                      New
+                        STATUS (#.03)                        New
+  
+ IMM ADMINISTRATION 
+    ROUTE (#920.2)      ROUTE (#.01)                         New
+                        HL7 CODE (#.02)                      New
+                        NCIT (#.03)                          New
+  
+ IMM ADMINISTRATION SITE 
+    (BODY) (#920.3)     SITE (#.01)                          New
+                        HL7 CODE (#.02)                      New
+  
+ V IMMUNIZATION  
+    (#9000010.11)       IMMUNIZATION (#.01)                Modified
+                        PATIENT NAME (#.02)                Modified
+                        VISIT (#.03)                       Modified
+                        SERIES (#.04)                      Modified
+                        LOT (#.05) )                         New
+                        REACTION (#.06)                      New
+                        CONTRAINDICATED (#.07)             Modified
+                        DIAGNOSIS (#.08)                   Deleted
+                        DIAGNOSIS 2 (#.09)                 Deleted
+                        DIAGNOSIS 3 (#.1)                  Deleted
+                        DIAGNOSIS 4 (#.11)                 Deleted
+                        DIAGNOSIS 5 (#.12)                 Deleted
+                        DIAGNOSIS 6 (#.13)                 Deleted
+                        DIAGNOSIS 7 (#.14)                 Deleted
+                        DIAGNOSIS 8 (#.15)                 Deleted
+                        DOSE OVERRIDE (#.08)                 New
+                        INJECTION SITE (#.09)                New
+                        VOLUME (#.11)                        New
+                        DATE OF VAC INFO STATEMENT (#.12)    New
+                        CREATED BY V CPT ENTRY (#.13)        New
+                        VAC ELIGIBILITY (#.14)               New
+                        IMPORT FROM OUTSIDE REGISTRY (#.15)  New
+                        NDC (#.16)                           New
+                        ADMINISTRATIVE NOTES (#1)            New
+                        VIS OFFERED/GIVEN TO PATIENT
+                           (multiple field #2, sub-file 
+                           #9000010.112)                     New
+                          VIS OFFERED/GIVEN TO PATIENT 
+                            (#.01) of the VIS OFFERED/GIVEN 
+                            TO PATIENT sub-file 
+                            (#9000010.112)                   New
+                          DATE VIS OFFERED/GIVEN (#.02) of 
+                            the VIS OFFERED/GIVEN TO PATIENT
+                            sub-file (#9000010.112)          New
+                        OTHER DIAGNOSIS (multiple field #3,
+                           sub-file #9000010.113)            New
+                          OTHER DIAGNOSIS (#.01) of the
+                            OTHER DIAGNOSIS sub-file 
+                            (#9000010.113)                   New
+                        REMARKS (#1101)                      New
+                        EVENT DATE AND TIME (#1201)        Modified
+                        ORDERING PROVIDER (#1202)          Modified
+                        CLINIC (#1203)                       New
+                        ENCOUNTER PROVIDER (#1204)         Modified
+                        DATE/TIME RECORDED (#1205)           New
+                        IMMUNIZATION DOCUMENTER (#1206)      New
+                        LOT NUMBER (#1207)                   New
+                        PARENT (#1208)                       New
+                        EXTERNAL KEY (#1209)                 New
+                        OUTSIDE PROVIDER NAME (#1210)        New
+                        ANCILLARY POV (#1213)                New
+                        USER LAST UPDATE (#1214)             New
+                        ORDERING LOCATION (#1215)            New
+                        DATE/TIME ENTERED (#1216)            New
+                        ENTERED BY (#1217)                   New
+                        DATE/TIME LAST MODIFIED (#1218)      New
+                        LAST MODIFIED BY (#1219)             New
+                        EVENT INFORMATION SOURCE (#1301)     New
+                        ROUTE OF ADMINISTRATION (#1302)      New
+                        SITE OF ADMINISTRATION (BODY) 
+                           (#1303)                           New
+                        PRIMARY DIAGNOSIS (#1304)            New
+                        DOSAGE (#1305)                       New
+                        SNOMED CT (multiple field #2601,
+                           sub-file #9000010.1126)           New
+                        SNOMED CT (#.01) of the SNOMED CT
+                           sub-file (#9000010.1126)          New
+                        SNOMED PREFERRED TERM (#.019) of
+                           the SNOMED CT sub-file 
+                           (#9000010.1126)                   New
+                        LOINC CODES (multiple field #2701,
+                           sub-file #9000010.1127)           New
+                        LOINC CODES (#.01) of the LOINC
+                           CODES sub-file (#9000010.1127)    New
+                        LOINC TEXT (#.019) of the LOINC 
+                           CODES sub-file (#9000010.1127)    New 
+                        EDITED FLAG (#80101)               Modified
+                        AUDIT TRAIL (#80102)               Modified
+                        COMMENTS (#81101)                  Modified
+                        VERIFIED (#81201)                  Modified
+                        PACKAGE (#81202)                   Modified
+                        DATA SOURCE (#81203)               Modified
+  
+ IMM MANUFACTURER  
+    (#9999999.04)       NAME (#.01)                          New
+                        MVX CODE (#.02)                      New
+                        STATUS (#.03)                        New
+                        FULL NAME (#.04)                     New
+                        SYNONYM #1 (#.05)                    New
+                        REPLACED BY VHA STANDARD TERM    
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #9999999.0499)  New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#9999999.0499)         New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file 
+                            (#9999999.0499)                  New
+                        CDC NOTES (#201)                     New
+                        VACCINE (multiple field #1101,
+                           sub-file #9999999.0411)           New
+                          VACCINE (#.01) of the VACCINE
+                            sub-file (#9999999.0411)         New
+                        MNEMONIC (#8801)                     New
+  
+ IMMUNIZATION             
+    (#9999999.14)       NAME (#.01)                        Modified
+                        SHORT NAME (.02)                   Modified
+                        CVX (#.03)                           New
+                        DEFAULT LOT # (.04)                  New
+                        MAX # IN SERIES (#.05)             Modified
+                        CHILDHOOD IMMUNIZATION (#.06)        New
+                        INACTIVE FLAG (#.07)               Modified
+                        SKIN TEST (#.08)                     New
+                        VACCINE GROUP (SERIES TYPE) (#.09)   New
+                        ALTERNATE SHORT NAME (#.1)           New
+                        CPT CODE (#.11)                      New
+                        RELATED CONTRAIND HL7 CODES (#.12)   New
+                        VIS DEFAULT DATE (#.13)              New
+                        ICD DIAGNOSIS CODE (#.14)            New
+                        ICD PROCEDURE CODE (#.15)            New
+                        INCLUDE IN FORECAST (#.16)           New
+                        INCLUDE IN VAC ACCOUNT REPORT (#.17) New
+                        DEFAULT VOLUME (#.18)                New
+                        COMBINATION IMMUNIZATION (Y/N) (#.2) New 
+                        COMPONENT #1 (#.21)                  New
+                        COMPONENT #2 (#.22)                  New
+                        COMPONENT #3 (#.23)                  New
+                        COMPONENT #4 (#.24)                  New
+                        COMPONENT #5 (#.25)                  New
+                        COMPONENT #6 (#.26)                  New
+                        BRAND #1 (#1.01)                     New
+                        BRAND #2 (#1.03)                     New
+                        BRAND #3 (#1.05)                     New
+                        BRAND #4 (#1.07)                     New
+                        BRAND #5 (#1.09)                     New
+                        FULL NAME (#1.14)                    New
+                        CPT CODE 2ND (#1.15)                 New
+                        CDC FULL VACCINE NAME (#.01) 
+                           of the CDC FULL VACCINE 
+                           NAME sub-file (#9999999.142)      New
+                        CODING SYSTEM (#.01) of the
+                           CODING SYSTEM sub-file 
+                           (#9999999.143)                    New
+                        CODE (#.01) of the CODE 
+                           sub-file (#9999999.1431)
+                           of the CODING SYSTEM 
+                           sub-file (#9999999.143)           New
+                        VACCINE INFORMATION STATEMENT
+                           (#4)                              New
+                        CDC PRODUCT NAM (#5)                 New
+                        SYNONYM (#.01) of the SYNONYM
+                           sub-file (#9999999.141)           New
+                        REPLACED BY VHA STANDARD TERM 
+                           (#99.97)                          New
+                        MASTER ENTRY FOR VUID (#99.98)       New
+                        VUID (#99.99)                        New
+                        EFFECTIVE DATE/TIME (multiple field
+                           #99.991, sub-file #9999999.1499)  New
+                          EFFECTIVE DATE/TIME (#.01) of
+                            the EFFECTIVE DATE/TIME 
+                            sub-file (#9999999.1499)         New
+                          STATUS (#.02) of the EFFECTIVE
+                            DATE/TIME sub-file 
+                            (#9999999.1499)                  New
+                        CLASS (#100)                         New
+                        MNEMONIC (#8801)                   Modified
+                        ACRONYM (#8802)                      New
+                        SELECTABLE FOR HISTORIC (#8803)      New
+  
+ IMMUNIZATION LOT 
+    (#9999999.41)       LOT NUMBER (#.01)                    New
+                        MANUFACTURER (#.02)                  New
+                        STATUS (#.03)                        New
+                        VACCINE (#.04)                       New
+                        VACCINE #2 (#.05)                    New
+                        VACCINE #3 (#.06)                    New
+                        VACCINE #4 (#.07)                    New
+                        VACCINE #5 (#.08)                    New
+                        EXPIRATION DATE (#.09)               New
+                        STARTING COUNT (#.11)                New
+                        DOSES UNUSED (#.12)                  New
+                        VACCINE SOURCE (#.13)                New
+                        HEALTH CARE FACILITY (#.14)          New
+                        LOW SUPPLY ALERT (#.15)              New
+                        LOT NUMBER FOR EXPORT (#.16)         New
+                        NDC CODE (#.17)                      New
+                        NDC CODE (VA) (#.18)                 New
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A 
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A 
+  
+ Options Associated:
+  
+ Option Name                     Type             New/Modified/Deleted
+ -----------                     ----             -------------------- 
+ PXTT EDIT IMMUNIZATIONS         Edit                  Modified
+ PXTT IN/ACTIVATE IMMUNIZATION   Edit                  Modified
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A 
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A 
+  
+ Additional Information:
+ N/A 
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A 
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+ Blood Bank Clearance:
+ ---------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A 
+  
+ Test Sites:
+ ----------
+ Cleveland, OH
+ Hampton, VA
+ Heartland-East HCS, MO
+ San Antonio, TX
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                           File Name           FTP Mode
+ -------------------------------------------------------------
+ Patient Care Encounter (PCE)    PXUM.PDF            (binary)
+    V. 1.0 User Manual
+ Patient Care Encounter (PCE)    PXTM.PDF            (binary)
+    V.1.0 Technical Manual
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ This patch will run a brief pre-installation process that will check for 
+ invalid entries in the IMMUNIZATION file (#9999999.14) and will delete 
+ field definitions for replaced fields in the V IMMUNIZATION file 
+ (#9000010.11). A post-installation process will standardize data in the 
+ IMMUNIZATION file (#9999999.14) and will move data from exiting diagnosis 
+ fields in the V IMMUNIZATION file (#9000010.11) to new fields. The 
+ routine, PXVP201, may be deleted after the patch is successfully
+ installed.
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ This patch should be installed during a period of minimal system 
+ activity, preferably with users off the system. Installation time is 
+ expected to be approximately 10 minutes.
+  
+ This patch is available via FTP as a KIDS distribution file. The Host
+ File is named PX_1_201.KID and should be downloaded in ASCII format. 
+ The file is located in the [ANONYMOUS.SOFTWARE] directory of the following
+ OI Field Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.domain.ext
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.domain.ext
+  Hines                         ftp.domain.ext
+  SLC                           ftp.domain.ext
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+    on the KIDS Installation menu.
+  
+ 2. Prior to installing the patch use the following installation options 
+    located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+    the KIDS Installation menu. For the Install Name enter PX*1.0*201.
+  
+    a.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of 
+        Install? NO//'
+        Answer NO.
+  
+    b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//
+        Answer NO.
+  
+    c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//'
+        Answer NO. 
+  
+ 4.  Verify the status of the installation.  An email message is sent to 
+     the installer at the end of the installation indicating whether the
+     installation was successful. Please enter a Remedy ticket if the 
+     installation failed.
+    
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**[Patch List]**;Aug 12, 1996;Build 41
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXCEAE1
+    Before: B16220510   After: B23079983  **22,73,199,201**
+Routine Name: PXCEVFI4
+    Before: B26873797   After: B28425692  **124,203,199,201**
+Routine Name: PXCEVIMM
+    Before: B31390321   After: B56314311  **27,124,199,201**
+Routine Name: PXKFIMM
+    Before:  B2638532   After:  B2843857  **22,124,201**
+Routine Name: PXVP201
+    Before:       n/a   After: B70774804  **201**
+Routine Name: PXVPST01
+    Before:       n/a   After:  B4321227  **201**
+Routine Name: PXVUTIL
+    Before:       n/a   After:  B3032993  **201**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 14, 2014
+Completed By:                               Date Completed: NOV 26, 2014
+Released By :                               Date Released : NOV 26, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

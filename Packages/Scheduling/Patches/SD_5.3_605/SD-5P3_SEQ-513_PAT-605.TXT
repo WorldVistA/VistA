@@ -1,0 +1,169 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 05/06/14 at 09:23
+=============================================================================
+Run Date: OCT 22, 2014                     Designation: SD*5.3*605
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #513                    Status: Released
+                  Compliance Date: NOV 22, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*219  <<= must be installed BEFORE `SD*5.3*605'
+                    (v)SD*5.3*496  <<= must be installed BEFORE `SD*5.3*605'
+
+Subject: DUPLICATE VISITS & TRUNCATED DISPLAY OF CONSULT SERVICES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch SD*5.3*605 addresses the following 2 issues:
+  
+ - Duplicate encounters show on the PCE Encounter List screen for a future
+   appointment that has notes associated with it before the date of the visit.
+  
+ - Consult Service names are being truncated in the Make Consult 
+   Appointment [SC MAKE CONSULT APPOINTMENT] option.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. INC000000226808 - 5 Patch PX*1*124 not working as described for one 
+                      patient. 
+    Duplicates:
+    INC000000410980 - Add/Edit created inappropriately.
+    INC000000823592 - Question on SDAM BACKGROUND JOB.
+  
+ 2. INC000000762365 - Truncated Display of Consult Service Name.
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Fargo, ND
+ N. Florida/S. Georgia
+ Salisbury, NC
+  
+ Remedy Overview:
+ ================
+ 1. INC0000000226808 - 5 Patch PX*1*124 not working as described for one
+                       patient.
+  
+ Problem:
+ ========
+ Future appointments that have notes made prior to the day of the 
+ appointment are displaying duplicate encounters on the PCE Encounter 
+ List.  The PCE Encounter List screen will display a duplicate encounter 
+ after one of the following two things occur:
+  
+   1) The appointment is Checked Out on the day of the appointment.
+   
+   OR
+  
+   2) No action is taken on the day of the appointment but the Appointment
+      Status Update (Background)[SDAM BACKGROUND JOB] menu option is ran
+      for the appointment date.
+  
+ Resolution:
+ ===========
+ A check was added to the ^SDVSIT routine to look for an existing entry in the
+ VISIT file [#9000010] for the exact date/time of the appointment and to use 
+ that visit if it exists for the patient instead of creating new one.
+ A timeout lock was also added to routine SDVSIT to correct an XINDEX
+ error.
+  
+  
+ 2. INC0000000762365 - Truncated Display of Consult Service Name  
+   
+ Problem:
+ ========
+ The list of consults screen in the Make Consult Appointment 
+ [SC MAKE CONSULT APPOINTMENT] option does not allocate enough columns to
+ show the entire consult service name in all cases. Sometimes the consult
+ service name gets truncated. The SERVICE NAME field (#.01) in the REQUEST
+ SERVICES file (#123.5) has a maximum length of 63 characters. The list of
+ consults screen only allows a length of 23 characters before it truncates.
+ This can lead to an incorrect consult service being selected.
+  
+ Resolution:
+ ===========
+ Modified routine ^SDCNSLT to increase the display length of the Consult
+ Service Name to 63 (the maximum length of the field). This allows users to
+ differentiate between multiple services. Other fields were relocated to a
+ second line.
+  
+ Installation Instructions:
+ ==========================
+ This patch may be installed during normal working hours with all users on
+ the system. However, as it is necessary to disable some menu options
+ when installing this patch it is recommended that the install be done 
+ during non-peak hours.  
+  
+ Install Time - less than 2 minutes.
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+   
+ 3. From this menu, you may select to use the following options (when
+    prompted for INSTALL NAME, enter SD*5.3*605).      
+  
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch is
+          installed.
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+       d. Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      
+ 4. Use the Install Package(s) option and select the package SD*5.3*605
+   
+ 5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+    respond No.
+   
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+    and Protocols? YES//" respond Yes.
+  
+    When prompted, 'Enter options you wish to mark as 'Out Of 
+    Order':', enter:
+  
+     Make Consult Appointment                [SC MAKE CONSULT APPOINTMENT]
+     Appointment Status Update (Background)  [SDAM BACKGROUND JOB]    
+  
+    When prompted, 'Enter protocols you wish to mark as 'Out Of
+    Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDCNSLT
+    Before: B40644653   After: B40924838  **478,496,605**
+Routine Name: SDVSIT
+    Before: B31344109   After: B36437638  **27,44,75,96,132,161,219,605**
+ 
+Routine list of preceding patches: 219, 496
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 09, 2012
+Completed By:                               Date Completed: OCT 20, 2014
+Released By :                               Date Released : OCT 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

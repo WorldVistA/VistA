@@ -1,0 +1,131 @@
+
+=============================================================================
+Run Date: JUL 09, 2014                     Designation: IVM*2*156
+Package : IVM - INCOME VERIFICATION MATCH     Priority: Mandatory
+Version : 2       SEQ #133                      Status: Released
+                  Compliance Date: AUG 09, 2014
+=============================================================================
+
+Associated patches: (v)IVM*2*111   <<= must be installed BEFORE `IVM*2*156'
+
+Subject: INACTIVATE HL7 MESSAGING WITH HEC LEGACY
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+    *************************************************************************
+    Note:  This patch is released in support of decommissioning the HEC
+           Legacy system.  IVM*2*156 is released along with EAS*1*96 (Enrollment
+           Application System) in host file: EAS_1_P96.KID.
+     
+           It is imperative that these patches be installed no later than
+           the compliance date.  Your understanding and support is
+           appreciated.
+    *************************************************************************
+ 
+ The Enrollment System (ES) became the official System of Record on 
+ March 29, 2009. The Health Eligibility Center Legacy (HECL) system will 
+ be decommissioned shortly after all sites have installed this suite of
+ patches.  This patch will inactivate the HL7 protocols utilized for 
+ messaging with the HECL.
+  
+ This patch addresses the following New Service Request (NSR):
+ -------------------------------------------------------------
+ There is no NSR associated with this patch.
+  
+  
+ This patch addresses the following Remedy Ticket(s):
+ ----------------------------------------------------
+ ClearQuest entry: ESR_CodeCR8792 - VistA patch to inactivate HL7 messaging 
+ with HEC Legacy.  
+  
+   
+ TECHNICAL DESCRIPTION
+ =====================
+ This patch will make changes to the IVM routines that will
+ check and verify if the ORU-Z04 protocols are disabled before creating and
+ transmitting HL7 data via an ORU-Z04 message.  Prior to the installation of
+ this patch, the IVM routines did not check for the ORU-Z04 protocols to see
+ if they are disabled.  Once this patch is installed, the routines will make
+ the check and stop the transmission of data if the protocol is disabled.
+ 
+ 
+ DATA DICTIONARY CHANGES
+ =======================
+ N/A 
+ 
+ 
+ Test Sites:
+ -----------
+ Chillicothe VAMC
+ VA New York Harbor HCS
+ VA Health Care Upstate New York
+ 
+ 
+ 
+ SOFTWARE RETRIEVAL
+ ------------------
+ The software for this patch is not being distributed through the National 
+ Patch Module. This patch is being distributed as a host file. The host 
+ file will contain the following two KIDS builds:
+  
+              Host file name: EAS_1_P96.KID
+  
+                      Builds: EAS*1.0*96
+                              IVM*2.0*156
+  
+ Sites may retrieve the software directly using File Transfer Protocol 
+ (FTP) from the ANONYMOUS.SOFTWARE directory at the following OI Field 
+ Offices:
+  
+                   Albany   : ftp.domain.ext
+                   Hines    : ftp.domain.ext
+             Salt Lake City : ftp.domain.ext
+     First Available Server : download.vista.domain.ext
+   
+  The following file will be available:
+      File Name         Description
+      -------------     --------------
+      EAS_1_P96.KID     Host File containing KIDS software distribution
+   
+  Note:Use ASCII mode when transferring the .KID file.
+ 
+ 
+  Patch Installation:
+  ===================
+   
+  Installation Instructions:
+  --------------------------
+   
+  Please see the Patch Description for patch EAS*1*96 for installation 
+  instructions.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IVMLINS2
+    Before: B25189104   After: B26072131  **14,34,111,156**
+ 
+Routine list of preceding patches: 111
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 22, 2013
+Completed By:                               Date Completed: JUL 09, 2014
+Released By :                               Date Released : JUL 09, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

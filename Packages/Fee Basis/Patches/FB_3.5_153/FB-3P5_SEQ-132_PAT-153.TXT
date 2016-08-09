@@ -1,0 +1,248 @@
+$TXT Created by                at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 03/04/15 at 08:54
+=============================================================================
+Run Date: JUN 17, 2015                     Designation: FB*3.5*153
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #132                    Status: Released
+                  Compliance Date: JUL 03, 2015
+=============================================================================
+
+Associated patches: (v)FB*3.5*25   <<= must be installed BEFORE `FB*3.5*153'
+                    (v)FB*3.5*114  <<= must be installed BEFORE `FB*3.5*153'
+                    (v)FB*3.5*127  <<= must be installed BEFORE `FB*3.5*153'
+
+Subject: PATIENT MRA FMS ERRORS;MILL BILL IND ISSUE;CNH POST ISSUE;PATIENT MRA TX
+
+Category: 
+  - Routine
+  - Input Template
+
+Description:
+============
+
+  
+   *******************************************************************
+   *  This patch is being released with a shortened compliance date. *
+   *  Please install as soon as conveniently possible. Thanks.       *
+   *  See Step 7 (below).                                            *
+   *******************************************************************
+  
+ This patch addresses the following 4 issues:
+  
+ 1. Patient MRA rejections from FMS.
+  
+ 2. For option 'Enter Unauthorized Claim' the response to query Mill Bill
+    Claim indicator is not always stored when 'NO'.
+  
+ 3. Authorizations that are entered for Contract Nursing Home obligations 
+    are hitting every station's obligations for integrated sites when
+    posted.
+  
+ 4. Patient MRA transmissions are not being sent due to deleted patient
+    authorizations.
+  
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC000000881344 Patient MRA rejections on transmission to FMS
+  
+ 2. INC000000799322 The Mill Bill Claim indicator is not always stored 
+                    properly in VistA. 
+  
+ 3. INC000000990062 Duplicate 1358 entries across multiple stations when
+                    posting CNH commitments for Obligation
+     
+ 4. INC000001219665 Veteran MRAs are not processing to Central Fee
+                 
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Manila Outpatient Clinic 
+ Miami VA Healthcare System
+ VA Heartland - West
+ W.G. (Bill) Hefner VA Medical Center (Salisbury) 
+  
+ Remedy Overview:
+ ================ 
+ 1. INC000000881344 Patient MRA rejections on transmission to FMS
+  
+ Problem:
+ --------
+ Site received FMS returned message errors for Patient MRA sent with null 
+ or undefined state that would also shift subsequent data stream.
+  
+ Resolution:
+ -----------
+ Modify processing routine to set State code to either state code 
+ abbreviation when defined or to two spaces if null or undefined.
+  
+ Routines: FBAAV4
+  
+  
+  
+ 2. INC000000799322 The Mill Bill Claim indicator is not always stored 
+                    properly in VistA. 
+                 
+ Problem:
+ --------
+ When user enters initial (N)o response to query 'Is this claim being
+ considered under Millennium Act 38 U.S.C. 1725' the response will be
+ stored as null (instead of 0) and a later display of the Unauthorized 
+ Claim will not display the field at all.
+  
+ Resolution:
+ -----------
+ Modifications have been made to routine FBUCEN and input template 'FB 
+ UNAUTHORIZED ENTER' to ensure a response of (N)o will be stored as 0 and 
+ subsequent displays of the Unauthorized Claim will always display the 
+ field '38 U.S.C. 1725' with a value of (Y)es or (N)o.
+  
+ Routines: FBUCEN      Input Template: FB UNAUTHORIZED ENTER
+  
+  
+  
+ 3. IN0000000990062 Duplicate 1358 entries across multiple stations when
+                    posting CNH commitments for Obligation
+  
+ Problem:
+ --------
+ When user attempts (when multiple stations defined at site) to Post 
+ Commitments for Obligation each station's authorization will appear on 
+ all the other defined stations that are also posting their commitments.
+  
+ Resolution:
+ -----------
+ Modifications have been made to routines that when Estimating or posting 
+ station commitments for obligation they only show for the station they 
+ are associated with.
+  
+ Routines: FBNHPC, FBNHPC1
+  
+  
+  
+ 4. INC000001219665 Veteran MRAs are not processing to Central Fee
+  
+ Problem:
+ --------
+ Site received 037 rejection message from Central Fee for missing Patient 
+ MRA transmissions. Transmissions not sent if a patient MRA entry has a 
+ missing patient authorization pointer OR the patient authorization 
+ has been deleted, if a batch contains less than 100 patient MRA 
+ transmissions.
+  
+ Resolution:
+ -----------
+ Patient MRA transmission processing logic was modified in 
+ retransmit/transmit routine to check for a Patient MRA with missing
+ pointer or patient authorization deleted and will delete that entry and
+ continue processing valid entries and ensure a full transmission is
+ completed.
+  
+ Routines: FBAAV4 
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. You may queue the install if you wish.
+ It should take less than two minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*153)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       FB*3.5*153.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+                                                        
+          Add type Veteran MRA               [FBAA MRA VETERAN ADD TYPE]
+          Change type Veteran MRA            [FBAA MRA VETERAN CHANGE TYPE]
+          Delete type Veteran MRA            [FBAA MRA VETERAN DELETE TYPE]
+          Reinstate type Veteran MRA         [FBAA MRA VETERAN REINSTATE]
+          Estimate Funds for Obligation      [FBCNH ESTIMATE FUNDS]
+          Post Commitments for Obligation    [FBCNH POST COMMITMENTS]
+          Enter Unauthorized Claim           [FBUC ENTER]
+          Re-Transmit MRA's                  [FBAA REQUEUE MRA]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+  
+    7. This is very important * * * 
+  
+       Please send a copy of this Patch Description to the: 
+       Chief, Fee Basis Department 
+       at the site immediately.
+  
+       After this patch is installed, action may need to be taken related
+       to Issue 4:
+  
+       After the patch is installed, users should work their rejects and
+       update MRA's as need. They should resubmit any reimbursables. It is
+       not recommended to use the Re-Transmit MRA's [FBAA REQUEUE MRA]
+       option for records of more than a day or two in the past because we
+       do not want to overwrite new data with older data, and the option
+       re-transmits all types of MRA's, not just Veteran MRA's.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBAAV4
+    Before: B35214888   After: B39089780  **13,34,37,70,146,127,153**
+Routine Name: FBNHPC
+    Before: B12365925   After: B14162859  **25,153**
+Routine Name: FBNHPC1
+    Before: B11615342   After: B13879946  **153**
+Routine Name: FBUCEN
+    Before: B26341993   After: B27715243  **32,61,114,153**
+ 
+Routine list of preceding patches: 25, 114, 127
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 28, 2014
+Completed By:                               Date Completed: JUN 09, 2015
+Released By :                               Date Released : JUN 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

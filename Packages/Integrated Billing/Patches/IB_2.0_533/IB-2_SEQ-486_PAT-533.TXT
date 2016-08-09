@@ -1,0 +1,193 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/05/14 at 12:27
+=============================================================================
+Run Date: JAN 05, 2015                     Designation: IB*2*533
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #486                      Status: Released
+                  Compliance Date: JAN 15, 2015
+=============================================================================
+
+Associated patches: (v)IB*2*497    <<= must be installed BEFORE `IB*2*533'
+                    (v)IB*2*506    <<= must be installed BEFORE `IB*2*533'
+
+Subject: E-IV UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **** Please Note ****
+  
+ There is a shortened compliance period of 10 days for installing this 
+ patch.  Please be aware of the shortened install timeframe - your 
+ cooperation and assistance is greatly appreciated!  
+  
+ **** Please Note ****
+  
+  
+ This patch fixes the following issues:
+  
+ 1. When dependent inquiries are being created, the name in PID (Patient 
+    Identification) segments is not populating using the patient's
+    registration file name as it should.
+  
+ 2. Appointment generated inquiries are getting stuck (i.e. nightly batch 
+    extracts and inquiries are being left in a queued status).
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000001044229    Integrated Billing - e-IIV:
+ 2. INC000001041109    Integrated Billing - Insurance Buffer:
+    Duplicate:
+    INC000001051437
+  
+  
+ ASSOCIATED NSR(s):
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ ========================
+ Lebanon VAMC
+ North Texas HCS (Dallas)
+ VA Heartland West (Columbia)
+  
+  
+ REMEDY OVERVIEW:
+ ===============
+ 1. INC000001044229    Integrated Billing - e-IIV:
+   
+    Problem: 
+    --------
+    The IB system should transmit the NAME field (#.01) from the PATIENT
+    file (#2) in the PID segment and the NAME OF INSURED field (#7.01) from
+    the INSURANCE TYPE sub-file (#2.312) in the GT1 segment of the 270 HL7
+    message when the patient is not the subscriber.
+   
+    Resolution:
+    -----------
+    Modify the current logic so the correct data is transmitted when the 
+    patient is not the subscriber.
+  
+ Routines: IBCNEHLQ
+  
+ 2. INC000001041109    Integrated Billing - Insurance Buffer:
+   
+    Problem: 
+    --------
+    When processing a non-buffer record in the IIV TRANSMISSION QUEUE file 
+    (#365.1) if the INSUR RECORD IEN (#.13) field is null, an undefined
+    error will occur while trying to create the PID segment for that
+    record.
+   
+    Resolution:
+    -----------
+    The code will be modified to take into account the possibility the 
+    INSUR RECORD IEN (#.13) might be null for non-buffer records.
+  
+    In addition to preventing the undefined error, the process was modified
+    so the HL7 Transmission limit, as defined by the HL7 MAXIMUM NUMBER field
+    (#51.15) in the IB SITE PARAMETERS file (#350.9), is not exceeded.  
+    Also, a pre-install routine will run to cancel any transmissions in the
+    queue for "Appointment" extracts in a "Ready To Transmit" state with a
+    SERVICE DATE (#.12) in the past.  It will also cancel any transactions
+    with a QUERY FLAG (#.11) of "Identification" that are in a "Ready to
+    Transmit", "Hold", or "Retry" status.  
+  
+ Routines: IBCNEHLQ, IBCNEDEP, IB20P533
+  
+    
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ It is recommended this patch be installed after normal work hours to 
+ avoid interruption to users. It should take less than 2 minutes to install
+ this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*533)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*533.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond YES.
+  
+        When prompted to select the options you would like to place out 
+        of order, enter the following: 
+   
+           eIV NIGHTLY PROCESS      [IBCNE IIV BATCH PROCESS]
+  
+  
+     7. You may delete routine IB20P533 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     IIV TRANSMISSION QUEUE (#365.1) record update.  See below:
+      
+  
+  Running Pre-Install Routine: PRE^IB20P533
+ Starting IB*2*533 Pre-Install....
+  
+ >>>Processing records.....
+ Total of X codes updated in the IIV TRANSMISSION QUEUE file (#365.1)
+  
+ Patch Pre-Install is complete.
+  
+ NOTE: If any type of error message is displayed during installation
+     create a REMEDY ticket to resolve the issue.  
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P533
+    Before:       n/a   After:  B4428350  **533**
+Routine Name: IBCNEDEP
+    Before: B83976754   After: B88960339  **184,271,300,416,438,506,533**
+Routine Name: IBCNEHLQ
+    Before: B44383583   After: B46752354  **184,271,300,361,416,438,467,
+                                           497,533**
+ 
+Routine list of preceding patches: 497, 506
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 25, 2014
+Completed By:                               Date Completed: DEC 12, 2014
+Released By :                               Date Released : JAN 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

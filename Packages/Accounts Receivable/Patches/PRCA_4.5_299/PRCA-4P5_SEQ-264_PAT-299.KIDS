@@ -1,0 +1,791 @@
+Released PRCA*4.5*299 SEQ #264
+Extracted from mail message
+**KIDS**:PRCA*4.5*299^
+
+**INSTALL NAME**
+PRCA*4.5*299
+"BLD",9604,0)
+PRCA*4.5*299^ACCOUNTS RECEIVABLE^0^3140207^y
+"BLD",9604,1,0)
+^^5^5^3140117^
+"BLD",9604,1,1,0)
+This patch addresses two issues. The first issue involves the criteria
+"BLD",9604,1,2,0)
+checks to identify a bill for VA care or non-VA care in the CBO Data
+"BLD",9604,1,3,0)
+Extract process. The second issue is about the DMC Referred Report Print 
+"BLD",9604,1,4,0)
+[PRCA RCDMC REFERRED RPT] option that opens the device twice resulted
+"BLD",9604,1,5,0)
+in the user being prompted twice for a message subject.
+"BLD",9604,4,0)
+^9.64PA^^
+"BLD",9604,6.3)
+6
+"BLD",9604,"ABPKG")
+n
+"BLD",9604,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9604,"KRN",.4,0)
+.4
+"BLD",9604,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",9604,"KRN",.401,0)
+.401
+"BLD",9604,"KRN",.402,0)
+.402
+"BLD",9604,"KRN",.403,0)
+.403
+"BLD",9604,"KRN",.5,0)
+.5
+"BLD",9604,"KRN",.84,0)
+.84
+"BLD",9604,"KRN",3.6,0)
+3.6
+"BLD",9604,"KRN",3.8,0)
+3.8
+"BLD",9604,"KRN",9.2,0)
+9.2
+"BLD",9604,"KRN",9.8,0)
+9.8
+"BLD",9604,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9604,"KRN",9.8,"NM",1,0)
+RCXVUTIL^^0^B22527268
+"BLD",9604,"KRN",9.8,"NM",2,0)
+PRCAREPT^^0^B24540582
+"BLD",9604,"KRN",9.8,"NM","B","PRCAREPT",2)
+
+"BLD",9604,"KRN",9.8,"NM","B","RCXVUTIL",1)
+
+"BLD",9604,"KRN",19,0)
+19
+"BLD",9604,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9604,"KRN",19.1,0)
+19.1
+"BLD",9604,"KRN",101,0)
+101
+"BLD",9604,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",9604,"KRN",409.61,0)
+409.61
+"BLD",9604,"KRN",771,0)
+771
+"BLD",9604,"KRN",779.2,0)
+779.2
+"BLD",9604,"KRN",870,0)
+870
+"BLD",9604,"KRN",8989.51,0)
+8989.51
+"BLD",9604,"KRN",8989.52,0)
+8989.52
+"BLD",9604,"KRN",8994,0)
+8994
+"BLD",9604,"KRN","B",.4,.4)
+
+"BLD",9604,"KRN","B",.401,.401)
+
+"BLD",9604,"KRN","B",.402,.402)
+
+"BLD",9604,"KRN","B",.403,.403)
+
+"BLD",9604,"KRN","B",.5,.5)
+
+"BLD",9604,"KRN","B",.84,.84)
+
+"BLD",9604,"KRN","B",3.6,3.6)
+
+"BLD",9604,"KRN","B",3.8,3.8)
+
+"BLD",9604,"KRN","B",9.2,9.2)
+
+"BLD",9604,"KRN","B",9.8,9.8)
+
+"BLD",9604,"KRN","B",19,19)
+
+"BLD",9604,"KRN","B",19.1,19.1)
+
+"BLD",9604,"KRN","B",101,101)
+
+"BLD",9604,"KRN","B",409.61,409.61)
+
+"BLD",9604,"KRN","B",771,771)
+
+"BLD",9604,"KRN","B",779.2,779.2)
+
+"BLD",9604,"KRN","B",870,870)
+
+"BLD",9604,"KRN","B",8989.51,8989.51)
+
+"BLD",9604,"KRN","B",8989.52,8989.52)
+
+"BLD",9604,"KRN","B",8994,8994)
+
+"BLD",9604,"PRE")
+
+"BLD",9604,"QUES",0)
+^9.62^^
+"BLD",9604,"REQB",0)
+^9.611^2^2
+"BLD",9604,"REQB",1,0)
+PRCA*4.5*108^2
+"BLD",9604,"REQB",2,0)
+PRCA*4.5*201^2
+"BLD",9604,"REQB","B","PRCA*4.5*108",1)
+
+"BLD",9604,"REQB","B","PRCA*4.5*201",2)
+
+"MBREQ")
+0
+"PKG",142,-1)
+1^1
+"PKG",142,0)
+ACCOUNTS RECEIVABLE^PRCA^BILL COLLECTIONS
+"PKG",142,20,0)
+^9.402P^1^1
+"PKG",142,20,1,0)
+2^^PRCAMRG
+"PKG",142,20,1,1)
+
+"PKG",142,20,"B",2,1)
+
+"PKG",142,22,0)
+^9.49I^1^1
+"PKG",142,22,1,0)
+4.5^^2950320
+"PKG",142,22,1,"PAH",1,0)
+299^3140207
+"PKG",142,22,1,"PAH",1,1,0)
+^^5^5^3140207
+"PKG",142,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. The first issue involves the criteria
+"PKG",142,22,1,"PAH",1,1,2,0)
+checks to identify a bill for VA care or non-VA care in the CBO Data
+"PKG",142,22,1,"PAH",1,1,3,0)
+Extract process. The second issue is about the DMC Referred Report Print 
+"PKG",142,22,1,"PAH",1,1,4,0)
+[PRCA RCDMC REFERRED RPT] option that opens the device twice resulted
+"PKG",142,22,1,"PAH",1,1,5,0)
+in the user being prompted twice for a message subject.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PRCAREPT")
+0^2^B24540582^B23557806
+"RTN","PRCAREPT",1,0)
+PRCAREPT ;SF-ISC/YJK-AR LIST,REPORT ;8/26/93  8:43 AM
+"RTN","PRCAREPT",2,0)
+V ;;4.5;Accounts Receivable;**68,63,108,299**;Mar 20, 1995;Build 6
+"RTN","PRCAREPT",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","PRCAREPT",4,0)
+ ;MAS,Agent Cashier, 3rd party,RC/DOJ reports.
+"RTN","PRCAREPT",5,0)
+PRINT ;ask if the report will be queued.
+"RTN","PRCAREPT",6,0)
+ K PRCAQUE S PRCA("MESS")="Do you wish to queue this report "
+"RTN","PRCAREPT",7,0)
+QUE S %=2 W !,PRCA("MESS") D YN^DICN Q:%<0  W " "
+"RTN","PRCAREPT",8,0)
+ I %=0 W !,"Answer <YES> or <NO>" G QUE
+"RTN","PRCAREPT",9,0)
+ K IO("Q") S %ZIS("B")="",%ZIS="M",PRCA("DEV")="" S:%=1 %ZIS="MQ",PRCA("DEV")="Q;",IOP="Q"
+"RTN","PRCAREPT",10,0)
+ ;
+"RTN","PRCAREPT",11,0)
+DIP S L=0,FLDS=PRCATEMP,BY=PRCASORT,FR=PRCAFT,TO=PRCALAST,DHD=PRCAHDR
+"RTN","PRCAREPT",12,0)
+ D EN1^DIP K L,FLDS,BY,FR,TO,DHD,DIC,DIS,IOP
+"RTN","PRCAREPT",13,0)
+ ;
+"RTN","PRCAREPT",14,0)
+KILLV K ZTSK,PRCAKDT1,PRCAQUE,DQTIME,PRCAKDT2,PRCACT,PRCARCOJ,PRCATEMP,PRCADT1,PRCADT2,PRCABN,PRCABILN,PRCAHDR,PRCAFT,PRCALAST,PRCATEMP,PRCASORT,PRCADMC,PRCANAME,DTOUT,DUOUT,DIR,DIRUT Q
+"RTN","PRCAREPT",15,0)
+END D KILLV K PRCA,PRCAIOP Q
+"RTN","PRCAREPT",16,0)
+ ;
+"RTN","PRCAREPT",17,0)
+REPT ;====================== REPORT SUBROUTINES ==========================
+"RTN","PRCAREPT",18,0)
+EN2 ;report for MAS reconciliation with AR for 3rd Party.
+"RTN","PRCAREPT",19,0)
+ S PRCA("DATE")="DATE BILL PREPARED" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",20,0)
+ S PRCAFT=PRCADT1_",T,100",PRCALAST=PRCADT2_",T,199",PRCAHDR="MAS RECONCILIATION REPORT"
+"RTN","PRCAREPT",21,0)
+ S DIC="^PRCA(430," S PRCATEMP="[PRCAR MAS REPORT]",PRCASORT="@DATE BILL PREPARED,@CATEGORY:INTERNAL(TYPE),@CURRENT STATUS:STATUS NUMBER" D PRINT,END Q
+"RTN","PRCAREPT",22,0)
+ ;
+"RTN","PRCAREPT",23,0)
+EN3 ;print 3rd party accounts receivable report.
+"RTN","PRCAREPT",24,0)
+ S PRCAHDR="3RD PARTY ACTIVE REFERRAL REPORT"
+"RTN","PRCAREPT",25,0)
+ S PRCASORT="DEBTOR;S2,PATIENT,RC/DOJ REFERRAL DATE,@CURRENT STATUS:STATUS NUMBER,@CATEGORY:INTERNAL(TYPE)"
+"RTN","PRCAREPT",26,0)
+ S PRCAFT=",,,102,T",PRCALAST=",,,102,T"
+"RTN","PRCAREPT",27,0)
+ S PRCATEMP="[PRCA 3RD REPORT]",DIC="^PRCA(430," D PRINT,END Q
+"RTN","PRCAREPT",28,0)
+ ;
+"RTN","PRCAREPT",29,0)
+EN4 ;Report AR referred to RC
+"RTN","PRCAREPT",30,0)
+ S PRCA("DATE")="DATE REFERRED TO RC" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",31,0)
+ S PRCACT=0,PRCARCOJ="",PRCATEMP="[PRCAD DC DOJ]"
+"RTN","PRCAREPT",32,0)
+ S PRCASORT="DEBTOR;S1,@RC/DOJ REFERRAL DATE,@RC/DOJ REFERRAL CODE"
+"RTN","PRCAREPT",33,0)
+ S PRCAFT=","_PRCADT1_",RC",PRCALAST=","_PRCADT2_",RC"
+"RTN","PRCAREPT",34,0)
+ S PRCAHDR="ACCOUNTS RECEIVABLE REFERRED TO RC"
+"RTN","PRCAREPT",35,0)
+ K PRCAEN4 S DIC="^PRCA(430," D PRINT,END Q
+"RTN","PRCAREPT",36,0)
+ ;
+"RTN","PRCAREPT",37,0)
+EN5 ;Report AR referred to DOJ
+"RTN","PRCAREPT",38,0)
+ S PRCA("DATE")="DATE REFERRED TO DOJ" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",39,0)
+ S PRCATEMP="[PRCAD DC DOJ]",PRCASORT="DEBTOR;S1,@RC/DOJ REFERRAL DATE,@RC/DOJ REFERRAL CODE"
+"RTN","PRCAREPT",40,0)
+ S PRCAFT=","_PRCADT1_",DOJ",PRCALAST=","_PRCADT2_",DOJ"
+"RTN","PRCAREPT",41,0)
+ S PRCAHDR="ACCOUNTS RECEIVABLE REFERRED TO DOJ",DIC="^PRCA(430," D PRINT,END Q
+"RTN","PRCAREPT",42,0)
+ ;
+"RTN","PRCAREPT",43,0)
+EN6 ;print other transaction for CALM code sheet in the AT section.
+"RTN","PRCAREPT",44,0)
+ D TSK^PRCAPTR Q
+"RTN","PRCAREPT",45,0)
+ ;
+"RTN","PRCAREPT",46,0)
+EN8 ;RC debt collection report.
+"RTN","PRCAREPT",47,0)
+ S PRCA("DATE")="DATE RC TRANSACTION CREATED" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",48,0)
+ S PRCATEMP="[PRCAS DC]",PRCASORT="+TRANSACTION TYPE;S2,@DATE ENTERED"
+"RTN","PRCAREPT",49,0)
+ S PRCAHDR="REGIONAL COUNSEL DEBT COLLECTION REPORT FROM "_PRCAKDT1_" TO "_PRCAKDT2
+"RTN","PRCAREPT",50,0)
+ S DIC="^PRCA(433,",PRCAFT=","_PRCADT1,PRCALAST=","_PRCADT2
+"RTN","PRCAREPT",51,0)
+ S DIS(1)="I $P($G(^PRCA(433,D0,0)),U,7)=""RC"""
+"RTN","PRCAREPT",52,0)
+ S DIS(2)="I $P($G(^PRCA(433,D0,0)),U,7)=""DC"""
+"RTN","PRCAREPT",53,0)
+ S DIS(0)="I $P($G(^PRCA(433,D0,1)),U,2)'=45"
+"RTN","PRCAREPT",54,0)
+ D PRINT,END Q
+"RTN","PRCAREPT",55,0)
+ ;
+"RTN","PRCAREPT",56,0)
+EN9 ;DOJ debt collection report.
+"RTN","PRCAREPT",57,0)
+ S PRCA("DATE")="DATE DOJ TRANSACTION CREATED" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",58,0)
+ S PRCATEMP="[PRCAS DC]",PRCASORT="+TRANSACTION TYPE;S2,@RC DOJ CODE,@DATE ENTERED"
+"RTN","PRCAREPT",59,0)
+ S PRCAHDR="DEPARTMENT OF JUSTICE DEBT COLLECTION REPORT FROM "_PRCAKDT1_" TO "_PRCAKDT2
+"RTN","PRCAREPT",60,0)
+ S DIC="^PRCA(433,",PRCAFT=",DOJ,"_PRCADT1,PRCALAST=",DOJ,"_PRCADT2
+"RTN","PRCAREPT",61,0)
+ S DIS(0)="I $P($G(^PRCA(433,D0,1)),U,2)'=45"
+"RTN","PRCAREPT",62,0)
+ D PRINT,END Q
+"RTN","PRCAREPT",63,0)
+ ;
+"RTN","PRCAREPT",64,0)
+EN10 ;print contingent (Worker's Comp & Tort Feasors) 3rd party accounts receivable report.
+"RTN","PRCAREPT",65,0)
+ S PRCA("DATE")="DATE REFERRED TO RC/DOJ" D ASKDT^PRCAQUE G:(PRCADT1="")!(PRCADT2="") END
+"RTN","PRCAREPT",66,0)
+ S PRCAHDR="REFERRED TP TORT & WORKER'S COMP AR REPORT"
+"RTN","PRCAREPT",67,0)
+ S PRCASORT="DEBTOR;S1,@REFERRAL DATE,@CURRENT STATUS:STATUS NUMBER,@CATEGORY:CATEGORY NUMBER"
+"RTN","PRCAREPT",68,0)
+ S PRCAFT=","_PRCADT1_",102,22",PRCALAST=","_PRCADT2_",102,23"
+"RTN","PRCAREPT",69,0)
+ S PRCATEMP="[PRCAR CONTINGENT REPORT]",DIC="^PRCA(430," D PRINT,END Q
+"RTN","PRCAREPT",70,0)
+ ;
+"RTN","PRCAREPT",71,0)
+EN11 ;print DMC referred debts
+"RTN","PRCAREPT",72,0)
+ W !!,"This report should be run on or AFTER the first Wednesday of the month."
+"RTN","PRCAREPT",73,0)
+ W !,"Make sure your facility has received the monthly offset information from"
+"RTN","PRCAREPT",74,0)
+ W !,"the DMC to insure the accuracy of this report."
+"RTN","PRCAREPT",75,0)
+ ;
+"RTN","PRCAREPT",76,0)
+ W !!,?5,"Enter DMC Report to print:"
+"RTN","PRCAREPT",77,0)
+ W !,?10,"1 - All Patients"
+"RTN","PRCAREPT",78,0)
+ W !,?10,"2 - Single Patient",!
+"RTN","PRCAREPT",79,0)
+ ;
+"RTN","PRCAREPT",80,0)
+ S DIR(0)="LO^1:2:0"
+"RTN","PRCAREPT",81,0)
+ S DIR("A")="Report",DIR("B")="1",DIR("?",1)="Enter '1' to print DMC information for ALL patients.",DIR("?")="Enter '2' to print DMC information about a single patient."
+"RTN","PRCAREPT",82,0)
+ D ^DIR G:$D(DIRUT) END
+"RTN","PRCAREPT",83,0)
+ S PRCADMC=+Y
+"RTN","PRCAREPT",84,0)
+ ;
+"RTN","PRCAREPT",85,0)
+ I PRCADMC=2 S DIC="^RCD(340,",DIC(0)="AEQZ" D ^DIC I Y<0 K PRCADMC,DIC G END
+"RTN","PRCAREPT",86,0)
+ S PRCANAME=+Y
+"RTN","PRCAREPT",87,0)
+ I $D(DTOUT)!$D(DUOUT) G END
+"RTN","PRCAREPT",88,0)
+ S PRCAHDR="REFERRED DMC DEBTS"
+"RTN","PRCAREPT",89,0)
+ ;S PRCASORT="@DATE SENT TO DMC,+@INTERNAL(DEBTOR);S2"
+"RTN","PRCAREPT",90,0)
+ I PRCADMC=1 S PRCAFT=",",PRCALAST=",",PRCASORT="@DATE SENT TO DMC,+DEBTOR;S2"
+"RTN","PRCAREPT",91,0)
+ I PRCADMC=2 S PRCAFT=","_PRCANAME,PRCALAST=","_PRCANAME,PRCASORT="@DATE SENT TO DMC,+@INTERNAL(DEBTOR)"
+"RTN","PRCAREPT",92,0)
+ S PRCATEMP="[RCDMC REFERRED DEBTS]",DIC="^PRCA(430," D PRINT,END Q
+"RTN","PRCAREPT",93,0)
+ ;
+"RTN","RCXVUTIL")
+0^1^B22527268^B17859013
+"RTN","RCXVUTIL",1,0)
+RCXVUTIL ;DAOU/ALA-AR Data Extract Utility Program ;29-JUL-03
+"RTN","RCXVUTIL",2,0)
+ ;;4.5;Accounts Receivable;**201,299**;Mar 20, 1995;Build 6
+"RTN","RCXVUTIL",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","RCXVUTIL",4,0)
+ ;
+"RTN","RCXVUTIL",5,0)
+SPAR(REF) ;  HL7 Segment Parsing
+"RTN","RCXVUTIL",6,0)
+ ;  Input Parameter
+"RTN","RCXVUTIL",7,0)
+ ;    REF = Array or global reference
+"RTN","RCXVUTIL",8,0)
+ ;       Global or array should end with ')'
+"RTN","RCXVUTIL",9,0)
+ ;       e.g. ^TMP($J,"XXX",#)
+"RTN","RCXVUTIL",10,0)
+ ;
+"RTN","RCXVUTIL",11,0)
+ ;  Output Parameters
+"RTN","RCXVUTIL",12,0)
+ ;    RCXSEG(#) = Each sequence of the segment in the array
+"RTN","RCXVUTIL",13,0)
+ ;
+"RTN","RCXVUTIL",14,0)
+ NEW ISCT,II,IJ,IK,ISDATA,ISPEC,ISBEG,ISEND,IS,LSDATA,IM,NPC
+"RTN","RCXVUTIL",15,0)
+ ;
+"RTN","RCXVUTIL",16,0)
+ S ISCT="",II=0,IS=0
+"RTN","RCXVUTIL",17,0)
+ F  S ISCT=$O(@REF@(ISCT)) Q:ISCT=""  D
+"RTN","RCXVUTIL",18,0)
+ . S IS=IS+1
+"RTN","RCXVUTIL",19,0)
+ . S ISDATA(IS)=$G(@REF@(ISCT))
+"RTN","RCXVUTIL",20,0)
+ . I $O(@REF@(ISCT))="" S ISDATA(IS)=ISDATA(IS)_HLFS
+"RTN","RCXVUTIL",21,0)
+ . S ISPEC(IS)=$L(ISDATA(IS),HLFS)
+"RTN","RCXVUTIL",22,0)
+ ;
+"RTN","RCXVUTIL",23,0)
+ S IM=0,LSDATA=""
+"RTN","RCXVUTIL",24,0)
+LP S IM=IM+1 Q:IM>IS
+"RTN","RCXVUTIL",25,0)
+ S LSDATA=LSDATA_ISDATA(IM),NPC=ISPEC(IM)
+"RTN","RCXVUTIL",26,0)
+ F IJ=1:1:NPC-1 D
+"RTN","RCXVUTIL",27,0)
+ . S II=II+1,RCXSEG(II)=$$CLNSTR($P(LSDATA,HLFS,IJ),HL("ECH"),$E(HL("ECH")))
+"RTN","RCXVUTIL",28,0)
+ S LSDATA=$P(LSDATA,HLFS,NPC)
+"RTN","RCXVUTIL",29,0)
+ G LP
+"RTN","RCXVUTIL",30,0)
+ ;
+"RTN","RCXVUTIL",31,0)
+CLNSTR(STRING,CHARS,SUBSEP) ;  Remove extra trailing components and subcomponents
+"RTN","RCXVUTIL",32,0)
+ ;  in the HL7 segment
+"RTN","RCXVUTIL",33,0)
+ ;
+"RTN","RCXVUTIL",34,0)
+ ;  Input parameters
+"RTN","RCXVUTIL",35,0)
+ ;    STRING - The data value to be 'cleansed'
+"RTN","RCXVUTIL",36,0)
+ ;    CHARS - The component character to be removed
+"RTN","RCXVUTIL",37,0)
+ ;    SUSEP - The subcomponent character to be removed
+"RTN","RCXVUTIL",38,0)
+ ;
+"RTN","RCXVUTIL",39,0)
+ N RTSTRING,NUMPEC,PEC
+"RTN","RCXVUTIL",40,0)
+ S RTSTRING=$$RTRIMCH(STRING,CHARS)
+"RTN","RCXVUTIL",41,0)
+ ; Now we have string without trailing chars, remove from subs
+"RTN","RCXVUTIL",42,0)
+ S NUMPEC=$L(RTSTRING,SUBSEP)
+"RTN","RCXVUTIL",43,0)
+ F PEC=1:1:NUMPEC S $P(RTSTRING,SUBSEP,PEC)=$$RTRIMCH($P(RTSTRING,SUBSEP,PEC),CHARS)
+"RTN","RCXVUTIL",44,0)
+ Q RTSTRING
+"RTN","RCXVUTIL",45,0)
+ ;
+"RTN","RCXVUTIL",46,0)
+RTRIMCH(STR,CHRS) ;  Remove the trailing chars from string
+"RTN","RCXVUTIL",47,0)
+ N R,L
+"RTN","RCXVUTIL",48,0)
+ S L=1,CHRS=$G(CHRS," ")
+"RTN","RCXVUTIL",49,0)
+ F R=$L(STR):-1:1 Q:CHRS'[$E(STR,R)
+"RTN","RCXVUTIL",50,0)
+ I L=R,(CHRS[$E(STR)) S STR=""
+"RTN","RCXVUTIL",51,0)
+ Q $E(STR,L,R)
+"RTN","RCXVUTIL",52,0)
+ ;
+"RTN","RCXVUTIL",53,0)
+DFP(IBN) ;  Date of First Payment Function
+"RTN","RCXVUTIL",54,0)
+ ;  Input Parameter
+"RTN","RCXVUTIL",55,0)
+ ;    IBN = IEN of the bill number from file 430
+"RTN","RCXVUTIL",56,0)
+ ;
+"RTN","RCXVUTIL",57,0)
+ N VAL,IBPAY,IBT,IBT0,IBT1
+"RTN","RCXVUTIL",58,0)
+ S VAL=0
+"RTN","RCXVUTIL",59,0)
+ ;  No payments made.
+"RTN","RCXVUTIL",60,0)
+ I '$P($G(^PRCA(430,IBN,7)),U,7) Q ""
+"RTN","RCXVUTIL",61,0)
+ S (IBPAY,IBT)=0 F  S IBT=$O(^PRCA(433,"C",IBN,IBT)) Q:'IBT  D  Q:IBPAY
+"RTN","RCXVUTIL",62,0)
+ . S IBT0=$G(^PRCA(433,IBT,0)),IBT1=$G(^(1))
+"RTN","RCXVUTIL",63,0)
+ . I $P(IBT0,U,4)'=2 Q  ;                  Not complete.
+"RTN","RCXVUTIL",64,0)
+ . I $P(IBT1,U,2)'=2,$P(IBT1,U,2)'=34 Q  ; Not a payment.
+"RTN","RCXVUTIL",65,0)
+ . S X=$S(+IBT1:+IBT1,1:$P(IBT1,U,9)\1),$P(VAL,U,4)=X,IBPAY=1
+"RTN","RCXVUTIL",66,0)
+ Q $P(VAL,U,4)
+"RTN","RCXVUTIL",67,0)
+ ;
+"RTN","RCXVUTIL",68,0)
+DATE(X) ;  Pass in External Date and get FileMan date format
+"RTN","RCXVUTIL",69,0)
+ ;
+"RTN","RCXVUTIL",70,0)
+ ;  Input Parameter
+"RTN","RCXVUTIL",71,0)
+ ;    X = a date in any regular date format
+"RTN","RCXVUTIL",72,0)
+ ;  Output Parameter
+"RTN","RCXVUTIL",73,0)
+ ;    Y = a date in FileMan format
+"RTN","RCXVUTIL",74,0)
+ ;  Parameters
+"RTN","RCXVUTIL",75,0)
+ ;    DIC(0) = FileMan date parameter
+"RTN","RCXVUTIL",76,0)
+ ;
+"RTN","RCXVUTIL",77,0)
+ I X["@" S %DT="T"
+"RTN","RCXVUTIL",78,0)
+ I $G(DIC(0))="" S DIC(0)=""
+"RTN","RCXVUTIL",79,0)
+ D ^%DT
+"RTN","RCXVUTIL",80,0)
+ I Y=-1 S Y=""
+"RTN","RCXVUTIL",81,0)
+ K DIC,%DT
+"RTN","RCXVUTIL",82,0)
+ Q Y
+"RTN","RCXVUTIL",83,0)
+ ;
+"RTN","RCXVUTIL",84,0)
+TASK(RCDSC) ;  Check on Task Status
+"RTN","RCXVUTIL",85,0)
+ ;
+"RTN","RCXVUTIL",86,0)
+ ;  Input Parameter
+"RTN","RCXVUTIL",87,0)
+ ;    RCDSC = Task Description
+"RTN","RCXVUTIL",88,0)
+ ;
+"RTN","RCXVUTIL",89,0)
+ NEW RTASKS,RTSK,ZTSK,ZTKEY
+"RTN","RCXVUTIL",90,0)
+ D DESC^%ZTLOAD(RCDSC,"RTASKS")
+"RTN","RCXVUTIL",91,0)
+ S RTSK=""
+"RTN","RCXVUTIL",92,0)
+ F  S RTSK=$O(RTASKS(RTSK)) Q:RTSK=""  D
+"RTN","RCXVUTIL",93,0)
+ . S ZTSK=RTSK D STAT^%ZTLOAD
+"RTN","RCXVUTIL",94,0)
+ ;
+"RTN","RCXVUTIL",95,0)
+ K RTASKS
+"RTN","RCXVUTIL",96,0)
+ I $G(ZTSK(2))="Inactive: Finished" Q 0
+"RTN","RCXVUTIL",97,0)
+ I $G(ZTSK(2))="Inactive: Interrupted" Q 0
+"RTN","RCXVUTIL",98,0)
+ I $G(ZTSK(2))="Active: Pending" Q 1
+"RTN","RCXVUTIL",99,0)
+ Q 0
+"RTN","RCXVUTIL",100,0)
+ ;
+"RTN","RCXVUTIL",101,0)
+SAT(RDATE) ;  Find the next Saturday date from the passed in date
+"RTN","RCXVUTIL",102,0)
+ NEW CDOW,FDATE,NDAYS
+"RTN","RCXVUTIL",103,0)
+ S CDOW=$$DOW^XLFDT(RDATE,1),NDAYS=6-CDOW
+"RTN","RCXVUTIL",104,0)
+ I NDAYS=0 S NDAYS=7
+"RTN","RCXVUTIL",105,0)
+ S FDATE=$$FMADD^XLFDT(RDATE,NDAYS)
+"RTN","RCXVUTIL",106,0)
+ Q FDATE
+"RTN","RCXVUTIL",107,0)
+ ;
+"RTN","RCXVUTIL",108,0)
+CARE(RCXVIEN) ;  Is bill VA or NON-VA care?
+"RTN","RCXVUTIL",109,0)
+ ;
+"RTN","RCXVUTIL",110,0)
+ ;  Input parameter
+"RTN","RCXVUTIL",111,0)
+ ;    RCXVIEN = Bill ien
+"RTN","RCXVUTIL",112,0)
+ ;
+"RTN","RCXVUTIL",113,0)
+ ;  Output parameter
+"RTN","RCXVUTIL",114,0)
+ ;    RCXVCFL = Care Flag
+"RTN","RCXVUTIL",115,0)
+ ;    0 = Non-VA Care
+"RTN","RCXVUTIL",116,0)
+ ;    1 = VA Care
+"RTN","RCXVUTIL",117,0)
+ ; 
+"RTN","RCXVUTIL",118,0)
+ ; *299 criteria for inpatient and outpatient
+"RTN","RCXVUTIL",119,0)
+ ; -Non-VA care if bill classification is inpt/(med. part A) & no ptf #.
+"RTN","RCXVUTIL",120,0)
+ ; -Non-VA care if ptf # & discharge dt are not null and ward is null.
+"RTN","RCXVUTIL",121,0)
+ ; -VA care if ptf # & discharge dt are not null and ward is not null.
+"RTN","RCXVUTIL",122,0)
+ ; -Non-VA care if ptf # & fee basis are not null, otherwise VA care.
+"RTN","RCXVUTIL",123,0)
+ ; -VA care if at least one assoc. opt encounter is not a NON-COUNT (12)
+"RTN","RCXVUTIL",124,0)
+ ;  encounter, otherwise Non-VA care.
+"RTN","RCXVUTIL",125,0)
+ ; -VA care or Non-VA care in the final indicator is determined based on
+"RTN","RCXVUTIL",126,0)
+ ;  the opt encounter criteria if the flow reaches it.
+"RTN","RCXVUTIL",127,0)
+ ;  
+"RTN","RCXVUTIL",128,0)
+ NEW RCXVCARE,RCXVRATE,RCXVODT,RPTF
+"RTN","RCXVUTIL",129,0)
+ ;
+"RTN","RCXVUTIL",130,0)
+ ; If not Reimbursable Insurance, it's VA CARE
+"RTN","RCXVUTIL",131,0)
+ S RCXVRATE=$O(^DGCR(399.3,"B","REIMBURSABLE INS.",""))
+"RTN","RCXVUTIL",132,0)
+ I $P($G(^DGCR(399,RCXVIEN,0)),U,7)'=RCXVRATE S RCXVCFL=1 Q
+"RTN","RCXVUTIL",133,0)
+ ;
+"RTN","RCXVUTIL",134,0)
+ ; non-va discharge date
+"RTN","RCXVUTIL",135,0)
+ I $P($G(^DGCR(399,RCXVIEN,0)),U,16)'="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",136,0)
+ ;
+"RTN","RCXVUTIL",137,0)
+ ; non-va facility, non-va care type, non-va care id
+"RTN","RCXVUTIL",138,0)
+ S RCXVCARE=$G(^DGCR(399,RCXVIEN,"U2"))
+"RTN","RCXVUTIL",139,0)
+ I $P(RCXVCARE,U,10)'="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",140,0)
+ I $P(RCXVCARE,U,11)'="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",141,0)
+ I $P(RCXVCARE,U,12)'="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",142,0)
+ ;
+"RTN","RCXVUTIL",143,0)
+ ; If prescription, it's VA Care
+"RTN","RCXVUTIL",144,0)
+ I $D(^IBA(362.4,"C",RCXVIEN))>0 S RCXVCFL=1 Q
+"RTN","RCXVUTIL",145,0)
+ ; 
+"RTN","RCXVUTIL",146,0)
+ ; Check inpatient
+"RTN","RCXVUTIL",147,0)
+ ; -ptf entry number (#399/.08) and bill classification (#399/.05)
+"RTN","RCXVUTIL",148,0)
+ S RPTF=$P($G(^DGCR(399,RCXVIEN,0)),U,8)
+"RTN","RCXVUTIL",149,0)
+ I $P($G(^DGCR(399,RCXVIEN,0)),U,5)=1,RPTF="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",150,0)
+ ;
+"RTN","RCXVUTIL",151,0)
+ ; -discharge date (#45/70) and ward at discharge (#45/2.2)
+"RTN","RCXVUTIL",152,0)
+ I RPTF'="" D  Q
+"RTN","RCXVUTIL",153,0)
+ . I $P($G(^DGPT(RPTF,70)),U,1)'="" D  Q
+"RTN","RCXVUTIL",154,0)
+ .. N X S X="" D PTF^DGPMUTL(RPTF)
+"RTN","RCXVUTIL",155,0)
+ .. I X="" S RCXVCFL=0 Q
+"RTN","RCXVUTIL",156,0)
+ .. S RCXVCFL=1
+"RTN","RCXVUTIL",157,0)
+ . I $P($G(^DGPT(RPTF,0)),U,4)=1 S RCXVCFL=0 Q
+"RTN","RCXVUTIL",158,0)
+ . S RCXVCFL=1
+"RTN","RCXVUTIL",159,0)
+ ;
+"RTN","RCXVUTIL",160,0)
+ ; Check outpatient encounter
+"RTN","RCXVUTIL",161,0)
+ NEW IBCBK,IBVAL
+"RTN","RCXVUTIL",162,0)
+ S RCXVCFL=0
+"RTN","RCXVUTIL",163,0)
+ S IBCBK="I '$P(Y0,U,6) S ^TMP(""RCXVOE"",$J,+$P(Y0,U,8),Y)=Y0"
+"RTN","RCXVUTIL",164,0)
+ S IBVAL("DFN")=$P(^DGCR(399,RCXVIEN,0),U,2)
+"RTN","RCXVUTIL",165,0)
+ S RCXVODT=0 K ^TMP("RCXVOE",$J)
+"RTN","RCXVUTIL",166,0)
+ ; DBIA# 2351 for call to scan^ibsdu
+"RTN","RCXVUTIL",167,0)
+ F  S RCXVODT=$O(^DGCR(399,RCXVIEN,"OP",RCXVODT)) Q:'RCXVODT  D
+"RTN","RCXVUTIL",168,0)
+ . S IBVAL("BDT")=RCXVODT,IBVAL("EDT")=RCXVODT+.9999
+"RTN","RCXVUTIL",169,0)
+ . D SCAN^IBSDU("PATIENT/DATE",.IBVAL,"",IBCBK,1)
+"RTN","RCXVUTIL",170,0)
+ ; status (#409.68/.12)
+"RTN","RCXVUTIL",171,0)
+ N IBPT1,IBPT2 S IBPT1=""
+"RTN","RCXVUTIL",172,0)
+ F IBPT1=$O(^TMP("RCXVOE",$J,IBPT1)) Q:(IBPT1="")!(RCXVCFL)  D
+"RTN","RCXVUTIL",173,0)
+ . S IBPT2=0 F  S IBPT2=$O(^TMP("RCXVOE",$J,IBPT1,IBPT2)) Q:'IBPT2!(RCXVCFL)  D
+"RTN","RCXVUTIL",174,0)
+ .. I $P(^TMP("RCXVOE",$J,IBPT1,IBPT2),U,12)'=12 S RCXVCFL=1
+"RTN","RCXVUTIL",175,0)
+ K ^TMP("RCXVOE",$J)
+"RTN","RCXVUTIL",176,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9604,6)
+^264
+**END**
+**END**
+

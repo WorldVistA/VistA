@@ -1,0 +1,2419 @@
+Released OR*3*273 SEQ #346
+Extracted from mail message
+**KIDS**:OR*3.0*273^
+
+**INSTALL NAME**
+OR*3.0*273
+"BLD",7194,0)
+OR*3.0*273^ORDER ENTRY/RESULTS REPORTING^0^3140128^y
+"BLD",7194,1,0)
+^^17^17^3140128^
+"BLD",7194,1,1,0)
+This patch corrects 6 issues within the ORDER ENTRY/RESULTS REPORTING 
+"BLD",7194,1,2,0)
+package relating to team lists:
+"BLD",7194,1,3,0)
+ 
+"BLD",7194,1,4,0)
+1. Error on entering "^" at the Type prompt of option ORLP TEAM ADD.
+"BLD",7194,1,5,0)
+ 
+"BLD",7194,1,6,0)
+2. Team list visibility is changed when edited.
+"BLD",7194,1,7,0)
+ 
+"BLD",7194,1,8,0)
+3. Locks are set late when creating or renaming lists.
+"BLD",7194,1,9,0)
+ 
+"BLD",7194,1,10,0)
+4. CPRS will allow a duplicate team list name when entering personal 
+"BLD",7194,1,11,0)
+   lists.
+"BLD",7194,1,12,0)
+ 
+"BLD",7194,1,13,0)
+5. Occasionally, the option ORLP3M DISPLAY LIST SOURCE displays the
+"BLD",7194,1,14,0)
+   current user's list source instead of the selected user.
+"BLD",7194,1,15,0)
+ 
+"BLD",7194,1,16,0)
+6. Various ORLP options do not timeout when selecting a list in use 
+"BLD",7194,1,17,0)
+   elsewhere.
+"BLD",7194,4,0)
+^9.64PA^^
+"BLD",7194,6)
+6^
+"BLD",7194,6.3)
+17
+"BLD",7194,"KRN",0)
+^9.67PA^8989.52^19
+"BLD",7194,"KRN",.4,0)
+.4
+"BLD",7194,"KRN",.401,0)
+.401
+"BLD",7194,"KRN",.402,0)
+.402
+"BLD",7194,"KRN",.403,0)
+.403
+"BLD",7194,"KRN",.5,0)
+.5
+"BLD",7194,"KRN",.84,0)
+.84
+"BLD",7194,"KRN",3.6,0)
+3.6
+"BLD",7194,"KRN",3.8,0)
+3.8
+"BLD",7194,"KRN",9.2,0)
+9.2
+"BLD",7194,"KRN",9.8,0)
+9.8
+"BLD",7194,"KRN",9.8,"NM",0)
+^9.68A^12^6
+"BLD",7194,"KRN",9.8,"NM",1,0)
+ORLP^^0^B83826939
+"BLD",7194,"KRN",9.8,"NM",3,0)
+ORLP2^^0^B47891209
+"BLD",7194,"KRN",9.8,"NM",7,0)
+ORLP3MGR^^0^B39663549
+"BLD",7194,"KRN",9.8,"NM",10,0)
+ORWTPL^^0^B28051857
+"BLD",7194,"KRN",9.8,"NM",11,0)
+ORLP1^^0^B53525531
+"BLD",7194,"KRN",9.8,"NM",12,0)
+ORLPL^^0^B13080692
+"BLD",7194,"KRN",9.8,"NM","B","ORLP",1)
+ 
+"BLD",7194,"KRN",9.8,"NM","B","ORLP1",11)
+ 
+"BLD",7194,"KRN",9.8,"NM","B","ORLP2",3)
+ 
+"BLD",7194,"KRN",9.8,"NM","B","ORLP3MGR",7)
+ 
+"BLD",7194,"KRN",9.8,"NM","B","ORLPL",12)
+
+"BLD",7194,"KRN",9.8,"NM","B","ORWTPL",10)
+ 
+"BLD",7194,"KRN",19,0)
+19
+"BLD",7194,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",7194,"KRN",19.1,0)
+19.1
+"BLD",7194,"KRN",101,0)
+101
+"BLD",7194,"KRN",101,"NM",0)
+^9.68A^^0
+"BLD",7194,"KRN",409.61,0)
+409.61
+"BLD",7194,"KRN",771,0)
+771
+"BLD",7194,"KRN",870,0)
+870
+"BLD",7194,"KRN",8989.51,0)
+8989.51
+"BLD",7194,"KRN",8989.52,0)
+8989.52
+"BLD",7194,"KRN",8994,0)
+8994
+"BLD",7194,"KRN","B",.4,.4)
+ 
+"BLD",7194,"KRN","B",.401,.401)
+ 
+"BLD",7194,"KRN","B",.402,.402)
+ 
+"BLD",7194,"KRN","B",.403,.403)
+ 
+"BLD",7194,"KRN","B",.5,.5)
+ 
+"BLD",7194,"KRN","B",.84,.84)
+ 
+"BLD",7194,"KRN","B",3.6,3.6)
+ 
+"BLD",7194,"KRN","B",3.8,3.8)
+ 
+"BLD",7194,"KRN","B",9.2,9.2)
+ 
+"BLD",7194,"KRN","B",9.8,9.8)
+ 
+"BLD",7194,"KRN","B",19,19)
+ 
+"BLD",7194,"KRN","B",19.1,19.1)
+ 
+"BLD",7194,"KRN","B",101,101)
+ 
+"BLD",7194,"KRN","B",409.61,409.61)
+ 
+"BLD",7194,"KRN","B",771,771)
+ 
+"BLD",7194,"KRN","B",870,870)
+ 
+"BLD",7194,"KRN","B",8989.51,8989.51)
+ 
+"BLD",7194,"KRN","B",8989.52,8989.52)
+ 
+"BLD",7194,"KRN","B",8994,8994)
+ 
+"BLD",7194,"QUES",0)
+^9.62^^
+"BLD",7194,"REQB",0)
+^9.611^6^2
+"BLD",7194,"REQB",4,0)
+OR*3.0*243^2
+"BLD",7194,"REQB",6,0)
+OR*3.0*82^2
+"BLD",7194,"REQB","B","OR*3.0*243",4)
+ 
+"BLD",7194,"REQB","B","OR*3.0*82",6)
+ 
+"MBREQ")
+0
+"PKG",174,-1)
+1^1
+"PKG",174,0)
+ORDER ENTRY/RESULTS REPORTING^OR^Order Entry/Results Reporting
+"PKG",174,20,0)
+^9.402P^^
+"PKG",174,22,0)
+^9.49I^1^1
+"PKG",174,22,1,0)
+3.0^2971217^2990325^66481
+"PKG",174,22,1,"PAH",1,0)
+273^3140128^1193
+"PKG",174,22,1,"PAH",1,1,0)
+^^17^17^3140128
+"PKG",174,22,1,"PAH",1,1,1,0)
+This patch corrects 6 issues within the ORDER ENTRY/RESULTS REPORTING 
+"PKG",174,22,1,"PAH",1,1,2,0)
+package relating to team lists:
+"PKG",174,22,1,"PAH",1,1,3,0)
+ 
+"PKG",174,22,1,"PAH",1,1,4,0)
+1. Error on entering "^" at the Type prompt of option ORLP TEAM ADD.
+"PKG",174,22,1,"PAH",1,1,5,0)
+ 
+"PKG",174,22,1,"PAH",1,1,6,0)
+2. Team list visibility is changed when edited.
+"PKG",174,22,1,"PAH",1,1,7,0)
+ 
+"PKG",174,22,1,"PAH",1,1,8,0)
+3. Locks are set late when creating or renaming lists.
+"PKG",174,22,1,"PAH",1,1,9,0)
+ 
+"PKG",174,22,1,"PAH",1,1,10,0)
+4. CPRS will allow a duplicate team list name when entering personal 
+"PKG",174,22,1,"PAH",1,1,11,0)
+   lists.
+"PKG",174,22,1,"PAH",1,1,12,0)
+ 
+"PKG",174,22,1,"PAH",1,1,13,0)
+5. Occasionally, the option ORLP3M DISPLAY LIST SOURCE displays the
+"PKG",174,22,1,"PAH",1,1,14,0)
+   current user's list source instead of the selected user.
+"PKG",174,22,1,"PAH",1,1,15,0)
+ 
+"PKG",174,22,1,"PAH",1,1,16,0)
+6. Various ORLP options do not timeout when selecting a list in use 
+"PKG",174,22,1,"PAH",1,1,17,0)
+   elsewhere.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","ORLP")
+0^1^B83826939^B76319972
+"RTN","ORLP",1,0)
+ORLP ; SLC/CLA - Manager for Team List options ; 2/9/11 3:17pm
+"RTN","ORLP",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**47,90,98,243,273**;Dec 17, 1997;Build 17
+"RTN","ORLP",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORLP",4,0)
+ ;
+"RTN","ORLP",5,0)
+ ;DBIA reference section
+"RTN","ORLP",6,0)
+ ;10035 - ^DPT(
+"RTN","ORLP",7,0)
+ ;2160  - ^XUTL("OR"
+"RTN","ORLP",8,0)
+ ;10006 - DIC
+"RTN","ORLP",9,0)
+ ;10009 - DICN
+"RTN","ORLP",10,0)
+ ;10018 - DIE
+"RTN","ORLP",11,0)
+ ;10013 - DIK
+"RTN","ORLP",12,0)
+ ;10026 - DIR
+"RTN","ORLP",13,0)
+ ;3070  - PTCL^SCAPMC
+"RTN","ORLP",14,0)
+ ;
+"RTN","ORLP",15,0)
+CLEAR ; From TM, MERG^ORLP1, END^ORLP0.
+"RTN","ORLP",16,0)
+ K ^XUTL("OR",$J,"ORLP"),^("ORV"),^("ORU"),^("ORW") S ORCNT=0
+"RTN","ORLP",17,0)
+ Q
+"RTN","ORLP",18,0)
+ ;
+"RTN","ORLP",19,0)
+TM ; From option ORLP TEAM ADD - create/add a team list.
+"RTN","ORLP",20,0)
+ N ORLTYP
+"RTN","ORLP",21,0)
+ D CLEAR
+"RTN","ORLP",22,0)
+ W @IOF,!,"A team list is a list containing patients related to several providers.",!,"These providers are the list's users.  You may now create a new team list"
+"RTN","ORLP",23,0)
+ W !,"or add autolinks, users and/or patients to an existing team list.  Autolinks",!,"automatically add or remove patients with ADT movements.  Users on the list"
+"RTN","ORLP",24,0)
+ W !,"may receive notifications regarding patients on the same list.  Please prefix",!,"your list name with 'TEAM' or 'SERVICE' (e.g. TEAM7B, SERVICECARDIOLOGY.)",!
+"RTN","ORLP",25,0)
+ D ASKLIST,END
+"RTN","ORLP",26,0)
+ Q
+"RTN","ORLP",27,0)
+ ;
+"RTN","ORLP",28,0)
+ASKLIST ; Ask for team list.
+"RTN","ORLP",29,0)
+ ; NOTE: For new entries, TYPE field is required and trigger
+"RTN","ORLP",30,0)
+ ;       stuffs CREATOR field with DUZ of current user.
+"RTN","ORLP",31,0)
+ ;
+"RTN","ORLP",32,0)
+AL N DLAYGO,DIC,DIE,DIK,DR,ORFLAG,ORLTNAM,OROWNER,ORROOT,ORDA,ORYY
+"RTN","ORLP",33,0)
+ N DIR S DIR(0)="FAO^3:30",DIR("A")="Enter team list name: "
+"RTN","ORLP",34,0)
+ D ^DIR
+"RTN","ORLP",35,0)
+ I '$D(X)!$D(DIRUT) K DIR,DIRUT Q
+"RTN","ORLP",36,0)
+ S ORLTNAM=$$CHKNAM(Y)                 ; Check for duplication.
+"RTN","ORLP",37,0)
+ K DIR
+"RTN","ORLP",38,0)
+ N DIC S X=$G(X),(ORROOT,DIC)="^OR(100.21,",DLAYGO=100.21,DIC(0)="LEFQZ" D ^DIC
+"RTN","ORLP",39,0)
+ I '$D(X)!(+Y<0)!$D(DIRUT) K DIRUT Q   ; User aborted or problem.
+"RTN","ORLP",40,0)
+ ; Check for "Personal" lists (and not a new entry):
+"RTN","ORLP",41,0)
+ I ORLTNAM>0,(+Y>0),$P($G(^OR(100.21,+Y,0)),U,2)="P" W !!,"     Personal lists cannot be edited here.",! G AL
+"RTN","ORLP",42,0)
+ S (ORYY,TEAM)=Y,ORDA=+Y,TEAM(0)=Y(0),^TMP("ORLP",$J,"TLIST")=+Y K DIC
+"RTN","ORLP",43,0)
+ ;
+"RTN","ORLP",44,0)
+ ; Lock before allowing editing or creation
+"RTN","ORLP",45,0)
+ L +^OR(100.21,+TEAM):3 I '$T W !?5,"  Another user is editing this entry." Q
+"RTN","ORLP",46,0)
+ ;
+"RTN","ORLP",47,0)
+ ; Check for entry of team type (new team entry):
+"RTN","ORLP",48,0)
+ I $P(TEAM,U,3) D  Q
+"RTN","ORLP",49,0)
+ .I $P(TEAM(0),U,2)="" D
+"RTN","ORLP",50,0)
+ ..SET Y=TEAM,Y(0)=TEAM(0) ; Reassign in case DIE previously called.
+"RTN","ORLP",51,0)
+ ..N DIE S DIE=ORROOT,DA=+Y,DR="1  Enter type:  ~R" D ^DIE I $O(Y(0)) S DIK=DIE D ^DIK Q
+"RTN","ORLP",52,0)
+ .S (ORLTYP,OROWNER)=""
+"RTN","ORLP",53,0)
+ .S ORLTYP=$P($G(^OR(100.21,+TEAM,0)),U,2) Q:'$L(ORLTYP)
+"RTN","ORLP",54,0)
+ .; Check for "P" type, ask for user/owner input:
+"RTN","ORLP",55,0)
+ .I ORLTYP="P" D 
+"RTN","ORLP",56,0)
+ ..D OWNER^ORLP1 ; Sets OROWNER variable.
+"RTN","ORLP",57,0)
+ ..I +TEAM,'+$G(^OR(100.21,+TEAM,11)) S ^OR(100.21,+TEAM,11)="0^"
+"RTN","ORLP",58,0)
+ .I (ORLTYP="P")&(OROWNER="") S DIK=ORROOT,DA=ORDA D ^DIK Q
+"RTN","ORLP",59,0)
+ .;
+"RTN","ORLP",60,0)
+ .; Allow further editing of autolink type teams:
+"RTN","ORLP",61,0)
+ .I ORLTYP["A" S:'$D(^OR(100.21,+TEAM,2,0)) ^(0)="^100.213AVI^^" D  Q
+"RTN","ORLP",62,0)
+ .. D ASKLINK,ASKUSER,ASKDEV,ASKSUB
+"RTN","ORLP",63,0)
+ .;
+"RTN","ORLP",64,0)
+ .; Proceed with editing for "TM" type teams:
+"RTN","ORLP",65,0)
+ .D ASKPT^ORLP00(+TEAM),ASKUSER,ASKDEV
+"RTN","ORLP",66,0)
+ ;
+"RTN","ORLP",67,0)
+ ; For existing teams, display team type:
+"RTN","ORLP",68,0)
+ W !,"  Type: "_$S($P(Y(0),U,2)="TM":"Manual Team List",$P(Y(0),U,2)="TA":"Autolinked Team List",$P(Y(0),U,2)="MRAL":"Manual Removal Autolinked Team List",1:"(Unknown)")
+"RTN","ORLP",69,0)
+ ;
+"RTN","ORLP",70,0)
+ ; Allow applicable editing for all types but "TM" teams:
+"RTN","ORLP",71,0)
+ I $P(TEAM(0),U,2)'="TM" D
+"RTN","ORLP",72,0)
+ . D ASKLINK,ASKUSER,ASKDEV
+"RTN","ORLP",73,0)
+ . ;
+"RTN","ORLP",74,0)
+ . ; Editing of "subscription" attribute for "TA" and "MRAL" teams:
+"RTN","ORLP",75,0)
+ . I $P(TEAM(0),U,2)["A" D
+"RTN","ORLP",76,0)
+ . . D ASKSUB
+"RTN","ORLP",77,0)
+ ; Proceed with editing for "TM" type teams:
+"RTN","ORLP",78,0)
+ I $P(TEAM(0),U,2)="TM" D ASKPT^ORLP00(+TEAM),ASKUSER,ASKDEV
+"RTN","ORLP",79,0)
+ Q
+"RTN","ORLP",80,0)
+ ;
+"RTN","ORLP",81,0)
+ASKLINK ; Ask for autolinks.
+"RTN","ORLP",82,0)
+ N DIC,DA,DLAYGO,Y,DUOUT,LVP,LVPT,LNAME
+"RTN","ORLP",83,0)
+ W !
+"RTN","ORLP",84,0)
+ F  K DIC,DA,DUOUT D  I LVP<1 Q
+"RTN","ORLP",85,0)
+ .S DLAYGO=100.21,DA(1)=+TEAM,DIC="^OR(100.21,"_DA(1)_",2,",DIC(0)="AELMQZ",DIC("A")="  Enter team autolink: "
+"RTN","ORLP",86,0)
+ .D ^DIC S LVP=Y I Y<1 Q
+"RTN","ORLP",87,0)
+ .I $P($G(Y),U,3)=1 D
+"RTN","ORLP",88,0)
+ ..S LNAME=Y(0,0)
+"RTN","ORLP",89,0)
+ ..I LVP["VA(200" F  D  Q:'$D(Y)
+"RTN","ORLP",90,0)
+ ...S DA(1)=+TEAM,DIE="^OR(100.21,"_DA(1)_",2,",DA(1)=+TEAM,DA=+LVP,DR="1R" D ^DIE I $D(Y) W !,"  This field is required in order for Provider autolinks to work correctly.",!,"  Please answer the question."
+"RTN","ORLP",91,0)
+ ..S LVPT=$P($G(^OR(100.21,+TEAM,2,+LVP,0)),U,2)
+"RTN","ORLP",92,0)
+ ..; For clinics, take a fork in the road:
+"RTN","ORLP",93,0)
+ ..I $P($P(LVP,U,2),";",2)="SC(" D BYCL(LVP) Q
+"RTN","ORLP",94,0)
+ ..; For autolinks besides clinics, truck on:
+"RTN","ORLP",95,0)
+ ..D ADDLPTS
+"RTN","ORLP",96,0)
+ Q
+"RTN","ORLP",97,0)
+ ;
+"RTN","ORLP",98,0)
+ADDLPTS ; Add patients linked to autolink.
+"RTN","ORLP",99,0)
+ W !
+"RTN","ORLP",100,0)
+ W !,"       [ADT movements linked to "
+"RTN","ORLP",101,0)
+ W !,"          ",LNAME
+"RTN","ORLP",102,0)
+ W !,"        will now automatically add patients to this list.]"
+"RTN","ORLP",103,0)
+ S LINK=$P(LVP,U,2),FILE="^"_$P(LINK,";",2),X="",CNT=0
+"RTN","ORLP",104,0)
+ W !!,"       Adding patients linked to ",LNAME,"..."
+"RTN","ORLP",105,0)
+ W !
+"RTN","ORLP",106,0)
+ I FILE="^DIC(42," D LOOPTS("CN",LNAME) Q
+"RTN","ORLP",107,0)
+ I FILE="^DG(405.4," D LOOPTS("RM",LNAME) Q
+"RTN","ORLP",108,0)
+ I FILE="^VA(200," D  Q
+"RTN","ORLP",109,0)
+ . ; Variable LVPT determines if provider pointer is for:
+"RTN","ORLP",110,0)
+ . ;    B - Both Primary and Attending
+"RTN","ORLP",111,0)
+ . ;    A - Attending
+"RTN","ORLP",112,0)
+ . ;    P - Primary
+"RTN","ORLP",113,0)
+ . I LVPT["B" D LOOPTS("APR",+LINK) N CNTAPR S CNTAPR=CNT,CNT=0 D LOOPTS("AAP",+LINK) Q
+"RTN","ORLP",114,0)
+ . I LVPT["P" D LOOPTS("APR",+LINK) Q
+"RTN","ORLP",115,0)
+ . I LVPT["A" D LOOPTS("AAP",+LINK)
+"RTN","ORLP",116,0)
+ I FILE="^DIC(45.7," D LOOPTS("ATR",+LINK) Q
+"RTN","ORLP",117,0)
+ Q
+"RTN","ORLP",118,0)
+ ;
+"RTN","ORLP",119,0)
+BYCL(CLINIC) ; SLC/PKS - 6/99 - Return list of clinic patients by enrollment.
+"RTN","ORLP",120,0)
+ ;
+"RTN","ORLP",121,0)
+ ; Called by ASKLINK.
+"RTN","ORLP",122,0)
+ ;
+"RTN","ORLP",123,0)
+ ; Variables used:
+"RTN","ORLP",124,0)
+ ;
+"RTN","ORLP",125,0)
+ ;    CLINIC  = Clinic to search.
+"RTN","ORLP",126,0)
+ ;    ORLIST  = Array, returned by call to PTCL^SCAPMC.
+"RTN","ORLP",127,0)
+ ;    ORERR   = Array for errors, returned by call to PTCL^SCAPMC.
+"RTN","ORLP",128,0)
+ ;    ORRET  = Flag for problem with PTCL^SCAPMC call.
+"RTN","ORLP",129,0)
+ ;    RESULT  = Holds result of PTCL^SCAPMC call (1=OK, 0=error).
+"RTN","ORLP",130,0)
+ ;    RCD     = Holder for each record in ^TMP of PTCL^SCAPMC.
+"RTN","ORLP",131,0)
+ ;    DFN     = Patient IEN.
+"RTN","ORLP",132,0)
+ ;    ALCNT   = Count of autolink patients added.
+"RTN","ORLP",133,0)
+ ;    DUPCNT  = Count of duplicate patients already on list.
+"RTN","ORLP",134,0)
+ ;    X       = Temp value holder variable.
+"RTN","ORLP",135,0)
+ ;
+"RTN","ORLP",136,0)
+ N DIC,DA,DO,DD,ORLIST,ORERR,RESULT,RCD,DFN,ALCNT,DUPCNT,X,ORRET
+"RTN","ORLP",137,0)
+ ;
+"RTN","ORLP",138,0)
+ ; Assign clinic variable:
+"RTN","ORLP",139,0)
+ S CLINIC=$P(CLINIC,"^",2)
+"RTN","ORLP",140,0)
+ S CLINIC=$P(CLINIC,";")
+"RTN","ORLP",141,0)
+ ;
+"RTN","ORLP",142,0)
+ ; Keep user informed:
+"RTN","ORLP",143,0)
+ W !
+"RTN","ORLP",144,0)
+ W !,"       [Patient enrollments linked to "
+"RTN","ORLP",145,0)
+ W !,"          ",LNAME
+"RTN","ORLP",146,0)
+ W !,"        will now automatically add patients to this list.]"
+"RTN","ORLP",147,0)
+ W !
+"RTN","ORLP",148,0)
+ W !,"       Adding patients enrolled in ",LNAME,"..."
+"RTN","ORLP",149,0)
+ W !
+"RTN","ORLP",150,0)
+ ;
+"RTN","ORLP",151,0)
+ ; Process the Autolink entries:
+"RTN","ORLP",152,0)
+ K ^TMP("SC TMP LIST") ; Clean up potential leftover data.
+"RTN","ORLP",153,0)
+ S ORRET=1
+"RTN","ORLP",154,0)
+ S RESULT=$$PTCL^SCAPMC(CLINIC,,.ORLIST,.ORERR)
+"RTN","ORLP",155,0)
+ I $L($G(RESULT)) D   ; Make sure something was returned.
+"RTN","ORLP",156,0)
+ .I RESULT>0 S ORRET=0 ; Was return value 1 or more?
+"RTN","ORLP",157,0)
+ I ORRET W !,"  Error in processing - patients will not be added." Q  ; Abort if there's a problem.
+"RTN","ORLP",158,0)
+ ; Clinic patients should now be in ^TMP("SC TMP LIST",$J file.
+"RTN","ORLP",159,0)
+ ;
+"RTN","ORLP",160,0)
+ ; Write the patients to the OE/RR LIST file:
+"RTN","ORLP",161,0)
+ S ALCNT=0  ; Initialize autolink counter.
+"RTN","ORLP",162,0)
+ S DUPCNT=0 ; Initialize duplicate counter.
+"RTN","ORLP",163,0)
+ S RCD=0    ; Initialize to start with first data record.
+"RTN","ORLP",164,0)
+ F  S RCD=$O(^TMP("SC TMP LIST",$J,RCD)) Q:'RCD  D  ; Each record.
+"RTN","ORLP",165,0)
+ .S DFN=$P(^TMP("SC TMP LIST",$J,RCD),"^")          ; Patient IEN.
+"RTN","ORLP",166,0)
+ .S X=DFN_";DPT(" ; Add ";DPT(" to patient string.
+"RTN","ORLP",167,0)
+ .I $D(^OR(100.21,+TEAM,10,"B",X)) S DUPCNT=DUPCNT+1 Q  ; This patient already on list - increment dupe counter.
+"RTN","ORLP",168,0)
+ .S:'$D(^OR(100.21,+TEAM,10,0)) ^(0)="^100.2101AV^^"
+"RTN","ORLP",169,0)
+ .K DIC,DA,DO,DD
+"RTN","ORLP",170,0)
+ .S DA(1)=+TEAM,DIC="^OR(100.21,"_DA(1)_",10,",DIC(0)="L"
+"RTN","ORLP",171,0)
+ .D FILE^DICN
+"RTN","ORLP",172,0)
+ .I +X S ALCNT=ALCNT+1 ; Increment counter.
+"RTN","ORLP",173,0)
+ .Q  ; Loop for each record in ^TMP file.
+"RTN","ORLP",174,0)
+ ;
+"RTN","ORLP",175,0)
+ ; Give user the results:
+"RTN","ORLP",176,0)
+ I ALCNT>0 W !,"       "_ALCNT_" patient(s) added to list."
+"RTN","ORLP",177,0)
+ I ALCNT=0 W !,"       No linked patients found."
+"RTN","ORLP",178,0)
+ I DUPCNT>0 W !,"       "_DUPCNT_" patient(s) already on list."
+"RTN","ORLP",179,0)
+ W !
+"RTN","ORLP",180,0)
+ K ^TMP("SC TMP LIST",$J) ; Clean up ^TMP file entries.
+"RTN","ORLP",181,0)
+ ;
+"RTN","ORLP",182,0)
+ Q
+"RTN","ORLP",183,0)
+ ;
+"RTN","ORLP",184,0)
+LOOPTS(REF,DEX) ;
+"RTN","ORLP",185,0)
+ S ORLPT=0 F  S ORLPT=$O(^DPT(REF,DEX,ORLPT)) Q:ORLPT'>0  S X=ORLPT_";DPT(" D ADDLOOP
+"RTN","ORLP",186,0)
+ I $D(LVPT),LVPT["B"!(LVPT']"") Q:REF="APR"
+"RTN","ORLP",187,0)
+ I +X W !,$S(+CNT:"       "_(+$G(CNTAPR)+(+CNT))_" patient(s) added.",1:"       Linked patients already on list.")
+"RTN","ORLP",188,0)
+ E  W "       No linked patients found."
+"RTN","ORLP",189,0)
+ W !
+"RTN","ORLP",190,0)
+ K DEX,FILE,MSG,REF,X,Y
+"RTN","ORLP",191,0)
+ Q
+"RTN","ORLP",192,0)
+ ;
+"RTN","ORLP",193,0)
+ASKUSER ; From ASKLIST - ask for providers/users.
+"RTN","ORLP",194,0)
+ Q:$D(DTOUT)!($D(DUOUT))
+"RTN","ORLP",195,0)
+ W !
+"RTN","ORLP",196,0)
+ S:'$D(^OR(100.21,+TEAM,1,0)) ^(0)="^100.212PA^^"
+"RTN","ORLP",197,0)
+ K DIC,DA
+"RTN","ORLP",198,0)
+ S DLAYGO=100.212,DA(1)=+TEAM
+"RTN","ORLP",199,0)
+ S DIC("P")="100.212PA",DIC="^OR(100.21,"_DA(1)_",1,",DIC(0)="AELMQ"
+"RTN","ORLP",200,0)
+ S DIC("A")="  Enter team provider/user: "
+"RTN","ORLP",201,0)
+ ; SLC/PKS - Next line added on 4/11/2000:
+"RTN","ORLP",202,0)
+ S DIC("S")="I $D(X),$D(^VA(200,""AK.PROVIDER"",$P(^(0),U))),$$ACTIVE^XUSER(+Y)"
+"RTN","ORLP",203,0)
+ F  D  Q:Y<1
+"RTN","ORLP",204,0)
+ .D ^DIC
+"RTN","ORLP",205,0)
+ .I '(Y<1) W !
+"RTN","ORLP",206,0)
+ K DIC,DA,DLAYGO
+"RTN","ORLP",207,0)
+ Q
+"RTN","ORLP",208,0)
+ ;
+"RTN","ORLP",209,0)
+ASKDEV ; From ASKLIST - ask for device.
+"RTN","ORLP",210,0)
+ ;
+"RTN","ORLP",211,0)
+ ; New, by PKS - 7/29/99:
+"RTN","ORLP",212,0)
+ Q:$D(DTOUT)!($D(DUOUT))  ; Previous interaction fail?
+"RTN","ORLP",213,0)
+ W !
+"RTN","ORLP",214,0)
+ N DIE,DR
+"RTN","ORLP",215,0)
+ S DIE="^OR(100.21,"
+"RTN","ORLP",216,0)
+ S DA=+TEAM
+"RTN","ORLP",217,0)
+ S DR="1.5  Enter device: "
+"RTN","ORLP",218,0)
+ D ^DIE ; Writes to DEVICE field.
+"RTN","ORLP",219,0)
+ K DIE
+"RTN","ORLP",220,0)
+ Q
+"RTN","ORLP",221,0)
+ ;
+"RTN","ORLP",222,0)
+ASKSUB ; From ASKLIST - Ask re: subscription status.
+"RTN","ORLP",223,0)
+ ; (PKS - 8/1999)
+"RTN","ORLP",224,0)
+ ;
+"RTN","ORLP",225,0)
+ Q:$D(DTOUT)!($D(DUOUT))  ; Previous interaction fail?
+"RTN","ORLP",226,0)
+ W !
+"RTN","ORLP",227,0)
+ N DIE,DR
+"RTN","ORLP",228,0)
+ S DIE="^OR(100.21,"
+"RTN","ORLP",229,0)
+ S DA=+TEAM
+"RTN","ORLP",230,0)
+ S DR="1.7  Enter subscription status: "
+"RTN","ORLP",231,0)
+ D ^DIE ; Writes to SUBSCRIBE field.
+"RTN","ORLP",232,0)
+ K DIE
+"RTN","ORLP",233,0)
+ ;
+"RTN","ORLP",234,0)
+ Q
+"RTN","ORLP",235,0)
+ ;
+"RTN","ORLP",236,0)
+STOR ; From SEQ^ORLP0 - store list in 100.21.
+"RTN","ORLP",237,0)
+ Q:'$D(DUZ)!('ORCNT)
+"RTN","ORLP",238,0)
+ I '$D(TEAM),($D(Y)#2) S TEAM=Y
+"RTN","ORLP",239,0)
+ S DLAYGO=100.21
+"RTN","ORLP",240,0)
+ L +^OR(100.21,+TEAM):$G(DILOCKTM,3) I '$T W !,"Another user is editing this entry." Q
+"RTN","ORLP",241,0)
+ S (CNT,ORLI)=0 F ORLJ=1:1 S ORLI=$O(^XUTL("OR",$J,"ORLP",ORLI)) Q:ORLI<1  I $D(^(ORLI,0)) S X=^(0),X=$P(X,U,3) D ADDLOOP
+"RTN","ORLP",242,0)
+ I $G(X)>0 S MSG=$S(CNT=0:"       Patient(s) already on list.",1:"       "_CNT_" patient(s) added.") W !?5,MSG
+"RTN","ORLP",243,0)
+ E  W !?5,"       No patients found."
+"RTN","ORLP",244,0)
+ I CNT>0 W !?5,"  Storing list " W:$D(TEAM) $P(TEAM,U,2)," " W "for future reference..."
+"RTN","ORLP",245,0)
+ L -^OR(100.21,+TEAM)
+"RTN","ORLP",246,0)
+ Q
+"RTN","ORLP",247,0)
+ ;
+"RTN","ORLP",248,0)
+ADDLOOP ; From STOR, LOOPTS - add patients.
+"RTN","ORLP",249,0)
+ Q:$D(^OR(100.21,+TEAM,10,"B",X))  ; Quit if on list.
+"RTN","ORLP",250,0)
+ S:'$D(^OR(100.21,+TEAM,10,0)) ^(0)="^100.2101AV^^"
+"RTN","ORLP",251,0)
+ K DIC,DA,DO,DD
+"RTN","ORLP",252,0)
+ S DA(1)=+TEAM,DIC="^OR(100.21,"_DA(1)_",10,",DIC(0)="L"
+"RTN","ORLP",253,0)
+ D FILE^DICN I Y>0 S:$D(CNT) CNT=CNT+1
+"RTN","ORLP",254,0)
+ Q
+"RTN","ORLP",255,0)
+ ;
+"RTN","ORLP",256,0)
+CHKNAM(X) ; Check for duplicate entry.
+"RTN","ORLP",257,0)
+ N DIC
+"RTN","ORLP",258,0)
+ S X=$G(X)
+"RTN","ORLP",259,0)
+ S DIC="^OR(100.21,"
+"RTN","ORLP",260,0)
+ D ^DIC
+"RTN","ORLP",261,0)
+ S X=+Y
+"RTN","ORLP",262,0)
+ Q X
+"RTN","ORLP",263,0)
+ ;
+"RTN","ORLP",264,0)
+END ;
+"RTN","ORLP",265,0)
+ I $G(TEAM) L -^OR(100.21,+TEAM)
+"RTN","ORLP",266,0)
+ ;
+"RTN","ORLP",267,0)
+END1 K %,CNT,DA,DD,DIC,DO,DIE,DIK,DIR,DR,LINK,ORCNT,ORLI,ORLJ,ORLPT,SEL,TEAM,X,Y,ORBSTG,ORBROOT,DTOUT
+"RTN","ORLP",268,0)
+ Q
+"RTN","ORLP",269,0)
+ ;
+"RTN","ORLP1")
+0^11^B53525531^B46347945
+"RTN","ORLP1",1,0)
+ORLP1 ; SLC/DCM,CLA - Patient Lists, Store ; 1/19/11 10:12am
+"RTN","ORLP1",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**11,63,90,98,273**;Dec 17, 1997;Build 17
+"RTN","ORLP1",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORLP1",4,0)
+ ;
+"RTN","ORLP1",5,0)
+ ;DBIA reference section
+"RTN","ORLP1",6,0)
+ ;2160  - ^XUTL("OR"
+"RTN","ORLP1",7,0)
+ ;10006 - DIC
+"RTN","ORLP1",8,0)
+ ;10009 - YN^DICN
+"RTN","ORLP1",9,0)
+ ;10018 - DIE
+"RTN","ORLP1",10,0)
+ ;10013 - DIK
+"RTN","ORLP1",11,0)
+ ;10026 - DIR
+"RTN","ORLP1",12,0)
+ ;2957  - CLNLIST^GMRCTU
+"RTN","ORLP1",13,0)
+ ;2263  - XPAR
+"RTN","ORLP1",14,0)
+ ;
+"RTN","ORLP1",15,0)
+STOR ;called by ORLP0 - Store lists
+"RTN","ORLP1",16,0)
+ N %,DA,DIC,DIK,DIR,DLAYGO,DR,ORLIST,ORLN,I,J,X,Y
+"RTN","ORLP1",17,0)
+ W !!,"Store list for future reference"
+"RTN","ORLP1",18,0)
+ S %=1 D YN^DICN Q:%=-1
+"RTN","ORLP1",19,0)
+ I %=0 W !,"You may store the newly compiled list.  Answer YES or NO." G STOR
+"RTN","ORLP1",20,0)
+ Q:%=2
+"RTN","ORLP1",21,0)
+ ;
+"RTN","ORLP1",22,0)
+GETNAME ; Call DIR to get user entry for new list name:
+"RTN","ORLP1",23,0)
+ N ORTNAM
+"RTN","ORLP1",24,0)
+ S ORTNAM=""
+"RTN","ORLP1",25,0)
+ N ORNEWL   ; Flag used to indicate a new list (v. existing list).
+"RTN","ORLP1",26,0)
+ S ORNEWL=1 ; Begin w/assumption of a new list name.
+"RTN","ORLP1",27,0)
+ F  D  Q:$D(X)
+"RTN","ORLP1",28,0)
+ .S DIR(0)="FAO^3:30",DIR("A")="Enter a name for this list: "
+"RTN","ORLP1",29,0)
+ .D ^DIR
+"RTN","ORLP1",30,0)
+ .I '$D(X)!($D(DIRUT)) K DIRUT W "  List not permanently stored." Q
+"RTN","ORLP1",31,0)
+ .S (ORLN,ORTNAM)=X
+"RTN","ORLP1",32,0)
+ .S X=$G(X),DIC="^OR(100.21,"
+"RTN","ORLP1",33,0)
+ .D ^DIC
+"RTN","ORLP1",34,0)
+ I '$D(X)!(X="") Q
+"RTN","ORLP1",35,0)
+ I +Y>0 S ORLIST=+Y,ORLN=$P(Y,U,2) K DIC S Y=ORLIST S ORNEWL=0 ; List name already exists.
+"RTN","ORLP1",36,0)
+ ;
+"RTN","ORLP1",37,0)
+OVRWR ;
+"RTN","ORLP1",38,0)
+ N ORABORT ; Flag for aborting process.
+"RTN","ORLP1",39,0)
+ N ERROR
+"RTN","ORLP1",40,0)
+ S ORABORT=0
+"RTN","ORLP1",41,0)
+ ;
+"RTN","ORLP1",42,0)
+ ; Check for problems with name entry:
+"RTN","ORLP1",43,0)
+ I 'ORNEWL D
+"RTN","ORLP1",44,0)
+ .I $$NAMCH(+ORLIST) S ORABORT=1
+"RTN","ORLP1",45,0)
+ I ORABORT G GETNAME
+"RTN","ORLP1",46,0)
+ ;
+"RTN","ORLP1",47,0)
+ ; Ask - overwrite if an existing team by that name already?:
+"RTN","ORLP1",48,0)
+ I 'ORNEWL D  Q:$G(ERROR)
+"RTN","ORLP1",49,0)
+ .I $O(^OR(100.21,+Y,10,0)) D  Q:%'=1  ; Any patients on list yet?
+"RTN","ORLP1",50,0)
+ ..F  D  Q:%
+"RTN","ORLP1",51,0)
+ ...W !,ORLN_" already has patients.  Do you want to overwrite it"
+"RTN","ORLP1",52,0)
+ ...S %=2 D YN^DICN
+"RTN","ORLP1",53,0)
+ ...I %=2!(%=-1) W !,"List ",ORLN," unchanged.",! S ORABORT=1 Q
+"RTN","ORLP1",54,0)
+ ...I '% W !,"Answer YES or NO, if you answer YES the list "_ORLN_" will be cleared,",!,"and this temporary list will overwrite it.",! Q
+"RTN","ORLP1",55,0)
+ .I ORABORT Q
+"RTN","ORLP1",56,0)
+ .L +^OR(100.21,+ORLIST):$G(DILOCKTM,3) I '$T W !,"Another user is editing this entry." S ERROR=1 Q
+"RTN","ORLP1",57,0)
+ .I '$D(^OR(100.21,ORLIST,10,0))#2 S ^(0)="^100.2101AV^"
+"RTN","ORLP1",58,0)
+ .I '$D(^OR(100.21,ORLIST,1,0))#2 S ^(0)="^100.212PA^"
+"RTN","ORLP1",59,0)
+ .S I=0 F  S I=$O(^OR(100.21,ORLIST,10,I)) Q:'I  S DA=+I,DA(1)=+ORLIST,DIK="^OR(100.21,"_ORLIST_",10," D ^DIK
+"RTN","ORLP1",60,0)
+ .L -^OR(100.21,+ORLIST)
+"RTN","ORLP1",61,0)
+ I ORABORT G GETNAME
+"RTN","ORLP1",62,0)
+ ;
+"RTN","ORLP1",63,0)
+ ; If a new list name, write new team into OE/RR LIST file:
+"RTN","ORLP1",64,0)
+ I ORNEWL D
+"RTN","ORLP1",65,0)
+ .S DIC="^OR(100.21,",DLAYGO=100.21,DIC(0)="LEFQZ"
+"RTN","ORLP1",66,0)
+ .D ^DIC
+"RTN","ORLP1",67,0)
+ .I (Y<0!'$D(X)) S ORABORT=1 Q  ; User aborted or there was a problem.
+"RTN","ORLP1",68,0)
+ .S ORLIST=+Y
+"RTN","ORLP1",69,0)
+ I ORABORT K DIC Q
+"RTN","ORLP1",70,0)
+ ;
+"RTN","ORLP1",71,0)
+ ; Assure other required entries if necessary:
+"RTN","ORLP1",72,0)
+ I ORNEWL D
+"RTN","ORLP1",73,0)
+ .I $P($G(^OR(100.21,+ORLIST,1,0)),U,2)'="P" D
+"RTN","ORLP1",74,0)
+ ..S DIE="^OR(100.21,",DA=ORLIST,DR="1///^S X=""P"""
+"RTN","ORLP1",75,0)
+ ..D ^DIE
+"RTN","ORLP1",76,0)
+ ..K DIE,DA
+"RTN","ORLP1",77,0)
+ .I '$D(^OR(100.21,+ORLIST,1,DUZ)) S DA(1)=ORLIST,DIC="^OR(100.21,"_DA(1)_",1,",DIC(0)="LX",X="`"_DUZ D ^DIC K DIC
+"RTN","ORLP1",78,0)
+ ;
+"RTN","ORLP1",79,0)
+ ; Add selected patients to list (if any):
+"RTN","ORLP1",80,0)
+ L +^OR(100.21,+ORLIST):$G(DILOCKTM,3) I '$T W !,"Another user is editing this entry." Q
+"RTN","ORLP1",81,0)
+ S ORI=0
+"RTN","ORLP1",82,0)
+ F  S ORI=$O(^XUTL("OR",$J,"ORLP",ORI)) Q:ORI<1  I $D(^(ORI,0)) S X=^(0),X="PT.`"_+$P(X,"^",3),DA(1)=ORLIST,DIC="^OR(100.21,"_ORLIST_",10,",DIC(0)="LX" D ^DIC
+"RTN","ORLP1",83,0)
+ K DIC,ORI
+"RTN","ORLP1",84,0)
+ L -^OR(100.21,ORLIST)
+"RTN","ORLP1",85,0)
+ W !!,"List has been stored."
+"RTN","ORLP1",86,0)
+ Q
+"RTN","ORLP1",87,0)
+ ;
+"RTN","ORLP1",88,0)
+MERG ;called by option ORLP MERG - merge patient lists
+"RTN","ORLP1",89,0)
+ D CLEAR^ORLP ;clear XUTL for merge
+"RTN","ORLP1",90,0)
+ D ASK^ORLP0(.X)
+"RTN","ORLP1",91,0)
+ I (X<0)!(X>1) Q
+"RTN","ORLP1",92,0)
+ S:'$D(ORCNT) ORCNT=0
+"RTN","ORLP1",93,0)
+ W @IOF,!,"Merging patients from two or more Personal and/or Team patient lists.",!
+"RTN","ORLP1",94,0)
+ S DIC="^OR(100.21,",DIC(0)="AEQM",DIC("S")="I ""PT""[$E($P(^(0),U,2))"
+"RTN","ORLP1",95,0)
+ F ORK=1:1 S ORCT=0,DIC("A")="Select LIST "_ORK_": " D P1^ORLP0 Q:ORY<1  I ORCNT>0 W !!,ORCT_" Patients added, "_ORCNT_" total"
+"RTN","ORLP1",96,0)
+ Q:$D(DTOUT)!($D(DUOUT))
+"RTN","ORLP1",97,0)
+ I 'ORCNT W !!,"List empty.",! D END^ORLP0 Q
+"RTN","ORLP1",98,0)
+ D PR2^ORLA1(OROPREF)
+"RTN","ORLP1",99,0)
+ W !!,"LIST PATIENTS MERGED"
+"RTN","ORLP1",100,0)
+ D LIST^ORLP0
+"RTN","ORLP1",101,0)
+ D STOR,END^ORLP0
+"RTN","ORLP1",102,0)
+ D BUILD^ORLA1 ;load XUTL with user's primary list
+"RTN","ORLP1",103,0)
+ K DIC,ORCEND,ORCLIN,ORCNT,ORCOLW,ORCSTRT,ORCT,ORDEF,ORK,ORPRIM,ORPROV,ORSPEC,ORTITLE,ORUPNM,ORUSSN,ORWARD,Y
+"RTN","ORLP1",104,0)
+ Q
+"RTN","ORLP1",105,0)
+ ;
+"RTN","ORLP1",106,0)
+DEL ;called by option ORLP DELETE - delete a list
+"RTN","ORLP1",107,0)
+ I '$D(ORLST) S DIC="^OR(100.21,",DIC(0)="AEQM",DIC("S")="I $P(^(0),U,2)'=""P""",DIC("A")="Select Team PATIENT LIST to delete: "
+"RTN","ORLP1",108,0)
+ I $D(ORLST) S DIC="^OR(100.21,",DIC(0)="AEQM",DIC("S")="I $P(^(0),U,2)=""P""&($D(^OR(100.21,""C"",DUZ,+Y)))",DIC("A")="Select Personal PATIENT LIST to delete: "
+"RTN","ORLP1",109,0)
+ D ^DIC
+"RTN","ORLP1",110,0)
+ K DIC
+"RTN","ORLP1",111,0)
+ I Y<1 Q
+"RTN","ORLP1",112,0)
+ S ORPTEAM=Y
+"RTN","ORLP1",113,0)
+ ;
+"RTN","ORLP1",114,0)
+D2 ;
+"RTN","ORLP1",115,0)
+ S %=""
+"RTN","ORLP1",116,0)
+ I $$GET^XPAR("USR.`"_DUZ,"ORLP DEFAULT TEAM",1,"I")=+ORPTEAM W !!,"This is your primary patient list, are you sure you want to remove it" S %=2 D YN^DICN
+"RTN","ORLP1",117,0)
+ I %=0 W !,"Answer YES if you really want to remove this list." G D2
+"RTN","ORLP1",118,0)
+ I %'="" Q:%'=1
+"RTN","ORLP1",119,0)
+ W !!,"WARNING - Deleting a patient list will disable access by providers who use the",!,"list as their preferred patient list."
+"RTN","ORLP1",120,0)
+ ;
+"RTN","ORLP1",121,0)
+D1 ;
+"RTN","ORLP1",122,0)
+ L +^OR(100.21,+ORPTEAM):$G(DILOCKTM,3) I '$T W !,"Another user is editing this entry." Q
+"RTN","ORLP1",123,0)
+ W !,"Are you ready to delete list ",$P(ORPTEAM,"^",2)
+"RTN","ORLP1",124,0)
+ S %=2 D YN^DICN
+"RTN","ORLP1",125,0)
+ I %=0 W !,"Enter YES to delete the list, NO to quit." G D1
+"RTN","ORLP1",126,0)
+ Q:%'=1
+"RTN","ORLP1",127,0)
+ W !,"Processing........"
+"RTN","ORLP1",128,0)
+ ;L +^OR(100.21,+ORPTEAM)
+"RTN","ORLP1",129,0)
+ S DA=+ORPTEAM,DIK="^OR(100.21,"
+"RTN","ORLP1",130,0)
+ D ^DIK
+"RTN","ORLP1",131,0)
+ K DA,DIC,DIK
+"RTN","ORLP1",132,0)
+ ;
+"RTN","ORLP1",133,0)
+ ; Next 2 lines added by PKS, 2/8/2000:
+"RTN","ORLP1",134,0)
+ W !,"Searching for/removing Consults pointers to deleted team..."
+"RTN","ORLP1",135,0)
+ D CLNLIST^GMRCTU(+ORPTEAM,0) ; Dump pointers to team in file 123.5.
+"RTN","ORLP1",136,0)
+ ;
+"RTN","ORLP1",137,0)
+ W !,"List deletion completed.",!
+"RTN","ORLP1",138,0)
+ L -^OR(100.21,+ORPTEAM)
+"RTN","ORLP1",139,0)
+ K ORPTEAM,ORLPDUZ,Y,XX,^TMP("ORLP",$J,"TLIST") ;KILL temporary list
+"RTN","ORLP1",140,0)
+ G DEL
+"RTN","ORLP1",141,0)
+ Q
+"RTN","ORLP1",142,0)
+ ;
+"RTN","ORLP1",143,0)
+CLEAR(X) ;called by option ORLP CLEAR - clear active list
+"RTN","ORLP1",144,0)
+ I '$D(^XUTL("OR",$J,"ORLP")) W !!,"No list currently defined" S X=1 Q
+"RTN","ORLP1",145,0)
+ F  D  Q:X
+"RTN","ORLP1",146,0)
+ . W !!,"Are you sure you want to clear the current pt selection list"
+"RTN","ORLP1",147,0)
+ . S %=2 D YN^DICN
+"RTN","ORLP1",148,0)
+ . I %=-1 S X=% Q
+"RTN","ORLP1",149,0)
+ . I %=0 W !!,"YES will clear the current pt selection list and leave you with a blank slate to work from." S X=0 Q
+"RTN","ORLP1",150,0)
+ . I %=1 K ^XUTL("OR",$J,"ORLP"),^("ORV"),^("ORU"),^("ORW") S:$D(ORCNT) ORCNT=0 W !!,"List cleared" S X=% Q
+"RTN","ORLP1",151,0)
+ . W !!,"Nothing done."
+"RTN","ORLP1",152,0)
+ . S X=2
+"RTN","ORLP1",153,0)
+ Q
+"RTN","ORLP1",154,0)
+ ;
+"RTN","ORLP1",155,0)
+NAMCH(ORTEAM) ; Check for name duplication, proper team type.
+"RTN","ORLP1",156,0)
+ ;
+"RTN","ORLP1",157,0)
+ ; Variables used:
+"RTN","ORLP1",158,0)
+ ;
+"RTN","ORLP1",159,0)
+ ;    ORTEAM = IEN of team in Team List file (^OR100.21).
+"RTN","ORLP1",160,0)
+ ;
+"RTN","ORLP1",161,0)
+ ; Check for name duplication and not a "Personal" type team:
+"RTN","ORLP1",162,0)
+ I $P($G(^OR(100.21,ORTEAM,0)),U,2)'="P" D  Q 1
+"RTN","ORLP1",163,0)
+ .W !,ORTNAM," name already used - can't overwrite.",!
+"RTN","ORLP1",164,0)
+ .K X,Y,ORLIST,ORLN
+"RTN","ORLP1",165,0)
+ ;
+"RTN","ORLP1",166,0)
+ ; Check for "Personal" type but not current user's team:
+"RTN","ORLP1",167,0)
+ ;    ("CREATOR" field was added later, so not used here.)
+"RTN","ORLP1",168,0)
+ ;    Is this user's DUZ in "USER" multiple?
+"RTN","ORLP1",169,0)
+ I '$D(^OR(100.21,"C",DUZ,ORTEAM)) D  Q 1
+"RTN","ORLP1",170,0)
+ .W !,ORTNAM," name exists, you are not a user - can't overwrite.",!
+"RTN","ORLP1",171,0)
+ .K X,Y,ORLIST,ORLN
+"RTN","ORLP1",172,0)
+ ;
+"RTN","ORLP1",173,0)
+ Q 0
+"RTN","ORLP1",174,0)
+ ;
+"RTN","ORLP1",175,0)
+OWNER ; Get input from CAC for list user/owner.
+"RTN","ORLP1",176,0)
+ ;
+"RTN","ORLP1",177,0)
+ ; Variables used herein:
+"RTN","ORLP1",178,0)
+ ;
+"RTN","ORLP1",179,0)
+ ;    DIR,X,Y = FM call variables.
+"RTN","ORLP1",180,0)
+ ;    ORYY    = NEW'd in calling routine (ORLP).
+"RTN","ORLP1",181,0)
+ ;    OROWNER = NEW'd in calling routine (ORLP).
+"RTN","ORLP1",182,0)
+ ;
+"RTN","ORLP1",183,0)
+ N DIR,X,Y
+"RTN","ORLP1",184,0)
+ ;
+"RTN","ORLP1",185,0)
+ ; Assign variables and get input from CAC for user/owner of list:
+"RTN","ORLP1",186,0)
+ S OROWNER="" ; Default.
+"RTN","ORLP1",187,0)
+ S DIR(0)="PAO^200,:AEMNQ"
+"RTN","ORLP1",188,0)
+ S DIR("A")="  Enter owner of this Personal type list: "
+"RTN","ORLP1",189,0)
+ S DIR("S")="I $D(X),$D(^VA(200,""AK.PROVIDER"",$P(^(0),U))),$$ACTIVE^XUSER(+Y)"
+"RTN","ORLP1",190,0)
+ S DIR("?")="Only owner you specify can edit list after creation."
+"RTN","ORLP1",191,0)
+ D ^DIR
+"RTN","ORLP1",192,0)
+ S OROWNER=Y
+"RTN","ORLP1",193,0)
+ K DIR,X,Y                             ; Clean up.
+"RTN","ORLP1",194,0)
+ I OROWNER<1 S OROWNER="" Q            ; No acceptable entry.
+"RTN","ORLP1",195,0)
+ S OROWNER=+OROWNER                    ; Selected user's DUZ.
+"RTN","ORLP1",196,0)
+ S $P(^OR(100.21,+ORYY,0),U,5)=OROWNER ; Assign CREATOR field.
+"RTN","ORLP1",197,0)
+ ;
+"RTN","ORLP1",198,0)
+ Q
+"RTN","ORLP1",199,0)
+ ;
+"RTN","ORLP2")
+0^3^B47891209^B42159968
+"RTN","ORLP2",1,0)
+ORLP2 ; SLC/Staff - Remove Autolinks from Team List ; 11/3/10 12:44pm
+"RTN","ORLP2",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**47,98,273**;Dec 17, 1997;Build 17
+"RTN","ORLP2",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORLP2",4,0)
+ ;
+"RTN","ORLP2",5,0)
+ ;DBIA reference section
+"RTN","ORLP2",6,0)
+ ;10035 - ^DPT(
+"RTN","ORLP2",7,0)
+ ;3070  - PTCL^SCAPMC,^TMP("SC TMP LIST"
+"RTN","ORLP2",8,0)
+ ;10006 - DIC
+"RTN","ORLP2",9,0)
+ ;10009 - YN^DICN
+"RTN","ORLP2",10,0)
+ ;10018 - DIE
+"RTN","ORLP2",11,0)
+ ;10013 - DIK
+"RTN","ORLP2",12,0)
+ ;10026 - DIR
+"RTN","ORLP2",13,0)
+ ;
+"RTN","ORLP2",14,0)
+ ;from option ORLP REMOVE AUTOLINKS - remove autolinks from team lists
+"RTN","ORLP2",15,0)
+ N %X,%Y,ACT,ALINK,CNT,DA,DIC,DIE,DIK,DIR,DLAYGO,DR,DTOUT,DUOUT,ERROR,FILE,K,LINK,LIST,LNAME,LNK,LST,ORLPT,ORSTOP,ORUS,REF,TEAM,USER,VP,Y
+"RTN","ORLP2",16,0)
+ D CLEAR^ORLP
+"RTN","ORLP2",17,0)
+ W @IOF
+"RTN","ORLP2",18,0)
+ W !,"A team list is a list containing patients related to several providers.",!,"These providers are the list's users.  You may select one of these lists"
+"RTN","ORLP2",19,0)
+ W !,"and remove one or more autolinks.  Removal of autolinks will stop the",!,"automatic addition or deletion of patients with ADT movements associated",!,"with the deleted autolink."
+"RTN","ORLP2",20,0)
+ W !!,"Patients that were placed on the list using the deleted autolink will be",!,"removed from the list if they were not placed on the list by another Autolink.",!!
+"RTN","ORLP2",21,0)
+ D ASKLIST I $D(DTOUT)!($G(ORSTOP)) D END Q
+"RTN","ORLP2",22,0)
+ I '$G(ERROR) D ASKLINK(LIST) I $D(DTOUT)!($G(ORSTOP)) D END Q
+"RTN","ORLP2",23,0)
+ D END
+"RTN","ORLP2",24,0)
+ Q
+"RTN","ORLP2",25,0)
+ ;
+"RTN","ORLP2",26,0)
+ASKLIST ;ask for team list
+"RTN","ORLP2",27,0)
+ N DIC,DA,DIE
+"RTN","ORLP2",28,0)
+ S DIC="^OR(100.21,",DIC(0)="AEFMQ",DIC("S")="I $P(^(0),U,2)[""A""",DIC("A")="Enter team list name: "
+"RTN","ORLP2",29,0)
+ D GETDEF^ORLPL ;get list default, if one exists
+"RTN","ORLP2",30,0)
+ D ^DIC I Y'>0 S ORSTOP=1 Q
+"RTN","ORLP2",31,0)
+ S LIST=Y,^TMP("ORLP",$J,"TLIST")=+Y
+"RTN","ORLP2",32,0)
+ I '$O(^OR(100.21,+LIST,2,0)) W !,"No Autolinks established for this team",! S ORSTOP=1 Q
+"RTN","ORLP2",33,0)
+ I $O(^OR(100.21,+Y,10,0)) D
+"RTN","ORLP2",34,0)
+ . F  D  Q:%
+"RTN","ORLP2",35,0)
+ .. S ORSTOP=0 W !,"List ",$P(Y,"^",2)," already contains patients and/or users.",!,"Do you want to remove some of them" S %=1 D YN^DICN I %=1 L +^OR(100.21,+LIST):$G(DILOCKTM,3) I '$T W !,"Another user is editing this entry." S ERROR=1 Q
+"RTN","ORLP2",36,0)
+ .. I '% W !,"Answer 'YES' to delete existing 'Autolinks' and the associated patients,",!,"'NO' to return to the menus.",!
+"RTN","ORLP2",37,0)
+ .. S ORSTOP=%'=1
+"RTN","ORLP2",38,0)
+ Q
+"RTN","ORLP2",39,0)
+ ;
+"RTN","ORLP2",40,0)
+ASKLINK(LIST) ;ask for autolinks
+"RTN","ORLP2",41,0)
+ I +$G(LIST)'>0 Q
+"RTN","ORLP2",42,0)
+ S ORUS="^OR(100.21,+LIST,2,",ORUS(0)="40MN",ORUS("T")="W @IOF,?31,""TEAM AUTOLINK LIST"",!",ORUS("A")="Enter Autolink(s) to REMOVE from list: "
+"RTN","ORLP2",43,0)
+ D ^ORUS S %X="Y(",%Y="ALINK(" D %XY^%RCR I '$O(ALINK(0)) Q
+"RTN","ORLP2",44,0)
+ K ^TMP("ORLP",$J,"LINK"),^TMP("ORLP",$J,"UNLINK")
+"RTN","ORLP2",45,0)
+ ;
+"RTN","ORLP2",46,0)
+ ; Build ^TMP global of all patients that would be on list because
+"RTN","ORLP2",47,0)
+ ; of the deleted autolinks and delete autolinks
+"RTN","ORLP2",48,0)
+ S LNK=0 F  S LNK=$O(ALINK(LNK)) Q:'LNK  D
+"RTN","ORLP2",49,0)
+ . I $P(^OR(100.21,+LIST,0),U,2)["A",'$O(^OR(100.21,+LIST,2,0)) Q
+"RTN","ORLP2",50,0)
+ . S VP=$G(^OR(100.21,+LIST,2,+ALINK(LNK),0)),VP(1)="^"_$P($P(VP,";",2),U),VP(2)=+VP,LNAME=$P(ALINK(LNK),U,3) D PTS(.VP,"UNLINK")
+"RTN","ORLP2",51,0)
+ . S DA=+ALINK(LNK),DA(1)=+LIST,DIE="^OR(100.21,"_DA(1)_",2,",DR=".01///@" D ^DIE W !,"  Autolink "_$P(ALINK(LNK),U,3)_" deleted!"
+"RTN","ORLP2",52,0)
+ ;
+"RTN","ORLP2",53,0)
+ ; Build ^TMP global of all patients that would be on list because
+"RTN","ORLP2",54,0)
+ ; of remaining autolinks.
+"RTN","ORLP2",55,0)
+ S DA(1)=+LIST,DIC="^OR(100.21,"_DA(1)_",2,",DIC(0)="NZ"
+"RTN","ORLP2",56,0)
+ S LST=0 F  S LST=$O(^OR(100.21,+LIST,2,LST)) Q:'LST  S X="`"_LST D ^DIC   S VP=Y(0),VP(1)="^"_$P($P(VP,";",2),U),VP(2)=+VP,LNAME=Y(0,0) D PTS(.VP,"LINK")
+"RTN","ORLP2",57,0)
+ K DIC
+"RTN","ORLP2",58,0)
+ ; if the patient is on list because of remaining autolink leave them 
+"RTN","ORLP2",59,0)
+ ; there otherwise delete them
+"RTN","ORLP2",60,0)
+ S CNT=0,K="" F  S K=$O(^TMP("ORLP",$J,"UNLINK",K)) Q:K=""  D
+"RTN","ORLP2",61,0)
+ . I '$D(^TMP("ORLP",$J,"LINK",K)) S DA=$O(^OR(100.21,+LIST,10,"B",K,0)) I DA S DA(1)=+LIST,DIK="^OR(100.21,"_DA(1)_",10," D ^DIK K DIK S CNT=CNT+1
+"RTN","ORLP2",62,0)
+ W !,"  "_CNT_" patient(s) removed from list.",!
+"RTN","ORLP2",63,0)
+ Q
+"RTN","ORLP2",64,0)
+ ;
+"RTN","ORLP2",65,0)
+PTS(VP,ACT) ;
+"RTN","ORLP2",66,0)
+ ; set or kill entries out of temp global 
+"RTN","ORLP2",67,0)
+ ; set for patients found to be on a deleted link
+"RTN","ORLP2",68,0)
+ ; kill for patients to be on another autolink.
+"RTN","ORLP2",69,0)
+ ; ("Clinic" addition to $SELECT function added by PKS-6/99:)
+"RTN","ORLP2",70,0)
+ I ACT="UNLINK" W !,"[ADT movements linked to "_$S(VP["DIC(42":"Ward Location ",VP["DG(405":"Room Bed ",VP["VA(200":"Provider ",VP["SC(":"Clinic ",1:"Treating Speciality ")_LNAME_" will now be discontinued.]"
+"RTN","ORLP2",71,0)
+ I VP(1)="^DIC(42," D LOOPTS("CN",LNAME,ACT) Q
+"RTN","ORLP2",72,0)
+ I VP(1)="^DG(405.4," D LOOPTS("RM",LNAME,ACT) Q
+"RTN","ORLP2",73,0)
+ I VP(1)="^VA(200," D  Q
+"RTN","ORLP2",74,0)
+ . I $P(VP,U,2)="B" D LOOPTS("APR",+VP,ACT),LOOPTS("AAP",+VP,ACT) Q
+"RTN","ORLP2",75,0)
+ . I $P(VP,U,2)="P" D LOOPTS("APR",+VP,ACT) Q
+"RTN","ORLP2",76,0)
+ . I $P(VP,U,2)="A" D LOOPTS("AAP",+VP,ACT) Q
+"RTN","ORLP2",77,0)
+ I VP(1)="^DIC(45.7," D LOOPTS("ATR",+VP,ACT) Q
+"RTN","ORLP2",78,0)
+ ; Next line added by PKS on 6/99:
+"RTN","ORLP2",79,0)
+ I VP(1)="^SC(" D LOOPCL("SC",+VP,ACT) Q
+"RTN","ORLP2",80,0)
+ Q
+"RTN","ORLP2",81,0)
+ ;
+"RTN","ORLP2",82,0)
+LOOPTS(REF,DEX,ACT) ;
+"RTN","ORLP2",83,0)
+ S ORLPT=0 F  S ORLPT=$O(^DPT(REF,DEX,ORLPT)) Q:'ORLPT  S X=ORLPT_";DPT(" S ^TMP("ORLP",$J,ACT,X)=""
+"RTN","ORLP2",84,0)
+ Q
+"RTN","ORLP2",85,0)
+ ;
+"RTN","ORLP2",86,0)
+LOOPCL(REF,CLINIC,ACT) ; slc/PKS - 6/99
+"RTN","ORLP2",87,0)
+ ;
+"RTN","ORLP2",88,0)
+ ; Add CLINIC linked patients to ^TMP list of all Autolink patients,
+"RTN","ORLP2",89,0)
+ ;    so they can be evaluated for deletion if not duplicated
+"RTN","ORLP2",90,0)
+ ;    by another Autolink.
+"RTN","ORLP2",91,0)
+ ;
+"RTN","ORLP2",92,0)
+ ; Variables used:
+"RTN","ORLP2",93,0)
+ ;
+"RTN","ORLP2",94,0)
+ ;    REF     = Passed as "SC" for code clarity but not used herein.
+"RTN","ORLP2",95,0)
+ ;    CLINIC  = Clinic to search.
+"RTN","ORLP2",96,0)
+ ;    ACT     = Action to take ("LINK" or "UNLINK").
+"RTN","ORLP2",97,0)
+ ;    ORLIST  = Array, returned by call to PTCL^SCAPMC.
+"RTN","ORLP2",98,0)
+ ;    ORERR   = Array for errors, returned by call to PTCL^SCAPMC.
+"RTN","ORLP2",99,0)
+ ;    RESULT  = Holds result of PTCL^SCAPMC call (1=OK, 0=error).
+"RTN","ORLP2",100,0)
+ ;    RCD     = Holder for each record in ^TMP of PTCL^SCAPMC.
+"RTN","ORLP2",101,0)
+ ;    PATIENT = Patient IEN.
+"RTN","ORLP2",102,0)
+ ;    X       = Temp value holder variable.
+"RTN","ORLP2",103,0)
+ ;
+"RTN","ORLP2",104,0)
+ N ORLIST,ORERR,RESULT,RCD,PATIENT,X
+"RTN","ORLP2",105,0)
+ ;
+"RTN","ORLP2",106,0)
+ ; Process the Autolink entries:
+"RTN","ORLP2",107,0)
+ K ^TMP("SC TMP LIST") ; Clean up potential leftover data.
+"RTN","ORLP2",108,0)
+ S RESULT=$$PTCL^SCAPMC(CLINIC,,.ORLIST,.ORERR)
+"RTN","ORLP2",109,0)
+ I RESULT=0 W !,"Processing ERROR - patients NOT deleted for this autolink." Q  ; Abort if there's a problem.
+"RTN","ORLP2",110,0)
+ ; Clinic patients should now be in ^TMP("SC TMP LIST",$J file.
+"RTN","ORLP2",111,0)
+ ;
+"RTN","ORLP2",112,0)
+ ; Write patients to the new, second ^TMP file for further processing.
+"RTN","ORLP2",113,0)
+ S RCD=0 ; Initialize.
+"RTN","ORLP2",114,0)
+ F  S RCD=$O(^TMP("SC TMP LIST",$J,RCD)) Q:'RCD  D  ; Read each record from first ^TMP file.
+"RTN","ORLP2",115,0)
+ .S PATIENT=$P(^TMP("SC TMP LIST",$J,RCD),"^") ; Patient IEN.
+"RTN","ORLP2",116,0)
+ .S X=PATIENT_";DPT(" ; Add to patient string.
+"RTN","ORLP2",117,0)
+ .S ^TMP("ORLP",$J,ACT,X)="" ; Write to second ^TMP file.
+"RTN","ORLP2",118,0)
+ .Q  ; Loop for each record in ^TMP file written to new ^TMP file.
+"RTN","ORLP2",119,0)
+ ;
+"RTN","ORLP2",120,0)
+ K ^TMP("SC TMP LIST",$J) ; Clean up first ^TMP file entries.
+"RTN","ORLP2",121,0)
+ ;
+"RTN","ORLP2",122,0)
+ Q
+"RTN","ORLP2",123,0)
+ ;
+"RTN","ORLP2",124,0)
+REN ; SLC/PKS - 7/99
+"RTN","ORLP2",125,0)
+ ; 
+"RTN","ORLP2",126,0)
+ ; Allow users to rename a Team List.
+"RTN","ORLP2",127,0)
+ ;    Shows as a selection on menu of ORLP TEAM MENU option,
+"RTN","ORLP2",128,0)
+ ;    Called by option ORLP TEAM RENAME shown on that menu.
+"RTN","ORLP2",129,0)
+ ;
+"RTN","ORLP2",130,0)
+ ; Variables used:
+"RTN","ORLP2",131,0)
+ ;
+"RTN","ORLP2",132,0)
+ ;    DIC    = Fileman call.
+"RTN","ORLP2",133,0)
+ ;    Y      = DIC output variable containing existing Team List name.
+"RTN","ORLP2",134,0)
+ ;    DIE    = Fileman call.
+"RTN","ORLP2",135,0)
+ ;    DR     = DIE input variable.
+"RTN","ORLP2",136,0)
+ ;    ORTEAM = Selected team.
+"RTN","ORLP2",137,0)
+ ;    ORNEW  = New name to use in renaming of Team List.
+"RTN","ORLP2",138,0)
+ ;
+"RTN","ORLP2",139,0)
+ N DIC,DIR,DIE,DR,ORTEAM,ORNEW
+"RTN","ORLP2",140,0)
+ ;
+"RTN","ORLP2",141,0)
+ ; Allow selection of a Team List to rename:
+"RTN","ORLP2",142,0)
+ S DIC="^OR(100.21,"
+"RTN","ORLP2",143,0)
+ S DIC(0)="AEFQ"
+"RTN","ORLP2",144,0)
+ S DIC("A")="Enter team list name: "
+"RTN","ORLP2",145,0)
+ D ^DIC ; Call Fileman function for lookup of Team List name.
+"RTN","ORLP2",146,0)
+ I ($D(DTOUT))!($D(DUOUT)) Q  ; Punt if there's a problem.
+"RTN","ORLP2",147,0)
+ I '(Y>0) Q                   ; Punt if no entry selected.
+"RTN","ORLP2",148,0)
+ S ORTEAM=$P(Y,"^")           ; Assign IEN of list selected by user.
+"RTN","ORLP2",149,0)
+ K DIC
+"RTN","ORLP2",150,0)
+ ;
+"RTN","ORLP2",151,0)
+ L +^OR(100.21,ORTEAM):$G(DILOCKTM,3) ; Lock the file at the Team List level.
+"RTN","ORLP2",152,0)
+ I ('$TEST) W !,"Another user is editing this entry." QUIT  ; Punt if there's a file locking conflict.
+"RTN","ORLP2",153,0)
+ ;
+"RTN","ORLP2",154,0)
+ ; Call Fileman's DIR to get formatted user input:
+"RTN","ORLP2",155,0)
+ ;
+"RTN","ORLP2",156,0)
+ S DIR(0)="FA^3:30^KILL:(X?.N)!'(X'?1P.E) X"
+"RTN","ORLP2",157,0)
+ S DIR("A")="Enter new team list name: "
+"RTN","ORLP2",158,0)
+ S DIR("?")="Name must be from 3-30 characters and not begin with punctuation or consist wholly of numbers"
+"RTN","ORLP2",159,0)
+ S DIR("??")=DIR("?")
+"RTN","ORLP2",160,0)
+ D ^DIR
+"RTN","ORLP2",161,0)
+ I ($D(DTOUT))!($D(DUOUT)) Q  ; Punt if there's a problem.
+"RTN","ORLP2",162,0)
+ I Y=-1 K DIR Q  ; Punt if no input is made.
+"RTN","ORLP2",163,0)
+ S ORNEW=X
+"RTN","ORLP2",164,0)
+ K DIR
+"RTN","ORLP2",165,0)
+ ;
+"RTN","ORLP2",166,0)
+ ;L +^OR(100.21,ORTEAM):3 ; Lock the file at the Team List level.
+"RTN","ORLP2",167,0)
+ ;I ('$TEST) W !,"Another user is editing this entry." QUIT  ; Punt if there's a file locking conflict.
+"RTN","ORLP2",168,0)
+ ;
+"RTN","ORLP2",169,0)
+ ; Call Fileman function to implement renaming:
+"RTN","ORLP2",170,0)
+ S DIE="^OR(100.21,"
+"RTN","ORLP2",171,0)
+ S DA=ORTEAM
+"RTN","ORLP2",172,0)
+ S DR=".01///^S X=ORNEW"
+"RTN","ORLP2",173,0)
+ D ^DIE ; Writes to first field of .01 record.
+"RTN","ORLP2",174,0)
+ S DR=".1///^SET X=ORNEW"
+"RTN","ORLP2",175,0)
+ D ^DIE ; Writes to third field of .01 record.
+"RTN","ORLP2",176,0)
+ ;
+"RTN","ORLP2",177,0)
+ L -^OR(100.21,ORTEAM) ; Unlock file.
+"RTN","ORLP2",178,0)
+ K DIE
+"RTN","ORLP2",179,0)
+ Q
+"RTN","ORLP2",180,0)
+ ;
+"RTN","ORLP2",181,0)
+END ;
+"RTN","ORLP2",182,0)
+ I '$G(LIST) Q
+"RTN","ORLP2",183,0)
+ L -^OR(100.21,+LIST)
+"RTN","ORLP2",184,0)
+ Q
+"RTN","ORLP2",185,0)
+ ;
+"RTN","ORLP3MGR")
+0^7^B39663549^B36801102
+"RTN","ORLP3MGR",1,0)
+ORLP3MGR ; SLC/AEB - Manager Options - Patient List Defaults ;9/22/97 [4/25/00 3:25pm]
+"RTN","ORLP3MGR",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**9,82,273**;Dec 17, 1997;Build 17
+"RTN","ORLP3MGR",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORLP3MGR",4,0)
+ ;
+"RTN","ORLP3MGR",5,0)
+ ;DBIA reference section
+"RTN","ORLP3MGR",6,0)
+ ;2992  - ^XTV(8989.51
+"RTN","ORLP3MGR",7,0)
+ ;10086 - %ZIS
+"RTN","ORLP3MGR",8,0)
+ ;10006 - DIC
+"RTN","ORLP3MGR",9,0)
+ ;2051  - FIND1^DIC
+"RTN","ORLP3MGR",10,0)
+ ;2054  - CLEAN^DILF
+"RTN","ORLP3MGR",11,0)
+ ;10026 - DIR
+"RTN","ORLP3MGR",12,0)
+ ;2336  - EDITPAR^XPAREDIT
+"RTN","ORLP3MGR",13,0)
+ ;
+"RTN","ORLP3MGR",14,0)
+CLSTRTD ;
+"RTN","ORLP3MGR",15,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",16,0)
+ S ORLPT="Set Default Clinic Start Date",PARAM="ORLP DEFAULT CLINIC START DATE"
+"RTN","ORLP3MGR",17,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",18,0)
+ Q
+"RTN","ORLP3MGR",19,0)
+ ;
+"RTN","ORLP3MGR",20,0)
+CLSTPD ;
+"RTN","ORLP3MGR",21,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",22,0)
+ S ORLPT="Set Default Clinic Stop Date",PARAM="ORLP DEFAULT CLINIC STOP DATE"
+"RTN","ORLP3MGR",23,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",24,0)
+ Q
+"RTN","ORLP3MGR",25,0)
+ ;
+"RTN","ORLP3MGR",26,0)
+CLSUN ;
+"RTN","ORLP3MGR",27,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",28,0)
+ S ORLPT="Set Default Clinic Sunday",PARAM="ORLP DEFAULT CLINIC SUNDAY"
+"RTN","ORLP3MGR",29,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",30,0)
+ Q
+"RTN","ORLP3MGR",31,0)
+ ;
+"RTN","ORLP3MGR",32,0)
+CLMON ;
+"RTN","ORLP3MGR",33,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",34,0)
+ S ORLPT="Set Default Clinic Monday",PARAM="ORLP DEFAULT CLINIC MONDAY"
+"RTN","ORLP3MGR",35,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",36,0)
+ Q
+"RTN","ORLP3MGR",37,0)
+ ;
+"RTN","ORLP3MGR",38,0)
+CLTUE ;
+"RTN","ORLP3MGR",39,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",40,0)
+ S ORLPT="Set Default Clinic Tuesday",PARAM="ORLP DEFAULT CLINIC TUESDAY"
+"RTN","ORLP3MGR",41,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",42,0)
+ Q
+"RTN","ORLP3MGR",43,0)
+ ;
+"RTN","ORLP3MGR",44,0)
+CLWED ;
+"RTN","ORLP3MGR",45,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",46,0)
+ S ORLPT="Set Default Clinic Wednesday",PARAM="ORLP DEFAULT CLINIC WEDNESDAY"
+"RTN","ORLP3MGR",47,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",48,0)
+ Q
+"RTN","ORLP3MGR",49,0)
+ ;
+"RTN","ORLP3MGR",50,0)
+CLTHUR ;
+"RTN","ORLP3MGR",51,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",52,0)
+ S ORLPT="Set Default Clinic Thursday",PARAM="ORLP DEFAULT CLINIC THURSDAY"
+"RTN","ORLP3MGR",53,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",54,0)
+ Q
+"RTN","ORLP3MGR",55,0)
+ ;
+"RTN","ORLP3MGR",56,0)
+CLFRI ;
+"RTN","ORLP3MGR",57,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",58,0)
+ S ORLPT="Set Default Clinic Friday",PARAM="ORLP DEFAULT CLINIC FRIDAY"
+"RTN","ORLP3MGR",59,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",60,0)
+ Q
+"RTN","ORLP3MGR",61,0)
+ ;
+"RTN","ORLP3MGR",62,0)
+CLSAT ;
+"RTN","ORLP3MGR",63,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",64,0)
+ S ORLPT="Set Default Clinic Saturday",PARAM="ORLP DEFAULT CLINIC SATURDAY"
+"RTN","ORLP3MGR",65,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",66,0)
+ Q
+"RTN","ORLP3MGR",67,0)
+ ;
+"RTN","ORLP3MGR",68,0)
+LSTORD ;
+"RTN","ORLP3MGR",69,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",70,0)
+ S ORLPT="Set Default Sort Order for Patient List",PARAM="ORLP DEFAULT LIST ORDER"
+"RTN","ORLP3MGR",71,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",72,0)
+ Q
+"RTN","ORLP3MGR",73,0)
+ ;
+"RTN","ORLP3MGR",74,0)
+LSTSRC ;
+"RTN","ORLP3MGR",75,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",76,0)
+ S ORLPT="Set Default List Source",PARAM="ORLP DEFAULT LIST SOURCE"
+"RTN","ORLP3MGR",77,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",78,0)
+ Q
+"RTN","ORLP3MGR",79,0)
+ ;
+"RTN","ORLP3MGR",80,0)
+PROVIDER ;
+"RTN","ORLP3MGR",81,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",82,0)
+ S ORLPT="Set Default Primary Provider",PARAM="ORLP DEFAULT PROVIDER"
+"RTN","ORLP3MGR",83,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",84,0)
+ Q
+"RTN","ORLP3MGR",85,0)
+ ;
+"RTN","ORLP3MGR",86,0)
+SPEC ;
+"RTN","ORLP3MGR",87,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",88,0)
+ S ORLPT="Set Default Treating Specialty",PARAM="ORLP DEFAULT SPECIALTY"
+"RTN","ORLP3MGR",89,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",90,0)
+ Q
+"RTN","ORLP3MGR",91,0)
+ ;
+"RTN","ORLP3MGR",92,0)
+TEAM ;
+"RTN","ORLP3MGR",93,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",94,0)
+ S ORLPT="Set Default Team List",PARAM="ORLP DEFAULT TEAM"
+"RTN","ORLP3MGR",95,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",96,0)
+ Q
+"RTN","ORLP3MGR",97,0)
+ ;
+"RTN","ORLP3MGR",98,0)
+WARD ;
+"RTN","ORLP3MGR",99,0)
+ N ORLPT,PARAM
+"RTN","ORLP3MGR",100,0)
+ S ORLPT="Set Default Ward",PARAM="ORLP DEFAULT WARD"
+"RTN","ORLP3MGR",101,0)
+ D OPSETUP(ORLPT,PARAM)
+"RTN","ORLP3MGR",102,0)
+ Q
+"RTN","ORLP3MGR",103,0)
+ ;
+"RTN","ORLP3MGR",104,0)
+OPSETUP(ORLPT,PARAM) ;
+"RTN","ORLP3MGR",105,0)
+ N ORLPPAR
+"RTN","ORLP3MGR",106,0)
+ S ORLPPAR=$O(^XTV(8989.51,"B",PARAM,0)) Q:ORLPPAR=""
+"RTN","ORLP3MGR",107,0)
+ D TITLE(ORLPT) D PROC(ORLPPAR)
+"RTN","ORLP3MGR",108,0)
+ Q
+"RTN","ORLP3MGR",109,0)
+ ;
+"RTN","ORLP3MGR",110,0)
+TITLE(ORLPT) ;
+"RTN","ORLP3MGR",111,0)
+ ; Center and write title
+"RTN","ORLP3MGR",112,0)
+ S IOP=0 D ^%ZIS K IOP W @IOF
+"RTN","ORLP3MGR",113,0)
+ W !,?(80-$L(ORLPT)-1/2),ORLPT
+"RTN","ORLP3MGR",114,0)
+ Q
+"RTN","ORLP3MGR",115,0)
+ ;
+"RTN","ORLP3MGR",116,0)
+PROC(PAR) ; Process Parameter Settings
+"RTN","ORLP3MGR",117,0)
+ D EDITPAR^XPAREDIT(PAR)
+"RTN","ORLP3MGR",118,0)
+ Q
+"RTN","ORLP3MGR",119,0)
+ ;
+"RTN","ORLP3MGR",120,0)
+DEFSRC ; default list source and value for user
+"RTN","ORLP3MGR",121,0)
+ N ORX,ORLPLNM,ORLPDUZ,ORLPERR,ORLPRTN,ORLPCNT
+"RTN","ORLP3MGR",122,0)
+ ;  Get user DUZ number
+"RTN","ORLP3MGR",123,0)
+ K DIC,Y S DIC="^VA(200,",DIC(0)="AEQ",DIC("A")="Enter user's name: ",DIC("B")=DUZ D ^DIC Q:Y<1
+"RTN","ORLP3MGR",124,0)
+ S ORLPDUZ=$S(Y'<1:$P(Y,"^"),1:DUZ) K DIC,Y,DUOUT,DTOUT
+"RTN","ORLP3MGR",125,0)
+ Q:'$D(ORLPDUZ)
+"RTN","ORLP3MGR",126,0)
+ S ORX=$$FDEFSRC^ORQPTQ11(ORLPDUZ)
+"RTN","ORLP3MGR",127,0)
+ S ORLPLNM=$P(ORX,U,2)
+"RTN","ORLP3MGR",128,0)
+ W !!,"The user's default list of patients is based on: ",$P(ORX,U,3),"  ",ORLPLNM,!
+"RTN","ORLP3MGR",129,0)
+ I ORLPLNM="Combination" D
+"RTN","ORLP3MGR",130,0)
+ .; Look for an existing record for this user:
+"RTN","ORLP3MGR",131,0)
+ .K ORLPERR
+"RTN","ORLP3MGR",132,0)
+ .S ORLPRTN=$$FIND1^DIC(100.24,"","QX",ORLPDUZ,"","","ORLPERR")
+"RTN","ORLP3MGR",133,0)
+ .K ORLPERR
+"RTN","ORLP3MGR",134,0)
+ .D CLEAN^DILF                ; Clean up after DB call.
+"RTN","ORLP3MGR",135,0)
+ .;
+"RTN","ORLP3MGR",136,0)
+ .; If no combination record then punt:
+"RTN","ORLP3MGR",137,0)
+ .I +ORLPRTN<1 Q
+"RTN","ORLP3MGR",138,0)
+ .;
+"RTN","ORLP3MGR",139,0)
+ .; Print title for display of current entries:
+"RTN","ORLP3MGR",140,0)
+ .W !,"   User's current combination entries are:",!
+"RTN","ORLP3MGR",141,0)
+ .;
+"RTN","ORLP3MGR",142,0)
+ .; Call tag^routine to display existing combination sources:
+"RTN","ORLP3MGR",143,0)
+ .S ORLPCNT=0
+"RTN","ORLP3MGR",144,0)
+ .S ORLPCNT=$$COMBDISP^ORQPTQ5(ORLPDUZ,ORLPRTN)
+"RTN","ORLP3MGR",145,0)
+ .I ORLPCNT<1 W !,"No current combination entries...."
+"RTN","ORLP3MGR",146,0)
+ .W !
+"RTN","ORLP3MGR",147,0)
+ S DIR(0)="FOU",DIR("T")=10,DIR("A")="<RETURN> to continue"
+"RTN","ORLP3MGR",148,0)
+ I ORLPLNM="Combination" S DIR("T")=20 ; More time for combos.
+"RTN","ORLP3MGR",149,0)
+ D ^DIR
+"RTN","ORLP3MGR",150,0)
+ K DIR,Y,X,DTOUT,DUOUT,DIRUT
+"RTN","ORLP3MGR",151,0)
+ ;
+"RTN","ORLP3MGR",152,0)
+ Q
+"RTN","ORLP3MGR",153,0)
+ ;
+"RTN","ORLP3MGR",154,0)
+UDEFSRC ; default list source and value for the user
+"RTN","ORLP3MGR",155,0)
+ ; SLC/PKS - 3/2000: Modified to display "Combination" sources.
+"RTN","ORLP3MGR",156,0)
+ ;
+"RTN","ORLP3MGR",157,0)
+ ; Variables used:
+"RTN","ORLP3MGR",158,0)
+ ;
+"RTN","ORLP3MGR",159,0)
+ ;   ORLPCNT = Holds return value from function call.
+"RTN","ORLP3MGR",160,0)
+ ;   ORLPDUZ = DUZ of current user.
+"RTN","ORLP3MGR",161,0)
+ ;   ORLPERR = Error array for return from DB calls.
+"RTN","ORLP3MGR",162,0)
+ ;   ORLPLNM = Name of default list source.
+"RTN","ORLP3MGR",163,0)
+ ;   ORLPRTN = Return value from DB calls.
+"RTN","ORLP3MGR",164,0)
+ ;   ORX     = Holds default list source parameter.
+"RTN","ORLP3MGR",165,0)
+ ;
+"RTN","ORLP3MGR",166,0)
+ N ORX,ORLPLNM,ORLPDUZ,ORLPERR,ORLPRTN,ORLPCNT
+"RTN","ORLP3MGR",167,0)
+ Q:'$D(DUZ)
+"RTN","ORLP3MGR",168,0)
+ S ORX=$$FDEFSRC^ORQPTQ11(DUZ)
+"RTN","ORLP3MGR",169,0)
+ S ORLPLNM=$P(ORX,U,2)
+"RTN","ORLP3MGR",170,0)
+ W !!,"Your default list of patients is based on: ",$P(ORX,U,3),"  ",ORLPLNM,!
+"RTN","ORLP3MGR",171,0)
+ I ORLPLNM="Combination" D
+"RTN","ORLP3MGR",172,0)
+ .; Look for an existing record for this user:
+"RTN","ORLP3MGR",173,0)
+ .S ORLPDUZ=DUZ
+"RTN","ORLP3MGR",174,0)
+ .K ORLPERR
+"RTN","ORLP3MGR",175,0)
+ .S ORLPRTN=$$FIND1^DIC(100.24,"","QX",ORLPDUZ,"","","ORLPERR")
+"RTN","ORLP3MGR",176,0)
+ .K ORLPERR
+"RTN","ORLP3MGR",177,0)
+ .D CLEAN^DILF                ; Clean up after DB call.
+"RTN","ORLP3MGR",178,0)
+ .;
+"RTN","ORLP3MGR",179,0)
+ .; If no combination record then punt:
+"RTN","ORLP3MGR",180,0)
+ .I +ORLPRTN<1 Q
+"RTN","ORLP3MGR",181,0)
+ .;
+"RTN","ORLP3MGR",182,0)
+ .; Print title for display of current entries:
+"RTN","ORLP3MGR",183,0)
+ .W !,"   Your current combination entries are:",!
+"RTN","ORLP3MGR",184,0)
+ .;
+"RTN","ORLP3MGR",185,0)
+ .; Call tag^routine to display existing combination sources:
+"RTN","ORLP3MGR",186,0)
+ .S ORLPCNT=0
+"RTN","ORLP3MGR",187,0)
+ .S ORLPCNT=$$COMBDISP^ORQPTQ5(ORLPDUZ,ORLPRTN)
+"RTN","ORLP3MGR",188,0)
+ .I ORLPCNT<1 W !,"No current combination entries...."
+"RTN","ORLP3MGR",189,0)
+ .W !
+"RTN","ORLP3MGR",190,0)
+ .;
+"RTN","ORLP3MGR",191,0)
+ .Q
+"RTN","ORLP3MGR",192,0)
+ ;
+"RTN","ORLP3MGR",193,0)
+ ; Allow user viewing with default timeout:
+"RTN","ORLP3MGR",194,0)
+ S DIR(0)="FOU",DIR("T")=10,DIR("A")="<RETURN> to continue"
+"RTN","ORLP3MGR",195,0)
+ I ORLPLNM="Combination" S DIR("T")=20 ; More time for combos.
+"RTN","ORLP3MGR",196,0)
+ D ^DIR
+"RTN","ORLP3MGR",197,0)
+ K DIR,Y,X,DTOUT,DUOUT,DIRUT
+"RTN","ORLP3MGR",198,0)
+ Q
+"RTN","ORLP3MGR",199,0)
+ ;
+"RTN","ORLPL")
+0^12^B13080692^B8776341
+"RTN","ORLPL",1,0)
+ORLPL ; slc/CLA - Display/Edit Patient Lists; 8/8/91
+"RTN","ORLPL",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**273**;Dec 17, 1997;Build 17
+"RTN","ORLPL",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified
+"RTN","ORLPL",4,0)
+ ;
+"RTN","ORLPL",5,0)
+ ;DBIA reference section
+"RTN","ORLPL",6,0)
+ ;10142 - EN^DDIOL
+"RTN","ORLPL",7,0)
+ ;10006 - DIC
+"RTN","ORLPL",8,0)
+ ;10013 - DIK
+"RTN","ORLPL",9,0)
+ ;10026 - DIR
+"RTN","ORLPL",10,0)
+ ;2263  - XPAR
+"RTN","ORLPL",11,0)
+ ;
+"RTN","ORLPL",12,0)
+GETDEF ;called by SETUP, ASKLIST^ORLP, INQ^ORLP1 - get a default list from ^TMP or user's primary list
+"RTN","ORLPL",13,0)
+ N LST
+"RTN","ORLPL",14,0)
+ I $D(^TMP("ORLP",$J,"TLIST")) S DIC("B")=^TMP("ORLP",$J,"TLIST") Q
+"RTN","ORLPL",15,0)
+ ;if user has a primary list defined, its type is team, users are defined and the current user is on the list, use the primary list as the default
+"RTN","ORLPL",16,0)
+ S LST=$$GET^XPAR("USR.`"_DUZ,"ORLP DEFAULT TEAM",1,"I") I +$G(LST)>0,$D(^OR(100.21,LST,0)) S DIC("B")=$P(^(0),U)
+"RTN","ORLPL",17,0)
+ Q
+"RTN","ORLPL",18,0)
+SETUP ;called by DELUSER, DELPT - setup list for display and editing
+"RTN","ORLPL",19,0)
+ S LIST=Y,^TMP("ORLP",$J,"TLIST")=+Y
+"RTN","ORLPL",20,0)
+ K DIC,^XUTL("OR",$J),Y
+"RTN","ORLPL",21,0)
+ Q
+"RTN","ORLPL",22,0)
+DELUSER ;called by option ORLP DELETE TEAM USERS - removes provider/users from a list
+"RTN","ORLPL",23,0)
+ S ET="U",DIC="^OR(100.21,",DIC(0)="AEMQ",DIC("S")="I $P(^(0),U,2)'=""P""",DIC("A")="Select TEAM PATIENT list: "
+"RTN","ORLPL",24,0)
+ D ^DIC I Y<1 D END Q
+"RTN","ORLPL",25,0)
+ D SETUP
+"RTN","ORLPL",26,0)
+ ;if no users on list goto NOENTRY
+"RTN","ORLPL",27,0)
+ I '$D(^OR(100.21,+LIST,1,0)) G NOENTRY
+"RTN","ORLPL",28,0)
+ I $P(^OR(100.21,+LIST,1,0),"^",4)=""!($P(^(0),"^",4)=0) G NOENTRY
+"RTN","ORLPL",29,0)
+ L +^OR(100.21,+LIST):$G(DILOCKTM,3) ; Lock the file at the Team List level.
+"RTN","ORLPL",30,0)
+ I ('$TEST) W !,"Another user is editing this entry." D END Q  ; Punt if there's a file locking conflict.
+"RTN","ORLPL",31,0)
+ S ORUS="^OR(100.21,+LIST,1,",ORUS(0)="40MN",ORUS("T")="W @IOF,?34,""OWNER LIST"",!",ORUS("A")="Enter Provider/user(s) to REMOVE from list: "
+"RTN","ORLPL",32,0)
+ D ^ORUS
+"RTN","ORLPL",33,0)
+ I ($D(Y)<10) G ULEND
+"RTN","ORLPL",34,0)
+ S I=0 W ! F  S I=$O(Y(I)) Q:I<1  S DA(1)=+LIST,DA=+Y(I),DIK="^OR(100.21,"_DA(1)_",1," D
+"RTN","ORLPL",35,0)
+ . N Y D ^DIK
+"RTN","ORLPL",36,0)
+ W !,"Provider/user(s) removed from list."
+"RTN","ORLPL",37,0)
+ D ULEND
+"RTN","ORLPL",38,0)
+ Q
+"RTN","ORLPL",39,0)
+DELPT ;called by option ORLP DELETE TEAM PATIENTS - removes patients from a list
+"RTN","ORLPL",40,0)
+ S ET="P",DIC="^OR(100.21,",DIC(0)="AEMQ",DIC("S")="I $P(^(0),U,2)[""M""",DIC("A")="Select TEAM PATIENT list: "
+"RTN","ORLPL",41,0)
+ D ^DIC I Y<1 D END Q
+"RTN","ORLPL",42,0)
+ D SETUP
+"RTN","ORLPL",43,0)
+ ;if no patients on list goto NOENTRY
+"RTN","ORLPL",44,0)
+ I '$O(^OR(100.21,+LIST,10,0)) G NOENTRY
+"RTN","ORLPL",45,0)
+ L +^OR(100.21,+LIST):$G(DILOCKTM,3) ; Lock the file at the Team List level.
+"RTN","ORLPL",46,0)
+ I ('$TEST) W !,"Another user is editing this entry." D END Q  ; Punt if there's a file locking conflict.
+"RTN","ORLPL",47,0)
+ I $P(^OR(100.21,+LIST,0),U,2)="TA" D  D ULEND Q
+"RTN","ORLPL",48,0)
+ . S A(1)="",A(2)="This 'TEAM PATIENT' list is an AUTOLINK list."
+"RTN","ORLPL",49,0)
+ . S A(3)="In order to remove patients from this TEAM PATIENT list you must remove the"
+"RTN","ORLPL",50,0)
+ . S A(4)="AUTOLINK(s).",A(5)="" D EN^DDIOL(.A) K A
+"RTN","ORLPL",51,0)
+ . S DIR(0)="YO",DIR("A")="Do you want to remove Autolinks",DIR("B")="Y" D ^DIR K DIR Q:$D(DIROUT)  I Y=1 D ASKLINK^ORLP2(+LIST)
+"RTN","ORLPL",52,0)
+ S ORUS="^OR(100.21,+LIST,10,",ORUS(0)="40MN",ORUS("T")="W @IOF,?32,""PATIENT LIST"",!",ORUS("A")="Enter patient(s) to REMOVE from list: "
+"RTN","ORLPL",53,0)
+ D ^ORUS
+"RTN","ORLPL",54,0)
+ I ($D(Y)<10) G ULEND
+"RTN","ORLPL",55,0)
+ S I=0 W ! F  S I=$O(Y(I)) Q:I<1  S DA(1)=+LIST,DA=+Y(I),DIK="^OR(100.21,"_DA(1)_",10," D
+"RTN","ORLPL",56,0)
+ . N Y D ^DIK
+"RTN","ORLPL",57,0)
+ W !,"Patient(s) removed from list."
+"RTN","ORLPL",58,0)
+ D ULEND
+"RTN","ORLPL",59,0)
+ Q
+"RTN","ORLPL",60,0)
+NOENTRY ;called by DELUSER, DELPT - indicate no entries in file/record/field
+"RTN","ORLPL",61,0)
+ W !!,"There are no ",$S(ET="U":"provider/user ",ET="P":"patient ",1:""),"entries in this list to edit!"
+"RTN","ORLPL",62,0)
+ULEND I $G(LIST) L -^OR(100.21,+LIST)
+"RTN","ORLPL",63,0)
+END K DA,DIC,DIK,ET,I,J,LIST,ORUS,RESP,Y
+"RTN","ORLPL",64,0)
+ Q
+"RTN","ORWTPL")
+0^10^B28051857^B25081990
+"RTN","ORWTPL",1,0)
+ORWTPL ; SLC/STAFF - Personal Preference Lists ; 4/2/12 3:35pm
+"RTN","ORWTPL",2,0)
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**85,109,173,243,273**;Oct 24, 2000;Build 17
+"RTN","ORWTPL",3,0)
+ ;;Per VHA Directive 2004-038, this routine should not be modified.
+"RTN","ORWTPL",4,0)
+ ;
+"RTN","ORWTPL",5,0)
+ ;DBIA reference section
+"RTN","ORWTPL",6,0)
+ ;4329  - ^VA(200
+"RTN","ORWTPL",7,0)
+ ;10013 - DIK
+"RTN","ORWTPL",8,0)
+ ;2263  - XPAR
+"RTN","ORWTPL",9,0)
+ ;
+"RTN","ORWTPL",10,0)
+NEWLIST(VAL,LISTNAME,USER,ORVIZ) ; from ORWTPP
+"RTN","ORWTPL",11,0)
+ ; set user's new personal list
+"RTN","ORWTPL",12,0)
+ N CAPNAME
+"RTN","ORWTPL",13,0)
+ S LISTNAME=$G(LISTNAME)
+"RTN","ORWTPL",14,0)
+ I '$L(LISTNAME) S VAL="^invalid list name" Q
+"RTN","ORWTPL",15,0)
+ S CAPNAME=$$UPPER^ORU(LISTNAME)
+"RTN","ORWTPL",16,0)
+ I $D(^OR(100.21,"D",CAPNAME)) S VAL="^invalid list name - duplicate of another name" Q
+"RTN","ORWTPL",17,0)
+ I $O(^OR(100.21,"B",LISTNAME,0)) S VAL="^invalid list name - duplicate of another name" Q
+"RTN","ORWTPL",18,0)
+ ;*** check input transform, duplicate name for same user
+"RTN","ORWTPL",19,0)
+ N DA,DIK,NUM
+"RTN","ORWTPL",20,0)
+ L +^OR(100.21,0):20 I '$T S VAL="^unable to set up" Q
+"RTN","ORWTPL",21,0)
+ S NUM=1+$P(^OR(100.21,0),U,3)
+"RTN","ORWTPL",22,0)
+ F  Q:'$D(^OR(100.21,NUM,0))  S NUM=NUM+1
+"RTN","ORWTPL",23,0)
+ S $P(^OR(100.21,0),U,3)=NUM,$P(^(0),U,4)=$P(^(0),U,4)+1
+"RTN","ORWTPL",24,0)
+ S ^OR(100.21,NUM,0)=LISTNAME_"^P"
+"RTN","ORWTPL",25,0)
+ L -^OR(100.21,0)
+"RTN","ORWTPL",26,0)
+ K ^OR(100.21,NUM,1),^(2),^(10)
+"RTN","ORWTPL",27,0)
+ S ^OR(100.21,NUM,1,0)="^100.212PA^"_USER_"^1"
+"RTN","ORWTPL",28,0)
+ S ^OR(100.21,NUM,1,USER,0)=USER
+"RTN","ORWTPL",29,0)
+ S ^OR(100.21,NUM,11)=$G(ORVIZ)_U
+"RTN","ORWTPL",30,0)
+ S DIK="^OR(100.21,",DA=NUM
+"RTN","ORWTPL",31,0)
+ D IX1^DIK
+"RTN","ORWTPL",32,0)
+ S VAL=NUM_U_LISTNAME_"^^^^^^^"_$G(ORVIZ)
+"RTN","ORWTPL",33,0)
+ Q
+"RTN","ORWTPL",34,0)
+ ;
+"RTN","ORWTPL",35,0)
+DELLIST(OK,LISTNUM,USER) ; from ORWTPP
+"RTN","ORWTPL",36,0)
+ ; delete user's personal list
+"RTN","ORWTPL",37,0)
+ N DA,DIK
+"RTN","ORWTPL",38,0)
+ S LISTNUM=+$G(LISTNUM),OK=1
+"RTN","ORWTPL",39,0)
+ I '$O(^OR(100.21,"C",USER,LISTNUM,0)) S OK=0 Q
+"RTN","ORWTPL",40,0)
+ I $P($G(^OR(100.21,LISTNUM,0)),U,2)'="P" S OK=0 Q
+"RTN","ORWTPL",41,0)
+ S DA=LISTNUM,DIK="^OR(100.21,"
+"RTN","ORWTPL",42,0)
+ D ^DIK
+"RTN","ORWTPL",43,0)
+ Q
+"RTN","ORWTPL",44,0)
+ ;
+"RTN","ORWTPL",45,0)
+SAVELIST(OK,PLIST,LISTNUM,USER,ORVIZ) ; from ORWTPP
+"RTN","ORWTPL",46,0)
+ ; save user's personal list changes
+"RTN","ORWTPL",47,0)
+ N CNT,DA,DFN,DIK,NUM K DA
+"RTN","ORWTPL",48,0)
+ S LISTNUM=+$G(LISTNUM),OK=1
+"RTN","ORWTPL",49,0)
+ I $P($G(^OR(100.21,LISTNUM,0)),U,2)'="P" S OK=0 Q
+"RTN","ORWTPL",50,0)
+ I '$D(^OR(100.21,"C",USER,LISTNUM)) S OK=0 Q
+"RTN","ORWTPL",51,0)
+ I '$D(^OR(100.21,LISTNUM,10,0))#2 S ^(0)="^100.2101AV^"
+"RTN","ORWTPL",52,0)
+ S DA(1)=LISTNUM,DIK="^OR(100.21,"_LISTNUM_",10,"
+"RTN","ORWTPL",53,0)
+ S DA=0 F  S DA=$O(^OR(100.21,LISTNUM,10,DA)) Q:DA<1  D ^DIK
+"RTN","ORWTPL",54,0)
+ K DA
+"RTN","ORWTPL",55,0)
+ S CNT=0
+"RTN","ORWTPL",56,0)
+ S NUM=0 F  S NUM=$O(PLIST(NUM)) Q:NUM<1  D
+"RTN","ORWTPL",57,0)
+ .S DFN=+PLIST(NUM) I 'DFN Q
+"RTN","ORWTPL",58,0)
+ .S CNT=CNT+1
+"RTN","ORWTPL",59,0)
+ .S ^OR(100.21,LISTNUM,10,CNT,0)=DFN_";DPT("
+"RTN","ORWTPL",60,0)
+ S ^OR(100.21,LISTNUM,10,0)="^100.2101AV^"_CNT_U_CNT
+"RTN","ORWTPL",61,0)
+ S ^OR(100.21,LISTNUM,11)=$G(ORVIZ)_U
+"RTN","ORWTPL",62,0)
+ S DA=LISTNUM,DIK="^OR(100.21,"
+"RTN","ORWTPL",63,0)
+ D IX1^DIK
+"RTN","ORWTPL",64,0)
+ Q
+"RTN","ORWTPL",65,0)
+ ;
+"RTN","ORWTPL",66,0)
+LSDEF(INFO,USER) ; from ORWTPP
+"RTN","ORWTPL",67,0)
+ ; get user's list sources
+"RTN","ORWTPL",68,0)
+ N TYPE
+"RTN","ORWTPL",69,0)
+ S INFO=""
+"RTN","ORWTPL",70,0)
+ F TYPE="P","S","T","W","C" D
+"RTN","ORWTPL",71,0)
+ .S INFO=INFO_$P($$LISTSRC^ORQPTQ11(USER,TYPE),U)_U
+"RTN","ORWTPL",72,0)
+ Q
+"RTN","ORWTPL",73,0)
+ ;
+"RTN","ORWTPL",74,0)
+SORTDEF(SORT,USER) ; from ORWTPP
+"RTN","ORWTPL",75,0)
+ ; get user's sort order - Modified by PKS - 8/30/2001
+"RTN","ORWTPL",76,0)
+ N ORSECT
+"RTN","ORWTPL",77,0)
+ S ORSECT=$G(^VA(200,USER,5))
+"RTN","ORWTPL",78,0)
+ I +ORSECT>0 S ORSECT=$P(ORSECT,U)
+"RTN","ORWTPL",79,0)
+ S SORT=$$GET^XPAR("USR.`"_USER_"^SRV.`"_$G(ORSECT)_"^DIV^SYS^PKG","ORLP DEFAULT LIST ORDER",1,"I") I SORT']"" S SORT="A"
+"RTN","ORWTPL",80,0)
+ Q
+"RTN","ORWTPL",81,0)
+ ;
+"RTN","ORWTPL",82,0)
+CLDAYS(DAYS,USER) ; from ORWTPP
+"RTN","ORWTPL",83,0)
+ ; get user's clinic defaults
+"RTN","ORWTPL",84,0)
+ N DAY
+"RTN","ORWTPL",85,0)
+ S DAYS=""
+"RTN","ORWTPL",86,0)
+ F DAY="MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY" D
+"RTN","ORWTPL",87,0)
+ .S DAYS=DAYS_$$GET^XPAR("USR.`"_USER,"ORLP DEFAULT CLINIC "_DAY,1,"I")_U
+"RTN","ORWTPL",88,0)
+ Q
+"RTN","ORWTPL",89,0)
+ ;
+"RTN","ORWTPL",90,0)
+CLRANGE(RANGE,USER) ; from ORWTPP
+"RTN","ORWTPL",91,0)
+ ; get user's default clinic start, stop dates
+"RTN","ORWTPL",92,0)
+ N RNG
+"RTN","ORWTPL",93,0)
+ S RANGE=""
+"RTN","ORWTPL",94,0)
+ F RNG="START","STOP" D
+"RTN","ORWTPL",95,0)
+ .S RANGE=RANGE_$$GET^XPAR("USR.`"_USER,"ORLP DEFAULT CLINIC "_RNG_" DATE",1,"I")_U
+"RTN","ORWTPL",96,0)
+ Q
+"RTN","ORWTPL",97,0)
+ ;
+"RTN","ORWTPL",98,0)
+SAVECD(OK,INFO,USER) ; from ORWTPP
+"RTN","ORWTPL",99,0)
+ ; save user's clinic defaults
+"RTN","ORWTPL",100,0)
+ N FRI,MON,SAT,START,STOP,SUN,THURS,TUES,WED
+"RTN","ORWTPL",101,0)
+ S OK=1
+"RTN","ORWTPL",102,0)
+ S START=+$P(INFO,U,1) S START=$S(START=0:"T",START<0:"T"_START,1:"T+"_START)
+"RTN","ORWTPL",103,0)
+ S STOP=+$P(INFO,U,2) S STOP=$S(STOP=0:"T",STOP<0:"T"_STOP,1:"T+"_STOP)
+"RTN","ORWTPL",104,0)
+ S MON=+$P(INFO,U,3),MON=$S('MON:"@",1:"`"_MON)
+"RTN","ORWTPL",105,0)
+ S TUES=+$P(INFO,U,4),TUES=$S('TUES:"@",1:"`"_TUES)
+"RTN","ORWTPL",106,0)
+ S WED=+$P(INFO,U,5),WED=$S('WED:"@",1:"`"_WED)
+"RTN","ORWTPL",107,0)
+ S THURS=+$P(INFO,U,6),THURS=$S('THURS:"@",1:"`"_THURS)
+"RTN","ORWTPL",108,0)
+ S FRI=+$P(INFO,U,7),FRI=$S('FRI:"@",1:"`"_FRI)
+"RTN","ORWTPL",109,0)
+ S SAT=+$P(INFO,U,8),SAT=$S('SAT:"@",1:"`"_SAT)
+"RTN","ORWTPL",110,0)
+ S SUN=+$P(INFO,U,9),SUN=$S('SUN:"@",1:"`"_SUN)
+"RTN","ORWTPL",111,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC START DATE",1,START)
+"RTN","ORWTPL",112,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC STOP DATE",1,STOP)
+"RTN","ORWTPL",113,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC MONDAY",1,MON)
+"RTN","ORWTPL",114,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC TUESDAY",1,TUES)
+"RTN","ORWTPL",115,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC WEDNESDAY",1,WED)
+"RTN","ORWTPL",116,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC THURSDAY",1,THURS)
+"RTN","ORWTPL",117,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC FRIDAY",1,FRI)
+"RTN","ORWTPL",118,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC SATURDAY",1,SAT)
+"RTN","ORWTPL",119,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT CLINIC SUNDAY",1,SUN)
+"RTN","ORWTPL",120,0)
+ Q
+"RTN","ORWTPL",121,0)
+ ;
+"RTN","ORWTPL",122,0)
+SAVEPLD(OK,INFO,USER) ; from ORWTPP
+"RTN","ORWTPL",123,0)
+ ; save user's clinic defaults
+"RTN","ORWTPL",124,0)
+ N PROV,SORT,SOURCE,SPEC,TEAM,WARD
+"RTN","ORWTPL",125,0)
+ S OK=1
+"RTN","ORWTPL",126,0)
+ S SOURCE=$P(INFO,U,1)
+"RTN","ORWTPL",127,0)
+ S SORT=$P(INFO,U,2)
+"RTN","ORWTPL",128,0)
+ S PROV=+$P(INFO,U,3),PROV=$S('PROV:"@",1:"`"_PROV)
+"RTN","ORWTPL",129,0)
+ S SPEC=+$P(INFO,U,4),SPEC=$S('SPEC:"@",1:"`"_SPEC)
+"RTN","ORWTPL",130,0)
+ S TEAM=+$P(INFO,U,5),TEAM=$S('TEAM:"@",1:"`"_TEAM)
+"RTN","ORWTPL",131,0)
+ S WARD=+$P(INFO,U,6),WARD=$S('WARD:"@",1:"`"_WARD)
+"RTN","ORWTPL",132,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT LIST SOURCE",1,SOURCE)
+"RTN","ORWTPL",133,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT LIST ORDER",1,SORT)
+"RTN","ORWTPL",134,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT PROVIDER",1,PROV)
+"RTN","ORWTPL",135,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT SPECIALTY",1,SPEC)
+"RTN","ORWTPL",136,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT TEAM",1,TEAM)
+"RTN","ORWTPL",137,0)
+ D EN^XPAR(USER_";VA(200,","ORLP DEFAULT WARD",1,WARD)
+"RTN","ORWTPL",138,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",7194,6)
+^346
+**END**
+**END**
+

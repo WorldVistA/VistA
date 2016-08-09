@@ -1,0 +1,180 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/01/13 at 11:22
+=============================================================================
+Run Date: DEC 16, 2014                     Designation: PSD*3*75
+Package : PSD - CONTROLLED SUBSTANCES         Priority: Mandatory
+Version : 3        SEQ #64                      Status: Released
+                  Compliance Date: JAN 15, 2015
+=============================================================================
+
+Associated patches: (v)PSD*3*71        install with patch       `PSD*3*75'
+                    (v)PSD*3*55    <<= must be installed BEFORE `PSD*3*75'
+
+Subject: CONTROLLED SUBSTANCE REPORT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following problems:
+  
+ 1. The Rx (Prescription) Outpatient Dispensing Report [PSD RX DISPENSING 
+ REPORT] option is being modified to filter out and not print CMOP 
+ prescriptions.
+  
+ 2. The Destroyed Drugs Report [PSD DEST DRUGS REPORT] option is being 
+ modified so that the destruction holding numbers will appear on the 
+ report at the appropriate time (after being destroyed).
+  
+ 3. The NAOU Usage Report [PSD NAOU USAGE] option is being modified for a 
+ printing selection display issue. 
+  
+ ASSOCIATED Remedy:
+ ==================
+ 1. INC000000602941 - A portion of this report is not working correctly
+                      Rx (Prescription) Outpatient Dispensing Report 
+ 2. INC000000788871 - Destruction holding numbers do not appear on the
+                      Destroyed Drugs Report after being destroyed.
+ 3. INC000000819482 - Printing Issue
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Manchester VA Medical Center  
+ St. Cloud VA Medical Center  
+ VA Heartland - West 
+  
+ OVERVIEW:
+ =========
+ 1. INC000000602941 - A portion of this report is not working correctly Rx
+                      (Prescription) Outpatient Dispensing Report  
+  
+ Problem:
+ --------
+ The Rx (Prescription) Outpatient Dispensing Report [PSD RX DISPENSING
+ REPORT] should only show the local prescriptions and the CMOP prescriptions
+ should be screened out.
+  
+ Resolution:
+ -----------
+ The routine for the Rx (Prescription) Outpatient Dispensing Report [PSD
+ RX DISPENSING REPORT] will be modified to screen out CMOP prescriptions.
+  
+ Technical:
+ ----------
+ The ^PSDOPTN routine will be modified to screen out prescriptions
+ that have been sent to CMOP.
+  
+ 2. INC000000788871 - Destruction holding numbers do not appear on the 
+                      Destroyed Drugs Report after being destroyed.
+  
+ Problem:
+ --------
+ The Destroyed Drugs Report [PSD DEST DRUGS REPORT] does not report on
+ destruction holding transactions for drugs destroyed when the user does not
+ select ^ALL for the vaults.
+   
+ Resolution:
+ -----------
+ The routine for the Destroyed Drugs Report [PSD DEST DRUGS REPORT] will
+ be modified to allow users to select a single or multiple vaults.
+  
+ Technical:
+ ----------
+ The ^PSDESTP routine will be modified to initialize the pharmacy location
+ variable before starting the for loop to step through the data.
+  
+ 3. INC000000819482 - Printing Issue
+  
+ Problem:
+ --------
+ When printing the NAOU Usage Report [PSD NAOU USAGE] for a NAOU which
+ has no activity in that time frame, the NAOU selected does not print in the
+ header of the report. Inspectors would like the NAOU chosen to print on
+ the report whether there is usage or no usage during the time frame
+ chosen. Currently it is impossible to tell which NAOU's were selected to
+ be included on the report.
+  
+ Resolution:
+ -----------
+ The NAOU Usage Report [PSD NAOU USAGE] will be modified to include the NOAUs
+ that have not had any usage for the requested reporting time period.
+  
+ Technical:
+ ----------
+ The ^PDNU2 and ^PSDNU3 routines will be modified to print the NAOU header
+ and the message "*****  NO DATA AVAILABLE FOR THIS REPORT  *****" if there
+ has been no activity during the reporting period.
+   
+ =================== INSTALLATION INSTRUCTIONS =====================
+     
+ This patch may be installed during normal working hours with all users 
+ on the system. However, as it is necessary to disable some menu options
+ when installing this patch it is recommended that the install be done
+ during non-peak hours.
+     
+ Install Time - less than 2 minutes.
+  
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+   2. From the Kernel Installation & Distribution System menu, select
+      the Installation menu.
+     
+   3. From this menu, you may select to use the following options
+          (when prompted for INSTALL NAME, enter PSD*3.0*75)
+     
+       a. Backup a Transport Global - this option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any other changes such as DDs or templates.
+     
+       b. Compare Transport Global to Current System - this option will
+          allow you to view all changes that will be made when the patch
+          is installed. It compares all components of the patch (routines,
+          DDs, templates, etc.).
+     
+       c. Verify Checksums in Transport Global - this option will ensure
+          the integrity of the routines that are in the transport global.
+     
+    4. Use the Install Package(s) option and select the package PSD*3.0*75
+     
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.
+     
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONTROLLED SUBSTANCES ;**[Patch List]**;13 Feb 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSDESTP
+    Before: B48187487   After: B48298563  **8,62,71,75**
+Routine Name: PSDNU2
+    Before: B19397437   After: B22108701  **75**
+Routine Name: PSDNU3
+    Before:  B3705047   After:  B3988500  **75**
+Routine Name: PSDOPTN
+    Before: B18659539   After: B20101780  **18,55,75**
+ 
+Routine list of preceding patches: 55, 71
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 22, 2013
+Completed By:                               Date Completed: DEC 03, 2014
+Released By :                               Date Released : DEC 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

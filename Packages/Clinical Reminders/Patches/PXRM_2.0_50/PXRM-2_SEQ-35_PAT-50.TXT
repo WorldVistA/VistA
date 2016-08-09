@@ -1,0 +1,215 @@
+
+=============================================================================
+Run Date: JAN 27, 2015                     Designation: PXRM*2*50
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #35                      Status: Released
+                  Compliance Date: FEB 27, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*50'
+
+Subject: ICD10 AND SNOMED CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch is the first in a phase of patches being developed and 
+ released to update national reminder taxonomies to include ICD10 and 
+ SNOMED codes.
+  
+ On October 1, 2015, the VA will begin to use ICD-10 diagnosis codes in 
+ place of ICD-9.  In preparation for this change, the national clinical
+ reminder taxonomies are being reviewed and updated by the responsible
+ Program Offices in VACO.  The taxonomies are also being updated to include
+ SNOMED-CT codes which are currently used in VistA/CPRS on the problem
+ list.  Some taxonomies are also getting updates to the ICD9 codes based on
+ these detailed reviews.  And in some cases HCPCS codes, CPT codes and
+ ICD10 procedure codes are being added or updated.  This first taxonomy
+ patch covers the initial set of taxonomies whose review has been
+ completed.  An additional patch or patches will complete the process
+ for the remaining taxonomies.
+  
+ The process for review included a detailed review by HIMS coding staff to 
+ provide possible ICD10 codes for inclusion and then subsequent review by
+ SMEs designated by the responsible Program Office.  The responsible
+ Program Office is listed as the sponsor in each taxonomy definition.
+  
+ In the process of reviewing all the national taxonomies, a large number 
+ of old and outdated taxonomies were found that were originally used in
+ reminders that were distributed in 1996.  Most of those old, antiquated
+ reminders have already been inactivated and renamed but the taxonomies
+ that were included in them had not been reviewed or updated.  
+ These taxonomies are being renamed with a leading 'ZZ' and inactivated by
+ this patch.  These taxonomies should not be in use at any site and there
+ are no plans to support them or update them.
+  
+ URL updates:
+ Reminder dialog VA-AAA SCREENING contained four URL's that no longer 
+ worked.  Three of the URL's were within the reminder dialog as part of a 
+ TIU TEMPLATE FIELD.  The other was in the reminder definition VA-AAA 
+ SCREENING.  Before the patch install, the Reminder Definition contained 
+ two Web Addresses.  After the patch install, there is only one Web 
+ Address for the definition.  This patch updates the URL's that are 
+ embedded within TIU TEMPLATE FIELD names and also updates the Web Address 
+ in the Reminder Definition VA-AAA SCREENING.
+  
+ Health Summary Update:
+ Health summary type, OB IMAGING FOR AAA, was also updated.  The 'Max Occ' 
+ was set to 10 and the 'Time' was set to null.  This was for the Component 
+ named SII. 
+  
+ NOTE: Your Selection Items in the health summary type OB IMAGING FOR 
+       AAA will be removed upon patch install.  This is a limitation of the
+       install. It is IMPORTANT that you know what Selection Items you have
+       in that health summary BEFORE installing the patch as they will be
+       removed upon install.  It is recommended that you do a printout of
+       the health summary prior to installing the patch to make it easy to
+       add the Selection items back to the health summary type.
+  
+ Associated Remedy ticket(s):
+ ============================
+ INC00001050516 - ICD-10 and SNOMED CODES
+  
+ Associated NSR(s):
+ =================
+ N/A
+    
+ Participating Test Sites:
+ =========================
+ Providence VAMC, RI
+ James J. Peters VAMC, Bronx, NY
+ Northport VAMC, NY
+ Atlanta VAMC, GA
+  
+    
+ REMEDY OVERVIEW:
+ ===============
+ 1. INC00001050516 - ICD-10 and SNOMED CODES
+    
+ Problem:
+ --------
+ This patch is the first in a phase of patches being developed and 
+ released to update national reminder taxonomies to include ICD10 and 
+ SNOMED codes.
+  
+ In the process of reviewing all the national taxonomies, a large number 
+ of old and outdated taxonomies were found that were originally used in
+ reminders that were distributed in 1996.  Most of those old, antiquated
+ reminders have already been inactivated and renamed but the taxonomies
+ that were included in them had not been reviewed or updated.  
+ These taxonomies are being renamed with a leading 'ZZ' and inactivated by
+ this patch.  These taxonomies should not be in use at any site and there
+ are no plans to support them or update them.
+  
+ URL's within the VA-AAA SCREENING reminder definition and dialog were 
+ incorrect.
+  
+ Health Summary type OB IMAGING FOR AAA needs updating to allow for 10 
+ occurrences.
+  
+ Resolution:
+ -----------
+ First phase of National reminder taxonomy updates have been completed.
+ URL's updated in VA-AAA SCREENING reminder definition and dialog.
+ Health summary type updated.
+  
+ Build Components:
+ =================
+ N/A
+     
+ Data Dictionary:
+ ================
+ REMINDER EXCHANGE (#811.8) file
+     
+ Software & Documentation Retrieval Instructions:
+ ================================================
+    
+ This patch is being distributed as a host file.  The name of the host
+ file is PXRM_2_0_50.KID.  This file should be downloaded in ASCII
+ format.
+       
+ The preferred method for obtaining these files is to use File 
+ Transfer Protocol (FTP) to download them from:
+ ftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available FTP server.
+ Sites may also elect to retrieve the files directly from a 
+ specific server as follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+    
+ The Install and Setup Guide is also available on the above servers.  It is
+ available as .pdf format.  This file should be downloaded in BINARY
+ format.  
+  
+     File Name:                  Description:            Protocol:
+     ==========                  ============            =========
+     PXRM_2_0_50_RN.PDF          PXRM*2.0*50 Release     BINARY
+                                 Notes
+     PXRM_2_0_50.KID             PXRM*2.0*50 Host File   ASCII
+      
+ Documentation  can also be found on the VistA Documentation
+ Library (VDL) at:  http://www.domain.ext/vdl/
+    
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation
+ will take five to ten minutes.  Refer to the Release Notes,
+ PXRM_2_0_50_RN.PDF, for complete details.
+    
+ 1.  Use the "Load a Distribution' option on the KIDS installation
+     menu.  When prompted to enter a host file type in PXRM_2_0_50.KID
+    
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the 
+     following options, as desired:
+         Print Transport Global
+         Compare Transport global to Current System
+         Verify Checksums in Transport Global
+         Backup a Transport Global
+     
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the
+     following option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*50
+      
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the
+     install? NO//," respond 'NO'.
+       
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu
+     Options, and Protocols? NO// respond 'NO'.
+         
+ 6.  After successful installation, the following init 
+     routines may be deleted
+     PXRMP50E
+     PXRMP50I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 212
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP50E
+    Before:       n/a   After:  B1068988  **50**
+Routine Name: PXRMP50I
+    Before:       n/a   After: B12503930  **50**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 17, 2014
+Completed By:                               Date Completed: JAN 27, 2015
+Released By :                               Date Released : JAN 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,255 @@
+$TXT Created by                 CHEYL106.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Monday, 05/23/16 at 10:18
+=============================================================================
+Run Date: JUN 28, 2016                     Designation: LEX*2*107
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #97                      Status: Released
+                  Compliance Date: JUL 11, 2016
+=============================================================================
+
+Associated patches: (v)LEX*2*105   <<= must be installed BEFORE `LEX*2*107'
+
+Subject: Code Set FY16 4th Qtr Update
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+  - Other
+  - Data Dictionary
+
+Description:
+============
+
+  This patch contains the FY16 4th Quarter Code Set distribution with 17
+  changes effective Jul 01, 2016.  This patch also contains one change from
+  FY14 2nd Qtr (effective Jan 01, 2014) and 10 changes from FY16 2nd Qtr
+  (effective Jan 01, 2016).  Additionally, this patch exports 14221 changes
+  to the SNOMED CT coding system.  This patch installs the data for the
+  following Informational patch:
+   
+            ICPT*6.0*76
+   
+  This patch writes to the following files:
+   
+       CPT                       #81       ^ICPT(       ICR 4489
+       CPT MODIFIER              #81.3     ^DIC(81.3,   ICR 4492
+       LEXICON files          #757-757.41  ^LEX(        N/A
+   
+  ENHANCEMENTS
+  ============
+   
+    FY16 4th Quarter Update
+ 
+      HCPCS Procedure Additions
+      -------------------------
+ 
+        Effective Jul 01, 2016                               (15 Codes)
+          C9137   C9138   C9461   C9470   C9471   C9472   C9473   C9474
+          C9475   Q5102   Q9981   Q9982   Q9983   S0285   S0311
+ 
+      HCPCS Procedure Inactivations
+      -----------------------------
+ 
+        Effective Jul 01, 2016                                (2 Codes)
+          C1820   C1822
+ 
+      HCPCS Procedures Re-Used
+      ------------------------
+ 
+        Effective Jan 01, 2016                                 (1 Code)
+          J3090
+ 
+      HCPCS Procedure Revisions  (10 Codes)
+      -------------------------
+ 
+        Effective Jan 01, 2014 (FY14 2nd Qtr)                  (1 Code)
+          G9295
+ 
+        Effective Jan 01, 2016 (FY16 2nd Qtr)                 (9 Codes)
+          G9283   G9284   G9293   G9294   G9410   G9411   G9412   G9413
+          G9594
+ 
+      CPT/HCPCS Modifier Pairs
+      ------------------------
+                                      Added  Inact  React  Revise  Total
+                                      -----  -----  -----  ------  -----
+        Effective Jan 01, 2006     *      6     --     --      --      6
+        
+                                   *  update from a previous quarter
+ 
+      SNOMED CT Changes
+      -----------------
+                           Effective  Added  Inact  React  Revise  Total
+                          ----------  -----  -----  -----  ------  -----
+        SNOMED Codes      03/01/2016    722      5     --      11    738
+        SNOMED Terms
+          Concepts                      733     17     --      --    750
+          Synonyms                     9643   2327     --      --  11970
+          Fully Specified               748     15     --      --    763
+                                      -----  -----  -----  ------  -----
+                                      11846   2364     --      11  14221
+  
+  REQUEST/INCIDENTS:
+  =================
+  
+    I8142531FY16 - Add re-used code J3090 and description
+    R8779467FY16 - Add Modifiers 50, RT and LT with CPT code 37187
+  
+  OTHER CHANGES:
+  =============
+  
+    Fix description for HCPCS Codes G9410, G9411, G9412, and G9413
+ 
+ 
+  SFTP SOFTWARE RETRIEVAL:
+  =======================
+        
+    Global Host File:                  LEX_2_107.GBL  (ASCII)
+        
+    The host file is 236 MB in size and could take up to 10 minutes to SFTP.
+    The preferred method is to retrieve the file from:
+        
+        download.vista.domain.ext.
+        
+    This transmits the files from the first available server. Sites may 
+    also elect to retrieve files directly from a specific server. 
+        
+    Sites may retrieve the software directly using Secure File Transfer
+    Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at the following
+    OI Field Offices:
+        
+        Albany            domain.ext
+        Hines             domain.ext
+        Salt Lake City    domain.ext
+ 
+  INSTALLATION INSTRUCTIONS
+  =========================
+ 
+     1)  Users may be on the system during the install of LEX*2.0*107.
+         It is recommended that this patch be installed during non-peak
+         hours.  This patch should take from 57 to 82 minutes to install
+         depending on the system.
+ 
+             Create a backup    50-65 minutes
+             Load the Global      2-4 minutes
+             Kids Install        5-13 minutes
+ 
+     2)  Size/Disk Space Requirements:
+ 
+         The changes to the Lexicon, ICD and CPT globals will result in a
+         combined growth of about 148 MB of data.  The import global ^LEXM
+         is about 183 MB in size.  Make sure there is sufficient space for
+         the growth to the VistA globals and the import global before
+         continuing.
+ 
+ 
+     3)  Create a backup of the following global files before continuing:
+ 
+             CPT                         #81         ^ICPT(
+             CPT Modifier                #81.3       ^DIC(81.3,
+             Lexicon Files            #757-757.41    ^LEX(
+ 
+         These backup files may get as large as 2.17 gigabytes.  Make sure
+         space is available before proceeding.  It should take from 50 to
+         65 minutes to create the backup files.
+ 
+         When you are creating a backup of non-subscripted globals, you are
+         saving the entire global.  You should use the utility ^%GO for
+         non-subscripted globals, and when prompted for a global, enter 
+         the global root (global name only, no open parenthesis, no file
+         number and no commas, as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^ICPT            CPT
+             ^LEX             Lexicon Files
+ 
+         When you are creating a backup of a subscripted global, you are
+         saving a partial global (a file within a global).  You should use
+         the utility ^%GOGEN, and when prompted for a global, enter the open
+         global reference (as shown below).  Examples:
+ 
+             Enter            To create a Backup copy of:
+             ------           --------------------------
+             ^DIC(81.3,       CPT Modifier
+ 
+     4)  Install the data from the global host file LEX_2_107.GBL.  This
+         file contains the Lexicon Utility's import global ^LEXM.
+ 
+         This global is approximately 236 megabytes in size.  Make sure
+         there is sufficient space available to load this global with
+         journaling on.  The loading of the global should take from 
+         2 to 4 minutes.
+ 
+         From the Programmer prompt, execute the following routine:
+ 
+            >D ^%GI
+ 
+            Global input
+ 
+            Device: VA5$:[ANONYMOUS.SOFTWARE]LEX_2_107.GBL Parameter: RS=>
+            Globals were saved on 28 May 2016   7:05 PM   Cache
+            with description: LEX*2.0*107/ICPT*6.0*76 Data
+ 
+            Input option: A
+              ^LEXM
+ 
+     5)  Set up user and IO variables (D ^XUP) for programmer access.
+ 
+     6)  Distribution Load:
+ 
+         Load the KIDS Distribution from the Packman Message using the
+         Packman function "Install/Check Message."
+ 
+     7)  KIDS Installation:
+ 
+         Install the patch using the KIDS Installation Menu action
+         "Install Package(s)" and the install name LEX*2.0*107.
+ 
+           Respond "NO" at the "Want KIDS to INHIBIT LOGONs during
+           the install?" prompt.
+ 
+           Respond "NO" at the "Want to DISABLE Scheduled Options,
+           Menu Options, and Protocols?" prompt.
+ 
+         The KIDs install should take from 6-13 minutes
+ 
+     8)  Cleanup
+ 
+         a)  The Environment Check routine LEX2107 and the Post-Install 
+             routine LEX2107P should be deleted using the KERNEL option 
+             'Delete Routines' [XTRDEL] upon completion of the
+             installation.
+ 
+             NOTE:  The installation of this patch should trigger an
+                    update protocol and may spawn background tasks for 
+                    the Clinical Reminders or Consult packages.  You 
+                    do not need to wait for these background jobs to 
+                    complete to delete the Environment Check and 
+                    Post-Install routines.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX2107
+    Before:       n/a   After:B153837788  **107**
+Routine Name: LEX2107P
+    Before:       n/a   After: B20896043  **107**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 02, 2016
+Completed By:                               Date Completed: JUN 27, 2016
+Released By :                               Date Released : JUN 28, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

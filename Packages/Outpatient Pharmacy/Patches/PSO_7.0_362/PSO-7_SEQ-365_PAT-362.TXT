@@ -1,0 +1,210 @@
+$TXT Created by                 at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/19/13 at 10:16
+=============================================================================
+Run Date: APR 24, 2014                     Designation: PSO*7*362
+Package : PSO - OUTPATIENT PHARMACY           Priority: Mandatory
+Version : 7       SEQ #365                      Status: Released
+                  Compliance Date: MAY 25, 2014
+=============================================================================
+
+Associated patches: (v)PSO*7*133   <<= must be installed BEFORE `PSO*7*362'
+                    (v)PSO*7*264   <<= must be installed BEFORE `PSO*7*362'
+                    (v)PSO*7*379   <<= must be installed BEFORE `PSO*7*362'
+
+Subject: BAD ADDR/COMBAT VET/SIG
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1) Fix the Bad Address Indicator Report (Bad Address Suspended List [PSO 
+    BAI SUSPENDED]) so prescriptions with a Routing of Mail and the patient
+    has a Country Code of Philippines will not show up on the report when
+    run at Manila.
+  
+ 2) A patient's prescription is changing from Co-pay to No Co-pay when it
+    is released.
+  
+ 3) The Sig does not match between the prescription and order.
+  
+ Associated Remedy ticket(s):
+ ============================ 
+ 1) INC000000410256 - Foreign Address shows on reports for Philippines
+ 2) INC000000604392 - Combat Vet Charges
+ 3) INC000000717567 - RX Sig Does Not Match Order Text                  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ VA North Florida South Georgia VA HCS
+ William S Middleton Memorial Veterans Hospital - Madison
+ Richard L Roudebush VA Medical Center - Indianapolis
+  
+  
+ Remedy Overview:
+ ================
+  
+ 1) INC000000410256 - Foreign Address shows on reports for Philippines
+  
+ Problem: 
+ ========
+ While researching issue for Philippines addresses getting marked as foreign 
+ addresses (INC000000398402) it was discovered that the Bad Address Suspended
+ List [PSO BAI SUSPENDED] and the Log of Suspended Rx's by Day [PSO PNDLOG]
+ reports will also mark prescriptions as having a foreign address when the
+ Routing is Mail and the patient has a country of Philippines.
+  
+ Resolution:
+ ===========
+ Need to modify these reports so they check the patient's country against the 
+ Site the user is processing from and if they are Philippines and Manila 
+ respectively, the prescription should not show up on the report.
+  
+ Technical Resolution:
+ =====================
+ Modify FOREIGN^PSOSULOG and FOREIGN^PSOBAIR2 to check the Site against 
+ the patient's country.  If the Country is Philippines and the Site is 
+ Manila-RO then do not add the prescription to the report.
+  
+  
+ 2) INC000000604392 - Combat Vet Charges
+  
+ Problem:
+ --------
+ If a patient has a prescription that was created while he/she was combat
+ vet eligible and the prescription is renewed after their combat vet
+ eligibility ends, the new prescription is not combat vet eligible and the
+ prescription requires a co-pay.  When releasing the new prescription, it
+ is changing from co-pay to no co-pay.
+  
+ Resolution:
+ -----------
+ Modify processing so the co-pay eligibilities do not carry over into the new
+ prescription during a renewal.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSORN52 so the IBQ node from the renewed prescription is
+ not copied to the new prescription.
+  
+  
+ 3) INC000000717567 - RX Sig Does Not Match Order Text 
+  
+ Patient Safety Issue:
+ ---------------------
+ PSPO 2250
+  
+ Problem:
+ --------
+ If the Duration of a prescription is deleted, the existing order Sig is not 
+ updated nor is a new order created so the Order and Prescription do not
+ match.
+  
+ Resolution:
+ -----------
+ Modify processing so a new order is created if the Duration is deleted.
+  
+ Technical Resolution:
+ ---------------------
+ Modify routine PSOOREDX at tag DUR1 to set PSOSIGFL=1 if deleting Duration.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ To avoid disruptions, this patch should be installed during non-peak 
+ hours when there is minimal Outpatient Pharmacy prescription processing.  
+ Avoid times when CMOP prescriptions are being processed, Outpatient 
+ Pharmacy suspense or prescription labels are being printed, running Bad 
+ Address List or Log of Suspended Rx's by Day reports when this patch is 
+ installed.   The menu options listed below should be marked out of order 
+ when installing this patch.
+  
+ It should take less than 2 minutes to install this patch.
+  
+ The patch can also be queued for install.
+  
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSO*7.0*362)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSO*7.0*362.
+  
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? YES//" respond YES.
+       
+    7. When prompted, "Enter options you wish to mark as 'Out of Order':",
+       enter:
+    
+       Patient Prescription Processing             [PSO LM BACKDOOR ORDERS]
+       Complete Orders from OERR                   [PSO LMOE FINISH]
+       Edit Prescriptions                          [PSO RXEDIT]
+       Bad Address Suspended List                  [PSO BAI SUSPENDED]
+       Log of Suspended Rx's by Day(this Division) [PSO PNDLOG]
+  
+    8. When prompted 'Enter protocols you wish to mark as 'Out Of Order':',
+       press enter
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;7.0;OUTPATIENT PHARMACY;**[Patch List]**;DEC 1997;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSOBAIR2
+    Before: B39307918   After: B40647574  **233,200,264,362**
+Routine Name: PSOOREDX
+    Before: B19354107   After: B19671149  **133,362**
+Routine Name: PSORN52
+    Before: B44688558   After: B44851851  **1,11,27,37,46,79,71,100,117,
+                                           157,143,219,148,239,201,225,
+                                           303,358,251,387,379,362**
+Routine Name: PSOSULOG
+    Before: B61735277   After: B63262026  **18,264,362**
+ 
+Routine list of preceding patches: 133, 264, 379
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 21, 2010
+Completed By:                               Date Completed: APR 21, 2014
+Released By :                               Date Released : APR 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

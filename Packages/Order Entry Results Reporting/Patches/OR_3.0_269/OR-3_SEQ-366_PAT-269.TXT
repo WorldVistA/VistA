@@ -1,0 +1,415 @@
+
+=============================================================================
+Run Date: MAY 24, 2016                     Designation: OR*3*269
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #366                      Status: Released
+                  Compliance Date: JUN 24, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*281       install with patch       `OR*3*269'
+                    (v)GMRA*4*46       install with patch       `OR*3*269'
+                    (v)OR*3*286    <<= must be installed BEFORE `OR*3*269'
+                    (v)OR*3*306    <<= must be installed BEFORE `OR*3*269'
+                    (v)OR*3*311    <<= must be installed BEFORE `OR*3*269'
+                    (v)OR*3*346    <<= must be installed BEFORE `OR*3*269'
+                    (v)OR*3*352    <<= must be installed BEFORE `OR*3*269'
+                    (v)PSO*7*411       install with patch       `OR*3*269'
+                    (v)OR*3*395    <<= must be installed BEFORE `OR*3*269'
+
+Subject: ADD SIGN/SYMPTOMS TO ALLERGY-DRUG INTERACTION ORDER CHECK MESSAGE
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch is part of the Medication Order Check Healthcare Application
+ (MOCHA) Enhancements 2 group of patches. A host file was created to 
+ simplify installation at Veterans Health Administration (VHA) facilities. 
+ The host file MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID contains: PSJ*5*281, 
+ PSO*7*411, OR*3*269 and GMRA*4*46. Additionally there is the stand alone 
+ patch PSS*1*175 which must be installed before the combined build.
+  
+ Important: Recently released patch GMRA*4*48 contains an Allergy 
+            Assessment Clean Up utility tool that produces a report that
+            identifies discrepancies between the ADVERSE REACTION
+            ASSESSMENT file (#120.86) and the PATIENT ALLERGIES file
+            (#120.8). It is imperative that GMRA*4*48 be installed prior to
+            the installation of OR*3*269 and its associated patches, and
+            that all data discrepancies identified by GMRA*4*48 have been
+            corrected. If not, then installing OR*3*269 and its associated
+            patches may result in drug allergy order checks not displaying
+            in Computerized Patient Record System (CPRS) and pharmacy
+            during the medication order entry processes.
+  
+ The following functionality changes are introduced in this patch: 
+ 1. This patch will enable the Computerized Patient Record System (CPRS) 
+    to display the sign/symptom and the severity of an adverse reaction to
+    a medication in its ALLERGY-DRUG INTERACTION order check messages.  It
+    will also update the Remote Data Interoperability (RDI) component
+    within CPRS to retrieve the sign/symptom, severity, and
+    observed/historical data values from the Health Data Repository (HDR)
+    for adverse reactions.
+  
+ 2. During testing of an unrelated patch, it was discovered that order 
+    checks performed during the AudioCare renewal process were stored
+    in the ORDER CHECK INSTANCES (#100.05) file using the user who
+    processed the refills, rather than the proxy user. Since the routine
+    required to correct this issue is already included in this patch, 
+    the correction was added to this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ ORDER CHECK INSTANCES      ORDER (#.01)         Modified
+  (#100.05)                 STATUS (#1)          Modified
+                            OCCURRENCE (#2)      Modified
+                            USER (#3)            Modified
+                            OCCURRENCE           Modified
+                               DATE/TIME (#4)
+                            ORDER CHECK (#5)     Modified
+                            CLINICAL DANGER      Modified
+                               LEVEL (#6)
+                            OVERRIDE REASON (#7) Modified
+                            PHARMACIST OVERRIDE  Modified
+                               COMMENTS (#13)
+                            PHARMACIST (#14)     Modified
+                            PHARMACIST COMMENTS  Modified
+                               DATE/TIME (#14.1)
+                            MONOGRAPH TERM (#16) Modified
+                            DRUG ALLERGIES (#17) Modified
+                            DISPENSE DRUGS (#50) New
+                            GROUP ONE PHARMACY   New
+                               ORDERS (#60)
+                            GROUP TWO PHARMACY   New
+                               ORDERS (#70)
+                            INTERVENTION (#81)   New
+                            CLOZAPINE DISPENSING New
+                               FREQUENCY (#82)
+                            DRUG INTERACTION     New
+                               SEVERITY (#83)
+                            DATABASE (#84)       New
+                            CLOZAPINE LAB        New
+                               RESULTS (#90)
+                            CLINICAL EFFECTS     New
+                               (#100)
+ DRUG ALLERGIES SUB-FIELD   INTERACTING          Deleted
+  (#100.517)                   MEDICATION (#.01)
+                            REACTANT (#.01)      New
+                            LOCATION (#1)        Deleted
+                            CAUSATIVE AGENT (#2) Modified
+                            VA DRUG CLASSES (#3) Modified
+                            DRUG INGREDIENTS     Modified
+                               (#4)
+                            SIGNS/SYMPTOMS (#5)  Modified
+                            REMOTE LOCATION      Deleted
+                               (#6)
+                            LOCATION TYPE (#6)   New
+                            INTERVENTION (#7)    Deleted
+                            REMOTE LOCATION      New
+                               (#7)
+                            DATABASE (#8)        Deleted
+                            ORIGINATION DATE/    New
+                            TIME (#8)
+                            OBSERVED/HISTORICAL  Modified
+                               (#9)
+                            SEVERITY (#10)       Modified
+  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ 20100825 Drug-Allergy Order Check Enhancements and Improved Detail
+          The following features are introduced by this patch:
+          1. Add signs/symptoms and severity data to the drug-allergy 
+             order check message.
+          2. Replace the site designation (local/remote) with the name of 
+             the site that documented the allergy and the date and time of
+             when the documentation was entered.
+          3. Populate the DRUG ALLERGIES field (#17) in the ORDER CHECK 
+             INSTANCES file (#100.05) for drug-allergy order checks.
+  
+ 20080334 CCDSS (CPRS) PSI mandated work 2009
+ A Clinical decision Support System is being requested to further enhance 
+ drug order checking to improve patient care and reduce costs. This request
+ is to address work mandated as determined by Patient Safety Incident (PSI)
+ evaluation.
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ PSPO 2069
+ When a provider is shown an adverse reaction order check message, the 
+ provider has to cancel the order and then navigate to the coversheet to 
+ review both the severity and the signs and symptoms of the reaction. This 
+ patch addresses this issue by including the reaction's severity and its 
+ signs and symptoms in the order check message. For example, Previous 
+ MODERATE adverse reaction to IODINE resulted in VOMITTING (ANN ARBOR VAMC 
+ entered on 01/14/2013@14:27).
+  
+ PSPO 2099
+ When a provider is shown an adverse reaction order check message with 
+ (LOCAL) at the end of the message, providers have misinterpreted this to 
+ mean the patient experienced a localized reaction (such as a rash) 
+ instead of the fact that the reaction was documented locally. This patch 
+ addresses this issue by replacing the site designation (local/remote) 
+ with the name of the site that documented the allergy and the date and 
+ time of when the documentation was entered. For example, (ANN ARBOR VAMC 
+ entered on 01/14/2013@14:27).
+  
+ PSPO 457/2072
+ The wrong reactant is displayed in the adverse reaction order check 
+ message. The ordered drug is displayed as the causative agent. See 
+ associated remedy tickets 130757, 173383 and 510151 for resolution. 
+  
+ PSPO 281
+ The adverse reaction order check message displays the ordered drug 
+ instead of the causative agent in the adverse reaction order check 
+ message. See associated remedy tickets 130757 and 536052.
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ 1. HD130757 1 Wrong reactant displayed in allergy check pop-up window
+    HD173383 pt with sulfa allergy received HCTZ
+    HD510151 1 Misleading adverse reaction if order for Furosemide and pt 
+             has allergy to Sulfa Drugs
+  
+ Problem:
+ -------
+ The wrong reactant is displayed in the adverse reaction order check 
+ message. The ordered drug is displayed as the causative agent.
+  
+ Resolution:
+ ----------
+ The adverse reaction order check message is modified to correctly display 
+ the causative agent from the PATIENT ALLERGIES file (#120.8).
+  
+ 2. HD536052 Ofloxacin allergy entry does not prompt for Order checks
+  
+ Problem:
+ -------
+ The adverse reaction order check message displays the ordered drug 
+ instead of the causative agent in the adverse reaction order check 
+ message.
+  
+ Resolution:
+ ----------
+ The adverse reaction order check message is modified to correctly display 
+ the causative agent from the PATIENT ALLERGIES file (#120.8).
+  
+  
+ Test Sites:
+ ----------
+ VA Maryland Health Care System
+ Sioux Falls VA Health Care System
+ Orlando VA Medical Center 
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to retrieve the files from the ANONYMOUS.SOFTWARE 
+ directory on download.vista.domain.ext using secure file transfer protocol
+ (SFTP). This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve the files directly from a specific server
+ as follows:
+  
+  Albany         ftp.domain.ext
+  Hines          ftp.domain.ext
+  Salt Lake City ftp.domain.ext
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version  CPRSGUIUM.PDF                   Binary
+                               CPRSGUIUM.DOC                   Binary
+ MOCHA Enhancements 2 Release  PSS_1_PSJ_5_PSO_7_RN_R0416.PDF  Binary
+   Notes
+ MOCHA Enhancements 2          PSS_1_PSJ_5_PSO_7_MOCHA_E2_CB_IG.PDF
+   Installation Guide                                          Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post installation routine will execute the following tasks:
+   1.  Add a REMOTE DATA UNAVAILABLE entry to the ORDER CHECKS file 
+       (#100.8).
+   2.  Update the Allergy-Contrast Media Interactions order check in the
+       CPRS Expert System to use the new allergy order check application 
+       programming interface (API).
+   3.  Convert existing data within the ORDER CHECK INSTANCES file 
+       (#100.05) to conform with the new data dictionary.
+  
+ After the patch is successfully installed, KIDS will automatically delete 
+ the main post-install routine ORY269.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ strongly recommended that it be installed during non-peak hours when 
+ CPRS usage is at a minimum, particularly medication activities and 
+ entering or editing adverse reaction data to minimize potential 
+ disruption to users. The amount of time needed to complete the 
+ installation is dependent upon the number of entries in the ORDER CHECK 
+ INSTANCES (#100.05) file that need conversion and could range from 5 to 
+ 30 minutes.
+  
+  
+ Installation Instructions
+ -------------------------
+ Refer to the MOCHA Enhancements 2 Installation Guide for installation 
+ instructions. 
+  
+ Install Order:
+    1. PSS_1_175.KID
+    2. MOCHA_ENH_2_GMRA_OR_PSJ_PSO.KID
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After the patch is successfully installed, KIDS will automatically delete 
+ the main post-install routine ORY269. Sites may safely delete the 
+ following remaining post-install routines using the Delete Routines 
+ [XTRDEL] option:
+  
+ ORY2690
+ ORY26901
+ ORY26902
+ ORY26903
+ ORY26904
+ ORY26905
+ ORY2691
+ ORY2692
+ ORY2693
+ ORY2694
+ ORY269ES
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 84
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCHECK
+    Before:B120029142   After:B120466042  **7,56,70,94,141,215,243,293,
+                                           280,346,357,352,345,311,269**
+Routine Name: ORCSAVE
+    Before: B98247986   After: B98204455  **7,56,70,73,92,94,116,141,163,
+                                           187,190,195,243,303,293,280,
+                                           306,286,269**
+Routine Name: ORCSAVE2
+    Before: B84601504   After: B85557974  **4,27,56,70,94,116,190,157,
+                                           215,265,243,293,280,346,269**
+Routine Name: ORKCHK5
+    Before: B46374630   After: B87020125  **6,32,74,94,123,190,280,357,
+                                           345,269**
+Routine Name: ORKCHK6
+    Before: B31183287   After: B28204591  **6,32,74,87,94,123,162,190,
+                                           249,280,272,346,345,269**
+Routine Name: OROCAPI1
+    Before: B44544805   After: B59785777  **293,346,345,269**
+Routine Name: ORQQAL
+    Before: B28169891   After: B15654998  **9,85,162,190,216,232,243,269**
+Routine Name: ORRDI1
+    Before:B113704699   After:B165641370  **232,294,306,269**
+Routine Name: ORWDXC
+    Before: B69940726   After: B72504942  **10,141,221,243,280,346,345,
+                                           311,395,269**
+Routine Name: ORY269
+    Before:       n/a   After: B18452228  **269**
+Routine Name: ORY2690
+    Before:       n/a   After: B15650231  **269**
+Routine Name: ORY26901
+    Before:       n/a   After: B70829648  **269**
+Routine Name: ORY26902
+    Before:       n/a   After: B80510090  **269**
+Routine Name: ORY26903
+    Before:       n/a   After: B60307349  **269**
+Routine Name: ORY26904
+    Before:       n/a   After: B65797598  **269**
+Routine Name: ORY26905
+    Before:       n/a   After: B54406345  **269**
+Routine Name: ORY2691
+    Before:       n/a   After: B40554138  **269**
+Routine Name: ORY2692
+    Before:       n/a   After: B26767922  **269**
+Routine Name: ORY2693
+    Before:       n/a   After: B13000330  **269**
+Routine Name: ORY2694
+    Before:       n/a   After: B13530470  **269**
+Routine Name: ORY269ES
+    Before:       n/a   After: B12638325  **269**
+ 
+Routine list of preceding patches: 286, 395
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 06, 2006
+Completed By:                               Date Completed: MAY 19, 2016
+Released By :                               Date Released : MAY 24, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,157 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 07/01/14 at 07:33
+=============================================================================
+Run Date: JAN 07, 2015                     Designation: DG*5.3*872
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #789                    Status: Released
+                  Compliance Date: FEB 07, 2015
+=============================================================================
+
+Associated patches: (v)DG*5.3*216  <<= must be installed BEFORE `DG*5.3*872'
+                    (v)DG*5.3*851  <<= must be installed BEFORE `DG*5.3*872'
+
+Subject: APPT. TYPE SUB-CATEGORY,PATIENT ADDRESS UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch DG*5.3*872 addresses 2 issues:
+  
+ 1.  APPOINTMENT TYPE SUB-CATEGORY field (#24) of the APPOINTMENT 
+     sub-file (#2.98) of the PATIENT file (#2) is not assigned
+     properly.
+ 2.  Patient Address Update option is not displaying correctly.
+     
+             
+ ASSOCIATED REMEDY TICKETS: 
+ ==========================
+ 1)  INC000000626738  Field #24-Appointment Type Sub-Category in the Patient
+                      File (#2) is not assigned
+ 2)  INC000000772240  Patient Address Update option   
+  
+   
+ ASSOCIATED NSR: 
+ ===============
+ N/A
+  
+   
+ PARTICIPATING TEST SITES: 
+ =========================
+ Alexandria VA Medical Center
+ W.G. (Bill) Hefner VA Medical Center (Salisbury, NC)
+ Upstate New York HCS
+   
+  
+ Remedy Overview:
+ ================
+ 1)  INC000000626738    Field #24-Appointment Type Sub-Category in the Patient
+                        File (#2) is not assigned    
+  
+ Problem:
+ --------
+ The APPOINTMENT TYPE SUB-CATEGORY field (#24) of the APPOINTMENT sub-file 
+ (#2.98) of the PATIENT file (#2), which is a pointer to the SHARING 
+ AGREEMENT SUB-CATEGORY file (#35.2), is not assigned properly.
+  
+ When making an appointment using the Appointment Management [SDAM APPT 
+ MGT] option, if the user enters SHARING AGREEMENT as the Appointment Type,
+ the Registration Application Program Interface (API) will present an 
+ additional prompt for the user to enter the Appointment Type sub-category.
+ If there is no selection made, the application times out or user enters an
+ (^) up-arrow to exit prompt, the API returns a value of zero, which is 
+ filed into APPOINTMENT TYPE SUB-CATEGORY field (#24).
+  
+ Resolution:
+ -----------
+ Modified routine ^DGSAUTL to return a Null value when there is no selection
+ made, application times out or user exits prompt with the "^" selection.
+  
+  
+ 2)  INC000000772240    Patient Address Update option 
+   
+ Problem:
+ --------
+ When using the Patient Address Update [DG ADDRESS UPDATE] option the city,
+ state and zip code appears twice in the view for the Temporary Address.
+ Also, after the county name there is a () showing.
+  
+ Resolution:
+ -----------
+ Modified routine ^DGADDUTL to only display () if there is a Catchment Code
+ for that county and to only display the address once.
+        
+  
+  
+ Installation Instructions:
+ --------------------------
+ This patch may be run with users on the system, but it is recommended
+ that it be queued to run after normal business hours.
+   
+ Installation will take less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+   
+      1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+      2. From the Kernel Installation & Distribution System menu, select
+         the Installation menu.
+   
+      3. From this menu, you may select to use the following options (when
+         prompted for INSTALL NAME, enter DG*5.3*872).      
+  
+         a. Backup a Transport Global - this option will create a backup
+            message of any routines exported with the patch. It will NOT
+            backup any other changes such as DDs or templates.
+         b. Compare Transport Global to Current System - this option will
+            allow you to view all changes that will be made when the patch is
+            installed.
+         c. Verify Checksums in Transport Global - this option will ensure
+            the integrity of the routines that are in the transport global.
+         d. Print Transport Global - this option will allow you to view
+            the components of the KIDS build.
+      
+      4. Use the Install Package(s) option and select the package DG*5.3*872
+   
+      5. When prompted "Want KIDS to INHIBIT LOGONS during install ? NO//"
+         respond No.
+   
+      6. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? YES//" respond Yes.
+  
+         When prompted, 'Enter options you wish to mark as 'Out Of 
+         Order':', enter:
+              
+                   Appointment Management  [SDAM APPT MGT]
+                   Patient Address Update  [DG ADDRESS UPDATE]
+  
+         When prompted, 'Enter protocols you wish to mark as 'Out Of
+         Order':', press enter.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGADDUTL
+    Before: B57638537   After: B57456144  **658,695,730,688,808,851,872**
+Routine Name: DGSAUTL
+    Before: B23041075   After: B23374835  **114,194,216,872**
+ 
+Routine list of preceding patches: 216, 851
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 25, 2013
+Completed By:                               Date Completed: DEC 09, 2014
+Released By :                               Date Released : JAN 07, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,176 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 04/14/15 at 12:46
+=============================================================================
+Run Date: APR 14, 2016                     Designation: TIU*1*286
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #268                      Status: Released
+                  Compliance Date: MAY 15, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*159   <<= must be installed BEFORE `TIU*1*286'
+                    (v)TIU*1*234   <<= must be installed BEFORE `TIU*1*286'
+                    (v)TIU*1*282   <<= must be installed BEFORE `TIU*1*286'
+
+Subject: TIU FIXES FOR PHILIPPINES ADDRESSES, DATE RANGE RESETS, & MISSING PATCH LIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following 3 issues:
+  
+ 1. Date range search options in Text Integration (TIU) functions will
+    reset the date range.
+ 2. Incorrect Philippines address format makes province and postal code not
+    display in the patient address.
+ 3. Routine TIUSRVR2 does not contain reference to TIU*1*211 on the 2nd 
+    line
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000163940 - Document list resets, unexpected
+    Duplicates:
+    INC000000263165 - TIU*1*224 since the installation of this patch, 
+                      rebuilding list does not respect search parameter
+    INC000000271865 - Duplicate discharge summary titles display even 
+                      though only 1 in file 8925.1/all entries selectable
+    INC000000345577 - Document Issue
+ 2. INC000000980011 - Text Integration Utility - Other
+ 3. INC000000211841 - 2nd line of TIUSRVR2 missing associated patch
+                      TIU*1*211
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Montana HCS (Ft. Harrison, Miles City)
+ James H. Quillen VAMC (Mountain Home, TN)
+ Hunter Holmes McGuire VAMC (Richmond, VA)
+  
+ REMEDY OVERVIEW:
+ ================
+  
+ 1. INC00000163940 - Document list resets, unexpected
+  
+   Problem:
+   --------
+   Date range search options in TIU functions will reset the date range
+   'End' date to today when refreshing and returning to the original list
+   display.  I.e., when a user selects a date range (in the past) using TIU
+   Reporting functions, a list of documents matching that date range will
+   be displayed.  After selecting and browsing any of the notes on the list
+   and then returning to the date range list, the list is rebuilt with the
+   original 'From' date but with an incorrect 'End' date of the current 
+   day.
+  
+   Resolution:
+   -----------
+   Routines TIUR, TIURM, TIURPTTL, TIURTITL have been modified to rebuild
+   the date range correctly upon returning to the date range display.
+  
+  
+ 2. INC000000980011 - Text Integration Utility - Other
+  
+   Problem:
+   --------
+   Patients with a Philippines address have an incorrect address format 
+   printed when using the TIU Object - VA-WRIISC ADDRESS.  A Philippines 
+   address uses province and postal code instead of state and zip.  
+   The province and postal code are not showing with the patient address.
+  
+   Resolution:
+   -----------
+   Routine TIUWRIIS has been modified to correctly format the Philippines 
+   addresses to use province instead of state and postal code instead of 
+   zip.  
+  
+  
+ 3. INC000000211841 - 2nd line of TIUSRVR2 missing associated patch 
+                      TIU*1*211
+   Problem:
+   --------
+   The routine TIUSRVR2, included in patch TIU*1.0*211, does not contain
+   211 in the patch list on the 2nd line of the routine.
+  
+   Resolution:
+   -----------
+   Added 211 to the 2nd line of routine TIUSRVR2 to comply with Standards
+   and Conventions Committee (SACC) standards.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options. It is strongly recommended to 
+ install this patch when users are off the system.  It should take 
+ less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*286)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*286.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUR
+    Before: B47288621   After: B48162828  **74,79,58,100,113,112,207,224,
+                                           272,282,286**
+Routine Name: TIURM
+    Before: B24432420   After: B25100246  **74,79,58,100,113,216,224,286**
+Routine Name: TIURPTTL
+    Before: B20534008   After: B21170947  **100,286**
+Routine Name: TIURTITL
+    Before: B19866250   After: B20499577  **58,100,286**
+Routine Name: TIUSRVR2
+    Before: B31602592   After: B32093464  **100,109,162,211,222,234,286**
+Routine Name: TIUWRIIS
+    Before: B41724372   After: B43880455  **159,286**
+ 
+Routine list of preceding patches: 159, 234, 282
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 18, 2014
+Completed By:                               Date Completed: APR 05, 2016
+Released By :                               Date Released : APR 14, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

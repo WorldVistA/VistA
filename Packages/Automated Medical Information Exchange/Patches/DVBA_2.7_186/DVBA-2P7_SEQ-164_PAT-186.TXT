@@ -1,0 +1,654 @@
+$TXT Created by                 DEVFEX.DOMAIN.EXT  (KIDS) on Friday, 04/04/14 at 16:38
+=============================================================================
+Run Date: APR 23, 2014                     Designation: DVBA*2.7*186
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #164                    Status: Released
+                  Compliance Date: APR 30, 2014
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*181<<= must be installed BEFORE `DVBA*2.7*186'
+                    (v)DVBA*2.7*185<<= must be installed BEFORE `DVBA*2.7*186'
+
+Subject: CAPRI VLER DAS Enhancement and Defect Fixes
+
+Category: 
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Routine
+  - Other
+
+Description:
+============
+
+   I. OVERVIEW
+  
+    This patch (DVBA*2.7*186) and CAPRI GUI v186 provides enhancements
+    and  defect fixes for the CAPRI GUI and the Automated Medical 
+    Information Exchange (AMIE) package.  Please refer to the 
+    'FUNCTIONAL OVERVIEW' section (III) for the specific changes and 
+    primary functionality being delivered.
+  
+    This patch introduces enhancements to the AUTOMATED MED INFO EXCHANGE
+    (AMIE) V 2.7 package in support of VLER DAS.
+  
+    This Veterans Lifetime Electronic Record (VLER) Data Access Service
+    (DAS) patch will file XML exam results to the VistA 2507 EXAM file 
+    (#396.4).
+  
+    VLER DAS Changes Background
+  
+    In support of the VLER DAS and Veterans Benefit Management
+    System (VBMS) efforts to receive and process computable data, 
+    changes will be necessary to CAPRI, Progress Note Construction
+    Set (PNCS) and the individual CAPRI DBQ templates to transmit an XML
+    file of DBQ data elements through the VLER DAS.
+  
+  
+    In response to changes in technical dependencies:
+      1.  VBMS requires ability for a PDF be transmitted with the XML
+          file.
+      2.  The Harris solution has been put on hold; duration unknown.
+          We will no longer use the XML schema provided by Harris.
+      3.  New terminology standards will need to be established. Scope
+          of terminology can add complexity.
+      4.  VA will design XML schema to fit the requirements.
+      5.  VLER DAS web service will no longer provide the one-way SSL.
+          It will provide no SSL. The web service configurations for
+          CAPRI will need to be modified.
+      6.  Due to the fact that VA will be integrating the terminology
+          standards for the XML and designing the XML schema, code 
+          changes in PNCS will be required to enable DBQ data to be read
+          and analyzed by other VA systems.
+  
+  
+  
+ II. ASSOCIATED REMEDY TICKETS & NEW SERVICE REQUESTS
+   
+    The following section lists the Remedy tickets and/or New Service 
+    Requests associated with this patch:
+  
+     1. INC000000932543 - Manual "transmit to virtual VA" function. 
+                          CAPRI is no longer asking for transmission
+                          confirmation.  
+          Duplicates:     None
+   
+     2. INC000000939292 - Remove all special characters in metadata
+                          provided to Virtual VA    
+          Duplicates:     None
+  
+  
+   
+ III. FUNCTIONAL OVERVIEW
+   
+    The following is an overview of the changes and primary
+    functionality that will be delivered in CAPRI GUI v186 and this
+    VistA patch (DVBA*2.7*186).
+     
+    1. The following Remedy tickets are being addressed:
+  
+      a.  INC000000932543 - Manual "transmit to virtual VA" function.
+                            CAPRI is no longer asking for transmission
+                            confirmation.  
+       
+          Problem
+          -------
+          The confirmation message is no longer displayed when manual
+          "Transmit to VVA" is utilized. This defect was introduced when
+          the "automatic transmission" to VVA was distributed.
+  
+          Solution
+          --------
+          CAPRI has been modified to display the confirmation when
+          "Transmit to VVA" option is  utilized.
+  
+      b.  INC000000939292 - Remove all special characters in metadata
+          provided to Virtual VA    
+  
+          Problem
+          -------
+          Remove special characters from header fields in any transmission
+          to Virtual VA: Virtual VA cannot process any fields in the header
+          information that have special characters.  This includes the
+          Source Comment and the Subject (exam name).  
+  
+  
+          Solution
+          --------
+          Currently, "&", "(", ")" are used in exam names but CAPRI doesn't
+          control these names. Replaced "&" with "and".  Replaced any of
+          the following special characters with a space:
+          ()-_+=!@#$%^&*[]{}\|;:'"<>/?`~,.
+  
+  
+    2. The following enhancements that were requested by Veterans Health
+       Administration Veterans Affairs Central Office (VHAVACO) are being
+       addressed:
+  
+      a.  CAPRI DBQ Template Data Tagging and VLER DAS Transmission
+  
+           VLER DAS - 
+           In support of the Veterans Lifetime Electronic Record
+           (VLER) Data Access Service (DAS) and Veterans Benefit
+           Management System (VBMS) efforts to receive and
+           process computable data, changes will be necessary to
+           CAPRI and the individual CAPRI DBQ templates to
+           transmit an XML file of DBQ data elements through the
+           VLER DAS.
+  
+           Transmission of DBQ XML data to VLER/DAS:
+           Add SSL to the XML DBQ data transmission to VLER/DAS.  This is
+           achieved using 1-Way SSL to a new Authentication Server instead
+           of directly to VLER and then 2-way SSL from the new
+           Authentication Server to VLER/DAS.  CAPRI sends an
+           Authentication Token to the Authentication Server for
+           validation of the user's credentials, in addition to the normal
+           payload intended for the VLER/DAS webservers. The 
+           authentication token is obtained using remote BSE from current 
+           login of user to validate all requests to new Authentication 
+           Server. Created a new Authenticator process. This process takes
+           input of a remote BSE token and validates it against CLAIMS in
+           production. Created a new Authentication webserver process in 
+           Weblogic answering all requests from CAPRI intended for VLER. 
+           The Authentication webserver acts as a secure bridge that
+           securely transports authorized DBQs from CAPRI to VLER DAS.
+           This is achieved by parsing the incoming request for remote
+           BSE token. The token is separately passed to the newly created
+           Authenticator process. Once authentication is received from the
+           Authenticator process, the security token is deemed valid and 
+           the Authentication webserver process forwards the DBQ to VLER
+           DAS using two-way (mutual) SSL.  VLER response is sent back to
+           the original requesting CAPRI instance. Authentication Server
+           to VLER  communication is all done over 2-way SSL. The 
+           Authentication Server is needed due to the current architecture
+           of VLER, which at the time, only supports server to server 
+           communication using two-way (mutual) SSL.
+  
+  
+    3.  The following defects that were reported directly to the CAPRI
+        development team are being addressed:
+  
+      a.  Change indexing values for automated insertions of completed 
+          exams to Virtual VA (VVA) to C&P Exam and Exam Type 
+  
+        Problem
+        -------
+        Currently automated transmissions to VVA are indexed as follows:
+            Document Type:  CAPRI
+            Subject:  Clinical Documents
+  
+        Solution
+        --------
+        Indexing values for automated transmissions to VVA will now be 
+        indexed as follows:
+            Document Type:  C&P Exam
+            Subject:  Exam Type
+  
+  
+      b.  CAPRI Contract Referral (CCR) option: If a patient has a
+          "BAD ADDRESS INDICATOR" set to "YES" in Vista a pop-up does
+          not appear prior to referring an exam to a vendor. 
+  
+        Problem
+        -------
+        In DemTran Production, Version: 1.3.2.6 demTRAN.exe 6/29/2012
+        8:41 AM.
+        This pop-up occurs as follows, CAPRI CCR option should also
+        display this message to the user.
+  
+        Patient's record has been flagged with the 'Bad Address 
+        Indicator': HOMELESS (for example).  Address information will 
+        NOT be included in the documents supplied to the contractor 
+        until the indicator is removed or unless VBA has included an
+        address in the remarks section of the 2507. Do you wish to continue
+        with Check-Out/Resend processing?  Yes / No
+     
+  
+        Solution
+        --------
+        CCR has been modified to display message to user when the patient's
+        record is flagged with "Bad Address Indicator" in VistA. 
+  
+  
+      c.  Timeliness Report Has Negative Average Days. 
+  
+        Problem
+        -------
+        Report showing negative average for contractors. When each 2507
+        request is examined by the timeliness report, the average is being
+        calculated based on more than one exam if more than one exam is 
+        associated to the request. CCR should only base its average 
+        calculation on the exam that took the longest to complete. Also, 
+        if more than one exam is associated to the request but split up
+        across multiple vendors, the calculation should create and average
+        entry of each vendor that has all their exams completed. If an exam
+        is canceled and another exam is associated to the same request with
+        the same vendor, then a calculation needs to be produced.
+     
+  
+        Solution
+        --------
+        Changed the calculation basis based on the exam associated to the
+        request. The exam that was open the longest is the basis for the
+        average day calculation. If one exam is finished and another 
+        assigned to the same contractor is open, the calculation will be
+        skipped until all exams are closed.
+  
+  
+      d.  CCR does not allow [COMPLETED] 2507 EXAM REQUESTS to be
+          Automatically Released to R.O. by Capri - when a "Split" referral
+          is used, and the contracted exam is downloaded through CCR prior
+          to a last on-site exam being signed-off in Capri.
+  
+        Problem
+        -------
+        CCR does not allow [COMPLETED] 2507 EXAM REQUESTS to be
+        Automatically Released to R.O. by Capri - when a "Split" referral
+        is used, and the contracted exam is downloaded through CCR prior to
+        a last on-site exam being signed-off in Capri.   
+      
+  
+        Solution
+        --------
+        Fixed by correcting the erroneous references to field 90 in file
+        396.4  to their correct field reference, i.e. field 102
+  
+  
+      e.  Transmission to VLER DAS is delayed due to size of PDFs being
+          transmitted
+         
+        Problem
+        -------
+        Transmission to VLER DAS is delayed due to size of PDFs being
+        transmitted
+  
+        Solution
+        --------
+        Add PDF Compression and linearization to the PDF exam results file
+        sent to VLER/DAS. PDF compression reduces the PDF file size which,
+        in turn, reduces transmission times. The following files are
+        needed for PDF compression and must be located in the same 
+        directory as the CAPRI GUI:  QPDF.EXE, QPDF13.DLL, 
+        LIBGCC_S_DW2-1.DLL, LIBSTDC++-6.DLL.
+  
+  
+  
+    4.  2507 EXAM (#396.4) file changes: Data Dictionary (partial)
+  
+       To support the VLER DAS contract, the following fields will be added
+       to the 2507 EXAM (#396.4) file to support the filling of the 2507
+       Exam XML
+  
+          - 72  : EXAM RESULTS XML - The XML filed by the VLER DAS
+          - 73  : XML DAS Confirmation - The VLER DAS XML confirmation
+                  status message passed in from the application.
+          - 74  : XML Transmission Date/Time - The VistA system date
+                  and time of the XML storage.
+  
+  
+    5.  CAPRI TEMPLATES (#396.17) file change: Data Dictionary (partial)
+  
+       To support the VLER DAS contract, the following field will be added
+       to the CAPRI TEMPLATES (#396.17) file to support the linking of
+       TIU document to the CAPRI TEMPLATE file
+  
+          - 23  : TIU DOCUMENT - POINTER TO TIU DOCUMENT FILE (#8925)
+   
+  
+    6. New/Modified Remote Procedures - 
+  
+        a. DVBA CAPRI EXAM XML
+   
+           (New)
+           This RPC allows for the filing of the 2507 EXAM template
+           in the XML version.
+            P1 EXAMIEN is the IEN of the 2507 EXAM file entry #396.4
+            P2 DAS     is the XML DAS Confirmation message
+            P3 XML     is the array list format of the template being
+                       stored
+  
+        b. DVBA CAPRI EXAM LINK TIU
+           (New)
+           Links an exam in CAPRI TEMPLATES #396.17 to TIU DOCUMENT #8925
+            P1 EXAMIEN  is the exam IEN in CAPRI TEMPLATES #396.17
+            P2 TIUIEN   is the TIU IEN in TIU DOCUMENT #8925
+  
+  
+        c. DVBA CAPRI GET EXAM IEN
+           (New)
+           Get an exam IEN from the CAPRI TEMMPLATE #396.17 given a TIU
+           IEN from TIU DOCUMENT #8925
+            P1 TIUIEN   is the TIU IEN in TIU DOCUMENT #8925
+  
+  
+   7.  Added/Modified Routines 
+  
+        a. Add: DVBAXML
+           Description:
+           This routine files the XML passed in from the VLER DAS
+           application and stores the Exam XML in the 2507 Exam file
+           with the DAS confirmation status and the system date and
+           time.
+  
+        b. Modify: DVBABURL
+           Description of change:
+           Added logic to retrieve the VLER DAS production web server URL
+           from Parameter Definition file (#8989.51) if user is logged on 
+           to a production system. Otherwise, retrieve the VLER DAS 
+           Development Channel 3 web server URL.
+  
+        c. Add: DVBA186P
+           Description:
+           Post Init routine adds VLER DAS production web server URL
+           and VLER DAS Development Channel 3 web server URL to the
+           Parameter Definition file.
+  
+        d. Modify: DVBACER1
+           Description:
+           Report driver and report logic for CCR
+  
+  
+ IV. TECHNICAL COMPONENTS
+  
+   The following section describes the technical components being exported
+   with this patch. 
+  
+                                      UP    SEND  DATA               USER
+                                      DATE  SEC.  COMES  SITE   RSLV OVER
+ FILE #   FILE NAME                   DD    CODE  W/FILE DATA   PTS  RIDE
+ ------------------------------------------------------------------------
+  
+ 396.4       2507 EXAM                YES   YES   NO                  NO
+ Partial DD: subDD: 396.4      fld: 72
+                               fld: 73
+                               fld: 74
+  
+ 396.17      CAPRI TEMPLATES          YES   YES   NO                  NO
+ Partial DD: subDD: 396.17     fld: 23
+  
+  
+   1.  Added/Modified Routines 
+  
+        a. Add: DVBAXML
+           Description:
+           This routine files the XML passed in from the VLER DAS
+           application and stores the Exam XML in the 2507 Exam file
+           with the DAS confirmation status and the system date and
+           time.
+  
+        b. Modify: DVBABURL
+           Description of change:
+           Added logic to retrieve the VLER DAS production web server URL
+           from Parameter Definition file (#8989.51) if user is logged on 
+           to a production system. Otherwise, retrieve the VLER DAS 
+           Development Channel 3 web server URL.
+  
+        c. Add: DVBA186P
+           Description:
+           Post Init routine adds VLER DAS production web server URL
+           and VLER DAS Development Channel 3 web server URL to the
+           Parameter Definition file.
+           Adds an entry to the Remote Application file (#8994.5) for 
+           VLER DAS-CAPRI.
+  
+        d. Modify: DVBACER1
+           Description:
+           Report driver and report logic for CCR
+  
+     
+   2.  The following REMOTE PROCEDURES entries are being added/modified
+       (#8994) file:
+  
+      a. Added
+         DVBA CAPRI EXAM XML
+         This RPC allows for the filling of the 2507 EXAM template in
+         the XML version.
+  
+      b. Added
+         DVBA CAPRI EXAM LINK TIU
+         Links an exam in CAPRI TEMPLATES #396.17 to TIU DOCUMENT #8925
+  
+      c. Added
+         DVBA CAPRI GET EXAM IEN
+         Get an exam IEN from the CAPRI TEMMPLATE #396.17 given a TIU
+         IEN from TIU DOCUMENT #8925
+  
+   3. The following Options are being added/modified:
+  
+      a. Modified
+         DVBA CAPRI GUI
+         Adding the above mentioned RPCs
+         This is the 'B' type option used by CAPRI GUI client
+         application. It contains all the RPCs used by the CAPRI GUI
+         application.
+  
+   4. The following entry is being added to the PARAMETER DEFINITION 
+      File (#8989.51): 
+  
+      a. NAME: DVBAB CAPRI VLER DAS PROD URL
+         DISPLAY TEXT: VLER DAS production server URL
+         MULTIPLE VALUED: No
+         VALUE DATA TYPE: free text
+         VALUE HELP: Enter the URL of the production VLER DAS server.
+         DESCRIPTION: This is the URL that CAPRI utilizes to 
+                      connect to the VLER DAS production server.
+         PRECEDENCE: 1
+         ENTITY FILE: PACKAGE
+  
+       b. NAME: DVBAB CAPRI VLER DAS CH3 URL
+          DISPLAY TEXT: VLER DAS Development Channel 3 server URL
+          MULTIPLE VALUED: No
+          VALUE DATA TYPE: free text
+          VALUE HELP: Enter the URL of the VLER DAS Development 
+                      Channel 3 server.
+          DESCRIPTION: This is the URL that CAPRI utilizes to 
+                       connect to the VLER DAS Development Channel 3
+                       server.
+          PRECEDENCE: 1
+          ENTITY FILE: PACKAGE
+  
+  
+ V. SOFTWARE AND DOCUMENTATION RETRIEVAL
+     
+   1. VistA Patch DVBA*2.7*186
+    
+      a. The VistA server software is being distributed as a PackMan patch
+         message through the National Patch Module (NPM). The KIDS build
+         for this patch is DVBA*2.7*186.
+  
+   2. CAPRI GUI v186 Client Software & User Documentation
+  
+      a.  The CAPRI GUI v186 client software is being distributed as
+          executable CAPRI.exe ([DVBA_27_P186_10.zip]). The 
+          installed executable for this patch is client version 
+          186.10 with a size of 9,865 KB.
+  
+          The CAPRI GUI v186 client software and documentation for this
+          patch may be retrieved directly using FTP. The preferred method
+          is to FTP the files from:
+  
+             download.vista.domain.ext
+  
+         This transmits the files from the first available FTP server.
+         Sites may also elect to retrieve software directly from a specific
+         server as follows:
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+        The following files will be available:
+  
+        File Name             Contents                     Retrieval format
+        ---------             --------                     ----------------
+        DVBA_27_P186_10.zip   File(s) indented below:      BINARY
+         - CAPRI.exe          CAPRI v186 executable
+         - VACAPRIVVA.dll     Virtual VA dynamically linked library
+         - CAPRI_Help.chm     CAPRI On-line Help
+         - CAPRI.map          CAPRI error map
+         - CAPRISession.r2w   Reflections session configuration
+         - ssh_config         Secure Shell configuration       
+         - CAPRI_GUI_ISG.doc  CAPRI GUI Installation Supplemental Guide
+         - Libeay32.dll       VLER /DAS dynamically linked library
+         - Ssleay32.dll       VLER /DAS dynamically linked library
+         - QPDF.exe           Support PDF compression and Linearization
+         - QPDF13.dll         Support PDF compression and Linearization
+         - LIBGCC_S_DW2-1.dll Support PDF compression and Linearization
+         - LIBSTDC++-6.dll    Support PDF compression and Linearization
+  
+        DVBA_27_P186_RN.PDF   Patch Release Notes          BINARY
+        DVBA_27_P186_UM.PDF   Updated CAPRI User Manual    BINARY 
+        CAPRI_SYSADMINTECHGUIDE_DVBA_27_TM.PDF SAT Guide   BINARY
+  
+       The VistA Documentation Library (VDL) web site will also contain the
+       'Release Notes' and updated 'CAPRI User Manual'. This web site is
+       usually updated within 1-3 days of the patch release date.
+  
+       The VDL web address for CAPRI user documentation is:
+      
+          http://www.domain.ext/vdl/application.asp?appid=133
+  
+  
+ VI. INSTALLATION REQUIREMENTS/NOTES:
+  
+  1. Users On the System
+  
+     a. This patch (DVBA*2.7*186) may be installed while CAPRI users are
+        still using the previously released version of the CAPRI GUI
+        (i.e. DVBA_27_185.exe).
+  
+     b. Once the installation of this patch has been completed, CAPRI users
+        should be upgraded to the new released version of the CAPRI GUI
+        (CAPRI.exe [DVBA_27_P186_10.zip]). Please refer to the 
+        CAPRI_GUI_ISG.doc document within the DVBA_27_P186_10.zip file
+        for supplemental installation instructions regarding the
+        installation of the following files:
+            VACAPRIVVA.dll        Virtual VA dynamically linked library
+            CAPRI_Help.chm        CAPRI On-line Help
+            CAPRI.map             CAPRI error map
+            CAPRISession.r2w      Reflections session configuration
+            ssh_config            Secure Shell configuration
+            Libeay32.dll          VLER /DAS dynamically linked library
+            Ssleay32.dll          VLER /DAS dynamically linked library
+            QPDF.exe              Support PDF compression and Linearization
+            QPDF13.dll            Support PDF compression and Linearization
+            LIBGCC_S_DW2-1.dll    Support PDF compression and Linearization
+            LIBSTDC++-6.dll       Support PDF compression and Linearization
+  
+  
+     c. This patch modifies routines used by the CAPRI GUI application 
+        and the Automated Medical Information Exchange (AMIE) package. It
+        should be installed during non-peak hours to minimize disruption to
+        users and to reduce the possibility of errors when the routines are
+        updated.
+  
+  2. VistA Options
+         
+     a. The following VistA options should be disabled while installing
+        this patch: NONE.
+  
+  3. Software Installation Time
+  
+     a. The estimated installation time for VistA patch DVBA*2.7*186 is 
+        less than 5 minutes during off peak hours.
+   
+  4. Required Builds
+  
+     a. The following is a list of REQUIRED builds for this KIDS
+        distribution (DVBA*2.7*186). KIDS will not allow the installation
+        of this patch without their prior installation.
+  
+        Required Builds:
+        ----------------
+        DVBA*2.7*181
+        DVBA*2.7*185
+  
+  
+ VII. INSTALLATION INSTRUCTIONS:
+  
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu to unload
+       the KIDS distribution included with this message.
+  
+    2. From the 'Kernel Installation & Distribution System' menu, select
+       the Installation menu.
+  
+    3. From this menu, you may now elect to use the following options (when
+       prompted for INSTALL NAME, enter DVBA*2.7*186).
+  
+       a. Backup a Transport Global - This option will create a backup
+          message of any routines exported with the patch. It will NOT
+          backup any changes such as DDs or templates.
+       b. Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when the patch
+          is installed.  It compares all components of the patch (routines,
+          DDs, templates, etc.).
+       c. Verify Checksums in Transport Global - This option will allow you
+          to ensure the integrity of the routines that are in the transport
+          global.
+       d. Print Transport Global - this option will allow you to view the
+          components of the KIDS build.
+  
+    4. Use the Install Package(s) option and select package DVBA*2.7*186.
+  
+    5. If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+       Install? NO//', respond NO.
+  
+    6. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', it is recommended you answer NO.
+  
+    7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', respond NO.
+  
+    8. If CAPRI GUI users have not already been upgraded to the new 
+       version of the CAPRI GUI v186 (CAPRI.exe [DVBA_27_P186_10.zip]), 
+       they should be upgraded as soon as possible upon installation of 
+       this patch.
+  
+    9.  NOTE: Post-install routine DVBA186P is a temporary routine used
+        as part of the post-install process. This routine will not be
+        automatically deleted by KIDS after patch installation. After
+        verifying that "VLER DAS-CAPRI" is listed in the Remote
+        Application file (#8994.5), you may manually delete this
+        routine.
+  
+ VIII. TEST SITES
+  
+   The following sites participated in the testing of the CAPRI GUI v186
+   and DVBA*2.7*186 server software.
+  
+    Test Sites:
+    ---------- 
+    * Denver
+    * Greater LA
+    * Alexandria
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 21
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBA186P
+    Before:       n/a   After:  B5933861  **186**
+Routine Name: DVBABURL
+    Before:  B6313636   After:  B7360044  **104,136,143,149,168,181,186**
+Routine Name: DVBACER1
+    Before: B97387784   After:B135356111  **178,185,186**
+Routine Name: DVBAXML
+    Before:       n/a   After:  B4264387  **186**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 05, 2013
+Completed By:                               Date Completed: APR 18, 2014
+Released By :                               Date Released : APR 23, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,325 @@
+$TXT Created by              at DEVESS.DOMAIN.EXT  (KIDS) on Monday, 03/31/14 at 10:03
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: ACKQ*3*21
+Package : ACKQ - QUASAR                       Priority: Mandatory
+Version : 3        SEQ #18                      Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)ACKQ*3*6    <<= must be installed BEFORE `ACKQ*3*21'
+                    (v)LEX*2*80    <<= must be installed BEFORE `ACKQ*3*21'
+                    (v)ICD*18*57   <<= must be installed BEFORE `ACKQ*3*21'
+                    (v)ACKQ*3*22   <<= must be installed BEFORE `ACKQ*3*21'
+
+Subject: QUASAR ICD-10 REMEDIATION
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Print Template
+  - Sort Template
+
+Description:
+============
+
+  
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the Anonymous
+ directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10)
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on 
+ or after the ICD-10 activation date will use the ICD-10 code set. 
+ Clinical Modification (ICD-10-CM) diagnosis codes increase from about
+ 13,000 ICD-9 codes to more than 68,000. Procedure Coding System 
+ (ICD-10-PCS) procedure codes increase from about 3,800 ICD-9 codes to 
+ nearly 87,000. Both systems also expand the number of characters allotted
+ to seven alpha-numeric characters. This value does not include the 
+ decimal point, which follows the third character for the ICD-10-CM 
+ code set. There is no decimal point in the ICD-10-PCS code set. 
+       
+ These code sets have the potential to reveal more about quality of care,
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater specificity
+ and clinical detail to provide information for clinical decision making
+ and outcomes research.
+       
+ This request, when implemented, will allow the Veterans Health Administration 
+ (VHA) to accommodate the entry, display, lookup, view, print, storage, 
+ and transmission of the ICD-10-code sets in the Veterans Health Information 
+ Systems and Technology Architecture (VistA) legacy and HealtheVet systems 
+ for Quality Audiology and Speech Analysis and Reporting (QUASAR).
+   
+ The New Visit Entry and Edit Visit Entry screens have been modified to 
+ reflect either ICD-9 and/or ICD-10 codes.
+ Also the Patient Inquiry Screen has been updated to allow for
+ ICD-10 codes.
+   
+ The following reports have been updated with ICD-10 code set:
+ Visits by Diagnosis
+ Print A&SP File Entries
+  
+   
+ Patch Components
+ ================
+   
+    
+ Files & Fields Associated:
+   
+ File Name (#)          Field Name (#)                   New/Modified/Deleted
+ -------------          -------------------------------  --------------------
+ A&SP DIAGNOSTIC CONDITION (#509850.1)                    (File Description
+                                                           MODIFIED)
+                         CODE (#.01)                       MODIFIED
+                         MODIFIERS ALLOWED (#.02)          MODIFIED
+                         CLINIC STOP (#.04)                MODIFIED
+                         HEARING LOSS CODE (#.05)          MODIFIED
+                         ACITIVE (#.06)                    MODIFIED
+                         ICD VERSION (#.07)                NEW
+   ALLOWABLE MODIFIERS (sub-file)(#509850.11)              MODIFIED
+                         ALLOWABLE MODIFIERS (#.01)        MODIFIED
+                         DESCRIPTION (#.02)                MODIFIED
+ A&SP CLINIC VISIT (#509850.6)
+   DIAGNOSTIC CODE  (sub-file)(#509850.63)
+                        DIAGNOSTIC CODE (#.01)             MODIFIED
+                        *MODIFIER (#.15)                   MODIFIED
+   PCE ERROR       (sub-file)(#509850.65)
+                        PCE FIELD NAME                     MODIFIED
+ A&SP WORKLOAD (#509850.7)
+   ICD  (sub-file)(#509850.71)                             MODIFIED
+   DIVISION  (sub-file)(#509850.75)                        MODIFIED
+   DIVISION ICD  (sub-file)(#509850.751)                   MODIFIED
+      
+ Forms Associated:
+   
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+   
+ Mail Groups Associated:
+   
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+   
+ Options Associated:
+   
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+   
+ Protocols Associated:
+     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+    
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ N/A
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (#)              New/Modified/Deleted
+ -------------      ----      ------------------         --------------------
+ ACKQ DIAG COND 10  Print     A&SP DIAGNOSTIC CONDITION (#509850.1)  NEW
+                    
+ ACKQ DIAG COND 9   Print     A&SP DIAGNOSTIC CONDITION (#509850.1)  NEW
+ ACKQ DIAG COND ICD-10
+                    Sort      A&SP DIAGNOSTIC CONDITION (#509850.1)  NEW
+ ACKQ DIAG COND ICD-9
+                    Sort      A&SP DIAGNOSTIC CONDITION (#509850.1)  NEW
+   
+ Additional Information:
+ N/A
+   
+   
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+    
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+   
+    
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+   
+   
+ Test Sites:
+ -----------
+ Miami VA Healthcare System, Miami, FL
+ Michael E. DeBakey VA Medical Center, Houston, TX
+ John D. Dingell VA Medical Center, Detroit, MI
+   
+   
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+   
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+   
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+   
+ The documentation will be in the form of Adobe Acrobat files.
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+   
+ File Description                     File Name                FTP Mode
+ --------------------------------------------------------------------------
+ Production Overview Guide            ICD-10_Prod_Overview_    (binary)
+  Groups 5, 6, & 7                     Guide_Groups_5_6_7.pdf
+ QUASAR User Manual                   ACKQ3_0UM.pdf            (binary)
+ QUASAR Technical Manual              ACKQ3_0TM.pdf            (binary)
+ ICD-10 Release Notes for QUASAR      ICD-10_RN_ACKQ_3_21.pdf  (binary)
+   
+   
+ Patch Installation:
+   
+   
+ Pre/Post Installation Overview
+ ------------------------------
+   
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than five
+ minutes to install.
+   
+   
+ Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (ACKQ*3.0*21):
+   
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+   
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter ACKQ*3.0*21.
+   
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+   
+ Post-Installation Instructions
+ ------------------------------
+ Routines ACKQ3P21, ACKQ3P22, ACKQ3P23, ACKQ3P24, ACKQ3P25, ACKQ3P26, 
+ ACKQ3P27, ACKQ3P28, ACKQ3P29, ACKQ3P30 and ACKQ3P31 can be deleted
+ using the  KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+ installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;QUASAR;**[Patch List]**;Feb 11, 2000;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ACKQ3P21
+    Before:       n/a   After: B10292761  **21**
+Routine Name: ACKQ3P22
+    Before:       n/a   After:B107295732  **21**
+Routine Name: ACKQ3P23
+    Before:       n/a   After:B163591953  **21**
+Routine Name: ACKQ3P24
+    Before:       n/a   After:B175490838  **21**
+Routine Name: ACKQ3P25
+    Before:       n/a   After:B180734387  **21**
+Routine Name: ACKQ3P26
+    Before:       n/a   After:B170351193  **21**
+Routine Name: ACKQ3P27
+    Before:       n/a   After:B181236934  **21**
+Routine Name: ACKQ3P28
+    Before:       n/a   After:B173816917  **21**
+Routine Name: ACKQ3P29
+    Before:       n/a   After:B176695818  **21**
+Routine Name: ACKQ3P30
+    Before:       n/a   After:B177402525  **21**
+Routine Name: ACKQ3P31
+    Before:       n/a   After: B51665533  **21**
+Routine Name: ACKQAICD
+    Before:       n/a   After:   B957364  **21**
+Routine Name: ACKQASU
+    Before: B23317920   After: B23248447  **8,15,16,22,21**
+Routine Name: ACKQASU4
+    Before: B47495608   After: B47445380  **17,22,21**
+Routine Name: ACKQDWLP
+    Before: B86446562   After: B86401481  **1,22,21**
+Routine Name: ACKQFIL1
+    Before: B13086208   After: B14947078  **1,21**
+Routine Name: ACKQFILP
+    Before:  B4333469   After:  B6966093  **21**
+Routine Name: ACKQNQ
+    Before: B28737008   After: B48901869  **8,14,18,22,21**
+Routine Name: ACKQPCE1
+    Before: B72511274   After: B74830918  **1,2,5,7,8,16,21**
+Routine Name: ACKQR3
+    Before: B79522688   After:B157244635  **8,22,21**
+Routine Name: ACKQUT1
+    Before:  B2204546   After:  B3394296  **6,21**
+Routine Name: ACKQUTL4
+    Before: B89569144   After: B88886980  **1,8,14,17,16,22,21**
+Routine Name: ACKQUTL7
+    Before: B27877671   After: B46128919  **8,22,21**
+Routine Name: ACKQUTL8
+    Before: B44883529   After: B46493863  **1,2,8,21**
+Routine Name: ACKQWL1
+    Before: B17083561   After: B17758509  **21**
+ 
+Routine list of preceding patches: 6, 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 27, 2012
+Completed By:                               Date Completed: AUG 29, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,390 @@
+
+=============================================================================
+Run Date: JUL 01, 2016                     Designation: IB*2*530
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #515                      Status: Released
+                  Compliance Date: JUL 31, 2016
+=============================================================================
+
+Associated patches: (c)PRCA*4.5*303    install with patch       `IB*2*530'
+                    (v)PRCA*4.5*298<<= must be installed BEFORE `IB*2*530'
+                    (v)IB*2*511    <<= must be installed BEFORE `IB*2*530'
+                    (v)BPS*1*17    <<= must be installed BEFORE `IB*2*530'
+                    (v)IB*2*516    <<= must be installed BEFORE `IB*2*530'
+
+Subject: MCCF ENHANCEMENTS PROJECT - CARC/RARC
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *****************************************************************************
+   
+ NOTICE:
+   
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement.
+   
+ *****************************************************************************
+   
+ MCCF (Medical Care Collection Fund) Enhancement for uniform use of
+ CARC/RARC (Claims Adjustment Reason Codes/Remittance Advice
+ Remark Codes) Codes.
+    
+ This patch implements changes to the Veterans Health Information Systems 
+ and Technology Architecture (VistA) Accounts Receivable (AR) software
+ requested by the Veterans Health Administration (VHA) Chief Business
+ Office (CBO) Business Solutions to comply with legislative changes
+ mandated by the Health Insurance Portability and Accountability Act of
+ 1996 (HIPAA) as amended by Public Law (P.L.) 111-148, the Patient
+ Protection and Affordable Care Act (PPACA), Section 1104.
+    
+ VHA uses the following standard, unique identifiers and Electronic Data
+ Interchange (EDI) transactions in support of its third-party revenue and
+ collections operation:
+ - National Provider Identifier (NPI)
+ - 270/271 Health Care Eligibility Benefit Inquiry and Response
+ - 837 Health Care Claims - Institutional and Professional
+ - National Council Pharmacy Drug Program (NCPDP) Pharmacy Transactions
+ - 835 Health Care Claim Payment/Advice
+ - Claim Adjustment Reason Codes (CARC)
+ - Remittance Advice Remark Codes (RARC)
+ - Electronic Funds Transfer (EFT)
+ - Electronic Explanation of Benefits (EEOB)
+ - Electronic Remittance Advice (ERA)
+ - Third Party Joint Inquiry (TPJI)
+    
+ This patch adds the following:
+   - Created a new Action option on the TPJI screen to allow accounts
+     receivable staff to further investigate issues with EEOBs, ERAs and EFTs.
+   - Created Menu for the above screen
+   - Created action option for ERA Summary Information screen to display
+     additional ERA data and EEOB information.
+   - Created action option to print EEOBs and additional data.
+   
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+    
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ EXPLANATION OF BENEFITS (#361.1)                          Modified
+                       PAYER ID (#.03)                     Modified
+                       ENTRY DATE/TIME (#.05)              Modified
+                       EOB PAID DATE (#.06)                Modified
+                       TRACE NUMBER (#.07)                 Modified
+                       CORRECTED PRIORITY PAYER TYPE       Modified
+                         (#1.15) 
+   
+   
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+   
+   
+ Functions Associated:
+                                                            New/Modified/
+ Function Name                                               Deleted    
+ -------------                                             -------------
+ N/A
+    
+    
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+   
+   
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ N/A
+    
+   
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBCNE JT VIEW EXP ELIG BEN SCREEN                         Modified 
+ IBJ EXIT                                                  Modified 
+ IBJT 835 ADDITIONAL DATA                                  New 
+ IBJT ACTIVE LIST SCREEN SKIP                              Modified 
+ IBJT AR ACCOUNT PROFILE SCREEN                            Modified 
+ IBJT AR COMMENT HISTORY SCREEN                            Modified 
+ IBJT BILL CHARGES SCREEN                                  Modified 
+ IBJT BILL DX SCREEN                                       Modified 
+ IBJT BILL PROCEDURES SCREEN                               Modified 
+ IBJT CHANGE BILL                                          Modified 
+ IBJT CLAIM SCREEN MENU                                    Modified 
+ IBJT CLAIM SCREEN SKIP                                    Modified 
+ IBJT CT/IR COMMUNICATIONS LIST SCREEN                     Modified 
+ IBJT ECME RESP INFO SCREEN                                Modified 
+ IBJT EDI STATUS SCREEN                                    Modified 
+ IBJT ERA 835 INFORMATION                                  New 
+ IBJT ERA 835 MENU                                         New 
+ IBJT ERA 835 PRINT EEOB                                   New 
+ IBJT ERA 835 RECEIPT PROF                                 New 
+ IBJT EXIT MENU                                            New 
+ IBJT HS HEALTH SUMMARY                                    Modified 
+ IBJT NS VIEW AN BEN SCREEN                                Modified 
+ IBJT NS VIEW EXP POL SCREEN                               Modified 
+ IBJT NS VIEW INS CO SCREEN                                Modified 
+ IBJT PT ELIGIBILITY SCREEN                                Modified 
+   
+   
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+   
+   
+ Templates Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBJT 835 EEOB      List                                   New 
+ PRINT                                                     
+ IBJT ADDITIONAL    List                                   New 
+ 835 DATA                                                  
+ IBJT ERA 835       List                                   New 
+ INFORMATION                                               
+   
+   
+ Additional Information:
+ N/A
+   
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ NSR# 20130515 - Uniform Use of CARC and RARC (835) Rule
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+    
+ Problem:
+ -------
+ N/A
+   
+ Resolution:
+ ----------
+ N/A
+   
+   
+ Test Sites:
+ ----------
+ Alexandria VA Health Care System (Alexandria, LA) - Station 502
+ Huntington VA Medical Center (Huntington, WV) - Station 581
+ South Texas Veterans Health Care System (San Antonio, TX) - Station 671
+   
+   
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch is available.
+   
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+   
+ Sites may retrieve the software and/or documentation directly using Secure 
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+   
+    
+ Title                                 File Name                  FTP Mode
+ ---------------------------------------------------------------------------
+ Integrated Billing User Manual        IB_2_0_UM.PDF              (binary)
+ Integrated Billing Technical Manual   IB_2_0_TM.PDF              (binary)
+      /Security Guide
+ Integrated Billing Release Notes      IB_2_0_P530_RN.PDF         (binary)
+ EPAYMENTS USER MANUAL (EDI LOCKBOX)   EPAYMENTS_USER_            (binary)
+                                       MANUAL_R0516.PDF
+   
+   
+ Patch Installation:
+   
+   
+ Pre/Post Installation Overview
+ ------------------------------
+   
+ Note: 
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement. 
+    
+ There are no special instructions to be performed before installing the patch.
+   
+ Post Install routine will reindex the modified files for the new indices. 
+   
+ After the post-install is complete you can safely remove the routine IB20P530. 
+  
+   
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system.  Installation should
+ take less than 5 minutes.
+   
+ No options need to be disabled.
+   
+   
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.  This patch should take less than 5 minutes 
+ to install.
+   
+ This patch can be obtained from the ANONYMOUS.SOFTWARE directory at one of
+ the OI Field Offices.  The preferred method is to retrieve the files from
+ DOWNLOAD.VISTA.DOMAIN.EXT, which will transmit the file from the first 
+ available server.  Sites may elect to retrieve the files from a specific
+ server.
+   
+     OI FIELD OFFICE     ADDRESS                        DIRECTORY 
+     ---------------------------------------------------------------------
+     Albany              DOMAIN.EXT        
+     Hines               DOMAIN.EXT         
+     Salt Lake City      DOMAIN.EXT           
+   
+ The software distribution includes: 
+   
+   FILE NAME                   DESCRIPTION
+  -------------------------------------------------------
+  PRCA_IB_MCCF_EDI_1_0.KID      KIDS Build
+   
+  1.  Retrieve the file PRCA_IB_MCCF_EDI_1_0.KID using one of the methods
+      described above. This file contains the patches PRCA*4.5*303 and
+      IB*2.0*530  
+   
+  2.  From the Kernel Installation & Distribution System menu, select 
+      the Installation menu.  
+   
+  3.  From this menu, select the option Load a Distribution and when
+      prompted for "Enter a Host File:" enter the full directory 
+      path where you saved the file PRCA_IB_MCCF_EDI_1_0.KID 
+      
+      When prompted for OK to continue with Load? NO//", enter "YES."
+   
+  4.  When prompted to; 
+      "Enter the Coordinator for Mail Group 'CARC_RARC_DATA':", please
+      respond with the appropriate person.
+   
+  5.  From the "Installation ..." menu, run the following three KIDS 
+      options. When prompted for INSTALL NAME, enter PRCA IB MCCF EDI 1.0 
+  
+      5  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+      4  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+      2  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+   
+  6.  Use the Install Package(s) option and when prompted for "INSTALL NAME"
+      enter PRCA IB MCCF EDI 1.0.    
+   
+  7.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//' respond YES.   
+   
+      By answering YES to rebuild the menu trees warn them that it could affect
+      users on the system and installation times may increase.
+   
+  8.  When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//" 
+      respond NO.  
+   
+  9.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+      Protocols? NO//" respond NO.                      
+     
+ 10.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+   
+ 11.  You may delete the post install routines after installation:
+      PR45P303
+      IB20P530
+   
+   
+ Post-Installation Instructions
+ ------------------------------
+    
+ There are no special Post-installation actions required by this patch.
+   
+ If the installation was successful routine IB20P530 can be safely removed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 71
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P530
+    Before:       n/a   After:  B4312048  **530**
+Routine Name: IBJDF11
+    Before: B27610057   After: B29071797  **69,80,118,128,204,205,227,451,530**
+Routine Name: IBJTAD
+    Before:       n/a   After: B39399972  **530**
+Routine Name: IBJTEP
+    Before:       n/a   After:B140265417  **530**
+Routine Name: IBJTEP1
+    Before:       n/a   After: B37006051  **530**
+Routine Name: IBJTLA1
+    Before: B11361045   After: B12051503  **39,80,61,51,153,137,183,276,
+                                           451,516,530**
+Routine Name: IBJTLB1
+    Before: B11794378   After: B12752963  **39,80,61,137,276,451,516,530**
+Routine Name: IBJTPE
+    Before:       n/a   After:B131608692  **530**
+Routine Name: IBJTTB1
+    Before: B17288056   After: B24663260  **39,530**
+Routine Name: IBJTU1
+    Before:  B7959085   After:  B8838308  **39,80,276,451,516,530**
+Routine Name: IBJTU6
+    Before:  B7149148   After:  B8750017  **452,530**
+ 
+Routine list of preceding patches: 452, 516
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2014
+Completed By:                               Date Completed: JUN 15, 2016
+Released By :                               Date Released : JUL 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

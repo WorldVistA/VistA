@@ -1,0 +1,537 @@
+Released PSJ*5*312 SEQ #266
+Extracted from mail message
+**KIDS**:PSJ*5.0*312^
+
+**INSTALL NAME**
+PSJ*5.0*312
+"BLD",9836,0)
+PSJ*5.0*312^INPATIENT MEDICATIONS^0^3141112^y
+"BLD",9836,1,0)
+^^6^6^3141008^
+"BLD",9836,1,1,0)
+This patch will resolve the following issues:
+"BLD",9836,1,2,0)
+ 
+"BLD",9836,1,3,0)
+1)      Clinic orders, when finished with start date greater than 72 
+"BLD",9836,1,4,0)
+hours in the past, disappear from the Inpatient Profile.
+"BLD",9836,1,5,0)
+2)      Active inpatient orders have been expired by the system at 
+"BLD",9836,1,6,0)
+midnight.
+"BLD",9836,4,0)
+^9.64PA^^
+"BLD",9836,6.3)
+2
+"BLD",9836,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9836,"KRN",.4,0)
+.4
+"BLD",9836,"KRN",.401,0)
+.401
+"BLD",9836,"KRN",.402,0)
+.402
+"BLD",9836,"KRN",.403,0)
+.403
+"BLD",9836,"KRN",.5,0)
+.5
+"BLD",9836,"KRN",.84,0)
+.84
+"BLD",9836,"KRN",3.6,0)
+3.6
+"BLD",9836,"KRN",3.8,0)
+3.8
+"BLD",9836,"KRN",9.2,0)
+9.2
+"BLD",9836,"KRN",9.8,0)
+9.8
+"BLD",9836,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9836,"KRN",9.8,"NM",1,0)
+PSJO1^^0^B46301239
+"BLD",9836,"KRN",9.8,"NM","B","PSJO1",1)
+
+"BLD",9836,"KRN",19,0)
+19
+"BLD",9836,"KRN",19,"NM",0)
+^9.68A^1^1
+"BLD",9836,"KRN",19,"NM",1,0)
+PSJU VBW^^0
+"BLD",9836,"KRN",19,"NM","B","PSJU VBW",1)
+
+"BLD",9836,"KRN",19.1,0)
+19.1
+"BLD",9836,"KRN",101,0)
+101
+"BLD",9836,"KRN",409.61,0)
+409.61
+"BLD",9836,"KRN",771,0)
+771
+"BLD",9836,"KRN",779.2,0)
+779.2
+"BLD",9836,"KRN",870,0)
+870
+"BLD",9836,"KRN",8989.51,0)
+8989.51
+"BLD",9836,"KRN",8989.52,0)
+8989.52
+"BLD",9836,"KRN",8994,0)
+8994
+"BLD",9836,"KRN","B",.4,.4)
+
+"BLD",9836,"KRN","B",.401,.401)
+
+"BLD",9836,"KRN","B",.402,.402)
+
+"BLD",9836,"KRN","B",.403,.403)
+
+"BLD",9836,"KRN","B",.5,.5)
+
+"BLD",9836,"KRN","B",.84,.84)
+
+"BLD",9836,"KRN","B",3.6,3.6)
+
+"BLD",9836,"KRN","B",3.8,3.8)
+
+"BLD",9836,"KRN","B",9.2,9.2)
+
+"BLD",9836,"KRN","B",9.8,9.8)
+
+"BLD",9836,"KRN","B",19,19)
+
+"BLD",9836,"KRN","B",19.1,19.1)
+
+"BLD",9836,"KRN","B",101,101)
+
+"BLD",9836,"KRN","B",409.61,409.61)
+
+"BLD",9836,"KRN","B",771,771)
+
+"BLD",9836,"KRN","B",779.2,779.2)
+
+"BLD",9836,"KRN","B",870,870)
+
+"BLD",9836,"KRN","B",8989.51,8989.51)
+
+"BLD",9836,"KRN","B",8989.52,8989.52)
+
+"BLD",9836,"KRN","B",8994,8994)
+
+"BLD",9836,"QUES",0)
+^9.62^^
+"BLD",9836,"REQB",0)
+^9.611^1^1
+"BLD",9836,"REQB",1,0)
+PSJ*5.0*299^2
+"BLD",9836,"REQB","B","PSJ*5.0*299",1)
+
+"KRN",19,9871,-1)
+0^1
+"KRN",19,9871,0)
+PSJU VBW^Non-Verified/Pending Orders^^R^^^^^^^^^^^1
+"KRN",19,9871,1,0)
+^^7^7^2910312^^^^
+"KRN",19,9871,1,1,0)
+  Allows the user to verify (or take other actions) on non-verified orders
+"KRN",19,9871,1,2,0)
+for patients.  If the user is a pharmacist, this option will show all
+"KRN",19,9871,1,3,0)
+orders not verified by a pharmacist for a ward group, ward, or single
+"KRN",19,9871,1,4,0)
+patient, as the user chooses.  If the user is a nurse, this option will
+"KRN",19,9871,1,5,0)
+show all orders not verified by a nurse.  If the user is ward staff,
+"KRN",19,9871,1,6,0)
+this option will show patients with orders not verified by a nurse,
+"KRN",19,9871,1,7,0)
+but not allow any action to be taken.
+"KRN",19,9871,15)
+D KILL^XUSCLEAN
+"KRN",19,9871,20)
+
+"KRN",19,9871,25)
+PSGVBW
+"KRN",19,9871,99)
+56742,62611
+"KRN",19,9871,"U")
+NON-VERIFIED/PENDING ORDERS
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",471,-1)
+1^1
+"PKG",471,0)
+INPATIENT MEDICATIONS^PSJ^UNIT DOSE AND IVS
+"PKG",471,20,0)
+^9.402P^^
+"PKG",471,22,0)
+^9.49I^1^1
+"PKG",471,22,1,0)
+5.0^2971215^2990325^66481
+"PKG",471,22,1,"PAH",1,0)
+312^3141112
+"PKG",471,22,1,"PAH",1,1,0)
+^^6^6^3141112
+"PKG",471,22,1,"PAH",1,1,1,0)
+This patch will resolve the following issues:
+"PKG",471,22,1,"PAH",1,1,2,0)
+ 
+"PKG",471,22,1,"PAH",1,1,3,0)
+1)      Clinic orders, when finished with start date greater than 72 
+"PKG",471,22,1,"PAH",1,1,4,0)
+hours in the past, disappear from the Inpatient Profile.
+"PKG",471,22,1,"PAH",1,1,5,0)
+2)      Active inpatient orders have been expired by the system at 
+"PKG",471,22,1,"PAH",1,1,6,0)
+midnight.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","PSJO1")
+0^1^B46301239^B46556084
+"RTN","PSJO1",1,0)
+PSJO1 ;BIR/CML3,PR-GET UNIT DOSE/IV ORDERS FOR INPATIENT ;15 May 98 / 9:28 AM
+"RTN","PSJO1",2,0)
+ ;;5.0;INPATIENT MEDICATIONS;**3,47,56,58,109,110,127,162,181,275,292,299,312**;16 DEC 97;Build 2
+"RTN","PSJO1",3,0)
+ ;
+"RTN","PSJO1",4,0)
+ ; Reference to ^PS(55 is supported by DBIA# 2191.
+"RTN","PSJO1",5,0)
+ ; Reference to ^%DTC is supported by DBIA# 10000.
+"RTN","PSJO1",6,0)
+ ; Reference to ^%ZOSV is supported by DBIA# 10097.
+"RTN","PSJO1",7,0)
+ ; Reference to XLFDT is supported by DBIA# 10103.
+"RTN","PSJO1",8,0)
+ ;
+"RTN","PSJO1",9,0)
+ECHK ;
+"RTN","PSJO1",10,0)
+ S C="A",ON=+O_"U",START=$G(^PS(55,PSGP,5,+O,2)),STOP=$P(START,U,4),START=$P(START,U,2) S:PSJOS START=-START
+"RTN","PSJO1",11,0)
+ I +START>PSGDT,(STOP>PSGDT) G SET
+"RTN","PSJO1",12,0)
+ S ND=$G(^PS(55,PSGP,5,+O,0)) G:$S($P(ND,"^",9)="":1,1:"DE"'[$P(ND,"^",9)) SET S ND4=$G(^PS(55,PSGP,5,+O,4)) I ST'="O",SD'<PSGODT,$S($P(ND,"^",9)="E":$P(ND4,"^",16),1:0)
+"RTN","PSJO1",13,0)
+ E  I ST="O",$P(ND,"^",9)="E",$S('$P(ND4,"^",UDU):1,SD<PSGODT:0,1:$P(ND4,"^",16))
+"RTN","PSJO1",14,0)
+ E  I PSJOL="S",(STOP>$P($G(PSJDCEXP),U,2)) S C="DF" G SET
+"RTN","PSJO1",15,0)
+ E  Q:PSJOL="S"  S C="O"
+"RTN","PSJO1",16,0)
+ ;
+"RTN","PSJO1",17,0)
+SET ;
+"RTN","PSJO1",18,0)
+ I ON["P",($D(PRNTON)!($D(P("PRNTON")))) N PSJOK S PSJOK=$$COMCHK($S($G(P("PRNTON"))]"":P("PRNTON"),$G(PRNTON)]"":PRNTON,1:""),PSJPTYP) Q:'PSJOK
+"RTN","PSJO1",19,0)
+ NEW DRUGNAME,CLINFLAG D DRGDISP^PSJLMUT1(PSGP,ON,40,0,.DRUGNAME,1)
+"RTN","PSJO1",20,0)
+ S DN=DRUGNAME(1),SUB=$S(PSJOS:START,1:$E(DN,1,40))
+"RTN","PSJO1",21,0)
+ I ON["P",$G(P("PRNTON"))]"",$G(PRNTON)=+P("PRNTON") Q
+"RTN","PSJO1",22,0)
+ I ON["P",$G(P("PRNTON"))]"" S PRNTON=+P("PRNTON"),ON=+P("PRNTON")
+"RTN","PSJO1",23,0)
+ S CLINFLAG=$$CLINIC(PSGP,ON) I CLINFLAG]"" D
+"RTN","PSJO1",24,0)
+ .N CLINSORT,SORT S CLINSORT=$$CLINSORT(C)
+"RTN","PSJO1",25,0)
+ .S C="Cz^"_CLINFLAG_"^"_CLINSORT_"^"_C
+"RTN","PSJO1",26,0)
+ S ^TMP("PSJ",$J,C,$S(PSJOS:SUB,1:ST),$S(PSJOS:ST,1:SUB),ON)=DN_"^"_$G(NF),PSJOCNT=PSJOCNT+1 Q
+"RTN","PSJO1",27,0)
+ ;
+"RTN","PSJO1",28,0)
+IVSET ;Set IV data in ^TMP("PSJ",$J,.
+"RTN","PSJO1",29,0)
+ N DRG,DRGT,ON55,ORTX,P,STAT,TYP,X,Y,NAME,ND
+"RTN","PSJO1",30,0)
+ I ON["V" S ON55=ON,Y=$G(^PS(55,DFN,"IV",+ON,0)) F X=2,3,4,9,17 S P(X)=$P(Y,U,X)
+"RTN","PSJO1",31,0)
+ I ON["V",(P(2)=""),(P(3)="") Q
+"RTN","PSJO1",32,0)
+ I ON'["V" S ND=$G(^PS(53.1,+ON,0)) I 'ND K ^PS(53.1,"AS",SD,PSGP,+ON) Q
+"RTN","PSJO1",33,0)
+ I ON'["V",ND S P(17)=$P($G(^PS(53.1,+ON,0)),U,9),Y=$G(^PS(53.1,+ON,2)),P(9)=$P(Y,U),P(2)=$P(Y,U,2),P(3)=$P(Y,U,4),P(4)=$P($G(^PS(53.1,+ON,8)),U),P("PRNTON")=$P($G(^PS(53.1,+ON,.2)),U,8)
+"RTN","PSJO1",34,0)
+ I ON'["V",P("PRNTON")]"" N PSJOK S PSJOK=$$COMCHK(P("PRNTON"),PSJPTYP) Q:'PSJOK
+"RTN","PSJO1",35,0)
+ D @$S(ON["V":"GTDRG^PSIVORFB",1:"GTDRG^PSIVORFA"),GTOT^PSIVUTL(P(4))
+"RTN","PSJO1",36,0)
+ I $G(DRG) S DRGT=$S($G(DRG("AD",1))]"":$P($G(DRG("AD",1)),U,2),1:$P($G(DRG("SOL",1)),U,2)),ORTX=DRGT
+"RTN","PSJO1",37,0)
+ I $G(ORTX)="",(ON'["V") D DRGDISP^PSJLMUT1(PSGP,+ON_"P",40,"",.NAME,1) S ORTX=NAME(1)
+"RTN","PSJO1",38,0)
+ ;* I $G(ORTX)=""!(ON'["V") D DRGDISP^PSJLMUT1(PSGP,+ON_"P",40,"",.NAME,1) S ORTX=NAME(1)
+"RTN","PSJO1",39,0)
+ S:$G(ORTX)="" ORTX="NOT FOUND"
+"RTN","PSJO1",40,0)
+ ;
+"RTN","PSJO1",41,0)
+IVSET1 ;
+"RTN","PSJO1",42,0)
+ ;* S TYP=$S(P(2)=P(3):"O",1:"C"),STAT=$S("ED"[P(17):"O",P(17)="P":"P",1:"A")
+"RTN","PSJO1",43,0)
+ N PSJCLIN,CLINSORT
+"RTN","PSJO1",44,0)
+ S TYP=$$ONE^PSJBCMA(PSGP,ON,P(9),P(2),P(3)) I TYP'="O" S TYP=$S(ON["P":"z",1:"C")
+"RTN","PSJO1",45,0)
+ S STAT=$S($G(PSJPRI)="D":"A","ED"[P(17):"O",P(17)="P":"P",1:"A")
+"RTN","PSJO1",46,0)
+ I P(17)="P" S STAT="C"_$S($P($G(^PS(53.1,+ON,.2)),U,8)]"":"D",$P($G(^PS(53.1,+ON,.2)),U,4)="S":"A",$P($G(^(0)),U,24)="R":"C",1:"B")
+"RTN","PSJO1",47,0)
+ I PSJOL="S",(STAT="O"),(P(3)>$P($G(PSJDCEXP),U,2)) S STAT="DF"
+"RTN","PSJO1",48,0)
+ I ON["P",$G(P("PRNTON"))]"",PRNTON=+P("PRNTON") Q
+"RTN","PSJO1",49,0)
+ I ON["P",$G(P("PRNTON"))]"" S PRNTON=+P("PRNTON"),ON=+P("PRNTON")
+"RTN","PSJO1",50,0)
+ S PSJCLIN=$$CLINIC(PSGP,ON) I PSJCLIN]"" D
+"RTN","PSJO1",51,0)
+ .N STAT2 S STAT2=$S($P(STAT,"^",4)]"":$P(STAT,"^",4),1:STAT)
+"RTN","PSJO1",52,0)
+ .N CLINSORT S CLINSORT=$$CLINSORT(STAT) S STAT="Cz^"_PSJCLIN_"^"_CLINSORT_"^"_STAT2
+"RTN","PSJO1",53,0)
+ S ^TMP("PSJ",$J,STAT,$S(PSJOS:-P(2),1:TYP),$S(PSJOS:TYP,1:ORTX),ON)="^F",PSJOCNT=PSJOCNT+1
+"RTN","PSJO1",54,0)
+ Q
+"RTN","PSJO1",55,0)
+ ;
+"RTN","PSJO1",56,0)
+ENU ; update status field to reflect expired orders, if necessary
+"RTN","PSJO1",57,0)
+ W !!,"...a few moments, I have some updating to do..."
+"RTN","PSJO1",58,0)
+ENUNM ;
+"RTN","PSJO1",59,0)
+ F Q=+PSJPAD:0 S Q=$O(^PS(55,PSGP,5,"AUS",Q)) Q:'Q!(Q>PSGDT)  S UPD=Q F QQ=0:0 S QQ=$O(^PS(55,PSGP,5,"AUS",Q,QQ)) Q:'QQ  I $D(^PS(55,PSGP,5,QQ,0)),"DEH"'[$E($P(^(0),"^",9)) D
+"RTN","PSJO1",60,0)
+ .N DIE,DA,DR,X,Y,QQON S QQON=QQ,DIE="^PS(55,"_PSGP_",5,",DA(1)=PSGP,DA=+QQON,DR="28////E" D ^DIE
+"RTN","PSJO1",61,0)
+ .S ORIFN=$P(^PS(55,PSGP,5,+QQON,0),"^",21) D EN1^PSJHL2(PSGP,"SC",QQON_"U")
+"RTN","PSJO1",62,0)
+ K UPD Q
+"RTN","PSJO1",63,0)
+ ;
+"RTN","PSJO1",64,0)
+EN(PSJPTYP) ; enter here
+"RTN","PSJO1",65,0)
+ ; PSJPTYP=1:UD ONLY, 2:IV ONLY, 3:BOTH
+"RTN","PSJO1",66,0)
+ N PSJX,PSJY
+"RTN","PSJO1",67,0)
+ S PSJDCEXP=$$RECDCEXP^PSJP()
+"RTN","PSJO1",68,0)
+ S PSJOL=$G(PSJOL)  ; Initialize if no 'View Profile' option selected
+"RTN","PSJO1",69,0)
+ I PSJOL="L",$D(XRTL) D T0^%ZOSV
+"RTN","PSJO1",70,0)
+ K ^TMP("PSJ",$J) D NOW^%DTC S PSGDT=+$E(%,1,12),DT=$$DT^XLFDT,PSJOS=$P(PSJSYSP0,"^",11),UDU=$S($P(PSJSYSU,";",3)>1:3,1:1)
+"RTN","PSJO1",71,0)
+ S PSJOCNT=0 I PSJPTYP>1 F PSJORD=0:0 S PSJORD=$O(^PS(55,DFN,"IV",PSJORD)) Q:'PSJORD  D
+"RTN","PSJO1",72,0)
+ .S PSJX=$G(^PS(55,DFN,"IV",+PSJORD,0))
+"RTN","PSJO1",73,0)
+ .S PSJY=$P(PSJX,U,17)
+"RTN","PSJO1",74,0)
+ .I $P(PSJX,U,3)<PSGDT,"AR"[PSJY S $P(^PS(55,DFN,"IV",+PSJORD,0),U,17)="E",PSJY="E",ON=+PSJORD D EXPIR^PSIVOE
+"RTN","PSJO1",75,0)
+ .I +PSJSYSU=3,('+$P($G(^PS(55,DFN,"IV",+PSJORD,4)),U,4)),($P($G(^(.2)),U,4)="D") S PSJPRI="D"
+"RTN","PSJO1",76,0)
+ .I $S($G(PSJPRI)="D":1,PSJY="P":0,PSJOL="L":1,$P(PSJX,U,3)>$P($G(PSJDCEXP),U,2):1,1:"DPE"'[PSJY) S ON=+PSJORD_"V" D IVSET K PSJPRI,ON
+"RTN","PSJO1",77,0)
+ D NOW^%DTC S PSJIVOF=PSJOCNT,PSGDT=%,(X1,DT)=$P(%,"."),X2=-2 D C^%DTC S PSGODT=X_(PSGDT#1),HDT=$$ENDTC^PSGMI(PSGDT)
+"RTN","PSJO1",78,0)
+ D ENUNM
+"RTN","PSJO1",79,0)
+ I PSJPTYP'=2 F ST="C","O","OC","P","R" F SD=0:0 S SD=$O(^PS(55,PSGP,5,"AU",ST,SD)) Q:'SD  F O=0:0 S O=$O(^PS(55,PSGP,5,"AU",ST,SD,O)) Q:'O  D ECHK
+"RTN","PSJO1",80,0)
+ Q:$D(PSGONNV)
+"RTN","PSJO1",81,0)
+ ;I PSJPTYP'=2 F SD="I","N" S O=0 F  S O=$O(^PS(53.1,"AS",SD,PSGP,O)) Q:'O  S ON=+O_"P",X=$P($G(^PS(53.1,+O,0)),U,4) I $S(PSJPTYP=3:1,PSJPTYP=1&("FI"[X):0,1:1) D NVSET
+"RTN","PSJO1",82,0)
+ N PRNTON F SD="I","N" S (PRNTON,O)=0 F  S O=$O(^PS(53.1,"AS",SD,PSGP,O)) Q:'O  S ON=+O_"P",X=$P($G(^PS(53.1,+O,0)),U,4) I $S(PSJPTYP=3:1,PSJPTYP=1&("FI"[X):0,1:1) D NVSET
+"RTN","PSJO1",83,0)
+ ;I $S(+PSJSYSU=3:1,1:$D(PSGLPF)) S O=0,SD="P" F  S O=$O(^PS(53.1,"AS",SD,PSGP,O)) Q:'O  S ON=O_"P",X=$P($G(^PS(53.1,+O,0)),U,4) I $S(PSJPTYP=3:1,PSJPTYP=1&("FI"[X):0,1:1) D @$S("FI"[X:"IVSET",1:"NVSET")
+"RTN","PSJO1",84,0)
+ N PRNTON S (PRNTON,O)=0,SD="P" F  S O=$O(^PS(53.1,"AS",SD,PSGP,O)) Q:'O  S ON=O_"P",X=$P($G(^PS(53.1,+O,0)),U,4) I $S(PSJPTYP=3:1,PSJPTYP=1&("FI"[X):0,1:1) D @$S("FI"[X:"IVSET",1:"NVSET")
+"RTN","PSJO1",85,0)
+ I PSJOL="L",$D(XRT0) S XRTN="PSJO1" D T1^%ZOSV
+"RTN","PSJO1",86,0)
+ D CLEAN^PSJIMO1(PSGP)
+"RTN","PSJO1",87,0)
+ Q
+"RTN","PSJO1",88,0)
+ ;
+"RTN","PSJO1",89,0)
+NVSET ; Set up orders from 53.1.
+"RTN","PSJO1",90,0)
+ N ND S ND=$G(^PS(53.1,O,0)) I 'ND D  Q
+"RTN","PSJO1",91,0)
+ .K ^PS(53.1,"AS",SD,PSGP,O)
+"RTN","PSJO1",92,0)
+ I $P(ND,U,15),$G(PSGP) I PSGP'=$P(ND,U,15) D  Q
+"RTN","PSJO1",93,0)
+ .K ^PS(53.1,"AS",SD,PSGP,O)
+"RTN","PSJO1",94,0)
+ I $P(ND,U,9)["D" D  Q
+"RTN","PSJO1",95,0)
+ .K ^PS(53.1,"AS",SD,PSGP,O)
+"RTN","PSJO1",96,0)
+ .N ND2 S ND2=$G(^PS(53.1,O,.2)) I $P(ND2,U,8) K ^PS(53.1,"ACX",$P(ND2,U,8))
+"RTN","PSJO1",97,0)
+ S ST=$P($G(^PS(53.1,O,0)),U,7),START=-$P($G(^(2)),U,2),P("PRNTON")=$P($G(^PS(53.1,O,.2)),"^",8) S:ST="" ST="z"
+"RTN","PSJO1",98,0)
+ S C=$S(((SD="N")&($P($G(^PS(53.1,O,.2)),U,8)]"")):"BD",SD="N":"BA",SD="I":"BB",$P($G(^PS(53.1,O,.2)),U,8)]"":"CD",$P($G(^PS(53.1,O,.2)),U,4)="S":"CA",$P($G(^(0)),U,24)="R":"CC",1:"CB")
+"RTN","PSJO1",99,0)
+ ;I C="CC" S C=$$CKPC^PSGOU(PSGP,+$P($G(^PS(53.1,O,0)),U,25),O)
+"RTN","PSJO1",100,0)
+ D SET
+"RTN","PSJO1",101,0)
+ Q
+"RTN","PSJO1",102,0)
+ ;
+"RTN","PSJO1",103,0)
+KILL ;
+"RTN","PSJO1",104,0)
+ K P,STAT,TYP,ORTX,N,JJ
+"RTN","PSJO1",105,0)
+ Q
+"RTN","PSJO1",106,0)
+COMCHK(PSJCOM,PSJPTYP) ;Check complex orders for order type
+"RTN","PSJO1",107,0)
+ S OK=0
+"RTN","PSJO1",108,0)
+ I PSJCOM=0 S OK=1 Q OK
+"RTN","PSJO1",109,0)
+ I PSJCOM=""  Q OK
+"RTN","PSJO1",110,0)
+ I PSJPTYP="" Q OK
+"RTN","PSJO1",111,0)
+ I '$D(^PS(53.1,"ACX",PSJCOM)) Q OK
+"RTN","PSJO1",112,0)
+ S OK=1 I PSJPTYP=3 Q OK
+"RTN","PSJO1",113,0)
+ N PSJON S PSJON=""
+"RTN","PSJO1",114,0)
+ F  S PSJON=$O(^PS(53.1,"ACX",PSJCOM,PSJON)) Q:'PSJON  D  Q:OK=0
+"RTN","PSJO1",115,0)
+ .I $P($G(^PS(53.1,PSJON,0)),"^",9)["D" K ^PS(53.1,"ACX",PSJCOM)
+"RTN","PSJO1",116,0)
+ .I $P($G(^PS(53.1,PSJON,0)),"^",4)'="U",PSJPTYP=1 S OK=0 Q
+"RTN","PSJO1",117,0)
+ .I $P($G(^PS(53.1,PSJON,0)),"^",4)="U",PSJPTYP=2 S OK=0 Q
+"RTN","PSJO1",118,0)
+ Q OK
+"RTN","PSJO1",119,0)
+ ;
+"RTN","PSJO1",120,0)
+CLINIC(PSGP,ORDER) ; Return Clinic Name for a given patient/order combination
+"RTN","PSJO1",121,0)
+ I '$G(ORDER) Q ""
+"RTN","PSJO1",122,0)
+ N CLN S CLN=$S(ORDER["P":$G(^PS(53.1,+ORDER,"DSS")),ORDER["V":$G(^PS(55,PSGP,"IV",+ORDER,"DSS")),ORDER["U":$G(^PS(55,PSGP,5,+ORDER,8)),1:"")
+"RTN","PSJO1",123,0)
+ I 'CLN,(ORDER=+ORDER) D
+"RTN","PSJO1",124,0)
+ .I $D(^PS(53.1,"ACX",+ORDER)) N PSJORD S PSJORD=0 F  S PSJORD=$O(^PS(53.1,"ACX",+ORDER,PSJORD)) Q:'PSJORD!$G(CLN)  S CLN=$G(^PS(53.1,+PSJORD,"DSS"))
+"RTN","PSJO1",125,0)
+ .I $D(^PS(55,"ACX",+ORDER)) N ACX2,PSJORD S ACX2="" F  S ACX2=$O(^PS(55,"ACX",+ORDER,ACX2)) Q:'ACX2!$G(CLN)  S PSJORD=0 F  S PSJORD=$O(^PS(55,"ACX",+ORDER,ACX2,PSJORD)) Q:'PSJORD!$G(CLN)  D
+"RTN","PSJO1",126,0)
+ ..S CLN=$S(PSJORD["P":$G(^PS(53.1,+PSJORD,"DSS")),PSJORD["V":$G(^PS(55,PSGP,"IV",+PSJORD,"DSS")),ORDER["U":$G(^PS(55,PSGP,5,+PSJORD,8)),1:"")
+"RTN","PSJO1",127,0)
+ S CLN=$S($P(CLN,"^",2):$$GET1^DIQ(44,+CLN,.01),1:"")
+"RTN","PSJO1",128,0)
+ Q CLN
+"RTN","PSJO1",129,0)
+ ;
+"RTN","PSJO1",130,0)
+CLINSORT(C) ; Return integer sort value based on order status
+"RTN","PSJO1",131,0)
+ I $P(C,"^")="Cz" N CTMP S CTMP=C N C S C=$P(CTMP,"^",4)
+"RTN","PSJO1",132,0)
+ S SORT=$S($E(C)="A":3,$E(C)["C"!($E(C)["P"):1,($E(C)["B"):2,($E(C)["DF"):4,1:5)
+"RTN","PSJO1",133,0)
+ Q SORT
+"VER")
+8.0^22.0
+"BLD",9836,6)
+^266
+**END**
+**END**
+

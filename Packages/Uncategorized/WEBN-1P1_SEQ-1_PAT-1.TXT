@@ -1,0 +1,281 @@
+
+=============================================================================
+Run Date: MAY 28, 2014                     Designation: WEBN*1.1*1
+Package : WEBN - NAT'L UTILIZATION MGMT INTEG Priority: Mandatory
+Version : 1.1         SEQ #1                    Status: Released
+                  Compliance Date: JUN 28, 2014
+=============================================================================
+
+
+Subject: NATIONAL UTILIZATION MANAGEMENT INTEGRATION (NUMI) VERSION 14.1 RELEASE
+
+Category: 
+  - Informational
+  - Other
+
+Description:
+============
+
+ National Utilization Management Integration (NUMI) is a web-based 
+ application that facilitates Utilization Management (UM) at all VA Medical
+ Centers (VAMC) to ensure that patients are receiving the right care at the
+ right time at the right place to increase efficiency, promote quality, 
+ improve access to care and ensure effective use of resources.
+  
+ NUMI users can perform the following functions:
+  
+ * Pre-populate patient stay information from VistA into a NUMI SQL 
+   database which records patient stay information. UM reviewed outcomes, 
+   reasons, and recommended levels of care are saved in the NUMI database.
+ * Generate a list of patient admissions and hospital days that need to be
+   reviewed to assist UM reviewers in organizing their workload.
+ * For newly admitted patients, collect patient and treatment information
+   to determine whether patients meet clinical criteria for inpatient
+   admission.
+ * Following admission, collect treatment information for each hospital day
+   to determine whether patients meet continued stay criteria.
+ * Standardize documentation of 
+   + reasons for inpatient admissions or continued stays that do not meet
+     clinical criteria for inpatient care, and 
+   + recommended levels of care for admissions and continued stay days not
+     meeting criteria
+ * Provide Physician Advisors with an automated UM review list to access
+   reviews, document agreement or disagreement with current levels of care,
+   and add comments and recommendations regarding patients not meeting
+   criteria.
+ * Generate summary reports of UM outcomes to provide insight into system
+   constraints and barriers and identify quality improvement opportunities.
+ * Assign specific reason codes for reviews that do not meet criteria. The
+   VA-specific reason code structure will enable UM staff to aggregate and
+   analyze the most prevalent reasons why patients are not meeting criteria
+   at their current level of care. This information provides insight to
+   help identify quality and access improvement opportunities.
+ * Display a list of patient stays and review information, with filters and
+   search features to assist in organizing individual reviewer workloads
+ * Allow the reviewer to filter the display of patients based upon
+   observation status in both worklist and reports.
+ * Allow the Administrator to select the Automatic Dismissal Filter
+   criteria on a per site basis.
+ * Upon any synchronization, the program shall automatically check the
+   Treating Specialty and other filter parameters for compliance with
+   Automatic Dismissal Filter criteria and if the patient's clinical
+   parameters lie within the boundaries of the filter criteria, that
+   patient shall be dismissed.
+  
+ The purpose of this software product release is to fix defects reported
+ with NUMI v1.1.14.0 when it was released into production by the
+ development team. This patch NUMI v1.1.14.1 contains fixes for 15 defects
+ identified in the application version 14.0.
+   
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Options Associated:
+ --------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ ---------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ---------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ ----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+  
+ INC000000887582
+ Problem: Reminder date not automatically incrementing. 
+ Solution: A fix implemented in the current patch corrects the defect
+ reported on Saved Review Summary Screen by automatically
+ setting the Reminder Date to the following day. 
+  
+ INC000000973957
+ Problem: NUMI user with Super User privileges cannot Add and Edit an
+ individual user under Admin/Users screen. 
+ Solution: A fix implemented in the current patch corrects the defect hence
+ enabling Super Users to add and edit an individual user under Admin/Users.
+  
+ INC000000879320
+ Problem: Patient transfers noted on the Stay Movement List are not 
+ aligning with the stay appearing on the work list. Example: A patient is 
+ currently in Ward 5N and the movement table shows the transfer. The 
+ patient work list shows the patient stay in ICU which was the original 
+ location when the stay was created.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by pulling Patient Movements, Treating Specialty, Ward, Service 
+ Section and Attending Doctor information from the Stay Records.
+  
+ INC000000902444
+ Problem: The status icons will not update & not recognizing a continued 
+ stay review done on a Patient who has transferred in. Blue triangle icon 
+ remains.  
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by displaying a completion icon (green circle) if each 
+ non-discharge day has a review of any kind (admission or continued stay.)
+ If these conditions are not met, a blue triangle is displayed.
+  
+ INC000000868812
+ Problem: On Patient selection screen, hovering mouse over ellipses when 
+ field data extends in length beyond box no longer displays the entire 
+ data.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by improving the Tool Tip functionality on Patient Selection 
+ Screen.
+  
+ INC000000883747
+ Problem: Undefined Treating Specialties causing errors.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by displaying NULL Facility Treating Specialties as "Unknown" on
+ the Primary Review page.
+  
+ INC000000889997 
+ Problem: NUMI screens have "powered by Medora" and "A product of the VA
+ Ann Arbor Healthcare Center.." at the bottom.
+ Solution: In the current patch, text "Powered by Medora" and "A Product of
+ Ann Arbor Healthcare Center" is removed from all NUMI application screens.
+  
+ INC000000866745, INC000000866119
+ Problem: For reviews meeting and not meeting criteria, admission reviews, 
+ continued stays reviews, and various other scenarios, there is an error if
+ no clinical findings are selected.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by setting subset and day-of-care to NULL if no clinical findings
+ are selected.
+  
+ INC000000868483
+ Problem: Deleting a review, and then adding a new one on the same
+ patient/day undeletes the old one.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by refreshing the History Screen once a review is deleted.
+  
+ INC000000889977 
+ Problem: NUMI Primary Review Screen under Criteria Met currently 
+ "Criteria Not Met No". Should simply say "Criteria Met: No" or 
+ "Criteria Met: Yes" 
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by updating the NUMI Primary Review screen wording for label 
+ "IQ Criteria MET:" to state either "Yes" or "No".
+  
+ INC000000768019
+ Problem: Free Text search in Utilization Review and other pages works 
+ erratically.
+ Solution: A fix implemented in the current patch improves the free text 
+ search functionality.
+  
+ INC000000865693, INC000000919204
+ Problem: Invalid dismissed stays are still showing on the patient 
+ selection screen when the "patients currently in beds" criterion is 
+ selected.
+ Solution: A fix implemented in the current patch partially corrects the 
+ defect reported by displaying a warning message to the user stating that 
+ the stay cannot be found in VistA when a reviewer tries to access a stay 
+ that has been deleted in VistA. The deleted stay is moved to the Patient 
+ Stay Administration screen. Note: Another fix will be needed in the future
+ to restore the last step of the invalid stay processing so that deleting 
+ an invalid stay completely from NUMI is again possible.
+ INC000000863454
+ Problem: When reviews are copied, the new reviewer name does not transfer
+ to the Show Reviews list. The new reviewer does appear on the work list in
+ the Reviewer column.
+ Solution: A fix implemented in the current patch corrects the defect
+ reported by ensuring that copied reviews display the accurate reviewer 
+ name on History and Primary Review pages.
+  
+ INC000000884685
+ Problem: Patients with long DFNs causing errors and not behaving like 
+ other patients.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by gracefully processing patients with long DFN numbers.
+  
+ INC000000894651
+ Problem: NUMI InfoLog Table contains NULL values for UserName.
+ Solution: A fix implemented in the current patch corrects the defect 
+ reported by capturing a UserName in the InfoLog table when an application
+ error is reported.
+  
+ Associated Change Requests: 
+ ---------------------------
+ N/A
+  
+ Test Sites:
+ -----------
+ Bay Pines VAMC
+ Gainesville (NFSG)
+ Omaha VAMC
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation is available.
+  
+ The preferred method is to FTP the files from download.vista.domain.ext.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Document Library at: 
+ http://www.domain.ext/vdl/ 
+   
+ FILE NAME                           DESCRIPTION
+ =========                           ===========
+ NUMI_14_1_ServerSetupGuide.pdf      NUMI Server Setup Guide v14.1
+ NUMI_14_1_SysMgmtGuide.pdf          NUMI System Management Guide v14.1
+ NUMI_14_1_UG.pdf                    NUMI User Guide v14.1
+  
+ Installation Instructions:
+ --------------------------
+ This is a .NET based Web Application Build. This is a Centralized Server 
+ promotion. No installation is required at local sites.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 21, 2014
+Completed By:                               Date Completed: MAY 14, 2014
+Released By :                               Date Released : MAY 28, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

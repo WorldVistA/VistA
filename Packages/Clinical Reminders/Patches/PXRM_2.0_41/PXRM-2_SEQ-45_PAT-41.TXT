@@ -1,0 +1,182 @@
+
+=============================================================================
+Run Date: DEC 24, 2015                     Designation: PXRM*2*41
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #45                      Status: Released
+                  Compliance Date: JAN 26, 2016
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*41'
+
+Subject: TELEDERM REMINDER DIALOGS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ There is a shortage of dermatologists in the VA creating an access to 
+ care problem.  Long wait times to see a dermatologist can result.  In
+ addition, dermatology services are typically based at medical center
+ facilities that may require patients to travel long distances or times to
+ receive care by a dermatologist.  To address these challenges, the VA has
+ initiated a Teledermatology Program.  Store and forward Teledermatology
+ is a telehealth strategy in which a trained imager at a referring site
+ takes digital images of the patient's skin, uploads them through a
+ computer into VistA Imaging along with additional patient information on a
+ consult form completed by the ordering provider.  These are then
+ interpreted by a consulting dermatologist in a timeframe that is 
+ understood by both parties.  The consulting Teledermatologist reviews the
+ images and answers the consult, alerting the referring provider of a
+ diagnosis and recommendation via CPRS.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC00000967433 - Creation of VMP patch for telederm dialog templates
+  
+ Associated NSRs:
+ ================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ LEBANON VAMC (Lebanon, PA)
+ SAN FRANCISCO VAMC (San Francisco, CA)
+ N. FLORIDA/S. GEORGIA HCS (Gainesville, FL)
+ WILMINGTON VAMC (Wilmington, DE)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC00000967433 - Creation of VMP patch for telederm dialog templates
+  
+ Problem:
+ --------
+ There is a shortage of dermatologists in the VA creating an access to 
+ care problem.  Long wait times to see a dermatologist can result.  In
+ addition, dermatology services are typically based at medical center
+ facilities that may require patients to travel long distances or times 
+ to receive care by a dermatologist.  To address these challenges, the VA
+ has initiated a Teledermatology Program.  New reminder dialogs for
+ Teledermatology note templates were needed.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*41, distributes the two teledermatology reminder 
+ dialogs.  Two routines are included with this patch, PXRMP41E and
+ PXRMP41I. They are init tasks that add new entries to the REMINDER
+ EXCHANGE (#811.8) file and the contents of these entries are installed
+ during the post-init.  These routines can be deleted after the install.
+  
+ This patch installs the following Teledermatology reminder dialogs:
+  
+       VA-TELEDERMATOLOGY IMAGER NOTE
+       VA-TELEDERMATOLOGY READER NOTE
+  
+ The reminder dialog templates are one part of the teledermatology 
+ process.  For information on the complete process please refer to the
+ teledermatology implementation and user manuals found on the
+ teledermatology website:
+  
+ http://vaww.infoshare.domain.ext/sites/telehealth/docs/Forms/tdrm.aspx
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_41.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide is also available on the above servers.  It is
+ available as .pdf format.  This file should be downloaded in BINARY
+ format.
+  
+     File Name:                   Description:             Protocol:
+     ==========                   ============             =========
+     PXRM_2_0_41_IG.PDF           PXRM*2.0*41 Install      BINARY
+                                  and Setup Guide
+     PXRM_2_0_41.KID              PXRM*2.0*41 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+  
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_41_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in
+     <your directory name>:PXRM_2_0_41.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*41
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//, respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted:
+  
+     PXRMP41E
+     PXRMP41I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 223
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP41E
+    Before:       n/a   After:   B723022  **41**
+Routine Name: PXRMP41I
+    Before:       n/a   After:  B2412342  **41**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 05, 2014
+Completed By:                               Date Completed: DEC 22, 2015
+Released By :                               Date Released : DEC 24, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,152 @@
+
+=============================================================================
+Run Date: APR 27, 2016                     Designation: TBI*2*16
+Package : TBI - TRAUMATIC BRAIN INJURY        Priority: Mandatory
+Version : 2        SEQ #14                      Status: Released
+                  Compliance Date: MAY 28, 2016
+=============================================================================
+
+
+Subject: HREG Sustainment Release Patch 7
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ **********************************************************************
+ This patch announces the National Release of Traumatic Brain Injury Patch 
+ TBI*2.0*16. TBI*2.0*16 will be deployed to the production server for 
+ national release on 5/2/2016 at 9 p.m. Eastern time. No additional action 
+ is required from sites.
+ **********************************************************************
+  
+ RELEASE INFORMATION:
+ ===================
+ TBI Patch 2.0*16 contains code changes (defect fixes enhancements) to the 
+ TBI Registry. These changes are Work Items that were recorded and tracked 
+ in the Registries Project Area of RTC.
+  
+ This patch contains the TBI Work Items completed for Release 7 for the   
+ production deployment.
+  
+ TBI Patch 2.0*16 includes the TBI Registry Work Items listed below:
+  
+ 1)      301540: Defect_Comprehensive TBI Not Saving Question 16-B
+ 2)      238217: TBI: Refactor  Functional Mobility Assessment
+ 3)      238218: TBI: Refactor  Quebec User Evaluation of Satisfaction
+ 4)      289481: TBI - DEFECT: Log Full VIA Response required
+ 5)      250180: Research VISN realignment
+  
+ The following describes each component of the TBI Patch 2.0*16
+  
+ 1) 301540: 
+ Issue: DEFECT:  On the Comprehensive TBI Evaluation instrument, question 
+ 16-B is NOT being saved when the user has selected NO for question 6. 
+ This defect was introduced when the CBTIE was refactored to prevent data 
+ loss.
+  
+ Solution: Corrected code to remove check on Question 6 value when saving 
+ value for Question 16-B.
+  
+ 2) 238217:  
+ Issue: Refactor the delete-then-save pattern on the Functional Mobility 
+ Assessment instrument to reduce data loss
+  
+ Solution: Verify instrument works and data is saved under normal, 
+ time-out and adverse scenarios.
+  
+  
+ 3) 238218: 
+ Issue: Refactor the delete-then-save pattern on the Quebec User 
+ Evaluation of Satisfaction instrument to reduce data loss.
+  
+ Solution: Verify instrument works and data is saved under normal, 
+ time-out and adverse scenarios.
+  
+ 4)  289481: 
+  
+ Issue: When making a VIA call, the InstrumentsManager code that 
+ serializes the data is using the result variable instead of the ret 
+ variable that actually was the result from the call into VIA.
+  
+ Solution: Use the correct object to record the VIA response data.  When 
+ an instrument is submitted and data is written back to VistA using VIA, 
+ the full VIA response should be logged into the DB table.
+  
+ 5) 250180: 
+  
+ Issue: Research VISN realignment
+  
+ Solution: Conduct the research for VISN realignment.
+  
+ SOFTWARE:
+ =========
+ TBI is a web-based application. Changes will be applied to the national 
+ production servers and will be immediately available to the users. No 
+ changes at the local site are required for this patch.
+ ================
+ DOCUMENTATION:
+ ================
+ NOTE: NO DOCUMENT UPDATES WERE REQUIRED FOR THIS PATCH
+  
+ Additional Information:
+ ===================
+ TBI Design and User Documentation is located on TSPR:
+  
+ http://tspr.vista.domain.ext/warboard/anotebk.asp?proj=1313&Type=Active  
+  
+ Documentation Retrieval Instructions:
+ The preferred method is to SFTP the files from 
+ sftp://download.vista.domain.ext/.
+   
+ This transmits the files from the first available SFTP server.
+ Sites may also elect to retrieve software directly from a specific server 
+ as follows:
+   
+ Albany              sftp.domain.ext  
+ Hines               sftp.domain.ext
+ Salt Lake City      sftp.domain.ext
+  
+  
+ Documentation can also be found on the VA Software Documentation Library
+ at: http://www4.domain.ext/vdl/
+   
+ Title                              File Name              FTP Mode
+ -----------------------------------------------------------------------
+ TBI Instruments User Manual       TBIINSUM.PDF           BINARY
+  
+ REMEDY TICKETS AND OVERVIEW:
+ =============================
+ There are no Remedy Tickets associated with this patch.
+  
+ TEST SITES:
+ ===========
+ Houston, TX
+ Lebanon, PA
+ Dallas, TX
+  
+  
+ Routine Information:
+ ====================
+  
+  
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 11, 2016
+Completed By:                               Date Completed: APR 27, 2016
+Released By :                               Date Released : APR 27, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

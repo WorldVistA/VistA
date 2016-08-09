@@ -1,0 +1,333 @@
+$TXT Created by                 DEVESS.DOMAIN.EXT  (KIDS) on Friday, 10/11/13 at 10:15
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: LR*5.2*421
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #352                    Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*315  <<= must be installed BEFORE `LR*5.2*421'
+                    (v)LEX*2*80    <<= must be installed BEFORE `LR*5.2*421'
+                    (v)ICD*18*57   <<= must be installed BEFORE `LR*5.2*421'
+                    (v)LR*5.2*422  <<= must be installed BEFORE `LR*5.2*421'
+                    (v)LR*5.2*429  <<= must be installed BEFORE `LR*5.2*421'
+
+Subject: EMERGING PATHOGENS INITIATIVE (EPI) ICD-10 CLASS I REMEDIATION PROJECT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) 
+ posted on the Anonymous directory for installation order. 
+ This is critical for proper functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The Laboratory Emerging Pathogens Initiative (EPI) application allows the 
+ Department of Veterans Affairs (VA) to track certain emerging pathogens on
+ the national level without the necessity for additional local data entry.
+ It is designed to automatically provide data on emerging pathogens to 
+ Veterans Affairs Headquarters (VAHQ) without additional individual data
+ entry at the site level. Functionality in this application includes using
+ look up capabilities to add, delete, edit, or view ICD codes for pathogen
+ set-up parameters. Once parameters have been decided, an extract
+ automatically searches for specific ICD codes related to certain emerging
+ pathogens (e.g., Hepatitis, Legionella). The data is sent to the 
+ Austin Information Technology Center (AITC) for initial processing and
+ coupling with denominator data related to workload. Veterans Affairs 
+ Headquarters (VAHQ) data retrieval and analysis can then be accomplished.
+ Plans can be formulated on the national level for intervention strategies
+ and resource needs. Results of aggregate data can also be shared with
+ appropriate public health authorities for planning on the national level
+ for the non-VA and private health care sectors.
+  
+ Patch LR*5.2*421 makes the following changes to the Emerging Pathogens 
+ Initiative (EPI) application:
+ - The following fields and screens have been updated to refer to "ICD"
+   rather than "ICD9":
+   - Laboratory Search/Extract Parameters Input screens
+   - Enter/Edit Local Pathogens screens
+   - Detailed Verification Report
+   - Help Text
+ - Within the Enter/Edit Local Pathogens and Laboratory Search/Extract
+   Parameters Input screens, users are prompted to specify a code set on
+   which to search prior to entering an ICD code. Based on this input, the
+   system will only allow ICD-9 entry or ICD-10 entry.
+ - The Pathogen Inquiry option has been modified to list both ICD-9 and
+   ICD-10 codes.
+ - The Generate Local Report/Spreadsheet option has been modified to 
+   include both the Diagnosis Code Set Designation and the Diagnosis Code.
+ - Health Level 7 (HL7) Reports that are sent to Austin Information 
+   Technology Center (AITC) have been modified to include ICD-10 Codes and
+   Descriptions, which are included in the DG1 Segments in this Health 
+   Level 7 (HL7) format.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)         Field Name                 New/Modified/Deleted
+ -------------         -------------------        --------------------
+ LAB SEARCH/EXTRACT    ICD DIAGNOSIS SUB-FIELD
+  (#69.5)               (#69.54) Field (#4)           
+                       ICD DIAGNOSIS (#.01)       Modifed
+                       CODING SYSTEM(#1)          New
+  
+ Forms Associated:
+  
+ Form Name File # New/Modified/Deleted
+ --------- ------ --------------------
+ LREPI9    #69.5  Modified
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name New/Modified/Deleted
+ --------------- --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name           Type               New/Modified/Deleted
+ -----------           -----------        --------------------
+ LREPI PARAMETER SETUP Run Routine        Modified 
+  
+ Protocols Associated:
+  
+ Protocol Name New/Modified/Deleted
+ ------------- --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name Type File Name (#) New/Modified/Deleted
+ ------------- ---- ------------------ --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Orlando VA Medical Center, Orlando, FL
+ Coatesville VA Medical Center, Coatesville, PA 
+ Battle Creek VA Medical Center, Battle Creek, MI
+ Captain James A. Lovell Federal Health Care Center, N. Chicago, IL
+  
+ Blood Bank Clearance Statement
+ ------------------------------
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*421 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*421 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*421 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany ftp.domain.ext <ftp://ftp.domain.ext>
+ Hines ftp.domain.ext <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                File Name                         FTP Mode
+ --------------------------------------------------------------------------
+ ICD-10 Release Notes            ICD-10_RN_LR_5_2_421.pdf          Binary
+   (LR*5.2*421)
+ Hep C Extract & EPI Technical   lab_epi_hepC_tech_user_guide.pdf  Binary
+   and User Guide
+ Production Overview Guide       ICD-10_Production_Overview_       Binary
+   Groups 3 - 4                    Guide_Groups_3-4.pdf
+ Roll Up Modifications           lab_epi_rollup_mod_tech_user_     Binary
+   Technical and User Manual       manual.pdf
+ Search/Extract Technical and    lap_epi_searchextract_tm_ug.pdf   Binary
+   User Guide
+ EPI Technical and User Guide    lab_epi_tech_user_guide.pdf       Binary
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch will execute routine ^LR421P during "post-installation"
+ processing.
+  
+  
+ Pre-Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions
+ -----------------------------
+ 1. Choose the PackMan message containing this patch.
+  
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3. From the Kernel Installation and Distribution System Menu, select
+ the Installation Menu. From this menu, you may elect to use the
+ following option. When prompted for the INSTALL enter the patch #
+ (LR*5.2*421):
+  
+ a. Backup a Transport Global - This option will create a backup
+ message of any routines exported with this patch. It will not
+ backup any other changes such as DD's or templates.
+ b. Compare Transport Global to Current System - This option will
+ allow you to view all changes that will be made when this patch
+ is installed. It compares all components of this patch
+ (routines, DD's, templates, etc.).
+ c. Verify Checksums in Transport Global - This option will allow
+ you to ensure the integrity of the routines that are in the
+ transport global.
+  
+ 4. From the Installation Menu, select the Install Package(s) option and
+ choose the patch to install. Enter LR*5.2*421.
+  
+ 5. When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+ Install? NO//', respond NO.
+  
+ 6. When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+ respond NO.
+  
+ 7. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+ Protocols? NO//', respond NO.
+  
+ 8. If prompted 'Delay Install (Minutes): (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ The post installation routine ^LR421P will make applicable ICD-10 
+ modifications to the LAB SEARCH/EXTRACT file (#69.5). Messages will 
+ display in the "installation window" during the execution of ^LR421P, 
+ showing the file modification being done.
+  
+ ^LR421P routine should be deleted using the  KERNEL option 'Delete
+ Routines' [XTRDEL] upon completion of the installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 48
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR421P
+    Before:       n/a   After: B10419361  **421**
+Routine Name: LREPI
+    Before: B57448349   After: B66094816  **132,175,260,281,421**
+Routine Name: LREPI2
+    Before: B33309495   After: B33293208  **132,157,175,242,260,281,320,421**
+Routine Name: LREPI2A
+    Before: B25858178   After: B25843319  **281,421**
+Routine Name: LREPI3
+    Before: B38193002   After: B50368609  **132,175,260,281,320,315,421**
+Routine Name: LREPI5
+    Before:  B5654909   After:  B7519412  **281,315,421**
+Routine Name: LREPICD
+    Before:       n/a   After:  B3035110  **421**
+Routine Name: LREPIPI
+    Before: B12589955   After: B21641423  **281,421**
+Routine Name: LREPIRP3
+    Before: B78489594   After: B78340966  **281,421**
+Routine Name: LREPIRP5
+    Before: B38435100   After: B38416569  **281,320,421**
+Routine Name: LREPIRP7
+    Before: B69729328   After: B69807608  **281,320,421**
+Routine Name: LREPIRS1
+    Before: B38487610   After: B39937424  **281,421**
+Routine Name: LREPIRS3
+    Before: B53422919   After: B54324401  **281,421**
+Routine Name: LREPISRV
+    Before: B27007288   After: B28774078  **260,281,421**
+Routine Name: LREPIXDG
+    Before:       n/a   After:  B1966011  **421**
+ 
+Routine list of preceding patches: 315
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 09, 2012
+Completed By:                               Date Completed: AUG 08, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

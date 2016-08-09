@@ -1,0 +1,889 @@
+
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: LEX*2*80
+Package : LEX - LEXICON UTILITY               Priority: Mandatory
+Version : 2        SEQ #85                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)LEX*2*25    <<= must be installed BEFORE `LEX*2*80'
+                    (v)LEX*2*30    <<= must be installed BEFORE `LEX*2*80'
+                    (v)LEX*2*62    <<= must be installed BEFORE `LEX*2*80'
+                    (v)LEX*2*81    <<= must be installed BEFORE `LEX*2*80'
+                    (v)TIU*1*267   <<= must be installed BEFORE `LEX*2*80'
+                    (v)ICD*18*62   <<= must be installed BEFORE `LEX*2*80'
+                    (v)PSO*7*404   <<= must be installed BEFORE `LEX*2*80'
+                    (v)GMPL*2*43   <<= must be installed BEFORE `LEX*2*80'
+                    (v)RA*5*112    <<= must be installed BEFORE `LEX*2*80'
+                    (v)ONC*2.11*56 <<= must be installed BEFORE `LEX*2*80'
+                    (v)IBD*3*64    <<= must be installed BEFORE `LEX*2*80'
+                    (v)ICD*18*69   <<= must be installed BEFORE `LEX*2*80'
+                    (v)LR*5.2*429  <<= must be installed BEFORE `LEX*2*80'
+                    (v)DG*5.3*870  <<= must be installed BEFORE `LEX*2*80'
+                    (v)ACKQ*3*22   <<= must be installed BEFORE `LEX*2*80'
+                    (v)LEX*2*94    <<= must be installed BEFORE `LEX*2*80'
+
+Subject: ICD-10-CM/PCS Code Set
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ *****************************ATTENTION*********************************
+ *                                                                     *
+ *   The following patches must be installed immediately after the     *
+ *   install of ICD*18*57/LEX*2*80:                                    *
+ *                                                                     *
+ *     1     PX*1.0*203                                                *
+ *     2     EC*2.0*124                                                *
+ *     3     ROR*1.5*23                                                *
+ *                                                                     *
+ ***********************************************************************
+ 
+ 
+  This patch exports the International Classification of Diseases 
+  (ICD), 10th Revision, Clinical Mod (ICD-10-CM), and Procedure 
+  Coding System (ICD-10-PCS) Code Set.    
+    
+  This is a multi-package Kernel Installation and Distribution System
+  (KIDS) distribution consisting of the following two builds:
+    
+    Install
+    Order    Build         Subject
+    -------  ----------    ------------------------------------------
+       1     ICD*18.0*57   ICD-10-CM/PCS Coding System Implementation
+       2     LEX*2.0*80    ICD-10-CM/PCS Lexicon Implementation
+    
+  Install Name:  ICD*18.0*57 
+    
+    NOTE:  This message does not contain an installable KIDS build, nor
+           does it contain any routines or data.  The installable KIDS 
+           distribution and accompanying data host file can be obtained
+           using the File Transfer Protocol (FTP) instructions and 
+           installation instructions found in patch ICD*18.0*57.
+     
+  ENHANCEMENTS:
+  ============
+    
+    LEX*2.0*80
+    ==========
+    
+      Data Dictionaries
+      -----------------
+    
+        CODES file 757.02 modified
+    
+          Cross-References added
+    
+            ^LEX(757.02,"ADX",CODE,EFF,STA,IEN1,IEN2)
+            ^LEX(757.02,"APR",CODE,EFF,STA,IEN1,IEN2)
+    
+            Where
+    
+              CODE     ICD Diagnosis OR Procedure Code
+              EFF      Effective Date
+              STA      Activation Status (0/1)
+              IEN1     Internal Entry Number - DA(1)
+              IEN2     Internal Entry Number - DA
+  
+        CODING SYSTEMS file 757.03 Field added
+  
+           11    IMPLEMENTATION DATE (D), [2;1]
+           12    SEARCH THRESHOLD (N)     [2;2]
+  
+        CHARACTER POSITIONS new file 757.033
+  
+           .01   IDENTIFIER (RF), [0;1]
+           .02   FRAGMENT (F), [0;2]
+           .03   DATE ENTERED (D), [0;3]
+           .04   SOURCE (P757.03'), [0;4]
+           .05   DETAILS (S), [0;5]
+           1     STATUS (Multiple-757.331), [1;0]
+                 .01  STATUS EFFECTIVE DATE (MD), [0;1]
+                 .02  STATUS (S), [0;2]
+           2     NAME/TITLE (Multiple-757.332), [2;0]
+                 .01  NAME/TITLE EFFECTIVE DATE (MD), [0;1]
+                 .02  NAME/TITLE (F), [1;1]
+           3     DESCRIPTION (Multiple-757.043), [3;0]
+                 .01  DESCRIPTION EFFECTIVE DATE (MD), [0;1]
+                 .02  DESCRIPTION (F), [1;1]
+           4     EXPLANATION (Multiple-757.334), [4;0]
+                 .01  EXPLANATION EFFECTIVE DATE (MD), [0;1]
+                 .02  EXPLANATION (F), [1;1]
+           5     INCLUDES (Multiple-757.335), [5;0]
+                 .01  INCLUDES EFFECTIVE DATE (MD), [0;1]
+                 .02  INCLUDE (Multiple-757.345), [1;0]
+                      .01  SYNONYM (MMF), [0;1]
+   
+      Files (data)
+      ------------
+  
+        The following Lexical files have had the ICD-10 Diagnosis
+        and Procedures added:
+  
+           MAJOR CONCEPT MAP  757
+           CONCEPT USAGE      757.001
+           EXPRESSIONS        757.01
+           CODES              757.02
+           SEMANTIC MAP       757.1
+  
+        The SUBSET DEFINITIONS file 757.2 has been modified to 
+        include the two new Subsets:
+  
+           ICD-10 Diagnosis
+           ICD-10 Procedures
+  
+        The LOOK-UP SCREENS file 757.3 has been modified to include
+        ICD-10 in the screens:
+  
+           Problem/Diagnosis (ICD-9, ICD-10, CPT-4 and HCPCS)
+           Problem/Diagnosis (ICD-9, ICD-10, CPT-4, HCPCS and DSM-IV)
+           ICD-10 Diagnosis/Procedures
+           ICD-9 and ICD-10 Diagnosis/Procedures
+           ICD-10 Diagnosis
+           ICD-10 Operation/Procedure
+           Diagnosis (ICD-9 or ICD-10)
+  
+        The DISPLAYS file 757.31 has been modified to include the
+        display of ICD-10 codes:
+  
+           ICD-9 and ICD-10 Diagnosis (only)
+           ICD-9 and ICD-10 Diagnosis and Procedures
+           ICD-9, ICD-10 and CPT codes
+           ICD-9, ICD-10, CPT and DSM
+           ICD-10 Diagnosis (only)
+           ICD-10 Diagnosis and Procedures
+  
+        The following two new fields in file 757.03 are populated 
+        with data.
+  
+           11    Implementation Date
+           12    Search Threshold
+  
+        The new file CHARACTER POSITIONS #757.033 is populated with
+        data.
+  
+    Routines
+    --------
+    
+      Modified:
+ 
+        Lexicon Lookup
+ 
+          LEXA       Look-up (Silent)        
+          LEXA1      Lexicon Look-up (Loud)        
+          LEXA4      Look-up (Loud) Unresolved Narrative         
+          LEXAB      Look-up Exact Match "B" index         
+          LEXABC     Look-up by Code         
+          LEXAL      Look-up List (Global)         
+          LEXALK     Look-up by Words        
+          LEXAR      Look-up (Interpret User Response)         
+          LEXAR3     Look-up Response (Help, Def, MAX)         
+          LEXAR4     Look-up Response (Select Entry)         
+          LEXAR5     Look-up Response (Select Entry)         
+          LEXAR6     Look-up Response (Unresolved Narr)        
+          LEXASC     Look-up by Shortcuts        
+          LEXASO     Look-up Display String (Sources)  
+ 
+        Lexicon Query
+ 
+          LEXQC      Changes - Extract
+          LEXQC2     Changes - Save 
+          LEXQC3     Changes - ICD/ICP/10D/10P
+          LEXQC4     Changes - CPT/MOD
+          LEXQCM     CPT Modifiers - Extract
+          LEXQCM2    CPT Modifiers - Save 
+          LEXQCP     CPT Procedures - Extract 
+          LEXQCP2    CPT Procedures - Save
+          LEXQCPA    CPT Procedures - Ask
+          LEXQH      History - Main 
+          LEXQHL1    History - ICD-9/10 Diagnosis Extr
+          LEXQHL2    History - ICD-9/10 Procedure Extr
+          LEXQHL3    History - CPT/HCPCS Extract
+          LEXQHL4    History - CPT Modifier Extract
+          LEXQHL5    History - Lexicon ICD/CPT Extract
+          LEXQHLM    History - Extract Misc 
+          LEXQID     ICD Diagnosis - Extract
+          LEXQID2    ICD Diagnosis - Extract (cont)
+          LEXQID3    ICD Diagnosis - Extract (cont)
+          LEXQID4    ICD Diagnosis - Save 
+          LEXQIDA    ICD Diagnosis - Ask
+          LEXQIP     ICD Procedure - Extract
+          LEXQIP2    ICD Procedure - Extract
+          LEXQIP3    ICD Procedure - Save 
+          LEXQIPA    ICD Procedure - Ask
+          LEXQL      Lookup Code
+          LEXQL2     Lookup Code (Build List) 
+          LEXQL3     Lookup ICD Code
+          LEXQL4     Lookup Code (CPT/MOD)
+          LEXQM      Miscellaneous
+ 
+        Lexicon Miscellaneous Application Programming Interface (APIs)
+ 
+          LEXCODE    Retrieval of IEN^Term based on Code 
+          LEXRXE     Re-Index 757.1 B/AMCC/AMCT/ASTT
+          LEXRXF     Re-Index 757.21 B/C/AA
+          LEXRXG     Re-Index 757.33 B/C/G
+          LEXRXXP    Re-Index Parse
+          LEXRXXS    Re-Index Save/Send
+          LEXSET     Setup Appl/User Defaults for Look-up
+          LEXSET2    Appl/Sub/Mode/User Defaults
+          LEXSET3    Overwrite/Merge Appl/User Defaults
+          LEXSET4    Setup Functions 
+          LEXSET5    Setup Appl/User Defaults for Look-up
+          LEXSRC2    Classification Code Source Util 
+          LEXTRAN    Lexicon code and text wrapper APIs 
+          LEXTRAN1   Lexicon code and text wrapper APIs 
+          LEXU       Miscellaneous Lexicon Utilities 
+          LEXXGI     Global Import (Needs ^LEXM) 
+          LEXXGI2    Global Import (Update w/^LEXM)
+          LEXXGI3    Global Import (Needs ^LEXM)
+          LEXXGI4    Global Import (repair at site)
+ 
+        Lexicon Cross-References
+ 
+          LEXNDX4    Linked Word Indexes
+          LEXNDX6    Supplemental Word Indexes
+          LEXNDX8    Set/kill indexes 757.02 
+          LEXRXXT3   Re-index (tasked)
+          LEXTOKN    Parse String into Words
+          LEXTOKN2   Parse String into Words
+   
+        Lexicon Defaults
+ 
+          LEXDCC     Default Display
+          LEXDCX     Default Shortcut Context        
+          LEXDD1     Display Defaults        
+          LEXDD2     Display Defaults - Build List       
+          LEXDD4     Display Defaults - List Elements        
+          LEXDDS     Display Defaults - Single User        
+          LEXDDSP    Display Defaults - Single User Parse        
+          LEXDFL     Default Filter        
+          LEXDFN2    Default Names
+          LEXDFSB    Default Filter - Include/Exclude
+          LEXDFSE    Default Filter - Exclude Semantics        
+          LEXDM2     Default Misc - Ask to delete        
+          LEXDM4     Default Misc - Files/User/Service       
+          LEXDMGT    Defaults - Manager/Update       
+          LEXDMGU    Defaults - Manager/User Group       
+          LEXDMGV    Defaults - Manager/Verify       
+          LEXDVO     Default Vocabulary        
+ 
+      New:
+ 
+        Lexicon ICD-10 Specific
+ 
+          LEX10CS    ICD-10 Code Set
+          LEX10CS2   ICD-10 Code Set (cont)
+          LEX10CX    ICD-10 Suggestions - Main
+          LEX10CX2   ICD-10 Suggestions - Source (get)
+          LEX10CX3   ICD-10 Suggestions - Target (find)
+          LEX10CX4   ICD-10 Suggestions - Ask 
+          LEX10CX5   ICD-10 Suggestions - Misc
+          LEX10DBC   ICD-10 Diagnosis Lookup by Code
+          LEX10DBR   ICD-10 Diagnosis Lookup by Root
+          LEX10DBT   ICD-10 Diagnosis Lookup by Text
+          LEX10DL    ICD-10 Diagnosis Prototype
+          LEX10DLS   ICD-10 Diagnosis Prototype
+          LEX10DU    ICD-10 Diagnosis Utilities
+          LEX10DX    ICD-9  Diagnosis
+          LEX10PL    ICD-10 Procedure Prototype
+          LEX10PLA   ICD-10 Procedure Prototype
+          LEX10PLS   ICD-10 Procedure Prototype
+          LEX10PR    ICD-10 Procedure Code
+          LEX10TAX   Post ICD-10 Taxonomies
+ 
+        Lexicon (general)
+ 
+          LEXDMGS    Search Threshold
+          LEXHLP2    Context Sensitive Help Text
+          LEXQC3     Changes - ICD/ICP/10D/10P
+          LEXQC4     Changes - CPT/MOD
+          LEXQL4     Lookup Code (CPT/MOD)
+          LEXU2      Miscellaneous Lexicon Utilities (cont)
+          LEXU3      Miscellaneous Lexicon Utilities (cont)
+          LEXU4      Miscellaneous Lexicon Utilities (cont)
+          LEXUH      Miscellaneous Lexicon Utilities (Help)
+          LEXXM      Mixed Case
+          LEXXM1     Mixed Case (1)
+          LEXXM2     Mixed Case (2)
+          LEXXM3     Mixed Case (3)
+          LEXXM4     Mixed Case (4)
+          LEXXM5     Mixed Case (5)
+          LEXXM6     Mixed Case (+6)
+          LEXXMM     Mixed Case (Miscellaneous)
+ 
+      Documentation changes:
+  
+          LEXAR7    LEXDFSS   LEXDM     LEXDMGO   LEXEDF1   LEXEDF2
+          LEXERF    LEXERI    LEXHLP    LEXLK2    LEXMTLU   LEXNDX1
+          LEXNDX2   LEXNDX3   LEXNDX5   LEXRX     LEXRXB    LEXRXC
+          LEXRXD    LEXRXD4   LEXRXE    LEXRXF    LEXRXG    LEXRXXP
+          LEXRXXS   LEXSC     LEXSC2    LEXSC3    LEXXFI    LEXXFI3
+          LEXXFI4   LEXXFI6   LEXXFI7   LEXXFI8   LEXXFQ    LEXXII
+          LEXXII2
+ 
+      Edit First two lines only (SACC compliant):
+  
+          LEXA2     LEXA3     LEXABC2   LEXAFIL   LEXAL2    LEXAM
+          LEXAMD    LEXAMD2   LEXAR2    LEXAS     LEXAS2    LEXAS3
+          LEXAS4    LEXAS5    LEXAS6    LEXAS7    LEXDCCC   LEXDCCS
+          LEXDCXS   LEXDD3    LEXDDSD   LEXDDSS   LEXDDT1   LEXDDT2
+          LEXDDTC   LEXDDTD   LEXDDTF   LEXDDTV   LEXDFLC   LEXDFLS
+          LEXDFLT   LEXDFN    LEXDFSI   LEXDFSO   LEXDFST   LEXDM3
+          LEXDMG    LEXDSV    LEXDVOS   LEXLK     LEXPRNT   LEXRXD4
+          LEXSET4
+  
+      Deleted:
+   
+        Delete at Site by installation:
+ 
+          LEXIENV   LEXILG    LEXILGD   LEXILGO   LEXILGP   LEXILGU
+          LEXILGX   LEXLGM    LEXLGM2   LEXLGM3   LEXPL     LEXPLEM
+          LEXPLIA   LEXPLUP   LEXXST    LEXXST2   LEXXST3   LEXXST4
+          LEXTOLKN
+ 
+        Delete by IRM after install:
+ 
+          Environment Check, Pre-Install and Post-Install routines
+   
+          LEX2080   LEX2080A  LEX2080B  LEX2080C  LEX2080P
+    
+      Options
+      -------
+  
+        New:
+  
+            [LEX MGR EDIT SEARCH THRESHOLD]
+            Edit Search Threshold for a Coding System
+  
+               This allows a manager to edit the search threshold for a coding
+               system.  That is the default number of record to examine before
+               prompting the user to continue or refine the search.  
+  
+        Modified:
+  
+            The following options were modified to change the order that they
+            appear on the [LEX MGR EDIT LEXICON] managers menu:
+               
+               [LEX MGR EDIT LEXICON]      Edit Lexicon (menu)
+               [LEX MGR EDIT DEFN]         Edit Term Definition 
+               [LEX MGR EDIT SHORTCUTS]    Edit Shortcuts by Context
+               
+            The following options are "run routine" type options.  While 
+            the option has not change, the routine it calls has, giving
+            the option the appearance that it has changed.
+  
+               [LEX CSV ICD QUERY]           ICD Diagnosis Code Set Query
+               [LEX CSV ICP QUERY]           ICD Procedure Code Set Query
+               [LEX CSV HISTORY]             Code History
+               [LEX CSV ICD/CPT CHANGE LIST] ICD/CPT Code Set Change List
+  
+  
+  REMEDY TICKETS:
+  ==============
+ 
+    609125 - %DT variable in CODE^LEXTRAN
+    736579 - ICD-9 Filter displays DSM-IV Codes 
+    994832 - LEDI issue w/SNOMED CT codes and IENs in LEXTRAN1
+ 
+  
+  
+  DOCUMENTATION RETRIEVAL:
+  =======================
+  
+    Updated documentation describing the functionality introduced by this 
+    patch is available in the [ANONYMOUS.SOFTWARE] directories at the 
+    following Internet addresses:
+  
+       Preferred or Specific Server   Internet address
+       ----------------------------   -------------------------
+       First available ftp server     download.vista.domain.ext <-- preferred
+       Albany                         ftp.domain.ext
+       Hines                          ftp.domain.ext
+       Salt Lake City                 ftp.domain.ext
+  
+    Below is a list of the documentation files related to this patch and 
+    available via the FTP sites listed above.
+  
+      File Name                               Protocol
+      -------------------                     --------
+      ICD_18_57_LEXTM.PDF                     binary   Lexicon Technical Manual
+      ICD_18_57_LEXUM.PDF                     binary   Lexicon User Manual
+      ICD_18_57_IG.PDF                        binary   Installation Guide
+ 
+  
+    After this patch is released, the updated manuals may also be retrieved 
+    from the Internet at http://www.domain.ext/vdl
+    
+  
+  INSTALLATION INSTRUCTIONS
+  =========================
+        
+    Please refer to the patch description for ICD*18.0*57 for instructions 
+    for retrieving the KIDS distribution, retrieving the data global host
+    file and installing this patch.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;LEXICON UTILITY;**[Patch List]**;Sep 23, 1996;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LEX10CS
+    Before:       n/a   After: B72383021  **80**
+Routine Name: LEX10CS2
+    Before:       n/a   After: B50802408  **80**
+Routine Name: LEX10CX
+    Before:       n/a   After: B90915734  **80**
+Routine Name: LEX10CX2
+    Before:       n/a   After: B27454248  **80**
+Routine Name: LEX10CX3
+    Before:       n/a   After: B97828924  **80**
+Routine Name: LEX10CX4
+    Before:       n/a   After: B37820297  **80**
+Routine Name: LEX10CX5
+    Before:       n/a   After: B45896269  **80**
+Routine Name: LEX10DBC
+    Before:       n/a   After:  B9636063  **80**
+Routine Name: LEX10DBR
+    Before:       n/a   After:  B8889238  **80**
+Routine Name: LEX10DBT
+    Before:       n/a   After:  B9014801  **80**
+Routine Name: LEX10DL
+    Before:       n/a   After: B57481356  **80**
+Routine Name: LEX10DLS
+    Before:       n/a   After: B50742305  **80**
+Routine Name: LEX10DU
+    Before:       n/a   After:B116539995  **80**
+Routine Name: LEX10DX
+    Before:       n/a   After: B28706888  **80**
+Routine Name: LEX10PL
+    Before:       n/a   After:B120447479  **80**
+Routine Name: LEX10PLA
+    Before:       n/a   After: B39916196  **80**
+Routine Name: LEX10PLS
+    Before:       n/a   After: B85504731  **80**
+Routine Name: LEX10PR
+    Before:       n/a   After: B47282338  **80**
+Routine Name: LEX10TAX
+    Before:       n/a   After: B83701759  **80**
+Routine Name: LEX2080
+    Before:       n/a   After:B184435059  **80**
+Routine Name: LEX2080A
+    Before:       n/a   After: B57341845  **80**
+Routine Name: LEX2080B
+    Before:       n/a   After: B59256107  **80**
+Routine Name: LEX2080C
+    Before:       n/a   After: B58859352  **80**
+Routine Name: LEX2080P
+    Before:       n/a   After: B91320913  **80**
+Routine Name: LEXA
+    Before: B44698793   After: B53072237  **3,4,6,19,25,36,38,43,55,73,80**
+Routine Name: LEXA1
+    Before: B38731910   After: B69671285  **3,4,6,11,15,38,55,73,80**
+Routine Name: LEXA2
+    Before:   B535269   After:   B597135  **38,80**
+Routine Name: LEXA3
+    Before: B15059941   After: B15059941  **1,4,80**
+Routine Name: LEXA4
+    Before: B21030061   After: B22480783  **3,6,15,80**
+Routine Name: LEXAB
+    Before:  B9544212   After: B10463880  **25,80**
+Routine Name: LEXABC
+    Before: B46217187   After: B68137439  **4,25,26,29,38,73,51,80**
+Routine Name: LEXABC2
+    Before: B25816397   After: B25634318  **4,80**
+Routine Name: LEXAFIL
+    Before:   B205120   After:   B201610  **80**
+Routine Name: LEXAL
+    Before: B37971689   After: B72078379  **6,55,80**
+Routine Name: LEXAL2
+    Before: B12928118   After: B14217830  **80**
+Routine Name: LEXALK
+    Before: B22806965   After: B35871965  **2,3,6,25,51,80**
+Routine Name: LEXAM
+    Before: B15878015   After: B18114833  **80**
+Routine Name: LEXAMD
+    Before: B24549577   After: B28007514  **6,25,80**
+Routine Name: LEXAMD2
+    Before:  B2872185   After:  B2872185  **6,80**
+Routine Name: LEXAR
+    Before: B17442980   After: B18722296  **3,19,25,55,80**
+Routine Name: LEXAR2
+    Before:  B1018662   After:  B1200564  **80**
+Routine Name: LEXAR3
+    Before: B38300154   After: B79678965  **73,80**
+Routine Name: LEXAR4
+    Before:  B9905737   After: B10464362  **4,5,6,25,55,80**
+Routine Name: LEXAR5
+    Before: B25152319   After: B56192093  **14,25,26,38,55,73,80**
+Routine Name: LEXAR6
+    Before: B33720085   After: B38407694  **3,9,11,80**
+Routine Name: LEXAR7
+    Before: B17047262   After: B18786524  **9,25,73,80**
+Routine Name: LEXAS
+    Before:  B6614534   After:  B6614534  **4,80**
+Routine Name: LEXAS2
+    Before: B10917713   After: B11730023  **80**
+Routine Name: LEXAS3
+    Before:  B4196429   After:  B4196429  **80**
+Routine Name: LEXAS4
+    Before:  B8439698   After:  B8439698  **80**
+Routine Name: LEXAS5
+    Before: B14441583   After: B15308783  **80**
+Routine Name: LEXAS6
+    Before:  B6676230   After:  B6676230  **41,80**
+Routine Name: LEXAS7
+    Before: B18643877   After: B18643877  **80**
+Routine Name: LEXASC
+    Before:  B6679811   After:  B7966749  **25,80**
+Routine Name: LEXASO
+    Before: B16929355   After: B18758787  **25,32,73,80**
+Routine Name: LEXCODE
+    Before: B38198808   After: B71456026  **25,73,80**
+Routine Name: LEXDCC
+    Before:  B4957812   After:  B5534473  **80**
+Routine Name: LEXDCCC
+    Before:  B8352647   After:  B8993729  **80**
+Routine Name: LEXDCCS
+    Before: B12310875   After: B13152111  **80**
+Routine Name: LEXDCX
+    Before:  B4372991   After:  B4881405  **80**
+Routine Name: LEXDCXS
+    Before: B20695673   After: B21843767  **80**
+Routine Name: LEXDD1
+    Before: B22014117   After: B25092584  **80**
+Routine Name: LEXDD2
+    Before:  B3129195   After:  B3584925  **80**
+Routine Name: LEXDD3
+    Before:   B947330   After:  B1122704  **80**
+Routine Name: LEXDD4
+    Before: B14098487   After: B13932965  **80**
+Routine Name: LEXDDS
+    Before:  B2093495   After:  B2531478  **80**
+Routine Name: LEXDDSD
+    Before:  B8702123   After:  B9566423  **80**
+Routine Name: LEXDDSP
+    Before: B14491280   After: B15948891  **80**
+Routine Name: LEXDDSS
+    Before:  B2858762   After:  B3222865  **80**
+Routine Name: LEXDDT1
+    Before:  B5416359   After:  B5978859  **80**
+Routine Name: LEXDDT2
+    Before:  B4317509   After:  B4823705  **80**
+Routine Name: LEXDDTC
+    Before:  B1554828   After:  B1795542  **80**
+Routine Name: LEXDDTD
+    Before:  B1846548   After:  B2129676  **80**
+Routine Name: LEXDDTF
+    Before: B13760824   After: B14904532  **80**
+Routine Name: LEXDDTV
+    Before:  B3335880   After:  B3758286  **80**
+Routine Name: LEXDFL
+    Before:  B4960220   After:  B5442174  **80**
+Routine Name: LEXDFLC
+    Before:   B795201   After:   B911217  **80**
+Routine Name: LEXDFLS
+    Before: B14832359   After: B15732119  **80**
+Routine Name: LEXDFLT
+    Before:  B2054932   After:  B2257084  **80**
+Routine Name: LEXDFN
+    Before: B15697638   After: B17432462  **6,80**
+Routine Name: LEXDFN2
+    Before: B10551696   After: B11535780  **80**
+Routine Name: LEXDFSB
+    Before:  B3384984   After:  B3384984  **80**
+Routine Name: LEXDFSE
+    Before: B11756941   After: B12795665  **80**
+Routine Name: LEXDFSI
+    Before:  B9333756   After:  B9975036  **80**
+Routine Name: LEXDFSO
+    Before:  B6471992   After:  B7103084  **80**
+Routine Name: LEXDFSS
+    Before: B18377628   After: B19790328  **80**
+Routine Name: LEXDFST
+    Before:  B6173810   After:  B6779396  **80**
+Routine Name: LEXDM
+    Before: B14264609   After: B15365543  **81,80**
+Routine Name: LEXDM2
+    Before: B12707166   After: B14152696  **80**
+Routine Name: LEXDM3
+    Before:  B2911195   After:  B3366699  **80**
+Routine Name: LEXDM4
+    Before: B30212363   After: B31719160  **4,80**
+Routine Name: LEXDMG
+    Before: B10098170   After: B10875914  **80**
+Routine Name: LEXDMGO
+    Before:  B5510946   After:  B6104772  **80**
+Routine Name: LEXDMGS
+    Before:       n/a   After:  B7121139  **80**
+Routine Name: LEXDMGT
+    Before: B13311302   After: B14879684  **80**
+Routine Name: LEXDMGU
+    Before: B19106674   After: B17558143  **80**
+Routine Name: LEXDMGV
+    Before: B12206347   After: B10768836  **80**
+Routine Name: LEXDSV
+    Before:  B5732630   After:  B6361439  **80**
+Routine Name: LEXDVO
+    Before:  B4237055   After:  B4750248  **80**
+Routine Name: LEXDVOS
+    Before: B13847911   After: B14773585  **80**
+Routine Name: LEXEDF1
+    Before: B14571584   After: B16274240  **3,25,80**
+Routine Name: LEXEDF2
+    Before: B21442230   After: B23335121  **80**
+Routine Name: LEXERF
+    Before:  B6241374   After:  B6876897  **80**
+Routine Name: LEXERI
+    Before: B25688427   After: B28387082  **80**
+Routine Name: LEXHLP
+    Before: B44256661   After: B49116460  **11,80**
+Routine Name: LEXHLP2
+    Before:       n/a   After: B43406586  **80**
+Routine Name: LEXIENV
+    Before:  B2220341   After:    Delete  
+Routine Name: LEXILG
+    Before:  B3264267   After:    Delete  
+Routine Name: LEXILGD
+    Before:  B6547962   After:    Delete  
+Routine Name: LEXILGO
+    Before:  B7485420   After:    Delete  
+Routine Name: LEXILGP
+    Before:  B6881976   After:    Delete  
+Routine Name: LEXILGU
+    Before:  B6610815   After:    Delete  
+Routine Name: LEXILGX
+    Before:  B7059394   After:    Delete  
+Routine Name: LEXLGM
+    Before: B24937877   After:    Delete  
+Routine Name: LEXLGM2
+    Before: B12066085   After:    Delete  
+Routine Name: LEXLGM3
+    Before:  B7626310   After:    Delete  
+Routine Name: LEXLK
+    Before:  B4258330   After:  B4772038  **80**
+Routine Name: LEXLK2
+    Before: B34120218   After: B35967054  **6,19,80**
+Routine Name: LEXMTLU
+    Before:  B3910098   After:  B4465457  **11,80**
+Routine Name: LEXNDX1
+    Before: B13157193   After: B15300301  **80**
+Routine Name: LEXNDX2
+    Before: B21432451   After: B24352657  **51,80**
+Routine Name: LEXNDX3
+    Before:  B9214968   After: B10557269  **80**
+Routine Name: LEXNDX4
+    Before: B20468165   After: B25651972  **80**
+Routine Name: LEXNDX5
+    Before:  B6805423   After:  B7594232  **80**
+Routine Name: LEXNDX6
+    Before:  B7394894   After: B13564352  **80**
+Routine Name: LEXNDX8
+    Before: B33490445   After: B57045957  **25,73,80**
+Routine Name: LEXPL
+    Before: B18846088   After:    Delete  
+Routine Name: LEXPLEM
+    Before: B21438486   After:    Delete  
+Routine Name: LEXPLIA
+    Before:  B5712377   After:    Delete  
+Routine Name: LEXPLUP
+    Before:  B5493248   After:    Delete  
+Routine Name: LEXPRNT
+    Before: B14926711   After: B16064767  **80**
+Routine Name: LEXQC
+    Before:B101390114   After:  B5018665  **62,80**
+Routine Name: LEXQC2
+    Before: B14109806   After: B13016948  **62,80**
+Routine Name: LEXQC3
+    Before:       n/a   After: B22152952  **80**
+Routine Name: LEXQC4
+    Before:       n/a   After: B47380274  **80**
+Routine Name: LEXQCM
+    Before: B67014752   After: B69421811  **62,68,80**
+Routine Name: LEXQCM2
+    Before: B58451026   After: B59164466  **62,80**
+Routine Name: LEXQCP
+    Before: B77088041   After: B79602950  **62,80**
+Routine Name: LEXQCP2
+    Before: B56468860   After: B57182153  **62,80**
+Routine Name: LEXQCPA
+    Before:  B9847253   After:  B9841880  **62,80**
+Routine Name: LEXQH
+    Before: B19745844   After: B20466600  **62,80**
+Routine Name: LEXQHL1
+    Before: B94982465   After: B95304509  **62,80**
+Routine Name: LEXQHL2
+    Before: B92433013   After: B90489365  **62,80**
+Routine Name: LEXQHL3
+    Before: B40808701   After: B40434251  **62,80**
+Routine Name: LEXQHL4
+    Before:B101257381   After:B100552373  **62,80**
+Routine Name: LEXQHL5
+    Before: B13324910   After: B21983988  **62,80**
+Routine Name: LEXQHLM
+    Before:  B8941107   After:  B7914203  **62,80**
+Routine Name: LEXQID
+    Before: B46340703   After: B59190420  **62,73,80**
+Routine Name: LEXQID2
+    Before: B36269222   After: B35722447  **62,73,80**
+Routine Name: LEXQID3
+    Before: B61299678   After: B74079700  **62,80**
+Routine Name: LEXQID4
+    Before: B62471424   After: B67283614  **62,80**
+Routine Name: LEXQIDA
+    Before: B55078060   After: B51204614  **62,80**
+Routine Name: LEXQIP
+    Before: B67055751   After: B87751371  **62,73,80**
+Routine Name: LEXQIP2
+    Before: B18474806   After: B10742392  **62,80**
+Routine Name: LEXQIP3
+    Before: B28550330   After: B28040002  **62,73,80**
+Routine Name: LEXQIPA
+    Before:  B3508695   After:  B3640982  **62,80**
+Routine Name: LEXQL
+    Before: B49347251   After: B69016427  **62,80**
+Routine Name: LEXQL2
+    Before: B36280170   After: B49164602  **62,80**
+Routine Name: LEXQL3
+    Before: B34226328   After: B12608656  **62,80**
+Routine Name: LEXQL4
+    Before:       n/a   After: B39546926  **80**
+Routine Name: LEXQM
+    Before: B27832557   After: B27832926  **62,80**
+Routine Name: LEXRX
+    Before: B25440682   After: B29831306  **81,80**
+Routine Name: LEXRXB
+    Before: B52650110   After: B53080223  **81,80**
+Routine Name: LEXRXC
+    Before:B104836918   After:B105521717  **81,80**
+Routine Name: LEXRXD
+    Before: B72163787   After: B72709975  **81,80**
+Routine Name: LEXRXD4
+    Before: B78250103   After: B78250103  **81,80**
+Routine Name: LEXRXE
+    Before: B59805790   After: B60291807  **81,80**
+Routine Name: LEXRXF
+    Before: B89637737   After: B90798435  **81,80**
+Routine Name: LEXRXG
+    Before: B75572745   After: B76130411  **81,80**
+Routine Name: LEXRXXP
+    Before: B22174903   After: B22155217  **81,80**
+Routine Name: LEXRXXS
+    Before:B124182348   After:B125584554  **81,80**
+Routine Name: LEXRXXT3
+    Before:  B2392111   After:  B2474933  **81,80**
+Routine Name: LEXSC
+    Before:  B3047995   After:  B3537512  **80**
+Routine Name: LEXSC2
+    Before:  B8240546   After:  B9055298  **11,80**
+Routine Name: LEXSC3
+    Before:  B9634238   After: B10957166  **80**
+Routine Name: LEXSET
+    Before: B11622540   After: B17938997  **25,80**
+Routine Name: LEXSET2
+    Before: B18221774   After: B18221774  **6,80**
+Routine Name: LEXSET3
+    Before: B12976280   After: B12976280  **6,80**
+Routine Name: LEXSET4
+    Before:  B3072931   After:  B3440677  **80**
+Routine Name: LEXSET5
+    Before: B22917951   After: B25961242  **6,11,80**
+Routine Name: LEXSRC2
+    Before: B47664785   After: B52534156  **25,28,73,80**
+Routine Name: LEXTOKN
+    Before:       n/a   After: B54550782  **80**
+Routine Name: LEXTOKN2
+    Before:       n/a   After: B13220121  **80**
+Routine Name: LEXTOLKN
+    Before: B38854621   After:    Delete  
+Routine Name: LEXTRAN
+    Before: B74420928   After: B77492995  **41,59,73,80**
+Routine Name: LEXTRAN1
+    Before: B91365999   After:B109851516  **59,73,51,80**
+Routine Name: LEXU
+    Before: B21563695   After:B137452070  **2,6,9,15,25,36,73,51,80**
+Routine Name: LEXU2
+    Before:       n/a   After:B131844732  **80**
+Routine Name: LEXU3
+    Before:       n/a   After: B65261771  **80**
+Routine Name: LEXU4
+    Before:       n/a   After: B63972250  **80**
+Routine Name: LEXUH
+    Before:       n/a   After:B105430964  **80**
+Routine Name: LEXXFI
+    Before: B53802032   After: B61706578  **32,46,49,41,59,73,80**
+Routine Name: LEXXFI3
+    Before: B36032723   After: B36033514  **32,80**
+Routine Name: LEXXFI4
+    Before: B23614617   After: B23615408  **32,80**
+Routine Name: LEXXFI6
+    Before:  B7377365   After:  B7378156  **32,80**
+Routine Name: LEXXFI7
+    Before: B41558940   After: B40222921  **32,49,80**
+Routine Name: LEXXFI8
+    Before: B38145534   After: B39455696  **32,80**
+Routine Name: LEXXFQ
+    Before: B15590093   After: B17747138  **4,25,73,80**
+Routine Name: LEXXGI
+    Before: B41415628   After: B55219661  **4,25,26,27,28,29,46,49,50,
+                                           41,59,73,80**
+Routine Name: LEXXGI2
+    Before: B66127456   After: B66453808  **25,26,28,29,46,49,50,73,80**
+Routine Name: LEXXGI3
+    Before: B21977980   After: B20329956  **59,80**
+Routine Name: LEXXGI4
+    Before: B22057583   After:B168770794  **51,80**
+Routine Name: LEXXGP1
+    Before:       n/a   After:B211142742  **80**
+Routine Name: LEXXGP2
+    Before:       n/a   After:B136699834  **80**
+Routine Name: LEXXII
+    Before: B40032247   After: B41394926  **32,46,49,50,41,59,73,80**
+Routine Name: LEXXII2
+    Before: B32005202   After: B32320657  **59,80**
+Routine Name: LEXXM
+    Before:       n/a   After: B70674913  **80**
+Routine Name: LEXXM1
+    Before:       n/a   After: B23924703  **80**
+Routine Name: LEXXM2
+    Before:       n/a   After: B28282174  **80**
+Routine Name: LEXXM3
+    Before:       n/a   After: B82567477  **80**
+Routine Name: LEXXM4
+    Before:       n/a   After: B52053731  **80**
+Routine Name: LEXXM5
+    Before:       n/a   After: B16058487  **80**
+Routine Name: LEXXM6
+    Before:       n/a   After: B53334113  **80**
+Routine Name: LEXXMM
+    Before:       n/a   After: B37694855  **80**
+Routine Name: LEXXST
+    Before: B68105086   After:    Delete  
+Routine Name: LEXXST2
+    Before: B19441321   After:    Delete  
+Routine Name: LEXXST3
+    Before: B23757267   After:    Delete  
+Routine Name: LEXXST4
+    Before: B16472154   After:    Delete  
+ 
+Routine list of preceding patches: 51, 68, 81
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 26, 2011
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

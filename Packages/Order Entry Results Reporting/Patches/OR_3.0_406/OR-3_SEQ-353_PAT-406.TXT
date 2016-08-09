@@ -1,0 +1,311 @@
+$TXT Created by                  CPRS30.DOMAIN.EXT  (KIDS) on Wednesday, 01/28/15 at 06:55
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: OR*3*406
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #353                      Status: Released
+                  Compliance Date: SEP 16, 2015
+=============================================================================
+
+
+Subject: ORDER ENTRY UPDATE FOR ICD-10 PTF PROJECT
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+ **************************************************************************
+ *                                                                        *
+ *  IMPORTANT:                                                            *
+ *                                                                        *
+ *   This patch is being released in support of the ICD-10 Patient        *
+ *   Treatment File Modifications project.  Patch DG*5.3*884              *
+ *   (Registration) is being released along with GMTS*2.7*111 (Health     *
+ *   Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab Service), *
+ *   ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406 (Order         *
+ *   Entry/Results Reporting) in a multi-package build (host file).       *
+ *                                                                        *
+ *   Because this is a multi-package build, it can only be distributed    *
+ *   as a host file; no builds are included in the patch messages. The    *
+ *   name of the host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be    *
+ *   obtained from one of the anonymous file transfer protocol (ftp)      *
+ *   directories listed in the 'Software & Documentation Retrieval        *
+ *   Instructions' section of this patch.                                 *
+ *                                                                        *
+ *   Detailed information regarding pre-installation items,               *
+ *   post-installation items, and installation instructions can be found  *
+ *   in the Installation Guide: ICD_10_PTF_Modifications_IG.PDF. This     *
+ *   document may be obtained from one of the anonymous file transfer     *
+ *   protocol (ftp) directories listed in the 'Software & Documentation   *
+ *   Retrieval Instructions' section of this patch.                       *
+ *                                                                        *
+ *   It is imperative that these patches be installed no later than the   *
+ *   compliance date.  Your understanding and support is appreciated.     *
+ *                                                                        *
+ **************************************************************************
+  
+ ICD-10-CM will replace ICD-9-CM as the diagnostic coding system.
+ ICD-10-PCS will replace the ICD-9-CM procedural coding system.  Veterans 
+ Health Administration (VHA) software remediation for ICD-10 enabled the 
+ transition to support the use of the ICD-10 code sets; this PTF 
+ Modifications project will increase the maximum allowable codes in the 
+ entry, display, lookup, view, print, storage, and transmission of the 
+ ICD-10 code sets in the VistA legacy and HealtheVet systems.
+  
+ The ICD-10 PTF Modifications team proposes new functionality within the 
+ VistA Admission Discharge Transfer (ADT) module to allow up to 25 ICD-10 
+ diagnosis codes in 701 and 501 transactions including 25 corresponding 
+ Present on Admission (POA) indicators and to allow up to 25 ICD-10 
+ procedure codes in 401 and 601 transactions. 
+  
+ Currently, 701 transactions allow one ICD-10 principal diagnosis with a 
+ POA indicator and up to 13 secondary diagnoses with POA indicators for a 
+ total of 14 ICD-10 diagnosis codes and 14 POA indicators. The 501 
+ transactions allow 10 ICD-10 diagnoses codes with POA indicators. The 401 
+ Surgeries and 601 Procedures transactions currently allow up to 5 ICD-10 
+ procedure codes each.
+  
+ This OE/RR patch works in conjunction with the GMTS*2.7*111 patch that is 
+ also part of the PTF ICD-10 project.  That GMTS patch modifies several
+ Health Summary Components (file #142.1) to now return up to 25 ICD codes
+ when pulling data for a given PTF file entry.  See the GMTS*2.7*111 patch
+ description for more details about the Health Summary modifications.
+  
+ The following reports in OE/RR REPORT (file #101.24) will now also display
+ up to 25 ICD codes per occurrence.
+  
+ ORRPW ADT ADM DC - Adm./Discharge
+ ORRPW ADT DC DIAG - Discharge Diagnosis
+ ORRPW ADT EXP - Expanded ADT
+ ORRPW ADT ICD PROC - ICD Procedures
+ ORRPW ADT ICD SURG - ICD Surgeries
+ ORRPW DOD ADT EXP - DOD Expanded ADT
+  
+ This OE/RR patch will establish a default value at the PACKAGE level for 
+ the ORWRP TIME/OCC LIMITS INDV parameter.  This parameter sets the date
+ and time limits for an individual report.  The parameter value for the
+ reports listed above shall be: T-7;T;25.  This sets a date range of the
+ previous seven days up to the current date and will return a maximum
+ number of 25 occurrences.
+  
+ Setting the maximum occurrence value to 25 will ensure that all available
+ ICD codes shall be returned.  Due to how the parameter ORWRP TIME/OCC 
+ LIMITS INDV is defined, a date range must also be set when setting the
+ maximum occurrence value.  T-7 and T were chosen as the date range
+ defaults as these are the default values used by the application when no
+ user/system/package values have already been defined.
+  
+ NOTE: The ORWRP TIME/OCC LIMITS INDV parameter may also be set for a 
+ report at the USER and SYSTEM levels.  The precedence order for these
+ values is defined as: USER, SYSTEM, PACKAGE.  Meaning that a report will
+ first attempt to use any USER values.  If none are defined, then SYSTEM
+ values will be tried, followed by PACKAGE values.  End users and support
+ staff should be trained to use an Occurrence Limit of 25 for these reports
+ when setting any USER or SYSTEM values for this parameter.  Any occurrence
+ limit less than 25 may not show the report reader all of the available ICD
+ data.  Again, this only applies to the OE/RR reports listed above.
+  
+ If your sites has created local (IEN < 1000) report entries in OE/RR 
+ REPORT that use any of the following HEALTH SUMMARY COMPONENTS, those
+ reports should also have the ORWRP TIME/OCC LIMITS INDV parameter set with
+ an Occurrence Limit of 25. If using FileMan to inquire to a given report
+ file entry, the REPORT COMPONENT field will indicate which Health Summary
+ Component(s) a report is using.
+  
+ Example:
+ Select OE/RR REPORT NAME: ORRPW ADT ADM DC       Adm./Discharge     
+  
+  
+ NUMBER: 1036                            NAME: ORRPW ADT ADM DC
+   ID: OR_ADC                            REMOTE: YES
+   QUALIFIER: HSComponent                ROUTINE: ORDV01
+   ENTRY POINT: HSQUERY                  CATEGORY: LISTVIEW
+   TAB: REPORTS TAB                      TYPE: LISTVIEW
+   RPC: ORWRP REPORT TEXT
+ ->REPORT COMPONENT: MAS ADMISSIONS/DISCHARGES <<------------------------
+   HEADING: Adm./Discharge               DESCRIPTIVE TEXT: Adm./Discharge
+   PRINT TAG: HSTYPEB                    PRINT ROUTINE: ORWRPP1
+  
+ HEALTH SUMMARY COMPONENTS
+ -----------------------------------------------------------------------
+ MAS ADMISSIONS/DISCHARGES - Updated to display up to 25 diagnosis codes 
+                             with each occurrence
+  
+ MAS ADT HISTORY EXPANDED -  Updated to display up to 25 diagnosis codes, 
+                             up to 25 procedure codes, and up to 25
+                             operation codes
+  
+ MAS DISCHARGE DIAGNOSIS -   Updated to display up to 25 diagnosis codes
+                             with each occurrence
+  
+ MAS PROCEDURES ICD CODES -  Updated to display up to 25 procedure codes 
+                             with each occurrence
+  
+ MAS SURGERIES ICD CODES -   Updated to display up to 25 operation codes 
+                             with each occurrence
+  
+  
+ Individual users may set the USER level parameter value for any local 
+ reports via CPRS GUI.  Using the Tools -> Options -> Reports Tab -> Set
+ Individual Reports.  Find the report name(s), set the Max to 25, click OK.
+  
+ Local/Region IT Staff may set the SYSTEM (or USER) level parameter value 
+ for any local report(s) via the General Parameter Tools [XPAR MENU TOOLS]
+ option.
+  
+ 1. Choose Edit Parameter Values
+ 2. Enter the parameter definition name, ORWRP TIME/OCC LIMITS INDV
+ 3. Select USER or SYSTEM as appropriate
+ 4. Enter the local report name
+ 5. Enter or (edit existing) time and occurrence limits.  The occurrence 
+    limit should be set to 25.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+ --------------------------
+ N/A
+  
+ Forms Associated:
+ -----------------
+ N/A
+  
+ Mail Groups Associated:
+ -----------------------
+ N/A
+  
+ Options Associated:
+ -------------------
+ N/A
+  
+ Protocols Associated:
+ ---------------------
+ N/A
+  
+ Security Keys Associated:
+ -------------------------
+ N/A
+  
+ Templates Associated:
+ --------------------
+ N/A
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ============================
+ NSR #20070902 - ICD-10-CM Conversion
+  
+  
+ Patient Safety Issues (PSIs):
+ =============================
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ============================
+ N/A
+  
+  
+ Test Sites:
+ ===========
+ The following sites participated in testing this software.
+ * Detroit, MI
+ * Madison, WI
+ * Richmond, VA 
+ * West Haven, CT
+  
+  
+ Software & Documentation Retrieval Instructions:
+ =====================================
+ The software for this set of patches is not being distributed through the 
+ National Patch Module. 
+  
+ Patch DG*5.3*884 (Registration) is being released along with GMTS*2.7*111
+ (Health Summary), IB*2.0*522 (Integrated Billing), LR*5.2*442 (Lab
+ Service), ROR*1.5*25 (Clinical Case Registries), and OR*3.0*406
+ (Order Entry/Results Reporting) in a multi-package build (host
+ file).
+  
+ Because this is a multi-package build, it can only be distributed as a
+ host file; no builds are included in the patch messages. The name of the
+ host file is: ICD_10_PTF_MODIFICATIONS.KID; it can be obtained from one of
+ the anonymous file transfer protocol (ftp) directories listed below. 
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is also available and can be obtained from one of the anonymous 
+ file transfer protocol (ftp) directories listed below.
+  
+ The preferred method is to FTP the files from: 
+  
+  ftp://download.vista.domain.ext/
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Note: 
+  - Please use the 'Binary' transfer method for retrieval of .pdf files
+  - Please use the 'ASCII' transfer method for retrieval of .KID files
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ The software distribution includes these file(s):
+ -------------------------------------------------------------------------
+ ICD_10_PTF_MODIFICATIONS.KID
+  
+  
+ The documentation includes these titles and file names:
+ -------------------------------------------------------------------------
+     Title: CPRS: Order Entry/Results Reporting OR*3.0*406 Release Notes
+ File Name: OR_3_0_406_RN.pdf
+  
+     Title: ICD-10 PTF Installation Guide (all patches)
+ File Name: ICD_10_PTF_MODIFICATIONS_IG.PDF 
+  
+  
+ Patch Installation:
+ ==================================================
+ Detailed information regarding pre-installation items, post-installation
+ items, and installation instructions can be found in the Installation
+ Guide: ICD_10_PTF_Modifications_IG.PDF. This document may be obtained from
+ one of the anonymous file transfer protocol (ftp) directories listed in
+ the 'Software & Documentation Retrieval Instructions' of this patch 
+ description.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORY406
+    Before:       n/a   After:  B6519234  **406**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 27, 2015
+Completed By:                               Date Completed: AUG 28, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

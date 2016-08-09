@@ -1,0 +1,286 @@
+$TXT Created by                at MNTVBB.FO-WASH.DOMAIN.EXT  (KIDS) on Tuesday, 06/10/14 at 14:02
+=============================================================================
+Run Date: MAY 14, 2015                     Designation: PRC*5.1*182
+Package : PRC - IFCAP                         Priority: Mandatory
+Version : 5.1       SEQ #165                    Status: Released
+                  Compliance Date: JUN 14, 2015
+=============================================================================
+
+
+Subject: LOAD CURRENT NATIONAL PSC/FSC TABLE IN FILE 441.2
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will address the following issue:
+  
+ 1. Update Federal Supply Classification/Product Service Code (FSC/PSC)
+    codes from the current National Master file.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000849189 Update Federal Supply Classification/Product 
+    Service Code (FSC/PSC) codes from the current National Master file.
+      
+      Duplicate: INC000000791125 Update FSC File with code D322
+      Duplicate: INC000000974157 Code D318 is missing from the FSC list
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ St Cloud VAMC
+ N. Florida/S. Georgia HCS
+ W.G. (Bill) Hefner VAMC - Salisbury
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000849189 Update Federal Supply Classification/Product 
+    Service Code (FSC/PSC) codes from the current National Master file.
+  
+    Problem:     
+    --------
+    Sites requested codes D318, D319, D320 and D322 be added to the 
+    FEDERAL SUPPLY CLASSIFICATION file (#441.2). While Researching
+    the codes, a major discrepancy was discovered between the National file
+    and the codes/data in the FEDERAL SUPPLY CLASSIFICATION file (#441.2).
+    It was decided to add/edit/delete all codes from the National file to
+    the FEDERAL SUPPLY CLASSIFICATION file (#441.2).
+  
+    Also, lower case group code names in the FSC GROUP TITLES file (#441.3)
+    will be modified to upper case.
+  
+  
+    Resolution:
+    -----------                    
+    Logistics group will create an Excel file of all the national PSC codes
+    (with required fields) to upload (via FTP) to VistA. The uploaded data
+    is compared to the existing codes/data in the FEDERAL SUPPLY
+    CLASSIFICATION file (#441.2) and the necessary codes edited or added
+    based on the current national data file.  This data load/update/delete
+    process will use routine ZPRC182A (not sent to sites) and perform the
+    update of the FEDERAL SUPPLY CLASSIFICATION file (#441.2)
+  
+    The patch will delete, via a pre-install routine, the current FEDERAL 
+    SUPPLY CLASSIFICATION files (#441.2) and the FSC GROUP TITLES files
+    (#441.3) as a new file of data is passed via the patch.
+  
+    A modification was made to the input transform for the FEDERAL SUPPLY
+    CLASSIFICATION file (#441.2), NUMBER field (#.01) to allow new code
+    format '1A1N2A', example 'M1MH':
+  
+    K:$L(X)>4!($L(X)<4)!'((X?4N)&(+X=X)!(X?1A3N)!(X?2A2N)!(X?1A1N2A)) X
+  
+    Also a new code 'D' for delete was added to the COMMODITY CODE 
+    SET field (#4).
+  
+    Post install routine will insure all deleted FSC/PSC codes will be
+    "removed" from the 'B' and "D" cross references so they are no 
+    longer selectable by users, but old orders using the deleted codes 
+    continue to be able to sync to the old code.
+  
+ Routines: PRC182P (Pre-install), PRC182P1 (post-install), ZPRC182A
+                   (not sent to sites)
+  
+  
+ DATA DICTIONARY:
+ ================
+  
+ DD CHANGES BEFORE:
+ ------------------ 
+ STANDARD DATA DICTIONARY #441.2 -- FEDERAL SUPPLY CLASSIFICATION FILE   
+                                   JUN 6,2014@06:52:57       PAGE 1  
+ STORED IN ^PRC(441.2,  (1050 ENTRIES)   SITE: Albany IRM Field Office   
+                            UCI: MNTVBB,MNTVBB    (VERSION 5.1)
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+ 441.2,.01     NUMBER                 0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM: K:$L(X)>4!($L(X)<4)!'((X?4N)&(+X=X)
+                                !(X?1A3N)!(X?2A2N)) X S:$D(X) DINUM=
+                                $S(X?4N:X,X?1A3N:$A(X)_$E(X,2,4),
+                                1:$A(X)_$A(X,2)_$E(X,3,4))
+  
+               LAST EDITED:      JUL 22, 2005 
+               HELP-PROMPT:      ENTER THE APPLICABLE FSC/PSC CODE. 
+               DESCRIPTION:      This is the 4-character long Federal 
+                                 Supply Classification (FSC) code or
+                                 Product Service Code (PSC).
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY 
+                                 PROGRAMMER
+  
+               CROSS-REFERENCE:  441.2^B 
+                                 1)= S ^PRC(441.2,"B",$E(X,1,30),DA)=""
+                                 2)= K ^PRC(441.2,"B",$E(X,1,30),DA)
+  
+  
+  
+ 441.2,4       COMMODITY CODE         0;4 SET
+  
+                                 '1' FOR Drugs; 
+                                 '2' FOR Other Medical; 
+                                 '3' FOR General; 
+                                 '6' FOR Fuel; 
+                                 '8' FOR Subsistence; 
+                                 '9' FOR Unposted Building Supplies; 
+               LAST EDITED:      MAR 22, 1989 
+               HELP-PROMPT:      Enter Commodity Code associated with this 
+                                 FSC. 
+               DESCRIPTION:
+                                 This is the FSC commodity code.  
+  
+  
+ DD CHANGES AFTER:
+ -----------------
+  
+ STANDARD DATA DICTIONARY #441.2 -- FEDERAL SUPPLY CLASSIFICATION FILE   
+                                     JUN 6,2014@06:56:05     PAGE 1
+ STORED IN ^PRC(441.2,  (3030 ENTRIES)   SITE: Washington OIFO   UCI: 
+ MNT,MNT (VERSION 5.1)
+  
+  
+ DATA          NAME                  GLOBAL        DATA
+ ELEMENT       TITLE                 LOCATION      TYPE
+ --------------------------------------------------------------------------
+  
+  
+ 441.2,.01     NUMBER                 0;1 FREE TEXT (Required)
+  
+               INPUT TRANSFORM:  K:$L(X)>4!($L(X)<4)!'((X?4N)&(+X=X)
+                                 !(X?1A3N)!(X?2A2N)!(X?1A1N2A)) S:$D(X)
+                                 DINUM=$S(X?4N:X,X?1A3N:$A(X)_$E(X,2,4),
+                                 X?2A2N:$A(X)_$A(X,2)_$E(X,3,4),1:$A(X)_
+                                 $E(X,2)_$A(X,3)_$A(X,4))
+               LAST EDITED:      MAY 16, 2014 
+               HELP-PROMPT:      ENTER THE APPLICABLE FSC/PSC CODE. 
+               DESCRIPTION:      This is the 4-character long Federal 
+                                 Supply
+                                 Classification (FSC) code or Product 
+                                 Service
+                                 Code (PSC).  
+  
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY 
+                                 PROGRAMMER
+  
+               CROSS-REFERENCE:  441.2^B 
+                                 1)= S ^PRC(441.2,"B",$E(X,1,30),DA)=""
+                                 2)= K ^PRC(441.2,"B",$E(X,1,30),DA)
+  
+  
+  
+ 441.2,4       COMMODITY CODE         0;4 SET
+  
+                                 '1' FOR Drugs; 
+                                 '2' FOR Other Medical; 
+                                 '3' FOR General; 
+                                 '6' FOR Fuel; 
+                                 '8' FOR Subsistence; 
+                                 '9' FOR Unposted Building Supplies; 
+                                 'D' FOR Deleted Code; 
+               LAST EDITED:      MAY 13, 2014 
+               HELP-PROMPT:      Enter Commodity Code associated with this 
+                                 FSC.
+               DESCRIPTION:
+                                 This is the FSC commodity code.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ You may install this patch at any time without interruption to users. 
+ It should take less than 5 minutes to install this patch.
+  
+   ***********************************************************************
+   PLEASE NOTE: Pre & Post install routines PRC182P & PRC182P1 will be
+   deleted once the install is complete.  If you wish to check the
+   checksum of these routines please use the 'Verify Checksums in
+   Transport Global' under the Installation Menu.
+   ***********************************************************************
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PRC*5.1*182)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PRC*5.1*182.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond 'NO'  
+  
+    6. When prompted 'Want to DISABLE Schedule Options, Menu Options and
+       Protocols? YES//', respond 'YES' 
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+            Order":" enter the following option:
+  
+       New Detailed Purchase Card Order   [PRCH ENTER DETAILED ORDER]
+       New Simplified Purchase Card Order [PRCH ENTER SIMPLIFIED ORDER]
+       New Purchase Order                 [PRCHPC PO ADD]
+       Enter Delivery Order               [PRCH ENTER DELIVERY ORDER]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+V ;;5.1;IFCAP;**[Patch List]**;Oct 20, 2000;Build 40
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRC182P
+    Before:       n/a   After:  B2342579  **182**
+Routine Name: PRC182P1
+    Before:       n/a   After:  B2176536  **182**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 17, 2013
+Completed By:                               Date Completed: MAY 13, 2015
+Released By :                               Date Released : MAY 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

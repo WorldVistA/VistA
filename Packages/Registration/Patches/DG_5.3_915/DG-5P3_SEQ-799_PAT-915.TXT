@@ -1,0 +1,339 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 10/05/15 at 15:37
+=============================================================================
+Run Date: DEC 15, 2015                     Designation: DG*5.3*915
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #799                    Status: Released
+                  Compliance Date: JAN 15, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*653  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*657  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*760  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*808  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*857  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*872  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*876  <<= must be installed BEFORE `DG*5.3*915'
+                    (v)DG*5.3*886  <<= must be installed BEFORE `DG*5.3*915'
+
+Subject: ENTERPRISE REGISTRATION - MVI ITERATION 14
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *************************************************************************
+ * This patch may be installed with users on the system, however because *
+ * the patient lookup routines are being exported with this patch, we    *
+ * strongly advise that it be installed after business hours.            *
+ *************************************************************************
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       three VistA namespaces: DG, RG and MPIF.
+       The enhancements related to this patch are only being distributed in
+       the DG and MPIF VistA namespaces. MPIF*1.0*61 should be installed
+       before DG*5.3*915 for non-legacy sites (do NOT install MPIF*1.0*61
+       on legacy sites), as the new registration functionality being 
+       exported in this patch will not work without MPIF*1.0*61. 
+       Therefore it is recommended that these patches be installed in the
+       following order on non-legacy sites: 
+              MPIF*1.0*61 and then DG*5.3*915.
+  
+ NOTE: Legacy sites can install just the DG*5.3*915 patch and there is
+       code in place that will continue to execute as before without
+       MPIF*1.0*61 installed. MPIF*1.0*61 should NOT be installed on 
+       legacy sites.
+  
+  
+ This enhancement patch updates the option Register a Patient [DG REGISTER 
+ PATIENT] to utilize the new Enterprise Registration processes to improve 
+ the Veterans' experience at VA facilities by allowing new local patients 
+ to be looked up directly in the Master Veteran Index (MVI).  The data 
+ from the new patient's MVI record is automatically imported into the 
+ local site and an attempt is made to obtain the Enrollment System (ES)
+ data when possible.  In addition, this Enterprise Registration also 
+ allows for lookup and import of Department of Defense (DoD) data if the
+ patient is a new patient to the VA system.
+  
+ New Process:
+ Within the Register a Patient [DG REGISTER PATIENT] option, the initial
+ patient lookup search remains unchanged.  If only one patient is found
+ locally then the registration staff is asked to confirm that this is the
+ patient they are attempting to register, if not then they are asked if
+ they want to do an Enterprise Search.  If multiple local patients are
+ found and none are selected, then they are asked if they want to do an
+ Enterprise Search.  If no local patient is found, they are asked if they
+ want to do an Enterprise Search.  In any case if the registration staff
+ chooses not to do an Enterprise Search when asked they are returned to
+ the Select PATIENT prompt.  All NEW patients created via the Register a
+ Patient [DG REGISTER PATIENT] option will now require an Enterprise 
+ Search to be able to add the patient to the local VistA system.
+  
+ Upon choosing to do an Enterprise Search the registration staff is 
+ presented with a series of prompts to obtain the search criteria.  If 
+ insufficient criteria is entered, a message is displayed and the search 
+ criteria is prompted again.  Upon entering sufficient data a query is 
+ sent to the MVI to attempt to find matches.  If no match is found on the 
+ MVI, the query is automatically sent to DoD to find possible matches as 
+ well.
+  
+ If matches are found then they are presented to the registration staff to 
+ review the records and select from the matches found.  The list of 
+ possible matches are grouped as Auto Link or Potential Match.  Upon 
+ selection of a match, the data from the MVI (or DoD) is automatically 
+ loaded into the new patient's record.  If the patient is already enrolled 
+ in the VA system, a query is sent to obtain the patient's enrollment 
+ record prior to entering the registration screens.  After which time the 
+ registration process continues as normal.
+  
+ If too many matches are found, the registration staff are informed and 
+ asked to provide updated search criteria to find a more limited search 
+ result list from which to select.
+  
+ If no matches are found then the registration staff is asked if they want 
+ to add the new patient.
+  
+ If any matches are returned that are above the Auto Link threshold, the 
+ registration staff must select one of the patients returned from the 
+ query (Auto Link threshold or Potential Match threshold) or hold the new 
+ security key 'DG MVI ADD PT' to override the selection.
+  
+  
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+   
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+   
+ Forms Associated:
+   
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+   
+   
+ Mail Groups Associated:
+   
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+   
+   
+ Options Associated:
+   
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+   
+   
+ Protocols Associated:
+   
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+   
+   
+ Security Keys Associated:
+   
+ Security Key Name
+ -----------------
+ DG MVI ADD PT
+   
+   
+ Templates Associated:
+   
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+   
+   
+ Additional Information:
+   
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+   
+   
+ Test Sites:
+ ----------
+ Battle Creek VAMC
+ Upstate NY HCS
+ West Palm Beach VAMC
+   
+   
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this
+ patch is available.
+   
+ The preferred method is to FTP the files from the ANONYMOUS.SOFTWARE
+ directory at: ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+   
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+   
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/application.asp?appid=55
+   
+ Title                                       File Name          FTP Mode
+ -----------------------------------------------------------------------
+ PIMS ADT Registration User Manual     DG_5_3_P915_REG_UM.PDF   (binary)
+  
+    
+   
+ Patch Installation:
+   
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes. 
+  
+ Note: Ensure that the post-install steps in MPIF*1.0*61 were completed to
+ update the MPI_PSIM_EXECUTE web server entry in your production account
+ to ensure it is directed at the MVI load balancer. This will ensure Health
+ Level Sever (HL7) messages are reliably routed when specific nodes are down.
+ See patch MPIF*1.0*61 for details.  
+   
+  
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install.  This patch may be 
+ installed with users on the system, however because the patient lookup 
+ routines are impacted, we strongly advise that it be installed after 
+ business hours.
+   
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+  
+   
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+   
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch 
+     number (i.e. DG*5.3*915):
+   
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+       
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+   
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt CPRS users.  If your facility has the XQBUILDTREEQUE
+     nightly batch job tasked to run, answer NO to this question.
+     The nightly job will rebuild the menus as scheduled.
+   
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+   
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.  The following OPTIONS should be
+     disabled during the installation.
+       
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+   
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGADDUTL
+    Before: B57456144   After: B57517976  **658,695,730,688,808,851,872,915**
+Routine Name: DGREG
+    Before: B48715273   After: B51312405  **1,32,108,147,149,182,245,250,
+                                           513,425,533,574,563,624,658,
+                                           864,886,915**
+Routine Name: DGREGAED
+    Before: B40377250   After: B42299807  **522,560,658,730,688,808,915**
+Routine Name: DGREGAZL
+    Before: B41604558   After: B42841680  **522,560,581,730,760,915**
+Routine Name: DPTLK
+    Before:B116067548   After:B121219825  **32,72,93,73,136,157,197,232,
+                                           265,277,223,327,244,513,528,
+                                           541,576,600,485,633,629,647,
+                                           769,857,876,915**
+Routine Name: DPTLK1
+    Before: B42806553   After: B48432581  **32,50,197,249,317,391,244,
+                                           532,574,620,641,680,538,657,
+                                           915**
+Routine Name: DPTLK2
+    Before: B32261378   After: B34529775  **32,197,214,244,532,578,615,
+                                           620,647,680,702,653,915**
+Routine Name: DPTLK4
+    Before:  B3734144   After:  B3783232  **73,857,915**
+Routine Name: DPTLK7
+    Before:       n/a   After:B174142560  **915**
+ 
+Routine list of preceding patches: 653, 657, 760, 872, 876, 886
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 17, 2015
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : DEC 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

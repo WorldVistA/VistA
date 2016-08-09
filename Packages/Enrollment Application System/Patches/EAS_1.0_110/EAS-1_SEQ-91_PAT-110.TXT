@@ -1,0 +1,89 @@
+
+=============================================================================
+Run Date: MAY 22, 2014                     Designation: EAS*1*110
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #91                      Status: Released
+                  Compliance Date: JUN 22, 2014
+=============================================================================
+
+Associated patches: (v)EAS*1*100   <<= must be installed BEFORE `EAS*1*110'
+
+Subject: DATA ENTRY FIX FOR LTC COPAYMENT TEST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will be exported with patch DG*5.3*812 as a combined build. Please 
+ refer to patch DG*5.3*812 for installation instructions.
+  
+ This patch addresses the following:
+  
+ - Updates the Executable Help Text for ALL OTHER INCOME (#.17) field in the
+ INDIVIDUAL ANNUAL INCOME (#408.21) file.
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC0000000315498    - LTC Copay test no longer calculated yearly total
+    INC0000000341958(d) - same as remedy 315498
+    INC0000000376853(d) - entering monthly amounts * 12 fails to annualize
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Alexandria VA Medical Center - Pineville
+ Boise VA Medical Center
+ Tuscaloosa VA Medical Center
+ VA Western NY HCS
+  
+ Remedy Overview:
+ ================
+ 1. INC0000000315498  LTC Copay test no longer calculated yearly total
+  
+ Problem:
+ --------
+ When financial information is entered for a patient on the Current 
+ Calendar Year Gross Income Screen <5>, the annual amount does not 
+ automatically calculate from the monthly amount when an asterisk is
+ appended to the value of the ALL OTHER INCOME (#.17) field in
+ the INDIVIDUAL ANNUAL INCOME (#408.21) file, as the help text indicates it
+ should.
+  
+ Resolution:
+ -----------
+ The input transform will be modified to provide the functionality of
+ multiplying a monthly amount into an annual amount when a "*" is added. The
+ executable help will also be updated to reflect this functionality.
+  
+ Installation Instructions:
+ ==========================
+  
+  See patch DG*5.3*812
+
+Routine Information:
+====================
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EASECDD
+    Before: B51118284   After: B59709892  **5,7,34,40,100,110**
+ 
+Routine list of preceding patches: 100
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 07, 2013
+Completed By:                               Date Completed: MAY 07, 2014
+Released By :                               Date Released : MAY 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

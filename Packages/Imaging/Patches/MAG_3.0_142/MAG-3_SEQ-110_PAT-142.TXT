@@ -1,0 +1,509 @@
+
+=============================================================================
+Run Date: MAR 31, 2015                     Designation: MAG*3*142
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #110                      Status: Released
+                  Compliance Date: APR 30, 2015
+=============================================================================
+
+Associated patches: (v)MAG*3*118   <<= must be installed BEFORE `MAG*3*142'
+
+Subject: SITE IEN
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This document describes MAG*3.0*142, the patch that resolves the Site 
+ INSTITUTION file (#4) Internal Entry Number (IEN) issue where the STATION 
+ NUMBER field (#99) entry sometimes gets passed instead of the Site IEN.  
+ It also repairs MAGV CREATE WORK ITEM Remote Procedure Call (RPC) errors.
+  
+ This patch is not compatible with MAG*3.0*138 and should not be installed at 
+ sites running MAG*3.0*138.  The features and fixes of MAG*3.0*142 are 
+ summarized within this document.
+  
+ Distribution of Software:
+ =========================
+  
+ To obtain MAG*3.0*142 files after testing, use FTP to retrieve 
+ MAG3_0P142.KID and other files from one of the following OI Field Offices' 
+ ANONYMOUS.SOFTWARE directories:
+  
+  OI Field Office       FTP Address                     Directory
+  ---------------       -----------------               ------------
+  Albany                ftp.domain.ext        
+  Hines                 ftp.domain.ext         
+  Salt Lake City        ftp.domain.ext           
+  
+  
+ The following Kernel Installation and Distribution System (KIDS) build was 
+ created in the development of this patch.
+  
+ File Name        Description
+ -----------------------------
+ MAG3_0P142.KID   KIDS build for patch MAG*3.0*142
+  
+ NOTE: Any late-breaking news about this patch will be found in a readme file.
+  
+ Installation instructions are included in this document.
+  
+ Patch Contents:
+ ===============
+  
+ This patch includes software and documentation files.
+  
+ Software
+  
+ The following software is included in the MAG*3.0*142 patch:
+  
+ * MAG3_0P142.KID - KIDS (Kernel Installation & Distribution System) package 
+ to be installed on the VistA system.
+  
+ Documentation 
+  
+ This document, MAG3_0P142_Patch_Description.pdf provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Associated Patches:
+ ===================
+  
+ This patch must be installed after MAG*3.0*118.
+  
+ Test Sites:
+ ===========
+  
+ The following sites are test sites for this patch:
+  
+ * Western Orbit
+ * Coatesville
+ * Philadelphia
+ * Anchorage
+  
+ Remedy Calls:
+ =============
+  
+ The following Remedy help desk calls are addressed in this patch:
+  
+ 1. INC000000933906, INC000000915276, INC000000923228 - This patch fixes an 
+ issue when a Site INSTITUTION file (#4) IEN does not match its STATION 
+ NUMBER (#99), resulting in errors when looking up the current IMAGE NETWORK 
+ WRITE LOCATION  field (#.03)  in the IMAGING SITE PARAMETERS file (#2006.1).
+  
+ 2. INC000000927714 - The MAGV CREATE WORK ITEM RPC may encounter errors when 
+ non-Veterans Administration Medical Center (VAMC), Medical and Regional 
+ Office Center (M&ROC), Regional Office Outpatient Clinic (RO-OC) and 
+ Outpatient Clinic (OC) entries are not screened durings INSTITUTION file (#4) Internal 
+ Entry Number (IEN).  
+  
+ 3. INC000001064318, INC000000927641, INC000000927821, INC000000908787, 
+ INC000000937092 - Hybrid DICOM Gateway (HDIG) passes an INSTITUTION file (#4)
+ STATION NUMBER field (#99) value to a look up RPC (MAG DICOM RADIOLOGY
+ PROCEDURES) instead of the site's INSTITUTION file (#4) Internal Entry
+ Number (IEN).
+  
+ NSRs:
+ =====
+  
+ There are no New Service Requests (NSRs) associated with this patch.
+  
+ Patient Safety Issues:
+ ======================
+  
+ There are no patient safety issues associated with this patch.
+  
+  
+ Patch 142 Changes:
+ ==================
+  
+ This patch addresses three issues. 
+  
+ 1) This patch fixes an issue when a Site INSTITUTION file (#4) IEN does not 
+ match its STATION NUMBER (#99), resulting in errors when looking up the 
+ current IMAGE NETWORK WRITE LOCATION field (#.03) in the IMAGING SITE 
+ PARAMETERS file (#2006.1).
+  
+ 2) The MAGV CREATE WORK ITEM RPC may encounter errors when non-VAMC, M&ROC, 
+ RO-OC and OC entries are not screened during data validation.  
+  
+ 3) Hybrid DICOM Gateway (HDIG) passes a Station Number to a legacy procedure 
+ look up RPC instead of a SITE IEN.  
+  
+ Issue 1 Summary
+  
+ Sites are sometimes receiving an error when trying to reconcile studies 
+ through DICOM Correct.  There is an issue with a Site IEN mismatch when 
+ looking up the current IMAGING NETWORK WRITE LOCATION field. When calling 
+ RPC "MAGVA GET CWL," Importer II is passing the STATION NUMBER field (#99) 
+ value instead of the INSTITUTION file (#4)  IEN (which is incorrect).
+  
+ Solution 1
+   
+ The MAGVAG03 routine which supports the MAGVA GET CWL RPC has been modified 
+ to accept either a STATION NUMBER (#99) or an INSTITUTION file (#4) IEN as 
+ an input parameter when looking up the IMAGE NETWORK WRITE LOCATION field 
+ (#.03) in the IMAGING SITE PARAMETERS file (#2006.1).
+  
+ Issue 2 Summary
+   
+ When an incoming exam object (image) fails a study lookup (missing or 
+ incorrect patient name, accession number, etc.), typically the images will 
+ be moved to a queue to be addressed for DICOM correction at a later time.  
+ Instead of the images being moved to the DICOM Correct queue, the images are 
+ simply rejected by the HDIG.
+    
+ The RPC "MAGV CREATE WORK ITEM", used by the HDIG to create entries in the 
+ MAG WORK ITEM file (#2006.941), failed during the validation of the LOCATION 
+ field (#4) value "501."  This field value is the INSTITUTION file (#4) IEN 
+ and STATION NUMBER field (#99) value for the NEW MEXICO HCS (ALBUQUERQUE 
+ VAMC). The lookup failed due to the existence of INSTITUTION file (#4) entry 
+ "501st TMW CLINIC-GREENHAM COMM" - an entry that resides within other VistA 
+ systems, as well.
+  
+ Solution 2
+  
+ A filter has been added to the LOCATION field (#4) of the MAG WORK ITEM file 
+ (#2006.941) to filter out non-VAMC, M&ROC, RO-OC and OC entries.
+  
+ Issue 3 Summary
+  
+ Some sites are periodically unable to get the procedure search list to work.  
+ Importer II was passing in the IEN instead of a station number, whereas 
+ Importer I was passing in the station number.  Importer II calls RPC 
+ "MAG DICOM RADIOLOGY PROCEDURES (PROC^MAGDRPCA)" instead of "MAGV GET 
+ RADIOLOGY PROCEDURES (GETPROCS^MAGVIM10)."  It passes the Station Number to 
+ the RPC.  This is the right value for MAGV GET RADIOLOGY PROCEDURES 
+ (GETPROCS^MAGVIM10).  However, since it is calling the wrong RPC, one that 
+ expects the Site IEN, it fails. 
+  
+ Solution 3 
+    
+ The code was modified to call the correct RPC MAGV GET RADIOLOGY PROCEDURES 
+ (GETPROCS^MAGVIM10).  This release will allow sites with IENs and Station 
+ Numbers that do not match to use the new Importer without error during the 
+ procedure lookup.  The affected sites will no longer have to revert to using 
+ the legacy Importer.
+  
+ Routines:
+ =========
+  
+ This section lists new and modified routines for the VistA System.  For each 
+ routine, the second line will contain the following information:
+  
+ * ;;3.0;IMAGING;**[Patch List]**;Mar 19, 2002;Build 15;Oct 20, 2014
+ * CHECK1^XTSUMBLD is used to generate the checksums.
+  
+ Please note that the "before" checksum may differ if any test software has 
+ been installed.
+  
+ Routine     Checksum Before   Checksum After   Patch List
+  
+ MAGIP142    N/A               4110380          **142**
+ MAGDRPCA    96716003          98101426         **53,123,118,142**
+ MAGVAG03    74285507          76869387         **118,142**
+  
+ Routine MAGIP142 is an installation routine that is automatically deleted 
+ after the KIDS installation.
+  
+ Data Dictionary:
+ ================
+  
+ A screen has been added to the LOCATION (#4) field of the MAG WORK ITEM 
+ (#2006.941) file.
+  
+ Mail Groups:
+ ============
+  
+ There are no new or modified mail groups in this patch.
+  
+ Forms:
+ ======
+  
+ There are no new or modified forms in this patch.
+  
+ Security Keys:
+ ==============
+  
+ There are no new or modified security keys in this patch.
+  
+ Remote Procedures:
+ ==================
+  
+ There are no new or modified remote procedures in this patch.
+  
+ Menu Options:
+ =============
+  
+ There are no new or modified menu options in this patch.
+  
+ Protocols:
+ ==========
+  
+ There are no new or modified protocols in this patch.
+  
+ Templates:
+ ==========
+  
+ There are no new or modified templates in this patch.
+  
+   
+ Installation
+ ============
+   
+ Installation Planning
+ =====================
+  
+ MAG*3.0*142 is to be installed on the VistA System.  This patch must be 
+ installed by the compliance date to conform to the VHA Directive 2001-023.
+  
+ Note:  All sites running VistA Imaging 3.0 must install the KIDS portion of 
+ this patch. 
+  
+ Installation for the KIDS will take approximately two minutes.  
+  
+ Installation Prerequisites
+ ==========================
+   
+ Before installing this patch, you will need to download the MAG*3.0*142 files 
+ from one of the OI Field Offices FTP servers. Verify that the patches listed 
+ in the section Associated Patches on Page 2 have been installed.   
+  
+ Note:  All released VistA Imaging patches must be installed on the VistA 
+ system before installing Patch 142.  
+  
+ Note:  This patch is not compatible with MAG*3.0*138 and should not be 
+ installed at sites running MAG*3.0*138.  VistA System (KIDS) Installation 
+  
+ Installing the VistA system (KIDS) involves installing the file 
+ MAG3_0P142.KID on the VistA system.
+  
+ Before installing the file, all released patches, including the patches 
+ listed in the Associated Patches section of this document, must be installed 
+ (i.e., MAG*3.0*118).  Please verify with your VistA Imaging coordinator or 
+ VistA Administrator.
+  
+ Note:  This patch is not compatible with MAG*3.0*138 and should not be 
+ installed at sites running MAG*3.0*138.
+  
+ Installation Steps
+ ==================
+  
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the #1 Load a Distribution [XPD LOAD DISTRIBUTION] option to load 
+       the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P142.KID) of the 
+       MAG*3.0*142 KIDS file that you downloaded from the Imaging FTP server.
+    c. When prompted to continue with the load, enter "YES."  A message will 
+       be displayed when the load is complete.
+ 4.  After loading the KIDS file, use the following options to verify the 
+     contents of the patch.  This is a good time to back up any affected 
+     routines.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run this 
+       option if you want to ensure the integrity of the routines in the patch.
+    b. Compare Transport Global to Current System [XPD COMPARETO SYSTEM] - Run
+       this option if you want to view all changes that will be made when the 
+       patch is installed. All components (routines, options, and so on) in 
+       the patch will be compared.
+    c. Back up a Transport Global [XPD BACKUP] - Run this option if you want to 
+       create a backup message of any routines exported with the patch. The 
+       option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install the 
+    KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*142.
+    c. Answer "NO" to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+  
+ 6. When the installation has finished, an Install Completed message will be 
+    displayed.
+  
+ KIDS Installation Example
+   
+ This example shows the output when the KIDS file is installed.  If you have 
+ already installed the patch and are installing the KIDS file in a namespace 
+ on which it has previously been installed, your output may be different. 
+  
+ Select Installation Option: 1 Load a Distribution
+ Enter a Host File: C:\MAG3_0P142.KID
+  
+ KIDS Distribution saved on Oct 20, 2014@01:04:51
+ Comment: VistA Imaging V3.0 - Patch 142
+  
+ This Distribution contains Transport Globals for the following Package(s):
+ MAG*3.0*142
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// YES
+ Loading Distribution...
+  
+    MAG*3.0*142
+ Use INSTALL NAME: MAG*3.0*142 to install this Distribution.
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ You have PENDING ALERTS
+           Enter  "VA to jump to VIEW ALERTS option
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: MAG*3.0*142      9/12/14@22:36:17
+      => VistA Imaging V3.0 - Patch 142 - ;Created on Sep 12, 2014@22:32:17
+  
+ This Distribution was loaded on Sep 12, 2014@22:36:17 with header of 
+    VistA Imaging V3.0 - Patch 142 - ;Created on Sep 12, 2014@22:32:17
+    It consisted of the following Install(s):
+     MAG*3.0*142
+ Checking Install for Package MAG*3.0*142
+  
+ Install Questions for MAG*3.0*142
+  
+ Incoming Files:
+  
+    2006.941  MAG WORK ITEM  (Partial Definition)
+ Note:  You already have the 'MAG WORK ITEM' File.
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME//   HERE
+   
+  Install Started for MAG*3.0*142 : 
+                Sep 12, 2014@22:36:32
+  
+ Build Distribution Date: Sep 12, 2014
+  
+  Installing Routines:...
+                Sep 12, 2014@22:36:32
+  
+  Installing Data Dictionaries: ..
+                Sep 12, 2014@22:36:32
+  
+  Running Post-Install Routine: POS^MAGIP142.
+  
+ Post Install Mail Message: Sep 12, 2014@22:36:32
+  
+  Updating Routine file......
+  
+  Updating KIDS files.......
+  
+  MAG*3.0*142 Installed. 
+                Sep 12, 2014@22:36:32
+  
+  
+ Uninstalling MAG*3.0*142
+ ========================
+   
+ Imaging MAG*3.0*142 has a KIDS Install only.  There are no Imaging Client 
+ updates to this patch.
+  
+ NOTE:  To uninstall MAG*3.0*142 you had to have selected the "Kernel 
+ Installation & Distribution System" menu option:  "Backup a Transport Global" 
+ (see installation section above, step 4c) before you installed the patch. 
+  
+ If it is necessary to uninstall MAG*3.0*142, administrators will need to use 
+ the Packman function INSTALL/CHECK MESSAGE.  Check your MailMan messages for 
+ the backup message sent by the Backup a Transport Global function.
+  
+ 1.  Select the message shown below:
+ Backup of MAG*3.0*142 install on <mmm dd, yyyy>    <user name>
+ 2. Select the Xtract Packman option
+ 3. Select the Install/Check Message option
+ 4. Enter 'Yes' at the prompt
+ 5. Enter "No" at the backup prompt.  There is no need to backup the backup.
+  
+ Enter message action (in IN basket): Ignore// Xtract PackMan
+ Select PackMan function: ?
+     Answer with PackMan function NUMBER, or NAME
+    Choose from:
+    1            ROUTINE LOAD
+    2            GLOBAL LOAD
+    3            PACKAGE LOAD
+    4            SUMMARIZE MESSAGE
+    5            PRINT MESSAGE
+    6            INSTALL/CHECK MESSAGE
+    7            INSTALL SELECTED ROUTINE(S)
+    8            TEXT PRINT/DISPLAY
+    9            COMPARE MESSAGE
+  
+ Select PackMan function: 6  INSTALL/CHECK MESSAGE
+  
+ Warning:  Installing this message will cause a permanent update of globals
+ and routines.
+ Do you really want to do this? NO// YES
+  
+ Routines are the only parts that are backed up.  NO other parts
+ are backed up, not even globals.  You may use the 'Summarize Message'
+ option of PackMan to see what parts the message contains.
+ Those parts that are not routines should be backed up separately
+ if they need to be preserved.
+  
+ Shall I preserve the routines on disk in a separate back-up message? YES// NO
+ No backup message built.
+  
+ Line 2    Message #43517     Unloading Routine   MAGDPRCA
+  (PACKMAN_BACKUP)
+ Line 380  Message #43517     Unloading Routine   MAVGAG03
+  (PACKMAN_BACKUP)
+  
+ Select PackMan function:<return>
+  
+ Enter message action (in IN basket): Ignore// 
+  
+ The Uninstall is now complete.
+  
+
+Routine Information:
+====================
+Routine Name: MAGDRPCA
+    Checksum:
+  98101426
+ Description of Changes:
+  Procedure lookup modified to accept either Station Number or an 
+  Institution file (#4) IEN.
+
+Routine Name: MAGIP142
+    Checksum:
+  4110380
+ Description of Changes:
+  Post install routine.
+
+Routine Name: MAGVAG03
+    Checksum:
+  76869387
+ Description of Changes:
+  The Current Write Location function was modified to accept either
+  a Station Number or an Institution file (#4).
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 26, 2013
+Completed By:                               Date Completed: MAR 23, 2015
+Released By :                               Date Released : MAR 31, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,159 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Wednesday, 10/01/14 at 14:08
+=============================================================================
+Run Date: MAR 16, 2015                     Designation: LR*5.2*448
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #360                    Status: Released
+                  Compliance Date: APR 16, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*448'
+
+Subject: CPT BILLING ISSUES IN LAB
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following 2 issues:
+  
+ 1. Problems with ES Display List selections.
+  
+ 2. Active CPT codes in file 64 are rejected as inactive.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*448 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*448 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*448 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000000895757 - LRCAPES CPT code issue
+ 2. INC000001058933 - Active CPT rejected as inactive
+  
+ Associated NSR(s):
+ ==================
+ N/A
+    
+ Participating Testing Sites:
+ ============================
+ Mountain Home VAMC
+ Houston VAMC
+ Heartland West (Kansas City)
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000000895757 - LRCAPES CPT code issue
+  
+ Problem:
+ --------
+ The ES (Electronic Signature) Display List is a list of the most commonly
+ used CPT (Current Procedural Terminology)/NLT (National Laboratory Test)
+ codes used in Lab CPT Billing. However when using the ES Display List,
+ an invalid selection can be made leading to the assignment of the wrong
+ CPT code.
+  
+ Solution:
+ ---------
+ Modify routines LRCAPES and LRCAPES1 to not allow an invalid selection
+ from the ES Display List and to display a warning when such a selection is
+ made.
+  
+ Routines: LRCAPES, LRCAPES1  
+  
+ 2. INC000001058933 - Active CPT rejected as inactive
+  
+ Problem:
+ --------
+ A CPT code that is linked to an active WKLD CODE (#64) file is sometimes
+ rejected as inactive. This happens because the routine only checks the
+ first WKLD CODE that is linked to the CPT code. A CPT code is often linked
+ to multiple WKLD CODEs over time, some of which are active and some are
+ inactive.
+  
+ Solution:
+ ---------
+ Modify routine LRCAPES1 to look through all WKLD CODEs that are linked to
+ a CPT code to see if any of them are active.
+     
+ Routine: LRCAPES1
+  
+   ==================== INSTALLATION INSTRUCTIONS ====================
+   The install time for this patch is less than 2 minutes. This patch
+   can be installed when Laboratory users are on the system.
+  
+   NOTE: Kernel patches must be current on the target system to avoid
+         problems loading and/or installing this patch.
+  
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the KIDS patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify that
+      all routines have the correct checksums.
+  
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+      Options:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Backup a Transport Global
+  
+      If you wish to preserve a copy of the routines exported in this patch
+      prior to installation, you should use the 'Backup a Transport Global'
+      option at this time. You may also compare the routines in your
+      production account to the routines in the patch by using the 'Compare
+      a Transport Global to Current System' option.
+  
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' menu and
+      select the package 'LR*5.2*448.
+  
+      When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+      choose 'NO'.
+  
+      When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LRCAPES
+    Before: B86635853   After: B87234278  **274,259,349,308,350,448**
+Routine Name: LRCAPES1
+    Before: B78998804   After: B91936521  **274,308,350,448**
+ 
+Routine list of preceding patches: 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 30, 2014
+Completed By:                               Date Completed: MAR 09, 2015
+Released By :                               Date Released : MAR 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

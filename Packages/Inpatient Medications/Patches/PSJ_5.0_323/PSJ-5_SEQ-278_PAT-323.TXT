@@ -1,0 +1,372 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 05/03/16 at 07:36
+=============================================================================
+Run Date: JUL 05, 2016                     Designation: PSJ*5*323
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #278                      Status: Released
+                  Compliance Date: AUG 05, 2016
+=============================================================================
+
+Associated patches: (v)PSJ*5*129   <<= must be installed BEFORE `PSJ*5*323'
+                    (v)PSJ*5*299   <<= must be installed BEFORE `PSJ*5*323'
+
+Subject: Patients on Specific Drug Rpt, WS Issue & PRN IV labels
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues:
+ 1) Erroneous data on Patient on Specific Drug Report
+ 2) Ward Stock issue with Clinic Orders
+ 3) IV order of PRN is printing multiple labels
+  
+ Associated Remedy ticket(s):
+ ============================
+  
+ 1)INC000000941177 Erroneous data on Patient on Specific Drug Report
+   Duplicate:
+   INC000001029951 Patient on Specific Drug Report issue  
+  
+ 2)INC000000970007 Ward Stock issue with Clinic Orders
+  
+ 3)INC000000741106 IV order of PRN is printing multiple labels 
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Upstate New York VAMC (Batavia, Buffalo, Canandaigua, Syracuse, Bath, 
+ Albany)
+ West Palm Beach VAMC
+ Augusta - Charlie Norwood VA Medical Center
+  
+  
+   
+ Remedy Overview:
+ ================
+ Issue 1:
+ --------
+ INC000000941177    Erroneous data on Patient on Specific Report
+   
+ Problem: 
+ --------
+ The Patient on Specific Drug report, when run with a date range of today thru
+ tomorrow, is displaying a patient who died several months ago and the order it
+ is displaying does not fall within the date range specified.
+  
+ Resolution:
+ -----------
+ A modification is made to the AUD cross-reference of the PHARMACY 
+ PATIENT file (#55). A post-install routine was created to check the "AUD"
+ x-ref in the PHARMACY PATIENT file (#55) for STOP DATE/TIMEs that
+ contain quotes around them and fix them by removing the quotes.
+  
+ Data Dictionary:
+ ----------------
+ BEFORE:
+ 55.06,34      STOP DATE/TIME         2;4 DATE (Required)
+  
+               INPUT TRANSFORM:  X:X=+X&X&$D(^PS(55,DA(1),5,DA,2)) "S PSGDL=X D 
+                                 EN2^PSSDDUT3" S %DT="ERTX" D ^%DT S X=+Y K:Y'>0
+                                  X
+               LAST EDITED:      JUN 25, 2013 
+               HELP-PROMPT:      Enter the date and time that the last dose is 
+                                 to be given (and the order will expire). 
+               DESCRIPTION:        This is the date and time the order will
+                                 automatically expire.  This package initially
+                                 calculates a default stop date, depending on
+                                 the SITE PARAMETERS.  
+  
+               EXECUTABLE HELP:  D EN^DDIOL(" TIME IS REQUIRED.","","?0")
+               GROUP:            PSJU
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  55.06^ASD^MUMPS 
+                                 1)= S ^PS(55,DA(1),5,"AUS",+X,DA)="" I $P($G(^P
+                                 S(55,DA(1),5,DA,0)),"^",7)]"" S ^PS(55,DA(1),5,
+                                 "AU",$P(^(0),"^",7),+X,DA)=""
+  
+                                 2)= K ^PS(55,DA(1),5,"AUS",+X,DA) I $P($G(^PS(5
+                                 5,DA(1),5,DA,0)),"^",7)]"" K ^PS(55,DA(1),5,"AU
+                                 ",$P(^(0),"^",7),+X,DA)
+                                 3)= NEEDED BY UNIT DOSE
+                                 Used by Unit Dose to gather orders.  X-refs are
+                                 in the form of: ^PS(55,DA(1),"AU",status,stop
+                                 date/time,DA) ^PS(55,DA(1),"AUS",stop
+                                 date/time,DA) 
+                                  
+                                 These are used primarily by the profiles.  
+  
+               CROSS-REFERENCE:  55.06^AL53^MUMPS 
+                                 1)= I '$D(DIU(0)) D:$D(PSGAL(53))#2 KILL^PSGAL5
+                                 :PSGAL(53)=X K PSGAL
+  
+                                 2)= I '$D(DIU(0)),'$D(PSGPO) S PSGAL(53)=X,PSGA
+                                 L("C")=6000,PSGALFF=34 D ^PSGAL5
+                                 3)= UNIT DOSE ACTIVITY LOG
+                                 Used by Unit Dose to log any changes made to
+                                 this field.  
+  
+               CROSS-REFERENCE:  55^AUD 
+                                 1)= S ^PS(55,"AUD",$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^PS(55,"AUD",$E(X,1,30),DA(1),DA)
+                                 Identifies verified Unit Dose orders by the
+                                 order's stop date/time.  
+  
+               RECORD INDEXES:   ACRUD (#450) (WHOLE FILE #55), AUDC (#483)
+                                 (WHOLE FILE #55), AUN (#485), CIMOU (#1131)
+                                 (WHOLE FILE #55)
+ AFTER:
+  
+  
+ 55.06,34      STOP DATE/TIME         2;4 DATE (Required)
+  
+               INPUT TRANSFORM:  X:X=+X&X&$D(^PS(55,DA(1),5,DA,2)) "S PSGDL=X D 
+                                 EN2^PSSDDUT3" S %DT="ERTX" D ^%DT S X=+Y K:Y'>0
+                                  X
+               LAST EDITED:      JUN 25, 2013 
+               HELP-PROMPT:      Enter the date and time that the last dose is 
+                                 to be given (and the order will expire). 
+               DESCRIPTION:        This is the date and time the order will
+                                 automatically expire.  This package initially
+                                 calculates a default stop date, depending on
+                                 the SITE PARAMETERS.  
+  
+               EXECUTABLE HELP:  D EN^DDIOL(" TIME IS REQUIRED.","","?0")
+               GROUP:            PSJU
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+                                 TRIGGERED by the PREVIOUS STOP DATE/TIME field 
+                                 of the UNIT DOSE sub-field of the PHARMACY 
+                                 PATIENT File 
+  
+               CROSS-REFERENCE:  55.06^ASD^MUMPS 
+                                 1)= S ^PS(55,DA(1),5,"AUS",+X,DA)="" I $P($G(^P
+                                 S(55,DA(1),5,DA,0)),"^",7)]"" S ^PS(55,DA(1),5,
+                                 "AU",$P(^(0),"^",7),+X,DA)=""
+  
+                                 2)= K ^PS(55,DA(1),5,"AUS",+X,DA) I $P($G(^PS(5
+                                 5,DA(1),5,DA,0)),"^",7)]"" K ^PS(55,DA(1),5,"AU
+                                 ",$P(^(0),"^",7),+X,DA)
+                                 3)= NEEDED BY UNIT DOSE
+                                 Used by Unit Dose to gather orders.  X-refs are
+                                 in the form of: ^PS(55,DA(1),"AU",status,stop
+                                 date/time,DA) ^PS(55,DA(1),"AUS",stop
+                                 date/time,DA) 
+                                  
+                                 These are used primarily by the profiles.  
+  
+               CROSS-REFERENCE:  55.06^AL53^MUMPS 
+                                 1)= I '$D(DIU(0)) D:$D(PSGAL(53))#2 KILL^PSGAL5
+                                 :PSGAL(53)=X K PSGAL
+  
+                                 2)= I '$D(DIU(0)),'$D(PSGPO) S PSGAL(53)=X,PSGA
+                                 L("C")=6000,PSGALFF=34 D ^PSGAL5
+                                 3)= UNIT DOSE ACTIVITY LOG
+                                 Used by Unit Dose to log any changes made to
+                                 this field.  
+  
+               CROSS-REFERENCE:  55^AUD 
+                                 1)= S ^PS(55,"AUD",+(X),DA(1),DA)=""
+                                 2)= K ^PS(55,"AUD",+(X),DA(1),DA)
+                                 Identifies verified Unit Dose orders by the
+                                 order's stop date/time.  
+  
+               RECORD INDEX:     ACRUD (#470)    MUMPS    IR    ACTION
+                                 WHOLE FILE (#55)
+                   Short Descr:  Clinical Reminders index.
+                   Description:  This cross-reference builds two indexes, one
+                                 for finding all patients with a particular drug
+                                 and one for finding all the drugs a patient
+                                 has. The indexes are stored in the Clinical
+                                 Reminders index global as: 
+                                  ^PXRMINDX(55,"IP",DRUG,DFN,START,STOP,DAS) 
+                                  ^PXRMINDX(55,"PI",DFN,DRUG,START,STOP,DAS) 
+                                 respectively. START is the start date and STOP
+                                 is the stop date.  For all the details, see the
+                                 Clinical Reminders Index Technical
+                                 Guide/Programmer's Manual.  
+                     Set Logic:  D SPSPA^PSJXRFS(.X,.DA,"UD")
+                      Set Cond:  S X=$$PATCH^XPDUTL("PXRM*1.5*12")
+                    Kill Logic:  D KPSPA^PSJXRFK(.X,.DA,"UD")
+                     Kill Cond:  S X=$$PATCH^XPDUTL("PXRM*1.5*12")
+                    Whole Kill:  K ^PXRMINDX(55)
+                          X(1):  START DATE/TIME  (55.06,10)  (Subscr 1)
+                                 (forwards)
+                          X(2):  STOP DATE/TIME  (55.06,34)  (Subscr 2)
+                                 (forwards)
+  
+               RECORD INDEX:     AUDC (#501)    REGULAR    IR    SORTING ONLY
+                                 WHOLE FILE (#55)
+                   Short Descr:  List of patients with orders associated with
+                                 clinic appointments.
+                     Set Logic:  S ^PS(55,"AUDC",$E(X(1),1,20),$E(X(2),1,20),DA(
+                                 1),DA)=""
+                    Kill Logic:  K ^PS(55,"AUDC",$E(X(1),1,20),$E(X(2),1,20),DA(
+                                 1),DA)
+                    Whole Kill:  K ^PS(55,"AUDC")
+                          X(1):  STOP DATE/TIME  (55.06,34)  (Subscr 1)
+                                 (Len 20)  (forwards)
+                          X(2):  CLINIC  (55.06,130)  (Subscr 2)  (Len 20)
+                                 (forwards)
+  
+               RECORD INDEX:     AUN (#503)    REGULAR    IR    SORTING ONLY
+                   Short Descr:  Clinic cross-reference.
+                   Description:  This cross-reference is used to easily
+                                 determine if a specific patient has clinic
+                                 orders.  
+                     Set Logic:  S ^PS(55,DA(1),5,"AUN",X(1),X(2),DA)=""
+                    Kill Logic:  K ^PS(55,DA(1),5,"AUN",X(1),X(2),DA)
+                    Whole Kill:  K ^PS(55,DA(1),5,"AUN")
+                          X(1):  STOP DATE/TIME  (55.06,34)  (Subscr 1)
+                                 (forwards)
+                          X(2):  CLINIC  (55.06,130)  (Subscr 2)  (forwards)
+  
+               RECORD INDEX:     CIMOU (#744)    REGULAR    IR
+                                 LOOKUP & SORTING    WHOLE FILE (#55)
+                   Short Descr:  CIMOU - PS(55,"CIMOU",PATIENT,CLINIC,STOP
+                                 DATE/TIME,PATIENT,ORDER)
+                   Description:  This cross reference is used during enhanced
+                                 order checks for quick access to clinic order
+                                 information for unit dose orders by PATIENT, 
+                                 CLINIC, STOP DATE/TIME and ORDER NUMBER.  
+                                  
+                                 The set condition checks to see if the clinic
+                                 is defined with YES answered for the ADMINISTER
+                                 INPATIENT MEDS parameter under the SET UP A
+                                 CLINIC [SDBUILD] option and if the order has an
+                                 appointment date/time defined.  If both are
+                                 true, the cross reference is defined.  
+                                  
+                                 Using the same criteria, this cross reference
+                                 will be defined if a clinic is added or edited
+                                 using the CLINIC DEFINITION [PSJ CD] option.  
+                     Set Logic:  S ^PS(55,"CIMOU",X(1),X(2),X(3),DA(1),DA)=""
+                      Set Cond:  S X=$$CHECK^PSJIMO1() I X
+                    Kill Logic:  K ^PS(55,"CIMOU",X(1),X(2),X(3),DA(1),DA)
+                    Whole Kill:  K ^PS(55,"CIMOU")
+                          X(1):  PATIENT NAME  (55.06,.5)  (Subscr 1)
+                                 (forwards)
+                          X(2):  CLINIC  (55.06,130)  (Subscr 2)  (forwards)
+                          X(3):  STOP DATE/TIME  (55.06,34)  (Subscr 3)
+                                 (forwards)
+ Issue 2:
+ --------
+ INC000000970007    Ward Stock issue with Clinic Orders
+   
+ Problem: 
+ --------
+  
+ Clinic orders for Unit Dose (UD) are determining Ward Stock ("WS") (for
+ profile display) based on the location of the LAST admission.  So if it's 
+ an outpatient, and they were last admitted to a location that has a lot
+ of items stocked, you see "WS" in the last column of the Inpatient Profile.
+ Also with new UD orders, if the Dispense Drug is WS, it displays that 
+ message before prompting for pre-exchange doses (just like normal
+ Inpatient functionality if it's WS). 
+  
+  
+ Resolution:
+ -----------
+ A modification was made to the PUD tag in routine PSJLMPRU to not display WS
+ on the Inpatient Profile screen for Clinic Orders.   A modification was also
+ made to the EN tag of routine PSGPEN to ensure that the message for ward 
+ stock item does not display when verifying a Clinic Order.
+  
+ Issue 3:
+ --------
+  
+ Problem:
+ --------
+ When an IV order created in CPRS, with a schedule that contains a frequency
+ changed to a PRN order in Vista, the Frequency is not cleared out and is
+ stored in the PHARMACY PATIENT file #55.
+  
+ The release of PSJ*5.0*194 fixed the issue of multiple labels but not
+ the carry over of the Frequency.
+  
+ Resolution:
+ -----------
+ A modification was made to the SET55 tag in routine PSIVORFB to check
+ to see if the schedule contains PRN (as needed), and if so, do not 
+ store a frequency in the PHARMACY PATIENT file (#55).
+  
+  
+ Other Components
+ ================
+ AUD cross-reference for PHARMACY PATIENT file (#55)
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is advised to install this patch during non-peak hours.
+  
+ It should take less than 2 minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*323)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this patch
+             is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package PSJ*5.0*323.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 10
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGPEN
+    Before: B39805137   After: B40801558  **30,37,50,58,115,110,127,129,323**
+Routine Name: PSIVORFB
+    Before: B84688439   After: B86884261  **3,18,28,68,58,85,110,111,120,
+                                           134,213,161,181,273,267,285,
+                                           257,299,323**
+Routine Name: PSJ323PO
+    Before:       n/a   After:  B1916591  **323**
+Routine Name: PSJLMPRU
+    Before: B14898207   After: B15059824  **16,58,85,110,185,181,267,323**
+ 
+Routine list of preceding patches: 129, 299
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 19, 2015
+Completed By:                               Date Completed: JUN 17, 2016
+Released By :                               Date Released : JUL 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

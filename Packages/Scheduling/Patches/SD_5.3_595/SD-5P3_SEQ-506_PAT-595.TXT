@@ -1,0 +1,177 @@
+$TXT Created by             MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 03/28/14 at 15:36
+=============================================================================
+Run Date: JUL 10, 2014                     Designation: SD*5.3*595
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #506                    Status: Released
+                  Compliance Date: AUG 10, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*591  <<= must be installed BEFORE `SD*5.3*595'
+
+Subject: FIX STATUS DISPLAY IN APPOINTMENT MGMT AND LIST BY APPOINTMENT
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ This patch will fix a functionality issue that was introduced with patch 
+ SD*5.3*591, whereby the incorrect status for an appointment is being 
+ displayed in Appointment Management [SDAM APPT MGT] when an appointment
+ has only been partially Checked Out. The original request pointed to
+ incorrect displayed status of an appointment if it was purged.
+ Additionally the List by Appointment [PXCE SDAM LIST] protocol was evaluated 
+ to provide a consistent appointment status display when this protocol is
+ executed in the PCE ENCOUNTER ENTRY options in Patient Care Encounter
+ (PCE).
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ HD0000000618919 - Appt Mgmt does not show that a vet has been checked out
+    Duplicates:
+    HD0000000705899 - PCE/APPT MGT STATUS - NOT CORRECT FOR SOME CASES
+    HD0000000708893 - Appointment Management does not change to Action
+                      Required at Checkout
+    HD0000000711586 - Cannot Cancel an Appointment
+    HD0000000711816 - No action taken but action required
+    HD0000000712237 - Users unable to Cancel or No-show appointments 
+    HD0000000717662 - Appt Status is no action taken - clerk should be able
+                      to cancel appt
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Plains HCS
+ Coatesville, PA
+ Huntington, WV
+ Upstate New York HCS
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ HD0000000618919 - Appt Mgmt does not show that a vet has been checked out
+  
+ Problem:
+ --------
+ When retrieving the status for an appointment, if the appointment has
+ only been partially Checked Out, the status in Appointment Management
+ [SDAM APPT MGT] will be incorrectly displayed as 'No Action Taken', unless
+ the appointment was first Checked In (which is no longer required).
+ If the appointment has been Checked In, the partially Checked Out 
+ appointment will correctly display the status as 'Act Req/Checked Out';
+ however, a partially Checked Out appointment should display a status of
+ 'Act Req/Checked Out', regardless of whether it has been Checked In.
+ Once the appointment is fully Checked Out, it does display the correct
+ status of 'Checked Out'.  This issue only occurs with partially Checked
+ Out appointments.
+  
+ During testing it was discovered that some appointments had 'NT' status in 
+ the Appointment multiple entries while being already CHECKED OUT as indicated
+ in the Outpatient Encounter file and it affected the status display when
+ listing by appointment in PXCE ENCOUNTER ENTRY options in PCE.
+  
+ Resolution:
+ -----------
+ Routine SDAM1 has been modified to determine how the appointment
+ status is calculated and displayed. The new logic evaluates the related
+ entry in the Outpatient Encounter file, if it exists, to provide correct
+ status as displayed in Scheduling and PCE in VistA. The displayed results
+ are consistent and reflect the true status of appointments.
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ Users are allowed on the system during patch installation.
+  
+ Installation should take less than 2 minutes.
+  
+ 1. LOAD TRANSPORT GLOBAL
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. START UP KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu [XPD
+    MAIN]
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+       1  Load a Distribution
+       2  Verify Checksums in Transport Global
+       3  Print Transport Global
+       4  Compare Transport Global to Current System
+       5  Backup a Transport Global
+       6  Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+  
+ 3. From this menu, you may elect to use the following options (when
+    prompted for INSTALL NAME, enter SD*5.3*595):
+  
+    a. Backup a Transport Global - This option will create a backup
+       message of any routines exported with this patch.  It will NOT
+       backup any other changes such as DDs or templates.
+   
+    b. Compare Transport Global to Current System - This option will
+       allow you to view all changes that will be made when the patch
+       is installed.  It compares all components of the patch
+       (routines, DDs, templates, etc.).
+  
+    c. Verify Checksums in Transport Global - This option will ensure
+       the integrity of the routines that are in the transport global.
+  
+    d. Print Transport Global - This option will allow you to view
+       the components of the KIDS build.
+  
+ 4. Use the Install Package(s) option and select the package SD*5.3*595.
+  
+    a. When prompted "Want KIDS to INHIBIT LOGONS during the
+       install? NO//", respond NO.
+  
+    b. When prompted "Want to DISABLE Scheduled Options, Menu Options,
+       and Protocols? YES//", respond YES.
+  
+     1) When prompted "Enter options you wish to mark as "Out of
+        Order":" enter the following option:
+  
+            Appointment Management          [SDAM APPT MGT]
+            Make Appointment                [SDM]
+            PCE Coordinator Menu            [PX PCE COORDINATOR MENU]
+  
+     2) When prompted "Enter protocols you wish to mark as "Out of
+        Order":" enter the following:
+  
+            List by Appointment             [PXCE SDAM LIST]
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 13
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDAM1
+    Before: B31062484   After: B37380633  **149,155,193,189,445,478,466,
+                                           567,591,595**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 16, 2012
+Completed By:                               Date Completed: JUN 30, 2014
+Released By :                               Date Released : JUL 10, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

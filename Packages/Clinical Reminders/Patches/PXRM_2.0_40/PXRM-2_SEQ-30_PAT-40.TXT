@@ -1,0 +1,133 @@
+$TXT Created by                      DVF.DOMAIN.EXT  (KIDS) on Monday, 07/28/14 at 10:31
+=============================================================================
+Run Date: NOV 25, 2014                     Designation: PXRM*2*40
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #30                      Status: Released
+                  Compliance Date: DEC 26, 2014
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*40'
+
+Subject: MHV SECURE MESSAGING FIX
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Patch PXRM*2*24, which discontinued the use of a FileMan API to copy a 
+ patient list to OE/RR lists, created a problem populating the "AB" 
+ index of the OE/RR LIST file (#100.21). Consequently, this affected 
+ MyHealtheVet (MHV) secure messaging which depends on the "AB" index.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000940890 - MHV Secure Messaging (SM) "AB" index correction for
+                      menu option COPY TO OE/RR TEAM
+ 2. INC000000885893 - Secure Messaging Triage teams no longer link to
+                      OE/RR patient lists.
+    Duplicate:
+    INC000000811837 - Unable to access Secure Messaging Triage team link.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Mountain Home VAMC, TN 
+ VA Maryland HCS
+ VA Northern California HCS 
+  
+  
+ REMEDY OVERVIEW:
+ ================ 
+ 1. INC000000940890 - MHV Secure Messaging (SM) "AB" index correction
+                      menu option COPY TO OE/RR TEAM
+    
+ 2. INC000000885893 - Secure Messaging Triage teams can no longer link to
+                      their OE/RR patient lists.
+    Duplicate:
+    INC000000811837 - Users can no longer access Secure Messaging team
+                      link.
+  
+ Problem 1 & 2:
+ ==============
+ During the time period when PXRM*2*24 was being developed, sites
+ reported errors when trying to copy very large reminder patient lists to
+ OE/RR lists. The error was occurring in the FileMan API used to copy a
+ list; it was not able to handle such large lists. Consequently, the
+ routine that does the copy was changed to no longer use the FileMan API
+ and the routine was included in PXRM*2*24. It came to light that this
+ caused a problem populating the "AB" index of the OE/RR LIST file
+ (#100.21), which in turn affected MyHealtheVet (MHV) secure messaging,
+ because the OE/RR API that MHV uses to get the list of patients on an
+ OE/RR team list depends on the "AB" index.
+  
+ Resolution 1 & 2:
+ =================
+ Patch PXRM*2*26, released July 24, 2014, corrects the problem of the
+ "AB" index not being populated when copying a reminder patient list to
+ an OE/RR team list. The post-init of this patch checks all the existing
+ lists in the OE/RR LIST file (#100.21) and ensures that the "AB" index
+ is populated for all of them. Therefore, any existing OE/RR team lists
+ that were created after PXRM*2*24 was installed by copying from a
+ reminder patient list will now work for MHV secure messaging.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ This patch can be installed with users on the system but it is recommended
+ that the installation is done during periods of low activity. It should
+ take less than 2 minutes to install this patch, however the amount of time
+ the post-init routine PXRMP40I will take depends on the number and size of
+ the lists in OE/RR LIST file (#100.21).
+  
+  
+ 1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu.
+  
+ 2. On the KIDS menu under the 'INSTALLATION' menu, use the following
+    options, as desired:
+        Print Transport Global
+        Compare Transport Global to Current System
+        Verify Checksums in Transport Global
+        Backup a Transport Global
+  
+ 3. Use the Install Package(s) option and select the package: PXRM*2.0*40
+  
+ 4. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//,"
+    respond 'NO'.
+  
+ 5. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO// respond 'NO'.
+  
+ 6. The post-init routine PXRMP40I may be deleted once the installation has
+    succesfully completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 202
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP40I
+    Before:       n/a   After:  B5014583  **40**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 13, 2014
+Completed By:                               Date Completed: NOV 19, 2014
+Released By :                               Date Released : NOV 25, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

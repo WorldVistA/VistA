@@ -1,0 +1,183 @@
+$TXT Created by                 at DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 04/01/14 at 11:46
+=============================================================================
+Run Date: JUL 09, 2014                     Designation: LR*5.2*440
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #349                    Status: Released
+                  Compliance Date: AUG 09, 2014
+=============================================================================
+
+Associated patches: (v)LR*5.2*187  <<= must be installed BEFORE `LR*5.2*440'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*440'
+                    (v)LR*5.2*424  <<= must be installed BEFORE `LR*5.2*440'
+
+Subject: PROBLEM WITH ACCESSIONING, DC'ed TESTS, AND PANELS TO PCE 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses 3 issues:
+  
+ 1. Some data in file 69 is overlaid (wiped out) during accessioning.
+  
+ 2. A DC'ed test (discontinued) was accessioned.
+  
+ 3. Some panel tests not going to PCE.
+  
+ BLOOD BANK REVIEW:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*440 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*440 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*440 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000000984319 - COMBINED FROM field in file 69 lost during
+                      accessioning
+  
+ 2. INC000000938850 - DC'ed test was accessioned
+  
+ 3. INC000000936915 - panel vs atomic test
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A 
+    
+ PARTICIPATING TEST SITES:
+ =========================
+ Battle Creek VAMC
+ Central Texas HCS
+ Mountain Home VAMC
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+ 1. INC000000984319 - COMBINED FROM field in file 69 lost during
+                      accessioning
+  
+    Problem:
+    --------
+    Data in the COMBINED FROM field (#20) of subfile TEST (#69.03) of the
+    LAB ORDER ENTRY file (#69) is lost during accessioning.
+  
+    Solution:
+    ---------
+    Modify routine LRWLST11 to retain this data during the accessioning
+    process.
+  
+    Routine: LRWLST11  
+  
+ 2. INC000000938850 - DC'ed test was accessioned
+  
+    Problem:
+    --------
+    Under certain conditions, an order that is discontinued in CPRS will be
+    accessioned even though it has previously been discontinued.
+  
+    Solution:
+    ---------
+    Modify routine LR7OF2 to mark all sequences of a discontinued test as
+    "discontinued/cancelled", including sequences that have been merged in
+    the LAB ORDER ENTRY file (#69).
+     
+    Routine: LR7OF2
+  
+ 3. INC000000936915 - panel vs atomic test
+  
+    Problem:
+    --------
+    When a panel test is defined without an accession area and option
+    "Enter/verify data (auto instrument)" [LRVR] is used to enter results,
+    the CPT codes are not getting transferred to PCE (Patient Care
+    Encounter).
+  
+    Solution:
+    ---------
+    Modify routine LRVR1 to make sure CPT codes are passed to PCE even if
+    the ordered panel does not have a defined accession area.
+  
+    Routine: LRVR1
+  
+    ==================== INSTALLATION INSTRUCTIONS ====================
+  
+    The install time for this patch is less than 2 minutes. This patch
+    can be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+  
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*440.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OF2
+    Before: B20526056   After: B25837155  **121,187,440**
+Routine Name: LRVR1
+    Before: B56575699   After: B56559612  **42,153,221,286,291,350,424,440**
+Routine Name: LRWLST11
+    Before: B73046359   After: B73046039  **121,128,153,202,286,331,375,
+                                           350,440**
+ 
+Routine list of preceding patches: 187, 424
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 18, 2014
+Completed By:                               Date Completed: JUL 02, 2014
+Released By :                               Date Released : JUL 09, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

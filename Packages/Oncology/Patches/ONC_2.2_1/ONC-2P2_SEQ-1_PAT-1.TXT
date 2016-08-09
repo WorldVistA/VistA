@@ -1,0 +1,1450 @@
+
+=============================================================================
+Run Date: JUN 18, 2014                     Designation: ONC*2.2*1
+Package : ONC - ONCOLOGY                      Priority: Mandatory
+Version : 2.2         SEQ #1                    Status: Released
+                  Compliance Date: JUL 19, 2014
+=============================================================================
+
+Associated patches: (v)ONC*2.11*57 <<= must be installed BEFORE `ONC*2.2*1'
+
+Subject: ONCOTRAX V2.2, NAACCR V14, CS V02.05 AND OTHER UPDATES
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch contains enhancements that extend and improve the functionality
+ of the VistA OncoTrax package.  The purpose of this release is to update
+ the functionality as described below and to update the version number of
+ the OncoTrax package from the outdated V2.11 to V2.2.
+  
+ All Data Dictionary modifications and additions have been reviewed and
+ approved by the Data Base Administrator.
+  
+  
+ Remedy Ticket(s) 
+ ================
+ 842908 - Change to OncoTrax. State extract problem
+ 890026 - Error
+ 914869 - ICD10
+  
+ 1. ACCESSION NUMBER LOOK-UP
+ This release adds the ability to look-up Patient Abstracts by the 
+ Accession Number from various options under the "ABSTRACTING/PRINTING" 
+ menu.  These options will now allow look-up by Accession Number: 
+ [Abstract Edit Primary], [Patient Summary], [Print Abstract QA (80c)], 
+ [Print Abstract-Extended (80c)], [Print Complete Abstract (132c)] and the 
+ separate screens under the [Abstract Screens Menu].
+ ROUTINE: ONCOGEN 
+  
+ 2. STATE DATA EXTRACT
+ REMEDY TICKET #: 842908
+ This release addresses an issue in Patch 57, which exported an incorrect 
+ entry in the State Data Extract of the Oncology Data Extract Format 
+ (#160.16) file.  The field UNUSUAL FOLLOW-UP METHOD was exported with the 
+ LENGTH field = 1 and ENDING POSITION = 2290.  This problem pushed the 
+ STATE Extract off by one character resulting in an incorrect format which 
+ would be rejected.  This field should have had the LENGTH field = 2 and 
+ the ENDING POSITION = 2291.  The problem was only in the STATE EXTRACT; 
+ the NCDB EXTRACT and VACCR EXTRACT were not affected.
+ FILE: Oncology Data Extract Format (#160.16):
+ ^ONCO(160.16,2,"FIELD",206,0)="2290^2^2291^Unusual Follow-Up Method"
+  
+ 3. DATE OF SURGICAL DISCHARGE FIELD PLACEMENT
+ This release renames the DATE OF SURGICAL DISCHARGE (#435) field in the 
+ Oncology Primary (#165.5) file to DATE MOST DEFINITIVE SURG DIS; it also 
+ changes the placement of that field in the Complete Abstract to follow 
+ the MOST DEFINITIVE SURG DATE (#50) field.
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]FILE ^DD: Oncology Primary (#165.5), 
+ field #435
+  
+ 4. DATE FLAG FIELDS
+ This release adds functionality to allow registrars to edit the DATE FLAG 
+ fields; previously these fields were stuffed and not editable.  This will 
+ allow registrars to fix errors in the DATE FLAG fields.
+ INPUT TEMPLATE: [ONCO ABSTRACT - I]
+ FILE ^DD: Oncology Primary (#165.5), new fields #999.1 - #999.25
+  
+ 5. FIX ERROR IN "PRINT QA/MULTIPLE ABSTRACT" OPTION
+ This option was incorrectly skipping many cases due to an earlier 
+ conversion of the Class of Case field.  This option was only selecting 
+ cases with Class of Case ="00" or "10" due to the way the code was 
+ written based on the old Class of Case values.  This was fixed by getting 
+ the correct Class of Case values of "00" thru "22" based on the newly 
+ converted values.
+  
+ 6. APPROACH FIELD
+ This release adds code to default the value of the APPROACH (#234) field 
+ of the Oncology Primary (#165.5) file to "0" if the SURG OF PRIM @FAC 
+ (#58.7) field is equal to "00".
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]
+  
+ 7. COLON AND LUNG PERFORMANCE MEASURES
+ Rename the TYPE OF RADIATION (#262) field of the Oncology Primary 
+ (#165.5) file to MULTIMODALITY RADIATION TYPE and add "multimodality" 
+ text to the "0" code.
+ FILE ^DD: Oncology Primary (#165.5), field #262
+ ROUTINES: ONCPMC, ONCPML
+  
+ 8. FOLLOW-UP CALCULATIONS
+ This release provides modifications to the way the Follow-up rate is 
+ calculated to exclude CLASS OF CASE "00" and Patients older than 100.
+ The RS follow-up rate should exclude ALL Class of Case "00" and Patients 
+ aged >=100 - not just for 2006 cases and forward:
+  
+ Example:
+    Total patients from registry reference date    12358       100%
+  
+     1.  Less benign/borderline cases                 -    67 
+     2.  Less Carcinoma in situ cervix cases          -     0 
+     3.  Less in situ/localized basal and squamous    -     4 
+         cell carcinoma of skin cases     " 
+     4.  Less foreign residents                       -     1 
+     5.  Less non-analytic cases                      -  1842 
+     6.  Less (ALL) Class of Case 00 case             -   291 
+     7.  Less (ALL) Patient Age 100+ case             -     0 
+  
+          SUBTOTAL CASES = ANALYTIC CASES           (A) 10153       100%
+          Class of Case 00-22
+  
+ 9. DATE LAST CONTACT FIELD
+ This release changes the data type of the DATE LAST CONTACT field (#200) in
+ the Oncology Primary (#165.5) file from 'free text' data type to 'date' data
+ type, to assist in sorting reports by this field.  
+  
+ 10. SSF4 FIELD FOR PROSTATE CASES
+ In this release, for cases with a DATE DX >2010, the SSF4 (#44.4) field of
+ the Oncology Primary (#165.5,) file will default to a value of "988".
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]
+  
+ 11. ADDITIONS TO SUBSEQUENT COURSE OF TREATMENT MULTIPLE
+ This release adds several new fields to the SUBSEQUENT COURSE OF 
+ TREATMENT (#165.51) multiple: SCOPE OF LN SURGERY DATE (#38), SURGICAL 
+ PROC/OTHER SITE DATE (#39), METS SITE RESECTED (#40), METS SITE RESECTED 
+ DATE (#41) and PALLIATIVE CARE (#42).
+ FILE ^DD: Oncology Primary (#165.5), Subsequent Course of Treatment 
+ (#165.51) multiple new fields #38, #39, #40, #41, #42 
+ INPUT TEMPLATE: [ONCO RECURRENCE FOLLOWUP]
+  
+ 12. FIRST COURSE OF TREATMENT
+ This release provides an addition of new fields to the First Course of 
+ Treatment section: METS SITE RESECTED (#139.6) and METS SITE RESECTED 
+ DATE (#139.7) fields, in the Oncology Primary (#165.5) file.
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]
+  
+ 13. ENHANCE ACOS, NAACCR AND VACCR DOWNLOADS
+ Enhance ACOS, NAACR & VACCR download to give Registrar ability to 
+      a. extract 'single'  case changed (or)
+      b. extract 'multiple' diagnosis year that were changed during a date range. 
+   
+ UTILITY OPTIONS- CT
+ Utility Options Option: CT  Create ACOS Data Download
+ Diagnosis Year START: 1998
+ Diagnosis Year END: 2011
+ Diagnosis Years: 1998-2011
+  
+       Select one of the following:
+  
+            1 All eligible cases for this year
+            2 Cases within a 'Date Case Last Changed' date range
+            3 Accession number-Seq
+  
+  
+ UTILITY OPTIONS- CC
+   1) VACCR Record Layout v13.0 (VA Registry)
+   2) NAACCR State Record Layout v13.0
+    Select one of the following:
+  
+           1         Date Case Completed
+           2         Date Case Last Changed
+           3         Accession number-Seq
+  
+ 14. MAILMAN SERVER FUNCTIONALITY FOR AUTOMATIC UPDATES
+ This release provides MailMan server functionality for automatic updates 
+ and possible download of data.  This is an Oncology server option that 
+ can only be initiated by a user entered in the Oncology Site Parameter 
+ file (#160.1).  The following functionalities are being provided by this 
+ option:
+  
+        a. Allows programmer to update file #160.16 using a MailMan
+ message.
+        b. Allows server users to initiate a MailMan message to a 
+ particular site and a particular report will be created and mailed to 
+ valid recipients entered in file 160.1.  Reports that can be generated 
+ using this function are Registry and Timeliness.
+        c. Allows programmers to update/correct the server IP address in 
+ the Oncology Site Parameter file (#160.1).
+  
+ 15. SURGICAL APPROACH FIELD REQUIRED FOR EDITS
+ The "RX Hosp--Surg App 2010" Data Item, derived from the SURG APP 2010 
+ (#165.5,234) field was not being required and not being exported in the 
+ Data Extracts.  This item will be fixed by requiring this field for 
+ primaries with DATE DX > 2009 and will be included in the Data Extracts.
+  
+ 16. CREATE RQRS EXTRACT OPTION
+ The "RQRS   Create RQRS extract" option was modified to ignore abstracts 
+ with Class of Case greater than "22".
+  
+ 17. FACILITY FILE NAME CHANGE
+ "West Haven" facility was changed to "Connecticut HCS" in Facility File 
+ (#160.19).
+ ROUTINE: ONC2PS01
+ DATA: ^ONCO(160.19,
+  
+ 18. FIX ERROR IN GIST 7TH EDITION STAGING
+ Item #15 from patch ONC*2.11*56 fixed an issue for CS Schema 
+ Discriminator values for G-E Junction Staging.  However, the code fix was 
+ added before the GIST staging code which created a problem because it was 
+ skipping the GIST staging code.  This issue was fixed by moving the code 
+ from Patch 56 to after the GIST staging code.
+ ROUTINE: ONCOTN
+  
+ 19. FIX ERROR IN COMMON BILE DUCT 7TH EDITION STAGING
+ Common Bile Duct cases with a discriminator value of "040" were deriving 
+ a strange Stage value of "SB".  This was due to a typo in the code.  The 
+ code was corrected so these are now "2B".
+ ROUTINE: ONCSG1A
+  
+ 20. PROBLEMS WITH 7TH EDITION STAGING OF COLORECTAL CASES
+ There was an issue with the 7th Edition staging for colon/rectum cases 
+ coded T4a N2 M0 in which these were deriving a Clinical or Pathologic 
+ Stage Group of "99".  These should derive Stage Group values of "3C".  
+ This issue was corrected by fixing the staging logic.There was also a 
+ typo in the code for Colorectal Staging which was causing cases coded T2 
+ N2b M0 to incorrectly derive a Stage value of "99".  This was fixed as 
+ well.
+ ROUTINE: ONCSG1
+  
+ 21. CHEMOTHERAPEUTIC AGENT (#164.18) FILE UPDATE
+ Six  new values were added to the Chemotherapeutic Agent (#164.18) file.  
+ These new entries are now selectable choices in the Chemotherapeutic 
+ Agent 1-5 fields in the Abstract Edit Options.  The 6 new values are:  
+ AFINITOR, DESATINIB, PRALATREXATE, AXITINIB, RUXOLITINIB, PAZOPANIB.
+ ROUTINE: ONC2PS01
+ DATA: ^ONCO(164.18,
+  
+ 22. TWO NEW ENTRIES ADDED TO OTHER STAGING FOR ONCOLOGY (#164.3) FILE
+ Two new values were added to the Other Staging for Oncology (#164.3) 
+ file: BCLC and MELD.  Both of these values were added to the 
+ Hepatocellular Carcinoma (Liver) site group.
+ ROUTINE: ONC2PS01
+ DATA: ^ONCO(164.3
+  
+ 23. NEW ABSTRACTOR/REGISTRAR SITE PARAMETER
+ A new multiple  field was added to the ONCOLOGY SITE PARAMETERS (#160.16) 
+ file, called ABSTRACTOR/REGISTRAR.  This field will hold a unique, 
+ specific 3 digit number that can be assigned to each specific 
+ abstractor/registrar at each VAMC site.  Each site can control this 
+ number at a local level, by using the [TR Define Tumor Registry 
+ Parameters] option of the Utility Options menu.  The new field will be 
+ displayed in column 742, "Abstracted By" field.  If the Abstractor has 
+ not been assigned a 3-Digit State Number then their initials will be used 
+ from file #200; if they do not have anything in the Initials field then 
+ the field will default to "999". 
+  
+ 24. OCULAR LYMPHOMA STAGING ISSUE
+ There was an issue in the staging code for Ocular Lymphoma primaries 
+ where the Clinical or Pathologic M-Code value of NULL was causing an 
+ erroneous value to be calculated for the corresponding Clinical or 
+ Pathologic Stage Group.  This would also cause an EDITS reject error.  
+ The problem was fixed by allowing a NULL M-code value to not skip out of 
+ the rest of the staging code for these types of primaries and continue, 
+ which results in the correct stage group being assigned.
+ ROUTINE: ONCOTN
+  
+ 25. BREAST PRIMARY STAGING ISSUE
+ There was an issue in the staging code for Breast Primaries where the 
+ Pathologic N-Code: value was causing an error in Collaborative Staging 
+ and EDITS.  This was due to typos in the Help and Input Transform where 
+ the code was displaying and checking for O's instead of correctly 
+ checking for or displaying zeroes.
+ ROUTINE: ONC2PS01
+ DATA: ^ONCO(160.16,,"FIELD,90 and ^ONCO(164.33,23
+  
+ 26. CANADIAN PROVINCES AND COUNTRY CODES
+  
+ REMEDY TICKET #: 890026
+ There was a problem in several extract items where a country code outside 
+ of the U.S. would result in a blank being sent which caused an EDITS 
+ error and not allow the abstract to be completed.  The extract items are 
+ "Address at DX--Country", "Followup Contact--Country", "Current 
+ Address--Country".  The code was modified to try to get the correct 
+ country code and if it cannot be determined then the values of these 
+ extract items will be defaulted to a value of "ZZU" which will pass
+ edits and not cause an error.
+  
+ 27. METS AT DX (CS) FIELD STUFFING
+ An issue was identified in the Abstract Enter/Edit option, where the 
+ registrar enters "98" (Not Applicable) for the METS AT DX (CS) (#165.5, 
+ 34.3) field, and the METS AT DX-BONE (#165.5,34.31), METS AT DX-BRAIN 
+ (#165.5,34.32), METS AT DX-LIVER (#165.5,34.33) and METS AT DX-LUNG 
+ (#165.5,34.34) fields were being stuffed with the value of 0 (None).  
+ These fields should be stuffed with the value of 8 (Not Applicable).  The 
+ [ONCO ABSTRACT-I] Input template was modified to address this issue.  
+ Existing cases will be checked and converted to the correct value if 
+ necessary.
+ ROUTINE: ONC2PS01
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]
+  
+ 28. SITE SPECIFIC FACTORS FOR TESTIS SCHEMA COLLABORATIVE STAGING ISSUE
+ There was an issue with the Site Specific Factors for Testis Primaries 
+ where the SSF11 value was not being defaulted to a value of 988, but the 
+ SSF12-SSF16 values were being defaulted to 988.  The code was modified to 
+ reverse this, so that SSF11 is defaulted to 988 and SSF12-SSF16 values 
+ are not.
+ ROUTINE: ONCCS3
+  
+ 29. MODIFICATIONS FOR ABSTRACT TO FLOW DIRECTLY TO RECURRENCE/SUB TX FOLLOW-UP
+ The [AI  Complete Abstract] and [EE  ABSTRACT EDIT PRIMARY] options have 
+ been modified so that upon completion of the Abstract (right after the 
+ ABSTRACT STATUS field the code will go directly to the [Recurrence/Sub Tx 
+ Follow-up] module after the [Post/Edit Follow-up] module.  Prior to this 
+ change the user would have to exit out of the Abstract Option(s) and then 
+ navigate over to the Follow-Up Functions menu to access the Recurrence 
+ fields.  In addition, when  the ^PF [Post/Edit Follow-up] option is 
+ called directly, at the end it will flow to the ^RF [Recurrence/Sub Tx 
+ Follow-up] module, and vice versa.
+ ROUTINES: ONCOAIF, ONCOAIP
+  
+ 30. PROBLEM WITH USERS BEING ABLE TO SELECT INACTIVE ICD-10 CODES
+ REMEDY TICKET #: 914869
+ There was an issue in which users were able to select ICD-10 codes that 
+ are inactive.  The ICD-10 codes exist but are INACTIVE until they become 
+ ACTIVE in October 2014.  Usually Oncology does not screen INACTIVE codes 
+ because Registrars may be entering data for an old case with an ICD code 
+ that was ACTIVE at the time of DX but is now INACTIVE.  In this case a 
+ screen was added to screen out INACTIVE codes so that ICD-10 codes may 
+ not be selected. If this is problematic, the screen could be removed 
+ after ICD-10 is ACTIVE.
+ ROUTINE: ONCFUNC
+  
+ 31. PROBLEM WITH FILEMAN REPORT UNABLE TO PRINT ONCOLOGY FIELDS ON SINGLE LINE
+ There was an issue with the output transform for several fields in the 
+ ONCOLOGY PRIMARY (#165.5) file, which was preventing the fields from 
+ printing correctly on Fileman or Custom ONCOLOGY reports.  The output 
+ transform was forcing a new line, so that the fields could not all print 
+ on a single line.  The fields in question are SURGICAL DX/STAGING PROC 
+ (#58.1), SURGICAL DX/STAGING PROC DATE (#58.3), SURG DX/STAGING PROC @FAC 
+ (#58.4) and SURGERY OF PRIMARY (F) (#58.6).  The output transforms have 
+ been modified to fix this issue.
+ ROUTINE: ONCODSR.
+  
+ 32. PROBLEM WITH ENTENSION FIELD VALUES FOR LACRIMAL GLAND SITES
+ There was an issue with the Extension field values when editing abstracts 
+ for Lacrimal Gland (C69.5) sites.  The Extension field was displaying 2 
+ codes (#70 and #80) both with the identical text of "Adjacent Bone".  
+ This was not correct, the text for code 80 should have been "Further 
+ contiguous extension".  This item is corrected by fixing the DESCRIPTION 
+ (#.01) field of the CODE/DESCRIPTION (#4) multiple field in the SEER CODE 
+ SET (#164.5) File.  The post-init routine for this patch will update this 
+ field/sub-file when the patch is installed.
+ ROUTINE: ONC2PS01
+  
+ 33. COLLABORATIVE STAGING v02.05
+ This release will implement CS version 0205. The necessary data 
+ conversions will be performed when the patch is installed.
+ SOURCE: Collaborative Stage Version 0204 to 0205 Conversion Specifications
+ ROUTINE: ONCCSRS,ONC2PS01
+  
+ 34. NAACCR (NORTH AMERICAN ASSOCIATION OF CENTRAL CANCER REGISTRIES) v14 RECORD LAYOUT 
+ This patch will include implementation of the new NAACCR Record Layout v14.  
+  
+ 35. NAACCR v14 EDITS METAFILE
+ This release will implement the use of the new v14 EDITS metafile when
+ completing Abstracts.
+  
+ 36. LYMPHATIC VESSEL INVASION (L)
+ The value of "X" was removed from the set of code values for the 
+ LYMPHATIC VESSEL INVASION (L) field (#149) of the Oncology Primary 
+ (#165.5) file.  The new codes 8 and 9 were added.   All existing 
+ primaries with value of "X" will be converted to 8 or 9 depending on the 
+ Histology data.
+ FILE ^DD:  ONCOLOGY PRIMARY (#165.5), FIELD: LYMPHATIC VESSEL INVASION (L)  ( #149).
+ ROUTINE: ONC2PS01
+  
+ 37. LANGERHANS CELL HISTIOCYTOSIS, NOS HISTOLOGY UPDATE
+ The ICD-O-3 MORPHOLOGY (#169.3) file had two Histology entries (#97511 
+ and #97513) with the identical name of LANGERHANS CELL HISTIOCYTOSIS, NOS, 
+ except that the 97513 entry had (9751/1) appended to the end.  The 97511 
+ value is obsolete after 2010, so the 97513 value now has the  "(9751/1)" 
+ removed from the name and the 97511 has "(<2010 CASES)" appended to the 
+ text.
+ DATA: ^ONCO(169.3 file, ENTRIES 97511 and 97513
+ ROUTINE: ONCCS
+  
+ 38. TYPE OF RECURRENCE, DISTANT SITE 1-3 AND REC DATE-1ST FLAG DEFAULTS
+ In the [Recurrence/Sub TX Follow-up] option the TYPE OF FIRST RECURRENCE, 
+ DISTANT SITE 1, DISTANT SITE 2, DISTANT SITE 3 and REC DATE-1ST FLAG 
+ fields will be set to default values based on the value of the CANCER 
+ STATUS field value within the TUMOR STATUS multiple.  If there is an 
+ existing value in the TYPE OF FIRST RECURRENCE field, then this value 
+ will be retained and the defaults will not be set.
+ INPUT TEMPLATE: [ONCO RECURRENCE FOLLOWUP]
+ ROUTINE: ONCOAIF
+  
+ 39. MERKEL CELL 7TH EDITION STAGING
+ There was a problem with staging for Merkel Cell cases in which a TNM of 
+ T1, N1a, M0 was computing a Clinical Stage Group of 99 (Unknown).  This 
+ was because the N-code of N1a was not in the staging table so these were 
+ staging as unknown.  The issue is fixed and these cases will be staged to 
+ "IIIA".
+ ROUTINE: ONCSG3
+  
+ 40. READMISSION W/I 30 DAYS/SURG FIELD IN ABSTRACT
+ The READMISSION W/I 30 DAYS/SURG (#165.5, #14) field needed to be moved 
+ within the Abstract Edit options.  This field is related to the Most 
+ Definitive Surgery and not the First Surgical Procedure so the field was 
+ moved to the correct spot in the Abstract.
+ INPUT TEMPLATE: [ONCO ABSTRACT-I]
+  
+ 41. SECONDARY DIAGNOSIS 1-10 FIELDS
+ The SECONDARY DIAGNOSIS 1-10 FIELDS (#160, #25.91-#25.9901) will be added 
+ to the 3 Oncology Extract Layouts and the fields will be editable (with 
+ ICD-10 activation) in the [Complete Abstract] option, in the Patient Data 
+ section following the COMORBIDITY/COMPLICATION 1-10 fields.
+ ROUTINES: ONCACDU1, ONCFUNC, ONCOAIP, ONCPAT, ONCPDI
+  
+ 42. STAGING FOR WALDENSTROM CASES
+ The staging code for Waldenstrom cases (Primary Site C42.0 & Histology 
+ 9761/3) were incorrectly skipping over the Extension and Lymph Node 
+ (#165.5, #30 & #31) fields.  These special cases needed code in the Input 
+ Transform and Help to get the correct Extension and Lymph Node field 
+ values and allow editing.
+ ROUTINE: ONCODEL
+  
+  
+ Patch Components
+ ================
+ Routines:
+ ---------
+ This release contains 431 routines, however 58 routines are old, obsolete
+ routines which will be DELETED AT SITE.  This leaves 373 routines that 
+ will be installed at the site.
+  
+ Therefore when running "Verify Checksums in Transport Globals" or other
+ options, it will check 373 routines.
+  
+ Files & Fields Associated:     
+ File Name (#)                          Field Name (#)       New/Modified/Deleted
+ -------------                          ------------------   -----------------
+ CHEMOTHERAPEUTIC AGENT (#164.18)       Data                 New and modified
+ ONCOLOGY SITE PARAMETERS (#160.1)   MAIL SERVER USER (#100) New
+                                 ABSTRACTOR/REGISTRAR (#105) New          
+ ONCOLOGY DATA EXTRACT FORMAT (#160.16) Data                 Modified
+ OTHER STAGING FOR ONCOLOGY (#164.3)    Data                 Modified
+ ONCOLOGY PRIMARY (#165.5)  DATE MOST DEFINITIVE SURG DIS (#435)   Modified
+                            MULTIMODALITY RADIATION TYPE (#262)    Modified
+                            DATE OF DIAGNOSIS FLAG (#999.1)  New
+                            SUBSQ RX CRS DATE FLAG (#999.25) New
+  
+ Forms Associated:                                          
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:                             
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+ Option Name                          Type             New/Modified/Deleted
+ -----------                          ----             --------------------
+ ONCOLOGY SERVER PROCESS [ONCSERVER]  Server           New
+  
+ Protocols Associated:                                     
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:                         
+ Security Key Name
+ -----------------
+ N/A 
+  
+ Templates Associated:
+ Template Name              Type      File Name (#)     New/Modified/Deleted
+ -------------              ----      -------------     --------------------
+ ONCO ABSTRACT-I            Input     #165.5            Modified
+ ONCO RECURRENCE FOLLOWUP   Input     #165.5            Modified 
+  
+  
+ Test Sites
+ ==========
+ Upstate New York HCS
+ Washington, DC VAMC
+ Hines VAMC
+ West Haven, Ct
+    
+  
+ Documentation
+ =============
+ Documentation can be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Technical Manual and Package Security Guide  --  onc211_tm.doc
+ User Manual - OncoTrax -- oncotraxmanual_2012.doc
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ==============================
+ There is a pre-installation routine (PRE1^ONC2PS01) and a post installation
+ routine (ONC2PS01) associated with this patch.  The routine ONC2PS01 may be 
+ optionally deleted by the installer after the installation is complete. 
+  
+  
+ Installation instructions:
+ ==========================
+ This patch should be loaded with Oncology users off the system. 
+ Installation will take approximately 30 minutes.
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+ NOTE:
+ You may see the following message when doing the "Load a Distribution" option:
+  
+ Distribution OK!
+  
+ Want to Continue with Load? YES// 
+ Loading Distribution...
+  
+    ONC*2.2*1
+ This Patch is for Version 2.2, you are running Version 2.11
+  
+ Want to continue installing this build? NO// <-- ANSWER "YES" AT THIS PROMPT
+  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+ This patch is available via FTP as a Kernel Installation and Distribution
+ System (KIDS) distribution file.  The Host File is named ONC22P1.KID 
+ and is located in the [ANONYMOUS.SOFTWARE] directory of the following OI Field
+ Offices.
+     
+                                PREFERRED ADDRESS
+                                -----------------
+  First available ftp server    download.vista.domain.ext
+  
+  SPECIFIC FIELD OFFICE         FTP ADDRESS
+  ---------------------         -----------
+  Albany                        ftp.domain.ext
+  Hines                         ftp.domain.ext
+  SLC                           ftp.domain.ext
+  
+ 1. Load the KIDS distribution file via the 'Load a Distribution' option 
+ on the KIDS Installation menu. 
+  
+ 2. Prior to installing the patch you may want to make use of the following
+ optional installation options located on the KIDS Installation menu:
+  
+    a.  Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+    b.  Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed.  It compares all components of this patch
+        (routines, DD's, templates, etc.).
+  
+    c.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+  
+ 3. Install the KIDS distribution via the 'Install Package(s)' option on 
+ the KIDS Installation menu.
+  
+    a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+        NO//' Answer NO.
+   
+    b.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' Answer NO. 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.2;ONCOLOGY;**[Patch List]**;Jul 31, 2013;Build 9
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ONC2PS01
+    Before:       n/a   After:B134442865  **1**
+Routine Name: ONC2PS1A
+    Before:       n/a   After: B43511605  **1**
+Routine Name: ONCACD0
+    Before: B81586467   After:B163524418  **1**
+Routine Name: ONCACD1
+    Before: B45446923   After: B64310335  **1**
+Routine Name: ONCACDU1
+    Before: B26408691   After: B30581185  **1**
+Routine Name: ONCACDU2
+    Before: B82187171   After: B99537064  **1**
+Routine Name: ONCASCI
+    Before:  B3659084   After:  B3659084  **1**
+Routine Name: ONCATF
+    Before: B47209323   After: B47209323  **1**
+Routine Name: ONCATF1
+    Before: B40406368   After: B40406368  **1**
+Routine Name: ONCBPC0
+    Before:  B6901838   After:  B6901838  **1**
+Routine Name: ONCBPC1
+    Before: B17284866   After: B17284866  **1**
+Routine Name: ONCBPC2
+    Before: B12764757   After: B12764757  **1**
+Routine Name: ONCBPC3
+    Before: B14635274   After: B14635274  **1**
+Routine Name: ONCBPC4
+    Before: B21169006   After: B21169006  **1**
+Routine Name: ONCBPC4A
+    Before: B38587962   After: B38587962  **1**
+Routine Name: ONCBPC5
+    Before:  B4450409   After:  B4450409  **1**
+Routine Name: ONCBPC6
+    Before:  B4771682   After:  B4771682  **1**
+Routine Name: ONCBPC8
+    Before: B47081923   After: B47081923  **1**
+Routine Name: ONCBPC8A
+    Before: B33284452   After: B33284452  **1**
+Routine Name: ONCBRP0
+    Before: B12837473   After: B12837473  **1**
+Routine Name: ONCBRP1
+    Before: B32719907   After: B32719907  **1**
+Routine Name: ONCBRP2
+    Before: B62506484   After: B62506484  **1**
+Routine Name: ONCBRP3
+    Before:  B7503561   After:  B7503561  **1**
+Routine Name: ONCBRP4
+    Before: B18122984   After: B18122984  **1**
+Routine Name: ONCBRP5
+    Before: B34977273   After: B34977273  **1**
+Routine Name: ONCBRP5A
+    Before: B22871751   After: B22871751  **1**
+Routine Name: ONCBRP6
+    Before:  B2557088   After:  B2557088  **1**
+Routine Name: ONCBRP7
+    Before:  B5546084   After:  B5546084  **1**
+Routine Name: ONCBRP9
+    Before: B48248085   After: B48248085  **1**
+Routine Name: ONCBRP9A
+    Before: B41234576   After: B41234576  **1**
+Routine Name: ONCBRP9B
+    Before:  B4450430   After:  B4450430  **1**
+Routine Name: ONCCPC0
+    Before: B18285534   After: B18285534  **1**
+Routine Name: ONCCPC1
+    Before: B18505199   After: B18505199  **1**
+Routine Name: ONCCPC2
+    Before: B23982785   After: B23982785  **1**
+Routine Name: ONCCPC3
+    Before: B13119883   After: B13119883  **1**
+Routine Name: ONCCPC4
+    Before: B42722216   After: B42722216  **1**
+Routine Name: ONCCPC4A
+    Before: B23893949   After: B23893949  **1**
+Routine Name: ONCCPC5
+    Before:  B2440947   After:  B2440947  **1**
+Routine Name: ONCCPC6
+    Before:  B2131050   After:  B2131050  **1**
+Routine Name: ONCCPC7
+    Before:  B4963773   After:  B4963773  **1**
+Routine Name: ONCCPC9
+    Before: B43467064   After: B43467064  **1**
+Routine Name: ONCCPC9A
+    Before: B36996984   After: B36996984  **1**
+Routine Name: ONCCPC9B
+    Before:  B5787445   After:  B5787445  **1**
+Routine Name: ONCCS
+    Before: B51579300   After: B53941422  **1**
+Routine Name: ONCCS2
+    Before:B115939463   After:B161397128  **1**
+Routine Name: ONCCS3
+    Before:B114262815   After:B165294557  **1**
+Routine Name: ONCCSOT
+    Before: B39113425   After: B39113425  **1**
+Routine Name: ONCCSRS
+    Before: B43589337   After: B44624188  **1**
+Routine Name: ONCCSSTF
+    Before: B43956602   After: B43956602  **1**
+Routine Name: ONCCSV2
+    Before: B59868741   After: B59868741  **1**
+Routine Name: ONCCSV2A
+    Before:B145990753   After:B145990753  **1**
+Routine Name: ONCDTUTL
+    Before:  B5364893   After:  B5364893  **1**
+Routine Name: ONCDTX
+    Before: B77514496   After: B77514496  **1**
+Routine Name: ONCDTX1
+    Before: B16707284   After: B16707284  **1**
+Routine Name: ONCEDIT
+    Before: B90474447   After: B90474447  **1**
+Routine Name: ONCEDIT2
+    Before: B36961845   After: B36961845  **1**
+Routine Name: ONCEECA
+    Before:   B275860   After:   B275860  **1**
+Routine Name: ONCENV16
+    Before:   B603636   After:    Delete  
+Routine Name: ONCENV21
+    Before:   B745894   After:    Delete  
+Routine Name: ONCFIX
+    Before:       n/a   After:    Delete  
+Routine Name: ONCFUNC
+    Before: B42640935   After: B47880653  **1**
+Routine Name: ONCGENED
+    Before: B26258151   After: B26470345  **1**
+Routine Name: ONCGPC0
+    Before: B10271078   After: B10271078  **1**
+Routine Name: ONCGPC1
+    Before: B26135683   After: B26135683  **1**
+Routine Name: ONCGPC2
+    Before: B34300918   After: B34297337  **1**
+Routine Name: ONCGPC3
+    Before: B37337028   After: B37337028  **1**
+Routine Name: ONCGPC4
+    Before:  B2287713   After:  B2287713  **1**
+Routine Name: ONCGPC5
+    Before:   B711382   After:   B711382  **1**
+Routine Name: ONCGPC7
+    Before: B28612141   After: B28612141  **1**
+Routine Name: ONCGPC7A
+    Before: B52387035   After: B52387035  **1**
+Routine Name: ONCGPC7B
+    Before: B50557081   After: B50557081  **1**
+Routine Name: ONCHPC0
+    Before: B10413880   After: B10413880  **1**
+Routine Name: ONCHPC1
+    Before:  B7513074   After:  B7513074  **1**
+Routine Name: ONCHPC2
+    Before: B43941036   After: B43941036  **1**
+Routine Name: ONCHPC2A
+    Before: B15386094   After: B15386094  **1**
+Routine Name: ONCHPC3
+    Before:  B6912178   After:  B6912178  **1**
+Routine Name: ONCHPC4
+    Before: B58420486   After: B58420486  **1**
+Routine Name: ONCHPC4A
+    Before: B25360992   After: B25360992  **1**
+Routine Name: ONCHPC5
+    Before:  B2297851   After:  B2297851  **1**
+Routine Name: ONCHPC6
+    Before:  B3980653   After:  B3980653  **1**
+Routine Name: ONCHPC8
+    Before: B60713068   After: B60713068  **1**
+Routine Name: ONCHPC8A
+    Before: B54728029   After: B54728029  **1**
+Routine Name: ONCHTWT
+    Before:   B983574   After:   B983574  **1**
+Routine Name: ONCIPC0
+    Before:  B8509251   After:  B8509251  **1**
+Routine Name: ONCIPC1
+    Before: B21514647   After: B21514647  **1**
+Routine Name: ONCIPC2
+    Before: B39154587   After: B39154587  **1**
+Routine Name: ONCIPC2A
+    Before: B15090103   After: B15090103  **1**
+Routine Name: ONCIPC3
+    Before: B30435995   After: B30435995  **1**
+Routine Name: ONCIPC3A
+    Before: B55646126   After: B55646126  **1**
+Routine Name: ONCIPC3B
+    Before: B19559942   After: B19559942  **1**
+Routine Name: ONCIPC3C
+    Before: B51622848   After: B51622848  **1**
+Routine Name: ONCIPC4
+    Before: B10711967   After: B10736683  **1**
+Routine Name: ONCIPC5
+    Before: B29479405   After: B29479405  **1**
+Routine Name: ONCIPC6
+    Before:  B3994103   After:  B3994103  **1**
+Routine Name: ONCIPC8
+    Before: B43372549   After: B43372549  **1**
+Routine Name: ONCIPC8A
+    Before: B45475707   After: B45475707  **1**
+Routine Name: ONCIPC8B
+    Before: B37692944   After: B37692944  **1**
+Routine Name: ONCIPC8C
+    Before: B55402593   After: B55402593  **1**
+Routine Name: ONCLNG
+    Before: B16808865   After: B16808865  **1**
+Routine Name: ONCLNG1
+    Before: B99067756   After: B99067756  **1**
+Routine Name: ONCLPC0
+    Before: B10514022   After: B10514022  **1**
+Routine Name: ONCLPC1
+    Before: B19641216   After: B19641216  **1**
+Routine Name: ONCLPC2
+    Before:  B3561890   After:  B3561890  **1**
+Routine Name: ONCLPC3
+    Before: B40928003   After: B40928003  **1**
+Routine Name: ONCLPC4
+    Before:  B2148069   After:  B2148069  **1**
+Routine Name: ONCLPC5
+    Before: B21199473   After: B21199473  **1**
+Routine Name: ONCLPC6
+    Before:  B4634497   After:  B4634497  **1**
+Routine Name: ONCLPC7
+    Before:   B706738   After:   B706738  **1**
+Routine Name: ONCLPC9
+    Before: B19952611   After: B19952611  **1**
+Routine Name: ONCLPC9A
+    Before: B51877997   After: B51877997  **1**
+Routine Name: ONCLPC9B
+    Before: B27297739   After: B27297739  **1**
+Routine Name: ONCMPC0
+    Before:  B6357751   After:  B6357751  **1**
+Routine Name: ONCMPC1
+    Before: B20744246   After: B20744246  **1**
+Routine Name: ONCMPC2
+    Before:  B8443615   After:  B8443615  **1**
+Routine Name: ONCMPC3
+    Before: B27786106   After: B27786106  **1**
+Routine Name: ONCMPC4
+    Before: B25043669   After: B25043669  **1**
+Routine Name: ONCMPC4A
+    Before: B56547671   After: B56547671  **1**
+Routine Name: ONCMPC5
+    Before:  B3224779   After:  B3224779  **1**
+Routine Name: ONCMPC6
+    Before:  B4105582   After:  B4105582  **1**
+Routine Name: ONCMPC7
+    Before:  B2403676   After:  B2403676  **1**
+Routine Name: ONCMPC9
+    Before: B18150335   After: B18150335  **1**
+Routine Name: ONCMPC9A
+    Before: B40240411   After: B40240411  **1**
+Routine Name: ONCMPC9B
+    Before:  B9462793   After:  B9462793  **1**
+Routine Name: ONCMPH
+    Before:  B2009397   After:  B2009397  **1**
+Routine Name: ONCNPC0
+    Before:  B6754206   After:  B6754206  **1**
+Routine Name: ONCNPC1
+    Before: B24268621   After: B24268621  **1**
+Routine Name: ONCNPC2
+    Before: B21531582   After: B21531582  **1**
+Routine Name: ONCNPC3
+    Before:  B6292554   After:  B6292554  **1**
+Routine Name: ONCNPC4
+    Before: B24146889   After: B24146889  **1**
+Routine Name: ONCNPC4A
+    Before: B24957911   After: B24957911  **1**
+Routine Name: ONCNPC5
+    Before:  B2756999   After:  B2756999  **1**
+Routine Name: ONCNPC6
+    Before:  B4957274   After:  B4957274  **1**
+Routine Name: ONCNPC8
+    Before: B21963914   After: B21963914  **1**
+Routine Name: ONCNPC8A
+    Before: B15586688   After: B15586688  **1**
+Routine Name: ONCNPC8B
+    Before: B33295209   After: B33295209  **1**
+Routine Name: ONCNPI
+    Before: B32186235   After: B32186235  **1**
+Routine Name: ONCNTX
+    Before: B87537325   After: B87537325  **1**
+Routine Name: ONCNTX1
+    Before: B56514658   After: B56514658  **1**
+Routine Name: ONCOAI
+    Before: B28755753   After: B28755753  **1**
+Routine Name: ONCOAIC
+    Before: B11789159   After: B11789159  **1**
+Routine Name: ONCOAID
+    Before:  B8458397   After:  B8458397  **1**
+Routine Name: ONCOAIF
+    Before: B40598156   After: B51005422  **1**
+Routine Name: ONCOAIM
+    Before: B22101895   After: B22101895  **1**
+Routine Name: ONCOAIM2
+    Before:  B3543064   After:  B3543064  **1**
+Routine Name: ONCOAIP
+    Before:B103520591   After:B104009853  **1**
+Routine Name: ONCOAIP1
+    Before:  B9531360   After:  B9531360  **1**
+Routine Name: ONCOAIP2
+    Before:  B3582117   After:  B3582117  **1**
+Routine Name: ONCOAIQ
+    Before:  B8053621   After:  B8053621  **1**
+Routine Name: ONCOAIS
+    Before:  B7347538   After:  B7347538  **1**
+Routine Name: ONCOAIT
+    Before:  B1211393   After:  B1211393  **1**
+Routine Name: ONCOANC0
+    Before: B21445335   After: B21445335  **1**
+Routine Name: ONCOANC1
+    Before: B21219299   After: B21219299  **1**
+Routine Name: ONCOANC2
+    Before: B22555664   After: B22555664  **1**
+Routine Name: ONCOANC3
+    Before: B12213347   After: B12213347  **1**
+Routine Name: ONCOANC4
+    Before: B12799880   After: B12799880  **1**
+Routine Name: ONCOANC5
+    Before: B11158795   After: B11158795  **1**
+Routine Name: ONCOANC9
+    Before:  B3745064   After:  B3745064  **1**
+Routine Name: ONCOANCF
+    Before: B32058874   After: B32058874  **1**
+Routine Name: ONCOANCQ
+    Before: B25651393   After: B21563256  **1**
+Routine Name: ONCOAS
+    Before: B18131224   After: B18131224  **1**
+Routine Name: ONCOCC
+    Before: B44658900   After: B44658900  **1**
+Routine Name: ONCOCFL
+    Before:  B4012582   After:  B4012582  **1**
+Routine Name: ONCOCFL1
+    Before: B61829784   After: B61829784  **1**
+Routine Name: ONCOCFP
+    Before: B50437593   After: B50437593  **1**
+Routine Name: ONCOCFR
+    Before: B30967942   After: B30967942  **1**
+Routine Name: ONCOCKI
+    Before:  B4437393   After:  B4437393  **1**
+Routine Name: ONCOCOC
+    Before:  B6349998   After:  B6349998  **1**
+Routine Name: ONCOCOF
+    Before: B24466837   After: B24341196  **1**
+Routine Name: ONCOCOFA
+    Before:  B2437896   After:  B2437896  **1**
+Routine Name: ONCOCOM
+    Before: B52166923   After: B52166923  **1**
+Routine Name: ONCOCOML
+    Before:  B1365958   After:  B1365958  **1**
+Routine Name: ONCOCON
+    Before: B14433965   After: B14433965  **1**
+Routine Name: ONCOCOP
+    Before:  B2361671   After:  B2361671  **1**
+Routine Name: ONCOCOS
+    Before: B10618905   After: B10618905  **1**
+Routine Name: ONCOCRA
+    Before:  B1506094   After:  B1506094  **1**
+Routine Name: ONCOCRC
+    Before: B12766110   After: B12766110  **1**
+Routine Name: ONCOCRF
+    Before: B14483451   After: B14483451  **1**
+Routine Name: ONCOCRFA
+    Before:  B3817093   After:  B3817093  **1**
+Routine Name: ONCODEL
+    Before: B17361497   After: B18347782  **1**
+Routine Name: ONCODGR
+    Before:  B2195125   After:  B2195125  **1**
+Routine Name: ONCODIS
+    Before:   B778492   After:   B773952  **1**
+Routine Name: ONCODLF
+    Before: B23576940   After: B23576940  **1**
+Routine Name: ONCODSP
+    Before: B50443707   After: B53068263  **1**
+Routine Name: ONCODSP1
+    Before: B21383416   After: B21383416  **1**
+Routine Name: ONCODSR
+    Before: B89512891   After: B90029978  **1**
+Routine Name: ONCODXD
+    Before: B17370508   After: B17370508  **1**
+Routine Name: ONCOEDC
+    Before: B26158579   After: B26708219  **1**
+Routine Name: ONCOEDC1
+    Before: B42257754   After: B42257754  **1**
+Routine Name: ONCOENA
+    Before:  B1937983   After:  B1937983  **1**
+Routine Name: ONCOENV
+    Before: B31499844   After: B31499844  **1**
+Routine Name: ONCOES
+    Before: B68765242   After: B78691651  **1**
+Routine Name: ONCOFDP
+    Before: B14855963   After: B14855963  **1**
+Routine Name: ONCOFLF
+    Before: B17881251   After: B17881251  **1**
+Routine Name: ONCOFTS
+    Before: B13108300   After: B13151124  **1**
+Routine Name: ONCOFUL
+    Before: B22246467   After: B22246467  **1**
+Routine Name: ONCOFUM
+    Before: B13605728   After: B13605728  **1**
+Routine Name: ONCOFUP
+    Before:  B4216330   After:  B4216330  **1**
+Routine Name: ONCOGEN
+    Before: B47631016   After: B44377351  **1**
+Routine Name: ONCOHELP
+    Before:  B3398919   After:  B6721354  **1**
+Routine Name: ONCOHICD
+    Before: B39876698   After: B39778848  **1**
+Routine Name: ONCOIT
+    Before: B37213574   After: B37213574  **1**
+Routine Name: ONCOLRU
+    Before:  B7113449   After:  B7113449  **1**
+Routine Name: ONCOMNI
+    Before: B58173682   After: B57056639  **1**
+Routine Name: ONCOOT
+    Before: B71002979   After: B71002979  **1**
+Routine Name: ONCOPA1
+    Before: B58176718   After: B58176718  **1**
+Routine Name: ONCOPA1A
+    Before: B57815890   After: B57499640  **1**
+Routine Name: ONCOPA2
+    Before: B44535183   After: B44535183  **1**
+Routine Name: ONCOPA2A
+    Before: B18422769   After: B18422769  **1**
+Routine Name: ONCOPA3
+    Before: B38378790   After: B38378790  **1**
+Routine Name: ONCOPA3A
+    Before: B27991276   After: B27991276  **1**
+Routine Name: ONCOPAR
+    Before: B13874306   After: B13874306  **1**
+Routine Name: ONCOPCE
+    Before: B70189715   After: B70189715  **1**
+Routine Name: ONCOPFX
+    Before:  B4983959   After:  B4983959  **1**
+Routine Name: ONCOPMA
+    Before: B23135907   After: B23135907  **1**
+Routine Name: ONCOPMB
+    Before: B23741129   After: B23753532  **1**
+Routine Name: ONCOPMP
+    Before:  B3059088   After:  B3059088  **1**
+Routine Name: ONCOPOS
+    Before: B17139507   After:    Delete  
+Routine Name: ONCOPOS1
+    Before: B35749229   After:    Delete  
+Routine Name: ONCOPOS2
+    Before: B40131915   After:    Delete  
+Routine Name: ONCOPRE
+    Before:  B1328921   After:    Delete  
+Routine Name: ONCOPRT
+    Before: B41204141   After: B41401233  **1**
+Routine Name: ONCOPRT1
+    Before: B57470448   After: B57470448  **1**
+Routine Name: ONCOPST
+    Before:       n/a   After:    Delete  
+Routine Name: ONCOPST1
+    Before:       n/a   After:    Delete  
+Routine Name: ONCOPST2
+    Before:       n/a   After:    Delete  
+Routine Name: ONCOPST3
+    Before:       n/a   After:    Delete  
+Routine Name: ONCOPST4
+    Before:       n/a   After:    Delete  
+Routine Name: ONCORF
+    Before:  B4642573   After:  B4849037  **1**
+Routine Name: ONCOSA
+    Before:  B9399540   After:  B9399540  **1**
+Routine Name: ONCOSA1
+    Before: B11411674   After: B11411674  **1**
+Routine Name: ONCOSC
+    Before: B11427074   After: B11427074  **1**
+Routine Name: ONCOSC1
+    Before:  B6612674   After:  B6612674  **1**
+Routine Name: ONCOSCF
+    Before:  B3938618   After:  B3938618  **1**
+Routine Name: ONCOSCG
+    Before: B12768439   After: B12768439  **1**
+Routine Name: ONCOSCOM
+    Before:  B3316978   After:  B3316978  **1**
+Routine Name: ONCOSCT
+    Before: B11821848   After: B11821848  **1**
+Routine Name: ONCOSCT0
+    Before:  B8671966   After:  B8671966  **1**
+Routine Name: ONCOSCT1
+    Before:  B7381828   After:  B7381828  **1**
+Routine Name: ONCOSCT2
+    Before: B19240156   After: B19240156  **1**
+Routine Name: ONCOSCT3
+    Before:  B2781384   After:  B2781384  **1**
+Routine Name: ONCOSINP
+    Before:  B9583126   After:  B9583126  **1**
+Routine Name: ONCOSO
+    Before:  B5178337   After:  B5178337  **1**
+Routine Name: ONCOSSA
+    Before: B14757229   After: B14757229  **1**
+Routine Name: ONCOSSA1
+    Before: B15229749   After: B15229749  **1**
+Routine Name: ONCOSSA2
+    Before:  B8003035   After:  B8003035  **1**
+Routine Name: ONCOSSA3
+    Before:  B3095497   After:  B3095497  **1**
+Routine Name: ONCOSSA4
+    Before:  B4638815   After:  B4638815  **1**
+Routine Name: ONCOSSAT
+    Before: B12800639   After: B12800639  **1**
+Routine Name: ONCOST
+    Before:  B2142434   After:  B2142434  **1**
+Routine Name: ONCOST1
+    Before:  B7690763   After:  B7690763  **1**
+Routine Name: ONCOSUR
+    Before: B60090941   After: B60090941  **1**
+Routine Name: ONCOSUR1
+    Before: B36834583   After: B36834583  **1**
+Routine Name: ONCOSUR2
+    Before: B46917344   After: B46917344  **1**
+Routine Name: ONCOTM
+    Before: B12379399   After: B12379399  **1**
+Routine Name: ONCOTN
+    Before:B119940311   After:B125200324  **1**
+Routine Name: ONCOTN0
+    Before: B49148768   After: B49148768  **1**
+Routine Name: ONCOTNE
+    Before: B30270501   After: B30270501  **1**
+Routine Name: ONCOTNM
+    Before:B137993546   After:B137993546  **1**
+Routine Name: ONCOTNMB
+    Before:   B648870   After:   B648870  **1**
+Routine Name: ONCOTNMC
+    Before:  B8836327   After:  B8836327  **1**
+Routine Name: ONCOTNMX
+    Before:  B1925096   After:  B1925096  **1**
+Routine Name: ONCOTNO
+    Before: B21943756   After: B21943756  **1**
+Routine Name: ONCOTNS
+    Before: B19044048   After: B19091763  **1**
+Routine Name: ONCOU
+    Before: B19968589   After: B20220840  **1**
+Routine Name: ONCOU0
+    Before:  B1928305   After:  B1976486  **1**
+Routine Name: ONCOU0A
+    Before:  B6489600   After:  B6489600  **1**
+Routine Name: ONCOU55
+    Before: B29262224   After: B29262224  **1**
+Routine Name: ONCOU55A
+    Before:  B9583374   After:  B9583374  **1**
+Routine Name: ONCOU55B
+    Before:  B2593325   After:  B2593325  **1**
+Routine Name: ONCOUK
+    Before: B17650591   After: B17650591  **1**
+Routine Name: ONCOUTC
+    Before: B13598286   After: B13598286  **1**
+Routine Name: ONCP2P0
+    Before:  B6652955   After:  B6652955  **1**
+Routine Name: ONCP2P1
+    Before:  B7499412   After:  B7499412  **1**
+Routine Name: ONCP2P2
+    Before: B57787500   After: B57787500  **1**
+Routine Name: ONCP2P3
+    Before:  B6759135   After:  B6759135  **1**
+Routine Name: ONCP2P4
+    Before: B32183944   After: B32183944  **1**
+Routine Name: ONCP2P4A
+    Before: B62450775   After: B62450775  **1**
+Routine Name: ONCP2P5
+    Before:  B2551370   After:  B2551370  **1**
+Routine Name: ONCP2P6
+    Before:  B5614385   After:  B5614385  **1**
+Routine Name: ONCP2P8
+    Before: B37983685   After: B37983685  **1**
+Routine Name: ONCP2P8A
+    Before: B48523761   After: B48523761  **1**
+Routine Name: ONCP2P8B
+    Before:  B3539945   After:  B3539945  **1**
+Routine Name: ONCP36
+    Before: B34655262   After:    Delete  
+Routine Name: ONCP36A
+    Before: B74692365   After:    Delete  
+Routine Name: ONCP36A1
+    Before: B38227185   After:    Delete  
+Routine Name: ONCP36A2
+    Before: B20484273   After:    Delete  
+Routine Name: ONCP36B
+    Before: B50701468   After:    Delete  
+Routine Name: ONCP36B1
+    Before: B31406389   After:    Delete  
+Routine Name: ONCP36C
+    Before: B81631238   After:    Delete  
+Routine Name: ONCP36D
+    Before: B21091181   After:    Delete  
+Routine Name: ONCP36E
+    Before: B32821842   After:    Delete  
+Routine Name: ONCP36F
+    Before: B68146658   After:    Delete  
+Routine Name: ONCPAT
+    Before: B47751522   After: B79038942  **1**
+Routine Name: ONCPAT1
+    Before:  B2690514   After:  B8589668  **1**
+Routine Name: ONCPCDX
+    Before:  B3257923   After:  B3257923  **1**
+Routine Name: ONCPCI
+    Before: B24563873   After: B24563873  **1**
+Routine Name: ONCPCS
+    Before: B13889291   After: B15624488  **1**
+Routine Name: ONCPDI
+    Before:  B7353112   After:  B7465905  **1**
+Routine Name: ONCPHC
+    Before:  B4459971   After:  B4459971  **1**
+Routine Name: ONCPL
+    Before:  B3168179   After:  B3168179  **1**
+Routine Name: ONCPM
+    Before:  B7795122   After:  B7795122  **1**
+Routine Name: ONCPMB
+    Before:  B3958592   After:  B3958592  **1**
+Routine Name: ONCPMC
+    Before: B11179867   After: B11238104  **1**
+Routine Name: ONCPML
+    Before: B24177429   After: B24254454  **1**
+Routine Name: ONCPMP
+    Before:  B5711304   After:  B5711304  **1**
+Routine Name: ONCPOS6
+    Before:  B8280371   After:    Delete  
+Routine Name: ONCPPC0
+    Before:  B4092043   After:  B4092043  **1**
+Routine Name: ONCPPC1
+    Before:  B6064815   After:  B6064815  **1**
+Routine Name: ONCPPC2
+    Before:  B9874323   After:  B9874323  **1**
+Routine Name: ONCPPC3
+    Before:  B4428720   After:  B4428720  **1**
+Routine Name: ONCPPC4
+    Before: B17202238   After: B17202238  **1**
+Routine Name: ONCPPC5
+    Before:  B4818379   After:  B4818379  **1**
+Routine Name: ONCPPC6
+    Before: B18098095   After: B18098095  **1**
+Routine Name: ONCPPC7
+    Before:  B5416472   After:  B5416472  **1**
+Routine Name: ONCPPC9
+    Before: B28731845   After: B28731845  **1**
+Routine Name: ONCPPC9A
+    Before: B22989622   After: B22989622  **1**
+Routine Name: ONCPPC9B
+    Before: B27659546   After: B27659546  **1**
+Routine Name: ONCPRE12
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE13
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE14
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE15
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE16
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE17
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE18
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE19
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE20
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE21
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE22
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE23
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPRE51
+    Before: B24635743   After:    Delete  
+Routine Name: ONCPRE52
+    Before:   B211081   After:    Delete  
+Routine Name: ONCPRE53
+    Before:   B122157   After:    Delete  
+Routine Name: ONCPRE54
+    Before:   B646205   After:    Delete  
+Routine Name: ONCPRE6
+    Before:  B5335355   After:    Delete  
+Routine Name: ONCPRE7
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPREMR
+    Before: B17509071   After:    Delete  
+Routine Name: ONCPS53A
+    Before:B169093757   After:    Delete  
+Routine Name: ONCPS53B
+    Before:B159998399   After:    Delete  
+Routine Name: ONCPS53C
+    Before:B149245653   After:    Delete  
+Routine Name: ONCPS54A
+    Before: B25346603   After:    Delete  
+Routine Name: ONCPSD
+    Before:  B6627917   After:  B6627917  **1**
+Routine Name: ONCPST11
+    Before:  B1612741   After:    Delete  
+Routine Name: ONCPST13
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPST15
+    Before:   B786889   After:    Delete  
+Routine Name: ONCPST19
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPST22
+    Before:  B2289781   After:    Delete  
+Routine Name: ONCPST40
+    Before:       n/a   After:    Delete  
+Routine Name: ONCPST51
+    Before:B136899122   After:    Delete  
+Routine Name: ONCPST52
+    Before: B12125689   After:    Delete  
+Routine Name: ONCPST53
+    Before:  B2057318   After:    Delete  
+Routine Name: ONCPST54
+    Before:  B5159512   After:    Delete  
+Routine Name: ONCPST56
+    Before: B53878693   After:    Delete  
+Routine Name: ONCPST57
+    Before: B44495073   After:    Delete  
+Routine Name: ONCPTHST
+    Before:  B3958786   After:  B3958786  **1**
+Routine Name: ONCPTX
+    Before: B82449372   After: B84842424  **1**
+Routine Name: ONCRESTG
+    Before:  B5694007   After:  B5694007  **1**
+Routine Name: ONCRFNR
+    Before:  B2850594   After:  B2850594  **1**
+Routine Name: ONCRPC
+    Before: B15093875   After: B15093875  **1**
+Routine Name: ONCRR
+    Before:  B7087743   After:  B7087743  **1**
+Routine Name: ONCSAPI
+    Before:  B5208764   After:  B5706621  **1**
+Routine Name: ONCSAPI1
+    Before: B26797085   After: B26797085  **1**
+Routine Name: ONCSAPI3
+    Before: B55610697   After: B55610697  **1**
+Routine Name: ONCSAPID
+    Before: B21856891   After: B21859405  **1**
+Routine Name: ONCSAPIE
+    Before: B58002089   After: B58002089  **1**
+Routine Name: ONCSAPIR
+    Before: B26610695   After: B26610695  **1**
+Routine Name: ONCSAPIS
+    Before:  B9309557   After:  B9309557  **1**
+Routine Name: ONCSAPIT
+    Before: B77972147   After: B77972147  **1**
+Routine Name: ONCSAPIU
+    Before:  B7316141   After:  B7316141  **1**
+Routine Name: ONCSAPIV
+    Before: B11259789   After: B11259789  **1**
+Routine Name: ONCSAPIX
+    Before:  B9859486   After:  B9859486  **1**
+Routine Name: ONCSED01
+    Before: B13507255   After: B13507255  **1**
+Routine Name: ONCSED02
+    Before: B17490289   After: B17490289  **1**
+Routine Name: ONCSED03
+    Before: B44378907   After: B44378907  **1**
+Routine Name: ONCSED04
+    Before: B25577841   After: B25577841  **1**
+Routine Name: ONCSEDEM
+    Before:  B3657858   After:  B3657858  **1**
+Routine Name: ONCSG0
+    Before: B49166434   After: B49166434  **1**
+Routine Name: ONCSG0A
+    Before: B30426924   After: B30426924  **1**
+Routine Name: ONCSG1
+    Before:B152655132   After:B154656243  **1**
+Routine Name: ONCSG1A
+    Before: B51960655   After: B51954616  **1**
+Routine Name: ONCSG2
+    Before: B55673512   After: B55673512  **1**
+Routine Name: ONCSG3
+    Before: B69938670   After: B70543239  **1**
+Routine Name: ONCSG4
+    Before: B79706344   After: B79706344  **1**
+Routine Name: ONCSG4A
+    Before: B18136273   After: B18136273  **1**
+Routine Name: ONCSG5
+    Before: B67058899   After: B67058899  **1**
+Routine Name: ONCSG5A
+    Before: B64524003   After: B64524003  **1**
+Routine Name: ONCSNACR
+    Before:  B6005907   After:  B6005907  **1**
+Routine Name: ONCSPC0
+    Before: B16826730   After: B16826730  **1**
+Routine Name: ONCSPC1
+    Before:  B7803234   After:  B7803234  **1**
+Routine Name: ONCSPC2
+    Before: B16192359   After: B16192359  **1**
+Routine Name: ONCSPC3
+    Before: B13539346   After: B13539346  **1**
+Routine Name: ONCSPC4
+    Before: B38181307   After: B38181307  **1**
+Routine Name: ONCSPC4A
+    Before: B38376501   After: B38376501  **1**
+Routine Name: ONCSPC5
+    Before: B10166482   After: B10166482  **1**
+Routine Name: ONCSPC6
+    Before:  B4640534   After:  B4640534  **1**
+Routine Name: ONCSPC8
+    Before: B42929610   After: B42929610  **1**
+Routine Name: ONCSPC8A
+    Before: B39737162   After: B39737162  **1**
+Routine Name: ONCSRV
+    Before:       n/a   After: B14249551  **1**
+Routine Name: ONCSRV01
+    Before:       n/a   After:  B6980964  **1**
+Routine Name: ONCSRVRP
+    Before:       n/a   After: B16573509  **1**
+Routine Name: ONCSRVTM
+    Before:       n/a   After: B35307509  **1**
+Routine Name: ONCSSF1
+    Before: B36723126   After: B36723126  **1**
+Routine Name: ONCSSF2
+    Before: B21276764   After: B21276764  **1**
+Routine Name: ONCSSF25
+    Before: B13108569   After: B13108569  **1**
+Routine Name: ONCSSF3
+    Before: B23518844   After: B23518844  **1**
+Routine Name: ONCSSF4
+    Before: B20855629   After: B20855629  **1**
+Routine Name: ONCSSF5
+    Before: B21087348   After: B21087348  **1**
+Routine Name: ONCSSF6
+    Before: B22917384   After: B22917384  **1**
+Routine Name: ONCSTX
+    Before:   B967309   After:   B967309  **1**
+Routine Name: ONCSUBS
+    Before:  B7009875   After:  B7009875  **1**
+Routine Name: ONCSYMP
+    Before: B11984863   After: B11984863  **1**
+Routine Name: ONCTEXT
+    Before:  B1290050   After:  B1290050  **1**
+Routine Name: ONCTIME
+    Before: B14762855   After: B14762855  **1**
+Routine Name: ONCTNMC
+    Before:  B9628869   After:  B9628869  **1**
+Routine Name: ONCTPC0
+    Before:  B9479356   After:  B9479356  **1**
+Routine Name: ONCTPC1
+    Before: B14593845   After: B14593845  **1**
+Routine Name: ONCTPC2
+    Before: B14770718   After: B14770718  **1**
+Routine Name: ONCTPC3
+    Before: B10519366   After: B10519366  **1**
+Routine Name: ONCTPC4
+    Before: B32657444   After: B32657444  **1**
+Routine Name: ONCTPC5
+    Before: B10087071   After: B10087071  **1**
+Routine Name: ONCTPC6
+    Before:  B5416628   After:  B5416628  **1**
+Routine Name: ONCTPC8
+    Before: B44121595   After: B44121595  **1**
+Routine Name: ONCTPC8A
+    Before: B27301984   After: B27301984  **1**
+Routine Name: ONCTXSM
+    Before: B19167802   After: B19167802  **1**
+Routine Name: ONCUTX
+    Before: B37076017   After: B37076017  **1**
+Routine Name: ONCUTX1
+    Before: B32335696   After: B32335696  **1**
+Routine Name: ONCX
+    Before:    B59681   After:    B59681  **1**
+Routine Name: ONCX10
+    Before: B13422084   After: B13422084  **1**
+Routine Name: ONCX10A
+    Before: B32534122   After: B32534122  **1**
+Routine Name: ONCXDEM
+    Before:  B3540836   After:  B3540836  **1**
+Routine Name: ONCXERR
+    Before:  B5253465   After:  B5253465  **1**
+Routine Name: ONCXURL
+    Before:  B3380054   After:  B3380054  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 12, 2013
+Completed By:                               Date Completed: MAY 30, 2014
+Released By :                               Date Released : JUN 18, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

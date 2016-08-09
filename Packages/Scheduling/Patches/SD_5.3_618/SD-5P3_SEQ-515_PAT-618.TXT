@@ -1,0 +1,263 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 08/18/14 at 13:43
+=============================================================================
+Run Date: NOV 20, 2014                     Designation: SD*5.3*618
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #515                    Status: Released
+                  Compliance Date: DEC 21, 2014
+=============================================================================
+
+Associated patches: (v)SD*5.3*406  <<= must be installed BEFORE `SD*5.3*618'
+                    (v)SD*5.3*572  <<= must be installed BEFORE `SD*5.3*618'
+
+Subject: APPOINTMENT LIST SORTING ISSUE
+
+Category: 
+  - Routine
+  - Informational
+  - Other
+
+Description:
+============
+
+ This patch will fix/update the following three (3) issues:
+  
+ 1. Patient names are not sorted in alphabetical order for the Appointment 
+    List.
+  
+ 2. The Organ Donors appointment type description needs to be updated.
+  
+ 3. The length of the data field Clinic IEN Number in the Patient
+    Appointment Information Transmission (PAIT) documentation needs to be 
+    updated.
+  
+  
+ Associated Remedy Tickets:
+ ==========================
+ 1. INC000000603057 - Patient appointment list no longer print
+                      alphabetically
+ 2. INC000000731055 - Description For Appointment Type Organ Donors
+ 3. INC000000967362 - Update the length of clinic IEN number in PAIT 
+                      documentation
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Erie, PA
+ Fayetteville, SC
+ New York Harbor HCS 
+  
+ Remedy Ticket Overview:
+ =======================
+ 1. INC000000603057 - Patient appointment lists no longer print 
+                      alphabetically
+  
+    Problem:
+    --------
+    When generating the Appointment List [SDLIST] & the Inpatient 
+    Appointment List [SDAPP INPT] menu options, patients who have the same 
+    appointment date and time in the same clinics, are not displaying in 
+    alphabetical order.
+  
+    Resolution:
+    -----------
+    Routines SDAL, SDAL0, and SDCIAL have been modified to sort patient 
+    names alphabetically. This patch fixes Appointment List as well as
+    Inpatient Appointment List.
+  
+ 2. INC000000731055 - Description For Appointment Type Organ Donors
+    
+    Problem:
+    --------
+    The Health Eligibility Center (HEC) has requested that the Organ Donor 
+    appointment type description needs to be updated to include
+    non-veterans in the DESCRIPTION field (#10) of the APPOINTMENT TYPE
+    file (#409.1).
+  
+    Current wording:
+  
+     DESCRIPTION: Exam of a veteran who wishes to be an organ donor to 
+     determine if organ designated will be useable.
+  
+    Resolution:
+    -----------
+    A post-install routine SD53P618 has been created to add the following 
+    wording, "or non-veteran", to the DESCRIPTION field (#10) of the
+    APPOINTMENT TYPE file (#409.1).
+  
+    The new description reads:
+  
+     DESCRIPTION: Exam of a veteran or non-veteran who wishes to be an
+     organ donor to determine if organ designated will be useable.
+  
+ 3. INC000000967362 - Update the length of clinic IEN number in PAIT
+                      Documentation
+  
+    Problem:
+    --------
+    Since Austin Information Technology Center (AITC) has changed the 
+    length of the Clinic IEN Number from 6 to 7 digits on their systems to 
+    accept this value sent from VistA, VistA needs to update this
+    information in the PAIT documentation.
+  
+    Resolution:
+    -----------
+    There is no coding change in VistA. The length of the data field Clinic
+    IEN Number has been updated from 6 to 7 digits for the HL7 segment
+    AIL.3.1 in the PAIT Technical Manual.
+  
+  
+ Software and Documentation Distribution:
+ ========================================
+ Sites may retrieve the documentation directly via FTP. The preferred
+ method is to FTP the files from:
+  
+         download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server.
+  
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS,SOFTWARE directory from a specific server as follows:
+  
+ Albany:                 ftp.domain.ext
+ Hines:                  ftp.domain.ext
+ Salt Lake City:         ftp.domain.ext
+  
+ Filename                        Description
+ ========                        ===========
+ pait_technical_manual.pdf       PAIT Technical Manual
+  
+  
+ NOTE: These files must be transferred using the binary (BIN) file
+       transfer mode. The sizes of the files once downloaded will be
+       2.36 MB.
+  
+ The complete and update documents will be posted to the VDL immediately
+ after the release of the patch.
+  
+  
+ Installation Instructions:
+ ==========================
+ If installed during the normal workday, it is recommended that the
+ following selections(s) in the OPTION file (#19) be disabled to prevent
+ possible conflicts while running the KIDS install.
+  
+         Appointment List                [SDLIST]
+         Inpatient Appointment List      [SDAPP INPT]
+  
+ It is also recommended that using option Install File Print [XPD PRINT
+ INSTALL FILE] on the Utilities sub-menu of the Kernel Installation and
+ Distribution System menu to review all of the install messages; 
+ especially for the update of Appointment Type ORGAN DONORS.
+  
+ Install Time - less than 3 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ NOTE: After the patch is installed, delete the routine SD53P618 by using
+       Delete Routine [XTRDEL] option.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL NAME,
+          enter SD*5.3*618):
+  
+    a. Backup a Transport Global - this option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, DD's,
+       templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you 
+       to ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? YES//', answer YES.
+  
+       Enter options you wish to mark as 'Out of Order':
+  
+         Appointment List                [SDLIST]
+         Inpatient Appointment List      [SDAPP INPT]
+  
+  
+ Routine Information:
+ ====================
+  
+ The second line of each of these routines now looks like:
+  ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53P618
+    Before:       n/a   After:  B5848002  **618**
+Routine Name: SDAL
+    Before: B31245513   After: B32575250  **37,46,106,171,177,80,266,491,
+                                           572,618**
+Routine Name: SDAL0
+    Before: B36699440   After: B37381989  **28,37,106,149,171,177,193,
+                                           305,373,266,572,618**
+Routine Name: SDCIAL
+    Before: B22598364   After: B22822282  **32,406,618**
+ 
+Routine list of preceding patches: 406, 572
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2014
+Completed By:                               Date Completed: NOV 17, 2014
+Released By :                               Date Released : NOV 20, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

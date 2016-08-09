@@ -1,0 +1,255 @@
+
+=============================================================================
+Run Date: JAN 12, 2015                     Designation: PREC*5*1
+Package : PREC - PHARMACY ENTERPRISE CUSTOM S Priority: Mandatory
+Version : 5         SEQ #1                      Status: Released
+                  Compliance Date: FEB 12, 2015
+=============================================================================
+
+
+Subject: PECS 5.0
+
+Category: 
+  - Other
+  - Enhancement (Mandatory)
+  - Informational
+
+Description:
+============
+
+ Pharmacy Enterprise Customization System (PECS) is a Java 2 Enterprise
+ Edition (J2EE) application used to research, review, report, and manage
+ customized drug information from First Data Bank's (FDB) MedKnowledge 
+ Framework (formerly Drug Information Framework (DIF)), which is a
+ Commercial-off-the-Shelf (COTS) product, used in the enhanced order
+ checking process.
+  
+ The PECS application, through a web-based Graphical User Interface (GUI),
+ allows VHA pharmacists and clinicians to research and request custom 
+ changes to Drug-Drug Interaction, Drug Pairs, Dose Range, Duplicate
+ Therapy, and Professional Monograph records, controlling access through a
+ role based authorization. VHA Pharmacy Benefits Management (PBM)
+ periodically (as needed in support of VA procedures and priorities)
+ prepare, review and approve the customizations, which result in VA Custom
+ drug data, which will supersede or enhance the industry standard FDB-drug
+ data.
+  
+ The purpose of this software product release is to replace the current
+ version, PECS v3.0, with an enhanced version, PECS v5.0, which provides
+ functional enhancements to Easy Search, Reports, Drug-Drug Interaction 
+ (DDI), Drug Pairs(DP), Dose Range(DR), Duplicate Therapy(DT), and 
+ Professional Monograph(PM).  
+  
+ PECS v5.0 includes several enhancements to the system to provide for 
+ better data integrity.  The biggest changes for this release are:
+ 1. Enhancements to export functionality to show the date an approved or
+    deleted Drug-Drug Interaction, Drug Pairs, Dose Range, Duplicate Therapy
+    or Professional Monograph was exported to the incremental file.
+    
+ 2. Enhancements to non-customized Drug-Drug Interaction, Drug Pairs,
+    Dose Range, Duplicate Therapy or Professional Monograph records.
+  
+ 3. Comparison reports for the Dose Range FDB Updates.
+  
+ 4. Enhancement to linking Dose Range records to the FDB record.
+         
+ 5. Removed reverse interactions from the DDI Comparison Report.
+  
+ 6. Enhancements to the contact list.
+  
+  
+ Impacts to Pharmacists and Clinicians:
+ 1. As a PECS User, pharmacists, clinicians, and PBM personnel on the detail 
+    page can see the date an approved or deleted Drug-Drug Interaction,
+    Professional Monograph, Duplicate Therapy, or Dose Range customization 
+    was successfully exported to the incremental file.
+  
+ 2. As a PECS User, pharmacists, clinicians, and PBM personnel can add 
+    comments to non-customized FDB records for Drug-Drug Interaction, 
+    Professional Monograph, Duplicate Therapy and Dose Range concepts.
+  
+ 3. As a PECS User, pharmacists, clinicians, and PBM personnel can see a 
+    report with the differences between the Dose Range record on file in 
+    PECS and the latest incremental FDB update.
+  
+ 4. As a PECS User, pharmacists, clinicians, and PBM personnel can see the 
+    changes to the FDB Dose Range record and any associated VA Custom records, 
+    with history icons on custom Dose Range records, provides links from 
+    custom Dose Range records to the corresponding FDB records and vice versa, 
+    includes the FDB record on the Dose Range history report, and displays 
+    the VA source of data on the Easy Search tool.
+  
+ 5. PECS Users, pharmacists, clinicians, and PBM  personnel no longer see 
+    the reverse interactions on the Drug-Drug Interactions/Drug Pair FDB 
+    Comparison report.
+  
+ 6. As a PECS User, pharmacists, clinicians, and PBM personnel will have an 
+    editable contact list for the users that includes the ability to generate 
+    a hyperlink into email.
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ Chillicothe VAMC
+ Mann-Grandstaff VAMC
+ Nebraska/Western Iowa HCS (Omaha)
+  
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ Title                           File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ PECS v5.0 Release Notes         PREC_5_0_RN_R1114.PDF           Binary 
+ PECS v5.0 Troubleshooting Guide PREC_5_0_TG_R1114.PDF           Binary 
+ PECS v5.0 User Guide            PREC_5_0_UM_R1114.PDF           Binary  
+  
+ Patch Installation:
+ -------------------------------
+ N/A
+  
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+  
+ Installation Instructions:
+ --------------------------
+ This is a Web Application JAVA Build. This is a Centralized Server
+ promotion. NO installation is required at Local sites.
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2014
+Completed By:                               Date Completed: JAN 07, 2015
+Released By :                               Date Released : JAN 12, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

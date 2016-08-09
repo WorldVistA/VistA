@@ -1,0 +1,302 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: EAS*1*113
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #106                      Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)EAS*1*86    <<= must be installed BEFORE `EAS*1*113'
+                    (v)EAS*1*111   <<= must be installed BEFORE `EAS*1*113'
+                    (v)DG*5.3*890  <<= must be installed BEFORE `EAS*1*113'
+                    (v)DG*5.3*904  <<= must be installed BEFORE `EAS*1*113'
+
+Subject: BT BULLETIN
+
+Category: 
+  - Enhancement (Mandatory)
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+  Note:  This patch is being released in support of the Enrollment Customer
+         Enhancements (ECE) and Enrollment System Enhancements projects and
+         the Enrollment System (ES) 4.1 release.  EAS*1*113 (Enrollment
+         Application System) is released with DG*5.3*871 (Registration),
+         DG*5.3*890 (Registration),DG*5.3*891 (Registration), DG*5.3*901
+         (Registration), DG*5.3*904 (Registration), DG*5.3*906 (Registration)
+         and IVM*2*160 (Income Verification Match) in host file
+         DG_53_P891.KID.
+   
+         It is imperative that this patch be installed no later than the
+         compliance date.  Your understanding and support is appreciated.
+  *************************************************************************
+   
+  The Health Eligibility Center (HEC) requested modifications to the
+  Enrollment System (ES) to support the requirements of the Veterans
+  Financial Assessment initiative.
+ 
+   
+  This patch modifies the Enrollment Application System v1.0 application as
+  described below:
+  
+      Add a Beneficiary Travel Bulletin.
+   ----------------------------------------------------------
+   Due to the Income Verification Match (IVM) process, the BT CLAIMS
+   PROCESSING Mailgroup will be automatically created in VistA with the
+   installation of this patch. Sites are responsible for determining the
+   appropriate membership for the Mailgroup and adding those users.
+   Messages will contain notification of a change in the Veteran's BT
+   Financial Indicator status. The bulletin that will be loaded with
+   this patch is called EAS BT CLAIMS PROCESSING.
+  
+  
+   The bulletin will be sent to each member of the Mailgroup and will
+   contain the following information:
+  
+   Mail Message From: Health Eligibility Center    Date: MM/DD/YYYY HH:MM
+   Subject: IVM-Beneficiary Travel Financial Indicator upload FOR<DFN>
+  
+   An Income Verification Match verified Beneficiary Travel information
+   has been uploaded for the following patient.
+  
+   Patient Name:
+   LAST 4 OF SSN:  
+   ICN:
+   DFN:
+   STATION NUMBER:
+   Prev Category:
+   New Category:
+   Date of Test:
+   Income Year of Conversion:
+  
+   - When a converted/reversal Rx Copay Test is received from IVM, a
+     check will be done to see if the BT Financial Indicator is
+     different than the BT Financial Indicator on file.  (e.g. the
+     new Financial Indicator is 1 (YES) and the BT Financial Indicator on 
+     File is 0 (No),or the new status is 0 (NO) and the BT Financial 
+     Indicator on File is 1 (Yes) or a null).
+   - If the BT Financial Indicator has changed, a bulletin 
+     will be sent to the BT CLAIMS PROCESSING Mail group.
+  
+    HL7 Changes
+   ----------------------------------------------------------
+   - The Z06 reciever is modified to process and store the BT Financial
+     Indicator received from ES, in the ZMT-31 segment-sequence, to the
+     BT FINANCIAL INDICATOR (#4) field of the ANNUAL MEANS TEST (#408.31)
+     file. 
+ 
+  
+  
+   Patch Components:
+   -----------------
+    
+   Files & Fields Associated:
+  
+  File Name         Number    Field Name     Number  New/Modified/Deleted
+  -------------     ------    ------------   ------  --------------------
+  N/A
+   
+  
+   Forms Associated:
+  
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+   N/A
+    
+    
+   Mail Groups Associated:
+  
+   Mail Group Name               New/Modified/Deleted
+   ---------------               --------------------
+   BT CLAIMS PROCESSING          New
+  
+   This new mail group is being sent with the patch and each site will be
+   responsible for adding the appropriate members needing to receive the
+   new BT FINANCIAL INDICATOR bulletin.
+    
+   An example of the bulletin that will be sent to the BT CLAIMS
+   PROCESSING mail group:
+  
+ =======================================================
+ Subj: IVM - Beneficiary Travel Financial Indicator UPLOAD FOR XXXXXXX  
+ [#89416]
+ 11/13/14@15:30  23 lines
+ From: POSTMASTER  In 'IN' basket.  Automatic Deletion Date: Nov 20, 2014
+ Page 1  *New*
+ --------------------------------------------------------------------------
+ A converted BT FINANCIAL INDICATOR was received for this patient who is
+ eligible for Beneficiary Travel.
+  
+ An Income Verification Match verified Beneficiary Travel Information has 
+ been uploaded for the following patient.
+  
+ Patient Name:  XXXX,XXXXXX
+  
+ Last 4 of SSN:  XXXX
+  
+ ICN:  5000000111V198302    
+  
+ DFN:  XXXXXXX
+  
+ STATION NUMBER:  500
+  
+ Prev Category:  NON-EXEMPT
+  
+ New Category:  MT COPAY REQUIRED
+  
+ Date of Test:  OCT 22, 2014
+  
+ Income Year of Conversion:  2013
+  
+ ========================================================
+  
+  
+   Options Associated:
+  
+   Option Name            Type               New/Modified/Deleted
+   -----------            ----               --------------------
+   N/A
+    
+    
+   Protocols Associated:
+  
+   Protocol Name                             New/Modified/Deleted
+   -------------                             --------------------
+   N/A
+    
+    
+   Security Keys Associated:
+  
+   Security Key Name
+   -----------------
+   N/A
+    
+   Templates Associated:
+  
+   Template Name     Type        File Name (Number)    New/Modified/Deleted
+   -----------       ----        ------------------    --------------------
+   N/A
+   
+     
+   Additional Information:
+  
+       
+   New Service Request (NSRs):
+   ---------------------------
+   N/A
+    
+    
+   Patient Safety Issues (PSIs):
+   -----------------------------
+   N/A
+    
+    
+   Remedy Ticket(s) & Overview:
+   ----------------------------
+   N/A
+    
+    
+   Test Sites:
+   -----------
+   West Texas VA Health Care System, Big Spring, TX
+   Fargo VA Health Care System, Fargo, ND
+   Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+   VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+     
+     
+   Documentation Retrieval Instructions:
+   =====================================
+  Updated documentation describing the new functionality introduced by 
+  this patch is available.
+   
+  The preferred method is to FTP the files from
+  ftp://download.vista.domain.ext/.  This transmits the files from the 
+  first available FTP server.  Sites may also elect to retrieve software
+  directly from a specific server as follows:
+   
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+   
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+  
+ Title                         File Name                       FTP Mode
+ -----------------------------------------------------------------------
+ N/A
+   
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3*901
+                                      DG*5.3*906
+  
+  
+  
+   
+ Installation Instructions:
+ --------------------------
+  
+ Please see the DG*5.3*891 Patch Description for installation 
+ instructions.
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;ENROLLMENT APPLICATION SYSTEM;**[Patch List]**;FEB 20, 2015;Build 53
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EAS1113P
+    Before:       n/a   After:  B5460770  **113**
+Routine Name: EASBTBUL
+    Before:       n/a   After:  B5431051  **113**
+Routine Name: EASPREC3
+    Before: B11366491   After: B11588856  **71,111,113**
+Routine Name: EASPREC6
+    Before: B83152765   After: B95603593  **111,113**
+Routine Name: EASPREC7
+    Before: B65699293   After: B79134294  **23,30,35,52,42,86,113**
+Routine Name: EASUM1
+    Before: B29901786   After: B30155239  **23,30,35,42,86,113**
+Routine Name: EASUM5
+    Before:       n/a   After: B16512870  **113**
+Routine Name: EASUM6
+    Before: B30233395   After: B31577950  **111,113**
+ 
+Routine list of preceding patches: 86, 111
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : AUG 26, 2013
+Completed By:                               Date Completed: DEC 01, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

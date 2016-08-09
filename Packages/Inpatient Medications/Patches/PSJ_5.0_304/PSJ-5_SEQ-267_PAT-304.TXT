@@ -1,0 +1,329 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/31/14 at 12:21
+=============================================================================
+Run Date: MAR 09, 2015                     Designation: PSJ*5*304
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #267                      Status: Released
+                  Compliance Date: APR 09, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*164   <<= must be installed BEFORE `PSJ*5*304'
+                    (v)PSJ*5*254   <<= must be installed BEFORE `PSJ*5*304'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*304'
+
+Subject: UNDEFINED ERRORS IN DICN0, ATC ISSUE, PHARMACY LOCK & DISP PSJU VBW
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)  An UNDEFINED error when editing the Infusion Rate for a non-verified IV
+      order.
+ 2)  Automated Tablet Counter (ATC) interface issue with Extra Units
+      Dispensed option.
+ 3)  Pharmacists are getting locked out of the system.
+ 4)  Message display issues with Non-Verified/Pending order screen
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1) INC000000858224     <UNDEFINED>N1+3^DICN0  *DO(2)
+ 2) INC000000942477     ATC Interface issue:  Extra Units Dispensed (PSJU EUD)
+ 3) INC000000969366     Pharmacists are getting locked out of Vista due to bad
+                         data in the AIS cross-reference in the PHARMACY 
+                         PATIENT FILE (#55).
+       Duplicate(s):
+       -------------
+       INC000000971136
+       INC000000981384
+       INC000000986677
+       INC000000996123
+       INC000000996782
+       INC000001006991
+       INC000001070083
+  
+ 4)  INC000000856200 - Non-Verified/Pending order screen [PSJU VBW] is not 
+                        displaying the correct prompt at the end of the page
+                        when the page is full and there are no other orders
+                        to be displayed.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Upstate New York
+ Oklahoma City VAMC
+ Huntington VAMC
+ Madison VAMC
+ Charleston VAMC
+  
+ Remedy Ticket Overview:
+ =======================
+  
+ 1.  INC000000858224
+  
+  Problem:
+  --------
+  When a user has a non-verified IV order and the additive triggers a critical
+  drug interaction, and the user attempts to modify the infusion rate, an
+  undefined error will occur. 
+  
+  Resolution:
+  -----------
+  Routine PSGSICH was modified to kill the variable DO prior to the Fileman
+  call.
+  
+ 2.  INC000000942477
+  
+  Problem:
+  --------
+  When PSJ*5*284 was released, Network Channel compatibility was added to 
+  send Pick List options.  The option EXtra Units Dispensed [PSJU EUD] 
+  was overlooked for network channel. 
+  
+  Resolution:
+  -----------
+  Routine PSGEUD was modified so that when using the Pick List option 
+  Extra Units Dispensed (PSJU EUD) to send the Pick List to the ATC,
+  it functions properly when using a Network Channel device.
+  
+  
+ 3)  INC000000969366
+  
+  Patient Safety Issue:
+  ---------------------
+  PSPO00002536
+  
+  Problem:
+  --------
+  When a pharmacist goes into Vista to verify orders using menu option 
+  Non-Verified/Pending Orders [PSJU VBW], they are sometimes locked up 
+  within the Vista session.  On occasion a stop date is being stored with
+  quotes around it in the AIS cross-reference of the PHARMACY PATIENT FILE
+  (#55).  When a pharmacist attempts to pull up the list of non-verified
+  orders and they hit a stop date with quotes around it, the system is put
+  into an infinite loop which locks up their user ID's. The pharmacist
+  cannot continue to process these orders until they contact the help desk
+  to have their session terminated, which unlocks their user ID.
+  
+  Resolution:
+  -----------
+  Modified two routines, PSGVBW & PSIVACT, to prevent the infinite loop. 
+  Modified the AIS cross-reference of the PHARMACY PATIENT FILE (#55) 
+  to ensure only numeric values are extracted from the file. Also added
+  the required HELP-PROMPT information for the STOP DATE/TIME field (#.03)
+  of the PHARMACY PATIENT FILE (#55).
+  
+  A post-install routine (PSJ304PO) has been created to re-index the AIS 
+  cross-reference of the Pharmacy Patient File (#55).
+  
+ DATA DICTIONARY
+ ---------------
+  
+ BEFORE:
+ 55.01,.03     STOP DATE/TIME         0;3 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ETX" D:X'=+X ^%DT D:X=+X ENDL^PSSDDUT3 S
+                                  X=Y K:Y<1!(Y'[".") X
+               LAST EDITED:      JUN 25, 2013 
+               DESCRIPTION:        This is the date and time the order is to
+                                 end.  
+  
+               GROUP:            PSJI
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  55^AIV 
+                                 1)= S ^PS(55,"AIV",+$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^PS(55,"AIV",+$E(X,1,30),DA(1),DA)
+                                 Identifies IV orders by the order's stop
+                                 date/time.  
+  
+               CROSS-REFERENCE:  55.01^AF^MUMPS 
+                                 1)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.03 D ENTO^PSIVAL
+  
+                                 2)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.03 D ENFR^PSIVAL
+                                 Used by IV Package.  
+  
+               CROSS-REFERENCE:  55.01^AIS 
+                                 1)= S ^PS(55,DA(1),"IV","AIS",$E(X,1,30),DA)=""
+                                 2)= K ^PS(55,DA(1),"IV","AIS",$E(X,1,30),DA)
+  
+               CROSS-REFERENCE:  55^AIT^MUMPS 
+                                 1)= I $P($G(^PS(55,DA(1),"IV",DA,0)),U,4)]"" S 
+                                 ^PS(55,DA(1),"IV","AIT",$P(^(0),U,4),+X,DA)=""
+  
+                                 2)= I $P($G(^PS(55,DA(1),"IV",DA,0)),U,4)]"" K 
+                                 ^PS(55,DA(1),"IV","AIT",$P(^(0),U,4),+X,DA)
+                                   Used by IV to gather orders.  X-refs are in
+                                 the form of:  
+                                   ^PS(55,DA(1),"IV","AIT",type,stop
+                                 date/time,DA)  
+                                  
+                                   These are used primarily by the Med Due
+                                 Worksheet and MAR.  
+  
+ AFTER:
+  
+ 55.01,.03     STOP DATE/TIME         0;3 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ETX" D:X'=+X ^%DT D:X=+X ENDL^PSSDDUT3 S
+                                  X=Y K:Y<1!(Y'[".") X
+               LAST EDITED:      MAY 28, 2014 
+               HELP-PROMPT:      Enter the stop DATE and TIME for this order. 
+               DESCRIPTION:        This is the date and time the order is to
+                                 end.  
+  
+               GROUP:            PSJI
+               NOTES:            XXXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+  
+               CROSS-REFERENCE:  55^AIV 
+                                 1)= S ^PS(55,"AIV",+$E(X,1,30),DA(1),DA)=""
+                                 2)= K ^PS(55,"AIV",+$E(X,1,30),DA(1),DA)
+                                 Identifies IV orders by the order's stop
+                                 date/time.  
+  
+               CROSS-REFERENCE:  55.01^AF^MUMPS 
+                                 1)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.03 D ENTO^PSIVAL
+  
+                                 2)= Q:$D(PSIVACT)  I '$D(DIU(0)) S PSIVF1=55.01
+                                 ,PSIVF2=.03 D ENFR^PSIVAL
+                                 Used by IV Package.  
+  
+               CROSS-REFERENCE:  55.01^AIS 
+                                 1)= S ^PS(55,DA(1),"IV","AIS",+X,DA)=""
+                                 2)= K ^PS(55,DA(1),"IV","AIS",+X,DA)
+  
+               CROSS-REFERENCE:  55^AIT^MUMPS 
+                                 1)= I $P($G(^PS(55,DA(1),"IV",DA,0)),U,4)]"" S 
+                                 ^PS(55,DA(1),"IV","AIT",$P(^(0),U,4),+X,DA)=""
+  
+                                 2)= I $P($G(^PS(55,DA(1),"IV",DA,0)),U,4)]"" K 
+                                 ^PS(55,DA(1),"IV","AIT",$P(^(0),U,4),+X,DA)
+                                   Used by IV to gather orders.  X-refs are in
+                                 the form of:  
+                                   ^PS(55,DA(1),"IV","AIT",type,stop
+                                 date/time,DA)  
+                                  
+                                   These are used primarily by the Med Due
+                                 Worksheet and MAR.  
+  
+ 4.  INC000000856200
+  
+  Problem:
+  --------
+  Users are not able to select a patient with pending/non-verified Inpatient
+  Medication orders using the option Non-Verified/Pending Orders [PSJU VBW]
+  in Vista when the screen display is full, 20 orders, and there are no 
+  further orders to display.  The prompt they receive is "^" TO QUIT when
+  they should be getting the prompt Select 1 - 20:.
+  
+  Resolution:
+  -----------
+  Routine PSGVBW0 was modified so that the variable PSJASK is not reset when
+  displaying the last medication order on the screen.
+  
+  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  
+ ****************************** N O T E **********************************
+   
+   Please Verify Pre Checksums for Routine PSGEUD for Class III 
+   modifications.
+  
+   PSJ*5*304 may contain a routine that may overwrite Class III 
+   modifications for the ATC Devices at your site. Class III changes must
+   be reinstated after installing PSJ*5*304.
+  
+ *************************************************************************
+  
+ It is advised to install this patch during non-peak hours.  The patch
+ installation should take less than 2 minutes.  
+ However, there is a post-install routine, PSJ304PO, that will be queued 
+ which will re-index the "AIS" cross-reference of the 
+ Pharmacy Patient File(#55). 
+ The process time for PSJ304PO depends on the
+ size of file #55 and a MailMan message will be sent to the patch
+ installer upon completion. 
+  
+  
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+ 2. From the Kernel Installation & Distribution System menu, select
+    the Installation menu.
+  
+ 3. From this menu, you may select to use the following options (when 
+    prompted for INSTALL NAME, enter PSJ*5.0*304):
+  
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup 
+        message of any routines exported with this patch. It will not 
+        backup any other changes such as DD's or templates.
+  
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*304.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    respond NO.
+  
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+    Protocols? NO//", respond NO.
+  
+ 7. After successful completion of the post-install process, 
+    the post-install routine, PSJ304PO, should be manually deleted.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS ;**[Patch List]**;16 DEC 97;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGEUD
+    Before: B27762235   After: B31070056  **31,41,50,111,150,164,304**
+Routine Name: PSGSICH
+    Before: B43509537   After: B43620389  **254,304**
+Routine Name: PSGVBW
+    Before: B97529412   After: B97694806  **5,16,39,59,62,67,58,81,80,
+                                           110,111,133,139,155,241,243,
+                                           265,275,304**
+Routine Name: PSGVBW0
+    Before: B42020216   After: B41945132  **29,39,53,56,95,80,110,127,
+                                           124,243,304**
+Routine Name: PSIVACT
+    Before: B30113388   After: B30388063  **15,38,58,110,181,275,304**
+Routine Name: PSJ304PO
+    Before:       n/a   After:  B6350369  **304**
+ 
+Routine list of preceding patches: 164, 254, 275
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 13, 2013
+Completed By:                               Date Completed: MAR 04, 2015
+Released By :                               Date Released : MAR 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

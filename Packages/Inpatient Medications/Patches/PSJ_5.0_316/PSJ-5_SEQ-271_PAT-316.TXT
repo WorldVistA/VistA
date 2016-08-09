@@ -1,0 +1,221 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 07/20/15 at 10:43
+=============================================================================
+Run Date: SEP 22, 2015                     Designation: PSJ*5*316
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #271                      Status: Released
+                  Compliance Date: OCT 23, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*129   <<= must be installed BEFORE `PSJ*5*316'
+                    (v)PSJ*5*267   <<= must be installed BEFORE `PSJ*5*316'
+                    (v)PSJ*5*276   <<= must be installed BEFORE `PSJ*5*316'
+                    (v)PSJ*5*312   <<= must be installed BEFORE `PSJ*5*316'
+
+Subject: Unit Dose issues & Parameter carry overs
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issues:
+  
+ 1)  Activity Log not showing Dispense Drug changes
+ 2)  Expired Unit Dose orders showing on Patient Profile as Active
+ 3)  Parameters carrying over from IV to Unit Dose orders
+ 4)  When verifying a Unit Dose order with a PRN schedule w/o a Frequency,
+     user is getting Pre-Exchange DOSES: OI// indicating it is invalid.
+  
+  
+ Associated Remedy tickets:
+ =========================
+ 1)  INC000000905936:  When a change to the Dosage is done there is no 
+                       Activity Log entry to reflect this change.
+  
+     Duplicate:
+     INC000000939022
+  
+ 2)  INC000000964470:  Unit Dose orders are not changing their status from 
+                       Active to Expired
+  
+     Duplicates:
+     INC000001220510   
+     INC000001223661   
+     INC000001225865   
+     INC000001226952
+     INC000001231650
+     INC000001233775
+     INC000001248182
+  
+ 3)  INC000001104816:  Parameters carrying over from IV to Unit Dose
+                       orders
+  
+ 4)  INC000001123236:  Dispense Drug Unit Dose blank or has a zero
+  
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+  
+ Participating Test Sites:
+ ========================
+ Eastern Colorado HCS
+ Oklahoma City VAMC
+ Salisbury VAMC
+ Upstate NY HCS
+  
+  
+ Remedy Overview:
+ ===============
+ 1)  INC000000905936
+  
+   Problem:
+   -------
+   When the Dispense Drug of an active Unit Dose order is modified in 
+   Vista, there is no activity log entry to reflect the change.  
+  
+   Resolution:
+   ----------
+   Modified routine PSGAL5 to store an Activity Log entry in the Pharmacy
+   Patient File (#55) when the Dispense Drug is modified.  Also modified 
+   PSGOE92 so that after several Dispense Drug changes, each activity log 
+   will only show the prior dispense drug as opposed to concatenating them 
+   together.
+  
+  
+ 2) INC000000964470
+  
+   Problem:
+   -------
+   In VistA, pharmacy is seeing old, expired orders showing as Active.  
+   This is due to 2 variables (Q & QQ ) getting overwritten by other called
+   routines.
+  
+   Resolution:
+   ----------
+   Modified routine PSJO1 to change the variable Q and QQ to be PSJOQ and
+   PSJOQQ. 
+  
+  
+ 3) INC000001104816
+  
+   Problem:
+   -------
+   Unit Dose prescriptions that are finished using the "Speed Finish"
+   functionality in the option INPATIENT ORDER ENTRY [PSJ OE] are having
+   attributes from IV prescriptions copied into them.  This is due to some 
+   variables that were not cleaned up from the previous order.
+  
+   Resolution:
+   ----------
+   After exiting the INPATIENT ORDER ENTRY option, any remaining variables
+   will now be cleaned up so they are not around when another option is 
+   invoked.
+  
+  
+ 4) INC000001123236
+  
+   Problem:
+   -------
+   When verifying a pending Unit Dose order that has a PRN Schedule, where 
+   there is no Frequency defined, the user is getting the incorrect prompt:
+   'Pre-Exchange DOSES: OI//', indicating it is invalid.
+  
+   Resolution:
+   ----------
+   Routine PSGPL0 was modified so that when a Schedule Type of PRN is used 
+   and there is no frequency defined in the ADMINISTRATION SCHEDULE file 
+   (#51.1), the order is given the correct Pre-Exchange DOSES prompt. 
+  
+   
+ Components:
+ ==========
+ OPTION file (#19), OPTION: PSJ OE, EXIT ACTION: D KILL^XUSCLEAN
+  
+  
+ Installation Instructions:
+ =========================
+ It is recommended that the install take place during non-peak hours.
+  
+ Install Time - less than 2 minutes.
+  
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+    
+ 2.  Start up the Kernel Installation and Distribution System Menu
+     [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+ 3.  From this menu, you may elect to use the following options
+     (When prompted for the INSTALL NAME, enter PSJ*5.0*316):
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will
+         not backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option
+         will allow you to view all changes that will be made when
+         this patch is installed.  It compares all components of this
+         patch (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will
+         allow you to ensure the integrity of the routines that are
+         in the transport global.
+    
+ 4.  Use the Install Package(s) option and select the package PSJ*5.0*316.
+    
+     a.  Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//,
+         answer NO
+     b.  When prompted "Want KIDS to INHIBIT LOGONs during the install?
+         NO//", answer NO.
+     c.  When prompted "Want to DISABLE Scheduled Options and Menu Options
+         and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 8
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGAL5
+    Before: B28188853   After: B28128327  **3,22,50,267,316**
+Routine Name: PSGOE92
+    Before: B31221311   After: B30935948  **2,35,50,58,81,110,215,237,276,316**
+Routine Name: PSGPL0
+    Before: B34905695   After: B35526876  **50,83,110,125,129,316**
+Routine Name: PSJO1
+    Before: B46301239   After: B46824069  **3,47,56,58,109,110,127,162,
+                                           181,275,292,299,312,316**
+ 
+Routine list of preceding patches: 129, 267, 276, 312
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 16, 2015
+Completed By:                               Date Completed: SEP 03, 2015
+Released By :                               Date Released : SEP 22, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

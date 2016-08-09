@@ -1,0 +1,323 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/25/15 at 11:52
+=============================================================================
+Run Date: APR 21, 2015                     Designation: PSB*3*72
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #69                      Status: Released
+                  Compliance Date: MAY 22, 2015
+=============================================================================
+
+Associated patches: (v)PSB*3*64    <<= must be installed BEFORE `PSB*3*72'
+                    (v)PSB*3*78    <<= must be installed BEFORE `PSB*3*72'
+
+Subject: BCMA MED LOG AND REPORT CORRECTIONS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+     *************************** NOTE *************************
+     *  This patch contains a post-install routine, which     *
+     *  could cause excessive install times of several hours  *
+     *  or more depending on the size of the database. Test   *
+     *  sites reported an average install time of 2 hours.    * 
+     *  See the installation section for more information.    *
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system. Users should remain off the  *
+     *  system for a period of 10 minutes during installation.*
+     **********************************************************
+  
+ This patch will resolve the following issues:
+  
+ 1. The Medication History report in Bar Code Medication Administration
+    (BCMA) displays amounts in the Units Given field for an order that has
+    not been given. 
+  
+ 2. When a user makes a change to an order using the Edit Med Log option,
+    which does not change the action status, several reports display the
+    initials of the person who edited the order instead of the person who
+    created the action on the order.
+  
+ 3. The BCMA Medication Log and Medication Variance report headers do not
+    display the time frame of the report.
+  
+ 4. The BCMA AUDIT LOG (#53.799) sub-file does not include an entry for Pro
+    Re Nada (PRN) Effectiveness when a PRN is "Un-Given".
+  
+ 5. The legend of the Medication Therapy report does not include users who
+    entered comments for an order.
+  
+ 6. The second line of routine PSBOPE has an invalid format.
+  
+ 7. Update the unsupported $$UCASE^XUSG Application Programming Interface
+    (API) to the supported API $$UP^XLFSTR in routine PSBMLLKU.
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+   
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000000389846 - Missing Dose Units Change
+                      PSPO #1682
+ 2. INC000000351820 - Patch 45 initial issue doesn't look to resolve
+                      showing initials
+ 3. INC000000425372 - Some discrepancies in report headers for BCMA reports
+ 4. INC000000460174 - PRN effectiveness reporting
+ 5. INC000000505556 - Medication Therapy report doesn't display complete
+                      information
+ 6. INC000000953788 - Bar Code Med Admin - Patch Install Issue: warning on
+                      compare at several Region 1 sites.
+ 7. INC000000986997 - Specific Patient Selection throws error
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Wilkes-Barre
+ Upstate NY
+ Biloxi
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000389846 - Missing Dose Units Change
+  
+    Duplicate:
+    ----------
+    INC0000000334673
+  
+    Patient Safety Issue: PSPO #1682
+  
+    Problem:
+    --------
+    The Medication History report in BCMA displays amounts in the Units
+    Given field for an Intravenous Piggyback (IVPB) or Intravenous (IV)
+    order that has a status of Held or Refused, or has had a Missing Dose
+    requested. 
+  
+    Resolution:
+    -----------
+    Routines PSBML and PSBML2 were modified to store the dosage ordered in
+    the DOSE ORDERED (#.02) field of the ADDITIVES (#53.796) and SOLUTIONS
+    (#53.797) sub-files of the BCMA MEDICATION LOG (#53.79) file, and to
+    only store the DOSE GIVEN (#.03) in the ADDITIVES (#53.796) and
+    SOLUTIONS (#53.797) sub-files when the order is marked Given or
+    Infusing. 
+  
+    Routine PSBOPM was modified to append the DOSE ORDERED (#.02) field
+    to the ADDITIVES (#.01) field on the Medication History report. 
+  
+    Routine PSBOML was modified to use the DOSE ORDERED (#.02) field when
+    displaying the dosage order on the Medication Log report.  
+  
+    Post-install routine PSB372P will be run upon installation to update
+    the DOSE ORDERED (#.02) field of the ADDITIVES (#53.796) and SOLUTIONS
+    (#53.797) sub-files with data from the DOSE GIVEN (#.03) field for all
+    historical entries.
+  
+  
+ 2. INC000000351820 - Patch 45 initial issue doesn't look to resolve
+                      showing Initials
+  
+    Problem:
+    --------
+    When a user makes a change to an order using the Edit Med Log option,
+    which does not change the ACTION STATUS (#.09) in the BCMA MEDICATION
+    LOG (#53.79) file, several reports display the initials of the person
+    who edited the order instead of the person who created the action on
+    the order.
+  
+    Resolution:
+    -----------
+    Routines PSBCSUTX, PSBMLLKU, PSBOMH1, PSBOML, PSBOMT, PSBOPE, and
+    PSBOPM were modified to use the last ACTION BY LOG (#.05) field in
+    the AUDIT LOG (#53.799) sub-file with an ACTION STATUS LOG (#.04) field
+    containing "Field: ACTION STATUS" to get the initials for all BCMA
+    reports which contain the initials.
+  
+  
+ 3. INC000000425372 - Some discrepancies in report headers for BCMA reports
+  
+    Problem:
+    --------
+    The BCMA Medication Log and Medication Variance report headers do not
+    display the time frame of the report. This is inconsistent with other
+    BCMA reports.
+  
+    Resolution:
+    -----------
+    Routines PSBOML and PSBOMV were modified to include the start and stop
+    times in the report header.
+  
+  
+ 4. INC000000460174 - PRN effectiveness reporting
+  
+    Problem:
+    --------
+    The BCMA AUDIT LOG (#53.799) sub-file of the BCMA MEDICATION LOG
+    (#53.79) file does not include an entry for PRN Effectiveness when a
+    PRN is "Un-Given".
+  
+    Resolution:
+    -----------
+    Routine PSBML2 was modified to use FileMan to update the PRN REASON
+    (#.21), PRN EFFECTIVENESS (#.22), PRN EFFECTIVENESS ENTERED BY (#.23),
+    PRN EFFECTIVENESS ENTERED AT (#.24), PRN EFFECTIVENESS MINUTES (#.25),
+    and PRN REASON FLAG (#.27) fields in the BCMA MEDICATION LOG (#53.79)
+    file, which properly created the PRN Effectiveness entry in the BCMA
+    AUDIT LOG (#53.799) sub-file.
+  
+  
+ 5. INC000000505556 - Medication Therapy report doesn't display complete
+                      information
+  
+    Problem:
+    --------
+    The legend of the Medication Therapy report does not include users who
+    entered comments for an order.
+  
+    Resolution:
+    -----------
+    Routine PSBOMT was modified to include the name of the user who entered
+    a comment in the report's legend.
+  
+  
+ 6. INC000000953788 - Bar Code Med Admin - Patch Install Issue: warning
+                      on compare at several Region 1 sites.
+  
+    Problem:
+    --------
+    The second line of routine PSBOPE has an invalid format.
+  
+    Resolution:
+    -----------
+    Routine PSBOPE was modified to correct the second line of the routine.
+  
+  
+ 7. INC000000986997 - Specific Patient Selection throws error
+  
+    Problem:
+    --------
+    Unsupported API $$UCASE^XUSG is being removed.
+  
+    Resolution:
+    -----------
+    Routine PSBMLLKU was modified to use the supported API $$UP^XLFSTR.
+  
+    Note:
+    -----
+    Routines APSPFUNC, AUPNPAT and BDGF2 called from routine PSBMLLKU are 
+    Indian Health Services (IHS) only routines and will display as an
+    XINDEX error when installing this patch in VA Accounts. This
+    functionality was introduced by patch PSB*3.0*42. This enhancement is
+    intended to enable the BCMA application to recognize whether it is
+    operating in the Indian Health Service (IHS) or Veterans Health
+    Administration (VHA) environment, and respond by recognizing and
+    displaying the patient identifier appropriate to the environment. This
+    will enable a single version of BCMA to be maintained by VHA and yet be
+    installed and operate in a "plug and play" fashion in an IHS or Tribal
+    facility running Resource and Patient Management System (RPMS).
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system. Users should remain off the  *
+     *  system for a period of 10 minutes during installation.*
+     *                                                        *
+     *  This patch contains a post-install routine, which     *
+     *  could cause excessive install times of several hours  *
+     *  or more depending on the size of the database. Test   *
+     *  sites reported an average install time of 2 hours.    *
+     *                                                        *
+     *  This post-install routine is automatically deleted    *
+     *  After the installation completes.  If you wish to     *
+     *  Verify the checksum of this routine, please use       *
+     *  Option 2 Verify Checksums in Transport Global         *
+     *  Before installing the patch.                          *
+     *                                                        *
+     *  Suggested time to install: Queued for Non-peak        *
+     *  requirement hours.                                    *
+     **********************************************************
+      
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*72):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*72.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 16
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB372P
+    Before:       n/a   After:  B7779557  **72**
+Routine Name: PSBCSUTX
+    Before: B62829638   After: B69934937  **16,13,38,32,72**
+Routine Name: PSBML
+    Before:B123316080   After:B127507803  **6,3,4,9,11,13,25,45,33,52,70,72**
+Routine Name: PSBML2
+    Before: B90238392   After:B103484155  **3,18,22,23,13,45,42,70,72**
+Routine Name: PSBMLLKU
+    Before:B105244000   After:B106582479  **3,9,11,20,13,38,32,56,42,70,72**
+Routine Name: PSBOMH1
+    Before: B83153329   After: B84411239  **6,3,9,11,26,38,45,51,50,57,
+                                           67,64,72**
+Routine Name: PSBOML
+    Before: B62348455   After: B64746915  **3,11,50,54,70,72**
+Routine Name: PSBOMT
+    Before: B91036821   After: B93970205  **32,50,70,72**
+Routine Name: PSBOMV
+    Before: B51967870   After: B55477289  **60,78,72**
+Routine Name: PSBOPE
+    Before: B22369471   After: B23332859  **5,23,32,70,78,72**
+Routine Name: PSBOPM
+    Before: B75665878   After: B93804999  **3,9,13,17,40,70,72**
+ 
+Routine list of preceding patches: 64, 78
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2012
+Completed By:                               Date Completed: APR 07, 2015
+Released By :                               Date Released : APR 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

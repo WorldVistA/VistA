@@ -1,0 +1,228 @@
+$TXT Created by               at HOO.DOMAIN.EXT  (KIDS) on Tuesday, 07/15/14 at 13:26
+=============================================================================
+Run Date: MAR 17, 2015                     Designation: OR*3*312
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #351                      Status: Released
+                  Compliance Date: APR 17, 2015
+=============================================================================
+
+Associated patches: (v)OR*3*243    <<= must be installed BEFORE `OR*3*312'
+                    (v)OR*3*298    <<= must be installed BEFORE `OR*3*312'
+
+Subject: ALL MEDICATION REPORT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Note:  This patch can only be installed at sites running CPRS.
+  
+  This patch contains the several changes to reports in CPRS found on
+  the Reports Tab. This patch also addresses a patient safety issue
+  as described in issue #1 (PSI/PSPO #970).
+  
+  1) This patch adds a new Pharmacy report to the Clinical Reports on the
+  Reports Tab in CPRS (Computerized Patient Record System).  
+  The name of the report is All Medications. 
+  It includes All Inpatient and Outpatient Pharmacy data for a patient.
+  The data in the report can be limited by using date range parameters
+  defined by the user. To determine the data that is included, based on
+  date range selection, the logic is to first look for Last Fill Date,
+  then Issue Date, then Order date (depends on if the date exists for the
+  drug/RX being screened.
+  
+  When data is added to the report it will initially be sorted by STATUS,
+  beginning with Active Susp, followed by Active, followed by Discontinued,
+  followed by Expired, followed by Pending
+  (alphabetically within each of these groups).  Users will have the
+  ability to sort the report in different sequence by clicking on a column
+  header, thus sorting by that column.
+  
+  The All Medications report will be placed as the first item on the Pharmacy
+  menu on the CPRS Reports Tab.
+  
+  The All Medications report supports Remote Data Views (RDV) from remote
+  Facilities. Please note that remote data will not be available from all
+  sites until every VA site has installed this patch. Only sites that have
+  installed this patch will return remote data for this report when being
+  queried. If a remote site is queried that has not installed the patch,
+  no data is returned and no message is given to the user indicating that
+  the remote site may or may not have data. This will not be a problem once
+  all sites have installed the patch, usually within 30 days of the patch
+  being released.
+  
+  This report was created in response to a Patient Safety Program Office
+  (PSPO) Issue PSPO 970.
+  The API's (Application Program Interface) created by this effort will
+  also be used by the VistaWeb application to create the same report
+  in VistaWeb.  VistaWeb is a web based inter-facility patient reporting
+  application.
+  
+  2) This patch changes the Date Range selection logic for the 
+  Pharmacy All Outpatient report.  Prior to this change, the report
+  had no beginning and end dates, and would display all data when the report
+  was selected.  With this change, the user can specify a date range
+  for pulling outpatient pharmacy data. To determine the data that is
+  included, based on date range selection, the logic is to first look
+  for Last Fill Date then Issue Date, then Order date (depends on if the
+  date exists for the drug/RX being screened.
+  
+  This change is being made at the request of the DoD BHIE AHLTA Project
+  to allow more flexibility and so that Date Range parameters are passed to 
+  external interfaces like VistaWeb and DOD queries.
+  
+  As part of this change the name of the report is being changed in CPRS
+  to more accurately reflect the data being selected/displayed.  The
+  report name will change from "Pharmacy All Outpatient" to simply
+  "Outpatient Medications".  To be consistent, VistaWeb will also be
+  making this change sometime in the future.
+  
+  This report not only exists on the Dept. of Defense Reports, but also
+  on the Clinical Reports | Pharmacy menu.  The same change to the report
+  name will also be made there.
+  
+  In the past, most of the DOD reports would include local VA data
+  when the report was selected. With the installation of this patch,
+  Local VA data will not be included with any of the DOD reports found
+  under the Dept. of Defense Reports menu. It will still be possible
+  to get local data, as well as DOD data, on the same display for these
+  reports by selecting the same report under the Clinical Reports menu.
+  
+  3) This patch fixes a potential problem on printed reports that show
+  the Lab Accession #. Accession numbers that extend beyond 10 characters
+  get truncated when printed at the top of the report. For example, an
+  Accession # of "SPLB 03 1648" was printing as "SPLB 03 16".  This patch
+  corrects this problem by extending the Accession # column in the
+  OE/RR Reports File (#101.24) to 16 characters for all reports that
+  contain the Accession # column.
+  
+  4) This patch re-exports entries with internal numbers greater than 999
+  and entries 3 (ORRP AP ALL) and 24 (ORL ANATOMIC PATHOLOGY)
+  from the OE/RR Reports file (#101.24).  This is a common occurrence
+  when new entries are being sent out in this file.  Entries above 999
+  are considered nationally controlled entries in this file.  Locally
+  created entries in this file are generally done in entry numbers less
+  than 999.  If you have created or modified entries in this file with
+  an internal number greater than 999 or #3 and #24, those changes
+  will be lost.  To preserve any local changes, either save them off
+  someplace before installing this patch, or move the changed entries
+  to internal numbers less than 999.
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ PSPO00000970
+  
+ RELATED CQ'S
+ ============
+  18074
+  17772
+  19005
+  20112
+  22007
+  
+ RELATED Remedy Tickets
+ ======================
+  259376
+  
+ TEST SITES
+ ==========
+  Black Hills
+  Long Beach
+  Mountain Home
+  San Diego
+  Atlanta
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                               File Name                  FTP Mode
+ -----------------------------------------------------------------------
+ CPRS User Guide: GUI Version         CPRSGUIUM.DOC             Binary
+                                      CPRSGUIUM.PDF             Binary
+  
+ CPRS Technical Manual                CPRSLMTM.DOC              Binary
+                                      CPRSLMTM.PDF              Binary
+  
+ CPRS Patch OR*3.0*312 Release Notes  OR_30_312_RN.DOC          Binary
+                                      OR_30_312_RN.PDF          Binary
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch should be loaded during non-peak hours to minimize disruption
+  to users.  Installation will take less than 1 minute.  Users may remain
+  on the system.
+  
+  ***Important Note***
+  If you have made local changes to any reports entries in the OE/RR 
+  REPORTS file (#101.24) with an internal entry number greater than 999, 
+  you need to save those changes off and redo them after installing this 
+  patch. Or, you will need to move the changed entries to internal entry 
+  numbers less than 999.
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2.  From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+  3.  From this menu, you may elect to use the following options
+          a.  Backup a Transport Global
+          b.  Compare Transport Global to Current System
+          c.  Verify Checksums in Transport Global
+  
+  4.  Use the Install Package(s) options and select the package OR*3*312.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//'
+      respond NO.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 31
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORDV06
+    Before: B40307303   After: B41792290  **109,118,167,208,215,274,243,312**
+Routine Name: ORDV06A
+    Before:  B7403444   After:  B7946029  **215,243,312**
+Routine Name: ORDV06B
+    Before:       n/a   After: B36021752  **312**
+Routine Name: ORY312
+    Before:       n/a   After:  B1970420  **312**
+ 
+Routine list of preceding patches: 243
+
+=============================================================================
+User Information:                          Hold Date     : MAR 12, 2015
+Entered By  :                               Date Entered  : APR 16, 2009
+Completed By:                               Date Completed: FEB 17, 2015
+Released By :                               Date Released : MAR 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,462 @@
+$TXT Created by                      DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 05/14/14 at 16:39
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: ROR*1.5*19
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #21                    Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)ROR*1.5*5   <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)ROR*1.5*12  <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)LEX*2*80    <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)ICD*18*57   <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)GMPL*2*42   <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)ROR*1.5*20  <<= must be installed BEFORE `ROR*1.5*19'
+                    (v)ROR*1.5*23  <<= must be installed BEFORE `ROR*1.5*19'
+
+Subject: ICD-10 CLINICAL CASE REGISTRIES CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the 
+ Anonymous directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionality within the Clinical Case Registries (CCR)
+ application was updated to address the ICD-10 code set.
+  
+ 1. Registry update process has been changed so that Reason for Selection
+     for a patient added to a Registry can also be ICD-10 code in
+     outpatient file, ICD-10 code in Outpatient Encounter file (409.68), 
+     ICD-10 code in the PTF file (45) or ICD-10 code in Problem List
+     package.
+     
+  
+ 2. Registry update process for historical encounters has been modified. 
+     For historical encounters, Date of Interest for determining Coding
+     System is the visit creation date instead of the visit date.
+  
+ 3. ICD-10 diagnoses and ICD-10 procedure codes can be searched for in the 
+     ROR Report parameters.
+  
+ 4. ICD-10 diagnoses codes can be saved in Your Templates along with 
+     ICD-9 diagnoses codes.
+  
+ 5. Common Templates have been updated to include ICD-10 codes. Note:   
+     The Pre-install routine saves the current Common Templates for 180
+     days in ^XTMP("RORP19",$J) global before updating them with ICD-9 and
+     ICD-10 codes. If a Common Template has been modified, it will be
+     overwritten with the original ICD-9 codes and new ICD-10 codes.
+  
+ 6. Reports show ICD-10 diagnoses and procedure codes.
+  
+ 7. CCR Registry information that is sent to the National Database via Health
+     Level (HL7) messages now can differentiate between ICD-9 and ICD-10
+     diagnosis codes.
+  
+ 8. RPC call ROR LIST ICD-9 was removed and replaced by ROR LIST ICD. ROR LIST
+     ICD is now linked to option ROR GUI.
+  
+  
+ Patch Components
+ ================
+  
+ Data Dictionary
+ ---------------
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ ROR SELECTION RULE (#798.2)  CODING SYSTEM (#7)      New
+  
+ File Data
+ ---------
+  
+ File Name (#)                Record Name             New/Modified/Deleted
+ -------------                -----------             --------------------
+ ROR SELECTION RULE (#798.2)  VA HIV PROBLEM          Modified
+                              VA HIV PROBLEM (ICD10)  New
+                              VA HIV PTF              Modified
+                              VA HIV PTF (ICD10)      New
+                              VA HIV VPOV             Modified
+                              VA HIV VPOV (ICD10)     New
+  
+                              VA HEPC PROBLEM         Modified
+                              VA HEPC PROBLEM (ICD10) New
+                              VA HEPC PTF             Modified
+                              VA HEPC PTF (ICD10)     New
+                              VA HEPC VPOV            Modified
+                              VA HEPC VPOV (ICD10)    New
+  
+  
+ File Name (#)                Record Name             New/Modified/Deleted
+ -------------                -----------             --------------------
+ ROR REGISTRY PARAMETERS      VA HIV                  Modified
+ (#798.1)                     VA HEPC                 Modified
+  
+  
+ File Name (#)                Record Name             New/Modified/Deleted
+ -------------                -----------             --------------------
+ ROR REPORT PARAMETERS        Diagnoses (#13)         Modified
+ (#799.34)                    Procedures (#15)        Modified
+  
+  
+ File Name (#)                Record Name             New/Modified/Deleted
+ -------------                -----------             --------------------
+ ROR LIST ITEM (#799.1)       ICD                     New
+                              ICD10                   New
+                              ICDFILT                 New
+                              ICDLST                  New
+  
+  
+ Dialog Name                                          New/Modified/Deleted
+ -----------                                          --------------------
+ 7981013.001  Diagnoses (HTML)                        Modified
+ 7981013.002  Diagnoses (CSV)                         Modified
+ 7981015.002  Procedures (CSV)                        Modified
+ 7981999.001  Common XSL templates (HTML)             Modified
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #                  New/Modified/Deleted
+ ---------                    ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                      New/Modified/Deleted
+ ---------------                                      --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                         Type             New/Modified/Deleted
+ -----------                         ----             --------------------
+ ROR GUI                             Broker           Modified
+  
+ Protocols Associated:
+  
+ Protocol Name                                        New/Modified/Deleted
+ -------------                                        --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name             Type      File Name (#)    New/Modified/Deleted
+ -------------             ----      -------------    --------------------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Coatesville VA Medical Center, Coatesville, PA
+ Palo Alto VA Medical Center, Palo Alto, CA
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to File Transfer Protocol (FTP) the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the Department of Veterans Affairs (VA) 
+ Software Documentation Library at: http://www4.domain.ext/vdl/
+  
+ File Description
+   File Name                                          (FTP Mode)
+ ----------------------------------------------------------------------------
+ ICD-10 Release Notes for CCR (ROR*1.5*19)
+   ICD-10_RN_ROR_1_5_19.PDF                           (Binary)
+ Tech Manual / Security Guide
+   ROR1_5_19TM.PDF                                    (Binary)
+ User Manual
+   ROR1_5_19UM.PDF                                    (Binary)
+ Install Manual / Implementation Guide
+   ROR1_5_19IG.PDF                                    (Binary)
+ Production Overview Guide
+   ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf        (Binary) 
+  
+  
+ Patch Installation:
+ ------------------
+ This patch includes an M patch and a revised Graphical User Interface
+ (GUI) executable.
+  
+ Installation of the patch will not take more than 5 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application, as a new GUI is to be
+ installed.
+  
+ NOTE: The nightly task (the [ROR TASK] option) must not be running
+       during the installation. 
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (ROR*1.5*19):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter ROR*1.5*19.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ -----------------------------
+  
+ IMPORTANT NOTE:  This patch includes a revised Graphical User Interface
+ (GUI) application which must be distributed to the appropriate 
+ workstations, or the appropriate File Server.  Please consult with your 
+ system manager for the proper procedure in order to perform the GUI 
+ Update.  After the patch is installed correctly, and the GUI is 
+ updated, the version of the GUI will be 1.5.19.
+  
+  
+ File Name         Contents      Transfer Mode  
+ ---------         -----------   -------------
+ ROR1_5P19GUI.ZIP  Zipped GUI    BINARY
+  
+ 1. Unzip the ROR1_5P19GUI.ZIP into a temporary folder.
+       
+ 2. Open the temporary folder and double click the file CCRSetup.exe to
+    begin the install.
+       
+ 3. Wait until the setup Wizard prepares the installation 
+    procedure. A welcome message displays.
+   
+ 4. Click Next to continue the installation.
+       
+ 5. Select the directory in which to install the CCR GUI. 
+    We recommend that you accept the default directory: 
+    C:\Program Files\VistA\Clinical Case Registries. To 
+    select a different location, click Change and select 
+    the directory. Click Next to proceed with the installation.
+  
+ 6. Review the installation settings and click Install to 
+    proceed. The setup Wizard finishes the installation
+    and a confirmation screen displays.
+       
+ 7. Click Finish.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After the patch is installed and the MailMan message is generated, delete
+ the following routines using the Delete Routines [XTRDEL] option:
+ RORP019, RORP019A, RORP019B.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 43
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORHL081
+    Before: B40675935   After: B53807054  **19**
+Routine Name: RORHL09
+    Before: B46542068   After: B49866717  **1,5,19**
+Routine Name: RORHL10
+    Before: B39368946   After: B43699436  **1,19**
+Routine Name: RORHL11
+    Before: B29297297   After: B32282660  **1,19**
+Routine Name: RORHL17
+    Before: B29156798   After: B32627161  **10,19**
+Routine Name: RORHL21
+    Before: B60105937   After: B73970107  **14,19**
+Routine Name: RORHLUT1
+    Before:  B6316864   After: B11358445  **19**
+Routine Name: RORP019
+    Before:       n/a   After: B56048541  **19**
+Routine Name: RORP019A
+    Before:       n/a   After: B61479192  **19**
+Routine Name: RORP019B
+    Before:       n/a   After: B49874731  **19**
+Routine Name: RORRP016
+    Before: B72990496   After: B89480677  **1,10,23,19**
+Routine Name: RORTSK13
+    Before: B47863947   After: B56838764  **1,8,19**
+Routine Name: RORUPD
+    Before: B25273345   After: B27217675  **19**
+Routine Name: RORUPD07
+    Before:  B7767949   After:  B9069135  **19**
+Routine Name: RORUPD08
+    Before: B22389683   After: B26892777  **19**
+Routine Name: RORUPDUT
+    Before: B53163080   After: B61030807  **18,19**
+Routine Name: RORUPR
+    Before: B27398451   After: B30466397  **19**
+Routine Name: RORUPR1
+    Before: B71424454   After: B78546166  **12,19**
+Routine Name: RORUTL11
+    Before:  B3742734   After:  B3834939  **13,14,15,17,18,20,19**
+Routine Name: RORX001
+    Before: B45889554   After: B46071921  **8,10,14,17,19**
+Routine Name: RORX002
+    Before: B23097652   After: B24874852  **1,8,19**
+Routine Name: RORX003
+    Before: B37325159   After: B37498647  **1,8,13,19**
+Routine Name: RORX004
+    Before: B25410396   After: B25510463  **8,13,19**
+Routine Name: RORX005A
+    Before: B38542920   After: B38694345  **1,8,10,13,19**
+Routine Name: RORX006A
+    Before: B33446739   After: B33568931  **8,13,19**
+Routine Name: RORX007A
+    Before: B25232646   After: B25293169  **1,8,13,19**
+Routine Name: RORX008A
+    Before: B41054061   After: B41310899  **8,13,19**
+Routine Name: RORX009A
+    Before: B78980793   After: B79362879  **8,13,19**
+Routine Name: RORX010
+    Before: B59198848   After: B59462663  **8,13,19**
+Routine Name: RORX011
+    Before: B97364438   After: B97708529  **1,8,13,19**
+Routine Name: RORX012A
+    Before: B86805561   After: B87183312  **8,13,19**
+Routine Name: RORX013
+    Before:  B8643469   After:  B9621515  **1,19**
+Routine Name: RORX013A
+    Before: B66335578   After: B66326088  **1,13,19**
+Routine Name: RORX013C
+    Before: B11993633   After: B15621973  **19**
+Routine Name: RORX014A
+    Before: B41146323   After: B41362081  **8,13,19**
+Routine Name: RORX015
+    Before: B12843309   After: B13984728  **1,19**
+Routine Name: RORX015A
+    Before: B92384089   After: B93935282  **1,8,13,19**
+Routine Name: RORX015C
+    Before: B20478911   After: B26111732  **1,19**
+Routine Name: RORX016A
+    Before: B14087578   After: B14149594  **8,13,19**
+Routine Name: RORX018
+    Before:B163618513   After:B164117438  **10,13,19**
+Routine Name: RORX019
+    Before:B164858937   After:B165372487  **10,13,14,15,19**
+Routine Name: RORX020
+    Before: B68556557   After: B68783751  **10,13,14,15,19**
+Routine Name: RORX021A
+    Before:B128932587   After:B131321298  **17,19**
+Routine Name: RORX022A
+    Before:B129621152   After:B130137226  **8,13,17,18,19**
+Routine Name: RORXU002
+    Before:B118388269   After:B120128201  **1,10,13,15,17,19**
+Routine Name: RORXU008
+    Before:  B8451586   After: B11632767  **1,19**
+Routine Name: RORXU010
+    Before:  B9497434   After: B16438309  **8,19**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2012
+Completed By:                               Date Completed: AUG 28, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

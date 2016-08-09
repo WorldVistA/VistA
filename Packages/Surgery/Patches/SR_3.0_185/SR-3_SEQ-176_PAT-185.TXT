@@ -1,0 +1,164 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/05/16 at 16:23
+=============================================================================
+Run Date: MAR 23, 2016                     Designation: SR*3*185
+Package : SR - SURGERY                        Priority: Mandatory
+Version : 3       SEQ #176                      Status: Released
+                  Compliance Date: APR 22, 2016
+=============================================================================
+
+Associated patches: (v)SR*3*184    <<= must be installed BEFORE `SR*3*185'
+
+Subject: RISK ASSESSMENT TRANSMISSION UNDEF, NON-OR PROCEDURE REPORT DEFECT
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses the following issues in the VistA Surgery application:
+  
+ 1. During transmission of Surgery Risk Assessments, an UNDEFINED error
+    occurs when routine SROATMNO calls routine ADM1^SROAPIMS without
+    initializing the needed local variable SRSOUT.
+  
+ 2. Routines that generate the Report of Non-O.R. Procedures [SRONOR] 
+    option need to be modified to recognize recent modifications to the
+    IN/OUT-PATIENT field (#.011) in the SURGERY file (#130): three (3)
+    values have been added to the SET of allowable choices ("1" FOR SAME
+    DAY, "2" FOR ADMISSION, "3" FOR HOSPITALIZED).
+  
+  
+ Associated Remedy ticket(s):
+ ==========================
+ 1. INC000001108479 - Risk Assessment Transmission UNDEF
+ -  INC000001113414 (d)
+ -  INC000001124120 (d)
+ 2. INC000001108876 - Non-OR Procedure Report Defect
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Black Hills HCS
+ Milwaukee, WI
+  
+  
+ Remedy Overview:
+ ================
+ 1. INC000001108479 - Risk Assessment Transmission UNDEF
+  
+    Duplicates:
+    -----------
+    INC000001113414
+    INC000001124120 
+  
+    Problem:
+    --------
+    Whether started manually from the VistA Surgery Risk Assessment Menu by
+    selecting Queue Assessment Transmission [SROA TRANSMIT ASSESSMENT]
+    option or via Surgery Nightly Cleanup and Updates [SRTASK-NIGHT] 
+    option, the process can encounter an UNDEFINED error. The error occurs
+    when routine ^SROATMNO calls routine ADM1^SROAPIMS.
+  
+    Resolution:
+    -----------
+    The code at ADM1+4^SROAPIMS is modified to use the $GET function to 
+    return a null value if the variable is undefined. The modification 
+    prevents the UNDEFINED error.
+  
+ 2. INC000001108876 - Non-OR Procedure Report Defect
+     
+    Problem:
+    --------
+    When the Report of Non-O.R. Procedures [SRONOR] option is printed
+    selecting the By Location sort, the program prints "???" in the
+    column where it should print the HOSPITAL ADMISSION STATUS field
+    (#.011) of the SURGERY file (#130). This occurs because of recent
+    changes to the data definition of the field. The NAME TITLE was changed
+    from IN/OUT-PATIENT STATUS to HOSPITAL ADMISSION STATUS and the SET of
+    allowable values was expanded. The programs for the By Specialty and By
+    Provider sort were modified to recognize the additional SET values. The
+    program for the By Location sort was not similarly modified. As a
+    consequence, when the field value to be printed is 1, 2 or 3; the
+    program displays "???".
+  
+    Resolution:
+    -----------
+    The program for the By Location is modified in the same manner as the 
+    other sorts.
+  
+  
+ Installation Instructions:
+ ==========================
+ The install time for this patch is less than 2 minutes. This patch can be
+ installed when Surgery users are on the system.
+  
+ NOTE: Kernel patches must be current on the target system to avoid
+       problems loading and/or installing this patch.
+  
+   1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+      option will load the KIDS patch onto your system.
+  
+   2. The patch has now been loaded into a Transport global on your
+      system. You now need to use KIDS to install the transport global.
+  
+   3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+      select the 'Installation' menu.
+  
+   4. Use the 'Verify Checksum in Transport Global' option and verify
+      that all routines have the correct checksums.
+     
+   5. On the KIDS menu, under the 'Installation' menu, use the following
+      options:
+              Print Transport Global
+              Compare Transport Global to Current System
+              Backup a Transport Global
+  
+      To preserve a copy of the routines exported in this patch prior to
+      installation, you should use the 'Backup a Transport Global' option
+      at this time. You may also compare the routines in your production
+      account to the routines in the patch by using the 'Compare a 
+      Transport Global to Current System' option.
+  
+   6. Use the 'Install Package(s)' option under the 'Installation' menu
+      and select the package 'SR*3.0*185'.
+  
+      If prompted 'Want KIDS to INHIBIT LOGONs during the install? YES//,
+      choose 'NO'.
+  
+      If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;Surgery;**[Patch List]**;24 Jun 93;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SROAPIMS
+    Before: B27799692   After: B27826704  **38,46,47,57,71,81,86,100,125,
+                                           134,160,175,182,184,185**
+Routine Name: SRONOR7
+    Before: B17816972   After: B18187654  **50,175,185**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 16, 2015
+Completed By:                               Date Completed: MAR 09, 2016
+Released By :                               Date Released : MAR 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

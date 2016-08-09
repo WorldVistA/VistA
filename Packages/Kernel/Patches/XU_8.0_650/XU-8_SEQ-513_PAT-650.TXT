@@ -1,0 +1,209 @@
+$TXT Created by           G at KRN.FO-OAKLAND.DOMAIN.EXT  (KIDS) on Thursday, 09/25/14 at 13:44
+=============================================================================
+Run Date: NOV 03, 2014                     Designation: XU*8*650
+Package : XU - KERNEL                         Priority: EMERGENCY
+Version : 8       SEQ #513                      Status: Released
+                  Compliance Date: NOV 05, 2014
+=============================================================================
+
+
+Subject: DIRECT MODE PROGRAMMER ACCESS AUDIT
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch was created in support of an OIG request to more closely monitor
+ programmer mode access to VistA systems.  
+  
+ The concept and design of this option was originally done by Byran Lucas who is
+ with Enterprise Systems Engineering, Health Systems Platforms (ESEHSP).  
+  
+ The patch installs one option named Direct-mode Programmer Access
+ Audits [XUPROGAUD] and places it on the existing menu XUSPY, which is for
+ Information Security Officers, and is placed on the sub-menu Access Monitor
+ Menu [XUMNACCESS].
+  
+ There are no M routines included in this patch, the option makes a call via the
+ ENTRY ACTION field of the new option to a pre-existing program in the %SYS
+ namespace in Cache', the audit report features of Cache' are called which allow
+ the user to view the audit reports captured by the Cache' audit management
+ processes. The called routine (%ZSPECIAL) is distributed to all sites, and is
+ maintained by ESEHSP.
+ 
+ Patch Components
+ ================
+   
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A
+   
+ Patient Safety Issues:
+ ======================
+   
+ None
+ 
+ 
+ Options Associated:
+ ====================
+  
+ Option Name                    Type                New/Modified/Deleted
+ -----------                    ----                --------------------
+ [XUPROGAUD]                    Action               New
+ Direct-mode Programmer Access Audits 
+ 
+  
+ Parameters Associated:
+  
+ Parameter Name                                     New/Modified/Deleted
+ --------------                                     --------------------
+ N/A
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+ 
+  
+ 
+ Remedy Ticket(s) & Overview
+ ============================
+ 
+ None
+ 
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS
+ ============================================
+ Patch XU*8*650 contains changes to a package referenced in ProPath standard
+ titled: BBM Team Review of VistA Patches. This patch does not alter or modify
+ any VistA Blood Bank software design safeguards or safety critical elements
+ functions.
+ 
+ RISK ANALYSIS: Changes made by patch XU*8*650 have no effect on Blood Bank
+ software functionality, therefore RISK is none.
+ 
+ 
+ 
+ Test Sites: (Patch Tracking Message #)
+ Danville, IL
+ Wilmington, DE
+ New York Harbor Health Care System
+ 
+ 
+ 
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ No changes have been made to Kernel documentation as a result of this patch;
+ however, the most up-to-date VA Kernel end-user documentation is available on
+ the VHA Software Document Library (VDL) at the following Internet Website:
+      http://www.domain.ext/vdl/application.asp?appid=10
+ NOTE: VistA documentation is made available online in Microsoft Word 
+ format (.DOC) and Adobe Acrobat Portable Document Format (.PDF).
+ 
+  
+  
+ Installation Instructions:
+ ==========================
+ 
+ ****NOTE******  The Option "Direct-mode Programmer Access Audits" [XUPROGAUD]
+ should be placed out-of-order until HS-TIP 17 "Various NVS Utilities Updates"
+ has been installed.
+  
+ TaskMan doesn't need to be stopped or placed in wait state.
+  
+ 
+ Users may remain on the system during patch installation.
+  
+ Installation should take less than a minute.
+ 
+   1. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. 
+      This option will load the KIDS package onto your system.
+ 
+   2. The patch has now been loaded into a transport global on your 
+      system. You now need to use KIDS to install the transport global.
+ 
+   3. On the KIDS menu, under the 'Installation' menu, you may elect to use 
+ the following option:
+ 
+         Print Transport Global
+ 
+   4. On the KIDS menu, in the 'Installation' menu, use the following option:
+           
+ Select Installation Option: Install Package(s)
+       Select INSTALL NAME: XU*8.0*650
+        
+ When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+                Install? NO//
+ 
+                Want KIDS to INHIBIT LOGONs during the install? NO//
+ 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// 
+ 
+ If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+  
+  
+ AFTER PATCH INSTALL CHECK:
+ ==========================
+ After the patch is installed, perform the steps below to ensure the option is
+ present and that it operates correctly with the %ZSPECIAL routine provided by
+ ESEHSP.
+  
+ SCD>D ^XQ1
+  
+ Select OPTION NAME: XUSPY       Information Security Officer Menu
+  
+  
+           User Security Menu ...
+           FileMan Security Menu ...
+           Menu and Option Security ...
+           System Audit Menu ...
+           Access Monitor Menu ...
+  
+ <SCD> Select Information Security Officer Menu Option: Access Monitor Menu
+  
+  
+           Display of Programmer Mode Entry List
+           Programmer Mode Entry Log Purge
+           Failed Access Attempts Log
+           Failed Access Attempts Log Purge
+           Device Failed Access Attempts
+           User Failed Access Attempts
+           Print Sign-on Log
+           Direct-mode Programmer Access Audits
+  
+ <SCD> Select Access Monitor Menu Option: Direct-mode Programmer Access Audits
+  
+ 1) Audit list
+ 2) Audit list by event
+ 3) Audit list by username
+ 4) Audit list by pid
+ 5) Exit
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 20, 2014
+Completed By:                               Date Completed: OCT 23, 2014
+Released By :                               Date Released : NOV 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,213 @@
+$TXT Created by                at DEV.DEV.DOMAIN.EXT  (KIDS) on Monday, 06/23/14 at 09:02
+=============================================================================
+Run Date: OCT 16, 2014                     Designation: RMPR*3*173
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #153                      Status: Released
+                  Compliance Date: NOV 16, 2014
+=============================================================================
+
+Associated patches: (v)RMPR*3*3        install with patch       `RMPR*3*173'
+                    (v)RMPR*3*139  <<= must be installed BEFORE `RMPR*3*173'
+
+Subject:  REMOVE ABILITY TO EDIT INACTIVE HCPCS ITEM;NEW PURGE FOR FILE #664
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch addresses the following issues:
+  
+ 1) Users are able to edit Inactive HCPCS items in Prosthetics.     
+  
+ 2) New purge process created for the PROSTHETICS 1358 file [#664]
+                                         
+  
+ Associated Remedy Tickets:
+ =========================
+ 1) INC000000922056 - Site able to edit an inactive HCPCS item
+  
+ 2) INC000000932492 - Very limited file 664 purging of old orders resulting
+                      in duplicate order numbers seen
+  
+    Duplicate: 
+    ----------
+    INC000000779840 
+   
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA North Florida/South Georgia Health Care System
+ VA Heartland East HCS
+ St Cloud VA Medical Center 
+  
+  
+ Remedy Overview:
+ ================ 
+ 1) INC000000922056 
+  
+ Problem:
+ --------
+ Sites are allowed to edit an inactive HCPCS item. The only check for 
+ an inactive HCPCS item was for the entire HCPCS to be inactive, not a
+ defined HCPCS item. If a user entered HCPCS AND Item at the HCPCS query
+ there was no check for item status.
+  
+  
+ Resolution:
+ -----------
+ Modification has been made to also check the PROSTHETICS HCPCS ITEM 
+ MASTER FILE (#661.11) for inactive HCPCS items and notify the user if the 
+ item is inactive and not editable.
+  
+  
+  Routines: RMPRPIY7
+  
+  
+  
+ 2) INC000000932492 
+  
+ Problem:
+ --------
+ Purchase Card orders have never been purged from the PROSTHETICS 1358 file
+ [#664] and non P-CARD orders have only been purged if the linked suspense
+ record was closed or cancelled.  That means all orders still exist going
+ back to 1994, while the corresponding IFCAP orders created have been
+ purged through 2005,  always keeping the previous 8 years.
+  
+  
+ Resolution:
+ -----------
+ Modifications have been made to RMPRCDP to include purge process for all 
+ orders in the PROSTHETICS 1358 file [#664] where an order will be deleted
+ if previously purged from the IFCAP PROCUREMENT & ACCOUNTING TRANSACTIONS
+ File [#442]. Therefore, the purge criteria will be guided by the same
+ purge criteria used for IFCAP annual purging where the order information
+ is kept for the previous 8 years.
+  
+ Also, new option Purge Aged Purchasing Transactions [PAG] was added to the
+ PURGE OBSOLETE DATA [PGE] menu, like so:
+  
+ Select Utilities <TEST ACCOUNT> Option: PGE  Purge Obsolete Data
+  
+  
+    PAG    Purge Aged Purchasing Transactions   <<<
+    PCL    Purge Closed Purchasing Transactions
+    PCX    Purge Cancelled Transactions
+    PSU    Purge Suspense Records
+  
+  Routines: RMPRCDP
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+  
+  Sites may retrieve documentation in one of the following ways:
+  
+  (1) The preferred method is to FTP the files from
+      download.vista.domain.ext, which will transmit the files from the
+      first available FTP server.
+  
+  (2) Sites may also elect to retrieve documentation directly from the 
+      ANONYMOUS SOFTWARE DIRECTORY from a specific server as follows:
+  
+      Albany          ftp.domain.ext
+      Hines           ftp.domain.ext
+      Salt Lake City  ftp.domain.ext
+  
+      The documentation distribution includes: 
+  
+      File Name        Description                      Retrieval Format
+      =========        ===========                      ================
+      rmpr_3_tm.pdf    Prosthetics Technical Manual     Binary
+  
+  
+  (3) Once released, documentation may be retrieved from VISTA
+      Documentation Library (VDL) on the Internet at the following address:
+      http://www.domain.ext/vdl
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ You may install this patch at any time without interruption to users. It
+ should take less than two minutes to install this patch.
+  
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter RMPR*3.0*173)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       RMPR*3.0*173.
+   
+    5. When Prompted " Want KIDS to Rebuild Menu Trees Upon Completion of
+      Install? NO//", respond NO.
+  
+    6. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    7. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", hit ENTER.
+  
+       a) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+  
+          Edit Inventory Items                  [RMPR INV EDIT]
+          Purge Closed Purchasing Transactions  [RMPR PURGE CLOSED]
+          Purge Cancelled Transactions          [RMPR PURGE CANCELLED]
+  
+       b) When prompted "Enter protocols you wish to mark as "Out of
+          Order":" just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 29
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPRCDP
+    Before: B12814776   After: B34194835  **3,173**
+Routine Name: RMPRPIY7
+    Before: B54541499   After: B59398060  **61,118,139,173**
+ 
+Routine list of preceding patches: 3, 139
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 26, 2013
+Completed By:                               Date Completed: OCT 07, 2014
+Released By :                               Date Released : OCT 16, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

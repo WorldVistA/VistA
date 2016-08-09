@@ -1,0 +1,318 @@
+
+=============================================================================
+Run Date: JUL 01, 2014                     Designation: MAG*3*144
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3        SEQ #98                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)MAG*3*123   <<= must be installed BEFORE `MAG*3*144'
+
+Subject: MAG INDEX TERMS UPDATE
+
+Category: 
+  - Data Dictionary
+
+Description:
+============
+
+ The MAG Index Terms are used in the indexing of images to allow clinicians to
+ apply sort filters when viewing or researching images. Clinicians must 
+ have the most recent Index Terms, otherwise they might encounter issues 
+ when images are viewed across sites or the Veterans Integrated Service 
+ Networks (VISN). 
+  
+ Previously, the VA used MailMan, an electronic messaging system, to
+ distribute MAG Index Terms. However, VA MailMan is no longer used for this
+ purpose. This patch will update the current MAG VistA Imaging Index Term
+ files for the VHA and Indian Health Service (IHS) sites accordingly.
+  
+ The files to be updated are:
+    
+  #2005.82  IMAGE INDEX FOR CLASS FILE
+  
+ This file has all the class types of images and is used in the indexing of 
+ images, which allow clinicians to apply sort filters when viewing or 
+ researching images.
+   
+  #2005.83  IMAGE INDEX FOR TYPES FILE
+  
+ This file has all the types of images and is used in the indexing of images 
+ to allow clinicians to apply sort filters when viewing or researching images.
+   
+  #2005.84  IMAGE INDEX FOR SPECIALTY/SUBSPECIALTY
+  
+ This file has all the specialties and subspecialties to associate with an 
+ image. These specialties will be used to allow clinicians the flexibility to 
+ filter images according to only the images they are interested in 
+ researching or viewing.
+   
+  #2005.85  IMAGE INDEX FOR PROCEDURE/EVENT FILE
+  
+ This file has all the possible procedures or procedural events that an image 
+ can be associated with and that will be used for indexing images. The 
+ PROCEDURE/EVENT associated with an image can be used in filters defined by a 
+ clinician.
+    
+ Distribution of Software
+ ========================
+  
+ The release build of this patch can be downloaded from the FTP folder. 
+ Installation instructions are included in this document. 
+  
+  
+ To obtain MAG*3.0*144 files, use File Transfer Protocol (FTP) to retrieve 
+ MAG3_ 0P144.KID from one of the following OI Field Offices' 
+ ANONYMOUS.SOFTWARE directories:
+  
+ OI Field Office        FTP Address                    Directory
+ -----------------      -----------                    -------------
+ Albany                 ftp.domain.ext        
+ Hines                  ftp.domain.ext       
+ Salt Lake City         ftp.domain.ext         
+  
+ Patch Contents
+ ==============
+  
+ This section provides information about the files this patch includes.
+  
+ Software
+ ========
+  
+ MAG3_0P144.KID - KIDS will be installed on the VA VistA/IHS RPMS database.
+ Documentation 
+  
+ MAG3_0P144_Patch_Description.pdf, provides an overview, 
+ explains the changes, and outlines the installation for this patch.
+  
+ Associated Patches
+ ==================
+  
+ This patch must be installed after MAG*3.0*123 in patch order. 
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+         Fayetteville, NC (Large)
+         Maryland HCS - Baltimore, MD (Integrated)
+         Philadelphia, PA (Large)
+         Indian Health Service (IHS) Feather River Creek
+  
+ Remedy Calls
+ ============
+ The following Remedy help desk calls are addressed in this patch:
+         INC000000944941: The MAG Index Terms update failed for 24 sites. 
+         INC000000943622: IHS reported that the September 2013 Index Term 
+                          update inadvertently inactivated the CCD-SUMMARY 
+                          Image Index Type.
+ NSRs
+ ====
+ There are no New Service Requests (NSRs) addressed in this patch. 
+  
+ Security Keys
+ =============
+ There are no new or modified security keys included in this patch.
+  
+ Remote Procedure Calls
+ ======================
+ No remote procedure calls are affected by this patch.
+  
+ Menu Options
+ ============
+ There are no new menu options in this patch.
+  
+ Data Dictionaries
+ =================
+ There are no new or modified data dictionaries in this patch.
+  
+ Routines 
+ ========
+ There is only one post-install routine introduced in this patch. 
+  
+ Installation
+ ============
+  
+ Installation Planning
+ =====================
+ This patch must be installed by the compliance date to conform with VHA
+ Directive 2001-023.
+  
+ NOTE: All sites running VistA Imaging 3.0 must install the KIDS portion of 
+ this patch. The time that it will take to install the various components 
+ of  this patch is as follows: 
+     
+         Users may be on the system during installation.  Installing the KIDS
+         takes about 2 minutes.
+         Take time to write down the restore code for the restoring backup 
+         purpose during KIDS installation (e.g., Restore Code: 5462077203).
+         
+         Take time to review the installation instructions in this document 
+         before beginning the installation.
+  
+ Installation Prerequisites
+ ==========================
+ You can download the patch installation files from the OI Field Office 
+ Anonymous FTP site. All instructions in this section assume that the 
+ distribution files for this patch have been copied to a local storage 
+ location.
+  
+ Installing the VistA/RPMS System (KIDS)
+  
+ Installing the VistA/RPMS system (KIDS) involves installing the file 
+ MAG3_0P144.KID on the VistA or RPMS system.
+  
+ Before installing the file, all released patches and associated patches 
+ must be installed (i.e., MAG*3.0*123). 
+ Please verify patch installation order with your VistA Imaging Coordinator  
+ or VistA/RPMS Administrator.
+  
+ Installing the KIDS Package
+  
+ To install the KIDs package:
+  
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the #1 Load a Distribution [XPD LOAD DISTRIBUTION] option to 
+       load the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P144.KID) of 
+       the P144 KIDS file that you downloaded from the FTP server.
+    c. When prompted to continue with the load, enter YES. A message 
+       will be displayed when the load is complete.
+ 4. Before you load the KIDS file, an environmental check routine
+    (MAGIP144) has to run. When prompted to run "the Environment Check 
+    Routine," enter "Y" for yes or press <Enter> to continue. 
+ For example, the following prompts appear:
+    a. Build MAG*3.0*144 has an Environmental Check Routine.
+    b. Want to RUN the Environment Check Routine? YES//
+    c. Will first run the Environment Check Routine, MAGIP144.
+ 5. After performing the environmental check steps, the MAG Index 
+    Terms update will continue after the user enters "Y" for yes or press
+    <Enter> for the following steps:
+    a. Update Imaging Index Terms with the latest Distribution (Y/N)? 
+    b. Globals will now be installed, OK? 
+  
+  
+  Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ backup****
+  
+ Restore Code: 5462942169
+  
+  
+ Globals will now be installed, OK? YES//
+  
+  
+  Install Started for MAG*3.0*144 :
+                Feb 10, 2014@11:56:16
+  
+  Installing Globals:
+  
+  ^MAG(2005.82)
+                Feb 10, 2014@11:56:16
+  
+  ^MAG(2005.83)
+                Feb 10, 2014@11:56:16
+  
+  ^MAG(2005.84)
+                Feb 10, 2014@11:56:16
+  
+  ^MAG(2005.85)
+                Feb 10, 2014@11:56:16
+   
+ 6. When the installation has finished, an Install Completed message will
+ be displayed.
+  
+ KIDS Installation Example
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 1  Load a Distribution
+ Enter a Host File: C:\MAG3_0P144.KID
+  
+ KIDS Distribution saved on Jan 31, 2014@10:05:27
+ Comment: IMAGING MAG INDEX TERMS UPDATE V3.0 *144
+  
+ This Distribution contains Transport Globals for the following Package(s):
+    MAG*3.0*144
+ Distribution OK!
+  
+ This is a Global Distribution. It contains Global(s) that will
+ update your system at this time. The following Global(s) will be installed:
+  
+ ^MAG(2005.82)Replace
+ ^MAG(2005.83)Replace
+ ^MAG(2005.84)Replace
+ ^MAG(2005.85)Replace
+  
+ If you continue with the Load, the Global(s) will be
+ Installed at this time.
+  
+ Want to Continue with Load? YES//
+ Loading Distribution...
+  
+ Build MAG*3.0*144 has an Environmental Check Routine
+ Want to RUN the Environment Check Routine? YES//
+    MAG*3.0*144
+ Will first run the Environment Check Routine, MAGIP144
+  
+ Update Imaging Index Terms with the latest Distribution (Y/N)? Y// ES
+ backup****
+  
+ Restore Code: 5462077203
+  
+ Globals will now be installed, OK? YES//
+  
+  Install Started for MAG*3.0*144 :
+                Jan 31, 2014@11:40:07
+  
+  Installing Globals:
+  
+  ^MAG(2005.82)
+                Jan 31, 2014@11:40:07
+  
+  ^MAG(2005.83)
+                Jan 31, 2014@11:40:07
+  
+  ^MAG(2005.84)
+                Jan 31, 2014@11:40:07
+  
+  ^MAG(2005.85)
+                Jan 31, 2014@11:40:07
+  
+  Running Post Install routine POST^MAGIP144
+  
+ Post Install Mail Message: Jan 31, 2014@11:40:07
+  
+  Updating KIDS files...
+  
+  MAG*3.0*144 Installed.
+ Patch 144 installation is complete.
+  
+ Note: For VA VistA site, make sure the STATE AUTHORIZED PORTABLE ORDERS (SAPO) 
+ is displayed on the Capture APPs (Procedure/Event) after P144 installed.
+  
+ Note: For IHS RPMS site, make sure the Image Index Type CCD-Summary is  
+ active.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 03, 2014
+Completed By:                               Date Completed: JUL 01, 2014
+Released By :                               Date Released : JUL 01, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

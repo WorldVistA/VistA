@@ -1,0 +1,117 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 10/21/14 at 14:01
+=============================================================================
+Run Date: FEB 27, 2015                     Designation: GMPL*2*46
+Package : GMPL - PROBLEM LIST                 Priority: Mandatory
+Version : 2        SEQ #40                      Status: Released
+                  Compliance Date: MAR 30, 2015
+=============================================================================
+
+Associated patches: (v)GMPL*2*42   <<= must be installed BEFORE `GMPL*2*46'
+
+Subject: RESOLVES UNDEFINED ERROR IN GMPLHIST
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following issues:
+ 1. Resolves the error <UNDEFINED>DT+37^GMPLHIST
+  
+ ASSOCIATED NSR:
+ ===============
+ N/A
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001058751 - Problem List - Other: <UNDEFINED>DT+37^GMPLHIST 
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Milwaukee - VA Medical Center
+ Washington DC VA Medical Center           
+ William S Middleton VAMC (Madison)   
+ Maryland Healthcare System - VA Medical Center
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001058751 - Problem List - Other: <UNDEFINED>DT+37^GMPLHIST 
+  
+ Problem:
+ --------
+ The OLD VALUE field (# 4) in the PROBLEM LIST AUDIT file (# 125.8) can 
+ store  a value that could point to a record in the EXPRESSIONS file
+ (#757.01) which has been deleted. When a user double clicks on a problem
+ in the CPRS GUI Problems tab and it has a record in file 125.8 with this
+ problem a message box with a Server Error of Undefined will be presented
+ to the user. Clicking on the OK button will close this message box and
+ present to the user an empty box that should contain a report on that
+ problem. Clicking the close button on the empty message box will close.
+ Then when the user double clicks on any other problem in the Problem tab
+ will cause CPRS GUI to error out and crash.
+  
+ Resolution:
+ -----------
+ Routine GMPLHIST handles the part of the problem report featuring records 
+ from the PROBLEM LIST AUDIT file. Modify this routine to properly handle
+ the attempted read of the missing EXPRESSIONS record.
+  
+ =================== INSTALLATION INSTRUCTIONS =====================
+   
+  Installation will take less than 2 minutes.  Users may be on the system.
+   
+     1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+   
+     2. From the Kernel Installation & Distribution System menu, select
+        the Installation menu.
+   
+     3. From this menu, you may select to use the following options
+        (when prompted for INSTALL NAME, enter GMPL*2.0*46)
+   
+        a. Backup a Transport Global - this option will create a backup
+           message of any routines exported with the patch. It will NOT
+           backup any other changes such as DDs or templates.
+   
+        b. Compare Transport Global to Current System - this option will
+           allow you to view all changes that will be made when the patch
+           is installed. It compares all components of the patch (routines,
+           DDs, templates, etc.).
+   
+        c. Verify Checksums in Transport Global - this option will ensure
+           the integrity of the routines that are in the transport global.
+   
+     4. Use the Install Package(s) option and select the package 
+        GMPL*2.0*46
+   
+     5. When prompted "Want KIDS to INHIBIT LOGONs during the install?
+        NO//", respond NO.
+   
+     6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//", respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;Problem List;**[Patch List]**;Aug 25, 1994;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMPLHIST
+    Before: B21062644   After: B21393527  **7,26,31,35,36,42,46**
+ 
+Routine list of preceding patches: 42
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2014
+Completed By:                               Date Completed: FEB 24, 2015
+Released By :                               Date Released : FEB 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

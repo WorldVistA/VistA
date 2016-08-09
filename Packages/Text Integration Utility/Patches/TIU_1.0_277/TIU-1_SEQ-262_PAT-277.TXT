@@ -1,0 +1,131 @@
+$TXT Created by                MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 02/15/13 at 09:07
+=============================================================================
+Run Date: APR 21, 2015                     Designation: TIU*1*277
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #262                      Status: Released
+                  Compliance Date: MAY 22, 2015
+=============================================================================
+
+Associated patches: (v)TIU*1*184   <<= must be installed BEFORE `TIU*1*277'
+
+Subject: OPERATION REPORT ADDENDUM UPLOAD FIELDS BLANK
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the Text Integration
+ Utilities (TIU) package:
+  
+ 1. When uploading an OPERATION REPORT, allow the AUTHOR/DICTATOR (#1202)
+    field and the ATTENDING PHYSICIAN (#1209) field of the TIU DOCUMENT
+    FILE (#8925) file to be populated into addendums to OPERATION REPORT
+    documents.
+  
+ ASSOCIATED REMEDY TICKETS:
+ =========================
+ 1. INC000000454162 - Uploaded documents create addendum without an author.
+    Duplicate(s)
+    INC000000760174 - Operative Report Missing Dictated By Field
+  
+  
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Washington DC VAMC 
+ W.G. Hefner VAMC (Salisbury, NC)
+ VA Maryland HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000454162 - Uploaded documents create addendum without an author
+  
+   Problem:
+   -------
+   When using the VistA Upload Documents [TIU UPLOAD DOCUMENTS] option 
+   to upload an addendum to an operation report, if the system finds a 
+   match for the patient and surgery case, the document is uploaded and 
+   filed successfully, however the AUTHOR/DICTATOR (#1202) field and the 
+   ATTENDING PHYSICIAN (#1209) field of the TIU DOCUMENT FILE (#8925) file 
+   are both blank. TIU*1.0*173 prevented these fields from being populated
+   during the upload process, which is correct for the original operation
+   report, but didn't allow these fields to be populated when an addendum
+   is created.
+  
+   Resolution:
+   ----------
+   Routine TIUPUTC will check if the uploaded OPERATION REPORT is an 
+   addendum to an existing document, and if it is, allow the
+   AUTHOR/DICTATOR (#1202) field and the ATTENDING PHYSICIAN (#1209) field
+   to be populated.
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ ========================== 
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*277)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*277.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUPUTC
+    Before: B30729125   After: B31718862  **3,21,81,100,113,112,173,184,277**
+ 
+Routine list of preceding patches: 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2013
+Completed By:                               Date Completed: APR 15, 2015
+Released By :                               Date Released : APR 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

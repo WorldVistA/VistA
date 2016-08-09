@@ -1,0 +1,130 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 07/08/15 at 15:25
+=============================================================================
+Run Date: OCT 09, 2015                     Designation: FB*3.5*162
+Package : FB - FEE BASIS                      Priority: Mandatory
+Version : 3.5       SEQ #134                    Status: Released
+                  Compliance Date: NOV 08, 2015
+=============================================================================
+
+Associated patches: (v)FB*3.5*153  <<= must be installed BEFORE `FB*3.5*162'
+
+Subject: CORRECT QUEUING OF FBCNH ESTIMATE FUNDS and FBCNH POST COMMITMENTS
+
+Category: 
+  - PATCH FOR A PATCH
+  - Routine
+
+Description:
+============
+
+ This patch corrects the situation introduced with patch FB*3.5*153 where 
+ an error is received when queuing the report from the two options:
+ Estimate Funds for Obligation [FBCNH ESTIMATE FUNDS] and Post Commitments
+ for Obligation [FBCNH POST COMMITMENTS].
+  
+ Associated Remedy Ticket(s):
+ ============================
+ 1. INC000001281755 Task error when queuing CNH Post Commitments
+                 
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Test Sites:
+ ===========
+ Minneapolis VA Medical Center
+ Miami VA Healthcare System
+ Erie VA Medical Center
+  
+ Remedy Overview:
+ ================ 
+ 1. INC000001281755 Task error when queuing CNH Post Commitments
+  
+ Problem:
+ --------
+ When a user attempts to queue the option Estimate Funds for Obligation
+ [FBCNH ESTIMATE FUNDS] or the option Post Commitments for Obligation
+ [FBCNH POST COMMITMENTS] they receive a task error.
+  
+ Resolution:
+ -----------
+ Routine FBNHPC has been updated to ensure two key variables are passed to
+ the tasked job when queuing for the above two options.
+  
+ Routine(s): FBNHPC
+  
+  
+  
+  
+        ================INSTALLATION INSTRUCTIONS ================= 
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. You may queue the install if you wish.
+ It should take less than two minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter FB*3.5*162)
+   
+         a.  Verify Checksums in Transport Global - This option allows
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option allows you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option 
+             allows you to view all changes that are made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option creates a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package
+       FB*3.5*162.
+   
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install?
+       NO//", respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+       and Protocols? YES//", respond YES.
+  
+       1) When prompted "Enter options you wish to mark as "Out of
+          Order":" enter the following option:
+                                                        
+          Estimate Funds for Obligation      [FBCNH ESTIMATE FUNDS] 
+          Post Commitments for Obligation    [FBCNH POST COMMITMENTS]
+  
+       2) When prompted "Enter protocols you wish to mark as "Out of
+          Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.5;FEE BASIS;**[Patch List]**;JAN 30, 1995;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: FBNHPC
+    Before: B14162859   After: B14845789  **25,153,162**
+ 
+Routine list of preceding patches: 153
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 08, 2015
+Completed By:                               Date Completed: OCT 06, 2015
+Released By :                               Date Released : OCT 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

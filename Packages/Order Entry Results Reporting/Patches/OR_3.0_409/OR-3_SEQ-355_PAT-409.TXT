@@ -1,0 +1,140 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 03/26/15 at 19:38
+=============================================================================
+Run Date: OCT 07, 2015                     Designation: OR*3*409
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #355                      Status: Released
+                  Compliance Date: NOV 07, 2015
+=============================================================================
+
+Associated patches: (v)OR*3*280    <<= must be installed BEFORE `OR*3*409'
+                    (v)OR*3*374    <<= must be installed BEFORE `OR*3*409'
+
+Subject: PRESERVE TREATING SPECIALTY ON RENEWAL
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issue in the ORDER ENTRY/RESULTS 
+ REPORTING (OR) package:
+  
+ 1. The Treating Specialty disappears when an order is renewed or Give
+    Additional Dose Now is selected.
+  
+ Associated Remedy Ticket(s):
+ ===========================
+ 1. INC000000069833 - 'Treating Specialty' disappears when first dose now 
+                      is used.
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+ Participating Test Sites:
+ =================
+ Mountain Home VAMC
+ Hudson Valley HCS
+  
+ Remedy Overview:
+ ===============
+ 1. INC000000069833
+  
+    Problem:
+    --------
+    This patch corrects a bug in the Computerized Record System (CPRS)
+    where if an Inpatient order with a Treating Specialty is renewed, the
+    renewed order will lose the original Treating Specialty. Also, if Give
+    Additional Dose Now is selected on a new order, the resulting order
+    will lose its Treating Specialty when signed.
+  
+    Solution:
+    ---------
+    Changed ORWDXR so that the Treating Specialty is preserved when the
+    order is renewed. Changed ORCSEND3 so that the Treating Specialty is
+    preserved when Give Additional Dose Now is selected.
+  
+  
+ Installation Instructions:
+ =========================
+  
+ This patch can be loaded with users in the system but it is recommended 
+ that it be installed when user activity is low.  Installation time will 
+ be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*409):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+  
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*409.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCSEND3
+    Before: B25737895   After: B25968577  **243,282,280,409**
+Routine Name: ORWDXR
+    Before: B59460463   After: B60135290  **10,85,125,131,134,141,149,
+                                           187,190,213,243,331,306,349,
+                                           374,409**
+ 
+Routine list of preceding patches: 280, 374
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 12, 2015
+Completed By:                               Date Completed: SEP 29, 2015
+Released By :                               Date Released : OCT 07, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

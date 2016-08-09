@@ -1,0 +1,147 @@
+
+=============================================================================
+Run Date: JUL 18, 2016                     Designation: WEBP*1*7
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: EMERGENCY
+Version : 1         SEQ #7                      Status: Released
+                  Compliance Date: JUL 25, 2016
+=============================================================================
+
+
+Subject: PCMM WEB V1.7 CONFIGURATION UPDATE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*7 will implement a configuration change to optimize a CPRS Header 
+ Synchronization query. Currently, a query for the CPRS Header 
+ Synchronization is causing the PCMM Web database to lock when multiple 
+ threads are competing to access the same data. These locks are causing 
+ performance issues and unexpected behaviors in the Java Virtual Machine 
+ (JVM) and the application server crashes.
+  
+  
+ Configuration and Software Changes:
+ ===================================
+ RTC 348927 - The CPRS Header Sync process currently recalculates whenever 
+ any position on the team is added or modified in any way regardless if 
+ the position is the direct care provider (PCP or AP) or not which is not 
+ an efficient process since the CPRS header only displays the direct care 
+ provider and team name, not all other positions on the team. The CPRS 
+ Header Sync process is now optimized and will only trigger this process 
+ when a patient's direct care provider assignment is created, deleted or 
+ modified or the patient assignment changes. 
+  
+ CA-SDM Ticket: No associated helpdesk tickets for this issue.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*7 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ CA-SDM Ticket(s):
+ -----------------
+ N/A
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Documentation:
+ ==============
+  
+ Title                            File Name                 SFTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 12, 2016
+Completed By:                               Date Completed: JUL 13, 2016
+Released By :                               Date Released : JUL 18, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

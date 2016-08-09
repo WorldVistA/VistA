@@ -1,0 +1,222 @@
+$TXT Created by                     at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/04/14 at 14:51
+=============================================================================
+Run Date: MAR 23, 2015                     Designation: LR*5.2*445
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #361                    Status: Released
+                  Compliance Date: APR 23, 2015
+=============================================================================
+
+Associated patches: (v)LR*5.2*218  <<= must be installed BEFORE `LR*5.2*445'
+                    (v)LR*5.2*295  <<= must be installed BEFORE `LR*5.2*445'
+                    (v)LR*5.2*350  <<= must be installed BEFORE `LR*5.2*445'
+
+Subject: CLINICAL REMINDERS, LAB LABEL ERROR, HDR NOT UPDATED, P-MESSAGE OPEN ERROR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The patch addresses four (4) issues:
+  
+ 1.      Clinical Reminder programs are referencing an incorrect subfield 
+         when retrieving a lab test pointer.
+ 2.      When printing Future Labels, a Unique Identifier (UID) for an
+         unrelated order can occasionally print on the label.
+ 3.      In certain circumstances, lab results are not transmitted to the 
+         Health Data Repository (HDR).
+ 4.      When the Infection Control Survey Report is run specifying 
+         un-queued output to P-Message, a Cache NOT OPEN error occurs.
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*445 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*445 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*445 have no effect on Blood 
+ Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the changes 
+ made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Associated Remedy ticket(s):
+ ============================
+ 1.      INC000000450944 - Clinical Reminders
+ 2.      INC000000896007 - Lab Labels
+         INC000000896876 (d)
+         INC000000933926 (d)
+         INC000001028733 (d)
+ 3.      INC000000968796 - HDR Not Updated
+ 4.      INC000001020038 - P-Message Not Open Error
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Lake City VAMC
+ Minneapolis VAMC
+  
+ Remedy Overview:
+ ================
+  
+ 1.      INC000000450944 - Clinical Reminders
+  
+ Problem:
+ --------
+ Clinical Reminder programs are referencing the incorrect field, subfield 
+ to retrieve the LAB TEST FILE (#60) Internal Entry Number (IEN) for a test
+ result.
+  
+ Resolution:
+ -----------
+ The patch modifies code in four (4) routines to retrieve the correct
+ location of the lab test pointer.
+  
+ Routines: LRPX, LRPXAPI2, LRPXCHK, LRPXSXRL
+  
+ 2.      INC000000896007 - Lab Labels
+   
+ Problem:
+ --------
+ Sites report that when printing Future Labels, a UID for an unrelated 
+ order can occasionally print on a label. 
+  
+ Resolution:
+ -----------
+ The patch modifies two (2) routines to NEW the variables LRAA, LRAD, 
+ LRAN and LRUID.  With this change the variables will not be populated 
+ with data from previous orders.
+  
+ Routines: LRLABLDS, LRLABLD0
+  
+ 3.      INC000000968796 - HDR Not Updated
+   
+ Problem:
+ --------
+ Occasionally, lab results are not being transmitted to the Health Data 
+ Repository (HDR).  The defect occurs when there is a test that has been 
+ merged to another accession with the same Order #.
+  
+ Resolution:
+ -----------
+ The patch modifies code in two (2) routines:
+    1.   LR7OMERG: to properly update the "ORUT" node in LAB DATA FILE 
+         (#63) and update the LABORATORY ORDER ENTRY FILE (#69) with the
+         merged accession information.
+    2.   LRTSTOUT: to not cancel the test when it is being merged to an 
+         order with the same Order # in the LABORATORY ORDER ENTRY FILE 
+         (#69) and mark a rollover accession properly as merged in the
+         ACCESSION FILE (#68).
+  
+ Routines: LR7OMERG, LRTSTOUT
+   
+ 4.      INC000001020038 - P-Message Not Open Error
+   
+ Problem:
+ --------
+ A NOT OPEN error is generated when the Infection control survey report
+ [INFECTION CONTROL SURVEY REPORT] output is directed to P-Message without 
+ being queued.
+  
+ Resolution:
+ -----------
+ The patch %ZIS variable has been modified to allow the report to print
+ without error.
+  
+ Routine: LRMISEZ1
+  
+ Components:
+ ===========
+ N/A
+  
+ Installation Instructions:
+ ==========================
+    The install time for this patch is less than 2 minutes. This patch can
+    be installed when Laboratory users are on the system.
+  
+    NOTE: Kernel patches must be current on the target system to avoid
+          problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       To preserve a copy of the routines exported in this patch prior to 
+       installation, you should use the 'Backup a Transport Global' option 
+       at this time. You may also compare the routines in your production
+       account to the routines in the patch by using the 'Compare a
+       Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu
+       and select the package 'LR*5.2*445'.
+  
+       If prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'.
+  
+       If prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OMERG
+    Before: B51143327   After: B60838866  **121,221,386,350,445**
+Routine Name: LRLABLD0
+    Before: B39315798   After: B39441499  **1,65,121,161,218,445**
+Routine Name: LRLABLDS
+    Before: B10484822   After: B10565883  **161,218,445**
+Routine Name: LRMISEZ
+    Before: B11672648   After: B11668197  **350,445**
+Routine Name: LRPX
+    Before:  B5134304   After:  B5134380  **295,445**
+Routine Name: LRPXAPI2
+    Before: B78388700   After: B78424908  **295,445**
+Routine Name: LRPXCHK
+    Before: B64203634   After: B64203886  **295,445**
+Routine Name: LRPXSXRL
+    Before: B15543272   After: B15543359  **295,445**
+Routine Name: LRTSTOUT
+    Before:B163383366   After:B176003856  **100,121,153,202,221,337,350,445**
+ 
+Routine list of preceding patches: 218, 295, 350
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 18, 2014
+Completed By:                               Date Completed: MAR 17, 2015
+Released By :                               Date Released : MAR 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

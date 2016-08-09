@@ -1,0 +1,229 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 01/28/14 at 16:59
+=============================================================================
+Run Date: SEP 04, 2014                     Designation: OR*3*273
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #346                      Status: Released
+                  Compliance Date: OCT 05, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*82     <<= must be installed BEFORE `OR*3*273'
+                    (v)OR*3*243    <<= must be installed BEFORE `OR*3*273'
+
+Subject: TEAM LIST FIXES OF CREATE, ADD, RENAME, REMOVE, AND DELETE ERRORS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch corrects 6 issues within the ORDER ENTRY/RESULTS REPORTING 
+ package relating to team lists:
+ 1. Error on entering "^" at the Type prompt of Create/Add to Team List 
+    [ORLP TEAM ADD] option.
+  
+ 2. Team list visibility is changed when edited.
+  
+ 3. Locks are set late when creating or renaming lists and are not set when
+    removing patients.
+  
+ 4. CPRS will allow a duplicate team list name when entering personal 
+    lists.
+  
+ 5. Occasionally, the Display User's Preferred Patient List Source [ORLP3M 
+    DISPLAY LIST SOURCE] option displays the current user's list source
+    instead of the selected user.
+  
+ 6. Various ORLP options do not time out when selecting a list in use 
+    elsewhere.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY:
+ ==================
+ 1.  INC000000069514   AL+17^ORLP:1 Errors
+     Duplicates:
+     INC000000070138   ERROR ENTERING NEW PT TEAM LIST
+     INC000000239024   replicable M error caused when "^" out of 
+                       [ORLP TEAM ADD]
+ 2.  INC000000302690   OE/RR Teams no longer display to all users.
+ 3.  INC000000070647   TYPO IN ROUTINE ORLP
+ 4.  INC000000069810   GUI DOES NOT RESPECT CASE IN TEAM LIST DISPLAY
+ 5.  INC000000245729   Combination Lists
+ 6.  INC000000305953   Locks Missing Timeout
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Maryland Health Care System
+ VA Pittsburgh Health Care System 
+ Durham VA Medical Center
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000000069514   AL+17^ORLP:1 Errors
+  
+ Problem 1:
+ ----------
+ If users enter "^" at the Type prompt of Create/Add to Team List [ORLP 
+ TEAM ADD] option, an undefined error occurs - <UNDEFINED>AL+17^ORLP
+  
+ Resolution 1:
+ -------------
+ Routine ORLP was modified to handle no data in the Type field and exit as
+ expected. 
+  
+ 2.  INC000000302690   OE/RR Teams no longer display to all users.
+  
+ Problem 2:
+ ----------
+ Users were editing team lists (of any type), and the VISIBILITY flag was
+ being set automatically to OWNER.  This was preventing the viewing of the
+ team list by users other than the owner of the team. 
+  
+ Resolution 2:
+ -------------
+ Routine ORLP was modified to only set the VISIBILITY flag when creating a
+ PERSONAL PATIENT type team list.
+  
+ 3.  INC000000070647   TYPO IN ROUTINE ORLP
+  
+ Problem 3:
+ ----------
+ Team lists are not locked early enough when creating a new
+ list with Create/Add to Team List [ORLP TEAM ADD] option or renaming a
+ list with Rename Existing List(s) [ORLP TEAM RENAME] option. Team lists
+ are not locked when removing a patient from a list [ORLP TEAM DELETE
+ PATIENTS] or a provider from a list [ORLP TEAM DELETE USERS].
+  
+ Resolution 3:
+ -------------
+ Routines ORLPL, ORLP2, and ORLP were modified to lock lists as soon as the
+ name is entered.
+  
+ 4.  INC000000069810   GUI DOES NOT RESPECT CASE IN TEAM LIST DISPLAY
+  
+ Problem 4:
+ ----------
+ Since case is not checked, duplicate Team List names are allowed to be
+ entered in CPRS GUI.
+  
+ Resolution 4:
+ -------------
+ Routine ORWTPL was modified to allow CPRS to check for duplicate Team List
+ names regardless of the case.
+  
+ 5.  INC000000245729   Combination Lists
+  
+ Problem 5:
+ ----------
+ When running Display User's Preferred Patient List Source [ORLP3M DISPLAY 
+ LIST SOURCE] option, results are returned for the current user instead of
+ the selected user if both users have a combination list set as preferred
+ list source.
+  
+ Resolution 5:
+ -------------
+ Routine ORLP3MGR was modified to not reset ORLPDUZ to DUZ when printing
+ the combination list results.
+  
+ 6.  INC000000305953   Locks Missing Timeout
+  
+ Problem 6:
+ ----------
+ Remove Autolinks [ORLP TEAM DELETE AUTOLINKS] option and Delete Existing 
+ List(s) [ORLP TEAM DELETE] option hang when they try to access a list
+ being modified by another user.
+  
+ Resolution 6:
+ -------------
+ Routines ORLP1 and ORLP2 were modified to add a time out and an error
+ message.
+  
+  
+ INSTALLATION INSTRUCTIONS
+ =========================
+ This patch can be loaded with users in the system.  Installation time
+ will be less than 2 minutes.
+  
+  1.  Choose the PackMan message containing this patch and invoke the 
+      INSTALL/CHECK MESSAGE PackMan option.  
+  
+  2.  Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+  
+           Edits and Distribution ...  
+           Utilities ...  
+           Installation ...  
+  
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+           1      Load a Distribution
+           2      Verify Checksums in Transport Global
+           3      Print Transport Global
+           4      Compare Transport Global to Current System
+           5      Backup a Transport Global
+           6      Install Package(s)
+                  Restart Install of Package(s)
+                  Unload a Distribution
+  
+  3.  From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter "OR*3.0*273"):
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will
+          not backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option
+          will allow you to view all changes that will be made when
+          this patch is installed.  It compares all components of this
+          patch (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will
+          allow you to ensure the integrity of the routines that are
+          in the transport global.
+  
+  4.  Use the Install Package(s) option and select the package.
+      a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+          install? NO//", answer NO.
+      b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+          Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 17
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORLP
+    Before: B76319972   After: B83826939  **47,90,98,243,273**
+Routine Name: ORLP1
+    Before: B46347945   After: B53525531  **11,63,90,98,273**
+Routine Name: ORLP2
+    Before: B42159968   After: B47891209  **47,98,273**
+Routine Name: ORLP3MGR
+    Before: B36801102   After: B39663549  **9,82,273**
+Routine Name: ORLPL
+    Before:  B8776341   After: B13080692  **273**
+Routine Name: ORWTPL
+    Before: B25081990   After: B28051857  **85,109,173,243,273**
+ 
+Routine list of preceding patches: 82, 243
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 28, 2007
+Completed By:                               Date Completed: AUG 22, 2014
+Released By :                               Date Released : SEP 04, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

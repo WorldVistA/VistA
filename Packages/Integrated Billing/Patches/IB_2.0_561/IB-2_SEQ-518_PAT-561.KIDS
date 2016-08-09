@@ -1,0 +1,359 @@
+Released IB*2*561 SEQ #518
+Extracted from mail message
+**KIDS**:IB*2.0*561^
+
+**INSTALL NAME**
+IB*2.0*561
+"BLD",10127,0)
+IB*2.0*561^INTEGRATED BILLING^0^3160314^y
+"BLD",10127,1,0)
+^^3^3^3160314^
+"BLD",10127,1,1,0)
+This patch addresses the request to default the revenue code to 124  
+"BLD",10127,1,2,0)
+(PSYCHIATRIC) for five Mental Health Diagnosis Related Groups (DRGs)
+"BLD",10127,1,3,0)
+in the Charge Item file (#363.2).
+"BLD",10127,4,0)
+^9.64PA^^
+"BLD",10127,6)
+^491
+"BLD",10127,6.3)
+36
+"BLD",10127,"ABPKG")
+n
+"BLD",10127,"INIT")
+POST^IB20P561
+"BLD",10127,"KRN",0)
+^9.67PA^779.2^20
+"BLD",10127,"KRN",.4,0)
+.4
+"BLD",10127,"KRN",.401,0)
+.401
+"BLD",10127,"KRN",.402,0)
+.402
+"BLD",10127,"KRN",.403,0)
+.403
+"BLD",10127,"KRN",.5,0)
+.5
+"BLD",10127,"KRN",.84,0)
+.84
+"BLD",10127,"KRN",3.6,0)
+3.6
+"BLD",10127,"KRN",3.8,0)
+3.8
+"BLD",10127,"KRN",9.2,0)
+9.2
+"BLD",10127,"KRN",9.8,0)
+9.8
+"BLD",10127,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",10127,"KRN",9.8,"NM",1,0)
+IB20P561^^0^B7245228
+"BLD",10127,"KRN",9.8,"NM","B","IB20P561",1)
+
+"BLD",10127,"KRN",19,0)
+19
+"BLD",10127,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",10127,"KRN",19.1,0)
+19.1
+"BLD",10127,"KRN",101,0)
+101
+"BLD",10127,"KRN",409.61,0)
+409.61
+"BLD",10127,"KRN",771,0)
+771
+"BLD",10127,"KRN",779.2,0)
+779.2
+"BLD",10127,"KRN",870,0)
+870
+"BLD",10127,"KRN",8989.51,0)
+8989.51
+"BLD",10127,"KRN",8989.52,0)
+8989.52
+"BLD",10127,"KRN",8994,0)
+8994
+"BLD",10127,"KRN","B",.4,.4)
+
+"BLD",10127,"KRN","B",.401,.401)
+
+"BLD",10127,"KRN","B",.402,.402)
+
+"BLD",10127,"KRN","B",.403,.403)
+
+"BLD",10127,"KRN","B",.5,.5)
+
+"BLD",10127,"KRN","B",.84,.84)
+
+"BLD",10127,"KRN","B",3.6,3.6)
+
+"BLD",10127,"KRN","B",3.8,3.8)
+
+"BLD",10127,"KRN","B",9.2,9.2)
+
+"BLD",10127,"KRN","B",9.8,9.8)
+
+"BLD",10127,"KRN","B",19,19)
+
+"BLD",10127,"KRN","B",19.1,19.1)
+
+"BLD",10127,"KRN","B",101,101)
+
+"BLD",10127,"KRN","B",409.61,409.61)
+
+"BLD",10127,"KRN","B",771,771)
+
+"BLD",10127,"KRN","B",779.2,779.2)
+
+"BLD",10127,"KRN","B",870,870)
+
+"BLD",10127,"KRN","B",8989.51,8989.51)
+
+"BLD",10127,"KRN","B",8989.52,8989.52)
+
+"BLD",10127,"KRN","B",8994,8994)
+
+"BLD",10127,"QDEF")
+^^^^^^^^^^
+"BLD",10127,"QUES",0)
+^9.62^^
+"BLD",10127,"REQB",0)
+^9.611^^0
+"INIT")
+POST^IB20P561
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+561^3160314
+"PKG",200,22,1,"PAH",1,1,0)
+^^3^3^3160314
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses the request to default the revenue code to 124  
+"PKG",200,22,1,"PAH",1,1,2,0)
+(PSYCHIATRIC) for five Mental Health Diagnosis Related Groups (DRGs)
+"PKG",200,22,1,"PAH",1,1,3,0)
+in the Charge Item file (#363.2).
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","IB20P561")
+0^1^B7245228^n/a
+"RTN","IB20P561",1,0)
+IB20P561 ;ALB/CXW - IB*2.0*561 POST INIT: REVENUE CODE FOR MS-DRGS; 03-03-2016
+"RTN","IB20P561",2,0)
+ ;;2.0;INTEGRATED BILLING;**561**;21-MAR-94;Build 36
+"RTN","IB20P561",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P561",4,0)
+ Q
+"RTN","IB20P561",5,0)
+ ;
+"RTN","IB20P561",6,0)
+POST ;
+"RTN","IB20P561",7,0)
+ N IBA,IBDT317,IBDT318 S U="^"
+"RTN","IB20P561",8,0)
+ D MSG("    Revenue Code 124 for Mental Health Diagnosis Post-Install .....")
+"RTN","IB20P561",9,0)
+ ; effective date of RC v3.17 or RC v3.18
+"RTN","IB20P561",10,0)
+ S IBDT317=3151001,IBDT318=3160101
+"RTN","IB20P561",11,0)
+ D RVDRG(IBDT317,IBDT318)
+"RTN","IB20P561",12,0)
+ D MSG("    Revenue Code 124 for Mental Health Diagnosis Post-Install Complete")
+"RTN","IB20P561",13,0)
+ Q
+"RTN","IB20P561",14,0)
+ ;
+"RTN","IB20P561",15,0)
+ ;
+"RTN","IB20P561",16,0)
+RVDRG(IBDT317,IBDT318) ; default rvc to 124 for DRGs in Reasonable Charges (#363.2)
+"RTN","IB20P561",17,0)
+ ;
+"RTN","IB20P561",18,0)
+ N IB561,IBCNT,IBCNO,IBRVC,IBCS,IBCS0,IBBR0,IBDRGC,IBDRGF,IBXRF,IBITM,IBNEF,IBCI,IBCI0,IBCIA
+"RTN","IB20P561",19,0)
+ N DA,DIE,DR,DT,X,X1,X2,Y
+"RTN","IB20P561",20,0)
+ S (IBCNO,IBCNT)=0,IB561="IB20P561"
+"RTN","IB20P561",21,0)
+ ;
+"RTN","IB20P561",22,0)
+ ; charge items for drgs store in xtmp for 30 days for tracking purpose 
+"RTN","IB20P561",23,0)
+ ; xtmp(name,0)=purge dt_U_today dt_U_patch#_U_total update_U_total rec.
+"RTN","IB20P561",24,0)
+ ; xtmp(name,charge set ien,charge item ien)=charge item before update 
+"RTN","IB20P561",25,0)
+ K ^XTMP(IB561)
+"RTN","IB20P561",26,0)
+ S DT=$$DT^XLFDT,X1=DT,X2=30 D C^%DTC
+"RTN","IB20P561",27,0)
+ S ^XTMP(IB561,0)=X_U_DT_U_"IB*2.0*561 POST-INIT"
+"RTN","IB20P561",28,0)
+ ;
+"RTN","IB20P561",29,0)
+ D MSG("")
+"RTN","IB20P561",30,0)
+ D MSG(" >> Adding 124 for MH DRGs on 1-OCT-15 or 1-JAN-16: 881, 882, 883, 885 & 886...")
+"RTN","IB20P561",31,0)
+ S IBRVC=$O(^DGCR(399.2,"B",124,0))
+"RTN","IB20P561",32,0)
+ I 'IBRVC D MSG("    ** Error: Revenue Code 124 undefined, not added") G RVDRGQ
+"RTN","IB20P561",33,0)
+ ;
+"RTN","IB20P561",34,0)
+ S IBCS=0 F  S IBCS=$O(^IBE(363.1,IBCS)) Q:'IBCS  D
+"RTN","IB20P561",35,0)
+ . S IBCS0=$G(^IBE(363.1,IBCS,0)) Q:IBCS0=""
+"RTN","IB20P561",36,0)
+ . S IBBR0=$G(^IBE(363.3,+$P(IBCS0,U,2),0)) I IBBR0'["RC INPATIENT" Q
+"RTN","IB20P561",37,0)
+ . ;
+"RTN","IB20P561",38,0)
+ . S IBXRF="AIVDTS"_IBCS
+"RTN","IB20P561",39,0)
+ . S IBITM=0 F  S IBITM=$O(^IBA(363.2,IBXRF,IBITM)) Q:'IBITM  D
+"RTN","IB20P561",40,0)
+ .. S IBNEF="" F  S IBNEF=$O(^IBA(363.2,IBXRF,IBITM,IBNEF)) Q:IBNEF=""  I (IBNEF=-IBDT317)!(IBNEF=-IBDT318) D 
+"RTN","IB20P561",41,0)
+ ... S IBCI=0 F  S IBCI=$O(^IBA(363.2,IBXRF,IBITM,IBNEF,IBCI)) Q:'IBCI  D
+"RTN","IB20P561",42,0)
+ .... S IBCIA=$G(^IBA(363.2,IBCI,0)) Q:IBCIA=""
+"RTN","IB20P561",43,0)
+ .... S IBCI0=$P(IBCIA,U,1)
+"RTN","IB20P561",44,0)
+ .... S IBDRGC=$P(IBCI0,";",1)
+"RTN","IB20P561",45,0)
+ .... S IBDRGF=$P(IBCI0,";",2) Q:IBDRGF'="ICD("
+"RTN","IB20P561",46,0)
+ .... I '$F("^881^882^883^885^886^",(U_IBDRGC_U)) Q
+"RTN","IB20P561",47,0)
+ .... S ^XTMP(IB561,IBCS,+IBCI)=IBCIA
+"RTN","IB20P561",48,0)
+ .... S IBCNO=IBCNO+1
+"RTN","IB20P561",49,0)
+ .... I $P(IBCIA,U,6)=IBRVC Q
+"RTN","IB20P561",50,0)
+ .... ;
+"RTN","IB20P561",51,0)
+ .... S DIE="^IBA(363.2,",DA=+IBCI
+"RTN","IB20P561",52,0)
+ .... S DR=".06///"_IBRVC D ^DIE K DIE,DA,DR,X,Y
+"RTN","IB20P561",53,0)
+ .... S IBCNT=IBCNT+1
+"RTN","IB20P561",54,0)
+ ;
+"RTN","IB20P561",55,0)
+RVDRGQ S $P(^XTMP(IB561,0),U,4)=IBCNT_U_IBCNO
+"RTN","IB20P561",56,0)
+ D MSG("    Done.  "_IBCNT_" existing inpatient charge items updated (#363.2)")
+"RTN","IB20P561",57,0)
+ D MSG("")
+"RTN","IB20P561",58,0)
+ Q
+"RTN","IB20P561",59,0)
+ ;
+"RTN","IB20P561",60,0)
+ ;
+"RTN","IB20P561",61,0)
+MSG(IBA) ;
+"RTN","IB20P561",62,0)
+ D MES^XPDUTL(IBA)
+"RTN","IB20P561",63,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",10127,6)
+^518
+**END**
+**END**
+

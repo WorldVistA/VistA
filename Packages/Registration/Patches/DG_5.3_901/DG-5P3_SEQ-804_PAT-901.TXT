@@ -1,0 +1,244 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*901
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #804                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*863  <<= must be installed BEFORE `DG*5.3*901'
+
+Subject: DATE OF DEATH ENHANCEMENTS
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+  - Data Dictionary
+
+Description:
+============
+
+ **************************************************************************
+   Note:  This patch is being released in support of the Enrollment Customer
+          Enhancements (ECE) and Enrollment System Enhancements (ESE) projects
+          and the Enrollment System (ES) 4.1 release.  DG*5.3*901 (Registration)
+          is released with DG*5.3*891 (Registration), DG*5.3*871 (Registration),
+          DG*5.3*890 (Registration), DG*5.3*904 (Registration), DG*5.3*906
+          (Registration), EAS*1*113 (Enrollment Application System) and
+          IVM*2*160 (Income Verification Match) in host file DG_53_P891.KID.
+         
+          It is imperative that this patch be installed no later than the
+          compliance date.  Your understanding and support is appreciated.
+  
+ **************************************************************************
+  
+ This patch modified the Registration v5.3 application as described below: 
+  
+ The Master Veteran Index (MVI) will become the Department of Veteran 
+ Affairs (VA) one authoritative service for managing Date of Death
+ information. Given the promotion of the Veteran Health Administration 
+ (VHA) Identity Service (IdS) as the VA enterprise-wide identity management
+ system, it was necessary to re-examine the rules for authoritative
+ sources to add, delete, or update the Date of Death data.  Moving to MVI
+ as the single authoritative system leveraging authoritative sources will
+ ensure accuracy and consistency of Date of Death data across the VA
+ enterprise. The Date of Death will be promoted to the MVI's Primary View
+ and provided to MVI consumers.
+  
+ This patch modifies the Registration v5.3 application as described below: 
+  
+   - When  a VistA user edits or modifies the Date of Death, they must 
+     select one of the three approved sources of notification.  The 
+     approved choices for  the SOURCE OF NOTIFICATION (#.353) field in the 
+     PATIENT (#2) file are Inpatient at VAMC (1),Death Certificate on File
+     (3), or NCA (7).  There are no requirements to update existing date
+     of death records.    
+ 
+   - A VistA user may delete a date of death when the date of death was 
+     entered by a user at that site or at a child/satellite facility of
+     that site. 
+  
+   - When a VistA user attempts to edit the date of death, the system will
+     check the LAST EDITED BY field (#.355) in the PATIENT (#2) file.  The
+     following message will be displayed if the LAST EDITED BY field 
+     (#.355) in the PATIENT (#2) file is not a defined user at the site: 
+     "YOU MAY NOT EDIT DATE OF DEATH IF IT WAS NOT ENTERED BY A USER AT 
+     THIS SITE".  See example below:
+ 
+     Select Registration Menu <TEST ACCOUNT> Option: DEATH ENTRY
+ 
+ 
+     Select PATIENT NAME: REGPATIENT,ONE,ONE  REGPATIENT,ONE  4-27-59    
+     666878793    NO     NSC VETERAN      
+     Enrollment Priority: GROUP 5    Category: NOT ENROLLED  
+     End Date: 05/05/2015
+ 
+ 
+     YOU MAY NOT EDIT DATE OF DEATH IF IT WAS NOT ENTERED BY A USER 
+     AT THIS SITE
+ 
+ 
+     Select PATIENT NAME: 
+ 
+ Future patch(es) will be released to discontinue sharing the Date of Death with
+ ES and to share and receive Date of Death information with the MVI.  
+ 
+  
+  
+ Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ PATIENT (#2)               SOURCE OF NOTIFICATION  Modified
+                            (#.353)
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name        Type      File Name (Number)    New/Modified/Deleted
+ -------------        ----      ------------------    --------------------
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+ Problem:
+ -------
+ N/A
+  
+ Resolution:
+ ----------
+ N/A
+  
+ Test Sites:
+ ----------
+ West Texas VA Health Care System, Big Spring, TX
+ Fargo VA Health Care System, Fargo, ND
+ Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+ 
+  
+ DOCUMENTATION RETRIEVAL INSTRUCTIONS
+ ------------------------------------
+  
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/
+  
+ Title                         File Name                  FTP Mode
+ ------------------------------------------------------------------
+ User Manual - Registration    DG_5_3_P891_REG_UM.PDF     Binary
+   Menu      
+       
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3*901
+                                      DG*5.3*906 
+  
+ 
+ Installation Instructions:
+ --------------------------
+  
+ Please see the DG*5.3*891 Patch Description for installation 
+ instructions.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGDEATH
+    Before: B40455285   After: B44578937  **45,84,101,149,392,545,595,
+                                           568,563,725,772,863,901**
+ 
+Routine list of preceding patches: 863
+
+=============================================================================
+User Information:                          Hold Date     : DEC 05, 2015
+Entered By  :                               Date Entered  : SEP 15, 2014
+Completed By:                               Date Completed: NOV 19, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

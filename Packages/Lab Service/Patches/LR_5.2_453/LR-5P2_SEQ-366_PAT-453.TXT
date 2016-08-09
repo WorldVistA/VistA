@@ -1,0 +1,223 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/28/15 at 13:10
+=============================================================================
+Run Date: DEC 15, 2015                     Designation: LR*5.2*453
+Package : LR - LAB SERVICE                    Priority: Mandatory
+Version : 5.2       SEQ #366                    Status: Released
+                  Compliance Date: JAN 15, 2016
+=============================================================================
+
+Associated patches: (v)LR*5.2*221  <<= must be installed BEFORE `LR*5.2*453'
+                    (v)LR*5.2*427  <<= must be installed BEFORE `LR*5.2*453'
+
+Subject: LRWRKINC INCOMPLETE STATUS REPORT, CPRS LAB PROGRESS NOTES, MICRO PRELIM UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses four (4) issues:
+  
+ 1. The shipping manifest identifier is not shown on the Incomplete Status 
+    List (LRWRKINC) when printing the extended display.
+  
+ 2. The test status may not be correctly reflected on the Incomplete 
+    Status List (LRWRKINC).
+  
+ 3. Information such as report release date and time, performing 
+    laboratory, and ordering provider are displaying in CPRS Laboratory
+    progress notes for a patient's ordered test even though results are not
+    verified for that test.
+  
+ 4. Multiple updates to Microbiology preliminary comments sent by the 
+    Laboratory Electronic Data Interchange (LEDI) host site are not stored
+    by the LEDI collecting site in the patient's record if the STORE
+    DUPLICATE COMMENTS (#2.2) sub-field of the PROFILE (#50) field in the
+    LOAD/WORKLIST (#68.2) file is set to "YES".
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Associated Remedy Ticket(s):
+ ============================
+  
+ 1. INC000000807835: LRWRKINC Incomplete Status Report 
+                     (Shipping Manifest field)
+ 2. INC000001221322: LRWRKINC Incomplete Status Report
+                     (Test Status field)
+ 3. INC000000869626: CPRS Laboratory Progress Notes Issue
+ 4. INC000001071404: Microbiology Preliminary Comments Update Issue
+  
+  
+ Blood Bank Review:
+ ==================
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*453 does not 
+ contain any changes to the VISTA BLOOD BANK Software as defined by 
+ ProPath standard titled: BBM Team Review of VistA Patches.
+  
+ EFFECT ON BLOOD BANK FUNCTIONAL REQUIREMENTS: Patch LR*5.2*453 does not 
+ alter or modify any software design safeguards or safety critical 
+ elements functions.
+  
+ RISK ANALYSIS: Changes made by patch LR*5.2*453 have no effect on 
+ Blood Bank software functionality, therefore RISK is none.
+  
+ VALIDATION REQUIREMENTS BY OPTION: Because of the nature of the 
+ changes made, no specific validation requirements exist as a result of 
+ installation of this patch.
+  
+ Participating Test Sites:
+ =========================
+ Hudson Valley HCS
+ Minneapolis VAMC
+  
+ Remedy Overview:
+ ================
+  
+ 1. INC000000807835 - LRWRKINC Incomplete Status Report 
+                      (Shipping Manifest field)
+  
+    Problem:
+    --------
+    If a user selects the extended display format of the Incomplete Status 
+    Report (LRWRKINC), the shipping manifest identifier does not display.
+    An incorrect variable is being referenced when attempting to display 
+    the shipping manifest identifier.
+    
+    Resolution:
+    -----------
+    Routine LRWRKINC is modified to correctly retrieve the shipping 
+    manifest identifier when printing the extended display format of the
+    Incomplete Status Report (LRWRKINC).
+  
+    Routine: LRWRKINC
+  
+ 2. INC000001221322 - LRWRKINC Incomplete Status Report (Test Status field)
+  
+    Problem:
+    --------
+    The test status always defaults to "In lab" on Incomplete Status 
+    Report rather than reflecting true statuses of "Added" to a shipping 
+    manifest, "Shipped" to the host site, and "Results received" from host
+    site.
+  
+    Resolution:
+    -----------
+    Routine LRWRKINC is modified to print the correct status of a test. 
+  
+    Routine: LRWRKINC
+  
+ 3. INC000000869626 - CPRS Laboratory Progress Notes Issue
+  
+    Problem:
+    --------
+    Result comments for information such as report release date and 
+    time, performing laboratory, and ordering provider may display
+    for a test even though a result has not been verified.  The 
+    information displayed pertains to a previous test on the patient for
+    the same accession area and not the test being searched.
+  
+    Resolution:
+    -----------
+    Routine LR7OR2 is modified to not attempt to display result comments 
+    such as report release date and time, performing laboratory, and
+    ordering provider if no results have been verified for the
+    test.
+  
+    Routine: LR7OR2
+  
+ 4. INC000001071404 - Microbiology Preliminary Comments Update Issue
+  
+    Problem:
+    --------
+    Multiple updates of Microbiology preliminary comments are not stored 
+    at the LEDI collecting site if the STORE DUPLICATE COMMENTS (#2.2)
+    sub-field of the PROFILE (#50) field in the LOAD/WORKLIST (#68.2) file
+    is set to "YES" at the LEDI collecting site.  (The LEDI host site does
+    send all comment updates.) The first set of preliminary comments is
+    stored.  However, any subsequent preliminary comments sent by the LEDI
+    host site are not stored.
+  
+    Resolution:
+    -----------
+    Routine LRVRMI3 is modified to store all Microbiology preliminary 
+    comments sent by a LEDI host site regardless of whether the STORE
+    DUPLICATE COMMENTS (#2.2) sub-field of the PROFILE (#50) field in the
+    LOAD/WORKLIST (#68.2) file is set to "YES" at the LEDI collecting 
+    site.  The laboratory report will then match between the host site and 
+    the collecting site in the Preliminary Comments section.
+    
+    Routine: LRVRMI3
+  
+    ==================== Installation Instructions ====================
+   This patch may be loaded with users on the system.  You may wish to 
+   install it during non-peak hours. Installation will take less than 1 
+   minute. 
+  
+   NOTE: Kernel patches must be current on the target system to avoid 
+         problems loading and/or installing this patch.
+  
+    1. Use the 'INSTALL/CHECK MESSAGE' option of the PackMan menu. This
+       option will load the KIDS patch onto your system.
+  
+    2. The patch has now been loaded into a Transport global on your
+       system. You now need to use KIDS to install the transport global.
+  
+    3. On the 'Kernel Installation & Distribution System' Menu (KIDS),
+       select the 'Installation' menu.
+  
+    4. Use the 'Verify Checksum in Transport Global' option and verify
+       that all routines have the correct checksums.
+     
+    5. On the KIDS menu, under the 'Installation' menu, use the following
+       options:
+               Print Transport Global
+               Compare Transport Global to Current System
+               Backup a Transport Global
+  
+       If you wish to preserve a copy of the routines exported in this 
+       patch prior to installation, you should use the 'Backup a Transport
+       Global' option at this time. You may also compare the routines in
+       your production account to the routines in the patch by using the
+       'Compare a Transport Global to Current System' option.
+  
+    6. Use the 'Install Package(s)' option under the 'Installation' menu 
+       and select the package 'LR*5.2*453'.
+  
+       When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//,
+       choose 'NO'. 
+  
+       When prompted 'Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//', choose 'NO'.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.2;LAB SERVICE;**[Patch List]**;Sep 27, 1994;Build 4
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: LR7OR2
+    Before: B40394119   After: B40671777  **121,187,219,285,286,372,350,453**
+Routine Name: LRVRMI3
+    Before: B26579796   After: B26582667  **350,427,453**
+Routine Name: LRWRKINC
+    Before: B75328970   After: B75427718  **153,201,221,453**
+ 
+Routine list of preceding patches: 221, 427
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 06, 2015
+Completed By:                               Date Completed: DEC 09, 2015
+Released By :                               Date Released : DEC 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

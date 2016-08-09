@@ -1,0 +1,568 @@
+
+=============================================================================
+Run Date: NOV 05, 2015                     Designation: SD*5.3*603
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #528                    Status: Released
+                  Compliance Date: NOV 30, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*107  <<= must be installed BEFORE `SD*5.3*603'
+                    (v)SD*5.3*526  <<= must be installed BEFORE `SD*5.3*603'
+                    (v)SD*5.3*539  <<= must be installed BEFORE `SD*5.3*603'
+                    (v)SD*5.3*575  <<= must be installed BEFORE `SD*5.3*603'
+                    (v)SD*5.3*581  <<= must be installed BEFORE `SD*5.3*603'
+
+Subject: PCMM WEB LEGACY CHANGES
+
+Category: 
+  - Data Dictionary
+  - Routine
+  - Enhancement (Mandatory)
+  - Other
+  - Sort Template
+
+Description:
+============
+
+ This patch implements changes to VistA required to support the new 
+ Patient-Centered Management Module (PCMM) Web. There is a companion CPRS
+ patch (OR*3.0*387) that implements changes to Remote Procedure Calls (RPC)
+ required to display content for the Primary Care Header and Detail Window.
+  
+ This patch is a part of a phased, coordinated process for deploying PCMM 
+ Web. The VistA software for this patch and the companion OR*3.0*387 
+ patch is released as two KIDS host files. They may be downloaded from a 
+ secured ftp site as directed by the PCMM Web Implementation Team.
+  
+ *******************************************************************
+ DO NOT INSTALL THIS PATCH ON A PRODUCTION SYSTEM UNTIL NOTIFIED BY 
+ THE PCMM WEB IMPLEMENTATION MANAGER.
+ *******************************************************************
+  
+ In order to fully support a team based, patient-centric approach to
+ healthcare delivery, enhancements to PCMM have been developed to allow a
+ team to be formed and aligned around a patient, including providers across
+ multiple VA sites and in non-VA settings to enable care coordination and
+ communication. The software supports automated data collection for
+ management metrics and analysis related to access, workload, and panel
+ management. VHA's model of team-based care is known as the
+ Patient-Aligned Care Team (PACT). The goal is to evolve and replace
+ existing PCMM software with functionality that identifies all team members
+ and specialists (VA and non-VA) involved in the care of the patient, as
+ well as their contact information and provide modalities to facilitate
+ provider-provider communication. This new PACT Management Module is known
+ as PCMM Web. According to the PCMM Modification Workgroup, the
+ relationship between the patient and his/her Primary Care Provider (PCP)
+ will help to enhance patient care and the treatment process. Patients who
+ regularly visit the same PCP receive better healthcare and utilize fewer
+ healthcare resources because of the PCP's ability to treat patients more
+ efficiently and effectively.
+  
+ Most of the changes to VistA are to background processing that will not 
+ be visible to users. An Application Proxy user was created to support 
+ batch processing for reading and updating VistA files.
+  
+ TECHNICAL SUMMARY:
+ ==================
+  
+ Files
+ -----
+ STANDARD POSITION (#403.46) file - Several position names were changed and
+ new positions were added.
+ Name change
+   TEAM PHARMACIST to PACT CLINICAL PHARMACIST
+   DIETITIAN to REGISTERED DIETITIAN
+   OIF OEF CLINICAL CASE MANAGER to TCM CLINICAL CASE MANAGER
+   OIF OEF PROGRAM MANAGER to TCM PROGRAM MANAGER 
+   OIF OEF TRANSITION PATIENT ADVOCATE to TCM TRANSITION PATIENT ADVOCATE
+ New positions
+   ADMINISTRATIVE ASSOCIATE
+   ANTICOAG CLINICAL PHARMACIST
+   ADVANCE PRACTICE ASSOCIATE PROVIDER
+   ASSOCIATE PROVIDER
+   CLINICAL ASSOCIATE
+   FELLOW
+   NURSE (LVN)
+   NURSE PRACTITIONER ASSOCIATE PROVIDER
+   PEER SUPPORT APPRENTICE
+   PEER SUPPORT SPECIALIST
+   PHYSICIAN ASSISTANT ASSOCIATE PROVIDER
+   PRIMARY CARE PROVIDER
+   SURROGATE CARE MANAGER
+   SURROGATE PRIMARY CARE PROVIDER
+   SURROGATE CLINICAL ASSOCIATE
+   ADVANCE PRACTICE NURSE
+   ADVANCE PRACTICE NURSE (MHTC)
+   LEAD COORDINATOR
+   PEER SUPPORT SPECIALIST (MHTC)
+  
+ POSITION ASSIGNMENT HISTORY (#404.52) file
+ A new field was added:
+   TEAMLET POSITION (#.12) field - indicates whether or not a position is a
+   teamlet member.
+ The descriptions for the following field descriptions were modified to 
+ reflect that PCMM Web will maintain FTEE history data.
+   FTEE HISTORY multiple (#1)
+     FTEE HISTORY (#.01) field
+     VALUE (#.02) field
+     USER (#.03) field
+ The trigger (FTEXR) on the FTEE EQUIVALENT (#.09) field will be deleted by
+ the post-install routine. (This trigger performed updates to FTEE 
+ HISTORY, now maintained by PCMM Web.)
+  
+ PATIENT TEAM ASSIGNMENT (#404.42) file - New code values were added to two
+ fields.
+   ASSIGNMENT TYPE (#.08) field
+     '98' for PENDING PRIMARY CARE
+   STATUS (#.15) field
+     'DU' for DOD UNASSIGN
+     'IU' for INACTIVE UNASSIGN
+     'DD' for REASSIGN-DOD REMOVED
+     'PR' for PAT RELOCATION
+     'RP' for REQ BY PAT
+     'NN' for NOT NEEDED
+     'PC' for PROV CHANGE
+     'PI' for MVI MOVE/MERGE
+     'FT' for INTRA FAC TRANS
+     'MU' for MISSING/UNK
+     'MD' for M-PACT DENIAL/WDRAW
+     'DC' for DISCHARGE FROM CARE
+     'ER' for ERROR
+  
+ PATIENT TEAM POSITION ASSIGNMENT (#404.43) file - New code values were 
+ added to one field.
+   STATUS (#.12) field
+     'DU' for DOD UNASSIGN
+     'IU' for INACTIVE UNASSIGN
+     'DD' for REASSIGN-DOD REMOVED
+     'PR' for PAT RELOCATION
+     'RP' for REQ BY PAT
+     'NN' for NOT NEEDED
+     'PC' for PROV CHANGE
+     'PI' for MVI MOVE/MERGE
+     'FT' for INTRA FAC TRANS
+     'MU' for MISSING/UNK
+     'MD' for M-PACT DENIAL/WDRAW
+     'DC' for DISCHARGE FROM CARE
+     'ER' for ERROR
+ A new cross reference ("C") was added to TEAM POSITION (#.02) field
+  
+ OUTPATIENT PROFILE (#404.41) file - Two new fields were added:
+   CPRS HEADER TEXT (#.06) field - This field is populated by PCMM Web with
+     primary care information to be displayed in the CPRS PCMM Header.
+   CPRS PC WINDOW CACHE (#.07) field - This field stores the last data set 
+     displayed in the CPRS Primary Care Details Window. This cached data
+     will be displayed if there is no connection to PCMM Web.
+  
+ OUTPATIENT ENCOUNTER (#409.68) file - A new Index, ACOD, was created to 
+ sort records by the PATIENT (#.02) field and CHECK OUT PROCESS COMPLETION
+ (#.07) field.
+  
+ PCMM PATIENT EVENTS (#404.54) file - This is a new file used to track
+ patient events of interest to PCMM Web.
+   PATIENT (#.01) field
+   EVENT DATE/TIME (#.02) field
+   EVENT CODE (#.03) field
+   EVENT DATA (#.04) field
+  
+ TEAM PURPOSE (#403.47) File - Two records were added:
+   PRIMARY CARE - NVCC
+   PRIMARY CARE - HBPC
+  
+  
+ Routines
+ --------
+ The routine SCMCTSK was modified to update several files when a patient 
+ date of death is entered or removed in the PATIENT (#2) file.
+   - User enters or removes a date of death for a patient in VistA
+   - A cross reference on the PATIENT (#2) file DATE OF DEATH (#.351) field
+     executes
+       FC^DGFCPROT
+   - This routine submits the DG FIELD MONITOR protocol to TaskMan
+   - The DG FIELD MONITOR protocol executes the protocols in its Items list
+   - The SCMC PCMM INACTIVATE ON DATE OF DEATH protocol executes 
+       DEATH^SCMCTSK
+   - This entry point updates the following File
+       PCMM PATIENT EVENTS (#404.54) file - record is created or updated
+  
+ The routine SCMCTSK2 was modified to ensure the PCMM NIGHTLY TASK [SCMC 
+ PCMM NIGHTLY TASK] menu option job never runs on VistA. (A QUIT statement
+ was added immediately after the entry point - NIGHT.)
+  
+ Three new routines; SCMCWS1, SCMCWS1A, SCMCWSUT; were developed to 
+ implement a new Application Program Interface (API) that calls a PCMM Web
+ web service to retrieve PACT and other team information that is displayed
+ in the CPRS PC Details Window.
+ This API uses the HealtheVet Web Service Client (HWSC) to implement the 
+ web service. The default set up is performed by the post-install routine.
+ This API is called by the CPRS RPC: ORWPT1 PCDETAIL. A new ICR, 6027 - 
+ SCMC PCMM/R GET PRIMARY CARE DETAILS, was created and activated to 
+ support this functionality.
+ These routines are also used by the new RPC, SCMC PCDETAIL. It is used to
+ batch load CPRS PC Window Cache during PCMMR deployment.
+  
+ *************************************************************************
+ NOTE: Sites will encounter an XINDEX Error after the installation of this
+ patch. SCMCWS1 uses HWSC. It calls a Cache Class to parse the eXtensible 
+ Markup Language (XML) document returned by the web service call.
+ A SAC Exemption (134) was approved on 02/04/2015.
+ *************************************************************************
+  
+ A new routine, SCMCDDR, was developed to implement the RPC, SCMC LISTER.
+ It returns VistA data to PCMM Web using the VA FileMan DBS API: Lister
+ (LIST^DIC).
+  
+ A new routine, SCMCDDR0, was developed to implement the RPC, SCMC FINDER.
+ It returns VistA data to PCMM Web using the VA FileMan DBS API: Find
+ (FIND^DIC).
+  
+ A new routine, SCMCDDR2, was developed to implement the RPC, SCMC GETS
+ ENTRY DATA. It returns VistA data to PCMM Web using the VA FileMan DBS
+ API: Data Retriever (GETS^DIQ). 
+  
+ A new routine, SCMCDDR3, was developed to implement the RPC, SCMC FILER.
+ It updates VistA data from PCMM Web using a VA FileMan DBS APIs: Filer
+ (FILE^DIE) and Updater (UPDATE^DIE).
+  
+ A new routine, SCMCENCT, was developed to implement the RPC, SCMC GET
+ PATIENT ENCOUNTERS. It returns patient encounter data to PCMM Web. The
+ data is used to determine if and when a patient had a completed encounter
+ with a teamlet member.
+  
+ A new routine, SCMCNPER, was developed to implement the RPC, SCMC GET
+ NEW PERSON. It returns provider information to PCMM Web.
+  
+ A new routine, SCMCPAT, was developed to implement two RPCs.
+  SCMC PATIENT DIEDON returns a patient's date of death to PCMM Web.
+  SCMC PATIENT INFO returns patient demographic information to PCMM Web.
+  
+ A new routine, SCMCFTEE, was developed to implement five RPCs; SCMC
+ FTEE CREATE, SCMC FTEE READ, SCMC FTEE READALL, SCMC FTEE UPDATE, SCMC
+ FTEE DELETE. They allow PCMM Web to maintain FTEE HISTORY multiple (#1) in
+ the POSITION ASSIGNMENT HISTORY (#404.52) file.
+  
+ The routine SCMCMHTC was modified to fix a date comparison issue.
+  
+ The routine SCAPMC23 was modified to correct an endless loop when reading 
+ unexpected data.
+  
+ The routine SCMCDD1 was modified to create or update OUTPATIENT PROFILE  
+ (#404.41) file records for all assignment types. The routine was also
+ modified to add "fail-safes" to quit processing if PATIENT TEAM ASSIGNMENT
+ (#404.42) file or PATIENT TEAM POSITION ASSIGNMENT (#404.43) file records
+ are not found when sending mail messages.
+  
+ Two routines, SCMCTSK5 and SCMCTSK6, were modified to change
+ auto-inactivation related time periods and other text in report and mail
+ boiler plate text. All auto-inactivation processing will be performed by
+ PCMM Web.
+  
+ The routine SDCOU was modified to create ACOD index records for Credit 
+ Stop Code OUTPATIENT ENCOUNTER (#409.68) file records. The original code 
+ did not properly handle new style indexes. The Set and Kill logic was 
+ modified to do so.
+  
+ The pre-install routine, SD53I603, was developed to perform the following 
+ actions:
+  - Delete the global for the STANDARD POSITION (#403.46) file and create
+    the initial file header.
+  
+ The post-install routine, SD53P603, was developed to perform the 
+ following actions:
+  - Add or update HWSC server and web service file entries
+  - Add the application proxy user
+  - Convert values in the PATIENT TEAM POSITION ASSIGNMENT (#404.43) file
+    STATUS (#.12) field from NA to IU
+  - Build the new ACOD index for the OUTPATIENT ENCOUNTER (#409.68) file
+  - Build the new C cross reference for PATIENT TEAM POSITION ASSIGNMENT 
+    (#404.43) file
+  - Un-schedule the legacy PCMM NIGHTLY TASK [SCMC PCMM NIGHTLY TASK]
+    menu option from TaskMan
+  - Place PCMM legacy menu options out-of-order
+  - Change users' secondary menu option from SCMC PCMM GUI WORKSTATION to
+    SCMC PCMMR WEB USER MENU
+  - Create missing ACOD index records in the OUTPATIENT ENCOUNTER (#409.68)
+    file
+  - Delete the trigger cross reference (FTEXR) on the POSITION ASSIGNMENT
+    HISTORY (404.52) file FTEE EQUIVALENT (#.09) field
+  - Create two records in the TEAM PURPOSE (#403.47) file
+    - PRIMARY CARE - NVCC
+    - PRIMARY CARE - HBPC
+  
+ A new routine, SCMCOPT, was developed to place a number of PCMM legacy 
+ menu options and a protocol out-of-order. The items to be placed
+ out-of-order are listed below in the Options Associated and Protocols
+ Associated sections. This routine also contains an entry point to change 
+ the value in the SECONDARY MENU OPTIONS (#.01) field in the SECONDARY MENU
+ OPTIONS (#203) multiple in the NEW PERSON (#200) file for users that 
+ have the option SCMC PCMM GUI WORKSTATION to SCMC PCMMR WEB USER MENU. 
+ Both entry points are called by the post-installation routine, SD53P603.
+  
+ A new routine, SCMCFPOS, was developed to fix the TEAM POSITION (#404.57) 
+ file at sites that have deviated from the gold STANDARD POSITION (#403.46)
+ file that is released with this patch.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)              New/Modified/Deleted
+ -------------          --------------------------  --------------------
+ PATIENT TEAM ASSIGNMENT file (#404.42)
+  STATUS field             (#.15)                     Modified - new codes
+  ASSIGNMENT TYPE field    (#.08)                     Modified - new code
+  
+ PATIENT TEAM POSITION ASSIGNMENT file (#404.43)
+  TEAM POSITION            (#.02)                     New C cross reference
+  STATUS                   (#.12)                     Modified - new codes
+  
+ POSITION ASSIGNMENT HISTORY file (#404.52)
+  TEAMLET POSITION field   (#.12)                     New
+  FTEE HISTORY multiple    (#1)                       Modified
+    FTEE HISTORY field       (#.01)                   Modified
+    VALUE field              (#.02)                   Modified
+    USER field               (#.03)                   Modified 
+  
+ OUTPATIENT PROFILE file  (#404.41)
+  CPRS HEADER TEXT field     (#.06)                   New
+  CPRS PC WINDOW CACHE field (#.07)                   New
+  
+ OUTPATIENT ENCOUNTERS file (#409.68)
+  PATIENT field            (#.02)        Added ACOD index for .02 and .07
+  
+ PCMM PATIENT EVENTS      (#404.54)                   New
+   PATIENT field           (#.01)                     New
+   EVENT DATE/TIME field   (#.02)                     New
+   EVENT CODE field        (#.03)                     New
+   EVENT DATA field        (#.04)                     New
+  
+ STANDARD POSITION file (#403.46) no DD change, updated and added positions
+  
+  
+ Forms Associated:
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+  
+ Options Associated:
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ SCMC PCMMR APP PROXY MENU      broker           new 
+ SCMC PCMMR WEB USER MENU       broker           new
+ SC PCMM MARK OPT OUT OF ORDER  routine          new
+ SCMC PCMM NIGHTLY TASK         routine          out-of-order
+ SCMC PATIENT ASSIGN/UNASSIGN   routine          out-of-order
+ SCMC CLEAN GHOST ENTRIES       routine          out-of-order
+ SCMC CLEAN INSTITUTION         routine          out-of-order
+ SCMC CONVERSION TOOLS MENU     menu             out-of-order
+ SCMC EXTEND A PATIENT          routine          out-of-order
+ SCMC FLAGGED                   routine          out-of-order
+ SCMC MU MASS TEAM UNASSIGNMENT routine          out-of-order
+ SCMC PC ATTENDING CONVERSION   routine          out-of-order
+ SCMC PCMM BASELINE SEEDING     routine          out-of-order
+ SCMC PCMM EDIT PRACTIT #404.52 routine          out-of-order
+ SCMC PRECEPTOR CONVERSION      routine          out-of-order
+ SCMC PRECEPTOR MIGRATION RPT   routine          out-of-order
+ SCMC RETRANSMIT                routine          out-of-order
+ SCMC PCMM GUI WORKSTATION      broker           out-of-order
+ SCMC PC ATTENDING ASGN RPT     routine          out-of-order 
+  
+ Protocols Associated:
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ SC PC PATIENT ASSIGN/UNASSIGN     disabled
+  
+  
+ Security Keys Associated:
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Remote Procedures Associated:
+ RPC Name                          New/Modified/Deleted
+ -------------                     --------------------
+ SCMC LISTER                       New
+ SCMC FINDER                       New
+ SCMC GETS ENTRY DATA              New
+ SCMC FILER                        New
+ SC DELETE ENTRY                   Modified-set APP PROXY ALLOWED to Y
+ SCMC GET PATIENT ENCOUNTERS       New
+ SCMC GET NEW PERSON               New
+ SC PAT ASGN MAILMAN               Modified-set APP PROXY ALLOWED to Y
+ SC PATIENT LOOKUP                 Modified-set APP PROXY ALLOWED to Y
+ SCMC PATIENT DIEDON               New
+ SCMC PATIENT INFO                 New
+ SCMC FTEE CREATE                  New
+ SCMC FTEE READ                    New
+ SCMC FTEE READALL                 New
+ SCMC FTEE UPDATE                  New
+ SCMC FTEE DELETE                  New
+ SCMC PCDETAIL                     New
+                   
+  
+ Templates Associated:
+ Template Name      Type      File Name (#)          New/Modified/Deleted
+ -------------      ----      ------------------     --------------------
+ SCMC INACTIVATED   SORT      #404.43                modified
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Memphis VAMC - Memphis, TN
+ Iron Mountain VAMC - Iron Mountain MI
+ VA West Los Angeles HCS  - Los Angeles, CA
+ Portland VAMC - Portland, OR
+  
+  
+ Documentation Retrieval Instructions:
+ =====================================
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www.domain.ext/vdl/
+  
+ File Description                   File Name                    FTP Mode
+ --------------------------------------------------------------------------
+ Installation Guide                 SD_53_603_IG.PDF             binary
+ Release Notes                      SD_53_603_RN.PDF             binary 
+ User Guide                         SD_53_603_UM.PDF             binary
+ Technical Manual                   SD_53_603_TM.PDF             binary 
+  
+ Software Retrieval Instructions:
+ ================================
+ The VistA software for this patch is released as a KIDS host file. It may 
+ be downloaded from a secured ftp site as directed by the PCMM Web 
+ Implementation Team.
+ The software distribution includes:
+   
+ File Name               Contents          Retrieval Format
+ ---------               --------          ----------------
+ SD_53_603.KID           KIDS Build        ascii
+  
+  
+ Patch Installation:
+ ===================
+  
+ This patch is a part of a phased, coordinated process for deploying PCMM
+ Web.
+  
+ *******************************************************************
+ DO NOT INSTALL THIS PATCH ON A PRODUCTION SYSTEM UNTIL NOTIFIED BY 
+ THE PCMM WEB IMPLEMENTATION MANAGER.
+ *******************************************************************
+  
+ Please refer to the PCMM Web-VistA Installation Guide for complete
+ details.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 79
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SCAPMC23
+    Before: B18108399   After: B18453123  **41,148,603**
+Routine Name: SCMCDD1
+    Before: B22709019   After: B25172674  **41,89,107,603**
+Routine Name: SCMCDDR
+    Before:       n/a   After: B34341424  **603**
+Routine Name: SCMCDDR0
+    Before:       n/a   After: B16319343  **603**
+Routine Name: SCMCDDR2
+    Before:       n/a   After: B24257447  **603**
+Routine Name: SCMCDDR3
+    Before:       n/a   After:  B6820328  **603**
+Routine Name: SCMCENCT
+    Before:       n/a   After: B28013021  **603**
+Routine Name: SCMCFPOS
+    Before:       n/a   After: B95974585  **603**
+Routine Name: SCMCFTEE
+    Before:       n/a   After: B17041744  **603**
+Routine Name: SCMCMHTC
+    Before:  B9636096   After: B10680608  **575,603**
+Routine Name: SCMCNPER
+    Before:       n/a   After: B40344757  **603**
+Routine Name: SCMCOPT
+    Before:       n/a   After: B44626560  **603**
+Routine Name: SCMCPAT
+    Before:       n/a   After:  B7157117  **603**
+Routine Name: SCMCTSK
+    Before: B36651125   After: B38253964  **264,278,272,297,581,603**
+Routine Name: SCMCTSK2
+    Before:B103317459   After:B105827282  **297,498,527,499,532,504,603**
+Routine Name: SCMCTSK5
+    Before: B58969240   After: B59325306  **297,532,539,603**
+Routine Name: SCMCTSK6
+    Before: B61520556   After: B61603528  **297,532,581,603**
+Routine Name: SCMCWS1
+    Before:       n/a   After:B162034987  **603**
+Routine Name: SCMCWS1A
+    Before:       n/a   After: B97769299  **603**
+Routine Name: SCMCWSUT
+    Before:       n/a   After:  B5582990  **603**
+Routine Name: SD53I603
+    Before:       n/a   After:   B142505  **603**
+Routine Name: SD53P603
+    Before:       n/a   After:B249302623  **603**
+Routine Name: SDCOU
+    Before:  B4920937   After:  B4357231  **603**
+ 
+Routine list of preceding patches: 107, 148, 504, 539, 575, 581
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 22, 2012
+Completed By:                               Date Completed: NOV 05, 2015
+Released By :                               Date Released : NOV 05, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

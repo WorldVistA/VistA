@@ -1,0 +1,557 @@
+$TXT Created by            A at CARVDD.DOMAIN.EXT  (KIDS) on Monday, 04/18/16 at 17:19
+=============================================================================
+Run Date: JUL 01, 2016                     Designation: PRCA*4.5*304
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #273                    Status: Released
+                  Compliance Date: JUL 31, 2016
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*149<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*221<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*237<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*264<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*297<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*298<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)PRCA*4.5*303<<= must be installed BEFORE `PRCA*4.5*304'
+                    (v)IB*2*529    <<= must be installed BEFORE `PRCA*4.5*304'
+
+Subject: MEDICAL CARE COLLECTION FUND (MCCF) ENHANCEMENTS PROJECT - EPAYMENTS
+
+Category: 
+  - Routine
+  - Other
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+
+Description:
+============
+
+  
+ *************************************************************************
+  
+ NOTICE:
+  
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement.
+  
+ *************************************************************************
+  
+  
+ The Medical ePayments Compliance (Phase 2, Iteration 2) project ensures 
+ the Veterans Administrations (VA) compliance with Electronic Funds
+ Transfer (EFT) & Electronic Remittance Advice (ERA) Operating Rules, and
+ enables VA to more effectively use ERA data, resulting in better revenue
+ and cash flow management.  It will provide the infrastructure foundation
+ for electronic exchange of claim payment information and promotes an
+ interoperable system and will reduce the time elapsed between receipt of
+ the Electronic Data Interchange (EDI) 835 Electronic Remittance Advice
+ Transaction and receipt of the Cash Concentration or Disbursement (CCD+)
+ transactions.  It will ensure that trace numbers between payments and
+ remittances can be used by VA, reducing the level of open accounts
+ receivable, allow claim denials to be more quickly addressed, and
+ standardizes Electronic Funds Transfer (EFT) & ERA enrollment to reduce
+ workload burden on VA staff.
+  
+ This patch contains changes to the ePayments (835 and EFT) program area 
+ to ensure compliance. Specifically, enhancements to the Veterans 
+ Health Information Systems and Technology Architecture (VistA) Third Party
+ EDI Lockbox module to increase timely and accurate processing of payments
+ for electronic pharmacy claims in compliance with Health Insurance
+ Portability and Accountability Act (HIPAA) and Veterans Health
+ Administration (VHA) Fiscal Accounting policies will also be required.  
+ The ePayments system is used by Accounts Receivable (AR) staff to process
+ payments from third party payers for both medical and pharmacy claims. The
+ objectives of the requested ePayments software modifications are to
+ expedite accurate payments by enhancing the ePayments software to
+ streamline the user's ability to process the pharmacy 835 while:
+  
+ Complying with HIPAA legislative requirements to meet patient needs and
+ secure Protected Health Information (PHI).
+  
+ Conducting payment accounting in accordance with the Office of Management
+ and Budget (OMB) directives.
+  
+ Systematically enforcing VHA Fiscal Accounting policy.
+  
+ This patch implements the following:
+   - Auto-posting of Pharmacy ERA payments
+   - Auditing of Suspense item processing
+   - Allowing ERAs with data exceptions Auto-post after corrections
+   - Allows re-use of Deposit Ticket #'s for manually created deposit
+     tickets
+   - Allows the Medical Auto-decrease functionality to specify maximum
+     decrease amounts by Claims Adjustment Reason Codes (CARC)
+   - Add Medical and Pharmacy filters to several reports 
+  
+  
+ Patch Components
+ ================
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                       
+ New/Modified/Deleted
+ -------------          -----------------------------------  
+ --------------------
+ AR SITE PARAMETER (#342)
+                        MAX DAYS ENTRY SUSPENDED (#7.04)          New
+                        AUTO POST MEDICAL PAPER BILLS (#7.05)     New
+                        AUTO POST PHARMACY PAPER BILLS (#7.06)    New
+ AR BATCH PAYMENT (#344)
+                        RECEIPT # (#.01)                          Modified
+ ELECTRONIC REMITTANCE ADVICE (#344.4)
+                        DATE POSTED TO SUSPENSE                   Modified
+ ELECTRONIC REMITTANCE ADVICE - ERA DETAIL SUB-FILE (#344.41)
+                        CLAIM COMMENT                             New
+                        CLAIM COMMENT DATE                        New
+                        CLAIM COMMENT USER                        New
+ RCDPE AUTO-PAY EXCLUSION (#344.6)
+                        EXCLUDE RX CLAIM POSTING (#.08)           New
+                        PHARMACY AUTO-POST COMMENT (#3)           New
+ RCDPE PARAMETER (#344.61)
+                        AUTO-POST RX CLAIMS ENABLED (#1.01)       New
+                        AUTO-DECREASE RX ENABLED (#1.02)          New
+ RCDPE CARC-RARC AUTO DEC (#344.62)                               New
+ RCDPE SUSPENSE AUDIT (#344.71)                                   New
+ RCDPE AUTO-POST AUDIT (#344.72)                                  New
+ RCDPE DM REPORT PARAMETERS (#344.9)                              New
+ RCDPE DM REPORT ARCHIVE (#344.91)                                New
+  
+  
+ Forms Associated:
+                                                           New/Modified/
+ Form Name                    File Name (Number)             Deleted    
+ ---------                    ------------------           -------------
+ N/A
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                    Type                         Deleted
+ -----------                    ----                       -------------
+ Finance AR Manager Menu [PRCA  menu                 Modified
+   MANAGER MENU]
+ Agent Cashier Menu [RCDP AGENT menu                 Modified
+   CASHIER MENU]
+ EDI Lockbox (ePayments)        menu                 Modified 
+   Reports Menu  [RCDPE EDI 
+   LOCKBOX REPORTS MENU]
+ EDI Diagnostic Measures        menu                   New 
+   Reports  [RCDPE EDI NATIONAL
+   REPORTS]
+ EDI VOLUME STATISTICS Report   run routine            New
+   [RCDPE EDI VOLUME
+    STATISTICS]
+ EFT/ERA TRENDING Report        run routine            New  
+   [RCDPE EFT-ERA TRENDING
+    REPORT]
+ ERA Status Change Audit Report run routine            New
+   [RCDPE ERA STATUS CHNG AUD
+    REP]
+ Disable-Enable DM Background   run routine            New
+   Job/Reports  [RCDPE NR 
+   DISABLE/ENABLE]
+ EDI Diagnostic Measures        menu                   New
+   Extracts Menu  [RCDPE NR
+   EXTRACT MENU]
+ Manually Start DM Extract      run routine            New
+   [RCDPE NR MANUAL START]
+ Manually Transmit DM Extract   run routine            New
+   [RCDPE NR MANUAL TRANSMIT]
+ View/Print Extracted Reports   run routine            New
+   [RCDPE NR VIEW/PRINT 
+    EXTRACTS]
+ Link Payment Tracking Report   run routine            New
+   [RCDPE SUSPENSE AUDIT
+    REPORT] 
+  
+ Parameter Definitions:
+                                                           New/Modified/
+ Parameter Name                                              Deleted    
+ --------------                                            -------------
+ RCDPE APAR                                                Modified
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ RCDP LINK PAYMENTS SUSPENSE REPORT                        Modified
+ RCDPE APAR CLAIM COMMENT                                  New
+ RCDPE APAR EEOB REFRESH                                   Modified
+ RCDPE APAR EEOB REVIEW                                    Modified
+ RCDPE APAR RESEARCH                                       Modified
+ RCDPE APAR SELECTED EEOB MENU                             Modified
+ RCDPE APAR SPLIT LINE                                     Modified
+ RCDPE APAR VERIFY                                         Modified
+ RCDPE APAR VIEW/PRINT EOB                                 Modified
+ RCDPE APAR VIEW/PRINT ERA                                 Modified
+ RCDPE EOB WL RECEIPT VIEW                                 Modified
+ RCDPE EOB WL REVIEW                                       Modified
+ RCDPE EOB WORKLIST CHANGE VIEW                            Modified
+ RCDPE EOB WORKLIST DIST ADJ                               Modified
+ RCDPE EOB WORKLIST MARK FOR AUTO POST                     New
+ RCDPE EOB WORKLIST MENU                                   Modified
+ RCDPE EOB WORKLIST RECEIPT PROCESSING                     Modified
+ RCDPE EOB WORKLIST REFRESH                                Modified
+ RCDPE EOB WORKLIST SPLIT LINE                             Modified
+ RCDPE EOB WORKLIST VERIFY                                 Modified
+ RCDPE MARK FOR AUTOPOST                                   New
+ RCDPE VIEW/PRINT WORKLIST ERA                             Modified
+ RCDPE WORKLIST ERA LIST MENU                              Modified
+ RCDPE WORKLIST ERA MARK FOR AUTO POST                     New
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ N/A
+  
+  
+  
+ List Templates:
+                                                           New/Modified/
+ Template Name                    Type                       Deleted    
+ -------------                    ----                     -------------
+ RCDP DEPOSIT PROFILE             List                     Modified
+ RCDP LINK PAYMENTS TO ACCOUNTS   List                     Modified
+ RCDPE WORKLIST ERA LIST          List                     Modified
+  
+  
+  
+ Templates Associated:
+  
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ RCMS EDI LOCKBOX   Input     AR SITE PARAMETER (#342)       Modified
+  
+  
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20130518 - Medical ePayments Compliance (Phase 2, Iteration 2) 
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ 1. INC1269592/INC1282993: EFTs posted to paper EOBs are not showing up
+                           on reports and causing stale dated lockups.
+  
+ Problem:
+ --------
+ When processing EFTs with paper EOBs, EFTs are not marked as posted in
+ VistA. Consequently, they are still showing up on reports and causing
+ stale dated lockups. 
+  
+ Resolution:
+ -----------
+ After investigating, this was determined to be a training issue as users
+ at some sites were not properly closing receipts after the EFT was posted 
+ to a paper EOB. No programming changes were needed.
+  
+  
+ 2. INC1289740: Auto-Posting of ERA line items does not always work.
+  
+ Problem:
+ --------
+ During auto-posting of (ERA) line items that were marked for
+ auto-posting, if the payment amount was greater than the claim balance,
+ processing of ERA line items stopped and the remainder of the line items
+ did not process. In addition, the line items did not go back on the
+ Auto-Post Awaiting Resolution (APAR) worklist.
+  
+ Resolution:
+ -----------
+ Any ERA line items with a payment amount less than the claim balance will
+ post. Any line items that cannot be posted due the payment amount being
+ greater than the claim balance will be sent to the APAR worklist.
+  
+  
+ 3. INC1289572/IR277545: Receipt processing issues
+  
+ Problem:
+ --------
+ This was actually two separate problems related to receipts:
+ 3a. When an ERA has more than one receipt number, the APAR Header 
+     displays the incorrect receipt numbers. 
+ 3b. When a user utilizes the Split/Edit action from the APAR worklist to
+     put dollars into Suspense and enters a comment, the comment is not
+     displayed on the Receipt Profile or the 215 Report.
+  
+ Resolution:
+ -----------
+ 3a. The APAR header was fixed to display the correct receipt numbers when
+     there are multiple receipt numbers on an ERA.
+ 3b. There was conditional logic that was used when transferring comments
+     to the ERA detail lines.  This conditional logic was removed and all
+     comments are now transferred  Subsequently, the comments will be 
+     displayed on the Receipt Profile and the 215 Report.
+  
+  
+ 4. INC1289748: The Auto-Post report does not correctly display split
+                payments.
+  
+ Problem:
+ --------
+ The Auto-Post report does not correctly display split payments, including
+ suspense payments. In addition, the receipt number does not always
+ display correctly.
+  
+ Resolution:
+ -----------
+ The Auto-Post report now displays all payments, including split payments
+ and suspense payments. The receipt number is now correctly displayed.
+  
+  
+ Test Sites:
+ -----------
+ Alexandria VA Health Care System (Alexandria, LA)-Station 502
+ Huntington VA Medical Center (Huntington, WV)-Station 581
+ South Texas Veterans Health Care System (San Antonio, TX)-Station 671
+  
+  
+ Software and Documentation Retrieval Instructions:
+ ---------------------------------------------------- 
+ Software being released as a host file and/or documentation describing 
+ the new functionality introduced by this patch are available.
+  
+ The preferred method is to retrieve files from download.vista.domain.ext.
+ This transmits the files from the first available server. Sites may 
+ also elect to retrieve files directly from a specific server. 
+  
+ Sites may retrieve the software and/or documentation directly using Secure
+ File Transfer Protocol (SFTP) from the ANONYMOUS.SOFTWARE directory at 
+ the following OI Field Offices:
+    
+ Albany:                 domain.ext
+ Hines:                  domain.ext    
+ Salt Lake City:         domain.ext
+    
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ File Description                     File Name           FTP Mode
+ --------------------------------------------------------------------
+ ACCOUNTS RECEIVABLES Technical Manual/ PRCA_4_5_TM_R0516.PDF  (binary)
+ Security Manual
+ ACCOUNTS RECEIVABLES Release Notes/  PRCA_4_5_P304_RN.PDF     (binary)
+ Installation Guide                   
+ EPAYMENTS USER MANUAL (EDI LOCKBOX)  EPAYMENTS_USER_          (binary)
+                                      MANUAL_R0516.PDF
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Note: 
+    The patch bundle PRCA IB MCCF EDI 1.0 (IB*2.0*530/PRCA*4.5*303) must
+    be installed first, then install two standalone patches, IB*2.0*529
+    and PRCA*4.5*304. Patch IB*2.0*529 must be installed before installing
+    PRCA*4.5*304. Install all patches close together so that your site has
+    all of the features released as part of this enhancement
+  
+ There is a post installation routine which will initially prevent your
+ site from auto-auditing medical and pharmacy bills, and auto-posting and
+ auto-decreasing pharmacy ERAs.
+  
+ After the post-install is complete you can safely remove the routine 
+ RC45P304. 
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+ No options or protocols need to be disabled during installation.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (PRCA*4.5*304):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter PRCA*4.5*304.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 104
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRCABJ
+    Before: B31725810   After: B36508118  **11,34,101,114,155,153,141,
+                                           165,167,173,201,237,304**
+Routine Name: PRCABJ2
+    Before:       n/a   After:  B9182483  **304**
+Routine Name: PRCACOL
+    Before: B22513060   After: B22640648  **165,198,264,304**
+Routine Name: RC45P304
+    Before:       n/a   After:  B3318505  **304**
+Routine Name: RCBEPAY
+    Before: B12526324   After: B27398421  **153,304**
+Routine Name: RCDPDPLM
+    Before: B38305120   After: B38473096  **114,149,304**
+Routine Name: RCDPEAA1
+    Before: B60672744   After: B79531337  **298,304**
+Routine Name: RCDPEAA2
+    Before: B95635325   After:B113400441  **298,304**
+Routine Name: RCDPEAA3
+    Before: B72680990   After: B91778928  **298,304**
+Routine Name: RCDPEAD
+    Before: B15979535   After: B51253087  **298,304**
+Routine Name: RCDPEAP
+    Before:B192874498   After:B218588559  **298,304**
+Routine Name: RCDPEAP1
+    Before: B28791355   After: B94067228  **298,304**
+Routine Name: RCDPEAPP
+    Before:B144741985   After:B217684038  **298,304**
+Routine Name: RCDPEAPS
+    Before:       n/a   After: B29098546  **304**
+Routine Name: RCDPEDAR
+    Before:B196389465   After:B196427903  **173,276,284,283,298,304**
+Routine Name: RCDPEM
+    Before: B61345619   After: B61473456  **173,255,269,276,283,298,304**
+Routine Name: RCDPEM0
+    Before: B72082268   After: B74803925  **173,208,220,298,304**
+Routine Name: RCDPEM2
+    Before:B218873122   After:B246465704  **173,208,276,284,293,298,303,304**
+Routine Name: RCDPEM4
+    Before:B226302840   After:B226362632  **276,284,298,304**
+Routine Name: RCDPEM7
+    Before: B82538875   After:B142964137  **276,298,303,304**
+Routine Name: RCDPEMA
+    Before: B22679834   After: B22680742  **298,304**
+Routine Name: RCDPENR1
+    Before:       n/a   After:B219791139  **304**
+Routine Name: RCDPENR2
+    Before:       n/a   After:B248634854  **304**
+Routine Name: RCDPENR3
+    Before:       n/a   After:B197064024  **304**
+Routine Name: RCDPENR4
+    Before:       n/a   After: B69353385  **304**
+Routine Name: RCDPENRU
+    Before:       n/a   After:B274576776  **304**
+Routine Name: RCDPESP
+    Before:B100040879   After:B152385563  **298,304**
+Routine Name: RCDPESP1
+    Before: B30021822   After:B102077824  **298,304**
+Routine Name: RCDPESP2
+    Before: B90155274   After:B171453792  **298,304**
+Routine Name: RCDPESP5
+    Before:       n/a   After:B123783170  **304**
+Routine Name: RCDPEWL1
+    Before: B68166367   After: B75362412  **173,208,222,298,304**
+Routine Name: RCDPEWL7
+    Before: B96884750   After: B98845066  **208,222,269,276,298,304**
+Routine Name: RCDPEWL8
+    Before: B82558343   After: B93821264  **208,269,276,298,304**
+Routine Name: RCDPEWLP
+    Before:B166745287   After:B173786255  **298,303,304**
+Routine Name: RCDPEX1
+    Before: B18257259   After: B19679836  **173,262,298,304**
+Routine Name: RCDPEX2
+    Before: B22431438   After: B28186252  **173,269,298,304**
+Routine Name: RCDPEX32
+    Before: B48567496   After: B54785721  **173,249,298,304**
+Routine Name: RCDPLPL1
+    Before: B25554080   After: B35848725  **114,148,153,208,269,304**
+Routine Name: RCDPLPL3
+    Before: B43605509   After: B52913516  **153,304**
+Routine Name: RCDPLPL4
+    Before:       n/a   After:B236411644  **304**
+Routine Name: RCDPLPLM
+    Before: B40847044   After: B40815572  **114,208,304**
+Routine Name: RCDPLPS1
+    Before:       n/a   After: B45239923  **304**
+Routine Name: RCDPLPS2
+    Before:       n/a   After: B48351879  **304**
+Routine Name: RCDPRLIS
+    Before: B22200175   After: B22215700  **114,304**
+Routine Name: RCDPRSEA
+    Before: B21546260   After: B21515890  **114,148,208,269,304**
+Routine Name: RCDPUDEP
+    Before: B15651914   After:B125854727  **114,173,257,283,297,304**
+Routine Name: RCDPURE1
+    Before: B60661584   After: B73998256  **114,148,153,169,204,173,214,
+                                           217,296,298,304**
+Routine Name: RCDPURED
+    Before: B37216500   After: B41284430  **114,169,174,196,202,244,268,
+                                           271,304**
+Routine Name: RCDPURET
+    Before: B48340501   After: B61262925  **114,141,169,173,196,221,304**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 09, 2014
+Completed By:                               Date Completed: JUN 15, 2016
+Released By :                               Date Released : JUL 01, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,190 @@
+
+=============================================================================
+Run Date: MAY 14, 2015                     Designation: BPS*1*17
+Package : BPS - E CLAIMS MGMT ENGINE          Priority: Mandatory
+Version : 1        SEQ #16                      Status: Released
+                  Compliance Date: JUN 06, 2015
+=============================================================================
+
+Associated patches: (v)BPS*1*11    <<= must be installed BEFORE `BPS*1*17'
+
+Subject: ePAYMENTS COMPLIANCE
+
+Category: 
+  - Data Dictionary
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+  
+   Patch BPS*1.0*17 is part of a multi-build: 
+       BPS IB PRCA EPAYMENTS BUNDLE 1.0
+   See patch PRCA*4.5*298 for the complete description.
+  
+ This patch has enhancements that extend the capabilities of the Veterans
+ Health Information Systems and Technology Architecture (VistA) electronic
+ payment (ePayments) system.  Below is a list of all the applications 
+ involved in this project along with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*298
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*511
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1.0*17
+  
+  
+ This specific patch contains the following functionality:
+ ---------------------------------------------------------
+  
+ The patch creates a new 'AEC' cross reference on the existing PRESCRIPTION
+ NUMBER field (9002313.57,1.11) of the BPS LOG OF TRANSACTIONS file
+ #9002313.57 which is used to improve matching of the ECME number on the
+ incoming pharmacy Electronic Remittance Advice (ERA) claim lines to the
+ claim numbers in the VistA database.
+  
+ Patch Components
+ ================
+  
+ The following is a list of field modifications included in this patch:
+  
+ File Name (#)                                                   New/Modified/
+   Sub-File Name (#)    Field Name (#)                              Deleted
+ -------------------    -------------------                      -------------
+ BPS LOG OF TRANSACTIONS (#9002313.57)
+                        PRESCRIPTION NUMBER (#1.11)                Modified
+     
+  
+ Forms Associated:
+  
+ Form Name             File #     New/Modified/Deleted
+ ---------             ------     --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------     
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name       Type               New/Modified/Deleted
+ -----------       ----               -------------------- 
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name                            New/Modified/Deleted
+ -------------                            -------------------- 
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name     Type        File Name (Number)  New/Modified/Deleted
+ -------------     ----        ------------------  --------------------
+ N/A
+  
+  
+ Additional Information: N/A
+  
+  
+ New Service Requests (NSRs):
+ -------------------------------------------------------------
+ NSR - Request id: 20110503 Electronic Data Interchange (EDI) New 
+       Standards and Operating Rules (Veterans Health Administration)
+       VHA Provider-Side TCRs  05/19/2011 
+       
+       http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503   
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ -------------------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+  VA Puget Sound Health Care System
+  VA Southern Nevada Healthcare System (VASNHS) - Las Vegas
+  New Mexico VA Health Care System - Albuquerque
+  Tuscaloosa VA Medical Center
+  Central Alabama Veterans Health Care System (CAVHCS)
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                   File Name             FTP Mode
+ ----------------------------------------------------------------------
+ BPS Release Notes/Installation       BPS_1_P17_RN.PDF         Binary
+ Guide (BPS*1.0*17)    
+  
+ ECME Technical Manual\Security
+ Guide                                BPS_1_TM_R0515.PDF       Binary
+  
+   
+ Patch Installation: 
+  
+ Installation Instructions
+ -------------------------
+ See patch PRCA*4.5*298 for the installation instructions.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;1.0;E CLAIMS MGMT ENGINE;**[Patch List]**; 15 May 2014;Build 99
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: BPS10P17
+    Before:       n/a   After: B10122809  **17**
+Routine Name: BPSUTIL2
+    Before: B32920062   After: B52546743  **7,8,10,11,17**
+ 
+Routine list of preceding patches: 11
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 13, 2013
+Completed By:                               Date Completed: APR 24, 2015
+Released By :                               Date Released : MAY 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

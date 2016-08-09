@@ -1,0 +1,150 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 09/24/15 at 14:10
+=============================================================================
+Run Date: MAR 29, 2016                     Designation: IB*2*552
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #510                      Status: Released
+                  Compliance Date: APR 28, 2016
+=============================================================================
+
+Associated patches: (v)IB*2*237    <<= must be installed BEFORE `IB*2*552'
+                    (v)IB*2*397    <<= must be installed BEFORE `IB*2*552'
+
+Subject: <MAXNUMBER> ERROR/NEGATIVE BILL AMOUNTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch fixes the following issues: 
+ 1. MESSAGE CHECKSUM calculations are leading to <MAXNUMBER> errors.
+ 2. The potential for the back billing process to bill a negative amount.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001120403    Integrated Billing - Other:
+ 2. INC000000956230    Neg $ Amounts (Files #350 & 354.71)
+    Duplicates:
+    INC000001089258    Integrated Billing - Application Error:
+    INC000001291861    Integrated Billing - Copay : 
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Caribbean HCS
+ Erie VAMC
+ Tennessee Valley HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001120403    Integrated Billing - Other:
+   
+    Problem: 
+    --------
+    While calculating the MESSAGE CHECKSUM (#.15) field for the 
+    BILL STATUS MESSAGE (#361) file, if the utility encounters a 
+    numeric value containing an "E" any arrhythmic calculation on 
+    that field evaluates the "E" as "Exponent" which can lead to a
+    <MAXNUMBER> error.
+   
+    Resolution:
+    -----------
+    Rather than evaluating every line, the checksum utility will only
+    evaluate the lines necessary in the checksum calculation thereby 
+    avoiding the possibility of encountering an unintended element with
+    the potential of containing an "E".
+  
+    Routine: IBCEST1
+  
+  
+ 2. INC000000956230    Neg $ Amounts (Files #350 & 354.71)
+   
+    Problem: 
+    --------
+    When the IB back billing process encounters an IB PATIENT COPAY 
+    ACCOUNT (#354.7) record where the total amount billed for the year 
+    exceeds the YEARLY CAP AMOUNT (#.04) in the IB COPAY CAPS file 
+    (#354.75) the back billing process can potentially bill a negative
+    amount, which based on the field definitions should not be possible.  
+   
+    Resolution:
+    -----------
+    When determining the amount to back bill, if the bill amount is less
+    than zero, the processing will halt for that record and the negative
+    amount will not be billed.
+  
+    Routine: IBARXMC  
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install this patch at
+ any time without interruption to users.  It should take less than 2
+ minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*552)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*552.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO//, respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBARXMC
+    Before: B43160101   After: B43974651  **156,186,237,552**
+Routine Name: IBCEST1
+    Before:  B3887328   After:  B4362589  **320,397,552**
+ 
+Routine list of preceding patches: 237, 397
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 04, 2015
+Completed By:                               Date Completed: MAR 22, 2016
+Released By :                               Date Released : MAR 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

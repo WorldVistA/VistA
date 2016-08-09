@@ -1,0 +1,161 @@
+
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: WEBP*1*5
+Package : WEBP - PATIENT CENTERED MANAGEMENT  Priority: Mandatory
+Version : 1         SEQ #5                      Status: Released
+                  Compliance Date: JUN 02, 2016
+=============================================================================
+
+
+Subject: PCMM WEB BACKGROUND PROCESSING ENHANCEMENTS
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The Patient-Centered Management Module (PCMM) Web application version 
+ WEBP*1*5 will implement three performance enhancements detailed below.
+ These enhancements are all for background processing, and will not change 
+ the PCMM Web GUI.
+  
+ Configuration Changes:
+ ======================
+ RTC Ticket: 303721 - VISTA SYNC- the Vista Synchronization process 
+ needs optimization to increase performance.  The synchronization was 
+ being performed each time a change was made to a team.
+  
+ Solution: To optimize the processing of teams, instead of processing a 
+ team each time a change occurs to the team, The Vista Synchronization 
+ process will group multiple changes to a team into a single 
+ transaction at a given interval based on the last date/time the team 
+ was synchronized. 
+  
+  
+ RTC Ticket: 301176 - Sites are reporting patients still pending and 
+ have not switched to active, this is due to a long running query that 
+ is being interrupted during auto-inactivation job 
+  
+ Solution: Optimize the query used to process the auto-inactivation job 
+ to utilize indexes for processing the AI jobs. The utilization of the 
+ indexing will reduce query running time and improve the processing
+ reliability.
+  
+  
+ RTC Ticket: 293434 - MVI A24 and A43 messages were creating duplicate 
+ entries in the PCMMWeb database and could possibly cause data 
+ corruption. 
+  
+ Solution: To prevent data corruption and the duplicate entries in the 
+ PCMMWeb database, route A24 and A43 messages through hazel cast to 
+ enforce serialization.
+  
+  
+ Implementation:
+ ===============
+ The PCMM Web WEBP*1*5 is a centrally managed web-based application and 
+ will be implemented and deployed to a central web server.  No installation
+ is required by sites.
+  
+  
+ Implementation Files:
+ =====================
+ None
+  
+ Patch Components:
+ -----------------
+  
+ Files & Fields Associated: N/A
+  
+ Forms Associated: N/A
+  
+ Mail Groups Associated: N/A
+  
+ Options Associated: N/A
+  
+ Protocols Associated: N/A
+  
+ Security Keys Associated: N/A
+  
+ Templates Associated: N/A
+  
+  
+ Additional Information:
+ -----------------------
+ N/A
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ 20070415 - Rehost/Reengineer PCMM
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+ Test Sites:
+ ----------
+ N/A
+   
+  
+ Documentation:
+ ==============
+  
+ Title                            File Name                 SFTP Mode
+ -----------------------------------------------------------------------
+ No documentation updates for this release. 
+  
+  
+ Patch Installation:
+ ===================
+  
+ There is no local VistA installation for PCMM Web. All installations will 
+ be done on the national web server.
+  
+ Pre/Post Installation Overview:
+ -------------------------------
+ N/A
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ N/A
+  
+ Installation Instructions:
+ --------------------------
+ N/A
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+  
+  
+ ADDITIONAL INFORMATION:
+ =======================
+ If you have any questions concerning the implementation of this 
+ application, please contact the VA Service Desk at 1-888-596-4357 or 
+ directly log a CA SDM ticket using the category:
+ Applications-HealtheVet-Vista, and type, PCMM Web.
+  
+ Any changes or impacts to this package/installation will be reported on 
+ this message.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2016
+Completed By:                               Date Completed: MAY 03, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

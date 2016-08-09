@@ -1,0 +1,162 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 11/27/15 at 08:14
+=============================================================================
+Run Date: FEB 25, 2016                     Designation: IB*2*558
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #508                      Status: Released
+                  Compliance Date: MAR 26, 2016
+=============================================================================
+
+
+Subject: TRICARE RX ADMINISTRATIVE FEE UPDATE FOR CY2016
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch addresses the following two issues:
+  
+ 1. Update the DISPENSING FEE field (#1.01) in the RATE SCHEDULE file
+    (#363) to $12.19 with an EFFECTIVE DATE (#.05) of January 1st, 2016 for
+    RATE TYPE field (#.02) = 'TRICARE' and 'TRICARE REIMB. INS.'.
+  
+  
+ 2. Update the NAME field (#.02) of 2 existing CODEs (#.01) and add 1 new
+    CODE record to the PLACE OF SERVICE file (#353.1).
+  
+  
+ TROUBLE TICKETS:
+ ===============
+ 1. I6244524FY16   TRICARE RX Administrative fee update for CY2016
+ 2. I6206690FY16   2016 Annual Updates-Occ, Value, POS and Revenue Codes
+  
+  
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Butler HCS
+ Huntington VAMC
+ VA Nebraska Western Iowa HCS
+  
+  
+ TICKET OVERVIEW:
+ ===============
+ 1. I6244524FY16   TRICARE RX Administrative fee update for CY2016
+  
+ Problem:
+ --------
+ The Chief Business Office has requested updates to the DISPENSING FEE
+ field (#1.02) in the RATE SCHEDULE file (#363) from $11.16 to $12.19
+ with an EFFECTIVE DATE (#.05) of January 1st, 2016 for RATE TYPE fields
+ (#.02) = 'TRICARE' and 'TRICARE REIMB. INS.'.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P558 was created to inactivate the DISPENSING FEE
+ field in the RATE SCHEDULE file = $11.16 and added the new DISPENSING FEE
+ field = $12.19 with an EFFECTIVE DATE of January 1st, 2016 for RATE TYPE
+ fields  = 'TRICARE' and 'TRICARE REIMB. INS.'.
+  
+  
+ 2. I6206690FY16    2016 Annual Updates-Occ, Value, POS and Revenue Codes
+  
+ Problem:
+ --------
+ The Chief Business Office has requested updates to the NAME field (#.02)
+ of 2 existing CODEs (#.01) and add 1 new CODE record to the PLACE OF
+ SERVICE file (#353.1).
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P558 was created to update the PLACE OF
+ SERVICE file (#353.1).
+  
+   Code #    Name  (old)
+   ------    ---------------------------------------
+     17      RETAIL WALK-IN
+     22      OUTPATIENT HOSPITAL 
+  
+  
+   Code #    Name (updated)
+   ------    ---------------------------------------
+     17      WALK-IN RETAIL HEALTH CLINIC 
+     19      OFF CAMPUS-OUTPATIENT HOSPITAL (new)
+     22      ON CAMPUS-OUTPATIENT HOSPITAL 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+  
+ Installation will take less than 2 minutes. 
+  
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+  
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+   
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*558):
+    
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+    
+ 4.   Select Installation Option: Install Package(s)
+     
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+    
+ 5.   CLEAN UP POST-INIT ROUTINE:
+      --------------------------
+      Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P558.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 32
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P558
+    Before:       n/a   After: B12608050  **558**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 28, 2015
+Completed By:                               Date Completed: FEB 22, 2016
+Released By :                               Date Released : FEB 25, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

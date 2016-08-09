@@ -1,0 +1,196 @@
+
+=============================================================================
+Run Date: JAN 15, 2015                     Designation: PXRM*2*38
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #34                      Status: Released
+                  Compliance Date: FEB 15, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*38'
+
+Subject: LUNG CANCER DIALOG
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ DESCRIPTION
+ ----------
+ The National Oncology Program Office seeks to provide tools to VA 
+ facilities to enable providers to format essential clinical data so that 
+ it is readily available for clinical care and to measure the quality of 
+ care in the VA in a prospective, timely, and cost-efficient manner. Using 
+ Reminder Dialogs in CPRS is one mechanism to support these goals. 
+ Reminder dialogs will include information necessary for quality 
+ assessment as defined by the National Quality Forum, ASCO's Quality 
+ Oncology Practice Initiative, and other reliable and up-to-date sources. 
+ Reminder dialogs will enable the standardization of clinical information 
+ necessary for quality indicators into a discrete format and obtain key 
+ elements to continuously monitor the quality of cancer care. 
+ The reminder dialogs: VA-ONCOLOGY LUNG CANCER REMINDER DIALOG, 
+ VA-ONCOLOGY PROSTATE CANCER REMINDER DIALOG and the VA-SYMPTOM ASSESSMENT 
+ SCALE (VSAS) REMINDER DIALOG were developed and are supported by the 
+ National Oncology Program Office in Specialty Care Services (part of 
+ Patient Care Services). Please contact Susan Hamilton-Hill for any 
+ questions/concerns at susan.hamilton-hill@domain.ext.
+  
+ The VA-ONCOLOGY LUNG CANCER and VA-ONCOLOGY PROSTATE CANCER Reminder
+ Dialog Templates should be initiated and used for newly-diagnosed lung
+ and prostate cancer cases.
+ The VA-SYMPTOM ASSESSMENT SCALE (VSAS) Reminder Dialog Template should be
+ used for oncology patients at their initial visit and at every return
+ visit whenever vital signs and pain score are obtained.
+  
+ ** NOTE: There are user guides for each of the reminder dialogs that can
+          be found on the Vista Documentation Library.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000000943596 - Lung Cancer Dialog
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ Durham VAMC, NC
+ W.G. Hefner VAMC (Salisbury), NC
+ Richard L. Roudebush VAMC (Indianapolis), IN
+ North Florida / South Georgia VAHCS
+ Clement J. Zablocki VAMC (Milwaukee), WI
+ Gulf Coast VA HCS (Biloxi), MS 
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000000943596 - Lung Cancer Dialog
+  
+  
+ Problem:
+ --------
+ It is important to develop a sustainable solution for cancer quality 
+ measurement and informed clinical decision-making in the VHA. The VHA is 
+ working to develop or adopt guidelines for quality care in oncology. 
+ Acquiring data to assess the quality of care among patients with cancer 
+ is essential. A major challenge in this area is that a large portion of 
+ information available in the electronic health record is in free text 
+ form, making it difficult to mine data out of text-based information.
+ As a result, there is a wealth of clinical information that is not easily 
+ extractable or computable. 
+  
+  
+ Resolution:
+ -----------
+ Reminder dialog templates will enable us to standardize clinical 
+ information necessary for quality indicators into a discrete format and 
+ obtain key elements to continuously monitor the quality of cancer care in 
+ VHA.  The three reminder dialogs that have been developed will help us 
+ standardize this clinical information.
+  
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_38.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/.
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide and User Manuals are also available on the
+ above servers.  It is available as .pdf format.  This file should be
+ downloaded in BINARY format.
+  
+     File Name:                   Description:             Protocol:
+     ==========                   ============             =========
+     PXRM_2_0_38_IG.PDF           PXRM*2.0*38 Install      BINARY
+                                  and Setup Guide
+     PXRM_2_0_38_UM_LUNG.PDF      Lung Dialog User Manual  BINARY
+     PXRM_2_0_38_UM_PROSTATE.PDF  Prostate Dialog User     BINARY
+                                  Manual
+     PXRM_2_0_38_UM_VSAS.PDF      VSAS Dialog User Manual  BINARY
+     PXRM_2_0_38.KID              PXRM*2.0*38 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_38_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in
+     <your directory name>:PXRM_2_0_38.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*38
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO// respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted
+  
+     PXRMP38E
+     PXRMP38I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 207
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP38E
+    Before:       n/a   After:  B1062854  **38**
+Routine Name: PXRMP38I
+    Before:       n/a   After:  B2486864  **38**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 11, 2013
+Completed By:                               Date Completed: JAN 14, 2015
+Released By :                               Date Released : JAN 15, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

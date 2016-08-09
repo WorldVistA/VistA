@@ -1,0 +1,186 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 10/30/15 at 10:54
+=============================================================================
+Run Date: FEB 10, 2016                     Designation: DVBA*2.7*194
+Package : DVBA - AUTOMATED MED INFO EXCHANGE  Priority: Mandatory
+Version : 2.7       SEQ #170                    Status: Released
+                  Compliance Date: MAR 12, 2016
+=============================================================================
+
+Associated patches: (v)DVBA*2.7*17 <<= must be installed BEFORE `DVBA*2.7*194'
+                    (v)DVBA*2.7*184<<= must be installed BEFORE `DVBA*2.7*194'
+
+Subject: CANCEL C&P REQUESTS/EXAMS, REMOVE PRIORITY OF EXAM VALIDATION 
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will address the following two (2) issues: 
+  
+ 1. Remove PRIORITY OF EXAM field (#9) from the Check C&P File 
+    Integrity [DVBA C CHECK 2507 INTEGRITY] validation logic. 
+ 2. Filter out inactive cancellation reasons from the Cancel C&P
+    Request/Exams [DVBA C CANCEL REQUESTS/EXAMS] option.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000001270435    CAPRI - Other:  2507 INTEGRITY REPORT STATUS
+ 2. INC000001275437    CAPRI - Other: cancellation reasons
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Erie VAMC
+ Lexington VAMC
+ Bay Pines VA HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001270435    CAPRI - Other:  2507 INTEGRITY REPORT STATUS
+   
+    Problem: 
+    --------
+    While running the Check C&P File Integrity [DVBA C CHECK 2507 
+    INTEGRITY] option, the report identifies any records in the 
+    2507 REQUEST (396.3) file missing "crucial information".  One 
+    such element, is the PRIORITY OF EXAM field (#9), which is no 
+    longer populated and should not be used as a validation point 
+    going forward.
+   
+    Resolution:
+    -----------
+    The PRIORITY OF EXAM (#9) field will be removed from the validation
+    logic.
+  
+    Routine(s):DVBCCHKR
+  
+    Documentation:
+    --------------
+    The Medical Administration Service (MAS) User Manual 
+    (DVBA_27_P194_MASUM.PDF) will be updated to replace references to
+    "eight" validation points with "seven" as the "PRIORITY OF EXAM" 
+    has been removed. 
+   
+  
+  
+ 2. INC000001275437    CAPRI - Other: cancellation reasons
+   
+    Problem: 
+    --------
+    While canceling exams through the Cancel C&P Request/Exams
+    [DVBA C CANCEL REQUESTS/EXAMS] option, the option displays and 
+    allows selection of cancellation reasons that are currently inactive. 
+   
+    Resolution:
+    -----------
+    Filter the cancelation reasons so that only active reasons are displayed
+    and selectable.  
+  
+    Routine(s):DVBCCNCL, DVBCCNC1
+  
+  
+ DOCUMENTATION DISTRIBUTION:
+ =========================== 
+ Sites may retrieve the new documentation directly via SFTP. The 
+ preferred method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+ Albany:             ftp.domain.ext
+ Hines:              ftp.domain.ext
+ Salt Lake City:     ftp.domain.ext
+  
+ Filename                 Description                          Format
+ ========                 ===========                          ======
+ DVBA_27_P194_MASUM.PDF   Medical Admin Service User Manual    Binary 
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ You may install this patch at any time without interruption to users. 
+ It should take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter DVBA*2.7*194)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        DVBA*2.7*194.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//", respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? YES//", respond YES.
+  
+        
+     7. When prompted 'Enter options you wish to mark as 'Out Of 
+        Order':'  Enter the following options:
+  
+        Check C&P File Integrity  [DVBA C CHECK 2507 INTEGRITY]
+        Cancel C&P Requests/Exams [DVBA C CANCEL REQUESTS/EXAMS]
+  
+     8. When prompted 'Enter protocols you wish to mark as 'Out Of 
+        Order':' press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.7;AMIE;**[Patch List]**;Apr 10, 1995;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DVBCCHKR
+    Before: B29016651   After: B29025053  **17,194**
+Routine Name: DVBCCNC1
+    Before: B14407596   After: B14689531  **194**
+Routine Name: DVBCCNCL
+    Before: B27121636   After: B29391810  **102,184,194**
+ 
+Routine list of preceding patches: 17, 184
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 21, 2015
+Completed By:                               Date Completed: FEB 04, 2016
+Released By :                               Date Released : FEB 10, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

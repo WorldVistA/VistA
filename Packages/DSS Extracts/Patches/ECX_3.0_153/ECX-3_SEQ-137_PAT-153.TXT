@@ -1,0 +1,220 @@
+$TXT Created by                DEVVCC.DOMAIN.EXT  (KIDS) on Monday, 12/01/14 at 15:22
+=============================================================================
+Run Date: JAN 27, 2015                     Designation: ECX*3*153
+Package : ECX - DSS EXTRACTS                  Priority: Mandatory
+Version : 3       SEQ #137                      Status: Released
+                  Compliance Date: FEB 27, 2015
+=============================================================================
+
+Associated patches: (v)ECX*3*149   <<= must be installed BEFORE `ECX*3*153'
+
+Subject: DSS FY 2015 SUSTAINMENT UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ Since the release of the DSS FY 15 Sustainment patch ECX*3*149, three 
+ issues have been identified.  The first issue is with the laboratory 
+ pre-extract audit report not running when queued.  The second issue is 
+ with the laboratory blood bank comparative report.  For the source side 
+ of the report, it always shows "no data".  The third issue is the 
+ radiology extract is not counting workload when the site is using site 
+ specific accession numbering.  This patch will correct these three issues.
+  
+ Problem #1: Can't queue the laboratory blood bank pre-extract audit 
+ report.
+  
+   ASSOCIATED REMEDY:
+   ==================
+   INC000001080573    DSS - Extract Issue:
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:  
+   --------
+   The Laboratory Blood Bank (LBB) Pre-Extract Audit [ECX LBB SOURCE AUDIT]
+   report can no longer be queued.  The report, by default, is queued to 
+   run in the background.  When running the report, taskman will reject
+   the task with a "no routine at destination" error.
+  
+   Resolution:
+   -----------
+   The routine ECXPLBB was updated so that the correct routine is called
+   when the report is queued.
+  
+ Problem #2: The laboratory blood bank (LBB) comparative report incorrectly
+ shows "no data" on source side of report.
+  
+  
+   ASSOCIATED REMEDY:
+   ==================
+   INC000001080573    DSS - Extract Issue:
+   INC000001081819    DSS - Extract Issue:
+   INC000001081841    DSS - Extract Issue:
+  
+  
+   ASSOCIATED NSR:
+   ===============
+   N/A
+  
+   Problem:
+   --------
+   The laboratory blood bank (LBB) comparative report [ECX LBB SOURCE 
+   AUDIT COMPAR] will display ***************N*O***D*A*T*A*****************
+   on the LOCAL BLOOD BANK SOURCE side of the report, even if there is
+   data.
+  
+   Resolution:
+   -----------
+   The routine ECXLBBC was modified to correctly identify the location
+   where the source side data was being stored so that it could be 
+   displayed correctly on the report.
+  
+ Problem #3: The radiology extract will not identify workload when the 
+ site has the USE SITE ACCESSION NUMBER? field (#.131) of the RAD/NUC MED 
+ DIVISION file (#79) set to yes.
+  
+   ASSOCIATED REMEDY:
+   ==================
+   INC000001082268    DSS - Extract Issue:
+   INC000001082997    DSS - RAD Extract not working. results = 0 
+  
+    
+   ASSOCIATED NSR:
+   ===============
+   N/A
+   
+   Problem:  
+   --------
+   Sites that have set the USE SITE ACCESSION NUMBER? field to yes, 
+   indicating that all case numbers should start with the station number,
+   will not have those records counted when the radiology extract is
+   run.
+  
+   Resolution:
+   -----------
+   The radiology extract code was modified to correctly handle sites that
+   are using the site specific numbering system.  The case numbers are 
+   stored in one table if day-case number format is used and stored in a
+   different table if the station number-day-case number format is used.
+   The extract code now uses the correct table based on the numbering
+   format employed at the site.
+  
+ Test Sites:
+ -----------
+ Los Angeles
+ Long Beach
+ Boston
+  
+ INSTALLATION:
+ =============
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+                  Extract Manager's Options [ECXMGR]
+   
+ Install Time - less than 2 minutes (unless otherwise indicated) 
+  
+ ***********************************************************
+  
+    1.   LOAD TRANSPORT GLOBAL 
+         ---------------------
+         Choose the PackMan message containing this patch and invoke 
+         the INSTALL/CHECK MESSAGE PackMan option.  
+  
+    2.   START UP KIDS
+         -------------
+         Start up the Kernel Installation and Distribution System Menu
+         [XPD MAIN]:  
+  
+              Edits and Distribution ...
+              Utilities ...
+              Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+              Load a Distribution 
+              Print Transport Global
+              Compare Transport Global to Current System
+              Verify Checksums in Transport Global              
+              Install Package(s)
+              Restart Install of Package(s)
+              Unload a Distribution
+              Backup a Transport Global     
+    
+    Select Installation Option: 
+    
+    3.   Select Installation Option:
+         --------------------------
+         NOTE: The following are OPTIONAL (When prompted for the 
+               INSTALL NAME, enter ECX*3.0*153):
+  
+         a.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It
+             will not backup any other changes such as DD's or templates.
+         b.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made
+             when this patch is installed.  It compares all components of
+             this patch (routines, DD's, templates, etc.).
+         c.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that
+             are in the transport global.
+  
+    4.   Select Installation Option: Install Package(s) 
+                                     ----------------
+         **This is the step to start the installation of this KIDS patch:
+  
+         a.  Choose the Install Package(s) option to start the patch
+             install.  Enter ECX*3.0*153 when prompted for a build 
+             name.
+         b.  When prompted 'Want KIDS to INHIBIT LOGONs during 
+             the install?  NO//' answer NO.
+         c.  When prompted 'Want to DISABLE Scheduled Options, 
+             Menu Options, and Protocols? NO//' answer YES.
+         d.  When prompted 'Enter options you wish to mark as 'Out 
+             Of Order':'  Enter the following options:
+  
+                      Extract Manager's Options [ECXMGR]
+  
+         e.  When prompted 'Enter protocols you wish to mark as 'Out Of
+             Order':' press <return>. 
+         f.  If prompted 'Delay Install (Minutes):  (0-60):  0//'          
+             answer "0" (unless otherwise indicated).
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;DSS EXTRACTS;**[Patch List]**;Dec 22, 1997;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ECXLBBC
+    Before: B39992879   After: B41769309  **120,149,153**
+Routine Name: ECXPLBB
+    Before: B26803590   After: B26831922  **78,92,105,136,143,149,153**
+Routine Name: ECXRAD
+    Before: B42805966   After: B45034346  **11,8,13,16,24,33,39,46,71,
+                                           84,92,105,120,127,136,144,149,
+                                           153**
+ 
+Routine list of preceding patches: 149
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 10, 2014
+Completed By:                               Date Completed: JAN 16, 2015
+Released By :                               Date Released : JAN 27, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

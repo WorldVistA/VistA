@@ -1,0 +1,162 @@
+
+=============================================================================
+Run Date: SEP 18, 2015                     Designation: MHV*1*20
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #15                      Status: Released
+                  Compliance Date: OCT 19, 2015
+=============================================================================
+
+
+Subject: MYHEALTHEVET REL 12.14 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ MHV 12.14 will be promoted to production on Saturday, September 19, 2015.
+  
+ Infrastructure & Interface (I&I) Team Enhancements
+ ==================================================
+  
+ - Epic 186171: Federated Credentials - Admin Portal Updates
+  
+ --Display a new field on the View Details screen under Help Desk tab and 
+ the IPA tab (Manage MHV Users (Advanced and Premium) and Manage MHV Users 
+ (All Accounts) called 'Last Sign-in Partner Used' that shows the Sign-on 
+ partner used to log in to MHV. 
+ --The Generate Password button will be displayed in the Helpdesk tab for 
+ all users.
+ --Display a new field on the View Details screen under Help Desk tab and 
+ the IPA tab (Manage MHV Users (Advanced and Premium) and Manage MHV Users 
+ (All Accounts)   called Last Login Date/Time which shows the date and 
+ time of the last time the user logged in.
+ --A deactivated user account will have the last name appended with 
+ DELETED followed by the name of the number. e.g. SmithDELETEDTWO.
+  
+  
+ - Epic 186169: Federated Credentials - New User Registration
+  
+ --A MHV user account will be successfully created using the MHV 
+ registration process.
+ --The User is able to login and go to the User Profile page to modify 
+ their account. 
+ --The User is able to sign in with their Sign-in Partner after 
+ successfully registering for a MHV account using the MHV registration 
+ process.
+  
+  
+ - Epic 186186: Federated Credentials - Remote ID Proofing
+  
+ --The user is able to go to the AccessVA website, login with their 
+ selected credential, and access their MHV account. 
+ --The system will log the appropriate Account Activity entries. 
+ --A MHV user account has been successfully created for the user logging 
+ in with a Federated Credential and registering for a MHV account.
+  
+  
+ - Epic 186168: BB CCD Direct Integration 
+  
+ --User should be able to see all content updates.
+ --User should be able to see the summary table for Send My VA Health 
+ Summary Requests.
+ --The VA Health Summary file is sent to one DIRECT email address.
+  
+ - Epic 194314: MHV and eBenefits
+  
+ --The MHV user is able to select the eBenefits link from the Quick Links 
+ box on MHV Home page and is directed to the eBenefits Home Page logged on 
+ if using a DS   Logon Premium credential.  
+ --The MHV user is able to select the eBenefits link from the Quick Links 
+ box on MHV Home page and is directed to the eBenefits Home Page not 
+ logged on if using a   MHV username and password.  
+ --When the User closes the eBenefits browser window, the MHV window will 
+ remain open with user still logged on to MHV.
+  
+  
+ Veteran Facing Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ - Epic 186206: Handle Errors - Save Messages as CPRS Progress Notes
+ --CPRS Progress Notes alerts created when message fails to save. 
+ --Display error message from VistA 
+ --SM admins can view CPRS Progress Notes alerts at a facility
+  
+ - Epic 166737: Email Notifications- Save Messages as CPRS Progress Notes
+ --Update email notification message received by distribution group 
+ members when message fails to save in CPRS as progress Note.
+  
+ - Epic 190560: SM Surrogate Message Notification
+ --The surrogate receives email notification. 
+  
+ - Epic 177922: Facility Update for Rx Notification
+ --Treatment facility listing is updated prior to sending Rx notification. 
+  
+ - Story 196876: SM Internal team Communication Box
+ --The HCT members view update Internal Team communications box 
+  
+  
+ Innovations Enhancements (VFE) Team Enhancements
+ ===================================================
+  
+ - Epic 176246: SM Provider API - Reassign Message
+  
+ Extended the API's to include the entire message reassign features:
+  
+ --SM_API_RA01 Messages to TG Outside Facility
+ --SM_API_RA02 Retrieve List of VISN (Provider Only) 
+ --SM_API_RA03 Retrieve Facility List of a VISN (Provider Only) 
+ --SM_API_RA04 ReAssign Messages to Triage Group Within Facility
+ --SM_API_RA05 Retrieve Reassign Message History (Provider Only) 
+ --SM_API_RA06 ReAssign Messages to Staff (Clinician)Within Facility
+ --SM_API_RA07 Retrieve Reassign Team Members (Provider Only)
+ --SM_API_RA08 ReAssign Messages to Staff Outside Facility
+ --SM_API_RA09 Search Clinician Inside Facility
+ --SM_API_RA10 Search Clinician Outside Facility
+ --SM_API_RA11 Retrieve Patient Facility List  (Provider Only)
+ --SM_API_RA12 Retrieve Triage Group List_by_Facility_Outside Facility 
+ (Provider Only)
+ --SM_API_RA13 Retrieve Triage Groups by Clinician Inside Facility 
+ (Provider Only)
+ --SM_API_RA14 Get Triage Groups by Clinician Outside Facility (Provider 
+ Only)
+ --SM_API_RA15 Alternate Flows
+  
+ - Epic 110501: Download VA Medical Images and Reports
+ --Content changes based on Limited Field findings
+  
+ Sustainment Team
+ ================
+  
+ - JAZZ197190: Java SE Upgrade to Java 6 Update 101/Java 7 Update 85
+ --Affect server side only to comply with latest VA approved Java updates
+  
+ - JAZZ199177: 508 Select (Combo) control does not have an explicit label 
+ or title attribute
+ --508 changes 
+  
+ - JAZZ200073: Update VistA names 
+ --Update VistA sites per customer request
+  
+ Routine Information
+ ===============
+  
+ No routines included
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 02, 2015
+Completed By:                               Date Completed: SEP 18, 2015
+Released By :                               Date Released : SEP 18, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

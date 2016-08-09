@@ -1,0 +1,192 @@
+
+=============================================================================
+Run Date: SEP 08, 2014                     Designation: EAS*1*116
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #94                      Status: Released
+                  Compliance Date: OCT 09, 2014
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.0 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational patch is to announce the release of the
+ Enrollment Systems (ES) 4.0 build and ES 3.12.6 for the Veteran Online
+ Health Application (VOA) Graphical User Interface/Front End, referred to
+ as VOA UI.
+  
+ The Enterprise Health Benefits Determination Program (EHBD) provides
+ enhancements to the Enrollment Systems. 
+  
+ This ES 4.0 build, developed in Java/.net technology, will have both
+ Enrollment System Enhancement (ESE) and Enrollment Customer Enhancements
+ (ECE) development efforts including enhancements to  ES applications and
+ functionality such as the Enrollment System Core (ESC), Health Benefits
+ Plan (HBP), Veterans On line Application (VOA), Enrollment System
+ Enhancements, Veterans Benefits Handbook (VBH), Enrollment System
+ Financial (ESF) Letters and Income Verification Match (IVM).
+  
+ Enhancements:
+ =============
+  
+ Update Manage Batch Handbook Requests
+    - How the user requests a batch of handbooks for mailing, views 
+ Handbook batch request status information including historical 
+ information, or cancels a scheduled batch request has changed.  ES now 
+ allows for preferential selection of a priority group when scheduling a 
+ batch request.
+  
+ View Handbook Batch File Statistics
+    - Users can now view, for a specific date, statistics related to the 
+ weekly generation of handbook and insert requests included in the batch 
+ file and sent to the CMS.
+  
+ Maintain Veteran Email Address
+    - Changes were made to the Communications/Delivery Preference and 
+ Demographics/Addresses screens with respect to the Veterans email address.
+  
+ Health Benefits Plan (HPB)
+    - Additions and updates were made to some HBP descriptions (viewable 
+ in the online help).
+  
+ Presumptive Health Benefit Plan (HBP)
+    - ES now automatically assigns or un-assigns the Presumptive Health 
+ Benefit Plan to new Veteran records based on new rules and triggers 
+ (update existing Veteran records scheduled for future release).
+  
+ Reports
+    - Reports QM 26 & QM 27 were removed from the Reports screen.
+  
+ Batch Processes
+    - "Batch Process for sending Final Letter requests to CMS" and "Batch 
+ Process for handling the CMS Final Letter request results" were added to 
+ the Batch Process Management screen.
+  
+ System Parameters
+    - IVM Final Letter Indicator and VOA Anonymous/Level 1 Process 
+ Indicator System Parameters were added.  
+  
+ VOA 
+    - Deploying new servers and COTS ADOBE software at AITC to allow
+ Veterans to log in through eBenefits to access a 10_10EZ form to fill out
+ and submit for VA Health enrollment. This process will replace the
+ existing frontend system located in Martinsburg and automate the process.
+    - The VOA Web Service was changed to align with the latest version 
+ of the 1010EZ form released by OMB, and
+    - To return an error message back to the VOA frontend when the 
+ functionality to support anonymous and LOA 1 users is turned off.
+    -Provide interface to generate the existing online interactive 
+ questionnaire for the VA Forms 10-10EZ/EZR.
+    -Enable access to Veterans with DS Logon Level 2 by logging into the 
+ eBenefits portal.
+    -Provide the ability to consume DS Logon Level 2 credentials from 
+ eBenefits/VAAFI Proxy.
+    -Enable bi-directional connection for data exchange from/to VOAUI and
+ ES
+    -Provide the ability to pre-populate the forms with the Veteran's 
+ existing data from ES.
+    -Enable online submission of completed VOAUI to ES.
+  
+ What to Expect:
+ ===============
+ During the ES 4.0 implementation, which is expected to take less than 
+ eight hours, HL7 messaging to and from the ES will be disabled by the VIE 
+ team.
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.0 requires deployment of Java and .NET 
+ Software to dedicated servers at the AITC.  The AITC staff will perform 
+ the installation with support from the development team. Support from the 
+ sites is not required. 
+  
+ The ES application will be unavailable and Veteran enrollment 
+ determinations will be delayed until the deployment is complete.  
+ PSIM/MVI and messaging to/from the sites will be unavailable during the 
+ deployment. An ANR will be created to announce the deployment which will 
+ list all impacted systems and to track the outage. 
+  
+ Implementation Date:
+ ====================
+ September 6, 2014
+  
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+ Routine Information:
+ ====================
+ N/A
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The user documentation is available on the Office of Information Field
+ Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+    OIFO                  FTP address                      Directory
+ Albany               ftp.domain.ext        
+ Hines                ftp.domain.ext         
+ Salt Lake City       ftp.domain.ext           
+ VistA download site  download.vista.domain.ext       
+  
+  The user documentation files listed below may be obtained via FTP.
+  
+  The preferred method is to download the files from:
+       download.vista.domain.ext
+  
+  This method transmits the files from the first available FTP server.  
+  
+  Sites may also select to retrieve documentation from a specific server 
+  as shown in the above table.
+  
+  The following files should be downloaded in the binary FTP mode. 
+  
+  Filename                           Description
+  --------                           -----------
+ ES_4_0_0_Developers_Guide Final.PDF Developers Guide
+ ES_4_0_0_Installation_Guide.PDF     Installation Guide
+ ES_4_0_0_Release_Notes Final.PDF    Release Notes
+ ES_4_0_0_Security_Guide.PDF         Security Guide
+ ES_4_0_0_Troubleshooting_Guide.PDF  Troubleshooting Guide
+ ES_4_0_0_User_Manual Final.PDF      User Manual
+ ES_4_0_0_Systems_Management_Guide Final.PDF
+                                     Systems Management Guide
+  
+ Mandate:
+ ======== 
+ N/A
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Reporting Problems:
+ ===================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 01, 2014
+Completed By:                               Date Completed: SEP 04, 2014
+Released By :                               Date Released : SEP 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

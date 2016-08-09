@@ -1,0 +1,187 @@
+$TXT Created by                     MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 08/12/15 at 11:15
+=============================================================================
+Run Date: OCT 13, 2015                     Designation: PSJ*5*217
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #272                      Status: Released
+                  Compliance Date: NOV 13, 2015
+=============================================================================
+
+Associated patches: (v)PSJ*5*36    <<= must be installed BEFORE `PSJ*5*217'
+                    (v)PSJ*5*260   <<= must be installed BEFORE `PSJ*5*217'
+
+Subject: PICK LIST/NATURE OF ORDER
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issues:
+  
+ 1. The check to determine whether a patient is on an active pick list is 
+    not taking into consideration the pick list being flagged to be filed
+    away. 
+  
+ 2. Various workflows in Inpatient Order Entry [PSJ OE] can result in an 
+    order having a Nature of Order of -1.  This corrupt data can cause an 
+    <UNDEFINED> error to occur.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+   N/A 
+    
+  
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+  
+ 1. INC000000210363 - Problem encountered with a patient record merge.
+  
+ 2. INC000000207717 - UNDEFINED error with invalid NATURE OF ORDER
+    Duplicates:
+    INC000000270483
+    INC000000282032
+    INC000000309382
+    INC000000318468
+    INC000000318843
+    INC000000361015
+    INC000000371018
+    INC000000467434
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Maryland HCS
+ Upstate NY HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000210363 - Problem encountered with a patient record merge.
+  
+  Problem
+  -------
+  The check to determine whether a patient is on an active pick list is 
+  not taking into consideration the pick list being flagged to be filed
+  away. This will incorrectly prevent a patient record merge from 
+  occurring.
+  
+  Resolution
+  ----------
+  Modify routine PSJPATMR to check the value of the FILED AWAY FLAG 
+  field (#.04) on the DISPENSE DRUG SUB-FILE (#53.53) of the PICK LIST 
+  file (#53.5) before determining if the patient is on a pick list.
+  
+  
+ 2. INC000000207717 - <UNDEFINED>STS+27^ORPRS04
+  
+  Problem:
+  -------
+  Various workflows in Inpatient Order Entry [PSJ OE] can result in an 
+  order having a Nature of Order value of -1.  This corrupt data can 
+  cause an <UNDEFINED> error to occur.
+  
+  Resolution:
+  -----------
+  Changed PSJUTL5 so that the Nature of Order is no longer saved as -1, and
+  further corrupt data will not be saved.
+  
+  Technical:
+  ----------
+  Older orders with a Nature of Order of -1 will not be corrected by this 
+  patch; manual intervention will be required in order to change these
+  fields to a valid value.  This correction cannot be done programmatically
+  since user judgment is required on a case-by-case basis.
+  
+  Please see the POST-INSTALLATION INSTRUCTIONS section for instructions.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+ NOTE:  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS AN 'EDITED'
+        ERROR WILL OCCUR.  
+  
+ The patch should be installed when NO Inpatient Pharmacy users 
+ are on the system.
+  
+ Installation will take less than 1 minute.
+  
+ Suggested time to install: non-peak requirement hours.
+    
+ 1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+     
+ 2. From the Kernel Installation & Distribution System menu, select the
+    Installation menu.
+   
+ 3. From this menu, you may select to use the following options
+    (when prompted for INSTALL NAME, enter PSJ*5.0*217):
+    a.  Verify Checksums in Transport Global - This option will allow you
+        to ensure the integrity of the routines that are in the transport
+        global.
+    b.  Print Transport Global - This option will allow you to view the
+        components of the KIDS build.
+    c.  Compare Transport Global to Current System - This option will allow
+        you to view all changes that will be made when this patch is
+        installed.  It compares all components of this patch (routines,
+        DD's, templates, etc.).
+    d.  Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+    
+ 4. Use the Install Package(s) option and select the package PSJ*5.0*217.
+  
+ 5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//",
+    answer NO.
+    
+ 6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+    Protocols? NO//", answer NO. 
+  
+  
+ POST-INSTALLATION INSTRUCTIONS:
+ ==============================
+  **********************************************
+  *   Corrupt Order Cleanup Instructions       *
+  *   Use the following instructions to clean  *
+  *   up orders that contain invalid nature of *
+  *   order data.                              *
+  **********************************************
+  
+  In order to correct the Nature of Order on a corrupted order, go to 
+  FileMan and select ENTER OR EDIT FILE ENTRIES.  Select the Order File
+  (#100) and edit the field ORDER ACTIONS (#0.8). Edit the sub-field 
+  NATURE OF ORDER (#12).  Enter the number of the corrupted order and 
+  search through each DATE/TIME ORDERED (#.01) date until you find the 
+  date associated with a NATURE OF ORDER of -1.  Change this value to any 
+  valid value.
+  
+  If problems persist, please contact the VA Helpdesk.
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSJPATMR
+    Before: B63535261   After: B65386243  **36,217**
+Routine Name: PSJUTL5
+    Before: B22923563   After: B23315545  **40,218,260,217**
+ 
+Routine list of preceding patches: 36, 260
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2009
+Completed By:                               Date Completed: SEP 28, 2015
+Released By :                               Date Released : OCT 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

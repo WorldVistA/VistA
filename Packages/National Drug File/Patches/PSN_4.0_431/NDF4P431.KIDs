@@ -1,0 +1,356 @@
+KIDS Distribution saved on Mar 04, 2015@17:42:56
+PSN*4*431
+**KIDS**:PSN*4.0*431^
+
+**INSTALL NAME**
+PSN*4.0*431
+"BLD",1586,0)
+PSN*4.0*431^NATIONAL DRUG FILE^0^3150304^y
+"BLD",1586,1,0)
+^^17^17^3140903^^^^
+"BLD",1586,1,1,0)
+This patch provides updates to data in several of the files associated
+"BLD",1586,1,2,0)
+with the Patient Medication Instruction Sheet (PMI) portion of the
+"BLD",1586,1,3,0)
+National Drug File (NDF) application.  The seven files are:
+"BLD",1586,1,4,0)
+   50.621        PMI-ENGLISH              
+"BLD",1586,1,5,0)
+   50.622        PMI-SPANISH              
+"BLD",1586,1,6,0)
+   50.623        PMI MAP-ENGLISH          
+"BLD",1586,1,7,0)
+   50.624        PMI MAP-SPANISH          
+"BLD",1586,1,8,0)
+   50.625        WARNING LABEL-ENGLISH    
+"BLD",1586,1,9,0)
+   50.626        WARNING LABEL-SPANISH    
+"BLD",1586,1,10,0)
+   50.627        WARNING LABEL MAP     
+"BLD",1586,1,11,0)
+ 
+"BLD",1586,1,12,0)
+The environment check routine for this patch checks to see that the
+"BLD",1586,1,13,0)
+installer is a valid user.
+"BLD",1586,1,14,0)
+The post-install routine for this patch deletes existing entries in these
+"BLD",1586,1,15,0)
+files, loads the new data, and rematches entries in the VA PRODUCT file 
+"BLD",1586,1,16,0)
+(#50.68) to the proper PMIs.
+"BLD",1586,1,17,0)
+The source of the data for the PMIs is First Data Bank.
+"BLD",1586,4,0)
+^9.64PA^^
+"BLD",1586,6.3)
+94
+"BLD",1586,"ABPKG")
+n
+"BLD",1586,"INID")
+y^y
+"BLD",1586,"INIT")
+PSN431P
+"BLD",1586,"KRN",0)
+^9.67PA^9002226^21
+"BLD",1586,"KRN",.4,0)
+.4
+"BLD",1586,"KRN",.4,"NM",0)
+^9.68A^^
+"BLD",1586,"KRN",.401,0)
+.401
+"BLD",1586,"KRN",.402,0)
+.402
+"BLD",1586,"KRN",.403,0)
+.403
+"BLD",1586,"KRN",.5,0)
+.5
+"BLD",1586,"KRN",.84,0)
+.84
+"BLD",1586,"KRN",3.6,0)
+3.6
+"BLD",1586,"KRN",3.8,0)
+3.8
+"BLD",1586,"KRN",9.2,0)
+9.2
+"BLD",1586,"KRN",9.8,0)
+9.8
+"BLD",1586,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",1586,"KRN",19,0)
+19
+"BLD",1586,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",1586,"KRN",19.1,0)
+19.1
+"BLD",1586,"KRN",19.1,"NM",0)
+^9.68A^^
+"BLD",1586,"KRN",101,0)
+101
+"BLD",1586,"KRN",101,"NM",0)
+^9.68A^^
+"BLD",1586,"KRN",409.61,0)
+409.61
+"BLD",1586,"KRN",771,0)
+771
+"BLD",1586,"KRN",779.2,0)
+779.2
+"BLD",1586,"KRN",870,0)
+870
+"BLD",1586,"KRN",8989.51,0)
+8989.51
+"BLD",1586,"KRN",8989.52,0)
+8989.52
+"BLD",1586,"KRN",8994,0)
+8994
+"BLD",1586,"KRN",9002226,0)
+9002226
+"BLD",1586,"KRN",9002226,"NM",0)
+^9.68A^^
+"BLD",1586,"KRN","B",.4,.4)
+
+"BLD",1586,"KRN","B",.401,.401)
+
+"BLD",1586,"KRN","B",.402,.402)
+
+"BLD",1586,"KRN","B",.403,.403)
+
+"BLD",1586,"KRN","B",.5,.5)
+
+"BLD",1586,"KRN","B",.84,.84)
+
+"BLD",1586,"KRN","B",3.6,3.6)
+
+"BLD",1586,"KRN","B",3.8,3.8)
+
+"BLD",1586,"KRN","B",9.2,9.2)
+
+"BLD",1586,"KRN","B",9.8,9.8)
+
+"BLD",1586,"KRN","B",19,19)
+
+"BLD",1586,"KRN","B",19.1,19.1)
+
+"BLD",1586,"KRN","B",101,101)
+
+"BLD",1586,"KRN","B",409.61,409.61)
+
+"BLD",1586,"KRN","B",771,771)
+
+"BLD",1586,"KRN","B",779.2,779.2)
+
+"BLD",1586,"KRN","B",870,870)
+
+"BLD",1586,"KRN","B",8989.51,8989.51)
+
+"BLD",1586,"KRN","B",8989.52,8989.52)
+
+"BLD",1586,"KRN","B",8994,8994)
+
+"BLD",1586,"KRN","B",9002226,9002226)
+
+"BLD",1586,"PRE")
+PSN431E
+"BLD",1586,"PRET")
+PSNPMI
+"BLD",1586,"QDEF")
+^^^^NO^^^^NO^^YES
+"BLD",1586,"QUES",0)
+^9.62^^
+"BLD",1586,"REQB",0)
+^9.611^1^1
+"BLD",1586,"REQB",1,0)
+PSN*4.0*427^1
+"BLD",1586,"REQB","B","PSN*4.0*427",1)
+
+"INIT")
+PSN431P
+"MBREQ")
+0
+"PKG",114,-1)
+1^1
+"PKG",114,0)
+NATIONAL DRUG FILE^PSN^This is the National Drug File Package V 4
+"PKG",114,20,0)
+^9.402P^^
+"PKG",114,22,0)
+^9.49I^1^1
+"PKG",114,22,1,0)
+4.0^3041105
+"PKG",114,22,1,"PAH",1,0)
+431^3150304
+"PKG",114,22,1,"PAH",1,1,0)
+^^17^17^3150304
+"PKG",114,22,1,"PAH",1,1,1,0)
+This patch provides updates to data in several of the files associated
+"PKG",114,22,1,"PAH",1,1,2,0)
+with the Patient Medication Instruction Sheet (PMI) portion of the
+"PKG",114,22,1,"PAH",1,1,3,0)
+National Drug File (NDF) application.  The seven files are:
+"PKG",114,22,1,"PAH",1,1,4,0)
+   50.621        PMI-ENGLISH              
+"PKG",114,22,1,"PAH",1,1,5,0)
+   50.622        PMI-SPANISH              
+"PKG",114,22,1,"PAH",1,1,6,0)
+   50.623        PMI MAP-ENGLISH          
+"PKG",114,22,1,"PAH",1,1,7,0)
+   50.624        PMI MAP-SPANISH          
+"PKG",114,22,1,"PAH",1,1,8,0)
+   50.625        WARNING LABEL-ENGLISH    
+"PKG",114,22,1,"PAH",1,1,9,0)
+   50.626        WARNING LABEL-SPANISH    
+"PKG",114,22,1,"PAH",1,1,10,0)
+   50.627        WARNING LABEL MAP     
+"PKG",114,22,1,"PAH",1,1,11,0)
+ 
+"PKG",114,22,1,"PAH",1,1,12,0)
+The environment check routine for this patch checks to see that the
+"PKG",114,22,1,"PAH",1,1,13,0)
+installer is a valid user.
+"PKG",114,22,1,"PAH",1,1,14,0)
+The post-install routine for this patch deletes existing entries in these
+"PKG",114,22,1,"PAH",1,1,15,0)
+files, loads the new data, and rematches entries in the VA PRODUCT file 
+"PKG",114,22,1,"PAH",1,1,16,0)
+(#50.68) to the proper PMIs.
+"PKG",114,22,1,"PAH",1,1,17,0)
+The source of the data for the PMIs is First Data Bank.
+"PRE")
+PSN431E
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSN431E")
+0^^B217620
+"RTN","PSN431E",1,0)
+PSN431E ;BHM/DB-Environment Check for PMI data updates ; 04 Mar 2015  9:56 AM
+"RTN","PSN431E",2,0)
+ ;;4.0;NATIONAL DRUG FILE;**431**; 30 Oct 98;Build 94
+"RTN","PSN431E",3,0)
+ ;
+"RTN","PSN431E",4,0)
+ I $D(DUZ)#2 N DIC,X,Y S DIC=200,DIC(0)="N",X="`"_DUZ D ^DIC I Y>0
+"RTN","PSN431E",5,0)
+ E  W !,"You must be a valid user."
+"RTN","PSN431E",6,0)
+ Q
+"RTN","PSN431P")
+0^^B1382757
+"RTN","PSN431P",1,0)
+PSN431P ;BIR/WRT-Unwind Transport Global and set pieces in VA PRODUCT file ; 04 Mar 2015  9:58 AM
+"RTN","PSN431P",2,0)
+ ;;4.0;NATIONAL DRUG FILE;**431**; 30 Oct 98;Build 94
+"RTN","PSN431P",3,0)
+ ;
+"RTN","PSN431P",4,0)
+BUILD ;GET PMIS INFO FROM TRANSPORT GLOBAL AND LOAD
+"RTN","PSN431P",5,0)
+ I '$D(XPDGREF) Q
+"RTN","PSN431P",6,0)
+ N DA,I,J,K,LINE,PSN,ROOT,X
+"RTN","PSN431P",7,0)
+ F PSN=50.621:.001:50.627 K ^PS(PSN)
+"RTN","PSN431P",8,0)
+ S ROOT=$NA(@XPDGREF@("DATA")),J=0
+"RTN","PSN431P",9,0)
+ K ^TMP($J)
+"RTN","PSN431P",10,0)
+ F  S J=$O(@ROOT@(J)) Q:'J  S LINE=^(J),K=$L(LINE,"|")-1 F I=1:1:K S X=$P(LINE,"|",I),^TMP($J,$P(X,"^"))=$P(X,"^",2,4)
+"RTN","PSN431P",11,0)
+ S DA=0 F  S DA=$O(^PSNDF(50.68,DA)) Q:'DA  S X=$P($G(^(DA,1)),"^",1,4) S:$D(^TMP($J,DA)) X=X_"^"_^(DA) S ^PSNDF(50.68,DA,1)=X
+"RTN","PSN431P",12,0)
+ K ^TMP($J)
+"RTN","PSN431P",13,0)
+ F PSN=50.621:.001:50.627 M ^PS(PSN)=@XPDGREF@(PSN)
+"RTN","PSN431P",14,0)
+ K DA,I,J,K,LINE,PSN,ROOT,X
+"RTN","PSN431P",15,0)
+ Q
+"TEMP",50.621,0)
+PMI-ENGLISH^50.621^^
+"TEMP",50.622,0)
+PMI-SPANISH^50.622^^
+"TEMP",50.623,0)
+PMI MAP-ENGLISH^50.623^^
+"TEMP",50.624,0)
+PMI MAP-SPANISH^50.624^^
+"TEMP",50.625,0)
+WARNING LABEL-ENGLISH^50.625^^
+"TEMP",50.626,0)
+WARNING LABEL-SPANISH^50.626^^
+"TEMP",50.627,0)
+WARNING LABEL MAP^50.627^^
+"VER")
+8.0^22.0
+**END**
+**END**

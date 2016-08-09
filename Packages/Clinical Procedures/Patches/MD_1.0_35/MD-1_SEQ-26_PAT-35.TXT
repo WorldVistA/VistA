@@ -1,0 +1,383 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 06/27/14 at 10:23
+=============================================================================
+Run Date: NOV 05, 2014                     Designation: MD*1*35
+Package : MD - CLINICAL PROCEDURES            Priority: Mandatory
+Version : 1        SEQ #26                      Status: Released
+                  Compliance Date: DEC 06, 2014
+=============================================================================
+
+Associated patches: (v)MD*1*32     <<= must be installed BEFORE `MD*1*35'
+
+Subject: AIS APPROVED CLINICAL PROCEDURES TERMINOLOGY ADDITIONS/UPDATES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following 3 issues:
+  
+ 1) The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+    terms used during data entry/display in CP Flowsheet.  The Office of
+    Informatics and Analytics - Applied Informatics (AI) Terminology Review
+    Group submitted a spreadsheet requesting additions or updates of 77
+    Terms.
+      
+ 2) Numeric Terms in Clinical Flowsheets have the ability to be Totaled 
+    and/or Sub-Totaled. Some should NOT be totaled because they may cause
+    confusion and lead to incorrect clinical decisions.  
+  
+ 3) A record in CP Terminology TERM_QUALIFIER_PAIR File (#704.103) was
+    identified by a Salt Lake City Development group as a circular
+    reference (or a record with an invalid pairing of Parent/Child
+    records).  They requested the record be removed from the file. The
+    record does not cause any errors.
+       
+       
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1) INC0000000859796 Clinical Procedures - Flowsheets: Group #1
+    INC0000000862176 Clinical Procedures - Flowsheets: Group #2
+    INC0000000862205 Clinical Procedures - Flowsheets: Group #3 
+    INC0000000862214 Clinical Procedures - Flowsheets: Group #4 
+    INC0000000862219 Clinical Procedures - Flowsheets: Group #5
+    INC0000000862221 Clinical Procedures - Flowsheets: Group #6
+    INC0000000862225 Clinical Procedures - Flowsheets: Group #7 
+    INC0000000862230 Clinical Procedures - Flowsheets: Group #8 
+      
+ 2) INC0000000882351 Clinical Procedures - Flowsheets: Amend select numeric
+                     terms with "Do not check Total or Subtotals"
+  
+ 3) INC0000000971808 Clinical Procedures - Flowsheets:
+  
+      
+ ASSOCIATED NSR(S):
+ ==================
+ N/A
+       
+       
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas Veterans HCS 
+ Huntington VAMC, WV 
+ VA Heartland - East
+ VA Pittsburgh HCS, PA 
+       
+       
+ REMEDY OVERVIEW:
+ ================
+ 1) INC0000000859796 Clinical Procedures - Flowsheets: Group #1
+    INC0000000862176 Clinical Procedures - Flowsheets: Group #2
+    INC0000000862205 Clinical Procedures - Flowsheets: Group #3 
+    INC0000000862214 Clinical Procedures - Flowsheets: Group #4 
+    INC0000000862219 Clinical Procedures - Flowsheets: Group #5
+    INC0000000862221 Clinical Procedures - Flowsheets: Group #6
+    INC0000000862225 Clinical Procedures - Flowsheets: Group #7 
+    INC0000000862230 Clinical Procedures - Flowsheets: Group #8 
+      
+ Problem: 1
+ ----------
+ The Clinical Procedures (CP) Terminology TERM file (#704.101) contains
+ terms used during data entry/display in CP Flowsheet.  The Office of 
+ Informatics and Analytics - Applied Informatics (AI) Terminology Review
+ Group submitted a spreadsheet requesting additions or updates of 77 Terms.
+       
+ The following list documents the approved changes for group #1
+      
+ (Add) - PROCEDURE PERSONNEL
+ (Add) - ACTIVITIES OF DAILY LIVING: WANDERING PREVENTION MEASURES
+ (Mod) - ARTERIAL LINE SITE CONDITION
+ (Add) - CAUTI: ALTERNATIVES ATTEMPTED PRIOR TO CATH
+ (Add) - CAUTI: CATHETER IN PLACE
+ (Add) - CAUTI: INDICATIONS
+ (Add) - CAUTI: INSERTION REQUIREMENTS
+ (Mod) - DEGREES C
+ (Mod) - CENTRAL LINE SITE CONDITION
+ (Mod) - CENTRAL LINE TYPE
+      
+ The following list documents the approved changes for group #2
+      
+ (Add) - DIAGNOSIS
+ (Mod) - DIALYSIS CATHETER CONDITION
+ (Add) - DIALYSIS: ARTERIAL PRESSURE
+ (Add) - DIALYSIS: UFR (ULTRAFILTRATION RATE)
+ (Add) - DIALYSIS: VENOUS PRESSURE
+ (Add) - DISTANCE VISION
+ (Mod) - EDUCATION TOPIC
+ (Mod) - ENTERAL TUBE ASPIRATE COLOR
+ (Add) - ENTERAL TUBE ASPIRATE PH
+ (Add) - ENTERAL TUBE RESIDUAL VOLUME
+      
+ The following list documents the approved changes for group #3
+      
+ (Add) - EPIDURAL: MEDICATION
+ (Add) - EPIDURAL: RESERVOIR VOLUME REMAINING
+ (Add) - EPIDURAL: TOTAL VOLUME GIVEN
+ (Add) - FALL PREVENTION
+ (Add) - GAIT
+ (Mod) - IABP SITE CONDITION
+ (Mod) - INTAKE- PO FLUIDS
+ (Mod) - IV LINE CARE
+ (Mod) - IV SITE CONDITION
+ (Add) - MDS: BATHING-SELF PERFORMANCE
+           
+ The following list documents the approved changes for group #4
+      
+ (Add) - MDS: BATHING-SUPPORT
+ (Add) - MDS: BED MOBILITY-SELF PERFORMANCE
+ (Add) - MDS: BED MOBILITY-SUPPORT
+ (Add) - MDS: DRESSING-SELF PERFORMANCE
+ (Add) - MDS: DRESSING-SUPPORT
+ (Add) - MDS: EATING-SELF PERFORMANCE
+ (Add) - MDS: EATING-SUPPORT
+ (Add) - MDS: LOCOMOTION OFF UNIT-SELF PERFORMANCE
+ (Add) - MDS: LOCOMOTION OFF UNIT-SUPPORT
+ (Add) - MDS: LOCOMOTION ON UNIT-SELF PERFORMANCE
+      
+ The following list documents the approved changes for group #5
+      
+ (Add) - MDS: LOCOMOTION ON UNIT-SUPPORT
+ (Add) - MDS: PERSONAL HYGIENE-SELF PERFORMANCE
+ (Add) - MDS: PERSONAL HYGIENE-SUPPORT
+ (Add) - MDS: TOILET USE-SELF PERFORMANCE
+ (Add) - MDS: TOILET USE-SUPPORT
+ (Add) - MDS: TRANSFER-SELF PERFORMANCE
+ (Add) - MDS: TRANSFER-SUPPORT
+ (Add) - MDS: WALK IN CORRIDOR-SELF PERFORMANCE
+ (Add) - MDS: WALK IN CORRIDOR-SUPPORT
+ (Add) - MDS: WALK IN ROOM-SELF PERFORMANCE
+      
+ The following list documents the approved changes for group #6
+      
+ (Add) - MDS: WALK IN ROOM-SUPPORT
+ (Add) - MEDICATION LAST DOSE: HYPOGLYCEMIC AGENT
+ (Add) - MEDICATION LAST DOSE: ESA   ERYTHROPOETIN
+ (Add) - MEWS-RESPIRATORY
+ (Add) - MEWS-CONSCIOUS LEVEL
+ (Add) - MEWS-HEART RATE
+ (Add) - MEWS-HOURLY URINE
+ (Add) - MEWS-SCORE
+ (Add) - MEWS-SYSTOLIC BLOOD PRESSURE
+ (Add) - MEWS-TEMPERATURE
+      
+ The following list documents the approved changes for group #7
+      
+ (Add) - NUMBER OF DAYS
+ (Add) - OSTOMY CARE
+ (Mod) - OSTOMY TYPE
+ (Mod) - PA CATHETER CONDITION
+ (Add) - PCA - TOTAL DOSE 24 HR
+ (Mod) - PRESSURE ULCER COLOR
+ (Mod) - PRESSURE ULCER PREVENTION DEVICE TYPE
+ (Mod) - PRESSURE ULCER RISK FACTORS
+ (Add) - RESTRAINT- ACTIVE ORDER
+      
+ The following list documents the approved changes for group #8
+      
+ (Add) - RESTRAINTS: BEHAVIOR CRITERIA FOR DISCONTINUE
+ (Add) - SECLUSION: BEHAVIOR CRITERIA FOR DISCONTINUATION
+ (Add) - SECOND VERIFIER
+ (Add) - SEE CPRS PROGRESS NOTE FOR
+ (Add) - ST/T WAVE MEASUREMENT
+ (Mod) - ADL - AMBULATION DISTANCE
+ (Mod) - TONOMETRY
+ (Mod) - VENTILATOR MINUTE VOLUME
+      
+ Resolution: 1
+ -------------
+ Post-Init routine MDTERMX will make the above Additions/Modifications to
+ the CP Terminology TERM File (#704.101) and TERM_TYPE file (#704.102) as
+ described in the Problem Section above. The details of each of these terms
+ is in the Clinical Observation (CliO) Terminology Dictionary And Clinical
+ Data Model Documentation that is listed below.
+      
+  
+ 2) INC0000000882351 Clinical Procedures - Flowsheets: Amend select numeric
+                     terms with "Do not check Total or Subtotals".
+      
+ PSPO:
+ -----
+ PSPO #2448
+  
+ Problem: 2
+ ----------
+ Any numeric term in CP Flowsheets has the potential to be totaled or 
+ subtotaled at the discretion of the CP Flowsheet Coordinator.  This is done 
+ by placing a check mark in the Display Totals Row or Display Subtotals by 
+ Time Interval boxes within the Term Display Properties when building a 
+ Flowsheet View.  This was a part of the original design of the software.  
+ HOWEVER, some terms should NOT be totaled because they may cause confusion
+ and lead to incorrect clinical decisions.
+      
+ Resolution: 2
+ -------------
+ Post-Init routine MDTERMX will make the changes to the CP Terminology
+ TERM File (#704.101) for the following terms that, if totaled, are
+ considered "high risk" by Informatics Patient Safety and the Applied
+ Informatics Service (AIS) CP Flowsheets Terminology Team. Each term will 
+ be changed to include the phrase "Do not check Total or Subtotals" in the
+ actual term name.
+  
+ BIPAP-EXPIRATORY
+ BIPAP-INSPIRATORY
+ CEREBRAL PERFUSION PRESSURE
+ INTRACRANIAL PRESSURE
+ IV DOSE RATE - g/TIME
+ IV DOSE RATE - mcg/kg/HOUR
+ IV DOSE RATE - mcg/TIME
+ IV DOSE RATE - mg/kg/HOUR
+ IV DOSE RATE - mg/TIME
+ IV DOSE RATE - UNITS/HOUR
+ IV DOSE RATE - UNITS/kg/HOUR
+ IV FLOW RATE - ml/kg/TIME
+ IV FLOW RATE - ml/TIME
+ **OUTPUT - BLADDER SCAN - (The Term Name will be changed to BLADDER SCAN)
+ PACEMAKER RATE
+ PCA - DEMAND DOSE
+ PCA - LIMIT DOSE
+ PCA - LOCK OUT
+ PCA - VOLUME REMAINING
+ PCA - VOLUME START
+ PEAK INSPIRATORY PRESSURE
+ PULSE
+ RESPIRATORY RATE
+ TRACTION WEIGHT
+ VENTILATOR AUTO PEEP
+ VENTILATOR PATIENT EXHALE VOLUME
+ VENTILATOR PATIENT MINUTE VOLUME
+ VENTILATOR PATIENT RATE
+ VENTILATOR PATIENT RATE TOTAL
+ VENTILATOR PEAK PRESSURE
+ VENTILATOR TIDAL VOLUME ACTUAL
+ VT/VC
+      
+  
+ 3) INC0000000971808 Clinical Procedures - Flowsheets:
+      
+ Problem: 3
+ ----------
+ While testing Terminology Patch MD*1*32, a development group in Salt Lake
+ City found a circular record reference in the CP Terminology
+ TERM_QUALIFIER_PAIR File (#704.103) at record IEN 2381.  While this record
+ is not causing any problems, they felt that it should be removed from the
+ file.
+      
+ Resolution: 3
+ -------------
+ Post-Init routine MDTERMX will remove the circular file reference from 
+ the CP Terminology TERM_QUALIFIER_PAIR File (#704.103). 
+      
+ DOCUMENTATION: 
+ ============== 
+ Documentation is available for the Clinical Observation (CliO) 
+ Terminology Dictionary And Clinical Data Model Documentation on the
+ ANONYMOUS.SOFTWARE directory at one of the following Office of  
+ Information (OI) Field Offices.
+ Sites will be able to download the documentation in the ".PDF" format.
+       
+ The preferred method is to FTP the files from: Download.vista.domain.ext
+       
+ This transmits files from the first available FTP server. Sites may 
+ also elect to retrieve documentation directly from a specific server as 
+ follows:
+       
+       Albany                  ftp.domain.ext
+       Hines                   ftp.domain.ext
+       Salt Lake City          ftp.domain.ext
+       
+ File Name:            Description:                     Protocol:
+ ==========            ============                     =========
+ MD1_0P35TERM.PDF      CliO Terminology Dictionary      Binary
+                       And Clinical Data Model
+       
+ Documentation may be found on the System Design and Development Web 
+ page at:  http://www.domain.ext/vd
+       
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the 
+ Clinical Procedures users be off the system.  Other VISTA users
+ will not be affected.
+       
+ Install Time - less than 5 minutes.
+     
+ 1.  Load Transport Global 
+     ---------------------
+       
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------    
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter MD*1.0*35):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch install.
+       
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO 
+       
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? NO//' answer NO 
+       
+ NOTE: Post-Init routine MDTERMX will be automatically deleted after it has
+       made the file modifications.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;CLINICAL PROCEDURES;**[Patch List]**;Aug 2, 2012;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MDTERMX
+    Before:  B4314808   After:  B4314808  **35**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 31, 2013
+Completed By:                               Date Completed: OCT 31, 2014
+Released By :                               Date Released : NOV 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

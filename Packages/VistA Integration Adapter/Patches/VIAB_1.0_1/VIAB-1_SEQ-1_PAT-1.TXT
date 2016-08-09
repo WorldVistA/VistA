@@ -1,0 +1,268 @@
+$TXT Created by              CPRS27.DOMAIN.EXT  (KIDS) on Monday, 03/10/14 at 11:28
+=============================================================================
+Run Date: JUL 02, 2014                     Designation: VIAB*1*1
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1         SEQ #1                      Status: Released
+                  Compliance Date: AUG 02, 2014
+=============================================================================
+
+
+Subject: ADD APPLICATION PROXY FOR VISTALINK
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ The VistA Integration Adapter (VIA) team needs to create a new proxy
+ user in order to connect via VistALink and to allow Remote Procedure
+ Calls (RPC) to be invoked.  This user is VIABAPPLICATIONPROXY,VIAB
+ for the Application Proxy.  In addition, a new menu option
+ 'VIAB WEB SERVICES OPTION'is created.  Both are installed by the
+ patch with the routine VIABRPC5.
+  
+ ************************ Important Information ***********************
+ **                                                                  **
+ ** Note: A VistaLink listener port needs to be open, available and  **
+ **       maintained by each production site.                        **
+ **                                                                  **
+ ** Note: The host name/address and VistALink port must be correctly **
+ **       defined in the VistALink                                   **
+ **       gov.va.med.vistalink.connectorConfig.xml file              **
+ **                                                                  **
+ ** Note: The following 4 patches have to be installed in order to   **
+ **       allow VistALink to work with VIA.  They are in support of  **
+ **       VIA (for this patch - VIAB*1*1) but not dependent upon     **
+ **       VIA.  Also they are not dependent upon each other and can  **
+ **       be installed in any order.  In addition, they will be      **
+ **       released in conjunction with VIA's Incremental 3.          **
+ **                                                                  **
+ **       They are as follows...                                     **
+ **                                                                  **
+ **       OR*3*392                                                   **
+ **       TIU*1*283                                                  **
+ **       SD*5.3*613                                                 **
+ **       DG*5.3*883                                                 **
+ **                                                                  **
+ **********************************************************************
+  
+   
+ Patch Components:
+ -----------------
+   
+  Options Associated:
+   
+    Option Name                Type                     New/Modified/Deleted
+    -----------                ----                     --------------------
+    VIAB WEB SERVICES OPTION   Broker (Client/Server)   NEW
+  
+    Option Details:
+  
+       Field                Value
+       -----                -----
+       NAME (#.01):         VIAB WEB SERVICES OPTION
+       MENU TEXT (#1):      VIAB Web Services Option
+       DESCRIPTION (#3.5):  This option is required by the Kernel Broker to
+                            give access to the RPCs used by the Vista
+                            Integration Adapter (VIA) team. 
+       RPC (#320):
+                            DG SENSITIVE RECORD ACCESS
+                            DG SENSITIVE RECORD BULLETIN
+                            ORPRF HASFLG
+                            ORQPT CLINIC PATIENTS
+                            ORQPT PROVIDER PATIENTS
+                            ORQPT SPECIALTIES
+                            ORQPT SPECIALTY PATIENTS
+                            ORQPT TEAM PATIENTS
+                            ORQPT TEAMS
+                            ORQPT WARDRMBED
+                            ORQPT WARDS
+                            ORQQAL LIST
+                            ORQQCN DETAIL
+                            ORQQCN GET ORDER NUMBER
+                            ORQQCN LIST
+                            ORQQVI VITALS
+                            ORVAA VAA
+                            ORWCIRN FACLIST
+                            ORWCV DTLVST
+                            ORWCV VST
+                            ORWDX LOADRSP
+                            ORWDX LOCK
+                            ORWDX LOCK ORDER
+                            ORWDX SEND
+                            ORWDX UNLOCK
+                            ORWDX UNLOCK ORDER
+                            ORWDXA OFCPLX
+                            ORWDXC SESSION
+                            ORWDXM DLGNAME
+                            ORWDXM1 BLDQRSP
+                            ORWLRR ALLTESTS
+                            ORWLRR INFO
+                            ORWLRR INTERIMG
+                            ORWORDG MAPSEQ
+                            ORWORR AGET
+                            ORWORR GET4LST
+                            ORWPS ACTIVE
+                            ORWPS DETAIL
+                            ORWPT ADMITLST
+                            ORWPT BYWARD
+                            ORWPT DIEDON
+                            ORWPT FULLSSN
+                            ORWPT ID INFO
+                            ORWPT LAST5
+                            ORWPT LIST ALL
+                            ORWPT PTINQ
+                            ORWPT SELECT
+                            ORWPT1 PCDETAIL
+                            ORWPT1 PRCARE
+                            ORWPT16 ID INFO
+                            ORWRP REPORT TEXT
+                            ORWRP2 HS COMPONENTS
+                            ORWRP2 HS REPORT TEXT
+                            ORWSR RPTLIST
+                            ORWTIU CHKTXT
+                            ORWU CLINLOC
+                            ORWU DT
+                            ORWU NEWPERS
+                            ORWU USERINFO
+                            ORWU VALIDSIG
+                            ORWU1 NEWLOC
+                            SC GETS ENTRY DATA
+                            SC LISTER
+                            TIU AUTHORIZATION
+                            TIU CREATE RECORD
+                            TIU DOCUMENTS BY CONTEXT
+                            TIU GET PRF ACTIONS
+                            TIU GET RECORD TEXT
+                            TIU HAS AUTHOR SIGNED?
+                            TIU IS THIS A CONSULT?
+                            TIU IS THIS A SURGERY?
+                            TIU ISPRF
+                            TIU LOCK RECORD
+                            TIU LONG LIST OF TITLES
+                            TIU ONE VISIT NOTE?
+                            TIU REQUIRES COSIGNATURE
+                            TIU SET DOCUMENT TEXT
+                            TIU SIGN RECORD
+                            TIU UNLOCK RECORD
+                            TIU UPDATE RECORD
+                            TIU WAS THIS SAVED?
+                            TIU WHICH SIGNATURE ACTION
+  
+   
+  Proxy Users Created (NEW PERSON (#200) file):
+  
+     Proxy User #1:
+     Field                                   Value
+     -----                                   -----
+     NAME (#.01):                         VIABAPPLICATIONPROXY,VIAB
+     SECONDARY MENU OPTIONS (#203):       VIAB WEB SERVICES OPTION
+     USER CLASS (#9.5) - USER CLASS SUB-FIELD (#200.07) file
+        User Class (#.01):                APPLICATION PROXY
+        ISPRIMARY (#2):                   Yes
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ N/A
+   
+   
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+   
+   
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+   
+   
+ Test Sites:
+ -----------
+ Heartlands East and West
+ Charleston
+   
+   
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+  N/A
+  
+  
+ Patch Installation:
+ -------------------  
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  Please refer to below instructions.
+   
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system although it is 
+  recommended that it be installed during non-peak hours to minimize
+  potential disruption to users.  This patch should take less than 5 
+  minutes to install.
+  
+ *********************************Warning*******************************
+ ** The installer at each site must have the 'XUMGR' key in order for **
+ ** the 'Application Proxy' API to be run during the patch            **
+ ** installation.                                                     **
+ ***********************************************************************
+  
+  
+  Installation Instructions:
+  --------------------------
+  1.  Choose the PackMan message containing this patch.
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the patch 
+      VIAB*1.0*1:
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch (VIAB*1.0*1) to install.
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//', press <ENTER>.
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//', press <ENTER>.
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;VISTA INTEGRATION ADAPTER;**[Patch List]**;06-FEB-14;Build 25
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: VIABRPC5
+    Before:       n/a   After:  B3766964  **1**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 03, 2014
+Completed By:                               Date Completed: JUL 02, 2014
+Released By :                               Date Released : JUL 02, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

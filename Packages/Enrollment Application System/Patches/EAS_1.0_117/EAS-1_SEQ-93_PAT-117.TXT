@@ -1,0 +1,93 @@
+
+=============================================================================
+Run Date: JUL 28, 2014                     Designation: EAS*1*117
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1        SEQ #93                      Status: Released
+                  Compliance Date: AUG 28, 2014
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) APPLICATION, VERSION 3.12.5
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The ES application version 3.12.5 addresses one defect related to sending
+ Delete for empty value on appointment request indicator and appointment
+ request date values in ZIO segment; and one requirement change to allow update
+ of such values from Z07 when either value is currently Null. 
+  
+ Enhancements:
+ =============
+ Send empty values as Null on ZIO segment if they currently are Null and
+ Veteran is in Verified enrollment status Allow update from ZIO segment on Z07
+ if either appointment request indicator or appointment request date is
+ currently Null.
+  
+ What to Expect:
+ ===============
+ No changes to any VistA packages are required. ES will halt sending delete
+ indicator on ZIO segment in all cases where Veteran is not in Cancel/Decline
+ or Rejected status. 
+  
+ Implementation:
+ ===============
+ ESR 3.12.5 is a centrally managed web-based application and will be
+ implemented as a one-time rollout by the ES Technical team. No software will
+ be installed at the facilities.
+  
+  
+ Implementation Date:
+ ====================
+ July 26, 2014
+  
+ Associated Remedy Tickets:
+ ==========================
+ #1006932
+ Problem:
+ ========
+ The APPOINTMENT REQUEST DATE field (#1010.1511) is missing for some patients
+ that have APPOINTMENT REQUEST ON 1010EZ field (#1010.159) indicator set to a
+ value of YES.  Auditing has indicated the EAS ESR xxx ORU-Z11 CLIENT protocol
+ appears to be deleting the appointment request date from certain records. 
+ The ORU-Z11 protocol is an IVM package HL7 protocol that provides the means
+ by which the VistA facilities process an Unsolicited Enrollment / Eligibility
+ transmission from the Health Eligibility Center's Enrollment System. These
+ deletions have the potential of a negative downstream impact to the New
+ Enrollee Appointment Request (NEAR) management and reporting options.
+ 
+ Solution:
+ =========
+ These issues were discussed on the bi-weekly EHBD Remedy Ticket Discussion on
+ Thursday. July 10, 2014.  These calls allow high priority items and that need
+ attention to be brought to the larger EHBD IPT, which is held on Mondays on a
+ Bi-Weekly basis.  Enrollment System development staff has indicated analysis
+ and correction is completed on both issues; with sending the delete quotes
+ and the failure to populate subsequent updates. The EHBD IPT voted to release
+ a fast-track patch in order to correct the problems. 
+ 
+ Reporting Problems:
+ ===================
+ Problems associated with ES application should be reported via Remedy 
+ or contact the National Help Desk (NHD) 1-888-596-4357 for assistance.
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 23, 2014
+Completed By:                               Date Completed: JUL 25, 2014
+Released By :                               Date Released : JUL 28, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

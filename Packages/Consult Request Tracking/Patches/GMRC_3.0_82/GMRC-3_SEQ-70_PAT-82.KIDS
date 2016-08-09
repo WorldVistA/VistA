@@ -1,0 +1,979 @@
+Released GMRC*3*82 SEQ #70
+Extracted from mail message
+**KIDS**:GMRC*3.0*82^
+
+**INSTALL NAME**
+GMRC*3.0*82
+"BLD",9557,0)
+GMRC*3.0*82^CONSULT/REQUEST TRACKING^0^3150319^y
+"BLD",9557,1,0)
+^^73^73^3150126^^
+"BLD",9557,1,1,0)
+This patch implements the New Service Request (NSR) 20130715 which masks 
+"BLD",9557,1,2,0)
+the first 5 digits of the patients social security number with 'X's on 
+"BLD",9557,1,3,0)
+the Standard Form (SF) 513 Consult Form.  This code modification has been
+"BLD",9557,1,4,0)
+reviewed by Patient Safety and the SSN Reduction team because the
+"BLD",9557,1,5,0)
+513 has two other unique identifiers (name and DOB).
+"BLD",9557,1,6,0)
+ 
+"BLD",9557,1,7,0)
+This NSR is part of the VistA Intake Program (VIP) which delivers
+"BLD",9557,1,8,0)
+VistA modifications developed at sites as class I VistA software.
+"BLD",9557,1,9,0)
+ 
+"BLD",9557,1,10,0)
+Pre-Installation Instructions:
+"BLD",9557,1,11,0)
+This patch may be installed with users on the system although it is
+"BLD",9557,1,12,0)
+recommended that it be installed during non-peak hours to minimize 
+"BLD",9557,1,13,0)
+potential disruption to users.  This patch should take less than 5 
+"BLD",9557,1,14,0)
+minutes to install.
+"BLD",9557,1,15,0)
+ 
+"BLD",9557,1,16,0)
+Installation Instructions:
+"BLD",9557,1,17,0)
+1.      Choose the PackMan message containing this patch.
+"BLD",9557,1,18,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"BLD",9557,1,19,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"BLD",9557,1,20,0)
+the Installation Menu.  From this menu, you may elect to use the 
+"BLD",9557,1,21,0)
+following options. When prompted for the INSTALL NAME enter GMRC*3.0*
+"BLD",9557,1,22,0)
+a.      Backup a Transport Global - This option will create a backup 
+"BLD",9557,1,23,0)
+message of any routines exported with this patch. It will not backup any 
+"BLD",9557,1,24,0)
+other changes such as DDs or templates.
+"BLD",9557,1,25,0)
+b.      Compare Transport Global to Current System - This option will 
+"BLD",9557,1,26,0)
+allow you to view all changes that will be made when this patch is 
+"BLD",9557,1,27,0)
+installed.  It compares all components of this patch (routines, DDs, 
+"BLD",9557,1,28,0)
+templates, etc.).c.      Verify Checksums in Transport Global - This 
+"BLD",9557,1,29,0)
+ allow you to ensure the integrity of the routines that are in the 
+"BLD",9557,1,30,0)
+transport global.
+"BLD",9557,1,31,0)
+to ensure the integrity of the routines that are in the transport global.
+"BLD",9557,1,32,0)
+4. From the Installation Menu, select the Install Package(s) option 
+"BLD",9557,1,33,0)
+   and choose the patch to install.
+"BLD",9557,1,34,0)
+5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"BLD",9557,1,35,0)
+   NO//'
+"BLD",9557,1,36,0)
+      This patch does not require logons to be inhibited.
+"BLD",9557,1,37,0)
+ 
+"BLD",9557,1,38,0)
+6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"BLD",9557,1,39,0)
+   and Protocols? NO//' 
+"BLD",9557,1,40,0)
+      This patch does not require any items to be disabled.
+"BLD",9557,1,41,0)
+ 
+"BLD",9557,1,42,0)
+Routine Information:
+"BLD",9557,1,43,0)
+====================
+"BLD",9557,1,44,0)
+GMRCP5D
+"BLD",9557,1,45,0)
+ 
+"BLD",9557,1,46,0)
+ 
+"BLD",9557,1,47,0)
+User Information:  
+"BLD",9557,1,48,0)
+  Entered By  :   DOUGLAS HALL         Date Entered  :   DEC  15,2015
+"BLD",9557,1,49,0)
+  Completed By:                        Date Completed:   
+"BLD",9557,1,50,0)
+  Released By :                        Date Released : 
+"BLD",9557,1,51,0)
+ 
+"BLD",9557,1,52,0)
+ 
+"BLD",9557,1,53,0)
+Routine Information:
+"BLD",9557,1,54,0)
+====================
+"BLD",9557,1,55,0)
+ 
+"BLD",9557,1,56,0)
+ 
+"BLD",9557,1,57,0)
+Routine Name: GMRCP5D
+"BLD",9557,1,58,0)
+ Description of Changes:
+"BLD",9557,1,59,0)
+  Before
+"BLD",9557,1,60,0)
+  *****************************************************************
+"BLD",9557,1,61,0)
+  .D BLD("HDR",SUB,1,0,GMRCSN)
+"BLD",9557,1,62,0)
+  *****************************************************************
+"BLD",9557,1,63,0)
+  After
+"BLD",9557,1,64,0)
+  *****************************************************************
+"BLD",9557,1,65,0)
+  .D BLD("HDR",SUB,1,0,"XXX-XX-"_$P(GMRCSN,"-",2,3)
+"BLD",9557,1,66,0)
+  *****************************************************************
+"BLD",9557,1,67,0)
+  End of Differences
+"BLD",9557,1,68,0)
+ 
+"BLD",9557,1,69,0)
+ 
+"BLD",9557,1,70,0)
+==========================================================================
+"BLD",9557,1,71,0)
+User Information:  
+"BLD",9557,1,72,0)
+  Entered By  :                        Date Entered  :   JAN 15,2015
+"BLD",9557,1,73,0)
+  Completed By:                        Date Completed:   
+"BLD",9557,4,0)
+^9.64PA^^
+"BLD",9557,6.3)
+11
+"BLD",9557,"ABPKG")
+n
+"BLD",9557,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9557,"KRN",.4,0)
+.4
+"BLD",9557,"KRN",.401,0)
+.401
+"BLD",9557,"KRN",.402,0)
+.402
+"BLD",9557,"KRN",.403,0)
+.403
+"BLD",9557,"KRN",.5,0)
+.5
+"BLD",9557,"KRN",.84,0)
+.84
+"BLD",9557,"KRN",3.6,0)
+3.6
+"BLD",9557,"KRN",3.8,0)
+3.8
+"BLD",9557,"KRN",9.2,0)
+9.2
+"BLD",9557,"KRN",9.8,0)
+9.8
+"BLD",9557,"KRN",9.8,"NM",0)
+^9.68A^1^1
+"BLD",9557,"KRN",9.8,"NM",1,0)
+GMRCP5D^^0^B71343010
+"BLD",9557,"KRN",9.8,"NM","B","GMRCP5D",1)
+
+"BLD",9557,"KRN",19,0)
+19
+"BLD",9557,"KRN",19.1,0)
+19.1
+"BLD",9557,"KRN",101,0)
+101
+"BLD",9557,"KRN",409.61,0)
+409.61
+"BLD",9557,"KRN",771,0)
+771
+"BLD",9557,"KRN",779.2,0)
+779.2
+"BLD",9557,"KRN",870,0)
+870
+"BLD",9557,"KRN",8989.51,0)
+8989.51
+"BLD",9557,"KRN",8989.52,0)
+8989.52
+"BLD",9557,"KRN",8994,0)
+8994
+"BLD",9557,"KRN","B",.4,.4)
+
+"BLD",9557,"KRN","B",.401,.401)
+
+"BLD",9557,"KRN","B",.402,.402)
+
+"BLD",9557,"KRN","B",.403,.403)
+
+"BLD",9557,"KRN","B",.5,.5)
+
+"BLD",9557,"KRN","B",.84,.84)
+
+"BLD",9557,"KRN","B",3.6,3.6)
+
+"BLD",9557,"KRN","B",3.8,3.8)
+
+"BLD",9557,"KRN","B",9.2,9.2)
+
+"BLD",9557,"KRN","B",9.8,9.8)
+
+"BLD",9557,"KRN","B",19,19)
+
+"BLD",9557,"KRN","B",19.1,19.1)
+
+"BLD",9557,"KRN","B",101,101)
+
+"BLD",9557,"KRN","B",409.61,409.61)
+
+"BLD",9557,"KRN","B",771,771)
+
+"BLD",9557,"KRN","B",779.2,779.2)
+
+"BLD",9557,"KRN","B",870,870)
+
+"BLD",9557,"KRN","B",8989.51,8989.51)
+
+"BLD",9557,"KRN","B",8989.52,8989.52)
+
+"BLD",9557,"KRN","B",8994,8994)
+
+"BLD",9557,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9557,"QUES",0)
+^9.62^^
+"BLD",9557,"REQB",0)
+^9.611^1^1
+"BLD",9557,"REQB",1,0)
+GMRC*3.0*66^2
+"BLD",9557,"REQB","B","GMRC*3.0*66",1)
+
+"MBREQ")
+0
+"PKG",406,-1)
+1^1
+"PKG",406,0)
+CONSULT/REQUEST TRACKING^GMRC^CONSULTS/REQUESTS
+"PKG",406,20,0)
+^9.402P^^
+"PKG",406,22,0)
+^9.49I^1^1
+"PKG",406,22,1,0)
+3.0^2980101^2981113^1
+"PKG",406,22,1,"PAH",1,0)
+82^3150319^520736435
+"PKG",406,22,1,"PAH",1,1,0)
+^^73^73^3150319
+"PKG",406,22,1,"PAH",1,1,1,0)
+This patch implements the New Service Request (NSR) 20130715 which masks 
+"PKG",406,22,1,"PAH",1,1,2,0)
+the first 5 digits of the patients social security number with 'X's on 
+"PKG",406,22,1,"PAH",1,1,3,0)
+the Standard Form (SF) 513 Consult Form.  This code modification has been
+"PKG",406,22,1,"PAH",1,1,4,0)
+reviewed by Patient Safety and the SSN Reduction team because the
+"PKG",406,22,1,"PAH",1,1,5,0)
+513 has two other unique identifiers (name and DOB).
+"PKG",406,22,1,"PAH",1,1,6,0)
+ 
+"PKG",406,22,1,"PAH",1,1,7,0)
+This NSR is part of the VistA Intake Program (VIP) which delivers
+"PKG",406,22,1,"PAH",1,1,8,0)
+VistA modifications developed at sites as class I VistA software.
+"PKG",406,22,1,"PAH",1,1,9,0)
+ 
+"PKG",406,22,1,"PAH",1,1,10,0)
+Pre-Installation Instructions:
+"PKG",406,22,1,"PAH",1,1,11,0)
+This patch may be installed with users on the system although it is
+"PKG",406,22,1,"PAH",1,1,12,0)
+recommended that it be installed during non-peak hours to minimize 
+"PKG",406,22,1,"PAH",1,1,13,0)
+potential disruption to users.  This patch should take less than 5 
+"PKG",406,22,1,"PAH",1,1,14,0)
+minutes to install.
+"PKG",406,22,1,"PAH",1,1,15,0)
+ 
+"PKG",406,22,1,"PAH",1,1,16,0)
+Installation Instructions:
+"PKG",406,22,1,"PAH",1,1,17,0)
+1.      Choose the PackMan message containing this patch.
+"PKG",406,22,1,"PAH",1,1,18,0)
+2.      Choose the INSTALL/CHECK MESSAGE PackMan option.  
+"PKG",406,22,1,"PAH",1,1,19,0)
+3.      From the Kernel Installation and Distribution System Menu, select 
+"PKG",406,22,1,"PAH",1,1,20,0)
+the Installation Menu.  From this menu, you may elect to use the 
+"PKG",406,22,1,"PAH",1,1,21,0)
+following options. When prompted for the INSTALL NAME enter GMRC*3.0*
+"PKG",406,22,1,"PAH",1,1,22,0)
+a.      Backup a Transport Global - This option will create a backup 
+"PKG",406,22,1,"PAH",1,1,23,0)
+message of any routines exported with this patch. It will not backup any 
+"PKG",406,22,1,"PAH",1,1,24,0)
+other changes such as DDs or templates.
+"PKG",406,22,1,"PAH",1,1,25,0)
+b.      Compare Transport Global to Current System - This option will 
+"PKG",406,22,1,"PAH",1,1,26,0)
+allow you to view all changes that will be made when this patch is 
+"PKG",406,22,1,"PAH",1,1,27,0)
+installed.  It compares all components of this patch (routines, DDs, 
+"PKG",406,22,1,"PAH",1,1,28,0)
+templates, etc.).c.      Verify Checksums in Transport Global - This 
+"PKG",406,22,1,"PAH",1,1,29,0)
+ allow you to ensure the integrity of the routines that are in the 
+"PKG",406,22,1,"PAH",1,1,30,0)
+transport global.
+"PKG",406,22,1,"PAH",1,1,31,0)
+to ensure the integrity of the routines that are in the transport global.
+"PKG",406,22,1,"PAH",1,1,32,0)
+4. From the Installation Menu, select the Install Package(s) option 
+"PKG",406,22,1,"PAH",1,1,33,0)
+   and choose the patch to install.
+"PKG",406,22,1,"PAH",1,1,34,0)
+5. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+"PKG",406,22,1,"PAH",1,1,35,0)
+   NO//'
+"PKG",406,22,1,"PAH",1,1,36,0)
+      This patch does not require logons to be inhibited.
+"PKG",406,22,1,"PAH",1,1,37,0)
+ 
+"PKG",406,22,1,"PAH",1,1,38,0)
+6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+"PKG",406,22,1,"PAH",1,1,39,0)
+   and Protocols? NO//' 
+"PKG",406,22,1,"PAH",1,1,40,0)
+      This patch does not require any items to be disabled.
+"PKG",406,22,1,"PAH",1,1,41,0)
+ 
+"PKG",406,22,1,"PAH",1,1,42,0)
+Routine Information:
+"PKG",406,22,1,"PAH",1,1,43,0)
+====================
+"PKG",406,22,1,"PAH",1,1,44,0)
+GMRCP5D
+"PKG",406,22,1,"PAH",1,1,45,0)
+ 
+"PKG",406,22,1,"PAH",1,1,46,0)
+ 
+"PKG",406,22,1,"PAH",1,1,47,0)
+User Information:  
+"PKG",406,22,1,"PAH",1,1,48,0)
+  Entered By  :   DOUGLAS HALL         Date Entered  :   DEC  15,2015
+"PKG",406,22,1,"PAH",1,1,49,0)
+  Completed By:                        Date Completed:   
+"PKG",406,22,1,"PAH",1,1,50,0)
+  Released By :                        Date Released : 
+"PKG",406,22,1,"PAH",1,1,51,0)
+ 
+"PKG",406,22,1,"PAH",1,1,52,0)
+ 
+"PKG",406,22,1,"PAH",1,1,53,0)
+Routine Information:
+"PKG",406,22,1,"PAH",1,1,54,0)
+====================
+"PKG",406,22,1,"PAH",1,1,55,0)
+ 
+"PKG",406,22,1,"PAH",1,1,56,0)
+ 
+"PKG",406,22,1,"PAH",1,1,57,0)
+Routine Name: GMRCP5D
+"PKG",406,22,1,"PAH",1,1,58,0)
+ Description of Changes:
+"PKG",406,22,1,"PAH",1,1,59,0)
+  Before
+"PKG",406,22,1,"PAH",1,1,60,0)
+  *****************************************************************
+"PKG",406,22,1,"PAH",1,1,61,0)
+  .D BLD("HDR",SUB,1,0,GMRCSN)
+"PKG",406,22,1,"PAH",1,1,62,0)
+  *****************************************************************
+"PKG",406,22,1,"PAH",1,1,63,0)
+  After
+"PKG",406,22,1,"PAH",1,1,64,0)
+  *****************************************************************
+"PKG",406,22,1,"PAH",1,1,65,0)
+  .D BLD("HDR",SUB,1,0,"XXX-XX-"_$P(GMRCSN,"-",2,3)
+"PKG",406,22,1,"PAH",1,1,66,0)
+  *****************************************************************
+"PKG",406,22,1,"PAH",1,1,67,0)
+  End of Differences
+"PKG",406,22,1,"PAH",1,1,68,0)
+ 
+"PKG",406,22,1,"PAH",1,1,69,0)
+ 
+"PKG",406,22,1,"PAH",1,1,70,0)
+==========================================================================
+"PKG",406,22,1,"PAH",1,1,71,0)
+User Information:  
+"PKG",406,22,1,"PAH",1,1,72,0)
+  Entered By  :                        Date Entered  :   JAN 15,2015
+"PKG",406,22,1,"PAH",1,1,73,0)
+  Completed By:                        Date Completed:   
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+1
+"RTN","GMRCP5D")
+0^1^B71343010^B71660490
+"RTN","GMRCP5D",1,0)
+GMRCP5D ;SLC/DCM,RJS,JFR,WAT,DEH - Print Consult form 513 (Gather Data - Addendums, Headers, Service reports and Comments) ;03/18/09  15:00
+"RTN","GMRCP5D",2,0)
+ ;;3.0;CONSULT/REQUEST TRACKING;**4,12,15,22,29,35,38,61,65,66,82**;Dec 27, 1997;Build 11
+"RTN","GMRCP5D",3,0)
+ ;This routine invokes the following ICR(s):
+"RTN","GMRCP5D",4,0)
+ ;2056 $$GET1^DIQ, 2541 $$KSP^XUPARAM, 10103 $$FMTE^XLFDT, 10104 $$UP^XLFSTR, 10061 VADPT API
+"RTN","GMRCP5D",5,0)
+ ;10040 ^SC(, 4156 $$CVEDT^DGCV
+"RTN","GMRCP5D",6,0)
+ ;
+"RTN","GMRCP5D",7,0)
+FORMAT(GMRCIFN,GMRCRD,PAGEWID) ;
+"RTN","GMRCP5D",8,0)
+ ;
+"RTN","GMRCP5D",9,0)
+ I $L($P(GMRCRD,U,15)) D
+"RTN","GMRCP5D",10,0)
+ .I $O(^TMP("GMRCR",$J,"MCAR",0)) D
+"RTN","GMRCP5D",11,0)
+ ..N GMRCSVC
+"RTN","GMRCP5D",12,0)
+ ..S GMRCSVC=$P($G(^GMR(123.5,+$P(GMRCRD,U,5),0)),U,1)
+"RTN","GMRCP5D",13,0)
+ ..S:$L(GMRCSVC) GMRCSVC=GMRCSVC_" "
+"RTN","GMRCP5D",14,0)
+ ..;
+"RTN","GMRCP5D",15,0)
+ ..; Medicine Results?
+"RTN","GMRCP5D",16,0)
+ ..S GMRCR0=0 F  S GMRCR0=$O(^TMP("GMRCR",$J,"MCAR",GMRCR0)) Q:'GMRCR0  D
+"RTN","GMRCP5D",17,0)
+ ...D SUB("H","SREP",GMRCR0,$$CENTER(GMRCSVC_"Service Report #"_GMRCR0_" continued."))
+"RTN","GMRCP5D",18,0)
+ ...D SUB("H","SREP",GMRCR0," ")
+"RTN","GMRCP5D",19,0)
+ ...D BLD("SREP",GMRCR0,1,0,$$CENTER("Medicine Package Report"))
+"RTN","GMRCP5D",20,0)
+ ...D BLD("SREP",GMRCR0,1,0,"")
+"RTN","GMRCP5D",21,0)
+ ...N LN
+"RTN","GMRCP5D",22,0)
+ ...S LN=0 F  S LN=$O(^TMP("GMRCR",$J,"MCAR",GMRCR0,LN)) Q:'LN  D
+"RTN","GMRCP5D",23,0)
+ ....D BLD("SREP",GMRCR0,1,0,$G(^TMP("GMRCR",$J,"MCAR",GMRCR0,LN,0)))
+"RTN","GMRCP5D",24,0)
+ ;
+"RTN","GMRCP5D",25,0)
+ ; Build Processing Activities
+"RTN","GMRCP5D",26,0)
+ S GMRCR0=0 F  S GMRCR0=$O(^GMR(123,GMRCIFN,40,GMRCR0)) Q:'GMRCR0  D
+"RTN","GMRCP5D",27,0)
+ .N GMRCR1,GMRC400,CMT,USER,GMRCDT,RPRV,GMRC402,GMRCISIT
+"RTN","GMRCP5D",28,0)
+ .S GMRCR1=+$O(^GMR(123,GMRCIFN,40,GMRCR0,0)) Q:GMRCR1'=1
+"RTN","GMRCP5D",29,0)
+ .S GMRC400=$G(^GMR(123,GMRCIFN,40,GMRCR0,0))
+"RTN","GMRCP5D",30,0)
+ .S GMRC402=$G(^GMR(123,GMRCIFN,40,GMRCR0,2))
+"RTN","GMRCP5D",31,0)
+ .S CMT=$$PRCMT^GMRCP5B(+$P(GMRC400,U,2)) Q:'$L(CMT)
+"RTN","GMRCP5D",32,0)
+ .S GMRCDT=$P(GMRC400,U,3) S:'GMRCDT GMRCDT=$P(GMRC400,U,1)
+"RTN","GMRCP5D",33,0)
+ .S GMRCDT=$$EXDT(GMRCDT)_" "_$P(GMRC402,U,3)
+"RTN","GMRCP5D",34,0)
+ .;Following lines modified in patch *38
+"RTN","GMRCP5D",35,0)
+ .;I $P(^GMR(123,GMRCIFN,0),U,23) D  ;commented out
+"RTN","GMRCP5D",36,0)
+ .;.S GMRCISIT=$$GET1^DIQ(4,$P(^GMR(123,GMRCIFN,0),U,23),.01)  ;commented out
+"RTN","GMRCP5D",37,0)
+ .;.S GMRCISIT="Entered at: "_GMRCISIT  ;commented out
+"RTN","GMRCP5D",38,0)
+ .I $L(GMRC402) D  ;ADDED
+"RTN","GMRCP5D",39,0)
+ ..S GMRCISIT=$$GET1^DIQ(123,GMRCIFN,.07)  ;ADDED
+"RTN","GMRCP5D",40,0)
+ .I '$D(GMRCISIT) D  ;ADDED
+"RTN","GMRCP5D",41,0)
+ ..S GMRCISIT=$$KSP^XUPARAM("INST")  ;ADDED
+"RTN","GMRCP5D",42,0)
+ ..I GMRCISIT'="" S GMRCISIT=$$GET1^DIQ(4,GMRCISIT,.01)  ;ADDED
+"RTN","GMRCP5D",43,0)
+ ..I GMRCISIT="" S GMRCISIT=$$GET1^DIQ(123,GMRCIFN,.05)  ;ADDED
+"RTN","GMRCP5D",44,0)
+ .S GMRCISIT="Entered at: "_GMRCISIT  ;ADDED
+"RTN","GMRCP5D",45,0)
+ .;End of modifications for patch *38
+"RTN","GMRCP5D",46,0)
+ .S RPRV=$$GET1^DIQ(200,+$P(GMRC400,U,4),.01)
+"RTN","GMRCP5D",47,0)
+ .I '$L(RPRV) S RPRV=$P(GMRC402,U,2)
+"RTN","GMRCP5D",48,0)
+ .S:($L(RPRV)) RPRV="Responsible Person: "_RPRV
+"RTN","GMRCP5D",49,0)
+ .S USER=$$GET1^DIQ(200,+$P(GMRC400,U,5),.01)
+"RTN","GMRCP5D",50,0)
+ .I '$L(USER) S USER=$P(GMRC402,U)
+"RTN","GMRCP5D",51,0)
+ .S USER="Entered by: "_USER_" - "_GMRCDT
+"RTN","GMRCP5D",52,0)
+ .D SUB("H","COM",GMRCR0,CMT_" Comment ("_USER_") continued.")
+"RTN","GMRCP5D",53,0)
+ .D SUB("H","COM",GMRCR0," ")
+"RTN","GMRCP5D",54,0)
+ .D BLD("COM",GMRCR0,1,0,"")
+"RTN","GMRCP5D",55,0)
+ .D BLD("COM",GMRCR0,1,0,$$CENTER("("_CMT_" Comment)"))
+"RTN","GMRCP5D",56,0)
+ .I $P(GMRC400,U,2)=17!($P(GMRC400,U,2)=25) D
+"RTN","GMRCP5D",57,0)
+ .. N FWDLN,FWDRS
+"RTN","GMRCP5D",58,0)
+ .. S FWDLN="Forwarded from: "
+"RTN","GMRCP5D",59,0)
+ .. S FWDRS=$P($G(^GMR(123,GMRCIFN,40,GMRCR0,3)),U)
+"RTN","GMRCP5D",60,0)
+ .. I $L(FWDRS) S FWDLN=FWDLN_FWDRS
+"RTN","GMRCP5D",61,0)
+ .. I '$L(FWDRS) S FWDLN=FWDLN_$$GET1^DIQ(123.5,+$P(GMRC400,U,6),.01)
+"RTN","GMRCP5D",62,0)
+ .. D BLD("COM",GMRCR0,1,5,FWDLN)
+"RTN","GMRCP5D",63,0)
+ .D BLD("COM",GMRCR0,1,5,USER)
+"RTN","GMRCP5D",64,0)
+ .D:($L(RPRV)) BLD("COM",GMRCR0,1,5,RPRV)
+"RTN","GMRCP5D",65,0)
+ .D:($L($G(GMRCISIT))) BLD("COM",GMRCR0,1,5,GMRCISIT)
+"RTN","GMRCP5D",66,0)
+ .;
+"RTN","GMRCP5D",67,0)
+ .N GMRCR2 S GMRCR2=0
+"RTN","GMRCP5D",68,0)
+ .F  S GMRCR2=$O(^GMR(123,GMRCIFN,40,GMRCR0,GMRCR1,GMRCR2)) Q:'GMRCR2  D
+"RTN","GMRCP5D",69,0)
+ ..D BLD("COM",GMRCR0,1,0,$G(^GMR(123,GMRCIFN,40,GMRCR0,GMRCR1,GMRCR2,0)))
+"RTN","GMRCP5D",70,0)
+ ;
+"RTN","GMRCP5D",71,0)
+ Q
+"RTN","GMRCP5D",72,0)
+ ;
+"RTN","GMRCP5D",73,0)
+ADDEND(GMRCIFN,GMRCR0,GMRCNDX,GMRCRD,PAGEWID) ;
+"RTN","GMRCP5D",74,0)
+ ;
+"RTN","GMRCP5D",75,0)
+ N GMRCADD,GMRCNDX,GMRCR1,GMRCV,TEXT,GMRCX
+"RTN","GMRCP5D",76,0)
+ ;
+"RTN","GMRCP5D",77,0)
+ S GMRCADD=0 F  S GMRCADD=$O(^TMP("GMRCR",$J,"RES",GMRCR0,"ADD",GMRCADD)) Q:'GMRCADD  D
+"RTN","GMRCP5D",78,0)
+ .N GMRCSGNM,GMRCNMDT,GMRCTIT,GMRCMODE,GMRCCSDT,GMRCCTIT,GMRCCSGM
+"RTN","GMRCP5D",79,0)
+ .;
+"RTN","GMRCP5D",80,0)
+ .F GMRCV="GMRCSGNM","GMRCNMDT","GMRCTIT","GMRCMODE" D
+"RTN","GMRCP5D",81,0)
+ ..S @GMRCV=$G(^TMP("GMRCR",$J,"RES",GMRCR0,"ADD",GMRCADD,GMRCV))
+"RTN","GMRCP5D",82,0)
+ .;
+"RTN","GMRCP5D",83,0)
+ . F GMRCV="GMRCCSDT","GMRCCTIT","GMRCCSGM","GMRCCSIG" D
+"RTN","GMRCP5D",84,0)
+ .. S @GMRCV=$G(^TMP("GMRCR",$J,"RES",GMRCR0,"ADD",GMRCADD,GMRCV))
+"RTN","GMRCP5D",85,0)
+ .S GMRCNDX=$O(^TMP("GMRC",$J,"OUTPUT","RES"," "),-1)+1
+"RTN","GMRCP5D",86,0)
+ .I $L($G(GMRCRPT)) D SUB("H","RES",GMRCNDX,"Addendum #"_GMRCADD_" To Consult Note #"_GMRCR0_" for "_GMRCRPT_" continued.")
+"RTN","GMRCP5D",87,0)
+ .I '$L($G(GMRCRPT)) D SUB("H","RES",GMRCNDX,"Addendum #"_GMRCADD_" To Consult Note #"_GMRCR0_" continued.")
+"RTN","GMRCP5D",88,0)
+ .D SUB("H","RES",GMRCNDX," ")
+"RTN","GMRCP5D",89,0)
+ .I $L($G(GMRCSGNM)) D
+"RTN","GMRCP5D",90,0)
+ ..D SUB("F","RES",GMRCNDX," ")
+"RTN","GMRCP5D",91,0)
+ ..I (GMRCMODE="electronic") S GMRCX=" Addendum Signature: "_GMRCSGNM_" /es/ "_$$EXDT($G(GMRCNMDT))
+"RTN","GMRCP5D",92,0)
+ ..I '(GMRCMODE="electronic") S GMRCX=" Addendum Author: "_GMRCSGNM S:$L($G(GMRCNMDT)) GMRCX=GMRCX_" Last edited: "_$$EXDT(GMRCNMDT)
+"RTN","GMRCP5D",93,0)
+ ..D SUB("F","RES",GMRCNDX,GMRCX)
+"RTN","GMRCP5D",94,0)
+ ..D:$L($G(GMRCTIT)) SUB("F","RES",GMRCNDX,"                     "_GMRCTIT)
+"RTN","GMRCP5D",95,0)
+ .I $L($G(GMRCCSDT)) D
+"RTN","GMRCP5D",96,0)
+ ..D SUB("F","RES",GMRCNDX," ")
+"RTN","GMRCP5D",97,0)
+ ..I (GMRCCSGM="electronic") S GMRCX=" Addendum CoSignature: "_GMRCCSIG_" /es/ "_$$EXDT(GMRCCSDT)
+"RTN","GMRCP5D",98,0)
+ ..I '(GMRCCSGM="electronic") S GMRCX=" Addendum CoSignature: "_GMRCCSIG_" /chart/ "_$$EXDT(GMRCCSDT)
+"RTN","GMRCP5D",99,0)
+ ..D SUB("F","RES",GMRCNDX,GMRCX)
+"RTN","GMRCP5D",100,0)
+ ..D:$L($G(GMRCCTIT)) SUB("F","RES",GMRCNDX,"                       "_GMRCCTIT)
+"RTN","GMRCP5D",101,0)
+ .D BLD("RES",GMRCNDX,1,0," ")
+"RTN","GMRCP5D",102,0)
+ .I $L($G(GMRCRPT)) D BLD("RES",GMRCNDX,1,0,$$CENTER("ADDENDUM #"_GMRCADD_" TO CONSULT NOTE #"_GMRCR0_" FOR "_GMRCRPT))
+"RTN","GMRCP5D",103,0)
+ .I '$L($G(GMRCRPT)) D BLD("RES",GMRCNDX,1,0,$$CENTER("ADDENDUM #"_GMRCADD_" TO CONSULT NOTE #"_GMRCR0))
+"RTN","GMRCP5D",104,0)
+ .D BLD("RES",GMRCNDX,1,0," ")
+"RTN","GMRCP5D",105,0)
+ .S GMRCR1=0 F  S GMRCR1=$O(^TMP("GMRCR",$J,"RES",GMRCR0,"ADD",GMRCADD,GMRCR1)) Q:'GMRCR1  D
+"RTN","GMRCP5D",106,0)
+ ..D BLD("RES",GMRCNDX,1,0,$G(^TMP("GMRCR",$J,"RES",GMRCR0,"ADD",GMRCADD,GMRCR1,0)))
+"RTN","GMRCP5D",107,0)
+ Q
+"RTN","GMRCP5D",108,0)
+ ;
+"RTN","GMRCP5D",109,0)
+HDR ; Header code for form 513
+"RTN","GMRCP5D",110,0)
+ ;GMRCPEL   ext fmt Primary Eligibiity Code
+"RTN","GMRCP5D",111,0)
+ ;GMRCELIG  ext fmt of Patient Type defined @ FORMAT^GMRCP5A
+"RTN","GMRCP5D",112,0)
+ ;CVELIG    marker to indicate if pt has active preference for Combat Veteran Eligibility status
+"RTN","GMRCP5D",113,0)
+ ;get and format eligibility info
+"RTN","GMRCP5D",114,0)
+ N VAEL,VAPA,GMRCPEL,SUB,GMRCFROM
+"RTN","GMRCP5D",115,0)
+ N CVELIG ;WAT
+"RTN","GMRCP5D",116,0)
+ D ELIG^VADPT
+"RTN","GMRCP5D",117,0)
+ D ADD^VADPT
+"RTN","GMRCP5D",118,0)
+ N VASV,OEFOIF D SVC^VADPT S:(VASV(11)>0)!(VASV(12)>0)!(VASV(13)>0) OEFOIF="OEF/OIF" ;WAT 66
+"RTN","GMRCP5D",119,0)
+ S GMRCPEL=$P(VAEL(1),U,2)
+"RTN","GMRCP5D",120,0)
+ I $L($G(GMRCELIG))  D
+"RTN","GMRCP5D",121,0)
+ .;if TYPE is Active Duty and VETERAN Y/N? is No, then call the pt Active Duty
+"RTN","GMRCP5D",122,0)
+ .S:$P(VAEL(6),U,1)=5&(VAEL(4)=0) GMRCELIG=$P(VAEL(6),U,2)
+"RTN","GMRCP5D",123,0)
+ F SUB=0,1 D
+"RTN","GMRCP5D",124,0)
+ .N GMRCFLN
+"RTN","GMRCP5D",125,0)
+ .S GMRCFLN=$P($G(^DPT(GMRCDFN,0)),U,1)
+"RTN","GMRCP5D",126,0)
+ .S CVELIG=$$CVEDT^DGCV(GMRCDFN) S:$P($G(CVELIG),U,3) CVELIG="CV ELIGIBLE" ;WAT
+"RTN","GMRCP5D",127,0)
+ .D BLD("HDR",SUB,1,0,GMRCDVL)
+"RTN","GMRCP5D",128,0)
+ .D BLD("HDR",SUB,1,6,"MEDICAL RECORD")
+"RTN","GMRCP5D",129,0)
+ .D BLD("HDR",SUB,0,39,"|")
+"RTN","GMRCP5D",130,0)
+ .D BLD("HDR",SUB,0,45,"CONSULTATION SHEET")
+"RTN","GMRCP5D",131,0)
+ .D BLD("HDR",SUB,1,0,GMRCDVL)
+"RTN","GMRCP5D",132,0)
+ .D BLD("HDR",SUB,1,0,GMRCFLN)
+"RTN","GMRCP5D",133,0)
+ .D BLD("HDR",SUB,0,45,GMRCPEL)
+"RTN","GMRCP5D",134,0)
+ .D BLD("HDR",SUB,1,0,"XXX-XX-"_$P(GMRCSN,"-",3))
+"RTN","GMRCP5D",135,0)
+ .D BLD("HDR",SUB,0,16,$$EXDT(GMRCDOB))
+"RTN","GMRCP5D",136,0)
+ .D BLD("HDR",SUB,0,45,GMRCELIG)
+"RTN","GMRCP5D",137,0)
+ .D:$G(CVELIG)["CV" BLD("HDR",SUB,1,45,CVELIG)
+"RTN","GMRCP5D",138,0)
+ .D:$G(OEFOIF)="OEF/OIF" BLD("HDR",SUB,1,45,OEFOIF) ;WAT 66
+"RTN","GMRCP5D",139,0)
+ ;
+"RTN","GMRCP5D",140,0)
+ ;                                  ADDRESS LINES 1-3
+"RTN","GMRCP5D",141,0)
+ F GMRCX=1,2,3 D:$L(VAPA(GMRCX))
+"RTN","GMRCP5D",142,0)
+ .D BLD("HDR",0,1,0,VAPA(GMRCX))
+"RTN","GMRCP5D",143,0)
+ .;I GMRCX=1 D BLD("HDR",0,0,51,"Standard Form 513 (Rev 9-77)")
+"RTN","GMRCP5D",144,0)
+ ;
+"RTN","GMRCP5D",145,0)
+ ;         CITY              STATE                ZIP CODE
+"RTN","GMRCP5D",146,0)
+ S GMRCX=VAPA(4)_"   "_$P(VAPA(5),U,2)_"      "_VAPA(6)
+"RTN","GMRCP5D",147,0)
+ ;
+"RTN","GMRCP5D",148,0)
+ I $L(VAPA(8)) S GMRCX=GMRCX_"      Phone: "_VAPA(8)   ; TELEPHONE (IF AVAILABLE)
+"RTN","GMRCP5D",149,0)
+ ;
+"RTN","GMRCP5D",150,0)
+ D BLD("HDR",0,1,0,GMRCX)
+"RTN","GMRCP5D",151,0)
+ D BLD("HDR",0,1,0,GMRCDVL)
+"RTN","GMRCP5D",152,0)
+ D BLD("HDR",0,1,0,"Consult Request: "_$$CONSRQ(GMRCIFN))
+"RTN","GMRCP5D",153,0)
+ D BLD("HDR",0,1,55,"|Consult No.: "_GMRCIFN)
+"RTN","GMRCP5D",154,0)
+ ;
+"RTN","GMRCP5D",155,0)
+ D BLD("HDR",1,1,0,GMRCEQL)
+"RTN","GMRCP5D",156,0)
+ D BLD("HDR",0,1,0,GMRCDVL)
+"RTN","GMRCP5D",157,0)
+ ;
+"RTN","GMRCP5D",158,0)
+ I $G(CMT) D BLD("HDR",0,1,27,"("_$$PRCMT^GMRCP5B(CMT)_")") Q
+"RTN","GMRCP5D",159,0)
+ ;
+"RTN","GMRCP5D",160,0)
+ S GMRCFROM=$P($G(^SC(+$P(GMRCRD,U,6),0)),U,1)
+"RTN","GMRCP5D",161,0)
+ ;
+"RTN","GMRCP5D",162,0)
+ I '$L(GMRCFROM) D
+"RTN","GMRCP5D",163,0)
+ .N VAIN
+"RTN","GMRCP5D",164,0)
+ .D INP^VADPT
+"RTN","GMRCP5D",165,0)
+ .S GMRCFROM=$P($G(VAIN(4)),U,2)
+"RTN","GMRCP5D",166,0)
+ .I $L($G(VAIN(5))) S GMRCFROM=GMRCFROM_" (Rm/Bd: "_$G(VAIN(5))_" )"
+"RTN","GMRCP5D",167,0)
+ ;No location, IFC - consulting site
+"RTN","GMRCP5D",168,0)
+ I '$L(GMRCFROM),$P(GMRCRD,U,23),$P($G(GMRCRD(12)),U,5)="F" D
+"RTN","GMRCP5D",169,0)
+ .I $P(GMRCRD,U,21) S GMRCFROM=$$GET1^DIQ(4,$P(GMRCRD,U,21),.01)
+"RTN","GMRCP5D",170,0)
+ .E  S GMRCFROM=$$GET1^DIQ(4,$P(GMRCRD,U,23),.01)
+"RTN","GMRCP5D",171,0)
+ ;
+"RTN","GMRCP5D",172,0)
+ D BLD("HDR",0,1,0,"To: "_$P($G(^GMR(123.5,+$P(GMRCRD,U,5),0)),U,1))
+"RTN","GMRCP5D",173,0)
+ D BLD("HDR",0,1,5,"From: "_GMRCFROM)
+"RTN","GMRCP5D",174,0)
+ D BLD("HDR",0,0,49,"|Requested: "_$$EXDT($P(GMRCRD,U,7)))
+"RTN","GMRCP5D",175,0)
+ ;
+"RTN","GMRCP5D",176,0)
+ D BLD("HDR",0,1,0,GMRCDVL)
+"RTN","GMRCP5D",177,0)
+ D BLD("HDR",0,1,0,"Requesting Facility: "_$E(GMRCFAC,1,22))
+"RTN","GMRCP5D",178,0)
+ I $P(GMRCRD,U,11) D BLD("HDR",0,0,45,"|ATTENTION: "_$E($$GET1^DIQ(200,+$P(GMRCRD,U,11),.01),1,21))
+"RTN","GMRCP5D",179,0)
+ I $P(GMRCRD,U,23) D
+"RTN","GMRCP5D",180,0)
+ . D BLD("HDR",0,1,0,"Remote Consult No.: "_GMRCINO)
+"RTN","GMRCP5D",181,0)
+ . D BLD("HDR",0,1,0,"Role: "_GMRCIRL)
+"RTN","GMRCP5D",182,0)
+ D BLD("HDR",0,1,0,GMRCEQL)
+"RTN","GMRCP5D",183,0)
+ ;
+"RTN","GMRCP5D",184,0)
+ D KVAR^VADPT ;WAT 66
+"RTN","GMRCP5D",185,0)
+ Q
+"RTN","GMRCP5D",186,0)
+ ;
+"RTN","GMRCP5D",187,0)
+CENTER(X) ;
+"RTN","GMRCP5D",188,0)
+ ;
+"RTN","GMRCP5D",189,0)
+ N TEXT,COL
+"RTN","GMRCP5D",190,0)
+ S COL=35-($L(X)\2) Q:(COL<1) X
+"RTN","GMRCP5D",191,0)
+ S $E(TEXT,COL)=X
+"RTN","GMRCP5D",192,0)
+ Q TEXT
+"RTN","GMRCP5D",193,0)
+ ;
+"RTN","GMRCP5D",194,0)
+BLD(SUB,NDX,LINE,TAB,TEXT,RUNTIME) ;
+"RTN","GMRCP5D",195,0)
+ ;
+"RTN","GMRCP5D",196,0)
+ Q:'$L($G(SUB))
+"RTN","GMRCP5D",197,0)
+ N LINECNT
+"RTN","GMRCP5D",198,0)
+ ;
+"RTN","GMRCP5D",199,0)
+ F LINECNT=1:1:+LINE S ^TMP("GMRC",$J,"OUTPUT",SUB,NDX,$$LASTLN(SUB,NDX)+1,0)=""
+"RTN","GMRCP5D",200,0)
+ ;
+"RTN","GMRCP5D",201,0)
+ S $E(^TMP("GMRC",$J,"OUTPUT",SUB,NDX,$$LASTLN(SUB,NDX),0),TAB+1)=TEXT
+"RTN","GMRCP5D",202,0)
+ I $L($G(RUNTIME)) S ^TMP("GMRC",$J,"OUTPUT",SUB,NDX,$$LASTLN(SUB,NDX),1)=RUNTIME
+"RTN","GMRCP5D",203,0)
+ ;
+"RTN","GMRCP5D",204,0)
+ S GMRCLAST=SUB
+"RTN","GMRCP5D",205,0)
+ Q
+"RTN","GMRCP5D",206,0)
+ ;
+"RTN","GMRCP5D",207,0)
+SUB(ZONE,SUB,NDX,TEXT) ;
+"RTN","GMRCP5D",208,0)
+ ;
+"RTN","GMRCP5D",209,0)
+ N NEXT
+"RTN","GMRCP5D",210,0)
+ S NEXT=$O(^TMP("GMRC",$J,"OUTPUT",SUB,NDX,ZONE," "),-1)+1
+"RTN","GMRCP5D",211,0)
+ S ^TMP("GMRC",$J,"OUTPUT",SUB,NDX,ZONE,NEXT,0)=TEXT
+"RTN","GMRCP5D",212,0)
+ Q
+"RTN","GMRCP5D",213,0)
+ ;
+"RTN","GMRCP5D",214,0)
+LASTLN(SUB,NDX) ;
+"RTN","GMRCP5D",215,0)
+ Q +$O(^TMP("GMRC",$J,"OUTPUT",SUB,NDX," "),-1)
+"RTN","GMRCP5D",216,0)
+ ;
+"RTN","GMRCP5D",217,0)
+CONSRQ(IFN) ;
+"RTN","GMRCP5D",218,0)
+ ;
+"RTN","GMRCP5D",219,0)
+ N PTR,LINK,REF,GMRCRQ
+"RTN","GMRCP5D",220,0)
+ I +$P(^GMR(123,+IFN,0),U,8) D
+"RTN","GMRCP5D",221,0)
+ . S GMRCRQ=$P(^GMR(123,+IFN,0),U,8)
+"RTN","GMRCP5D",222,0)
+ . S GMRCRQ=$$GET1^DIQ(123.3,+GMRCRQ,.01)
+"RTN","GMRCP5D",223,0)
+ . I '$L(GMRCRQ) S GMRCRQ="Procedure"
+"RTN","GMRCP5D",224,0)
+ I $L($G(GMRCRQ)) Q GMRCRQ
+"RTN","GMRCP5D",225,0)
+ I $L($G(^GMR(123,IFN,1.11))) D
+"RTN","GMRCP5D",226,0)
+ . N SERV,TYPE
+"RTN","GMRCP5D",227,0)
+ . S SERV=$$UP^XLFSTR($$GET1^DIQ(123.5,$P(^GMR(123,IFN,0),U,5),.01))
+"RTN","GMRCP5D",228,0)
+ . S TYPE=$$UP^XLFSTR(^GMR(123,IFN,1.11)) I TYPE'=SERV D
+"RTN","GMRCP5D",229,0)
+ . I TYPE'=SERV S GMRCRQ=$E(^GMR(123,IFN,1.11),1,36)
+"RTN","GMRCP5D",230,0)
+ Q:$L($G(GMRCRQ)) GMRCRQ Q "Consult"
+"RTN","GMRCP5D",231,0)
+ ;
+"RTN","GMRCP5D",232,0)
+EXDT(X) ;EXTERNAL DATE FORMAT
+"RTN","GMRCP5D",233,0)
+ ;
+"RTN","GMRCP5D",234,0)
+ N DATE,TIME,HR,MN,PD,Y,%DT
+"RTN","GMRCP5D",235,0)
+ Q:'$L(X) ""
+"RTN","GMRCP5D",236,0)
+ I '(X?7N.1".".6N) S %DT="PTS" D ^%DT S X=Y
+"RTN","GMRCP5D",237,0)
+ Q $$FMTE^XLFDT(X,"5PMZ")
+"RTN","GMRCP5D",238,0)
+ ;
+"VER")
+8.0^22.0
+"BLD",9557,6)
+^70
+**END**
+**END**
+

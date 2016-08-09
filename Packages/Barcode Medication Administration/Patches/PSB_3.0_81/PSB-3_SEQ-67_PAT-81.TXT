@@ -1,0 +1,363 @@
+$TXT Created by            at MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 07/24/14 at 13:28
+=============================================================================
+Run Date: APR 13, 2015                     Designation: PSB*3*81
+Package : PSB - BAR CODE MED ADMIN            Priority: Mandatory
+Version : 3        SEQ #67                      Status: Released
+                  Compliance Date: MAY 13, 2015
+=============================================================================
+
+Associated patches: (v)PSB*3*13    <<= must be installed BEFORE `PSB*3*81'
+                    (v)PSB*3*17    <<= must be installed BEFORE `PSB*3*81'
+                    (v)PSB*3*70    <<= must be installed BEFORE `PSB*3*81'
+
+Subject: IHS HRN CHANGES, MED HISTORY AND AADT X-REF ISSUES
+
+Category: 
+  - Routine
+  - Data Dictionary
+
+Description:
+============
+
+ This Patch Addresses 5 issues:
+  
+ 1. The Bar Code Medication Administration (BCMA) Medication History
+    report displays data prior to the report start date when run in the
+    Computerized Records System (CPRS) application.  
+ 2. BCMA Labels for Unit dose drugs are missing the Indian Health Services
+    (IHS) Health Record Number (HRN) in place of Last 4 digits of a
+    patient's Social Security Number (SSN) as the patient Identifier.
+ 3. The BCMA Unknown Actions Report does not display IHS HRN in place
+    of Last 4 digits of a patient's Social Security Number (SSN) as the
+    patient identifier.
+ 4. A dangling "AADT" index causes an undefined error to occur when
+    a site runs the BCMA Extract (ECXBCM) option. 
+ 5. The Meds on Patient section of the BCMA Virtual Due List (VDL)
+    displays an Intravenous (IV) bag as infusing after it has been marked
+    completed if the Action Date/Time was edited using the Edit Med Log
+    option.
+  
+ Associated NSR(s):
+ ==================
+ N/A
+   
+ Associated Remedy ticket(s):
+ ============================
+ 1. INC000000357532 - Different drug showing
+ 2. INC000000813843 - BCMA Label missing IHS HRN
+ 3. INC000001007788 - UNKNOWN ACTION Status report in BCMA does not
+                      display HRN
+ 4. IN0000000838556 - Bar Code Med Admin - Other: Dangling AADT X-ref
+        Duplicates
+        ==========
+        INC000000838796
+        INC000000844016
+        INC000000877943
+        INC000000878907
+        INC000000893468
+ 5. INC000001000542 - IV Bag displays as infusing on "Meds on Patient" after
+                      it was completed
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Washington DC VA Medical Center 
+ Upstate New York
+ Pittsburgh Healthcare System
+  
+ REMEDY OVERVIEW
+ ===============
+   
+ 1. INC0000000357532 - Different drug showing
+  
+ Problem:
+ ========
+ The BCMA Medication History report displays data prior to the report start date
+ when run in the Computerized Records System (CPRS) application.  
+  
+ Resolution:
+ ===========
+ Routine PSBOPM1 was modified to use the start date of the report as the
+ start Point when search for data in the BCMA MEDICATION LOG (#53.79) file.
+  
+ 2. INC00000000813843 - BCMA Label missing IHS HRN
+  
+ Problem:
+ ========
+ BCMA Labels for Unit dose drugs are missing the Indian Health Services
+ (IHS) Health Record Number (HRN) in place of Last 4 digits of a patient's
+ Social Security Number (SSN) as the patient Identifier.
+  
+ Resolution:
+ ===========
+ Routines PSBOBL and PSBOBZ were modified to display the patients HRN on
+ the label when printed from an IHS site. The label printing change
+ is only for IHS sites.  No changes were made in VistA.
+  
+ 3. INC00000001007788 - UNKNOWN ACTION Status report in BCMA does
+                        not display HRN 
+  
+ Problem:
+ ========
+ The BCMA Unknown Actions Report does not display IHS HRN in place
+ of Last 4 digits of a patient's Social Security Number (SSN) as the patient
+ identifier.
+  
+ Resolution:
+ ===========
+ Routine PSBOXA was modified to display the patient HRN on the Unknown
+ Actions report when run on an IHS site.
+  
+ 4. INC000000838556 - Bar Code Med Admin - Other: Dangling AADT X-ref
+  
+ Problem:
+ ========
+ A dangling "AADT" index causes an undefined error to occur when
+ a site runs the BCMA Extract (ECXBCM) option.
+  
+ Resolution:
+ ===========
+ Kill logic was added to the "AADT" index to clean up the global when the
+ ACTION DATE/TIME (#.06) field is modified in the BCMA MEDICATION LOG
+ (#53.79) file.  Post install routine PSB381P will clean up any "AADT" 
+ indexes that do not have 0 nodes for the last 60 days from install date. 
+  
+ Data Dictionary:
+ ================
+  
+ ********************BEFORE***********************
+  
+ 53.79,.06     ACTION DATE/TIME       0;6 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      SEP 10, 2012 
+               DESCRIPTION:      Fileman Date/Time containing the actual time
+                                 the med was administered.  
+  
+               CROSS-REFERENCE:  53.79^AADT^MUMPS 
+                                 1)= S ^PSB(53.79,"AADT",$P(^PSB(53.79,DA,0),U),
+                                 X,DA)=""
+  
+                                 2)= Q
+                                 Creates a cross reference by patient for
+                                 administration times 
+                                  
+                                   ^PSB(53.79,"AADT",dfn,administration
+                                 d/t,DA)=""
+  
+ ********************AFTER***********************
+  
+ 53.79,.06     ACTION DATE/TIME       0;6 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      MAY 12, 2014 
+               HELP-PROMPT:      Enter the date/time the medication was 
+                                 administered. 
+               DESCRIPTION:      Fileman Date/Time containing the actual time
+                                 the med was administered.  
+  
+               CROSS-REFERENCE:  53.79^AADT^MUMPS 
+                                 1)= S ^PSB(53.79,"AADT",$P(^PSB(53.79,DA,0),U),
+                                 X,DA)=""
+  
+                                 2)= K ^PSB(53.79,"AADT",$P(^PSB(53.79,DA,0),U),
+                                 X,DA)
+                                 Creates a cross reference by patient for
+                                 administration times
+  
+ 5. INC0000000100542 - IV Bag displays as infusing on "Meds on Patient"
+                            after it was completed
+  
+ Problem:
+ ========
+ The Meds on Patient section of the BCMA Virtual Due List (VDL) 
+ displays an Intravenous (IV) bag as infusing after it has been marked
+ completed if the Action Date/Time was edited using the Edit Med Log
+ option.
+  
+ Resolution:
+ ===========
+ The Kill condition was removed from the "AINFUSING" index when the 
+ PATIENT (#.01) or ACTION DATE/TIME (#.06) fields are modified in the
+ BCMA MEDICATION LOG (#53.79) file.  Post install routine PSB381P will
+ also clean up any "AINFUSING" indexes where the bag is completed. 
+  
+ Data Dictionary:
+ ================
+  
+ ********************BEFORE***********************
+  
+ 53.79,.01     PATIENT NAME           0;1 POINTER TO PATIENT FILE (#2)
+                                  (Required)
+  
+               LAST EDITED:      SEP 10, 2012 
+               DESCRIPTION:      This field contains a pointer to the PATIENT
+                                 File (#2) and is the patient that received the
+                                 medication.
+  
+ 53.79,.06     ACTION DATE/TIME       0;6 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      SEP 10, 2012 
+               DESCRIPTION:      Fileman Date/Time containing the actual time
+                                 the med was administered.
+ RECORD INDEX:     AINFUSING (#1126)    REGULAR    IR
+                                 SORTING ONLY
+                   Short Descr:  Index of IV's still with a status of Infusing.
+                   Description:  Updates AINFUSING when DFN or admin date/time
+                                 changes and Action Status is "I" for infusing
+                                 or kill index when Action Status changes from
+                                 "I" to anything.  
+                     Set Logic:  S ^PSB(53.79,"AINFUSING",X(1),X(2),DA)=""
+                      Set Cond:  S X=0 I $P(^PSB(53.79,DA,0),U,9)="I",$P(^PSB(53
+                                 .79,DA,0),U,10)]"" S X=1
+                    Kill Logic:  K ^PSB(53.79,"AINFUSING",X(1),X(2),DA)
+                     Kill Cond:  S X=0 I $P(^PSB(53.79,DA,0),U,9)'="I" S X=1
+                    Whole Kill:  K ^PSB(53.79,"AINFUSING")
+                          X(1):  PATIENT NAME  (53.79,.01)  (Subscr 1)
+                                 (forwards)
+                          X(2):  ACTION DATE/TIME  (53.79,.06)  (Subscr 2)
+                                 (forwards)
+  
+ ********************AFTER***********************
+  
+ 53.79,.01     PATIENT NAME           0;1 POINTER TO PATIENT FILE (#2)
+                                  (Required)
+  
+               LAST EDITED:      MAY 12, 2014 
+               HELP-PROMPT:      Enter the patient that received the medication. 
+               DESCRIPTION:      This field contains a pointer to the PATIENT
+                                 File (#2) and is the patient that received the
+                                 medication.
+  
+ 53.79,.06     ACTION DATE/TIME       0;6 DATE (Required)
+  
+               INPUT TRANSFORM:  S %DT="ESTXR" D ^%DT S X=Y K:Y<1 X
+               LAST EDITED:      MAY 12, 2014 
+               HELP-PROMPT:      Enter the date/time the medication was 
+                                 administered. 
+               DESCRIPTION:      Fileman Date/Time containing the actual time
+                                 the med was administered.
+  
+               RECORD INDEX:     AINFUSING (#529)    REGULAR    IR
+                                 SORTING ONLY
+                   Short Descr:  Index of IV's still with a status of Infusing.
+                   Description:  Updates AINFUSING when DFN or admin date/time
+                                 changes and Action Status is "I" for infusing
+                                 or kill index when Action Status changes from
+                                 "I" to anything.  
+                     Set Logic:  S ^PSB(53.79,"AINFUSING",X(1),X(2),DA)=""
+                      Set Cond:  S X=0 I $P(^PSB(53.79,DA,0),U,9)="I",$P(^PSB(53
+                                 .79,DA,0),U,10)]"" S X=1
+                    Kill Logic:  K ^PSB(53.79,"AINFUSING",X(1),X(2),DA)
+                    Whole Kill:  K ^PSB(53.79,"AINFUSING")
+                          X(1):  PATIENT NAME  (53.79,.01)  (Subscr 1)
+                                 (forwards)
+                          X(2):  ACTION DATE/TIME  (53.79,.06)  (Subscr 2)
+                                 (forwards)
+  
+ NOTES:
+ ======
+ Routine APSPFUNC called from PSBOBL, PSBOBZ and PSBOXA are Indian Health
+ Services only routines and will display as an XINDEX error when installing
+ this patch in VA Accounts.  This functionality was introduced by patch
+ PSB*3.0*42. This enhancement is intended to enable the BCMA application to
+ recognize whether it is operating in the Indian Health Service (IHS) or
+ Veterans Health Administration (VHA) environment, and respond by
+ recognizing and displaying the patient identifier appropriate to the
+ environment. This will enable a single version of BCMA to be maintained by
+ VHA and yet be installed and operate in a "plug and play" fashion in an
+ IHS or Tribal facility running Resource and Patient Management System
+ (RPMS).
+  
+ Installation Instructions:
+ ==========================
+    
+     *************************** NOTE *************************
+     *  IF A USER IS ON THE SYSTEM AND USING THESE PROGRAMS   *
+     *  AN EDITED ERROR WILL OCCUR.                           *                 
+     *                                                        *
+     *  This post-install routine is automatically deleted    *
+     *  After the installation completes.  If you wish to     *
+     *  Verify the checksum of this routine, please use       *
+     *  Option 2 Verify Checksums in Transport Global         *
+     *  Before installing the patch                           *
+     *                                                        *
+     *  The patch should be installed when NO BCMA Client     *
+     *  users are on the system.                              *                 
+     * ********************************************************
+    
+     Installation will take less than 1 minute.
+    
+     Suggested time to install: Non-peak requirement hours.
+    
+    1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+    
+    2. From the Kernel Installation & Distribution System menu, select
+       the Installation menu.
+    
+    3. From this menu, you may select to use the following options
+       (when prompted for INSTALL NAME, enter PSB*3.0*81):
+           a.  Verify Checksums in Transport Global - This option will allow
+               you to ensure the integrity of the routines that are in the
+               transport global.
+           b.  Print Transport Global - This option will allow you to view
+               the components of the KIDS build.
+           c.  Compare Transport Global to Current System - This option will
+               allow you to view all changes that will be made when this 
+               patch is installed.  It compares all components of this
+               patch (routines, DD's, templates, etc.).
+           d.  Backup a Transport Global - This option will create a backup
+               message of any routines exported with this patch. It will not
+               backup any other changes such as DD's or templates.
+    
+    4. Use the Install Package(s) option and select the package PSB*3.0*81.
+    
+    5. When prompted "Want KIDS to INHIBIT LOGONs during the install? NO//"
+       respond NO.
+    6. When prompted "Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? Yes//" Respond Yes.
+    
+           1) When prompted "Enter options you wish to mark as "Out of
+              Order":" enter the following option:
+  
+                Barcode Label Print            [PSBO BZ]
+                Label Print                    [PSBO BL]
+  
+          2) When prompted "Enter protocols you wish to mark as "Out of
+              Order":" just press <Return>.
+     7. After installation, you may use the Install Print File [XPD PRINT
+        INSTALL FILE] option to view the deleted indexes.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;BAR CODE MED ADMIN;**[Patch List]**;Mar 2004;Build 6
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSB381P
+    Before:       n/a   After:  B4386771  **81**
+Routine Name: PSBOBL
+    Before: B10430547   After: B11869712  **70,81**
+Routine Name: PSBOBZ
+    Before: B19545874   After: B20385498  **2,70,81**
+Routine Name: PSBOPM1
+    Before:  B7334610   After:  B7894847  **17,81**
+Routine Name: PSBOXA
+    Before: B24284983   After: B25770439  **13,81**
+ 
+Routine list of preceding patches: 13, 17, 70
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 12, 2014
+Completed By:                               Date Completed: APR 08, 2015
+Released By :                               Date Released : APR 13, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,272 @@
+$TXT Created by                 MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 04/06/15 at 10:46
+=============================================================================
+Run Date: APR 05, 2016                     Designation: PRS*4*143
+Package : PRS - PAID                          Priority: Mandatory
+Version : 4       SEQ #133                      Status: Released
+                  Compliance Date: MAY 06, 2016
+=============================================================================
+
+Associated patches: (v)PRS*4*141   <<= must be installed BEFORE `PRS*4*143'
+
+Subject: HYBRID TABLE UPDATES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the Hybrid table for Occupation
+ Series/Title Codes converting to Hybrid status.
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A   
+  
+     
+ ASSOCIATED REMEDY TICKET(S):
+ ============================
+ 1. INC000001019651 - Add Occ/Title code 0622 to hybrid table
+ 2. INC000001022635 - Hybrid Conversion 0644 Occupation Title Codes
+ 3. INC000001022637 - Hybrid Conversion 0682 Occupation Title Codes
+ 4. INC000001051671 - PAID - Hybrid Conversion 0601 Occupation Title Codes
+ 5. INC000001223052 - Hybrid Addition: 0621-15-00  CERTIFIED NURSING ASSISTANT
+ 6. INC000001221176 - Hybrid Addition: 160102  BIOMEDICAL EQUIPMENT SUPPORT 
+                      SPECIALIST
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ VA Heartland East HCS
+ VA Heartland West HCS
+ VA North Florida/South Georgia HCS
+  
+     
+ Remedy Overview:
+ ================
+  
+ 1. INC000001019651 - Add Occ/Title code 0622 to hybrid table
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0622 
+ hybrid conversion:
+  
+ 062204  MEDICAL SUPPLY TECH(STERILE PROCESSING)  
+ 062205  MED SUPPLY TECH(STERILE PRO ADVANCED)    
+ 062206  MED SUPPLY TECH(STERILE PROCESSING QA)   
+ 062207  MED SUPPLY TECH(STERILE PRO RME COORD)   
+ 062208  MED SUPPLY TECH(STERILE PRO TRAINER)     
+ 062209  MED SUPPLY TECH(STERILE PRO COORD)       
+ 062211  LEAD MED SUPLY TECH(STERILE PROCESSING)  
+ 062212  SUP MED SUPPLY TECH(STERILE PROCESSING)  
+ 062213  SUP MED SUPPLY TECH(AST CHIEF STL PRO)   
+ 062214  SUP MED SUPPLY TECH(STERILE PRO CHIEF)
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ 2. INC000001022635 - Hybrid Conversion 0644 Occupation Title Codes 
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0644 
+ hybrid conversion: these will need to be added in ETA.
+  
+ 064404  MEDICAL TECHNOLOGIST (TEAM LEADER)       
+ 064407  MEDICAL TECH (ADVANCED STAFF TECH)       
+ 064408  MEDICAL TECH (TECHNICAL SPECIALIST)      
+ 064409  MED TECH (LAB EDUCATION COORD)           
+ 064411  MED TECH (QUALITY MANAGEMENT TECH)       
+ 064412  MED TECH (LEAD MED TECH)                 
+ 064413  MED TECH (SUPERVISORY TECH)              
+ 064414  MED TECH (ANCILLARY TESTING COORD)       
+ 064415  MED TECH (LAB INFO MANAGER)              
+ 064416  MED TECH (LABORATORY MANAGER)            
+ 064417  MED TECH (SUPERVISORY TECH)              
+ 064418  MED TECH (REGIONAL TECH SPEC)            
+ 064419  MED TECH (REGIONAL COMM TECH)            
+ 064421  MED TECH (REGIONAL MANAGER)
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ 3. INC000001022637 - Hybrid Conversion 0682 Occupation Title Codes 
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0682 
+ hybrid conversion: these will need to be added in ETA.
+  
+ 068202  DENTAL HYGIENIST                       
+ 068204  DENTAL HYGIENIST (ADVANCED CLINICAL)     
+ 068205  LEAD DENTAL HYGIENIST                    
+ 068206  SUPERVISORY DENTAL HYGIENIST             
+ 068207  DENTAL HYGIENIST (SENIOR CLINICAL)
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ 4. INC000001051671 - PAID - Hybrid Conversion 0601 Occupation Title Codes
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0601 
+ hybrid conversion:
+  
+ 060175  THERAPEUTIC MEDICAL PHYSICIST (TMP)      
+ 060176  THERAPEUTIC MED PHYSICIST (AD LEVEL)     
+ 060178  SUPERVISORY THERAPEUTIC MED PHYSICIST    
+ 060179  MEDICAL PHYSICIST (PROGRAM MANAGER)      
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ 5. INC000001223052 - Hybrid Addition: 0621-15-00  CERTIFIED NURSING ASSISTANT
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 0621 
+ hybrid conversion: these will need to be added in ETA.
+  
+ 062115  CERTIFIED NURSING ASSISTANT
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ 6. INC000001221176 - Hybrid Addition: 160102  BIOMEDICAL EQUIPMENT SUPPORT 
+                      SPECIALIST
+  
+ Problem:
+ --------
+ New occupation series/title codes were converted to a hybrid status.
+  
+ Below are the occupations that were added in PAID for the 1601 
+ hybrid conversion: these will need to be added in ETA.
+  
+ 160102  BIOMEDICAL EQUIPMENT SUPPORT SPECIALIST 
+  
+ Resolution:
+ -----------
+ Added the occupation series/title codes to the hybrid table  
+ in routine PRSAENT1.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ If installed during the normal workday, it is recommended that the PAID
+ users be off the system and that all the PAID ETA options in the OPTION
+ (#19) file be disabled to prevent possible conflicts while running the
+ KIDS install. 
+  
+ All the ETA options can be selected by using the PAID ETA
+ namespace of PRS and the asterisk, or wildcard character (*). 
+ As shown in steps 4.C. of the installation instructions, type PRS*, 
+ to disable all PAID ETA options. 
+ Other VISTA users will not be affected. 
+  
+ Install Time - less than 2 minutes.
+   
+ 1.   Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+   
+ 2.   Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]:
+   
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+  
+      Select Kernel Installation & Distribution System Option: INStallation
+                            ---
+      1      Load a Distribution
+      2      Verify Checksums in Transport Global
+      3      Print Transport Global
+      4      Compare Transport Global to Current System
+      5      Backup a Transport Global
+      6      Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution
+   
+             Select Installation Option:
+   
+ 3.   From this menu, you may elect to use the following options
+      (When prompted for the INSTALL NAME, enter PRS*4.0*143):
+   
+      a.  Print Transport Global - this option will allow you to view
+          the components of the KIDS build.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed. It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+      d.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+   
+ 4.   Use the Install Package(s) option and select the package
+      PRS*4.0*143.
+   
+      a.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+          NO//', answer NO
+      b.  When prompted 'Want to DISABLE Scheduled Options, Menu
+          Options, and Protocols? YES//', answer YES.
+      c.  When prompted 'Enter options you wish to mark as 'Out Of
+          Order':', enter PRS*
+      d.  When prompted 'Enter protocols you wish to mark as 'Out Of
+          Order':', press <return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;PAID;**[Patch List]**;Sep 21, 1995;Build 11
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PRSAENT1
+    Before: B74143649   After: B81444138  **96,130,135,138,141,143**
+ 
+Routine list of preceding patches: 141
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 20, 2014
+Completed By:                               Date Completed: MAR 29, 2016
+Released By :                               Date Released : APR 05, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

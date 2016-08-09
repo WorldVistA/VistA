@@ -1,0 +1,1181 @@
+Released PSN*4*429 SEQ #467
+Extracted from mail message
+**KIDS**:PSN*4.0*429^
+
+**INSTALL NAME**
+PSN*4.0*429
+"BLD",9244,0)
+PSN*4.0*429^NATIONAL DRUG FILE^0^3151201^y
+"BLD",9244,1,0)
+^^64^64^3150925^^^^
+"BLD",9244,1,1,0)
+This patch is part of the Pharmacy Safety Updates project which was 
+"BLD",9244,1,2,0)
+established to address specific New Service Requests (NSRs) as well as a
+"BLD",9244,1,3,0)
+Remedy Ticket and a Patient Safety Issue (PSI) related to the VistA Pharmacy
+"BLD",9244,1,4,0)
+applications as approved by the Health Systems Enterprise Systems Manager
+"BLD",9244,1,5,0)
+(ESM).
+"BLD",9244,1,6,0)
+  
+"BLD",9244,1,7,0)
+This project is comprised of patches from five different applications, as
+"BLD",9244,1,8,0)
+shown below:
+"BLD",9244,1,9,0)
+  
+"BLD",9244,1,10,0)
+   APPLICATION/VERSION                                  PATCH
+"BLD",9244,1,11,0)
+   -----------------------------------------------------------------
+"BLD",9244,1,12,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+"BLD",9244,1,13,0)
+   INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+"BLD",9244,1,14,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+"BLD",9244,1,15,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+"BLD",9244,1,16,0)
+   INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+"BLD",9244,1,17,0)
+ 
+"BLD",9244,1,18,0)
+ 
+"BLD",9244,1,19,0)
+The following New service Requests (NSRs) are being addressed by this patch:
+"BLD",9244,1,20,0)
+    
+"BLD",9244,1,21,0)
+ NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+"BLD",9244,1,22,0)
+ ---------------------------------------------------------------------------
+"BLD",9244,1,23,0)
+ The Outpatient Pharmacy and supporting VistA applications are being modified
+"BLD",9244,1,24,0)
+ to allow dispensing of more than 90 day supply fill for outpatient 
+"BLD",9244,1,25,0)
+ prescriptions. The new limit will be 365 days and will be set for each drug
+"BLD",9244,1,26,0)
+ individually. See below for more information on specific menu 
+"BLD",9244,1,27,0)
+ options related to this enhancement.  
+"BLD",9244,1,28,0)
+    
+"BLD",9244,1,29,0)
+  
+"BLD",9244,1,30,0)
+The following National Drug File (NDF) functionality was modified:
+"BLD",9244,1,31,0)
+ 
+"BLD",9244,1,32,0)
+1. A new field called MAXIMUM DAYS SUPPLY (#32) was added to the VA PRODUCT
+"BLD",9244,1,33,0)
+   file (#50.68) for storing the national maximum day supply value for a
+"BLD",9244,1,34,0)
+   medication in an outpatient prescription. This field will not be populated
+"BLD",9244,1,35,0)
+   initially by Pharmacy Product System - National (PPS-N) as changes will be
+"BLD",9244,1,36,0)
+   required to that application to edit and export this new field. 
+"BLD",9244,1,37,0)
+  
+"BLD",9244,1,38,0)
+2. Inquire to VA Product Info For Local Drug [PSNLOOK] option
+"BLD",9244,1,39,0)
+   This option was modified to display the new field as seen below:
+"BLD",9244,1,40,0)
+   
+"BLD",9244,1,41,0)
+   ...
+"BLD",9244,1,42,0)
+  
+"BLD",9244,1,43,0)
+      Override DF Exclude from Dosage Checks: No
+"BLD",9244,1,44,0)
+   
+"BLD",9244,1,45,0)
+      Auto-Create Default Possible Dosage? Yes
+"BLD",9244,1,46,0)
+      Reduced Co-pay: None
+"BLD",9244,1,47,0)
+      Maximum Days Supply: 360
+"BLD",9244,1,48,0)
+ 
+"BLD",9244,1,49,0)
+   ...
+"BLD",9244,1,50,0)
+ 
+"BLD",9244,1,51,0)
+3. Inquire to National Files [PSNACT] option
+"BLD",9244,1,52,0)
+   This option was also modified to display the new field as seen below:
+"BLD",9244,1,53,0)
+ 
+"BLD",9244,1,54,0)
+   ...
+"BLD",9244,1,55,0)
+  
+"BLD",9244,1,56,0)
+      Auto-Create Default Possible Dosage? No
+"BLD",9244,1,57,0)
+          Possible Dosages To Auto-Create: 1x Possible Dosage
+"BLD",9244,1,58,0)
+                                  Package: Both Inpatient and Outpatient
+"BLD",9244,1,59,0)
+   
+"BLD",9244,1,60,0)
+      Reduced Co-pay: None
+"BLD",9244,1,61,0)
+      Maximum Days Supply: 360
+"BLD",9244,1,62,0)
+   
+"BLD",9244,1,63,0)
+      Press return to continue or '^' to exit: 
+"BLD",9244,1,64,0)
+   ...
+"BLD",9244,4,0)
+^9.64PA^50.68^1
+"BLD",9244,4,50.68,0)
+50.68
+"BLD",9244,4,50.68,2,0)
+^9.641^50.68^1
+"BLD",9244,4,50.68,2,50.68,0)
+VA PRODUCT  (File-top level)
+"BLD",9244,4,50.68,2,50.68,1,0)
+^9.6411^32^1
+"BLD",9244,4,50.68,2,50.68,1,32,0)
+MAXIMUM DAYS SUPPLY
+"BLD",9244,4,50.68,222)
+y^n^p^^^^n^^n
+"BLD",9244,4,50.68,224)
+
+"BLD",9244,4,"APDD",50.68,50.68)
+
+"BLD",9244,4,"APDD",50.68,50.68,32)
+
+"BLD",9244,4,"B",50.68,50.68)
+
+"BLD",9244,6.3)
+12
+"BLD",9244,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9244,"KRN",.4,0)
+.4
+"BLD",9244,"KRN",.401,0)
+.401
+"BLD",9244,"KRN",.402,0)
+.402
+"BLD",9244,"KRN",.403,0)
+.403
+"BLD",9244,"KRN",.5,0)
+.5
+"BLD",9244,"KRN",.84,0)
+.84
+"BLD",9244,"KRN",3.6,0)
+3.6
+"BLD",9244,"KRN",3.8,0)
+3.8
+"BLD",9244,"KRN",9.2,0)
+9.2
+"BLD",9244,"KRN",9.8,0)
+9.8
+"BLD",9244,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9244,"KRN",9.8,"NM",1,0)
+PSNACT^^0^B106329201
+"BLD",9244,"KRN",9.8,"NM",2,0)
+PSNLOOK^^0^B48493462
+"BLD",9244,"KRN",9.8,"NM","B","PSNACT",1)
+
+"BLD",9244,"KRN",9.8,"NM","B","PSNLOOK",2)
+
+"BLD",9244,"KRN",19,0)
+19
+"BLD",9244,"KRN",19.1,0)
+19.1
+"BLD",9244,"KRN",101,0)
+101
+"BLD",9244,"KRN",409.61,0)
+409.61
+"BLD",9244,"KRN",771,0)
+771
+"BLD",9244,"KRN",779.2,0)
+779.2
+"BLD",9244,"KRN",870,0)
+870
+"BLD",9244,"KRN",8989.51,0)
+8989.51
+"BLD",9244,"KRN",8989.52,0)
+8989.52
+"BLD",9244,"KRN",8994,0)
+8994
+"BLD",9244,"KRN","B",.4,.4)
+
+"BLD",9244,"KRN","B",.401,.401)
+
+"BLD",9244,"KRN","B",.402,.402)
+
+"BLD",9244,"KRN","B",.403,.403)
+
+"BLD",9244,"KRN","B",.5,.5)
+
+"BLD",9244,"KRN","B",.84,.84)
+
+"BLD",9244,"KRN","B",3.6,3.6)
+
+"BLD",9244,"KRN","B",3.8,3.8)
+
+"BLD",9244,"KRN","B",9.2,9.2)
+
+"BLD",9244,"KRN","B",9.8,9.8)
+
+"BLD",9244,"KRN","B",19,19)
+
+"BLD",9244,"KRN","B",19.1,19.1)
+
+"BLD",9244,"KRN","B",101,101)
+
+"BLD",9244,"KRN","B",409.61,409.61)
+
+"BLD",9244,"KRN","B",771,771)
+
+"BLD",9244,"KRN","B",779.2,779.2)
+
+"BLD",9244,"KRN","B",870,870)
+
+"BLD",9244,"KRN","B",8989.51,8989.51)
+
+"BLD",9244,"KRN","B",8989.52,8989.52)
+
+"BLD",9244,"KRN","B",8994,8994)
+
+"BLD",9244,"QDEF")
+^^^^NO^^^^NO^^NO
+"BLD",9244,"QUES",0)
+^9.62^^
+"BLD",9244,"REQB",0)
+^9.611^1^1
+"BLD",9244,"REQB",1,0)
+PSN*4.0*296^2
+"BLD",9244,"REQB","B","PSN*4.0*296",1)
+
+"FIA",50.68)
+VA PRODUCT
+"FIA",50.68,0)
+^PSNDF(50.68,
+"FIA",50.68,0,0)
+50.68I
+"FIA",50.68,0,1)
+y^n^p^^^^n^^n
+"FIA",50.68,0,10)
+
+"FIA",50.68,0,11)
+
+"FIA",50.68,0,"RLRO")
+
+"FIA",50.68,0,"VR")
+4.0^PSN
+"FIA",50.68,50.68)
+1
+"FIA",50.68,50.68,32)
+
+"MBREQ")
+0
+"PKG",136,-1)
+1^1
+"PKG",136,0)
+NATIONAL DRUG FILE^PSN^This is the National Drug File Package V 4
+"PKG",136,20,0)
+^9.402P^^
+"PKG",136,22,0)
+^9.49I^1^1
+"PKG",136,22,1,0)
+4.0^2981030^2981223^11595
+"PKG",136,22,1,"PAH",1,0)
+429^3151201
+"PKG",136,22,1,"PAH",1,1,0)
+^^64^64^3151201
+"PKG",136,22,1,"PAH",1,1,1,0)
+This patch is part of the Pharmacy Safety Updates project which was 
+"PKG",136,22,1,"PAH",1,1,2,0)
+established to address specific New Service Requests (NSRs) as well as a
+"PKG",136,22,1,"PAH",1,1,3,0)
+Remedy Ticket and a Patient Safety Issue (PSI) related to the VistA Pharmacy
+"PKG",136,22,1,"PAH",1,1,4,0)
+applications as approved by the Health Systems Enterprise Systems Manager
+"PKG",136,22,1,"PAH",1,1,5,0)
+(ESM).
+"PKG",136,22,1,"PAH",1,1,6,0)
+  
+"PKG",136,22,1,"PAH",1,1,7,0)
+This project is comprised of patches from five different applications, as
+"PKG",136,22,1,"PAH",1,1,8,0)
+shown below:
+"PKG",136,22,1,"PAH",1,1,9,0)
+  
+"PKG",136,22,1,"PAH",1,1,10,0)
+   APPLICATION/VERSION                                  PATCH
+"PKG",136,22,1,"PAH",1,1,11,0)
+   -----------------------------------------------------------------
+"PKG",136,22,1,"PAH",1,1,12,0)
+   OUTPATIENT PHARMACY (OP) V. 7.0                      PSO*7*444
+"PKG",136,22,1,"PAH",1,1,13,0)
+   INTEGRATED BILLING (IB) V. 2.0                       IB*2*545
+"PKG",136,22,1,"PAH",1,1,14,0)
+   PHARMACY DATA MANAGEMENT (PDM) V. 1.0                PSS*1*189
+"PKG",136,22,1,"PAH",1,1,15,0)
+   NATIONAL DRUG FILE (NDF) V. 4.0                      PSN*4*429
+"PKG",136,22,1,"PAH",1,1,16,0)
+   INPATIENT MEDICATIONS (IM) V.5.0                     PSJ*5*313
+"PKG",136,22,1,"PAH",1,1,17,0)
+ 
+"PKG",136,22,1,"PAH",1,1,18,0)
+ 
+"PKG",136,22,1,"PAH",1,1,19,0)
+The following New service Requests (NSRs) are being addressed by this patch:
+"PKG",136,22,1,"PAH",1,1,20,0)
+    
+"PKG",136,22,1,"PAH",1,1,21,0)
+ NSRs 20060601/20111206 Allow Dispensing of Greater Than 90 Day Supply
+"PKG",136,22,1,"PAH",1,1,22,0)
+ ---------------------------------------------------------------------------
+"PKG",136,22,1,"PAH",1,1,23,0)
+ The Outpatient Pharmacy and supporting VistA applications are being modified
+"PKG",136,22,1,"PAH",1,1,24,0)
+ to allow dispensing of more than 90 day supply fill for outpatient 
+"PKG",136,22,1,"PAH",1,1,25,0)
+ prescriptions. The new limit will be 365 days and will be set for each drug
+"PKG",136,22,1,"PAH",1,1,26,0)
+ individually. See below for more information on specific menu 
+"PKG",136,22,1,"PAH",1,1,27,0)
+ options related to this enhancement.  
+"PKG",136,22,1,"PAH",1,1,28,0)
+    
+"PKG",136,22,1,"PAH",1,1,29,0)
+  
+"PKG",136,22,1,"PAH",1,1,30,0)
+The following National Drug File (NDF) functionality was modified:
+"PKG",136,22,1,"PAH",1,1,31,0)
+ 
+"PKG",136,22,1,"PAH",1,1,32,0)
+1. A new field called MAXIMUM DAYS SUPPLY (#32) was added to the VA PRODUCT
+"PKG",136,22,1,"PAH",1,1,33,0)
+   file (#50.68) for storing the national maximum day supply value for a
+"PKG",136,22,1,"PAH",1,1,34,0)
+   medication in an outpatient prescription. This field will not be populated
+"PKG",136,22,1,"PAH",1,1,35,0)
+   initially by Pharmacy Product System - National (PPS-N) as changes will be
+"PKG",136,22,1,"PAH",1,1,36,0)
+   required to that application to edit and export this new field. 
+"PKG",136,22,1,"PAH",1,1,37,0)
+  
+"PKG",136,22,1,"PAH",1,1,38,0)
+2. Inquire to VA Product Info For Local Drug [PSNLOOK] option
+"PKG",136,22,1,"PAH",1,1,39,0)
+   This option was modified to display the new field as seen below:
+"PKG",136,22,1,"PAH",1,1,40,0)
+   
+"PKG",136,22,1,"PAH",1,1,41,0)
+   ...
+"PKG",136,22,1,"PAH",1,1,42,0)
+  
+"PKG",136,22,1,"PAH",1,1,43,0)
+      Override DF Exclude from Dosage Checks: No
+"PKG",136,22,1,"PAH",1,1,44,0)
+   
+"PKG",136,22,1,"PAH",1,1,45,0)
+      Auto-Create Default Possible Dosage? Yes
+"PKG",136,22,1,"PAH",1,1,46,0)
+      Reduced Co-pay: None
+"PKG",136,22,1,"PAH",1,1,47,0)
+      Maximum Days Supply: 360
+"PKG",136,22,1,"PAH",1,1,48,0)
+ 
+"PKG",136,22,1,"PAH",1,1,49,0)
+   ...
+"PKG",136,22,1,"PAH",1,1,50,0)
+ 
+"PKG",136,22,1,"PAH",1,1,51,0)
+3. Inquire to National Files [PSNACT] option
+"PKG",136,22,1,"PAH",1,1,52,0)
+   This option was also modified to display the new field as seen below:
+"PKG",136,22,1,"PAH",1,1,53,0)
+ 
+"PKG",136,22,1,"PAH",1,1,54,0)
+   ...
+"PKG",136,22,1,"PAH",1,1,55,0)
+  
+"PKG",136,22,1,"PAH",1,1,56,0)
+      Auto-Create Default Possible Dosage? No
+"PKG",136,22,1,"PAH",1,1,57,0)
+          Possible Dosages To Auto-Create: 1x Possible Dosage
+"PKG",136,22,1,"PAH",1,1,58,0)
+                                  Package: Both Inpatient and Outpatient
+"PKG",136,22,1,"PAH",1,1,59,0)
+   
+"PKG",136,22,1,"PAH",1,1,60,0)
+      Reduced Co-pay: None
+"PKG",136,22,1,"PAH",1,1,61,0)
+      Maximum Days Supply: 360
+"PKG",136,22,1,"PAH",1,1,62,0)
+   
+"PKG",136,22,1,"PAH",1,1,63,0)
+      Press return to continue or '^' to exit: 
+"PKG",136,22,1,"PAH",1,1,64,0)
+   ...
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+2
+"RTN","PSNACT")
+0^1^B106329201^B119301998
+"RTN","PSNACT",1,0)
+PSNACT ;BIR/DMA&WRT-inquiries by VAPN, CMOP ID, or NDC ;07/02/03 14:01
+"RTN","PSNACT",2,0)
+ ;;4.0;NATIONAL DRUG FILE;**22,35,47,62,65,70,160,169,262,296,429**; 30 Oct 98;Build 12
+"RTN","PSNACT",3,0)
+ ;
+"RTN","PSNACT",4,0)
+ ;Reference to ^PS(50.606 supported by DBIA #2174
+"RTN","PSNACT",5,0)
+ ;
+"RTN","PSNACT",6,0)
+ I '$D(IORVON) S X="IORVON;IORVOFF" D ENDR^%ZISS
+"RTN","PSNACT",7,0)
+ K DIC,DIR F ZXX=0:0 W ! D TEXT,ASKIT Q:$D(DIRUT)
+"RTN","PSNACT",8,0)
+ K QUIT,DIR,DIC,OLDDA,PROMPT,J,I,IEN,PPP,Y,Y1,Y3,Y5,Y6,Y7,Z0,Z1,Z3,Z5,Z6,Z7,ZA,ZXX,ASK,NDX,SIE,PSN,PSN1,MORE,SIE1
+"RTN","PSNACT",9,0)
+ N PMIS,QQQ,ENG,MAP,D,ANS,ZCT,DYAYGO,DUOUT,DTOUT
+"RTN","PSNACT",10,0)
+ Q
+"RTN","PSNACT",11,0)
+TEXT W !,"This option allows you to lookup NDF file information three ways (VA Product",!,"Name, NDC, or CMOP ID number).",!
+"RTN","PSNACT",12,0)
+ Q
+"RTN","PSNACT",13,0)
+ASKIT S DIR(0)="SA^VA:VA PRODUCT;N:NDC;C:CMOP ID",DIR("A")="LOOKUP BY (VA) PRODUCT, (N)DC, OR (C)MOP ID ? " D ^DIR G END:$D(DIRUT) S ASK=Y(0)
+"RTN","PSNACT",14,0)
+ I ASK="NDC" D NDC
+"RTN","PSNACT",15,0)
+ I ASK="VA PRODUCT"  D LISTNDC
+"RTN","PSNACT",16,0)
+ I ASK="CMOP ID" D CMOP
+"RTN","PSNACT",17,0)
+ Q
+"RTN","PSNACT",18,0)
+ ;
+"RTN","PSNACT",19,0)
+NDC ;OR UPN
+"RTN","PSNACT",20,0)
+ K PROMPT S DIR(0)="SA^N:NDC;U:UPN",DIR("A")="NDC (N) or UPN (U) ? " D ^DIR G END:$D(DIRUT) S PROMPT=Y(0)
+"RTN","PSNACT",21,0)
+ I PROMPT="NDC" S DIR(0)="F",DIR("A")="Enter NDC with or without Dashes (-)" D ^DIR G END:$D(DIRUT) D:X["-" PAD S DIC=50.67,DIC(0)="EQZN",D=PROMPT D IX^DIC Q:Y<0  S DA=+Y,NDF=Y(0) D LKNDC
+"RTN","PSNACT",22,0)
+ I PROMPT="UPN" S DIC=50.67,DIC(0)="AEQZN",DIC("A")="Select "_PROMPT_":"_" ",D=PROMPT D IX^DIC Q:Y<0  S DA=+Y,NDF=Y(0) D LKNDC
+"RTN","PSNACT",23,0)
+ Q
+"RTN","PSNACT",24,0)
+LKNDC W @IOF,!,"NDC: ",$P(NDF,"^",2),$$DT($P(NDF,"^",7)),"  UPN: ",$P(NDF,"^",3),!,"VA Product Name: ",$P(^PSNDF(50.68,$P(NDF,"^",6),0),"^"),!,"Manufacturer: ",$P($G(^PS(55.95,+$P(NDF,"^",4),0)),"^"),"  Trade Name: ",$P(NDF,"^",5),!,"Route: "
+"RTN","PSNACT",25,0)
+ S K=0 F  S K=$O(^PSNDF(50.67,DA,1,K)) Q:'K  W $P(^(K,0),"^")," "
+"RTN","PSNACT",26,0)
+ W !,"Package Size: ",$P(^PS(50.609,$P(NDF,"^",8),0),"^"),"  Package Type: ",$P(^PS(50.608,$P(NDF,"^",9),0),"^")
+"RTN","PSNACT",27,0)
+ S ZA=$P(NDF,"^",6) D PRINT(ZA)
+"RTN","PSNACT",28,0)
+ Q
+"RTN","PSNACT",29,0)
+END K DA,DA,DIC,DIE,DIR,DR,IN,ING,J,K,L,NEW,NDF,OLD,OLDDA,PROMPT,X,Y,Y1,Y3,Y7,^TMP($J) Q
+"RTN","PSNACT",30,0)
+ Q
+"RTN","PSNACT",31,0)
+ ;
+"RTN","PSNACT",32,0)
+PRODI ;INQUIRE INTO 50.68
+"RTN","PSNACT",33,0)
+ F  S DIC="^PSNDF(50.68,",DIC(0)="AEQM" D ^DIC Q:Y<0  S DA=+Y D EN^DIQ
+"RTN","PSNACT",34,0)
+ K DA,DIC,X,Y Q
+"RTN","PSNACT",35,0)
+ ;
+"RTN","PSNACT",36,0)
+NDCI ;INQUIRE INTO 50.67
+"RTN","PSNACT",37,0)
+ S DIR(0)="SA^N:NDC;U:UPN;T:TRADE;P:PRODUCT",DIR("A")="NDC (N), UPN (U), Trade name (T), or Product (P) " D ^DIR G END:$D(DIRUT) S PROMPT=Y(0) G LISTNDC:PROMPT["PRO",LISTNDC1:PROMPT="NDC" I PROMPT["T" S PROMPT="T"
+"RTN","PSNACT",38,0)
+ F  S DIC="^PSNDF(50.67,",DIC(0)="AEQZS",DIC("A")="Select "_PROMPT S:PROMPT="T" DIC("A")=DIC("A")_"rade name" S DIC("A")=DIC("A")_" ",D=PROMPT D IX^DIC Q:Y<0  S DA=+Y D EN^DIQ
+"RTN","PSNACT",39,0)
+ K DA,DIC,DIR,PROMPT,X,Y Q
+"RTN","PSNACT",40,0)
+ ;
+"RTN","PSNACT",41,0)
+LINK ;LINK NDCS OR UPNS
+"RTN","PSNACT",42,0)
+ S DIR(0)="SA^N:NDC;U:UPN",DIR("A")="NDC (N) or UPN (U) ",DIR("B")="NDC" D ^DIR G END:$D(DIRUT) S PROMPT=Y(0)
+"RTN","PSNACT",43,0)
+ F  Q:$D(DIRUT)!(Y<0)  S DIC=50.67,DIC(0)="AEQZ",DIC("A")="Enter Current "_PROMPT_" ",D=PROMPT D IX^DIC Q:Y<0  S DA=+Y,OLD=$P(Y(0),"^",$S(PROMPT="NDC":2,1:3)) D
+"RTN","PSNACT",44,0)
+ .K DIR S DIR(0)="F^"_$S(PROMPT="NDC":"12:12",1:"1:40")_"^W:$D(^PSNDF(50.67,PROMPT,X)) !!,""That "_PROMPT_" already exists"",! K:$D(^PSNDF(50.67,PROMPT,X)) X",DIR("A")="Enter a new "_PROMPT_" " D ^DIR K DIR Q:$D(DIRUT)  S NEW=Y
+"RTN","PSNACT",45,0)
+ .I PROMPT="NDC" D
+"RTN","PSNACT",46,0)
+ ..S IN=$O(^PSNDF(50.67,DA,2,"B",NEW,0)) I IN S DIR(0)="Y" W !,"Those NDCs are already linked" S DIR("A")="Do you want to unlink them " D ^DIR Q:$D(DIRUT)  Q:'Y
+"RTN","PSNACT",47,0)
+ ..I IN S DA(1)=DA,DA=IN,DIE="^PSNDF(50.67,"_DA(1)_",2,",DR=".01///@;" D ^DIE W !,"Unlinked",! Q
+"RTN","PSNACT",48,0)
+ ..I 'IN S DIE="^PSNDF(50.67,",DR="1////"_NEW D ^DIE K DD,DO S DA(1)=DA,DIC="^PSNDF(50.67,"_DA(1)_",2,",DIC(0)="L",DLAYGO=50.67,DIC("P")=$P(^DD(50.67,11,0),"^",2),X=OLD D ^DIC W !,"Linked",! Q
+"RTN","PSNACT",49,0)
+ .I PROMPT="UPN" D
+"RTN","PSNACT",50,0)
+ ..S IN=$O(^PSNDF(50.67,DA,3,"B",NEW,0)) I IN S DIR(0)="Y" W !,"Those UPNs are already linked" S DIR("A")="Do you want to unlink them " D ^DIR Q:$D(DIRUT)  Q:'Y
+"RTN","PSNACT",51,0)
+  ..S DA(1)=DA,DA=IN,DIE="^PSNDF(50.67,"_DA(1)_",3,",DR=".01///@;" D ^DIE W !,"Unlinked",! Q
+"RTN","PSNACT",52,0)
+ ..I 'IN S DIE="^PSNDF(50.67,",DR="1////"_NEW D ^DIE K DD,DO S DA(1)=DA,DIC="^PSNDF(50.67,"_DA(1)_",3,",DIC(0)="L",DLAYGO=50.67,DIC("P")=$P(^DD(50.67,12,0),"^",2),X=OLD D ^DIC W !,"Linked",! Q
+"RTN","PSNACT",53,0)
+ G LINK
+"RTN","PSNACT",54,0)
+ ;
+"RTN","PSNACT",55,0)
+LISTNDC ;LOOK UP NDCS BY PRODUCT
+"RTN","PSNACT",56,0)
+ K L,DA,^TMP($J),DIC
+"RTN","PSNACT",57,0)
+ S DIC=50.68,DIC(0)="AQEMZ" D ^DIC G END:Y<0 S IEN=+Y W @IOF D PRINT(IEN) Q:$G(QUIT)
+"RTN","PSNACT",58,0)
+ F SIE=0:0 S SIE=$O(^PSNDF(50.68,"ANDC",IEN,SIE)) Q:'SIE!($G(QUIT))  D PRNT ; S ^TMP($J,"A"_$P(^PSNDF(50.67,SIE,0),"^",2)_"^"_SIE)=""
+"RTN","PSNACT",59,0)
+ Q
+"RTN","PSNACT",60,0)
+PRT D:($Y+5)>IOSL&('$G(QUIT)) HANG Q:$G(QUIT)  S DA=SIE,DIC="^PSNDF(50.67," W ! D EN^DIQ
+"RTN","PSNACT",61,0)
+ Q
+"RTN","PSNACT",62,0)
+ ;
+"RTN","PSNACT",63,0)
+LISTNDC1 ;LOOK UP PARTIAL NDC
+"RTN","PSNACT",64,0)
+ ;
+"RTN","PSNACT",65,0)
+ F  K ^TMP($J) S QUIT=0,DIR(0)="F^1:12",DIR("A")="Select NDC " D ^DIR Q:$D(DIRUT)  S PSN1=Y,PSN=Y D
+"RTN","PSNACT",66,0)
+ .I $D(^PSNDF(50.67,"NDC",PSN1)) S DA=0 F  S DA=$O(^PSNDF(50.67,"NDC",PSN1,DA)) S:'DA QUIT=1 Q:QUIT  S DIC="^PSNDF(50.67," W ! D EN^DIQ
+"RTN","PSNACT",67,0)
+ .Q:QUIT
+"RTN","PSNACT",68,0)
+ .I PSN1?."0".E S PSN1=PSN1_"/"
+"RTN","PSNACT",69,0)
+ .I PSN1?.N,PSN1=+PSN1 S PSN1=$$LJ^XLFSTR(PSN1,12,0)-1
+"RTN","PSNACT",70,0)
+ .S ZCT=0 F  Q:QUIT  S PSN1=$O(^PSNDF(50.67,"NDC",PSN1)),DA=0 Q:$E(PSN1,1,$L(PSN))'=PSN  F  Q:QUIT  S DA=$O(^PSNDF(50.67,"NDC",PSN1,DA)) Q:'DA  S ZCT=ZCT+1,^TMP($J,ZCT)=DA W !,$J(ZCT,5),"  ",PSN1 D
+"RTN","PSNACT",71,0)
+ ..S MORE=$E($O(^PSNDF(50.67,"NDC",PSN1)),1,$L(PSN))=PSN!$O(^(PSN1,DA)) I ZCT#5&MORE Q
+"RTN","PSNACT",72,0)
+ ..S DIR(0)="NOA^1:"_ZCT,DIR("A")="Choose 1 - "_ZCT_" or ^ to quit " S:MORE DIR("A")=DIR("A")_"or return to see more "
+"RTN","PSNACT",73,0)
+ ..D ^DIR I $D(DUOUT)!$D(DTOUT) S QUIT=1 Q
+"RTN","PSNACT",74,0)
+ ..I Y="" Q
+"RTN","PSNACT",75,0)
+ ..S DA=^TMP($J,Y),QUIT=1,DIC="^PSNDF(50.67," W !! D EN^DIQ Q
+"RTN","PSNACT",76,0)
+ G END
+"RTN","PSNACT",77,0)
+ ;
+"RTN","PSNACT",78,0)
+PRINT(VAPRDIEN) ; Prints the VA Product fields
+"RTN","PSNACT",79,0)
+ ;Input: VAPRDIEN - Internal Entry Number (IEN) in the VA PRODUCT (#50.68) file
+"RTN","PSNACT",80,0)
+ ;
+"RTN","PSNACT",81,0)
+ N QQQ,Z0,Z1,Z3,Z5,Z6,Z7,X,PSNELXY,K,ING
+"RTN","PSNACT",82,0)
+ S Z0=^PSNDF(50.68,VAPRDIEN,0)
+"RTN","PSNACT",83,0)
+ S Z1=^PSNDF(50.68,VAPRDIEN,1)
+"RTN","PSNACT",84,0)
+ S Z3=^PSNDF(50.68,VAPRDIEN,3)
+"RTN","PSNACT",85,0)
+ S Z5=$G(^PSNDF(50.68,VAPRDIEN,5))
+"RTN","PSNACT",86,0)
+ S Z6=$G(^PSNDF(50.68,VAPRDIEN,6,1,0))
+"RTN","PSNACT",87,0)
+ S Z7=$G(^PSNDF(50.68,VAPRDIEN,7))
+"RTN","PSNACT",88,0)
+ S QQQ=$P(Z1,"^",5) D GCN
+"RTN","PSNACT",89,0)
+ W !,"VA Product Name: ",$P(Z0,"^"),"  ",$$DT($P(Z7,U,3))
+"RTN","PSNACT",90,0)
+ W !,"VA Generic Name: ",$P(^PSNDF(50.6,+$P(Z0,"^",2),0),"^")
+"RTN","PSNACT",91,0)
+ D NDOSE(VAPRDIEN)
+"RTN","PSNACT",92,0)
+ W !,"National Formulary Name: ",$P(Z0,"^",6)
+"RTN","PSNACT",93,0)
+ W !,"VA Print Name: ",$P(Z1,"^")
+"RTN","PSNACT",94,0)
+ W !,"VA Product Identifier: ",$P(Z1,"^",2),"  Transmit to CMOP: ",$S($P(Z1,"^",3):"Yes",1:"No"),"  VA Dispense Unit: ",$P($G(^PSNDF(50.64,+$P(Z1,"^",4),0)),"^")
+"RTN","PSNACT",95,0)
+ W !,"PMIS: ",PMIS,!,"Active Ingredients: "
+"RTN","PSNACT",96,0)
+ S (K,QUIT)=0 F  S K=$O(^PSNDF(50.68,VAPRDIEN,2,K)) Q:'K  D  Q:$G(QUIT)
+"RTN","PSNACT",97,0)
+ . S (PSNELXY,X)=^PSNDF(50.68,VAPRDIEN,2,K,0),ING=^PS(50.416,K,0)
+"RTN","PSNACT",98,0)
+ . S:$P(ING,"^",2) ING=^PS(50.416,$P(ING,"^",2),0)
+"RTN","PSNACT",99,0)
+ . W ?23,$P(ING,"^"),"  Strength: ",$P(PSNELXY,"^",2)," Units: ",$P($G(^PS(50.607,+$P(PSNELXY,"^",3),0)),"^")
+"RTN","PSNACT",100,0)
+ . D:($Y+5)>IOSL&'QUIT HANG Q:$G(QUIT)  W !
+"RTN","PSNACT",101,0)
+ Q:$G(QUIT)
+"RTN","PSNACT",102,0)
+ W !,"Primary VA Drug Class: ",$P($G(^PS(50.605,+Z3,0),"Unknown"),"^")
+"RTN","PSNACT",103,0)
+ W !,"Secondary VA Drug Class: "
+"RTN","PSNACT",104,0)
+ S (K,QUIT)=0 F  S K=$O(^PSNDF(50.68,VAPRDIEN,4,K)) Q:'K  D  Q:$G(QUIT)
+"RTN","PSNACT",105,0)
+ . W ?26,$P($G(^PS(50.605,+K,0),"Unknown"),"^")
+"RTN","PSNACT",106,0)
+ . D:($Y+5)>IOSL&'QUIT HANG Q:$G(QUIT)  W !
+"RTN","PSNACT",107,0)
+ Q:$G(QUIT)
+"RTN","PSNACT",108,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",109,0)
+ W !,"CS Federal Schedule: "_$S($P($G(^PSNDF(50.68,VAPRDIEN,7)),"^")]"":$P(^PSNDF(50.68,VAPRDIEN,7),"^"),1:"") D EXPAN(VAPRDIEN)
+"RTN","PSNACT",110,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",111,0)
+ W !,"National Formulary Indicator: ",$S($P(Z5,"^"):"Yes",1:"No")
+"RTN","PSNACT",112,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",113,0)
+ W !,"National Formulary Restriction: ",! D NFIP(VAPRDIEN) Q:$G(QUIT)
+"RTN","PSNACT",114,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",115,0)
+ I $G(^PSNDF(50.68,VAPRDIEN,8)) W !,"Exclude Drg-Drg Interaction Ck: Yes (No check for Drug-Drug Interactions)"
+"RTN","PSNACT",116,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",117,0)
+ D OVEX(VAPRDIEN)
+"RTN","PSNACT",118,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",119,0)
+ D POSDOS(VAPRDIEN)
+"RTN","PSNACT",120,0)
+ D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",121,0)
+ D REDCOP(VAPRDIEN)
+"RTN","PSNACT",122,0)
+ W !,"Maximum Days Supply: ",$$GET1^DIQ(50.68,VAPRDIEN,32)
+"RTN","PSNACT",123,0)
+ W ! D HANG
+"RTN","PSNACT",124,0)
+ Q
+"RTN","PSNACT",125,0)
+ ;
+"RTN","PSNACT",126,0)
+CMOP K DIC S DIC="^PSNDF(50.68,",DIC(0)="QEAZ",D="C",DIC("A")="CMOP ID: " D MIX^DIC1 Q:Y<0  S IEN=+Y D PRINT(IEN) F SIE=0:0 S SIE=$O(^PSNDF(50.68,"ANDC",IEN,SIE)) Q:'SIE  D PRNT
+"RTN","PSNACT",127,0)
+ Q
+"RTN","PSNACT",128,0)
+HANG K DIR S DIR(0)="E",DIR("A")="Press return to continue or '^' to exit" D ^DIR W @IOF S $X=0 S:Y'=1 QUIT=1
+"RTN","PSNACT",129,0)
+ Q
+"RTN","PSNACT",130,0)
+PRNT D:($Y+7)>IOSL&('$G(QUIT)) HANG Q:$G(QUIT)
+"RTN","PSNACT",131,0)
+ S NDX=^PSNDF(50.67,SIE,0)
+"RTN","PSNACT",132,0)
+ W !,"NDC: ",$P(NDX,"^",2),"  UPN: ",$P(NDX,"^",3),!,"VA Product Name: ",$P(^PSNDF(50.68,$P(NDX,"^",6),0),"^"),!,"Manufacturer: ",$P($G(^PS(55.95,+$P(NDX,"^",4),0)),"^"),"  Trade Name: ",$P(NDX,"^",5),!,"Route: "
+"RTN","PSNACT",133,0)
+ S SIE1=0 F  S SIE1=$O(^PSNDF(50.67,SIE,1,SIE1)) Q:'SIE1  W $P(^(SIE1,0),"^")
+"RTN","PSNACT",134,0)
+ W !,"Package Size: ",$P(^PS(50.609,$P(NDX,"^",8),0),"^"),"  Package Type: ",$P(^PS(50.608,$P(NDX,"^",9),0),"^"),!
+"RTN","PSNACT",135,0)
+ Q
+"RTN","PSNACT",136,0)
+PAD S ANS=Y F VV=1:1:3 S VV1=$S(VV=1:6,VV=2:4,VV=3:2) D PAD1
+"RTN","PSNACT",137,0)
+ S ANS=$P(ANS,"-",1)_$P(ANS,"-",2)_$P(ANS,"-",3) K VV,VV1
+"RTN","PSNACT",138,0)
+ S ANS=$TR(ANS,"-"),X=ANS
+"RTN","PSNACT",139,0)
+ Q
+"RTN","PSNACT",140,0)
+PAD1 I $L($P(ANS,"-",VV))<VV1 S $P(ANS,"-",VV)=$E("0000000",1,VV1-$L($P(ANS,"-",VV)))_$P(ANS,"-",VV)
+"RTN","PSNACT",141,0)
+ Q
+"RTN","PSNACT",142,0)
+DT(Y) ;Inactivation Date display
+"RTN","PSNACT",143,0)
+ X:Y ^DD("DD") Q $S(Y]"":IORVON_" ***INACTIVE: "_Y_" ***"_IORVOFF,1:"")
+"RTN","PSNACT",144,0)
+ Q
+"RTN","PSNACT",145,0)
+GCN I QQQ']"" S PMIS="None"
+"RTN","PSNACT",146,0)
+ I QQQ]"",'$D(^PS(50.623,"B",QQQ)) S PMIS="None"
+"RTN","PSNACT",147,0)
+ I QQQ]"",$D(^PS(50.623,"B",QQQ)) S MAP=$O(^PS(50.623,"B",QQQ,0)),ENG=$P(^PS(50.623,MAP,0),"^",2),PMIS=$P(^PS(50.621,+ENG,0),"^")
+"RTN","PSNACT",148,0)
+ Q
+"RTN","PSNACT",149,0)
+ I QQQ]"",$D(^PS(50.623,"B",QQQ)) S MAP=$O(^PS(50.623,"B",QQQ,0)),ENG=$P(^PS(50.623,MAP,0),"^",2),PMIS=$P(^PS(50.621,+ENG,0),"^")
+"RTN","PSNACT",150,0)
+ Q
+"RTN","PSNACT",151,0)
+ ;
+"RTN","PSNACT",152,0)
+NDOSE(PSNELXXX) ;New Dose Form/Strength/Unit display added with patch PSN*4*169
+"RTN","PSNACT",153,0)
+ N PSNELSTL,PSNELUNL,PSNELZER
+"RTN","PSNACT",154,0)
+ S PSNELZER=$G(^PSNDF(50.68,PSNELXXX,0))
+"RTN","PSNACT",155,0)
+ I '$P(PSNELZER,"^",3) W !,"Dose Form: "
+"RTN","PSNACT",156,0)
+ I $P(PSNELZER,"^",3) W !,"Dose Form: ",$P($G(^PS(50.606,+$P(PSNELZER,"^",3),0)),"^")_$S($P($G(^PS(50.606,+$P(PSNELZER,"^",3),1)),"^")=1:"  (Exclude from Dosing Cks)",1:"")
+"RTN","PSNACT",157,0)
+ S PSNELSTL=$L($P(PSNELZER,"^",4))
+"RTN","PSNACT",158,0)
+ I $P(PSNELZER,"^",5) S PSNELUNL=$L($P($G(^PS(50.607,+$P(PSNELZER,"^",5),0)),"^"))
+"RTN","PSNACT",159,0)
+ I '$P(PSNELZER,"^",5) S PSNELUNL=0
+"RTN","PSNACT",160,0)
+ I (PSNELSTL+PSNELUNL)<62 W !,"Strength: ",$P(PSNELZER,"^",4)," Units: ",$S($P(PSNELZER,"^",5):$P($G(^PS(50.607,+$P(PSNELZER,"^",5),0)),"^"),1:"") Q
+"RTN","PSNACT",161,0)
+ W !,"Strength: ",$P(PSNELZER,"^",4)
+"RTN","PSNACT",162,0)
+ W !,"Units: " I PSNELUNL<72 W $S($P(PSNELZER,"^",5):$P($G(^PS(50.607,+$P(PSNELZER,"^",5),0)),"^"),1:"") Q
+"RTN","PSNACT",163,0)
+ W !,"  "_$P($G(^PS(50.607,+$P(PSNELZER,"^",5),0)),"^")
+"RTN","PSNACT",164,0)
+ Q
+"RTN","PSNACT",165,0)
+ ;
+"RTN","PSNACT",166,0)
+OVEX(PSNELORX) ;New Override Dose Form display added with patch PSN*4*169
+"RTN","PSNACT",167,0)
+ N PSNELDFF
+"RTN","PSNACT",168,0)
+ W !,"Override DF Exclude from Dosage Checks: "_$S($P($G(^PSNDF(50.68,PSNELORX,9)),"^")=1:"Yes",$P($G(^PSNDF(50.68,PSNELORX,9)),"^")=0:"No",1:"") I $P($G(^PSNDF(50.68,PSNELORX,9)),"^")=1 D
+"RTN","PSNACT",169,0)
+ .S PSNELDFF=$P($G(^PSNDF(50.68,PSNELORX,0)),"^",3)
+"RTN","PSNACT",170,0)
+ .I 'PSNELDFF Q
+"RTN","PSNACT",171,0)
+ .I '$D(^PS(50.606,PSNELDFF,0)) Q
+"RTN","PSNACT",172,0)
+ .I $P($G(^PS(50.606,PSNELDFF,1)),"^")=1 W " (Dosage Checks shall be performed)" Q
+"RTN","PSNACT",173,0)
+ .I $P($G(^PS(50.606,PSNELDFF,1)),"^")=0 W " (No dosage checks performed)"
+"RTN","PSNACT",174,0)
+ Q
+"RTN","PSNACT",175,0)
+REDCOP(VAPRD) ;
+"RTN","PSNACT",176,0)
+ ; Input: VAPRD - VA PRODUCT (#50.68) entry IEN
+"RTN","PSNACT",177,0)
+ N II,III,PSNRED,Y1,Y2
+"RTN","PSNACT",178,0)
+ I '$O(^PSNDF(50.68,VAPRD,10,0)) W !,"Reduced Co-pay: None" Q
+"RTN","PSNACT",179,0)
+ W !,"Reduced Co-pay:"
+"RTN","PSNACT",180,0)
+ S (II,III)=0
+"RTN","PSNACT",181,0)
+ F  S II=$O(^PSNDF(50.68,VAPRD,10,II)) Q:'II  D
+"RTN","PSNACT",182,0)
+ .S PSNRED=$G(^(II,0)) S Y1=$P(PSNRED,"^"),Y2=$P(PSNRED,"^",2),III=III+1
+"RTN","PSNACT",183,0)
+ .W:III>1 ! W ?17,"Start Date: " W:Y1 $$FMTE^XLFDT(Y1,5),?47,"Stop Date: " W:Y2 $$FMTE^XLFDT(Y2,5)
+"RTN","PSNACT",184,0)
+ .D:($Y+5)>IOSL HANG Q:$G(QUIT)
+"RTN","PSNACT",185,0)
+ Q
+"RTN","PSNACT",186,0)
+EXPAN(PSNELFZA) ;
+"RTN","PSNACT",187,0)
+ N PSNELFZB,PSNELFZC
+"RTN","PSNACT",188,0)
+ I $P($G(^PSNDF(50.68,PSNELFZA,7)),"^")="" Q
+"RTN","PSNACT",189,0)
+ S PSNELFZB=PSNELFZA_"," S PSNELFZC=$$GET1^DIQ(50.68,PSNELFZB,19)
+"RTN","PSNACT",190,0)
+ W "  "_$G(PSNELFZC)
+"RTN","PSNACT",191,0)
+ Q
+"RTN","PSNACT",192,0)
+NFIP(PSNELFJ) ;
+"RTN","PSNACT",193,0)
+ N PSNELFJZ,PSNELFJC
+"RTN","PSNACT",194,0)
+ S PSNELFJC=0
+"RTN","PSNACT",195,0)
+ F PSNELFJZ=0:0 S PSNELFJZ=$O(^PSNDF(50.68,PSNELFJ,6,PSNELFJZ)) Q:'PSNELFJZ!($G(QUIT))  D
+"RTN","PSNACT",196,0)
+ .I PSNELFJC W !
+"RTN","PSNACT",197,0)
+ .W $G(^PSNDF(50.68,PSNELFJ,6,PSNELFJZ,0))
+"RTN","PSNACT",198,0)
+ .S PSNELFJC=1
+"RTN","PSNACT",199,0)
+ .D:($Y+5)>IOSL HANG
+"RTN","PSNACT",200,0)
+ I '$G(QUIT),$G(PSNELFJC) W !
+"RTN","PSNACT",201,0)
+ Q
+"RTN","PSNACT",202,0)
+ ;
+"RTN","PSNACT",203,0)
+POSDOS(VAPRD) ; Dispaly Possible Dosage Auto-Create Setting fields
+"RTN","PSNACT",204,0)
+ ; Input: VAPRD - VA PRODUCT (#50.68) entry IEN
+"RTN","PSNACT",205,0)
+ ;
+"RTN","PSNACT",206,0)
+ N POSDOS Q:'$G(VAPRD)
+"RTN","PSNACT",207,0)
+ S POSDOS=$$POSDOS^PSNAPIS(VAPRD)
+"RTN","PSNACT",208,0)
+ W !!,"Auto-Create Default Possible Dosage? ",$S($P(POSDOS,"^")="Y":"Yes",1:"No")
+"RTN","PSNACT",209,0)
+ I $P(POSDOS,"^")="N" D
+"RTN","PSNACT",210,0)
+ . W !,"    Possible Dosages To Auto-Create: ",$S($P(POSDOS,"^",2)="N":"No Possible Dosages",$P(POSDOS,"^",2)="O":"1x Possible Dosage",$P(POSDOS,"^",2)="B":"1x and 2x Possible Dosages",1:"")
+"RTN","PSNACT",211,0)
+ . I ($P(POSDOS,"^",2)'="N") D
+"RTN","PSNACT",212,0)
+ . . W !,"                            Package: ",$S($P(POSDOS,"^",3)="O":"Outpatient",$P(POSDOS,"^",3)="I":"Inpatient",$P(POSDOS,"^",3)="IO":"Both Inpatient and Outpatient",1:"")
+"RTN","PSNACT",213,0)
+ Q
+"RTN","PSNLOOK")
+0^2^B48493462^B48743973
+"RTN","PSNLOOK",1,0)
+PSNLOOK ;BIR/WRT-Look up into drug file ;06/19/03 15:00
+"RTN","PSNLOOK",2,0)
+ ;;4.0;NATIONAL DRUG FILE;**2,3,5,11,22,27,62,70,169,262,296,429**; 30 Oct 98;Build 12
+"RTN","PSNLOOK",3,0)
+ ;
+"RTN","PSNLOOK",4,0)
+ ; Reference to ^PSDRUG supported by DBIA# 2192
+"RTN","PSNLOOK",5,0)
+ ; Reference to ^PS(50.606 supported by DBIA# 2174
+"RTN","PSNLOOK",6,0)
+ ;
+"RTN","PSNLOOK",7,0)
+ ;USE PSNLK*
+"RTN","PSNLOOK",8,0)
+BEGIN ;
+"RTN","PSNLOOK",9,0)
+ D ASK
+"RTN","PSNLOOK",10,0)
+ N PSNLKDA,PSNLKIND,PSNLKCL,PSNLKNOD,PSNLKVPN,PSNLKID,PSNLKVDU,PSNLKTR,PSNLKDAV,PSNLKGK,PSNLKPMI,PSNLKQQ
+"RTN","PSNLOOK",11,0)
+ N DIC,X,Y,DLAYGO,DTOUT,DUOUT,DIR,DIRUT,DIROUT,%DT,PSNLKMAP,PSNLKENG,PSNLKDF,PSNLKSTR,PSNLKUN,PSNLKFRM
+"RTN","PSNLOOK",12,0)
+ N PSNLKUNT,PSNLKNFN,PSNLKBB,PSNLKAND,PSNLKGR,PSNLKIST,PSNLKIUT,PSNLKSEV,PSNLKCSF,PSNLKSP,PSNLKNND,PSNLKCC
+"RTN","PSNLOOK",13,0)
+ N PSNLKSCL,PSNLKZ,PSNLKRE,PSNLKWRT,PSNZZFS,PSNLKL1,PSNLKL2,PSNLKIUN,PSNZZFSA
+"RTN","PSNLOOK",14,0)
+SELD ;Select Drug
+"RTN","PSNLOOK",15,0)
+ K PSNLKDA,PSNLKIND,PSNLKCL,PSNLKNOD,PSNLKVPN,PSNLKID,PSNLKVDU,PSNLKTR,PSNLKDAV,PSNLKGK,PSNLKPMI,PSNLKQQ
+"RTN","PSNLOOK",16,0)
+ K DIC,X,Y,DLAYGO,DTOUT,DUOUT,DIR,DIRUT,DIROUT,%DT,PSNLKMAP,PSNLKENG,PSNLKDF,PSNLKSTR,PSNLKUN,PSNLKFRM
+"RTN","PSNLOOK",17,0)
+ K PSNLKUNT,PSNLKNFN,PSNLKBB,PSNLKAND,PSNLKGR,PSNLKIST,PSNLKIUT,PSNLKSEV,PSNLKCSF,PSNLKSP,PSNLKNND,PSNLKCC
+"RTN","PSNLOOK",18,0)
+ K PSNLKSCL,PSNLKZ,PSNLKRE,PSNLKWRT,PSNZZFS,PSNLKL1,PSNLKL2,PSNLKIUN,PSNZZFSA
+"RTN","PSNLOOK",19,0)
+ ;
+"RTN","PSNLOOK",20,0)
+ W ! K DIC S DIC=50,DIC(0)="QEAM" D ^DIC I Y<0!($D(DTOUT))!($D(DUOUT)) Q
+"RTN","PSNLOOK",21,0)
+ S PSNLKDA=+Y K Y
+"RTN","PSNLOOK",22,0)
+ S PSNLKIND=$P($G(^PSDRUG(PSNLKDA,"I")),"^") I PSNLKIND,PSNLKIND<DT  S Y=PSNLKIND D DD^%DT W !!,"This drug has an Inactive date of "_$G(Y),! D MESS G SELD
+"RTN","PSNLOOK",23,0)
+ D DSPLY
+"RTN","PSNLOOK",24,0)
+ D HG
+"RTN","PSNLOOK",25,0)
+ G SELD
+"RTN","PSNLOOK",26,0)
+ ;
+"RTN","PSNLOOK",27,0)
+ASK W !!,"This option will allow you to look up entries in your local DRUG file. It will",!,"display National Drug File software match information.",!
+"RTN","PSNLOOK",28,0)
+ Q
+"RTN","PSNLOOK",29,0)
+DSPLY W @IOF W !?14,"DRUG Generic Name:  ",$P($G(^PSDRUG(PSNLKDA,0)),"^") I $D(^PSDRUG(PSNLKDA,"ND")) S PSNLKCL=$P(^("ND"),"^",6)
+"RTN","PSNLOOK",30,0)
+ I $D(^PSDRUG(PSNLKDA,"ND")),$P(^PSDRUG(PSNLKDA,"ND"),"^",2)]"" S PSNLKNOD=^PSDRUG(PSNLKDA,"ND") D DSPLY1,DSPLY2,PRODF,DSP,ING,SV,DSP1,RESTN Q
+"RTN","PSNLOOK",31,0)
+ W !?8,"*** NO NATIONAL DRUG FILE INFORMATION ***",!
+"RTN","PSNLOOK",32,0)
+ Q
+"RTN","PSNLOOK",33,0)
+DSPLY1 W !?5,"VA Product Name: ",$P(PSNLKNOD,"^",2)
+"RTN","PSNLOOK",34,0)
+ W !?5,"VA Generic Name: ",$P($G(^PSNDF(50.6,$P(PSNLKNOD,"^"),0)),"^")
+"RTN","PSNLOOK",35,0)
+ Q
+"RTN","PSNLOOK",36,0)
+DSPLY2 ;
+"RTN","PSNLOOK",37,0)
+ S (PSNLKVPN,PSNLKID,PSNLKVDU,PSNLKTR)=""
+"RTN","PSNLOOK",38,0)
+ K X S PSNLKDAV=$P(PSNLKNOD,"^"),PSNLKGK=$P(PSNLKNOD,"^",3),X=$$PROD2^PSNAPIS(PSNLKDAV,PSNLKGK) I $P(X,"^")]"" S PSNLKVPN=$P(X,"^"),PSNLKID=$P(X,"^",2),PSNLKTR=$P(X,"^",3),PSNLKVDU=$P(X,"^",4)
+"RTN","PSNLOOK",39,0)
+ K PSNLKPMI I X]"" S PSNLKQQ=$P(^PSNDF(50.68,PSNLKGK,1),"^",5) D GCN
+"RTN","PSNLOOK",40,0)
+ K X
+"RTN","PSNLOOK",41,0)
+ Q
+"RTN","PSNLOOK",42,0)
+GCN I PSNLKQQ']"" S PSNLKPMI="None" Q
+"RTN","PSNLOOK",43,0)
+ ;
+"RTN","PSNLOOK",44,0)
+GCN1 ; 
+"RTN","PSNLOOK",45,0)
+ I $D(^PS(50.623,"B",PSNLKQQ)) S PSNLKMAP=$O(^PS(50.623,"B",PSNLKQQ,0)),PSNLKENG=$P(^PS(50.623,PSNLKMAP,0),"^",2),PSNLKPMI=$P(^PS(50.621,+PSNLKENG,0),"^") Q
+"RTN","PSNLOOK",46,0)
+ S PSNLKPMI="None"
+"RTN","PSNLOOK",47,0)
+ Q
+"RTN","PSNLOOK",48,0)
+DSPLY3 W ?50,"Transmit To CMOP: "
+"RTN","PSNLOOK",49,0)
+ I PSNLKTR=1 W "YES"
+"RTN","PSNLOOK",50,0)
+ I PSNLKTR=0 W "NO"
+"RTN","PSNLOOK",51,0)
+ Q
+"RTN","PSNLOOK",52,0)
+PRODF ;
+"RTN","PSNLOOK",53,0)
+ S X=$$PROD0^PSNAPIS(PSNLKDAV,PSNLKGK)
+"RTN","PSNLOOK",54,0)
+ S PSNLKDF=+$P(X,"^",2),PSNLKSTR=$P(X,"^",3),PSNLKUN=+$P(X,"^",4),PSNLKFRM=$S($G(PSNLKDF):$P($G(^PS(50.606,PSNLKDF,0)),"^"),1:""),PSNLKUNT=$S($G(PSNLKUN):$P($G(^PS(50.607,PSNLKUN,0)),"^"),1:""),PSNLKNFN=$P(^PSNDF(50.68,PSNLKGK,0),"^",6)
+"RTN","PSNLOOK",55,0)
+ K X
+"RTN","PSNLOOK",56,0)
+ Q
+"RTN","PSNLOOK",57,0)
+ING F PSNLKBB=0:0 S PSNLKBB=$O(^PSNDF(50.68,PSNLKGK,2,PSNLKBB)) Q:'PSNLKBB  D
+"RTN","PSNLOOK",58,0)
+ .I $D(^PSNDF(50.68,PSNLKGK,2,PSNLKBB,0)) S PSNLKAND=$G(^PSNDF(50.68,PSNLKGK,2,PSNLKBB,0)),PSNLKGR=$P(^PS(50.416,$P(PSNLKAND,"^",1),0),"^"),PSNLKIST=$P(PSNLKAND,"^",2),PSNLKIUT=$P(PSNLKAND,"^",3) K PSNLKIUN D ING1,IN2
+"RTN","PSNLOOK",59,0)
+ Q
+"RTN","PSNLOOK",60,0)
+IN2 W ?3,PSNLKGR,?50,"Str: ",PSNLKIST W:PSNLKIUT ?65,"Unt: ",$G(PSNLKIUN) W !
+"RTN","PSNLOOK",61,0)
+ Q
+"RTN","PSNLOOK",62,0)
+ING1 S:$P(^PS(50.416,$P(PSNLKAND,"^"),0),"^",2) PSNLKGR=$P($G(^PS(50.416,$P(^PS(50.416,$P(PSNLKAND,"^"),0),"^",2),0)),"^") I PSNLKIUT S PSNLKIUN=$P(^PS(50.607,PSNLKIUT,0),"^")
+"RTN","PSNLOOK",63,0)
+ Q
+"RTN","PSNLOOK",64,0)
+SC I $O(^PSNDF(50.68,PSNLKGK,4,0)) W !,"Secondary Class(es): ",! F PSNLKCC=0:0 S PSNLKCC=$O(^PSNDF(50.68,PSNLKGK,4,PSNLKCC)) Q:'PSNLKCC  S PSNLKZ=$P($G(^PSNDF(50.68,PSNLKGK,4,PSNLKCC,0)),"^") I PSNLKZ D
+"RTN","PSNLOOK",65,0)
+ .S PSNLKSCL=$P($G(^PS(50.605,PSNLKZ,0)),"^") D SC1
+"RTN","PSNLOOK",66,0)
+ Q
+"RTN","PSNLOOK",67,0)
+SC1 W "   ",PSNLKSCL
+"RTN","PSNLOOK",68,0)
+ Q
+"RTN","PSNLOOK",69,0)
+SV S PSNLKSEV=$G(^PSNDF(50.68,PSNLKGK,7)) I PSNLKSEV]"" S PSNLKCSF=$P(PSNLKSEV,"^"),PSNLKSP=$P(PSNLKSEV,"^",2) S:PSNLKSP="M" PSNLKSP="Multi" S:PSNLKSP="S" PSNLKSP="Single" D SV1
+"RTN","PSNLOOK",70,0)
+ Q
+"RTN","PSNLOOK",71,0)
+SV1 S PSNZZFSA=PSNLKGK_"," S PSNZZFS=$$GET1^DIQ(50.68,PSNZZFSA,19) I $G(PSNZZFS)="" S PSNZZFS="None"
+"RTN","PSNLOOK",72,0)
+ S PSNLKNND=$P(^PSNDF(50.68,PSNLKGK,7),"^",3)
+"RTN","PSNLOOK",73,0)
+ Q
+"RTN","PSNLOOK",74,0)
+DSP W !,"Dosage Form: ",PSNLKFRM_$S('$G(PSNLKDF):"",$P($G(^PS(50.606,PSNLKDF,1)),"^")=1:"  (Exclude from Dosing Cks)",1:"")
+"RTN","PSNLOOK",75,0)
+ S PSNLKL1=$L(PSNLKSTR),PSNLKL2=$S($G(PSNLKUN):$L(PSNLKUNT),1:0)
+"RTN","PSNLOOK",76,0)
+ I (PSNLKL1+PSNLKL2)<62 W !,"Strength: ",PSNLKSTR W:$G(PSNLKUN) " Units: "_PSNLKUNT G PSDZZ
+"RTN","PSNLOOK",77,0)
+ W !,"Strength: ",PSNLKSTR
+"RTN","PSNLOOK",78,0)
+ I $G(PSNLKUN) D
+"RTN","PSNLOOK",79,0)
+ .W !,"Units: " I PSNLKL2<72 W PSNLKUNT Q
+"RTN","PSNLOOK",80,0)
+ .W !,PSNLKUNT
+"RTN","PSNLOOK",81,0)
+PSDZZ ;
+"RTN","PSNLOOK",82,0)
+ W !,"National Formulary Name: ",PSNLKNFN,!,"VA Print Name: ",PSNLKVPN,!,"VA Product Identifier: ",PSNLKID D DSPLY3 W !,"VA Dispense Unit: ",PSNLKVDU I $D(PSNLKPMI) W !,"PMIS: ",PSNLKPMI
+"RTN","PSNLOOK",83,0)
+ W !,"Active Ingredients: ",!
+"RTN","PSNLOOK",84,0)
+ Q
+"RTN","PSNLOOK",85,0)
+DSP1 D HG W "Primary Drug Class: ",$P(^PS(50.605,PSNLKCL,0),"^") D SC W !,"CS Federal Schedule: ",$G(PSNLKCSF)_"  "_$G(PSNZZFS),!,"Single/Multi Source Product: ",$G(PSNLKSP)
+"RTN","PSNLOOK",86,0)
+ I $G(PSNLKNND)]"" W !,"Inactivation Date: " S Y=PSNLKNND D DD^%DT W Y K Y
+"RTN","PSNLOOK",87,0)
+ W !,"Max Single Dose: ",$P(PSNLKSEV,"^",4),?45,"Min Single Dose: ",$P(PSNLKSEV,"^",5)
+"RTN","PSNLOOK",88,0)
+ W !,"Max Daily Dose: ",$P(PSNLKSEV,"^",6),?45,"Min Daily Dose: ",$P(PSNLKSEV,"^",7),!,"Max Cumulative Dose: ",$P(PSNLKSEV,"^",8)
+"RTN","PSNLOOK",89,0)
+ W !,"National Formulary Indicator: " I $D(^PSNDF(50.68,PSNLKGK,5)) W:$P(^PSNDF(50.68,PSNLKGK,5),"^")=0 "No" W:$P(^PSNDF(50.68,PSNLKGK,5),"^")=1 "Yes"
+"RTN","PSNLOOK",90,0)
+ W !
+"RTN","PSNLOOK",91,0)
+ I $G(^PSNDF(50.68,PSNLKGK,8)) W !,"Exclude Drg-Drg Interaction Ck: Yes (No check for Drug-Drug Interactions)"
+"RTN","PSNLOOK",92,0)
+ D OVER
+"RTN","PSNLOOK",93,0)
+ D POSDOS^PSNACT(PSNLKGK)
+"RTN","PSNLOOK",94,0)
+ D REDCOP^PSNACT(PSNLKGK)
+"RTN","PSNLOOK",95,0)
+ W !,"Maximum Days Supply: ",$$GET1^DIQ(50.68,PSNLKGK,32)
+"RTN","PSNLOOK",96,0)
+ W !
+"RTN","PSNLOOK",97,0)
+ Q
+"RTN","PSNLOOK",98,0)
+RESTN I $O(^PSNDF(50.68,PSNLKGK,6,0)) W !,"Restriction: " F PSNLKRE=0:0 S PSNLKRE=$O(^PSNDF(50.68,PSNLKGK,6,PSNLKRE)) Q:'PSNLKRE  S PSNLKWRT=$G(^PSNDF(50.68,PSNLKGK,6,PSNLKRE,0)) W !,PSNLKWRT
+"RTN","PSNLOOK",99,0)
+ Q
+"RTN","PSNLOOK",100,0)
+HG ;
+"RTN","PSNLOOK",101,0)
+ W ! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR K DIR
+"RTN","PSNLOOK",102,0)
+ W @IOF
+"RTN","PSNLOOK",103,0)
+ Q
+"RTN","PSNLOOK",104,0)
+MESS ;
+"RTN","PSNLOOK",105,0)
+ W ! K DIR S DIR(0)="E",DIR("A")="Press Return to Continue" D ^DIR K DIR
+"RTN","PSNLOOK",106,0)
+ Q
+"RTN","PSNLOOK",107,0)
+ ;
+"RTN","PSNLOOK",108,0)
+OVER ;
+"RTN","PSNLOOK",109,0)
+ W !,"Override DF Exclude from Dosage Checks: "_$S($P($G(^PSNDF(50.68,PSNLKGK,9)),"^")=1:"Yes",$P($G(^PSNDF(50.68,PSNLKGK,9)),"^")=0:"No",1:"") I $P($G(^PSNDF(50.68,PSNLKGK,9)),"^")=1 D
+"RTN","PSNLOOK",110,0)
+ .I '$G(PSNLKDF) Q
+"RTN","PSNLOOK",111,0)
+ .I '$D(^PS(50.606,PSNLKDF,0)) Q
+"RTN","PSNLOOK",112,0)
+ .I $P($G(^PS(50.606,PSNLKDF,1)),"^")=1 W " (Dosage Checks shall be performed)" Q
+"RTN","PSNLOOK",113,0)
+ .I $P($G(^PS(50.606,PSNLKDF,1)),"^")=0 W " (No Dosage Checks performed)"
+"RTN","PSNLOOK",114,0)
+ Q
+"VER")
+8.0^22.0
+"^DD",50.68,50.68,32,0)
+MAXIMUM DAYS SUPPLY^NJ3,0a^^7;10^K:+X'=X!(X>365)!(X<1)!(X?.E1"."1.N) X
+"^DD",50.68,50.68,32,3)
+Type a number between 1 and 365, 0 decimal digits.
+"^DD",50.68,50.68,32,8.5)
+^
+"^DD",50.68,50.68,32,9)
+^
+"^DD",50.68,50.68,32,21,0)
+^^1^1^3150318^^
+"^DD",50.68,50.68,32,21,1,0)
+This is the maximum number of days supply allowed for this drug product.
+"^DD",50.68,50.68,32,"AUDIT")
+y
+"^DD",50.68,50.68,32,"DT")
+3150318
+"BLD",9244,6)
+^467
+**END**
+**END**
+

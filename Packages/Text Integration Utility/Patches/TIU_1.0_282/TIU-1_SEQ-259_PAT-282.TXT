@@ -1,0 +1,135 @@
+$TXT Created by              at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 10/28/13 at 18:58
+=============================================================================
+Run Date: AUG 06, 2014                     Designation: TIU*1*282
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #259                      Status: Released
+                  Compliance Date: SEP 05, 2014
+=============================================================================
+
+Associated patches: (v)TIU*1*212   <<= must be installed BEFORE `TIU*1*282'
+                    (v)TIU*1*272   <<= must be installed BEFORE `TIU*1*282'
+
+Subject: FIX SEARCH FOR SELECTED DOCUMENTS
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Text Integration
+ Utility package:
+  
+ -Cannot search for documents with multiple keywords
+ -Error saving TIU Document Parameter name
+  
+ Associated Remedy tickets:
+ =========================
+ 1) INC000000370899 - "Search for Selected Documents" does not work
+  
+ 2) INC000000228670 - Duplicate Discharge Summary Title
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Black Hills HCS
+ Miami - VA Healthcare System
+ Bronx - James J. Peters VA Medical Center
+  
+ Remedy Overview:
+ ===============
+ 1) INC000000370899 - "Search for Selected Documents" does not work
+  
+ Problem:
+ -------
+ When using the option Search for Selected Documents [TIU SEARCH LIST 
+ MGR], the user is not allowed to search for a document using multiple 
+ keywords.
+  
+ Resolution:
+ ----------
+ Changed TIUR Routine so that a document may be searched for using multiple
+ consecutive words from the document name.
+  
+ 2) INC000000228670 - Duplicate Discharge Summary Title
+  
+ Problem:
+ -------
+ When using the option Document Parameter Edit [TIU DOCUMENT PARAMETER 
+ EDIT], if there is more than one TIU Document Parameter of the same name, 
+ then accepting the default value for the DOCUMENT DEFINITION prompt will 
+ cause a failure to save properly in FileMan.
+  
+ Resolution:
+ ----------
+ Changed TIUDPEDT Routine so that the DOCUMENT DEFINITION default will save
+ properly.
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter TIU*1.0*282)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       TIU*1.0*282.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;TEXT INTEGRATION UTILITIES;**[Patch List]**;Jun 20, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: TIUDPEDT
+    Before:  B4199183   After:  B4279272  **198,206,212,282**
+Routine Name: TIUR
+    Before: B41230330   After: B47288621  **74,79,58,100,113,112,207,224,
+                                           272,282**
+ 
+Routine list of preceding patches: 212, 272
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 28, 2013
+Completed By:                               Date Completed: AUG 05, 2014
+Released By :                               Date Released : AUG 06, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

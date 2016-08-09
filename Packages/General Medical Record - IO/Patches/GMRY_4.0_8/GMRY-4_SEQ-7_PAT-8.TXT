@@ -1,0 +1,155 @@
+$TXT Created by                      DAYT17.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Tuesday, 04/22/14 at 13:16
+=============================================================================
+Run Date: MAY 08, 2014                     Designation: GMRY*4*8
+Package : GMRY - GEN. MED. REC. - I/O         Priority: Mandatory
+Version : 4         SEQ #7                      Status: Released
+                  Compliance Date: JUN 08, 2014
+=============================================================================
+
+
+Subject: Output over 999 mls not being displayed.
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This Patch will correct the following issue:
+   
+ When using the Enter/Edit Patient Output [GMRY EDIT OUTPUT] or  
+ [NURCPE-I/O-OUTPUT], any amount over 999 mls will not display on the
+ screen.
+  
+ Associated NSR(s): 
+ =================
+ N/A
+  
+   
+ Associated Remedy Tickets:
+ =========================
+ INC000000153832 - Partial data populating in the Vista Intake/Output 
+                   Package
+  
+ Duplicate:
+ ---------
+ INC000000217660 - Output above 999 mls not displaying
+  
+   
+ Participating Test Sites:
+ ========================  
+ Birmingham VAMC
+ Salisbury VAMC
+ Salt Lake City VAMC
+   
+  
+ Remedy Ticket Overview:  
+ ======================
+ INC000000217660 - Output above 999 mls not displaying
+   
+   Problem:
+   -------  
+   A site reported an issue when editing an existing volume or adding a new
+   volume in menu option Enter/Edit Patient Output [GMRY EDIT OUTPUT] or
+   [NURCPE-I/O-OUTPUT]. When the volume exceeds 999 mls, the information 
+   does not display on the screen because the field only allows 3 
+   characters.
+   
+   Resolution:
+   ----------
+   A modification will be made to the routine GMRYUT11 to display results 
+   greater than 999 mls by widening the print area by one character.
+  
+     
+   Routine:  GMRYUT11
+   
+   
+ ======================== INSTALLATION INSTRUCTIONS =======================
+        
+ If installed during the normal workday, it is recommended that the 
+ Input/Output users be off the system.  Other VISTA users will not be
+ affected.
+      
+ Install Time - less than 2 minutes
+        
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+                
+ 2.  Start Up KIDS 
+     -----------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+  
+     Edits and Distribution ...  
+     Utilities ...  
+     Installation ...  
+      
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+     Load a Distribution 
+     Print Transport Global 
+     Compare Transport Global to Current System 
+     Verify Checksums in Transport Global 
+     Install Package(s) 
+     Restart Install of Package(s) 
+     Unload a Distribution 
+     Backup a Transport Global 
+         
+     Select Installation Option: 
+      
+ 3.  Select Installation Option: 
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter GMRY*4.0*8):
+         
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+        
+ 4.  Select Installation Option: Install Package(s):
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+      
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO. 
+       
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Intake/Output;**[Patch List]**;;Build 19
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRYUT11
+    Before: B11411445   After: B11411491  **8**
+ Description of Changes:
+  Change a pattern from 1.3 to 1.4. at WRITE+5^GMRYUT11
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 25, 2013
+Completed By:                               Date Completed: APR 23, 2014
+Released By :                               Date Released : MAY 08, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

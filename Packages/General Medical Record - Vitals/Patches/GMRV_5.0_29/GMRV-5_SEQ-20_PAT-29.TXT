@@ -1,0 +1,158 @@
+$TXT Created by             at DEV.DEV.DOMAIN.EXT  (KIDS) on Friday, 02/21/14 at 10:32
+=============================================================================
+Run Date: JUN 13, 2014                     Designation: GMRV*5*29
+Package : GMRV - GEN. MED. REC. - VITALS      Priority: Mandatory
+Version : 5        SEQ #20                      Status: Released
+                  Compliance Date: JUN 23, 2014
+=============================================================================
+
+Associated patches: (v)GMRV*5*22   <<= must be installed BEFORE `GMRV*5*29'
+                    (v)DG*5.3*857  <<= must be installed BEFORE `GMRV*5*29'
+
+Subject: ADD VHIC API CALL FOR PATIENT LOOKUP
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ **************************************************************************
+ ** Installation Note:  It is important that if your site is using       **
+ ** CareFusion that you install CareFusion patch NDC VA 2.1.5 before     **
+ ** you install GMRV*5*29.                                               **
+ **************************************************************************
+  
+ This patch will provide the modification needed in the Vitals/Measurements
+ 5.0 package for the patient lookup to accept the data from the new VHIC 
+ 4.2 (Veteran Health Identification Card) Veteran's ID Cards.
+      
+            
+ Associated Remedy ticket(s):
+ ===========================
+ INC000000912695 - Veteran ID Card 4.2
+      
+  
+ Associated NSR(s):
+ =================
+ N/A
+  
+       
+ Participating Test Sites:
+ ========================
+ Loma Linda VAMC
+ Pittsburg HCS
+ Hines VA Hospital
+ Richmond VAMC
+           
+  
+ Remedy Overview:
+ ===============
+  
+   INC000000912695
+  
+   Problem:
+   --------
+   Use of the VHIC 4.2 Veteran's ID Cards is about to begin.  A
+   modification is needed in the Vitals/Measurements 5.0 package patient
+   lookup to accept the data from the ID card reader and translate the data
+   appropriately.  
+      
+   Resolution:
+   ------------
+   Routine GMVRPCP will be updated to utilize the new VHIC ID Card Patient
+   API (Application Programmer Interface) 'RPCVIC^DPTLK' to translate
+   an ID Card for the purpose of a patient lookup.
+      
+      
+ Installation Instructions:
+ =========================
+ Installation Note:  It is important that if your site is using 
+ CareFusion that you install CareFusion patch NDC VA 2.1.5 before
+ you install GMRV*5*29.  
+  
+ If installed during the normal workday, it is recommended that the 
+ Vitals/Measurement users be off the system.  Other VISTA users will not 
+ be affected.
+  
+ Install Time - less than 2 minutes 
+     
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+ Select Kernel Installation & Distribution System Option: INStallation 
+                                                          ---
+     Load a Distribution 
+     Print Transport Global 
+     Compare Transport Global to Current System 
+     Verify Checksums in Transport Global 
+     Install Package(s) 
+     Restart Install of Package(s) 
+     Unload a Distribution 
+     Backup a Transport Global 
+    
+ Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     --------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter GMRV*5.0*29).
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) :
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch.
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//', answer NO.
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+        Protocols? YES//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;GEN. MED. REC. - VITALS;**[Patch List]**;Oct 31, 2002;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMVRPCP
+    Before: B29107373   After: B31769410  **1,3,22,29**
+ 
+Routine list of preceding patches: 22
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 23, 2014
+Completed By:                               Date Completed: MAY 22, 2014
+Released By :                               Date Released : JUN 13, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

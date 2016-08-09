@@ -1,0 +1,102 @@
+$TXT Created by                 CINP.FO-BIRM.DOMAIN.EXT  (KIDS) on Wednesday, 04/29/15 at 11:42
+=============================================================================
+Run Date: SEP 02, 2015                     Designation: HDI*1*14
+Package : HDI - HEALTH DATA & INFORMATICS     Priority: Mandatory
+Version : 1        SEQ #10                      Status: Released
+                  Compliance Date: OCT 03, 2015
+=============================================================================
+
+Associated patches: (v)HDI*1*6     <<= must be installed BEFORE `HDI*1*14'
+                    (v)XU*8*654    <<= must be installed BEFORE `HDI*1*14'
+
+Subject: VIMM 2.0 Standardization
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ In the post-init routine this patch will add data for the Immunizations (VIMM)
+ Domain to the HDIS Domain file (#7115.1) and Immunizations File & Field data
+ with VUIDs to the XTID VUID FOR SET OF CODES file (#8985.1). 
+ 
+ It will also add data for the File/Fields being standardized for VIMM to the 
+ HDIS File/Field file (#7115.6). These entries are being added to the files 
+ for VHA Unique Identifier (VUID) Seeding which is part of standardizing the 
+ VIMM files associated with the VIMM Domain. Patch PX*1*206 will actually 
+ invoke the standardization VUID Seeding.
+ 
+ Remedy Tickets addressed by this patch:
+ ======================================
+ NA
+  
+ Installation Instructions:
+ =========================
+ This patch can be installed with users on the system with installation
+ taking less than 1 minute.
+  
+  Note: The following is a list of REQUIRED builds for HDI*1.0*14.
+        KIDS will not allow the installation of this patch
+        without the prior installation of them.
+  
+            HDI*1.0*6
+            
+   1. Use the INSTALL/CHECK MESSAGE option on the PackMan menu. [Note:
+      TEXT PRINT/DISPLAY option in the PackMan menu will display the
+      patch text only.]
+   
+   2. From the Kernel Installation and Distribution System Menu, select
+      the Installation menu.
+  
+   3. From this menu, you may elect to use the following options
+      (when prompted for INSTALL NAME, enter HDI*1.0*14):
+  
+        a.  Backup a Transport Global
+        b.  Compare Transport Global to Current System
+        c.  Verify Checksums in Transport Global
+        d.  Print Transport Global
+  
+   4. Use the Install Package(s) option and select the package HDI*1.0*14.
+  
+   5. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      YES//', respond NO.
+  
+   6. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? YES//', respond NO.
+    
+   7. Routine HDI1014A and HDI1014B may be deleted after successful 
+      installation of this patch.
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;HEALTH DATA & INFORMATICS;**[Patch List]**;Feb 22, 2005;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: HDI1014A
+    Before:       n/a   After:  B6536981  **14**
+Routine Name: HDI1014B
+    Before:       n/a   After:  B3231269  **14**
+Routine Name: HDISVAP
+    Before:  B4892248   After:  B6261884  **2,14**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 15, 2015
+Completed By:                               Date Completed: SEP 01, 2015
+Released By :                               Date Released : SEP 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

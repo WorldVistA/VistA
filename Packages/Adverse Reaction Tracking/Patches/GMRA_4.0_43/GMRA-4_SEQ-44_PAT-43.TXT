@@ -1,0 +1,126 @@
+$TXT Created by                   MNTVBB.DOMAIN.EXT  (KIDS) on Thursday, 11/14/13 at 10:40
+=============================================================================
+Run Date: JUN 05, 2014                     Designation: GMRA*4*43
+Package : GMRA - ADVERSE REACTION TRACKING    Priority: Mandatory
+Version : 4        SEQ #44                      Status: Released
+                  Compliance Date: JUL 05, 2014
+=============================================================================
+
+
+Subject: HEALTH DATA REPOSITORY MERGE ISSUE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will correct the following issue:
+ 
+ 1) VistA allows the user to merge two records for the same patient (duplicates)
+    using the Patient Merge utilities, which include the Duplicate Resolution
+    System. Through a series of precise procedures, duplicate record pairs are
+    merged.
+ 
+    This patch introduces a process to check the allergy assessment of the two
+    duplicate records belonging to the same patient.
+ 
+ 
+ Associated NSR(s):
+ =================
+ N/A 
+ 
+ 
+ Associated Remedy ticket(s):
+ ===========================
+ 1) INC0000000237112  HDR Merge Testing: Resulting patient lists NKA
+  
+ 
+ Participating Test Sites:
+ ========================
+ South Texas HCS
+ Hudson Valley HCS
+  
+   
+ REMEDY OVERVIEW:
+ ===============
+  1) INC0000000237112 - HDR Merge Testing: Resulting patient lists NKA
+   
+  Problem:
+  --------
+  Duplicate patient merge functionality is not processing data elements from 
+  allergy assessments.
+  
+  If two patients are merged and one has allergies and the other does not, 
+  there is no check to see if an assessment has been done to determine if the 
+  patient should be marked as having allergies.
+   
+  Solution:
+  ---------
+  A routine has been added to run pre-merge that will assess both the FROM 
+  and TO patients to determine their allergy status and set appropriate 
+  fields in the ADVERSE REACTION ASSESSMENT file (#120.86).  This routine 
+  will be added to the package file and will be permanent for the merge to 
+  call each time before it is run.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ =========================
+  It is recommended that this patch be installed outside of normal business
+  hours to avoid any complications resulting from users on the system.  This
+  patch should take less than 1 minute to install.
+  
+  1.  Use the INSTALL/CHECK MESSAGE option on the PackMan menu.
+  
+  2.  From the Kernel Installation and Distribution System Menu, select
+     the Installation menu.
+  
+  3.  From this menu, you may elect to use the following options
+     (when prompted for INSTALL NAME, enter GMRA*4.0*43):
+         a.  Backup a Transport Global
+         b.  Compare Transport Global to Current System
+         c.  Verify Checksums in Transport Global
+  
+  4.  Use the Install Package(s) option and select the package GMRA*4.0*43.
+  
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+      hit enter.
+  
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+      Protocols? NO//', hit enter.
+  
+  7.  If prompted 'Delay Install (Minutes):  (0-60): 0//; respond '0'.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;4.0;Adverse Reaction Tracking;**[Patch List]**;Mar 29, 1996;Build 5
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRAMRG
+    Before:       n/a   After:  B2162163  **43**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 26, 2009
+Completed By:                               Date Completed: MAY 16, 2014
+Released By :                               Date Released : JUN 05, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

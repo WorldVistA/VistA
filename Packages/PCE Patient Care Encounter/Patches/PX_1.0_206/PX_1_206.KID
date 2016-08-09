@@ -1,0 +1,7730 @@
+KIDS Distribution saved on May 28, 2015@14:24:26
+ADDED VACCINE GROUP, CNG 920.4, 920.5 FILE NAME, FIX SKHS
+**KIDS**:PX*1.0*206^
+
+**INSTALL NAME**
+PX*1.0*206
+"BLD",9189,0)
+PX*1.0*206^PCE PATIENT CARE ENCOUNTER^0^3150528^y
+"BLD",9189,1,0)
+^^15^15^3150416^
+"BLD",9189,1,1,0)
+The Veterans Health Information Systems and Technology Architecture
+"BLD",9189,1,2,0)
+(VistA) Immunizations Enhancements (VIMM) 2.0 project modifies existing
+"BLD",9189,1,3,0)
+Skin Test files and adds additional files to enable VA to quickly and
+"BLD",9189,1,4,0)
+reliably document and exchange standardized skin test and immunization
+"BLD",9189,1,5,0)
+information on beneficiaries across services and departments.
+"BLD",9189,1,6,0)
+Additionally, modifications support VistA Evolution requirements. This
+"BLD",9189,1,7,0)
+provides a Veteran patient-centric vaccine record exchangeable with the
+"BLD",9189,1,8,0)
+external community. Clinicians will have access to a more complete medical
+"BLD",9189,1,9,0)
+history in the VistA electronic medical record resulting in improved
+"BLD",9189,1,10,0)
+health status as well as public health monitoring.
+"BLD",9189,1,11,0)
+ 
+"BLD",9189,1,12,0)
+The goals for the VIMM 2.0 project are to deliver an Initial Operating
+"BLD",9189,1,13,0)
+Capability comprised of standard, interoperable skin test and immunization
+"BLD",9189,1,14,0)
+data for exchange with external trading partners based on the
+"BLD",9189,1,15,0)
+modernization of the VistA Patient Care Encounter (PCE) package.
+"BLD",9189,4,0)
+^9.64PA^9999999.04^9
+"BLD",9189,4,920,0)
+920
+"BLD",9189,4,920,222)
+y^y^f^^n^^y^o^n
+"BLD",9189,4,920,224)
+
+"BLD",9189,4,920.1,0)
+920.1
+"BLD",9189,4,920.1,222)
+y^y^f^^^^n
+"BLD",9189,4,920.2,0)
+920.2
+"BLD",9189,4,920.2,222)
+y^y^f^^^^n
+"BLD",9189,4,920.3,0)
+920.3
+"BLD",9189,4,920.3,222)
+y^y^f^^^^n
+"BLD",9189,4,920.4,0)
+920.4
+"BLD",9189,4,920.4,222)
+y^y^f^^n^^y^o^n
+"BLD",9189,4,920.5,0)
+920.5
+"BLD",9189,4,920.5,222)
+y^y^f^^n^^y^o^n
+"BLD",9189,4,9999999.04,0)
+9999999.04
+"BLD",9189,4,9999999.04,222)
+y^y^f^^^^n
+"BLD",9189,4,9999999.14,0)
+9999999.14
+"BLD",9189,4,9999999.14,222)
+y^y^f^^^^n
+"BLD",9189,4,9999999.28,0)
+9999999.28
+"BLD",9189,4,9999999.28,222)
+y^y^f^^^^n
+"BLD",9189,4,"B",920,920)
+
+"BLD",9189,4,"B",920.1,920.1)
+
+"BLD",9189,4,"B",920.2,920.2)
+
+"BLD",9189,4,"B",920.3,920.3)
+
+"BLD",9189,4,"B",920.4,920.4)
+
+"BLD",9189,4,"B",920.5,920.5)
+
+"BLD",9189,4,"B",9999999.04,9999999.04)
+
+"BLD",9189,4,"B",9999999.14,9999999.14)
+
+"BLD",9189,4,"B",9999999.28,9999999.28)
+
+"BLD",9189,6.3)
+50
+"BLD",9189,"ABPKG")
+n
+"BLD",9189,"INI")
+PRE^PXVP206
+"BLD",9189,"INIT")
+POST^PXVP206
+"BLD",9189,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9189,"KRN",.4,0)
+.4
+"BLD",9189,"KRN",.401,0)
+.401
+"BLD",9189,"KRN",.402,0)
+.402
+"BLD",9189,"KRN",.403,0)
+.403
+"BLD",9189,"KRN",.5,0)
+.5
+"BLD",9189,"KRN",.84,0)
+.84
+"BLD",9189,"KRN",3.6,0)
+3.6
+"BLD",9189,"KRN",3.8,0)
+3.8
+"BLD",9189,"KRN",9.2,0)
+9.2
+"BLD",9189,"KRN",9.8,0)
+9.8
+"BLD",9189,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9189,"KRN",9.8,"NM",1,0)
+PXVZRT^^0^B71159926
+"BLD",9189,"KRN",9.8,"NM",2,0)
+PXRHS04^^0^B8043318
+"BLD",9189,"KRN",9.8,"NM","B","PXRHS04",2)
+
+"BLD",9189,"KRN",9.8,"NM","B","PXVZRT",1)
+
+"BLD",9189,"KRN",19,0)
+19
+"BLD",9189,"KRN",19,"NM",0)
+^9.68A^2^2
+"BLD",9189,"KRN",19,"NM",1,0)
+PXTT EDIT SKIN TESTS^^0
+"BLD",9189,"KRN",19,"NM",2,0)
+PXTT IN/ACTIVATE SKIN TEST^^0
+"BLD",9189,"KRN",19,"NM","B","PXTT EDIT SKIN TESTS",1)
+
+"BLD",9189,"KRN",19,"NM","B","PXTT IN/ACTIVATE SKIN TEST",2)
+
+"BLD",9189,"KRN",19.1,0)
+19.1
+"BLD",9189,"KRN",101,0)
+101
+"BLD",9189,"KRN",409.61,0)
+409.61
+"BLD",9189,"KRN",771,0)
+771
+"BLD",9189,"KRN",779.2,0)
+779.2
+"BLD",9189,"KRN",870,0)
+870
+"BLD",9189,"KRN",8989.51,0)
+8989.51
+"BLD",9189,"KRN",8989.52,0)
+8989.52
+"BLD",9189,"KRN",8994,0)
+8994
+"BLD",9189,"KRN","B",.4,.4)
+
+"BLD",9189,"KRN","B",.401,.401)
+
+"BLD",9189,"KRN","B",.402,.402)
+
+"BLD",9189,"KRN","B",.403,.403)
+
+"BLD",9189,"KRN","B",.5,.5)
+
+"BLD",9189,"KRN","B",.84,.84)
+
+"BLD",9189,"KRN","B",3.6,3.6)
+
+"BLD",9189,"KRN","B",3.8,3.8)
+
+"BLD",9189,"KRN","B",9.2,9.2)
+
+"BLD",9189,"KRN","B",9.8,9.8)
+
+"BLD",9189,"KRN","B",19,19)
+
+"BLD",9189,"KRN","B",19.1,19.1)
+
+"BLD",9189,"KRN","B",101,101)
+
+"BLD",9189,"KRN","B",409.61,409.61)
+
+"BLD",9189,"KRN","B",771,771)
+
+"BLD",9189,"KRN","B",779.2,779.2)
+
+"BLD",9189,"KRN","B",870,870)
+
+"BLD",9189,"KRN","B",8989.51,8989.51)
+
+"BLD",9189,"KRN","B",8989.52,8989.52)
+
+"BLD",9189,"KRN","B",8994,8994)
+
+"BLD",9189,"PRE")
+PXVE206
+"BLD",9189,"PRET")
+PRETRAN^PXVP206
+"BLD",9189,"QUES",0)
+^9.62^^
+"BLD",9189,"REQB",0)
+^9.611^5^4
+"BLD",9189,"REQB",2,0)
+PX*1.0*201^1
+"BLD",9189,"REQB",3,0)
+XU*8.0*654^2
+"BLD",9189,"REQB",4,0)
+HDI*1.0*14^2
+"BLD",9189,"REQB",5,0)
+PX*1.0*208^2
+"BLD",9189,"REQB","B","HDI*1.0*14",4)
+
+"BLD",9189,"REQB","B","PX*1.0*201",2)
+
+"BLD",9189,"REQB","B","PX*1.0*208",5)
+
+"BLD",9189,"REQB","B","XU*8.0*654",3)
+
+"DATA",920,1,0)
+ADENOVIRUS VIS^3110714^H^1
+"DATA",920,1,100)
+253088698300001111110714
+"DATA",920,1,"VUID")
+5197838^1
+"DATA",920,2,0)
+ANTHRAX VIS^3100310^C^1
+"DATA",920,2,100)
+253088698300002811100310
+"DATA",920,2,"VUID")
+5197842^1
+"DATA",920,3,0)
+DIPHTHERIA/TETANUS/PERTUSSIS (DTAP) VIS^3070517^C^1
+"DATA",920,3,100)
+253088698300003511070517
+"DATA",920,3,"VUID")
+5197846^1
+"DATA",920,4,0)
+HEPATITIS A VIS^3111025^C^1
+"DATA",920,4,100)
+253088698300004211111025
+"DATA",920,4,"VUID")
+5197856^1
+"DATA",920,5,0)
+HEPATITIS B VIS^3120202^C^1
+"DATA",920,5,100)
+253088698300005911120202
+"DATA",920,5,"VUID")
+5197862^1
+"DATA",920,6,0)
+HAEMOPHILUS INFLUENZAE TYPE B VIS^2981216^H^1
+"DATA",920,6,100)
+253088698300006611981216
+"DATA",920,6,"VUID")
+5197850^1
+"DATA",920,7,0)
+HAEMOPHILUS INFLUENZAE TYPE B VIS^3140204^C^1
+"DATA",920,7,100)
+253088698300006611140204
+"DATA",920,7,"VUID")
+5197852^1
+"DATA",920,8,0)
+HUMAN PAPILLOMAVIRUS VACCINE (CERVARIX) VIS^3110503^C^1
+"DATA",920,8,100)
+253088698300007311110503
+"DATA",920,8,"VUID")
+5197864^1
+"DATA",920,9,0)
+HUMAN PAPILLOMAVIRUS VACCINE (GARDASIL) VIS^3120222^H^1
+"DATA",920,9,100)
+253088698300008011120222
+"DATA",920,9,"VUID")
+5197868^1
+"DATA",920,10,0)
+HUMAN PAPILLOMAVIRUS VACCINE (GARDASIL) VIS^3130517^C^1
+"DATA",920,10,100)
+253088698300008011130517
+"DATA",920,10,"VUID")
+5197872^1
+"DATA",920,11,0)
+INFLUENZA VACCINE - LIVE, INTRANASAL VIS^3120702^H^1
+"DATA",920,11,100)
+253088698300009711120702
+"DATA",920,11,"VUID")
+5197882^1
+"DATA",920,12,0)
+INFLUENZA VACCINE - LIVE, INTRANASAL VIS^3130726^H^1
+"DATA",920,12,100)
+253088698300009711130726
+"DATA",920,12,"VUID")
+5197884^1
+"DATA",920,13,0)
+INFLUENZA VACCINE - INACTIVATED VIS^3120702^H^1
+"DATA",920,13,100)
+253088698300010311120702
+"DATA",920,13,"VUID")
+5197874^1
+"DATA",920,14,0)
+INFLUENZA VACCINE - INACTIVATED VIS^3130726^H^1
+"DATA",920,14,100)
+253088698300010311130726
+"DATA",920,14,"VUID")
+5197876^1
+"DATA",920,15,0)
+JAPANESE ENCEPHALITIS VIS^3111207^H^1
+"DATA",920,15,100)
+253088698300011011111207
+"DATA",920,15,"VUID")
+5197890^1
+"DATA",920,16,0)
+JAPANESE ENCEPHALITIS VIS^3140124^C^1
+"DATA",920,16,100)
+253088698300011011140124
+"DATA",920,16,"VUID")
+5197892^1
+"DATA",920,17,0)
+MEASLES/MUMPS/RUBELLA VIS^3120420^C^1
+"DATA",920,17,100)
+253088698300012711120420
+"DATA",920,17,"VUID")
+5197896^1
+"DATA",920,18,0)
+MEASLES/MUMPS/RUBELLA/VARICELLA VIS^3100521^C^1
+"DATA",920,18,100)
+253088698300013411100521
+"DATA",920,18,"VUID")
+5197900^1
+"DATA",920,19,0)
+MENINGOCOCCAL VIS^3111014^C^1
+"DATA",920,19,100)
+253088698300014111111014
+"DATA",920,19,"VUID")
+5197904^1
+"DATA",920,20,0)
+PNEUMOCOCCAL CONJUGATE (PCV13) VIS^3100416^H^1
+"DATA",920,20,100)
+253088698300015811100416
+"DATA",920,20,"VUID")
+5197914^1
+"DATA",920,21,0)
+PNEUMOCOCCAL CONJUGATE (PCV13) VIS^3130227^C^1
+"DATA",920,21,100)
+253088698300015811130227
+"DATA",920,21,"VUID")
+5197916^1
+"DATA",920,22,0)
+PNEUMOCOCCAL POLYSACCHARIDE VIS^3091006^C^1
+"DATA",920,22,100)
+253088698300016511091006
+"DATA",920,22,"VUID")
+5197920^1
+"DATA",920,23,0)
+POLIO VIS^3111108^C^1
+"DATA",920,23,100)
+253088698300017211111108
+"DATA",920,23,"VUID")
+5197924^1
+"DATA",920,24,0)
+RABIES VIS^3091006^C^1
+"DATA",920,24,100)
+253088698300018911091006
+"DATA",920,24,"VUID")
+5197928^1
+"DATA",920,25,0)
+ROTAVIRUS VIS^3101206^H^1
+"DATA",920,25,100)
+253088698300019611101206
+"DATA",920,25,"VUID")
+5197932^1
+"DATA",920,26,0)
+ROTAVIRUS VIS^3130826^C^1
+"DATA",920,26,100)
+253088698300019611130826
+"DATA",920,26,"VUID")
+5197934^1
+"DATA",920,27,0)
+SHINGLES VIS^3091006^C^1
+"DATA",920,27,100)
+253088698300020211091006
+"DATA",920,27,"VUID")
+5198323^1
+"DATA",920,28,0)
+TETANUS/DIPHTHERIA/PERTUSSIS (TDAP/TD) VIS^3120124^H^1
+"DATA",920,28,100)
+253088698300022611120124
+"DATA",920,28,"VUID")
+5198335^1
+"DATA",920,29,0)
+TYPHOID VIS^3120529^C^1
+"DATA",920,29,100)
+253088698300023311120529
+"DATA",920,29,"VUID")
+5198337^1
+"DATA",920,30,0)
+VARICELLA (CHICKENPOX) VIS^3080313^C^1
+"DATA",920,30,100)
+253088698300024011080313
+"DATA",920,30,"VUID")
+5198341^1
+"DATA",920,31,0)
+YELLOW FEVER VIS^3110330^C^1
+"DATA",920,31,100)
+253088698300025711110330
+"DATA",920,31,"VUID")
+5198345^1
+"DATA",920,32,0)
+MULTIPLE VACCINES VIS^3121116^H^1
+"DATA",920,32,100)
+253088698300026411121116
+"DATA",920,32,"VUID")
+5197908^1
+"DATA",920,33,0)
+TETANUS/DIPHTHERIA/PERTUSSIS (TDAP) VIS^3130509^C^1
+"DATA",920,33,100)
+253088698300027111130509
+"DATA",920,33,"VUID")
+5198331^1
+"DATA",920,34,0)
+TETANUS/DIPHTHERIA (TD) VIS^3140204^C^1
+"DATA",920,34,100)
+253088698300028811140204
+"DATA",920,34,"VUID")
+5198327^1
+"DATA",920,35,0)
+ADENOVIRUS VIS^3140611^C^1
+"DATA",920,35,100)
+253088698300001111140611
+"DATA",920,35,"VUID")
+5197840^1
+"DATA",920,36,0)
+INFLUENZA VACCINE - INACTIVATED VIS^3140819^C^1
+"DATA",920,36,100)
+253088698300010311140819
+"DATA",920,36,"VUID")
+5197878^1
+"DATA",920,37,0)
+INFLUENZA VACCINE - LIVE, INTRANASAL VIS^3140819^C^1
+"DATA",920,37,100)
+253088698300009711140819
+"DATA",920,37,"VUID")
+5197886^1
+"DATA",920,38,0)
+MULTIPLE VACCINES VIS^3141022^C^1
+"DATA",920,38,100)
+253088698300026411141022
+"DATA",920,38,"VUID")
+5197910^1
+"DATA",920.4,4,0)
+SEVERE ALLERGY EGGS^91930004^^04^C
+"DATA",920.4,4,1)
+Allergy to eggs (disorder) 
+"DATA",920.4,4,2)
+Anaphylaxis or severe allergy to egg or egg protein
+"DATA",920.4,4,3,0)
+^920.43PA^10^10
+"DATA",920.4,4,3,1,0)
+58
+"DATA",920.4,4,3,2,0)
+20
+"DATA",920.4,4,3,3,0)
+59
+"DATA",920.4,4,3,4,0)
+22
+"DATA",920.4,4,3,5,0)
+55
+"DATA",920.4,4,3,6,0)
+1140
+"DATA",920.4,4,3,7,0)
+1141
+"DATA",920.4,4,3,8,0)
+1149
+"DATA",920.4,4,3,9,0)
+1150
+"DATA",920.4,4,3,10,0)
+1158
+"DATA",920.4,4,"VUID")
+^^^SCT 
+"DATA",920.4,6,0)
+SEVERE NEOMYCIN ALLERGY^294468006^^06^C
+"DATA",920.4,6,1)
+Neomycin allergy (disorder) 
+"DATA",920.4,6,2)
+Anaphylaxis or severe allergy to Neomycin
+"DATA",920.4,6,3,0)
+^920.43PA^14^14
+"DATA",920.4,6,3,1,0)
+17
+"DATA",920.4,6,3,2,0)
+1010
+"DATA",920.4,6,3,3,0)
+28
+"DATA",920.4,6,3,4,0)
+1
+"DATA",920.4,6,3,5,0)
+25
+"DATA",920.4,6,3,6,0)
+22
+"DATA",920.4,6,3,7,0)
+34
+"DATA",920.4,6,3,8,0)
+48
+"DATA",920.4,6,3,9,0)
+1110
+"DATA",920.4,6,3,10,0)
+1120
+"DATA",920.4,6,3,11,0)
+1121
+"DATA",920.4,6,3,12,0)
+1130
+"DATA",920.4,6,3,13,0)
+1140
+"DATA",920.4,6,3,14,0)
+1141
+"DATA",920.4,6,"VUID")
+^^^SCT 
+"DATA",920.4,7,0)
+SEVERE STREPTOMYCIN ALLERGY^294466005^^07^C
+"DATA",920.4,7,1)
+Streptomycin allergy (disorder) 
+"DATA",920.4,7,2)
+Anaphylaxis or severe allergy to Streptomycin
+"DATA",920.4,7,3,0)
+^920.43PA^1^1
+"DATA",920.4,7,3,1,0)
+1010
+"DATA",920.4,7,"VUID")
+^^^SCT 
+"DATA",920.4,9,0)
+SEVERE REACTION PREVIOUS DOSE^VXC20^^09^C
+"DATA",920.4,9,1)
+allergy to previous dose of this vaccine or to any of its unlisted vaccine components (anaphylactic) 
+"DATA",920.4,9,2)
+Severe allergy or reaction to previous dose of this vaccine or to any of its vaccine components, including Guillan Barre following previous dose without other explanation
+"DATA",920.4,9,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,11,0)
+LATEX ALLERGY^300916003^^^C
+"DATA",920.4,11,1)
+Latex allergy (disorder) 
+"DATA",920.4,11,2)
+Allergy to latex (see package insert to determine whether product contains latex)
+"DATA",920.4,11,"VUID")
+^^^SCT 
+"DATA",920.4,12,0)
+SEVERE POLYMYXIN B ALLERGY^294530006^^^C
+"DATA",920.4,12,1)
+Polymyxin B allergy (disorder) 
+"DATA",920.4,12,2)
+Anaphylaxis or severe allergy to Polymyxin B
+"DATA",920.4,12,3,0)
+^920.43PA^7^7
+"DATA",920.4,12,3,1,0)
+1
+"DATA",920.4,12,3,2,0)
+7
+"DATA",920.4,12,3,3,0)
+1110
+"DATA",920.4,12,3,4,0)
+1120
+"DATA",920.4,12,3,5,0)
+1130
+"DATA",920.4,12,3,6,0)
+1140
+"DATA",920.4,12,3,7,0)
+1141
+"DATA",920.4,12,"VUID")
+^^^SCT 
+"DATA",920.4,13,0)
+HX INTUSSUSCEPTION^VXC21^^^C
+"DATA",920.4,13,1)
+Previous history of intussusception 
+"DATA",920.4,13,2)
+Previous history of intussusception
+"DATA",920.4,13,3,0)
+^920.43PA^4^4
+"DATA",920.4,13,3,1,0)
+1074
+"DATA",920.4,13,3,2,0)
+1116
+"DATA",920.4,13,3,3,0)
+1119
+"DATA",920.4,13,3,4,0)
+60
+"DATA",920.4,13,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,14,0)
+ENCEPHALOPATHY PREVIOUS DOSE^VXC22^^15^C
+"DATA",920.4,14,1)
+encephalopathy within 7 days of previous dose of DTP or DTaP 
+"DATA",920.4,14,2)
+History of encephalopathy, without other identifiable cause, occurring within 7 days of previous pertussis-containing vaccine.
+"DATA",920.4,14,3,0)
+^920.43PA^13^13
+"DATA",920.4,14,3,1,0)
+1011
+"DATA",920.4,14,3,2,0)
+1020
+"DATA",920.4,14,3,3,0)
+1022
+"DATA",920.4,14,3,4,0)
+1050
+"DATA",920.4,14,3,5,0)
+1102
+"DATA",920.4,14,3,6,0)
+1106
+"DATA",920.4,14,3,7,0)
+29
+"DATA",920.4,14,3,8,0)
+1110
+"DATA",920.4,14,3,9,0)
+1115
+"DATA",920.4,14,3,10,0)
+1120
+"DATA",920.4,14,3,11,0)
+1130
+"DATA",920.4,14,3,12,0)
+1132
+"DATA",920.4,14,3,13,0)
+3
+"DATA",920.4,14,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,15,0)
+CURRENT FEVER^VXC23^^16^P
+"DATA",920.4,15,1)
+current fever with moderate- to-severe illness
+"DATA",920.4,15,2)
+Not a contraindication to vaccination, but may consider delaying vaccine if current fever.
+"DATA",920.4,15,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,16,0)
+CURRENT ACUTE ILLNESS^VXC24^^21^P
+"DATA",920.4,16,1)
+current acute illness, moderate to severe (with or without fever) (e.g., diarrhea, otitis media, vomiting) 
+"DATA",920.4,16,2)
+Not a contraindication to vaccination, but may consider delaying vaccine during current acute illness.
+"DATA",920.4,16,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,18,0)
+HX ARTHUS REACTION^VXC25^^^C
+"DATA",920.4,18,1)
+History of Arthus hypersensitivity reaction to a tetanus-containing vaccine administered < 10 yrs previously 
+"DATA",920.4,18,2)
+History of Arthus hypersensitivity reaction to a tetanus-containing vaccine administered <10 years previously. Defer vaccine until 10 years after Arthus reaction.
+"DATA",920.4,18,3,0)
+^920.43PA^20^20
+"DATA",920.4,18,3,1,0)
+3
+"DATA",920.4,18,3,2,0)
+1009
+"DATA",920.4,18,3,3,0)
+1020
+"DATA",920.4,18,3,4,0)
+1022
+"DATA",920.4,18,3,5,0)
+23
+"DATA",920.4,18,3,6,0)
+1035
+"DATA",920.4,18,3,7,0)
+1050
+"DATA",920.4,18,3,8,0)
+1102
+"DATA",920.4,18,3,9,0)
+1106
+"DATA",920.4,18,3,10,0)
+29
+"DATA",920.4,18,3,11,0)
+1110
+"DATA",920.4,18,3,12,0)
+4
+"DATA",920.4,18,3,13,0)
+1113
+"DATA",920.4,18,3,14,0)
+1115
+"DATA",920.4,18,3,15,0)
+1120
+"DATA",920.4,18,3,16,0)
+1130
+"DATA",920.4,18,3,17,0)
+1132
+"DATA",920.4,18,3,18,0)
+1138
+"DATA",920.4,18,3,19,0)
+2
+"DATA",920.4,18,3,20,0)
+1142
+"DATA",920.4,18,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,19,0)
+UNSTABLE/EVOLVING NEURO DZ^VXC26^^37^P
+"DATA",920.4,19,1)
+underlying unstable, evolving neurologic disorders, (including seizure disorders, cerebral palsy, and developmental delay) 
+"DATA",920.4,19,2)
+Underlying unstable, evolving neurologic disorders, (including seizure disorders, cerebral palsy, Guillan Barre and developmental delay)
+"DATA",920.4,19,3,0)
+^920.43PA^29^29
+"DATA",920.4,19,3,1,0)
+1011
+"DATA",920.4,19,3,2,0)
+1015
+"DATA",920.4,19,3,3,0)
+54
+"DATA",920.4,19,3,4,0)
+1020
+"DATA",920.4,19,3,5,0)
+1022
+"DATA",920.4,19,3,6,0)
+1050
+"DATA",920.4,19,3,7,0)
+53
+"DATA",920.4,19,3,8,0)
+1102
+"DATA",920.4,19,3,9,0)
+1106
+"DATA",920.4,19,3,10,0)
+29
+"DATA",920.4,19,3,11,0)
+1110
+"DATA",920.4,19,3,12,0)
+55
+"DATA",920.4,19,3,13,0)
+1115
+"DATA",920.4,19,3,14,0)
+1120
+"DATA",920.4,19,3,15,0)
+1123
+"DATA",920.4,19,3,16,0)
+1130
+"DATA",920.4,19,3,17,0)
+1132
+"DATA",920.4,19,3,18,0)
+612013
+"DATA",920.4,19,3,19,0)
+1140
+"DATA",920.4,19,3,20,0)
+1141
+"DATA",920.4,19,3,21,0)
+1144
+"DATA",920.4,19,3,22,0)
+1149
+"DATA",920.4,19,3,23,0)
+1150
+"DATA",920.4,19,3,24,0)
+1151
+"DATA",920.4,19,3,25,0)
+1153
+"DATA",920.4,19,3,26,0)
+1155
+"DATA",920.4,19,3,27,0)
+1158
+"DATA",920.4,19,3,28,0)
+1160
+"DATA",920.4,19,3,29,0)
+3
+"DATA",920.4,19,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,20,0)
+CURRENT IMMUNODEFICIENCY^VXC27^^36^C
+"DATA",920.4,20,1)
+immunodeficiency due to any cause, including HIV (hematologic and solid tumors, congenital immunodeficiency, long-term immunosuppressive therapy, including steroids) 
+"DATA",920.4,20,2)
+Immunodeficiency for any cause, including HIV, hematologic and solid tumors, congenital immunodeficiency, long-term immunosuppressive therapy, including steroids. Caution with live vaccines. Inactivated flu vaccine is NOT contraindicated.
+"DATA",920.4,20,3,0)
+^920.43PA^8^8
+"DATA",920.4,20,3,1,0)
+17
+"DATA",920.4,20,3,2,0)
+16
+"DATA",920.4,20,3,3,0)
+28
+"DATA",920.4,20,3,4,0)
+34
+"DATA",920.4,20,3,5,0)
+55
+"DATA",920.4,20,3,6,0)
+1121
+"DATA",920.4,20,3,7,0)
+1149
+"DATA",920.4,20,3,8,0)
+1151
+"DATA",920.4,20,"VUID")
+^^^CDCPHINVS 
+"DATA",920.4,21,0)
+CURRENT PREGNANCY^77386006^^39^C
+"DATA",920.4,21,1)
+Patient currently pregnant (finding) 
+"DATA",920.4,21,2)
+Patient currently pregnant. Avoid live vaccines. Inactivated influenza vaccine is NOT contraindicated.
+"DATA",920.4,21,3,0)
+^920.43PA^8^8
+"DATA",920.4,21,3,1,0)
+17
+"DATA",920.4,21,3,2,0)
+16
+"DATA",920.4,21,3,3,0)
+28
+"DATA",920.4,21,3,4,0)
+34
+"DATA",920.4,21,3,5,0)
+55
+"DATA",920.4,21,3,6,0)
+1121
+"DATA",920.4,21,3,7,0)
+1149
+"DATA",920.4,21,3,8,0)
+1151
+"DATA",920.4,21,"VUID")
+^^^SCT 
+"DATA",920.4,22,0)
+THROMBOCYTOPENIA^302215000^^40^P
+"DATA",920.4,22,1)
+Thrombocytopenic disorder (disorder) 
+"DATA",920.4,22,2)
+Precaution: MMR vaccination may cause or worsen thrombocytopenia.
+"DATA",920.4,22,3,0)
+^920.43PA^2^2
+"DATA",920.4,22,3,1,0)
+17
+"DATA",920.4,22,3,2,0)
+34
+"DATA",920.4,22,"VUID")
+^^^SCT 
+"DATA",920.4,25,0)
+CONCURRENT TB SKIN TEST^^^^P
+"DATA",920.4,25,2)
+If patient needs TB skin test (PPD) this visit, avoid giving MMR. MMR can suppress PPD reaction. Consider giving PPD this visit, and MMR when patient returns to have PPD read. If MMR given first, must wait 4 weeks to give PPD/TB skin test.
+"DATA",920.4,25,3,0)
+^920.43PA^2^2
+"DATA",920.4,25,3,1,0)
+17
+"DATA",920.4,25,3,2,0)
+34
+"DATA",920.5,1,0)
+Parental decision^00
+"DATA",920.5,2,0)
+Religious exemption^01
+"DATA",920.5,3,0)
+Other^02
+"DATA",920.5,4,0)
+Patient decision^03
+"FIA",920)
+VACCINE INFORMATION STATEMENT
+"FIA",920,0)
+^AUTTIVIS(
+"FIA",920,0,0)
+920I
+"FIA",920,0,1)
+y^y^f^^n^^y^o^n
+"FIA",920,0,10)
+
+"FIA",920,0,11)
+
+"FIA",920,0,"RLRO")
+
+"FIA",920,0,"VR")
+1.0^PX
+"FIA",920,920)
+0
+"FIA",920,920.02)
+0
+"FIA",920,920.99)
+0
+"FIA",920.1)
+IMMUNIZATION INFO SOURCE
+"FIA",920.1,0)
+^PXV(920.1,
+"FIA",920.1,0,0)
+920.1I
+"FIA",920.1,0,1)
+y^y^f^^^^n
+"FIA",920.1,0,10)
+
+"FIA",920.1,0,11)
+
+"FIA",920.1,0,"RLRO")
+
+"FIA",920.1,0,"VR")
+1.0^PX
+"FIA",920.1,920.1)
+0
+"FIA",920.1,920.199)
+0
+"FIA",920.2)
+IMM ADMINISTRATION ROUTE
+"FIA",920.2,0)
+^PXV(920.2,
+"FIA",920.2,0,0)
+920.2I
+"FIA",920.2,0,1)
+y^y^f^^^^n
+"FIA",920.2,0,10)
+
+"FIA",920.2,0,11)
+
+"FIA",920.2,0,"RLRO")
+
+"FIA",920.2,0,"VR")
+1.0^PX
+"FIA",920.2,920.2)
+0
+"FIA",920.2,920.299)
+0
+"FIA",920.3)
+IMM ADMINISTRATION SITE (BODY)
+"FIA",920.3,0)
+^PXV(920.3,
+"FIA",920.3,0,0)
+920.3I
+"FIA",920.3,0,1)
+y^y^f^^^^n
+"FIA",920.3,0,10)
+
+"FIA",920.3,0,11)
+
+"FIA",920.3,0,"RLRO")
+
+"FIA",920.3,0,"VR")
+1.0^PX
+"FIA",920.3,920.3)
+0
+"FIA",920.3,920.399)
+0
+"FIA",920.4)
+IMM CONTRAINDICATION REASONS
+"FIA",920.4,0)
+^PXV(920.4,
+"FIA",920.4,0,0)
+920.4I
+"FIA",920.4,0,1)
+y^y^f^^n^^y^o^n
+"FIA",920.4,0,10)
+
+"FIA",920.4,0,11)
+
+"FIA",920.4,0,"RLRO")
+
+"FIA",920.4,0,"VR")
+1.0^PX
+"FIA",920.4,920.4)
+0
+"FIA",920.4,920.43)
+0
+"FIA",920.4,920.499)
+0
+"FIA",920.5)
+IMM REFUSAL REASONS
+"FIA",920.5,0)
+^PXV(920.5,
+"FIA",920.5,0,0)
+920.5
+"FIA",920.5,0,1)
+y^y^f^^n^^y^o^n
+"FIA",920.5,0,10)
+
+"FIA",920.5,0,11)
+
+"FIA",920.5,0,"RLRO")
+
+"FIA",920.5,0,"VR")
+1.0^PX
+"FIA",920.5,920.5)
+0
+"FIA",920.5,920.599)
+0
+"FIA",9999999.04)
+IMM MANUFACTURER
+"FIA",9999999.04,0)
+^AUTTIMAN(
+"FIA",9999999.04,0,0)
+9999999.04I
+"FIA",9999999.04,0,1)
+y^y^f^^^^n
+"FIA",9999999.04,0,10)
+
+"FIA",9999999.04,0,11)
+
+"FIA",9999999.04,0,"RLRO")
+
+"FIA",9999999.04,0,"VR")
+1.0^PX
+"FIA",9999999.04,9999999.04)
+0
+"FIA",9999999.04,9999999.0411)
+0
+"FIA",9999999.04,9999999.0499)
+0
+"FIA",9999999.14)
+IMMUNIZATION
+"FIA",9999999.14,0)
+^AUTTIMM(
+"FIA",9999999.14,0,0)
+9999999.14I
+"FIA",9999999.14,0,1)
+y^y^f^^^^n
+"FIA",9999999.14,0,10)
+
+"FIA",9999999.14,0,11)
+
+"FIA",9999999.14,0,"RLRO")
+
+"FIA",9999999.14,0,"VR")
+1.0^PX
+"FIA",9999999.14,9999999.14)
+0
+"FIA",9999999.14,9999999.141)
+0
+"FIA",9999999.14,9999999.142)
+0
+"FIA",9999999.14,9999999.143)
+0
+"FIA",9999999.14,9999999.1431)
+0
+"FIA",9999999.14,9999999.144)
+0
+"FIA",9999999.14,9999999.145)
+0
+"FIA",9999999.14,9999999.147)
+0
+"FIA",9999999.14,9999999.1499)
+0
+"FIA",9999999.28)
+SKIN TEST
+"FIA",9999999.28,0)
+^AUTTSK(
+"FIA",9999999.28,0,0)
+9999999.28
+"FIA",9999999.28,0,1)
+y^y^f^^^^n
+"FIA",9999999.28,0,10)
+
+"FIA",9999999.28,0,11)
+
+"FIA",9999999.28,0,"RLRO")
+
+"FIA",9999999.28,0,"VR")
+1.0^PX
+"FIA",9999999.28,9999999.28)
+0
+"FIA",9999999.28,9999999.283)
+0
+"FIA",9999999.28,9999999.2831)
+0
+"FIA",9999999.28,9999999.2899)
+0
+"INI")
+PRE^PXVP206
+"INIT")
+POST^PXVP206
+"IX",920,920,"AMASTERVUID",0)
+920^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^920^^^^^S
+"IX",920,920,"AMASTERVUID",.1,0)
+^^3^3^3140520^
+"IX",920,920,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920,920,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920,920,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920,920,"AMASTERVUID",1)
+S ^AUTTIVIS("AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920,920,"AMASTERVUID",2)
+K ^AUTTIVIS("AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920,920,"AMASTERVUID",2.5)
+K ^AUTTIVIS("AMASTERVUID")
+"IX",920,920,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920,920,"AMASTERVUID",11.1,1,0)
+1^F^920^99.99^30^1^F
+"IX",920,920,"AMASTERVUID",11.1,1,3)
+
+"IX",920,920,"AMASTERVUID",11.1,2,0)
+2^F^920^99.98^^2^F
+"IX",920,920,"AMASTERVUID",11.1,2,3)
+
+"IX",920.1,920.1,"AMASTERVUID",0)
+920.1^AMASTERVUID^This cross-reference identifies the Master Entry for a VUID.^R^^R^IR^I^920.1^^^^^S
+"IX",920.1,920.1,"AMASTERVUID",.1,0)
+^^3^3^3150305^
+"IX",920.1,920.1,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920.1,920.1,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920.1,920.1,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920.1,920.1,"AMASTERVUID",1)
+S ^PXV(920.1,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920.1,920.1,"AMASTERVUID",2)
+K ^PXV(920.1,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920.1,920.1,"AMASTERVUID",2.5)
+K ^PXV(920.1,"AMASTERVUID")
+"IX",920.1,920.1,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920.1,920.1,"AMASTERVUID",11.1,1,0)
+1^F^920.1^99.99^30^1^F
+"IX",920.1,920.1,"AMASTERVUID",11.1,2,0)
+2^F^920.1^99.98^^2^F
+"IX",920.2,920.2,"AMASTERVUID",0)
+920.2^AMASTERVUID^This cross-reference identifies the Master Entry for a VUID.^R^^R^IR^I^920.2^^^^^S
+"IX",920.2,920.2,"AMASTERVUID",.1,0)
+^^3^3^3150305^
+"IX",920.2,920.2,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920.2,920.2,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920.2,920.2,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920.2,920.2,"AMASTERVUID",1)
+S ^PXV(920.2,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920.2,920.2,"AMASTERVUID",2)
+K ^PXV(920.2,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920.2,920.2,"AMASTERVUID",2.5)
+K ^PXV(920.2,"AMASTERVUID")
+"IX",920.2,920.2,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920.2,920.2,"AMASTERVUID",11.1,1,0)
+1^F^920.2^99.99^30^1^F
+"IX",920.2,920.2,"AMASTERVUID",11.1,2,0)
+2^F^920.2^99.98^^2^F
+"IX",920.3,920.3,"AMASTERVUID",0)
+920.3^AMASTERVUID^This cross-reference identifies the Master Entry for a VUID.^R^^R^IR^I^920.3^^^^^S
+"IX",920.3,920.3,"AMASTERVUID",.1,0)
+^^3^3^3150305^
+"IX",920.3,920.3,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920.3,920.3,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920.3,920.3,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920.3,920.3,"AMASTERVUID",1)
+S ^PXV(920.3,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920.3,920.3,"AMASTERVUID",2)
+K ^PXV(920.3,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920.3,920.3,"AMASTERVUID",2.5)
+K ^PXV(920.3,"AMASTERVUID")
+"IX",920.3,920.3,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920.3,920.3,"AMASTERVUID",11.1,1,0)
+1^F^920.3^99.99^30^1^F
+"IX",920.3,920.3,"AMASTERVUID",11.1,2,0)
+2^F^920.3^99.98^^2^F
+"IX",920.4,920.4,"AMASTERVUID",0)
+920.4^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^920.4^^^^^S
+"IX",920.4,920.4,"AMASTERVUID",.1,0)
+^^3^3^3150127^
+"IX",920.4,920.4,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920.4,920.4,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920.4,920.4,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920.4,920.4,"AMASTERVUID",1)
+S ^PXV(920.4,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920.4,920.4,"AMASTERVUID",2)
+K ^PXV(920.4,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920.4,920.4,"AMASTERVUID",2.5)
+K ^PXV(920.4,"AMASTERVUID")
+"IX",920.4,920.4,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920.4,920.4,"AMASTERVUID",11.1,1,0)
+1^F^920.4^99.99^30^1^F
+"IX",920.4,920.4,"AMASTERVUID",11.1,1,3)
+
+"IX",920.4,920.4,"AMASTERVUID",11.1,2,0)
+2^F^920.4^99.98^^2^F
+"IX",920.4,920.4,"AMASTERVUID",11.1,2,3)
+
+"IX",920.5,920.5,"AMASTERVUID",0)
+920.5^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^920.5^^^^^S
+"IX",920.5,920.5,"AMASTERVUID",.1,0)
+^^3^3^3150127^
+"IX",920.5,920.5,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",920.5,920.5,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",920.5,920.5,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",920.5,920.5,"AMASTERVUID",1)
+S ^PXV(920.5,"AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",920.5,920.5,"AMASTERVUID",2)
+K ^PXV(920.5,"AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",920.5,920.5,"AMASTERVUID",2.5)
+K ^PXV(920.5,"AMASTERVUID")
+"IX",920.5,920.5,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",920.5,920.5,"AMASTERVUID",11.1,1,0)
+1^F^920.5^99.99^30^1^F
+"IX",920.5,920.5,"AMASTERVUID",11.1,1,3)
+
+"IX",920.5,920.5,"AMASTERVUID",11.1,2,0)
+2^F^920.5^99.98^^2^F
+"IX",920.5,920.5,"AMASTERVUID",11.1,2,3)
+
+"IX",9999999.04,9999999.04,"AMASTERVUID",0)
+9999999.04^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^9999999.04^^^^^S
+"IX",9999999.04,9999999.04,"AMASTERVUID",.1,0)
+^^3^3^3140521^
+"IX",9999999.04,9999999.04,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",9999999.04,9999999.04,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",9999999.04,9999999.04,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",9999999.04,9999999.04,"AMASTERVUID",1)
+S ^AUTTIMAN("AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",9999999.04,9999999.04,"AMASTERVUID",2)
+K ^AUTTIMAN("AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",9999999.04,9999999.04,"AMASTERVUID",2.5)
+K ^AUTTIMAN("AMASTERVUID")
+"IX",9999999.04,9999999.04,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",9999999.04,9999999.04,"AMASTERVUID",11.1,1,0)
+1^F^9999999.04^99.99^30^1^F
+"IX",9999999.04,9999999.04,"AMASTERVUID",11.1,2,0)
+2^F^9999999.04^99.98^^2^F
+"IX",9999999.14,9999999.14,"AMASTERVUID",0)
+9999999.14^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^9999999.14^^^^^S
+"IX",9999999.14,9999999.14,"AMASTERVUID",.1,0)
+^^3^3^3140520^
+"IX",9999999.14,9999999.14,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",9999999.14,9999999.14,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",9999999.14,9999999.14,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",9999999.14,9999999.14,"AMASTERVUID",1)
+S ^AUTTIMM("AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",9999999.14,9999999.14,"AMASTERVUID",2)
+K ^AUTTIMM("AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",9999999.14,9999999.14,"AMASTERVUID",2.5)
+K ^AUTTIMM("AMASTERVUID")
+"IX",9999999.14,9999999.14,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",9999999.14,9999999.14,"AMASTERVUID",11.1,1,0)
+1^F^9999999.14^99.99^30^1^F
+"IX",9999999.14,9999999.14,"AMASTERVUID",11.1,2,0)
+2^F^9999999.14^99.98^^2^F
+"IX",9999999.28,9999999.28,"AMASTERVUID",0)
+9999999.28^AMASTERVUID^This cross-reference identifies the Master entry for a VUID.^R^^R^IR^I^9999999.28^^^^^S
+"IX",9999999.28,9999999.28,"AMASTERVUID",.1,0)
+^^3^3^3141118^
+"IX",9999999.28,9999999.28,"AMASTERVUID",.1,1,0)
+If multiple entries have the same VUID in the file, this cross-reference 
+"IX",9999999.28,9999999.28,"AMASTERVUID",.1,2,0)
+can be used to identify the Master entry for a VUID associated with a 
+"IX",9999999.28,9999999.28,"AMASTERVUID",.1,3,0)
+Term/Concept.
+"IX",9999999.28,9999999.28,"AMASTERVUID",1)
+S ^AUTTSK("AMASTERVUID",$E(X(1),1,30),X(2),DA)=""
+"IX",9999999.28,9999999.28,"AMASTERVUID",2)
+K ^AUTTSK("AMASTERVUID",$E(X(1),1,30),X(2),DA)
+"IX",9999999.28,9999999.28,"AMASTERVUID",2.5)
+K ^AUTTSK("AMASTERVUID")
+"IX",9999999.28,9999999.28,"AMASTERVUID",11.1,0)
+^.114IA^2^2
+"IX",9999999.28,9999999.28,"AMASTERVUID",11.1,1,0)
+1^F^9999999.28^99.99^30^1^F
+"IX",9999999.28,9999999.28,"AMASTERVUID",11.1,2,0)
+2^F^9999999.28^99.98^^2^F
+"KRN",19,9860,-1)
+0^1
+"KRN",19,9860,0)
+PXTT EDIT SKIN TESTS^Skin Tests Add/Edit^Do not use! Placed out of order by PX*1*206^E^^^^^^^^^^1^1
+"KRN",19,9860,1,0)
+^19.06^18^18^3150122^^^^
+"KRN",19,9860,1,1,0)
+This option allows a user to create a new Skin Test table entry or edit a
+"KRN",19,9860,1,2,0)
+Skin Test table entry that was originally created at your site. Skin tests
+"KRN",19,9860,1,3,0)
+that are distributed with the PCE package can be inactivated using the PCE
+"KRN",19,9860,1,4,0)
+"Activate/Inactivate Table Items" menu.
+"KRN",19,9860,1,5,0)
+ 
+"KRN",19,9860,1,6,0)
+Once a skin test is defined in this table, it should not be deleted if
+"KRN",19,9860,1,7,0)
+there is any encounter form definitions which may be referencing the skin
+"KRN",19,9860,1,8,0)
+test, or if there is any patient encounter data which may be referencing
+"KRN",19,9860,1,9,0)
+this skin test historically.  Use the "Inactive Flag" field to make a
+"KRN",19,9860,1,10,0)
+skin test "INACTIVE" for selection in the Encounter form definition
+"KRN",19,9860,1,11,0)
+process and the PCE encounter data entry process.
+"KRN",19,9860,1,12,0)
+ 
+"KRN",19,9860,1,13,0)
+If skin tests are to be included on the clinic's encounter form, the skin
+"KRN",19,9860,1,14,0)
+tests must first be defined in the Skin Test file using this option.
+"KRN",19,9860,1,15,0)
+ 
+"KRN",19,9860,1,16,0)
+The scanning of encounter forms with the AICS package will provide PCE
+"KRN",19,9860,1,17,0)
+with patient skin test information which is stored in the V SKIN TEST
+"KRN",19,9860,1,18,0)
+file.
+"KRN",19,9860,15)
+K PXTDUZ,PXNAT,PXB
+"KRN",19,9860,20)
+D ZERO^PXTTU1("^AUTTSK(",$G(PXNAT))
+"KRN",19,9860,30)
+AUTTSK(
+"KRN",19,9860,31)
+QAMEZL
+"KRN",19,9860,34)
+S PXTDUZ=+$P($$SITE^VASITE,U,3) I $S($G(PXNAT):1,(+$G(Y)>100000):1,1:0)
+"KRN",19,9860,40)
+
+"KRN",19,9860,41)
+
+"KRN",19,9860,50)
+AUTTSK(
+"KRN",19,9860,51)
+.01;8801;.03
+"KRN",19,9860,53)
+BACKOUTOK
+"KRN",19,9860,"U")
+SKIN TESTS ADD/EDIT
+"KRN",19,9878,-1)
+0^2
+"KRN",19,9878,0)
+PXTT IN/ACTIVATE SKIN TEST^Skin Tests^Do not use! Placed out of order by PX*1*206^E^^^^^^^n^
+"KRN",19,9878,1,0)
+^^2^2^2951122^
+"KRN",19,9878,1,1,0)
+This option allows you to toggle the Inactive flag on a Skin Test entry
+"KRN",19,9878,1,2,0)
+found in the SKIN TEST file.
+"KRN",19,9878,30)
+AUTTSK(
+"KRN",19,9878,31)
+QAMEZ
+"KRN",19,9878,50)
+AUTTSK(
+"KRN",19,9878,51)
+.03
+"KRN",19,9878,53)
+BACKOUTOK
+"KRN",19,9878,"U")
+SKIN TESTS
+"MBREQ")
+0
+"ORD",18,19)
+19;18;;;OPT^XPDTA;OPTF1^XPDIA;OPTE1^XPDIA;OPTF2^XPDIA;;OPTDEL^XPDIA
+"ORD",18,19,0)
+OPTION
+"PKG",507,-1)
+1^1
+"PKG",507,0)
+PCE PATIENT CARE ENCOUNTER^PX^Patient Care Encounter
+"PKG",507,22,0)
+^9.49I^1^1
+"PKG",507,22,1,0)
+1.0^2960812^2960912^10958
+"PKG",507,22,1,"PAH",1,0)
+206^3150528^11963
+"PKG",507,22,1,"PAH",1,1,0)
+^^15^15^3150528
+"PKG",507,22,1,"PAH",1,1,1,0)
+The Veterans Health Information Systems and Technology Architecture
+"PKG",507,22,1,"PAH",1,1,2,0)
+(VistA) Immunizations Enhancements (VIMM) 2.0 project modifies existing
+"PKG",507,22,1,"PAH",1,1,3,0)
+Skin Test files and adds additional files to enable VA to quickly and
+"PKG",507,22,1,"PAH",1,1,4,0)
+reliably document and exchange standardized skin test and immunization
+"PKG",507,22,1,"PAH",1,1,5,0)
+information on beneficiaries across services and departments.
+"PKG",507,22,1,"PAH",1,1,6,0)
+Additionally, modifications support VistA Evolution requirements. This
+"PKG",507,22,1,"PAH",1,1,7,0)
+provides a Veteran patient-centric vaccine record exchangeable with the
+"PKG",507,22,1,"PAH",1,1,8,0)
+external community. Clinicians will have access to a more complete medical
+"PKG",507,22,1,"PAH",1,1,9,0)
+history in the VistA electronic medical record resulting in improved
+"PKG",507,22,1,"PAH",1,1,10,0)
+health status as well as public health monitoring.
+"PKG",507,22,1,"PAH",1,1,11,0)
+ 
+"PKG",507,22,1,"PAH",1,1,12,0)
+The goals for the VIMM 2.0 project are to deliver an Initial Operating
+"PKG",507,22,1,"PAH",1,1,13,0)
+Capability comprised of standard, interoperable skin test and immunization
+"PKG",507,22,1,"PAH",1,1,14,0)
+data for exchange with external trading partners based on the
+"PKG",507,22,1,"PAH",1,1,15,0)
+modernization of the VistA Patient Care Encounter (PCE) package.
+"PRE")
+PXVE206
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+4
+"RTN","PXRHS04")
+0^2^B8043318
+"RTN","PXRHS04",1,0)
+PXRHS04 ; SLC/SBW - PCE Visit Skin Test Data Extract ;11/25/96
+"RTN","PXRHS04",2,0)
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**13,206**;Aug 12, 1996;Build 50
+"RTN","PXRHS04",3,0)
+SKIN(DFN) ; Control branching
+"RTN","PXRHS04",4,0)
+ ;INPUT  : DFN      - Pointer to PATIENT file (#2)
+"RTN","PXRHS04",5,0)
+ ;OUTPUT : 
+"RTN","PXRHS04",6,0)
+ ;  Data from V SKIN TEST (9000010.12) file
+"RTN","PXRHS04",7,0)
+ ;  ^TMP("PXS,$J,SKIN,InvDt,IFN,0) = SKIN TEST [E;.01]
+"RTN","PXRHS04",8,0)
+ ;     ^ EVENT DATE/TIME or VISIT/ADMIT DATE&TIME [I;1201 or .03] 
+"RTN","PXRHS04",9,0)
+ ;     ^ RESULTS CODE [I;.04] ^ RESULTS [E;.04] ^ READING [E;.05]
+"RTN","PXRHS04",10,0)
+ ;     ^ DATE READ [I;.06] ^ ORDERING PROVIDER [E;1202]
+"RTN","PXRHS04",11,0)
+ ;     ^ ENCOUNTER PROVIDER [E;1204]
+"RTN","PXRHS04",12,0)
+ ;  ^TMP("PXS",$J,SKIN,InvDt,IFN,1) = ^ HOSPITAL LOCATION [E;9000010;.22] 
+"RTN","PXRHS04",13,0)
+ ;     ^ HOSP. LOC. ABBREVIATION [E;44;1]
+"RTN","PXRHS04",14,0)
+ ;     ^ LOC OF ENCOUNTER [E;9000010;.06] ^ OUTSIDE LOC [E;9000010;2101]
+"RTN","PXRHS04",15,0)
+ ;  ^TMP("PXS",$J,SKIN,InvDt,IFN,"S") = DATA SOURCE [E;80102]
+"RTN","PXRHS04",16,0)
+ ;
+"RTN","PXRHS04",17,0)
+ ;   [] = [I(nternal)/E(xternal); Optional file #; Record #]
+"RTN","PXRHS04",18,0)
+ ;   Subscripts:
+"RTN","PXRHS04",19,0)
+ ;     SKIN  - Skin Test name
+"RTN","PXRHS04",20,0)
+ ;     InvDt - Inverse FileMan date of DATE OF event or visit
+"RTN","PXRHS04",21,0)
+ ;     IFN   - Internal Record #
+"RTN","PXRHS04",22,0)
+ ;
+"RTN","PXRHS04",23,0)
+ Q:$G(DFN)']""!'$D(^AUPNVSK("AA",DFN))
+"RTN","PXRHS04",24,0)
+ N PXSK,PXIVD,PXIFN,IHSDATE
+"RTN","PXRHS04",25,0)
+ S IHSDATE=9999999-$$HSDATE^PXRHS01
+"RTN","PXRHS04",26,0)
+ K ^TMP("PXS",$J)
+"RTN","PXRHS04",27,0)
+ S PXSK=""
+"RTN","PXRHS04",28,0)
+ F  S PXSK=$O(^AUPNVSK("AA",DFN,PXSK)) Q:PXSK=""  D
+"RTN","PXRHS04",29,0)
+ . S PXIVD=0
+"RTN","PXRHS04",30,0)
+ . F  S PXIVD=$O(^AUPNVSK("AA",DFN,PXSK,PXIVD)) Q:PXIVD'>0  Q:PXIVD>IHSDATE  D
+"RTN","PXRHS04",31,0)
+ . . S PXIFN=0
+"RTN","PXRHS04",32,0)
+ . . F  S PXIFN=$O(^AUPNVSK("AA",DFN,PXSK,PXIVD,PXIFN)) Q:PXIFN'>0  D
+"RTN","PXRHS04",33,0)
+ . . . N DIC,DIQ,DR,DA,REC,VDATA,SKIN,SKDT,RESULTC,RESULT,READING,RDT
+"RTN","PXRHS04",34,0)
+ . . . N OPROV,EPROV,HLOC,HLOCABB,SOURCE,IDT,COMMENT,PXSKIEN
+"RTN","PXRHS04",35,0)
+ . . . S DIC=9000010.12,DA=PXIFN,DIQ="REC(",DIQ(0)="IE"
+"RTN","PXRHS04",36,0)
+ . . . S DR=".01;.03;.04;.05;.06;1201;1202;1204;80102;81101"
+"RTN","PXRHS04",37,0)
+ . . . D EN^DIQ1
+"RTN","PXRHS04",38,0)
+ . . . Q:'$D(REC)
+"RTN","PXRHS04",39,0)
+ . . . S VDATA=$$GETVDATA^PXRHS03(+REC(9000010.12,DA,.03,"I"))
+"RTN","PXRHS04",40,0)
+ . . . S SKIN=REC(9000010.12,DA,.01,"E")  ;+ORIG
+"RTN","PXRHS04",41,0)
+ . . . S PXSKIEN=REC(9000010.12,DA,.01,"I")  ;get SKIN TEST IEN
+"RTN","PXRHS04",42,0)
+ . . . ;replace Name with PRINT NAME for National records
+"RTN","PXRHS04",43,0)
+ . . . I $P($G(^AUTTSK(+PXSKIEN,12)),U)]"" S SKIN=$P(^AUTTSK(+PXSKIEN,12),U)
+"RTN","PXRHS04",44,0)
+ . . . I $L(SKIN)>11 D  ;name longer than 11 characters
+"RTN","PXRHS04",45,0)
+ . . . . S SKIN=$E(SKIN,1,10)_"*"  ;truncate
+"RTN","PXRHS04",46,0)
+ . . . S SKDT=REC(9000010.12,DA,1201,"I")
+"RTN","PXRHS04",47,0)
+ . . . S:SKDT']"" SKDT=$P(VDATA,U)
+"RTN","PXRHS04",48,0)
+ . . . S IDT=9999999-SKDT
+"RTN","PXRHS04",49,0)
+ . . . S RESULTC=REC(9000010.12,DA,.04,"I")
+"RTN","PXRHS04",50,0)
+ . . . S RESULT=REC(9000010.12,DA,.04,"E")
+"RTN","PXRHS04",51,0)
+ . . . S READING=REC(9000010.12,DA,.05,"E")
+"RTN","PXRHS04",52,0)
+ . . . S RDT=REC(9000010.12,DA,.06,"I")
+"RTN","PXRHS04",53,0)
+ . . . S OPROV=REC(9000010.12,DA,1202,"E")
+"RTN","PXRHS04",54,0)
+ . . . S EPROV=REC(9000010.12,DA,1204,"E")
+"RTN","PXRHS04",55,0)
+ . . . S HLOC=$P(VDATA,U,5)
+"RTN","PXRHS04",56,0)
+ . . . S HLOCABB=$P(VDATA,U,6)
+"RTN","PXRHS04",57,0)
+ . . . S SOURCE=REC(9000010.12,DA,80102,"E")
+"RTN","PXRHS04",58,0)
+ . . . S COMMENT=REC(9000010.12,DA,81101,"E")
+"RTN","PXRHS04",59,0)
+ . . . S ^TMP("PXS",$J,SKIN,IDT,DA,0)=SKIN_U_SKDT_U_RESULTC_U_RESULT_U_READING_U_RDT_U_OPROV_U_EPROV
+"RTN","PXRHS04",60,0)
+ . . . S ^TMP("PXS",$J,SKIN,IDT,DA,1)=HLOC_U_HLOCABB_U_$P(VDATA,U,2)_U_$P(VDATA,U,4)
+"RTN","PXRHS04",61,0)
+ . . . S ^TMP("PXS",$J,SKIN,IDT,DA,"S")=SOURCE
+"RTN","PXRHS04",62,0)
+ . . . S ^TMP("PXS",$J,SKIN,IDT,DA,"COM")=COMMENT
+"RTN","PXRHS04",63,0)
+ Q
+"RTN","PXVE206")
+0^^B1087848
+"RTN","PXVE206",1,0)
+PXVE206 ;BPOIFO/CLR - ENVIRONMENT CHECK ;04/22/2015
+"RTN","PXVE206",2,0)
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**206**;Aug 12, 1996;Build 50
+"RTN","PXVE206",3,0)
+ ;Patch cannot be re-installed without assistance if STS seeding and deployment have commenced
+"RTN","PXVE206",4,0)
+ I $$STATUS() D  Q 
+"RTN","PXVE206",5,0)
+  . D BMES^XPDUTL("Patch cannot be re-installed without assistance from Product Support - INSTALLATION ABORTED")
+"RTN","PXVE206",6,0)
+  . S XPDQUIT=1
+"RTN","PXVE206",7,0)
+ Q
+"RTN","PXVE206",8,0)
+ ;
+"RTN","PXVE206",9,0)
+STATUS() ;checks STS status of files
+"RTN","PXVE206",10,0)
+ ; Return  0  if OK to re-install patch
+"RTN","PXVE206",11,0)
+ ;         1  if NOT OK to re-install
+"RTN","PXVE206",12,0)
+ N PXVFF,PXVSTOP,PXV920
+"RTN","PXVE206",13,0)
+ S PXVSTOP=0
+"RTN","PXVE206",14,0)
+ F PXVFF=920,920.1,920.2,920.3,920.4,920.5,9999999.04,9999999.28,9999999.14 D
+"RTN","PXVE206",15,0)
+ . S PXVSTOP=$S(PXVSTOP:1,+$$GETSTAT^HDISVF01(PXVFF)=0:0,1:1)
+"RTN","PXVE206",16,0)
+ Q PXVSTOP
+"RTN","PXVP206")
+0^^B79621981
+"RTN","PXVP206",1,0)
+PXVP206 ;BPOIFO/CLR - POST INSTALL ;01/14/15 12:38pm
+"RTN","PXVP206",2,0)
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**206**;Aug 12, 1996;Build 50
+"RTN","PXVP206",3,0)
+ ;
+"RTN","PXVP206",4,0)
+ ; This routine uses the following IAs:
+"RTN","PXVP206",5,0)
+ ; #4639 - ^HDISVCMR calls     (supported)
+"RTN","PXVP206",6,0)
+ ; #4651 - ^HDISVF09 calls     (supported)
+"RTN","PXVP206",7,0)
+ ; #4640 - ^HDISVF01 calls     (supported)
+"RTN","PXVP206",8,0)
+ ;
+"RTN","PXVP206",9,0)
+ Q
+"RTN","PXVP206",10,0)
+ ;
+"RTN","PXVP206",11,0)
+PRETRAN ;Load spreadsheet
+"RTN","PXVP206",12,0)
+ M @XPDGREF@("PXVSKX")=^XTMP("PXVSKX")
+"RTN","PXVP206",13,0)
+ Q
+"RTN","PXVP206",14,0)
+ ;
+"RTN","PXVP206",15,0)
+PRE ;
+"RTN","PXVP206",16,0)
+ N PXVI,PXVNM,I,PXVC
+"RTN","PXVP206",17,0)
+ ;delete SHORT NAME identifier
+"RTN","PXVP206",18,0)
+ I $D(^DD(9999999.14,0,"ID",.02)) K ^DD(9999999.14,0,"ID",.02)
+"RTN","PXVP206",19,0)
+ I $$DUP() D  Q
+"RTN","PXVP206",20,0)
+ . D BMES^XPDUTL("DUPLICATE Names were found in the SKIN TEST file - INSTALLATION ABORTED")
+"RTN","PXVP206",21,0)
+ . S XPDABORT=1
+"RTN","PXVP206",22,0)
+ D DELETE(920) ;kills file
+"RTN","PXVP206",23,0)
+ Q
+"RTN","PXVP206",24,0)
+ ;
+"RTN","PXVP206",25,0)
+POST ;Post installation
+"RTN","PXVP206",26,0)
+ ;standardize SKIN Test file
+"RTN","PXVP206",27,0)
+ ;
+"RTN","PXVP206",28,0)
+ N ERRCNT,PXVCPDT,XUMF,PXVGL,PXVF
+"RTN","PXVP206",29,0)
+ S XUMF=1
+"RTN","PXVP206",30,0)
+ K ^XTMP("PXVSKX"),^XTMP("PXVERR")
+"RTN","PXVP206",31,0)
+ M ^XTMP("PXVSKX")=@XPDGREF@("PXVSKX")
+"RTN","PXVP206",32,0)
+ I '$D(^XTMP("PXVSKB")) M ^XTMP("PXVSKB",9999999.28)=^AUTTSK
+"RTN","PXVP206",33,0)
+ S PXVCPDT=$$FMADD^XLFDT(DT,90)
+"RTN","PXVP206",34,0)
+ S ^XTMP("PXVSKX",0)=PXVCPDT_"^"_DT  ;set purge ddt/creation dt
+"RTN","PXVP206",35,0)
+ S PXVCPDT=$$FMADD^XLFDT(DT,60)
+"RTN","PXVP206",36,0)
+ S ^XTMP("PXVSKB",0)=PXVCPDT_"^"_DT
+"RTN","PXVP206",37,0)
+ ;backup files populated in PX*1*201
+"RTN","PXVP206",38,0)
+ I '$D(^XTMP("PXVBKUP")) D
+"RTN","PXVP206",39,0)
+ . F PXVF=920.1,920.2,920.3,9999999.04,9999999.14,920.4,920.5 D
+"RTN","PXVP206",40,0)
+ . . S PXVGL=$$ROOT^DILFD(PXVF,"",1) Q:PXVGL=""
+"RTN","PXVP206",41,0)
+ . . M ^XTMP("PXVBKUP",PXVF)=@PXVGL
+"RTN","PXVP206",42,0)
+ S ^XTMP("PXVBKUP",0)=PXVCPDT_"^"_DT  ;90 days
+"RTN","PXVP206",43,0)
+ D DATA ;restores original SKIN TEST file
+"RTN","PXVP206",44,0)
+ D SELECT ;standardizes entries in skin test file
+"RTN","PXVP206",45,0)
+ D REMAIN  ;inactivates non-standard entries
+"RTN","PXVP206",46,0)
+ D SHORTNM  ;fixes spelling error
+"RTN","PXVP206",47,0)
+ D MAIL
+"RTN","PXVP206",48,0)
+ I $D(^XTMP("PXVERR")) D  Q 
+"RTN","PXVP206",49,0)
+ . D BMES^XPDUTL("Master File Server Seeding was aborted because of errors in the SKIN TEST file conversion!!")
+"RTN","PXVP206",50,0)
+ D CLEAN  ;deletes MAX# IN SERIES values
+"RTN","PXVP206",51,0)
+ D HDIS  ;seeds if no errors
+"RTN","PXVP206",52,0)
+ Q
+"RTN","PXVP206",53,0)
+ ;
+"RTN","PXVP206",54,0)
+SELECT ;Select standard in local file entries
+"RTN","PXVP206",55,0)
+ N I,PXVIEN,PXVNM,PXVZ,PXVOUT,PXVERR,PXVNAT
+"RTN","PXVP206",56,0)
+ F I=0:0 S I=$O(^XTMP("PXVSKX",I)) Q:I=""  D
+"RTN","PXVP206",57,0)
+ . S PXVZ=$G(^XTMP("PXVSKX",I,0))
+"RTN","PXVP206",58,0)
+ . S PXVNM=$P(PXVZ,U,2)
+"RTN","PXVP206",59,0)
+ . S PXVIEN=$$IEN(PXVNM)
+"RTN","PXVP206",60,0)
+ . I $P(PXVZ,U)="" D  Q
+"RTN","PXVP206",61,0)
+ . . Q:'+PXVIEN  ;quit if not in file
+"RTN","PXVP206",62,0)
+ . . D LOCAL(PXVIEN)
+"RTN","PXVP206",63,0)
+ . S PXVZ=PXVIEN_"^"_I_"~"_PXVZ
+"RTN","PXVP206",64,0)
+ . S PXVOUT=$$STANDARD(PXVZ)
+"RTN","PXVP206",65,0)
+ Q
+"RTN","PXVP206",66,0)
+ ;
+"RTN","PXVP206",67,0)
+STANDARD(PXVZ) ;set up standard record
+"RTN","PXVP206",68,0)
+ ;  .01          NAME
+"RTN","PXVP206",69,0)
+ ;  .02          CODE
+"RTN","PXVP206",70,0)
+ ;  .03          INACTIVE FLAG
+"RTN","PXVP206",71,0)
+ ;  .11          CPT CODE
+"RTN","PXVP206",72,0)
+ ;  3            CODING SYSTEM  (multiple)
+"RTN","PXVP206",73,0)
+ ;  1201         PRINT NAME
+"RTN","PXVP206",74,0)
+ ;  8801         MNEMONIC
+"RTN","PXVP206",75,0)
+ ;IEN/0^ROW #~CLASS^NAME^PRINT NAME^STATUS^CPT^MAP NAME
+"RTN","PXVP206",76,0)
+ N PXV,PXVT,PXVNM,PXVRNM,PXVMAPN,PXVPRT,PXVIEN,PXVERR
+"RTN","PXVP206",77,0)
+ Q:PXVZ="" 1
+"RTN","PXVP206",78,0)
+ Q:$D(PXVNAT($P(PXVZ,U,4))) 1 ;duplicate National record
+"RTN","PXVP206",79,0)
+ I $P(PXVZ,U,7)'="" Q:$D(^AUTTSK("B",$P(PXVZ,U,7))) 1  ;quit if record exists with map name
+"RTN","PXVP206",80,0)
+ S XUMF=1
+"RTN","PXVP206",81,0)
+ S (PXV,PXVIEN(1))=+$P(PXVZ,U)
+"RTN","PXVP206",82,0)
+ I '+$P(PXVZ,U) D
+"RTN","PXVP206",83,0)
+ . S PXVIEN(1)=100+(+$P($P(PXVZ,U,2),"~")),PXV="+1"  ;get IEN
+"RTN","PXVP206",84,0)
+ S PXVRNM=$S(PXV="+1":"",1:$P($G(^AUTTSK(+$P(PXVZ,U),0)),U))  ;Record Name
+"RTN","PXVP206",85,0)
+ S PXVNM=$$UP^XLFSTR($P(PXVZ,U,3))  ;Name
+"RTN","PXVP206",86,0)
+ S PXVPRT=$P(PXVZ,U,4)  ;Print Name
+"RTN","PXVP206",87,0)
+ S PXVMAPN=$P(PXVZ,U,7)  ;Map Name
+"RTN","PXVP206",88,0)
+ I PXV="+1",$D(^AUTTSK("B",PXVPRT)) D
+"RTN","PXVP206",89,0)
+ . ;if record already exists with print name, use that record
+"RTN","PXVP206",90,0)
+ . S (PXV,PXVIEN(1))=$O(^AUTTSK("B",PXVPRT,""))
+"RTN","PXVP206",91,0)
+ . S PXVRNM=PXVPRT
+"RTN","PXVP206",92,0)
+ I $$UP^XLFSTR(PXVRNM)'=PXVPRT D
+"RTN","PXVP206",93,0)
+ . S PXVT(9999999.28,PXV_",",.01)=PXVPRT  ;REPLACE NAME W/PRINT NAME
+"RTN","PXVP206",94,0)
+ S PXVT(9999999.28,PXV_",",1201)=$S(PXVMAPN]"":PXVMAPN,1:PXVNM)
+"RTN","PXVP206",95,0)
+ I PXV'="+1",(+$P($G(^AUTTSK(PXV,0)),U,3)) S $P(^AUTTSK(PXV,0),U,3)=""  ;uneditable prevents FM edit
+"RTN","PXVP206",96,0)
+ S PXVT(9999999.28,PXV_",",100)="NATIONAL"
+"RTN","PXVP206",97,0)
+ S PXVNAT(PXVPRT)=""
+"RTN","PXVP206",98,0)
+ D UPDATE^DIE("E","PXVT","PXVIEN","PXVERR")
+"RTN","PXVP206",99,0)
+ I $D(PXVERR) D ERROR(.PXVERR),BMES(PXVIEN(1)) Q 1
+"RTN","PXVP206",100,0)
+ ;CODING SYSTEM->CODE
+"RTN","PXVP206",101,0)
+ I $P(PXVZ,U,6) D MANY(PXVIEN(1),.PXVZ)
+"RTN","PXVP206",102,0)
+ Q $G(PXV)_U_$S($D(PXVERR):1,1:0)
+"RTN","PXVP206",103,0)
+ ;
+"RTN","PXVP206",104,0)
+MANY(IEN,PXVZ) ;populates Coding Multiple
+"RTN","PXVP206",105,0)
+ N PXVL,PXVCOL,PXVITEM,I,PXVT,PXVERR,PXVLL,PXVREC
+"RTN","PXVP206",106,0)
+ ;CODING SYSTEM
+"RTN","PXVP206",107,0)
+ S PXVCOL="CPT",PXVL=1
+"RTN","PXVP206",108,0)
+ S PXVT(9999999.283,"?+"_PXVL_","_IEN_",",.01)=PXVCOL
+"RTN","PXVP206",109,0)
+ ;CPT CODES
+"RTN","PXVP206",110,0)
+ S PXVLL=PXVL,PXVL=PXVL+1,PXVCOL=$P(PXVZ,U,6)
+"RTN","PXVP206",111,0)
+ F I=1:1 S PXVITEM=$P(PXVCOL,"|",I) Q:PXVITEM=""  D
+"RTN","PXVP206",112,0)
+ . S PXVT(9999999.2831,"?+"_PXVL_",?+"_PXVLL_","_IEN_",",.01)=PXVITEM
+"RTN","PXVP206",113,0)
+ . S PXVL=PXVL+1
+"RTN","PXVP206",114,0)
+ D UPDATE^DIE(,"PXVT",,"PXVERR")
+"RTN","PXVP206",115,0)
+ I $D(PXVERR) D ERROR(.PXVERR),BMES(IEN)
+"RTN","PXVP206",116,0)
+ Q
+"RTN","PXVP206",117,0)
+ ;
+"RTN","PXVP206",118,0)
+REMAIN ;
+"RTN","PXVP206",119,0)
+ ;loop through file entries with no Class code
+"RTN","PXVP206",120,0)
+ N PXVIEN,PXVZ
+"RTN","PXVP206",121,0)
+ F PXVIEN=0:0 S PXVIEN=$O(^AUTTSK(PXVIEN)) Q:PXVIEN'>0  D
+"RTN","PXVP206",122,0)
+ . S PXVZ=$G(^AUTTSK(+PXVIEN,0))
+"RTN","PXVP206",123,0)
+ . I $P($G(^AUTTSK(PXVIEN,100)),U)="" D LOCAL(PXVIEN)
+"RTN","PXVP206",124,0)
+ Q
+"RTN","PXVP206",125,0)
+ ;
+"RTN","PXVP206",126,0)
+LOCAL(PXVIEN) ;
+"RTN","PXVP206",127,0)
+ N PXVT,PXVERR
+"RTN","PXVP206",128,0)
+ I $P($G(^AUTTSK(+PXVIEN,0)),U,3)="" S PXVT(9999999.28,PXVIEN_",",.03)="INACTIVE"
+"RTN","PXVP206",129,0)
+ S PXVT(9999999.28,PXVIEN_",",100)="LOCAL"
+"RTN","PXVP206",130,0)
+ D UPDATE^DIE("E","PXVT",,"PXVERR")
+"RTN","PXVP206",131,0)
+ I $D(PXVERR) D ERROR(.PXVERR),BMES(PXVIEN)
+"RTN","PXVP206",132,0)
+ Q
+"RTN","PXVP206",133,0)
+ ;
+"RTN","PXVP206",134,0)
+DUP() ;
+"RTN","PXVP206",135,0)
+ ; Returns 0: No duplicates
+"RTN","PXVP206",136,0)
+ ;         1: Duplicate
+"RTN","PXVP206",137,0)
+ N PXVARY,PXVFLG,PXV,PXVIEN
+"RTN","PXVP206",138,0)
+ S PXVFLG=0,PXV=-1 F  S PXV=$O(^AUTTSK("B",PXV)) Q:PXV=""!(PXVFLG)  D
+"RTN","PXVP206",139,0)
+ . F PXVIEN=0:0 S PXVIEN=$O(^AUTTSK("B",PXV,PXVIEN)) Q:PXVIEN=""  D
+"RTN","PXVP206",140,0)
+ . . I '$D(PXVARY($$UP^XLFSTR(PXV))) S PXVARY($$UP^XLFSTR(PXV))="" Q
+"RTN","PXVP206",141,0)
+ . . S PXVFLG=1
+"RTN","PXVP206",142,0)
+ Q PXVFLG
+"RTN","PXVP206",143,0)
+ ; 
+"RTN","PXVP206",144,0)
+IEN(PXVNM) ;
+"RTN","PXVP206",145,0)
+ ;Returns 0:   No match
+"RTN","PXVP206",146,0)
+ ;        IEN: Matching IEN
+"RTN","PXVP206",147,0)
+ N PXVI,PXVIEN
+"RTN","PXVP206",148,0)
+ S PXVIEN="",PXVI=""
+"RTN","PXVP206",149,0)
+ F PXVNM=PXVNM,$$LOW^XLFSTR(PXVNM),$$SENTENCE^XLFSTR(PXVNM),$$TITLE^XLFSTR(PXVNM) D
+"RTN","PXVP206",150,0)
+ . F  S PXVI=$O(^AUTTSK("B",PXVNM,PXVI)) Q:PXVI=""  D
+"RTN","PXVP206",151,0)
+ . . S PXVIEN=PXVI
+"RTN","PXVP206",152,0)
+ Q +PXVIEN
+"RTN","PXVP206",153,0)
+ ;
+"RTN","PXVP206",154,0)
+ERROR(PXVERR) ;
+"RTN","PXVP206",155,0)
+ I '$D(^XTMP("PXVERR",0)) S ^XTMP("PXVERR",0)=$$FMADD^XLFDT(DT,30)_"^"_DT
+"RTN","PXVP206",156,0)
+ S ERRCNT=$S('$D(ERRCNT):1,1:ERRCNT+1)
+"RTN","PXVP206",157,0)
+ S $P(^XTMP("PXVERR",0),U,3)=ERRCNT
+"RTN","PXVP206",158,0)
+ M ^XTMP("PXVERR",ERRCNT)=PXVERR
+"RTN","PXVP206",159,0)
+ Q
+"RTN","PXVP206",160,0)
+ ;
+"RTN","PXVP206",161,0)
+MAIL ;
+"RTN","PXVP206",162,0)
+ N PXVTXT,XMSUB,XMTEXT,PXVTXT,XMY,PXVOK,DIFROM
+"RTN","PXVP206",163,0)
+ S PXVOK=$G(^XTMP("PXVERR",0))>0
+"RTN","PXVP206",164,0)
+ S XMSUB="The SKIN TEST file update "
+"RTN","PXVP206",165,0)
+ S XMSUB=XMSUB_$S(PXVOK:"FAILED",1:"was SUCCESSFUL")
+"RTN","PXVP206",166,0)
+ S XMTEXT="PXVTXT("
+"RTN","PXVP206",167,0)
+ I PXVOK D
+"RTN","PXVP206",168,0)
+ . S PXVTXT(1)="Errors occurred during the update of the SKIN TEST (#9999999.28) file."
+"RTN","PXVP206",169,0)
+ . S PXVTXT(2)="Master File Server Seeding was aborted."
+"RTN","PXVP206",170,0)
+ . S PXVTXT(3)="Details of the errors are stored in ^XTMP(""PXVERR"") for the next 30 days."
+"RTN","PXVP206",171,0)
+ . S PXVTXT(4)="Please contact Product Support for assistance."
+"RTN","PXVP206",172,0)
+ I 'PXVOK D
+"RTN","PXVP206",173,0)
+ . S PXVTXT(1)="The SKIN TEST file has been successfully updated."
+"RTN","PXVP206",174,0)
+ S XMY(DUZ)=""
+"RTN","PXVP206",175,0)
+ D ^XMD
+"RTN","PXVP206",176,0)
+ Q
+"RTN","PXVP206",177,0)
+ ;
+"RTN","PXVP206",178,0)
+DATA ;deletes data in the SKIN TEST file and restores from backup
+"RTN","PXVP206",179,0)
+ N PXVI,DA,DIK
+"RTN","PXVP206",180,0)
+ S XUMF=1
+"RTN","PXVP206",181,0)
+ I '$D(^XTMP("PXVSKB")) D BMES^XPDUTL("SKIN TEST was not restored") Q
+"RTN","PXVP206",182,0)
+ F PXVI=0:0 S PXVI=$O(^AUTTSK(PXVI)) Q:PXVI'>0  D
+"RTN","PXVP206",183,0)
+ . S DA=PXVI,DIK="^AUTTSK(" D ^DIK
+"RTN","PXVP206",184,0)
+ S PXVI=-1 F  S PXVI=$O(^XTMP("PXVSKB",9999999.28,PXVI)) Q:PXVI=""  D
+"RTN","PXVP206",185,0)
+ . M ^AUTTSK(PXVI)=^XTMP("PXVSKB",9999999.28,PXVI)
+"RTN","PXVP206",186,0)
+ Q
+"RTN","PXVP206",187,0)
+ ;
+"RTN","PXVP206",188,0)
+DELETE(PXVFN) ;
+"RTN","PXVP206",189,0)
+ ; Delete data in selected file
+"RTN","PXVP206",190,0)
+ N PXVG,J,DIK,DA,XUMF
+"RTN","PXVP206",191,0)
+ S PXVG=$$ROOT^DILFD(PXVFN,0,"GL")
+"RTN","PXVP206",192,0)
+ S XUMF=1
+"RTN","PXVP206",193,0)
+ F J=0:0 S J=$O(@(PXVG_J_")")) Q:J'>0  D 
+"RTN","PXVP206",194,0)
+ . S DA=J,DIK=PXVG D ^DIK
+"RTN","PXVP206",195,0)
+ Q
+"RTN","PXVP206",196,0)
+ ;
+"RTN","PXVP206",197,0)
+BMES(IEN) ; 
+"RTN","PXVP206",198,0)
+ Q:IEN=""
+"RTN","PXVP206",199,0)
+ D BMES^XPDUTL("Fileman error in SKIN TEST record # "_IEN)
+"RTN","PXVP206",200,0)
+ Q
+"RTN","PXVP206",201,0)
+ ;
+"RTN","PXVP206",202,0)
+SHORTNM ;fix short name spelling
+"RTN","PXVP206",203,0)
+ N PXVI,PXVT,PXVERR
+"RTN","PXVP206",204,0)
+ S PXVI=$O(^AUTTIMM("B","VARICELLA","")) Q:PXVI=""  D
+"RTN","PXVP206",205,0)
+ . Q:'$D(^AUTTIMM("D","VARCELLA",PXVI))
+"RTN","PXVP206",206,0)
+ . S PXVT(9999999.14,PXVI_",",.02)="VARICELLA"
+"RTN","PXVP206",207,0)
+ . D UPDATE^DIE("E","PXVT")
+"RTN","PXVP206",208,0)
+ Q
+"RTN","PXVP206",209,0)
+ ;
+"RTN","PXVP206",210,0)
+CLEAN ;deletes MAX#INSERIES
+"RTN","PXVP206",211,0)
+ N PXV
+"RTN","PXVP206",212,0)
+ F PXV=0:0 S PXV=$O(^AUTTIMM(PXV)) Q:PXV'>0  D
+"RTN","PXVP206",213,0)
+ . Q:$P($G(^AUTTIMM(PXV,0)),U,5)=""
+"RTN","PXVP206",214,0)
+ . I $D(^AUTTIMM(PXV,0)) S $P(^AUTTIMM(PXV,0),U,5)=""
+"RTN","PXVP206",215,0)
+ Q
+"RTN","PXVP206",216,0)
+ ;
+"RTN","PXVP206",217,0)
+HDIS ; Call HDIS to begin the 'seeding' process
+"RTN","PXVP206",218,0)
+ N DOMPTR,TMP
+"RTN","PXVP206",219,0)
+ D SETSTAT^HDISVF01(920,,4)  ;sets seeding status of 920 to 'AWAITING ERT UPDATE'
+"RTN","PXVP206",220,0)
+ D ERTBULL  ;sends bulletin to ERT
+"RTN","PXVP206",221,0)
+ S TMP=$$GETIEN^HDISVF09("IMMUNIZATIONS",.DOMPTR)
+"RTN","PXVP206",222,0)
+ D EN^HDISVCMR(DOMPTR,"")
+"RTN","PXVP206",223,0)
+ Q
+"RTN","PXVP206",224,0)
+ ;
+"RTN","PXVP206",225,0)
+UPD ;
+"RTN","PXVP206",226,0)
+ N DIC,DIE,DA,DR,Y,XUMF
+"RTN","PXVP206",227,0)
+ S XUMF=1
+"RTN","PXVP206",228,0)
+ F PXV=0:0 S DIC="^AUTTSK(",DIC(0)="AEQLN" D ^DIC Q:Y<0  D
+"RTN","PXVP206",229,0)
+ . S DIE="^AUTTSK(",DR=".01;.03;3;100;1201;8801",DA=+Y D ^DIE
+"RTN","PXVP206",230,0)
+ Q
+"RTN","PXVP206",231,0)
+ ;
+"RTN","PXVP206",232,0)
+ERTBULL ;
+"RTN","PXVP206",233,0)
+ ;sends bulletin to ERT that 920 is ready for full file update
+"RTN","PXVP206",234,0)
+ N PXVTMP,HDISP,HDISFLAG,HDISTASK
+"RTN","PXVP206",235,0)
+ S PXVTMP=$$SITE^VASITE()
+"RTN","PXVP206",236,0)
+ S HDISP(1)=$P(PXVTMP,"^",2),HDISP(1)=HDISP(1)_" (#"_($P(PXVTMP,"^",3))_") with Domain/IP Address "_$G(^XMB("NETNAME")) ;facility name
+"RTN","PXVP206",237,0)
+ S HDISP(2)="VACCINE INFORMATION STATEMENT (#920)"
+"RTN","PXVP206",238,0)
+ S HDISP(3)=$$NOW^XLFDT N Y S Y=HDISP(3) D DD^%DT S HDISP(3)=Y ;date/time
+"RTN","PXVP206",239,0)
+ S HDISP(4)=$$PROD^XUPROD(),HDISP(4)=$S(HDISP(4):"PRODUCTION",1:"TEST") ;system type
+"RTN","PXVP206",240,0)
+ S HDISP(5)=$P(PXVTMP,"^",3) ;facility number
+"RTN","PXVP206",241,0)
+ S HDISP(6)=920
+"RTN","PXVP206",242,0)
+ S HDISFLAG("FROM")="HDIS Data Standardization Server"
+"RTN","PXVP206",243,0)
+ D TASKBULL^XMXAPI(DUZ,"HDIS NOTIFY ERT",.HDISP,,,.HDISFLAG,.HDISTASK) ;
+"RTN","PXVP206",244,0)
+ Q
+"RTN","PXVP206",245,0)
+ ;
+"RTN","PXVP206",246,0)
+RESTORE(PXVF) ;
+"RTN","PXVP206",247,0)
+ N PXVGL,PXVI
+"RTN","PXVP206",248,0)
+ I (PXVF'=920.1)&(PXVF'=920.2)&(PXVF'=920.3)&(PXVF'=920.4)&(PXVF'=920.5)&(PXVF'=9999999.04)&(PXVF'=9999999.14) D  Q
+"RTN","PXVP206",249,0)
+ . W !,"Only 920.1, 920.2, 920.3, 920.4, 920.5,9999999.04 and 9999999.14 can be restored using this API."
+"RTN","PXVP206",250,0)
+ I '$D(^XTMP("PXVBKUP",PXVF)) W !,"Data backup has been purged.  Restore is aborted." Q
+"RTN","PXVP206",251,0)
+ D DELETE(PXVF)
+"RTN","PXVP206",252,0)
+ S PXVGL=$$ROOT^DILFD(PXVF)
+"RTN","PXVP206",253,0)
+ S PXVI=-1 F  S PXVI=$O(^XTMP("PXVBKUP",PXVF,PXVI)) Q:PXVI=""  D
+"RTN","PXVP206",254,0)
+ . M @(PXVGL_""""_PXVI_""""_")")=^XTMP("PXVBKUP",PXVF,PXVI)
+"RTN","PXVP206",255,0)
+ Q
+"RTN","PXVZRT")
+0^1^B71159926
+"RTN","PXVZRT",1,0)
+PXVZRT ;SLC/PBB - VIMM UTILITY ROUTINE ;01/15/2015  4:44 PM
+"RTN","PXVZRT",2,0)
+ ;;1.0;PCE PATIENT CARE ENCOUNTER;**206**;Aug 12, 1996;Build 50
+"RTN","PXVZRT",3,0)
+ ;
+"RTN","PXVZRT",4,0)
+ Q
+"RTN","PXVZRT",5,0)
+ZRT ;Manipulate update of MFN ZRT segment for Immunization files
+"RTN","PXVZRT",6,0)
+ I IEN,((NAME="Term")!(NAME="Status")) K XXIEN ;This is the indication that it's first update for any subfile
+"RTN","PXVZRT",7,0)
+ S:$D(HLNODE(1)) HLNODE=HLNODE_HLNODE(1)
+"RTN","PXVZRT",8,0)
+ G 920:IFN=920,99999914:IFN=9999999.14,99999928:IFN=9999999.28,9204:IFN=920.4,99999904:IFN=9999999.04,9201:IFN=920.1
+"RTN","PXVZRT",9,0)
+ Q
+"RTN","PXVZRT",10,0)
+920 ; Manipulate update of MFN ZRT segment for 920 File
+"RTN","PXVZRT",11,0)
+ I IEN,NAME="Term" D  Q
+"RTN","PXVZRT",12,0)
+ .N Y,X1
+"RTN","PXVZRT",13,0)
+ .S X1=$$UNESC^XUMF0($P(HLNODE,HLFS,3),.HL)
+"RTN","PXVZRT",14,0)
+ .;Get Name, Date and Language from Term
+"RTN","PXVZRT",15,0)
+ .F I=1:1 S Y=$P(X1," ",I) Q:Y?1N.N1"/"1N.N1"/"1N.N  I '$L(Y),'$L($P(X1," ",I+1,99)) Q
+"RTN","PXVZRT",16,0)
+ .I Y="" S ERROR="1^Error - .01 is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",17,0)
+ .S X1=$P(X1,Y)
+"RTN","PXVZRT",18,0)
+ .S Y=$L(X1) F I=Y:-1 Q:$E(X1,I)'=" "  S X1=$E(X1,1,Y-1) ;Get rid of spaces on end of .01
+"RTN","PXVZRT",19,0)
+ .S $P(HLNODE,HLFS,3)=X1
+"RTN","PXVZRT",20,0)
+ I IEN,NAME="VistA_VIS_Language" D  Q
+"RTN","PXVZRT",21,0)
+ .N DIC,X,IENS
+"RTN","PXVZRT",22,0)
+ .S NAME=$$UNESC^XUMF0($P(HLNODE,HLFS,3),.HL)
+"RTN","PXVZRT",23,0)
+ .S DIC=.85,DIC(0)="M",X=NAME D ^DIC I Y<0 S ERROR="1^Error - .04 LANGUAGE is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",24,0)
+ .S IENS=IEN_","
+"RTN","PXVZRT",25,0)
+ .S FDA(IFN,IENS,.04)=+Y
+"RTN","PXVZRT",26,0)
+ .S OUT=1
+"RTN","PXVZRT",27,0)
+ .Q
+"RTN","PXVZRT",28,0)
+ I 'IEN,NAME="Term" D  Q
+"RTN","PXVZRT",29,0)
+ .;Assuming that the " " delimiter is used in Term
+"RTN","PXVZRT",30,0)
+ .;Assuming MFS Update will be in the form: 
+"RTN","PXVZRT",31,0)
+ .; ZRT^Term^ANTHRAX VIS 3/10/2010 ENGLISH
+"RTN","PXVZRT",32,0)
+ .; ZRT^VistA_VIS_Edition_Date^3/10/2010     in form:mm/dd/yy
+"RTN","PXVZRT",33,0)
+ .; ZRT^VistA_VIS_Language^ENGLISH
+"RTN","PXVZRT",34,0)
+ .N DIC,X,X1,X2,X3,Y,XREF,ROOT,FDA,ERR,IENS,IIEN,%DT,I
+"RTN","PXVZRT",35,0)
+ .S NAME=$$UNESC^XUMF0($P(HLNODE,HLFS,3),.HL)
+"RTN","PXVZRT",36,0)
+ .S ROOT=$$ROOT^DILFD(IFN,,1)
+"RTN","PXVZRT",37,0)
+ .;Get Name, Date and Language from Term
+"RTN","PXVZRT",38,0)
+ .F I=1:1 S Y=$P(NAME," ",I) Q:Y?1N.N1"/"1N.N1"/"1N.N  I '$L(Y),'$L($P(NAME," ",I+1,99)) Q
+"RTN","PXVZRT",39,0)
+ .I Y="" S ERROR="1^Error - .01 is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",40,0)
+ .S X1=$P(NAME,Y),X2=Y,X3=$P(NAME,Y,2)
+"RTN","PXVZRT",41,0)
+ .F I=1:1 Q:$E(X3,I)'=" "  S X3=$E(X3,I+1,$L(X3)) ;Get rid of leading spaces from Language.
+"RTN","PXVZRT",42,0)
+ .S Y=$L(X1) F I=Y:-1 Q:$E(X1,I)'=" "  S X1=$E(X1,1,Y-1) ;Get rid of spaces on end of .01
+"RTN","PXVZRT",43,0)
+ .;Get Date from Term
+"RTN","PXVZRT",44,0)
+ .;put it into form: 3140819
+"RTN","PXVZRT",45,0)
+ .S X=X2 D ^%DT
+"RTN","PXVZRT",46,0)
+ .I Y=-1 S ERROR="1^Error - .02 in Term is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",47,0)
+ .S X2=Y
+"RTN","PXVZRT",48,0)
+ .;
+"RTN","PXVZRT",49,0)
+ .S DIC=.85,DIC(0)="M",X=X3 D ^DIC I Y<0 S ERROR="1^Error - .04 LANGUAGE is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",50,0)
+ .S X3=+Y
+"RTN","PXVZRT",51,0)
+ .;Lookup B x-ref and see if match of date and Language.
+"RTN","PXVZRT",52,0)
+ .S IIEN=0
+"RTN","PXVZRT",53,0)
+ .F  Q:ERROR  S IIEN=$O(@ROOT@("B",X1,IIEN)) Q:'IIEN  S IENS=IIEN_"," I $$GET1^DIQ(920,IENS,.02,"I")=X2,$$GET1^DIQ(920,IENS,.04,"I")=X3 D:IEN  S IEN=IIEN
+"RTN","PXVZRT",54,0)
+ ..;Here the error generated if more as one entry match ,01  and .02 and .04
+"RTN","PXVZRT",55,0)
+ ..S ERROR="1^Error - File IENs duplicate: "_IEN_" and "_IIEN_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",56,0)
+ .Q:ERROR
+"RTN","PXVZRT",57,0)
+ .;
+"RTN","PXVZRT",58,0)
+ .I IEN D
+"RTN","PXVZRT",59,0)
+ ..M RECORD("BEFORE")=@ROOT@(IEN)
+"RTN","PXVZRT",60,0)
+ ..S RECORD("STATUS")=$$GETSTAT^XTID(IFN,,IEN_",")
+"RTN","PXVZRT",61,0)
+ .I 'IEN D  Q:ERROR
+"RTN","PXVZRT",62,0)
+ ..D CHK^DIE(IFN,.01,,X1,.X)
+"RTN","PXVZRT",63,0)
+ ..I X="^" S ERROR="1^Error - .01 is invalid"_" File #: "_IFN_" HLNODE="_HLNODE Q
+"RTN","PXVZRT",64,0)
+ ..K DIC S DIC=IFN,DIC(0)="F" D FILE^DICN K DIC
+"RTN","PXVZRT",65,0)
+ ..I Y="-1" S ERROR="1^Error - stub entry IFN: "_IFN_" failed HLNODE: "_HLNODE Q
+"RTN","PXVZRT",66,0)
+ ..S IEN=+Y,RECORD("NEW")=1
+"RTN","PXVZRT",67,0)
+ .;
+"RTN","PXVZRT",68,0)
+ .S:'$G(RECORD("NEW")) ^TMP("XUMF EVENT",$J,IFN,"BEFORE",IEN,"REPLACED BY")=""
+"RTN","PXVZRT",69,0)
+ .S:'$G(RECORD("NEW")) ^TMP("XUMF EVENT",$J,IFN,"BEFORE",IEN,"INHERITS FROM")=""
+"RTN","PXVZRT",70,0)
+ .;
+"RTN","PXVZRT",71,0)
+ .S IENS=IEN_","
+"RTN","PXVZRT",72,0)
+ .;
+"RTN","PXVZRT",73,0)
+ .S FDA(IFN,IENS,99.99)=VUID
+"RTN","PXVZRT",74,0)
+ .S FDA(IFN,IENS,99.98)=1
+"RTN","PXVZRT",75,0)
+ .;
+"RTN","PXVZRT",76,0)
+ .K ERR
+"RTN","PXVZRT",77,0)
+ .;
+"RTN","PXVZRT",78,0)
+ .D FILE^DIE("E","FDA","ERR")
+"RTN","PXVZRT",79,0)
+ .I $D(ERR) D
+"RTN","PXVZRT",80,0)
+ ..S ERROR="1^VUID update error IFN: "_IFN_" IEN: "_IEN_" VUID: "_VUID_" HLNODE: "_HLNODE
+"RTN","PXVZRT",81,0)
+ ..D EM^XUMF1H(ERROR,.ERR) K ERR
+"RTN","PXVZRT",82,0)
+ .;
+"RTN","PXVZRT",83,0)
+ .;Execute Additional coding for  4.001,3  ADD-PROCESSING LOGIC
+"RTN","PXVZRT",84,0)
+ .D ADD^XUMF1H
+"RTN","PXVZRT",85,0)
+ .;
+"RTN","PXVZRT",86,0)
+ .; clean multiple flag
+"RTN","PXVZRT",87,0)
+ .K:'$D(XIEN(IEN)) XIEN
+"RTN","PXVZRT",88,0)
+ .S XIEN(IEN)=$G(XIEN(IEN))+1
+"RTN","PXVZRT",89,0)
+ .S OUT=1
+"RTN","PXVZRT",90,0)
+ Q
+"RTN","PXVZRT",91,0)
+99999914 ; Manipulate update of MFN ZRT segment for 9999999.14 File
+"RTN","PXVZRT",92,0)
+ N X,XX,ERR,IENS,IEN1,IENX,X1,X2,X4,DA,DIK,I,FDAA
+"RTN","PXVZRT",93,0)
+ I IEN,NAME="VistA_CVX_Mapping" D  Q  ;ZRT^VistA_CVX_Mapping^CPT:90701,90743
+"RTN","PXVZRT",94,0)
+ .S X=$P(HLNODE,HLFS,3) ;X=CPT:90701,90743
+"RTN","PXVZRT",95,0)
+ .I '$L(X)!(X="""""") D DS(9999999.143,IEN) S OUT=1 Q  ;Q:$G(OUT)  ;If there is nothing coming from Push, wipe anything was there before
+"RTN","PXVZRT",96,0)
+ .I '$G(XXIEN(9999999.143)) D DS(9999999.143,IEN)  S XXIEN(9999999.143)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",97,0)
+ .S X1=$P(X,":"),X2=$P(X,":",2)
+"RTN","PXVZRT",98,0)
+ .S IENS=IEN_","
+"RTN","PXVZRT",99,0)
+ .S IEN1="+1,",FDAA(9999999.143,"+1,"_IENS,.01)=X1
+"RTN","PXVZRT",100,0)
+ .F I=2:1 S X4=$P(X2,",",I-1) Q:'X4  S IENX="+"_I_","_IEN1_IENS,FDAA(9999999.1431,IENX,.01)=X4
+"RTN","PXVZRT",101,0)
+ .D:$D(FDAA) UPDATE^DIE("","FDAA",,"ERR")
+"RTN","PXVZRT",102,0)
+ .I $D(ERR) D  Q
+"RTN","PXVZRT",103,0)
+ ..S ERROR="1^subfile update error SUBFILE#: 9999999.1431 HLNODE:"_HLNODE
+"RTN","PXVZRT",104,0)
+ ..D EM^XUMF1H(ERROR,.ERR)
+"RTN","PXVZRT",105,0)
+ .Q:$G(ERROR)
+"RTN","PXVZRT",106,0)
+ .S OUT=1
+"RTN","PXVZRT",107,0)
+ I IEN,NAME="VistA_CDC_Product_Name" D  Q
+"RTN","PXVZRT",108,0)
+ .I $P(HLNODE,HLFS,3)="""""" D DS(9999999.145,IEN) S OUT=1 Q
+"RTN","PXVZRT",109,0)
+ .I '$G(XXIEN(9999999.145)) D DS(9999999.145,IEN)  S XXIEN(9999999.145)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",110,0)
+ I IEN,NAME="VistA_Synonym" D  Q
+"RTN","PXVZRT",111,0)
+ .I $P(HLNODE,HLFS,3)="""""" D DS(9999999.141,IEN) S OUT=1 Q
+"RTN","PXVZRT",112,0)
+ .I '$G(XXIEN(9999999.141)) D DS(9999999.141,IEN)  S XXIEN(9999999.141)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",113,0)
+ I IEN,NAME="VistA_Inactive_Flag" D  Q
+"RTN","PXVZRT",114,0)
+ .S:$P(HLNODE,HLFS,3)'=1 $P(HLNODE,HLFS,3)=""""""
+"RTN","PXVZRT",115,0)
+ I IEN,NAME="vista_has_vis" D  Q
+"RTN","PXVZRT",116,0)
+ .I $P(HLNODE,HLFS,3)="""""" D DS(9999999.144,IEN) S OUT=1 Q
+"RTN","PXVZRT",117,0)
+ .I '$G(XXIEN(9999999.144)) D DS(9999999.144,IEN)  S XXIEN(9999999.144)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",118,0)
+ I IEN,NAME="VistA_Immunization_Group" D  Q
+"RTN","PXVZRT",119,0)
+ .I $P(HLNODE,HLFS,3)="""""" D DS(9999999.147,IEN) S OUT=1 Q
+"RTN","PXVZRT",120,0)
+ .I '$G(XXIEN(9999999.147)) D DS(9999999.147,IEN)  S XXIEN(9999999.147)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",121,0)
+ I IEN,NAME="Status" D IFST(.07,"",1) Q
+"RTN","PXVZRT",122,0)
+ Q
+"RTN","PXVZRT",123,0)
+99999928  ; Manipulate update of MFN ZRT segment for 9999999.28 File
+"RTN","PXVZRT",124,0)
+ N X,ERR,IENS,IEN1,IENX,X1,X2,X4,DA,DIK,I,FDAA
+"RTN","PXVZRT",125,0)
+ I IEN,NAME="VistA_Skin_Test_Mapping" D  Q
+"RTN","PXVZRT",126,0)
+ .;ZRT^VistA_Skin_Test_Mapping^CPT:90701,90743
+"RTN","PXVZRT",127,0)
+ .S X=$P(HLNODE,HLFS,3) ;X=CPT:90701,90743
+"RTN","PXVZRT",128,0)
+ .I '$L(X)!(X="""""") D DS(9999999.283,IEN) S OUT=1 Q  ;Q:$G(OUT)  ;If there is nothing coming from Push, wipe anything was there before
+"RTN","PXVZRT",129,0)
+ .I '$G(XXIEN(9999999.283)) D DS(9999999.283,IEN)  S XXIEN(9999999.283)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",130,0)
+ .S X1=$P(X,":"),X2=$P(X,":",2) ;$$FIND1^DIC(FILE,IENS,FLAGS,[.]VALUE,[.]INDEXES,[.]SCREEN,MSG_ROOT)
+"RTN","PXVZRT",131,0)
+ .S IENS=IEN_","
+"RTN","PXVZRT",132,0)
+ .S IEN1="+1,",FDAA(9999999.283,"+1,"_IENS,.01)=X1
+"RTN","PXVZRT",133,0)
+ .F I=2:1 S X4=$P(X2,",",I-1) Q:'X4  S IENX="+"_I_","_IEN1_IENS,FDAA(9999999.2831,IENX,.01)=X4
+"RTN","PXVZRT",134,0)
+ .D:$D(FDAA) UPDATE^DIE("","FDAA",,"ERR")
+"RTN","PXVZRT",135,0)
+ .I $D(ERR) D  Q
+"RTN","PXVZRT",136,0)
+ ..S ERROR="1^subfile update error SUBFILE#: 9999999.2831 HLNODE:"_HLNODE
+"RTN","PXVZRT",137,0)
+ ..D EM^XUMF1H(ERROR,.ERR)
+"RTN","PXVZRT",138,0)
+ .Q:$G(ERROR)
+"RTN","PXVZRT",139,0)
+ .S OUT=1
+"RTN","PXVZRT",140,0)
+ I IEN,NAME="VistA_Inactive_Flag" D  Q
+"RTN","PXVZRT",141,0)
+ .S:$P(HLNODE,HLFS,3)'=1 $P(HLNODE,HLFS,3)=""""""
+"RTN","PXVZRT",142,0)
+ I IEN,NAME="VistA_CPT_Code" D  Q
+"RTN","PXVZRT",143,0)
+ .S OUT=1
+"RTN","PXVZRT",144,0)
+ I IEN,NAME="Status" D IFST(.03,"",1) Q
+"RTN","PXVZRT",145,0)
+ Q
+"RTN","PXVZRT",146,0)
+9204 ; Manipulate update of MFN ZRT segment for 920.4 File
+"RTN","PXVZRT",147,0)
+ I IEN,NAME="vista_applies_to" D  Q
+"RTN","PXVZRT",148,0)
+ .I $P(HLNODE,HLFS,3)="""""" D DS(920.43,IEN) S OUT=1 Q
+"RTN","PXVZRT",149,0)
+ .I '$G(XXIEN(920.43)) D DS(920.43,IEN)  S XXIEN(920.43)=1 ;CLEAN SUBFILE ENTRY
+"RTN","PXVZRT",150,0)
+ I IEN,NAME="Status" D IFST(.03,0,1) Q
+"RTN","PXVZRT",151,0)
+ Q
+"RTN","PXVZRT",152,0)
+9201 ; Manipulate update of MFN ZRT Segment for 920.01 File
+"RTN","PXVZRT",153,0)
+ I IEN,NAME="Status" D IFST(.03,0,1) Q
+"RTN","PXVZRT",154,0)
+ Q
+"RTN","PXVZRT",155,0)
+99999904 ; Manipulate update of MFN ZRT Segment for 9999999.04 File
+"RTN","PXVZRT",156,0)
+ I IEN,NAME="Status" D IFST(.03,0,1) Q
+"RTN","PXVZRT",157,0)
+ Q
+"RTN","PXVZRT",158,0)
+M92002 ;Conversion of File:920 field .02  EDITION DATE to VETS form  02/31/2014
+"RTN","PXVZRT",159,0)
+ N Y,X ;Date in internal form:  3140231
+"RTN","PXVZRT",160,0)
+ ;set Y to HL7 Form:  20140231 and subsequently to: >> 2/31/2014 << 
+"RTN","PXVZRT",161,0)
+ S Y=$$FMTHL7^XLFDT(TMP1(LEV,X2,IENS,I)),TMP1(LEV,X2,IENS,I)=" "_+$E(Y,5,6)_"/"_+$E(Y,7,8)_"/"_$E(Y,1,4)_" "
+"RTN","PXVZRT",162,0)
+ ;Note that space put at begining and end to get form: >>ADENOVIRUS VIS 6/11/2014 ENGLISH<< 
+"RTN","PXVZRT",163,0)
+ Q
+"RTN","PXVZRT",164,0)
+M92004 ;Conversion of File:920 field .04  POINTER TO LANGUAGE FILE (#.85)
+"RTN","PXVZRT",165,0)
+ S TMP1(LEV,X2,IENS,I)=$$GET1^DIQ(.85,TMP1(LEV,X2,IENS,I)_",",1)
+"RTN","PXVZRT",166,0)
+ Q
+"RTN","PXVZRT",167,0)
+M92003 ;Conversion of File:920 field .03 EDITION STATUS
+"RTN","PXVZRT",168,0)
+ ;Get:   7/26/2013HISTORICENGLISH
+"RTN","PXVZRT",169,0)
+ ;Get .02 _ .03 _ .04   get rid of space on start and end.
+"RTN","PXVZRT",170,0)
+ N X,Y,XX,DIC
+"RTN","PXVZRT",171,0)
+ S XX=$$GET1^DIQ(.85,TMP1(LEV,X2,IENS,.04)_",",1)
+"RTN","PXVZRT",172,0)
+ S TMP1(LEV,X2,IENS,I)=$E(TMP1(LEV,X2,IENS,.02),2,$L(TMP1(LEV,X2,IENS,.02))-1)_TMP1(LEV,X2,IENS,I)_XX
+"RTN","PXVZRT",173,0)
+ Q
+"RTN","PXVZRT",174,0)
+M999142 ;Conversion of File:9999999.14 FIELD:.2  COMBINATION IMMUNIZATION COMVERT FROM 1 to Y  and from 0 to N
+"RTN","PXVZRT",175,0)
+ N X
+"RTN","PXVZRT",176,0)
+ S X=TMP1(LEV,X2,IENS,I),TMP1(LEV,X2,IENS,I)=$S(X:"Y",1:"N")
+"RTN","PXVZRT",177,0)
+ Q
+"RTN","PXVZRT",178,0)
+M9992803 ;Conversion of File:9999999.28 FIELD:.03  INACTIVE FLAG
+"RTN","PXVZRT",179,0)
+ S:TMP1(LEV,X2,IENS,I)'=1 TMP1(LEV,X2,IENS,I)=0
+"RTN","PXVZRT",180,0)
+ Q
+"RTN","PXVZRT",181,0)
+M999283 ;Conversion of File:9999999.28 FIELD: 3  CODING SYSTEM  From: CPT to CPT:00001,00002
+"RTN","PXVZRT",182,0)
+ ;TMP1(2,"9999999.283","1,7,",".01")="CPT"    D GETS^DIQ(X2,IENS,"*","","TMP1(LEV)")
+"RTN","PXVZRT",183,0)
+ N TMP,X4,X3,II
+"RTN","PXVZRT",184,0)
+ S X4=TMP1(LEV,X2,IENS,I)_":" ;X4=CPT:
+"RTN","PXVZRT",185,0)
+ D GETS^DIQ(9999999.283,IENS,"**","","TMP") ;TMP(9999999.2831,"1,1,7,",.01)=86485
+"RTN","PXVZRT",186,0)
+ S II="" F  S II=$O(TMP(9999999.2831,II)) Q:'II  S X3=$G(TMP(9999999.2831,II,.01)) S:X3 X4=X4_X3_","
+"RTN","PXVZRT",187,0)
+ S:$G(X3) X4=$E(X4,1,$L(X4)-1) S TMP1(LEV,X2,IENS,I)=X4
+"RTN","PXVZRT",188,0)
+ Q
+"RTN","PXVZRT",189,0)
+M999143 ;Conversion of File:9999999.14 FIELD: 3  CODING SYSTEM  From: CPT to CPT:00001,00002
+"RTN","PXVZRT",190,0)
+ ;TMP1(2,"9999999.143","1,7,",".01")="CPT"    D GETS^DIQ(X2,IENS,"*","","TMP1(LEV)")
+"RTN","PXVZRT",191,0)
+ N TMP,X4,X3,II
+"RTN","PXVZRT",192,0)
+ S X4=TMP1(LEV,X2,IENS,I)_":" ;X4=CPT:
+"RTN","PXVZRT",193,0)
+ D GETS^DIQ(9999999.143,IENS,"**","","TMP") ;TMP(9999999.2831,"1,1,7,",.01)=86485
+"RTN","PXVZRT",194,0)
+ S II="" F  S II=$O(TMP(9999999.1431,II)) Q:'II  S X3=$G(TMP(9999999.1431,II,.01)) S:X3 X4=X4_X3_","
+"RTN","PXVZRT",195,0)
+ S X4=$S($G(X3):$E(X4,1,$L(X4)-1),1:"") S TMP1(LEV,X2,IENS,I)=X4
+"RTN","PXVZRT",196,0)
+ Q
+"RTN","PXVZRT",197,0)
+DS(SUBFILE,IENS) ;Delete subfile
+"RTN","PXVZRT",198,0)
+ N ROOT,IDX,X
+"RTN","PXVZRT",199,0)
+ S ROOT=$$ROOT^DILFD(SUBFILE,","_IENS,1)
+"RTN","PXVZRT",200,0)
+ S IDX=0 F  S IDX=$O(@ROOT@(IDX)) Q:'IDX  D
+"RTN","PXVZRT",201,0)
+ .N DA,DIK,DIC S DA(1)=+IENS,DA=IDX,DIK=$P(ROOT,")")_"," D ^DIK
+"RTN","PXVZRT",202,0)
+ Q
+"RTN","PXVZRT",203,0)
+IFST(FIELD,YES,NO) ;Send AE if Inactive flag doesn't match VUID Status.
+"RTN","PXVZRT",204,0)
+ Q:'$D(FDA(IFN,IEN_",",FIELD))
+"RTN","PXVZRT",205,0)
+ N X1 S X1=$P(HLNODE,HLFS,3)
+"RTN","PXVZRT",206,0)
+ Q:X1=1&(FDA(IFN,IEN_",",FIELD)=YES)  ;Match, both active
+"RTN","PXVZRT",207,0)
+ Q:X1=0&(FDA(IFN,IEN_",",FIELD)=NO)  ;Match, both inactive
+"RTN","PXVZRT",208,0)
+ S ERROR="1^"_IFN_"99,.02 STATUS HLNODE:"_HLNODE_" Doesn't match "_FIELD_" Inactive Flag "_FDA(IFN,IEN_",",FIELD)
+"RTN","PXVZRT",209,0)
+ D EM^XUMF1H(ERROR,.ERR)
+"RTN","PXVZRT",210,0)
+ Q
+"SEC","^DIC",920,920,0,"AUDIT")
+@
+"SEC","^DIC",920,920,0,"DD")
+@
+"SEC","^DIC",920,920,0,"DEL")
+@
+"SEC","^DIC",920,920,0,"LAYGO")
+@
+"SEC","^DIC",920,920,0,"WR")
+@
+"SEC","^DIC",920.1,920.1,0,"AUDIT")
+@
+"SEC","^DIC",920.1,920.1,0,"DD")
+@
+"SEC","^DIC",920.1,920.1,0,"DEL")
+@
+"SEC","^DIC",920.1,920.1,0,"LAYGO")
+@
+"SEC","^DIC",920.1,920.1,0,"RD")
+@
+"SEC","^DIC",920.1,920.1,0,"WR")
+@
+"SEC","^DIC",920.2,920.2,0,"AUDIT")
+@
+"SEC","^DIC",920.2,920.2,0,"DD")
+@
+"SEC","^DIC",920.2,920.2,0,"DEL")
+@
+"SEC","^DIC",920.2,920.2,0,"LAYGO")
+@
+"SEC","^DIC",920.2,920.2,0,"WR")
+@
+"SEC","^DIC",920.3,920.3,0,"AUDIT")
+@
+"SEC","^DIC",920.3,920.3,0,"DD")
+@
+"SEC","^DIC",920.3,920.3,0,"DEL")
+@
+"SEC","^DIC",920.3,920.3,0,"LAYGO")
+@
+"SEC","^DIC",920.3,920.3,0,"WR")
+@
+"SEC","^DIC",920.4,920.4,0,"AUDIT")
+@
+"SEC","^DIC",920.4,920.4,0,"DD")
+@
+"SEC","^DIC",920.4,920.4,0,"DEL")
+@
+"SEC","^DIC",920.4,920.4,0,"LAYGO")
+@
+"SEC","^DIC",920.4,920.4,0,"RD")
+@
+"SEC","^DIC",920.4,920.4,0,"WR")
+@
+"SEC","^DIC",920.5,920.5,0,"AUDIT")
+@
+"SEC","^DIC",920.5,920.5,0,"DD")
+@
+"SEC","^DIC",920.5,920.5,0,"DEL")
+@
+"SEC","^DIC",920.5,920.5,0,"LAYGO")
+@
+"SEC","^DIC",920.5,920.5,0,"RD")
+@
+"SEC","^DIC",920.5,920.5,0,"WR")
+@
+"SEC","^DIC",9999999.04,9999999.04,0,"AUDIT")
+@
+"SEC","^DIC",9999999.04,9999999.04,0,"DD")
+@
+"SEC","^DIC",9999999.04,9999999.04,0,"DEL")
+@
+"SEC","^DIC",9999999.04,9999999.04,0,"LAYGO")
+@
+"SEC","^DIC",9999999.04,9999999.04,0,"RD")
+
+"SEC","^DIC",9999999.04,9999999.04,0,"WR")
+@
+"SEC","^DIC",9999999.14,9999999.14,0,"DD")
+@
+"SEC","^DIC",9999999.14,9999999.14,0,"DEL")
+@
+"SEC","^DIC",9999999.28,9999999.28,0,"DD")
+@
+"SEC","^DIC",9999999.28,9999999.28,0,"DEL")
+@
+"TEMP","PXVSKX",0)
+3150815^3150507
+"TEMP","PXVSKX",1,0)
+^AIMS^^INACTIVE^^^
+"TEMP","PXVSKX",2,0)
+^ALLERGY^^INACTIVE^^^
+"TEMP","PXVSKX",3,0)
+N^CANDIDA^CANDIDA^^86485^^
+"TEMP","PXVSKX",4,0)
+^CMI^^INACTIVE^^^
+"TEMP","PXVSKX",5,0)
+N^COCCI^COCCIDIOIDOMYCOSIS^^86490^^
+"TEMP","PXVSKX",6,0)
+^COCCI-HI^^INACTIVE^^^
+"TEMP","PXVSKX",7,0)
+^DAYTON PPD^^INACTIVE^^^
+"TEMP","PXVSKX",8,0)
+^EMP PPD^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",9,0)
+N^HISTOPLAS^HISTOPLASMIN^^86510^HISTO^rename existing entries to HISTO upon post install; create HISTO entry if one doesn't exist yet
+"TEMP","PXVSKX",10,0)
+^INPT PPD^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",11,0)
+^JH TEST^^INACTIVE^^^
+"TEMP","PXVSKX",12,0)
+^MEM-PPD^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",13,0)
+N^MONO-VAC^MONO-VACC TUBERCULIN^^^MONO-VACC^rename existing entries to MONO-VACC upon post install (note spelling change)
+"TEMP","PXVSKX",14,0)
+^MUMPS^^INACTIVE^^^
+"TEMP","PXVSKX",15,0)
+^MUMPS (SK)^^INACTIVE^^^rename existing entries to MUMPS upon post install
+"TEMP","PXVSKX",16,0)
+^MUMPS CTRL^^INACTIVE^^^rename existing entries to MUMPS upon post install
+"TEMP","PXVSKX",17,0)
+^MUMPS SK^^INACTIVE^^^rename existing entries to MUMPS upon post install
+"TEMP","PXVSKX",18,0)
+^Other Test^^INACTIVE^^^
+"TEMP","PXVSKX",19,0)
+^POLLEN^^INACTIVE^^^
+"TEMP","PXVSKX",20,0)
+^PPD (LAB)^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",21,0)
+^PPD 2^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",22,0)
+^PPD ELSE^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",23,0)
+^PPD ELSEWH^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",24,0)
+^PPD GIVEN^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",25,0)
+^PPD LOCAL^^INACTIVE^^^
+"TEMP","PXVSKX",26,0)
+^PPD NEG^^INACTIVE^^^ Locate all existing V SKIN TEST ENTRIES and document interpretation as negative, do not rename entries
+"TEMP","PXVSKX",27,0)
+^PPD PLACED^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",28,0)
+^PPD POS^^INACTIVE^^^
+"TEMP","PXVSKX",29,0)
+^PPD READ^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",30,0)
+^PPD RESULT^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",31,0)
+^PPD STEP 2^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",32,0)
+^PPD TEST^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",33,0)
+^PPD/BCG^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",34,0)
+^PPD[ST(2)]^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",35,0)
+^PPD-TB^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",36,0)
+^PURIFIED^^INACTIVE^^^
+"TEMP","PXVSKX",37,0)
+^QFN-GI-IT^^INACTIVE^^^
+"TEMP","PXVSKX",38,0)
+N^SHICK^SCHICK DIPHTHERIA^^^SCHICK^rename existing entries to SHICK upon post install
+"TEMP","PXVSKX",39,0)
+^SMALLPOX^^INACTIVE^^^
+"TEMP","PXVSKX",40,0)
+^TB TEST^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",41,0)
+^TB TINE^^INACTIVE^^^
+"TEMP","PXVSKX",42,0)
+^TEST^^INACTIVE^^^
+"TEMP","PXVSKX",43,0)
+N^TETANUS ST^TETANUS SKIN TEST^^^TETANUS^rename existing entries to TETANUS upon post install
+"TEMP","PXVSKX",44,0)
+^TINE^^INACTIVE^^^
+"TEMP","PXVSKX",45,0)
+N^TRICHO^TRICHOPHYTON^^^TRICHOPHYTON^rename existing entries to TRICHOPHYTON upon post install
+"TEMP","PXVSKX",46,0)
+N^TRICHOP^TRICHOPHYTON^^^TRICHOPHYTON^rename existing entries to TRICHOPHYTON upon post install
+"TEMP","PXVSKX",47,0)
+N^TRICHOPHYT^TRICHOPHYTON^^^TRICHOPHYTON^rename existing entries to TRICHOPHYTON upon post install
+"TEMP","PXVSKX",48,0)
+N^TRYCOPHYTO^TRICHOPHYTON^^^TRICHOPHYTON^rename existing entries to TRICHOPHYTON upon post install
+"TEMP","PXVSKX",49,0)
+^T-SPOT.TB^^INACTIVE^^^
+"TEMP","PXVSKX",50,0)
+N^TST^PPD TUBERCULIN^^86580^PPD^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",51,0)
+^TUBERCULIN^PPD TUBERCULIN^INACTIVE^^^can you repoint these entries in V SKIN TEST rather than renaming them?
+"TEMP","PXVSKX",52,0)
+^UNLISTED^^INACTIVE^^^
+"TEMP","PXVSKX",53,0)
+^ZAP1^^INACTIVE^^^
+"TEMP","PXVSKX",54,0)
+^ZAP2^^INACTIVE^^^
+"TEMP","PXVSKX",55,0)
+^ZCANDIDA^^INACTIVE^^^
+"TEMP","PXVSKX",56,0)
+^ZCOCCI^^INACTIVE^^^
+"TEMP","PXVSKX",57,0)
+^ZHISTOPLAS^^INACTIVE^^^rename existing entries to HISTO upon post install
+"TEMP","PXVSKX",58,0)
+^ZMONO-VAC^^INACTIVE^^^
+"TEMP","PXVSKX",59,0)
+^ZOLADEX^^INACTIVE^^^
+"TEMP","PXVSKX",60,0)
+^ZPPD^^INACTIVE^^^rename existing entries to PPD upon post install
+"TEMP","PXVSKX",61,0)
+^ZSCHICK^^INACTIVE^^^
+"TEMP","PXVSKX",62,0)
+^ZZPPD^^INACTIVE^^^
+"TEMP","PXVSKX",63,0)
+N^TETANUS^TETANUS SKIN TEST^^^^
+"TEMP","PXVSKX",64,0)
+N^TRICHOPHYTON^TRICHOPHYTON^^^^
+"TEMP","PXVSKX",65,0)
+N^PPD^PPD TUBERCULIN^^86580^^
+"TEMP","PXVSKX",66,0)
+N^MONO-VACC^MONO-VACC TUBERCULIN^^^^
+"TEMP","PXVSKX",67,0)
+N^HISTO^HISTOPLASMIN^^86510^^
+"TEMP","PXVSKX",68,0)
+N^SCHICK^SCHICK DIPHTHERIA^^^^
+"VER")
+8.0^22.0
+"^DD",920,920,0)
+FIELD^^100^11
+"^DD",920,920,0,"DDA")
+N
+"^DD",920,920,0,"DT")
+3150309
+"^DD",920,920,0,"ID",.02)
+W "   ",$E($P(^(0),U,2),4,5)_"-"_$E($P(^(0),U,2),6,7)_"-"_$E($P(^(0),U,2),2,3)
+"^DD",920,920,0,"ID",.03)
+W "   ",@("$P($P($C(59)_$S($D(^DD(920,.03,0)):$P(^(0),U,3),1:0)_$E("_DIC_"Y,0),0),$C(59)_$P(^(0),U,3)_"":"",2),$C(59),1)")
+"^DD",920,920,0,"ID",.04)
+S %I=Y,Y=$S('$D(^(0)):"",$D(^DI(.85,+$P(^(0),U,4),0))#2:$P(^(0),U,1),1:""),C=$P(^DD(.85,.01,0),U,2) D Y^DIQ:Y]"" W "   ",Y,@("$E("_DIC_"%I,0),0)") S Y=%I K %I
+"^DD",920,920,0,"IX","AREPLACETERM",920,99.97)
+
+"^DD",920,920,0,"IX","AVUID",920,99.99)
+
+"^DD",920,920,0,"IX","B",920,.01)
+
+"^DD",920,920,0,"IX","BC",920,100)
+
+"^DD",920,920,0,"NM","VACCINE INFORMATION STATEMENT")
+
+"^DD",920,920,0,"PT",920,99.97)
+
+"^DD",920,920,0,"PT",9000010.112,.01)
+
+"^DD",920,920,0,"PT",9999999.144,.01)
+
+"^DD",920,920,0,"VRPK")
+PX
+"^DD",920,920,.01,0)
+NAME^RFa^^0;1^K:$L(X)>50!($L(X)<3)!'(X'?1P.E) X
+"^DD",920,920,.01,.1)
+Name
+"^DD",920,920,.01,1,0)
+^.1
+"^DD",920,920,.01,1,1,0)
+920^B
+"^DD",920,920,.01,1,1,1)
+S ^AUTTIVIS("B",$E(X,1,50),DA)=""
+"^DD",920,920,.01,1,1,2)
+K ^AUTTIVIS("B",$E(X,1,50),DA)
+"^DD",920,920,.01,3)
+Enter the name of the Vaccine Information Statement (3-50 characters).
+"^DD",920,920,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920,920,.01,9)
+^
+"^DD",920,920,.01,21,0)
+^.001^1^1^3150403^^
+"^DD",920,920,.01,21,1,0)
+This is the name of the Vaccine Information Statement (VIS).
+"^DD",920,920,.01,"AUDIT")
+y
+"^DD",920,920,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",920,920,.01,"DT")
+3150227
+"^DD",920,920,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920,920,.02,0)
+EDITION DATE^Da^^0;2^S %DT="EX" D ^%DT S X=Y K:Y<1 X
+"^DD",920,920,.02,.1)
+Edition Date
+"^DD",920,920,.02,3)
+Enter the edition date of this VIS.
+"^DD",920,920,.02,9)
+^
+"^DD",920,920,.02,21,0)
+^^2^2^3140501^
+"^DD",920,920,.02,21,1,0)
+This is the edition date of this Vaccine Information Statement
+"^DD",920,920,.02,21,2,0)
+distributed by the CDC.
+"^DD",920,920,.02,"AUDIT")
+y
+"^DD",920,920,.02,"DT")
+3150309
+"^DD",920,920,.03,0)
+EDITION STATUS^Sa^C:CURRENT;H:HISTORIC;^0;3^Q
+"^DD",920,920,.03,.1)
+Edition Status
+"^DD",920,920,.03,3)
+Enter the status of this VIS edition.
+"^DD",920,920,.03,9)
+^
+"^DD",920,920,.03,21,0)
+^.001^3^3^3150403^^
+"^DD",920,920,.03,21,1,0)
+This is the status of this edition of this Vaccine Information Statement
+"^DD",920,920,.03,21,2,0)
+(VIS). A status of CURRENT indicates this VIS is in current use. A
+"^DD",920,920,.03,21,3,0)
+status of HISTORIC indicates this VIS is no longer in use.
+"^DD",920,920,.03,"AUDIT")
+y
+"^DD",920,920,.03,"DT")
+3150227
+"^DD",920,920,.04,0)
+LANGUAGE^*P.85'a^DI(.85,^0;4^S DIC("S")="I $P(^(0),U,7)=""L""" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",920,920,.04,.1)
+Language
+"^DD",920,920,.04,3)
+Enter the language translation of this VIS.
+"^DD",920,920,.04,9)
+^
+"^DD",920,920,.04,12)
+Screen allows selection of living languages only.
+"^DD",920,920,.04,12.1)
+S DIC("S")="I $P(^(0),U,7)=""L"""
+"^DD",920,920,.04,21,0)
+^.001^2^2^3140828^^^
+"^DD",920,920,.04,21,1,0)
+This is the language translation of this Vaccine Information Statement
+"^DD",920,920,.04,21,2,0)
+(VIS).
+"^DD",920,920,.04,"AUDIT")
+y
+"^DD",920,920,.04,"DT")
+3150227
+"^DD",920,920,2,0)
+VIS TEXT^920.02^^2;0
+"^DD",920,920,2,9)
+^
+"^DD",920,920,2,21,0)
+^^1^1^3140501^
+"^DD",920,920,2,21,1,0)
+This is the text of the Vaccine Information Statement (VIS).
+"^DD",920,920,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920'Ia^AUTTIVIS(^VUID;3^Q
+"^DD",920,920,99.97,1,0)
+^.1
+"^DD",920,920,99.97,1,1,0)
+920^AREPLACETERM
+"^DD",920,920,99.97,1,1,1)
+S ^AUTTIVIS("AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920,920,99.97,1,1,2)
+K ^AUTTIVIS("AREPLACETERM",$E(X,1,30),DA)
+"^DD",920,920,99.97,1,1,"%D",0)
+^^2^2^3140520^
+"^DD",920,920,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",920,920,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920,920,99.97,1,1,"DT")
+3140520
+"^DD",920,920,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",920,920,99.97,9)
+^
+"^DD",920,920,99.97,21,0)
+^.001^4^4^3140520^^
+"^DD",920,920,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",920,920,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",920,920,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",920,920,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",920,920,99.97,"AUDIT")
+y
+"^DD",920,920,99.97,"DT")
+3150227
+"^DD",920,920,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920,920,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920,920,99.98,9)
+^
+"^DD",920,920,99.98,21,0)
+^^2^2^3140506^
+"^DD",920,920,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",920,920,99.98,21,2,0)
+Term/Concept.
+"^DD",920,920,99.98,"AUDIT")
+y
+"^DD",920,920,99.98,"DT")
+3150227
+"^DD",920,920,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920,920,99.99,1,0)
+^.1
+"^DD",920,920,99.99,1,1,0)
+920^AVUID
+"^DD",920,920,99.99,1,1,1)
+S ^AUTTIVIS("AVUID",$E(X,1,30),DA)=""
+"^DD",920,920,99.99,1,1,2)
+K ^AUTTIVIS("AVUID",$E(X,1,30),DA)
+"^DD",920,920,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT PROGRAMMER
+"^DD",920,920,99.99,1,1,"%D",0)
+^^1^1^3140506^
+"^DD",920,920,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920,920,99.99,1,1,"DT")
+3140506
+"^DD",920,920,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920,920,99.99,9)
+^
+"^DD",920,920,99.99,21,0)
+^^2^2^3140506^
+"^DD",920,920,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",920,920,99.99,21,2,0)
+terms VHA wide.
+"^DD",920,920,99.99,"AUDIT")
+y
+"^DD",920,920,99.99,"DT")
+3150227
+"^DD",920,920,99.991,0)
+EFFECTIVE DATE/TIME^920.99DA^^TERMSTATUS;0
+"^DD",920,920,99.991,9)
+^
+"^DD",920,920,99.991,21,0)
+^.001^1^1^3150127^^^^
+"^DD",920,920,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",920,920,100,0)
+2D BAR CODE^RFa^^100;1^K:$L(X)>24!($L(X)<1) X
+"^DD",920,920,100,.1)
+Barcode
+"^DD",920,920,100,1,0)
+^.1
+"^DD",920,920,100,1,1,0)
+920^BC
+"^DD",920,920,100,1,1,1)
+S ^AUTTIVIS("BC",$E(X,1,30),DA)=""
+"^DD",920,920,100,1,1,2)
+K ^AUTTIVIS("BC",$E(X,1,30),DA)
+"^DD",920,920,100,1,1,"%D",0)
+^^1^1^3150310^
+"^DD",920,920,100,1,1,"%D",1,0)
+This cross reference will be used to facilitate bar code scanning.
+"^DD",920,920,100,1,1,"DT")
+3150107
+"^DD",920,920,100,3)
+Answer must be 1-24 characters in length.
+"^DD",920,920,100,9)
+^
+"^DD",920,920,100,21,0)
+^.001^1^1^3150310^^^
+"^DD",920,920,100,21,1,0)
+This is the barcode from the CDC VIS barcode lookup table.
+"^DD",920,920,100,"AUDIT")
+y
+"^DD",920,920,100,"DT")
+3150227
+"^DD",920,920,101,0)
+VIS URL^Fa^^101;1^K:$L(X)>245!($L(X)<1) X
+"^DD",920,920,101,.1)
+Vaccine Information Statement URL
+"^DD",920,920,101,3)
+Enter the URL for this VIS (1-245 characters).
+"^DD",920,920,101,9)
+^
+"^DD",920,920,101,21,0)
+^^3^3^3140501^
+"^DD",920,920,101,21,1,0)
+This is the URL for this vaccine information statement. The URL may be 
+"^DD",920,920,101,21,2,0)
+used to access this vaccine information statement directly over the 
+"^DD",920,920,101,21,3,0)
+internet from the CDC website.
+"^DD",920,920,101,"AUDIT")
+y
+"^DD",920,920,101,"DT")
+3150227
+"^DD",920,920.02,0)
+VIS TEXT SUB-FIELD^^.01^1
+"^DD",920,920.02,0,"DT")
+3140501
+"^DD",920,920.02,0,"NM","VIS TEXT")
+
+"^DD",920,920.02,0,"UP")
+920
+"^DD",920,920.02,.01,0)
+VIS TEXT^Wx^^0;1^Q
+"^DD",920,920.02,.01,.1)
+VIS Text
+"^DD",920,920.02,.01,3)
+Enter the text of the vaccine information statement.
+"^DD",920,920.02,.01,21,0)
+^^1^1^3140501^
+"^DD",920,920.02,.01,21,1,0)
+This is the text of the Vaccine Information Statement (VIS).
+"^DD",920,920.02,.01,"DT")
+3140501
+"^DD",920,920.99,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920,920.99,0,"DT")
+3140506
+"^DD",920,920.99,0,"IX","B",920.99,.01)
+
+"^DD",920,920.99,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920,920.99,0,"UP")
+920
+"^DD",920,920.99,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920,920.99,.01,.1)
+
+"^DD",920,920.99,.01,1,0)
+^.1
+"^DD",920,920.99,.01,1,1,0)
+920.99^B
+"^DD",920,920.99,.01,1,1,1)
+S ^AUTTIVIS(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920,920.99,.01,1,1,2)
+K ^AUTTIVIS(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920,920.99,.01,1,1,"%D",0)
+^^1^1^3140527^
+"^DD",920,920.99,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",920,920.99,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",920,920.99,.01,9)
+^
+"^DD",920,920.99,.01,21,0)
+^.001^2^2^3140506^^^
+"^DD",920,920.99,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",920,920.99,.01,21,2,0)
+established.
+"^DD",920,920.99,.01,"AUDIT")
+y
+"^DD",920,920.99,.01,"DT")
+3150227
+"^DD",920,920.99,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920,920.99,.02,.1)
+
+"^DD",920,920.99,.02,3)
+Enter the Status of reference term, ACTIVE or INACTIVE.
+"^DD",920,920.99,.02,9)
+^
+"^DD",920,920.99,.02,21,0)
+^^4^4^3140527^
+"^DD",920,920.99,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",920,920.99,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a
+"^DD",920,920.99,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be
+"^DD",920,920.99,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920,920.99,.02,"AUDIT")
+y
+"^DD",920,920.99,.02,"DT")
+3150227
+"^DD",920.1,920.1,0)
+FIELD^^99.991^7
+"^DD",920.1,920.1,0,"DDA")
+N
+"^DD",920.1,920.1,0,"DT")
+3150108
+"^DD",920.1,920.1,0,"ID",.02)
+W "   HL7:",$P(^(0),U,2)
+"^DD",920.1,920.1,0,"IX","AREPLACETERM",920.1,99.97)
+
+"^DD",920.1,920.1,0,"IX","AVUID",920.1,99.99)
+
+"^DD",920.1,920.1,0,"IX","B",920.1,.01)
+
+"^DD",920.1,920.1,0,"IX","H",920.1,.02)
+
+"^DD",920.1,920.1,0,"NM","IMMUNIZATION INFO SOURCE")
+
+"^DD",920.1,920.1,0,"PT",920.1,99.97)
+
+"^DD",920.1,920.1,0,"PT",9000010.11,1301)
+
+"^DD",920.1,920.1,0,"VRPK")
+PX
+"^DD",920.1,920.1,.01,0)
+SOURCE^RFa^^0;1^K:$S($L(X)>60:1,1:$L(X)<3) X
+"^DD",920.1,920.1,.01,.1)
+Source
+"^DD",920.1,920.1,.01,1,0)
+^.1
+"^DD",920.1,920.1,.01,1,1,0)
+920.1^B
+"^DD",920.1,920.1,.01,1,1,1)
+S ^PXV(920.1,"B",X,DA)=""
+"^DD",920.1,920.1,.01,1,1,2)
+K ^PXV(920.1,"B",X,DA)
+"^DD",920.1,920.1,.01,3)
+Answer must be 3-60 characters in length.
+"^DD",920.1,920.1,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920.1,920.1,.01,9)
+^
+"^DD",920.1,920.1,.01,21,0)
+^.001^2^2^3140610^^^^
+"^DD",920.1,920.1,.01,21,1,0)
+This is the source of the information being provided for an immunization
+"^DD",920.1,920.1,.01,21,2,0)
+event.
+"^DD",920.1,920.1,.01,23,0)
+^.001^2^2^3140610^^^^
+"^DD",920.1,920.1,.01,23,1,0)
+This is the descriptive (long) version of this information source.  Its
+"^DD",920.1,920.1,.01,23,2,0)
+main use is for determining the source of historical events.
+"^DD",920.1,920.1,.01,"AUDIT")
+y
+"^DD",920.1,920.1,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.1,920.1,.01,"DT")
+3150108
+"^DD",920.1,920.1,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.1,920.1,.02,0)
+HL7 CODE^RFXa^^0;2^K:X'?2N X I $D(X),$D(^PXV(920.1,"H",X)),$O(^(X,0))'=DA K X D EN^DDIOL("Another Source is using the HL7 Code just entered.  Please choose another.")
+"^DD",920.1,920.1,.02,.1)
+HL7 Code
+"^DD",920.1,920.1,.02,1,0)
+^.1
+"^DD",920.1,920.1,.02,1,1,0)
+920.1^H
+"^DD",920.1,920.1,.02,1,1,1)
+S ^PXV(920.1,"H",$E(X,1,30),DA)=""
+"^DD",920.1,920.1,.02,1,1,2)
+K ^PXV(920.1,"H",$E(X,1,30),DA)
+"^DD",920.1,920.1,.02,1,1,3)
+Used to enforce that only one source may use an HL7 code.
+"^DD",920.1,920.1,.02,1,1,"%D",0)
+^.101^3^3^3140610^^^
+"^DD",920.1,920.1,.02,1,1,"%D",1,0)
+No two Sources can use the same HL7 code at the same time.  This
+"^DD",920.1,920.1,.02,1,1,"%D",2,0)
+x-ref is checked on entry/edit of an HL7 CODE to enforce that rule.
+"^DD",920.1,920.1,.02,1,1,"%D",3,0)
+Also allows a Source to be selected by its 2-character HL7 CODE.
+"^DD",920.1,920.1,.02,1,1,"DT")
+3140602
+"^DD",920.1,920.1,.02,3)
+Answer must be 2 characters in length, both characters numeric.
+"^DD",920.1,920.1,.02,9)
+^
+"^DD",920.1,920.1,.02,21,0)
+^.001^3^3^3140610^^^^
+"^DD",920.1,920.1,.02,21,1,0)
+This is the HL7 code used for this SOURCE.  It is a required entry of
+"^DD",920.1,920.1,.02,21,2,0)
+2 numbers.  A  leading zero is acceptable.  NO TWO SOURCES MAY
+"^DD",920.1,920.1,.02,21,3,0)
+USE THE SAME HL7 CODE.
+"^DD",920.1,920.1,.02,23,0)
+^.001^3^3^3140610^^
+"^DD",920.1,920.1,.02,23,1,0)
+This is the corresponding HL7 code for this information source of an
+"^DD",920.1,920.1,.02,23,2,0)
+immunization event.  The HL7 code is for transmitting and receiving this
+"^DD",920.1,920.1,.02,23,3,0)
+information.
+"^DD",920.1,920.1,.02,"AUDIT")
+y
+"^DD",920.1,920.1,.02,"DT")
+3150108
+"^DD",920.1,920.1,.03,0)
+INACTIVE FLAG^SaO^0:ACTIVE;1:INACTIVE;^0;3^Q
+"^DD",920.1,920.1,.03,2)
+S Y(0)=Y S Y=$S('+Y:"ACTIVE",1:"INACTIVE")
+"^DD",920.1,920.1,.03,2.1)
+S Y=$S('+Y:"ACTIVE",1:"INACTIVE")
+"^DD",920.1,920.1,.03,3)
+Enter a '1' or 'INACTIVE' if this Source is no longer active.
+"^DD",920.1,920.1,.03,9)
+^
+"^DD",920.1,920.1,.03,21,0)
+^.001^2^2^3150323^^
+"^DD",920.1,920.1,.03,21,1,0)
+This is used to show if the Source is ACTIVE OR INACTIVE.  This should be
+"^DD",920.1,920.1,.03,21,2,0)
+a '1' if it is INACTIVE or a '0' or no value if it is ACTIVE.
+"^DD",920.1,920.1,.03,"AUDIT")
+y
+"^DD",920.1,920.1,.03,"DT")
+3150324
+"^DD",920.1,920.1,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920.1'Ia^PXV(920.1,^VUID;3^Q
+"^DD",920.1,920.1,99.97,1,0)
+^.1
+"^DD",920.1,920.1,99.97,1,1,0)
+920.1^AREPLACETERM
+"^DD",920.1,920.1,99.97,1,1,1)
+S ^PXV(920.1,"AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920.1,920.1,99.97,1,1,2)
+K ^PXV(920.1,"AREPLACETERM",$E(X,1,30),DA)
+"^DD",920.1,920.1,99.97,1,1,"%D",0)
+^^2^2^3150108^
+"^DD",920.1,920.1,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries
+"^DD",920.1,920.1,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920.1,920.1,99.97,1,1,"DT")
+3150108
+"^DD",920.1,920.1,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",920.1,920.1,99.97,9)
+^
+"^DD",920.1,920.1,99.97,21,0)
+^^4^4^3150107^
+"^DD",920.1,920.1,99.97,21,1,0)
+This is populated when one Term/Concept replaces another Term/Concept.
+"^DD",920.1,920.1,99.97,21,2,0)
+This field is controlled by standardization and should only be
+"^DD",920.1,920.1,99.97,21,3,0)
+changed  by standardization processes.  This field contains a pointer
+"^DD",920.1,920.1,99.97,21,4,0)
+to a VHA standard term that replaces this entry.
+"^DD",920.1,920.1,99.97,"AUDIT")
+y
+"^DD",920.1,920.1,99.97,"DT")
+3150309
+"^DD",920.1,920.1,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920.1,920.1,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920.1,920.1,99.98,9)
+^
+"^DD",920.1,920.1,99.98,21,0)
+^.001^2^2^3150127^^
+"^DD",920.1,920.1,99.98,21,1,0)
+This field identifies the Master Entry for a VUID associated with a 
+"^DD",920.1,920.1,99.98,21,2,0)
+Term/Concept.
+"^DD",920.1,920.1,99.98,"AUDIT")
+y
+"^DD",920.1,920.1,99.98,"DT")
+3150109
+"^DD",920.1,920.1,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920.1,920.1,99.99,1,0)
+^.1
+"^DD",920.1,920.1,99.99,1,1,0)
+920.1^AVUID
+"^DD",920.1,920.1,99.99,1,1,1)
+S ^PXV(920.1,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.1,920.1,99.99,1,1,2)
+K ^PXV(920.1,"AVUID",$E(X,1,30),DA)
+"^DD",920.1,920.1,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.1,920.1,99.99,1,1,"%D",0)
+^.101^1^1^3150108^^
+"^DD",920.1,920.1,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.1,920.1,99.99,1,1,"DT")
+3150108
+"^DD",920.1,920.1,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920.1,920.1,99.99,9)
+^
+"^DD",920.1,920.1,99.99,21,0)
+^^2^2^3150107^
+"^DD",920.1,920.1,99.99,21,1,0)
+VHA Unique ID (VUID).  A unique meaningless integer assigned to reference
+"^DD",920.1,920.1,99.99,21,2,0)
+terms VHA wide.
+"^DD",920.1,920.1,99.99,"AUDIT")
+y
+"^DD",920.1,920.1,99.99,"DT")
+3150109
+"^DD",920.1,920.1,99.991,0)
+EFFECTIVE DATE/TIME^920.199DA^^TERMSTATUS;0
+"^DD",920.1,920.1,99.991,9)
+^
+"^DD",920.1,920.1,99.991,21,0)
+^^1^1^3150107^
+"^DD",920.1,920.1,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",920.1,920.199,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920.1,920.199,0,"DT")
+3150108
+"^DD",920.1,920.199,0,"IX","B",920.199,.01)
+
+"^DD",920.1,920.199,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920.1,920.199,0,"UP")
+920.1
+"^DD",920.1,920.199,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920.1,920.199,.01,1,0)
+^.1
+"^DD",920.1,920.199,.01,1,1,0)
+920.199^B
+"^DD",920.1,920.199,.01,1,1,1)
+S ^PXV(920.1,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920.1,920.199,.01,1,1,2)
+K ^PXV(920.1,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920.1,920.199,.01,9)
+^
+"^DD",920.1,920.199,.01,21,0)
+^.001^2^2^3150108^^^
+"^DD",920.1,920.199,.01,21,1,0)
+This is the date/time when the status of the reference term was
+"^DD",920.1,920.199,.01,21,2,0)
+established.
+"^DD",920.1,920.199,.01,"AUDIT")
+y
+"^DD",920.1,920.199,.01,"DT")
+3150108
+"^DD",920.1,920.199,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920.1,920.199,.02,3)
+Enter the Status of this term.
+"^DD",920.1,920.199,.02,9)
+^
+"^DD",920.1,920.199,.02,21,0)
+^.001^4^4^3150109^^
+"^DD",920.1,920.199,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'.  If 
+"^DD",920.1,920.199,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a
+"^DD",920.1,920.199,.02,21,3,0)
+particular patient event.  If 'INACTIVE', then the term will only be
+"^DD",920.1,920.199,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920.1,920.199,.02,"AUDIT")
+y
+"^DD",920.1,920.199,.02,"DT")
+3150309
+"^DD",920.2,920.2,0)
+FIELD^^99.991^8
+"^DD",920.2,920.2,0,"DDA")
+N
+"^DD",920.2,920.2,0,"DT")
+3140707
+"^DD",920.2,920.2,0,"ID",.02)
+W "   ",$P(^(0),U,2)
+"^DD",920.2,920.2,0,"IX","AREPLACETERM",920.2,99.97)
+
+"^DD",920.2,920.2,0,"IX","AVUID",920.2,99.98)
+
+"^DD",920.2,920.2,0,"IX","AVUID",920.2,99.99)
+
+"^DD",920.2,920.2,0,"IX","B",920.2,.01)
+
+"^DD",920.2,920.2,0,"IX","H",920.2,.02)
+
+"^DD",920.2,920.2,0,"NM","IMM ADMINISTRATION ROUTE")
+
+"^DD",920.2,920.2,0,"PT",920.2,99.97)
+
+"^DD",920.2,920.2,0,"PT",9000010.11,1302)
+
+"^DD",920.2,920.2,0,"VRPK")
+PX
+"^DD",920.2,920.2,.01,0)
+ROUTE^RFa^^0;1^K:$L(X)>30!($L(X)<3) X
+"^DD",920.2,920.2,.01,.1)
+Route
+"^DD",920.2,920.2,.01,1,0)
+^.1
+"^DD",920.2,920.2,.01,1,1,0)
+920.2^B
+"^DD",920.2,920.2,.01,1,1,1)
+S ^PXV(920.2,"B",$E(X,1,30),DA)=""
+"^DD",920.2,920.2,.01,1,1,2)
+K ^PXV(920.2,"B",$E(X,1,30),DA)
+"^DD",920.2,920.2,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",920.2,920.2,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920.2,920.2,.01,9)
+^
+"^DD",920.2,920.2,.01,21,0)
+^.001^3^3^3140701^^^^
+"^DD",920.2,920.2,.01,21,1,0)
+This is the route of administration for an immunization/vaccine.  The
+"^DD",920.2,920.2,.01,21,2,0)
+response is expected to be at least 3 characters and no more than 30
+"^DD",920.2,920.2,.01,21,3,0)
+characters.  Response should also be all uppercase letters.
+"^DD",920.2,920.2,.01,23,0)
+^.001^3^3^3140701^^^^
+"^DD",920.2,920.2,.01,23,1,0)
+This is the route of administration of a vaccine to a patient.  Routes
+"^DD",920.2,920.2,.01,23,2,0)
+entered should be 3-30 uppercase characters.  The values entered here
+"^DD",920.2,920.2,.01,23,3,0)
+will be pointed by the V IMMUNIZATION file and the IMMUNIZATION file.
+"^DD",920.2,920.2,.01,"AUDIT")
+y
+"^DD",920.2,920.2,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",920.2,920.2,.01,"DT")
+3150227
+"^DD",920.2,920.2,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.2,920.2,.02,0)
+HL7 CODE^Fa^^0;2^K:$L(X)>3!($L(X)<1)!'(X?1.3U) X
+"^DD",920.2,920.2,.02,.1)
+HL7 Code
+"^DD",920.2,920.2,.02,1,0)
+^.1
+"^DD",920.2,920.2,.02,1,1,0)
+920.2^H
+"^DD",920.2,920.2,.02,1,1,1)
+S ^PXV(920.2,"H",$E(X,1,30),DA)=""
+"^DD",920.2,920.2,.02,1,1,2)
+K ^PXV(920.2,"H",$E(X,1,30),DA)
+"^DD",920.2,920.2,.02,1,1,3)
+Used to facilitate entry selection.
+"^DD",920.2,920.2,.02,1,1,"%D",0)
+^^1^1^3140616^
+"^DD",920.2,920.2,.02,1,1,"%D",1,0)
+This is used to make selection of an entry (hopefully) easier and quicker.
+"^DD",920.2,920.2,.02,1,1,"DT")
+3140616
+"^DD",920.2,920.2,.02,3)
+Answer must be 1-3 characters in length.
+"^DD",920.2,920.2,.02,9)
+^
+"^DD",920.2,920.2,.02,21,0)
+^.001^2^2^3140616^^^
+"^DD",920.2,920.2,.02,21,1,0)
+This is the HL7 code associated with this route.  It is expected to be 1-3
+"^DD",920.2,920.2,.02,21,2,0)
+uppercase alpha characters, only.
+"^DD",920.2,920.2,.02,23,0)
+^.001^2^2^3140616^^
+"^DD",920.2,920.2,.02,23,1,0)
+This is the HL7-0162 code for this route of administration. It must one
+"^DD",920.2,920.2,.02,23,2,0)
+to three uppercase alpha characters - no numbers or punctuation.
+"^DD",920.2,920.2,.02,"AUDIT")
+y
+"^DD",920.2,920.2,.02,"DT")
+3150227
+"^DD",920.2,920.2,.03,0)
+FDA NCIT^Fa^^0;3^K:$L(X)>6!($L(X)<6)!'(X?1U5N) X
+"^DD",920.2,920.2,.03,3)
+Answer must be 6 characters in length, 1 uppercase alpha followed by 5 numbers.
+"^DD",920.2,920.2,.03,9)
+^
+"^DD",920.2,920.2,.03,21,0)
+^.001^2^2^3140701^^^
+"^DD",920.2,920.2,.03,21,1,0)
+This is the FDA NCIT code for this route.  It must be in the format of 1
+"^DD",920.2,920.2,.03,21,2,0)
+uppercase alpha character followed by 5 numbers.
+"^DD",920.2,920.2,.03,23,0)
+^.001^4^4^3140701^^^
+"^DD",920.2,920.2,.03,23,1,0)
+This is the NCIT - FDA NCI Thesaurus - for this route.  Healthcare
+"^DD",920.2,920.2,.03,23,2,0)
+Information Technology Standards (HITSP) specifies the use of FDA
+"^DD",920.2,920.2,.03,23,3,0)
+routes of administration.  The code in this field maps this route
+"^DD",920.2,920.2,.03,23,4,0)
+to the FDA route.
+"^DD",920.2,920.2,.03,"AUDIT")
+y
+"^DD",920.2,920.2,.03,"DT")
+3150227
+"^DD",920.2,920.2,.04,0)
+DEFINITION^Fa^^0;4^K:$L(X)>90!($L(X)<3) X
+"^DD",920.2,920.2,.04,.1)
+Definition
+"^DD",920.2,920.2,.04,3)
+Answer must be 3-90 characters in length.
+"^DD",920.2,920.2,.04,9)
+^
+"^DD",920.2,920.2,.04,21,0)
+^.001^1^1^3140701^^
+"^DD",920.2,920.2,.04,21,1,0)
+This is the definition of this route.  It must be 3-90 characters.
+"^DD",920.2,920.2,.04,23,0)
+^^2^2^3140701^
+"^DD",920.2,920.2,.04,23,1,0)
+This is the definition (explanation) of this route of administration, as
+"^DD",920.2,920.2,.04,23,2,0)
+provided by the HL7-defined Table 0162 - Route of administration.
+"^DD",920.2,920.2,.04,"AUDIT")
+y
+"^DD",920.2,920.2,.04,"DT")
+3150227
+"^DD",920.2,920.2,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920.2'aI^PXV(920.2,^VUID;3^Q
+"^DD",920.2,920.2,99.97,1,0)
+^.1
+"^DD",920.2,920.2,99.97,1,1,0)
+920.2^AREPLACETERM
+"^DD",920.2,920.2,99.97,1,1,1)
+S ^PXV(920.2,"AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920.2,920.2,99.97,1,1,2)
+K ^PXV(920.2,"AREPLACETERM",$E(X,1,30),DA)
+"^DD",920.2,920.2,99.97,1,1,"%D",0)
+^^2^2^3140707^
+"^DD",920.2,920.2,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries
+"^DD",920.2,920.2,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920.2,920.2,99.97,1,1,"DT")
+3140707
+"^DD",920.2,920.2,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",920.2,920.2,99.97,9)
+^
+"^DD",920.2,920.2,99.97,21,0)
+^.001^4^4^3150127^^
+"^DD",920.2,920.2,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another
+"^DD",920.2,920.2,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should
+"^DD",920.2,920.2,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a
+"^DD",920.2,920.2,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",920.2,920.2,99.97,"AUDIT")
+y
+"^DD",920.2,920.2,99.97,"DT")
+3150327
+"^DD",920.2,920.2,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920.2,920.2,99.98,1,0)
+^.1
+"^DD",920.2,920.2,99.98,1,1,0)
+920.2^AVUID
+"^DD",920.2,920.2,99.98,1,1,1)
+S ^PXV(920.2,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.2,920.2,99.98,1,1,2)
+K ^PXV(920.2,"AVUID",$E(X,1,30),DA)
+"^DD",920.2,920.2,99.98,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.2,920.2,99.98,1,1,"%D",0)
+^^1^1^3140707^
+"^DD",920.2,920.2,99.98,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.2,920.2,99.98,1,1,"DT")
+3140707
+"^DD",920.2,920.2,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920.2,920.2,99.98,9)
+^
+"^DD",920.2,920.2,99.98,21,0)
+^.001^2^2^3150127^^^
+"^DD",920.2,920.2,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a
+"^DD",920.2,920.2,99.98,21,2,0)
+Term/Concept.
+"^DD",920.2,920.2,99.98,"AUDIT")
+y
+"^DD",920.2,920.2,99.98,"DT")
+3150227
+"^DD",920.2,920.2,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920.2,920.2,99.99,1,0)
+^.1
+"^DD",920.2,920.2,99.99,1,1,0)
+920.2^AVUID
+"^DD",920.2,920.2,99.99,1,1,1)
+S ^PXV(920.2,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.2,920.2,99.99,1,1,2)
+K ^PXV(920.2,"AVUID",$E(X,1,30),DA)
+"^DD",920.2,920.2,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.2,920.2,99.99,1,1,"%D",0)
+^^1^1^3150127^
+"^DD",920.2,920.2,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.2,920.2,99.99,1,1,"DT")
+3150127
+"^DD",920.2,920.2,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920.2,920.2,99.99,9)
+^
+"^DD",920.2,920.2,99.99,21,0)
+^^2^2^3140707^
+"^DD",920.2,920.2,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",920.2,920.2,99.99,21,2,0)
+terms VHA wide.
+"^DD",920.2,920.2,99.99,"AUDIT")
+y
+"^DD",920.2,920.2,99.99,"DT")
+3150227
+"^DD",920.2,920.2,99.991,0)
+EFFECTIVE DATE/TIME^920.299D^^TERMSTATUS;0
+"^DD",920.2,920.2,99.991,9)
+^
+"^DD",920.2,920.2,99.991,21,0)
+^^2^2^3140828^
+"^DD",920.2,920.2,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each
+"^DD",920.2,920.2,99.991,21,2,0)
+reference term.
+"^DD",920.2,920.299,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920.2,920.299,0,"DT")
+3140707
+"^DD",920.2,920.299,0,"IX","B",920.299,.01)
+
+"^DD",920.2,920.299,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920.2,920.299,0,"UP")
+920.2
+"^DD",920.2,920.299,.01,0)
+EFFECTIVE DATE/TIME^DaI^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920.2,920.299,.01,1,0)
+^.1
+"^DD",920.2,920.299,.01,1,1,0)
+920.299^B
+"^DD",920.2,920.299,.01,1,1,1)
+S ^PXV(920.2,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920.2,920.299,.01,1,1,2)
+K ^PXV(920.2,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920.2,920.299,.01,3)
+Enter the date and time when the status of this term was established.
+"^DD",920.2,920.299,.01,9)
+^
+"^DD",920.2,920.299,.01,21,0)
+^.001^2^2^3140829^^^
+"^DD",920.2,920.299,.01,21,1,0)
+This is the date/time when the Status of the reference term was
+"^DD",920.2,920.299,.01,21,2,0)
+established.
+"^DD",920.2,920.299,.01,"AUDIT")
+y
+"^DD",920.2,920.299,.01,"DT")
+3150327
+"^DD",920.2,920.299,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920.2,920.299,.02,3)
+Enter the Status of this term.
+"^DD",920.2,920.299,.02,9)
+^
+"^DD",920.2,920.299,.02,21,0)
+^^4^4^3140707^
+"^DD",920.2,920.299,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If
+"^DD",920.2,920.299,.02,21,2,0)
+ACTIVE', then the term will be accessible by end-users to document a
+"^DD",920.2,920.299,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be
+"^DD",920.2,920.299,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920.2,920.299,.02,"AUDIT")
+y
+"^DD",920.2,920.299,.02,"DT")
+3150227
+"^DD",920.3,920.3,0)
+FIELD^^99.991^6
+"^DD",920.3,920.3,0,"DDA")
+N
+"^DD",920.3,920.3,0,"DT")
+3140708
+"^DD",920.3,920.3,0,"ID",.02)
+W "   ",$P(^(0),U,2)
+"^DD",920.3,920.3,0,"IX","AREPLACETERM",920.3,99.97)
+
+"^DD",920.3,920.3,0,"IX","AVUID",920.3,99.98)
+
+"^DD",920.3,920.3,0,"IX","AVUID",920.3,99.99)
+
+"^DD",920.3,920.3,0,"IX","B",920.3,.01)
+
+"^DD",920.3,920.3,0,"IX","B",920.3,.02)
+
+"^DD",920.3,920.3,0,"NM","IMM ADMINISTRATION SITE (BODY)")
+
+"^DD",920.3,920.3,0,"PT",920.3,99.97)
+
+"^DD",920.3,920.3,0,"PT",9000010.11,1303)
+
+"^DD",920.3,920.3,0,"PT",9000010.12,1212)
+
+"^DD",920.3,920.3,0,"VRPK")
+PX
+"^DD",920.3,920.3,.01,0)
+SITE^RFa^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",920.3,920.3,.01,.1)
+Site
+"^DD",920.3,920.3,.01,1,0)
+^.1
+"^DD",920.3,920.3,.01,1,1,0)
+920.3^B
+"^DD",920.3,920.3,.01,1,1,1)
+S ^PXV(920.3,"B",$E(X,1,30),DA)=""
+"^DD",920.3,920.3,.01,1,1,2)
+K ^PXV(920.3,"B",$E(X,1,30),DA)
+"^DD",920.3,920.3,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",920.3,920.3,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920.3,920.3,.01,9)
+^
+"^DD",920.3,920.3,.01,21,0)
+^.001^3^3^3140616^^
+"^DD",920.3,920.3,.01,21,1,0)
+This is area on the body of the patient where the immunization/vaccine
+"^DD",920.3,920.3,.01,21,2,0)
+was administered.  The entry is expected to be 3-30 characters with all
+"^DD",920.3,920.3,.01,21,3,0)
+alpha characters being uppercase
+"^DD",920.3,920.3,.01,23,0)
+^.001^4^4^3140616^^
+"^DD",920.3,920.3,.01,23,1,0)
+This is the area of a patient's body to where a vaccine can be
+"^DD",920.3,920.3,.01,23,2,0)
+administered.  The entry is expected to be 3-30 characters, with the alpha
+"^DD",920.3,920.3,.01,23,3,0)
+characters being all uppercase.  The entry here should correspond to one
+"^DD",920.3,920.3,.01,23,4,0)
+of the entries the HL7 0163 Body Site Codeset table.
+"^DD",920.3,920.3,.01,"AUDIT")
+y
+"^DD",920.3,920.3,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",920.3,920.3,.01,"DT")
+3150227
+"^DD",920.3,920.3,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server(MFS).","","!?5") I $D(XUMF)
+"^DD",920.3,920.3,.02,0)
+HL7 CODE^RFa^^0;2^K:$L(X)>4!($L(X)<2)!'(X?2.4U) X
+"^DD",920.3,920.3,.02,.1)
+HL7 Code
+"^DD",920.3,920.3,.02,1,0)
+^.1
+"^DD",920.3,920.3,.02,1,1,0)
+920.3^B^MNEMONIC
+"^DD",920.3,920.3,.02,1,1,1)
+S:'$D(^PXV(920.3,"B",$E(X,1,30),DA)) ^(DA)=1
+"^DD",920.3,920.3,.02,1,1,2)
+I $D(^PXV(920.3,"B",$E(X,1,30),DA)),^(DA) K ^(DA)
+"^DD",920.3,920.3,.02,1,1,"%D",0)
+^^2^2^3150309^
+"^DD",920.3,920.3,.02,1,1,"%D",1,0)
+This mnemonic cross reference updates the "B" index to allow lookups by
+"^DD",920.3,920.3,.02,1,1,"%D",2,0)
+the HL7 Code for this administration route.
+"^DD",920.3,920.3,.02,1,1,"DT")
+3140709
+"^DD",920.3,920.3,.02,3)
+Answer must be 2-4 uppercase characters in length and is required.
+"^DD",920.3,920.3,.02,9)
+^
+"^DD",920.3,920.3,.02,21,0)
+^.001^2^2^3140714^^
+"^DD",920.3,920.3,.02,21,1,0)
+This is the corresponding HL7 code for this site.  It must 2-4 uppercase
+"^DD",920.3,920.3,.02,21,2,0)
+characters and entry is required.
+"^DD",920.3,920.3,.02,23,0)
+^.001^3^3^3140714^^
+"^DD",920.3,920.3,.02,23,1,0)
+This is the HL7 code for this site, based on the HL7 0163 Body Site
+"^DD",920.3,920.3,.02,23,2,0)
+Codeset table.  Entry is expected to be 2-4 uppercase characters and is
+"^DD",920.3,920.3,.02,23,3,0)
+required.
+"^DD",920.3,920.3,.02,"AUDIT")
+y
+"^DD",920.3,920.3,.02,"DT")
+3150227
+"^DD",920.3,920.3,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920.3'aI^PXV(920.3,^VUID;3^Q
+"^DD",920.3,920.3,99.97,1,0)
+^.1
+"^DD",920.3,920.3,99.97,1,1,0)
+920.3^AREPLACETERM
+"^DD",920.3,920.3,99.97,1,1,1)
+S ^PXV(920.3,"AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920.3,920.3,99.97,1,1,2)
+K ^PXV(920.3,"AREPLACETERM",$E(X,1,30),DA)
+"^DD",920.3,920.3,99.97,1,1,"%D",0)
+^^2^2^3140708^
+"^DD",920.3,920.3,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries
+"^DD",920.3,920.3,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920.3,920.3,99.97,1,1,"DT")
+3140708
+"^DD",920.3,920.3,99.97,3)
+Enter the term that replaces this term.
+"^DD",920.3,920.3,99.97,9)
+^
+"^DD",920.3,920.3,99.97,21,0)
+^.001^4^4^3140829^^
+"^DD",920.3,920.3,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another
+"^DD",920.3,920.3,99.97,21,2,0)
+Term/Concept.  The field is controlled by standardization and should
+"^DD",920.3,920.3,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a
+"^DD",920.3,920.3,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",920.3,920.3,99.97,"AUDIT")
+y
+"^DD",920.3,920.3,99.97,"DT")
+3150327
+"^DD",920.3,920.3,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920.3,920.3,99.98,1,0)
+^.1
+"^DD",920.3,920.3,99.98,1,1,0)
+920.3^AVUID
+"^DD",920.3,920.3,99.98,1,1,1)
+S ^PXV(920.3,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.3,920.3,99.98,1,1,2)
+K ^PXV(920.3,"AVUID",$E(X,1,30),DA)
+"^DD",920.3,920.3,99.98,1,1,3)
+XXX--CAN'T BE ALTERED BY A PROGRAMMER
+"^DD",920.3,920.3,99.98,1,1,"%D",0)
+^^1^1^3140708^
+"^DD",920.3,920.3,99.98,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.3,920.3,99.98,1,1,"DT")
+3140708
+"^DD",920.3,920.3,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920.3,920.3,99.98,9)
+^
+"^DD",920.3,920.3,99.98,21,0)
+2^.001^2^2^3150127^^
+"^DD",920.3,920.3,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a
+"^DD",920.3,920.3,99.98,21,2,0)
+Term/Concept.
+"^DD",920.3,920.3,99.98,"AUDIT")
+y
+"^DD",920.3,920.3,99.98,"DT")
+3150227
+"^DD",920.3,920.3,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920.3,920.3,99.99,1,0)
+^.1
+"^DD",920.3,920.3,99.99,1,1,0)
+920.3^AVUID
+"^DD",920.3,920.3,99.99,1,1,1)
+S ^PXV(920.3,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.3,920.3,99.99,1,1,2)
+K ^PXV(920.3,"AVUID",$E(X,1,30),DA)
+"^DD",920.3,920.3,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.3,920.3,99.99,1,1,"%D",0)
+^^1^1^3150127^
+"^DD",920.3,920.3,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.3,920.3,99.99,1,1,"DT")
+3150127
+"^DD",920.3,920.3,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920.3,920.3,99.99,9)
+^
+"^DD",920.3,920.3,99.99,21,0)
+^^2^2^3140707^
+"^DD",920.3,920.3,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",920.3,920.3,99.99,21,2,0)
+terms VHA wide.
+"^DD",920.3,920.3,99.99,"AUDIT")
+y
+"^DD",920.3,920.3,99.99,"DT")
+3150227
+"^DD",920.3,920.3,99.991,0)
+EFFECTIVE DATE/TIME^920.399D^^TERMSTATUS;0
+"^DD",920.3,920.3,99.991,9)
+^
+"^DD",920.3,920.3,99.991,21,0)
+^^2^2^3140828^
+"^DD",920.3,920.3,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each
+"^DD",920.3,920.3,99.991,21,2,0)
+reference term.
+"^DD",920.3,920.399,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920.3,920.399,0,"DT")
+3140708
+"^DD",920.3,920.399,0,"IX","B",920.399,.01)
+
+"^DD",920.3,920.399,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920.3,920.399,0,"UP")
+920.3
+"^DD",920.3,920.399,.01,0)
+EFFECTIVE DATE/TIME^RDaI^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920.3,920.399,.01,1,0)
+^.1
+"^DD",920.3,920.399,.01,1,1,0)
+920.399^B
+"^DD",920.3,920.399,.01,1,1,1)
+S ^PXV(920.3,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920.3,920.399,.01,1,1,2)
+K ^PXV(920.3,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920.3,920.399,.01,3)
+Enter the date and time when the status of this term was established.
+"^DD",920.3,920.399,.01,9)
+^
+"^DD",920.3,920.399,.01,21,0)
+^.001^2^2^3140829^^
+"^DD",920.3,920.399,.01,21,1,0)
+This is the date/time when the Status of the reference term was
+"^DD",920.3,920.399,.01,21,2,0)
+established.
+"^DD",920.3,920.399,.01,"AUDIT")
+y
+"^DD",920.3,920.399,.01,"DT")
+3150327
+"^DD",920.3,920.399,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920.3,920.399,.02,3)
+Enter the Status of this term.
+"^DD",920.3,920.399,.02,9)
+^
+"^DD",920.3,920.399,.02,21,0)
+^^4^4^3140708^
+"^DD",920.3,920.399,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'.  If
+"^DD",920.3,920.399,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end users to document a
+"^DD",920.3,920.399,.02,21,3,0)
+particular patient event.  If 'INACTIVE', then the term will only be
+"^DD",920.3,920.399,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920.3,920.399,.02,"AUDIT")
+y
+"^DD",920.3,920.399,.02,"DT")
+3150227
+"^DD",920.4,920.4,0)
+FIELD^^3^13
+"^DD",920.4,920.4,0,"DDA")
+N
+"^DD",920.4,920.4,0,"DT")
+3150316
+"^DD",920.4,920.4,0,"ID",.02)
+W "   ",$P(^(0),U,2)
+"^DD",920.4,920.4,0,"IX","AREPLACETERM",920.4,99.97)
+
+"^DD",920.4,920.4,0,"IX","AVUID",920.4,99.99)
+
+"^DD",920.4,920.4,0,"IX","B",920.4,.01)
+
+"^DD",920.4,920.4,0,"IX","C",920.4,.02)
+
+"^DD",920.4,920.4,0,"IX","D",920.43,.01)
+
+"^DD",920.4,920.4,0,"NM","IMM CONTRAINDICATION REASONS")
+
+"^DD",920.4,920.4,0,"PT",920.4,99.97)
+
+"^DD",920.4,920.4,0,"VRPK")
+PX
+"^DD",920.4,920.4,.01,0)
+NAME^Fa^^0;1^K:$L(X)>30!($L(X)<3) X
+"^DD",920.4,920.4,.01,.1)
+VA SHORT NAME
+"^DD",920.4,920.4,.01,1,0)
+^.1
+"^DD",920.4,920.4,.01,1,1,0)
+920.4^B
+"^DD",920.4,920.4,.01,1,1,1)
+S ^PXV(920.4,"B",$E(X,1,30),DA)=""
+"^DD",920.4,920.4,.01,1,1,2)
+K ^PXV(920.4,"B",$E(X,1,30),DA)
+"^DD",920.4,920.4,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",920.4,920.4,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920.4,920.4,.01,9)
+^
+"^DD",920.4,920.4,.01,21,0)
+^^3^3^3150305^
+"^DD",920.4,920.4,.01,21,1,0)
+This is the name of the specific situation in which an immunization, 
+"^DD",920.4,920.4,.01,21,2,0)
+skin test or other procedure should not be used because it may be 
+"^DD",920.4,920.4,.01,21,3,0)
+harmful to the patient.
+"^DD",920.4,920.4,.01,"AUDIT")
+y
+"^DD",920.4,920.4,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.4,920.4,.01,"DT")
+3150311
+"^DD",920.4,920.4,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.4,920.4,.02,0)
+CONCEPT CODE^Fa^^0;2^K:$L(X)>10!($L(X)<2)!'(X'?1P.E) X
+"^DD",920.4,920.4,.02,.1)
+CDC CONCEPT CODE
+"^DD",920.4,920.4,.02,1,0)
+^.1
+"^DD",920.4,920.4,.02,1,1,0)
+920.4^C
+"^DD",920.4,920.4,.02,1,1,1)
+S ^PXV(920.4,"C",$E(X,1,30),DA)=""
+"^DD",920.4,920.4,.02,1,1,2)
+K ^PXV(920.4,"C",$E(X,1,30),DA)
+"^DD",920.4,920.4,.02,1,1,"%D",0)
+^^1^1^3150226^
+"^DD",920.4,920.4,.02,1,1,"%D",1,0)
+This provides lookup by CONCEPT CODE in addition to VA SHORT NAME.
+"^DD",920.4,920.4,.02,1,1,"DT")
+3150226
+"^DD",920.4,920.4,.02,3)
+Answer must be 2-10 characters in length.
+"^DD",920.4,920.4,.02,9)
+^
+"^DD",920.4,920.4,.02,21,0)
+^.001^1^1^3150226^^^
+"^DD",920.4,920.4,.02,21,1,0)
+The CONCEPT CODE as it came from the CDC.
+"^DD",920.4,920.4,.02,"AUDIT")
+y
+"^DD",920.4,920.4,.02,"DT")
+3150312
+"^DD",920.4,920.4,.03,0)
+INACTIVE^Sa^0:NO;1:YES;^0;3^Q
+"^DD",920.4,920.4,.03,3)
+Enter YES if this is an inactive contraindication.
+"^DD",920.4,920.4,.03,9)
+^
+"^DD",920.4,920.4,.03,21,0)
+^.001^1^1^3150403^^
+"^DD",920.4,920.4,.03,21,1,0)
+This field indicates if this contraindication is active or inactive.
+"^DD",920.4,920.4,.03,"AUDIT")
+y
+"^DD",920.4,920.4,.03,"DT")
+3150305
+"^DD",920.4,920.4,.04,0)
+NIP004^Fa^^0;4^K:$L(X)>2!($L(X)<2) X
+"^DD",920.4,920.4,.04,.1)
+CDC V 2.3.1.VALUE NIP004
+"^DD",920.4,920.4,.04,3)
+Answer must be 2 characters in length.
+"^DD",920.4,920.4,.04,9)
+^
+"^DD",920.4,920.4,.04,21,0)
+^^2^2^3150305^
+"^DD",920.4,920.4,.04,21,1,0)
+This is the National Immunization Program (NIP) defined table NIP004
+"^DD",920.4,920.4,.04,21,2,0)
+value related to this contraindication.
+"^DD",920.4,920.4,.04,"AUDIT")
+y
+"^DD",920.4,920.4,.04,"DT")
+3150305
+"^DD",920.4,920.4,.05,0)
+HL7 CODE^Fa^^VUID;4^K:$L(X)>10!($L(X)<3) X
+"^DD",920.4,920.4,.05,.1)
+CDC HL7 TABLE 0396 CODE
+"^DD",920.4,920.4,.05,3)
+Answer must be 3-10 characters in length.
+"^DD",920.4,920.4,.05,9)
+^
+"^DD",920.4,920.4,.05,21,0)
+^.001^1^1^3150402^^
+"^DD",920.4,920.4,.05,21,1,0)
+This is the corresponding HL7 code for this contraindication.
+"^DD",920.4,920.4,.05,"AUDIT")
+y
+"^DD",920.4,920.4,.05,"DT")
+3150305
+"^DD",920.4,920.4,.06,0)
+CONTRAINDICATION/PRECAUTION^RSa^P:PRECAUTION;C:CONTRAINDICATION;^0;5^Q
+"^DD",920.4,920.4,.06,3)
+Enter 'C' if this is a Contraindication or enter 'P' is this is a Precaution.
+"^DD",920.4,920.4,.06,9)
+^
+"^DD",920.4,920.4,.06,21,0)
+^^2^2^3150316^
+"^DD",920.4,920.4,.06,21,1,0)
+A value of 'C' indicates that this is a Contraindication, and a value of 
+"^DD",920.4,920.4,.06,21,2,0)
+'P' indicates that this is merely a Precaution.
+"^DD",920.4,920.4,.06,"AUDIT")
+y
+"^DD",920.4,920.4,.06,"DT")
+3150316
+"^DD",920.4,920.4,1,0)
+CONCEPT NAME^Fa^^1;1^K:$L(X)>175!($L(X)<6) X
+"^DD",920.4,920.4,1,.1)
+CDC CONCEPT NAME
+"^DD",920.4,920.4,1,3)
+Answer must be 6-175 characters in length.
+"^DD",920.4,920.4,1,9)
+^
+"^DD",920.4,920.4,1,21,0)
+^^1^1^3150202^
+"^DD",920.4,920.4,1,21,1,0)
+The CONCEPT NAME as it came from the CDC.
+"^DD",920.4,920.4,1,"AUDIT")
+y
+"^DD",920.4,920.4,1,"DT")
+3150227
+"^DD",920.4,920.4,2,0)
+CONCEPT DEFINITION^Fa^^2;1^K:$L(X)>240!($L(X)<1) X
+"^DD",920.4,920.4,2,.1)
+CDC CONCEPT DEFINTION
+"^DD",920.4,920.4,2,3)
+Answer must be 1-240 characters in length.
+"^DD",920.4,920.4,2,9)
+^
+"^DD",920.4,920.4,2,21,0)
+^^1^1^3150202^
+"^DD",920.4,920.4,2,21,1,0)
+The CONCEPT DEFINITION as it came from the CDC.
+"^DD",920.4,920.4,2,"AUDIT")
+y
+"^DD",920.4,920.4,2,"DT")
+3150227
+"^DD",920.4,920.4,3,0)
+IMMUNIZATIONS LIMITED TO^920.43PA^^3;0
+"^DD",920.4,920.4,3,9)
+^
+"^DD",920.4,920.4,3,21,0)
+^^3^3^3150311^
+"^DD",920.4,920.4,3,21,1,0)
+These are the Vaccines that apply to this Contraindication (or 
+"^DD",920.4,920.4,3,21,2,0)
+Precaution). If this list is empty, then the Contraindication applies to 
+"^DD",920.4,920.4,3,21,3,0)
+all Vaccines.
+"^DD",920.4,920.4,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920.4'aI^PXV(920.4,^VUID;3^Q
+"^DD",920.4,920.4,99.97,1,0)
+^.1
+"^DD",920.4,920.4,99.97,1,1,0)
+920.4^AREPLACETERM
+"^DD",920.4,920.4,99.97,1,1,1)
+S ^PXV(920.4,"AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920.4,920.4,99.97,1,1,2)
+K ^PXV(920.4,"AREPLACETERM",$E(X,1,30),DA)
+"^DD",920.4,920.4,99.97,1,1,"%D",0)
+^^2^2^3150127^
+"^DD",920.4,920.4,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",920.4,920.4,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920.4,920.4,99.97,1,1,"DT")
+3150127
+"^DD",920.4,920.4,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",920.4,920.4,99.97,9)
+^
+"^DD",920.4,920.4,99.97,21,0)
+^^4^4^3150127^
+"^DD",920.4,920.4,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",920.4,920.4,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",920.4,920.4,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",920.4,920.4,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",920.4,920.4,99.97,"AUDIT")
+y
+"^DD",920.4,920.4,99.97,"DT")
+3150327
+"^DD",920.4,920.4,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920.4,920.4,99.98,1,0)
+^.1^^0
+"^DD",920.4,920.4,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920.4,920.4,99.98,9)
+^
+"^DD",920.4,920.4,99.98,21,0)
+^^2^2^3150127^
+"^DD",920.4,920.4,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",920.4,920.4,99.98,21,2,0)
+Term/Concept.
+"^DD",920.4,920.4,99.98,"AUDIT")
+y
+"^DD",920.4,920.4,99.98,"DT")
+3150127
+"^DD",920.4,920.4,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920.4,920.4,99.99,1,0)
+^.1
+"^DD",920.4,920.4,99.99,1,1,0)
+920.4^AVUID
+"^DD",920.4,920.4,99.99,1,1,1)
+S ^PXV(920.4,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.4,920.4,99.99,1,1,2)
+K ^PXV(920.4,"AVUID",$E(X,1,30),DA)
+"^DD",920.4,920.4,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.4,920.4,99.99,1,1,"%D",0)
+^^1^1^3150127^
+"^DD",920.4,920.4,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.4,920.4,99.99,1,1,"DT")
+3150127
+"^DD",920.4,920.4,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920.4,920.4,99.99,9)
+^
+"^DD",920.4,920.4,99.99,21,0)
+^^2^2^3150127^
+"^DD",920.4,920.4,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to 
+"^DD",920.4,920.4,99.99,21,2,0)
+reference terms VHA wide.
+"^DD",920.4,920.4,99.99,"AUDIT")
+y
+"^DD",920.4,920.4,99.99,"DT")
+3150227
+"^DD",920.4,920.4,99.991,0)
+EFFECTIVE DATE/TIME^920.499DA^^TERMSTATUS;0
+"^DD",920.4,920.4,99.991,9)
+^
+"^DD",920.4,920.4,99.991,21,0)
+^^1^1^3150127^
+"^DD",920.4,920.4,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",920.4,920.43,0)
+IMMUNIZATIONS LIMITED TO SUB-FIELD^^.01^1
+"^DD",920.4,920.43,0,"DT")
+3150311
+"^DD",920.4,920.43,0,"IX","B",920.43,.01)
+
+"^DD",920.4,920.43,0,"NM","IMMUNIZATIONS LIMITED TO")
+
+"^DD",920.4,920.43,0,"UP")
+920.4
+"^DD",920.4,920.43,.01,0)
+IMMUNIZATIONS LIMITED TO^MP9999999.14'a^AUTTIMM(^0;1^Q
+"^DD",920.4,920.43,.01,1,0)
+^.1
+"^DD",920.4,920.43,.01,1,1,0)
+920.43^B
+"^DD",920.4,920.43,.01,1,1,1)
+S ^PXV(920.4,DA(1),3,"B",$E(X,1,30),DA)=""
+"^DD",920.4,920.43,.01,1,1,2)
+K ^PXV(920.4,DA(1),3,"B",$E(X,1,30),DA)
+"^DD",920.4,920.43,.01,1,2,0)
+920.4^D
+"^DD",920.4,920.43,.01,1,2,1)
+S ^PXV(920.4,"D",$E(X,1,30),DA(1),DA)=""
+"^DD",920.4,920.43,.01,1,2,2)
+K ^PXV(920.4,"D",$E(X,1,30),DA(1),DA)
+"^DD",920.4,920.43,.01,1,2,"%D",0)
+^^1^1^3150318^
+"^DD",920.4,920.43,.01,1,2,"%D",1,0)
+This cross reference allows whole file lookups and sorting.
+"^DD",920.4,920.43,.01,1,2,"DT")
+3150311
+"^DD",920.4,920.43,.01,3)
+Enter an immunization to which this contraindication applies or leave blank if it applies to all immunizations.
+"^DD",920.4,920.43,.01,21,0)
+^^2^2^3150311^
+"^DD",920.4,920.43,.01,21,1,0)
+This is an immunization that applies to this Contraindication or 
+"^DD",920.4,920.43,.01,21,2,0)
+Precaution.
+"^DD",920.4,920.43,.01,"AUDIT")
+y
+"^DD",920.4,920.43,.01,"DT")
+3150316
+"^DD",920.4,920.499,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920.4,920.499,0,"DT")
+3150127
+"^DD",920.4,920.499,0,"IX","B",920.499,.01)
+
+"^DD",920.4,920.499,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920.4,920.499,0,"UP")
+920.4
+"^DD",920.4,920.499,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920.4,920.499,.01,1,0)
+^.1
+"^DD",920.4,920.499,.01,1,1,0)
+920.499^B
+"^DD",920.4,920.499,.01,1,1,1)
+S ^PXV(920.4,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920.4,920.499,.01,1,1,2)
+K ^PXV(920.4,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920.4,920.499,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",920.4,920.499,.01,9)
+^
+"^DD",920.4,920.499,.01,21,0)
+^.001^2^2^3150127^^
+"^DD",920.4,920.499,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",920.4,920.499,.01,21,2,0)
+established.
+"^DD",920.4,920.499,.01,"AUDIT")
+y
+"^DD",920.4,920.499,.01,"DT")
+3150227
+"^DD",920.4,920.499,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920.4,920.499,.02,3)
+Enter the Status of reference term, ACTIVE or INACTIVE.
+"^DD",920.4,920.499,.02,9)
+^
+"^DD",920.4,920.499,.02,21,0)
+^^4^4^3150127^
+"^DD",920.4,920.499,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",920.4,920.499,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",920.4,920.499,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",920.4,920.499,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920.4,920.499,.02,"AUDIT")
+y
+"^DD",920.4,920.499,.02,"DT")
+3150227
+"^DD",920.5,920.5,0)
+FIELD^^99.991^6
+"^DD",920.5,920.5,0,"DDA")
+N
+"^DD",920.5,920.5,0,"DT")
+3150127
+"^DD",920.5,920.5,0,"IX","AREPLACETERM",920.5,99.97)
+
+"^DD",920.5,920.5,0,"IX","AVUID",920.5,99.99)
+
+"^DD",920.5,920.5,0,"IX","B",920.5,.01)
+
+"^DD",920.5,920.5,0,"NM","IMM REFUSAL REASONS")
+
+"^DD",920.5,920.5,0,"PT",920.5,99.97)
+
+"^DD",920.5,920.5,0,"VRPK")
+PX
+"^DD",920.5,920.5,.01,0)
+REASON^RFa^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E) X
+"^DD",920.5,920.5,.01,.1)
+Reason
+"^DD",920.5,920.5,.01,1,0)
+^.1
+"^DD",920.5,920.5,.01,1,1,0)
+920.5^B
+"^DD",920.5,920.5,.01,1,1,1)
+S ^PXV(920.5,"B",$E(X,1,30),DA)=""
+"^DD",920.5,920.5,.01,1,1,2)
+K ^PXV(920.5,"B",$E(X,1,30),DA)
+"^DD",920.5,920.5,.01,3)
+Answer must be 3-30 characters in length.
+"^DD",920.5,920.5,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",920.5,920.5,.01,9)
+^
+"^DD",920.5,920.5,.01,21,0)
+^.001^4^4^3141123^^
+"^DD",920.5,920.5,.01,21,1,0)
+This is the reason the immunization (or skin test) has been refused.
+"^DD",920.5,920.5,.01,21,2,0)
+ 
+"^DD",920.5,920.5,.01,21,3,0)
+PLEASE NOTE: that if 'Other' is used as a reason, further explanation
+"^DD",920.5,920.5,.01,21,4,0)
+may be required.
+"^DD",920.5,920.5,.01,23,0)
+^^2^2^3141123^
+"^DD",920.5,920.5,.01,23,1,0)
+These refusal reasons have been derived from the CDC-defined table
+"^DD",920.5,920.5,.01,23,2,0)
+NIP002 - Substance Refusal Reason.
+"^DD",920.5,920.5,.01,"AUDIT")
+y
+"^DD",920.5,920.5,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.5,920.5,.01,"DT")
+3150227
+"^DD",920.5,920.5,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server (MFS).","","!?5") I $D(XUMF)
+"^DD",920.5,920.5,.02,0)
+HL7 CODE^Fa^^0;2^K:$L(X)>2!($L(X)<2)!'(X?2N) X
+"^DD",920.5,920.5,.02,3)
+Answer must be 2 characters in length.
+"^DD",920.5,920.5,.02,9)
+^
+"^DD",920.5,920.5,.02,21,0)
+^.001^2^2^3141124^^
+"^DD",920.5,920.5,.02,21,1,0)
+This is the HL7 code for this refusal reason, used when transmitting this
+"^DD",920.5,920.5,.02,21,2,0)
+data.
+"^DD",920.5,920.5,.02,"AUDIT")
+y
+"^DD",920.5,920.5,.02,"DT")
+3150227
+"^DD",920.5,920.5,99.97,0)
+REPLACED BY VHA STANDARD TERM^P920.5'aI^PXV(920.5,^VUID;3^Q
+"^DD",920.5,920.5,99.97,1,0)
+^.1
+"^DD",920.5,920.5,99.97,1,1,0)
+920.5^AREPLACETERM
+"^DD",920.5,920.5,99.97,1,1,1)
+S ^PXV(920.5,"AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",920.5,920.5,99.97,1,1,2)
+K ^PXV(920.5,"AREPLACETERM",$E(X,1,30),DA)
+"^DD",920.5,920.5,99.97,1,1,"%D",0)
+^^2^2^3150127^
+"^DD",920.5,920.5,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",920.5,920.5,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",920.5,920.5,99.97,1,1,"DT")
+3150127
+"^DD",920.5,920.5,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",920.5,920.5,99.97,9)
+^
+"^DD",920.5,920.5,99.97,21,0)
+^^4^4^3150127^
+"^DD",920.5,920.5,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",920.5,920.5,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",920.5,920.5,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",920.5,920.5,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",920.5,920.5,99.97,"AUDIT")
+y
+"^DD",920.5,920.5,99.97,"DT")
+3150327
+"^DD",920.5,920.5,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",920.5,920.5,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",920.5,920.5,99.98,9)
+^
+"^DD",920.5,920.5,99.98,21,0)
+^^2^2^3150127^
+"^DD",920.5,920.5,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",920.5,920.5,99.98,21,2,0)
+Term/Concept.
+"^DD",920.5,920.5,99.98,"AUDIT")
+y
+"^DD",920.5,920.5,99.98,"DT")
+3150127
+"^DD",920.5,920.5,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",920.5,920.5,99.99,1,0)
+^.1
+"^DD",920.5,920.5,99.99,1,1,0)
+920.5^AVUID
+"^DD",920.5,920.5,99.99,1,1,1)
+S ^PXV(920.5,"AVUID",$E(X,1,30),DA)=""
+"^DD",920.5,920.5,99.99,1,1,2)
+K ^PXV(920.5,"AVUID",$E(X,1,30),DA)
+"^DD",920.5,920.5,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT BY PROGRAMMER
+"^DD",920.5,920.5,99.99,1,1,"%D",0)
+^^1^1^3150127^
+"^DD",920.5,920.5,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",920.5,920.5,99.99,1,1,"DT")
+3150127
+"^DD",920.5,920.5,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",920.5,920.5,99.99,9)
+^
+"^DD",920.5,920.5,99.99,21,0)
+^^2^2^3150127^
+"^DD",920.5,920.5,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference 
+"^DD",920.5,920.5,99.99,21,2,0)
+terms VHA wide.
+"^DD",920.5,920.5,99.99,"AUDIT")
+y
+"^DD",920.5,920.5,99.99,"DT")
+3150127
+"^DD",920.5,920.5,99.991,0)
+EFFECTIVE DATE/TIME^920.599DA^^TERMSTATUS;0
+"^DD",920.5,920.5,99.991,9)
+^
+"^DD",920.5,920.5,99.991,21,0)
+^.001^1^1^3150127^^
+"^DD",920.5,920.5,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",920.5,920.599,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",920.5,920.599,0,"DT")
+3150127
+"^DD",920.5,920.599,0,"IX","B",920.599,.01)
+
+"^DD",920.5,920.599,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",920.5,920.599,0,"UP")
+920.5
+"^DD",920.5,920.599,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",920.5,920.599,.01,1,0)
+^.1
+"^DD",920.5,920.599,.01,1,1,0)
+920.599^B
+"^DD",920.5,920.599,.01,1,1,1)
+S ^PXV(920.5,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",920.5,920.599,.01,1,1,2)
+K ^PXV(920.5,DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",920.5,920.599,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",920.5,920.599,.01,9)
+^
+"^DD",920.5,920.599,.01,21,0)
+^^2^2^3150127^
+"^DD",920.5,920.599,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",920.5,920.599,.01,21,2,0)
+established.
+"^DD",920.5,920.599,.01,"AUDIT")
+y
+"^DD",920.5,920.599,.01,"DT")
+3150227
+"^DD",920.5,920.599,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",920.5,920.599,.02,3)
+Enter the Status of reference term, ACTIVE or INACTIVE.
+"^DD",920.5,920.599,.02,9)
+^
+"^DD",920.5,920.599,.02,21,0)
+^^4^4^3150127^
+"^DD",920.5,920.599,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",920.5,920.599,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",920.5,920.599,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",920.5,920.599,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",920.5,920.599,.02,"AUDIT")
+y
+"^DD",920.5,920.599,.02,"DT")
+3150227
+"^DD",9999999.04,9999999.04,0)
+FIELD^^1101^12
+"^DD",9999999.04,9999999.04,0,"DDA")
+N
+"^DD",9999999.04,9999999.04,0,"DT")
+3140529
+"^DD",9999999.04,9999999.04,0,"ID",.02)
+W "   ",$P(^(0),U,2)
+"^DD",9999999.04,9999999.04,0,"ID",.03)
+W "   ",@("$P($P($C(59)_$S($D(^DD(9999999.04,.03,0)):$P(^(0),U,3),1:0)_$E("_DIC_"Y,0),0),$C(59)_$P(^(0),U,3)_"":"",2),$C(59),1)")
+"^DD",9999999.04,9999999.04,0,"IX","AREPLACETERM",9999999.04,99.97)
+
+"^DD",9999999.04,9999999.04,0,"IX","AVUID",9999999.04,99.99)
+
+"^DD",9999999.04,9999999.04,0,"IX","B",9999999.04,.01)
+
+"^DD",9999999.04,9999999.04,0,"IX","B",9999999.04,8801)
+
+"^DD",9999999.04,9999999.04,0,"IX","D",9999999.04,.05)
+
+"^DD",9999999.04,9999999.04,0,"IX","M",9999999.04,.02)
+
+"^DD",9999999.04,9999999.04,0,"NM","IMM MANUFACTURER")
+
+"^DD",9999999.04,9999999.04,0,"PT",9999999.04,99.97)
+
+"^DD",9999999.04,9999999.04,0,"PT",9999999.41,.02)
+
+"^DD",9999999.04,9999999.04,0,"VRPK")
+PX
+"^DD",9999999.04,9999999.04,.01,0)
+NAME^RFa^^0;1^K:$L(X)>75!($L(X)<3)!'(X'?1P.E) X
+"^DD",9999999.04,9999999.04,.01,.1)
+Name
+"^DD",9999999.04,9999999.04,.01,1,0)
+^.1^^-1
+"^DD",9999999.04,9999999.04,.01,1,1,0)
+9999999.04^B
+"^DD",9999999.04,9999999.04,.01,1,1,1)
+S ^AUTTIMAN("B",X,DA)=""
+"^DD",9999999.04,9999999.04,.01,1,1,2)
+K ^AUTTIMAN("B",X,DA)
+"^DD",9999999.04,9999999.04,.01,1,1,3)
+Modified to include complete name to better facilitate lookups.
+"^DD",9999999.04,9999999.04,.01,1,1,"%D",0)
+^.101^4^4^3140529^^
+"^DD",9999999.04,9999999.04,.01,1,1,"%D",1,0)
+The is the standard, REGULAR B x-ref, modified to include the complete name
+"^DD",9999999.04,9999999.04,.01,1,1,"%D",2,0)
+of the manufacturer.  This has been done as a user requirement, to better
+"^DD",9999999.04,9999999.04,.01,1,1,"%D",3,0)
+facilitate lookups for them.  This x-ref should be not deleted, even
+"^DD",9999999.04,9999999.04,.01,1,1,"%D",4,0)
+if recreating.
+"^DD",9999999.04,9999999.04,.01,1,1,"DT")
+3140506
+"^DD",9999999.04,9999999.04,.01,3)
+Answer must be 3-75 characters in length.
+"^DD",9999999.04,9999999.04,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",9999999.04,9999999.04,.01,9)
+^
+"^DD",9999999.04,9999999.04,.01,21,0)
+^.001^2^2^3140521^^^^
+"^DD",9999999.04,9999999.04,.01,21,1,0)
+This is the complete name of a manufacturer of vaccines/immunizations.
+"^DD",9999999.04,9999999.04,.01,21,2,0)
+The name must be at least 3 characters and no more than 75 characters.
+"^DD",9999999.04,9999999.04,.01,23,0)
+^.001^2^2^3140521^^^^
+"^DD",9999999.04,9999999.04,.01,23,1,0)
+This is the name of the manufacturer of vaccines and/or immunizations.
+"^DD",9999999.04,9999999.04,.01,23,2,0)
+It is mainly used by the Immunization Lot Number file.
+"^DD",9999999.04,9999999.04,.01,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",9999999.04,9999999.04,.01,"DT")
+3150306
+"^DD",9999999.04,9999999.04,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server(MFS).","","!?5") I $D(XUMF)
+"^DD",9999999.04,9999999.04,.02,0)
+MVX CODE^RFa^^0;2^K:$L(X)>3!($L(X)<2) X
+"^DD",9999999.04,9999999.04,.02,.1)
+MVX Code
+"^DD",9999999.04,9999999.04,.02,1,0)
+^.1
+"^DD",9999999.04,9999999.04,.02,1,1,0)
+9999999.04^M
+"^DD",9999999.04,9999999.04,.02,1,1,1)
+S ^AUTTIMAN("M",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.04,.02,1,1,2)
+K ^AUTTIMAN("M",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.04,.02,1,1,3)
+Used to facilitate lookup.
+"^DD",9999999.04,9999999.04,.02,1,1,"%D",0)
+^^2^2^3140807^
+"^DD",9999999.04,9999999.04,.02,1,1,"%D",1,0)
+This cross-reference allows entries in this file to be accessed by the data
+"^DD",9999999.04,9999999.04,.02,1,1,"%D",2,0)
+is this field, which can be considerably shorter in length.
+"^DD",9999999.04,9999999.04,.02,1,1,"DT")
+3140807
+"^DD",9999999.04,9999999.04,.02,3)
+Answer must be 2-3 characters in length.
+"^DD",9999999.04,9999999.04,.02,9)
+^
+"^DD",9999999.04,9999999.04,.02,21,0)
+^.001^2^2^3140428^^^
+"^DD",9999999.04,9999999.04,.02,21,1,0)
+This is the MVX code for this manufacturer.  The code is either 2 or 3
+"^DD",9999999.04,9999999.04,.02,21,2,0)
+characters in length.
+"^DD",9999999.04,9999999.04,.02,23,0)
+^.001^1^1^3140428^^^
+"^DD",9999999.04,9999999.04,.02,23,1,0)
+The MVX code is used in the transferring of immunization data via HL7.
+"^DD",9999999.04,9999999.04,.02,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,.02,"DT")
+3150306
+"^DD",9999999.04,9999999.04,.03,0)
+INACTIVE FLAG^Sa^1:INACTIVE;0:ACTIVE;^0;3^Q
+"^DD",9999999.04,9999999.04,.03,.1)
+Inactive Flag
+"^DD",9999999.04,9999999.04,.03,3)
+Enter a '1' to INACTIVATE this manufacturer.  If the manufacturer is currently ACTIVE, leave blank or enter a '0'.
+"^DD",9999999.04,9999999.04,.03,9)
+^
+"^DD",9999999.04,9999999.04,.03,21,0)
+^.001^3^3^3150323^^^^
+"^DD",9999999.04,9999999.04,.03,21,1,0)
+Use to show if this manufacturer is currently active.  If the field is blank
+"^DD",9999999.04,9999999.04,.03,21,2,0)
+or contains a '0' the software sees the manufacturer as active. Enter a
+"^DD",9999999.04,9999999.04,.03,21,3,0)
+'1' if the manufacturer is no longer active.
+"^DD",9999999.04,9999999.04,.03,23,0)
+^.001^3^3^3150323^^^^
+"^DD",9999999.04,9999999.04,.03,23,1,0)
+A set of codes used to designate a manufacturer as INACTIVE (by entering a
+"^DD",9999999.04,9999999.04,.03,23,2,0)
+'1') or ACTIVE (by entering a '0' or leaving blank).  This may be
+"^DD",9999999.04,9999999.04,.03,23,3,0)
+the opposite of what users are used to.
+"^DD",9999999.04,9999999.04,.03,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,.03,"DT")
+3150323
+"^DD",9999999.04,9999999.04,.04,0)
+FULL NAME^Fa^^0;4^K:$L(X)>110!($L(X)<3) X
+"^DD",9999999.04,9999999.04,.04,.1)
+Full Name
+"^DD",9999999.04,9999999.04,.04,3)
+Enter the complete name of this manufacturer, 3-110 characters in length.
+"^DD",9999999.04,9999999.04,.04,9)
+^
+"^DD",9999999.04,9999999.04,.04,21,0)
+^.001^4^4^3150306^^
+"^DD",9999999.04,9999999.04,.04,21,1,0)
+This is the complete name of the manufacturer.  It must be at least 3 
+"^DD",9999999.04,9999999.04,.04,21,2,0)
+characters and no more than 100 characters in length.  This is used 
+"^DD",9999999.04,9999999.04,.04,21,3,0)
+when the full name of the manufacturer cannot be entered into the NAME
+"^DD",9999999.04,9999999.04,.04,21,4,0)
+field.
+"^DD",9999999.04,9999999.04,.04,23,0)
+^.001^3^3^3150306^^
+"^DD",9999999.04,9999999.04,.04,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.04,9999999.04,.04,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.04,9999999.04,.04,23,3,0)
+version of the file.
+"^DD",9999999.04,9999999.04,.04,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,.04,"DT")
+3150306
+"^DD",9999999.04,9999999.04,.05,0)
+SYNONYM #1^Fa^^0;5^K:$L(X)>50!($L(X)<3) X
+"^DD",9999999.04,9999999.04,.05,.1)
+Synonym #1
+"^DD",9999999.04,9999999.04,.05,1,0)
+^.1
+"^DD",9999999.04,9999999.04,.05,1,1,0)
+9999999.04^D
+"^DD",9999999.04,9999999.04,.05,1,1,1)
+S ^AUTTIMAN("D",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.04,.05,1,1,2)
+K ^AUTTIMAN("D",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.04,.05,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.04,9999999.04,.05,1,1,"%D",1,0)
+This cross reference is used for sorting and lookup.
+"^DD",9999999.04,9999999.04,.05,1,1,"DT")
+3140529
+"^DD",9999999.04,9999999.04,.05,3)
+Answer must be 3-50 characters in length.
+"^DD",9999999.04,9999999.04,.05,9)
+^
+"^DD",9999999.04,9999999.04,.05,21,0)
+^.001^1^1^3140729^^^^
+"^DD",9999999.04,9999999.04,.05,21,1,0)
+This is an alternate (or shortened) name for this manufacturer.
+"^DD",9999999.04,9999999.04,.05,23,0)
+^.001^3^3^3140729^^
+"^DD",9999999.04,9999999.04,.05,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.04,9999999.04,.05,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.04,9999999.04,.05,23,3,0)
+version of the file.
+"^DD",9999999.04,9999999.04,.05,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,.05,"DT")
+3150306
+"^DD",9999999.04,9999999.04,99.97,0)
+REPLACED BY VHA STANDARD TERM^P9999999.04'Ia^AUTTIMAN(^VUID;3^Q
+"^DD",9999999.04,9999999.04,99.97,1,0)
+^.1
+"^DD",9999999.04,9999999.04,99.97,1,1,0)
+9999999.04^AREPLACETERM
+"^DD",9999999.04,9999999.04,99.97,1,1,1)
+S ^AUTTIMAN("AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.04,99.97,1,1,2)
+K ^AUTTIMAN("AREPLACETERM",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.04,99.97,1,1,"%D",0)
+^^2^2^3140521^
+"^DD",9999999.04,9999999.04,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",9999999.04,9999999.04,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",9999999.04,9999999.04,99.97,1,1,"DT")
+3140521
+"^DD",9999999.04,9999999.04,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",9999999.04,9999999.04,99.97,9)
+^
+"^DD",9999999.04,9999999.04,99.97,21,0)
+^.001^4^4^3140707^^
+"^DD",9999999.04,9999999.04,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",9999999.04,9999999.04,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",9999999.04,9999999.04,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",9999999.04,9999999.04,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",9999999.04,9999999.04,99.97,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,99.97,"DT")
+3150306
+"^DD",9999999.04,9999999.04,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",9999999.04,9999999.04,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",9999999.04,9999999.04,99.98,9)
+^
+"^DD",9999999.04,9999999.04,99.98,21,0)
+^^2^2^3140429^
+"^DD",9999999.04,9999999.04,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",9999999.04,9999999.04,99.98,21,2,0)
+Term/Concept.
+"^DD",9999999.04,9999999.04,99.98,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,99.98,"DT")
+3150306
+"^DD",9999999.04,9999999.04,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",9999999.04,9999999.04,99.99,1,0)
+^.1
+"^DD",9999999.04,9999999.04,99.99,1,1,0)
+9999999.04^AVUID
+"^DD",9999999.04,9999999.04,99.99,1,1,1)
+S ^AUTTIMAN("AVUID",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.04,99.99,1,1,2)
+K ^AUTTIMAN("AVUID",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.04,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT PROGRAMMER
+"^DD",9999999.04,9999999.04,99.99,1,1,"%D",0)
+^^1^1^3140521^
+"^DD",9999999.04,9999999.04,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",9999999.04,9999999.04,99.99,1,1,"DT")
+3140521
+"^DD",9999999.04,9999999.04,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",9999999.04,9999999.04,99.99,9)
+^
+"^DD",9999999.04,9999999.04,99.99,21,0)
+^^2^2^3140521^
+"^DD",9999999.04,9999999.04,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",9999999.04,9999999.04,99.99,21,2,0)
+terms VHA wide.
+"^DD",9999999.04,9999999.04,99.99,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,99.99,"DT")
+3150306
+"^DD",9999999.04,9999999.04,99.991,0)
+EFFECTIVE DATE/TIME^9999999.0499DA^^TERMSTATUS;0
+"^DD",9999999.04,9999999.04,99.991,9)
+^
+"^DD",9999999.04,9999999.04,99.991,21,0)
+.001^.001^1^1^3140807^^^^
+"^DD",9999999.04,9999999.04,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",9999999.04,9999999.04,201,0)
+CDC NOTES^Fa^^2;1^K:$L(X)>245!($L(X)<1) X
+"^DD",9999999.04,9999999.04,201,.1)
+CDC Notes
+"^DD",9999999.04,9999999.04,201,3)
+Answer must be 1-245 characters in length.
+"^DD",9999999.04,9999999.04,201,9)
+^
+"^DD",9999999.04,9999999.04,201,21,0)
+^.001^1^1^3140508^^^
+"^DD",9999999.04,9999999.04,201,21,1,0)
+These are any added information the CDC has for this manufacturer.
+"^DD",9999999.04,9999999.04,201,23,0)
+^.001^3^3^3140508^^
+"^DD",9999999.04,9999999.04,201,23,1,0)
+This any information regarding this manufacturer found in the CDC's table 
+"^DD",9999999.04,9999999.04,201,23,2,0)
+of manufacturers.  It has a length of 245 characters, taking up the entire
+"^DD",9999999.04,9999999.04,201,23,3,0)
+2 node.
+"^DD",9999999.04,9999999.04,201,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,201,"DT")
+3150306
+"^DD",9999999.04,9999999.04,1101,0)
+VACCINE^9999999.0411A^^11;0
+"^DD",9999999.04,9999999.04,1101,9)
+^
+"^DD",9999999.04,9999999.04,1101,21,0)
+^.001^1^1^3140529^^
+"^DD",9999999.04,9999999.04,1101,21,1,0)
+This is a list of vaccines produced by this manufacturer.
+"^DD",9999999.04,9999999.04,8801,0)
+MNEMONIC^Fa^^88;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>2!($L(X)<1) X
+"^DD",9999999.04,9999999.04,8801,.1)
+Mnemonic
+"^DD",9999999.04,9999999.04,8801,1,0)
+^.1
+"^DD",9999999.04,9999999.04,8801,1,1,0)
+9999999.04^B^MNEMONIC
+"^DD",9999999.04,9999999.04,8801,1,1,1)
+S ^AUTTIMAN("B",$E(X,1,30),DA)=1
+"^DD",9999999.04,9999999.04,8801,1,1,2)
+K ^AUTTIMAN("B",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.04,8801,1,1,"%D",0)
+^^2^2^3150310^
+"^DD",9999999.04,9999999.04,8801,1,1,"%D",1,0)
+This mnemonic cross reference updates the "B" index to allow lookups by
+"^DD",9999999.04,9999999.04,8801,1,1,"%D",2,0)
+the Mnemonic for this manufacturer.
+"^DD",9999999.04,9999999.04,8801,3)
+Answer must be 1-2 characters in length.
+"^DD",9999999.04,9999999.04,8801,9)
+^
+"^DD",9999999.04,9999999.04,8801,21,0)
+^.001^2^2^3140729^^^^
+"^DD",9999999.04,9999999.04,8801,21,1,0)
+Enter a one or two character "identifier" for this manufacturer that can
+"^DD",9999999.04,9999999.04,8801,21,2,0)
+be used as a 'short-cut' in selecting the company.
+"^DD",9999999.04,9999999.04,8801,23,0)
+^.001^3^3^3140729^^
+"^DD",9999999.04,9999999.04,8801,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.04,9999999.04,8801,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.04,9999999.04,8801,23,3,0)
+version of the file.
+"^DD",9999999.04,9999999.04,8801,"AUDIT")
+y
+"^DD",9999999.04,9999999.04,8801,"DT")
+3150306
+"^DD",9999999.04,9999999.0411,0)
+VACCINE SUB-FIELD^^.01^1
+"^DD",9999999.04,9999999.0411,0,"DT")
+3140529
+"^DD",9999999.04,9999999.0411,0,"IX","B",9999999.0411,.01)
+
+"^DD",9999999.04,9999999.0411,0,"NM","VACCINE")
+
+"^DD",9999999.04,9999999.0411,0,"UP")
+9999999.04
+"^DD",9999999.04,9999999.0411,.01,0)
+VACCINE^MFa^^0;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>30!($L(X)<2) X
+"^DD",9999999.04,9999999.0411,.01,.1)
+Vaccine
+"^DD",9999999.04,9999999.0411,.01,1,0)
+^.1
+"^DD",9999999.04,9999999.0411,.01,1,1,0)
+9999999.0411^B
+"^DD",9999999.04,9999999.0411,.01,1,1,1)
+S ^AUTTIMAN(DA(1),11,"B",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.0411,.01,1,1,2)
+K ^AUTTIMAN(DA(1),11,"B",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.0411,.01,3)
+Answer must be 2-30 characters in length.
+"^DD",9999999.04,9999999.0411,.01,9)
+^
+"^DD",9999999.04,9999999.0411,.01,21,0)
+^^1^1^3140603^
+"^DD",9999999.04,9999999.0411,.01,21,1,0)
+Enter the name of a vaccine produced by this manufacturer. 
+"^DD",9999999.04,9999999.0411,.01,23,0)
+^^3^3^3140623^
+"^DD",9999999.04,9999999.0411,.01,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.04,9999999.0411,.01,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.04,9999999.0411,.01,23,3,0)
+version of the file.
+"^DD",9999999.04,9999999.0411,.01,"AUDIT")
+y
+"^DD",9999999.04,9999999.0411,.01,"DT")
+3150306
+"^DD",9999999.04,9999999.0499,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",9999999.04,9999999.0499,0,"IX","B",9999999.0499,.01)
+
+"^DD",9999999.04,9999999.0499,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",9999999.04,9999999.0499,0,"UP")
+9999999.04
+"^DD",9999999.04,9999999.0499,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",9999999.04,9999999.0499,.01,1,0)
+^.1
+"^DD",9999999.04,9999999.0499,.01,1,1,0)
+9999999.0499^B
+"^DD",9999999.04,9999999.0499,.01,1,1,1)
+S ^AUTTIMAN(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",9999999.04,9999999.0499,.01,1,1,2)
+K ^AUTTIMAN(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",9999999.04,9999999.0499,.01,1,1,"%D",0)
+^^1^1^3140527^
+"^DD",9999999.04,9999999.0499,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",9999999.04,9999999.0499,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",9999999.04,9999999.0499,.01,9)
+^
+"^DD",9999999.04,9999999.0499,.01,21,0)
+^.001^2^2^3140807^^^^
+"^DD",9999999.04,9999999.0499,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",9999999.04,9999999.0499,.01,21,2,0)
+established.
+"^DD",9999999.04,9999999.0499,.01,"AUDIT")
+y
+"^DD",9999999.04,9999999.0499,.01,"DT")
+3150306
+"^DD",9999999.04,9999999.0499,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",9999999.04,9999999.0499,.02,3)
+Enter the Status of this term.
+"^DD",9999999.04,9999999.0499,.02,9)
+^
+"^DD",9999999.04,9999999.0499,.02,21,0)
+^^4^4^3140527^
+"^DD",9999999.04,9999999.0499,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",9999999.04,9999999.0499,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a
+"^DD",9999999.04,9999999.0499,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be
+"^DD",9999999.04,9999999.0499,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",9999999.04,9999999.0499,.02,"AUDIT")
+y
+"^DD",9999999.04,9999999.0499,.02,"DT")
+3150306
+"^DD",9999999.14,9999999.14,0)
+FIELD^^7^47
+"^DD",9999999.14,9999999.14,0,"DDA")
+N
+"^DD",9999999.14,9999999.14,0,"DT")
+3150527
+"^DD",9999999.14,9999999.14,0,"ID",.03)
+W "   ",$P(^(0),U,3)
+"^DD",9999999.14,9999999.14,0,"IX","ACPT",9999999.14,.11)
+
+"^DD",9999999.14,9999999.14,0,"IX","ACPT",9999999.14,1.15)
+
+"^DD",9999999.14,9999999.14,0,"IX","AREPLACETERM",9999999.14,99.97)
+
+"^DD",9999999.14,9999999.14,0,"IX","AVUID",9999999.14,99.99)
+
+"^DD",9999999.14,9999999.14,0,"IX","B",9999999.14,.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","B",9999999.14,8801)
+
+"^DD",9999999.14,9999999.14,0,"IX","C",9999999.14,.03)
+
+"^DD",9999999.14,9999999.14,0,"IX","D",9999999.14,.02)
+
+"^DD",9999999.14,9999999.14,0,"IX","D1",9999999.14,1.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","D2",9999999.14,1.03)
+
+"^DD",9999999.14,9999999.14,0,"IX","D3",9999999.14,1.05)
+
+"^DD",9999999.14,9999999.14,0,"IX","D4",9999999.14,1.07)
+
+"^DD",9999999.14,9999999.14,0,"IX","D5",9999999.14,1.09)
+
+"^DD",9999999.14,9999999.14,0,"IX","E",9999999.14,.1)
+
+"^DD",9999999.14,9999999.14,0,"IX","F",9999999.141,.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","G",9999999.14,8802)
+
+"^DD",9999999.14,9999999.14,0,"IX","H",9999999.145,.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","I",9999999.147,.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","V1",9999999.14,1.01)
+
+"^DD",9999999.14,9999999.14,0,"IX","V2",9999999.14,1.03)
+
+"^DD",9999999.14,9999999.14,0,"IX","V3",9999999.14,1.05)
+
+"^DD",9999999.14,9999999.14,0,"IX","V4",9999999.14,1.07)
+
+"^DD",9999999.14,9999999.14,0,"IX","V5",9999999.14,1.09)
+
+"^DD",9999999.14,9999999.14,0,"NM","IMMUNIZATION")
+
+"^DD",9999999.14,9999999.14,0,"PT",50.7,9)
+
+"^DD",9999999.14,9999999.14,0,"PT",801.41,15)
+
+"^DD",9999999.14,9999999.14,0,"PT",801.4118,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",801.43,.02)
+
+"^DD",9999999.14,9999999.14,0,"PT",810.31,.04)
+
+"^DD",9999999.14,9999999.14,0,"PT",810.32,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",811.1,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",811.1,.02)
+
+"^DD",9999999.14,9999999.14,0,"PT",811.52,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",811.902,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",920.43,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",990.32,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",9000010.11,.01)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.21)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.22)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.23)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.24)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.25)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,.26)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.14,99.97)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.41,.04)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.41,.05)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.41,.06)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.41,.07)
+
+"^DD",9999999.14,9999999.14,0,"PT",9999999.41,.08)
+
+"^DD",9999999.14,9999999.14,0,"VRPK")
+PX
+"^DD",9999999.14,9999999.14,.01,0)
+NAME^RFXa^^0;1^K:$L(X)>100!($L(X)<3)!'(X'?1P.E)!(X'?.ANP) X
+"^DD",9999999.14,9999999.14,.01,.1)
+Name
+"^DD",9999999.14,9999999.14,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.14,.01,1,1,0)
+9999999.14^B
+"^DD",9999999.14,9999999.14,.01,1,1,1)
+S ^AUTTIMM("B",$E(X,1,100),DA)=""
+"^DD",9999999.14,9999999.14,.01,1,1,2)
+K ^AUTTIMM("B",$E(X,1,100),DA)
+"^DD",9999999.14,9999999.14,.01,3)
+Enter the name of the Immunization (3-100 characters).
+"^DD",9999999.14,9999999.14,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",9999999.14,9999999.14,.01,9)
+^
+"^DD",9999999.14,9999999.14,.01,21,0)
+^.001^3^3^3141217^^^
+"^DD",9999999.14,9999999.14,.01,21,1,0)
+This is the name of the Immunization (e.g. Hib-Hep B).
+"^DD",9999999.14,9999999.14,.01,21,2,0)
+ 
+"^DD",9999999.14,9999999.14,.01,21,3,0)
+Enter the Name of the Immunization using 3 to 100 characters.
+"^DD",9999999.14,9999999.14,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.01,"DEL",.01,0)
+I 0
+"^DD",9999999.14,9999999.14,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",9999999.14,9999999.14,.01,"DT")
+3150303
+"^DD",9999999.14,9999999.14,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server(MFS).","","!?5") I $D(XUMF)
+"^DD",9999999.14,9999999.14,.02,0)
+SHORT NAME^Fa^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>10!($L(X)<2) X
+"^DD",9999999.14,9999999.14,.02,.1)
+Short Name
+"^DD",9999999.14,9999999.14,.02,1,0)
+^.1
+"^DD",9999999.14,9999999.14,.02,1,1,0)
+9999999.14^D
+"^DD",9999999.14,9999999.14,.02,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,.02,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,.02,1,1,"%D",0)
+^^2^2^3150309^
+"^DD",9999999.14,9999999.14,.02,1,1,"%D",1,0)
+This cross reference allows lookup and sorting by the Short Name for
+"^DD",9999999.14,9999999.14,.02,1,1,"%D",2,0)
+this immunization.
+"^DD",9999999.14,9999999.14,.02,3)
+Answer must be 2-10 characters in length.
+"^DD",9999999.14,9999999.14,.02,9)
+^
+"^DD",9999999.14,9999999.14,.02,21,0)
+^.001^4^4^3140625^^^
+"^DD",9999999.14,9999999.14,.02,21,1,0)
+This is the "Short" name for this immunization such as an acronym, 
+"^DD",9999999.14,9999999.14,.02,21,2,0)
+nickname, or other name by which it might be called (e.g. Tet Tox).
+"^DD",9999999.14,9999999.14,.02,21,3,0)
+ 
+"^DD",9999999.14,9999999.14,.02,21,4,0)
+Enter the short name using 2 to 10 characters (e.g. Tet Tox).
+"^DD",9999999.14,9999999.14,.02,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.02,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.03,0)
+CVX CODE^FXa^^0;3^K:$S(X'?1.3N:1,$L(X)=3:$E(X)="0",1:X<1) X I $D(X),$L(X)=1 S X="0"_X
+"^DD",9999999.14,9999999.14,.03,.1)
+CVX Code
+"^DD",9999999.14,9999999.14,.03,1,0)
+^.1
+"^DD",9999999.14,9999999.14,.03,1,1,0)
+9999999.14^C
+"^DD",9999999.14,9999999.14,.03,1,1,1)
+S ^AUTTIMM("C",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,.03,1,1,2)
+K ^AUTTIMM("C",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,.03,1,1,3)
+This cross-reference can be used for lookups.  May also be used in matching functions.
+"^DD",9999999.14,9999999.14,.03,1,1,"%D",0)
+^.101^3^3^3140422^^^^
+"^DD",9999999.14,9999999.14,.03,1,1,"%D",1,0)
+A standard (regular) cross-reference on the CVX CODE field.  The index is
+"^DD",9999999.14,9999999.14,.03,1,1,"%D",2,0)
+the "C".  This cross-reference is used for lookups and possibly for matching
+"^DD",9999999.14,9999999.14,.03,1,1,"%D",3,0)
+functions.
+"^DD",9999999.14,9999999.14,.03,1,1,"DT")
+3140414
+"^DD",9999999.14,9999999.14,.03,3)
+Enter a numeric code for this vaccine, 1-3 digits, no decimal digits.  Codes less than 10, and only those codes, must start with a zero.
+"^DD",9999999.14,9999999.14,.03,4)
+N PVX S PVX(1)="This should be the CDC's CVX code for this vaccine.",PVX(2)=" ",PVX(1,"F")="!?5" D EN^DDIOL(.PVX) K PVX
+"^DD",9999999.14,9999999.14,.03,9)
+^
+"^DD",9999999.14,9999999.14,.03,21,0)
+^.001^3^3^3140610^^^^
+"^DD",9999999.14,9999999.14,.03,21,1,0)
+This is the Center for Disease Control's (CDC) code for this vaccine,
+"^DD",9999999.14,9999999.14,.03,21,2,0)
+known as the CVX Code.  The purpose of the CVX code is mainly when using
+"^DD",9999999.14,9999999.14,.03,21,3,0)
+HL7 to share data regarding this vaccine.
+"^DD",9999999.14,9999999.14,.03,23,0)
+^.001^4^4^3140610^^^^
+"^DD",9999999.14,9999999.14,.03,23,1,0)
+The CDC's National Center of Immunization and Respiratory Diseases (NCIRD)
+"^DD",9999999.14,9999999.14,.03,23,2,0)
+developed and maintains a table of CVX codes, matching them with vaccine
+"^DD",9999999.14,9999999.14,.03,23,3,0)
+names. The table is known as HL7 Table 0292, Vaccines Administered.  The most
+"^DD",9999999.14,9999999.14,.03,23,4,0)
+up-to-date table can be found at the CDC Web site.
+"^DD",9999999.14,9999999.14,.03,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.03,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.04,0)
+DEFAULT LOT#^*P9999999.41a^AUTTIML(^0;4^S DIC("S")="I $P(^(0),U,3)=0" D ^DIC K DIC S DIC=DIE,X=+Y K:Y<0 X
+"^DD",9999999.14,9999999.14,.04,.1)
+Default Lot #
+"^DD",9999999.14,9999999.14,.04,3)
+Enter the default lot number for this immunization.
+"^DD",9999999.14,9999999.14,.04,9)
+^
+"^DD",9999999.14,9999999.14,.04,12)
+Lot must be active.
+"^DD",9999999.14,9999999.14,.04,12.1)
+S DIC("S")="I $P(^(0),U,3)=0"
+"^DD",9999999.14,9999999.14,.04,21,0)
+^.001^1^1^3140623^^^^
+"^DD",9999999.14,9999999.14,.04,21,1,0)
+This is the default lot number for this immunization.
+"^DD",9999999.14,9999999.14,.04,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.04,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.04,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.04,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.04,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.04,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.05,0)
+MAX # IN SERIES^Sa^0:NON-SERIES;1:1;2:2;3:3;4:4;5:5;6:6;7:7;8:8;^0;5^Q
+"^DD",9999999.14,9999999.14,.05,.1)
+Maximum Number In Series
+"^DD",9999999.14,9999999.14,.05,3)
+Enter the maximum number of vaccinations that can be given for this immunization.
+"^DD",9999999.14,9999999.14,.05,9)
+^
+"^DD",9999999.14,9999999.14,.05,21,0)
+^^5^5^3140430^
+"^DD",9999999.14,9999999.14,.05,21,1,0)
+(Optional) This is the maximum number of vaccinations that can be given
+"^DD",9999999.14,9999999.14,.05,21,2,0)
+for this immunization.
+"^DD",9999999.14,9999999.14,.05,21,3,0)
+ 
+"^DD",9999999.14,9999999.14,.05,21,4,0)
+Enter the number between 0 and 8 that represents the maximum allowable 
+"^DD",9999999.14,9999999.14,.05,21,5,0)
+vaccinations that can be given for this immunization.
+"^DD",9999999.14,9999999.14,.05,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.05,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.06,0)
+CHILDHOOD IMMUNIZATION^Sa^0:NO;1:YES;^0;6^Q
+"^DD",9999999.14,9999999.14,.06,.1)
+Childhood Immunization
+"^DD",9999999.14,9999999.14,.06,3)
+Enter YES if this is a childhood immunization. Otherwise, enter NO.
+"^DD",9999999.14,9999999.14,.06,9)
+^
+"^DD",9999999.14,9999999.14,.06,21,0)
+^.001^3^3^3150126^^^
+"^DD",9999999.14,9999999.14,.06,21,1,0)
+YES in this field indicates this immunization is a childhood 
+"^DD",9999999.14,9999999.14,.06,21,2,0)
+immunization. NO in this field indicates this immunization is not a
+"^DD",9999999.14,9999999.14,.06,21,3,0)
+childhood immunization.
+"^DD",9999999.14,9999999.14,.06,23,0)
+^.001^3^3^3150126^^
+"^DD",9999999.14,9999999.14,.06,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.06,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.06,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.06,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.06,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.07,0)
+INACTIVE FLAG^Sa^1:INACTIVE;^0;7^Q
+"^DD",9999999.14,9999999.14,.07,3)
+Enter 1 to make the immunization type inactive.
+"^DD",9999999.14,9999999.14,.07,9)
+^
+"^DD",9999999.14,9999999.14,.07,21,0)
+^.001^8^8^3150323^^
+"^DD",9999999.14,9999999.14,.07,21,1,0)
+This field is used to inactivate an immunization type.  If this field
+"^DD",9999999.14,9999999.14,.07,21,2,0)
+contains a "1" then the immunization is inactive.  Inactive immunizations
+"^DD",9999999.14,9999999.14,.07,21,3,0)
+cannot be selected in the manual data entry process. Immunization entries
+"^DD",9999999.14,9999999.14,.07,21,4,0)
+should be made inactive when they are no longer used. Do not delete the
+"^DD",9999999.14,9999999.14,.07,21,5,0)
+entry or change the meaning of the immunization entry.
+"^DD",9999999.14,9999999.14,.07,21,6,0)
+ 
+"^DD",9999999.14,9999999.14,.07,21,7,0)
+To make an inactive immunization active,
+"^DD",9999999.14,9999999.14,.07,21,8,0)
+enter the "@" symbol to delete the "1" from the field.
+"^DD",9999999.14,9999999.14,.07,23,0)
+^.001^5^5^3150323^^^^
+"^DD",9999999.14,9999999.14,.07,23,1,0)
+This field was added for use by PCE in the VA.
+"^DD",9999999.14,9999999.14,.07,23,2,0)
+ 
+"^DD",9999999.14,9999999.14,.07,23,3,0)
+The inactive flag should be used, rather than deleting entries in
+"^DD",9999999.14,9999999.14,.07,23,4,0)
+the immunization file, since there may be other files pointing at the
+"^DD",9999999.14,9999999.14,.07,23,5,0)
+immunization entry.
+"^DD",9999999.14,9999999.14,.07,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.07,"DT")
+3150304
+"^DD",9999999.14,9999999.14,.08,0)
+SKIN TEST^Sa^0:NOT A SKIN TEST;1:SKIN TEST;^0;8^Q
+"^DD",9999999.14,9999999.14,.08,.1)
+Skin Test
+"^DD",9999999.14,9999999.14,.08,3)
+Enter '1' if this is a skin test. Otherwise enter '0'.
+"^DD",9999999.14,9999999.14,.08,9)
+^
+"^DD",9999999.14,9999999.14,.08,21,0)
+^^3^3^3140528^
+"^DD",9999999.14,9999999.14,.08,21,1,0)
+This field indicates if this immunization is a skin test. Enter '1' if 
+"^DD",9999999.14,9999999.14,.08,21,2,0)
+this immunization is a skin test. Enter '0' if this immunization is not 
+"^DD",9999999.14,9999999.14,.08,21,3,0)
+a skin test.
+"^DD",9999999.14,9999999.14,.08,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.08,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.08,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.08,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.08,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.08,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.09,0)
+VACCINE GROUP (SERIES TYPE)^P9002084.93'Ia^BISERT(^0;9^Q
+"^DD",9999999.14,9999999.14,.09,.1)
+Vaccine Group (Series Type)
+"^DD",9999999.14,9999999.14,.09,3)
+Select the Imm/Serve Series Type (or "Vaccine Group") to which this vaccine belongs.
+"^DD",9999999.14,9999999.14,.09,9)
+^
+"^DD",9999999.14,9999999.14,.09,21,0)
+^^2^2^3140528^
+"^DD",9999999.14,9999999.14,.09,21,1,0)
+This field identifies the Imm/Serve Series Type (or "Vaccine group") to 
+"^DD",9999999.14,9999999.14,.09,21,2,0)
+which this immunization belongs.
+"^DD",9999999.14,9999999.14,.09,23,0)
+^^7^7^3140623^
+"^DD",9999999.14,9999999.14,.09,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.09,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.09,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.09,23,4,0)
+ 
+"^DD",9999999.14,9999999.14,.09,23,5,0)
+This field points to Indian Health Service's BI TABLE VACCINE GROUP 
+"^DD",9999999.14,9999999.14,.09,23,6,0)
+(SERIES TYPE) file (#9002084.93) which is not used by the Department of 
+"^DD",9999999.14,9999999.14,.09,23,7,0)
+Veterans Affairs.
+"^DD",9999999.14,9999999.14,.09,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.09,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.1,0)
+ALTERNATE SHORT NAME^FIa^^0;10^K:$L(X)>10!($L(X)<2) X
+"^DD",9999999.14,9999999.14,.1,.1)
+Alternate Short Name
+"^DD",9999999.14,9999999.14,.1,1,0)
+^.1
+"^DD",9999999.14,9999999.14,.1,1,1,0)
+9999999.14^E
+"^DD",9999999.14,9999999.14,.1,1,1,1)
+S ^AUTTIMM("E",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,.1,1,1,2)
+K ^AUTTIMM("E",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,.1,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,.1,1,1,"%D",1,0)
+This cross reference is used for sorting and lookup.
+"^DD",9999999.14,9999999.14,.1,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,.1,3)
+Answer must be 2-10 characters in length.
+"^DD",9999999.14,9999999.14,.1,9)
+^
+"^DD",9999999.14,9999999.14,.1,21,0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,.1,21,1,0)
+This is an alternate short name for this immunization.
+"^DD",9999999.14,9999999.14,.1,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.1,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.1,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.1,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.1,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.1,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.11,0)
+CPT CODE^P81'Ia^ICPT(^0;11^Q
+"^DD",9999999.14,9999999.14,.11,.1)
+CPT Code
+"^DD",9999999.14,9999999.14,.11,1,0)
+^.1
+"^DD",9999999.14,9999999.14,.11,1,1,0)
+9999999.14^ACPT
+"^DD",9999999.14,9999999.14,.11,1,1,1)
+S ^AUTTIMM("ACPT",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,.11,1,1,2)
+K ^AUTTIMM("ACPT",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,.11,1,1,"%D",0)
+^.101^1^1^3140529^^
+"^DD",9999999.14,9999999.14,.11,1,1,"%D",1,0)
+This cross reference is used for sorting.
+"^DD",9999999.14,9999999.14,.11,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,.11,3)
+Enter the CPT code for this immunization.
+"^DD",9999999.14,9999999.14,.11,9)
+^
+"^DD",9999999.14,9999999.14,.11,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.11,21,1,0)
+This is the CPT code associated with this immunization.
+"^DD",9999999.14,9999999.14,.11,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.11,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.11,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.11,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.11,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.11,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.12,0)
+RELATED CONTRAIND HL7 CODES^FIa^^0;12^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,.12,.1)
+Related Contraindication HL7 Codes
+"^DD",9999999.14,9999999.14,.12,3)
+Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,.12,9)
+^
+"^DD",9999999.14,9999999.14,.12,21,0)
+^^2^2^3140528^
+"^DD",9999999.14,9999999.14,.12,21,1,0)
+This field indicates the HL7 code(s) of any immunizations that should be
+"^DD",9999999.14,9999999.14,.12,21,2,0)
+contraindicated when this immunization is contraindicated.
+"^DD",9999999.14,9999999.14,.12,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.12,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.12,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.12,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.12,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.12,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.13,0)
+VIS DEFAULT DATE^Da^^0;13^S %DT="EX" D ^%DT S X=Y K:Y<1 X
+"^DD",9999999.14,9999999.14,.13,.1)
+VIS Default Date
+"^DD",9999999.14,9999999.14,.13,3)
+Enter the default date of the Vaccine Information Statement (Parent Information Sheet) for this vaccine.
+"^DD",9999999.14,9999999.14,.13,9)
+^
+"^DD",9999999.14,9999999.14,.13,21,0)
+^^2^2^3140528^
+"^DD",9999999.14,9999999.14,.13,21,1,0)
+This is the default date of the Vaccine Information Statement for this 
+"^DD",9999999.14,9999999.14,.13,21,2,0)
+immunization.
+"^DD",9999999.14,9999999.14,.13,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.13,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.13,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.13,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.13,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.13,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.14,0)
+ICD DIAGNOSIS CODE^FIa^^0;14^K:$L(X)>8!($L(X)<1) X
+"^DD",9999999.14,9999999.14,.14,.1)
+ICD Diagnosis Code
+"^DD",9999999.14,9999999.14,.14,3)
+Enter the ICD Diagnosis Code for this vaccine.
+"^DD",9999999.14,9999999.14,.14,9)
+^
+"^DD",9999999.14,9999999.14,.14,21,0)
+^.001^1^1^3140528^^
+"^DD",9999999.14,9999999.14,.14,21,1,0)
+This is the ICD diagnosis code associated with this immunization.
+"^DD",9999999.14,9999999.14,.14,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.14,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.14,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.14,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.14,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.14,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.15,0)
+ICD PROCEDURE CODE^FIa^^0;15^K:$L(X)>8!($L(X)<1) X
+"^DD",9999999.14,9999999.14,.15,.1)
+ICD Procedure Code
+"^DD",9999999.14,9999999.14,.15,3)
+Enter the ICD Procedure Code for this vaccine.
+"^DD",9999999.14,9999999.14,.15,9)
+^
+"^DD",9999999.14,9999999.14,.15,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.15,21,1,0)
+This is the ICD Procedure Code associated with this immunization.
+"^DD",9999999.14,9999999.14,.15,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.15,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.15,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.15,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.15,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.15,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.16,0)
+INCLUDE IN FORECAST^Sa^0:YES, INCLUDE;1:NO, EXCLUDE;^0;16^Q
+"^DD",9999999.14,9999999.14,.16,.1)
+Include In Forecast
+"^DD",9999999.14,9999999.14,.16,3)
+Enter 0 or YES to allow this Vaccine to be forecast for patients when appropriate.  Enter 1 or NO to EXCLUDE this Vaccine from all forecasts.
+"^DD",9999999.14,9999999.14,.16,9)
+^
+"^DD",9999999.14,9999999.14,.16,21,0)
+^^3^3^3140528^
+"^DD",9999999.14,9999999.14,.16,21,1,0)
+This field indicates if this vaccine is allowed to be forecast for 
+"^DD",9999999.14,9999999.14,.16,21,2,0)
+patients when appropriate. Enter NO to exclude this vaccine from all 
+"^DD",9999999.14,9999999.14,.16,21,3,0)
+forecasts.
+"^DD",9999999.14,9999999.14,.16,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.16,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.16,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.16,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.16,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.16,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.17,0)
+INCLUDE IN VAC ACCOUNT REPORT^SIa^1:YES;0:NO;^0;17^Q
+"^DD",9999999.14,9999999.14,.17,.1)
+Include In VAC Account Report
+"^DD",9999999.14,9999999.14,.17,3)
+Answer YES if this vaccine should be included in the Vaccine Accountability Report answer NO if not.
+"^DD",9999999.14,9999999.14,.17,9)
+^
+"^DD",9999999.14,9999999.14,.17,21,0)
+^.001^2^2^3141103^^
+"^DD",9999999.14,9999999.14,.17,21,1,0)
+This field indicates if this vaccine should be included in the Vaccine 
+"^DD",9999999.14,9999999.14,.17,21,2,0)
+Accountability Report. Enter NO if not.
+"^DD",9999999.14,9999999.14,.17,23,0)
+^.001^3^3^3141103^^
+"^DD",9999999.14,9999999.14,.17,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.17,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.17,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.17,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.17,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.18,0)
+DEFAULT VOLUME^NJ4,2a^^0;18^K:+X'=X!(X>5)!(X<0)!(X?.E1"."3N.N) X
+"^DD",9999999.14,9999999.14,.18,.1)
+Default Volume
+"^DD",9999999.14,9999999.14,.18,3)
+Enter the default volume for this vaccine.  Type a Number between 0 and 5, 2 Decimal Digits
+"^DD",9999999.14,9999999.14,.18,9)
+^
+"^DD",9999999.14,9999999.14,.18,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.18,21,1,0)
+This is the default volume for this vaccine.
+"^DD",9999999.14,9999999.14,.18,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.18,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.18,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.18,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.18,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.18,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.2,0)
+COMBINATION IMMUNIZATION (Y/N)^Sa^0:NO;1:YES;^0;20^Q
+"^DD",9999999.14,9999999.14,.2,.1)
+Combination Immunization (Y/N)
+"^DD",9999999.14,9999999.14,.2,3)
+If this is a combination immunization, enter YES. Otherwise, enter NO.
+"^DD",9999999.14,9999999.14,.2,9)
+^
+"^DD",9999999.14,9999999.14,.2,21,0)
+^^6^6^3140416^
+"^DD",9999999.14,9999999.14,.2,21,1,0)
+This YES/NO field identifies if this immunization is a combination
+"^DD",9999999.14,9999999.14,.2,21,2,0)
+product or not.  If this immunization is a combination product (a
+"^DD",9999999.14,9999999.14,.2,21,3,0)
+multi-component vaccine requiring multiple vaccine information
+"^DD",9999999.14,9999999.14,.2,21,4,0)
+statements), enter YES.  If this immunization is not a combination
+"^DD",9999999.14,9999999.14,.2,21,5,0)
+product, but can be represented by a single vaccine information
+"^DD",9999999.14,9999999.14,.2,21,6,0)
+statement, enter NO.
+"^DD",9999999.14,9999999.14,.2,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.2,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.21,0)
+COMPONENT #1^P9999999.14'a^AUTTIMM(^0;21^Q
+"^DD",9999999.14,9999999.14,.21,.1)
+Component #1
+"^DD",9999999.14,9999999.14,.21,3)
+Enter the first component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.21,9)
+^
+"^DD",9999999.14,9999999.14,.21,21,0)
+^.001^1^1^3140616^^^^
+"^DD",9999999.14,9999999.14,.21,21,1,0)
+This is the first component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.21,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.21,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.21,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.21,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.21,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.21,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.22,0)
+COMPONENT #2^P9999999.14'a^AUTTIMM(^0;22^Q
+"^DD",9999999.14,9999999.14,.22,.1)
+Component #2
+"^DD",9999999.14,9999999.14,.22,3)
+Enter the second component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.22,9)
+^
+"^DD",9999999.14,9999999.14,.22,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.22,21,1,0)
+This is the second component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.22,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.22,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.22,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.22,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.22,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.22,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.23,0)
+COMPONENT #3^P9999999.14'a^AUTTIMM(^0;23^Q
+"^DD",9999999.14,9999999.14,.23,.1)
+Component #3
+"^DD",9999999.14,9999999.14,.23,3)
+Enter the third component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.23,9)
+^
+"^DD",9999999.14,9999999.14,.23,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.23,21,1,0)
+This is the third component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.23,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.23,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.23,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.23,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.23,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.23,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.24,0)
+COMPONENT #4^P9999999.14'a^AUTTIMM(^0;24^Q
+"^DD",9999999.14,9999999.14,.24,.1)
+Component #4
+"^DD",9999999.14,9999999.14,.24,3)
+Enter the fourth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.24,9)
+^
+"^DD",9999999.14,9999999.14,.24,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.24,21,1,0)
+This is the fourth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.24,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.24,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.24,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.24,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.24,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.24,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.25,0)
+COMPONENT #5^P9999999.14'a^AUTTIMM(^0;25^Q
+"^DD",9999999.14,9999999.14,.25,.1)
+Component #5
+"^DD",9999999.14,9999999.14,.25,3)
+Enter the fifth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.25,9)
+^
+"^DD",9999999.14,9999999.14,.25,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.25,21,1,0)
+This is the fifth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.25,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.25,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.25,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.25,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.25,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.25,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.26,0)
+COMPONENT #6^P9999999.14'a^AUTTIMM(^0;26^Q
+"^DD",9999999.14,9999999.14,.26,.1)
+Component #6
+"^DD",9999999.14,9999999.14,.26,3)
+Enter the sixth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.26,9)
+^
+"^DD",9999999.14,9999999.14,.26,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,.26,21,1,0)
+This is the sixth component of this combination vaccine.
+"^DD",9999999.14,9999999.14,.26,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,.26,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,.26,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,.26,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,.26,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.26,"DT")
+3141126
+"^DD",9999999.14,9999999.14,.51,0)
+READING REQUIRED^Sa^1:YES;0:NO;^.5;1^Q
+"^DD",9999999.14,9999999.14,.51,.1)
+Reading Required
+"^DD",9999999.14,9999999.14,.51,3)
+Enter YES if this inoculation requires a reading.
+"^DD",9999999.14,9999999.14,.51,9)
+^
+"^DD",9999999.14,9999999.14,.51,21,0)
+^.001^2^2^3150126^^^
+"^DD",9999999.14,9999999.14,.51,21,1,0)
+This field indicates if this inoculation requires an objective reading 
+"^DD",9999999.14,9999999.14,.51,21,2,0)
+and a subjective interpretation of the reading.
+"^DD",9999999.14,9999999.14,.51,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,.51,"DT")
+3150126
+"^DD",9999999.14,9999999.14,1.01,0)
+BRAND #1^Fa^^1;1^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,1.01,.1)
+Brand #1
+"^DD",9999999.14,9999999.14,1.01,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.01,1,1,0)
+9999999.14^D1^MUMPS
+"^DD",9999999.14,9999999.14,1.01,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.01,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.01,1,1,"%D",0)
+^.101^1^1^3140529^^
+"^DD",9999999.14,9999999.14,1.01,1,1,"%D",1,0)
+This cross reference is for sorting and lookup.
+"^DD",9999999.14,9999999.14,1.01,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.01,1,2,0)
+9999999.14^V1^MUMPS
+"^DD",9999999.14,9999999.14,1.01,1,2,1)
+D UPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.01,1,2,2)
+D KUPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.01,1,2,"%D",0)
+^.101^3^3^3140602^^
+"^DD",9999999.14,9999999.14,1.01,1,2,"%D",1,0)
+This MUMPS cross reference converts the brand name to all uppercase and 
+"^DD",9999999.14,9999999.14,1.01,1,2,"%D",2,0)
+then sets the "V" cross reference node which is used for sorting and 
+"^DD",9999999.14,9999999.14,1.01,1,2,"%D",3,0)
+lookup.
+"^DD",9999999.14,9999999.14,1.01,1,2,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.01,3)
+Enter a brand name for this vaccine.  Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,1.01,9)
+^
+"^DD",9999999.14,9999999.14,1.01,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.01,21,1,0)
+This is the first brand name for this vaccine.
+"^DD",9999999.14,9999999.14,1.01,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.01,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.01,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.01,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.01,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.03,0)
+BRAND #2^Fa^^1;3^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,1.03,.1)
+Brand #2
+"^DD",9999999.14,9999999.14,1.03,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.03,1,1,0)
+9999999.14^D2^MUMPS
+"^DD",9999999.14,9999999.14,1.03,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.03,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.03,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,1.03,1,1,"%D",1,0)
+This cross reference is for sorting and lookup.
+"^DD",9999999.14,9999999.14,1.03,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.03,1,2,0)
+9999999.14^V2^MUMPS
+"^DD",9999999.14,9999999.14,1.03,1,2,1)
+D UPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.03,1,2,2)
+D KUPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.03,1,2,"%D",0)
+^^3^3^3140529^
+"^DD",9999999.14,9999999.14,1.03,1,2,"%D",1,0)
+This MUMPS cross reference converts the brand name to all uppercase and 
+"^DD",9999999.14,9999999.14,1.03,1,2,"%D",2,0)
+then sets the "V" cross reference node which is used for sorting and 
+"^DD",9999999.14,9999999.14,1.03,1,2,"%D",3,0)
+lookup.
+"^DD",9999999.14,9999999.14,1.03,1,2,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.03,3)
+Enter a brand name for this vaccine.  Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,1.03,9)
+^
+"^DD",9999999.14,9999999.14,1.03,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.03,21,1,0)
+This is the second brand name for this vaccine.
+"^DD",9999999.14,9999999.14,1.03,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.03,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.03,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.03,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.03,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.03,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.05,0)
+BRAND #3^Fa^^1;5^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,1.05,.1)
+Brand #3
+"^DD",9999999.14,9999999.14,1.05,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.05,1,1,0)
+9999999.14^D3^MUMPS
+"^DD",9999999.14,9999999.14,1.05,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.05,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.05,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,1.05,1,1,"%D",1,0)
+This cross reference is for sorting and lookup.
+"^DD",9999999.14,9999999.14,1.05,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.05,1,2,0)
+9999999.14^V3^MUMPS
+"^DD",9999999.14,9999999.14,1.05,1,2,1)
+D UPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.05,1,2,2)
+D KUPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.05,1,2,"%D",0)
+^^3^3^3140529^
+"^DD",9999999.14,9999999.14,1.05,1,2,"%D",1,0)
+This MUMPS cross reference converts the brand name to all uppercase and 
+"^DD",9999999.14,9999999.14,1.05,1,2,"%D",2,0)
+then sets the "V" cross reference node which is used for sorting and 
+"^DD",9999999.14,9999999.14,1.05,1,2,"%D",3,0)
+lookup.
+"^DD",9999999.14,9999999.14,1.05,1,2,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.05,3)
+Enter a brand name for this vaccine.  Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,1.05,9)
+^
+"^DD",9999999.14,9999999.14,1.05,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.05,21,1,0)
+This is the third brand name for this vaccine.
+"^DD",9999999.14,9999999.14,1.05,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.05,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.05,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.05,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.05,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.05,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.07,0)
+BRAND #4^Fa^^1;7^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,1.07,.1)
+Brand #4
+"^DD",9999999.14,9999999.14,1.07,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.07,1,1,0)
+9999999.14^D4^MUMPS
+"^DD",9999999.14,9999999.14,1.07,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.07,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.07,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,1.07,1,1,"%D",1,0)
+This cross reference is for sorting and lookup.
+"^DD",9999999.14,9999999.14,1.07,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.07,1,2,0)
+9999999.14^V4^MUMPS
+"^DD",9999999.14,9999999.14,1.07,1,2,1)
+D UPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.07,1,2,2)
+D KUPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.07,1,2,"%D",0)
+^^3^3^3140529^
+"^DD",9999999.14,9999999.14,1.07,1,2,"%D",1,0)
+This MUMPS cross reference converts the brand name to all uppercase and 
+"^DD",9999999.14,9999999.14,1.07,1,2,"%D",2,0)
+then sets the "V" cross reference node which is used for sorting and 
+"^DD",9999999.14,9999999.14,1.07,1,2,"%D",3,0)
+lookup.
+"^DD",9999999.14,9999999.14,1.07,1,2,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.07,3)
+Enter a brand name for this vaccine.  Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,1.07,9)
+^
+"^DD",9999999.14,9999999.14,1.07,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.07,21,1,0)
+This is the fourth brand name for this vaccine.
+"^DD",9999999.14,9999999.14,1.07,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.07,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.07,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.07,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.07,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.07,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.09,0)
+BRAND #5^Fa^^1;9^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.14,1.09,.1)
+Brand #5
+"^DD",9999999.14,9999999.14,1.09,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.09,1,1,0)
+9999999.14^D5^MUMPS
+"^DD",9999999.14,9999999.14,1.09,1,1,1)
+S ^AUTTIMM("D",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.09,1,1,2)
+K ^AUTTIMM("D",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.09,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,1.09,1,1,"%D",1,0)
+This cross reference is for sorting and lookup.
+"^DD",9999999.14,9999999.14,1.09,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.09,1,2,0)
+9999999.14^V5^MUMPS
+"^DD",9999999.14,9999999.14,1.09,1,2,1)
+D UPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.09,1,2,2)
+D KUPXREF^BIUTL5(X,"^AUTTIMM(","V")
+"^DD",9999999.14,9999999.14,1.09,1,2,"%D",0)
+^^3^3^3140529^
+"^DD",9999999.14,9999999.14,1.09,1,2,"%D",1,0)
+This MUMPS cross reference converts the brand name to all uppercase and 
+"^DD",9999999.14,9999999.14,1.09,1,2,"%D",2,0)
+then sets the "V" cross reference node which is used for sorting and 
+"^DD",9999999.14,9999999.14,1.09,1,2,"%D",3,0)
+lookup.
+"^DD",9999999.14,9999999.14,1.09,1,2,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.09,3)
+Enter a brand name for this vaccine.  Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.14,1.09,9)
+^
+"^DD",9999999.14,9999999.14,1.09,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.09,21,1,0)
+This is the fifth brand name for this vaccine.
+"^DD",9999999.14,9999999.14,1.09,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.09,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.09,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.09,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.09,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.09,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.14,0)
+FULL NAME^Fa^^1;14^K:$L(X)>80!($L(X)<3) X
+"^DD",9999999.14,9999999.14,1.14,.1)
+Full Name
+"^DD",9999999.14,9999999.14,1.14,3)
+Answer must be 3-80 characters in length.
+"^DD",9999999.14,9999999.14,1.14,9)
+^
+"^DD",9999999.14,9999999.14,1.14,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.14,21,1,0)
+This is the full name for this immunization.
+"^DD",9999999.14,9999999.14,1.14,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.14,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.14,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.14,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.14,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.14,"DT")
+3141126
+"^DD",9999999.14,9999999.14,1.15,0)
+CPT CODE 2ND^P81'Ia^ICPT(^1;15^Q
+"^DD",9999999.14,9999999.14,1.15,.1)
+CPT Code 2nd
+"^DD",9999999.14,9999999.14,1.15,1,0)
+^.1
+"^DD",9999999.14,9999999.14,1.15,1,1,0)
+9999999.14^ACPT
+"^DD",9999999.14,9999999.14,1.15,1,1,1)
+S ^AUTTIMM("ACPT",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,1.15,1,1,2)
+K ^AUTTIMM("ACPT",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,1.15,1,1,"%D",0)
+^^1^1^3140529^
+"^DD",9999999.14,9999999.14,1.15,1,1,"%D",1,0)
+This cross reference is for sorting.
+"^DD",9999999.14,9999999.14,1.15,1,1,"DT")
+3140529
+"^DD",9999999.14,9999999.14,1.15,3)
+Enter a second CPT Code for this vaccine.
+"^DD",9999999.14,9999999.14,1.15,9)
+^
+"^DD",9999999.14,9999999.14,1.15,21,0)
+^^1^1^3140528^
+"^DD",9999999.14,9999999.14,1.15,21,1,0)
+This is a second CPT code for this immunization.
+"^DD",9999999.14,9999999.14,1.15,23,0)
+^^3^3^3140623^
+"^DD",9999999.14,9999999.14,1.15,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.14,9999999.14,1.15,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.14,9999999.14,1.15,23,3,0)
+version of the file.
+"^DD",9999999.14,9999999.14,1.15,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,1.15,"DT")
+3141126
+"^DD",9999999.14,9999999.14,2,0)
+CDC FULL VACCINE NAME^9999999.142^^2;0
+"^DD",9999999.14,9999999.14,2,9)
+^
+"^DD",9999999.14,9999999.14,2,21,0)
+^^1^1^3140429^
+"^DD",9999999.14,9999999.14,2,21,1,0)
+This is the CDC Full Vaccine Name for this immunization.
+"^DD",9999999.14,9999999.14,3,0)
+CODING SYSTEM^9999999.143^^3;0
+"^DD",9999999.14,9999999.14,3,9)
+^
+"^DD",9999999.14,9999999.14,3,21,0)
+^^2^2^3140828^
+"^DD",9999999.14,9999999.14,3,21,1,0)
+This multiple stores the coding system(s) associated with the codes 
+"^DD",9999999.14,9999999.14,3,21,2,0)
+identifying this immunization.
+"^DD",9999999.14,9999999.14,4,0)
+VACCINE INFORMATION STATEMENT^9999999.144P^^4;0
+"^DD",9999999.14,9999999.14,4,9)
+^
+"^DD",9999999.14,9999999.14,4,21,0)
+^.001^2^2^3150309^^
+"^DD",9999999.14,9999999.14,4,21,1,0)
+This multiple identifies the Vaccine Information Statement(s) 
+"^DD",9999999.14,9999999.14,4,21,2,0)
+associated with this immunization.
+"^DD",9999999.14,9999999.14,5,0)
+CDC PRODUCT NAME^9999999.145^^5;0
+"^DD",9999999.14,9999999.14,5,9)
+^
+"^DD",9999999.14,9999999.14,5,21,0)
+^^2^2^3140828^
+"^DD",9999999.14,9999999.14,5,21,1,0)
+This multiple stores the CDC Product Name(s) reflecting manufacturer 
+"^DD",9999999.14,9999999.14,5,21,2,0)
+trade names, but may not be identical to those registered trade names.
+"^DD",9999999.14,9999999.14,7,0)
+VACCINE GROUP NAME^9999999.147A^^7;0
+"^DD",9999999.14,9999999.14,7,9)
+^
+"^DD",9999999.14,9999999.14,7,21,0)
+^^2^2^3150526^
+"^DD",9999999.14,9999999.14,7,21,1,0)
+This multiple field contains the VACCINE GROUP NAME(s) with which this
+"^DD",9999999.14,9999999.14,7,21,2,0)
+immunization is associated.
+"^DD",9999999.14,9999999.14,10,0)
+SYNONYM^9999999.141^^10;0
+"^DD",9999999.14,9999999.14,10,9)
+^
+"^DD",9999999.14,9999999.14,10,21,0)
+^^1^1^3140828^
+"^DD",9999999.14,9999999.14,10,21,1,0)
+This multiple stores locally editable synonyms for this immunization.
+"^DD",9999999.14,9999999.14,99.97,0)
+REPLACED BY VHA STANDARD TERM^P9999999.14'Ia^AUTTIMM(^VUID;3^Q
+"^DD",9999999.14,9999999.14,99.97,1,0)
+^.1
+"^DD",9999999.14,9999999.14,99.97,1,1,0)
+9999999.14^AREPLACETERM
+"^DD",9999999.14,9999999.14,99.97,1,1,1)
+S ^AUTTIMM("AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,99.97,1,1,2)
+K ^AUTTIMM("AREPLACETERM",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,99.97,1,1,"%D",0)
+^^2^2^3140520^
+"^DD",9999999.14,9999999.14,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",9999999.14,9999999.14,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",9999999.14,9999999.14,99.97,1,1,"DT")
+3140520
+"^DD",9999999.14,9999999.14,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",9999999.14,9999999.14,99.97,9)
+^
+"^DD",9999999.14,9999999.14,99.97,21,0)
+^.001^4^4^3140521^^
+"^DD",9999999.14,9999999.14,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",9999999.14,9999999.14,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",9999999.14,9999999.14,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",9999999.14,9999999.14,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",9999999.14,9999999.14,99.97,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,99.97,"DT")
+3141126
+"^DD",9999999.14,9999999.14,99.98,0)
+MASTER ENTRY FOR VUID^RSIa^1:YES;0:NO;^VUID;2^Q
+"^DD",9999999.14,9999999.14,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",9999999.14,9999999.14,99.98,9)
+^
+"^DD",9999999.14,9999999.14,99.98,21,0)
+^^2^2^3140429^
+"^DD",9999999.14,9999999.14,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",9999999.14,9999999.14,99.98,21,2,0)
+Term/Concept.
+"^DD",9999999.14,9999999.14,99.98,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,99.98,"DT")
+3141126
+"^DD",9999999.14,9999999.14,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",9999999.14,9999999.14,99.99,1,0)
+^.1
+"^DD",9999999.14,9999999.14,99.99,1,1,0)
+9999999.14^AVUID
+"^DD",9999999.14,9999999.14,99.99,1,1,1)
+S ^AUTTIMM("AVUID",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,99.99,1,1,2)
+K ^AUTTIMM("AVUID",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT PROGRAMMER
+"^DD",9999999.14,9999999.14,99.99,1,1,"%D",0)
+^^1^1^3140429^
+"^DD",9999999.14,9999999.14,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",9999999.14,9999999.14,99.99,1,1,"DT")
+3140429
+"^DD",9999999.14,9999999.14,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",9999999.14,9999999.14,99.99,9)
+^
+"^DD",9999999.14,9999999.14,99.99,21,0)
+^^2^2^3140429^
+"^DD",9999999.14,9999999.14,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference
+"^DD",9999999.14,9999999.14,99.99,21,2,0)
+terms VHA wide.
+"^DD",9999999.14,9999999.14,99.99,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,99.99,"DT")
+3141126
+"^DD",9999999.14,9999999.14,99.991,0)
+EFFECTIVE DATE/TIME^9999999.1499DA^^TERMSTATUS;0
+"^DD",9999999.14,9999999.14,99.991,9)
+^
+"^DD",9999999.14,9999999.14,99.991,21,0)
+.001^.001^1^1^3150107^^^^
+"^DD",9999999.14,9999999.14,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",9999999.14,9999999.14,100,0)
+CLASS^Sa^N:NATIONAL;V:VISN;L:LOCAL;^100;1^Q
+"^DD",9999999.14,9999999.14,100,.1)
+Class
+"^DD",9999999.14,9999999.14,100,3)
+Enter the CLASS.
+"^DD",9999999.14,9999999.14,100,9)
+^
+"^DD",9999999.14,9999999.14,100,21,0)
+^.001^1^1^3150105^^
+"^DD",9999999.14,9999999.14,100,21,1,0)
+This is the CLASS of this Immunization. 
+"^DD",9999999.14,9999999.14,100,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,100,"DT")
+3141126
+"^DD",9999999.14,9999999.14,8801,0)
+MNEMONIC^Fa^^88;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>3!($L(X)<1) X
+"^DD",9999999.14,9999999.14,8801,.1)
+Mnemonic
+"^DD",9999999.14,9999999.14,8801,1,0)
+^.1
+"^DD",9999999.14,9999999.14,8801,1,1,0)
+9999999.14^B^MNEMONIC
+"^DD",9999999.14,9999999.14,8801,1,1,1)
+S ^AUTTIMM("B",$E(X,1,30),DA)=1
+"^DD",9999999.14,9999999.14,8801,1,1,2)
+K ^AUTTIMM("B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,8801,1,1,"%D",0)
+^^2^2^3150309^
+"^DD",9999999.14,9999999.14,8801,1,1,"%D",1,0)
+This mnemonic cross reference updates the "B" index to allow lookups by
+"^DD",9999999.14,9999999.14,8801,1,1,"%D",2,0)
+the Mnemonic for this immunization.
+"^DD",9999999.14,9999999.14,8801,3)
+Your answer must be 1-3 characters in length.
+"^DD",9999999.14,9999999.14,8801,9)
+^
+"^DD",9999999.14,9999999.14,8801,21,0)
+^.001^3^3^3140430^^^^
+"^DD",9999999.14,9999999.14,8801,21,1,0)
+This is the mnemonic for this Immunization.
+"^DD",9999999.14,9999999.14,8801,21,2,0)
+ 
+"^DD",9999999.14,9999999.14,8801,21,3,0)
+Enter a 1 to 3 character mnemonic.
+"^DD",9999999.14,9999999.14,8801,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,8801,"DT")
+3141126
+"^DD",9999999.14,9999999.14,8802,0)
+ACRONYM^Fa^^88;2^K:$L(X)>20!($L(X)<1) X
+"^DD",9999999.14,9999999.14,8802,.1)
+Acronym
+"^DD",9999999.14,9999999.14,8802,1,0)
+^.1
+"^DD",9999999.14,9999999.14,8802,1,1,0)
+9999999.14^G
+"^DD",9999999.14,9999999.14,8802,1,1,1)
+S ^AUTTIMM("G",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.14,8802,1,1,2)
+K ^AUTTIMM("G",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.14,8802,1,1,"%D",0)
+^^1^1^3140602^
+"^DD",9999999.14,9999999.14,8802,1,1,"%D",1,0)
+This cross reference is used for lookup as well as sorting.
+"^DD",9999999.14,9999999.14,8802,1,1,"DT")
+3140602
+"^DD",9999999.14,9999999.14,8802,3)
+Answer must be 1-20 characters in length.
+"^DD",9999999.14,9999999.14,8802,9)
+^
+"^DD",9999999.14,9999999.14,8802,21,0)
+^.001^2^2^3140602^^
+"^DD",9999999.14,9999999.14,8802,21,1,0)
+This standardized vaccine acronym for this immunization is intended to 
+"^DD",9999999.14,9999999.14,8802,21,2,0)
+provide a uniform approach to vaccine references.
+"^DD",9999999.14,9999999.14,8802,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,8802,"DT")
+3141126
+"^DD",9999999.14,9999999.14,8803,0)
+SELECTABLE FOR HISTORIC^RSa^Y:YES;N:NO;^6;1^Q
+"^DD",9999999.14,9999999.14,8803,1,0)
+^.1
+"^DD",9999999.14,9999999.14,8803,3)
+Enter YES if this inactive immunization is selectable for historic entries.
+"^DD",9999999.14,9999999.14,8803,9)
+^
+"^DD",9999999.14,9999999.14,8803,21,0)
+^^2^2^3140609^
+"^DD",9999999.14,9999999.14,8803,21,1,0)
+This field determines whether an inactive immunization is selectable when 
+"^DD",9999999.14,9999999.14,8803,21,2,0)
+documenting a historic administration.
+"^DD",9999999.14,9999999.14,8803,"AUDIT")
+y
+"^DD",9999999.14,9999999.14,8803,"DT")
+3141126
+"^DD",9999999.14,9999999.141,0)
+SYNONYM SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.141,0,"DT")
+3140602
+"^DD",9999999.14,9999999.141,0,"IX","B",9999999.141,.01)
+
+"^DD",9999999.14,9999999.141,0,"NM","SYNONYM")
+
+"^DD",9999999.14,9999999.141,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.141,.01,0)
+SYNONYM^MFa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.141,.01,.1)
+Synonym
+"^DD",9999999.14,9999999.141,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.141,.01,1,1,0)
+9999999.141^B
+"^DD",9999999.14,9999999.141,.01,1,1,1)
+S ^AUTTIMM(DA(1),10,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.141,.01,1,1,2)
+K ^AUTTIMM(DA(1),10,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.141,.01,1,2,0)
+9999999.14^F
+"^DD",9999999.14,9999999.141,.01,1,2,1)
+S ^AUTTIMM("F",$E(X,1,30),DA(1),DA)=""
+"^DD",9999999.14,9999999.141,.01,1,2,2)
+K ^AUTTIMM("F",$E(X,1,30),DA(1),DA)
+"^DD",9999999.14,9999999.141,.01,1,2,"%D",0)
+^^1^1^3140602^
+"^DD",9999999.14,9999999.141,.01,1,2,"%D",1,0)
+This cross reference is used for lookup as well as sorting.
+"^DD",9999999.14,9999999.141,.01,1,2,"DT")
+3140602
+"^DD",9999999.14,9999999.141,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.141,.01,9)
+^
+"^DD",9999999.14,9999999.141,.01,21,0)
+^.001^1^1^3140602^^
+"^DD",9999999.14,9999999.141,.01,21,1,0)
+This locally editable field stores a synonym for this immunization.
+"^DD",9999999.14,9999999.141,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.141,.01,"DT")
+3140625
+"^DD",9999999.14,9999999.142,0)
+CDC FULL VACCINE NAME SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.142,0,"DT")
+3140429
+"^DD",9999999.14,9999999.142,0,"NM","CDC FULL VACCINE NAME")
+
+"^DD",9999999.14,9999999.142,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.142,.01,0)
+CDC FULL VACCINE NAME^Wx^^0;1^Q
+"^DD",9999999.14,9999999.142,.01,.1)
+CDC Full Vaccine Name
+"^DD",9999999.14,9999999.142,.01,3)
+Enter the CDC Full Vaccine Name.
+"^DD",9999999.14,9999999.142,.01,9)
+^
+"^DD",9999999.14,9999999.142,.01,21,0)
+^.001^1^1^3140429^^
+"^DD",9999999.14,9999999.142,.01,21,1,0)
+This is the CDC Full Vaccine Name for this immunization.
+"^DD",9999999.14,9999999.142,.01,"DT")
+3140429
+"^DD",9999999.14,9999999.143,0)
+CODING SYSTEM SUB-FIELD^^.02^2
+"^DD",9999999.14,9999999.143,0,"DT")
+3140529
+"^DD",9999999.14,9999999.143,0,"IX","B",9999999.143,.01)
+
+"^DD",9999999.14,9999999.143,0,"NM","CODING SYSTEM")
+
+"^DD",9999999.14,9999999.143,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.143,.01,0)
+CODING SYSTEM^MFa^^0;1^K:$L(X)>7!($L(X)<3) X
+"^DD",9999999.14,9999999.143,.01,.1)
+Coding System
+"^DD",9999999.14,9999999.143,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.143,.01,1,1,0)
+9999999.143^B
+"^DD",9999999.14,9999999.143,.01,1,1,1)
+S ^AUTTIMM(DA(1),3,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.143,.01,1,1,2)
+K ^AUTTIMM(DA(1),3,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.143,.01,3)
+Answer must be 3-7 characters in length.
+"^DD",9999999.14,9999999.143,.01,9)
+^
+"^DD",9999999.14,9999999.143,.01,21,0)
+^^2^2^3140529^
+"^DD",9999999.14,9999999.143,.01,21,1,0)
+This field indicates the coding system associated with the codes 
+"^DD",9999999.14,9999999.143,.01,21,2,0)
+identifying this immunization.
+"^DD",9999999.14,9999999.143,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.143,.01,"DT")
+3140625
+"^DD",9999999.14,9999999.143,.02,0)
+CODE^9999999.1431^^1;0
+"^DD",9999999.14,9999999.143,.02,9)
+^
+"^DD",9999999.14,9999999.143,.02,21,0)
+^^2^2^3140828^
+"^DD",9999999.14,9999999.143,.02,21,1,0)
+This multiple stores the code(s) representing this immunization within 
+"^DD",9999999.14,9999999.143,.02,21,2,0)
+this coding system.
+"^DD",9999999.14,9999999.1431,0)
+CODE SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.1431,0,"DT")
+3140529
+"^DD",9999999.14,9999999.1431,0,"IX","B",9999999.1431,.01)
+
+"^DD",9999999.14,9999999.1431,0,"NM","CODE")
+
+"^DD",9999999.14,9999999.1431,0,"UP")
+9999999.143
+"^DD",9999999.14,9999999.1431,.01,0)
+CODE^Fa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.1431,.01,.1)
+Code
+"^DD",9999999.14,9999999.1431,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.1431,.01,1,1,0)
+9999999.1431^B
+"^DD",9999999.14,9999999.1431,.01,1,1,1)
+S ^AUTTIMM(DA(2),3,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.1431,.01,1,1,2)
+K ^AUTTIMM(DA(2),3,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.1431,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.1431,.01,9)
+^
+"^DD",9999999.14,9999999.1431,.01,21,0)
+^.001^1^1^3140529^^
+"^DD",9999999.14,9999999.1431,.01,21,1,0)
+This code represents this immunization within this coding system.
+"^DD",9999999.14,9999999.1431,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.1431,.01,"DT")
+3140625
+"^DD",9999999.14,9999999.144,0)
+VACCINE INFORMATION STATEMENT SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.144,0,"DT")
+3140506
+"^DD",9999999.14,9999999.144,0,"IX","B",9999999.144,.01)
+
+"^DD",9999999.14,9999999.144,0,"NM","VACCINE INFORMATION STATEMENT")
+
+"^DD",9999999.14,9999999.144,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.144,.01,0)
+VACCINE INFORMATION STATEMENT^MP920'OXa^AUTTIVIS(^0;1^Q
+"^DD",9999999.14,9999999.144,.01,.1)
+Vaccine Information Statement
+"^DD",9999999.14,9999999.144,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.144,.01,1,1,0)
+9999999.144^B
+"^DD",9999999.14,9999999.144,.01,1,1,1)
+S ^AUTTIMM(DA(1),4,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.144,.01,1,1,2)
+K ^AUTTIMM(DA(1),4,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.144,.01,2)
+S Y(0)=Y S Y(0)=Y D VIS^PXVUTIL
+"^DD",9999999.14,9999999.144,.01,2.1)
+S Y(0)=Y D VIS^PXVUTIL
+"^DD",9999999.14,9999999.144,.01,3)
+Enter a Vaccine Information Statement for this immunization.
+"^DD",9999999.14,9999999.144,.01,9)
+^
+"^DD",9999999.14,9999999.144,.01,21,0)
+^.001^2^2^3150309^^^
+"^DD",9999999.14,9999999.144,.01,21,1,0)
+This is the name of the Vaccine Information Statement associated with 
+"^DD",9999999.14,9999999.144,.01,21,2,0)
+this immunization.
+"^DD",9999999.14,9999999.144,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.144,.01,"DT")
+3150309
+"^DD",9999999.14,9999999.145,0)
+CDC PRODUCT NAME SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.145,0,"DT")
+3140602
+"^DD",9999999.14,9999999.145,0,"IX","B",9999999.145,.01)
+
+"^DD",9999999.14,9999999.145,0,"NM","CDC PRODUCT NAME")
+
+"^DD",9999999.14,9999999.145,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.145,.01,0)
+CDC PRODUCT NAME^MFIa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.14,9999999.145,.01,.1)
+CDC Product Name
+"^DD",9999999.14,9999999.145,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.145,.01,1,1,0)
+9999999.145^B
+"^DD",9999999.14,9999999.145,.01,1,1,1)
+S ^AUTTIMM(DA(1),5,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.145,.01,1,1,2)
+K ^AUTTIMM(DA(1),5,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.145,.01,1,2,0)
+9999999.14^H
+"^DD",9999999.14,9999999.145,.01,1,2,1)
+S ^AUTTIMM("H",$E(X,1,30),DA(1),DA)=""
+"^DD",9999999.14,9999999.145,.01,1,2,2)
+K ^AUTTIMM("H",$E(X,1,30),DA(1),DA)
+"^DD",9999999.14,9999999.145,.01,1,2,"%D",0)
+^^1^1^3140602^
+"^DD",9999999.14,9999999.145,.01,1,2,"%D",1,0)
+This cross reference is used for lookup as well as sorting.
+"^DD",9999999.14,9999999.145,.01,1,2,"DT")
+3140602
+"^DD",9999999.14,9999999.145,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",9999999.14,9999999.145,.01,9)
+^
+"^DD",9999999.14,9999999.145,.01,21,0)
+^.001^2^2^3140602^^
+"^DD",9999999.14,9999999.145,.01,21,1,0)
+This is the CDC Product Name which reflects manufacturer trade names, but 
+"^DD",9999999.14,9999999.145,.01,21,2,0)
+may not be identical to those registered trade names.
+"^DD",9999999.14,9999999.145,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.145,.01,"DT")
+3140625
+"^DD",9999999.14,9999999.147,0)
+VACCINE GROUP NAME SUB-FIELD^^.01^1
+"^DD",9999999.14,9999999.147,0,"DT")
+3150527
+"^DD",9999999.14,9999999.147,0,"IX","B",9999999.147,.01)
+
+"^DD",9999999.14,9999999.147,0,"NM","VACCINE GROUP NAME")
+
+"^DD",9999999.14,9999999.147,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.147,.01,0)
+VACCINE GROUP NAME^Fa^^0;1^K:$L(X)>30!($L(X)<2) X
+"^DD",9999999.14,9999999.147,.01,.1)
+Vaccine Group Name
+"^DD",9999999.14,9999999.147,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.147,.01,1,1,0)
+9999999.147^B
+"^DD",9999999.14,9999999.147,.01,1,1,1)
+S ^AUTTIMM(DA(1),7,"B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.147,.01,1,1,2)
+K ^AUTTIMM(DA(1),7,"B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.147,.01,1,2,0)
+9999999.14^I
+"^DD",9999999.14,9999999.147,.01,1,2,1)
+S ^AUTTIMM("I",$E(X,1,30),DA(1),DA)=""
+"^DD",9999999.14,9999999.147,.01,1,2,2)
+K ^AUTTIMM("I",$E(X,1,30),DA(1),DA)
+"^DD",9999999.14,9999999.147,.01,1,2,"%D",0)
+^^1^1^3150526^
+"^DD",9999999.14,9999999.147,.01,1,2,"%D",1,0)
+This whole file cross reference is used for lookup as well as sorting.
+"^DD",9999999.14,9999999.147,.01,1,2,"DT")
+3150526
+"^DD",9999999.14,9999999.147,.01,3)
+Answer must be 2-30 characters in length.
+"^DD",9999999.14,9999999.147,.01,9)
+^
+"^DD",9999999.14,9999999.147,.01,21,0)
+^^2^2^3150526^
+"^DD",9999999.14,9999999.147,.01,21,1,0)
+This is the VACCINE GROUP NAME (sometimes known as vaccine family) with
+"^DD",9999999.14,9999999.147,.01,21,2,0)
+which this immunization is associated.
+"^DD",9999999.14,9999999.147,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.147,.01,"DT")
+3150527
+"^DD",9999999.14,9999999.1499,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",9999999.14,9999999.1499,0,"DT")
+3140429
+"^DD",9999999.14,9999999.1499,0,"IX","B",9999999.1499,.01)
+
+"^DD",9999999.14,9999999.1499,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",9999999.14,9999999.1499,0,"UP")
+9999999.14
+"^DD",9999999.14,9999999.1499,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",9999999.14,9999999.1499,.01,.1)
+
+"^DD",9999999.14,9999999.1499,.01,1,0)
+^.1
+"^DD",9999999.14,9999999.1499,.01,1,1,0)
+9999999.1499^B
+"^DD",9999999.14,9999999.1499,.01,1,1,1)
+S ^AUTTIMM(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",9999999.14,9999999.1499,.01,1,1,2)
+K ^AUTTIMM(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",9999999.14,9999999.1499,.01,1,1,"%D",0)
+^^1^1^3140527^
+"^DD",9999999.14,9999999.1499,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",9999999.14,9999999.1499,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",9999999.14,9999999.1499,.01,9)
+^
+"^DD",9999999.14,9999999.1499,.01,21,0)
+^^2^2^3140521^
+"^DD",9999999.14,9999999.1499,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",9999999.14,9999999.1499,.01,21,2,0)
+established.
+"^DD",9999999.14,9999999.1499,.01,"AUDIT")
+y
+"^DD",9999999.14,9999999.1499,.01,"DT")
+3140625
+"^DD",9999999.14,9999999.1499,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",9999999.14,9999999.1499,.02,3)
+Enter the Status of reference term, ACTIVE or INACTIVE.
+"^DD",9999999.14,9999999.1499,.02,9)
+^
+"^DD",9999999.14,9999999.1499,.02,21,0)
+^.001^4^4^3141126^^
+"^DD",9999999.14,9999999.1499,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",9999999.14,9999999.1499,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a
+"^DD",9999999.14,9999999.1499,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be
+"^DD",9999999.14,9999999.1499,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",9999999.14,9999999.1499,.02,"AUDIT")
+y
+"^DD",9999999.14,9999999.1499,.02,"DT")
+3141126
+"^DD",9999999.28,9999999.28,0)
+FIELD^^100^12
+"^DD",9999999.28,9999999.28,0,"DDA")
+N
+"^DD",9999999.28,9999999.28,0,"DT")
+3150304
+"^DD",9999999.28,9999999.28,0,"IX","AREPLACETERM",9999999.28,99.97)
+
+"^DD",9999999.28,9999999.28,0,"IX","AVUID",9999999.28,99.99)
+
+"^DD",9999999.28,9999999.28,0,"IX","B",9999999.28,.01)
+
+"^DD",9999999.28,9999999.28,0,"IX","B",9999999.28,8801)
+
+"^DD",9999999.28,9999999.28,0,"IX","C",9999999.28,.02)
+
+"^DD",9999999.28,9999999.28,0,"NM","SKIN TEST")
+
+"^DD",9999999.28,9999999.28,0,"PT",801.41,15)
+
+"^DD",9999999.28,9999999.28,0,"PT",801.4118,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",801.43,.02)
+
+"^DD",9999999.28,9999999.28,0,"PT",810.31,.04)
+
+"^DD",9999999.28,9999999.28,0,"PT",810.32,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",811.1,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",811.1,.02)
+
+"^DD",9999999.28,9999999.28,0,"PT",811.52,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",811.902,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",990.32,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",9000010.12,.01)
+
+"^DD",9999999.28,9999999.28,0,"PT",9999999.28,99.97)
+
+"^DD",9999999.28,9999999.28,0,"VRPK")
+PX
+"^DD",9999999.28,9999999.28,.01,0)
+NAME^RFXa^^0;1^K:$L(X)>30!($L(X)<3)!'(X'?1P.E)!(X'?.ANP) X
+"^DD",9999999.28,9999999.28,.01,1,0)
+^.1
+"^DD",9999999.28,9999999.28,.01,1,1,0)
+9999999.28^B
+"^DD",9999999.28,9999999.28,.01,1,1,1)
+S ^AUTTSK("B",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.28,.01,1,1,2)
+K ^AUTTSK("B",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.28,.01,3)
+Answer with Skin Test name (3-30 characters).
+"^DD",9999999.28,9999999.28,.01,7.5)
+I $G(DIC(0))["L",'$D(XUMF) K X D EN^DDIOL("Entries must be edited via the Master File Server (MFS).","","!?5")
+"^DD",9999999.28,9999999.28,.01,9)
+^
+"^DD",9999999.28,9999999.28,.01,21,0)
+^.001^2^2^3150303^^^^
+"^DD",9999999.28,9999999.28,.01,21,1,0)
+This is the name of the skin test (e.g Cocci,PPD).  The NAME must be at
+"^DD",9999999.28,9999999.28,.01,21,2,0)
+least 3 characters and no more than 30 characters.
+"^DD",9999999.28,9999999.28,.01,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,.01,"DEL",.01,0)
+I 0
+"^DD",9999999.28,9999999.28,.01,"DEL",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be inactivated via the Master File Server(MFS).","","!?5") I '$D(XUMF)
+"^DD",9999999.28,9999999.28,.01,"DT")
+3150303
+"^DD",9999999.28,9999999.28,.01,"LAYGO",1,0)
+D:'$D(XUMF) EN^DDIOL("Entries must be added via the Master File Server(MFS).","","!?5") I $D(XUMF)
+"^DD",9999999.28,9999999.28,.02,0)
+CODE^FXIa^^0;2^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>2!($L(X)<2)!'(X?2N) X I $D(X),$D(^AUTTSK("C",X)),'$D(^AUTTSK("C",X,DA)) K X D:'$D(ZTQUEUED) EN^DDIOL("    Already used! ")
+"^DD",9999999.28,9999999.28,.02,1,0)
+^.1
+"^DD",9999999.28,9999999.28,.02,1,1,0)
+9999999.28^C
+"^DD",9999999.28,9999999.28,.02,1,1,1)
+S ^AUTTSK("C",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.28,.02,1,1,2)
+K ^AUTTSK("C",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.28,.02,1,1,3)
+Also used to avoid duplicates.
+"^DD",9999999.28,9999999.28,.02,1,1,"%D",0)
+^^2^2^3141123^
+"^DD",9999999.28,9999999.28,.02,1,1,"%D",1,0)
+Used to keep the same code from being used by more than one entry.  The
+"^DD",9999999.28,9999999.28,.02,1,1,"%D",2,0)
+check is made in the input transform.
+"^DD",9999999.28,9999999.28,.02,1,1,"DT")
+3141123
+"^DD",9999999.28,9999999.28,.02,3)
+Answer must be 2 digits in length.
+"^DD",9999999.28,9999999.28,.02,9)
+^
+"^DD",9999999.28,9999999.28,.02,21,0)
+^.001^1^1^3150325^^
+"^DD",9999999.28,9999999.28,.02,21,1,0)
+This field is a two digit code representing this skin test.
+"^DD",9999999.28,9999999.28,.02,23,0)
+^.001^3^3^3150325^^
+"^DD",9999999.28,9999999.28,.02,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is
+"^DD",9999999.28,9999999.28,.02,23,2,0)
+included for backward compatibility with the Indian Health Service version
+"^DD",9999999.28,9999999.28,.02,23,3,0)
+of the file.
+"^DD",9999999.28,9999999.28,.02,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,.02,"DT")
+3141124
+"^DD",9999999.28,9999999.28,.03,0)
+INACTIVE FLAG^Sa^1:INACTIVE;^0;3^Q
+"^DD",9999999.28,9999999.28,.03,3)
+Enter 1 to make the skin test type inactive.
+"^DD",9999999.28,9999999.28,.03,9)
+^
+"^DD",9999999.28,9999999.28,.03,21,0)
+^^8^8^3150304^
+"^DD",9999999.28,9999999.28,.03,21,1,0)
+This field is used to inactivate a skin test type.  If this field contains
+"^DD",9999999.28,9999999.28,.03,21,2,0)
+a "1" then the skin test is inactive.  Inactive skin tests cannot be 
+"^DD",9999999.28,9999999.28,.03,21,3,0)
+selected in the manual data entry process.  Skin test entries should be
+"^DD",9999999.28,9999999.28,.03,21,4,0)
+made inactive when they are no longer used.  Do not delete the entry or
+"^DD",9999999.28,9999999.28,.03,21,5,0)
+change the meaning of the skin test entry.
+"^DD",9999999.28,9999999.28,.03,21,6,0)
+  
+"^DD",9999999.28,9999999.28,.03,21,7,0)
+To make an inactive skin test active,
+"^DD",9999999.28,9999999.28,.03,21,8,0)
+enter the "@" symbol to delete the "1" from the field.
+"^DD",9999999.28,9999999.28,.03,23,0)
+^.001^5^5^3150304^^^^
+"^DD",9999999.28,9999999.28,.03,23,1,0)
+This field was added for use by PCE in the VA.
+"^DD",9999999.28,9999999.28,.03,23,2,0)
+ 
+"^DD",9999999.28,9999999.28,.03,23,3,0)
+This inactive flag should be used, rather than deleting entries in
+"^DD",9999999.28,9999999.28,.03,23,4,0)
+the skin test file, since there may be other files pointing at the skin
+"^DD",9999999.28,9999999.28,.03,23,5,0)
+test entry.
+"^DD",9999999.28,9999999.28,.03,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,.03,"DT")
+3150304
+"^DD",9999999.28,9999999.28,.11,0)
+CPT CODE^P81'Ia^ICPT(^0;11^Q
+"^DD",9999999.28,9999999.28,.11,9)
+^
+"^DD",9999999.28,9999999.28,.11,21,0)
+^^1^1^3141123^
+"^DD",9999999.28,9999999.28,.11,21,1,0)
+This is a CPT code associated with this skin test.
+"^DD",9999999.28,9999999.28,.11,23,0)
+^^3^3^3140623^
+"^DD",9999999.28,9999999.28,.11,23,1,0)
+This field is not used by the Department of Veterans Affairs.  It is 
+"^DD",9999999.28,9999999.28,.11,23,2,0)
+included for backward compatibility with the Indian Health Service 
+"^DD",9999999.28,9999999.28,.11,23,3,0)
+version of the file.
+"^DD",9999999.28,9999999.28,.11,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,.11,"DT")
+3141124
+"^DD",9999999.28,9999999.28,3,0)
+CODING SYSTEM^9999999.283^^3;0
+"^DD",9999999.28,9999999.28,3,9)
+^
+"^DD",9999999.28,9999999.28,3,21,0)
+^^2^2^3141201^
+"^DD",9999999.28,9999999.28,3,21,1,0)
+This multiple stores the coding system(s) associated with the codes
+"^DD",9999999.28,9999999.28,3,21,2,0)
+identifying this skin test.
+"^DD",9999999.28,9999999.28,99.97,0)
+REPLACED BY VHA STANDARD TERM^P9999999.28'aI^AUTTSK(^VUID;3^Q
+"^DD",9999999.28,9999999.28,99.97,1,0)
+^.1
+"^DD",9999999.28,9999999.28,99.97,1,1,0)
+9999999.28^AREPLACETERM
+"^DD",9999999.28,9999999.28,99.97,1,1,1)
+S ^AUTTSK("AREPLACETERM",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.28,99.97,1,1,2)
+K ^AUTTSK("AREPLACETERM",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.28,99.97,1,1,"%D",0)
+^^2^2^3141118^
+"^DD",9999999.28,9999999.28,99.97,1,1,"%D",1,0)
+This cross-reference can be used to identify the replacement entries 
+"^DD",9999999.28,9999999.28,99.97,1,1,"%D",2,0)
+associated with a Term/Concept.
+"^DD",9999999.28,9999999.28,99.97,1,1,"DT")
+3141118
+"^DD",9999999.28,9999999.28,99.97,3)
+Enter the Term/Concept that replaces this entry.
+"^DD",9999999.28,9999999.28,99.97,9)
+^
+"^DD",9999999.28,9999999.28,99.97,21,0)
+^^4^4^3141118^
+"^DD",9999999.28,9999999.28,99.97,21,1,0)
+This field is populated when one Term/Concept replaces another 
+"^DD",9999999.28,9999999.28,99.97,21,2,0)
+Term/Concept.  This field is controlled by standardization and should 
+"^DD",9999999.28,9999999.28,99.97,21,3,0)
+only be changed by standardization processes.  This field contains a 
+"^DD",9999999.28,9999999.28,99.97,21,4,0)
+pointer to a VHA standard term that replaces this entry.
+"^DD",9999999.28,9999999.28,99.97,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,99.97,"DT")
+3150327
+"^DD",9999999.28,9999999.28,99.98,0)
+MASTER ENTRY FOR VUID^RSaI^1:YES;0:NO;^VUID;2^Q
+"^DD",9999999.28,9999999.28,99.98,3)
+Enter YES if this is the Master entry.
+"^DD",9999999.28,9999999.28,99.98,9)
+^
+"^DD",9999999.28,9999999.28,99.98,21,0)
+^.001^2^2^3141118^^^
+"^DD",9999999.28,9999999.28,99.98,21,1,0)
+This field identifies the Master entry for a VUID associated with a 
+"^DD",9999999.28,9999999.28,99.98,21,2,0)
+Term/Concept.
+"^DD",9999999.28,9999999.28,99.98,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,99.98,"DT")
+3150327
+"^DD",9999999.28,9999999.28,99.99,0)
+VUID^RFXIa^^VUID;1^S X=+X K:$L(X)>20!($L(X)<1)!'(X?1.20N) X
+"^DD",9999999.28,9999999.28,99.99,1,0)
+^.1
+"^DD",9999999.28,9999999.28,99.99,1,1,0)
+9999999.28^AVUID
+"^DD",9999999.28,9999999.28,99.99,1,1,1)
+S ^AUTTSK("AVUID",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.28,99.99,1,1,2)
+K ^AUTTSK("AVUID",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.28,99.99,1,1,3)
+XXX--CAN'T BE ALTERED EXCEPT PROGRAMMER
+"^DD",9999999.28,9999999.28,99.99,1,1,"%D",0)
+^^1^1^3141118^
+"^DD",9999999.28,9999999.28,99.99,1,1,"%D",1,0)
+This cross-reference is by VUID.
+"^DD",9999999.28,9999999.28,99.99,1,1,"DT")
+3141118
+"^DD",9999999.28,9999999.28,99.99,3)
+Answer must be 1-20 characters in length.
+"^DD",9999999.28,9999999.28,99.99,9)
+^
+"^DD",9999999.28,9999999.28,99.99,21,0)
+^.001^2^2^3141118^^^
+"^DD",9999999.28,9999999.28,99.99,21,1,0)
+VHA Unique ID (VUID). A unique meaningless integer assigned to reference 
+"^DD",9999999.28,9999999.28,99.99,21,2,0)
+terms VHA wide.
+"^DD",9999999.28,9999999.28,99.99,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,99.99,"DT")
+3141124
+"^DD",9999999.28,9999999.28,99.991,0)
+EFFECTIVE DATE/TIME^9999999.2899DA^^TERMSTATUS;0
+"^DD",9999999.28,9999999.28,99.991,9)
+^
+"^DD",9999999.28,9999999.28,99.991,21,0)
+^^1^1^3141118^
+"^DD",9999999.28,9999999.28,99.991,21,1,0)
+Describes the pair Status and Effective Date/Time for each reference term.
+"^DD",9999999.28,9999999.28,100,0)
+CLASS^Sa^N:NATIONAL;V:VISN;L:LOCAL;^100;1^Q
+"^DD",9999999.28,9999999.28,100,.1)
+Class
+"^DD",9999999.28,9999999.28,100,3)
+Enter the CLASS.
+"^DD",9999999.28,9999999.28,100,9)
+^
+"^DD",9999999.28,9999999.28,100,21,0)
+^.001^1^1^3150105^^^
+"^DD",9999999.28,9999999.28,100,21,1,0)
+This is the CLASS of this Skin Test.
+"^DD",9999999.28,9999999.28,100,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,100,"DT")
+3150105
+"^DD",9999999.28,9999999.28,1201,0)
+PRINT NAME^Fa^^12;1^K:$L(X)>15!($L(X)<3) X
+"^DD",9999999.28,9999999.28,1201,3)
+Answer must be 3-15 characters in length.
+"^DD",9999999.28,9999999.28,1201,9)
+^
+"^DD",9999999.28,9999999.28,1201,21,0)
+^^3^3^3141124^
+"^DD",9999999.28,9999999.28,1201,21,1,0)
+This is the name of this skin test that can be used in various reports and
+"^DD",9999999.28,9999999.28,1201,21,2,0)
+displays where space is not available to use the full name of the skin test.
+"^DD",9999999.28,9999999.28,1201,21,3,0)
+This print/display name is limited to 15 characters.
+"^DD",9999999.28,9999999.28,1201,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,1201,"DT")
+3150211
+"^DD",9999999.28,9999999.28,8801,0)
+MNEMONIC^Fa^^88;1^K:X[""""!($A(X)=45) X I $D(X) K:$L(X)>2!($L(X)<1) X
+"^DD",9999999.28,9999999.28,8801,1,0)
+^.1
+"^DD",9999999.28,9999999.28,8801,1,1,0)
+9999999.28^B^MNEMONIC
+"^DD",9999999.28,9999999.28,8801,1,1,1)
+S ^AUTTSK("B",$E(X,1,30),DA)=1
+"^DD",9999999.28,9999999.28,8801,1,1,2)
+K ^AUTTSK("B",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.28,8801,3)
+ANSWER MUST BE 1-2 CHARACTERS IN LENGTH
+"^DD",9999999.28,9999999.28,8801,9)
+^
+"^DD",9999999.28,9999999.28,8801,21,0)
+^^4^4^2940125^^
+"^DD",9999999.28,9999999.28,8801,21,1,0)
+(Optional)
+"^DD",9999999.28,9999999.28,8801,21,2,0)
+This is a 1-2 character mnemonic for the skin test.
+"^DD",9999999.28,9999999.28,8801,21,3,0)
+ 
+"^DD",9999999.28,9999999.28,8801,21,4,0)
+Enter a 1-2 character mnemonic.
+"^DD",9999999.28,9999999.28,8801,"AUDIT")
+y
+"^DD",9999999.28,9999999.28,8801,"DT")
+3150327
+"^DD",9999999.28,9999999.283,0)
+CODING SYSTEM SUB-FIELD^^.02^2
+"^DD",9999999.28,9999999.283,0,"DT")
+3141201
+"^DD",9999999.28,9999999.283,0,"IX","B",9999999.283,.01)
+
+"^DD",9999999.28,9999999.283,0,"NM","CODING SYSTEM")
+
+"^DD",9999999.28,9999999.283,0,"UP")
+9999999.28
+"^DD",9999999.28,9999999.283,.01,0)
+CODING SYSTEM^MFa^^0;1^K:$L(X)>7!($L(X)<3) X
+"^DD",9999999.28,9999999.283,.01,.1)
+Coding System
+"^DD",9999999.28,9999999.283,.01,1,0)
+^.1
+"^DD",9999999.28,9999999.283,.01,1,1,0)
+9999999.283^B
+"^DD",9999999.28,9999999.283,.01,1,1,1)
+S ^AUTTSK(DA(1),3,"B",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.283,.01,1,1,2)
+K ^AUTTSK(DA(1),3,"B",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.283,.01,3)
+Answer must be 3-7 characters in length.
+"^DD",9999999.28,9999999.283,.01,9)
+^
+"^DD",9999999.28,9999999.283,.01,21,0)
+^.001^2^2^3141201^^^
+"^DD",9999999.28,9999999.283,.01,21,1,0)
+This field indicates the coding system associated with the codes
+"^DD",9999999.28,9999999.283,.01,21,2,0)
+identifying this skin test.
+"^DD",9999999.28,9999999.283,.01,"AUDIT")
+y
+"^DD",9999999.28,9999999.283,.01,"DT")
+3150227
+"^DD",9999999.28,9999999.283,.02,0)
+CODE^9999999.2831^^1;0
+"^DD",9999999.28,9999999.283,.02,9)
+^
+"^DD",9999999.28,9999999.283,.02,21,0)
+^^2^2^3141201^
+"^DD",9999999.28,9999999.283,.02,21,1,0)
+This multiple stores the code(s) representing this skin test within
+"^DD",9999999.28,9999999.283,.02,21,2,0)
+this coding system.
+"^DD",9999999.28,9999999.2831,0)
+CODE SUB-FIELD^^.01^1
+"^DD",9999999.28,9999999.2831,0,"DT")
+3141201
+"^DD",9999999.28,9999999.2831,0,"IX","B",9999999.2831,.01)
+
+"^DD",9999999.28,9999999.2831,0,"NM","CODE")
+
+"^DD",9999999.28,9999999.2831,0,"UP")
+9999999.283
+"^DD",9999999.28,9999999.2831,.01,0)
+CODE^MFa^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",9999999.28,9999999.2831,.01,1,0)
+^.1
+"^DD",9999999.28,9999999.2831,.01,1,1,0)
+9999999.2831^B
+"^DD",9999999.28,9999999.2831,.01,1,1,1)
+S ^AUTTSK(DA(2),3,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.2831,.01,1,1,2)
+K ^AUTTSK(DA(2),3,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.2831,.01,3)
+Answer must be 1-30 characters in length.
+"^DD",9999999.28,9999999.2831,.01,9)
+^
+"^DD",9999999.28,9999999.2831,.01,21,0)
+^^1^1^3141201^
+"^DD",9999999.28,9999999.2831,.01,21,1,0)
+This code represents this skin test within this coding system.
+"^DD",9999999.28,9999999.2831,.01,"AUDIT")
+y
+"^DD",9999999.28,9999999.2831,.01,"DT")
+3150227
+"^DD",9999999.28,9999999.2899,0)
+EFFECTIVE DATE/TIME SUB-FIELD^^.02^2
+"^DD",9999999.28,9999999.2899,0,"DT")
+3141118
+"^DD",9999999.28,9999999.2899,0,"IX","B",9999999.2899,.01)
+
+"^DD",9999999.28,9999999.2899,0,"NM","EFFECTIVE DATE/TIME")
+
+"^DD",9999999.28,9999999.2899,0,"UP")
+9999999.28
+"^DD",9999999.28,9999999.2899,.01,0)
+EFFECTIVE DATE/TIME^RDIXa^^0;1^S %DT="ESTX" D ^%DT S X=Y K:Y<1 X
+"^DD",9999999.28,9999999.2899,.01,1,0)
+^.1
+"^DD",9999999.28,9999999.2899,.01,1,1,0)
+9999999.2899^B
+"^DD",9999999.28,9999999.2899,.01,1,1,1)
+S ^AUTTSK(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)=""
+"^DD",9999999.28,9999999.2899,.01,1,1,2)
+K ^AUTTSK(DA(1),"TERMSTATUS","B",$E(X,1,30),DA)
+"^DD",9999999.28,9999999.2899,.01,1,1,"%D",0)
+^^1^1^3141118^
+"^DD",9999999.28,9999999.2899,.01,1,1,"%D",1,0)
+This cross-reference is by Effective Date/Time.
+"^DD",9999999.28,9999999.2899,.01,3)
+Enter the date/time when the Status of the reference term was established.
+"^DD",9999999.28,9999999.2899,.01,9)
+^
+"^DD",9999999.28,9999999.2899,.01,21,0)
+^.001^2^2^3141118^^
+"^DD",9999999.28,9999999.2899,.01,21,1,0)
+This is the date/time when the Status of the reference term was 
+"^DD",9999999.28,9999999.2899,.01,21,2,0)
+established.
+"^DD",9999999.28,9999999.2899,.01,"AUDIT")
+y
+"^DD",9999999.28,9999999.2899,.01,"DT")
+3141124
+"^DD",9999999.28,9999999.2899,.02,0)
+STATUS^RSIa^1:ACTIVE;0:INACTIVE;^0;2^Q
+"^DD",9999999.28,9999999.2899,.02,3)
+Enter the Status of reference term, ACTIVE or INACTIVE.
+"^DD",9999999.28,9999999.2899,.02,9)
+^
+"^DD",9999999.28,9999999.2899,.02,21,0)
+^^4^4^3141118^
+"^DD",9999999.28,9999999.2899,.02,21,1,0)
+The Status of a reference term is either 'ACTIVE' or 'INACTIVE'. If 
+"^DD",9999999.28,9999999.2899,.02,21,2,0)
+'ACTIVE', then the term will be accessible by end-users to document a 
+"^DD",9999999.28,9999999.2899,.02,21,3,0)
+particular patient event. If 'INACTIVE', then the term will only be 
+"^DD",9999999.28,9999999.2899,.02,21,4,0)
+accessible by the application to display legacy data.
+"^DD",9999999.28,9999999.2899,.02,"AUDIT")
+y
+"^DD",9999999.28,9999999.2899,.02,"DT")
+3141124
+"^DIC",920,920,0)
+VACCINE INFORMATION STATEMENT^920
+"^DIC",920,920,0,"GL")
+^AUTTIVIS(
+"^DIC",920,920,"%",0)
+^1.005^^0
+"^DIC",920,920,"%D",0)
+^^17^17^3150227^
+"^DIC",920,920,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920,920,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall 
+"^DIC",920,920,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920,920,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920,920,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920,920,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920,920,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920,920,"%D",8,0)
+shall not be supported.
+"^DIC",920,920,"%D",9,0)
+ 
+"^DIC",920,920,"%D",10,0)
+This file stores Vaccine Information Statements (VISs). These are
+"^DIC",920,920,"%D",11,0)
+information sheets produced by the Centers for Disease Control and 
+"^DIC",920,920,"%D",12,0)
+Prevention (CDC) that explain both the benefits and risks of a vaccine
+"^DIC",920,920,"%D",13,0)
+to vaccine recipients.
+"^DIC",920,920,"%D",14,0)
+ 
+"^DIC",920,920,"%D",15,0)
+Federal law requires that healthcare staff provide a VIS to a patient, 
+"^DIC",920,920,"%D",16,0)
+parent, or legal representative before each dose of certain 
+"^DIC",920,920,"%D",17,0)
+vaccinations.
+"^DIC",920,"B","VACCINE INFORMATION STATEMENT",920)
+
+"^DIC",920.1,920.1,0)
+IMMUNIZATION INFO SOURCE^920.1
+"^DIC",920.1,920.1,0,"GL")
+^PXV(920.1,
+"^DIC",920.1,920.1,"%",0)
+^1.005^^0
+"^DIC",920.1,920.1,"%D",0)
+^^13^13^3150227^
+"^DIC",920.1,920.1,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920.1,920.1,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall  
+"^DIC",920.1,920.1,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920.1,920.1,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920.1,920.1,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920.1,920.1,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920.1,920.1,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920.1,920.1,"%D",8,0)
+shall not be supported.
+"^DIC",920.1,920.1,"%D",9,0)
+ 
+"^DIC",920.1,920.1,"%D",10,0)
+This file is a table of standard possible sources from which the
+"^DIC",920.1,920.1,"%D",11,0)
+information about a particular immunization event was obtained. The data
+"^DIC",920.1,920.1,"%D",12,0)
+in this file are derived from the CDC-defined Immunization Information
+"^DIC",920.1,920.1,"%D",13,0)
+Source table (NIP001).
+"^DIC",920.1,"B","IMMUNIZATION INFO SOURCE",920.1)
+
+"^DIC",920.2,920.2,0)
+IMM ADMINISTRATION ROUTE^920.2
+"^DIC",920.2,920.2,0,"GL")
+^PXV(920.2,
+"^DIC",920.2,920.2,"%",0)
+^1.005^^0
+"^DIC",920.2,920.2,"%D",0)
+^^12^12^3150227^
+"^DIC",920.2,920.2,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920.2,920.2,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall  
+"^DIC",920.2,920.2,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920.2,920.2,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920.2,920.2,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920.2,920.2,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920.2,920.2,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920.2,920.2,"%D",8,0)
+shall not be supported.
+"^DIC",920.2,920.2,"%D",9,0)
+ 
+"^DIC",920.2,920.2,"%D",10,0)
+This file is a table of routes of administration for
+"^DIC",920.2,920.2,"%D",11,0)
+vaccines/immunization events. The data in this table are from the
+"^DIC",920.2,920.2,"%D",12,0)
+HL7-defined Table 0162 - Route of Administrations.
+"^DIC",920.2,"B","IMM ADMINISTRATION ROUTE",920.2)
+
+"^DIC",920.3,920.3,0)
+IMM ADMINISTRATION SITE (BODY)^920.3
+"^DIC",920.3,920.3,0,"GL")
+^PXV(920.3,
+"^DIC",920.3,920.3,"%",0)
+^1.005^^0
+"^DIC",920.3,920.3,"%D",0)
+^^12^12^3150227^
+"^DIC",920.3,920.3,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920.3,920.3,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall  
+"^DIC",920.3,920.3,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920.3,920.3,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920.3,920.3,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920.3,920.3,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920.3,920.3,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920.3,920.3,"%D",8,0)
+shall not be supported.
+"^DIC",920.3,920.3,"%D",9,0)
+ 
+"^DIC",920.3,920.3,"%D",10,0)
+This is a table of administration sites - areas of the patient's body
+"^DIC",920.3,920.3,"%D",11,0)
+through which a vaccine/immunization can be administered. The values in
+"^DIC",920.3,920.3,"%D",12,0)
+this table are from the HL7-defined Table 0163 - Administrative site.
+"^DIC",920.3,"B","IMM ADMINISTRATION SITE (BODY)",920.3)
+
+"^DIC",920.4,920.4,0)
+IMM CONTRAINDICATION REASONS^920.4
+"^DIC",920.4,920.4,0,"GL")
+^PXV(920.4,
+"^DIC",920.4,920.4,"%",0)
+^1.005^^0
+"^DIC",920.4,920.4,"%D",0)
+^1.001^12^12^3150528^^^^
+"^DIC",920.4,920.4,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920.4,920.4,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall 
+"^DIC",920.4,920.4,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920.4,920.4,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920.4,920.4,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920.4,920.4,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920.4,920.4,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920.4,920.4,"%D",8,0)
+shall not be supported.
+"^DIC",920.4,920.4,"%D",9,0)
+ 
+"^DIC",920.4,920.4,"%D",10,0)
+This is a table of contraindications regarding immunizations and skin
+"^DIC",920.4,920.4,"%D",11,0)
+tests. The data for this table is derived from the CDC table 
+"^DIC",920.4,920.4,"%D",12,0)
+Vaccinations Contraindications.
+"^DIC",920.4,"B","IMM CONTRAINDICATION REASONS",920.4)
+
+"^DIC",920.5,920.5,0)
+IMM REFUSAL REASONS^920.5
+"^DIC",920.5,920.5,0,"GL")
+^PXV(920.5,
+"^DIC",920.5,920.5,"%",0)
+^1.005^^0
+"^DIC",920.5,920.5,"%D",0)
+^1.001^12^12^3150528^^
+"^DIC",920.5,920.5,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",920.5,920.5,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall 
+"^DIC",920.5,920.5,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",920.5,920.5,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",920.5,920.5,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",920.5,920.5,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",920.5,920.5,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",920.5,920.5,"%D",8,0)
+shall not be supported.
+"^DIC",920.5,920.5,"%D",9,0)
+ 
+"^DIC",920.5,920.5,"%D",10,0)
+This is a table of reason for the refusal of an immunization or skin 
+"^DIC",920.5,920.5,"%D",11,0)
+test. The data in this file has been derived from the CDC-defined table
+"^DIC",920.5,920.5,"%D",12,0)
+NIP002 - Substance Refusal Reason.
+"^DIC",920.5,"B","IMM REFUSAL REASONS",920.5)
+
+"^DIC",9999999.04,9999999.04,0)
+IMM MANUFACTURER^9999999.04
+"^DIC",9999999.04,9999999.04,0,"GL")
+^AUTTIMAN(
+"^DIC",9999999.04,9999999.04,"%",0)
+^1.005^^0
+"^DIC",9999999.04,9999999.04,"%D",0)
+^^12^12^3150306^
+"^DIC",9999999.04,9999999.04,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",9999999.04,9999999.04,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall 
+"^DIC",9999999.04,9999999.04,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",9999999.04,9999999.04,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",9999999.04,9999999.04,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",9999999.04,9999999.04,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",9999999.04,9999999.04,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",9999999.04,9999999.04,"%D",8,0)
+shall not be supported.
+"^DIC",9999999.04,9999999.04,"%D",9,0)
+ 
+"^DIC",9999999.04,9999999.04,"%D",10,0)
+This file is a table of immunization and/or vaccine manufacturers. The
+"^DIC",9999999.04,9999999.04,"%D",11,0)
+data in this file are derived from the CDC (Center for Disease Control)
+"^DIC",9999999.04,9999999.04,"%D",12,0)
+HL7 Table 0227 (Manufacturers of Vaccines (MVX)).
+"^DIC",9999999.04,"B","IMM MANUFACTURER",9999999.04)
+
+"^DIC",9999999.14,9999999.14,0)
+IMMUNIZATION^9999999.14I
+"^DIC",9999999.14,9999999.14,0,"GL")
+^AUTTIMM(
+"^DIC",9999999.14,9999999.14,"%",0)
+^1.005^1^1
+"^DIC",9999999.14,9999999.14,"%",1,0)
+PXRM
+"^DIC",9999999.14,9999999.14,"%","B","PXRM",1)
+
+"^DIC",9999999.14,9999999.14,"%D",0)
+^^25^25^3150302^
+"^DIC",9999999.14,9999999.14,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",9999999.14,9999999.14,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall 
+"^DIC",9999999.14,9999999.14,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",9999999.14,9999999.14,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",9999999.14,9999999.14,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",9999999.14,9999999.14,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",9999999.14,9999999.14,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",9999999.14,9999999.14,"%D",8,0)
+shall not be supported.
+"^DIC",9999999.14,9999999.14,"%D",9,0)
+ 
+"^DIC",9999999.14,9999999.14,"%D",10,0)
+In order to preserve the continuity of files shared by the Indian Health
+"^DIC",9999999.14,9999999.14,"%D",11,0)
+Service and the Department of Veterans Affairs, this file includes
+"^DIC",9999999.14,9999999.14,"%D",12,0)
+fields used by Indian Health Service that will not be used by the
+"^DIC",9999999.14,9999999.14,"%D",13,0)
+Department of Veterans Affairs. These fields may point to other files
+"^DIC",9999999.14,9999999.14,"%D",14,0)
+and routines not deployed by the Department of Veterans Affairs.
+"^DIC",9999999.14,9999999.14,"%D",15,0)
+Inclusion of these fields, as designed, was approved by the DBA. These
+"^DIC",9999999.14,9999999.14,"%D",16,0)
+fields were initially introduced with the release of the VISTA
+"^DIC",9999999.14,9999999.14,"%D",17,0)
+IMMUNIZATION ENHANCEMENTS 1.0 (PX*1*201) for the VistA Immunization
+"^DIC",9999999.14,9999999.14,"%D",18,0)
+Enhancements Project. Additional fields may be included in later
+"^DIC",9999999.14,9999999.14,"%D",19,0)
+enhancements.
+"^DIC",9999999.14,9999999.14,"%D",20,0)
+  
+"^DIC",9999999.14,9999999.14,"%D",21,0)
+This file is a list of Immunizations and associated codes developed
+"^DIC",9999999.14,9999999.14,"%D",22,0)
+specifically for use in the IHS. This file contains a full descriptive 
+"^DIC",9999999.14,9999999.14,"%D",23,0)
+name for each Immunization, plus a shortened name of Ten Characters 
+"^DIC",9999999.14,9999999.14,"%D",24,0)
+which is used on the Health Summary and on reports where space is 
+"^DIC",9999999.14,9999999.14,"%D",25,0)
+limited, plus a Two Digit Code for each Immunization.
+"^DIC",9999999.14,"B","IMMUNIZATION",9999999.14)
+
+"^DIC",9999999.28,9999999.28,0)
+SKIN TEST^9999999.28I
+"^DIC",9999999.28,9999999.28,0,"GL")
+^AUTTSK(
+"^DIC",9999999.28,9999999.28,"%",0)
+^1.005^1^1
+"^DIC",9999999.28,9999999.28,"%",1,0)
+PXRM
+"^DIC",9999999.28,9999999.28,"%","B","PXRM",1)
+
+"^DIC",9999999.28,9999999.28,"%D",0)
+^^15^15^3150227^
+"^DIC",9999999.28,9999999.28,"%D",1,0)
+Per VHA Directive, this file has been "locked down" by Data 
+"^DIC",9999999.28,9999999.28,"%D",2,0)
+Standardization (DS). The file definition (i.e. data dictionary) shall  
+"^DIC",9999999.28,9999999.28,"%D",3,0)
+not be modified. All additions, changes and deletions to entries in the
+"^DIC",9999999.28,9999999.28,"%D",4,0)
+file shall be done by Enterprise Reference Terminology (ERT) using the
+"^DIC",9999999.28,9999999.28,"%D",5,0)
+Master File Server (MFS), provided by the Common Services (CS). Creating
+"^DIC",9999999.28,9999999.28,"%D",6,0)
+and/or editing locally defined fields in the file are not permitted. Use
+"^DIC",9999999.28,9999999.28,"%D",7,0)
+of locally defined fields that were created prior to the VHA Directive
+"^DIC",9999999.28,9999999.28,"%D",8,0)
+shall not be supported.
+"^DIC",9999999.28,9999999.28,"%D",9,0)
+ 
+"^DIC",9999999.28,9999999.28,"%D",10,0)
+This file contains Skin Tests.  It consists of a full descriptive name,
+"^DIC",9999999.28,9999999.28,"%D",11,0)
+a Ten Character Abbreviated Name for the Health Summary and other
+"^DIC",9999999.28,9999999.28,"%D",12,0)
+reports where spaces are limited, plus a Two Digit Code (IHS only).
+"^DIC",9999999.28,9999999.28,"%D",13,0)
+ 
+"^DIC",9999999.28,9999999.28,"%D",14,0)
+This file was developed by IHS, and adopted by the VA for the source 
+"^DIC",9999999.28,9999999.28,"%D",15,0)
+file representing Skin Tests.
+"^DIC",9999999.28,"B","SKIN TEST",9999999.28)
+
+**END**
+**END**

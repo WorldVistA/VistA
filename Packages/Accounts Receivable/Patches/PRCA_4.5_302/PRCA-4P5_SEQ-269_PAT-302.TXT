@@ -1,0 +1,200 @@
+
+=============================================================================
+Run Date: FEB 09, 2015                     Designation: PRCA*4.5*302
+Package : PRCA - ACCOUNTS RECEIVABLE          Priority: Mandatory
+Version : 4.5       SEQ #269                    Status: Released
+                  Compliance Date: MAR 11, 2015
+=============================================================================
+
+Associated patches: (v)PRCA*4.5*269<<= must be installed BEFORE `PRCA*4.5*302'
+                    (v)IB*2*519    <<= must be installed BEFORE `PRCA*4.5*302'
+
+Subject: HEALTH PLAN IDENTIFIER (HPID) IMPLEMENTATION BUILD 2
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+   
+  The Health Plan Identifier (HPID) project implements a new national
+  standard of having a single identifier to use on electronic transmissions
+  pertaining to health care. All entities that are financially responsible
+  for care are assigned a HPID or Other Entity Identifier (OEID), used for
+  entities that aren't traditional health plans. This new standard 
+  increases interoperability by replacing clearinghouse-specific
+  identifiers for health plans.
+  
+  This PRCA patch builds on the Integrated Billing (IB) HPID Build 1 patch 
+  (IB*2.0*519) to enable Accounts Receivable (AR) to provide the ability to 
+  receive the HPID/OEID in the X12 835 transaction. 
+  
+  Below is a list of all the applications involved in this project along 
+  with their patch number:
+  
+    APPLICATION/VERSION                                   PATCH
+    ---------------------------------------------------------------
+    INTEGRATED BILLING (IB) V. 2.0                        IB*2.0*521
+    ELECTRONIC CLAIMS MANAGEMENT ENGINE (ECME) V. 1.0     BPS*1.0*18
+    ACCOUNTS RECEIVABLE (PRCA) V. 4.5                     PRCA*4.5*302
+   
+  The patches (IB*2.0*521, BPS*1.0*18 and PRCA*4.5*302) are being released 
+  in the Kernel Installation and Distribution System (KIDS) multi-build 
+  distribution as BPS IB PRCA HPID BUNDLE 2.0. 
+   
+   
+  
+  Patch Components
+  ================
+    
+   Files & Fields Associated:
+    
+   File Name (Number)    Field Name (Number)                    New/Mod/Del
+   ------------------    -------------------                    -----------
+   None
+   
+   
+   Forms Associated:
+    
+   Form Name             File #       New/Modified/Deleted
+   ---------             ------       --------------------
+   N/A
+      
+   Mail Groups Associated:
+    
+   Mail Group Name          New/Modified/Deleted
+   ---------------          --------------------
+   N/A
+      
+   Options Associated:
+         
+   Option Name                    Type             New/Modified/Deleted
+   -----------                    -----------      ------------------------
+   N/A
+    
+   Protocols Associated:
+    
+   Protocol Name                  New/Modified/Deleted
+   -------------                  -------------------- 
+   N/A
+      
+   Security Keys Associated:
+    
+   Security Key Name
+   -----------------
+   N/A
+    
+    
+   Templates Associated:
+   
+   
+   Template Name                   Type      File Name (Number) New/Mod/Del
+   -------------                   ----      ------------------ -----------
+   N/A
+  
+   Remote Procedure                          New/Mod/Del
+   -------------                             -----------
+   N/A  
+   
+   Additional Information:
+   N/A
+    
+    
+   New Service Requests (NSRs):
+   -----------------------------
+   NSR - Request ID: 20110503 Electronic Data Interchange (EDI) New 
+         Standards and Operating Rules (Veterans Health Administration)
+         VHA Provider-Side TCRs  05/19/2011 
+         http://vista.domain.ext/nsrd/ViewITRequest.asp?RequestID=20110503
+    
+    
+   Patient Safety Issues (PSIs):
+   ------------------------------
+   N/A
+    
+   Remedy Ticket(s) & Overviews:
+   -----------------------------
+   N/A
+    
+   Test Sites:
+   -----------
+   White River Junction, VT
+   Houston, TX
+   Walla Walla, WA
+   Tampa, FL
+  
+  
+   Documentation Retrieval Instructions:
+   -------------------------------------
+   Updated documentation describing the new functionality introduced by
+   this patch is available using the File Transfer Protocol (FTP).
+  
+   The preferred method is to FTP the files from 
+   ftp://download.vista.domain.ext/. This transmits the files from the
+   first available FTP server. Sites may also elect to retrieve software
+   directly from a specific server as follows:
+  
+    Albany         ftp.domain.ext  
+ <ftp://ftp.domain.ext>
+    Hines          ftp.domain.ext   
+ <ftp://ftp.domain.ext>
+    Salt Lake City ftp.domain.ext     
+ <ftp://ftp.domain.ext>
+  
+  
+   The documentation will be in the form of Adobe Acrobat files.
+  
+   Documentation can also be found on the VA Software Documentation 
+   Library at: http://www4.domain.ext/vdl/
+  
+   File Description                        File Name               FTP Mode
+   -------------------------------------------------------------------------
+   Release Notes/Installation Guide        prca_4_5_p302_rn_.pdf   Binary
+   
+  
+   Patch Installation: 
+  
+   Pre/Post Installation Overview
+   ------------------------------
+   The components sent with this patch PRCA*4.5*302 have been included in the 
+   HOST File BPS_IB_PRCA_HPID_BUNDLE_2_0.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch BPS*1.0*18.
+   
+   Installation Instructions
+   -------------------------
+   The components sent with this patch PRCA*4.5*302 have been included in the 
+   HOST File BPS_IB_PRCA_HPID_BUNDLE_2_0.KID. Please follow the instructions 
+   listed in the INSTALLATION INSTRUCTIONS section of the patch description 
+   for patch BPS*1.0*18.
+   
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;4.5;Accounts Receivable;**[Patch List]**;Mar 20, 1995;Build 28
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RCDPES10
+    Before: B85948119   After: B86556768  **269,302**
+Routine Name: RCDPESR9
+    Before: B71424370   After: B71991491  **173,252,269,302**
+ 
+Routine list of preceding patches: 269
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAY 01, 2014
+Completed By:                               Date Completed: JAN 15, 2015
+Released By :                               Date Released : FEB 09, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

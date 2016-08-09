@@ -1,0 +1,142 @@
+
+=============================================================================
+Run Date: AUG 28, 2015                     Designation: VIAB*1*4
+Package : VIAB - VISTA INTEGRATION ADAPTOR    Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: SEP 28, 2015
+=============================================================================
+
+
+Subject: VIA Security Enhancements - Informational
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Description:
+ ------------
+ The VIA release 1.0.11.0 was created to include enhancements related to 
+ the VIA Security Enhancements.
+  
+ This release fixes the findings from the 3/25/2015 WASA report with a 
+ critical finding for the "cprslaunch" method returning PHI/PII without 
+ authentication.  A Risk Based Decision (RBD)  567 was signed to allow 
+ VistA Integration Adapter to continue operations.  This fix allows the 
+ RBD to be closed without further extension.
+  
+ VIA Impacts:
+ 1) Adding new VIA_CONSUMING_APPLICATION database table to store the 
+    VIA consumer credentials.
+  
+ 2) Include and enable consumer credential authorization to allow 
+    access only to the applications registered in VIA.
+  
+ 3) Enhance all VIA web services to require consumer credentails. 
+    Return validation errors when the credentials are missing or invalid.
+  
+ 4) Disable http port on the F5 VIA Network configuration to force 
+    consumers to use the https transport layer only.
+  
+ 5) Decommissioned the login() and getSiteId() web services. These 
+    services were replaced by loginVIA() and getSite().
+  
+  
+ Patch Components:
+ -----------------
+ N/A
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               --------------------
+ N/A
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       --------------------
+ N/A
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+ N/A
+  
+ New Service Requests (NSRs):
+ ----------------------------
+ N/A  
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ N/A
+  
+  
+ Routine Information:
+ --------------------
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 05, 2015
+Completed By:                               Date Completed: AUG 27, 2015
+Released By :                               Date Released : AUG 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

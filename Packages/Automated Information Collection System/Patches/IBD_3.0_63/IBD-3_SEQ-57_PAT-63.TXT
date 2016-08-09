@@ -1,0 +1,417 @@
+$TXT Created by                       at DEVESS.DOMAIN.EXT  (KIDS) on Tuesday, 03/11/14 at 14:13
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: IBD*3*63
+Package : IBD - AUTOMATED INFO COLLECTION SYS Priority: Mandatory
+Version : 3        SEQ #57                      Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)IBD*3*55    <<= must be installed BEFORE `IBD*3*63'
+                    (v)IBD*3*56    <<= must be installed BEFORE `IBD*3*63'
+                    (v)LEX*2*80    <<= must be installed BEFORE `IBD*3*63'
+                    (v)ICD*18*57   <<= must be installed BEFORE `IBD*3*63'
+                    (v)IBD*3*64    <<= must be installed BEFORE `IBD*3*63'
+
+Subject: AICS ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The International Classification of Diseases, Tenth Revision (ICD-10)
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the implementation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research.
+  
+ The patch IBD*3.0*63 makes the following changes to the Automated 
+ Information Collection System (AICS) package:
+ 1. Addition of the new "Encounter Forms ICD-10 Update" report.
+ - A new menu item--Encounter Forms > Reports and Utilities > Encounter 
+ Forms ICD-10 Update--was introduced to run this report. This new report 
+ allows the user to display a list of Encounter Forms and Clinics after
+ making selections from several input options. When the report has been
+ displayed, the user may then update the ICD-10 Status field. Two new
+ routines were written for this new report: IBDFUTL4 and IBDFUTL5.
+ - Two date fields show the latest dates that the form was changed. The
+ history fields contain the user ID (DUZ) of the person who last changed 
+ the files. 
+ 2. Modification of some AICS routines to replace direct global reads and
+ old Application Program Interfaces (APIs) with new Lexicon and Global
+ Coding system APIs wherever possible. Several AICS routines were modified
+ to replace direct global reads to the ICD Diagnosis file (#80). For
+ example, a direct read to ^ICD9(IEN#,0) to find the ICD code or
+ description was replaced by a call to this API:
+ ICDDATA^ICDXCODE. These routines were changed to accommodate this: 
+ IBDFBK2, IBDFN4, IBDFN7, IBDFN8, IBDFN9, IBDFN11, IBDFN14, IBDFLST, 
+ IBDFUTL and IBDFUTL1.
+ 3.Modifications of the software to use hardcoded ICD-10 code "R69." for 
+ ICD-10 coding whenever the ICD-9 logic is using hardcoded ICD-9 code 
+ "799.9". 
+ 4. Addition of ICD-10 Code selections in Encounter Forms and Maintenance 
+ Utility Active/Inactive Report.
+ 5. Addition of Input Type ICD-10 Code Interface Package.
+ 6. Addition of Selection Type ICD-10 Code Interface Package.
+ 7. Addition of ICD-10 Code Tool Kit Block.
+ 8. Addition of ICD-10 Code text verbiage.
+ 9. Addition of ICD-10 Code wildcard search help text.
+ 10. Changes have been made to ICR# 1296 to introduce new parameters values
+ for the API GETLST^IBDF18A.
+ 11. The Replace Code option in the Maintenance Utility Report uses the 
+ approved standard Lexicon partial code search.
+ 12. Help text has been further refined to define a partial code wild card 
+ search. 
+ 13. The Problem List Package Interfaces are obsolete. Because of this, 
+ the Problem List Package Interfaces have been made Unavailable. This will
+ relieve all dependencies on Computerized Patient Record System (CPRS)
+ v29.
+ 14. If the user editing Encounter Forms has Lexicon User Filters in place 
+ those filters will be honored with the exception of editing an ICD-9 
+ block or editing an ICD-10 block within the encounter form.  When editing 
+ ICD-9 blocks the user will be allowed to choose from any ICD-9 code and 
+ when editing an ICD-10 block the user will be allowed to select any 
+ ICD-10 code, regardless of what Lexicon User Filters are in place.
+  
+  
+  Patch Components
+  ================
+  
+  Files & Fields Associated:   
+   
+  File Name (#)   Field Name (#)                  New/Modified/Deleted
+  -------------   -----------------------------   -------------------
+  
+  ENCOUNTER FORM (#357)
+   CODING SYSTEM UPDATES  (sub-file)(#357.03)     New
+                  CODING SYSTEM (#.01)            New
+                  UPDATE STATUS (#.02)            New
+                  DATE LAST EDITED (#.03)         New
+                  CHANGES MADE BY (#.04)          New
+  SELECTION (#357.3)
+                  ICD CODE EDIT DATE/TIME (#4.01) New
+                  ICD CHANGES MADE BY (#4.02)     New
+  PACKAGE INTERFACE (#357.6)
+                  ICD CODING SYSTEM (#.22)        New
+  
+   
+  Forms Associated:
+  N/A 
+  
+  Mail Groups Associated:
+  N/A
+  
+  Options Associated:  
+   
+  Option Name                   Type              New/Modified/Deleted
+  -----------                   ----              --------------------
+  IBDF REPORTS MENU             Menu              Modified
+  IBDF UTIL UPDATE ICD10 STATUS Run routine       New
+  
+  Protocols Associated:
+  
+  Protocol Name                     New/Modified/Deleted
+  -------------                     --------------------
+  IBDF ICD10 STATUS UPDATE          New
+  IBDF ICD10 STATUS UPDATE CL       New
+  IBDF ICD10 STATUS UPDATE JP       New
+  IBDF ICD10 STATUS UPDATE IS       New
+  IBDF ICD10 STATUS UPDATE PL       New
+  
+  Security Keys Associated:
+  N/A
+  
+  Templates Associated:
+   
+  Template Name                 Type              New/Modified/Deleted
+  -------------------------     -------------     --------------------
+  IBDF ICD10 STATUS REPORT      LIST TEMPLATE     New 
+  IBDF QUICK SELECTION EDIT     LIST TEMPLATE     Modified 
+  IBDF UTIL COMPLETE LIST TEMP  LIST TEMPLATE     Modified 
+  IBDF UTIL PRIMARY SCREEN      LIST TEMPLATE     Modified 
+  
+  Additional Information:
+  N/A
+  
+  New Service Requests (NSRs):
+  -----------------------------
+  NSR 20070902, ICD-10-CM Conversion
+  
+  Patient Safety Issues (PSIs):
+  ------------------------------
+  N/A  
+  
+  Remedy Ticket(s) & Overviews:
+  -----------------------------
+  Remedy Ticket #620277 Anomaly in current functionality to "replace" code 
+  using MU.
+  
+   Problem: 
+   -------
+   When a user terminates out of the Replace Code prompts with an '^' or a 
+   time out, the ICD-9 or ICD-10 code is replaced. 
+  
+   Resolution:
+   ----------
+   The Replace Code option in the Maintenance Utility Report has been 
+   modified to fix a defect in the termination logic. The original ICD-9 or
+   ICD-10 code will now be returned to the Encounter Form(s).
+  
+  
+  Test Sites:
+  -----------
+  Coatesville VA Medical Center, Coatesville, PA
+  Orlando VA Medical Center, Orlando, FL
+  Miami VA Healthcare System, Miami, FL
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at: http://www4.domain.ext/vdl/
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ File Description                  File                           
+ FTP Mode
+ ------------------------------------------------------------------------
+ ICD-10 Release Notes (IBD*3*63)   ICD-10_RN_IBD_3_63.pdf         
+ (binary)
+ Technical Manual                  aics3_0tm.pdf                 
+ (binary)
+ User Manual                       aics3_0um.pdf                  
+ (binary)
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ The post install process performs the following updates and additions:
+  a) Inactivating obsolete Problem List Package Interfaces
+  b) Adding an "ICD-10 DIAGNOSIS CODE" record to #359.1 file
+  c) Adding a "SHORT NARRATIVE (60 CHAR)" record to #359.1 file"
+  d) Adding "INPUT DIAGNOSIS CODE (ICD10)" record to #357.6 file"
+  e) Adding "DG SELECT ICD-10 DIAGNOSIS CODES" record to #357.6 file"
+  f) Adding ICD-10 blocks to both the TOOL KIT form and the DEFAULTS form.
+   The IBD*3.0*63 patch adds new ICD-10 related entries to various AICS 
+   files during its installation. It also updates some existing entries in 
+   AICS files. One of the entries that is updated by the installation 
+   process is the DEFAULTS form in File #357, which contains all standard 
+   blocks. During installation the new ICD-10 block is added to the
+   DEFAULTS form. This standard form is supposed to reside in all AICS
+   databases and should not be deleted. In case it was deleted for some
+   reason, the IBD*3.0*63 installation process checks if the DEFAULTS form
+   exists in the AICS environment. If it is not found, then a warning
+   message is printed on the screen and to the installation log, and the
+   following e-mail is sent to the person who is installing the patch or
+   to the POSTMASTER user:
+       The DEFAULTS form was not found in the environment and therefore
+     the installation process didn't add the new ICD-10 block to the
+     DEFAULTS form.
+       Please log a Remedy ticket to add the DEFAULTS form to your AICS
+     environment if you need it.
+       When you have it in the environment you can use TK menu options
+     to add the ICD-10 block to the DEFAULTS form manually.
+  g) Changing block names from "DIAGNOSIS (V2.1)" to "ICD-9 DIAGNOSIS 
+ (V2.1)"
+  h) Changing text In the INPUT DIAGNOSIS CODE (ICD9) record from 
+ "Diagnosis Code" to "ICD-9 Diagnosis code"
+  i) Setting the Coding System flag in #357, field #.22 for ICD-9 and 
+ ICD-10 Package Interfaces.
+  
+ Note: The database changes b) through i) listed above can be done only 
+ once. If the patch is installed the 2nd time then this portion of the 
+ post-install process will be skipped.
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (IBD*3.0*63):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter IBD*3.0*63.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond YES.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;AUTOMATED INFO COLLECTION SYS;**[Patch List]**;APR 24, 1997;Build 80
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBD3P63
+    Before:       n/a   After:B207259739  **63**
+Routine Name: IBD3P63A
+    Before:       n/a   After: B19965661  **63**
+Routine Name: IBDF18A
+    Before: B47580981   After: B52196782  **34,38,51,63**
+Routine Name: IBDF18A2
+    Before:  B5894591   After:  B9535002  **51,55,63**
+Routine Name: IBDF3
+    Before: B26445717   After: B32292279  **15,63**
+Routine Name: IBDF4
+    Before: B73953175   After: B99102539  **19,38,56,63**
+Routine Name: IBDF4A
+    Before: B40998233   After: B45844893  **38,63**
+Routine Name: IBDF5
+    Before: B17073479   After: B22015459  **63**
+Routine Name: IBDF5B
+    Before: B17974851   After: B36424692  **63**
+Routine Name: IBDF5C
+    Before:  B8857181   After: B13407929  **63**
+Routine Name: IBDF5D
+    Before:  B6700922   After:  B9905178  **63**
+Routine Name: IBDF6A
+    Before: B15897163   After: B20397072  **63**
+Routine Name: IBDF7
+    Before:  B5091202   After:  B8201139  **63**
+Routine Name: IBDF9A1
+    Before: B20396325   After: B20739240  **63**
+Routine Name: IBDFDE1
+    Before: B55163756   After: B57533893  **38,36,63**
+Routine Name: IBDFDE2
+    Before: B50073672   After: B50446438  **4,63**
+Routine Name: IBDFDE21
+    Before: B84112928   After: B92448772  **4,38,23,63**
+Routine Name: IBDFDE41
+    Before: B15981896   After: B17484519  **63**
+Routine Name: IBDFLST
+    Before: B28703563   After: B47525530  **9,38,51,63**
+Routine Name: IBDFLST1
+    Before:  B2836396   After:  B2883654  **63**
+Routine Name: IBDFN12
+    Before:  B9858869   After: B12645888  **12,38,40,51,63**
+Routine Name: IBDFN14
+    Before:  B8732971   After: B13316681  **12,38,51,63**
+Routine Name: IBDFN4
+    Before: B13325324   After:B227563778  **38,51,64,63**
+Routine Name: IBDFN4A
+    Before:       n/a   After: B16711898  **63**
+Routine Name: IBDFN7
+    Before:  B4134968   After:  B8761450  **38,51,64,63**
+Routine Name: IBDFN8
+    Before:   B889456   After:  B1969782  **25,38,51,63**
+Routine Name: IBDFN9
+    Before:   B876630   After:  B1176196  **38,36,51,63**
+Routine Name: IBDFQEA
+    Before: B31331634   After: B39066741  **15,38,63**
+Routine Name: IBDFQSL
+    Before:  B5375184   After:  B6204351  **63**
+Routine Name: IBDFQSL1
+    Before: B16849153   After: B19411131  **63**
+Routine Name: IBDFU1B
+    Before: B23536814   After: B25321593  **63**
+Routine Name: IBDFU2
+    Before: B27823065   After: B28385446  **15,63**
+Routine Name: IBDFU3
+    Before: B20119293   After: B22140976  **63**
+Routine Name: IBDFUTL
+    Before: B30782217   After:B144569260  **9,32,51,63**
+Routine Name: IBDFUTL1
+    Before: B52493604   After: B54382869  **32,23,51,63**
+Routine Name: IBDFUTL2
+    Before: B23965933   After: B28328999  **9,63**
+Routine Name: IBDFUTL3
+    Before:  B4956030   After:  B9491211  **63**
+Routine Name: IBDFUTL4
+    Before:       n/a   After:B156393751  **63**
+Routine Name: IBDFUTL5
+    Before:       n/a   After: B45996359  **63**
+Routine Name: IBDLXDG
+    Before:       n/a   After:B102250951  **63**
+Routine Name: IBDLXDG2
+    Before:       n/a   After: B41791567  **63**
+Routine Name: IBDUTICD
+    Before:       n/a   After: B26868434  **63**
+Routine Name: IBDUTIL1
+    Before:       n/a   After: B32332726  **63**
+Routine Name: IBDVAUT1
+    Before:       n/a   After:  B9357477  **63**
+ 
+Routine list of preceding patches: 55, 56, 64
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 20, 2011
+Completed By:                               Date Completed: JUN 17, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,208 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Tuesday, 10/27/15 at 12:05
+=============================================================================
+Run Date: FEB 23, 2016                     Designation: SD*5.3*639
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #529                    Status: Released
+                  Compliance Date: MAR 25, 2016
+=============================================================================
+
+Associated patches: (v)SD*5.3*634  <<= must be installed BEFORE `SD*5.3*639'
+
+Subject: DISABLE PAIT HL7 TRANSMISSION
+
+Category: 
+  - Routine
+  - Informational
+
+Description:
+============
+
+ This patch will disable the Patient Appointment Information Transmission 
+ (PAIT) Health Level Seven (HL7) transmission from each VistA site to the
+ VHA Support Service Center (VSSC) at the Austin Information Technology
+ Center (AITC) in Austin, Texas.
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. INC000001282848   Scheduling - Patient Appt Information Transmission:
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ VA North Florida / South Georgia VA Health Care System( Lake City VAMC) 
+ Cincinnati VA Medical Center
+ Huntington VA Medical Center
+  
+ Remedy Overview:
+ ================
+ INC000001282848  Scheduling - Patient Appt Information Transmission:
+   
+ Problem:
+ --------
+ Since the VHA Support Service Center (VSSC) no longer uses the patient 
+ appointment scheduling data that is generated and transmitted by the 
+ Patient Appointment Information Transmission (PAIT) software, VistA sites 
+ need to stop the bimonthly appointment data that is wrapped in HL7 batch 
+ messages and transmitted to the Austin Information Technology Center 
+ (AITC).
+  
+ Resolution:
+ -----------
+ The patch will disable the PAIT HL7 transmission from each VistA 
+ site to the VSSC at AITC in Austin, Texas. The following will resolve 
+ this issue:
+  
+    1. Disable SD-PAIT Logical Link.
+    2. Remove Taskman PAIT Transmission [SD-PAIT TASKED TRANSMISSION]
+       task job.
+    3. Place the following HL7 SD-PAIT menu options Out-of-Order:
+       - SD-PAIT MANUAL BATCH REJECT
+       - SD-PAIT MANUAL TRANSMISSION
+       - SD-PAIT TASKED TRANSMISSION
+       - SD-PAIT REPAIR
+    4. Make the following SD-PAIT related HL7 Application Parameters
+       inactive.
+       - SD-AAC-PAIT
+       - SD-SITE-PAIT
+  
+ Technical:
+ ==========
+ A post-installation routine SDRPSTOP has been created to insure the 
+ SD-PAIT logical link, nightly scheduled background job, PAIT related 
+ menu options, and parameters get disabled.
+  
+ To prevent routines linked to the disabled menu options from running,
+ QUIT commands have been added to the entry point of the routines
+ SDRPA00, SDRPA04, and SDRPA09.
+  
+  
+ Software and Documentation Distribution:
+ ========================================
+ Sites may retrieve the documentation directly via SFTP. The preferred 
+ method is to SFTP the files from:
+  
+        download.vista.domain.ext
+  
+ This transmits the files from the first available SFTP server.  
+  
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+ Albany:          sftp.domain.ext
+ Hines:           sftp.domain.ext
+ Salt Lake City:  sftp.domain.ext
+  
+ Filename                      Description             
+ ========                      ===========             
+ pait_technical_manual.pdf     PAIT Technical Manual   
+ pait_user_manual.pdf          PAIT User Manual          
+  
+ NOTE: These files must be transferred using the binary (BIN) file 
+       transfer mode. 
+  
+ The complete and updated User and Technical Manuals will be posted to the 
+ VDL immediately after the release of the patch.
+  
+  
+ Installation Instructions:
+ ==========================
+ Please install this patch when the PAIT nightly background job, Tasked
+ PAIT Transmission [SD-PAIT TASKED TRANSMISSION] is not scheduled to run.
+ VistA users will not be affected.
+  
+ Install Time - less than 3 minutes.
+  
+ Note: After the patch is installed, delete the routine SDRPSTOP by using
+       Delete Routine [XTRDEL] option.
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Startup KIDS 
+     ------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+     Select Installation Option: 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+   (When prompted for the INSTALL NAME, enter SD*5.3*639)
+       
+     a.  Verify Checksums in Transport Global - This option allows
+         you to ensure the integrity of the routines that are in the
+         transport global.
+     b.  Print Transport Global - This option allows you to view
+         the components of the KIDS build.
+     c.  Compare Transport Global to Current System - This option 
+         allows you to view all changes that are made when this 
+         patch is installed.  It compares all components of this patch
+         routines, DD's, templates, etc.).
+     d.  Backup a Transport Global - This option creates a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+    
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch:
+  
+     a.  Choose the Install Package(s) option to start the patch install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//', answer NO.
+  
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu options,
+         and Protocols? NO//', answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13,1993;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRPA00
+    Before: B83224590   After: B92057935  **290,333,349,376,491,639**
+Routine Name: SDRPA04
+    Before: B41686935   After: B43965670  **376,491,634,639**
+Routine Name: SDRPA09
+    Before:  B6442115   After:  B7507225  **333,639**
+Routine Name: SDRPSTOP
+    Before:       n/a   After: B10384441  **639**
+ 
+Routine list of preceding patches: 634
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 16, 2015
+Completed By:                               Date Completed: FEB 17, 2016
+Released By :                               Date Released : FEB 23, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

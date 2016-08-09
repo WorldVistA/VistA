@@ -1,0 +1,465 @@
+$TXT Created by                 at DEVVVV.DOMAIN.EXT  (KIDS) on Tuesday, 02/17/15 at 19:41
+=============================================================================
+Run Date: JUN 22, 2015                     Designation: SD*5.3*622
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #522                    Status: Released
+                  Compliance Date: JUL 23, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*327  <<= must be installed BEFORE `SD*5.3*622'
+                    (v)SD*5.3*354  <<= must be installed BEFORE `SD*5.3*622'
+                    (v)SD*5.3*555  <<= must be installed BEFORE `SD*5.3*622'
+                    (v)SD*5.3*568  <<= must be installed BEFORE `SD*5.3*622'
+                    (v)SD*5.3*621  <<= must be installed BEFORE `SD*5.3*622'
+
+Subject: VISTA SCHEDULING ENHANCEMENTS - ENHANCEMENT 4
+
+Category: 
+  - Data Dictionary
+  - Input Template
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ The Veterans Health Administration (VHA) Access and Clinic Administrative 
+ Program (ACAP) has requested an enterprise enhancement for the 
+ VistA Scheduling Package. The enhancement will reduce operating cost for
+ VHA and improve operational efficiencies resulting in patient centered
+ access to care, coordinated care, increased customer satisfaction, and 
+ the reduction of excessive cycle/wait time used for scheduling patients.
+  
+ This patch introduces the following changes for the Scheduling Package:
+  
+ 1. A clinic inactivation mail message that is sent to the new
+ mail group SD CLINIC INACTIVATE REMINDER on the date that the clinic 
+ is to go inactive.
+   
+ 2. The ability to print the default provider and clinic location on a 
+ scheduling letter sent or given to the patient.
+  
+ 3. The ability to print the clinic telephone number and telephone 
+ extension number on a scheduling letter sent or given to the patient. 
+  
+ 4. Display of the current date to the clerk creating a patient 
+ appointment for the next available date of a clinic.
+  
+ 5. The ability to print the pre-appointment letter for a patient 
+ immediately after creation of the appointment.
+  
+ 6. Display the desired date after creation of a series of multiple 
+ appointments.
+  
+  
+ Other Patch Components
+ ======================
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)              New/Modified/Deleted
+ -------------          --------------              --------------------
+ HOSPITAL LOCATION      TELEPHONE EXTENSION         New
+ (#44)                  (#99.1)
+ LETTER (#407.5)        PRINT DEFAULT PROVIDER?     New
+                        (#4)
+                        PRINT CLINIC LOCATION?      New 
+                        (#5)
+  
+ Forms Associated:
+  
+ Form Name              File #                      New/Modified/Deleted
+ ---------              ------                      --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                    New/Modified/Deleted
+ ---------------                                    --------------------
+ SD CLINIC INACTIVATE REMINDER                      New
+  
+ Options Associated:
+  
+ Option Name            Type                        New/Modified/Deleted
+ -----------            ----                        --------------------
+ N/A                                               
+  
+ Protocols Associated:
+  
+ Protocol Name                                      New/Modified/Deleted
+ -------------                                      --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Remote Procedures Associated:
+  
+ RPC Name                                           New/Modified/Deleted
+ -------------                                      --------------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name    Type       File Name (#)          New/Modified/Deleted
+ -------------    ----       ------------           --------------------
+ SDB              INPUT      HOSPITAL LOCATION      Modified (to include
+                             (#44)                  Telephone Extension
+                                                    logic)
+                                                  
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+  
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Asheville
+ Chillicothe VAMC
+ Cleveland VAMC
+ Hudson Valley
+ Mountain Home
+ North Chicago
+ Salt Lake City
+ Southern Arizona (Tucson)
+ VA New York Harbor Healthcare System
+ Washington DC
+ West Palm Beach
+  
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ The documentation will be in the form of Microsoft Word files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+ File Description                    File Name                   FTP Mode
+ --------------------------------------------------------------------------
+ Scheduling Appointment Menu         appt.doc                    (binary)
+ User Manual
+ Scheduling Supervisor Menu          supv.doc                    (binary)
+ User Manual
+ Scheduling Technical Manual         pimstm.doc                  (binary)
+ SD*5.3*622 Release Notes            vse_enh4_rn_sd_5_3_622.doc  (binary) 
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch exports the routine SD53622P which is used during 
+ post-installation for the creation of the new mail group SD CLINIC 
+ INACTIVATE REMINDER. The POSTMASTER is added as the first member of the
+ group when the patch is installed. The site must add new members from the
+ Scheduling package but there is no need repeat this step after future  
+ re-installation of the patch unless new members are added. If the patch
+ needs to be reinstalled later on for any reason, the routine SD53622P
+ checks to make sure that the group exists and avoids creating it again.
+ The post-installation routine will be deleted automatically upon
+ installation of the patch.
+  
+  
+ KNOWN ISSUES:
+ =============
+  
+ Issue #1
+  
+ Sites completing the installation of patch SD*5.3*622 will notice a 
+ non-incremental lock error when executing XINDEX on the routine SDMM1.
+ The error was not caused by this patch. It is a pre-existing issue 
+ introduced prior to this patch.  
+ Remedy Ticket # INC000001243756 was logged and referred to the maintenance
+ development team requesting remediation of the SAC violation.
+  
+ Therefore, the following error should be ignored for this patch 
+ installation:
+  
+ SDMM1    * *  73 Lines,  3706 Bytes, Checksum: B15878644
+ S1       L ^SC(SC,"S",X,1):5 G:'$T S1 F Y=1:1 I '$D(^SC(SC,"S",X,1,Y)) 
+ S:'$D(^(0
+           )) ^(0)="^44.003PA^^" S 
+ ^(Y,0)=DFN_U_(+SL)_U_U_D_U_U_$S($D(DUZ):DUZ,1:
+           "")_U_DT_U_U_U_$S(+SDEMP:+SDEMP,1:"") S SDY=Y L  Q
+    S1           S - Non-Incremental Lock.
+  
+ --- END ---
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 5 minutes
+ to install.  
+  
+ If installed during the normal workday, it is recommended that the
+ following entry in the OPTION file (#19) be disabled to prevent possible
+ conflicts while running the KIDS Install. Other VistA users will not be
+ affected.
+  
+       Scheduling Manager's Menu        [SDMGR]
+       Supervisor Menu                  [SDSUP]
+       Scheduling Menu                  [SDUSER]
+       Set up a Clinic                  [SDBUILD]
+  
+  
+ Installation Instructions
+ -------------------------
+ Install Time - less than 5 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (SD*5.3*622):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter SD*5.3*622.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES
+   
+     a) When prompted 'Enter options you wish to mark as "Out of Order":', 
+        enter the following:
+  
+       Scheduling Manager's Menu        [SDMGR]
+       Supervisor Menu                  [SDSUP]
+       Scheduling Menu                  [SDUSER]
+       Set up a Clinic                  [SDBUILD]
+  
+     b) When prompted 'Enter protocols you wish to mark as "Out of
+        Order":', just press ENTER.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ Post-Installation Instructions
+ ------------------------------
+ Proceed to populate the mail group SD CLINIC INACTIVATE REMINDER with
+ the Scheduling users that require notification of clinic inactivation.
+  
+ ================================================ 
+  
+ Example of patch installation in VistA
+  
+ DEVISC1A4:DEVMSD>D ^XUP
+  
+ Setting up programmer environment
+ This is a TEST account.
+  
+ Terminal Type set to: C-VT320
+  
+ Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution 
+ System
+  
+  
+           Edits and Distribution ...
+           Utilities ...
+           Installation ...
+           Patch Monitor Main Menu ...
+  
+ Select Kernel Installation & Distribution System Option: INStallation
+  
+  
+    1      Load a Distribution
+    2      Verify Checksums in Transport Global
+    3      Print Transport Global
+    4      Compare Transport Global to Current System
+    5      Backup a Transport Global
+    6      Install Package(s)
+           Restart Install of Package(s)
+           Unload a Distribution
+  
+ Select Installation Option: 6  Install Package(s)
+ Select INSTALL NAME: SD*5.3*622    Loaded from Distribution   
+ 11/4/14@16:57:35
+      => SD*5.3*622 TEST v1
+  
+ This Distribution was loaded on Nov 04, 2014@16:57:35 with header of 
+    SD*5.3*622 TEST v1
+    It consisted of the following Install(s):
+      SD*5.3*622
+ Checking Install for Package SD*5.3*622
+  
+ Install Questions for SD*5.3*622
+  
+ Incoming Files:
+  
+  
+    44        HOSPITAL LOCATION  (Partial Definition)
+ Note:  You already have the 'HOSPITAL LOCATION' File.
+  
+  
+    407.5     LETTER  (Partial Definition)
+ Note:  You already have the 'LETTER' File.
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO// 
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO// YES
+  
+ Enter options you wish to mark as 'Out Of Order': SDMGR   Scheduling 
+ Manager's Menu
+  
+ Enter options you wish to mark as 'Out Of Order': SDSUP   Supervisor Menu
+  
+ Enter options you wish to mark as 'Out Of Order': SDUSER   Scheduling Menu
+  
+ Enter options you wish to mark as 'Out Of Order': SDBUILD  Set up a Clinic
+  
+ Enter options you wish to mark as 'Out Of Order': 
+  
+ Enter protocols you wish to mark as 'Out Of Order': 
+  
+ Delay Install (Minutes):  (0-60): 0// 
+  
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+ DEVICE: HOME// ;80;999  UCX/TELNET
+ --------------------------------------------------------------------------
+  
+  Install Started for SD*5.3*622 : 
+                Nov 04, 2014@16:58:51
+  
+ Build Distribution Date: Nov 04, 2014
+  
+  Installing Routines:
+                Nov 04, 2014@16:58:51
+  
+  Installing Data Dictionaries: 
+                Nov 04, 2014@16:58:51
+  
+  Installing PACKAGE COMPONENTS: 
+  
+  Installing INPUT TEMPLATE
+                Nov 04, 2014@16:58:52
+  
+  Running Post-Install Routine: POST^SD53622P
+  
+ The mail group SD CLINIC INACTIVATE REMINDER needs to be created. Please 
+ wait...
+  
+   ******************************
+   Mail group SD CLINIC INACTIVATE REMINDER created.
+   After the patch installation, please add other members from Scheduling.
+   ******************************
+  
+  Updating Routine file...
+  
+  The following Routines were created during this install:
+      SDBT
+      SDBT1
+      SDBT2
+      SDBT3
+      SDBT4
+      SDBT5
+      SDBT6
+  
+  Updating KIDS files...
+  
+  SD*5.3*622 Installed. 
+                Nov 04, 2014@16:58:52
+  
+ Not a production UCI
+                                    SD*5.3*622
+  
+ Install completed
+  
+ ========================================= 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 30
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53622P
+    Before:       n/a   After:  B6649230  **622**
+Routine Name: SDCP
+    Before: B21063819   After: B22827962  **140,171,187,354,622**
+Routine Name: SDLT
+    Before: B17520984   After: B28750556  **185,213,281,330,398,523,441,
+                                           555,622**
+Routine Name: SDLTE
+    Before:  B2395827   After:  B2437046  **622**
+Routine Name: SDM0
+    Before: B90223264   After: B92285197  **140,167,206,186,223,237,241,
+                                           384,334,547,621,622**
+Routine Name: SDM1A
+    Before: B59582269   After: B78000980  **26,94,155,206,168,223,241,
+                                           263,327,478,446,544,621,622**
+Routine Name: SDMM1
+    Before: B15400257   After: B15878644  **28,206,168,327,622**
+Routine Name: SDNACT
+    Before: B20033650   After: B29097285  **63,380,549,568,622**
+ 
+Routine list of preceding patches: 354, 555, 568, 621
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 27, 2014
+Completed By:                               Date Completed: APR 20, 2015
+Released By :                               Date Released : JUN 22, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

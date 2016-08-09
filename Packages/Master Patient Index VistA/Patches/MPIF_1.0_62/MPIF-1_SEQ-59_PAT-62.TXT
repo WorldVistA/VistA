@@ -1,0 +1,262 @@
+$TXT Created by                  DEVCRN.DOMAIN.EXT  (KIDS) on Monday, 02/01/16 at 11:24
+=============================================================================
+Run Date: JUN 06, 2016                     Designation: MPIF*1*62
+Package : MPIF - MASTER PATIENT INDEX VISTA   Priority: Mandatory
+Version : 1        SEQ #59                      Status: Released
+                  Compliance Date: JUL 07, 2016
+=============================================================================
+
+Associated patches: (v)MPIF*1*20   <<= must be installed BEFORE `MPIF*1*62'
+                    (v)MPIF*1*61   <<= must be installed BEFORE `MPIF*1*62'
+
+Subject: MASTER VETERAN INDEX VISTA ENHANCEMENTS - ITERATION 15
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ *************************************************************************
+ * This patch may be installed with users on the system, however we      *
+ * strongly advise it be installed after business hours.                 *
+ ************************************************************************* 
+  
+ NOTE: To prevent legacy systems ending up as Treating Facilities,
+       RG* and MPIF* patches should NOT be installed on legacy 
+       systems.
+  
+ MPIF*1.0*20 and MPIF*1.0*61 are required builds for patch MPIF*1.0*62.
+  
+ NOTE: Master Patient Index (MPI) enhancements are being distributed in
+       three VistA namespaces: DG, RG and MPIF.
+       The enhancements related to this patch are only being distributed in
+       the DG and MPIF VistA namespaces. MPIF*1.0*62 should be installed
+       before DG*5.3*919 for non-legacy sites, as the new Swipe/Scan 
+       functionality being exported in these patches will not work without 
+       MPIF*1.0*62. (Do NOT install MPIF*1.0*62 on legacy sites.)
+       Therefore it is recommended that these patches be installed in the
+       following order on non-legacy sites: 
+              MPIF*1.0*62 and then DG*5.3*919.
+  
+       DG*5.3*919 should be installed immediately after installing
+       MPIF*1.0*62. 
+  
+ Enhancement
+ This enhancement patch provides support for patch DG*5.3*919. It updates
+ routines MPIFRPC and MPIFAPI to provide backend support and also an 
+ application programmer interface (API) to the REGISTRATION (DG) package
+ that will allow Veteran Health Information Card (VHIC) and the Department
+ of Defense's (DoD) Common Access Card (CAC) swipe and scan information to
+ be temporarily stored on the local Veterans Health Information System and Technology Architecture (VistA) system, until retrieved from the central
+ Master Patient Index (MPI) system.
+  
+ To allow the MPI system to retrieve the locally stored VHIC/CAC data from
+ the ^XTMP("MPIFCARD") global location during its nightly background
+ processing, a new remote procedure call (RPC) MPIF GET VHIC/CAC CARD DATA
+ was created. In addition, upon successful retrieval, MPI will then purge
+ all of the retrieved VHIC/CAC information from the local VistA system
+ using the RPC MPIF PURGE VHIC/CAC CARD DATA.
+     
+ Issue
+ In addition, it was noted by development that after the release of patch
+ MPIF*1.0*61 the patient's middle name was not being displayed in the
+ results list when the REGISTER A PATIENT [DG REGISTER PATIENT] menu
+ option was executed. So routine MPIFVER was updated to also display the
+ patient's middle name which will give users the ability to more 
+ accurately select the correct patient and if needed view the most
+ appropriate extended search data to verify the correct patient is being
+ selected when registering through this menu option.
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)  New/Modified/Deleted
+ ------------------         -------------------  --------------------
+ N/A  
+  
+ Forms Associated:
+  
+ Form Name             File #       New/Modified/Deleted
+ ---------             ------       --------------------
+ N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A
+  
+  
+ Remote Procedures Associated:
+  
+ Remote Procedure Name
+ ---------------------
+ MPIF GET VHIC/CAC CARD DATA
+ MPIF PURGE VHIC/CAC CARD DATA
+  
+    
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ N/A
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ C.W. Bill Young (Bay Pines) VAMC
+ Robley Rex (Louisville) VAMC
+ VA Connecticut HCS
+  
+  
+ Patch Installation:
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ There are no Pre/Post installation routine processes.    
+   
+   
+ Pre-Installation Instructions
+ ----------------------------- 
+ This patch takes less than 2 minutes to install. This patch may be 
+ installed with users on the system, however we strongly advise that it be
+ installed after business hours. 
+  
+ The following OPTIONs should be disabled during installation:
+      Load/Edit Patient Data                      [DG LOAD PATIENT DATA]
+      Register a Patient                          [DG REGISTER PATIENT]
+      Preregister a Patient                       [DGPRE PRE-REGISTER OPTION]
+      Electronic 10-10EZ Processing               [EAS EZ 1010EZ PROCESSING] 
+      Local/Missing ICN Resolution Background Job [MPIF LOC/MIS ICN RES]
+  
+ The HL7 incoming filers should be stopped.  Use the Monitor, Start, Stop
+ Filers [HL FILER MONITOR] option on the Filer and Link Management Options
+ [HL MENU FILER LINK MGT] menu on the HL7 Main Menu [HL MAIN MENU].
+   
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following options. When prompted for the INSTALL enter the patch
+     number (i.e. MPIF*1.0*62):
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond as per your facility's policy.  If you
+     choose to answer YES, then at the end of the patch installation,
+     KIDS will rebuild the menus which may take several hours and could
+     disrupt Computerized Patient Record System (CPRS) users.  If your
+     facility has the XQBUILDTREEQUE nightly batch job tasked to run, 
+     answer NO to this question. The nightly job will rebuild the menus
+     as scheduled.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO// respond YES.
+  
+ 8.  If prompted "Delay Install (Minutes):  (0 - 60): 0// respond 0.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ After patch installation has completed, restart the HL7 incoming filers.
+ Use the Monitor, Start, Stop Filers [HL FILER MONITOR] option on the Filer
+ and Link Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+ Menu [HL MAIN MENU].
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.0;MASTER PATIENT INDEX VISTA;**[Patch List]**;30 Apr 99;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: MPIFAPI
+    Before: B56281714   After: B64879127  **1,3,14,16,17,21,27,28,33,35,
+                                           37,43,45,44,46,48,55,56,60,61,
+                                           62**
+Routine Name: MPIFRPC
+    Before: B35812148   After: B42212497  **20,62**
+Routine Name: MPIFVER
+    Before: B52880836   After: B53549265  **61,62**
+ 
+Routine list of preceding patches: 20, 61
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 29, 2015
+Completed By:                               Date Completed: JUN 06, 2016
+Released By :                               Date Released : JUN 06, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

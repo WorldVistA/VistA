@@ -1,0 +1,368 @@
+Printing issues With Clinical Display
+=============================================================================
+Run Date: DEC 11, 2014                     Designation: MAG*3*149
+Package : MAG - IMAGING                       Priority: Mandatory
+Version : 3       SEQ #107                      Status: Released
+                  Compliance Date: JAN 11, 2015
+=============================================================================
+
+
+Subject: CLINICAL DISPLAY PRINTING ISSUES
+
+Category: 
+  - Other
+  - Routine
+
+Description:
+============
+
+ This patch will address the issues dealing with the Quality of Printing
+ PDF, and DICOM Encapsulated PDF images from the Clinical Display Client.
+  
+ When Patch 131 was installed some of the printed PDF images are now
+ blurry, distorted when printed. Most of these same images print fine when
+ printed with Clinical Display Client 122.
+  
+ Also the renaming of menu items concerning 'Controlled Images' for easier
+ understanding by user.
+  
+ Distribution of Software
+ ========================
+ To obtain MAG*3.0*149 files, use File Transfer Protocol (FTP) to retrieve 
+ MAG3_0P149.KID and other files from one of the following OI Field 
+ Offices' ANONYMOUS.SOFTWARE directories:
+  
+ OI Field Office    FTP Address                  Directory
+ ---------------    -----------                  -------------
+ Albany             ftp.domain.ext     
+ Hines              ftp.domain.ext      
+ Salt Lake City     ftp.domain.ext        
+  
+ File Name                                  Description
+ ---------------                            ----------------
+ MAG3_0P149.KID                              KIDS build for patch 
+                                              MAG*3.0*149
+ MAG3_0P149_Clinical_Display_Install.msi     Client application
+                                              installation file
+ MAG3_0P149_Clinical_Display_Setup.exe       Client application setup file
+  
+ Test Sites
+ ==========
+ The following sites are test sites for this patch:
+  
+ 1.
+ 2.
+ 3.
+  
+ Remedy Calls
+ ============
+ The following Remedy help desk calls are addressed in this patch:
+         425942 Change naming of Menu Items
+         936306 Printing DICOM PDF produces fuzzy image
+         952588 Quality Problems printing PDFs
+         960776 Inconsistent blurred printouts
+         968470 Quality Printing Issue.
+         987145 Print Optometry ,the characters become unreadable
+         996221 Display gets blurry after trying to print ophthalmology
+  
+ MAG*3.0*149 Changes
+ =================== 
+ Menu Option Summary
+  
+ Contained within the Clinical Display application, there are menu options 
+ on the Image List window that give the user the ability to change the 
+ 'Controlled' status of an Image. Controlled Images are images that may be 
+ of a sensitive nature. Controlled images open the same as other images. 
+ The difference is that the image list entry for controlled images has a 
+ warning icon and the abstract (thumbnail) for the image has a warning 
+ symbol rather than a small representation of the Image.
+  
+ Issue Summary
+  
+ Some users are confused by the current wording of the menu items and feel 
+ the wording is not intuitive. 
+  
+ Solution
+  
+ The 'True' and 'False' words are taken out of the menu options and 
+ replaced with the descriptive text associated with the Controlled status. 
+ The wording of the menu options will be changed.
+ From :
+ => False (Normal Display)
+ => True (Controlled Display) 
+  
+ To:
+ Not Controlled (Normal Display)
+ Controlled Display 
+  
+ Print function Summary
+  
+ In Clinical Display, images had always been printed the same way 
+ ('referred to as Normal') until MAG*3.0*131. In MAG*3.0*131, PDF images 
+ were rasterized before printing. Rasterization is used to convert vector 
+ graphics that are part of an image to a bitmap representation of the 
+ graphic. This is necessary in situations where annotations are being 
+ printed with the image. 
+  
+ Issue summary
+  
+ Users have reported that some PDF images are fuzzy, blurry or granular 
+ when printed. Also, the image being displayed in Clinical Display becomes 
+ blurry after printing.
+  
+ Issue details
+  
+ MAG*3.0*131 modified the Print Function of VistA Imaging Display. The 
+ change was to rasterize all Adobe PDF documents before printing. The 
+ displayed image is rasterized and redisplayed and the newly displayed 
+ image is the source of the printed image.
+  
+ In some Adobe PDF documents that have graphic data, the rasterization of 
+ the graphic causes the image to be granulated (fuzzy). The fuzziness is 
+ apparent on both the displayed image and the printed image.
+  
+ Sites report that the same images printed okay in the previous clinical 
+ display client, MAG*3.0*122. 
+  
+ Solution
+  
+ The solution is two parts. 
+  
+ First, change the print function back to the design of MAG*3.0*122. This 
+ will print all images normal as they were printed in MAG*3.0*122.
+  
+ Second, introduce a Print Options window. This window will give users the 
+ ability to view the image in normal mode and converted to Bitmap. The 
+ user can view the image in both modes and select the best mode for 
+ printing. 
+  
+ VistA Imaging Display Client changes (VI Display)
+  
+ In the Imaging Display Client, the print function will be changed back to 
+ the design of MAG*3.0*122. When the print option is selected, images will 
+ be printed normal.
+  
+ A new menu option will be available on the 'File' menu of the Image List, 
+ Full Resolution and Radiology Viewer windows. The new option will be 
+ directly under the 'Image Print' Option. 
+  
+ Supported Client Versions
+ =========================
+ When MAG*3.0*149 is released, the list of supported versions of Clinical 
+ Display will change to: 
+  
+ Supported Version               No Longer Supported
+ =================               ===================
+ MAG*3.0*149                     MAG*3.0*117
+ MAG*3.0*131                     MAG*3.0*106
+ MAG*3.0*122                     MAG*3.0*94
+  
+ NSRs
+ ====
+ There are no new service requests addressed in this patch.
+  
+ Patient Safety Issues
+ =====================
+ There are no patient safety issues associated with this patch.
+  
+ Data Dictionary
+ ===============
+ This patch does not modify any files or fields. 
+  
+ Mail Groups
+ ===========
+ This patch contains no new or modified mail groups.
+  
+ Forms
+ =====
+ This patch contains no new or modified forms.
+  
+ Security Keys
+ =============
+ This patch contains no new or modified security keys.
+  
+ Remote Procedures
+ =================
+ This patch contains no new remote procedure calls.
+  
+ Menu Options
+ ============
+ This patch contains no new menu options.
+  
+ Protocols
+ =========
+ This patch contains no new or modified protocols.
+  
+ Templates
+ =========
+ This patch contains no new or modified templates.
+  
+ Installation Planning
+ =====================
+ This patch is to be installed on the VistA System and on the client 
+ workstations.  This patch must be installed by the compliance date to 
+ conform with the VHA Directive 2001-023.
+  
+ This patch may be loaded while VistA Imaging System is active. 
+ Installation for the KIDS will take less than one minute. Installation on 
+ the client workstation will take less than one minute.
+  
+ Installation Prerequisites
+ ==========================
+ Before installing this patch, you will need to download the MAG*3.0*149 
+ files from one of the OI Field Offices FTP servers.
+  
+ VistA System (KIDS) Installation 
+ ================================
+ Installation Steps
+  
+ 1. Access the Kernel Installation and Distribution System Menu [XPD MAIN].
+ 2. Run the Installation option [XPD INSTALLATION MENU].
+ 3. Load the KIDS file by performing the following steps:
+    a. Run the Load a Distribution [XPD LOAD DISTRIBUTION] option to load
+       the KIDS distribution.
+    b. When prompted, enter the path and file name (MAG3_0P149.KID) of the
+       MAG*3.0*149 KIDS file that you downloaded.
+    c. When prompted to continue with the load, enter YES. A 
+       Distribution OK! Message will be displayed when the load is
+       complete.
+ 4. After loading the KIDS file, use the following options to verify the
+    contents of the patch.
+    a. Verify Checksums in Transport Global [XPD PRINT CHECKSUM] - Run 
+       this option if you want to ensure the integrity of the routines in
+       the patch.
+    b. Compare Transport Global to Current System [XPD COMPARE TO SYSTEM] -
+       Run this option if you want to view all changes that will be made
+       when the patch is installed. All components (routines, options, and 
+       so on) in the patch will be compared.
+    c. Back up a Transport Global [XPD BACKUP] - Run this option if you 
+       want to create a backup message of any routines exported with the
+       patch. The option will NOT back up any of the other changes.
+ 5. After performing the load and any optional verification steps, install
+    the KIDS file by performing the following steps:
+    a. Run the Install Package(s) [XPD INSTALL BUILD] option.
+    b. When prompted for the install name, enter MAG*3.0*149.
+    c. Answer NO to the following prompts, if they appear:
+  
+ Want KIDS to INHIBIT LOGONs during the install? No//NO
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? No/NO
+ Want KIDS to Rebuild Menu Trees Upon completion of Install? No//NO
+  
+ 6. When the installation has finished, an Install Completed message will
+    be displayed.
+  
+ KIDS Installation Example
+ =========================
+ This example shows the output when the KIDS file is installed for the 
+ first time. If you have already installed the patch and are installing 
+ the KIDS file in a namespace on which it has previously been installed, 
+ your output may be different.
+  
+ Select INSTALL NAME:  MAG*3.0*149  5/23/14@11:35:48
+    => VistA Imaging V3 - Patch 149 - Print issues ;Created on May 23, 
+ 2014@
+  
+ This Distribution was loaded on May 23, 2014@11:35:48 with header of
+   VistA Imaging V3 - Patch 149 - Print issues ;Created on May 23, 
+ 2014@10:44:0
+ 6
+   It consisted of the following Install(s):
+   MAG*3.0*149
+ Checking Install for Package MAG*3.0*149
+  
+ Install Questions for MAG*3.0*149
+  
+  
+  
+ Want KIDS to INHIBIT LOGONs during the install? NO//
+ Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ Enter the Device you want to print the Install messages.
+ You can queue the install by enter a 'Q' at the device prompt.
+ Enter a '^' to abort the install.
+  
+  
+         May 23, 2014@11:35:56
+  
+  Running Pre-Install Routine: PRE^MAGIP149
+  
+  Running Post-Install Routine: POS^MAGIP149
+  
+ Post Install Mail Message: May 23, 2014@11:35:56
+  
+  Updating Routine file...
+  
+  Updating KIDS files...
+  
+  MAG*3.0*149 Installed.
+         May 23, 2014@11:35:56
+  
+  Install Message sent
+  
+ Complete
+  
+ Install Completed 
+  
+  
+ VI Clinical Display Installation
+ ================================
+ The Clinical Imaging Display client software can be updated using one of 
+ the methods outlined below:
+         Manual Installation
+         Automatic Installation using other methods (SMS, PSexec, etc.) .
+  
+ Note: The Clinical Display Application is only supported on a Window 7 
+ operating system; other operating systems are not officially supported
+ Clinical Display is distributed as an MSI and EXE installation. The MSI 
+ is intended for sites that want to do a push installation (using SCCM or 
+ another tool). The EXE is intended for use to install on a single 
+ workstation. 
+  
+ After client installation is complete, log in to an updated workstation 
+ and use the Help | About menu option to verify that the version number is 
+ 3.0.149.<TBD>
+  
+ Manual Installation
+ ===================
+ The MAG3_0P149_Clinical_Display_Setup.exe file can be installed manually 
+ on workstations as described in Section "Single Workstation Installation" 
+ in the Clinical Imaging Installation Guide.
+  
+ Autoupdate Installation
+ =======================
+ VistA Imaging Autoupdate functionality is no longer supported.
+  
+ Uninstalling MAG*3.0*149
+ ========================
+ If it is necessary to uninstall the MAG*3.0*149 Client, use the Uninstall 
+ option from Windows Control Panel to Uninstall: "VistA Imaging Clinical 
+ Display".
+ Then Install the previous version of Clinical Display which was included 
+ in MAG*3.0*131.
+
+Routine Information:
+====================
+Routine Name: MAGGTU4D
+    Checksum:
+  5109397
+ Description of Changes:
+  Add P149 on the list
+
+Routine Name: MAGIP149
+    Checksum:
+  MAGIP149 - 4215025.
+ Description of Changes:
+  MAGIP149 is the Patch tracking routine.  It is deleted after the KIDS 
+  install.
+
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 24, 2014
+Completed By:                               Date Completed: DEC 11, 2014
+Released By :                               Date Released : DEC 11, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+

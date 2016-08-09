@@ -1,0 +1,690 @@
+$TXT Created by           at DEVESS.DOMAIN.EXT  (KIDS) on Wednesday, 08/13/14 at 16:13
+=============================================================================
+Run Date: AUG 29, 2014                     Designation: RMPR*3*168
+Package : RMPR - PROSTHETICS                  Priority: Mandatory
+Version : 3       SEQ #152                      Status: Released
+                  Compliance Date: SEP 12, 2014
+=============================================================================
+
+Associated patches: (v)RMPR*3*125  <<= must be installed BEFORE `RMPR*3*168'
+                    (v)RMPR*3*128  <<= must be installed BEFORE `RMPR*3*168'
+                    (v)RMPR*3*148  <<= must be installed BEFORE `RMPR*3*168'
+                    (v)RMPR*3*150  <<= must be installed BEFORE `RMPR*3*168'
+                    (v)RMPR*3*163  <<= must be installed BEFORE `RMPR*3*168'
+                    (v)LEX*2*80    <<= must be installed BEFORE `RMPR*3*168'
+                    (v)PX*1*199    <<= must be installed BEFORE `RMPR*3*168'
+                    (v)ICD*18*57   <<= must be installed BEFORE `RMPR*3*168'
+                    (v)GMRC*3*73   <<= must be installed BEFORE `RMPR*3*168'
+                    (v)OR*3*361    <<= must be installed BEFORE `RMPR*3*168'
+
+Subject: PROSTHETICS ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Other
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf) posted on the 
+ Anonymous directory for installation order. This is critical for proper
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. 
+ Dates of service, or dates of discharge for inpatients, that occur on or 
+ after the ICD-10 activation date will use the ICD-10 code set. Clinical 
+ Modification (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 
+ codes to more than 68,000. Procedure Coding System (ICD-10-PCS) procedure 
+ codes increase from about 3,800 ICD-9 codes to nearly 87,000. Both 
+ systems also expand the number of characters allotted to seven 
+ alpha-numeric characters. This value does not include the decimal point, 
+ which follows the third character for the ICD-10-CM code set. There is no 
+ decimal point in the ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionality within the Prosthetics application were 
+ updated to address the ICD-10 code set. These updates apply to both the
+ VistA Prosthetics Roll & Scroll application and the Prosthetics 
+ Graphical User Interface (GUI) application; there will be a separate
+ section listing the updates for each of these interfaces.
+  
+  
+ ===============================  WARNING  ================================
+  
+ The ICD-10 Class I Remediation project will update VistA to include the
+ ICD-10 Diagnosis and Procedure codes. The first patches to be delivered
+ by this project will be the STS patches ICD*18.0*57 and LEX*2.0*80 which 
+ will include both the ICD-10 Diagnosis and Procedure codes along with new
+ or updated APIs that will be used by the other VistA applications to
+ select, retrieve and display these new codes.
+  
+ There are several VistA applications that do not currently utilize code
+ set versioning. Those applications are Prosthetics, Home Based Primary
+ Care, and Lab Anatomic Pathology. As a result, these applications
+ currently allow inactive ICD-9 codes to be displayed and selected for
+ ICD-9 dates of service.
+  
+ During the interim, after the installation of the STS ICD-10 Class I
+ Remediation patches and prior to the ICD-10 Implementation date
+ (10/01/2015), these applications will also allow the display and
+ selection of inactive ICD-10 codes including statuses of (Inactive) or
+ (Pending). The users of these applications should use CAUTION to select
+ ICD-9 or ICD-10 codes that are appropriate and active.
+  
+ The following examples show how the software would appear in these
+ applications:
+  
+ EXAMPLE #1: Inactive ICD-9 codes.
+ The warning (Inactive) appears at the end of the short description.
+  
+ ICD-9 DIAGNOSIS CODE: 100.81// 488.
+  
+  12 matches found
+  
+     1.  488.      FLU D/T AVIAN FLU VIRUS (Inactive)
+     2.  488.0     FLU DT IDEN AVIAN VIRUS (Inactive)
+     3.  488.01    FLU DT IDEN AVIAN W PNEU (Major CC)
+     4.  488.02    FLU DT AVIAN W OTH RESP (CC)
+     5.  488.09    FLU DT AVIAN MANFEST NEC (CC)
+  
+  Press <RETURN> for more, '^' to exit, or Select 1-5:
+  
+  
+ EXAMPLE #2: Inactive ICD-10 codes.
+ The warning (Pending) appears at the end of the short description.
+  
+ ICD-9 DIAGNOSIS CODE: 100.81// S06.816
+  
+  3 matches found
+  
+     1.  S06.816A  Inj r int crtd,intcr w LOC >24 hr w/o ret consc w
+                   surv, init (10/01/2015) (Pending)
+     2.  S06.816D  Inj r int crtd,intcr w LOC >24 hr w/o ret consc w
+                   surv, subs (10/01/2015) (Pending)
+     3.  S06.816S  Inj r int crtd,intcr w LOC >24 hr w/o ret consc w
+                   surv, sqla (10/01/2015) (Pending)
+  
+  Select 1-3:
+  
+  
+ When creating or editing records dated after the ICD-10 Activation Date
+ (10/01/2015), the software will correctly screen out both the inactive
+ ICD-9 and inactive ICD-10 codes.
+  
+ ===========================  END OF WARNING  =============================
+  
+  
+ PROSTHETICS ROLL & SCROLL
+ =========================
+  
+ 1. Add/Edit Home Oxygen Patient
+  Full Menu Path: Home Oxygen Main Menu -> Add/Edit Home Oxygen Patient
+  
+  The software has been updated to determine the active coding system
+  based on Date Of Interest, which is the Home Oxygen Prescription Date.
+  Once the active coding system is determined, the software will respond in
+  one of two ways:
+   
+   1. If the ICD-9 coding system is active, the software will continue to 
+      function as it always has for the ICD-9 code set. This includes 
+      Look-ups, searches, and displayed information.
+  
+   2. If the ICD-10 coding system is active, the software will utilize new 
+      Application Program Interfaces (APIs) to perform the Look-ups and 
+      searches. Because of the increased granularity of the ICD-10 code
+      set, searches may return more matches than can be displayed on a
+      single screen.
+  
+ For the ICD-10 active coding system, the user can enter any of the 
+ following:
+   1. A valid ICD-10 code.
+   2. A partial ICD-10 code.
+   3. A partial description of a valid ICD-10 code.
+  
+  If the user selects a valid ICD-10 code, the software will continue to 
+  the next function.
+  
+  If the user selects one partial ICD-10 code (i.e., a branch node denoted 
+  by a trailing "-" ), all of the immediate descendants of that branch 
+  node will be displayed to the user. This step will repeat until the user
+  selects a valid ICD-10 code.
+  
+  The user can enter any of the following:
+    1. A valid ICD-10 code.
+    2. A partial ICD-10 code.
+    3. A partial description of a valid ICD-10 code.
+  
+  The example below shows the new ICD-10 search API drilling down two
+  levels to select a valid ICD-10 code.
+   
+   Step #1: The user enters first three characters (F14) of a valid ICD-10
+            code.
+    Result: The software then displays the total number of entries that
+            match the three character input (20), a numbered list of
+            matching codes, their descriptions, and designates leaf nodes
+            matches.
+  
+   Step #2: The user reviews the list and selects entry #4 (F14.15-), which
+            is a branch node.
+    Result: The software then displays the total number of entries that
+            match the partial ICD-10 code F14.15, a numbered list of
+            matching code(s), their descriptions, and whether the entry is
+            a branch (-) or a leaf node. In this example, there are three
+            matches and all three of them are valid ICD-10 codes (no "-" at
+            the end of the code).
+  
+   Step #3: The user reviews the list and selects entry #2 (F14.151),
+            which is a valid ICD-10 code.
+    Result: The software stores the selected ICD-10 code and advances to 
+            the next field in the edit list.
+    
+    Example noting just the fields immediately before and after the ICD 
+    field:
+  
+    UNIT COST: 1.00
+    UNIT OF ISSUE: EACH 
+    ICD-10 DIAGNOSIS CODE: F14
+  
+     20 matches found
+  
+        1.  F14.10     Cocaine Abuse, Uncomplicated
+        2.  F14.12-    Cocaine abuse with intoxication (4)
+        3.  F14.14     Cocaine Abuse with Cocaine-Induced Mood Disorder
+        4.  F14.15-    Cocaine abuse with cocaine-induced psychotic
+                       disorder (3)
+        5.  F14.18-    Cocaine abuse with other cocaine-induced
+                       disorder (4)
+        6.  F14.19     Cocaine Abuse with unspecified Cocaine-Induced
+                       Disorder
+        7.  F14.20     Cocaine Dependence, Uncomplicated
+        8.  F14.21     Cocaine Dependence, in Remission
+  
+     Press <RETURN> for more, "^" to exit, or Select 1-8: 4
+  
+     3 matches found
+  
+        1.  F14.150    Cocaine Abuse with Cocaine-Induced Psychotic
+                       Disorder with Delusions
+        2.  F14.151    Cocaine Abuse with Cocaine-Induced Psychotic
+                       Disorder with Hallucinations
+        3.  F14.159    Cocaine Abuse with Cocaine-Induced Psychotic
+                       Disorder, unspecified
+  
+      Select 1-3: 2
+     REMARKS: 
+     ITEM TYPE:
+     Select FUND CONTROL POINT:
+  
+  
+  The Add/Edit Home Oxygen Patient option has also been updated so that 
+  if the user selects an existing Item and that Item contains an ICD code
+  which was inactive based on the Start Date of the currently selected
+  prescription, the software will issue a warning and then prompt the user
+  with options on how to proceed.
+  
+  The user has three options:
+   1) Select a different item with no ICD code or with an active ICD code.
+   2) Enter a new item.
+   3) Proceed with this item. If the user proceeds with this item, the 
+      existing ICD Diagnosis code will be DELETED. The user may then enter
+      an active ICD Diagnosis code or they may leave the ICD Diagnosis
+      field blank.
+  
+  
+ 2. Appliance Transactions 
+  
+  Accessed through the following menu paths:
+  
+  PROSTHETIC OFFICIAL'S MENU -> Suspense -> Suspense Processing -> Display 
+  2319 -> Appliance Transactions 
+  
+  Prosthetic Official's Menu -> Process Form 2529-3 -> 2529-3 Request Menu 
+  -> Create 2529-3 Request and screen#4 -> Appliance Transactions (show 
+  full entry)
+  
+  Prosthetic Official's Menu Option -> Purchasing -> Enter New Request -> 
+  2421 Form -> Suspense Processing Screen ->Display 2319 action and 
+  screen#4 -> Appliance Transactions (show full entry)
+  
+  Prosthetic Official's Menu Option -> Purchasing -> Enter New Request -> 
+  2914 Eyeglass Record -> Suspense Processing Screen ->Display 2319 action 
+  and screen#4 -> Appliance Transactions (show full entry)
+  
+  Prosthetic Official's Menu Option -> Purchasing -> Stock Issues -> Issue 
+  from Stock -> and screen#4 -> Appliance Transactions (show full entry)
+  
+  Prosthetic Official's Menu Option -> Home Oxygen Main Menu -> Billing 
+  Transactions-> Display 2319 action and screen#4 - > Appliance
+  Transactions (show full entry).
+  
+  These options have been updated to determine the active coding system 
+  based on the Date of Interest, which is the Home Oxygen Prescription 
+  Date, and will then retrieve the necessary information and display it to
+  the user.
+  
+  If the ICD-9 coding system is active, the software will continue to 
+  function as it always has for the ICD-9 code set.
+  
+  If the ICD-10 coding system is active, the software will utilize new APIs
+  to retrieve and display the needed information.
+  
+  Due to the granularity of the ICD-10 code set, most of the Diagnosis 
+  descriptions are longer than the ICD-9 code set Diagnosis descriptions.
+  When an ICD Description is too long to fit on a single line, the
+  remainder of the description will be displayed on a second line, which
+  will be indented two spaces to denote that this information is related to
+  the preceding line.
+  
+  There is a possibility that the ICD code being displayed may have been 
+  inactive on the Date of Interest. In these instances, the software 
+  displays an alert message after the Diagnosis description and this alert 
+  may wrap onto the next line if the Diagnosis description is too long.
+  To avoid this wrapping and to make the display more readable, the
+  software has been updated to check the length of the information being
+  displayed; if all of the alert information will not fit onto a single
+  line, the entire warning will be displayed on the following line and will
+  be indented two spaces to denote that the information is related to the
+  previous line.
+  
+  The following is an example of this warning and indentation:
+  
+  PROSTHETICS,PATIENTONE        SSN: 000-12-3456            DOB: 01-01-1000
+                      APPLIANCE/REPAIR LINE ITEM DETAIL               <4-1>
+  
+  TYPE OF FORM:            INITIATOR:                    DATE: OCT 01, 2013
+  DELIVER TO: 
+  TYPE TRANS: INITIAL ISSUE     QTY:      SOURCE: COMMERCIAL
+  VENDOR:        
+  DELIVERY DATE: 
+  TOTAL COST:                   OBL: 
+  REMARKS:       
+  DISABILITY SERVED: NSC/OP
+  ITEM DESCRIPTION: COOKIE
+  APPLIANCE: COOKIE
+  CONTRACT #: 
+  EXCLUDED/WAIVER: 
+  PSAS HCPCS: A4364     ADHESIVE        
+  ICD-10 CODE: A00.0  CHOLERA DUE TO VIBRIO CHOLERAE 01, BIOVAR CHOLERAE
+    ** Inactive ** Date: OCT 01, 2013
+  CPT MODIFIER: 
+  DESCRIPTION: 
+  EXTENDED DESCRIPTION: 
+  
+  
+ 3. PSAS HCPCS History Option  
+  
+  This option has been updated to determine the active coding system 
+  based on the Date of Interest, which is the Entry Date, and will then
+  retrieve the necessary information and display it to the user.
+  
+  If the ICD-9 coding system is active, the software will continue to 
+  function as it always has for the ICD-9 code set.
+  
+  If the ICD-10 coding system is active, the software will utilize new APIs
+  to retrieve and display the needed information.
+  
+  Due to the granularity of the ICD-10 code set, most of the Diagnosis 
+  descriptions are longer than the ICD-9 code set Diagnosis descriptions.  
+  When an ICD Description is too long to fit on a single line, the
+  remainder of the description will be displayed on a second line, which
+  will be indented two spaces to denote that this information is related to
+  the preceding line.
+  
+  There is a possibility that the ICD code being displayed may have been 
+  inactive on the date of interest. In these instances, the software 
+  displays an alert message after the Diagnosis description and this alert 
+  may wrap onto the next line if the Diagnosis description is too long.  
+  To avoid this wrapping and to make the display more readable, the
+  software has been updated to check the length of the information being
+  displayed; if all of the alert information will not fit onto a single
+  line, the entire warning will be displayed on the following line and will
+  be indented two spaces to denote that the information is related to the
+  previous line.
+  
+  The following is an example of this warning and indentation:
+  
+  REQUEST DATE   PATIENT NAME   SSN   VENDOR      OCT 01, 2013-DEC 31, 2020
+  =========================================================================
+  MAR 30, 2020   PATIENT,NEW O  0000
+  ITEM: ACETAMINOPHEN W/CODE QTY:       TOTAL COST:    0.00   INITIAL ISSUE
+  INITIATOR: 
+  ICD-10 CODE: A01.09  Typhoid fever with other complications
+    ** Inactive ** Date: DEC 31, 2020
+  TOTAL DOLLARS SPENT ON THIS HCPCS: $    0.00 TOTAL QUANTITY ISSUED:    0
+  
+  
+ PROSTHETICS GUI
+ ===============
+  
+ 1. RPC Broker Calls
+  
+  The following RPC broker calls were updated to support the Delphi front-
+  end of Prosthetics:
+  
+  1. Appliance Transaction Detail
+     RPC: RMPR TRANS LIST EXPANDED
+     Routine: EN^RMPR9S4E
+     Notes: The client was updated to look for the code set value (9, 10,
+     etc.) as the second caret-delimited "^" piece of array element
+     RESULTS(49).
+  
+  
+  2. NPPD Detail Display
+     RPC: RMPR NPPD LIST X
+     Routine: EN^RMPR9LN1
+     Notes: This RPC populates the three dropdown lists from which the user
+     picks for the optional custom data fields. The list contains the field
+     description and the field number that is sent to the RMPR NPPD LIST
+     remote procedure below.
+  
+     The description was changed from "Suspense ICD-9" to "Suspense ICD" 
+     to fit with either code set.
+  
+     RPC: RMPR NPPD LIST
+     Routine: EN^RMPR9LNP
+     Notes: The remote procedure returns the ICD code in either piece 19,
+     20, or 21 of the results string. The client has been updated to look
+     for a tilde "~" as a secondary delimiter to separate the ICD and the
+     code set value (9, 10, etc.) for pieces 19, 20 and 21.
+  
+     Research was done regarding the use of the tilde and it was confirmed
+     that the tilde was safe to use as a delimiter.
+  
+  3. View Prosthetic Billing Information
+     RPC: RMPR PFFS LIST
+     Routine: EN^RMPRPFFS
+     Notes: The client was updated to look for the code set value (9, 10,
+     etc.) as the second caret-delimited  "^" piece of array element
+     RESULTS(49).
+  
+  
+ 2. User Interface changes
+  
+  1. The appliance detail form of the Prosthetics GUI will reflect whether
+     the ICD description is ICD-9 or ICD-10 on the field description 
+     label.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                          New/Mod/Del
+ -------------          -----------------------------------     -----------
+ RECORD OF PROS APPLIANCE/REPAIR (#660)
+                        SUSPENSE ICD (#8.8)                         Mod
+                        PRIMARY ICD DIAGNOSIS CODE (#30)            Mod
+                        SECONDARY ICD DIAGNOSIS CODE 1 (#31)        Mod
+                        SECONDARY ICD DIAGNOSIS 2 (#32)             Mod
+                        SECONDARY ICD DIAGNOSIS 3 (#33)             Mod
+   HOME OXYGEN PRESCRIPTION  (sub-file)(#665.193)
+                        PRIMARY ICD DIAGNOSIS CODE (#30)            Mod
+                        SECONDARY ICD DIAGNOSIS CODE 1 (#31)        Mod
+                        SECONDARY ICD DIAGNOSIS CODE 2 (#32)        Mod
+                        SECONDARY ICD DIAGNOSIS CODE 3 (#33)        Mod
+   HOME OXYGEN ITEM  (sub-file)(#665.194)
+                        ICD CODE (#7)                               Mod
+ PROSTHETIC SUSPENSE (#668)
+                        ICD (#1.6)                                  Mod
+                        PRIMARY ICD DIAGNOSIS CODE (#30)            Mod
+                        SECONDARY ICD DIAGNOSIS 1 (#31)             Mod
+                        SECONDARY ICD DIAGNOSIS 2 (#32)             Mod
+                        SECONDARY ICD DIAGNOSIS 3 (#33)             Mod
+  
+ Forms Associated:
+  
+ Form Name                File #                                New/Mod/Del
+ ---------                ------                                -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                                New/Mod/Del
+ ---------------                                                -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                            New/Mod/Del
+ -----------                    ----                            -----------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                                                  New/Mod/Del
+ -------------                                                  -----------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                     New/Mod/Del
+ -------------      ----      ----------------------            -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites :
+ -----------
+ Coatesville VAMC, Coatesville, PA
+ Houston VAMC, Houston, TX
+  
+ Documentation and Software Retrieval Instructions
+ ------------------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+  
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ OIFO               FTP ADDRESS                  DIRECTORY
+ ------------       ------------------------     ------------------
+ Albany             ftp.domain.ext     
+ Hines              ftp.domain.ext      
+ Salt Lake City     ftp.domain.ext        
+  
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+  
+  
+ File Description
+   File Name                                                     (FTP Mode)
+ --------------------------------------------------------------------------
+ ICD-10 Release Notes for Prosthetics
+   ICD-10_RN_RMPR_3_168.pdf                                      (Binary)
+ National Prosthetics Patient Database (NPPD) User Manual
+   rmpr_3_nppdum.pdf                                             (Binary)
+ Prosthetics Basics User Manual
+   prostheticsbasicsusermanual.pdf                               (Binary)
+ Prosthetics View Billing Information (GUI) User Manual
+   rmpr_3_pvbi_um.pdf                                            (Binary)
+ Prosthetics VistA Suite User Manual
+   rmpr_3_pvs_um.pdf                                             (Binary)
+ Electronic Order/Suspense Processing User Manual
+   rmpr_3_168.pdf                                                (Binary)
+ Prosthetics Administrative Home Oxygen Module User Manual
+   rmpr3_o2um.pdf                                                (Binary)
+ Prosthetics GUI client installation wizard (packed)
+   RMPR3_0P168GUI.zip                                            (Binary)
+ Production Overview Guide
+   ICD-10_Prod_Overview_Guide_Groups_5_6_7.pdf                   (Binary)
+  
+  
+ Patch Installation:
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ This patch updates the software version number of both the VistA
+ server software and the Prosthetics client GUI to version 3.0.168.83.
+ GUI client versions prior to version 3.0.168.83 are not compatible
+ with the VistA server software for this patch. Therefore, it is
+ crucial that the Prosthetics client GUI distributed with this patch
+ be installed immediately following the VistA server software install
+ to minimize service disruption to the Prosthetics System users.
+  
+ See GUI INSTALLATION INSTRUCTIONS section for complete details.
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than five
+ minutes to install.
+  
+ If installed during the normal workday, it is recommended that the
+ following selection(s) in the OPTION (#19) file, and all of their
+ descendants are disabled to prevent possible conflicts while running
+ the KIDS Install. Other VistA users will not be affected.
+  
+     RMPO ADD/EDIT PAT                   Add/Edit Home Oxygen Patient
+     RMPR OFFICIAL                       Prosthetic Official's Menu
+  
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     RMPR*3.0*168.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DDs) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed. It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter RMPR*3.0*168.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//'  Answer YES unless your system does this in a
+     nightly TaskMan process.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//' answer NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? NO//' answer YES.
+     
+ 8.  When prompted 'Enter options you wish to mark as 'Out Of Order':'  
+     Enter the following options:
+      
+       RMPO ADD/EDIT PAT                   Add/Edit Home Oxygen Patient
+       RMPR OFFICIAL                       Prosthetic Official's Menu
+  
+ 9.  When prompted 'Enter protocols you wish to mark as 'Out Of
+     Order':' press <enter>.
+  
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ There is no post-installation routine associated with this patch.
+  
+  
+ GUI INSTALLATION INSTRUCTIONS
+ -----------------------------
+ The Prosthetics GUI client software is being distributed as a self-
+ extracting Install Shield executable (file ProstheticsSuite3_168_83.exe
+ packed version - RMPR3_0P168GUI.zip). The installed executable for 
+ this patch is client ProsMenu.exe version 3.0.168.83 with a size of 
+ 2.64 MB.
+  
+ Install the Prosthetics GUI client software following the instructions
+ in the Prosthetics GUI Installation Guide.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;PROSTHETICS;**[Patch List]**;Feb 09, 1996;Build 43
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RMPOICD1
+    Before:       n/a   After:B142909870  **168**
+Routine Name: RMPOICD2
+    Before:       n/a   After: B43615664  **168**
+Routine Name: RMPOPED
+    Before: B86271815   After:B301665198  **29,44,41,52,77,110,140,148,168**
+Routine Name: RMPOPED1
+    Before:       n/a   After:  B3131356  **168**
+Routine Name: RMPR9LN1
+    Before: B10038287   After: B10033385  **90,75,60,125,168**
+Routine Name: RMPR9LNP
+    Before: B11512783   After: B42337320  **71,77,90,75,60,143,150,168**
+Routine Name: RMPR9S4E
+    Before: B42900080   After: B55214876  **59,92,99,90,75,168**
+Routine Name: RMPRPAT3
+    Before: B41816871   After: B58098580  **3,12,25,28,32,41,69,92,99,
+                                           90,162,163,168**
+Routine Name: RMPRPFFS
+    Before: B29300840   After: B39570031  **96,60,168**
+Routine Name: RMPRSE21
+    Before: B29249805   After: B42297840  **36,62,77,92,90,128,168**
+ 
+Routine list of preceding patches: 125, 128, 148, 150, 163
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 14, 2011
+Completed By:                               Date Completed: AUG 21, 2014
+Released By :                               Date Released : AUG 29, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

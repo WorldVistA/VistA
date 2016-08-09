@@ -1,0 +1,201 @@
+
+=============================================================================
+Run Date: MAY 21, 2015                     Designation: WEBB*1*4
+Package : WEBB - BED MANAGEMENT SOLUTION      Priority: Mandatory
+Version : 1         SEQ #4                      Status: Released
+                  Compliance Date: JUN 21, 2015
+=============================================================================
+
+
+Subject: BED MANAGEMENT SOLUTION VERSION 1.4
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ This patch announces the National Release of Bed Management Solutions 
+ (BMS) version 1.4. No additional action is necessary for sites except to
+ communicate the below modifications of BMS v1.4 to users.  This new BMS
+ 1.4 version addresses defects and there are no new enhancements.
+  
+ This build corrects four issues within the BMS application:
+  
+ 1) Resolve a defect when a patient is removed from the Patient Pending Bed
+    Placement (PPBP) list, the wait time continues to be calculated. 
+  
+ 2) Resolve a defect to change the default end time for a facility diversion
+    to "now" instead of the start time of the diversion.
+  
+ 3) Resolve a defect where scheduled admissions are coming up with an assigned
+    room date and time. 
+ 
+ 4) Fix to ADT processor to allow for tuning of the ADT processor via
+    configuration change instead of having to change source code.
+ 
+  
+  
+ ASSOCIATED REMEDY TICKET(s):
+  
+ 1) Remedy Incident # INC000001094698:  PPBPL wait times are not 
+    accurate after a patient is admitted.  Wait times are also 
+    showing negative numbers when patients are scheduled in the future.
+ 
+ 2) Remedy INC000001050969:  The default diversion end date and time 
+    are currently set to be the same as the diversion start date and 
+    time. The default time should be the current date and time instead.
+  
+ 3) Remedy Incident #INC000001003458: Scheduled admissions are coming 
+    up with an assigned to room date and time. These fields should be 
+    empty by default.
+ 
+ 4) Remedy Incident #INC000001053407:  Fix to ADT processor to allow 
+    for tuning of the ADT processor via configuration change instead 
+    of having to change source code
+  
+ ASSOCIATED NSR(s):
+ ==================
+    N/A
+  
+ PARTICIPATING TEST SITES:
+ =========================
+    North Texas HCS
+    Upstate NY
+    Indianapolis
+    
+  
+  
+ REMEDY TICKET OVERVIEW:
+ =======================
+  
+ 1) INC000001094698:  PPBPL wait times are not accurate after a patient is      
+    admitted.  Wait times are also showing negative numbers when patients 
+    are scheduled in the future.
+  
+    Problem:
+    ========
+    The Patient Pending Bed Placement List  (PPBPL) will not reflect 
+    accurate Wait Time information for patients who have been admitted, 
+    or those patients who have future appointments. When patients are 
+    admitted, they are removed from the PPBPL in the standard view, but 
+    when running a report to see Wait Times, BMS continues calculating 
+    after the patient is admitted. In order to get accurate Wait Times, 
+    the sites have to export the report and manually calculate. This 
+    requires extra work to get accurate information. In the case of 
+    future appointments, the negative Wait Times showing on the board 
+    can cause confusion and make it difficult to evaluate the Wait Times.
+    
+    Solution:
+    =========
+    This release will apply code fix to properly calculate Wait Time.  
+    Once a patient is admitted, the Wait Time stops calculating so that 
+    reports show how much time they actually waited. Future appointments 
+    show 0 wait time instead of negative times. 
+  
+ 2) INC000001050969:  The default diversion end date and time are 
+    currently set to be the same as the diversion start date and time. 
+    The diversion end date and time should default to the current date
+    and time.
+  
+    Problem:
+    ========
+    The default diversion end date and time are currently set to be 
+    the same as the diversion start date and time, leading to problems 
+    if users don't pay special attention to edit the end date and time
+    when ending the diversion.  The diversion end date and time should
+    default to the current date and time.
+    
+    
+    Solution:
+    =========
+    This release will implement a code change to default the diversion 
+    end date and time to the current date and time.  Users can still 
+    manually change the diversion end time.
+  
+ 3) Incident #INC000001003458: Scheduled admissions are coming up with 
+    an assigned room time of 7 AM, both for current and past admissions.
+    These fields should be empty by default.
+  
+  
+    Problem:
+    ========
+    This defect is visible when users access the "Patient Flow" view 
+    of the Patient Pending Bed Placement List (PPBPL) and can be edited 
+    by selecting the "Edit" link for the patient and updating the 
+    "Assignment Date Time" fields.  Users will need to continually 
+    manually edit the "Assignment Date Time" fields to either remove 
+    the entries or enter the correct entries.  If not corrected, the 
+    Patient Flow View shows incorrect and confusing information displayed
+    in the "Assigned to Room Date Time" column.  Incorrect "Assignment
+    Time" on the Patient Flow View could result in delays in room
+    assignment.
+    
+    Solution:
+    =========
+    This release changes the default "Assignment Date and Time" to null.
+  
+ 4) INC000001053407: Fix to ADT processor to allow for tuning of the ADT
+    processor via configuration change instead of having to change source 
+    code.
+  
+    Problem:
+    ========
+    If changes to the ADT processor are needed to ensure movements
+    entered in VistA are recorded in BMS, a new release is needed
+    to implement the changes.
+    
+    Solution:
+    =========
+    This release allows for tuning of the ADT processor without the 
+    need to edit source code.  This code will allow us to optimize  
+    how far back into the Movement file the delta processor should go. 
+    This will allow us to work on optimization of the Movement record 
+    process by only requiring a restart of the BMS service rather than 
+    releasing a new version.                    
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+    N/A
+  
+ IMPLEMENTATION:
+ ===============
+   The BMS application is a centrally managed web-based application hosted 
+   at AITC. BMS version 1.4 will be loaded into BMS Production account by 
+   AITC staff.  No software will be installed at the facilities.
+  
+ Reporting Problems:
+ ===================
+   If there are problems associated with the BMS application they should be
+   reported via Remedy by contacting the National Service Desk (NSD) 
+   1-888-596-4357 for assistance.
+  
+ DOCUMENTATION INFORMATION:
+ ==========================
+   The BMS User Guide is being updated to reflect the changes related to
+   the ADT process identified as part of issue 4.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 12, 2015
+Completed By:                               Date Completed: APR 27, 2015
+Released By :                               Date Released : MAY 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,402 @@
+$TXT Created by                DEVVFF.DOMAIN.EXT  (KIDS) on Thursday, 02/12/15 at 15:40
+=============================================================================
+Run Date: APR 28, 2015                     Designation: GMRC*3*75
+Package : GMRC - CONSULT/REQUEST TRACKING     Priority: Mandatory
+Version : 3        SEQ #71                      Status: Released
+                  Compliance Date: MAY 29, 2015
+=============================================================================
+
+Associated patches: (v)GMRC*3*46   <<= must be installed BEFORE `GMRC*3*75'
+
+Subject: NON-VA CARE HCPS HL7 INTERFACE
+
+Category: 
+  - Routine
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ This patch creates Health Level 7 (HL7) protocols, applications, a 
+ logical link, and routines to send and receive HL7 messages between VistA 
+ and the Healthcare Claims Processing System (HCPS) in Austin for Non-VA 
+ Care consults.
+    
+    
+ Enhancements
+ ============
+    
+ 1. Created new HL7 components (protocols, applications, and a logical
+    link) to support messages to HCPS.  REF-I12 (patient referral)
+    messages are sent for new or resubmitted consults.  REF-I13 messages
+    are sent for updates to consults (status changes, comments added,
+    etc.).  REF-I14 messages are sent for cancelled and discontinued
+    consults.
+    
+ 2. Created new routines GMRCHL7H and GMRCHL7P to receive consult event
+    messages and generate outgoing HL7 v2.5 REF messages.  Only consults
+    with 'HCPS' in the SERVICE NAME (#.01) in REQUEST SERVICES (#123.5)
+    will be transmitted to HCPS.
+    
+ 3. Created new routine GMRCHL7I to process incoming HL7 v2.5 RRI (return
+    referral information) messages.
+    
+ 4. Modified GMRCGUIB and GMRCACMT routines to send an HL7 v2.5 REF
+    message to HCPS when a user adds a comment to a Non-VA Care consult
+    through Computerized Patient Record System (CPRS).
+    
+ 5. Created new routine GMRC75P to add the 'HCPS,APPLICATION PROXY' user
+    to the NEW PERSON (#200) file.
+  
+    
+ Patch Components
+ ================
+ Files & Fields Associated: N/A
+    
+ Forms Associated: N/A
+    
+ Mail Groups Associated: 
+    
+ Mail Group                 New/Modified/Deleted
+ ----------                 --------------------
+ GMRC HCP HL7 MESSAGES            New
+    
+ Options Associated: N/A
+    
+ Protocols Associated:
+    
+ Protocol Name              New/Modified/Deleted
+ -------------              --------------------
+ GMRC CONSULTS TO HCP             New
+ GMRC HCP REF-I12 SERVER          New
+ GMRC HCP REF-I12 CLIENT          New
+ GMRC HCP REF-I13 SERVER          New
+ GMRC HCP REF-I13 CLIENT          New
+ GMRC HCP REF-I14 SERVER          New
+ GMRC HCP REF-I14 CLIENT          New
+ GMRC HCP RRI-I13 SERVER          New
+ GMRC HCP RRI-I13 CLIENT          New
+    
+ Security Keys Associated: N/A
+ Templates Associated: N/A
+    
+ HL7 Applications Associated:
+    
+ HL7 Application Name           New/Modified/Deleted
+ --------------------           --------------------
+ GMRC HCP SEND                    New
+ GMRC HCP RECEIVE                 New
+    
+ HL Logical Links Associated:
+    
+ HL Logical Link Name           New/Modified/Deleted
+ --------------------           --------------------
+ GMRCHCP                          New
+    
+ Routines Associated:
+    
+ Routine Name           New/Modified/Deleted
+ ------------           --------------------
+ GMRC75P                  New
+ GMRCACMT                 Modified
+ GMRCGUIB                 Modified
+ GMRCHL7H                 New
+ GMRCHL7P                 New
+ GMRCHL7I                 New
+    
+    
+ New Service Requests (NSRs)
+ ----------------------------
+ 20100117 - Expanded Fee Pilot - CPRS Integration
+ Non-VA care services are initiated by VA providers as a component of 
+ Veterans health care services. Having an automated link from CPRS, where 
+ the initial requests are entered, to the Referral and Authorization 
+ System (RAS), can assure more timely care for Veterans. In addition, VA 
+ providers frequently have no insight into when Non-VA care is scheduled, 
+ provided and completed. Integration from RAS to CPRS can serve to update 
+ VA providers on patient status.
+    
+    
+ Patient Safety Issues (PSIs): N/A
+ Remedy Ticket(s) & Overview: N/A
+    
+ Test Sites:
+ ----------
+ Indianapolis
+ Omaha
+    
+    
+ FTP Software Retrieval:
+ -----------------------
+  
+ The following software and documentation files are available. Use the 
+ Binary format when downloading.
+   
+ File Name         Contents                                    Format
+ ---------         --------                                    ------
+  
+ CONSTM.DOC        Consult/Request Tracking Technical Manual   Binary
+ CONSTM.PDF        Consult/Request Tracking Technical Manual   Binary
+ CONSUM.DOC        Consult/Request Tracking User Manual        Binary
+ CONSUM.PDF        Consult/Request Tracking User Manual        Binary
+ GMRC3_0_75IG.DOC  Non-VA Care Installation Guide GMRC*3.0*75  Binary
+ GMRC3_0_75IG.PDF  Non-VA Care Installation Guide GMRC*3.0*75  Binary
+ GMRC3_0_75RN.DOC  Non-VA Care Release Notes GMRC*3.0*75       Binary
+ GMRC3_0_75RN.PDF  Non-VA Care Release Notes GMRC*3.0*75       Binary
+  
+  
+ The preferred method is to FTP the files from download.vista.domain.ext, 
+ which will transmit the files from the first available FTP server.
+  
+ The files may also be downloaded directly from a particular FTP location 
+ at the following locations: 
+  
+ OI Field Office     FTP Location                Directory
+ ===============     ============                =========
+ ALBANY              ftp.domain.ext    [ANONYMOUS.SOFTWARE]
+ HINES               ftp.domain.ext     [ANONYMOUS.SOFTWARE]
+ SALT LAKE           ftp.domain.ext       [ANONYMOUS.SOFTWARE]
+  
+ Files are available in the ANONYMOUS.SOFTWARE directory. 
+    
+ Documentation can also be found on the VA Software Documentation Library  
+ (VDL) at:  http://www4.domain.ext/vdl/
+    
+    
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users.
+    
+ This patch should take less than 10 minutes to install and configure.
+    
+ No options need to be disabled when installing the patch.
+    
+ 1. Choose the PackMan message containing this patch.
+    
+ 2. Choose the INSTALL/CHECK MESSAGE PackMan option.
+    
+ 3. From the Kernel Installation and Distribution System Menu, select
+    the Installation Menu.  From this menu, you may elect to use the
+    following options:
+    (When prompted for the INSTALL enter the patch GMRC*3.0*75)
+    
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DDs or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DDs, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+    
+ 4.  From the Installation Menu, select the Install Package(s) option.
+     When prompted for the INSTALL enter GMRC*3.0*75
+    
+ 5.  When prompted ' Enter the Coordinator for Mail Group 'GMRC HCP HL7
+     MESSAGES':'  answer with a valid user and press Enter.
+     Clinical Applications Coordinators and anyone deemed appropriate
+     should be added by the IRM to this mail group. 
+    
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'  answer NO
+    
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+     and Protocols? NO//' answer NO
+    
+ 8. If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+    
+    
+ Routine Information:
+ ====================
+ The second line of each of these routines now looks like:
+  ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 22
+  
+ The checksums below are new checksums, and
+  can be checked with CHECK1^XTSUMBLD.
+  
+ Routine Name: GMRC75P
+     Before:       n/a   After:   B796503  **75**
+ Routine Name: GMRCACMT
+     Before: B27581442   After: B28819867  **4,14,18,20,22,29,35,47,55,75**
+ Routine Name: GMRCGUIB
+     Before: B50120851   After: B51487660  **4,12,18,20,17,22,29,30,35,
+                                            45,53,55,64,46,75**
+ Routine Name: GMRCHL7H
+     Before:       n/a   After:B129894392  **75**
+ Routine Name: GMRCHL7I
+     Before:       n/a   After: B72452860  **75**
+ Routine Name: GMRCHL7P
+     Before:       n/a   After:  B5636355  **75**
+  
+ Routine list of preceding patches: 46
+    
+    
+ Post-Installation Instructions
+ ------------------------------
+ Note: The installation site will be contacted by the Chief Business Office
+ (CBO) when and if the Post-Install instructions are to be followed. If a
+ logical link needs to be set up, the DNS Domain and TCP/IP port
+ information will be provided at that time.
+  
+ 1. Setup the SENDING FACILITY:
+    Using the HL7 Main Menu [HL MAIN MENU] option, select the Interface
+    Developer Options [HL MENU INTERFACE TK] menu, then select the EA
+    Application Edit [HL EDIT APPL PARAM] option.  Enter GMRC HCP SEND
+    at the Select HL7 APPLICATION PARAMETER NAME: prompt.
+    Enter your Facility Id in the FACILITY NAME field (e.g. 583).
+    
+                             HL7 APPLICATION EDIT
+    ---------------------------------------------------------------------
+    
+                NAME: GMRC HCP SEND               ACTIVE/INACTIVE: ACTIVE
+    
+       FACILITY NAME: **enter your facility**        COUNTRY CODE: USA
+    
+ HL7 FIELD SEPARATOR: |                   HL7 ENCODING CHARACTERS: ^~\&
+    
+             MAIL GROUP:
+    
+     Save and Exit the screen.
+    
+  2. Setup the RECEIVING FACILITY:
+     Using the HL7 Main Menu [HL MAIN MENU] option, select the Interface
+     Developer Options [HL MENU INTERFACE TK] menu, then select the EA
+     Application Edit [HL EDIT APPL PARAM] option.  Enter GMRC HCP RECEIVE
+     at the Select HL7 APPLICATION PARAMETER NAME: prompt.
+     Enter 200 in the FACILITY NAME field for the HCPS facility.
+    
+                              HL7 APPLICATION EDIT
+     ---------------------------------------------------------------------
+    
+                 NAME: GMRC HCP RECEIVE            ACTIVE/INACTIVE: ACTIVE
+    
+        FACILITY NAME: 200                            COUNTRY CODE: USA
+    
+  HL7 FIELD SEPARATOR: |                   HL7 ENCODING CHARACTERS: ^~\&
+    
+              MAIL GROUP:
+    
+     Save and Exit the screen.
+    
+  3. Setup the LOGICAL LINK:
+     Using the HL7 Main Menu [HL MAIN MENU] option, select the Interface
+     Developer Options [HL MENU INTERFACE TK] menu, then select the EL
+     Link Edit [HL EDIT LOGICAL LINKS] option.
+     Enter GMRCHCP at the Select HL LOGICAL LINK NODE prompt.
+     Ensure TCP is the LLP Type.
+     Enter the provided DNS DOMAIN field.
+    
+                        HL7 LOGICAL LINK
+     --------------------------------------------------------------------
+    
+                     NODE: GMRCHCP                        DESCRIPTION:
+    
+              INSTITUTION:
+    
+           MAILMAN DOMAIN:
+    
+                AUTOSTART:
+    
+               QUEUE SIZE: 10
+    
+                 LLP TYPE: TCP
+    
+               DNS DOMAIN: TO BE PROVIDED
+     --------------------------------------------------------------------
+      COMMAND:                                       Press <PF1>H for help
+    
+     Hit Enter on the TCP field to edit page 2.
+     Enter the provided TCP/IP Port.
+    
+                        HL7 LOGICAL LINK
+  -----------------------------------------------------------------------
+    -----------------------TCP LOWER LEVEL PARAMETERS------------------
+    -                      GMRCHCP                                    -
+    -                                                                 -
+    -  TCP/IP SERVICE TYPE: CLIENT (SENDER)                           -
+    -       TCP/IP ADDRESS:                          [leave blank]    -
+    -          TCP/IP PORT: TO BE PROVIDED                                      -
+    -          TCP/IP PORT (OPTIMIZED):                               -
+    -                                                                 -
+    -   ACK TIMEOUT:               RE-TRANSMISION ATTEMPTS:           -
+    -  READ TIMEOUT:             EXCEED RE-TRANSMIT ACTION: restart   -
+    -    BLOCK SIZE:                              SAY HELO:           -
+    -                              TCP/IP OPENFAIL TIMEOUT:           -
+    -STARTUP NODE:                              PERSISTENT: NO        -
+    -   RETENTION: 30                 UNI-DIRECTIONAL WAIT:           -
+    -------------------------------------------------------------------
+  -----------------------------------------------------------------------
+     Save and Exit the screens.
+    
+    
+  4. Add the GMRC CONSULTS TO HCP protocol to the GMRC EVSEND OR protocol
+     ITEM multiple using FileMan's Enter or Edit File Entries option.
+    
+     Select VA FileMan Option: ENter or Edit File Entries
+    
+     INPUT TO WHAT FILE: PROTOCOL// 101  PROTOCOL  (5806 entries)
+     EDIT WHICH FIELD: ALL// ITEM
+          1   ITEM    (multiple)
+          2   ITEM TEXT
+     CHOOSE 1-2: 1  ITEM  (multiple)
+        EDIT WHICH ITEM SUB-FIELD: ALL//
+     THEN EDIT FIELD:
+    
+     Select PROTOCOL NAME: GMRC EVSEND OR       Consults event sent to 
+  OE/RR
+     Select ITEM: EDP MONITOR// GMRC CONSULTS TO HCP       Consults to HCP
+       MNEMONIC:
+       SEQUENCE:
+       MODIFYING ACTION:
+       FORMAT CODE:
+       DISPLAY NAME:
+       PROMPT:
+       DEFAULT:
+       HELP:
+       MODE:
+     Select ITEM:
+  
+  5. The post-install routine GMRC75P may be deleted upon successful
+     installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;CONSULT/REQUEST TRACKING;**[Patch List]**;DEC 27, 1997;Build 22
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: GMRC75P
+    Before:       n/a   After:   B796503  **75**
+Routine Name: GMRCACMT
+    Before: B27581442   After: B28819867  **4,14,18,20,22,29,35,47,55,75**
+Routine Name: GMRCGUIB
+    Before: B50120851   After: B51487660  **4,12,18,20,17,22,29,30,35,
+                                           45,53,55,64,46,75**
+Routine Name: GMRCHL7H
+    Before:       n/a   After:B129894392  **75**
+Routine Name: GMRCHL7I
+    Before:       n/a   After: B72452860  **75**
+Routine Name: GMRCHL7P
+    Before:       n/a   After:  B5636355  **75**
+ 
+Routine list of preceding patches: 46
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 20, 2012
+Completed By:                               Date Completed: APR 28, 2015
+Released By :                               Date Released : APR 28, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

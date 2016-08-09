@@ -1,0 +1,216 @@
+$TXT Created by                   at DEVICD.DOMAIN.EXT  (KIDS) on Friday, 03/28/14 at 07:55
+=============================================================================
+Run Date: JUN 17, 2014                     Designation: ROR*1.5*23
+Package : ROR - CLINICAL CASE REGISTRIES      Priority: Mandatory
+Version : 1.5        SEQ #20                    Status: Released
+                  Compliance Date: AUG 01, 2014
+=============================================================================
+
+Associated patches: (v)ROR*1.5*10  <<= must be installed BEFORE `ROR*1.5*23'
+                    (v)LEX*2*80    <<= must be installed BEFORE `ROR*1.5*23'
+                    (v)ICD*18*57   <<= must be installed BEFORE `ROR*1.5*23'
+
+Subject: ICD-9 Remediation of RORRP016 routine
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ *****************************ATTENTION*********************************
+ *                                                                     *
+ * The following patches must be installed immediately after the       *
+ * install of ICD*18*57/LEX*2*80: 1. PX*1*203, 2. EC*2.0*124,          *
+ * 3. ROR*1.5*23.                                                      *
+ *                                                                     *
+ ***********************************************************************
+  
+ This patch remediates routine RORRP016 to use a supported Integration Control
+ Registration (ICR) instead of the retired ICRs 10082 and 10083. ICR 10082 and 
+ 10083 granted global reads to several fields in File #80 and File #80.1. 
+ However, both were retired on November 15, 2008. Routine RORRP016 was never 
+ updated to use the supported replacement ICR #3990 which was part of the 
+ ICD-9 remediation project. 
+  
+ During IOC production testing of STS ICD-10 patches (LEX*2.0*80 and 
+ ICD*18.0*57), Clinical Case Registries (CCR) Graphic User Interface (GUI) user
+ received an error message "File #80 does not contain a field 9.5". This was 
+ as a result of field #9.5 being moved by the ICD-10 project. 
+  
+  
+ Patch Components
+ ================
+  
+ Files & Fields Associated:
+ --------------------------
+  
+ Data Dictionary
+ ---------------
+  
+ File Name (#)                Field Name (#)          New/Modified/Deleted
+ -------------                --------------          --------------------
+ N/A
+  
+ Dialog Name                                          New/Modified/Deleted
+ -----------                                          --------------------
+ N/A
+  
+ Forms Associated:
+  
+ Form Name                File #                  New/Modified/Deleted
+ ---------                ------                  --------------------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                  New/Modified/Deleted
+ ---------------                  --------------------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type             New/Modified/Deleted
+ -----------                    ----             --------------------
+ N/A
+  
+ Protocols Associated:
+  
+ Protocol Name                     New/Modified/Deleted
+ -------------                     --------------------
+ N/A
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)    New/Modified/Deleted
+ -------------      ----      -------------    --------------------       
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ N/A
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ INC000000988639 - Clinical Case Registries - Other
+  
+ Problem:
+ --------
+ Site testing STS ICD-10 patches in production gets an error message "File #80
+ does not contain a field 9.5" when executing the fielded CCR GUI application.
+  
+ Resolution:
+ -----------
+ Routine RORRP016, linetags QUERY and QUERY1 changed to use ICR 5747 instead 
+ of reading fields from File #80 and File #80.1. 
+  
+  
+  
+ Test Sites:
+ -----------
+ Coatesville VA Medical Center, Coatesville, PA
+ Miami VA Healthcare System, Miami, FL
+ Orlando VA Medical Center, Orlando, FL
+  
+  
+ Patch Installation:
+ ------------------
+ Installation of the patch will not take more than 2 minutes. This patch
+ can be installed with VistA users online, but Registry users should be
+ logged out of the CCR Registry Application.
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Pre-Installation Instructions
+ -----------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than 2 minutes
+ to install.
+  
+ This is a MUMPS only patch and does not update the GUI application. 
+  
+ Installation Instructions
+ -------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (ROR*1.5*23):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter ROR*1.5*23.
+  
+ 5.  If prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond NO.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond NO.
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+  
+  
+ Post-Installation Instructions:
+ -------------------------------
+ N/A
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;1.5;CLINICAL CASE REGISTRIES;**[Patch List]**;Feb 17, 2006;Build 7
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: RORRP016
+    Before: B71590151   After: B72990496  **1,10,23**
+ 
+Routine list of preceding patches: 10
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : MAR 26, 2014
+Completed By:                               Date Completed: JUN 16, 2014
+Released By :                               Date Released : JUN 17, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

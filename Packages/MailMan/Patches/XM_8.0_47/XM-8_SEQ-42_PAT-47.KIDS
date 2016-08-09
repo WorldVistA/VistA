@@ -1,0 +1,2203 @@
+Released XM*8*47 SEQ #42
+Extracted from mail message
+**KIDS**:XM*8.0*47^
+
+**INSTALL NAME**
+XM*8.0*47
+"BLD",9954,0)
+XM*8.0*47^MAILMAN^0^3150520^y
+"BLD",9954,1,0)
+^^25^25^3150420^
+"BLD",9954,1,1,0)
+Patch XM*8.0*47 addresses five issues:
+"BLD",9954,1,2,0)
+ 
+"BLD",9954,1,3,0)
+1. When using the Mailman extrinsic function $$MG^XMBGRP to create a new 
+"BLD",9954,1,4,0)
+mail group, if the organizer's DUZ is only 4 digits, and those 4 digits 
+"BLD",9954,1,5,0)
+match with the last 4 of the SSN of any person in the New Person(#200) 
+"BLD",9954,1,6,0)
+file, the call will fail and the mail group will not be created.
+"BLD",9954,1,7,0)
+ 
+"BLD",9954,1,8,0)
+2. When using the Mailman API SENDMSG^XMXAPI, if the subject line is 
+"BLD",9954,1,9,0)
+under 3 characters or over 65 characters the API will fail and the 
+"BLD",9954,1,10,0)
+message will not be sent. When using the Mailman application to send a 
+"BLD",9954,1,11,0)
+message, subject lines are automatically truncated. The code changes will 
+"BLD",9954,1,12,0)
+duplicate this functionality.
+"BLD",9954,1,13,0)
+ 
+"BLD",9954,1,14,0)
+3. An entry in the BULLETIN(3.6) file named XM DOMAIN ADDED makes several 
+"BLD",9954,1,15,0)
+references to the NOIS system which is no longer used. In an effort to 
+"BLD",9954,1,16,0)
+correct this issue and avoid future issues, the name NOIS will be 
+"BLD",9954,1,17,0)
+replaced with the more generic term "trouble ticket."
+"BLD",9954,1,18,0)
+ 
+"BLD",9954,1,19,0)
+4. Two Mailman API's have been confirmed to be functioning incorrectly. 
+"BLD",9954,1,20,0)
+The COPYAMT^XMXSEC1 API does not properly count the number of lines in a 
+"BLD",9954,1,21,0)
+mail message. The OPTEDIT^XMXSEC2 API does not properly check if a 
+"BLD",9954,1,22,0)
+message text or message subject line can be edited.
+"BLD",9954,1,23,0)
+ 
+"BLD",9954,1,24,0)
+5. Mailman API QX^XMXUTIL3 is not properly displaying a list of users 
+"BLD",9954,1,25,0)
+that are either current or not current in reading a message.
+"BLD",9954,4,0)
+^9.64PA^^
+"BLD",9954,6.3)
+6
+"BLD",9954,"INID")
+^n
+"BLD",9954,"INIT")
+EN^XM47PT
+"BLD",9954,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9954,"KRN",.4,0)
+.4
+"BLD",9954,"KRN",.401,0)
+.401
+"BLD",9954,"KRN",.402,0)
+.402
+"BLD",9954,"KRN",.403,0)
+.403
+"BLD",9954,"KRN",.5,0)
+.5
+"BLD",9954,"KRN",.84,0)
+.84
+"BLD",9954,"KRN",3.6,0)
+3.6
+"BLD",9954,"KRN",3.8,0)
+3.8
+"BLD",9954,"KRN",9.2,0)
+9.2
+"BLD",9954,"KRN",9.8,0)
+9.8
+"BLD",9954,"KRN",9.8,"NM",0)
+^9.68A^5^5
+"BLD",9954,"KRN",9.8,"NM",1,0)
+XMXSEC2^^0^B68956624
+"BLD",9954,"KRN",9.8,"NM",2,0)
+XMXUTIL3^^0^B23398981
+"BLD",9954,"KRN",9.8,"NM",3,0)
+XMBGRP^^0^B34217969
+"BLD",9954,"KRN",9.8,"NM",4,0)
+XMXAPI^^0^B52258962
+"BLD",9954,"KRN",9.8,"NM",5,0)
+XMXSEC1^^0^B64246079
+"BLD",9954,"KRN",9.8,"NM","B","XMBGRP",3)
+
+"BLD",9954,"KRN",9.8,"NM","B","XMXAPI",4)
+
+"BLD",9954,"KRN",9.8,"NM","B","XMXSEC1",5)
+
+"BLD",9954,"KRN",9.8,"NM","B","XMXSEC2",1)
+
+"BLD",9954,"KRN",9.8,"NM","B","XMXUTIL3",2)
+
+"BLD",9954,"KRN",19,0)
+19
+"BLD",9954,"KRN",19,"NM",0)
+^9.68A^^
+"BLD",9954,"KRN",19.1,0)
+19.1
+"BLD",9954,"KRN",101,0)
+101
+"BLD",9954,"KRN",409.61,0)
+409.61
+"BLD",9954,"KRN",771,0)
+771
+"BLD",9954,"KRN",779.2,0)
+779.2
+"BLD",9954,"KRN",870,0)
+870
+"BLD",9954,"KRN",8989.51,0)
+8989.51
+"BLD",9954,"KRN",8989.52,0)
+8989.52
+"BLD",9954,"KRN",8994,0)
+8994
+"BLD",9954,"KRN","B",.4,.4)
+
+"BLD",9954,"KRN","B",.401,.401)
+
+"BLD",9954,"KRN","B",.402,.402)
+
+"BLD",9954,"KRN","B",.403,.403)
+
+"BLD",9954,"KRN","B",.5,.5)
+
+"BLD",9954,"KRN","B",.84,.84)
+
+"BLD",9954,"KRN","B",3.6,3.6)
+
+"BLD",9954,"KRN","B",3.8,3.8)
+
+"BLD",9954,"KRN","B",9.2,9.2)
+
+"BLD",9954,"KRN","B",9.8,9.8)
+
+"BLD",9954,"KRN","B",19,19)
+
+"BLD",9954,"KRN","B",19.1,19.1)
+
+"BLD",9954,"KRN","B",101,101)
+
+"BLD",9954,"KRN","B",409.61,409.61)
+
+"BLD",9954,"KRN","B",771,771)
+
+"BLD",9954,"KRN","B",779.2,779.2)
+
+"BLD",9954,"KRN","B",870,870)
+
+"BLD",9954,"KRN","B",8989.51,8989.51)
+
+"BLD",9954,"KRN","B",8989.52,8989.52)
+
+"BLD",9954,"KRN","B",8994,8994)
+
+"BLD",9954,"QDEF")
+^^^^^^^^^^YES
+"BLD",9954,"QUES",0)
+^9.62^^
+"BLD",9954,"REQB",0)
+^9.611^2^2
+"BLD",9954,"REQB",1,0)
+XM*8.0*34^2
+"BLD",9954,"REQB",2,0)
+XM*8.0*41^2
+"BLD",9954,"REQB","B","XM*8.0*34",1)
+
+"BLD",9954,"REQB","B","XM*8.0*41",2)
+
+"INIT")
+EN^XM47PT
+"MBREQ")
+0
+"PKG",54,-1)
+1^1
+"PKG",54,0)
+MAILMAN^XM^Electronic Mail, both local and networked
+"PKG",54,20,0)
+^9.402P^^
+"PKG",54,22,0)
+^9.49I^1^1
+"PKG",54,22,1,0)
+8.0^3020815^3020826^66481
+"PKG",54,22,1,"PAH",1,0)
+47^3150520
+"PKG",54,22,1,"PAH",1,1,0)
+^^25^25^3150520
+"PKG",54,22,1,"PAH",1,1,1,0)
+Patch XM*8.0*47 addresses five issues:
+"PKG",54,22,1,"PAH",1,1,2,0)
+ 
+"PKG",54,22,1,"PAH",1,1,3,0)
+1. When using the Mailman extrinsic function $$MG^XMBGRP to create a new 
+"PKG",54,22,1,"PAH",1,1,4,0)
+mail group, if the organizer's DUZ is only 4 digits, and those 4 digits 
+"PKG",54,22,1,"PAH",1,1,5,0)
+match with the last 4 of the SSN of any person in the New Person(#200) 
+"PKG",54,22,1,"PAH",1,1,6,0)
+file, the call will fail and the mail group will not be created.
+"PKG",54,22,1,"PAH",1,1,7,0)
+ 
+"PKG",54,22,1,"PAH",1,1,8,0)
+2. When using the Mailman API SENDMSG^XMXAPI, if the subject line is 
+"PKG",54,22,1,"PAH",1,1,9,0)
+under 3 characters or over 65 characters the API will fail and the 
+"PKG",54,22,1,"PAH",1,1,10,0)
+message will not be sent. When using the Mailman application to send a 
+"PKG",54,22,1,"PAH",1,1,11,0)
+message, subject lines are automatically truncated. The code changes will 
+"PKG",54,22,1,"PAH",1,1,12,0)
+duplicate this functionality.
+"PKG",54,22,1,"PAH",1,1,13,0)
+ 
+"PKG",54,22,1,"PAH",1,1,14,0)
+3. An entry in the BULLETIN(3.6) file named XM DOMAIN ADDED makes several 
+"PKG",54,22,1,"PAH",1,1,15,0)
+references to the NOIS system which is no longer used. In an effort to 
+"PKG",54,22,1,"PAH",1,1,16,0)
+correct this issue and avoid future issues, the name NOIS will be 
+"PKG",54,22,1,"PAH",1,1,17,0)
+replaced with the more generic term "trouble ticket."
+"PKG",54,22,1,"PAH",1,1,18,0)
+ 
+"PKG",54,22,1,"PAH",1,1,19,0)
+4. Two Mailman API's have been confirmed to be functioning incorrectly. 
+"PKG",54,22,1,"PAH",1,1,20,0)
+The COPYAMT^XMXSEC1 API does not properly count the number of lines in a 
+"PKG",54,22,1,"PAH",1,1,21,0)
+mail message. The OPTEDIT^XMXSEC2 API does not properly check if a 
+"PKG",54,22,1,"PAH",1,1,22,0)
+message text or message subject line can be edited.
+"PKG",54,22,1,"PAH",1,1,23,0)
+ 
+"PKG",54,22,1,"PAH",1,1,24,0)
+5. Mailman API QX^XMXUTIL3 is not properly displaying a list of users 
+"PKG",54,22,1,"PAH",1,1,25,0)
+that are either current or not current in reading a message.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+YES
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+6
+"RTN","XM47PT")
+0^^B10685809^n/a
+"RTN","XM47PT",1,0)
+XM47PT ;ALB/JAM - UPDATE XM DOMAIN ADDED ENTRY IN THE BULLETIN FILE ;May 7, 2015
+"RTN","XM47PT",2,0)
+ ;;8.0;MailMan;**47**;Jun 28, 2002;Build 6
+"RTN","XM47PT",3,0)
+ ;
+"RTN","XM47PT",4,0)
+ Q
+"RTN","XM47PT",5,0)
+ ;
+"RTN","XM47PT",6,0)
+ ;
+"RTN","XM47PT",7,0)
+EN ;Validate user and initialize variables
+"RTN","XM47PT",8,0)
+ I '$D(DUZ) D BMES^XPDUTL("*** PROGRAMMER NOT DEFINED ***") Q
+"RTN","XM47PT",9,0)
+ N XMIEN,XMTL,XMSTR,XMUP,XMDL,XMDSTR
+"RTN","XM47PT",10,0)
+XMESSUPD ;Update the MESSAGE(#10) field of XM DOMAIN
+"RTN","XM47PT",11,0)
+ D BMES^XPDUTL("** Updating the BULLETIN(#3.6) file **")
+"RTN","XM47PT",12,0)
+ S XMIEN=$O(^XMB(3.6,"B","XM DOMAIN ADDED",""))_","
+"RTN","XM47PT",13,0)
+ F XMTL=1:1 S XMSTR=$P($T(MESSBULL+XMTL),";;",2) Q:XMSTR="QUIT"  D
+"RTN","XM47PT",14,0)
+ .S ^TMP($J,"WP",XMTL)=XMSTR
+"RTN","XM47PT",15,0)
+ .Q
+"RTN","XM47PT",16,0)
+ D WP^DIE(3.6,XMIEN,10,"K","^TMP($J,""WP"")","XMUP(""ERR"")")
+"RTN","XM47PT",17,0)
+ I $D(XMUP("ERR")) D XMUERR K ^TMP($J,"WP") Q
+"RTN","XM47PT",18,0)
+XMDESUPD ;Update the DESCRIPTION(#6) field of XM DOMAIN
+"RTN","XM47PT",19,0)
+ F XMDL=1:1 S XMDSTR=$P($T(DESCBULL+XMDL),";;",2) Q:XMDSTR="QUIT"  D
+"RTN","XM47PT",20,0)
+ .S ^TMP($J,"WPD",XMDL)=XMDSTR
+"RTN","XM47PT",21,0)
+ .Q
+"RTN","XM47PT",22,0)
+ D WP^DIE(3.6,XMIEN,6,"K","^TMP($J,""WPD"")","XMUP(""DERR"")")
+"RTN","XM47PT",23,0)
+ I $D(XMUP("DERR")) D XMUERR K ^TMP($J,"WPD"),^TMP($J,"WP") Q
+"RTN","XM47PT",24,0)
+ D BMES^XPDUTL("** The BULLETIN(#3.6) file has been successfully updated. **")
+"RTN","XM47PT",25,0)
+ K ^TMP($J,"WP"),^TMP($J,"WPD")
+"RTN","XM47PT",26,0)
+ Q
+"RTN","XM47PT",27,0)
+XMUERR ;Message to the user that an error occurred
+"RTN","XM47PT",28,0)
+ D BMES^XPDUTL("*** AN ERROR OCCURRED WHEN ATTEMPTING TO UPDATE THE XM DOMAIN ADDED ENTRY. PLEASE CONTACT YOUR IRM ***")
+"RTN","XM47PT",29,0)
+ Q
+"RTN","XM47PT",30,0)
+MESSBULL ;Message contents of the XM DOMAIN bulletin
+"RTN","XM47PT",31,0)
+ ;;This site has just received an incoming transmission from  
+"RTN","XM47PT",32,0)
+ ;;'|2|'. Since we have no record of this domain 
+"RTN","XM47PT",33,0)
+ ;;in the DOMAIN file 4.2, and did not find '|1|' in the 
+"RTN","XM47PT",34,0)
+ ;;INTERNET SUFFIX file 4.2996, we have added '|1|' to the 
+"RTN","XM47PT",35,0)
+ ;;DOMAIN file.
+"RTN","XM47PT",36,0)
+ ;;
+"RTN","XM47PT",37,0)
+ ;;If you think this domain should be added to file 4.2996, 
+"RTN","XM47PT",38,0)
+ ;;please enter a trouble ticket. Only internationally recognized internet 
+"RTN","XM47PT",39,0)
+ ;;suffixes should be added to file 4.2996, and then only via 
+"RTN","XM47PT",40,0)
+ ;;a MailMan patch. 
+"RTN","XM47PT",41,0)
+ ;;
+"RTN","XM47PT",42,0)
+ ;;If you think this domain may be a poorly named VHA domain, 
+"RTN","XM47PT",43,0)
+ ;;please enter a trouble ticket. All new VHA domains should end in 
+"RTN","XM47PT",44,0)
+ ;;'.DOMAIN.EXT'.
+"RTN","XM47PT",45,0)
+ ;;QUIT
+"RTN","XM47PT",46,0)
+DESCBULL ;Description contents of the XM DOMAIN bulletin
+"RTN","XM47PT",47,0)
+ ;;This bulletin is sent to alert IRM to the new domain. This shouldn't happen 
+"RTN","XM47PT",48,0)
+ ;;very often, and if it does, the domain name should be investigated. 
+"RTN","XM47PT",49,0)
+ ;;
+"RTN","XM47PT",50,0)
+ ;;If you think that it is a bad name, enter a trouble ticket so it can be investigated. 
+"RTN","XM47PT",51,0)
+ ;;
+"RTN","XM47PT",52,0)
+ ;;If this new top-level domain is a valid internet suffix, it should be
+"RTN","XM47PT",53,0)
+ ;;deleted from the DOMAIN file and added to file 4.2996, INTERNET SUFFIX,
+"RTN","XM47PT",54,0)
+ ;;and a trouble ticket should be entered for MailMan, so that a patch can be sent
+"RTN","XM47PT",55,0)
+ ;;out to add this top-level domain to file 4.2996 at every site.
+"RTN","XM47PT",56,0)
+ ;;QUIT
+"RTN","XM47PT",57,0)
+ Q
+"RTN","XMBGRP")
+0^3^B34217969^B34058917
+"RTN","XMBGRP",1,0)
+XMBGRP ;ISC-SF/GMB - Mail Group APIs ;04/17/2002  07:44
+"RTN","XMBGRP",2,0)
+ ;;8.0;MailMan;**47**;Jun 28, 2002;Build 6
+"RTN","XMBGRP",3,0)
+ ; Was (WASH ISC)/JL,CAP
+"RTN","XMBGRP",4,0)
+ ;
+"RTN","XMBGRP",5,0)
+ ; Entry points (DBIA 1146):
+"RTN","XMBGRP",6,0)
+ ; $$DM  Delete local members from a mail group.
+"RTN","XMBGRP",7,0)
+ ; $$MG  Create a mail group or add members to an existing mail group.
+"RTN","XMBGRP",8,0)
+MG(XMGROUP,XMTYPE,XMORG,XMSELF,XMY,XMDESC,XMQUIET) ; Create group or add members to existing group
+"RTN","XMBGRP",9,0)
+ ;Example:
+"RTN","XMBGRP",10,0)
+ ;S X=$$MG^XMBGRP(XMGROUP,XMTYPE,XMORG,XMSELF,.XMY,.XMDESC,XMQUIET)
+"RTN","XMBGRP",11,0)
+ ;
+"RTN","XMBGRP",12,0)
+ ;XMGROUP  =group name if creating a new group;
+"RTN","XMBGRP",13,0)
+ ;         =group name or pointer to ^XMB(3.8,
+"RTN","XMBGRP",14,0)
+ ;         if adding members to an existing group.
+"RTN","XMBGRP",15,0)
+ ;XMTYPE   type of group - used only for creation
+"RTN","XMBGRP",16,0)
+ ;         0=public (default)
+"RTN","XMBGRP",17,0)
+ ;         1=private
+"RTN","XMBGRP",18,0)
+ ;XMORG    group organizer - used only for creation
+"RTN","XMBGRP",19,0)
+ ;         pointer to ^VA(200, (default=DUZ)
+"RTN","XMBGRP",20,0)
+ ;XMSELF   allow self enrollment - used only for creation
+"RTN","XMBGRP",21,0)
+ ;         0=no
+"RTN","XMBGRP",22,0)
+ ;         1=yes (default)
+"RTN","XMBGRP",23,0)
+ ;XMY      local group members (Array - Pass by reference)
+"RTN","XMBGRP",24,0)
+ ;         XMY(member DUZ)=""
+"RTN","XMBGRP",25,0)
+ ;XMDESC   description (Array - Pass by reference)
+"RTN","XMBGRP",26,0)
+ ;         - used only for creation
+"RTN","XMBGRP",27,0)
+ ;         Must be appropriate for FM word processing field.
+"RTN","XMBGRP",28,0)
+ ;XMQUIET  silent flag
+"RTN","XMBGRP",29,0)
+ ;         0=interactive
+"RTN","XMBGRP",30,0)
+ ;         1=silent (default)
+"RTN","XMBGRP",31,0)
+ N XMABORT,XMGIEN,XMGNAME
+"RTN","XMBGRP",32,0)
+ S XMABORT=0
+"RTN","XMBGRP",33,0)
+ D MGINIT(XMGROUP,.XMGIEN,.XMGNAME,.XMTYPE,.XMORG,.XMSELF,.XMY,.XMDESC,.XMQUIET,.XMABORT)
+"RTN","XMBGRP",34,0)
+ I XMABORT K XMY Q 0
+"RTN","XMBGRP",35,0)
+ I '$D(XMGIEN) D
+"RTN","XMBGRP",36,0)
+ . D CREATE(XMGNAME,.XMGIEN,XMTYPE,XMORG,XMSELF,.XMDESC,XMQUIET,.XMABORT)  Q:XMABORT
+"RTN","XMBGRP",37,0)
+ . Q:'$O(XMY(""))
+"RTN","XMBGRP",38,0)
+ . D ADD(XMGIEN,.XMY,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",39,0)
+ . D NOTIFY("Members have been added to the "_XMGNAME_" Mail Group.",XMQUIET)
+"RTN","XMBGRP",40,0)
+ E  D
+"RTN","XMBGRP",41,0)
+ . D ADD(XMGIEN,.XMY,.XMABORT)
+"RTN","XMBGRP",42,0)
+ K XMY
+"RTN","XMBGRP",43,0)
+ Q $S(XMABORT:0,1:XMGIEN)
+"RTN","XMBGRP",44,0)
+MGINIT(XMGROUP,XMGIEN,XMGNAME,XMTYPE,XMORG,XMSELF,XMY,XMDESC,XMQUIET,XMABORT) ;
+"RTN","XMBGRP",45,0)
+ D CHKGROUP(XMGROUP,.XMGIEN,.XMGNAME,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",46,0)
+ I $D(XMGIEN),'$O(XMY("")) D  Q
+"RTN","XMBGRP",47,0)
+ . D NOTIFY("E907 No members specified to add to Mail Group "_XMGNAME,XMQUIET)
+"RTN","XMBGRP",48,0)
+ . S XMABORT=1
+"RTN","XMBGRP",49,0)
+ D CHKVAL(.XMTYPE,"XMTYPE",2,0,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",50,0)
+ S:$G(XMORG)="" XMORG=DUZ
+"RTN","XMBGRP",51,0)
+ S:XMORG<1 XMORG=.5
+"RTN","XMBGRP",52,0)
+ I '$D(^VA(200,XMORG,0)) D  Q
+"RTN","XMBGRP",53,0)
+ . D NOTIFY("E904 "_XMORG_" is not a user to use as an organizer of a mail group.",XMQUIET)
+"RTN","XMBGRP",54,0)
+ . S XMABORT=1
+"RTN","XMBGRP",55,0)
+ D CHKVAL(.XMSELF,"XMSELF",4,1,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",56,0)
+ D CHKVAL(.XMQUIET,"XMQUIET",7,1,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",57,0)
+ S:$D(ZTQUEUED) XMQUIET=1
+"RTN","XMBGRP",58,0)
+ Q
+"RTN","XMBGRP",59,0)
+CHKGROUP(XMGROUP,XMGIEN,XMGNAME,XMABORT) ;
+"RTN","XMBGRP",60,0)
+ I +XMGROUP=XMGROUP D  Q
+"RTN","XMBGRP",61,0)
+ . S XMGIEN=XMGROUP
+"RTN","XMBGRP",62,0)
+ . S XMGNAME=$P($G(^XMB(3.8,XMGIEN,0)),U,1)
+"RTN","XMBGRP",63,0)
+ . I XMGNAME="" D
+"RTN","XMBGRP",64,0)
+ . . D NOTIFY("E910 Mail Group "_XMGROUP_" could not be found !",XMQUIET)
+"RTN","XMBGRP",65,0)
+ . . S XMABORT=1
+"RTN","XMBGRP",66,0)
+ S XMGNAME=XMGROUP
+"RTN","XMBGRP",67,0)
+ I $L(XMGNAME)<3 D  Q
+"RTN","XMBGRP",68,0)
+ . D NOTIFY("E901 "_XMGNAME_" is not valid -- it is shorter than 3 characters",XMQUIET)
+"RTN","XMBGRP",69,0)
+ . S XMABORT=1
+"RTN","XMBGRP",70,0)
+ I $L(XMGNAME)>30 D  Q
+"RTN","XMBGRP",71,0)
+ . D NOTIFY("E902 "_XMGNAME_" is not valid -- it is longer than 30 characters",XMQUIET)
+"RTN","XMBGRP",72,0)
+ . S XMABORT=1
+"RTN","XMBGRP",73,0)
+ I $D(^XMB(3.8,"B",XMGNAME)) S XMGIEN=$O(^(XMGNAME,0))
+"RTN","XMBGRP",74,0)
+ Q
+"RTN","XMBGRP",75,0)
+CHKVAL(XMVAL,XMVNAME,XMPOSN,XMDEFALT,XMABORT) ;
+"RTN","XMBGRP",76,0)
+ S:$G(XMVAL)="" XMVAL=XMDEFALT
+"RTN","XMBGRP",77,0)
+ I XMVAL=0!(XMVAL=1) Q
+"RTN","XMBGRP",78,0)
+ D NOTIFY("E903 Parameter "_XMPOSN_"="_XMVAL_" (not valid, must be 0 or 1).",XMQUIET)
+"RTN","XMBGRP",79,0)
+ S XMABORT=1
+"RTN","XMBGRP",80,0)
+ Q
+"RTN","XMBGRP",81,0)
+CREATE(XMGNAME,XMGIEN,XMTYPE,XMORG,XMSELF,XMDESC,XMQUIET,XMABORT) ;
+"RTN","XMBGRP",82,0)
+ N DIC,Y,DA,DO,DD,X
+"RTN","XMBGRP",83,0)
+ S X=XMGNAME
+"RTN","XMBGRP",84,0)
+ S DIC="^XMB(3.8,",DIC(0)="FZMN"_$S(XMQUIET:"",1:"E")
+"RTN","XMBGRP",85,0)
+ ;** XM*8.0*47 Modified the DIR("DR") array to use a four slash stuff for the organizer field to prevent Fileman from reading four digit DUZ's as last four of SSN **
+"RTN","XMBGRP",86,0)
+ S DIC("DR")="4///"_$S(XMTYPE=0:"PU",1:"PR")_";5////"_XMORG_";10///0;7///"_$S(XMSELF:"y",1:"n")
+"RTN","XMBGRP",87,0)
+ D FILE^DICN
+"RTN","XMBGRP",88,0)
+ I Y<0 D  Q
+"RTN","XMBGRP",89,0)
+ . D NOTIFY("Mail Group ("_XMGNAME_") creation failed!",XMQUIET)
+"RTN","XMBGRP",90,0)
+ . S XMABORT=1
+"RTN","XMBGRP",91,0)
+ S XMGIEN=+Y
+"RTN","XMBGRP",92,0)
+ ;Add descriptive text
+"RTN","XMBGRP",93,0)
+ I $O(XMDESC(""))'="" D
+"RTN","XMBGRP",94,0)
+ . D WP^DIE(3.8,XMGIEN_",",3,"","XMDESC")
+"RTN","XMBGRP",95,0)
+ . K XMDESC
+"RTN","XMBGRP",96,0)
+ D NOTIFY("Mail Group "_XMGROUP_" created.",XMQUIET)
+"RTN","XMBGRP",97,0)
+ Q
+"RTN","XMBGRP",98,0)
+ADD(XMGIEN,XMY,XMABORT) ; Add local members
+"RTN","XMBGRP",99,0)
+ L +^XMB(3.8,XMGIEN):9 E  D  Q
+"RTN","XMBGRP",100,0)
+ . D NOTIFY("E906 "_XMGROUP_" File could not be locked - Did not add members.",XMQUIET)
+"RTN","XMBGRP",101,0)
+ . S XMABORT=1
+"RTN","XMBGRP",102,0)
+ N XMUSER,XMFDA,XMADDCNT
+"RTN","XMBGRP",103,0)
+ S XMUSER="",XMADDCNT=0
+"RTN","XMBGRP",104,0)
+ F  S XMUSER=$O(XMY(XMUSER)) Q:XMUSER=""  D
+"RTN","XMBGRP",105,0)
+ . I '$D(^VA(200,XMUSER,0))!'$D(^XMB(3.7,XMUSER,0)) D  Q
+"RTN","XMBGRP",106,0)
+ . . D NOTIFY("E908 Invalid member ("_XMUSER_") - NOT pointer to ^VA(200",XMQUIET)
+"RTN","XMBGRP",107,0)
+ . Q:$D(^XMB(3.8,XMGIEN,1,"B",XMUSER))  ; already a member
+"RTN","XMBGRP",108,0)
+ . S XMFDA(3.81,"+1,"_XMGIEN_",",.01)=XMUSER
+"RTN","XMBGRP",109,0)
+ . D UPDATE^DIE("","XMFDA")
+"RTN","XMBGRP",110,0)
+ . S XMADDCNT=XMADDCNT+1
+"RTN","XMBGRP",111,0)
+ L -^XMB(3.8,XMGIEN)
+"RTN","XMBGRP",112,0)
+ K XMY
+"RTN","XMBGRP",113,0)
+ S:'XMADDCNT XMABORT=1  ; No members added
+"RTN","XMBGRP",114,0)
+ Q
+"RTN","XMBGRP",115,0)
+DM(XMGROUP,XMY,XMQUIET) ; Delete members
+"RTN","XMBGRP",116,0)
+ ;XMGROUP  Mail Group Name or entry number
+"RTN","XMBGRP",117,0)
+ ;XMY      Array of members to remove
+"RTN","XMBGRP",118,0)
+ ;         XMY(local member DUZ)=""
+"RTN","XMBGRP",119,0)
+ ;XMQUIET  Silent Flag
+"RTN","XMBGRP",120,0)
+ N XMGIEN,XMUSER,DIK,DA,XMABORT
+"RTN","XMBGRP",121,0)
+ S XMABORT=0
+"RTN","XMBGRP",122,0)
+ D DMINIT(XMGROUP,.XMGIEN,.XMY,.XMQUIET,.XMABORT)
+"RTN","XMBGRP",123,0)
+ I XMABORT K XMY Q 0
+"RTN","XMBGRP",124,0)
+ L +^XMB(3.8,XMGIEN):9 E  D  Q 0
+"RTN","XMBGRP",125,0)
+ . D NOTIFY("E906 "_XMGROUP_" File could not be locked - Did not delete members.",XMQUIET)
+"RTN","XMBGRP",126,0)
+ . S XMABORT=1
+"RTN","XMBGRP",127,0)
+ S DA(1)=XMGIEN,DIK="^XMB(3.8,"_XMGIEN_",1,"
+"RTN","XMBGRP",128,0)
+ S XMUSER=""
+"RTN","XMBGRP",129,0)
+ F  S XMUSER=$O(XMY(XMUSER)) Q:XMUSER=""  D
+"RTN","XMBGRP",130,0)
+ . S DA=$O(^XMB(3.8,XMGIEN,1,"B",XMUSER,0)) Q:'DA
+"RTN","XMBGRP",131,0)
+ . D ^DIK
+"RTN","XMBGRP",132,0)
+ K XMY
+"RTN","XMBGRP",133,0)
+ L -^XMB(3.8,XMGIEN)
+"RTN","XMBGRP",134,0)
+ Q 1
+"RTN","XMBGRP",135,0)
+DMINIT(XMGROUP,XMGIEN,XMY,XMQUIET,XMABORT) ;
+"RTN","XMBGRP",136,0)
+ N XMGNAME
+"RTN","XMBGRP",137,0)
+ D CHKGROUP(XMGROUP,.XMGIEN,.XMGNAME,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",138,0)
+ I '$D(XMGIEN) D  Q
+"RTN","XMBGRP",139,0)
+ . D NOTIFY("E910 Mail Group "_XMGROUP_" could not be found !",XMQUIET)
+"RTN","XMBGRP",140,0)
+ . S XMABORT=1
+"RTN","XMBGRP",141,0)
+ D CHKVAL(.XMQUIET,"XMQUIET",3,1,.XMABORT) Q:XMABORT
+"RTN","XMBGRP",142,0)
+ S:$D(ZTQUEUED) XMQUIET=1
+"RTN","XMBGRP",143,0)
+ I '$O(XMY("")) D  Q
+"RTN","XMBGRP",144,0)
+ . D NOTIFY("E909 Member delete attempted with no members specified.",XMQUIET)
+"RTN","XMBGRP",145,0)
+ . S XMABORT=1
+"RTN","XMBGRP",146,0)
+ Q
+"RTN","XMBGRP",147,0)
+NOTIFY(XMMSG,XMQUIET) ; Notification
+"RTN","XMBGRP",148,0)
+ N I,XMTEXT
+"RTN","XMBGRP",149,0)
+ S XMTEXT(1)="There was a call to the Mail Group Applications Programmer"
+"RTN","XMBGRP",150,0)
+ S XMTEXT(2)="Interface (API) that required notification to the user:"
+"RTN","XMBGRP",151,0)
+ S XMTEXT(3)=""
+"RTN","XMBGRP",152,0)
+ S XMTEXT(4)=XMMSG
+"RTN","XMBGRP",153,0)
+ I XMQUIET D SENDMSG(.XMTEXT) Q
+"RTN","XMBGRP",154,0)
+ F I=1:1:4 W !,XMTEXT(I)
+"RTN","XMBGRP",155,0)
+ W !,$C(7)
+"RTN","XMBGRP",156,0)
+ Q
+"RTN","XMBGRP",157,0)
+SENDMSG(XMTEXT) ;
+"RTN","XMBGRP",158,0)
+ N XMY,XMDUZ,XMSUB
+"RTN","XMBGRP",159,0)
+ S XMY(.5)="",XMY(DUZ)="",XMTEXT="XMTEXT("
+"RTN","XMBGRP",160,0)
+ S XMDUZ=.5,XMSUB="MAIL GROUP API"
+"RTN","XMBGRP",161,0)
+ D ^XMD
+"RTN","XMBGRP",162,0)
+ Q
+"RTN","XMXAPI")
+0^4^B52258962^B50919089
+"RTN","XMXAPI",1,0)
+XMXAPI ;ISC-SF/GMB - Message APIs ; 4/2/09 10:11am
+"RTN","XMXAPI",2,0)
+ ;;8.0;MailMan;**15,41,47**;Jun 28, 2002;Build 6
+"RTN","XMXAPI",3,0)
+ ; All entry points covered by DBIA 2729.
+"RTN","XMXAPI",4,0)
+ ; Variables input:
+"RTN","XMXAPI",5,0)
+ ; XMATTACH  Imaging system BLOB attachment array
+"RTN","XMXAPI",6,0)
+ ; XMBODY    Message text (MUST NOT BE "XMBODY")
+"RTN","XMXAPI",7,0)
+ ;              (must be closed root, passed by value.  See WP_ROOT
+"RTN","XMXAPI",8,0)
+ ;               definition for WP^DIE(), FM word processing filer)
+"RTN","XMXAPI",9,0)
+ ; XMDUZ     User's DUZ, or enough of user's name for a positive ID
+"RTN","XMXAPI",10,0)
+ ;              eg: 1301 or "lastname,firs"
+"RTN","XMXAPI",11,0)
+ ; XMK       Basket number, or enough of a name for a positive ID
+"RTN","XMXAPI",12,0)
+ ;              eg: 1 or "IN"
+"RTN","XMXAPI",13,0)
+ ; XMKZ      Message number in basket XMK
+"RTN","XMXAPI",14,0)
+ ;           OR
+"RTN","XMXAPI",15,0)
+ ;           if $G(XMK)="", Message number in ^XMB(3.9
+"RTN","XMXAPI",16,0)
+ ; XMKZA     Message number list or list array in basket XMK
+"RTN","XMXAPI",17,0)
+ ;              eg: "1,3,5-7" or ARRAY("1,3")=""
+"RTN","XMXAPI",18,0)
+ ;                               ARRAY("5-7")=""
+"RTN","XMXAPI",19,0)
+ ;              (list may end in comma)
+"RTN","XMXAPI",20,0)
+ ;              (ARRAY must be passed by reference)
+"RTN","XMXAPI",21,0)
+ ;           OR
+"RTN","XMXAPI",22,0)
+ ;           if $G(XMK)="", Message number list or list array in ^XMB(3.9
+"RTN","XMXAPI",23,0)
+ ;              (same rules, but number ranges are NOT allowed)
+"RTN","XMXAPI",24,0)
+ ; XMSUBJ    Message subject
+"RTN","XMXAPI",25,0)
+ ; XMTO      Addressee or addressee array
+"RTN","XMXAPI",26,0)
+ ;              (array must be passed by reference)
+"RTN","XMXAPI",27,0)
+ ;           User's DUZ, or enough of user's name for a positive ID
+"RTN","XMXAPI",28,0)
+ ;              eg: 1301 or "lastname,firs" or ARRAY(1301)=""
+"RTN","XMXAPI",29,0)
+ ;                                             ARRAY("lastname,firs")=""
+"RTN","XMXAPI",30,0)
+ ;           G.group name (enough for positive ID)
+"RTN","XMXAPI",31,0)
+ ;           S.server name (enough for positive ID)
+"RTN","XMXAPI",32,0)
+ ;           D.device name (enough for positive ID)
+"RTN","XMXAPI",33,0)
+ ;           prefix above (except devices and servers) by:
+"RTN","XMXAPI",34,0)
+ ;              I: for 'information only' recipient (may not reply)
+"RTN","XMXAPI",35,0)
+ ;                 eg: "I:1301" or "I:lastname,firs"
+"RTN","XMXAPI",36,0)
+ ;              C: for 'copy' recipient (not expected to reply)
+"RTN","XMXAPI",37,0)
+ ;                 eg: "C:1301" or "C:lastname,firs"
+"RTN","XMXAPI",38,0)
+ ;              L@datetime: for when (in future) to send to this recipient
+"RTN","XMXAPI",39,0)
+ ;                 (datetime may be anything accepted by FM)
+"RTN","XMXAPI",40,0)
+ ;                 eg: "L@25 DEC@0500:1301" or "L@1 JAN:lastname,firs"
+"RTN","XMXAPI",41,0)
+ ;                     or "L@2981225.05:1301"
+"RTN","XMXAPI",42,0)
+ ;              (may combine IL@datetime:  or  CL@datetime:)
+"RTN","XMXAPI",43,0)
+ ;           To delete recipient, prefix by -
+"RTN","XMXAPI",44,0)
+ ;                 eg: -1301 or "-lastname,firs"
+"RTN","XMXAPI",45,0)
+ ; XMZ       message number in ^XMB(3.9,
+"RTN","XMXAPI",46,0)
+ ;
+"RTN","XMXAPI",47,0)
+ ; Variables output (must be passed by reference):
+"RTN","XMXAPI",48,0)
+ ; XMFULL    expanded address of last addressee
+"RTN","XMXAPI",49,0)
+ ; XMMSG     simple message telling how many messages were acted on
+"RTN","XMXAPI",50,0)
+ ; XMZ       message number created in ^XMB(3.9,
+"RTN","XMXAPI",51,0)
+ ;
+"RTN","XMXAPI",52,0)
+ ; Errors
+"RTN","XMXAPI",53,0)
+ ; XMERR     if there's any errors, then XMERR is set to the number of
+"RTN","XMXAPI",54,0)
+ ;           errors, otherwise XMERR is undefined.
+"RTN","XMXAPI",55,0)
+ ;           ^TMP("XMERR",$J,error number,"TEXT",line number)=error text
+"RTN","XMXAPI",56,0)
+ANSRMSG(XMDUZ,XMK,XMKZ,XMSUBJ,XMBODY,XMTO,XMINSTR,XMZR) ; Answer a msg (Send new msg with copy of original msg inside)
+"RTN","XMXAPI",57,0)
+ ; In:  User, basket, msg #
+"RTN","XMXAPI",58,0)
+ ; Out: XMZR (message number of answer)
+"RTN","XMXAPI",59,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",60,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",61,0)
+ D ANSRMSG^XMXPARM(.XMDUZ,.XMK,.XMKZ,.XMSUBJ,.XMBODY,.XMTO,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",62,0)
+ D ANSRMSG^XMXANSER(XMDUZ,.XMK,XMKZ,.XMSUBJ,XMBODY,.XMTO,.XMINSTR,.XMZR)
+"RTN","XMXAPI",63,0)
+ Q
+"RTN","XMXAPI",64,0)
+DELMSG(XMDUZ,XMK,XMKZA,XMMSG) ; Delete msgs from a basket
+"RTN","XMXAPI",65,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",66,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",67,0)
+ D ACTMSGS^XMXPARM(.XMDUZ,.XMK,.XMKZA) Q:$D(XMERR)
+"RTN","XMXAPI",68,0)
+ D DELMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMMSG)
+"RTN","XMXAPI",69,0)
+ Q
+"RTN","XMXAPI",70,0)
+FLTRMSG(XMDUZ,XMK,XMKZA,XMMSG) ; Filters msgs in a basket
+"RTN","XMXAPI",71,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",72,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",73,0)
+ D ACTMSGS^XMXPARM(.XMDUZ,.XMK,.XMKZA) Q:$D(XMERR)
+"RTN","XMXAPI",74,0)
+ D FLTRMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMMSG)
+"RTN","XMXAPI",75,0)
+ Q
+"RTN","XMXAPI",76,0)
+FWDMSG(XMDUZ,XMK,XMKZA,XMTO,XMINSTR,XMMSG) ; Forward msgs
+"RTN","XMXAPI",77,0)
+ ; XMINSTR("SHARE DATE")
+"RTN","XMXAPI",78,0)
+ ; XMINSTR("SHARE BSKT")
+"RTN","XMXAPI",79,0)
+ ; XMINSTR("SELF BSKT")
+"RTN","XMXAPI",80,0)
+ ; XMINSTR("FWD BY") substitute any string instead of XMDUZ name
+"RTN","XMXAPI",81,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",82,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",83,0)
+ D FWDMSG^XMXPARM(.XMDUZ,.XMK,.XMKZA,.XMTO,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",84,0)
+ D FWDMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMTO,.XMINSTR,.XMMSG)
+"RTN","XMXAPI",85,0)
+ Q
+"RTN","XMXAPI",86,0)
+LATERMSG(XMDUZ,XMK,XMKZA,XMINSTR,XMMSG) ; Later msgs
+"RTN","XMXAPI",87,0)
+ ; XMINSTR("LATER")
+"RTN","XMXAPI",88,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",89,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",90,0)
+ D LATERMSG^XMXPARM(.XMDUZ,.XMK,.XMKZA,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",91,0)
+ D LATERMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMINSTR,.XMMSG)
+"RTN","XMXAPI",92,0)
+ Q
+"RTN","XMXAPI",93,0)
+MOVEMSG(XMDUZ,XMK,XMKZA,XMKTO,XMMSG) ; Move msgs from one basket to another
+"RTN","XMXAPI",94,0)
+ ; XMKTO   Basket number, or enough of a name for a positive ID.
+"RTN","XMXAPI",95,0)
+ ;         Identifies basket to move to
+"RTN","XMXAPI",96,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",97,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",98,0)
+ D MOVEMSG^XMXPARM(.XMDUZ,.XMK,.XMKZA,.XMKTO) Q:$D(XMERR)
+"RTN","XMXAPI",99,0)
+ D MOVEMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,XMKTO,.XMMSG)
+"RTN","XMXAPI",100,0)
+ Q
+"RTN","XMXAPI",101,0)
+NTOGLMSG(XMDUZ,XMK,XMKZA,XMMSG) ; New Toggle msgs
+"RTN","XMXAPI",102,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",103,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",104,0)
+ D ACTMSGS^XMXPARM(.XMDUZ,.XMK,.XMKZA) Q:$D(XMERR)
+"RTN","XMXAPI",105,0)
+ D NTOGLMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMMSG)
+"RTN","XMXAPI",106,0)
+ Q
+"RTN","XMXAPI",107,0)
+PRTMSG(XMDUZ,XMK,XMKZA,XMPRTTO,XMINSTR,XMMSG,XMTASK,XMSUBJ,XMTO) ; Print msgs
+"RTN","XMXAPI",108,0)
+ ; XMINSTR("HDR"), "RESPS", "RECIPS", "WHEN"
+"RTN","XMXAPI",109,0)
+ ; XMPRTTO Printer name
+"RTN","XMXAPI",110,0)
+ ; XMSUBJ & XMTO used only if XMPRTTO is a P-MESSAGE device.  Even then, they're optional.
+"RTN","XMXAPI",111,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",112,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",113,0)
+ D PRTMSG^XMXPARM(.XMDUZ,.XMK,.XMKZA,.XMPRTTO,.XMINSTR,.XMSUBJ,.XMTO) Q:$D(XMERR)
+"RTN","XMXAPI",114,0)
+ D PRTMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,XMPRTTO,.XMINSTR,.XMMSG,.XMTASK,.XMSUBJ,.XMTO)
+"RTN","XMXAPI",115,0)
+ Q
+"RTN","XMXAPI",116,0)
+PUTSERV(XMKN,XMZ) ; Put a message in a server basket
+"RTN","XMXAPI",117,0)
+ ; XMKN   full server name, including "S."
+"RTN","XMXAPI",118,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",119,0)
+ D SERV^XMXPARMB(.XMKN,.XMZ) Q:$D(XMERR)
+"RTN","XMXAPI",120,0)
+ D PUTSERV^XMXMSGS1(XMKN,XMZ)
+"RTN","XMXAPI",121,0)
+ Q
+"RTN","XMXAPI",122,0)
+REPLYMSG(XMDUZ,XMK,XMKZ,XMBODY,XMINSTR,XMZR) ; Reply to msg (Attach reply to original msg)
+"RTN","XMXAPI",123,0)
+ ; XMINSTR("NET REPLY") 1=send over the network; 0=don't (default)
+"RTN","XMXAPI",124,0)
+ ; XMINSTR("NET SUBJ")  Network Reply subject (see XMSUBJ)
+"RTN","XMXAPI",125,0)
+ ; Out: XMZR (message number of answer)
+"RTN","XMXAPI",126,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",127,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",128,0)
+ D REPLYMSG^XMXPARM(.XMDUZ,.XMK,.XMKZ,.XMBODY,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",129,0)
+ D REPLYMSG^XMXREPLY(XMDUZ,.XMK,XMKZ,XMBODY,.XMINSTR,.XMZR)
+"RTN","XMXAPI",130,0)
+ Q
+"RTN","XMXAPI",131,0)
+SENDBULL(XMDUZ,XMBN,XMPARM,XMBODY,XMTO,XMINSTR,XMZ,XMATTACH) ; Send a bulletin (returns XMZ)
+"RTN","XMXAPI",132,0)
+ ; In:  User, bulletin name, bulletin parameters, add'l text,
+"RTN","XMXAPI",133,0)
+ ;      add'l recipients, send now or later (when?), opt'l BLOB
+"RTN","XMXAPI",134,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",135,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",136,0)
+ D BULLETIN^XMXPARM(.XMDUZ,.XMBN,.XMPARM,.XMBODY,.XMTO,.XMINSTR,.XMATTACH) Q:$D(XMERR)
+"RTN","XMXAPI",137,0)
+ D SENDBULL^XMXBULL(XMDUZ,XMBN,.XMPARM,.XMBODY,.XMTO,.XMINSTR,.XMZ,.XMATTACH)
+"RTN","XMXAPI",138,0)
+ Q
+"RTN","XMXAPI",139,0)
+SENDMSG(XMDUZ,XMSUBJ,XMBODY,XMTO,XMINSTR,XMZ,XMATTACH) ; Send a msg
+"RTN","XMXAPI",140,0)
+ ; In:  User, basket (if you are recipient), all msg parts,
+"RTN","XMXAPI",141,0)
+ ;      priority?, closed?, (info?,cc?), send now or later (when?),
+"RTN","XMXAPI",142,0)
+ ;      (KIDS,MIME,text,PackMan), delete date (if to shared,mail)
+"RTN","XMXAPI",143,0)
+ ; XMINSTR("RCPT BSKT")
+"RTN","XMXAPI",144,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",145,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",146,0)
+ ; ** XM*8*47 Adds code to automatically truncate subject line if too long or concatenate if too short. **
+"RTN","XMXAPI",147,0)
+ I $L(XMSUBJ)<3,XMSUBJ'="" S XMSUBJ=XMSUBJ_"..."
+"RTN","XMXAPI",148,0)
+ I $L(XMSUBJ)>65 S XMSUBJ=$E(XMSUBJ,1,65)
+"RTN","XMXAPI",149,0)
+ D SENDMSG^XMXPARM(.XMDUZ,.XMSUBJ,.XMBODY,.XMTO,.XMINSTR,.XMATTACH) Q:$D(XMERR)
+"RTN","XMXAPI",150,0)
+ D SENDMSG^XMXSEND(XMDUZ,XMSUBJ,XMBODY,.XMTO,.XMINSTR,.XMZ,.XMATTACH)
+"RTN","XMXAPI",151,0)
+ Q
+"RTN","XMXAPI",152,0)
+TASKBULL(XMDUZ,XMBN,XMPARM,XMBODY,XMTO,XMINSTR,XMTASK,XMATTACH) ; Send a bulletin (Task it - does not return XMZ)
+"RTN","XMXAPI",153,0)
+ ; XMBN     Bulletin name (must be full name)
+"RTN","XMXAPI",154,0)
+ ; XMPARM   Array of parameters necessary for bulletin
+"RTN","XMXAPI",155,0)
+ ;             ARRAY(1)="parameter 1"
+"RTN","XMXAPI",156,0)
+ ;             ARRAY(2)="parameter 2"
+"RTN","XMXAPI",157,0)
+ ; XMBODY   Additional text to append to the bulletin text
+"RTN","XMXAPI",158,0)
+ ;              (must be closed root, passed by value.  See WP_ROOT
+"RTN","XMXAPI",159,0)
+ ;               definition for WP^DIE(), FM word processing filer)
+"RTN","XMXAPI",160,0)
+ ; XMTO     Additional addressee(s)
+"RTN","XMXAPI",161,0)
+ ; XMINSTR("SELF BSKT")
+"RTN","XMXAPI",162,0)
+ ;  ***ETC.***
+"RTN","XMXAPI",163,0)
+ ; In:  User, bulletin name, bulletin parameters, add'l text,
+"RTN","XMXAPI",164,0)
+ ;      add'l recipients, send now or later (when?), opt'l BLOB
+"RTN","XMXAPI",165,0)
+ ; Out: XMTASK (task number)
+"RTN","XMXAPI",166,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",167,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",168,0)
+ D BULLETIN^XMXPARM(.XMDUZ,.XMBN,.XMPARM,.XMBODY,.XMTO,.XMINSTR,.XMATTACH) Q:$D(XMERR)
+"RTN","XMXAPI",169,0)
+ D TASKBULL^XMXBULL(XMDUZ,XMBN,.XMPARM,.XMBODY,.XMTO,.XMINSTR,.XMTASK,.XMATTACH)
+"RTN","XMXAPI",170,0)
+ Q
+"RTN","XMXAPI",171,0)
+TERMMSG(XMDUZ,XMK,XMKZA,XMMSG) ; Terminate msgs
+"RTN","XMXAPI",172,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",173,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",174,0)
+ D ACTMSGS^XMXPARM(.XMDUZ,.XMK,.XMKZA) Q:$D(XMERR)
+"RTN","XMXAPI",175,0)
+ D TERMMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMMSG)
+"RTN","XMXAPI",176,0)
+ Q
+"RTN","XMXAPI",177,0)
+VAPORMSG(XMDUZ,XMK,XMKZA,XMINSTR,XMMSG) ; Set vaporize date for msgs in a basket
+"RTN","XMXAPI",178,0)
+ ; XMINSTR("VAPOR")
+"RTN","XMXAPI",179,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",180,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",181,0)
+ D VAPORMSG^XMXPARM(.XMDUZ,.XMK,.XMKZA,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",182,0)
+ D VAPORMSG^XMXMSGS(XMDUZ,.XMK,.XMKZA,.XMINSTR,.XMMSG)
+"RTN","XMXAPI",183,0)
+ Q
+"RTN","XMXAPI",184,0)
+ZAPSERV(XMKN,XMZ) ; Delete a message from a server basket
+"RTN","XMXAPI",185,0)
+ ; XMKN   full server name, including "S."
+"RTN","XMXAPI",186,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",187,0)
+ D SERV^XMXPARMB(.XMKN,.XMZ) Q:$D(XMERR)
+"RTN","XMXAPI",188,0)
+ D ZAPSERV^XMXMSGS1(XMKN,XMZ)
+"RTN","XMXAPI",189,0)
+ Q
+"RTN","XMXAPI",190,0)
+ ; ***** other actions
+"RTN","XMXAPI",191,0)
+ADDRNSND(XMDUZ,XMZ,XMTO,XMINSTR) ; Build a message part 2 (address and send)
+"RTN","XMXAPI",192,0)
+ ; XMZ (in)
+"RTN","XMXAPI",193,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",194,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",195,0)
+ D ADDRNSND^XMXPARM(.XMDUZ,.XMZ,.XMTO,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",196,0)
+ D ADDRNSND^XMXSEND(XMDUZ,XMZ,.XMTO,.XMINSTR)
+"RTN","XMXAPI",197,0)
+ Q
+"RTN","XMXAPI",198,0)
+CRE8XMZ(XMSUBJ,XMZ) ; Build a message part 1 (create)
+"RTN","XMXAPI",199,0)
+ ; In:  subject
+"RTN","XMXAPI",200,0)
+ ; Out: XMZ
+"RTN","XMXAPI",201,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",202,0)
+ D VSUBJ^XMXPARM(.XMSUBJ) Q:$D(XMERR)
+"RTN","XMXAPI",203,0)
+ D CRE8XMZ^XMXSEND(XMSUBJ,.XMZ)
+"RTN","XMXAPI",204,0)
+ Q
+"RTN","XMXAPI",205,0)
+MOVEBODY(XMZ,XMBODY) ; Move text to the message
+"RTN","XMXAPI",206,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",207,0)
+ D MOVEBODY^XMXPARM(.XMZ,.XMBODY) Q:$D(XMERR)
+"RTN","XMXAPI",208,0)
+ D MOVEBODY^XMXSEND(XMZ,XMBODY)
+"RTN","XMXAPI",209,0)
+ Q
+"RTN","XMXAPI",210,0)
+TOWHOM(XMDUZ,XMZ,XMTYPE,XMTO,XMINSTR,XMFULL) ; Check ONE msg addressee
+"RTN","XMXAPI",211,0)
+ ; XMFULL   Expanded address of the addressee
+"RTN","XMXAPI",212,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",213,0)
+ I '$D(XMV) N XMV,XMDISPI,XMDUN,XMNOSEND,XMPRIV
+"RTN","XMXAPI",214,0)
+ D TOWHOM^XMXPARM(.XMDUZ,.XMZ,.XMTYPE,XMTO,.XMINSTR) Q:$D(XMERR)
+"RTN","XMXAPI",215,0)
+ D TOWHOM^XMXTO(XMDUZ,.XMZ,XMTYPE,XMTO,.XMINSTR,.XMFULL)
+"RTN","XMXAPI",216,0)
+ Q
+"RTN","XMXAPI",217,0)
+VSUBJ(XMSUBJ) ; Validate a subject
+"RTN","XMXAPI",218,0)
+ N DIERR ; ADDED IN PATCH XM*8.0*41 JDG
+"RTN","XMXAPI",219,0)
+ D VSUBJ^XMXPARM(.XMSUBJ)
+"RTN","XMXAPI",220,0)
+ Q
+"RTN","XMXSEC1")
+0^5^B64246079^B64148927
+"RTN","XMXSEC1",1,0)
+XMXSEC1 ;ISC-SF/GMB - Message security and restrictions (cont.) ;05/17/2002  13:26
+"RTN","XMXSEC1",2,0)
+ ;;8.0;MailMan;**47**;Jun 28, 2002;Build 6
+"RTN","XMXSEC1",3,0)
+ ; All entry points covered by DBIA 2732.
+"RTN","XMXSEC1",4,0)
+GETRESTR(XMDUZ,XMZ,XMZREC,XMINSTR,XMRESTR) ;
+"RTN","XMXSEC1",5,0)
+ ; If a message is closed, it may not be forwarded to SHARED,MAIL, even by the sender
+"RTN","XMXSEC1",6,0)
+ I $G(XMZREC)="" S XMZREC=$G(^XMB(3.9,XMZ,0))
+"RTN","XMXSEC1",7,0)
+ I "^Y^y^"[(U_$P(XMZREC,U,9)_U) D
+"RTN","XMXSEC1",8,0)
+ . S:$G(XMRESTR("FLAGS"))'["X" XMRESTR("FLAGS")=$G(XMRESTR("FLAGS"))_"X"
+"RTN","XMXSEC1",9,0)
+ E  I $G(XMRESTR("FLAGS"))["X" S XMRESTR("FLAGS")=$TR(XMRESTR("FLAGS"),"X")
+"RTN","XMXSEC1",10,0)
+ ; If a message is confidential, it may not be forwarded to SHARED,MAIL
+"RTN","XMXSEC1",11,0)
+ I "^Y^y^"[(U_$P(XMZREC,U,11)_U) D
+"RTN","XMXSEC1",12,0)
+ . S:$G(XMRESTR("FLAGS"))'["C" XMRESTR("FLAGS")=$G(XMRESTR("FLAGS"))_"C"
+"RTN","XMXSEC1",13,0)
+ E  I $G(XMRESTR("FLAGS"))["C" S XMRESTR("FLAGS")=$TR(XMRESTR("FLAGS"),"C")
+"RTN","XMXSEC1",14,0)
+ Q:$G(XMINSTR("ADDR FLAGS"))["R"
+"RTN","XMXSEC1",15,0)
+ ; If a message is priority, it may not be forwarded to groups unless
+"RTN","XMXSEC1",16,0)
+ ; the site has chosen to allow it, or if
+"RTN","XMXSEC1",17,0)
+ ; the user is the originator or possesses the proper security key,
+"RTN","XMXSEC1",18,0)
+ I $P(XMZREC,U,7)["P",'$P($G(^XMB(1,1,2)),U,1),'$$ORIGIN8R^XMXSEC(XMDUZ,XMZREC),'$D(^XUSEC("XM GROUP PRIORITY",XMDUZ)) S XMRESTR("NOFPG")=""
+"RTN","XMXSEC1",19,0)
+ E  K:$D(XMRESTR("NOFPG")) XMRESTR("NOFPG")
+"RTN","XMXSEC1",20,0)
+ ; If a message has responses, it may not be broadcast.  Users w/auto-
+"RTN","XMXSEC1",21,0)
+ ; forward addresses would not see the responses.
+"RTN","XMXSEC1",22,0)
+ I $O(^XMB(3.9,XMZ,3,0)) S XMRESTR("NOBCAST")=""
+"RTN","XMXSEC1",23,0)
+ ; If a message is more lines than the limit,
+"RTN","XMXSEC1",24,0)
+ ; then it may not be sent/forwarded to a remote site.
+"RTN","XMXSEC1",25,0)
+ D CHKLINES(XMDUZ,XMZ,.XMRESTR)
+"RTN","XMXSEC1",26,0)
+ Q
+"RTN","XMXSEC1",27,0)
+CHKLINES(XMDUZ,XMZ,XMRESTR) ; Replaces NO^XMA21A
+"RTN","XMXSEC1",28,0)
+ N XMLIMIT
+"RTN","XMXSEC1",29,0)
+ Q:$D(^XUSEC("XMMGR",XMDUZ))
+"RTN","XMXSEC1",30,0)
+ S XMLIMIT=$P($G(^XMB(1,1,"NETWORK-LIMIT")),U)
+"RTN","XMXSEC1",31,0)
+ I XMLIMIT,$P($G(^XMB(3.9,XMZ,2,0)),U,4)>XMLIMIT S XMRESTR("NONET")=XMLIMIT Q
+"RTN","XMXSEC1",32,0)
+ K:$D(XMRESTR("NONET")) XMRESTR("NONET")
+"RTN","XMXSEC1",33,0)
+ Q
+"RTN","XMXSEC1",34,0)
+CHKMSG(XMDUZ,XMK,XMKZ,XMZ,XMZREC) ; Is the message where the calling routine says it is,
+"RTN","XMXSEC1",35,0)
+ ; and is the user authorized to access it?
+"RTN","XMXSEC1",36,0)
+ I $G(XMK) D  Q
+"RTN","XMXSEC1",37,0)
+ . S XMZ=$O(^XMB(3.7,XMDUZ,2,XMK,1,"C",XMKZ,""))
+"RTN","XMXSEC1",38,0)
+ . I 'XMZ D  Q
+"RTN","XMXSEC1",39,0)
+ . . N XMPARM
+"RTN","XMXSEC1",40,0)
+ . . S XMPARM(1)=XMKZ,XMPARM(2)=XMK
+"RTN","XMXSEC1",41,0)
+ . . D ERRSET^XMXUTIL(34351,.XMPARM) ; Message _XMKZ_ in basket _XMK_ does not exist.
+"RTN","XMXSEC1",42,0)
+ . S XMZREC=$G(^XMB(3.9,XMZ,0))
+"RTN","XMXSEC1",43,0)
+ . I XMZREC'="" D:XMDUZ'=DUZ  Q
+"RTN","XMXSEC1",44,0)
+ . . N X
+"RTN","XMXSEC1",45,0)
+ . . S X=$$SURRACC^XMXSEC(XMDUZ,"",XMZ,XMZREC)
+"RTN","XMXSEC1",46,0)
+ . N XMPARM
+"RTN","XMXSEC1",47,0)
+ . S XMPARM(1)=XMZ,XMPARM(2)=XMKZ,XMPARM(3)=XMK
+"RTN","XMXSEC1",48,0)
+ . D ERRSET^XMXUTIL(34352,.XMPARM) ; Message _XMZ_ (message _XMKZ_ in basket _XMK_) does not exist.
+"RTN","XMXSEC1",49,0)
+ S XMZ=XMKZ
+"RTN","XMXSEC1",50,0)
+ S XMZREC=$G(^XMB(3.9,XMZ,0))
+"RTN","XMXSEC1",51,0)
+ I XMZREC="" D ERRSET^XMXUTIL(34354,XMZ) Q  ; Message _XMZ_ does not exist.
+"RTN","XMXSEC1",52,0)
+ Q:'$$ACCESS^XMXSEC(XMDUZ,XMZ,XMZREC)
+"RTN","XMXSEC1",53,0)
+ S XMK=+$O(^XMB(3.7,"M",XMZ,XMDUZ,""))
+"RTN","XMXSEC1",54,0)
+ Q:'XMK
+"RTN","XMXSEC1",55,0)
+ S XMKZ=$P($G(^XMB(3.7,XMDUZ,2,XMK,1,XMZ,0)),U,2)
+"RTN","XMXSEC1",56,0)
+ I 'XMKZ D ADDITM^XMUT4A(XMDUZ,XMK,XMZ,.XMKZ)
+"RTN","XMXSEC1",57,0)
+ Q
+"RTN","XMXSEC1",58,0)
+PAKMAN(XMZ,XMZREC) ; Returns 1 if this is a packman msg; 0 if not.
+"RTN","XMXSEC1",59,0)
+ ; Unfortunately, there isn't always an "X" in piece 7 of the zero node,
+"RTN","XMXSEC1",60,0)
+ ; so we must go check out the first line of text.
+"RTN","XMXSEC1",61,0)
+ N XMTYPE
+"RTN","XMXSEC1",62,0)
+ I $G(XMZREC)="" S XMZREC=$G(^XMB(3.9,XMZ,0))
+"RTN","XMXSEC1",63,0)
+ S XMTYPE=$P(XMZREC,U,7)
+"RTN","XMXSEC1",64,0)
+ I "P"[XMTYPE D  Q XMTYPE  ; "P" means priority, and it exists along with
+"RTN","XMXSEC1",65,0)
+ . ; message type in piece 7 in all MailMan versions thru 7.*
+"RTN","XMXSEC1",66,0)
+ . N XMREC,XMI
+"RTN","XMXSEC1",67,0)
+ . S XMTYPE=0
+"RTN","XMXSEC1",68,0)
+ . S XMI=$O(^XMB(3.9,XMZ,2,.999999)) I 'XMI Q
+"RTN","XMXSEC1",69,0)
+ . S XMREC=^XMB(3.9,XMZ,2,XMI,0)
+"RTN","XMXSEC1",70,0)
+ . Q:$E(XMREC,1)'="$"
+"RTN","XMXSEC1",71,0)
+ . I XMREC?1"$TXT Created by".E1" at ".E1" on ".E S XMTYPE=1 Q  ; Unsecured PackMan
+"RTN","XMXSEC1",72,0)
+ . I XMREC?1"$TXT PACKMAN BACKUP".E S XMTYPE=1 Q  ; PackMan Backup
+"RTN","XMXSEC1",73,0)
+ . I XMREC?1"$TXT ^Created by".E1" at ".E1" on ".E S XMTYPE=1 Q  ; Secured PackMan
+"RTN","XMXSEC1",74,0)
+ Q:XMTYPE="K"!(XMTYPE="X") 1  ; PackMan message (KIDS or regular)
+"RTN","XMXSEC1",75,0)
+ Q 0
+"RTN","XMXSEC1",76,0)
+OPTGRP(XMDUZ,XMK,XMOPT,XMOX,XMQDNUM) ; What may the user do at the basket/message group level?
+"RTN","XMXSEC1",77,0)
+ I XMK D
+"RTN","XMXSEC1",78,0)
+ . I XMDUZ=.5,XMK>999 D OPTPOST(.XMOPT,.XMOX) Q
+"RTN","XMXSEC1",79,0)
+ . D OPTUSER1(XMDUZ,.XMOPT,.XMOX)
+"RTN","XMXSEC1",80,0)
+ . D OPTUSER2(XMK,.XMOPT,.XMOX)
+"RTN","XMXSEC1",81,0)
+ E  D
+"RTN","XMXSEC1",82,0)
+ . I XMK="!" D OPTSS(XMDUZ,.XMOPT,.XMOX) Q
+"RTN","XMXSEC1",83,0)
+ . D OPTUSER1(XMDUZ,.XMOPT,.XMOX)
+"RTN","XMXSEC1",84,0)
+ Q
+"RTN","XMXSEC1",85,0)
+SET(XMCD,XMDN,XMOPT,XMOX) ;
+"RTN","XMXSEC1",86,0)
+ N XMDREC
+"RTN","XMXSEC1",87,0)
+ S XMDREC=$$EZBLD^DIALOG(XMDN)
+"RTN","XMXSEC1",88,0)
+ S XMOPT(XMCD)=$P(XMDREC,":",2,99)
+"RTN","XMXSEC1",89,0)
+ S XMOX("O",XMCD)=$P(XMDREC,":",1) ; "O"=original english to foreign
+"RTN","XMXSEC1",90,0)
+ S XMOX("X",$P(XMDREC,":",1))=XMCD ; "X"=translate foreign to english
+"RTN","XMXSEC1",91,0)
+ Q
+"RTN","XMXSEC1",92,0)
+Q(XMCD,XMDN) ;
+"RTN","XMXSEC1",93,0)
+ I $G(XMQDNUM) S XMOPT(XMCD,"?")=XMDN Q
+"RTN","XMXSEC1",94,0)
+ S XMOPT(XMCD,"?")=$$EZBLD^DIALOG(XMDN)
+"RTN","XMXSEC1",95,0)
+ Q
+"RTN","XMXSEC1",96,0)
+OPTUSER1(XMDUZ,XMOPT,XMOX) ;
+"RTN","XMXSEC1",97,0)
+ D SET("D",37202,.XMOPT,.XMOX) ; Delete messages
+"RTN","XMXSEC1",98,0)
+ D SET("F",37203,.XMOPT,.XMOX) ; Forward messages
+"RTN","XMXSEC1",99,0)
+ D SET("FI",37204,.XMOPT,.XMOX) ; Filter messages
+"RTN","XMXSEC1",100,0)
+ D SET("H",37205,.XMOPT,.XMOX) ; Headerless Print messages
+"RTN","XMXSEC1",101,0)
+ D SET("L",37206,.XMOPT,.XMOX) ; Later messages
+"RTN","XMXSEC1",102,0)
+ D SET("NT",37208,.XMOPT,.XMOX) ; New Toggle messages
+"RTN","XMXSEC1",103,0)
+ D SET("P",37209,.XMOPT,.XMOX) ; Print messages
+"RTN","XMXSEC1",104,0)
+ D SET("S",37213,.XMOPT,.XMOX) ; Save messages to another basket
+"RTN","XMXSEC1",105,0)
+ D SET("T",37214,.XMOPT,.XMOX) ; Terminate messages
+"RTN","XMXSEC1",106,0)
+ I '$D(^XMB(3.7,XMDUZ,15,"AF")) D
+"RTN","XMXSEC1",107,0)
+ . I XMDUZ=DUZ D Q("FI",37204.1) Q  ; You have no message filters defined.
+"RTN","XMXSEC1",108,0)
+ . S XMOPT("FI","?")=$$EZBLD^DIALOG(37204.2,XMV("NAME")) ; |1| has no message filters defined.
+"RTN","XMXSEC1",109,0)
+ D SET("V",37216,.XMOPT,.XMOX) ; Vaporize date set messages
+"RTN","XMXSEC1",110,0)
+ Q:XMDUZ'=.6
+"RTN","XMXSEC1",111,0)
+ D Q("L",37462) ; You may not do this in SHARED,MAIL.
+"RTN","XMXSEC1",112,0)
+ S XMOPT("NT","?")=XMOPT("L","?")
+"RTN","XMXSEC1",113,0)
+ Q:$$ZPOSTPRV^XMXSEC()
+"RTN","XMXSEC1",114,0)
+ ; You must hold the XMMGR key or be a POSTMASTER surrogate to do this in SHARED,MAIL.
+"RTN","XMXSEC1",115,0)
+ I $G(XMQDNUM) D  Q
+"RTN","XMXSEC1",116,0)
+ . F I="D","F","FI","S","T","V" S XMOPT(I,"?")=37261
+"RTN","XMXSEC1",117,0)
+ N DIR
+"RTN","XMXSEC1",118,0)
+ D BLD^DIALOG(37261,"","","DIR(""?"")")
+"RTN","XMXSEC1",119,0)
+ F I="D","F","FI","S","T","V" M XMOPT(I,"?")=DIR("?")
+"RTN","XMXSEC1",120,0)
+ Q
+"RTN","XMXSEC1",121,0)
+OPTUSER2(XMK,XMOPT,XMOX) ;
+"RTN","XMXSEC1",122,0)
+ D SET("C",37201,.XMOPT,.XMOX) ; Change the name of this basket
+"RTN","XMXSEC1",123,0)
+ D SET("N",37207,.XMOPT,.XMOX) ; New message list
+"RTN","XMXSEC1",124,0)
+ D SET("Q",37211,.XMOPT,.XMOX) ; Query (search for) messages in this basket
+"RTN","XMXSEC1",125,0)
+ D SET("R",37212,.XMOPT,.XMOX) ; Resequence messages
+"RTN","XMXSEC1",126,0)
+ I XMK'>1 D Q("C",37201.1) ; The name of this basket may not be changed.
+"RTN","XMXSEC1",127,0)
+ ;"The name of "_$S(XMK=1:"the IN",XMK=.5:"the WASTE",1:"this")_" basket may not be changed."
+"RTN","XMXSEC1",128,0)
+ Q:XMDUZ'=.6!$$ZPOSTPRV^XMXSEC()
+"RTN","XMXSEC1",129,0)
+ ; You must hold the XMMGR key or be a POSTMASTER surrogate to do this in SHARED,MAIL.
+"RTN","XMXSEC1",130,0)
+ I $G(XMQDNUM) S XMOPT("C","?")=37261 Q
+"RTN","XMXSEC1",131,0)
+ N DIR
+"RTN","XMXSEC1",132,0)
+ D BLD^DIALOG(37261,"","","DIR(""?"")")
+"RTN","XMXSEC1",133,0)
+ M XMOPT("C","?")=DIR("?")
+"RTN","XMXSEC1",134,0)
+ Q
+"RTN","XMXSEC1",135,0)
+OPTPOST(XMOPT,XMOX) ;
+"RTN","XMXSEC1",136,0)
+ D SET("D",37202,.XMOPT,.XMOX) ; Delete messages
+"RTN","XMXSEC1",137,0)
+ D SET("F",37203,.XMOPT,.XMOX) ; Forward messages (Added so that postmaster could reroute messages which for some reason were addressed to the wrong domain.)
+"RTN","XMXSEC1",138,0)
+ D SET("Q",37211,.XMOPT,.XMOX) ; Query (search for) messages in this basket
+"RTN","XMXSEC1",139,0)
+ D SET("R",37212,.XMOPT,.XMOX) ; Resequence messages
+"RTN","XMXSEC1",140,0)
+ D SET("X",37219,.XMOPT,.XMOX) ; Xmit Priority toggle
+"RTN","XMXSEC1",141,0)
+ Q
+"RTN","XMXSEC1",142,0)
+OPTSS(XMDUZ,XMOPT,XMOX) ; Super Search
+"RTN","XMXSEC1",143,0)
+ D SET("H",37205,.XMOPT,.XMOX) ; Headerless Print messages
+"RTN","XMXSEC1",144,0)
+ D SET("P",37209,.XMOPT,.XMOX) ; Print messages
+"RTN","XMXSEC1",145,0)
+ Q
+"RTN","XMXSEC1",146,0)
+COPYAMT(XMZ,XMWHICH) ; Checks total number of lines to be copied and total number of responses to be copied.
+"RTN","XMXSEC1",147,0)
+ ; Function returns 1 if OK; 0 if not OK.
+"RTN","XMXSEC1",148,0)
+ ; XMWHICH string of which responses to copy (0=original msg).
+"RTN","XMXSEC1",149,0)
+ ;         Default = original msg and all responses.
+"RTN","XMXSEC1",150,0)
+ N XMLIMIT,XMRESPS,XMABORT
+"RTN","XMXSEC1",151,0)
+ S XMABORT=0
+"RTN","XMXSEC1",152,0)
+ S XMLIMIT=$$COPYLIMS
+"RTN","XMXSEC1",153,0)
+ S XMRESPS=+$P($G(^XMB(3.9,XMZ,3,0)),U,4)
+"RTN","XMXSEC1",154,0)
+ I XMRESPS=0 D TOOMANY(+$P($G(^XMB(3.9,XMZ,2,0)),U,4),$P(XMLIMIT,U,3),37470,.XMABORT) Q 'XMABORT
+"RTN","XMXSEC1",155,0)
+ N I,J,XMRANGE,XMLINES
+"RTN","XMXSEC1",156,0)
+ S:'$D(XMWHICH) XMWHICH="0-"_XMRESPS
+"RTN","XMXSEC1",157,0)
+ S (XMRESPS,XMLINES)=0
+"RTN","XMXSEC1",158,0)
+ ; **Patch XM*8*47 modifies the FOR loop to work when XMWHICH does not contain a ",". Added a conditional so that response(XMRESPS) lines are counted correctly.**
+"RTN","XMXSEC1",159,0)
+ F I=1:1:$L(XMWHICH,",") D
+"RTN","XMXSEC1",160,0)
+ . S XMRANGE=$P(XMWHICH,",",I)
+"RTN","XMXSEC1",161,0)
+ . F J=$P(XMRANGE,"-",1):1:$S(XMRANGE["-":$P(XMRANGE,"-",2),1:XMRANGE) D
+"RTN","XMXSEC1",162,0)
+ . . I J=0 S XMLINES=XMLINES+$P($G(^XMB(3.9,XMZ,2,0)),U,4)
+"RTN","XMXSEC1",163,0)
+ . . I J'=0 S XMRESPS=XMRESPS+1,XMLINES=XMLINES+$P($G(^XMB(3.9,+$G(^XMB(3.9,XMZ,3,J,0)),2,0)),U,4)
+"RTN","XMXSEC1",164,0)
+ D TOOMANY(XMLINES,$P(XMLIMIT,U,3),37470,.XMABORT) Q:XMABORT 0
+"RTN","XMXSEC1",165,0)
+ D TOOMANY(XMRESPS,$P(XMLIMIT,U,2),37471,.XMABORT) Q:XMABORT 0
+"RTN","XMXSEC1",166,0)
+ Q 1
+"RTN","XMXSEC1",167,0)
+TOOMANY(HOWMANY,XMLIMIT,XMDIALOG,XMABORT) ;
+"RTN","XMXSEC1",168,0)
+ Q:HOWMANY'>XMLIMIT
+"RTN","XMXSEC1",169,0)
+ S XMABORT=1
+"RTN","XMXSEC1",170,0)
+ D ERRSET^XMXUTIL(XMDIALOG,XMLIMIT) ; You may not copy more than the site limit of _XMLIMIT_ lines / responses.
+"RTN","XMXSEC1",171,0)
+ Q
+"RTN","XMXSEC1",172,0)
+COPYLIMS() ; Function returns copy limits string.
+"RTN","XMXSEC1",173,0)
+ ; limits:  # recipients^# responses^# lines
+"RTN","XMXSEC1",174,0)
+ N I
+"RTN","XMXSEC1",175,0)
+ S XMLIMIT=$G(^XMB(1,1,.11))
+"RTN","XMXSEC1",176,0)
+ F I=1:1:3 I '$P(XMLIMIT,U,I) S $P(XMLIMIT,U,I)=$P("2999^99^3999",U,I)
+"RTN","XMXSEC1",177,0)
+ Q XMLIMIT
+"RTN","XMXSEC1",178,0)
+COPYRECP(XMZ) ; Checks total number of recipients to see if it's OK to list them in the copy text and send the copy to them, too.
+"RTN","XMXSEC1",179,0)
+ ; Function returns 1 if OK; 0 if not OK.
+"RTN","XMXSEC1",180,0)
+ N XMLIMIT
+"RTN","XMXSEC1",181,0)
+ S XMLIMIT=$$COPYLIMS
+"RTN","XMXSEC1",182,0)
+ Q:$P($G(^XMB(3.9,XMZ,1,0)),U,4)'>$P(XMLIMIT,U,1) 1
+"RTN","XMXSEC1",183,0)
+ D ERRSET^XMXUTIL(37472,$P(XMLIMIT,U,1))
+"RTN","XMXSEC1",184,0)
+ ;Because this message has more than the site limit of _X_ recipients,
+"RTN","XMXSEC1",185,0)
+ ;we will neither list them in the text of the copy,
+"RTN","XMXSEC1",186,0)
+ ;nor will we deliver the copy to them.
+"RTN","XMXSEC1",187,0)
+ Q 0
+"RTN","XMXSEC1",188,0)
+SSPRIV() ; Is the user authorized to conduct a super search?
+"RTN","XMXSEC1",189,0)
+ Q:$$ZSSPRIV 1
+"RTN","XMXSEC1",190,0)
+ D ERRSET^XMXUTIL(34413.5)
+"RTN","XMXSEC1",191,0)
+ Q 0
+"RTN","XMXSEC1",192,0)
+ZSSPRIV() ; Is the user authorized to conduct a super search?
+"RTN","XMXSEC1",193,0)
+ I DUZ'<1,$D(^XUSEC("XM SUPER SEARCH",DUZ)) Q 1
+"RTN","XMXSEC1",194,0)
+ Q 0
+"RTN","XMXSEC1",195,0)
+ACCESS2(XMDUZ,XMZ,XMZREC) ; The user (XMDUZ) is not a recipient
+"RTN","XMXSEC1",196,0)
+ N XMOK                  ; of the message, but did he send it?
+"RTN","XMXSEC1",197,0)
+ I XMDUZ=$P(XMZREC,U,2)!(XMDUZ=$P(XMZREC,U,4)) D  Q XMOK
+"RTN","XMXSEC1",198,0)
+ . I XMDUZ='DUZ,'$$SURRACC^XMXSEC(XMDUZ,"",XMZ,XMZREC) S XMOK=0 Q
+"RTN","XMXSEC1",199,0)
+ . ; The user sent the message, so add him to it.
+"RTN","XMXSEC1",200,0)
+ . D ADDRECP^XMTDL(XMZ,$P(XMZREC,U,7)["P",XMDUZ)
+"RTN","XMXSEC1",201,0)
+ . S XMOK=1
+"RTN","XMXSEC1",202,0)
+ I XMDUZ'=DUZ D  Q 0
+"RTN","XMXSEC1",203,0)
+ . Q:'$$ACCESS^XMXSEC(DUZ,XMZ,XMZREC)
+"RTN","XMXSEC1",204,0)
+ . D ERRSET^XMXUTIL(37103,XMV("NAME"),XMZ)
+"RTN","XMXSEC1",205,0)
+ . ; You may not access this message as |1| unless you
+"RTN","XMXSEC1",206,0)
+ . ; or someone else on the message forwards it to |1|.
+"RTN","XMXSEC1",207,0)
+ D ERRSET^XMXUTIL(37102,"",XMZ)
+"RTN","XMXSEC1",208,0)
+ ; You are neither a sender nor a recipient of this message.
+"RTN","XMXSEC1",209,0)
+ ; If you need to see it, ask someone to forward it to you.
+"RTN","XMXSEC1",210,0)
+ Q 0
+"RTN","XMXSEC2")
+0^1^B68956624^B66090183
+"RTN","XMXSEC2",1,0)
+XMXSEC2 ;ISC-SF/GMB - Message security and restrictions (cont.) ;04/18/2002  08:01
+"RTN","XMXSEC2",2,0)
+ ;;8.0;MailMan;**47**;Jun 28, 2002;Build 6
+"RTN","XMXSEC2",3,0)
+ ; All entry points covered by DBIA 2733.
+"RTN","XMXSEC2",4,0)
+EDIT(XMDUZ,XMZ,XMZREC) ; May the user edit the message? (1=may, 0=may not)
+"RTN","XMXSEC2",5,0)
+ I '$$ORIGIN8R^XMXSEC(XMDUZ,.XMZREC) D ERRSET^XMXUTIL(37405.1) Q 0  ; Only the originator may Edit a message.
+"RTN","XMXSEC2",6,0)
+ I $P($G(^XMB(3.9,XMZ,1,0)),U,4)>1!($P(XMZREC,U,2)'=$O(^XMB(3.9,XMZ,1,"C",0))) D ERRSET^XMXUTIL(37405.2) Q 0  ; You may not Edit a message you have already sent to someone else.
+"RTN","XMXSEC2",7,0)
+ I $O(^XMB(3.9,XMZ,3,0)) D ERRSET^XMXUTIL(37405.3) Q 0  ; You may not Edit a message which has a reply.
+"RTN","XMXSEC2",8,0)
+ I $D(^XMB(3.9,XMZ,"K")),XMINSTR("TYPE")["X"!(XMINSTR("TYPE")["K") D ERRSET^XMXUTIL(37405.4) ; You may not Edit a secure KIDS or PackMan message.
+"RTN","XMXSEC2",9,0)
+ Q 1
+"RTN","XMXSEC2",10,0)
+OPTEDIT(XMINSTR,XMOPT,XMOX,XMQDNUM) ; We know the user may edit the message.
+"RTN","XMXSEC2",11,0)
+ ; Now, what, exactly, may be edited?
+"RTN","XMXSEC2",12,0)
+ D SET("C",$S($G(XMINSTR("FLAGS"))["C":37302,1:37301),.XMOPT,.XMOX) ; UnConfidential (surrogate may read) / Confidential (surrogate can't read)
+"RTN","XMXSEC2",13,0)
+ D SET("D",$S($D(XMINSTR("RCPT BSKT")):37304,1:37303),.XMOPT,.XMOX) ; Delivery basket remove / Delivery basket set
+"RTN","XMXSEC2",14,0)
+ D SET("I",$S($G(XMINSTR("FLAGS"))["I":37308,1:37307),.XMOPT,.XMOX) ; UnInformation only / Information only
+"RTN","XMXSEC2",15,0)
+ D SET("NS",37309,.XMOPT,.XMOX) ; Add Network Signature
+"RTN","XMXSEC2",16,0)
+ D SET("P",$S($G(XMINSTR("FLAGS"))["P":37312,1:37311),.XMOPT,.XMOX) ; Normal delivery / Priority delivery
+"RTN","XMXSEC2",17,0)
+ D SET("R",$S($G(XMINSTR("FLAGS"))["R":37314,1:37313),.XMOPT,.XMOX) ; No Confirm receipt / Confirm receipt
+"RTN","XMXSEC2",18,0)
+ D SET("ES",37305,.XMOPT,.XMOX) ; Edit Subject
+"RTN","XMXSEC2",19,0)
+ D SET("ET",37306,.XMOPT,.XMOX) ; Edit Text
+"RTN","XMXSEC2",20,0)
+ D SET("V",$S($G(XMINSTR("VAPOR")):37318,1:37317),.XMOPT,.XMOX) ; Vaporize date remove / Vaporize date set
+"RTN","XMXSEC2",21,0)
+ D SET("X",$S($G(XMINSTR("FLAGS"))["X":37320,1:37319),.XMOPT,.XMOX) ; UnClose (forward allowed) / Closed (no forward allowed)
+"RTN","XMXSEC2",22,0)
+ D SET("S",$S($D(^XMB(3.9,XMZ,"K")):37316,$D(XMINSTR("SCR KEY")):37316,1:37315),.XMOPT,.XMOX) ; UnScramble / Scramble message text
+"RTN","XMXSEC2",23,0)
+ I $G(XMPAKMAN)!($G(XMINSTR("TYPE"))["X")!($G(XMINSTR("TYPE"))["K") D
+"RTN","XMXSEC2",24,0)
+ . D Q("NX",37309.4) ; You may not add a Network Signature to a KIDS or PackMan message.
+"RTN","XMXSEC2",25,0)
+ . D Q("S",37315.4) ; Sorry, but we can't (un)secure a KIDS or PackMan message here.
+"RTN","XMXSEC2",26,0)
+ I '$D(XMOPT("NS","?")),'$$GOTNS^XMVVITA(XMDUZ) D
+"RTN","XMXSEC2",27,0)
+ . ; pgmr note: this must be the last place that sets XMOPT("NS","?").
+"RTN","XMXSEC2",28,0)
+ . I XMDUZ=DUZ D Q("NS",37309.1) Q  ; You have no Network Signature.
+"RTN","XMXSEC2",29,0)
+ . S XMOPT("NS","?")=$$EZBLD^DIALOG(37309.3,XMV("NAME")) ; |1| has no Network Signature.
+"RTN","XMXSEC2",30,0)
+ I $D(^TMP("XMY",$J,.6)) D
+"RTN","XMXSEC2",31,0)
+ . D Q("C",37301.6) ; Messages addressed to SHARED,MAIL may not be 'Confidential'.
+"RTN","XMXSEC2",32,0)
+ . D Q("X",37320.6) ; Messages addressed to SHARED,MAIL may not be 'Closed'.
+"RTN","XMXSEC2",33,0)
+ ; **XM*8*47 Adds conditionals to check if the subject line and message portion can be edited similar to OPTMSG.**
+"RTN","XMXSEC2",34,0)
+ N XMFROM,XMFLAG
+"RTN","XMXSEC2",35,0)
+ S XMFROM=$P(^XMB(3.9,XMZ,0),U,2),XMFLAG=0
+"RTN","XMXSEC2",36,0)
+ I $P($G(^XMB(3.9,XMZ,1,0)),U,4)>1!(XMFROM'=$O(^XMB(3.9,XMZ,1,"C",0))) S XMFLAG=1 D Q("ES",37405.2),Q("ET",37405.2)
+"RTN","XMXSEC2",37,0)
+ I $O(^XMB(3.9,XMZ,3,0)),'XMFLAG D Q("ES",37405.3),Q("ET",37405.3)
+"RTN","XMXSEC2",38,0)
+ Q
+"RTN","XMXSEC2",39,0)
+SET(XMCD,XMDN,XMOPT,XMOX) ;
+"RTN","XMXSEC2",40,0)
+ N XMDREC
+"RTN","XMXSEC2",41,0)
+ S XMDREC=$$EZBLD^DIALOG(XMDN)
+"RTN","XMXSEC2",42,0)
+ S XMOPT(XMCD)=$P(XMDREC,":",2,99)
+"RTN","XMXSEC2",43,0)
+ S XMOX("O",XMCD)=$P(XMDREC,":",1) ; "O"=original english to foreign
+"RTN","XMXSEC2",44,0)
+ S XMOX("X",$P(XMDREC,":",1))=XMCD ; "X"=translate foreign to english
+"RTN","XMXSEC2",45,0)
+ Q
+"RTN","XMXSEC2",46,0)
+Q(XMCD,XMDN) ;
+"RTN","XMXSEC2",47,0)
+ I $G(XMQDNUM) S XMOPT(XMCD,"?")=XMDN Q
+"RTN","XMXSEC2",48,0)
+ S XMOPT(XMCD,"?")=$$EZBLD^DIALOG(XMDN)
+"RTN","XMXSEC2",49,0)
+ Q
+"RTN","XMXSEC2",50,0)
+OPTMSG(XMDUZ,XMK,XMZ,XMIM,XMINSTR,XMIU,XMOPT,XMOX,XMQDNUM) ; The user has access to the message.  Now what may the user do with it?
+"RTN","XMXSEC2",51,0)
+ ; in:
+"RTN","XMXSEC2",52,0)
+ ; XMDUZ  = the user
+"RTN","XMXSEC2",53,0)
+ ; XMK    = basket IEN if message is in a basket
+"RTN","XMXSEC2",54,0)
+ ;        = ! if super search (option XM SUPER SEARCH)
+"RTN","XMXSEC2",55,0)
+ ;        = 0 otherwise
+"RTN","XMXSEC2",56,0)
+ ; XMZ    = the message IEN
+"RTN","XMXSEC2",57,0)
+ ; The following are set by INMSG1 and INMSG2^XMXUTIL2
+"RTN","XMXSEC2",58,0)
+ ; XMIM("FROM")  = piece 2 of the message's zero node
+"RTN","XMXSEC2",59,0)
+ ; XMINSTR       = special instructions
+"RTN","XMXSEC2",60,0)
+ ; XMIU("ORIGN8")=
+"RTN","XMXSEC2",61,0)
+ ; XMIU("IEN")   = the user's IEN in the message's recipient multiple
+"RTN","XMXSEC2",62,0)
+ ; XMQDNUM = 0 - set XMOPT(<opt>,"?")=dialog text (default)
+"RTN","XMXSEC2",63,0)
+ ;           1 - set XMOPT(<opt>,"?")=dialog number (all are TYPE: ERROR)
+"RTN","XMXSEC2",64,0)
+ ;           FYI, XMOPT(<opt>,"?") is displayed in SHOWERR^XMJDIR.
+"RTN","XMXSEC2",65,0)
+ ; out:
+"RTN","XMXSEC2",66,0)
+ ; XMOPT(<opt>) Possible options
+"RTN","XMXSEC2",67,0)
+ ; '$D(XMOPT(<opt>,"?")) User may do these things.
+"RTN","XMXSEC2",68,0)
+ ;  $D(XMOPT(<opt>,"?")) User may NOT do these things.
+"RTN","XMXSEC2",69,0)
+ N XMSECPAK
+"RTN","XMXSEC2",70,0)
+ I $D(^XMB(3.9,XMZ,"K")),XMINSTR("TYPE")["X"!(XMINSTR("TYPE")["K") S XMSECPAK=1 ; secure packman
+"RTN","XMXSEC2",71,0)
+ E  S XMSECPAK=0
+"RTN","XMXSEC2",72,0)
+ K XMOPT,XMOX
+"RTN","XMXSEC2",73,0)
+ D SET("B",37441,.XMOPT,.XMOX) ; Backup
+"RTN","XMXSEC2",74,0)
+ D SET("I",37442,.XMOPT,.XMOX) ; Ignore
+"RTN","XMXSEC2",75,0)
+ D SET("P",37416,.XMOPT,.XMOX) ; Print
+"RTN","XMXSEC2",76,0)
+ D SET("Q",37417,.XMOPT,.XMOX) ; Query
+"RTN","XMXSEC2",77,0)
+ D SET("QC",37431,.XMOPT,.XMOX) ; Query Current
+"RTN","XMXSEC2",78,0)
+ D SET("QD",37418,.XMOPT,.XMOX) ; Query Detailed
+"RTN","XMXSEC2",79,0)
+ D SET("QN",37419,.XMOPT,.XMOX) ; Query Network
+"RTN","XMXSEC2",80,0)
+ D SET("QNC",37432,.XMOPT,.XMOX) ; Query Not Current
+"RTN","XMXSEC2",81,0)
+ D SET("QR",37420,.XMOPT,.XMOX) ; Query Recipients
+"RTN","XMXSEC2",82,0)
+ D SET("QT",37433,.XMOPT,.XMOX) ; Query Terminated
+"RTN","XMXSEC2",83,0)
+ Q:XMK="!"
+"RTN","XMXSEC2",84,0)
+ D SET("A",37401,.XMOPT,.XMOX) ; Answer
+"RTN","XMXSEC2",85,0)
+ D SET("AA",37402,.XMOPT,.XMOX) ; Access Attachments
+"RTN","XMXSEC2",86,0)
+ D SET("C",37403,.XMOPT,.XMOX) ; Copy
+"RTN","XMXSEC2",87,0)
+ D SET("D",37404,.XMOPT,.XMOX) ; Delete
+"RTN","XMXSEC2",88,0)
+ D SET("E",37405,.XMOPT,.XMOX) ; Edit
+"RTN","XMXSEC2",89,0)
+ D SET("F",37406,.XMOPT,.XMOX) ; Forward
+"RTN","XMXSEC2",90,0)
+ D SET("IN",$S($G(XMINSTR("FLAGS"))["I":37409,1:37408),.XMOPT,.XMOX) ; UnInformation only / Information only
+"RTN","XMXSEC2",91,0)
+ D SET("H",37407,.XMOPT,.XMOX) ; Headerless Print
+"RTN","XMXSEC2",92,0)
+ D SET("K",$S($G(XMINSTR("FLAGS"))["K":37412,1:37411),.XMOPT,.XMOX) ; UnPriority replies / Priority replies
+"RTN","XMXSEC2",93,0)
+ D SET("L",37413,.XMOPT,.XMOX) ; Later
+"RTN","XMXSEC2",94,0)
+ D SET("N",$S($G(XMINSTR("FLAGS"))["N":37415,1:37414),.XMOPT,.XMOX) ; UnNew / New
+"RTN","XMXSEC2",95,0)
+ D SET("R",37422,.XMOPT,.XMOX) ; Reply
+"RTN","XMXSEC2",96,0)
+ D SET("S",37423,.XMOPT,.XMOX) ; Save
+"RTN","XMXSEC2",97,0)
+ D SET("T",37424,.XMOPT,.XMOX) ; Terminate
+"RTN","XMXSEC2",98,0)
+ D SET("V",37425,.XMOPT,.XMOX) ; Vaporize date edit
+"RTN","XMXSEC2",99,0)
+ D SET("W",37444,.XMOPT,.XMOX) ; Write
+"RTN","XMXSEC2",100,0)
+ D SET("X",$S($G(XMINSTR("TYPE"))["K":37427,$G(XMINSTR("TYPE"))["X":37428,1:37426),.XMOPT,.XMOX) ; Xtract KIDS / Xtract PackMan / Xtract
+"RTN","XMXSEC2",101,0)
+ I XMDUZ=DUZ!($G(XMV("PRIV"))["W") D
+"RTN","XMXSEC2",102,0)
+ . D OPTW(XMDUZ,XMZ,XMIM("FROM"),XMIU("ORIGN8"),XMSECPAK,.XMINSTR)
+"RTN","XMXSEC2",103,0)
+ E  D
+"RTN","XMXSEC2",104,0)
+ . D OPTWNO^XMXSEC3(XMIU("ORIGN8"))
+"RTN","XMXSEC2",105,0)
+ D OPTR(XMDUZ,XMK,XMZ,.XMIU,XMSECPAK,.XMINSTR)
+"RTN","XMXSEC2",106,0)
+ I DUZ=.6 D Q("R",37422.6) ; SHARED,MAIL may not Reply to a message.
+"RTN","XMXSEC2",107,0)
+ I XMDUZ=.6 D DOSHARE^XMXSEC3(XMDUZ,XMK,XMIU("ORIGN8"),.XMINSTR) Q
+"RTN","XMXSEC2",108,0)
+ I XMDUZ=.5,XMK>999 D DOPOST^XMXSEC3
+"RTN","XMXSEC2",109,0)
+ Q
+"RTN","XMXSEC2",110,0)
+OPTW(XMDUZ,XMZ,XMFROM,XMORIGN8,XMSECPAK,XMINSTR) ; User must be self or have 'write' privilege as surrogate.
+"RTN","XMXSEC2",111,0)
+ I XMINSTR("TYPE")["X"!(XMINSTR("TYPE")["K") D Q("A",37401.4) ; You may not Answer a KIDS or PackMan message.
+"RTN","XMXSEC2",112,0)
+ I XMINSTR("FLAGS")["X",'XMORIGN8 D Q("C",37403.1) ; Only the originator may Copy a 'closed' message.
+"RTN","XMXSEC2",113,0)
+ I $D(^XMB(3.9,XMZ,"K")) D
+"RTN","XMXSEC2",114,0)
+ . I XMSECPAK D Q("C",37403.4) ; You may not Copy a secure KIDS or PackMan message.
+"RTN","XMXSEC2",115,0)
+ . E  D
+"RTN","XMXSEC2",116,0)
+ . . I '$D(XMOPT("A","?")) D Q("A",37401.2) ; You may not Answer a scrambled message.  Use Reply.
+"RTN","XMXSEC2",117,0)
+ . . I '$D(XMOPT("C","?")) D Q("C",37403.2) ; You may not Copy a scrambled message.
+"RTN","XMXSEC2",118,0)
+ I '$D(XMOPT("A","?")),'$$GOTNS^XMVVITA(XMDUZ) D
+"RTN","XMXSEC2",119,0)
+ . ; pgmr note: this must be the last place that sets XMOPT("A","?").
+"RTN","XMXSEC2",120,0)
+ . I XMDUZ=DUZ D Q("A",37401.1) Q  ; You must have a Network Signature to Answer a message.
+"RTN","XMXSEC2",121,0)
+ . S XMOPT("A","?")=$$EZBLD^DIALOG(37401.3,XMV("NAME")) ; |1| must have a Network Signature to Answer a message.
+"RTN","XMXSEC2",122,0)
+ I 'XMORIGN8 D  Q
+"RTN","XMXSEC2",123,0)
+ . D Q("IN",37409.1) ; Only the originator may toggle 'Information only'.
+"RTN","XMXSEC2",124,0)
+ . D Q("E",37405.1) ; Only the originator may Edit a message.
+"RTN","XMXSEC2",125,0)
+ I $P($G(^XMB(3.9,XMZ,1,0)),U,4)>1!(XMFROM'=$O(^XMB(3.9,XMZ,1,"C",0))) D  Q
+"RTN","XMXSEC2",126,0)
+ . ; You may not Edit a message you have already sent to someone else.
+"RTN","XMXSEC2",127,0)
+ . ; You may toggle the 'information only' switch, if you wish.
+"RTN","XMXSEC2",128,0)
+ . I $G(XMQDNUM) S XMOPT("E","?")=37405.2 Q
+"RTN","XMXSEC2",129,0)
+ . N DIR
+"RTN","XMXSEC2",130,0)
+ . D BLD^DIALOG(37405.2,"","","DIR(""?"")")
+"RTN","XMXSEC2",131,0)
+ . M XMOPT("E","?")=DIR("?")
+"RTN","XMXSEC2",132,0)
+ I $O(^XMB(3.9,XMZ,3,0)) D Q("E",37405.3) Q  ; You may not Edit a message which has a reply.
+"RTN","XMXSEC2",133,0)
+ I XMSECPAK D Q("E",37405.4) ; You may not Edit a secure KIDS or PackMan message.
+"RTN","XMXSEC2",134,0)
+ Q
+"RTN","XMXSEC2",135,0)
+OPTR(XMDUZ,XMK,XMZ,XMIU,XMSECPAK,XMINSTR) ; User must be self or have 'read' privilege as surrogate.
+"RTN","XMXSEC2",136,0)
+ I '$O(^XMB(3.9,XMZ,2005,0)) D Q("AA",37402.1) ; This message has no Attachments.
+"RTN","XMXSEC2",137,0)
+ I 'XMK D
+"RTN","XMXSEC2",138,0)
+ . D Q("D",37404.1) ; This message has already been deleted.  It's not in a basket.
+"RTN","XMXSEC2",139,0)
+ . D Q("V",37425.1) ; This message has already vaporized.  It's not in a basket.
+"RTN","XMXSEC2",140,0)
+ I XMINSTR("FLAGS")'["P" D Q("K",37412.1) ; The message must be 'priority' in order to toggle 'Priority replies'.
+"RTN","XMXSEC2",141,0)
+ I XMINSTR("FLAGS")["X",'XMIU("ORIGN8") D Q("F",37406.1) ; Only the originator may forward a 'closed' message.
+"RTN","XMXSEC2",142,0)
+ I XMSECPAK D
+"RTN","XMXSEC2",143,0)
+ . D Q("P",37416.4) ; You may not Print a secure KIDS or PackMan message.
+"RTN","XMXSEC2",144,0)
+ . S XMOPT("H","?")=XMOPT("P","?")
+"RTN","XMXSEC2",145,0)
+ . D Q("R",37422.4) ; You may not Reply to a secure KIDS or PackMan message.
+"RTN","XMXSEC2",146,0)
+ E  I 'XMIU("ORIGN8") D
+"RTN","XMXSEC2",147,0)
+ . I XMINSTR("FLAGS")["I" D Q("R",37422.1) Q  ; Only the originator may Reply to an 'Information only' message.
+"RTN","XMXSEC2",148,0)
+ . I $P($G(^XMB(3.9,XMZ,1,XMIU("IEN"),"T")),U,1)="I" D Q("R",37422.2) ; 'Information only' recipients may not reply to a message.
+"RTN","XMXSEC2",149,0)
+ E  I $$BCAST^XMXSEC(XMZ) D Q("R",37422.3) ; May not reply to a Broadcast message.  Send a new one.
+"RTN","XMXSEC2",150,0)
+ I XMINSTR("TYPE")["X"!(XMINSTR("TYPE")["K") D
+"RTN","XMXSEC2",151,0)
+ . I '$D(^XUSEC("XUPROGMODE",DUZ)) D Q("X",37428.2) ; You must hold the XUPROGMODE key to extract KIDS or PackMan messages.
+"RTN","XMXSEC2",152,0)
+ E  D Q("X",37428.1) ; This message is neither KIDS nor PackMan.
+"RTN","XMXSEC2",153,0)
+ Q
+"RTN","XMXUTIL3")
+0^2^B23398981^B23130058
+"RTN","XMXUTIL3",1,0)
+XMXUTIL3 ;ISC-SF/GMB - List addressees, recipients, message network header ;03/05/2001  15:23
+"RTN","XMXUTIL3",2,0)
+ ;;8.0;MailMan;**34,47**;Jun 28, 2002;Build 6
+"RTN","XMXUTIL3",3,0)
+ ; All entry points covered by DBIA 2737.
+"RTN","XMXUTIL3",4,0)
+ ; Common Parameters for Q, QD, QL, QN, QX:
+"RTN","XMXUTIL3",5,0)
+ ; XMZ     message number in message file
+"RTN","XMXUTIL3",6,0)
+ ; XMAMT   How many?
+"RTN","XMXUTIL3",7,0)
+ ;         =number - Get this many
+"RTN","XMXUTIL3",8,0)
+ ;         =*      - Get all (default)
+"RTN","XMXUTIL3",9,0)
+ ; XMSTART("IEN") is used to start the lister going.  The lister will
+"RTN","XMXUTIL3",10,0)
+ ;         keep it updated from call to call.
+"RTN","XMXUTIL3",11,0)
+ ;         It is the IEN to start AFTER.
+"RTN","XMXUTIL3",12,0)
+ ;         (Default is to start at the beginning: after 0.)
+"RTN","XMXUTIL3",13,0)
+ ; XMTROOT is the target root to receive the message list.
+"RTN","XMXUTIL3",14,0)
+ ;         (default is ^TMP("XMLIST",$J))
+"RTN","XMXUTIL3",15,0)
+ ; XMFLAGS are used to control processing (currently not used, except QX)
+"RTN","XMXUTIL3",16,0)
+ ; XMFIND  Search for recipients/addressees matching this string.
+"RTN","XMXUTIL3",17,0)
+ ;         Same rules as for FileMan lookups.
+"RTN","XMXUTIL3",18,0)
+ ;         (If XMFIND is supplied, XMSTART and XMAMT are ignored, and
+"RTN","XMXUTIL3",19,0)
+ ;          a complete list is returned.)
+"RTN","XMXUTIL3",20,0)
+ ;
+"RTN","XMXUTIL3",21,0)
+Q(XMZ,XMFLAGS,XMAMT,XMSTART,XMFIND,XMTROOT) ; Addressee listing
+"RTN","XMXUTIL3",22,0)
+ N XMCNT,XMIEN,XMREC
+"RTN","XMXUTIL3",23,0)
+ D QINIT(.XMFLAGS,.XMAMT,.XMFIND,.XMTROOT)
+"RTN","XMXUTIL3",24,0)
+ I $D(XMFIND) D
+"RTN","XMXUTIL3",25,0)
+ . D FIND^DIC(3.911,","_XMZ_",","","",XMFIND,"","B")
+"RTN","XMXUTIL3",26,0)
+ E  D
+"RTN","XMXUTIL3",27,0)
+ . D LIST^DIC(3.911,","_XMZ_",","","",XMAMT,.XMSTART,"","B")
+"RTN","XMXUTIL3",28,0)
+ S XMCNT=0
+"RTN","XMXUTIL3",29,0)
+ F  S XMCNT=$O(^TMP("DILIST",$J,2,XMCNT)) Q:XMCNT=""  S XMIEN=^(XMCNT) D
+"RTN","XMXUTIL3",30,0)
+ . S XMREC=$G(^XMB(3.9,XMZ,6,XMIEN,0))
+"RTN","XMXUTIL3",31,0)
+ . S @(XMTROOT_XMCNT_",""TO NAME"")")=$P(XMREC,U,1)
+"RTN","XMXUTIL3",32,0)
+ . I $P(XMREC,U,2)'="" S @(XMTROOT_XMCNT_",""TYPE"")")=$P(XMREC,U,2)
+"RTN","XMXUTIL3",33,0)
+ S @(XMTROOT_"0)")=$G(^TMP("DILIST",$J,0))
+"RTN","XMXUTIL3",34,0)
+ K ^TMP("DILIST",$J)
+"RTN","XMXUTIL3",35,0)
+ Q
+"RTN","XMXUTIL3",36,0)
+QD(XMZ,XMFLAGS,XMAMT,XMSTART,XMFIND,XMTROOT) ; Recipient listing
+"RTN","XMXUTIL3",37,0)
+ D QINIT(.XMFLAGS,.XMAMT,.XMFIND,.XMTROOT)
+"RTN","XMXUTIL3",38,0)
+ I $D(XMFIND) D
+"RTN","XMXUTIL3",39,0)
+ . N XMCNT
+"RTN","XMXUTIL3",40,0)
+ . D QFIND^XMXUTIL4(XMZ,XMFLAGS,XMFIND,XMTROOT,.XMCNT)
+"RTN","XMXUTIL3",41,0)
+ . S @(XMTROOT_"0)")=XMCNT_U_"*^0"
+"RTN","XMXUTIL3",42,0)
+ . K ^TMP("DILIST",$J)
+"RTN","XMXUTIL3",43,0)
+ E  D
+"RTN","XMXUTIL3",44,0)
+ . D QLIST^XMXUTIL4(XMZ,XMFLAGS,XMAMT,.XMSTART,XMTROOT)
+"RTN","XMXUTIL3",45,0)
+ Q
+"RTN","XMXUTIL3",46,0)
+QL(XMZ,XMFLAGS,XMAMT,XMSTART,XMFIND,XMTROOT) ; Later'd Addressee listing
+"RTN","XMXUTIL3",47,0)
+ N XMCNT,XMIEN,XMREC
+"RTN","XMXUTIL3",48,0)
+ D QINIT(.XMFLAGS,.XMAMT,.XMFIND,.XMTROOT)
+"RTN","XMXUTIL3",49,0)
+ I $D(XMFIND) D
+"RTN","XMXUTIL3",50,0)
+ . D FIND^DIC(3.914,","_XMZ_",","","",XMFIND,"","B")
+"RTN","XMXUTIL3",51,0)
+ E  D
+"RTN","XMXUTIL3",52,0)
+ . D LIST^DIC(3.914,","_XMZ_",","","",XMAMT,.XMSTART,"","B")
+"RTN","XMXUTIL3",53,0)
+ S XMCNT=0
+"RTN","XMXUTIL3",54,0)
+ F  S XMCNT=$O(^TMP("DILIST",$J,2,XMCNT)) Q:XMCNT=""  S XMIEN=^(XMCNT) D
+"RTN","XMXUTIL3",55,0)
+ . S XMREC=$G(^XMB(3.9,XMZ,7,XMIEN,0))
+"RTN","XMXUTIL3",56,0)
+ . S @(XMTROOT_XMCNT_",""TO NAME"")")=$P(XMREC,U,1)
+"RTN","XMXUTIL3",57,0)
+ . I $P(XMREC,U,2)'="" S @(XMTROOT_XMCNT_",""TYPE"")")=$P(XMREC,U,2)
+"RTN","XMXUTIL3",58,0)
+ . S @(XMTROOT_XMCNT_",""BY DUZ"")")=$P(XMREC,U,3)
+"RTN","XMXUTIL3",59,0)
+ . S @(XMTROOT_XMCNT_",""BY NAME"")")=$P(XMREC,U,4)
+"RTN","XMXUTIL3",60,0)
+ . S @(XMTROOT_XMCNT_",""WHEN"")")=$P(XMREC,U,5)
+"RTN","XMXUTIL3",61,0)
+ . S @(XMTROOT_XMCNT_",""WHEN MM"")")=$$MMDT^XMXUTIL1($P(XMREC,U,5))
+"RTN","XMXUTIL3",62,0)
+ S @(XMTROOT_"0)")=$G(^TMP("DILIST",$J,0))
+"RTN","XMXUTIL3",63,0)
+ K ^TMP("DILIST",$J)
+"RTN","XMXUTIL3",64,0)
+ Q
+"RTN","XMXUTIL3",65,0)
+QINIT(XMFLAGS,XMAMT,XMFIND,XMTROOT) ; For internal MailMan use only.
+"RTN","XMXUTIL3",66,0)
+ S XMFLAGS=$G(XMFLAGS)
+"RTN","XMXUTIL3",67,0)
+ I $G(XMAMT)="" S XMAMT="*"
+"RTN","XMXUTIL3",68,0)
+ I $D(XMFIND),XMFIND="" K XMFIND
+"RTN","XMXUTIL3",69,0)
+ I $D(XMTROOT),XMTROOT'="" D
+"RTN","XMXUTIL3",70,0)
+ . K @$$CREF^DILF(XMTROOT)
+"RTN","XMXUTIL3",71,0)
+ . S XMTROOT=$$OREF^DILF(XMTROOT)_"""XMLIST"","
+"RTN","XMXUTIL3",72,0)
+ E  D
+"RTN","XMXUTIL3",73,0)
+ . K ^TMP("XMLIST",$J)
+"RTN","XMXUTIL3",74,0)
+ . S XMTROOT="^TMP(""XMLIST"",$J,"
+"RTN","XMXUTIL3",75,0)
+ Q
+"RTN","XMXUTIL3",76,0)
+QN(XMZ,XMFLAGS,XMAMT,XMSTART,XMTROOT) ; Get network header lines
+"RTN","XMXUTIL3",77,0)
+ N XMCNT,XMIEN
+"RTN","XMXUTIL3",78,0)
+ D QNINIT(.XMAMT,.XMTROOT)
+"RTN","XMXUTIL3",79,0)
+ S XMCNT=0
+"RTN","XMXUTIL3",80,0)
+ S XMIEN=+$G(XMSTART("IEN"))
+"RTN","XMXUTIL3",81,0)
+ F  S XMIEN=$O(^XMB(3.9,XMZ,2,XMIEN)) Q:XMIEN'<1  D  Q:XMCNT=XMAMT
+"RTN","XMXUTIL3",82,0)
+ . S XMCNT=XMCNT+1
+"RTN","XMXUTIL3",83,0)
+ . S @(XMTROOT_XMCNT_")")=^XMB(3.9,XMZ,2,XMIEN,0)
+"RTN","XMXUTIL3",84,0)
+ S XMSTART("IEN")=XMIEN
+"RTN","XMXUTIL3",85,0)
+ S @(XMTROOT_"0)")=XMCNT_U_XMAMT_U_$S(XMIEN'<1:0,$O(^XMB(3.9,XMZ,2,XMIEN))<1:1,1:0) ; Any more?
+"RTN","XMXUTIL3",86,0)
+ Q
+"RTN","XMXUTIL3",87,0)
+QNINIT(XMAMT,XMTROOT) ; For internal MailMan use only.
+"RTN","XMXUTIL3",88,0)
+ I $G(XMAMT)="" S XMAMT="*"
+"RTN","XMXUTIL3",89,0)
+ I $D(XMTROOT),XMTROOT'="" D
+"RTN","XMXUTIL3",90,0)
+ . K @$$CREF^DILF(XMTROOT)
+"RTN","XMXUTIL3",91,0)
+ . S XMTROOT=$$OREF^DILF(XMTROOT)_"""XMLIST"","
+"RTN","XMXUTIL3",92,0)
+ E  D
+"RTN","XMXUTIL3",93,0)
+ . K ^TMP("XMLIST",$J)
+"RTN","XMXUTIL3",94,0)
+ . S XMTROOT="^TMP(""XMLIST"",$J,"
+"RTN","XMXUTIL3",95,0)
+ Q
+"RTN","XMXUTIL3",96,0)
+QX(XMZ,XMFLAGS,XMAMT,XMSTART,XMTROOT) ; Local Recipient Xtract
+"RTN","XMXUTIL3",97,0)
+ ; XMFLAGS = "C" list users who are current in reading the message
+"RTN","XMXUTIL3",98,0)
+ ;           "N" list users who are NOT current in reading the message
+"RTN","XMXUTIL3",99,0)
+ ;           "T" list users who have terminated the message
+"RTN","XMXUTIL3",100,0)
+ N XMFIND,XMCNT,XMIEN,XMREC,XMTO,XMNAME,XMRESPS,XMMORE
+"RTN","XMXUTIL3",101,0)
+ I $L($G(XMFLAGS))'=1,"CNT"'[XMFLAGS Q
+"RTN","XMXUTIL3",102,0)
+ D QINIT(.XMFLAGS,.XMAMT,.XMFIND,.XMTROOT)
+"RTN","XMXUTIL3",103,0)
+ S XMRESPS=+$P($G(^XMB(3.9,XMZ,3,0)),U,4)
+"RTN","XMXUTIL3",104,0)
+ ; **XM*8.0*47 Fixes quit logic in both FOR loops and adds a subscript level when setting the XMIEN variable.
+"RTN","XMXUTIL3",105,0)
+ S XMCNT=0,XMTO=+$G(XMSTART("IEN")),XMIEN=""
+"RTN","XMXUTIL3",106,0)
+ F  S XMTO=$O(^XMB(3.9,XMZ,1,"C",XMTO)) Q:+XMTO'=XMTO  D  Q:XMCNT=XMAMT
+"RTN","XMXUTIL3",107,0)
+ . S XMIEN=$O(^XMB(3.9,XMZ,1,"C",XMTO,XMIEN)) Q:'XMIEN
+"RTN","XMXUTIL3",108,0)
+ . S XMREC=$G(^XMB(3.9,XMZ,1,XMIEN,0))
+"RTN","XMXUTIL3",109,0)
+ . I XMFLAGS="C",$P(XMREC,U,2)'=XMRESPS Q  ; not current
+"RTN","XMXUTIL3",110,0)
+ . I XMFLAGS="N",$P(XMREC,U,2)=XMRESPS Q  ; current
+"RTN","XMXUTIL3",111,0)
+ . I XMFLAGS="T",'$G(^XMB(3.9,XMZ,1,XMIEN,"D")) Q  ; not terminated
+"RTN","XMXUTIL3",112,0)
+ . S XMCNT=XMCNT+1
+"RTN","XMXUTIL3",113,0)
+ . S XMNAME=$$NAME^XMXUTIL(XMTO)
+"RTN","XMXUTIL3",114,0)
+ . D QDFLDS^XMXUTIL4(XMZ,XMFLAGS,XMIEN,XMREC,XMNAME,XMTROOT,XMCNT)
+"RTN","XMXUTIL3",115,0)
+ S XMSTART("IEN")=XMTO
+"RTN","XMXUTIL3",116,0)
+ I XMAMT'="*" D
+"RTN","XMXUTIL3",117,0)
+ . S XMMORE=0 ; any more?
+"RTN","XMXUTIL3",118,0)
+ . F  S XMTO=$O(^XMB(3.9,XMZ,1,"C",XMTO)) Q:+XMTO'=XMTO  D  Q:XMMORE
+"RTN","XMXUTIL3",119,0)
+ . . S XMIEN=$O(^XMB(3.9,XMZ,1,"C",XMTO,XMIEN)) Q:'XMIEN
+"RTN","XMXUTIL3",120,0)
+ . . S XMREC=$G(^XMB(3.9,XMZ,1,XMIEN,0))
+"RTN","XMXUTIL3",121,0)
+ . . I XMFLAGS="C",$P(XMREC,U,2)'=XMRESPS Q  ; not current
+"RTN","XMXUTIL3",122,0)
+ . . I XMFLAGS="N",$P(XMREC,U,2)=XMRESPS Q  ; current
+"RTN","XMXUTIL3",123,0)
+ . . I XMFLAGS="T",'$G(^XMB(3.9,XMZ,1,XMIEN,"D")) Q  ; not terminated
+"RTN","XMXUTIL3",124,0)
+ . . S XMMORE=1
+"RTN","XMXUTIL3",125,0)
+ S @(XMTROOT_"0)")=XMCNT_U_XMAMT_U_$S(XMAMT="*":0,1:XMMORE)
+"RTN","XMXUTIL3",126,0)
+ Q
+"VER")
+8.0^22.0
+"BLD",9954,6)
+^42
+**END**
+**END**
+

@@ -1,0 +1,466 @@
+
+=============================================================================
+Run Date: MAR 02, 2015                     Designation: EAS*1*118
+Package : EAS - ENROLLMENT APPLICATION SYSTEM Priority: Mandatory
+Version : 1       SEQ #100                      Status: Released
+                  Compliance Date: APR 02, 2015
+=============================================================================
+
+
+Subject: ENROLLMENT SYSTEM (ES) 4.1 RELEASE
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The purpose of this Informational patch is to announce the release of 
+ the Enrollment Systems (ES) 4.1 and the 4.1 Veteran Online
+ Health Application (VOA) Graphical User Interface/Front End, referred 
+ to as VOA UI.
+  
+ The Enterprise Health Benefits Determination Program (EHBD) provides
+ enhancements to the Enrollment Systems. 
+  
+ This ES 4.1 build, developed in Java/.net technology, will have both
+ Enrollment System Enhancement (ESE) and Enrollment Customer 
+ Enhancements (ECE) development efforts including enhancements to ES
+ applications and functionality such as the Enrollment System Core (ESC),
+ Health Benefits Plan (HBP), Veterans On line Application (VOA), Enrollment
+ Enhancements (EE), Veterans Benefits Handbook (VBH), Enrollment System
+ Financial (ESF) Letters and Income Verification Match (IVM).
+  
+ Enhancements:
+ =============
+ The following components and features will be included in the Enrollment
+ System (ES) 4.1 release:
+  
+ Catastrophic Disability (CD) 
+ -  CR10900 / CCR12974 - Changes to Business Object and Persistent Layers 
+    to support CD Descriptors
+ -  CR10900 / CCR12977 - Create one-time batch process to convert CD
+    records to CD Descriptors
+ -  CR10900 / CCR12978 - Modify Office of Policy Planning (OPP) extract job
+    to support CD Descriptor data
+ -  CR10900 / CCR12979 - Modify ES UI to display CD Descriptor data
+ -  CR10900 / CCR12980 - Modify ES CD History screen to display CD 
+    Descriptor data
+ -  CR10900 / CCR12975 - Make messaging layer changes in ES to support CD 
+    Descriptors.
+ -  CR10900 / CCR12976 - Modify service layer and ILOG rules to support CD
+    Descriptor data. 
+  
+ Legislative Changes 2 - Meaningful Use Preferred Language
+ -  CR13121 / CCR13171 - Manage (add update delete) current Preferred 
+    Language in the Personal Data Page
+ -  CR13121 / CCR13172 - ES UI changes to show history of Preferred 
+    Language in the Personal Data History Page
+ -  CR13121 / CCR13293 - Add Preferred Language to the OPP Extract
+  
+ Legislative Changes 3 - Manage Veterans Health Identification Card (VHIC)
+ -  CR13138 / CCR13346 - VHIC error handling
+  
+ Legislative Changes 4 - Self Identified Gender
+ -  CR13254 /CCR13255 - LC4 - Self-Identified Gender Identity (SIGI)
+    and Birth Sex - ESC screen changes
+  
+ Legislative Changes 5 - Airborne Hazard / Open Burn Pit HBP
+ -  CR13210/CCR13211 - Health Benefit Plan View Information
+  
+ Veterans Online Application (VOA) 
+ -  CR13270 / CCR13393 - VOA - Processing Status Detail Report
+ -  CR13313 / CCR13311 - Update VOA Web Service (WS) code for 2014 
+    Office of Management and Budget (OMB) approved 1010EZ/EZR forms
+ -  CR13193 / CCR13247 - VOA - Email Template to be sent to the veteran 
+    when person is not found in Master Veterans Index (MVI) and
+    Status=Pending
+ -  CR13269 / CCR13391 - VOA - Processing Status Summary Report
+ -  CR13321 / CCR13322 - VOA - Add Security Identifier (SEC ID) type for
+    portal strategy
+ -  CR13397 / CCR13095 - VOA - Add proxy PF logic not triggered 
+    Anonymous/DS Logon Level 1 (Not known to ES and MVI) if Enroll stat =
+    Pend
+ -  CR13396 / CCR13109 - VOA - the email address has the old project name 
+    "ESR" instead of "ESC"
+ -  CR13321 / CCR13157 - VOA - Change the code to provide the Benefit 
+    Gateway Services (BGS) credentials properly
+  
+ Handbook 
+ -  CR12136 / CCR13067 - Modify triggering events by reducing the number 
+    of inserts being sent to only when there is a Priority Group (PG)
+    change.
+ -  CR13090 / CCR13092 - Publishing a Handbook without restrictions
+  
+ Enrollment System Financial (ESF) Letters 
+ -  CR13126 / CCR13147 - Receive Beneficiary Travel Financial Indicator 
+    (BTFI) in ES
+ -  CR13126 / CCR13127 - Add trigger to Person Submitted Advice to detect 
+    the event where Beneficiary Travel (BT) Indicator changes state.
+ -  CR11504 / CR12675 / CCR13288 - Decommission Amount Contributed to 
+    Spouse and Child in ES
+ -  CR11504 / CR12675 / CCR13289 - Determine Dependency for Spouse and 
+    Child not living with Veteran in ES
+ -  CR11504 / CCR13290 - Add Contributed to Spousal Support in ES
+ -  CR11504 / CCR13292 - ES to send Y/N indicator to IVM for Spouse in ES
+ -  CR13126/ CCR13128 - Receive Beneficiary Travel Financial Indicator in 
+    ES
+ -  CR11504/ CCR13367 - Display Contributed to Child Support Amount field 
+    when an amount was previously stored
+ -  CR11504/ CCR13386 - Display Contributed to Spousal Support Amount 
+    field when an amount was previously stored
+ -  CR13126 / CCR13221 VistA to Send BTFI to ES - and - ES to Send BTFI to
+    VistA
+ -  CR11504 / CCR13291 - ES to receive Y/N indicator for Spouse in ES
+ -  CR11504 / CCR13338 - Rule Layer Modifications for Decommissioning 
+    Spousal/Dependent Support
+  
+  
+ Enrollment Enhancements 
+  
+ -  CR13030 / CCR13186 - Enter Date of Death Prior to the Enrollment 
+    Application Date
+ -  CR13184 / CCR13246 - ESC Date of Death service - implement trigger to 
+    MVI when Date of Death entered
+ -  CR13184 / CCR13258 - ESC Date of Death service - implement rule 
+    changes for Process Demographics
+ -  CR13184 / CCR13275 - ESC Date of Death - UI changes for modifying Date 
+    of Death
+ -  CR13184 / CCR13337 - Date of Death - Modify ESC to support additional 
+    Death Sites of Notification
+ -  CR13184 / CCR13245 - ESC Date of Death - modify hibernate mapping
+ -  CR13184 / CCR13187 - Date of Death - implement ES UI changes
+ -  CR13184 / CCR13189 - Date of Death - implement Health Level Seven (HL7)
+    changes in ES
+ -  CR13184 / CCR13525 - Date of Death - Modify ES UI to use MVI system 
+    parameter for Date of Death modification
+  
+ Income Verification Match (IVM) 
+ -  CR13069 / RTC#125410   Display Date Cloned Column: EDB Mean Page
+ -  CR12759 / RTC#112610 - Send BT Financial Indicator to ES
+ -  CR12759 / RTC#135198 - Modification to IVM Income 
+    Prioritization_Create Group G
+ -  CR12818, 13126, 12759 / RTC#123239 - Display BT Financial Indicator in 
+    IVM
+ -  CR13072 / RTC#125214 - Display Veteran Information on the Case Detail 
+    screen
+ -  CR13076 / RTC#125412 - IVM Manual Acknowledgment Correspondence Letter
+ -  CR12760 / RTC#112616 - Move the IVM Aging Report to the IVM 
+    Enrollment Database (EDB) Report Tab
+ -  CR13066 / RTC#125406 - Discontinue processing A /Net Worth cases
+ -  CR12065 / RTC#129738 - Relinquish IVM Generic Closure Letter and Date 
+    of Death Process
+ -  CR11504 / RTC#112609 - Update Spousal and Dependent Indicator Logic in 
+    Migrate Package
+ -  CR13071 / RTC#125212 - Spouse Address Clean-up Process
+ -  CR13063 / RTC#125217 - Add Veteran  Personal Identifier (VPID)
+    to Income Verification Division (IVD) Letters
+ -  CR13073 / RTC#125224 - Replacing Type of Income on Health Eligibility
+    Center (HEC) Forms
+ -  CR12760 / RTC#112612 - Supervisor to Generate Reports by Supervisor 
+    Groups
+ -  CR12760 / RTC#112450 - IVM-12S Flagged Case Summary Report
+ -  CR12760 / RTC#112614 - IVM-17 Reopened Case Detail Report
+ -  CR12760 / RTC#112686 - IVM-17S Reopened Case Summary Report
+ -  CR12760 / RTC#112680 - Retain IVM Reports and Auto Delete after 4 Days
+ -  CR12760 / RTC#112682 - IVM-Folders Created by Program Support Clerk 
+    (PSC) Report
+ -  CR12760 / RTC#112615 - IVM-Quality Assurance (QA) Detail Report
+  
+ ES 508 Compliance:
+ -  CCR12964 - 508 Compliance - Form fields need to be labeled.
+ -  CCR12981 - 508 Compliance - Update ES Reporting framework
+ -  CCR12982 - 508 Compliance - Extend ValueList functionality
+ -  CCR12983 - 508 Compliance: Update data and layout tables
+ -  CCR13040 - 508 - Work Items - "Comments" text area does not have 
+    <label for> and ID
+ -  CCR13044 - 508 - WAT Toolbar -View Raw Data of HL7 Message - No 
+    Label/Fieldset legend elements found.
+ -  CCR13045 - 508 - Add Dependent Page - Amount Contributed($) has no ID 
+    for text field and is announced as "Colon Edit" by JAWS.
+ -  CCR13047 - 508 - Eligibility & Enrollment (E&E) Add New Service Account
+    Page - Screen Reader does not recognize "Active" for radio buttons
+ -  CCR13048 - 508 - E&E Add New Service Accounts Page - "No" radio button 
+    has title tag = No (No).
+ -  CCR13049 - 508-  Table is not recognized as a data table by Screen 
+    reader
+ -  CCR13053 - 508- "User Profiles" table has additional blank column
+ -  CCR13054 - 508-  The user is unable to use table commands after the 
+    link is expanded in the data table on the Roles tab
+ -  CCR13056 - 508 - The user is unable to use table commands after the 
+    link is expanded on the Edit Role page
+ -  CCR13058 - 508-  The user is unable to use table commands after the 
+    link is expanded in the data table on the Capability Sets tab
+ -  CCR13059 - 508- "Health Benefit Plans Available - Select to Add" table 
+    has additional blank column
+ -  CCR13060 - 508- "Dependency Factors" table has incorrect reading order.
+ -  CCR13083 - 508 - Data table detected as layout table with headers.
+ -  CCR13084 - 508 - A method shall be provided that permits users to skip 
+    repetitive navigation.
+ -  CCR13087 - 508 - Important links and form controls should have 
+    shortcut keys.
+ -  CCR13097 - 508 - Table does not have a caption element.
+ -  CCR13098 - 508 - The id attribute's value should be unique.
+ -  CCR13099 - 508 - The script element does not have a corresponding 
+    noscript element.
+ -  CCR13100 - 508 - There is no mechanism to bypass navigation links.
+ -  CCR13140 - 508 - Provide an alert and give sufficient time to indicate 
+    more time is required
+ -  CCR13141 - 508 - Make error messages known immediately when error 
+    appears for screen reader
+ -  CCR13298 - 508 - Log-in Page - Make error messages known immediately 
+    when error appears for screen reader
+ -  CCR13204 - 508 - Provide instructions on each screen which fields are 
+    required to be filled
+ -  CCR13205 - 508 - Make sure skip navigation links are visible (508-2)
+ -  CCR13208 - 508 - Information conveyed using color only (this CCR is 
+    related with CCR13085)
+ -  CCR13296 - 508 - Layout table is missing role="presentation"
+ -  CCR13299 - 508 - Ensure all form fields have implicit or explicit 
+    labels.
+ -  CCR13182 - 508 - Make focus indicators clearly defined (508-4)
+ -  CCR13195 - 508 - Ensure all form fields have implicit or explicit 
+    labels.
+ -  CCR13196 - 508 - Images must have an alt attribute
+ -  CCR13197 - 508 - Changes of context are not announced when control 
+    value changes.
+ -  CCR13199 - 508 - Summary for layout tables should be empty or absent.
+ -  CCR13198 - 508 - Script element does not have a corresponding noscript 
+    element
+ -  CCR13200 - 508 - Data table missing header or if layout table, missing 
+    role="presentation"
+ -  CCR13201 - 508 - Use header-id method to mark up column and row header 
+    cells
+ -  CCR13205 - 508 - Make sure skip navigation links are visible (508-2)
+ -  CCR13422 - 508 - Ensure all form fields have implicit or explicit 
+    labels.
+  
+ IVM 508 Compliance:
+ -  CR13232 / RTC#112854 - Modifications to make the IVM application 508 
+    compliant
+ -  CR13232 / RTC#113659 - Modifications to make the IVM Intake Dependents 
+    Page 508 Compliant
+ -  CR13232 / RTC#113756 - Modifications to make the IVM Workload Profile 
+    Page 508 Compliant
+ -  CR13232 / RTC#113740 - Modifications to make the IVM Intake Veteran 
+    Employer Page 508 Compliant
+ -  CR13232 / RTC#113744 - Modifications to make the IVM Reports Page 508 
+    Compliant
+ -  CR13232 / RTC#117834 - Modifications to make the IVM Spouse Employer 
+    Page 508 Compliant
+ -  CR13232 / RTC#113746 - Modifications to make the IVM Workload Aging 
+    Status Page 508 Compliant
+ -  CR13232 / RTC#113749 - Modifications to make the IVM Workload Assign 
+    Page 508 Compliant
+ -  CR13232 / RTC#113752 - Modifications to make the IVM Workload Auto 
+    Create Page 508 Compliant
+ -  CR13232 / RTC#113754 - Modifications to make the IVM Workload Create 
+    Case Page 508 Compliant
+ -  CR13232 / RTC#113757 - Modifications to make the IVM Workload Search 
+    Page 508 Compliant
+ -  CR13232 / RTC#113761 - Modifications to make the IVM Workload Sort 
+    Page 508 Compliant
+ -  CR13232 / RTC#113763 - Modifications to make the IVM Workload Update 
+    Page 508 Compliant
+ -  CR13232 / RTC#113660 - Modifications to make the IVM Intake Insurance 
+    Page 508 Compliant
+ -  CR13232 / RTC#113662 - Modifications to make the IVM Intake Spouse 
+    Page 508 Compliant
+ -  CR13232 / RTC#113742 - Modifications to make the IVM Intake Veteran 
+    Page 508 Compliant
+ -  CR13232 / RTC#117813 - Modifications to make the IVM Login Page 508 
+    Compliant
+ -  CR13232 / RTC#117821 - Modifications to make the IVM Warning Page 508 
+    Compliant
+ -  CR13232 / RTC#113350 - Modifications to make the IVM Case Related 
+    Cases Page 508 Compliant
+ -  CR13232 / RTC#117842 - IVM 508 Compliant - Logs Detail Page
+ -  CR13232 / RTC#112862 - Modifications to make the IVM Case Assignment 
+    History Page 508 Compliant
+ -  CR13232 / RTC#112864 - Modifications to make the IVM Case Detail Page 
+    508 Compliant
+ -  CR13232 / RTC#112868 - Modifications to make the IVM Case History Page 
+    508 Compliant
+ -  CR13232 / RTC#113359 - Modifications to make the IVM Case Status 
+    History Page 508 Compliant
+ -  CR13232 / RTC#113640 - Modifications to make the IVM Communication 
+    Letters Log Page 508 Compliant
+ -  CR13232 / RTC#113648 - Modifications to make the IVM Financial EDB 
+    Means Test Page 508 Compliant
+ -  CR13232 / RTC#113652 - Modifications to make the IVM Federal Tax 
+    Information (FTI) Detail Page 508 Compliant
+ -  CR13232 / RTC#113653 - Modifications to make the IVM FTI Financial 
+    Calculator Page 508 Compliant
+ -  CR13232 / RTC#113655 - Modifications to make the IVM Home Page 508 
+    Compliant
+ -  CR13232 / RTC#128073 - IVM 508 Compliance: Skip Links
+ -  CR13232 / RTC#130772 - Verify accessibility using a screen reader
+  
+ IVM Security:
+ The External Assessment Service (EAS) team performed a Web Application 
+ Security Assessment (WASA) to identify common vulnerabilities and 
+ determine the likelihood that a malicious individual could obtain 
+ unauthorized access to the application, data, or other network resources. 
+ As a result the assessment, the following issues have been addressed.
+  
+ -  CR13231 / RTC#116185 - (1) Invalidate Redirects and Forwards
+ -  CR13231 / RTC#117017 - (2) Authorization Bypass
+ -  CR13231 / RTC#117018 - (3) Structured Query Language (SQL) Injection
+ -  CR13231 / RTC#117019 - (4) Insecure Cryptographic Storage
+ -  CR13231 / RTC#117020 - (5) Redirected Cross-site scripting (XSS) 
+    Attacks
+ -  CR13231 / RTC#117022 - (6) Not Enforcing Authentication on some pages
+ -  CR13231 / RTC#117028 - (7) Not Configuring Cookies Securely
+ -  CR13231 / RTC#117029 - (8) Displaying Detailed Error Message
+ -  CR13231 / RTC#117067 - (9) Insufficient Transport Layer Protection
+ -  CR13231 / RTC#117030 - (10) Parameter Tampering
+ -  CR13231 / RTC#117031 - (11) Reflected POST Cross-site Scripting (XSS) 
+    Attacks
+  
+  
+ Overview of Test Exclusions for Enrollment System Core (ESC):
+  
+ The VistA patches associated with the ES 4.1 release have been separated 
+ from the ES 4.1 release.  As a result, some of the ES functionality will 
+ remain dormant/inactive until the VistA patches are released. 
+  
+  
+ Below is a list of the VistA patches associated with ES 4.1. 
+ The patches will be released after ES 4.1 is deployed.
+  
+                                                               Anticipated
+ Patch Name   Description                                      Release Date
+ DG*5.3*894   CD CATASTROPHIC DISABILITY CHANGES               April 2015
+ IVM*2*158    CATASTROPHIC DISABILITY OUTBOUND HL7             April 2015
+ DG*5.3*871   HEALTH BENEFIT PLAN                              June  2015
+ DG*5.3*890   CONTRIBUTED TO SPOUSE AND CONTRIBUTED TO CHILD   June  2015
+ EAS*1*111    RECEIVE CONVERSION/REVERSAL TESTS FROM ES        June  2015
+ EAS*1*113    BT BULLETIN                                      June  2015
+ DG*5.3*904   BT FINANCIAL INDICATOR                           June  2015
+ DG*5.3*901   DATE OF DEATH ENHANCEMENTS                       June  2015
+ DG*5.3*906   ENROLLMENT ENHANCEMENTS - ACA                    June  2015
+ IVM*2*160    CONTRIBUTED TO SPOUSE AND CONTRIBUTED TO CHILD   June  2015
+  
+  
+ VOA 4.1 release:
+  
+ To facilitate and expedite the full automation of VA's online application 
+ offerings, VOAUI will enable user authentication through integration with 
+ eBenefits/AccessVA/VAAFI (VA Authentication Federation Infrastructure)
+ proxy and direct online submission to the Enrollment System (ES).
+  
+ The authenticated VOAUI will use ES services to query and retrieve veteran
+ data and prepopulate VOAUI's 10-10EZ/EZR form.  These prepopulated forms
+ will be available for the authenticated user to complete and/or update
+ relevant information required and will be submitted online to ES.  VOAUI
+ is accessible from the eBenefits portal and AccessVA for authorized users
+ with DS-Logon Level 2.
+  
+ This VOAUI 4.1 enhancement release includes the following features:
+ -  Integrate VOA with AccessVA's Identity Access Management (IAM)
+    Portal Strategy
+ -  Align with the latest OMB-approved VA 10-10EZ/EZR forms dated July 2014
+ -  Provide document upload capability for the Veteran to attach/include 
+    documentation when submitting to ES.
+  
+  
+ What to Expect:
+ ===============
+ During the ES 4.1 implementation, which is expected to take less than 
+ eight hours, HL7 messaging to and from the ES will be disabled by the VIE 
+ team.
+  
+  
+ Implementation:
+ ===============
+ The implementation of ES 4.1 requires deployment of Java and .NET 
+ Software to dedicated servers at the Austin Information Technology 
+ Center (AITC).  The AITC staff will perform the installation with support
+ from the development team. Support from the sites is not required.
+  
+ The ES application will be unavailable and Veteran enrollment 
+ determinations will be delayed until the deployment is complete. 
+ PSIM/MVI and messaging to/from the sites will be unavailable during the 
+ deployment. An ANR will be created to announce the deployment which will 
+ list all impacted systems and to track the outage. 
+  
+  
+ Implementation Date:
+ ====================
+ February 28, 2015
+  
+ Implementation Files:
+ =====================
+ N/A
+  
+ Routine Information:
+ ====================
+ N/A
+  
+  
+ DOCUMENTATION RETRIEVAL:
+ ========================
+ The user documentation is available on the Office of Information Field
+ Office (OIFO) ANONYMOUS.SOFTWARE directories listed below:
+  
+    OIFO                  FTP address                      Directory
+ Albany               ftp.domain.ext        
+ Hines                ftp.domain.ext         
+ Salt Lake City       ftp.domain.ext           
+ VistA download site  download.vista.domain.ext       
+  
+  The user documentation files listed below may be obtained via FTP.
+  
+  The preferred method is to download the files from:
+       download.vista.domain.ext
+  
+  This method transmits the files from the first available FTP server.  
+  
+  Sites may also select to retrieve documentation from a specific server 
+  as shown in the above table.
+  
+  The following files should be downloaded in the binary FTP mode. 
+  
+  Filename                              Description
+  --------                              -----------
+ ES_4_1_0_Developers_Guide              Developers Guide
+ ES_4_1_0_Installation_Guide            Installation Guide
+ ES_4_1_0_Release_Notes                 Release Notes
+ ES_4_1_0_Security_Guide                Security Guide
+ ES_4_1_0_Production_Operations_Manual  Production Operations Manual
+    (Includes Troubleshooting Guide)
+ ES_4_1_0_User_Guide                    User Guide
+ ES_4_1_0_Systems_Management_Guide      Systems Management Guide
+  
+ Mandate:
+ ======== 
+ N/A
+  
+ Associated Remedy Tickets:
+ ==========================
+ N/A
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Reporting Problems:
+ ===================
+ N/A
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 24, 2014
+Completed By:                               Date Completed: MAR 02, 2015
+Released By :                               Date Released : MAR 02, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

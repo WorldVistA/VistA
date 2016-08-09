@@ -1,0 +1,233 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 07/26/13 at 17:10
+=============================================================================
+Run Date: APR 22, 2014                     Designation: OR*3*375
+Package : OR - ORDER ENTRY/RESULTS REPORTING  Priority: Mandatory
+Version : 3       SEQ #336                      Status: Released
+                  Compliance Date: MAY 23, 2014
+=============================================================================
+
+Associated patches: (v)OR*3*314    <<= must be installed BEFORE `OR*3*375'
+                    (v)OR*3*332    <<= must be installed BEFORE `OR*3*375'
+
+Subject: Delayed order-Framestack-Cumulative Report fixes
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the ORDER ENTRY/RESULTS 
+ REPORTING package:
+  
+ 1) CPRS defaults to "Tray" only when there is no location passed in or
+    no entry exists in the NUTRITION LOCATION file (#119.6).
+  
+ 2) Option [ORCM MENU] allows the currently selected menu to add itself as
+    an item.
+  
+ 3) When the VBEC server is down, the cumulative report on the "Lab" Tab 
+    returns no information.
+  
+ Associated NSR(s):
+ =================
+ N/A 
+  
+ Associated Remedy ticket(s):
+ ===========================
+ 1) INC000000219278 - Delayed Diet Order doesn't survive the admission
+  
+ 2) INC000000624848 - Option ORCM MENU allows menu to be put on itself
+    Duplicate(s):
+    INC000000626049 - FRAMESTACK TREE2+1^ORDD41
+  
+ 3) INC000000832820 - OERR - Labs Tab: LAB CUM not displaying- VBECS down
+    Duplicate(s):   
+    INC000000841656 - Lab - Other:
+    INC000000841607 - Lab - Other:
+  
+  
+ Participating Test Sites:
+ ========================
+ VA Hudson Valley HCS, NY (Castle Point)
+ INDIANAPOLIS, IN (C)
+  
+ REMEDY OVERVIEW:
+ ================
+ 1) INC000000219278 - Delayed Diet Order doesn't survive the admission
+   
+ Problem:
+ --------
+ The problem occurs when a user uses a quick order in the CPRS GUI to 
+ create a delayed diet order for admission. If the quick order has 
+ "Delivery" set to anything besides "Tray", and there is no location 
+ passed in or the location used does not have an entry in the 
+ NUTRITION LOCATION file (#119.6), by default it will leave the
+ delivery dropdown blank, and only "Tray" can be selected. If the user
+ leaves the box blank, the delayed order will be cancel when the admission
+ event occurs.
+  
+ **Note: This patch addresses 2 of the know faults and will not completely 
+ fix the issue with delayed orders getting canceled when the movement 
+ occurs.
+  
+ This problem consists of 4 faults.
+ 1) By default CPRS defaults to "Tray" only when there is no location 
+    passed in or no location entry in the NUTRITION LOCATION file (#119.6).
+  
+  
+ 2) The remote procedure call is not passing the parameters back in the 
+    proper position
+  
+ Faults 1 and 2 will be corrected with this patch.
+  
+    The remaining  2 faults are part of the CPRS Graphical User Interface 
+    (GUI), which is not controlled by VistA Maintenance. VistA Maintenance
+    works in conjunction with DEV-OERR package to get GUI bug fixes added
+    to each major release of the CPRS GUI, We are not in control of what is
+    added to the releases; therefore we are unable to determine when they
+    will be added to a CPRS GUI release. These two issues have already been
+    reported in Remedy and they are currently assigned to the CPRS  
+    development team, and will be addressed by a future GUI release of
+    CPRS.
+  
+ 3) If there is a selected location, CPRS uses the selected location's 
+    services (if it has an entry in the NUTRITION LOCATION file (#119.6))
+    even if it is a delayed order to admit. (Remedy ticket INC000000766435)
+  
+ 4) When a delivery mismatch occurs (The QO specifies a delivery that is 
+    not a valid option for the specified location) the CPRS GUI will allow 
+    the user to accept the order without requiring the user to select one
+    of the available options (recorded in INC000000767935)
+  
+ Faults 3 and 4 will not be corrected with this patch.
+  
+  
+ Resolution:
+ -----------
+ When there is no location passed in or no entry in the NUTRITION LOCATION 
+ file (#119.6), The PATCH will allow the delivery dropdown to have the
+ options: "Tray", "Dining room", and "Cafeteria" available as it was 
+ original intended.
+  
+ Routine ORWDFH has been modified to set ORLST(3)="TCD" when no location 
+ is passed in or no entry exists in the NUTRITION LOCATION file (#119.6).
+ Also changed the RPC return array position of this information by setting
+ ORLST(1)="" if ORLST(1) doesn't exist and ORLST(2)="" if ORLST(2) doesn't 
+ exist.
+  
+  
+ 2) INC000000624848 - Option ORCM MENU allows menu to be put on it-self
+   
+ Problem:
+ --------
+ The problem occurs when a user adds an item to a menu using option 
+ Enter/edit order menus [ORCM MENU] and the item name is exactly as
+ the menu name. This occurs because the system is not properly 
+ checking if the item is a recursive reference. 
+  
+ Resolution:
+ -----------
+ Changed the code to reject a menu being placed on itself in the same 
+ manner that it rejects other recursive references.
+  
+ Routine ORCMEDT5 has been modified to compare the ITEM variable to the 
+ MENU variable. If they are the same it will reject the entry.
+  
+ 3) INC000000832820 - OERR - Labs Tab: LAB CUM not displaying- VBECS down
+   
+ Problem:
+ --------
+ The problem occurs when the VBEC server is down. The cumulative report on 
+ the "Lab" Tab returns no information. This happens because the current 
+ code changes the location that the system looks for the information to an 
+ incorrect location in memory.  
+   
+  
+ Resolution:
+ -----------
+ Altered the code to prevent the location pointer change.
+  
+ Routine ORWLR1 has been modified to eliminate the setting of the local 
+ variable OROOT.
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+  This patch can be loaded with users in the system but it is recommended 
+  that it be installed when user activity is low.  Installation time will 
+  be less than 2 minutes.
+    
+    1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter OR*3.0*375):
+    
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        OR*3.0*375.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;3.0;ORDER ENTRY/RESULTS REPORTING;**[Patch List]**;Dec 17, 1997;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: ORCMEDT5
+    Before: B36616080   After: B37965466  **8,46,296,314,375**
+Routine Name: ORWDFH
+    Before: B51608431   After: B53150906  **10,92,141,187,215,243,375**
+Routine Name: ORWLR1
+    Before: B40020805   After: B40488173  **172,212,309,332,375**
+ 
+Routine list of preceding patches: 243, 314, 332
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUN 19, 2013
+Completed By:                               Date Completed: APR 10, 2014
+Released By :                               Date Released : APR 22, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

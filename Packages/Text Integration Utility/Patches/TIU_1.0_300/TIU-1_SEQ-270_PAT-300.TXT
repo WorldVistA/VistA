@@ -1,0 +1,187 @@
+$TXT Created by                at VIALAB1.AAC.DOMAIN.EXT  (KIDS) on Thursday, 02/11/16 at 09:16
+=============================================================================
+Run Date: MAY 03, 2016                     Designation: TIU*1*300
+Package : TIU - TEXT INTEGRATION UTILITIES    Priority: Mandatory
+Version : 1       SEQ #270                      Status: Released
+                  Compliance Date: JUN 03, 2016
+=============================================================================
+
+Associated patches: (v)TIU*1*263   <<= must be installed BEFORE `TIU*1*300'
+
+Subject: TIU Updates for VIAB*1*5
+
+Category: 
+  - Other
+
+Description:
+============
+
+  The VistA Integration Adaptor (VIA) project requires access to certain
+  Remote Procedure Calls (RPCs) that are part of the TEXT INTEGRATION
+  UTILITIES package. The purpose of this patch is to publish those RPCs
+  allowing access for use by VIA by setting the field APP PROXY ALLOWED 
+  field (#.11) of the REMOTE PROCEDURE file (#8994) to YES.
+   
+  This patch is one of a series of patches that will allow access for use 
+  by VIA:
+   
+   OR*3*426
+   TIU*1*300
+   VIAB*1*5
+   
+  Patch Components:
+  -----------------
+   
+   
+  Files & Fields Associated:
+   
+  File Name (Number)         Field Name (Number)     New/Modified/Deleted
+  ------------------         -------------------     --------------------
+  N/A
+   
+  Forms Associated:
+   
+  Form Name                    File #               New/Modified/Deleted
+  ---------                    ------               --------------------
+  N/A
+   
+  Mail Groups Associated:
+   
+  Mail Group Name          New/Modified/Deleted
+  ---------------          --------------------
+  N/A
+   
+  Options Associated:
+   
+  Option Name            Type               New/Modified/Deleted
+  -----------            ----               -------------------- 
+  N/A
+   
+  Protocols Associated:
+   
+  Protocol Name       New/Modified/Deleted
+  -------------       -------------------- 
+  N/A
+   
+  Security Keys Associated:
+   
+  Security Key Name
+  -----------------
+  N/A
+   
+  Templates Associated:
+   
+  Template Name      Type      File Name (Number)  New/Modified/Deleted 
+  -------------      ----      ------------------  --------------------
+  N/A
+   
+  Additional Information:
+   
+  Remote Procedure Calls Modified:
+  -------------------------------
+  TIU DETAILED DISPLAY         
+  TIU SET ADMINISTRATIVE CLOSURE
+   
+  New Service Requests (NSRs):
+  ----------------------------  
+  N/A
+   
+   
+  Patient Safety Issues (PSIs):
+  -----------------------------
+  N/A
+   
+  Remedy Ticket(s) & Overview:
+  ----------------------------
+  N/A
+   
+   
+  Test Sites:
+  ----------
+  Gulf Coast
+  Northampton
+  Central Alabama
+   
+  Documentation Retrieval Instructions:
+  ------------------------------------- 
+  N/A
+   
+  Patch Installation:
+   
+   
+  Pre/Post Installation Overview:
+  -------------------------------
+  This patch has no special requirements for the pre or post installation. 
+  The installation is a typical installation from a PackMan message.
+   
+  Pre-Installation Instructions:
+  ------------------------------
+  This patch may be installed with users on the system. This patch should
+  take less than 5 minutes to install.
+   
+  No menu options need to be disabled.
+   
+  Installation Instructions:
+  --------------------------
+  This installation will install modified Remote Procedure Calls (RPCs).
+   
+  1.  Choose the PackMan message containing this patch.
+   
+  2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+   
+  3.  From the Kernel Installation and Distribution System Menu, select
+      the Installation Menu.  From this menu, you may elect to use the
+      following options. When prompted for the INSTALL NAME enter the 
+      patch  #TIU*1.0*300
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DDs or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DDs, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+       
+  4.  From the Installation Menu, select the Install Package(s) option and
+      choose the patch TIU*1*300 to install.
+   
+  5.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+      NO//'
+      Respond: NO
+   
+  6.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+      and Protocols? NO//' 
+      Respond: NO
+   
+  7.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//' respond 0.
+   
+   
+  Post-Installation Instructions:
+  -------------------------------
+  N/A
+   
+  Routine Information:
+  --------------------
+  
+ Routine Information:
+ ====================
+ No routines included.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JAN 05, 2016
+Completed By:                               Date Completed: APR 12, 2016
+Released By :                               Date Released : MAY 03, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,94 @@
+
+=============================================================================
+Run Date: JAN 08, 2015                     Designation: NHIN*1*4
+Package : NHIN - NATIONAL HEALTH INFO NETWORK Priority: Mandatory
+Version : 1         SEQ #3                      Status: Released
+                  Compliance Date: FEB 08, 2015
+=============================================================================
+
+
+Subject: VLER eHEALTH EXCHANGE 6.0.2.4 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ Note: Technical support staff at Austin Information Technology Center
+ (AITC) will install this enhancement release on the eHealth Exchange
+ (formerly VLER and formerly NHIN) servers on January 11, 2015, between
+ 12:45 AM - 4:00 AM EST, using a pre-approved Request for
+ Change Order and Implementation Plan.
+  
+ No effort is required by local sites.  User Acceptance Test is by the 
+ direction of the eHealth Exchange Business Owner and no MOU are required.
+ **********************************************************************
+   
+ eHealth Exchange (formerly VLER and formerly NHIN) Adapter Release 6.0.2.4
+ contains code changes (enhancements) to the eHealth Exchange Adapter
+ module.  These changes are Work Items that were recorded and tracked in
+ the eHealth Exchange area of RTC.  This release contains the Work Items
+ completed during production deployment. 
+  
+ This enhancement release enables the Exchange Adapter to be compatible 
+ with Healtheway's 2011 specification as well as ensures backward 
+ compatibility with Healtheway's 2010 specifications.  This enhancement 
+ allows VA eHealth Exchange to onboard additional external partners who 
+ are currently 2011 specification-certified and have not been able to 
+ conduct health information exchange with the VA due to the lack of 
+ compatibility.
+  
+ The v6.0.2.4 code was certified by Healtheway as meeting the compliance 
+ standards of the 2011 specification in November 2014 and needs to be 
+ deployed in the eHealth Exchange Production environment in order to 
+ initiate the on-boarding of 2011 partners.  In addition to now being able 
+ to exchange with 2011 partners, it is critical that backward 
+ compatibility with 2010 partners be maintained, since not all partners 
+ who currently exchange with VA are 2011 certified.  The Exchange CONNECT 
+ gateway subscription will be upgraded to support exchange with 2011 
+ specification-certified partners.  The upgraded capability will be 
+ backward compatible with eHealth Exchange partners who continue to use 
+ the 2010 Healtheway specification.
+  
+ Test sites - N/A
+ The upgraded software will be deployed to a centralized system at AITC.
+  
+ Testing Process:
+  
+ Features and Functionality tested in this release to production
+ included:
+ - 2010/2011 Specification backward compatibility: Tested the inbound and 
+ outbound ability to execute patient discovery (PD), document query (DQ), 
+ and document retrieve (DR) functionality with partners configured on 
+ either 2010 or 2011 specifications to ensure backward compatibility when 
+ 2011 Specification is rolled out.
+ - Immunization Retention: Tested the ability to receive pushed C32 
+ documents and store immunization data in VistA via VLER DAS.
+  
+ Testing was conducted with external partners - both 2011 and 2010 
+ partners - to ensure that the upgraded capability allowed for successful 
+ exchange with 2011 partners and backward compabitility with 2010 
+ partners.  2010/2011 Spec testing was conducted with 5 partners:  Kaiser 
+ Permanente (KP), Med Virginia (Med VA), Wright State University, Indiana 
+ Health Information Exchange (HIE) and Conemaugh Health Systems.  In 
+ addition, a Document Push test was conducted with Walgreens.
+  
+ Remedy tickets: None.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : DEC 15, 2014
+Completed By:                               Date Completed: JAN 08, 2015
+Released By :                               Date Released : JAN 08, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

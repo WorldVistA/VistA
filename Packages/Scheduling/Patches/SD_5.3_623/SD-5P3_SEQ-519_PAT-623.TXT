@@ -1,0 +1,251 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 11/05/14 at 17:29
+=============================================================================
+Run Date: MAR 16, 2015                     Designation: SD*5.3*623
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #519                    Status: Released
+                  Compliance Date: APR 01, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*615  <<= must be installed BEFORE `SD*5.3*623'
+
+Subject: MID-FY15 TABLE MAINTENANCE FOR CLINIC STOP FILE
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ This patch provides Fiscal Year 2015 Mid-Year updates to the CLINIC 
+ STOP file (#40.7) as requested by the Office of Finance, Managerial 
+ Cost Accounting Office (MCAO).
+  
+                           *** IMPORTANT NOTE ***
+ **************************************************************************
+ ** This patch is being released with a compliance date of April 1, 2015.**
+ ** This patch should be installed as close to Close of Business (COB)   **
+ ** March 31, 2015 as possible but not after April 1, 2015. Early        **
+ ** installation of this patch could result in transmission of incorrect **
+ ** stop codes that will result in errors from Austin. Coordination with **
+ ** the MAS (Medical Administration Service) PAS (Program Application    **
+ ** Specialist)/ADPAC (Automated Data Processing Application Coordinator)**
+ ** is imperative as the patch will cause changes to the CLINIC STOP file**
+ ** (#40.7). Testing can be done in a site's mirror account before       **
+ ** installation in production to verify changes. This patch inactivates **
+ ** and creates stop codes effective April 1, 2015; therefore installing **
+ ** early may modify certain stop codes that may currently be in use at  **
+ ** your site. It is advised that clinics with stop codes assigned that  **
+ ** will incur restriction date/type changes should be corrected as soon **
+ ** as possible after installation. Please keep in mind that new stop    **
+ ** code corrections should not be assigned until April 1, 2015 as they  **
+ ** will not be accepted in Austin until that date. All other stop code  **
+ ** corrections should be made as early as possible on April 1, 2015.    **
+ **************************************************************************
+  
+ MCA (Managerial Cost Accounting) Sites Team Instructions for 
+               FY15 Mid-Year Stop Code Patch
+ ------------------------------------------------------------
+ This patch makes additions and changes to the CLINIC STOP file (#40.7) as 
+ of April 1, 2015.
+  
+   - No Clinic can be created using any new stop codes contained in the 
+     patch until after this patch is implemented.
+  
+   - Any clinics using a stop code inactivated by the patch should have
+     an active stop code assigned. Assigning appropriate active stop codes
+     to clinics can be accomplished prior to patch implementation if 
+     desired.
+  
+ MCA Site Teams, Scheduling, and IRM (Information Resource Management) 
+ should coordinate to perform the following sequence:
+  
+   1. Run the DSS worksheet option Create DSS Clinic Stop Code File 
+      [ECXSCLOAD]. Then, make any necessary adjustments before approval so
+      all clinics on the worksheet have setups applicable for the month of
+      March 2015.
+  
+   2. IRM installs the patch late on March 31 or early on April 1, 2015.
+  
+   3. Run the Non-Conforming Clinics Stop Code Report [SD CLN STOP CODE 
+      REP] to list those clinics that need changes in the HOSPITAL LOCATION
+      file (#44) for FY15 Mid-Year. Work with Scheduling staff to make 
+      changes in the HOSPITAL LOCATION file (#44) so that the clinics will
+      have the correct stop codes in place for April 1st clinic appoint-
+      ments. DO NOT make changes using Enter/Edit DSS Stop Codes for 
+      Clinics [ECXSCEDIT] for the CLINICS AND STOP CODES file (#728.44) at
+      this time.
+  
+   4. Follow normal procedures to run the DSS CLI Extract for March 2015.
+      Updates should not be made for April stop code changes with the
+      Enter/Edit DSS Stop Codes for Clinics [ECXSCEDIT] option prior to
+      running the March CLI Extract. Perform normal AUDITS for the CLI
+      Extract.
+  
+   5. After auditing the March CLI Extract proceed with FY15 Mid-Year Stop
+      Code changes to the DSS Clinics and Stop Codes Worksheet clinics:
+  
+      a. Run the Create DSS Clinic Stop Code File [ECXSCLOAD] option. This
+         option creates local entries in the CLINICS AND STOP CODE file
+         (#728.44) and compares this file to the HOSPITAL LOCATION file 
+         (#44) to see if there are any differences since the last time the
+         file was reviewed.
+  
+      b. Use the option Clinics and DSS Stop Codes Print [ECXSCLIST]. This
+         option produces a worksheet of (A) All Clinics, (C) Active, (D) 
+         Duplicate, (I) Inactive, or only the (U) Unreviewed Clinics that
+         are awaiting approval.
+  
+      c. Update for FY15 Mid-Year as needed using the Enter/Edit DSS Stop
+         Codes for Clinics [ECXSCEDIT] option.
+  
+      d. Approve changes using the Approve Reviewed DSS Clinic Worksheet
+         [ECXSCAPPROV] option. Finalize all stop code changes on the work-
+         sheet to be ready to run the April DSS CLI Extract.
+  
+  
+ Associated Remedy Ticket(s):
+ ============================
+ INC000001041910 FY15 Mid-Year changes to Clinic Stop file
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Wilmington VAMC
+ Upstate New York HCS
+ Salisbury VAMC
+  
+  
+ Remedy Ticket Overview:
+ =======================
+ INC000001041910 FY15 Mid-Year changes to Clinic Stop file
+  
+ Problem:
+ --------
+ The Office of Finance, Managerial Cost Accounting Office (MCAO), has 
+ requested Fiscal Year 2015 Mid-Year changes to the CLINIC STOP file 
+ (#40.7).
+  
+ Resolution:
+ -----------
+ The requested Fiscal Year 2015 Mid-Year changes were submitted by the 
+ MCAO to be implemented effective April 1, 2015. Post-init routine SD53MY15
+ updates the CLINIC STOP file (#40.7) by adding one (1) new stop code and 
+ inactivating one (1) existing stop code.
+  
+ Listed below are the applicable stop code updates:
+  
+ New Stop Code being added (effective 04/01/2015):
+  
+ Stop Code   Name/Description           Restriction Type   Restriction Date
+  
+    673      CLINICAL TEAM CONFERENCE         S               04/01/2015
+  
+ Stop Code being inactivated (Inactive Date: 04/01/2015):
+  
+ Stop Code: 716  POST SURG RTINE AFTRCARE 2ND
+  
+  
+ Installation Instructions:
+ ==========================
+ This patch may be run with users on the system, but it is recommended that
+ it be queued to run after normal business hours.
+  
+ Install Time - less than 3 minutes.
+ Suggested time to install: non-peak requirement hours.
+  
+ NOTE: After the patch is installed, delete the routine SD53MY15 using the
+       Delete Routine [XTRDEL] option.
+  
+ 1. Load Transport Global
+    ---------------------
+    Choose the PackMan message containing this patch and invoke the
+    INSTALL/CHECK MESSAGE PackMan option.
+  
+ 2. Start Up KIDS
+    -------------
+    Start up the Kernel Installation and Distribution System Menu
+    [XPD MAIN]:
+         Edits and Distribution ...
+         Utilities ...
+         Installation ...
+  
+    Select Kernel Installation & Distribution System Option: INStallation
+                                                             ---
+         Load a Distribution
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify Checksums in Transport Global
+         Install Package(s)
+         Restart Install of Package(s)
+         Unload a Distribution
+         Backup a Transport Global
+  
+ 3. Select Installation Option:
+    ---------------------------
+    NOTE: The following are OPTIONAL - (When prompted for the INSTALL
+          NAME, enter SD*5.3*623):
+  
+    a. Backup a Transport Global - This option will create a backup message
+       of any routines exported with this patch. It will not backup any 
+       other changes such as DD's or templates.
+  
+    b. Compare Transport Global to Current System - This option will allow
+       you to view all changes that will be made when this patch is 
+       installed. It compares all components of this patch (routines, 
+       DD's, templates, etc.)
+  
+    c. Verify Checksums in Transport Global - This option will allow you to
+       ensure the integrity of the routines that are in the transport 
+       global.
+  
+ 4. Select Installation Option: Install Package(s)
+    ----------------------------------------------
+    ** This is the step to start the installation of this KIDS patch:
+  
+    a. Choose the Install Package(s) option to start the patch install.
+  
+    b. When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+       NO//', answer NO.
+  
+    c. When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+       Protocols? NO//', answer NO.
+  
+ NOTE: Details of the changes applied by this patch are provided during the
+       installation and may also be reviewed with the Install File Print
+       option on the Utilities menu on the Kernel Installation and 
+       Distribution System menu.
+  
+       It is important to check the CLINIC STOP file (#40.7) post 
+       installation to make sure that all of the updates are correctly 
+       reflected in the CLINIC STOP file (#40.7). If any discrepancies are
+       found, you should enter a Remedy ticket.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;AUG 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SD53MY15
+    Before:       n/a   After: B68505021  **623**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : AUG 28, 2014
+Completed By:                               Date Completed: MAR 09, 2015
+Released By :                               Date Released : MAR 16, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

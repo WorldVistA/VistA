@@ -1,0 +1,132 @@
+$TXT Created by                  at MNTVBB.DOMAIN.EXT  (KIDS) on Monday, 09/08/14 at 10:41
+=============================================================================
+Run Date: DEC 03, 2014                     Designation: PSJ*5*310
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #264                      Status: Released
+                  Compliance Date: JAN 03, 2015
+=============================================================================
+
+
+Subject: CREATININE CLEARANCE AND BODY SURFACE AREA MISSING
+
+Category: 
+  - Other
+
+Description:
+============
+
+ This patch will resolve the following issue:
+  
+ The Patient Information Screen for Inpatient Medications does not
+ display the Creatinine Clearance (CrCL) and Body Surface Area (BSA)
+ when no orders are present.
+  
+  
+ Associated Remedy tickets:
+ ==========================
+ 1. INC000001040930       Creatinine Clearance (CrCl) and Body Surface Area
+                          (BSA) are not displayed when there are no orders
+                          for Inpatient Medications.
+  
+ Associated PSPO(s):
+ ===================
+ PSPO #2632
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Oklahoma VAMC
+ Houston VAMC
+ Albany VAMC
+  
+ Remedy Overview:
+ ================
+ 1. INC000001040930       Creatinine Clearance (CrCl) and Body Surface Area 
+                          (BSA) are not displayed when there are no existing
+                          orders for Inpatient Medications on the 
+                          Inpatient Order Entry [PSJ OE] screen.
+  
+ Problem:
+ --------
+ In Inpatient Medications, when no orders are present for a patient, the 
+ CrCl and BSA are not displayed in the header.
+  
+ Resolution:
+ -----------
+ Modified the top margin in the List Template - PSJ LM BRIEF PATIENT INFO 
+ from 8 lines to 9 lines.  This will enable the CrCl and BSA to be 
+ displayed at all times for the Inpatient Patient Information screen.
+  
+ Components:
+ ===========
+ List Template       PSJ LM BRIEF PATIENT INFO
+  
+  
+ Installation Instructions:
+ ==========================
+ It is recommended that the install take place during non-peak hours.
+  
+ Install Time - less than 2 minutes. 
+  
+ 1.  Choose the PackMan message containing this patch and invoke the 
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+    2.  Start up the Kernel Installation and Distribution System Menu
+        [XPD MAIN]: 
+    
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...  
+    
+      Select Kernel Installation & Distribution System Option: Installation
+                                                               ---
+             1      Load a Distribution
+             2      Verify Checksums in Transport Global
+             3      Print Transport Global
+             4      Compare Transport Global to Current System
+             5      Backup a Transport Global
+             6      Install Package(s)
+                    Restart Install of Package(s)
+                    Unload a Distribution
+    
+    3.  From this menu, you may elect to use the following options
+        (When prompted for the INSTALL NAME, enter PSJ*5.0*310):
+    
+        a.  Backup a Transport Global - This option will create a backup
+            message of any routines exported with this patch. It will
+            not backup any other changes such as DD's or templates.
+        b.  Compare Transport Global to Current System - This option
+            will allow you to view all changes that will be made when
+            this patch is installed.  It compares all components of this
+            patch (routines, DD's, templates, etc.).
+        c.  Verify Checksums in Transport Global - This option will
+            allow you to ensure the integrity of the routines that are
+            in the transport global.
+    
+    4.  Use the Install Package(s) option and select the package
+        PSJ*5.0*310.
+    
+        a.  When prompted "Want KIDS to INHIBIT LOGONs during the
+            install? NO//", answer NO.
+        b.  When prompted "Want to DISABLE Scheduled Options and Menu 
+            Options and Protocols? NO//", answer NO.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 22, 2014
+Completed By:                               Date Completed: DEC 02, 2014
+Released By :                               Date Released : DEC 03, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

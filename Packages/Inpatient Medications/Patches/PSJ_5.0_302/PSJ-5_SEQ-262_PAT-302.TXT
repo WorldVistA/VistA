@@ -1,0 +1,136 @@
+$TXT Created by                 CHEY19.FO-BAYPINES.DOMAIN.EXT  (KIDS) on Thursday, 03/27/14 at 19:33
+=============================================================================
+Run Date: OCT 23, 2014                     Designation: PSJ*5*302
+Package : PSJ - INPATIENT MEDICATIONS         Priority: Mandatory
+Version : 5       SEQ #262                      Status: Released
+                  Compliance Date: NOV 23, 2014
+=============================================================================
+
+Associated patches: (v)PSJ*5*170   <<= must be installed BEFORE `PSJ*5*302'
+                    (v)PSJ*5*275   <<= must be installed BEFORE `PSJ*5*302'
+
+Subject: PREVENT IV ORDERS FOR DECEASED PATIENTS AND DOSE LIMIT ISSUES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch will resolve the following issues in the Inpatient Medications
+ package:
+  
+ 1. IV orders can be placed for deceased patient
+ 2. Dose Limit problem for Day-of-the-Week schedules
+  
+ Associated Remedy Tickets:
+ =========================
+ 1. INC0000000745177 - IV Orders Issue
+  
+ 2. INC0000000587650 - Dose Limit problem for Day-of-the-Week schedules
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Sites:
+ =========================
+ Pittsburgh HCS 
+ Salisbury 
+ Upstate New York
+  
+ Remedy Ticket Overview:
+ ======================
+ 1. INC000000745177 - IV Orders Issue
+  
+ Problem:
+ -------
+ It is possible in Inpatient Order Entry [PSJ OE] to create a new 
+ IV order for a patient who is marked deceased.
+  
+ Resolution:
+ ----------
+ This patch will modify Routine PSJOE0 so that new IV orders can no longer 
+ be created for a patient who is marked deceased.
+  
+  
+ 2. INC0000000587650 - Dose Limit problem for Day-of-the-Week schedules
+  
+ Problem:
+ -------
+ If a unit dose order with a Day-of-the-Week schedule has its Stop 
+ Date/Time calculated using Dose Limits, and the current day is not one of 
+ the administration days, then the Stop Date/Time will be calculated as 
+ being one fewer doses in the future than it should.
+  
+ Resolution:
+ ----------
+ Changed PSGDL so that the Stop Date is properly calculated as N+1 doses 
+ in the future, where N is the Dose Limit, so that exactly N doses fall 
+ between the Start Date/Time and the Stop Date/Time.
+  
+  
+        ================INSTALLATION INSTRUCTIONS =================
+  
+ It is not necessary to disable any options. It is recommended to install 
+ this patch when users are off the system.  It should take less than 2
+ minutes to install this patch.
+  
+    1. Choose the PackMan message containing this patch and invoke the
+       INSTALL/CHECK MESSAGE PackMan option.  
+   
+    2. From the Kernel Installation & Distribution System menu, select 
+       the Installation menu.  
+   
+    3. From this menu, you may select to use the following options: 
+       (when prompted for INSTALL NAME, enter PSJ*5.0*302)
+   
+         a.  Verify Checksums in Transport Global - This option will allow
+             you to ensure the integrity of the routines that are in the
+             transport global.
+         b.  Print Transport Global - This option will allow you to view
+             the components of the KIDS build.
+         c.  Compare Transport Global to Current System - This option will
+             allow you to view all changes that will be made when this 
+             patch is installed.  It compares all components of this patch
+             (routines, DD's, templates, etc.).
+         d.  Backup a Transport Global - This option will create a backup
+             message of any routines exported with this patch. It will not
+             backup any other changes such as DD's or templates.
+   
+    4. Use the Install Package(s) option and select the package 
+       PSJ*5.0*302.
+  
+    5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+       NO//" respond NO.  
+   
+    6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+       Protocols? NO//" respond NO.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.0;INPATIENT MEDICATIONS;**[Patch List]**;16 DEC 97;Build 2
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PSGDL
+    Before: B13848268   After: B14139634  **16,50,64,58,111,170,302**
+Routine Name: PSJOE0
+    Before: B26253829   After: B26555549  **47,56,110,133,162,241,267,275,302**
+ 
+Routine list of preceding patches: 170, 275
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 25, 2013
+Completed By:                               Date Completed: OCT 21, 2014
+Released By :                               Date Released : OCT 23, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

@@ -1,0 +1,356 @@
+$TXT Created by           at DEVESS.DOMAIN.EXT  (KIDS) on Monday, 03/10/14 at 11:32
+=============================================================================
+Run Date: AUG 15, 2014                     Designation: EC*2*114
+Package : EC - EVENT CAPTURE                  Priority: Mandatory
+Version : 2       SEQ #118                      Status: Released
+                  Compliance Date: AUG 29, 2014
+=============================================================================
+
+Associated patches: (v)EC*2*47     <<= must be installed BEFORE `EC*2*114'
+                    (v)EC*2*95     <<= must be installed BEFORE `EC*2*114'
+                    (v)LEX*2*80    <<= must be installed BEFORE `EC*2*114'
+                    (v)PX*1*199    <<= must be installed BEFORE `EC*2*114'
+                    (v)ICD*18*57   <<= must be installed BEFORE `EC*2*114'
+                    (v)EC*2*112    <<= must be installed BEFORE `EC*2*114'
+                    (v)EC*2*119    <<= must be installed BEFORE `EC*2*114'
+
+Subject: EVENT CAPTURE ICD-10 CLASS 1 REMEDIATION
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Other
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ IMPORTANT INFORMATION Please read the Overview Guide 
+ (ICD-10_Production_Overview_Guide_Groups_3_4.pdf) posted on the Anonymous 
+ directory for installation order. This is critical for proper 
+ functionality of the ICD-10 Software.
+  
+ The International Classification of Diseases, Tenth Revision (ICD-10) 
+ Class 1 Software Remediation project replaces the 30-year-old set of 
+ diagnosis and procedure codes (ICD-9-CM) that medical personnel use. Dates
+ of service, or dates of discharge for inpatients, that occur on or after
+ the Activation Date will use the ICD-10 code set. Clinical Modification
+ (ICD-10-CM) diagnosis codes increase from about 13,000 ICD-9 codes to more
+ than 68,000. Procedure Coding System (ICD-10-PCS) procedure codes increase
+ from about 3,800 ICD-9 codes to nearly 87,000. Both systems also expand
+ the number of characters allotted to seven alpha-numeric characters. This
+ value does not include the decimal point, which follows the third
+ character for the ICD-10-CM code set. There is no decimal point in the
+ ICD-10-PCS code set. 
+  
+ These code sets have the potential to reveal more about quality of care, 
+ so that data can be used in a more meaningful way to better understand 
+ complications, better design clinically robust algorithms, and better 
+ track the outcomes of care. ICD-10-CM also incorporates greater 
+ specificity and clinical detail to provide information for clinical 
+ decision making and outcomes research. 
+  
+ The following functionality within the Event Capture application were 
+ updated to address the ICD-10 code set.
+  
+ EVENT CAPTURE GUI
+ =================
+  
+ RPC Broker Calls:
+  
+  The following new RPC call was created to pass the ICD-10 Activation Date
+  over to the GUI front end. This new RPC was also added to the EC GUI
+  CONTEXT option in the OPTION file (#19).
+  
+  EC ICD10IMPLEMENTATIONDATE
+  
+  The following RPC broker calls were updated to support the Delphi front-
+  end of EVENT CAPTURE. 
+  
+  EC GETPATPROCS        EC GETPATINFO       EC VALIDATE SPREADSHEET DATA
+  EC GETBATPROCS        EC GETENCDXS        EC REPORTS
+  EC FILER              EC GETLIST
+     
+  They were updated to utilize the following two new APIs:
+    $$SINFO^ICDEX - To determine the Active ICD Coding System based on the
+                    Date Of Interest (DOI).
+    $$ICDDX^ICDEX - To validate and retrieve the ICD data.
+  
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)          Field Name (#)                          New/Mod/Del
+ -------------          --------------------------------------  -----------
+ EVENT CAPTURE PATIENT (#721)                                       Mod
+                        PRIMARY ICD CODE (#20)
+   SECONDARY ICD CODE  (sub-file)(#721.038)                         Mod
+                        SECONDARY ICD CODE (#.01)
+  
+ Forms Associated:
+  
+ Form Name                File #                                New/Mod/Del
+ ---------                ------                                -----------
+ N/A
+  
+ Mail Groups Associated:
+  
+ Mail Group Name                                                New/Mod/Del
+ ---------------                                                -----------
+ N/A
+  
+ Options Associated:
+  
+ Option Name                    Type                            New/Mod/Del
+ -----------                    ----                            -----------
+ EC GUI CONTEXT                 Broker (Client/Server)              Mod
+  
+ Protocols Associated:
+  
+ Protocol Name                                                  New/Mod/Del
+ -------------                                                  -----------
+ N/A
+  
+ Remote Procedure Call (RPC):
+  
+ RPC Name                                                       New/Mod/Del
+ --------                                                       -----------
+ EC ICD10IMPLEMENTATIONDATE                                         New
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (#)                     New/Mod/Del
+ -------------      ----      ------------------                -----------
+ N/A
+  
+ Additional Information:
+ N/A
+  
+  
+ New Service Requests (NSRs):
+ -----------------------------
+ NSR 20070902, ICD-10-CM Conversion
+  
+ Patient Safety Issues (PSIs):
+ ------------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overviews:
+ -----------------------------
+ N/A
+  
+  
+ Test Sites:
+ -----------
+ Battle Creek VA Medical Center, Battle Creek, MI
+ CA Carl Vinson, VA Medical Center, Dublin, GA 
+ John D. Dingell VA Medical Center, Detroit, MI
+  
+  
+ Documentation Retrieval Instructions:
+ -------------------------------------
+ The VistA server software for this patch is being distributed through the
+ National Patch Module (NPM). 
+  
+ The Event Capture GUI client software is being distributed as a self-
+ extracting Install Shield executable. The installed executable for this
+ patch is client version 2.1.3.9 with a size of 2.47 MB.
+  
+ The GUI client software and documentation for this patch may be retrieved
+ directly using FTP from the ANONYMOUS.SOFTWARE directory at the following
+ Office of Information (OI) Field Offices:
+  
+   OIFO               FTP ADDRESS                  DIRECTORY
+   ------------       ------------------------     ------------------
+   First available    download.vista.domain.ext    
+   Albany             ftp.domain.ext     
+   Hines              ftp.domain.ext      
+   Salt Lake City     ftp.domain.ext        
+  
+  The following files will be available:
+  
+     File Name           Format        Description
+     ---------           ------        -----------
+     EC2_0P114GUI.ZIP    BINARY        EC GUI client installer zip file
+  
+  
+ The Technical and User Manuals can be obtained via FTP from the
+ following ANONYMOUS.SOFTWARE directories:
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+ Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+ Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+ Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+  
+ The documentation will be in the form of Adobe Acrobat files.
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ (VDL) at: http://www4.domain.ext/vdl/
+  
+ File Description                   
+  File Name                                        (FTP Mode)
+ --------------------------------------------------------------------------
+ EVENT CAPTURE GUI User Manual
+   ec_2_p114_um.pdf                                (binary)
+ EVENT CAPTURE GUI Technical Manual
+   ec_2_p114_tm.pdf                                (binary)
+ EVENT CAPTURE Installation Guide
+   ec_2_p114_ig.pdf                                (binary)
+ EVENT CAPTURE Release Notes
+   ICD-10_RN_EC_2_114.pdf                          (binary)
+ Production Overview Guide
+   ICD-10_Production_Overview_Guide_Groups_3_4.pdf (binary)
+  
+ The VistA Documentation Library (VDL) web site will contain the updated
+ 'Event Capture User Manual', and 'Event Capture Technical Manual'.
+  
+ This web site is usually updated within 1-3 days of the patch release
+ date.
+  
+   The VDL address is http://www.domain.ext/vdl/application.asp?appid=39.
+  
+  
+ Patch Installation:
+   ********************* IMPORTANT NOTE ***************************
+   This patch updates the software version number of both the VistA
+   server software and the Event Capture client GUI to version 2.1.3.9.
+   GUI client versions prior to version 2.1.3.9 are not compatible with 
+   the VistA server software for this patch. Therefore, it is crucial
+   that the Event Capture client GUI distributed with this patch be
+   installed immediately following the VistA server software install
+   to minimize service disruption to the Event Capture System users.
+  
+  
+ Pre/Post Installation Overview
+ ------------------------------
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize
+ potential disruption to users. This patch should take less than five
+ to install.
+  
+ If installed during the normal workday, it is recommended that the 
+ following selection(s) in the OPTION (#19) file, and all of their 
+ descendants be disabled to prevent possible conflicts while running the 
+ KIDS Install. Other VISTA users will not be affected.
+  
+     EC GUI Context version 2.1.3.5   ... EC GUI CONTEXT
+  
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu. From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch #
+     (EC*2.0*114):
+  
+     a. Backup a Transport Global - This option will create a backup
+        message of any routines exported with this patch. It will not
+        backup any other changes such as DD's or templates.
+     b. Compare Transport Global to Current System - This option will
+        allow you to view all changes that will be made when this patch
+        is installed. It compares all components of this patch
+        (routines, DD's, templates, etc.).
+     c. Verify Checksums in Transport Global - This option will allow
+        you to ensure the integrity of the routines that are in the
+        transport global.
+  
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install. Enter EC*2.0*114.
+  
+ 5.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? NO//', respond Answer YES unless your system does this in a
+     nightly TaskMan process.
+  
+ 6.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? NO//',
+     respond NO.
+  
+ 7.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, and
+     Protocols? NO//', respond YES.
+  
+     EC GUI CONTEXT                      EC GUI Context version 2.1.3.5
+  
+ 8.  If prompted 'Delay Install (Minutes):  (0 - 60): 0//', respond 0.
+  
+ 9.  Install the Event Capture GUI client software following the
+     instructions of the EC GUI Installation Guide found on the VistA
+     Documentation Library (VDL) at the following link:
+     http://www.domain.ext/vdl/application.asp?appid=39
+  
+ 10.  The Event Capture GUI executable file "ECS GUI.exe", that
+      is unbundled after running the install in step #10, may be
+      copied to another machine without additional supporting files.
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Cleanup - The Pre-Install routine EC2P114 should be deleted using the
+    KERNEL option 'Delete Routines' [XTRDEL] upon completion of the
+    installation.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;EVENT CAPTURE;**[Patch List]**;8 May 96;Build 20
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: EC2P114
+    Before:       n/a   After:   B349693  **114**
+Routine Name: ECEFPAT
+    Before: B71296249   After: B75867358  **25,32,39,42,47,49,54,65,72,
+                                           95,76,112,119,114**
+Routine Name: ECPCER
+    Before: B32347801   After: B35305594  **4,18,23,47,72,95,119,114**
+Routine Name: ECUERPC
+    Before: B51135256   After: B57028774  **25,32,33,46,47,59,72,95,114**
+Routine Name: ECUERPC1
+    Before: B53869940   After: B67385088  **25,33,42,46,47,54,72,76,110,
+                                           112,114**
+Routine Name: ECUMRPC2
+    Before: B30358856   After: B37122855  **25,30,42,46,47,49,75,72,95,114**
+Routine Name: ECUTL2
+    Before: B28978680   After: B39326217  **23,33,47,63,72,95,114**
+Routine Name: ECV5RPC
+    Before: B12908234   After: B14145200  **25,30,36,47,114**
+Routine Name: ECVICDDT
+    Before:       n/a   After:   B925988  **114**
+ 
+Routine list of preceding patches: 119
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 13, 2012
+Completed By:                               Date Completed: AUG 14, 2014
+Released By :                               Date Released : AUG 15, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

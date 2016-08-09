@@ -1,0 +1,173 @@
+
+=============================================================================
+Run Date: MAY 21, 2015                     Designation: PXRM*2*51
+Package : PXRM - CLINICAL REMINDERS           Priority: Mandatory
+Version : 2        SEQ #39                      Status: Released
+                  Compliance Date: JUN 22, 2015
+=============================================================================
+
+Associated patches: (v)PXRM*2*26   <<= must be installed BEFORE `PXRM*2*51'
+
+Subject: TERATOGENIC MEDICATION REMINDER ORDER CHECK UPDATE
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ The Teratogenic Medications Order Check Interim Solution was originally 
+ released as VistA patch PXRM*2*22 in July 2012.  The interim solution is 
+ intended to have regular updates for clinical content, primarily to add 
+ newly approved medications with FDA Pregnancy Categories that warrant an 
+ order check. This patch, PXRM*2*51 represents the second such update.  
+ Included in this update are new medications, order check text changes 
+ consistent with the Notification of Teratogenic Medications project, and 
+ updates to the taxonomies that define a women's medical inability to 
+ conceive a pregnancy including the introduction of Systematized 
+ Nomenclature of Medicine (SNOMED) codes to those taxonomies.
+  
+ Associated Remedy Tickets:
+ ===========================
+ 1.  INC000001050528 - VA-Teratogenic Medication Order Check Update
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+ Participating Test Site(s):
+ ===========================
+ Captain James A. Lovell Federal HCS (North Chicago, IL)
+ Cincinnati VAMC (Cincinnati, OH)
+ VA Central Plains HCS (Omaha, NE) 
+  
+ REMEDY OVERVIEW:
+ ================
+ 1.  INC000001050528 - VA-Teratogenic Medication Order Check Update
+  
+ Problem:
+ --------
+ The Teratogenic Medications Order Check Interim Solution was originally 
+ released as VistA patch PXRM*2*22 in July 2012.  The interim solution is 
+ intended to have regular updates for clinical content, primarily to add 
+ newly approved medication with FDA Pregnancy Categories that warrant an
+ order check.
+  
+ Resolution:
+ -----------
+ This patch, PXRM*2*51, represents the second such update.  Two routines 
+ are included with this patch, PXRMP51E and PXRMP51I. They are init tasks
+ that add new entries to the REMINDER EXCHANGE (#811.8) file and the
+ contents of these entries are installed during the post-init.  These
+ routines can be deleted after the install.
+  
+ Included in this update are new medications, order check text changes 
+ consistent with the Notification of Teratogenic Medications project, and 
+ updates to the taxonomies that define a women's medical inability to 
+ conceive a pregnancy including the introduction of SNOMED codes to those 
+ taxonomies.
+  
+ Please refer to PXRM_2_0_51_IG.pdf for more detail concerning these 
+ clinical reminders.
+  
+   
+ Build Components:
+ =================
+ N/A
+  
+ Data Dictionary:
+ ================
+ N/A
+  
+ Software & Documentation Retrieval Instructions:
+ ================================================
+ This patch is being distributed as a host file.  The name of the host 
+ file is PXRM_2_0_51.KID.  This file should be downloaded in ASCII format.
+  
+ The preferred method for obtaining these files is to use File Transfer 
+ Protocol (FTP) to download them from:
+  
+     ftp://download.vista.domain.ext/
+  
+  
+ This transmits the files from the first available FTP server.  Sites may 
+ also elect to retrieve the files directly from a specific server as 
+ follows:
+  
+     Albany              ftp.domain.ext
+     Hines               ftp.domain.ext
+     Salt Lake City      ftp.domain.ext
+  
+ The Install and Setup Guide and User Manuals are also available on the
+ above servers.  It is available as .pdf format.  This file should be
+ downloaded in BINARY format.
+  
+     File Name:                   Description:             Protocol:
+     ==========                   ============             =========
+     PXRM_2_0_51_IG.PDF           PXRM*2.0*51 Install      BINARY
+                                  and Setup Guide
+     PXRM_2_0_51.KID              PXRM*2.0*51 Host File    ASCII
+  
+  
+ Documentation can also be found on the VistA Documentation Library (VDL) 
+ at:  http://www.domain.ext/vdl/
+  
+ Installation:
+ =============
+ This patch can be loaded with users on the system.  Installation will 
+ take ten to fifteen minutes.  Refer to the Install and Setup Guide, 
+ PXRM_2_0_51_IG.PDF, for complete details.
+  
+ 1.  Use the "Load a Distribution" option on the KIDS installation menu.  
+     When prompted to enter a host file type in
+     <your directory name>:PXRM_2_0_51.KID
+  
+ 2.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     options, as desired:
+         Print Transport Global
+         Compare Transport Global to Current System
+         Verify checksums in Transport Global
+         Backup a Transport Global
+  
+ 3.  On the KIDS menu under the 'INSTALLATION' menu, use the following 
+     option to install the patch:
+         Install Package(s)
+            When prompted for INSTALL NAME, use PXRM*2.0*51
+  
+ 4.  When prompted "Want KIDS to INHIBIT LOGONs during the install?  
+     NO//," respond 'NO'.
+  
+ 5.  When prompted "Want to DISABLE Scheduled Options, Menu Options, and 
+     Protocols? NO//, respond 'NO'.
+  
+ 6.  After successful installation, the following init routines may be 
+     deleted:
+  
+     PXRMP51E
+     PXRMP51I
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;2.0;CLINICAL REMINDERS;**[Patch List]**;Feb 04, 2005;Build 211
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: PXRMP51E
+    Before:       n/a   After:   B863461  **51**
+Routine Name: PXRMP51I
+    Before:       n/a   After:  B2484731  **51**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : SEP 17, 2014
+Completed By:                               Date Completed: MAY 20, 2015
+Released By :                               Date Released : MAY 21, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,178 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 02/19/14 at 14:41
+=============================================================================
+Run Date: MAY 19, 2014                     Designation: IB*2*515
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #475                      Status: Released
+                  Compliance Date: JUN 18, 2014
+=============================================================================
+
+
+Subject: 2014 ANNUAL UPDATE - REVENUE/VALUE/CONDITION/OCCURRENCE SPAN/POS CODES
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch contains updates to the MCCR Utility (#399.1) file, the Revenue
+ Code (#399.2) file and the Place of Service (#353.1) file for 2014.
+  
+  
+ ASSOCIATED REMEDY TICKETS:
+ ==========================
+ 1. INC000000923410 2014 Annual Update-Revenue, Value, Condition, Occurrence and Place of Service codes
+  
+   
+ ASSOCIATED NSR's:
+ =================
+ N/A
+  
+    
+ PARTICIPATING TEST SITES:
+ =========================
+ Central Texas HCS
+ Maryland HCS
+ South Texas HCS
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000000923410 2014 Annual Update-Revenue, Value, Condition, Occurrence and Place of Service codes
+   
+ Problem:
+ --------
+ The Chief Business Office has requested the following updates to the
+ MCCR Utility (#399.1) file , the Revenue Code (#399.2) file and the
+ Place of Service (#353.1) file for 2014.
+  
+ Resolution:
+ -----------
+ A post-init routine IB20P515 was created to update codes in the following
+ three files:
+  
+ The MCCR Utility (#399.1) file will update 1 Occurrence Span Code, 9 Value
+ Codes and 3 Condition Codes.
+  
+ Occurrence Span Code:
+  M0  QIO/UR APPROVED STAY DATES (name updated)
+  
+ Value Codes:
+  25  OFFSET TO THE PATIENT-PAYMENT AMOUN-PRESCRIPTION DRUGS (new)
+  26  OFFSET TO THE PATIENT-PAYMENT AMOUNT-HEARING & EAR SERVICES (new)
+  27  OFFSET TO THE PATIENT-PAYMENT AMOUNT-VISION & EYE SERVICES (new)
+  28  OFFSET TO THE PATIENT-PAYMENT AMOUNT-DENTAL SERVICES (new)
+  29  OFFSET TO THE PATIENT-PAYMENT AMOUNT-CHIROPRACTIC SERVICES (new)
+  33  OFFSET TO THE PATIENT-PAYMENT AMOUNT-PODIATRIC SERVICES (new)
+  34  OFFSET TO THE PATIENT-PAYMENT AMOUNT-OTHER MEDICAL SERVICES (new)
+  84  LIFE TIME RESERVE AMOUNT IN THE THIRD GREATER CALENDAR YEAR (removed)
+  85  COINSURANCE AMOUNT IN THE THIRD OR GREATER CALENDAR YEAR (removed)
+  
+ Condition Codes:
+  81  C-SECT/INDUCTIONS PERF AT LESS THAN 39 WKS GEST FOR MED NEC (new)
+  82  C-SECT/INDUCTIONS PERF AT LESS THAN 39 WEEKS GEST ELECTIVELY (new)
+  83  C-SECT/INDUCTIONS PERFORMED AT 39 WKS GESTATION OR GREATER (new)
+  
+ The Revenue Code (#399.2) file will activate the following 143 codes
+ (if inactive): 022,110,111,112,113,114,115,116,117,118,119,120,121,
+  122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,
+  140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,
+  157,158,159,175,180,183,185,189,201,202,249,253,254,256,261,262,263,
+  269,280,289,291,293,314,319,330,339,349,379,380,390,391,400,409,422,
+  423,429,432,433,434,439,449,469,550,559,599,600,602,603,604,621,624,
+  630,661,680,700,710,739,769,779,789,790,815,816,817,829,830,832,833,
+  839,840,841,842,843,849,850,852,853,859,880,890,891,892,893,899,911,
+  919,925,941,944.
+  
+ The following code will also be updated:
+  953  CHEMICAL DEPENDENCY (DRUG AND ALCOHOL) (name updated)
+  
+ The Place of Service (#353.1) file will have an old code removed:
+  18  PLACE OF EMPLOYMENT/WORKSITE (removed)
+  
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is recommended that this patch be installed outside of normal business
+ hours to avoid any complications resulting from users on the system.
+ Installation will take less than 2 minutes.
+    
+ 1.   LOAD TRANSPORT GLOBAL 
+      ---------------------
+      Choose the PackMan message containing this patch and invoke the
+      INSTALL/CHECK MESSAGE PackMan option.
+    
+ 2.   START UP KIDS
+      -------------
+      Start up the Kernel Installation and Distribution System Menu
+      [XPD MAIN]: 
+             Edits and Distribution ...  
+             Utilities ...  
+             Installation ...
+   
+      Select Kernel Installation & Distribution System Option: INStallation
+             Load a Distribution 
+             Print Transport Global 
+             Compare Transport Global to Current System 
+             Verify Checksums in Transport Global 
+             Install Package(s)
+             Restart Install of Package(s)
+             Unload a Distribution 
+             Backup a Transport Global 
+   
+ 3.   Select Installation Option:
+      ---------------------------
+      NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+             NAME, enter IB*2.0*515):
+   
+      a.  Backup a Transport Global - This option will create a backup
+          message of any routines exported with this patch. It will not
+          backup any other changes such as DD's or templates.
+      b.  Compare Transport Global to Current System - This option will
+          allow you to view all changes that will be made when this patch
+          is installed.  It compares all components of this patch
+          (routines, DD's, templates, etc.).
+      c.  Verify Checksums in Transport Global - This option will allow
+          you to ensure the integrity of the routines that are in the
+          transport global.
+    
+ 4.   Select Installation Option: Install Package(s)
+    
+      **This is the step to start the installation of this KIDS patch:
+      a. Choose the Install Package(s) option to start the patch install.
+      b. When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//' answer NO
+      c. When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//' answer NO
+    
+ 5.   CLEAN UP POST-INIT ROUTINE
+      --------------------------
+      Optional - Once this patch has been successfully installed you may 
+      delete the post-init routine: IB20P515.
+  
+ 6.   Use the 'Install File Print' option to review the updates and ensure
+      that the install has been completed.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 15
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P515
+    Before:       n/a   After: B33115131  **515**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : NOV 26, 2013
+Completed By:                               Date Completed: MAY 12, 2014
+Released By :                               Date Released : MAY 19, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

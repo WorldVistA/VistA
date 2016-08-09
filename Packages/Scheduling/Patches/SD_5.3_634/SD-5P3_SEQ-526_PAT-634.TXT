@@ -1,0 +1,215 @@
+$TXT Created by          at MNTVBB.DOMAIN.EXT  (KIDS) on Friday, 04/03/15 at 15:33
+=============================================================================
+Run Date: SEP 23, 2015                     Designation: SD*5.3*634
+Package : SD - SCHEDULING                     Priority: Mandatory
+Version : 5.3       SEQ #526                    Status: Released
+                  Compliance Date: OCT 24, 2015
+=============================================================================
+
+Associated patches: (v)SD*5.3*491  <<= must be installed BEFORE `SD*5.3*634'
+
+Subject: PAIT IPv6 ADDRESS FORMAT MODIFICATION
+
+Category: 
+  - Routine
+  - Other
+
+Description:
+============
+
+ In preparation for the VA's transition from Internet Protocol version 4 
+ (IPv4) to Internet Protocol version 6 (IPv6), the Patient Appointment 
+ Information Transmission (PAIT) package will require modifications to 
+ make it IPv6 ready.
+  
+ IPv6 is the latest version of the Internet Protocol (IP), the 
+ communications protocol that provides an identification and location 
+ system for computers on networks and routes traffic across the Internet. 
+ IPv6 was developed by the Internet Engineering Task Force (IETF) to deal 
+ with the long-anticipated problem of IPv4 address exhaustion. IPv6 is 
+ intended to replace IPv4.
+  
+ VistA is only compatible with IPv4 currently and this effort is to 
+ prepare for IPv6 compatibility.
+  
+  
+ Associated Remedy Ticket:
+ ==========================
+ INC000001094333  PAIT IPv6 Conversion
+  
+  
+ Associated NSR(s):
+ ==================
+ N/A
+  
+  
+ Participating Test Sites:
+ =========================
+ Manchester VAMC
+ Upstate New York HCS
+ Miami VA HCS
+  
+  
+ Remedy Overview:
+ ================
+ INC000001094333  PAIT IPv6 Conversion
+  
+  
+ Problem:
+ --------
+ When SD-PAIT tasked transmission job is completed, a job completion 
+ bulletin is generated and sent to the SD-PAIT mail group. Currently,
+ the length of the IP Address column for this MailMan message is for 
+ the IPv4 address format. It needs to be expanded to have enough
+ space for the new IPv6 address format. 
+  
+  
+ Resolution:
+ -----------
+ Routine SDRPA04 has been modified by this patch. The length of the IP 
+ Address column in this MailMan message has been increased from eleven
+ (11) characters to thirty-nine (39) characters to accommodate this new
+ IPv6 address format.
+  
+ After this patch is released, both address formats can be displayed 
+ properly in this MailMan message.
+  
+  
+ Technical:
+ ==========
+ The current IPv4 address format looks like: nn.nn.nn.nn
+  
+ The future IPv6 address format will look like:
+ hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh:hhhh
+  
+ n = Numeric value.
+ h = Hexadecimal value
+  
+  
+ Software and Documentation Distribution:
+ ========================================
+ Sites may retrieve the updated documentation directly via FTP. The 
+ preferred method is to FTP the files from:
+  
+ download.vista.domain.ext
+  
+ This transmits the files from the first available FTP server.
+  
+ Sites may also elect to retrieve the documentation directly from the
+ ANONYMOUS.SOFTWARE directory from a specific server as follows:
+  
+ Albany:                       ftp.domain.ext
+ Hines:                        ftp.domain.ext
+ Salt Lake City:               ftp.domain.ext
+  
+  
+ Filename                      Description              Retrieval Format
+ --------                      -----------              ---------------- 
+ PAIT_TECHNICAL_MANUAL.PDF     PAIT Technical Manual    Binary
+  
+ These files must be transferred using the binary (BIN) file transfer mode.
+  
+ The complete and updated manuals will be posted to the VDL immediately 
+ after the release of the patch.
+  
+  
+ Installation Instructions:
+ ==========================
+ Please install this patch when the tasked PAIT Transmission [SD-PAIT 
+ TASKED TRANSMISSION] is not scheduled to run.
+  
+ Taskman PAIT Transmission [SD-PAIT TASKED TRANSMISSION] is scheduled to 
+ run the 1st and 15th of every month. This patch cannot be installed
+ on 1st, 2nd, 3rd, 4th, 15th, 16th, 17th, or 18th of any month. The 
+ four-day restriction is due to AITC's processing requirements.
+  
+ Install Time - less than 2 minutes (unless otherwise indicated)
+  
+ 1.  Load Transport Global 
+     ---------------------
+     Choose the PackMan message containing this patch and invoke the 
+     INSTALL/CHECK MESSAGE PackMan option.  
+              
+ 2.  Start Up KIDS 
+     -------------
+     Start up the Kernel Installation and Distribution System Menu 
+     [XPD MAIN]: 
+          Edits and Distribution ...  
+          Utilities ...  
+          Installation ...  
+    
+     Select Kernel Installation & Distribution System Option: INStallation 
+                                                              ---
+          Load a Distribution 
+          Print Transport Global 
+          Compare Transport Global to Current System 
+          Verify Checksums in Transport Global 
+          Install Package(s) 
+          Restart Install of Package(s) 
+          Unload a Distribution 
+          Backup a Transport Global 
+    
+ 3.  Select Installation Option: 
+     ---------------------------
+     NOTE:  The following are OPTIONAL - (When prompted for the INSTALL
+            NAME, enter SD*5.3*634):
+       
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+  
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+  
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  Select Installation Option: Install Package(s) 
+     ----------------------------------------------
+     **This is the step to start the installation of this KIDS patch: 
+     a.  Choose the Install Package(s) option to start the patch
+         install.
+  
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         YES//' answer NO. 
+  
+     c. When prompted 'Want to DISABLE Scheduled Options, Menu 
+        Options, and Protocols? YES//' answer YES.
+  
+         PAIT Reports Menu                 [SD-PAIT REPORTS]
+         Manual Startup PAIT Transmission  [SD-PAIT MANUAL TRANSMISSION]
+         Rejected Transmissions            [SD-PAIT REJECTED]
+         Taskman PAIT Transmission         [SD-PAIT TASKED TRANSMISSION]
+         SD-PAIT Last Run Repair           [SD-PAIT REPAIR]
+  
+     d. When prompted "Enter protocols you wish to mark as "Out of
+        Order":", just press <Return>.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;5.3;Scheduling;**[Patch List]**;Aug 13, 1993;Build 3
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: SDRPA04
+    Before: B41493577   After: B41686935  **376,491,634**
+ 
+Routine list of preceding patches: 491
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : FEB 11, 2015
+Completed By:                               Date Completed: SEP 17, 2015
+Released By :                               Date Released : SEP 23, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

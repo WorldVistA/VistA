@@ -1,0 +1,991 @@
+Released IB*2*524 SEQ #483
+Extracted from mail message
+**KIDS**:IB*2.0*524^
+
+**INSTALL NAME**
+IB*2.0*524
+"BLD",9697,0)
+IB*2.0*524^INTEGRATED BILLING^0^3140723^y
+"BLD",9697,1,0)
+^^6^6^3140711^
+"BLD",9697,1,1,0)
+This patch addresses two issues. The first issue contains updates to the 
+"BLD",9697,1,2,0)
+IB Action Type file (#350.1) and the IB Action Charge file (#350.2).
+"BLD",9697,1,3,0)
+The second issue involves the IBJD Billing Lag Time report showing the
+"BLD",9697,1,4,0)
+last patient with blank information on the first page and the name then
+"BLD",9697,1,5,0)
+repeated on the top of the next page with the associated claim activity
+"BLD",9697,1,6,0)
+data.
+"BLD",9697,4,0)
+^9.64PA^^
+"BLD",9697,6)
+^456
+"BLD",9697,6.3)
+24
+"BLD",9697,"INIT")
+POST^IB20P524
+"BLD",9697,"KRN",0)
+^9.67PA^779.2^20
+"BLD",9697,"KRN",.4,0)
+.4
+"BLD",9697,"KRN",.401,0)
+.401
+"BLD",9697,"KRN",.402,0)
+.402
+"BLD",9697,"KRN",.403,0)
+.403
+"BLD",9697,"KRN",.5,0)
+.5
+"BLD",9697,"KRN",.84,0)
+.84
+"BLD",9697,"KRN",3.6,0)
+3.6
+"BLD",9697,"KRN",3.8,0)
+3.8
+"BLD",9697,"KRN",9.2,0)
+9.2
+"BLD",9697,"KRN",9.8,0)
+9.8
+"BLD",9697,"KRN",9.8,"NM",0)
+^9.68A^2^2
+"BLD",9697,"KRN",9.8,"NM",1,0)
+IBJDB12^^0^B48647865
+"BLD",9697,"KRN",9.8,"NM",2,0)
+IBEBR^^0^B23037770
+"BLD",9697,"KRN",9.8,"NM","B","IBEBR",2)
+
+"BLD",9697,"KRN",9.8,"NM","B","IBJDB12",1)
+
+"BLD",9697,"KRN",19,0)
+19
+"BLD",9697,"KRN",19.1,0)
+19.1
+"BLD",9697,"KRN",101,0)
+101
+"BLD",9697,"KRN",409.61,0)
+409.61
+"BLD",9697,"KRN",771,0)
+771
+"BLD",9697,"KRN",779.2,0)
+779.2
+"BLD",9697,"KRN",870,0)
+870
+"BLD",9697,"KRN",8989.51,0)
+8989.51
+"BLD",9697,"KRN",8989.52,0)
+8989.52
+"BLD",9697,"KRN",8994,0)
+8994
+"BLD",9697,"KRN","B",.4,.4)
+
+"BLD",9697,"KRN","B",.401,.401)
+
+"BLD",9697,"KRN","B",.402,.402)
+
+"BLD",9697,"KRN","B",.403,.403)
+
+"BLD",9697,"KRN","B",.5,.5)
+
+"BLD",9697,"KRN","B",.84,.84)
+
+"BLD",9697,"KRN","B",3.6,3.6)
+
+"BLD",9697,"KRN","B",3.8,3.8)
+
+"BLD",9697,"KRN","B",9.2,9.2)
+
+"BLD",9697,"KRN","B",9.8,9.8)
+
+"BLD",9697,"KRN","B",19,19)
+
+"BLD",9697,"KRN","B",19.1,19.1)
+
+"BLD",9697,"KRN","B",101,101)
+
+"BLD",9697,"KRN","B",409.61,409.61)
+
+"BLD",9697,"KRN","B",771,771)
+
+"BLD",9697,"KRN","B",779.2,779.2)
+
+"BLD",9697,"KRN","B",870,870)
+
+"BLD",9697,"KRN","B",8989.51,8989.51)
+
+"BLD",9697,"KRN","B",8989.52,8989.52)
+
+"BLD",9697,"KRN","B",8994,8994)
+
+"BLD",9697,"QUES",0)
+^9.62^^
+"BLD",9697,"REQB",0)
+^9.611^2^2
+"BLD",9697,"REQB",1,0)
+IB*2.0*118^2
+"BLD",9697,"REQB",2,0)
+IB*2.0*429^2
+"BLD",9697,"REQB","B","IB*2.0*118",1)
+
+"BLD",9697,"REQB","B","IB*2.0*429",2)
+
+"INIT")
+POST^IB20P524
+"MBREQ")
+0
+"PKG",200,-1)
+1^1
+"PKG",200,0)
+INTEGRATED BILLING^IB^INTEGRATED BILLING
+"PKG",200,20,0)
+^9.402P^1^1
+"PKG",200,20,1,0)
+2^^IBAXDR
+"PKG",200,20,1,1)
+
+"PKG",200,20,"B",2,1)
+
+"PKG",200,22,0)
+^9.49I^1^1
+"PKG",200,22,1,0)
+2.0^2940321^2990406^2447
+"PKG",200,22,1,"PAH",1,0)
+524^3140723
+"PKG",200,22,1,"PAH",1,1,0)
+^^6^6^3140723
+"PKG",200,22,1,"PAH",1,1,1,0)
+This patch addresses two issues. The first issue contains updates to the 
+"PKG",200,22,1,"PAH",1,1,2,0)
+IB Action Type file (#350.1) and the IB Action Charge file (#350.2).
+"PKG",200,22,1,"PAH",1,1,3,0)
+The second issue involves the IBJD Billing Lag Time report showing the
+"PKG",200,22,1,"PAH",1,1,4,0)
+last patient with blank information on the first page and the name then
+"PKG",200,22,1,"PAH",1,1,5,0)
+repeated on the top of the next page with the associated claim activity
+"PKG",200,22,1,"PAH",1,1,6,0)
+data.
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"RTN")
+3
+"RTN","IB20P524")
+0^^B26802086^n/a
+"RTN","IB20P524",1,0)
+IB20P524 ;ALB/CXW - IB V2.0 POST INIT, IB Action Type Update; 21-APR-2014
+"RTN","IB20P524",2,0)
+ ;;2.0;INTEGRATED BILLING;**524**;21-MAR-94;Build 24
+"RTN","IB20P524",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IB20P524",4,0)
+ Q
+"RTN","IB20P524",5,0)
+ ;
+"RTN","IB20P524",6,0)
+POST ; 
+"RTN","IB20P524",7,0)
+ N IBX
+"RTN","IB20P524",8,0)
+ D MSG("    IB*2*524 Post-Install .....")
+"RTN","IB20P524",9,0)
+ D IBAFSV,IBUFSV,IBCHGE
+"RTN","IB20P524",10,0)
+ D MSG("    IB*2*524 Post-Install Complete")
+"RTN","IB20P524",11,0)
+ Q
+"RTN","IB20P524",12,0)
+ ;
+"RTN","IB20P524",13,0)
+IBAFSV ; addition for fee service inpt per diem and fee service nsc rx copay
+"RTN","IB20P524",14,0)
+ N IBI,IBY,IBY1,IBCR,IBAR,IBSR,IBPTL,IBSL,IBFPL,IBEL,DIC,DIE,DA,DR,U,X,Y
+"RTN","IB20P524",15,0)
+ S U="^",IBSR=""
+"RTN","IB20P524",16,0)
+ D MSG(""),MSG(">>> Adding new action type to IB Action Type file #350.1...")
+"RTN","IB20P524",17,0)
+ F IBI=1:1 S IBCR=$P($T(IBAT+IBI),";;",2) Q:IBCR="QUIT"  D
+"RTN","IB20P524",18,0)
+ . S IBY=$P(IBCR,U)
+"RTN","IB20P524",19,0)
+ . S IBY1=$O(^IBE(350.1,"B",IBY,0))
+"RTN","IB20P524",20,0)
+ . I IBY1 D MSG(" >> "_IBY_" already exists in the file") Q
+"RTN","IB20P524",21,0)
+ . S IBAR=$P(IBCR,U,3)
+"RTN","IB20P524",22,0)
+ . S IBAR=$O(^PRCA(430.2,"B",IBAR,0))
+"RTN","IB20P524",23,0)
+ . I 'IBAR D MSG(" >> "_IBAR_" not defined in AR Category file (#430.2)") Q
+"RTN","IB20P524",24,0)
+ . I $P(IBCR,U,4)="P" S IBSR=$O(^IBE(350.1,"B","DG INPT PER DIEM NEW",0)),IBSR=$P($G(^IBE(350.1,+IBSR,0)),"^",4)
+"RTN","IB20P524",25,0)
+ . I $P(IBCR,U,4)="N" S IBSR=$O(^IBE(350.1,"B","PSO NSC RX COPAY NEW",0)),IBSR=$P($G(^IBE(350.1,+IBSR,0)),"^",4)
+"RTN","IB20P524",26,0)
+ . S X=IBY,DIC="^IBE(350.1,",DIC(0)="" D FILE^DICN
+"RTN","IB20P524",27,0)
+ . I Y<1 D MSG(" >> ERROR when adding "_IBY_" to the file, Log a Remedy ticket!") Q
+"RTN","IB20P524",28,0)
+ . ; input transform bypass in service field
+"RTN","IB20P524",29,0)
+ . S DA=+Y,DIE=DIC,DR=".02///"_$P(IBCR,U,2)_";.03///"_IBAR_";.04////"_IBSR_";.05///"_$P(IBCR,U,5)_";.08///"_$P(IBCR,U,6)
+"RTN","IB20P524",30,0)
+ . ; mirror logic of dg inpt per diem and pso nsc rx copay
+"RTN","IB20P524",31,0)
+ . S (IBPTL,IBSL,IBFPL,IBEL)=""
+"RTN","IB20P524",32,0)
+ . I $P(IBCR,U,9) S IBPTL=$P($T(NPTL+1),";;",2)
+"RTN","IB20P524",33,0)
+ . I $P(IBCR,U,10) S IBSL=$S($P(IBCR,U,2)="FSINT PD":$P($T(PSL+1),";;",2),1:$P($T(NSL+1),";;",2))
+"RTN","IB20P524",34,0)
+ . I $P(IBCR,U,11) S IBFPL=$P($T(NFPL+1),";;",2)
+"RTN","IB20P524",35,0)
+ . I $P(IBCR,U,12) S IBEL=$P($T(NEL+1),";;",2)
+"RTN","IB20P524",36,0)
+ . S DR=DR_";.1///"_$P(IBCR,U,7)_";.11///"_$P(IBCR,U,8)_";10///"_IBPTL_";20///"_IBSL_";30///"_IBFPL_";40///"_IBEL
+"RTN","IB20P524",37,0)
+ . D ^DIE K X,Y,DA,DIC,DIE,DR
+"RTN","IB20P524",38,0)
+ . D MSG(" >> "_IBY_" added")
+"RTN","IB20P524",39,0)
+ Q
+"RTN","IB20P524",40,0)
+IBUFSV ; add the pointers created from IBAFSV to these fields in file (#350.1)
+"RTN","IB20P524",41,0)
+ N IBI,IBRC,IBNEW,IBCAN,IBUPD,IBJ,DA,DR,DIE
+"RTN","IB20P524",42,0)
+ F IBI=1:1 S IBRC=$P($T(IBUT+IBI),";;",2) Q:IBRC="QUIT"  D
+"RTN","IB20P524",43,0)
+ . S IBNEW=$O(^IBE(350.1,"B",$P(IBRC,"^"),0))
+"RTN","IB20P524",44,0)
+ . S IBCAN=$O(^IBE(350.1,"B",$P(IBRC,"^",2),0))
+"RTN","IB20P524",45,0)
+ . S IBUPD=$O(^IBE(350.1,"B",$P(IBRC,"^",3),0))
+"RTN","IB20P524",46,0)
+ . F IBJ=IBNEW,IBCAN,IBUPD D
+"RTN","IB20P524",47,0)
+ .. Q:'IBJ
+"RTN","IB20P524",48,0)
+ .. S DIE="^IBE(350.1,",DA=IBJ
+"RTN","IB20P524",49,0)
+ .. S DR=".06///"_IBCAN_";.07///"_IBUPD_";.09///"_IBNEW
+"RTN","IB20P524",50,0)
+ .. D ^DIE K DA,DR,DIE
+"RTN","IB20P524",51,0)
+ Q
+"RTN","IB20P524",52,0)
+IBCHGE ; add the billing rate for FS to the charge table in file (#350.2)
+"RTN","IB20P524",53,0)
+ N IBEDT,IBI,IBCR,IBN,IBNM,IBN20,IBK,DA,DIC,DIE,DR,X,Y
+"RTN","IB20P524",54,0)
+ S IBEDT=3140312
+"RTN","IB20P524",55,0)
+ D MSG(""),MSG(">>> Adding new billing rate to IB Action Charge file #350.2...")
+"RTN","IB20P524",56,0)
+ F IBI=1:1 S IBCR=$P($T(IBAC+IBI),";;",2) Q:IBCR="QUIT"  D
+"RTN","IB20P524",57,0)
+ . S IBNM=$P(IBCR,U),IBK=$P(IBCR,U,2)
+"RTN","IB20P524",58,0)
+ . S IBN=$O(^IBE(350.1,"B",IBNM,0)) Q:'IBN
+"RTN","IB20P524",59,0)
+ . I $D(^IBE(350.2,"AIVDT",IBN,-IBEDT)) D MSG(" >> The billing rate for "_IBNM_" already exists in the file") Q
+"RTN","IB20P524",60,0)
+ . ; additional amount logic
+"RTN","IB20P524",61,0)
+ . S IBN20="I $G(DFN)>0,$$PRIORITY^DGENA(DFN)>6"
+"RTN","IB20P524",62,0)
+ . S X=IBK,DIC="^IBE(350.2,",DIC(0)="" D FILE^DICN
+"RTN","IB20P524",63,0)
+ . I Y<1 D MSG(" >> ERROR when adding the billing rate for "_IBNM_" to the file, Log a Remedy ticket!") Q 
+"RTN","IB20P524",64,0)
+ . S DIE="^IBE(350.2,",DA=+Y,DR=".02///"_IBEDT_";.03///"_IBN_";.04///"_$P(IBCR,U,4)
+"RTN","IB20P524",65,0)
+ . I $P(IBCR,U,6) S DR=DR_";.06///"_$P(IBCR,U,6)_";20///"_IBN20
+"RTN","IB20P524",66,0)
+ . D ^DIE D MSG(" >> The billing rate for "_IBNM_" added")
+"RTN","IB20P524",67,0)
+ D MSG("")
+"RTN","IB20P524",68,0)
+ Q
+"RTN","IB20P524",69,0)
+ ;
+"RTN","IB20P524",70,0)
+MSG(IBX) ;
+"RTN","IB20P524",71,0)
+ D MES^XPDUTL(IBX)
+"RTN","IB20P524",72,0)
+ Q
+"RTN","IB20P524",73,0)
+ ;
+"RTN","IB20P524",74,0)
+NPTL ; Parent Trace Logic for FS nsc rx copay new/cancel/update
+"RTN","IB20P524",75,0)
+ ;;D PTL^IBAUTL
+"RTN","IB20P524",76,0)
+ ;
+"RTN","IB20P524",77,0)
+PSL ; Set Logic for FS inpt per diem new
+"RTN","IB20P524",78,0)
+ ;;S IBDESC="INPT PER DIEM"
+"RTN","IB20P524",79,0)
+ ;
+"RTN","IB20P524",80,0)
+NSL ; Set Logic for FS nsc rx copay new/cancel/update
+"RTN","IB20P524",81,0)
+ ;;S:'$D(^(10)) X="" I $D(^(10)) X ^(10) S X=$S($D(Y(0)):$P(Y(0),U),1:"UNK") I $D(Y(0)) S X=X_"-"_$S($$DRUG^IBRXUTL1(+$P(Y(0),U,6))'="":$$DRUG^IBRXUTL1(+$P(Y(0),U,6)),1:"UNK DRUG"),X=$E(X,1,18)_"-"_$S($D(IBUNIT):IBUNIT,$D(IBX):$P(IBX,U,2),1:"")
+"RTN","IB20P524",82,0)
+ ;
+"RTN","IB20P524",83,0)
+NFPL ; Full Profile Logic for FS nsc rx copay new/cancel/update
+"RTN","IB20P524",84,0)
+ ;;I $D(X) D EN^PSOCPVW
+"RTN","IB20P524",85,0)
+ ;
+"RTN","IB20P524",86,0)
+NEL ; Eligibility Logic for FS nsc rx copay new
+"RTN","IB20P524",87,0)
+ ;;S X=0,X1="",X2="" G:'$D(VAEL) 1^IBAERR I VAEL(4),'+VAEL(3),'IBDOM,'$$RXEXMT^IBARXEU0(DFN,DT) S X=1,X2=$P(^IBE(350.1,DA,0),"^",4) D COST^IBAUTL
+"RTN","IB20P524",88,0)
+ ;
+"RTN","IB20P524",89,0)
+IBAT ; Name^abbreviation^charge category^service^sequence #^user lookup name^place on hold^billing group^parent trace logic^set logic^full profile logic^eligibility logic
+"RTN","IB20P524",90,0)
+ ;;FEE SERV INPT PER DIEM NEW^FSINT PD^HOSPITAL CARE PER DIEM^P^1^FEE SERV INPT PER DIEM^1^3^^1
+"RTN","IB20P524",91,0)
+ ;;FEE SERV INPT PER DIEM CANCEL^CAN FSPD^HOSPITAL CARE PER DIEM^P^2
+"RTN","IB20P524",92,0)
+ ;;FEE SERV INPT PER DIEM UPDATE^UPD FSPD^HOSPITAL CARE PER DIEM^P^3^^1^3
+"RTN","IB20P524",93,0)
+ ;;FEE SERV NSC RX COPAY NEW^FSNSC CO^RX CO-PAYMENT/NSC VET^N^1^FEE SERV NSC RX CO^1^5^1^1^1^1
+"RTN","IB20P524",94,0)
+ ;;FEE SERV NSC RX COPAY CANCEL^CAN FNSC^RX CO-PAYMENT/NSC VET^N^2^^^^1^1^1
+"RTN","IB20P524",95,0)
+ ;;FEE SERV NSC RX COPAY UPDATE^UPD FNSC^RX CO-PAYMENT/NSC VET^N^3^^1^5^1^1^1
+"RTN","IB20P524",96,0)
+ ;;QUIT
+"RTN","IB20P524",97,0)
+ ;
+"RTN","IB20P524",98,0)
+IBUT ; new action^cancel action^update action
+"RTN","IB20P524",99,0)
+ ;;FEE SERV INPT PER DIEM NEW^FEE SERV INPT PER DIEM CANCEL^FEE SERV INPT PER DIEM UPDATE
+"RTN","IB20P524",100,0)
+ ;;FEE SERV NSC RX COPAY NEW^FEE SERV NSC RX COPAY CANCEL^FEE SERV NSC RX COPAY UPDATE
+"RTN","IB20P524",101,0)
+ ;;QUIT
+"RTN","IB20P524",102,0)
+ ;
+"RTN","IB20P524",103,0)
+IBAC ; transaction type^key^active dt^unit charge^inactive dt^additional amount
+"RTN","IB20P524",104,0)
+ ;;FEE SERV INPT PER DIEM NEW^FEE SERV INPT PER DIEM^^10
+"RTN","IB20P524",105,0)
+ ;;FEE SERV NSC RX COPAY NEW^FEE SERV RX1^^8^^1
+"RTN","IB20P524",106,0)
+ ;;FEE SERV NSC RX COPAY CANCEL^FEE SERV RX3^^8^^1
+"RTN","IB20P524",107,0)
+ ;;FEE SERV NSC RX COPAY UPDATE^FEE SERV RX4^^8^^1
+"RTN","IB20P524",108,0)
+ ;;QUIT
+"RTN","IB20P524",109,0)
+ ;
+"RTN","IBEBR")
+0^2^B23037770^B22111673
+"RTN","IBEBR",1,0)
+IBEBR ;ALB/AAS - Add/Edit IB ACTION CHARGE FILE ;3-MAR-92
+"RTN","IBEBR",2,0)
+ ;;2.0;INTEGRATED BILLING;**34,52,429,524**;21-MAR-94;Build 24
+"RTN","IBEBR",3,0)
+ ;;Per VA Directive 6402, this routine should not be modified.
+"RTN","IBEBR",4,0)
+ ;
+"RTN","IBEBR",5,0)
+% ; entry point
+"RTN","IBEBR",6,0)
+ D HOME^%ZIS W @IOF
+"RTN","IBEBR",7,0)
+EN W !!,?28,"Enter/Edit Billing Rates",!!
+"RTN","IBEBR",8,0)
+ S IBX="MAIN" D CHOOSE I $D(DIRUT)!('Y) G END
+"RTN","IBEBR",9,0)
+ I Y>0,Y<7 D @Y
+"RTN","IBEBR",10,0)
+ G EN
+"RTN","IBEBR",11,0)
+ Q
+"RTN","IBEBR",12,0)
+1 ;enter edit revenue code rates
+"RTN","IBEBR",13,0)
+ ;D EN1^IBCBR
+"RTN","IBEBR",14,0)
+ ;D ENR^IBEMTO ; bill MT OPT charges awaiting the new copay rate
+"RTN","IBEBR",15,0)
+ ;D END
+"RTN","IBEBR",16,0)
+ W !!,"  ******* This option is no longer active.",!,?10,"Please use the Enter/Edit Charge Master option.",!
+"RTN","IBEBR",17,0)
+ Q
+"RTN","IBEBR",18,0)
+ ;
+"RTN","IBEBR",19,0)
+2 ;enter per diem rate
+"RTN","IBEBR",20,0)
+ S IBX="PERDIEM" D CHOOSE Q:$D(DIRUT)
+"RTN","IBEBR",21,0)
+ D EFFDT,END
+"RTN","IBEBR",22,0)
+ G 2
+"RTN","IBEBR",23,0)
+ ;
+"RTN","IBEBR",24,0)
+3 ;enter medicare deductable
+"RTN","IBEBR",25,0)
+ S IBX="MEDIC",IBPD="MEDICARE DEDUCTIBLE" ;D CHOOSE Q:$D(DIRUT)
+"RTN","IBEBR",26,0)
+ D EFFDT,END Q:$G(Y)<1
+"RTN","IBEBR",27,0)
+ G 3
+"RTN","IBEBR",28,0)
+ ;
+"RTN","IBEBR",29,0)
+4 ;enter hcfa amb. surg. rates
+"RTN","IBEBR",30,0)
+ S IBX="HCFA" D CHOOSE Q:$D(DIRUT)
+"RTN","IBEBR",31,0)
+ D EFFDT,END
+"RTN","IBEBR",32,0)
+ G 4
+"RTN","IBEBR",33,0)
+ ;
+"RTN","IBEBR",34,0)
+5 ;enter rx copay rates
+"RTN","IBEBR",35,0)
+ S IBX="COPAY" D CHOOSE Q:$D(DIRUT)
+"RTN","IBEBR",36,0)
+ D EFFDT,END
+"RTN","IBEBR",37,0)
+ G 5
+"RTN","IBEBR",38,0)
+ ;
+"RTN","IBEBR",39,0)
+6 ;enter champva subsistence rates
+"RTN","IBEBR",40,0)
+ S IBX="CHMPVA" D CHOOSE Q:$D(DIRUT)
+"RTN","IBEBR",41,0)
+ D EFFDT,END
+"RTN","IBEBR",42,0)
+ G 6
+"RTN","IBEBR",43,0)
+ ;
+"RTN","IBEBR",44,0)
+CHOOSE S IBSEL=$P($T(@IBX),";;",2,99),IB=""
+"RTN","IBEBR",45,0)
+ F I=1:1 Q:$P($T(@IBX+I),";;",2,99)=""  S IB=IB_I_":"_$P($P($T(@IBX+I),";;",2,99),"^",$S($P($P($T(@IBX+1),";;",2,99),"^",5)="":1,1:5))_";"
+"RTN","IBEBR",46,0)
+ W !!,"CHOOSE FROM:"
+"RTN","IBEBR",47,0)
+ F I=1:1 S X=$P(IB,";",I) Q:'X  W !?4,+X,?20,$P(X,":",2)
+"RTN","IBEBR",48,0)
+ S DIR("?")="^D 1^IBEBRH",DIR("??")="^D 2^IBEBRH"
+"RTN","IBEBR",49,0)
+ W !! S DIR(0)="SOA^"_IB,DIR("A")="Select "_IBSEL_": " D ^DIR K DIR I $D(DIRUT) G CHOOSEQ
+"RTN","IBEBR",50,0)
+ S IBP=$P($T(@IBX+Y),";;",2,99) S IBPD=$P(IBP,"^",1) F I=2:1 Q:$P(IBP,"^",I)=""  S IBPD(I)=$P(IBP,"^",I)
+"RTN","IBEBR",51,0)
+CHOOSEQ Q
+"RTN","IBEBR",52,0)
+ ;
+"RTN","IBEBR",53,0)
+EFFDT S %DT="EX"
+"RTN","IBEBR",54,0)
+ R !!,"   Select Effective Date: ",X:DTIME Q:X=""  D:X["?" 3^IBEBRH I X=" ",$D(IBEFDT) S X=IBEFDT
+"RTN","IBEBR",55,0)
+ D ^%DT K %DT G:X["?" EFFDT Q:Y<1  S IBEFDT=+Y
+"RTN","IBEBR",56,0)
+ D FILE G EFFDT
+"RTN","IBEBR",57,0)
+ Q
+"RTN","IBEBR",58,0)
+ ;
+"RTN","IBEBR",59,0)
+FILE ;  -add new entries in 350.2 and edit
+"RTN","IBEBR",60,0)
+ S DLAYGO=350.2,X=IBPD,DIC="^IBE(350.2,",DIC(0)="ELMQ",DIC("S")="I $P(^(0),U,2)=IBEFDT",DIC("DR")=".02///"_IBEFDT D ^DIC K DIC G:+Y<0 FILEQ
+"RTN","IBEBR",61,0)
+ ;
+"RTN","IBEBR",62,0)
+ ;  -if a new entry
+"RTN","IBEBR",63,0)
+ S IBNEW=$P(Y,"^",3)
+"RTN","IBEBR",64,0)
+ K DR S DR="" S IBORIG=$O(^IBE(350.2,"B",IBPD,0)),IBLAST=$O(^IBE(350.2,"B",IBPD,+Y),-1) I IBNEW S DR=".02///"_IBEFDT_";.03///"_$P($G(^IBE(350.2,+IBORIG,0)),"^",3)_";"
+"RTN","IBEBR",65,0)
+ ;
+"RTN","IBEBR",66,0)
+ S DIE="^IBE(350.2,",DA=+Y,DR=DR_".04;.06;.05;" D ^DIE K DIE
+"RTN","IBEBR",67,0)
+ ;
+"RTN","IBEBR",68,0)
+ ;  -delete if no charge or not inactive
+"RTN","IBEBR",69,0)
+ S X=$G(^IBE(350.2,DA,0)) I '$P(X,"^",4)&('$P(X,"^",5)) W !!,*7,"Deleting - no charge, not inactive" S DIK="^IBE(350.2," D ^DIK Q
+"RTN","IBEBR",70,0)
+ ;
+"RTN","IBEBR",71,0)
+ ;  -set computed logic for new entry if needed
+"RTN","IBEBR",72,0)
+ S IB10=$G(^IBE(350.2,+IBORIG,10)) I IB10]"" S ^IBE(350.2,DA,10)=IB10
+"RTN","IBEBR",73,0)
+ ;  -set additional amount logic if needed (from last one)
+"RTN","IBEBR",74,0)
+ S IB20=$G(^IBE(350.2,+IBLAST,20)) I IB20]"" S ^IBE(350.2,DA,20)=IB20
+"RTN","IBEBR",75,0)
+ ;
+"RTN","IBEBR",76,0)
+ ;  -logic for rx3-rx6
+"RTN","IBEBR",77,0)
+ S IB=0,IB0=$G(^IBE(350.2,DA,0)) F  S IB=$O(IBPD(IB)) Q:'IB  D
+"RTN","IBEBR",78,0)
+ . S IBORIG=$O(^IBE(350.2,"B",IBPD(IB),0)),IBATYP=+$P($G(^IBE(350.2,+IBORIG,0)),"^",3)
+"RTN","IBEBR",79,0)
+ . I 'IBNEW S DA=$O(^IBE(350.2,"AIVDT",IBATYP,-IBEFDT,0)) Q:'DA
+"RTN","IBEBR",80,0)
+ . I IBNEW S X=IBPD(IB),DIC="^IBE(350.2,",DIC(0)="L" K DD,DO D FILE^DICN Q:Y<0  S DA=+Y
+"RTN","IBEBR",81,0)
+ . S DIE="^IBE(350.2,",DR=".02////"_IBEFDT_";.03////"_IBATYP_";.04////"_$P(IB0,"^",4)_";.05////"_$S($P(IB0,"^",5)]"":$P(IB0,"^",5),1:"@")_";.06////"_$S($P(IB0,"^",6)]"":$P(IB0,"^",6),1:"@") D ^DIE
+"RTN","IBEBR",82,0)
+ . I IB20]"" S ^IBE(350.2,DA,20)=IB20
+"RTN","IBEBR",83,0)
+ ;
+"RTN","IBEBR",84,0)
+FILEQ K IB10,DIC,DIE,DR,DA,IBNEW,IBORIG,DIK Q
+"RTN","IBEBR",85,0)
+ ;
+"RTN","IBEBR",86,0)
+END ;Kill vars
+"RTN","IBEBR",87,0)
+ K I,X,Y,IBNOD,IBPD,DIR,DIC,DIE,DIK,DA,DR,DA,IB10,IBORIG,IB,IB0,IBP,IBEFDT,IBSEL,IBX,IBRUN,IB20,IBLAST
+"RTN","IBEBR",88,0)
+ Q
+"RTN","IBEBR",89,0)
+ ;
+"RTN","IBEBR",90,0)
+ ;;
+"RTN","IBEBR",91,0)
+COPAY ;;Co-pay Type
+"RTN","IBEBR",92,0)
+NSC ;;RX1^RX3^RX4^^NSC RX CO-PAY (RX1)
+"RTN","IBEBR",93,0)
+SC ;;RX2^RX5^RX6^^SC RX CO-PAY (RX2)
+"RTN","IBEBR",94,0)
+FSNSC ;;FEE SERV RX1^FEE SERV RX3^FEE SERV RX4^^FEE SERV NSC RX CO-PAY (RX1)
+"RTN","IBEBR",95,0)
+ ;;
+"RTN","IBEBR",96,0)
+PERDIEM ;;Per Diem
+"RTN","IBEBR",97,0)
+ ;;INPT PER DIEM
+"RTN","IBEBR",98,0)
+ ;;NHCU PER DIEM
+"RTN","IBEBR",99,0)
+ ;;FEE SERV INPT PER DIEM
+"RTN","IBEBR",100,0)
+ ;;
+"RTN","IBEBR",101,0)
+HCFA ;;HCFA Amb. Surg. Rate
+"RTN","IBEBR",102,0)
+ ;;MEDICARE 1^^^^AMB SURG RATE 1
+"RTN","IBEBR",103,0)
+ ;;MEDICARE 2^^^^AMB SURG RATE 2
+"RTN","IBEBR",104,0)
+ ;;MEDICARE 3^^^^AMB SURG RATE 3
+"RTN","IBEBR",105,0)
+ ;;MEDICARE 4^^^^AMB SURG RATE 4
+"RTN","IBEBR",106,0)
+ ;;MEDICARE 5^^^^AMB SURG RATE 5
+"RTN","IBEBR",107,0)
+ ;;MEDICARE 6^^^^AMB SURG RATE 6
+"RTN","IBEBR",108,0)
+ ;;MEDICARE 7^^^^AMB SURG RATE 7
+"RTN","IBEBR",109,0)
+ ;;MEDICARE 8^^^^AMB SURG RATE 8
+"RTN","IBEBR",110,0)
+ ;;MEDICARE 9^^^^AMB SURG RATE 9
+"RTN","IBEBR",111,0)
+ ;;
+"RTN","IBEBR",112,0)
+CHMPVA ;;CHAMPVA Rate Type
+"RTN","IBEBR",113,0)
+ ;;CHAMPVA PER DIEM
+"RTN","IBEBR",114,0)
+ ;;CHAMPVA SUBSISTENCE LIMIT
+"RTN","IBEBR",115,0)
+ ;;
+"RTN","IBEBR",116,0)
+MEDIC ;;Medicare Deductible
+"RTN","IBEBR",117,0)
+ ;;MEDICARE DEDUCTIBLE
+"RTN","IBEBR",118,0)
+ ;;
+"RTN","IBEBR",119,0)
+MAIN ;;Billing Rate Type
+"RTN","IBEBR",120,0)
+ ;;REVENUE CODE RATES
+"RTN","IBEBR",121,0)
+ ;;PER DIEM RATES
+"RTN","IBEBR",122,0)
+ ;;MEDICARE DEDUCTIBLE
+"RTN","IBEBR",123,0)
+ ;;HCFA AMB. SURG. RATES
+"RTN","IBEBR",124,0)
+ ;;RX CO-PAYMENT
+"RTN","IBEBR",125,0)
+ ;;CHAMPVA SUBSISTENCE RATES
+"RTN","IBJDB12")
+0^1^B48647865^B47224040
+"RTN","IBJDB12",1,0)
+IBJDB12 ;ALB/CPM - BILLING LAG TIME REPORT (OPT PRINT/SUMMARIES) ; 30-DEC-96
+"RTN","IBJDB12",2,0)
+ ;;2.0;INTEGRATED BILLING;**69,100,118,524**;21-MAR-94;Build 24
+"RTN","IBJDB12",3,0)
+ ;;Per VHA Directive 6402, this routine should not be modified.
+"RTN","IBJDB12",4,0)
+ ;
+"RTN","IBJDB12",5,0)
+OPT ; - Print the outpatient report.
+"RTN","IBJDB12",6,0)
+ F IBX=1,"2I",9,10,"3I","4I",11,2,3,4 I IBSEL[(","_IBX_",") D  Q:IBQ
+"RTN","IBJDB12",7,0)
+ .I '$D(^TMP("IBJDB1",$J,IBDIV,"OP",IBX)) D  Q
+"RTN","IBJDB12",8,0)
+ ..S IBPAG=0 D OPTH I IBQ Q
+"RTN","IBJDB12",9,0)
+ ..W !!,"There was no ",$$TITLE^IBJDB1(+IBX,0)
+"RTN","IBJDB12",10,0)
+ ..I IBX["I" W " (Late Insurance)"
+"RTN","IBJDB12",11,0)
+ ..W !," claim activity during this period." D PAUSE
+"RTN","IBJDB12",12,0)
+ .;
+"RTN","IBJDB12",13,0)
+ .S IBPAG=0 D OPTH I IBQ Q
+"RTN","IBJDB12",14,0)
+ .K IBCT,IBTL S (IBCT(IBX),IBTL(IBX))=0,IBX1=""
+"RTN","IBJDB12",15,0)
+ .F  S IBX1=$O(^TMP("IBJDB1",$J,IBDIV,"OP",IBX,IBX1)) Q:IBX1=""  D  Q:IBQ
+"RTN","IBJDB12",16,0)
+ ..I $Y>(IOSL-2) D PAUSE Q:IBQ  D OPTH Q:IBQ
+"RTN","IBJDB12",17,0)
+ ..N IBWPT S IBWPT=1
+"RTN","IBJDB12",18,0)
+ ..S (IBH,IBX2)=0
+"RTN","IBJDB12",19,0)
+ ..F  S IBX2=$O(^TMP("IBJDB1",$J,IBDIV,"OP",IBX,IBX1,IBX2)) Q:'IBX2  S IBX3=$G(^(IBX2)) D  Q:IBQ
+"RTN","IBJDB12",20,0)
+ ...I $Y>(IOSL-4) D PAUSE Q:IBQ  D OPTH S IBWPT=1 Q:IBQ  S IBH=0
+"RTN","IBJDB12",21,0)
+ ...;
+"RTN","IBJDB12",22,0)
+ ...; - Write bill #, dates and total days.
+"RTN","IBJDB12",23,0)
+ ...W:IBH ! I 'IBH S IBH=1
+"RTN","IBJDB12",24,0)
+ ...I IBWPT D WPAT S IBWPT=0
+"RTN","IBJDB12",25,0)
+ ...W ?40,$P(IBX3,U),?50,$$DTE($P(IBX3,U,2)),$P(IBX3,U,5)
+"RTN","IBJDB12",26,0)
+ ...W ?63,$$DTE($P(IBX3,U,3)),?76,$J($P(IBX3,U,4),4)
+"RTN","IBJDB12",27,0)
+ ...S IBCT(IBX)=IBCT(IBX)+1,IBTL(IBX)=IBTL(IBX)+$P(IBX3,U,4)
+"RTN","IBJDB12",28,0)
+ .;
+"RTN","IBJDB12",29,0)
+ .D AVG,PAUSE
+"RTN","IBJDB12",30,0)
+ ;
+"RTN","IBJDB12",31,0)
+OPTQ Q
+"RTN","IBJDB12",32,0)
+ ;
+"RTN","IBJDB12",33,0)
+OPTH ; - Write the outpatient detail report header.
+"RTN","IBJDB12",34,0)
+ W @IOF,*13 S IBPAG=$G(IBPAG)+1
+"RTN","IBJDB12",35,0)
+ W !,"Outpatient Billing Lag Time Report"
+"RTN","IBJDB12",36,0)
+ W ?48,IBRUN,?72,"Page ",$J(IBPAG,3)
+"RTN","IBJDB12",37,0)
+ W !,$$TITLE^IBJDB1(+IBX,0) I IBX["I" W " (Late Insurance)"
+"RTN","IBJDB12",38,0)
+ W !,"Claims w/activity from ",$$DTE(IBBDT)," to ",$$DTE(IBEDT)
+"RTN","IBJDB12",39,0)
+ W " (*=Insurance found after trmt)"
+"RTN","IBJDB12",40,0)
+ W:IBDIV !,"Division: ",$P($G(^DG(40.8,IBDIV,0)),U) W !!
+"RTN","IBJDB12",41,0)
+ W:IBX[2!(IBX=11) ?50,"Date of" W:IBX=9!(IBX=10) ?50,"Date Claim"
+"RTN","IBJDB12",42,0)
+ W:IBX=1!(IBX[3)!(IBX=10) ?63,"Date of" W:IBX[2!(IBX=9) ?63,"Date Claim"
+"RTN","IBJDB12",43,0)
+ W ?76,"# of",!,"Patient",?27,"SSN",?40,"Bill #"
+"RTN","IBJDB12",44,0)
+ W:IBX=1!(IBX[3)!(IBX[4) ?50,"Date of Care"
+"RTN","IBJDB12",45,0)
+ W:IBX[2 ?50,"Check Out" W:IBX=9 ?50,"Authorized"
+"RTN","IBJDB12",46,0)
+ W:IBX=10 ?51,"Activated" W:IBX=11 ?50,"First Paymt"
+"RTN","IBJDB12",47,0)
+ W:IBX=1 ?63,"Check Out" W:IBX[3!(IBX=10) ?63,"First Paymt"
+"RTN","IBJDB12",48,0)
+ W:IBX[4!(IBX=11) ?63,"Date Closed" W:IBX[2 ?63,"Authorized"
+"RTN","IBJDB12",49,0)
+ W:IBX=9 ?64,"Activated" W ?76,"Days",!,$$DASH(80)
+"RTN","IBJDB12",50,0)
+ S IBQ=$$STOP^IBOUTL("Billing Lag Time Report")
+"RTN","IBJDB12",51,0)
+ Q
+"RTN","IBJDB12",52,0)
+ ;
+"RTN","IBJDB12",53,0)
+AVG ; - Write total days and average line.
+"RTN","IBJDB12",54,0)
+ W !?75,"-----",!,"Average Number of Days for",?75,$J(IBTL(IBX),5)
+"RTN","IBJDB12",55,0)
+ W !,$$TITLE^IBJDB1(+IBX,0),$S(IBX["I":" (Late Ins)",1:""),": "
+"RTN","IBJDB12",56,0)
+ W $J($S('IBCT(IBX):0,1:IBTL(IBX)/IBCT(IBX)),0,2)
+"RTN","IBJDB12",57,0)
+ W " (",IBCT(IBX)," claim",$S(IBCT(IBX)>1:"s",1:""),")"
+"RTN","IBJDB12",58,0)
+ Q
+"RTN","IBJDB12",59,0)
+ ;
+"RTN","IBJDB12",60,0)
+WPAT ; - Write patient data.
+"RTN","IBJDB12",61,0)
+ W !,$E($P(IBX1,"@@"),1,25),?27,$$SSN($P(IBX1,"@@",2))
+"RTN","IBJDB12",62,0)
+ Q
+"RTN","IBJDB12",63,0)
+ ;
+"RTN","IBJDB12",64,0)
+SUM ; - Print the summary reports.
+"RTN","IBJDB12",65,0)
+ D OPTS,PAUSE I IBQ G SUMQ
+"RTN","IBJDB12",66,0)
+ D INPS,PAUSE
+"RTN","IBJDB12",67,0)
+SUMQ Q
+"RTN","IBJDB12",68,0)
+ ;
+"RTN","IBJDB12",69,0)
+OPTS ; - Print the outpatient summary report.
+"RTN","IBJDB12",70,0)
+ I $E(IOST,1,2)="C-" W @IOF,*13
+"RTN","IBJDB12",71,0)
+ W !?32,"BILLING LAG TIME"
+"RTN","IBJDB12",72,0)
+ D CTR("OUTPATIENT SUMMARY REPORT"_$S(IBDIV:" for "_$P($G(^DG(40.8,IBDIV,0)),U),1:""))
+"RTN","IBJDB12",73,0)
+ D CTR("Receivables with activity from "_$$DTE(IBBDT)_" to "_$$DTE(IBEDT))
+"RTN","IBJDB12",74,0)
+ D CTR("Run Date: "_IBRUN) W !?12,$$DASH(55)
+"RTN","IBJDB12",75,0)
+ W !!?2,"Time Period",?50,"Average Number of days"
+"RTN","IBJDB12",76,0)
+ W !?2,"-----------",?50,"----------------------"
+"RTN","IBJDB12",77,0)
+ W !?2,$$TITLE^IBJDB1(1,0),?55,$J($S('IBCT(IBDIV,"OP",1):0,1:IBTL(IBDIV,"OP",1)/IBCT(IBDIV,"OP",1)),7,2)," (",IBCT(IBDIV,"OP",1)," claims)"
+"RTN","IBJDB12",78,0)
+ W !?2,$$TITLE^IBJDB1(2,0),"-LI",?55,$J($S('IBCT(IBDIV,"OP","2I"):0,1:IBTL(IBDIV,"OP","2I")/IBCT(IBDIV,"OP","2I")),7,2)," (",IBCT(IBDIV,"OP","2I")," claims)"
+"RTN","IBJDB12",79,0)
+ W !?2,$$TITLE^IBJDB1(9,0),?55,$J($S('IBCT(IBDIV,"OP",9):0,1:IBTL(IBDIV,"OP",9)/IBCT(IBDIV,"OP",9)),7,2)," (",IBCT(IBDIV,"OP",9)," claims)"
+"RTN","IBJDB12",80,0)
+ W !?2,$$TITLE^IBJDB1(10,0),?55,$J($S('IBCT(IBDIV,"OP",10):0,1:IBTL(IBDIV,"OP",10)/IBCT(IBDIV,"OP",10)),7,2)," (",IBCT(IBDIV,"OP",10)," claims)"
+"RTN","IBJDB12",81,0)
+ W !?2,$$TITLE^IBJDB1(3,0),"-LI",?55,$J($S('IBCT(IBDIV,"OP","3I"):0,1:IBTL(IBDIV,"OP","3I")/IBCT(IBDIV,"OP","3I")),7,2)," (",IBCT(IBDIV,"OP","3I")," claims)"
+"RTN","IBJDB12",82,0)
+ W !?2,$$TITLE^IBJDB1(4,0),"-LI",?55,$J($S('IBCT(IBDIV,"OP","4I"):0,1:IBTL(IBDIV,"OP","4I")/IBCT(IBDIV,"OP","4I")),7,2)," (",IBCT(IBDIV,"OP","4I")," claims)"
+"RTN","IBJDB12",83,0)
+ W !?2,$$TITLE^IBJDB1(11,0),?55,$J($S('IBCT(IBDIV,"OP",11):0,1:IBTL(IBDIV,"OP",11)/IBCT(IBDIV,"OP",11)),7,2)," (",IBCT(IBDIV,"OP",11)," claims)"
+"RTN","IBJDB12",84,0)
+ W !!?2,$$TITLE^IBJDB1(2,0),"+",?55,$J($S('IBCT(IBDIV,"OP",2):0,1:IBTL(IBDIV,"OP",2)/IBCT(IBDIV,"OP",2)),7,2)," (",IBCT(IBDIV,"OP",2)," claims)"
+"RTN","IBJDB12",85,0)
+ W !?2,$$TITLE^IBJDB1(3,0),"+",?55,$J($S('IBCT(IBDIV,"OP",3):0,1:IBTL(IBDIV,"OP",3)/IBCT(IBDIV,"OP",3)),7,2)," (",IBCT(IBDIV,"OP",3)," claims)"
+"RTN","IBJDB12",86,0)
+ W !?2,$$TITLE^IBJDB1(4,0),"+",?55,$J($S('IBCT(IBDIV,"OP",4):0,1:IBTL(IBDIV,"OP",4)/IBCT(IBDIV,"OP",4)),7,2)," (",IBCT(IBDIV,"OP",4)," claims)"
+"RTN","IBJDB12",87,0)
+ I $E(IOST,1,2)="C-" D
+"RTN","IBJDB12",88,0)
+ .W !!?2,"*LI=Late Insurance (policy identified after treatment)"
+"RTN","IBJDB12",89,0)
+ .W !?2,"+This element does not include Late Insurance claims"
+"RTN","IBJDB12",90,0)
+ E  W !!
+"RTN","IBJDB12",91,0)
+ Q
+"RTN","IBJDB12",92,0)
+ ;
+"RTN","IBJDB12",93,0)
+INPS ; - Print the inpatient summary report.
+"RTN","IBJDB12",94,0)
+ I $E(IOST,1,2)="C-" W @IOF,*13
+"RTN","IBJDB12",95,0)
+ W !?32,"BILLING LAG TIME"
+"RTN","IBJDB12",96,0)
+ D CTR("INPATIENT SUMMARY REPORT"_$S(IBDIV:" for "_$P($G(^DG(40.8,IBDIV,0)),U),1:""))
+"RTN","IBJDB12",97,0)
+ D CTR("Receivables with activity from "_$$DTE(IBBDT)_" to "_$$DTE(IBEDT))
+"RTN","IBJDB12",98,0)
+ I $E(IOST,1,2)="C-" D CTR("Run Date: "_IBRUN)
+"RTN","IBJDB12",99,0)
+ W !?12,$$DASH(55)
+"RTN","IBJDB12",100,0)
+ W !!?2,"Time Period",?50,"Average Number of days"
+"RTN","IBJDB12",101,0)
+ W !?2,"-----------",?50,"----------------------"
+"RTN","IBJDB12",102,0)
+ W !?2,$$TITLE^IBJDB1(5,0),?55,$J($S('IBCT(IBDIV,"IN",5):0,1:IBTL(IBDIV,"IN",5)/IBCT(IBDIV,"IN",5)),7,2)," (",IBCT(IBDIV,"IN",5)," claims)"
+"RTN","IBJDB12",103,0)
+ W !?2,$$TITLE^IBJDB1(6,0),"-LI",?55,$J($S('IBCT(IBDIV,"IN","6I"):0,1:IBTL(IBDIV,"IN","6I")/IBCT(IBDIV,"IN","6I")),7,2)," (",IBCT(IBDIV,"IN","6I")," claims)"
+"RTN","IBJDB12",104,0)
+ W !?2,$$TITLE^IBJDB1(9,0),?55,$J($S('IBCT(IBDIV,"IN",9):0,1:IBTL(IBDIV,"IN",9)/IBCT(IBDIV,"IN",9)),7,2)," (",IBCT(IBDIV,"IN",9)," claims)"
+"RTN","IBJDB12",105,0)
+ W !?2,$$TITLE^IBJDB1(10,0),?55,$J($S('IBCT(IBDIV,"IN",10):0,1:IBTL(IBDIV,"IN",10)/IBCT(IBDIV,"IN",10)),7,2)," (",IBCT(IBDIV,"IN",10)," claims)"
+"RTN","IBJDB12",106,0)
+ W !?2,$$TITLE^IBJDB1(7,0),"-LI",?55,$J($S('IBCT(IBDIV,"IN","7I"):0,1:IBTL(IBDIV,"IN","7I")/IBCT(IBDIV,"IN","7I")),7,2)," (",IBCT(IBDIV,"IN","7I")," claims)"
+"RTN","IBJDB12",107,0)
+ W !?2,$$TITLE^IBJDB1(8,0),"-LI",?55,$J($S('IBCT(IBDIV,"IN","8I"):0,1:IBTL(IBDIV,"IN","8I")/IBCT(IBDIV,"IN","8I")),7,2)," (",IBCT(IBDIV,"IN","8I")," claims)"
+"RTN","IBJDB12",108,0)
+ W !?2,$$TITLE^IBJDB1(11,0),?55,$J($S('IBCT(IBDIV,"IN",11):0,1:IBTL(IBDIV,"IN",11)/IBCT(IBDIV,"IN",11)),7,2)," (",IBCT(IBDIV,"IN",11)," claims)"
+"RTN","IBJDB12",109,0)
+ W !!?2,$$TITLE^IBJDB1(6,0),"+",?55,$J($S('IBCT(IBDIV,"IN",6):0,1:IBTL(IBDIV,"IN",6)/IBCT(IBDIV,"IN",6)),7,2)," (",IBCT(IBDIV,"IN",6)," claims)"
+"RTN","IBJDB12",110,0)
+ W !?2,$$TITLE^IBJDB1(7,0),"+",?55,$J($S('IBCT(IBDIV,"IN",7):0,1:IBTL(IBDIV,"IN",7)/IBCT(IBDIV,"IN",7)),7,2)," (",IBCT(IBDIV,"IN",7)," claims)"
+"RTN","IBJDB12",111,0)
+ W !?2,$$TITLE^IBJDB1(8,0),"+",?55,$J($S('IBCT(IBDIV,"IN",8):0,1:IBTL(IBDIV,"IN",8)/IBCT(IBDIV,"IN",8)),7,2)," (",IBCT(IBDIV,"IN",8)," claims)"
+"RTN","IBJDB12",112,0)
+ W !!?2,"*LI=Late Insurance (policy identified after treatment)"
+"RTN","IBJDB12",113,0)
+ W !?2,"+This element does not include Late Insurance claims"
+"RTN","IBJDB12",114,0)
+ Q
+"RTN","IBJDB12",115,0)
+ ;
+"RTN","IBJDB12",116,0)
+CTR(X) ; - Center and write text.
+"RTN","IBJDB12",117,0)
+ W !?(80-$L(X))\2,X
+"RTN","IBJDB12",118,0)
+ Q
+"RTN","IBJDB12",119,0)
+ ;
+"RTN","IBJDB12",120,0)
+DASH(X) ; - Return a dashed line.
+"RTN","IBJDB12",121,0)
+ Q $TR($J("",X)," ","=")
+"RTN","IBJDB12",122,0)
+ ;
+"RTN","IBJDB12",123,0)
+PAUSE ; - Page break.
+"RTN","IBJDB12",124,0)
+ I $E(IOST,1,2)'="C-" Q
+"RTN","IBJDB12",125,0)
+ N IBX,DIR,DIRUT,DUOUT,DTOUT,DIROUT,X,Y
+"RTN","IBJDB12",126,0)
+ F IBX=$Y:1:(IOSL-3) W !
+"RTN","IBJDB12",127,0)
+ S DIR(0)="E" D ^DIR I $D(DIRUT)!($D(DUOUT)) S IBQ=1
+"RTN","IBJDB12",128,0)
+ Q
+"RTN","IBJDB12",129,0)
+ ;
+"RTN","IBJDB12",130,0)
+SSN(X) ; - Format the SSN.
+"RTN","IBJDB12",131,0)
+ Q $S(X]"":$E(X,1,3)_"-"_$E(X,4,5)_"-"_$E(X,6,10),1:"")
+"RTN","IBJDB12",132,0)
+ ;
+"RTN","IBJDB12",133,0)
+DTE(X) ; - Format date (MMM DD,YYYY).
+"RTN","IBJDB12",134,0)
+ S:'X X="" S Y=X X ^DD("DD") Q Y
+"VER")
+8.0^22.0
+"BLD",9697,6)
+^483
+**END**
+**END**
+

@@ -1,0 +1,392 @@
+
+=============================================================================
+Run Date: DEC 17, 2015                     Designation: DG*5.3*891
+Package : DG - REGISTRATION                   Priority: Mandatory
+Version : 5.3       SEQ #801                    Status: Released
+                  Compliance Date: JAN 01, 2016
+=============================================================================
+
+Associated patches: (v)DG*5.3*830  <<= must be installed BEFORE `DG*5.3*891'
+
+Subject: ENHANCE VISTA MEANS TEST REPORT TO SUPPORT VFA
+
+Category: 
+  - Routine
+  - Enhancement (Mandatory)
+
+Description:
+============
+
+ **************************************************************************
+ Note: This patch is being released in support of the Enrollment Customer
+ Enhancements (ECE) and Enrollment System Enhancements (ESE) projects and the
+ Enrollment System (ES) 4.0 release. 
+ 
+ DG*5.3*891 (Registration) is released with DG*5.3*871 (Registration),
+ DG*5.3*890 (Registration), DG*5.3*901 (Registration), DG*5.3*904
+ (Registration), DG*5.3*906 (Registration), EAS*1*113 (Enrollment Application
+ System) and IVM*2*160 (Income Verification Match) in host file DG_53_P891.KID.
+                                        
+ It is imperative that this patch be installed no later than the 
+ compliance date. Your understanding and support is appreciated.
+  
+ **************************************************************************
+  
+ The Health Eligibility Center (HEC) requested modifications to the VistA 
+ Registration, Enrollment and Eligibility (VistA REE) software to correctly
+ identify Veterans placed on the Required Means Test at Next Appointment report.
+ The Veterans Financial Assessment (VFA) project made changes to no longer
+ expire means tests less than 365 days old from the VFA Start Date (January 1,
+ 2013).  This functionality was released March 24,2014 with host file
+ DG_53_P858.KID.  This patch modifies the Required Means Test at Next
+ Appointment report to utilize the VFA rules to determine if the means test
+ is current.
+  
+ This patch modified the Registration v5.3 application as described below:
+  
+ VistA will check whether the patient means test is current.  If the means
+ test is current then the patient record is not displayed.  
+  
+  
+  Patch Components:
+ -----------------
+  
+  
+ Files & Fields Associated:
+  
+ File Name (Number)         Field Name (Number)     New/Modified/Deleted
+ ------------------         -------------------     --------------------
+ N/A                        N/A                     N/A
+  
+  
+ Forms Associated:
+  
+ Form Name                    File #               New/Modified/Deleted
+ ---------                    ------               --------------------
+ N/A                          N/A                  N/A
+  
+  
+ Mail Groups Associated:
+  
+ Mail Group Name          New/Modified/Deleted
+ ---------------          --------------------
+ N/A                       N/A                 
+  
+  
+ Options Associated:
+  
+ Option Name            Type               New/Modified/Deleted
+ -----------            ----               -------------------- 
+ N/A                    N/A                 N/A                 
+  
+  
+ Protocols Associated:
+  
+ Protocol Name       New/Modified/Deleted
+ -------------       -------------------- 
+ N/A                 N/A                 
+  
+  
+ Security Keys Associated:
+  
+ Security Key Name
+ -----------------
+ N/A                
+  
+  
+ Templates Associated:
+  
+ Template Name      Type      File Name (Number)  New/Modified/Deleted 
+ -------------      ----      ------------------  --------------------
+ N/A                 N/A      N/A        N/A       N/A
+  
+  
+ Additional Information:
+  
+  
+ New Service Requests (NSRs):
+ ----------------------------  
+ CR12791/CCR12885
+  
+  
+ Patient Safety Issues (PSIs):
+ -----------------------------
+ N/A 
+  
+  
+ Remedy Ticket(s) & Overview:
+ ----------------------------
+  
+ 1. INC000001016627 - MAS Means Test
+  
+ Problem:
+ -------
+ The installation of Vista patch EMERGENCY DG*5.3*858, EAS*1.0*106, 
+ IVM*2.0*154, DGBT*1.0*24, IB*2.0*385 is not working in regards to the 
+ following information.
+  
+ 1. The option "Required Means Test at Next Appointment" which is used by 
+ staff to display those patients who require a means test at their next 
+ appointment, is displaying the names of patients who have been excluded 
+ from the means test by way of the patch installation. 
+  
+ Resolution:
+ ----------
+ Recode Means Test Report to use current criteria.
+  
+  
+ Test Sites:
+ ----------  
+ West Texas VA Health Care System, Big Spring, TX
+ Fargo VA Health Care System, Fargo, ND
+ Clement J. Zablocki Veterans Affairs Medical Center, Milwaukee, WI
+ VA Pittsburgh Healthcare System, Pittsburgh, PA
+                                                                
+                                     
+ KNOWN ISSUES: 
+ -------------                                                        
+ Three issues have been found during IOC testing related to using the
+ contributed to spouse or child indicators in lieu of the amount contributed to
+ spouse or child values.  All three issues will be fixed in subsequent patches
+ to be deployed approximately 2 months after release of this host file.
+ 
+ Issue 1: When a Veteran's income test Married Last Year value is "Yes" and the
+ Contributed to Spousal Support field has a stored value; updating the Married
+ Last Year value to "No" does not remove the value in the Contributed to Spousal
+ Support field.  The Contributed to Spouse value continues to display on the
+ income test screens.  The user must remove the spouse from the means test prior
+ to changing the Married Last Year value to "No".  This ensures the spouse is
+ appropriately not counted as a dependent and their income is not included in
+ the calculation of the means test status, copay test status, or enrollment
+ determination.  The issue appears to be isolated to the display on the income
+ test and should not cause any negative impact to processing.
+ 
+ Solution 1: Work Item 235262 was entered to address the issue.  Requirements
+ on how to handle the display will be forthcoming and the solution will be
+ released in patch DG*5.3*923.
+                                                                   
+ Issue 2: The 10-10EZ and 10-10EZR forms were updated to ask the Veteran if
+ their spouse or child did not live with them did they provide support in
+ lieu of asking for the amount contributed to spouse or child.  The amount
+ contributed to spouse and child fields were replaced by contributed to
+ spouse or child yes/no indicators for determining whether the spouse
+ should be counted as a dependent on the income test.  The 10-10EZ form
+ does not print the indicator of yes or no in Block 3 of the Dependent
+ Information and the 10-10EZR form always prints "No" regardless of the
+ indicator stored values.  The issue appears to be isolated to the printing
+ of the 10-10EZ and 10-10EZR forms in VistA.  The income test is shared with
+ the Enrollment System (ES).  The ES 10-10EZ and 10-10EZR forms print the yes
+ or no indicator on the form correctly. 
+ 
+ Solution 2: Work Item 219329 was entered to address the issue.  Printing of
+ the forms may be done through the Enrollment System (ES) until patch
+ EAS*1*135 is released to correct the issue. 
+ 
+ Issue 3:  When a Veteran does not live with their spouse and contributes to
+ their support, the spouse's income information is not printed on the 10-10EZ
+ form or 10-10EZR form in VistA.  The issue appears to be isolated to the
+ printing of the 10-10EZ and 10-10EZR forms in VistA.  The income test is shared
+ with the Enrollment System (ES).  The ES 10-10EZ and 10-10EZR forms print the
+ spouse's income on the form correctly.  
+ 
+ Solution 3:  Work Item 235260 was entered to address the issue.  Printing of
+ the forms may be done through the Enrollment System (ES) until patch
+ EAS*1*135 is released to correct the issue.
+ 
+ 
+  
+  
+ Documentation Retrieval Instructions:
+ ------------------------------------- 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to FTP the files from 
+ ftp://download.vista.domain.ext/.
+ This transmits the files from the first available FTP server. Sites may 
+ also elect to retrieve software directly from a specific server as 
+ follows:
+  
+  
+         OI&T FIELD OFFICE       FTP ADDRESS                DIRECTORY
+         -----------------       -----------                ---------
+         Albany             ftp.domain.ext   []
+         Hines              ftp.domain.ext    []
+         Salt Lake City     ftp.domain.ext      []
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:http://www4.domain.ext/vdl/:
+ 
+ Note:  There are two separate host files (DG_53_P865.KID and DG_53_P891.KID),
+ containing multiple Registration (DG) patches, that require updates to the
+ User Manual-Registration Menu document.  These host files are being released
+ together to support the ECE and ESE projects.  All changes to the User
+ Manual-Registration Menu documentation for these DG patches can be found in
+ the DG_5_3_P891_REG_UM.PDF file.
+  
+ Title                           File Name                      FTP Mode
+ -----------------------------------------------------------------------
+ User Manual- Registration Menu  DG_5_3_P891_REG_UM.PDF         Binary      
+ User Manual - Means Test        DG_5_3_P891_MTS_UM.PDF         Binary
+   Supervisors Menu
+ User Manual - Copay Exemption   DG_5_3_P891_CETS_UM.PDF        Binary 
+ IVM Technical Manual            IVM_2_P160_TM.PDF              Binary 
+ 
+  
+  
+ FTP Instructions:
+ -----------------
+  
+ ES 4.1 includes the following patches.  The host file was created to
+ simplify installation at Veterans Health Administration (VHA) facilities.
+  
+    File Name                         Contents           Retrieval Format
+    --------------------------------  --------           ----------------
+    DG_53_P891.KID                    DG*5.3*891          ASCII
+                                      DG*5.3*871
+                                      DG*5.3*890
+                                      DG*5.3*904
+                                      EAS*1*113
+                                      IVM*2*160
+                                      DG*5.3*901
+                                      DG*5.3*906
+  
+  
+ Pre-Installation Instructions:
+ ------------------------------
+ The following kids build DG_53_P891.KID will be installed.
+  
+ This patch may be installed with users on the system although it is 
+ recommended that it be installed during non-peak hours to minimize 
+ potential disruption to users.  This patch should take less than 15 
+ minutes to install.
+  
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be unscheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+     Taskman Management [XUTM MGR] menu.
+  
+ 2.  The HL7 incoming/outgoing filers should be stopped.  Use the Monitor
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and Link
+     Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+     Menu [HL MAIN MENU].
+  
+ 3.  The following options should be disabled during installation:
+  
+          Register a Patient                    [DG REGISTER PATIENT]
+          Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+          View Registration Data                [DG REGISTRATION VIEW] 
+          Add a New Means Test                  [DG MEANS TEST ADD]
+          Adjudicate a Means Test               [DG MEANS TEST ADJUDICATE]
+          Complete a Required Means Test        [DG MEANS TEST COMPLETE]
+          Document Comments on a Means Test     [DG MEANS TEST COMMENTS]
+          Edit an Existing Means Test           [DG MEANS TEST EDIT]
+          View a Past Means Test                [DG MEANS TEST VIEW TEST]
+          Add a Copay Exemption Test            [DG CO-PAY TEST ADD]
+          Edit an Existing Copay Exemption Test [DG CO-PAY TEST EDIT]
+          View a Past Copay Test                [DG CO-PAY TEST VIEW TEST] 
+          Death Entry                           [DG DEATH ENTRY]
+  
+ 4.  This patch may be installed with users on the system, however because 
+     the Registration options need to be placed out of order, we suggest it
+     be installed after business hours.
+  
+  
+ Installation Instructions:
+ --------------------------
+  
+ 1.  Download DG_53_P891.KID into your local directory.
+  
+ 2.  From the Kernel Installation and Distribution System (KIDS) Menu, 
+     select the Installation menu. 
+  
+ 3.  Use Load a Distribution option. You may need to prepend a directory 
+     name. When prompted for "Enter a Host File: ", respond with
+     DG_53_P891.KID
+  
+     Example: USER$:[ABC]DG_53_P891.KID
+  
+ 4.  If given the option to run any Environment Check Routine(s), answer
+     "YES." 
+  
+ 5.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch
+     DG*5.3*891.
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as DD's or templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+  
+ 6.  Select Installation Option: Install Package(s) 
+                                 ------------------
+     **This is the step to start the installation of this KIDS patch: 
+    
+     a.  Choose the Install Package(s) option to start the patch install
+         and enter DG*5.3*891 at the INSTALL NAME prompt.
+     b.  When prompted 'Want KIDS to INHIBIT LOGONs during the install? 
+         NO//'  answer NO
+     c.  When prompted 'Want to DISABLE Scheduled Options, Menu Options,
+         and Protocols? NO//'  answer YES
+  
+  
+          Register a Patient                    [DG REGISTER PATIENT]
+          Load/Edit Patient Data                [DG LOAD PATIENT DATA]
+          View Registration Data                [DG REGISTRATION VIEW] 
+          Add a New Means Test                  [DG MEANS TEST ADD]
+          Adjudicate a Means Test               [DG MEANS TEST ADJUDICATE]
+          Complete a Required Means Test        [DG MEANS TEST COMPLETE]
+          Document Comments on a Means Test     [DG MEANS TEST COMMENTS]
+          Edit an Existing Means Test           [DG MEANS TEST EDIT]
+          View a Past Means Test                [DG MEANS TEST VIEW TEST]
+          Add a Copay Exemption Test            [DG CO-PAY TEST ADD]
+          Edit an Existing Copay Exemption Test [DG CO-PAY TEST EDIT]
+          View a Past Copay Test                [DG CO-PAY TEST VIEW TEST]
+          Death Entry                           [DG DEATH ENTRY]
+       
+ Post-Installation Instructions:
+ ------------------------------
+ 
+ 1.  The IVM BACKGROUND JOB [IVM BACKGROUND JOB] should be scheduled.
+     Use the Schedule/Unschedule Options [XUTM SCHEDULE] option on the
+     Taskman Management [XUTM MGR] menu.
+  
+ 2.  The HL7 incoming/outgoing filers should be started.  Use the Monitor
+     Start, Stop Filers [HL FILER MONITOR] option on the Filer and Link
+     Management Options [HL MENU FILER LINK MGT] menu on the HL7 Main
+     Menu [HL MAIN MENU].
+ 
+ 
+ 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+;;5.3;Registration;**[Patch List]**;Aug 13, 1993;Build 14
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: DGMTOFA
+    Before: B25657506   After: B29409617  **3,50,182,326,426,568,725,830,891**
+ 
+Routine list of preceding patches: 830
+
+=============================================================================
+User Information:                          Hold Date     : DEC 06, 2015
+Entered By  :                               Date Entered  : JUN 23, 2014
+Completed By:                               Date Completed: NOV 20, 2015
+Released By :                               Date Released : DEC 17, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,145 @@
+
+=============================================================================
+Run Date: APR 29, 2016                     Designation: MHV*1*25
+Package : MHV - MYHEALTHEVET                  Priority: Mandatory
+Version : 1        SEQ #19                      Status: Released
+                  Compliance Date: MAY 30, 2016
+=============================================================================
+
+
+Subject: MYHEALTHEVET RELEASE 2016.2.0.0 INFORMATIONAL PATCH
+
+Category: 
+  - Informational
+
+Description:
+============
+
+ The quarterly MyHealtheVet Release MHV_2016.2.0.0 will be promoted to the 
+ MHV Production environment on Saturday, April 30th, 2016 starting at 
+ 10:00PM EDT.
+  
+ ============================================================
+ Infrastructure & Interface (I&I) Team Enhancements (NATIONAL RELEASE):
+ ============================================================
+ JAZZ# 275615:  MHV Admin Portal Enhancements - 
+  
+ Admin Portal: Home Page Updates - Added last login date/time in the blue 
+ login box once the VA Staff has logged in to MHV Administrative Portal.
+  
+ Admin Portal: Manage VA Staff - VA Staff Details Page Updates - On the 
+ View Details screen under Help Desk tab, the system will display a new 
+ field, SM Last Login Date/Time, that shows the date and time a MHV user 
+ last logged in to Secure Messaging. On the Manage VA Staff screen under
+ Manage VA Staff tab, display a new field, Last Login Date/Time, that shows
+ the date and time a VA Staff has last logged in.
+  
+ Admin Portal: Manage MHV Users - In Person Authentication Page Updates - 
+ On the Manage MHV Users screen under the In-Person Authentication tab, 
+ the system will display the field Last Login Date/Time to "MHV" Last 
+ Login Date/Time. 
+  
+ Admin Portal: Manage MHV Users - Help Desk tab - View Details Page 
+ Updates - On the Manage MHV Users screen under the In-Person 
+ Authentication tab, the system will display a new field, SM Last Login 
+ Date/Time, that shows the date and time a MHV user last logged in to
+ Secure Messaging.
+  
+ JAZZ# 278955:  MHV BB CCD Direct Enhancements - 
+  
+ Send VA Health Summary - Basic and Alternate Flow - The system will 
+ connect users in the VA CCD Direct Field Test Group to the Profiles page 
+ so that they can opt-in to the delivery notification from the VA Health 
+ Summary landing page. MHV Users with Premium account and part of the VA
+ CCD Direct Field Test Group should be able to see all content updates. MHV
+ User with Premium account and part of the VA CCD Direct Field Test Group
+ should be able to see the summary table for Send My VA Health Summary
+ Requests.
+  
+ Opt-In to Receive VA Health Summary Delivery Notification - Premium MHV 
+ account users in the VA CCD Direct field test group, will be able to 
+ navigate to the Profiles page and setup their email preference to receive 
+ email notifications about the delivery status when the health summary has
+ been sent. The VA Health Summary file will be sent to one Direct email
+ address.
+  
+ Turn Off VA Health Summary Email Notification - Premium MHV account users 
+ in the VA CCD Direct field test group, will be able to navigate to the 
+ Profiles page and setup their email preference to opt out of receiving 
+ email notifications about the delivery status of the health summary. MHV 
+ Users with Premium accounts and part of the VA CCD Direct Field Test 
+ Group will be able to turn on/off the "Send My Health Summary Delivery 
+ Notification".
+  
+ VA Health Summary Background Job - The VA Health Summary Background Job 
+ will be made available so that if a delivery notification has not been 
+ received within one hour of the time the Direct message was sent, the
+ system will record an AAL (activity log) entry that the request to send VA
+ Health Summary was unsuccessful.  
+  
+ JAZZ# 278323:  MHV Registration Page Content Updates - When users select 
+ the 'help desk' hyperlink, the MHV system will open the "Contact My 
+ HealtheVet" page. The MHV System will also display the text "(Leave blank 
+ if no Middle Name)" under the 'Middle Name' field.
+ ================================================================
+ Veteran Facing Enhancements (VFE) Team Enhancements (NATIONAL RELEASE):
+ ================================================================
+ JAZZ#272695: Workload Credit Enhancement (WLC) - Secure Messaging (SM) 
+ Healthcare Team (HCT) Member utilizing SM WLC will see 4 elements when 
+ they choose a problem list entry as a diagnosis:  ICD 10 Code, ICD 10 
+ Narrative String, SCT Code, and SCT Narrative String 
+  
+ JAZZ#272664: Sent folder defect fix - HCT members will be able reply to a 
+ message from the Sent folder that it will go to the intended recipient. 
+ Additionally, when they reply to a message from the Sent folder and save 
+ a draft in the draft folder (either automatically or manually), the 
+ message can be sent successfully from the draft folder to the intended 
+ recipient. 
+  
+ JAZZ#275380: Rx (Rx Refill) Facility update cronjob - The MHV system will 
+ generate email NOTIFICATIONS (For Rx tracking and appointments) and will 
+ update the list of treatment facilities for the user, in a single call,  
+ prior to sending email notification. 
+  
+ JAZZ#278828: SM Patient display last login - SM patient users will be 
+ able to view the last login date/time in Secure Messaging. 
+  
+ JAZZ#280109: SM HCT member display last login - SM HCT members will be 
+ able to view the last login date/time in Secure Messaging. 
+  
+ JAZZ#280112: SM Admin display last login - SM administrators will be able
+ to view the SM patient user's last successful SM login date/time in the
+ "Search by Patient" report.
+ ====================================================
+ Sustainment Team (NATIONAL RELEASE):
+ ====================================================
+ JAZZ#301437 - Repair the "Contact Us" link on the Wellness Reminder page
+ JAZZ#177079 - Analyze problem of inability to bring up HLA from MHV
+ JAZZ#290695 - Evaluate partitioning the MESSAGE_TRACE_LOG table by 
+ CREATED_DATE
+ JAZZ#293703 - Create job that will notify Product Development when the 
+ secure messaging escalation job does not run or has errors
+ ====================================================
+ System Reengineering (SRE) Team (FIELD TESTING ONLY):
+ ====================================================
+  
+ The latest SQA verified stories, defects, and tasks will be deployed to 
+ the System Re-Engineering Pre-Production and Staging environments. These 
+ changes are not being nationally released at this time.
+
+Routine Information:
+====================
+No routines included.
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : APR 20, 2016
+Completed By:                               Date Completed: APR 28, 2016
+Released By :                               Date Released : APR 29, 2016
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+No routines included

@@ -1,0 +1,172 @@
+$TXT Created by             at MNTVBB.DOMAIN.EXT  (KIDS) on Wednesday, 10/29/14 at 14:20
+=============================================================================
+Run Date: JAN 14, 2015                     Designation: IB*2*537
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #488                      Status: Released
+                  Compliance Date: JAN 28, 2015
+=============================================================================
+
+
+Subject: FY15 STOP CODE MID YEAR
+
+Category: 
+  - Routine
+
+Description:
+============
+
+ This patch updates Integrated Billing Clinic Stop Codes to reflect 
+ Fiscal Year 2015 mid-year changes.
+  
+ *** Please Note ***
+ There is shortened compliance period for this patch.  It is imperative 
+ this patch is installed by 1/28/15 to meet effective date of Stop Code 
+ 183.
+  
+  
+ ASSOCIATED REMEDY TICKET:
+ =========================
+ 1. INC000001069737    FY15 STOP CODE MID YEAR
+  
+  
+ ASSOCIATED NSR(s):
+ ==================
+ N/A
+  
+  
+ PARTICIPATING TEST SITES:
+ =========================
+ Altoona VAMC
+ Maryland HCS (Baltimore)
+ Upstate NY HCS (Albany)
+  
+  
+ REMEDY OVERVIEW:
+ ================
+ 1. INC000001069737    FY15 STOP CODE MID YEAR
+   
+    Problem: 
+    --------
+    As requested by the Chief Business Office (CBO), the IB CLINIC
+    STOP CODE BILLABLE TYPES (#352.5) file needs to be updated to
+    reflect changes for Fiscal Year 2015 (mid-year).
+   
+    Resolution:
+    -----------
+    Add and update requested Stop Codes as described below:
+  
+ Routine: IB20P537 
+  
+ STOP CODES ADDED
+ ----------------
+  
+ STOP   EFFECTIVE                                                OVERRIDE
+ CODE   DATE         BILLABLE TYPE   DESCRIPTION                     FLAG
+ --------------------------------------------------------------------------
+ 673   APR  1,2015  NON-BILLABLE    CLINICAL TEAM CONFERENCE      OVERRIDE
+  
+  
+ STOP CODES MODIFIED
+ -------------------
+  
+ OLD: 
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 183    OCT  1,2014  BASIC CARE      PEER SPECIALIST              OVERRIDE 
+  
+  
+  
+ NEW:
+  
+ STOP    EFFECTIVE                                                OVERRIDE
+ CODE    DATE       BILLABLE TYPE   DESCRIPTION                     FLAG
+ ---------------------------------------------------------------------------
+ 183    JAN 28,2015  NON-BILLABLE    PEER SPECIALIST              OVERRIDE
+   
+  
+ INSTALLATION INSTRUCTIONS:
+ ==========================
+ It is not necessary to disable any options.  You may install 
+ this patch at any time without interruption to users.  It should
+ take less than 2 minutes to install this patch.
+   
+     1. Choose the PackMan message containing this patch and invoke the
+        INSTALL/CHECK MESSAGE PackMan option.  
+    
+     2. From the Kernel Installation & Distribution System menu, select 
+        the Installation menu.  
+    
+     3. From this menu, you may select to use the following options: 
+        (when prompted for INSTALL NAME, enter IB*2.0*537)
+    
+          a.  Verify Checksums in Transport Global - This option will allow
+              you to ensure the integrity of the routines that are in the
+              transport global.
+          b.  Print Transport Global - This option will allow you to view
+              the components of the KIDS build.
+          c.  Compare Transport Global to Current System - This option will
+              allow you to view all changes that will be made when this 
+              patch is installed.  It compares all components of this patch
+              (routines, DD's, templates, etc.).
+          d.  Backup a Transport Global - This option will create a backup
+              message of any routines exported with this patch. It will not
+              backup any other changes such as DD's or templates.
+  
+     4. Use the Install Package(s) option and select the package 
+        IB*2.0*537.
+   
+     5. When Prompted "Want KIDS to INHIBIT LOGONs during the install? 
+        NO//" respond NO.  
+    
+     6. When Prompted "Want to DISABLE Scheduled Options, Menu Options, 
+        and Protocols? NO// respond NO.
+  
+     7. You may delete routine IB20P537 after the installation.
+  
+  
+ *** After the install please review the installation to verify the
+     Stop Codes were added.  See below:
+     NOTE: If any type of error message is displayed during installation
+     create a REMEDY ticket to resolve the issue. 
+  
+ DSS Clinic Stop Codes, Post-Install Starting
+  
+  Adding new codes to file 352.5
+  
+    673  CLINICAL TEAM CONFERENCE
+  
+      1 entry added to 352.5
+  
+  Updating Stop Code entries in file 352.5
+  
+    183  PEER SPECIALIST
+  
+      1 update added to file 352.5
+  
+ DSS Clinic Stop Codes, Post-Install Complete 
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 1
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IB20P537
+    Before:       n/a   After: B10383864  **537**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : OCT 14, 2014
+Completed By:                               Date Completed: JAN 12, 2015
+Released By :                               Date Released : JAN 14, 2015
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT

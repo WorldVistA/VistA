@@ -1,0 +1,568 @@
+$TXT Created by               at DEVVFF.DOMAIN.EXT  (KIDS) on Thursday, 05/08/14 at 12:33
+=============================================================================
+Run Date: JUL 24, 2014                     Designation: IB*2*506
+Package : IB - INTEGRATED BILLING             Priority: Mandatory
+Version : 2       SEQ #477                      Status: Released
+                  Compliance Date: AUG 23, 2014
+=============================================================================
+
+Associated patches: (v)IB*2*142    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*276    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*399    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*416    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*435    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*438    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*479    <<= must be installed BEFORE `IB*2*506'
+                    (v)IB*2*497    <<= must be installed BEFORE `IB*2*506'
+
+Subject: EIV SYSTEM MODIFICATIONS
+
+Category: 
+  - Routine
+  - Data Dictionary
+  - Enhancement (Mandatory)
+  - Input Template
+  - Other
+
+Description:
+============
+
+  
+ This Integrated Billing (IB) patch introduces substantial changes to 
+ Veterans Health Information Systems & Technology Architecture (VistA)'s
+ electronic Insurance Verification (eIV) eligibility inquiry and
+ response processing in order to meet the Committee on Operating Rules for 
+ Information Exchange (CORE) Operating Rules.
+  
+  
+ Complete list of patch items:
+  
+ 1.  Revised the insurance buffer views and actions.
+  
+     a) The new default view for those who select the option PROCESS
+        INSURANCE BUFFER [IBCN INSURANCE BUFFER PROCESS] is the "Complete
+        Buffer".  The "Complete Buffer" view consists of a list of all
+        insurance buffer entries that have the status of 'ENTERED'.
+  
+     b) Added a new insurance buffer view "Failure Buffer", which consists
+        of a list of all entries that have the status of 'ENTERED' and has
+        the eIV symbol of "!".
+  
+     c) The insurance buffer view "Future Appointments" has been removed.
+  
+     d) The action (VE) VERIFY ENTRY has been removed.
+  
+     e) A new action (ES) ESCALATE ENTRY has been introduced with this
+        patch.  More details regarding this action are listed below.
+  
+ 2.  The ability to escalate an insurance buffer entry was introduced with
+     this patch.
+  
+     a) Two new security keys were added to VistA as a result of this
+        patch. If a user selects the option PROCESS INSURANCE BUFFER
+        [IBCN INSURANCE BUFFER PROCESS] and they have neither of the new
+        security keys (IB INSURANCE COMPANY EDIT and IB GROUP PLAN EDIT),
+        then the only insurance buffer records that are displayed to them
+        would be entries for eIV confirmed active policies ("+" entries)
+        when the patient in that record has an active policy on file in
+        VistA.  Other active policies marked with an "$" eIV symbol will
+        not be displayed to these users.
+  
+     b) Only users with neither of the new security keys (IB INSURANCE
+        COMPANY EDIT and IB GROUP PLAN EDIT), may use the new action
+        (ES) ESCALATE ENTRY within the option PROCESS INSURANCE BUFFER
+        [IBCN INSURANCE BUFFER PROCESS].
+  
+     c) The "+" eIV symbol of insurance buffer entries that have been
+        escalated using the new action (ES) ESCALATE ENTRY, will be
+        replaced with an "$" eIV symbol.
+  
+ 3.  Disabled the ability to create a new Insurance Company and/or a new
+     Group/Plan in VistA through the option PROCESS INSURANCE BUFFER [IBCN
+     INSURANCE BUFFER PROCESS].
+  
+ 4.  The name of the VistA file that stores the records for the Insurance
+     Buffer has been renamed from the "INSURANCE BUFFER" to the
+     "INSURANCE VERIFICATION PROCESSOR".  The file number and file layout
+     remain the same.  The patch includes the DATE ENTERED (#355.33,.01)
+     field although it was not changed, in order for KIDS to update the
+     file name of the file #355.33 on the system where this patch is being
+     installed.
+  
+ 5.  Modified the daily eIV registration message that is automatically sent
+     by VistA via a Health Level 7 (HL7) message to the Financial Service
+     Center (FSC) in Austin, TX.  The updated message now includes
+     additional data regarding the site's current eIV Site Parameter
+     settings.
+  
+ 6.  Modified the eIV Site Parameters that are viewed/edited using the
+     option MCCR SITE PARAMETER DISPLAY/EDIT [IBJ MCCR SITE PARAMETERS].
+  
+     a) The value of the existing FRESHNESS DAYS field (#350.9,51.01),
+        which controls the days between electronic re-verification checks,
+        is now controlled by FSC through HL7 messages. This field may no
+        longer be edited using the option MCCR SITE PARAMETER DISPLAY/EDIT
+        [IBJ MCCR SITE PARAMETERS].
+  
+     b) The existing TIMEOUT DAYS field (#350.9,51.05) which controls the
+        number of days between when an eIV inquiry is sent to FSC and when
+        the eIV system determines that FSC did not send an eIV response in
+        time.  The value of this existing field is now controlled by FSC
+        through HL7 messages.
+  
+     c) The new RETRY FLAG field (#350.9,51.26) which controls whether
+        VistA will retransmit an eIV inquiry if an eIV response is not
+        received from FSC within the value of the TIMEOUT DAYS
+        (#350.9,51.05).  This flag is controlled by FSC.
+  
+     d) The value of the existing field HL7 RESPONSE PROCESSING
+        (#350.9,51.13) is no longer displayed within the eIV Site
+        Parameters.  The value of this field may no longer be edited using
+        the option MCCR SITE PARAMETER DISPLAY/EDIT [IBJ MCCR SITE
+        PARAMETERS].
+  
+ 7.  Modified VistA's retry methodology (resending inquiries to FSC)
+     so that any payer's eIV response will be considered a final
+     response to the eIV inquiry.  Prior to this change, payer's eIV
+     response could result in an eIV inquiry being resent to the payer
+     (with no modifications to the eIV inquiry) every few days without
+     actually providing an answer to the eligibility inquiry itself.
+  
+ 8.  The option INSURANCE COMPANY ENTRY/EDIT [IBCN INSURANCE CO EDIT] has
+     been locked with the new security key IB INSURANCE COMPANY EDIT.
+  
+ 9.  The ability to add a new group/plan through the option PATIENT
+     INSURANCE INFO VIEW/EDIT [IBCN PATIENT INSURANCE] has been locked
+     with the new security key IB GROUP PLAN EDIT.
+  
+ 10. The option EIV RESPONSE REPORT [IBCNE IIV RESPONSE REPORT] has been
+     modified to include the associated eligibility benefit information.
+  
+ 11. For the following options, the display of eligibility benefits has
+     been modified with this patch to include a summary of key elements of
+     data when available.  This summary will contain the Coverage Status
+     and Coverage Type for all payers that send this information in their
+     eIV response. When the software determines that the eIV eligibility
+     data from Medicare payers indicate possible other insurance for that
+     patient, this information will be included in the summary of key data
+     elements. This change to the display of eligibility information
+     applies to the following options:
+  
+  
+     a) PROCESS INSURANCE BUFFER [IBCN INSURANCE BUFFER PROCESS]
+  
+     b) PATIENT INSURANCE INFO VIEW/EDIT [IBCN PATIENT INSURANCE]
+  
+     c) EIV RESPONSE REPORT [IBCNE IIV RESPONSE REPORT]
+  
+     d) THIRD PARTY JOINT INQUIRY [IBJ THIRD PARTY JOINT INQUIRY]
+  
+ 12. The EIV STATISTICAL REPORT [IBCNE IIV STATISTICAL REPORT] was modified
+     to include 'Escalated' records in the insurance buffer breakout of the
+     eIV symbols.
+  
+ 13. Increased the length of field ORIGINAL SUBSCRIBER ID (#365.1,1.05)
+     from 20 to 80 characters.
+  
+ 14. Increased the length of field HL7 SUBSCRIBER ID FIELD (#365.1,.16)
+     from 20 to 80 characters.
+  
+ Patch Components
+ ================
+  
+  
+ Files & Fields Associated:
+  
+ File Name (#)                                             New/Modified/
+   Sub-file Name (#)   Field Name (Number)                   Deleted
+ -------------------   ---------------------------------   -------------
+ PATIENT (#2)                                              Modified
+   INSURANCE TYPE sub-file (#2.312)                        Modified
+                       REQUESTED SERVICE DATE (#8.01)      New
+                       REQUESTED SERVICE TYPE (#8.02)      New
+ IB SITE PARAMETERS (#350.9)                               Modified
+                       RETRY FLAG (#51.26)                 New
+ INSURANCE VERIFICATION PROCESSOR (#355.33)                Modified
+                       DATE ENTERED (#.01)                 Modified
+ IIV STATUS TABLE (#365.15)                                Modified
+                       CODE (#.01)                         Modified
+ IIV TRANSMISSION QUEUE (#365.1)                           Modified
+                       HL7 SUBSCRIBER ID FIELD (#.16)      Modified
+                       ORIGINAL SUBSCRIBER ID (#1.05)      Modified
+  
+  
+  
+ Mail Groups Associated:
+                                                           New/Modified/
+ Mail Group Name                                             Deleted    
+ ---------------                                           -------------
+ N/A
+  
+  
+  
+ Options Associated:
+                                                           New/Modified/
+ Option Name                  Type                           Deleted    
+ -----------                  ----                         -------------
+ IBCN INSURANCE CO EDIT       run routine                  Modified 
+  
+  
+  
+ Protocols Associated:
+                                                           New/Modified/
+ Protocol Name                                               Deleted    
+ -------------                                             -------------
+ IBCNB ENTRY ESCALATE                                      New 
+ IBCNB ENTRY SCREEN MENU                                   Modified 
+ IBCNB ENTRY VERIFY                                        Delete 
+ IBCNB LIST APPOINTMENTS VIEW                              Delete 
+ IBCNB LIST COMPLETE VIEW                                  New 
+ IBCNB LIST FAILURE VIEW                                   New 
+ IBCNB LIST SCREEN MENU                                    Modified 
+  
+  
+ Security Keys Associated:
+                                                           New/Modified/
+ Security Key Name                                           Deleted    
+ -----------------                                         -------------
+ IB GROUP PLAN EDIT                                        New 
+ IB INSURANCE COMPANY EDIT                                 New 
+  
+  
+ Templates, Input Associated:
+                                                           New/Modified/
+ Template Name      Type      File Name (Number)             Deleted    
+ -------------      ----      ------------------           -------------
+ IBCNE GENERAL      Input     IB SITE PARAMETERS (#350.9)  Modified 
+ PARAMETER EDIT                                            
+  
+  
+ Templates, List Associated:
+                                                           New/Modified/
+ TEMPLATE Name                        Type                   Deleted
+ -------------                        ----                 -------------
+ IBCNB INSURANCE BUFFER ENTRY         List                 Modified
+ IBCNB INSURANCE BUFFER LIST          List                 Modified
+  
+  
+ Additional Information:
+  
+ New Service Requests (NSRs)
+ ----------------------------  
+ #20110503  Electronic Data Interchange (EDI) New Standards and Operating
+ Rules (Veterans Health Administration) VHA Provider-Side TCRs.
+  
+  
+ Patient Safety Issues (PSIs)
+ -----------------------------
+ N/A
+  
+  
+ Remedy Ticket(s) & Overview
+ ---------------------------
+ N/A
+  
+  
+ Test Sites:
+ ----------
+ Wilmington, DE 
+ Madison, WI
+ Memphis, TN
+ Denver, CO (East Colorado HCS)
+  
+  
+ Documentation Retrieval Instructions
+ ------------------------------------ 
+ Updated documentation describing the new functionality introduced by this 
+ patch is available.
+  
+ The preferred method is to File Transfer Protocol (FTP) the files from 
+ ftp://download.vista.domain.ext/.  This transmits the files from the first
+ available FTP server. Sites may also elect to retrieve software directly
+ from a specific server as follows:
+  
+  Albany         ftp.domain.ext  <ftp://ftp.domain.ext>
+  Hines          ftp.domain.ext   <ftp://ftp.domain.ext>
+  Salt Lake City ftp.domain.ext     <ftp://ftp.domain.ext>
+  
+ Documentation can also be found on the VA Software Documentation Library 
+ at:
+ http://www4.domain.ext/vdl/
+  
+ Title                                File Name               FTP Mode
+ -----------------------------------------------------------------------
+ IB eIV System Modification Compliance
+  Release Notes/Installation Guide
+  (IB*2.0*506)                        ib_2_p506_rn.pdf        Binary
+  
+ Electronic Insurance Verification
+  User Guide                          ib_2_0_eIV_ug_r0514.pdf    Binary
+  
+ Electronic Insurance Verification
+  Technical Manual/Security Guide     ib_2_0_eIV_tm_r0514.pdf    Binary
+  
+ Integrated Billing (IB) V. 2.0
+  Technical Manual                    ib_2_0_tm_r0514.pdf        Binary
+  
+  
+  
+  
+ Patch Installation:
+                        
+  
+ Pre/Post Installation Overview
+ ------------------------------
+ Two new security keys were added as a result of this patch.  These keys
+ need to be assigned to the appropriate folks as determined by the site.
+  
+  a) The security key IB INSURANCE COMPANY EDIT is to be assigned to users
+     who are authorized to add new insurance companies in VistA.
+  
+  b) The security key IB GROUP PLAN EDIT is to be assigned to users who are
+     authorized to add new group plans and individual plans in VistA.
+  
+  
+ There is a post install routine, IBY506PO that is included in this patch.
+ After the patch has been installed the post install routine may be deleted
+ by the site.
+  
+ 1.  Initializes several eIV site Parameters
+  
+ 2.  Loops through the IIV TRANSMISSION QUEUE file (#365.1) and performs
+     the following for all entries with a TRANSMISSION STATUS (#365.1,.04)
+     that has a value of HOLD.
+  
+     a) Changes the TRANSMISSION STATUS (#365.1,.04) to COMMUNICATION
+        FAILURE.
+  
+     b) Identifies all associated entries in the IIV RESPONSE file (#365)
+        and changes the TRANSMISSION STATUS (#365,.06) to COMMUNICATION
+        FAILURE unless it currently has the status of RESPONSE RECEIVED.
+  
+     c) Identifies any associated insurance buffer entry and changes the
+        eIV symbol to be "#" and indicate that a communication failure
+        occurred.
+  
+  
+ 3.  Adds two new entries to the existing IIV STATUS TABLE (#365.15)
+  
+ 4.  A one-time subscriber update utility must be scheduled upon 
+     installation of the patch. Unless the installation is queued, the 
+     post-install will prompt the installer of the patch to schedule this
+     activity for off-hours.  If the installation is queued, the new update
+     utility will be scheduled for tomorrow at 9 PM.  NOTE: This part of 
+     the process does NOT require that IB users be off the system, or 
+     un-scheduling of the eIV Nightly Process [IBCNE IIV BATCH PROCESS] 
+     option.  A message will be sent to the MailMan mailbox of the installer,
+     upon successful completion of the subscriber update process.  It is 
+     recommended that one look for the MailMan message 24 hours after the 
+     process is scheduled to run.
+  
+     The subject of the message will be "Subscriber Update Has Completed".
+  
+  
+ Installation Instructions
+ -------------------------
+ This patch may be installed with users on the system although it is 
+ *strongly* recommended that it be installed during non-peak hours to 
+ minimize potential disruption to users.  This patch should take less 
+ than 5 minutes to install.
+  
+ The following Menu Options at the site should be disabled during
+ install:
+  
+   PROCESS INSURANCE BUFFER [IBCN INSURANCE BUFFER PROCESS]
+   MCCR SITE PARAMETER DISPLAY/EDIT [IBJ MCCR SITE PARAMETERS]
+   INSURANCE COMPANY ENTRY/EDIT [IBCN INSURANCE CO EDIT]
+   PATIENT INSURANCE INFO VIEW/EDIT [IBCN PATIENT INSURANCE]
+   EIV RESPONSE REPORT [IBCNE IIV RESPONSE REPORT]
+   THIRD PARTY JOINT INQUIRY [IBJ THIRD PARTY JOINT INQUIRY]
+  
+  
+ Pre-Installation Instructions
+ -----------------------------
+  
+ 1.  Choose the PackMan message containing this patch.
+  
+ 2.  Choose the INSTALL/CHECK MESSAGE PackMan option.  
+  
+ 3.  From the Kernel Installation and Distribution System Menu, select
+     the Installation Menu.  From this menu, you may elect to use the
+     following option. When prompted for the INSTALL enter the patch 
+     IB*2.0*506:
+  
+     a.  Backup a Transport Global - This option will create a backup
+         message of any routines exported with this patch. It will not
+         backup any other changes such as Data Dictionaries (DD's) or
+         templates.
+     b.  Compare Transport Global to Current System - This option will
+         allow you to view all changes that will be made when this patch
+         is installed.  It compares all components of this patch
+         (routines, DD's, templates, etc.).
+     c.  Verify Checksums in Transport Global - This option will allow
+         you to ensure the integrity of the routines that are in the
+         transport global.
+      
+ 4.  From the Installation Menu, select the Install Package(s) option and
+     choose the patch to install.
+  
+ 5.  355.33    INSURANCE VERIFICATION PROCESSOR  (Partial Definition)
+     *BUT YOU ALREADY HAVE 'INSURANCE BUFFER' AS FILE #355.33!
+     Shall I write over your INSURANCE BUFFER File? YES//
+  
+ 6.  When prompted 'Want KIDS to Rebuild Menu Trees Upon Completion of
+     Install? YES//YES'     
+     **************************IMPORTANT*******************************
+     You must answer 'Yes' to the Want KIDS to Rebuild Menu Trees Upon 
+     Completion of Install? YES//' prompt.
+     Failure to do so will cause the Insurance Buffer to not function
+     properly until the rebuild runs at night.
+     ******************************************************************
+  
+ 7.  When prompted 'Want KIDS to INHIBIT LOGONs during the install?
+     NO//'
+  
+ 8.  When prompted 'Want to DISABLE Scheduled Options, Menu Options, 
+     and Protocols? YES//YES' 
+  
+       When prompted 'Enter options you wish to mark as 'Out Of Order':
+           Enter the following options one at a time:
+  
+          PROCESS INSURANCE BUFFER [IBCN INSURANCE BUFFER PROCESS]
+          MCCR SITE PARAMETER DISPLAY/EDIT [IBJ MCCR SITE PARAMETERS]
+          INSURANCE COMPANY ENTRY/EDIT [IBCN INSURANCE CO EDIT]
+          PATIENT INSURANCE INFO VIEW/EDIT [IBCN PATIENT INSURANCE]
+          EIV RESPONSE REPORT [IBCNE IIV RESPONSE REPORT]
+          THIRD PARTY JOINT INQUIRY [IBJ THIRD PARTY JOINT INQUIRY]
+  
+      When prompted 'Enter protocols you wish to mark as 'Out Of Order':
+          Press the Return or Enter key as there are no protocols that
+          needs to be marked as 'Out of Order'.
+  
+ 9. If prompted "Delay Install (minutes):  (0 - 60): 0// respond 0.
+  
+ 10. There is no need to queue the install.  At the 'DEVICE' prompt, hit 
+     the return key which will enable the Install to run in the foreground.  
+     a '^' to abort the install.
+  
+     DEVICE: HOME//
+  
+ 11. A one-time subscriber update utility must be scheduled upon 
+     installation of the patch. During installation, the post-install
+     routine prompts for the installer to schedule the one time subscriber
+     update utility and will not complete installation until it is
+     scheduled.
+  
+ The following shows an example of the message and then the date/time prompt 
+ that is generated:
+  
+ Creating Task to Update the Insurance Type File... 
+ *************************** IMPORTANT!! ********************************
+ This option will scan through the entire Patient File for patients with 
+ insurance where the relationship to insured is self.  Certain fields in 
+ Insurance Type sub-file will be updated to match the patient data if it 
+ does not already exist.  This will take a while and must be queued to run
+ in the background when there are few users on the system. The default is
+ tomorrow at 9:00 p.m.
+  
+ Enter date/time to queue the option: T+1@2100//
+  
+  
+ Post-Installation Instructions
+ ------------------------------
+ 1. Two new security keys were added as a result of this patch.  These keys
+    need to be assigned to the appropriate folks as determined by the site.
+  
+  a. The security key IB INSURANCE COMPANY EDIT is to be assigned to users
+     who are authorized to add new insurance companies in VistA and/or
+     users who currently have the IB EDI INSURANCE EDIT security key
+     assigned to them.
+  
+  b. The security key IB GROUP PLAN EDIT is to be assigned to users who are
+     authorized to add new group plans and individual plans in VistA.
+  
+ 2. A message will be sent to the MailMan mailbox of the installer,
+    upon successful completion of the subscriber update process.  It is 
+    recommended that one look for the MailMan message 24 hours after the 
+    process is scheduled to run.
+  
+    The subject of the message will be "Subscriber Update Has Completed".
+  
+  
+ 3. There is a post install routine, IBY506PO that is included in this
+    patch.  After the patch has been installed the post install routine may
+    be deleted by the site.
+
+Routine Information:
+====================
+The second line of each of these routines now looks like:
+ ;;2.0;INTEGRATED BILLING;**[Patch List]**;21-MAR-94;Build 74
+
+The checksums below are new checksums, and
+ can be checked with CHECK1^XTSUMBLD.
+
+Routine Name: IBCNBAA
+    Before: B67963575   After: B75234738  **82,184,246,416,506**
+Routine Name: IBCNBLA
+    Before: B65832730   After: B68621473  **82,149,153,184,271,416,506**
+Routine Name: IBCNBLA1
+    Before: B83105620   After:B100917255  **82,133,149,184,252,271,416,
+                                           438,506**
+Routine Name: IBCNBLL
+    Before:B101908545   After:B138729075  **82,149,153,183,184,271,345,
+                                           416,438,435,506**
+Routine Name: IBCNEDE2
+    Before: B60928994   After: B63879348  **184,271,249,345,416,438,506**
+Routine Name: IBCNEDE6
+    Before: B32414593   After: B33816621  **184,271,345,416,497,506**
+Routine Name: IBCNEDEP
+    Before: B86075479   After: B83976754  **184,271,300,416,438,506**
+Routine Name: IBCNEDST
+    Before: B52803166   After: B47395616  **497,506**
+Routine Name: IBCNEHL1
+    Before:B206919324   After:B215626728  **300,345,416,444,438,497,506**
+Routine Name: IBCNEHL3
+    Before:B168485042   After:B171692667  **300,416,497,506**
+Routine Name: IBCNEHL4
+    Before:B174356077   After:B174792299  **300,416,438,497*506**
+Routine Name: IBCNEHLM
+    Before: B26579443   After: B28096778  **184,251,300,416,438,497,506**
+Routine Name: IBCNEHLT
+    Before: B77895122   After: B80145618  **184,251,271,300,416,438,506**
+Routine Name: IBCNERP8
+    Before: B66453982   After: B75472595  **184,271,345,416,506**
+Routine Name: IBCNERP9
+    Before:B102330381   After:B103562066  **184,271,416,506**
+Routine Name: IBCNERPE
+    Before: B60593817   After: B65900140  **271,300,416,438,497,506**
+Routine Name: IBCNES
+    Before: B28429551   After: B63081036  **416,438,497,506**
+Routine Name: IBCNEUT1
+    Before: B35326232   After: B44078437  **184,497,506**
+Routine Name: IBCNSJ12
+    Before: B20812349   After: B21606758  **28,62,142,506**
+Routine Name: IBCNSJ3
+    Before: B17659726   After: B19317542  **28,497,506**
+Routine Name: IBCNSM3
+    Before: B14041849   After: B14271242  **6,28,85,211,251,399,506**
+Routine Name: IBCNSUR
+    Before: B23131946   After: B24160231  **103,276,506**
+Routine Name: IBCNUPD
+    Before: B15205533   After: B19970193  **497,506**
+Routine Name: IBJPI
+    Before: B21978399   After: B19548396  **184,271,316,416,438,479,506**
+Routine Name: IBY506PO
+    Before:       n/a   After: B23493376  **506**
+
+=============================================================================
+User Information:
+Entered By  :                               Date Entered  : JUL 15, 2013
+Completed By:                               Date Completed: JUN 06, 2014
+Released By :                               Date Released : JUL 24, 2014
+=============================================================================
+
+
+Packman Mail Message:
+=====================
+
+$END TXT
