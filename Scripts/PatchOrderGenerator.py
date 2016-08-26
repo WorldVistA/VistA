@@ -436,6 +436,10 @@ class PatchOrderGenerator(object):
       patchInfo = PatchInfo()
       patchInfo.installName = kidsInstallName
       setPatchInfoFromInstallName(kidsInstallName, patchInfo)
+      if kidsInstallName in self._kidsInstallNameSha1Dict:
+        sha1Path = self._kidsInstallNameSha1Dict[kidsInstallName]
+        patchInfo.kidsSha1Path = sha1Path
+        patchInfo.kidsSha1 = readSha1SumFromSha1File(sha1Path)
       if kidsInstallName in self._installNameSeqMap:
         patchInfo.seqNo = self._installNameSeqMap[kidsInstallName]
       patchInfo.kidsFilePath = self._kidsInstallNameDict[kidsInstallName]
