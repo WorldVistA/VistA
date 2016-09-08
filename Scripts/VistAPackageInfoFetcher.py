@@ -758,7 +758,7 @@ def main():
     print "the latest version is [%s]" % ver
     output = packagePatchHist.getAllPatchesInstalledByTime(datetime(2012,8,24))
     pprint.pprint(output)
-    output = packagePatchHist.getAllPatchInstalledAfterByTime("T-365")
+    output = packagePatchHist.getAllPatchInstalledAfterByTime("T-1000")
     pprint.pprint(output)
 
 

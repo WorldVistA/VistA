@@ -28,6 +28,7 @@ import bisect
 import argparse
 import shutil
 import csv
+import json
 
 from datetime import datetime, date, time
 from LogManager import logger
@@ -47,6 +48,12 @@ GLOBAL_VARIABLE_SECTION_HEADER_LIST = [
       '''Line Occurrences &nbsp;(* Changed, &nbsp;! Killed)''']
 FILENO_FILEMANDB_SECTION_HEADER_LIST = [
      "FileNo",
+      '''Call Tags''']
+RPC_REFERENCE_SECTION_HEADER_LIST = [
+     "RPC Name",
+      '''Call Tags''']
+HL7_REFERENCE_SECTION_HEADER_LIST = [
+     "HL7 Protocol Name",
       '''Call Tags''']
 DEFAULT_VARIABLE_SECTION_HEADER_LIST = ["Name", "Line Occurrences"]
 LINE_TAG_PER_LINE = 10
@@ -360,7 +367,7 @@ def writeSubSectionHeader(headerName, outputFile):
 # class to generate the web page based on input
 class WebPageGenerator:
     def __init__(self, crossReference, outDir, repDir, docRepDir, gitPath,
-                 includeSource=False):
+                 includeSource=False, rtnJson=None):
         self._crossRef = crossReference
         self._allPackages = crossReference.getAllPackages()
         self._allRoutines = crossReference.getAllRoutines()
@@ -376,6 +383,8 @@ class WebPageGenerator:
         self._dotPath = ""
         self._includeSource = includeSource
         self.__initWebTemplateFile__()
+        with open(rtnJson, 'r') as jsonFile:
+            self._rtnRefJson = json.load(jsonFile)
 
     def __initWebTemplateFile__(self):
         #load _header and _footer in the memory
@@ -1413,8 +1422,7 @@ class WebPageGenerator:
         #do not generate graph if no dep routines, totalDep routines > max_dependency_list
         if (not depRoutines
             or len(depRoutines) == 0
-            or  totalDep > MAX_DEPENDENCY_LIST_SIZE
-            or len(depRoutines) == 1):
+            or  totalDep > MAX_DEPENDENCY_LIST_SIZE):
             logger.debug("No called Routines found! for routine:%s package:%s" % (routineName, packageName))
             return
         try:
@@ -1523,11 +1531,11 @@ class WebPageGenerator:
     def generatePackageDependencySection(self, packageName, outputFile, isDependencyList=True):
         if isDependencyList:
             sectionGraphHeader = "Dependency Graph"
-            sectionListHeder = "Package Dependency List"
+            sectionListHeader = "Package Dependency List"
             packageSuffix = "_dependency"
         else:
             sectionGraphHeader = "Dependent Graph"
-            sectionListHeder = "Package Dependent List"
+            sectionListHeader = "Package Dependent List"
             packageSuffix = "_dependent"
         fileNamePrefix = normalizePackageName(packageName) + packageSuffix
         # write the image of the dependency graph
@@ -1551,8 +1559,8 @@ class WebPageGenerator:
         totalPackages = 0
         if depPackages:
             totalPackages = len(depPackages)
-        writeSectionHeader("%s Total: %d " % (sectionListHeder, totalPackages),
-                           sectionListHeder,
+        writeSectionHeader("%s Total: %d " % (sectionListHeader, totalPackages),
+                           sectionListHeader,
                            outputFile)
         outputFile.write("""<h4>Format:&nbsp;&nbsp;
                             package[# of caller routines(R):
@@ -1699,75 +1707,23 @@ class WebPageGenerator:
             depRoutines = routine.getCalledRoutines()
             sectionGraphHeader = "Call Graph"
             sectionListHeader = "Called Routines"
-            tableHeaderText = "Called Routines"
-            routineSuffix = "_called"
             totalNum = routine.getTotalCalled()
         else:
             depRoutines = routine.getCallerRoutines()
             sectionGraphHeader = "Caller Graph"
             sectionListHeader = "Caller Routines"
             routineSuffix = "_caller"
-            tableHeaderText = "Caller Routines"
             totalNum = routine.getTotalCaller()
-        fileNamePrefix = routineName + routineSuffix
-        writeSectionHeader(sectionGraphHeader, sectionGraphHeader, outputFile)
-        if totalNum > 0:
-            # write the image of the caller graph
-            try:
-                fileName = os.path.join(self._outDir, packageName + "/" + fileNamePrefix + ".cmapx")
-                cmapFile = open(os.path.join(self._outDir, packageName + "/" + fileNamePrefix + ".cmapx"), 'r')
-                outputFile.write("<div class=\"contents\">\n")
-                outputFile.write("<img src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
-                           % (urllib.quote(packageName + "/" + fileNamePrefix + ".gif"),
-                              sectionGraphHeader,
-                              fileNamePrefix))
-                #append the content of map outputFile
-                for line in cmapFile:
-                    outputFile.write(line)
-                outputFile.write("</div>\n")
-            except IOError:
-                pass
-            writeSectionHeader("%s Total: %d" % (sectionListHeader, totalNum),
-                               sectionListHeader,
-                               outputFile)
-            outputFile.write("<div class=\"contents\"><table>\n")
-            outputFile.write("<tr><th class=\"indexkey\">Package</th>")
-            outputFile.write("<th class=\"indexvalue\">Total</th>")
-            outputFile.write("<th class=\"indexvalue\">%s</th></tr>\n" % tableHeaderText)
-            # sort the key by Total # of routines
-            sortedDepRoutines = sorted(sorted(depRoutines.keys()),
-                                     key=lambda item: len(depRoutines[item]),
-                                     reverse=True)
-            for depPackage in sortedDepRoutines:
-                routinePackageLink = getPackageHyperLinkByName(depPackage.getName())
-                routineNameLink = ""
-                index = 0
-                for depRoutine in sorted(depRoutines[depPackage].keys()):
-                    if dependencyList: # append tag information for called routines
-#                            allTags = filter(len, depRoutines[depPackage][depRoutine].iterkeys())
-                        allTags = depRoutines[depPackage][depRoutine].keys()
-                        sortedTags = sorted(allTags)
-                        # format the tag
-                        tagString = ""
-                        if len(sortedTags) > 1:
-                            tagString = "("
-                        idx = 0
-                        for tag in sortedTags:
-                            if idx > 0:
-                                tagString += ","
-                            idx += 1
-                            tagString += tag
-                        if len(sortedTags) > 1:
-                            tagString += ")"
-                        routineNameLink += tagString + "^"
-                    routineNameLink += getRoutineHypeLinkByName(depRoutine.getName())
-                    routineNameLink += "&nbsp;&nbsp;"
-                    if (index + 1) % 8 == 0:
-                        routineNameLink += "<BR>"
-                    index += 1
-                outputFile.write("<tr><td class=\"indexkey\">%s</td><td class=\"indexvalue\">%d</td><td class=\"indexvalue\">%s</td></tr>\n"
-                           % (routinePackageLink, len(depRoutines[depPackage]), routineNameLink))
-            outputFile.write("</table>\n</div>\n")
+        if not depRoutines:
+          return
+        self.__writeRoutineDepGraphSection__(routine, depRoutines,
+                                             sectionGraphHeader,
+                                             sectionGraphHeader,
+                                             outputFile, dependencyList)
+        self.__writeRoutineDepListSection__(routine, depRoutines,
+                                            sectionListHeader,
+                                            sectionListHeader,
+                                            outputFile, dependencyList)
 #===============================================================================
 # Method to generate routine variables sections such as Local Variables, Global Variables
 #===============================================================================
@@ -1776,6 +1732,22 @@ class WebPageGenerator:
         writeSectionHeader(sectionTitle, sectionTitle, outputFile)
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
+    def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
+      return ("http://code.osehra.org/Prod/Visual/files/%s-%s.html" % (fileNo,
+            ien))
+    def __convertRPCDataReference__(self, variables):
+        return self.__convertRtnDataReference__(variables, '8994')
+    def __convertHL7DataReference__(self, variables):
+        return self.__convertRtnDataReference__(variables, '101')
+    def __convertRtnDataReference__(self, variables, fileNo):
+        output = []
+        for item in variables:
+            detailLink = self.__getDataEntryDetailHtmlLink__(fileNo,
+                item['ien'])
+            name = "<a href=\"%s\">%s</a>" % (detailLink, item['name'])
+            tag = item.get('tag', "")
+            output.append((name, tag))
+        return output
     def __convertVariableToTableData__(self, variables, isGlobal = False):
         output = []
         allVars = sorted(variables.iterkeys())
@@ -1846,18 +1818,233 @@ class WebPageGenerator:
 #===============================================================================
 # Method to generate individual routine page
 #===============================================================================
+    def __getRpcReferences__(self, rtnName):
+        return self.__getRtnDataFileRefs__(rtnName, '8994')
+    def __getHl7References__(self, rtnName):
+        return self.__getRtnDataFileRefs__(rtnName, '101')
+    def __getRtnDataFileRefs__(self, rtnName, fileNo):
+        if self._rtnRefJson and rtnName in self._rtnRefJson:
+          refFilesJson = self._rtnRefJson[rtnName]
+          return refFilesJson.get(fileNo)
+        return None
+    def __writeRoutineInfoSection__(self, routine, data, header, link, outputFile):
+        writeSectionHeader(header, link, outputFile)
+        for comment in data:
+            outputFile.write("<p><span class=\"information\">%s</span></p>\n" % comment)
+    def __writeRoutineSourceSection__(self, routine, data, header, link, outputFile):
+        writeSectionHeader(header, link, outputFile)
+        outputFile.write("<p><span class=\"information\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>\n" %
+                         (getRoutineSourceHtmlFileName(routine.getOriginalName()),
+                          routine.getOriginalName()))
+    def __writeRoutineVariableSection__(self, routine, data, header, link,
+                                        outputFile, tableHeader, convFunc):
+        self.generateRoutineVariableSection(outputFile, header,
+                                            tableHeader, data, convFunc)
+    def __writeRoutineDepGraphSection__(self, routine, data, header, link,
+                                        outputFile, isDependency=True):
+        writeSectionHeader(header, link, outputFile)
+        routineName = routine.getName()
+        packageName = routine.getPackage().getName()
+        if isDependency:
+          routineSuffix = "_called"
+        else:
+          routineSuffix = "_caller"
+        fileNamePrefix = routineName + routineSuffix
+        fileName = os.path.join(self._outDir,
+                                packageName + "/" + fileNamePrefix + ".cmapx")
+        if not os.path.exists(fileName):
+          logging.warn("Can not find file %s" % fileName)
+          return
+        outputFile.write("<div class=\"contents\">\n")
+        outputFile.write("<img src=\"%s\" border=\"0\" alt=\"%s\" usemap=\"#%s\"/>\n"
+                   % (urllib.quote(packageName + "/" + fileNamePrefix + ".gif"),
+                      header,
+                      fileNamePrefix))
+        #append the content of map outputFile
+        with open(fileName, 'r') as cmapFile:
+          for line in cmapFile:
+              outputFile.write(line)
+        outputFile.write("</div>\n")
+    def __writeRoutineDepListSection__(self, routine, data, header, link,
+                                       outputFile, isDependency=True):
+      if isDependency:
+          totalNum = routine.getTotalCalled()
+      else:
+          totalNum = routine.getTotalCaller()
+      writeSectionHeader("%s Total: %d" % (header, totalNum),
+                         header,
+                         outputFile)
+      outputFile.write("<div class=\"contents\"><table>\n")
+      outputFile.write("<tr><th class=\"indexkey\">Package</th>")
+      outputFile.write("<th class=\"indexvalue\">Total</th>")
+      outputFile.write("<th class=\"indexvalue\">%s</th></tr>\n" % header)
+      # sort the key by Total # of routines
+      sortedDepRoutines = sorted(sorted(data.keys()),
+                               key=lambda item: len(data[item]),
+                               reverse=True)
+      for depPackage in sortedDepRoutines:
+          routinePackageLink = getPackageHyperLinkByName(depPackage.getName())
+          routineNameLink = ""
+          index = 0
+          for depRoutine in sorted(data[depPackage].keys()):
+              if isDependency: # append tag information for called routines
+#                            allTags = filter(len, depRoutines[depPackage][depRoutine].iterkeys())
+                  allTags = data[depPackage][depRoutine].keys()
+                  sortedTags = sorted(allTags)
+                  # format the tag
+                  tagString = ""
+                  if len(sortedTags) > 1:
+                      tagString = "("
+                  idx = 0
+                  for tag in sortedTags:
+                      if idx > 0:
+                          tagString += ","
+                      idx += 1
+                      tagString += tag
+                  if len(sortedTags) > 1:
+                      tagString += ")"
+                  routineNameLink += tagString + "^"
+              routineNameLink += getRoutineHypeLinkByName(depRoutine.getName())
+              routineNameLink += "&nbsp;&nbsp;"
+              if (index + 1) % 8 == 0:
+                  routineNameLink += "<BR>"
+              index += 1
+          outputFile.write("<tr><td class=\"indexkey\">%s</td><td class=\"indexvalue\">%d</td><td class=\"indexvalue\">%s</td></tr>\n"
+                     % (routinePackageLink, len(data[depPackage]), routineNameLink))
+      outputFile.write("</table>\n</div>\n")
     def __generateIndividualRoutinePage__(self, routine, platform=None):
         assert routine
-        indexList = ["Info", "Source", "Call Graph", "Called Routines",
-                     "Caller Graph", "Caller Routines", "Global Variables Directly Accessed",
-                     "FileMan Files Accessed Via FileMan Db Call", "External References",
-                     "Label References", "Naked Globals", "Local Variables", "Marked Items"]
         routineName = routine.getName()
+        """ This is a list sections that might be applicable to a routine
+        """
+        sectionGenLst = [
+           # Name section
+           {
+             "name": "Info", # this is also the link name
+             "header" : "Information", # this is the actual display name
+             "data" : routine.getComment, # the data source
+             "generator" : self.__writeRoutineInfoSection__, # section generator
+           },
+           # Source section
+           {
+             "name": "Source", # this is also the link name
+             "header" : "Source Code", # this is the actual display name
+             "data" : routine.hasSourceCode, # the data source
+             "generator" : self.__writeRoutineSourceSection__, # section generator
+           },
+           # Call Graph section
+           {
+             "name": "Call Graph", # this is also the link name
+             "data" : routine.getCalledRoutines, # the data source
+             "generator" : self.__writeRoutineDepGraphSection__, # section generator
+           },
+           # Called Routines section
+           {
+             "name": "Called Routines", # this is also the link name
+             "data" : routine.getCalledRoutines, # the data source
+             "generator" : self.__writeRoutineDepListSection__, # section generator
+           },
+           # Caller Graph section
+           {
+             "name": "Caller Graph", # this is also the link name
+             "data" : routine.getCallerRoutines, # the data source
+             "generator" : self.__writeRoutineDepGraphSection__, # section generator
+             "geneargs" : [False],
+           },
+           # Caller Routines section
+           {
+             "name": "Caller Routines", # this is also the link name
+             "data" : routine.getCallerRoutines, # the data source
+             "generator" : self.__writeRoutineDepListSection__, # section generator
+             "geneargs" : [False],
+           },
+           # Used in RPC section
+           {
+             "name": "Used in RPC", # this is also the link name
+             "data" : self.__getRpcReferences__, # the data source
+             "dataarg" : [routineName], # extra arguments for data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [RPC_REFERENCE_SECTION_HEADER_LIST,
+                           self.__convertRPCDataReference__], # extra argument
+           },
+           # Used in HL7 Interface section
+           {
+             "name": "Used in HL7 Interface", # this is also the link name
+             "data" : self.__getHl7References__, # the data source
+             "dataarg" : [routineName], # extra arguments for data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [HL7_REFERENCE_SECTION_HEADER_LIST,
+                           self.__convertHL7DataReference__], # extra argument
+           },
+           # FileMan Files Accessed Via FileMan Db Call section
+           {
+             "name": "FileMan Files Accessed Via FileMan Db Call", # this is also the link name
+             "data" : routine.getFilemanDbCallGlobals, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [FILENO_FILEMANDB_SECTION_HEADER_LIST,
+                           self.__convertFileManDbCallToTableData__], # extra argument
+           },
+           # Global Variables Directly Accessed section
+           {
+             "name": "Global Variables Directly Accessed", # this is also the link name
+             "data" : routine.getGlobalVariables, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [GLOBAL_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertGlobalVarToTableData__], # extra argument
+           },
+           # External References section
+           {
+             "name": "External References", # this is also the link name
+             "data" : routine.getExternalReference, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertExternalReferenceToTableData__], # extra argument
+           },
+           # Label References section
+           {
+             "name": "Label References", # this is also the link name
+             "data" : routine.getLabelReferences, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertLableReferenceToTableData__], # extra argument
+           },
+           # Naked Globals section
+           {
+             "name": "Naked Globals", # this is also the link name
+             "data" : routine.getNakedGlobals, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertNakedGlobaToTableData__], # extra argument
+           },
+           # Local Variables section
+           {
+             "name": "Local Variables", # this is also the link name
+             "data" : routine.getLocalVariables, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertVariableToTableData__], # extra argument
+           },
+           # Marked Items section
+           {
+             "name": "Marked Items", # this is also the link name
+             "data" : routine.getMarkedItems, # the data source
+             "generator" : self.__writeRoutineVariableSection__, # section generator
+             "geneargs" : [DEFAULT_VARIABLE_SECTION_HEADER_LIST,
+                           self.__convertMarkedItemToTableData__], # extra argument
+           },
+        ]
         package = routine.getPackage()
         outputFile = open(os.path.join(self._outDir,
                                        getRoutineHtmlFileNameUnquoted(routineName)), 'w')
         self.__includeHeader__(outputFile)
         # generated the qindex bar
+        indexList = []
+        idxLst = []
+        for idx, item in enumerate(sectionGenLst):
+          extraarg = item.get('dataarg', [])
+          if item['data'](*extraarg):
+            indexList.append(item['name'])
+            idxLst.append(idx)
         generateIndexBar(outputFile, indexList)
         outputFile.write("<title>Routine: "+routineName+"</title>")
         outputFile.write("<div class=\"_header\">\n")
@@ -1867,54 +2054,13 @@ class WebPageGenerator:
         if platform:
             routineHeader += "Platform: %s" % platform
         outputFile.write("<h1>%s</h1>\n</div>\n</div><br/>\n" % routineHeader)
-        writeSectionHeader("Information", "Info", outputFile)
-        for comment in routine.getComment():
-            outputFile.write("<p><span class=\"information\">%s</span></p>\n" % comment)
-        writeSectionHeader("Source Code", "Source", outputFile)
-        if routine.hasSourceCode():
-            outputFile.write("<p><span class=\"information\">Source file &lt;<a class=\"el\" href=\"%s\">%s.m</a>&gt;</span></p>\n" %
-                             (getRoutineSourceHtmlFileName(routine.getOriginalName()),
-                              routine.getOriginalName()))
-        else:
-            outputFile.write("<p><span class=\"information\">Source file not available</span></p>\n")
-        self.generateRoutineDependencySection(routine, outputFile, True)
-        self.generateRoutineDependencySection(routine, outputFile, False)
-        self.generateRoutineVariableSection(outputFile,
-                                            "Global Variables Directly Accessed",
-                                            GLOBAL_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getGlobalVariables(),
-                                            self.__convertGlobalVarToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "FileMan Files Accessed Via "
-                                            "FileMan Db call",
-                                            FILENO_FILEMANDB_SECTION_HEADER_LIST,
-                                            routine.getFilemanDbCallGlobals(),
-                                            self.__convertFileManDbCallToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "External References",
-                                            DEFAULT_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getExternalReference(),
-                                            self.__convertExternalReferenceToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "Label References",
-                                            DEFAULT_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getLabelReferences(),
-                                            self.__convertLableReferenceToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "Naked Globals",
-                                            DEFAULT_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getNakedGlobals(),
-                                            self.__convertNakedGlobaToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "Local Variables",
-                                            LOCAL_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getLocalVariables(),
-                                            self.__convertVariableToTableData__)
-        self.generateRoutineVariableSection(outputFile,
-                                            "Marked Items",
-                                            DEFAULT_VARIABLE_SECTION_HEADER_LIST,
-                                            routine.getMarkedItems(),
-                                            self.__convertMarkedItemToTableData__)
+        for idx in idxLst:
+          sectionGen = sectionGenLst[idx]
+          data = sectionGen['data'](*sectionGen.get('dataarg',[]))
+          link = sectionGen['name']
+          header = sectionGen.get('header', link)
+          geneargs = sectionGen.get('geneargs',[])
+          sectionGen['generator'](routine, data, header, link, outputFile, *geneargs)
         outputFile.write("<br/>\n")
         # generated the index bar at the bottom
         generateIndexBar(outputFile, indexList)
@@ -2055,6 +2201,8 @@ if __name__ == '__main__':
                         help='generate routine source code page?')
     parser.add_argument('-lf', '--outputLogFileName', required=False,
                         help='the output Logging file')
+    parser.add_argument('-rj','--rtnJson', help='routine reference in VistA '
+        'Data file in JSON format')
     result = parser.parse_args();
     if not result.outputLogFileName:
         outputLogFile = getTempLogFile()
@@ -2070,7 +2218,8 @@ if __name__ == '__main__':
                                   result.MRepositDir,
                                   doxDir,
                                   result.gitPath,
-                                  result.includeSource)
+                                  result.includeSource,
+                                  result.rtnJson)
     if result.hasDot and result.dotPath:
         webPageGen.setDotPath(result.dotPath)
     webPageGen.generateWebPage()
