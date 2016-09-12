@@ -170,7 +170,7 @@ class DefaultKIDSBuildInstaller(object):
 
   """ Answer all the KIDS install questions
   """
-  def __handleKIDSInstallQuestions__(self, connection):
+  def __handleKIDSInstallQuestions__(self, connection, connection2=None):
     connection.send("Install\r")
     connection.expect("Select INSTALL NAME:")
     connection.send(self._kidsInstallName+"\r")
@@ -247,9 +247,11 @@ class DefaultKIDSBuildInstaller(object):
     return True
 
   """ Do a fresh load and installation """
-  def normalInstallation(self, vistATestClient, reinst=True):
+  def normalInstallation(self, vistATestClient, vistATestClient2=None, reinst=True):
     logger.info("Start installing %s" % self._kidsInstallName)
     connection = vistATestClient.getConnection()
+    if vistATestClient2:
+      connection2 = vistATestClient2.getConnection()
     self.__gotoKIDSMainMenu__(vistATestClient)
     self.__loadKIDSBuild__(connection)
     result = self.__handleKIDSLoadOptions__(connection, reinst)
@@ -262,13 +264,16 @@ class DefaultKIDSBuildInstaller(object):
         self.__printTransportGlobal__(vistATestClient,[self._kidsInstallName],self._tgOutputDir)
       else:
         self.__printTransportGlobal__(vistATestClient,self._multiBuildList,self._tgOutputDir)
-    result = self.__handleKIDSInstallQuestions__(connection)
+    if vistATestClient2:
+      result = self.__handleKIDSInstallQuestions__(connection, connection2)
+    else:
+      result = self.__handleKIDSInstallQuestions__(connection)
     if not result:
       result = self.unloadDistribution(vistATestClient, False)
       if not result:
         logger.error("Unload %s failed" % self._kidsInstallName)
         return False
-      return self.normalInstallation(vistATestClient, reinst)
+      return self.normalInstallation(vistATestClient, vistATestClient2, reinst)
     self.__installationCommon__(vistATestClient)
     return True
 
@@ -360,7 +365,7 @@ class DefaultKIDSBuildInstaller(object):
     @reinst: wether re-install the KIDS build, default is False
     @return, True if no error, otherwise False
   """
-  def runInstallation(self, vistATestClient, reinst=False):
+  def runInstallation(self, vistATestClient, vistATestClient2=None, reinst=False):
     connection = vistATestClient.getConnection()
     self.__setupLogFile__(connection)
     infoFetcher = VistAPackageInfoFetcher(vistATestClient)
@@ -375,7 +380,7 @@ class DefaultKIDSBuildInstaller(object):
     self.preInstallationWork(vistATestClient)
     if infoFetcher.isInstallStarted(installStatus):
       return self.restartInstallation(vistATestClient)
-    return self.normalInstallation(vistATestClient, reinst)
+    return self.normalInstallation(vistATestClient,vistATestClient2, reinst)
 
   def __printTGlobalChecksums__(self,testClient,installname,outputDir):
     connection = testClient.getConnection()

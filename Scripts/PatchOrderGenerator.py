@@ -504,9 +504,9 @@ class PatchOrderGenerator(object):
         patchInfo = self._patchInfoDict[installName]
         patchInfo.hasCustomInstaller = True
         if patchInfo.customInstallerPath:
-          logger.warning("Duplicated installer for %s: [%s:%s]" %
+          logger.warning("Duplicated installer for %s: [%s:%s]" % (
                          installName, patchInfo.customInstallerPath,
-                         pythonScript)
+                         pythonScript))
 
         logger.info("%s: custom installer %s" % (pythonScript, installName))
         self._patchInfoDict[installName].customInstallerPath = pythonScript
