@@ -155,11 +155,11 @@ def testDDZWRFile():
   # Find all the word processing multiple
   for file, schema in allSchemaDict.iteritems():
     for field, detail in schema.iteritems():
-      types = detail[1]
-      subFile = detail[-2]
-      if len(types) == 1 and subFile:
+      types = detail['type']
+      subFile = detail['subfile']
+      if types and len(types) == 1 and subFile:
         if subFile in allSchemaDict and '.01' in allSchemaDict[subFile]:
-          subTypes = allSchemaDict[subFile]['.01'][1]
+          subTypes = allSchemaDict[subFile]['.01']['type']
           if len(subTypes) == 1:
             types.extend(subTypes)
 
@@ -167,10 +167,16 @@ def testDDZWRFile():
     print '----------------------------------'
     print "File: %s" % file
     print '----------------------------------'
-    for field, value in schema.iteritems():
-      print ("Field: %s, Name: %s, Type: %s: Specifier: %s, Location: %s, Multiple#: %s, files: %s set: %s" %
-             (field, value[0], value[1], value[2], value[3], value[5], value[4], value[6]))
+    for field, valueDict in schema.iteritems():
+      print ("Field: %s, Name: %s, Type: %s: Specifier: %s,"
+             "Location: %s, Multiple#: %s, files: %s set: %s" %
+             (field, valueDict['name'], valueDict['type'],
+              valueDict['specifier'], valueDict['location'],
+              valueDict['subfile'], valueDict['files'], valueDict['set']))
 
+def parseDataBySchema(dataRoot, schemaRoot):
+  """ first sort the schema Root by location """
+  """ for each data entry, parse data by location """
 def generateSchema(globalRoot):
   """ read the 0 subscript node """
   #print globalRoot["0"].value
@@ -183,6 +189,9 @@ def generateSchema(globalRoot):
   return fileSchema
 
 def parseSchemaField(key, globalRoot):
+  fieldLst = ['name', 'type',
+              'specifier', 'location',
+              'files', 'subfile', 'set']
   if '0' not in globalRoot:
     return None
   item = globalRoot["0"].value
@@ -199,7 +208,7 @@ def parseSchemaField(key, globalRoot):
   location = item[3]
   if item[3].strip(' ') == ';': # No location information
     location = None
-  return [item[0], type, specifier, location, files, subFile, setDict]
+  return dict(zip(fieldLst, [item[0], type, specifier, location, files, subFile, setDict]))
   """ handle extra attributes"""
   if len(item) >= 5 and item[4]:
     inputTrans = ""
