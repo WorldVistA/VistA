@@ -103,22 +103,6 @@ def testGlobalNode():
   print 2 in gn['test']
   printGlobal(gn)
 
-def testRPCZWRFile():
-  inputFileName = "C:/Users/Jason.li/git/VistA-M/Packages/RPC Broker/Globals/8994+REMOTE PROCEDURE.zwr"
-  globalRoot = createGlobalNodeByZWRFile(inputFileName)
-  for key in getKeys(globalRoot["8994"]):
-    rpcRoot = globalRoot['8994'][key]
-    if "0" not in rpcRoot:
-      print ("Data Erorr in %s" % rpcRoot)
-      continue
-    rpcName = rpcRoot["0"].value[0]
-    print '----------------------------------------'
-    print "Print RPC Call %s" % key
-    print '----------------------------------------'
-    printRPCEntry(rpcRoot)
-    #if rpcName.startswith('OR') or rpcName.startswith('OCX'):
-    #  pass
-
 def getKeys(globalRoot, func=int):
   outKey = []
   for key in globalRoot:
@@ -136,7 +120,7 @@ def createGlobalNodeByZWRFile(inputFileName):
       if idx <=1:
         continue
       line = line.strip('\r\n')
-      if idx == 2: globalRoot = GlobalNode(line[:line.find('(')-1])
+      if idx == 2: globalRoot = GlobalNode(subscript=line[:line.find('(')-1])
       createGlobalNode(line, globalRoot)
   return globalRoot
 
@@ -412,83 +396,6 @@ def parseFieldTypeSpecifier(typeField):
         specifier.append(specif)
   return types, specifier, files, subFile
 
-class KeyValueMap(object):
-  def __init__(self, key, valueMap=None):
-    self.key = key
-    self.valueMap = valueMap
-  def apply(self, value):
-    if self.valueMap and value in self.valueMap:
-      return self.valueMap[value]
-    return value
-
-YesNoMap = {'0': 'No', '1': 'Yes'}
-YESNOMAP = {'0': 'NO', '1': 'YES'}
-TRUEFALSEMAP = {'0': 'FALSE', '1': 'TRUE'}
-ZERO_LOC_LIST = (
-    KeyValueMap("NAME"), KeyValueMap("TAG"),
-    KeyValueMap("ROUTINE"), KeyValueMap("RETURN VALUE TYPE",
-                                       {'1': 'SINGLE VALUE',
-                                        '2': 'ARRAY',
-                                        '3': 'WORD PROCESSING',
-                                        '4': 'GLOBAL ARRAY',
-                                        '5': 'GLOBAL INSTANCE',
-                                       }),
-    KeyValueMap("AVAILABILITY", {'P': 'PUBLIC',
-                                 'S': 'SUBSCRIPTION',
-                                 'A': 'AGREEMENT',
-                                 'R': 'RESTRICTED'}),
-    KeyValueMap("INACTIVE", {'0': 'ACTIVE',
-                             '1': 'INACTIVE',
-                             '2': 'LOCAL INACTIVE(ACTIVE REMOTELY)',
-                             '3': 'REMOTE INACTIVE(ACTIVE LOCALLY)'}),
-    KeyValueMap("CLIENT MANAGER", YESNOMAP),
-    KeyValueMap("WORD WRAP ON", TRUEFALSEMAP),
-    KeyValueMap("VERSION"),
-    KeyValueMap("SUPPRESS RDV USER SETUP",YesNoMap),
-    KeyValueMap("APP PROXY ALLOWED", YesNoMap) )
-
-INPUT_PARAMETER_LIST = (
-  KeyValueMap("INPUT PARAMETER"),
-  KeyValueMap("PARAMETER TYPE",
-             {'1': 'LITERAL', '2': 'LIST', '3': 'WORD PROCESSING', '4': 'REFERENCE'}),
-  KeyValueMap("MAXUMUM DATA LENGTH"),
-  KeyValueMap("REQUIRED", YESNOMAP),
-  KeyValueMap("SEQUENCE NUMBER"),
-)
-
-
-def parseMapValue(value, mapLst):
-  locMap = zip([x.key for x in mapLst], value)
-  for idx, (name, value) in enumerate(locMap):
-    if mapLst[idx].valueMap:
-      locMap[idx] = (name, mapLst[idx].apply(value))
-  return locMap
-
-def printRPCEntry(globalNode):
-  # pass the rpc call detail by schema
-  value = globalNode["0"].value
-  print parseMapValue(value, ZERO_LOC_LIST)
-  """ parsing description """
-  if "1" in globalNode:
-    print "Description:"
-    parsingWordProcessingNode(globalNode["1"])
-  """ parsing input parameter """
-  if "2" in globalNode:
-    print "Input Parameters:"
-    for key in sorted(globalNode["2"]):
-      try:
-        idx = int(key)
-        if idx > 0:
-          parsingInputParameterNode(globalNode["2"][key])
-      except ValueError as e:
-        pass
-
-  """ parsing return parameter """
-  if "3" in globalNode:
-    print "Return Parameter Description:"
-    parsingWordProcessingNode(globalNode["3"])
-
-
 def parsingWordProcessingNode(globalNode, level=1):
   indent = "\t"*level
   for key in sorted(globalNode, key=lambda x: int(x)):
@@ -521,7 +428,6 @@ def createGlobalNode(inputLine, globalNode):
 
 def main():
   #testGlobalNode()
-  #testRPCZWRFile()
   testDDZWRFile()
   #test_sortDataEntryFloatFirst()
 
