@@ -30,9 +30,12 @@ def fmDtToPyDt(fileManDt):
     if len(datePart) < 7:
       datePart = datePart.ljust(7,'0')
     try:
-      outDate = date(int(datePart[0:-4]) + 1700,
-                     int(datePart[-4:-2]),
-                     int(datePart[-2:]))
+      year = int(datePart[0:-4])
+      month = int(datePart[-4:-2])
+      if month == 0: month = 1
+      day = int(datePart[-2:])
+      if day == 0: day = 1
+      outDate = date(year + 1700, month, day)
     except ValueError:
       return None
     outTime = time()
@@ -63,6 +66,7 @@ def testFmDtToPyDt():
                "2930913.146",
                "2970919.082701",
                "3091203.09072",
+               "3110000",
                )
   for fmDt in fileManDt:
     print fmDtToPyDt(fmDt)
