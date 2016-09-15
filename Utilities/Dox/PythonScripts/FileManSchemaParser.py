@@ -155,9 +155,10 @@ class FileManSchemaParser(object):
     self._allSchema = {} # a dict of all schema
     self._ddRoot = None # global Root by reading the zwr file
     self._zeroFiles = ['0'] # all file and subfile WRT file zero
+    self._subFiles = set() # all the subFiles
 
   def _readZeroFile(self, inputDDZWRFile):
-    for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile, 0):
+    for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
       if '0' in globalRoot:
         printGlobal(globalRoot)
         break
@@ -170,6 +171,13 @@ class FileManSchemaParser(object):
     self._updateMultiple()
     return self._allSchema
 
+  def parseSchemaDDFileV2(self, inputDDZWRFile):
+    for ddRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
+      self._ddRoot = ddRoot
+      #logging.info("Printing Global Node:")
+      #printGlobal(ddRoot)
+      self._generateSchema()
+    return self._allSchema
   def _generateFileZeroSchema(self):
     while (len(self._zeroFiles) > 0):
       file = self._zeroFiles.pop(0)
@@ -179,17 +187,30 @@ class FileManSchemaParser(object):
 
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
-    for file in files: # create all the files
-      self._allSchema[file] = FileManFile(file, "")
+    logging.info("Parsing files %s" % files)
     for file in files:
+      if file not in self._allSchema:
+        self._allSchema[file] = FileManFile(file, "")
       self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
 
+  def _parseSubFilesNode(self, rootNode):
+    """ Get the subFiles used in the file """
+    for key in getKeys(rootNode['SB'], float):
+      logging.info("Adding subfiles: %s" % key)
+      assert key in self._allSchema
+      assert self._allSchema[key].isSubFile()
+      self._subFiles.add(key)
   def _generateFileSchema(self, rootNode, fileSchema):
+    """
+      handle the "PT" and "SB" subscript first
+    """
     for key in getKeys(rootNode, float):
       if key == '0': continue # ignore the fields 0
       field = self._parseSchemaField(key, rootNode[key], fileSchema)
       if field:
         fileSchema.addFileManField(field)
+    if 'SB' in rootNode:
+      self._parseSubFilesNode(rootNode)
 
   def _parseSchemaField(self, fieldNo, rootNode, fileSchema):
     if '0' not in rootNode:
@@ -199,6 +220,7 @@ class FileManSchemaParser(object):
     if not zeroFields:
       logging.warn("No value: %s for %s" % (zeroFields, rootNode['0']))
       return None
+    zeroFields = zeroFields.split('^')
     if len(zeroFields) < 2:
       return FileManFieldFactory.createField(fieldNo, zeroFields[0],
                                              FileManField.FIELD_TYPE_NONE, None)
@@ -262,13 +284,12 @@ class FileManSchemaParser(object):
                        (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile:
-        if subFile in self._allSchema:
-          subFileSchema = self._allSchema[subFile]
-          subFileSchema.setParentFile(fileSchema)
-          fileSchema.addFileManSubFile(subFileSchema)
-          fileField.setPointedToSubFile(subFileSchema)
-        else:
-          logging.warn("Could not find subfile: %s" % subFile)
+        if subFile not in self._allSchema:
+          self._allSchema[subFile] = FileManFile(subFile, "", fileSchema)
+        subFileSchema = self._allSchema[subFile]
+        subFileSchema.setParentFile(fileSchema)
+        fileSchema.addFileManSubFile(subFileSchema)
+        fileField.setPointedToSubFile(subFileSchema)
       else:
         logging.warn("No subfile is set for file:%s, field:%r 0-index:%s" %
                      (fileSchema.getFileNo(), fileField, zeroFields))
@@ -281,10 +302,11 @@ class FileManSchemaParser(object):
         vpFileSchemas = []
         if vptrs:
           for x in vptrs:
-            if x in self._allSchema:
-              vpFileSchemas.append(self._allSchema[x])
-            else:
-              logging.warn("Can not find file %s" % x)
+            if x not in self._allSchema:
+              self._allSchema[x] = FileManFile(x, "")
+            if self._allSchema[x].isSubFile():
+              logging.info("Field: %s point to subFile: %s" % (fileField, x))
+            vpFileSchemas.append(self._allSchema[x])
           fileField.setPointedToFiles(vpFileSchemas)
     elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
       if len(zeroFields) >= 5:
@@ -371,10 +393,12 @@ def testDDZWRFile():
   parser = createArgParser()
   result = parser.parse_args();
   schemaParse = FileManSchemaParser()
-  allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
+  #allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
+  allSchemaDict = schemaParse.parseSchemaDDFileV2(result.ddFile)
   # Find all the word processing multiple
   # printAllSchemas(allSchemaDict)
-  # allSchemaDict['2'].printFileManInfo()
+  allSchemaDict['2'].printFileManInfo()
+  allSchemaDict['1'].printFileManInfo()
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
