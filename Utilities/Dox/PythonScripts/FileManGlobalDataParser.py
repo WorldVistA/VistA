@@ -23,53 +23,104 @@ from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from FileManSchemaParser import FileManSchemaParser
 
+class FileManFileData(object):
+  def __init__(self, fileNo, name):
+    self._fileNo = fileNo
+    self._name = name
+    self._data = {}
+  @property
+  def data(self):
+    return self._data
+  @property
+  def name(self):
+    return self._name
+  @property
+  def fileNo(self):
+    return self._fileNo
+  def addFileManDataEntry(self, ien, dataEntry):
+    self._data[ien] = dataEntry
+  def __repr__(self):
+    return "%s, %s, %s" % (self._fileNo, self._name, self._data)
+
 class FileManDataEntry(object):
-  def __init__(self, name, ien):
+  def __init__(self, fileNo, ien):
     self._ien = ien
     self._data = []
-    self._name = name
+    self._fileNo = fileNo
+  @property
+  def data(self):
+    return self._data
   def addData(self, data):
     self._data.append(data)
   def __repr__(self):
-    return "\n%s: %s: \n%s" % (self._name, self._ien, self._data)
+    return "%s: %s: %s" % (self._fileNo, self._ien, self._data)
 
-class SingleValueData(object):
+class FileManDataField(object):
   def __init__(self, fieldId, type, name, value):
     self._fieldId = fieldId
     self._type = type
     self._name = name
     self._value = value
+  @property
+  def name(self):
+    return self._name
+  @property
+  def type(self):
+    return self._type
+  @property
+  def value(self):
+    return self._value
+  @value.setter
+  def value(self, value):
+    self._value = value
   def __repr__(self):
     return "%s: %s" % (self._name, self._value)
 
-class MultipleValueData(object):
-  def __init__(self, fieldId, name):
-    self._fieldId = fieldId
-    self._name = name
-    self._data = []
-  def addData(self, data):
-    self._data.append(data)
-  def __repr__(self):
-    return "%s: %s" % (self._name, self._data)
+def printFileManFileData(fileManData, level=0):
+  curIndent = "\t"*(level+1)
+  if level == 0:
+    print "File#: %s, Name: %s" % (fileManData.fileNo, fileManData.name)
+  for ien in getKeys(fileManData.data.keys(), int):
+    dataEntry = fileManData.data[ien]
+    if level == 0:
+      print "FileEntry#: %s" % ien
+    else:
+      print
+    for dataField in dataEntry.data:
+      if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
+        if dataField.value:
+          print "%s%s:" % (curIndent, dataField.name)
+          printFileManFileData(dataField.value, level+1)
+      elif dataField.type == FileManField.FIELD_TYPE_WORD_PROCESSING:
+        wdList = dataField.value
+        if wdList:
+          print "%s%s:" % (curIndent, dataField.name)
+          for item in wdList:
+            print "%s\t%s" % (curIndent, item)
+      else:
+        print "%s%s: %s" % (curIndent, dataField.name, dataField.value)
+    print
+
 
 def test_FileManDataEntry():
-  dataEntry = FileManDataEntry("Test", 1)
-  dataEntry.addData(SingleValueData('0.1', 'NAME', 'Test'))
-  dataEntry.addData(SingleValueData('1', 'TAG', 'TST'))
-  dataEntry.addData(SingleValueData('2', 'ROUTINE', 'TEST1'))
-  dataEntry.addData(SingleValueData('3', 'INPUT TYPE', '1'))
-  multiValue = MultipleValueData('4', 'GROUP')
-  subDataEntry = FileManDataEntry("SubTest", 1)
-  subDataEntry.addData(SingleValueData('.01', 'NAME', 'SUBTEST'))
-  subDataEntry.addData(SingleValueData('1', 'DATA', '0'))
-  multiValue.addData(subDataEntry)
-  subDataEntry = FileManDataEntry("SubTest", 2)
-  subDataEntry.addData(SingleValueData('.01', 'NAME', 'SUBTEST1'))
-  subDataEntry.addData(SingleValueData('1', 'DATA', '1'))
-  multiValue.addData(subDataEntry)
-  dataEntry.addData(multiValue)
-  import pprint
-  pprint.pprint(dataEntry)
+  fileManData = FileManFileData('1', 'TEST FILE 1')
+  dataEntry = FileManDataEntry("Test",1)
+  dataEntry.addData(FileManDataField('0.1', 0, 'NAME', 'Test'))
+  dataEntry.addData(FileManDataField('1', 0, 'TAG', 'TST'))
+  dataEntry.addData(FileManDataField('2', 1, 'ROUTINE', 'TEST1'))
+  dataEntry.addData(FileManDataField('3', 2, 'INPUT TYPE', '1'))
+  subFileData = FileManFileData('1.01', 'TEST FILE SUB-FIELD')
+  subDataEntry = FileManDataEntry("1.01", 1)
+  subDataEntry.addData(FileManDataField('.01',0,  'NAME', 'SUBTEST'))
+  subDataEntry.addData(FileManDataField('1', 1, 'DATA', '0'))
+  subFileData.addFileManDataEntry('1', subDataEntry)
+  subDataEntry = FileManDataEntry("1.01", 2)
+  subDataEntry.addData(FileManDataField('.01', 0, 'NAME', 'SUBTEST1'))
+  subDataEntry.addData(FileManDataField('1', 1, 'DATA', '1'))
+  subFileData.addFileManDataEntry('2', subDataEntry)
+  dataEntry.addData(FileManDataField('4', 9, 'SUB-FIELD', subFileData))
+  fileManData.addFileManDataEntry('1', dataEntry)
+  printFileManFileData(fileManData)
 
 def sortSchemaByLocation(fileSchema):
   locFieldDict = {}
@@ -86,18 +137,19 @@ class FileManGlobalDataParser(object):
   def __init__(self):
     self._dataRoot = None
     self._allSchemaDict = None
-    self._glbDataDict = {}
-    self._outDataRoot = None
-    self._curData = None
+    self._glbData = None
 
+  @property
+  def outFileManData(self):
+    return self._glbData
   def parseZWRGlobalDataBySchema(self, inputFileName, allSchemaDict, fileNumber):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
     self._allSchemaDict = allSchemaDict
-    self._outDataRoot = self._glbDataDict
-    self._curData = None
-    self._parseDataBySchema(self._dataRoot, self._allSchemaDict[fileNumber])
+    schemaFile = allSchemaDict[fileNumber]
+    self._glbData = FileManFileData(fileNumber, schemaFile.getFileManName())
+    self._parseDataBySchema(self._dataRoot[fileNumber], schemaFile, self._glbData)
 
-  def _parseDataBySchema(self, dataRoot, fileSchema):
+  def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
     """ for each data entry, parse data by location """
@@ -108,7 +160,7 @@ class FileManGlobalDataParser(object):
         continue
       #if level == 0 and int(ien) != 160: continue
       dataEntry = dataRoot[ien]
-      self._curData = FileManDataEntry(fileSchema.getFileNo(), ien)
+      outDataEntry = FileManDataEntry(fileSchema.getFileNo(), ien)
       dataKeys = [x for x in dataEntry]
       sortedKey = sorted(dataKeys, cmp=sortDataEntryFloatFirst)
       for locKey in sortedKey:
@@ -118,14 +170,15 @@ class FileManGlobalDataParser(object):
           if len(fieldDict) == 1:
             fieldAttr = fieldDict.values()[0]
             if fieldAttr.isSubFilePointerType(): # Multiple
-              self._parseSubFileField(curDataRoot, fieldAttr)
+              self._parseSubFileField(curDataRoot, fieldAttr, outDataEntry)
             else:
-              self._parseSingleDataValueField(curDataRoot, fieldAttr)
+              self._parseSingleDataValueField(curDataRoot, fieldAttr, outDataEntry)
           else:
-            self._parseDataValueField(curDataRoot, fieldDict)
-      self._outDataRoot[ien] = self._curData
+            self._parseDataValueField(curDataRoot, fieldDict, outDataEntry)
+      logging.debug("adding %s" % ien)
+      outGlbData.addFileManDataEntry(ien, outDataEntry)
 
-  def _parseSingleDataValueField(self, dataEntry, fieldAttr):
+  def _parseSingleDataValueField(self, dataEntry, fieldAttr, outDataEntry):
     values = dataEntry.value
     if not values: return
     location = fieldAttr.getLocation()
@@ -142,17 +195,17 @@ class FileManGlobalDataParser(object):
     else:
       dataValue = str(dataEntry.value)
     if dataValue:
-      self._parseIndividualFieldDetail(dataValue, fieldAttr)
+      self._parseIndividualFieldDetail(dataValue, fieldAttr, outDataEntry)
 
-  def _parseDataValueField(self, fieldDict):
-    values = self._curDataRoot.value
+  def _parseDataValueField(self, dataRoot, fieldDict, outDataEntry):
+    values = dataRoot.value
     if not values: return # this is very import to check
     for idx, value in enumerate(values, 1):
       if value and str(idx) in fieldDict:
         fieldAttr = fieldDict[str(idx)]
-        parseIndividualFieldDetail(value, fieldAttr)
+        self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
 
-  def _parseIndividualFieldDetail(self, value, fieldAttr):
+  def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
     if not value: return
     value = value.strip(' ')
     if not value: return
@@ -167,24 +220,28 @@ class FileManGlobalDataParser(object):
         fieldDetail = 'File: %s, IEN: %s' % (filePointedTo.getFileNo(), value)
       else:
         fieldDetail = 'No Pointed to File'
-    self._curData.addData(SingleValueData(fieldAttr.getFieldNo(),
+    outDataEntry.addData(FileManDataField(fieldAttr.getFieldNo(),
                                           fieldAttr.getType(),
                                           fieldAttr.getName(),
                                           fieldDetail))
     logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
 
-  def _parseSubFileField(self, dataRoot, fieldAttr):
+  def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     logging.debug ("%s" % (fieldAttr.getName() + ':'))
     subFile = fieldAttr.getPointedToSubFile()
     if fieldAttr.hasSubType(FileManField.FIELD_TYPE_WORD_PROCESSING):
       outLst = self._parsingWordProcessingNode(dataRoot)
-      self.curData.addData(SingleValueData(fieldAttr.getFieldNo(),
-                                           fieldAttr.getType(),
+      outDataEntry.addData(FileManDataField(fieldAttr.getFieldNo(),
+                                           FileManField.FIELD_TYPE_WORD_PROCESSING,
                                            fieldAttr.getName(),
                                            outLst))
     elif subFile:
-      self._outDataRoot = self._curData
-      self._parseDataBySchema(dataRoot, subFile)
+      subFileData = FileManFileData(subFile.getFileNo(), subFile.getFileManName())
+      self._parseDataBySchema(dataRoot, subFile, subFileData)
+      outDataEntry.addData(FileManDataField(fieldAttr.getFieldNo(),
+                                            FileManField.FIELD_TYPE_SUBFILE_POINTER,
+                                            fieldAttr.getName(),
+                                            subFileData))
     else:
       logging.info ("Sorry, do not know how to intepret the schema %s" % fieldAttr)
 
@@ -192,7 +249,7 @@ class FileManGlobalDataParser(object):
     outLst = []
     for key in sorted(dataRoot, key=lambda x: int(x)):
       if '0' in dataRoot[key]:
-        outLst.append(dataRoot[key]['0'].value)
+        outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
 
@@ -210,7 +267,11 @@ def testGlobalParser():
   print result
   schemaParser = FileManSchemaParser()
   allSchemaDict = schemaParser.parseSchemaDDFile(result.ddFile)
-  parseZWRGlobalDataBySchema(result.gdFile, allSchemaDict, result.fileNo)
+  glbDataParser = FileManGlobalDataParser()
+  glbDataParser.parseZWRGlobalDataBySchema(result.gdFile,
+                                           allSchemaDict,
+                                           result.fileNo)
+  printFileManFileData(glbDataParser.outFileManData)
 
 def horologToDateTime(input):
   from datetime import timedelta
@@ -227,9 +288,9 @@ def test_horologToDateTime():
 def main():
   from LogManager import initConsoleLogging
   initConsoleLogging(formatStr='%(message)s')
-  test_horologToDateTime()
+  #test_horologToDateTime()
   #test_FileManDataEntry()
-  #testGlobalParser()
+  testGlobalParser()
 
 if __name__ == '__main__':
   main()
