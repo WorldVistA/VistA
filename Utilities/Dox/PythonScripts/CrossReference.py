@@ -921,7 +921,6 @@ class Package(object):
         self._globals = dict()
         self._namespaces = []
         self._globalNamespace = []
-        self._rpcs = []
         self._routineDependencies = dict()
         self._routineDependents = dict()
         self._globalDependencies = dict()
@@ -935,6 +934,7 @@ class Package(object):
         self._origName = packageName
         self._docLink = ""
         self._docMirrorLink = ""
+        self.rpcs = []
     def addRoutine(self, Routine):
         self._routines[Routine.getName()] = Routine
         Routine.setPackage(self)
