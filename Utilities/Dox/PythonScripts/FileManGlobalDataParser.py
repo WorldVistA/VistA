@@ -142,12 +142,15 @@ class FileManGlobalDataParser(object):
   @property
   def outFileManData(self):
     return self._glbData
-  def parseZWRGlobalDataBySchema(self, inputFileName, allSchemaDict, fileNumber):
+  def parseZWRGlobalDataBySchema(self, inputFileName, allSchemaDict, fileNumber, subscript):
     self._dataRoot = createGlobalNodeByZWRFile(inputFileName)
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
     self._glbData = FileManFileData(fileNumber, schemaFile.getFileManName())
-    self._parseDataBySchema(self._dataRoot[fileNumber], schemaFile, self._glbData)
+    if subscript in self._dataRoot:
+      self._parseDataBySchema(self._dataRoot[subscript], schemaFile, self._glbData)
+    else:
+      logging.error("%s does not exist in %s" % (subscript, self._dataRoot))
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
@@ -220,6 +223,12 @@ class FileManGlobalDataParser(object):
         fieldDetail = 'File: %s, IEN: %s' % (filePointedTo.getFileNo(), value)
       else:
         fieldDetail = 'No Pointed to File'
+    elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
+      if value.find(',') >=0:
+        fieldDetail = horologToDateTime(value)
+      else:
+        pass
+
     outDataEntry.addData(FileManDataField(fieldAttr.getFieldNo(),
                                           fieldAttr.getType(),
                                           fieldAttr.getName(),
@@ -258,7 +267,8 @@ def createArgParser():
   parser = argparse.ArgumentParser(description='FileMan Global Data Parser')
   parser.add_argument('ddFile', help='path to ZWR file contains DD global')
   parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
-  parser.add_argument('fileNo', help='fileManFileNo')
+  parser.add_argument('fileNo', help='FileMan File Number')
+  parser.add_argument('subscript', help='The first subscript of the global root')
   return parser
 
 def testGlobalParser():
@@ -270,7 +280,8 @@ def testGlobalParser():
   glbDataParser = FileManGlobalDataParser()
   glbDataParser.parseZWRGlobalDataBySchema(result.gdFile,
                                            allSchemaDict,
-                                           result.fileNo)
+                                           result.fileNo,
+                                           result.subscript)
   printFileManFileData(glbDataParser.outFileManData)
 
 def horologToDateTime(input):
