@@ -26,7 +26,6 @@ from FileManSchemaParser import FileManSchemaParser
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
-print SCRIPTS_DIR
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
@@ -67,6 +66,9 @@ class FileManDataEntry(object):
   @property
   def ien(self):
     return self._ien
+  @property
+  def fileNo(self):
+    return self._fileNo
   @name.setter
   def name(self, name):
     self._name = name
@@ -167,7 +169,8 @@ class FileManGlobalDataParser(object):
     self._crossRef = crossRef
     self._curFileNo =  None
     self._glbData = {} # fileNo => FileManData
-    self._selfRef = {}
+    self._pointerRef = {}
+    self._fileKeyIndex = {} # File: => ien => Value
 
   @property
   def outFileManData(self):
@@ -237,8 +240,61 @@ class FileManGlobalDataParser(object):
     self.parseZWRGlobalDataBySchema(dataRoot, allSchemaDict,
                                     fileNumber, subscript)
 
+  def generateFileIndex(self, inputFileName, allSchemaDict,
+                        fileNumber, subscript):
+    self._allSchemaDict = allSchemaDict
+    schemaFile = allSchemaDict[fileNumber]
+    if not schemaFile.hasField('.01'):
+      logging.error("File does not have a .01 field, ignore")
+      return
+    keyField = schemaFile.getFileManFieldByFieldNo('.01')
+    keyLoc = keyField.getLocation()
+    if not keyLoc:
+      logging.error(".01 field does not have a location")
+      return
+    self._curFileNo = fileNumber
+    for dataRoot in readGlobalNodeFromZWRFile(inputFileName):
+      if not dataRoot: continue
+      self._dataRoot = dataRoot
+      fileDataRoot = dataRoot
+      if subscript:
+        if subscript in dataRoot:
+          logging.debug("using subscript %s" % subscript)
+          fileDataRoot = dataRoot[subscript]
+      (ien, detail) = self._getKeyNameBySchema(fileDataRoot, keyLoc, keyField)
+      if detail:
+        logging.info("Adding %s:%s to file: %s" % (ien, detail, fileNumber))
+        self._addFileKeyIndex(fileNumber, ien, detail)
+      elif ien:
+        logging.info("No key associated with ien: %s, file: %s" % (ien, fileNumber))
+
+  def _getKeyNameBySchema(self, dataRoot, keyLoc, keyField):
+    floatKey = getKeys(dataRoot, float)
+    logging.debug('Total # of entry is %s' % len(floatKey))
+    for ien in floatKey:
+      if float(ien) <=0:
+        continue
+      dataEntry = dataRoot[ien]
+      index, loc = keyLoc.split(';')
+      if not index or index not in dataEntry:
+        continue
+      dataEntry = dataEntry[index]
+      if not dataEntry.value:
+        return (ien, None)
+      values = dataEntry.value.split('^')
+      dataValue = None
+      if convertToType(loc, int):
+        intLoc = int(loc)
+        if intLoc > 0 and intLoc <= len(values):
+          dataValue = values[intLoc-1]
+      else:
+        dataValue = str(dataEntry.value)
+      if dataValue:
+        return (ien, self._parseIndividualFieldDetail(dataValue, keyField, None))
+    return (None, None)
+
   def parseZWRGlobalFileBySchemaV2(self, inputFileName, allSchemaDict,
-                                 fileNumber, subscript):
+                                   fileNumber, subscript):
     self._allSchemaDict = allSchemaDict
     schemaFile = allSchemaDict[fileNumber]
     self._glbData[fileNumber] = FileManFileData(fileNumber,
@@ -250,14 +306,12 @@ class FileManGlobalDataParser(object):
       fileDataRoot = dataRoot
       if subscript:
         if subscript in dataRoot:
-          logging.info("using subscript %s" % subscript)
+          logging.debug("using subscript %s" % subscript)
           fileDataRoot = dataRoot[subscript]
       self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
     self._resolveSelfPointer()
     if self._crossRef:
       self._updateCrossReference()
-    for value in self._glbData.itervalues():
-      printFileManFileData(value)
 
   def parseZWRGlobalDataBySchema(self, dataRoot, allSchemaDict,
                                  fileNumber, subscript):
@@ -284,7 +338,29 @@ class FileManGlobalDataParser(object):
   def _updateCrossReference(self):
     if '8994' in self._glbData:
       self._updateRPCRefence()
+    elif '101' in self._glbData:
+      self._updateHL7Reference()
 
+  def _updateHL7Reference(self):
+    protocol = self._glbData['101']
+    for ien in sorted(protocol.dataEntries.keys(), key=lambda x: float(x)):
+      protocolEntry = protocol.dataEntries[ien]
+      if '4' in protocolEntry.fields:
+        type = protocolEntry.fields['4'].value
+        if type != 'event driver' and type != 'subscriber':
+          continue
+        # only care about the event drive and subscriber type
+        entryName = protocolEntry.name
+        namespace, package = \
+          self._crossRef.__categorizeVariableNameByNamespace__(entryName)
+        if package:
+          package.hl7.append(protocolEntry)
+          logging.info("Adding HL7: %s to Package: %s" %
+                       (entryName, package.getName()))
+        elif '12' in protocolEntry.fields: # check the packge it belongs
+          pass
+        else:
+          logging.warn("Can not find a package for HL7: %s" % entryName)
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
     for ien in sorted(rpcData.dataEntries.keys(), key=lambda x: float(x)):
@@ -313,21 +389,24 @@ class FileManGlobalDataParser(object):
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
-    for fileNo in self._selfRef:
+    for fileNo in self._pointerRef:
       if fileNo in self._glbData:
         fileData = self._glbData[fileNo]
-        for ien, fields in self._selfRef[fileNo].iteritems():
+        for ien, fields in self._pointerRef[fileNo].iteritems():
           if ien in fileData.dataEntries:
             name = fileData.dataEntries[ien].name
+            if not name: name = str(ien)
             for field in fields:
               field.value = ";".join((field.value, name))
+    self._pointerRef = {}
+
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
     """ for each data entry, parse data by location """
     floatKey = getKeys(dataRoot, float)
-    logging.info('Total # of entry is %s' % len(floatKey))
+    logging.debug('Total # of entry is %s' % len(floatKey))
     for ien in floatKey:
       if float(ien) <=0:
         continue
@@ -351,6 +430,8 @@ class FileManGlobalDataParser(object):
             self._parseDataValueField(curDataRoot, fieldDict, outDataEntry)
       logging.debug("adding %s" % ien)
       outGlbData.addFileManDataEntry(ien, outDataEntry)
+      if fileSchema.getFileNo() == self._curFileNo:
+        self._addFileKeyIndex(self._curFileNo, ien, outDataEntry.name)
 
   def _parseSingleDataValueField(self, dataEntry, fieldAttr, outDataEntry):
     if not dataEntry.value:
@@ -388,7 +469,7 @@ class FileManGlobalDataParser(object):
       return
     value = value.strip(' ')
     fieldDetail = value
-    selfPointer = False
+    pointerFileNo = None
     if fieldAttr.isSetType():
       setDict = fieldAttr.getSetMembers()
       if setDict and value in setDict:
@@ -397,9 +478,12 @@ class FileManGlobalDataParser(object):
       filePointedTo = fieldAttr.getPointedToFile()
       if filePointedTo:
         fileNo = filePointedTo.getFileNo()
-        if fileNo == self._curFileNo:
-          selfPointer = True
-        fieldDetail = ';'.join((filePointedTo.getFileNo(), value))
+        fieldDetail = ';'.join((fileNo, value))
+        idxName = self._getFileKeyIndex(fileNo, value)
+        if idxName:
+          fieldDetail = ';'.join((fieldDetail, str(idxName)))
+        elif fileNo == self._curFileNo:
+          pointerFileNo = fileNo
       else:
         fieldDetail = 'No Pointed to File'
     elif fieldAttr.isVariablePointerType():
@@ -418,24 +502,37 @@ class FileManGlobalDataParser(object):
           fieldDetail = outDt
         else:
           logging.warn("Could not parse Date/Time: %s" % value)
-    elif fieldAttr.getName().upper() == "TIMESTAMP": # timestamp field
+    elif fieldAttr.getName().upper().startswith("TIMESTAMP"): # timestamp field
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
     logging.debug("Field Detail is %s" % fieldDetail)
-    dataField = FileManDataField(fieldAttr.getFieldNo(),
-                                 fieldAttr.getType(),
-                                 fieldAttr.getName(),
-                                 fieldDetail)
-    if selfPointer:
-      self._addDataFieldToSelfRef(value, dataField)
-    outDataEntry.addField(dataField)
-    if fieldAttr.getFieldNo() == '.01':
-      logging.debug("Setting dataEntry name as %s" % fieldDetail)
-      outDataEntry.name = fieldDetail
-    logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
+    if outDataEntry:
+      dataField = FileManDataField(fieldAttr.getFieldNo(),
+                                   fieldAttr.getType(),
+                                   fieldAttr.getName(),
+                                   fieldDetail)
+      if pointerFileNo:
+        self._addDataFieldToPointerRef(pointerFileNo, value, dataField)
+      outDataEntry.addField(dataField)
+      if fieldAttr.getFieldNo() == '.01':
+        logging.debug("Setting dataEntry name as %s" % fieldDetail)
+        outDataEntry.name = fieldDetail
+      logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
+    return fieldDetail
 
-  def _addDataFieldToSelfRef(self, ien, dataField):
-      self._selfRef.setdefault(self._curFileNo, {}).setdefault(ien, set()).add(dataField)
+  def _addDataFieldToPointerRef(self, fileNo, ien, dataField):
+    self._pointerRef.setdefault(fileNo, {}).setdefault(ien, set()).add(dataField)
+
+  def _addFileKeyIndex(self, fileNo, ien, value):
+    ienDict = self._fileKeyIndex.setdefault(fileNo, {})
+    if ien not in ienDict:
+      ienDict[ien] = value
+
+  def _getFileKeyIndex(self, fileNo, ien):
+    if fileNo in self._fileKeyIndex:
+      if ien in self._fileKeyIndex[fileNo]:
+        return self._fileKeyIndex[fileNo][ien]
+    return None
 
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     logging.debug ("%s" % (fieldAttr.getName() + ':'))
@@ -478,12 +575,48 @@ def testGlobalParser(crosRef=None):
   glbDataParser = FileManGlobalDataParser(crossRef)
   #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
 
-  glbDataParser.parseZWRGlobalFileBySchemaV2(result.gdFile,
-                                           allSchemaDict,
-                                           result.fileNo,
-                                           result.subscript)
-  if result.outdir:
-    outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+  allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(result.MRepositDir,
+                                                     'Packages'),
+                                                   "*/Globals/*.zwr")
+
+  isolatedFiles = schemaParser.isolatedFiles
+  if not result.all or result.fileNo in isolatedFiles:
+    logging.info("Parsing file: %s at %s" % (result.fileNo, result.gdFile))
+    glbDataParser.parseZWRGlobalFileBySchemaV2(result.gdFile,
+                                               allSchemaDict,
+                                               result.fileNo,
+                                               result.subscript)
+    if result.outdir:
+      outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+    return
+  """ Also generate all required files as well """
+  sccSet = schemaParser.sccSet
+  for idx, value in enumerate(sccSet):
+    if result.fileNo in value:
+      break
+  for i in xrange(0,idx+1):
+    fileSet = sccSet[i]
+    fileSet &= set(allFiles.keys())
+    fileSet -= isolatedFiles
+    fileSet.discard('757')
+    if len(fileSet) > 1:
+      for file in fileSet:
+        zwrFile = allFiles[file][1]
+        globalSub = allFiles[file][0]
+        logging.debug("Generate file key index for: %s at %s" % (file, zwrFile))
+        glbDataParser.generateFileIndex(zwrFile, allSchemaDict, file, file)
+    for file in fileSet:
+      zwrFile = allFiles[file][1]
+      globalSub = allFiles[file][0]
+      logging.info("Parsing file: %s at %s" % (file, zwrFile))
+      glbDataParser.parseZWRGlobalFileBySchemaV2(zwrFile,
+                                                 allSchemaDict,
+                                                 file,
+                                                 file)
+      if result.outdir:
+        outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+      del glbDataParser.outFileManData[file]
+
 
 def horologToDateTime(input):
   """
@@ -511,12 +644,14 @@ def createArgParser():
   parser.add_argument('fileNo', help='FileMan File Number')
   parser.add_argument('subscript', help='The first subscript of the global root')
   parser.add_argument('outdir', help='top directory to generate output in html')
+  parser.add_argument('-all', action='store_true',
+                      help='generate all dependency files as well')
   return parser
 
 
 def main():
   from LogManager import initConsoleLogging
-  initConsoleLogging(formatStr='%(message)s')
+  initConsoleLogging(formatStr='%(asctime)s %(message)s')
   #test_horologToDateTime()
   #test_FileManDataEntry()
   testGlobalParser()
