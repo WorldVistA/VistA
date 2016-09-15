@@ -19,8 +19,8 @@ import re
 from datetime import datetime
 import logging
 from CrossReference import FileManField
-from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, createGlobalNodeByZWRFile
-from ZWRGlobalParser import createGlobalNodeByZWRFile
+from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst
+from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
 from FileManSchemaParser import FileManSchemaParser, parsingWordProcessingNode
 
 def sortSchemaByLocation(fileSchema):
@@ -40,6 +40,7 @@ def parseDataBySchema(dataRoot, fileSchemaDict, fileNumber, level=0):
   locFieldDict = sortSchemaByLocation(fileSchemaDict[fileNumber])
   """ for each data entry, parse data by location """
   floatKey = getKeys(dataRoot, float)
+  logging.debug('Total # of entry is %s' % len(floatKey))
   for ien in floatKey:
     if float(ien) <=0:
       continue
@@ -122,7 +123,7 @@ def parseSubFileField(dataRoot, fieldAttr, fileSchemaDict, level):
 
 def parseZWRGlobalDataBySchema(inputFileName, allSchemaDict, fileNumber):
   glbDataRoot = createGlobalNodeByZWRFile(inputFileName)
-  parseDataBySchema(glbDataRoot[fileNumber], allSchemaDict, fileNumber)
+  parseDataBySchema(glbDataRoot, allSchemaDict, fileNumber)
 
 def createArgParser():
   import argparse

@@ -463,6 +463,25 @@ class FileManField(object):
     FIELD_TYPE_MUMPS = 10
     FIELD_TYPE_BOOLEAN = 11
     FIELD_TYPE_LAST = 12
+
+    """
+      Enumeration for SPECIFIER
+    """
+    FIELD_SPECIFIED_NONE = 0
+    FIELD_SPECIFIER_REQUIRED = 1
+    FIELD_SPECIFIER_AUDIT= 2
+    FIELD_SPECIFIER_MULTILINE = 3
+    FIELD_SPECIFIER_LAYGO_NOT_ALLOWED = 4
+    FIELD_SPECIFIER_OUTPUT_TRANSFORM = 5
+    FIELD_SPECIFIER_EDITING_NOT_ALLOWD = 6
+    FIELD_SPECIFIER_NO_WORD_WRAPPING = 7
+    FIELD_SPECIFIER_IGORE_PIPE = 8
+    FIELD_SPECIFIER_NEW_ENTRY_NO_ASK = 9
+    FIELD_SPECIFIER_NEW_ENTRY_ASK_ANOTHER = 10
+    FIELD_SPECIFIER_UNEDITABLE = 11
+    FIELD_SPECIFIER_AUDIT_EDIT_DELETE = 12
+    FIELD_SPECIFIER_EDIT_PROG_ONLY = 13
+
     def __init__(self, fieldNo, name, fType ,location = None):
         self._fieldNo = None
         self.setFieldNo(fieldNo)
@@ -470,6 +489,7 @@ class FileManField(object):
         self._loc = location
         self._type = fType
         self._subType = None
+        self._specifier = None
         self._typeName = None
         self._indexName = None
         self._propList = None # store extra information is name value pair format
@@ -506,6 +526,10 @@ class FileManField(object):
         if self._subType:
             return subType in self._subType
         return False
+    def getSpecifier(self):
+        return self._specifier
+    def setSpecifier(self, specifier):
+        self._specifier = specifier
     def getFieldNo(self):
         return self._fieldNo
     def setType(self, fType):
@@ -580,12 +604,13 @@ class FileManField(object):
     def __str__(self):
         return self._fieldNo
     def __repr__(self):
-        return ("%s, %s, %s, %s, %s, %s" % (self.getFieldNo(),
+        return ("%s, %s, %s, %s, %s, %s, %s" % (self.getFieldNo(),
                                     self.getName(),
                                     self.getLocation(),
                                     self.getTypeName(),
                                     self.getType(),
-                                    self.getSubType()))
+                                    self.getSubType(),
+                                    self.getSpecifier()))
 #===============================================================================
 # # A series of subclass of FileManField based on type
 #===============================================================================
