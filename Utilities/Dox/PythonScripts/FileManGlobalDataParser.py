@@ -21,6 +21,7 @@ import logging
 from CrossReference import FileManField
 from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
+from ZWRGlobalParser import readGlobalNodeFromZWRFile
 from FileManSchemaParser import FileManSchemaParser
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -31,8 +32,6 @@ if SCRIPTS_DIR not in sys.path:
 
 from FileManDateTimeUtil import fmDtToPyDt
 import glob
-
-outDir = "C:/Users/Jason.li/git/Prod-Manage/Visual/form"
 
 class FileManFileData(object):
   def __init__(self, fileNo, name):
@@ -106,279 +105,29 @@ def printFileManFileData(fileManData, level=0):
     print "File#: %s, Name: %s" % (fileManData.fileNo, fileManData.name)
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
-    if level == 0:
-      print "FileEntry#: %s, Name: %s" % (ien, dataEntry.name)
-    else:
-      print
-    for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
-      dataField = dataEntry.fields[fldId]
-      if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
-        if dataField.value and dataField.value.dataEntries:
-          print "%s%s:" % (curIndent, dataField.name)
-          printFileManFileData(dataField.value, level+1)
-      elif dataField.type == FileManField.FIELD_TYPE_WORD_PROCESSING:
-        wdList = dataField.value
-        if wdList:
-          print "%s%s:" % (curIndent, dataField.name)
-          for item in wdList:
-            print "%s\t%s" % (curIndent, item)
-      else:
-        print "%s%s: %s" % (curIndent, dataField.name, dataField.value)
+    printFileManDataEntry(dataEntry, ien, level)
+
+def printFileManDataEntry(dataEntry, ien, level):
+  curIndent = "\t"*(level+1)
+  if level == 0:
+    print "FileEntry#: %s, Name: %s" % (ien, dataEntry.name)
+  else:
     print
-
-def safeFileName(name):
-  import base64
-  return base64.urlsafe_b64encode(name)
-
-header="""
-<link rel="stylesheet" href="http://tablesorter.com/themes/blue/style.css" type="text/css" id=""/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://tablesorter.com/__jquery.tablesorter.js"></script>
-<script type="text/javascript" id="js">
-  $(document).ready(function() {
-  // call the tablesorter plugin
-  $("#rpctable").tablesorter({
-    // sort on the first column and third column, order asc
-    sortList: [[0,0],[2,0]]
-  });
-}); </script>
-"""
-
-dthead = """
-<link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../style.css" type="text/css" id=""/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
-<script type="text/javascript" id="js">
-  $(document).ready(function() {
-  // call the tablesorter plugin
-      $("#rpctable").dataTable({
-        "bInfo": true,
-        "iDisplayLength": 25,
-        "sPaginationType": "full_numbers",
-        "bStateSave": true,
-        "bAutoWidth": false
-      });
-
-}); </script>
-"""
-
-dthead_rpc = """
-<link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
-<script type="text/javascript" id="js">
-  $(document).ready(function() {
-  // call the tablesorter plugin
-      $("#rpctable").dataTable({
-        "bPaginate": false,
-        "bLengthChange": false,
-        "bInfo": false,
-        "bStateSave": true,
-        "bSort": false
-      });
-
-}); </script>
-"""
-
-def writeTableInfoRPC(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
-  output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
-  output.write("<thead>\n")
-  output.write("<tr>\n")
-  for name in ("Name", "Value"):
-    output.write("<th>%s</th>\n" % name)
-  output.write("</tr>\n")
-  output.write("</thead>\n")
-
-dox_url = "http://code.osehra.org/dox/"
-def getRPCHRefLink(value):
-  return "<a href=\"%s.html\">%s</a>" % (safeFileName(value), value)
-
-def getRoutineHRefLink(routineName):
-  from WebPageGenerator import getRoutineHtmlFileName
-  return "<a href=\"%s%s\">%s</a>" % (dox_url,
-                                      getRoutineHtmlFileName(routineName),
-                                      routineName)
-
-def getWordProcessingDataBrief(value):
-  return getWordProcessingData(value, False)
-def getWordProcessingData(value, isList=True):
-  outValue = " ".join(value)
-  if isList:
-    outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
-  return outValue
-
-"""
-"""
-rpc_list_fields = (('.01', getRPCHRefLink), # Name
-                   ('.02', None), # Tag
-                   ('.03', getRoutineHRefLink), # Routine
-                   ('.05', None),# Availability
-                   ('1', getWordProcessingDataBrief),# Description
-                   )
-
-def writeRPCTableInfo(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
-  output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
-  output.write("<thead>\n")
-  output.write("<tr>\n")
-  for name in ("Name", "Tag", "Routine", "Availability", "Description"):
-    output.write("<th>%s</th>\n" % name)
-  output.write("</tr>\n")
-  output.write("</thead>\n")
-
-def writeTableListInfo(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
-  output.write("<div id=\"demo\">")
-  output.write("<table id=\"rpctable\" class=\"display\">\n")
-  output.write("<thead>\n")
-  output.write("<tr>\n")
-  for name in ("Name", "IEN"):
-    output.write("<th>%s</th>\n" % name)
-  output.write("</tr>\n")
-  output.write("</thead>\n")
-
-def generateRPCListHtml(dataEntryLst, outputName, dir=outDir):
-  with open("%s/%s.html" % (dir, outputName), 'w+') as output:
-      output.write("<html>\n")
-      output.write("%s\n" % dthead)
-      output.write("<body id=\"dt_example\">")
-      output.write("""<div id="container" style="width:80%">""")
-      output.write("<h1>Package: %s RPC List</h1>" % (getPackageHRefLink(outputName)))
-      writeRPCTableInfo(output)
-      """ table body """
-      output.write("<tbody>\n")
-      for dataEntry in dataEntryLst:
-        tableRow = [""]*len(rpc_list_fields)
-        allFields = dataEntry.fields
-        output.write("<tr>\n")
-        for idx, id in enumerate(rpc_list_fields):
-          if id[0] in allFields:
-            value = allFields[id[0]].value
-            if id[1]:
-              value = id[1](value)
-            tableRow[idx] = value
-        for item in tableRow:
-          output.write("<td class=\"ellipsis\">%s</td>\n" % item)
-        output.write("</tr>\n")
-      output.write("</tbody>\n")
-      output.write("</table>\n")
-      output.write("</div>\n")
-      output.write("</div>\n")
-      output.write ("</body></html>\n")
-
-def getPackageHRefLink(pkgName):
-  from WebPageGenerator import getPackageHtmlFileName
-  value = "<a href=\"%s%s\">%s</a>" % (dox_url,
-                                       getPackageHtmlFileName(pkgName),
-                                       pkgName)
-  return value
-
-def getDataEntryHtmlFile(dataEntry, ien, fileNo):
-  entryName = str(dataEntry.name)[:20]
-  return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
-
-def generateDataTableHtml(fileManData, fileNo, dir=outDir):
-  with open("%s/%s.html" % (dir, fileNo), 'w') as output:
-    output.write("<html>\n")
-    output.write("%s\n" % dthead)
-    output.write("<body id=\"dt_example\">")
-    output.write("""<div id="container" style="width:80%">""")
-    output.write("<h1>File %s Data List</h1>" % (fileNo))
-    writeTableListInfo(output)
-    output.write("<tbody>\n")
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
-      dataEntry = fileManData.dataEntries[ien]
-      if not dataEntry.name:
-        logging.info("no name for %s" % dataEntry)
-        continue
-      dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                dataEntry.name)
-      tableRow = [dataHtmlLink, dataEntry.ien]
-      output.write("<tr>\n")
-      """ table body """
-      for item in tableRow:
-        output.write("<td class=\"ellipsis\">%s</td>\n" % item)
-      output.write("</tr>\n")
-    output.write("</tbody>\n")
-    output.write("</table>\n")
-    output.write("</div>\n")
-    output.write("</div>\n")
-    output.write ("</body></html>\n")
-
-def convertFileManDataToHtml(fileManData, dir=outDir):
-  for ien in getKeys(fileManData.dataEntries.keys(), float):
-    dataEntry = fileManData.dataEntries[ien]
-    if not dataEntry.name:
-      logging.info("no name for %s" % dataEntry)
-      continue
-    with open("%s/%s" % (dir, getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)), 'w') as output:
-      output.write ("<html>")
-      output.write ("%s\n" % dthead_rpc)
-      output.write("<body id=\"dt_example\">")
-      output.write("""<div id="container" style="width:80%">""")
-      output.write ("<h1>%s (%s)</h1>\n" % (dataEntry.name, ien))
-      writeTableInfoRPC(output)
-      """ table body """
-      output.write("<tbody>\n")
-      fileManDataEntryToHtml(output, dataEntry, True)
-      output.write("</tbody>\n")
-      output.write("</table>\n")
-      output.write("</div>\n")
-      output.write("</div>\n")
-      output.write ("</body></html>")
-
-def convertFileManSubFileDataToHtml(output, fileManData):
-  output.write ("<ol>\n")
-  for ien in getKeys(fileManData.dataEntries.keys(), float):
-    dataEntry = fileManData.dataEntries[ien]
-    fileManDataEntryToHtml(output, dataEntry, False)
-  output.write ("</ol>\n")
-
-import cgi
-def fileManDataEntryToHtml(output, dataEntry, isRoot):
-  if not isRoot:
-    output.write ("<li>\n")
   for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
-    if isRoot:
-      output.write ("<tr>\n")
     dataField = dataEntry.fields[fldId]
-    fieldType = dataField.type
-    name, value = dataField.name, dataField.value
-    """ hack for RPC """
-    if isRoot and fldId == '.03' and dataField.name == "ROUTINE":
-      value = getRoutineHRefLink(value)
-    if fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
+    if dataField.type == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if dataField.value and dataField.value.dataEntries:
-        if isRoot:
-          output.write("<td>%s</td>\n" % name)
-          output.write("<td>\n")
-        else:
-          output.write ("<dl><dt>%s:</dt>\n" % name)
-          output.write ("<dd>\n")
-        convertFileManSubFileDataToHtml(output, dataField.value)
-        if isRoot:
-          output.write("</td>\n")
-        else:
-          output.write ("</dd></dl>\n")
-      continue
-    if fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
-      value = "\n".join(value)
-      value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
-    if isRoot:
-      output.write ("<td>%s</td>\n" % name)
-      output.write ("<td>%s</td>\n" % value)
-      output.write ("</tr>\n")
+        print "%s%s:" % (curIndent, dataField.name)
+        printFileManFileData(dataField.value, level+1)
+    elif dataField.type == FileManField.FIELD_TYPE_WORD_PROCESSING:
+      wdList = dataField.value
+      if wdList:
+        print "%s%s:" % (curIndent, dataField.name)
+        for item in wdList:
+          print "%s\t%s" % (curIndent, item)
     else:
-      output.write ("<dt>%s:  &nbsp;&nbsp;%s</dt>\n" % (name, value))
-      #output.write ("<dd>%s</dd>\n" % value)
-  if not isRoot:
-    output.write("</li>\n")
+      print "%s%s: %s" % (curIndent, dataField.name, dataField.value)
+  print
 
 def test_FileManDataEntry():
   fileManData = FileManFileData('1', 'TEST FILE 1')
@@ -416,7 +165,9 @@ class FileManGlobalDataParser(object):
     self._dataRoot = None
     self._allSchemaDict = None
     self._crossRef = crossRef
+    self._curFileNo =  None
     self._glbData = {} # fileNo => FileManData
+    self._selfRef = {}
 
   @property
   def outFileManData(self):
@@ -446,7 +197,9 @@ class FileManGlobalDataParser(object):
         outFiles[fileNo] = (globalDes, os.path.normpath(os.path.abspath(file)))
     return outFiles
 
-  def parseFileManZWRGlobaFilesBySchema(self, mRepositDir, allSchemaDict):
+  def parseAllZWRGlobaFilesBySchema(self, mRepositDir, allSchemaDict):
+    """ Parsing all ZWR Global Files via Schema
+    """
     allFiles = self.getAllFileManZWRFiles(os.path.join(mRepositDir,
                                                        'Packages'),
                                                      "*/Globals/*.zwr")
@@ -476,9 +229,6 @@ class FileManGlobalDataParser(object):
       logging.info("File: %s, root: %s, sub: %s" % (ddFile, rootName, subscript))
       self.parseZWRGlobalDataBySchema(self._dataRoot, allSchemaDict,
                                       fileNo, subscript)
-      dir = "C:/Users/Jason.li/git/Prod-Manage/Visual/files"
-      logging.info("writing html for file %s: Name: %s" % (fileNo, glbDes))
-      self.outputFileManData(True, dir)
       self._glbData = {}
 
   def parseZWRGlobalFileBySchema(self, inputFileName, allSchemaDict,
@@ -486,6 +236,30 @@ class FileManGlobalDataParser(object):
     self._createDataRootByZWRFile(inputFileName)
     self.parseZWRGlobalDataBySchema(dataRoot, allSchemaDict,
                                     fileNumber, subscript)
+
+  def parseZWRGlobalFileBySchemaV2(self, inputFileName, allSchemaDict,
+                                 fileNumber, subscript):
+    self._allSchemaDict = allSchemaDict
+    schemaFile = allSchemaDict[fileNumber]
+    self._glbData[fileNumber] = FileManFileData(fileNumber,
+                                                schemaFile.getFileManName())
+    self._curFileNo = fileNumber
+    for dataRoot in readGlobalNodeFromZWRFile(inputFileName):
+      if not dataRoot: continue
+      self._dataRoot = dataRoot
+      fileDataRoot = dataRoot
+      if subscript:
+        if subscript in dataRoot:
+          logging.info("using subscript %s" % subscript)
+          fileDataRoot = dataRoot[subscript]
+      logging.info("Printing dataRoot: %s" % fileDataRoot.child.values()[0])
+      printGlobal(fileDataRoot)
+      self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
+    self._resolveSelfPointer()
+    if self._crossRef:
+      self._updateCrossReference()
+    for value in self._glbData.itervalues():
+      printFileManFileData(value)
 
   def parseZWRGlobalDataBySchema(self, dataRoot, allSchemaDict,
                                  fileNumber, subscript):
@@ -540,23 +314,22 @@ class FileManGlobalDataParser(object):
 
 
   def _resolveSelfPointer(self):
-    return
     """ Replace self-reference with meaningful data """
-    selfRefPtr = set()
-    for fileNo in self._glbData.iterkeys():
-      fileManData = self._glbData[fileNo]
-      for ien in fileManData.dataEntries:
-        dataEntry = fileManData.dataEntries[ien]
-        for fileField in dataEntry.fields.itervalues():
-          if fileField.type == FileManField.FIELD_TYPE_FILE_POINTER:
-            pass
+    for fileNo in self._selfRef:
+      if fileNo in self._glbData:
+        fileData = self._glbData[fileNo]
+        for ien, fields in self._selfRef[fileNo].iteritems():
+          if ien in fileData.dataEntries:
+            value = fileData.dataEntries[ien].name
+            for field in fields:
+              field.value = "%s, Name: %s" % (field.value, value)
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
     locFieldDict = sortSchemaByLocation(fileSchema)
     """ for each data entry, parse data by location """
     floatKey = getKeys(dataRoot, float)
-    logging.debug('Total # of entry is %s' % len(floatKey))
+    logging.info('Total # of entry is %s' % len(floatKey))
     for ien in floatKey:
       if float(ien) <=0:
         continue
@@ -582,8 +355,9 @@ class FileManGlobalDataParser(object):
       outGlbData.addFileManDataEntry(ien, outDataEntry)
 
   def _parseSingleDataValueField(self, dataEntry, fieldAttr, outDataEntry):
-    values = dataEntry.value
-    if not values: return
+    if not dataEntry.value:
+      return
+    values = dataEntry.value.split('^')
     location = fieldAttr.getLocation()
     dataValue = None
     if location:
@@ -601,7 +375,9 @@ class FileManGlobalDataParser(object):
       self._parseIndividualFieldDetail(dataValue, fieldAttr, outDataEntry)
 
   def _parseDataValueField(self, dataRoot, fieldDict, outDataEntry):
-    values = dataRoot.value
+    if not dataRoot.value:
+      return
+    values = dataRoot.value.split('^')
     if not values: return # this is very import to check
     for idx, value in enumerate(values, 1):
       if value and str(idx) in fieldDict:
@@ -609,10 +385,12 @@ class FileManGlobalDataParser(object):
         self._parseIndividualFieldDetail(value, fieldAttr, outDataEntry)
 
   def _parseIndividualFieldDetail(self, value, fieldAttr, outDataEntry):
-    if not value: return
+    logging.debug("Parsing Individual Field Detail: %s" % value)
+    if not value.strip(' '):
+      return
     value = value.strip(' ')
-    if not value: return
     fieldDetail = value
+    selfPointer = False
     if fieldAttr.isSetType():
       setDict = fieldAttr.getSetMembers()
       if setDict and value in setDict:
@@ -620,9 +398,19 @@ class FileManGlobalDataParser(object):
     elif fieldAttr.isFilePointerType():
       filePointedTo = fieldAttr.getPointedToFile()
       if filePointedTo:
+        fileNo = filePointedTo.getFileNo()
+        if fileNo == self._curFileNo:
+          selfPointer = True
         fieldDetail = 'File: %s, IEN: %s' % (filePointedTo.getFileNo(), value)
       else:
         fieldDetail = 'No Pointed to File'
+    elif fieldAttr.isVariablePointerType():
+      vpInfo = value.split(';')
+      if len(vpInfo) != 2:
+        logging.error("Unknown variable pointer format: %s" % value)
+        fieldDetail = "Unknow Variable Pointer"
+      else:
+        fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], vpInfo[0])
     elif fieldAttr.getType() == FileManField.FIELD_TYPE_DATE_TIME: # datetime
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
@@ -632,15 +420,24 @@ class FileManGlobalDataParser(object):
           fieldDetail = outDt
         else:
           logging.warn("Could not parse Date/Time: %s" % value)
-
-    outDataEntry.addField(FileManDataField(fieldAttr.getFieldNo(),
-                                          fieldAttr.getType(),
-                                          fieldAttr.getName(),
-                                          fieldDetail))
+    elif fieldAttr.getName().upper() == "TIMESTAMP": # timestamp field
+      if value.find(',') >=0:
+        fieldDetail = horologToDateTime(value)
+    logging.debug("Field Detail is %s" % fieldDetail)
+    dataField = FileManDataField(fieldAttr.getFieldNo(),
+                                 fieldAttr.getType(),
+                                 fieldAttr.getName(),
+                                 fieldDetail)
+    if selfPointer:
+      self._addDataFieldToSelfRef(value, dataField)
+    outDataEntry.addField(dataField)
     if fieldAttr.getFieldNo() == '.01':
       logging.debug("Setting dataEntry name as %s" % fieldDetail)
       outDataEntry.name = fieldDetail
-    logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
+    logging.info("%s: %s" % (fieldAttr.getName(), fieldDetail))
+
+  def _addDataFieldToSelfRef(self, ien, dataField):
+      self._selfRef.setdefault(self._curFileNo, {}).setdefault(ien, set()).add(dataField)
 
   def _parseSubFileField(self, dataRoot, fieldAttr, outDataEntry):
     logging.debug ("%s" % (fieldAttr.getName() + ':'))
@@ -670,40 +467,22 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-  def outputFileManData(self, html=False, dir=outDir):
-    fileManDataMap = self._glbData
-    for fileNo in getKeys(fileManDataMap.iterkeys(), float):
-      fileManData = fileManDataMap[fileNo]
-      if not html:
-        printFileManFileData(fileManData)
-      else:
-        if fileNo == '8994':
-          if self._crossRef:
-            allPackages = self._crossRef.getAllPackages()
-            for package in allPackages.itervalues():
-              if package.rpcs:
-                logging.info("generating RPC list for package: %s" % package.getName())
-                generateRPCListHtml(package.rpcs, package.getName(), dir)
-        generateDataTableHtml(fileManData, fileNo, dir)
-        convertFileManDataToHtml(fileManData,dir)
-
 
 def testGlobalParser(crosRef=None):
   parser = createArgParser()
   result = parser.parse_args()
   print result
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
-  crosRef = parseCrossRefGeneratorWithArgs(result)
+  crossRef = parseCrossRefGeneratorWithArgs(result)
   schemaParser = FileManSchemaParser()
-  allSchemaDict = schemaParser.parseSchemaDDFile(result.ddFile)
-  glbDataParser = FileManGlobalDataParser(crosRef)
-  glbDataParser.parseFileManZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
+  allSchemaDict = schemaParser.parseSchemaDDFileV2(result.ddFile)
+  glbDataParser = FileManGlobalDataParser(crossRef)
+  #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
 
-  #glbDataParser.parseZWRGlobalFileBySchema(result.gdFile,
-  #                                         allSchemaDict,
-  #                                         result.fileNo,
-  #                                         result.subscript)
-  #glbDataParser.outputFileManData(html=True)
+  glbDataParser.parseZWRGlobalFileBySchemaV2(result.gdFile,
+                                           allSchemaDict,
+                                           result.fileNo,
+                                           result.subscript)
 
 
 def horologToDateTime(input):
