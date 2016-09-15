@@ -336,6 +336,7 @@ class FileManFile(object):
         self._description = None # description of fileMan file
         self.setFileNo(fileNo)
         self._fileManDbCallRoutines = None
+        self._fileAttrs = None
     def getFileNo(self):
         return self._fileNo
     def setFileNo(self, fileNo):

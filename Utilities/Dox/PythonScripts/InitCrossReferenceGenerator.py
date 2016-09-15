@@ -3,7 +3,14 @@ import glob
 import re
 import csv
 import os
+import sys
 import argparse
+
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
+print SCRIPTS_DIR
+if SCRIPTS_DIR not in sys.path:
+  sys.path.append(SCRIPTS_DIR)
 
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from LogManager import logger, initConsoleLogging
@@ -18,6 +25,7 @@ fileNoPackageMappingDict = {"18.02":"Web Services Client",
                    "59.74":"Pharmacy Data Management"
                    }
 
+
 def getVDLHttpLinkByID(vdlId):
   return "http://www.va.gov/vdl/application.asp?appid=%s" % vdlId
 
@@ -30,9 +38,11 @@ class InitCrossReferenceGenerator(object):
     return self.crossRef
 
   def parsePercentRoutineMappingFile(self, mappingFile):
-    csvReader = csv.reader(open(mappingFile, "rb"))
-    for line in csvReader:
-      self.crossRef.addPercentRoutineMapping(line[0], line[1], line[2])
+    result = csv.DictReader(open(mappingFile, "rb"))
+    for row in result:
+      self.crossRef.addPercentRoutineMapping(row['Name'],
+                                             row['Source'],
+                                             row['Package'])
 
   def parsePackagesFile(self, packageFilename):
     result = csv.DictReader(open(packageFilename, 'rb'))
