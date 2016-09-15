@@ -936,6 +936,7 @@ class Package(object):
         self._docLink = ""
         self._docMirrorLink = ""
         self.rpcs = []
+        self.hl7 = []
     def addRoutine(self, Routine):
         self._routines[Routine.getName()] = Routine
         Routine.setPackage(self)
