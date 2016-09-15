@@ -669,13 +669,9 @@ def createCallGraphLogAugumentParser():
     return parser
 
 def parseAllCallGraphLogWithArg(arguments):
-    return parseAllCallGraphLog(arguments.xindexLogDir,
-                                arguments.MRepositDir,
-                                arguments.patchRepositDir)
+    return parseAllCallGraphLog(arguments.xindexLogDir)
 
-def parseAllCallGraphLog(xindexLogDir, MRepositDir, patchRepositDir):
-    from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
-    crossRef = parseCrossReferenceGeneratorArgs(MRepositDir, patchRepositDir)
+def parseAllCallGraphLog(xindexLogDir, crossRef):
     xindexLogParser = CallerGraphLogFileParser(crossRef)
     xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
     return xindexLogParser
@@ -690,5 +686,6 @@ if __name__ == '__main__':
                 parents=[initParser, xindexLogParser])
     initConsoleLogging()
     result = parser.parse_args();
+    crossRef = parseAllCallGraphLogWithArg(result.
     logParser = parseAllCallGraphLogWithArg(result)
     runRegressionTestingCases(logParser)

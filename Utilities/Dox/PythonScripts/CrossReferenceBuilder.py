@@ -18,6 +18,8 @@
 
 import os
 import argparse
+from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
 from CallerGraphParser import parseAllCallGraphLog
 from CallerGraphParser import createCallGraphLogAugumentParser
 from DataDictionaryParser import parseDataDictionaryLogFile
@@ -26,11 +28,13 @@ from FileManDbCallParser import parseFileManDBJSONFile
 from FileManDbCallParser import createFileManDBFileAugumentParser
 
 def createCrossReferenceLogArgumentParser():
+    initCrossRefParser = createInitialCrossRefGenArgParser()
     callLogArgParser = createCallGraphLogAugumentParser()
     dataDictLogArgParser = createDataDictionaryAugumentParser()
     filemanDBJsonArgParser = createFileManDBFileAugumentParser()
     parser = argparse.ArgumentParser(add_help=False,
-                                     parents=[callLogArgParser,
+                                     parents=[initCrossRefParser,
+                                              callLogArgParser,
                                               dataDictLogArgParser,
                                               filemanDBJsonArgParser])
     return parser
@@ -46,6 +50,7 @@ class CrossReferenceBuilder(object):
     def buildCrossReference(self, xindexLogDir, MRepositDir,
                             patchRepositDir, fileSchemaDir=None,
                             filemanDbJson=None):
+
         logParser = parseAllCallGraphLog(xindexLogDir,
                                          MRepositDir,
                                          patchRepositDir)
