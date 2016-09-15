@@ -686,6 +686,6 @@ if __name__ == '__main__':
                 parents=[initParser, xindexLogParser])
     initConsoleLogging()
     result = parser.parse_args();
-    crossRef = parseAllCallGraphLogWithArg(result.
+    crossRef = parseAllCallGraphLogWithArg(result)
     logParser = parseAllCallGraphLogWithArg(result)
     runRegressionTestingCases(logParser)
