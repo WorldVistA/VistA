@@ -252,8 +252,6 @@ class FileManGlobalDataParser(object):
         if subscript in dataRoot:
           logging.info("using subscript %s" % subscript)
           fileDataRoot = dataRoot[subscript]
-      logging.info("Printing dataRoot: %s" % fileDataRoot.child.values()[0])
-      printGlobal(fileDataRoot)
       self._parseDataBySchema(fileDataRoot, schemaFile, self._glbData[fileNumber])
     self._resolveSelfPointer()
     if self._crossRef:
@@ -320,9 +318,9 @@ class FileManGlobalDataParser(object):
         fileData = self._glbData[fileNo]
         for ien, fields in self._selfRef[fileNo].iteritems():
           if ien in fileData.dataEntries:
-            value = fileData.dataEntries[ien].name
+            name = fileData.dataEntries[ien].name
             for field in fields:
-              field.value = "%s, Name: %s" % (field.value, value)
+              field.value = ";".join((field.value, name))
 
   def _parseDataBySchema(self, dataRoot, fileSchema, outGlbData):
     """ first sort the schema Root by location """
@@ -401,7 +399,7 @@ class FileManGlobalDataParser(object):
         fileNo = filePointedTo.getFileNo()
         if fileNo == self._curFileNo:
           selfPointer = True
-        fieldDetail = 'File: %s, IEN: %s' % (filePointedTo.getFileNo(), value)
+        fieldDetail = ';'.join((filePointedTo.getFileNo(), value))
       else:
         fieldDetail = 'No Pointed to File'
     elif fieldAttr.isVariablePointerType():
@@ -434,7 +432,7 @@ class FileManGlobalDataParser(object):
     if fieldAttr.getFieldNo() == '.01':
       logging.debug("Setting dataEntry name as %s" % fieldDetail)
       outDataEntry.name = fieldDetail
-    logging.info("%s: %s" % (fieldAttr.getName(), fieldDetail))
+    logging.debug("%s: %s" % (fieldAttr.getName(), fieldDetail))
 
   def _addDataFieldToSelfRef(self, ien, dataField):
       self._selfRef.setdefault(self._curFileNo, {}).setdefault(ien, set()).add(dataField)
@@ -473,6 +471,7 @@ def testGlobalParser(crosRef=None):
   result = parser.parse_args()
   print result
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
+  from FileManDataToHtml import outputFileManDataAsHtml
   crossRef = parseCrossRefGeneratorWithArgs(result)
   schemaParser = FileManSchemaParser()
   allSchemaDict = schemaParser.parseSchemaDDFileV2(result.ddFile)
@@ -483,7 +482,8 @@ def testGlobalParser(crosRef=None):
                                            allSchemaDict,
                                            result.fileNo,
                                            result.subscript)
-
+  if result.outdir:
+    outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
 
 def horologToDateTime(input):
   """
@@ -510,6 +510,7 @@ def createArgParser():
   parser.add_argument('gdFile', help='path to ZWR file contains Globals data')
   parser.add_argument('fileNo', help='FileMan File Number')
   parser.add_argument('subscript', help='The first subscript of the global root')
+  parser.add_argument('outdir', help='top directory to generate output in html')
   return parser
 
 
