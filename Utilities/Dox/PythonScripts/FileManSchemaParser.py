@@ -34,7 +34,7 @@ def setTypeAndSpecifer(types, specifier, values):
   A Tuple of two elements:
   1. Matching string
   4. Argument if present, in the form of
-     (Type, subType, Specifier)
+     (Type, subType, Extra Specifier)
 """
 FIELD_TYPE_MAP_LIST = (
   ('Cm',

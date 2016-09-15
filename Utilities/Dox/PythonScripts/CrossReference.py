@@ -921,12 +921,14 @@ class Package(object):
         self._globals = dict()
         self._namespaces = []
         self._globalNamespace = []
+        self._rpcs = []
         self._routineDependencies = dict()
         self._routineDependents = dict()
         self._globalDependencies = dict()
         self._globalDependents = dict()
         self._fileManDependencies = dict()
         self._fileManDependents = dict()
+        self._descr = [] # a list of description sentense from Package File
         """ fileman db call related dependencies """
         self._fileManDbDependencies = dict()
         self._fileManDbDependents = dict()
