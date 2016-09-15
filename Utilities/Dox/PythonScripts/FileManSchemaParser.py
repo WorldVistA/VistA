@@ -21,6 +21,7 @@ import logging
 from CrossReference import FileManFile, FileManFieldFactory
 from CrossReference import FileManField
 from ZWRGlobalParser import createGlobalNodeByZWRFile, getKeys
+from ZWRGlobalParser import readGlobalNodeFromZWRFile, printGlobal
 
 """
   Utility Function to set the Type/Specifier
@@ -153,11 +154,29 @@ class FileManSchemaParser(object):
   def __init__(self):
     self._allSchema = {} # a dict of all schema
     self._ddRoot = None # global Root by reading the zwr file
+    self._zeroFiles = ['0'] # all file and subfile WRT file zero
+
+  def _readZeroFile(self, inputDDZWRFile):
+    for globalRoot in readGlobalNodeFromZWRFile(inputDDZWRFile, 0):
+      if '0' in globalRoot:
+        printGlobal(globalRoot)
+        break
+
   def parseSchemaDDFile(self, inputDDZWRFile):
     self._ddRoot = createGlobalNodeByZWRFile(inputDDZWRFile)
+    assert self._ddRoot.subscript == "^DD"
+    #self._generateFileZeroSchema()
     self._generateSchema()
     self._updateMultiple()
     return self._allSchema
+
+  def _generateFileZeroSchema(self):
+    while (len(self._zeroFiles) > 0):
+      file = self._zeroFiles.pop(0)
+      if file not in self._allSchema:
+        self._allSchema[file] = FileManFile(file, "")
+      self._generateFileSchema(self._ddRoot[file], self._allSchema[file])
+
   def _generateSchema(self):
     files = getKeys(self._ddRoot, float) # sort files by float value
     for file in files: # create all the files
@@ -201,7 +220,8 @@ class FileManSchemaParser(object):
           types.insert(0, multipleType)
           if not subFile: subFile = filePointedTo
     if not types:
-      logging.warn('Can not determine the type for %s' % zeroFields)
+      logging.warn('Can not determine the type for %s, fn: %s, file:%s' %
+                   (zeroFields, fieldNo, fileSchema.getFileNo()))
       types = [FileManField.FIELD_TYPE_NONE]
     if types and types[0]  == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile and subFile == fileSchema.getFileNo():
@@ -214,17 +234,18 @@ class FileManSchemaParser(object):
     if specifier:
       fileField.setSpecifier(specifier)
       logging.debug("Adding specifier: %s to %r" % (specifier, fileField))
-    self._setFieldSpecifiData(zeroFields, fileField, rootNode,
+    self._setFieldSpecificData(zeroFields, fileField, rootNode,
                               fileSchema, filePointedTo, subFile)
     return fileField
 
-  def _setFieldSpecifiData(self, zeroFields, fileField, rootNode,
+  def _setFieldSpecificData(self, zeroFields, fileField, rootNode,
                            fileSchema, filePointedTo, subFile):
     if fileField.getType() == FileManField.FIELD_TYPE_FILE_POINTER:
       if filePointedTo:
         if filePointedTo in self._allSchema:
           fileField.setPointedToFile(self._allSchema[filePointedTo])
         else:
+          logging.info("%r: filePointedTo: %s" % (fileField, filePointedTo))
           """ try to set the global location here """
           if len(zeroFields) >= 3:
             fileGlobalRoot = zeroFields[2]
@@ -257,12 +278,18 @@ class FileManSchemaParser(object):
     elif fileField.getType() == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER:
       if "V" in rootNode: # parsing variable pointer
         vptrs = parsingVariablePointer(rootNode['V'])
+        vpFileSchemas = []
         if vptrs:
-          vpFileSchemas = [self._allSchema.get(x) for x in vptrs]
+          for x in vptrs:
+            if x in self._allSchema:
+              vpFileSchemas.append(self._allSchema[x])
+            else:
+              logging.warn("Can not find file %s" % x)
           fileField.setPointedToFiles(vpFileSchemas)
     elif fileField.getType() == FileManField.FIELD_TYPE_COMPUTED:
       if len(zeroFields) >= 5:
-        logging.debug("Computed Mumps Code: %s for %r" % ("".join(zeroFields[4:]), fileField))
+        logging.debug("Computed Mumps Code: %s for %r" %
+                      ("".join(zeroFields[4:]), fileField))
 
   @staticmethod
   def parseFieldTypeSpecifier(typeField):
@@ -347,8 +374,7 @@ def testDDZWRFile():
   allSchemaDict = schemaParse.parseSchemaDDFile(result.ddFile)
   # Find all the word processing multiple
   # printAllSchemas(allSchemaDict)
-  from FileManGlobalDataParser import parseDataBySchema
-  parseDataBySchema(schemaParse._ddRoot['2'], allSchemaDict, '0')
+  # allSchemaDict['2'].printFileManInfo()
 
 def printAllSchemas(allSchemaDict):
   files = getKeys(allSchemaDict.keys(), float)
