@@ -481,7 +481,7 @@ class FileManField(object):
     FIELD_SPECIFIER_UNEDITABLE = 11
     FIELD_SPECIFIER_AUDIT_EDIT_DELETE = 12
     FIELD_SPECIFIER_EDIT_PROG_ONLY = 13
-    FIELD_SPECIFIER_SCREEN = 14
+    FIELD_SPECIFIER_POINTER_SCREEN = 14
 
     def __init__(self, fieldNo, name, fType ,location = None):
         self._fieldNo = None

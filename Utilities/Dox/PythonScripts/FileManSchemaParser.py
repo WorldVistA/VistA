@@ -145,7 +145,7 @@ FIELD_TYPE_MAP_LIST = (
   ('*',
    (None,
     None,
-    FileManField.FIELD_SPECIFIER_SCREEN)
+    FileManField.FIELD_SPECIFIER_POINTER_SCREEN)
   ),
 )
 
