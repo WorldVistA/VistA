@@ -236,7 +236,7 @@ def parseCrossReferenceGeneratorArgs(MRepositDir,
                                                            "Packages"),
                                                 "*/Routines/*.m")
 
-  return crossRefGen
+  return crossRefGen.crossReference
 
 def createInitialCrossRefGenArgParser():
     parser = argparse.ArgumentParser(add_help=False) # no help page

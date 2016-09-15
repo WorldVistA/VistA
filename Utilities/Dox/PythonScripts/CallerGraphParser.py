@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# A logFileParser class to parse XINDEX log files and generate the routine/package information in CrossReference Structure
+# A XindexLogParser class to parse XINDEX log files and generate the routine/package information in CrossReference Structure
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
 #
@@ -452,8 +452,8 @@ class XINDEXLogFileParser (IXindexLogFileParser, ISectionParser):
 # A class to parse XINDEX log file output and convert to Routine/Package
 #===============================================================================
 class CallerGraphLogFileParser(object):
-    def __init__(self):
-        self._crossRef = CrossReference()
+    def __init__(self, crossRef):
+        self._crossRef = crossRef
 
     def printResult(self):
         logger.info("Total Routines are %d" % len(self._crossRef.getAllRoutines()))
@@ -548,8 +548,6 @@ class CallerGraphLogFileParser(object):
         return self._crossRef.categorizeGlobalByNamespace(globalName)
 # end of class CallerGraphLogFileParser
 
-def getVDLHttpLinkByID(vdlId):
-  return "http://www.va.gov/vdl/application.asp?appid=%s" % vdlId
 #===============================================================================
 # Section for unit/regression testing routines
 #===============================================================================
@@ -582,7 +580,7 @@ localVarRegressionTest = {"ONCBPC1":['''TABLE("DURATION OF SMOKE-FREE HISTORY"''
                                       '''CNT'''],
                           "MAGBRTE4":['''KEYWORD("CONDITION"'''],
                           "XTERSUM4":['''ZTSAVE("XTERMAX"'''],
-                          "XTINEND":['''XMY("G.KERNEL_INSTALL@ISC-SF.VA.GOV"'''],
+                          #"XTINEND":['''XMY("G.KERNEL_INSTALL@ISC-SF.VA.GOV"'''],
                           "XTHC10A":['''DFLTHDR("CONTENT-LENGTH"''','''DFLTHDR("USER-AGENT"'''],
                           "RCCPW":['''ZTSAVE("SITE"''','''ZTSAVE("^TMP(""RCCPW"",$J,"'''],
                           "PRCARPS":['''ZTSAVE("PRCA(""BILLN"")"''','''ZTSAVE("PRCA(""BILLN"")"'''],
@@ -664,14 +662,10 @@ def createCallGraphLogAugumentParser():
     parser = argparse.ArgumentParser(add_help=False) # no help page
     argGroup = parser.add_argument_group(
                               'Call Graph Log Parser Releated Arguments',
-                              "Argument for Parsing Call Graph and Schema logs")
+                              "Argument for Parsing XINDEX Call Graph logs")
     argGroup.add_argument('-xl', '--xindexLogDir', required=True,
                           help='Input XINDEX log files directory, nomally under'
                              '${CMAKE_BUILD_DIR}/Docs/CallerGraph/')
-    argGroup.add_argument('-mr', '--MRepositDir', required=True,
-                          help='VistA M Component Git Repository Directory')
-    argGroup.add_argument('-pr', '--patchRepositDir', required=True,
-                          help="VistA Git Repository Directory")
     return parser
 
 def parseAllCallGraphLogWithArg(arguments):
@@ -680,17 +674,20 @@ def parseAllCallGraphLogWithArg(arguments):
                                 arguments.patchRepositDir)
 
 def parseAllCallGraphLog(xindexLogDir, MRepositDir, patchRepositDir):
-    logFileParser = CallerGraphLogFileParser()
-    DoxDir = 'Utilities/Dox'
-    logFileParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
-    return logFileParser
+    from InitCrossReferenceGenerator import parseCrossReferenceGeneratorArgs
+    crossRef = parseCrossReferenceGeneratorArgs(MRepositDir, patchRepositDir)
+    xindexLogParser = CallerGraphLogFileParser(crossRef)
+    xindexLogParser.parseAllCallerGraphLog(xindexLogDir, "*.log")
+    return xindexLogParser
 
 import logging
 if __name__ == '__main__':
-    logFileParser = createCallGraphLogAugumentParser()
+    from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
+    initParser = createInitialCrossRefGenArgParser()
+    xindexLogParser = createCallGraphLogAugumentParser()
     parser = argparse.ArgumentParser(
                 description='VistA Cross-Reference Call Graph Log Files Parser',
-                parents=[logFileParser])
+                parents=[initParser, xindexLogParser])
     initConsoleLogging()
     result = parser.parse_args();
     logParser = parseAllCallGraphLogWithArg(result)
