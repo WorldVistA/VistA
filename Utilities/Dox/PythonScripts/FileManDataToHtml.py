@@ -58,12 +58,15 @@ table_sorter_header="""
   html header using JQuery DataTable Plugin
   https://datatables.net/
 """
-dthead = """
+data_table_reference = """
 <link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
 <link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
 <link rel="stylesheet" href="../style.css" type="text/css" id=""/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
+"""
+
+data_table_list_init_setup = """
 <script type="text/javascript" id="js">
   $(document).ready(function() {
   // call the tablesorter plugin
@@ -72,17 +75,32 @@ dthead = """
         "iDisplayLength": 25,
         "sPaginationType": "full_numbers",
         "bStateSave": true,
-        "bAutoWidth": false
+        "bAutoWidth": true
       });
-
 }); </script>
 """
 
-dthead_rpc = """
-<link rel="stylesheet" href="../datatable/css/demo_page.css" type="text/css" id=""/>
-<link rel="stylesheet" href="../datatable/css/demo_table.css" type="text/css" id=""/>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="../datatable/js/jquery.dataTables.js"></script>
+from string import Template
+
+data_table_large_list_init_setup = Template("""
+<script type="text/javascript" id="js">
+  $$(document).ready(function() {
+  // call the tablesorter plugin
+      $$("#rpctable").dataTable({
+        "bProcessing": true,
+        "bStateSave": true,
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bDeferRender": true,
+        "sAjaxSource": "${ajexSrc}"
+      });
+}); </script>
+""")
+
+def test_sub():
+  print data_table_large_list_init_setup.substitute(ajexSrc="Test")
+
+data_table_record_init_setup = """
 <script type="text/javascript" id="js">
   $(document).ready(function() {
   // call the tablesorter plugin
@@ -93,9 +111,21 @@ dthead_rpc = """
         "bStateSave": true,
         "bSort": false
       });
-
 }); </script>
 """
+
+def outputDataListTableHeader(output):
+  output.write("%s\n" % data_table_reference)
+  output.write("%s\n" % data_table_list_init_setup)
+
+def outputLargeDataListTableHeader(output, src):
+  output.write("%s\n" % data_table_reference)
+  initSet = data_table_large_list_init_setup.substitute(ajexSrc=src)
+  output.write("%s\n" % initSet)
+
+def outputDataRecordTableHeader(output):
+  output.write("%s\n" % data_table_reference)
+  output.write("%s\n" % data_table_record_init_setup)
 
 def outputFileEntryTableList(output):
   #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
@@ -109,16 +139,28 @@ def outputFileEntryTableList(output):
   output.write("</thead>\n")
 
 dox_url = "http://code.osehra.org/dox/"
-def getRPCHRefLink(value):
-  return "<a href=\"%s.html\">%s</a>" % (safeFileName(value), value)
 
-def getRoutineHRefLink(routineName):
+def getDataEntryHtmlFile(dataEntry, ien, fileNo):
+  entryName = str(dataEntry.name)
+  return getDataEntryHtmlFileByName(entryName, ien, fileNo)
+
+def getDataEntryHtmlFileByName(entryName, ien, fileNo):
+  entryName = entryName[:20] # max 20 chars
+  return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
+
+def getFileHtmlLink(dataEntry, value):
+  entryName = str(value)
+  htmlFile = getDataEntryHtmlFileByName(entryName, dataEntry.ien,
+                                        dataEntry.fileNo)
+  return "<a href=\"%s\">%s</a>" % (htmlFile, value)
+
+def getRoutineHRefLink(dataEntry, routineName):
   from WebPageGenerator import getRoutineHtmlFileName
   return "<a href=\"%s%s\">%s</a>" % (dox_url,
                                       getRoutineHtmlFileName(routineName),
                                       routineName)
 
-def getWordProcessingDataBrief(value):
+def getWordProcessingDataBrief(dataEntry, value):
   return getWordProcessingData(value, False)
 def getWordProcessingData(value, isList=True):
   outValue = " ".join(value)
@@ -126,22 +168,44 @@ def getWordProcessingData(value, isList=True):
     outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
   return outValue
 
+def getFileManFilePointerLink(dataEntry, value):
+  if value:
+    fields = value.split(';')
+    if len(fields) == 3: # fileNo, ien, name
+      refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
+      value = '<a href="%s">%s</a>' % (refFile, fields[-1])
+    elif len(fields) == 2:
+      value = 'File: %s, IEN: %s' % (fields[0], fields[1])
+    else:
+      logging.error("Unknown File Pointer Value %s" % value)
+  return value
 """
+fields and logic to convert to html for RPC List
 """
-rpc_list_fields = (('.01', getRPCHRefLink), # Name
-                   ('.02', None), # Tag
-                   ('.03', getRoutineHRefLink), # Routine
-                   ('.05', None),# Availability
-                   ('1', getWordProcessingDataBrief),# Description
+rpc_list_fields = (("Name", '.01', getFileHtmlLink), # Name
+                   ("Tag", '.02', None), # Tag
+                   ("Routine", '.03', getRoutineHRefLink), # Routine
+                   ("Availability", '.05', None),# Availability
+                   ("Description", '1', getWordProcessingDataBrief),# Description
                    )
 
-def writeRPCTableInfo(output):
-  #output.write("<table id=\"rpctable\" class=\"tablesorter\">\n")
+"""
+fields and logic to convert to html for HL7 List
+"""
+hl7_list_fields = (
+                   ("Name", '.01', getFileHtmlLink), # Name
+                   ("Type", '4', None), # Type
+                   ("Event Type", '770.4', getFileManFilePointerLink), # Event Type
+                   ("Sendor", '770.1', getFileManFilePointerLink),# Sending Application
+                   ("Receiver", '770.2', getFileManFilePointerLink),# Receiving Application
+                   )
+
+def outputDataTableHeader(output, name_list):
   output.write("<div id=\"demo\">")
   output.write("<table id=\"rpctable\" class=\"display\">\n")
   output.write("<thead>\n")
   output.write("<tr>\n")
-  for name in ("Name", "Tag", "Routine", "Availability", "Description"):
+  for name in name_list:
     output.write("<th>%s</th>\n" % name)
   output.write("</tr>\n")
   output.write("</thead>\n")
@@ -157,32 +221,48 @@ def writeTableListInfo(output):
   output.write("</tr>\n")
   output.write("</thead>\n")
 
-def generateRPCListHtml(dataEntryLst, outputName, dir):
+def generateRPCListHtml(dataEntryLst, pkgName, dir):
   """
     Specific logic to handle RPC List
     @TODO move the logic to a specific file
   """
-  with open("%s/%s.html" % (dir, outputName), 'w+') as output:
+
+  return generateDataListByPackage(dataEntryLst,
+                                   pkgName, dir,
+                                   rpc_list_fields, "RPC")
+
+def generateHL7ListByPackage(dataEntryLst, pkgName, dir):
+  """
+    Specific logic to handle HL7 List
+    @TODO move the logic to a specific file
+  """
+  return generateDataListByPackage(dataEntryLst,
+                                   pkgName, dir,
+                                   hl7_list_fields, "HL7")
+
+def generateDataListByPackage(dataEntryLst, packageName, dir, list_fields, listName):
+  with open("%s/%s.html" % (dir, packageName), 'w+') as output:
       output.write("<html>\n")
-      output.write("%s\n" % dthead)
+      outputDataListTableHeader(output)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
-      output.write("<h1>Package: %s RPC List</h1>" % (getPackageHRefLink(outputName)))
-      writeRPCTableInfo(output)
+      output.write("<h1>Package: %s %s List</h1>" % (getPackageHRefLink(packageName), listName))
+      outputDataTableHeader(output, [x[0] for x in list_fields])
       """ table body """
       output.write("<tbody>\n")
       for dataEntry in dataEntryLst:
-        tableRow = [""]*len(rpc_list_fields)
+        tableRow = [""]*len(list_fields)
         allFields = dataEntry.fields
         output.write("<tr>\n")
-        for idx, id in enumerate(rpc_list_fields):
-          if id[0] in allFields:
-            value = allFields[id[0]].value
-            if id[1]:
-              value = id[1](value)
+        for idx, id in enumerate(list_fields):
+          if id[1] in allFields:
+            value = allFields[id[1]].value
+            if id[-1]:
+              value = id[-1](dataEntry, value)
             tableRow[idx] = value
         for item in tableRow:
-          output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+          #output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+          output.write("<td>%s</td>\n" % item)
         output.write("</tr>\n")
       output.write("</tbody>\n")
       output.write("</table>\n")
@@ -197,18 +277,12 @@ def getPackageHRefLink(pkgName):
                                        pkgName)
   return value
 
-def getDataEntryHtmlFile(dataEntry, ien, fileNo):
-  entryName = str(dataEntry.name)
-  return getDataEntryHtmlFileByName(entryName, ien, fileNo)
-
-def getDataEntryHtmlFileByName(entryName, ien, fileNo):
-  entryName = entryName[:20] # max 20 chars
-  return safeFileName("%s-%s-%s" % (fileNo, ien, entryName)) + ".html"
-
 def generateDataTableHtml(fileManData, fileNo, dir):
+  if len(fileManData.dataEntries) > 4500:
+    return generateLargeDataTableHtml(fileManData, fileNo, dir)
   with open("%s/%s.html" % (dir, fileNo), 'w') as output:
     output.write("<html>\n")
-    output.write("%s\n" % dthead)
+    outputDataListTableHeader(output)
     output.write("<body id=\"dt_example\">")
     output.write("""<div id="container" style="width:80%">""")
     output.write("<h1>File %s Data List</h1>" % (fileNo))
@@ -217,7 +291,7 @@ def generateDataTableHtml(fileManData, fileNo, dir):
     for ien in getKeys(fileManData.dataEntries.keys(), float):
       dataEntry = fileManData.dataEntries[ien]
       if not dataEntry.name:
-        logging.info("no name for %s" % dataEntry)
+        logging.warn("no name for %s" % dataEntry)
         continue
       dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
                                                 dataEntry.name)
@@ -233,16 +307,50 @@ def generateDataTableHtml(fileManData, fileNo, dir):
     output.write("</div>\n")
     output.write ("</body></html>\n")
 
+def generateLargeDataTableHtml(fileManData, fileNo, dir):
+  """ Use DataTable Ajax source """
+  """ Write the html file first """
+  ajexSrc = "%s_array.txt" % fileNo
+  import json
+  logging.info("Ajex source file: %s" % ajexSrc)
+  with open(os.path.join(dir, "%s.html" % fileNo), 'w') as output:
+    output.write("<html>\n")
+    outputLargeDataListTableHeader(output, ajexSrc)
+    output.write("<body id=\"dt_example\">")
+    output.write("""<div id="container" style="width:80%">""")
+    output.write("<h1>File %s Data List</h1>" % (fileNo))
+    writeTableListInfo(output)
+    """ empty table body """
+    output.write("<tbody>\n")
+    output.write("</tbody>\n")
+    output.write("</table>\n")
+    output.write("</div>\n")
+    output.write("</div>\n")
+    output.write ("</body></html>\n")
+  """ Write out the data file in JSON format """
+  outJson = {"aaData": []}
+  with open(os.path.join(dir, ajexSrc), 'w') as output:
+    outArray =  outJson["aaData"]
+    for ien in getKeys(fileManData.dataEntries.keys(), float):
+      dataEntry = fileManData.dataEntries[ien]
+      if not dataEntry.name:
+        logging.warn("no name for %s" % dataEntry)
+        continue
+      dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                dataEntry.name)
+      outArray.append([dataHtmlLink, ien])
+    json.dump(outJson, output)
+
 def convertFileManDataToHtml(fileManData, dir):
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
     if not dataEntry.name:
-      logging.info("no name for %s" % dataEntry)
+      logging.warn("no name for %s" % dataEntry)
       continue
     outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
     with open("%s/%s" % (dir, outHtmlFileName), 'w') as output:
       output.write ("<html>")
-      output.write ("%s\n" % dthead_rpc)
+      outputDataRecordTableHeader(output)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       output.write ("<h1>%s (%s)</h1>\n" % (dataEntry.name, ien))
@@ -275,7 +383,7 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     name, value = dataField.name, dataField.value
     """ hack for RPC """
     if isRoot and fldId == '.03' and dataField.name == "ROUTINE":
-      value = getRoutineHRefLink(value)
+      value = getRoutineHRefLink(dataEntry, value)
     elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if value and value.dataEntries:
         if isRoot:
@@ -295,7 +403,7 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
         fields = value.split(';')
         if len(fields) == 3: # fileNo, ien, name
           refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
-          value = '<a href="%s">%s<a>' % (refFile, fields[-1])
+          value = '<a href="%s">%s</a>' % (refFile, fields[-1])
         elif len(fields) == 2:
           value = 'File: %s, IEN: %s' % (fields[0], fields[1])
         else:
@@ -329,5 +437,19 @@ def outputFileManDataAsHtml(fileManDataMap, outDir, crossRef):
             logging.info("generating RPC list for package: %s"
                          % package.getName())
             generateRPCListHtml(package.rpcs, package.getName(), outDir)
+    elif fileNo == '101':
+      if crossRef:
+        allPackages = crossRef.getAllPackages()
+        for package in allPackages.itervalues():
+          if package.hl7:
+            logging.info("generating HL7 list for package: %s"
+                         % package.getName())
+            generateHL7ListByPackage(package.hl7, package.getName(), outDir)
     generateDataTableHtml(fileManData, fileNo, outDir)
     convertFileManDataToHtml(fileManData, outDir)
+
+def main():
+  test_sub()
+
+if __name__ == '__main__':
+  main()
