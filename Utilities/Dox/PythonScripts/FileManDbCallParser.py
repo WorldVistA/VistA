@@ -137,7 +137,7 @@ def createFileManDBFileAugumentParser(isRequired=True):
 
 def parseFileManDBJSONFile(crossRef, fileManJsonFile, isRequired=True):
     fileDbCallParser = FileManDbCallParser(crossRef)
-    fileDbCallParser.parseFileManDbJSONFile(fileManJsonFile, isRequired)
+    fileDbCallParser.parseFileManDbJSONFile(fileManJsonFile)
     return fileDbCallParser
 
 if __name__ == '__main__':
