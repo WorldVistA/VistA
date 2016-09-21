@@ -632,13 +632,12 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-
 def testGlobalParser(crosRef=None):
   parser = createArgParser()
   result = parser.parse_args()
   print result
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
-  from FileManDataToHtml import outputFileManDataAsHtml
+  from FileManDataToHtml import FileManDataToHtml
   crossRef = parseCrossRefGeneratorWithArgs(result)
   glbDataParser = FileManGlobalDataParser(crossRef)
   #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
@@ -653,6 +652,7 @@ def testGlobalParser(crosRef=None):
   glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
                                              allSchemaDict, '1', '^DIC(')
   assert result.fileNo in glbDataParser.globalLocationMap
+  htmlGen = FileManDataToHtml(crossRef, result.outdir)
   if not result.all or result.fileNo in isolatedFiles:
     gdFile = allFiles[result.fileNo]['path']
     logging.info("Parsing file: %s at %s" % (result.fileNo, gdFile))
@@ -660,7 +660,7 @@ def testGlobalParser(crosRef=None):
                                                allSchemaDict,
                                                result.fileNo)
     if result.outdir:
-      outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+      htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
     else:
       fileManDataMap = glbDataParser.outFileManData
       for fileNo in getKeys(fileManDataMap.iterkeys(), float):
@@ -690,7 +690,7 @@ def testGlobalParser(crosRef=None):
                                                  allSchemaDict,
                                                  file)
       if result.outdir:
-        outputFileManDataAsHtml(glbDataParser.outFileManData, result.outdir, crossRef)
+        htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
       del glbDataParser.outFileManData[file]
 
 
