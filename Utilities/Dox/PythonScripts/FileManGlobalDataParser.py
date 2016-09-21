@@ -31,6 +31,7 @@ if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
 from FileManDateTimeUtil import fmDtToPyDt
+from PatchOrderGenerator import PatchOrderGenerator
 import glob
 
 """ These are used to capture install entries that don't use the
@@ -611,44 +612,55 @@ class FileManGlobalDataParser(object):
             rpcInfo['tag'] = rpcTag
           self._rtnRefDict.setdefault(rpcRoutine,{}).setdefault('8994',[]).append(rpcInfo)
 
+  def _findInstallPackage(self,packageList, installEntryName):
+    namespace, package = self._crossRef.__categorizeVariableNameByNamespace__(installEntryName)
+    # A check to remove the mis-categorized installs which happen to fall in a namespace
+    if installEntryName in INSTALL_PACKAGE_FIX:
+      package = INSTALL_PACKAGE_FIX[installEntryName]
+    # If it cannot match a package by namespace, capture the name via Regular Expression
+    if package is None:
+      pkgMatch = re.match("[A-Z./ \&\-\']+",installEntryName)
+      if pkgMatch:
+        # if a match is found, switch to title case and remove extra spaces
+        targetName = pkgMatch.group(0).title().strip()
+        # First check it against the list of package names
+        if targetName in packageList:
+          package = targetName
+        # Then check it against the dictionary above for some odd spellings or capitalization
+        elif targetName in INSTALL_RENAME_DICT:
+          package = INSTALL_RENAME_DICT[targetName]
+        # If all else fails, assign it to the "Unknown"
+        else:
+          package = "Unknown"
+    package = str(package).strip()
+    return package
+
   def _updateInstallReference(self):
     installData = self._glbData['9.7']
     output = os.path.join(self.outDir, "install_information.json")
     installJSONData = {}
     packageList = self._crossRef.getAllPackages()
+    patchOrderGen = PatchOrderGenerator()
+    patchOrderGen.analyzeVistAPatchDir(self.patchDir +"/Packages")
     with open(output, 'w') as installDataOut:
       for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
         installItem = {}
         installEntry = installData.dataEntries[ien]
-        namespace, package = \
-        self._crossRef.__categorizeVariableNameByNamespace__(installEntry.name)
-        # A check to remove the mis-categorized installs which happen to fall in a namespace
-        if installEntry.name in INSTALL_PACKAGE_FIX:
-          package = INSTALL_PACKAGE_FIX[installEntry.name]
-        # If it cannot match a package by namespace, capture the name via Regular Expression
-        if package is None:
-          pkgMatch = re.match("[A-Z./ \&\-\']+",installEntry.name)
-          if pkgMatch:
-            # if a match is found, switch to title case and remove extra spaces
-            targetName = pkgMatch.group(0).title().strip()
-            # First check it against the list of package names
-            if targetName in packageList:
-              package = targetName
-            # Then check it against the dictionary above for some odd spellings or capitalization
-            elif targetName in INSTALL_RENAME_DICT:
-              package = INSTALL_RENAME_DICT[targetName]
-            # If all else fails, assign it to the "Unknown"
-            else:
-              package = "Unknown"
-        package = str(package).strip()
+        package = self._findInstallPackage(packageList, installEntry.name)
         # if this is the first time the package is found, add an entry in the install JSON data.
         if package not in installJSONData:
           installJSONData[package]=[]
         if installEntry.name:
-          print package
-          print installEntry.name
           installItem['name'] = installEntry.name
           installItem['ien'] = installEntry.ien
+          installItem['label'] = installEntry.name
+          installItem['value'] = len(installJSONData[package])
+          if installEntry.name in patchOrderGen._kidsDepBuildDict:
+            installchildren = []
+            for child in patchOrderGen._kidsDepBuildDict[installEntry.name]:
+              childPackage = self._findInstallPackage(packageList,child)
+              installchildren.append({"name": child, "package": childPackage});
+            installItem['children'] = installchildren
           if '11' in installEntry.fields:
             installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
           if '1' in installEntry.fields:
@@ -883,6 +895,8 @@ def testGlobalParser(crosRef=None):
     assert fileNo in glbDataParser.globalLocationMap
   if result.outdir:
     glbDataParser.outDir = result.outdir
+  if result.patchRepositDir:
+    glbDataParser.patchDir = result.patchRepositDir
   htmlGen = FileManDataToHtml(crossRef, result.outdir)
   if not result.all or set(result.fileNos).issubset(isolatedFiles):
     for fileNo in result.fileNos:
