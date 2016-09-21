@@ -304,6 +304,7 @@ regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>([A-Z0-9][A-Z0-9]*)?)\
 #regDoRtn = "D((:'?\$\$)|( )|(,))%s" % regTagRtnInfo
 #print regDoRtn
 #regexRtnCode = re.compile(regDoRtn)
+from FileManGlobalDataParser import getMumpsRoutine
 def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   """
     For a giving Mumps code, it use regular expression
@@ -311,21 +312,15 @@ def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
     and covert html routines to html format
   """
   output = ""
-  pos = 0
+  startpos = 0
   endpos = 0
-  for result in regexRtnCode.finditer(inputString):
-    if result:
-      routine = result.group('rtn')
-      if routine:
-        tag = result.group('tag')
-        start, end = result.span('rtn')
-        endpos = result.end()
-        output += (inputString[pos:start] +
-                   getRoutineHRefLink(None, routine, crossRef=crosRef) +
-                   inputString[end:endpos])
-        pos = endpos
-  if endpos != 0 and endpos < len(inputString):
-    output += inputString[endpos:]
+  for routine, tag, start in getMumpsRoutine(inputString):
+    if routine:
+      output += (inputString[startpos:start] +
+                 getRoutineHRefLink(None, routine, crossRef=crosRef))
+      startpos = start + len(routine)
+  if startpos < len(inputString):
+    output += inputString[startpos:]
   if output:
     return output
   else:
