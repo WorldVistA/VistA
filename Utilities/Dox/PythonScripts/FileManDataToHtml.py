@@ -278,75 +278,60 @@ def getPackageHRefLink(pkgName):
   return value
 
 def generateDataTableHtml(fileManData, fileNo, dir):
-  if len(fileManData.dataEntries) > 4500:
-    return generateLargeDataTableHtml(fileManData, fileNo, dir)
+  isLargeFile = len(fileManData.dataEntries) > 4500
   with open("%s/%s.html" % (dir, fileNo), 'w') as output:
     output.write("<html>\n")
-    outputDataListTableHeader(output)
+    if isLargeFile:
+      ajexSrc = "%s_array.txt" % fileNo
+      outputLargeDataListTableHeader(output, ajexSrc)
+    else:
+      outputDataListTableHeader(output)
     output.write("<body id=\"dt_example\">")
     output.write("""<div id="container" style="width:80%">""")
-    output.write("<h1>File %s Data List</h1>" % (fileNo))
+    output.write("<h1>File %s(%s) Data List</h1>" % (fileManData.name, fileNo))
     writeTableListInfo(output)
-    output.write("<tbody>\n")
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
-      dataEntry = fileManData.dataEntries[ien]
-      if not dataEntry.name:
-        logging.warn("no name for %s" % dataEntry)
-        continue
-      name = dataEntry.name
-      if isFilePointerType(dataEntry):
-        link, name = convertFilePointerToHtml(dataEntry.name)
-      dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                name)
-      tableRow = [dataHtmlLink, dataEntry.ien]
-      output.write("<tr>\n")
-      """ table body """
-      for item in tableRow:
-        output.write("<td class=\"ellipsis\">%s</td>\n" % item)
-      output.write("</tr>\n")
+    if not isLargeFile:
+      output.write("<tbody>\n")
+      for ien in getKeys(fileManData.dataEntries.keys(), float):
+        dataEntry = fileManData.dataEntries[ien]
+        if not dataEntry.name:
+          logging.warn("no name for %s" % dataEntry)
+          continue
+        name = dataEntry.name
+        if isFilePointerType(dataEntry):
+          link, name = convertFilePointerToHtml(dataEntry.name)
+        dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                  name)
+        tableRow = [dataHtmlLink, dataEntry.ien]
+        output.write("<tr>\n")
+        """ table body """
+        for item in tableRow:
+          output.write("<td class=\"ellipsis\">%s</td>\n" % item)
+        output.write("</tr>\n")
     output.write("</tbody>\n")
     output.write("</table>\n")
     output.write("</div>\n")
     output.write("</div>\n")
     output.write ("</body></html>\n")
-
-def generateLargeDataTableHtml(fileManData, fileNo, dir):
-  """ Use DataTable Ajax source """
-  """ Write the html file first """
-  ajexSrc = "%s_array.txt" % fileNo
-  import json
-  logging.info("Ajex source file: %s" % ajexSrc)
-  with open(os.path.join(dir, "%s.html" % fileNo), 'w') as output:
-    output.write("<html>\n")
-    outputLargeDataListTableHeader(output, ajexSrc)
-    output.write("<body id=\"dt_example\">")
-    output.write("""<div id="container" style="width:80%">""")
-    output.write("<h1>File %s Data List</h1>" % (fileNo))
-    writeTableListInfo(output)
-    """ empty table body """
-    output.write("<tbody>\n")
-    output.write("</tbody>\n")
-    output.write("</table>\n")
-    output.write("</div>\n")
-    output.write("</div>\n")
-    output.write ("</body></html>\n")
-  """ Write out the data file in JSON format """
-  outJson = {"aaData": []}
-  with open(os.path.join(dir, ajexSrc), 'w') as output:
-    outArray =  outJson["aaData"]
-    for ien in getKeys(fileManData.dataEntries.keys(), float):
-      dataEntry = fileManData.dataEntries[ien]
-      if not dataEntry.name:
-        logging.warn("no name for %s" % dataEntry)
-        continue
-      name = dataEntry.name
-      if isFilePointerType(dataEntry):
-        link, name = convertFilePointerToHtml(dataEntry.name)
-      dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                name)
-      outArray.append([dataHtmlLink, ien])
-    json.dump(outJson, output)
-
+  if isLargeFile:
+    import json
+    logging.info("Ajex source file: %s" % ajexSrc)
+    """ Write out the data file in JSON format """
+    outJson = {"aaData": []}
+    with open(os.path.join(dir, ajexSrc), 'w') as output:
+      outArray =  outJson["aaData"]
+      for ien in getKeys(fileManData.dataEntries.keys(), float):
+        dataEntry = fileManData.dataEntries[ien]
+        if not dataEntry.name:
+          logging.warn("no name for %s" % dataEntry)
+          continue
+        name = dataEntry.name
+        if isFilePointerType(dataEntry):
+          link, name = convertFilePointerToHtml(dataEntry.name)
+        dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
+                                                  name)
+        outArray.append([dataHtmlLink, ien])
+      json.dump(outJson, output)
 def isFilePointerType(dataEntry):
   if dataEntry and dataEntry.type:
     return ( dataEntry.type == FileManField.FIELD_TYPE_FILE_POINTER or
@@ -358,13 +343,18 @@ def convertFileManDataToHtml(fileManData, dir):
     if not dataEntry.name:
       logging.warn("no name for %s" % dataEntry)
       continue
+    name = dataEntry.name
+    if isFilePointerType(dataEntry):
+      link, name = convertFilePointerToHtml(dataEntry.name)
     outHtmlFileName = getDataEntryHtmlFile(dataEntry, ien, fileManData.fileNo)
     with open("%s/%s" % (dir, outHtmlFileName), 'w') as output:
       output.write ("<html>")
       outputDataRecordTableHeader(output)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
-      output.write ("<h1>%s (%s)</h1>\n" % (dataEntry.name, ien))
+      output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
+                                                        fileManData.name,
+                                                        fileManData.fileNo))
       outputFileEntryTableList(output)
       """ table body """
       output.write("<tbody>\n")
@@ -412,6 +402,7 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     elif (fieldType == FileManField.FIELD_TYPE_FILE_POINTER or
           fieldType == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER) :
       if value:
+        origVal = value
         value, tmp = convertFilePointerToHtml(value)
     elif fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
