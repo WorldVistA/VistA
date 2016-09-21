@@ -21,7 +21,7 @@ import logging
 from CrossReference import FileManFile, FileManFieldFactory
 from CrossReference import FileManField, Global
 from ZWRGlobalParser import createGlobalNodeByZWRFile, getKeys
-from ZWRGlobalParser import readGlobalNodeFromZWRFile, printGlobal
+from ZWRGlobalParser import readGlobalNodeFromZWRFileV2, printGlobal
 
 FILE_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
@@ -275,7 +275,7 @@ class FileManSchemaParser(object):
     return outList
 
   def parseSchemaDDFileV2(self, inputDDZWRFile):
-    for ddRoot in readGlobalNodeFromZWRFile(inputDDZWRFile):
+    for ddRoot in readGlobalNodeFromZWRFileV2(inputDDZWRFile, '^DD'):
       self._ddRoot = ddRoot
       #logging.info("Printing Global Node:")
       #printGlobal(ddRoot)
