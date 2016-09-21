@@ -938,6 +938,7 @@ class Package(object):
         self.rpcs = []
         self.hl7 = []
         self.protocol = []
+        self.hlo = []
     def addRoutine(self, Routine):
         self._routines[Routine.getName()] = Routine
         Routine.setPackage(self)

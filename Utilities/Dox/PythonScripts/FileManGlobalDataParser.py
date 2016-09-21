@@ -467,6 +467,8 @@ class FileManGlobalDataParser(object):
       self._updateRPCRefence()
     if '101' in self._glbData:
       self._updateHL7Reference()
+    if '779.2' in self._glbData:
+      self._updateHLOReference()
 
   def outRtnReferenceDict(self):
     if len(self._rtnRefDict):
@@ -475,6 +477,18 @@ class FileManGlobalDataParser(object):
       with open(os.path.join(self.outDir, "Routine-Ref.json"), 'w') as output:
         logging.info("Generate File: %s" % output.name)
         json.dump(self._rtnRefDict, output)
+
+  def _updateHLOReference(self):
+    hlo = self._glbData['779.2']
+    for ien in sorted(hlo.dataEntries.keys(),key=lambda x: float(x)):
+      hloEntry = hlo.dataEntries[ien]
+      entryName = hloEntry.name
+      namespace, package = \
+        self._crossRef.__categorizeVariableNameByNamespace__(entryName)
+      if package:
+        package.hlo.append(hloEntry)
+        logging.info("Adding hlo: %s to Package: %s" %
+                     (entryName, package.getName()))
 
   def _updateHL7Reference(self):
     protocol = self._glbData['101']
@@ -491,7 +505,6 @@ class FileManGlobalDataParser(object):
             package.protocol.append(protocolEntry)
             logging.info("Adding Protocol Entry: %s to Package: %s" %
                          (entryName, package.getName()))
-            print package
         # only care about the event drive and subscriber type
         elif (type == 'event driver' and type == 'subscriber'):
           entryName = protocolEntry.name
