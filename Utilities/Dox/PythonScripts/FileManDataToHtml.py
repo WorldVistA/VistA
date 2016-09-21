@@ -299,7 +299,11 @@ def isFilePointerType(dataEntry):
              dataEntry.type == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER )
   return False
 
-regexRtnCode = re.compile("( ?D |[ :',]\$\$)(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+#regTagRtnInfo = "(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)"
+#regDoRtn = "D((:'?\$\$)|( )|(,))%s" % regTagRtnInfo
+#print regDoRtn
+#regexRtnCode = re.compile(regDoRtn)
 def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   """
     For a giving Mumps code, it use regular expression
@@ -668,11 +672,11 @@ def test_safeElementId():
 
 def test_getRoutineName():
   for input in (
-      '%ZTLOAD',
-      '^%ZTLOAD1',
-      'TST^ZNTLFF',
+      ('%ZTLOAD', '%ZTLOAD'),
+      ('^%ZTLOAD1', '%ZTLOAD1'),
+      ('TST^ZNTLFF', 'ZNTLFF'),
       ):
-    print getRoutineName(input)
+    assert getRoutineName(input[0]) == input[1], "%s, %s" % (input[0], input[1])
 
 def test_getMumpsRoutineHtmlLink():
   for input in (
@@ -687,6 +691,7 @@ def test_getMumpsRoutineHtmlLink():
     """W:'$$TM^%ZTLOAD() *7,!!,"WARNING -- TASK MANAGER DOESN'T!!!!",!!,*7""",
     """W "This is a Test",$$TM^ZTLOAD()""",
     """D ^PSIVXU Q:$D(XQUIT) D EN^PSIVSTAT,NOW^%DTC S ^PS(50.8,1,.2)=% K %""",
+    """D ^TEST1,EN^TEST2""",
   ):
     print getMumpsRoutineHtmlLinks(input)
 
