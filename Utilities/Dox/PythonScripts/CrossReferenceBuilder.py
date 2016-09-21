@@ -41,15 +41,17 @@ def createCrossReferenceLogArgumentParser():
 class CrossReferenceBuilder(object):
     def __init__(self):
         pass
-    def buildCrossReferenceWithArgs(self, arguments):
+    def buildCrossReferenceWithArgs(self, arguments, pkgDepJson=None):
+        print pkgDepJson
         return self.buildCrossReference(arguments.xindexLogDir,
                                         arguments.MRepositDir,
                                         arguments.patchRepositDir,
                                         arguments.fileSchemaDir,
-                                        arguments.filemanDbJson)
+                                        arguments.filemanDbJson,
+                                        pkgDepJson)
     def buildCrossReference(self, xindexLogDir, MRepositDir,
                             patchRepositDir, fileSchemaDir=None,
-                            filemanDbJson=None):
+                            filemanDbJson=None, pkgDepJson=None):
 
         crossRef = parseCrossReferenceGeneratorArgs(MRepositDir,
                                                     patchRepositDir)
@@ -63,7 +65,8 @@ class CrossReferenceBuilder(object):
         if filemanDbJson:
             crossRef = parseFileManDBJSONFile(crossRef,
                                    filemanDbJson).getCrossReference()
-        crossRef.generateAllPackageDependencies()
+        if pkgDepJson:
+          crossRef.generateAllPackageDependencies(os.path.abspath(pkgDepJson))
         return crossRef
     def buildCrossReferenceFromMongoDB(self):
         pass
@@ -73,11 +76,14 @@ def main():
     parser = argparse.ArgumentParser(
           description='VistA Cross-Reference Builder',
           parents=[crossRefParse])
+    parser.add_argument('-pj', '--pkgDepJson',
+                        help='Output JSON file for package dependencies')
     result = parser.parse_args()
+    print result
     from LogManager import initConsoleLogging
     initConsoleLogging()
     crossRefBlder = CrossReferenceBuilder()
-    crossRefBlder.buildCrossReferenceWithArgs(result)
+    crossRefBlder.buildCrossReferenceWithArgs(result, result.pkgDepJson)
 
 """
     main entry

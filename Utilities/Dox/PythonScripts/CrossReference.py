@@ -1470,11 +1470,34 @@ class CrossReference:
             if routineName in self._allRoutines:
                 logger.info("Removing Routine: %s" % routineName)
                 self._allRoutines.pop(routineName)
-    def generateAllPackageDependencies(self):
+    def generateAllPackageDependencies(self, outputJsonFile=None):
         self.__fixPlatformDependentRoutines__()
         self.__generatePlatformDependentRoutineDependencies__()
         for package in self._allPackages.itervalues():
             package.generatePackageDependencies()
+        # output dependency information in json format
+        if outputJsonFile:
+          self._outputAllPackageDependency('json', outputJsonFile)
+
+    def _outputAllPackageDependency(self, fileformat, outputFile):
+        if fileformat == 'json':
+          outJson = []
+          for pkg in self._allPackages.itervalues():
+            pkgjson = {'name': pkg.getName()}
+            dependency = set();
+            for depPkgs in [pkg.getPackageRoutineDependencies(),
+                            pkg.getPackageGlobalDependencies(),
+                            pkg.getPackageFileManFileDependencies(),
+                            pkg.getPackageFileManDbCallDependencies()]:
+              for depPkg in depPkgs:
+                if depPkg.getName() not in dependency:
+                  dependency.add(depPkg.getName())
+            if dependency:
+              pkgjson['depends'] = list(dependency)
+            outJson.append(pkgjson)
+          with open(outputFile, "w") as output:
+            import json
+            json.dump(outJson, output)
 
 def testPackage():
     packageA = Package("A")
