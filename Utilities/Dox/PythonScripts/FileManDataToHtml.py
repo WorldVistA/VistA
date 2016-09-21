@@ -170,7 +170,7 @@ def getWordProcessingData(value, isList=True):
 
 def getFileManFilePointerLink(dataEntry, value):
   if value:
-    fields = value.split(';')
+    fields = value.split('^')
     if len(fields) == 3: # fileNo, ien, name
       refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
       value = '<a href="%s">%s</a>' % (refFile, fields[-1])
@@ -293,8 +293,11 @@ def generateDataTableHtml(fileManData, fileNo, dir):
       if not dataEntry.name:
         logging.warn("no name for %s" % dataEntry)
         continue
+      name = dataEntry.name
+      if isFilePointerType(dataEntry):
+        link, name = convertFilePointerToHtml(dataEntry.name)
       dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                dataEntry.name)
+                                                name)
       tableRow = [dataHtmlLink, dataEntry.ien]
       output.write("<tr>\n")
       """ table body """
@@ -336,11 +339,19 @@ def generateLargeDataTableHtml(fileManData, fileNo, dir):
       if not dataEntry.name:
         logging.warn("no name for %s" % dataEntry)
         continue
+      name = dataEntry.name
+      if isFilePointerType(dataEntry):
+        link, name = convertFilePointerToHtml(dataEntry.name)
       dataHtmlLink = "<a href=\"%s\">%s</a>" % (getDataEntryHtmlFile(dataEntry, ien, fileNo),
-                                                dataEntry.name)
+                                                name)
       outArray.append([dataHtmlLink, ien])
     json.dump(outJson, output)
 
+def isFilePointerType(dataEntry):
+  if dataEntry and dataEntry.type:
+    return ( dataEntry.type == FileManField.FIELD_TYPE_FILE_POINTER or
+             dataEntry.type == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER )
+  return False
 def convertFileManDataToHtml(fileManData, dir):
   for ien in getKeys(fileManData.dataEntries.keys(), float):
     dataEntry = fileManData.dataEntries[ien]
@@ -376,8 +387,6 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
   if not isRoot:
     output.write ("<li>\n")
   for fldId in sorted(dataEntry.fields.keys(), key=lambda x: float(x)):
-    if isRoot:
-      output.write ("<tr>\n")
     dataField = dataEntry.fields[fldId]
     fieldType = dataField.type
     name, value = dataField.name, dataField.value
@@ -387,6 +396,7 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
     elif fieldType == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if value and value.dataEntries:
         if isRoot:
+          output.write ("<tr>\n")
           output.write("<td>%s</td>\n" % name)
           output.write("<td>\n")
         else:
@@ -395,23 +405,19 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
         convertFileManSubFileDataToHtml(output, value)
         if isRoot:
           output.write("</td>\n")
+          output.write ("</tr>\n")
         else:
           output.write ("</dd></dl>\n")
       continue
-    elif fieldType == FileManField.FIELD_TYPE_FILE_POINTER:
+    elif (fieldType == FileManField.FIELD_TYPE_FILE_POINTER or
+          fieldType == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER) :
       if value:
-        fields = value.split(';')
-        if len(fields) == 3: # fileNo, ien, name
-          refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
-          value = '<a href="%s">%s</a>' % (refFile, fields[-1])
-        elif len(fields) == 2:
-          value = 'File: %s, IEN: %s' % (fields[0], fields[1])
-        else:
-          logging.error("Unknown File Pointer Value %s" % dataField.value)
+        value, tmp = convertFilePointerToHtml(value)
     elif fieldType == FileManField.FIELD_TYPE_WORD_PROCESSING:
       value = "\n".join(value)
       value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
     if isRoot:
+      output.write ("<tr>\n")
       output.write ("<td>%s</td>\n" % name)
       output.write ("<td>%s</td>\n" % value)
       output.write ("</tr>\n")
@@ -421,6 +427,24 @@ def fileManDataEntryToHtml(output, dataEntry, isRoot):
   if not isRoot:
     output.write("</li>\n")
 
+def convertFilePointerToHtml(inputValue):
+  value = inputValue
+  name = inputValue
+  fields = inputValue.split('^')
+  if len(fields) == 3: # fileNo, ien, name
+    refFile = getDataEntryHtmlFileByName(fields[2], fields[1], fields[0])
+    value = '<a href="%s">%s</a>' % (refFile, fields[-1])
+    name = fields[-1]
+  elif len(fields) == 2:
+    value = 'File: %s, IEN: %s' % (fields[0], fields[1])
+    name = value
+  else:
+    logging.error("Unknown File Pointer Value %s" % inputValue)
+  return value, name
+def test_convertFilePointerToHtml():
+  input = ('1^345^Testing', '2^345', '5')
+  for one in input:
+    print convertFilePointerToHtml(one)
 def outputFileManDataAsHtml(fileManDataMap, outDir, crossRef):
   """
     This is the entry pointer to generate Html output
@@ -450,6 +474,7 @@ def outputFileManDataAsHtml(fileManDataMap, outDir, crossRef):
 
 def main():
   test_sub()
+  test_convertFilePointerToHtml()
 
 if __name__ == '__main__':
   main()
