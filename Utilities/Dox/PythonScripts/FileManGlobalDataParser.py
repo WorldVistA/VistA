@@ -482,32 +482,41 @@ class FileManGlobalDataParser(object):
       protocolEntry = protocol.dataEntries[ien]
       if '4' in protocolEntry.fields:
         type = protocolEntry.fields['4'].value
-        if type != 'event driver' and type != 'subscriber':
-          continue
+        if (type != 'event driver' and type != 'subscriber') and (not re.search("[Mm]enu", type)):
+          logging.info("Adding Protocol Entry of type: %s" % (type))
+          entryName = protocolEntry.name
+          namespace, package = \
+            self._crossRef.__categorizeVariableNameByNamespace__(entryName)
+          if package:
+            package.protocol.append(protocolEntry)
+            logging.info("Adding Protocol Entry: %s to Package: %s" %
+                         (entryName, package.getName()))
+            print package
         # only care about the event drive and subscriber type
-        entryName = protocolEntry.name
-        namespace, package = \
-          self._crossRef.__categorizeVariableNameByNamespace__(entryName)
-        if package:
-          package.hl7.append(protocolEntry)
-          logging.info("Adding HL7: %s to Package: %s" %
-                       (entryName, package.getName()))
-        elif '12' in protocolEntry.fields: # check the packge it belongs
-          pass
-        else:
-          logging.warn("Can not find a package for HL7: %s" % entryName)
-        for field in ('771', '772'):
-          if field not in protocolEntry.fields:
-            continue
-          hl7Rtn = protocolEntry.fields[field].value
-          if not hl7Rtn:
-            continue
-          for rtn, tag, pos in getMumpsRoutine(hl7Rtn):
-            hl7Info = {"name": entryName,
-                       "ien": ien}
-            if tag:
-              hl7Info['tag'] = tag
-            self._rtnRefDict.setdefault(rtn,{}).setdefault('101',[]).append(hl7Info)
+        elif (type == 'event driver' and type == 'subscriber'):
+          entryName = protocolEntry.name
+          namespace, package = \
+            self._crossRef.__categorizeVariableNameByNamespace__(entryName)
+          if package:
+            package.hl7.append(protocolEntry)
+            logging.info("Adding HL7: %s to Package: %s" %
+                         (entryName, package.getName()))
+          elif '12' in protocolEntry.fields: # check the packge it belongs
+            pass
+          else:
+            logging.warn("Can not find a package for HL7: %s" % entryName)
+          for field in ('771', '772'):
+            if field not in protocolEntry.fields:
+              continue
+            hl7Rtn = protocolEntry.fields[field].value
+            if not hl7Rtn:
+              continue
+            for rtn, tag, pos in getMumpsRoutine(hl7Rtn):
+              hl7Info = {"name": entryName,
+                         "ien": ien}
+              if tag:
+                hl7Info['tag'] = tag
+              self._rtnRefDict.setdefault(rtn,{}).setdefault('101',[]).append(hl7Info)
 
   def _updateRPCRefence(self):
     rpcData = self._glbData['8994']
