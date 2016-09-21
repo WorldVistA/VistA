@@ -33,6 +33,10 @@ from FileManDateTimeUtil import fmDtToPyDt
 import glob
 
 class FileManFileData(object):
+  """
+    Class to represent FileMan File data WRT
+    either a FileMan file or a subFile
+  """
   def __init__(self, fileNo, name):
     self._fileNo = fileNo
     self._name = name
@@ -52,6 +56,9 @@ class FileManFileData(object):
     return "%s, %s, %s" % (self._fileNo, self._name, self._data)
 
 class FileManDataEntry(object):
+  """
+  One FileMan File DataEntry
+  """
   def __init__(self, fileNo, ien):
     self._ien = ien
     self._data = {}
@@ -85,6 +92,9 @@ class FileManDataEntry(object):
     return "%s: %s: %s" % (self._fileNo, self._ien, self._data)
 
 class FileManDataField(object):
+  """
+    Represent an individual field in a FileMan DataEntry
+  """
   def __init__(self, fieldId, type, name, value):
     self._fieldId = fieldId
     self._type = type
