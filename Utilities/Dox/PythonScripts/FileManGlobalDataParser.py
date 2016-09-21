@@ -18,6 +18,7 @@ import sys
 import re
 from datetime import datetime
 import logging
+import json
 from CrossReference import FileManField
 from ZWRGlobalParser import getKeys, sortDataEntryFloatFirst, printGlobal
 from ZWRGlobalParser import convertToType, createGlobalNodeByZWRFile
@@ -31,6 +32,46 @@ if SCRIPTS_DIR not in sys.path:
 
 from FileManDateTimeUtil import fmDtToPyDt
 import glob
+
+""" These are used to capture install entries that don't use the
+package prefix as their install name or have odd capitalization
+after being passed through the title function
+"""
+INSTALL_PACKAGE_FIX = {"VA FILEMAN 22.0": "VA FileMan",
+                       "DIETETICS 5.5" : "Dietetics"
+                      }
+INSTALL_RENAME_DICT = {"Kernel Public Domain" : "Kernel",
+                           "Kernel - Virgin Install" : "Kernel",
+                           #"DIETETICS " : "Dietetics",
+                           "Rpc Broker": "RPC Broker",
+                           "Pce Patient Care Encounter": "PCE Patient Care Encounter",
+                           "Sagg" : "SAGG Project",
+                           "Sagg Project" : "SAGG Project",
+                           "Emergency Department" : "Emergency Department Integration Software",
+                           "Gen. Med. Rec. - Vitals" : "General Medical Record - Vitals",
+                           "Gen. Med. Rec. - I/O" : "General Medical Record - IO",
+                           "Mailman" : "MailMan",
+                           "Bar Code Med Admin" : "Barcode Medication Administration",
+                           "Ifcap" : "IFCAP",
+                           "Master Patient Index Vista" : "Master Patient Index VistA",
+                           "Consult/Request Tracking" : "Consult Request Tracking",
+                           "Outpatient Pharmacy Version" : "Outpatient Pharmacy",
+                           "Clinical Info Resource Network" : "Clinical Information Resource Network",
+                           "Dss Extracts" : "DSS Extracts",
+                           "Automated Info Collection Sys" : "Automated Information Collection System",
+                           "Text Integration Utilities" : "Text Integration Utility",
+                           "Drug Accountability V." : "Drug Accountability",
+                           "Women'S Health" : "Womens Health",
+                           "Health Data & Informatics" : "Health Data and Informatics",
+                           "Capacity Management - Rum" : "Capacity Management - RUM",
+                           "Authorization/Subscription" : "Authorization Subscription",
+                           "Pharmacy Data Management Host" : "Pharmacy Data Management",
+                           "Equipment/Turn-In Request" : "Equipment Turn-In Request",
+                           "Pbm" : "Pharmacy Benefits Management",
+                           "Cmoph" : "CMOP",
+                           "Cmop" : "CMOP"
+                          }
+
 
 regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>"
                          "([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
@@ -470,10 +511,11 @@ class FileManGlobalDataParser(object):
       self._updateHL7Reference()
     if '779.2' in self._glbData:
       self._updateHLOReference()
+    if '9.7' in self._glbData:
+      self._updateInstallReference()
 
   def outRtnReferenceDict(self):
     if len(self._rtnRefDict):
-      import json
       """ generate the dependency in json file """
       with open(os.path.join(self.outDir, "Routine-Ref.json"), 'w') as output:
         logging.info("Generate File: %s" % output.name)
@@ -568,6 +610,59 @@ class FileManGlobalDataParser(object):
             rpcTag = rpcEntry.fields['.02'].value
             rpcInfo['tag'] = rpcTag
           self._rtnRefDict.setdefault(rpcRoutine,{}).setdefault('8994',[]).append(rpcInfo)
+
+  def _updateInstallReference(self):
+    installData = self._glbData['9.7']
+    output = os.path.join(self.outDir, "install_information.json")
+    installJSONData = {}
+    packageList = self._crossRef.getAllPackages()
+    with open(output, 'w') as installDataOut:
+      for ien in sorted(installData.dataEntries.keys(), key=lambda x: float(x)):
+        installItem = {}
+        installEntry = installData.dataEntries[ien]
+        namespace, package = \
+        self._crossRef.__categorizeVariableNameByNamespace__(installEntry.name)
+        # A check to remove the mis-categorized installs which happen to fall in a namespace
+        if installEntry.name in INSTALL_PACKAGE_FIX:
+          package = INSTALL_PACKAGE_FIX[installEntry.name]
+        # If it cannot match a package by namespace, capture the name via Regular Expression
+        if package is None:
+          pkgMatch = re.match("[A-Z./ \&\-\']+",installEntry.name)
+          if pkgMatch:
+            # if a match is found, switch to title case and remove extra spaces
+            targetName = pkgMatch.group(0).title().strip()
+            # First check it against the list of package names
+            if targetName in packageList:
+              package = targetName
+            # Then check it against the dictionary above for some odd spellings or capitalization
+            elif targetName in INSTALL_RENAME_DICT:
+              package = INSTALL_RENAME_DICT[targetName]
+            # If all else fails, assign it to the "Unknown"
+            else:
+              package = "Unknown"
+        package = str(package).strip()
+        # if this is the first time the package is found, add an entry in the install JSON data.
+        if package not in installJSONData:
+          installJSONData[package]=[]
+        if installEntry.name:
+          print package
+          print installEntry.name
+          installItem['name'] = installEntry.name
+          installItem['ien'] = installEntry.ien
+          if '11' in installEntry.fields:
+            installItem['installDate'] = installEntry.fields['11'].value.strftime("%Y-%m-%d")
+          if '1' in installEntry.fields:
+            installItem['packageLink'] = installEntry.fields['1'].value
+          if '40' in installEntry.fields:
+            installItem['numRoutines'] = len(installEntry.fields['40'].value.dataEntries)
+          if '14' in installEntry.fields:
+            installItem['numFiles'] = len(installEntry.fields['14'].value.dataEntries)
+          # Checks for the absence of asterisks which usually denotes a package change.
+          testMatch = re.search("\*+",installEntry.name)
+          if testMatch is None:
+            installItem['packageSwitch'] = True
+          installJSONData[package].append(installItem)
+      json.dump(installJSONData,installDataOut)
 
   def _resolveSelfPointer(self):
     """ Replace self-reference with meaningful data """
