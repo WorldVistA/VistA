@@ -275,6 +275,7 @@ class FileManGlobalDataParser(object):
     self._glbLocMap = initGlobalLocationMap # File: => Global Location
     self._fileParsed = set() # set of files that has been parsed
     self._rtnRefDict = {} # dict of rtn => fileNo => Details
+    self._allFiles = {}  # Dict of fileNum => Global file
   @property
   def outFileManData(self):
     return self._glbData
@@ -506,7 +507,7 @@ class FileManGlobalDataParser(object):
             logging.info("Adding Protocol Entry: %s to Package: %s" %
                          (entryName, package.getName()))
         # only care about the event drive and subscriber type
-        elif (type == 'event driver' and type == 'subscriber'):
+        elif (type == 'event driver' or type == 'subscriber'):
           entryName = protocolEntry.name
           namespace, package = \
             self._crossRef.__categorizeVariableNameByNamespace__(entryName)
@@ -781,6 +782,8 @@ def testGlobalParser(crosRef=None):
   isolatedFiles = schemaParser.isolatedFiles
   glbDataParser.parseZWRGlobalFileBySchemaV2(allFiles['1']['path'],
                                              allSchemaDict, '1', '^DIC(')
+  glbDataParser._allFiles = allFiles
+  glbDataParser._allSchemaDict = allSchemaDict
   for fileNo in result.fileNos:
     assert fileNo in glbDataParser.globalLocationMap
   if result.outdir:
@@ -794,7 +797,7 @@ def testGlobalParser(crosRef=None):
                                                  allSchemaDict,
                                                  fileNo)
       if result.outdir:
-        htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
+        htmlGen.outputFileManDataAsHtml(glbDataParser)
       else:
         fileManDataMap = glbDataParser.outFileManData
         for file in getKeys(fileManDataMap.iterkeys(), float):
@@ -828,7 +831,7 @@ def testGlobalParser(crosRef=None):
                                                  allSchemaDict,
                                                  file)
       if result.outdir:
-        htmlGen.outputFileManDataAsHtml(glbDataParser.outFileManData)
+        htmlGen.outputFileManDataAsHtml(glbDataParser)
       del glbDataParser.outFileManData[file]
 
 
