@@ -299,11 +299,6 @@ def isFilePointerType(dataEntry):
              dataEntry.type == FileManField.FIELD_TYPE_VARIABLE_FILE_POINTER )
   return False
 
-regexRtnCode = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
-#regTagRtnInfo = "(?P<tag>([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)"
-#regDoRtn = "D((:'?\$\$)|( )|(,))%s" % regTagRtnInfo
-#print regDoRtn
-#regexRtnCode = re.compile(regDoRtn)
 from FileManGlobalDataParser import getMumpsRoutine
 def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
   """
@@ -494,8 +489,14 @@ class FileManDataToHtml(object):
       outputDataListTableHeader(output, tName)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
-      output.write("<h1>Package: %s %s List</h1>" %
-                   (getPackageHRefLink(pkgName), listName))
+      if pkgName == "All":
+        pkgLinkName = pkgName
+        output.write("<h1>%s %s List</h1>" % (pkgLinkName, listName))
+      else:
+        output.write("<h2 align=\"right\"><a href=\"./All-%s.html\">"
+                     "All %s</a></h2>" % (listName, listName))
+        pkgLinkName = getPackageHRefLink(pkgName)
+        output.write("<h1>Package: %s %s List</h1>" % (pkgLinkName, listName))
       if not custom_header:
         outputDataTableHeader(output, [x[0] for x in list_fields], tName)
       else:
