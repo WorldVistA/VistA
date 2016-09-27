@@ -29,19 +29,18 @@ print SCRIPTS_DIR
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
-from FileManDateTimeUtil import fmDtToPyDt
 from ZWRGlobalParser import getKeys
 from CrossReference import FileManField
 from ZWRGlobalParser import readGlobalNodeFromZWRFileV2
 from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
 from WebPageGenerator import getPackageHtmlFileName
 from FileManGlobalDataParser import FileManDataEntry, FileManDataField, FileManFileData
-from DataTableHtml import data_table_reference, data_table_list_init_setup
+from DataTableHtml import data_table_list_init_setup
 from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
-from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader
+from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
-from DataTableHtml import outputFileEntryTableList, safeElementId, safeFileName
+from DataTableHtml import outputFileEntryTableList, safeElementId
 
 
 def test_sub():
@@ -63,12 +62,14 @@ def getFileHtmlLink(dataEntry, value, **kargs):
   htmlFile = getDataEntryHtmlFileByName(entryName, dataEntry.ien,
                                         dataEntry.fileNo)
   return "<a href=\"%s\">%s</a>" % (htmlFile, value)
+
 def getRoutineName(inputString):
   tagRoutine = inputString.split('^')
   if len(tagRoutine) == 1:
     return inputString
   else:
     return tagRoutine[-1]
+
 def getRoutineHRefLink(dataEntry, routineName, **kargs):
   rtnName = getRoutineName(routineName)
   crossRef = None
@@ -80,6 +81,7 @@ def getRoutineHRefLink(dataEntry, routineName, **kargs):
   return routineName[:pos] + "<a href=\"%s%s\">%s</a>" % (dox_url,
                                       getRoutineHtmlFileName(rtnName),
                                       rtnName) + routineName[pos+len(rtnName):]
+
 def getPackageHRefLink(pkgName):
   value = "<a href=\"%s%s\">%s</a>" % (dox_url,
                                        getPackageHtmlFileName(pkgName),
@@ -88,11 +90,13 @@ def getPackageHRefLink(pkgName):
 
 def getWordProcessingDataBrief(dataEntry, value, **kargs):
   return getWordProcessingData(value, False)
+
 def getWordProcessingData(value, isList=True):
   outValue = " ".join(value)
   if isList:
     outValue = "<pre>\n" + cgi.escape(outValue) + "\n</pre>\n"
   return outValue
+
 def getFileManFilePointerLink(dataEntry, value, **kargs):
   if value:
     fields = value.split('^')
@@ -140,6 +144,7 @@ def getFreeTextLink(dataEntry, value, **kargs):
         if value == glbData.outFileManData[file].dataEntries[entry].fields[field].value:
           return '<a href="%s-%s.html">%s</a>' % (file,entry, glbData.outFileManData[file].dataEntries[entry].fields[field].value)
   return value
+
 """
 fields and logic to convert to html for RPC List
 """
@@ -178,6 +183,10 @@ hl7_table_header_fields = (
       <th>Response</th>
      """),
   )
+
+hl7_column_names = ["Name", "Type", "Transaction","Response",
+                    "Event Type", "Sender", "Receiver"]
+
 """
 fields and logic to convert to html for Protocol List
 """
@@ -190,16 +199,6 @@ protocol_list_fields = (
        ("Exit Action", '15', None), # Type
    )
 
-protocol_table_header_fields = (
-    ("""
-      <th colspan="1">Name</th>
-      <th colspan="1">Type</th>
-      <th colspan="1">Lock</th>
-      <th colspan="1">Description</th>
-      <th colspan="1">"Entry Action"</th>
-      <th colspan="1">"Exit Action"</th>
-    """),
-  )
 """
 fields and logic to convert to html for HLO List
 """
@@ -223,6 +222,9 @@ HLO_table_header_fields = (
       <th>Action Routine</th>
     """),
   )
+
+HLO_column_names = ["Name", "Package", "HL7 Message Type",
+                    "Action Tag", "Action Routine"]
 
 """
 fields and logic to convert to html for option List
@@ -269,6 +271,7 @@ def getMumpsRoutineHtmlLinks(inputString, crosRef=None):
     return output
   else:
     return inputString
+
 def convertFilePointerToHtml(inputValue):
   value = inputValue
   name = inputValue
@@ -283,6 +286,7 @@ def convertFilePointerToHtml(inputValue):
   else:
     logging.error("Unknown File Pointer Value %s" % inputValue)
   return value, name
+
 def test_convertFilePointerToHtml():
   input = ('1^345^Testing', '2^345', '5')
   for one in input:
@@ -296,6 +300,7 @@ class FileManDataToHtml(object):
     self.crossRef = crossRef
     self.outDir = outDir
     self.glbData = glbData
+
   def outputFileManDataAsHtml(self, gblDataParser):
     """
       This is the entry pointer to generate Html output
@@ -370,9 +375,13 @@ class FileManDataToHtml(object):
             logging.error("ien: %s of file 19 does not have a type" % ien)
 
         self._generateDataListByPackage(allOptionList, "All", option_list_fields,
-                                        "Option")
+                                        "Option",
+                                        [x[0] for x in option_list_fields],
+                                        ["Name", "Lock"])
         self._generateDataListByPackage(allMenuList, "All", menu_list_fields,
-                                        "Menu")
+                                        "Menu",
+                                        [x[0] for x in menu_list_fields],
+                                        ["Name", "Menu Text", "Lock"])
 
         self._generateServerMenu(allMenuList, allOptionList, serverMenuList)
         self._generateMenuDependency(allMenuList, allOptionList)
@@ -524,21 +533,29 @@ class FileManDataToHtml(object):
         self._addChildMenusToJson(menuDepDict[item], menuDepDict, childDict)
       logging.debug("Adding child %s to parent %s" % (childDict['name'], outJson['name']))
       outJson.setdefault('children',[]).append(childDict)
+
   def _generateRPCListHtml(self, dataEntryLst, pkgName):
     """
       Specific logic to handle RPC List
       @TODO move the logic to a specific file
     """
+    columnNames = [x[0] for x in rpc_list_fields]
+    searchColumnNames = ["Name", "Tag", "Routine"]
     return self._generateDataListByPackage(dataEntryLst,
-                                     pkgName, rpc_list_fields, "RPC")
+                                     pkgName, rpc_list_fields, "RPC",
+                                     columnNames, searchColumnNames)
 
   def _generateHL7ListByPackage(self, dataEntryLst, pkgName):
     """
       Specific logic to handle HL7 List
       @TODO move the logic to a specific file
     """
+    searchColumnNames = ["Name", "Transaction", "Response",
+                         "Event Type", "Sender", "Receiver"]
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            hl7_list_fields, "HL7",
+                                           hl7_column_names,
+                                           searchColumnNames,
                                            hl7_table_header_fields)
 
   def _generateProtocolListByPackage(self, dataEntryLst, pkgName):
@@ -546,26 +563,32 @@ class FileManDataToHtml(object):
       Specific logic to handle HL7 List
       @TODO move the logic to a specific file
     """
+    columnNames = [x[0] for x in protocol_list_fields]
+    searchColumnNames = ["Name", "Lock", "Description", "Entry Action", "Exit Action"]
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            protocol_list_fields, "Protocols",
-                                           protocol_table_header_fields)
+                                           columnNames, searchColumnNames)
 
   def _generateHLOListByPackage(self, dataEntryLst, pkgName , fileManDataMap):
     """
       Specific logic to handle HLO List
       @TODO move the logic to a specific file
     """
+    searchColumnNames = ["Name", "Package", "HL7 Message Type",
+                         "Action Tag", "Action Routine"]
     return self._generateDataListByPackage(dataEntryLst, pkgName,
                                            HLO_list_fields, "HLO",
+                                           HLO_column_names, searchColumnNames,
                                            HLO_table_header_fields)
 
   def _generateDataListByPackage(self, dataEntryLst, pkgName, list_fields,
-                                 listName, custom_header=None):
+                                 listName, columnNames, searchColumnNames,
+                                 custom_header=None):
     outDir = self.outDir
     with open("%s/%s-%s.html" % (outDir, pkgName, listName), 'w+') as output:
       output.write("<html>\n")
       tName = safeElementId("%s-%s" % (listName, pkgName))
-      outputDataListTableHeader(output, tName)
+      outputDataListTableHeader(output, tName, columnNames, searchColumnNames)
       output.write("<body id=\"dt_example\">")
       output.write("""<div id="container" style="width:80%">""")
       if pkgName == "All":
@@ -577,9 +600,11 @@ class FileManDataToHtml(object):
         pkgLinkName = getPackageHRefLink(pkgName)
         output.write("<h1>Package: %s %s List</h1>" % (pkgLinkName, listName))
       if not custom_header:
-        outputDataTableHeader(output, [x[0] for x in list_fields], tName)
+        outputDataTableHeader(output, columnNames, tName)
+        outputDataTableFooter(output, columnNames, tName)
       else:
         outputCustomDataTableHeader(output, custom_header, tName)
+        outputDataTableFooter(output, columnNames, tName)
       """ table body """
       output.write("<tbody>\n")
       for dataEntry in dataEntryLst:

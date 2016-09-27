@@ -8,7 +8,7 @@ import logging
 
 from datetime import datetime
 from LogManager import logger, initConsoleLogging
-from ICRSchema import SUBFILE_FIELDS, SUBFILE_KEYWORDS, ICR_FILE_KEYWORDS, DATE_TIME_FIELD
+from ICRSchema import ICR_FILE_KEYWORDS, DATE_TIME_FIELD
 from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields

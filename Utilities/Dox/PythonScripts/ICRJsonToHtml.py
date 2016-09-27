@@ -7,18 +7,15 @@ import cgi
 import logging
 import pprint
 
-from datetime import datetime
 from LogManager import logger, initConsoleLogging
-from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS, isSubFile, isWordProcessingField
+from ICRSchema import ICR_FILE_KEYWORDS_LIST, SUBFILE_FIELDS
+from ICRSchema import isSubFile, isWordProcessingField
 from WebPageGenerator import getPackageHtmlFileName, getGlobalHtmlFileNameByName
-from WebPageGenerator import getRoutineHtmlFileName, normalizePackageName
-from DataTableHtml import data_table_reference, data_table_list_init_setup
-from DataTableHtml import data_table_large_list_init_setup, data_table_record_init_setup
-from DataTableHtml import outputDataTableHeader, outputCustomDataTableHeader
+from WebPageGenerator import getRoutineHtmlFileName
+from DataTableHtml import outputDataTableHeader, outputDataTableFooter
 from DataTableHtml import writeTableListInfo, outputDataListTableHeader
 from DataTableHtml import outputLargeDataListTableHeader, outputDataRecordTableHeader
-from DataTableHtml import outputFileEntryTableList, safeElementId, safeFileName
-
+from DataTableHtml import outputFileEntryTableList, safeElementId
 from InitCrossReferenceGenerator import createInitialCrossRefGenArgParser
 from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
 from FileManGlobalDataParser import generateSingleFileFieldToIenMappingBySchema
@@ -167,7 +164,6 @@ def getRPCHRefLink(rpcName, icrEntry, **kargs):
         return '<a href=\"%s\">%s</a>' % (rpcFilename, rpcName)
     return rpcName
 
-
 """ A list of fields that are part of the summary page for each package or all """
 summary_list_fields = [
     ('IA #', 'NUMBER', None),
@@ -193,7 +189,6 @@ field_convert_map = {
     'SUBSCRIBING PACKAGE': getPackageHRefLink,
     'REMOTE PROCEDURE': getRPCHRefLink
 }
-
 
 class ICRJsonToHtml(object):
 
@@ -302,6 +297,7 @@ class ICRJsonToHtml(object):
             output.write("</div>\n")
             output.write("</div>\n")
             output.write ("</body></html>\n")
+
     def _generateICRSummaryPageImpl(self, inputJson, listName, pkgName, isForAll=False):
         outDir = self._outDir
         pkgHtmlName = pkgName
@@ -315,11 +311,16 @@ class ICRJsonToHtml(object):
             output.write("<html>\n")
             tName = safeElementId("%s-%s" % (listName, pkgName))
             useAjax = useAjaxDataTable(len(inputJson))
+            columnNames = [x[0] for x in summary_list_fields]
+            searchColumns = ['IA #', 'Name', 'Custodial Package',
+                             'Date Created', 'File #', 'Remote Procedure',
+                             'Routine', 'Date Activated']
             if useAjax:
                 ajaxSrc = '%s_array.txt' % pkgName
-                outputLargeDataListTableHeader(output, ajaxSrc, tName)
+                outputLargeDataListTableHeader(output, ajaxSrc, tName,
+                                                columnNames, searchColumns)
             else:
-                outputDataListTableHeader(output, tName)
+                outputDataListTableHeader(output, tName, columnNames, searchColumns)
             output.write("<body id=\"dt_example\">")
             output.write("""<div id="container" style="width:80%">""")
 
@@ -330,7 +331,8 @@ class ICRJsonToHtml(object):
                              "All %s</a></h2>" % (listName, listName))
                 output.write("<h1>Package: %s %s</h1>" % (pkgName, listName))
             # pkgLinkName = getPackageHRefLink(pkgName)
-            outputDataTableHeader(output, [x[0] for x in summary_list_fields], tName)
+            outputDataTableHeader(output, columnNames, tName)
+            outputDataTableFooter(output, columnNames, tName)
             """ table body """
             output.write("<tbody>\n")
             if not useAjax:

@@ -46,7 +46,6 @@ data_table_reference = """
 data_table_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-  // call the tablesorter plugin
       $$("#${tableName}").dataTable({
         "bInfo": true,
         "iDisplayLength": 25,
@@ -57,18 +56,123 @@ data_table_list_init_setup = Template("""
 }); </script>
 """)
 
+data_table_list_with_columns_init_setup = Template("""
+<script type="text/javascript" id="js">
+  $(document).ready(function() {
+    $("#${tableName}").dataTable({
+        "bInfo": true,
+        "iDisplayLength": 25,
+        "sPaginationType": "full_numbers",
+        "bStateSave": true,
+        "bAutoWidth": true,
+        "columns": [${columnNames}]});
+
+    var table = $("#${tableName}").DataTable();
+    var columns = table.settings().init().columns;
+    table.columns().every(function(index) {
+      var column = this;
+      var name = columns[index].name;
+      if (${searchColumns}) {
+        var select = $('<input type="text" placeholder="Search '+name+'" />')
+          .appendTo( $(column.footer()).empty() )
+          .on('keyup change', function() {
+            if (column.search() !== this.value) {
+              column
+                .search(this.value)
+                .draw();
+            }
+          });
+      } else {
+        var select = $('<select><option value=""></option></select>')
+          .appendTo($(column.footer()).empty())
+          .on('change', function() {
+            var val = $.fn.dataTable.util.escapeRegex($(this).val());
+            column
+              .search(val ? '^'+val+'$' : '', true, false)
+              .draw();
+          });
+
+        column.data().unique().sort().each(function(d, j) {
+          if ($.trim( d ) != '') {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+          }
+        });
+      }
+    });
+
+    table
+     .search('')
+     .columns().search('')
+     .draw();
+}); </script>
+""")
+
+
 data_table_large_list_init_setup = Template("""
 <script type="text/javascript" id="js">
   $$(document).ready(function() {
-  // call the tablesorter plugin
       $$("#${tableName}").dataTable({
         "bProcessing": true,
         "bStateSave": true,
         "iDisplayLength": 10,
         "sPaginationType": "full_numbers",
         "bDeferRender": true,
-        "sAjaxSource": "${ajexSrc}"
+        "sAjaxSource": "${ajaxSrc}"
       });
+}); </script>
+""")
+
+data_table_large_list_with_columns_init_setup = Template("""
+<script type="text/javascript" id="js">
+  $$(document).ready(function() {
+      $$("#${tableName}").dataTable({
+        "bProcessing": true,
+        "bStateSave": true,
+        "iDisplayLength": 10,
+        "sPaginationType": "full_numbers",
+        "bDeferRender": true,
+        "sAjaxSource": "${ajaxSrc}",
+        "columns": [${columnNames}],
+        "fnInitComplete": function(oSettings, json) {
+          var table = $("#${tableName}").DataTable();
+          var columns = table.settings().init().columns;
+          table.columns().every( function (index) {
+            var column = this;
+            var name = columns[index].name;
+            if (${searchColumns}) {
+              var select = $('<input type="text" placeholder="Search '+name+'" />')
+                .appendTo( $(column.footer()).empty() )
+                .on('keyup change', function () {
+                  if (column.search() !== this.value) {
+                    column
+                      .search( this.value )
+                      .draw();
+                  }
+              });
+            } else {
+              var select = $('<select><option value=""></option></select>')
+                .appendTo($(column.footer()).empty())
+                .on('change', function() {
+                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                  column
+                    .search( val ? '^'+val+'$' : '', true, false )
+                    .draw();
+                });
+              column.data().unique().sort().each(function(d, j) {
+                if ($.trim( d ) != '') {
+                  select.append('<option value="'+d+'">'+d+'</option>')
+                }
+              });
+            }
+          });
+        }
+      });
+      var table = $('#${tableName}').DataTable();
+
+      table
+        .search( '' )
+        .columns().search( '' )
+        .draw();
 }); </script>
 """)
 
@@ -88,15 +192,38 @@ data_table_record_init_setup = Template("""
 
 """ Some Utilitity functions for some TablelizedData
 """
-def outputDataListTableHeader(output, tName):
+def outputDataListTableHeader(output, tName, columns=None, searchColumnNames=None):
   output.write("%s\n" % data_table_reference)
-  initSet = data_table_list_init_setup.substitute(tableName=tName)
+  if columns is None and searchColumnNames is None:
+    initSet = data_table_list_init_setup.substitute(tableName=tName)
+  else:
+    columnNames = []
+    for col in columns:
+      columnNames.append("{ name : '" + col + "'}")
+    searchColumns = []
+    for name in searchColumnNames:
+      searchColumns.append("name == '" + name +"'")
+    initSet = data_table_list_with_columns_init_setup.safe_substitute(tableName=tName,
+                                                                      columnNames=",".join(columnNames),
+                                                                      searchColumns="||".join(searchColumns))
   output.write("%s\n" % initSet)
 
-def outputLargeDataListTableHeader(output, src, tName):
+def outputLargeDataListTableHeader(output, src, tName, columns=None, searchColumnNames=None):
   output.write("%s\n" % data_table_reference)
-  initSet = data_table_large_list_init_setup.substitute(ajexSrc=src,
-                                                        tableName=tName)
+  if columns is None and searchColumnNames is None:
+    initSet = data_table_large_list_init_setup.substitute(ajaxSrc=src,
+                                                          tableName=tName)
+  else:
+    columnNames = []
+    for col in columns:
+      columnNames.append("{ name : '" + col + "'}")
+    searchColumns = []
+    for name in searchColumnNames:
+      searchColumns.append("name == '" + name +"'")
+    initSet = data_table_large_list_with_columns_init_setup.safe_substitute(ajaxSrc=src,
+                                                                            tableName=tName,
+                                                                            columnNames=",".join(columnNames),
+                                                                            searchColumns="||".join(searchColumns))
   output.write("%s\n" % initSet)
 
 def outputDataRecordTableHeader(output, tName):
@@ -113,6 +240,14 @@ def outputDataTableHeader(output, name_list, tName):
     output.write("<th>%s</th>\n" % name)
   output.write("</tr>\n")
   output.write("</thead>\n")
+
+def outputDataTableFooter(output, name_list, tName):
+  output.write("<tfoot>\n")
+  output.write("<tr>\n")
+  for name in name_list:
+    output.write("<th>%s</th>\n" % name)
+  output.write("</tr>\n")
+  output.write("</tfoot>\n")
 
 def outputFileEntryTableList(output, tName):
   output.write("<div id=\"demo\">")
@@ -155,4 +290,4 @@ def safeElementId(name):
   it turns out that '=' is not a valid html element id
   remove the padding
   """
-  return base64.b64encode(name, ["_", "_"]).replace('=','')
+  return base64.b64encode(name, "__").replace('=','')
