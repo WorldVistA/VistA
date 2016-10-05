@@ -37,7 +37,17 @@ ICR_FILE_KEYWORDS_LIST = [
     'GOOD ONLY FOR VERSION',
     'DATE/TIME EDITED',
     'DEFERRED UNTIL',
-    'REMINDER'
+    'REMINDER',
+    'ENTERED',
+    'EXPIRES',
+    'VERSION',
+    'TAG^ROUTINE',
+    'DESCRIPTION',
+    'COMPONENT',
+    'RETURN VALUE TYPE',
+    'APP PROXY ALLOWED',
+    'WORD WRAP ON',
+    'AVAILABILITY'
 ]
 
 """ Convert to a set for fast search """
@@ -76,6 +86,15 @@ SUBFILE_FIELDS = {
         'ACCESS',
         'FIELD DESCRIPTION',
         'LOCATION'
+    ],
+    'INPUT PARAMETER': [
+      'PARAMETER TYPE',
+      'MAXIMUM DATA LENGTH',
+      'SEQUENCE NUMBER',
+      'REQUIRED'
+    ],
+    'CROSS REF NUM': [
+      'TYPE',
     ]
 }
 

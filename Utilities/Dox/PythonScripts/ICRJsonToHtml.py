@@ -225,7 +225,7 @@ class ICRJsonToHtml(object):
         pkgJson = {} # group by package
         allpgkJson = []
         for icrEntry in inputJson:
-            #self._generateICRIndividualPage(icrEntry)
+            self._generateICRIndividualPage(icrEntry)
             summaryInfo = self._convertICREntryToSummaryInfo(icrEntry)
             allpgkJson.append(summaryInfo)
             if 'CUSTODIAL PACKAGE' in icrEntry:
@@ -254,10 +254,17 @@ class ICRJsonToHtml(object):
                     for subPkg in icrItem['SUBSCRIBING PACKAGE']:
                         if 'SUBSCRIBING PACKAGE' in subPkg:
                             subPkgName = subPkg['SUBSCRIBING PACKAGE']
-                            subDep = outDep.setdefault(subPkgName, {}).setdefault('dependencies',{})
-                            subDep.setdefault(curPkg, []).append(curIaNum)
-                            curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
-                            curDep.setdefault(subPkgName, []).append(curIaNum)
+                            if isinstance(subPkgName,list):
+                              for subPkgNameEntry in subPkgName:
+                                subDep = outDep.setdefault(subPkgNameEntry, {}).setdefault('dependencies',{})
+                                subDep.setdefault(curPkg, []).append(curIaNum)
+                                curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
+                                curDep.setdefault(subPkgNameEntry, []).append(curIaNum)
+                            else:
+                              subDep = outDep.setdefault(subPkgName, {}).setdefault('dependencies',{})
+                              subDep.setdefault(curPkg, []).append(curIaNum)
+                              curDep = outDep.setdefault(curPkg, {}).setdefault('dependents', {})
+                              curDep.setdefault(subPkgName, []).append(curIaNum)
         """ Convert outDep to html page """
         outDir = self._outDir
         outFilename = "%s/ICR-PackageDep.html" % outDir

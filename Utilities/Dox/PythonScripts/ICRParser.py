@@ -13,12 +13,12 @@ from ICRSchema import isSubFile, isSubFileField, isWordProcessingField
 
 # regular  expression for fields
 START_OF_RECORD = re.compile('^(?P<name>NUMBER): ')
-GENERIC_START_OF_RECORD = re.compile('^( {0,2})?(?P<name>[A-Z/]+( [A-Z/#]+)*): ') # max of 2 spaces
+GENERIC_START_OF_RECORD = re.compile('^( *)?(?P<name>[A-Z^/]+( [A-Z/#^]+)*): ') # max of 2 spaces
 DBA_COMMENTS = re.compile('^( +)?(?P<name>DBA Comments): ')
-GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z/]+( [A-Z/#]+)*): ')
+GENERIC_FIELD_RECORD = re.compile('( )(?P<name>[A-Z^/]+( [A-Z/^#]+)*): ')
 # This is dictories of all possible sub-files in the schema
 LINES_TO_IGNORE = [
-    re.compile('^(\r\f)?INTEGRATION REFERENCES LIST'),
+    re.compile('^[\r\f]?INTEGRATION REFERENCES LIST'),
     re.compile('^-+$')
 ]
 
@@ -185,7 +185,7 @@ class ICRParser(object):
             preVal = self._curRecord[self._curField]
             self._curRecord[self._curField] = []
             self._curRecord[self._curField].append(preVal)
-        self._curRecord[self._curField].append(line)
+        self._curRecord[self._curField].append(line.strip())
 
     def isIgnoredLine(self, line):
         for regEx in LINES_TO_IGNORE:
