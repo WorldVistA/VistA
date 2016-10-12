@@ -16,6 +16,7 @@
 import os
 import sys
 import re
+import subprocess
 from datetime import datetime
 import logging
 import json
@@ -925,7 +926,6 @@ class FileManGlobalDataParser(object):
         outLst.append("%s" % dataRoot[key]['0'].value)
     return outLst
 
-
 def generateSingleFileFieldToIenMappingBySchema(mRepositDir, crossRef, fileNo, fieldNo):
   glbDataParser = FileManGlobalDataParser(crossRef)
   allFiles = glbDataParser.getAllFileManZWRFiles(os.path.join(mRepositDir,
@@ -941,12 +941,26 @@ def getAllSchema(allFiles):
   allSchemaDict = schemaParser.parseSchemaDDFileV2(allFiles['0']['path'])
   return allSchemaDict;
 
+def __generateGitRepositoryKey__(gitPath, mDir, outputFile):
+    sha1Key = __getGitRepositLatestSha1Key__(gitPath,mDir)
+    outputFile.write("""{
+  "date": "%s",
+  "sha1": "%s"
+}""" % (datetime.today().date(), sha1Key))
+def __getGitRepositLatestSha1Key__(gitPath,mDir):
+    gitCommand = "\"" + os.path.join(gitPath, "git") + "\"" + " rev-parse --verify HEAD"
+    os.chdir(mDir)
+    result = subprocess.check_output(gitCommand, shell=True)
+    return result.strip()
+
 def testGlobalParser(crosRef=None):
   parser = createArgParser()
   result = parser.parse_args()
   print result
   from InitCrossReferenceGenerator import parseCrossRefGeneratorWithArgs
   from FileManDataToHtml import FileManDataToHtml
+  outputFile = open(os.path.join(result.outdir, "filesInfo.json"), 'wb')
+  __generateGitRepositoryKey__(result.gitPath, result.MRepositDir, outputFile)
   crossRef = parseCrossRefGeneratorWithArgs(result)
   glbDataParser = FileManGlobalDataParser(crossRef)
   #glbDataParser.parseAllZWRGlobaFilesBySchema(result.MRepositDir, allSchemaDict)
@@ -1063,6 +1077,8 @@ def createArgParser():
   parser.add_argument('fileNos', help='FileMan File Numbers', nargs='+')
   #parser.add_argument('glbRoot', help='Global root location for FileMan file')
   parser.add_argument('-outdir', help='top directory to generate output in html')
+  parser.add_argument('-gp', '--gitPath', required=True,
+                      help='Path to the folder containing git excecutable')
   parser.add_argument('-all', action='store_true',
                       help='generate all dependency files as well')
   return parser
