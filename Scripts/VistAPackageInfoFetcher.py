@@ -391,9 +391,9 @@ class VistAPackageInfoFetcher(object):
         linesToSearch = connection.before.split("\r\n")
         for line in linesToSearch: # only care the the first line
           line = line.strip("\r\n ")
-          if not re.search("^1 ", line): continue
-          result = indexOfInstallStatus(line)
-          break
+          tmpResult = indexOfInstallStatus(line)
+          if tmpResult > result:
+            result=tmpResult
         connection.send("^\r")
         continue
     menuUtil.exitFileManMenu(self._testClient)
