@@ -266,6 +266,65 @@ Example run:
     Oct 27, 2014 11:25:58 AM com.pwc.us.rgi.vista.tools.MRALogger logInfo
     INFO: Ended filemancall.
 
+Generating HL7 and RPC interaction info
+***************************************
+
+An additional feature of the Dox pages is now available which connects the
+information gathered for each routine with the Remote Procedure Calls (RPCs)
+and HL7 messages the routine is used in.  To acquire this information,
+run the ``FileManGlobalDataParser.py`` script to parse the information from
+the ``REMOTE PROCEDURE`` and the ``PROTOCOL`` files.  This script can be found
+in the ``Utilities/Dox/PythonScripts`` directory.
+
+The usage information can be found by excuting the file with a ``-h`` argument
+
+.. parsed-literal::
+
+  $ python FileManGlobalDataParser.py -h
+  usage: FileManGlobalDataParser.py [-h] -mr MREPOSITDIR -pr PATCHREPOSITDIR
+                                  [-outdir OUTDIR] -gp GITPATH [-all]
+                                  fileNos [fileNos ...]
+
+  FileMan Global Data Parser
+  positional arguments:
+    fileNos               FileMan File Numbers
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -outdir OUTDIR        top directory to generate output in html
+    -gp GITPATH, --gitPath GITPATH
+                        Path to the folder containing git excecutable
+    -all                  generate all dependency files as well
+
+  Initial CrossReference Generator Arguments:
+    Argument for generating initial CrossReference
+
+    -mr MREPOSITDIR, --MRepositDir MREPOSITDIR
+                        VistA M Component Git Repository Directory
+    -pr PATCHREPOSITDIR, --patchRepositDir PATCHREPOSITDIR
+                        VistA Git Repository Directory
+
+To generate the information for the Dox pages, we are going to supply two file
+numbers to the script:
+
+ ======================= =======================
+         Numbers              Fileman File
+ ======================= =======================
+          101                  Protocol
+          8994              Remote Procedure
+ ======================= =======================
+
+**Do not supply the** ``-all`` **argument to the command.**  An
+example run of the command would look like the following:
+
+.. parsed-literal::
+
+  $ python FileManGlobalDataParser.py -mr ~/Work/OSEHRA/VistA-M -pr ~/Work/OSEHRA/VistA -gp /usr/local/bin -outdir ~/Work/OSEHRA/DataParserOut 101 8994
+
+This command will write out a file called ``Routine-Ref.json`` which will need
+to be supplied to the web page generation script.
+
+
 Run python script to generate the web based documentation.
 ----------------------------------------------------------
 
@@ -285,12 +344,14 @@ That command will print the necessary arguments and flags that need to be set.
 .. parsed-literal::
 
  $ python WebPageGenerator.py --help
- usage: WebPageGenerator.py [-h] -xl XINDEXLOGDIR -mr MREPOSITDIR -pr
-                           PATCHREPOSITDIR -fs FILESCHEMADIR -db FILEMANDBJSON
-                           -o OUTPUTDIR -gp GITPATH [-hd] [-dp DOTPATH] [-is]
-                           [-lf OUTPUTLOGFILENAME]
+
+ usage: WebPageGenerator.py [-h] -mr MREPOSITDIR -pr PATCHREPOSITDIR -xl
+                           XINDEXLOGDIR -fs FILESCHEMADIR -db FILEMANDBJSON -o
+                           OUTPUTDIR -gp GITPATH [-hd] [-dp DOTPATH] [-is]
+                           [-lf OUTPUTLOGFILENAME] -rj RTNJSON]
 
  VistA Visual Cross-Reference Documentation Generator
+
 
  optional arguments:
   -h, --help            show this help message and exit
@@ -304,6 +365,7 @@ That command will print the necessary arguments and flags that need to be set.
   -is, --includeSource  generate routine source code page?
   -lf OUTPUTLOGFILENAME, --outputLogFileName OUTPUTLOGFILENAME
                         the output Logging file
+  -rj RTNJSON, --rtnJson RTNJSON
 
  Call Graph Log Parser Releated Arguments:
   Argument for Parsing Call Graph and Schema logs
@@ -338,7 +400,8 @@ before it is able to run successfully.
 * ``-pr`` or  ``--patchRepositDir`` - path to the VistA Git source directory.
 
 * ``-db`` or ``--filemanDbJson`` - fileman db call information in JSON format.
-  This is found {}
+* ``-rj`` or ``--rtnJson``  -  path to the DataParser routine information in
+  JSON format.
 
 All other flags or arguments are optional, but do have an effect on the
 output files.
@@ -367,11 +430,12 @@ Git Bash:
 
 .. parsed-literal::
 
-  $ python ./WebPageGenerator.py -xl ~/Work/OSEHRA/VistA-build/Docs/CallerGraph/Log
-      -mr ~/Work/OSEHRA/VistA-M/ -gp /bin/ -pr ~/Work/OSEHRA/VistA -is
-      -o ~/CrossReference/ -hd -dp /usr/local/Graphviz2.30/bin/
-      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
-      -db ~/Work/OSEHRA/filemanDBCall.json
+ $ python ./WebPageGenerator.py -xl ~/Work/OSEHRA/VistA-build/Docs/CallerGraph/Log
+     -mr ~/Work/OSEHRA/VistA-M/ -gp /bin/ -pr ~/Work/OSEHRA/VistA -is
+     -o ~/CrossReference/ -hd -dp /usr/local/Graphviz2.30/bin/
+     -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
+     -db ~/Work/OSEHRA/filemanDBCall.json
+     -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
 
 and the example run of the analyzer:
 
@@ -382,6 +446,7 @@ and the example run of the analyzer:
      -o ~/CrossReference/ -hd -dp /usr/local/Graphviz2.30/bin/
      -fs  ~/Work/OSEHRA/VistA-build/Docs/Schema
      -db ~/Work/OSEHRA/filemanDBCall.json
+     -rj ~/Work/OSEHRA/DataParserOut/Routine-Ref.json
  2014-10-27 12:39:47,243 INFO Total # of Packages is 140
  2014-10-27 12:39:47,433 INFO Total Search Files are 2933
  2014-10-27 12:39:52,933 INFO Package: Uncategorized is new

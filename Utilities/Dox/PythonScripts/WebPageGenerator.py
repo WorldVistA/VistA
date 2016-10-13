@@ -1733,7 +1733,7 @@ class WebPageGenerator:
         outputList = converFunc(variables)
         writeGenericTablizedData(headerList, outputList, outputFile)
     def __getDataEntryDetailHtmlLink__(self, fileNo, ien):
-      return ("http://code.osehra.org/Prod/Visual/files/%s-%s.html" % (fileNo,
+      return ("http://code.osehra.org/vivian/files/%s-%s.html" % (fileNo,
             ien))
     def __convertRPCDataReference__(self, variables):
         return self.__convertRtnDataReference__(variables, '8994')
@@ -2201,7 +2201,7 @@ if __name__ == '__main__':
                         help='generate routine source code page?')
     parser.add_argument('-lf', '--outputLogFileName', required=False,
                         help='the output Logging file')
-    parser.add_argument('-rj','--rtnJson', help='routine reference in VistA '
+    parser.add_argument('-rj','--rtnJson', required=True,help='routine reference in VistA '
         'Data file in JSON format')
     result = parser.parse_args();
     if not result.outputLogFileName:
