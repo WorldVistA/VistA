@@ -168,45 +168,47 @@ class PatchIncrInstallExtractCommit(object):
     while True:
       startCache(self._instance, self._useSudo)
       testClient = self._createTestClient()
+      testClient2 = self._createTestClient()
       with testClient:
-        patchApply = PatchSequenceApply(testClient, patchLogDir)
-        outPatchList = patchApply.generatePatchSequence(inputPatchDir)
-        if not outPatchList:
-          logger.info("No Patch needs to apply")
-          return True
-        patchInfo = outPatchList[0]
-        logger.info(patchInfo)
-        result = patchApply.applyPatchSequenceByInstallName(
-                                              patchInfo.installName,
-                                              patchOnly=True)
-        if result < 0:
-          logger.error("Error installing patch %s" % patchInfo.installName)
-          return False
-        elif result == 0:
-          logger.info("%s is already installed" % patchInfo.installName)
-          continue
-        commitFile = getDefaultCommitMsgFileByPatchInfo(patchInfo,
-                                                        dir=commitMsgDir)
-        generateCommitMsgFileByPatchInfo(patchInfo, commitFile,
-                                         reposDir=SCRIPTS_DIR)
-        MExtractor = VistADataExtractor(mRepo, outputDir, extractLogDir,
-                                        gitBranch=mRepoBranch)
-        MExtractor.extractData(testClient)
-        commit = MCompReposCommitter(mRepo)
-        commit.commit(commitFile)
-
-        if backupConfig:
-          backupDir = backupConfig['backup_dir']
-          if not os.path.exists(backupDir):
-            logger.error("%s does not exist" % backupDir)
+        with testClient2:
+          patchApply = PatchSequenceApply(testClient, patchLogDir,testClient2)
+          outPatchList = patchApply.generatePatchSequence(inputPatchDir)
+          if not outPatchList:
+            logger.info("No Patch needs to apply")
+            return True
+          patchInfo = outPatchList[0]
+          logger.info(patchInfo)
+          result = patchApply.applyPatchSequenceByInstallName(
+                                                patchInfo.installName,
+                                                patchOnly=True)
+          if result < 0:
+            logger.error("Error installing patch %s" % patchInfo.installName)
             return False
-          cacheDir = backupConfig['cache_dat_dir']
-          origDir = os.path.join(cacheDir, "CACHE.DAT")
-          backupCacheDataByGitHash(self._instance, origDir, backupDir,
-                                   mRepo, mRepoBranch, self._useSudo)
-          startCache(self._instance, self._useSudo)
-        if not isContinuous:
-          break
+          elif result == 0:
+            logger.info("%s is already installed" % patchInfo.installName)
+            continue
+          commitFile = getDefaultCommitMsgFileByPatchInfo(patchInfo,
+                                                          dir=commitMsgDir)
+          generateCommitMsgFileByPatchInfo(patchInfo, commitFile,
+                                           reposDir=SCRIPTS_DIR)
+          MExtractor = VistADataExtractor(mRepo, outputDir, extractLogDir,
+                                          gitBranch=mRepoBranch)
+          MExtractor.extractData(testClient)
+          commit = MCompReposCommitter(mRepo)
+          commit.commit(commitFile)
+
+          if backupConfig:
+            backupDir = backupConfig['backup_dir']
+            if not os.path.exists(backupDir):
+              logger.error("%s does not exist" % backupDir)
+              return False
+            cacheDir = backupConfig['cache_dat_dir']
+            origDir = os.path.join(cacheDir, "CACHE.DAT")
+            backupCacheDataByGitHash(self._instance, origDir, backupDir,
+                                     mRepo, mRepoBranch, self._useSudo)
+            startCache(self._instance, self._useSudo)
+          if not isContinuous:
+            break
     return True
 
 if __name__ == '__main__':
