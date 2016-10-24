@@ -686,7 +686,8 @@ class FileManGlobalDataParser(object):
           installItem['name'] = installEntry.name
           installItem['ien'] = installEntry.ien
           installItem['label'] = installEntry.name
-          installItem['value'] = len(installJSONData[package])
+          installItem['value'] = installEntry.name
+          installItem['parent']= package
           if installEntry.name in patchOrderGen._kidsDepBuildDict:
             installchildren = []
             for child in patchOrderGen._kidsDepBuildDict[installEntry.name]:
