@@ -43,6 +43,11 @@ ROUTINE_EXTRACT_EXCLUDE_LIST = (
    "TTTSCAN"
 )
 
+""" List of routine names that are to be included again after the above has excluded a set of them """
+ROUTINE_EXTRACT_EXCEPTION_LIST = (
+  "%ut*"
+)
+
 """ Extract routines/globals from a VistA instance and import
     to the git repository
 """
@@ -101,13 +106,15 @@ class VistADataExtractor:
 
   def __extractRoutines__(self, vistATestClient):
     # do not export ZGO, ZGI and xobw.* routines for now
-    excludeList = ROUTINE_EXTRACT_EXCLUDE_LIST
+    excludeList   = ROUTINE_EXTRACT_EXCLUDE_LIST
+    exceptionList = ROUTINE_EXTRACT_EXCEPTION_LIST
     vistARoutineExport = VistARoutineExport()
     logger.info("Extracting All Routines from VistA instance to %s" %
                 self._routineOutputFile)
     vistARoutineExport.exportAllRoutines(vistATestClient,
                                          self._routineOutputFile,
-                                         excludeList)
+                                         excludeList,
+                                         exceptionList)
 
   def __importZGORoutine__(self, vistATestClient):
     logger.info("Import ZGO routine to VistA instance")

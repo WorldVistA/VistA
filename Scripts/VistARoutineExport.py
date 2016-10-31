@@ -54,7 +54,7 @@ class VistARoutineExport(object):
     connection.send("No\r")
 
   def __exportRoutineImpl__(self, vistATestClient, outputFileName,
-                            routineList, excludeList=None,
+                            routineList, excludeList=None, exceptionList=None,
                             allRoutines=False):
     vistATestClient.waitForPrompt()
     connection = vistATestClient.getConnection()
@@ -70,6 +70,10 @@ class VistARoutineExport(object):
       for routine in excludeList:
         connection.expect(self.REGEX_ROUTINES)
         connection.send("'%s\r" % routine)
+    if exceptionList:
+      for routine in exceptionList:
+        connection.expect(self.REGEX_ROUTINES)
+        connection.send("%s\r" % routine)
     connection.expect(self.REGEX_ROUTINES, 360)
     connection.send("\r")
     if vistATestClient.isCache():
@@ -86,11 +90,12 @@ class VistARoutineExport(object):
                                       outputFileName,
                                       routineList,
                                       excludeList)
-  def exportAllRoutines(self, vistATestClient, outputFileName, excludeList=None):
+  def exportAllRoutines(self, vistATestClient, outputFileName, excludeList=None,exceptionList=None):
     return self.__exportRoutineImpl__(vistATestClient,
                                       outputFileName,
                                       None,
                                       excludeList,
+                                      exceptionList,
                                       True)
 
 DEFAULT_OUTPUT_LOG_FILE_NAME = "RoutineExportTest.log"
